@@ -1,4 +1,4 @@
-import Logo from 'modules/logo/Logo'
+import Logo from '~/containers/logo/Logo'
 import { useTranslation } from 'react-i18next'
 
 const About = () => {

@@ -6,7 +6,10 @@
     "extends": [
         "eslint:recommended",
         "plugin:react/recommended",
-        "plugin:react/jsx-runtime"
+        "plugin:react/jsx-runtime",
+        "react-app",
+        "react-app/jest",
+        "prettier"
     ],
     "parserOptions": {
         "ecmaFeatures": {
@@ -62,8 +65,8 @@
     "overrides": [
         {
             "files": [
-                "**/*.spec.js",
-                "**/*.spec.jsx"
+                "**/tests/**/*.*.js",
+                "**/tests/**/*.js"
             ],
             "env": {
                 "jest": true

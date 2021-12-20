@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom'
-import { routes } from 'constants/routes'
-import Home from 'pages/home/Home'
-import About from 'pages/about/About'
+import { routes } from '~/constants/routes'
+import Home from '~/pages/home/Home'
+import About from '~/pages/about/About'
 
 const AppMain = () => {
   return (

@@ -2,7 +2,7 @@ import { AppBar, Box, Button, IconButton, Toolbar } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
-import { routes } from 'constants/routes'
+import { routes } from '~/constants/routes'
 
 const AppHeader = () => {
   const { t } = useTranslation()

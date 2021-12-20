@@ -1,10 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter } from 'react-router-dom'
-import 'styles/index.css'
-import 'plugins/i18n'
-import App from './App'
-import reportWebVitals from './reportWebVitals'
+import '~/styles/index.css'
+import '~/plugins/i18n'
+import App from '~/App'
+import reportWebVitals from '~/plugins/report-web-vitals'
 
 ReactDOM.render(
   <BrowserRouter>

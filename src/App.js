@@ -1,5 +1,5 @@
-import AppHeader from 'components/layout/AppHeader'
-import AppMain from 'components/layout/AppMain'
+import AppHeader from '~/containers/layout/AppHeader'
+import AppMain from '~/containers/layout/AppMain'
 
 const App = () => (
   <div className="App">

@@ -1,6 +1,92 @@
-# Getting Started with Create React App
+# ITA Project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Description should be here.
+
+## Project structure
+
+<ul>
+    <li>App-Folder
+        <ul>
+            <li>
+             /src - project source code folder
+                <ul>
+                    <li>
+                        /assets - for assets ('.svg', '.ico'...)
+                    </li>
+                    <li>
+                        /components - for shared basic components
+                    </li>
+                    <li>
+                        /constants - for general constants
+                    </li>
+                    <li>
+                        /containers - for complex components
+                    </li>
+                    <li>
+                        /pages - for project pages
+                    </li>
+                    <li>
+                        /plugins - for plugins
+                    </li>
+                    <li>
+                        /styles - for general styles and style variables
+                    </li>
+                </ul>
+            </li>
+            <li>
+                /test - project tests folder
+                <ul>
+                    <li>
+                        /coverage - coverage store
+                    </li>
+                    <li>
+                        /unit - unit tests, should duplicate project structure
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+</ul>
+
+#### Components
+
+Folder for basic shared project components. Like inputs, forms, buttons, table grids, loaders etc. Components should be stateless. 
+
+#### Containers
+
+Folder for more complex project components. Example: Container for rendering list of items, with sorting filtering etc. Containers should also be stateless.
+
+#### Pages
+
+Folder for project pages. The page should manage it state, work with requests for BE, and pass props to containers and components.
+
+## Code conventions
+
+#### Before any pull request, you have to make sure you tested your component and components your work could affect. Test your component with Unit tests. SELF-TESTING and good quality of unit tests may guaranty the success of the application.
+
+#### Code style
+
+The project has installed and configured ES Lint and Prettier. All rules are set, you can learn them in .eslintrc.json file.
+
+#### Coding rules
+
+<ul>
+    <li>
+        Components and containers should not be deep nested. If so separate them into a couple of components.</li>
+    <li>
+        JSX should not include complex logic (If else statements, handlers functions, etc.).</li>
+    <li>
+        If a component or page has complex long logic statements, it should be separated or moved to a custom hook.</li>
+    <li>
+        If the logic in components has been repeated it should be moved to custom hooks.
+    </li>
+    <li>
+        Components should be covered with unit tests. Coverage limit set for 80%. Pre push hooks are configured.
+    </li>
+    <li>
+        General CSS styles should be placed in the styles folder. Values that are repeated should be moved to CSS variables.
+    </li>
+</ul>
 
 ## Available Scripts
 
@@ -28,43 +114,3 @@ The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
