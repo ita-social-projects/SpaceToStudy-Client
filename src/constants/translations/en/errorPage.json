@@ -1,4 +1,4 @@
 {
-  "authTitle": "Authorization policy",
-  "authText": "invalid user authentication or authentication on the server side or when accessing a specific url. We suggest you go to the main page."
+  "authTitle": "Authorization\npolicy",
+  "authText": "invalid user authentication or authentication on\nthe server side or when accessing a specific url.\nWe suggest you go to the main page."
 }

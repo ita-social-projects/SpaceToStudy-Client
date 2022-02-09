@@ -1,26 +1,27 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import './errorPages.css'
-import { Button } from '@mui/material'
+import './errorPages.styles'
+import { useStyles } from './errorPages.styles'
+import { Container, Typography } from '@mui/material'
+import  HomeButton  from './home-button'
 
 const AuthPolicy = () => {
+  const styles = useStyles()
   const { t } = useTranslation()
 
   return (
-    <div className="root">
-      <div className="container">
-        <div className="text">
-          <h1>
+    <div>
+      <Container className={ styles.root } maxWidth="lg">
+        <div className={ styles.text }>
+          <Typography component="h1" gutterBottom  variant="h3">
             { t('errorPage.authTitle') }
-          </h1>
-          <p>
+          </Typography>
+          <Typography component="p" gutterBottom variant="body2">
             { t('errorPage.authText') }
-          </p>
-          <Button className="button" variant="contained">
-            { t('button.toMain') }
-          </Button>
+          </Typography>
+          <HomeButton />
         </div>
-      </div>
+      </Container>
     </div>
   )
 }
