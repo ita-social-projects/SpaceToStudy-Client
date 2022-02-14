@@ -10,7 +10,17 @@ export const theme = createTheme({
     button: {
       textTransform: 'capitalize'
     }
-  }
+  },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          padding: '16px 48px',
+          marginTop: '24px'
+        },
+      },
+    },
+  },
 })
 
 export default theme
