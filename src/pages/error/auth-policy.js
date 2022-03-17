@@ -22,7 +22,6 @@ const AuthPolicy = () => {
         { t('button.toMain') }
       </Button>
     </div>
-
   )
 }
 
