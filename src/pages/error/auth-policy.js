@@ -9,12 +9,11 @@ const AuthPolicy = () => {
   const { t } = useTranslation()
 
   return (
-
     <div className={ styles.root }>
-      <Typography component="h1" gutterBottom  variant="h3">
+      <Typography variant="h3">
         { t('errorPage.authTitle') }
       </Typography>
-      <Typography component="p" gutterBottom variant="body2">
+      <Typography variant="body2">
         { t('errorPage.authText') }
       </Typography>
       <Button
