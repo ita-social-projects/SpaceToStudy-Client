@@ -1,8 +1,12 @@
 import React from 'react'
 
-const Layout = () => {
+const Layout = ({ children }) => {
   return (
-    <div>Layout</div>
+    <div>
+      This Is Layout Component
+      { /* header will be here */ }
+      { children }
+    </div>
   )
 }
 
