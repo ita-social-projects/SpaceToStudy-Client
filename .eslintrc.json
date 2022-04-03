@@ -46,7 +46,7 @@
         "react/jsx-no-target-blank": "error",
         "react/jsx-pascal-case": "error",
         "react/jsx-sort-props": "error",
-        "react/jsx-space-before-closing": "error",
+        "react/jsx-tag-spacing": ["error", { "beforeSelfClosing": "always" }],
         "react/jsx-one-expression-per-line": ["error", { "allow": "literal" }],
         "react/jsx-no-useless-fragment": ["error", { "allowExpressions": true }],
         "react/jsx-max-depth": ["error", { "max": 3 }],
