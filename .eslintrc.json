@@ -31,6 +31,8 @@
         "quotes": [ "error", "single" ],
         "semi": [ "error", "never" ],
         "object-curly-spacing": ["error", "always"],
+        "eol-last": ["error", "always"],
+        "no-multiple-empty-lines": ["error", { "max": 2, "maxEOF": 1, "maxBOF": 0 }],
         "react/jsx-boolean-value": "error",
         "react/jsx-closing-bracket-location": "error",
         "react/jsx-curly-spacing": [ "error", { "when": "always", "children": true } ],
