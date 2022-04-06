@@ -1,8 +1,9 @@
-import AppHeader from '~/containers/layout/AppHeader'
+import AppHeader from '~/containers/layout/AppHeader/AppHeader'
 import AppMain from '~/containers/layout/AppMain'
 import { ThemeProvider } from '@mui/material'
-import theme from './styles/custom-mui.styles'
 import { ModalProvider } from './context/modal-context'
+
+import theme from './styles/app-theme/custom-mui.styles'
 
 const App = () => (
   <div className="App">

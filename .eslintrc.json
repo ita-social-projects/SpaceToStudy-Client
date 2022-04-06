@@ -50,7 +50,7 @@
         "react/jsx-tag-spacing": ["error", { "beforeSelfClosing": "always" }],
         "react/jsx-one-expression-per-line": ["error", { "allow": "literal" }],
         "react/jsx-no-useless-fragment": ["error", { "allowExpressions": true }],
-        "react/jsx-max-depth": ["error", { "max": 3 }],
+        "react/jsx-max-depth": ["error", { "max": 4 }],
         "react/jsx-wrap-multilines": ["error", {
             "declaration": "parens",
             "assignment": "parens",

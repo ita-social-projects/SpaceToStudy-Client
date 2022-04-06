@@ -1,4 +1,9 @@
 export const routes = {
   home: '/',
-  about: 'about'
+  about: 'about',
+  guestNavBar: {
+    whatYouCanDo: '#whatYouCanDo',
+    howItWorks: '#howItWorks',
+    whoWeAre: '#whoWeAre'
+  }
 }
