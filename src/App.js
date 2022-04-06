@@ -6,7 +6,7 @@ import theme from './styles/custom-mui.styles'
 const App = () => (
   <div className="App">
     <ThemeProvider theme={ theme }>
-      <AppHeader /> 
+      <AppHeader />
       <AppMain />
     </ThemeProvider>
   </div>
