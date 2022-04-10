@@ -31,6 +31,8 @@
         "quotes": [ "error", "single" ],
         "semi": [ "error", "never" ],
         "object-curly-spacing": ["error", "always"],
+        "eol-last": ["error", "always"],
+        "no-multiple-empty-lines": ["error", { "max": 2, "maxEOF": 1, "maxBOF": 0 }],
         "react/jsx-boolean-value": "error",
         "react/jsx-closing-bracket-location": "error",
         "react/jsx-curly-spacing": [ "error", { "when": "always", "children": true } ],
@@ -46,7 +48,7 @@
         "react/jsx-no-target-blank": "error",
         "react/jsx-pascal-case": "error",
         "react/jsx-sort-props": "error",
-        "react/jsx-space-before-closing": "error",
+        "react/jsx-tag-spacing": ["error", { "beforeSelfClosing": "always" }],
         "react/jsx-one-expression-per-line": ["error", { "allow": "literal" }],
         "react/jsx-no-useless-fragment": ["error", { "allowExpressions": true }],
         "react/jsx-max-depth": ["error", { "max": 3 }],
@@ -60,7 +62,8 @@
             "prop": "ignore"
         }],
         "react-hooks/rules-of-hooks": "error",
-        "react-hooks/exhaustive-deps": "warn"
+        "react-hooks/exhaustive-deps": "warn",
+        "react/prop-types": "off"
     },
     "overrides": [
         {
