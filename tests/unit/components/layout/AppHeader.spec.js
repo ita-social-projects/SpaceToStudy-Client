@@ -1,5 +1,5 @@
 import { screen } from '@testing-library/react'
-import AppHeader from '~/containers/layout/AppHeader'
+import AppHeader from '~/containers/layout/AppHeaders'
 import { renderWithRouter } from '~tests/test-utils'
 
 describe('AppHeader layout component test', () => {

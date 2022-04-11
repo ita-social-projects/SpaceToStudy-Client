@@ -59,7 +59,7 @@ const appTypography = {
   subtitle2: {
     color: blueGrey[900],
     opacity: '0.75',
-    fontWeight: 400,
+    fontWeight: 500,
     fontSize: '14px',
     lineHeight: '20px',
     letterSpacing: '0.1px'
