@@ -1,4 +1,4 @@
-import AppHeader from '~/containers/layout/AppHeader/AppHeader'
+import AppHeader from '~/containers/layout/AppHeader'
 import AppMain from '~/containers/layout/AppMain'
 import { ThemeProvider } from '@mui/material'
 import { ModalProvider } from './context/modal-context'
