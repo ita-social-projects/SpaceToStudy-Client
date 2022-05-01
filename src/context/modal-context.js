@@ -1,7 +1,7 @@
-import React, { useCallback, useState } from 'react'
+import { createContext, useCallback, useState } from 'react'
 import Modal from '~/containers/modal/Modal'
 
-const ModalContext = React.createContext()
+const ModalContext = createContext()
 
 const ModalProvider = (props) => {
   const [modal, setModal] = useState()
