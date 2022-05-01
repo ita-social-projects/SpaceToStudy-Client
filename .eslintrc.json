@@ -43,7 +43,6 @@
         "react/jsx-indent": [ "error", 2 ],
         "react/jsx-key": "error",
         "react/jsx-max-props-per-line": [ "error", { "maximum": 3 }],
-        "react/jsx-no-bind": "error",
         "react/jsx-no-literals": "off",
         "react/jsx-no-target-blank": "error",
         "react/jsx-pascal-case": "error",
