@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { routes } from '~/constants/routes'
-import { Typography, Box, Button, IconButton, List } from '@mui/material'
+import { Typography, Box, Button, IconButton, List, ListItem  } from '@mui/material'
 
 import Logo from '~/containers/logo/Logo'
 import LanguageIcon from '@mui/icons-material/Language'
@@ -22,12 +22,11 @@ const style = {
     alignItems: 'center',
   },
   navItem: {
-    paddingLeft: '20px',
-    opacity: '1',
-    textDecoration: 'none',
+    paddingLeft: '0',
+    width: 'auto',
     '&::after': {
       content: '"/"',
-      paddingLeft: '20px',
+      padding: '0 0 3px 20px',
     },
     '&:last-child::after': {
       content: '""'
@@ -51,12 +50,14 @@ const Navbar = ({ navigationItems, children }) => {
 
   const navigationList = navigationItems.map(i => {
     return (
-      <Typography
-        component={ Link } key={ i[0] } sx={ style.navItem }
-        to={ i[1] } variant="subtitle2"
-      >
-        { i[0] }
-      </Typography>)
+      <ListItem key={ i[0] } sx={ style.navItem }>
+        <Typography
+          component={ Link } 
+          sx={ { textDecoration: 'none', opacity: '1' } } to={ i[1] } variant="subtitle2"
+        >
+          { i[0] }
+        </Typography>
+      </ListItem>)
   })
 
   return (
