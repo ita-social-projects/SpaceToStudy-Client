@@ -1,5 +1,6 @@
+import { Link } from 'react-router-dom'
 import { routes } from '~/constants/routes'
-import { Typography, Link, Box, Button, IconButton } from '@mui/material'
+import { Typography, Box, Button, IconButton } from '@mui/material'
 
 import Logo from '~/containers/logo/Logo'
 import LanguageIcon from '@mui/icons-material/Language'
@@ -23,6 +24,7 @@ const style = {
   navItem: {
     paddingLeft: '20px',
     opacity: '1',
+    textDecoration: 'none',
     '&::after': {
       content: '"/"',
       paddingLeft: '20px',
@@ -41,7 +43,7 @@ const style = {
   },
   menuIcon: {
     display: { md: 'none' },
-    margin: '9px 11px 9px 0',
+    marginRight: '11px',
   }
 }
 
@@ -49,19 +51,17 @@ const Navbar = ({ navigationItems, children }) => {
 
   const navigationList = navigationItems.map(i => {
     return (
-      <Typography key={ i[0] } sx={ style.navItem } variant="subtitle2" >
-        <Link
-          href={ i[1] } 
-          sx={ { textDecoration: 'none', color: 'inherit' } }
-        >
-          { i[0] }
-        </Link>
+      <Typography
+        component={ Link } key={ i[0] } sx={ style.navItem }
+        to={ i[1] } variant="subtitle2"
+      >
+        { i[0] }
       </Typography>)
   })
 
   return (
     <Box sx={ style.header }>
-      <Button component={ Link } sx={ { m: { xs: '8px', sm: '16px', md: '20px 32px' } } } to={ routes.home }>
+      <Button component={ Link } sx={ { m: { xs: '10px', sm: '18px', md: '20px 32px' } } } to={ routes.home }>
         <Logo />
       </Button>
       
@@ -88,4 +88,3 @@ Navbar.propTypes = {
   navigationItems: PropTypes.array.isRequired,
   children: PropTypes.node.isRequired
 }
-
