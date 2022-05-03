@@ -10,9 +10,6 @@ const style = {
   loginButton: {
     display: { xs: 'none', md: 'inherit' },
     margin: '18px 40px 18px 4px',
-    padding: '10px 16px',
-    backgroundColor: 'primary.900',
-    opacity: '1',
   }
 }
 
