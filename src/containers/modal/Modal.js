@@ -5,10 +5,10 @@ import useConfirm from '~/hooks/use-confirm'
 
 const Modal = ({ content, closeModal }) => {
 
-  const { getConfirmation } = useConfirm() 
+  const { checkConfirmation } = useConfirm() 
 
-  const onClose = async() => {
-    const confirmed = await getConfirmation('Are you sure you would like to close thi window?', true)
+  const onClose = async () => {
+    const confirmed = await checkConfirmation('Ви дійсно хочете вийти?')
     if (confirmed) {
       closeModal()
     }

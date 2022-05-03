@@ -2,14 +2,19 @@ import { useContext } from 'react'
 import { ConfirmationDialogContext } from '~/context/confirm-context'
 
 const useConfirm = () => {
-  const { openDialog } = useContext(ConfirmationDialogContext)
+  const { openDialog, needCofirmation, setNeedConfirmation } = useContext(ConfirmationDialogContext)
 
-  const getConfirmation = (message, dirty) =>
-    new Promise((res) => {
-      openDialog({ actionCallback: res, message, dirty })
-    })
+  const checkConfirmation = (message) => {
+    if (needCofirmation) {
+      return new Promise((res) => {
+        openDialog({ sendConfirm: res, message })
+      })
+    }
 
-  return { getConfirmation }
+    return true
+  }
+
+  return { checkConfirmation, setNeedConfirmation }
 }
 
 export default useConfirm

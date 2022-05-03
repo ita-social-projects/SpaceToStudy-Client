@@ -6,26 +6,25 @@ export const ConfirmationDialogContext = createContext({})
 export const ConfirmationDialogProvider = ({ children }) => {
   const [dialogOpen, setDialogOpen] = useState(false)
   const [dialogConfig, setDialogConfig] = useState({})
+  const [needCofirmation, setNeedConfirmation] = useState(false)
 
-  const openDialog = ({ actionCallback, message, dirty }) => {
-    if (dirty) {
-      setDialogOpen(true)
-      setDialogConfig({ actionCallback, message })
-    }
+  const openDialog = ({ sendConfirm, message }) => {
+    setDialogOpen(true)
+    setDialogConfig({ sendConfirm, message })
   }
 
   const onConfirm = () => {
-    dialogConfig.actionCallback(true)
+    dialogConfig.sendConfirm(true)
     setDialogOpen(false)
   }
 
   const onDismiss = () => {
-    dialogConfig.actionCallback(false)
+    dialogConfig.sendConfirm(false)
     setDialogOpen(false)
   }
 
   return (
-    <ConfirmationDialogContext.Provider value={ { openDialog } }>
+    <ConfirmationDialogContext.Provider value={ { openDialog, needCofirmation, setNeedConfirmation } }>
       <ConfirmDialog
         message={ dialogConfig.message }
         onConfirm={ onConfirm } 
