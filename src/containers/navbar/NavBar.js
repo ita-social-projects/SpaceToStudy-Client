@@ -88,3 +88,4 @@ Navbar.propTypes = {
   navigationItems: PropTypes.array.isRequired,
   children: PropTypes.node.isRequired
 }
+
