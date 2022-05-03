@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { routes } from '~/constants/routes'
-import { Typography, Box, Button, IconButton } from '@mui/material'
+import { Typography, Box, Button, IconButton, List } from '@mui/material'
 
 import Logo from '~/containers/logo/Logo'
 import LanguageIcon from '@mui/icons-material/Language'
@@ -17,7 +17,7 @@ const style = {
     maxWidth: 'xl',
     width: { xl: '100%' },
   },
-  navBox: {
+  navList: {
     display: { xs: 'none', md: 'flex' },
     alignItems: 'center',
   },
@@ -65,9 +65,9 @@ const Navbar = ({ navigationItems, children }) => {
         <Logo />
       </Button>
       
-      <Box sx={ style.navBox }>
+      <List sx={ style.navList }>
         { navigationList }
-      </Box>
+      </List>
 
       <Box sx={ style.iconBox }>
         <IconButton sx={ { display: { xs: 'none', sm: 'inherit' } } }>
