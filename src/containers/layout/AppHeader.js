@@ -1,23 +1,12 @@
 import { routes } from '~/constants/routes'
 import { useTranslation } from 'react-i18next'
 
-import { AppBar, Box, Button, IconButton } from '@mui/material'
+import { AppBar, Button, IconButton } from '@mui/material'
 import LoginIcon from '@mui/icons-material/Login'
 
 import NavBar from '~/containers/navbar/NavBar'
 
 const style = {
-  header: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    width: { xl: '100%' },
-    maxWidth: '1536px',
-    margin: { xs: '0', xl: 'auto' }, 
-    padding: '0px'
-  },
-  loginIcon: {
-    display: { md: 'none' }
-  },
   loginButton: {
     display: { xs: 'none', md: 'inherit' },
     margin: '18px 40px 18px 4px',
@@ -33,21 +22,24 @@ const AppHeader = () => {
   const guestNavBarTransations = Object.values(t('header.navbar', { returnObjects: true }))
   const guestNavBarRoutes = Object.values(routes.guestNavBar)
 
+  const navigationItems = []
+  for ( let i = 0; i < guestNavBarTransations.length; i++ ) {
+    navigationItems.push([guestNavBarTransations[i], guestNavBarRoutes[i]])
+  }
+  
   return (
     <AppBar color='common' >
-      <Box sx={ style.header }>
-        <NavBar guestNavBarRoutes={ guestNavBarRoutes } guestNavBarTransations={ guestNavBarTransations } >
+      <NavBar navigationItems={ navigationItems }>
           
-          <IconButton sx={ style.loginIcon }>
-            <LoginIcon />
-          </IconButton>
+        <IconButton sx={ { display: { md: 'none' } } }>
+          <LoginIcon />
+        </IconButton>
 
-          <Button sx={ style.loginButton } variant="contained">
-            { t('header.loginButton') }
-          </Button>
+        <Button sx={ style.loginButton } variant="contained">
+          { t('header.loginButton') }
+        </Button>
 
-        </NavBar>
-      </Box>
+      </NavBar>
     </AppBar>
   )
 }
