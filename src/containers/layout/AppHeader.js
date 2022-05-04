@@ -32,7 +32,7 @@ const AppHeader = () => {
           <LoginIcon />
         </IconButton>
 
-        <Button color='primary' sx={ style.loginButton } variant="contained">
+        <Button sx={ style.loginButton } variant="contained">
           { t('header.loginButton') }
         </Button>
 
