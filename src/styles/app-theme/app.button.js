@@ -3,7 +3,6 @@ import palette from './app.pallete.js'
 const button = {
   styleOverrides: {
     root: {
-      fontFamily: 'Poppins',
       lineHeight: '20px',
       opacity: '1',
     },
