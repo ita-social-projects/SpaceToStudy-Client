@@ -63,7 +63,7 @@ const Navbar = ({ navigationItems, children }) => {
   return (
     <Box sx={ style.header }>
       <Button
-        component={ Link } size='small' sx={ { m: { xs: '10px', sm: '18px', md: '22px 32px' } } }
+        component={ Link } size='small' sx={ { m: { xs: '10px', sm: '18px', md: '22px 24px' } } }
         to={ routes.home }
       >
         <Logo />
