@@ -1,9 +1,9 @@
 export const routes = {
-  home: '/',
-  about: 'about',
+  home: { label: 'home', route: '/' } ,
+  about: { label: 'about', route: '/about' } ,
   guestNavBar: {
-    whatYouCanDo: '#whatYouCanDo',
-    howItWorks: '#howItWorks',
-    whoWeAre: '#whoWeAre'
-  }
+    whatCanYouDo: { label: 'whatCanYouDo', route: '#whatCanYouDo' },
+    howItWorks: { label: 'howItWorks', route: '#howItWorks' },
+    whoWeAre: { label: 'whoWeAre', route: '#whoWeAre' },
+  },
 }

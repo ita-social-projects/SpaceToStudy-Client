@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { routes } from '~/constants/routes'
+import { useTranslation } from 'react-i18next'
 import { Typography, Box, Button, IconButton, List, ListItem  } from '@mui/material'
 
 import Logo from '~/containers/logo/Logo'
@@ -48,14 +49,17 @@ const style = {
 
 const Navbar = ({ navigationItems, children }) => {
 
+  const { t } = useTranslation()
+  console.log(navigationItems)
+  
   const navigationList = navigationItems.map(i => {
     return (
-      <ListItem key={ i[0] } sx={ style.navItem }>
+      <ListItem key={ i.label } sx={ style.navItem }>
         <Typography
           component={ Link } 
-          sx={ { textDecoration: 'none', opacity: '1' } } to={ i[1] } variant="subtitle2"
+          sx={ { textDecoration: 'none', opacity: '1' } } to={ i.route } variant="subtitle2"
         >
-          { i[0] }
+          { t(`header.guestNavBar.${ i.label }`) }
         </Typography>
       </ListItem>)
   })
@@ -64,7 +68,7 @@ const Navbar = ({ navigationItems, children }) => {
     <Box sx={ style.header }>
       <Button
         component={ Link } size='small' sx={ { m: { xs: '10px', sm: '18px', md: '22px 24px' } } }
-        to={ routes.home }
+        to={ routes.home.route }
       >
         <Logo />
       </Button>

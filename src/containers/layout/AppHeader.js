@@ -16,17 +16,9 @@ const style = {
 const AppHeader = () => {
   const { t } = useTranslation()
 
-  const guestNavBarTransations = Object.values(t('header.navbar', { returnObjects: true }))
-  const guestNavBarRoutes = Object.values(routes.guestNavBar)
-
-  const navigationItems = []
-  for ( let i = 0; i < guestNavBarTransations.length; i++ ) {
-    navigationItems.push([guestNavBarTransations[i], guestNavBarRoutes[i]])
-  }
-  
   return (
-    <AppBar color='common' >
-      <NavBar navigationItems={ navigationItems }>
+    <AppBar color='common' position='static' >
+      <NavBar navigationItems={ Object.values(routes.guestNavBar) }>
           
         <IconButton sx={ { display: { md: 'none' } } }>
           <LoginIcon />
