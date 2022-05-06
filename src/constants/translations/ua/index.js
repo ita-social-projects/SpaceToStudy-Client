@@ -1,6 +1,7 @@
 import common from './common.json'
 import errorPage from './errorPage.json'
 import button from './button.json'
+import header from './header.json'
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default { translations: { common, errorPage, button } }
+export default { translations: { common, errorPage, button, header } }
