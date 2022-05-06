@@ -1,11 +1,12 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
+import Comp from '~/components/testConfirmComponent/testConfirm'
 import { ModalContext } from '~/context/modal-context'
 
 const GuestHomePage = () => {
   const { setModal } = useContext(ModalContext)
 
   const handleModal = () => {
-    setModal(<h1>Hello Space2Study!!!</h1>)
+    setModal(<Comp />)
   }
 
   return (

@@ -1,13 +1,23 @@
-import React from 'react'
 import { Dialog, IconButton } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import { Box } from '@mui/system'
+import useConfirm from '~/hooks/use-confirm'
 
 const Modal = ({ content, closeModal }) => {
+
+  const { checkConfirmation } = useConfirm() 
+
+  const onClose = async () => {
+    const confirmed = await checkConfirmation('Ви дійсно хочете вийти?')
+    if (confirmed) {
+      closeModal()
+    }
+  }
+
   return (
-    <Dialog maxWidth="xl" onClose={ closeModal } open >
+    <Dialog maxWidth="xl" onClose={ onClose } open>
       <Box sx={ { p: 2 } }>
-        <IconButton onClick={ closeModal } sx={ { float: 'right' } } >
+        <IconButton onClick={ onClose } sx={ { float: 'right' } }>
           <CloseIcon />
         </IconButton>
         <Box>
