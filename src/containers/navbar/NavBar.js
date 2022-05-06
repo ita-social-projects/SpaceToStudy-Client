@@ -50,7 +50,6 @@ const style = {
 const Navbar = ({ navigationItems, children }) => {
 
   const { t } = useTranslation()
-  console.log(navigationItems)
   
   const navigationList = navigationItems.map(i => {
     return (
