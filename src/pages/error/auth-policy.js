@@ -19,7 +19,7 @@ const AuthPolicy = () => {
       <Button
         variant="contained"
       >
-        { t('button.toMain') }
+        { t('buttons.toMain') }
       </Button>
     </div>
   )

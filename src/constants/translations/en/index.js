@@ -6,8 +6,8 @@ import questions from './questions.json'
 import titles from './titles.json'
 import guestHomePage from './guestHomePage.json'
 
-const en = { 
-  translations: { common, errorPage, button, header, questions, titles, guestHomePage } 
+const en = {
+  translations: { common, errorPage, button, header, questions, titles, guestHomePage }
 }
 
 export default en

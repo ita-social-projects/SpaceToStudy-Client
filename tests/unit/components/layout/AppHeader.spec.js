@@ -3,9 +3,9 @@ import AppHeader from '~/containers/layout/AppHeader'
 import { renderWithRouter } from '~tests/test-utils'
 
 describe('AppHeader layout component test', () => {
-  it('should have button with about text', () => {
+  it('should have buttons with about text', () => {
     renderWithRouter(
-      <AppHeader />
+      <AppHeader/>
     )
 
     const linkElement = screen.getByText('common.about')
