@@ -51,14 +51,14 @@ const Navbar = ({ navigationItems, children }) => {
 
   const { t } = useTranslation()
   
-  const navigationList = navigationItems.map(i => {
+  const navigationList = navigationItems.map(item => {
     return (
-      <ListItem key={ i.label } sx={ style.navItem }>
+      <ListItem key={ item.label } sx={ style.navItem }>
         <Typography
           component={ Link } 
-          sx={ { textDecoration: 'none', opacity: '1' } } to={ i.route } variant="subtitle2"
+          sx={ { textDecoration: 'none', opacity: '1' } } to={ item.route } variant="subtitle2"
         >
-          { t(`header.guestNavBar.${ i.label }`) }
+          { t(`header.guestNavBar.${ item.label }`) }
         </Typography>
       </ListItem>)
   })
