@@ -9,8 +9,8 @@ import NotFound from '~/pages/error/NotFound'
 const AppMain = () => {
   return (
     <Routes>
-      <Route element={ <GuestHomePage /> } path={ routes.home } />
-      <Route element={ <Example /> } name="home" path={ routes.about } />
+      <Route element={ <GuestHomePage /> } path={ routes.home.route } />
+      <Route element={ <Example /> } name="home" path={ routes.about.route } />
       <Route element={ <NotFound /> } path="*" />
     </Routes>
   )
