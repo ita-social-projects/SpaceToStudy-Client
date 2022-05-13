@@ -1,5 +1,3 @@
-import palette from './app.pallete.js'
-
 const appTypography = {
   fontFamily: ['Poppins', 'Rubik', '-apple-system', 'Arial', 'sans-serif'].join(','),
   h1: {
