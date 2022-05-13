@@ -1,10 +1,13 @@
+import { useContext } from 'react'
 import { routes } from '~/constants/routes'
 import { useTranslation } from 'react-i18next'
 
 import { AppBar, Toolbar, Button, IconButton } from '@mui/material'
 import LoginIcon from '@mui/icons-material/Login'
 
+import { ModalContext } from '~/context/modal-context'
 import NavBar from '~/containers/navbar/NavBar'
+import LoginDialog from '~/components/login-dialog/LoginDialog'
 
 const style = {
   loginButton: {
@@ -15,6 +18,11 @@ const style = {
 
 const AppHeader = () => {
   const { t } = useTranslation()
+  const { setModal } = useContext(ModalContext)
+
+  const handleModal = () => {
+    setModal(<LoginDialog />)
+  }
 
   return (
     <>
@@ -22,11 +30,14 @@ const AppHeader = () => {
 
         <NavBar navigationItems={ Object.values(routes.guestNavBar) }>
           
-          <IconButton sx={ { display: { md: 'none' } } }>
+          <IconButton onClick={ handleModal } size='large' sx={ { display: { md: 'none' } } }>
             <LoginIcon />
           </IconButton>
 
-          <Button size='medium' sx={ style.loginButton } variant="contained">
+          <Button
+            onClick={ handleModal } size='medium' sx={ style.loginButton }
+            variant="contained"
+          >
             { t('header.loginButton') }
           </Button>
 

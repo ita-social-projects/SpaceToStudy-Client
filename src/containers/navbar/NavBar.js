@@ -36,10 +36,6 @@ const style = {
   iconBox: {
     display: 'flex',
     alignItems: 'center',
-    '& *': {
-      margin: '0 6px',
-      color: 'primary.900',
-    }
   },
   menuIcon: {
     display: { md: 'none' },
@@ -77,11 +73,11 @@ const Navbar = ({ navigationItems, children }) => {
       </List>
 
       <Box sx={ style.iconBox }>
-        <IconButton sx={ { display: { xs: 'none', sm: 'inherit' } } }>
+        <IconButton size='large' sx={ { display: { xs: 'none', sm: 'inherit' } } }>
           <LanguageIcon />
         </IconButton>
         { children }
-        <IconButton sx={ style.menuIcon }>
+        <IconButton size='large' sx={ style.menuIcon }>
           <MenuIcon />
         </IconButton>
       </Box>

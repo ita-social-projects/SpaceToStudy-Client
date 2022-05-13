@@ -57,6 +57,7 @@ const appTypography = {
     fontSize: '14px',
     lineHeight: '20px',
     letterSpacing: '0.0025em'
+
   },
   caption: {
     fontWeight: 400,
