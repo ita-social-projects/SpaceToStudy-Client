@@ -35,31 +35,6 @@ const style = {
   },
 }
 
-const data = [ 
-  {
-    image: MapLogo,
-    id: 'panel1',
-    heading:'Flexible Location', 
-    subHeading:'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.',
-  },
-  {
-    id: 'panel2',
-    heading:'Individual Time', 
-    subHeading:'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.',
-  },
-  {
-    id: 'panel3',
-    heading:'Free choice of teachers', 
-    subHeading:'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.',
-  },
-  {
-    
-    id: 'panel4',
-    heading:'Digital Communication', 
-    subHeading:'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.',
-  }
-]
-
 const GuestHomePage = () => {
   const { setModal } = useContext(ModalContext)
 
@@ -73,20 +48,10 @@ const GuestHomePage = () => {
       
       <button onClick={ handleModal }>click</button>
 
-      
       <Box sx={ style.mapSection }>
         <Box component="img" src={ MapLogo } sx={ style.image }></Box>
         <Box sx={ style.leftBlock }>
-          { data.map(({ id,heading,subHeading }) => 
-            (<Accordions
-              heading={ heading } 
-              id={ id }
-              key={ id }
-              subHeading={ subHeading }
-              // eslint-disable-next-line react/jsx-closing-bracket-location
-            />)
-          ) 
-          } 
+          <Accordions />
         </Box>
       </Box>
     </Box>
