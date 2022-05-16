@@ -1,0 +1,22 @@
+{
+    "panel1": {
+        "id": "panel1",
+        "heading": "",
+        "subHeading": ""
+    },
+    "panel2": {
+        "id": "panel2",
+        "heading": "",
+        "subHeading": ""
+    },
+    "panel3": {
+        "id": "panel3",
+        "heading": "",
+        "subHeading": ""
+    },
+    "panel4": {
+        "id": "panel4",
+        "heading": "",
+        "subHeading": ""
+    }
+}
