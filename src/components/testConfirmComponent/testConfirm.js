@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react'
 import useConfirm from '~/hooks/use-confirm'
+import usePrompt from '~/hooks/use-prompt'
 
 const Comp = () => {
   const [dirty, setDirty] = useState(false)
   const { setNeedConfirmation } = useConfirm()
+  const { setPrompt } = usePrompt()
 
   useEffect(() => {
     setNeedConfirmation(dirty)
-  }, [dirty, setNeedConfirmation])
+    setPrompt(dirty)
+  }, [dirty, setNeedConfirmation, setPrompt])
 
   return (
     <div style={ { height: '600px', width: '500px' } }>
@@ -16,11 +19,8 @@ const Comp = () => {
         dirty:
         { dirty.toString() }
       </h1>
-      <button onClick={ () => setDirty((prev) => !prev) }>
-        click
-      </button>  
+      <button onClick={ () => setDirty((prev) => !prev) }>click</button>
     </div>
-    
   )
 }
 
