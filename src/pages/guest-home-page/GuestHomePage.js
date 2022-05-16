@@ -43,7 +43,6 @@ const data = [
     subHeading:'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.',
   },
   {
-    // image: '../img/guest-home-page/map.jpg',
     id: 'panel2',
     heading:'Individual Time', 
     subHeading:'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.',
