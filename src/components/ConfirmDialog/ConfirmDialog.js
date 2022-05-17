@@ -1,20 +1,38 @@
 import { useTranslation } from 'react-i18next'
-import { Button, Dialog, DialogActions, DialogContent } from '@mui/material'
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Typography } from '@mui/material'
+import CloseIcon from '@mui/icons-material/Close'
 
-const ConfirmDialog = ({ message, open, onConfirm, onDismiss }) => {
+const ConfirmDialog = ({ message, title, open, onConfirm, onDismiss }) => {
   const { t } = useTranslation()
 
   return (
-    <Dialog open={ open }>
-      <DialogContent>
-        { message }
+    <Dialog onClose={ onDismiss } open={ open }>
+      <DialogTitle sx={ { p: '13px 16px' } }>
+        <Typography variant="h6">
+          { t(title) }
+        </Typography>
+        <IconButton
+          onClick={ onDismiss }
+          sx={ { position: 'absolute', right: 16, top: 16, p: 0 } }
+        >
+          <CloseIcon />
+        </IconButton>
+      </DialogTitle>
+      <DialogContent dividers sx={ { p: 2 } }>
+        <Typography variant="subtitle1">
+          { t(message) }
+        </Typography>
       </DialogContent>
-      <DialogActions>
-        <Button color="error" onClick={ onDismiss } variant="contained">
-          { t('common.no') }
+      <DialogActions sx={ { p: '12px' } }>
+        <Button onClick={ onConfirm } variant="tonal">
+          <Typography variant="button">
+            { t('common.yes') }
+          </Typography>
         </Button>
-        <Button color="success" onClick={ onConfirm } variant="contained">
-          { t('common.yes') }
+        <Button onClick={ onDismiss } variant="contained">
+          <Typography variant="button">
+            { t('common.no') }
+          </Typography>
         </Button>
       </DialogActions>
     </Dialog>

@@ -2,6 +2,7 @@ import { blueGrey } from '@mui/material/colors'
 
 const palette = {
   primary: blueGrey,
+  white: '#FFFFFF',
   error: {
     50: '#FFEFF2',
     100: '#FFCFD4',

@@ -6,8 +6,10 @@ i18n
   .use(initReactI18next)
   .init({
     resources,
-    lng: 'ua',
+    lng: 'en',
     ns: ['translations']
   })
+
+i18n.languages = ['en', 'ua']
 
 export default i18n

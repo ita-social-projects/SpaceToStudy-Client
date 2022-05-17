@@ -4,7 +4,6 @@ const appTypography = {
   fontFamily: ['Poppins', 'Rubik', '-apple-system', 'Arial', 'sans-serif'].join(','),
   h1: {
     color: palette.primary[900],
-    opacity: '0.75',
     fontFamily: 'Rubik',
     fontWeight: 800,
     fontSize: '72px',
@@ -13,7 +12,6 @@ const appTypography = {
   },
   h2: {
     color: palette.primary[900],
-    opacity: '0.75',
     fontWeight: 600,
     fontSize: '61px',
     lineHeight: '92px',
@@ -21,36 +19,31 @@ const appTypography = {
   },
   h3: {
     color: palette.primary[900],
-    opacity: '0.75',
     fontWeight: 500,
     fontSize: '49px',
     lineHeight: '74px'
   },
   h4: {
     color: palette.primary[900],
-    opacity: '0.75',
     fontWeight: 500,
     fontSize: '35px',
     lineHeight: '53px'
   },
   h5: {
     color: palette.primary[900],
-    opacity: '0.75',
     fontWeight: 400,
     fontSize: '20px',
     lineHeight: '30px'
   },
   h6: {
     color: palette.primary[900],
-    opacity: '0.75',
     fontWeight: 500,
-    fontSize: '14px',
-    lineHeight: '20px',
+    fontSize: '20px',
+    lineHeight: '28px',
     letterSpacing: '0.15px'
   },
   subtitle1: {
     color: palette.primary[900],
-    opacity: '0.75',
     fontWeight: 400,
     fontSize: '16px',
     lineHeight: '24px',
@@ -58,7 +51,6 @@ const appTypography = {
   },
   subtitle2: {
     color: palette.primary[900],
-    opacity: '0.75',
     fontWeight: 500,
     fontSize: '14px',
     lineHeight: '20px',
@@ -66,7 +58,6 @@ const appTypography = {
   },
   body1: {
     color: palette.primary[900],
-    opacity: '0.75',
     fontWeight: 400,
     fontSize: '16px',
     lineHeight: '24px',
@@ -74,7 +65,6 @@ const appTypography = {
   },
   body2: {
     color: palette.primary[900],
-    opacity: '0.75',
     fontWeight: 400,
     fontSize: '16px',
     lineHeight: '21px',
@@ -82,7 +72,6 @@ const appTypography = {
   },
   caption: {
     color: palette.primary[900],
-    opacity: '0.75',
     fontWeight: 400,
     fontSize: '12px',
     lineHeight: '18px',
@@ -90,7 +79,6 @@ const appTypography = {
   },
   overline: {
     color: palette.primary[900],
-    opacity: '0.75',
     fontWeight: 400,
     fontSize: '10px',
     lineHeight: '15px',
@@ -98,8 +86,7 @@ const appTypography = {
     textTransform: 'uppercase'
   },
   button: {
-    color: palette.primary[900],
-    opacity: '0.75',
+    color: palette.white,
     fontWeight: 500,
     fontSize: '16px',
     lineHeight: '24px',
@@ -107,8 +94,7 @@ const appTypography = {
     textTransform: 'capitalize'
   },
   button1: {
-    color: palette.primary[900],
-    opacity: '0.75',
+    color: palette.white,
     fontWeight: 500,
     fontSize: '14px',
     lineHeight: '21px',
