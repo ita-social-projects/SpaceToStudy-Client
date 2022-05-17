@@ -22,7 +22,6 @@ const button = {
     },
     tonal: {
       backgroundColor: palette.primary[50],
-      color: palette.primary[900]
     }
   },
 }

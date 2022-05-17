@@ -24,15 +24,11 @@ const ConfirmDialog = ({ message, title, open, onConfirm, onDismiss }) => {
         </Typography>
       </DialogContent>
       <DialogActions sx={ { p: '12px' } }>
-        <Button onClick={ onConfirm } variant="tonal">
-          <Typography variant="button">
-            { t('common.yes') }
-          </Typography>
+        <Button onClick={ onConfirm } size='large' variant="tonal">
+          { t('common.yes') }
         </Button>
-        <Button onClick={ onDismiss } variant="contained">
-          <Typography variant="button">
-            { t('common.no') }
-          </Typography>
+        <Button onClick={ onDismiss } size='large' variant="contained">
+          { t('common.no') }
         </Button>
       </DialogActions>
     </Dialog>

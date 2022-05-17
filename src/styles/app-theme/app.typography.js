@@ -86,6 +86,7 @@ const appTypography = {
     textTransform: 'uppercase'
   },
   button: {
+    color: palette.primary[900],
     fontWeight: 500,
     fontSize: '16px',
     lineHeight: '24px',
@@ -93,6 +94,7 @@ const appTypography = {
     textTransform: 'capitalize'
   },
   button1: {
+    color: palette.primary[900],
     fontWeight: 500,
     fontSize: '14px',
     lineHeight: '21px',
