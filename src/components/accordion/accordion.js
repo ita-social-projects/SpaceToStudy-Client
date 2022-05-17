@@ -1,4 +1,3 @@
-import React from 'react'
 import Accordion from '@mui/material/Accordion'
 import AccordionSummary from '@mui/material/AccordionSummary'
 import AccordionDetails from '@mui/material/AccordionDetails'
@@ -32,75 +31,47 @@ const style = {
     fontWeight: '400',
     fontSize: '14px',
     lineHeight: '24px',
-    color: '#FFFFFF'
+    color: 'white'
   },
   active: {
     backgroundColor: 'primary.800',
     borderRadius: '6px',
     mb: '24px',
     '& p': {
-      color: '#FFFFFF'
+      color: 'white'
     }
   }
 }
 
-const data = [ 
-  {
-    id: 'panel1',
-    heading:'Flexible Location', 
-    subHeading:'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.',
-  },
-  {
-    id: 'panel2',
-    heading:'Individual Time', 
-    subHeading:'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.',
-  },
-  {
-    id: 'panel3',
-    heading:'Free choice of teachers', 
-    subHeading:'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.',
-  },
-  {
-    
-    id: 'panel4',
-    heading:'Digital Communication', 
-    subHeading:'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.',
-  }
-]
+const Accordions = ({ id,heading,subHeading, image, setImage, expanded, setExpanded }) => {
 
-const Accordions = () => {
-  const [expanded, setExpanded] = React.useState('panel1')
-
-  const handleChange = (panel) => (event, newExpanded) => {
-    setExpanded(newExpanded ? panel : false)
-  }
   const { t } = useTranslation()
+    
+  const handleChange = () => {
+    setExpanded(id)
+    setImage(image)
+  }
+ 
   return (
-    data.map(panel => {
-      return(
-        <Accordion
-          disableGutters="true"
-          expanded={ expanded === panel.id }
-          key={ panel.id }
-          onChange={ handleChange(panel.id) }
-          sx={ expanded === panel.id ? style.active : style.accordion }
-        > 
-          <AccordionSummary>
-            <Typography sx={ style.heading }>
-              { panel.heading }
-            </Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Typography sx={ style.subHeading }>
-              { panel.subHeading }
-            </Typography>
-          </AccordionDetails>
-        </Accordion>
-   
-      )
-    }) 
-  
-  ) 
+    <Accordion
+      disableGutters="true"
+      expanded={ expanded === id }
+      key={ id }
+      onChange={ handleChange }
+      sx={ expanded === id ? style.active : style.accordion }
+    > 
+      <AccordionSummary>
+        <Typography sx={ style.heading }>
+          { t(`${heading}`) }
+        </Typography>
+      </AccordionSummary>
+      <AccordionDetails>
+        <Typography sx={ style.subHeading }>
+          { t(`${subHeading}`) }
+        </Typography>
+      </AccordionDetails>
+    </Accordion>
+  )
 }
 
 export default Accordions

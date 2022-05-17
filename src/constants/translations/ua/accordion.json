@@ -1,22 +1,18 @@
 {
-    "panel1": {
-        "id": "panel1",
-        "heading": "",
-        "subHeading": ""
+    "flexibleLocation": {
+        "heading": "Flexible Location",
+        "subHeading": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
     },
-    "panel2": {
-        "id": "panel2",
-        "heading": "",
-        "subHeading": ""
+    "individualTime": {
+        "heading": "Individual Time",
+        "subHeading": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
     },
-    "panel3": {
-        "id": "panel3",
-        "heading": "",
-        "subHeading": ""
+    "freeChoiceOfTeachers": {
+        "heading": "Free Choice of Teachers",
+        "subHeading": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
     },
-    "panel4": {
-        "id": "panel4",
-        "heading": "",
-        "subHeading": ""
+    "digitalCommunication": {
+        "heading": "Digital Communication",
+        "subHeading": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
     }
 }
