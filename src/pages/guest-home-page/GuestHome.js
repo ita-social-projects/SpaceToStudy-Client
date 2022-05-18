@@ -14,7 +14,7 @@ const GuestHomePage = () => {
 
   
   return (
-    <Box sx={ { margin: '0 auto', maxWidth:'1128px' } }>
+    <Box sx={ { margin: '0 auto', maxWidth:'100%' } }>
       
       <button onClick={ handleModal }>click</button>
 
