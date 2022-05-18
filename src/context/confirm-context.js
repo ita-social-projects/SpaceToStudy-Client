@@ -1,5 +1,5 @@
 import { createContext, useState } from 'react'
-import ConfirmDialog from '~/components/ConfirmDialog/ConfirmDialog'
+import ConfirmDialog from '~/components/confirm-dialog/ConfirmDialog'
 
 export const ConfirmationDialogContext = createContext({})
 

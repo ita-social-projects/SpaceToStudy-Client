@@ -1,6 +1,6 @@
-import MapLogo from '~/img/guest-home-page/map.jpg'
+import MapLogo from '~/img/guest-home-page/map.svg'
 import WorldLogo from '~/img/guest-home-page/world.jpg'
-const data = [ 
+const accordionArray = [ 
   {
     image: MapLogo,
     id: 'panel1',
@@ -26,4 +26,4 @@ const data = [
     subHeading:'accordion.digitalCommunication.subHeading',
   }
 ]
-export default data
+export default accordionArray

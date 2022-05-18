@@ -3,7 +3,8 @@ import { useContext } from 'react'
 import Comp from '~/components/test-confirm-component/testConfirm'
 import { ModalContext } from '~/context/modal-context'
 import { Box } from '@mui/material'
-import Feature from '~/containers/feature/feature'
+import AccordionWithImage from '~/components/accordion-with-image/AccordionWithImage'
+import accordionArray from '~/components/accordion-with-image/accordionArray'
 
 const GuestHomePage = () => {
   const { setModal } = useContext(ModalContext)
@@ -11,14 +12,13 @@ const GuestHomePage = () => {
   const handleModal = () => {
     setModal(<Comp />)
   }
-
   
   return (
-    <Box sx={ { margin: '0 auto', maxWidth:'100%' } }>
+    <Box sx={ { margin: '0 auto', maxWidth:'1128px' } }>
       
       <button onClick={ handleModal }>click</button>
 
-      <Feature />
+      <AccordionWithImage accordionArray={ accordionArray } />
      
     </Box>
     

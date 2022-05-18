@@ -21,21 +21,22 @@ const style = {
     fontFamily: 'Poppins',
     fontStyle: 'normal',
     fontWeight: '500',
-    fontSize: { xs:'20px', xl:'13px' },
-    lineHeight: { xs:'28px', xl:'18px' },
+    fontSize: '20px', 
+    lineHeight: '28px',
     color: 'primary.900'
   },
   subHeading: {
     fontFamily: 'Poppins',
     fontStyle: 'normal',
     fontWeight: '400',
-    fontSize: { xs:'14px', xl:'8px' },
-    lineHeight: { xs:'24px', xl:'12px' },
+    fontSize: '14px',
+    lineHeight: '24px',
     color: 'white'
   },
   active: {
     backgroundColor: 'primary.800',
     borderRadius: '6px',
+    boxShadow: '0px 3.19149px 3.82979px -1.91489px rgba(144, 164, 174, 0.2), 0px 5.74468px 7.65957px 0.638298px rgba(144, 164, 174, 0.14), 0px 1.91489px 10.2128px 1.2766px rgba(144, 164, 174, 0.12)',
     mb: '24px',
     '& p': {
       color: 'white'
@@ -43,31 +44,27 @@ const style = {
   }
 }
 
-const Accordions = ({ id,heading,subHeading, image, setImage, expanded, setExpanded }) => {
+const Accordions = ({ item ,expanded, onChange }) => {
 
   const { t } = useTranslation()
     
-  const handleChange = () => {
-    setExpanded(id)
-    setImage(image)
-  }
  
   return (
     <Accordion
-      disableGutters="true"
-      expanded={ expanded === id }
-      key={ id }
-      onChange={ handleChange }
-      sx={ expanded === id ? style.active : style.accordion }
+      disableGutters='true'
+      expanded={ expanded }
+      key={ item.id }
+      onChange={ ()=> onChange(item) }
+      sx={ expanded ? style.active : style.accordion }
     > 
       <AccordionSummary>
         <Typography sx={ style.heading }>
-          { t(`${heading}`) }
+          { t(item.heading) }
         </Typography>
       </AccordionSummary>
       <AccordionDetails>
         <Typography sx={ style.subHeading }>
-          { t(`${subHeading}`) }
+          { t(item.subHeading) }
         </Typography>
       </AccordionDetails>
     </Accordion>
