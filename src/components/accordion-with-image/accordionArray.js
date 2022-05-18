@@ -1,5 +1,5 @@
 import MapLogo from '~/img/guest-home-page/map.svg'
-import WorldLogo from '~/img/guest-home-page/world.jpg'
+
 const accordionArray = [ 
   {
     image: MapLogo,
@@ -8,7 +8,7 @@ const accordionArray = [
     subHeading:'accordion.flexibleLocation.subHeading',
   },
   {
-    image: WorldLogo,
+    image: MapLogo,
     id: 'panel2',
     heading:'accordion.individualTime.heading', 
     subHeading:'accordion.individualTime.subHeading',
@@ -20,7 +20,7 @@ const accordionArray = [
     subHeading:'accordion.freeChoiceOfTeachers.subHeading',
   },
   {
-    image: WorldLogo,
+    image: MapLogo,
     id: 'panel4',
     heading:'accordion.digitalCommunication.heading', 
     subHeading:'accordion.digitalCommunication.subHeading',
