@@ -8,9 +8,9 @@ export const ConfirmationDialogProvider = ({ children }) => {
   const [dialogConfig, setDialogConfig] = useState({})
   const [needCofirmation, setNeedConfirmation] = useState(false)
 
-  const openDialog = ({ sendConfirm, message }) => {
+  const openDialog = ({ sendConfirm, message, title }) => {
     setDialogOpen(true)
-    setDialogConfig({ sendConfirm, message })
+    setDialogConfig({ sendConfirm, message, title })
   }
 
   const onConfirm = () => {
@@ -30,6 +30,7 @@ export const ConfirmationDialogProvider = ({ children }) => {
         onConfirm={ onConfirm } 
         onDismiss={ onDismiss }
         open={ dialogOpen }
+        title={ dialogConfig.title }
       />
       { children }
     </ConfirmationDialogContext.Provider>

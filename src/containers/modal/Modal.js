@@ -4,11 +4,13 @@ import { Box } from '@mui/system'
 import useConfirm from '~/hooks/use-confirm'
 
 const Modal = ({ content, closeModal }) => {
-
-  const { checkConfirmation } = useConfirm() 
+  const { checkConfirmation } = useConfirm()
 
   const onClose = async () => {
-    const confirmed = await checkConfirmation('Ви дійсно хочете вийти?')
+    const confirmed = await checkConfirmation({
+      message: 'questions.confirmation',
+      title: 'titles.confirmTitle' 
+    })
     if (confirmed) {
       closeModal()
     }
