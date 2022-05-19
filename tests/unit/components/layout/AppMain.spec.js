@@ -3,9 +3,9 @@ import { renderWithRouter } from '~tests/test-utils'
 import AppMain from '~/containers/layout/AppMain'
 
 describe('AppMain layout component test', () => {
-  it('should have buttons with about text', () => {
+  it('should have button with about text', () => {
     renderWithRouter(
-      <AppMain/>
+      <AppMain />
     )
     const linkElement = screen.getByText('common.title')
     expect(linkElement).toBeInTheDocument()

@@ -17,7 +17,6 @@ const palette = {
     700: '#D32F2F',
     800: '#C72A28',
     900: '#B91F1B'
-    900: '#B91F1B',
   },
   success: {
     50: '#EBF3EB',

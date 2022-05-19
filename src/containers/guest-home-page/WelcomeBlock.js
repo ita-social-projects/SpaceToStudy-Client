@@ -1,40 +1,38 @@
 import { useTranslation } from 'react-i18next'
 import { Typography, Box, Button } from '@mui/material'
 
-import { WelcomeBlockStyles as style } from '~/containers/guest-home-page/styles/WelcomeBlockStyles'
+import { WelcomeBlockStyles as style } from '~/containers/guest-home-page/styles/welcomeBlockStyles'
+import titleMd from '~/assets/images/titleMd.svg'
+import titleSm from '~/assets/images/titleSm.svg'
+import titleXs from '~/assets/images/titleXs.svg'
+import useBreakpoints from '~/hooks/use-breakpoints'
 
 const WelcomeBlock = () => {
   const { t } = useTranslation()
+  const size = useBreakpoints()
+
+  const images = {
+    xl: titleMd,
+    lg: titleMd,
+    md: titleMd,
+    sm: titleSm,
+    xs: titleXs
+  }
 
   return (
-    <Box sx={ style.container } >
-      <Box sx={ style.title } >
-        <Typography sx={ style.h1 } variant={ 'h1' } >
-          { t('guestHomePage.welcomeBlock.title.titlePart1') }
-          <br />
-          <Box component="span" sx={ style.blue } >
-            { t('guestHomePage.welcomeBlock.title.titlePart2') }
-          </Box >
-          <br />
-          { t('guestHomePage.welcomeBlock.title.titlePart3') }
-          <Box component="span" sx={ style.green } >
-            { t('guestHomePage.welcomeBlock.title.titlePart4') }
-          </Box >
-        </Typography >
-      </Box >
+    <Box sx={ style.container }>
+      <Box
+        alt='Title' component='img' src={ images[size] }
+        sx={ style.title }
+      />
+      <Typography sx={ style.subtitle }>
+        { t('guestHomePage.welcomeBlock.description') }
+      </Typography>
 
-      <Typography sx={ style.subtitle } variant={ 'subtitle1' } >
-        { t('guestHomePage.welcomeBlock.subtitle.subtitlePart1') }
-        <br />
-        { t('guestHomePage.welcomeBlock.subtitle.subtitlePart2') }
-      </Typography >
-
-      <Button sx={ style.getStartBtn } >
-        <Typography >
-          { t('guestHomePage.welcomeBlock.btnText') }
-        </Typography >
-      </Button >
-    </Box >
+      <Button sx={ style.getStartBtn } variant="contained">
+        { t('guestHomePage.welcomeBlock.getStarted') }
+      </Button>
+    </Box>
   )
 }
 

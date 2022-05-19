@@ -31,7 +31,7 @@ const appTypography = {
   h6: {
     fontWeight: 500,
     fontSize: '20px',
-    lineHeight: '30px',
+    lineHeight: '28px',
     letterSpacing: '0.15px'
   },
   subtitle1: {
@@ -55,13 +55,13 @@ const appTypography = {
   body2: {
     fontWeight: 400,
     fontSize: '14px',
-    lineHeight: '21px',
+    lineHeight: '20px',
     letterSpacing: '0.0025em'
   },
   caption: {
     fontWeight: 400,
     fontSize: '12px',
-    lineHeight: '18px',
+    lineHeight: '20px',
     letterSpacing: '0.4px'
   },
   overline: {
@@ -76,14 +76,14 @@ const appTypography = {
     fontSize: '16px',
     lineHeight: '24px',
     letterSpacing: '0.5px',
-    textTransform: 'none'
+    textTransform: 'capitalize'
   },
   button1: {
     fontWeight: 500,
     fontSize: '14px',
-    lineHeight: '21px',
+    lineHeight: '20px',
     letterSpacing: '0.5px',
-    textTransform: 'none'
+    textTransform: 'capitalize'
   }
 }
 

@@ -1,4 +1,3 @@
-import React from 'react'
 import { useContext } from 'react'
 
 import Comp from '~/components/testConfirmComponent/testConfirm'
@@ -13,10 +12,10 @@ const GuestHomePage = () => {
   }
 
   return (
-    <>
+    <div>
       <WelcomeBlock />
       <button onClick={ handleModal }>click</button>
-    </>
+    </div>
   )
 }
 
