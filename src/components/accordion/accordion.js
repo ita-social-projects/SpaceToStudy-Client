@@ -21,16 +21,16 @@ const style = {
     fontFamily: 'Poppins',
     fontStyle: 'normal',
     fontWeight: '500',
-    fontSize: '20px', 
-    lineHeight: '28px',
+    fontSize: { md:'20px',sm:'13px' }, 
+    lineHeight:  { md:'28px',sm:'18px' },
     color: 'primary.900'
   },
   subHeading: {
     fontFamily: 'Poppins',
     fontStyle: 'normal',
     fontWeight: '400',
-    fontSize: '14px',
-    lineHeight: '24px',
+    fontSize: { md:'14px',sm:'8px' },
+    lineHeight: { md:'24px',sm:'12px' },
     color: 'white'
   },
   active: {

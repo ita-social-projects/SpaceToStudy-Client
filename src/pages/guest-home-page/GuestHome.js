@@ -4,7 +4,7 @@ import Comp from '~/components/test-confirm-component/testConfirm'
 import { ModalContext } from '~/context/modal-context'
 import { Box } from '@mui/material'
 import AccordionWithImage from '~/components/accordion-with-image/AccordionWithImage'
-import accordionArray from '~/components/accordion-with-image/accordionArray'
+import accordionInfo from '~/components/accordion-with-image/accordionInfo'
 
 const GuestHomePage = () => {
   const { setModal } = useContext(ModalContext)
@@ -14,12 +14,13 @@ const GuestHomePage = () => {
   }
   
   return (
-    <Box sx={ { margin: '0 auto', maxWidth:'1128px' } }>
+    <Box>
       
       <button onClick={ handleModal }>click</button>
 
-      <AccordionWithImage accordionArray={ accordionArray } />
-     
+      <Box sx={ { display:'flex',justifyContent:'center',alignItems:'center' } }>
+        <AccordionWithImage accordionArray={ accordionInfo } />
+      </Box>
     </Box>
     
     

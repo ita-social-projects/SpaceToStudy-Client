@@ -1,6 +1,6 @@
 import MapLogo from '~/img/guest-home-page/map.svg'
 
-const accordionArray = [ 
+const accordionInfo = [ 
   {
     image: MapLogo,
     id: 'panel1',
@@ -26,4 +26,4 @@ const accordionArray = [
     subHeading:'accordion.digitalCommunication.subHeading',
   }
 ]
-export default accordionArray
+export default accordionInfo

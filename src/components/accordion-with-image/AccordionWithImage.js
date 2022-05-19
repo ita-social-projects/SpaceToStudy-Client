@@ -17,12 +17,12 @@ const style = {
     display: 'flex',
     justifyContent: 'center',
     flexDirection: 'column',
-    width: '360px',
-    height: '396px',
+    width: { md:'360px',sm:'229px' },
+    height: { md:'396px',sm:'244px' }
   },
   image: {
-    width: '744px',
-    height: '470px', 
+    width: { md:'744px',sm:'475px' },
+    height: { md:'470px',sm:'300px' },
     mr: '24px'
   },
 }
