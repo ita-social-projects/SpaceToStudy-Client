@@ -22,8 +22,6 @@ const GuestHomePage = () => {
         <AccordionWithImage accordionArray={ accordionInfo } />
       </Box>
     </Box>
-    
-    
   )
 }
 

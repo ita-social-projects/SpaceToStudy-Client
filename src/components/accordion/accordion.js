@@ -18,19 +18,13 @@ const style = {
     }
   },
   heading: {
-    fontFamily: 'Poppins',
-    fontStyle: 'normal',
-    fontWeight: '500',
-    fontSize: { md:'20px',sm:'13px' }, 
-    lineHeight:  { md:'28px',sm:'18px' },
+    fontSize: { lg:'20px', sm:'13px' },
+    lineHeight: { lg:'28px', sm:'18px' },
     color: 'primary.900'
   },
   subHeading: {
-    fontFamily: 'Poppins',
-    fontStyle: 'normal',
-    fontWeight: '400',
-    fontSize: { md:'14px',sm:'8px' },
-    lineHeight: { md:'24px',sm:'12px' },
+    fontSize: { lg:'14px', sm:'8px' },
+    lineHeight: { lg:'24px', sm:'12px' },
     color: 'white'
   },
   active: {
@@ -38,7 +32,7 @@ const style = {
     borderRadius: '6px',
     boxShadow: '0px 3.19149px 3.82979px -1.91489px rgba(144, 164, 174, 0.2), 0px 5.74468px 7.65957px 0.638298px rgba(144, 164, 174, 0.14), 0px 1.91489px 10.2128px 1.2766px rgba(144, 164, 174, 0.12)',
     mb: '24px',
-    '& p': {
+    '& h6': {
       color: 'white'
     }
   }
@@ -58,12 +52,12 @@ const Accordions = ({ item ,expanded, onChange }) => {
       sx={ expanded ? style.active : style.accordion }
     > 
       <AccordionSummary>
-        <Typography sx={ style.heading }>
+        <Typography sx={ style.heading } variant={ 'h6' }>
           { t(item.heading) }
         </Typography>
       </AccordionSummary>
       <AccordionDetails>
-        <Typography sx={ style.subHeading }>
+        <Typography sx={ style.subHeading } variant={ 'body1' }>
           { t(item.subHeading) }
         </Typography>
       </AccordionDetails>
