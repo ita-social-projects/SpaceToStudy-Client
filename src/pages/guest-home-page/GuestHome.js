@@ -17,10 +17,9 @@ const GuestHomePage = () => {
     <Box>
       
       <button onClick={ handleModal }>click</button>
-
-      <Box sx={ { display:'flex',justifyContent:'center',alignItems:'center' } }>
-        <AccordionWithImage accordionArray={ accordionInfo } />
-      </Box>
+      
+      <AccordionWithImage items={ accordionInfo }  />
+      
     </Box>
   )
 }

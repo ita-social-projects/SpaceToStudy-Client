@@ -6,47 +6,35 @@ import { useState } from 'react'
 const style = {
   feature: {
     display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    maxWidth:'1128px',
-    maxHeight:'470px',
+    alignItems:'center',
+    justifyContent:'center',
     pr:'24px',
-    pl:'24px'
+    pl:'24px',
+    overflow:'auto',
   },
   info: {
-    width:'34%',
-    maxHeight:'396px',
+    maxWidth:{ md:'360px',sm:'229px' },
+    overflow:'auto'
   },
   image: {
-    width:'66%',
-    height:'auto',
+    maxHeight:'470px',
+    overflowY:'auto',
     mr: '24px'
   },
 }
 
-const AccordionWithImage = ({ accordionArray }) => {
+const AccordionWithImage = ({ items }) => {
     
-  const [activeItem, setActiveItem] = useState(accordionArray[0])
-
-  const onChange = (item) => {
-    setActiveItem(item)
-  }
+  const [activeItemId, setActiveItemId] = useState(0)
  
 
   return(
     <Box sx={ style.feature }>
-      <Box component="img" src={ activeItem.image } sx={ style.image } />
-      <Box sx={ style.info }>
-        { accordionArray.map(item =>(
-          <Accordions
-            expanded={ item.id === activeItem.id }
-            item={ item }
-            key={ item.id }
-            onChange={ onChange }
-          />
-        )) 
-        }
-      </Box>
+      <Box component="img" src={ items[activeItemId].image } sx={ style.image } />
+      <Accordions
+        activeIndex={ activeItemId } items={ items } onChange={ (id) => setActiveItemId(id) }
+        styles={ style.info }
+      />
     </Box>
   )
 }
