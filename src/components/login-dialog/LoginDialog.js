@@ -1,78 +1,24 @@
 import { useState } from 'react'
-import { endAdornment } from '~/services/eyeToggle'
 import { Box, FormControl, FormControlLabel, Typography, TextField, Button, Checkbox } from '@mui/material'
+import { useTranslation } from 'react-i18next'
 
 import login from '~/assets/login.svg'
-
-const style = {
-  form: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  h2: { 
-    marginBottom: '32px',
-    fontSize: '40px', 
-    lineHeight: '48px' 
-  },
-  checkboxContainer: {
-    margin: '25px 0',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center'
-  },
-  linesBox: {
-    margin: '23px 0',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center'
-  },
-  line: {
-    display: 'flex',
-    width: '34%', 
-    height: '2px', 
-    backgroundColor: 'primary.100'
-  },
-  google: {
-    marginBottom: '16px',
-    width: '100%'   
-  },
-  underlineText: {
-    fontWeight: '500',
-    textDecoration: 'underline',
-  }
-}
+import useForm from '~/hooks/use-form'
+import validationSchema from '~/constants/validation/login'
+import { endAdornment } from '~/services/isVisible'
+import style from './LoginDialog.style'
 
 const LoginDialog = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [rememberMe, setrememberMe] = useState(false)
+  const { t } = useTranslation()
   const [showPassword, setShowPassword] = useState(true)
-  
-  const emailHandler = ( event ) => {
-    setEmail( event.target.value )
-  }
-  const passwordHandler = ( event ) => {
-    setPassword( event.target.value )
-  }
-  const rememberMeHandler = ( ) => {
-    setrememberMe( !rememberMe )
-  }
-  
-  
-  const submitHandler = (event) => {
-    event.preventDefault()
 
-    console.log( {
-      email: email,
-      password: password,
-      rememberMe: rememberMe
-    } )
-    setEmail('')
-    setPassword('')
-    setrememberMe(false)
-  }
-
+  const { handleSubmit, handleChange, handleBlur, data, errors } = useForm(
+    {
+      onSubmit: () => console.log({ data, errors }),
+      initialValues: { email: '', password: '', rememberMe: false },
+      validationSchema: validationSchema
+    }
+  )
 
   return (
     <Box sx={ style.form }>
@@ -80,53 +26,63 @@ const LoginDialog = () => {
         <img alt="login" src={ login } />
       </Box> 
       
-      <form onSubmit={ submitHandler }>
-        { /* <FormControl onSubmit={ submitHandler } sx={ { m: '0', width: '370px' } }> */ }
-        <Typography sx={ style.h2 } variant="h2">Welcome back</Typography>
+      <Box component='form' onSubmit={ handleSubmit }>
+        <Typography sx={ style.h2 } variant="h2">
+          { t( 'login.head' ) }
+        </Typography>
         
         <TextField
+          error={ errors.email }
           fullWidth 
-          label='Email'
-          onChange={ emailHandler }
+          helperText={ errors.email && t( 'login.emailError' ) }
+          label={ t( 'login.email' ) }
+          onBlur={ handleBlur('email') }
+          onChange={ handleChange('email') }
           required
           size='large'
           sx={ { mb: '16px' } }
           type='email'
-          value={ email }
+          value={ data.email }
         ></TextField>
         <TextField 
           InputProps={ endAdornment( showPassword, setShowPassword ) }
-          fullWidth
-          label='Password' 
-          onChange={ passwordHandler }
+          error={ errors.password }
+          fullWidth 
+          helperText={ errors.password && t( 'login.passwordError' ) }
+          label={ t( 'login.password' ) }
+          onBlur={ handleBlur('password') }
+          onChange={ handleChange('password') }
           required
           type='password'
-          value={ password }
+          value={ data.password }
         ></TextField>
         
         <Box sx={ style.checkboxContainer } >
           <FormControlLabel
-            checked={ rememberMe }
+            checked={ data.rememberMe }
             control={ <Checkbox /> }
-            label='Remember me'
+            label={ t( 'login.rememberMe' ) }
             labelPlacement='end'
-            onChange={ rememberMeHandler }
+            onChange={ handleChange('rememberMe') }
             sx={ { color: 'primary.900', fontSize:'24px' } }
-            value={ rememberMe }
           />
-          <Typography sx={ style.underlineText } variant='subtitle2'>Forgot Password?</Typography>
+          <Typography sx={ style.underlineText } variant='subtitle2'>
+            { t( 'login.forgotPassword' ) }
+          </Typography>
         </Box>
         
         <Button
           size='large' sx={ { width: '100%' } } type='submit'
           variant="contained"
         >
-          LOGIN
+          { t( 'login.loginButton' ) }
         </Button>
         
         <Box sx={ style.linesBox }>
           <Box sx={ style.line } />
-          <Typography variant="overline">or continue</Typography>
+          <Typography variant="overline">
+            { t( 'login.continue' ) }
+          </Typography>
           <Box sx={ style.line } />
         </Box>
         
@@ -134,12 +90,13 @@ const LoginDialog = () => {
         
         <Box sx={ { display: 'flex' } }>
           <Typography sx={ { pr: 1 } } variant="body2">
-            Don’t have an account yet?
+            { t( 'login.haveAccount' ) }
           </Typography>
-          <Typography sx={ style.underlineText } variant="body2">Join us for free</Typography>
+          <Typography sx={ style.underlineText } variant="body2">
+            { t( 'login.joinUs' ) }
+          </Typography>
         </Box>
-        { /* </FormControl> */ }
-      </form>
+      </Box>
     </Box>
   )
 }
