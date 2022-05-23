@@ -14,11 +14,10 @@ const style = {
   },
   info: {
     maxWidth:{ md:'360px',sm:'229px' },
-    overflow:'auto'
   },
   image: {
     maxHeight:'470px',
-    overflowY:'auto',
+    overflow:'auto',
     mr: '24px'
   },
 }
