@@ -22,13 +22,13 @@ const Accordions = ({ items, onChange ,activeIndex,styles }) => {
             sx={ activeIndex === index ? style.active : style.accordion }
           >
             <AccordionSummary>
-              <Typography sx={ style.heading } variant={ 'h6' }>
-                { t(item.heading) }
+              <Typography sx={ style.title } variant={ 'h6' }>
+                { t(item.title) }
               </Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography sx={ style.subHeading } variant={ 'body1' }>
-                { t(item.subHeading) }
+              <Typography sx={ style.description } variant={ 'body1' }>
+                { t(item.description) }
               </Typography>
             </AccordionDetails>
           </Accordion>

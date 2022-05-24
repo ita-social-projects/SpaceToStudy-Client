@@ -11,12 +11,12 @@ export const style = {
       display: 'none'
     }
   },
-  heading: {
+  title: {
     fontSize: { md:'20px', sm:'13px' },
     lineHeight: { md:'28px', sm:'18px' },
     color: 'primary.900'
   },
-  subHeading: {
+  description: {
     fontSize: { md:'14px', sm:'8px' },
     lineHeight: { md:'24px', sm:'12px' },
     color: 'white'
