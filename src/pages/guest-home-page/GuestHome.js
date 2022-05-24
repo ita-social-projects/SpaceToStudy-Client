@@ -4,7 +4,7 @@ import Comp from '~/components/test-confirm-component/testConfirm'
 import { ModalContext } from '~/context/modal-context'
 import { Box } from '@mui/material'
 import AccordionWithImage from '~/components/accordion-with-image/AccordionWithImage'
-import accordionInfo from '~/components/accordion-with-image/accordionInfo'
+import { descriptionTimes } from '~/components/accordion-with-image/descriptionTimes'
 
 const GuestHomePage = () => {
   const { setModal } = useContext(ModalContext)
@@ -17,8 +17,8 @@ const GuestHomePage = () => {
     <Box>
       
       <button onClick={ handleModal }>click</button>
-      
-      <AccordionWithImage items={ accordionInfo }  />
+
+      <AccordionWithImage items={ descriptionTimes }  />
       
     </Box>
   )

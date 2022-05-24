@@ -1,145 +1,112 @@
 {
-    "env": {
-        "browser": true,
-        "es2021": true
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:react/jsx-runtime",
+    "react-app",
+    "react-app/jest",
+    "prettier"
+  ],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
     },
-    "extends": [
-        "eslint:recommended",
-        "plugin:react/recommended",
-        "plugin:react/jsx-runtime",
-        "react-app",
-        "react-app/jest",
-        "prettier"
+    "ecmaVersion": 2021,
+    "sourceType": "module"
+  },
+  "plugins": ["react", "testing-library", "react-hooks"],
+  "rules": {
+    "prefer-arrow-callback": ["error"],
+    "func-style": ["error", "expression"],
+    "indent": ["error", 2],
+    "linebreak-style": ["error", "windows"],
+    "quotes": ["error", "single"],
+    "semi": ["error", "never"],
+    "object-curly-spacing": ["error", "always"],
+    "eol-last": ["error", "always"],
+    "no-multiple-empty-lines": [
+      "error",
+      {
+        "max": 2,
+        "maxEOF": 1,
+        "maxBOF": 0
+      }
     ],
-    "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true
-        },
-        "ecmaVersion": 2021,
-        "sourceType": "module"
-    },
-    "plugins": [
-        "react",
-        "testing-library",
-        "react-hooks"
+    "react/jsx-boolean-value": "error",
+    "react/jsx-closing-bracket-location": "error",
+    "react/jsx-curly-spacing": [
+      "error",
+      {
+        "when": "always",
+        "children": true
+      }
     ],
-    "rules": {
-        "prefer-arrow-callback": [
-            "error"
-        ],
-        "func-style": [
-            "error",
-            "expression"
-        ],
-        "indent": [
-            "error",
-            2
-        ],
-        "linebreak-style": [ "error", "windows" ],
-        "quotes": [
-            "error",
-            "single"
-        ],
-        "semi": [
-            "error",
-            "never"
-        ],
-        "object-curly-spacing": [
-            "error",
-            "always"
-        ],
-        "eol-last": [
-            "error",
-            "always"
-        ],
-        "no-multiple-empty-lines": [
-            "error",
-            {
-                "max": 2,
-                "maxEOF": 1,
-                "maxBOF": 0
-            }
-        ],
-        "react/jsx-boolean-value": "error",
-        "react/jsx-closing-bracket-location": "error",
-        "react/jsx-curly-spacing": [
-            "error",
-            {
-                "when": "always",
-                "children": true
-            }
-        ],
-        "react/jsx-equals-spacing": "error",
-        "react/jsx-first-prop-new-line": "error",
-        "react/jsx-handler-names": "error",
-        "react/jsx-indent-props": [
-            "error",
-            2
-        ],
-        "react/jsx-indent": [
-            "error",
-            2
-        ],
-        "react/jsx-key": "error",
-        "react/jsx-max-props-per-line": [
-            "error",
-            {
-                "maximum": 3
-            }
-        ],
-        "react/jsx-no-literals": "off",
-        "react/jsx-no-target-blank": "error",
-        "react/jsx-pascal-case": "error",
-        "react/jsx-sort-props": "error",
-        "react/jsx-tag-spacing": [
-            "error",
-            {
-                "beforeSelfClosing": "always"
-            }
-        ],
-        "react/jsx-one-expression-per-line": [
-            "error",
-            {
-                "allow": "literal"
-            }
-        ],
-        "react/jsx-no-useless-fragment": [
-            "error",
-            {
-                "allowExpressions": true
-            }
-        ],
-        "react/jsx-max-depth": [
-            "error",
-            {
-                "max": 4
-            }
-        ],
-        "react/jsx-wrap-multilines": [
-            "error",
-            {
-                "declaration": "parens",
-                "assignment": "parens",
-                "return": "parens",
-                "arrow": "parens",
-                "condition": "parens",
-                "logical": "parens",
-                "prop": "ignore"
-            }
-        ],
-        "react-hooks/rules-of-hooks": "error",
-        "react-hooks/exhaustive-deps": "warn",
-        "react/prop-types": "off"
-    },
-    "overrides": [
-        {
-            "files": [
-                "**/tests/**/*.*.js",
-                "**/tests/**/*.js"
-            ],
-            "env": {
-                "jest": true
-            }
-        }
-    ]
+    "react/jsx-equals-spacing": "error",
+    "react/jsx-first-prop-new-line": "error",
+    "react/jsx-handler-names": "error",
+    "react/jsx-indent-props": ["error", 2],
+    "react/jsx-indent": ["error", 2],
+    "react/jsx-key": "error",
+    "react/jsx-max-props-per-line": [
+      "error",
+      {
+        "maximum": 3
+      }
+    ],
+    "react/jsx-no-literals": "off",
+    "react/jsx-no-target-blank": "error",
+    "react/jsx-pascal-case": "error",
+    "react/jsx-sort-props": "error",
+    "react/jsx-tag-spacing": [
+      "error",
+      {
+        "beforeSelfClosing": "always"
+      }
+    ],
+    "react/jsx-one-expression-per-line": [
+      "error",
+      {
+        "allow": "literal"
+      }
+    ],
+    "react/jsx-no-useless-fragment": [
+      "error",
+      {
+        "allowExpressions": true
+      }
+    ],
+    "react/jsx-max-depth": [
+      "error",
+      {
+        "max": 4
+      }
+    ],
+    "react/jsx-wrap-multilines": [
+      "error",
+      {
+        "declaration": "parens",
+        "assignment": "parens",
+        "return": "parens",
+        "arrow": "parens",
+        "condition": "parens",
+        "logical": "parens",
+        "prop": "ignore"
+      }
+    ],
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "react/prop-types": "off"
+  },
+  "overrides": [
+    {
+      "files": ["**/tests/**/*.*.js", "**/tests/**/*.js"],
+      "env": {
+        "jest": true
+      }
+    }
+  ]
 }
