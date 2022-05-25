@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
-export const useForm = (options) => {
-  const [data, setData] = useState((options?.initialValues || {}))
+export const useForm = ({ initialValues, validationSchema, onSubmit }) => {
+  const [data, setData] = useState(initialValues)
   const [errors, setErrors] = useState({})
 
   const handleChange = (key) => (event) => {
@@ -13,37 +13,33 @@ export const useForm = (options) => {
   }
   
   const handleBlur = (key) => ( event ) => {
-    const validations = options?.validationSchema
-    const isValid = RegExp(validations[key].regExp).test( event.target.value )
+    const valid = validationSchema[key](event.target.value)
     setErrors({
       ...errors,
-      [key]: !isValid,
+      [key]: valid,
     })
   }
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-    
-    const validations = options?.validationSchema
-    
-    if (validations) {
-      const newErrors = {}
-      for (const key in validations) {
-        let isValid = RegExp(validations[key].regExp).test( data[key] )
-        newErrors[key] = !isValid
-        console.log('hello',key, isValid)
-        if (!isValid) {
-          setErrors(newErrors)
-          console.log(errors)
+    let isValid = true
+    if (validationSchema) {
+      for (const key in validationSchema) {
+        let value = data[key]
+        let validation  = validationSchema[key](value)
+        if (validation.error) {
+          isValid = false  
+          setErrors({
+            ...errors,
+            [key]: validation ,
+          })
           return
         }
       }
     }
-
-    if (options?.onSubmit) {
-      options.onSubmit()
+    if (isValid) {
+      onSubmit()
     }
-    // setErrors({})
   }
 
   return {
