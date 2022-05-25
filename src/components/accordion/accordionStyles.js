@@ -1,7 +1,9 @@
 export const style = {
-  accordion: {
+  accordion:{
     borderRadius: '6px',
     mb: { md:'16px',sm:'8px' },
+  },
+  inactive: {
     boxShadow: 'none',
     '&:hover': {
       backgroundColor: 'primary.50',
@@ -19,15 +21,13 @@ export const style = {
   description: {
     fontSize: { md:'14px', sm:'8px' },
     lineHeight: { md:'24px', sm:'12px' },
-    color: 'white'
+    color: 'basic.white'
   },
   active: {
     backgroundColor: 'primary.800',
-    borderRadius: '6px',
     boxShadow: 'shadows.primary',
-    mb: { md:'16px',sm:'8px' },
     '& h6': {
-      color: 'white'
+      color: 'basic.white'
     }
   }
 }

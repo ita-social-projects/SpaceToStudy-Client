@@ -15,11 +15,8 @@ const GuestHomePage = () => {
   
   return (
     <Box>
-      
       <button onClick={ handleModal }>click</button>
-
       <AccordionWithImage items={ descriptionTimes }  />
-      
     </Box>
   )
 }

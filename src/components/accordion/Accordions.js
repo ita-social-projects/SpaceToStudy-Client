@@ -19,7 +19,7 @@ const Accordions = ({ items, onChange ,activeIndex,styles }) => {
             expanded={ activeIndex === index }
             key={ index }
             onChange={ ()=> onChange(index) }
-            sx={ activeIndex === index ? style.active : style.accordion }
+            sx={ [style.accordion, activeIndex === index ? style.active : style.inactive] }
           >
             <AccordionSummary>
               <Typography sx={ style.title } variant={ 'h6' }>
