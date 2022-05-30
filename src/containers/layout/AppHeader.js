@@ -31,7 +31,7 @@ const AppHeader = () => {
         <NavBar navigationItems={ Object.values(routes.guestNavBar) }>
           
           <IconButton onClick={ handleModal } size='large' sx={ { display: { md: 'none' } } }>
-            <LoginIcon />
+            <LoginIcon color='primary' />
           </IconButton>
 
           <Button

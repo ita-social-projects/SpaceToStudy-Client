@@ -74,11 +74,11 @@ const Navbar = ({ navigationItems, children }) => {
 
       <Box sx={ style.iconBox }>
         <IconButton size='large' sx={ { display: { xs: 'none', sm: 'inherit' } } }>
-          <LanguageIcon />
+          <LanguageIcon color='primary' />
         </IconButton>
         { children }
         <IconButton size='large' sx={ style.menuIcon }>
-          <MenuIcon />
+          <MenuIcon color='primary' />
         </IconButton>
       </Box>
     </Box>

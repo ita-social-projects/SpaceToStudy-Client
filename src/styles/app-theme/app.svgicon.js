@@ -2,9 +2,12 @@ import palette from './app.pallete.js'
 
 const svgicon = {
   styleOverrides: {
-    root: {
+    colorPrimary: {
       color: palette.primary[900],
     },
+    colorDisabled: {
+      color: palette.primary[100]
+    }
   },
 }
 
