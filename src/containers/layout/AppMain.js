@@ -1,19 +1,37 @@
-import { Route, Routes } from 'react-router-dom'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
-import { routes } from '~/constants/routes'
-import Example from '~/pages/home/Home'
-import GuestHomePage from '~/pages/guest-home-page/GuestHome'
-import NotFound from '~/pages/error/NotFound'
-
+import { setUser } from '~/redux/reducer'
+import { CircularProgress } from '@mui/material'
+import Student from './Student'
+import Guest from './Guest'
+import Mentor from './Mentor'
 
 const AppMain = () => {
-  return (
-    <Routes>
-      <Route element={ <GuestHomePage /> } path={ routes.home.route } />
-      <Route element={ <Example /> } name="home" path={ routes.about.route } />
-      <Route element={ <NotFound /> } path="*" />
-    </Routes>
-  )
+  const { loading, userRole } = useSelector((state) => state.appMain)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(setUser())
+  }, [dispatch])
+
+  if (loading) {
+    return (
+      <CircularProgress 
+        color={ 'basic' } 
+        size={ 70 } 
+        sx={ { position: 'fixed', left: '50%', top: '50%' } }
+      />)
+  }
+
+  switch (userRole) {
+  case 'student':
+    return <Student />
+  case 'mentor':
+    return <Mentor />
+  default:
+    return <Guest />
+  }
 }
 
 export default AppMain
