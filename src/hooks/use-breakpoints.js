@@ -1,20 +1,21 @@
 import { useTheme, useMediaQuery } from '@mui/material'
 
 const useBreakpoints = () => {
-  let size
   const theme = useTheme()
 
-  if (useMediaQuery(theme.breakpoints.up('md'))) {
-    size = 'md'
-  }
-  if (useMediaQuery(theme.breakpoints.between('sm', 'md'))) {
-    size = 'sm'
-  }
-  if (useMediaQuery(theme.breakpoints.between('xs', 'sm'))) {
-    size = 'xs'
+  const sizes = {
+    desktop: useMediaQuery(theme.breakpoints.up('md')),
+    tablet: useMediaQuery(theme.breakpoints.between('sm', 'md')),
+    mobile: useMediaQuery(theme.breakpoints.between('xs', 'sm'))
   }
 
-  return size
+  if (sizes.desktop) {
+    return 'desktop'
+  } else if (sizes.tablet) {
+    return 'tablet'
+  } else {
+    return 'mobile'
+  }
 }
 
 export default useBreakpoints

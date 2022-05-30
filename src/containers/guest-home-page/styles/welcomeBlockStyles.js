@@ -1,5 +1,5 @@
 import theme from '~/styles/app-theme/custom-mui.styles'
-import desktopBg from '~/assets/images/desktopBg.svg'
+import desktopBg from '~/assets/img/guest-home-page/desktopBg.svg'
 
 export const WelcomeBlockStyles = {
   container: {
@@ -7,6 +7,7 @@ export const WelcomeBlockStyles = {
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    marginBottom: '82px',
     padding: {
       md: '144px 10px 96px',
       xs: '75px 10px 80px'
@@ -29,13 +30,8 @@ export const WelcomeBlockStyles = {
     textAlign: 'center',
   },
   getStartBtn: {
-    display: 'block',
-    margin: '0px auto',
     padding: '16px 51px',
-    background: theme.palette.primary[900],
     boxShadow: theme.shadows.primary,
-    borderRadius: '4px',
-    color: theme.palette.white,
     textTransform: 'none'
   }
 }

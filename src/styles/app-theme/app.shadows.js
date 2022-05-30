@@ -4,4 +4,3 @@ const shadows ={
 }
 
 export default shadows
->>>>>>> d03f3b8 (Make changes according to suggestions for the PR)
