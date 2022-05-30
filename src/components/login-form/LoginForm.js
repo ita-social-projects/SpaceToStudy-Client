@@ -6,7 +6,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff'
 
 import style from './login-form.style'
 
-const LoginForm = ({ handleSubmit, handleChange, handleBlur, data, dirty, errors }) => {
+const LoginForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) => {
   const [showPassword, setShowPassword] = useState(false)
   const { t } = useTranslation()
 
@@ -26,9 +26,9 @@ const LoginForm = ({ handleSubmit, handleChange, handleBlur, data, dirty, errors
   return (
     <Box component='form' onSubmit={ handleSubmit }>
       <TextField
-        error={ errors?.email?.error }
+        error={ Boolean(errors.email) }
         fullWidth 
-        helperText={ t(errors?.email?.helperText) }
+        helperText={ t(errors.email) }
         label={ t( 'login.email' ) }
         onBlur={ handleBlur('email') }
         onChange={ handleChange('email') }
@@ -41,9 +41,9 @@ const LoginForm = ({ handleSubmit, handleChange, handleBlur, data, dirty, errors
       
       <TextField 
         InputProps={ passwordVisibility }
-        error={ errors?.password?.error } 
+        error={ Boolean(errors.password) } 
         fullWidth
-        helperText={ t(errors?.password?.helperText) }
+        helperText={ t(errors.password) }
         label={ t( 'login.password' ) }
         onBlur={ handleBlur('password') }
         onChange={ handleChange('password') }

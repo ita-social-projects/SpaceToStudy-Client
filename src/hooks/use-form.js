@@ -1,8 +1,8 @@
 import { useState } from 'react'
 
-export const useForm = ({ initialValues, validationSchema, onSubmit }) => {
+export const useForm = ({ initialValues, validations, onSubmit }) => {
   const [data, setData] = useState(initialValues)
-  const [dirty, setDirty] = useState(false)
+  const [isDirty, setDirty] = useState(false)
   const [errors, setErrors] = useState({})
 
   const handleChange = (key) => (event) => {
@@ -15,7 +15,7 @@ export const useForm = ({ initialValues, validationSchema, onSubmit }) => {
   }
   
   const handleBlur = (key) => ( event ) => {
-    const valid = validationSchema[key](event.target.value)
+    const valid = validations[key](event.target.value)
     setErrors({
       ...errors,
       [key]: valid,
@@ -25,11 +25,11 @@ export const useForm = ({ initialValues, validationSchema, onSubmit }) => {
   const handleSubmit = async (event) => {
     event.preventDefault()
     let isValid = true
-    if (validationSchema) {
-      for (const key in validationSchema) {
+    if (validations) {
+      for (const key in validations) {
         let value = data[key]
-        let validation  = validationSchema[key](value)
-        if (validation.error) {
+        let validation  = validations[key](value)
+        if (validation) {
           isValid = false  
           setErrors({
             ...errors,
@@ -46,7 +46,7 @@ export const useForm = ({ initialValues, validationSchema, onSubmit }) => {
 
   return {
     data,
-    dirty,
+    isDirty,
     errors,
     handleChange,
     handleBlur,

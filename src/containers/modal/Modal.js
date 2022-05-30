@@ -18,7 +18,7 @@ const Modal = ({ content, closeModal }) => {
 
   return (
     <Dialog
-      // fullScreen
+      // TODO: add fullScreen=true on mobile version using useLayoutEffect hook
       maxWidth="xl" onClose={ onClose }
       open
     >

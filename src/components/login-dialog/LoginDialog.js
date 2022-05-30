@@ -16,18 +16,18 @@ const LoginDialog = () => {
   const { setNeedConfirmation } = useConfirm()
   const { setPrompt } = usePrompt()
 
-  const { handleSubmit, handleChange, handleBlur, data, dirty, errors } = useForm(
+  const { handleSubmit, handleChange, handleBlur, data, isDirty, errors } = useForm(
     {
-      onSubmit: () => console.log({ data, dirty }),
+      onSubmit: () => console.log({ data, isDirty }),
       initialValues: { email: '', password: '' },
-      validationSchema: { email, password }
+      validations: { email, password }
     }
   )
 
   useEffect(() => {
-    setNeedConfirmation(dirty)
-    setPrompt(dirty)
-  }, [dirty, setNeedConfirmation, setPrompt])
+    setNeedConfirmation(isDirty)
+    setPrompt(isDirty)
+  }, [isDirty, setNeedConfirmation, setPrompt])
 
   return (
     <Box sx={ style.root }>
@@ -42,8 +42,8 @@ const LoginDialog = () => {
         </Typography>
         
         <LoginForm
-          data={ data } dirty={ dirty } errors={ errors }
-          handleBlur={ handleBlur } handleChange={ handleChange } handleSubmit={ handleSubmit }
+          data={ data } errors={ errors } handleBlur={ handleBlur }
+          handleChange={ handleChange } handleSubmit={ handleSubmit }
         />
 
         <GoogleLogin />
