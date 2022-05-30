@@ -6,7 +6,8 @@
     "passwordError": "password has a minimum of 6 characters, at least 1 uppercase letter, 1 lowercase letter, and 1 number with no spaces",
     "rememberMe": "Remember me",
     "forgotPassword": "Forgot password?",
-    "loginButton": "LOGIN",
+    "loginButton": "Login",
+    "googleButton": "Login with Google",
     "continue": "or continue",
     "haveAccount": "Don`t have an account yet?",
     "joinUs": "Join us for free",
@@ -15,5 +16,11 @@
         "emailValid": "Enter valid email example@mail.com",
         "passwordLength": "Password has a minimum of 6 characters adm maximum 30",
         "passwordValid": "Password has at least 1 uppercase letter, 1 lowercase letter, and 1 number with no spaces"
-    }
+    },
+    "enterEmail": "Enter the email address associated with your account and we`ll send you a link to reset your password.",
+    "sendPassword": "Send me password reset link",
+    "backToLogin": "Back to Log in",
+    "passwordReset": "Password Reset",
+    "weSentEmail": "We`ve sent you an email with a password reset link to:",
+    "emailArrive": "If the email didn't arrive, give it a few minutes and check back. If it isn’t still there, check your spam folder."
 }

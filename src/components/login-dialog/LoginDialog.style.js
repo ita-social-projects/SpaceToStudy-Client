@@ -1,19 +1,39 @@
 const style = {
-  form: {
+  root: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  img: {
+    overflow:'auto',
+    maxWidth: '593px',
+    display: { xs: 'none', sm: 'none', md: 'flex' }
   },
   h2: { 
     marginBottom: '32px',
     fontSize: '40px', 
     lineHeight: '48px' 
   },
+  form: { 
+    maxWidth: '343px',
+    padding: { sm: '50px 80px', md: '0' }
+  },
+  input: {
+    maxWidth: '343px'
+  },
   checkboxContainer: {
     margin: '25px 0',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center'
+  },
+  checkboxLabel: {
+    	'& .MuiFormControlLabel-label': {
+      typography: 'subtitle2'
+    }
+  },
+  loginButton: {
+    padding: '18px 149px'
   },
   linesBox: {
     margin: '23px 0',
@@ -29,7 +49,7 @@ const style = {
   },
   google: {
     marginBottom: '16px',
-    width: '100%'   
+    padding: '15px 77px'   
   },
   underlineText: {
     fontWeight: '500',

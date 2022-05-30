@@ -20,6 +20,12 @@ const button = {
     contained: {
       backgroundColor: palette.primary[900]
     },
+    outlined: {
+      color: palette.primary[900]
+    },
+    text: {
+      color: palette.primary[900]
+    },
     tonal: {
       backgroundColor: palette.primary[50],
     }

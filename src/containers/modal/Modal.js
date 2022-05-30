@@ -17,7 +17,11 @@ const Modal = ({ content, closeModal }) => {
   }
 
   return (
-    <Dialog maxWidth="xl" onClose={ onClose } open>
+    <Dialog
+      // fullScreen
+      maxWidth="xl" onClose={ onClose }
+      open
+    >
       <Box sx={ { p: 2 } }>
         <IconButton onClick={ onClose } sx={ { float: 'right' } }>
           <CloseIcon />

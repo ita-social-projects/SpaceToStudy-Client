@@ -77,14 +77,14 @@ const appTypography = {
     fontSize: '16px',
     lineHeight: '24px',
     letterSpacing: '0.5px',
-    textTransform: 'capitalize'
+    textTransform: 'initial'
   },
   button1: {
     fontWeight: 500,
     fontSize: '14px',
     lineHeight: '20px',
     letterSpacing: '0.5px',
-    textTransform: 'capitalize'
+    textTransform: 'initial'
   }
 }
 

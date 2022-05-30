@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 export const useForm = ({ initialValues, validationSchema, onSubmit }) => {
   const [data, setData] = useState(initialValues)
+  const [dirty, setDirty] = useState(false)
   const [errors, setErrors] = useState({})
 
   const handleChange = (key) => (event) => {
@@ -10,6 +11,7 @@ export const useForm = ({ initialValues, validationSchema, onSubmit }) => {
       ...data,
       [key]: value
     })
+    setDirty(true)
   }
   
   const handleBlur = (key) => ( event ) => {
@@ -44,6 +46,7 @@ export const useForm = ({ initialValues, validationSchema, onSubmit }) => {
 
   return {
     data,
+    dirty,
     errors,
     handleChange,
     handleBlur,
