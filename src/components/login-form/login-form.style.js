@@ -13,7 +13,7 @@ const style = {
     alignItems: 'center'
   },
   checkboxLabel: {
-    	'& .MuiFormControlLabel-label': {
+    '& .MuiFormControlLabel-label': {
       typography: 'subtitle2'
     }
   },
