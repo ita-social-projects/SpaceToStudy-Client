@@ -7,20 +7,15 @@ export const WelcomeBlockStyles = {
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    minHeight: {
-      md: '650px',
-      sm: '350px',
-      xs: '404px'
+    padding: {
+      md: '144px 10px 96px',
+      xs: '75px 10px 80px'
     },
-    px: '10px',
     backgroundImage: `url(${desktopBg})`,
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat'
   },
   title: {
-    // width: '100%',
-    // maxWidth: '879px',
-    // overflow: 'auto',
     marginBottom: '24px',
   },
   subtitle: {

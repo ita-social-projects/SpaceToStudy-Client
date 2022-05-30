@@ -12,8 +12,6 @@ const WelcomeBlock = () => {
   const size = useBreakpoints()
 
   const images = {
-    xl: titleMd,
-    lg: titleMd,
     md: titleMd,
     sm: titleSm,
     xs: titleXs

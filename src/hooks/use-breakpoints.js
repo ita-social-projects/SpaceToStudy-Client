@@ -4,19 +4,13 @@ const useBreakpoints = () => {
   let size
   const theme = useTheme()
 
-  if (useMediaQuery(theme.breakpoints.only('xl'))) {
-    size = 'xl'
-  }
-  if (useMediaQuery(theme.breakpoints.only('lg'))) {
-    size = 'lg'
-  }
-  if (useMediaQuery(theme.breakpoints.only('md'))) {
+  if (useMediaQuery(theme.breakpoints.up('md'))) {
     size = 'md'
   }
-  if (useMediaQuery(theme.breakpoints.only('sm'))) {
+  if (useMediaQuery(theme.breakpoints.between('sm', 'md'))) {
     size = 'sm'
   }
-  if (useMediaQuery(theme.breakpoints.only('xs'))) {
+  if (useMediaQuery(theme.breakpoints.between('xs', 'sm'))) {
     size = 'xs'
   }
 
