@@ -37,6 +37,7 @@ const LoginDialog = () => {
       />
       
       <Box sx={ style.form }>
+        <Box component='hr' sx={ style.hr } />
         <Typography sx={ style.h2 } variant="h2">
           { t( 'login.head' ) }
         </Typography>

@@ -13,7 +13,7 @@ const style = {
   },
   google: {
     marginBottom: '16px',
-    padding: '15px 78px'   
+    padding: { xs: '15px 63.5px',sm:'15px 78px'  } 
   },
   underlineText: {
     fontWeight: '500',

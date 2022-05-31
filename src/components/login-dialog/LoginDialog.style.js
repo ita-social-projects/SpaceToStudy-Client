@@ -1,5 +1,7 @@
 const style = {
   root: {
+    maxWidth: { xs: '315px', sm: 'lg' },
+    mt: { sx: '200px', sm: 0 },
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -9,13 +11,18 @@ const style = {
     maxWidth: '593px',
     display: { xs: 'none', sm: 'none', md: 'flex' }
   },
+  hr: {
+    mt: 7,
+    mb: 5,
+    display: { xs: 'flex', sm: 'none' }
+  },
   h2: { 
     marginBottom: '32px',
     fontSize: '40px', 
     lineHeight: '48px' 
   },
   form: { 
-    maxWidth: '343px',
+    maxWidth: { xs: '320px', sm: '343px' },
     padding: { sm: '50px 80px', md: '0' }
   }
 }

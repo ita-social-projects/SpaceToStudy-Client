@@ -1,6 +1,6 @@
 const style = {
   form: { 
-    maxWidth: '343px',
+    maxWidth: { xs: '315px', sm: '343' },
     padding: { sm: '50px 80px', md: '0' }
   },
   input: {
@@ -18,7 +18,7 @@ const style = {
     }
   },
   loginButton: {
-    padding: '18px 149px'
+    padding: { xs:'18px 134px' , sm:'18px 149px' }
   },
   underlineText: {
     fontWeight: '500',
