@@ -16,7 +16,7 @@ export const mainSlice = createSlice({
     setUser(state) {
       const tokken = localStorage.getItem('accessToken')
 
-      if(tokken){
+      if(tokken) {
         const userData = parseJwt(tokken)
         state.userId = userData.id
         state.userRole = userData.role
