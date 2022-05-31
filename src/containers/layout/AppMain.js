@@ -1,11 +1,11 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-
 import { setUser } from '~/redux/reducer'
-import { CircularProgress } from '@mui/material'
+
 import Student from './Student'
 import Guest from './Guest'
 import Mentor from './Mentor'
+import Loader from '~/components/loader/Loader'
 
 const AppMain = () => {
   const { loading, userRole } = useSelector((state) => state.appMain)
@@ -16,13 +16,8 @@ const AppMain = () => {
   }, [dispatch])
 
   if (loading) {
-    return (
-      <CircularProgress 
-        color={ 'basic' } 
-        size={ 70 } 
-        sx={ { position: 'fixed', left: '50%', top: '50%' } }
-      />)
-  }
+    return <Loader size={ 70 } />
+  } 
 
   switch (userRole) {
   case 'student':
