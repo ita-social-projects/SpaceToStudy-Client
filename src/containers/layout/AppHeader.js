@@ -7,7 +7,7 @@ import LoginIcon from '@mui/icons-material/Login'
 
 import { ModalContext } from '~/context/modal-context'
 import NavBar from '~/containers/navbar/NavBar'
-import LoginDialog from '~/components/login-dialog/LoginDialog'
+import LoginDialog from '~/containers/login-dialog/LoginDialog'
 
 const style = {
   loginButton: {
@@ -26,8 +26,8 @@ const AppHeader = () => {
 
   return (
     <>
-      <AppBar color='common'>
-
+      <AppBar color='common' sx={ { boxShadow: 'primary' } }>
+      
         <NavBar navigationItems={ Object.values(routes.guestNavBar) }>
           
           <IconButton onClick={ handleModal } size='large' sx={ { display: { md: 'none' } } }>

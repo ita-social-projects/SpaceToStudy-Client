@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { Box, Typography, Button } from '@mui/material'
 
-import style from './google-login.style'
+import style from '~/containers/google-login/google-login.style'
 import google from '~/assets/img/login-dialog/google.svg'
 
 
