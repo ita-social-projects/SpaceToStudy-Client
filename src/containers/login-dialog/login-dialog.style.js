@@ -9,6 +9,7 @@ const style = {
   img: {
     overflow:'auto',
     maxWidth: '593px',
+    minWidth: '420px',
     display: { xs: 'none', sm: 'none', md: 'flex' }
   },
   hr: {

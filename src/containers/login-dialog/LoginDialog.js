@@ -31,10 +31,13 @@ const LoginDialog = () => {
 
   return (
     <Box sx={ style.root }>
-      <Box
-        alt="login" component='img' src={ login }
-        sx={ style.img }
-      />
+      
+      <Box sx={ style.img }>
+        <Box
+          alt="login" component='img' src={ login }
+          sx={ style.img }
+        />
+      </Box>
       
       <Box sx={ style.form }>
         <Box component='hr' sx={ style.hr } />
