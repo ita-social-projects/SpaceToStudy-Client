@@ -2,9 +2,9 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setUser } from '~/redux/reducer'
 
-import Student from './Student'
-import Guest from './Guest'
-import Mentor from './Mentor'
+import StudentLayout from './StudentLayout'
+import GuestLayout from './GuestLayout'
+import MentorLayout from './MentorLayout'
 import Loader from '~/components/loader/Loader'
 
 const AppMain = () => {
@@ -21,11 +21,11 @@ const AppMain = () => {
 
   switch (userRole) {
   case 'student':
-    return <Student />
+    return <StudentLayout />
   case 'mentor':
-    return <Mentor />
+    return <MentorLayout />
   default:
-    return <Guest />
+    return <GuestLayout />
   }
 }
 

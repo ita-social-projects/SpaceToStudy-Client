@@ -6,7 +6,7 @@ import NotFound from '~/pages/error/NotFound'
 import MentorHome from '~/pages/mentor-home/MentorHome'
 
 
-const Mentor = () => {
+const MentorLayout = () => {
   return (
     <Routes>
       <Route element={ <MentorHome /> } path={ routes.home.route } />
@@ -16,4 +16,4 @@ const Mentor = () => {
   )
 }
 
-export default Mentor
+export default MentorLayout
