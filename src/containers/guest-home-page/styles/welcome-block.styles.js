@@ -1,19 +1,21 @@
 import theme from '~/styles/app-theme/custom-mui.styles'
-import desktopBg from '~/assets/img/guest-home-page/desktopBg.svg'
+import welcomeBg from '~/assets/img/guest-home-page/welcomeBg.svg'
 
-export const WelcomeBlockStyles = {
+export const welcomeBlockStyles = {
   container: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: '82px',
-    padding: {
-      md: '144px 10px 96px',
-      xs: '75px 10px 80px'
+    marginBottom: '80px',
+    minHeight: {
+      md: '570px',
+      sm: '319px',
+      xs: '404px'
     },
-    backgroundImage: `url(${desktopBg})`,
+    backgroundImage: `url(${welcomeBg}), radial-gradient(ellipse closest-side, rgba(192, 229, 228, 0.4), transparent)`,
     backgroundPosition: 'center',
+    backgroundSize: 'contain',
     backgroundRepeat: 'no-repeat'
   },
   title: {
