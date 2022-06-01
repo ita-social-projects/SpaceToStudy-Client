@@ -13,7 +13,7 @@
     "joinUs": "Join us for free",
     "errorMessages": {
         "emailValid": "Enter valid email example@mail.com",
-        "passwordLength": "Password has a minimum of 6 characters adm maximum 30",
+        "passwordLength": "Password has minimum of 6 characters and maximum 30",
         "passwordValid": "Password has at least 1 uppercase letter, 1 lowercase letter, and 1 number with no spaces"
     }
 }
