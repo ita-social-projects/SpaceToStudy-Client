@@ -6,7 +6,7 @@ import useConfirm from '~/hooks/use-confirm'
 
 const style = {
   box: {
-    margin: { xs: '10px auto', sm: 0 },
+    margin: { xs: '1vh auto', sm: 0 },
     padding: { xs: 0, sm: 2 }
   },
   icon: { float: 'right', }
