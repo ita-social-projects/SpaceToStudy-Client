@@ -52,7 +52,7 @@ const Navbar = ({ navigationItems, children }) => {
       <ListItem key={ item.label } sx={ style.navItem }>
         <Typography
           component={ Link } 
-          sx={ { textDecoration: 'none', opacity: '1' } } to={ item.route } variant="subtitle2"
+          sx={ { color: 'primary.900', textDecoration: 'none', opacity: '1' } } to={ item.route } variant="subtitle2"
         >
           { t(`header.guestNavBar.${ item.label }`) }
         </Typography>
