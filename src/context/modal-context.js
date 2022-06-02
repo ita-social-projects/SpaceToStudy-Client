@@ -1,5 +1,5 @@
 import { createContext, useCallback, useState } from 'react'
-import Modal from '~/containers/modal/Modal'
+import Modal from '~/components/modal/Modal'
 
 const ModalContext = createContext()
 

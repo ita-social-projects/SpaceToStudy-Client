@@ -21,6 +21,7 @@ const Modal = ({ content, closeModal }) => {
       message: 'questions.confirmation',
       title: 'titles.confirmTitle' 
     })
+    
     if (confirmed) {
       closeModal()
     }

@@ -12,3 +12,8 @@ jest.mock('react-i18next', () => ({
     }
   },
 }))
+
+jest.mock('~/hooks/use-confirm', () => {
+  return () => ({
+    checkConfirmation: () => true
+  })})
