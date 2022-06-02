@@ -13,8 +13,8 @@ const style = {
     display: { xs: 'none', sm: 'none', md: 'flex' }
   },
   hr: {
-    mt: 7,
-    mb: 5,
+    mt: '6vh',
+    mb: '5vh',
     display: { xs: 'flex', sm: 'none' }
   },
   h2: { 
