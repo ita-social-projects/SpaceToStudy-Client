@@ -1,39 +1,14 @@
-import * as React from 'react'
+import { useState } from 'react'
 import Box from '@mui/material/Box'
 import { useTranslation } from 'react-i18next'
 import MobileStepper from '@mui/material/MobileStepper'
 import Typography from '@mui/material/Typography'
 import SwipeableViews from 'react-swipeable-views'
-
-const style = {
-  feature: {
-    display: { xs: 'flex', sm: 'none' },
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'column'
-  },
-  image: {
-    maxWidth: '343px',
-    maxHeight: '216px',
-    pb: '16px'
-  },
-  text: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    justifyContent: 'space-around',
-    width: '290px',
-    height: '144px',
-    backgroundColor: 'primary.900',
-    boxShadow: 'shadows.primary',
-    borderRadius: '6px',
-    p: '16px'
-  }
-}
+import { style } from './carousel.styles'
 
 const Carousel = ({ items }) => {
   const { t } = useTranslation()
-  const [activeStep, setActiveStep] = React.useState(0)
+  const [activeStep, setActiveStep] = useState(0)
   const maxSteps = items.length
 
   const handleStepChange = (step) => {
