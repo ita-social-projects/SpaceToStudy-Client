@@ -7,7 +7,7 @@ import LoginIcon from '@mui/icons-material/Login'
 
 import { ModalContext } from '~/context/modal-context'
 import NavBar from '~/containers/navbar/NavBar'
-import LoginDialog from '~/containers/login-dialog/LoginDialog'
+import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
 
 const style = {
   loginButton: {

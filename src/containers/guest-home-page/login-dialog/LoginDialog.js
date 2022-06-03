@@ -2,14 +2,14 @@ import { useEffect } from 'react'
 import { Box, Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
-import GoogleLogin from '~/containers/google-login/GoogleLogin'
-import LoginForm from '~/containers/login-form/LoginForm'
+import GoogleLogin from '~/containers/guest-home-page/google-login/GoogleLogin'
+import LoginForm from '~/containers/guest-home-page/login-form/LoginForm'
 import useForm from '~/hooks/use-form'
 import useConfirm from '~/hooks/use-confirm'
 import usePrompt from '~/hooks/use-prompt'
 import { email, password } from '~/constants/validation/login'
 import login from '~/assets/img/login-dialog/login.svg'
-import style from '~/containers/login-dialog/login-dialog.style'
+import style from '~/containers/guest-home-page/login-dialog/login-dialog.style'
 
 const LoginDialog = () => {
   const { t } = useTranslation()
