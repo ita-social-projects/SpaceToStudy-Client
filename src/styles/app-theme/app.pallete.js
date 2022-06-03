@@ -29,6 +29,9 @@ const palette = {
     700: '#388D3C',
     800: '#2C7C32',
     900: '#1E5F23'
+  },
+  text: {
+    primary: blueGrey[900],
   }
 }
 
