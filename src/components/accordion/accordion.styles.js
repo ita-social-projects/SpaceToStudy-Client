@@ -1,7 +1,7 @@
 export const style = {
-  accordion:{
+  accordion: {
     borderRadius: '6px',
-    mb: { md:'16px',sm:'8px' },
+    mb: { md: '16px', sm: '8px' }
   },
   inactive: {
     boxShadow: 'none',
@@ -14,13 +14,13 @@ export const style = {
     }
   },
   title: {
-    fontSize: { md:'20px', sm:'13px' },
-    lineHeight: { md:'28px', sm:'18px' },
+    fontSize: { md: '20px', sm: '13px' },
+    lineHeight: { md: '28px', sm: '18px' },
     color: 'primary.900'
   },
   description: {
-    fontSize: { md:'14px', sm:'8px' },
-    lineHeight: { md:'24px', sm:'12px' },
+    fontSize: { md: '14px', sm: '8px' },
+    lineHeight: { md: '24px', sm: '12px' },
     color: 'basic.white'
   },
   active: {

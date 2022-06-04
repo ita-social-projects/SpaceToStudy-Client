@@ -27,9 +27,8 @@ const CarouselWithImage = ({ items }) => {
         </Typography>
       </Box>
       <MobileStepper
-        activeStep={ activeStep } position='static' steps={ maxSteps }
-        sx={ { pt:'16px' } }
-        variant="dots"
+        activeStep={ activeStep } position="static" steps={ maxSteps }
+        sx={ { pt: '16px' } } variant="dots"
       />
     </Box>
   ))
