@@ -4,7 +4,7 @@ import AccordionDetails from '@mui/material/AccordionDetails'
 import { Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import { Box } from '@mui/system'
-import { style } from './accordionStyles'
+import { style } from './accordion.styles'
 
 const Accordions = ({ items, onChange ,activeIndex,styles }) => {
 
