@@ -2,16 +2,16 @@ import { render, screen, fireEvent } from '@testing-library/react'
 
 import ConfirmDialog from '~/components/confirm-dialog/ConfirmDialog'
 
-const mockConfirm = jest.fn()
-const mockDismiss = jest.fn()
+const confirm = jest.fn()
+const dismiss = jest.fn()
 
 describe('Confirm dialog test', () => {
   const props = { 
     title: 'title',
     message: 'message',
     open: true,
-    onConfirm: mockConfirm,
-    onDismiss: mockDismiss 
+    onConfirm: confirm,
+    onDismiss: dismiss 
   }
 
   beforeEach(() => {
@@ -19,12 +19,12 @@ describe('Confirm dialog test', () => {
   })
 
   it('should have title text', () => {
-    const title = screen.getByText('title')
+    const title = screen.getByText(props.title)
 
     expect(title).toBeInTheDocument()
   })
   it('should have message text', () => {
-    const message = screen.getByText('message')
+    const message = screen.getByText(props.message)
 
     expect(message).toBeInTheDocument()
   })
@@ -32,12 +32,12 @@ describe('Confirm dialog test', () => {
     const confirmButton = screen.getByText('common.yes')
     fireEvent.click(confirmButton)
 
-    expect(mockConfirm).toHaveBeenCalled()
+    expect(confirm).toHaveBeenCalled()
   })
   it('should dismiss', () => {
     const dismissButton = screen.getByText('common.no')
     fireEvent.click(dismissButton)
 
-    expect(mockDismiss).toHaveBeenCalled()
+    expect(dismiss).toHaveBeenCalled()
   })
 })

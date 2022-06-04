@@ -1,10 +1,10 @@
 import { screen } from '@testing-library/react'
 import AppHeader from '~/containers/layout/AppHeader'
-import { renderWithRouter } from '~tests/test-utils'
+import { renderWithRouterAndTheme } from '~tests/test-utils'
 
 describe('AppHeader layout component test', () => {
   it('should have button with about text', () => {
-    renderWithRouter(
+    renderWithRouterAndTheme(
       <AppHeader />
     )
 

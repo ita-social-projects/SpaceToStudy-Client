@@ -6,7 +6,6 @@ import GoogleLogin from '~/containers/guest-home-page/google-login/GoogleLogin'
 import LoginForm from '~/containers/guest-home-page/login-form/LoginForm'
 import useForm from '~/hooks/use-form'
 import useConfirm from '~/hooks/use-confirm'
-import usePrompt from '~/hooks/use-prompt'
 import { email, password } from '~/constants/validation/login'
 import login from '~/assets/img/login-dialog/login.svg'
 import style from '~/containers/guest-home-page/login-dialog/login-dialog.style'
@@ -14,7 +13,6 @@ import style from '~/containers/guest-home-page/login-dialog/login-dialog.style'
 const LoginDialog = () => {
   const { t } = useTranslation()
   const { setNeedConfirmation } = useConfirm()
-  const { setPrompt } = usePrompt()
 
   const { handleSubmit, handleChange, handleBlur, data, isDirty, errors } = useForm(
     {
@@ -26,8 +24,7 @@ const LoginDialog = () => {
 
   useEffect(() => {
     setNeedConfirmation(isDirty)
-    setPrompt(isDirty)
-  }, [isDirty, setNeedConfirmation, setPrompt])
+  }, [isDirty, setNeedConfirmation])
 
   return (
     <Box sx={ style.root }>
