@@ -1,7 +1,6 @@
 import Accordions from '../accordion/Accordions.js'
 import { Box } from '@mui/system'
 import { useState } from 'react'
-import Carousel from '../carousel/Carousel'
 
 const style = {
   feature: {
@@ -16,7 +15,6 @@ const style = {
     maxWidth: '744px',
     overflow: 'auto',
     mr: '24px',
-    display: { xs: 'none', sm: 'inline' }
   }
 }
 
@@ -30,9 +28,8 @@ const AccordionWithImage = ({ items }) => {
         activeIndex={ activeItemId }
         items={ items }
         onChange={ (id) => setActiveItemId(id) }
-        styles={ { maxWidth: { md: '360px', sm: '229px' }, display: { xs: 'none', sm: 'inline' } } }
+        styles={ { maxWidth: { md: '360px', sm: '229px' } } }
       />
-      <Carousel items={ items } />
     </Box>
   )
 }

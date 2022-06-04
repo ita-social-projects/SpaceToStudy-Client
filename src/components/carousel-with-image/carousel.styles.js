@@ -1,6 +1,6 @@
 export const style = {
   feature: {
-    display: { xs: 'flex', sm: 'none' },
+    display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column'

@@ -15,8 +15,8 @@ const Carousel = ({ items }) => {
     setActiveStep(step)
   }
 
-  const carouselWrapper = items.map((item, key) => (
-    <Box key={ key } sx={ style.feature }>
+  const carouselWrapper = items.map((item, index) => (
+    <Box key={ index } sx={ style.feature }>
       <Box component="img" src={ item.image } sx={ style.image } />
       <Box sx={ style.text }>
         <Typography sx={ { color: 'basic.white' } } variant={ 'h6' }>
@@ -27,7 +27,8 @@ const Carousel = ({ items }) => {
         </Typography>
       </Box>
       <MobileStepper
-        activeStep={ activeStep } position="static" steps={ maxSteps }
+        activeStep={ activeStep } position='static' steps={ maxSteps }
+        sx={ { pt:'16px' } }
         variant="dots"
       />
     </Box>
