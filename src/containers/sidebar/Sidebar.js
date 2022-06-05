@@ -49,7 +49,7 @@ const Sidebar = ({ isOpen, setIsOpen, navigationItems }) => {
       open={ isOpen }
     >
       <IconButton onClick={ closeSidebar } sx={ style.closeIcon } >
-        <CloseIcon />
+        <CloseIcon color='primary' />
       </IconButton>
       <Box role='presentation' textAlign='start' width='311px'>
         <List sx={ style.list }>
