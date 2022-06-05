@@ -1,24 +1,7 @@
 import { Box, Drawer, Typography, IconButton, List, ListItem, Link } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import { useTranslation } from 'react-i18next'
-
-const style = {
-  closeIcon: {
-    display: 'flex',
-    justifyContent: 'end',
-    margin: '10px 10px 10px 260px'
-  },
-  list: {
-    p: 0
-  },
-  listItem: {
-    // display: 'inline-block',
-    padding: '10px 8px',
-    fontSize: '18px',
-    color: 'primary.900',
-    textDecoration: 'none'
-  }
-}
+import style from '~/containers/sidebar/sidebar.style'
 
 const Sidebar = ({ isOpen, setIsOpen, navigationItems }) => {
   const { t } = useTranslation()
@@ -35,8 +18,7 @@ const Sidebar = ({ isOpen, setIsOpen, navigationItems }) => {
           onClick={ closeSidebar }
           sx={ style.listItem }
           variant="subtitle1"
-        >
-            
+        >            
           { t(`header.guestNavBar.${ item.label }`) }
         </Typography>
       </ListItem>)
@@ -51,7 +33,7 @@ const Sidebar = ({ isOpen, setIsOpen, navigationItems }) => {
       <IconButton onClick={ closeSidebar } sx={ style.closeIcon } >
         <CloseIcon color='primary' />
       </IconButton>
-      <Box role='presentation' textAlign='start' width='311px'>
+      <Box role='presentation'>
         <List sx={ style.list }>
           { navigationList }
         </List>

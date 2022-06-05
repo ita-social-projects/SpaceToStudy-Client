@@ -12,7 +12,7 @@ const style = {
     display: { xs: 'none', md: 'flex' },
     alignItems: 'center',
   },
-  navListText: { 
+  navItemText: { 
     color: 'primary.900',
     textDecoration: 'none',
   },
