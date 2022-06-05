@@ -8,42 +8,8 @@ import Logo from '~/containers/logo/Logo'
 import Sidebar from '~/containers/sidebar/Sidebar'
 import LanguageIcon from '@mui/icons-material/Language'
 import MenuIcon from '@mui/icons-material/Menu'
-
+import style from '~/containers/navbar/navbar.style'
 import PropTypes from 'prop-types'
-
-const style = {
-  header: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    padding: '0px',
-    margin: { xs: '0', xl: 'auto' }, 
-    maxWidth: 'xl',
-    width: { xl: '100%' },
-  },
-  navList: {
-    display: { xs: 'none', md: 'flex' },
-    alignItems: 'center',
-  },
-  navItem: {
-    paddingLeft: '0',
-    width: 'auto',
-    '&::after': {
-      content: '"/"',
-      padding: '0 0 3px 20px',
-    },
-    '&:last-child::after': {
-      content: '""'
-    },
-  },
-  iconBox: {
-    display: 'flex',
-    alignItems: 'center',
-  },
-  menuIcon: {
-    display: { md: 'none' },
-    marginRight: '11px',
-  }
-}
 
 const Navbar = ({ navigationItems, children }) => {
 
@@ -52,15 +18,14 @@ const Navbar = ({ navigationItems, children }) => {
 
   const openSidebar = () => {
     setIsOpen(true)
-    console.log(isOpen)
   }
-  
+
   const navigationList = navigationItems.map(item => {
     return (
       <ListItem key={ item.label } sx={ style.navItem }>
         <Typography
           component='a'
-          href={ item.route } sx={ { color: 'primary.900', textDecoration: 'none', opacity: '1' } } variant="subtitle2"
+          href={ item.route } sx={ style.navListText } variant="subtitle2"
         >
           { t(`header.guestNavBar.${ item.label }`) }
         </Typography>
@@ -70,7 +35,7 @@ const Navbar = ({ navigationItems, children }) => {
   return (
     <Box sx={ style.header }>
       <Button
-        component={ Link } size='small' sx={ { m: { xs: '10px', sm: '18px', md: '22px 24px' } } }
+        component={ Link } size='small' sx={ style.logoButton }
         to={ routes.home.route }
       >
         <Logo />
@@ -81,7 +46,7 @@ const Navbar = ({ navigationItems, children }) => {
       </List>
 
       <Box sx={ style.iconBox }>
-        <IconButton size='large' sx={ { display: { xs: 'none', sm: 'inherit' } } }>
+        <IconButton size='large' sx={ style.langIcon }>
           <LanguageIcon color='primary' />
         </IconButton>
         { children }
