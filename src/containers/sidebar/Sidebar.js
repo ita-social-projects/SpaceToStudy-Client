@@ -1,4 +1,4 @@
-import { Box, Drawer, Typography, IconButton, List, ListItem, Link } from '@mui/material'
+import { Drawer, Typography, IconButton, List, ListItem, Link } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import { useTranslation } from 'react-i18next'
 import style from '~/containers/sidebar/sidebar.style'
@@ -33,11 +33,10 @@ const Sidebar = ({ isOpen, setIsOpen, navigationItems }) => {
       <IconButton onClick={ closeSidebar } sx={ style.closeIcon } >
         <CloseIcon color='primary' />
       </IconButton>
-      <Box role='presentation'>
-        <List sx={ style.list }>
-          { navigationList }
-        </List>
-      </Box>
+
+      <List sx={ style.list }>
+        { navigationList }
+      </List>
     </Drawer>
   )
 }

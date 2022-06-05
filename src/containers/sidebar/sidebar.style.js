@@ -2,7 +2,7 @@ const style = {
   closeIcon: {
     display: 'flex',
     justifyContent: 'end',
-    margin: '10px 10px 10px 260px'
+    margin: '10px 10px 10px 261px'
   },
   list: { p: 0 },
   listItem: {
