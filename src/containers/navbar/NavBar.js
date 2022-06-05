@@ -1,9 +1,11 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { routes } from '~/constants/routes'
 import { useTranslation } from 'react-i18next'
 import { Typography, Box, Button, IconButton, List, ListItem  } from '@mui/material'
 
 import Logo from '~/containers/logo/Logo'
+import Sidebar from '~/containers/sidebar/Sidebar'
 import LanguageIcon from '@mui/icons-material/Language'
 import MenuIcon from '@mui/icons-material/Menu'
 
@@ -46,13 +48,19 @@ const style = {
 const Navbar = ({ navigationItems, children }) => {
 
   const { t } = useTranslation()
+  const [isOpen, setIsOpen] = useState(false)
+
+  const openSidebar = () => {
+    setIsOpen(true)
+    console.log(isOpen)
+  }
   
   const navigationList = navigationItems.map(item => {
     return (
       <ListItem key={ item.label } sx={ style.navItem }>
         <Typography
-          component={ Link } 
-          sx={ { color: 'primary.900', textDecoration: 'none', opacity: '1' } } to={ item.route } variant="subtitle2"
+          component='a'
+          href={ item.route } sx={ { color: 'primary.900', textDecoration: 'none', opacity: '1' } } variant="subtitle2"
         >
           { t(`header.guestNavBar.${ item.label }`) }
         </Typography>
@@ -77,10 +85,11 @@ const Navbar = ({ navigationItems, children }) => {
           <LanguageIcon color='primary' />
         </IconButton>
         { children }
-        <IconButton size='large' sx={ style.menuIcon }>
+        <IconButton onClick={ openSidebar } size='large' sx={ style.menuIcon }>
           <MenuIcon color='primary' />
         </IconButton>
       </Box>
+      <Sidebar isOpen={ isOpen } navigationItems={ navigationItems } setIsOpen={ setIsOpen } />
     </Box>
   )
 }
