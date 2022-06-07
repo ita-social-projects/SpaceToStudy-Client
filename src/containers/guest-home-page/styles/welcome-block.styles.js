@@ -1,5 +1,7 @@
 import theme from '~/styles/app-theme/custom-mui.styles'
-import welcomeBg from '~/assets/img/guest-home-page/welcomeBg.svg'
+import welcomeBgMd from '~/assets/img/guest-home-page/welcomeBgMd.svg'
+import welcomeBgSm from '~/assets/img/guest-home-page/welcomeBgSm.svg'
+import welcomeBgXs from '~/assets/img/guest-home-page/welcomeBgXs.svg'
 
 export const welcomeBlockStyles = {
   container: {
@@ -13,12 +15,17 @@ export const welcomeBlockStyles = {
       sm: '319px',
       xs: '404px'
     },
-    backgroundImage: `url(${welcomeBg}), radial-gradient(ellipse closest-side, rgba(192, 229, 228, 0.4), transparent)`,
+    backgroundImage: {
+      md: `url(${welcomeBgMd}), radial-gradient(ellipse closest-side, rgba(192, 229, 228, 0.4), transparent)`,
+      sm: `url(${welcomeBgSm}), radial-gradient(ellipse closest-side, rgba(192, 229, 228, 0.4), transparent)`,
+      xs: `url(${welcomeBgXs}), radial-gradient(ellipse closest-side, rgba(192, 229, 228, 0.4), transparent)`,
+    },
     backgroundPosition: 'center',
     backgroundSize: 'contain',
     backgroundRepeat: 'no-repeat'
   },
   title: {
+    maxWidth: '100%',
     marginBottom: '24px',
   },
   subtitle: {
