@@ -1,0 +1,38 @@
+trigger:
+  - develop
+  - devops
+  - main
+
+pr:
+  - develop
+  - devops
+  - main
+
+stages:
+  - stage: S2s
+    displayName: S2s
+    jobs: 
+      - job: BuildAndDeploy
+        pool:
+         vmImage: ubuntu-latest
+        steps:
+        - task: Docker@2
+          inputs:
+            containerRegistry: 'S2sStage-Registry'
+            repository: 'front-stage'
+            command: 'buildAndPush'
+            Dockerfile: '**/Dockerfile'
+            tags: '$(Build.BuildId)'
+
+        - task: AzureRmWebAppDeployment@4
+          inputs:
+            ConnectionType: 'AzureRM'
+            azureSubscription: 'S2s-Service'
+            appType: 'webAppContainer'
+            WebAppName: 'front-stage'
+            DockerNamespace: 'S2sStage'
+            DockerRepository: 'front-stage'
+            DockerImageTag: '$(Build.BuildId)'
+
+
+
