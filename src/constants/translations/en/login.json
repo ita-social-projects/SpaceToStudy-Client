@@ -1,0 +1,19 @@
+{
+    "head": "Welcome back",
+    "email": "Email",
+    "emailError": "Enter valid email example@mail.com",
+    "password": "Password",
+    "passwordError": "password has a minimum of 6 characters, at least 1 uppercase letter, 1 lowercase letter, and 1 number with no spaces",
+    "rememberMe": "Remember me",
+    "forgotPassword": "Forgot password?",
+    "loginButton": "Login",
+    "googleButton": "Login with Google",
+    "continue": "or continue",
+    "haveAccount": "Don`t have an account yet?",
+    "joinUs": "Join us for free",
+    "errorMessages": {
+        "emailValid": "Enter valid email example@mail.com",
+        "passwordLength": "Password has minimum of 6 characters and maximum 30",
+        "passwordValid": "Password has at least 1 uppercase letter, 1 lowercase letter, and 1 number with no spaces"
+    }
+}

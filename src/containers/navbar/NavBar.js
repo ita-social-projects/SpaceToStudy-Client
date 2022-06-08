@@ -36,10 +36,6 @@ const style = {
   iconBox: {
     display: 'flex',
     alignItems: 'center',
-    '& *': {
-      margin: '0 6px',
-      color: 'primary.900',
-    }
   },
   menuIcon: {
     display: { md: 'none' },
@@ -56,7 +52,7 @@ const Navbar = ({ navigationItems, children }) => {
       <ListItem key={ item.label } sx={ style.navItem }>
         <Typography
           component={ Link } 
-          sx={ { textDecoration: 'none', opacity: '1' } } to={ item.route } variant="subtitle2"
+          sx={ { color: 'primary.900', textDecoration: 'none', opacity: '1' } } to={ item.route } variant="subtitle2"
         >
           { t(`header.guestNavBar.${ item.label }`) }
         </Typography>
@@ -77,12 +73,12 @@ const Navbar = ({ navigationItems, children }) => {
       </List>
 
       <Box sx={ style.iconBox }>
-        <IconButton sx={ { display: { xs: 'none', sm: 'inherit' } } }>
-          <LanguageIcon />
+        <IconButton size='large' sx={ { display: { xs: 'none', sm: 'inherit' } } }>
+          <LanguageIcon color='primary' />
         </IconButton>
         { children }
-        <IconButton sx={ style.menuIcon }>
-          <MenuIcon />
+        <IconButton size='large' sx={ style.menuIcon }>
+          <MenuIcon color='primary' />
         </IconButton>
       </Box>
     </Box>
