@@ -15,7 +15,7 @@ const WhatCanYouDo = () => {
         { t('guestHomePage.whatCanYouDo.title') }
       </Typography>
 
-      <Typography sx={ style.description }>
+      <Typography sx={ style.description } variant='subtitle1'>
         { t('guestHomePage.whatCanYouDo.description') }
       </Typography>
 
@@ -28,7 +28,7 @@ const WhatCanYouDo = () => {
           <Typography sx={ style.cardTitle }>
             { t('guestHomePage.whatCanYouDo.learn.title') }
           </Typography>
-          <Typography sx={ style.cardDescription } variant='body1'>
+          <Typography sx={ style.cardDescription }>
             { t('guestHomePage.whatCanYouDo.learn.description') }
           </Typography>
           <Button variant='contained'>
@@ -44,7 +44,7 @@ const WhatCanYouDo = () => {
           <Typography sx={ style.cardTitle }>
             { t('guestHomePage.whatCanYouDo.teach.title') }
           </Typography>
-          <Typography sx={ style.cardDescription } variant='body1'>
+          <Typography sx={ style.cardDescription }>
             { t('guestHomePage.whatCanYouDo.teach.description') }
           </Typography>
           <Button variant='contained'>
