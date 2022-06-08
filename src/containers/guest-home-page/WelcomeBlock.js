@@ -27,7 +27,7 @@ const WelcomeBlock = () => {
         { t('guestHomePage.welcomeBlock.description') }
       </Typography>
 
-      <Button sx={ styles.getStartBtn } variant="contained">
+      <Button sx={ styles.getStartBtn } variant='contained'>
         { t('guestHomePage.welcomeBlock.getStarted') }
       </Button>
     </Box>
