@@ -1,4 +1,5 @@
-import { Drawer, Typography, IconButton, List, ListItem, Link } from '@mui/material'
+import { Link } from 'react-router-dom'
+import { Drawer, Typography, IconButton, List, ListItem } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import { useTranslation } from 'react-i18next'
 
@@ -14,7 +15,7 @@ const Sidebar = ({ isOpen,  closeSidebar, navigationItems }) => {
         key={ item.label }
       >
         <Typography
-          component={ HashLink }
+          component={ Link }
           onClick={ closeSidebar }
           sx={ style.listItem }
           to={ item.route }
