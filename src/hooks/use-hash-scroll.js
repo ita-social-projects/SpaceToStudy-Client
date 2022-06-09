@@ -7,7 +7,7 @@ const useHashScroll = () => {
   const scrollToAnchor = useCallback(() => {
     if (hash.includes('#')) {
       const elementWithId = document.getElementById(hash.replace('#', ''))
-      elementWithId.scrollIntoView({ behavior: 'smooth' })
+      if (elementWithId) elementWithId.scrollIntoView({ behavior: 'smooth' })
     }
   }, [hash]) 
   
