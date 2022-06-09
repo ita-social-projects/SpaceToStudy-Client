@@ -1,22 +1,23 @@
 import { Drawer, Typography, IconButton, List, ListItem, Link } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import { useTranslation } from 'react-i18next'
-import style from '~/containers/sidebar/sidebar.style'
 
-const Sidebar = ({ isOpen, setIsOpen, navigationItems }) => {
+import HashLink from '~/components/hash-link/HashLink'
+import { style } from '~/containers/sidebar/sidebar.style'
+
+const Sidebar = ({ isOpen,  closeSidebar, navigationItems }) => {
   const { t } = useTranslation()
   
-  const closeSidebar = () => setIsOpen(false)  
-
   const navigationList = navigationItems.map(item => {
     return (
       <ListItem
         key={ item.label }
       >
         <Typography
-          component={ Link } href={ item.route } 
+          component={ HashLink }
           onClick={ closeSidebar }
           sx={ style.listItem }
+          to={ item.route }
           variant="subtitle1"
         >            
           { t(`header.guestNavBar.${ item.label }`) }

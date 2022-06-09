@@ -1,4 +1,4 @@
-const style = {
+export const style = {
   closeIcon: {
     display: 'flex',
     justifyContent: 'end',
@@ -12,5 +12,3 @@ const style = {
     textDecoration: 'none'
   }
 }
-
-export default style

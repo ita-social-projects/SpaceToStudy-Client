@@ -4,12 +4,12 @@ import Sidebar from '~/containers/sidebar/Sidebar'
 
 describe('Sidebar test', () => {
   const isOpen = true
-  const setIsOpen = jest.fn()
+  const closeSidebar = jest.fn()
   const navigationItems = [{ label: 'label', route: '#route' }]
     
   beforeEach(() => {
     render(
-      <Sidebar isOpen={ isOpen } navigationItems={ navigationItems } setIsOpen={ setIsOpen } />
+      <Sidebar closeSidebar={ closeSidebar } isOpen={ isOpen } navigationItems={ navigationItems } />
     )
   })
 
@@ -19,18 +19,18 @@ describe('Sidebar test', () => {
     expect(text).toBeInTheDocument()
   })
     
-  it('should render link and call setIsOpen onClick link', async () => {
+  it('should render link and call closeSidebar onClick link', async () => {
     const linkElement = screen.getByRole('link')
     expect(linkElement).toHaveAttribute('href', '#route')
     
     fireEvent.click(linkElement)
-    await waitFor(() => expect(setIsOpen).toHaveBeenCalled())
+    await waitFor(() => expect(closeSidebar).toHaveBeenCalled())
   })
     
-  it('should call setIsOpen onClick button', async () => {
+  it('should call closeSidebar onClick button', async () => {
     const closeButton = screen.getByRole('button')
     fireEvent.click(closeButton)
 
-    await waitFor(() => expect(setIsOpen).toHaveBeenCalled())
+    await waitFor(() => expect(closeSidebar).toHaveBeenCalled())
   })
 })

@@ -4,11 +4,12 @@ import { routes } from '~/constants/routes'
 import { useTranslation } from 'react-i18next'
 import { Typography, Box, Button, IconButton, List, ListItem  } from '@mui/material'
 
+import HashLink from '~/components/hash-link/HashLink'
 import Logo from '~/containers/logo/Logo'
 import Sidebar from '~/containers/sidebar/Sidebar'
 import LanguageIcon from '@mui/icons-material/Language'
 import MenuIcon from '@mui/icons-material/Menu'
-import style from '~/containers/navbar/navbar.style'
+import { style } from '~/containers/navbar/navbar.style'
 import PropTypes from 'prop-types'
 
 const Navbar = ({ navigationItems, children }) => {
@@ -16,16 +17,18 @@ const Navbar = ({ navigationItems, children }) => {
   const { t } = useTranslation()
   const [isOpen, setIsOpen] = useState(false)
 
-  const openSidebar = () => {
-    setIsOpen(true)
-  }
+  const openSidebar = () => setIsOpen(true)
+  const closeSidebar = () => setIsOpen(false)  
 
   const navigationList = navigationItems.map(item => {
+
     return (
       <ListItem key={ item.label } sx={ style.navItem }>
         <Typography
-          component='a'
-          href={ item.route } sx={ style.navItemText } variant="subtitle2"
+          component={ HashLink }
+          sx={ style.navItemText }
+          to={ item.route }
+          variant="subtitle2"
         >
           { t(`header.guestNavBar.${ item.label }`) }
         </Typography>
@@ -35,7 +38,8 @@ const Navbar = ({ navigationItems, children }) => {
   return (
     <Box sx={ style.header }>
       <Button
-        component={ Link } size='small' sx={ style.logoButton }
+        component={ Link }
+        size='small' sx={ style.logoButton }
         to={ routes.home.route }
       >
         <Logo />
@@ -54,7 +58,7 @@ const Navbar = ({ navigationItems, children }) => {
           <MenuIcon color='primary' />
         </IconButton>
       </Box>
-      <Sidebar isOpen={ isOpen } navigationItems={ navigationItems } setIsOpen={ setIsOpen } />
+      <Sidebar closeSidebar={ closeSidebar }  isOpen={ isOpen } navigationItems={ navigationItems } />
     </Box>
   )
 }

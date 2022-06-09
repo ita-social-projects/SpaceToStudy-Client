@@ -1,4 +1,4 @@
-const style = {
+export const style = {
   header: {
     display: 'flex',
     justifyContent: 'space-between',
@@ -37,5 +37,3 @@ const style = {
     marginRight: '11px',
   }
 }
-
-export default style
