@@ -1,5 +1,5 @@
 import { screen, render, fireEvent, waitFor } from '@testing-library/react'
-import LoginForm from '~//containers/guest-home-page/login-form/LoginForm'
+import LoginForm from '~/containers/guest-home-page/login-form/LoginForm'
 
 const errors = { email: false, password: false }
 const data= { email: 'email@mail.com', password: 'passTest' }
