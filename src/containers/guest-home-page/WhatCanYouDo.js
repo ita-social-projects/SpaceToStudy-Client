@@ -1,13 +1,44 @@
 import { useTranslation } from 'react-i18next'
-import { Typography, Box, Button } from '@mui/material'
+import { Typography, Box } from '@mui/material'
 
-import { whatCanYouDoStyles as style } from '~/containers/guest-home-page/styles/what-can-you-do-styles'
+import Card from '~/components/card/Card'
+import { whatCanYouDoStyles as style } from '~/containers/guest-home-page/styles/what-can-you-do.styles'
 import learnImg from '~/assets/img/guest-home-page/learnImg.svg'
 import teachImg from '~/assets/img/guest-home-page/teachImg.svg'
 
+const cardData = [
+  {
+    id: 1,
+    img: learnImg,
+    title: 'guestHomePage.whatCanYouDo.learn.title',
+    description: 'guestHomePage.whatCanYouDo.learn.description',
+    btnText: 'guestHomePage.whatCanYouDo.learn.begin',
+    link: '#'
+  },
+  {
+    id: 2,
+    img: teachImg,
+    title: 'guestHomePage.whatCanYouDo.teach.title',
+    description: 'guestHomePage.whatCanYouDo.teach.description',
+    btnText: 'guestHomePage.whatCanYouDo.teach.begin',
+    link: '#'
+  }
+]
 
 const WhatCanYouDo = () => {
   const { t } = useTranslation()
+
+  const cards = cardData.map(item => {
+    return (
+      <Card
+        btnText={ t(item.btnText) }
+        description={ t(item.description) }
+        img={ item.img }
+        key={ item.id }
+        link={ item.link }
+        title={ t(item.title) }
+      />)
+  })
 
   return (
     <Box sx={ style.container }>
@@ -20,37 +51,7 @@ const WhatCanYouDo = () => {
       </Typography>
 
       <Box sx={ style.cards }>
-        <Box sx={ style.card }>
-          <Box
-            alt='Learn from experts' component='img' src={ learnImg }
-            sx={ style.cardImg }
-          ></Box>
-          <Typography sx={ style.cardTitle }>
-            { t('guestHomePage.whatCanYouDo.learn.title') }
-          </Typography>
-          <Typography sx={ style.cardDescription }>
-            { t('guestHomePage.whatCanYouDo.learn.description') }
-          </Typography>
-          <Button variant='contained'>
-            { t('guestHomePage.whatCanYouDo.learn.begin') }
-          </Button>
-        </Box>
-
-        <Box sx={ style.card }>
-          <Box
-            alt='Learn from experts' component='img' src={ teachImg }
-            sx={ style.cardImg }
-          ></Box>
-          <Typography sx={ style.cardTitle }>
-            { t('guestHomePage.whatCanYouDo.teach.title') }
-          </Typography>
-          <Typography sx={ style.cardDescription }>
-            { t('guestHomePage.whatCanYouDo.teach.description') }
-          </Typography>
-          <Button variant='contained'>
-            { t('guestHomePage.whatCanYouDo.teach.begin') }
-          </Button>
-        </Box>
+        { cards }
       </Box>
     </Box>
   )

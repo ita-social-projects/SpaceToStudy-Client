@@ -6,6 +6,9 @@ import titleMd from '~/assets/img/guest-home-page/titleMd.svg'
 import titleSm from '~/assets/img/guest-home-page/titleSm.svg'
 import titleXs from '~/assets/img/guest-home-page/titleXs.svg'
 import useBreakpoints from '~/hooks/use-breakpoints'
+import { Link } from 'react-router-dom'
+
+//TODO add possibility for button to redirect user to the specified url.
 
 const WelcomeBlock = () => {
   const { t } = useTranslation()
@@ -27,7 +30,10 @@ const WelcomeBlock = () => {
         { t('guestHomePage.welcomeBlock.description') }
       </Typography>
 
-      <Button sx={ styles.getStartBtn } variant='contained'>
+      <Button
+        component={ Link } sx={ styles.getStartBtn } to={ '#' }
+        variant='contained'
+      >
         { t('guestHomePage.welcomeBlock.getStarted') }
       </Button>
     </Box>
