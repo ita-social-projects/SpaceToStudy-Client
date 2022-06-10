@@ -45,12 +45,10 @@ describe('Login form', () => {
     expect(inputPassword.value).toBe('test')
   })
     
-  it('should submit',  () => {
-    const errors = { email: 'login.errorMessages.emailValid' }
+  it('should show error',  () => {
     const button = screen.getByText('login.loginButton')
     fireEvent.click(button)  
-    screen.debug()
-    const error = screen.getByText(errors.email)
+    const error = screen.getByText('login.errorMessages.emailValid')
     
     expect(error).toBeInTheDocument()
   })

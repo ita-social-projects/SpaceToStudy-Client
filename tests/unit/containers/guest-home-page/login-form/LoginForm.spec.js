@@ -2,7 +2,7 @@ import { screen, render, fireEvent, waitFor } from '@testing-library/react'
 import LoginForm from '~/containers/guest-home-page/login-form/LoginForm'
 
 const errors = { email: false, password: false }
-const data= { email: 'email@mail.com', password: 'passTest' }
+const data= { email: 'email@mail.com', password: 'passTest1' }
 const handleChange = jest.fn()
 const handleBlur = jest.fn()
 const handleSubmit = jest.fn()
@@ -56,5 +56,12 @@ describe('Login form', () => {
     const visibilityIcon = screen.getByTestId('VisibilityIcon')
 
     await waitFor(() => expect(visibilityIcon).toBeInTheDocument())
+  })
+  
+  it('should submit', async () => {
+    const button = screen.getByText('login.loginButton')
+    fireEvent.click(button)  
+  
+    await waitFor(() => expect(handleSubmit).toHaveBeenCalled())
   })
 })
