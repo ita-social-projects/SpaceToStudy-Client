@@ -14,10 +14,15 @@ describe('GoogleLogin component test', () => {
     expect(text).toBeInTheDocument()
   })
     
-  it('should have button with "Login with Google" text', () => {
-    const linkElement = screen.getByText('login.googleButton')
+  it('should have google logo', () => {
+    const logo = screen.getByAltText('google icon')
     
-    expect(linkElement).toBeInTheDocument()
+    expect(logo).toBeInTheDocument()
+  })
+  it('should have button with "Login with Google" text', () => {
+    const button = screen.getByText('login.googleButton')
+    
+    expect(button).toBeInTheDocument()
   })
     
   it('should have "have account" text', () => {
