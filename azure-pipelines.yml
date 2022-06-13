@@ -1,0 +1,76 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+
+trigger:
+  - develop
+  - devops
+  - main
+
+pr:
+  - develop
+  - devops
+  - main
+  
+variables:
+  agentOS: ubuntu-latest
+
+stages:
+
+  - stage: Env
+    displayName: Download and set latest .env
+    jobs:
+      - job: Env 
+        pool:
+          vmImage: $(agentOS)
+        steps:
+        - task: DownloadSecureFile@1
+          name: envStage
+          condition: eq(variables['Build.SourceBranch'], 'refs/heads/develop')
+          inputs:
+            secureFile: 'env-front-stage'
+        - task: Bash@3
+          name: setEnvStage
+          inputs:
+            targetType: 'inline'
+            script: 'mv $(envStage.secureFilePath) .env'
+
+  - stage: Build
+    displayName: Build and push docker image
+    jobs: 
+      - job: Build
+        pool:
+         vmImage: $(agentOS)
+        steps:
+        - task: Docker@2
+          inputs:
+            containerRegistry: 'S2sStage-Registry'
+            repository: 'front-stage'
+            command: 'buildAndPush'
+            Dockerfile: '**/Dockerfile'
+            tags: '$(Build.BuildId)'
+
+  - stage: Deploy
+    jobs:
+      - deployment: DeployCore
+        displayName: Deploy image to app service
+        environment: 'prod'
+      - job: Deploy
+        pool:
+          vmImage: $(agentOS)
+          strategy:
+          runOnce:
+            deploy:
+              steps:
+              - download: none
+              - task: AzureRmWebAppDeployment@4
+                inputs:
+                  ConnectionType: 'AzureRM'
+                  azureSubscription: 'S2s-Service'
+                  appType: 'webAppContainer'
+                  WebAppName: 'front-stage'
+                  DockerNamespace: 'S2sStage'
+                  DockerRepository: 'front-stage'
+                  DockerImageTag: '$(Build.BuildId)'
