@@ -13,7 +13,7 @@ const Accordions = ({ items, onChange, activeIndex, styles }) => {
     <Box sx={ { ...styles } }>
       { items.map((item, index) => (
         <Accordion
-          disableGutters="true"
+          disableGutters
           expanded={ activeIndex === index }
           key={ index }
           onChange={ () => onChange(index) }

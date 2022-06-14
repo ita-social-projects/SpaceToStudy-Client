@@ -16,5 +16,7 @@ export const theme = createTheme({
   },
   shadows
 })
-
+theme.shadows[0]=theme.shadows.primary[0]
+theme.shadows[1]=theme.shadows.primary[0]
+theme.shadows[4]=theme.shadows.primary[0]
 export default theme
