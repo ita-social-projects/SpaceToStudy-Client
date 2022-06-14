@@ -41,7 +41,7 @@ const WhatCanYouDo = () => {
   })
 
   return (
-    <Box sx={ style.container }>
+    <Box id='whatCanYouDo' sx={ style.container }>
       <Typography sx={ style.title }>
         { t('guestHomePage.whatCanYouDo.title') }
       </Typography>
