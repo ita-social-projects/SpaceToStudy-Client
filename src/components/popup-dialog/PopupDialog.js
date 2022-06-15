@@ -12,7 +12,7 @@ const style = {
   icon: { float: 'right', }
 }
 
-const Modal = ({ content, closeModal }) => {
+const PopupDialog = ({ content, closeModal }) => {
   const [width, setWidth] = useState(window.innerWidth)
   const { checkConfirmation } = useConfirm()
 
@@ -21,6 +21,7 @@ const Modal = ({ content, closeModal }) => {
       message: 'questions.confirmation',
       title: 'titles.confirmTitle' 
     })
+    
     if (confirmed) {
       closeModal()
     }
@@ -42,7 +43,7 @@ const Modal = ({ content, closeModal }) => {
       open
     >
       <Box sx={ style.box }>
-        <IconButton onClick={ onClose } sx={ style.icon }>
+        <IconButton data-testid='close-popup' onClick={ onClose } sx={ style.icon }>
           <CloseIcon />
         </IconButton>
         <Box>
@@ -53,4 +54,4 @@ const Modal = ({ content, closeModal }) => {
   )
 }
 
-export default Modal
+export default PopupDialog

@@ -1,5 +1,5 @@
 import { createContext, useCallback, useState } from 'react'
-import Modal from '~/containers/modal/Modal'
+import PopupDialog from '~/components/popup-dialog/PopupDialog'
 
 const ModalContext = createContext()
 
@@ -13,7 +13,7 @@ const ModalProvider = (props) => {
   return (
     <ModalContext.Provider value={ { setModal } } { ...props }>
       { props.children }
-      { modal && <Modal closeModal={ closeModal } content={ modal } /> }
+      { modal && <PopupDialog closeModal={ closeModal } content={ modal } /> }
     </ModalContext.Provider>
   )
 }
