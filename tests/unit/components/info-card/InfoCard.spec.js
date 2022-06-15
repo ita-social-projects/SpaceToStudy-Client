@@ -1,5 +1,4 @@
 import { screen, render } from '@testing-library/react'
-import { MemoryRouter } from 'react-router-dom'
 
 import InfoCard from '~/components/info-card/InfoCard'
 
@@ -11,14 +10,10 @@ describe('InfoCard component', () => {
     title: 'Learn from experts',
     description: 'It is a long established fact that a reader...',
     btnText: 'Start learning today',
-    link: '#'
   }
 
   beforeEach(() => {
-    render(
-      <MemoryRouter>
-        <InfoCard  { ...props } />
-      </MemoryRouter>)
+    render(<InfoCard  { ...props } />)
   })
 
   it('should contain image', () => {

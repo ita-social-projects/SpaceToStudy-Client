@@ -12,16 +12,14 @@ const cardData = [
     img: learnImg,
     title: 'guestHomePage.whatCanYouDo.learn.title',
     description: 'guestHomePage.whatCanYouDo.learn.description',
-    btnText: 'guestHomePage.whatCanYouDo.learn.begin',
-    link: '#'
+    btnText: 'guestHomePage.whatCanYouDo.learn.action'
   },
   {
     id: 2,
     img: teachImg,
     title: 'guestHomePage.whatCanYouDo.teach.title',
     description: 'guestHomePage.whatCanYouDo.teach.description',
-    btnText: 'guestHomePage.whatCanYouDo.teach.begin',
-    link: '#'
+    btnText: 'guestHomePage.whatCanYouDo.teach.action'
   }
 ]
 

@@ -11,12 +11,16 @@ export const cardStyles = {
       md: '427px',
       xs: '343px',
     },
-    padding: '24px',
+    // marginBottom: {
+    //   sm: '0px',
+    //   xs: '24px'
+    // },
+    padding: '24px 24px 32px',
     backgroundColor: theme.palette.basic.white,
     boxShadow: theme.shadows.primary,
     borderRadius: '6px',
-    '&:first-of-type': {
-      mb: {
+    '&:not(:last-child)': {
+      marginBottom: {
         sm: '0px',
         xs: '24px'
       }

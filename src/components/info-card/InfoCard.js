@@ -1,9 +1,8 @@
 import { Box, Button, Typography } from '@mui/material'
 
 import { cardStyles as style } from '~/components/info-card/info-card.styles'
-import { Link } from 'react-router-dom'
 
-//TODO add possibility for button to redirect user to the specified url.
+//TODO add possibility for button to open pop-up.
 
 const InfoCard = ({ img, title, description, btnText, link }) => {
   return (
@@ -19,7 +18,9 @@ const InfoCard = ({ img, title, description, btnText, link }) => {
       <Typography sx={ style.cardDescription }>
         { description }
       </Typography>
-      <Button component={ Link } to={ link } variant='contained'>
+      <Button
+        variant='contained'
+      >
         { btnText }
       </Button>
     </Box>
