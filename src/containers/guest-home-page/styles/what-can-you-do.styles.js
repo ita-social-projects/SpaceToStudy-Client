@@ -2,26 +2,13 @@ import theme from '~/styles/app-theme/custom-mui.styles'
 
 export const whatCanYouDoStyles = {
   container: {
-    my: {
-      md: '164px',
-      sm: '104px',
-      xs: '82px'
-    },
+    // my: {
+    //   md: '164px',
+    //   sm: '104px',
+    //   xs: '82px'
+    // },
+    my: '82px',
     textAlign: 'center'
-  },
-  title: {
-    typography: {
-      md: 'h3',
-      xs: 'h4'
-    },
-    marginBottom: '16px',
-  },
-  description: {
-    marginBottom: {
-      md: '40px',
-      sm: '24px',
-      xs: '16px'
-    },
   },
   cards: {
     display: 'flex',

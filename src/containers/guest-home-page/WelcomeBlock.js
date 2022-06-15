@@ -9,8 +9,6 @@ import titleXs from '~/assets/img/guest-home-page/titleXs.svg'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { routes } from '~/constants/routes'
 
-//TODO add possibility for button to redirect user to the specified url.
-
 const link = routes.guestNavBar.whatCanYouDo.route
 
 const WelcomeBlock = () => {

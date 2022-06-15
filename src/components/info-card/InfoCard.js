@@ -4,7 +4,7 @@ import { cardStyles as style } from '~/components/info-card/info-card.styles'
 
 //TODO add possibility for button to open pop-up.
 
-const InfoCard = ({ img, title, description, btnText, link }) => {
+const InfoCard = ({ img, title, description, btnText }) => {
   return (
     <Box sx={ style.card }>
       <Box

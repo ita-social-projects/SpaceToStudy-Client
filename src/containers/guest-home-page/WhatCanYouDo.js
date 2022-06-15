@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next'
-import { Typography, Box } from '@mui/material'
+import { Box } from '@mui/material'
 
+import Heading from '~/components/heading/Heading'
 import InfoCard from '~/components/info-card/InfoCard'
 import { whatCanYouDoStyles as style } from '~/containers/guest-home-page/styles/what-can-you-do.styles'
 import learnImg from '~/assets/img/guest-home-page/learnImg.svg'
@@ -40,13 +41,7 @@ const WhatCanYouDo = () => {
 
   return (
     <Box id='whatCanYouDo' sx={ style.container }>
-      <Typography data-testid='title' sx={ style.title }>
-        { t('guestHomePage.whatCanYouDo.title') }
-      </Typography>
-
-      <Typography data-testid='description' sx={ style.description } variant='subtitle1'>
-        { t('guestHomePage.whatCanYouDo.description') }
-      </Typography>
+      <Heading description={ t('guestHomePage.whatCanYouDo.description') } title={ t('guestHomePage.whatCanYouDo.title') } />
 
       <Box sx={ style.cards }>
         { cards }
