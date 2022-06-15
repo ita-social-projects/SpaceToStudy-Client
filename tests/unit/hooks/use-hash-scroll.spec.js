@@ -34,7 +34,7 @@ describe('test useHashScroll custom hook', () => {
     act(() => {
       result.current.scrollToAnchor()
     })
-    screen.debug()
+
     expect(mockedScroll).toBeCalled()
   })
 })

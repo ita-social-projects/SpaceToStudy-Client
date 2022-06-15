@@ -1,12 +1,12 @@
 import { screen, fireEvent, waitFor } from '@testing-library/react'
 import NavBar from '~/containers/navbar/NavBar'
-import { renderWithRouter } from '~tests/test-utils'
+import { renderWithRouterAndTheme } from '~tests/test-utils'
 
 describe('Sidebar test', () => {
   const navigationItems = [{ label:'label-test', route: '#route-test' }]
 
   beforeEach(() => {
-    renderWithRouter(
+    renderWithRouterAndTheme(
       <NavBar navigationItems={ navigationItems }>
         <button>children</button>
       </NavBar>
@@ -19,25 +19,25 @@ describe('Sidebar test', () => {
     expect(logo).toBeInTheDocument()
   })
   
-  it('should render children element', () => {
+  it('should render prop children element', () => {
     const children = screen.getByText('children')
     
     expect(children).toBeInTheDocument()
   })
 
-  it('should render navigation', () => {
+  it('should render navigation item with label text', () => {
     const text = screen.getByText('header.guestNavBar.label-test')
     
     expect(text).toBeInTheDocument()
   })
 
   it('should render language icon', () => {
-    const icon = screen.getByTestId('LanguageIcon')
+    const languageIcon = screen.getByTestId('LanguageIcon')
     
-    expect(icon).toBeInTheDocument()
+    expect(languageIcon).toBeInTheDocument()
   })
     
-  it('should open sidebar with close icon', async () => {
+  it('should open sidebar with close icon when click menu icon', async () => {
     const menuIcon = screen.getByTestId('MenuIcon')
 
     expect(menuIcon).toBeInTheDocument()
