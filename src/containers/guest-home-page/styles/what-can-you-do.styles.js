@@ -2,12 +2,11 @@ import theme from '~/styles/app-theme/custom-mui.styles'
 
 export const whatCanYouDoStyles = {
   container: {
-    // my: {
-    //   md: '164px',
-    //   sm: '104px',
-    //   xs: '82px'
-    // },
-    my: '82px',
+    my: {
+      md: '164px',
+      sm: '104px',
+      xs: '82px'
+    },
     textAlign: 'center'
   },
   cards: {
@@ -16,7 +15,7 @@ export const whatCanYouDoStyles = {
       sm: 'row',
       xs: 'column'
     },
-    justifyContent: 'space-evenly',
+    justifyContent: 'center',
     alignItems: {
       sm: 'inherit',
       xs: 'center',
