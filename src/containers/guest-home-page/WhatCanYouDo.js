@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { Typography, Box } from '@mui/material'
 
-import Card from '~/components/card/Card'
+import InfoCard from '~/components/info-card/InfoCard'
 import { whatCanYouDoStyles as style } from '~/containers/guest-home-page/styles/what-can-you-do.styles'
 import learnImg from '~/assets/img/guest-home-page/learnImg.svg'
 import teachImg from '~/assets/img/guest-home-page/teachImg.svg'
@@ -30,7 +30,7 @@ const WhatCanYouDo = () => {
 
   const cards = cardData.map(item => {
     return (
-      <Card
+      <InfoCard
         btnText={ t(item.btnText) }
         description={ t(item.description) }
         img={ item.img }
@@ -42,11 +42,11 @@ const WhatCanYouDo = () => {
 
   return (
     <Box id='whatCanYouDo' sx={ style.container }>
-      <Typography sx={ style.title }>
+      <Typography data-testid='title' sx={ style.title }>
         { t('guestHomePage.whatCanYouDo.title') }
       </Typography>
 
-      <Typography sx={ style.description } variant='subtitle1'>
+      <Typography data-testid='description' sx={ style.description } variant='subtitle1'>
         { t('guestHomePage.whatCanYouDo.description') }
       </Typography>
 

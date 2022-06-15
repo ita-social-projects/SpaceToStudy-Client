@@ -26,15 +26,17 @@ const WelcomeBlock = () => {
   return (
     <Box className='section' sx={ styles.container }>
       <Box
-        alt='Title' component='img' src={ images[size] }
+        alt='Title'
+        component='img' data-testid='titleImg' src={ images[size] }
         sx={ styles.title }
       />
-      <Typography sx={ styles.subtitle }>
+      <Typography data-testid='description' sx={ styles.subtitle }>
         { t('guestHomePage.welcomeBlock.description') }
       </Typography>
 
       <Button
-        component={ Link } sx={ styles.getStartBtn } to={ link }
+        component={ Link }
+        data-testid='getStarted' sx={ styles.getStartBtn } to={ link }
         variant='contained'
       >
         { t('guestHomePage.welcomeBlock.getStarted') }

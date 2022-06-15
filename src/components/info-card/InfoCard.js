@@ -1,15 +1,16 @@
 import { Box, Button, Typography } from '@mui/material'
 
-import { cardStyles as style } from '~/components/card/card.styles'
+import { cardStyles as style } from '~/components/info-card/info-card.styles'
 import { Link } from 'react-router-dom'
 
 //TODO add possibility for button to redirect user to the specified url.
 
-const Card = ({ img, title, description, btnText, link }) => {
+const InfoCard = ({ img, title, description, btnText, link }) => {
   return (
     <Box sx={ style.card }>
       <Box
-        alt='Learn from experts' component='img' src={ img }
+        alt='Learn from experts'
+        component='img' data-testid='img' src={ img }
         sx={ style.cardImg }
       ></Box>
       <Typography sx={ style.cardTitle }>
@@ -25,4 +26,4 @@ const Card = ({ img, title, description, btnText, link }) => {
   )
 }
 
-export default Card
+export default InfoCard

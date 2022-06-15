@@ -1,9 +1,9 @@
 import { screen, render } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 
-import Card from '~/components/card/Card'
+import InfoCard from '~/components/info-card/InfoCard'
 
-describe('Card component', () => {
+describe('InfoCard component', () => {
   const props =
   {
     id: 1,
@@ -17,12 +17,12 @@ describe('Card component', () => {
   beforeEach(() => {
     render(
       <MemoryRouter>
-        <Card  { ...props } />
+        <InfoCard  { ...props } />
       </MemoryRouter>)
   })
 
   it('should contain image', () => {
-    const img = screen.getByRole('img')
+    const img = screen.getByTestId('img')
 
     expect(img).toBeInTheDocument()
   })

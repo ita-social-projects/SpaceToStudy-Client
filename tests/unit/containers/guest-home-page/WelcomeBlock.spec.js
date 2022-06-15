@@ -13,21 +13,20 @@ describe('WelcomeBlock component', () => {
   })
 
   it('should have title img', () => {
-    screen.debug()
-    const img = screen.getByRole('img')
+    const img = screen.getByTestId('titleImg')
 
     expect(img).toBeInTheDocument()
   })
 
   it('should have correct description', () => {
-    const text = screen.getByText('guestHomePage.welcomeBlock.description')
+    const title = screen.getByTestId('description')
 
-    expect(text).toBeInTheDocument()
+    expect(title).toBeInTheDocument()
   })
 
   it('should have button with correct text', () => {
-    const text = screen.getByText('guestHomePage.welcomeBlock.getStarted')
+    const btn = screen.getByTestId('getStarted')
 
-    expect(text).toBeInTheDocument()
+    expect(btn).toBeInTheDocument()
   })
 })

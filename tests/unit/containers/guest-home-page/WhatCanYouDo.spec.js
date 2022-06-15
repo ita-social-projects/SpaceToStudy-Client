@@ -13,14 +13,14 @@ describe('WhatCanYouDo component', () => {
   })
 
   it('should have correct title', () => {
-    const text = screen.getByText('guestHomePage.whatCanYouDo.title')
+    const title = screen.getByTestId('title')
 
-    expect(text).toBeInTheDocument()
+    expect(title).toBeInTheDocument()
   })
 
   it('should have correct description', () => {
-    const text = screen.getByText('guestHomePage.whatCanYouDo.description')
+    const description = screen.getByTestId('description')
 
-    expect(text).toBeInTheDocument()
+    expect(description).toBeInTheDocument()
   })
 })
