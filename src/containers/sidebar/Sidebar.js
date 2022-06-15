@@ -3,7 +3,6 @@ import { Drawer, Typography, IconButton, List, ListItem } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import { useTranslation } from 'react-i18next'
 
-import HashLink from '~/components/hash-link/HashLink'
 import { style } from '~/containers/sidebar/sidebar.style'
 
 const Sidebar = ({ isOpen,  closeSidebar, navigationItems }) => {
