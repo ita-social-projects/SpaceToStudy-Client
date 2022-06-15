@@ -26,7 +26,7 @@ const useConfirm = () => {
     return true
   }
 
-  return { checkConfirmation, setNeedConfirmation }
+  return { checkConfirmation, setNeedConfirmation, openDialog }
 }
 
 export default useConfirm

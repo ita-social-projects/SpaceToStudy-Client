@@ -1,45 +1,46 @@
 import { act, renderHook } from '@testing-library/react-hooks'
 import useConfirm from '~/hooks/use-confirm'
 import { UNSAFE_NavigationContext as NavigationContext } from 'react-router-dom'
-import { ConfirmationDialogContext } from '~/context/confirm-context'
+import { ConfirmationDialogProvider } from '~/context/confirm-context'
 
 const unblock = jest.fn()
-const openDialog = jest.fn()
 const block = () => unblock
 const navigator = { block }
+let res
 
 describe('Use confirm custom hook', () => {
-  it('should not block browser navigation', async () => {
-    let needConfirmation = false
+  beforeEach(() => {
     const wrapper = ({ children }) => (
-      <ConfirmationDialogContext.Provider value={ { openDialog, needConfirmation } }>
+      <ConfirmationDialogProvider>
         <NavigationContext.Provider value={ { navigator } }>
           { children }
         </NavigationContext.Provider>
-      </ConfirmationDialogContext.Provider>
+      </ConfirmationDialogProvider>
     )
-    renderHook(() => useConfirm(), { wrapper })
-    expect(unblock).toHaveBeenCalled()
+    res = renderHook(() => useConfirm(), { wrapper })
   })
 
-  it('should show confirm dialog', async () => {
-    let needConfirmation = true
-    const wrapper = ({ children }) => (
-      <ConfirmationDialogContext.Provider value={ { openDialog, needConfirmation } }>
-        <NavigationContext.Provider value={ { navigator } }>
-          { children }
-        </NavigationContext.Provider>
-      </ConfirmationDialogContext.Provider>
-    )
-    const { result } = renderHook(() => useConfirm(), { wrapper })
-
+  it('should not open confirm dialog', async () => {
     act(() => {
-      result.current.checkConfirmation({
+      expect(res.result.current.checkConfirmation({
         message: 'message',
         title: 'title'
-      })
+      })).toBe(true)
+    })
+  })
+  
+  it('should open confirm dialog', async () => {
+    act(() => {
+      res.result.current.setNeedConfirmation(true)
     })
 
-    expect(openDialog).toHaveBeenCalled()
+    act(()=>{
+      res.result.current.checkConfirmation({
+        message: 'message',
+        title: 'title'
+      }).then(() => {
+        expect(res.result.current.openDialog).toHaveBeenCalled()
+      })
+    }) 
   })
 })
