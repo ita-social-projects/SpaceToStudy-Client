@@ -20,15 +20,15 @@ describe('Login form', () => {
   })
     
   it('should render img', () => {
-    const input = screen.getByAltText(/login/i)
+    const img = screen.getByAltText(/login/i)
     
-    expect(input).toBeInTheDocument()
+    expect(img).toBeInTheDocument()
   })
     
-  it('should render head', () => {
-    const input = screen.getByText(/login.head/i)
+  it('should render head text', () => {
+    const text = screen.getByText(/login.head/i)
     
-    expect(input).toBeInTheDocument()
+    expect(text).toBeInTheDocument()
   })
     
   it('should change email value', () => {

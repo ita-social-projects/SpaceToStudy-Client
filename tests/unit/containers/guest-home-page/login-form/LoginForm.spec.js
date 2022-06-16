@@ -20,16 +20,16 @@ describe('Login form', () => {
     )
   })
     
-  it('should render email input', () => {
-    const input = screen.getByLabelText(/email/i)
+  it('should render email input label', () => {
+    const inputLabel = screen.getByLabelText(/email/i)
     
-    expect(input).toBeInTheDocument()
+    expect(inputLabel).toBeInTheDocument()
   })
     
-  it('should render password input', () => {
-    const input = screen.getByText('login.password')
+  it('should render password input label', () => {
+    const inputLabel = screen.getByText('login.password')
       
-    expect(input).toBeInTheDocument()
+    expect(inputLabel).toBeInTheDocument()
   })
     
   it('should render checkbox label', () => {
@@ -55,7 +55,10 @@ describe('Login form', () => {
     fireEvent.click(visibilityOffIcon)  
     const visibilityIcon = screen.getByTestId('VisibilityIcon')
 
-    await waitFor(() => expect(visibilityIcon).toBeInTheDocument())
+    await waitFor(() => {
+      expect(visibilityIcon).toBeInTheDocument()
+      expect(visibilityOffIcon).not.toBeInTheDocument()
+    })
   })
   
   it('should submit', async () => {
