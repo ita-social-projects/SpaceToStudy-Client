@@ -20,6 +20,11 @@ export const whatCanYouDoStyles = {
       sm: 'inherit',
       xs: 'center',
     },
+    columnGap: {
+      md: '64px',
+      sm: '24px'
+    },
+    rowGap: '24px',
     boxSizing: 'border-box',
     maxWidth: '1124px',
     margin: '0 auto',

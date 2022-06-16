@@ -14,18 +14,7 @@ export const cardStyles = {
     padding: '24px 24px 32px',
     backgroundColor: theme.palette.basic.white,
     boxShadow: theme.shadows.primary,
-    borderRadius: '6px',
-    '&:not(:last-child)': {
-      marginRight: {
-        md: '64px',
-        sm: '24px',
-        xs: '0'
-      },
-      marginBottom: {
-        sm: '0px',
-        xs: '24px'
-      }
-    }
+    borderRadius: '6px'
   },
   cardImg: {
     marginBottom: '24px'

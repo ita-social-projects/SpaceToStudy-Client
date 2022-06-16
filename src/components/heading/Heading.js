@@ -1,9 +1,9 @@
-import { Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { headingStyles as style } from '~/components/heading/heading.styles'
 
 const Heading = ({ title, description }) => {
   return (
-    <>
+    <Box sx={ style.wrapper }>
       <Typography sx={ style.title }>
         { title }
       </Typography>
@@ -11,7 +11,7 @@ const Heading = ({ title, description }) => {
       <Typography sx={ style.description } variant='subtitle1'>
         { description }
       </Typography>
-    </>
+    </Box>
   )
 }
 
