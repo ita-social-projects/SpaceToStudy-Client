@@ -1,9 +1,11 @@
 import { Box } from '@mui/material'
+
 import { descriptionTimes } from '~/components/accordion-with-image/descriptionTimes'
 import Welcome from '~/containers/guest-home-page/Welcome'
-import WhatCanYouDo from '~/containers/guest-home-page/WhatCanYouDo'
 import FeatureBlock from '~/containers/guest-home-page/FeatureBlock'
-import Footer from '~/containers/footer/Footer'
+import WhatCanYouDo from '~/containers/guest-home-page/WhatCanYouDo'
+import WhoWeAre from '~/containers/guest-home-page/WhoWeAre'
+import Footer from '~/components/footer/Footer'
 
 const GuestHomePage = () => {
   
@@ -12,6 +14,7 @@ const GuestHomePage = () => {
       <Welcome />
       <FeatureBlock items={ descriptionTimes }  />
       <WhatCanYouDo />
+      <WhoWeAre />
       <Footer />
     </Box>
   )
