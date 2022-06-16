@@ -1,7 +1,7 @@
-import { screen, render, fireEvent } from '@testing-library/react'
-import { BrowserRouter } from 'react-router-dom'
+import { screen, fireEvent } from '@testing-library/react'
 import { constants } from '~/constants/common'
 import SignupDialog from '~/containers/guest-home-page/signup-dialog/SignupDialog'
+import { renderWithRouterAndTheme } from '~tests/test-utils'
 
 jest.mock('~/hooks/use-confirm', () => {
   return () => ({
@@ -11,10 +11,8 @@ jest.mock('~/hooks/use-confirm', () => {
 
 describe('Signup dialog', () => {
   beforeEach(() => {
-    render(
-      <BrowserRouter>
-        <SignupDialog type={ constants.student } />
-      </BrowserRouter>
+    renderWithRouterAndTheme(
+      <SignupDialog type={ constants.student } />
     )
   })
 

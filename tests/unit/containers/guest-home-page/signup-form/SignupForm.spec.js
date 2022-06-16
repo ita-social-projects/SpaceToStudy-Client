@@ -1,6 +1,6 @@
-import { screen, render, fireEvent, waitFor } from '@testing-library/react'
-import { BrowserRouter } from 'react-router-dom'
+import { screen, fireEvent, waitFor } from '@testing-library/react'
 import SignupForm from '~/containers/guest-home-page/signup-form/SignupForm'
+import { renderWithRouterAndTheme } from '~tests/test-utils'
 
 const errors = { firstName: false, lastName: false, email: false, password: false, confirmPassword: false }
 const data = { firstName: 'John', lastName: 'Doe', email: 'email@mail.com', password: 'passTest1', confirmPassword: 'passTest1' }
@@ -10,16 +10,14 @@ const handleSubmit = jest.fn()
 
 describe('Signup form', () => {
   beforeEach(() => {
-    render(
-      <BrowserRouter>
-        <SignupForm
-          data={ data }
-          errors={ errors }
-          handleBlur={ handleBlur }
-          handleChange={ handleChange }
-          handleSubmit={ handleSubmit }
-        />
-      </BrowserRouter>
+    renderWithRouterAndTheme(
+      <SignupForm
+        data={ data }
+        errors={ errors }
+        handleBlur={ handleBlur }
+        handleChange={ handleChange }
+        handleSubmit={ handleSubmit }
+      />
     )
   })
 
