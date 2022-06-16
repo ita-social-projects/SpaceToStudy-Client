@@ -1,19 +1,29 @@
 import { useTranslation } from 'react-i18next'
 import { Box } from '@mui/material'
 
-import Heading from '~/components/heading/Heading'
+import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import videoImg from '~/assets/img/guest-home-page/videoImg.svg'
+
+const titleVariant = {
+  md: 'h3',
+  xs: 'h4'
+}
+
+const descriptionVariant = {
+  xs: 'subtitle1'
+}
 
 const style = {
   container: {
-    mx: {
-      sm: '24px',
-      xs: '16px'
-    },
-    marginBottom: '71px',
+    marginBottom: '70px',
+  },
+  videoWrapper : {
+    px: '24px'
   },
   video: {
-    maxWidth: '100%'
+    display: 'block',
+    margin: '0 auto',
+    maxWidth: '100%',
   }
 }
 
@@ -23,12 +33,19 @@ const WhoWeAre = () => {
 
   return (
     <Box sx={ style.container }>
-      <Heading description={ t('guestHomePage.whoWeAre.description') } title={ t('guestHomePage.whoWeAre.title') } />
-
-      <Box
-        alt='Video' component='img' src={ videoImg }
-        sx={ style.video }
+      <TitleWithDescription
+        description={ t('guestHomePage.whoWeAre.description') }
+        descriptionVariant={ descriptionVariant }
+        title={ t('guestHomePage.whoWeAre.title') }
+        titleVariant={ titleVariant }
       />
+
+      <Box sx={ style.videoWrapper }>
+        <Box
+          alt='Video' component='img' src={ videoImg }
+          sx={ style.video }
+        />
+      </Box>
     </Box>
   )
 }
