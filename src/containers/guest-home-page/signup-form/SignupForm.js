@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { Box, FormControlLabel, Typography, TextField, Button, Checkbox } from '@mui/material'
 import useInputVisibility from '~/hooks/use-input-visibility'
 
-import style from './signup-form.style'
+import { style } from './signup-form.style'
 
 const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) => {
   const { t } = useTranslation()

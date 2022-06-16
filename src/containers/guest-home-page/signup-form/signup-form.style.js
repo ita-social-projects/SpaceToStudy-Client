@@ -1,4 +1,4 @@
-const style = {
+export const style = {
   form: {
     maxWidth: { xs: '315px', sm: '343px' },
     padding: { sm: '50px 80px', md: '0' }
@@ -29,5 +29,3 @@ const style = {
     textDecoration: 'underline'
   }
 }
-
-export default style

@@ -1,4 +1,4 @@
-const style = {
+export const style = {
   root: {
     maxWidth: { xs: '315px', sm: 'md', md: '800px', lg: 'lg' },
     mt: { sx: '200px', sm: 0 },
@@ -27,5 +27,3 @@ const style = {
     padding: { sm: '50px 60px 40px 80px', md: '10px 55px 0 95px' }
   }
 }
-
-export default style

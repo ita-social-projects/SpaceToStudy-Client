@@ -10,7 +10,7 @@ import { email, password } from '~/constants/validation/login'
 import { constants } from '~/constants/common'
 import SignupForm from '~/containers/guest-home-page/signup-form/SignupForm'
 
-import style from '~/containers/guest-home-page/signup-dialog/signup-dialog.style'
+import { style } from '~/containers/guest-home-page/signup-dialog/signup-dialog.style'
 
 const SignupDialog = ({ type }) => {
   const { t } = useTranslation()

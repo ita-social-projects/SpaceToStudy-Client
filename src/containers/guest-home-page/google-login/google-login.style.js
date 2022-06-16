@@ -1,4 +1,4 @@
-const style = {
+export const style = {
   linesBox: {
     margin: '23px 0',
     display: 'flex',
@@ -30,5 +30,3 @@ const style = {
     color: 'primary.700'
   }
 }
-
-export default style
