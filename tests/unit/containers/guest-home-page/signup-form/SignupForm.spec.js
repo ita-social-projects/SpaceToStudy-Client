@@ -68,7 +68,10 @@ describe('Signup form', () => {
     fireEvent.click(visibilityOffIcons[0])
     const visibilityIcons = screen.getAllByTestId('VisibilityIcon')
 
-    await waitFor(() => expect(visibilityIcons[0]).toBeInTheDocument())
+    await waitFor(() => {
+      expect(visibilityIcons[0]).toBeInTheDocument()
+      expect(visibilityOffIcons[0]).not.toBeInTheDocument()
+    })
   })
 
   it('should submit form', async () => {
