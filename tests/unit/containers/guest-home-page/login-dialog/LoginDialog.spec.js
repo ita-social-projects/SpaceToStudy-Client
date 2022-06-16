@@ -1,14 +1,9 @@
-import { screen, render, fireEvent, waitFor } from '@testing-library/react'
+import { screen, render, fireEvent } from '@testing-library/react'
 import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
 
 jest.mock('~/hooks/use-confirm', () => {
   return () => ({
     setNeedConfirmation: () => true
-  })
-})
-jest.mock('~/hooks/use-prompt', () => {
-  return () => ({
-    setPrompt: () => true
   })
 })
 
