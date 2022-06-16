@@ -1,10 +1,16 @@
 export const style = {
-  closeIcon: {
+  closeIconBox: {
     display: 'flex',
-    justifyContent: 'end',
-    margin: '10px 10px 10px 261px'
+    justifyContent: 'flex-end',
+
   },
-  list: { p: 0 },
+  closeIcon: {
+    margin: '10px',
+  },
+  list: {
+    p: 0, 
+    width: '311px'
+  },
   listItem: {
     padding: '10px 8px',
     fontSize: '18px',

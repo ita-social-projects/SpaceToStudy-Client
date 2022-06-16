@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom'
-import { Drawer, Typography, IconButton, List, ListItem } from '@mui/material'
+import { Drawer, Box, Typography, IconButton, List, ListItem } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import { useTranslation } from 'react-i18next'
 
 import { style } from '~/containers/sidebar/sidebar.style'
 
-const Sidebar = ({ isOpen,  closeSidebar, navigationItems }) => {
+const Sidebar = ({ isSidebarOpen,  sidebarActive, navigationItems }) => {
   const { t } = useTranslation()
   
   const navigationList = navigationItems.map(item => {
@@ -15,7 +15,7 @@ const Sidebar = ({ isOpen,  closeSidebar, navigationItems }) => {
       >
         <Typography
           component={ Link }
-          onClick={ closeSidebar }
+          onClick={ sidebarActive }
           sx={ style.listItem }
           to={ item.route }
           variant="subtitle1"
@@ -28,12 +28,14 @@ const Sidebar = ({ isOpen,  closeSidebar, navigationItems }) => {
   return (
     <Drawer
       anchor='right'
-      onClose={ closeSidebar }
-      open={ isOpen }
+      onClose={ sidebarActive }
+      open={ isSidebarOpen }
     >
-      <IconButton onClick={ closeSidebar } sx={ style.closeIcon } >
-        <CloseIcon color='primary' />
-      </IconButton>
+      <Box sx={ style.closeIconBox }>
+        <IconButton onClick={ sidebarActive } sx={ style.closeIcon } >
+          <CloseIcon color='primary' />
+        </IconButton>
+      </Box>
 
       <List sx={ style.list }>
         { navigationList }

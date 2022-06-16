@@ -14,10 +14,9 @@ import PropTypes from 'prop-types'
 const Navbar = ({ navigationItems, children }) => {
 
   const { t } = useTranslation()
-  const [isOpen, setIsOpen] = useState(false)
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
-  const openSidebar = () => setIsOpen(true)
-  const closeSidebar = () => setIsOpen(false)  
+  const sidebarActive = () => setIsSidebarOpen(!isSidebarOpen)
 
   const navigationList = navigationItems.map(item => {
 
@@ -53,11 +52,11 @@ const Navbar = ({ navigationItems, children }) => {
           <LanguageIcon color='primary' />
         </IconButton>
         { children }
-        <IconButton onClick={ openSidebar } size='large' sx={ style.menuIcon }>
+        <IconButton onClick={ sidebarActive } size='large' sx={ style.menuIcon }>
           <MenuIcon color='primary' />
         </IconButton>
       </Box>
-      <Sidebar closeSidebar={ closeSidebar }  isOpen={ isOpen } navigationItems={ navigationItems } />
+      <Sidebar isSidebarOpen={ isSidebarOpen } navigationItems={ navigationItems } sidebarActive={ sidebarActive } />
     </Box>
   )
 }
