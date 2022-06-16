@@ -1,11 +1,14 @@
 import { useTranslation } from 'react-i18next'
 import { Box } from '@mui/material'
 
+import { routes } from '~/constants/routes'
 import Heading from '~/components/heading/Heading'
 import InfoCard from '~/components/info-card/InfoCard'
 import { whatCanYouDoStyles as style } from '~/containers/guest-home-page/styles/what-can-you-do.styles'
 import learnImg from '~/assets/img/guest-home-page/learnImg.svg'
 import teachImg from '~/assets/img/guest-home-page/teachImg.svg'
+
+const sectionId = routes.guestNavBar.whatCanYouDo.label
 
 const cardData = [
   {
@@ -40,7 +43,7 @@ const WhatCanYouDo = () => {
   })
 
   return (
-    <Box id='whatCanYouDo' sx={ style.container }>
+    <Box id={ sectionId } sx={ style.container }>
       <Heading description={ t('guestHomePage.whatCanYouDo.description') } title={ t('guestHomePage.whatCanYouDo.title') } />
 
       <Box sx={ style.cards }>
