@@ -1,31 +1,18 @@
-import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Box, FormControlLabel, Typography, TextField, Button, Checkbox,IconButton, InputAdornment } from '@mui/material'
-import Visibility from '@mui/icons-material/Visibility'
-import VisibilityOff from '@mui/icons-material/VisibilityOff'
+import { useInputVisibility } from '~/hooks/use-input-visibility'
+import { Box, FormControlLabel, Typography, TextField, Button, Checkbox } from '@mui/material'
 
 import style from './login-form.style'
 
 const LoginForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) => {
-  const [showPassword, setShowPassword] = useState(false)
-  const { t } = useTranslation()
+  const [passwordVisibility, showPassword] = useInputVisibility(errors.password)
 
-  const passwordVisibility = {
-    endAdornment: (
-      <InputAdornment position='end'>
-        <IconButton
-          aria-label='toggle password visibility'
-          onClick={ () => setShowPassword(!showPassword) }
-        >
-          { (showPassword ? <Visibility /> : <VisibilityOff />) }
-        </IconButton>
-      </InputAdornment>
-    )
-  }
+  const { t } = useTranslation()
     
   return (
     <Box component='form' onSubmit={ handleSubmit }>
       <TextField
+        autoFocus
         error={ Boolean(errors.email) }
         fullWidth 
         helperText={ t(errors.email) }

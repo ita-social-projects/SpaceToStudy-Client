@@ -1,9 +1,7 @@
 {
     "head": "Welcome back",
     "email": "Email",
-    "emailError": "Enter valid email example@mail.com",
     "password": "Password",
-    "passwordError": "password has a minimum of 6 characters, at least 1 uppercase letter, 1 lowercase letter, and 1 number with no spaces",
     "rememberMe": "Remember me",
     "forgotPassword": "Forgot password?",
     "loginButton": "Login",
@@ -12,8 +10,8 @@
     "haveAccount": "Don`t have an account yet?",
     "joinUs": "Join us for free",
     "errorMessages": {
-        "emailValid": "Enter valid email example@mail.com",
-        "passwordLength": "Password has minimum of 6 characters and maximum 30",
-        "passwordValid": "Password has at least 1 uppercase letter, 1 lowercase letter, and 1 number with no spaces"
+        "emailValid": "Email should be of the following format: “local-part@domain.com”",
+        "passwordLength": "Password cannot be shorter than 8 and longer than 25 characters",
+        "passwordValid": "Password must contain at least one alphabetic, one numeric and one special character"
     }
 }

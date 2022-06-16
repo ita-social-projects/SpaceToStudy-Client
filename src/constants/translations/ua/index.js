@@ -5,9 +5,10 @@ import header from './header.json'
 import questions from './questions.json'
 import titles from './titles.json'
 import login from './login.json'
+import signup from './signup.json'
 
 const ua = { 
-  translations: { common, errorPage, button, header, questions, titles, login } 
+  translations: { common, errorPage, button, header, questions, titles, login, signup } 
 }
 
 export default ua

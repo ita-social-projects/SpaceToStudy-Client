@@ -3,18 +3,19 @@ import { createTheme } from '@mui/material'
 import palette from './app.pallete.js'
 import appTypography from './app.typography'
 import button from './app.button'
-import svgicon from './app.svgicon'
+import { svgIcon } from './app.svgicon'
 import shadows from './app.shadows'
-
+import { checkbox } from './app.checkbox'
+import { textField } from './app.textfield.js'
 
 export const theme = createTheme({
   palette,
   typography: appTypography,
   components: {
-    MuiSvgIcon: svgicon,
+    MuiSvgIcon: svgIcon,
     MuiButton: button,
+    MuiCheckbox: checkbox,
+    MuiTextField: textField
   },
   shadows
 })
-
-export default theme

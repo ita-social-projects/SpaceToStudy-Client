@@ -5,7 +5,7 @@ import { ModalProvider } from './context/modal-context'
 import { ConfirmationDialogProvider } from './context/confirm-context'
 import useHashScroll from '~/hooks/use-hash-scroll'
 
-import theme from './styles/app-theme/custom-mui.styles'
+import { theme } from './styles/app-theme/custom-mui.styles'
 
 const App = () => {
   useHashScroll()

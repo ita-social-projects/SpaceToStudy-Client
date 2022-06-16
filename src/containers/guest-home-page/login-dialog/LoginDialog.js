@@ -8,6 +8,7 @@ import useForm from '~/hooks/use-form'
 import useConfirm from '~/hooks/use-confirm'
 import { email, password } from '~/constants/validation/login'
 import login from '~/assets/img/login-dialog/login.svg'
+import { constants } from '~/constants/common'
 import style from '~/containers/guest-home-page/login-dialog/login-dialog.style'
 
 const LoginDialog = () => {
@@ -47,7 +48,7 @@ const LoginDialog = () => {
           handleChange={ handleChange } handleSubmit={ handleSubmit }
         />
 
-        <GoogleLogin />
+        <GoogleLogin type={ constants.login } />
       </Box>
     </Box>
   )

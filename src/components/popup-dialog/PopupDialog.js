@@ -7,9 +7,9 @@ import useConfirm from '~/hooks/use-confirm'
 const style = {
   box: {
     margin: { xs: '1vh auto', sm: 0 },
-    padding: { xs: 0, sm: 2 }
+    padding: { xs: 1, sm: 2, md: 4 }
   },
-  icon: { float: 'right', }
+  icon: { float: 'right', color: 'primary.900' }
 }
 
 const PopupDialog = ({ content, closeModal }) => {

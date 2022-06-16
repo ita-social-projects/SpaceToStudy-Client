@@ -7,30 +7,40 @@ export const useForm = ({ initialValues, validations, onSubmit }) => {
   const [isTouched, setTouched] = useState({})
 
   const handleChange = (key) => (event) => {
-    const value = (event.target.type === 'checkbox') ? event.target.checked : event.target.value
+    let valid
+    const value = event.target.type === 'checkbox' ? event.target.checked : event.target.value
     setData({
       ...data,
       [key]: value
     })
     if (isTouched[key]) {
-      const valid = validations[key](event.target.value)
+      if (key === 'confirmPassword') {
+        valid = validations[key](data.password, event.target.value)
+      } else {
+        valid = validations[key](event.target.value)
+      }
       setErrors({
         ...errors,
-        [key]: valid,
+        [key]: valid
       })
     }
   }
-  
-  const handleBlur = (key) => ( event ) => {
-    setDirty((data[key] !== initialValues[key]))
-    const valid = validations[key](event.target.value)
+
+  const handleBlur = (key) => (event) => {
+    let valid
+    setDirty(data[key] !== initialValues[key])
+    if (key === 'confirmPassword') {
+      valid = validations[key](data.password, event.target.value)
+    } else {
+      valid = validations[key](event.target.value)
+    }
     setErrors({
       ...errors,
-      [key]: valid,
+      [key]: valid
     })
     setTouched({
       ...isTouched,
-      [key]: true,
+      [key]: true
     })
   }
 
@@ -40,12 +50,12 @@ export const useForm = ({ initialValues, validations, onSubmit }) => {
     if (validations) {
       for (const key in validations) {
         let value = data[key]
-        let validation  = validations[key](value)
+        let validation = validations[key](value)
         if (validation) {
-          isValid = false  
+          isValid = false
           setErrors({
             ...errors,
-            [key]: validation ,
+            [key]: validation
           })
           return
         }
@@ -62,7 +72,7 @@ export const useForm = ({ initialValues, validations, onSubmit }) => {
     errors,
     handleChange,
     handleBlur,
-    handleSubmit,
+    handleSubmit
   }
 }
 

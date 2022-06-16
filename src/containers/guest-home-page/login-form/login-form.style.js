@@ -21,7 +21,6 @@ const style = {
     padding: { xs:'18px 134px' , sm:'18px 149px' }
   },
   underlineText: {
-    fontWeight: '500',
     textDecoration: 'underline',
   }
 }
