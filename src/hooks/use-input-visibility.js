@@ -3,7 +3,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import { IconButton, InputAdornment } from '@mui/material'
 import { useState } from 'react'
 
-export const useInputVisibility = ( inputError ) => {
+const useInputVisibility = (inputError) => {
   const [showInputText, setShowInputText] = useState(false)
 
   const iconColor = inputError ? 'error' : 'secondary'
@@ -18,5 +18,7 @@ export const useInputVisibility = ( inputError ) => {
     )
   }
 
-  return [inputVisibility, showInputText]
+  return { inputVisibility, showInputText }
 }
+
+export default useInputVisibility

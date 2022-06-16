@@ -8,6 +8,7 @@ import LoginIcon from '@mui/icons-material/Login'
 import { ModalContext } from '~/context/modal-context'
 import NavBar from '~/containers/navbar/NavBar'
 import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
+import SignupDialog from '~/containers/guest-home-page/signup-dialog/SignupDialog'
 
 const style = {
   loginButton: {
@@ -24,6 +25,10 @@ const AppHeader = () => {
     setModal(<LoginDialog />)
   }
 
+  const handleModal2 = () => {
+    setModal(<SignupDialog type='student' />)
+  }
+
   return (
     <>
       <AppBar color='common' sx={ { boxShadow: 'primary' } }>
@@ -36,6 +41,13 @@ const AppHeader = () => {
 
           <Button
             onClick={ openLoginDialog } size='medium' sx={ style.loginButton }
+            variant="contained"
+          >
+            { t('header.loginButton') }
+          </Button>
+
+          <Button
+            onClick={ handleModal2 } size='medium' sx={ style.loginButton }
             variant="contained"
           >
             { t('header.loginButton') }

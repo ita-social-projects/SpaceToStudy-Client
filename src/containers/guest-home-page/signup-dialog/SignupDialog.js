@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next'
 import GoogleLogin from '~/containers/guest-home-page/google-login/GoogleLogin'
 import useForm from '~/hooks/use-form'
 import useConfirm from '~/hooks/use-confirm'
-import usePrompt from '~/hooks/use-prompt'
 import { firstName, lastName,  confirmPassword } from '~/constants/validation/signup'
 import { email, password } from '~/constants/validation/login'
 import { constants } from '~/constants/common'
@@ -16,7 +15,6 @@ import style from '~/containers/guest-home-page/signup-dialog/signup-dialog.styl
 const SignupDialog = ({ type }) => {
   const { t } = useTranslation()
   const { setNeedConfirmation } = useConfirm()
-  const { setPrompt } = usePrompt()
 
   const { handleSubmit, handleChange, handleBlur, data, isDirty, errors } = useForm(
     {
@@ -28,8 +26,7 @@ const SignupDialog = ({ type }) => {
 
   useEffect(() => {
     setNeedConfirmation(isDirty)
-    setPrompt(isDirty)
-  }, [isDirty, setNeedConfirmation, setPrompt])
+  }, [isDirty, setNeedConfirmation])
 
   return (
     <Box sx={ style.root }>

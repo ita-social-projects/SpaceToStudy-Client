@@ -1,14 +1,14 @@
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { Box, FormControlLabel, Typography, TextField, Button, Checkbox } from '@mui/material'
-import { useInputVisibility } from '~/hooks/use-input-visibility'
+import useInputVisibility from '~/hooks/use-input-visibility'
 
 import style from './signup-form.style'
 
 const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) => {
   const { t } = useTranslation()
-  const [passwordVisibility, showPassword] = useInputVisibility(errors.password)
-  const [confirmPasswordVisibility, showConfirmPassword] = useInputVisibility(errors.confirmPassword)
+  const { inputVisibility: passwordVisibility, showInputText: showPassword } = useInputVisibility(errors.password)
+  const { inputVisibility: confirmPasswordVisibility, showInputText: showConfirmPassword } = useInputVisibility(errors.confirmPassword)
 
   const checkboxLabel = (
     <Box sx={ style.box }>

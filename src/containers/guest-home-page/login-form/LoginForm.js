@@ -1,11 +1,11 @@
 import { useTranslation } from 'react-i18next'
-import { useInputVisibility } from '~/hooks/use-input-visibility'
+import useInputVisibility from '~/hooks/use-input-visibility'
 import { Box, FormControlLabel, Typography, TextField, Button, Checkbox } from '@mui/material'
 
 import style from './login-form.style'
 
 const LoginForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) => {
-  const [passwordVisibility, showPassword] = useInputVisibility(errors.password)
+  const { inputVisibility: passwordVisibility, showInputText: showPassword } = useInputVisibility(errors.password)
 
   const { t } = useTranslation()
     
