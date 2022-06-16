@@ -12,11 +12,8 @@ import { style } from '~/containers/navbar/navbar.style'
 import PropTypes from 'prop-types'
 
 const Navbar = ({ navigationItems, children }) => {
-
   const { t } = useTranslation()
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
-
-  const sidebarActive = () => setIsSidebarOpen(!isSidebarOpen)
 
   const navigationList = navigationItems.map(item => {
 
@@ -52,11 +49,11 @@ const Navbar = ({ navigationItems, children }) => {
           <LanguageIcon color='primary' />
         </IconButton>
         { children }
-        <IconButton onClick={ sidebarActive } size='large' sx={ style.menuIcon }>
+        <IconButton onClick={ () => setIsSidebarOpen(true) } size='large' sx={ style.menuIcon }>
           <MenuIcon color='primary' />
         </IconButton>
       </Box>
-      <Sidebar isSidebarOpen={ isSidebarOpen } navigationItems={ navigationItems } sidebarActive={ sidebarActive } />
+      <Sidebar isSidebarOpen={ isSidebarOpen } navigationItems={ navigationItems } setIsSidebarOpen={ setIsSidebarOpen } />
     </Box>
   )
 }

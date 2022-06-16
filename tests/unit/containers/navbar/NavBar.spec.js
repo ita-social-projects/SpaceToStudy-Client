@@ -37,7 +37,7 @@ describe('Sidebar test', () => {
     expect(languageIcon).toBeInTheDocument()
   })
     
-  it('should open sidebar with close icon when click menu icon', async () => {
+  it('should open sidebar with close icon after click menu icon', async () => {
     const menuIcon = screen.getByTestId('MenuIcon')
 
     expect(menuIcon).toBeInTheDocument()

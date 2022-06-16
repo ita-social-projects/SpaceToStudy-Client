@@ -4,12 +4,12 @@ import { renderWithRouterAndTheme } from '~tests/test-utils'
 
 describe('Sidebar test', () => {
   const isSidebarOpen = true
-  const sidebarActive = jest.fn()
+  const setIsSidebarOpen = jest.fn()
   const navigationItems = [{ label: 'label-test', route: '/#route-test' }]
     
   beforeEach(() => {
     renderWithRouterAndTheme(
-      <Sidebar isSidebarOpen={ isSidebarOpen } navigationItems={ navigationItems } sidebarActive={ sidebarActive } />
+      <Sidebar isSidebarOpen={ isSidebarOpen } navigationItems={ navigationItems } setIsSidebarOpen={ setIsSidebarOpen } />
     )
   })
 
@@ -19,18 +19,18 @@ describe('Sidebar test', () => {
     expect(text).toBeInTheDocument()
   })
     
-  it('should render link and call closeSidebar onClick link', async () => {
+  it('should render link and call setIsSidebarOpen with false after click link', async () => {
     const linkElement = screen.getByRole('link')
     expect(linkElement).toHaveAttribute('href', '/#route-test')
     
     fireEvent.click(linkElement)
-    await waitFor(() => expect(sidebarActive).toHaveBeenCalled())
+    await waitFor(() => expect(setIsSidebarOpen).toHaveBeenCalledWith(false))
   })
     
-  it('should call closeSidebar onClick button', async () => {
-    const closeButton = screen.getByRole('button')
-    fireEvent.click(closeButton)
+  it('should call setIsSidebarOpen with false after click button', async () => {
+    const closeIcon = screen.getByTestId('CloseIcon')
+    fireEvent.click(closeIcon)
 
-    await waitFor(() => expect(sidebarActive).toHaveBeenCalled())
+    await waitFor(() => expect(setIsSidebarOpen).toHaveBeenCalledWith(false))
   })
 })

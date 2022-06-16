@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 
 import { style } from '~/containers/sidebar/sidebar.style'
 
-const Sidebar = ({ isSidebarOpen,  sidebarActive, navigationItems }) => {
+const Sidebar = ({ isSidebarOpen,  setIsSidebarOpen, navigationItems }) => {
   const { t } = useTranslation()
   
   const navigationList = navigationItems.map(item => {
@@ -15,7 +15,7 @@ const Sidebar = ({ isSidebarOpen,  sidebarActive, navigationItems }) => {
       >
         <Typography
           component={ Link }
-          onClick={ sidebarActive }
+          onClick={ () => setIsSidebarOpen(false) }
           sx={ style.listItem }
           to={ item.route }
           variant="subtitle1"
@@ -28,11 +28,11 @@ const Sidebar = ({ isSidebarOpen,  sidebarActive, navigationItems }) => {
   return (
     <Drawer
       anchor='right'
-      onClose={ sidebarActive }
+      onClose={ () => setIsSidebarOpen(false) }
       open={ isSidebarOpen }
     >
       <Box sx={ style.closeIconBox }>
-        <IconButton onClick={ sidebarActive } sx={ style.closeIcon } >
+        <IconButton onClick={ () => setIsSidebarOpen(false) } sx={ style.closeIcon } >
           <CloseIcon color='primary' />
         </IconButton>
       </Box>
