@@ -1,15 +1,15 @@
 import { screen, render } from '@testing-library/react'
 
-import Heading from '~/components/heading/Heading'
+import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 
-describe('Heading component', () => {
+describe('title-with-description component', () => {
   const props = {
     title: 'Title for test case',
     description: 'Description for test case'
   }
 
   beforeEach(() => {
-    render(<Heading { ...props } />)
+    render(<TitleWithDescription { ...props } />)
   })
 
   it('should have correct title', () => {

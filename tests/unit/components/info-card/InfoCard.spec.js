@@ -6,10 +6,10 @@ describe('InfoCard component', () => {
   const props =
   {
     id: 1,
-    img: 'learnImg.svg',
+    img: 'learnImg.png',
     title: 'Learn from experts',
     description: 'It is a long established fact that a reader...',
-    btnText: 'Start learning today',
+    actionLabel: 'Start learning today',
   }
 
   beforeEach(() => {
@@ -17,7 +17,7 @@ describe('InfoCard component', () => {
   })
 
   it('should contain image', () => {
-    const img = screen.getByTestId('img')
+    const img = screen.getByTestId('infoCardImg')
 
     expect(img).toBeInTheDocument()
   })
@@ -35,7 +35,7 @@ describe('InfoCard component', () => {
   })
 
   it('should have correct button text', () => {
-    const text = screen.getByText(props.btnText)
+    const text = screen.getByText(props.actionLabel)
 
     expect(text).toBeInTheDocument()
   })

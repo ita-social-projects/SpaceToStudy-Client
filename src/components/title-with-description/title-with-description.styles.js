@@ -1,7 +1,8 @@
-export const headingStyles = {
+export const titleWithDescriptionStyles = {
   wrapper: {
     marginBottom: '32px',
-    px: '15px'
+    px: '15px',
+    textAlign: 'center'
   },
   title: {
     typography: {

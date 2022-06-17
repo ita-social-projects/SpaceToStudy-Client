@@ -9,9 +9,9 @@ import titleXs from '~/assets/img/guest-home-page/titleXs.svg'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { routes } from '~/constants/routes'
 
-const link = routes.guestNavBar.whatCanYouDo.route
+const scrollTo = routes.guestNavBar.whatCanYouDo.route
 
-const WelcomeBlock = () => {
+const Welcome = () => {
   const { t } = useTranslation()
   const size = useBreakpoints()
 
@@ -25,16 +25,16 @@ const WelcomeBlock = () => {
     <Box className='section' sx={ styles.container }>
       <Box
         alt='Title'
-        component='img' data-testid='titleImg' src={ images[size] }
+        component='img' data-testid='welcomeTitleImg' src={ images[size] }
         sx={ styles.title }
       />
-      <Typography data-testid='description' sx={ styles.subtitle }>
+      <Typography data-testid='welcomeDescription' sx={ styles.subtitle }>
         { t('guestHomePage.welcomeBlock.description') }
       </Typography>
 
       <Button
         component={ Link }
-        data-testid='getStarted' sx={ styles.getStartBtn } to={ link }
+        data-testid='welcomeGetStarted' sx={ styles.getStartBtn } to={ scrollTo }
         variant='contained'
       >
         { t('guestHomePage.welcomeBlock.getStarted') }
@@ -43,4 +43,4 @@ const WelcomeBlock = () => {
   )
 }
 
-export default WelcomeBlock
+export default Welcome

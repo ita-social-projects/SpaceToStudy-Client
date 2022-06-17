@@ -1,27 +1,30 @@
 import { Box, Button, Typography } from '@mui/material'
 
-import { cardStyles as style } from '~/components/info-card/info-card.styles'
+import { styles } from '~/components/info-card/info-card.styles'
+import { useTranslation } from 'react-i18next'
 
 //TODO add possibility for button to open pop-up.
 
-const InfoCard = ({ img, title, description, btnText }) => {
+const InfoCard = ({ img, title, description, actionLabel, cardWidth }) => {
+  const { t } = useTranslation()
+
   return (
-    <Box sx={ style.card }>
+    <Box sx={ { ...styles.card, maxWidth: cardWidth } }>
       <Box
-        alt='Learn from experts'
-        component='img' data-testid='img' src={ img }
-        sx={ style.cardImg }
+        alt={ t(title) }
+        component='img' data-testid='infoCardImg' src={ img }
+        sx={ styles.cardImg }
       ></Box>
-      <Typography sx={ style.cardTitle }>
-        { title }
+      <Typography sx={ styles.cardTitle }>
+        { t(title) }
       </Typography>
-      <Typography sx={ style.cardDescription }>
-        { description }
+      <Typography sx={ styles.cardDescription }>
+        { t(description) }
       </Typography>
       <Button
         variant='contained'
       >
-        { btnText }
+        { t(actionLabel) }
       </Button>
     </Box>
   )

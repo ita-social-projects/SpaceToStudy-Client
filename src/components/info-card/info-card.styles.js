@@ -1,17 +1,14 @@
 import theme from '~/styles/app-theme/custom-mui.styles'
 
-export const cardStyles = {
+export const styles = {
   card: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'center',
     boxSizing: 'border-box',
-    maxWidth: {
-      md: '427px',
-      xs: '343px',
-    },
     padding: '24px 24px 32px',
+    textAlign: 'center',
     backgroundColor: theme.palette.basic.white,
     boxShadow: theme.shadows.primary,
     borderRadius: '6px'
