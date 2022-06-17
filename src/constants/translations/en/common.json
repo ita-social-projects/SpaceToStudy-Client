@@ -2,5 +2,27 @@
   "title": "space2",
   "about": "About us",
   "yes": "Yes",
-  "no": "No"
+  "no": "No",
+  "labels": {
+    "email": "Email",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "terms": "Terms",
+    "privacyPolicy": "Privacy Policy",
+    "login": "Login",
+    "signup": "Sign up"
+  },
+  "errorMessages": {
+    "emailValid": "Email should be of the following format: “local-part@domain.com”",
+    "passwordLength": "Password cannot be shorter than 8 and longer than 25 characters",
+    "passwordValid": "Password must contain at least one alphabetic, one numeric and one special character",
+    "emptyField": "This field cannot be empty",
+    "firstNameLength": "First name cannot be longer than 30 characters",
+    "lastNameLength": "Last name cannot be longer than 30 characters",
+    "firstNameAlphabeticOnly": "First name can contain alphabetic characters only",
+    "lastNameAlphabeticOnly": "Last name can contain alphabetic characters only",
+    "passwordsDontMatch": "Passwords do not match"
+  }
 }

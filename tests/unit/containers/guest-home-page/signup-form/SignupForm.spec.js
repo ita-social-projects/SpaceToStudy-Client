@@ -22,31 +22,31 @@ describe('Signup form', () => {
   })
 
   it('should render firstName input', () => {
-    const input = screen.getByText('signup.firstName')
+    const input = screen.getByText('common.labels.firstName')
 
     expect(input).toBeInTheDocument()
   })
 
   it('should render lastName input', () => {
-    const input = screen.getByText('signup.lastName')
+    const input = screen.getByText('common.labels.lastName')
 
     expect(input).toBeInTheDocument()
   })
 
   it('should render email input', () => {
-    const input = screen.getByText('signup.email')
+    const input = screen.getByText('common.labels.email')
 
     expect(input).toBeInTheDocument()
   })
 
   it('should render password input', () => {
-    const input = screen.getByText('signup.password')
+    const input = screen.getByText('common.labels.password')
 
     expect(input).toBeInTheDocument()
   })
 
   it('should render confirmPassword input', () => {
-    const input = screen.getByText('signup.confirmPassword')
+    const input = screen.getByText('common.labels.confirmPassword')
 
     expect(input).toBeInTheDocument()
   })
@@ -58,7 +58,7 @@ describe('Signup form', () => {
   })
 
   it('should render signup button', () => {
-    const button = screen.getByText('signup.signupButton')
+    const button = screen.getByText('common.labels.signup')
 
     expect(button).toBeInTheDocument()
   })
@@ -75,7 +75,7 @@ describe('Signup form', () => {
   })
 
   it('should submit form', async () => {
-    const button = screen.getByText('signup.signupButton')
+    const button = screen.getByText('common.labels.signup')
     fireEvent.click(button)
 
     await waitFor(() => expect(handleSubmit).toHaveBeenCalled())

@@ -5,16 +5,19 @@ import { useTranslation } from 'react-i18next'
 import GoogleLogin from '~/containers/guest-home-page/google-login/GoogleLogin'
 import useForm from '~/hooks/use-form'
 import useConfirm from '~/hooks/use-confirm'
-import { firstName, lastName,  confirmPassword } from '~/constants/validation/signup'
-import { email, password } from '~/constants/validation/login'
-import { constants } from '~/constants/common'
+import { firstName, lastName, confirmPassword, email, password } from '~/constants/validation/login'
+import { signup } from '~/containers/guest-home-page/constants'
 import SignupForm from '~/containers/guest-home-page/signup-form/SignupForm'
+import student from '~/assets/img/signup-dialog/student.png'
+import mentor from '~/assets/img/signup-dialog/mentor.png'
 
 import { style } from '~/containers/guest-home-page/signup-dialog/signup-dialog.style'
 
 const SignupDialog = ({ type }) => {
   const { t } = useTranslation()
   const { setNeedConfirmation } = useConfirm()
+
+  const signupImg = type === 'student' ? student : mentor
 
   const { handleSubmit, handleChange, handleBlur, data, isDirty, errors } = useForm(
     {
@@ -33,13 +36,13 @@ const SignupDialog = ({ type }) => {
       
       <Box sx={ style.img }>
         <Box
-          alt="signup" component='img' src={ require(`../../../assets/img/signup-dialog/${type}.svg`).default }
+          alt="signup" component='img' src={ signupImg }
           sx={ style.img }
         />
       </Box>
       
       <Box sx={ style.form }>
-        <Box component='hr' sx={ style.hr } />
+        <Box sx={ style.line } />
         <Typography sx={ style.h2 } variant="h2">
           { t( 'signup.head', { returnObjects: true })[type] }
         </Typography>
@@ -52,7 +55,7 @@ const SignupDialog = ({ type }) => {
           handleSubmit={ handleSubmit }
         />
 
-        <GoogleLogin type={ constants.signup } />
+        <GoogleLogin type={ signup } />
       </Box>
     </Box>
   )

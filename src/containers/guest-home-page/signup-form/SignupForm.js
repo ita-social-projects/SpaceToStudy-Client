@@ -10,7 +10,7 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) =>
   const { inputVisibility: passwordVisibility, showInputText: showPassword } = useInputVisibility(errors.password)
   const { inputVisibility: confirmPasswordVisibility, showInputText: showConfirmPassword } = useInputVisibility(errors.confirmPassword)
 
-  const checkboxLabel = (
+  const policyAgreement = (
     <Box sx={ style.box }>
       <Typography variant='subtitle2'>
         { t( 'signup.iAgree' ) }
@@ -20,7 +20,7 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) =>
         sx={ style.underlineText } to={ '/' } 
         variant='subtitle2'
       >
-        { t( 'signup.terms' ) }
+        { t( 'common.labels.terms' ) }
       </Typography>
       <Typography sx={ { ml: '5px' } } variant='subtitle2'>
         { t( 'signup.and' ) }
@@ -30,7 +30,7 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) =>
         sx={ style.underlineText } to={ '/' } 
         variant='subtitle2'
       >
-        { t( 'signup.privacy' ) }
+        { t( 'common.labels.privacyPolicy' ) }
       </Typography>
     </Box>
   )
@@ -42,7 +42,7 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) =>
         error={ Boolean(errors.firstName) }
         fullWidth 
         helperText={ t(errors.firstName) }
-        label={ t( 'signup.firstName' ) }
+        label={ t( 'common.labels.firstName' ) }
         onBlur={ handleBlur('firstName') }
         onChange={ handleChange('firstName') }
         required
@@ -56,7 +56,7 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) =>
         error={ Boolean(errors.lastName) }
         fullWidth 
         helperText={ t(errors.lastName) }
-        label={ t( 'signup.lastName' ) }
+        label={ t( 'common.labels.lastName' ) }
         onBlur={ handleBlur('lastName') }
         onChange={ handleChange('lastName') }
         required
@@ -70,7 +70,7 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) =>
         error={ Boolean(errors.email) }
         fullWidth 
         helperText={ t(errors.email) }
-        label={ t( 'signup.email' ) }
+        label={ t( 'common.labels.email' ) }
         onBlur={ handleBlur('email') }
         onChange={ handleChange('email') }
         required
@@ -85,7 +85,7 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) =>
         error={ Boolean(errors.password) } 
         fullWidth
         helperText={ t(errors.password) }
-        label={ t( 'signup.password' ) }
+        label={ t( 'common.labels.password' ) }
         onBlur={ handleBlur('password') }
         onChange={ handleChange('password') }
         required
@@ -99,7 +99,7 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) =>
         error={ Boolean(errors.confirmPassword) } 
         fullWidth
         helperText={ t(errors.confirmPassword) }
-        label={ t( 'signup.confirmPassword' ) }
+        label={ t( 'common.labels.confirmPassword' ) }
         onBlur={ handleBlur('confirmPassword') }
         onChange={ handleChange('confirmPassword') }
         required
@@ -110,7 +110,7 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) =>
       <Box sx={ style.checkboxContainer } >
         <FormControlLabel
           control={ <Checkbox /> }
-          label={ checkboxLabel }
+          label={ policyAgreement }
           labelPlacement='end'
           size='large'
           sx={ style.checkboxLabel }
@@ -122,7 +122,7 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) =>
         size='large' sx={ style.signupButton } type='submit'
         variant="contained"
       >
-        { t( 'signup.signupButton' ) }
+        { t( 'common.labels.signup' ) }
       </Button>
     </Box>
   )

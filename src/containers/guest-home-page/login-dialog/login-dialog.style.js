@@ -12,7 +12,9 @@ const style = {
     minWidth: '420px',
     display: { xs: 'none', sm: 'none', md: 'flex' }
   },
-  hr: {
+  line: {
+    height: '1px',
+    backgroundColor: 'primary.100',
     mt: '6vh',
     mb: '5vh',
     display: { xs: 'flex', sm: 'none' }

@@ -16,7 +16,7 @@ const LoginForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) => 
         error={ Boolean(errors.email) }
         fullWidth 
         helperText={ t(errors.email) }
-        label={ t( 'login.email' ) }
+        label={ t( 'common.labels.email' ) }
         onBlur={ handleBlur('email') }
         onChange={ handleChange('email') }
         required
@@ -31,7 +31,7 @@ const LoginForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) => 
         error={ Boolean(errors.password) } 
         fullWidth
         helperText={ t(errors.password) }
-        label={ t( 'login.password' ) }
+        label={ t( 'common.labels.password' ) }
         onBlur={ handleBlur('password') }
         onChange={ handleChange('password') }
         required
@@ -58,7 +58,7 @@ const LoginForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) => 
         size='large' sx={ style.loginButton } type='submit'
         variant="contained"
       >
-        { t( 'login.loginButton' ) }
+        { t( 'common.labels.login' ) }
       </Button>
     </Box>
   )
