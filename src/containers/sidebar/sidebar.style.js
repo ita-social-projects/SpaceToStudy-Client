@@ -1,13 +1,11 @@
 export const style = {
-  closeIconBox: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-
-  },
   closeIcon: {
-    margin: '10px',
+    position: 'absolute',
+    right: '14px',
+    top: '14px',
   },
   list: {
+    mt: '54px',
     p: 0, 
     width: '311px'
   },

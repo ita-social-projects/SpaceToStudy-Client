@@ -31,11 +31,9 @@ const Sidebar = ({ isSidebarOpen,  setIsSidebarOpen, navigationItems }) => {
       onClose={ () => setIsSidebarOpen(false) }
       open={ isSidebarOpen }
     >
-      <Box sx={ style.closeIconBox }>
-        <IconButton onClick={ () => setIsSidebarOpen(false) } sx={ style.closeIcon } >
-          <CloseIcon color='primary' />
-        </IconButton>
-      </Box>
+      <IconButton onClick={ () => setIsSidebarOpen(false) } sx={ style.closeIcon } >
+        <CloseIcon color='primary' />
+      </IconButton>
 
       <List sx={ style.list }>
         { navigationList }
