@@ -27,7 +27,7 @@ describe('Login form', () => {
   })
     
   it('should render password input label', () => {
-    const inputLabel = screen.getByText('login.password')
+    const inputLabel = screen.getByText('common.labels.password')
       
     expect(inputLabel).toBeInTheDocument()
   })
@@ -45,7 +45,7 @@ describe('Login form', () => {
   })
     
   it('should render login button', () => {
-    const button = screen.getByText('login.loginButton')
+    const button = screen.getByText('common.labels.login')
       
     expect(button).toBeInTheDocument()
   })
@@ -62,7 +62,7 @@ describe('Login form', () => {
   })
   
   it('should submit', async () => {
-    const button = screen.getByText('login.loginButton')
+    const button = screen.getByText('common.labels.login')
     fireEvent.click(button)  
   
     await waitFor(() => expect(handleSubmit).toHaveBeenCalled())

@@ -1,10 +1,11 @@
 import { screen, render } from '@testing-library/react'
+import { login } from '~/containers/guest-home-page/constants'
 import GoogleLogin from '~/containers/guest-home-page/google-login/GoogleLogin'
 
 describe('GoogleLogin component test', () => {
   beforeEach(() => {
     render(
-      <GoogleLogin />
+      <GoogleLogin type={ login } />
     )
   })
 
