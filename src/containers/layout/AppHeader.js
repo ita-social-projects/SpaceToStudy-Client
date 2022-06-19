@@ -26,7 +26,7 @@ const AppHeader = () => {
 
   return (
     <>
-      <AppBar color='common' sx={ { boxShadow: 'primary' } }>
+      <AppBar color='common' sx={ { boxShadow: '0' } }>
       
         <NavBar navigationItems={ Object.values(routes.guestNavBar) }>
           

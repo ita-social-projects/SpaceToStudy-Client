@@ -31,7 +31,7 @@ export const WelcomeBlockStyles = {
   },
   getStartBtn: {
     padding: '16px 51px',
-    boxShadow: theme.shadows.primary,
+    boxShadow: '0',
     textTransform: 'none'
   }
 }

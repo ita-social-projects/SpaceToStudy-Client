@@ -25,7 +25,7 @@ export const style = {
   },
   active: {
     backgroundColor: 'primary.800',
-    boxShadow: 'shadows.primary',
+    boxShadow: '0',
     '& h6': {
       color: 'basic.white'
     }
