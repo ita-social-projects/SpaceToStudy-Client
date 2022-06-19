@@ -20,22 +20,22 @@ const AppHeader = () => {
   const { t } = useTranslation()
   const { setModal } = useContext(ModalContext)
 
-  const openLoginDialog = () => {
+  const handleModal = () => {
     setModal(<LoginDialog />)
   }
 
   return (
     <>
-      <AppBar color='common' sx={ { boxShadow: 'primary' } }>
+      <AppBar color='common' sx={ { boxShadow: '0' } }>
       
         <NavBar navigationItems={ Object.values(routes.guestNavBar) }>
           
-          <IconButton onClick={ openLoginDialog } size='large' sx={ { display: { md: 'none' } } }>
+          <IconButton onClick={ handleModal } size='large' sx={ { display: { md: 'none' } } }>
             <LoginIcon color='primary' />
           </IconButton>
 
           <Button
-            onClick={ openLoginDialog } size='medium' sx={ style.loginButton }
+            onClick={ handleModal } size='medium' sx={ style.loginButton }
             variant="contained"
           >
             { t('header.loginButton') }
