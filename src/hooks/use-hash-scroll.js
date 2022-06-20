@@ -2,7 +2,7 @@ import { useEffect, useCallback } from 'react'
 import { useLocation } from 'react-router-dom'
 
 const useHashScroll = () => {
-  let { hash } = useLocation()
+  const { hash } = useLocation()
 
   const scrollToAnchor = useCallback((elementWithId) => {
     if (hash.includes('#')) {
