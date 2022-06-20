@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { Typography, Box, Button } from '@mui/material'
 
-import { welcomeBlockStyles as style } from '~/containers/guest-home-page/styles/welcome-block.styles'
+import { styles } from '~/containers/guest-home-page/styles/welcome.styles'
 import titleMd from '~/assets/img/guest-home-page/titleMd.svg'
 import titleSm from '~/assets/img/guest-home-page/titleSm.svg'
 import titleXs from '~/assets/img/guest-home-page/titleXs.svg'
@@ -18,16 +18,16 @@ const WelcomeBlock = () => {
   }
 
   return (
-    <Box sx={ style.container }>
+    <Box sx={ styles.container }>
       <Box
         alt='Title' component='img' src={ images[size] }
-        sx={ style.title }
+        sx={ styles.title }
       />
-      <Typography sx={ style.subtitle }>
+      <Typography sx={ styles.subtitle }>
         { t('guestHomePage.welcomeBlock.description') }
       </Typography>
 
-      <Button sx={ style.getStartBtn } variant="contained">
+      <Button sx={ styles.getStartBtn } variant="contained">
         { t('guestHomePage.welcomeBlock.getStarted') }
       </Button>
     </Box>
