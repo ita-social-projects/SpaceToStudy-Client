@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Drawer, Box, Typography, IconButton, List, ListItem } from '@mui/material'
+import { Drawer, Typography, IconButton, List, ListItem } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import { useTranslation } from 'react-i18next'
 
