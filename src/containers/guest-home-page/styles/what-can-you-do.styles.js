@@ -1,5 +1,3 @@
-import theme from '~/styles/app-theme/custom-mui.styles'
-
 export const styles = {
   container: {
     my: {
@@ -32,7 +30,7 @@ export const styles = {
       sm: '48px',
       xs: '32px'
     },
-    backgroundColor: theme.palette.primary[50],
+    backgroundColor: 'primary.50',
     borderRadius: {
       md: '20px',
       xs: '16px'

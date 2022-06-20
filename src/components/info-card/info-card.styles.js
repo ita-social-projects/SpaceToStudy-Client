@@ -1,5 +1,3 @@
-import theme from '~/styles/app-theme/custom-mui.styles'
-
 export const styles = {
   card: {
     display: 'flex',
@@ -9,8 +7,8 @@ export const styles = {
     boxSizing: 'border-box',
     padding: '24px 24px 32px',
     textAlign: 'center',
-    backgroundColor: theme.palette.basic.white,
-    boxShadow: theme.shadows.primary,
+    backgroundColor: 'basic.white',
+    boxShadow: 'primary',
     borderRadius: '6px'
   },
   cardImg: {
