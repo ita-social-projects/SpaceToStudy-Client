@@ -47,21 +47,18 @@ stages:
             tags: '$(Build.BuildId)'
 
   - stage: Deploy
+    displayName: Deploy image to app service
     jobs:
-      - job: Deploy
-        pool:
-          vmImage: $(agentOS)
-          strategy:
-          runOnce:
-            deploy:
-              steps:
-              - download: none
-              - task: AzureRmWebAppDeployment@4
-                inputs:
-                  ConnectionType: 'AzureRM'
-                  azureSubscription: 'S2s-Service'
-                  appType: 'webAppContainer'
-                  WebAppName: 'front-stage'
-                  DockerNamespace: 'S2sStage'
-                  DockerRepository: 'front-stage'
-                  DockerImageTag: '$(Build.BuildId)'
+     - job: Deploy
+       pool:
+         vmImage: $(agentOS)
+       steps:
+         - task: AzureRmWebAppDeployment@4
+           inputs:
+             ConnectionType: 'AzureRM'
+             azureSubscription: 'S2s-Service'
+             appType: 'webAppContainer'
+             WebAppName: 's2s-front-stage'
+             DockerNamespace: 's2sstage.azurecr.io'
+             DockerRepository: 'front-stage'
+             DockerImageTag: '$(Build.BuildId)'
