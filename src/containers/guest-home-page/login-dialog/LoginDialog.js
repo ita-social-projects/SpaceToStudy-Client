@@ -9,6 +9,7 @@ import useConfirm from '~/hooks/use-confirm'
 import { email, password } from '~/constants/validation/login'
 import loginImg from '~/assets/img/login-dialog/login.png'
 import { login } from '~/containers/guest-home-page/constants'
+
 import style from '~/containers/guest-home-page/login-dialog/login-dialog.style'
 
 const LoginDialog = () => {
@@ -38,7 +39,6 @@ const LoginDialog = () => {
       </Box>
       
       <Box sx={ style.form }>
-        <Box sx={ style.line } />
         <Typography sx={ style.h2 } variant="h2">
           { t( 'login.head' ) }
         </Typography>
