@@ -31,6 +31,7 @@ export const styles = {
       sm: 'subtitle1',
       xs: 'body2'
     },
+    px: '24px',
     maxWidth:  '798px',
     marginBottom: '32px',
     color: 'primary.900',

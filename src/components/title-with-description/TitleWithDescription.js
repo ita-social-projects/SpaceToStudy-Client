@@ -1,18 +1,15 @@
 import { Box, Typography } from '@mui/material'
-import { titleWithDescriptionStyles as style } from '~/components/title-with-description/title-with-description.styles'
-import { useTranslation } from 'react-i18next'
+import { styles } from '~/components/title-with-description/title-with-description.styles'
 
-const TitleWithDescription = ({ title, description }) => {
-  const { t } = useTranslation()
-
+const TitleWithDescription = ({ title, titleVariant, description, descriptionVariant }) => {
   return (
-    <Box sx={ style.wrapper }>
-      <Typography sx={ style.title }>
-        { t(title) }
+    <Box sx={ styles.wrapper }>
+      <Typography sx={ { typography: titleVariant, ...styles.title } }>
+        { title }
       </Typography>
 
-      <Typography variant='subtitle1'>
-        { t(description) }
+      <Typography sx={ { typography: descriptionVariant } }>
+        { description }
       </Typography>
     </Box>
   )

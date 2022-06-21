@@ -1,14 +1,10 @@
-export const titleWithDescriptionStyles = {
+export const styles = {
   wrapper: {
     marginBottom: '32px',
-    px: '15px',
+    px: '24px',
     textAlign: 'center'
   },
   title: {
-    typography: {
-      md: 'h3',
-      xs: 'h4'
-    },
     marginBottom: '16px',
   }
 }

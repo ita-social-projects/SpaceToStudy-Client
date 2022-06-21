@@ -17,7 +17,7 @@ describe('InfoCard component', () => {
   })
 
   it('should contain image', () => {
-    const img = screen.getByTestId('infoCardImg')
+    const img = screen.getByAltText(props.title)
 
     expect(img).toBeInTheDocument()
   })

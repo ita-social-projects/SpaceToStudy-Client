@@ -25,7 +25,7 @@ const Welcome = () => {
     <Box className='section' sx={ styles.container }>
       <Box
         alt='Title'
-        component='img' data-testid='welcomeTitleImg' src={ images[size] }
+        component='img' src={ images[size] }
         sx={ styles.title }
       />
       <Typography data-testid='welcomeDescription' sx={ styles.subtitle }>

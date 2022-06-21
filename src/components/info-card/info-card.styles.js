@@ -5,7 +5,8 @@ export const styles = {
     justifyContent: 'space-between',
     alignItems: 'center',
     boxSizing: 'border-box',
-    padding: '24px 24px 32px',
+    paddingTop: '24px',
+    paddingBottom: '32px',
     textAlign: 'center',
     backgroundColor: 'basic.white',
     boxShadow: 'primary',
@@ -15,17 +16,15 @@ export const styles = {
     marginBottom: '24px'
   },
   cardTitle: {
-    typography: {
-      md: 'h4',
-      xs: 'h5'
+    maxWidth: {
+      md: '340px',
+      xs: '240px'
     },
-    marginBottom: '16px',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
   },
   cardDescription: {
-    typography: {
-      md: 'body1',
-      xs: 'body2'
-    },
-    marginBottom: '24px',
+    marginBottom: '24px'
   }
 }

@@ -1,30 +1,37 @@
-import { Box, Button, Typography } from '@mui/material'
+import { Box, Button } from '@mui/material'
 
+import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import { styles } from '~/components/info-card/info-card.styles'
-import { useTranslation } from 'react-i18next'
 
 //TODO add possibility for button to open pop-up.
 
-const InfoCard = ({ img, title, description, actionLabel, cardWidth }) => {
-  const { t } = useTranslation()
+const titleVariant = {
+  md: 'h4',
+  xs: 'h5'
+}
+const descriptionVariant = {
+  md: 'body1',
+  xs: 'body2'
+}
 
+const InfoCard = ({ img, title, description, actionLabel, cardWidth }) => {
   return (
     <Box sx={ { ...styles.card, maxWidth: cardWidth } }>
       <Box
-        alt={ t(title) }
-        component='img' data-testid='infoCardImg' src={ img }
+        alt={ title }
+        component='img' src={ img }
         sx={ styles.cardImg }
       ></Box>
-      <Typography sx={ styles.cardTitle }>
-        { t(title) }
-      </Typography>
-      <Typography sx={ styles.cardDescription }>
-        { t(description) }
-      </Typography>
-      <Button
-        variant='contained'
-      >
-        { t(actionLabel) }
+
+      <TitleWithDescription
+        description={ description }
+        descriptionVariant={ descriptionVariant }
+        title={ title }
+        titleVariant={ titleVariant }
+      />
+
+      <Button variant='contained'>
+        { actionLabel }
       </Button>
     </Box>
   )

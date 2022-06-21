@@ -1,13 +1,23 @@
 import { Box } from '@mui/material'
+import { useTranslation } from 'react-i18next'
 
-import { routes } from '~/constants/routes'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import InfoCard from '~/components/info-card/InfoCard'
+import { routes } from '~/constants/routes'
 import { styles } from '~/containers/guest-home-page/styles/what-can-you-do.styles'
 import learnImg from '~/assets/img/guest-home-page/learnImg.png'
 import teachImg from '~/assets/img/guest-home-page/teachImg.png'
 
 const sectionId = routes.guestNavBar.whatCanYouDo.label
+
+const titleVariant = {
+  md: 'h3',
+  xs: 'h4'
+}
+
+const descriptionVariant = {
+  xs: 'subtitle1'
+}
 
 const cardWidth = {
   md: '427px',
@@ -34,24 +44,28 @@ const cardData = [
 ]
 
 const WhatCanYouDo = () => {
+  const { t } = useTranslation()
+
   const cards = cardData.map(item => {
     return (
       <InfoCard
-        actionLabel={ item.actionLabel }
+        actionLabel={ t(item.actionLabel) }
         cardWidth={ item.cardWidth }
-        description={ item.description }
+        description={ t(item.description) }
         img={ item.img }
         key={ item.id }
         link={ item.link }
-        title={ item.title }
+        title={ t(item.title) }
       />)
   })
 
   return (
     <Box id={ sectionId } sx={ styles.container }>
       <TitleWithDescription
-        description={ 'guestHomePage.whatCanYouDo.description' }
-        title={ 'guestHomePage.whatCanYouDo.title' }
+        description={ t('guestHomePage.whatCanYouDo.description') }
+        descriptionVariant={ descriptionVariant }
+        title={ t('guestHomePage.whatCanYouDo.title') }
+        titleVariant={ titleVariant }
       />
 
       <Box sx={ styles.cards }>

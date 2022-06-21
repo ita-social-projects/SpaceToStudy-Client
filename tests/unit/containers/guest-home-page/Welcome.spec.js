@@ -1,17 +1,17 @@
 import { screen } from '@testing-library/react'
 
-import { renderWithRouterAndTheme } from '~tests/test-utils'
+import { renderWithProviders } from '~tests/test-utils'
 import Welcome from '~/containers/guest-home-page/Welcome'
 
 describe('Welcome component', () => {
   beforeEach(() => {
-    renderWithRouterAndTheme(
+    renderWithProviders(
       <Welcome />
     )
   })
 
   it('should have title img', () => {
-    const img = screen.getByTestId('welcomeTitleImg')
+    const img = screen.getByAltText('Title')
 
     expect(img).toBeInTheDocument()
   })
