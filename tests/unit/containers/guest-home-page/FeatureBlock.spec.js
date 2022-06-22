@@ -17,9 +17,11 @@ describe('Carousel test', () => {
   it('Test should render carousel component', () => {
     useBreakpoints.mockImplementation(() => 'mobile')
     render(<FeatureBlock items={items} />)
-    const component = screen.getByTestId('carousel')
+    const carouselComponent = screen.getByTestId('carousel')
+    const accordionComponent = screen.queryByTestId('accordion')
 
-    expect(component).toBeInTheDocument()
+    expect(carouselComponent).toBeInTheDocument()
+    expect(accordionComponent).not.toBeInTheDocument()
   })
 })
 
@@ -27,8 +29,10 @@ describe('Accordion test', () => {
   it('Test should render accordion component', () => {
     useBreakpoints.mockImplementation(() => 'desktop')
     render(<FeatureBlock items={items} />)
-    const component = screen.getByTestId('accordion')
+    const accordionComponent = screen.getByTestId('accordion')
+    const carouselComponent = screen.queryByTestId('carousel')
 
-    expect(component).toBeInTheDocument()
+    expect(accordionComponent).toBeInTheDocument()
+    expect(carouselComponent).not.toBeInTheDocument()
   })
 })
