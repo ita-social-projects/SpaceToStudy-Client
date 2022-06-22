@@ -8,6 +8,7 @@ import LoginIcon from '@mui/icons-material/Login'
 import { ModalContext } from '~/context/modal-context'
 import NavBar from '~/containers/navbar/NavBar'
 import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
+import { mainShadow } from '~/styles/app-theme/shadows'
 
 const style = {
   loginButton: {
@@ -26,7 +27,7 @@ const AppHeader = () => {
 
   return (
     <>
-      <AppBar color='common' sx={ { boxShadow: '0' } }>
+      <AppBar color='common' sx={ { boxShadow: mainShadow } }>
       
         <NavBar navigationItems={ Object.values(routes.guestNavBar) }>
           
