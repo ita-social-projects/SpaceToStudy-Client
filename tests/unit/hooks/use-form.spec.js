@@ -19,7 +19,7 @@ describe('useForm custom hook test without errors', () => {
     expect(result.current.isDirty).toEqual(false)
   })
 
-  it('should handle changes', () => {
+  it('should change data value', () => {
     const validations = { email: jest.fn(() => undefined) }
     const { result } = renderHook(() => useForm({ initialValues, validations, onSubmit }))
     
@@ -28,6 +28,7 @@ describe('useForm custom hook test without errors', () => {
     expect(result.current.data).toEqual({ email: 'test' })
     expect(result.current.errors).toEqual({})
   })
+  
   it('should blur after change', () => {
     const validations = { email: jest.fn(() => undefined) }
     const { result } = renderHook(() => useForm({ initialValues, validations, onSubmit }))
@@ -39,6 +40,7 @@ describe('useForm custom hook test without errors', () => {
     expect(result.current.errors).toEqual({ email: undefined })
     expect(result.current.isDirty).toEqual(true)
   })
+
   it('should submit', () => {
     const validations = { email: jest.fn(() => undefined) }
     const { result } = renderHook(() => useForm({ initialValues, validations, onSubmit }))
@@ -50,9 +52,10 @@ describe('useForm custom hook test without errors', () => {
     expect(onSubmit).toBeCalled()
   })
 })
+
 describe('useForm custom hook test with errors', () => {
 
-  it('should handle change', () => {
+  it('should change with validation after blur', () => {
     const validations = { email: jest.fn(() => 'error') }
     const { result } = renderHook(() => useForm({ initialValues, validations, onSubmit }))
 
@@ -63,6 +66,7 @@ describe('useForm custom hook test with errors', () => {
     expect(validations.email).toBeCalled()
     expect(result.current.errors).toEqual({ email: 'error' })
   })
+
   it('should handle blur', () => {
     const validations = { email: jest.fn(() => 'error') }
     const { result } = renderHook(() => useForm({ initialValues, validations, onSubmit }))
@@ -72,7 +76,8 @@ describe('useForm custom hook test with errors', () => {
     expect(validations.email).toBeCalled()
     expect(result.current.errors).toEqual({ email: 'error' })
   })
-  it('should submit', () => {
+
+  it('should validate and not submit', () => {
     const validations = { email: jest.fn(() => 'error') }
     const { result } = renderHook(() => useForm({ initialValues, validations, onSubmit }))
     
@@ -80,5 +85,6 @@ describe('useForm custom hook test with errors', () => {
 
     expect(validations.email).toBeCalled()
     expect(result.current.errors).toEqual({ email: 'error' })
+    expect(onSubmit).not.toBeCalled()
   })
 })
