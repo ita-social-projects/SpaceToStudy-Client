@@ -1,4 +1,4 @@
-import { mainShadow } from '~/styles/app-theme/shadows'
+import { mainShadow } from '~/styles/app-theme/custom-shadows'
 export const style = {
   accordion: {
     borderRadius: '6px',

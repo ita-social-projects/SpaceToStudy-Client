@@ -1,6 +1,6 @@
 import theme from '~/styles/app-theme/custom-mui.styles'
 import desktopBg from '~/assets/img/guest-home-page/desktopBg.svg'
-import { mainShadow } from '~/styles/app-theme/shadows'
+import { mainShadow } from '~/styles/app-theme/custom-shadows'
 export const WelcomeBlockStyles = {
   container: {
     display: 'flex',

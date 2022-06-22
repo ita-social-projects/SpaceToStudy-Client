@@ -29,21 +29,23 @@ const CarouselWithImage = ({ items }) => {
           { t(item.description) }
         </Typography>
       </Box>
+    </Box>
+  ))
+
+  return (
+    <>
+      <SwipeableViews enableMouseEvents index={ activeStep } onChangeIndex={ handleStepChange }>
+        { carouselWrapper }
+      </SwipeableViews>
       <MobileStepper
         activeStep={ activeStep }
         data-testid="carousel"
         position="static"
         steps={ maxSteps }
-        sx={ { pt: '16px', boxShadow: 'none' } }
+        sx={ { display: 'flex', justifyContent: 'center', pt: '16px', boxShadow: 'none',  } }
         variant="dots"
       />
-    </Box>
-  ))
-
-  return (
-    <SwipeableViews enableMouseEvents index={ activeStep } onChangeIndex={ handleStepChange }>
-      { carouselWrapper }
-    </SwipeableViews>
+    </>
   )
 }
 export default CarouselWithImage
