@@ -1,24 +1,22 @@
 import { render, screen } from '@testing-library/react'
 import FeatureBlock from '~/containers/guest-home-page/FeatureBlock'
 import MapLogo from '~/assets/img/guest-home-page/map.svg'
+import useBreakpoints from '~/hooks/use-breakpoints'
 
-let mockMobile = 'mobile'
-jest.mock('~/hooks/use-breakpoints', () => {
-  return () => mockMobile
-})
+jest.mock('~/hooks/use-breakpoints')
 
 const items = [
   {
     image: MapLogo,
-    title: 'guestHomePage.accordion.flexibleLocation.title',
-    description: 'guestHomePage.accordion.flexibleLocation.description'
+    title: 'First test title',
+    description: 'First test description'
   }
 ]
 
 describe('Carousel test', () => {
-  render(<FeatureBlock items={ items } />)
-
-  it('Test if carousel render', () => {
+  it('Test should render carousel component', () => {
+    useBreakpoints.mockImplementation(() => 'mobile')
+    render(<FeatureBlock items={items} />)
     const component = screen.getByTestId('carousel')
 
     expect(component).toBeInTheDocument()
@@ -26,12 +24,11 @@ describe('Carousel test', () => {
 })
 
 describe('Accordion test', () => {
-  mockMobile = 'desktop'
-  render(<FeatureBlock items={ items } />)
+  it('Test should render accordion component', () => {
+    useBreakpoints.mockImplementation(() => 'desktop')
+    render(<FeatureBlock items={items} />)
+    const component = screen.getByTestId('accordion')
 
-  it('Test if accordion render', () => {
-    const component = screen.queryByTestId('carousel')
-
-    expect(component).not.toBeInTheDocument()
+    expect(component).toBeInTheDocument()
   })
 })

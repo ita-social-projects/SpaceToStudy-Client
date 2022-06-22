@@ -7,20 +7,20 @@ describe('AccordionWithImage component test', () => {
   const items = [
     {
       image: MapLogo,
-      title: 'guestHomePage.accordion.flexibleLocation.title',
-      description: 'guestHomePage.accordion.flexibleLocation.description'
+      title: 'First test title',
+      description: 'First test description'
     },
     {
       image: Logo,
-      title: 'guestHomePage.accordion.individualTime.title',
-      description: 'guestHomePage.accordion.individualTime.description'
+      title: 'Second test title',
+      description: 'Second test description'
     }
   ]
   beforeEach(() => {
-    render(<AccordionWithImage items={ items } />)
+    render(<AccordionWithImage items={items} />)
   })
   it('Test onChange id', () => {
-    const id = screen.getByText('guestHomePage.accordion.individualTime.title')
+    const id = screen.getByText('Second test title')
     fireEvent.click(id)
 
     expect(id).toBeInTheDocument()

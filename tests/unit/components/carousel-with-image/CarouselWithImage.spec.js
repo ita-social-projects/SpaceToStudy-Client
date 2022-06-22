@@ -7,17 +7,17 @@ describe('CarouselWithImage component test', () => {
   const items = [
     {
       image: MapLogo,
-      title: 'guestHomePage.accordion.flexibleLocation.title',
-      description: 'guestHomePage.accordion.flexibleLocation.description'
+      title: 'title1',
+      description: 'description1'
     },
     {
       image: Logo,
-      title: 'guestHomePage.accordion.individualTime.title',
-      description: 'guestHomePage.accordion.individualTime.description'
+      title: 'title2',
+      description: 'description2'
     }
   ]
   beforeEach(() => {
-    render(<CarouselWithImage items={ items } />)
+    render(<CarouselWithImage items={items} />)
   })
   it('Test image', () => {
     const mapLogo = screen.getByAltText('map.svg')
