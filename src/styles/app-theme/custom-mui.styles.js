@@ -17,5 +17,4 @@ export const theme = createTheme({
     MuiCheckbox: checkbox,
     MuiTextField: textField
   },
-  shadows
 })

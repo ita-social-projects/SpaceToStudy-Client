@@ -1,3 +1,4 @@
+import { mainShadow } from '~/styles/app-theme/shadows'
 export const style = {
   accordion: {
     borderRadius: '6px',
@@ -25,7 +26,7 @@ export const style = {
   },
   active: {
     backgroundColor: 'primary.800',
-    boxShadow: '0',
+    boxShadow: mainShadow,
     '& h6': {
       color: 'basic.white'
     }

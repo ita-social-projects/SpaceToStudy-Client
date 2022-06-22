@@ -1,6 +1,6 @@
 import theme from '~/styles/app-theme/custom-mui.styles'
 import desktopBg from '~/assets/img/guest-home-page/desktopBg.svg'
-
+import { mainShadow } from '~/styles/app-theme/shadows'
 export const WelcomeBlockStyles = {
   container: {
     display: 'flex',
@@ -31,7 +31,7 @@ export const WelcomeBlockStyles = {
   },
   getStartBtn: {
     padding: '16px 51px',
-    boxShadow: '0',
+    boxShadow: mainShadow,
     textTransform: 'none'
   }
 }

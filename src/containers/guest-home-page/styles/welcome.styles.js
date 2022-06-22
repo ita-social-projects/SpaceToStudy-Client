@@ -2,7 +2,7 @@ import { theme } from '~/styles/app-theme/custom-mui.styles'
 import welcomeBgMd from '~/assets/img/guest-home-page/welcomeBgMd.svg'
 import welcomeBgSm from '~/assets/img/guest-home-page/welcomeBgSm.svg'
 import welcomeBgXs from '~/assets/img/guest-home-page/welcomeBgXs.svg'
-
+import { mainShadow } from '~/styles/app-theme/shadows'
 const gradient = 'radial-gradient(ellipse at top, rgba(192, 229, 228, 0.4), transparent 80%'
 
 export const styles = {
@@ -42,7 +42,7 @@ export const styles = {
   },
   getStartBtn: {
     padding: '16px 51px',
-    boxShadow: theme.shadows.primary,
+    boxShadow: mainShadow,
     textTransform: 'none'
   }
 }
