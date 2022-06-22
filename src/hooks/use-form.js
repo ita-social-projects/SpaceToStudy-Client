@@ -7,30 +7,30 @@ export const useForm = ({ initialValues, validations, onSubmit }) => {
   const [isTouched, setTouched] = useState({})
 
   const handleChange = (key) => (event) => {
-    const value = (event.target.type === 'checkbox') ? event.target.checked : event.target.value
+    const value = event.target.type === 'checkbox' ? event.target.checked : event.target.value
     setData({
       ...data,
       [key]: value
     })
     if (isTouched[key]) {
-      const valid = validations[key](event.target.value)
+      const valid = validations[key](event.target.value, data)
       setErrors({
         ...errors,
-        [key]: valid,
+        [key]: valid
       })
     }
   }
-  
-  const handleBlur = (key) => ( event ) => {
-    setDirty((data[key] !== initialValues[key]))
-    const valid = validations[key](event.target.value)
+
+  const handleBlur = (key) => (event) => {
+    setDirty(data[key] !== initialValues[key])
+    const valid = validations[key](event.target.value, data)
     setErrors({
       ...errors,
-      [key]: valid,
+      [key]: valid
     })
     setTouched({
       ...isTouched,
-      [key]: true,
+      [key]: true
     })
   }
 
@@ -40,12 +40,12 @@ export const useForm = ({ initialValues, validations, onSubmit }) => {
     if (validations) {
       for (const key in validations) {
         let value = data[key]
-        let validation  = validations[key](value)
+        let validation = validations[key](value, data)
         if (validation) {
-          isValid = false  
+          isValid = false
           setErrors({
             ...errors,
-            [key]: validation ,
+            [key]: validation
           })
           return
         }
@@ -62,7 +62,7 @@ export const useForm = ({ initialValues, validations, onSubmit }) => {
     errors,
     handleChange,
     handleBlur,
-    handleSubmit,
+    handleSubmit
   }
 }
 

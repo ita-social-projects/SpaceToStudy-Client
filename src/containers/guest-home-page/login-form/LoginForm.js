@@ -1,35 +1,22 @@
-import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Box, FormControlLabel, Typography, TextField, Button, Checkbox,IconButton, InputAdornment } from '@mui/material'
-import Visibility from '@mui/icons-material/Visibility'
-import VisibilityOff from '@mui/icons-material/VisibilityOff'
+import useInputVisibility from '~/hooks/use-input-visibility'
+import { Box, FormControlLabel, Typography, TextField, Button, Checkbox } from '@mui/material'
 
 import style from './login-form.style'
 
 const LoginForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) => {
-  const [showPassword, setShowPassword] = useState(false)
-  const { t } = useTranslation()
+  const { inputVisibility: passwordVisibility, showInputText: showPassword } = useInputVisibility(errors.password)
 
-  const passwordVisibility = {
-    endAdornment: (
-      <InputAdornment position='end'>
-        <IconButton
-          aria-label='toggle password visibility'
-          onClick={ () => setShowPassword(!showPassword) }
-        >
-          { (showPassword ? <Visibility /> : <VisibilityOff />) }
-        </IconButton>
-      </InputAdornment>
-    )
-  }
+  const { t } = useTranslation()
     
   return (
     <Box component='form' onSubmit={ handleSubmit }>
       <TextField
+        autoFocus
         error={ Boolean(errors.email) }
         fullWidth 
         helperText={ t(errors.email) }
-        label={ t( 'login.email' ) }
+        label={ t( 'common.labels.email' ) }
         onBlur={ handleBlur('email') }
         onChange={ handleChange('email') }
         required
@@ -44,7 +31,7 @@ const LoginForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) => 
         error={ Boolean(errors.password) } 
         fullWidth
         helperText={ t(errors.password) }
-        label={ t( 'login.password' ) }
+        label={ t( 'common.labels.password' ) }
         onBlur={ handleBlur('password') }
         onChange={ handleChange('password') }
         required
@@ -71,7 +58,7 @@ const LoginForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) => 
         size='large' sx={ style.loginButton } type='submit'
         variant="contained"
       >
-        { t( 'login.loginButton' ) }
+        { t( 'common.labels.login' ) }
       </Button>
     </Box>
   )

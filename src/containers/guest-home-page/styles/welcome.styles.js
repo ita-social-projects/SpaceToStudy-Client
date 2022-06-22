@@ -1,4 +1,4 @@
-import theme from '~/styles/app-theme/custom-mui.styles'
+import { theme } from '~/styles/app-theme/custom-mui.styles'
 import welcomeBgMd from '~/assets/img/guest-home-page/welcomeBgMd.svg'
 import welcomeBgSm from '~/assets/img/guest-home-page/welcomeBgSm.svg'
 import welcomeBgXs from '~/assets/img/guest-home-page/welcomeBgXs.svg'

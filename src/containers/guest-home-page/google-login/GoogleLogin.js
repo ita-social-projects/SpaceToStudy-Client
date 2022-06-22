@@ -1,21 +1,19 @@
 import { useTranslation } from 'react-i18next'
 import { Box, Typography, Button } from '@mui/material'
 
-import style from '~/containers/guest-home-page/google-login/google-login.style'
+import { style } from '~/containers/guest-home-page/google-login/google-login.style'
 import google from '~/assets/img/login-dialog/google.svg'
 
 
-const GoogleLogin = () => {
+const GoogleLogin = ({ type }) => {
   const { t } = useTranslation()
-    
+
   return (
     <Box>
       <Box sx={ style.linesBox }>
-        <Box sx={ style.line } />
-        <Typography variant="overline">
-          { t( 'login.continue' ) }
+        <Typography sx={ style.continue } variant="body2">
+          { t( `${type}.continue` ) }
         </Typography>
-        <Box sx={ style.line } />
       </Box>
         
       <Button size='large' sx={ style.google } variant="outlined">
@@ -23,18 +21,18 @@ const GoogleLogin = () => {
           alt="google icon" component='img' src={ google }
           sx={ { pr: 1 } }
         />
-        { t('login.googleButton') }
+        { t( `${type}.googleButton` ) }
       </Button>
         
-      <Box sx={ { display: 'flex' } }>
+      <Box sx={ style.haveAccount }>
         <Typography sx={ { pr: 1 } } variant="body2">
-          { t( 'login.haveAccount' ) }
+          { t( `${type}.haveAccount` ) }
         </Typography>
         <Typography
           sx={ style.underlineText } 
           variant="body2"
         >
-          { t( 'login.joinUs' ) }
+          { t( `${type}.joinUs` ) }
         </Typography>
       </Box>
     </Box>   

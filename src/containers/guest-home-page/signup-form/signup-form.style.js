@@ -1,5 +1,5 @@
-const style = {
-  form: { 
+export const style = {
+  form: {
     maxWidth: { xs: '315px', sm: '343px' },
     padding: { sm: '50px 80px', md: '0' }
   },
@@ -7,22 +7,25 @@ const style = {
     maxWidth: '343px'
   },
   checkboxContainer: {
-    margin: '25px 0',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center'
+    margin: '20px 0'
   },
   checkboxLabel: {
     '& .MuiFormControlLabel-label': {
       typography: 'subtitle2'
     }
   },
-  loginButton: {
-    padding: { xs:'18px 134px' , sm:'18px 149px' }
+  box: {
+    display: 'flex',
+    color: 'primary.700',
+    whiteSpace: 'nowrap'
+  },
+  signupButton: {
+    width: '100%',
+    padding: '18px 0px'
   },
   underlineText: {
-    textDecoration: 'underline',
+    color: 'primary.900',
+    marginLeft: '5px',
+    textDecoration: 'underline'
   }
 }
-
-export default style
