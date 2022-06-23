@@ -6,7 +6,7 @@ export const style = {
     flexDirection: 'column'
   },
   image: {
-    maxWidth: '343px',
+    maxWidth: '320px',
     maxHeight: '216px',
     pb: '16px'
   },
@@ -15,10 +15,9 @@ export const style = {
     flexDirection: 'column',
     alignItems: 'flex-start',
     justifyContent: 'space-around',
-    width: '290px',
+    width: '280px',
     height: '144px',
     backgroundColor: 'primary.900',
-    boxShadow: 'shadows.primary',
     borderRadius: '6px',
     p: '16px'
   }

@@ -4,7 +4,6 @@ import palette from './app.pallete.js'
 import appTypography from './app.typography'
 import button from './app.button'
 import { svgIcon } from './app.svgicon'
-import shadows from './app.shadows'
 import { checkbox } from './app.checkbox'
 import { textField } from './app.textfield.js'
 
@@ -17,5 +16,4 @@ export const theme = createTheme({
     MuiCheckbox: checkbox,
     MuiTextField: textField
   },
-  shadows
 })

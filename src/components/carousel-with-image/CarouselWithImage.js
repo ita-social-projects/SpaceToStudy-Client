@@ -16,8 +16,11 @@ const CarouselWithImage = ({ items }) => {
   }
 
   const carouselWrapper = items.map((item, index) => (
-    <Box key={ index } sx={ style.feature }>
-      <Box component="img" src={ item.image } sx={ style.image } />
+    <Box data-testid="carousel" key={ index } sx={ style.feature }>
+      <Box
+        alt={ item.image } component="img" src={ item.image }
+        sx={ style.image }
+      />
       <Box sx={ style.text }>
         <Typography sx={ { color: 'basic.white' } } variant={ 'h6' }>
           { t(item.title) }
@@ -26,17 +29,22 @@ const CarouselWithImage = ({ items }) => {
           { t(item.description) }
         </Typography>
       </Box>
-      <MobileStepper
-        activeStep={ activeStep } position="static" steps={ maxSteps }
-        sx={ { pt: '16px' } } variant="dots"
-      />
     </Box>
   ))
 
   return (
-    <SwipeableViews enableMouseEvents index={ activeStep } onChangeIndex={ handleStepChange }>
-      { carouselWrapper }
-    </SwipeableViews>
+    <>
+      <SwipeableViews enableMouseEvents index={ activeStep } onChangeIndex={ handleStepChange }>
+        { carouselWrapper }
+      </SwipeableViews>
+      <MobileStepper
+        activeStep={ activeStep }
+        position="static"
+        steps={ maxSteps }
+        sx={ { display: 'flex', justifyContent: 'center', pt: '16px', boxShadow: 'none' } }
+        variant="dots"
+      />
+    </>
   )
 }
 export default CarouselWithImage
