@@ -29,7 +29,7 @@ describe('useForm custom hook test without errors', () => {
     expect(result.current.errors).toEqual({})
   })
   
-  it('should blur after change', () => {
+  it('should blur after change with dirty true', () => {
     const validations = { email: jest.fn(() => undefined) }
     const { result } = renderHook(() => useForm({ initialValues, validations, onSubmit }))
     
