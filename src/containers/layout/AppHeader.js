@@ -8,7 +8,6 @@ import LoginIcon from '@mui/icons-material/Login'
 import { ModalContext } from '~/context/modal-context'
 import NavBar from '~/containers/navbar/NavBar'
 import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
-import SignupDialog from '~/containers/guest-home-page/signup-dialog/SignupDialog'
 import { mainShadow } from '~/styles/app-theme/custom-shadows'
 
 const style = {
@@ -24,9 +23,6 @@ const AppHeader = () => {
 
   const openLoginDialog = () => {
     setModal(<LoginDialog />)
-  }
-  const openLoginDialo1 = () => {
-    setModal(<SignupDialog type='student' />)
   }
 
   return (
