@@ -34,9 +34,6 @@ const AppHeader = () => {
           <IconButton onClick={ openLoginDialog } size='large' sx={ { display: { md: 'none' } } }>
             <LoginIcon color='primary' />
           </IconButton>
-          <IconButton onClick={ openLoginDialo1 } size='large' sx={ { display: { md: 'none' } } }>
-            <LoginIcon color='primary' />
-          </IconButton>
 
           <Button
             onClick={ openLoginDialog } size='medium' sx={ style.loginButton }
