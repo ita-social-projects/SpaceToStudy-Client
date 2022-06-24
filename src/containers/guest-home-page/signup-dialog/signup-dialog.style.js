@@ -1,7 +1,7 @@
 export const style = {
   root: {
     maxWidth: { xs: '315px', sm: 'md', md: '800px', lg: 'lg' },
-    mt: { xs: '50px', sm: 0 },
+    mt: { xs: '55px', sm: 0 },
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center'

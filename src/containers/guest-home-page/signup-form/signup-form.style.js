@@ -7,12 +7,13 @@ export const style = {
     maxWidth: '343px'
   },
   checkboxContainer: {
-    margin: '20px 0'
+    margin: '20px 0',
   },
   checkboxLabel: {
+    mr: 0,
     '& .MuiFormControlLabel-label': {
       typography: 'subtitle2'
-    }
+    },
   },
   box: {
     display: 'flex',
