@@ -36,7 +36,8 @@ const AppHeader = () => {
           </IconButton>
 
           <Button
-            onClick={ openLoginDialog } size='medium' sx={ style.loginButton }
+            data-testid='open-modal' onClick={ openLoginDialog } size='medium'
+            sx={ style.loginButton }
             variant="contained"
           >
             { t('header.loginButton') }

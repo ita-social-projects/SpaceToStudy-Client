@@ -6,7 +6,7 @@ import FeatureBlock from '~/containers/guest-home-page/FeatureBlock'
 const GuestHomePage = () => {
   
   return (
-    <Box>
+    <Box data-testid="guestHome">
       <WelcomeBlock />
       <FeatureBlock items={ descriptionTimes }  />
     </Box>
