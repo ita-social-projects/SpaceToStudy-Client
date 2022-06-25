@@ -4,7 +4,6 @@ export const style = {
     padding: { xs: 0, sm: 2, md: 4 },
   },
   icon: {
-    float: 'right',
     color: 'primary.900',
     position: 'absolute',
     right: { xs: '8px', sm: '20px' },
