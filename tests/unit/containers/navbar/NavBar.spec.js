@@ -1,12 +1,12 @@
 import { screen, fireEvent, waitFor } from '@testing-library/react'
 import NavBar from '~/containers/navbar/NavBar'
-import { renderWithRouterAndTheme } from '~tests/test-utils'
+import { renderWithProviders } from '~tests/test-utils'
 
 describe('Sidebar test', () => {
   const navigationItems = [{ label:'label-test', route: '#route-test' }]
 
   beforeEach(() => {
-    renderWithRouterAndTheme(
+    renderWithProviders(
       <NavBar navigationItems={ navigationItems }>
         <button>children</button>
       </NavBar>

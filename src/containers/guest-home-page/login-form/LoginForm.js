@@ -27,8 +27,7 @@ const LoginForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) => 
       />
       
       <TextField 
-        InputProps={ passwordVisibility }
-        dataTestid='password-input' 
+        InputProps={ { ...passwordVisibility, 'data-testid': 'password-input' } } 
         error={ Boolean(errors.password) }
         fullWidth
         helperText={ t(errors.password) }
