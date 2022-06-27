@@ -19,17 +19,17 @@ describe('modal context', () => {
     )
     render(<AppHeader />, { wrapper })
 
-    const button = screen.getByTestId('open-modal')
+    const button = screen.getByText('header.loginButton')
     act(() => {fireEvent.click(button)})
-    const inputNode = screen.getByTestId('password-input').querySelector('input')
+    const inputNode = screen.getByLabelText(/common.labels.password/i)
     act(() => { fireEvent.change(inputNode, { target: { value: 'test' } }) })
     act(()=>{fireEvent.blur(inputNode)})
-    const closeButton = screen.getByTestId('close-popup')
+    const closeButton = screen.getByTestId('CloseIcon')
     act(()=>{fireEvent.click(closeButton)})
   })
-
+  
   it('should open modal popup', () => {
-    const popup = screen.getByTestId('popup')  
+    const popup = screen.getByTestId('popup')
 
     expect(popup).toBeInTheDocument()
   })

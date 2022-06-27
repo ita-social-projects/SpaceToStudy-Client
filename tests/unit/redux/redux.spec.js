@@ -5,11 +5,11 @@ import { request } from '~/plugins/request'
 import MockAdapter from 'axios-mock-adapter'
 
 import { URLs } from '~/constants/request'
-import { errorMessage, initialState, stateWithUserData, tokken, userData } from './redux.variables'
+import { errorMessage, initialState, stateWithUserData, token, userData } from './redux.variables'
 
 Object.defineProperty(window, 'localStorage', {
   value: {
-    getItem: () => tokken,
+    getItem: () => token,
     setItem: () => ''
   }
 })
@@ -29,7 +29,7 @@ describe('redux test', () => {
   })
 
   it('should set user data to store', async () => {
-    mock.onPost(URLs.user.login).reply(200, tokken)
+    mock.onPost(URLs.user.login).reply(200, token)
     await store.dispatch(loginUser(userData))
 
     expect(store.getState()).toEqual({ appMain: stateWithUserData })

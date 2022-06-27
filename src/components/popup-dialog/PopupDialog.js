@@ -26,7 +26,7 @@ const PopupDialog = ({ content, closeModal }) => {
       open
     >
       <Box sx={ style.box }>
-        <IconButton data-testid='close-popup' onClick={ onClose } sx={ style.icon }>
+        <IconButton onClick={ onClose } sx={ style.icon }>
           <CloseIcon />
         </IconButton>
         <Box>

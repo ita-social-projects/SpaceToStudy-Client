@@ -26,7 +26,7 @@ describe('Popup dialog test', () => {
     expect(content).toBeInTheDocument()
   })
   it('should close popup', async () => {
-    const closeButton = screen.getByTestId('close-popup')
+    const closeButton = screen.getByTestId('CloseIcon')
     fireEvent.click(closeButton)
 
     await waitFor(() => expect(closeModal).toHaveBeenCalled())
