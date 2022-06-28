@@ -4,6 +4,8 @@ trigger:
     include:
     - develop
     - main
+
+pr: none
   
 variables:
   agentOS: ubuntu-latest
