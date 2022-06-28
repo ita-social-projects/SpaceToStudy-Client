@@ -7,11 +7,7 @@ const gradient = 'radial-gradient(ellipse at top, rgba(192, 229, 228, 0.4), tran
 
 export const styles = {
   container: {
-    display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: '80px',
     minHeight: {
       md: '570px',
       sm: '319px',
