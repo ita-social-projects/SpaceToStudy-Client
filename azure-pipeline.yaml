@@ -1,12 +1,7 @@
 trigger:
   - develop
   - devops
-  - main
 
-pr:
-  - develop
-  - devops
-  - main
   
 variables:
   agentOS: ubuntu-latest
