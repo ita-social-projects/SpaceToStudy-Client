@@ -1,8 +1,8 @@
 trigger:
-  - develop
-  - devops
+  - developqwe
+  - devopseqwe
 
-  
+ asdasdadaewaeq
 variables:
   agentOS: ubuntu-latest
 
