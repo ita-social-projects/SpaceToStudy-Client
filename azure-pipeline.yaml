@@ -2,7 +2,7 @@ trigger:
   - developqwe
   - devopseqwesadasd
 
- asdasdadaewaeqasdqweqweqweqwasdassadasd
+ asdasdadaewaeqasdqweqweqtestweqwasdassadasd
 variables:
   agentOS: ubuntu-latest
 
