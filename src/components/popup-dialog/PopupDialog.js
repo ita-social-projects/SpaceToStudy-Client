@@ -16,7 +16,7 @@ const PopupDialog = ({ content, closeModal }) => {
     })
     if (confirmed) closeModal()
   }
- 
+
   return (
     <Dialog
       data-testid='popup'
