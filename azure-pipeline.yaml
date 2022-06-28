@@ -1,12 +1,9 @@
 trigger:
-  - develop
-  - devops
-  - main
-
-pr:
-  - develop
-  - devops
-  - main
+  batch: true
+  branches:
+    include:
+    - develop
+    - main
   
 variables:
   agentOS: ubuntu-latest
