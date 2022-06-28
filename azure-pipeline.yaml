@@ -13,6 +13,7 @@ variables:
 stages:
 
   # test1
+  # test2
   # - stage: Env
   #   displayName: Download and set latest .env
   #   jobs:
