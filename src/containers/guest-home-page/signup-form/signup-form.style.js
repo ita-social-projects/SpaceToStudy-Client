@@ -10,6 +10,7 @@ export const style = {
     margin: '20px 0'
   },
   checkboxLabel: {
+    mr: 0,
     '& .MuiFormControlLabel-label': {
       typography: 'subtitle2'
     }

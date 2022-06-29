@@ -1,44 +1,25 @@
-import { useState, useLayoutEffect } from 'react'
-import { Dialog, IconButton } from '@mui/material'
+import { Box, Dialog, IconButton } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
-import { Box } from '@mui/system'
-import useConfirm from '~/hooks/use-confirm'
 
-const style = {
-  box: {
-    margin: { xs: '1vh auto', sm: 0 },
-    padding: { xs: 1, sm: 2, md: 4 }
-  },
-  icon: { float: 'right', color: 'primary.900' }
-}
+import useConfirm from '~/hooks/use-confirm'
+import useBreakpoints from '~/hooks/use-breakpoints'
+import { style } from '~/components/popup-dialog/popup-dialog.style'
 
 const PopupDialog = ({ content, closeModal }) => {
-  const [width, setWidth] = useState(window.innerWidth)
   const { checkConfirmation } = useConfirm()
+  const size = useBreakpoints()
 
   const onClose = async () => {
     const confirmed = await checkConfirmation({
       message: 'questions.confirmation',
       title: 'titles.confirmTitle' 
     })
-    
-    if (confirmed) {
-      closeModal()
-    }
+    if (confirmed) closeModal()
   }
  
-  useLayoutEffect(() => {
-    const getWindowWidth = () => setWidth(window.innerWidth)
-    
-    window.addEventListener('resize', getWindowWidth)
-    return () => {
-      window.removeEventListener('resize', getWindowWidth)
-    }
-  }, [])
-
   return (
     <Dialog
-      fullScreen={ (width < 600) }
+      fullScreen={ (size === 'mobile') }
       maxWidth="xl" onClose={ onClose }
       open
     >
