@@ -1,6 +1,6 @@
 import { screen, fireEvent, waitFor } from '@testing-library/react'
 import Sidebar from '~/containers/sidebar/Sidebar'
-import { renderWithRouterAndTheme } from '~tests/test-utils'
+import { renderWithProviders } from '~tests/test-utils'
 
 describe('Sidebar test', () => {
   const isSidebarOpen = true
@@ -8,7 +8,7 @@ describe('Sidebar test', () => {
   const navigationItems = [{ label: 'label-test', route: '/#route-test' }]
     
   beforeEach(() => {
-    renderWithRouterAndTheme(
+    renderWithProviders(
       <Sidebar isSidebarOpen={ isSidebarOpen } navigationItems={ navigationItems } setIsSidebarOpen={ setIsSidebarOpen } />
     )
   })

@@ -16,15 +16,17 @@ const PopupDialog = ({ content, closeModal }) => {
     })
     if (confirmed) closeModal()
   }
- 
+
   return (
     <Dialog
+      data-testid='popup'
       fullScreen={ (size === 'mobile') }
-      maxWidth="xl" onClose={ onClose }
+      maxWidth="xl"
+      onClose={ onClose }
       open
     >
       <Box sx={ style.box }>
-        <IconButton data-testid='close-popup' onClick={ onClose } sx={ style.icon }>
+        <IconButton onClick={ onClose } sx={ style.icon }>
           <CloseIcon />
         </IconButton>
         <Box>

@@ -6,11 +6,11 @@ const ConfirmDialog = ({ message, title, open, onConfirm, onDismiss }) => {
   const { t } = useTranslation()
 
   return (
-    <Dialog onClose={ onDismiss } open={ open }>
+    <Dialog data-testid='confirmDialog' onClose={ onDismiss } open={ open }>
       <Typography sx={ { p: '13px 16px' } } variant="h6">
         { t(title) }
       </Typography>
-      <IconButton data-testid='closeIcon' onClick={ onDismiss } sx={ { position: 'absolute', right: 16, top: 16, p: 0 } }>
+      <IconButton onClick={ onDismiss } sx={ { position: 'absolute', right: 16, top: 16, p: 0 } }>
         <CloseIcon />
       </IconButton>
       <DialogContent dividers sx={ { p: 2 } }>

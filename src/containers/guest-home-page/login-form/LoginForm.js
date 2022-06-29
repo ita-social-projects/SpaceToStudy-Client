@@ -8,7 +8,7 @@ const LoginForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) => 
   const { inputVisibility: passwordVisibility, showInputText: showPassword } = useInputVisibility(errors.password)
 
   const { t } = useTranslation()
-    
+
   return (
     <Box component='form' onSubmit={ handleSubmit }>
       <TextField
@@ -27,8 +27,8 @@ const LoginForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) => 
       />
       
       <TextField 
-        InputProps={ passwordVisibility }
-        error={ Boolean(errors.password) } 
+        InputProps={ passwordVisibility } 
+        error={ Boolean(errors.password) }
         fullWidth
         helperText={ t(errors.password) }
         label={ t( 'common.labels.password' ) }

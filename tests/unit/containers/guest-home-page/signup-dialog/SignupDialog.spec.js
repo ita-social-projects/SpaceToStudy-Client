@@ -1,7 +1,7 @@
 import { screen, fireEvent } from '@testing-library/react'
 import { student } from '~/containers/guest-home-page/constants'
 import SignupDialog from '~/containers/guest-home-page/signup-dialog/SignupDialog'
-import { renderWithRouterAndTheme } from '~tests/test-utils'
+import { renderWithProviders } from '~tests/test-utils'
 
 jest.mock('~/hooks/use-confirm', () => {
   return () => ({
@@ -11,7 +11,7 @@ jest.mock('~/hooks/use-confirm', () => {
 
 describe('Signup dialog', () => {
   beforeEach(() => {
-    renderWithRouterAndTheme(
+    renderWithProviders(
       <SignupDialog type={ student } />
     )
   })

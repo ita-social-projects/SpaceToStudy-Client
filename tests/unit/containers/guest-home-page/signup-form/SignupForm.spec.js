@@ -1,6 +1,6 @@
 import { screen, fireEvent, waitFor } from '@testing-library/react'
 import SignupForm from '~/containers/guest-home-page/signup-form/SignupForm'
-import { renderWithRouterAndTheme } from '~tests/test-utils'
+import { renderWithProviders } from '~tests/test-utils'
 
 const errors = { firstName: false, lastName: false, email: false, password: false, confirmPassword: false }
 const data = { firstName: 'John', lastName: 'Doe', email: 'email@mail.com', password: 'passTest1', confirmPassword: 'passTest1' }
@@ -10,7 +10,7 @@ const handleSubmit = jest.fn()
 
 describe('Signup form', () => {
   beforeEach(() => {
-    renderWithRouterAndTheme(
+    renderWithProviders(
       <SignupForm
         data={ data }
         errors={ errors }
