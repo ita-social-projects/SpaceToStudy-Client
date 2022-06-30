@@ -1,19 +1,32 @@
-import { useState } from 'react'
+import { useState, useContext, useCallback, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { routes } from '~/constants/routes'
+import { routes, studentRoutes } from '~/constants/routes'
 import { useTranslation } from 'react-i18next'
-import { Typography, Box, Button, IconButton, List, ListItem  } from '@mui/material'
+import { Typography, Box, Button, List, ListItem  } from '@mui/material'
 
+import { ModalContext } from '~/context/modal-context'
 import Logo from '~/containers/logo/Logo'
 import Sidebar from '~/containers/sidebar/Sidebar'
-import LanguageIcon from '@mui/icons-material/Language'
-import MenuIcon from '@mui/icons-material/Menu'
+import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
+import HeaderIcons from '~/components/header-icons/HeaderIcons'
 import { style } from '~/containers/navbar/navbar.style'
-import PropTypes from 'prop-types'
 
-const Navbar = ({ navigationItems, children1 }) => {
+
+const Navbar = () => {
   const { t } = useTranslation()
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+  const [ navigationItems , setNavigationItems] = useState(Object.values(routes.guestNavBar))
+  const { setModal } = useContext(ModalContext)
+  const { userRole } = useSelector((state) => state.appMain)
+
+  useEffect(() => {
+    if (userRole ==='student') setNavigationItems(Object.values(studentRoutes.studentNavBar))
+  }, [userRole])
+  
+  const openLoginDialog = useCallback(() => {
+    setModal(<LoginDialog />)
+  }, [setModal])
 
   const navigationList = navigationItems.map(item => {
     return (
@@ -43,23 +56,11 @@ const Navbar = ({ navigationItems, children1 }) => {
         { navigationList }
       </List>
 
-      <Box sx={ style.iconBox }>
-        <IconButton size='large' sx={ style.langIcon }>
-          <LanguageIcon color='primary' />
-        </IconButton>
-        { children1 }
-        <IconButton onClick={ () => setIsSidebarOpen(true) } size='large' sx={ style.menuIcon }>
-          <MenuIcon color='primary' />
-        </IconButton>
-      </Box>
+      <HeaderIcons openLoginDialog={ openLoginDialog } setIsSidebarOpen={ setIsSidebarOpen } />
+
       <Sidebar isSidebarOpen={ isSidebarOpen } navigationItems={ navigationItems } setIsSidebarOpen={ setIsSidebarOpen } />
     </Box>
   )
 }
 
 export default Navbar
-
-Navbar.propTypes = {
-  navigationItems: PropTypes.array.isRequired,
-  children1: PropTypes.node.isRequired
-}
