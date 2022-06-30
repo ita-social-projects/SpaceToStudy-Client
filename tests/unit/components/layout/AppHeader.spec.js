@@ -1,14 +1,17 @@
 import { screen } from '@testing-library/react'
-import AppHeader from '~/containers/layout/AppHeader'
 import { renderWithProviders } from '~tests/test-utils'
+import AppHeader from '~/containers/layout/AppHeader'
+import { ModalProvider } from '~/context/modal-context'
 
-describe.skip('AppHeader layout component test', () => {
-  it('should have button with about text', () => {
-    renderWithProviders(
+describe('AppHeader layout component test', () => {
+  renderWithProviders(
+    <ModalProvider>
       <AppHeader />
-    )
+    </ModalProvider>
+  )
+  it('should render toolbar', () => {
+    const toolbar = screen.getByTestId('toolbar')
 
-    const linkElement = screen.getByText('common.about')
-    expect(linkElement).toBeInTheDocument()
+    expect(toolbar).toBeInTheDocument()
   })
 })

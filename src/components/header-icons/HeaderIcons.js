@@ -11,24 +11,7 @@ import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded'
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined'
 
 import Loader from '~/components/loader/Loader'
-
-const style = {
-  iconBox: {
-    mr: { xs: '14px', sm: '20px', md:'32px' },
-    display: 'flex',
-    alignItems: 'center',
-    '&>.MuiIconButton-root': {
-      p: { sm: '12px', md: '7px', lg: '12px' },
-    },
-  },
-  loginButton: {
-    display: { xs: 'none', md: 'inherit' },
-    margin: '18px 10px',
-  },
-  langIcon: { display: { xs: 'none', sm: 'inherit' } },
-  menuIcon: { display: { md: 'none' } },
-  sudentIcons: { display: { xs: 'none', md: 'inherit' } }
-}
+import { style } from '~/components/header-icons/header-icons.style'
 
 
 const HeaderIcons = ({ openLoginDialog, setIsSidebarOpen }) => {
@@ -37,7 +20,7 @@ const HeaderIcons = ({ openLoginDialog, setIsSidebarOpen }) => {
     
 
   if (loading) {
-    return(<Loader />)
+    return(<Loader size={ 20 } />)
   }
   
   if (userRole === 'student') {

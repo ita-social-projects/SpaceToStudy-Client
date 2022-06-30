@@ -9,7 +9,7 @@ const AppHeader = () => {
       <AppBar color='common' sx={ { boxShadow: mainShadow } }>
         <NavBar />
       </AppBar>
-      <Toolbar sx={ { height: { xs: '56px', sm: '72px', md: '80px' } } } />
+      <Toolbar data-testid='toolbar' sx={ { height: { xs: '56px', sm: '72px', md: '80px' } } } />
     </>
   )
 }
