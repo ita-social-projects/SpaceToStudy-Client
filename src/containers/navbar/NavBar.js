@@ -11,12 +11,11 @@ import MenuIcon from '@mui/icons-material/Menu'
 import { style } from '~/containers/navbar/navbar.style'
 import PropTypes from 'prop-types'
 
-const Navbar = ({ navigationItems, children }) => {
+const Navbar = ({ navigationItems, children1 }) => {
   const { t } = useTranslation()
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
   const navigationList = navigationItems.map(item => {
-
     return (
       <ListItem key={ item.label } sx={ style.navItem }>
         <Typography
@@ -25,7 +24,7 @@ const Navbar = ({ navigationItems, children }) => {
           to={ item.route }
           variant="subtitle2"
         >
-          { t(`header.guestNavBar.${ item.label }`) }
+          { t(`${ item.label }`) }
         </Typography>
       </ListItem>)
   })
@@ -48,7 +47,7 @@ const Navbar = ({ navigationItems, children }) => {
         <IconButton size='large' sx={ style.langIcon }>
           <LanguageIcon color='primary' />
         </IconButton>
-        { children }
+        { children1 }
         <IconButton onClick={ () => setIsSidebarOpen(true) } size='large' sx={ style.menuIcon }>
           <MenuIcon color='primary' />
         </IconButton>
@@ -62,5 +61,5 @@ export default Navbar
 
 Navbar.propTypes = {
   navigationItems: PropTypes.array.isRequired,
-  children: PropTypes.node.isRequired
+  children1: PropTypes.node.isRequired
 }

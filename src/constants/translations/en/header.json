@@ -4,5 +4,12 @@
         "howItWorks": "How it works",
         "whoWeAre": "Who we are"
     },
+    "studentNavBar": {
+        "allTutors": "Mentors",
+        "categories": "Categories",
+        "howItWorks": "How it works",
+        "faq": "FAQ",
+        "becomeMentor": "Become a mentor"
+    },
     "loginButton": "Login"
 }

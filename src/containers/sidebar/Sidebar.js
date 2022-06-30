@@ -20,7 +20,7 @@ const Sidebar = ({ isSidebarOpen,  setIsSidebarOpen, navigationItems }) => {
           to={ item.route }
           variant="subtitle1"
         >            
-          { t(`header.guestNavBar.${ item.label }`) }
+          { t(`${ item.label }`) }
         </Typography>
       </ListItem>)
   })
