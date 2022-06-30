@@ -1,4 +1,10 @@
 {
-  "authTitle": "Authorization\npolicy",
-  "authText": "invalid user authentication or authentication on\nthe server side or when accessing a specific url.\nWe suggest you go to the main page."
+  "401": {
+    "authTitle": "Authorization\npolicy",
+    "authText": "invalid user authentication or authentication on\nthe server side or when accessing a specific url.\nWe suggest you go to the main page."
+  },
+  "500": {
+    "title":"Internal Server Error",
+    "description":"We are sorry, the server encountered an unexpected error that prevented it from executing the request. We suggest you go to the home page. Report an error."
+  }
 }

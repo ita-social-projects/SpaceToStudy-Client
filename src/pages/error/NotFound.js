@@ -1,11 +1,12 @@
+import { Box } from '@mui/material'
 import React from 'react'
 
 
 const NotFound = () => {
   return (
-    <div>
+    <Box>
       404 NotFound
-    </div>
+    </Box>
   )
 }
 

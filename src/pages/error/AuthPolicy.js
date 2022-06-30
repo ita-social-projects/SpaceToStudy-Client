@@ -1,7 +1,7 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import './errorPages.styles'
-import { useStyles } from './errorPages.styles'
+import './styles/auth-policy.styles'
+import { useStyles } from './styles/auth-policy.styles'
 import { Button, Typography } from '@mui/material'
 
 const AuthPolicy = () => {
@@ -11,10 +11,10 @@ const AuthPolicy = () => {
   return (
     <div className={ styles.root }>
       <Typography variant="h3">
-        { t('errorPage.authTitle') }
+        { t('errorPage.401.authTitle') }
       </Typography>
       <Typography variant="body2">
-        { t('errorPage.authText') }
+        { t('errorPage.401.authText') }
       </Typography>
       <Button
         variant="contained"
