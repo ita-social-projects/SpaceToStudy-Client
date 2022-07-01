@@ -1,8 +1,8 @@
-import { theme } from '~/styles/app-theme/custom-mui.styles'
 import welcomeBgMd from '~/assets/img/guest-home-page/welcomeBgMd.svg'
 import welcomeBgSm from '~/assets/img/guest-home-page/welcomeBgSm.svg'
 import welcomeBgXs from '~/assets/img/guest-home-page/welcomeBgXs.svg'
 import { mainShadow } from '~/styles/app-theme/custom-shadows'
+
 const gradient = 'radial-gradient(ellipse at top, rgba(192, 229, 228, 0.4), transparent 80%'
 
 export const styles = {
@@ -31,9 +31,10 @@ export const styles = {
       sm: 'subtitle1',
       xs: 'body2'
     },
+    px: '24px',
     maxWidth:  '798px',
     marginBottom: '32px',
-    color: theme.palette.primary[900],
+    color: 'primary.900',
     textAlign: 'center',
   },
   getStartBtn: {
