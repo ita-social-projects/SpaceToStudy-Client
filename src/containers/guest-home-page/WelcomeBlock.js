@@ -18,7 +18,7 @@ const WelcomeBlock = () => {
   }
 
   return (
-    <Box sx={ styles.container }>
+    <Box className='section' sx={ styles.container }>
       <Box
         alt='Title' component='img' src={ images[size] }
         sx={ styles.title }
