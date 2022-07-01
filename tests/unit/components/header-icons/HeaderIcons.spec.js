@@ -63,7 +63,7 @@ describe('test with loading equal true', () => {
 
   it('should render loader', () => {
     const loader = screen.getByTestId('loader')
-    screen.debug()
+
     expect(loader).toBeInTheDocument()
   })
     
