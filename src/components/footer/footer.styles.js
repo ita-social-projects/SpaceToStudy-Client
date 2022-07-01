@@ -5,11 +5,10 @@ export const style = {
   container: {
     display: 'flex',
     alignItems: 'center',
-    maxWidth: '1128px',
-    margin: '0 auto',
-    padding: { xs:'16px', sm: '26px 20px' },
+    paddingTop: 3,
+    paddingBottom: 3,
     '& > *': {
-      flexBasis: '564px'
+      flexGrow: 1
     }
   },
   links: {

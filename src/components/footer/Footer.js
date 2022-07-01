@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { Typography, Box } from '@mui/material'
+import { Typography, Box, Container } from '@mui/material'
 
 import { routes } from '~/constants/routes'
 import { style } from './footer.styles'
@@ -11,9 +11,9 @@ const Footer = () => {
 
   return (
     <Box sx={ style.footer }>
-      <Box sx={ style.container }>
+      <Container sx={ style.container }>
         <Typography color="primary.50" variant="caption">
-          { t('guestHomePage.footer') }
+          { t('common.allRightsReserved') }
         </Typography>
         <Box  sx={ style.links }>
           <Typography 
@@ -31,7 +31,7 @@ const Footer = () => {
             { termOfUse.label }
           </Typography>
         </Box>
-      </Box>
+      </Container>
     </Box>
   )
 }
