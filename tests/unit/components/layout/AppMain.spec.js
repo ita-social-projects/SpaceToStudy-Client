@@ -10,7 +10,6 @@ Object.defineProperty(window, 'localStorage', {
     getItem: () => true
   }
 })
-
 const mockState = {
   appMain: { loading: true, userRole: '' }
 }

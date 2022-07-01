@@ -1,4 +1,5 @@
 import { Box } from '@mui/material'
+import { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
@@ -7,6 +8,8 @@ import { routes } from '~/constants/routes'
 import { styles } from '~/containers/guest-home-page/styles/what-can-you-do.styles'
 import learnImg from '~/assets/img/guest-home-page/learnImg.png'
 import teachImg from '~/assets/img/guest-home-page/teachImg.png'
+import { ModalContext } from '~/context/modal-context'
+import SignupDialog from '~/containers/guest-home-page/signup-dialog/SignupDialog'
 
 const sectionId = routes.guestNavBar.whatCanYouDo.label
 
@@ -31,6 +34,7 @@ const cardData = [
     title: 'guestHomePage.whatCanYouDo.learn.title',
     description: 'guestHomePage.whatCanYouDo.learn.description',
     actionLabel: 'guestHomePage.whatCanYouDo.learn.actionLabel',
+    actionType: 'student',
     cardWidth
   },
   {
@@ -39,16 +43,23 @@ const cardData = [
     title: 'guestHomePage.whatCanYouDo.teach.title',
     description: 'guestHomePage.whatCanYouDo.teach.description',
     actionLabel: 'guestHomePage.whatCanYouDo.teach.actionLabel',
+    actionType: 'mentor',
     cardWidth
   }
 ]
 
 const WhatCanYouDo = () => {
   const { t } = useTranslation()
+  const { setModal } = useContext(ModalContext)
+
+  const openDialog = (type) => {
+    setModal(<SignupDialog type={ type } />)
+  }
 
   const cards = cardData.map(item => {
     return (
       <InfoCard
+        action={ () => openDialog(item.actionType) }
         actionLabel={ t(item.actionLabel) }
         cardWidth={ item.cardWidth }
         description={ t(item.description) }

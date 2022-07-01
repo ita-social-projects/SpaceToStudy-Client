@@ -13,26 +13,11 @@ const descriptionVariant = {
   xs: 'subtitle1'
 }
 
-const style = {
-  container: {
-    marginBottom: '70px',
-  },
-  videoWrapper : {
-    px: '24px'
-  },
-  video: {
-    display: 'block',
-    margin: '0 auto',
-    maxWidth: '100%',
-  }
-}
-
-
 const WhoWeAre = () => {
   const { t } = useTranslation()
 
   return (
-    <Box sx={ style.container }>
+    <Box className='section' sx={ { flexDirection: 'column' } }>
       <TitleWithDescription
         description={ t('guestHomePage.whoWeAre.description') }
         descriptionVariant={ descriptionVariant }
@@ -40,10 +25,10 @@ const WhoWeAre = () => {
         titleVariant={ titleVariant }
       />
 
-      <Box sx={ style.videoWrapper }>
+      <Box sx={ { px: '24px' } }>
         <Box
           alt='Video' component='img' src={ videoImg }
-          sx={ style.video }
+          sx={ { maxWidth: '100%' } }
         />
       </Box>
     </Box>
