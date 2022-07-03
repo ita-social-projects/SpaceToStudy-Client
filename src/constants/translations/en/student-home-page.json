@@ -5,6 +5,11 @@
         "label": "What would you like to learn",
         "button": "Find mentor"
     },
+    "popularCategories": {
+        "title": "Popular Categories",
+        "description": "Explore subjects you're passionate about.",
+        "viewMore": "View more"
+    },
     "faq": {
         "title": "Frequently Asked Questions",
         "subtitle": "Everything you need to know about learning journey in Space2Study as a student",
