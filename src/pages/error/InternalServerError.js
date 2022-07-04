@@ -10,7 +10,7 @@ const InternalServerError = () => {
   return (
     <Box sx={ style.container }>
       <Box sx={ style.wrapper }>
-        <Box sx={ { width: '488px', height: '256px' } }>
+        <Box sx={ style.text }>
           <Typography sx={ style.title } variant={ 'h2' }>
             { t('errorPage.500.title') }
           </Typography>

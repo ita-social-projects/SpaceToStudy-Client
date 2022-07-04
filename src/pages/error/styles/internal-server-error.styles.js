@@ -4,20 +4,28 @@ import { mainShadow } from '~/styles/app-theme/custom-shadows'
 export const style = {
   container: {
     display: 'flex',
-    flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    height: '100vh'
   },
   wrapper: {
     width: '1250px',
-    height: '436px',
+    height: { md: '436px', sm: '850px' },
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: { md: 'column', sm: 'row' },
     justifyContent: 'center',
     alignItems: 'flex-start',
     backgroundImage: `url(${backGround500})`,
     backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'right'
+    backgroundPosition: { md: 'right', sm: 'bottom' }
+  },
+  text: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: { md: 'flex-start', sm: 'center' },
+    width: { md: '488px', sm: '600px' },
+    height: '256px'
   },
   title: {
     lineHeight: '61px',
@@ -28,7 +36,8 @@ export const style = {
   description: {
     letterSpacing: '0.5px',
     color: 'primary.900',
-    marginBottom: '40px'
+    marginBottom: '40px',
+    textAlign: { md: 'start', sm: 'center' }
   },
   homeBtn: {
     width: '194px',
