@@ -37,7 +37,7 @@ const Navbar = () => {
           to={ item.route }
           variant="subtitle2"
         >
-          { t(`${ item.label }`) }
+          { t(`header.${ item.label }`) }
         </Typography>
       </ListItem>)
   })

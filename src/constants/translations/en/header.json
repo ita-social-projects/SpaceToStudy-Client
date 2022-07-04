@@ -1,15 +1,10 @@
 {
-    "guestNavBar": {
-        "whatCanYouDo": "What can you do",
-        "howItWorks": "How it works",
-        "whoWeAre": "Who we are"
-    },
-    "studentNavBar": {
-        "allTutors": "Mentors",
-        "categories": "Categories",
-        "howItWorks": "How it works",
-        "faq": "FAQ",
-        "becomeMentor": "Become a mentor"
-    },
+    "whatCanYouDo": "What can you do",
+    "howItWorks": "How it works",
+    "whoWeAre": "Who we are",
+    "allTutors": "Mentors",
+    "categories": "Categories",
+    "faq": "FAQ",
+    "becomeMentor": "Become a mentor",
     "loginButton": "Login"
 }
