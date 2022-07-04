@@ -25,7 +25,7 @@ describe('Guest NavBar test', () => {
     expect(logo).toBeInTheDocument()
   })
   it('should render navigation item with guestNavBar text', () => {
-    const text = screen.getByText('header.guestNavBar.whatCanYouDo')
+    const text = screen.getByText('header.whatCanYouDo')
     
     expect(text).toBeInTheDocument()
   })
@@ -60,7 +60,7 @@ describe('Student NavBar test', () => {
   })
 
   it('should render navigation item with studentNavBar text', () => {
-    const text = screen.getByText('header.studentNavBar.allTutors')
+    const text = screen.getByText('header.allTutors')
 
     expect(text).toBeInTheDocument()
   })
