@@ -1,7 +1,6 @@
 const appTypography = {
-  fontFamily: ['Poppins', 'Rubik', '-apple-system', 'Arial', 'sans-serif'].join(','),
+  fontFamily: ['Rubik', '-apple-system', 'Arial', 'sans-serif'].join(','),
   h1: {
-    fontFamily: 'Rubik',
     fontWeight: 800,
     fontSize: '72px',
     letterSpacing: '-1.5px',
