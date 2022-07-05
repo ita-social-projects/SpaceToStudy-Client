@@ -1,4 +1,3 @@
-import backGround500 from '~/assets/img/error-page/500.svg'
 import { mainShadow } from '~/styles/app-theme/custom-shadows'
 
 export const style = {
@@ -9,39 +8,39 @@ export const style = {
     height: '90vh'
   },
   wrapper: {
-    width: '1250px',
-    height: { md: '436px', sm: '750px', xs: '550px' },
+    height: { md: '440px', sm: '800px', xs: '560px' },
+    padding: { md: '15px' },
+    overflow: 'hidden',
     display: 'flex',
-    flexDirection: { md: 'column', sm: 'row', xs: 'row' },
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-    backgroundImage: `url(${backGround500})`,
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: { md: 'right', sm: 'bottom', xs: 'bottom' },
-    backgroundSize: 'contain'
+    flexDirection: { md: 'row', xs: 'column' },
+    justifyContent: { md: 'center', xs: 'space-around' },
+    alignItems: 'center'
   },
-  text: {
+  leftBlock: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: { md: 'flex-start', sm: 'center', xs: 'center' },
-    width: { md: '488px', sm: '600px', xs: '320px' },
-    height: '256px'
+    alignItems: { md: 'flex-start', xs: 'center' },
+    maxWidth: { md: '488px', sm: '531px', xs: '343px' }
+  },
+  image: {
+    maxWidth: { md: '834px', sm: '629px', xs: '340px' },
+    overflow: 'auto'
   },
   title: {
-    lineHeight: { md: '61px', sm: '74px', xs: '50px' },
+    lineHeight: { md: '61px', sm: '74px', xs: '51px' },
     fontSize: { md: '61px', sm: '45px', xs: '32px' },
     fontWeight: '300',
     color: 'primary.900',
-    marginBottom: '16px'
+    mb: '16px'
   },
   description: {
-    textAlign: { md: 'start', sm: 'center', xs: 'center' },
-    lineHeight:{ md:'24px',sm:'24px',xs:'18px' },
-    fontSize:{ md:'16px',sm:'16px',xs:'14px' },
+    textAlign: { md: 'start', xs: 'center' },
+    lineHeight: { sm: '24px', xs: '18px' },
+    fontSize: { sm: '16px', xs: '14px' },
     letterSpacing: '0.5px',
     color: 'primary.900',
-    marginBottom: '40px',
+    mb: '40px'
   },
   homeBtn: {
     width: '194px',
