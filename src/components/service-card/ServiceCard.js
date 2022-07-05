@@ -1,7 +1,24 @@
 import { Link } from 'react-router-dom'
-import { Box, Typography, Button } from '@mui/material'
+import { Box, Button } from '@mui/material'
 
 import { serviceCardHoverShadow, serviceCardShadow } from '~/styles/app-theme/custom-shadows'
+import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
+
+const sx = {
+  margin: '0px',
+  mb: '0px',
+  textAlign: 'start'
+}
+
+const titleStyles = {
+  m: '0',
+  typography: { xs: 'h6' }
+}
+
+const descriptionStyles = {
+  typography: { xs: 'body2' },
+  color: 'primary.500'
+}
 
 const styles = {
   card: {
@@ -25,16 +42,13 @@ const ServiceCard = ({ img, title, count, link }) => {
         alt='Category image' component='img' src={ img }
         sx={ { mr: '24px' } }
       />
-      <Box sx={ { textAlign: 'start' } }>
-        <Typography variant='h6'>
-          { title }
-        </Typography>
-        <Typography sx={ { color: 'primary.500' } } variant='body2'>
-          { `${count} mentors` }
-        </Typography>
-      </Box>
+      <TitleWithDescription
+        description={ `${count} mentors` } descriptionStyles={ descriptionStyles } sx={ sx }
+        title={ title } titleStyles={ titleStyles }
+      />
     </Button>
   )
 }
 
 export default ServiceCard
+
