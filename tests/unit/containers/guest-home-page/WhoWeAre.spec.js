@@ -8,8 +8,8 @@ describe('WhoWeAre component', () => {
   })
 
   it('should contain img', () => {
-    const img = screen.getByRole('img')
+    const videoBox = screen.getByTestId('video section')
 
-    expect(img).toBeInTheDocument()
+    expect(videoBox).toBeInTheDocument()
   })
 })
