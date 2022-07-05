@@ -36,8 +36,10 @@ export const style = {
   },
   description: {
     textAlign: { md: 'start', xs: 'center' },
-    lineHeight: { sm: '24px', xs: '18px' },
-    fontSize: { sm: '16px', xs: '14px' },
+    typography:{
+      sm:'subtitle1',
+      xs:'subtitle2'
+    },
     letterSpacing: '0.5px',
     color: 'primary.900',
     mb: '40px'
