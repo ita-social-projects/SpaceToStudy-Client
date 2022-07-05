@@ -14,13 +14,15 @@ import teachImg from '~/assets/img/guest-home-page/teachImg.png'
 
 const sectionId = routes.guestNavBar.whatCanYouDo.label
 
-const titleVariant = {
-  md: 'h3',
-  xs: 'h4'
+const titleStyles = {
+  typography: {
+    md: 'h3',
+    xs: 'h4'
+  }
 }
 
-const descriptionVariant = {
-  xs: 'subtitle1'
+const descriptionStyles = {
+  typography: { xs: 'subtitle1' }
 }
 
 const cardWidth = {
@@ -75,9 +77,9 @@ const WhatCanYouDo = () => {
     <Box id={ sectionId } sx={ styles.container }>
       <TitleWithDescription
         description={ t('guestHomePage.whatCanYouDo.description') }
-        descriptionVariant={ descriptionVariant }
+        descriptionStyles={ descriptionStyles }
         title={ t('guestHomePage.whatCanYouDo.title') }
-        titleVariant={ titleVariant }
+        titleStyles={ titleStyles }
       />
 
       <Box sx={ styles.cards }>

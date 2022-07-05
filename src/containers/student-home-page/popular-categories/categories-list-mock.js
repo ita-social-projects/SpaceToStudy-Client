@@ -1,6 +1,6 @@
 import serviceIcon from '~/assets/img/student-home-page/service_icon.png'
 
-export const categoriesList = [
+export const categoriesListMock = [
   {
     id: '1',
     img: serviceIcon,
