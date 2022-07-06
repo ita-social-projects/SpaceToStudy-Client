@@ -9,7 +9,7 @@ export const style = {
   },
   wrapper: {
     height: { md: '440px', sm: '800px', xs: '560px' },
-    padding: { md: '15px' },
+    padding: { md: '64px' },
     overflow: 'hidden',
     display: 'flex',
     flexDirection: { md: 'row', xs: 'column' },
@@ -45,8 +45,7 @@ export const style = {
     mb: '40px'
   },
   homeBtn: {
-    width: '194px',
-    height: '56px',
+    padding:'15px 50px',
     backgroundColor: 'primary.900',
     borderRaidus: '4px',
     boxShadow: mainShadow
