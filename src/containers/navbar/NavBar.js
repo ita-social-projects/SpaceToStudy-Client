@@ -8,7 +8,7 @@ import { Typography, Box, Button, List, ListItem  } from '@mui/material'
 import Logo from '~/containers/logo/Logo'
 import Sidebar from '~/containers/sidebar/Sidebar'
 
-import HeaderIcons from '~/containers/header-icons/HeaderIcons'
+import NavigationIcons from '~/containers/navigation-icons/NavigationIcons'
 import { style } from '~/containers/navbar/navbar.style'
 
 
@@ -51,7 +51,7 @@ const Navbar = () => {
         { navigationList }
       </List>
 
-      <HeaderIcons setIsSidebarOpen={ setIsSidebarOpen } />
+      <NavigationIcons setIsSidebarOpen={ setIsSidebarOpen } />
 
       <Sidebar isSidebarOpen={ isSidebarOpen } navigationItems={ navigationItems } setIsSidebarOpen={ setIsSidebarOpen } />
     </Box>

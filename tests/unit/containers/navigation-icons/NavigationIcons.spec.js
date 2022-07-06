@@ -1,6 +1,6 @@
 import { screen, fireEvent, waitFor } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
-import HeaderIcons from '~/containers/header-icons/HeaderIcons'
+import NavigationIcons from '~/containers/navigation-icons/NavigationIcons'
 import { ModalProvider } from '~/context/modal-context'
 
 const setIsSidebarOpen = jest.fn()
@@ -10,12 +10,12 @@ jest.mock('~/hooks/use-confirm', () => {
   })
 })
 
-describe('test with guest role', () => {
+describe('NavigationIcons test with guest role', () => {
   const preloadedState = { appMain: { loading: false, userRole: '' } }
   beforeEach(() => {
     renderWithProviders(
       <ModalProvider>
-        <HeaderIcons setIsSidebarOpen={ setIsSidebarOpen } />
+        <NavigationIcons setIsSidebarOpen={ setIsSidebarOpen } />
       </ModalProvider>, { preloadedState })
   })
 
@@ -36,13 +36,13 @@ describe('test with guest role', () => {
     
 })
 
-describe('test with student role', () => {
+describe('NavigationIcons test with student role', () => {
 
   const preloadedState = { appMain: { loading: false, userRole: 'student' } }
   beforeEach(() => {
     renderWithProviders(
       <ModalProvider>
-        <HeaderIcons setIsSidebarOpen={ setIsSidebarOpen } />
+        <NavigationIcons setIsSidebarOpen={ setIsSidebarOpen } />
       </ModalProvider>, { preloadedState })
   })
 
@@ -53,13 +53,13 @@ describe('test with student role', () => {
   })
 })
 
-describe('test with loading equal true', () => {
+describe('NavigationIcons test with loading equal true', () => {
 
   const preloadedState = { appMain: { loading: true, userRole: 'student' } }
   beforeEach(() => {
     renderWithProviders(
       <ModalProvider>
-        <HeaderIcons setIsSidebarOpen={ setIsSidebarOpen } />
+        <NavigationIcons setIsSidebarOpen={ setIsSidebarOpen } />
       </ModalProvider>, { preloadedState })
   })
 
