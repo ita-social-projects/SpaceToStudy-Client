@@ -41,11 +41,11 @@ describe('useForm custom hook test without errors', () => {
     expect(result.current.isDirty).toEqual(true)
   })
 
-  it('should submit', () => {
+  it('should submit',async () => {
     const validations = { email: jest.fn(() => undefined) }
     const { result } = renderHook(() => useForm({ initialValues, validations, onSubmit }))
     
-    act(() => result.current.handleSubmit(getFakeTestEvent()))
+    await act(() => result.current.handleSubmit(getFakeTestEvent()))
 
     expect(validations.email).toBeCalled()
     expect(result.current.errors).toEqual({ email: undefined })
@@ -77,11 +77,11 @@ describe('useForm custom hook test with errors', () => {
     expect(result.current.errors).toEqual({ email: 'error' })
   })
 
-  it('should validate and not submit', () => {
+  it('should validate and not submit', async() => {
     const validations = { email: jest.fn(() => 'error') }
     const { result } = renderHook(() => useForm({ initialValues, validations, onSubmit }))
     
-    act(() => result.current.handleSubmit(getFakeTestEvent()))
+    await act(() => result.current.handleSubmit(getFakeTestEvent()))
 
     expect(validations.email).toBeCalled()
     expect(result.current.errors).toEqual({ email: 'error' })
