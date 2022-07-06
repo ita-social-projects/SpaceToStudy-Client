@@ -46,6 +46,8 @@ stages:
             command: 'buildAndPush'
             Dockerfile: '**/Dockerfile'
             tags: '$(Build.BuildId)'
+            arguments: '--build-arg username=horondi --build-arg password=${{ variables.pass }}'
+            
 
   - stage: Deploy
     displayName: Deploy image to app service
