@@ -46,7 +46,7 @@ stages:
             command: 'buildAndPush'
             Dockerfile: '**/Dockerfile'
             tags: '$(Build.BuildId)'
-            arguments: '--build-arg username=horondi --build-arg password=${{ variables.pass }}'
+            arguments: '--build-arg username=${{ variables.name }} --build-arg password=${{ variables.pass }}'
             
 
   - stage: Deploy
