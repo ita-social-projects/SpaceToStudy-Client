@@ -1,5 +1,5 @@
 import { makeStyles } from '@mui/styles'
-import errorPhoto401 from '../../img/error-page/401.svg'
+import errorPhoto401 from '~/assets/img/error-page/401.svg'
 
 export const useStyles = makeStyles((theme) => {
   return {
