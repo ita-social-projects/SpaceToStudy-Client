@@ -19,7 +19,7 @@ const Navbar = () => {
   const { userRole } = useSelector((state) => state.appMain)
 
   useEffect(() => {
-    if (userRole ==='student') setNavigationItems(Object.values(studentRoutes.studentNavBar))
+    if (userRole ==='student') setNavigationItems(Object.values(studentRoutes.navBar))
   }, [userRole])
   
 

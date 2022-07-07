@@ -59,8 +59,8 @@ describe('Student NavBar test', () => {
       </ModalProvider>, { preloadedState })
   })
 
-  it('should render navigation item with studentNavBar text', () => {
-    const text = screen.getByText('header.allTutors')
+  it('should render navigation item with navBar text', () => {
+    const text = screen.getByText('header.mentors')
 
     expect(text).toBeInTheDocument()
   })

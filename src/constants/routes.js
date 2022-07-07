@@ -10,8 +10,8 @@ export const routes = {
   },
 }
 export const studentRoutes = {
-  studentNavBar: {
-    allTutors: { label: 'allTutors', route: '/allTutors' },
+  navBar: {
+    mentors: { label: 'mentors', route: '/mentors' },
     categories: { label: 'categories', route: '/#categories' },
     howItWorks: { label: 'howItWorks', route: '/#howItWorks' },
     faq: { label: 'faq', route: '/#faq' },
