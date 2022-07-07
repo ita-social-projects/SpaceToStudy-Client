@@ -1,8 +1,8 @@
-import { request } from '~/plugins/request'
+import { axiosClient } from '~/plugins/axiosClient'
 import { URLs } from '~/constants/request'
 
 export const exampleService = {
   getAll: () => {
-    return request.get(URLs.example.get)
+    return axiosClient.get(URLs.example.get)
   }
 }

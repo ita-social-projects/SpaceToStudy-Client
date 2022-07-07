@@ -1,15 +1,16 @@
-import { screen, render, fireEvent, waitFor } from '@testing-library/react'
+import { screen, fireEvent, waitFor } from '@testing-library/react'
+import { renderWithProviders } from '~tests/test-utils'
 import LoginForm from '~/containers/guest-home-page/login-form/LoginForm'
 
 const errors = { email: false, password: false }
-const data= { email: 'email@mail.com', password: 'passTest1' }
+const data = { email: 'email@mail.com', password: 'passTest1' }
 const handleChange = jest.fn()
 const handleBlur = jest.fn()
 const handleSubmit = jest.fn()
 
-describe('Login form', () => {
+describe('Login form test', () => {
   beforeEach(() => {
-    render(
+    renderWithProviders(
       <LoginForm
         data={ data }
         errors={ errors }
@@ -19,40 +20,40 @@ describe('Login form', () => {
       />
     )
   })
-    
+
   it('should render email input label', () => {
     const inputLabel = screen.getByLabelText(/email/i)
-    
+
     expect(inputLabel).toBeInTheDocument()
   })
-    
+
   it('should render password input label', () => {
     const inputLabel = screen.getByText('common.labels.password')
-      
+
     expect(inputLabel).toBeInTheDocument()
   })
-    
+
   it('should render checkbox label', () => {
     const label = screen.getByText('login.rememberMe')
-      
+
     expect(label).toBeInTheDocument()
   })
-    
+
   it('should render forgot password text', () => {
     const text = screen.getByText('login.forgotPassword')
-      
+
     expect(text).toBeInTheDocument()
   })
-    
+
   it('should render login button', () => {
     const button = screen.getByText('common.labels.login')
-      
+
     expect(button).toBeInTheDocument()
   })
 
   it('should show visibility icon', async () => {
     const visibilityOffIcon = screen.getByTestId('VisibilityOffIcon')
-    fireEvent.click(visibilityOffIcon)  
+    fireEvent.click(visibilityOffIcon)
     const visibilityIcon = screen.getByTestId('VisibilityIcon')
 
     await waitFor(() => {
@@ -60,11 +61,14 @@ describe('Login form', () => {
       expect(visibilityOffIcon).not.toBeInTheDocument()
     })
   })
-  
+
   it('should submit', async () => {
+    handleSubmit.mockImplementation((event) => {
+      event.preventDefault()
+    })
     const button = screen.getByText('common.labels.login')
-    fireEvent.click(button)  
-  
-    await waitFor(() => expect(handleSubmit).toHaveBeenCalled())
+    fireEvent.click(button)
+
+    expect(handleSubmit).toHaveBeenCalled()
   })
 })

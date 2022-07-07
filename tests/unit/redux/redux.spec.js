@@ -1,42 +1,96 @@
 import { store } from '~/redux/store'
-import reducer, { logout } from '~/redux/reducer'
-import { loginUser } from '~/redux/action-creators'
-import { request } from '~/plugins/request'
+import reducer, { logout, checkAuth, loginUser, logoutUser, signupUser } from '~/redux/reducer'
+import { axiosClient } from '~/plugins/axiosClient'
 import MockAdapter from 'axios-mock-adapter'
 
 import { URLs } from '~/constants/request'
-import { errorMessage, initialState, stateWithUserData, token, userData } from './redux.variables'
+import {
+  errorMessage,
+  initialState,
+  accessToken,
+  loginUserData,
+  signupUserData,
+  userEmail,
+  stateAfterSignup,
+  stateAfterLogin
+} from './redux.variables'
+
+import { axiosInstance } from '~/services/auth-service'
 
 Object.defineProperty(window, 'localStorage', {
   value: {
-    getItem: () => token,
-    setItem: () => ''
+    getItem: () => accessToken,
+    setItem: () => '',
+    removeItem: jest.fn()
   }
 })
 
-const mock = new MockAdapter(request)
+const mockAxiosClient = new MockAdapter(axiosClient)
+
+const mockAxiosInstance = new MockAdapter(axiosInstance)
 
 describe('redux test', () => {
   it('should return the initial state', () => {
-
     expect(reducer(undefined, {})).toEqual(initialState)
   })
-  it('should set an error to store', async () => {
-    mock.onPost(URLs.user.login).reply(401, new Error(errorMessage))
-    await store.dispatch(loginUser(userData))
+
+  it('should set an error to store after signup', async () => {
+    mockAxiosClient.onPost(URLs.auth.signup).reply(404, new Error(errorMessage))
+    await store.dispatch(signupUser(signupUserData))
 
     expect(store.getState()).toEqual({ appMain: { ...initialState, error: errorMessage } })
   })
 
-  it('should set user data to store', async () => {
-    mock.onPost(URLs.user.login).reply(200, token)
-    await store.dispatch(loginUser(userData))
+  it('should set user email to store after signup', async () => {
+    mockAxiosClient.onPost(URLs.auth.signup).reply(200, { userEmail })
+    await store.dispatch(signupUser(signupUserData))
 
-    expect(store.getState()).toEqual({ appMain: stateWithUserData })
+    expect(store.getState()).toEqual({ appMain: stateAfterSignup })
+  })
+
+  it('should set an error to store after login', async () => {
+    mockAxiosClient.onPost(URLs.auth.login).reply(404, new Error(errorMessage))
+    await store.dispatch(loginUser(loginUserData))
+
+    expect(store.getState()).toEqual({ appMain: { ...stateAfterSignup, error: errorMessage } })
+  })
+
+  it('should set user data to store after login', async () => {
+    mockAxiosClient.onPost(URLs.auth.login).reply(200, { accessToken })
+    await store.dispatch(loginUser(loginUserData))
+
+    expect(store.getState()).toEqual({ appMain: stateAfterLogin })
+  })
+
+  it('should set an error to store after checkAuth', async () => {
+    mockAxiosInstance.onGet(URLs.auth.refresh).reply(404, new Error(errorMessage))
+    await store.dispatch(checkAuth())
+
+    expect(store.getState()).toEqual({ appMain: { ...stateAfterLogin, error: errorMessage } })
+  })
+
+  it('should set user data to store after checkAuth', async () => {
+    mockAxiosInstance.onGet(URLs.auth.refresh).reply(200, { accessToken })
+    await store.dispatch(checkAuth())
+
+    expect(store.getState()).toEqual({ appMain: stateAfterLogin })
+  })
+
+  it('should set an error to store after logout', async () => {
+    mockAxiosClient.onPost(URLs.auth.logout).reply(404, new Error(errorMessage))
+    await store.dispatch(logoutUser())
+
+    expect(store.getState()).toEqual({ appMain: { ...stateAfterLogin, error: errorMessage } })
+  })
+
+  it('should remove user data from store after logout', async () => {
+    mockAxiosClient.onPost(URLs.auth.logout).reply(200, { count: 'deletedCount: 1' })
+    await store.dispatch(logoutUser())
+
+    expect(store.getState()).toEqual({ appMain: initialState })
   })
 
   it('should clear user data from store', () => {
-
-    expect(reducer(stateWithUserData, logout())).toEqual(initialState)
+    expect(reducer(stateAfterLogin, logout())).toEqual(initialState)
   })
 })

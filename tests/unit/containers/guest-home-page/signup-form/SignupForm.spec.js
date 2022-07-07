@@ -3,12 +3,18 @@ import SignupForm from '~/containers/guest-home-page/signup-form/SignupForm'
 import { renderWithProviders } from '~tests/test-utils'
 
 const errors = { firstName: false, lastName: false, email: false, password: false, confirmPassword: false }
-const data = { firstName: 'John', lastName: 'Doe', email: 'email@mail.com', password: 'passTest1', confirmPassword: 'passTest1' }
+const data = {
+  firstName: 'John',
+  lastName: 'Doe',
+  email: 'email@mail.com',
+  password: 'passTest1',
+  confirmPassword: 'passTest1'
+}
 const handleChange = jest.fn()
 const handleBlur = jest.fn()
 const handleSubmit = jest.fn()
 
-describe('Signup form', () => {
+describe('Signup form test', () => {
   beforeEach(() => {
     renderWithProviders(
       <SignupForm
@@ -75,9 +81,12 @@ describe('Signup form', () => {
   })
 
   it('should submit form', async () => {
+    handleSubmit.mockImplementation((event) => {
+      event.preventDefault()
+    })
     const button = screen.getByText('common.labels.signup')
     fireEvent.click(button)
 
-    await waitFor(() => expect(handleSubmit).toHaveBeenCalled())
+    expect(handleSubmit).toHaveBeenCalled()
   })
 })
