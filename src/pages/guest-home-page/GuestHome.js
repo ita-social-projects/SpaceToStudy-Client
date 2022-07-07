@@ -3,7 +3,7 @@ import { descriptionTimes } from '~/components/accordion-with-image/descriptionT
 import Welcome from '~/containers/guest-home-page/Welcome'
 import WhatCanYouDo from '~/containers/guest-home-page/WhatCanYouDo'
 import FeatureBlock from '~/containers/guest-home-page/FeatureBlock'
-import Footer from '~/components/footer/Footer'
+import Footer from '~/containers/footer/Footer'
 
 const GuestHomePage = () => {
   

@@ -1,8 +1,11 @@
-import React from 'react'
+import { Container } from '@mui/material'
+import FindMentorBlock from '~/containers/student-home-page/find-mentor-block/FindMentorBlock'
 
 const StudentHome = () => {
   return (
-    <div data-testid="studentHome">Hello Student!</div>
+    <Container data-testid="studentHome" sx={ { pt: 6 } }>
+      <FindMentorBlock />
+    </Container>
   )
 }
 

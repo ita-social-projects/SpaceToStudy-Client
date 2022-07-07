@@ -6,10 +6,24 @@ import login from './login.json'
 import questions from './questions.json'
 import titles from './titles.json'
 import guestHomePage from './guest-home-page.json'
+import studentHomePage from './student-home-page.json'
 import signup from './signup.json'
+import footer from './footer.json'
 
-const en = { 
-  translations: { common, errorPage, button, header, questions, titles, guestHomePage, login, signup } 
+const en = {
+  translations: {
+    common,
+    errorPage,
+    button,
+    header,
+    questions,
+    titles,
+    guestHomePage,
+    login,
+    signup,
+    studentHomePage,
+    footer
+  }
 }
 
 export default en

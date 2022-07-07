@@ -17,6 +17,10 @@ const button = {
       padding: '12px 24px',
       fontSize: '16px',
     },
+    sizeExtraLarge: {
+      padding: '16px 32px',
+      fontSize: '16px',
+    },
     contained: {
       backgroundColor: palette.primary[900]
     },

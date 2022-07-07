@@ -6,6 +6,7 @@ const palette = {
     black:'#000000',
     white:'#FFFFFF',
   },
+  companyBlue:'rgba(0, 167, 167, 0.2)',
   error: {
     50: '#FFEFF2',
     100: '#FFCFD4',
