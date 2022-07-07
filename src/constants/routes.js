@@ -11,7 +11,7 @@ export const routes = {
 }
 export const studentRoutes = {
   navBar: {
-    mentors: { label: 'mentors', route: '/mentors' },
+    findMentor: { label: 'findMentor', route: '/findMentor' },
     categories: { label: 'categories', route: '/#categories' },
     howItWorks: { label: 'howItWorks', route: '/#howItWorks' },
     faq: { label: 'faq', route: '/#faq' },

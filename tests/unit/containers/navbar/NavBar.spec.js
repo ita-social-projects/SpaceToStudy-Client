@@ -60,7 +60,7 @@ describe('Student NavBar test', () => {
   })
 
   it('should render navigation item with navBar text', () => {
-    const text = screen.getByText('header.mentors')
+    const text = screen.getByText('header.findMentor')
 
     expect(text).toBeInTheDocument()
   })
