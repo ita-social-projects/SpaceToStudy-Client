@@ -1,5 +1,5 @@
 import { Container } from '@mui/material'
-import FindMentorBlock from '~/containers/student-home/find-mentor-block/FindMentorBlock'
+import FindMentorBlock from '~/containers/student-home-page/find-mentor-block/FindMentorBlock'
 
 const StudentHome = () => {
   return (

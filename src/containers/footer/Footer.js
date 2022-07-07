@@ -13,7 +13,7 @@ const Footer = () => {
     <Box sx={ style.footer }>
       <Container sx={ style.container }>
         <Typography color="primary.50" variant="caption">
-          { t('common.allRightsReserved') }
+          { t('footer.allRightsReserved') }
         </Typography>
         <Box  sx={ style.links }>
           <Typography 
@@ -21,14 +21,14 @@ const Footer = () => {
             to={ privacyPolicy.route }
             variant="caption"
           >
-            { privacyPolicy.label }
+            { t(`footer.${privacyPolicy.label}`) }
           </Typography>
           <Typography 
             component={ Link }
             to={ termOfUse.route }
             variant="caption"
           >
-            { termOfUse.label }
+            { t(`footer.${termOfUse.label}`) }
           </Typography>
         </Box>
       </Container>

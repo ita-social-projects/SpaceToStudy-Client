@@ -1,5 +1,5 @@
 import { screen, fireEvent, render } from '@testing-library/react'
-import FindMentorBlock from '~/containers/student-home/find-mentor-block/FindMentorBlock'
+import FindMentorBlock from '~/containers/student-home-page/find-mentor-block/FindMentorBlock'
 import useBreakpoints from '~/hooks/use-breakpoints'
 
 const mockNavigate = jest.fn()
@@ -23,15 +23,15 @@ describe('FindMentorBlock test', () => {
     expect(img).toBeInTheDocument()
   })
   it('should navigate if click on find mentor button', async () => {
-    const findMentorButton = screen.getByText('studentHome.findMentorBlock.button')
+    const findMentorButton = screen.getByText('studentHomePage.findMentorBlock.button')
     fireEvent.click(findMentorButton)
 
     expect(mockNavigate).toHaveBeenCalled()
   })
   it('should navigate if press enter', async () => {
-    const input = screen.getByLabelText(/studentHome.findMentorBlock.label/i)
+    const input = screen.getByLabelText(/studentHomePage.findMentorBlock.label/i)
     fireEvent.change(input, { target: { value: 'test' } })
-    fireEvent.keyDown(input, { key: 'Enter', code: 'Enter', charCode: 13 })
+    fireEvent.keyPress(input, { key: 'Enter', code: 'Enter', charCode: 13 })
 
     expect(mockNavigate).toHaveBeenCalled()
   })

@@ -1,12 +1,21 @@
 export const routes = {
   home: { label: 'home', route: '/' },
   about: { label: 'about', route: '/about' },
-  findMentor: { label: 'Find Mentor', route: '/findMentor' },
-  privacyPolicy: { label: 'Privacy Policy', route: '/privacyPolicy' },
-  termOfUse: { label: 'Term of Use', route: '/termOfUse' },
+  privacyPolicy: { label: 'privacyPolicy', route: '/privacyPolicy' },
+  termOfUse: { label: 'termOfUse', route: '/termOfUse' },
   guestNavBar: {
     whatCanYouDo: { label: 'whatCanYouDo', route: '/#whatCanYouDo' },
     howItWorks: { label: 'howItWorks', route: '/#howItWorks' },
     whoWeAre: { label: 'whoWeAre', route: '/#whoWeAre' },
+  },
+}
+
+export const studentRoutes = {
+  navBar: {
+    findMentor: { label: 'findMentor', route: '/findMentor' },
+    categories: { label: 'categories', route: '/#categories' },
+    howItWorks: { label: 'howItWorks', route: '/#howItWorks' },
+    faq: { label: 'faq', route: '/#faq' },
+    becomeMentor: { label: 'becomeMentor', route: '/becomeMentor' },
   },
 }
