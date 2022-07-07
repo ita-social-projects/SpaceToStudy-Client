@@ -27,14 +27,11 @@ const FindMentorBlock = () => {
     return navigate(findMentor.route, { state: { filter } })
   }, [filter, findMentor.route, navigate])
 
-  const handleEnterPress = useCallback(
-    (e) => {
-      if (e.key === 'Enter' && filter) {
-        redirect()
-      }
-    },
-    [filter, redirect]
-  )
+  const handleEnterPress = useCallback((e) => {
+    if (e.key === 'Enter' && filter) {
+      redirect()
+    }
+  },[filter, redirect])
 
   return (
     <Box className="section" sx={ styles.container }>
