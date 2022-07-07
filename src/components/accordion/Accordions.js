@@ -13,7 +13,7 @@ const Accordions = ({ items, isFromGuest = true, onChange, activeIndex, styles }
 
   let style
   isFromGuest ? style = guestStyle : style = faqStyle 
-  console.log(style)
+
   return (
     <Box sx={ { ...styles } }>
       { items.map((item, index) => (

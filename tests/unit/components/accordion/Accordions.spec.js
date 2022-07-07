@@ -43,3 +43,30 @@ describe('Accordion component test', () => {
     expect(props.onChange).toHaveBeenCalled()
   })
 })
+
+describe('Accordions test when isFromGuest equal false', () => {
+  const props = {
+    items: [
+      {
+        title: 'title1',
+        description: 'description1'
+      },
+      {
+        title: 'title2',
+        description: 'description2'
+      }
+    ],
+    isFromGuest: false,
+    onChange: onChangeMock,
+    activeIndex: '0',
+    styles: {}
+  }
+  beforeEach(() => {
+    render(<Accordions { ...props } />)
+  })
+  it('shuld render expand more icon', () => {
+    const expandMoreIcon = screen.getAllByTestId('ExpandMoreRoundedIcon')
+
+    expect(expandMoreIcon).toHaveLength(2)
+  })
+})
