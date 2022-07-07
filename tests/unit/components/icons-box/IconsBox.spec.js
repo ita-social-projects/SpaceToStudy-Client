@@ -5,7 +5,7 @@ import IconsBox from '~/components/icons-box/IconsBox'
 const child = (<button>test</button>)
 const setIsSidebarOpen = jest.fn()
 
-describe('IconsBox test with guest role', () => {
+describe('IconsBox test with child element', () => {
 
   beforeEach(() => {
     renderWithProviders(<IconsBox child={ child } setIsSidebarOpen={ setIsSidebarOpen } />)
@@ -23,7 +23,7 @@ describe('IconsBox test with guest role', () => {
     expect(menuIcon).toBeInTheDocument()
   })
     
-  it('should render click menu icon', () => {
+  it('should click menu icon', () => {
     const menuIcon = screen.getByTestId('MenuIcon')
     fireEvent.click(menuIcon)
     

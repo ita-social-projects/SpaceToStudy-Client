@@ -27,7 +27,7 @@ describe('NavigationIcons test with guest role', () => {
     await waitFor(() => expect(img).toBeInTheDocument())
   })
     
-  it('should render and click menu icon', () => {
+  it('should render and call setIsSidebarOpen after click menu icon', () => {
     const menuIcon = screen.getByTestId('MenuIcon')
     fireEvent.click(menuIcon)
     
