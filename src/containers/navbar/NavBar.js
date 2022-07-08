@@ -1,22 +1,29 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { routes } from '~/constants/routes'
+import { routes, studentRoutes } from '~/constants/routes'
 import { useTranslation } from 'react-i18next'
-import { Typography, Box, Button, IconButton, List, ListItem  } from '@mui/material'
+import { Typography, Box, Button, List, ListItem  } from '@mui/material'
 
 import Logo from '~/containers/logo/Logo'
 import Sidebar from '~/containers/sidebar/Sidebar'
-import LanguageIcon from '@mui/icons-material/Language'
-import MenuIcon from '@mui/icons-material/Menu'
-import { style } from '~/containers/navbar/navbar.style'
-import PropTypes from 'prop-types'
 
-const Navbar = ({ navigationItems, children }) => {
+import NavigationIcons from '~/containers/navigation-icons/NavigationIcons'
+import { style } from '~/containers/navbar/navbar.style'
+
+
+const Navbar = () => {
   const { t } = useTranslation()
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+  const [ navigationItems , setNavigationItems] = useState(Object.values(routes.guestNavBar))
+  const { userRole } = useSelector((state) => state.appMain)
+
+  useEffect(() => {
+    if (userRole ==='student') setNavigationItems(Object.values(studentRoutes.navBar))
+  }, [userRole])
+  
 
   const navigationList = navigationItems.map(item => {
-
     return (
       <ListItem key={ item.label } sx={ style.navItem }>
         <Typography
@@ -25,7 +32,7 @@ const Navbar = ({ navigationItems, children }) => {
           to={ item.route }
           variant="subtitle2"
         >
-          { t(`header.guestNavBar.${ item.label }`) }
+          { t(`header.${ item.label }`) }
         </Typography>
       </ListItem>)
   })
@@ -44,23 +51,11 @@ const Navbar = ({ navigationItems, children }) => {
         { navigationList }
       </List>
 
-      <Box sx={ style.iconBox }>
-        <IconButton size='large' sx={ style.langIcon }>
-          <LanguageIcon color='primary' />
-        </IconButton>
-        { children }
-        <IconButton onClick={ () => setIsSidebarOpen(true) } size='large' sx={ style.menuIcon }>
-          <MenuIcon color='primary' />
-        </IconButton>
-      </Box>
+      <NavigationIcons setIsSidebarOpen={ setIsSidebarOpen } />
+
       <Sidebar isSidebarOpen={ isSidebarOpen } navigationItems={ navigationItems } setIsSidebarOpen={ setIsSidebarOpen } />
     </Box>
   )
 }
 
 export default Navbar
-
-Navbar.propTypes = {
-  navigationItems: PropTypes.array.isRequired,
-  children: PropTypes.node.isRequired
-}

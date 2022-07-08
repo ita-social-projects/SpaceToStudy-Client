@@ -9,7 +9,6 @@ export const routes = {
     whoWeAre: { label: 'whoWeAre', route: '/#whoWeAre' },
   },
 }
-
 export const studentRoutes = {
   navBar: {
     findMentor: { label: 'findMentor', route: '/findMentor' },

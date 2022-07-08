@@ -14,8 +14,8 @@ describe('Sidebar test', () => {
   })
 
   it('should render navigation item with label text', () => {
-    const text = screen.getByText('header.guestNavBar.label-test')
-    
+    const text = screen.getByText('header.label-test')
+
     expect(text).toBeInTheDocument()
   })
     

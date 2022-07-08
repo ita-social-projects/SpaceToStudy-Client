@@ -1,26 +1,20 @@
-import { render, screen, fireEvent, act, waitForElementToBeRemoved } from '@testing-library/react'
-import { MemoryRouter } from 'react-router-dom'
-import { Provider } from 'react-redux'
-
+import { screen, fireEvent, act, waitForElementToBeRemoved } from '@testing-library/react'
 import { ModalProvider } from '~/context/modal-context'
-import AppHeader from '~/containers/layout/AppHeader'
+import { renderWithProviders } from '~tests/test-utils'
+import NavBar from '~/containers/navbar/NavBar'
 import { ConfirmationDialogProvider } from '~/context/confirm-context'
 import { store } from '~/redux/store'
 
+
 describe('modal context', () => {
   beforeEach(() => {
-    const wrapper = ({ children }) => (
-      <MemoryRouter>
-        <ConfirmationDialogProvider>
-          <Provider store={ store }>
-            <ModalProvider>
-              { children }
-            </ModalProvider>
-          </Provider>
-        </ConfirmationDialogProvider>
-      </MemoryRouter>
+    renderWithProviders(
+      <ConfirmationDialogProvider>
+        <ModalProvider>
+          <NavBar />
+        </ModalProvider>
+      </ConfirmationDialogProvider>
     )
-    render(<AppHeader />, { wrapper })
 
     const button = screen.getByText('header.loginButton')
     act(() => {
@@ -76,3 +70,4 @@ describe('modal context', () => {
     expect(popup).not.toBeInTheDocument()
   })
 })
+
