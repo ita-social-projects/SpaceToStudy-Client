@@ -1,6 +1,6 @@
 import { screen, fireEvent } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
-import StudentIcons from '~/containers/navigation-icons/StudentIcons'
+import StudentIcons from '~/containers/navigation-icons/student-icons/StudentIcons'
 
 const openLoginDialog = jest.fn()
 const setIsSidebarOpen = jest.fn()
