@@ -10,7 +10,7 @@ jest.mock('~/hooks/use-confirm', () => {
   })
 })
 
-describe('NavigationIcons test with guest role', () => {
+describe('test with guest role', () => {
   const preloadedState = { appMain: { loading: false, userRole: '' } }
   beforeEach(() => {
     renderWithProviders(
@@ -26,17 +26,17 @@ describe('NavigationIcons test with guest role', () => {
 
     await waitFor(() => expect(img).toBeInTheDocument())
   })
-    
-  it('should render and call setIsSidebarOpen after click menu icon', () => {
+
+  it('should render and click menu icon', () => {
     const menuIcon = screen.getByTestId('MenuIcon')
     fireEvent.click(menuIcon)
-    
+
     expect(setIsSidebarOpen).toBeCalledWith(true)
   })
-    
+
 })
 
-describe('NavigationIcons test with student role', () => {
+describe('test with student role', () => {
 
   const preloadedState = { appMain: { loading: false, userRole: 'student' } }
   beforeEach(() => {
@@ -48,12 +48,12 @@ describe('NavigationIcons test with student role', () => {
 
   it('should render message icon', () => {
     const messageIcon = screen.getByTestId('MessageRoundedIcon')
-    
+
     expect(messageIcon).toBeInTheDocument()
   })
 })
 
-describe('NavigationIcons test with loading equal true', () => {
+describe('test with loading equal true', () => {
 
   const preloadedState = { appMain: { loading: true, userRole: 'student' } }
   beforeEach(() => {
@@ -68,6 +68,5 @@ describe('NavigationIcons test with loading equal true', () => {
 
     expect(loader).toBeInTheDocument()
   })
-    
-})
 
+})

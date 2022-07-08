@@ -9,5 +9,10 @@ export const style = {
   },
   langIcon: { display: { xs: 'none', sm: 'inherit' } },
   menuIcon: { display: { md: 'none' } },
-
+  loginButton: {
+    display: { xs: 'none', md: 'inherit' },
+    margin: '18px 10px',
+  },
+  loginIcon: { display: { md: 'none' } },
+  sudentIcons: { display: { xs: 'none', md: 'inherit' } }
 }
