@@ -18,13 +18,3 @@ export const studentRoutes = {
     becomeMentor: { label: 'becomeMentor', route: '/becomeMentor' },
   },
 }
-
-export const studentRoutes = {
-  navBar: {
-    findMentor: { label: 'findMentor', route: '/findMentor' },
-    categories: { label: 'categories', route: '/#categories' },
-    howItWorks: { label: 'howItWorks', route: '/#howItWorks' },
-    faq: { label: 'faq', route: '/#faq' },
-    becomeMentor: { label: 'becomeMentor', route: '/becomeMentor' },
-  },
-}
