@@ -2,8 +2,10 @@ import { render, screen } from '@testing-library/react'
 import { useSelector } from 'react-redux'
 import { MemoryRouter } from 'react-router-dom'
 import { ThemeProvider } from '@emotion/react'
-import AppMain from '~/containers/layout/AppMain'
+import { ModalProvider } from '~/context/modal-context'
 import { theme } from '~/styles/app-theme/custom-mui.styles'
+
+import AppMain from '~/containers/layout/AppMain'
 
 Object.defineProperty(window, 'localStorage', {
   value: {
@@ -72,9 +74,11 @@ describe('AppMain layout component test', () => {
       userRole: ''
     }))
     render(
-      <MemoryRouter>
-        <AppMain />
-      </MemoryRouter>
+      <ModalProvider>
+        <MemoryRouter>
+          <AppMain />
+        </MemoryRouter>
+      </ModalProvider>
     )
     const guestHome = screen.getByTestId('guestHome')
 
@@ -87,9 +91,11 @@ describe('AppMain layout component test', () => {
       userRole: ''
     }))
     render(
-      <MemoryRouter>
-        <AppMain />
-      </MemoryRouter>
+      <ModalProvider>
+        <MemoryRouter>
+          <AppMain />
+        </MemoryRouter>
+      </ModalProvider>
     )
 
     expect(mockDispatch).toHaveBeenCalledTimes(1)

@@ -1,6 +1,6 @@
 import { screen, render } from '@testing-library/react'
 
-import WhoWeAre from '~/containers/guest-home-page/WhoWeAre'
+import WhoWeAre from '~/containers/guest-home-page/who-we-are/WhoWeAre'
 
 describe('WhoWeAre component', () => {
   beforeEach(() => {

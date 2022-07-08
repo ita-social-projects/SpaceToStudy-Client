@@ -3,8 +3,8 @@ import { Box } from '@mui/material'
 
 import { routes } from '~/constants/routes'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
+import VideoBox from '~/components/video-box/VideoBox'
 import videoImg from '~/assets/img/guest-home-page/videoImg.png'
-import videoBar from '~/assets/img/guest-home-page/videoBar.png'
 
 const sectionId = routes.guestNavBar.whoWeAre.label
 
@@ -15,16 +15,6 @@ const titleVariant = {
 
 const descriptionVariant = {
   xs: 'subtitle1'
-}
-
-const styles = {
-  videoBg: {
-    padding: {
-      md: '32px 96px',
-      sm: '20px 60px',
-      xs: '20px 12px',
-    }
-  }
 }
 
 const WhoWeAre = () => {
@@ -38,20 +28,7 @@ const WhoWeAre = () => {
         title={ t('guestHomePage.whoWeAre.title') }
         titleVariant={ titleVariant }
       />
-      <Box
-        data-testid='video section' sx={ { backgroundColor: 'basic.grey', borderRadius: '18px' } }
-      >
-        <Box
-          alt='Video bar' component='img' src={ videoBar }
-          sx={ { maxWidth: '100%' } }
-        />
-        <Box sx={ styles.videoBg }>
-          <Box
-            alt='Video' component='img' src={ videoImg }
-            sx={ { maxWidth: '100%' } }
-          />
-        </Box>
-      </Box>
+      <VideoBox video={ videoImg } />
     </Box>
   )
 }

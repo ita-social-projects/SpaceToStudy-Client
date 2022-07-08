@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react'
 
 import { renderWithProviders } from '~tests/test-utils'
-import Welcome from '~/containers/guest-home-page/Welcome'
+import Welcome from '~/containers/guest-home-page/welcome/Welcome'
 
 describe('Welcome component', () => {
   beforeEach(() => {

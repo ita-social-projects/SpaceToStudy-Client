@@ -4,12 +4,13 @@ import { useTranslation } from 'react-i18next'
 
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import InfoCard from '~/components/info-card/InfoCard'
+import SignupDialog from '~/containers/guest-home-page/signup-dialog/SignupDialog'
+import { ModalContext } from '~/context/modal-context'
 import { routes } from '~/constants/routes'
-import { styles } from '~/containers/guest-home-page/styles/what-can-you-do.styles'
+import { student, mentor } from '~/containers/guest-home-page/constants'
+import { styles } from '~/containers/guest-home-page/what-can-you-do/what-can-you-do.styles'
 import learnImg from '~/assets/img/guest-home-page/learnImg.png'
 import teachImg from '~/assets/img/guest-home-page/teachImg.png'
-import { ModalContext } from '~/context/modal-context'
-import SignupDialog from '~/containers/guest-home-page/signup-dialog/SignupDialog'
 
 const sectionId = routes.guestNavBar.whatCanYouDo.label
 
@@ -34,7 +35,7 @@ const cardData = [
     title: 'guestHomePage.whatCanYouDo.learn.title',
     description: 'guestHomePage.whatCanYouDo.learn.description',
     actionLabel: 'guestHomePage.whatCanYouDo.learn.actionLabel',
-    actionType: 'student',
+    actionType: student,
     cardWidth
   },
   {
@@ -43,7 +44,7 @@ const cardData = [
     title: 'guestHomePage.whatCanYouDo.teach.title',
     description: 'guestHomePage.whatCanYouDo.teach.description',
     actionLabel: 'guestHomePage.whatCanYouDo.teach.actionLabel',
-    actionType: 'mentor',
+    actionType: mentor,
     cardWidth
   }
 ]

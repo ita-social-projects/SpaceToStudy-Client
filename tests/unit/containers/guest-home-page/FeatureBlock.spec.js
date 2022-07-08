@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import FeatureBlock from '~/containers/guest-home-page/FeatureBlock'
+import FeatureBlock from '~/containers/guest-home-page/feature/FeatureBlock'
 import MapLogo from '~/assets/img/guest-home-page/map.svg'
 import useBreakpoints from '~/hooks/use-breakpoints'
 
@@ -16,7 +16,7 @@ const items = [
 describe('Carousel test', () => {
   it('Test should render carousel component', () => {
     useBreakpoints.mockImplementation(() => 'mobile')
-    render(<FeatureBlock items={items} />)
+    render(<FeatureBlock items={ items } />)
     const carouselComponent = screen.getByTestId('carousel')
     const accordionComponent = screen.queryByTestId('accordion')
 
@@ -28,7 +28,7 @@ describe('Carousel test', () => {
 describe('Accordion test', () => {
   it('Test should render accordion component', () => {
     useBreakpoints.mockImplementation(() => 'desktop')
-    render(<FeatureBlock items={items} />)
+    render(<FeatureBlock items={ items } />)
     const accordionComponent = screen.getByTestId('accordion')
     const carouselComponent = screen.queryByTestId('carousel')
 

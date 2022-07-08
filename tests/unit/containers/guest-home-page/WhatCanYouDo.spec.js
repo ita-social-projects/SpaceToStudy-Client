@@ -3,7 +3,7 @@ import { MemoryRouter } from 'react-router-dom'
 
 import { ModalProvider } from '~/context/modal-context'
 import { ConfirmationDialogProvider } from '~/context/confirm-context'
-import WhatCanYouDo from '~/containers/guest-home-page/WhatCanYouDo'
+import WhatCanYouDo from '~/containers/guest-home-page/what-can-you-do/WhatCanYouDo'
 
 describe('WhatCanYoDo component', () => {
   it('should render popup after button click', () => {
