@@ -8,11 +8,12 @@ import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded'
 
 const Accordions = ({ items, onChange, activeIndex, showMoreIcon, style }) => {
   const { t } = useTranslation()
-
+  
   return (
     <Box sx={ style.root }>
       { items.map((item, index) => (
         <Accordion
+          data-testid={ `${ index }-${ activeIndex === index }` }
           disableGutters
           expanded={ activeIndex === index }
           key={ index }
