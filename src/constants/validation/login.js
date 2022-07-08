@@ -26,7 +26,7 @@ export const firstName = (value) => {
   if (value.length > 30) {
     helperText = 'common.errorMessages.firstNameLength'
   }
-  if (!RegExp(/^[a-z]+$/i).test(value)) {
+  if (!RegExp(/^[a-zа-яєії]+$/i).test(value)) {
     helperText = 'common.errorMessages.firstNameAlphabeticOnly'
   }
   helperText = emptyField(value, helperText)
@@ -38,7 +38,7 @@ export const lastName = (value) => {
   if (value.length > 30) {
     helperText = 'common.errorMessages.lastNameLength'
   }
-  if (!RegExp(/^[a-z]+$/i).test(value)) {
+  if (!RegExp(/^[a-zа-яєії]+$/i).test(value)) {
     helperText = 'common.errorMessages.lastNameAlphabeticOnly'
   }
   helperText = emptyField(value, helperText)
