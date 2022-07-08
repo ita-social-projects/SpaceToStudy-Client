@@ -4,6 +4,7 @@ import { Box, Typography } from '@mui/material'
 
 import { accordionItems } from '~/containers/student-home-page/faq/accordionItems'
 import Accordions from '~/components/accordion/Accordions'
+import { studentRoutes } from '~/constants/routes'
 
 import { style } from '~/containers/student-home-page/faq/faq.style'
 
@@ -11,11 +12,10 @@ const Faq = () => {
   const { t } = useTranslation()
   const [activeItemId, setActiveItemId] = useState(null)
 
-  const items = accordionItems
   const changeAccordion = (id) => activeItemId === id ? setActiveItemId(null) : setActiveItemId(id)
 
   return (
-    <Box className='section' id='faq' sx={ style.root }>
+    <Box className='section' id={ studentRoutes.navBar.faq.label } sx={ style.root }>
       <Box sx={ style.titleBox }>
         <Typography sx={ style.title } variant='h5'>
           { t('studentHomePage.faq.title') }
@@ -26,7 +26,7 @@ const Faq = () => {
       </Box>
       <Accordions
         activeIndex={ activeItemId }
-        items={ items }
+        items={ accordionItems }
         onChange={ changeAccordion }
         showMoreIcon
         style={ style.accordions }
