@@ -3,7 +3,7 @@ import Accordions from '~/components/accordion/Accordions'
 
 const onChangeMock = jest.fn()
 
-describe('Accordion component test', () => {
+describe('Accordion component without expandMoreIcon test', () => {
   const props = {
     items: [
       {
@@ -17,10 +17,11 @@ describe('Accordion component test', () => {
     ],
     onChange: onChangeMock,
     activeIndex: '0',
-    styles: {}
+    showMoreIcon: false,
+    style: {}
   }
   beforeEach(() => {
-    render(<Accordions {...props} />)
+    render(<Accordions { ...props } />)
   })
   it('Test headings', () => {
     const firstTitle = screen.getByText('title1')
@@ -42,9 +43,15 @@ describe('Accordion component test', () => {
 
     expect(props.onChange).toHaveBeenCalled()
   })
+
+  it('shuld render expand more icon', () => {
+    const expandMoreIcon = screen.queryAllByTestId('ExpandMoreRoundedIcon')
+
+    expect(expandMoreIcon).toHaveLength(0)
+  })
 })
 
-describe('Accordions test when isFromGuest equal false', () => {
+describe('Accordions test with expandMoreIcon', () => {
   const props = {
     items: [
       {
@@ -56,10 +63,10 @@ describe('Accordions test when isFromGuest equal false', () => {
         description: 'description2'
       }
     ],
-    isFromGuest: false,
+    showMoreIcon: true,
     onChange: onChangeMock,
     activeIndex: '0',
-    styles: {}
+    style: {}
   }
   beforeEach(() => {
     render(<Accordions { ...props } />)

@@ -6,21 +6,21 @@ import AccordionSummary from '@mui/material/AccordionSummary'
 import AccordionDetails from '@mui/material/AccordionDetails'
 import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded'
 
-const Accordions = ({ items, onChange, activeIndex, showMoreIcon=false, style }) => {
+const Accordions = ({ items, onChange, activeIndex, showMoreIcon, style }) => {
   const { t } = useTranslation()
 
   return (
     <Box sx={ style.root }>
       { items.map((item, index) => (
         <Accordion
-          disableGuttersmaxWidth
+          disableGutters
           expanded={ activeIndex === index }
           key={ index }
           onChange={ () => onChange(index) }
           sx={ [style.accordion, activeIndex === index ? style.active : style.inactive] }
         >
           <AccordionSummary
-            expandIcon={ showMoreIcon && <ExpandMoreRoundedIcon /> } // TODO 
+            expandIcon={ showMoreIcon && <ExpandMoreRoundedIcon /> }
             sx={ style.summary }
           >
             <Typography sx={ style.title } variant={ 'h6' }>
