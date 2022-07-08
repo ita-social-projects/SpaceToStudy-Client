@@ -1,7 +1,13 @@
-import { screen, fireEvent } from '@testing-library/react'
+import { screen, fireEvent, render } from '@testing-library/react'
+import { MemoryRouter } from 'react-router-dom'
 import { student } from '~/containers/guest-home-page/constants'
 import SignupDialog from '~/containers/guest-home-page/signup-dialog/SignupDialog'
-import { renderWithProviders } from '~tests/test-utils'
+
+const mockDispatch = jest.fn()
+
+jest.mock('react-redux', () => ({
+  useDispatch: () => mockDispatch
+}))
 
 jest.mock('~/hooks/use-confirm', () => {
   return () => ({
@@ -9,10 +15,12 @@ jest.mock('~/hooks/use-confirm', () => {
   })
 })
 
-describe('Signup dialog', () => {
+describe('Signup dialog test', () => {
   beforeEach(() => {
-    renderWithProviders(
-      <SignupDialog type={ student } />
+    render(
+      <MemoryRouter>
+        <SignupDialog type={ student } />
+      </MemoryRouter>
     )
   })
 
@@ -48,5 +56,27 @@ describe('Signup dialog', () => {
     const error = screen.getByText('common.errorMessages.emptyField')
 
     expect(error).toBeInTheDocument()
+  })
+
+  it('should dispatch after button submit', async () => {
+    const inputFirstName = screen.getByLabelText(/common.labels.firstName/i)
+    fireEvent.change(inputFirstName, { target: { value: 'test' } })
+
+    const inputLastName = screen.getByLabelText(/common.labels.lastName/i)
+    fireEvent.change(inputLastName, { target: { value: 'test' } })
+
+    const inputEmail = screen.getByLabelText(/common.labels.email/i)
+    fireEvent.change(inputEmail, { target: { value: 'test@gmail.com' } })
+
+    const inputPassword = screen.getByLabelText(/common.labels.password/i)
+    fireEvent.change(inputPassword, { target: { value: '12345678a/A' } })
+
+    const inputConfirmPassword = screen.getByLabelText(/common.labels.confirmPassword/i)
+    fireEvent.change(inputConfirmPassword, { target: { value: '12345678a/A' } })
+
+    const button = screen.getByText('common.labels.signup')
+    fireEvent.click(button)
+
+    expect(mockDispatch).toHaveBeenCalledTimes(1)
   })
 })

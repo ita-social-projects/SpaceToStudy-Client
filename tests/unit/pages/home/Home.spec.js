@@ -4,18 +4,16 @@ import Home from '~/pages/home/Home'
 import MockAdapter from 'axios-mock-adapter'
 
 import { URLs } from '~/constants/request'
-import { request } from '~/plugins/request'
+import { axiosClient } from '~/plugins/axiosClient'
 
-const mock = new MockAdapter(request)
+const mock = new MockAdapter(axiosClient)
 
 describe('Home page test', () => {
   it('should have title text', async () => {
     const items = [{ title: 'test', _id: 'test1' }]
 
     mock.onGet(URLs.example.get).reply(200, { items })
-    render(
-      <Home />
-    )
+    render(<Home />)
     const loadingText = screen.getByText('Loading')
     expect(loadingText).toBeInTheDocument()
 
@@ -24,8 +22,6 @@ describe('Home page test', () => {
 
     await waitForElementToBeRemoved(loadingText)
 
-    items.forEach((item) =>
-      expect(screen.getByText(item.title)).toBeInTheDocument()
-    )
+    items.forEach((item) => expect(screen.getByText(item.title)).toBeInTheDocument())
   })
 })

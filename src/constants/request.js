@@ -2,7 +2,10 @@ export const URLs = {
   example: {
     get: '/example'
   },
-  user: {
-    login: '/auth/login'
+  auth: {
+    login: '/auth/login',
+    signup: '/auth/signup',
+    logout: '/auth/logout',
+    refresh: '/auth/refresh'
   }
 }

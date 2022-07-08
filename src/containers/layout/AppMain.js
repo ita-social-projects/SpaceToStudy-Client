@@ -1,23 +1,25 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setUser } from '~/redux/reducer'
 
 import StudentLayout from './StudentLayout'
 import GuestLayout from './GuestLayout'
 import MentorLayout from './MentorLayout'
 import Loader from '~/components/loader/Loader'
+import { checkAuth } from '~/redux/reducer'
 
 const AppMain = () => {
   const { loading, userRole } = useSelector((state) => state.appMain)
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(setUser())
+    if (localStorage.getItem('accessToken')) {
+      dispatch(checkAuth())
+    }
   }, [dispatch])
 
   if (loading) {
     return <Loader size={ 70 } />
-  } 
+  }
 
   switch (userRole) {
   case 'student':
