@@ -2,17 +2,7 @@ import Accordions from '../accordion/Accordions.js'
 import { Box } from '@mui/system'
 import { useState } from 'react'
 
-const style = {
-  feature: {
-    px: '24px',
-    overflow: 'auto'
-  },
-  image: {
-    maxHeight: '470px',
-    overflow: 'auto',
-    mr: '24px'
-  }
-}
+import { style } from '~/components/accordion-with-image/accordion-with-image.style'
 
 const AccordionWithImage = ({ items }) => {
   const [activeItemId, setActiveItemId] = useState(0)
@@ -24,7 +14,7 @@ const AccordionWithImage = ({ items }) => {
         activeIndex={ activeItemId }
         items={ items }
         onChange={ (id) => setActiveItemId(id) }
-        styles={ { maxWidth: { md: '360px', sm: '229px' } } }
+        style={ style.accordions }
       />
     </Box>
   )

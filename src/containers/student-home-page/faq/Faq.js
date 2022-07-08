@@ -5,14 +5,7 @@ import { Box, Typography } from '@mui/material'
 import { accordionItems } from '~/containers/student-home-page/faq/accordionItems'
 import Accordions from '~/components/accordion/Accordions'
 
-const style = {
-  accordion: {
-    margin: { xs: '0 16px', sm: '0 24px ' },
-    maxWidth: { xs: '500px', sm: '720px', md: '928px' }
-  },
-  title: { textAlign: 'center', color: 'textPrimary', pb: '10px' },
-  subtitle: { textAlign: 'center',color: 'primary.900' }
-}
+import { style } from '~/containers/student-home-page/faq/faq.style'
 
 const Faq = () => {
   const { t } = useTranslation()
@@ -22,8 +15,8 @@ const Faq = () => {
   const changeAccordion = (id) => activeItemId === id ? setActiveItemId(null) : setActiveItemId(id)
 
   return (
-    <Box className='section' id='faq' sx={ { flexDirection: 'column' } }>
-      <Box sx={ { pb: '50px' } }>
+    <Box className='section' id='faq' sx={ style.root }>
+      <Box sx={ style.titleBox }>
         <Typography sx={ style.title } variant='h5'>
           { t('studentHomePage.faq.title') }
         </Typography>  
@@ -33,10 +26,10 @@ const Faq = () => {
       </Box>
       <Accordions
         activeIndex={ activeItemId }
-        isFromGuest={ false }
         items={ items }
         onChange={ changeAccordion }
-        styles={ style.accordion }
+        showMoreIcon
+        style={ style.accordions }
       />
     </Box>
   )

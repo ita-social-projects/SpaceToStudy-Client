@@ -6,16 +6,11 @@ import AccordionSummary from '@mui/material/AccordionSummary'
 import AccordionDetails from '@mui/material/AccordionDetails'
 import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded'
 
-import { guestStyle, faqStyle } from './accordion.styles'
-
-const Accordions = ({ items, isFromGuest = true, onChange, activeIndex, styles }) => {
+const Accordions = ({ items, onChange, activeIndex, showMoreIcon=false, style }) => {
   const { t } = useTranslation()
 
-  let style
-  isFromGuest ? style = guestStyle : style = faqStyle 
-
   return (
-    <Box sx={ { ...styles } }>
+    <Box sx={ style.root }>
       { items.map((item, index) => (
         <Accordion
           disableGuttersmaxWidth
@@ -25,15 +20,15 @@ const Accordions = ({ items, isFromGuest = true, onChange, activeIndex, styles }
           sx={ [style.accordion, activeIndex === index ? style.active : style.inactive] }
         >
           <AccordionSummary
-            expandIcon={ !isFromGuest && <ExpandMoreRoundedIcon /> }
-            sx={ style?.summary }
+            expandIcon={ showMoreIcon && <ExpandMoreRoundedIcon /> } // TODO 
+            sx={ style.summary }
           >
             <Typography sx={ style.title } variant={ 'h6' }>
               { t(item.title) }
             </Typography>
           </AccordionSummary>
           <AccordionDetails sx={ style.details } >
-            <Typography sx={ style?.description } variant={ 'body1' }>
+            <Typography sx={ style.description } variant={ 'body1' }>
               { t(item.description) }
             </Typography>
           </AccordionDetails>
