@@ -5,7 +5,7 @@ import { AuthService } from '~/services/auth-service'
 
 const initialState = {
   userId: '',
-  userRole: '',
+  userRole: 'student',
   userEmail: '',
   loading: false,
   error: ''
