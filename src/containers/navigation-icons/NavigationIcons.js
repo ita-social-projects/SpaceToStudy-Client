@@ -2,7 +2,7 @@ import { useContext, useCallback } from 'react'
 import { useSelector } from 'react-redux'
 
 import Loader from '~/components/loader/Loader'
-import GuestIcons from '~/containers/navigation-icons/Guesticons'
+import GuestIcons from '~/containers/navigation-icons/GuestIcons'
 import StudentIcons from '~/containers/navigation-icons/StudentIcons'
 import { ModalContext } from '~/context/modal-context'
 import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
