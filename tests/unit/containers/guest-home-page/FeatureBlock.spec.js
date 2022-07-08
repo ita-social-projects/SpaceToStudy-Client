@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import FeatureBlock from '~/containers/guest-home-page/feature/FeatureBlock'
+import FeatureBlock from '~/containers/guest-home-page/FeatureBlock'
 import MapLogo from '~/assets/img/guest-home-page/map.svg'
 import useBreakpoints from '~/hooks/use-breakpoints'
 

@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { Typography, Box, Button } from '@mui/material'
 
-import { styles } from '~/containers/guest-home-page/welcome/welcome.styles'
+import { styles } from '~/containers/guest-home-page/styles/welcome.styles'
 import titleMd from '~/assets/img/guest-home-page/titleMd.svg'
 import titleSm from '~/assets/img/guest-home-page/titleSm.svg'
 import titleXs from '~/assets/img/guest-home-page/titleXs.svg'

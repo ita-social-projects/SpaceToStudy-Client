@@ -3,7 +3,13 @@ import { MemoryRouter } from 'react-router-dom'
 
 import { ModalProvider } from '~/context/modal-context'
 import { ConfirmationDialogProvider } from '~/context/confirm-context'
-import WhatCanYouDo from '~/containers/guest-home-page/what-can-you-do/WhatCanYouDo'
+import WhatCanYouDo from '~/containers/guest-home-page/WhatCanYouDo'
+
+const mockDispatch = jest.fn()
+
+jest.mock('react-redux', () => ({
+  useDispatch: () => mockDispatch
+}))
 
 describe('WhatCanYoDo component', () => {
   it('should render popup after button click', () => {

@@ -8,7 +8,7 @@ import SignupDialog from '~/containers/guest-home-page/signup-dialog/SignupDialo
 import { ModalContext } from '~/context/modal-context'
 import { routes } from '~/constants/routes'
 import { student, mentor } from '~/containers/guest-home-page/constants'
-import { styles } from '~/containers/guest-home-page/what-can-you-do/what-can-you-do.styles'
+import { styles } from '~/containers/guest-home-page/styles/what-can-you-do.styles'
 import learnImg from '~/assets/img/guest-home-page/learnImg.png'
 import teachImg from '~/assets/img/guest-home-page/teachImg.png'
 
