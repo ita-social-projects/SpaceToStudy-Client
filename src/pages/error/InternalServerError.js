@@ -12,10 +12,10 @@ const InternalServerError = () => {
     <Box sx={ style.container }>
       <Box sx={ style.wrapper }>
         <Box sx={ style.leftBlock }>
-          <Typography data-testid='title' sx={ style.title } variant={ 'h2' }>
+          <Typography sx={ style.title } variant={ 'h2' }>
             { t('errorPage.500.title') }
           </Typography>
-          <Typography data-testid='description' sx={ style.description } variant={ 'subtitle1' }>
+          <Typography sx={ style.description } variant={ 'subtitle1' }>
             { t('errorPage.500.description') }
           </Typography>
           <Button href="/" sx={ style.homeBtn } variant="contained">
