@@ -6,12 +6,12 @@ describe('InternalServerError page test', () => {
     render(<InternalServerError />)
   })
   it('Test title', () => {
-    const title = screen.getByTestId('title')
+    const title = screen.getByText('errorPage.500.title')
 
     expect(title).toBeInTheDocument()
   })
   it('Test description', () => {
-    const description = screen.getByTestId('description')
+    const description = screen.getByText('errorPage.500.description')
 
     expect(description).toBeInTheDocument()
   })
