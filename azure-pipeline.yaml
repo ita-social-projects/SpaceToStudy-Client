@@ -39,14 +39,23 @@ stages:
         pool:
          vmImage: $(agentOS)
         steps:
-        - task: Docker@2
+        - task: Docker@0
           inputs:
-            containerRegistry: 'S2sStage-Registry'
-            repository: 'front-stage'
-            command: 'buildAndPush'
-            Dockerfile: '**/Dockerfile'
-            tags: '$(Build.BuildId)'
-            arguments: '--build-arg username=${{ variables.name }} --build-arg password=${{ variables.pass }}'
+            containerregistrytype: 'Azure Container Registry'
+            azureSubscription: 'S2s-Service'
+            azureContainerRegistry: '{"loginServer":"s2sstage.azurecr.io", "id" : "/subscriptions/734fc759-c3a2-4e22-a478-301dc5b10496/resourceGroups/Space2Study/providers/Microsoft.ContainerRegistry/registries/S2sStage"}'
+            action: 'Build an image'
+            dockerFile: '**/Dockerfile'
+            buildArguments: 'password=$(password)'
+            imageName: 'front-stage:$(Build.BuildId)'
+       
+        - task: Docker@0
+          inputs:
+            containerregistrytype: 'Azure Container Registry'
+            azureSubscription: 'S2s-Service'
+            azureContainerRegistry: '{"loginServer":"s2sstage.azurecr.io", "id" : "/subscriptions/734fc759-c3a2-4e22-a478-301dc5b10496/resourceGroups/Space2Study/providers/Microsoft.ContainerRegistry/registries/S2sStage"}'
+            action: 'Push an image'
+            imageName: 'front-stage:$(Build.BuildId)'
             
 
   - stage: Deploy
