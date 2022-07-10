@@ -12,25 +12,23 @@ variables:
 
 stages:
 
-  # test1
-  # test2
-  # - stage: Env
-  #   displayName: Download and set latest .env
-  #   jobs:
-  #     - job: Env 
-  #       pool:
-  #         vmImage: $(agentOS)
-  #       steps:
-  #       - task: DownloadSecureFile@1
-  #         name: envStage
-  #         condition: eq(variables['Build.SourceBranch'], 'refs/heads/develop')
-  #         inputs:
-  #           secureFile: 'env-front-stage'
-  #       - task: Bash@3
-  #         name: setEnvStage
-  #         inputs:
-  #           targetType: 'inline'
-  #           script: 'mv $(envStage.secureFilePath) .env'
+  - stage: Env
+    displayName: Download and set latest .env
+    jobs:
+      - job: Env 
+        pool:
+          vmImage: $(agentOS)
+        steps:
+        - task: DownloadSecureFile@1
+          name: envStage
+          condition: eq(variables['Build.SourceBranch'], 'refs/heads/develop')
+          inputs:
+            secureFile: 'env-front-stage'
+        - task: Bash@3
+          name: setEnvStage
+          inputs:
+            targetType: 'inline'
+            script: 'mv $(envStage.secureFilePath) .env'
 
   - stage: Build
     displayName: Build and push docker image
