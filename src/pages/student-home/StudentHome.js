@@ -5,7 +5,7 @@ import Faq from '~/containers/student-home-page/faq/Faq'
 
 const StudentHome = () => {
   return (
-    <Box sx={ { backgroundColor: 'studentBackground' } }>
+    <Box sx={ { backgroundColor: 'backgroundColor' } }>
       <Container data-testid="studentHome" sx={ { pt: 6 } }>
         <FindMentorBlock />
         <Faq />

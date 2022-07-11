@@ -2,7 +2,7 @@ import { blueGrey } from '@mui/material/colors'
 
 const palette = {
   primary: blueGrey,
-  studentBackground: '#F7F7F7',
+  backgroundColor: '#F7F7F7',
   basic:{
     black:'#000000',
     white:'#FFFFFF',
