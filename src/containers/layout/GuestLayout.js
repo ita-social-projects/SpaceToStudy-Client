@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom'
 
-import { routes } from '~/constants/routes'
+import { routes, errors } from '~/constants/routes'
 import Example from '~/pages/home/Home'
 import GuestHomePage from '~/pages/guest-home-page/GuestHome'
 import NotFound from '~/pages/error/NotFound'
@@ -12,9 +12,9 @@ const GuestLayout = () => {
     <Routes>
       <Route element={ <GuestHomePage /> } path={ routes.home.route } />
       <Route element={ <Example /> } name="home" path={ routes.about.route } />
-      <Route element={ <AuthPolicy /> } path="/401" />
-      <Route element={ <NotFound /> } path="/404" />
-      <Route element={ <InternalServerError /> } path="/500" />
+      <Route element={ <AuthPolicy /> } path={ errors.authPolicy.route } />
+      <Route element={ <NotFound /> } path={ errors.notFound.route } />
+      <Route element={ <InternalServerError /> } path={ errors.internalServerError.route } />
     </Routes>
   )
 }
