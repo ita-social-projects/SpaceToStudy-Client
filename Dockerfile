@@ -25,4 +25,3 @@ RUN chmod +x /tmp/ssh_setup.sh \
     && service ssh restart
 EXPOSE 80 2222
 CMD /usr/sbin/sshd && sh /usr/share/nginx/html/get-env.sh && nginx -g 'daemon off;'
-RUN cat /usr/share/nginx/html/env.js
