@@ -13,12 +13,6 @@ describe('Faq component test', () => {
     expect(title).toBeInTheDocument()
   })
     
-  it('should render expand moreMore icon', () => {
-    const icon = screen.getAllByTestId('ExpandMoreRoundedIcon')
-      
-    expect(icon).toHaveLength(4)
-  })
-    
   it('should render findTurot text', () => {
     const text = screen.getByText('studentHomePage.faq.findTutor')
     

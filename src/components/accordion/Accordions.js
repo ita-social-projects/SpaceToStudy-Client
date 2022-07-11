@@ -6,7 +6,7 @@ import AccordionSummary from '@mui/material/AccordionSummary'
 import AccordionDetails from '@mui/material/AccordionDetails'
 import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded'
 
-import { style } from '~/components/accordion/accordions.style'
+import { style } from '~/components/accordion/accordion.styles'
 
 const Accordions = ({ items, onChange, activeIndex, showMoreIcon, square }) => {
   const { t } = useTranslation()
