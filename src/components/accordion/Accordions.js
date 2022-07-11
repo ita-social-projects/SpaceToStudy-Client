@@ -6,11 +6,15 @@ import AccordionSummary from '@mui/material/AccordionSummary'
 import AccordionDetails from '@mui/material/AccordionDetails'
 import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded'
 
-const Accordions = ({ items, onChange, activeIndex, showMoreIcon, style, square }) => {
+import { style } from '~/components/accordion/accordions.style'
+
+const Accordions = ({ items, onChange, activeIndex, showMoreIcon, square }) => {
   const { t } = useTranslation()
 
+  const accordionType = showMoreIcon ? 'withShowMoreIcon' : 'noShowMoreIcon'
+
   return (
-    <Box sx={ style.root }>
+    <Box sx={ style[accordionType].root }>
       { items.map((item, index) => (
         <Accordion
           data-testid={ `${ index }-${ activeIndex === index }` }
@@ -18,19 +22,19 @@ const Accordions = ({ items, onChange, activeIndex, showMoreIcon, style, square 
           expanded={ activeIndex === index }
           key={ index }
           onChange={ () => onChange(index) }
-          square
-          sx={ [style.accordion, activeIndex === index ? style.active : style.inactive] }
+          square={ square }
+          sx={ [style[accordionType].accordion, activeIndex === index ? style[accordionType].active : style[accordionType].inactive] }
         >
           <AccordionSummary
             expandIcon={ showMoreIcon && <ExpandMoreRoundedIcon /> }
-            sx={ style.summary }
+            sx={ style[accordionType].summary }
           >
-            <Typography sx={ style.title } variant={ 'h6' }>
+            <Typography sx={ style[accordionType].title } variant={ 'h6' }>
               { t(item.title) }
             </Typography>
           </AccordionSummary>
-          <AccordionDetails sx={ style.details } >
-            <Typography sx={ style.description } variant={ 'body1' }>
+          <AccordionDetails sx={ style[accordionType].details } >
+            <Typography sx={ style[accordionType].description } variant={ 'body1' }>
               { t(item.description) }
             </Typography>
           </AccordionDetails>

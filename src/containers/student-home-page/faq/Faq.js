@@ -7,7 +7,6 @@ import Accordions from '~/components/accordion/Accordions'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import { studentRoutes } from '~/constants/routes'
 
-import { style } from '~/containers/student-home-page/faq/faq.style'
 
 const Faq = () => {
   const { t } = useTranslation()
@@ -16,7 +15,7 @@ const Faq = () => {
   const changeAccordion = (id) => activeItemId === id ? setActiveItemId(null) : setActiveItemId(id)
 
   return (
-    <Box className='section' id={ studentRoutes.navBar.faq.label } sx={ style.root }>
+    <Box className='section' id={ studentRoutes.navBar.faq.label } sx={ { flexDirection: 'column' } }>
       <TitleWithDescription
         description={ t('studentHomePage.faq.subtitle') }
         descriptionVariant='subtitle1'
@@ -30,7 +29,6 @@ const Faq = () => {
         onChange={ changeAccordion }
         showMoreIcon
         square
-        style={ style.accordions }
       />
     </Box>
   )

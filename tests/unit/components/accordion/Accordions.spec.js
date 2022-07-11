@@ -18,7 +18,6 @@ describe('Accordion component without expandMoreIcon test', () => {
     onChange: onChangeMock,
     activeIndex: '0',
     showMoreIcon: false,
-    style: {}
   }
   beforeEach(() => {
     render(<Accordions { ...props } />)
@@ -66,7 +65,6 @@ describe('Accordions test with expandMoreIcon', () => {
     showMoreIcon: true,
     onChange: onChangeMock,
     activeIndex: '0',
-    style: {}
   }
   beforeEach(() => {
     render(<Accordions { ...props } />)
