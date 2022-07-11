@@ -2,16 +2,12 @@
 # build
 FROM node:14-alpine as build
 WORKDIR /app
-RUN cat .env
-RUN echo "REACT_APP_API_BASE_PATH=https://s2s-back-stage.azurewebsites.net" >> .env
-RUN cat .env
 RUN apk add --no-cache git
 COPY . /app/
-RUN cat .env
 RUN npm install
 RUN npm run lint
 RUN npm run build
-RUN cat .env
+RUN cat ./.env
 
 # prod
 FROM nginx:stable
