@@ -3,6 +3,7 @@ import { Box } from '@mui/system'
 import { Typography, Button } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
+import { routes } from '~/constants/routes'
 import { style } from './styles/internal-server-error.styles'
 import backGround500 from '~/assets/img/error-page/500.svg'
 
@@ -20,7 +21,7 @@ const InternalServerError = () => {
             { t('errorPage.500.description') }
           </Typography>
           <Button
-            component={ Link } sx={ style.homeBtn } to="/"
+            component={ Link } sx={ style.homeBtn } to={ routes.home.route }
             variant="contained"
           >
             { t('button.toMain') }

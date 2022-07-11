@@ -6,8 +6,8 @@ export const routes = {
   guestNavBar: {
     whatCanYouDo: { label: 'whatCanYouDo', route: '/#whatCanYouDo' },
     howItWorks: { label: 'howItWorks', route: '/#howItWorks' },
-    whoWeAre: { label: 'whoWeAre', route: '/#whoWeAre' },
-  },
+    whoWeAre: { label: 'whoWeAre', route: '/#whoWeAre' }
+  }
 }
 export const studentRoutes = {
   navBar: {
@@ -15,6 +15,11 @@ export const studentRoutes = {
     categories: { label: 'categories', route: '/#categories' },
     howItWorks: { label: 'howItWorks', route: '/#howItWorks' },
     faq: { label: 'faq', route: '/#faq' },
-    becomeMentor: { label: 'becomeMentor', route: '/becomeMentor' },
-  },
+    becomeMentor: { label: 'becomeMentor', route: '/becomeMentor' }
+  }
+}
+export const errors = {
+  authPolicy: { label: 'authPolicy', route: '/401' },
+  notFound: { label: 'notFound', route: '/404' },
+  internalServerError: { label: 'internalServerError', route: '/500' }
 }
