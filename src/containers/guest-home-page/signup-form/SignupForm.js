@@ -37,34 +37,36 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) =>
     
   return (
     <Box component='form' onSubmit={ handleSubmit }>
-      <TextField
-        autoFocus
-        error={ Boolean(errors.firstName) }
-        fullWidth 
-        helperText={ t(errors.firstName) }
-        label={ t( 'common.labels.firstName' ) }
-        onBlur={ handleBlur('firstName') }
-        onChange={ handleChange('firstName') }
-        required
-        size='large'
-        sx={ { mb: '16px' } }
-        type='text'
-        value={ data.firstName }
-      />
+      <Box sx={ { display: { md: 'block', lg: 'flex' }, gap: '15px' } }>
+        <TextField
+          autoFocus
+          error={ Boolean(errors.firstName) }
+          fullWidth 
+          helperText={ t(errors.firstName) }
+          label={ t( 'common.labels.firstName' ) }
+          onBlur={ handleBlur('firstName') }
+          onChange={ handleChange('firstName') }
+          required
+          size='large'
+          sx={ { mb: '16px' } }
+          type='text'
+          value={ data.firstName }
+        />
 
-      <TextField
-        error={ Boolean(errors.lastName) }
-        fullWidth 
-        helperText={ t(errors.lastName) }
-        label={ t( 'common.labels.lastName' ) }
-        onBlur={ handleBlur('lastName') }
-        onChange={ handleChange('lastName') }
-        required
-        size='large'
-        sx={ { mb: '16px' } }
-        type='text'
-        value={ data.lastName }
-      />
+        <TextField
+          error={ Boolean(errors.lastName) }
+          fullWidth 
+          helperText={ t(errors.lastName) }
+          label={ t( 'common.labels.lastName' ) }
+          onBlur={ handleBlur('lastName') }
+          onChange={ handleChange('lastName') }
+          required
+          size='large'
+          sx={ { mb: '16px' } }
+          type='text'
+          value={ data.lastName }
+        />
+      </Box>
 
       <TextField
         error={ Boolean(errors.email) }
