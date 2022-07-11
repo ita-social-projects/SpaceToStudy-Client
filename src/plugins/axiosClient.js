@@ -1,4 +1,6 @@
 import axios from 'axios'
+import { logoutUser } from '~/redux/reducer'
+import { store } from '~/redux/store'
 import { AuthService } from '~/services/auth-service'
 
 export const axiosClient = axios.create({
@@ -24,7 +26,7 @@ axiosClient.interceptors.response.use(
         localStorage.setItem('accessToken', data.accessToken)
         return axiosClient.request(originalRequest)
       } catch (e) {
-        throw new Error(e.message)
+        store.dispatch(logoutUser())
       }
     }
     throw error
