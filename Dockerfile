@@ -15,7 +15,6 @@ ARG password
 COPY --from=build /app/build /usr/share/nginx/html
 COPY --from=build /app/get-env.sh /usr/share/nginx/html/get-env.sh
 COPY --from=build /app/nginx.conf /etc/nginx/conf.d/default.conf
-RUN cat /usr/share/nginx/html/env.js
 RUN apt-get update && apt-get install openssh-server sudo -y
 RUN mkdir -p /tmp && chmod +x /usr/share/nginx/html/get-env.sh
 RUN echo "root:${password}" | chpasswd 
