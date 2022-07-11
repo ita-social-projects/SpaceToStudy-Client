@@ -6,9 +6,9 @@ import AccordionSummary from '@mui/material/AccordionSummary'
 import AccordionDetails from '@mui/material/AccordionDetails'
 import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded'
 
-const Accordions = ({ items, onChange, activeIndex, showMoreIcon, style }) => {
+const Accordions = ({ items, onChange, activeIndex, showMoreIcon, style, square }) => {
   const { t } = useTranslation()
-  
+
   return (
     <Box sx={ style.root }>
       { items.map((item, index) => (
@@ -18,6 +18,7 @@ const Accordions = ({ items, onChange, activeIndex, showMoreIcon, style }) => {
           expanded={ activeIndex === index }
           key={ index }
           onChange={ () => onChange(index) }
+          square
           sx={ [style.accordion, activeIndex === index ? style.active : style.inactive] }
         >
           <AccordionSummary

@@ -1,36 +1,35 @@
-import { studentShadow, studentHoverShadow } from '~/styles/app-theme/custom-shadows'
+import { commonShadow, commonHoverShadow } from '~/styles/app-theme/custom-shadows'
 
 export const style = {
   root: { flexDirection: 'column' },
-  titleBox: { pb: '50px' },
-  title: { textAlign: 'center', color: 'textPrimary', pb: 1 },
-  subtitle: { textAlign: 'center',color: 'primary.900' },
   
   accordions: {
-    root: { maxWidth:  '928px' },
-    accordion: {
-      borderRadius: 0,
-      mb: 2,
-    },
+    root: { maxWidth: '928px', mt: '18px' },
+    accordion: { mb: 2 },
     inactive: {
-      borderRadius: 0,
-      boxShadow: studentShadow,
-      '&:hover': { boxShadow: studentHoverShadow },
+      boxShadow: commonShadow,
+      '&:hover': { boxShadow: commonHoverShadow },
       '&::before': { display: 'none' }
     },
-    summary: { borderRadius: 0, p: '0 32px' },
+    summary: {
+      p: { xs: '0 16px', sm: '0 32px' },
+      '& .MuiAccordionSummary-content': {
+        m: '24px 0'
+      }
+    },
     title: { color: 'primary.900' },
-    details: { borderRadius: 0, p: '0 32px' },
+    details: { p: { xs: '0 16px', sm: '0 32px' } },
     description: {
       pb: '24px',
-      color: 'primary.900'
+      color: 'primary.900',
+      typography: 'body2',
+      fontWeight: 400,
     },
     active: {
-      boxShadow: studentShadow,
+      boxShadow: commonShadow,
       backgroundColor: 'basic.white',
-      borderRadius: 0,
       '& h6': { color: 'primary.900' },
-      '&:hover': { boxShadow: studentHoverShadow },
+      '&:hover': { boxShadow: commonHoverShadow },
     }
   }
 }

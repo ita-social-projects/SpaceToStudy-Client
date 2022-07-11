@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Box, Typography } from '@mui/material'
+import { Box } from '@mui/material'
 
 import { accordionItems } from '~/containers/student-home-page/faq/accordionItems'
 import Accordions from '~/components/accordion/Accordions'
+import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import { studentRoutes } from '~/constants/routes'
 
 import { style } from '~/containers/student-home-page/faq/faq.style'
@@ -16,19 +17,19 @@ const Faq = () => {
 
   return (
     <Box className='section' id={ studentRoutes.navBar.faq.label } sx={ style.root }>
-      <Box sx={ style.titleBox }>
-        <Typography sx={ style.title } variant='h5'>
-          { t('studentHomePage.faq.title') }
-        </Typography>  
-        <Typography sx={ style.subtitle } variant='subtitle1'>
-          { t('studentHomePage.faq.subtitle') }
-        </Typography>  
-      </Box>
+      <TitleWithDescription
+        description={ t('studentHomePage.faq.subtitle') }
+        descriptionVariant='subtitle1'
+        title={ t('studentHomePage.faq.title') }
+        titleVariant='h5'
+      />
+
       <Accordions
         activeIndex={ activeItemId }
         items={ accordionItems }
         onChange={ changeAccordion }
         showMoreIcon
+        square
         style={ style.accordions }
       />
     </Box>
