@@ -28,7 +28,10 @@ stages:
           name: setEnvStage
           inputs:
             targetType: 'inline'
-            script: 'mv $(envStage.secureFilePath) .env'
+            script: |
+              ls -la
+              pwd
+              mv $(envStage.secureFilePath) .env
 
   - stage: Build
     displayName: Build and push docker image
