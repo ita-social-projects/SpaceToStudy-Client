@@ -1,9 +1,10 @@
-import { render, screen } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 import InternalServerError from '~/pages/error/InternalServerError'
+import { renderWithProviders } from '~tests/test-utils'
 
 describe('InternalServerError page test', () => {
   beforeEach(() => {
-    render(<InternalServerError />)
+    renderWithProviders(<InternalServerError />)
   })
   it('should render title', () => {
     const title = screen.getByText('errorPage.500.title')
