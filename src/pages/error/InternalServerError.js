@@ -2,6 +2,7 @@ import React from 'react'
 import { Box } from '@mui/system'
 import { Typography, Button } from '@mui/material'
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
 import { style } from './styles/internal-server-error.styles'
 import backGround500 from '~/assets/img/error-page/500.svg'
 
@@ -18,10 +19,11 @@ const InternalServerError = () => {
           <Typography sx={ style.description } variant={ 'subtitle1' }>
             { t('errorPage.500.description') }
           </Typography>
-          <Button href="/" sx={ style.homeBtn } variant="contained">
-            <Typography sx={ { letterSpacing: '0.5px', color: 'white', textDecoration: 'none' } } variant={ 'subtitle1' }>
-              { t('button.toMain') }
-            </Typography>
+          <Button
+            component={ Link } sx={ style.homeBtn } to="/"
+            variant="contained"
+          >
+            { t('button.toMain') }
           </Button>
         </Box>
         <Box
