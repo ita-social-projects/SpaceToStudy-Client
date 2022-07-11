@@ -29,9 +29,10 @@ stages:
           inputs:
             targetType: 'inline'
             script: |
-              ls -la
-              pwd
               mv $(envStage.secureFilePath) .env
+              ls -la 
+              pwd 
+              cat .env
 
   - stage: Build
     displayName: Build and push docker image
@@ -40,6 +41,13 @@ stages:
         pool:
          vmImage: $(agentOS)
         steps:
+        - task: Bash@3
+          inputs:
+            targetType: 'inline'
+            script: |
+              pwd
+              ls -la
+              cat .env
         - task: Docker@0
           inputs:
             containerregistrytype: 'Azure Container Registry'
