@@ -1,7 +1,6 @@
 import { mainShadow, commonShadow, commonHoverShadow } from '~/styles/app-theme/custom-shadows'
 
 export const style = {
-
   noShowMoreIcon: {    
     root: { maxWidth: { md: '360px', sm: '229px' } },
     accordion: {
@@ -36,7 +35,6 @@ export const style = {
       }
     }
   },
-  
   withShowMoreIcon: {
     root: { maxWidth: '928px', mt: '18px' },
     accordion: { mb: 2 },

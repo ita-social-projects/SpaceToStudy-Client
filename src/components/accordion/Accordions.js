@@ -11,10 +11,10 @@ import { style } from '~/components/accordion/accordion.styles'
 const Accordions = ({ items, onChange, activeIndex, showMoreIcon, square }) => {
   const { t } = useTranslation()
 
-  const accordionType = showMoreIcon ? 'withShowMoreIcon' : 'noShowMoreIcon'
+  const accordionStyle = style[showMoreIcon ? 'withShowMoreIcon' : 'noShowMoreIcon']
 
   return (
-    <Box sx={ style[accordionType].root }>
+    <Box sx={ accordionStyle.root }>
       { items.map((item, index) => (
         <Accordion
           data-testid={ `${ index }-${ activeIndex === index }` }
@@ -23,18 +23,18 @@ const Accordions = ({ items, onChange, activeIndex, showMoreIcon, square }) => {
           key={ index }
           onChange={ () => onChange(index) }
           square={ square }
-          sx={ [style[accordionType].accordion, activeIndex === index ? style[accordionType].active : style[accordionType].inactive] }
+          sx={ [accordionStyle.accordion, activeIndex === index ? accordionStyle.active : accordionStyle.inactive] }
         >
           <AccordionSummary
             expandIcon={ showMoreIcon && <ExpandMoreRoundedIcon /> }
-            sx={ style[accordionType].summary }
+            sx={ accordionStyle.summary }
           >
-            <Typography sx={ style[accordionType].title } variant={ 'h6' }>
+            <Typography sx={ accordionStyle.title } variant={ 'h6' }>
               { t(item.title) }
             </Typography>
           </AccordionSummary>
-          <AccordionDetails sx={ style[accordionType].details } >
-            <Typography sx={ style[accordionType].description } variant={ 'body1' }>
+          <AccordionDetails sx={ accordionStyle.details } >
+            <Typography sx={ accordionStyle.description } variant={ 'body1' }>
               { t(item.description) }
             </Typography>
           </AccordionDetails>
