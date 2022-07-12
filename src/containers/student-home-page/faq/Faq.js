@@ -18,9 +18,9 @@ const Faq = () => {
     <Box className='section' id={ studentRoutes.navBar.faq.label } sx={ { flexDirection: 'column', mb: 0, pb: 10 } }>
       <TitleWithDescription
         description={ t('studentHomePage.faq.subtitle') }
-        descriptionVariant='subtitle1'
+        descriptionStyles={ { typography: { xs: 'subtitle1' } } }
         title={ t('studentHomePage.faq.title') }
-        titleVariant='h5'
+        titleStyles={ { typography: { xs: 'h5' } } }
       />
 
       <Accordions
