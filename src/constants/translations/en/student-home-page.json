@@ -4,5 +4,14 @@
         "description": "A Space2Study platform is a place where you can learn from the best. Type what would you like to learn and find the best mentor for that.",
         "label": "What would you like to learn",
         "button": "Find mentor"
+    },
+    "faq": {
+        "title": "Frequently Asked Questions",
+        "subtitle": "Everything you need to know about learning journey in Space2Study as a student",
+        "findTutor": "How to find a tutor",
+        "findTutorDesription": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.",
+        "bookLeson": "How to book a lesson",
+        "rules": "Rules for students",
+        "howPayLesons": "How you can pay for lessons"
     }
 }

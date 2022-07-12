@@ -3,7 +3,7 @@ import Accordions from '~/components/accordion/Accordions'
 
 const onChangeMock = jest.fn()
 
-describe('Accordion component test', () => {
+describe('Accordion component without expandMoreIcon test', () => {
   const props = {
     items: [
       {
@@ -17,10 +17,10 @@ describe('Accordion component test', () => {
     ],
     onChange: onChangeMock,
     activeIndex: '0',
-    styles: {}
+    showMoreIcon: false,
   }
   beforeEach(() => {
-    render(<Accordions {...props} />)
+    render(<Accordions { ...props } />)
   })
   it('Test headings', () => {
     const firstTitle = screen.getByText('title1')
@@ -41,5 +41,37 @@ describe('Accordion component test', () => {
     fireEvent.click(title)
 
     expect(props.onChange).toHaveBeenCalled()
+  })
+
+  it('shuld render expand more icon', () => {
+    const expandMoreIcon = screen.queryAllByTestId('ExpandMoreRoundedIcon')
+
+    expect(expandMoreIcon).toHaveLength(0)
+  })
+})
+
+describe('Accordions test with expandMoreIcon', () => {
+  const props = {
+    items: [
+      {
+        title: 'title1',
+        description: 'description1'
+      },
+      {
+        title: 'title2',
+        description: 'description2'
+      }
+    ],
+    showMoreIcon: true,
+    onChange: onChangeMock,
+    activeIndex: '0',
+  }
+  beforeEach(() => {
+    render(<Accordions { ...props } />)
+  })
+  it('shuld render expand more icon', () => {
+    const expandMoreIcon = screen.getAllByTestId('ExpandMoreRoundedIcon')
+
+    expect(expandMoreIcon).toHaveLength(2)
   })
 })

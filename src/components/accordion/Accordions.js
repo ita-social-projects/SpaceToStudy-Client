@@ -1,31 +1,40 @@
-import Accordion from '@mui/material/Accordion'
-import AccordionSummary from '@mui/material/AccordionSummary'
-import AccordionDetails from '@mui/material/AccordionDetails'
 import { Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import { Box } from '@mui/system'
-import { style } from './accordion.styles'
+import Accordion from '@mui/material/Accordion'
+import AccordionSummary from '@mui/material/AccordionSummary'
+import AccordionDetails from '@mui/material/AccordionDetails'
+import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded'
 
-const Accordions = ({ items, onChange, activeIndex, styles }) => {
+import { style } from '~/components/accordion/accordion.styles'
+
+const Accordions = ({ items, onChange, activeIndex, showMoreIcon, square }) => {
   const { t } = useTranslation()
 
+  const accordionStyle = style[showMoreIcon ? 'withShowMoreIcon' : 'noShowMoreIcon']
+
   return (
-    <Box sx={ { ...styles } }>
+    <Box sx={ accordionStyle.root }>
       { items.map((item, index) => (
         <Accordion
+          data-testid={ `${ index }-${ activeIndex === index }` }
           disableGutters
           expanded={ activeIndex === index }
           key={ index }
           onChange={ () => onChange(index) }
-          sx={ [style.accordion, activeIndex === index ? style.active : style.inactive] }
+          square={ square }
+          sx={ [accordionStyle.accordion, activeIndex === index ? accordionStyle.active : accordionStyle.inactive] }
         >
-          <AccordionSummary>
-            <Typography sx={ style.title } variant={ 'h6' }>
+          <AccordionSummary
+            expandIcon={ showMoreIcon && <ExpandMoreRoundedIcon /> }
+            sx={ accordionStyle.summary }
+          >
+            <Typography sx={ accordionStyle.title } variant={ 'h6' }>
               { t(item.title) }
             </Typography>
           </AccordionSummary>
-          <AccordionDetails>
-            <Typography sx={ style.description } variant={ 'body1' }>
+          <AccordionDetails sx={ accordionStyle.details } >
+            <Typography sx={ accordionStyle.description } variant={ 'body1' }>
               { t(item.description) }
             </Typography>
           </AccordionDetails>
