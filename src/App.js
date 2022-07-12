@@ -1,5 +1,6 @@
 import AppHeader from '~/containers/layout/AppHeader'
 import AppMain from '~/containers/layout/AppMain'
+import ScrollToTop from '~/components/scroll-to-top/ScrollToTop'
 import { ThemeProvider } from '@mui/material'
 import { ModalProvider } from './context/modal-context'
 import { ConfirmationDialogProvider } from './context/confirm-context'
@@ -17,6 +18,7 @@ const App = () => {
           <ModalProvider>
             <AppHeader />
             <AppMain />
+            <ScrollToTop />
           </ModalProvider>
         </ConfirmationDialogProvider>
       </ThemeProvider>
