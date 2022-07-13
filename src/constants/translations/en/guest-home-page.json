@@ -35,6 +35,31 @@
       "actionLabel": "Become a mentor"
     }
   },
+  "howItWorks":{
+    "title":"How It Works",
+    "switch":{
+      "learnFromExperts":"Learn from Experts",
+      "shareYourExperience":"Share your Experience"
+    },
+    "iconBar":{
+      "signUp":{
+        "title":"Sign Up",
+        "description":"It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
+      },
+      "selectAMentor":{
+        "title":"Select a Mentor",
+        "description":"It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
+      },
+      "sendRequest":{
+        "title":"Send Request",
+        "description":"It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
+      },
+      "startLearning":{
+        "title":"Start Learning",
+        "description":"It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
+      }
+    }
+  },
   "whoWeAre": {
     "title": "Who we are",
     "description": "Space to Study - an educational platform that offersIt a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed."
