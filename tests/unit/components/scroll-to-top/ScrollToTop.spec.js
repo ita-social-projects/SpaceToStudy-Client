@@ -4,7 +4,7 @@ import ScrollToTop from '~/components/scroll-to-top/ScrollToTop'
 
 window.scrollTo = jest.fn()
 
-describe('Popup dialog test', () => {
+describe('ScrollToTop dialog test', () => {
 
   beforeEach(() => {
     render(<ScrollToTop />)
