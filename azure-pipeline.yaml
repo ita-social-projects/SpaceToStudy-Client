@@ -12,28 +12,6 @@ variables:
 
 stages:
 
-  # - stage: Env
-  #   displayName: Download and set latest .env
-  #   jobs:
-  #     - job: Env 
-  #       pool:
-  #         vmImage: $(agentOS)
-  #       steps:
-  #       - task: DownloadSecureFile@1
-  #         name: envStage
-  #         condition: eq(variables['Build.SourceBranch'], 'refs/heads/develop')
-  #         inputs:
-  #           secureFile: 'env-front-stage'
-  #       - task: Bash@3
-  #         name: setEnvStage
-  #         inputs:
-  #           targetType: 'inline'
-  #           script: |
-  #             mv $(envStage.secureFilePath) .env
-  #             ls -la 
-  #             pwd 
-  #             cat .env
-
   - stage: Build
     displayName: Build and push docker image
     jobs: 
@@ -50,11 +28,7 @@ stages:
           name: setEnvStage
           inputs:
             targetType: 'inline'
-            script: |
-              mv $(envStage.secureFilePath) .env
-              ls -la 
-              pwd 
-              cat .env
+            script: 'mv $(envStage.secureFilePath) .env'
         - task: Docker@0
           inputs:
             containerregistrytype: 'Azure Container Registry'
