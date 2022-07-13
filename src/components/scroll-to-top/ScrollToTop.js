@@ -8,16 +8,11 @@ import { style } from '~/components/scroll-to-top/scroll-to-top.style'
 const ScrollToTop = () => {
   const [showTopBtn, setShowTopBtn] = useState(false)
   
-  const scroll = () => {
-    if (window.scrollY > 450) {
-      setShowTopBtn(true)
-    } else {
-      setShowTopBtn(false)
-    }
-  }
-    
+  const scroll = () => (window.scrollY > 450) ? setShowTopBtn(true) : setShowTopBtn(false)
+ 
   useEffect(() => {
     window.addEventListener('scroll', scroll)
+    return () => window.removeEventListener('scroll', scroll)
   }, [])
 
   const goToTop = () => {
