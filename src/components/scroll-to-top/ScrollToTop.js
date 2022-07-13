@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
-import { IconButton } from '@mui/material'
-import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp'
+import { IconButton, Box } from '@mui/material'
 import ArrowUpwardRoundedIcon from '@mui/icons-material/ArrowUpwardRounded'
 
 import { style } from '~/components/scroll-to-top/scroll-to-top.style'
@@ -29,9 +28,11 @@ const ScrollToTop = () => {
   }
 
   return (showTopBtn && (
-    <IconButton onClick={ goToTop } sx={ style.button }>
-      <ArrowCircleUpIcon sx={ style.icon } />
-    </IconButton>
+    <Box sx={ style.root }>
+      <IconButton onClick={ goToTop } sx={ style.button }>
+        <ArrowUpwardRoundedIcon sx={ style.icon } />
+      </IconButton>
+    </Box>
 
   ))
 }
