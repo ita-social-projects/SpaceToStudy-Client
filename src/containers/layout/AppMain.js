@@ -6,13 +6,15 @@ import GuestLayout from './GuestLayout'
 import MentorLayout from './MentorLayout'
 import Loader from '~/components/loader/Loader'
 import { checkAuth } from '~/redux/reducer'
+import { getFromLocalStorage } from '~/services/local-storage-service'
+import { accessToken } from '~/constants'
 
 const AppMain = () => {
   const { loading, userRole } = useSelector((state) => state.appMain)
   const dispatch = useDispatch()
 
   useEffect(() => {
-    if (localStorage.getItem('accessToken')) {
+    if (getFromLocalStorage(accessToken)) {
       dispatch(checkAuth())
     }
   }, [dispatch])

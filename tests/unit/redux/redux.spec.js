@@ -1,7 +1,10 @@
+import MockAdapter from 'axios-mock-adapter'
+
 import { store } from '~/redux/store'
 import reducer, { logout, checkAuth, loginUser, logoutUser, signupUser } from '~/redux/reducer'
 import { axiosClient } from '~/plugins/axiosClient'
-import MockAdapter from 'axios-mock-adapter'
+import { axiosInstance } from '~/services/auth-service'
+import { getFromLocalStorage, removeFromLocalStorage, setToLocalStorage } from '~/services/local-storage-service'
 
 import { URLs } from '~/constants/request'
 import {
@@ -15,15 +18,11 @@ import {
   stateAfterLogin
 } from './redux.variables'
 
-import { axiosInstance } from '~/services/auth-service'
+jest.mock('~/services/local-storage-service')
 
-Object.defineProperty(window, 'localStorage', {
-  value: {
-    getItem: () => accessToken,
-    setItem: () => '',
-    removeItem: jest.fn()
-  }
-})
+getFromLocalStorage.mockImplementation(() => accessToken)
+removeFromLocalStorage.mockImplementation(jest.fn())
+setToLocalStorage.mockImplementation(jest.fn())
 
 const mockAxiosClient = new MockAdapter(axiosClient)
 
