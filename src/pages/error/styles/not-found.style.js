@@ -12,7 +12,7 @@ export const style = {
     flexDirection: 'column',
     alignItems: { md: 'flex-start', xs: 'center' },
     position: { sm: 'inherit', md: 'absolute' },
-    top: '48%',
+    top: '300px',
     left: '50%',
     m: { md: '0 auto', xs: '65px auto 0' },
     maxWidth: '430px',
@@ -47,7 +47,7 @@ export const style = {
     m: '0 auto'
   },
   manImg: {
-    maxWidth: { xs: '285px', sm: '420px', md: '600px' },
+    maxWidth: { xs: '285px', sm: '420px', md: '500px' },
     overflow: 'auto'
   },
   plantImg: {
