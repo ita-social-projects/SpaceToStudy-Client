@@ -3,6 +3,8 @@ import { Typography, Button, FormGroup } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import Stack from '@mui/material/Stack'
 import Switch from '@mui/material/Switch'
+import ImageWithTitleAndDescription from '~/components/image-with-title-and-description/ImageWithTitleAndDescription'
+
 
 const style = {
   block: {
@@ -17,14 +19,17 @@ const style = {
     justifyContent: 'center',
     flexDirection: 'column'
   },
-  iconBar: {
-    display: 'flex',
-    alignItems: 'center',
-    flexDirection: 'row',
-    width: '615px',
-    height: '90px'
-  }
 }
+
+const titleVariant = {
+  xs:'h6'
+  
+}
+
+const descriptionVariant = {
+  xs: 'subtitle2'
+}
+
 
 const HowItWorks = ( { items } ) => {
   const { t } = useTranslation()
@@ -39,29 +44,25 @@ const HowItWorks = ( { items } ) => {
         <FormGroup>
           <Stack alignItems="center" direction="row" spacing={ 1 }>
             <Typography variant={ 'h6' }>
-              { t('guestHomePage.howItWorks.switch.learnFromExperts') }
+              { t('guestHomePage.howItWorks.learnFromExperts') }
             </Typography>
             <Switch defaultChecked inputProps={ { 'aria-label': 'ant design' } } />
             <Typography sx={ { color: 'primary.500' } } variant={ 'h6' }>
-              { t('guestHomePage.howItWorks.switch.shareYourExperience') }
+              { t('guestHomePage.howItWorks.shareYourExperience') }
             </Typography>
           </Stack>
         </FormGroup>
 
 
         { items.map((item,key) => (
-          <Box key={ key } sx={ style.iconBar }>
-           
-            <Box component="img" src={ item.image } sx={ { mr: '60px',witdh:'88px',height:'88px' } }></Box>
-            <Box sx={ { width: '466px', height: '76px' } }>
-              <Typography sx={ { mb: '10px' } } variant={ 'h6' }>
-                { t(item.title) }
-              </Typography>
-              <Typography variant={ 'subtitle2' } >
-                { t(item.description) }
-              </Typography>
-            </Box>
-          </Box>
+          <ImageWithTitleAndDescription 
+            description={ t(item.description) }
+            descriptionVariant={ descriptionVariant }
+            image={ item.image }
+            key={ key }
+            title={ t(item.title) }
+            titleVariant={ titleVariant }
+          />
         )) }
         
 

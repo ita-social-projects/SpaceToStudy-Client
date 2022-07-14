@@ -6,22 +6,22 @@ import howItWorksFourth from '~/assets/img/guest-home-page/howItWorksFourth.svg'
 export const iconBarArray = [
   {
     image: howItWorksFirst,
-    title: 'guestHomePage.howItWorks.iconBar.signUp.title',
-    description: 'guestHomePage.howItWorks.iconBar.signUp.description'
+    title: 'guestHomePage.howItWorks.signUp.title',
+    description: 'guestHomePage.howItWorks.signUp.description'
   },
   {
     image: howItWorksSecond,
-    title: 'guestHomePage.howItWorks.iconBar.selectAMentor.title',
-    description: 'guestHomePage.howItWorks.iconBar.selectAMentor.description'
+    title: 'guestHomePage.howItWorks.selectAMentor.title',
+    description: 'guestHomePage.howItWorks.selectAMentor.description'
   },
   {
     image: howItWorksThird,
-    title: 'guestHomePage.howItWorks.iconBar.sendRequest.title',
-    description: 'guestHomePage.howItWorks.iconBar.sendRequest.description'
+    title: 'guestHomePage.howItWorks.sendRequest.title',
+    description: 'guestHomePage.howItWorks.sendRequest.description'
   },
   {
     image: howItWorksFourth,
-    title: 'guestHomePage.howItWorks.iconBar.startLearning.title',
-    description: 'guestHomePage.howItWorks.iconBar.startLearning.description'
+    title: 'guestHomePage.howItWorks.startLearning.title',
+    description: 'guestHomePage.howItWorks.startLearning.description'
   }
 ]
