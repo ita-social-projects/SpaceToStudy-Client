@@ -28,7 +28,6 @@ const ScrollToTop = () => {
         <ArrowUpwardRoundedIcon sx={ style.icon } />
       </IconButton>
     </Box>
-
   ))
 }
 
