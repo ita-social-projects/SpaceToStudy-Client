@@ -1,4 +1,4 @@
-export const allItemsMock = [
+export const mockCategories = [
   {
     id: '1',
     img: 'img.pmg',

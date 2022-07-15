@@ -1,11 +1,11 @@
 import { renderHook, act } from '@testing-library/react-hooks'
 
 import useShowMore from '~/hooks/use-show-more'
-import { allItemsMock } from '~tests/unit/hooks/use-show-more/all-items-mock'
+import { mockCategories } from '~tests/unit/hooks/mock-categories'
 
 describe('useShowMore custom hook', () => {
   it('should do expand items by value from step', () => {
-    const { result } = renderHook(() => useShowMore(allItemsMock, 2, 2))
+    const { result } = renderHook(() => useShowMore(mockCategories, 2, 2))
 
     act(() => {
       result.current.showMore()
@@ -15,7 +15,7 @@ describe('useShowMore custom hook', () => {
   })
 
   it('should assign expandable value to false, if there is no more items to show', () => {
-    const { result } = renderHook(() => useShowMore(allItemsMock, 3, 2))
+    const { result } = renderHook(() => useShowMore(mockCategories, 3, 2))
 
     act(() => {
       result.current.showMore()
