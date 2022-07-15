@@ -10,9 +10,10 @@ export const style = {
   button: {
     m: { xs: '0 8px 8px 0', md: '0 12px 12px 0', lg: '0 20px 20px 0' },
     cursor: 'pointer',
-    backgroundColor: 'success.100',
+    backgroundColor: 'primary.50',
+    opacity: 0.7,
     boxShadow: commonHoverShadow,
-    '&:hover': { backgroundColor: 'success.200' }
+    '&:hover': {  opacity: 1, backgroundColor: 'primary.100' }
   },
   icon: {
     fontSize: '24px', 

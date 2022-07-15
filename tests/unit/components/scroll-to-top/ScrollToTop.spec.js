@@ -1,10 +1,10 @@
 import { render, screen, fireEvent } from '@testing-library/react'
 import ScrollToTop from '~/components/scroll-to-top/ScrollToTop'
 
-window.scrollTo = jest.fn()
 
 describe('ScrollToTop dialog test', () => {
-
+  window.scrollTo = jest.fn()
+  
   beforeEach(() => {
     render(<ScrollToTop />)
   })
