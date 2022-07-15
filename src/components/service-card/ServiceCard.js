@@ -4,22 +4,6 @@ import { Box, Button } from '@mui/material'
 import { serviceCardHoverShadow, serviceCardShadow } from '~/styles/app-theme/custom-shadows'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 
-const sx = {
-  margin: '0px',
-  mb: '0px',
-  textAlign: 'start'
-}
-
-const titleStyles = {
-  m: '0',
-  typography: { xs: 'h6' }
-}
-
-const descriptionStyles = {
-  typography: { xs: 'body2' },
-  color: 'primary.500'
-}
-
 const styles = {
   card: {
     display: 'flex',
@@ -37,14 +21,20 @@ const styles = {
 
 const ServiceCard = ({ img, title, count, link }) => {
   return (
-    <Button component={ Link } sx={ styles.card } to={ link }>
+    <Button
+      component={ Link } data-testid='service-card' sx={ styles.card }
+      to={ link }
+    >
       <Box
         alt='Category image' component='img' src={ img }
         sx={ { mr: '24px' } }
       />
       <TitleWithDescription
-        description={ `${count} mentors` } descriptionStyles={ descriptionStyles } sx={ sx }
-        title={ title } titleStyles={ titleStyles }
+        componentStyles={ { margin: '0px', mb: '0px', textAlign: 'start' } }
+        description={ `${count} mentors` }
+        descriptionStyles={ { typography: { xs: 'body2' }, color: 'primary.500' } }
+        title={ title }
+        titleStyles={ { m: '0', typography: { xs: 'h6' } } }
       />
     </Button>
   )
