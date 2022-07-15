@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
-import { Box, FormControlLabel, Typography, TextField, Button, Checkbox } from '@mui/material'
+import { Box, FormControlLabel, Typography, TextField, Button, Checkbox, Tooltip } from '@mui/material'
 import useInputVisibility from '~/hooks/use-input-visibility'
 
 import { style } from './signup-form.style'
@@ -39,68 +39,103 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) =>
     <Box component='form' onSubmit={ handleSubmit }>
       <Box sx={ { display: { md: 'block', lg: 'flex' }, gap: '15px' } }>
         <TextField
+          FormHelperTextProps={ { sx: style.helperText } }
           autoFocus
           error={ Boolean(errors.firstName) }
-          fullWidth 
-          helperText={ t(errors.firstName) }
+          fullWidth
+          helperText={ errors.firstName ? 
+            (<Tooltip title={ t(errors.firstName) }>
+              <Typography variant="caption">
+                { t(errors.firstName) }
+              </Typography>
+            </Tooltip>)
+            : ' ' }
           label={ t( 'common.labels.firstName' ) }
           onBlur={ handleBlur('firstName') }
           onChange={ handleChange('firstName') }
           required
           size='large'
-          sx={ { mb: '16px' } }
+          sx={ { mb: '5px' } }
           type='text'
           value={ data.firstName }
         />
 
         <TextField
+          FormHelperTextProps={ { sx: style.helperText } }
           error={ Boolean(errors.lastName) }
           fullWidth 
-          helperText={ t(errors.lastName) }
+          helperText={ errors.lastName ? 
+            (<Tooltip title={ t(errors.lastName) }>
+              <Typography variant="caption">
+                { t(errors.lastName) }
+              </Typography>
+            </Tooltip>)
+            : ' ' }
           label={ t( 'common.labels.lastName' ) }
           onBlur={ handleBlur('lastName') }
           onChange={ handleChange('lastName') }
           required
           size='large'
-          sx={ { mb: '16px' } }
+          sx={ { mb: '5px' } }
           type='text'
           value={ data.lastName }
         />
       </Box>
 
       <TextField
+        FormHelperTextProps={ { sx: style.helperText } }
         error={ Boolean(errors.email) }
         fullWidth 
-        helperText={ t(errors.email) }
+        helperText={ errors.email ? 
+          (<Tooltip title={ t(errors.email) }>
+            <Typography variant="caption">
+              { t(errors.email) }
+            </Typography>
+          </Tooltip>)
+          : ' ' }
         label={ t( 'common.labels.email' ) }
         onBlur={ handleBlur('email') }
         onChange={ handleChange('email') }
         required
         size='large'
-        sx={ { mb: '16px' } }
+        sx={ { mb: '5px' } }
         type='email'
         value={ data.email }
       />
       
-      <TextField 
+      <TextField
+        FormHelperTextProps={ { sx: style.helperText } }
         InputProps={ passwordVisibility }
         error={ Boolean(errors.password) } 
         fullWidth
-        helperText={ t(errors.password) }
+        helperText={ errors.password ? 
+          (<Tooltip title={ t(errors.password) }>
+            <Typography variant="caption">
+              { t(errors.password) }
+            </Typography>
+          </Tooltip>)
+          : ' ' }
         label={ t( 'common.labels.password' ) }
         onBlur={ handleBlur('password') }
         onChange={ handleChange('password') }
         required
-        sx={ { mb: '16px' } }
+        sx={ { mb: '5px' } }
         type={ (showPassword ? 'text' : 'password') }
         value={ data.password }
       />
 
       <TextField 
+        FormHelperTextProps={ { sx: style.helperText } }
         InputProps={ confirmPasswordVisibility }
         error={ Boolean(errors.confirmPassword) } 
         fullWidth
-        helperText={ t(errors.confirmPassword) }
+        helperText={ errors.confirmPassword ? 
+          (<Tooltip title={ t(errors.confirmPassword) }>
+            <Typography variant="caption">
+              { t(errors.confirmPassword) }
+            </Typography>
+          </Tooltip>)
+          : ' ' }
         label={ t( 'common.labels.confirmPassword' ) }
         onBlur={ handleBlur('confirmPassword') }
         onChange={ handleChange('confirmPassword') }
