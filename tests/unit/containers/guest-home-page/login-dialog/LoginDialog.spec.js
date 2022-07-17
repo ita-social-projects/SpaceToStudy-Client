@@ -1,6 +1,7 @@
 import { screen, render, fireEvent } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
+import { ModalProvider } from '~/context/modal-context'
 
 const mockDispatch = jest.fn()
 
@@ -18,7 +19,9 @@ describe('Login dialog test', () => {
   beforeEach(() => {
     render(
       <MemoryRouter>
-        <LoginDialog />
+        <ModalProvider>
+          <LoginDialog />
+        </ModalProvider>
       </MemoryRouter>
     )
   })
@@ -58,6 +61,7 @@ describe('Login dialog test', () => {
   })
 
   it('should dispatch after button submit', async () => {
+    mockDispatch.mockReturnValue({ unwrap: () => '' })
     const inputEmail = screen.getByLabelText(/common.labels.email/i)
     fireEvent.change(inputEmail, { target: { value: 'test@gmail.com' } })
 

@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useContext, useEffect } from 'react'
 import { Box, Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
@@ -7,6 +7,7 @@ import GoogleLogin from '~/containers/guest-home-page/google-login/GoogleLogin'
 import LoginForm from '~/containers/guest-home-page/login-form/LoginForm'
 import useForm from '~/hooks/use-form'
 import useConfirm from '~/hooks/use-confirm'
+import { ModalContext } from '~/context/modal-context'
 import { email, password } from '~/constants/validation/login'
 import loginImg from '~/assets/img/login-dialog/login.png'
 import { login } from '~/containers/guest-home-page/constants'
@@ -17,10 +18,18 @@ import style from '~/containers/guest-home-page/login-dialog/login-dialog.style'
 const LoginDialog = () => {
   const { t } = useTranslation()
   const { setNeedConfirmation } = useConfirm()
+  const { closeModal } = useContext(ModalContext)
   const dispatch = useDispatch()
 
   const { handleSubmit, handleChange, handleBlur, data, isDirty, errors } = useForm({
-    onSubmit: () => dispatch(loginUser(data)),
+    onSubmit: async () => {
+      try {
+        await dispatch(loginUser(data)).unwrap()
+        closeModal()
+      } catch (e) {
+        console.log(e)
+      }
+    },
     initialValues: { email: '', password: '' },
     validations: { email, password }
   })

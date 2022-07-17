@@ -16,6 +16,7 @@ export const loginUser = createAsyncThunk('appMain/loginUser', async (userData, 
     const { data } = await AuthService.login(userData)
     localStorage.setItem('accessToken', data.accessToken)
     dispatch(setUser(data.accessToken))
+    return data.accessToken
   } catch (e) {
     return rejectWithValue(e.message)
   }
@@ -25,6 +26,7 @@ export const signupUser = createAsyncThunk('appMain/signupUser', async (userData
   try {
     const { data } = await AuthService.signup(userData)
     dispatch(setUserEmail(data.userEmail))
+    return data.userEmail
   } catch (e) {
     return rejectWithValue(e.message)
   }
