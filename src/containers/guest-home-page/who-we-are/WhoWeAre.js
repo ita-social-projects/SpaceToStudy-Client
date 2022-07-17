@@ -8,17 +8,6 @@ import videoImg from '~/assets/img/guest-home-page/videoImg.png'
 
 const sectionId = routes.guestNavBar.whoWeAre.label
 
-const titleStyles = {
-  typography: {
-    md: 'h3',
-    xs: 'h4'
-  }
-}
-
-const descriptionStyles = {
-  typography: { xs: 'subtitle1' }
-}
-
 const WhoWeAre = () => {
   const { t } = useTranslation()
 
@@ -26,9 +15,9 @@ const WhoWeAre = () => {
     <Box className='section' id={ sectionId } sx={ { flexDirection: 'column', px: '16px' } }>
       <TitleWithDescription
         description={ t('guestHomePage.whoWeAre.description') }
-        descriptionStyles={ descriptionStyles }
+        descriptionStyles={ { typography: { xs: 'subtitle1' } } }
         title={ t('guestHomePage.whoWeAre.title') }
-        titleStyles={ titleStyles }
+        titleStyles={ { typography: { md: 'h3', xs: 'h4' } } }
       />
       <VideoBox video={ videoImg } />
     </Box>

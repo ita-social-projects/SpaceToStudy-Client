@@ -4,7 +4,7 @@ import { Box, Button } from '@mui/material'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import useShowMore from '~/hooks/use-show-more'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
-import ServiceCard from '~/components/service-card/ServiceCard'
+import ClickableCard from '~/components/clickable-card/ClickableCard'
 
 import { styles } from '~/containers/student-home-page/popular-categories/popluar-categories.styles'
 import { categoriesListMock } from '~/containers/student-home-page/popular-categories/categories-list-mock'
@@ -21,8 +21,6 @@ const step = {
   mobile: 4
 }
 
-//TODO Write test for this component
-
 const PopularCategories = () => {
   const size = useBreakpoints()
   const { items: categoriesList, expandable, showMore } = useShowMore(categoriesListMock, count[size], step[size])
@@ -30,7 +28,7 @@ const PopularCategories = () => {
 
   const categories = categoriesList.map(item => {
     return (
-      <ServiceCard
+      <ClickableCard
         count={ item.count } img={ item.img } key={ item.id }
         link={ item.link } title={ item.title }
       />

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { Box, Button } from '@mui/material'
 
-import { serviceCardHoverShadow, serviceCardShadow } from '~/styles/app-theme/custom-shadows'
+import { commonHoverShadow, commonShadow } from '~/styles/app-theme/custom-shadows'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 
 const styles = {
@@ -11,18 +11,18 @@ const styles = {
     maxWidth: '360px',
     p: '25px 32px',
     backgroundColor: 'basic.white',
-    boxShadow: serviceCardShadow,
+    boxShadow: commonShadow,
     borderRadius: '6px',
     '&:hover': {
-      boxShadow: serviceCardHoverShadow
+      boxShadow: commonHoverShadow
     }
   }
 }
 
-const ServiceCard = ({ img, title, count, link }) => {
+const ClickableCard = ({ img, title, count, link }) => {
   return (
     <Button
-      component={ Link } data-testid='service-card' sx={ styles.card }
+      component={ Link } data-testid='clickable-card' sx={ styles.card }
       to={ link }
     >
       <Box
@@ -40,5 +40,4 @@ const ServiceCard = ({ img, title, count, link }) => {
   )
 }
 
-export default ServiceCard
-
+export default ClickableCard

@@ -5,7 +5,3 @@ export const mainShadow =
 export const commonShadow = '0px 3px 16px 2px rgba(144, 164, 174, 0.12)'
 
 export const commonHoverShadow = '0px 3px 16px 2px rgba(144, 164, 174, 0.56)'
-
-export const serviceCardShadow = '0px 3px 16px 2px rgba(144, 164, 174, 0.12)'
-export const serviceCardHoverShadow = '0px 3px 16px 2px rgba(144, 164, 174, 0.56)'
-
