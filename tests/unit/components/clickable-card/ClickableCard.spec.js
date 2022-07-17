@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 
-import ServiceCard from '~/components/service-card/ServiceCard'
+import ClickableCard from '~/components/clickable-card/ClickableCard'
 
 const props = {
   id: '1',
@@ -11,9 +11,9 @@ const props = {
   link: '#'
 }
 
-describe('ServiceCard component', () => {
+describe('ClickableCard component', () => {
   beforeEach(()=>{
-    renderWithProviders(<ServiceCard { ...props } />)
+    renderWithProviders(<ClickableCard { ...props } />)
   })
 
   it('should render icon', () => {

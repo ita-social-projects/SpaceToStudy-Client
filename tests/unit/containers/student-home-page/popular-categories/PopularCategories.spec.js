@@ -26,7 +26,7 @@ describe('PopularCategories component', () => {
 
     rerender(<PopularCategories />)
 
-    const categories = screen.getAllByTestId('service-card')
+    const categories = screen.getAllByTestId('clickable-card')
 
     expect(categories).toHaveLength(mockCategories.length)
   })

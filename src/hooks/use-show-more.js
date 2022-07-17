@@ -1,23 +1,25 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
-const useShowMore = (allItems, start, step) => {
-  const totalPages = allItems.length > start ? Math.ceil((allItems.length - start) / step) : 0
-  const [items, setItems] = useState(allItems.slice(0, start))
-  const [currentPage, setCurrentPage] = useState(1)
-  const expandable = currentPage <= totalPages
+const useShowMore = (allItems, itemsToShow, itemsToAdd) => {
+  const [currentPage, setCurrentPage] = useState(0)
+  const [items, setItems] = useState([])
+
+  const totalPages = useMemo(() => {
+    return allItems.length > itemsToShow ? Math.ceil((allItems.length - itemsToShow) / itemsToAdd) : 0
+  }, [allItems, itemsToShow, itemsToAdd])
+
+  const isExpandable = currentPage < totalPages
 
   useEffect(() => {
-    setItems(allItems.slice(0, start))
-    setCurrentPage(1)
-  }, [allItems, start, step])
+    const limit = itemsToShow + itemsToAdd * currentPage
+    setItems(allItems.slice(0, limit))
+  }, [allItems, itemsToShow, itemsToAdd, currentPage])
 
   const showMore = () => {
-    const limit = start + step * currentPage
-    setItems(allItems.slice(0, limit))
     setCurrentPage((prevState) => prevState + 1)
   }
 
-  return { items, expandable, showMore }
+  return { items, isExpandable, showMore }
 }
 
 export default useShowMore

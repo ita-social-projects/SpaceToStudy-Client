@@ -13,7 +13,7 @@ const useBreakpoints = () => {
     return 'desktop'
   } else if (sizes.tablet) {
     return 'tablet'
-  } else if (sizes.mobile) {
+  } else {
     return 'mobile'
   }
 }

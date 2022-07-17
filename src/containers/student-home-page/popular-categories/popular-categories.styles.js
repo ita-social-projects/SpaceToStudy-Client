@@ -7,6 +7,6 @@ export const styles = {
     },
     gridAutoRows: '126px',
     gridGap: '24px',
-    mb: '32px',
+    mb: '32px'
   }
 }
