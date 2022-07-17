@@ -6,7 +6,7 @@ import { ModalProvider } from '~/context/modal-context'
 const mockDispatch = jest.fn()
 
 jest.mock('react-redux', () => ({
-  useDispatch: () => mockDispatch
+  useDispatch: () => mockDispatch.mockReturnValue({ unwrap: () => '' })
 }))
 
 jest.mock('~/hooks/use-confirm', () => {
@@ -61,7 +61,6 @@ describe('Login dialog test', () => {
   })
 
   it('should dispatch after button submit', async () => {
-    mockDispatch.mockReturnValue({ unwrap: () => '' })
     const inputEmail = screen.getByLabelText(/common.labels.email/i)
     fireEvent.change(inputEmail, { target: { value: 'test@gmail.com' } })
 
