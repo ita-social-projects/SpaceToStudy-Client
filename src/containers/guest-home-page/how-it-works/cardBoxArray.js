@@ -3,7 +3,7 @@ import howItWorksSecond from '~/assets/img/guest-home-page/howItWorksSecond.svg'
 import howItWorksThird from '~/assets/img/guest-home-page/howItWorksThird.svg'
 import howItWorksFourth from '~/assets/img/guest-home-page/howItWorksFourth.svg'
 
-export const iconBarArray = [
+export const cardBoxArray = [
   {
     image: howItWorksFirst,
     title: 'guestHomePage.howItWorks.signUp.title',

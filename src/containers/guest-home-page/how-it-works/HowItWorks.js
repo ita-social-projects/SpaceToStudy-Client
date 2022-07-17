@@ -3,41 +3,46 @@ import { Typography, Button, FormGroup } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import Stack from '@mui/material/Stack'
 import Switch from '@mui/material/Switch'
-import ImageWithTitleAndDescription from '~/components/image-with-title-and-description/ImageWithTitleAndDescription'
-
+import CardWithImage from '~/components/card-with-image/CardWithImage'
+import SignupDialog from '~/containers/guest-home-page/signup-dialog/SignupDialog'
+import { ModalContext } from '~/context/modal-context'
+import { useContext } from 'react'
 
 const style = {
   block: {
     display: 'flex',
-    // alignItems: 'center',
+    alignItems: 'center',
     justifyContent: 'center',
-    pb: '300px'
+    pb: '80px'
   },
   container: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column'
-  },
+  }
 }
 
 const titleVariant = {
-  xs:'h6'
-  
+  xs: 'h6'
 }
 
 const descriptionVariant = {
   xs: 'subtitle2'
 }
 
-
-const HowItWorks = ( { items } ) => {
+const HowItWorks = ({ items }) => {
   const { t } = useTranslation()
+  const { setModal } = useContext(ModalContext)
+
+  const openDialog = (type) => {
+    setModal(<SignupDialog type={ type } />)
+  }
 
   return (
     <Box sx={ style.block }>
       <Box sx={ style.container }>
-        <Typography variant={ 'h3' }>
+        <Typography sx={ { mb: '32px' } } variant={ 'h3' }>
           { t('guestHomePage.howItWorks.title') }
         </Typography>
 
@@ -52,23 +57,24 @@ const HowItWorks = ( { items } ) => {
             </Typography>
           </Stack>
         </FormGroup>
-
-
-        { items.map((item,key) => (
-          <ImageWithTitleAndDescription 
-            description={ t(item.description) }
-            descriptionVariant={ descriptionVariant }
-            image={ item.image }
-            key={ key }
-            title={ t(item.title) }
-            titleVariant={ titleVariant }
-          />
-        )) }
         
+        <Box sx={ { mt: '45px' } }>
+          { items.map((item, key) => (
+            <CardWithImage
+              description={ t(item.description) }
+              descriptionVariant={ descriptionVariant }
+              image={ item.image }
+              key={ key }
+              side={ key % 2 === 0 ? 'right' : 'left' }
+              title={ t(item.title) }
+              titleVariant={ titleVariant }
+            />
+          )) }
+        </Box>
 
-        <Button sx={ { padding: '16px 32px' } } variant="contained">
+        <Button onClick={ () => openDialog('student') } sx={ { padding: '16px 32px', mt: '34px' } } variant="contained">
           <Typography>Start learning today</Typography>
-        </Button> 
+        </Button>
       </Box>
     </Box>
   )
