@@ -1,13 +1,18 @@
+import { accessToken } from '~/constants'
 import { axiosClient } from '~/plugins/axiosClient'
 import { logoutUser } from '~/redux/reducer'
 import { AuthService } from '~/services/auth-service'
+import { getFromLocalStorage, setToLocalStorage } from './local-storage-service'
 
 export const setupInterceptors = (store) => {
   axiosClient.interceptors.request.use((config) => {
-    config.headers.authorization = `Bearer ${localStorage.getItem('accessToken')}`
+    const token = getFromLocalStorage(accessToken)
+    if (token) {
+      config.headers.authorization = `Bearer ${token}`
+    }
     return config
   })
-    
+
   axiosClient.interceptors.response.use(
     (config) => {
       return config
@@ -18,7 +23,7 @@ export const setupInterceptors = (store) => {
         originalRequest._isRetry = true
         try {
           const { data } = await AuthService.refresh()
-          localStorage.setItem('accessToken', data.accessToken)
+          setToLocalStorage(accessToken, data.accessToken)
           return axiosClient.request(originalRequest)
         } catch (e) {
           store.dispatch(logoutUser())
@@ -28,4 +33,3 @@ export const setupInterceptors = (store) => {
     }
   )
 }
-

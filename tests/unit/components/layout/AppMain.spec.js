@@ -2,21 +2,19 @@ import { render, screen } from '@testing-library/react'
 import { useSelector } from 'react-redux'
 import { MemoryRouter } from 'react-router-dom'
 import { ThemeProvider } from '@emotion/react'
+
 import { ModalProvider } from '~/context/modal-context'
 import { theme } from '~/styles/app-theme/custom-mui.styles'
-
+import { getFromLocalStorage } from '~/services/local-storage-service'
 import AppMain from '~/containers/layout/AppMain'
 
-Object.defineProperty(window, 'localStorage', {
-  value: {
-    getItem: () => true
-  }
-})
 const mockState = {
   appMain: { loading: true, userRole: '' }
 }
 
 const mockDispatch = jest.fn()
+
+jest.mock('~/services/local-storage-service')
 
 jest.mock('react-redux', () => ({
   useDispatch: () => mockDispatch,
@@ -86,6 +84,7 @@ describe('AppMain layout component test', () => {
   })
 
   it('should dispatch checkAuth if accessToken exists in localStorage', async () => {
+    getFromLocalStorage.mockImplementation(() => true)
     useSelector.mockImplementation(() => ({
       loading: false,
       userRole: ''

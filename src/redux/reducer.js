@@ -2,6 +2,8 @@ import { createSlice } from '@reduxjs/toolkit'
 import { parseJwt } from '~/utils/helper-functions'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { AuthService } from '~/services/auth-service'
+import { removeFromLocalStorage, setToLocalStorage } from '~/services/local-storage-service'
+import { accessToken } from '~/constants'
 
 const initialState = {
   userId: '',
@@ -14,7 +16,7 @@ const initialState = {
 export const loginUser = createAsyncThunk('appMain/loginUser', async (userData, { rejectWithValue, dispatch }) => {
   try {
     const { data } = await AuthService.login(userData)
-    localStorage.setItem('accessToken', data.accessToken)
+    setToLocalStorage(accessToken, data.accessToken)
     dispatch(setUser(data.accessToken))
   } catch (e) {
     return rejectWithValue(e.message)
@@ -33,7 +35,7 @@ export const signupUser = createAsyncThunk('appMain/signupUser', async (userData
 export const logoutUser = createAsyncThunk('appMain/logoutUser', async (_, { rejectWithValue, dispatch }) => {
   try {
     await AuthService.logout()
-    localStorage.removeItem('accessToken')
+    removeFromLocalStorage(accessToken)
     dispatch(logout())
   } catch (e) {
     return rejectWithValue(e.message)
@@ -43,7 +45,7 @@ export const logoutUser = createAsyncThunk('appMain/logoutUser', async (_, { rej
 export const checkAuth = createAsyncThunk('appMain/checkAuth', async (_, { rejectWithValue, dispatch }) => {
   try {
     const { data } = await AuthService.refresh()
-    localStorage.setItem('accessToken', data.accessToken)
+    setToLocalStorage(accessToken, data.accessToken)
     dispatch(setUser(data.accessToken))
   } catch (e) {
     return rejectWithValue(e.message)
