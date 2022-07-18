@@ -72,11 +72,14 @@ describe('Signup form test', () => {
   it('should show visibility icon', async () => {
     const visibilityOffIcons = screen.getAllByTestId('VisibilityOffIcon')
     fireEvent.click(visibilityOffIcons[0])
+    fireEvent.click(visibilityOffIcons[1])
     const visibilityIcons = screen.getAllByTestId('VisibilityIcon')
 
     await waitFor(() => {
       expect(visibilityIcons[0]).toBeInTheDocument()
       expect(visibilityOffIcons[0]).not.toBeInTheDocument()
+      expect(visibilityIcons[1]).toBeInTheDocument()
+      expect(visibilityOffIcons[1]).not.toBeInTheDocument()
     })
   })
 
