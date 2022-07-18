@@ -1,5 +1,6 @@
 import { Box, Container } from '@mui/material'
 import FindMentorBlock from '~/containers/student-home-page/find-mentor-block/FindMentorBlock'
+import Footer from '~/containers/footer/Footer'
 import Faq from '~/containers/student-home-page/faq/Faq'
 
 const StudentHome = () => {
@@ -9,6 +10,7 @@ const StudentHome = () => {
         <FindMentorBlock />
         <Faq />
       </Container>
+      <Footer />
     </Box>
   )
 }
