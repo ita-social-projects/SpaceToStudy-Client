@@ -2,11 +2,13 @@ import { screen, fireEvent, render } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { student } from '~/containers/guest-home-page/constants'
 import SignupDialog from '~/containers/guest-home-page/signup-dialog/SignupDialog'
+import { ModalProvider } from '~/context/modal-context'
+
 
 const mockDispatch = jest.fn()
 
 jest.mock('react-redux', () => ({
-  useDispatch: () => mockDispatch
+  useDispatch: () => mockDispatch.mockReturnValue({ unwrap: () => '' })
 }))
 
 jest.mock('~/hooks/use-confirm', () => {
@@ -19,7 +21,9 @@ describe('Signup dialog test', () => {
   beforeEach(() => {
     render(
       <MemoryRouter>
-        <SignupDialog type={ student } />
+        <ModalProvider>
+          <SignupDialog type={ student } />
+        </ModalProvider>
       </MemoryRouter>
     )
   })

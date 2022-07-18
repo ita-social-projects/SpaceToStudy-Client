@@ -1,10 +1,11 @@
-import { useEffect } from 'react'
+import { useContext, useEffect } from 'react'
 import { Box, Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
 
 import useForm from '~/hooks/use-form'
 import useConfirm from '~/hooks/use-confirm'
+import { ModalContext } from '~/context/modal-context'
 
 import { firstName, lastName, confirmPassword, email, password } from '~/constants/validation/login'
 import { signup } from '~/containers/guest-home-page/constants'
@@ -20,12 +21,20 @@ import { style } from '~/containers/guest-home-page/signup-dialog/signup-dialog.
 const SignupDialog = ({ type }) => {
   const { t } = useTranslation()
   const { setNeedConfirmation } = useConfirm()
+  const { closeModal } = useContext(ModalContext)
   const dispatch = useDispatch()
 
   const signupImg = { student, mentor }
 
   const { handleSubmit, handleChange, handleBlur, data, isDirty, errors } = useForm({
-    onSubmit: () => dispatch(signupUser(data)),
+    onSubmit: async () => {
+      try {
+        await dispatch(signupUser(data)).unwrap()
+        closeModal()
+      } catch (e) {
+        console.log(e)
+      }
+    },
     initialValues: { firstName: '', lastName: '', email: '', password: '', confirmPassword: '' },
     validations: { firstName, lastName, email, password, confirmPassword }
   })

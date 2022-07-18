@@ -1,11 +1,12 @@
 import { screen, render, fireEvent } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
+import { ModalProvider } from '~/context/modal-context'
 
 const mockDispatch = jest.fn()
 
 jest.mock('react-redux', () => ({
-  useDispatch: () => mockDispatch
+  useDispatch: () => mockDispatch.mockReturnValue({ unwrap: () => '' })
 }))
 
 jest.mock('~/hooks/use-confirm', () => {
@@ -18,7 +19,9 @@ describe('Login dialog test', () => {
   beforeEach(() => {
     render(
       <MemoryRouter>
-        <LoginDialog />
+        <ModalProvider>
+          <LoginDialog />
+        </ModalProvider>
       </MemoryRouter>
     )
   })

@@ -11,7 +11,7 @@ const ModalProvider = (props) => {
   }, [setModal])
 
   return (
-    <ModalContext.Provider value={ { setModal } } { ...props }>
+    <ModalContext.Provider value={ { setModal, closeModal } } { ...props }>
       { props.children }
       { modal && <PopupDialog closeModal={ closeModal } content={ modal } /> }
     </ModalContext.Provider>
