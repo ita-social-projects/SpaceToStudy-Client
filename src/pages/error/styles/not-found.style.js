@@ -3,30 +3,31 @@ import { mainShadow } from '~/styles/app-theme/custom-shadows'
 export const style = {
   root: {
     display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
     flexDirection: { xs: 'column', md: 'row' },
-    margin: '0 auto',
-    maxWidth: 'lg'
+    margin: '0 20px',
   },
   box: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: { md: 'flex-start', xs: 'center' },
+    alignItems: {  xs: 'center', md: 'flex-start' },
     position: { sm: 'inherit', md: 'absolute' },
     top: '300px',
     left: '50%',
-    m: { md: '0 auto', xs: '65px auto 0' },
+    m: {  xs: '65px auto 0', sm: '72px auto 0', md: '0 auto' },
     maxWidth: '430px',
     zIndex: '2'
   },
   title: {
-    lineHeight: { md: '61px', sm: '74px', xs: '51px' },
-    fontSize: { md: '61px', sm: '45px', xs: '32px' },
+    lineHeight: { xs: '51px', sm: '74px', md: '61px'  },
+    fontSize: {  xs: '32px', sm: '45px', md: '61px' },
     fontWeight: '300',
     color: 'primary.900',
     mb: '16px'
   },
   description: {
-    textAlign: { md: 'start', xs: 'center' },
+    textAlign: { xs: 'center', md: 'start' },
     typography: {
       sm: 'subtitle1',
       xs: 'subtitle2'
@@ -35,24 +36,25 @@ export const style = {
     color: 'primary.900',
     mb: '40px'
   },
-  homeBtn: {
+  button: {
+    padding: '16px 48px',
     backgroundColor: 'primary.900',
     boxShadow: mainShadow,
   },
   imgBox: {
     display: 'flex',
     justifyContent: 'space-between',
-    position: { sm: 'inherit', md: 'relative' },
-    width: '90%',
-    m: '0 auto'
+    position: { sm: 'static', md: 'relative' },
+    width: '100%',
+    maxWidth: 'lg'
   },
   manImg: {
-    maxWidth: { xs: '285px', sm: '420px', md: '500px' },
+    maxWidth: { xs: '420px', md: '500px' },
     overflow: 'auto'
   },
   plantImg: {
     alignSelf: 'end',
-    maxWidth: { md: '200px', sm: '125px', xs: '90px' },
+    maxWidth: { xs: '125px', md: '200px' },
     overflow: 'auto'
   },
 }
