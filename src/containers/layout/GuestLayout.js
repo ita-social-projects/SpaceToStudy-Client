@@ -6,6 +6,7 @@ import GuestHomePage from '~/pages/guest-home-page/GuestHome'
 import NotFound from '~/pages/error/NotFound'
 import InternalServerError from '~/pages/error/InternalServerError'
 import AuthPolicy from '~/pages/error/AuthPolicy'
+import BadRequest from '~/pages/error/BadRequest'
 
 const GuestLayout = () => {
   return (
@@ -13,6 +14,7 @@ const GuestLayout = () => {
       <Route element={ <GuestHomePage /> } path={ routes.home.route } />
       <Route element={ <Example /> } name="home" path={ routes.about.route } />
       <Route element={ <AuthPolicy /> } path={ errors.authPolicy.route } />
+      <Route element={ <BadRequest /> } path={ errors.badRequest.route } />
       <Route element={ <NotFound /> } path={ errors.notFound.route } />
       <Route element={ <InternalServerError /> } path={ errors.internalServerError.route } />
     </Routes>

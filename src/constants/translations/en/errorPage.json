@@ -6,5 +6,9 @@
   "500": {
     "title":"Internal Server Error",
     "description":"We are sorry, the server encountered an unexpected error that prevented it from executing the request. We suggest you go to the home page. Report an error."
+  },
+  "400": {
+    "title":"Bad request",
+    "description":"The server was unable to process your request due to invalid syntax. We suggest you go back to the home page."
   }
 }
