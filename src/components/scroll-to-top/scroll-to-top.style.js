@@ -6,10 +6,10 @@ export const style = {
     justifyContent: 'end',
     position: 'sticky',
     bottom: '0',
-    heigth: 0,
-    // backgroundColor: 'backgroundColor' 
   },
   button: {
+    position: 'absolute',
+    bottom: '0',
     m: { xs: '0 8px 8px 0', md: '0 12px 12px 0', lg: '0 20px 20px 0' },
     cursor: 'pointer',
     backgroundColor: 'primary.50',
