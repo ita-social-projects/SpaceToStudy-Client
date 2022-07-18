@@ -1,12 +1,13 @@
 import { Box, Button, Container } from '@mui/material'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import useBreakpoints from '~/hooks/use-breakpoints'
 
-import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import { routes } from '~/constants/routes'
-import { styles } from './styles/bad-request.styles'
+import useBreakpoints from '~/hooks/use-breakpoints'
+import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
+
 import img from '~/assets/img/error-page/400.svg'
+import { styles } from './styles/bad-request.styles'
 
 const BadRequest = () => {
   const { t } = useTranslation()
