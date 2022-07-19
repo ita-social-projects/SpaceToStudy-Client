@@ -41,7 +41,7 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) =>
         autoFocus
         error={ Boolean(errors.firstName) }
         fullWidth 
-        helperText={ t(errors.firstName) }
+        helperText={ t(errors.firstName, { name: 'First name' }) }
         label={ t( 'common.labels.firstName' ) }
         onBlur={ handleBlur('firstName') }
         onChange={ handleChange('firstName') }
@@ -55,7 +55,7 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) =>
       <TextField
         error={ Boolean(errors.lastName) }
         fullWidth 
-        helperText={ t(errors.lastName) }
+        helperText={ t(errors.lastName, { name: 'Last name' }) }
         label={ t( 'common.labels.lastName' ) }
         onBlur={ handleBlur('lastName') }
         onChange={ handleChange('lastName') }
