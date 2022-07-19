@@ -7,6 +7,7 @@
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:react/jsx-runtime",
+    "plugin:storybook/recommended",
     "react-app",
     "react-app/jest",
     "prettier"
@@ -19,6 +20,7 @@
     "sourceType": "module"
   },
   "plugins": ["react", "testing-library", "react-hooks"],
+  "ignorePatterns": ["*/stories/*"],
   "rules": {
     "prefer-arrow-callback": ["error"],
     "func-style": ["error", "expression"],
@@ -106,6 +108,12 @@
       "files": ["**/tests/**/*.*.js", "**/tests/**/*.js"],
       "env": {
         "jest": true
+      }
+    },
+    {
+      "files": ["**/*.stories.*"],
+      "rules": {
+        "import/no-anonymous-default-export": "off"
       }
     }
   ]
