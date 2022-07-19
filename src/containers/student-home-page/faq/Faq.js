@@ -15,7 +15,7 @@ const Faq = () => {
   const changeAccordion = (id) => activeItemId === id ? setActiveItemId(null) : setActiveItemId(id)
 
   return (
-    <Box className='section' id={ studentRoutes.navBar.faq.label } sx={ { flexDirection: 'column' } }>
+    <Box className='section' id={ studentRoutes.navBar.faq.label } sx={ { flexDirection: 'column', mb: 0, pb: 10 } }>
       <TitleWithDescription
         description={ t('studentHomePage.faq.subtitle') }
         descriptionVariant='subtitle1'
