@@ -7,6 +7,7 @@ export const style = {
     alignItems: 'center',
     flexDirection: { xs: 'column', md: 'row' },
     margin: '0 20px',
+    height: '93vh'
   },
   box: {
     display: 'flex',
@@ -15,7 +16,6 @@ export const style = {
     position: { sm: 'inherit', md: 'absolute' },
     top: '300px',
     left: '50%',
-    m: {  xs: '65px auto 0', sm: '72px auto 0', md: '0 auto' },
     maxWidth: '430px',
     zIndex: '2'
   },
@@ -49,7 +49,7 @@ export const style = {
     maxWidth: 'lg'
   },
   manImg: {
-    maxWidth: { xs: '420px', md: '500px' },
+    maxWidth: { xs: '420px', md: '540px' },
     overflow: 'auto'
   },
   plantImg: {
