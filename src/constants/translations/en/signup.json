@@ -1,12 +1,12 @@
 {
     "head": {
-        "mentor": "Signup as a mentor",
-        "student": "Signup as a student"
+        "mentor": "Sign up as a mentor",
+        "student": "Sign up as a student"
     },
     "iAgree": "I agree to the",
     "and": "and",
-    "googleButton": "Google",
-    "continue": "or continue with",
+    "googleButton": "Sign up with Google",
+    "continue": "or continue",
     "haveAccount": "Already have a mentor account?",
-    "joinUs": "Log in"
+    "joinUs": "Login!"
 }
