@@ -21,14 +21,14 @@ const mockAxiosInstance = new MockAdapter(axiosInstance)
 
 describe('axios interceptors test', () => {
   setupInterceptors(store)
-  it('1', async () => {
+  it('should set token into request headers', async () => {
     mockAxiosClient.onPost(URLs.auth.login).reply(200, {})
     const res = await axiosClient.post(URLs.auth.login, loginUserData)
 
     expect(res.config.headers.authorization).toEqual(`Bearer ${mockAccessToken}`)
   })
 
-  it('2', async () => {
+  it('should send request for refresh token if 401 error was received', async () => {
     mockAxiosClient.onPost(URLs.auth.login).reply(401)
     mockAxiosInstance.onGet(URLs.auth.refresh).reply(200, { accessToken: mockAccessToken })
     try {
@@ -39,7 +39,7 @@ describe('axios interceptors test', () => {
     }
   })
 
-  it('3', async () => {
+  it('should clear local storage if refresh token has expired', async () => {
     mockAxiosClient.onPost(URLs.auth.login).reply(401)
     mockAxiosInstance.onGet(URLs.auth.refresh).reply(401)
     mockAxiosClient.onPost(URLs.auth.logout).reply(200)
