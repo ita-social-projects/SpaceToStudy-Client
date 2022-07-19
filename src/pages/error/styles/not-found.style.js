@@ -6,18 +6,19 @@ export const style = {
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: { xs: 'column', md: 'row' },
-    margin: '0 20px',
-    height: '93vh'
+    margin: { xs: '0 16px', sm: '0 60px' },
+    height: '90vh'
   },
   box: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: {  xs: 'center', md: 'flex-start' },
     position: { sm: 'inherit', md: 'absolute' },
-    top: '300px',
+    top: '40%',
     left: '50%',
+    m: '0 auto' ,
     maxWidth: '430px',
-    zIndex: '2'
+    zIndex: 2
   },
   title: {
     lineHeight: { xs: '51px', sm: '74px', md: '61px'  },
@@ -49,12 +50,12 @@ export const style = {
     maxWidth: 'lg'
   },
   manImg: {
-    maxWidth: { xs: '420px', md: '540px' },
+    maxWidth: { xs: '340px', md: '520px' },
     overflow: 'auto'
   },
   plantImg: {
     alignSelf: 'end',
-    maxWidth: { xs: '125px', md: '200px' },
+    maxWidth: { xs: '110px', md: '170px' },
     overflow: 'auto'
   },
 }
