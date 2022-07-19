@@ -4,7 +4,6 @@ import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 
 import { store } from '~/redux/store'
-import { setupInterceptors } from '~/services/setup-interceptors'
 import App from '~/App'
 import '~/styles/index.css'
 import '~/plugins/i18n'
@@ -22,4 +21,3 @@ ReactDOM.render(
   document.getElementById('root')
 )
 
-setupInterceptors(store)
