@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, Navigate } from 'react-router-dom'
 
 import { routes, errors } from '~/constants/routes'
 import Example from '~/pages/home/Home'
@@ -17,6 +17,7 @@ const GuestLayout = () => {
       <Route element={ <BadRequest /> } path={ errors.badRequest.route } />
       <Route element={ <NotFound /> } path={ errors.notFound.route } />
       <Route element={ <InternalServerError /> } path={ errors.internalServerError.route } />
+      <Route element={ <Navigate to={ errors.notFound.route }  /> } path='*' />
     </Routes>
   )
 }
