@@ -57,7 +57,6 @@
     "build-storybook": "build-storybook -s public",
     "prepare": "husky install",
     "pre-commit": "lint-staged"
-
   },
   "lint-staged": {
     "*.{js}": [
