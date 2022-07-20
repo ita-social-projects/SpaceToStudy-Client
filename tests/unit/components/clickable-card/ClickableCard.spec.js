@@ -6,7 +6,7 @@ import ClickableCard from '~/components/clickable-card/ClickableCard'
 const props = {
   id: '1',
   img: 'icon.png',
-  count: 234,
+  description: 234,
   title: 'Languages',
   link: '#'
 }
@@ -29,7 +29,7 @@ describe('ClickableCard component', () => {
   })
 
   it('should render mentors count', () => {
-    const count = screen.getByText(`${props.count} mentors`)
+    const count = screen.getByText(props.description)
 
     expect(count).toBeInTheDocument()
   })

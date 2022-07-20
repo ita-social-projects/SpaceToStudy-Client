@@ -35,28 +35,30 @@ const PopularCategories = () => {
   const categories = categoriesList.map((item) => {
     return (
       <ClickableCard
-        action={() => navigate(item.link)}
-        description={item.description}
-        img={item.img}
-        key={item.id}
-        title={item.title}
+        action={ () => navigate(item.link) }
+        description={ item.description }
+        img={ item.img }
+        key={ item.id }
+        title={ item.title }
       />
     )
   })
 
   return (
-    <Box className="section" sx={{ flexDirection: 'column' }}>
+    <Box className="section" sx={ { flexDirection: 'column' } }>
       <TitleWithDescription
-        description={t('studentHomePage.popularCategories.description')}
-        descriptionStyles={{ typography: { sm: 'body1', xs: 'body2' } }}
-        title={t('studentHomePage.popularCategories.title')}
-        titleStyles={{ typography: { sm: 'h4', xs: 'h5' } }}
+        description={ t('studentHomePage.popularCategories.description') }
+        descriptionStyles={ { typography: { sm: 'body1', xs: 'body2' } } }
+        title={ t('studentHomePage.popularCategories.title') }
+        titleStyles={ { typography: { sm: 'h4', xs: 'h5' } } }
       />
 
-      <Box sx={{ ...styles.container }}>{categories}</Box>
+      <Box sx={ { ...styles.container } }>
+        { categories }
+      </Box>
 
-      <Button onClick={showMore} sx={{ display: isExpandable ? 'block' : 'none' }} variant="tonal">
-        {t('studentHomePage.popularCategories.viewMore')}
+      <Button onClick={ showMore } sx={ { display: isExpandable ? 'block' : 'none' } } variant="tonal">
+        { t('studentHomePage.popularCategories.viewMore') }
       </Button>
     </Box>
   )

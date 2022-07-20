@@ -9,25 +9,28 @@ jest.mock('~/hooks/use-show-more')
 
 describe('PopularCategories component', () => {
   it('should expand list of items after click on View More', () => {
-    useShowMore.mockReturnValueOnce({
-      items: mockCategories.slice(0, 3),
-      expandable: true,
-      showMore: jest.fn()
-    }).mockReturnValueOnce({
-      items: mockCategories,
-      expandable: false,
-      showMore: jest.fn()
-    })
+    useShowMore
+      .mockReturnValueOnce({
+        items: mockCategories.slice(0, 3),
+        isExpandable: true,
+        showMore: jest.fn()
+      })
+      .mockReturnValueOnce({
+        items: mockCategories,
+        isExpandable: false,
+        showMore: jest.fn()
+      })
 
     const { rerender } = renderWithProviders(<PopularCategories />)
+    const beforeExpand = screen.getAllByTestId('clickable-card')
     const btn = screen.getByText(/studentHomePage.popularCategories.viewMore/)
 
     fireEvent.click(btn)
 
     rerender(<PopularCategories />)
 
-    const categories = screen.getAllByTestId('clickable-card')
+    const afterExpand = screen.getAllByTestId('clickable-card')
 
-    expect(categories).toHaveLength(mockCategories.length)
+    expect(afterExpand.length).toBeGreaterThan(beforeExpand.length)
   })
 })
