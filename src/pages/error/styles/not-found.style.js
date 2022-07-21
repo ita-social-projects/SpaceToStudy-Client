@@ -47,6 +47,7 @@ export const style = {
     justifyContent: 'space-between',
     position: { sm: 'static', md: 'relative' },
     width: '100%',
+    maxHeight: { sm: '50vh', md: '90vh' },
     maxWidth: 'lg'
   },
   manImg: {
