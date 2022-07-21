@@ -1,27 +1,32 @@
-import React from 'react'
 import { useTranslation } from 'react-i18next'
-import './styles/auth-policy.styles'
-import { useStyles } from './styles/auth-policy.styles'
-import { Button, Typography } from '@mui/material'
+import { Link } from 'react-router-dom'
+import { Box, Button, Container } from '@mui/material'
+
+import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
+import { routes } from '~/constants/routes'
+import error401 from '~/assets/img/error-page/401.svg'
+
+import { styles } from '~/pages/error/styles/auth-policy.styles'
 
 const AuthPolicy = () => {
-  const styles = useStyles()
   const { t } = useTranslation()
 
   return (
-    <div className={ styles.root }>
-      <Typography variant="h3">
-        { t('errorPage.401.authTitle') }
-      </Typography>
-      <Typography variant="body2">
-        { t('errorPage.401.authText') }
-      </Typography>
-      <Button
-        variant="contained"
-      >
-        { t('button.toMain') }
-      </Button>
-    </div>
+    <Container sx={styles.container}>
+      <Box sx={styles.errorInfo}>
+        <TitleWithDescription
+          componentStyles={styles.titleWithDescr}
+          description={t('errorPage.401.description')}
+          descriptionStyles={styles.description}
+          title={t('errorPage.401.title')}
+          titleStyles={styles.title}
+        />
+        <Button component={Link} size="extraLarge" to={routes.home.route} variant="contained">
+          {t('button.toMain')}
+        </Button>
+      </Box>
+      <Box alt="Authorization error" component="img" src={error401} sx={styles.errorImage} />
+    </Container>
   )
 }
 
