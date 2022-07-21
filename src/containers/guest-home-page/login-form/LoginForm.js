@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import useInputVisibility from '~/hooks/use-input-visibility'
-import { Box, FormControlLabel, Typography, TextField, Button, Checkbox } from '@mui/material'
+import { Box, FormControlLabel, Typography, Button, Checkbox } from '@mui/material'
+import AppTextField from '~/components/app-text-field/AppTextField'
 
 import style from './login-form.style'
 
@@ -11,11 +12,10 @@ const LoginForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) => 
 
   return (
     <Box component='form' onSubmit={ handleSubmit }>
-      <TextField
+      <AppTextField
         autoFocus
-        error={ Boolean(errors.email) }
-        fullWidth 
-        helperText={ t(errors.email) }
+        errorMsg={ t(errors.email) }
+        fullWidth
         label={ t( 'common.labels.email' ) }
         onBlur={ handleBlur('email') }
         onChange={ handleChange('email') }
@@ -25,12 +25,11 @@ const LoginForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) => 
         type='email'
         value={ data.email }
       />
-      
-      <TextField 
+
+      <AppTextField
         InputProps={ passwordVisibility } 
-        error={ Boolean(errors.password) }
+        errorMsg={ t(errors.password) }
         fullWidth
-        helperText={ t(errors.password) }
         label={ t( 'common.labels.password' ) }
         onBlur={ handleBlur('password') }
         onChange={ handleChange('password') }
