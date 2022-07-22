@@ -1,7 +1,7 @@
 export const style = {
   helperText: {
-    overflow: 'hidden', 
-    textOverflow: 'ellipsis', 
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
     whiteSpace: 'nowrap'
   }
 }
