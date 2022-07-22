@@ -1,8 +1,4 @@
 export const style = {
-  form: {
-    maxWidth: { xs: '315px', sm: '343px' },
-    padding: { sm: '50px 80px', md: '0' }
-  },
   input: {
     maxWidth: '343px'
   },
@@ -28,5 +24,10 @@ export const style = {
     color: 'primary.900',
     marginLeft: '5px',
     textDecoration: 'underline'
+  },
+  helperText: {
+    overflow: 'hidden', 
+    textOverflow: 'ellipsis', 
+    whiteSpace: 'nowrap'
   }
 }
