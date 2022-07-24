@@ -24,10 +24,5 @@ export const style = {
     color: 'primary.900',
     marginLeft: '5px',
     textDecoration: 'underline'
-  },
-  helperText: {
-    overflow: 'hidden', 
-    textOverflow: 'ellipsis', 
-    whiteSpace: 'nowrap'
   }
 }
