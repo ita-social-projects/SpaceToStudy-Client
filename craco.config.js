@@ -24,7 +24,9 @@ module.exports = {
         '!<rootDir>/path/to/dir/',
         '!src/*.js',
         '!src/constants/**/*.js',
-        '!src/plugins/**/*.js'
+        '!src/plugins/**/*.js',
+        '!src/services/setup-interceptors.js',
+        '!src/stories/**/*.{js,jsx,css}'
       ],
       coverageThreshold: {
         'global': {
