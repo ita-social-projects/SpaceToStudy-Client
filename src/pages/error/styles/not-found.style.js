@@ -48,7 +48,8 @@ export const style = {
     position: { sm: 'static', md: 'relative' },
     width: '100%',
     maxHeight: { sm: '50vh', md: '90vh' },
-    maxWidth: 'lg'
+    maxWidth: 'lg',
+    overflow: 'auto'
   },
   manImg: {
     maxWidth: { xs: '340px', md: '520px' },
