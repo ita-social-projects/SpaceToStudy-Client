@@ -24,11 +24,6 @@ jobs:
         
       - name : Test
         run: npm test
-        
-      - name: Change path to lcov.info and reports
-        run: |
-          sed -i 's/\/home\/runner\/work\/SpaceToStudy-Client\/SpaceToStudy-Client\//\/github\/workspace\//g' test-report.xml
-          sed -i 's/\/home\/runner\/work\/SpaceToStudy-Client/SpaceToStudy-Client\//\/github\/workspace\//g' coverage/lcov.info
       
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
