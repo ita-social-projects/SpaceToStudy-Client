@@ -4,9 +4,9 @@ const useBreakpoints = () => {
   const theme = useTheme()
 
   const sizes = {
-    desktop: useMediaQuery(theme.breakpoints.up('md')),
-    tablet: useMediaQuery(theme.breakpoints.between('sm', 'md')),
-    mobile: useMediaQuery(theme.breakpoints.between('xs', 'sm'))
+    desktop: useMediaQuery(theme.breakpoints.up('md'), { noSsr: true }),
+    tablet: useMediaQuery(theme.breakpoints.between('sm', 'md'), { noSsr: true }),
+    mobile: useMediaQuery(theme.breakpoints.between('xs', 'sm'), { noSsr: true })
   }
 
   if (sizes.desktop) {

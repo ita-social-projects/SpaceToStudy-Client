@@ -3,15 +3,6 @@ import { Box, Button } from '@mui/material'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import { styles } from '~/components/info-card/info-card.styles'
 
-const titleVariant = {
-  md: 'h4',
-  xs: 'h5'
-}
-const descriptionVariant = {
-  md: 'body1',
-  xs: 'body2'
-}
-
 const InfoCard = ({ img, title, description, actionLabel, cardWidth, action }) => {
   return (
     <Box sx={ { ...styles.card, maxWidth: cardWidth } }>
@@ -23,9 +14,9 @@ const InfoCard = ({ img, title, description, actionLabel, cardWidth, action }) =
 
       <TitleWithDescription
         description={ description }
-        descriptionVariant={ descriptionVariant }
+        descriptionStyles={ { typography: { md: 'body1', xs: 'body2' } } }
         title={ title }
-        titleVariant={ titleVariant }
+        titleStyles={ { typography: { md: 'h4', xs: 'h5' } } }
       />
 
       <Button onClick={ action } variant='contained'>

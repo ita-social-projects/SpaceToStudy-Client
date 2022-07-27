@@ -12,21 +12,13 @@ export default {
       type: 'string',
       description: 'Description value'
     },
-    titleVariant: {
-      type: 'string',
-      description: 'Title font size',
-      options: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
-      control: {
-        type: 'radio'
-      }
+    titleStyles: {
+      type: 'object',
+      description: 'Title styles'
     },
-    descriptionVariant: {
-      type: 'string',
-      description: 'Description font size',
-      options: ['subtitle1', 'subtitle2', 'body1', 'body2'],
-      control: {
-        type: 'radio'
-      }
+    descriptionStyles: {
+      type: 'object',
+      description: 'Description styles'
     }
   }
 }
@@ -38,8 +30,8 @@ export const Desktop = Template.bind({})
 Desktop.args = {
   title: 'Title',
   description: 'Description',
-  titleVariant: 'h2',
-  descriptionVariant: 'subtitle1'
+  titleStyles: { typography: 'h2' },
+  descriptionStyles: { typography: 'subtitle1' }
 }
 
 export const Tablet = Template.bind({})
@@ -47,8 +39,8 @@ export const Tablet = Template.bind({})
 Tablet.args = {
   title: 'Title',
   description: 'Description',
-  titleVariant: 'h3',
-  descriptionVariant: 'subtitle1'
+  titleStyles: { typography: 'h3' },
+  descriptionStyles: { typography: 'subtitle1' }
 }
 
 export const Mobile = Template.bind({})
@@ -56,6 +48,6 @@ export const Mobile = Template.bind({})
 Mobile.args = {
   title: 'Title',
   description: 'Description',
-  titleVariant: 'h4',
-  descriptionVariant: 'subtitle2'
+  titleStyles: { typography: 'h4' },
+  descriptionStyles: { typography: 'subtitle2' }
 }

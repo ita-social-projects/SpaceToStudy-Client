@@ -24,9 +24,9 @@ const BadRequest = () => {
       <Box sx={ styles.info }>
         <TitleWithDescription
           description={ t('errorPage.400.description') }
-          descriptionVariant={ sizesTypography[windowSize].description }
+          descriptionStyles={ { typography: sizesTypography[windowSize].description } }
           title={ t('errorPage.400.title') }
-          titleVariant={ sizesTypography[windowSize].title }
+          titleStyles={ { typography: sizesTypography[windowSize].title } }
         />
         <Button
           component={ Link }
