@@ -1,10 +1,7 @@
-import AppHeader from '~/containers/layout/AppHeader'
-import AppMain from '~/containers/layout/AppMain'
-import ScrollToTop from '~/components/scroll-to-top/ScrollToTop'
-import Footer from '~/containers/footer/Footer'
 import { ThemeProvider } from '@mui/material'
 import { ModalProvider } from './context/modal-context'
 import { ConfirmationDialogProvider } from './context/confirm-context'
+import AppContent from '~/containers/app-content/AppContent'
 import useHashScroll from '~/hooks/use-hash-scroll'
 
 import { theme } from './styles/app-theme/custom-mui.styles'
@@ -17,10 +14,7 @@ const App = () => {
       <ThemeProvider theme={ theme }>
         <ConfirmationDialogProvider>
           <ModalProvider>
-            <AppHeader />
-            <AppMain />
-            <ScrollToTop />
-            <Footer />
+            <AppContent />
           </ModalProvider>
         </ConfirmationDialogProvider>
       </ThemeProvider>

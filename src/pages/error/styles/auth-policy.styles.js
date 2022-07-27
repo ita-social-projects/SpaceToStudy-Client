@@ -1,6 +1,5 @@
 export const styles = {
   container: {
-    minHeight: '100vh',
     display: 'flex',
     flexDirection: {
       md: 'row',
@@ -11,6 +10,9 @@ export const styles = {
     rowGap: {
       sm: '75px',
       xs: '115px'
+    },
+    '& p': {
+      fontWeight: '300'
     }
   },
   errorInfo: {
