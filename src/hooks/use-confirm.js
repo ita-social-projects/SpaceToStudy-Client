@@ -16,6 +16,12 @@ const useConfirm = () => {
     return () => unblock()
   }, [needConfirmation, navigator])
 
+  useEffect(() => {
+    return () => {
+      setNeedConfirmation(false)
+    }
+  }, [setNeedConfirmation])
+
   const checkConfirmation = ({ message, title }) => {
     if (needConfirmation) {
       return new Promise((res) => {
