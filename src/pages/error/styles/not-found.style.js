@@ -18,7 +18,11 @@ export const style = {
     left: '50%',
     m: '0 auto',
     maxWidth: '430px',
-    zIndex: 2
+    zIndex: 2,
+    '& p': {
+      textAlign: { md: 'left', sm: 'center' },
+      fontWeight: 400
+    }
   },
   button: {
     padding: '16px 48px',

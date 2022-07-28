@@ -36,7 +36,7 @@ const NotFound = () => {
 
       <Box sx={style.imgBox}>
         <Box alt="man with bag" component="img" src={manImg} sx={style.manImg} />
-        <Box alt="flowerpot " component="img" src={plantImg} sx={style.plantImg} />
+        <Box alt="flowerpot" component="img" src={plantImg} sx={style.plantImg} />
       </Box>
     </Box>
   )
