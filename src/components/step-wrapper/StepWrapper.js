@@ -41,12 +41,12 @@ const StepWrapper = ({ activeStep, children, setActiveStep, steps }) => {
           sx={[styles.btn, { color: 'primary.500' }]}
           variant="outlined"
         >
-          <Box alt="backArrow" component="img" src={backArrow}></Box>
+          <img alt="backArrow" src={backArrow}></img>
           <Box sx={{ ml: '10px' }}>Back</Box>
         </Button>
         <Button onClick={next} sx={[styles.btn, { ml: '168px', color: 'primary.50' }]} variant="contained">
           <Box sx={{ mr: '10px' }}>{activeStep === steps.length - 1 ? 'Finish' : 'Next'}</Box>
-          <Box alt="nextArrow" component="img" src={nextArrow}></Box>
+          <img alt="nextArrow" src={nextArrow}></img>
         </Button>
       </Box>
     </Box>
