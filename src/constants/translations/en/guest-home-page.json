@@ -39,21 +39,41 @@
     "title": "How It Works",
     "learnFromExperts": "Learn from Experts",
     "shareYourExperience": "Share your Experience",
-    "signUp": {
-      "title": "Sign Up",
-      "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
+    "student": {
+      "signUp": {
+        "title": "Sign Up",
+        "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
+      },
+      "selectAMentor": {
+        "title": "Select a Mentor",
+        "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
+      },
+      "sendRequest": {
+        "title": "Send Request",
+        "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
+      },
+      "startLearning": {
+        "title": "Start Learning",
+        "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
+      }
     },
-    "selectAMentor": {
-      "title": "Select a Mentor",
-      "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
-    },
-    "sendRequest": {
-      "title": "Send Request",
-      "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
-    },
-    "startLearning": {
-      "title": "Start Learning",
-      "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
+    "mentor": {
+      "signUp": {
+        "title": "Sign Up",
+        "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
+      },
+      "selectAMentor": {
+        "title": "Create a Mentor Account",
+        "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
+      },
+      "sendRequest": {
+        "title": "Get New Students",
+        "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
+      },
+      "startLearning": {
+        "title": "Receive Feedbacks",
+        "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
+      }
     }
   },
   "whoWeAre": {

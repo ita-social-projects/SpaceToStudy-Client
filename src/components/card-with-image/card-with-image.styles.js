@@ -42,7 +42,7 @@ export const styles = {
       height: '90px'
     },
     wrap: {
-      width: '1150px',
+      width: '1152px',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'flex-end'
