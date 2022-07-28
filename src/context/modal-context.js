@@ -12,16 +12,16 @@ const ModalProvider = (props) => {
   }, [setModal])
 
   return (
-    <ModalContext.Provider value={{ setModal, closeModal, setFullScreen }} {...props}>
-      {props.children}
-      {modal && (
+    <ModalContext.Provider value={ { setModal, closeModal, setFullScreen } } { ...props }>
+      { props.children }
+      { modal && (
         <PopupDialog
-          closeModal={closeModal}
-          content={modal}
-          isFullScreen={isFullScreen}
-          setFullScreen={setFullScreen}
+          closeModal={ closeModal }
+          content={ modal }
+          isFullScreen={ isFullScreen }
+          setFullScreen={ setFullScreen }
         />
-      )}
+      ) }
     </ModalContext.Provider>
   )
 }

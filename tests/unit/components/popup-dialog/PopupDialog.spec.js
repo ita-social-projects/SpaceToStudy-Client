@@ -20,7 +20,7 @@ describe('Popup dialog test', () => {
   }
 
   beforeEach(() => {
-    render(<PopupDialog {...props} />)
+    render(<PopupDialog { ...props } />)
   })
 
   it('should have content text', () => {

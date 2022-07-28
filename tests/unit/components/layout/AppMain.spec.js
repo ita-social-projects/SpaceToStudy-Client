@@ -27,7 +27,7 @@ describe('AppMain layout component test', () => {
     useSelector.mockImplementation((fn) => fn(mockState))
     render(
       <MemoryRouter>
-        <ThemeProvider theme={theme}>
+        <ThemeProvider theme={ theme }>
           <AppMain />
         </ThemeProvider>
       </MemoryRouter>

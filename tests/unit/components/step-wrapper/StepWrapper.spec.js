@@ -10,7 +10,7 @@ describe('StepWrapper test with first active step', () => {
   beforeEach(() => {
     render(
       <ModalProvider>
-        <StepWrapper activeStep={0} setActiveStep={setActiveStepMock} steps={stepsMock} />
+        <StepWrapper activeStep={ 0 } setActiveStep={ setActiveStepMock } steps={ stepsMock } />
       </ModalProvider>
     )
   })
@@ -37,7 +37,7 @@ describe('StepWrapper test with last active step', () => {
   beforeEach(() => {
     render(
       <ModalProvider>
-        <StepWrapper activeStep={2} setActiveStep={setActiveStepMock} steps={stepsMock} />
+        <StepWrapper activeStep={ 2 } setActiveStep={ setActiveStepMock } steps={ stepsMock } />
       </ModalProvider>
     )
   })
