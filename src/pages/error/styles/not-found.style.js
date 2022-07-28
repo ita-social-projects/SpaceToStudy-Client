@@ -21,7 +21,7 @@ export const style = {
     zIndex: 2,
     '& p': {
       textAlign: { md: 'left', sm: 'center' },
-      fontWeight: 400
+      fontWeight: 300
     }
   },
   button: {

@@ -7,7 +7,7 @@ export const styles = {
     height: '90vh',
     '& p': {
       textAlign: { md: 'left', sm: 'center' },
-      fontWeight: 400
+      fontWeight: 300
     }
   },
   info: {

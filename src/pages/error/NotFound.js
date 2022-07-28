@@ -21,22 +21,31 @@ const NotFound = () => {
   }
 
   return (
-    <Box sx={style.root}>
-      <Box sx={style.box}>
+    <Box sx={ style.root }>
+      <Box sx={ style.box }>
         <TitleWithDescription
-          description={t('errorPage.404.description')}
-          descriptionVariant={sizesTypography[windowSize].description}
-          title={t('errorPage.404.title')}
-          titleVariant={sizesTypography[windowSize].title}
+          description={ t('errorPage.404.description') }
+          descriptionStyles={ { typography: sizesTypography[windowSize].description } }
+          title={ t('errorPage.404.title') }
+          titleStyles={ { typography: sizesTypography[windowSize].title, lineHeight: '61px' } }
         />
-        <Button component={Link} sx={style.button} to={routes.home.route} variant="contained">
-          {t('button.toMain')}
+        <Button
+          component={ Link } sx={ style.button } to={ routes.home.route }
+          variant='contained'
+        >
+          { t('button.toMain') }
         </Button>
       </Box>
 
-      <Box sx={style.imgBox}>
-        <Box alt="man with bag" component="img" src={manImg} sx={style.manImg} />
-        <Box alt="flowerpot" component="img" src={plantImg} sx={style.plantImg} />
+      <Box sx={ style.imgBox }>
+        <Box
+          alt='man with bag' component='img' src={ manImg }
+          sx={ style.manImg }
+        />
+        <Box
+          alt='flowerpot' component='img' src={ plantImg }
+          sx={ style.plantImg }
+        />
       </Box>
     </Box>
   )

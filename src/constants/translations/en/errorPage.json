@@ -4,7 +4,7 @@
     "authText": "invalid user authentication or authentication on\nthe server side or when accessing a specific url.\nWe suggest you go to the main page."
   },
   "404": {
-    "title": "Page Not found",
+    "title": "Page Not Found",
     "description": "We are sorry, but the page you were trying to find does\nnot exist. We suggest you go to the home page."
   },
   "500": {
@@ -15,4 +15,4 @@
     "title": "Bad request",
     "description": "The server was unable to process your request due to invalid syntax. We suggest you go back to the home page."
   }
-} 
+}
