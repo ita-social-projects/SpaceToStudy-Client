@@ -11,17 +11,17 @@ export const mentorCardBoxArray = [
   },
   {
     image: howItWorksMentorSecond,
-    title: 'guestHomePage.howItWorks.mentor.selectAMentor.title',
-    description: 'guestHomePage.howItWorks.mentor.selectAMentor.description'
+    title: 'guestHomePage.howItWorks.mentor.createAMentorAccount.title',
+    description: 'guestHomePage.howItWorks.mentor.createAMentorAccount.description'
   },
   {
     image: howItWorksMentorThird,
-    title: 'guestHomePage.howItWorks.mentor.sendRequest.title',
-    description: 'guestHomePage.howItWorks.mentor.sendRequest.description'
+    title: 'guestHomePage.howItWorks.mentor.getNewStudents.title',
+    description: 'guestHomePage.howItWorks.mentor.getNewStudents.description'
   },
   {
     image: howItWorksMentorFourth,
-    title: 'guestHomePage.howItWorks.mentor.startLearning.title',
-    description: 'guestHomePage.howItWorks.mentor.startLearning.description'
+    title: 'guestHomePage.howItWorks.mentor.receiveFeedbacks.title',
+    description: 'guestHomePage.howItWorks.mentor.receiveFeedbacks.description'
   }
 ]
