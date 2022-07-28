@@ -17,7 +17,7 @@ export const style = {
     top: '40%',
     left: '50%',
     m: '0 auto',
-    maxWidth: '430px',
+    maxWidth: '420px',
     zIndex: 2,
     '& p': {
       textAlign: { md: 'left', sm: 'center' },
