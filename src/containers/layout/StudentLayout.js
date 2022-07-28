@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, Navigate } from 'react-router-dom'
 
 import { errors, routes, studentRoutes } from '~/constants/routes'
 import Example from '~/pages/home/Home'
@@ -6,6 +6,8 @@ import NotFound from '~/pages/error/NotFound'
 import StudentHome from '~/pages/student-home/StudentHome'
 import FindMentor from '~/pages/find-mentor/FindMentor'
 import BadRequest from '~/pages/error/BadRequest'
+import InternalServerError from '~/pages/error/InternalServerError'
+
 
 const StudentLayout = () => {
   return (
@@ -14,7 +16,9 @@ const StudentLayout = () => {
       <Route element={ <Example /> } name="home" path={ routes.about.route } />
       <Route element={ <FindMentor /> } name="FindMentor" path={ studentRoutes.navBar.findMentor.route } />
       <Route element={ <BadRequest /> } path={ errors.badRequest.route } />
-      <Route element={ <NotFound /> } path="*" />
+      <Route element={ <NotFound /> } path={ errors.notFound.route } />
+      <Route element={ <InternalServerError /> } path={ errors.internalServerError.route } />
+      <Route element={ <Navigate to={ errors.notFound.route }  /> } path='*' />
     </Routes>
   )
 }

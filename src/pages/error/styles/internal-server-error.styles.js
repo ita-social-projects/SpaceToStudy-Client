@@ -8,13 +8,13 @@ export const style = {
     height: '90vh'
   },
   wrapper: {
-    height: { md: '440px', sm: '800px', xs: '560px' },
     padding: { md: '64px' },
     overflow: 'hidden',
     display: 'flex',
     flexDirection: { md: 'row', xs: 'column' },
-    justifyContent: { md: 'center', xs: 'space-around' },
-    alignItems: 'center'
+    justifyContent: { md: 'center', xs: 'space-evenly' },
+    alignItems: 'center',
+    height: '90vh'
   },
   leftBlock: {
     display: 'flex',
@@ -24,7 +24,7 @@ export const style = {
     maxWidth: { md: '488px', sm: '531px', xs: '343px' }
   },
   image: {
-    maxWidth: { md: '834px', sm: '629px', xs: '340px' },
+    maxWidth: { md: '834px', sm: '600px', xs: '340px' },
     overflow: 'auto'
   },
   title: {
@@ -36,16 +36,16 @@ export const style = {
   },
   description: {
     textAlign: { md: 'start', xs: 'center' },
-    typography:{
-      sm:'subtitle1',
-      xs:'subtitle2'
+    typography: {
+      sm: 'subtitle1',
+      xs: 'subtitle2'
     },
     letterSpacing: '0.5px',
     color: 'primary.900',
     mb: '40px'
   },
   homeBtn: {
-    padding:'15px 50px',
+    padding: '15px 50px',
     backgroundColor: 'primary.900',
     borderRaidus: '4px',
     boxShadow: mainShadow
