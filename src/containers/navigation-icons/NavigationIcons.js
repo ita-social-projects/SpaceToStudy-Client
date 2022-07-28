@@ -1,5 +1,6 @@
 import { useContext, useCallback } from 'react'
 import { useSelector } from 'react-redux'
+import { Box } from '@mui/material'
 
 import Loader from '~/components/loader/Loader'
 import GuestIcons from '~/containers/navigation-icons/guest-icons/GuestIcons'
@@ -7,22 +8,24 @@ import StudentIcons from '~/containers/navigation-icons/student-icons/StudentIco
 import { ModalContext } from '~/context/modal-context'
 import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
 
-
 const NavigationIcons = ({ setIsSidebarOpen }) => {
   const { loading, userRole } = useSelector((state) => state.appMain)
   const { setModal } = useContext(ModalContext)
 
   const openLoginDialog = useCallback(() => {
     setModal(<LoginDialog />)
-  }, [setModal]) 
+  }, [setModal])
 
+  if (loading)
+    return (
+      <Box sx={ { position: 'relative', minWidth: '100px' } }>
+        <Loader size={ 20 } />
+      </Box>
+    )
 
-  if (loading) return(<Loader size={ 20 } />)
+  if (userRole === 'student') return <StudentIcons setIsSidebarOpen={ setIsSidebarOpen } />
 
-  if (userRole === 'student') return (<StudentIcons setIsSidebarOpen={ setIsSidebarOpen } />)
-
-  return (<GuestIcons openLoginDialog={ openLoginDialog }  setIsSidebarOpen={ setIsSidebarOpen } />)
-
+  return <GuestIcons openLoginDialog={ openLoginDialog } setIsSidebarOpen={ setIsSidebarOpen } />
 }
 
 export default NavigationIcons
