@@ -18,14 +18,14 @@ const NavigationIcons = ({ setIsSidebarOpen }) => {
 
   if (loading)
     return (
-      <Box sx={{ position: 'relative', minWidth: '100px' }}>
-        <Loader size={20} />
+      <Box sx={ { position: 'relative', minWidth: '100px' } }>
+        <Loader size={ 20 } />
       </Box>
     )
 
-  if (userRole === 'student') return <StudentIcons setIsSidebarOpen={setIsSidebarOpen} />
+  if (userRole === 'student') return <StudentIcons setIsSidebarOpen={ setIsSidebarOpen } />
 
-  return <GuestIcons openLoginDialog={openLoginDialog} setIsSidebarOpen={setIsSidebarOpen} />
+  return <GuestIcons openLoginDialog={ openLoginDialog } setIsSidebarOpen={ setIsSidebarOpen } />
 }
 
 export default NavigationIcons
