@@ -24,6 +24,9 @@ jobs:
         
       - name : Test
         run: npm test
+        
+      - name : Check Path
+        run: ls -la && pwd && ls -la /
       
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
