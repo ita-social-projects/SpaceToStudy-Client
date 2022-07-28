@@ -37,7 +37,9 @@ module.exports = {
         }
       },
       coverageReporters: ['html'],
-      coverageDirectory: 'tests/coverage'
+      coverageDirectory: 'tests/coverage',
+      testResultsProcessor: 'jest-sonar-reporter',
+      collectCoverage: true
     }
   }
 }
