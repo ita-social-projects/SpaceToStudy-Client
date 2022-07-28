@@ -19,44 +19,50 @@ const ForgotPassword = () => {
   }
 
   const { handleSubmit, handleChange, handleBlur, errors, data } = useForm({
-    onSubmit: () => setModal(<InfoPopup email={data.email} />),
+    onSubmit: () => setModal(<InfoPopup email={ data.email } />),
     initialValues: { email: '' },
     validations: { email }
   })
 
   return (
-    <Box sx={style.root}>
+    <Box sx={ style.root }>
       <TitleWithDescription
-        componentStyles={style.wrapper}
-        description={t('login.enterEmail')}
-        descriptionStyles={style.description}
-        title={t('login.forgotPassword')}
-        titleStyles={style.title}
+        componentStyles={ style.wrapper }
+        description={ t('login.enterEmail') }
+        descriptionStyles={ style.description }
+        title={ t('login.forgotPassword') }
+        titleStyles={ style.title }
       />
 
-      <Box component="form" onSubmit={handleSubmit}>
+      <Box component="form" onSubmit={ handleSubmit }>
         <TextField
           autoFocus
-          error={Boolean(errors.email)}
+          error={ Boolean(errors.email) }
           fullWidth
-          helperText={t(errors.email)}
-          label={t('common.labels.email')}
-          onBlur={handleBlur('email')}
-          onChange={handleChange('email')}
+          helperText={ t(errors.email) }
+          label={ t('common.labels.email') }
+          onBlur={ handleBlur('email') }
+          onChange={ handleChange('email') }
           required
           size="large"
-          sx={{ mb: '16px' }}
+          sx={ { mb: '16px' } }
           type="email"
-          value={data.email}
+          value={ data.email }
         />
 
-        <Button size="large" sx={style.sentPass} type="submit" variant="contained">
-          {t('login.sendPassword')}
+        <Button
+          size="large" sx={ style.sentPass } type="submit"
+          variant="contained"
+        >
+          { t('login.sendPassword') }
         </Button>
       </Box>
 
-      <Button onClick={backToLogin} size="large" sx={style.backBtn} variant="text">
-        {t('login.backToLogin')}
+      <Button
+        onClick={ backToLogin } size="large" sx={ style.backBtn }
+        variant="text"
+      >
+        { t('login.backToLogin') }
       </Button>
     </Box>
   )

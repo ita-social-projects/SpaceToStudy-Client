@@ -17,52 +17,55 @@ const LoginForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) => 
   }
 
   return (
-    <Box component="form" onSubmit={handleSubmit}>
+    <Box component="form" onSubmit={ handleSubmit }>
       <TextField
         autoFocus
-        error={Boolean(errors.email)}
+        error={ Boolean(errors.email) }
         fullWidth
-        helperText={t(errors.email)}
-        label={t('common.labels.email')}
-        onBlur={handleBlur('email')}
-        onChange={handleChange('email')}
+        helperText={ t(errors.email) }
+        label={ t('common.labels.email') }
+        onBlur={ handleBlur('email') }
+        onChange={ handleChange('email') }
         required
         size="large"
-        sx={{ mb: '16px' }}
+        sx={ { mb: '16px' } }
         type="email"
-        value={data.email}
+        value={ data.email }
       />
 
       <TextField
-        InputProps={passwordVisibility}
-        error={Boolean(errors.password)}
+        InputProps={ passwordVisibility }
+        error={ Boolean(errors.password) }
         fullWidth
-        helperText={t(errors.password)}
-        label={t('common.labels.password')}
-        onBlur={handleBlur('password')}
-        onChange={handleChange('password')}
+        helperText={ t(errors.password) }
+        label={ t('common.labels.password') }
+        onBlur={ handleBlur('password') }
+        onChange={ handleChange('password') }
         required
-        type={showPassword ? 'text' : 'password'}
-        value={data.password}
+        type={ showPassword ? 'text' : 'password' }
+        value={ data.password }
       />
 
-      <Box sx={style.checkboxContainer}>
+      <Box sx={ style.checkboxContainer }>
         <FormControlLabel
-          control={<Checkbox />}
+          control={ <Checkbox /> }
           disabled
-          label={t('login.rememberMe')}
+          label={ t('login.rememberMe') }
           labelPlacement="end"
           size="large"
-          sx={style.checkboxLabel}
+          sx={ style.checkboxLabel }
           variant="subtitle2"
         />
-        <Typography onClick={openForgotPassword} sx={style.forgotPass} variant="subtitle2">
-          {t('login.forgotPassword')}
+        <Typography onClick={ openForgotPassword } sx={ style.forgotPass } variant="subtitle2">
+          { t('login.forgotPassword') }
         </Typography>
       </Box>
 
-      <Button size="large" sx={style.loginButton} type="submit" variant="contained">
-        {t('common.labels.login')}
+      <Button
+        size="large" sx={ style.loginButton } type="submit"
+        variant="contained"
+      >
+        { t('common.labels.login') }
       </Button>
     </Box>
   )

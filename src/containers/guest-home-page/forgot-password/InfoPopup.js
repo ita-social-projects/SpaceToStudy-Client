@@ -23,15 +23,18 @@ const InfoPopup = ({ email }) => {
   }, [closeModal])
 
   return (
-    <Box sx={style.root}>
-      <Box alt="info" component="img" src={info} sx={style.img} />
+    <Box sx={ style.root }>
+      <Box
+        alt="info" component="img" src={ info }
+        sx={ style.img }
+      />
 
       <TitleWithDescription
-        componentStyles={style.wrapper}
-        description={t('login.weSentEmail') + email + t('login.emailArrive')}
-        descriptionStyles={style.description}
-        title={t('login.passwordReset')}
-        titleStyles={style.title}
+        componentStyles={ style.wrapper }
+        description={ t('login.weSentEmail') + email + t('login.emailArrive') }
+        descriptionStyles={ style.description }
+        title={ t('login.passwordReset') }
+        titleStyles={ style.title }
       />
     </Box>
   )
