@@ -1,6 +1,6 @@
 import { useEffect, useContext } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Box } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 
 import { ModalContext } from '~/context/modal-context'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
@@ -11,16 +11,28 @@ const style = {
   img: { display: 'flex', margin: '0 auto' },
   wrapper: { maxWidth: '630px' },
   title: { typography: 'h5' },
-  description: { typography: 'subtitle' }
+  description: { typography: 'subtitle' },
+  email: { fontWeight: 500 }
 }
 
-const InfoPopup = ({ email }) => {
+
+const ResetPasswordInfo = ({ email }) => {
   const { t } = useTranslation()
   const { closeModal } = useContext(ModalContext)
 
   useEffect(() => {
     setTimeout(() => closeModal(), 5000)
   }, [closeModal])
+
+  const description = (
+    <>
+      { t('login.weSentEmail') }
+      <Typography component='span' sx={ style.email }>
+        { email }
+      </Typography>
+      { t('login.emailArrive') }
+    </>
+  )
 
   return (
     <Box sx={ style.root }>
@@ -31,7 +43,7 @@ const InfoPopup = ({ email }) => {
 
       <TitleWithDescription
         componentStyles={ style.wrapper }
-        description={ t('login.weSentEmail') + email + t('login.emailArrive') }
+        description={ description }
         descriptionStyles={ style.description }
         title={ t('login.passwordReset') }
         titleStyles={ style.title }
@@ -40,4 +52,4 @@ const InfoPopup = ({ email }) => {
   )
 }
 
-export default InfoPopup
+export default ResetPasswordInfo

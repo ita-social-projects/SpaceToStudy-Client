@@ -1,13 +1,13 @@
 import { screen } from '@testing-library/react'
-import InfoPopup from '~/containers/guest-home-page/forgot-password/InfoPopup'
 import { ModalProvider } from '~/context/modal-context'
-import { renderWithProviders } from '~tests/test-utils'
+import { renderWithProviders } from '~/tests/test-utils'
+import ResetPasswordInfo from '~/containers/guest-home-page/reset-password-info/ResetPasswordInfo'
 
 describe('InfoPopup test', () => {
   beforeEach(() => {
     renderWithProviders(
       <ModalProvider>
-        <InfoPopup email="test@test.com" />
+        <ResetPasswordInfo email="test@test.com" />
       </ModalProvider>
     )
   })
