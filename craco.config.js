@@ -39,8 +39,7 @@ module.exports = {
       coverageReporters: ['html', 'lcov'],
       coverageDirectory: 'tests/coverage',
       testResultsProcessor: 'jest-sonar-reporter',
-      collectCoverage: true,
-      coveragePathIgnorePatterns: ['/node_modules/', '/tests/']
+      collectCoverage: true
     }
   }
 }
