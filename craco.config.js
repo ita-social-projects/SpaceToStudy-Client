@@ -36,10 +36,8 @@ module.exports = {
           'statements': 80
         }
       },
-      coverageReporters: ['html'],
-      coverageDirectory: 'tests/coverage',
-      testResultsProcessor: 'jest-sonar-reporter',
-      collectCoverage: true
+      coverageReporters: ['html', 'lcov'],
+      coverageDirectory: 'tests/coverage'
     }
   }
 }
