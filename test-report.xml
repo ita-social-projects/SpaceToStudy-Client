@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testExecutions version="1">
+  <file path="D:\SoftServe\Space2Study\SpaceToStudy-Client\tests\unit\containers\student-home-page\faq\Faq.spec.js">
+    <testCase name="Faq component test should render title" duration="273"/>
+    <testCase name="Faq component test should render findTurot text" duration="80"/>
+    <testCase name="Faq component test should open first item after first click on first title and close after second" duration="233"/>
+    <testCase name="Faq component test should open first item, close first item and open second after click on second title" duration="166"/>
+  </file>
+  <file path="D:\SoftServe\Space2Study\SpaceToStudy-Client\tests\unit\containers\guest-home-page\FeatureBlock.spec.js">
+    <testCase name="Carousel test Test should render carousel component" duration="155"/>
+    <testCase name="Accordion test Test should render accordion component" duration="227"/>
+  </file>
+  <file path="D:\SoftServe\Space2Study\SpaceToStudy-Client\tests\unit\containers\student-home-page\FindMentorBlock.spec.js">
+    <testCase name="FindMentorBlock test should render image for desktop window size" duration="386"/>
+    <testCase name="FindMentorBlock test should navigate if click on find mentor button" duration="125"/>
+    <testCase name="FindMentorBlock test should navigate if press enter" duration="168"/>
+  </file>
+  <file path="D:\SoftServe\Space2Study\SpaceToStudy-Client\tests\unit\containers\guest-home-page\login-dialog\LoginDialog.spec.js">
+    <testCase name="Login dialog test should render img" duration="685"/>
+    <testCase name="Login dialog test should render head text" duration="175"/>
+    <testCase name="Login dialog test should change email value" duration="282"/>
+    <testCase name="Login dialog test should change password value" duration="174"/>
+    <testCase name="Login dialog test should show error" duration="178"/>
+    <testCase name="Login dialog test should dispatch after button submit" duration="225"/>
+  </file>
+  <file path="D:\SoftServe\Space2Study\SpaceToStudy-Client\tests\unit\components\layout\AppMain.spec.js">
+    <testCase name="AppMain layout component test should render loader" duration="97"/>
+    <testCase name="AppMain layout component test should render StudentLayout" duration="609"/>
+    <testCase name="AppMain layout component test should render MentorLayout" duration="9"/>
+    <testCase name="AppMain layout component test should render GuestLayout" duration="257"/>
+    <testCase name="AppMain layout component test should dispatch checkAuth if accessToken exists in localStorage" duration="71"/>
+  </file>
+  <file path="D:\SoftServe\Space2Study\SpaceToStudy-Client\tests\unit\containers\guest-home-page\signup-dialog\SignupDialog.spec.js">
+    <testCase name="Signup dialog test should render img" duration="988"/>
+    <testCase name="Signup dialog test should render head" duration="493"/>
+    <testCase name="Signup dialog test should change email value" duration="350"/>
+    <testCase name="Signup dialog test should change password value" duration="332"/>
+    <testCase name="Signup dialog test should show error" duration="302"/>
+    <testCase name="Signup dialog test should dispatch after button submit" duration="664"/>
+  </file>
+  <file path="D:\SoftServe\Space2Study\SpaceToStudy-Client\tests\unit\containers\navigation-icons\NavigationIcons.spec.js">
+    <testCase name="test with guest role should open login popup after click" duration="1300"/>
+    <testCase name="test with guest role should render and click menu icon" duration="58"/>
+    <testCase name="test with student role should render message icon" duration="215"/>
+    <testCase name="test with loading equal true should render loader" duration="43"/>
+  </file>
+  <file path="D:\SoftServe\Space2Study\SpaceToStudy-Client\tests\unit\containers\guest-home-page\login-form\LoginForm.spec.js">
+    <testCase name="Login form test should render email input label" duration="620"/>
+    <testCase name="Login form test should render password input label" duration="130"/>
+    <testCase name="Login form test should render checkbox label" duration="158"/>
+    <testCase name="Login form test should render forgot password text" duration="140"/>
+    <testCase name="Login form test should render login button" duration="119"/>
+    <testCase name="Login form test should show visibility icon" duration="234"/>
+    <testCase name="Login form test should submit" duration="107"/>
+  </file>
+  <file path="D:\SoftServe\Space2Study\SpaceToStudy-Client\tests\unit\context\modal-context.spec.js">
+    <testCase name="modal context should open modal popup" duration="2016"/>
+    <testCase name="modal context should request confirmation if left with filled form" duration="655"/>
+    <testCase name="modal context should not close popup if dismiss confirmation" duration="959"/>
+    <testCase name="modal context should close popup if accept confirmation" duration="1185"/>
+  </file>
+  <file path="D:\SoftServe\Space2Study\SpaceToStudy-Client\tests\unit\containers\guest-home-page\signup-form\SignupForm.spec.js">
+    <testCase name="Signup form test should render firstName input" duration="646"/>
+    <testCase name="Signup form test should render lastName input" duration="288"/>
+    <testCase name="Signup form test should render email input" duration="287"/>
+    <testCase name="Signup form test should render password input" duration="361"/>
+    <testCase name="Signup form test should render confirmPassword input" duration="234"/>
+    <testCase name="Signup form test should render checkbox label" duration="255"/>
+    <testCase name="Signup form test should render signup button" duration="209"/>
+    <testCase name="Signup form test should show visibility icon" duration="354"/>
+    <testCase name="Signup form test should submit form" duration="190"/>
+  </file>
+  <file path="D:\SoftServe\Space2Study\SpaceToStudy-Client\tests\unit\containers\navbar\NavBar.spec.js">
+    <testCase name="Guest NavBar test should render logo element" duration="344"/>
+    <testCase name="Guest NavBar test should render navigation item with guestNavBar text" duration="89"/>
+    <testCase name="Guest NavBar test should click login button" duration="1453"/>
+    <testCase name="Guest NavBar test should open sidebar with close icon after click menu icon" duration="280"/>
+    <testCase name="Student NavBar test should render navigation item with navBar text" duration="182"/>
+    <testCase name="Student NavBar test should render account icon" duration="114"/>
+  </file>
+  <file path="D:\SoftServe\Space2Study\SpaceToStudy-Client\tests\unit\containers\sidebar\Sidebar.spec.js">
+    <testCase name="Sidebar test should render navigation item with label text" duration="231"/>
+    <testCase name="Sidebar test should render link and call setIsSidebarOpen with false after click link" duration="132"/>
+    <testCase name="Sidebar test should call setIsSidebarOpen with false after click button" duration="61"/>
+  </file>
+  <file path="D:\SoftServe\Space2Study\SpaceToStudy-Client\tests\unit\containers\guest-home-page\WhatCanYouDo.spec.js">
+    <testCase name="WhatCanYoDo component should render popup after button click" duration="1113"/>
+  </file>
+  <file path="D:\SoftServe\Space2Study\SpaceToStudy-Client\tests\unit\components\layout\AppHeader.spec.js">
+    <testCase name="AppHeader layout component test should render toolbar" duration="11"/>
+  </file>
+  <file path="D:\SoftServe\Space2Study\SpaceToStudy-Client\tests\unit\containers\guest-home-page\google-login\GoogleLogin.spec.js">
+    <testCase name="GoogleLogin component test should have &quot;or continue&quot; text" duration="70"/>
+    <testCase name="GoogleLogin component test should have google logo" duration="25"/>
+    <testCase name="GoogleLogin component test should have button with &quot;Login with Google&quot; text" duration="24"/>
+    <testCase name="GoogleLogin component test should have &quot;have account&quot; text" duration="33"/>
+    <testCase name="GoogleLogin component test should have &quot;Join us&quot; text" duration="31"/>
+  </file>
+  <file path="D:\SoftServe\Space2Study\SpaceToStudy-Client\tests\unit\containers\student-home-page\popular-categories\PopularCategories.spec.js">
+    <testCase name="PopularCategories component should expand list of items after click on View More" duration="196"/>
+  </file>
+  <file path="D:\SoftServe\Space2Study\SpaceToStudy-Client\tests\unit\pages\error\InternalServerError.spec.js">
+    <testCase name="InternalServerError page test should render title" duration="151"/>
+    <testCase name="InternalServerError page test should render description" duration="37"/>
+    <testCase name="InternalServerError page test should render error logo" duration="23"/>
+  </file>
+  <file path="D:\SoftServe\Space2Study\SpaceToStudy-Client\tests\unit\components\accordion\Accordions.spec.js">
+    <testCase name="Accordion component without expandMoreIcon test Test headings" duration="367"/>
+    <testCase name="Accordion component without expandMoreIcon test Test descriptions" duration="58"/>
+    <testCase name="Accordion component without expandMoreIcon test Onclick test" duration="52"/>
+    <testCase name="Accordion component without expandMoreIcon test shuld render expand more icon" duration="67"/>
+    <testCase name="Accordions test with expandMoreIcon shuld render expand more icon" duration="198"/>
+  </file>
+  <file path="D:\SoftServe\Space2Study\SpaceToStudy-Client\tests\unit\components\confirm-dialog\ConfirmDialog.spec.js">
+    <testCase name="Confirm dialog test should have title text" duration="176"/>
+    <testCase name="Confirm dialog test should have message text" duration="70"/>
+    <testCase name="Confirm dialog test should confirm" duration="68"/>
+    <testCase name="Confirm dialog test should dismiss" duration="69"/>
+  </file>
+  <file path="D:\SoftServe\Space2Study\SpaceToStudy-Client\tests\unit\pages\error\BadRequest.spec.js">
+    <testCase name="BadRequest error page test should render title" duration="142"/>
+    <testCase name="BadRequest error page test should render description" duration="52"/>
+    <testCase name="BadRequest error page test should render error logo" duration="23"/>
+  </file>
+  <file path="D:\SoftServe\Space2Study\SpaceToStudy-Client\tests\unit\containers\navigation-icons\guest-icons\GuestIcons.spec.js">
+    <testCase name="test with guest role should render login icon" duration="140"/>
+    <testCase name="test with guest role should render login button" duration="41"/>
+    <testCase name="test with guest role should render click menu icon" duration="39"/>
+  </file>
+  <file path="D:\SoftServe\Space2Study\SpaceToStudy-Client\tests\unit\components\scroll-to-top\ScrollToTop.spec.js">
+    <testCase name="ScrollToTop dialog test should show ArrowUpwardRoundedIcon" duration="61"/>
+    <testCase name="ScrollToTop dialog test should show scroll to top" duration="152"/>
+  </file>
+  <file path="D:\SoftServe\Space2Study\SpaceToStudy-Client\tests\unit\components\popup-dialog\PopupDialog.spec.js">
+    <testCase name="Popup dialog test should have content text" duration="165"/>
+    <testCase name="Popup dialog test should close popup" duration="125"/>
+  </file>
+  <file path="D:\SoftServe\Space2Study\SpaceToStudy-Client\tests\unit\pages\home\Home.spec.js">
+    <testCase name="Home page test should have title text" duration="85"/>
+  </file>
+  <file path="D:\SoftServe\Space2Study\SpaceToStudy-Client\tests\unit\containers\guest-home-page\Welcome.spec.js">
+    <testCase name="Welcome component should have title img" duration="140"/>
+    <testCase name="Welcome component should have correct description" duration="57"/>
+    <testCase name="Welcome component should have button with correct text" duration="22"/>
+  </file>
+  <file path="D:\SoftServe\Space2Study\SpaceToStudy-Client\tests\unit\containers\footer\Footer.spec.js">
+    <testCase name="Footer component test should have title text" duration="55"/>
+    <testCase name="Footer component test should have link to Privacy Policy" duration="14"/>
+    <testCase name="Footer component test should have link to Term of Use" duration="14"/>
+  </file>
+  <file path="D:\SoftServe\Space2Study\SpaceToStudy-Client\tests\unit\containers\navigation-icons\student-icons\Studenticons.spec.js">
+    <testCase name="test with guest role should render login icon" duration="159"/>
+    <testCase name="test with guest role should render click menu icon" duration="57"/>
+  </file>
+  <file path="D:\SoftServe\Space2Study\SpaceToStudy-Client\tests\unit\hooks\use-confirm.spec.js">
+    <testCase name="Use confirm custom hook should not open confirm dialog" duration="24"/>
+    <testCase name="Use confirm custom hook should open confirm dialog" duration="180"/>
+  </file>
+  <file path="D:\SoftServe\Space2Study\SpaceToStudy-Client\tests\unit\components\info-card\InfoCard.spec.js">
+    <testCase name="InfoCard component should contain image" duration="81"/>
+    <testCase name="InfoCard component should have correct title" duration="34"/>
+    <testCase name="InfoCard component should have correct description" duration="70"/>
+    <testCase name="InfoCard component should have correct button text" duration="40"/>
+  </file>
+  <file path="D:\SoftServe\Space2Study\SpaceToStudy-Client\tests\unit\components\video-box\VideoBox.spec.js">
+    <testCase name="VideoBox component should contain video" duration="26"/>
+  </file>
+  <file path="D:\SoftServe\Space2Study\SpaceToStudy-Client\tests\unit\components\loader\Loader.spec.js">
+    <testCase name="Loader test should render loader" duration="65"/>
+  </file>
+  <file path="D:\SoftServe\Space2Study\SpaceToStudy-Client\tests\unit\components\accordion-with-image\AccordionWithImage.spec.js">
+    <testCase name="AccordionWithImage component test Test onChange id" duration="347"/>
+  </file>
+  <file path="D:\SoftServe\Space2Study\SpaceToStudy-Client\tests\unit\components\carousel-with-image\CarouselWithImage.spec.js">
+    <testCase name="CarouselWithImage component test Test image" duration="46"/>
+  </file>
+  <file path="D:\SoftServe\Space2Study\SpaceToStudy-Client\tests\unit\components\title-with-description\TitleWithDescription.spec.js">
+    <testCase name="title-with-description component should have correct title" duration="20"/>
+    <testCase name="title-with-description component should have correct description" duration="10"/>
+  </file>
+  <file path="D:\SoftServe\Space2Study\SpaceToStudy-Client\tests\unit\hooks\use-show-more.spec.js">
+    <testCase name="useShowMore custom hook should do expand items by value from step" duration="13"/>
+    <testCase name="useShowMore custom hook should assign expandable value to false, if there is no more items to show" duration="7"/>
+  </file>
+  <file path="D:\SoftServe\Space2Study\SpaceToStudy-Client\tests\unit\hooks\use-input-visibility.spec.js">
+    <testCase name="Use input visibility custom hook should use input visibility" duration="9"/>
+  </file>
+  <file path="D:\SoftServe\Space2Study\SpaceToStudy-Client\tests\unit\hooks\use-hash-scroll.spec.js">
+    <testCase name="test useHashScroll custom hook scrollToAnchor should be function" duration="10"/>
+    <testCase name="test useHashScroll custom hook should scroll to div with id after call scrollToAnchor" duration="6"/>
+  </file>
+  <file path="D:\SoftServe\Space2Study\SpaceToStudy-Client\tests\unit\redux\redux.spec.js">
+    <testCase name="redux test should return the initial state" duration="2"/>
+    <testCase name="redux test should set an error to store after signup" duration="13"/>
+    <testCase name="redux test should set user email to store after signup" duration="4"/>
+    <testCase name="redux test should set an error to store after login" duration="3"/>
+    <testCase name="redux test should set user data to store after login" duration="5"/>
+    <testCase name="redux test should set an error to store after checkAuth" duration="4"/>
+    <testCase name="redux test should set user data to store after checkAuth" duration="3"/>
+    <testCase name="redux test should set an error to store after logout" duration="3"/>
+    <testCase name="redux test should remove user data from store after logout" duration="3"/>
+    <testCase name="redux test should clear user data from store" duration="1"/>
+  </file>
+  <file path="D:\SoftServe\Space2Study\SpaceToStudy-Client\tests\unit\hooks\use-breakpoints.spec.js">
+    <testCase name="useBreakpoints custom hook should return correct value for desktop" duration="19"/>
+    <testCase name="useBreakpoints custom hook should return correct value for tablet" duration="5"/>
+    <testCase name="useBreakpoints custom hook should return correct value for mobile" duration="5"/>
+  </file>
+  <file path="D:\SoftServe\Space2Study\SpaceToStudy-Client\tests\unit\hooks\use-form.spec.js">
+    <testCase name="useForm custom hook test without errors should have initial values" duration="6"/>
+    <testCase name="useForm custom hook test without errors should change data value" duration="6"/>
+    <testCase name="useForm custom hook test without errors should blur after change with dirty true" duration="11"/>
+    <testCase name="useForm custom hook test without errors should submit" duration="7"/>
+    <testCase name="useForm custom hook test with errors should change with validation after blur" duration="11"/>
+    <testCase name="useForm custom hook test with errors should handle blur" duration="8"/>
+    <testCase name="useForm custom hook test with errors should validate and not submit" duration="9"/>
+  </file>
+  <file path="D:\SoftServe\Space2Study\SpaceToStudy-Client\tests\unit\services\local-storage-service.spec.js">
+    <testCase name="Local storage service test should return null from local storage" duration="1"/>
+    <testCase name="Local storage service test should set item if local storage is empty" duration="1"/>
+    <testCase name="Local storage service test should not remove item from local storage" duration="0"/>
+    <testCase name="Local storage service test should return item from local storage" duration="1"/>
+    <testCase name="Local storage service test should set item to local storage" duration="0"/>
+    <testCase name="Local storage service test should remove item from local storage" duration="1"/>
+  </file>
+  <file path="D:\SoftServe\Space2Study\SpaceToStudy-Client\tests\unit\hooks\use-axios.spec.js">
+    <testCase name="Use axios custom hook should call serviceMock" duration="5"/>
+  </file>
+  <file path="D:\SoftServe\Space2Study\SpaceToStudy-Client\tests\unit\pages\error\NotFound.spec.js">
+    <testCase name="InternalServerError page test should render title" duration="97"/>
+    <testCase name="InternalServerError page test should render description" duration="19"/>
+    <testCase name="InternalServerError page test should render error logo" duration="25"/>
+  </file>
+  <file path="D:\SoftServe\Space2Study\SpaceToStudy-Client\tests\unit\components\clickable-card\ClickableCard.spec.js">
+    <testCase name="ClickableCard component should render icon" duration="113"/>
+    <testCase name="ClickableCard component should render service title" duration="12"/>
+    <testCase name="ClickableCard component should render mentors count" duration="6"/>
+  </file>
+</testExecutions>
