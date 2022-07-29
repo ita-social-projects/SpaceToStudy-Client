@@ -15,12 +15,12 @@ export const style = {
   description: {
     typography: 'body2'
   },
-  sentPass: {
+  sentPassword: {
     mb: 1,
     p: '16px 0',
     width: '100%'
   },
-  backBtn: {
+  backButton: {
     textDecoration: 'underline',
     width: '100%',
     p: '16px 0'

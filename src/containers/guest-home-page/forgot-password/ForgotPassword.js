@@ -51,7 +51,7 @@ const ForgotPassword = () => {
         />
 
         <Button
-          size="large" sx={ style.sentPass } type="submit"
+          size="large" sx={ style.sentPassword } type="submit"
           variant="contained"
         >
           { t('login.sendPassword') }
@@ -59,7 +59,7 @@ const ForgotPassword = () => {
       </Box>
 
       <Button
-        onClick={ backToLogin } size="large" sx={ style.backBtn }
+        onClick={ backToLogin } size="large" sx={ style.backButton }
         variant="text"
       >
         { t('login.backToLogin') }

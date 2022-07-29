@@ -46,8 +46,8 @@ describe('ForgotPassword test', () => {
 
     const button = screen.getByText('login.sendPassword')
     fireEvent.click(button)
-    const resetpssTitle = screen.getByText('login.passwordReset')
+    const resetPasswordTitle = screen.getByText('login.passwordReset')
 
-    expect(resetpssTitle).toBeInTheDocument()
+    expect(resetPasswordTitle).toBeInTheDocument()
   })
 })
