@@ -3,6 +3,12 @@ import { renderWithProviders } from '~tests/test-utils'
 import LoginForm from '~/containers/guest-home-page/login-form/LoginForm'
 import { ModalProvider } from '~/context/modal-context'
 
+jest.mock('~/hooks/use-confirm', () => {
+  return () => ({
+    setNeedConfirmation: () => true
+  })
+})
+
 const errors = { email: false, password: false }
 const data = { email: 'email@mail.com', password: 'passTest1' }
 const handleChange = jest.fn()
@@ -14,11 +20,11 @@ describe('Login form test', () => {
     renderWithProviders(
       <ModalProvider>
         <LoginForm
-          data={data}
-          errors={errors}
-          handleBlur={handleBlur}
-          handleChange={handleChange}
-          handleSubmit={handleSubmit}
+          data={ data }
+          errors={ errors }
+          handleBlur={ handleBlur }
+          handleChange={ handleChange }
+          handleSubmit={ handleSubmit }
         />
       </ModalProvider>
     )

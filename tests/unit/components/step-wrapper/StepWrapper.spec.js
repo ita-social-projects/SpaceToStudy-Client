@@ -4,58 +4,51 @@ import { ModalProvider } from '~/context/modal-context'
 
 const stepsMock = ['General info', 'Languages', 'Study category']
 
-const setActiveStepMock = jest.fn()
+const childrenArrMock = ['1', '2', '3']
 
-describe('StepWrapper test with first active step', () => {
+describe('StepWrapper test', () => {
   beforeEach(() => {
     render(
       <ModalProvider>
-        <StepWrapper activeStep={ 0 } setActiveStep={ setActiveStepMock } steps={ stepsMock } />
+        <StepWrapper steps={ stepsMock }>
+          { childrenArrMock }
+        </StepWrapper>
       </ModalProvider>
     )
   })
 
-  it('should call setActiveStep after click on tab', () => {
-    const firstTab = screen.getByText(/General info/i)
+  it('should render second children after click on tab', () => {
+    const secondTab = screen.getByText(/Languages/i)
 
-    fireEvent.click(firstTab)
+    fireEvent.click(secondTab)
 
-    expect(setActiveStepMock).toHaveBeenCalled()
-  })
+    const secondChildren = screen.getByText(/2/i)
 
-  it('should call setActiveStep after click on next button', () => {
-    setActiveStepMock.mockImplementation((fn) => fn())
-    const nextBtn = screen.getByText(/Next/i)
-
-    fireEvent.click(nextBtn)
-
-    expect(setActiveStepMock).toHaveBeenCalled()
-  })
-})
-
-describe('StepWrapper test with last active step', () => {
-  beforeEach(() => {
-    render(
-      <ModalProvider>
-        <StepWrapper activeStep={ 2 } setActiveStep={ setActiveStepMock } steps={ stepsMock } />
-      </ModalProvider>
-    )
+    expect(secondChildren).toBeInTheDocument()
   })
 
   it('should render finish button', () => {
+    const nextBtn = screen.getByText(/Next/i)
+
+    fireEvent.click(nextBtn)
+    fireEvent.click(nextBtn)
+
     const finishBtn = screen.getByText(/Finish/i)
 
     fireEvent.click(finishBtn)
 
-    expect(setActiveStepMock).not.toHaveBeenCalled()
+    expect(jest.fn()).not.toHaveBeenCalled()
   })
 
-  it('should call setActiveStep after click on back button', () => {
-    setActiveStepMock.mockImplementation((fn) => fn())
+  it('should render first children after click on next and back button', () => {
+    const nextBtn = screen.getByText(/Next/i)
     const backBtn = screen.getByText(/Back/i)
 
+    fireEvent.click(nextBtn)
     fireEvent.click(backBtn)
 
-    expect(setActiveStepMock).toHaveBeenCalled()
+    const firstChildren = screen.getByText(/1/i)
+
+    expect(firstChildren).toBeInTheDocument()
   })
 })
