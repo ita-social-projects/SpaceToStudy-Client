@@ -3,7 +3,7 @@ import { renderWithProviders } from '~tests/test-utils'
 import { ModalProvider } from '~/context/modal-context'
 import ResetPasswordInfo from '~/containers/guest-home-page/reset-password-info/ResetPasswordInfo'
 
-describe('InfoPopup test', () => {
+describe('ResetPasswordInfo test', () => {
   beforeEach(() => {
     renderWithProviders(
       <ModalProvider>
