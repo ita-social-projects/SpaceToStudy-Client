@@ -1,12 +1,17 @@
 import { Button } from '@mui/material'
 import { Box } from '@mui/system'
+import { useState } from 'react'
 
 import backArrow from '~/assets/img/step-wrapper/backArrow.svg'
 import nextArrow from '~/assets/img/step-wrapper/nextArrow.svg'
 
 import { styles } from './step-wrapper.styles'
 
-const StepWrapper = ({ activeStep, children, setActiveStep, steps }) => {
+const StepWrapper = ({ children, steps }) => {
+  const [activeStep, setActiveStep] = useState(0)
+
+  const isLastStep = activeStep === steps.length - 1
+
   const stepLabels = steps.map((step, index) => (
     <Box
       key={ step }
@@ -20,7 +25,7 @@ const StepWrapper = ({ activeStep, children, setActiveStep, steps }) => {
 
   const next = () => {
     if (activeStep === steps.length - 1) {
-      //FINISH - SEND POST REQUEST
+      //TODO FINISH - SEND POST REQUEST
     } else {
       setActiveStep((prev) => prev + 1)
     }
@@ -35,8 +40,8 @@ const StepWrapper = ({ activeStep, children, setActiveStep, steps }) => {
       <Box sx={ styles.steps }>
         { stepLabels }
       </Box>
-      <Box>
-        { children }
+      <Box sx={ { mt: '46px' } }>
+        { children[activeStep] }
       </Box>
       <Box sx={ styles.btnWrapper }>
         <Button
@@ -50,7 +55,7 @@ const StepWrapper = ({ activeStep, children, setActiveStep, steps }) => {
         </Button>
         <Button onClick={ next } sx={ [styles.btn, { ml: '168px', color: 'primary.50' }] } variant="contained">
           <Box sx={ { mr: '10px' } }>
-            { activeStep === steps.length - 1 ? 'Finish' : 'Next' }
+            { isLastStep ? 'Finish' : 'Next' }
           </Box>
           <Box alt="nextArrow" component="img" src={ nextArrow }></Box>
         </Button>
