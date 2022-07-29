@@ -1,8 +1,4 @@
 export const style = {
-  form: {
-    maxWidth: { xs: '315px', sm: '343px' },
-    padding: { sm: '50px 80px', md: '0' }
-  },
   input: {
     maxWidth: '343px'
   },
