@@ -1,13 +1,13 @@
 import { screen } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 import { ModalProvider } from '~/context/modal-context'
-import ResetPasswordInfo from '~/containers/guest-home-page/reset-password-info/ResetPasswordInfo'
+import ResetPasswordSuccess from '~/containers/guest-home-page/reset-password-success/ResetPasswordSuccess'
 
-describe('ResetPasswordInfo test', () => {
+describe('ResetPasswordSuccess test', () => {
   beforeEach(() => {
     renderWithProviders(
       <ModalProvider>
-        <ResetPasswordInfo email="test@test.com" />
+        <ResetPasswordSuccess email="test@test.com" />
       </ModalProvider>
     )
   })

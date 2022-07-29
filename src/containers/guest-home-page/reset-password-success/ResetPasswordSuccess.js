@@ -16,7 +16,7 @@ const style = {
 }
 
 
-const ResetPasswordInfo = ({ email }) => {
+const ResetPasswordSuccess = ({ email }) => {
   const { t } = useTranslation()
   const { closeModal } = useContext(ModalContext)
 
@@ -52,4 +52,4 @@ const ResetPasswordInfo = ({ email }) => {
   )
 }
 
-export default ResetPasswordInfo
+export default ResetPasswordSuccess
