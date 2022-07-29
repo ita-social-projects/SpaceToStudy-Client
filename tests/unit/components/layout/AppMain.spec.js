@@ -4,6 +4,7 @@ import { MemoryRouter } from 'react-router-dom'
 import { ThemeProvider } from '@emotion/react'
 
 import { ModalProvider } from '~/context/modal-context'
+import { ConfirmationDialogProvider } from '~/context/confirm-context'
 import { theme } from '~/styles/app-theme/custom-mui.styles'
 import { getFromLocalStorage } from '~/services/local-storage-service'
 import AppMain from '~/containers/layout/AppMain'
@@ -58,7 +59,11 @@ describe('AppMain layout component test', () => {
     }))
     render(
       <MemoryRouter>
-        <AppMain />
+        <ConfirmationDialogProvider>
+          <ModalProvider>
+            <AppMain />
+          </ModalProvider>
+        </ConfirmationDialogProvider>
       </MemoryRouter>
     )
     const mentorHome = screen.getByTestId('mentorHome')

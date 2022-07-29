@@ -5,21 +5,21 @@ const button = {
     root: {
       lineHeight: '20px',
       fontSize: '14px',
-      opacity: '1',
+      opacity: '1'
     },
     sizeSmall: {
-      padding: '6px 16px',
+      padding: '6px 16px'
     },
     sizeMedium: {
-      padding: '10px 24px',
+      padding: '10px 24px'
     },
     sizeLarge: {
       padding: '12px 24px',
-      fontSize: '16px',
+      fontSize: '16px'
     },
     sizeExtraLarge: {
       padding: '16px 32px',
-      fontSize: '16px',
+      fontSize: '16px'
     },
     contained: {
       backgroundColor: palette.primary[900]
@@ -31,9 +31,9 @@ const button = {
       color: palette.primary[900]
     },
     tonal: {
-      backgroundColor: palette.primary[50],
+      backgroundColor: palette.primary[50]
     }
-  },
+  }
 }
 
 export default button

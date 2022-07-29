@@ -3,6 +3,7 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import PopupDialog from '~/components/popup-dialog/PopupDialog'
 
 const closeModal = jest.fn()
+const setFullScreen = jest.fn()
 
 jest.mock('~/hooks/use-confirm', () => {
   return () => ({
@@ -13,7 +14,9 @@ jest.mock('~/hooks/use-confirm', () => {
 describe('Popup dialog test', () => {
   const props = {
     content: 'test',
-    closeModal: closeModal
+    closeModal,
+    isFullScreen: true,
+    setFullScreen
   }
 
   beforeEach(() => {

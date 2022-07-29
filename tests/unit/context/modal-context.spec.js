@@ -3,8 +3,6 @@ import { ModalProvider } from '~/context/modal-context'
 import { renderWithProviders } from '~tests/test-utils'
 import NavBar from '~/containers/navbar/NavBar'
 import { ConfirmationDialogProvider } from '~/context/confirm-context'
-import { store } from '~/redux/store'
-
 
 describe('modal context', () => {
   beforeEach(() => {
@@ -70,4 +68,3 @@ describe('modal context', () => {
     expect(popup).not.toBeInTheDocument()
   })
 })
-
