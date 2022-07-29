@@ -15,23 +15,23 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) =>
 
   const policyAgreement = (
     <Box sx={ style.box }>
-      <Typography variant='subtitle2'>
-        { t( 'signup.iAgree' ) }
+      <Typography variant="subtitle2">
+        { t('signup.iAgree') }
       </Typography>
       <Typography
         component={ Link } sx={ style.underlineText } to={ '/' }
         variant="subtitle2"
       >
-        { t( 'common.labels.terms' ) }
+        { t('common.labels.terms') }
       </Typography>
-      <Typography sx={ { ml: '5px' } } variant='subtitle2'>
-        { t( 'signup.and' ) }
+      <Typography sx={ { ml: '5px' } } variant="subtitle2">
+        { t('signup.and') }
       </Typography>
       <Typography
         component={ Link } sx={ style.underlineText } to={ '/' }
         variant="subtitle2"
       >
-        { t( 'common.labels.privacyPolicy' ) }
+        { t('common.labels.privacyPolicy') }
       </Typography>
     </Box>
   )
