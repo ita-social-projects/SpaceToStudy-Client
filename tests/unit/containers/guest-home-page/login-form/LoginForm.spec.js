@@ -1,6 +1,7 @@
 import { screen, fireEvent, waitFor } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 import LoginForm from '~/containers/guest-home-page/login-form/LoginForm'
+import { ModalProvider } from '~/context/modal-context'
 
 const errors = { email: false, password: false }
 const data = { email: 'email@mail.com', password: 'passTest1' }
@@ -11,13 +12,15 @@ const handleSubmit = jest.fn()
 describe('Login form test', () => {
   beforeEach(() => {
     renderWithProviders(
-      <LoginForm
-        data={ data }
-        errors={ errors }
-        handleBlur={ handleBlur }
-        handleChange={ handleChange }
-        handleSubmit={ handleSubmit }
-      />
+      <ModalProvider>
+        <LoginForm
+          data={data}
+          errors={errors}
+          handleBlur={handleBlur}
+          handleChange={handleChange}
+          handleSubmit={handleSubmit}
+        />
+      </ModalProvider>
     )
   })
 
@@ -70,5 +73,13 @@ describe('Login form test', () => {
     fireEvent.click(button)
 
     expect(handleSubmit).toHaveBeenCalled()
+  })
+
+  it('should click forgot password text and open forgot password container', async () => {
+    const text = screen.getByText('login.forgotPassword')
+    fireEvent.click(text)
+    const backBtn = screen.queryByText('login.backToLogin')
+
+    await waitFor(() => expect(backBtn).toBeInTheDocument())
   })
 })

@@ -1,5 +1,5 @@
-const style = {
-  form: { 
+export const style = {
+  form: {
     maxWidth: { xs: '315px', sm: '343px' },
     padding: { sm: '50px 80px', md: '0' }
   },
@@ -18,11 +18,12 @@ const style = {
     }
   },
   loginButton: {
-    padding: { xs:'18px 134px' , sm:'18px 149px' }
+    padding: { xs: '18px 134px', sm: '18px 149px' }
   },
-  underlineText: {
-    textDecoration: 'underline',
+  forgotPass: {
+    cursor: 'pointer',
+    '&:hover': {
+      textDecoration: 'underline'
+    }
   }
 }
-
-export default style

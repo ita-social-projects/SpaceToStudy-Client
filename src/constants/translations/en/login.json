@@ -5,5 +5,11 @@
     "googleButton": "Login with Google",
     "continue": "or continue",
     "haveAccount": "Don`t have an account yet?",
-    "joinUs": "Join us for free"
+    "joinUs": "Join us for free",
+    "enterEmail": "Enter the email address associated with your account and we`ll send you a link to reset your password.",
+    "sendPassword": "Send me password reset link",
+    "backToLogin": "Back to Log in",
+    "passwordReset": "Password Reset",
+    "weSentEmail": "We`ve sent you an email with a password reset link to: \n",
+    "emailArrive": " If the email didn't arrive, give it a few minutes and check back. If it isn`t still there, check your spam folder."
 }
