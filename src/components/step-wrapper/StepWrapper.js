@@ -3,8 +3,8 @@ import { Box } from '@mui/system'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import backArrow from '~/assets/img/step-wrapper/backArrow.svg'
-import nextArrow from '~/assets/img/step-wrapper/nextArrow.svg'
+import EastIcon from '@mui/icons-material/East'
+import WestIcon from '@mui/icons-material/West'
 
 import { styles } from './step-wrapper.styles'
 
@@ -15,55 +15,71 @@ const StepWrapper = ({ children, steps }) => {
 
   const isLastStep = activeStep === steps.length - 1
 
-  const stepLabels = steps.map((step, index) => (
-    <Box
-      key={ step }
-      onClick={ () => setActiveStep(index) }
-      sx={ [styles.defaultTab, index === activeStep && styles.activeTab] }
-      typography="body2"
-    >
-      { step }
-    </Box>
-  ))
+  const finish = () => {
+    //TODO FINISH - SEND POST REQUEST
+  }
 
   const next = () => {
-    if (activeStep === steps.length - 1) {
-      //TODO FINISH - SEND POST REQUEST
-    } else {
-      setActiveStep((prev) => prev + 1)
-    }
+    setActiveStep((prev) => prev + 1)
   }
 
   const back = () => {
     setActiveStep((prev) => prev - 1)
   }
 
+  const stepLabels = steps.map((step, index) => (
+    <Box
+      color='primary.500'
+      key={ step }
+      onClick={ () => setActiveStep(index) }
+      sx={ [styles.defaultTab, index === activeStep && styles.activeTab] }
+      typography="caption"
+    >
+      { step }
+    </Box>
+  ))
+
+  const nextButton = isLastStep ? (
+    <Button
+      onClick={ finish }
+      size='small'
+      sx={ styles.btn }
+      variant="contained"
+    >
+      { t('common.finish') }
+    </Button>
+  ) : (
+    <Button
+      onClick={ next }
+      size='small'
+      sx={ styles.btn }
+      variant="contained"
+    >
+      { t('common.next') }
+      <EastIcon fontSize="small" />
+    </Button>
+  )
+
   return (
     <Box sx={ styles.root }>
       <Box sx={ styles.steps }>
         { stepLabels }
       </Box>
-      <Box sx={ { mt: '46px' } }>
+      <Box mt='46px'>
         { children[activeStep] }
       </Box>
       <Box sx={ styles.btnWrapper }>
         <Button
           disabled={ activeStep === 0 }
           onClick={ back }
-          sx={ [styles.btn, { color: 'primary.500' }] }
+          size='small'
+          sx={ styles.btn }
           variant="outlined"
         >
-          <Box alt="backArrow" component="img" src={ backArrow } />
-          <Box sx={ { ml: '10px' } }>
-            { t('common.back') }
-          </Box>
+          <WestIcon fontSize="small" />
+          { t('common.back') }
         </Button>
-        <Button onClick={ next } sx={ [styles.btn, { ml: '168px', color: 'primary.50' }] } variant="contained">
-          <Box sx={ { mr: '10px' } }>
-            { isLastStep ? t('common.finish') : t('common.next') }
-          </Box>
-          <Box alt="nextArrow" component="img" src={ nextArrow } />
-        </Button>
+        { nextButton }
       </Box>
     </Box>
   )
