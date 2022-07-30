@@ -8,6 +8,7 @@ const button = {
       opacity: '1'
     },
     sizeSmall: {
+      fontSize: '12px',
       padding: '6px 16px'
     },
     sizeMedium: {
@@ -22,7 +23,8 @@ const button = {
       fontSize: '16px'
     },
     contained: {
-      backgroundColor: palette.primary[900]
+      backgroundColor: palette.primary[900],
+      color: palette.primary[50]
     },
     outlined: {
       color: palette.primary[900]
