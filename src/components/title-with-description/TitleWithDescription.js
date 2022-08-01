@@ -1,5 +1,5 @@
-import { styles } from '~/components/title-with-description/title-with-description.styles'
 import { Box, Typography } from '@mui/material'
+import { styles } from '~/components/title-with-description/title-with-description.styles'
 
 const TitleWithDescription = ({ title, titleVariant, description, descriptionVariant, style = styles }) => {
   return (

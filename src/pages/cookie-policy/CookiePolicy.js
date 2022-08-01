@@ -15,16 +15,16 @@ const CookiePolicy = () => {
 
   const itemsData = cookieItemsData.map((item) => {
     return (
-      <Box data-testid="cookieItems" key={item.id} sx={styles.sectionTitle}>
-        <Box sx={item.id !== 1 ? styles.itemsContainer : null}>
+      <Box data-testid="cookieItems" key={ item.id } sx={ styles.sectionTitle }>
+        <Box sx={ item.id !== 1 ? styles.itemsContainer : null }>
           <TitleWithDescription
-            description={t(item.description)}
-            descriptionVariant={descriptionVariant}
-            style={item.styleProp}
-            textWithDot={t(item.textWithDot)}
-            textWithDotVariant={textWithDotVariant}
-            title={t(item.title)}
-            titleVariant={item.id === 1 ? sectionTitleVariant : cookieItemsTitleVariant}
+            description={ t(item.description) }
+            descriptionVariant={ descriptionVariant }
+            style={ item.styleProp }
+            textWithDot={ t(item.textWithDot) }
+            textWithDotVariant={ textWithDotVariant }
+            title={ t(item.title) }
+            titleVariant={ item.id === 1 ? sectionTitleVariant : cookieItemsTitleVariant }
           />
         </Box>
       </Box>
@@ -33,7 +33,9 @@ const CookiePolicy = () => {
 
   return (
     <Box data-testid="sectionBox">
-      <Container sx={styles.container}>{itemsData}</Container>
+      <Container sx={ styles.container }>
+        { itemsData }
+      </Container>
     </Box>
   )
 }
