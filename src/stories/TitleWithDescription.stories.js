@@ -50,15 +50,10 @@ export const Desktop = Template.bind({})
 Desktop.args = {
   title: 'Title',
   description: 'Description',
-<<<<<<< HEAD
-  titleStyles: { typography: 'h2' },
-  descriptionStyles: { typography: 'subtitle1' }
-=======
   textWithDot: 'TextWithDot',
   titleVariant: 'h2',
   descriptionVariant: 'subtitle1',
   textWithDotVariant: 'subtitle1'
->>>>>>> e7d47e3 (add privacy policy page)
 }
 
 export const Tablet = Template.bind({})
@@ -66,15 +61,10 @@ export const Tablet = Template.bind({})
 Tablet.args = {
   title: 'Title',
   description: 'Description',
-<<<<<<< HEAD
-  titleStyles: { typography: 'h3' },
-  descriptionStyles: { typography: 'subtitle1' }
-=======
   textWithDot: 'TextWithDot',
   titleVariant: 'h3',
   descriptionVariant: 'subtitle1',
   textWithDotVariant: 'subtitle1'
->>>>>>> e7d47e3 (add privacy policy page)
 }
 
 export const Mobile = Template.bind({})
@@ -82,13 +72,8 @@ export const Mobile = Template.bind({})
 Mobile.args = {
   title: 'Title',
   description: 'Description',
-<<<<<<< HEAD
-  titleStyles: { typography: 'h4' },
-  descriptionStyles: { typography: 'subtitle2' }
-=======
   textWithDot: 'TextWithDot',
   titleVariant: 'h4',
   descriptionVariant: 'subtitle2',
   textWithDotVariant: 'subtitle2'
->>>>>>> e7d47e3 (add privacy policy page)
 }
