@@ -1,36 +1,10 @@
 import { useState } from 'react'
-import { Box, Typography, Button } from '@mui/material'
+import { Box, Typography, Button, IconButton, ListItem, List } from '@mui/material'
 import CloudUploadIcon from '@mui/icons-material/CloudUpload'
+import CloseIcon from '@mui/icons-material/Close'
 
-const style = {
-  root: { 
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    mt: 5,
-    width: '100%',
-    minHeight: '150px',
-    border: 'dashed',
-    borderColor: 'primary.200'
-  },
-  rootDrag: { 
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    mt: 5,
-    width: '100%',
-    minHeight: '150px',
-    border: 'dashed',
-    backgroundColor: 'primary.50'
-  },
-  icon: {
-    m: 'auto',
-    mr: 1,
-    color: 'primary.700'
-  }
-}
+import { style } from '~/components/file-uploader/file-uploader.style'
+
 
 const FileUploader = () => {
   const [drag, setDrag] = useState(false)
@@ -52,26 +26,36 @@ const FileUploader = () => {
     setFiles([...files, ...e.dataTransfer.files])
     setDrag(false)
   }
+  
+  const deleteFile = (fileName) => {
+    setFiles(files.filter(item => item.name !== fileName))
+  }
   console.log(files)
   
   const filesList = files.map(item => (
-    <Typography key={ Math.random(10) } variant='body2'>
-      { item.name }
-    </Typography> 
+    <ListItem key={ Math.random(10) } sx={ style.listItem }>
+      <Typography ml={ 1 } variant='body2'>
+        { item.name }
+      </Typography> 
+      <IconButton onClick={ () => deleteFile(item.name) } size='small' >    
+        <CloseIcon sx={ style.close } />
+      </IconButton>
+    </ListItem>
   ))
+    
   return (
     <Box
       onDragLeave={ dragLeave }
       onDragOver={ dragStart }
       onDragStart={ dragStart }
       onDrop={ dragDrop }
-      sx={ drag ? style.rootDrag : style.root  }
+      sx={ drag ? style.rootDrag : style.root }
     >
         
       { (files.length > 0)  && 
-      (<Box>
+      (<List sx={ { width: '100%' } }>
         { filesList }
-      </Box>) }
+      </List>) }
     
       <Button>
         <CloudUploadIcon sx={ style.icon } />
