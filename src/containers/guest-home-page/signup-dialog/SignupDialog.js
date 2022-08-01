@@ -29,7 +29,7 @@ const SignupDialog = ({ type }) => {
   const { handleSubmit, handleChange, handleBlur, data, isDirty, errors } = useForm({
     onSubmit: async () => {
       try {
-        await dispatch(signupUser(data)).unwrap()
+        await dispatch(signupUser({ ...data, role: type })).unwrap()
         closeModal()
       } catch (e) {
         console.log(e)
@@ -46,11 +46,11 @@ const SignupDialog = ({ type }) => {
   return (
     <Box sx={ style.root }>
       <Box sx={ style.img }>
-        <Box 
-          alt="signup" 
-          component="img" 
-          src={ signupImg[type] } 
-          sx={ style.img } 
+        <Box
+          alt="signup"
+          component="img"
+          src={ signupImg[type] }
+          sx={ style.img }
         />
       </Box>
 
