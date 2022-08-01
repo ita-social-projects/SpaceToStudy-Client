@@ -9,6 +9,7 @@ import BadRequest from '~/pages/error/BadRequest'
 import AuthPolicy from '~/pages/error/AuthPolicy'
 import CookiePolicy from '~/pages/cookie-policy/CookiePolicy'
 
+
 const MentorLayout = () => {
   return (
     <Routes>
