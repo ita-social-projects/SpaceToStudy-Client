@@ -3,6 +3,7 @@ import TempComponent from './TempComponent'
 import useForm from '~/hooks/use-form'
 import { initialValues, stepLabels, validations } from '~/containers/mentor-home-page/constants'
 import GeneralInfo from '~/containers/mentor-home-page/general-info/GeneralInfo'
+import AddDocuments from '~/containers/mentor-home-page/add-documents/AddDocuments'
 
 const BecomeATutor = () => {
 
@@ -25,7 +26,7 @@ const BecomeATutor = () => {
     <TempComponent key="2">2</TempComponent>,
     <TempComponent key="3">3</TempComponent>,
     <TempComponent key="4">4</TempComponent>,
-    <TempComponent key="5">5</TempComponent>,
+    <AddDocuments key='5' />,
     <TempComponent key="6">6</TempComponent>
   ]
 
