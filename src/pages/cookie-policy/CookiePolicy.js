@@ -1,5 +1,5 @@
-import { Box, Container } from '@mui/material'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
+import { Box, Container } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import { styles } from './cookie-policy.styles'
 import {
