@@ -7,6 +7,7 @@ import questions from './questions.json'
 import titles from './titles.json'
 import guestHomePage from './guest-home-page.json'
 import studentHomePage from './student-home-page.json'
+import cookiePolicyPage from './cookie-policy-page.json'
 import signup from './signup.json'
 import footer from './footer.json'
 import becomeTutor from './becomeTutor.json'
@@ -23,6 +24,7 @@ const en = {
     login,
     signup,
     studentHomePage,
+    cookiePolicyPage,
     footer,
     becomeTutor
   }

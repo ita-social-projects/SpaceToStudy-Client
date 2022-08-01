@@ -8,7 +8,7 @@ import FindMentor from '~/pages/find-mentor/FindMentor'
 import BadRequest from '~/pages/error/BadRequest'
 import InternalServerError from '~/pages/error/InternalServerError'
 import AuthPolicy from '~/pages/error/AuthPolicy'
-
+import CookiePolicy from '~/pages/cookie-policy/CookiePolicy'
 
 const StudentLayout = () => {
   return (
@@ -18,6 +18,7 @@ const StudentLayout = () => {
       <Route element={ <FindMentor /> } name="FindMentor" path={ studentRoutes.navBar.findMentor.route } />
       <Route element={ <BadRequest /> } path={ errors.badRequest.route } />
       <Route element={ <AuthPolicy /> } path={ errors.authPolicy.route } />
+      <Route element={<CookiePolicy />} path={routes.privacyPolicy.route} />
       <Route element={ <NotFound /> } path={ errors.notFound.route } />
       <Route element={ <InternalServerError /> } path={ errors.internalServerError.route } />
       <Route element={ <Navigate to={ errors.notFound.route }  /> } path='*' />
