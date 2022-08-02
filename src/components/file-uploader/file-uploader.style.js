@@ -6,10 +6,11 @@ export const style = {
     justifyContent: 'space-around',
     alignItems: 'center',
     mt: 5,
-    width: '100%',
+    maxWidth: '360px',
     minHeight: '150px',
     border: 'dashed',
-    borderColor: 'primary.200'
+    borderColor: 'primary.200',
+    borderRadius: '4px'
   },
   rootDrag: { 
     display: 'flex',
@@ -17,10 +18,10 @@ export const style = {
     justifyContent: 'space-around',
     alignItems: 'center',
     mt: 5,
-    width: '100%',
     minHeight: '150px',
     border: 'dashed',
-    backgroundColor: 'primary.50'
+    backgroundColor: 'primary.50',
+    borderRadius: '4px'
   },
   icon: {
     m: 'auto',

@@ -6,7 +6,8 @@ export const style = {
   img: {
     borderRadius: '20px',
     mr: 10,
-    overflow: 'auto'
+    overflow: 'auto',
+    display: { xs: 'none', md: 'flex' }
   },
   rigthBox: {
     display: 'flex',

@@ -20,15 +20,12 @@ const FileUploader = () => {
   }
   const dragDrop = (e) => {
     e.preventDefault()
-    if (files.length < 1) {
-      setFiles([...e.dataTransfer.files])
-    }
     setFiles([...files, ...e.dataTransfer.files])
     setDrag(false)
   }
   
-  const deleteFile = (fileName) => {
-    setFiles(files.filter(item => item.name !== fileName))
+  const deleteFile = (file) => {
+    setFiles(files.filter(item => item !== file))
   }
   console.log(files)
   
@@ -37,7 +34,7 @@ const FileUploader = () => {
       <Typography ml={ 1 } variant='body2'>
         { item.name }
       </Typography> 
-      <IconButton onClick={ () => deleteFile(item.name) } size='small' >    
+      <IconButton onClick={ () => deleteFile(item) } size='small' >    
         <CloseIcon sx={ style.close } />
       </IconButton>
     </ListItem>
