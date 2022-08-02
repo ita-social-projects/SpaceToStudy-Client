@@ -23,6 +23,10 @@ const FileUploader = () => {
     setFiles([...files, ...e.dataTransfer.files])
     setDrag(false)
   }
+  const inputChange = (e) => {
+    e.preventDefault()
+    setFiles([...files, ...e.target.files])
+  }
   
   const deleteFile = (file) => {
     setFiles(files.filter(item => item !== file))
@@ -54,9 +58,15 @@ const FileUploader = () => {
         { filesList }
       </List>) }
     
-      <Button>
+      <Button component='label'>
         <CloudUploadIcon sx={ style.icon } />
         Upload your certificate
+        <input
+          hidden
+          multiple
+          onChange={ inputChange }
+          type="file"
+        />
       </Button>
     </Box>
   )
