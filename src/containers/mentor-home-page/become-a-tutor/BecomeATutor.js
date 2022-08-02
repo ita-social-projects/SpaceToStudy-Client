@@ -1,11 +1,15 @@
-import { Box } from '@mui/material'
 import StepWrapper from '~/components/step-wrapper/StepWrapper'
+import TempComponent from './TempComponent'
 
 const stepLabels = ['General info', 'Languages', 'Study category', 'Experience', 'Documents', 'Photo and Video']
 
 const childrenArr = [
-  <Box key="1">1</Box>,
-  <Box key="2">2</Box>
+  <TempComponent key="1" />,
+  <TempComponent key="2" />,
+  <TempComponent key="3" />,
+  <TempComponent key="4" />,
+  <TempComponent key="5" />,
+  <TempComponent key="6" />
 ]
 
 const BecomeATutor = () => {
