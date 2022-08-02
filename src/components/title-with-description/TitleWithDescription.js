@@ -3,7 +3,7 @@ import { styles } from '~/components/title-with-description/title-with-descripti
 
 const TitleWithDescription = ({ title, titleVariant, description, descriptionVariant, style = styles }) => {
   return (
-    <Box sx={ style.wrapper }>
+    <Box sx={ { ...style.wrapper } }>
       <Typography sx={ { typography: titleVariant, ...style.title } }>
         { title }
       </Typography>

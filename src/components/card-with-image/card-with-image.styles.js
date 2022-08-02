@@ -1,54 +1,54 @@
 export const styles = {
   left: {
-    title: {
-      marginBottom: '8px',
-      textAlign: 'end'
-    },
-    description: {
-      textAlign: 'end'
-    },
     box: {
       display: 'flex',
+      width: '1116px',
       alignItems: 'center',
-      flexDirection: 'row-reverse',
-      width: '620px',
-      height: '90px'
+      flexDirection: 'row-reverse'
     },
-    wrap: {
-      width: '1150px',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'flex-start'
+    clearBox: {
+      flexBasis: '466px'
+    },
+    wrapper: {
+      flexBasis: '466px'
     },
     image: {
       ml: '60px',
-      width: '88px',
-      height: '88px'
+      mr: '60px',
+      flexGrow: '0'
+    },
+    title: {
+      marginBottom: '8px',
+      textAlign: 'end'
+    },
+    description: {
+      textAlign: 'end'
     }
   },
   right: {
+    box: {
+      display: 'flex',
+      width: '1116px',
+      alignItems: 'center',
+      flexDirection: 'row'
+    },
+    clearBox: {
+      flexBasis: '466px'
+    },
+    wrapper: {
+      flexBasis: '466px'
+    },
+    image: {
+      ml: '60px',
+      mr: '60px',
+      flexGrow: '0'
+    },
     title: {
       marginBottom: '8px',
       textAlign: 'start'
     },
     description: {
       textAlign: 'start'
-    },
-    box: {
-      display: 'flex',
-      alignItems: 'center',
-      flexDirection: 'row',
-      width: '620px',
-      height: '90px'
-    },
-    wrap: {
-      width: '1152px',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'flex-end'
-    },
-    image: {
-      mr: '60px'
     }
   }
 }
