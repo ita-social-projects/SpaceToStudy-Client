@@ -11,7 +11,7 @@ export const styles = {
     }
   },
   itemsContainer: {
-    m: '0 auto 40px auto',
+    m: '0 auto 40px',
     maxWidth: '744px'
   },
   wrapper: {
