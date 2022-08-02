@@ -8,16 +8,12 @@ import WestIcon from '@mui/icons-material/West'
 
 import { styles } from './step-wrapper.styles'
 
-const StepWrapper = ({ children, steps }) => {
+const StepWrapper = ({ children, steps, handleSubmit }) => {
   const [activeStep, setActiveStep] = useState(0)
 
   const { t } = useTranslation()
 
   const isLastStep = activeStep === steps.length - 1
-
-  const finish = () => {
-    //TODO FINISH - SEND POST REQUEST
-  }
 
   const next = () => {
     setActiveStep((prev) => prev + 1)
@@ -41,7 +37,7 @@ const StepWrapper = ({ children, steps }) => {
 
   const nextButton = isLastStep ? (
     <Button
-      onClick={ finish }
+      onClick={ handleSubmit }
       size='small'
       sx={ styles.btn }
       variant="contained"
