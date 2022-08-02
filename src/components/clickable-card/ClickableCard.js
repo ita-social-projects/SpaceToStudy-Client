@@ -12,7 +12,7 @@ const ClickableCard = ({ img, title, description, action }) => {
         sx={ { mr: '24px' } }
       />
       <TitleWithDescription
-        componentStyles={ { margin: '0px', mb: '0px', textAlign: 'start' } }
+        componentStyles={ { wrapper: { margin: '0px', mb: '0px', textAlign: 'start' } } }
         description={ description }
         descriptionStyles={ { typography: { xs: 'body2' }, color: 'primary.500' } }
         title={ title }

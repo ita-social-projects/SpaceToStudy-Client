@@ -27,7 +27,7 @@ const ForgotPassword = () => {
   return (
     <Box sx={ style.root }>
       <TitleWithDescription
-        componentStyles={ style.wrapper }
+        componentStyles={ style }
         description={ t('login.enterEmail') }
         descriptionStyles={ style.description }
         title={ t('login.forgotPassword') }

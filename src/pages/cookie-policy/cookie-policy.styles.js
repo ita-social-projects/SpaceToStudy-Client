@@ -1,36 +1,35 @@
+import palette from '~/styles/app-theme/app.pallete'
+
 export const styles = {
   container: {
-    color: '#263238'
+    color: palette.text.primary
   },
   sectionTitle: {
     '&:first-of-type': {
-      background: '#ECEFF1',
+      background: palette.basic.grey,
       m: '30px 0 70px 0',
       py: '25px',
       borderRadius: '20px'
     }
   },
   itemsContainer: {
-    m: '50px auto',
+    m: '0 auto 40px auto',
     maxWidth: '744px'
   },
   wrapper: {
-    maxWidth: '1128px',
-    m: '0 auto',
-    mb: '32px',
-    textAlign: 'left'
+    textAlign: 'start'
   },
   title: {
     mb: '30px'
   },
-  textWithDot: {
-    m: '20px 0 15px 0',
+  titleWithDot: {
+    mb: '15px',
     fontWeight: '600',
     display: 'flex',
     alignItems: 'center',
     '&::before': {
       content: '""',
-      background: '#607D8B',
+      background: palette.primary[500], 
       minWidth: '8px',
       height: '8px',
       borderRadius: '50%',

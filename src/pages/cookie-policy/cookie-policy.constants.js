@@ -1,26 +1,24 @@
 import { styles } from './cookie-policy.styles'
 
-export const sectionTitleVariant = {
-  md: 'h4',
-  xs: 'h5'
+const sectionTitleVariant = { 
+  typography: { md: 'h4', xs: 'h5' } 
 }
-export const cookieItemsTitleVariant = {
-  md: 'h5',
-  xs: 'h5'
+const titleVariant = {
+  typography: { md: 'h5', xs: 'h5' }
 }
-export const descriptionVariant = {
-  md: 'body1',
-  xs: 'body2'
+const titleWithDotVariant = {
+  typography: { xlg: 'subtitle1' }
 }
-export const textWithDotVariant = {
-  xlg: 'subtitle1'
+const descriptionVariant = {
+  typography: { md: 'body1', xs: 'body2' }
 }
 
-const thirdPartyCookiesStyles = {
-  ...styles,
-  subtitleWrapper: {
-    display: 'flex',
-    flexDirection: 'column-reverse'
+const titleWithDotStyles = {
+  title: { 
+    ...styles.titleWithDot 
+  },
+  wrapper: { 
+    ...styles.wrapper
   }
 }
 
@@ -28,56 +26,88 @@ export const cookieItemsData = [
   {
     id: 1,
     title: 'cookiePolicyPage.cookiePolicy.title',
-    description: 'cookiePolicyPage.cookiePolicy.description'
+    description: 'cookiePolicyPage.cookiePolicy.description',
+    titleStyles: sectionTitleVariant,
+    descriptionStyles: descriptionVariant
   },
   {
     id: 2,
     title: 'cookiePolicyPage.whatAreCookies.title',
     description: 'cookiePolicyPage.whatAreCookies.description',
-    styleProp: styles
+    componentStyles: styles,
+    titleStyles: titleVariant,
+    descriptionStyles: descriptionVariant
   },
   {
     id: 3,
     title: 'cookiePolicyPage.HowWeUseCookies.title',
     description: 'cookiePolicyPage.HowWeUseCookies.description',
-    styleProp: styles
+    componentStyles: styles,
+    titleStyles: titleVariant,
+    descriptionStyles: descriptionVariant
   },
   {
     id: 4,
     title: 'cookiePolicyPage.DisablingCookies.title',
     description: 'cookiePolicyPage.DisablingCookies.description',
-    styleProp: styles
+    componentStyles: styles,
+    titleStyles: titleVariant,
+    descriptionStyles: descriptionVariant
   },
   {
     id: 5,
     title: 'cookiePolicyPage.TheCookiesWeSet.title',
-    textWithDot: 'cookiePolicyPage.TheCookiesWeSet.Account.title',
-    description: 'cookiePolicyPage.TheCookiesWeSet.Account.description',
-    styleProp: styles
+    componentStyles: styles,
+    titleStyles: titleVariant,
   },
   {
     id: 6,
-    textWithDot: 'cookiePolicyPage.TheCookiesWeSet.Login.title',
-    description: 'cookiePolicyPage.TheCookiesWeSet.Login.description',
-    styleProp: styles
+    title: 'cookiePolicyPage.TheCookiesWeSet.Account.title',
+    description: 'cookiePolicyPage.TheCookiesWeSet.Account.description',
+    componentStyles: titleWithDotStyles,
+    titleStyles:titleWithDotVariant,
+    descriptionStyles: descriptionVariant
   },
   {
     id: 7,
-    textWithDot: 'cookiePolicyPage.TheCookiesWeSet.Site.title',
-    description: 'cookiePolicyPage.TheCookiesWeSet.Site.description',
-    styleProp: styles
+    title: 'cookiePolicyPage.TheCookiesWeSet.Login.title',
+    description: 'cookiePolicyPage.TheCookiesWeSet.Login.description',
+    componentStyles: titleWithDotStyles,
+    titleStyles:titleWithDotVariant,
+    descriptionStyles: descriptionVariant
   },
   {
     id: 8,
-    title: 'cookiePolicyPage.ThirdPartyCookies.title',
-    textWithDot: 'cookiePolicyPage.ThirdPartyCookies.textWithDot',
-    description: 'cookiePolicyPage.ThirdPartyCookies.description',
-    styleProp: thirdPartyCookiesStyles
+    title: 'cookiePolicyPage.TheCookiesWeSet.Site.title',
+    description: 'cookiePolicyPage.TheCookiesWeSet.Site.description',
+    componentStyles: titleWithDotStyles,
+    titleStyles:titleWithDotVariant,
+    descriptionStyles: descriptionVariant
   },
   {
     id: 9,
+    title: 'cookiePolicyPage.ThirdPartyCookies.title',
+    description: 'cookiePolicyPage.ThirdPartyCookies.description',
+    componentStyles: styles,
+    titleStyles:titleVariant,
+    descriptionStyles: descriptionVariant
+  },
+  {
+    id: 10,
+    title: 'cookiePolicyPage.ThirdPartyCookies.titleWithDot',
+    componentStyles: titleWithDotStyles,
+    titleStyles:titleWithDotVariant,
+  },
+  {
+    id: 11,
     title: 'cookiePolicyPage.MoreInformation.title',
-    textWithDot: 'cookiePolicyPage.MoreInformation.textWithDot',
-    styleProp: styles
-  }
+    componentStyles: styles,
+    titleStyles:titleVariant
+  },
+  {
+    id: 12,   
+    title: 'cookiePolicyPage.MoreInformation.titleWithDot',
+    componentStyles: titleWithDotStyles,
+    titleStyles: titleWithDotVariant
+  },
 ]
