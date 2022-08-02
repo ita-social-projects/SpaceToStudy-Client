@@ -1,12 +1,10 @@
-import palette from '~/styles/app-theme/app.pallete'
-
 export const styles = {
   container: {
-    color: palette.text.primary
+    color: 'primary.900'
   },
   sectionTitle: {
     '&:first-of-type': {
-      background: palette.basic.grey,
+      backgroundColor: 'basic.grey',
       m: '30px 0 70px 0',
       py: '25px',
       borderRadius: '20px'
@@ -29,7 +27,7 @@ export const styles = {
     alignItems: 'center',
     '&::before': {
       content: '""',
-      background: palette.primary[500], 
+      backgroundColor: 'primary.500', 
       minWidth: '8px',
       height: '8px',
       borderRadius: '50%',
