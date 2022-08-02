@@ -6,7 +6,7 @@ describe('BecomeATutor test', () => {
     render(<BecomeATutor />)
   })
 
-  it('should render first tab', () => {
+  it.skip('should render first tab', () => {
     const firstTab = screen.getByText(/1/i)
 
     expect(firstTab).toBeInTheDocument()
