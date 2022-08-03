@@ -8,7 +8,8 @@ export const style = {
     minHeight: '100px',
     border: 'dashed',
     borderColor: 'primary.200',
-    borderRadius: '4px'
+    borderRadius: '4px',
+    overflow: 'auto',
   },
   rootDrag: { 
     display: 'flex',
@@ -18,11 +19,11 @@ export const style = {
     mt: 5,
     minHeight: '100px',
     border: 'dashed',
-    backgroundColor: 'success.100',
+    backgroundColor: 'basic.grey',
     borderRadius: '4px'
   },
   icon: {
-    m: 'auto',
+    my: 'auto',
     mr: 1,
     color: 'primary.700'
   },
@@ -30,6 +31,11 @@ export const style = {
     display: 'flex',
     justifyContent: 'space-between',
     p: 0,
+  },
+  fileName: {
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
+    ml: 1,
   },
   close: {
     color: 'primary.700',

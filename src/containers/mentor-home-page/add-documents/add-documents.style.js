@@ -5,7 +5,7 @@ export const style = {
   },
   img: {
     borderRadius: '20px',
-    mr: 5,
+    mr: 3,
     overflow: 'auto',
     display: { xs: 'none', md: 'flex' }
   },

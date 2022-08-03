@@ -2,5 +2,10 @@
     "generalInfo": {
         "title": "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.",
         "checkboxLabel": "I confirm that I am over 18 years old"
+    },
+    "documents": {
+        "imageAlt": "graduate student",
+        "description":"To download certificates, drag certificates in .doc/.docx/.pdf format to the square or click the \"Upload your certificate\" button. You can add maximum 10 certificates",
+        "button": "Upload your certificate"
     }
 }
