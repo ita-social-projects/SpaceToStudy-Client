@@ -31,7 +31,7 @@ const HowItWorks = () => {
     setIsStudent(!isStudent)
   }
 
-  const cardMap = isStudent ? <LearnFromExperts /> : <ShareYourExperience />
+  const cardMap = isStudent ? <ShareYourExperience /> : <LearnFromExperts /> 
 
   return (
     <Box sx={ style.block }>

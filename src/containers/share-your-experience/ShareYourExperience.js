@@ -1,16 +1,16 @@
-import { Box,Typography, Button } from '@mui/material'
-import { studentCardBoxArray } from '~/containers/guest-home-page/how-it-works/studentCardBoxArray'
+import { Box, Typography, Button } from '@mui/material'
 import CardWithImage from '~/components/card-with-image/CardWithImage'
 import SignupDialog from '~/containers/guest-home-page/signup-dialog/SignupDialog'
 import { ModalContext } from '~/context/modal-context'
-import { useContext } from 'react'
+import { useContext, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
+import { mentorCardBoxArray } from '~/containers/guest-home-page/how-it-works/mentorCardBoxArray'
 
 export const styles = {
-  wrap:{
-    display:'flex',
-    flexDirection:'column',
-    alignItems:'center'
+  wrap: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center'
   }
 }
 
@@ -30,9 +30,9 @@ const ShareYourExperience = () => {
     setModal(<SignupDialog type={ type } />)
   }
 
-  return (
-    <Box sx={ styles.wrap }>
-      { studentCardBoxArray.map((item, key) => (
+  const memoizedMentorArrayMap = useMemo(
+    () =>
+      mentorCardBoxArray.map((item, key) => (
         <CardWithImage
           description={ t(item.description) }
           descriptionVariant={ descriptionVariant }
@@ -42,12 +42,17 @@ const ShareYourExperience = () => {
           title={ t(item.title) }
           titleVariant={ titleVariant }
         />
-      )) }
+      )),
+    [mentorCardBoxArray]
+  )
 
-      <Button onClick={ () => openDialog('student') } sx={ { padding: '16px 32px', mt: '34px' } } variant="contained">
-        <Typography>
-          Start Learning Today
-        </Typography>
+  return (
+    <Box sx={ styles.wrap }>
+        
+      { memoizedMentorArrayMap }
+
+      <Button onClick={ () => openDialog('mentor') } sx={ { padding: '16px 32px', mt: '34px' } } variant="contained">
+        <Typography>Become a mentor</Typography>
       </Button>
     </Box>
   )
