@@ -1,7 +1,7 @@
 import { Box, Checkbox, FormControlLabel, Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import AppTextField from '~/components/app-text-field/AppTextField'
-import img from '~/assets/img/become-tutor/first-step.png'
+import img from '~/assets/img/mentor-home-page/become-tutor/first-step.png'
 import { styles } from './first-step.styles'
 
 const FirstStep = ({ data, handleChange, handleBlur, errors }) => {
