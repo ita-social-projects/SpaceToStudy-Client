@@ -1,6 +1,6 @@
 import { Button } from '@mui/material'
 import { Box } from '@mui/system'
-import { useState } from 'react'
+import { useState, cloneElement } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import EastIcon from '@mui/icons-material/East'
@@ -60,26 +60,29 @@ const StepWrapper = ({ children, steps }) => {
     </Button>
   )
 
+  const btnsBox = (
+    <Box sx={ styles.btnWrapper }>
+      <Button
+        disabled={ activeStep === 0 }
+        onClick={ back }
+        size='small'
+        sx={ styles.btn }
+        variant="outlined"
+      >
+        <WestIcon fontSize="small" />
+        { t('common.back') }
+      </Button>
+      { nextButton }
+    </Box>
+  )
+
   return (
     <Box sx={ styles.root }>
       <Box sx={ styles.steps }>
         { stepLabels }
       </Box>
-      <Box mt='46px'>
-        { children[activeStep] }
-      </Box>
-      <Box sx={ styles.btnWrapper }>
-        <Button
-          disabled={ activeStep === 0 }
-          onClick={ back }
-          size='small'
-          sx={ styles.btn }
-          variant="outlined"
-        >
-          <WestIcon fontSize="small" />
-          { t('common.back') }
-        </Button>
-        { nextButton }
+      <Box mt="46px">
+        { cloneElement(children[activeStep], { btnsBox }) }
       </Box>
     </Box>
   )
