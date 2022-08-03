@@ -1,9 +1,11 @@
 export const styles = {
   container: {
     display: 'flex',
-    p: 4
   },
   img: {
-    width: '50%'
+    borderRadius: '20px'
+  },
+  form: {
+    p:15
   }
 }

@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material'
+import { Box, Checkbox, FormControlLabel, Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import img from '~/assets/img/become-tutor/first-step.png'
@@ -7,20 +7,18 @@ import { styles } from './first-step.styles'
 const FirstStep = ({ data, handleChange, handleBlur, errors }) => {
   const { t } = useTranslation()
 
-
   return (
     <Box sx={ styles.container }>
-      <Box component='img' src={ img } sx={ styles.img } />
-      <Box component='form'>
-        <Typography>
-          Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.
+      <Box component="img" src={ img } sx={ styles.img } />
+      <Box component="form"  sx={ styles.form }>
+        <Typography mb='30px'>
+          { t('becomeTutor.firstStep.title') }
         </Typography>
         <AppTextField
           autoFocus
           errorMsg={ t(errors.firstName) }
           fullWidth
           label={ t('common.labels.firstName') }
-          mb='5px'
           onBlur={ handleBlur('firstName') }
           onChange={ handleChange('firstName') }
           required
@@ -31,7 +29,6 @@ const FirstStep = ({ data, handleChange, handleBlur, errors }) => {
           errorMsg={ t(errors.lastName) }
           fullWidth
           label={ t('common.labels.lastName') }
-          mb='5px'
           onBlur={ handleBlur('lastName') }
           onChange={ handleChange('lastName') }
           required
@@ -43,7 +40,6 @@ const FirstStep = ({ data, handleChange, handleBlur, errors }) => {
           errorMsg={ t(errors.country) }
           fullWidth
           label={ t('common.labels.country') }
-          mb='5px'
           onBlur={ handleBlur('country') }
           onChange={ handleChange('country') }
           required
@@ -55,13 +51,21 @@ const FirstStep = ({ data, handleChange, handleBlur, errors }) => {
           errorMsg={ t(errors.city) }
           fullWidth
           label={ t('common.labels.city') }
-          mb='5px'
           onBlur={ handleBlur('city') }
           onChange={ handleChange('city') }
           required
           size="large"
           type="text"
           value={ data.city }
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={ data.confirmAge }
+              onChange={ handleChange('confirmAge') }
+            />
+          }
+          label={ t('becomeTutor.firstStep.checkboxLabel') }
         />
       </Box>
     </Box>
