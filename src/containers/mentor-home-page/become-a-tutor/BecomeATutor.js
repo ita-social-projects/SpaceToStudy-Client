@@ -1,8 +1,8 @@
 import StepWrapper from '~/components/step-wrapper/StepWrapper'
 import TempComponent from './TempComponent'
-import FirstStep from '~/components/become-tutor-steps/firstStep/FirstStep'
 import useForm from '~/hooks/use-form'
 import { initialValues, stepLabels, validations } from '~/containers/mentor-home-page/constants'
+import GeneralInfo from '~/components/become-tutor-steps/general-info/GeneralInfo'
 
 const BecomeATutor = () => {
 
@@ -15,7 +15,7 @@ const BecomeATutor = () => {
   })
 
   const childrenArr = [
-    <FirstStep
+    <GeneralInfo
       data={ data }
       errors={ errors }
       handleBlur={ handleBlur }

@@ -6,6 +6,10 @@ export const styles = {
     borderRadius: '20px'
   },
   form: {
-    p:15
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    px: 15,
+    pt: 10
   }
 }

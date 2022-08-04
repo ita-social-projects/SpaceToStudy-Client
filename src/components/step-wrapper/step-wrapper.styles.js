@@ -23,7 +23,7 @@ export const styles = {
   },
   btnWrapper: {
     display: 'flex',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
     mt: '10px',
     columnGap: 18
   },

@@ -4,7 +4,7 @@ import AppTextField from '~/components/app-text-field/AppTextField'
 import img from '~/assets/img/mentor-home-page/become-tutor/genera-iInfo.png'
 import { styles } from './general-info.styles'
 
-const GeneralInfo = ({ data, handleChange, handleBlur, errors }) => {
+const GeneralInfo = ({ data, handleChange, handleBlur, errors, btnsBox }) => {
   const { t } = useTranslation()
 
   return (
@@ -67,6 +67,7 @@ const GeneralInfo = ({ data, handleChange, handleBlur, errors }) => {
           }
           label={ t('becomeTutor.firstStep.checkboxLabel') }
         />
+        { btnsBox }
       </Box>
     </Box>
   )
