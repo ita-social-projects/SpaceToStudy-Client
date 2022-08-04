@@ -1,7 +1,7 @@
 import { Box, Checkbox, FormControlLabel, Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import AppTextField from '~/components/app-text-field/AppTextField'
-import img from '~/assets/img/mentor-home-page/become-tutor/genera-iInfo.png'
+import img from '~/assets/img/mentor-home-page/become-tutor/general-info.png'
 import { styles } from './general-info.styles'
 
 const GeneralInfo = ({ data, handleChange, handleBlur, errors, btnsBox }) => {
