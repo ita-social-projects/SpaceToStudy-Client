@@ -22,8 +22,8 @@
     "passwordLength": "Password cannot be shorter than 8 and longer than 25 characters",
     "passwordValid": "Password must contain at least one alphabetic, one numeric and one special character",
     "emptyField": "This field cannot be empty",
-    "nameLength": "{{name}} cannot be longer than 30 characters",
-    "nameAlphabeticOnly": "{{name}} can contain alphabetic characters only",
+    "nameLength": "This field cannot be longer than 30 characters",
+    "nameAlphabeticOnly": "This field can contain alphabetic characters only",
     "passwordsDontMatch": "Passwords do not match"
   }
 }
