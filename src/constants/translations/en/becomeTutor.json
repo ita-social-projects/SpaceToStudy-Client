@@ -5,7 +5,7 @@
     },
     "documents": {
         "imageAlt": "graduate student",
-        "description":"To download certificates, drag certificates in .doc/.docx/.pdf format to the square or click the \"Upload your certificate\" button. You can add maximum 10 certificates",
+        "description":"To download certificates, drag certificates in .pdf format to the square or click the \"Upload your certificate\" button. You can add maximum 10 certificates",
         "button": "Upload your certificate"
     }
 }
