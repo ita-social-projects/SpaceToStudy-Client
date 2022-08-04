@@ -13,8 +13,7 @@ export const styles = {
       flexBasis: '466px'
     },
     image: {
-      ml: '60px',
-      mr: '60px',
+      m: '0px 60px 0px 60px',
       flexGrow: '0'
     },
     title: {
@@ -39,8 +38,7 @@ export const styles = {
       flexBasis: '466px'
     },
     image: {
-      ml: '60px',
-      mr: '60px',
+      m: '0px 60px 0px 60px',
       flexGrow: '0'
     },
     title: {

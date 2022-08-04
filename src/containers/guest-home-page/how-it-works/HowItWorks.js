@@ -1,26 +1,16 @@
 import { Box } from '@mui/system'
 import { Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
+import { useState } from 'react'
+import { routes } from '~/constants/routes'
 import Stack from '@mui/material/Stack'
 import Switch from '@mui/material/Switch'
-import { useState } from 'react'
-import ShareYourExperience from '~/containers/share-your-experience/ShareYourExperience'
-import LearnFromExperts from '~/containers/learn-from-experts/LearnFromExperts'
+import CardWithButton from '~/components/card-with-button/cardWithButton'
+import { mentorCardBoxArray } from '~/containers/guest-home-page/how-it-works/mentorCardBoxArray'
+import { studentCardBoxArray } from '~/containers/guest-home-page/how-it-works/studentCardBoxArray'
+import { style } from '~/containers/guest-home-page/how-it-works/how-it-works.style'
 
-const style = {
-  block: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    pb: '80px'
-  },
-  container: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'column'
-  }
-}
+const sectionId = routes.guestNavBar.howItWorks.label
 
 const HowItWorks = () => {
   const { t } = useTranslation()
@@ -31,10 +21,10 @@ const HowItWorks = () => {
     setIsStudent(!isStudent)
   }
 
-  const cardMap = isStudent ? <ShareYourExperience /> : <LearnFromExperts /> 
+  const cardMap = isStudent ? <CardWithButton array={ mentorCardBoxArray } btnText={ 'Start Learning Today' } role={ 'mentor' }  /> : <CardWithButton array={ studentCardBoxArray } btnText={ 'Become a mentor' } role={ 'student' } />
 
   return (
-    <Box sx={ style.block }>
+    <Box id={ sectionId } sx={ style.block }>
       <Box sx={ style.container }>
         <Typography sx={ { mb: '32px' } } variant={ 'h3' }>
           { t('guestHomePage.howItWorks.title') }
@@ -44,7 +34,7 @@ const HowItWorks = () => {
           <Typography variant={ 'h6' }>
             { t('guestHomePage.howItWorks.learnFromExperts') }
           </Typography>
-          <Switch checked={ isStudent } inputProps={ { 'aria-label': 'ant design' } } onChange={ handleChange } />
+          <Switch checked={ isStudent } onChange={ handleChange } />
           <Typography color="primary.500" variant={ 'h6' }>
             { t('guestHomePage.howItWorks.shareYourExperience') }
           </Typography>

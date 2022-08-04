@@ -1,5 +1,4 @@
-import { Box, Typography, Button } from '@mui/material'
-import { studentCardBoxArray } from '~/containers/guest-home-page/how-it-works/studentCardBoxArray'
+import { Box, Button } from '@mui/material'
 import CardWithImage from '~/components/card-with-image/CardWithImage'
 import SignupDialog from '~/containers/guest-home-page/signup-dialog/SignupDialog'
 import { ModalContext } from '~/context/modal-context'
@@ -22,7 +21,7 @@ const descriptionVariant = {
   xs: 'subtitle2'
 }
 
-const LearnFromExperts = () => {
+const CardWithButton = ({ array, role, btnText }) => {
   const { t } = useTranslation()
   const { setModal } = useContext(ModalContext)
 
@@ -30,9 +29,9 @@ const LearnFromExperts = () => {
     setModal(<SignupDialog type={ type } />)
   }
 
-  const memoizedStudentArrayMap = useMemo(
+  const cards = useMemo(
     () =>
-      studentCardBoxArray.map((item, key) => (
+      array.map((item, key) => (
         <CardWithImage
           description={ t(item.description) }
           descriptionVariant={ descriptionVariant }
@@ -43,18 +42,17 @@ const LearnFromExperts = () => {
           titleVariant={ titleVariant }
         />
       )),
-    [studentCardBoxArray]
+    [array]
   )
   return (
     <Box sx={ styles.wrap }>
-        
-      { memoizedStudentArrayMap }
+      { cards }
 
-      <Button onClick={ () => openDialog('student') } sx={ { padding: '16px 32px', mt: '34px' } } variant="contained">
-        <Typography>Start Learning Today</Typography>
+      <Button onClick={ () => openDialog({ role }) } sx={ { p: '16px 32px', mt: '34px' } } variant="contained">
+        { btnText }
       </Button>
     </Box>
   )
 }
 
-export default LearnFromExperts
+export default CardWithButton
