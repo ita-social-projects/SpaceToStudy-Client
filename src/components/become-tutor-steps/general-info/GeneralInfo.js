@@ -1,10 +1,10 @@
 import { Box, Checkbox, FormControlLabel, Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import AppTextField from '~/components/app-text-field/AppTextField'
-import img from '~/assets/img/mentor-home-page/become-tutor/first-step.png'
-import { styles } from './first-step.styles'
+import img from '~/assets/img/mentor-home-page/become-tutor/genera-iInfo.png'
+import { styles } from './general-info.styles'
 
-const FirstStep = ({ data, handleChange, handleBlur, errors }) => {
+const GeneralInfo = ({ data, handleChange, handleBlur, errors }) => {
   const { t } = useTranslation()
 
   return (
@@ -72,4 +72,4 @@ const FirstStep = ({ data, handleChange, handleBlur, errors }) => {
   )
 }
 
-export default FirstStep
+export default GeneralInfo

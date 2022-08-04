@@ -16,8 +16,8 @@
     "privacyPolicy": "Privacy Policy",
     "login": "Login",
     "signup": "Sign up",
-    "country": "country",
-    "city": "city"
+    "country": "Сountry",
+    "city": "Сity"
   },
   "errorMessages": {
     "emailValid": "Email should be of the following format: “local-part@domain.com”",

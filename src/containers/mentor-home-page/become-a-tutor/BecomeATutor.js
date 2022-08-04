@@ -2,25 +2,13 @@ import StepWrapper from '~/components/step-wrapper/StepWrapper'
 import TempComponent from './TempComponent'
 import FirstStep from '~/components/become-tutor-steps/firstStep/FirstStep'
 import useForm from '~/hooks/use-form'
-import { firstName, lastName, country, city } from '~/constants/validation/become-tutor'
+import { initialValues, stepLabels, validations } from '~/containers/mentor-home-page/constants'
 
 const BecomeATutor = () => {
-  const stepLabels = ['General info', 'Languages', 'Study category', 'Experience', 'Documents', 'Photo and Video']
 
   const { handleSubmit, handleChange, handleBlur, data, errors } = useForm({
-    initialValues: {
-      firstName: '',
-      lastName: '',
-      country: '',
-      city: '',
-      confirmAge: false
-    },
-    validations: { 
-      firstName,
-      lastName,
-      country,
-      city
-    },
+    initialValues,
+    validations,
     onSubmit: async () => {
       console.log(data)
     }
