@@ -1,6 +1,8 @@
-import { Box, Checkbox, FormControlLabel, Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
+import { Box, Checkbox, FormControlLabel, Typography } from '@mui/material'
+
 import AppTextField from '~/components/app-text-field/AppTextField'
+
 import img from '~/assets/img/mentor-home-page/become-tutor/general-info.png'
 import { styles } from './general-info.styles'
 
@@ -13,7 +15,7 @@ const GeneralInfo = ({ data, handleChange, handleBlur, errors, btnsBox }) => {
       <Box component="form"  sx={ styles.form }>
         <Box>
           <Typography mb='30px'>
-            { t('becomeTutor.firstStep.title') }
+            { t('becomeTutor.generalInfo.title') }
           </Typography>
           <AppTextField
             autoFocus
@@ -63,7 +65,7 @@ const GeneralInfo = ({ data, handleChange, handleBlur, errors, btnsBox }) => {
                 onChange={ handleChange('confirmAge') }
               />
             }
-            label={ t('becomeTutor.firstStep.checkboxLabel') }
+            label={ t('becomeTutor.generalInfo.checkboxLabel') }
           />
         </Box>
         { btnsBox }
