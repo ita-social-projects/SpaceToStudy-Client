@@ -41,7 +41,7 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) =>
       <Box sx={ { display: { md: 'block', lg: 'flex' }, gap: '15px' } }>
         <AppTextField
           autoFocus
-          errorMsg={ t(errors.firstName) }
+          errorMsg={ t(errors.firstName, { name: 'First name' }) }
           fullWidth
           label={ t('common.labels.firstName') }
           onBlur={ handleBlur('firstName') }
@@ -54,7 +54,7 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) =>
         />
 
         <AppTextField
-          errorMsg={ t(errors.lastName) }
+          errorMsg={ t(errors.lastName, { name: 'Last name' }) }
           fullWidth
           label={ t('common.labels.lastName') }
           onBlur={ handleBlur('lastName') }
