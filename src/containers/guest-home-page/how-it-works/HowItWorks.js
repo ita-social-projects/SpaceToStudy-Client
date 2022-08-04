@@ -6,8 +6,8 @@ import { routes } from '~/constants/routes'
 import Stack from '@mui/material/Stack'
 import Switch from '@mui/material/Switch'
 import CardWithButton from '~/components/card-with-button/cardWithButton'
-import { mentorCardBoxArray } from '~/containers/guest-home-page/how-it-works/mentorCardBoxArray'
-import { studentCardBoxArray } from '~/containers/guest-home-page/how-it-works/studentCardBoxArray'
+import { mentorCardBoxArray } from '~/containers/guest-home-page/how-it-works/CardBoxArrays'
+import { studentCardBoxArray } from '~/containers/guest-home-page/how-it-works/CardBoxArrays'
 import { style } from '~/containers/guest-home-page/how-it-works/how-it-works.style'
 
 const sectionId = routes.guestNavBar.howItWorks.label
@@ -21,7 +21,11 @@ const HowItWorks = () => {
     setIsStudent(!isStudent)
   }
 
-  const cardMap = isStudent ? <CardWithButton array={ mentorCardBoxArray } btnText={ 'Start Learning Today' } role={ 'mentor' }  /> : <CardWithButton array={ studentCardBoxArray } btnText={ 'Become a mentor' } role={ 'student' } />
+  const cardMap = isStudent ? (
+    <CardWithButton array={ mentorCardBoxArray } btnText={ 'Become a mentor' } role={ 'mentor' } />
+  ) : (
+    <CardWithButton array={ studentCardBoxArray } btnText={ 'Start Learning Today' } role={ 'student' } />
+  )
 
   return (
     <Box id={ sectionId } sx={ style.block }>
