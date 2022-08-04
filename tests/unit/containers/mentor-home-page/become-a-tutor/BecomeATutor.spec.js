@@ -7,7 +7,7 @@ describe('BecomeATutor test', () => {
   })
 
   it('should render first tab', () => {
-    const firstTab = screen.getByText(/becomeTutor.firstStep.title/i)
+    const firstTab = screen.getByText(/becomeTutor.generalInfo.title/i)
 
     expect(firstTab).toBeInTheDocument()
   })
