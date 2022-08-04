@@ -1,7 +1,6 @@
 export const styles = {
   root: {
-    my: 6,
-    mx: 13
+    my: 6
   },
   defaultTab: {
     display: 'flex',

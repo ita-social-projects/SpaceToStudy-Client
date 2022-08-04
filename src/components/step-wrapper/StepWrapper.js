@@ -1,4 +1,4 @@
-import { Button } from '@mui/material'
+import { Button, Container } from '@mui/material'
 import { Box } from '@mui/system'
 import { useState, cloneElement } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -73,14 +73,14 @@ const StepWrapper = ({ children, steps, handleSubmit }) => {
   )
 
   return (
-    <Box sx={ styles.root }>
+    <Container sx={ styles.root }>
       <Box sx={ styles.steps }>
         { stepLabels }
       </Box>
       <Box mt="46px">
         { cloneElement(children[activeStep], { btnsBox }) }
       </Box>
-    </Box>
+    </Container>
   )
 }
 
