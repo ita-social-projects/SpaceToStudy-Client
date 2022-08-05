@@ -5,7 +5,7 @@ import { ModalContext } from '~/context/modal-context'
 import CardWithImage from '~/components/card-with-image/CardWithImage'
 import SignupDialog from '~/containers/guest-home-page/signup-dialog/SignupDialog'
 
-export const styles = {
+const styles = {
   wrap: {
     display: 'flex',
     flexDirection: 'column',
@@ -21,7 +21,7 @@ const descriptionVariant = {
   xs: 'subtitle2'
 }
 
-const CardWithButton = ({ array, role, btnText }) => {
+const StepsWithButton = ({ array, role, btnText }) => {
   const { t } = useTranslation()
   const { setModal } = useContext(ModalContext)
 
@@ -37,7 +37,7 @@ const CardWithButton = ({ array, role, btnText }) => {
           descriptionVariant={ descriptionVariant }
           image={ item.image }
           key={ key }
-          side={ key % 2 === 0 ? 'right' : 'left' }
+          position={ key % 2 === 0 ? 'right' : 'left' }
           title={ t(item.title) }
           titleVariant={ titleVariant }
         />
@@ -55,4 +55,4 @@ const CardWithButton = ({ array, role, btnText }) => {
   )
 }
 
-export default CardWithButton
+export default StepsWithButton
