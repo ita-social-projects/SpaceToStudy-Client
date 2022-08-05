@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { routes } from '~/constants/routes'
 import Stack from '@mui/material/Stack'
 import Switch from '@mui/material/Switch'
-import CardWithButton from '~/components/card-with-button/cardWithButton'
+import CardWithButton from '~/components/card-with-button/СardWithButton'
 import { mentorCardBoxArray, studentCardBoxArray } from '~/containers/guest-home-page/how-it-works/CardBoxArrays'
 import { style } from '~/containers/guest-home-page/how-it-works/how-it-works.style'
 
