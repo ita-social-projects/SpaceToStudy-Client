@@ -1,9 +1,9 @@
 import { Box, Button } from '@mui/material'
-import CardWithImage from '~/components/card-with-image/CardWithImage'
-import SignupDialog from '~/containers/guest-home-page/signup-dialog/SignupDialog'
-import { ModalContext } from '~/context/modal-context'
 import { useContext, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
+import { ModalContext } from '~/context/modal-context'
+import CardWithImage from '~/components/card-with-image/CardWithImage'
+import SignupDialog from '~/containers/guest-home-page/signup-dialog/SignupDialog'
 
 export const styles = {
   wrap: {

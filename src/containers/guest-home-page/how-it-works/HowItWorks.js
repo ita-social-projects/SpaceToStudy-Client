@@ -6,8 +6,7 @@ import { routes } from '~/constants/routes'
 import Stack from '@mui/material/Stack'
 import Switch from '@mui/material/Switch'
 import CardWithButton from '~/components/card-with-button/cardWithButton'
-import { mentorCardBoxArray } from '~/containers/guest-home-page/how-it-works/CardBoxArrays'
-import { studentCardBoxArray } from '~/containers/guest-home-page/how-it-works/CardBoxArrays'
+import { mentorCardBoxArray, studentCardBoxArray } from '~/containers/guest-home-page/how-it-works/CardBoxArrays'
 import { style } from '~/containers/guest-home-page/how-it-works/how-it-works.style'
 
 const sectionId = routes.guestNavBar.howItWorks.label
