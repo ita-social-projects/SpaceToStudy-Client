@@ -20,19 +20,23 @@ describe('CookiePolicy component test', () => {
     expect(description).toBeInTheDocument()
   })
 
-  it('cookieItems should have length equal to 12', () => {
-    const cookieItems = screen.getAllByTestId('cookieItems')
-
-    expect(cookieItems).toHaveLength(12)
-  })
-
-  it('should have TitleWithDescription with given title, titleWithDot and description', () => {
-    const title = screen.getByText('cookiePolicyPage.TheCookiesWeSet.title')
-    const titleWithDot = screen.getByText('cookiePolicyPage.TheCookiesWeSet.Account.title')
-    const description = screen.getByText('cookiePolicyPage.TheCookiesWeSet.Account.description')
+  it('should have TitleWithDescription with given title, subtitle and description', () => {
+    const title = screen.getByText('cookiePolicyPage.theCookiesWeSet.title')
+    const subtitle = screen.getByText('cookiePolicyPage.theCookiesWeSet.account.title')
+    const description = screen.getByText('cookiePolicyPage.theCookiesWeSet.account.description')
 
     expect(title).toBeInTheDocument()
-    expect(titleWithDot).toBeInTheDocument()
+    expect(subtitle).toBeInTheDocument()
+    expect(description).toBeInTheDocument()
+  })
+
+  it('should have TitleWithDescription with given title, subtitle and description', () => {
+    const title = screen.getByText('cookiePolicyPage.thirdPartyCookies.title')
+    const subtitle = screen.getByText('cookiePolicyPage.thirdPartyCookies.titleWithDot')
+    const description = screen.getByText('cookiePolicyPage.thirdPartyCookies.description')
+
+    expect(title).toBeInTheDocument()
+    expect(subtitle).toBeInTheDocument()
     expect(description).toBeInTheDocument()
   })
 })
