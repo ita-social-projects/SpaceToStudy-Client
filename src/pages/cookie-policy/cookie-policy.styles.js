@@ -4,7 +4,7 @@ export const styles = {
   },
   wrapper: {
     textAlign: 'start',
-    m: '0 auto 40px',
+    mb: '50px',
     maxWidth: '744px',
   },
   firstItemWrapper: {
@@ -21,7 +21,7 @@ export const styles = {
   },
   titleStyles: {
     typography: { md: 'h5', xs: 'h5' },
-    mb: '30px'
+    mb: '30px',
   },
   subtitleStyles: {
     typography: { xlg: 'subtitle1' },
