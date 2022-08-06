@@ -21,7 +21,7 @@ export default {
       description: 'Description styles'
     }
   }
-}   
+}
 
 const Template = (args) => <TitleWithDescription {...args} />
 

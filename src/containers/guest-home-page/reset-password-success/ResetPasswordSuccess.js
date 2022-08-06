@@ -42,7 +42,7 @@ const ResetPasswordSuccess = ({ email }) => {
       />
 
       <TitleWithDescription
-        componentStyles={ style }
+        componentStyles={ style.wrapper }
         description={ description }
         descriptionStyles={ style.description }
         title={ t('login.passwordReset') }

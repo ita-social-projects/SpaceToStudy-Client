@@ -2,28 +2,33 @@ export const styles = {
   container: {
     color: 'primary.900'
   },
-  sectionTitle: {
-    '&:first-of-type': {
-      backgroundColor: 'basic.grey',
-      m: '30px 0 70px 0',
-      py: '25px',
-      borderRadius: '20px'
-    }
-  },
-  itemsContainer: {
-    m: '0 auto 40px',
-    maxWidth: '744px'
-  },
   wrapper: {
-    textAlign: 'start'
+    textAlign: 'start',
+    m: '0 auto 40px',
+    maxWidth: '744px',
   },
-  title: {
+  firstItemWrapper: {
+    backgroundColor: 'basic.grey',
+    mt: '30px',
+    mb: '70px',
+    p: '30px 0 50px',
+    borderRadius: '20px',
+  },
+  firstItemTitleStyle: { 
+    typography: { md: 'h4', xs: 'h5' },
+    mb: 0,
+    pt: '20px',
+  },
+  titleStyles: {
+    typography: { md: 'h5', xs: 'h5' },
     mb: '30px'
   },
-  titleWithDot: {
+  subtitleStyles: {
+    typography: { xlg: 'subtitle1' },
+    fontWeight: 600,
     mb: '15px',
-    fontWeight: '600',
     display: 'flex',
+    justifyContent: 'start',
     alignItems: 'center',
     '&::before': {
       content: '""',
@@ -33,5 +38,8 @@ export const styles = {
       borderRadius: '50%',
       mr: '20px'
     }
+  },
+  descriptionStyles: {
+    typography: { md: 'body1', xs: 'body2' }
   }
 }
