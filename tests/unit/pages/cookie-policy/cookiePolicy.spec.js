@@ -32,7 +32,7 @@ describe('CookiePolicy component test', () => {
 
   it('should have TitleWithDescription with given title, subtitle and description', () => {
     const title = screen.getByText('cookiePolicyPage.thirdPartyCookies.title')
-    const subtitle = screen.getByText('cookiePolicyPage.thirdPartyCookies.titleWithDot')
+    const subtitle = screen.getByText('cookiePolicyPage.thirdPartyCookies.subtitle')
     const description = screen.getByText('cookiePolicyPage.thirdPartyCookies.description')
 
     expect(title).toBeInTheDocument()
