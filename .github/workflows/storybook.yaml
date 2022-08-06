@@ -1,0 +1,27 @@
+name: Storybook
+
+on:
+  push:
+    paths: ["public/**"]
+    branches: [devops-test]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the Repo
+      - name: Checkout
+        uses: actions/checkout@v3
+      # Install Dependencies and Build Storybook
+      - name : Npm Install and Build
+        run: |
+          npm install
+          npm run build-storybook
+      # Deploy Storybook to GitHub Pages
+      - name: Deploy Storybook
+        uses: JamesIves/github-pages-deploy-action@3.6.2
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          branch: gh-pages
+          folder: storybook-static # output folder from package.json build-storybook
+          
