@@ -3,7 +3,6 @@ name: Storybook
 on:
   push:
     paths: ["public/**"]
-    branches: [devops-test]
 
 jobs:
   build-and-deploy:
