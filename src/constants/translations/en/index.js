@@ -9,6 +9,7 @@ import guestHomePage from './guest-home-page.json'
 import studentHomePage from './student-home-page.json'
 import signup from './signup.json'
 import footer from './footer.json'
+import becomeTutor from './becomeTutor.json'
 
 const en = {
   translations: {
@@ -22,7 +23,8 @@ const en = {
     login,
     signup,
     studentHomePage,
-    footer
+    footer,
+    becomeTutor
   }
 }
 

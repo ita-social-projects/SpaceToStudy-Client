@@ -1,7 +1,6 @@
 export const styles = {
   root: {
-    my: 6,
-    mx: 13
+    my: 6
   },
   defaultTab: {
     display: 'flex',
@@ -23,7 +22,7 @@ export const styles = {
   },
   btnWrapper: {
     display: 'flex',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
     mt: '10px',
     columnGap: 18
   },
