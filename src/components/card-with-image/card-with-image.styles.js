@@ -2,7 +2,7 @@ export const styles = {
   left: {
     box: {
       display: 'flex',
-      width: '1116px',
+      width:'1128px',
       alignItems: 'center',
       flexDirection: 'row-reverse'
     },
@@ -27,7 +27,7 @@ export const styles = {
   right: {
     box: {
       display: 'flex',
-      width: '1116px',
+      width:'1128px',
       alignItems: 'center',
       flexDirection: 'row'
     },
