@@ -48,7 +48,7 @@ const StepsWithButton = ({ array, role, btnText }) => {
     <Box sx={ styles.wrap }>
       { cards }
 
-      <Button onClick={ () => openDialog({ role }) } sx={ { p: '16px 32px', mt: '34px' } } variant="contained">
+      <Button onClick={ () => openDialog( role ) } sx={ { p: '16px 32px', mt: '34px' } } variant="contained">
         { btnText }
       </Button>
     </Box>

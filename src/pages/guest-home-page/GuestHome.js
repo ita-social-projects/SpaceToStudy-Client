@@ -11,10 +11,12 @@ const GuestHomePage = () => {
   return (
     <Box data-testid="guestHome">
       <Welcome />
-      <FeatureBlock items={ descriptionTimes }  />
-      <WhatCanYouDo />
-      <HowItWorks />
-      <WhoWeAre />
+      <Box sx={ { maxWidth:'1128px', margin:'0 auto' } }>
+        <FeatureBlock items={ descriptionTimes }  />
+        <WhatCanYouDo />
+        <HowItWorks />
+        <WhoWeAre />
+      </Box>
     </Box>
   )
 }
