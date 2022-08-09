@@ -14,9 +14,9 @@ export default {
 
 const Template = (args) => <AccordionWithImage {...args} />
 
-export const Desktop = Template.bind({})
+export const Default = Template.bind({})
 
-Desktop.args = {
+Default.args = {
     items: [
       {
         image: MapLogo,
