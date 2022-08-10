@@ -22,5 +22,5 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
-          folder: storybook-static # output folder from package.json build-storybook
+          folder: public # output folder from package.json build-storybook
           
