@@ -1,5 +1,4 @@
 import ConfirmDialog from '~/components/confirm-dialog/ConfirmDialog'
-import React from 'react'
 import i18n from '../plugins/i18n'
 
 export default {
