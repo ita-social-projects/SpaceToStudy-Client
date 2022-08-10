@@ -3,11 +3,13 @@ export const styles = {
     color: 'primary.900'
   },
   wrapper: {
+    m: '0 auto',
     textAlign: 'start',
     mb: '50px',
     maxWidth: '744px',
   },
   firstItemWrapper: {
+    textAlign: 'center',
     backgroundColor: 'basic.grey',
     mt: '30px',
     mb: '70px',
@@ -21,12 +23,12 @@ export const styles = {
   },
   titleStyles: {
     typography: { md: 'h5', xs: 'h5' },
-    mb: '30px',
+    mb: '25px',
   },
   subtitleStyles: {
     typography: { xlg: 'subtitle1' },
     fontWeight: 600,
-    mb: '15px',
+    my: '15px',
     display: 'flex',
     justifyContent: 'start',
     alignItems: 'center',
