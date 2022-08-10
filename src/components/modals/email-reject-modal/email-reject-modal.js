@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography'
 import CloseIcon from '@mui/icons-material/Close'
 import { style } from '../email-confirmation-modal.style'
 import { useState } from 'react'
-import img from '~/assets/img/email-confirmation-modals/icons8-forbidden-circle-50.svg'
+import img from '~/assets/img/email-confirmation-modals/not-success-icon.svg'
 import { styles } from '~/pages/error/styles/bad-request.styles'
 
 const EmailRejectModal = () => {
