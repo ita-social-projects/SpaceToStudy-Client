@@ -11,7 +11,7 @@ export const email = (value) => {
 
 export const password = (value) => {
   let helperText
-  if (!RegExp(/^(?=.*\d)(?=.*[a-zа-яєії])(?=.*[!"`'#%&,:;<>=@{}~_.\-$()*+\/\\?[\]^|])\S+$/i).test(value)) {
+  if (!RegExp(/^(?=.*\d)(?=.*[a-zа-яєії])(?=.*[!"`'#%&,:;<>=@{}~_.\-$()*+/\\?[\]^|])\S+$/i).test(value)) {
     helperText = 'common.errorMessages.passwordValid'
   }
   if (value.length < 8 || value.length > 25) {
