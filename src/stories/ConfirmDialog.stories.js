@@ -1,0 +1,19 @@
+import ConfirmDialog from '~/components/confirm-dialog/ConfirmDialog'
+import React from 'react'
+import i18n from '../plugins/i18n'
+
+export default {
+  title: 'ConfirmDialog',
+  component: ConfirmDialog
+}
+
+const Template = (args) => <ConfirmDialog {...args} />
+
+export const Default = Template.bind({})
+
+Default.args = {
+  title: 'Title',
+  message:
+    'It is a long established fact that a reader will be distracted by the readable content of a page when looking.',
+  open: true
+}
