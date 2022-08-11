@@ -70,6 +70,7 @@ export const mainSlice = createSlice({
       state.userId = ''
       state.userRole = ''
       state.userEmail = ''
+      state.isFirstLogin = initialState.isFirstLogin
     }
   },
   extraReducers: {
