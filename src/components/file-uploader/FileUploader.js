@@ -11,9 +11,8 @@ const FileUploader = ({ buttonText, upload }) => {
   const { t } = useTranslation()
 
   const { dragStart, dragLeave, dragDrop, addFiles, deleteFile, files, isDrag, error } = upload
-  
   const filesList = files.map(item => (
-    <ListItem key={ item.name + Math.random() } sx={ style.listItem }>
+    <ListItem key={ item.name + Date.now() } sx={ style.listItem }>
       <Typography sx={ style.fileName } variant='body2'>
         { item.name }
       </Typography> 

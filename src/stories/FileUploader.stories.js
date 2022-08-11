@@ -13,7 +13,7 @@ export default {
 }
 
 export const Default = () => {
-  const upload = useUpload({ maxQuantityFiles: 5 })
+  const upload = useUpload({ validations: () => null ,maxQuantityFiles: 5 })
   
   return (
     <div style={{ maxWidth: '400px', margin: '0 auto',  }}>
@@ -24,3 +24,16 @@ export const Default = () => {
 }
 
 Default.args = {}
+
+export const WithError = () => {
+  const upload = useUpload({ validations: () => 'Error text should be here' ,maxQuantityFiles: 5 })
+  
+  return (
+    <div style={{ maxWidth: '400px', margin: '0 auto',  }}>
+      <h1>File Uploader with error</h1>
+      <FileUploader buttonText={ 'Upload your files' } upload={ upload } />
+    </div> 
+  )
+}
+
+WithError.args = {}
