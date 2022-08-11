@@ -12,7 +12,7 @@ const MentorHome = () => {
       setFullScreen(true)
       setModal(<BecomeATutor />)
     }
-  }, [setModal, setFullScreen])
+  }, [setModal, setFullScreen, isFirstLogin])
 
   return <div data-testid="mentorHome">Hello Mentor!</div>
 }
