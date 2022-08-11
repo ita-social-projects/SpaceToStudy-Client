@@ -29,8 +29,8 @@ const BecomeATutor = () => {
   })
 
   const steps = useMemo(() => stepLabels.map(({ step, fields }) => { 
-    const error = fields.some((field) => errors[field])
-    return { step, error }
+    const isError = fields.some((field) => errors[field])
+    return { step, isError }
   }), [errors])
 
   const childrenArr = [
