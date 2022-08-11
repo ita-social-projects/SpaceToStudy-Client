@@ -1,9 +1,9 @@
-import React from 'react'
-import { Box, Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
+import { Box, Typography } from '@mui/material'
 
 import FileUploader from '~/components/file-uploader/FileUploader'
 import img from '~/assets/img/mentor-home-page/add-documents.png'
+
 import { style } from '~/containers/mentor-home-page/add-documents/add-documents.style'
 
 const AddDocuments = ({ btnsBox, uploadCertificates }) => {
@@ -17,6 +17,7 @@ const AddDocuments = ({ btnsBox, uploadCertificates }) => {
         src={ img }
         sx={ style.img }
       />
+      
       <Box sx={ style.rigthBox }>
         <Box>
           <Typography mb={ 5 } variant='body1'>
@@ -26,6 +27,7 @@ const AddDocuments = ({ btnsBox, uploadCertificates }) => {
             buttonText={ t('becomeTutor.documents.button') } upload={ uploadCertificates }
           />
         </Box>
+
         { btnsBox }
       </Box> 
     </Box>

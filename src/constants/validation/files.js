@@ -11,8 +11,6 @@ export const certificates = (files) => {
         file.type !== 'image/jpeg' &&
         file.type !== 'image/png'))) {
     error = 'becomeTutor.documents.typeError'
-  } else {
-    error = null
   }
   
   return error

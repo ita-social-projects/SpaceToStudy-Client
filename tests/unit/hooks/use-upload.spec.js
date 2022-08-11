@@ -11,6 +11,7 @@ const getFakeTestEvent = (fakeFile) => (
   })
 
 describe('useUpload custom hook test without errors', () => {
+
   it('should have initial values', () => {
     const { result } = renderHook(() => useUpload({ validations }))
 
@@ -68,4 +69,5 @@ describe('useUpload custom hook test without errors', () => {
     act(() => result.current.deleteFile(fakeFile))
     expect(result.current.files).toHaveLength(0)
   })
+    
 })

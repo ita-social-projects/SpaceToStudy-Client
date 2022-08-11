@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next'
+
 import { Box, Typography, Button, IconButton, ListItem, List } from '@mui/material'
 import CloudUploadIcon from '@mui/icons-material/CloudUpload'
 import CloseIcon from '@mui/icons-material/Close'
@@ -49,6 +50,7 @@ const FileUploader = ({ buttonText, upload }) => {
           />
         </Button>
       </Box>
+
       { error && (<Typography color='error' ml={ 1 } variant='caption'>
         { t(error) }
       </Typography>) }

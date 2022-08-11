@@ -1,7 +1,7 @@
 export const style = {
   root: {
     display: 'flex',
-    justifyContent: 'space-around'
+    justifyContent: 'space-between'
   },
   img: {
     borderRadius: '20px',
@@ -14,7 +14,6 @@ export const style = {
     flexDirection: 'column',
     justifyContent: 'space-between',
     maxWidth: '360px',
-    pt: 10
-    
+    pt: 12
   },
 }

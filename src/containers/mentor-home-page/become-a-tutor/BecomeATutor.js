@@ -1,11 +1,13 @@
 import StepWrapper from '~/components/step-wrapper/StepWrapper'
 import TempComponent from './TempComponent'
+
 import useForm from '~/hooks/use-form'
 import useUpload from '~/hooks/use-upload'
-import { initialValues, stepLabels, validations } from '~/containers/mentor-home-page/constants'
+
 import GeneralInfo from '~/containers/mentor-home-page/general-info/GeneralInfo'
 import AddDocuments from '~/containers/mentor-home-page/add-documents/AddDocuments'
 
+import { initialValues, stepLabels, validations } from '~/containers/mentor-home-page/constants'
 import { certificates } from '~/constants/validation/files'
 
 const BecomeATutor = () => {
