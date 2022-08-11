@@ -18,16 +18,6 @@ export const validations = {
   experience: experienceField
 }
 
-// export const stepLabels = [
-//   'General info', 
-//   'Languages', 
-//   'Study category', 
-//   'Experience', 
-//   'Documents', 
-//   'Photo and Video'
-// ]
-
-
 export const stepLabels = [
   {
     step: 'General info',
