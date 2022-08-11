@@ -12,8 +12,9 @@ export const style = {
   rigthBox: {
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-around',
-    maxWidth:'360px' ,
+    justifyContent: 'space-between',
+    maxWidth: '360px',
+    pt: 10
     
   },
 }

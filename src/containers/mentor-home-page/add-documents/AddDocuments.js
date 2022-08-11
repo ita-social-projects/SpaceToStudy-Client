@@ -6,7 +6,7 @@ import FileUploader from '~/components/file-uploader/FileUploader'
 import img from '~/assets/img/mentor-home-page/add-documents.png'
 import { style } from '~/containers/mentor-home-page/add-documents/add-documents.style'
 
-const AddDocuments = ({ btnsBox }) => {
+const AddDocuments = ({ btnsBox, uploadCertificates }) => {
   const { t } = useTranslation()
 
   return (
@@ -18,10 +18,14 @@ const AddDocuments = ({ btnsBox }) => {
         sx={ style.img }
       />
       <Box sx={ style.rigthBox }>
-        <Typography variant='body1'>
-          { t('becomeTutor.documents.description') }
-        </Typography>    
-        <FileUploader buttonText={ t('becomeTutor.documents.button') } />
+        <Box>
+          <Typography mb={ 5 } variant='body1'>
+            { t('becomeTutor.documents.description') }
+          </Typography>    
+          <FileUploader
+            buttonText={ t('becomeTutor.documents.button') } upload={ uploadCertificates }
+          />
+        </Box>
         { btnsBox }
       </Box> 
     </Box>
