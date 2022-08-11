@@ -22,8 +22,8 @@ describe('BecomeATutor test', () => {
   })
   
   it('should render Experience tab', () => {
-    const nextBtn = screen.getByText(/Experience/i)
-    fireEvent.click(nextBtn)
+    const experienceLabel = screen.getByText(/Experience/i)
+    fireEvent.click(experienceLabel)
 
     const fourthTab = screen.getByText(/becomeTutor.experience.title/i)
 
