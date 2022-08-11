@@ -23,9 +23,9 @@ const StepWrapper = ({ children, steps, handleSubmit }) => {
     setActiveStep((prev) => prev - 1)
   }
 
-  const stepLabels = steps.map((step, index) => (
+  const stepLabels = steps.map(({ step, error }, index) => (
     <Box
-      color='primary.500'
+      color={ error ? 'error.500' : 'primary.500' }
       key={ step }
       onClick={ () => setActiveStep(index) }
       sx={ [styles.defaultTab, index === activeStep && styles.activeTab] }

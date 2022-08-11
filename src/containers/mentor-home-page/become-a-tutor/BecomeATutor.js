@@ -1,14 +1,14 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 
 import StepWrapper from '~/components/step-wrapper/StepWrapper'
 import TempComponent from './TempComponent'
 
 import GeneralInfo from '~/containers/mentor-home-page/general-info/GeneralInfo'
+import Experience from '~/containers/mentor-home-page/experience/Experience'
 import AddDocuments from '~/containers/mentor-home-page/add-documents/AddDocuments'
 import useForm from '~/hooks/use-form'
 
 import { initialValues, stepLabels, validations } from '~/containers/mentor-home-page/constants'
-
 
 const BecomeATutor = () => {
   const [documents, setDocuments] = useState([])
@@ -28,6 +28,11 @@ const BecomeATutor = () => {
     }
   })
 
+  const steps = useMemo(() => stepLabels.map(({ step, fields }) => { 
+    const error = fields.some((field) => errors[field])
+    return { step, error }
+  }), [errors])
+
   const childrenArr = [
     <GeneralInfo
       data={ data }
@@ -38,7 +43,13 @@ const BecomeATutor = () => {
     />,
     <TempComponent key="2">2</TempComponent>,
     <TempComponent key="3">3</TempComponent>,
-    <TempComponent key="4">4</TempComponent>,
+    <Experience
+      data={ data }
+      errors={ errors }
+      handleBlur={ handleBlur }
+      handleChange={ handleChange }
+      key="4"
+    />,
     <AddDocuments
       addDocuments={ addDocuments }
       documents={ documents }
@@ -49,7 +60,7 @@ const BecomeATutor = () => {
   ]
 
   return (
-    <StepWrapper handleSubmit={ handleSubmit } steps={ stepLabels }>
+    <StepWrapper handleSubmit={ handleSubmit } steps={ steps }>
       { childrenArr }
     </StepWrapper>
   )

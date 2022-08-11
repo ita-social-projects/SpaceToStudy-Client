@@ -3,7 +3,11 @@ import StepWrapper from '~/components/step-wrapper/StepWrapper'
 import TempComponent from '~/containers/mentor-home-page/become-a-tutor/TempComponent'
 import { ModalProvider } from '~/context/modal-context'
 
-const stepsMock = ['General info', 'Languages', 'Study category']
+const stepsMock = [
+  { step: 'General info', error: false },
+  { step: 'Languages', error: false },
+  { step: 'Study category', error: false }
+]
 
 const childrenArrMock = [
   <TempComponent key="1">1</TempComponent>,
