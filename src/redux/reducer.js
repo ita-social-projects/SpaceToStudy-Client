@@ -10,7 +10,8 @@ const initialState = {
   userRole: '',
   userEmail: '',
   loading: false,
-  error: ''
+  error: '',
+  isFirstLogin: true
 }
 
 export const loginUser = createAsyncThunk('appMain/loginUser', async (userData, { rejectWithValue, dispatch }) => {
@@ -60,6 +61,7 @@ export const mainSlice = createSlice({
       const userData = parseJwt(action.payload)
       state.userId = userData.id
       state.userRole = userData.role
+      state.isFirstLogin = userData.isFirstLogin
     },
     setUserEmail(state, action) {
       state.userEmail = action.payload
