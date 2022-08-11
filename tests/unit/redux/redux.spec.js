@@ -86,7 +86,8 @@ describe('redux test', () => {
     mockAxiosClient.onPost(URLs.auth.logout).reply(200, { count: 'deletedCount: 1' })
     await store.dispatch(logoutUser())
 
-    expect(store.getState()).toEqual({ appMain: initialState })
+    const { isFirstLogin, ...expectedState } = initialState
+    expect(store.getState()).toEqual({ appMain: expectedState })
   })
 
   it('should clear user data from store', () => {

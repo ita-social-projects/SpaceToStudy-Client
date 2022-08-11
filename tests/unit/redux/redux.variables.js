@@ -13,7 +13,8 @@ export const initialState = {
   userRole: '',
   userEmail: '',
   loading: false,
-  error: ''
+  error: '',
+  isFirstlogin: true
 }
 
 export const stateAfterLogin = {
@@ -21,7 +22,8 @@ export const stateAfterLogin = {
   userRole: 'student',
   userEmail: 'johndoe@gmail.com',
   loading: false,
-  error: ''
+  error: '',
+  isFirstlogin: true
 }
 
 export const stateAfterSignup = {
@@ -29,7 +31,8 @@ export const stateAfterSignup = {
   userRole: '',
   loading: false,
   userEmail: 'johndoe@gmail.com',
-  error: ''
+  error: '',
+  isFirstlogin: true
 }
 
 export const userEmail = 'johndoe@gmail.com'
