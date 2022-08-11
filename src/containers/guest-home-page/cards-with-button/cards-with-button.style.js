@@ -1,8 +1,13 @@
 export const styles = {
+  wrap: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center'
+  },
   left: {
     box: {
       display: 'flex',
-      width:'1128px',
+      width: '1128px',
       alignItems: 'center',
       flexDirection: 'row-reverse'
     },
@@ -27,7 +32,7 @@ export const styles = {
   right: {
     box: {
       display: 'flex',
-      width:'1128px',
+      width: '1128px',
       alignItems: 'center',
       flexDirection: 'row'
     },

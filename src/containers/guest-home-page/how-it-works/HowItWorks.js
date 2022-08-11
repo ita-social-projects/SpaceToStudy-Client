@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { routes } from '~/constants/routes'
 import Stack from '@mui/material/Stack'
 import Switch from '@mui/material/Switch'
-import StepsWithButton from '~/components/steps-with-button/StepsWithButton'
+import CardsWithButton from '~/containers/guest-home-page/cards-with-button/CardsWithButton'
 import { mentorCardBoxArray, studentCardBoxArray } from '~/containers/guest-home-page/how-it-works/CardBoxArrays'
 import { style } from '~/containers/guest-home-page/how-it-works/how-it-works.style'
 
@@ -20,10 +20,10 @@ const HowItWorks = () => {
     setIsStudent(!isStudent)
   }
 
-  const cardMap = isStudent ? (
-    <StepsWithButton array={ mentorCardBoxArray } btnText={ 'Become a mentor' } role={ 'mentor' } />
+  const cardsMap = isStudent ? (
+    <CardsWithButton array={ mentorCardBoxArray } btnText={ 'Become a mentor' } role={ 'mentor' } />
   ) : (
-    <StepsWithButton array={ studentCardBoxArray } btnText={ 'Start Learning Today' } role={ 'student' } />
+    <CardsWithButton array={ studentCardBoxArray } btnText={ 'Start Learning Today' } role={ 'student' } />
   )
 
   return (
@@ -44,7 +44,7 @@ const HowItWorks = () => {
         </Stack>
 
         <Box sx={ { mt: '45px' } }>
-          { cardMap }
+          { cardsMap }
         </Box>
       </Box>
     </Box>
