@@ -10,11 +10,11 @@ import { styles } from '~/pages/error/styles/bad-request.styles'
 const EmailRejectModal = () => {
   const [open, setOpen] = useState(true)
 
-  const handleClickOpen = () => {
+  const clickOpen = () => {
     setOpen(true)
   }
 
-  const handleClose = () => {
+  const close = () => {
     setOpen(false)
   }
 
@@ -28,14 +28,14 @@ const EmailRejectModal = () => {
           borderRadius: '8px',
         },
       } }
-      onClose={ handleClose }
+      onClose={ close }
       open={ open }
       sx={ style.dialog }
     >
       <Box sx={ style.box }>
         <IconButton
           aria-label="close"
-          onClick={ handleClose }
+          onClick={ close }
           sx={ {
             position: 'absolute',
             right: 8,

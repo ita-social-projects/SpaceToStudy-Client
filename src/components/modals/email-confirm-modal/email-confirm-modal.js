@@ -10,11 +10,11 @@ import { styles } from '~/pages/error/styles/bad-request.styles'
 const EmailConfirmModal = () => {
   const [open, setOpen] = useState(true)
 
-  const handleClickOpen = () => {
+  const clickOpen = () => {
     setOpen(true)
   }
 
-  const handleClose = () => {
+  const close = () => {
     setOpen(false)
   }
 
@@ -28,14 +28,14 @@ const EmailConfirmModal = () => {
           borderRadius: '8px',
         },
       } }
-      onClose={ handleClose }
+      onClose={ close }
       open={ open }
       sx={ style.dialog }
     >
       <Box sx={ style.box }>
         <IconButton
           aria-label="close"
-          onClick={ handleClose }
+          onClick={ close }
           sx={ {
             position: 'absolute',
             right: 8,
@@ -56,7 +56,7 @@ const EmailConfirmModal = () => {
             component="h2" id="modal-modal-title" style={ style.message }
             variant="h6"
           >
-            Email has been successfully verified!
+            Your email has been successfully verified!
           </Typography>
           <Button
             color='primary' size="large" style={ style.button }
