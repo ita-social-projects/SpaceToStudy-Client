@@ -1,12 +1,15 @@
 import { useContext } from 'react'
-import { Box, TextField, Button } from '@mui/material'
+import { Box, Button } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
 import { ModalContext } from '~/context/modal-context'
 import useForm from '~/hooks/use-form'
+
+import AppTextField from '~/components/app-text-field/AppTextField'
 import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import ResetPasswordSuccess from '~/containers/guest-home-page/reset-password-success/ResetPasswordSuccess'
+
 import { email } from '~/constants/validation/login'
 import { style } from '~/containers/guest-home-page/forgot-password/forgot-password.style'
 
@@ -35,17 +38,16 @@ const ForgotPassword = () => {
       />
 
       <Box component="form" onSubmit={ handleSubmit }>
-        <TextField
+        <AppTextField
           autoFocus
-          error={ Boolean(errors.email) }
+          errorMsg={ t(errors.email) }
           fullWidth
-          helperText={ t(errors.email) }
           label={ t('common.labels.email') }
           onBlur={ handleBlur('email') }
           onChange={ handleChange('email') }
           required
           size="large"
-          sx={ { mb: '16px' } }
+          sx={ { mb: '5px' } }
           type="email"
           value={ data.email }
         />

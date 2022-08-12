@@ -1,10 +1,12 @@
 import { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import useInputVisibility from '~/hooks/use-input-visibility'
-import { Box, FormControlLabel, Typography, TextField, Button, Checkbox } from '@mui/material'
+import { Box, FormControlLabel, Typography, Button, Checkbox } from '@mui/material'
 
 import { ModalContext } from '~/context/modal-context'
 import ForgotPassword from '~/containers/guest-home-page/forgot-password/ForgotPassword'
+import AppTextField from '~/components/app-text-field/AppTextField'
+
 import { style } from './login-form.style'
 
 const LoginForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) => {
@@ -18,26 +20,24 @@ const LoginForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) => 
 
   return (
     <Box component="form" onSubmit={ handleSubmit }>
-      <TextField
+      <AppTextField
         autoFocus
-        error={ Boolean(errors.email) }
+        errorMsg={ t(errors.email) }
         fullWidth
-        helperText={ t(errors.email) }
         label={ t('common.labels.email') }
         onBlur={ handleBlur('email') }
         onChange={ handleChange('email') }
         required
         size="large"
-        sx={ { mb: '16px' } }
+        sx={ { mb: '5px' } }
         type="email"
         value={ data.email }
       />
 
-      <TextField
+      <AppTextField
         InputProps={ passwordVisibility }
-        error={ Boolean(errors.password) }
+        errorMsg={ t(errors.password) }
         fullWidth
-        helperText={ t(errors.password) }
         label={ t('common.labels.password') }
         onBlur={ handleBlur('password') }
         onChange={ handleChange('password') }
