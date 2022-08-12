@@ -41,7 +41,7 @@ describe('MentorHome component', () => {
     )
     render(<MentorHomeWithProviders />)
 
-    const titleToFind = /becomeTutor.generalInfo.title/i
-    expect(() => screen.getByText(titleToFind)).toThrow()
+    const titleToFind = screen.queryByText(/becomeTutor.generalInfo.title/i)
+    expect(titleToFind).not.toBeInTheDocument()
   })
 })
