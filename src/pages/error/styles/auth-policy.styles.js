@@ -1,22 +1,53 @@
-import { makeStyles } from '@mui/styles'
-import errorPhoto401 from '~/assets/img/error-page/401.svg'
-
-export const useStyles = makeStyles((theme) => {
-  return {
-    root: {
-      marginLeft: 'auto',
-      marginRight: 'auto',
-      whiteSpace: 'break-spaces',
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'flex-start',
-      backgroundImage: `url(${errorPhoto401})`,
-      backgroundRepeat: 'no-repeat',
-      backgroundPosition: 'center right',
+export const styles = {
+  container: {
+    display: 'flex',
+    flexDirection: {
+      md: 'row',
+      xs: 'column'
+    },
+    justifyContent: 'center',
+    alignItems: 'center',
+    rowGap: {
+      sm: '75px',
+      xs: '115px'
+    },
+    '& p': {
+      fontWeight: '300'
     }
+  },
+  errorInfo: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: {
+      md: 'start',
+      xs: 'center'
+    },
+    maxWidth: {
+      md: '360px',
+      xs: '530px'
+    }
+  },
+  titleWithDescr: {
+    textAlign: {
+      md: 'left',
+      xs: 'center'
+    }
+  },
+  title: {
+    typography: {
+      md: 'h2',
+      sm: 'h3',
+      xs: 'h4'
+    }
+  },
+  description: {
+    typography: {
+      sm: 'body1',
+      xs: 'body2'
+    }
+  },
+  errorImage: {
+    maxWidth: '100%',
+    overflow: 'auto'
   }
-})
-
-export default useStyles
-
+}

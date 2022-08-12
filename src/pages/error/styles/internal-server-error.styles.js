@@ -4,8 +4,7 @@ export const style = {
   container: {
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center',
-    height: '90vh'
+    alignItems: 'center'
   },
   wrapper: {
     padding: { md: '64px' },
@@ -14,7 +13,10 @@ export const style = {
     flexDirection: { md: 'row', xs: 'column' },
     justifyContent: { md: 'center', xs: 'space-evenly' },
     alignItems: 'center',
-    height: '90vh'
+    rowGap: {
+      sm: '148px',
+      xs: '100px'
+    }
   },
   leftBlock: {
     display: 'flex',

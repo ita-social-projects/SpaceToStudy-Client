@@ -1,7 +1,7 @@
 {
   "401": {
-    "authTitle": "Authorization\npolicy",
-    "authText": "invalid user authentication or authentication on\nthe server side or when accessing a specific url.\nWe suggest you go to the main page."
+    "title": "Authorization error",
+    "description": "Incorrect authorization or authentication of the user on the server side, or when accessing a specific URL. We suggest you go to the home page."
   },
   "404": {
     "title": "Page Not Found",
