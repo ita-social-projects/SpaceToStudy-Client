@@ -1,14 +1,14 @@
 import { Box, Typography } from '@mui/material'
 import { styles } from '~/components/title-with-description/title-with-description.styles'
 
-const TitleWithDescription = ({ title, titleStyles, description, descriptionStyles, componentStyles }) => {
+const TitleWithDescription = ({ title, titleVariant, description, descriptionVariant, style = styles }) => {
   return (
-    <Box sx={ { ...styles.wrapper, ...componentStyles } }>
-      <Typography sx={ { ...styles.title, ...titleStyles } }>
+    <Box sx={ { ...style.wrapper } }>
+      <Typography sx={ { typography: titleVariant, ...style.title } }>
         { title }
       </Typography>
 
-      <Typography sx={ { ...descriptionStyles } }>
+      <Typography sx={ { typography: descriptionVariant, ...style.description } }>
         { description }
       </Typography>
     </Box>
