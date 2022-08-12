@@ -1,45 +1,35 @@
-import { screen, render } from '@testing-library/react'
-import { MemoryRouter } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { screen } from '@testing-library/react'
 
 import { ModalProvider } from '~/context/modal-context'
 import { ConfirmationDialogProvider } from '~/context/confirm-context'
 import MentorHome from '~/pages/mentor-home/MentorHome'
-
-jest.mock('react-redux', () => ({
-  useSelector: jest.fn()
-}))
+import { renderWithProviders } from '~tests/test-utils'
 
 const MentorHomeWithProviders = () => (
-  <MemoryRouter>
-    <ConfirmationDialogProvider>
-      <ModalProvider>
-        <MentorHome />
-      </ModalProvider>
-    </ConfirmationDialogProvider>
-  </MemoryRouter>
+  <ConfirmationDialogProvider>
+    <ModalProvider>
+      <MentorHome />
+    </ModalProvider>
+  </ConfirmationDialogProvider>
 )
 
 describe('MentorHome component', () => {
+  const firstLoginState = {
+    appMain: { isFirstLogin: true }
+  }
+  const secondLoginState = {
+    appMain: { isFirstLogin: false }
+  }
+
   it('should render a BecomeATutor modal when logging in for the first time', () => {
-    useSelector.mockImplementation((fn) =>
-      fn({
-        appMain: { isFirstLogin: true }
-      })
-    )
-    render(<MentorHomeWithProviders />)
+    renderWithProviders(<MentorHomeWithProviders />, { preloadedState: firstLoginState })
 
     const firstTab = screen.getByText(/becomeTutor.generalInfo.title/i)
     expect(firstTab).toBeInTheDocument()
   })
 
   it("shouldn't render a BecomeATutor modal when logging in for the second time", () => {
-    useSelector.mockImplementation((fn) =>
-      fn({
-        appMain: { isFirstLogin: false }
-      })
-    )
-    render(<MentorHomeWithProviders />)
+    renderWithProviders(<MentorHomeWithProviders />, { preloadedState: secondLoginState })
 
     const titleToFind = screen.queryByText(/becomeTutor.generalInfo.title/i)
     expect(titleToFind).not.toBeInTheDocument()
