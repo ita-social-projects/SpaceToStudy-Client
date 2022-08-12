@@ -4,7 +4,10 @@ export const styles = {
     flexDirection: { md: 'row', xs: 'column' },
     alignItems: 'center',
     justifyContent: { md: 'space-between', xs: 'space-evenly' },
-    height: '90vh',
+    rowGap: {
+      sm: '75px',
+      xs: '115px'
+    },
     '& p': {
       textAlign: { md: 'left', sm: 'center' },
       fontWeight: 300
