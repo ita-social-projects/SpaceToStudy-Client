@@ -20,15 +20,6 @@ describe('BecomeATutor test', () => {
 
     expect(secondTab).toBeInTheDocument()
   })
-  
-  it('should render Experience tab', () => {
-    const experienceLabel = screen.getByText(/Experience/i)
-    fireEvent.click(experienceLabel)
-
-    const fourthTab = screen.getByText(/becomeTutor.experience.title/i)
-
-    expect(fourthTab).toBeInTheDocument()
-  })
 
   it('should open documents render error after add wrong file size', async() => {
     const fakeFile = new File(['certificate'], 'test-file.png', { type: 'image/png' })
