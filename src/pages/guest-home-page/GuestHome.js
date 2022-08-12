@@ -1,5 +1,5 @@
 import { Box } from '@mui/material'
-import { useEffect,useContext } from 'react'
+import { useEffect, useContext } from 'react'
 import { useLocation } from 'react-router-dom'
 
 import { ModalContext } from '~/context/modal-context'
@@ -12,14 +12,14 @@ import { descriptionTimes } from '~/components/accordion-with-image/descriptionT
 
 const GuestHomePage = () => {
   const { setModal } = useContext(ModalContext)
-  const { hash } = useLocation()
-
-  useEffect(()=> hash === '#login' && setModal(<LoginDialog />), [])
+  const { search } = useLocation()
   
+  useEffect(() => search === '?login' && setModal(<LoginDialog />), [])
+
   return (
     <Box data-testid="guestHome">
       <Welcome />
-      <FeatureBlock items={ descriptionTimes }  />
+      <FeatureBlock items={ descriptionTimes } />
       <WhatCanYouDo />
       <WhoWeAre />
     </Box>
