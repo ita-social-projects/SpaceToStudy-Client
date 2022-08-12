@@ -5,7 +5,7 @@ import { ModalContext } from '~/context/modal-context'
 
 const MentorHome = () => {
   const { setModal, setFullScreen } = useContext(ModalContext)
-  const { isFirstLogin } = useSelector(state => state.appMain)
+  const { isFirstLogin } = useSelector((state) => state.appMain)
 
   useEffect(() => {
     if (isFirstLogin) {

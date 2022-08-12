@@ -67,9 +67,9 @@ export const mainSlice = createSlice({
       state.userEmail = action.payload
     },
     logout(state) {
-      state.userId = ''
-      state.userRole = ''
-      state.userEmail = ''
+      state.userId = initialState.userId
+      state.userRole = initialState.userRole
+      state.userEmail = initialState.userEmail
       state.isFirstLogin = initialState.isFirstLogin
     }
   },
