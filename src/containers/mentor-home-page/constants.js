@@ -1,5 +1,5 @@
-import { nameField } from '~/constants/validation/common'
-import { experienceField } from  '~/constants/validation/experience'
+import { nameField } from '~/validations/common'
+import { experienceField } from  '~/validations/experience'
 
 export const initialValues = {
   firstName: '',

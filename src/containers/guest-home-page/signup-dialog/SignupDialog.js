@@ -7,7 +7,7 @@ import useForm from '~/hooks/use-form'
 import useConfirm from '~/hooks/use-confirm'
 import { ModalContext } from '~/context/modal-context'
 
-import { firstName, lastName, confirmPassword, email, password } from '~/constants/validation/login'
+import { firstName, lastName, confirmPassword, email, password } from '~/validations/login'
 import { signup } from '~/containers/guest-home-page/constants'
 import GoogleLogin from '~/containers/guest-home-page/google-login/GoogleLogin'
 import SignupForm from '~/containers/guest-home-page/signup-form/SignupForm'

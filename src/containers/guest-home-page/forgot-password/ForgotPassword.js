@@ -11,7 +11,7 @@ import TitleWithDescription from '~/components/title-with-description/TitleWithD
 import ImgTitleDescription from '~/components/img-title-description/ImgTitleDescription'
 import info from '~/assets/img/guest-home-page/info.svg'
 
-import { email } from '~/constants/validation/login'
+import { email } from '~/validations/login'
 import { style } from '~/containers/guest-home-page/forgot-password/forgot-password.style'
 
 const ForgotPassword = () => {
