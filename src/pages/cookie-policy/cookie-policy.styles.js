@@ -4,7 +4,6 @@ export const styles = {
   },
   wrapper: {
     m: '0 auto',
-    textAlign: 'start',
     mb: '50px',
     maxWidth: '744px',
   },
@@ -16,21 +15,20 @@ export const styles = {
     p: '30px 0 50px',
     borderRadius: '20px',
   },
-  firstItemTitleStyle: { 
+  firstItemTitle: { 
     typography: { md: 'h4', xs: 'h5' },
     mb: 0,
     pt: '20px',
   },
-  titleStyles: {
+  title: {
     typography: { md: 'h5', xs: 'h5' },
     mb: '25px',
   },
-  subtitleStyles: {
+  subtitle: {
     typography: { xlg: 'subtitle1' },
     fontWeight: 600,
     my: '15px',
     display: 'flex',
-    justifyContent: 'start',
     alignItems: 'center',
     '&::before': {
       content: '""',
@@ -41,7 +39,7 @@ export const styles = {
       mr: '20px'
     }
   },
-  descriptionStyles: {
+  description: {
     typography: { md: 'body1', xs: 'body2' }
   }
 }

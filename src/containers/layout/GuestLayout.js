@@ -16,7 +16,7 @@ const GuestLayout = () => {
       <Route element={ <Example /> } name="home" path={ routes.about.route } />
       <Route element={ <AuthPolicy /> } path={ errors.authPolicy.route } />
       <Route element={ <BadRequest /> } path={ errors.badRequest.route } />
-      <Route element={ <CookiePolicy /> } name="CookiePolicy" path={ routes.privacyPolicy.route } />
+      <Route element={ <CookiePolicy /> } path={ routes.privacyPolicy.route } />
       <Route element={ <NotFound /> } path={ errors.notFound.route } />
       <Route element={ <InternalServerError /> } path={ errors.internalServerError.route } />
       <Route element={ <Navigate to={ errors.notFound.route }  /> } path='*' />

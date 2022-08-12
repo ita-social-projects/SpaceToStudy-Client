@@ -11,15 +11,15 @@ const CookiePolicy = () => {
   const cookieItems = cookieItemsData.map((item, index) => {
     return (
       <Box key={ index } sx={ styles.wrapper }>
-        <Typography sx={ styles.titleStyles }>
+        <Typography sx={ styles.title }>
           { t(item.title) }
         </Typography>
 
-        <Typography sx={ item.subtitle && styles.subtitleStyles }>
+        <Typography sx={ item.subtitle && styles.subtitle }>
           { t(item.subtitle) }
         </Typography>
 
-        <Typography sx={ styles.descriptionStyles }>
+        <Typography sx={ styles.description }>
           { t(item.description) }
         </Typography>
       </Box>
@@ -29,11 +29,11 @@ const CookiePolicy = () => {
   return (
     <Container data-testid="sectionContainer" sx={ styles.container }>
       <Box sx={ styles.firstItemWrapper }>
-        <Typography sx={ styles.firstItemTitleStyle }>
+        <Typography sx={ styles.firstItemTitle }>
           { t('cookiePolicyPage.cookiePolicy.title') }
         </Typography>
 
-        <Typography sx={ styles.descriptionStyles }>
+        <Typography sx={ styles.description }>
           { t('cookiePolicyPage.cookiePolicy.description') }
         </Typography>
       </Box>
