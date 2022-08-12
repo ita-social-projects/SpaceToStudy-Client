@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { Box, Typography } from '@mui/material'
 
 import FileUploader from '~/components/file-uploader/FileUploader'
-import img from '~/assets/img/mentor-home-page/add-documents.png'
+import img from '~/assets/img/mentor-home-page/become-tutor/add-documents.png'
 
 import { style } from '~/containers/mentor-home-page/add-documents/add-documents.style'
 
