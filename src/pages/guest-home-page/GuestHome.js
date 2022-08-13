@@ -9,7 +9,6 @@ import WhatCanYouDo from '~/containers/guest-home-page/WhatCanYouDo'
 import WhoWeAre from '~/containers/guest-home-page/who-we-are/WhoWeAre'
 import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
 import { descriptionTimes } from '~/components/accordion-with-image/descriptionTimes'
-
 const GuestHomePage = () => {
   const { setModal } = useContext(ModalContext)
   const { search } = useLocation()

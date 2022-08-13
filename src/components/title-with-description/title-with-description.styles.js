@@ -6,7 +6,6 @@ export const styles = {
     textAlign: 'center'
   },
   title: {
-    marginBottom: '16px',
+    marginBottom: '16px'
   }
 }
-
