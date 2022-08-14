@@ -2,6 +2,7 @@ import { Button, Dialog, IconButton } from '@mui/material'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import CloseIcon from '@mui/icons-material/Close'
+<<<<<<< HEAD
 import { style } from './email-confirmation-modal.style'
 import { useContext, useEffect, useState } from 'react'
 import imgSuccess from '~/assets/img/email-confirmation-modals/success-icon.svg'
@@ -51,6 +52,23 @@ const EmailConfirmModal = ( { confirmToken } ) => {
     setModal(<LoginDialog />)
     close()
   }
+=======
+import { style } from '../email-confirmation-modal.style'
+import { useState } from 'react'
+import img from '~/assets/img/email-confirmation-modals/success-icon.svg'
+import { styles } from '~/pages/error/styles/bad-request.styles'
+
+const EmailConfirmModal = () => {
+  const [open, setOpen] = useState(true)
+
+  const handleClickOpen = () => {
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+  }
+>>>>>>> dfa268037d38a238060289bbc63d2eba2ac3dc3f
 
   return (
     <Dialog
@@ -62,14 +80,22 @@ const EmailConfirmModal = ( { confirmToken } ) => {
           borderRadius: '8px',
         },
       } }
+<<<<<<< HEAD
       onClose={ close }
+=======
+      onClose={ handleClose }
+>>>>>>> dfa268037d38a238060289bbc63d2eba2ac3dc3f
       open={ open }
       sx={ style.dialog }
     >
       <Box sx={ style.box }>
         <IconButton
           aria-label="close"
+<<<<<<< HEAD
           onClick={ close }
+=======
+          onClick={ handleClose }
+>>>>>>> dfa268037d38a238060289bbc63d2eba2ac3dc3f
           sx={ {
             position: 'absolute',
             right: 8,
@@ -80,17 +106,25 @@ const EmailConfirmModal = ( { confirmToken } ) => {
           <CloseIcon />
         </IconButton>
         <Box>
+<<<<<<< HEAD
           { /*TODO: here add positive-scenario-image, error, negative*/ }
           <Box
             alt="email-confirm-icon"
             component="img"
             src={ statusImage }
+=======
+          <Box
+            alt="email-confirm-icon"
+            component="img"
+            src={ img }
+>>>>>>> dfa268037d38a238060289bbc63d2eba2ac3dc3f
             sx={ styles.img }
           />
           <Typography
             component="h2" id="modal-modal-title" style={ style.message }
             variant="h6"
           >
+<<<<<<< HEAD
             { /*TODO: here add positive scenario text, error, negative*/ }
 
             { /*Your email has been successfully verified!*/ }
@@ -104,6 +138,15 @@ const EmailConfirmModal = ( { confirmToken } ) => {
             variant="contained"
           >
             { t('button.goToLogin') }
+=======
+            Email has been successfully verified!
+          </Typography>
+          <Button
+            color='primary' size="large" style={ style.button }
+            variant="contained"
+          >
+            Go to login
+>>>>>>> dfa268037d38a238060289bbc63d2eba2ac3dc3f
           </Button>
         </Box>
       </Box>
