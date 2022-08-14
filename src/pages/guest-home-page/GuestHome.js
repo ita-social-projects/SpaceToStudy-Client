@@ -17,11 +17,6 @@ const GuestHomePage = () => {
   const [ searchParams ] = useSearchParams()
   const confirmToken = searchParams.get('confirmToken')
 
-  // const resultFromLocation  = useLocation()
-  // console.log( resultFromLocation, 'resultFromLocation' )
-  // const resultFromParams  = useParams()
-  // console.log( resultFromParams, 'resultFromParams' )
-
   useEffect(() =>
     confirmToken && setModal(<EmailConfirmModal confirmToken={ confirmToken } />)
   , [])
