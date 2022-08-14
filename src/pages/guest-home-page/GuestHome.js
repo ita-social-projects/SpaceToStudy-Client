@@ -6,7 +6,25 @@ import WhatCanYouDo from '~/containers/guest-home-page/WhatCanYouDo'
 import HowItWorks from '~/containers/guest-home-page/how-it-works/HowItWorks'
 import WhoWeAre from '~/containers/guest-home-page/who-we-are/WhoWeAre'
 import { descriptionTimes } from '~/components/accordion-with-image/descriptionTimes'
+import { useContext, useEffect } from 'react'
+import { ModalContext } from '~/context/modal-context'
+import { useSearchParams } from 'react-router-dom'
+import EmailConfirmModal from '~/components/modals/email-confirm-modal/email-confirm-modal'
 const GuestHomePage = () => {
+
+  const { setModal } = useContext(ModalContext)
+
+  const [ searchParams ] = useSearchParams()
+  const confirmToken = searchParams.get('confirmToken')
+
+  // const resultFromLocation  = useLocation()
+  // console.log( resultFromLocation, 'resultFromLocation' )
+  // const resultFromParams  = useParams()
+  // console.log( resultFromParams, 'resultFromParams' )
+
+  useEffect(() =>
+    confirmToken && setModal(<EmailConfirmModal confirmToken={ confirmToken } />)
+  , [])
   
   return (
     <Box data-testid="guestHome">

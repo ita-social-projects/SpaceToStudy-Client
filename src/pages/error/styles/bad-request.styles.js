@@ -21,6 +21,7 @@ export const styles = {
   },
   img: {
     maxWidth: { sm: '590px', xs: '320px' },
-    overflow: 'auto'
+    overflow: 'auto',
+    height: '78px'
   }
 }
