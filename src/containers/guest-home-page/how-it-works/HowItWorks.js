@@ -34,11 +34,11 @@ const HowItWorks = () => {
         </Typography>
 
         <Stack alignItems="center" direction="row" spacing={ 1 }>
-          <Typography variant={ 'h6' }>
+          <Typography color={ isStudent ? 'primary.500' : 'primary.900' } variant={ 'h6' }>
             { t('guestHomePage.howItWorks.learnFromExperts') }
           </Typography>
           <Switch checked={ isStudent } onChange={ handleChange } />
-          <Typography color="primary.500" variant={ 'h6' }>
+          <Typography color={ isStudent ? 'primary.900' : 'primary.500' } variant={ 'h6' }>
             { t('guestHomePage.howItWorks.shareYourExperience') }
           </Typography>
         </Stack>
