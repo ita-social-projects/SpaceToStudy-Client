@@ -3,7 +3,7 @@ import { commonHoverShadow } from '~/styles/app-theme/custom-shadows'
 export const style = {
   root: {
     display: 'flex',
-    justifyContent: 'end',
+    justifyContent: 'flex-end',
     position: 'sticky',
     bottom: '0',
   },
