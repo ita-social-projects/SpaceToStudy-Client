@@ -8,13 +8,14 @@ export const styles = {
     box: {
       display: 'flex',
       width: '1128px',
-      alignItems: 'center',
+      alignItems: 'flex-start',
       flexDirection: 'row-reverse'
     },
     clearBox: {
       flexBasis: '466px'
     },
     wrapper: {
+      pt:'5px',
       flexBasis: '466px'
     },
     image: {
@@ -33,13 +34,14 @@ export const styles = {
     box: {
       display: 'flex',
       width: '1128px',
-      alignItems: 'center',
+      alignItems: 'flex-start',
       flexDirection: 'row'
     },
     clearBox: {
       flexBasis: '466px'
     },
     wrapper: {
+      pt:'5px',
       flexBasis: '466px'
     },
     image: {
