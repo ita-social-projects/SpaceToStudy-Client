@@ -2,8 +2,8 @@ export const loginUserData = { email: 'user@gmail.com', password: '123' }
 
 export const signupUserData = {
   email: 'user@gmail.com',
-  password: '123',
-  confirmPassword: '123',
+  password: 'testest_1',
+  confirmPassword: 'testest_1',
   firstName: 'John',
   lastName: 'Doe'
 }
@@ -13,15 +13,17 @@ export const initialState = {
   userRole: '',
   userEmail: '',
   loading: false,
-  error: ''
+  error: '',
+  isFirstLogin: true
 }
 
 export const stateAfterLogin = {
-  userId: '12345',
+  userId: '62f4fa49d39c988e347d833f',
   userRole: 'student',
   userEmail: 'johndoe@gmail.com',
   loading: false,
-  error: ''
+  error: '',
+  isFirstLogin: true
 }
 
 export const stateAfterSignup = {
@@ -29,7 +31,8 @@ export const stateAfterSignup = {
   userRole: '',
   loading: false,
   userEmail: 'johndoe@gmail.com',
-  error: ''
+  error: '',
+  isFirstLogin: true
 }
 
 export const userEmail = 'johndoe@gmail.com'
@@ -37,4 +40,4 @@ export const userEmail = 'johndoe@gmail.com'
 export const errorMessage = 'Request failed with status code 404'
 
 export const accessToken =
-  'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE2NTM4MjcxMDcsImV4cCI6MTY4NTM2MzEwNywiYXVkIjoid3d3LmV4YW1wbGUuY29tIiwic3ViIjoianJvY2tldEBleGFtcGxlLmNvbSIsImlkIjoiMTIzNDUiLCJyb2xlIjoic3R1ZGVudCJ9.J8HqR5AbIeFD6xe4ywlSSsltQ3X8dhjRaiqUVlDBGe4'
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZjRmYTQ5ZDM5Yzk4OGUzNDdkODMzZiIsInJvbGUiOiJzdHVkZW50IiwiaXNGaXJzdExvZ2luIjp0cnVlLCJpYXQiOjE2NjAyMjIwNDMsImV4cCI6MTY2MDIyNTY0M30.Gr10O-Ri3k_SJfXb41Yojx7toZvEz5RUekZVHLHEVOw'
