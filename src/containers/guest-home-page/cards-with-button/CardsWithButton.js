@@ -7,12 +7,12 @@ import TitleWithDescription from '~/components/title-with-description/TitleWithD
 import SignupDialog from '~/containers/guest-home-page/signup-dialog/SignupDialog'
 import { styles } from '~/containers/guest-home-page/cards-with-button/cards-with-button.style'
 
-const titleVariant = {
-  xs: 'h6'
+const titleStyles = {
+  typography: { xs: 'h6' } 
 }
 
-const descriptionVariant = {
-  xs: 'subtitle2'
+const descriptionStyles = {
+  typography: { xs: 'subtitle2' } 
 }
 
 const CardsWithButton = ({ array, role, btnText }) => {
@@ -31,10 +31,10 @@ const CardsWithButton = ({ array, role, btnText }) => {
           <Box component="img" src={ item.image } sx={ styles[key % 2 === 0 ? 'right' : 'left'].image }></Box>
           <TitleWithDescription
             description={ t(item.description) }
-            descriptionVariant={ descriptionVariant }
+            descriptionStyles={ descriptionStyles }
             style={ styles[key % 2 === 0 ? 'right' : 'left'] }
             title={ t(item.title) }
-            titleVariant={ titleVariant }
+            titleStyles={ titleStyles }
           />
         </Box>
       )),
