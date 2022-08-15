@@ -31,8 +31,7 @@ describe('Experience page test', () => {
     })
     fireEvent.blur(textField)
     const longTextError = screen.getByText(/common.errorMessages.longText/i)
-  
+
     expect(longTextError).toBeInTheDocument()
   })
-  
 })

@@ -4,9 +4,9 @@ import TempComponent from '~/containers/mentor-home-page/become-a-tutor/TempComp
 import { ModalProvider } from '~/context/modal-context'
 
 const stepsMock = [
-  { step: 'General info', isError: true },
-  { step: 'Languages', isError: false },
-  { step: 'Study category', isError: false }
+  { step: 'General info', hasError: true },
+  { step: 'Languages', hasError: false },
+  { step: 'Study category', hasError: false }
 ]
 
 const childrenArrMock = [

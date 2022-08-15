@@ -1,5 +1,5 @@
-import { nameField } from '~/validations/common'
-import { experienceField } from  '~/validations/experience'
+import { nameField } from '~/utils/validations/common'
+import { experienceField } from '~/utils/validations/experience'
 
 export const initialValues = {
   firstName: '',
@@ -21,32 +21,22 @@ export const validations = {
 export const stepLabels = [
   {
     step: 'General info',
-    fields: [
-      'firstName',
-      'lastName',
-      'country',
-      'city',
-      'confirmAge'
-    ]
+    fields: ['firstName', 'lastName', 'country', 'city', 'confirmAge']
   },
   {
-    step: 'Languages',
-    fields: []
+    step: 'Languages'
   },
   {
-    step: 'Study category',
-    fields: []
+    step: 'Study category'
   },
   {
     step: 'Experience',
     fields: ['experience']
   },
   {
-    step: 'Documents',
-    fields: []
+    step: 'Documents'
   },
   {
-    step: 'Photo and Video',
-    fields: []
+    step: 'Photo and Video'
   }
 ]
