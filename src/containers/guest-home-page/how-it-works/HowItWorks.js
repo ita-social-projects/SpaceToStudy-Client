@@ -33,7 +33,7 @@ const HowItWorks = () => {
           { t('guestHomePage.howItWorks.title') }
         </Typography>
 
-        <Stack alignItems="center" direction="row" spacing={ 1 }>
+        <Stack alignItems="center" spacing={ 1 } sx={ style.switch }>
           <Typography color={ isStudent ? 'primary.500' : 'primary.900' } variant={ 'h6' }>
             { t('guestHomePage.howItWorks.learnFromExperts') }
           </Typography>

@@ -7,45 +7,45 @@ export const styles = {
   left: {
     box: {
       display: 'flex',
-      width: '1128px',
       alignItems: 'flex-start',
-      flexDirection: 'row-reverse'
+      flexDirection: { sm: 'row-reverse', xs: 'row' }
     },
     clearBox: {
+      display: { xs: 'none', sm: 'flex' },
       flexBasis: '466px'
     },
     wrapper: {
-      pt:'5px',
+      pt: '5px',
       flexBasis: '466px'
     },
     image: {
-      m: '0px 60px 0px 60px',
+      m: { sm: '0px 60px 0px 60px', xs: '0px 20px 0px 20px' },
       flexGrow: '0'
     },
     title: {
       marginBottom: '8px',
-      textAlign: 'end'
+      textAlign: { sm: 'end', xs: 'start' }
     },
     description: {
-      textAlign: 'end'
+      textAlign: { sm: 'end', xs: 'start' }
     }
   },
   right: {
     box: {
       display: 'flex',
-      width: '1128px',
       alignItems: 'flex-start',
       flexDirection: 'row'
     },
     clearBox: {
+      display: { xs: 'none', sm: 'flex' },
       flexBasis: '466px'
     },
     wrapper: {
-      pt:'5px',
+      pt: '5px',
       flexBasis: '466px'
     },
     image: {
-      m: '0px 60px 0px 60px',
+      m: { sm: '0px 60px 0px 60px', xs: '0px 20px 0px 20px' },
       flexGrow: '0'
     },
     title: {

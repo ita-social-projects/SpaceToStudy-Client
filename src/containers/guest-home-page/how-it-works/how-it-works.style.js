@@ -7,5 +7,9 @@ export const style = {
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column'
+  },
+  switch:{
+    display:'flex',
+    flexDirection:{ sm:'row',xs:'column' }
   }
 }
