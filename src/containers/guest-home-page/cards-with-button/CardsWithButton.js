@@ -39,7 +39,7 @@ const CardsWithButton = ({ array, role, btnText }) => {
         </Box>
       )),
 
-    [array]
+    [array,t]
   )
   return (
     <Box sx={ styles.wrap }>
