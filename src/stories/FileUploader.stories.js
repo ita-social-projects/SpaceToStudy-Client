@@ -1,5 +1,5 @@
 import FileUploader from '~/components/file-uploader/FileUploader'
-import useUpload from '~/hooks/use-upload'
+
 
 export default {
   title: 'FileUploader',
@@ -9,31 +9,57 @@ export default {
       type: 'string',
       description: 'Button text'
     },
+    initialState: {
+      type: 'array',
+      description: 'Initial state'
+    },
+    initialError: {
+      type: 'string',
+      description: 'Initial error'
+    },
+    maxQuantityFiles: {
+      type: 'number',
+      description: 'Max quantity files'
+    },
+    validation: {
+      type: 'function',
+      description: 'Validation function'
+    }
   }
 }
 
-export const Default = () => {
-  const upload = useUpload({ validations: () => null ,maxQuantityFiles: 5 })
-  
+
+export const Default = (args) => {
   return (
     <div style={{ maxWidth: '400px', margin: '0 auto',  }}>
       <h1>File Uploader</h1>
-      <FileUploader buttonText={ 'Upload your files' } upload={ upload } />
+      <FileUploader { ...args }/>
     </div> 
   )
 }
+Default.args = {
+  buttonText: 'Upload your files',
+  emitter: () => console.log('emitter called'),
+  initialState: [],
+  initialError: null,
+  validation: () => '',
+  maxQuantityFiles: 5
+}
 
-Default.args = {}
 
-export const WithError = () => {
-  const upload = useUpload({ validations: () => 'Error text should be here' ,maxQuantityFiles: 5 })
-  
+export const WithError = (args) => {
   return (
     <div style={{ maxWidth: '400px', margin: '0 auto',  }}>
       <h1>File Uploader with error</h1>
-      <FileUploader buttonText={ 'Upload your files' } upload={ upload } />
+      <FileUploader { ...args } />
     </div> 
   )
 }
-
-WithError.args = {}
+WithError.args = {
+  buttonText: 'Upload your files',
+  emitter: () => console.log('emitter called'),
+  initialState: [],
+  initialError: 'Defauld error',
+  validation: () => 'Validation error',
+  maxQuantityFiles: 5
+}

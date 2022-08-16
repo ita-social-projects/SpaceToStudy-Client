@@ -1,9 +1,9 @@
 import { useState } from 'react'
 
-const useUpload = ({ validations, maxQuantityFiles }) => {
-  const [files, setFiles] = useState([])
+const useUpload = ({ validations, maxQuantityFiles, initialState, initialError }) => {
+  const [files, setFiles] = useState(initialState)
   const [isDrag, setIsDrag] = useState(false)
-  const [error, setError] = useState(null)
+  const [error, setError] = useState(initialError)
   
   const dragStart = (e) => {
     e.preventDefault()

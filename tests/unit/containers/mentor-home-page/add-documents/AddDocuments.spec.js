@@ -1,17 +1,9 @@
 import {  render, screen } from '@testing-library/react'
 import AddDocuments from '~/containers/mentor-home-page/add-documents/AddDocuments'
 
-const fakeFile = new File(['certificate'], 'test-file.png', { type: 'application/pdf' })
-const uploadCertificates = {
-  dragStart: jest.fn(),
-  dragLeave: jest.fn(),
-  dragDrop: jest.fn(),
-  addFiles: jest.fn(),
-  deleteFile: jest.fn(),
-  files:[fakeFile],
-  isDrag: true,
-  error: null
-}
+const addDocuments = jest.fn()
+const documents = []
+const documentsError = undefined
 const btnsBox = (
   <div>
     <button>back</button>
@@ -21,7 +13,13 @@ const btnsBox = (
 
 describe('AddDocuments test', () => {
   beforeEach(() => {
-    render(<AddDocuments btnsBox={ btnsBox } uploadCertificates={ uploadCertificates } />)
+    render(
+      <AddDocuments
+        addDocuments={ addDocuments }
+        btnsBox={ btnsBox }
+        documents={ documents }
+        documentsError={ documentsError }
+      />)
   })
 
   it('should render imgage', () => {
@@ -42,13 +40,5 @@ describe('AddDocuments test', () => {
 
     expect(buttonBack).toBeInTheDocument()
     expect(buttonNext).toBeInTheDocument()
-  })
-
-  it('should render file uploader with file', () => {
-    const button = screen.getByText('becomeTutor.documents.button')
-    const fileName = screen.getByText('test-file.png')
-
-    expect(button).toBeInTheDocument()
-    expect(fileName).toBeInTheDocument()
   })
 })

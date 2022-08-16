@@ -2,6 +2,8 @@ import { act, renderHook } from '@testing-library/react-hooks'
 import useUpload from '~/hooks/use-upload'
 
 const validations = jest.fn()
+const initialState = []
+const initialError = undefined
 const fakeFile = new File(['certificate'], 'test-file.png', { type: 'application/pdf' })
 const getFakeTestEvent = (fakeFile) => (
   {
@@ -13,7 +15,7 @@ const getFakeTestEvent = (fakeFile) => (
 describe('useUpload custom hook test without errors', () => {
 
   it('should have initial values', () => {
-    const { result } = renderHook(() => useUpload({ validations }))
+    const { result } = renderHook(() => useUpload({ validations, initialState, initialError }))
 
     expect(typeof result.current.dragStart).toBe('function')
     expect(typeof result.current.dragLeave).toBe('function')
@@ -22,12 +24,12 @@ describe('useUpload custom hook test without errors', () => {
     expect(typeof result.current.deleteFile).toBe('function')
 
     expect(result.current.files).toEqual([])
-    expect(result.current.error).toEqual(null)
+    expect(result.current.error).toEqual(undefined)
     expect(result.current.isDrag).toEqual(false)
   })
 
   it('should change isDrag value to true after dragStart', () => {
-    const { result } = renderHook(() => useUpload({ validations }))
+    const { result } = renderHook(() => useUpload({ validations, initialState, initialError }))
     
     act(() => result.current.dragStart(getFakeTestEvent(fakeFile)))
 
@@ -35,7 +37,7 @@ describe('useUpload custom hook test without errors', () => {
   })
     
   it('should change isDrag value to true after dragStart and to false after dragStart', () => {
-    const { result } = renderHook(() => useUpload({ validations }))
+    const { result } = renderHook(() => useUpload({ validations, initialState, initialError }))
     
     act(() => result.current.dragStart(getFakeTestEvent(fakeFile)))
     expect(result.current.isDrag).toEqual(true)
@@ -45,7 +47,7 @@ describe('useUpload custom hook test without errors', () => {
   })
   
   it('should change drop fake file', () => {
-    const { result } = renderHook(() => useUpload({ validations }))
+    const { result } = renderHook(() => useUpload({ validations, initialState, initialError }))
     
     act(() => result.current.dragDrop(getFakeTestEvent(fakeFile)))
 
@@ -53,7 +55,7 @@ describe('useUpload custom hook test without errors', () => {
   })
     
   it('should add fake file', () => {
-    const { result } = renderHook(() => useUpload({ validations }))
+    const { result } = renderHook(() => useUpload({ validations, initialState, initialError }))
     
     act(() => result.current.addFiles(getFakeTestEvent(fakeFile)))
 
@@ -61,7 +63,7 @@ describe('useUpload custom hook test without errors', () => {
   })
     
   it('should add fake file and delete', () => {
-    const { result } = renderHook(() => useUpload({ validations }))
+    const { result } = renderHook(() => useUpload({ validations, initialState, initialError }))
     
     act(() => result.current.addFiles(getFakeTestEvent(fakeFile)))
     expect(result.current.files).toHaveLength(1)

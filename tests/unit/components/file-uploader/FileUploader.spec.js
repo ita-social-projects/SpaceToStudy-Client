@@ -1,23 +1,25 @@
 import { render, screen, fireEvent } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import FileUploader from '~/components/file-uploader/FileUploader'
 
 const buttonText = 'test'
+const validation = jest.fn()
+const emitter = jest.fn()
+const initialState = []
+const initialError = undefined
 const fakeFile = new File(['certificate'], 'test-file.png', { type: 'application/pdf' })
 
-describe('FileUploader test without files', () => {
-  const upload = {
-    dragStart: jest.fn(),
-    dragLeave: jest.fn(),
-    dragDrop: jest.fn(),
-    addFiles: jest.fn(),
-    deleteFile: jest.fn(),
-    files:[],
-    isDrag: false,
-    error: null
-  }
-  
+describe('FileUploader test', () => {
   beforeEach(() => {
-    render(<FileUploader buttonText={ buttonText } upload={ upload } />)
+    render(
+      <FileUploader
+        buttonText={ buttonText }
+        emitter={ emitter }
+        initialError={ initialError }
+        initialState={ initialState }
+        maxQuantityFiles={ 5 }
+        validation={ validation }
+      />)
   })
 
   it('should render button with upload icon', () => {
@@ -28,51 +30,27 @@ describe('FileUploader test without files', () => {
     expect(button).toBeInTheDocument()
   })
 
-  it('should call drag-n-drop and call dragStart, dragLeave, dragDrop functions', () => {
+  it('should drop file', () => {
     const container = screen.getByTestId('drop')
     fireEvent.dragStart(container, { dataTransfer: { files: [fakeFile] } })
-
-    expect(upload.dragStart).toBeCalled()
-
-    fireEvent.dragLeave(container, { dataTransfer: { files: [fakeFile] } })
-    expect(upload.dragLeave).toBeCalled()
-
     fireEvent.drop(container, { dataTransfer: { files: [fakeFile] } })
-    expect(upload.dragDrop).toBeCalled()
-  })
-})
-
-describe('FileUploader with files', () => {
-  const upload = {
-    dragStart: jest.fn(),
-    dragLeave: jest.fn(),
-    dragDrop: jest.fn(),
-    addFiles: jest.fn(),
-    deleteFile: jest.fn(),
-    files:[fakeFile],
-    isDrag: true,
-    error: 'error'
-  }
-
-  beforeEach(() => {
-    render(<FileUploader buttonText={ buttonText } upload={ upload } />)
-  })
-
-  it('should render file name', () => {
+    fireEvent.dragLeave(container)
     const fileName = screen.getByText('test-file.png')
 
     expect(fileName).toBeInTheDocument()
   })
-  it('should call deleteFile', () => {
+
+  it('should delete file after uploading', () => {
+    const container = screen.getByTestId('drop')
+    fireEvent.drop(container, { dataTransfer: { files: [fakeFile] } })
     const icon = screen.getByTestId('CloseIcon')
+    const fileName = screen.getByText('test-file.png')
+
+    expect(fileName).toBeInTheDocument()
+
     fireEvent.click(icon)
 
-    expect(upload.deleteFile).toBeCalled()
+    expect(fileName).not.toBeInTheDocument()
   })
 
-  it('should render error text', () => {
-    const error = screen.getByText('error')
-
-    expect(error).toBeInTheDocument()
-  })
 })

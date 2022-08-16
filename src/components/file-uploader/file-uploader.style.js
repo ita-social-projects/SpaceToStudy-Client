@@ -11,14 +11,8 @@ export const style = {
     overflow: 'auto',
   },
   rootDrag: { 
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    minHeight: '100px',
-    border: 'dashed',
+    borderColor: 'primary.900',
     backgroundColor: 'basic.grey',
-    borderRadius: '4px'
   },
   icon: {
     my: 'auto',
