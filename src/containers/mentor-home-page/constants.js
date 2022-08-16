@@ -19,24 +19,10 @@ export const validations = {
 }
 
 export const stepLabels = [
-  {
-    step: 'General info',
-    fields: ['firstName', 'lastName', 'country', 'city', 'confirmAge']
-  },
-  {
-    step: 'Languages'
-  },
-  {
-    step: 'Study category'
-  },
-  {
-    step: 'Experience',
-    fields: ['experience']
-  },
-  {
-    step: 'Documents'
-  },
-  {
-    step: 'Photo and Video'
-  }
+  'General info', 
+  'Languages', 
+  'Study category', 
+  'Experience', 
+  'Documents', 
+  'Photo and Video'
 ]

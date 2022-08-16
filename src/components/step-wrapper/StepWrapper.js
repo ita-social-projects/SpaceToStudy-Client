@@ -8,7 +8,7 @@ import WestIcon from '@mui/icons-material/West'
 
 import { styles } from './step-wrapper.styles'
 
-const StepWrapper = ({ children, steps, handleSubmit }) => {
+const StepWrapper = ({ children, steps, handleSubmit, stepErrors }) => {
   const [activeStep, setActiveStep] = useState(0)
 
   const { t } = useTranslation()
@@ -23,9 +23,9 @@ const StepWrapper = ({ children, steps, handleSubmit }) => {
     setActiveStep((prev) => prev - 1)
   }
 
-  const stepLabels = steps.map(({ step, hasError }, index) => (
+  const stepLabels = steps.map((step, index) => (
     <Box
-      color={ hasError ? 'error.500' : 'primary.500' }
+      color={ stepErrors[step] ? 'error.500' : 'primary.500' }
       key={ step }
       onClick={ () => setActiveStep(index) }
       sx={ [styles.defaultTab, index === activeStep && styles.activeTab] }
@@ -78,7 +78,7 @@ const StepWrapper = ({ children, steps, handleSubmit }) => {
         { stepLabels }
       </Box>
       <Box mt="46px">
-        { cloneElement(children[activeStep], { btnsBox }) }
+        { cloneElement(children[activeStep], { btnsBox, stepLabel: steps[activeStep] }) }
       </Box>
     </Container>
   )

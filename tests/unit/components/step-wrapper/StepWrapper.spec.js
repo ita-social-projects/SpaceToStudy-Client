@@ -3,11 +3,9 @@ import StepWrapper from '~/components/step-wrapper/StepWrapper'
 import TempComponent from '~/containers/mentor-home-page/become-a-tutor/TempComponent'
 import { ModalProvider } from '~/context/modal-context'
 
-const stepsMock = [
-  { step: 'General info', hasError: true },
-  { step: 'Languages', hasError: false },
-  { step: 'Study category', hasError: false }
-]
+const stepsMock = ['General info', 'Languages', 'Study category']
+
+const stepErrorsMock = { 'General info': true }
 
 const childrenArrMock = [
   <TempComponent key="1">1</TempComponent>,
@@ -19,7 +17,7 @@ describe('StepWrapper test', () => {
   beforeEach(() => {
     render(
       <ModalProvider>
-        <StepWrapper steps={ stepsMock }>
+        <StepWrapper stepErrors={ stepErrorsMock } steps={ stepsMock }>
           { childrenArrMock }
         </StepWrapper>
       </ModalProvider>

@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Box, Checkbox, FormControlLabel, Typography } from '@mui/material'
 
@@ -6,8 +7,14 @@ import AppTextField from '~/components/app-text-field/AppTextField'
 import img from '~/assets/img/mentor-home-page/become-tutor/general-info.png'
 import { styles } from './general-info.styles'
 
-const GeneralInfo = ({ data, handleChange, handleBlur, errors, btnsBox }) => {
+const GeneralInfo = ({ data, handleChange, handleBlur, errors, btnsBox, setStepErrors, stepLabel }) => {
   const { t } = useTranslation()
+
+  useEffect(() => {
+    const fieldsWithValidation = ['firstName', 'lastName', 'country', 'city']
+    const stepHasError = fieldsWithValidation.some((field) => errors[field])
+    setStepErrors((prevState) => ({ ...prevState, [stepLabel]: stepHasError }))
+  }, [errors, setStepErrors, stepLabel])
 
   return (
     <Box sx={ styles.container }>

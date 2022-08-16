@@ -1,13 +1,18 @@
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Box, Typography } from '@mui/material'
 
 import AppTextField from '~/components/app-text-field/AppTextField'
 
 import img from '~/assets/img/mentor-home-page/become-tutor/experience.png'
-import { styles } from './experience.styles'
+import { styles } from './experience-step.styles'
 
-const Experience = ({ data, handleChange, handleBlur, errors, btnsBox }) => {
+const ExperienceStep = ({ data, handleChange, handleBlur, errors, btnsBox, setStepErrors, stepLabel }) => {
   const { t } = useTranslation()
+
+  useEffect(() => {
+    setStepErrors((prevState) => ({ ...prevState, [stepLabel]: Boolean(errors.experience) }))
+  }, [errors, setStepErrors, stepLabel])
 
   return (
     <Box sx={ styles.container }>
@@ -45,4 +50,4 @@ const Experience = ({ data, handleChange, handleBlur, errors, btnsBox }) => {
   )
 }
 
-export default Experience
+export default ExperienceStep
