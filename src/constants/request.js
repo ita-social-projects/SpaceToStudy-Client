@@ -6,9 +6,7 @@ export const URLs = {
     login: '/auth/login',
     signup: '/auth/signup',
     logout: '/auth/logout',
-    refresh: '/auth/refresh'
-  },
-  confirm: {
-    get: '/auth/confirm/'
+    refresh: '/auth/refresh',
+    confirm: '/auth/confirm-email'
   }
 }

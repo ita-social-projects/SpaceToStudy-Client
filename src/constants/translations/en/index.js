@@ -11,7 +11,7 @@ import cookiePolicyPage from './cookie-policy-page.json'
 import signup from './signup.json'
 import footer from './footer.json'
 import becomeTutor from './becomeTutor.json'
-import modal from './modals.json'
+import modals from './modals.json'
 
 const en = {
   translations: {
@@ -28,7 +28,7 @@ const en = {
     cookiePolicyPage,
     footer,
     becomeTutor,
-    modal
+    modals
   }
 }
 

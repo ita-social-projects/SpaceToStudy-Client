@@ -2,7 +2,9 @@ export const style = {
   box: {
     margin: { xs: '0 auto', sm: 0 },
     padding: { xs: 0, sm: 2, md: 7 },
-    textAlign: 'center'
+    textAlign: 'center',
+    boxShadow: 'none',
+    borderRadius: '8px',
   },
   button: {
     marginTop: '30px',

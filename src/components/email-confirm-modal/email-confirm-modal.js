@@ -1,111 +1,87 @@
-import { Button, Dialog, IconButton } from '@mui/material'
+import { Button } from '@mui/material'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import CloseIcon from '@mui/icons-material/Close'
 import { style } from './email-confirmation-modal.style'
 import { useContext, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { ModalContext } from '~/context/modal-context'
 import imgSuccess from '~/assets/img/email-confirmation-modals/success-icon.svg'
 import imgReject from '~/assets/img/email-confirmation-modals/not-success-icon.svg'
-import { styles } from '~/pages/error/styles/bad-request.styles'
 import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
-import { ModalContext } from '~/context/modal-context'
-import { useTranslation } from 'react-i18next'
 import useAxios from '~/hooks/use-axios'
-import { confirmService } from '~/services/confirm-service'
+import { AuthService } from '~/services/auth-service'
 
 const EmailConfirmModal = ( { confirmToken } ) => {
-  console.log( confirmToken , 'confirmToken inside EmailConfirmModal')
-  const [open, setOpen] = useState(true)
+
   const [message, setMessage] = useState()
-  const [statusImage, setStatusImage] = useState(imgSuccess)
-  const [isLoading, setIsLoading] = useState(false)
+  const [statusImage, setStatusImage] = useState()
   const { setModal } = useContext(ModalContext)
   const { t } = useTranslation()
 
-  //TODO: useAxios - u need to check what has come from confirmToken
-  const { response, error, loading, fetchData } = useAxios( { confirmService } )
+  const { response, error, loading, fetchData } = useAxios( { service: () => AuthService.confirmEmail(confirmToken) } )
   // useEffect(() => {
   //   console.log(response, ' : response from useAxios')
   //   console.log(error, ' : error from useAxios')
   //   console.log(loading, ' : loading from useAxios')
   //   console.log(fetchData(), ' : fetchData from useAxios')
-  // }, [])
+  // }, [loading])
+  // TODO: fix infinite rerender, and as a cause - infinite call of useAxios
 
   useEffect(() => {
     if (error) {
       setMessage('Your email has not been verified!')
       setStatusImage(imgReject)
     } else if (loading) {
-      setIsLoading(true)
+      setStatusImage()
     } else if (response) {
-      setMessage('Your email has been successfully verified!')
-      setStatusImage(imgSuccess)
+      if (response.data.status === 204) {
+        setMessage('Your email has been successfully verified!')
+        setStatusImage(imgSuccess)
+      } else if (response.data.status === 400) {
+        setMessage('The confirm token is either invalid or has expired!')
+        setStatusImage(imgReject)
+      }
     }
   }, [response])
 
-  const close = () => {
-    setOpen(false)
-  }
-  
   const openLoginDialog = () => {
     setModal(<LoginDialog />)
-    close()
   }
 
   return (
-    <Dialog
-      PaperProps={ {
-        style: {
-          boxShadow: 'none',
-          width: '744px',
-          height: '396px',
-          borderRadius: '8px',
-        },
-      } }
-      onClose={ close }
-      open={ open }
-      sx={ style.dialog }
-    >
-      <Box sx={ style.box }>
-        <IconButton
-          aria-label="close"
-          onClick={ close }
-          sx={ {
-            position: 'absolute',
-            right: 8,
-            top: 8,
-            color: (theme) => theme.palette.grey[500],
-          } }
+    <Box sx={ style.box }>
+      <Box>
+        { /*{ loading ?*/ }
+        { /*  <Loader size={ 20 } />*/ }
+        { /*  :*/ }
+        { /*  (<Box*/ }
+        { /*    alt="email-confirm-icon"*/ }
+        { /*    component="img"*/ }
+        { /*    src={ statusImage }*/ }
+        { /*  />) */ }
+        { /*} //TODO fix eslint error - "The closing bracket must be aligned with the opening tag" */ }
+        <Box
+          alt="email-confirm-icon"
+          component="img"
+          src={ statusImage }
+        />
+        <Typography
+          component="h2" id="modal-modal-title" style={ style.message }
+          variant="h6"
         >
-          <CloseIcon />
-        </IconButton>
-        <Box>
-          { /*TODO: here add positive-scenario-image, error, negative*/ }
-          <Box
-            alt="email-confirm-icon"
-            component="img"
-            src={ statusImage }
-            sx={ styles.img }
-          />
-          <Typography
-            component="h2" id="modal-modal-title" style={ style.message }
-            variant="h6"
-          >
-            { /*TODO: here add positive scenario text, error, negative*/ }
-            { /*Your email has been successfully verified!*/ }
-            { t('modals.emailConfirm') }
-            { /*{ t('modals.emailNotConfirm') }*/ }
-          </Typography>
-          <Button
-            color='primary' onClick={ openLoginDialog } size="large"
-            style={ style.button }
-            variant="contained"
-          >
-            { t('button.goToLogin') }
-          </Button>
-        </Box>
+          { message }
+          { /*{ t('modals.emailConfirm') }*/ }
+          { /*{ t('modals.emailNotConfirm') }*/ }
+        </Typography>
+        <Button
+          color='primary' onClick={ openLoginDialog } size="large"
+          style={ style.button }
+          variant="contained"
+        >
+          { t('button.goToLogin') }
+        </Button>
       </Box>
-    </Dialog>
+    </Box>
   )
 }
 
