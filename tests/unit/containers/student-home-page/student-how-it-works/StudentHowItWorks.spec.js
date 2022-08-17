@@ -1,16 +1,12 @@
-import { screen, fireEvent, render } from '@testing-library/react'
-import StudentHowItWorks from '~/containers/student-home-page/student-how-it-works/StudentHowItWorks'
+import { screen, fireEvent } from '@testing-library/react'
 
-const mockNavigate = jest.fn()
-
-jest.mock('react-router', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useNavigate: () => mockNavigate
-}))
+import { renderWithProviders } from '~tests/test-utils'
+import StudentHowItWorks from "~/containers/student-home-page/student-how-it-works/StudentHowItWorks";
 
 describe('FindMentorBlock test', () => {
+
     beforeEach(() => {
-      render(<StudentHowItWorks />)
+        renderWithProviders(<StudentHowItWorks />)
     })
 
     it('should have section title and description', async () => {
@@ -24,8 +20,9 @@ describe('FindMentorBlock test', () => {
     it('should redirect to find mentor page when click on the find mentor button', async () => {
         const findMentorButton = screen.getByText('studentHomePage.findMentorBlock.button')
         fireEvent.click(findMentorButton)
+        const findMentorText = screen.getByText(/FindMentor/i)
     
-        expect(mockNavigate).toHaveBeenCalled()
+        expect(findMentorText).toBeInTheDocument()
       })
 
       it('should have start learning image, title and description', async () => {

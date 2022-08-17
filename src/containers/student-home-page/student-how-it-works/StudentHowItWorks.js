@@ -1,14 +1,14 @@
 import { useCallback } from 'react'
 import { Box, Button } from '@mui/material'
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router'
+import { useNavigate } from 'react-router-dom'
 
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 
 import { studentRoutes } from '~/constants/routes'
-import { howItWorksCards } from './HowItWorksCards'
+import { howItWorksCards } from '~/containers/student-home-page/student-how-it-works/HowItWorksCards'
 
-import { styles } from './student-how-it-works.styles'
+import { styles } from '~/containers/student-home-page/student-how-it-works/student-how-it-works.styles'
 
 const sectionId = studentRoutes.navBar.howItWorks.label
 
@@ -17,9 +17,11 @@ const StudentHowItWorks = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
 
+  const { findMentor } = studentRoutes.navBar
+
   const redirect = useCallback(() => {
-    return navigate(studentRoutes.navBar.findMentor.route)
-  }, [studentRoutes.navBar.findMentor.route, navigate])
+    return navigate(findMentor.route)
+  }, [findMentor.route, navigate])
 
   const cards = howItWorksCards.map((item, index) => {
     return (
