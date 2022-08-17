@@ -3,7 +3,7 @@ import { screen, fireEvent } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 import StudentHowItWorks from "~/containers/student-home-page/student-how-it-works/StudentHowItWorks";
 
-describe('FindMentorBlock test', () => {
+describe('StudentHowItWorks test', () => {
 
     beforeEach(() => {
         renderWithProviders(<StudentHowItWorks />)
