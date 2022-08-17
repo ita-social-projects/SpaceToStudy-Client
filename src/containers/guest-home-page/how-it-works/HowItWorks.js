@@ -37,7 +37,7 @@ const HowItWorks = () => {
           <Typography color={ isStudent ? 'primary.500' : 'primary.900' } variant={ 'h6' }>
             { t('guestHomePage.howItWorks.learnFromExperts') }
           </Typography>
-          <Switch checked={ isStudent } onChange={ handleChange } />
+          <Switch checked={ isStudent } data-testid='switch' onChange={ handleChange } />
           <Typography color={ isStudent ? 'primary.900' : 'primary.500' } variant={ 'h6' }>
             { t('guestHomePage.howItWorks.shareYourExperience') }
           </Typography>
