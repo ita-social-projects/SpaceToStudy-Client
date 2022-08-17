@@ -44,6 +44,7 @@ describe('CardsWithButton container', () => {
     fireEvent.click(btn)
 
     const popup = screen.getByTestId('popup')
+    
     expect(popup).toBeInTheDocument()
   })
 })

@@ -4,7 +4,6 @@ import { MemoryRouter } from 'react-router-dom'
 import { ModalProvider } from '~/context/modal-context'
 import { ConfirmationDialogProvider } from '~/context/confirm-context'
 import HowItWorks from '~/containers/guest-home-page/how-it-works/HowItWorks'
-import { getByText } from '@storybook/testing-library'
 
 const mockDispatch = jest.fn()
 
@@ -13,7 +12,7 @@ jest.mock('react-redux', () => ({
 }))
 
 describe('HowItWorks container', () => {
-  const { getByRole } = render(
+  render(
     <MemoryRouter>
       <ConfirmationDialogProvider>
         <ModalProvider>
@@ -24,8 +23,12 @@ describe('HowItWorks container', () => {
   )
 
   it('should change info by clicking on switch', () => {
-    getByRole('checkbox').click()
+    const checkbox = screen.getByRole('checkbox')
+    checkbox.click()
 
-    fireEvent.change(getByRole('checkbox'), { target: { checked: 'false' } })
+    fireEvent.change(checkbox, { target: { checked: 'false' } })
+    const btnText = screen.getByText('Become a mentor')
+
+    expect(btnText).toBeInTheDocument()
   })
 })
