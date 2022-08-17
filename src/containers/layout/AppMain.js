@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useLayoutEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import StudentLayout from './StudentLayout'
@@ -13,7 +13,7 @@ const AppMain = () => {
   const { loading, userRole } = useSelector((state) => state.appMain)
   const dispatch = useDispatch()
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (getFromLocalStorage(accessToken)) {
       dispatch(checkAuth())
     }
