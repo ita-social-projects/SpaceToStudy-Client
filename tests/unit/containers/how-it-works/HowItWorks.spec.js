@@ -26,10 +26,6 @@ describe('HowItWorks container', () => {
   it('should change info by clicking on switch', () => {
     getByRole('checkbox').click()
 
-    fireEvent.change(getByRole('checkbox'), { target: { checked: '' } })
-
-    // expect(getByRole('checkbox')).toHaveAttribute('checked', 'false')
-    screen.debug()
-
+    fireEvent.change(getByRole('checkbox'), { target: { checked: 'false' } })
   })
 })
