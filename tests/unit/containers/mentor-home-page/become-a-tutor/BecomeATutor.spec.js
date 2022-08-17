@@ -21,19 +21,6 @@ describe('BecomeATutor test', () => {
     expect(secondTab).toBeInTheDocument()
   })
 
-  it('should open documents render error text after add wrong file type', async() => {
-    const fakeFile = new File(['certificate'], 'test-file.png', { type: 'text/javascript' })
-
-    const documents = screen.getByText(/Documents/i)
-    fireEvent.click(documents)
-
-    const input = screen.getByLabelText('becomeTutor.documents.button')
-    fireEvent.change(input, { target: { files: [fakeFile] } })
-    const error = screen.queryByText('becomeTutor.documents.typeError')
-
-    await waitFor(() => expect(error).toBeInTheDocument())
-  })
-
   it('should open documents render error after add wrong file size', async() => {
     const fakeFile = new File(['certificate'], 'test-file.png', { type: 'image/png' })
     Object.defineProperty(fakeFile, 'size', { value: 55_000_000 })
