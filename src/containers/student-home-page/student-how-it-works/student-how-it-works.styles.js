@@ -1,6 +1,6 @@
 export const styles = {
   container: {
-    backgroundColor: '#fff', 
+    backgroundColor: 'basic.white', 
     display: 'block', 
     textAlign: 'center',
     p: '35px 40px'
