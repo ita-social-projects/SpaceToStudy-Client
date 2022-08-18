@@ -19,8 +19,6 @@ const EmailConfirmModal = ( { confirmToken, setModal } ) => {
 
   const { response, error, loading } = useAxios( { service: serviceFunction } )
 
-  console.log({ response, error, loading }, 'useAxios response')
-
   const openLoginDialog = () => {
     setModal(<LoginDialog />)
   }
