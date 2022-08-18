@@ -1,7 +1,7 @@
 import { Box } from '@mui/material'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 
-const style = {
+const componentStyle = {
   root: { m: { xs: '100px 10px', sm: '45px 20px 55px' } },
   img: { display: 'block', margin: '0 auto' },
   wrapper: { maxWidth: '630px' },
@@ -9,21 +9,21 @@ const style = {
   description: { typography: 'subtitle' }
 }
 
-const ImgTitleDescription = ({ img, title, description, styles=style }) => {
+const ImgTitleDescription = ({ img, title, description, style=componentStyle }) => {
 
   return (
-    <Box sx={ styles.root }>
+    <Box sx={ style.root }>
       <Box
         alt="info" component="img" src={ img }
-        sx={ styles.img }
+        sx={ style.img }
       />
 
       <TitleWithDescription
-        componentStyles={ styles.wrapper }
+        componentStyles={ style.wrapper }
         description={ description }
-        descriptionStyles={ styles.description }
+        descriptionStyles={ style.description }
         title={ title }
-        titleStyles={ styles.title }
+        titleStyles={ style.title }
       />
     </Box>
   )
