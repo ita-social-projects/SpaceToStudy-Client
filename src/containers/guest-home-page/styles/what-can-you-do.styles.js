@@ -1,9 +1,8 @@
 export const styles = {
   container: {
     my: {
-      md: '164px',
-      sm: '104px',
-      xs: '82px'
+      sm:'80px',
+      xs: '48px'
     }
   },
   cards: {

@@ -23,7 +23,7 @@ const HowItWorks = () => {
   const cardsMap = isStudent ? (
     <CardsWithButton array={ mentorCardBoxArray } btnText={ 'Become a mentor' } role={ 'mentor' } />
   ) : (
-    <CardsWithButton array={ studentCardBoxArray } btnText={ 'Start Learning Today' } role={ 'student' } />
+    <CardsWithButton array={ studentCardBoxArray } btnText={ 'Start learning today' } role={ 'student' } />
   )
 
   return (
@@ -33,12 +33,12 @@ const HowItWorks = () => {
           { t('guestHomePage.howItWorks.title') }
         </Typography>
 
-        <Stack alignItems="center" direction="row" spacing={ 1 }>
-          <Typography variant={ 'h6' }>
+        <Stack alignItems="center" spacing={ 1 } sx={ style.switch }>
+          <Typography color={ isStudent ? 'primary.500' : 'primary.900' } variant={ 'h6' }>
             { t('guestHomePage.howItWorks.learnFromExperts') }
           </Typography>
-          <Switch checked={ isStudent } onChange={ handleChange } />
-          <Typography color="primary.500" variant={ 'h6' }>
+          <Switch checked={ isStudent } data-testid='switch' onChange={ handleChange } />
+          <Typography color={ isStudent ? 'primary.900' : 'primary.500' } variant={ 'h6' }>
             { t('guestHomePage.howItWorks.shareYourExperience') }
           </Typography>
         </Stack>

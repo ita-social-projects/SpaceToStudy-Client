@@ -43,7 +43,7 @@ export const style = {
     overflow: 'auto'
   },
   plantImg: {
-    alignSelf: 'end',
+    alignSelf: 'flex-end',
     maxWidth: { xs: '110px', md: '170px' },
     overflow: 'auto'
   }
