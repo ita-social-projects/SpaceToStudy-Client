@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { Box, Typography } from '@mui/material'
 
 import FileUploader from '~/components/file-uploader/FileUploader'
-import img from '~/assets/img/mentor-home-page/become-tutor/add-documents.png'
+import addDocumentsPNG from '~/assets/img/mentor-home-page/become-tutor/add-documents.png'
 import { certificates as certificatesValidation } from '~/constants/validation/files'
 
 import { style } from '~/containers/mentor-home-page/add-documents/add-documents.style'
@@ -15,7 +15,7 @@ const AddDocuments = ({ btnsBox, documents, documentsError, addDocuments }) => {
       <Box
         alt={ t('becomeTutor.documents.imageAlt') }
         component='img'
-        src={ img }
+        src={ addDocumentsPNG }
         sx={ style.img }
       />
       
