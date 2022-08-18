@@ -1,7 +1,6 @@
-import { useCallback } from 'react'
 import { Box, Button } from '@mui/material'
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 
@@ -15,13 +14,8 @@ const sectionId = studentRoutes.navBar.howItWorks.label
 const StudentHowItWorks = () => {
 
   const { t } = useTranslation()
-  const navigate = useNavigate()
 
   const { route } = studentRoutes.navBar.findMentor
-
-  const redirect = useCallback(() => {
-    return navigate(route)
-  }, [route, navigate])
 
   const cards = howItWorksCards.map((item, index) => {
     return (
@@ -57,7 +51,10 @@ const StudentHowItWorks = () => {
       </Box>
 
       <Button
-        onClick={ redirect } size="extraLarge" variant="contained"
+        component={ Link } 
+        size="extraLarge" 
+        to={ route } 
+        variant="contained" 
       >
         { t('studentHomePage.findMentorBlock.button') }
       </Button>
