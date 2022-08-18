@@ -6,21 +6,19 @@ import { ThemeProvider } from '@emotion/react'
 import { render } from '@testing-library/react'
 import { theme } from '~/styles/app-theme/custom-mui.styles'
 
-
 export const renderWithProviders = (
   ui,
-  { 
+  {
+    initialEntries,
     preloadedState,
     store = configureStore({ reducer: { appMain: reducer }, preloadedState }),
-    ...renderOptions 
+    ...renderOptions
   } = {}
 ) => {
   const Wrapper = ({ children }) => (
-    <MemoryRouter>
-      <Provider store={ store }>
-        <ThemeProvider theme={ theme }>
-          { children }
-        </ThemeProvider>
+    <MemoryRouter initialEntries={[initialEntries]}>
+      <Provider store={store}>
+        <ThemeProvider theme={theme}>{children}</ThemeProvider>
       </Provider>
     </MemoryRouter>
   )
