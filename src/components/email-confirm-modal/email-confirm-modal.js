@@ -19,6 +19,8 @@ const EmailConfirmModal = ( { confirmToken, setModal } ) => {
 
   const { response, error, loading } = useAxios( { service: serviceFunction } )
 
+  console.log({ response, error, loading }, 'useAxios response')
+
   const openLoginDialog = () => {
     setModal(<LoginDialog />)
   }
@@ -36,12 +38,12 @@ const EmailConfirmModal = ( { confirmToken, setModal } ) => {
       <Box sx={ style.box }>
         <Box>
           <Box
-            alt="email-confirm-icon"
+            alt="email-reject-icon"
             component="img"
             src={ imgReject }
           />
           <Typography
-            component="h2" data-testid='confirm-message' id="modal-modal-title"
+            component="h2" data-testid='reject-message' id="modal-modal-title"
             style={ style.message }
             variant="h6"
           >
@@ -70,7 +72,8 @@ const EmailConfirmModal = ( { confirmToken, setModal } ) => {
             src={ imgSuccess }
           />
           <Typography
-            component="h2" id="modal-modal-title" style={ style.message }
+            component="h2" data-testid='confirm-message' id="modal-modal-title"
+            style={ style.message }
             variant="h6"
           >
             { t('modals.emailConfirm') }
