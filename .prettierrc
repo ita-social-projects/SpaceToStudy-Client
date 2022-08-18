@@ -2,6 +2,7 @@
   "semi": false,
   "trailingComma": "none",
   "singleQuote": true,
+  "jsxSingleQuote": true,
   "arrowParens": "always",
   "printWidth": 120,
   "endOfLine": "auto"
