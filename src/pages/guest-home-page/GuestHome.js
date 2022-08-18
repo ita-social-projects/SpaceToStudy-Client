@@ -23,8 +23,8 @@ const GuestHomePage = () => {
   useEffect(() => search === '?login' && setModal(<LoginDialog />), [])
 
   useEffect(() =>
-    confirmToken && setModal(<EmailConfirmModal confirmToken={ confirmToken } />)
-  , [])
+    confirmToken && setModal(<EmailConfirmModal confirmToken={ confirmToken } setModal={ setModal } />)
+  , [ confirmToken , setModal ])
   
   return (
     <Box data-testid="guestHome">
