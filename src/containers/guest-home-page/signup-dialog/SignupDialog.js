@@ -15,13 +15,15 @@ import { signupUser } from '~/redux/reducer'
 
 import student from '~/assets/img/signup-dialog/student.png'
 import mentor from '~/assets/img/signup-dialog/mentor.png'
+import info from '~/assets/img/guest-home-page/info.svg'
 
 import { style } from '~/containers/guest-home-page/signup-dialog/signup-dialog.style'
+import ImgTitleDescription from '~/components/img-title-description/ImgTitleDescription'
 
 const SignupDialog = ({ type }) => {
   const { t } = useTranslation()
   const { setNeedConfirmation } = useConfirm()
-  const { closeModal } = useContext(ModalContext)
+  const { setModal, closeModal } = useContext(ModalContext)
   const dispatch = useDispatch()
 
   const signupImg = { student, mentor }
@@ -30,7 +32,13 @@ const SignupDialog = ({ type }) => {
     onSubmit: async () => {
       try {
         await dispatch(signupUser({ ...data, role: type })).unwrap()
-        closeModal()
+        setModal(
+          <ImgTitleDescription
+            description={ description }
+            img={ info }
+            title={ t('signup.confirmEmailTitle') }
+          />)
+        setTimeout(() => closeModal(), 5000)
       } catch (e) {
         console.log(e)
       }
@@ -38,6 +46,16 @@ const SignupDialog = ({ type }) => {
     initialValues: { firstName: '', lastName: '', email: '', password: '', confirmPassword: '' },
     validations: { firstName, lastName, email, password, confirmPassword }
   })
+
+  const description = (
+    <>
+      { t('signup.confirmEmailMessage') }
+      <Typography component="span" variant='subtitle2'>
+        { data.email }
+      </Typography>
+      { t('signup.confirmEmailDesc') }
+    </>
+  )
 
   useEffect(() => {
     setNeedConfirmation(isDirty)
