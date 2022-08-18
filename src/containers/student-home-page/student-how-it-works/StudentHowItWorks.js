@@ -17,11 +17,11 @@ const StudentHowItWorks = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
 
-  const { findMentor } = studentRoutes.navBar
+  const { route } = studentRoutes.navBar.findMentor
 
   const redirect = useCallback(() => {
-    return navigate(findMentor.route)
-  }, [findMentor.route, navigate])
+    return navigate(route)
+  }, [route, navigate])
 
   const cards = howItWorksCards.map((item, index) => {
     return (
