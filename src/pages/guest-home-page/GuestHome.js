@@ -9,13 +9,22 @@ import FeatureBlock from '~/containers/guest-home-page/FeatureBlock'
 import WhatCanYouDo from '~/containers/guest-home-page/WhatCanYouDo'
 import HowItWorks from '~/containers/guest-home-page/how-it-works/HowItWorks'
 import WhoWeAre from '~/containers/guest-home-page/who-we-are/WhoWeAre'
+import EmailConfirmModal from '~/components/email-confirm-modal/email-confirm-modal'
 import { descriptionTimes } from '~/components/accordion-with-image/descriptionTimes'
+import { useSearchParams } from 'react-router-dom'
 
 const GuestHomePage = () => {
-	const { setModal } = useContext(ModalContext)
-	const { search } = useLocation()
-	
-	useEffect(() => search === '?login' && setModal(<LoginDialog />), [])
+  const { search } = useLocation()
+  const { setModal } = useContext(ModalContext)
+
+  const [ searchParams ] = useSearchParams()
+  const confirmToken = searchParams.get('confirmToken')
+
+  useEffect(() => search === '?login' && setModal(<LoginDialog />), [])
+
+  useEffect(() =>
+    confirmToken && setModal(<EmailConfirmModal confirmToken={ confirmToken } />)
+  , [])
   
   return (
     <Box data-testid="guestHome">
