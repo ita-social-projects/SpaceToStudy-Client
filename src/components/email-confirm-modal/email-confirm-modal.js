@@ -41,7 +41,7 @@ const EmailConfirmModal = ( { confirmToken, setModal } ) => {
             src={ imgReject }
           />
           <Typography
-            component="h2" data-testid='reject-message' id="modal-modal-title"
+            component="h2" data-testid='reject-message'
             style={ style.message }
             variant="h6"
           >
@@ -70,7 +70,7 @@ const EmailConfirmModal = ( { confirmToken, setModal } ) => {
             src={ imgSuccess }
           />
           <Typography
-            component="h2" data-testid='confirm-message' id="modal-modal-title"
+            component="h2" data-testid='confirm-message'
             style={ style.message }
             variant="h6"
           >
