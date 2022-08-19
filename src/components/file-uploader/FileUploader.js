@@ -9,7 +9,7 @@ import useUpload from '~/hooks/use-upload'
 import { style } from '~/components/file-uploader/file-uploader.style'
 
 
-const FileUploader = ({ buttonText, emitter, initialState, initialError, validation, maxQuantityFiles }) => {
+const FileUploader = ({ buttonText, emitter, initialState, initialError, maxQuantityFiles, maxFileSize, maxAllFilesSize, fileTypes }) => {
   const { t } = useTranslation()
 
   const { dragStart, dragLeave, dragDrop, addFiles, deleteFile, files, isDrag, error } = useUpload(
@@ -17,7 +17,9 @@ const FileUploader = ({ buttonText, emitter, initialState, initialError, validat
       initialState: initialState,
       initialError: initialError,
       maxQuantityFiles: maxQuantityFiles,
-      validations: validation
+      fileTypes: fileTypes,
+      maxAllFilesSize: maxAllFilesSize,
+      maxFileSize: maxFileSize
     })
 
   useEffect(() => {

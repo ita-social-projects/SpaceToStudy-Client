@@ -1,7 +1,6 @@
 import { Box } from '@mui/material'
 import { useEffect, useContext } from 'react'
 import { useLocation } from 'react-router-dom'
-
 import { ModalContext } from '~/context/modal-context'
 import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
 import Welcome from '~/containers/guest-home-page/Welcome'
@@ -12,11 +11,11 @@ import WhoWeAre from '~/containers/guest-home-page/who-we-are/WhoWeAre'
 import { descriptionTimes } from '~/components/accordion-with-image/descriptionTimes'
 
 const GuestHomePage = () => {
-	const { setModal } = useContext(ModalContext)
-	const { search } = useLocation()
-	
-	useEffect(() => search === '?login' && setModal(<LoginDialog />), [])
-  
+  const { setModal } = useContext(ModalContext)
+  const { search } = useLocation()
+
+  useEffect(() => search === '?login' && setModal(<LoginDialog />), [search,setModal])
+
   return (
     <Box data-testid="guestHome">
       <Welcome />
@@ -29,5 +28,4 @@ const GuestHomePage = () => {
     </Box>
   )
 }
-
 export default GuestHomePage

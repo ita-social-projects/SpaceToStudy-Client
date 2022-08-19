@@ -2,10 +2,12 @@ import { render, screen, fireEvent } from '@testing-library/react'
 import FileUploader from '~/components/file-uploader/FileUploader'
 
 const buttonText = 'test'
-const validation = jest.fn()
 const emitter = jest.fn()
 const initialState = []
 const initialError = undefined
+const fileTypes = ['application/pdf']
+const maxAllFilesSize = 50_000
+const maxFileSize = 10_000
 const fakeFile = new File(['certificate'], 'test-file.png', { type: 'application/pdf' })
 
 describe('FileUploader test', () => {
@@ -14,10 +16,12 @@ describe('FileUploader test', () => {
       <FileUploader
         buttonText={ buttonText }
         emitter={ emitter }
+        fileTypes={ fileTypes }
         initialError={ initialError }
         initialState={ initialState }
+        maxAllFilesSize={ maxAllFilesSize }
+        maxFileSize={ maxFileSize }
         maxQuantityFiles={ 5 }
-        validation={ validation }
       />)
   })
 

@@ -3,9 +3,12 @@ import { Box, Typography } from '@mui/material'
 
 import FileUploader from '~/components/file-uploader/FileUploader'
 import addDocumentsPNG from '~/assets/img/mentor-home-page/become-tutor/add-documents.png'
-import { certificates as certificatesValidation } from '~/constants/validation/files'
 
 import { style } from '~/containers/mentor-home-page/add-documents/add-documents.style'
+
+const maxFileSize = 10_000_000
+const maxAllFilesSize = 50_000_000
+const fileTypes = ['application/pdf', 'image/jpeg', 'image/png']
 
 const AddDocuments = ({ btnsBox, documents, documentsError, addDocuments }) => {
   const { t } = useTranslation()
@@ -27,10 +30,12 @@ const AddDocuments = ({ btnsBox, documents, documentsError, addDocuments }) => {
           <FileUploader
             buttonText={ t('becomeTutor.documents.button') }
             emitter={ addDocuments }
+            fileTypes={ fileTypes }
             initialError={ documentsError }
             initialState={ documents }
+            maxAllFilesSize={ maxAllFilesSize }
+            maxFileSize={ maxFileSize }
             maxQuantityFiles={ 8 }
-            validation={ certificatesValidation }
           />
         </Box>
 

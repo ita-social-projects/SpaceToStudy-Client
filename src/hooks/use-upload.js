@@ -1,6 +1,7 @@
 import { useState } from 'react'
+import { filesValidation } from '~/utils/validation/files'
 
-const useUpload = ({ validations, maxQuantityFiles, initialState, initialError }) => {
+const useUpload = ({ initialState, initialError, maxQuantityFiles, fileTypes, maxAllFilesSize, maxFileSize }) => {
   const [files, setFiles] = useState(initialState)
   const [isDrag, setIsDrag] = useState(false)
   const [error, setError] = useState(initialError)
@@ -18,19 +19,19 @@ const useUpload = ({ validations, maxQuantityFiles, initialState, initialError }
     const newFiles = [...files, ...e.dataTransfer.files].slice(0, maxQuantityFiles)
     setFiles(newFiles)
     setIsDrag(false)
-    setError(validations(newFiles))
+    setError(filesValidation(newFiles, maxFileSize, maxAllFilesSize, fileTypes))
   }
   
   const addFiles = (e) => {
     e.preventDefault()  
     const newFiles = [...files, ...e.target.files].slice(0, maxQuantityFiles)
     setFiles(newFiles)
-    setError(validations(newFiles)) 
+    setError(filesValidation(newFiles, maxFileSize, maxAllFilesSize, fileTypes))
   }
   const deleteFile = (file) => {
     const newFiles = files.filter(item => item !== file)
     setFiles(newFiles)
-    setError(validations(newFiles))
+    setError(filesValidation(newFiles, maxFileSize, maxAllFilesSize, fileTypes))
   }
   
   return {
