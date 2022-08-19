@@ -24,7 +24,7 @@ const GuestHomePage = () => {
 
   useEffect(() => {
     confirmToken && setModal(<EmailConfirmModal confirmToken={ confirmToken } setModal={ setModal } />)
-    // navigate('/')
+    navigate('/')
   }, [ confirmToken , setModal, navigate ])
 
   return (

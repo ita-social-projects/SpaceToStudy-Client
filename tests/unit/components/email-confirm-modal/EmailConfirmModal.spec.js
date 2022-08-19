@@ -40,7 +40,7 @@ describe('EmailConfirmModal test', () => {
     }
     useAxios.mockImplementation(() => fakeData )
     renderWithProviders(<EmailConfirmModal { ...props } />)
-    screen.debug()
+
     const modalImg = screen.getByAltText('info')
     const title = screen.getByText('modals.emailNotConfirm')
     const description = screen.getByText('modals.emailReject-alreadyConfirmed')
