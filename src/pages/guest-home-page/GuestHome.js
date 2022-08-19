@@ -12,10 +12,10 @@ import WhoWeAre from '~/containers/guest-home-page/who-we-are/WhoWeAre'
 import { descriptionTimes } from '~/components/accordion-with-image/descriptionTimes'
 
 const GuestHomePage = () => {
-	const { setModal } = useContext(ModalContext)
-	const { search } = useLocation()
+  const { setModal } = useContext(ModalContext)
+  const { search } = useLocation()
 	
-	useEffect(() => search === '?login' && setModal(<LoginDialog />), [])
+  useEffect(() => search === '?login' && setModal(<LoginDialog />), [])
   
   return (
     <Box data-testid="guestHome">
