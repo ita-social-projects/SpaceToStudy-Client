@@ -16,25 +16,13 @@ export default {
       type: 'string',
       description: 'Initial error'
     },
-    maxQuantityFiles: {
-      type: 'number',
-      description: 'Max quantity files'
-    },
-    maxAllFilesSize: {
-      type: 'number',
-      description: 'Max all files size'
-    },
-    maxFileSize: {
-      type: 'number',
-      description: 'Max files size'
-    },
     emitter: {
       type: 'function',
       description: 'Emiter function'
     },
-    filesTypes: {
-      type: 'array',
-      description: 'Array of files types'
+    validationData: {
+      type: 'object',
+      description: 'All validation data'
     }
   }
 }
@@ -53,9 +41,13 @@ Default.args = {
   emitter: () => console.log('emitter called'),
   initialState: [],
   initialError: null,
-  emitter: () => '',
-  maxQuantityFiles: 5,
-  filesTypes: ['application/pdf', 'image/jpeg', 'image/png'],
-  maxFileSize: 10_000_000,
-  maxAllFilesSize: 50_000_000
+  validationData: {
+    maxFileSize: 5_000_000,
+    maxAllFilesSize: 20_000_000,
+    filesTypes: ['application/pdf', 'image/jpeg', 'image/png'],
+    fileSizeError: 'File size error',
+    allFilesSizeError: 'All files size error',
+    typeError: 'Type error',
+    maxQuantityFiles: 7
+  }
 }

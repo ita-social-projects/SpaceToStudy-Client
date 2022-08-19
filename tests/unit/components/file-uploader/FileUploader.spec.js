@@ -5,9 +5,15 @@ const buttonText = 'test'
 const emitter = jest.fn()
 const initialState = []
 const initialError = undefined
-const filesTypes = ['application/pdf']
-const maxAllFilesSize = 50_000
-const maxFileSize = 10_000
+const validationData = {
+  maxFileSize: 10_000_000,
+  maxAllFilesSize: 50_000_000,
+  filesTypes: ['application/pdf', 'image/jpeg', 'image/png'],
+  fileSizeError: 'becomeTutor.documents.fileSizeError',
+  allFilesSizeError: 'becomeTutor.documents.allFilesSizeError',
+  typeError: 'becomeTutor.documents.typeError',
+  maxQuantityFiles: 7
+}
 const fakeFile = new File(['certificate'], 'test-file.png', { type: 'application/pdf' })
 
 describe('FileUploader test', () => {
@@ -16,12 +22,9 @@ describe('FileUploader test', () => {
       <FileUploader
         buttonText={ buttonText }
         emitter={ emitter }
-        filesTypes={ filesTypes }
         initialError={ initialError }
         initialState={ initialState }
-        maxAllFilesSize={ maxAllFilesSize }
-        maxFileSize={ maxFileSize }
-        maxQuantityFiles={ 5 }
+        validationData={ validationData }
       />)
   })
 

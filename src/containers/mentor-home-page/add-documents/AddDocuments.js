@@ -6,9 +6,15 @@ import addDocumentsPNG from '~/assets/img/mentor-home-page/become-tutor/add-docu
 
 import { style } from '~/containers/mentor-home-page/add-documents/add-documents.style'
 
-const maxFileSize = 10_000_000
-const maxAllFilesSize = 50_000_000
-const filesTypes = ['application/pdf', 'image/jpeg', 'image/png']
+const validationData = {
+  maxFileSize: 10_000_000,
+  maxAllFilesSize: 50_000_000,
+  filesTypes: ['application/pdf', 'image/jpeg', 'image/png'],
+  fileSizeError: 'becomeTutor.documents.fileSizeError',
+  allFilesSizeError: 'becomeTutor.documents.allFilesSizeError',
+  typeError: 'becomeTutor.documents.typeError',
+  maxQuantityFiles: 7
+}
 
 const AddDocuments = ({ btnsBox, documents, documentsError, addDocuments }) => {
   const { t } = useTranslation()
@@ -30,12 +36,9 @@ const AddDocuments = ({ btnsBox, documents, documentsError, addDocuments }) => {
           <FileUploader
             buttonText={ t('becomeTutor.documents.button') }
             emitter={ addDocuments }
-            filesTypes={ filesTypes }
             initialError={ documentsError }
             initialState={ documents }
-            maxAllFilesSize={ maxAllFilesSize }
-            maxFileSize={ maxFileSize }
-            maxQuantityFiles={ 8 }
+            validationData={ validationData }
           />
         </Box>
 
