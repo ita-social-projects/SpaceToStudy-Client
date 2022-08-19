@@ -1,6 +1,5 @@
 import FileUploader from '~/components/file-uploader/FileUploader'
 
-
 export default {
   title: 'FileUploader',
   component: FileUploader,
@@ -21,13 +20,24 @@ export default {
       type: 'number',
       description: 'Max quantity files'
     },
-    validation: {
+    maxAllFilesSize: {
+      type: 'number',
+      description: 'Max all files size'
+    },
+    maxFileSize: {
+      type: 'number',
+      description: 'Max files size'
+    },
+    emitter: {
       type: 'function',
-      description: 'Validation function'
+      description: 'Emiter function'
+    },
+    filesTypes: {
+      type: 'array',
+      description: 'Array of files types'
     }
   }
 }
-
 
 export const Default = (args) => {
   return (
@@ -37,29 +47,15 @@ export const Default = (args) => {
     </div> 
   )
 }
+
 Default.args = {
   buttonText: 'Upload your files',
   emitter: () => console.log('emitter called'),
   initialState: [],
   initialError: null,
-  validation: () => '',
-  maxQuantityFiles: 5
-}
-
-
-export const WithError = (args) => {
-  return (
-    <div style={{ maxWidth: '400px', margin: '0 auto',  }}>
-      <h1>File Uploader with error</h1>
-      <FileUploader { ...args } />
-    </div> 
-  )
-}
-WithError.args = {
-  buttonText: 'Upload your files',
-  emitter: () => console.log('emitter called'),
-  initialState: [],
-  initialError: 'Defauld error',
-  validation: () => 'Validation error',
-  maxQuantityFiles: 5
+  emitter: () => '',
+  maxQuantityFiles: 5,
+  filesTypes: ['application/pdf', 'image/jpeg', 'image/png'],
+  maxFileSize: 10_000_000,
+  maxAllFilesSize: 50_000_000
 }
