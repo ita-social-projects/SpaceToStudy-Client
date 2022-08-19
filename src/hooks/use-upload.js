@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { filesValidation } from '~/utils/validation/files'
+import { filesValidation } from '~/utils/validations/files'
 
 const useUpload = ({ initialState, initialError, validationData }) => {
   const [files, setFiles] = useState(initialState)
