@@ -1,10 +1,9 @@
-import { fireEvent, screen, waitFor } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
-import EmailConfirmModal from '~/components/email-confirm-modal/EmailConfirmModal'
+import EmailConfirmModal from '~/containers/email-confirm-modal/EmailConfirmModal'
 import useAxios from '~/hooks/use-axios'
 
 const closeModal = jest.fn()
-const openLoginDialog = jest.fn()
 
 jest.mock('~/hooks/use-axios')
 
