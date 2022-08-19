@@ -1,6 +1,6 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
-import EmailConfirmModal from '~/components/email-confirm-modal/email-confirm-modal'
+import EmailConfirmModal from '~/components/email-confirm-modal/emailConfirmModal'
 import useAxios from '~/hooks/use-axios'
 
 const closeModal = jest.fn()

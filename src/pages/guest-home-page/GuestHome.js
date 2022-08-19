@@ -9,7 +9,7 @@ import FeatureBlock from '~/containers/guest-home-page/FeatureBlock'
 import WhatCanYouDo from '~/containers/guest-home-page/WhatCanYouDo'
 import HowItWorks from '~/containers/guest-home-page/how-it-works/HowItWorks'
 import WhoWeAre from '~/containers/guest-home-page/who-we-are/WhoWeAre'
-import EmailConfirmModal from '~/components/email-confirm-modal/email-confirm-modal'
+import EmailConfirmModal from '~/components/email-confirm-modal/emailConfirmModal'
 import { descriptionTimes } from '~/components/accordion-with-image/descriptionTimes'
 
 const GuestHomePage = () => {
