@@ -8,7 +8,7 @@ import { style } from '~/containers/mentor-home-page/add-documents/add-documents
 
 const maxFileSize = 10_000_000
 const maxAllFilesSize = 50_000_000
-const fileTypes = ['application/pdf', 'image/jpeg', 'image/png']
+const filesTypes = ['application/pdf', 'image/jpeg', 'image/png']
 
 const AddDocuments = ({ btnsBox, documents, documentsError, addDocuments }) => {
   const { t } = useTranslation()
@@ -30,7 +30,7 @@ const AddDocuments = ({ btnsBox, documents, documentsError, addDocuments }) => {
           <FileUploader
             buttonText={ t('becomeTutor.documents.button') }
             emitter={ addDocuments }
-            fileTypes={ fileTypes }
+            filesTypes={ filesTypes }
             initialError={ documentsError }
             initialState={ documents }
             maxAllFilesSize={ maxAllFilesSize }

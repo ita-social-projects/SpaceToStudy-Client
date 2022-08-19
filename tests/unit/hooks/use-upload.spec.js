@@ -3,9 +3,10 @@ import useUpload from '~/hooks/use-upload'
 
 const filesTypes = ['application/pdf']
 const initialState = []
-const initialError = undefined
+const initialError = null
 const maxAllFilesSize = 10000
 const maxFileSize = 100
+const maxQuantityFiles = 5
 const fakeFile = new File(['certificate'], 'test-file.png', { type: 'application/pdf' })
 const getFakeTestEvent = (fakeFile) => (
   {
@@ -26,11 +27,12 @@ describe('useUpload custom hook test without errors', () => {
     expect(typeof result.current.deleteFile).toBe('function')
 
     expect(result.current.files).toEqual([])
-    expect(result.current.error).toEqual(undefined)
+    expect(result.current.error).toEqual(null)
     expect(result.current.isDrag).toEqual(false)
   })
 
   it('should change isDrag value to true after dragStart', () => {
+   
     const { result } = renderHook(() => useUpload({ initialState, initialError, filesTypes }))
     
     act(() => result.current.dragStart(getFakeTestEvent(fakeFile)))
@@ -48,21 +50,21 @@ describe('useUpload custom hook test without errors', () => {
     expect(result.current.isDrag).toEqual(false)
   })
   
-  // it('should change drop fake file', () => {
-  //   const { result } = renderHook(() => useUpload({ initialState, initialError, filesTypes, maxAllFilesSize, maxFileSize }))
+  it('should change drop fake file', () => {
+    const { result } = renderHook(() => useUpload({ initialState, initialError, filesTypes, maxAllFilesSize, maxFileSize, maxQuantityFiles }))
     
-  //   act(() => result.current.dragDrop(getFakeTestEvent(fakeFile)))
+    act(() => result.current.dragDrop(getFakeTestEvent(fakeFile)))
 
-  //   expect(result.current.files).toHaveLength(1)
-  // })
+    expect(result.current.files).toHaveLength(1)
+  })
     
-  // it('should add fake file', () => {
-  //   const { result } = renderHook(() => useUpload({ initialState, initialError, filesTypes, maxAllFilesSize, maxFileSize }))
+  it('should add fake file', () => {
+    const { result } = renderHook(() => useUpload({ initialState, initialError, filesTypes, maxAllFilesSize, maxFileSize }))
     
-  //   act(() => result.current.addFiles(getFakeTestEvent(fakeFile)))
+    act(() => result.current.addFiles(getFakeTestEvent(fakeFile)))
 
-  //   expect(result.current.files).toHaveLength(1)
-  // })
+    expect(result.current.files).toHaveLength(1)
+  })
     
   it('should add fake file and delete', () => {
     const initialState = [fakeFile]

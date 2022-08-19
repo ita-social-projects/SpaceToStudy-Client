@@ -5,7 +5,7 @@ const buttonText = 'test'
 const emitter = jest.fn()
 const initialState = []
 const initialError = undefined
-const fileTypes = ['application/pdf']
+const filesTypes = ['application/pdf']
 const maxAllFilesSize = 50_000
 const maxFileSize = 10_000
 const fakeFile = new File(['certificate'], 'test-file.png', { type: 'application/pdf' })
@@ -16,7 +16,7 @@ describe('FileUploader test', () => {
       <FileUploader
         buttonText={ buttonText }
         emitter={ emitter }
-        fileTypes={ fileTypes }
+        filesTypes={ filesTypes }
         initialError={ initialError }
         initialState={ initialState }
         maxAllFilesSize={ maxAllFilesSize }
