@@ -15,7 +15,7 @@ const GuestHomePage = () => {
   const { setModal } = useContext(ModalContext)
   const { search } = useLocation()
 	
-  useEffect(() => search === '?login' && setModal(<LoginDialog />), [])
+  useEffect(() => search === '?login' && setModal(<LoginDialog />), [search,setModal])
   
   return (
     <Box data-testid="guestHome">
