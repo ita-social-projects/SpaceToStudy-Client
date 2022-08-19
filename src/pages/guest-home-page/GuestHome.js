@@ -1,6 +1,6 @@
 import { Box } from '@mui/material'
 import { useEffect, useContext } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useSearchParams } from 'react-router-dom'
 
 import { ModalContext } from '~/context/modal-context'
 import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
@@ -11,7 +11,6 @@ import HowItWorks from '~/containers/guest-home-page/how-it-works/HowItWorks'
 import WhoWeAre from '~/containers/guest-home-page/who-we-are/WhoWeAre'
 import EmailConfirmModal from '~/components/email-confirm-modal/email-confirm-modal'
 import { descriptionTimes } from '~/components/accordion-with-image/descriptionTimes'
-import { useSearchParams } from 'react-router-dom'
 
 const GuestHomePage = () => {
   const { search } = useLocation()
