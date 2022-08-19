@@ -1,4 +1,6 @@
 {
     "emailConfirm": "Your email has been successfully verified!",
-    "emailNotConfirm": "Your email address has not been verified!"
+    "emailNotConfirm": "Your email address has not been verified!",
+    "emailReject-badToken": "The confirm token is either invalid or has expired.",
+    "emailReject-alreadyConfirmed": "User email has been already confirmed."
 }

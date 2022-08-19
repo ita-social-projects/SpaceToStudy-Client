@@ -1,6 +1,6 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
-import EmailConfirmModal from '~/components/email-confirm-modal/emailConfirmModal'
+import EmailConfirmModal from '~/components/email-confirm-modal/EmailConfirmModal'
 import useAxios from '~/hooks/use-axios'
 
 const closeModal = jest.fn()
@@ -14,20 +14,40 @@ describe('EmailConfirmModal test', () => {
     closeModal: closeModal
   }
 
-  it('should render negative-scenario image and message - (error from useAxios)', async() => {
+  it('should render negative-scenario image and message (BAD_CONFIRM_TOKEN)', async() => {
     const fakeData = {
-      error : { response : { status: 400 } },
+      error : { response : { data : { code:'BAD_CONFIRM_TOKEN' } } },
       loading : false,
       response : null
     }
     useAxios.mockImplementation(() => fakeData )
     renderWithProviders(<EmailConfirmModal { ...props } />)
 
-    const modalImg = screen.getByAltText('email-reject-icon')
-    const message = screen.getByTestId('reject-message')
+    const modalImg = screen.getByAltText('info')
+    const title = screen.getByText('modals.emailNotConfirm')
+    const description = screen.getByText('modals.emailReject-badToken')
 
     expect(modalImg).toBeInTheDocument()
-    expect(message).toBeInTheDocument()
+    expect(title).toBeInTheDocument()
+    expect(description).toBeInTheDocument()
+  })
+
+  it('should render negative-scenario image and message (EMAIL_ALREADY_CONFIRMED)', async() => {
+    const fakeData = {
+      error : { response : { data : { code:'EMAIL_ALREADY_CONFIRMED' } } },
+      loading : false,
+      response : null
+    }
+    useAxios.mockImplementation(() => fakeData )
+    renderWithProviders(<EmailConfirmModal { ...props } />)
+    screen.debug()
+    const modalImg = screen.getByAltText('info')
+    const title = screen.getByText('modals.emailNotConfirm')
+    const description = screen.getByText('modals.emailReject-alreadyConfirmed')
+
+    expect(modalImg).toBeInTheDocument()
+    expect(title).toBeInTheDocument()
+    expect(description).toBeInTheDocument()
   })
 
   it('should render positive-scenario image and message - (response from useAxios)', async() => {
@@ -39,11 +59,11 @@ describe('EmailConfirmModal test', () => {
     useAxios.mockImplementation(() => fakeData )
     renderWithProviders(<EmailConfirmModal { ...props } />)
 
-    const modalImg = screen.getByAltText('email-confirm-icon')
-    const message = screen.getByTestId('confirm-message')
+    const modalImg = screen.getByAltText('info')
+    const title = screen.getByText('modals.emailConfirm')
 
     expect(modalImg).toBeInTheDocument()
-    expect(message).toBeInTheDocument()
+    expect(title).toBeInTheDocument()
   })
 
   it('should render Loader - (loading from useAxios)',async () => {
@@ -62,14 +82,14 @@ describe('EmailConfirmModal test', () => {
 
   it('should render button', async () => {
     const fakeData = {
-      error : { response : { status: 400 } },
+      error : null,
       loading : false,
-      response : null
+      response : { response : { status: 204 } }
     }
     useAxios.mockImplementation(() => fakeData )
     renderWithProviders(<EmailConfirmModal { ...props } />)
 
-    const button = screen.getByTestId('toLoginButton')
+    const button = screen.getByText('button.goToLogin')
 
     expect(button).toBeInTheDocument()
   })

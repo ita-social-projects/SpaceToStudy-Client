@@ -12,10 +12,10 @@ export const style = {
     textTransform: 'none',
     height: '56px',
   },
-  message: {
+  title: {
     marginTop: '30px',
     fontSize: '21px',
     fontWeight: 'bold',
-    color: '#29313D',
+    color: 'palette.grey.500',
   },
 }

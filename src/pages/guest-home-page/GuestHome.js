@@ -1,6 +1,6 @@
 import { Box } from '@mui/material'
 import { useEffect, useContext } from 'react'
-import { useLocation, useSearchParams } from 'react-router-dom'
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 
 import { ModalContext } from '~/context/modal-context'
 import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
@@ -9,22 +9,24 @@ import FeatureBlock from '~/containers/guest-home-page/FeatureBlock'
 import WhatCanYouDo from '~/containers/guest-home-page/WhatCanYouDo'
 import HowItWorks from '~/containers/guest-home-page/how-it-works/HowItWorks'
 import WhoWeAre from '~/containers/guest-home-page/who-we-are/WhoWeAre'
-import EmailConfirmModal from '~/components/email-confirm-modal/emailConfirmModal'
+import EmailConfirmModal from '~/components/email-confirm-modal/EmailConfirmModal'
 import { descriptionTimes } from '~/components/accordion-with-image/descriptionTimes'
 
 const GuestHomePage = () => {
   const { search } = useLocation()
   const { setModal } = useContext(ModalContext)
+  const navigate = useNavigate()
 
   const [ searchParams ] = useSearchParams()
   const confirmToken = searchParams.get('confirmToken')
 
   useEffect(() => search === '?login' && setModal(<LoginDialog />), [])
 
-  useEffect(() =>
+  useEffect(() => {
     confirmToken && setModal(<EmailConfirmModal confirmToken={ confirmToken } setModal={ setModal } />)
-  , [ confirmToken , setModal ])
-  
+    // navigate('/')
+  }, [ confirmToken , setModal, navigate ])
+
   return (
     <Box data-testid="guestHome">
       <Welcome />
