@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { axiosClient } from '~/plugins/axiosClient'
-import { URLs } from '~/constants/request'
+import { URLs as Urls, URLs } from '~/constants/request'
 
 export const axiosInstance = axios.create({
   withCredentials: true,
@@ -19,5 +19,9 @@ export const AuthService = {
   },
   refresh: () => {
     return axiosInstance.get(URLs.auth.refresh)
+  },
+  confirmEmail: (confirmToken) => {
+    const confirmUrl = `${Urls.auth.confirm}/${ confirmToken }`
+    return axiosInstance.get(confirmUrl)
   }
 }

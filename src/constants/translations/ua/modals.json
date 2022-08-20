@@ -1,0 +1,6 @@
+{
+  "emailConfirm": "Ваш email успішно перевірено!",
+  "emailNotConfirm": "Ваш email не перевірено!",
+  "emailReject-badToken": "Токен підтвердження або недійсний, або термін його дії минув.",
+  "emailReject-alreadyConfirmed": "Електронну адресу користувача вже підтверджено."
+}
