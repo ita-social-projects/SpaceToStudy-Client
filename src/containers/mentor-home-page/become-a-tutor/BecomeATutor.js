@@ -53,6 +53,7 @@ const BecomeATutor = () => {
       documents={ documents }
       documentsError={ documentsError }
       key='5'
+      setStepErrors={ setStepErrors }
     />,
     <TempComponent key="6">6</TempComponent>
   ]
