@@ -16,3 +16,12 @@ export const nameField = (value) => {
   helperText = emptyField(value, helperText)
   return helperText
 }
+
+export const textField = (min, max) => (value) => {
+  if (value.length !== 0 && value.length < min) {
+    return 'common.errorMessages.shortText'
+  }
+  if (value.length > max) {
+    return 'common.errorMessages.longText'
+  }
+}

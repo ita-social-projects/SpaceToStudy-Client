@@ -10,6 +10,7 @@ const btnsBox = (
     <button>next</button>
   </div>
 )
+const setStepErrors = jest.fn()
 
 describe('AddDocuments test', () => {
   beforeEach(() => {
@@ -19,6 +20,7 @@ describe('AddDocuments test', () => {
         btnsBox={ btnsBox }
         documents={ documents }
         documentsError={ documentsError }
+        setStepErrors={ setStepErrors }
       />)
   })
 

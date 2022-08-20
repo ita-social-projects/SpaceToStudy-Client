@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Box, Typography } from '@mui/material'
 
@@ -16,8 +17,12 @@ const validationData = {
   maxQuantityFiles: 7
 }
 
-const AddDocuments = ({ btnsBox, documents, documentsError, addDocuments }) => {
+const AddDocuments = ({ btnsBox, documents, documentsError, addDocuments, setStepErrors, stepLabel }) => {
   const { t } = useTranslation()
+
+  useEffect(() => {
+    setStepErrors((prevState) => ({ ...prevState, [stepLabel]: Boolean(documentsError) }))
+  }, [documentsError, setStepErrors, stepLabel])
 
   return (
     <Box sx={ style.root }>

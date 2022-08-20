@@ -10,5 +10,9 @@
         "typeError": "Wrong file type. Only .pdf/.png/.jpg/.jpeg files are allowed.",
         "allFilesSizeError": "Size of all certificates cannot be more than 50MB.",
         "fileSizeError": "Size for one file cannot be more than 10MB."
-    }
+    },
+    "experience": {
+        "title": "Describe your professional experience. Minimum 200 characters.",
+        "textFieldLabel": "Text here"
+    } 
 }

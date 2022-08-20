@@ -5,6 +5,8 @@ import { ModalProvider } from '~/context/modal-context'
 
 const stepsMock = ['General info', 'Languages', 'Study category']
 
+const stepErrorsMock = { 'General info': true }
+
 const childrenArrMock = [
   <TempComponent key="1">1</TempComponent>,
   <TempComponent key="2">2</TempComponent>,
@@ -15,7 +17,7 @@ describe('StepWrapper test', () => {
   beforeEach(() => {
     render(
       <ModalProvider>
-        <StepWrapper steps={ stepsMock }>
+        <StepWrapper stepErrors={ stepErrorsMock } steps={ stepsMock }>
           { childrenArrMock }
         </StepWrapper>
       </ModalProvider>
