@@ -1,4 +1,7 @@
 import '../src/styles/index.css';
+import { ThemeProvider } from '@mui/material'
+import { theme } from '~/styles/app-theme/custom-mui.styles'
+import i18n from '~/plugins/i18n'
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -9,3 +12,12 @@ export const parameters = {
     }
   }
 }
+
+export const decorators = [
+  (Story) => (
+    <ThemeProvider theme={ theme }>
+      <Story />
+    </ThemeProvider>
+  ),
+]
+

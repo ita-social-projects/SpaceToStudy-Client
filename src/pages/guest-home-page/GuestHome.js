@@ -1,7 +1,6 @@
 import { Box } from '@mui/material'
 import { useEffect, useContext } from 'react'
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
-
 import { ModalContext } from '~/context/modal-context'
 import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
 import Welcome from '~/containers/guest-home-page/Welcome'
@@ -20,7 +19,7 @@ const GuestHomePage = () => {
   const [ searchParams ] = useSearchParams()
   const confirmToken = searchParams.get('confirmToken')
 
-  useEffect(() => search === '?login' && setModal(<LoginDialog />), [])
+  useEffect(() => search === '?login' && setModal(<LoginDialog />), [search,setModal])
 
   useEffect(() => {
     confirmToken && setModal(<EmailConfirmModal confirmToken={ confirmToken } setModal={ setModal } />)
@@ -39,5 +38,4 @@ const GuestHomePage = () => {
     </Box>
   )
 }
-
 export default GuestHomePage
