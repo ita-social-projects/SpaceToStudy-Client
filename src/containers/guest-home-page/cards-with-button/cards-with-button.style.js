@@ -2,13 +2,17 @@ export const styles = {
   wrap: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center'
+    alignItems: 'center',
+    '&> .MuiBox-root:nth-child(4) .dots': {
+      display: { xs:'none',sm:'block' },
+    }
   },
   left: {
     box: {
       display: 'flex',
       alignItems: 'flex-start',
-      flexDirection: { sm: 'row-reverse', xs: 'row' }
+      flexDirection: { sm: 'row-reverse', xs: 'row' },
+      padding: '0px 20px 0px 20px'
     },
     clearBox: {
       display: { xs: 'none', sm: 'flex' },
@@ -19,6 +23,10 @@ export const styles = {
       flexBasis: '466px'
     },
     image: {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      flexDirection: 'column',
       m: { sm: '0px 60px 0px 60px', xs: '0px 20px 0px 20px' },
       flexGrow: '0'
     },
@@ -34,7 +42,8 @@ export const styles = {
     box: {
       display: 'flex',
       alignItems: 'flex-start',
-      flexDirection: 'row'
+      flexDirection: 'row',
+      padding: '0px 20px 0px 20px'
     },
     clearBox: {
       display: { xs: 'none', sm: 'flex' },
@@ -45,6 +54,10 @@ export const styles = {
       flexBasis: '466px'
     },
     image: {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      flexDirection: 'column',
       m: { sm: '0px 60px 0px 60px', xs: '0px 20px 0px 20px' },
       flexGrow: '0'
     },
