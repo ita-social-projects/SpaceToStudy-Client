@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react'
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import BecomeATutor from '~/containers/mentor-home-page/become-a-tutor/BecomeATutor'
 
 describe('BecomeATutor test', () => {
@@ -19,5 +19,19 @@ describe('BecomeATutor test', () => {
     const secondTab = screen.getByText(/2/i)
 
     expect(secondTab).toBeInTheDocument()
+  })
+
+  it('should open documents render error after add wrong file size', async() => {
+    const fakeFile = new File(['certificate'], 'test-file.png', { type: 'image/png' })
+    Object.defineProperty(fakeFile, 'size', { value: 55_000_000 })
+
+    const documents = screen.getByText(/Documents/i)
+    fireEvent.click(documents)
+
+    const input = screen.getByLabelText('becomeTutor.documents.button')
+    fireEvent.change(input, { target: { files: [fakeFile] } })
+    const error = screen.queryByText('becomeTutor.documents.allFilesSizeError')
+
+    await waitFor(() => expect(error).toBeInTheDocument())
   })
 })
