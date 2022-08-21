@@ -12,6 +12,8 @@ import EmailConfirmModal from '~/containers/email-confirm-modal/EmailConfirmModa
 import { descriptionTimes } from '~/components/accordion-with-image/descriptionTimes'
 
 const GuestHomePage = () => {
+  const { search } = useLocation()
+
   const { setModal } = useContext(ModalContext)
   const navigate = useNavigate()
 
