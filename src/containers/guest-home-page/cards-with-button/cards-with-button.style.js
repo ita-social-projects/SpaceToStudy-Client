@@ -2,13 +2,30 @@ export const styles = {
   wrap: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center'
+    alignItems: 'center',
+    '&> .MuiBox-root:nth-of-type(4) .dots': {
+      display: { xs: 'none', sm: 'block' }
+    }
+  },
+  image: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
+    m: { sm: '0px 60px', xs: '0px 20px' },
+    flexGrow: '0'
+  },
+  button: {
+    mt: '34px',
+    width: '210px',
+    height: '52px'
   },
   left: {
     box: {
       display: 'flex',
       alignItems: 'flex-start',
-      flexDirection: { sm: 'row-reverse', xs: 'row' }
+      flexDirection: { sm: 'row-reverse', xs: 'row' },
+      padding: '0px 20px '
     },
     clearBox: {
       display: { xs: 'none', sm: 'flex' },
@@ -18,10 +35,7 @@ export const styles = {
       pt: '5px',
       flexBasis: '466px'
     },
-    image: {
-      m: { sm: '0px 60px 0px 60px', xs: '0px 20px 0px 20px' },
-      flexGrow: '0'
-    },
+
     title: {
       marginBottom: '8px',
       textAlign: { sm: 'end', xs: 'start' }
@@ -34,7 +48,8 @@ export const styles = {
     box: {
       display: 'flex',
       alignItems: 'flex-start',
-      flexDirection: 'row'
+      flexDirection: 'row',
+      padding: '0px 20px'
     },
     clearBox: {
       display: { xs: 'none', sm: 'flex' },
@@ -43,10 +58,6 @@ export const styles = {
     wrapper: {
       pt: '5px',
       flexBasis: '466px'
-    },
-    image: {
-      m: { sm: '0px 60px 0px 60px', xs: '0px 20px 0px 20px' },
-      flexGrow: '0'
     },
     title: {
       marginBottom: '8px',

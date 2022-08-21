@@ -10,22 +10,22 @@ import howItWorksStudentFourth from '~/assets/img/guest-home-page/howItWorksStud
 
 export const mentorCardBoxArray = [
   {
-    image: howItWorksMentorFirst,
+    icon: howItWorksMentorFirst,
     title: 'guestHomePage.howItWorks.mentor.signUp.title',
     description: 'guestHomePage.howItWorks.mentor.signUp.description'
   },
   {
-    image: howItWorksMentorSecond,
+    icon: howItWorksMentorSecond,
     title: 'guestHomePage.howItWorks.mentor.createAMentorAccount.title',
     description: 'guestHomePage.howItWorks.mentor.createAMentorAccount.description'
   },
   {
-    image: howItWorksMentorThird,
+    icon: howItWorksMentorThird,
     title: 'guestHomePage.howItWorks.mentor.getNewStudents.title',
     description: 'guestHomePage.howItWorks.mentor.getNewStudents.description'
   },
   {
-    image: howItWorksMentorFourth,
+    icon: howItWorksMentorFourth,
     title: 'guestHomePage.howItWorks.mentor.receiveFeedbacks.title',
     description: 'guestHomePage.howItWorks.mentor.receiveFeedbacks.description'
   }
@@ -33,22 +33,22 @@ export const mentorCardBoxArray = [
 
 export const studentCardBoxArray = [
   {
-    image: howItWorksStudentFirst,
+    icon: howItWorksStudentFirst,
     title: 'guestHomePage.howItWorks.student.signUp.title',
     description: 'guestHomePage.howItWorks.student.signUp.description'
   },
   {
-    image: howItWorksStudentSecond,
+    icon: howItWorksStudentSecond,
     title: 'guestHomePage.howItWorks.student.selectAMentor.title',
     description: 'guestHomePage.howItWorks.student.selectAMentor.description'
   },
   {
-    image: howItWorksStudentThird,
+    icon: howItWorksStudentThird,
     title: 'guestHomePage.howItWorks.student.sendRequest.title',
     description: 'guestHomePage.howItWorks.student.sendRequest.description'
   },
   {
-    image: howItWorksStudentFourth,
+    icon: howItWorksStudentFourth,
     title: 'guestHomePage.howItWorks.student.startLearning.title',
     description: 'guestHomePage.howItWorks.student.startLearning.description'
   }
