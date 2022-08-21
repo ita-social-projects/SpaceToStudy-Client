@@ -29,7 +29,7 @@ const CardsWithButton = ({ array, role, btnText }) => {
       array.map((item, key) => (
         <Box key={ key } sx={ styles[key % 2 === 0 ? 'right' : 'left'].box }>
           <Box sx={ styles[key % 2 === 0 ? 'right' : 'left'].clearBox } />
-          <Box sx={ styles[key % 2 === 0 ? 'right' : 'left'].image }>
+          <Box sx={ styles.image }>
             <Box component='img' src={ item.icon } />
             <Box
               className='dots' component='img' src={ dots }
@@ -52,7 +52,7 @@ const CardsWithButton = ({ array, role, btnText }) => {
     <Box sx={ styles.wrap }>
       { cards }
 
-      <Button onClick={ () => openDialog(role) } sx={ { p: '16px 32px', mt: '34px' } } variant='contained'>
+      <Button onClick={ () => openDialog(role) } sx={ styles.button } variant='contained'>
         { btnText }
       </Button>
     </Box>

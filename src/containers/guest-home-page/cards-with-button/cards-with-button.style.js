@@ -3,9 +3,23 @@ export const styles = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    '&> .MuiBox-root:nth-child(4) .dots': {
-      display: { xs:'none',sm:'block' },
+    '&> .MuiBox-root:nth-of-type(4) .dots': {
+      display: { xs: 'none', sm: 'block' }
     }
+  },
+  image: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
+    m: { sm: '0px 60px 0px 60px', xs: '0px 20px 0px 20px' },
+    flexGrow: '0'
+  },
+  button: {
+    p: '16px 32px',
+    mt: '34px',
+    width: '210px',
+    height: '52px'
   },
   left: {
     box: {
@@ -22,14 +36,7 @@ export const styles = {
       pt: '5px',
       flexBasis: '466px'
     },
-    image: {
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      flexDirection: 'column',
-      m: { sm: '0px 60px 0px 60px', xs: '0px 20px 0px 20px' },
-      flexGrow: '0'
-    },
+
     title: {
       marginBottom: '8px',
       textAlign: { sm: 'end', xs: 'start' }
@@ -52,14 +59,6 @@ export const styles = {
     wrapper: {
       pt: '5px',
       flexBasis: '466px'
-    },
-    image: {
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      flexDirection: 'column',
-      m: { sm: '0px 60px 0px 60px', xs: '0px 20px 0px 20px' },
-      flexGrow: '0'
     },
     title: {
       marginBottom: '8px',
