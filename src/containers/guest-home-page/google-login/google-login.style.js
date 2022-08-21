@@ -18,7 +18,7 @@ export const style = {
   google: {
     marginBottom: '16px',
     width: '100%',
-    padding: { xs: '15px 63.5px', sm: '15px 78px' }
+    py: '15px'
   },
   underlineText: {
     fontWeight: '500',
