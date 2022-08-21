@@ -13,13 +13,17 @@ import { descriptionTimes } from '~/components/accordion-with-image/descriptionT
 
 const GuestHomePage = () => {
   const { search } = useLocation()
+
   const { setModal } = useContext(ModalContext)
   const navigate = useNavigate()
 
   const [ searchParams ] = useSearchParams()
   const confirmToken = searchParams.get('confirmToken')
 
-  useEffect(() => search === '?login' && setModal(<LoginDialog />), [search,setModal])
+  useEffect(() => {
+    search === '?login' && setModal(<LoginDialog />)
+    navigate('/')
+  }, [search, setModal, navigate])
 
   useEffect(() => {
     confirmToken && setModal(<EmailConfirmModal confirmToken={ confirmToken } setModal={ setModal } />)
