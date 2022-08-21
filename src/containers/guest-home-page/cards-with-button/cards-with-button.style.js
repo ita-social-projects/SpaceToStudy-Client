@@ -12,11 +12,10 @@ export const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'column',
-    m: { sm: '0px 60px 0px 60px', xs: '0px 20px 0px 20px' },
+    m: { sm: '0px 60px', xs: '0px 20px' },
     flexGrow: '0'
   },
   button: {
-    p: '16px 32px',
     mt: '34px',
     width: '210px',
     height: '52px'
@@ -26,7 +25,7 @@ export const styles = {
       display: 'flex',
       alignItems: 'flex-start',
       flexDirection: { sm: 'row-reverse', xs: 'row' },
-      padding: '0px 20px 0px 20px'
+      padding: '0px 20px '
     },
     clearBox: {
       display: { xs: 'none', sm: 'flex' },
@@ -50,7 +49,7 @@ export const styles = {
       display: 'flex',
       alignItems: 'flex-start',
       flexDirection: 'row',
-      padding: '0px 20px 0px 20px'
+      padding: '0px 20px'
     },
     clearBox: {
       display: { xs: 'none', sm: 'flex' },
