@@ -1,9 +1,9 @@
 import ConfirmDialog from '~/components/confirm-dialog/ConfirmDialog'
-import i18n from '~/plugins/i18n'
 
 export default {
   title: 'ConfirmDialog',
-  component: ConfirmDialog
+  component: ConfirmDialog,
+  argTypes: { onConfirm: { action: 'Confirmed' }, onDismiss: { action: 'Dismissed' } }
 }
 
 const Template = (args) => <ConfirmDialog {...args} />
