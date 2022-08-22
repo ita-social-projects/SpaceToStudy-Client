@@ -1,4 +1,4 @@
-import {  render, screen, fireEvent, waitFor } from '@testing-library/react'
+import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import AddDocuments from '~/containers/mentor-home-page/add-documents/AddDocuments'
 
 const addDocuments = jest.fn()
@@ -21,7 +21,8 @@ describe('AddDocuments test', () => {
         documents={ documents }
         documentsError={ documentsError }
         setStepErrors={ setStepErrors }
-      />)
+      />
+    )
   })
 
   it('should render imgage', () => {
@@ -44,7 +45,7 @@ describe('AddDocuments test', () => {
     expect(buttonNext).toBeInTheDocument()
   })
 
-  it('should render error text after add wrong file type', async() => {
+  it('should render error text after add wrong file type', async () => {
     const fakeFile = new File(['certificate'], 'test-file.js', { type: 'text/javascript' })
 
     const input = screen.getByLabelText('becomeTutor.documents.button')
@@ -54,7 +55,7 @@ describe('AddDocuments test', () => {
     await waitFor(() => expect(error).toBeInTheDocument())
   })
 
-  it('should render error after add wrong file size', async() => {
+  it('should render error after add wrong file size', async () => {
     const fakeFile = new File(['certificate'], 'test-file.png', { type: 'image/png' })
     Object.defineProperty(fakeFile, 'size', { value: 15_000_000 })
 

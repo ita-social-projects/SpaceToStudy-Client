@@ -8,7 +8,7 @@ export const styles = {
     width: '107px',
     borderBottom: '1px solid',
     borderColor: 'primary.500',
-    cursor: 'pointer',
+    cursor: 'pointer'
   },
   activeTab: {
     color: 'text',
@@ -18,7 +18,7 @@ export const styles = {
   },
   steps: {
     display: 'flex',
-    columnGap: '1px',
+    columnGap: '1px'
   },
   btnWrapper: {
     display: 'flex',

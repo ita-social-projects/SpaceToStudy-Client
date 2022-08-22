@@ -1,12 +1,11 @@
 import { screen, fireEvent } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
-import GuestIcons from  '~/containers/navigation-icons/guest-icons/GuestIcons'
+import GuestIcons from '~/containers/navigation-icons/guest-icons/GuestIcons'
 
 const openLoginDialog = jest.fn()
 const setIsSidebarOpen = jest.fn()
 
 describe('test with guest role', () => {
-
   beforeEach(() => {
     renderWithProviders(<GuestIcons openLoginDialog={ openLoginDialog } setIsSidebarOpen={ setIsSidebarOpen } />)
   })
@@ -31,5 +30,4 @@ describe('test with guest role', () => {
 
     expect(setIsSidebarOpen).toBeCalledWith(true)
   })
-
 })

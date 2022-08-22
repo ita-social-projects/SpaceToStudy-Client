@@ -1,15 +1,15 @@
 {
-    "head": {
-        "mentor": "Sign up as a mentor",
-        "student": "Sign up as a student"
-    },
-    "iAgree": "I agree to the",
-    "and": "and",
-    "googleButton": "Sign up with Google",
-    "continue": "or continue",
-    "haveAccount": "Already have a mentor account?",
-    "joinUs": "Login!",
-    "confirmEmailTitle": "Your email address needs to be verified",
-    "confirmEmailMessage": "We sent a confirmation email to: ",
-    "confirmEmailDesc": " Check your email and click on the confirmation button to continue."
+  "head": {
+    "mentor": "Sign up as a mentor",
+    "student": "Sign up as a student"
+  },
+  "iAgree": "I agree to the",
+  "and": "and",
+  "googleButton": "Sign up with Google",
+  "continue": "or continue",
+  "haveAccount": "Already have a mentor account?",
+  "joinUs": "Login!",
+  "confirmEmailTitle": "Your email address needs to be verified",
+  "confirmEmailMessage": "We sent a confirmation email to: ",
+  "confirmEmailDesc": " Check your email and click on the confirmation button to continue."
 }

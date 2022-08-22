@@ -16,13 +16,11 @@ const ExperienceStep = ({ data, handleChange, handleBlur, errors, btnsBox, setSt
 
   return (
     <Box sx={ styles.container }>
-      <Box 
-        alt="" 
-        component="img" 
-        src={ img } 
-        sx={ styles.img } 
+      <Box
+        alt='' component='img' src={ img }
+        sx={ styles.img }
       />
-      <Box sx={ styles.form } >
+      <Box sx={ styles.form }>
         <Box>
           <Typography mb='30px'>
             { t('becomeTutor.experience.title') }
@@ -32,15 +30,15 @@ const ExperienceStep = ({ data, handleChange, handleBlur, errors, btnsBox, setSt
             errorMsg={ t(errors.experience) }
             fullWidth
             label={ t('becomeTutor.experience.textFieldLabel') }
-            maxRows="17"
-            minRows="6"
+            maxRows='17'
+            minRows='6'
             multiline
             onBlur={ handleBlur('experience') }
             onChange={ handleChange('experience') }
-            type="text"
+            type='text'
             value={ data.experience }
           />
-          <Typography variant="body2" >
+          <Typography variant='body2'>
             { `${data.experience.length}/1000` }
           </Typography>
         </Box>

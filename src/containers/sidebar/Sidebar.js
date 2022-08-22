@@ -5,33 +5,28 @@ import { useTranslation } from 'react-i18next'
 
 import { style } from '~/containers/sidebar/sidebar.style'
 
-const Sidebar = ({ isSidebarOpen,  setIsSidebarOpen, navigationItems }) => {
+const Sidebar = ({ isSidebarOpen, setIsSidebarOpen, navigationItems }) => {
   const { t } = useTranslation()
-  
-  const navigationList = navigationItems.map(item => {
+
+  const navigationList = navigationItems.map((item) => {
     return (
-      <ListItem
-        key={ item.label }
-      >
+      <ListItem key={ item.label }>
         <Typography
           component={ Link }
           onClick={ () => setIsSidebarOpen(false) }
           sx={ style.listItem }
           to={ item.route }
-          variant="subtitle1"
-        >            
-          { t(`header.${ item.label }`) }
+          variant='subtitle1'
+        >
+          { t(`header.${item.label}`) }
         </Typography>
-      </ListItem>)
+      </ListItem>
+    )
   })
-    
+
   return (
-    <Drawer
-      anchor='right'
-      onClose={ () => setIsSidebarOpen(false) }
-      open={ isSidebarOpen }
-    >
-      <IconButton onClick={ () => setIsSidebarOpen(false) } sx={ style.closeIcon } >
+    <Drawer anchor='right' onClose={ () => setIsSidebarOpen(false) } open={ isSidebarOpen }>
+      <IconButton onClick={ () => setIsSidebarOpen(false) } sx={ style.closeIcon }>
         <CloseIcon color='primary' />
       </IconButton>
 

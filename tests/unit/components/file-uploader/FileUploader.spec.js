@@ -25,7 +25,8 @@ describe('FileUploader test', () => {
         initialError={ initialError }
         initialState={ initialState }
         validationData={ validationData }
-      />)
+      />
+    )
   })
 
   it('should render button with upload icon', () => {
@@ -58,5 +59,4 @@ describe('FileUploader test', () => {
 
     expect(fileName).not.toBeInTheDocument()
   })
-
 })

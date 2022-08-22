@@ -25,12 +25,12 @@ export const cookieItemsData = [
     description: 'cookiePolicyPage.theCookiesWeSet.site.description'
   },
   {
-    title : 'cookiePolicyPage.thirdPartyCookies.title',
+    title: 'cookiePolicyPage.thirdPartyCookies.title',
     subtitle: 'cookiePolicyPage.thirdPartyCookies.subtitle',
     description: 'cookiePolicyPage.thirdPartyCookies.description'
   },
   {
-    title : 'cookiePolicyPage.moreInformation.title',
-    subtitle: 'cookiePolicyPage.moreInformation.subtitle',
+    title: 'cookiePolicyPage.moreInformation.title',
+    subtitle: 'cookiePolicyPage.moreInformation.subtitle'
   }
 ]

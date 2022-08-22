@@ -4,13 +4,16 @@ import { useLocation } from 'react-router-dom'
 const useHashScroll = () => {
   const { hash } = useLocation()
 
-  const scrollToAnchor = useCallback((elementWithId) => {
-    if (hash.includes('#')) {
-      const elementWithId = document.getElementById(hash.replace('#', ''))
-      elementWithId && elementWithId.scrollIntoView({ behavior: 'smooth' })
-    }
-  }, [hash]) 
-  
+  const scrollToAnchor = useCallback(
+    (elementWithId) => {
+      if (hash.includes('#')) {
+        const elementWithId = document.getElementById(hash.replace('#', ''))
+        elementWithId && elementWithId.scrollIntoView({ behavior: 'smooth' })
+      }
+    },
+    [hash]
+  )
+
   useEffect(() => {
     scrollToAnchor()
   }, [scrollToAnchor])

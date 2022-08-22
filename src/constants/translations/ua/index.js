@@ -7,7 +7,7 @@ import titles from './titles.json'
 import login from './login.json'
 import modals from './modals.json'
 
-const ua = { 
+const ua = {
   translations: { common, errorPage, button, header, questions, titles, login, modals }
 }
 

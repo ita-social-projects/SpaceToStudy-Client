@@ -4,7 +4,7 @@ import ImgTitleDescription from '~/components/img-title-description/ImgTitleDesc
 
 describe('ImgTitleDescription test', () => {
   beforeEach(() => {
-    renderWithProviders(<ImgTitleDescription description="description" img="info" title="title" />)
+    renderWithProviders(<ImgTitleDescription description='description' img='info' title='title' />)
   })
 
   it('should render image', () => {

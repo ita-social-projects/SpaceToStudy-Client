@@ -1,9 +1,9 @@
 import en from './en'
 import ua from './ua'
 
-
 const resources = {
-  en, ua
+  en,
+  ua
 }
 
 export default resources

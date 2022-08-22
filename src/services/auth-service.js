@@ -21,7 +21,7 @@ export const AuthService = {
     return axiosInstance.get(URLs.auth.refresh)
   },
   confirmEmail: (confirmToken) => {
-    const confirmUrl = `${Urls.auth.confirm}/${ confirmToken }`
+    const confirmUrl = `${Urls.auth.confirm}/${confirmToken}`
     return axiosInstance.get(confirmUrl)
   }
 }

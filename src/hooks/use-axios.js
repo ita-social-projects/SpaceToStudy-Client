@@ -19,10 +19,10 @@ const useAxios = ({ service, fetchOnMount = true }) => {
   }, [service])
 
   useEffect(() => {
-    if(fetchOnMount) {
+    if (fetchOnMount) {
       fetchData()
     }
-  }, [fetchData, fetchOnMount] )
+  }, [fetchData, fetchOnMount])
 
   return { response, error, loading, fetchData }
 }

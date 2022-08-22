@@ -3,12 +3,12 @@ import { blueGrey } from '@mui/material/colors'
 const palette = {
   primary: blueGrey,
   backgroundColor: '#F7F7F7',
-  basic:{
-    black:'#000000',
-    white:'#FFFFFF',
+  basic: {
+    black: '#000000',
+    white: '#FFFFFF',
     grey: '#ECEFF1'
   },
-  companyBlue:'rgba(0, 167, 167, 0.2)',
+  companyBlue: 'rgba(0, 167, 167, 0.2)',
   error: {
     50: '#FFEFF2',
     100: '#FFCFD4',
@@ -34,7 +34,7 @@ const palette = {
     900: '#1E5F23'
   },
   text: {
-    primary: blueGrey[900],
+    primary: blueGrey[900]
   }
 }
 

@@ -12,7 +12,6 @@ import { styles } from '~/containers/student-home-page/student-how-it-works/stud
 const sectionId = studentRoutes.navBar.howItWorks.label
 
 const StudentHowItWorks = () => {
-
   const { t } = useTranslation()
 
   const { route } = studentRoutes.navBar.findMentor
@@ -20,11 +19,9 @@ const StudentHowItWorks = () => {
   const cards = howItWorksCards.map((item, index) => {
     return (
       <Box key={ index } sx={ styles.cardWrapper }>
-        <Box 
-          alt={ item.title } 
-          component='img' 
-          src={ item.image }  
-          sx={ styles.cardImg }  
+        <Box
+          alt={ item.title } component='img' src={ item.image }
+          sx={ styles.cardImg }
         ></Box>
 
         <TitleWithDescription
@@ -51,10 +48,8 @@ const StudentHowItWorks = () => {
       </Box>
 
       <Button
-        component={ Link } 
-        size="extraLarge" 
-        to={ route } 
-        variant="contained" 
+        component={ Link } size='extraLarge' to={ route }
+        variant='contained'
       >
         { t('studentHomePage.findMentorBlock.button') }
       </Button>

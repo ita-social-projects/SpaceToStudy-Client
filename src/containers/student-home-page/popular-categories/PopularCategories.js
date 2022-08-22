@@ -45,7 +45,7 @@ const PopularCategories = () => {
   })
 
   return (
-    <Box className="section" sx={ { flexDirection: 'column' } }>
+    <Box className='section' sx={ { flexDirection: 'column' } }>
       <TitleWithDescription
         description={ t('studentHomePage.popularCategories.description') }
         descriptionStyles={ { typography: { sm: 'body1', xs: 'body2' } } }
@@ -57,7 +57,7 @@ const PopularCategories = () => {
         { categories }
       </Box>
 
-      <Button onClick={ showMore } sx={ { display: isExpandable ? 'block' : 'none' } } variant="tonal">
+      <Button onClick={ showMore } sx={ { display: isExpandable ? 'block' : 'none' } } variant='tonal'>
         { t('studentHomePage.popularCategories.viewMore') }
       </Button>
     </Box>

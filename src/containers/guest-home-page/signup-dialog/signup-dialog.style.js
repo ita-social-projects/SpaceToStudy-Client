@@ -21,6 +21,6 @@ export const style = {
     borderTop: { xs: '1px solid', sm: 'none' },
     borderColor: { xs: 'primary.100' },
     maxWidth: { xs: '320px', sm: '343px' },
-    padding: {  xs: '30px 0 0 0', sm: '50px 60px 40px 80px', md: '10px 55px 0 95px' }
+    padding: { xs: '30px 0 0 0', sm: '50px 60px 40px 80px', md: '10px 55px 0 95px' }
   }
 }

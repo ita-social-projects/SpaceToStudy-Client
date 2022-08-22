@@ -24,8 +24,7 @@ const Welcome = () => {
   return (
     <Box className='section' sx={ styles.container }>
       <Box
-        alt='Title'
-        component='img' src={ images[size] }
+        alt='Title' component='img' src={ images[size] }
         sx={ styles.title }
       />
       <Typography data-testid='welcomeDescription' sx={ styles.subtitle }>
@@ -34,7 +33,9 @@ const Welcome = () => {
 
       <Button
         component={ Link }
-        data-testid='welcomeGetStarted' sx={ styles.getStartBtn } to={ scrollTo }
+        data-testid='welcomeGetStarted'
+        sx={ styles.getStartBtn }
+        to={ scrollTo }
         variant='contained'
       >
         { t('guestHomePage.welcomeBlock.getStarted') }

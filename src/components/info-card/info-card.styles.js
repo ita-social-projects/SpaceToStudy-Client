@@ -21,7 +21,7 @@ export const styles = {
     },
     whiteSpace: 'nowrap',
     overflow: 'hidden',
-    textOverflow: 'ellipsis',
+    textOverflow: 'ellipsis'
   },
   cardDescription: {
     marginBottom: '24px'

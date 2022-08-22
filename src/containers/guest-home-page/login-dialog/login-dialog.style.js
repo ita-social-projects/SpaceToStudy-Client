@@ -4,20 +4,20 @@ const style = {
     mt: { xs: '55px', sm: 0 },
     display: 'flex',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   img: {
-    overflow:'auto',
+    overflow: 'auto',
     maxWidth: '593px',
     minWidth: '420px',
     display: { xs: 'none', sm: 'none', md: 'flex' }
   },
-  h2: { 
+  h2: {
     marginBottom: '32px',
-    fontSize: '40px', 
-    lineHeight: '48px' 
+    fontSize: '40px',
+    lineHeight: '48px'
   },
-  form: { 
+  form: {
     borderTop: { xs: '1px solid', sm: 'none' },
     borderColor: { xs: 'primary.100' },
     maxWidth: { xs: '320px', sm: '343px' },

@@ -5,7 +5,7 @@ describe('CookiePolicy component test', () => {
   beforeEach(() => {
     render(<CookiePolicy />)
   })
-  
+
   it('should have section container', () => {
     const sectionContainer = screen.getByTestId('sectionContainer')
 
@@ -30,7 +30,7 @@ describe('CookiePolicy component test', () => {
     expect(description).toBeInTheDocument()
   })
 
-  it('should have TitleWithDescription with given title, subtitle and description', () => {
+  it('should have TitleWithDescription with given title, subtitle and description 2', () => {
     const title = screen.getByText('cookiePolicyPage.thirdPartyCookies.title')
     const subtitle = screen.getByText('cookiePolicyPage.thirdPartyCookies.subtitle')
     const description = screen.getByText('cookiePolicyPage.thirdPartyCookies.description')

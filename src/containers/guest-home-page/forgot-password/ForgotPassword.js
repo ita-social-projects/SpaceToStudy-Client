@@ -23,13 +23,8 @@ const ForgotPassword = () => {
   }
 
   const { handleSubmit, handleChange, handleBlur, errors, data } = useForm({
-    onSubmit: () =>{
-      setModal(
-        <ImgTitleDescription
-          description={ description }
-          img={ info }
-          title={ t('login.passwordReset') }
-        />)
+    onSubmit: () => {
+      setModal(<ImgTitleDescription description={ description } img={ info } title={ t('login.passwordReset') } />)
       setTimeout(() => closeModal(), 5000)
     },
     initialValues: { email: '' },
@@ -39,7 +34,7 @@ const ForgotPassword = () => {
   const description = (
     <>
       { t('login.weSentEmail') }
-      <Typography component="span"  variant='subtitle2'>
+      <Typography component='span' variant='subtitle2'>
         { data.email }
       </Typography>
       { t('login.emailArrive') }
@@ -56,7 +51,7 @@ const ForgotPassword = () => {
         titleStyles={ style.title }
       />
 
-      <Box component="form" onSubmit={ handleSubmit }>
+      <Box component='form' onSubmit={ handleSubmit }>
         <AppTextField
           autoFocus
           errorMsg={ t(errors.email) }
@@ -65,23 +60,23 @@ const ForgotPassword = () => {
           onBlur={ handleBlur('email') }
           onChange={ handleChange('email') }
           required
-          size="large"
+          size='large'
           sx={ { mb: '5px' } }
-          type="email"
+          type='email'
           value={ data.email }
         />
 
         <Button
-          size="large" sx={ style.sentPassword } type="submit"
-          variant="contained"
+          size='large' sx={ style.sentPassword } type='submit'
+          variant='contained'
         >
           { t('login.sendPassword') }
         </Button>
       </Box>
 
       <Button
-        onClick={ backToLogin } size="large" sx={ style.backButton }
-        variant="text"
+        onClick={ backToLogin } size='large' sx={ style.backButton }
+        variant='text'
       >
         { t('login.backToLogin') }
       </Button>

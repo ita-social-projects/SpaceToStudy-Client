@@ -10,13 +10,12 @@ jest.mock('react-router', () => ({
   useNavigate: () => mockNavigate
 }))
 
-
 describe('FindMentorBlock test', () => {
   beforeEach(() => {
     useBreakpoints.mockImplementation(() => 'desktop')
     render(<FindMentorBlock />)
   })
-    
+
   it('should render image for desktop window size', async () => {
     const img = screen.getByAltText('Bag')
 

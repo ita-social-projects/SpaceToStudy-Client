@@ -1,12 +1,12 @@
 {
-    "head": "Welcome back",
-    "email": "Email",
-    "password": "Password",
-    "rememberMe": "Remember me",
-    "forgotPassword": "Forgot password?",
-    "loginButton": "Login",
-    "googleButton": "Login with Google",
-    "continue": "or continue",
-    "haveAccount": "Don`t have an account yet?",
-    "joinUs": "Join us for free"
+  "head": "Welcome back",
+  "email": "Email",
+  "password": "Password",
+  "rememberMe": "Remember me",
+  "forgotPassword": "Forgot password?",
+  "loginButton": "Login",
+  "googleButton": "Login with Google",
+  "continue": "or continue",
+  "haveAccount": "Don`t have an account yet?",
+  "joinUs": "Join us for free"
 }

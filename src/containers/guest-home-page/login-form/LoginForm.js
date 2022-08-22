@@ -19,7 +19,7 @@ const LoginForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) => 
   }
 
   return (
-    <Box component="form" onSubmit={ handleSubmit }>
+    <Box component='form' onSubmit={ handleSubmit }>
       <AppTextField
         autoFocus
         errorMsg={ t(errors.email) }
@@ -28,9 +28,9 @@ const LoginForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) => 
         onBlur={ handleBlur('email') }
         onChange={ handleChange('email') }
         required
-        size="large"
+        size='large'
         sx={ { mb: '5px' } }
-        type="email"
+        type='email'
         value={ data.email }
       />
 
@@ -51,19 +51,19 @@ const LoginForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) => 
           control={ <Checkbox /> }
           disabled
           label={ t('login.rememberMe') }
-          labelPlacement="end"
-          size="large"
+          labelPlacement='end'
+          size='large'
           sx={ style.checkboxLabel }
-          variant="subtitle2"
+          variant='subtitle2'
         />
-        <Typography onClick={ openForgotPassword } sx={ style.forgotPass } variant="subtitle2">
+        <Typography onClick={ openForgotPassword } sx={ style.forgotPass } variant='subtitle2'>
           { t('login.forgotPassword') }
         </Typography>
       </Box>
 
       <Button
-        size="large" sx={ style.loginButton } type="submit"
-        variant="contained"
+        size='large' sx={ style.loginButton } type='submit'
+        variant='contained'
       >
         { t('common.labels.login') }
       </Button>

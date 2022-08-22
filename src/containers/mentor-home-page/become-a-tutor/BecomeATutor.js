@@ -28,24 +28,24 @@ const BecomeATutor = () => {
   })
 
   const [stepErrors, setStepErrors] = useState({})
-  
+
   const childrenArr = [
     <GeneralInfo
       data={ data }
       errors={ errors }
       handleBlur={ handleBlur }
       handleChange={ handleChange }
-      key="1"
+      key='1'
       setStepErrors={ setStepErrors }
     />,
-    <TempComponent key="2">2</TempComponent>,
-    <TempComponent key="3">3</TempComponent>,
+    <TempComponent key='2'>2</TempComponent>,
+    <TempComponent key='3'>3</TempComponent>,
     <ExperienceStep
       data={ data }
       errors={ errors }
       handleBlur={ handleBlur }
       handleChange={ handleChange }
-      key="4"
+      key='4'
       setStepErrors={ setStepErrors }
     />,
     <AddDocuments
@@ -55,7 +55,7 @@ const BecomeATutor = () => {
       key='5'
       setStepErrors={ setStepErrors }
     />,
-    <TempComponent key="6">6</TempComponent>
+    <TempComponent key='6'>6</TempComponent>
   ]
 
   return (

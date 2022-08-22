@@ -32,12 +32,7 @@ const SignupDialog = ({ type }) => {
     onSubmit: async () => {
       try {
         await dispatch(signupUser({ ...data, role: type })).unwrap()
-        setModal(
-          <ImgTitleDescription
-            description={ description }
-            img={ info }
-            title={ t('signup.confirmEmailTitle') }
-          />)
+        setModal(<ImgTitleDescription description={ description } img={ info } title={ t('signup.confirmEmailTitle') } />)
         setTimeout(() => closeModal(), 5000)
       } catch (e) {
         console.log(e)
@@ -50,7 +45,7 @@ const SignupDialog = ({ type }) => {
   const description = (
     <>
       { t('signup.confirmEmailMessage') }
-      <Typography component="span" variant='subtitle2'>
+      <Typography component='span' variant='subtitle2'>
         { data.email }
       </Typography>
       { t('signup.confirmEmailDesc') }
@@ -65,15 +60,13 @@ const SignupDialog = ({ type }) => {
     <Box sx={ style.root }>
       <Box sx={ style.img }>
         <Box
-          alt="signup"
-          component="img"
-          src={ signupImg[type] }
+          alt='signup' component='img' src={ signupImg[type] }
           sx={ style.img }
         />
       </Box>
 
       <Box sx={ style.form }>
-        <Typography sx={ style.h2 } variant="h2">
+        <Typography sx={ style.h2 } variant='h2'>
           { t('signup.head', { returnObjects: true })[type] }
         </Typography>
 

@@ -16,13 +16,15 @@ describe('test with guest role', () => {
     renderWithProviders(
       <ModalProvider>
         <NavigationIcons setIsSidebarOpen={ setIsSidebarOpen } />
-      </ModalProvider>, { preloadedState })
+      </ModalProvider>,
+      { preloadedState }
+    )
   })
 
   it('should open login popup after click', async () => {
     const loginButton = screen.getByText('header.loginButton')
     fireEvent.click(loginButton)
-    const img = screen.getByAltText('login') 
+    const img = screen.getByAltText('login')
 
     await waitFor(() => expect(img).toBeInTheDocument())
   })
@@ -33,17 +35,17 @@ describe('test with guest role', () => {
 
     expect(setIsSidebarOpen).toBeCalledWith(true)
   })
-
 })
 
 describe('test with student role', () => {
-
   const preloadedState = { appMain: { loading: false, userRole: 'student' } }
   beforeEach(() => {
     renderWithProviders(
       <ModalProvider>
         <NavigationIcons setIsSidebarOpen={ setIsSidebarOpen } />
-      </ModalProvider>, { preloadedState })
+      </ModalProvider>,
+      { preloadedState }
+    )
   })
 
   it('should render message icon', () => {
@@ -54,13 +56,14 @@ describe('test with student role', () => {
 })
 
 describe('test with loading equal true', () => {
-
   const preloadedState = { appMain: { loading: true, userRole: 'student' } }
   beforeEach(() => {
     renderWithProviders(
       <ModalProvider>
         <NavigationIcons setIsSidebarOpen={ setIsSidebarOpen } />
-      </ModalProvider>, { preloadedState })
+      </ModalProvider>,
+      { preloadedState }
+    )
   })
 
   it('should render loader', () => {
@@ -68,5 +71,4 @@ describe('test with loading equal true', () => {
 
     expect(loader).toBeInTheDocument()
   })
-
 })

@@ -18,7 +18,7 @@ const NavigationIcons = ({ setIsSidebarOpen }) => {
 
   if (loading)
     return (
-      <Box sx={ { minWidth: '100px', display: 'flex', justifyContent: 'center' }  }>
+      <Box sx={ { minWidth: '100px', display: 'flex', justifyContent: 'center' } }>
         <Loader size={ 20 } />
       </Box>
     )

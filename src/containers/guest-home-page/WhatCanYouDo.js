@@ -16,7 +16,7 @@ const sectionId = routes.guestNavBar.whatCanYouDo.label
 
 const cardWidth = {
   md: '427px',
-  xs: '343px',
+  xs: '343px'
 }
 
 const cardData = [
@@ -48,7 +48,7 @@ const WhatCanYouDo = () => {
     setModal(<SignupDialog type={ type } />)
   }
 
-  const cards = cardData.map(item => {
+  const cards = cardData.map((item) => {
     return (
       <InfoCard
         action={ () => openDialog(item.actionType) }
@@ -59,7 +59,8 @@ const WhatCanYouDo = () => {
         key={ item.id }
         link={ item.link }
         title={ t(item.title) }
-      />)
+      />
+    )
   })
 
   return (
@@ -78,4 +79,4 @@ const WhatCanYouDo = () => {
   )
 }
 
-export default  WhatCanYouDo
+export default WhatCanYouDo

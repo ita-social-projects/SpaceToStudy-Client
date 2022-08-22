@@ -14,7 +14,6 @@ const TitleWithDescription = ({
       <Typography sx={ { ...titleStyles, ...style.title } }>
         { title }
       </Typography>
-
       <Typography sx={ { ...descriptionStyles, ...style.description } }>
         { description }
       </Typography>

@@ -1,18 +1,18 @@
 {
-    "generalInfo": {
-        "title": "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.",
-        "checkboxLabel": "I confirm that I am over 18 years old"
-    },
-    "documents": {
-        "imageAlt": "graduate student",
-        "description":"To download certificates, drag certificates to the square or click the \"Upload your certificate\" button. Use only .pdf/.png/.jpeg files. You can add maximum 8 certificates.",
-        "button": "Upload your certificate",
-        "typeError": "Wrong file type. Only .pdf/.png/.jpg/.jpeg files are allowed.",
-        "allFilesSizeError": "Size of all certificates cannot be more than 50MB.",
-        "fileSizeError": "Size for one file cannot be more than 10MB."
-    },
-    "experience": {
-        "title": "Describe your professional experience. Minimum 200 characters.",
-        "textFieldLabel": "Text here"
-    } 
+  "generalInfo": {
+    "title": "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.",
+    "checkboxLabel": "I confirm that I am over 18 years old"
+  },
+  "documents": {
+    "imageAlt": "graduate student",
+    "description": "To download certificates, drag certificates to the square or click the \"Upload your certificate\" button. Use only .pdf/.png/.jpeg files. You can add maximum 8 certificates.",
+    "button": "Upload your certificate",
+    "typeError": "Wrong file type. Only .pdf/.png/.jpg/.jpeg files are allowed.",
+    "allFilesSizeError": "Size of all certificates cannot be more than 50MB.",
+    "fileSizeError": "Size for one file cannot be more than 10MB."
+  },
+  "experience": {
+    "title": "Describe your professional experience. Minimum 200 characters.",
+    "textFieldLabel": "Text here"
+  }
 }

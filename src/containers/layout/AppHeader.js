@@ -3,7 +3,6 @@ import NavBar from '~/containers/navbar/NavBar'
 import { mainShadow } from '~/styles/app-theme/custom-shadows'
 
 const AppHeader = () => {
-
   return (
     <>
       <AppBar color='common' sx={ { boxShadow: mainShadow } }>

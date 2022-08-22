@@ -7,8 +7,7 @@ const InfoCard = ({ img, title, description, actionLabel, cardWidth, action }) =
   return (
     <Box sx={ { ...styles.card, maxWidth: cardWidth } }>
       <Box
-        alt={ title }
-        component='img' src={ img }
+        alt={ title } component='img' src={ img }
         sx={ styles.cardImg }
       ></Box>
 

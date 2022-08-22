@@ -8,9 +8,9 @@ const stepsMock = ['General info', 'Languages', 'Study category']
 const stepErrorsMock = { 'General info': true }
 
 const childrenArrMock = [
-  <TempComponent key="1">1</TempComponent>,
-  <TempComponent key="2">2</TempComponent>,
-  <TempComponent key="3">3</TempComponent>
+  <TempComponent key='1'>1</TempComponent>,
+  <TempComponent key='2'>2</TempComponent>,
+  <TempComponent key='3'>3</TempComponent>
 ]
 
 describe('StepWrapper test', () => {

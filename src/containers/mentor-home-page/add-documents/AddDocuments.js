@@ -27,17 +27,15 @@ const AddDocuments = ({ btnsBox, documents, documentsError, addDocuments, setSte
   return (
     <Box sx={ style.root }>
       <Box
-        alt={ t('becomeTutor.documents.imageAlt') }
-        component='img'
-        src={ addDocumentsPNG }
+        alt={ t('becomeTutor.documents.imageAlt') } component='img' src={ addDocumentsPNG }
         sx={ style.img }
       />
-      
+
       <Box sx={ style.rigthBox }>
         <Box>
           <Typography mb={ 5 } variant='body1'>
             { t('becomeTutor.documents.description') }
-          </Typography>    
+          </Typography>
           <FileUploader
             buttonText={ t('becomeTutor.documents.button') }
             emitter={ addDocuments }
@@ -48,7 +46,7 @@ const AddDocuments = ({ btnsBox, documents, documentsError, addDocuments, setSte
         </Box>
 
         { btnsBox }
-      </Box> 
+      </Box>
     </Box>
   )
 }

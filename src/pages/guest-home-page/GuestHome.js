@@ -17,7 +17,7 @@ const GuestHomePage = () => {
   const { setModal } = useContext(ModalContext)
   const navigate = useNavigate()
 
-  const [ searchParams ] = useSearchParams()
+  const [searchParams] = useSearchParams()
   const confirmToken = searchParams.get('confirmToken')
 
   useEffect(() => {
@@ -28,13 +28,13 @@ const GuestHomePage = () => {
   useEffect(() => {
     confirmToken && setModal(<EmailConfirmModal confirmToken={ confirmToken } setModal={ setModal } />)
     navigate('/')
-  }, [ confirmToken , setModal, navigate ])
+  }, [confirmToken, setModal, navigate])
 
   return (
-    <Box data-testid="guestHome">
+    <Box data-testid='guestHome'>
       <Welcome />
-      <Box sx={ { maxWidth:'1128px', margin:'0 auto' } }>
-        <FeatureBlock items={ descriptionTimes }  />
+      <Box sx={ { maxWidth: '1128px', margin: '0 auto' } }>
+        <FeatureBlock items={ descriptionTimes } />
         <WhatCanYouDo />
         <HowItWorks />
         <WhoWeAre />

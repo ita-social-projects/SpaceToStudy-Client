@@ -10,6 +10,5 @@ jest.mock('react-i18next', () => ({
     return {
       t: (str) => str
     }
-  },
+  }
 }))
-

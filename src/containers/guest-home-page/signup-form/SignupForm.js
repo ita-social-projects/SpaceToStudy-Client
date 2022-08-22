@@ -16,22 +16,22 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) =>
   const policyAgreement = (
     <Box sx={ style.box }>
       <Typography variant='subtitle2'>
-        { t( 'signup.iAgree' ) }
+        { t('signup.iAgree') }
       </Typography>
       <Typography
         component={ Link } sx={ style.underlineText } to={ '/' }
-        variant="subtitle2"
+        variant='subtitle2'
       >
-        { t( 'common.labels.terms' ) }
+        { t('common.labels.terms') }
       </Typography>
       <Typography sx={ { ml: '5px' } } variant='subtitle2'>
-        { t( 'signup.and' ) }
+        { t('signup.and') }
       </Typography>
       <Typography
         component={ Link } sx={ style.underlineText } to={ '/' }
-        variant="subtitle2"
+        variant='subtitle2'
       >
-        { t( 'common.labels.privacyPolicy' ) }
+        { t('common.labels.privacyPolicy') }
       </Typography>
     </Box>
   )
@@ -47,9 +47,9 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) =>
           onBlur={ handleBlur('firstName') }
           onChange={ handleChange('firstName') }
           required
-          size="large"
+          size='large'
           sx={ { mb: '5px' } }
-          type="text"
+          type='text'
           value={ data.firstName }
         />
 
@@ -60,9 +60,9 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) =>
           onBlur={ handleBlur('lastName') }
           onChange={ handleChange('lastName') }
           required
-          size="large"
+          size='large'
           sx={ { mb: '5px' } }
-          type="text"
+          type='text'
           value={ data.lastName }
         />
       </Box>
@@ -74,9 +74,9 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) =>
         onBlur={ handleBlur('email') }
         onChange={ handleChange('email') }
         required
-        size="large"
+        size='large'
         sx={ { mb: '5px' } }
-        type="email"
+        type='email'
         value={ data.email }
       />
 
@@ -88,7 +88,7 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) =>
         onBlur={ handleBlur('password') }
         onChange={ handleChange('password') }
         required
-        size="large"
+        size='large'
         sx={ { mb: '5px' } }
         type={ showPassword ? 'text' : 'password' }
         value={ data.password }
@@ -102,7 +102,7 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) =>
         onBlur={ handleBlur('confirmPassword') }
         onChange={ handleChange('confirmPassword') }
         required
-        size="large"
+        size='large'
         type={ showConfirmPassword ? 'text' : 'password' }
         value={ data.confirmPassword }
       />
@@ -111,16 +111,16 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) =>
         <FormControlLabel
           control={ <Checkbox /> }
           label={ policyAgreement }
-          labelPlacement="end"
-          size="large"
+          labelPlacement='end'
+          size='large'
           sx={ style.checkboxLabel }
-          variant="subtitle2"
+          variant='subtitle2'
         />
       </Box>
 
       <Button
-        size="large" sx={ style.signupButton } type="submit"
-        variant="contained"
+        size='large' sx={ style.signupButton } type='submit'
+        variant='contained'
       >
         { t('common.labels.signup') }
       </Button>

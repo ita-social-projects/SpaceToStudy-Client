@@ -29,10 +29,10 @@ export default {
 
 export const Default = (args) => {
   return (
-    <div style={{ maxWidth: '400px', margin: '0 auto',  }}>
+    <div style={{ maxWidth: '400px', margin: '0 auto' }}>
       <h1>File Uploader</h1>
-      <FileUploader { ...args }/>
-    </div> 
+      <FileUploader {...args} />
+    </div>
   )
 }
 

@@ -24,10 +24,8 @@ const PopupDialog = ({ content, closeModal, isFullScreen, setFullScreen }) => {
 
   return (
     <Dialog
-      data-testid="popup"
-      fullScreen={ isFullScreen || size === 'mobile' } maxWidth="xl"
-      onClose={ onClose }
-      open
+      data-testid='popup' fullScreen={ isFullScreen || size === 'mobile' } maxWidth='xl'
+      onClose={ onClose } open
     >
       <Box sx={ style.box }>
         <IconButton onClick={ onClose } sx={ style.icon }>

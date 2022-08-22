@@ -29,21 +29,16 @@ const BadRequest = () => {
           titleStyles={ { typography: sizesTypography[windowSize].title } }
         />
         <Button
-          component={ Link }
-          size='extraLarge'
-          to={ routes.home.route }
-          variant="contained"
+          component={ Link } size='extraLarge' to={ routes.home.route }
+          variant='contained'
         >
           { t('button.toMain') }
         </Button>
       </Box>
       <Box
-        alt="man"
-        component="img"
-        src={ img }
+        alt='man' component='img' src={ img }
         sx={ styles.img }
       />
-      
     </Container>
   )
 }

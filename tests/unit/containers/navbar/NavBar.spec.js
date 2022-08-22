@@ -10,13 +10,14 @@ jest.mock('~/hooks/use-confirm', () => {
 })
 
 describe('Guest NavBar test', () => {
-
   const preloadedState = { appMain: { loading: false, userRole: '' } }
   beforeEach(() => {
     renderWithProviders(
       <ModalProvider>
         <NavBar />
-      </ModalProvider>, { preloadedState })
+      </ModalProvider>,
+      { preloadedState }
+    )
   })
 
   it('should render logo element', () => {
@@ -26,17 +27,17 @@ describe('Guest NavBar test', () => {
   })
   it('should render navigation item with guestNavBar text', () => {
     const text = screen.getByText('header.whatCanYouDo')
-    
+
     expect(text).toBeInTheDocument()
   })
-  it('should click login button', async() => {
+  it('should click login button', async () => {
     const loginButton = screen.getByText('header.loginButton')
     fireEvent.click(loginButton)
-    const img = screen.getByAltText('login') 
+    const img = screen.getByAltText('login')
 
     await waitFor(() => expect(img).toBeInTheDocument())
   })
-    
+
   it('should open sidebar with close icon after click menu icon', async () => {
     const menuIcon = screen.getByTestId('MenuIcon')
     expect(menuIcon).toBeInTheDocument()
@@ -48,7 +49,6 @@ describe('Guest NavBar test', () => {
   })
 })
 
-
 describe('Student NavBar test', () => {
   const preloadedState = { appMain: { loading: false, userRole: 'student' } }
 
@@ -56,7 +56,9 @@ describe('Student NavBar test', () => {
     renderWithProviders(
       <ModalProvider>
         <NavBar />
-      </ModalProvider>, { preloadedState })
+      </ModalProvider>,
+      { preloadedState }
+    )
   })
 
   it('should render navigation item with navBar text', () => {
@@ -69,5 +71,4 @@ describe('Student NavBar test', () => {
 
     expect(icon).toBeInTheDocument()
   })
-
 })

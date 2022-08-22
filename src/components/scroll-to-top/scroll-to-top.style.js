@@ -5,7 +5,7 @@ export const style = {
     display: 'flex',
     justifyContent: 'flex-end',
     position: 'sticky',
-    bottom: '0',
+    bottom: '0'
   },
   button: {
     position: 'absolute',
@@ -15,10 +15,10 @@ export const style = {
     backgroundColor: 'primary.50',
     opacity: 0.7,
     boxShadow: commonHoverShadow,
-    '&:hover': {  opacity: 1, backgroundColor: 'primary.100' }
+    '&:hover': { opacity: 1, backgroundColor: 'primary.100' }
   },
   icon: {
-    fontSize: '24px', 
+    fontSize: '24px',
     color: 'primary.900'
   }
 }

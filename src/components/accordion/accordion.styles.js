@@ -55,14 +55,13 @@ export const style = {
       pb: '24px',
       color: 'primary.900',
       typography: 'body2',
-      fontWeight: 400,
+      fontWeight: 400
     },
     active: {
       boxShadow: commonShadow,
       backgroundColor: 'basic.white',
       '& h6': { color: 'primary.900' },
-      '&:hover': { boxShadow: commonHoverShadow },
+      '&:hover': { boxShadow: commonHoverShadow }
     }
   }
-  
 }

@@ -4,7 +4,7 @@ import { renderWithProviders } from '~tests/test-utils'
 import AuthPolicy from '~/pages/error/AuthPolicy'
 
 describe('AuthPolicy component', () => {
-  beforeEach(()=> {
+  beforeEach(() => {
     renderWithProviders(<AuthPolicy />)
   })
 
@@ -12,7 +12,6 @@ describe('AuthPolicy component', () => {
     const title = screen.getByText(/errorPage.401.title/)
 
     expect(title).toBeInTheDocument()
-
   })
 
   it('should render description', () => {

@@ -12,22 +12,14 @@ const Footer = () => {
   return (
     <Box sx={ style.footer }>
       <Container sx={ style.container }>
-        <Typography color="primary.50" variant="caption">
+        <Typography color='primary.50' variant='caption'>
           { t('footer.allRightsReserved') }
         </Typography>
-        <Box  sx={ style.links }>
-          <Typography 
-            component={ Link } 
-            to={ privacyPolicy.route }
-            variant="caption"
-          >
+        <Box sx={ style.links }>
+          <Typography component={ Link } to={ privacyPolicy.route } variant='caption'>
             { t(`footer.${privacyPolicy.label}`) }
           </Typography>
-          <Typography 
-            component={ Link }
-            to={ termOfUse.route }
-            variant="caption"
-          >
+          <Typography component={ Link } to={ termOfUse.route } variant='caption'>
             { t(`footer.${termOfUse.label}`) }
           </Typography>
         </Box>

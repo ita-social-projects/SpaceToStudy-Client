@@ -53,4 +53,3 @@ export const studentCardBoxArray = [
     description: 'guestHomePage.howItWorks.student.startLearning.description'
   }
 ]
-

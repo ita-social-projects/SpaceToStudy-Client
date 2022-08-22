@@ -5,9 +5,7 @@ import Welcome from '~/containers/guest-home-page/Welcome'
 
 describe('Welcome component', () => {
   beforeEach(() => {
-    renderWithProviders(
-      <Welcome />
-    )
+    renderWithProviders(<Welcome />)
   })
 
   it('should have title img', () => {

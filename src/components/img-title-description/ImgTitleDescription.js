@@ -9,12 +9,11 @@ const componentStyle = {
   description: { typography: 'subtitle' }
 }
 
-const ImgTitleDescription = ({ img, title, description, style=componentStyle }) => {
-
+const ImgTitleDescription = ({ img, title, description, style = componentStyle }) => {
   return (
     <Box sx={ style.root }>
       <Box
-        alt="info" component="img" src={ img }
+        alt='info' component='img' src={ img }
         sx={ style.img }
       />
 

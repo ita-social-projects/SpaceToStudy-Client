@@ -16,7 +16,7 @@ export const styles = {
     backgroundImage: {
       md: `url(${welcomeBgMd}), ${gradient})`,
       sm: `url(${welcomeBgSm}), ${gradient})`,
-      xs: `url(${welcomeBgXs}), ${gradient})`,
+      xs: `url(${welcomeBgXs}), ${gradient})`
     },
     backgroundPosition: 'center',
     backgroundSize: 'contain',
@@ -24,7 +24,7 @@ export const styles = {
   },
   title: {
     maxWidth: '100%',
-    marginBottom: '24px',
+    marginBottom: '24px'
   },
   subtitle: {
     typography: {
@@ -32,10 +32,10 @@ export const styles = {
       xs: 'body2'
     },
     px: '24px',
-    maxWidth:  '798px',
+    maxWidth: '798px',
     marginBottom: '32px',
     color: 'primary.900',
-    textAlign: 'center',
+    textAlign: 'center'
   },
   getStartBtn: {
     padding: '16px 51px',

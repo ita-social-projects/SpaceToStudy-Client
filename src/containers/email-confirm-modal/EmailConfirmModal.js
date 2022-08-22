@@ -11,22 +11,19 @@ import { AuthService } from '~/services/auth-service'
 import Loader from '~/components/loader/Loader'
 import ImgTitleDescription from '~/components/img-title-description/ImgTitleDescription'
 
-const EmailConfirmModal = ( { confirmToken, setModal } ) => {
-
+const EmailConfirmModal = ({ confirmToken, setModal }) => {
   const { t } = useTranslation()
 
   const serviceFunction = useCallback(() => AuthService.confirmEmail(confirmToken), [confirmToken])
 
-  const { response, error, loading } = useAxios( { service: serviceFunction } )
+  const { response, error, loading } = useAxios({ service: serviceFunction })
 
   const openLoginDialog = () => {
     setModal(<LoginDialog />)
   }
 
   if (loading) {
-    return (
-      <Loader size={ 100 } />
-    )
+    return <Loader size={ 100 } />
   }
 
   if (error && error.response.data.code === 'BAD_CONFIRM_TOKEN') {
@@ -58,22 +55,16 @@ const EmailConfirmModal = ( { confirmToken, setModal } ) => {
   if (response) {
     return (
       <Box sx={ style.box }>
-        <ImgTitleDescription
-          img={ imgSuccess }
-          style={ style }
-          title={ t('modals.emailConfirm') }
-        />
+        <ImgTitleDescription img={ imgSuccess } style={ style } title={ t('modals.emailConfirm') } />
         <Button
-          color='primary' onClick={ openLoginDialog } size="large"
-          style={ style.button }
-          variant="contained"
+          color='primary' onClick={ openLoginDialog } size='large'
+          style={ style.button } variant='contained'
         >
           { t('button.goToLogin') }
         </Button>
       </Box>
     )
   }
-
 }
 
 export default EmailConfirmModal

@@ -22,14 +22,14 @@ const AuthPolicy = () => {
           titleStyles={ styles.title }
         />
         <Button
-          component={ Link } size="extraLarge" to={ routes.home.route }
-          variant="contained"
+          component={ Link } size='extraLarge' to={ routes.home.route }
+          variant='contained'
         >
           { t('button.toMain') }
         </Button>
       </Box>
       <Box
-        alt="Authorization error" component="img" src={ error401 }
+        alt='Authorization error' component='img' src={ error401 }
         sx={ styles.errorImage }
       />
     </Container>

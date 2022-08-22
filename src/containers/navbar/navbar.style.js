@@ -3,18 +3,18 @@ export const style = {
     display: 'flex',
     justifyContent: 'space-between',
     padding: '0px',
-    margin: { xs: '0', xl: 'auto' }, 
+    margin: { xs: '0', xl: 'auto' },
     maxWidth: 'xl',
-    width: { xl: '100%' },
+    width: { xl: '100%' }
   },
   logoButton: { m: { xs: '10px', sm: '18px', md: '22px 6px 22px 24px', lg: '22px 24px' } },
   navList: {
     display: { xs: 'none', md: 'flex' },
-    alignItems: 'center',
+    alignItems: 'center'
   },
-  navItemText: { 
+  navItemText: {
     color: 'primary.900',
-    textDecoration: 'none',
+    textDecoration: 'none'
   },
   navItem: {
     '&:last-child': {
@@ -25,10 +25,10 @@ export const style = {
     width: 'auto',
     '&::after': {
       content: '"/"',
-      padding: { md: '0 0 3px 8px', lg:'0 0 3px 20px' } 
+      padding: { md: '0 0 3px 8px', lg: '0 0 3px 20px' }
     },
     '&:last-child::after': {
       content: '""'
-    },
-  },
+    }
+  }
 }
