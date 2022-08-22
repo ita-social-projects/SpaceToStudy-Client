@@ -7,5 +7,5 @@ export const style = {
     maxHeight: '470px',
     overflow: 'auto',
     mr: '24px'
-  },  
+  }
 }
