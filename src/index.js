@@ -9,7 +9,6 @@ import App from '~/App'
 import '~/styles/index.css'
 import '~/plugins/i18n'
 
-
 ReactDOM.render(
   <BrowserRouter>
     <React.StrictMode>
@@ -17,8 +16,7 @@ ReactDOM.render(
         <App />
       </Provider>
     </React.StrictMode>
-  </BrowserRouter>
-  ,
+  </BrowserRouter>,
   document.getElementById('root')
 )
 

@@ -12,16 +12,16 @@ export const style = {
     }
   },
   links: {
-    display: { xs:'flex', sm: 'block' },
-    flexDirection: { xs:'column' },
-    alignItems: { xs:'end' },
+    display: { xs: 'flex', sm: 'block' },
+    flexDirection: { xs: 'column' },
+    alignItems: { xs: 'end' },
     '& > *': {
       color: 'primary.50',
       textDecoration: 'none',
       '&:nth-of-type(2n)::before': {
-        content: { sm:'" • "', xs: 'none' },
+        content: { sm: '" • "', xs: 'none' },
         color: 'primary.100'
       }
     }
-  },
+  }
 }

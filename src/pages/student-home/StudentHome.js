@@ -7,7 +7,7 @@ import StudentHowItWorks from '~/containers/student-home-page/student-how-it-wor
 const StudentHome = () => {
   return (
     <Box sx={ { backgroundColor: 'backgroundColor' } }>
-      <Container data-testid="studentHome" sx={ { pt: 6 } }>
+      <Container data-testid='studentHome' sx={ { pt: 6 } }>
         <FindMentorBlock />
         <PopularCategories />
         <StudentHowItWorks />

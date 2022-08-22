@@ -5,7 +5,7 @@ import { style } from './app-text-field.styles'
 const AppTextField = ({ errorMsg, ...props }) => {
   const helperText = errorMsg ? (
     <Tooltip title={ errorMsg }>
-      <Typography variant="caption">
+      <Typography variant='caption'>
         { errorMsg }
       </Typography>
     </Tooltip>

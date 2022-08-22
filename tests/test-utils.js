@@ -16,9 +16,11 @@ export const renderWithProviders = (
   } = {}
 ) => {
   const Wrapper = ({ children }) => (
-    <MemoryRouter initialEntries={[initialEntries]}>
-      <Provider store={store}>
-        <ThemeProvider theme={theme}>{children}</ThemeProvider>
+    <MemoryRouter initialEntries={ [initialEntries] }>
+      <Provider store={ store }>
+        <ThemeProvider theme={ theme }>
+          { children }
+        </ThemeProvider>
       </Provider>
     </MemoryRouter>
   )

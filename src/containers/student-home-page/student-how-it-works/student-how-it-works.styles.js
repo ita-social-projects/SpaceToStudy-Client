@@ -1,7 +1,7 @@
 export const styles = {
   container: {
-    backgroundColor: 'basic.white', 
-    display: 'block', 
+    backgroundColor: 'basic.white',
+    display: 'block',
     textAlign: 'center',
     p: '35px 40px'
   },
@@ -17,7 +17,7 @@ export const styles = {
     gap: '35px',
     m: '50px 0 70px 0'
   },
-  cardWrapper: {  
+  cardWrapper: {
     m: '0 auto',
     maxWidth: '239px'
   },
@@ -26,7 +26,7 @@ export const styles = {
   },
   cardTitle: {
     typography: 'h6',
-    mt: '25px' 
+    mt: '25px'
   },
   cardDescription: {
     typography: 'body2'

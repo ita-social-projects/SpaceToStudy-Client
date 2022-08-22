@@ -41,16 +41,14 @@ const LoginDialog = () => {
   return (
     <Box sx={ style.root }>
       <Box sx={ style.img }>
-        <Box 
-          alt="login" 
-          component="img" 
-          src={ loginImg } 
-          sx={ style.img } 
+        <Box
+          alt='login' component='img' src={ loginImg }
+          sx={ style.img }
         />
       </Box>
 
       <Box sx={ style.form }>
-        <Typography sx={ style.h2 } variant="h2">
+        <Typography sx={ style.h2 } variant='h2'>
           { t('login.head') }
         </Typography>
 

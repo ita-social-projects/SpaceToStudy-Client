@@ -9,10 +9,9 @@ jest.mock('react-router-dom', () => ({
 }))
 
 describe('test useHashScroll custom hook', () => {
-  
-  it('scrollToAnchor should be function',  () => {
-    const { result } = renderHook(() => useHashScroll()) 
-    
+  it('scrollToAnchor should be function', () => {
+    const { result } = renderHook(() => useHashScroll())
+
     expect(typeof result.current.scrollToAnchor).toBe('function')
   })
 
@@ -22,7 +21,7 @@ describe('test useHashScroll custom hook', () => {
     document.getElementById = jest.fn().mockImplementation(() => elementWithId)
     const mockedScroll = jest.fn()
     window.HTMLElement.prototype.scrollIntoView = mockedScroll
-    
+
     const { result } = renderHook(() => useHashScroll())
     act(() => {
       result.current.scrollToAnchor()

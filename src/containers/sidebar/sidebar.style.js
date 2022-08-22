@@ -2,11 +2,11 @@ export const style = {
   closeIcon: {
     position: 'absolute',
     right: '14px',
-    top: '14px',
+    top: '14px'
   },
   list: {
     mt: '54px',
-    p: 0, 
+    p: 0,
     width: '311px'
   },
   listItem: {

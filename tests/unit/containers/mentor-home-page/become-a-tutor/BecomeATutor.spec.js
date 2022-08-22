@@ -21,7 +21,7 @@ describe('BecomeATutor test', () => {
     expect(secondTab).toBeInTheDocument()
   })
 
-  it('should open documents render error after add wrong file size', async() => {
+  it('should open documents render error after add wrong file size', async () => {
     const fakeFile = new File(['certificate'], 'test-file.png', { type: 'image/png' })
     Object.defineProperty(fakeFile, 'size', { value: 55_000_000 })
 

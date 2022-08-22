@@ -27,7 +27,7 @@ const CookiePolicy = () => {
   })
 
   return (
-    <Container data-testid="sectionContainer" sx={ styles.container }>
+    <Container data-testid='sectionContainer' sx={ styles.container }>
       <Box sx={ styles.firstItemWrapper }>
         <Typography sx={ styles.firstItemTitle }>
           { t('cookiePolicyPage.cookiePolicy.title') }

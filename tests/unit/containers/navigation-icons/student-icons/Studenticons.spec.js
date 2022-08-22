@@ -6,7 +6,6 @@ const openLoginDialog = jest.fn()
 const setIsSidebarOpen = jest.fn()
 
 describe('test with guest role', () => {
-
   beforeEach(() => {
     renderWithProviders(<StudentIcons openLoginDialog={ openLoginDialog } setIsSidebarOpen={ setIsSidebarOpen } />)
   })
@@ -23,5 +22,4 @@ describe('test with guest role', () => {
 
     expect(setIsSidebarOpen).toBeCalledWith(true)
   })
-
 })

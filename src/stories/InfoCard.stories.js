@@ -19,7 +19,7 @@ export default {
     },
     actionLabel: {
       type: 'string',
-      description: 'Action label' 
+      description: 'Action label'
     },
     cardWidth: {
       type: 'string',

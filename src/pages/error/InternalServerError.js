@@ -22,13 +22,13 @@ const InternalServerError = () => {
           </Typography>
           <Button
             component={ Link } sx={ style.homeBtn } to={ routes.home.route }
-            variant="contained"
+            variant='contained'
           >
             { t('button.toMain') }
           </Button>
         </Box>
         <Box
-          alt="errorLogo" component="img" src={ backGround500 }
+          alt='errorLogo' component='img' src={ backGround500 }
           sx={ style.image }
         ></Box>
       </Box>

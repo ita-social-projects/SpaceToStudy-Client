@@ -12,7 +12,7 @@ const props = {
 }
 
 describe('ClickableCard component', () => {
-  beforeEach(()=>{
+  beforeEach(() => {
     renderWithProviders(<ClickableCard { ...props } />)
   })
 

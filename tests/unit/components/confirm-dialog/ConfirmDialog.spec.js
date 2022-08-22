@@ -6,12 +6,12 @@ const confirm = jest.fn()
 const dismiss = jest.fn()
 
 describe('Confirm dialog test', () => {
-  const props = { 
+  const props = {
     title: 'title',
     message: 'message',
     open: true,
     onConfirm: confirm,
-    onDismiss: dismiss 
+    onDismiss: dismiss
   }
 
   beforeEach(() => {

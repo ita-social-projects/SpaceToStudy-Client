@@ -12,8 +12,8 @@ export default {
   parameters: {
     componentSubtitle: (
       <a
-        href="https://design-system.aurora.io/?path=/story/material-ui-textfield-including-select--basic"
-        target="_blank"
+        href='https://design-system.aurora.io/?path=/story/material-ui-textfield-including-select--basic'
+        target='_blank'
       >
         Full API
       </a>

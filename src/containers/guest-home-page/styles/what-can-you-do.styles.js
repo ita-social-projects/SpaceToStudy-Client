@@ -1,7 +1,7 @@
 export const styles = {
   container: {
     my: {
-      sm:'80px',
+      sm: '80px',
       xs: '48px'
     }
   },
@@ -14,7 +14,7 @@ export const styles = {
     justifyContent: 'center',
     alignItems: {
       sm: 'inherit',
-      xs: 'center',
+      xs: 'center'
     },
     columnGap: {
       md: '64px',

@@ -9,8 +9,8 @@ import { theme } from './styles/app-theme/custom-mui.styles'
 const App = () => {
   useHashScroll()
 
-  return(
-    <div className="App">
+  return (
+    <div className='App'>
       <ThemeProvider theme={ theme }>
         <ConfirmationDialogProvider>
           <ModalProvider>

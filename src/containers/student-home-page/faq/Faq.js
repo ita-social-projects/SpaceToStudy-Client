@@ -7,12 +7,11 @@ import Accordions from '~/components/accordion/Accordions'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import { studentRoutes } from '~/constants/routes'
 
-
 const Faq = () => {
   const { t } = useTranslation()
   const [activeItemId, setActiveItemId] = useState(null)
 
-  const changeAccordion = (id) => activeItemId === id ? setActiveItemId(null) : setActiveItemId(id)
+  const changeAccordion = (id) => (activeItemId === id ? setActiveItemId(null) : setActiveItemId(id))
 
   return (
     <Box className='section' id={ studentRoutes.navBar.faq.label } sx={ { flexDirection: 'column', mb: 0, pb: 10 } }>
@@ -24,11 +23,8 @@ const Faq = () => {
       />
 
       <Accordions
-        activeIndex={ activeItemId }
-        items={ accordionItems }
-        onChange={ changeAccordion }
-        showMoreIcon
-        square
+        activeIndex={ activeItemId } items={ accordionItems } onChange={ changeAccordion }
+        showMoreIcon square
       />
     </Box>
   )

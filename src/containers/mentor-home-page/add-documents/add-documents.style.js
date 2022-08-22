@@ -15,5 +15,5 @@ export const style = {
     justifyContent: 'space-between',
     maxWidth: '360px',
     pt: 12
-  },
+  }
 }

@@ -1,5 +1,5 @@
 export const style = {
-  root: { 
+  root: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-around',
@@ -8,11 +8,11 @@ export const style = {
     border: 'dashed',
     borderColor: 'primary.200',
     borderRadius: '4px',
-    overflow: 'auto',
+    overflow: 'auto'
   },
-  rootDrag: { 
+  rootDrag: {
     borderColor: 'primary.900',
-    backgroundColor: 'basic.grey',
+    backgroundColor: 'basic.grey'
   },
   icon: {
     my: 'auto',
@@ -22,15 +22,15 @@ export const style = {
   listItem: {
     display: 'flex',
     justifyContent: 'space-between',
-    p: 0,
+    p: 0
   },
   fileName: {
     textOverflow: 'ellipsis',
     overflow: 'hidden',
-    ml: 1,
+    ml: 1
   },
   close: {
     color: 'primary.700',
-    fontSize: '20px',
+    fontSize: '20px'
   }
 }

@@ -29,7 +29,7 @@ const StepWrapper = ({ children, steps, handleSubmit, stepErrors }) => {
       key={ step }
       onClick={ () => setActiveStep(index) }
       sx={ [styles.defaultTab, index === activeStep && styles.activeTab] }
-      typography="caption"
+      typography='caption'
     >
       { step }
     </Box>
@@ -37,35 +37,28 @@ const StepWrapper = ({ children, steps, handleSubmit, stepErrors }) => {
 
   const nextButton = isLastStep ? (
     <Button
-      onClick={ handleSubmit }
-      size='small'
-      sx={ styles.btn }
-      variant="contained"
+      onClick={ handleSubmit } size='small' sx={ styles.btn }
+      variant='contained'
     >
       { t('common.finish') }
     </Button>
   ) : (
     <Button
-      onClick={ next }
-      size='small'
-      sx={ styles.btn }
-      variant="contained"
+      onClick={ next } size='small' sx={ styles.btn }
+      variant='contained'
     >
       { t('common.next') }
-      <EastIcon fontSize="small" />
+      <EastIcon fontSize='small' />
     </Button>
   )
 
   const btnsBox = (
     <Box sx={ styles.btnWrapper }>
       <Button
-        disabled={ activeStep === 0 }
-        onClick={ back }
-        size='small'
-        sx={ styles.btn }
-        variant="outlined"
+        disabled={ activeStep === 0 } onClick={ back } size='small'
+        sx={ styles.btn } variant='outlined'
       >
-        <WestIcon fontSize="small" />
+        <WestIcon fontSize='small' />
         { t('common.back') }
       </Button>
       { nextButton }
@@ -77,7 +70,7 @@ const StepWrapper = ({ children, steps, handleSubmit, stepErrors }) => {
       <Box sx={ styles.steps }>
         { stepLabels }
       </Box>
-      <Box mt="46px">
+      <Box mt='46px'>
         { cloneElement(children[activeStep], { btnsBox, stepLabel: steps[activeStep] }) }
       </Box>
     </Container>

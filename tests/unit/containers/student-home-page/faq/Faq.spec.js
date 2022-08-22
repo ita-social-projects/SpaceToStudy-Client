@@ -1,7 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react'
 import Faq from '~/containers/student-home-page/faq/Faq'
 
-
 describe('Faq component test', () => {
   beforeEach(() => {
     render(<Faq />)
@@ -9,13 +8,13 @@ describe('Faq component test', () => {
 
   it('should render title', () => {
     const title = screen.getByText('studentHomePage.faq.title')
-    
+
     expect(title).toBeInTheDocument()
   })
-    
+
   it('should render findTurot text', () => {
     const text = screen.getByText('studentHomePage.faq.findTutor')
-    
+
     expect(text).toBeInTheDocument()
   })
 
@@ -25,7 +24,7 @@ describe('Faq component test', () => {
     const openFirstItem = screen.getByTestId('0-true')
 
     expect(openFirstItem).toBeInTheDocument()
-    
+
     fireEvent.click(title)
     const closeFirstItem = screen.getByTestId('0-false')
 
@@ -38,7 +37,7 @@ describe('Faq component test', () => {
     fireEvent.click(title1)
     const openFirstItem = screen.getByTestId('0-true')
     const closeSecondItem = screen.getByTestId('1-false')
-    
+
     expect(openFirstItem).toBeInTheDocument()
     expect(closeSecondItem).toBeInTheDocument()
 
@@ -49,5 +48,4 @@ describe('Faq component test', () => {
     expect(closeFirstItem).toBeInTheDocument()
     expect(openSecondItem).toBeInTheDocument()
   })
-
 })

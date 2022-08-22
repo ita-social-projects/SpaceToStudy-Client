@@ -3,7 +3,6 @@ import NotFound from '~/pages/error/NotFound'
 import { renderWithProviders } from '~tests/test-utils'
 
 describe('InternalServerError page test', () => {
-  
   beforeEach(() => {
     renderWithProviders(<NotFound />)
   })

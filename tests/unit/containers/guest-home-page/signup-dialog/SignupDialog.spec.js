@@ -4,7 +4,6 @@ import { student } from '~/containers/guest-home-page/constants'
 import SignupDialog from '~/containers/guest-home-page/signup-dialog/SignupDialog'
 import { ModalProvider } from '~/context/modal-context'
 
-
 const mockDispatch = jest.fn()
 
 jest.mock('react-redux', () => ({

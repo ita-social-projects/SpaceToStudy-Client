@@ -22,25 +22,29 @@ describe('Use confirm custom hook', () => {
 
   it('should not open confirm dialog', async () => {
     act(() => {
-      expect(res.result.current.checkConfirmation({
-        message: 'message',
-        title: 'title'
-      })).toBe(true)
+      expect(
+        res.result.current.checkConfirmation({
+          message: 'message',
+          title: 'title'
+        })
+      ).toBe(true)
     })
   })
-  
+
   it('should open confirm dialog', async () => {
     act(() => {
       res.result.current.setNeedConfirmation(true)
     })
 
-    act(()=>{
-      res.result.current.checkConfirmation({
-        message: 'message',
-        title: 'title'
-      }).then(() => {
-        expect(res.result.current.openDialog).toHaveBeenCalled()
-      })
-    }) 
+    act(() => {
+      res.result.current
+        .checkConfirmation({
+          message: 'message',
+          title: 'title'
+        })
+        .then(() => {
+          expect(res.result.current.openDialog).toHaveBeenCalled()
+        })
+    })
   })
 })

@@ -10,7 +10,7 @@ import { style } from '~/containers/navigation-icons/navigation-icons.style'
 const GuestIcons = ({ openLoginDialog, setIsSidebarOpen }) => {
   const { t } = useTranslation()
 
-  return(
+  return (
     <Box sx={ style.iconBox }>
       <IconButton sx={ style.langIcon }>
         <LanguageIcon color='primary' />
@@ -20,7 +20,7 @@ const GuestIcons = ({ openLoginDialog, setIsSidebarOpen }) => {
       </IconButton>
       <Button
         onClick={ openLoginDialog } size='medium' sx={ style.loginButton }
-        variant="contained"
+        variant='contained'
       >
         { t('header.loginButton') }
       </Button>

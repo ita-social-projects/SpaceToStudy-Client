@@ -12,23 +12,19 @@ const Home = () => {
   const { response, loading, fetchData } = useAxios({ service: exampleService.getAll })
 
   useEffect(() => {
-    if(response) {
+    if (response) {
       setExampleItems(response.data.items)
     }
   }, [response])
 
   return (
-    <div className="Home">
+    <div className='Home'>
       <Logo />
       <Button onClick={ fetchData }>Test</Button>
       { t('common.title') }
-      { loading ?
-        <div>Loading</div>
-        :
-        exampleItems.map((example) => (<div key={ example._id }>
-          { example.title }
-        </div>))
-      }
+      { loading ? <div>Loading</div> : exampleItems.map((example) => (<div key={ example._id }>
+        { example.title }
+      </div>)) }
     </div>
   )
 }
