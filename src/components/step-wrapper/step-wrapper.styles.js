@@ -1,3 +1,5 @@
+import { fade } from '~/styles/app-theme/custom-animations'
+
 export const styles = {
   root: {
     my: 6
@@ -14,7 +16,8 @@ export const styles = {
     color: 'text',
     fontWeight: 600,
     borderBottom: '3px solid',
-    pb: '14px'
+    pb: '14px',
+    animation: `${fade} 0.5s ease-in-out`
   },
   steps: {
     display: 'flex',
