@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
 import { Typography, Box, Button } from '@mui/material'
+import HashLink from '~/components/hash-link/HashLink'
 
 import { styles } from '~/containers/guest-home-page/styles/welcome.styles'
 import titleMd from '~/assets/img/guest-home-page/titleMd.svg'
@@ -32,7 +32,7 @@ const Welcome = () => {
       </Typography>
 
       <Button
-        component={ Link }
+        component={ HashLink }
         data-testid='welcomeGetStarted'
         sx={ styles.getStartBtn }
         to={ scrollTo }

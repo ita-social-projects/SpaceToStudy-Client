@@ -7,6 +7,7 @@ import useShowMore from '~/hooks/use-show-more'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import ClickableCard from '~/components/clickable-card/ClickableCard'
 import { categoriesListMock } from '~/containers/student-home-page/popular-categories/categories-list-mock'
+import { studentRoutes } from '~/constants/routes'
 
 import { styles } from '~/containers/student-home-page/popular-categories/popular-categories.styles'
 
@@ -15,7 +16,7 @@ const itemsToShow = {
   tablet: 12,
   mobile: 4
 }
-
+const sectionId = studentRoutes.navBar.categories.label
 const itemsToAdd = {
   desktop: 6,
   tablet: 4,
@@ -45,7 +46,7 @@ const PopularCategories = () => {
   })
 
   return (
-    <Box className='section' sx={ { flexDirection: 'column' } }>
+    <Box className='section' id={ sectionId } sx={ { flexDirection: 'column' } }>
       <TitleWithDescription
         description={ t('studentHomePage.popularCategories.description') }
         descriptionStyles={ { typography: { sm: 'body1', xs: 'body2' } } }

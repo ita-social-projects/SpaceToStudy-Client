@@ -5,6 +5,7 @@ import { routes, studentRoutes } from '~/constants/routes'
 import { useTranslation } from 'react-i18next'
 import { Typography, Box, Button, List, ListItem } from '@mui/material'
 
+import HashLink from '~/components/hash-link/HashLink'
 import Logo from '~/containers/logo/Logo'
 import Sidebar from '~/containers/sidebar/Sidebar'
 
@@ -25,7 +26,7 @@ const Navbar = () => {
     return (
       <ListItem key={ item.label } sx={ style.navItem }>
         <Typography
-          component={ Link } sx={ style.navItemText } to={ item.route }
+          component={ HashLink } sx={ style.navItemText } to={ item.route }
           variant='subtitle2'
         >
           { t(`header.${item.label}`) }
