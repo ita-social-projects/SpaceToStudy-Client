@@ -57,7 +57,7 @@ describe('Signup dialog test', () => {
   })
 
   it('should show error', () => {
-    const checkbox = screen.getByTestId('checkbox')
+    const checkbox = screen.getByRole('checkbox')
     const button = screen.getByText('common.labels.signup')
 
     fireEvent.click(checkbox)
@@ -84,7 +84,7 @@ describe('Signup dialog test', () => {
     const inputConfirmPassword = screen.getByLabelText(/common.labels.confirmPassword/i)
     fireEvent.change(inputConfirmPassword, { target: { value: '12345678a/A' } })
 
-    const checkbox = screen.getByTestId('checkbox')
+    const checkbox = screen.getByRole('checkbox')
     fireEvent.click(checkbox)
 
     const button = screen.getByText('common.labels.signup')

@@ -72,7 +72,7 @@ describe('Signup form test', () => {
   })
 
   it('should enable signup button', async () => {
-    const checkbox = screen.getByTestId('checkbox')
+    const checkbox = screen.getByRole('checkbox')
     const button = screen.getByText('common.labels.signup')
 
     expect(button).toBeDisabled()
@@ -107,7 +107,7 @@ describe('Signup form test', () => {
     handleSubmit.mockImplementation((event) => {
       event.preventDefault()
     })
-    const checkbox = screen.getByTestId('checkbox')
+    const checkbox = screen.getByRole('checkbox')
     const button = screen.getByText('common.labels.signup')
     fireEvent.click(checkbox)
     fireEvent.click(button)
