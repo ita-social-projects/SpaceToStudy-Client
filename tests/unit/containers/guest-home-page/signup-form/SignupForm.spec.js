@@ -71,6 +71,17 @@ describe('Signup form test', () => {
     expect(button).toBeInTheDocument()
   })
 
+  it('should enable signup button', async () => {
+    const checkbox = screen.getByTestId('checkbox')
+    const button = screen.getByText('common.labels.signup')
+
+    expect(button).toBeDisabled()
+
+    fireEvent.click(checkbox)
+
+    expect(button).toBeEnabled()
+  })
+
   it('should show visibility icon', async () => {
     const visibilityOffIcons = screen.getAllByTestId('VisibilityOffIcon')
     fireEvent.click(visibilityOffIcons[0])
@@ -96,7 +107,9 @@ describe('Signup form test', () => {
     handleSubmit.mockImplementation((event) => {
       event.preventDefault()
     })
+    const checkbox = screen.getByTestId('checkbox')
     const button = screen.getByText('common.labels.signup')
+    fireEvent.click(checkbox)
     fireEvent.click(button)
 
     expect(handleSubmit).toHaveBeenCalled()
