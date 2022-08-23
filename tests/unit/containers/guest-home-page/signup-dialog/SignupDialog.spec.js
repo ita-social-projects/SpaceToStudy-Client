@@ -1,4 +1,4 @@
-import { screen, fireEvent, render } from '@testing-library/react'
+import { screen, fireEvent, render, waitFor } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { student } from '~/containers/guest-home-page/constants'
 import SignupDialog from '~/containers/guest-home-page/signup-dialog/SignupDialog'
@@ -80,6 +80,8 @@ describe('Signup dialog test', () => {
     const button = screen.getByText('common.labels.signup')
     fireEvent.click(button)
 
-    expect(mockDispatch).toHaveBeenCalledTimes(1)
+    await waitFor(() => {
+      expect(mockDispatch).toHaveBeenCalledTimes(1)
+    })
   })
 })
