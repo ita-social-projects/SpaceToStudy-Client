@@ -22,7 +22,7 @@
   "errorMessages": {
     "emailValid": "Email should be of the following format: “local-part@domain.com”",
     "passwordLength": "Password cannot be shorter than 8 and longer than 25 characters",
-    "passwordValid": "Password must contain at least one alphabetic, one numeric and one special character",
+    "passwordValid": "Password must contain at least one alphabetic and one numeric character",
     "emptyField": "This field cannot be empty",
     "nameLength": "This field cannot be longer than 30 characters",
     "nameAlphabeticOnly": "This field can contain alphabetic characters only",
