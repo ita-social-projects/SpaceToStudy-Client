@@ -8,7 +8,7 @@ import { style } from '~/containers/mentor-home-page/add-photo/add-photo.style'
 
 const validationData = {
   maxFileSize: 10_000_000,
-  filesTypes: ['image/jpeg', 'image/png', 'image/jpg'],
+  filesTypes: ['image/jpeg', 'image/png'],
   fileSizeError: 'becomeTutor.photo.fileSizeError',
   typeError: 'becomeTutor.photo.typeError',
   maxQuantityFiles: 1
