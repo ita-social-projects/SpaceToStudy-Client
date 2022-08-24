@@ -3,6 +3,7 @@ import BecomeATutor from '~/containers/mentor-home-page/become-a-tutor/BecomeATu
 
 describe('BecomeATutor test', () => {
   beforeEach(() => {
+    window.URL.createObjectURL = jest.fn()
     render(<BecomeATutor />)
   })
 
@@ -31,6 +32,19 @@ describe('BecomeATutor test', () => {
     const input = screen.getByLabelText('becomeTutor.documents.button')
     fireEvent.change(input, { target: { files: [fakeFile] } })
     const error = screen.queryByText('becomeTutor.documents.allFilesSizeError')
+
+    await waitFor(() => expect(error).toBeInTheDocument())
+  })
+  it('should open photo render error after add wrong file size', async () => {
+    const fakeFile = new File(['certificate'], 'test-file.png', { type: 'image/png' })
+    Object.defineProperty(fakeFile, 'size', { value: 55_000_000 })
+
+    const photo = screen.getByText(/Photo and Video/i)
+    fireEvent.click(photo)
+
+    const input = screen.getByLabelText('becomeTutor.photo.button')
+    fireEvent.change(input, { target: { files: [fakeFile] } })
+    const error = screen.queryByText('becomeTutor.photo.fileSizeError')
 
     await waitFor(() => expect(error).toBeInTheDocument())
   })
