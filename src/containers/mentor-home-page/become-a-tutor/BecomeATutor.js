@@ -5,6 +5,8 @@ import TempComponent from './TempComponent'
 import GeneralInfo from '~/containers/mentor-home-page/general-info/GeneralInfo'
 import ExperienceStep from '~/containers/mentor-home-page/experience-step/ExperienceStep'
 import AddDocuments from '~/containers/mentor-home-page/add-documents/AddDocuments'
+import AddPhoto from '../add-photo/AddPhoto'
+
 import useForm from '~/hooks/use-form'
 
 import { initialValues, stepLabels, validations } from '~/containers/mentor-home-page/constants'
@@ -12,10 +14,16 @@ import { initialValues, stepLabels, validations } from '~/containers/mentor-home
 const BecomeATutor = () => {
   const [documents, setDocuments] = useState([])
   const [documentsError, setDocumentsError] = useState()
+  const [photo, setPhoto] = useState([])
+  const [photoError, setPhotoError] = useState()
 
   const addDocuments = (documents, error) => {
     setDocuments(documents)
     setDocumentsError(error)
+  }
+  const addPhoto = (photo, error) => {
+    setPhoto(photo)
+    setPhotoError(error)
   }
 
   const { handleSubmit, handleChange, handleBlur, data, errors } = useForm({
@@ -24,6 +32,7 @@ const BecomeATutor = () => {
     onSubmit: async () => {
       console.log(data)
       console.log(documents)
+      console.log(photo)
     }
   })
 
@@ -55,7 +64,10 @@ const BecomeATutor = () => {
       key='5'
       setStepErrors={ setStepErrors }
     />,
-    <TempComponent key='6'>6</TempComponent>
+    <AddPhoto
+      addPhoto={ addPhoto } key='6' photo={ photo }
+      photoError={ photoError } setStepErrors={ setStepErrors }
+    />
   ]
 
   return (

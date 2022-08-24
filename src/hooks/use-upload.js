@@ -24,7 +24,7 @@ const useUpload = ({ initialState, initialError, validationData }) => {
 
   const addFiles = (e) => {
     e.preventDefault()
-    const newFiles = [...files, ...e.target.files].slice(0, validationData.dataTransfermaxQuantityFiles)
+    const newFiles = [...files, ...e.target.files].slice(0, validationData.maxQuantityFiles)
     setFiles(newFiles)
     setError(filesValidation(newFiles, validationData))
   }
