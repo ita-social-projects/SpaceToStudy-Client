@@ -144,7 +144,7 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors, clos
         disabled={ buttonDisabled }
         loading={ loading }
         size='large'
-        sx={ style.signupButton }
+        sx={ styles.signupButton }
         type='submit'
         variant='contained'
       >
