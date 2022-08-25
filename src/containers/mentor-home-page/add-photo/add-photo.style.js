@@ -27,5 +27,8 @@ export const style = {
     justifyContent: 'space-between',
     maxWidth: '360px',
     pt: 12
+  },
+  description: {
+    mb: 5
   }
 }

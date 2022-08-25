@@ -34,7 +34,7 @@ const AddPhoto = ({ btnsBox, photo, photoError, addPhoto, setStepErrors, stepLab
   const photoPrewiew =
     photoError || !photoForPreview ? (
       <Box sx={ style.preview }>
-        <Typography mb={ 5 } variant='body1'>
+        <Typography>
           { t('becomeTutor.photo.placeholder') }
         </Typography>
       </Box>
@@ -50,7 +50,7 @@ const AddPhoto = ({ btnsBox, photo, photoError, addPhoto, setStepErrors, stepLab
       { photoPrewiew }
       <Box sx={ style.rigthBox }>
         <Box>
-          <Typography mb={ 5 } variant='body1'>
+          <Typography sx={ style.description }>
             { t('becomeTutor.photo.description') }
           </Typography>
           <FileUploader

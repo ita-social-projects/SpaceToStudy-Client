@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-indent */
+/* eslint-disable react/jsx-indent-props */
 import { render, screen, fireEvent, waitFor, cleanup } from '@testing-library/react'
 import AddPhoto from '~/containers/mentor-home-page/add-photo/AddPhoto'
 
@@ -56,26 +58,24 @@ describe('AddPhoto test', () => {
 
     await waitFor(() => expect(error).toBeInTheDocument())
   })
+})
 
-  it('should render error after add wrong file size', async () => {
-    const fakeFile = new File(['photo'], 'test-file.png', { type: 'image/png' })
-    Object.defineProperty(fakeFile, 'size', { value: 15_000_000 })
-
-    const input = screen.getByLabelText('becomeTutor.photo.button')
-    fireEvent.change(input, { target: { files: [fakeFile] } })
-    const error = screen.queryByText('becomeTutor.photo.fileSizeError')
-
-    await waitFor(() => expect(error).toBeInTheDocument())
-    photo.push(fakeFile)
-  })
-  it('should render image after chosing right file', async () => {
-    const fakeFile = new File(['photo'], 'test-file.png', { type: 'image/png' })
-    Object.defineProperty(fakeFile, 'size', { value: 9_000_000 })
-
-    const input = screen.getByLabelText('becomeTutor.photo.button')
-    fireEvent.change(input, { target: { files: [fakeFile] } })
+describe('AddPhoto test with photo prop', () => {
+  const photo = [new File(['photo'], 'test-file.png', { type: 'image/png' })]
+  it('should render image preview', async () => {
+    window.URL.createObjectURL = jest.fn(() => 'image/png')
+    render(
+      <AddPhoto
+        addPhoto={ addPhoto }
+        btnsBox={ btnsBox }
+        photo={ photo }
+        photoError={ photoError }
+        setStepErrors={ setStepErrors }
+      />
+    )
 
     const photoPreview = screen.queryByAltText('becomeTutor.photo.imageAlt')
+
     await waitFor(() => expect(photoPreview).toBeInTheDocument())
   })
 })
