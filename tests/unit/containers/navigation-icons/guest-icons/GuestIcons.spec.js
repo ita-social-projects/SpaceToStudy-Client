@@ -30,4 +30,12 @@ describe('test with guest role', () => {
 
     expect(setIsSidebarOpen).toBeCalledWith(true)
   })
+
+  it('should render tooltip title', async () => {
+    const loginIcon = screen.getByTestId('LoginIcon')
+    fireEvent.mouseOver(loginIcon)
+    const loginTooltipTitle = await screen.findByText('iconsTooltip.login')
+
+    expect(loginTooltipTitle).toBeInTheDocument()
+  })
 })

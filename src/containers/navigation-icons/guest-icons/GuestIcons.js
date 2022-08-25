@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 
-import { Box, Button, IconButton } from '@mui/material'
+import { Box, Button, IconButton, Tooltip } from '@mui/material'
 import LanguageIcon from '@mui/icons-material/Language'
 import MenuIcon from '@mui/icons-material/Menu'
 import LoginIcon from '@mui/icons-material/Login'
@@ -12,21 +12,29 @@ const GuestIcons = ({ openLoginDialog, setIsSidebarOpen }) => {
 
   return (
     <Box sx={ style.iconBox }>
-      <IconButton sx={ style.langIcon }>
-        <LanguageIcon color='primary' />
-      </IconButton>
-      <IconButton onClick={ openLoginDialog } sx={ { display: { md: 'none' } } }>
-        <LoginIcon color='primary' />
-      </IconButton>
+      <Tooltip arrow title={ t('iconsTooltip.language') }>
+        <IconButton sx={ style.langIcon }>
+          <LanguageIcon color='primary' />
+        </IconButton>
+      </Tooltip>
+
+      <Tooltip arrow title={ t('iconsTooltip.login') }>
+        <IconButton onClick={ openLoginDialog } sx={ { display: { md: 'none' } } }>
+          <LoginIcon color='primary' />
+        </IconButton>
+      </Tooltip>
       <Button
         onClick={ openLoginDialog } size='medium' sx={ style.loginButton }
         variant='contained'
       >
         { t('header.loginButton') }
       </Button>
-      <IconButton onClick={ () => setIsSidebarOpen(true) } sx={ style.menuIcon }>
-        <MenuIcon color='primary' />
-      </IconButton>
+
+      <Tooltip arrow title={ t('iconsTooltip.menu') }>
+        <IconButton onClick={ () => setIsSidebarOpen(true) } sx={ style.menuIcon }>
+          <MenuIcon color='primary' />
+        </IconButton>
+      </Tooltip>
     </Box>
   )
 }
