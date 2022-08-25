@@ -8,6 +8,8 @@ import Button from '@mui/material/Button'
 import Checkbox from '@mui/material/Checkbox'
 import useInputVisibility from '~/hooks/use-input-visibility'
 import AppTextField from '~/components/app-text-field/AppTextField'
+import { useSelector } from 'react-redux'
+import Loader from '~/components/loader/Loader'
 import { routes } from '~/constants/routes'
 
 import { styles } from '~/containers/guest-home-page/signup-form/SignupForm.styles'
@@ -19,6 +21,20 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors, clos
   const { inputVisibility: passwordVisibility, showInputText: showPassword } = useInputVisibility(errors.password)
   const { inputVisibility: confirmPasswordVisibility, showInputText: showConfirmPassword } = useInputVisibility(
     errors.confirmPassword
+  )
+  const { loading } = useSelector((state) => state.appMain)
+
+  const submitButton = loading ? (
+    <Box sx={ { minWidth: '100px', display: 'flex', justifyContent: 'center' } }>
+      <Loader size={ 20 } />
+    </Box>
+  ) : (
+    <Button
+      size='large' sx={ style.signupButton } type='submit'
+      variant='contained'
+    >
+      { t('common.labels.signup') }
+    </Button>
   )
 
   const handleOnAgreementChange = () => {
@@ -137,12 +153,7 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors, clos
         />
       </Box>
 
-      <Button
-        disabled={ buttonDisabled } size='large' sx={ styles.signupButton }
-        type='submit' variant='contained'
-      >
-        { t('common.labels.signup') }
-      </Button>
+      { submitButton }
     </Box>
   )
 }

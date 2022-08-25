@@ -5,9 +5,15 @@ import { ModalProvider } from '~/context/modal-context'
 import { SnackBarProvider } from '~/context/snackbar-context'
 
 const mockDispatch = jest.fn()
+const mockSelector = jest.fn()
+
+const mockState = {
+  appMain: { loading: false }
+}
 
 jest.mock('react-redux', () => ({
-  useDispatch: () => mockDispatch.mockReturnValue({ unwrap: () => '' })
+  useDispatch: () => mockDispatch.mockReturnValue({ unwrap: () => '' }),
+  useSelector: () => mockSelector.mockReturnValue(mockState)
 }))
 
 jest.mock('~/hooks/use-confirm', () => {

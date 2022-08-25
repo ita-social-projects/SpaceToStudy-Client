@@ -16,6 +16,7 @@ const handleSubmit = jest.fn()
 const closeModal = jest.fn()
 
 describe('Signup form test', () => {
+  const preloadedState = { appMain: { loading: false } }
   beforeEach(() => {
     renderWithProviders(
       <SignupForm
@@ -25,7 +26,8 @@ describe('Signup form test', () => {
         handleBlur={ handleBlur }
         handleChange={ handleChange }
         handleSubmit={ handleSubmit }
-      />
+      />,
+      { preloadedState }
     )
   })
 
@@ -113,5 +115,25 @@ describe('Signup form test', () => {
     fireEvent.click(button)
 
     expect(handleSubmit).toHaveBeenCalled()
+  })
+})
+
+describe('Signup form test with loading', () => {
+  const preloadedState = { appMain: { loading: true } }
+  it('should render loader', () => {
+    renderWithProviders(
+      <SignupForm
+        data={ data }
+        errors={ errors }
+        handleBlur={ handleBlur }
+        handleChange={ handleChange }
+        handleSubmit={ handleSubmit }
+      />,
+      { preloadedState }
+    )
+
+    const loader = screen.getByTestId('loader')
+
+    expect(loader).toBeInTheDocument()
   })
 })
