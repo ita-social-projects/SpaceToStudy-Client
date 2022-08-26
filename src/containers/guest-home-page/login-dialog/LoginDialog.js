@@ -14,11 +14,13 @@ import { login } from '~/containers/guest-home-page/constants'
 import { loginUser } from '~/redux/reducer'
 
 import style from '~/containers/guest-home-page/login-dialog/login-dialog.style'
+import { SnackBarContext } from '~/context/snackbar-context'
 
 const LoginDialog = () => {
   const { t } = useTranslation()
   const { setNeedConfirmation } = useConfirm()
   const { closeModal } = useContext(ModalContext)
+  const { setShowError } = useContext(SnackBarContext)
   const dispatch = useDispatch()
 
   const { handleSubmit, handleChange, handleBlur, data, isDirty, errors } = useForm({
@@ -27,7 +29,7 @@ const LoginDialog = () => {
         await dispatch(loginUser(data)).unwrap()
         closeModal()
       } catch (e) {
-        console.log(e)
+        setShowError(true)
       }
     },
     initialValues: { email: '', password: '' },
