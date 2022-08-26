@@ -23,7 +23,8 @@ export const style = {
   underlineText: {
     fontWeight: '500',
     color: 'primary.900',
-    textDecoration: 'underline'
+    textDecoration: 'underline',
+    cursor: 'pointer'
   },
   haveAccount: {
     display: 'flex',

@@ -77,6 +77,7 @@ const SignupDialog = ({ type }) => {
         </Typography>
 
         <SignupForm
+          closeModal={ closeModal }
           data={ data }
           errors={ errors }
           handleBlur={ handleBlur }

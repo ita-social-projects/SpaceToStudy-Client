@@ -1,10 +1,20 @@
-import { screen, render } from '@testing-library/react'
-import { login } from '~/containers/guest-home-page/constants'
-import GoogleLogin from '~/containers/guest-home-page/google-login/GoogleLogin'
+import { screen, fireEvent, waitFor } from '@testing-library/react'
 
-describe('GoogleLogin component test', () => {
+import { ConfirmationDialogProvider } from '~/context/confirm-context'
+import { ModalProvider } from '~/context/modal-context'
+import { login, signup } from '~/containers/guest-home-page/constants'
+import GoogleLogin from '~/containers/guest-home-page/google-login/GoogleLogin'
+import { renderWithProviders } from '~tests/test-utils'
+
+const mockCloseModal = jest.fn()
+
+describe('GoogleLogin component test for login', () => {
   beforeEach(() => {
-    render(<GoogleLogin type={ login } />)
+    renderWithProviders(
+      <ModalProvider value={ { closeModal: mockCloseModal } }>
+        <GoogleLogin type={ login } />
+      </ModalProvider>
+    )
   })
 
   it('should have "or continue" text', () => {
@@ -34,5 +44,32 @@ describe('GoogleLogin component test', () => {
     const text = screen.getByText('login.joinUs')
 
     expect(text).toBeInTheDocument()
+  })
+
+  it('should close login modal after click', async () => {
+    const link = screen.getByText('login.joinUs')
+    fireEvent.click(link)
+
+    await waitFor(() => expect(mockCloseModal).toHaveBeenCalled())
+  })
+})
+
+describe('GoogleLogin component test for signup', () => {
+  beforeEach(() => {
+    renderWithProviders(
+      <ConfirmationDialogProvider>
+        <ModalProvider>
+          <GoogleLogin type={ signup } />
+        </ModalProvider>
+      </ConfirmationDialogProvider>
+    )
+  })
+
+  it('should render login popup', async () => {
+    const link = screen.getByText('signup.joinUs')
+    fireEvent.click(link)
+    const popup = await screen.findByTestId('popup')
+
+    expect(popup).toBeInTheDocument()
   })
 })

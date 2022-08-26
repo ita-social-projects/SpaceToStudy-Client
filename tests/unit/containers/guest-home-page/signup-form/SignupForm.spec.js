@@ -13,11 +13,13 @@ const data = {
 const handleChange = jest.fn()
 const handleBlur = jest.fn()
 const handleSubmit = jest.fn()
+const closeModal = jest.fn()
 
 describe('Signup form test', () => {
   beforeEach(() => {
     renderWithProviders(
       <SignupForm
+        closeModal={ closeModal }
         data={ data }
         errors={ errors }
         handleBlur={ handleBlur }
@@ -81,6 +83,13 @@ describe('Signup form test', () => {
       expect(visibilityIcons[1]).toBeInTheDocument()
       expect(visibilityOffIcons[1]).not.toBeInTheDocument()
     })
+  })
+
+  it('should close signup modal page after click', async () => {
+    const link = screen.getByText('common.labels.privacyPolicy')
+    fireEvent.click(link)
+
+    await waitFor(() => expect(closeModal).toHaveBeenCalled())
   })
 
   it('should submit form', async () => {
