@@ -1,5 +1,3 @@
-/* eslint-disable react/jsx-indent */
-/* eslint-disable react/jsx-indent-props */
 import { render, screen, fireEvent, waitFor, cleanup } from '@testing-library/react'
 import AddPhoto from '~/containers/mentor-home-page/add-photo/AddPhoto'
 
