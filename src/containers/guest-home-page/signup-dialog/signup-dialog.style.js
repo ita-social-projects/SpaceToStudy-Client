@@ -21,6 +21,10 @@ export const style = {
     borderTop: { xs: '1px solid', sm: 'none' },
     borderColor: { xs: 'primary.100' },
     maxWidth: { xs: '320px', sm: '343px' },
-    padding: { xs: '30px 0 0 0', sm: '50px 60px 40px 80px', md: '10px 55px 0 95px' }
+    maxHeight: { sm: '75vh' },
+    padding: { xs: '30px 0 0 0', sm: '10px 20px 40px 80px', md: '10px 15px 0 75px' },
+    mr: { sm: '40px' },
+    mt: { sm: '40px', md: '0' },
+    overflow: 'auto'
   }
 }
