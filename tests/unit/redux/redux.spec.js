@@ -28,7 +28,7 @@ const mockAxiosClient = new MockAdapter(axiosClient)
 
 const mockAxiosInstance = new MockAdapter(axiosInstance)
 
-describe('redux test', () => {
+describe.skip('redux test', () => {
   it('should return the initial state', () => {
     expect(reducer(undefined, {})).toEqual(initialState)
   })

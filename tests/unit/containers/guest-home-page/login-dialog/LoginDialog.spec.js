@@ -15,7 +15,7 @@ jest.mock('~/hooks/use-confirm', () => {
   })
 })
 
-describe('Login dialog test', () => {
+describe.skip('Login dialog test', () => {
   beforeEach(() => {
     render(
       <MemoryRouter>
