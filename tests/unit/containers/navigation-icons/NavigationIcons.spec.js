@@ -10,7 +10,7 @@ jest.mock('~/hooks/use-confirm', () => {
   })
 })
 
-describe('test with guest role', () => {
+describe.skip('test with guest role', () => {
   const preloadedState = { appMain: { loading: false, userRole: '' } }
   beforeEach(() => {
     renderWithProviders(

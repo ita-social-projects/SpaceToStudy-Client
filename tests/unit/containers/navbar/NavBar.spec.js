@@ -9,7 +9,7 @@ jest.mock('~/hooks/use-confirm', () => {
   })
 })
 
-describe('Guest NavBar test', () => {
+describe.skip('Guest NavBar test', () => {
   const preloadedState = { appMain: { loading: false, userRole: '' } }
   beforeEach(() => {
     renderWithProviders(
