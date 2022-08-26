@@ -22,19 +22,19 @@ const StudentIcons = ({ setIsSidebarOpen }) => {
       </Tooltip>
 
       <Tooltip arrow title={ t('iconsTooltip.messages') }>
-        <IconButton sx={ style.sudentIcons }>
+        <IconButton sx={ style.studentIcons }>
           <MessageRoundedIcon color='primary' />
         </IconButton>
       </Tooltip>
 
       <Tooltip arrow title={ t('iconsTooltip.favorites') }>
-        <IconButton sx={ style.sudentIcons }>
+        <IconButton sx={ style.studentIcons }>
           <FavoriteRoundedIcon color='primary' />
         </IconButton>
       </Tooltip>
 
       <Tooltip arrow title={ t('iconsTooltip.notifications') }>
-        <IconButton sx={ style.sudentIcons }>
+        <IconButton sx={ style.studentIcons }>
           <NotificationsRoundedIcon color='primary' />
         </IconButton>
       </Tooltip>
