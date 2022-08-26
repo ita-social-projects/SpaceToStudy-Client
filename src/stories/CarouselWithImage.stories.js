@@ -20,23 +20,23 @@ Default.args = {
     items: [
       {
         image: MapLogo,
-        title: 'Title 1',
-        description: 'Description 1'
+        title: 'Flexible Location',
+        description: 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.'
       },
       {
         image: MapLogo,
-        title: 'Title 2',
-        description: 'Description 2'
+        title: 'Individual Time',
+        description: 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.'
       },
       {
         image: MapLogo,
-        title: 'Title 3',
-        description: 'Description 3'
+        title: 'Free Choice of Teachers',
+        description: 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.'
       },
       {
         image: MapLogo,
-        title: 'Title 4',
-        description: 'Description 4'
+        title: 'Digital Communication',
+        description: 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.'
       },
     ]
   }
