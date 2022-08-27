@@ -17,7 +17,7 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors, clos
     errors.confirmPassword
   )
 
-  const handleButtonChange = () => {
+  const handleOnAgreementChange = () => {
     setButtonDisabled(!buttonDisabled)
   }
 
@@ -126,7 +126,7 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors, clos
           control={ <Checkbox /> }
           label={ policyAgreement }
           labelPlacement='end'
-          onChange={ handleButtonChange }
+          onChange={ handleOnAgreementChange }
           size='large'
           sx={ style.checkboxLabel }
           variant='subtitle2'
