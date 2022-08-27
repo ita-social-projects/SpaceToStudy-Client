@@ -4,22 +4,21 @@ export const style = {
   },
   container: {
     display: 'flex',
+    flexDirection: { xs: 'column-reverse', sm: 'row' },
+    justifyContent: { xs: 'space-between', sm: 'space-around' },
     alignItems: 'center',
-    paddingTop: 3,
-    paddingBottom: 3,
-    '& > *': {
-      flexGrow: 1
-    }
+    py: { xs: '12px', sm: '26px' }
   },
   links: {
     display: { xs: 'flex', sm: 'block' },
-    flexDirection: { xs: 'column' },
-    alignItems: { xs: 'end' },
+    flexDirection: { xs: 'row', sm: 'column' },
+    pb: { xs: 1, sm: 0 },
     '& > *': {
       color: 'primary.50',
       textDecoration: 'none',
       '&:nth-of-type(2n)::before': {
-        content: { sm: '" • "', xs: 'none' },
+        content: '" • "',
+        px: 1,
         color: 'primary.100'
       }
     }
