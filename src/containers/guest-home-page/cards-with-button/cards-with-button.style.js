@@ -1,4 +1,4 @@
-import { slidesLeft, slidesRight } from '~/styles/app-theme/custom-keyframes'
+import { slidesRightAnimation, slidesLeftAnimation } from '~/styles/app-theme/custom-animations'
 
 export const styles = {
   wrap: {
@@ -45,9 +45,7 @@ export const styles = {
     description: {
       textAlign: { sm: 'end', xs: 'start' }
     },
-    slidesIn: {
-      animation: `${slidesRight} 1s ease-in-out`
-    }
+    slidesIn: slidesRightAnimation
   },
   right: {
     box: {
@@ -71,8 +69,6 @@ export const styles = {
     description: {
       textAlign: 'start'
     },
-    slidesIn: {
-      animation: `${slidesLeft} 1s ease-in-out`
-    }
+    slidesIn: slidesLeftAnimation
   }
 }
