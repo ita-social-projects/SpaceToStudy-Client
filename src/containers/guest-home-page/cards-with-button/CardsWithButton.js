@@ -25,35 +25,39 @@ const CardsWithButton = ({ array, role, btnText, isStudent }) => {
     setModal(<SignupDialog type={ type } />)
   }
 
-  const cards = array.map((item, key) => (
-    <Transition in={ isStudent } key={ key } timeout={ 1000 }>
-      { (state) => (
-        <Box
-          sx={ [
-            styles[key % 2 === 0 ? 'right' : 'left'].box,
-            state === 'exiting' && styles[key % 2 === 0 ? 'right' : 'left'].slidesIn,
-            state === 'entering' && styles[key % 2 === 0 ? 'right' : 'left'].slidesIn
-          ] }
-        >
-          <Box sx={ styles[key % 2 === 0 ? 'right' : 'left'].clearBox } />
-          <Box sx={ styles.image }>
-            <Box component='img' src={ item.icon } />
-            <Box
-              className='dots' component='img' src={ dots }
-              sx={ styles.dots }
+  const cards = array.map((item, key) => {
+    const boxSide = key % 2 === 0 ? 'right' : 'left'
+
+    return (
+      <Transition in={ isStudent } key={ key } timeout={ 1000 }>
+        { (state) => (
+          <Box
+            sx={ [
+              styles[boxSide].box,
+              state === 'exiting' && styles[boxSide].slidesIn,
+              state === 'entering' && styles[boxSide].slidesIn
+            ] }
+          >
+            <Box sx={ styles[boxSide].clearBox } />
+            <Box sx={ styles.image }>
+              <Box component='img' src={ item.icon } />
+              <Box
+                className='dots' component='img' src={ dots }
+                sx={ styles.dots }
+              />
+            </Box>
+            <TitleWithDescription
+              description={ t(item.description) }
+              descriptionStyles={ descriptionStyles }
+              style={ styles[boxSide] }
+              title={ t(item.title) }
+              titleStyles={ titleStyles }
             />
           </Box>
-          <TitleWithDescription
-            description={ t(item.description) }
-            descriptionStyles={ descriptionStyles }
-            style={ styles[key % 2 === 0 ? 'right' : 'left'] }
-            title={ t(item.title) }
-            titleStyles={ titleStyles }
-          />
-        </Box>
-      ) }
-    </Transition>
-  ))
+        ) }
+      </Transition>
+    )
+  })
 
   return (
     <Box sx={ styles.wrap }>
