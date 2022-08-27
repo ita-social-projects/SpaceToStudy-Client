@@ -21,9 +21,17 @@ const HowItWorks = () => {
   }
 
   const cardsMap = isStudent ? (
-    <CardsWithButton array={ mentorCardBoxArray } btnText={ 'Become a mentor' } role={ 'mentor' } />
+    <CardsWithButton
+      array={ mentorCardBoxArray } btnText={ 'Become a mentor' } isStudent={ isStudent }
+      role={ 'mentor' }
+    />
   ) : (
-    <CardsWithButton array={ studentCardBoxArray } btnText={ 'Start learning today' } role={ 'student' } />
+    <CardsWithButton
+      array={ studentCardBoxArray }
+      btnText={ 'Start learning today' }
+      isStudent={ isStudent }
+      role={ 'student' }
+    />
   )
 
   return (

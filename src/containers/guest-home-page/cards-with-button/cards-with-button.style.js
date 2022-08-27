@@ -1,3 +1,5 @@
+import { slidesLeft, slidesRight } from '~/styles/app-theme/custom-keyframes'
+
 export const styles = {
   wrap: {
     display: 'flex',
@@ -42,6 +44,9 @@ export const styles = {
     },
     description: {
       textAlign: { sm: 'end', xs: 'start' }
+    },
+    slidesIn: {
+      animation: `${slidesRight} 1s ease-in-out`
     }
   },
   right: {
@@ -65,6 +70,9 @@ export const styles = {
     },
     description: {
       textAlign: 'start'
+    },
+    slidesIn: {
+      animation: `${slidesLeft} 1s ease-in-out`
     }
   }
 }

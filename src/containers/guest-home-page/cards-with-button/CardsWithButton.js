@@ -1,6 +1,7 @@
 import { Box, Button } from '@mui/material'
-import { useContext, useMemo } from 'react'
+import { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
+import Transition from 'react-transition-group/Transition'
 import { ModalContext } from '~/context/modal-context'
 
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
@@ -16,7 +17,7 @@ const descriptionStyles = {
   typography: { xs: 'subtitle2' }
 }
 
-const CardsWithButton = ({ array, role, btnText }) => {
+const CardsWithButton = ({ array, role, btnText, isStudent }) => {
   const { t } = useTranslation()
   const { setModal } = useContext(ModalContext)
 
@@ -24,10 +25,16 @@ const CardsWithButton = ({ array, role, btnText }) => {
     setModal(<SignupDialog type={ type } />)
   }
 
-  const cards = useMemo(
-    () =>
-      array.map((item, key) => (
-        <Box key={ key } sx={ styles[key % 2 === 0 ? 'right' : 'left'].box }>
+  const cards = array.map((item, key) => (
+    <Transition in={ isStudent } key={ key } timeout={ 1000 }>
+      { (state) => (
+        <Box
+          sx={ [
+            styles[key % 2 === 0 ? 'right' : 'left'].box,
+            state === 'exiting' && styles[key % 2 === 0 ? 'right' : 'left'].slidesIn,
+            state === 'entering' && styles[key % 2 === 0 ? 'right' : 'left'].slidesIn
+          ] }
+        >
           <Box sx={ styles[key % 2 === 0 ? 'right' : 'left'].clearBox } />
           <Box sx={ styles.image }>
             <Box component='img' src={ item.icon } />
@@ -44,10 +51,10 @@ const CardsWithButton = ({ array, role, btnText }) => {
             titleStyles={ titleStyles }
           />
         </Box>
-      )),
+      ) }
+    </Transition>
+  ))
 
-    [array, t]
-  )
   return (
     <Box sx={ styles.wrap }>
       { cards }
