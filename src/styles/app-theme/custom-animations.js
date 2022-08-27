@@ -8,3 +8,7 @@ export const fade = keyframes`
     opacity: 1;
   }
 `
+
+export const fadeAnimation = {
+  animation: `${fade} 0.5s ease-in`
+}

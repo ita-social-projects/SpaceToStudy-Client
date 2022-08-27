@@ -1,10 +1,10 @@
-import { fade } from '~/styles/app-theme/custom-animations'
+import { fadeAnimation } from '~/styles/app-theme/custom-animations'
 
 export const style = {
   root: {
     display: 'flex',
     justifyContent: 'space-between',
-    animation: `${fade} 0.5s ease-in-out`
+    ...fadeAnimation
   },
   img: {
     borderRadius: '20px',

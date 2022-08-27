@@ -1,4 +1,4 @@
-import { fade } from '~/styles/app-theme/custom-animations'
+import { fadeAnimation } from '~/styles/app-theme/custom-animations'
 
 export const styles = {
   root: {
@@ -17,7 +17,7 @@ export const styles = {
     fontWeight: 600,
     borderBottom: '3px solid',
     pb: '14px',
-    animation: `${fade} 0.5s ease-in-out`
+    ...fadeAnimation
   },
   steps: {
     display: 'flex',
