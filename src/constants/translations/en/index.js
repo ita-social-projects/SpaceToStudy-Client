@@ -8,6 +8,7 @@ import titles from './titles.json'
 import guestHomePage from './guest-home-page.json'
 import studentHomePage from './student-home-page.json'
 import cookiePolicyPage from './cookie-policy-page.json'
+import iconsTooltip from './iconsTooltip'
 import signup from './signup.json'
 import footer from './footer.json'
 import becomeTutor from './becomeTutor.json'
@@ -22,6 +23,7 @@ const en = {
     questions,
     titles,
     guestHomePage,
+    iconsTooltip,
     login,
     signup,
     studentHomePage,

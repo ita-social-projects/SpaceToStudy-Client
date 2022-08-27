@@ -1,4 +1,4 @@
-import { screen, fireEvent } from '@testing-library/react'
+import { screen, fireEvent, waitFor } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 import StudentIcons from '~/containers/navigation-icons/student-icons/StudentIcons'
 
@@ -11,9 +11,9 @@ describe('test with guest role', () => {
   })
 
   it('should render login icon', () => {
-    const messagIcon = screen.getByTestId('MessageRoundedIcon')
+    const messageIcon = screen.getByTestId('MessageRoundedIcon')
 
-    expect(messagIcon).toBeInTheDocument()
+    expect(messageIcon).toBeInTheDocument()
   })
 
   it('should render click menu icon', () => {
@@ -21,5 +21,13 @@ describe('test with guest role', () => {
     fireEvent.click(menuIcon)
 
     expect(setIsSidebarOpen).toBeCalledWith(true)
+  })
+
+  it('should render tooltip title', async () => {
+    const messageIcon = screen.getByTestId('MessageRoundedIcon')
+    fireEvent.mouseOver(messageIcon)
+    const messagesTooltipTitle = await screen.findByText('iconsTooltip.messages')
+
+    expect(messagesTooltipTitle).toBeInTheDocument()
   })
 })
