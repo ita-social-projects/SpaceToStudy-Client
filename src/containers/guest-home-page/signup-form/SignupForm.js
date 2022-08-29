@@ -1,13 +1,15 @@
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
+import HashLink from '~/components/hash-link/HashLink'
 import { Box, FormControlLabel, Typography, Button, Checkbox } from '@mui/material'
 import useInputVisibility from '~/hooks/use-input-visibility'
 import AppTextField from '~/components/app-text-field/AppTextField'
+import { routes } from '~/constants/routes'
 
 import { style } from './signup-form.style'
 
-const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) => {
+const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors, closeModal }) => {
   const { t } = useTranslation()
+  const { privacyPolicy, termOfUse } = routes
   const { inputVisibility: passwordVisibility, showInputText: showPassword } = useInputVisibility(errors.password)
   const { inputVisibility: confirmPasswordVisibility, showInputText: showConfirmPassword } = useInputVisibility(
     errors.confirmPassword
@@ -19,7 +21,10 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) =>
         { t('signup.iAgree') }
       </Typography>
       <Typography
-        component={ Link } sx={ style.underlineText } to={ '/' }
+        component={ HashLink }
+        onClick={ closeModal }
+        sx={ style.underlineText }
+        to={ termOfUse.route }
         variant='subtitle2'
       >
         { t('common.labels.terms') }
@@ -28,7 +33,10 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) =>
         { t('signup.and') }
       </Typography>
       <Typography
-        component={ Link } sx={ style.underlineText } to={ '/' }
+        component={ HashLink }
+        onClick={ closeModal }
+        sx={ style.underlineText }
+        to={ privacyPolicy.route }
         variant='subtitle2'
       >
         { t('common.labels.privacyPolicy') }
