@@ -2,6 +2,7 @@ import { screen, fireEvent, waitFor } from '@testing-library/react'
 import NavBar from '~/containers/navbar/NavBar'
 import { renderWithProviders } from '~tests/test-utils'
 import { ModalProvider } from '~/context/modal-context'
+import { SnackBarProvider } from '~/context/snackbar-context'
 
 jest.mock('~/hooks/use-confirm', () => {
   return () => ({
@@ -13,9 +14,11 @@ describe('Guest NavBar test', () => {
   const preloadedState = { appMain: { loading: false, userRole: '' } }
   beforeEach(() => {
     renderWithProviders(
-      <ModalProvider>
-        <NavBar />
-      </ModalProvider>,
+      <SnackBarProvider>
+        <ModalProvider>
+          <NavBar />
+        </ModalProvider>
+      </SnackBarProvider>,
       { preloadedState }
     )
   })

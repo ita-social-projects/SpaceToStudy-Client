@@ -2,6 +2,7 @@ import { screen, render, fireEvent } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
 import { ModalProvider } from '~/context/modal-context'
+import { SnackBarProvider } from '~/context/snackbar-context'
 
 const mockDispatch = jest.fn()
 
@@ -19,9 +20,11 @@ describe('Login dialog test', () => {
   beforeEach(() => {
     render(
       <MemoryRouter>
-        <ModalProvider>
-          <LoginDialog />
-        </ModalProvider>
+        <SnackBarProvider>
+          <ModalProvider>
+            <LoginDialog />
+          </ModalProvider>
+        </SnackBarProvider>
       </MemoryRouter>
     )
   })

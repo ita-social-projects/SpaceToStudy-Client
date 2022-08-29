@@ -20,7 +20,7 @@ export const loginUser = createAsyncThunk('appMain/loginUser', async (userData, 
     setToLocalStorage(accessToken, data.accessToken)
     dispatch(setUser(data.accessToken))
   } catch (e) {
-    return rejectWithValue(e.message)
+    return rejectWithValue(e.response.data.code)
   }
 })
 
@@ -29,7 +29,7 @@ export const signupUser = createAsyncThunk('appMain/signupUser', async (userData
     const { data } = await AuthService.signup(userData)
     dispatch(setUserEmail(data.userEmail))
   } catch (e) {
-    return rejectWithValue(e.message)
+    return rejectWithValue(e.response.data.code)
   }
 })
 
@@ -39,7 +39,7 @@ export const logoutUser = createAsyncThunk('appMain/logoutUser', async (_, { rej
     removeFromLocalStorage(accessToken)
     dispatch(logout())
   } catch (e) {
-    return rejectWithValue(e.message)
+    return rejectWithValue(e.response.data.code)
   }
 })
 
@@ -49,7 +49,7 @@ export const checkAuth = createAsyncThunk('appMain/checkAuth', async (_, { rejec
     setToLocalStorage(accessToken, data.accessToken)
     dispatch(setUser(data.accessToken))
   } catch (e) {
-    return rejectWithValue(e.message)
+    return rejectWithValue(e.response.data.code)
   }
 })
 

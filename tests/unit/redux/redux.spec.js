@@ -15,7 +15,8 @@ import {
   signupUserData,
   userEmail,
   stateAfterSignup,
-  stateAfterLogin
+  stateAfterLogin,
+  errorCode
 } from './redux.variables'
 
 jest.mock('~/services/local-storage-service')
@@ -28,16 +29,19 @@ const mockAxiosClient = new MockAdapter(axiosClient)
 
 const mockAxiosInstance = new MockAdapter(axiosInstance)
 
+const error = new Error(errorMessage)
+error.code = errorCode
+
 describe('redux test', () => {
   it('should return the initial state', () => {
     expect(reducer(undefined, {})).toEqual(initialState)
   })
 
   it('should set an error to store after signup', async () => {
-    mockAxiosClient.onPost(URLs.auth.signup).reply(404, new Error(errorMessage))
+    mockAxiosClient.onPost(URLs.auth.signup).reply(404, error)
     await store.dispatch(signupUser(signupUserData))
 
-    expect(store.getState()).toEqual({ appMain: { ...initialState, error: errorMessage } })
+    expect(store.getState()).toEqual({ appMain: { ...initialState, error: errorCode } })
   })
 
   it('should set user email to store after signup', async () => {
@@ -48,10 +52,10 @@ describe('redux test', () => {
   })
 
   it('should set an error to store after login', async () => {
-    mockAxiosClient.onPost(URLs.auth.login).reply(404, new Error(errorMessage))
+    mockAxiosClient.onPost(URLs.auth.login).reply(404, error)
     await store.dispatch(loginUser(loginUserData))
 
-    expect(store.getState()).toEqual({ appMain: { ...stateAfterSignup, error: errorMessage } })
+    expect(store.getState()).toEqual({ appMain: { ...stateAfterSignup, error: errorCode } })
   })
 
   it('should set user data to store after login', async () => {
@@ -62,10 +66,10 @@ describe('redux test', () => {
   })
 
   it('should set an error to store after checkAuth', async () => {
-    mockAxiosInstance.onGet(URLs.auth.refresh).reply(404, new Error(errorMessage))
+    mockAxiosInstance.onGet(URLs.auth.refresh).reply(404, error)
     await store.dispatch(checkAuth())
 
-    expect(store.getState()).toEqual({ appMain: { ...stateAfterLogin, error: errorMessage } })
+    expect(store.getState()).toEqual({ appMain: { ...stateAfterLogin, error: errorCode } })
   })
 
   it('should set user data to store after checkAuth', async () => {
@@ -76,10 +80,10 @@ describe('redux test', () => {
   })
 
   it('should set an error to store after logout', async () => {
-    mockAxiosClient.onPost(URLs.auth.logout).reply(404, new Error(errorMessage))
+    mockAxiosClient.onPost(URLs.auth.logout).reply(404, error)
     await store.dispatch(logoutUser())
 
-    expect(store.getState()).toEqual({ appMain: { ...stateAfterLogin, error: errorMessage } })
+    expect(store.getState()).toEqual({ appMain: { ...stateAfterLogin, error: errorCode } })
   })
 
   it('should remove user data from store after logout', async () => {

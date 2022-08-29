@@ -38,6 +38,7 @@ export const stateAfterSignup = {
 export const userEmail = 'johndoe@gmail.com'
 
 export const errorMessage = 'Request failed with status code 404'
+export const errorCode = 'USER_NOT_REGISTERED'
 
 export const accessToken =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZjRmYTQ5ZDM5Yzk4OGUzNDdkODMzZiIsInJvbGUiOiJzdHVkZW50IiwiaXNGaXJzdExvZ2luIjp0cnVlLCJpYXQiOjE2NjAyMjIwNDMsImV4cCI6MTY2MDIyNTY0M30.Gr10O-Ri3k_SJfXb41Yojx7toZvEz5RUekZVHLHEVOw'

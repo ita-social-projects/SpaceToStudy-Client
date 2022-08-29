@@ -1,6 +1,7 @@
 import { screen, fireEvent, waitFor } from '@testing-library/react'
 import ForgotPassword from '~/containers/guest-home-page/forgot-password/ForgotPassword'
 import { ModalProvider } from '~/context/modal-context'
+import { SnackBarProvider } from '~/context/snackbar-context'
 import { renderWithProviders } from '~tests/test-utils'
 
 jest.mock('~/hooks/use-confirm', () => {
@@ -12,9 +13,11 @@ jest.mock('~/hooks/use-confirm', () => {
 describe('ForgotPassword test', () => {
   beforeEach(() => {
     renderWithProviders(
-      <ModalProvider>
-        <ForgotPassword />
-      </ModalProvider>
+      <SnackBarProvider>
+        <ModalProvider>
+          <ForgotPassword />
+        </ModalProvider>
+      </SnackBarProvider>
     )
   })
 

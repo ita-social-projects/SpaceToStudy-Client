@@ -1,6 +1,7 @@
 import { ThemeProvider } from '@mui/material'
 import { ModalProvider } from './context/modal-context'
 import { ConfirmationDialogProvider } from './context/confirm-context'
+import { SnackBarProvider } from './context/snackbar-context'
 import AppContent from '~/containers/app-content/AppContent'
 import useHashScroll from '~/hooks/use-hash-scroll'
 
@@ -10,15 +11,15 @@ const App = () => {
   useHashScroll()
 
   return (
-    <div className='App'>
-      <ThemeProvider theme={ theme }>
+    <ThemeProvider theme={ theme }>
+      <SnackBarProvider>
         <ConfirmationDialogProvider>
           <ModalProvider>
             <AppContent />
           </ModalProvider>
         </ConfirmationDialogProvider>
-      </ThemeProvider>
-    </div>
+      </SnackBarProvider>
+    </ThemeProvider>
   )
 }
 export default App

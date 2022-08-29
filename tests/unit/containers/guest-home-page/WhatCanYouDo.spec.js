@@ -4,6 +4,7 @@ import { MemoryRouter } from 'react-router-dom'
 import { ModalProvider } from '~/context/modal-context'
 import { ConfirmationDialogProvider } from '~/context/confirm-context'
 import WhatCanYouDo from '~/containers/guest-home-page/WhatCanYouDo'
+import { SnackBarProvider } from '~/context/snackbar-context'
 
 const mockDispatch = jest.fn()
 
@@ -15,11 +16,13 @@ describe('WhatCanYoDo component', () => {
   it('should render popup after button click', () => {
     render(
       <MemoryRouter>
-        <ConfirmationDialogProvider>
-          <ModalProvider>
-            <WhatCanYouDo />
-          </ModalProvider>
-        </ConfirmationDialogProvider>
+        <SnackBarProvider>
+          <ConfirmationDialogProvider>
+            <ModalProvider>
+              <WhatCanYouDo />
+            </ModalProvider>
+          </ConfirmationDialogProvider>
+        </SnackBarProvider>
       </MemoryRouter>
     )
 

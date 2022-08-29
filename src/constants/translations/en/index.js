@@ -13,6 +13,7 @@ import signup from './signup.json'
 import footer from './footer.json'
 import becomeTutor from './becomeTutor.json'
 import modals from './modals.json'
+import errors from './errors.json'
 
 const en = {
   translations: {
@@ -30,7 +31,8 @@ const en = {
     cookiePolicyPage,
     footer,
     becomeTutor,
-    modals
+    modals,
+    errors
   }
 }
 
