@@ -9,6 +9,36 @@ export const fade = keyframes`
   }
 `
 
+export const slidesRight = keyframes`
+  from {
+    transform: translateX(-10%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0px);
+    opacity: 1;
+  }
+`
+
+export const slidesLeft = keyframes`
+  from {
+    transform: translateX(10%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0px);
+    opacity: 1;
+  }
+`
+
 export const fadeAnimation = {
   animation: `${fade} 0.5s ease-in`
+}
+
+export const slidesRightAnimation = {
+  animation: `${slidesRight} 1s ease-in-out`
+}
+
+export const slidesLeftAnimation = {
+  animation: `${slidesLeft} 1s ease-in-out`
 }

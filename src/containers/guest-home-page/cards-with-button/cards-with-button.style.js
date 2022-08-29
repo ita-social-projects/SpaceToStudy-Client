@@ -1,3 +1,5 @@
+import { slidesRightAnimation, slidesLeftAnimation } from '~/styles/app-theme/custom-animations'
+
 export const styles = {
   wrap: {
     display: 'flex',
@@ -42,7 +44,8 @@ export const styles = {
     },
     description: {
       textAlign: { sm: 'end', xs: 'start' }
-    }
+    },
+    slidesIn: slidesRightAnimation
   },
   right: {
     box: {
@@ -65,6 +68,7 @@ export const styles = {
     },
     description: {
       textAlign: 'start'
-    }
+    },
+    slidesIn: slidesLeftAnimation
   }
 }

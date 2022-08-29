@@ -1,6 +1,7 @@
 import { Box, Button } from '@mui/material'
-import { useContext, useMemo } from 'react'
+import { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
+import Transition from 'react-transition-group/Transition'
 import { ModalContext } from '~/context/modal-context'
 
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
@@ -16,7 +17,7 @@ const descriptionStyles = {
   typography: { xs: 'subtitle2' }
 }
 
-const CardsWithButton = ({ array, role, btnText }) => {
+const CardsWithButton = ({ array, role, btnText, isStudent }) => {
   const { t } = useTranslation()
   const { setModal } = useContext(ModalContext)
 
@@ -24,30 +25,40 @@ const CardsWithButton = ({ array, role, btnText }) => {
     setModal(<SignupDialog type={ type } />)
   }
 
-  const cards = useMemo(
-    () =>
-      array.map((item, key) => (
-        <Box key={ key } sx={ styles[key % 2 === 0 ? 'right' : 'left'].box }>
-          <Box sx={ styles[key % 2 === 0 ? 'right' : 'left'].clearBox } />
-          <Box sx={ styles.image }>
-            <Box component='img' src={ item.icon } />
-            <Box
-              className='dots' component='img' src={ dots }
-              sx={ styles.dots }
+  const cards = array.map((item, key) => {
+    const boxSide = key % 2 === 0 ? 'right' : 'left'
+
+    return (
+      <Transition in={ isStudent } key={ key } timeout={ 1000 }>
+        { (state) => (
+          <Box
+            sx={ [
+              styles[boxSide].box,
+              state === 'exiting' && styles[boxSide].slidesIn,
+              state === 'entering' && styles[boxSide].slidesIn
+            ] }
+          >
+            <Box sx={ styles[boxSide].clearBox } />
+            <Box sx={ styles.image }>
+              <Box component='img' src={ item.icon } />
+              <Box
+                className='dots' component='img' src={ dots }
+                sx={ styles.dots }
+              />
+            </Box>
+            <TitleWithDescription
+              description={ t(item.description) }
+              descriptionStyles={ descriptionStyles }
+              style={ styles[boxSide] }
+              title={ t(item.title) }
+              titleStyles={ titleStyles }
             />
           </Box>
-          <TitleWithDescription
-            description={ t(item.description) }
-            descriptionStyles={ descriptionStyles }
-            style={ styles[key % 2 === 0 ? 'right' : 'left'] }
-            title={ t(item.title) }
-            titleStyles={ titleStyles }
-          />
-        </Box>
-      )),
+        ) }
+      </Transition>
+    )
+  })
 
-    [array, t]
-  )
   return (
     <Box sx={ styles.wrap }>
       { cards }
