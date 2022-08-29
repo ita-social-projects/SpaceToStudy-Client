@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import HashLink from '~/components/hash-link/HashLink'
 import { Box, FormControlLabel, Typography, Button, Checkbox } from '@mui/material'
@@ -10,10 +11,15 @@ import { style } from './signup-form.style'
 const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors, closeModal }) => {
   const { t } = useTranslation()
   const { privacyPolicy, termOfUse } = routes
+  const [buttonDisabled, setButtonDisabled] = useState(true)
   const { inputVisibility: passwordVisibility, showInputText: showPassword } = useInputVisibility(errors.password)
   const { inputVisibility: confirmPasswordVisibility, showInputText: showConfirmPassword } = useInputVisibility(
     errors.confirmPassword
   )
+
+  const handleOnAgreementChange = () => {
+    setButtonDisabled(!buttonDisabled)
+  }
 
   const policyAgreement = (
     <Box sx={ style.box }>
@@ -120,6 +126,7 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors, clos
           control={ <Checkbox /> }
           label={ policyAgreement }
           labelPlacement='end'
+          onChange={ handleOnAgreementChange }
           size='large'
           sx={ style.checkboxLabel }
           variant='subtitle2'
@@ -127,8 +134,8 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors, clos
       </Box>
 
       <Button
-        size='large' sx={ style.signupButton } type='submit'
-        variant='contained'
+        disabled={ buttonDisabled } size='large' sx={ style.signupButton }
+        type='submit' variant='contained'
       >
         { t('common.labels.signup') }
       </Button>
