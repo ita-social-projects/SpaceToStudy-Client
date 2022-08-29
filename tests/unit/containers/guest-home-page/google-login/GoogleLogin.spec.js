@@ -1,5 +1,6 @@
 import { screen, fireEvent, waitFor } from '@testing-library/react'
 
+import { SnackBarProvider } from '~/context/snackbar-context'
 import { ConfirmationDialogProvider } from '~/context/confirm-context'
 import { ModalProvider } from '~/context/modal-context'
 import { login, signup } from '~/containers/guest-home-page/constants'
@@ -57,11 +58,13 @@ describe('GoogleLogin component test for login', () => {
 describe('GoogleLogin component test for signup', () => {
   beforeEach(() => {
     renderWithProviders(
-      <ConfirmationDialogProvider>
-        <ModalProvider>
-          <GoogleLogin type={ signup } />
-        </ModalProvider>
-      </ConfirmationDialogProvider>
+      <SnackBarProvider>
+        <ConfirmationDialogProvider>
+          <ModalProvider>
+            <GoogleLogin type={ signup } />
+          </ModalProvider>
+        </ConfirmationDialogProvider>
+      </SnackBarProvider>
     )
   })
 
