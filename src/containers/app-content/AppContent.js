@@ -10,7 +10,12 @@ const styles = {
     flexDirection: 'column',
     height: '100vh',
     '.MuiToolbar-root + div': {
-      flexGrow: 1
+      flexGrow: 1,
+      marginTop: {
+        md: '16px',
+        sm: '8px',
+        xs: '0px'
+      }
     }
   }
 }
