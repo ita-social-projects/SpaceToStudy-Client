@@ -1,8 +1,8 @@
-import { Link } from 'react-router-dom'
 import { Drawer, Typography, IconButton, List, ListItem } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import { useTranslation } from 'react-i18next'
 
+import HashLink from '~/components/hash-link/HashLink'
 import { style } from '~/containers/sidebar/sidebar.style'
 
 const Sidebar = ({ isSidebarOpen, setIsSidebarOpen, navigationItems }) => {
@@ -12,7 +12,7 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen, navigationItems }) => {
     return (
       <ListItem key={ item.label }>
         <Typography
-          component={ Link }
+          component={ HashLink }
           onClick={ () => setIsSidebarOpen(false) }
           sx={ style.listItem }
           to={ item.route }

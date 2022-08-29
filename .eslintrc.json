@@ -90,7 +90,7 @@
       {
         "declaration": "parens",
         "assignment": "parens",
-        "return": "parens",
+        "return": "parens-new-line",
         "arrow": "parens",
         "condition": "parens",
         "logical": "parens",
