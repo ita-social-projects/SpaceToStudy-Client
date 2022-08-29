@@ -1,8 +1,11 @@
+import { fadeAnimation } from '~/styles/app-theme/custom-animations'
+
 export const styles = {
   container: {
     display: 'flex',
     justifyContent: 'space-between',
-    columnGap: 2
+    columnGap: 2,
+    ...fadeAnimation
   },
   img: {
     borderRadius: '20px'
