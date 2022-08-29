@@ -17,3 +17,37 @@ code {
   justify-content: center;
   align-items: center;
 }
+
+
+::-webkit-scrollbar {
+  background: #DEE0E1;
+}
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px rgba(43, 49, 52, 0.3); 
+}
+::-webkit-scrollbar-thumb {
+  background: #9DA7AC; 
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #727E84;
+}
+
+
+body ::-webkit-scrollbar {
+  background: #DEE0E1;
+  width: 1vw;
+  /* width: 10px; */
+}
+body ::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px rgba(43, 49, 52, 0.3); 
+  border-radius: 0.75vw;
+  /* border-radius: 10px; */
+}
+body ::-webkit-scrollbar-thumb {
+  background: #9DA7AC; 
+  border-radius: 0.75vw;
+    /* border-radius: 10px; */
+}
+body ::-webkit-scrollbar-thumb:hover {
+  background: #727E84;
+}
