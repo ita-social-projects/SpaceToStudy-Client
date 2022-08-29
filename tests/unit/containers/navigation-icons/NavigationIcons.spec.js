@@ -2,6 +2,7 @@ import { screen, fireEvent, waitFor } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 import NavigationIcons from '~/containers/navigation-icons/NavigationIcons'
 import { ModalProvider } from '~/context/modal-context'
+import { SnackBarProvider } from '~/context/snackbar-context'
 
 const setIsSidebarOpen = jest.fn()
 jest.mock('~/hooks/use-confirm', () => {
@@ -10,13 +11,15 @@ jest.mock('~/hooks/use-confirm', () => {
   })
 })
 
-describe.skip('test with guest role', () => {
+describe('test with guest role', () => {
   const preloadedState = { appMain: { loading: false, userRole: '' } }
   beforeEach(() => {
     renderWithProviders(
-      <ModalProvider>
-        <NavigationIcons setIsSidebarOpen={ setIsSidebarOpen } />
-      </ModalProvider>,
+      <SnackBarProvider>
+        <ModalProvider>
+          <NavigationIcons setIsSidebarOpen={ setIsSidebarOpen } />
+        </ModalProvider>
+      </SnackBarProvider>,
       { preloadedState }
     )
   })

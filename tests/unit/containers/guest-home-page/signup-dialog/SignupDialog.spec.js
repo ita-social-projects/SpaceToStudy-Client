@@ -3,6 +3,7 @@ import { MemoryRouter } from 'react-router-dom'
 import { student } from '~/containers/guest-home-page/constants'
 import SignupDialog from '~/containers/guest-home-page/signup-dialog/SignupDialog'
 import { ModalProvider } from '~/context/modal-context'
+import { SnackBarProvider } from '~/context/snackbar-context'
 
 const mockDispatch = jest.fn()
 
@@ -20,9 +21,11 @@ describe('Signup dialog test', () => {
   beforeEach(() => {
     render(
       <MemoryRouter>
-        <ModalProvider>
-          <SignupDialog type={ student } />
-        </ModalProvider>
+        <SnackBarProvider>
+          <ModalProvider>
+            <SignupDialog type={ student } />
+          </ModalProvider>
+        </SnackBarProvider>
       </MemoryRouter>
     )
   })

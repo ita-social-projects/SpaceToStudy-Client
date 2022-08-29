@@ -1,3 +1,12 @@
 {
-    "INCORRECT_CREDENTIALS": "Your email or password is incorrect"
+    "USER_NOT_REGISTERED": "User is not registered",
+    "INCORRECT_CREDENTIALS": "Your email or password is incorrect",
+    "ROLE_NOT_SUPPORTED": "User role is not supported",
+    "ALREADY_REGISTERED": "An account with this email already exists",
+    "EMAIL_ALREADY_CONFIRMED": "User with this email is already confirmed",
+    "EMAIL_NOT_CONFIRMED": "Please confirm your email to login",
+    "NOT_FOUND": "User has not been found",
+    "BAD_REFRESH_TOKEN": "You have be logged out, please sign in again",
+    "UNAUTHORIZED": "User is not authorized",
+    "EMAIL_NOT_FOUND": "There is no user registered with that email"
 }

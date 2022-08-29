@@ -1,23 +1,37 @@
 import { createContext, useState } from 'react'
-import { Snackbar, Alert } from '@mui/material'
-import { useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
+import { Snackbar, Alert } from '@mui/material'
+import { snackbarVariants } from '~/constants'
 
 export const SnackBarContext = createContext()
 
 export const SnackBarProvider = ({ children }) => {
-  const { error } = useSelector((state) => state.appMain)
-  const [showError, setShowError] = useState(false)
   const { t } = useTranslation()
+  const [show, setShow] = useState(false)
+  const [severity, setSeverity] = useState(snackbarVariants.info)
+  const [message, setMessage] = useState('')
 
-  const handleClose = () => setShowError(false)
+  const setAlert = (options) => {
+    setShow(true)
+    setSeverity(options.severity)
+    setMessage(options.message)
+  }
+
+  const handleClose = () => {
+    setShow(false)
+  }
 
   return (
-    <SnackBarContext.Provider value={ { setShowError } }>
+    <SnackBarContext.Provider value={ { setAlert } }>
       { children }
-      <Snackbar autoHideDuration={ 4000 } onClose={ handleClose } open={ showError }>
-        <Alert elevation={ 6 } severity={ 'error' } variant='filled'>
-          { t(`errors.${error}`) }
+      <Snackbar
+        anchorOrigin={ { vertical: 'top', horizontal: 'center' } }
+        autoHideDuration={ 4000 }
+        onClose={ handleClose }
+        open={ show }
+      >
+        <Alert severity={ severity } variant='filled'>
+          { t(message) }
         </Alert>
       </Snackbar>
     </SnackBarContext.Provider>

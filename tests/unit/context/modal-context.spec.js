@@ -3,15 +3,18 @@ import { ModalProvider } from '~/context/modal-context'
 import { renderWithProviders } from '~tests/test-utils'
 import NavBar from '~/containers/navbar/NavBar'
 import { ConfirmationDialogProvider } from '~/context/confirm-context'
+import { SnackBarProvider } from '~/context/snackbar-context'
 
-describe.skip('modal context', () => {
+describe('modal context', () => {
   beforeEach(() => {
     renderWithProviders(
-      <ConfirmationDialogProvider>
-        <ModalProvider>
-          <NavBar />
-        </ModalProvider>
-      </ConfirmationDialogProvider>
+      <SnackBarProvider>
+        <ConfirmationDialogProvider>
+          <ModalProvider>
+            <NavBar />
+          </ModalProvider>
+        </ConfirmationDialogProvider>
+      </SnackBarProvider>
     )
 
     const button = screen.getByText('header.loginButton')

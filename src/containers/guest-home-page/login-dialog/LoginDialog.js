@@ -8,19 +8,20 @@ import LoginForm from '~/containers/guest-home-page/login-form/LoginForm'
 import useForm from '~/hooks/use-form'
 import useConfirm from '~/hooks/use-confirm'
 import { ModalContext } from '~/context/modal-context'
+import { SnackBarContext } from '~/context/snackbar-context'
 import { email, password } from '~/utils/validations/login'
 import loginImg from '~/assets/img/login-dialog/login.png'
 import { login } from '~/containers/guest-home-page/constants'
 import { loginUser } from '~/redux/reducer'
 
 import style from '~/containers/guest-home-page/login-dialog/login-dialog.style'
-import { SnackBarContext } from '~/context/snackbar-context'
+import { snackbarVariants } from '~/constants'
 
 const LoginDialog = () => {
   const { t } = useTranslation()
   const { setNeedConfirmation } = useConfirm()
   const { closeModal } = useContext(ModalContext)
-  const { setShowError } = useContext(SnackBarContext)
+  const { setAlert } = useContext(SnackBarContext)
   const dispatch = useDispatch()
 
   const { handleSubmit, handleChange, handleBlur, data, isDirty, errors } = useForm({
@@ -29,7 +30,10 @@ const LoginDialog = () => {
         await dispatch(loginUser(data)).unwrap()
         closeModal()
       } catch (e) {
-        setShowError(true)
+        setAlert({
+          severity: snackbarVariants.error,
+          message: `errors.${e}`
+        })
       }
     },
     initialValues: { email: '', password: '' },

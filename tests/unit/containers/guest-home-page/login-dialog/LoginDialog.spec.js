@@ -1,9 +1,15 @@
 import { screen, render, fireEvent } from '@testing-library/react'
+import MockAdapter from 'axios-mock-adapter'
 import { MemoryRouter } from 'react-router-dom'
+import { URLs } from '~/constants/request'
 import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
 import { ModalProvider } from '~/context/modal-context'
+import { SnackBarProvider } from '~/context/snackbar-context'
+import { axiosClient } from '~/plugins/axiosClient'
 
 const mockDispatch = jest.fn()
+
+const mockAxiosClient = new MockAdapter(axiosClient)
 
 jest.mock('react-redux', () => ({
   useDispatch: () => mockDispatch.mockReturnValue({ unwrap: () => '' })
@@ -15,13 +21,15 @@ jest.mock('~/hooks/use-confirm', () => {
   })
 })
 
-describe.skip('Login dialog test', () => {
+describe('Login dialog test', () => {
   beforeEach(() => {
     render(
       <MemoryRouter>
-        <ModalProvider>
-          <LoginDialog />
-        </ModalProvider>
+        <SnackBarProvider>
+          <ModalProvider>
+            <LoginDialog />
+          </ModalProvider>
+        </SnackBarProvider>
       </MemoryRouter>
     )
   })
@@ -58,6 +66,20 @@ describe.skip('Login dialog test', () => {
     const error = screen.getByText('common.errorMessages.emptyField')
 
     expect(error).toBeInTheDocument()
+  })
+
+  it('should show snackbar with error', async () => {
+    mockAxiosClient.onPost(URLs.auth.login).reply(404, { code: 'error' })
+    const inputEmail = screen.getByLabelText(/common.labels.email/i)
+    fireEvent.change(inputEmail, { target: { value: 'test@gmail.com' } })
+
+    const inputPassword = screen.getByLabelText(/common.labels.password/i)
+    fireEvent.change(inputPassword, { target: { value: '12345678a/A' } })
+
+    const button = screen.getByText('common.labels.login')
+    fireEvent.click(button)
+
+    screen.debug()
   })
 
   it('should dispatch after button submit', async () => {

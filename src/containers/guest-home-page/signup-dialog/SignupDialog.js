@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux'
 import useForm from '~/hooks/use-form'
 import useConfirm from '~/hooks/use-confirm'
 import { ModalContext } from '~/context/modal-context'
+import { SnackBarContext } from '~/context/snackbar-context'
 
 import { firstName, lastName, confirmPassword, email, password } from '~/utils/validations/login'
 import { signup } from '~/containers/guest-home-page/constants'
@@ -19,11 +20,13 @@ import info from '~/assets/img/guest-home-page/info.svg'
 
 import { style } from '~/containers/guest-home-page/signup-dialog/signup-dialog.style'
 import ImgTitleDescription from '~/components/img-title-description/ImgTitleDescription'
+import { snackbarVariants } from '~/constants'
 
 const SignupDialog = ({ type }) => {
   const { t } = useTranslation()
   const { setNeedConfirmation } = useConfirm()
   const { setModal, closeModal } = useContext(ModalContext)
+  const { setAlert } = useContext(SnackBarContext)
   const dispatch = useDispatch()
 
   const signupImg = { student, mentor }
@@ -35,7 +38,10 @@ const SignupDialog = ({ type }) => {
         setModal(<ImgTitleDescription description={ description } img={ info } title={ t('signup.confirmEmailTitle') } />)
         setTimeout(() => closeModal(), 5000)
       } catch (e) {
-        console.log(e)
+        setAlert({
+          severity: snackbarVariants.error,
+          message: `errors.${e}`
+        })
       }
     },
     initialValues: { firstName: '', lastName: '', email: '', password: '', confirmPassword: '' },

@@ -7,6 +7,7 @@ import CardsWithButton from '~/containers/guest-home-page/cards-with-button/Card
 
 import howItWorksMentorFirst from '~/assets/img/guest-home-page/howItWorksMentorFirst.svg'
 import howItWorksMentorSecond from '~/assets/img/guest-home-page/howItWorksMentorSecond.svg'
+import { SnackBarProvider } from '~/context/snackbar-context'
 
 const mockDispatch = jest.fn()
 
@@ -30,11 +31,13 @@ describe('CardsWithButton container', () => {
   beforeEach(() => {
     render(
       <MemoryRouter>
-        <ConfirmationDialogProvider>
-          <ModalProvider>
-            <CardsWithButton array={ items } btnText={ 'Become a mentor' } role={ 'mentor' } />
-          </ModalProvider>
-        </ConfirmationDialogProvider>
+        <SnackBarProvider>
+          <ConfirmationDialogProvider>
+            <ModalProvider>
+              <CardsWithButton array={ items } btnText={ 'Become a mentor' } role={ 'mentor' } />
+            </ModalProvider>
+          </ConfirmationDialogProvider>
+        </SnackBarProvider>
       </MemoryRouter>
     )
   })
