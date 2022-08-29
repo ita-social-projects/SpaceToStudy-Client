@@ -1,11 +1,14 @@
 import { useTranslation } from 'react-i18next'
 
-import { Box, Button, IconButton, Tooltip } from '@mui/material'
+import Box from '@mui/material/Box'
+import IconButton from '@mui/material/IconButton'
+import Button from '@mui/material/Button'
+import Tooltip from '@mui/material/Tooltip'
 import LanguageIcon from '@mui/icons-material/Language'
 import MenuIcon from '@mui/icons-material/Menu'
 import LoginIcon from '@mui/icons-material/Login'
 
-import { style } from '~/containers/navigation-icons/navigation-icons.style'
+import { style } from '~/containers/navigation-icons/NavigationIcons.styles'
 
 const GuestIcons = ({ openLoginDialog, setIsSidebarOpen }) => {
   const { t } = useTranslation()

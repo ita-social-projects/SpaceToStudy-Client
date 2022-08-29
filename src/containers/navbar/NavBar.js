@@ -3,14 +3,19 @@ import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { routes, studentRoutes } from '~/constants/routes'
 import { useTranslation } from 'react-i18next'
-import { Typography, Box, Button, List, ListItem } from '@mui/material'
+
+import Typography from '@mui/material/Typography'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
 
 import HashLink from '~/components/hash-link/HashLink'
 import Logo from '~/containers/logo/Logo'
 import Sidebar from '~/containers/sidebar/Sidebar'
-
 import NavigationIcons from '~/containers/navigation-icons/NavigationIcons'
-import { style } from '~/containers/navbar/navbar.style'
+
+import { style } from '~/containers/navbar/NavBar.styles'
 
 const Navbar = () => {
   const { t } = useTranslation()

@@ -1,9 +1,15 @@
-import { Drawer, Typography, IconButton, List, ListItem } from '@mui/material'
-import CloseIcon from '@mui/icons-material/Close'
 import { useTranslation } from 'react-i18next'
 
+import Drawer from '@mui/material/Drawer'
+import Typography from '@mui/material/Typography'
+import IconButton from '@mui/material/IconButton'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+import CloseIcon from '@mui/icons-material/Close'
+
 import HashLink from '~/components/hash-link/HashLink'
-import { style } from '~/containers/sidebar/sidebar.style'
+
+import { style } from '~/containers/sidebar/Sidebar.styles'
 
 const Sidebar = ({ isSidebarOpen, setIsSidebarOpen, navigationItems }) => {
   const { t } = useTranslation()

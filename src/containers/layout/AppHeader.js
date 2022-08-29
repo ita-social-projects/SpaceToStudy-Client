@@ -1,4 +1,5 @@
-import { AppBar, Toolbar } from '@mui/material'
+import AppBar from '@mui/material/AppBar'
+import Toolbar from '@mui/material/Toolbar'
 import NavBar from '~/containers/navbar/NavBar'
 import { mainShadow } from '~/styles/app-theme/custom-shadows'
 
