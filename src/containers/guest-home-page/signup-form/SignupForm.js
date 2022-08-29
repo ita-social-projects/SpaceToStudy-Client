@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
+import HashLink from '~/components/hash-link/HashLink'
 import { Box, FormControlLabel, Typography, Button, Checkbox } from '@mui/material'
 import useInputVisibility from '~/hooks/use-input-visibility'
 import AppTextField from '~/components/app-text-field/AppTextField'
@@ -21,7 +21,7 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors, clos
         { t('signup.iAgree') }
       </Typography>
       <Typography
-        component={ Link }
+        component={ HashLink }
         onClick={ closeModal }
         sx={ style.underlineText }
         to={ termOfUse.route }
@@ -33,7 +33,7 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors, clos
         { t('signup.and') }
       </Typography>
       <Typography
-        component={ Link }
+        component={ HashLink }
         onClick={ closeModal }
         sx={ style.underlineText }
         to={ privacyPolicy.route }

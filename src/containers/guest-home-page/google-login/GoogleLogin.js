@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Box, Typography, Button } from '@mui/material'
-import { Link } from 'react-router-dom'
+import HashLink from '~/components/hash-link/HashLink'
 
 import { ModalContext } from '~/context/modal-context'
 import { routes } from '~/constants/routes'
@@ -47,7 +47,7 @@ const GoogleLogin = ({ type }) => {
           </Typography>
         ) : (
           <Typography
-            component={ Link }
+            component={ HashLink }
             onClick={ closeModal }
             sx={ style.underlineText }
             to={ whatCanYouDo.route }
