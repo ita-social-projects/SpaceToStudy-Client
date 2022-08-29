@@ -5,20 +5,26 @@ export const style = {
   },
   preview: {
     display: 'flex',
-    justifyContent: 'center',
-    width: '649px',
-    height: '700px',
     alignItems: 'center',
+    justifyContent: 'center',
+    maxWidth: '649px',
+    width: '100%',
+    height: '700px',
     border: 'dashed',
     borderColor: 'primary.200',
     borderRadius: '20px',
     mr: 3
   },
   img: {
-    width: '649px',
-    height: '700px',
+    width: '100%',
+    height: '100%',
     objectFit: 'cover',
-    borderRadius: '20px',
+    borderRadius: '20px'
+  },
+  imgContainer: {
+    maxWidth: '649px',
+    width: '100%',
+    height: '700px',
     mr: 3
   },
   rigthBox: {

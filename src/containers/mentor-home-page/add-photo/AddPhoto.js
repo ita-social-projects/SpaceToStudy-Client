@@ -39,10 +39,12 @@ const AddPhoto = ({ btnsBox, photo, photoError, addPhoto, setStepErrors, stepLab
         </Typography>
       </Box>
     ) : (
-      <Box
-        alt={ t('becomeTutor.photo.imageAlt') } component='img' src={ photoForPreview }
-        sx={ style.img }
-      />
+      <Box sx={ style.imgContainer }>
+        <Box
+          alt={ t('becomeTutor.photo.imageAlt') } component='img' src={ photoForPreview }
+          sx={ style.img }
+        />
+      </Box>
     )
 
   return (
