@@ -4,7 +4,7 @@ import { Box, Typography } from '@mui/material'
 
 import FileUploader from '~/components/file-uploader/FileUploader'
 
-import { style } from '~/containers/mentor-home-page/add-photo/add-photo.style'
+import { style } from '~/containers/mentor-home-page/add-photo/AddPhoto.style'
 
 const validationData = {
   maxFileSize: 10_000_000,
