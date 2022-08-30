@@ -9,7 +9,7 @@ export const style = {
     justifyContent: 'center',
     maxWidth: '649px',
     width: '100%',
-    height: '700px',
+    aspectRatio: '0.927',
     border: 'dashed',
     borderColor: 'primary.200',
     borderRadius: '20px',
@@ -17,15 +17,9 @@ export const style = {
   },
   img: {
     width: '100%',
-    height: '100%',
     objectFit: 'cover',
-    borderRadius: '20px'
-  },
-  imgContainer: {
-    maxWidth: '649px',
-    width: '100%',
-    height: '700px',
-    mr: 3
+    borderRadius: '20px',
+    aspectRatio: '0.927'
   },
   rigthBox: {
     display: 'flex',
@@ -36,5 +30,10 @@ export const style = {
   },
   description: {
     mb: 5
+  },
+  imgContainer: {
+    maxHeight: '700px',
+    maxWidth: '649px',
+    mr: 3
   }
 }
