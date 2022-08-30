@@ -1,5 +1,7 @@
 import { useContext } from 'react'
-import { Box, Button, Typography } from '@mui/material'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import Typography from '@mui/material/Typography'
 import { useTranslation } from 'react-i18next'
 
 import { ModalContext } from '~/context/modal-context'
@@ -12,7 +14,7 @@ import ImgTitleDescription from '~/components/img-title-description/ImgTitleDesc
 import info from '~/assets/img/guest-home-page/info.svg'
 
 import { email } from '~/utils/validations/login'
-import { style } from '~/containers/guest-home-page/forgot-password/forgot-password.style'
+import { style } from '~/containers/guest-home-page/forgot-password/ForgotPassword.style'
 
 const ForgotPassword = () => {
   const { t } = useTranslation()

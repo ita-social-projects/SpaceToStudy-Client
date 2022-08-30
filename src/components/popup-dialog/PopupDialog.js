@@ -1,10 +1,12 @@
 import { useEffect } from 'react'
-import { Box, Dialog, IconButton } from '@mui/material'
+import Box from '@mui/material/Box'
+import Dialog from '@mui/material/Dialog'
+import IconButton from '@mui/material/IconButton'
 import CloseIcon from '@mui/icons-material/Close'
 
 import useConfirm from '~/hooks/use-confirm'
 import useBreakpoints from '~/hooks/use-breakpoints'
-import { style } from '~/components/popup-dialog/popup-dialog.style'
+import { style } from '~/components/popup-dialog/PopupDialog.style'
 
 const PopupDialog = ({ content, closeModal, isFullScreen, setFullScreen }) => {
   const { checkConfirmation } = useConfirm()

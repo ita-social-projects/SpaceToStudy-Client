@@ -1,13 +1,17 @@
 import { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import useInputVisibility from '~/hooks/use-input-visibility'
-import { Box, FormControlLabel, Typography, Button, Checkbox } from '@mui/material'
+import Box from '@mui/material/Box'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import Typography from '@mui/material/Typography'
+import Button from '@mui/material/Button'
+import Checkbox from '@mui/material/Checkbox'
 
 import { ModalContext } from '~/context/modal-context'
 import ForgotPassword from '~/containers/guest-home-page/forgot-password/ForgotPassword'
 import AppTextField from '~/components/app-text-field/AppTextField'
 
-import { style } from './login-form.style'
+import { style } from './LoginForm.style'
 
 const LoginForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) => {
   const { inputVisibility: passwordVisibility, showInputText: showPassword } = useInputVisibility(errors.password)

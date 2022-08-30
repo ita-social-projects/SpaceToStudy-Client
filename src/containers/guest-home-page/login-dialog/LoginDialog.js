@@ -1,5 +1,6 @@
 import { useContext, useEffect } from 'react'
-import { Box, Typography } from '@mui/material'
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
 import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
 
@@ -14,7 +15,7 @@ import loginImg from '~/assets/img/login-dialog/login.png'
 import { login } from '~/containers/guest-home-page/constants'
 import { loginUser } from '~/redux/reducer'
 
-import style from '~/containers/guest-home-page/login-dialog/login-dialog.style'
+import style from '~/containers/guest-home-page/login-dialog/LoginDialog.style'
 import { snackbarVariants } from '~/constants'
 
 const LoginDialog = () => {

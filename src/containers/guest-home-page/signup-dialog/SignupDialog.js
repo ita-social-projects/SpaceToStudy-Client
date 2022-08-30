@@ -1,5 +1,6 @@
 import { useContext, useEffect } from 'react'
-import { Box, Typography } from '@mui/material'
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
 import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
 
@@ -18,7 +19,7 @@ import student from '~/assets/img/signup-dialog/student.png'
 import mentor from '~/assets/img/signup-dialog/mentor.png'
 import info from '~/assets/img/guest-home-page/info.svg'
 
-import { style } from '~/containers/guest-home-page/signup-dialog/signup-dialog.style'
+import { style } from '~/containers/guest-home-page/signup-dialog/SignupDialog.style'
 import ImgTitleDescription from '~/components/img-title-description/ImgTitleDescription'
 import { snackbarVariants } from '~/constants'
 

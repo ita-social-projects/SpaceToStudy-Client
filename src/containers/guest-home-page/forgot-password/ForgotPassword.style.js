@@ -1,7 +1,7 @@
 export const style = {
   root: {
     maxWidth: '350px',
-    padding: { xs: '50px 16px', sm: '70px' }
+    padding: { xs: '50px 16px', sm: '70px', md: '96px' }
   },
   wrapper: {
     textAlign: 'start',
