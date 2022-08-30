@@ -1,5 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;800;900&display=swap');
 
+:root {
+   --scrollbar-background: #DEE0E1;
+   --scrollbar-thumb-background: #9DA7AC;
+   --scrollbar-thumb-hover-background: #727E84;
+   --scrollbar-border-radius: 10px;
+   --scrollbar-box-shadow: inset 0 0 5px rgba(43, 49, 52, 0.3);
+}
+
 body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
@@ -20,31 +28,31 @@ code {
 
 
 ::-webkit-scrollbar {
-  background: #DEE0E1;
+  background: var(--scrollbar-background)
 }
 ::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 5px rgba(43, 49, 52, 0.3); 
+  box-shadow: var(--scrollbar-box-shadow); 
 }
 ::-webkit-scrollbar-thumb {
-  background: #9DA7AC; 
+  background: var(--scrollbar-thumb-background); 
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #727E84;
+  background: var(--scrollbar-thumb-hover-background); 
 }
 
 body ::-webkit-scrollbar {
-  background: #DEE0E1;
   width: 10px;
-  border-radius: 10px;
+  background: var(--scrollbar-background);
+  border-radius: var(--scrollbar-border-radius);
 }
 body ::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 5px rgba(43, 49, 52, 0.3); 
-  border-radius: 10px;
+  box-shadow: var(--scrollbar-box-shadow); 
+  border-radius: var(--scrollbar-border-radius);
 }
 body ::-webkit-scrollbar-thumb {
-  background: #9DA7AC; 
-  border-radius: 10px;
+  background: var(--scrollbar-thumb-background); 
+  border-radius: var(--scrollbar-border-radius);
 }
 body ::-webkit-scrollbar-thumb:hover {
-  background: #727E84;
+  background: var(--scrollbar-thumb-hover-background); 
 }
