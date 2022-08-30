@@ -5,6 +5,7 @@ import GuestIcons from '~/containers/navigation-icons/guest-icons/GuestIcons'
 import StudentIcons from '~/containers/navigation-icons/student-icons/StudentIcons'
 import { ModalContext } from '~/context/modal-context'
 import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
+import { student } from '~/constants'
 
 const NavigationIcons = ({ setIsSidebarOpen }) => {
   const { userRole } = useSelector((state) => state.appMain)
@@ -14,7 +15,7 @@ const NavigationIcons = ({ setIsSidebarOpen }) => {
     setModal(<LoginDialog />)
   }, [setModal])
 
-  if (userRole === 'student') return <StudentIcons setIsSidebarOpen={ setIsSidebarOpen } />
+  if (userRole === student) return <StudentIcons setIsSidebarOpen={ setIsSidebarOpen } />
 
   return <GuestIcons openLoginDialog={ openLoginDialog } setIsSidebarOpen={ setIsSidebarOpen } />
 }

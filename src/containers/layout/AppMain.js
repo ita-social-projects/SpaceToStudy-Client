@@ -1,12 +1,10 @@
 import { useLayoutEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import StudentLayout from './StudentLayout'
-import GuestLayout from './GuestLayout'
-import MentorLayout from './MentorLayout'
 import Loader from '~/components/loader/Loader'
 import { checkAuth } from '~/redux/reducer'
 import { getFromLocalStorage } from '~/services/local-storage-service'
+import AppRouter from '~/router'
 import { accessToken } from '~/constants'
 
 const AppMain = () => {
@@ -23,14 +21,7 @@ const AppMain = () => {
     return <Loader size={ 70 } />
   }
 
-  switch (userRole) {
-  case 'student':
-    return <StudentLayout />
-  case 'mentor':
-    return <MentorLayout />
-  default:
-    return <GuestLayout />
-  }
+  return <AppRouter userRole={ userRole } />
 }
 
 export default AppMain

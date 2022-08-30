@@ -10,7 +10,7 @@ import { ModalContext } from '~/context/modal-context'
 import { SnackBarContext } from '~/context/snackbar-context'
 
 import { firstName, lastName, confirmPassword, email, password } from '~/utils/validations/login'
-import { signup } from '~/containers/guest-home-page/constants'
+import { signup } from '~/constants'
 import GoogleLogin from '~/containers/guest-home-page/google-login/GoogleLogin'
 import SignupForm from '~/containers/guest-home-page/signup-form/SignupForm'
 import { signupUser } from '~/redux/reducer'

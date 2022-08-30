@@ -12,7 +12,7 @@ import { ModalContext } from '~/context/modal-context'
 import { SnackBarContext } from '~/context/snackbar-context'
 import { email, password } from '~/utils/validations/login'
 import loginImg from '~/assets/img/login-dialog/login.png'
-import { login } from '~/containers/guest-home-page/constants'
+import { login } from '~/constants'
 import { loginUser } from '~/redux/reducer'
 
 import style from '~/containers/guest-home-page/login-dialog/LoginDialog.style'

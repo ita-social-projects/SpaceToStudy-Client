@@ -3,7 +3,7 @@ import { screen, fireEvent, waitFor } from '@testing-library/react'
 import { SnackBarProvider } from '~/context/snackbar-context'
 import { ConfirmationDialogProvider } from '~/context/confirm-context'
 import { ModalProvider } from '~/context/modal-context'
-import { login, signup } from '~/containers/guest-home-page/constants'
+import { login, signup } from '~/constants'
 import GoogleLogin from '~/containers/guest-home-page/google-login/GoogleLogin'
 import { renderWithProviders } from '~tests/test-utils'
 
