@@ -46,7 +46,7 @@ const LoginDialog = () => {
 
   return (
     <Box sx={ style.root }>
-      <Box sx={ style.img }>
+      <Box sx={ style.imgContainer }>
         <Box
           alt='login' component='img' src={ loginImg }
           sx={ style.img }

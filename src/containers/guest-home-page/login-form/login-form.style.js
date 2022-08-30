@@ -18,7 +18,8 @@ export const style = {
     }
   },
   loginButton: {
-    padding: { xs: '18px 134px', sm: '18px 149px' }
+    width: '100%',
+    py: '18px'
   },
   forgotPass: {
     cursor: 'pointer',

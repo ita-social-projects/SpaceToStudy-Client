@@ -64,7 +64,7 @@ const SignupDialog = ({ type }) => {
 
   return (
     <Box sx={ style.root }>
-      <Box sx={ style.img }>
+      <Box sx={ style.imgContainer }>
         <Box
           alt='signup' component='img' src={ signupImg[type] }
           sx={ style.img }

@@ -1,7 +1,6 @@
 export const style = {
   box: {
-    margin: { xs: '0 auto', sm: 0 },
-    padding: { xs: 0, sm: 2, md: 4 }
+    margin: { xs: '0 auto', sm: 0 }
   },
   icon: {
     color: 'primary.900',

@@ -1,16 +1,20 @@
 export const style = {
   root: {
-    maxWidth: { xs: '315px', sm: 'md', md: '800px', lg: 'lg' },
-    mt: { xs: '55px', sm: 0 },
+    maxWidth: { sm: 'sm', md: 'md', lg: 'lg' },
+    mt: { xs: '56px', sm: 0 },
     display: 'flex',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
+    maxHeight: { xs: 'calc(100vh - 56px)', sm: 'calc(100vh - 64px)' }
+  },
+  imgContainer: {
+    maxWidth: '593px',
+    maxHeight: 'inherit',
+    display: { xs: 'none', md: 'flex' }
   },
   img: {
-    overflow: 'auto',
-    maxWidth: { sm: '300px', md: '593px' },
-    minWidth: '340px',
-    display: { xs: 'none', sm: 'none', md: 'flex' }
+    objectFit: 'contain',
+    width: '100%'
   },
   h2: {
     marginBottom: '32px',
@@ -20,11 +24,10 @@ export const style = {
   form: {
     borderTop: { xs: '1px solid', sm: 'none' },
     borderColor: { xs: 'primary.100' },
-    maxWidth: { xs: '320px', sm: '343px' },
-    maxHeight: { sm: '75vh' },
-    padding: { xs: '30px 0 0 0', sm: '10px 20px 40px 80px', md: '10px 15px 0 75px' },
-    mr: { sm: '40px' },
-    mt: { sm: '40px', md: '0' },
+    maxWidth: { xs: '359px', sm: '534px', md: '439px', lg: '552px' },
+    maxHeight: 'inherit',
+    boxSizing: 'border-box',
+    padding: { xs: '24px 8px', sm: '40px 96px', md: '40px 80px 40px 16px', lg: '56px 96px 56px 16px' },
     overflow: 'auto'
   }
 }

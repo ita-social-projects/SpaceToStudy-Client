@@ -13,6 +13,7 @@ export const style = {
   },
   box: {
     display: 'flex',
+    flexWrap: 'wrap',
     color: 'primary.700',
     whiteSpace: 'nowrap'
   },
