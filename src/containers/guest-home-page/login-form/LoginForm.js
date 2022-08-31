@@ -7,10 +7,10 @@ import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import Checkbox from '@mui/material/Checkbox'
 
-import Loader from '~/components/loader/Loader'
 import { ModalContext } from '~/context/modal-context'
 import ForgotPassword from '~/containers/guest-home-page/forgot-password/ForgotPassword'
 import AppTextField from '~/components/app-text-field/AppTextField'
+import AppButton from '~/components/app-button/AppButton'
 
 import { styles } from '~/containers/guest-home-page/login-form/LoginForm.styles'
 
@@ -23,19 +23,6 @@ const LoginForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) => 
   const openForgotPassword = () => {
     setModal(<ForgotPassword />)
   }
-
-  const loginButton = loading ? (
-    <Box sx={ style.loaderContainer }>
-      <Loader size={ 20 } />
-    </Box>
-  ) : (
-    <Button
-      size='large' sx={ style.loginButton } type='submit'
-      variant='contained'
-    >
-      { t('common.labels.login') }
-    </Button>
-  )
 
   return (
     <Box component='form' onSubmit={ handleSubmit }>
@@ -80,7 +67,14 @@ const LoginForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) => 
         </Typography>
       </Box>
 
-      { loginButton }
+      <AppButton
+        buttonStyle={ style.loginButton }
+        label={ t('common.labels.login') }
+        loading={ loading }
+        size='large'
+        type='submit'
+        variant='contained'
+      />
     </Box>
   )
 }

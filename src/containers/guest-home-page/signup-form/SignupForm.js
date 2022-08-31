@@ -9,8 +9,8 @@ import Checkbox from '@mui/material/Checkbox'
 import useInputVisibility from '~/hooks/use-input-visibility'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import { useSelector } from 'react-redux'
-import Loader from '~/components/loader/Loader'
 import { routes } from '~/constants/routes'
+import AppButton from '~/components/app-button/AppButton'
 
 import { styles } from '~/containers/guest-home-page/signup-form/SignupForm.styles'
 
@@ -27,19 +27,6 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors, clos
   const handleOnAgreementChange = () => {
     setButtonDisabled(!buttonDisabled)
   }
-
-  const submitButton = loading ? (
-    <Box sx={ style.loaderContainer }>
-      <Loader size={ 20 } />
-    </Box>
-  ) : (
-    <Button
-      disabled={ buttonDisabled } size='large' sx={ style.signupButton }
-      type='submit' variant='contained'
-    >
-      { t('common.labels.signup') }
-    </Button>
-  )
 
   const policyAgreement = (
     <Box sx={ styles.box }>
@@ -153,7 +140,15 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors, clos
         />
       </Box>
 
-      { submitButton }
+      <AppButton
+        buttonStyle={ style.signupButton }
+        disabled={ buttonDisabled }
+        label={ t('common.labels.signup') }
+        loading={ loading }
+        size='large'
+        type='submit'
+        variant='contained'
+      />
     </Box>
   )
 }
