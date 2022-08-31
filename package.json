@@ -55,8 +55,8 @@
     "build": "craco build",
     "test": "cross-env CI=true craco test --coverage",
     "lint": "eslint src/**/*.js --fix",
-    "storybook": "start-storybook -p 6006 -s public",
-    "build-storybook": "build-storybook -s public",
+    "storybook": "start-storybook -p 6006 -o build-story",
+    "build-storybook": "build-storybook -o build-story",
     "prepare": "husky install",
     "pre-commit": "lint-staged"
   },

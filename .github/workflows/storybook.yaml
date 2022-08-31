@@ -3,7 +3,7 @@ name: Storybook
 on:
   push:
     #paths: ["public/**"]
-    paths: ["src/stories/**"]
+    paths: ["build-story/**"]
 
 jobs:
   build-and-deploy:
@@ -23,6 +23,4 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
-          #folder: public # output folder from package.json build-storybook
-          folder: src/stories
-          
+          folder: build-story # output folder from package.json build-storybook     
