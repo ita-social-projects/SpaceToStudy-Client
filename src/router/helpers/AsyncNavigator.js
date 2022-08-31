@@ -12,23 +12,22 @@ export const AsyncNavigator = ({ to, role }) => {
 
   const isAuth = state?.role === userRole
 
-  if (pathname !== routes.home.route && pathname !== routes.mentor.route && pathname !== routes.student.route) {
-    to = pathname
-  }
+  const pathto = state?.pathname || to
 
   useEffect(() => {
     setTimeout(() => {
-      if (!isAuth && to !== routes.home.route && state) {
+      if (!isAuth && pathto !== routes.home.route && state) {
         navigate(errors.authPolicy.route)
       } else {
-        navigate(to, {
+        navigate(pathto, {
           state: {
-            role
+            role,
+            pathname
           }
         })
       }
     }, 0)
-  }, [navigate, to, role, isAuth, state])
+  }, [navigate, pathto, role, isAuth, state, pathname])
 
   return <Loader size={ 70 } />
 }
