@@ -1,5 +1,5 @@
 export const routes = {
-  home: { label: 'home', route: '/' },
+  home: { label: 'home', route: '//*' },
   student: { route: '/student', nested: '/student/*' },
   mentor: { route: '/mentor', nested: '/mentor/*' },
   about: { label: 'about', route: '/about' },

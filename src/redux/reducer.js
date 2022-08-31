@@ -2,14 +2,14 @@ import { createSlice } from '@reduxjs/toolkit'
 import { parseJwt } from '~/utils/helper-functions'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { AuthService } from '~/services/auth-service'
-import { removeFromLocalStorage, setToLocalStorage } from '~/services/local-storage-service'
+import { getFromLocalStorage, removeFromLocalStorage, setToLocalStorage } from '~/services/local-storage-service'
 import { accessToken } from '~/constants'
 
 const initialState = {
   userId: '',
   userRole: '',
   userEmail: '',
-  loading: false,
+  loading: true,
   error: '',
   isFirstLogin: true
 }
@@ -45,9 +45,11 @@ export const logoutUser = createAsyncThunk('appMain/logoutUser', async (_, { rej
 
 export const checkAuth = createAsyncThunk('appMain/checkAuth', async (_, { rejectWithValue, dispatch }) => {
   try {
-    const { data } = await AuthService.refresh()
-    setToLocalStorage(accessToken, data.accessToken)
-    dispatch(setUser(data.accessToken))
+    if (getFromLocalStorage(accessToken)) {
+      const { data } = await AuthService.refresh()
+      setToLocalStorage(accessToken, data.accessToken)
+      dispatch(setUser(data.accessToken))
+    }
   } catch (e) {
     return rejectWithValue(e.response.data.code)
   }
