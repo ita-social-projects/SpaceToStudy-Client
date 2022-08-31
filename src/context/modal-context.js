@@ -28,6 +28,7 @@ const ModalProvider = (props) => {
           closeModalAfterDelay={ closeModalAfterDelay }
           content={ modal }
           isFullScreen={ isFullScreen }
+          paperProps={ paperProps }
           setFullScreen={ setFullScreen }
           timerId={ timer }
         />
