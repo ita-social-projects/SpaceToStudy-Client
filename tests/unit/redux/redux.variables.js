@@ -12,7 +12,7 @@ export const initialState = {
   userId: '',
   userRole: '',
   userEmail: '',
-  loading: false,
+  loading: true,
   error: '',
   isFirstLogin: true
 }

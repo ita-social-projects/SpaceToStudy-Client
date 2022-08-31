@@ -4,7 +4,6 @@ import { store } from '~/redux/store'
 import reducer, { logout, checkAuth, loginUser, logoutUser, signupUser } from '~/redux/reducer'
 import { axiosClient } from '~/plugins/axiosClient'
 import { axiosInstance } from '~/services/auth-service'
-import { getFromLocalStorage, removeFromLocalStorage, setToLocalStorage } from '~/services/local-storage-service'
 
 import { URLs } from '~/constants/request'
 import {
@@ -19,11 +18,12 @@ import {
   errorCode
 } from './redux.variables'
 
-jest.mock('~/services/local-storage-service')
-
-getFromLocalStorage.mockImplementation(() => accessToken)
-removeFromLocalStorage.mockImplementation(jest.fn())
-setToLocalStorage.mockImplementation(jest.fn())
+jest.mock('~/services/local-storage-service', () => ({
+  __esModule: true,
+  getFromLocalStorage: () => true,
+  setToLocalStorage: () => true,
+  removeFromLocalStorage: () => true
+}))
 
 const mockAxiosClient = new MockAdapter(axiosClient)
 
@@ -41,7 +41,7 @@ describe('redux test', () => {
     mockAxiosClient.onPost(URLs.auth.signup).reply(404, error)
     await store.dispatch(signupUser(signupUserData))
 
-    expect(store.getState()).toEqual({ appMain: { ...initialState, error: errorCode } })
+    expect(store.getState()).toEqual({ appMain: { ...initialState, loading: false, error: errorCode } })
   })
 
   it('should set user email to store after signup', async () => {
@@ -90,10 +90,10 @@ describe('redux test', () => {
     mockAxiosClient.onPost(URLs.auth.logout).reply(200, { count: 'deletedCount: 1' })
     await store.dispatch(logoutUser())
 
-    expect(store.getState()).toEqual({ appMain: initialState })
+    expect(store.getState()).toEqual({ appMain: { ...initialState, loading: false } })
   })
 
   it('should clear user data from store', () => {
-    expect(reducer(stateAfterLogin, logout())).toEqual(initialState)
+    expect(reducer(stateAfterLogin, logout())).toEqual({ ...initialState, loading: false })
   })
 })
