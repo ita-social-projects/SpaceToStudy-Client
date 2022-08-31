@@ -25,7 +25,7 @@ const LoginForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) => 
   }
 
   const loginButton = loading ? (
-    <Box sx={ { minWidth: '100px', display: 'flex', justifyContent: 'center' } }>
+    <Box sx={ style.loaderContainer }>
       <Loader size={ 20 } />
     </Box>
   ) : (
