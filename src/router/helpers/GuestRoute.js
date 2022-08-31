@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import Loader from '~/components/loader/Loader'
@@ -8,15 +7,13 @@ import { GuestRoutes } from '../routes'
 export const GuestRoute = ({ userRole }) => {
   const navigate = useNavigate()
 
-  useEffect(() => {
-    if (userRole) {
-      setTimeout(() => {
-        navigate(routes[userRole].route)
-      }, 0)
-    } else {
-      return <GuestRoutes />
-    }
-  }, [navigate, userRole])
+  if (userRole) {
+    setTimeout(() => {
+      navigate(routes[userRole].route)
+    }, 0)
+  } else {
+    return <GuestRoutes />
+  }
 
   return <Loader size={ 70 } />
 }
