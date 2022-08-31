@@ -4,11 +4,20 @@ export default {
   title: 'AppButton',
   component: AppButton,
   argTypes: {
+    label: { description: 'Label of the button' },
     variant: {
+      description: 'Variant of the button',
       options: ['contained', 'outlined', 'text'],
       control: { type: 'radio' }
     },
-    size: { options: ['large', 'medium', 'small'], control: { type: 'radio' } }
+    disabled: { description: 'Disables button if true' },
+    loading: { description: 'Hides button and shows loader if true' },
+    size: {
+      description: 'Size of the button',
+      options: ['large', 'medium', 'small'],
+      control: { type: 'radio' }
+    },
+    buttonStyle: { description: 'Styles for button' }
   }
 }
 
