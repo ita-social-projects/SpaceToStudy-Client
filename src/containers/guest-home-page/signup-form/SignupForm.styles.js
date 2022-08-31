@@ -25,5 +25,10 @@ export const styles = {
     color: 'primary.900',
     marginLeft: '5px',
     textDecoration: 'underline'
+  },
+  loaderContainer: {
+    minWidth: '100px',
+    display: 'flex',
+    justifyContent: 'center'
   }
 }

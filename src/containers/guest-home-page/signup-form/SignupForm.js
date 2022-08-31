@@ -24,22 +24,22 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors, clos
   )
   const { loading } = useSelector((state) => state.appMain)
 
+  const handleOnAgreementChange = () => {
+    setButtonDisabled(!buttonDisabled)
+  }
+
   const submitButton = loading ? (
-    <Box sx={ { minWidth: '100px', display: 'flex', justifyContent: 'center' } }>
+    <Box sx={ style.loaderContainer }>
       <Loader size={ 20 } />
     </Box>
   ) : (
     <Button
-      size='large' sx={ style.signupButton } type='submit'
-      variant='contained'
+      disabled={ buttonDisabled } size='large' sx={ style.signupButton }
+      type='submit' variant='contained'
     >
       { t('common.labels.signup') }
     </Button>
   )
-
-  const handleOnAgreementChange = () => {
-    setButtonDisabled(!buttonDisabled)
-  }
 
   const policyAgreement = (
     <Box sx={ styles.box }>
