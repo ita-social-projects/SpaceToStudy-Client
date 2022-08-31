@@ -57,21 +57,3 @@ describe('test with student role', () => {
     expect(messageIcon).toBeInTheDocument()
   })
 })
-
-describe('test with loading equal true', () => {
-  const preloadedState = { appMain: { loading: true, userRole: 'student' } }
-  beforeEach(() => {
-    renderWithProviders(
-      <ModalProvider>
-        <NavigationIcons setIsSidebarOpen={ setIsSidebarOpen } />
-      </ModalProvider>,
-      { preloadedState }
-    )
-  })
-
-  it('should render loader', () => {
-    const loader = screen.getByTestId('loader')
-
-    expect(loader).toBeInTheDocument()
-  })
-})

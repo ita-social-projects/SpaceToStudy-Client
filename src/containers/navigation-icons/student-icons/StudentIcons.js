@@ -1,6 +1,8 @@
 import { useTranslation } from 'react-i18next'
 
-import { Box, IconButton, Tooltip } from '@mui/material'
+import Box from '@mui/material/Box'
+import IconButton from '@mui/material/IconButton'
+import Tooltip from '@mui/material/Tooltip'
 import LanguageIcon from '@mui/icons-material/Language'
 import MenuIcon from '@mui/icons-material/Menu'
 import MessageRoundedIcon from '@mui/icons-material/MessageRounded'
@@ -8,7 +10,7 @@ import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded'
 import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded'
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined'
 
-import { style } from '~/containers/navigation-icons/navigation-icons.style'
+import { style } from '~/containers/navigation-icons/NavigationIcons.styles'
 
 const StudentIcons = ({ setIsSidebarOpen }) => {
   const { t } = useTranslation()
