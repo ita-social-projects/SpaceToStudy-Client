@@ -1,7 +1,7 @@
 import { screen, fireEvent, act, waitForElementToBeRemoved } from '@testing-library/react'
 import { ModalProvider } from '~/context/modal-context'
 import { renderWithProviders } from '~tests/test-utils'
-import NavBar from '~/containers/navbar/NavBar'
+import NavBar from '~/containers/layout/navbar/NavBar'
 import { ConfirmationDialogProvider } from '~/context/confirm-context'
 import { SnackBarProvider } from '~/context/snackbar-context'
 

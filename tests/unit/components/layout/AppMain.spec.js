@@ -5,7 +5,7 @@ import { ThemeProvider } from '@emotion/react'
 
 import { ModalProvider } from '~/context/modal-context'
 import { ConfirmationDialogProvider } from '~/context/confirm-context'
-import AppMain from '~/containers/layout/AppMain'
+import AppMain from '~/containers/layout/app-main/AppMain'
 import { theme } from '~/styles/app-theme/custom-mui.styles'
 
 const mockState = {

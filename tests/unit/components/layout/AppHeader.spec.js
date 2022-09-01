@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
-import AppHeader from '~/containers/layout/AppHeader'
+import AppHeader from '~/containers/layout/app-header/AppHeader'
 import { ModalProvider } from '~/context/modal-context'
 
 describe('AppHeader layout component test', () => {
