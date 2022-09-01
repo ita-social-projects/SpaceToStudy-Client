@@ -8,7 +8,7 @@ export const style = {
     maxHeight: { xs: 'calc(100vh - 56px)', sm: 'calc(100vh - 64px)' }
   },
   imgContainer: {
-    maxWidth: '593px',
+    maxWidth: '50%',
     maxHeight: 'inherit',
     display: { xs: 'none', md: 'flex' }
   },
@@ -16,18 +16,26 @@ export const style = {
     objectFit: 'contain',
     width: '100%'
   },
-  h2: {
-    marginBottom: '32px',
+  formContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    maxHeight: 'inherit',
+    boxSizing: 'border-box',
+    borderTop: { xs: '1px solid', sm: 'none' },
+    borderColor: { xs: 'primary.100' },
+    pt: { xs: '24px', sm: '40px', lg: '56px' },
+    pl: { xs: '8px', sm: '96px', md: '16px' }
+  },
+  title: {
+    mb: '8px',
     fontSize: '32px',
     lineHeight: '48px'
   },
   form: {
-    borderTop: { xs: '1px solid', sm: 'none' },
-    borderColor: { xs: 'primary.100' },
-    maxWidth: { xs: '359px', sm: '534px', md: '439px', lg: '552px' },
-    maxHeight: 'inherit',
-    boxSizing: 'border-box',
-    padding: { xs: '24px 8px', sm: '40px 96px', md: '40px 80px 40px 16px', lg: '56px 96px 56px 16px' },
-    overflow: 'auto'
+    overflow: 'auto',
+    maxWidth: { xs: '343px', lg: '420px' },
+    pt: '16px',
+    pr: { xs: '8px', sm: '96px', md: '80px', lg: '96px' },
+    pb: { xs: '24px', sm: '40px', lg: '56px' }
   }
 }

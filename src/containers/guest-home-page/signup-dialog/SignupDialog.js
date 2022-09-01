@@ -72,21 +72,21 @@ const SignupDialog = ({ type }) => {
         />
       </Box>
 
-      <Box sx={ style.form }>
-        <Typography sx={ style.h2 } variant='h2'>
+      <Box sx={ style.formContainer }>
+        <Typography sx={ style.title } variant='h2'>
           { t('signup.head', { returnObjects: true })[type] }
         </Typography>
-
-        <SignupForm
-          closeModal={ closeModal }
-          data={ data }
-          errors={ errors }
-          handleBlur={ handleBlur }
-          handleChange={ handleChange }
-          handleSubmit={ handleSubmit }
-        />
-
-        <GoogleLogin type={ signup } />
+        <Box sx={ style.form }>
+          <SignupForm
+            closeModal={ closeModal }
+            data={ data }
+            errors={ errors }
+            handleBlur={ handleBlur }
+            handleChange={ handleChange }
+            handleSubmit={ handleSubmit }
+          />
+          <GoogleLogin type={ signup } />
+        </Box>
       </Box>
     </Box>
   )

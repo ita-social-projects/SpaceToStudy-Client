@@ -1,6 +1,6 @@
 const style = {
   root: {
-    maxWidth: { sm: 'lg' },
+    maxWidth: { sm: 'sm', md: 'md', lg: 'lg' },
     mt: { xs: '56px', sm: 0 },
     display: 'flex',
     justifyContent: 'space-between',
@@ -8,7 +8,7 @@ const style = {
     maxHeight: { xs: 'calc(100vh - 56px)', sm: 'calc(100vh - 64px)' }
   },
   imgContainer: {
-    maxWidth: '593px',
+    maxWidth: { md: '50%', lg: '593px' },
     maxHeight: 'inherit',
     display: { xs: 'none', md: 'flex' }
   },
@@ -16,19 +16,27 @@ const style = {
     objectFit: 'contain',
     width: '100%'
   },
-  h2: {
-    marginBottom: '32px',
+  formContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    maxHeight: 'inherit',
+    boxSizing: 'border-box',
+    borderTop: { xs: '1px solid', sm: 'none' },
+    borderColor: { xs: 'primary.100' },
+    pt: { xs: '24px', sm: '64px' },
+    pl: { xs: '8px', sm: '96px', md: '16px' }
+  },
+  title: {
+    mb: '16px',
     fontSize: '40px',
     lineHeight: '48px'
   },
   form: {
-    maxHeight: 'inherit',
-    boxSizing: 'border-box',
     overflow: 'auto',
-    borderTop: { xs: '1px solid', sm: 'none' },
-    borderColor: { xs: 'primary.100' },
-    maxWidth: { xs: '359px', sm: '534px', md: '439px', lg: '455px' },
-    padding: { xs: '24px 8px', sm: '64px 96px', md: '40px 80px 40px 16px', lg: '56px 96px 56px 16px' }
+    maxWidth: '343px',
+    pt: '16px',
+    pr: { xs: '8px', sm: '96px', md: '80px', lg: '96px' },
+    pb: { xs: '24px', sm: '64px' }
   }
 }
 

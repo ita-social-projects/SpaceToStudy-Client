@@ -7,7 +7,7 @@ export const style = {
     maxWidth: '343px'
   },
   checkboxContainer: {
-    margin: '25px 0',
+    mb: '20px',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center'

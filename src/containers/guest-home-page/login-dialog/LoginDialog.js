@@ -54,20 +54,20 @@ const LoginDialog = () => {
         />
       </Box>
 
-      <Box sx={ style.form }>
-        <Typography sx={ style.h2 } variant='h2'>
+      <Box sx={ style.formContainer }>
+        <Typography sx={ style.title } variant='h2'>
           { t('login.head') }
         </Typography>
-
-        <LoginForm
-          data={ data }
-          errors={ errors }
-          handleBlur={ handleBlur }
-          handleChange={ handleChange }
-          handleSubmit={ handleSubmit }
-        />
-
-        <GoogleLogin type={ login } />
+        <Box sx={ style.form }>
+          <LoginForm
+            data={ data }
+            errors={ errors }
+            handleBlur={ handleBlur }
+            handleChange={ handleChange }
+            handleSubmit={ handleSubmit }
+          />
+          <GoogleLogin type={ login } />
+        </Box>
       </Box>
     </Box>
   )
