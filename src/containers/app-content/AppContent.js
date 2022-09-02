@@ -1,4 +1,5 @@
-import { Box } from '@mui/material'
+import Box from '@mui/material/Box'
+
 import AppHeader from '~/containers/layout/app-header/AppHeader'
 import AppMain from '~/containers/layout/app-main/AppMain'
 import ScrollToTop from '~/components/scroll-to-top/ScrollToTop'

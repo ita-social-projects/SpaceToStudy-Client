@@ -1,4 +1,4 @@
-import { createTheme } from '@mui/material'
+import { createTheme } from '@mui/material/styles'
 
 import palette from './app.pallete.js'
 import appTypography from './app.typography'

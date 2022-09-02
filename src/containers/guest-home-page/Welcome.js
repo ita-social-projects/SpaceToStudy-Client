@@ -1,5 +1,8 @@
 import { useTranslation } from 'react-i18next'
-import { Typography, Box, Button } from '@mui/material'
+
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import Button from '@mui/material/Button'
 import HashLink from '~/components/hash-link/HashLink'
 
 import { styles } from '~/containers/guest-home-page/styles/welcome.styles'

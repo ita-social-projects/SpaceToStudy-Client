@@ -1,6 +1,9 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { Typography, Box, Container } from '@mui/material'
+
+import Container from '@mui/material/Container'
+import Typography from '@mui/material/Typography'
+import Box from '@mui/material/Box'
 
 import { routes } from '~/constants/routes'
 import { style } from './footer.styles'

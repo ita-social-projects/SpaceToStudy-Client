@@ -1,10 +1,12 @@
-import { Box, Button } from '@mui/material'
 import { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import Transition from 'react-transition-group/Transition'
 import { ModalContext } from '~/context/modal-context'
 
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
+
 import SignupDialog from '~/containers/guest-home-page/signup-dialog/SignupDialog'
 import { styles } from '~/containers/guest-home-page/cards-with-button/cards-with-button.style'
 import dots from '~/assets/img/guest-home-page/dots.svg'

@@ -1,9 +1,10 @@
-import { Box } from '@mui/material'
 import { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import Box from '@mui/material/Box'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import InfoCard from '~/components/info-card/InfoCard'
+
 import SignupDialog from '~/containers/guest-home-page/signup-dialog/SignupDialog'
 import { ModalContext } from '~/context/modal-context'
 import { routes } from '~/constants/routes'

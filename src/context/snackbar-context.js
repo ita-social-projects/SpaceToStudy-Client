@@ -1,6 +1,9 @@
 import { createContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Snackbar, Alert } from '@mui/material'
+
+import Snackbar from '@mui/material/Snackbar'
+import Alert from '@mui/material/Alert'
+
 import { snackbarVariants } from '~/constants'
 
 export const SnackBarContext = createContext()

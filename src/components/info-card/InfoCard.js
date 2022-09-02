@@ -1,4 +1,5 @@
-import { Box, Button } from '@mui/material'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
 
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import { styles } from '~/components/info-card/info-card.styles'

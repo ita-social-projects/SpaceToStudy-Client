@@ -1,6 +1,9 @@
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
-import { Box, Button, Container } from '@mui/material'
+
+import Box from '@mui/material/Box'
+import Container from '@mui/material/Container'
+import Button from '@mui/material/Button'
 
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import { routes } from '~/constants/routes'
