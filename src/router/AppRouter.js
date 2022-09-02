@@ -7,9 +7,10 @@ import BadRequest from '~/pages/error/BadRequest'
 import AuthPolicy from '~/pages/error/AuthPolicy'
 import { errors, routes } from '~/constants/routes'
 import { mentor, student } from '~/constants'
-import { MentorRoutes, StudentRoutes } from './routes'
-import { PrivateRoute } from './helpers/PrivateRoute'
-import { GuestRoute } from './helpers/GuestRoute'
+import PrivateRoute from './helpers/PrivateRoute'
+import GuestRoute from './helpers/GuestRoute'
+import StudentRoutes from './routes/StudentRoutes'
+import MentorRoutes from './routes/MentorRoutes'
 
 const AppRouter = ({ userRole }) => {
   return (

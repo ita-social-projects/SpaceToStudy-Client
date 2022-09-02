@@ -2,9 +2,9 @@ import { useNavigate } from 'react-router-dom'
 
 import Loader from '~/components/loader/Loader'
 import { routes } from '~/constants/routes'
-import { GuestRoutes } from '../routes'
+import GuestRoutes from '../routes/GuestRoutes'
 
-export const GuestRoute = ({ userRole }) => {
+const GuestRoute = ({ userRole }) => {
   const navigate = useNavigate()
 
   if (userRole) {
@@ -17,3 +17,5 @@ export const GuestRoute = ({ userRole }) => {
 
   return <Loader size={ 70 } />
 }
+
+export default GuestRoute
