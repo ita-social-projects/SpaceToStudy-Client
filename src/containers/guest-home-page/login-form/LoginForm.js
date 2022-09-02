@@ -1,10 +1,11 @@
 import { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import useInputVisibility from '~/hooks/use-input-visibility'
+import { useSelector } from 'react-redux'
+
 import Box from '@mui/material/Box'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Typography from '@mui/material/Typography'
-import Button from '@mui/material/Button'
 import Checkbox from '@mui/material/Checkbox'
 
 import { ModalContext } from '~/context/modal-context'
