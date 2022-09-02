@@ -12,22 +12,22 @@ import { style } from '~/pages/error/styles/not-found.style'
 
 const NotFound = () => {
   const { t } = useTranslation()
-  const windowSize = useBreakpoints()
+  const { isDesktop, isTablet, isMobile } = useBreakpoints()
 
-  const sizesTypography = {
-    desktop: { title: 'h2', description: 'subtitle1' },
-    tablet: { title: 'h3', description: 'subtitle1' },
-    mobile: { title: 'h4', description: 'subtitle2' }
-  }
+  const desktop = { title: 'h2', description: 'subtitle1' }
+  const tablet = { title: 'h3', description: 'subtitle1' }
+  const mobile = { title: 'h4', description: 'subtitle2' }
+
+  const windowSize = (isDesktop && desktop) || (isTablet && tablet) || (isMobile && mobile)
 
   return (
     <Box sx={ style.root }>
       <Box sx={ style.box }>
         <TitleWithDescription
           description={ t('errorPage.404.description') }
-          descriptionStyles={ { typography: sizesTypography[windowSize].description } }
+          descriptionStyles={ { typography: windowSize.description } }
           title={ t('errorPage.404.title') }
-          titleStyles={ { typography: sizesTypography[windowSize].title, lineHeight: '61px' } }
+          titleStyles={ { typography: windowSize.title, lineHeight: '61px' } }
         />
         <Button
           component={ Link } sx={ style.button } to={ routes.home.route }

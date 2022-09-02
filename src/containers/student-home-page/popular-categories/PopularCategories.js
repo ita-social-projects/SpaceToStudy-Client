@@ -11,27 +11,16 @@ import { studentRoutes } from '~/constants/routes'
 
 import { styles } from '~/containers/student-home-page/popular-categories/popular-categories.styles'
 
-const itemsToShow = {
-  desktop: 12,
-  tablet: 12,
-  mobile: 4
-}
 const sectionId = studentRoutes.navBar.categories.label
-const itemsToAdd = {
-  desktop: 6,
-  tablet: 4,
-  mobile: 4
-}
 
 const PopularCategories = () => {
   const navigate = useNavigate()
-  const windowSize = useBreakpoints()
+  const { isDesktop, isTablet, isMobile } = useBreakpoints()
   const { t } = useTranslation()
-  const {
-    items: categoriesList,
-    isExpandable,
-    showMore
-  } = useShowMore(categoriesListMock, itemsToShow[windowSize], itemsToAdd[windowSize])
+
+  const itemsToShow = (isDesktop && 12) || (isTablet && 12) || (isMobile && 4)
+  const itemsToAdd = (isDesktop && 6) || (isTablet && 4) || (isMobile && 4)
+  const { items: categoriesList, isExpandable, showMore } = useShowMore(categoriesListMock, itemsToShow, itemsToAdd)
 
   const categories = categoriesList.map((item) => {
     return (

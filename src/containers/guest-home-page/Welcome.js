@@ -13,18 +13,14 @@ const scrollTo = routes.guestNavBar.whatCanYouDo.route
 
 const Welcome = () => {
   const { t } = useTranslation()
-  const size = useBreakpoints()
+  const { isDesktop, isTablet, isMobile } = useBreakpoints()
 
-  const images = {
-    desktop: titleMd,
-    tablet: titleSm,
-    mobile: titleXs
-  }
+  const images = (isDesktop && titleMd) || (isTablet && titleSm) || (isMobile && titleXs)
 
   return (
     <Box className='section' sx={ styles.container }>
       <Box
-        alt='Title' component='img' src={ images[size] }
+        alt='Title' component='img' src={ images }
         sx={ styles.title }
       />
       <Typography data-testid='welcomeDescription' sx={ styles.subtitle }>

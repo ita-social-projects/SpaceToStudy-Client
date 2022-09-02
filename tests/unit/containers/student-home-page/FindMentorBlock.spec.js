@@ -11,8 +11,10 @@ jest.mock('react-router', () => ({
 }))
 
 describe('FindMentorBlock test', () => {
+  const desktopData = { isDesktop: true, isMobile: false, isTablet: false }
+
   beforeEach(() => {
-    useBreakpoints.mockImplementation(() => 'desktop')
+    useBreakpoints.mockImplementation(() => desktopData)
     render(<FindMentorBlock />)
   })
 
