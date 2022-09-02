@@ -1,6 +1,6 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 
-import { errors, routes } from '~/constants/routes'
+import { errors, studentRoutes as routes } from '~/constants/routes'
 import StudentHome from '~/pages/student-home/StudentHome'
 import FindMentor from '~/pages/find-mentor/FindMentor'
 
