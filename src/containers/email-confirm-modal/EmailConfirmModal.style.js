@@ -1,7 +1,7 @@
 export const style = {
   box: {
     margin: { xs: '0 auto', sm: 0 },
-    padding: { xs: 0, sm: 2, md: 7 },
+    padding: { xs: 4, md: 11 },
     textAlign: 'center',
     boxShadow: 'none',
     borderRadius: '8px'

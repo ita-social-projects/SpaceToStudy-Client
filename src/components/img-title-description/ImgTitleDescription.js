@@ -1,8 +1,8 @@
-import { Box } from '@mui/material'
+import Box from '@mui/material/Box'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 
 const componentStyle = {
-  root: { m: { xs: '100px 10px', sm: '45px 20px 55px' } },
+  root: { m: { xs: '100px 10px', sm: '56px', md: '80px' } },
   img: { display: 'block', margin: '0 auto' },
   wrapper: { maxWidth: '630px' },
   title: { typography: 'h5' },

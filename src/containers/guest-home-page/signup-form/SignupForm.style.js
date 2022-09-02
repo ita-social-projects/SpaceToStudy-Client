@@ -3,7 +3,7 @@ export const style = {
     maxWidth: '343px'
   },
   checkboxContainer: {
-    margin: '20px 0'
+    mb: '20px'
   },
   checkboxLabel: {
     mr: 0,
@@ -13,6 +13,7 @@ export const style = {
   },
   box: {
     display: 'flex',
+    flexWrap: 'wrap',
     color: 'primary.700',
     whiteSpace: 'nowrap'
   },

@@ -1,5 +1,6 @@
 import { useContext, useEffect } from 'react'
-import { Box, Typography } from '@mui/material'
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
 import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
 
@@ -14,7 +15,7 @@ import loginImg from '~/assets/img/login-dialog/login.png'
 import { login } from '~/containers/guest-home-page/constants'
 import { loginUser } from '~/redux/reducer'
 
-import style from '~/containers/guest-home-page/login-dialog/login-dialog.style'
+import style from '~/containers/guest-home-page/login-dialog/LoginDialog.style'
 import { snackbarVariants } from '~/constants'
 
 const LoginDialog = () => {
@@ -46,27 +47,27 @@ const LoginDialog = () => {
 
   return (
     <Box sx={ style.root }>
-      <Box sx={ style.img }>
+      <Box sx={ style.imgContainer }>
         <Box
           alt='login' component='img' src={ loginImg }
           sx={ style.img }
         />
       </Box>
 
-      <Box sx={ style.form }>
-        <Typography sx={ style.h2 } variant='h2'>
+      <Box sx={ style.formContainer }>
+        <Typography sx={ style.title } variant='h2'>
           { t('login.head') }
         </Typography>
-
-        <LoginForm
-          data={ data }
-          errors={ errors }
-          handleBlur={ handleBlur }
-          handleChange={ handleChange }
-          handleSubmit={ handleSubmit }
-        />
-
-        <GoogleLogin type={ login } />
+        <Box sx={ style.form }>
+          <LoginForm
+            data={ data }
+            errors={ errors }
+            handleBlur={ handleBlur }
+            handleChange={ handleChange }
+            handleSubmit={ handleSubmit }
+          />
+          <GoogleLogin type={ login } />
+        </Box>
       </Box>
     </Box>
   )

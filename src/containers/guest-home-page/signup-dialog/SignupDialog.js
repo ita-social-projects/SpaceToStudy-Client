@@ -1,5 +1,6 @@
 import { useContext, useEffect } from 'react'
-import { Box, Typography } from '@mui/material'
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
 import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
 
@@ -18,7 +19,7 @@ import student from '~/assets/img/signup-dialog/student.png'
 import mentor from '~/assets/img/signup-dialog/mentor.png'
 import info from '~/assets/img/guest-home-page/info.svg'
 
-import { style } from '~/containers/guest-home-page/signup-dialog/signup-dialog.style'
+import { style } from '~/containers/guest-home-page/signup-dialog/SignupDialog.style'
 import ImgTitleDescription from '~/components/img-title-description/ImgTitleDescription'
 import { snackbarVariants } from '~/constants'
 
@@ -64,28 +65,28 @@ const SignupDialog = ({ type }) => {
 
   return (
     <Box sx={ style.root }>
-      <Box sx={ style.img }>
+      <Box sx={ style.imgContainer }>
         <Box
           alt='signup' component='img' src={ signupImg[type] }
           sx={ style.img }
         />
       </Box>
 
-      <Box sx={ style.form }>
-        <Typography sx={ style.h2 } variant='h2'>
+      <Box sx={ style.formContainer }>
+        <Typography sx={ style.title } variant='h2'>
           { t('signup.head', { returnObjects: true })[type] }
         </Typography>
-
-        <SignupForm
-          closeModal={ closeModal }
-          data={ data }
-          errors={ errors }
-          handleBlur={ handleBlur }
-          handleChange={ handleChange }
-          handleSubmit={ handleSubmit }
-        />
-
-        <GoogleLogin type={ signup } />
+        <Box sx={ style.form }>
+          <SignupForm
+            closeModal={ closeModal }
+            data={ data }
+            errors={ errors }
+            handleBlur={ handleBlur }
+            handleChange={ handleChange }
+            handleSubmit={ handleSubmit }
+          />
+          <GoogleLogin type={ signup } />
+        </Box>
       </Box>
     </Box>
   )

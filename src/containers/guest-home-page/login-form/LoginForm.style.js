@@ -7,7 +7,7 @@ export const style = {
     maxWidth: '343px'
   },
   checkboxContainer: {
-    margin: '25px 0',
+    mb: '20px',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center'
@@ -18,7 +18,8 @@ export const style = {
     }
   },
   loginButton: {
-    padding: { xs: '18px 134px', sm: '18px 149px' }
+    width: '100%',
+    py: '18px'
   },
   forgotPass: {
     cursor: 'pointer',
