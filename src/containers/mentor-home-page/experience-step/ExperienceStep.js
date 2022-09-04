@@ -35,7 +35,6 @@ const ExperienceStep = ({ data, handleChange, handleBlur, errors, btnsBox, setSt
             multiline
             onBlur={ handleBlur('experience') }
             onChange={ handleChange('experience') }
-            sx={ styles.textfield }
             type='text'
             value={ data.experience }
           />
