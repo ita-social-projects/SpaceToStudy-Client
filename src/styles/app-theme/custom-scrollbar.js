@@ -1,7 +1,4 @@
 export const scrollbar = {
-  '&::-webkit-scrollbar': {
-    background: 'none'
-  },
   '&::-webkit-scrollbar-track': {
     boxShadow: 'none'
   },
@@ -9,12 +6,6 @@ export const scrollbar = {
     background: 'none'
   },
   '&:hover': {
-    '&::-webkit-scrollbar': {
-      background: 'none',
-      '&:hover': {
-        cursor: 'pointer !important'
-      }
-    },
     '&::-webkit-scrollbar-track': {
       boxShadow: 'inset 0 0 5px rgba(43, 49, 52, 0.3)'
     },
@@ -26,11 +17,7 @@ export const scrollbar = {
     }
   }
 }
-
 export const textfieldScrollbar = {
-  '& ::-webkit-scrollbar': {
-    background: 'none'
-  },
   '& ::-webkit-scrollbar-track': {
     boxShadow: 'none'
   },
@@ -38,12 +25,6 @@ export const textfieldScrollbar = {
     background: 'none'
   },
   '& :hover': {
-    '&::-webkit-scrollbar': {
-      background: 'none',
-      '&:hover': {
-        cursor: 'pointer !important'
-      }
-    },
     '&::-webkit-scrollbar-track': {
       boxShadow: 'inset 0 0 5px rgba(43, 49, 52, 0.3)'
     },

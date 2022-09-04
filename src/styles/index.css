@@ -35,9 +35,10 @@ code {
 ::-webkit-scrollbar-thumb:hover {
   background: #727E84; 
 }
-
 body ::-webkit-scrollbar {
   width: 10px;
+  height: 10px;
+  background: none;
   border-radius: var(--scrollbar-border-radius);
 }
 body ::-webkit-scrollbar-track {
