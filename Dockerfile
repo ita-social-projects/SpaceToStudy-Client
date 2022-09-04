@@ -1,4 +1,5 @@
-# build
+# Build target 'build' #
+########################
 FROM node:14-alpine as build
 WORKDIR /app
 RUN apk add --no-cache git
@@ -7,9 +8,10 @@ RUN npm install
 RUN npm run lint
 RUN npm run build
 
-# prod
+# Build target 'production' #
+#############################
 FROM nginx:stable-alpine
-VOLUME [ "/sys/fs/cgroup" ]
+VOLUME /sys/fs/cgroup
 ARG password
 COPY --from=build /app/build /usr/share/nginx/html
 COPY --from=build /app/nginx.conf /etc/nginx/conf.d/default.conf
@@ -23,6 +25,6 @@ RUN chmod +x /tmp/ssh_setup.sh \
     && rc-update add sshd \
     && rc-update add nginx \
     && rc-status \
-    && rc-service sshd restart && rc-service nginx restart
+    && rc-service sshd restart
 EXPOSE 80 2222
 CMD /usr/sbin/sshd && nginx -g 'daemon off;'
