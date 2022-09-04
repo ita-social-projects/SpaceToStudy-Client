@@ -1,4 +1,5 @@
 import { fadeAnimation } from '~/styles/app-theme/custom-animations'
+import { scrollbar } from '~/styles/app-theme/custom-scrollbar'
 
 export const styles = {
   container: {
@@ -16,5 +17,6 @@ export const styles = {
     flexDirection: 'column',
     justifyContent: 'space-between',
     pt: 10
-  }
+  },
+  textfield: scrollbar
 }
