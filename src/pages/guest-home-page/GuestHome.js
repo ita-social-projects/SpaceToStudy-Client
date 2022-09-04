@@ -33,7 +33,7 @@ const GuestHomePage = () => {
   return (
     <Box data-testid='guestHome'>
       <Welcome />
-      <Box sx={ { maxWidth: '1128px', margin: '0 auto' } }>
+      <Box sx={ { maxWidth: '1128px', margin: '0 auto', overflowX: 'hidden' } }>
         <FeatureBlock items={ descriptionTimes } />
         <WhatCanYouDo />
         <HowItWorks />
