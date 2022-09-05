@@ -6,12 +6,13 @@ import TitleWithDescription from '~/components/title-with-description/TitleWithD
 import InfoCard from '~/components/info-card/InfoCard'
 
 import SignupDialog from '~/containers/guest-home-page/signup-dialog/SignupDialog'
+import { student, mentor } from '~/constants'
 import { ModalContext } from '~/context/modal-context'
 import { routes } from '~/constants/routes'
-import { student, mentor } from '~/constants'
-import { styles } from '~/containers/guest-home-page/styles/what-can-you-do.styles'
+
 import learnImg from '~/assets/img/guest-home-page/learnImg.png'
 import teachImg from '~/assets/img/guest-home-page/teachImg.png'
+import { styles } from '~/containers/guest-home-page/styles/what-can-you-do.styles'
 
 const sectionId = routes.guestNavBar.whatCanYouDo.label
 
