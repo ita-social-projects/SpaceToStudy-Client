@@ -13,20 +13,21 @@ const BadRequest = () => {
   const { t } = useTranslation()
   const { isDesktop, isTablet, isMobile } = useBreakpoints()
 
-  const desktop = { title: 'h2', description: 'subtitle1' }
-  const tablet = { title: 'h3', description: 'subtitle1' }
-  const mobile = { title: 'h4', description: 'subtitle2' }
+  const desktopTypography = { title: 'h2', description: 'subtitle1' }
+  const tabletTypography = { title: 'h3', description: 'subtitle1' }
+  const mobileTypography = { title: 'h4', description: 'subtitle2' }
 
-  const windowSize = (isDesktop && desktop) || (isTablet && tablet) || (isMobile && mobile)
+  const windowSizeTypography =
+    (isDesktop && desktopTypography) || (isTablet && tabletTypography) || (isMobile && mobileTypography)
 
   return (
     <Container sx={ styles.container }>
       <Box sx={ styles.info }>
         <TitleWithDescription
           description={ t('errorPage.400.description') }
-          descriptionStyles={ { typography: windowSize.description } }
+          descriptionStyles={ { typography: windowSizeTypography.description } }
           title={ t('errorPage.400.title') }
-          titleStyles={ { typography: windowSize.title } }
+          titleStyles={ { typography: windowSizeTypography.title } }
         />
         <Button
           component={ Link } size='extraLarge' to={ routes.home.route }

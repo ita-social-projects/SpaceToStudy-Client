@@ -15,12 +15,12 @@ const Welcome = () => {
   const { t } = useTranslation()
   const { isDesktop, isTablet, isMobile } = useBreakpoints()
 
-  const images = (isDesktop && titleMd) || (isTablet && titleSm) || (isMobile && titleXs)
+  const image = (isDesktop && titleMd) || (isTablet && titleSm) || (isMobile && titleXs)
 
   return (
     <Box className='section' sx={ styles.container }>
       <Box
-        alt='Title' component='img' src={ images }
+        alt='Title' component='img' src={ image }
         sx={ styles.title }
       />
       <Typography data-testid='welcomeDescription' sx={ styles.subtitle }>
