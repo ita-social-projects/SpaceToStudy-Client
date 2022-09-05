@@ -23,5 +23,9 @@ export const AuthService = {
   confirmEmail: (confirmToken) => {
     const confirmUrl = `${Urls.auth.confirm}/${confirmToken}`
     return axiosInstance.get(confirmUrl)
+  },
+  forgotPassword: (userEmail) => {
+    const forgotPasswordUrl = process.env.REACT_APP_API_BASE_PATH + URLs.auth.forgotPassword
+    return axios.post(forgotPasswordUrl, userEmail)
   }
 }
