@@ -1,10 +1,10 @@
-import axios from 'axios'
 import { screen, fireEvent, waitFor } from '@testing-library/react'
 import ForgotPassword from '~/containers/guest-home-page/forgot-password/ForgotPassword'
 import { ModalProvider } from '~/context/modal-context'
 import { SnackBarProvider } from '~/context/snackbar-context'
 import { renderWithProviders } from '~tests/test-utils'
 import MockAdapter from 'axios-mock-adapter'
+import { axiosInstance } from '~/services/auth-service'
 import { URLs } from '~/constants/request'
 
 jest.mock('~/hooks/use-confirm', () => {
@@ -12,7 +12,7 @@ jest.mock('~/hooks/use-confirm', () => {
     setNeedConfirmation: () => true
   })
 })
-const mockAxios = new MockAdapter(axios)
+const mockAxios = new MockAdapter(axiosInstance)
 
 describe('ForgotPassword test', () => {
   beforeEach(async () => {
@@ -48,7 +48,7 @@ describe('ForgotPassword test', () => {
   })
 
   it('should submit form and open info popup', async () => {
-    mockAxios.onPost(process.env.REACT_APP_API_BASE_PATH + URLs.auth.forgotPassword).reply(204)
+    mockAxios.onPost(URLs.auth.forgotPassword).reply(204)
 
     const input = screen.getByLabelText(/common.labels.email/i)
     fireEvent.change(input, { target: { value: 'test@gmail.com' } })
@@ -61,9 +61,7 @@ describe('ForgotPassword test', () => {
   })
 
   it('should show error snackbar', async () => {
-    mockAxios
-      .onPost(process.env.REACT_APP_API_BASE_PATH + URLs.auth.forgotPassword)
-      .reply(404, { code: 'EMAIL_NOT_FOUND' })
+    mockAxios.onPost(URLs.auth.forgotPassword).reply(404, { code: 'EMAIL_NOT_FOUND' })
 
     const input = screen.getByLabelText(/common.labels.email/i)
     fireEvent.change(input, { target: { value: 'error@gmail.com' } })
