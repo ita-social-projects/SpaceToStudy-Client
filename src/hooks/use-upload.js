@@ -17,16 +17,22 @@ const useUpload = ({ initialState, initialError, validationData }) => {
   const dragDrop = (e) => {
     e.preventDefault()
     const newFiles = [...files, ...e.dataTransfer.files].slice(0, validationData.maxQuantityFiles)
-    setFiles(newFiles)
+    const error = filesValidation(newFiles, validationData)
     setIsDrag(false)
-    setError(filesValidation(newFiles, validationData))
+    if (!error) {
+      setFiles(newFiles)
+    }
+    setError(error)
   }
 
   const addFiles = (e) => {
     e.preventDefault()
     const newFiles = [...files, ...e.target.files].slice(0, validationData.maxQuantityFiles)
-    setFiles(newFiles)
-    setError(filesValidation(newFiles, validationData))
+    const error = filesValidation(newFiles, validationData)
+    if (!error) {
+      setFiles(newFiles)
+    }
+    setError(error)
   }
   const deleteFile = (file) => {
     const newFiles = files.filter((item) => item !== file)

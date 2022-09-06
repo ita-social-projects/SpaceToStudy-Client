@@ -8,6 +8,7 @@ import AddDocuments from '~/containers/mentor-home-page/add-documents/AddDocumen
 import AddPhoto from '../add-photo/AddPhoto'
 
 import useForm from '~/hooks/use-form'
+import { imageResize } from '~/utils/image-resize'
 
 import { initialValues, stepLabels, validations } from '~/containers/mentor-home-page/constants'
 
@@ -15,15 +16,26 @@ const BecomeATutor = () => {
   const [documents, setDocuments] = useState([])
   const [documentsError, setDocumentsError] = useState()
   const [photo, setPhoto] = useState([])
+  const [photoForUpload, setPhotoForUpload] = useState('')
   const [photoError, setPhotoError] = useState()
 
   const addDocuments = (documents, error) => {
     setDocuments(documents)
     setDocumentsError(error)
   }
+
   const addPhoto = (photo, error) => {
     setPhoto(photo)
     setPhotoError(error)
+    if (photo.length) {
+      const originalPhotoPath = URL.createObjectURL(photo[0])
+      const photoSizes = { newWidth: 648, newHeight: 648 }
+      imageResize(originalPhotoPath, photoSizes).then((resizedPhoto) => {
+        setPhotoForUpload(resizedPhoto)
+      })
+    } else {
+      setPhotoForUpload('')
+    }
   }
 
   const { handleSubmit, handleChange, handleBlur, data, errors } = useForm({
@@ -32,7 +44,7 @@ const BecomeATutor = () => {
     onSubmit: async () => {
       console.log(data)
       console.log(documents)
-      console.log(photo)
+      console.log(photoForUpload)
     }
   })
 
@@ -65,8 +77,12 @@ const BecomeATutor = () => {
       setStepErrors={ setStepErrors }
     />,
     <AddPhoto
-      addPhoto={ addPhoto } key='6' photo={ photo }
-      photoError={ photoError } setStepErrors={ setStepErrors }
+      addPhoto={ addPhoto }
+      key='6'
+      photo={ photo }
+      photoError={ photoError }
+      photoForUpload={ photoForUpload }
+      setStepErrors={ setStepErrors }
     />
   ]
 

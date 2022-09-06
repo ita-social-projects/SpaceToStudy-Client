@@ -1,9 +1,12 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import BecomeATutor from '~/containers/mentor-home-page/become-a-tutor/BecomeATutor'
+import { imageResize } from '~/utils/image-resize'
+
+jest.mock('~/utils/image-resize')
 
 describe('BecomeATutor test', () => {
   beforeEach(() => {
-    window.URL.createObjectURL = jest.fn()
+    window.URL.createObjectURL = jest.fn(() => 'image/png')
     render(<BecomeATutor />)
   })
 
@@ -47,5 +50,19 @@ describe('BecomeATutor test', () => {
     const error = screen.queryByText('becomeTutor.photo.fileSizeError')
 
     await waitFor(() => expect(error).toBeInTheDocument())
+  })
+
+  it('should resize and show photo after adding photo', async () => {
+    imageResize.mockImplementation(() => Promise.resolve('image.png'))
+    const fakeFile = new File(['certificate'], 'test-file.png', { type: 'image/png' })
+    Object.defineProperty(fakeFile, 'size', { value: 9_000_000 })
+
+    const photo = screen.getByText(/Photo and Video/i)
+    fireEvent.click(photo)
+
+    const input = screen.getByLabelText('becomeTutor.photo.button')
+    fireEvent.change(input, { target: { files: [fakeFile] } })
+    const photoPreview = await screen.findByAltText('becomeTutor.photo.imageAlt')
+    await waitFor(() => expect(photoPreview).toBeInTheDocument())
   })
 })

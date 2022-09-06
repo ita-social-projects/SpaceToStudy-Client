@@ -1,51 +1,41 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Box, Typography } from '@mui/material'
 
 import FileUploader from '~/components/file-uploader/FileUploader'
 
 import { style } from '~/containers/mentor-home-page/add-photo/AddPhoto.style'
+import { filesize } from './constants'
 
 const validationData = {
-  maxFileSize: 10_000_000,
+  maxFileSize: filesize['10MB'],
   filesTypes: ['image/jpeg', 'image/png'],
   fileSizeError: 'becomeTutor.photo.fileSizeError',
   typeError: 'becomeTutor.photo.typeError',
   maxQuantityFiles: 1
 }
 
-const AddPhoto = ({ btnsBox, photo, photoError, addPhoto, setStepErrors, stepLabel }) => {
+const AddPhoto = ({ btnsBox, photo, photoError, addPhoto, setStepErrors, stepLabel, photoForUpload }) => {
   const { t } = useTranslation()
-  const [photoForPreview, setPhotoForPreview] = useState('')
 
   useEffect(() => {
     setStepErrors((prevState) => ({ ...prevState, [stepLabel]: Boolean(photoError) }))
   }, [photoError, setStepErrors, stepLabel])
 
-  useEffect(() => {
-    if (photo.length) {
-      const src = URL.createObjectURL(photo[0])
-      setPhotoForPreview(src)
-    } else {
-      setPhotoForPreview('')
-    }
-  }, [photo])
-
-  const photoPrewiew =
-    photoError || !photoForPreview ? (
-      <Box sx={ style.preview }>
-        <Typography>
-          { t('becomeTutor.photo.placeholder') }
-        </Typography>
-      </Box>
-    ) : (
-      <Box sx={ style.imgContainer }>
-        <Box
-          alt={ t('becomeTutor.photo.imageAlt') } component='img' src={ photoForPreview }
-          sx={ style.img }
-        />
-      </Box>
-    )
+  const photoPrewiew = photoForUpload ? (
+    <Box sx={ style.imgContainer }>
+      <Box
+        alt={ t('becomeTutor.photo.imageAlt') } component='img' src={ photoForUpload }
+        sx={ style.img }
+      />
+    </Box>
+  ) : (
+    <Box sx={ style.preview }>
+      <Typography>
+        { t('becomeTutor.photo.placeholder') }
+      </Typography>
+    </Box>
+  )
 
   return (
     <Box sx={ style.root }>

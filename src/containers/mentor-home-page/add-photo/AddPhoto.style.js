@@ -1,15 +1,18 @@
+import { fadeAnimation } from '~/styles/app-theme/custom-animations'
+
 export const style = {
   root: {
     display: 'flex',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    ...fadeAnimation
   },
   preview: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    maxWidth: '649px',
+    maxWidth: '645px',
     width: '100%',
-    aspectRatio: '0.927',
+    aspectRatio: '1',
     border: 'dashed',
     borderColor: 'primary.200',
     borderRadius: '20px',
@@ -17,9 +20,7 @@ export const style = {
   },
   img: {
     width: '100%',
-    objectFit: 'cover',
-    borderRadius: '20px',
-    aspectRatio: '0.927'
+    borderRadius: '20px'
   },
   rigthBox: {
     display: 'flex',
@@ -32,8 +33,8 @@ export const style = {
     mb: 5
   },
   imgContainer: {
-    maxHeight: '700px',
-    maxWidth: '649px',
+    maxHeight: '648px',
+    maxWidth: '648px',
     mr: 3
   }
 }

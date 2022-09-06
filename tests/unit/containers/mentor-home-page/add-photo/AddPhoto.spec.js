@@ -57,23 +57,3 @@ describe('AddPhoto test', () => {
     await waitFor(() => expect(error).toBeInTheDocument())
   })
 })
-
-describe('AddPhoto test with photo prop', () => {
-  const photo = [new File(['photo'], 'test-file.png', { type: 'image/png' })]
-  it('should render image preview', async () => {
-    window.URL.createObjectURL = jest.fn(() => 'image/png')
-    render(
-      <AddPhoto
-        addPhoto={ addPhoto }
-        btnsBox={ btnsBox }
-        photo={ photo }
-        photoError={ photoError }
-        setStepErrors={ setStepErrors }
-      />
-    )
-
-    const photoPreview = screen.queryByAltText('becomeTutor.photo.imageAlt')
-
-    await waitFor(() => expect(photoPreview).toBeInTheDocument())
-  })
-})
