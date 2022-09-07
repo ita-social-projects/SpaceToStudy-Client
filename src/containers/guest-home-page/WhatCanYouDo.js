@@ -6,8 +6,8 @@ import TitleWithDescription from '~/components/title-with-description/TitleWithD
 import InfoCard from '~/components/info-card/InfoCard'
 
 import SignupDialog from '~/containers/guest-home-page/signup-dialog/SignupDialog'
-import { student, mentor } from '~/constants'
 import { ModalContext } from '~/context/modal-context'
+import { student, mentor } from '~/constants'
 import { routes } from '~/constants/routes'
 
 import learnImg from '~/assets/img/guest-home-page/learnImg.png'
