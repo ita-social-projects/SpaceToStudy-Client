@@ -1,3 +1,5 @@
+import { scrollbar } from '~/styles/app-theme/custom-scrollbar'
+
 export const style = {
   root: {
     maxWidth: { sm: 'sm', md: 'md', lg: 'lg' },
@@ -36,6 +38,7 @@ export const style = {
     maxWidth: { xs: '343px', lg: '420px' },
     pt: '16px',
     pr: { xs: '8px', sm: '96px', md: '80px', lg: '96px' },
-    pb: { xs: '24px', sm: '40px', lg: '56px' }
+    pb: { xs: '24px', sm: '40px', lg: '56px' },
+    ...scrollbar
   }
 }

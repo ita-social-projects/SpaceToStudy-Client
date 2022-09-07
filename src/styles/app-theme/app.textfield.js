@@ -1,8 +1,10 @@
 import palette from './app.pallete.js'
+import { textfieldScrollbar } from '~/styles/app-theme/custom-scrollbar'
 
 export const textField = {
   styleOverrides: {
     root: {
+      ...textfieldScrollbar,
       '& label': {
         '&.Mui-focused': {
           color: palette.primary[900]
