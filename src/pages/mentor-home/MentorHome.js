@@ -9,7 +9,10 @@ const MentorHome = () => {
 
   useEffect(() => {
     if (isFirstLogin) {
-      openModal(<BecomeATutor />, { sx: { height: '90%', width: '90%', maxWidth: '100%' } })
+      openModal({
+        component: <BecomeATutor />,
+        paperProps: { sx: { height: '90%', width: '90%', maxWidth: '100%' } }
+      })
     }
   }, [openModal, isFirstLogin])
 

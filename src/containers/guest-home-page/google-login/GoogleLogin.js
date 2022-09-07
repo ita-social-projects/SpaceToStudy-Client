@@ -17,7 +17,7 @@ const GoogleLogin = ({ type }) => {
 
   const openLoginDialog = () => {
     closeModal()
-    setTimeout(() => openModal(<LoginDialog />), 0)
+    setTimeout(() => openModal({ component: <LoginDialog /> }), 0)
   }
 
   return (

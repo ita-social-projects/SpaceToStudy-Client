@@ -12,7 +12,7 @@ const NavigationIcons = ({ setIsSidebarOpen }) => {
   const { openModal } = useContext(ModalContext)
 
   const openLoginDialog = useCallback(() => {
-    openModal(<LoginDialog />)
+    openModal({ component: <LoginDialog /> })
   }, [openModal])
 
   if (userRole === student) return <StudentIcons setIsSidebarOpen={ setIsSidebarOpen } />

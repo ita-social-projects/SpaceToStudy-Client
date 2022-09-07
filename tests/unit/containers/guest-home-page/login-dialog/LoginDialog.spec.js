@@ -1,4 +1,4 @@
-import { screen, render, fireEvent, act, waitFor } from '@testing-library/react'
+import { screen, render, fireEvent, waitFor } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
 import { ModalProvider } from '~/context/modal-context'

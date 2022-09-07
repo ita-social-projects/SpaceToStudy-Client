@@ -48,7 +48,7 @@ const WhatCanYouDo = () => {
   const { openModal } = useContext(ModalContext)
 
   const openDialog = (type) => {
-    openModal(<SignupDialog type={ type } />)
+    openModal({ component: <SignupDialog type={ type } /> })
   }
 
   const cards = cardData.map((item) => {

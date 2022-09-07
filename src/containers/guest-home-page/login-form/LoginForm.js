@@ -19,7 +19,7 @@ const LoginForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) => 
   const { t } = useTranslation()
 
   const openForgotPassword = () => {
-    openModal(<ForgotPassword />)
+    openModal({ component: <ForgotPassword /> })
   }
 
   return (

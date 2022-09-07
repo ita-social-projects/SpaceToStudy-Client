@@ -7,7 +7,7 @@ import useConfirm from '~/hooks/use-confirm'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { styles } from '~/components/popup-dialog/PopupDialog.styles'
 
-const PopupDialog = ({ content, closeModal,paperProps, timerId, closeModalAfterDelay }) => {
+const PopupDialog = ({ content, closeModal, paperProps, timerId, closeModalAfterDelay }) => {
   const { checkConfirmation } = useConfirm()
   const { isMobile } = useBreakpoints()
 
@@ -19,18 +19,17 @@ const PopupDialog = ({ content, closeModal,paperProps, timerId, closeModalAfterD
     if (confirmed) closeModal()
   }
 
-  const handleMouseEnter = timerId ? () => clearTimeout(timerId) : null
+  const handleMouseOver = timerId ? () => clearTimeout(timerId) : null
 
   const handleMouseLeave = timerId ? () => closeModalAfterDelay() : null
 
   return (
     <Dialog
-      PaperProps={ paperProps }
-      data-testid='popup' fullScreen={ isMobile } maxWidth='xl'
-      onClose={ onClose } open
+      PaperProps={ paperProps } data-testid='popup' fullScreen={ isMobile }
+      maxWidth='xl' onClose={ onClose } open
     >
       <Box
-        data-testid='popupContent' onMouseEnter={ handleMouseEnter } onMouseLeave={ handleMouseLeave }
+        data-testid='popupContent' onMouseLeave={ handleMouseLeave } onMouseOver={ handleMouseOver }
         sx={ styles.box }
       >
         <IconButton onClick={ onClose } sx={ styles.icon }>

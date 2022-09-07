@@ -19,7 +19,7 @@ const EmailConfirmModal = ({ confirmToken, openModal }) => {
   const { response, error, loading } = useAxios({ service: serviceFunction })
 
   const openLoginDialog = () => {
-    openModal(<LoginDialog />)
+    openModal({ component: <LoginDialog /> })
   }
 
   if (loading) {

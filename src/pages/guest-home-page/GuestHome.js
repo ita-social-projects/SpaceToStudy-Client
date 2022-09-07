@@ -25,7 +25,7 @@ const GuestHomePage = () => {
   const resetToken = searchParams.get('resetToken')
 
   useEffect(() => {
-    search === '?login' && openModal(<LoginDialog />)
+    search === '?login' && openModal({ component: <LoginDialog /> })
     navigate('/')
   }, [search, openModal, navigate])
 
