@@ -30,7 +30,8 @@ describe('Login form test', () => {
             handleSubmit={ handleSubmit }
           />
         </ModalProvider>
-      </SnackBarProvider>
+      </SnackBarProvider>,
+      { preloadedState }
     )
   })
 
