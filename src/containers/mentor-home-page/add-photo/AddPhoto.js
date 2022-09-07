@@ -5,15 +5,7 @@ import { Box, Typography } from '@mui/material'
 import FileUploader from '~/components/file-uploader/FileUploader'
 
 import { style } from '~/containers/mentor-home-page/add-photo/AddPhoto.style'
-import { filesize } from './constants'
-
-const validationData = {
-  maxFileSize: filesize['10MB'],
-  filesTypes: ['image/jpeg', 'image/png'],
-  fileSizeError: 'becomeTutor.photo.fileSizeError',
-  typeError: 'becomeTutor.photo.typeError',
-  maxQuantityFiles: 1
-}
+import { validationData } from './constants'
 
 const AddPhoto = ({ btnsBox, photo, photoError, addPhoto, setStepErrors, stepLabel, photoForUpload }) => {
   const { t } = useTranslation()
