@@ -10,7 +10,7 @@ import plantImg from '~/assets/img/error-page/404-plant.svg'
 import manImg from '~/assets/img/error-page/404-man.svg'
 import useBreakpoints from '~/hooks/use-breakpoints'
 
-import { style } from '~/pages/error/styles/not-found.style'
+import { style } from '~/pages/error/styles/NotFound.styles'
 
 const NotFound = () => {
   const { t } = useTranslation()

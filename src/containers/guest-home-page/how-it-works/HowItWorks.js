@@ -11,7 +11,7 @@ import CardsWithButton from '~/containers/guest-home-page/cards-with-button/Card
 import { mentorCardBoxArray, studentCardBoxArray } from '~/containers/guest-home-page/how-it-works/CardBoxArrays'
 import { mentor, student } from '~/constants'
 
-import { style } from '~/containers/guest-home-page/how-it-works/how-it-works.style'
+import { style } from '~/containers/guest-home-page/how-it-works/HowItWorks.styles'
 
 const sectionId = routes.guestNavBar.howItWorks.label
 

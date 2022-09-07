@@ -8,7 +8,7 @@ import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import CloseIcon from '@mui/icons-material/Close'
 
-import { style } from '~/components/confirm-dialog/confirm-dialog.style'
+import { style } from '~/components/confirm-dialog/ConfirmDialog.styles'
 
 const ConfirmDialog = ({ message, title, open, onConfirm, onDismiss }) => {
   const { t } = useTranslation()

@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import MobileStepper from '@mui/material/MobileStepper'
 import Typography from '@mui/material/Typography'
 import SwipeableViews from 'react-swipeable-views'
-import { style } from './carousel-with-image.styles'
+import { style } from './CarouselWithImage.styles'
 
 const CarouselWithImage = ({ items }) => {
   const { t } = useTranslation()

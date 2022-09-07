@@ -15,7 +15,7 @@ import loginImg from '~/assets/img/login-dialog/login.png'
 import { login, snackbarVariants } from '~/constants'
 import { loginUser } from '~/redux/reducer'
 
-import style from '~/containers/guest-home-page/login-dialog/LoginDialog.style'
+import style from '~/containers/guest-home-page/login-dialog/LoginDialog.styles'
 
 const LoginDialog = () => {
   const { t } = useTranslation()

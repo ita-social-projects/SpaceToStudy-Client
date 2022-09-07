@@ -2,7 +2,7 @@ import Typography from '@mui/material/Typography'
 import TextField from '@mui/material/TextField'
 import Tooltip from '@mui/material/Tooltip'
 
-import { style } from './app-text-field.styles'
+import { style } from './AppTextField.styles'
 
 const AppTextField = ({ errorMsg, ...props }) => {
   const helperText = errorMsg ? (

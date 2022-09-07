@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
-import { style } from './EmailConfirmModal.style'
+import { style } from './EmailConfirmModal.styles'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import imgSuccess from '~/assets/img/email-confirmation-modals/success-icon.svg'

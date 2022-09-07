@@ -6,7 +6,7 @@ import CloseIcon from '@mui/icons-material/Close'
 
 import useConfirm from '~/hooks/use-confirm'
 import useBreakpoints from '~/hooks/use-breakpoints'
-import { style } from '~/components/popup-dialog/PopupDialog.style'
+import { style } from '~/components/popup-dialog/PopupDialog.styles'
 
 const PopupDialog = ({ content, closeModal, isFullScreen, setFullScreen, timerId, closeModalAfterDelay }) => {
   const { checkConfirmation } = useConfirm()

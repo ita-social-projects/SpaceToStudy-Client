@@ -10,7 +10,7 @@ import useInputVisibility from '~/hooks/use-input-visibility'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import { routes } from '~/constants/routes'
 
-import { style } from './SignupForm.style'
+import { style } from './SignupForm.styles'
 
 const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors, closeModal }) => {
   const { t } = useTranslation()

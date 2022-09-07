@@ -17,7 +17,7 @@ import { AuthService } from '~/services/auth-service'
 
 import { snackbarVariants } from '~/constants'
 import { email } from '~/utils/validations/login'
-import { style } from '~/containers/guest-home-page/forgot-password/ForgotPassword.style'
+import { style } from '~/containers/guest-home-page/forgot-password/ForgotPassword.styles'
 
 const ForgotPassword = () => {
   const { t } = useTranslation()

@@ -10,7 +10,7 @@ import useBreakpoints from '~/hooks/use-breakpoints'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 
 import img from '~/assets/img/error-page/400.svg'
-import { styles } from './styles/bad-request.styles'
+import { styles } from './styles/BadRequest.styles'
 
 const BadRequest = () => {
   const { t } = useTranslation()

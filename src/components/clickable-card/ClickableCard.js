@@ -2,7 +2,7 @@ import Box from '@mui/material/Box'
 
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 
-import { styles } from '~/components/clickable-card/clickable-card.styles'
+import { styles } from '~/components/clickable-card/ClickableCard.styles'
 
 const ClickableCard = ({ img, title, description, action }) => {
   return (

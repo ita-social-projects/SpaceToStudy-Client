@@ -20,7 +20,7 @@ import student from '~/assets/img/signup-dialog/student.png'
 import mentor from '~/assets/img/signup-dialog/mentor.png'
 import info from '~/assets/img/guest-home-page/info.svg'
 
-import { style } from '~/containers/guest-home-page/signup-dialog/SignupDialog.style'
+import { style } from '~/containers/guest-home-page/signup-dialog/SignupDialog.styles'
 
 const SignupDialog = ({ type }) => {
   const { t } = useTranslation()

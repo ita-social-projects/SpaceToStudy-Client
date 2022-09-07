@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 
 import { routes } from '~/constants/routes'
-import { style } from './styles/internal-server-error.styles'
+import { style } from './styles/InternalServerError.styles'
 import backGround500 from '~/assets/img/error-page/500.svg'
 
 const InternalServerError = () => {

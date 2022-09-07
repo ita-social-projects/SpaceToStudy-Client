@@ -11,7 +11,7 @@ import { ModalContext } from '~/context/modal-context'
 import ForgotPassword from '~/containers/guest-home-page/forgot-password/ForgotPassword'
 import AppTextField from '~/components/app-text-field/AppTextField'
 
-import { style } from './LoginForm.style'
+import { style } from './LoginForm.styles'
 
 const LoginForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) => {
   const { inputVisibility: passwordVisibility, showInputText: showPassword } = useInputVisibility(errors.password)

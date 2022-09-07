@@ -10,7 +10,7 @@ import { ModalContext } from '~/context/modal-context'
 import { routes } from '~/constants/routes'
 import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
 
-import { style } from '~/containers/guest-home-page/google-login/google-login.style'
+import { style } from '~/containers/guest-home-page/google-login/GoogleLogin.styles'
 import google from '~/assets/img/login-dialog/google.svg'
 
 const GoogleLogin = ({ type }) => {

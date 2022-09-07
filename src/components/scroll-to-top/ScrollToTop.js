@@ -4,7 +4,7 @@ import IconButton from '@mui/material/IconButton'
 import Box from '@mui/material/Box'
 import ArrowUpwardRoundedIcon from '@mui/icons-material/ArrowUpwardRounded'
 
-import { style } from '~/components/scroll-to-top/scroll-to-top.style'
+import { style } from '~/components/scroll-to-top/ScrollToTop.styles'
 
 const ScrollToTop = () => {
   const [isVisible, setIsVisible] = useState(false)

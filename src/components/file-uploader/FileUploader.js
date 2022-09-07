@@ -12,7 +12,7 @@ import CloseIcon from '@mui/icons-material/Close'
 
 import useUpload from '~/hooks/use-upload'
 
-import { style } from '~/components/file-uploader/file-uploader.style'
+import { style } from '~/components/file-uploader/FileUploader.styles'
 
 const FileUploader = ({ buttonText, emitter, initialState, initialError, validationData }) => {
   const { t } = useTranslation()

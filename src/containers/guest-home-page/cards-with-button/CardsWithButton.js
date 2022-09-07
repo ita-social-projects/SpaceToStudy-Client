@@ -8,7 +8,7 @@ import Button from '@mui/material/Button'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 
 import SignupDialog from '~/containers/guest-home-page/signup-dialog/SignupDialog'
-import { styles } from '~/containers/guest-home-page/cards-with-button/cards-with-button.style'
+import { styles } from '~/containers/guest-home-page/cards-with-button/CardsWithButton.styles'
 import dots from '~/assets/img/guest-home-page/dots.svg'
 
 const titleStyles = {
