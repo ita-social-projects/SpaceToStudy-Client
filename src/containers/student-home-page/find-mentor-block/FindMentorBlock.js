@@ -13,11 +13,9 @@ const FindMentorBlock = () => {
   const [filter, setFilter] = useState('')
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const windowSize = useBreakpoints()
+  const { isDesktop, isMobile } = useBreakpoints()
 
   const { findMentor } = studentRoutes.navBar
-  const desktopSize = windowSize === 'desktop'
-  const mobileSize = windowSize === 'mobile'
 
   const onChange = (e) => {
     setFilter(e.target.value)
@@ -55,7 +53,7 @@ const FindMentorBlock = () => {
               ),
               autoComplete: 'off'
             } }
-            fullWidth={ mobileSize }
+            fullWidth={ isMobile }
             label={ t('studentHomePage.findMentorBlock.label') }
             onChange={ onChange }
             onKeyPress={ handleEnterPress }
@@ -63,14 +61,14 @@ const FindMentorBlock = () => {
             value={ filter }
           />
           <Button
-            fullWidth={ mobileSize } onClick={ redirect } size='extraLarge'
+            fullWidth={ isMobile } onClick={ redirect } size='extraLarge'
             variant='contained'
           >
             { t('studentHomePage.findMentorBlock.button') }
           </Button>
         </Box>
       </Box>
-      { desktopSize && <Box alt='Bag' component='img' src={ bag }></Box> }
+      { isDesktop && <Box alt='Bag' component='img' src={ bag }></Box> }
     </Box>
   )
 }

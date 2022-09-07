@@ -10,7 +10,7 @@ import { style } from '~/components/popup-dialog/PopupDialog.style'
 
 const PopupDialog = ({ content, closeModal, isFullScreen, setFullScreen, timerId, closeModalAfterDelay }) => {
   const { checkConfirmation } = useConfirm()
-  const size = useBreakpoints()
+  const { isMobile } = useBreakpoints()
 
   const onClose = async () => {
     const confirmed = await checkConfirmation({
@@ -30,7 +30,7 @@ const PopupDialog = ({ content, closeModal, isFullScreen, setFullScreen, timerId
 
   return (
     <Dialog
-      data-testid='popup' fullScreen={ isFullScreen || size === 'mobile' } maxWidth='xl'
+      data-testid='popup' fullScreen={ isFullScreen || isMobile } maxWidth='xl'
       onClose={ onClose } open
     >
       <Box

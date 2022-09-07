@@ -11,22 +11,23 @@ import { styles } from './styles/bad-request.styles'
 
 const BadRequest = () => {
   const { t } = useTranslation()
-  const windowSize = useBreakpoints()
+  const { isDesktop, isTablet, isMobile } = useBreakpoints()
 
-  const sizesTypography = {
-    desktop: { title: 'h2', description: 'subtitle1' },
-    tablet: { title: 'h3', description: 'subtitle1' },
-    mobile: { title: 'h4', description: 'subtitle2' }
-  }
+  const desktopTypography = { title: 'h2', description: 'subtitle1' }
+  const tabletTypography = { title: 'h3', description: 'subtitle1' }
+  const mobileTypography = { title: 'h4', description: 'subtitle2' }
+
+  const windowSizeTypography =
+    (isDesktop && desktopTypography) || (isTablet && tabletTypography) || (isMobile && mobileTypography)
 
   return (
     <Container sx={ styles.container }>
       <Box sx={ styles.info }>
         <TitleWithDescription
           description={ t('errorPage.400.description') }
-          descriptionStyles={ { typography: sizesTypography[windowSize].description } }
+          descriptionStyles={ { typography: windowSizeTypography.description } }
           title={ t('errorPage.400.title') }
-          titleStyles={ { typography: sizesTypography[windowSize].title } }
+          titleStyles={ { typography: windowSizeTypography.title } }
         />
         <Button
           component={ Link } size='extraLarge' to={ routes.home.route }

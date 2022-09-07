@@ -17,7 +17,7 @@ describe('useBreakpoints custom hook', () => {
 
     const { result } = renderHook(useBreakpoints)
 
-    expect(result.current).toBe('desktop')
+    expect(result.current.isDesktop).toBeTruthy()
   })
 
   it('should return correct value for tablet', () => {
@@ -25,7 +25,7 @@ describe('useBreakpoints custom hook', () => {
 
     const { result } = renderHook(useBreakpoints)
 
-    expect(result.current).toBe('tablet')
+    expect(result.current.isTablet).toBeTruthy()
   })
 
   it('should return correct value for mobile', () => {
@@ -33,6 +33,6 @@ describe('useBreakpoints custom hook', () => {
 
     const { result } = renderHook(useBreakpoints)
 
-    expect(result.current).toBe('mobile')
+    expect(result.current.isMobile).toBeTruthy()
   })
 })
