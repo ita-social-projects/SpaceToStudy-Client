@@ -1,14 +1,12 @@
-import { Button, Box } from '@mui/material'
+import { Button } from '@mui/material'
 
 import Loader from '../loader/Loader'
 
-import { style } from './AppButton.style'
-
 const AppButton = ({ loading, label, ...props }) => {
   const loader = (
-    <Box sx={ style.loaderContainer }>
-      <Loader size={ 20 } />
-    </Box>
+    <Button { ...props } disabled>
+      <Loader size={ 20 } sx={ { opacity: '0.6', color: 'basic.black' } } />
+    </Button>
   )
 
   const button = (<Button { ...props }>
