@@ -1,37 +1,17 @@
 import { Route, Routes, Navigate } from 'react-router-dom'
 
-import InternalServerError from '~/pages/error/InternalServerError'
+import { errors, routes } from '~/constants/routes'
 import NotFound from '~/pages/error/NotFound'
-import CookiePolicy from '~/pages/cookie-policy/CookiePolicy'
+import InternalServerError from '~/pages/error/InternalServerError'
+import MentorHome from '~/pages/mentor-home/MentorHome'
 import BadRequest from '~/pages/error/BadRequest'
 import AuthPolicy from '~/pages/error/AuthPolicy'
-import { errors, routes } from '~/constants/routes'
-import { mentor, student } from '~/constants'
-import PrivateRoute from './helpers/PrivateRoute'
-import GuestRoute from './helpers/GuestRoute'
-import StudentRoutes from './routes/StudentRoutes'
-import MentorRoutes from './routes/MentorRoutes'
+import CookiePolicy from '~/pages/cookie-policy/CookiePolicy'
 
-const AppRouter = ({ userRole }) => {
+const MentorLayout = () => {
   return (
     <Routes>
-      <Route element={ <GuestRoute userRole={ userRole } /> } path={ routes.home.route } />
-      <Route
-        element={
-          <PrivateRoute role={ student } userRole={ userRole }>
-            <StudentRoutes />
-          </PrivateRoute>
-        }
-        path={ routes.student.nested }
-      />
-      <Route
-        element={
-          <PrivateRoute role={ mentor } userRole={ userRole }>
-            <MentorRoutes />
-          </PrivateRoute>
-        }
-        path={ routes.mentor.nested }
-      />
+      <Route element={ <MentorHome /> } path={ routes.home.route } />
       <Route element={ <BadRequest /> } path={ errors.badRequest.route } />
       <Route element={ <AuthPolicy /> } path={ errors.authPolicy.route } />
       <Route element={ <CookiePolicy /> } path={ routes.privacyPolicy.route } />
@@ -42,4 +22,4 @@ const AppRouter = ({ userRole }) => {
   )
 }
 
-export default AppRouter
+export default MentorLayout
