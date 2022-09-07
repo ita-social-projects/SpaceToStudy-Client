@@ -12,11 +12,10 @@ import { ModalContext } from '~/context/modal-context'
 import { SnackBarContext } from '~/context/snackbar-context'
 import { email, password } from '~/utils/validations/login'
 import loginImg from '~/assets/img/login-dialog/login.png'
-import { login } from '~/containers/guest-home-page/constants'
+import { login, snackbarVariants } from '~/constants'
 import { loginUser } from '~/redux/reducer'
 
 import style from '~/containers/guest-home-page/login-dialog/LoginDialog.style'
-import { snackbarVariants } from '~/constants'
 
 const LoginDialog = () => {
   const { t } = useTranslation()

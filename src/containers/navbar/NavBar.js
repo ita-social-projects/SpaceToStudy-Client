@@ -14,6 +14,7 @@ import HashLink from '~/components/hash-link/HashLink'
 import Logo from '~/containers/logo/Logo'
 import Sidebar from '~/containers/sidebar/Sidebar'
 import NavigationIcons from '~/containers/navigation-icons/NavigationIcons'
+import { student } from '~/constants'
 
 import { style } from '~/containers/navbar/NavBar.styles'
 
@@ -24,7 +25,7 @@ const Navbar = () => {
   const { userRole } = useSelector((state) => state.appMain)
 
   useEffect(() => {
-    if (userRole === 'student') setNavigationItems(Object.values(studentRoutes.navBar))
+    if (userRole === student) setNavigationItems(Object.values(studentRoutes.navBar))
   }, [userRole])
 
   const navigationList = navigationItems.map((item) => {

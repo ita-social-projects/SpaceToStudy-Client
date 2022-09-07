@@ -5,9 +5,8 @@ import { ThemeProvider } from '@emotion/react'
 
 import { ModalProvider } from '~/context/modal-context'
 import { ConfirmationDialogProvider } from '~/context/confirm-context'
-import { theme } from '~/styles/app-theme/custom-mui.styles'
-import { getFromLocalStorage } from '~/services/local-storage-service'
 import AppMain from '~/containers/layout/AppMain'
+import { theme } from '~/styles/app-theme/custom-mui.styles'
 
 const mockState = {
   appMain: { loading: true, userRole: '' }
@@ -37,22 +36,25 @@ describe('AppMain layout component test', () => {
     expect(loader).toBeInTheDocument()
   })
 
-  it('should render StudentLayout', () => {
+  it('should render StudentLayout', async () => {
     useSelector.mockImplementation(() => ({
       loading: false,
       userRole: 'student'
     }))
     render(
-      <MemoryRouter>
-        <AppMain />
-      </MemoryRouter>
+      <ThemeProvider theme={ theme }>
+        <MemoryRouter>
+          <AppMain />
+        </MemoryRouter>
+      </ThemeProvider>
     )
-    const studentLayout = screen.getByTestId('studentHome')
 
-    expect(studentLayout).toBeInTheDocument()
+    const studentHome = await screen.findByTestId('studentHome')
+
+    expect(studentHome).toBeInTheDocument()
   })
 
-  it('should render MentorLayout', () => {
+  it('should render MentorLayout', async () => {
     useSelector.mockImplementation(() => ({
       loading: false,
       userRole: 'mentor'
@@ -61,12 +63,15 @@ describe('AppMain layout component test', () => {
       <MemoryRouter>
         <ConfirmationDialogProvider>
           <ModalProvider>
-            <AppMain />
+            <ThemeProvider theme={ theme }>
+              <AppMain />
+            </ThemeProvider>
           </ModalProvider>
         </ConfirmationDialogProvider>
       </MemoryRouter>
     )
-    const mentorHome = screen.getByTestId('mentorHome')
+
+    const mentorHome = await screen.findByTestId('mentorHome')
 
     expect(mentorHome).toBeInTheDocument()
   })
@@ -88,8 +93,25 @@ describe('AppMain layout component test', () => {
     expect(guestHome).toBeInTheDocument()
   })
 
+  it('should render AuthPolicy page if the path with role and user role do not match', () => {
+    useSelector.mockImplementation(() => ({
+      loading: false,
+      userRole: 'mentor'
+    }))
+    render(
+      <ModalProvider>
+        <MemoryRouter initialEntries={ ['/student'] }>
+          <AppMain />
+        </MemoryRouter>
+      </ModalProvider>
+    )
+
+    const errorTitle = screen.getByText(/errorPage.401.title/)
+
+    expect(errorTitle).toBeInTheDocument()
+  })
+
   it('should dispatch checkAuth if accessToken exists in localStorage', async () => {
-    getFromLocalStorage.mockImplementation(() => true)
     useSelector.mockImplementation(() => ({
       loading: false,
       userRole: ''

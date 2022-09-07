@@ -10,9 +10,10 @@ import { ModalContext } from '~/context/modal-context'
 import { SnackBarContext } from '~/context/snackbar-context'
 
 import { firstName, lastName, confirmPassword, email, password } from '~/utils/validations/login'
-import { signup } from '~/containers/guest-home-page/constants'
+import { signup, snackbarVariants } from '~/constants'
 import GoogleLogin from '~/containers/guest-home-page/google-login/GoogleLogin'
 import SignupForm from '~/containers/guest-home-page/signup-form/SignupForm'
+import ImgTitleDescription from '~/components/img-title-description/ImgTitleDescription'
 import { signupUser } from '~/redux/reducer'
 
 import student from '~/assets/img/signup-dialog/student.png'
@@ -20,8 +21,6 @@ import mentor from '~/assets/img/signup-dialog/mentor.png'
 import info from '~/assets/img/guest-home-page/info.svg'
 
 import { style } from '~/containers/guest-home-page/signup-dialog/SignupDialog.style'
-import ImgTitleDescription from '~/components/img-title-description/ImgTitleDescription'
-import { snackbarVariants } from '~/constants'
 
 const SignupDialog = ({ type }) => {
   const { t } = useTranslation()

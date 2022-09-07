@@ -1,6 +1,6 @@
 import { screen, fireEvent, render, waitFor } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
-import { student } from '~/containers/guest-home-page/constants'
+import { student } from '~/constants'
 import SignupDialog from '~/containers/guest-home-page/signup-dialog/SignupDialog'
 import { ModalProvider } from '~/context/modal-context'
 import { SnackBarProvider } from '~/context/snackbar-context'

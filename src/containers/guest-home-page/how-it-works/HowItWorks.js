@@ -7,6 +7,8 @@ import Stack from '@mui/material/Stack'
 import Switch from '@mui/material/Switch'
 import CardsWithButton from '~/containers/guest-home-page/cards-with-button/CardsWithButton'
 import { mentorCardBoxArray, studentCardBoxArray } from '~/containers/guest-home-page/how-it-works/CardBoxArrays'
+import { mentor, student } from '~/constants'
+
 import { style } from '~/containers/guest-home-page/how-it-works/how-it-works.style'
 
 const sectionId = routes.guestNavBar.howItWorks.label
@@ -23,14 +25,14 @@ const HowItWorks = () => {
   const cardsMap = isStudent ? (
     <CardsWithButton
       array={ mentorCardBoxArray } btnText={ 'Become a mentor' } isStudent={ isStudent }
-      role={ 'mentor' }
+      role={ mentor }
     />
   ) : (
     <CardsWithButton
       array={ studentCardBoxArray }
       btnText={ 'Start learning today' }
       isStudent={ isStudent }
-      role={ 'student' }
+      role={ student }
     />
   )
 
