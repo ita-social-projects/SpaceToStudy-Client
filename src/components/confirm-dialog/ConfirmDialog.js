@@ -1,5 +1,11 @@
 import { useTranslation } from 'react-i18next'
-import { Button, Dialog, DialogActions, DialogContent, IconButton, Typography } from '@mui/material'
+
+import Button from '@mui/material/Button'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import IconButton from '@mui/material/IconButton'
+import Typography from '@mui/material/Typography'
 import CloseIcon from '@mui/icons-material/Close'
 
 import { style } from '~/components/confirm-dialog/confirm-dialog.style'

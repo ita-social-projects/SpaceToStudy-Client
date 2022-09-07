@@ -1,8 +1,9 @@
-import { Box } from '@mui/material'
-import AppHeader from '~/containers/layout/AppHeader'
-import AppMain from '~/containers/layout/AppMain'
+import Box from '@mui/material/Box'
+
+import AppHeader from '~/containers/layout/app-header/AppHeader'
+import AppMain from '~/containers/layout/app-main/AppMain'
 import ScrollToTop from '~/components/scroll-to-top/ScrollToTop'
-import Footer from '~/containers/footer/Footer'
+import Footer from '~/containers/layout/footer/Footer'
 
 const styles = {
   content: {

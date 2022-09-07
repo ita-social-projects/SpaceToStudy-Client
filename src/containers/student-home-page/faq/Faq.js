@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Box } from '@mui/material'
+
+import Box from '@mui/material/Box'
 
 import { accordionItems } from '~/containers/student-home-page/faq/accordionItems'
 import Accordions from '~/components/accordion/Accordions'

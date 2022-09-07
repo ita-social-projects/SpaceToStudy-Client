@@ -1,4 +1,5 @@
-import { useTheme, useMediaQuery } from '@mui/material'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { useTheme } from '@mui/material/styles'
 
 const useBreakpoints = () => {
   const theme = useTheme()

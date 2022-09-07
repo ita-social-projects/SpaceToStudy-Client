@@ -1,5 +1,8 @@
-import { Container, Typography, Box } from '@mui/material'
 import { useTranslation } from 'react-i18next'
+
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import Container from '@mui/material/Container'
 
 import { cookieItemsData } from './cookie-policy.constants'
 

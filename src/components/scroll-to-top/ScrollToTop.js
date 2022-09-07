@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
-import { IconButton, Box } from '@mui/material'
+
+import IconButton from '@mui/material/IconButton'
+import Box from '@mui/material/Box'
 import ArrowUpwardRoundedIcon from '@mui/icons-material/ArrowUpwardRounded'
 
 import { style } from '~/components/scroll-to-top/scroll-to-top.style'

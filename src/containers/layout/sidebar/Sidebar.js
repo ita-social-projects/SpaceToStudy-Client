@@ -9,7 +9,7 @@ import CloseIcon from '@mui/icons-material/Close'
 
 import HashLink from '~/components/hash-link/HashLink'
 
-import { style } from '~/containers/sidebar/Sidebar.styles'
+import { style } from '~/containers/layout/sidebar/Sidebar.styles'
 
 const Sidebar = ({ isSidebarOpen, setIsSidebarOpen, navigationItems }) => {
   const { t } = useTranslation()

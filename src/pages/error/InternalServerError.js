@@ -1,8 +1,11 @@
 import React from 'react'
-import { Box } from '@mui/system'
-import { Typography, Button } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
+
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import Button from '@mui/material/Button'
+
 import { routes } from '~/constants/routes'
 import { style } from './styles/internal-server-error.styles'
 import backGround500 from '~/assets/img/error-page/500.svg'

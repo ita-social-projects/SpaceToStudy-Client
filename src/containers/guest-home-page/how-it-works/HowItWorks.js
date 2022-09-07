@@ -1,10 +1,12 @@
-import { Box } from '@mui/system'
-import { Typography } from '@mui/material'
-import { useTranslation } from 'react-i18next'
 import { useState } from 'react'
-import { routes } from '~/constants/routes'
+import { useTranslation } from 'react-i18next'
+
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
 import Stack from '@mui/material/Stack'
 import Switch from '@mui/material/Switch'
+
+import { routes } from '~/constants/routes'
 import CardsWithButton from '~/containers/guest-home-page/cards-with-button/CardsWithButton'
 import { mentorCardBoxArray, studentCardBoxArray } from '~/containers/guest-home-page/how-it-works/CardBoxArrays'
 import { mentor, student } from '~/constants'

@@ -1,6 +1,8 @@
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Box, Typography } from '@mui/material'
+
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
 
 import AppTextField from '~/components/app-text-field/AppTextField'
 

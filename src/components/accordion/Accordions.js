@@ -1,6 +1,7 @@
-import { Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
-import { Box } from '@mui/system'
+
+import Typography from '@mui/material/Typography'
+import Box from '@mui/material/Box'
 import Accordion from '@mui/material/Accordion'
 import AccordionSummary from '@mui/material/AccordionSummary'
 import AccordionDetails from '@mui/material/AccordionDetails'

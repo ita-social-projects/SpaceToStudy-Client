@@ -1,4 +1,6 @@
-import { Box, Container } from '@mui/material'
+import Box from '@mui/material/Box'
+import Container from '@mui/material/Container'
+
 import FindMentorBlock from '~/containers/student-home-page/find-mentor-block/FindMentorBlock'
 import PopularCategories from '~/containers/student-home-page/popular-categories/PopularCategories'
 import Faq from '~/containers/student-home-page/faq/Faq'

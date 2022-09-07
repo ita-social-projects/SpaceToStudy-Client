@@ -1,6 +1,8 @@
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Box, Typography } from '@mui/material'
+
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
 
 import FileUploader from '~/components/file-uploader/FileUploader'
 import addDocumentsPNG from '~/assets/img/mentor-home-page/become-tutor/add-documents.png'

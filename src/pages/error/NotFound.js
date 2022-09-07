@@ -1,12 +1,14 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
-import { Button, Box } from '@mui/material'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
+
 import { routes } from '~/constants/routes'
 import plantImg from '~/assets/img/error-page/404-plant.svg'
 import manImg from '~/assets/img/error-page/404-man.svg'
 import useBreakpoints from '~/hooks/use-breakpoints'
-import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 
 import { style } from '~/pages/error/styles/not-found.style'
 

@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next'
-import { Box } from '@mui/material'
+
+import Box from '@mui/material/Box'
 
 import { routes } from '~/constants/routes'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'

@@ -1,6 +1,10 @@
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Box, Checkbox, FormControlLabel, Typography } from '@mui/material'
+
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import Checkbox from '@mui/material/Checkbox'
+import FormControlLabel from '@mui/material/FormControlLabel'
 
 import AppTextField from '~/components/app-text-field/AppTextField'
 

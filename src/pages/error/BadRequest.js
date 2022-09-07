@@ -1,6 +1,9 @@
-import { Box, Button, Container } from '@mui/material'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+
+import Box from '@mui/material/Box'
+import Container from '@mui/material/Container'
+import Button from '@mui/material/Button'
 
 import { routes } from '~/constants/routes'
 import useBreakpoints from '~/hooks/use-breakpoints'

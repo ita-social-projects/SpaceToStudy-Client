@@ -1,9 +1,15 @@
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { Box, Typography, Button, IconButton, ListItem, List } from '@mui/material'
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import Button from '@mui/material/Button'
+import IconButton from '@mui/material/IconButton'
+import ListItem from '@mui/material/ListItem'
+import List from '@mui/material/List'
 import CloudUploadIcon from '@mui/icons-material/CloudUpload'
 import CloseIcon from '@mui/icons-material/Close'
+
 import useUpload from '~/hooks/use-upload'
 
 import { style } from '~/components/file-uploader/file-uploader.style'

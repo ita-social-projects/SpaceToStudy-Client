@@ -1,5 +1,5 @@
 import { screen, fireEvent, waitFor } from '@testing-library/react'
-import Sidebar from '~/containers/sidebar/Sidebar'
+import Sidebar from '~/containers/layout/sidebar/Sidebar'
 import { renderWithProviders } from '~tests/test-utils'
 
 describe('Sidebar test', () => {

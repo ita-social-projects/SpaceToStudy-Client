@@ -1,7 +1,9 @@
-import { Button, Container } from '@mui/material'
-import { Box } from '@mui/system'
 import { useState, cloneElement } from 'react'
 import { useTranslation } from 'react-i18next'
+
+import Button from '@mui/material/Button'
+import Container from '@mui/material/Container'
+import Box from '@mui/material/Box'
 
 import EastIcon from '@mui/icons-material/East'
 import WestIcon from '@mui/icons-material/West'

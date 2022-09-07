@@ -1,6 +1,7 @@
-import Accordions from '../accordion/Accordions.js'
-import { Box } from '@mui/system'
 import { useState } from 'react'
+
+import Accordions from '../accordion/Accordions.js'
+import Box from '@mui/material/Box'
 
 import { style } from '~/components/accordion-with-image/accordion-with-image.style'
 
