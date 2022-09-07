@@ -11,7 +11,7 @@ import { AuthService } from '~/services/auth-service'
 import Loader from '~/components/loader/Loader'
 import ImgTitleDescription from '~/components/img-title-description/ImgTitleDescription'
 
-const EmailConfirmModal = ({ confirmToken, setModal }) => {
+const EmailConfirmModal = ({ confirmToken, openModal }) => {
   const { t } = useTranslation()
 
   const serviceFunction = useCallback(() => AuthService.confirmEmail(confirmToken), [confirmToken])
@@ -19,7 +19,7 @@ const EmailConfirmModal = ({ confirmToken, setModal }) => {
   const { response, error, loading } = useAxios({ service: serviceFunction })
 
   const openLoginDialog = () => {
-    setModal(<LoginDialog />)
+    openModal(<LoginDialog />)
   }
 
   if (loading) {

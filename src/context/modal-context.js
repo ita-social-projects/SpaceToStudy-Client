@@ -11,8 +11,17 @@ const ModalProvider = (props) => {
 
   const closeModal = useCallback(() => {
     setModal()
+    setPaperProps({})
     setTimer(null)
-  }, [setModal])
+  }, [setModal, setPaperProps])
+
+  const openModal = useCallback(
+    (component, props) => {
+      setModal(component)
+      setPaperProps(props)
+    },
+    [setModal, setPaperProps]
+  )
 
   const closeModalAfterDelay = (delay = 5000) => {
     const timerId = setTimeout(closeModal, delay)

@@ -13,11 +13,11 @@ import google from '~/assets/img/login-dialog/google.svg'
 const GoogleLogin = ({ type }) => {
   const { t } = useTranslation()
   const { whatCanYouDo } = routes.guestNavBar
-  const { setModal, closeModal } = useContext(ModalContext)
+  const { openModal, closeModal } = useContext(ModalContext)
 
   const openLoginDialog = () => {
     closeModal()
-    setTimeout(() => setModal(<LoginDialog />), 0)
+    setTimeout(() => openModal(<LoginDialog />), 0)
   }
 
   return (

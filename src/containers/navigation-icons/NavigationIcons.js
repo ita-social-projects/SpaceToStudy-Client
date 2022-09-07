@@ -9,11 +9,11 @@ import { student } from '~/constants'
 
 const NavigationIcons = ({ setIsSidebarOpen }) => {
   const { userRole } = useSelector((state) => state.appMain)
-  const { setModal } = useContext(ModalContext)
+  const { openModal } = useContext(ModalContext)
 
   const openLoginDialog = useCallback(() => {
-    setModal(<LoginDialog />)
-  }, [setModal])
+    openModal(<LoginDialog />)
+  }, [openModal])
 
   if (userRole === student) return <StudentIcons setIsSidebarOpen={ setIsSidebarOpen } />
 

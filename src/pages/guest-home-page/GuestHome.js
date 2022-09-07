@@ -17,7 +17,7 @@ import ResetPassword from '~/containers/guest-home-page/reset-password/ResetPass
 const GuestHomePage = () => {
   const { search } = useLocation()
 
-  const { setModal } = useContext(ModalContext)
+  const { openModal } = useContext(ModalContext)
   const navigate = useNavigate()
 
   const [searchParams] = useSearchParams()
@@ -25,15 +25,16 @@ const GuestHomePage = () => {
   const resetToken = searchParams.get('resetToken')
 
   useEffect(() => {
-    search === '?login' && setModal(<LoginDialog />)
+    search === '?login' && openModal(<LoginDialog />)
     navigate('/')
-  }, [search, setModal, navigate])
+  }, [search, openModal, navigate])
 
   useEffect(() => {
-    confirmToken && setModal(<EmailConfirmModal confirmToken={ confirmToken } setModal={ setModal } />)
-    resetToken && setModal(<ResetPassword resetToken={ resetToken } setModal={ setModal } />)
+    confirmToken && openModal({ component:<EmailConfirmModal confirmToken={ confirmToken } openModal={ openModal } /> })
+	 resetToken && openModal({ component:<ResetPassword openModal={ openModal } resetToken={ resetToken } /> })
+
     navigate('/')
-  }, [confirmToken, setModal, navigate, resetToken])
+  }, [confirmToken, openModal, navigate, resetToken])
 
   return (
     <Box data-testid='guestHome'>

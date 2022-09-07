@@ -45,10 +45,10 @@ const cardData = [
 
 const WhatCanYouDo = () => {
   const { t } = useTranslation()
-  const { setModal } = useContext(ModalContext)
+  const { openModal } = useContext(ModalContext)
 
   const openDialog = (type) => {
-    setModal(<SignupDialog type={ type } />)
+    openModal(<SignupDialog type={ type } />)
   }
 
   const cards = cardData.map((item) => {

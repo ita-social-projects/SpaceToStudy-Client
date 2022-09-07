@@ -15,11 +15,11 @@ import { styles } from '~/containers/guest-home-page/login-form/LoginForm.styles
 
 const LoginForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) => {
   const { inputVisibility: passwordVisibility, showInputText: showPassword } = useInputVisibility(errors.password)
-  const { setModal } = useContext(ModalContext)
+  const { openModal } = useContext(ModalContext)
   const { t } = useTranslation()
 
   const openForgotPassword = () => {
-    setModal(<ForgotPassword />)
+    openModal(<ForgotPassword />)
   }
 
   return (
