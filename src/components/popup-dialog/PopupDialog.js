@@ -8,7 +8,7 @@ import useConfirm from '~/hooks/use-confirm'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { style } from '~/components/popup-dialog/PopupDialog.style'
 
-const PopupDialog = ({ content, closeModal, isFullScreen, setFullScreen }) => {
+const PopupDialog = ({ content, closeModal, isFullScreen, setFullScreen, timerId, closeModalAfterDelay }) => {
   const { checkConfirmation } = useConfirm()
   const size = useBreakpoints()
 
@@ -24,12 +24,19 @@ const PopupDialog = ({ content, closeModal, isFullScreen, setFullScreen }) => {
     return () => setFullScreen(false)
   }, [setFullScreen])
 
+  const handleMouseEnter = timerId ? () => clearTimeout(timerId) : null
+
+  const handleMouseLeave = timerId ? () => closeModalAfterDelay() : null
+
   return (
     <Dialog
       data-testid='popup' fullScreen={ isFullScreen || size === 'mobile' } maxWidth='xl'
       onClose={ onClose } open
     >
-      <Box sx={ style.box }>
+      <Box
+        data-testid='popupContent' onMouseEnter={ handleMouseEnter } onMouseLeave={ handleMouseLeave }
+        sx={ style.box }
+      >
         <IconButton onClick={ onClose } sx={ style.icon }>
           <CloseIcon />
         </IconButton>

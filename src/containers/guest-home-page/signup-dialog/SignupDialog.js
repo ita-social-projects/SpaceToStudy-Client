@@ -25,7 +25,7 @@ import { style } from '~/containers/guest-home-page/signup-dialog/SignupDialog.s
 const SignupDialog = ({ type }) => {
   const { t } = useTranslation()
   const { setNeedConfirmation } = useConfirm()
-  const { setModal, closeModal } = useContext(ModalContext)
+  const { setModal, closeModal, closeModalAfterDelay } = useContext(ModalContext)
   const { setAlert } = useContext(SnackBarContext)
   const dispatch = useDispatch()
 
@@ -36,7 +36,7 @@ const SignupDialog = ({ type }) => {
       try {
         await dispatch(signupUser({ ...data, role: type })).unwrap()
         setModal(<ImgTitleDescription description={ description } img={ info } title={ t('signup.confirmEmailTitle') } />)
-        setTimeout(() => closeModal(), 5000)
+        closeModalAfterDelay()
       } catch (e) {
         setAlert({
           severity: snackbarVariants.error,

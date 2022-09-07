@@ -7,19 +7,29 @@ const ModalProvider = (props) => {
   const [modal, setModal] = useState()
   const [isFullScreen, setFullScreen] = useState(false)
 
+  const [timer, setTimer] = useState(null)
+
   const closeModal = useCallback(() => {
     setModal()
+    setTimer(null)
   }, [setModal])
 
+  const closeModalAfterDelay = (delay = 5000) => {
+    const timerId = setTimeout(closeModal, delay)
+    setTimer(timerId)
+  }
+
   return (
-    <ModalContext.Provider value={ { setModal, closeModal, setFullScreen } } { ...props }>
+    <ModalContext.Provider value={ { setModal, closeModal, setFullScreen, closeModalAfterDelay } } { ...props }>
       { props.children }
       { modal && (
         <PopupDialog
           closeModal={ closeModal }
+          closeModalAfterDelay={ closeModalAfterDelay }
           content={ modal }
           isFullScreen={ isFullScreen }
           setFullScreen={ setFullScreen }
+          timerId={ timer }
         />
       ) }
     </ModalContext.Provider>

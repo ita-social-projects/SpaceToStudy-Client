@@ -18,7 +18,7 @@ import { style } from '~/containers/guest-home-page/forgot-password/ForgotPasswo
 
 const ForgotPassword = () => {
   const { t } = useTranslation()
-  const { setModal, closeModal } = useContext(ModalContext)
+  const { setModal, closeModalAfterDelay } = useContext(ModalContext)
 
   const backToLogin = () => {
     setModal(<LoginDialog />)
@@ -27,7 +27,7 @@ const ForgotPassword = () => {
   const { handleSubmit, handleChange, handleBlur, errors, data } = useForm({
     onSubmit: () => {
       setModal(<ImgTitleDescription description={ description } img={ info } title={ t('login.passwordReset') } />)
-      setTimeout(() => closeModal(), 5000)
+      closeModalAfterDelay()
     },
     initialValues: { email: '' },
     validations: { email }
