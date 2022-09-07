@@ -17,7 +17,7 @@ export default {
       options: ['large', 'medium', 'small'],
       control: { type: 'radio' }
     },
-    buttonStyle: { description: 'Styles for button' }
+    sx: { description: 'Styles for button' }
   }
 }
 
@@ -37,5 +37,5 @@ Default.args = {
   loading: false,
   variant: 'contained',
   size: 'large',
-  buttonStyle: ''
+  sx: ''
 }

@@ -4,21 +4,16 @@ import Loader from '../loader/Loader'
 
 import { style } from './AppButton.style'
 
-const AppButton = ({ label, variant, size, buttonStyle, type, loading, disabled }) => {
+const AppButton = ({ loading, label, ...props }) => {
   const loader = (
     <Box sx={ style.loaderContainer }>
       <Loader size={ 20 } />
     </Box>
   )
 
-  const button = (
-    <Button
-      disabled={ disabled } size={ size } sx={ buttonStyle }
-      type={ type } variant={ variant }
-    >
-      { label }
-    </Button>
-  )
+  const button = (<Button { ...props }>
+    { label }
+  </Button>)
 
   return loading ? loader : button
 }
