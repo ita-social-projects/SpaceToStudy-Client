@@ -23,7 +23,7 @@ const Welcome = () => {
   return (
     <Box className='section' sx={ styles.container }>
       <Box
-        alt='Title' component='img' src={ image }
+        $src={ image } alt='Title' component='img'
         sx={ styles.title }
       />
       <Typography data-testid='welcomeDescription' sx={ styles.subtitle }>
