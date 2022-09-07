@@ -1,9 +1,10 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import { useTranslation } from 'react-i18next'
 
+import { SnackBarContext } from '~/context/snackbar-context'
 import { ModalContext } from '~/context/modal-context'
 import useForm from '~/hooks/use-form'
 
@@ -12,23 +13,40 @@ import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import ImgTitleDescription from '~/components/img-title-description/ImgTitleDescription'
 import info from '~/assets/img/guest-home-page/info.svg'
+import { AuthService } from '~/services/auth-service'
 
+import { snackbarVariants } from '~/constants'
 import { email } from '~/utils/validations/login'
 import { style } from '~/containers/guest-home-page/forgot-password/ForgotPassword.style'
 
 const ForgotPassword = () => {
   const { t } = useTranslation()
   const { setModal, closeModalAfterDelay } = useContext(ModalContext)
+  const [loading, setLoading] = useState(false)
+  const { setAlert } = useContext(SnackBarContext)
 
   const backToLogin = () => {
     setModal(<LoginDialog />)
   }
 
-  const { handleSubmit, handleChange, handleBlur, errors, data } = useForm({
-    onSubmit: () => {
+  const sendEmail = async (data) => {
+    try {
+      setLoading(true)
+      await AuthService.forgotPassword(data)
       setModal(<ImgTitleDescription description={ description } img={ info } title={ t('login.passwordReset') } />)
       closeModalAfterDelay()
-    },
+    } catch (e) {
+      setAlert({
+        severity: snackbarVariants.error,
+        message: `errors.${e.response.data.code}`
+      })
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const { handleSubmit, handleChange, handleBlur, errors, data } = useForm({
+    onSubmit: async () => sendEmail(data),
     initialValues: { email: '' },
     validations: { email }
   })
@@ -72,7 +90,7 @@ const ForgotPassword = () => {
           size='large' sx={ style.sentPassword } type='submit'
           variant='contained'
         >
-          { t('login.sendPassword') }
+          { loading ? 'Loading' : t('login.sendPassword') }
         </Button>
       </Box>
 

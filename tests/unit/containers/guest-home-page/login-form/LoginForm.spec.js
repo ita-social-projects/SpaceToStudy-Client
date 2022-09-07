@@ -1,6 +1,7 @@
 import { screen, fireEvent, waitFor } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 import LoginForm from '~/containers/guest-home-page/login-form/LoginForm'
+import { SnackBarProvider } from '~/context/snackbar-context'
 import { ModalProvider } from '~/context/modal-context'
 
 jest.mock('~/hooks/use-confirm', () => {
@@ -18,15 +19,17 @@ const handleSubmit = jest.fn()
 describe('Login form test', () => {
   beforeEach(() => {
     renderWithProviders(
-      <ModalProvider>
-        <LoginForm
-          data={ data }
-          errors={ errors }
-          handleBlur={ handleBlur }
-          handleChange={ handleChange }
-          handleSubmit={ handleSubmit }
-        />
-      </ModalProvider>
+      <SnackBarProvider>
+        <ModalProvider>
+          <LoginForm
+            data={ data }
+            errors={ errors }
+            handleBlur={ handleBlur }
+            handleChange={ handleChange }
+            handleSubmit={ handleSubmit }
+          />
+        </ModalProvider>
+      </SnackBarProvider>
     )
   })
 
