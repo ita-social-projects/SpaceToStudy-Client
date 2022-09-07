@@ -52,7 +52,7 @@ const FileUploader = ({ buttonText, emitter, initialState, initialError, validat
           { filesList }
         </List>) }
 
-        <Button component='label'>
+        <Button component='label' sx={ styles.uploadBtn }>
           <CloudUploadIcon sx={ styles.icon } />
           { buttonText }
           <input

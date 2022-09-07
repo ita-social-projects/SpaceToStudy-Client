@@ -4,19 +4,18 @@ export const style = {
   root: {
     display: 'flex',
     justifyContent: 'space-between',
+    gap: '32px',
     ...fadeAnimation
   },
   preview: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    maxWidth: '645px',
-    width: '100%',
+    flex: '0.4 1 580px',
     aspectRatio: '1',
     border: 'dashed',
     borderColor: 'primary.200',
-    borderRadius: '20px',
-    mr: 3
+    borderRadius: '20px'
   },
   img: {
     width: '100%',
@@ -26,15 +25,13 @@ export const style = {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    maxWidth: '360px',
+    flex: '0 2 360px',
     pt: 12
   },
   description: {
     mb: 5
   },
   imgContainer: {
-    maxHeight: '648px',
-    maxWidth: '648px',
-    mr: 3
+    flex: '0.4 1 580px'
   }
 }

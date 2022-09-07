@@ -29,7 +29,7 @@ const BecomeATutor = () => {
     setPhotoError(error)
     if (photo.length) {
       const originalPhotoPath = URL.createObjectURL(photo[0])
-      const photoSizes = { newWidth: 648, newHeight: 648 }
+      const photoSizes = { newWidth: 580, newHeight: 580 }
       imageResize(originalPhotoPath, photoSizes).then((resizedPhoto) => {
         setPhotoForUpload(resizedPhoto)
       })
