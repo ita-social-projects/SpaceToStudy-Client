@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react'
+import { createContext, useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Snackbar from '@mui/material/Snackbar'
@@ -14,11 +14,11 @@ export const SnackBarProvider = ({ children }) => {
   const [severity, setSeverity] = useState(snackbarVariants.info)
   const [message, setMessage] = useState('')
 
-  const setAlert = (options) => {
+  const setAlert = useCallback((options) => {
     setShow(true)
     setSeverity(options.severity)
     setMessage(options.message)
-  }
+  }, [])
 
   const handleClose = () => {
     setShow(false)

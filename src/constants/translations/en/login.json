@@ -11,5 +11,8 @@
   "backToLogin": "Back to Log in",
   "passwordReset": "Password Reset",
   "weSentEmail": "We`ve sent you an email with a password reset link to: \n",
-  "emailArrive": " If the email didn't arrive, give it a few minutes and check back. If it isn`t still there, check your spam folder."
+  "emailArrive": " If the email didn't arrive, give it a few minutes and check back. If it isn`t still there, check your spam folder.",
+  "newPassword": "Create new password",
+  "resetPasswordDesc": "Your new password must be different from previous used passwords.",
+  "savePassword": "Save password"
 }
