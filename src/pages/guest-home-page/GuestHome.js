@@ -31,7 +31,7 @@ const GuestHomePage = () => {
 
   useEffect(() => {
     confirmToken && setModal(<EmailConfirmModal confirmToken={ confirmToken } setModal={ setModal } />)
-    resetToken && setModal(<ResetPassword resetToken={ resetToken } />)
+    resetToken && setModal(<ResetPassword resetToken={ resetToken } setModal={ setModal } />)
     navigate('/')
   }, [confirmToken, setModal, navigate, resetToken])
 

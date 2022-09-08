@@ -6,7 +6,6 @@ import useAxios from '~/hooks/use-axios'
 import useInputVisibility from '~/hooks/use-input-visibility'
 
 import { AuthService } from '~/services/auth-service'
-import { ModalContext } from '~/context/modal-context'
 import { SnackBarContext } from '~/context/snackbar-context'
 
 import Button from '@mui/material/Button'
@@ -28,9 +27,8 @@ const styles = {
   form: { display: 'flex', flexDirection: 'column' }
 }
 
-const ResetPassword = ({ resetToken }) => {
+const ResetPassword = ({ resetToken, setModal }) => {
   const { t } = useTranslation()
-  const { setModal } = useContext(ModalContext)
   const { setAlert } = useContext(SnackBarContext)
 
   const {
