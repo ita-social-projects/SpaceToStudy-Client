@@ -8,5 +8,6 @@
     "NOT_FOUND": "User has not been found",
     "BAD_REFRESH_TOKEN": "You have be logged out, please sign in again",
     "UNAUTHORIZED": "User is not authorized",
-    "EMAIL_NOT_FOUND": "There is no user registered with that email"
+    "EMAIL_NOT_FOUND": "There is no user registered with that email",
+    "BAD_RESET_TOKEN": "Your time is up please try again"
 }

@@ -5,18 +5,21 @@ const useAxios = ({ service, fetchOnMount = true }) => {
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(fetchOnMount)
 
-  const fetchData = useCallback(async () => {
-    try {
-      setLoading(true)
-      const res = await service()
-      setResponse(res)
-      setError(null)
-    } catch (e) {
-      setError(e)
-    } finally {
-      setLoading(false)
-    }
-  }, [service])
+  const fetchData = useCallback(
+    async (data) => {
+      try {
+        setLoading(true)
+        const res = await service(data)
+        setResponse(res)
+        setError(null)
+      } catch (e) {
+        setError(e)
+      } finally {
+        setLoading(false)
+      }
+    },
+    [service]
+  )
 
   useEffect(() => {
     if (fetchOnMount) {
