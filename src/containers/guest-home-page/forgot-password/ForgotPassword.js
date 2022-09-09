@@ -33,10 +33,10 @@ const ForgotPassword = () => {
     try {
       setLoading(true)
       await AuthService.forgotPassword(data)
-      openModal({
-        component: <ImgTitleDescription description={ description } img={ info } title={ t('login.passwordReset') } />,
-        delayToClose: 5000
-      })
+      openModal(
+        { component: <ImgTitleDescription description={ description } img={ info } title={ t('login.passwordReset') } /> },
+        5000
+      )
     } catch (e) {
       setAlert({
         severity: snackbarVariants.error,

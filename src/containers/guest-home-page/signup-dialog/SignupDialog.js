@@ -35,10 +35,14 @@ const SignupDialog = ({ type }) => {
     onSubmit: async () => {
       try {
         await dispatch(signupUser({ ...data, role: type })).unwrap()
-        openModal({
-          component: <ImgTitleDescription description={ description } img={ info } title={ t('signup.confirmEmailTitle') } />,
-          delayToClose: 5000
-        })
+        openModal(
+          {
+            component: (
+              <ImgTitleDescription description={ description } img={ info } title={ t('signup.confirmEmailTitle') } />
+            )
+          },
+          5000
+        )
       } catch (e) {
         setAlert({
           severity: snackbarVariants.error,

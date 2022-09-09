@@ -24,7 +24,7 @@ const ModalProvider = (props) => {
   )
 
   const openModal = useCallback(
-    ({ component, paperProps, delayToClose }) => {
+    ({ component, paperProps }, delayToClose = 0) => {
       setModal(component)
       setPaperProps(paperProps)
       delayToClose && closeModalAfterDelay(delayToClose)
