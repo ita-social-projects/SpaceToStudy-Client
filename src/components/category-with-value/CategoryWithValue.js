@@ -78,7 +78,7 @@ const CategoryWithValue = ({
               />
             </Box>
             { stateItems.length > 1 && (
-              <IconButton onClick={ () => removeItem(idx) }>
+              <IconButton data-testid='deleteBtn' onClick={ () => removeItem(idx) }>
                 <CloseIcon color='primary' />
               </IconButton>
             ) }
