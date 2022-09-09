@@ -1,4 +1,4 @@
-import { mainShadow, commonHoverShadow, commonShadow } from '~/styles/app-theme/custom-shadows'
+import { mainShadow, commonShadow, commonHoverShadow } from '~/styles/app-theme/custom-shadows'
 
 export const style = {
   noShowMoreIcon: {
