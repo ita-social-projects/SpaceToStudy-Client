@@ -69,13 +69,11 @@ const LoginForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) => 
       </Box>
 
       <AppButton
-        label={ t('common.labels.login') }
-        loading={ loading }
-        size='large'
-        sx={ style.loginButton }
-        type='submit'
-        variant='contained'
-      />
+        loading={ loading } size='large' sx={ style.loginButton }
+        type='submit' variant='contained'
+      >
+        { t('common.labels.login') }
+      </AppButton>
     </Box>
   )
 }

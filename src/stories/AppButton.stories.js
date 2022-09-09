@@ -24,9 +24,9 @@ export default {
 export const Default = (args) => {
   return (
     <div
-      style={{ maxWidth: '400px', margin: '0 auto', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+      style={{ maxWidth: '200px', margin: '0 auto', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
     >
-      <AppButton {...args} />
+      <AppButton {...args}>{args.label}</AppButton>
     </div>
   )
 }
@@ -37,5 +37,5 @@ Default.args = {
   loading: false,
   variant: 'contained',
   size: 'large',
-  sx: ''
+  sx: { width: '100%', py: '18px' }
 }

@@ -87,13 +87,11 @@ const ForgotPassword = () => {
           value={ data.email }
         />
         <AppButton
-          label={ t('login.sendPassword') }
-          loading={ loading }
-          size='large'
-          sx={ styles.sentPassword }
-          type='submit'
-          variant='contained'
-        />
+          loading={ loading } size='large' sx={ styles.sentPassword }
+          type='submit' variant='contained'
+        >
+          { t('login.sendPassword') }
+        </AppButton>
       </Box>
 
       <Button

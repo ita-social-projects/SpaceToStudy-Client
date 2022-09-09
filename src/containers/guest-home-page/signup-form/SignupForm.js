@@ -142,13 +142,14 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors, clos
 
       <AppButton
         disabled={ buttonDisabled }
-        label={ t('common.labels.signup') }
         loading={ loading }
         size='large'
         sx={ style.signupButton }
         type='submit'
         variant='contained'
-      />
+      >
+        { t('common.labels.signup') }
+      </AppButton>
     </Box>
   )
 }
