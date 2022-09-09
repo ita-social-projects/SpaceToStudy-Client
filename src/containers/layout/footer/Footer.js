@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 
 import { routes } from '~/constants/routes'
-import { style } from './Footer.styles.js'
+import { style } from '~/containers/layout/footer/Footer.styles'
 
 const Footer = () => {
   const { privacyPolicy, termOfUse } = routes

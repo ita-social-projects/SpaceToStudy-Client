@@ -4,8 +4,8 @@ export const style = {
   },
   container: {
     display: 'flex',
-    flexDirection: { xs: 'column-reverse', sm: 'row' },
     justifyContent: { xs: 'space-between', sm: 'space-around' },
+    flexDirection: { xs: 'column-reverse', sm: 'row' },
     alignItems: 'center',
     py: { xs: '12px', sm: '26px' }
   },
