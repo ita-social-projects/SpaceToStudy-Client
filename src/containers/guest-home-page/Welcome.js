@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import HashLink from '~/components/hash-link/HashLink'
 
-import { styles } from '~/containers/guest-home-page/styles/Welcome.styles.js'
+import { styles } from '~/containers/guest-home-page/styles/Welcome.style.js'
 import titleMd from '~/assets/img/guest-home-page/titleMd.svg'
 import titleSm from '~/assets/img/guest-home-page/titleSm.svg'
 import titleXs from '~/assets/img/guest-home-page/titleXs.svg'
