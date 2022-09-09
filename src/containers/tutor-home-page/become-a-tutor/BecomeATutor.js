@@ -3,6 +3,7 @@ import StepWrapper from '~/components/step-wrapper/StepWrapper'
 import TempComponent from './TempComponent'
 
 import GeneralInfo from '~/containers/tutor-home-page/general-info/GeneralInfo'
+import LanguagesStep from '~/containers/tutor-home-page/languages-step/LanguagesStep'
 import ExperienceStep from '~/containers/tutor-home-page/experience-step/ExperienceStep'
 import AddDocuments from '~/containers/tutor-home-page/add-documents/AddDocuments'
 import AddPhoto from '../add-photo/AddPhoto'
@@ -34,6 +35,8 @@ const BecomeATutor = () => {
     }
   })
 
+  const [languages, setLanguages] = useState([{}])
+
   const childrenArr = [
     <GeneralInfo
       data={ data }
@@ -43,7 +46,10 @@ const BecomeATutor = () => {
       key='1'
       setStepErrors={ setStepErrors }
     />,
-    <TempComponent key='2'>2</TempComponent>,
+    <LanguagesStep
+      key='2' languages={ languages } setLanguages={ setLanguages }
+      setStepErrors={ setStepErrors }
+    />,
     <TempComponent key='3'>3</TempComponent>,
     <ExperienceStep
       data={ data }
