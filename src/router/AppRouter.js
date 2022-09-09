@@ -15,7 +15,7 @@ import MentorRoutes from './routes/MentorRoutes'
 const AppRouter = ({ userRole }) => {
   return (
     <Routes>
-      <Route element={ <GuestRoute userRole={ userRole } /> } path={ routes.home.route } />
+      <Route element={ <GuestRoute userRole={ userRole } /> } path={ routes.home.nested } />
       <Route
         element={
           <PrivateRoute role={ student } userRole={ userRole }>
