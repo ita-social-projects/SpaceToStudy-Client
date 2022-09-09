@@ -6,7 +6,7 @@ import { getFromLocalStorage, setToLocalStorage } from './local-storage-service'
 import i18n from '~/plugins/i18n'
 
 export const setupInterceptors = (store) => {
-  axiosClient.interceptors.request.use(async (config) => {
+  axiosClient.interceptors.request.use((config) => {
     const token = getFromLocalStorage(accessToken)
     if (token) {
       config.headers.authorization = `Bearer ${token}`
