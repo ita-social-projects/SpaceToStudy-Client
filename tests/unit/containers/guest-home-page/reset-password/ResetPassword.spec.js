@@ -3,24 +3,20 @@ import useAxios from '~/hooks/use-axios'
 import ResetPassword from '~/containers/guest-home-page/reset-password/ResetPassword'
 import { SnackBarProvider } from '~/context/snackbar-context'
 import { renderWithProviders } from '~tests/test-utils'
+import { axiosInstance } from '~/services/auth-service'
+import MockAdapter from 'axios-mock-adapter'
+import { URLs } from '~/constants/request'
+import { axiosClient } from '~/plugins/axiosClient'
 
-jest.mock('~/hooks/use-axios')
-
+const mockAxiosClient = new MockAdapter(axiosClient)
 const setModal = jest.fn()
 const resetToken = 'test'
+const error = new Error()
+error.code = 'BAD_RESET_TOKEN'
 
 describe('ResetPassword test', () => {
   it('should open login dilog after positive response', async () => {
-    const mockData = {
-      response: { response: { status: 204 } },
-      error: null,
-      loading: false,
-      fetchData: jest.fn()
-    }
-    useAxios.mockImplementation((options) => {
-      options.service()
-      return mockData
-    })
+    mockAxiosClient.onPatch(`${URLs.auth.resetPassword}/${resetToken}`).reply(200)
 
     renderWithProviders(
       <SnackBarProvider>
@@ -43,13 +39,7 @@ describe('ResetPassword test', () => {
   })
 
   it('should open snackbar with error after reject', async () => {
-    const mockData = {
-      response: null,
-      error: { response: { data: { code: 'BAD_RESET_TOKEN' } } },
-      loading: false,
-      fetchData: jest.fn()
-    }
-    useAxios.mockImplementation(() => mockData)
+    mockAxiosClient.onPatch(`${URLs.auth.resetPassword}/${resetToken}`).reply(404, error)
 
     renderWithProviders(
       <SnackBarProvider>

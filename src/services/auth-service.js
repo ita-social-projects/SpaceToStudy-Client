@@ -29,6 +29,6 @@ export const AuthService = {
   },
   resetPassword: (resetToken, newPassword) => {
     const confirmUrl = `${Urls.auth.resetPassword}/${resetToken}`
-    return axiosInstance.patch(confirmUrl, newPassword)
+    return axiosClient.patch(confirmUrl, newPassword)
   }
 }
