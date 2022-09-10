@@ -1,38 +1,32 @@
 export const scrollbar = {
   '&::-webkit-scrollbar-track': {
-    boxShadow: 'none'
+    visibility: 'hidden'
   },
   '&::-webkit-scrollbar-thumb': {
-    background: 'none'
+    visibility: 'hidden'
   },
   '&:hover': {
     '&::-webkit-scrollbar-track': {
-      boxShadow: 'inset 0 0 5px rgba(43, 49, 52, 0.3)'
+      visibility: 'visible'
     },
     '&::-webkit-scrollbar-thumb': {
-      background: '#9DA7AC',
-      '&:hover': {
-        background: '#727E84'
-      }
+      visibility: 'visible'
     }
   }
 }
 export const textfieldScrollbar = {
   '& ::-webkit-scrollbar-track': {
-    boxShadow: 'none'
+    visibility: 'hidden'
   },
   '& ::-webkit-scrollbar-thumb': {
-    background: 'none'
+    visibility: 'hidden'
   },
   '& :hover': {
     '&::-webkit-scrollbar-track': {
-      boxShadow: 'inset 0 0 5px rgba(43, 49, 52, 0.3)'
+      visibility: 'visible'
     },
     '&::-webkit-scrollbar-thumb': {
-      background: '#9DA7AC',
-      '&:hover': {
-        background: '#727E84'
-      }
+      visibility: 'visible'
     }
   }
 }
