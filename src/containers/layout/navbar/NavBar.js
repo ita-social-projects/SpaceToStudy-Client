@@ -16,7 +16,7 @@ import Sidebar from '~/containers/layout/sidebar/Sidebar'
 import NavigationIcons from '~/containers/navigation-icons/NavigationIcons'
 import { student } from '~/constants'
 
-import { style } from '~/containers/layout/navbar/NavBar.styles'
+import { styles } from '~/containers/layout/navbar/NavBar.styles'
 
 const Navbar = () => {
   const { t } = useTranslation()
@@ -30,9 +30,9 @@ const Navbar = () => {
 
   const navigationList = navigationItems.map((item) => {
     return (
-      <ListItem key={ item.label } sx={ style.navItem }>
+      <ListItem key={ item.label } sx={ styles.navItem }>
         <Typography
-          component={ HashLink } sx={ style.navItemText } to={ item.route }
+          component={ HashLink } sx={ styles.navItemText } to={ item.route }
           variant='subtitle2'
         >
           { t(`header.${item.label}`) }
@@ -42,15 +42,15 @@ const Navbar = () => {
   })
 
   return (
-    <Box sx={ style.header }>
+    <Box sx={ styles.header }>
       <Button
-        component={ Link } size='small' sx={ style.logoButton }
+        component={ Link } size='small' sx={ styles.logoButton }
         to={ routes.home.route }
       >
         <Logo />
       </Button>
 
-      <List sx={ style.navList }>
+      <List sx={ styles.navList }>
         { navigationList }
       </List>
 

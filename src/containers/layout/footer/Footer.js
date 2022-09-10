@@ -6,19 +6,19 @@ import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 
 import { routes } from '~/constants/routes'
-import { style } from '~/containers/layout/footer/Footer.styles'
+import { styles } from '~/containers/layout/footer/Footer.styles'
 
 const Footer = () => {
   const { privacyPolicy, termOfUse } = routes
   const { t } = useTranslation()
 
   return (
-    <Box sx={ style.footer }>
-      <Container sx={ style.container }>
+    <Box sx={ styles.footer }>
+      <Container sx={ styles.container }>
         <Typography color='primary.50' variant='caption'>
           { t('footer.allRightsReserved') }
         </Typography>
-        <Box sx={ style.links }>
+        <Box sx={ styles.links }>
           <Typography component={ Link } to={ privacyPolicy.route } variant='caption'>
             { t(`footer.${privacyPolicy.label}`) }
           </Typography>

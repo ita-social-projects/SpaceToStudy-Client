@@ -1,6 +1,6 @@
 import { mainShadow } from '~/styles/app-theme/custom-shadows'
 
-export const style = {
+export const styles = {
   container: {
     display: 'flex',
     justifyContent: 'center',

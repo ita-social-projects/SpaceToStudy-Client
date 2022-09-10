@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
-import { style } from './EmailConfirmModal.styles'
+import { styles } from '~/containers/email-confirm-modal/EmailConfirmModal.styles'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import imgSuccess from '~/assets/img/email-confirmation-modals/success-icon.svg'
@@ -28,11 +28,11 @@ const EmailConfirmModal = ({ confirmToken, setModal }) => {
 
   if (error && error.response.data.code === 'BAD_CONFIRM_TOKEN') {
     return (
-      <Box sx={ style.box }>
+      <Box sx={ styles.box }>
         <ImgTitleDescription
           description={ t('modals.emailReject-badToken') }
           img={ imgReject }
-          style={ style }
+          style={ styles }
           title={ t('modals.emailNotConfirm') }
         />
       </Box>
@@ -41,11 +41,11 @@ const EmailConfirmModal = ({ confirmToken, setModal }) => {
 
   if (error && error.response.data.code === 'EMAIL_ALREADY_CONFIRMED') {
     return (
-      <Box sx={ style.box }>
+      <Box sx={ styles.box }>
         <ImgTitleDescription
           description={ t('modals.emailReject-alreadyConfirmed') }
           img={ imgReject }
-          style={ style }
+          style={ styles }
           title={ t('modals.emailNotConfirm') }
         />
       </Box>
@@ -54,11 +54,11 @@ const EmailConfirmModal = ({ confirmToken, setModal }) => {
 
   if (response) {
     return (
-      <Box sx={ style.box }>
-        <ImgTitleDescription img={ imgSuccess } style={ style } title={ t('modals.emailConfirm') } />
+      <Box sx={ styles.box }>
+        <ImgTitleDescription img={ imgSuccess } style={ styles } title={ t('modals.emailConfirm') } />
         <Button
           color='primary' onClick={ openLoginDialog } size='large'
-          style={ style.button } variant='contained'
+          style={ styles.button } variant='contained'
         >
           { t('button.goToLogin') }
         </Button>

@@ -1,4 +1,4 @@
-export const style = {
+export const styles = {
   root: {
     minWidth: { xs: '280px', sm: '400px' }
   },

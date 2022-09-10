@@ -1,4 +1,4 @@
-export const style = {
+export const styles = {
   footer: {
     backgroundColor: 'primary.900'
   },

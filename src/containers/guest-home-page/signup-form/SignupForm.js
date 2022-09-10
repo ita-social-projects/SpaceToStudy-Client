@@ -10,7 +10,7 @@ import useInputVisibility from '~/hooks/use-input-visibility'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import { routes } from '~/constants/routes'
 
-import { style } from './SignupForm.styles'
+import { styles } from '~/containers/guest-home-page/signup-form/SignupForm.styles'
 
 const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors, closeModal }) => {
   const { t } = useTranslation()
@@ -26,14 +26,14 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors, clos
   }
 
   const policyAgreement = (
-    <Box sx={ style.box }>
+    <Box sx={ styles.box }>
       <Typography variant='subtitle2'>
         { t('signup.iAgree') }
       </Typography>
       <Typography
         component={ HashLink }
         onClick={ closeModal }
-        sx={ style.underlineText }
+        sx={ styles.underlineText }
         to={ termOfUse.route }
         variant='subtitle2'
       >
@@ -45,7 +45,7 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors, clos
       <Typography
         component={ HashLink }
         onClick={ closeModal }
-        sx={ style.underlineText }
+        sx={ styles.underlineText }
         to={ privacyPolicy.route }
         variant='subtitle2'
       >
@@ -125,20 +125,20 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors, clos
         value={ data.confirmPassword }
       />
 
-      <Box sx={ style.checkboxContainer }>
+      <Box sx={ styles.checkboxContainer }>
         <FormControlLabel
           control={ <Checkbox /> }
           label={ policyAgreement }
           labelPlacement='end'
           onChange={ handleOnAgreementChange }
           size='large'
-          sx={ style.checkboxLabel }
+          sx={ styles.checkboxLabel }
           variant='subtitle2'
         />
       </Box>
 
       <Button
-        disabled={ buttonDisabled } size='large' sx={ style.signupButton }
+        disabled={ buttonDisabled } size='large' sx={ styles.signupButton }
         type='submit' variant='contained'
       >
         { t('common.labels.signup') }

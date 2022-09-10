@@ -1,4 +1,4 @@
-export const style = {
+export const styles = {
   feature: {
     px: '24px',
     overflow: 'auto'

@@ -9,7 +9,7 @@ import CloseIcon from '@mui/icons-material/Close'
 
 import HashLink from '~/components/hash-link/HashLink'
 
-import { style } from '~/containers/layout/sidebar/Sidebar.styles'
+import { styles } from '~/containers/layout/sidebar/Sidebar.styles'
 
 const Sidebar = ({ isSidebarOpen, setIsSidebarOpen, navigationItems }) => {
   const { t } = useTranslation()
@@ -20,7 +20,7 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen, navigationItems }) => {
         <Typography
           component={ HashLink }
           onClick={ () => setIsSidebarOpen(false) }
-          sx={ style.listItem }
+          sx={ styles.listItem }
           to={ item.route }
           variant='subtitle1'
         >
@@ -32,11 +32,11 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen, navigationItems }) => {
 
   return (
     <Drawer anchor='right' onClose={ () => setIsSidebarOpen(false) } open={ isSidebarOpen }>
-      <IconButton onClick={ () => setIsSidebarOpen(false) } sx={ style.closeIcon }>
+      <IconButton onClick={ () => setIsSidebarOpen(false) } sx={ styles.closeIcon }>
         <CloseIcon color='primary' />
       </IconButton>
 
-      <List sx={ style.list }>
+      <List sx={ styles.list }>
         { navigationList }
       </List>
     </Drawer>

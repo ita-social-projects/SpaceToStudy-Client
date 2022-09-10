@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography'
 import AppTextField from '~/components/app-text-field/AppTextField'
 
 import img from '~/assets/img/mentor-home-page/become-tutor/experience.png'
-import { styles } from './experience-step.styles'
+import { styles } from '~/containers/mentor-home-page/experience-step/experience-step.styles'
 
 const ExperienceStep = ({ data, handleChange, handleBlur, errors, btnsBox, setStepErrors, stepLabel }) => {
   const { t } = useTranslation()

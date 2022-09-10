@@ -10,7 +10,7 @@ import plantImg from '~/assets/img/error-page/404-plant.svg'
 import manImg from '~/assets/img/error-page/404-man.svg'
 import useBreakpoints from '~/hooks/use-breakpoints'
 
-import { style } from '~/pages/error/styles/NotFound.styles'
+import { styles } from '~/pages/error/styles/NotFound.styles'
 
 const NotFound = () => {
   const { t } = useTranslation()
@@ -24,8 +24,8 @@ const NotFound = () => {
     (isDesktop && desktopTypography) || (isTablet && tabletTypography) || (isMobile && mobileTypography)
 
   return (
-    <Box sx={ style.root }>
-      <Box sx={ style.box }>
+    <Box sx={ styles.root }>
+      <Box sx={ styles.box }>
         <TitleWithDescription
           description={ t('errorPage.404.description') }
           descriptionStyles={ { typography: windowSizeTypography.description } }
@@ -33,21 +33,21 @@ const NotFound = () => {
           titleStyles={ { typography: windowSizeTypography.title, lineHeight: '61px' } }
         />
         <Button
-          component={ Link } sx={ style.button } to={ routes.home.route }
+          component={ Link } sx={ styles.button } to={ routes.home.route }
           variant='contained'
         >
           { t('button.toMain') }
         </Button>
       </Box>
 
-      <Box sx={ style.imgBox }>
+      <Box sx={ styles.imgBox }>
         <Box
           alt='man with bag' component='img' src={ manImg }
-          sx={ style.manImg }
+          sx={ styles.manImg }
         />
         <Box
           alt='flowerpot' component='img' src={ plantImg }
-          sx={ style.plantImg }
+          sx={ styles.plantImg }
         />
       </Box>
     </Box>

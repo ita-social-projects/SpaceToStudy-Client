@@ -11,7 +11,7 @@ import { ModalContext } from '~/context/modal-context'
 import ForgotPassword from '~/containers/guest-home-page/forgot-password/ForgotPassword'
 import AppTextField from '~/components/app-text-field/AppTextField'
 
-import { style } from './LoginForm.styles'
+import { styles } from '~/containers/guest-home-page/login-form/LoginForm.styles'
 
 const LoginForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) => {
   const { inputVisibility: passwordVisibility, showInputText: showPassword } = useInputVisibility(errors.password)
@@ -50,23 +50,23 @@ const LoginForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) => 
         value={ data.password }
       />
 
-      <Box sx={ style.checkboxContainer }>
+      <Box sx={ styles.checkboxContainer }>
         <FormControlLabel
           control={ <Checkbox /> }
           disabled
           label={ t('login.rememberMe') }
           labelPlacement='end'
           size='large'
-          sx={ style.checkboxLabel }
+          sx={ styles.checkboxLabel }
           variant='subtitle2'
         />
-        <Typography onClick={ openForgotPassword } sx={ style.forgotPass } variant='subtitle2'>
+        <Typography onClick={ openForgotPassword } sx={ styles.forgotPass } variant='subtitle2'>
           { t('login.forgotPassword') }
         </Typography>
       </Box>
 
       <Button
-        size='large' sx={ style.loginButton } type='submit'
+        size='large' sx={ styles.loginButton } type='submit'
         variant='contained'
       >
         { t('common.labels.login') }

@@ -1,4 +1,4 @@
-export const style = {
+export const styles = {
   header: {
     display: 'flex',
     justifyContent: 'space-between',

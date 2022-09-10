@@ -8,7 +8,7 @@ import Box from '@mui/material/Box'
 import EastIcon from '@mui/icons-material/East'
 import WestIcon from '@mui/icons-material/West'
 
-import { styles } from './StepWrapper.styles'
+import { styles } from '~/components/step-wrapper/StepWrapper.styles'
 
 const StepWrapper = ({ children, steps, handleSubmit, stepErrors }) => {
   const [activeStep, setActiveStep] = useState(0)

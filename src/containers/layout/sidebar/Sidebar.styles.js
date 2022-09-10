@@ -1,4 +1,4 @@
-export const style = {
+export const styles = {
   closeIcon: {
     position: 'absolute',
     right: '14px',

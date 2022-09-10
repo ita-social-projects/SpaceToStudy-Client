@@ -1,4 +1,4 @@
-export const style = {
+export const styles = {
   root: {
     maxWidth: '350px',
     padding: { xs: '50px 16px', sm: '70px', md: '96px' }

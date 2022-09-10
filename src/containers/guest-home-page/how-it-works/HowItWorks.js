@@ -11,7 +11,7 @@ import CardsWithButton from '~/containers/guest-home-page/cards-with-button/Card
 import { mentorCardBoxArray, studentCardBoxArray } from '~/containers/guest-home-page/how-it-works/CardBoxArrays'
 import { mentor, student } from '~/constants'
 
-import { style } from '~/containers/guest-home-page/how-it-works/HowItWorks.styles'
+import { styles } from '~/containers/guest-home-page/how-it-works/HowItWorks.styles'
 
 const sectionId = routes.guestNavBar.howItWorks.label
 
@@ -39,13 +39,13 @@ const HowItWorks = () => {
   )
 
   return (
-    <Box id={ sectionId } sx={ style.block }>
-      <Box sx={ style.container }>
+    <Box id={ sectionId } sx={ styles.block }>
+      <Box sx={ styles.container }>
         <Typography sx={ { mb: '32px' } } variant={ 'h3' }>
           { t('guestHomePage.howItWorks.title') }
         </Typography>
 
-        <Stack alignItems='center' spacing={ 1 } sx={ style.switch }>
+        <Stack alignItems='center' spacing={ 1 } sx={ styles.switch }>
           <Typography color={ isStudent ? 'primary.500' : 'primary.900' } variant={ 'h6' }>
             { t('guestHomePage.howItWorks.learnFromExperts') }
           </Typography>
