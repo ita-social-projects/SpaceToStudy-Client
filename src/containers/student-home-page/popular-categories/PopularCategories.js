@@ -9,7 +9,7 @@ import useShowMore from '~/hooks/use-show-more'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import ClickableCard from '~/components/clickable-card/ClickableCard'
 import { categoriesListMock } from '~/containers/student-home-page/popular-categories/categories-list-mock'
-import { studentRoutes } from '~/constants/routes'
+import { studentRoutes } from '~/router/constants/studentRoutes'
 
 import { styles } from '~/containers/student-home-page/popular-categories/popular-categories.styles'
 

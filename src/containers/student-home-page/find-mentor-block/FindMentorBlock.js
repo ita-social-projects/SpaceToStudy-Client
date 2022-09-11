@@ -9,7 +9,7 @@ import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import SearchIcon from '@mui/icons-material/Search'
 
-import { studentRoutes } from '~/constants/routes'
+import { studentRoutes } from '~/router/constants/studentRoutes'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { styles } from './find-mentor-block.styles'
 import bag from '~/assets/img/student-home/bag.png'
@@ -27,8 +27,8 @@ const FindMentorBlock = () => {
   }
 
   const redirect = useCallback(() => {
-    return navigate(findMentor.route, { state: { filter } })
-  }, [filter, findMentor.route, navigate])
+    return navigate(findMentor.path, { state: { filter } })
+  }, [filter, findMentor.path, navigate])
 
   const handleEnterPress = useCallback(
     (e) => {

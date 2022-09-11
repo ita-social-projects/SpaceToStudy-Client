@@ -5,7 +5,7 @@ import { renderWithProviders } from '~tests/test-utils'
 describe('Sidebar test', () => {
   const isSidebarOpen = true
   const setIsSidebarOpen = jest.fn()
-  const navigationItems = [{ label: 'label-test', route: '/#route-test' }]
+  const navigationItems = [{ label: 'label-test', path: '/#route-test' }]
 
   beforeEach(() => {
     renderWithProviders(

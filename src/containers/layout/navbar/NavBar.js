@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { routes, studentRoutes } from '~/constants/routes'
+import { studentRoutes } from '~/router/constants/studentRoutes'
+import { guestRoutes } from '~/router/constants/guestRoutes'
 import { useTranslation } from 'react-i18next'
 
 import Typography from '@mui/material/Typography'
@@ -21,7 +22,7 @@ import { style } from '~/containers/layout/navbar/NavBar.styles'
 const Navbar = () => {
   const { t } = useTranslation()
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
-  const [navigationItems, setNavigationItems] = useState(Object.values(routes.guestNavBar))
+  const [navigationItems, setNavigationItems] = useState(Object.values(guestRoutes.guestNavBar))
   const { userRole } = useSelector((state) => state.appMain)
 
   useEffect(() => {
@@ -32,7 +33,7 @@ const Navbar = () => {
     return (
       <ListItem key={ item.label } sx={ style.navItem }>
         <Typography
-          component={ HashLink } sx={ style.navItemText } to={ item.route }
+          component={ HashLink } sx={ style.navItemText } to={ item.path }
           variant='subtitle2'
         >
           { t(`header.${item.label}`) }
@@ -45,7 +46,7 @@ const Navbar = () => {
     <Box sx={ style.header }>
       <Button
         component={ Link } size='small' sx={ style.logoButton }
-        to={ routes.home.route }
+        to={ guestRoutes.home.path }
       >
         <Logo />
       </Button>

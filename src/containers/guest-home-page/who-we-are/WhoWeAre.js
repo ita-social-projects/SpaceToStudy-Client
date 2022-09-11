@@ -2,12 +2,12 @@ import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
 
-import { routes } from '~/constants/routes'
+import { guestRoutes } from '~/router/constants/guestRoutes'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import VideoBox from '~/components/video-box/VideoBox'
 import videoImg from '~/assets/img/guest-home-page/videoImg.png'
 
-const sectionId = routes.guestNavBar.whoWeAre.label
+const sectionId = guestRoutes.guestNavBar.whoWeAre.label
 
 const WhoWeAre = () => {
   const { t } = useTranslation()

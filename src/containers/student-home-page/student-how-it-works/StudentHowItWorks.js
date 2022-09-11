@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 
-import { studentRoutes } from '~/constants/routes'
+import { studentRoutes } from '~/router/constants/studentRoutes'
 import { howItWorksCards } from '~/containers/student-home-page/student-how-it-works/HowItWorksCards'
 
 import { styles } from '~/containers/student-home-page/student-how-it-works/student-how-it-works.styles'
@@ -16,7 +16,7 @@ const sectionId = studentRoutes.navBar.howItWorks.label
 const StudentHowItWorks = () => {
   const { t } = useTranslation()
 
-  const { route } = studentRoutes.navBar.findMentor
+  const { path } = studentRoutes.navBar.findMentor
 
   const cards = howItWorksCards.map((item, index) => {
     return (
@@ -50,7 +50,7 @@ const StudentHowItWorks = () => {
       </Box>
 
       <Button
-        component={ Link } size='extraLarge' to={ route }
+        component={ Link } size='extraLarge' to={ path }
         variant='contained'
       >
         { t('studentHomePage.findMentorBlock.button') }

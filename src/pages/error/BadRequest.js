@@ -5,7 +5,7 @@ import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import Button from '@mui/material/Button'
 
-import { routes } from '~/constants/routes'
+import { guestRoutes } from '~/router/constants/guestRoutes'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 
@@ -33,7 +33,7 @@ const BadRequest = () => {
           titleStyles={ { typography: windowSizeTypography.title } }
         />
         <Button
-          component={ Link } size='extraLarge' to={ routes.home.route }
+          component={ Link } size='extraLarge' to={ guestRoutes.home.path }
           variant='contained'
         >
           { t('button.toMain') }

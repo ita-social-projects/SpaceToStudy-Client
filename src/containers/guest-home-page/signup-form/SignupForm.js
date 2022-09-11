@@ -8,13 +8,13 @@ import Button from '@mui/material/Button'
 import Checkbox from '@mui/material/Checkbox'
 import useInputVisibility from '~/hooks/use-input-visibility'
 import AppTextField from '~/components/app-text-field/AppTextField'
-import { routes } from '~/constants/routes'
+import { guestRoutes } from '~/router/constants/guestRoutes'
 
 import { style } from './SignupForm.style'
 
 const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors, closeModal }) => {
   const { t } = useTranslation()
-  const { privacyPolicy, termOfUse } = routes
+  const { privacyPolicy, termOfUse } = guestRoutes
   const [buttonDisabled, setButtonDisabled] = useState(true)
   const { inputVisibility: passwordVisibility, showInputText: showPassword } = useInputVisibility(errors.password)
   const { inputVisibility: confirmPasswordVisibility, showInputText: showConfirmPassword } = useInputVisibility(
@@ -34,7 +34,7 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors, clos
         component={ HashLink }
         onClick={ closeModal }
         sx={ style.underlineText }
-        to={ termOfUse.route }
+        to={ termOfUse.path }
         variant='subtitle2'
       >
         { t('common.labels.terms') }
@@ -46,7 +46,7 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors, clos
         component={ HashLink }
         onClick={ closeModal }
         sx={ style.underlineText }
-        to={ privacyPolicy.route }
+        to={ privacyPolicy.path }
         variant='subtitle2'
       >
         { t('common.labels.privacyPolicy') }

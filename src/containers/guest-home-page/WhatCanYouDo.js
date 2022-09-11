@@ -8,13 +8,13 @@ import InfoCard from '~/components/info-card/InfoCard'
 import SignupDialog from '~/containers/guest-home-page/signup-dialog/SignupDialog'
 import { ModalContext } from '~/context/modal-context'
 import { student, mentor } from '~/constants'
-import { routes } from '~/constants/routes'
+import { guestRoutes } from '~/router/constants/guestRoutes'
 
 import learnImg from '~/assets/img/guest-home-page/learnImg.png'
 import teachImg from '~/assets/img/guest-home-page/teachImg.png'
 import { styles } from '~/containers/guest-home-page/styles/what-can-you-do.styles'
 
-const sectionId = routes.guestNavBar.whatCanYouDo.label
+const sectionId = guestRoutes.guestNavBar.whatCanYouDo.label
 
 const cardWidth = {
   md: '427px',

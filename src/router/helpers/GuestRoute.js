@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 
 import Loader from '~/components/loader/Loader'
-import { routes } from '~/constants/routes'
+import { guestRoutes } from '~/router/constants/guestRoutes'
 import GuestRoutes from '../routes/GuestRoutes'
 
 const GuestRoute = ({ userRole }) => {
@@ -9,7 +9,7 @@ const GuestRoute = ({ userRole }) => {
 
   if (userRole) {
     setTimeout(() => {
-      navigate(routes[userRole].route)
+      navigate(guestRoutes[userRole].path)
     }, 0)
   } else {
     return <GuestRoutes />

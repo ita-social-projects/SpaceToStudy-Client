@@ -6,14 +6,14 @@ import Typography from '@mui/material/Typography'
 import Stack from '@mui/material/Stack'
 import Switch from '@mui/material/Switch'
 
-import { routes } from '~/constants/routes'
+import { guestRoutes } from '~/router/constants/guestRoutes'
 import CardsWithButton from '~/containers/guest-home-page/cards-with-button/CardsWithButton'
 import { mentorCardBoxArray, studentCardBoxArray } from '~/containers/guest-home-page/how-it-works/CardBoxArrays'
 import { mentor, student } from '~/constants'
 
 import { style } from '~/containers/guest-home-page/how-it-works/how-it-works.style'
 
-const sectionId = routes.guestNavBar.howItWorks.label
+const sectionId = guestRoutes.guestNavBar.howItWorks.label
 
 const HowItWorks = () => {
   const { t } = useTranslation()

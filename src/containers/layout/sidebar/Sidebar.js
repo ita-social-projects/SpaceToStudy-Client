@@ -21,7 +21,7 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen, navigationItems }) => {
           component={ HashLink }
           onClick={ () => setIsSidebarOpen(false) }
           sx={ style.listItem }
-          to={ item.route }
+          to={ item.path }
           variant='subtitle1'
         >
           { t(`header.${item.label}`) }

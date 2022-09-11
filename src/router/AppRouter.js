@@ -5,7 +5,8 @@ import NotFound from '~/pages/error/NotFound'
 import CookiePolicy from '~/pages/cookie-policy/CookiePolicy'
 import BadRequest from '~/pages/error/BadRequest'
 import AuthPolicy from '~/pages/error/AuthPolicy'
-import { errors, routes } from '~/constants/routes'
+import { errorsRoutes } from '~/router/constants/errorsRoutes'
+import { guestRoutes } from '~/router/constants/guestRoutes'
 import { mentor, student } from '~/constants'
 import PrivateRoute from './helpers/PrivateRoute'
 import GuestRoute from './helpers/GuestRoute'
@@ -15,14 +16,14 @@ import MentorRoutes from './routes/MentorRoutes'
 const AppRouter = ({ userRole }) => {
   return (
     <Routes>
-      <Route element={ <GuestRoute userRole={ userRole } /> } path={ routes.home.nested } />
+      <Route element={ <GuestRoute userRole={ userRole } /> } path={ guestRoutes.home.nested } />
       <Route
         element={
           <PrivateRoute role={ student } userRole={ userRole }>
             <StudentRoutes />
           </PrivateRoute>
         }
-        path={ routes.student.nested }
+        path={ guestRoutes.student.nested }
       />
       <Route
         element={
@@ -30,14 +31,14 @@ const AppRouter = ({ userRole }) => {
             <MentorRoutes />
           </PrivateRoute>
         }
-        path={ routes.mentor.nested }
+        path={ guestRoutes.mentor.nested }
       />
-      <Route element={ <BadRequest /> } path={ errors.badRequest.route } />
-      <Route element={ <AuthPolicy /> } path={ errors.authPolicy.route } />
-      <Route element={ <CookiePolicy /> } path={ routes.privacyPolicy.route } />
-      <Route element={ <NotFound /> } path={ errors.notFound.route } />
-      <Route element={ <InternalServerError /> } path={ errors.internalServerError.route } />
-      <Route element={ <Navigate to={ errors.notFound.route } /> } path='*' />
+      <Route element={ <BadRequest /> } path={ errorsRoutes.badRequest.path } />
+      <Route element={ <AuthPolicy /> } path={ errorsRoutes.authPolicy.path } />
+      <Route element={ <CookiePolicy /> } path={ guestRoutes.privacyPolicy.path } />
+      <Route element={ <NotFound /> } path={ errorsRoutes.notFound.path } />
+      <Route element={ <InternalServerError /> } path={ errorsRoutes.internalServerError.path } />
+      <Route element={ <Navigate to={ errorsRoutes.notFound.path } /> } path='*' />
     </Routes>
   )
 }

@@ -10,9 +10,9 @@ import titleMd from '~/assets/img/guest-home-page/titleMd.svg'
 import titleSm from '~/assets/img/guest-home-page/titleSm.svg'
 import titleXs from '~/assets/img/guest-home-page/titleXs.svg'
 import useBreakpoints from '~/hooks/use-breakpoints'
-import { routes } from '~/constants/routes'
+import { guestRoutes } from '~/router/constants/guestRoutes'
 
-const scrollTo = routes.guestNavBar.whatCanYouDo.route
+const scrollTo = guestRoutes.guestNavBar.whatCanYouDo.path
 
 const Welcome = () => {
   const { t } = useTranslation()
