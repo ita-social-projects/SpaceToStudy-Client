@@ -21,6 +21,20 @@ export const useForm = ({ initialValues, validations, onSubmit }) => {
     }
   }
 
+  const handleAddFiles = (key, files) => {
+    setData({
+      ...data,
+      [key]: files
+    })
+  }
+
+  const handleErrors = (key, error) => {
+    setErrors({
+      ...errors,
+      [key]: error
+    })
+  }
+
   const handleBlur = (key) => (event) => {
     setDirty(data[key] !== initialValues[key])
     const valid = validations[key](event.target.value, data)
@@ -61,7 +75,9 @@ export const useForm = ({ initialValues, validations, onSubmit }) => {
     isDirty,
     errors,
     handleChange,
+    handleAddFiles,
     handleBlur,
+    handleErrors,
     handleSubmit
   }
 }

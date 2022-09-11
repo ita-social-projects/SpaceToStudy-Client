@@ -32,7 +32,7 @@ const FileUploader = ({ buttonText, emitter, initialState, initialError, validat
       <Typography sx={ styles.fileName } variant='body2'>
         { item.name }
       </Typography>
-      <IconButton onClick={ () => deleteFile(item) } size='small'>
+      <IconButton data-testid='delete-file' onClick={ () => deleteFile(item) } size='small'>
         <CloseIcon sx={ styles.close } />
       </IconButton>
     </ListItem>

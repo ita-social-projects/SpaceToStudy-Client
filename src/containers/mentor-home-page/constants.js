@@ -6,7 +6,8 @@ export const initialValues = {
   country: '',
   city: '',
   confirmAge: false,
-  experience: ''
+  experience: '',
+  photo: []
 }
 
 export const validations = {

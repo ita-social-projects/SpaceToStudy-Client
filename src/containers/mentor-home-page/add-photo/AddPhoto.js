@@ -1,23 +1,38 @@
-import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Box, Typography } from '@mui/material'
 
 import FileUploader from '~/components/file-uploader/FileUploader'
+import { imageResize } from '~/utils/image-resize'
 
 import { style } from '~/containers/mentor-home-page/add-photo/AddPhoto.style'
 import { validationData } from './constants'
 
-const AddPhoto = ({ btnsBox, photo, photoError, addPhoto, setStepErrors, stepLabel, photoForUpload }) => {
+const AddPhoto = ({ btnsBox, handleErrors, errors, handleStepErrors, stepLabel, data, handleAddFiles }) => {
   const { t } = useTranslation()
 
-  useEffect(() => {
-    setStepErrors((prevState) => ({ ...prevState, [stepLabel]: Boolean(photoError) }))
-  }, [photoError, setStepErrors, stepLabel])
+  const addPhoto = (originalPhoto, error) => {
+    if (data.photo.length !== originalPhoto.length) {
+      if (!originalPhoto.length) {
+        handleAddFiles('photo', [])
+      } else {
+        const originalPhotoPath = URL.createObjectURL(originalPhoto[0])
+        const photoSizes = { newWidth: 580, newHeight: 580 }
+        const photoName = originalPhoto[0].name
+        imageResize(originalPhotoPath, photoSizes).then((resizedPhoto) => {
+          handleAddFiles('photo', [{ src: resizedPhoto, name: photoName }])
+        })
+      }
+    }
+    if (errors.photo !== error) {
+      handleErrors('photo', error)
+      handleStepErrors(stepLabel, error)
+    }
+  }
 
-  const photoPrewiew = photoForUpload ? (
+  const photoPrewiew = data.photo.length ? (
     <Box sx={ style.imgContainer }>
       <Box
-        alt={ t('becomeTutor.photo.imageAlt') } component='img' src={ photoForUpload }
+        alt={ t('becomeTutor.photo.imageAlt') } component='img' src={ data.photo[0].src }
         sx={ style.img }
       />
     </Box>
@@ -40,8 +55,8 @@ const AddPhoto = ({ btnsBox, photo, photoError, addPhoto, setStepErrors, stepLab
           <FileUploader
             buttonText={ t('becomeTutor.photo.button') }
             emitter={ addPhoto }
-            initialError={ photoError }
-            initialState={ photo }
+            initialError={ errors.photo }
+            initialState={ data.photo }
             validationData={ validationData }
           />
         </Box>
