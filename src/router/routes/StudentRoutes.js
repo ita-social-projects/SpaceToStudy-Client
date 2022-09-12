@@ -9,7 +9,7 @@ const StudentRoutes = () => {
     <Routes>
       <Route element={ <StudentHome /> } index />
       <Route element={ <FindMentor /> } path={ routes.navBar.findMentor.route } />
-      <Route element={ <Navigate to={ errors.notFound.route } /> } path='*' />
+      <Route element={ <Navigate to={ errors.notFound.nested } /> } path='*' />
     </Routes>
   )
 }
