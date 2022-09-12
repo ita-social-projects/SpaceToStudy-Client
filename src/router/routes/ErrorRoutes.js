@@ -13,7 +13,7 @@ const ErrorRoutes = () => {
       <Route element={ <AuthPolicy /> } path={ errors.authPolicy.route } />
       <Route element={ <NotFound /> } path={ errors.notFound.route } />
       <Route element={ <InternalServerError /> } path={ errors.internalServerError.route } />
-      <Route element={ <Navigate to={ errors.notFound.route } /> } path='*' />
+      <Route element={ <Navigate to={ errors.notFound.nested } /> } path='*' />
     </Routes>
   )
 }
