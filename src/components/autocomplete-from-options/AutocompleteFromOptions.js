@@ -1,4 +1,3 @@
-import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
@@ -10,8 +9,6 @@ import AppTextField from '~/components/app-text-field/AppTextField'
 import { styles } from '~/components/autocomplete-from-options/AutocompleteFromOptions.styles'
 
 const AutocompleteFromOptions = ({ options, formState, handleFormChange, btnText }) => {
-  const { t } = useTranslation()
-
   const handleChange = (field, idx) => (event, newValue) => {
     const newItems = [...formState]
     newItems[idx][field] = newValue
