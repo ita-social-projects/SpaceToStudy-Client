@@ -1,10 +1,12 @@
+import { scrollbar } from '~/styles/app-theme/custom-scrollbar'
+
 export const styles = {
   form: {
     overflow: 'auto',
-    maxHeight: '316px',
-    pt: '10px'
+    pt: '10px',
+    ...scrollbar
   },
-  formItem: {
+  container: {
     display: 'flex',
     alignItems: 'flex-start'
   },

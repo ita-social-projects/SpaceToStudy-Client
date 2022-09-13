@@ -4,6 +4,7 @@ export const styles = {
   container: {
     display: 'flex',
     justifyContent: 'space-between',
+    maxHeight: '580px',
     columnGap: 2,
     ...fadeAnimation
   },
@@ -16,5 +17,9 @@ export const styles = {
     flexDirection: 'column',
     justifyContent: 'space-between',
     pt: 2
+  },
+  btnsBox: {
+    pt: '10px',
+    mt: 'auto'
   }
 }

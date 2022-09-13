@@ -46,10 +46,7 @@ const BecomeATutor = () => {
       key='1'
       setStepErrors={ setStepErrors }
     />,
-    <LanguagesStep
-      key='2' languages={ languages } setLanguages={ setLanguages }
-      setStepErrors={ setStepErrors }
-    />,
+    <LanguagesStep key='2' languages={ languages } setLanguages={ setLanguages } />,
     <TempComponent key='3'>3</TempComponent>,
     <ExperienceStep
       data={ data }
