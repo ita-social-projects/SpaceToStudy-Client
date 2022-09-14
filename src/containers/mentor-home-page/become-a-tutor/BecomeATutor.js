@@ -20,8 +20,8 @@ const BecomeATutor = () => {
     setStepErrors((prevState) => ({ ...prevState, [stepLabel]: Boolean(isError) }))
   }, [])
 
-  const addDocuments = (documents, error) => {
-    setDocuments(documents)
+  const addDocuments = ({ files, error }) => {
+    files && setDocuments(files)
     setDocumentsError(error)
   }
 

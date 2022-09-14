@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
@@ -14,20 +13,16 @@ import useUpload from '~/hooks/use-upload'
 
 import { styles } from '~/components/file-uploader/FileUploader.styles'
 
-const FileUploader = ({ buttonText, emitter, initialState, initialError, validationData }) => {
+const FileUploader = ({ buttonText, emitter, initialState = [], initialError = '', validationData }) => {
   const { t } = useTranslation()
 
-  const { dragStart, dragLeave, dragDrop, addFiles, deleteFile, files, isDrag, error } = useUpload({
-    initialState: initialState,
-    initialError: initialError,
+  const { dragStart, dragLeave, dragDrop, addFiles, deleteFile, isDrag } = useUpload({
+    files: initialState,
+    emitter: emitter,
     validationData
   })
 
-  useEffect(() => {
-    emitter(files, error)
-  }, [files, error, emitter])
-
-  const filesList = files.map((item) => (
+  const filesList = initialState.map((item) => (
     <ListItem key={ item.name + Date.now() } sx={ styles.listItem }>
       <Typography sx={ styles.fileName } variant='body2'>
         { item.name }
@@ -48,7 +43,7 @@ const FileUploader = ({ buttonText, emitter, initialState, initialError, validat
         onDrop={ dragDrop }
         sx={ [styles.root, isDrag && styles.rootDrag] }
       >
-        { files.length > 0 && (<List sx={ { width: '100%' } }>
+        { initialState.length > 0 && (<List sx={ { width: '100%' } }>
           { filesList }
         </List>) }
 
@@ -62,9 +57,9 @@ const FileUploader = ({ buttonText, emitter, initialState, initialError, validat
         </Button>
       </Box>
 
-      { error && (
+      { initialError && (
         <Typography color='error' ml={ 1 } variant='caption'>
-          { t(error) }
+          { t(initialError) }
         </Typography>
       ) }
     </>
