@@ -17,7 +17,7 @@ import { AuthService } from '~/services/auth-service'
 
 import { snackbarVariants } from '~/constants'
 import { email } from '~/utils/validations/login'
-import { styles } from '~/containers/guest-home-page/forgot-password/ForgotPassword.style'
+import { styles } from '~/containers/guest-home-page/forgot-password/ForgotPassword.styles'
 import AppButton from '~/components/app-button/AppButton'
 
 const ForgotPassword = () => {
