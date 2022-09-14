@@ -57,9 +57,8 @@ describe('AddPhoto test', () => {
 
     const input = screen.getByLabelText('becomeTutor.photo.button')
     fireEvent.change(input, { target: { files: [fakeFile] } })
-    const error = screen.queryByText('becomeTutor.photo.typeError')
 
-    await waitFor(() => expect(error).toBeInTheDocument())
+    await waitFor(() => expect(handleErrors).toHaveBeenCalledWith('photo', 'becomeTutor.photo.typeError'))
   })
 })
 describe('AddPhoto test with image and error', () => {

@@ -42,21 +42,29 @@ describe('FileUploader test', () => {
     fireEvent.dragStart(container, { dataTransfer: { files: [fakeFile] } })
     fireEvent.drop(container, { dataTransfer: { files: [fakeFile] } })
     fireEvent.dragLeave(container)
-    const fileName = screen.getByText('test-file.png')
 
-    expect(fileName).toBeInTheDocument()
+    expect(emitter).toHaveBeenCalledTimes(2)
   })
+})
 
+describe('FileUploader test with file', () => {
+  const initialState = [fakeFile]
+  beforeEach(() => {
+    render(
+      <FileUploader
+        buttonText={ buttonText }
+        emitter={ emitter }
+        initialError={ initialError }
+        initialState={ initialState }
+        validationData={ validationData }
+      />
+    )
+  })
   it('should delete file after uploading', () => {
-    const container = screen.getByTestId('drop')
-    fireEvent.drop(container, { dataTransfer: { files: [fakeFile] } })
-    const icon = screen.getByTestId('CloseIcon')
-    const fileName = screen.getByText('test-file.png')
+    const remove = screen.getByTestId('delete-file')
+    fireEvent.click(remove)
+    const newState = { error: undefined, files: [] }
 
-    expect(fileName).toBeInTheDocument()
-
-    fireEvent.click(icon)
-
-    expect(fileName).not.toBeInTheDocument()
+    expect(emitter).toHaveBeenCalledWith(newState)
   })
 })
