@@ -17,6 +17,7 @@ import { styles } from '~/containers/guest-home-page/login-form/LoginForm.styles
 
 const LoginForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) => {
   const { inputVisibility: passwordVisibility, showInputText: showPassword } = useInputVisibility(errors.password)
+  const { loading } = useSelector((state) => state.appMain)
 
   const { openModal } = useContext(ModalContext)
 
