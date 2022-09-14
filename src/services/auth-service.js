@@ -25,7 +25,7 @@ export const AuthService = {
     return axiosInstance.get(confirmUrl)
   },
   forgotPassword: (userEmail) => {
-    return axiosInstance.post(URLs.auth.forgotPassword, userEmail)
+    return axiosClient.post(URLs.auth.forgotPassword, userEmail)
   },
   resetPassword: (resetToken, newPassword) => {
     const confirmUrl = `${Urls.auth.resetPassword}/${resetToken}`
