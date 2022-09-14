@@ -11,7 +11,7 @@ export const setupInterceptors = (store) => {
     if (token) {
       config.headers.authorization = `Bearer ${token}`
     }
-    config.headers['accept-language'] = i18n.language
+    config.headers['Accept-Language'] = i18n.language
     return config
   })
 
