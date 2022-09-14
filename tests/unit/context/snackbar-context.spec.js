@@ -21,7 +21,7 @@ describe('snackbar context', () => {
           </ModalProvider>
         </ConfirmationDialogProvider>
       </SnackBarProvider>,
-      preloadedState
+      { preloadedState }
     )
 
     mockAxiosClient.onPost(URLs.auth.login).reply(404, { code: 'error' })

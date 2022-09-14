@@ -1,14 +1,16 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import HashLink from '~/components/hash-link/HashLink'
+import { useSelector } from 'react-redux'
+
 import Box from '@mui/material/Box'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Typography from '@mui/material/Typography'
-import Button from '@mui/material/Button'
 import Checkbox from '@mui/material/Checkbox'
 import useInputVisibility from '~/hooks/use-input-visibility'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import { routes } from '~/constants/routes'
+import AppButton from '~/components/app-button/AppButton'
 
 import { styles } from '~/containers/guest-home-page/signup-form/SignupForm.styles'
 
@@ -20,6 +22,7 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors, clos
   const { inputVisibility: confirmPasswordVisibility, showInputText: showConfirmPassword } = useInputVisibility(
     errors.confirmPassword
   )
+  const { loading } = useSelector((state) => state.appMain)
 
   const handleOnAgreementChange = () => {
     setButtonDisabled(!buttonDisabled)
@@ -137,12 +140,16 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors, clos
         />
       </Box>
 
-      <Button
-        disabled={ buttonDisabled } size='large' sx={ styles.signupButton }
-        type='submit' variant='contained'
+      <AppButton
+        disabled={ buttonDisabled }
+        loading={ loading }
+        size='large'
+        sx={ styles.signupButton }
+        type='submit'
+        variant='contained'
       >
         { t('common.labels.signup') }
-      </Button>
+      </AppButton>
     </Box>
   )
 }

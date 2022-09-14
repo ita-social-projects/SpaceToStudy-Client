@@ -18,6 +18,7 @@ import { AuthService } from '~/services/auth-service'
 import { snackbarVariants } from '~/constants'
 import { email } from '~/utils/validations/login'
 import { styles } from '~/containers/guest-home-page/forgot-password/ForgotPassword.styles'
+import AppButton from '~/components/app-button/AppButton'
 
 const ForgotPassword = () => {
   const { t } = useTranslation()
@@ -87,13 +88,12 @@ const ForgotPassword = () => {
           type='email'
           value={ data.email }
         />
-
-        <Button
-          size='large' sx={ styles.sentPassword } type='submit'
-          variant='contained'
+        <AppButton
+          loading={ loading } size='large' sx={ styles.sentPassword }
+          type='submit' variant='contained'
         >
-          { loading ? 'Loading' : t('login.sendPassword') }
-        </Button>
+          { t('login.sendPassword') }
+        </AppButton>
       </Box>
 
       <Button

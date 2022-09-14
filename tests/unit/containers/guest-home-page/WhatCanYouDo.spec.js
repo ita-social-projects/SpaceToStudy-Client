@@ -7,9 +7,11 @@ import WhatCanYouDo from '~/containers/guest-home-page/WhatCanYouDo'
 import { SnackBarProvider } from '~/context/snackbar-context'
 
 const mockDispatch = jest.fn()
+const mockSelector = jest.fn()
 
 jest.mock('react-redux', () => ({
-  useDispatch: () => mockDispatch
+  useDispatch: () => mockDispatch,
+  useSelector: () => mockSelector
 }))
 
 describe('WhatCanYoDo component', () => {

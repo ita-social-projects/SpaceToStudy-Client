@@ -12,7 +12,7 @@ jest.mock('~/hooks/use-confirm', () => {
 })
 
 describe('test with guest role', () => {
-  const preloadedState = { appMain: { loading: false, userRole: '' } }
+  const preloadedState = { appMain: { userRole: '' } }
   beforeEach(() => {
     renderWithProviders(
       <SnackBarProvider>
@@ -41,7 +41,7 @@ describe('test with guest role', () => {
 })
 
 describe('test with student role', () => {
-  const preloadedState = { appMain: { loading: false, userRole: 'student' } }
+  const preloadedState = { appMain: { userRole: 'student' } }
   beforeEach(() => {
     renderWithProviders(
       <ModalProvider>

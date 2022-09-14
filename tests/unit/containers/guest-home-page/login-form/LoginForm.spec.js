@@ -17,6 +17,7 @@ const handleBlur = jest.fn()
 const handleSubmit = jest.fn()
 
 describe('Login form test', () => {
+  const preloadedState = { appMain: { loading: false } }
   beforeEach(() => {
     renderWithProviders(
       <SnackBarProvider>
@@ -29,7 +30,8 @@ describe('Login form test', () => {
             handleSubmit={ handleSubmit }
           />
         </ModalProvider>
-      </SnackBarProvider>
+      </SnackBarProvider>,
+      { preloadedState }
     )
   })
 
@@ -90,5 +92,27 @@ describe('Login form test', () => {
     const backBtn = screen.queryByText('login.backToLogin')
 
     await waitFor(() => expect(backBtn).toBeInTheDocument())
+  })
+})
+
+describe('Login form test with loading', () => {
+  const preloadedState = { appMain: { loading: true } }
+  it('should render loader', () => {
+    renderWithProviders(
+      <ModalProvider>
+        <LoginForm
+          data={ data }
+          errors={ errors }
+          handleBlur={ handleBlur }
+          handleChange={ handleChange }
+          handleSubmit={ handleSubmit }
+        />
+      </ModalProvider>,
+      { preloadedState }
+    )
+
+    const loader = screen.getByTestId('loader')
+
+    expect(loader).toBeInTheDocument()
   })
 })
