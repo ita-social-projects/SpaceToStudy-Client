@@ -4,15 +4,17 @@ import BecomeATutor from '~/containers/mentor-home-page/become-a-tutor/BecomeATu
 import { ModalContext } from '~/context/modal-context'
 
 const MentorHome = () => {
-  const { setModal, setFullScreen } = useContext(ModalContext)
+  const { openModal } = useContext(ModalContext)
   const { isFirstLogin } = useSelector((state) => state.appMain)
 
   useEffect(() => {
     if (isFirstLogin) {
-      setFullScreen(true)
-      setModal(<BecomeATutor />)
+      openModal({
+        component: <BecomeATutor />,
+        paperProps: { sx: { height: '90%', width: '90%', maxWidth: '100%' } }
+      })
     }
-  }, [setModal, setFullScreen, isFirstLogin])
+  }, [openModal, isFirstLogin])
 
   return <div data-testid='mentorHome'>Hello Mentor!</div>
 }

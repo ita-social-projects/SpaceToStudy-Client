@@ -22,20 +22,22 @@ import AppButton from '~/components/app-button/AppButton'
 
 const ForgotPassword = () => {
   const { t } = useTranslation()
-  const { setModal, closeModalAfterDelay } = useContext(ModalContext)
+  const { openModal } = useContext(ModalContext)
   const [loading, setLoading] = useState(false)
   const { setAlert } = useContext(SnackBarContext)
 
   const backToLogin = () => {
-    setModal(<LoginDialog />)
+    openModal({ component: <LoginDialog /> })
   }
 
   const sendEmail = async (data) => {
     try {
       setLoading(true)
       await AuthService.forgotPassword(data)
-      setModal(<ImgTitleDescription description={ description } img={ info } title={ t('login.passwordReset') } />)
-      closeModalAfterDelay()
+      openModal(
+        { component: <ImgTitleDescription description={ description } img={ info } title={ t('login.passwordReset') } /> },
+        5000
+      )
     } catch (e) {
       setAlert({
         severity: snackbarVariants.error,
