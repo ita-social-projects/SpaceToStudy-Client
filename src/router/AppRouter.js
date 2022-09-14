@@ -31,7 +31,7 @@ const AppRouter = ({ userRole }) => {
       />
       <Route element={ <CookiePolicy /> } path={ routes.privacyPolicy.route } />
       <Route element={ <ErrorRoutes /> } path={ routes.error.nested } />
-      <Route element={ <Navigate to={ errors.notFound.nested } /> } path='*' />
+      <Route element={ <Navigate to={ errors.notFound.path } /> } path='*' />
     </Routes>
   )
 }

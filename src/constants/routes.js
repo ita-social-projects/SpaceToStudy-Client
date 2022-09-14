@@ -25,7 +25,7 @@ export const studentRoutes = {
 
 export const errors = {
   badRequest: { label: 'badRequest', route: '/400' },
-  authPolicy: { label: 'authPolicy', route: '/401', nested: '/error/401' },
-  notFound: { label: 'notFound', route: '/404', nested: '/error/404' },
+  authPolicy: { label: 'authPolicy', route: '/401', path: '/error/401' },
+  notFound: { label: 'notFound', route: '/404', path: '/error/404' },
   internalServerError: { label: 'internalServerError', route: '/500' }
 }
