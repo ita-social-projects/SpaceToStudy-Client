@@ -10,33 +10,33 @@ import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded'
 import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded'
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined'
 
-import { style } from '~/containers/navigation-icons/NavigationIcons.styles'
+import { styles } from '~/containers/navigation-icons/NavigationIcons.styles'
 
 const StudentIcons = ({ setIsSidebarOpen }) => {
   const { t } = useTranslation()
 
   return (
-    <Box sx={ style.iconBox }>
+    <Box sx={ styles.iconBox }>
       <Tooltip arrow title={ t('iconsTooltip.language') }>
-        <IconButton size='large' sx={ style.langIcon }>
+        <IconButton size='large' sx={ styles.langIcon }>
           <LanguageIcon color='primary' />
         </IconButton>
       </Tooltip>
 
       <Tooltip arrow title={ t('iconsTooltip.messages') }>
-        <IconButton sx={ style.studentIcons }>
+        <IconButton sx={ styles.studentIcons }>
           <MessageRoundedIcon color='primary' />
         </IconButton>
       </Tooltip>
 
       <Tooltip arrow title={ t('iconsTooltip.favorites') }>
-        <IconButton sx={ style.studentIcons }>
+        <IconButton sx={ styles.studentIcons }>
           <FavoriteRoundedIcon color='primary' />
         </IconButton>
       </Tooltip>
 
       <Tooltip arrow title={ t('iconsTooltip.notifications') }>
-        <IconButton sx={ style.studentIcons }>
+        <IconButton sx={ styles.studentIcons }>
           <NotificationsRoundedIcon color='primary' />
         </IconButton>
       </Tooltip>
@@ -48,7 +48,7 @@ const StudentIcons = ({ setIsSidebarOpen }) => {
       </Tooltip>
 
       <Tooltip arrow title={ t('iconsTooltip.menu') }>
-        <IconButton onClick={ () => setIsSidebarOpen(true) } sx={ style.menuIcon }>
+        <IconButton onClick={ () => setIsSidebarOpen(true) } sx={ styles.menuIcon }>
           <MenuIcon color='primary' />
         </IconButton>
       </Tooltip>

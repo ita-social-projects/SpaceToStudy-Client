@@ -1,7 +1,5 @@
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
-
-import { styles } from '~/components/title-with-description/title-with-description.styles'
+import { Box, Typography } from '@mui/material'
+import { styles } from '~/components/title-with-description/TitleWithDescription.styles'
 
 const TitleWithDescription = ({
   title,

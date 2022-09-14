@@ -11,7 +11,7 @@ import SearchIcon from '@mui/icons-material/Search'
 
 import { studentRoutes } from '~/constants/routes'
 import useBreakpoints from '~/hooks/use-breakpoints'
-import { styles } from './find-mentor-block.styles'
+import { styles } from '~/containers/student-home-page/find-mentor-block/find-mentor-block.styles'
 import bag from '~/assets/img/student-home/bag.png'
 
 const FindMentorBlock = () => {

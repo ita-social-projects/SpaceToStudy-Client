@@ -9,7 +9,7 @@ import TitleWithDescription from '~/components/title-with-description/TitleWithD
 import { routes } from '~/constants/routes'
 import error401 from '~/assets/img/error-page/401.svg'
 
-import { styles } from '~/pages/error/styles/auth-policy.styles'
+import { styles } from '~/pages/error/styles/AuthPolicy.styles'
 
 const AuthPolicy = () => {
   const { t } = useTranslation()

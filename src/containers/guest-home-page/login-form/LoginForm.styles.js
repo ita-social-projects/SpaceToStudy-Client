@@ -1,4 +1,4 @@
-export const style = {
+export const styles = {
   form: {
     maxWidth: { xs: '315px', sm: '343px' },
     padding: { sm: '50px 80px', md: '0' }

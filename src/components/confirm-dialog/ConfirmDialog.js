@@ -8,28 +8,28 @@ import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import CloseIcon from '@mui/icons-material/Close'
 
-import { style } from '~/components/confirm-dialog/confirm-dialog.style'
+import { styles } from '~/components/confirm-dialog/ConfirmDialog.styles'
 
 const ConfirmDialog = ({ message, title, open, onConfirm, onDismiss }) => {
   const { t } = useTranslation()
 
   return (
     <Dialog
-      PaperProps={ { sx: style.root } } data-testid='confirmDialog' onClose={ onDismiss }
+      PaperProps={ { sx: styles.root } } data-testid='confirmDialog' onClose={ onDismiss }
       open={ open }
     >
-      <Typography sx={ style.title } variant='h6'>
+      <Typography sx={ styles.title } variant='h6'>
         { t(title) }
       </Typography>
-      <IconButton onClick={ onDismiss } sx={ style.icon }>
+      <IconButton onClick={ onDismiss } sx={ styles.icon }>
         <CloseIcon />
       </IconButton>
-      <DialogContent dividers sx={ style.content }>
+      <DialogContent dividers sx={ styles.content }>
         <Typography variant='subtitle1'>
           { t(message) }
         </Typography>
       </DialogContent>
-      <DialogActions sx={ style.actions }>
+      <DialogActions sx={ styles.actions }>
         <Button onClick={ onConfirm } size='large' variant='tonal'>
           { t('common.yes') }
         </Button>

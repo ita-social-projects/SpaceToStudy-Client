@@ -12,7 +12,7 @@ import CloseIcon from '@mui/icons-material/Close'
 
 import useUpload from '~/hooks/use-upload'
 
-import { style } from '~/components/file-uploader/file-uploader.style'
+import { styles } from '~/components/file-uploader/FileUploader.styles'
 
 const FileUploader = ({ buttonText, emitter, initialState, initialError, validationData }) => {
   const { t } = useTranslation()
@@ -28,12 +28,12 @@ const FileUploader = ({ buttonText, emitter, initialState, initialError, validat
   }, [files, error, emitter])
 
   const filesList = files.map((item) => (
-    <ListItem key={ item.name + Date.now() } sx={ style.listItem }>
-      <Typography sx={ style.fileName } variant='body2'>
+    <ListItem key={ item.name + Date.now() } sx={ styles.listItem }>
+      <Typography sx={ styles.fileName } variant='body2'>
         { item.name }
       </Typography>
       <IconButton onClick={ () => deleteFile(item) } size='small'>
-        <CloseIcon sx={ style.close } />
+        <CloseIcon sx={ styles.close } />
       </IconButton>
     </ListItem>
   ))
@@ -46,14 +46,14 @@ const FileUploader = ({ buttonText, emitter, initialState, initialError, validat
         onDragOver={ dragStart }
         onDragStart={ dragStart }
         onDrop={ dragDrop }
-        sx={ [style.root, isDrag && style.rootDrag] }
+        sx={ [styles.root, isDrag && styles.rootDrag] }
       >
         { files.length > 0 && (<List sx={ { width: '100%' } }>
           { filesList }
         </List>) }
 
         <Button component='label'>
-          <CloudUploadIcon sx={ style.icon } />
+          <CloudUploadIcon sx={ styles.icon } />
           { buttonText }
           <input
             hidden multiple onChange={ addFiles }

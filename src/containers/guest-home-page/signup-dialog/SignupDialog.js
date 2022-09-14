@@ -20,7 +20,7 @@ import student from '~/assets/img/signup-dialog/student.png'
 import mentor from '~/assets/img/signup-dialog/mentor.png'
 import info from '~/assets/img/guest-home-page/info.svg'
 
-import { style } from '~/containers/guest-home-page/signup-dialog/SignupDialog.style'
+import { styles } from '~/containers/guest-home-page/signup-dialog/SignupDialog.styles'
 
 const SignupDialog = ({ type }) => {
   const { t } = useTranslation()
@@ -63,19 +63,19 @@ const SignupDialog = ({ type }) => {
   }, [isDirty, setNeedConfirmation])
 
   return (
-    <Box sx={ style.root }>
-      <Box sx={ style.imgContainer }>
+    <Box sx={ styles.root }>
+      <Box sx={ styles.imgContainer }>
         <Box
           alt='signup' component='img' src={ signupImg[type] }
-          sx={ style.img }
+          sx={ styles.img }
         />
       </Box>
 
-      <Box sx={ style.formContainer }>
-        <Typography sx={ style.title } variant='h2'>
+      <Box sx={ styles.formContainer }>
+        <Typography sx={ styles.title } variant='h2'>
           { t('signup.head', { returnObjects: true })[type] }
         </Typography>
-        <Box sx={ style.form }>
+        <Box sx={ styles.form }>
           <SignupForm
             closeModal={ closeModal }
             data={ data }

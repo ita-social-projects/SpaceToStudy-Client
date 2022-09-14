@@ -15,7 +15,7 @@ import loginImg from '~/assets/img/login-dialog/login.png'
 import { login, snackbarVariants } from '~/constants'
 import { loginUser } from '~/redux/reducer'
 
-import style from '~/containers/guest-home-page/login-dialog/LoginDialog.style'
+import styles from '~/containers/guest-home-page/login-dialog/LoginDialog.styles'
 
 const LoginDialog = () => {
   const { t } = useTranslation()
@@ -45,19 +45,19 @@ const LoginDialog = () => {
   }, [isDirty, setNeedConfirmation])
 
   return (
-    <Box sx={ style.root }>
-      <Box sx={ style.imgContainer }>
+    <Box sx={ styles.root }>
+      <Box sx={ styles.imgContainer }>
         <Box
           alt='login' component='img' src={ loginImg }
-          sx={ style.img }
+          sx={ styles.img }
         />
       </Box>
 
-      <Box sx={ style.formContainer }>
-        <Typography sx={ style.title } variant='h2'>
+      <Box sx={ styles.formContainer }>
+        <Typography sx={ styles.title } variant='h2'>
           { t('login.head') }
         </Typography>
-        <Box sx={ style.form }>
+        <Box sx={ styles.form }>
           <LoginForm
             data={ data }
             errors={ errors }

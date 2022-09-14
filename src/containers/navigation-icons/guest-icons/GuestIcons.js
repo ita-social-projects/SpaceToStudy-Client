@@ -8,15 +8,15 @@ import LanguageIcon from '@mui/icons-material/Language'
 import MenuIcon from '@mui/icons-material/Menu'
 import LoginIcon from '@mui/icons-material/Login'
 
-import { style } from '~/containers/navigation-icons/NavigationIcons.styles'
+import { styles } from '~/containers/navigation-icons/NavigationIcons.styles'
 
 const GuestIcons = ({ openLoginDialog, setIsSidebarOpen }) => {
   const { t } = useTranslation()
 
   return (
-    <Box sx={ style.iconBox }>
+    <Box sx={ styles.iconBox }>
       <Tooltip arrow title={ t('iconsTooltip.language') }>
-        <IconButton sx={ style.langIcon }>
+        <IconButton sx={ styles.langIcon }>
           <LanguageIcon color='primary' />
         </IconButton>
       </Tooltip>
@@ -27,14 +27,14 @@ const GuestIcons = ({ openLoginDialog, setIsSidebarOpen }) => {
         </IconButton>
       </Tooltip>
       <Button
-        onClick={ openLoginDialog } size='medium' sx={ style.loginButton }
+        onClick={ openLoginDialog } size='medium' sx={ styles.loginButton }
         variant='contained'
       >
         { t('header.loginButton') }
       </Button>
 
       <Tooltip arrow title={ t('iconsTooltip.menu') }>
-        <IconButton onClick={ () => setIsSidebarOpen(true) } sx={ style.menuIcon }>
+        <IconButton onClick={ () => setIsSidebarOpen(true) } sx={ styles.menuIcon }>
           <MenuIcon color='primary' />
         </IconButton>
       </Tooltip>

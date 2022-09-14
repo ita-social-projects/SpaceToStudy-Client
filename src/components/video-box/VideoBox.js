@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box'
 
-import { styles } from '~/components/video-box/video-box.styles'
+import { styles } from '~/components/video-box/VideoBox.styles'
 import titleBar from '~/assets/img/guest-home-page/title-bar.png'
 
 const VideoBox = ({ video }) => {

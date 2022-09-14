@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography'
 import FileUploader from '~/components/file-uploader/FileUploader'
 import addDocumentsPNG from '~/assets/img/mentor-home-page/become-tutor/add-documents.png'
 
-import { style } from '~/containers/mentor-home-page/add-documents/add-documents.style'
+import { styles } from '~/containers/mentor-home-page/add-documents/add-documents.style'
 
 const validationData = {
   maxFileSize: 10_000_000,
@@ -27,13 +27,13 @@ const AddDocuments = ({ btnsBox, documents, documentsError, addDocuments, setSte
   }, [documentsError, setStepErrors, stepLabel])
 
   return (
-    <Box sx={ style.root }>
+    <Box sx={ styles.root }>
       <Box
         alt={ t('becomeTutor.documents.imageAlt') } component='img' src={ addDocumentsPNG }
-        sx={ style.img }
+        sx={ styles.img }
       />
 
-      <Box sx={ style.rigthBox }>
+      <Box sx={ styles.rigthBox }>
         <Box>
           <Typography mb={ 5 } variant='body1'>
             { t('becomeTutor.documents.description') }

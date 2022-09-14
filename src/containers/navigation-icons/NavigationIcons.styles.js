@@ -1,4 +1,4 @@
-export const style = {
+export const styles = {
   iconBox: {
     mr: { xs: '14px', sm: '20px', md: '32px' },
     display: 'flex',

@@ -2,7 +2,7 @@ import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
-import { styles } from '~/components/info-card/info-card.styles'
+import { styles } from '~/components/info-card/InfoCard.styles'
 
 const InfoCard = ({ img, title, description, actionLabel, cardWidth, action }) => {
   return (

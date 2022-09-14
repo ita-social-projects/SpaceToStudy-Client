@@ -6,7 +6,7 @@ import Container from '@mui/material/Container'
 
 import { cookieItemsData } from './cookie-policy.constants'
 
-import { styles } from './cookie-policy.styles'
+import { styles } from './CookiePolicy.styles'
 
 const CookiePolicy = () => {
   const { t } = useTranslation()

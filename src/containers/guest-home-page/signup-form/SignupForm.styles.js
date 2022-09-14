@@ -1,4 +1,4 @@
-export const style = {
+export const styles = {
   input: {
     maxWidth: '343px'
   },

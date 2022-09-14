@@ -3,19 +3,19 @@ import { useState } from 'react'
 import Accordions from '../accordion/Accordions.js'
 import Box from '@mui/material/Box'
 
-import { style } from '~/components/accordion-with-image/accordion-with-image.style'
+import { styles } from '~/components/accordion-with-image/AccordionWithImage.styles'
 
 const AccordionWithImage = ({ items }) => {
   const [activeItemId, setActiveItemId] = useState(0)
 
   return (
-    <Box className='section' data-testid='accordion' sx={ style.feature }>
-      <Box component='img' src={ items[activeItemId].image } sx={ style.image } />
+    <Box className='section' data-testid='accordion' sx={ styles.feature }>
+      <Box component='img' src={ items[activeItemId].image } sx={ styles.image } />
       <Accordions
         activeIndex={ activeItemId }
         items={ items }
         onChange={ (id) => setActiveItemId(id) }
-        style={ style.accordions }
+        style={ styles.accordions }
       />
     </Box>
   )

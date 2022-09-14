@@ -7,12 +7,12 @@ import AccordionSummary from '@mui/material/AccordionSummary'
 import AccordionDetails from '@mui/material/AccordionDetails'
 import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded'
 
-import { style } from '~/components/accordion/accordion.styles'
+import { styles } from '~/components/accordion/Accordion.styles.js'
 
 const Accordions = ({ items, onChange, activeIndex, showMoreIcon, square }) => {
   const { t } = useTranslation()
 
-  const accordionStyle = style[showMoreIcon ? 'withShowMoreIcon' : 'noShowMoreIcon']
+  const accordionStyle = styles[showMoreIcon ? 'withShowMoreIcon' : 'noShowMoreIcon']
 
   return (
     <Box sx={ accordionStyle.root }>

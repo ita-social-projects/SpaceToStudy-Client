@@ -12,7 +12,8 @@ import { routes } from '~/constants/routes'
 
 import learnImg from '~/assets/img/guest-home-page/learnImg.png'
 import teachImg from '~/assets/img/guest-home-page/teachImg.png'
-import { styles } from '~/containers/guest-home-page/styles/what-can-you-do.styles'
+
+import { styles } from '~/containers/guest-home-page/styles/WhatCanYouDo.styles'
 
 const sectionId = routes.guestNavBar.whatCanYouDo.label
 

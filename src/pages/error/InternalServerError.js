@@ -7,24 +7,24 @@ import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 
 import { routes } from '~/constants/routes'
-import { style } from './styles/internal-server-error.styles'
+import { styles } from '~/pages/error/styles/InternalServerError.styles'
 import backGround500 from '~/assets/img/error-page/500.svg'
 
 const InternalServerError = () => {
   const { t } = useTranslation()
 
   return (
-    <Box sx={ style.container }>
-      <Box sx={ style.wrapper }>
-        <Box sx={ style.leftBlock }>
-          <Typography sx={ style.title } variant={ 'h2' }>
+    <Box sx={ styles.container }>
+      <Box sx={ styles.wrapper }>
+        <Box sx={ styles.leftBlock }>
+          <Typography sx={ styles.title } variant={ 'h2' }>
             { t('errorPage.500.title') }
           </Typography>
-          <Typography sx={ style.description } variant={ 'subtitle1' }>
+          <Typography sx={ styles.description } variant={ 'subtitle1' }>
             { t('errorPage.500.description') }
           </Typography>
           <Button
-            component={ Link } sx={ style.homeBtn } to={ routes.home.route }
+            component={ Link } sx={ styles.homeBtn } to={ routes.home.route }
             variant='contained'
           >
             { t('button.toMain') }
@@ -32,7 +32,7 @@ const InternalServerError = () => {
         </Box>
         <Box
           alt='errorLogo' component='img' src={ backGround500 }
-          sx={ style.image }
+          sx={ styles.image }
         ></Box>
       </Box>
     </Box>

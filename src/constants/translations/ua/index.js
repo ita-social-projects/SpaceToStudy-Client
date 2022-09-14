@@ -1,5 +1,5 @@
 import common from './common.json'
-import errorPage from './errorPage.json'
+import errorPage from './error-page.json'
 import button from './button.json'
 import header from './header.json'
 import questions from './questions.json'

@@ -1,4 +1,4 @@
-export const style = {
+export const styles = {
   linesBox: {
     margin: '23px 0',
     display: 'flex',

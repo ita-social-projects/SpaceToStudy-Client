@@ -17,7 +17,7 @@ import { AuthService } from '~/services/auth-service'
 
 import { snackbarVariants } from '~/constants'
 import { email } from '~/utils/validations/login'
-import { style } from '~/containers/guest-home-page/forgot-password/ForgotPassword.style'
+import { styles } from '~/containers/guest-home-page/forgot-password/ForgotPassword.styles'
 
 const ForgotPassword = () => {
   const { t } = useTranslation()
@@ -62,13 +62,13 @@ const ForgotPassword = () => {
   )
 
   return (
-    <Box sx={ style.root }>
+    <Box sx={ styles.root }>
       <TitleWithDescription
-        componentStyles={ style.wrapper }
+        componentStyles={ styles.wrapper }
         description={ t('login.enterEmail') }
-        descriptionStyles={ style.description }
+        descriptionStyles={ styles.description }
         title={ t('login.forgotPassword') }
-        titleStyles={ style.title }
+        titleStyles={ styles.title }
       />
 
       <Box component='form' onSubmit={ handleSubmit }>
@@ -87,7 +87,7 @@ const ForgotPassword = () => {
         />
 
         <Button
-          size='large' sx={ style.sentPassword } type='submit'
+          size='large' sx={ styles.sentPassword } type='submit'
           variant='contained'
         >
           { loading ? 'Loading' : t('login.sendPassword') }
@@ -95,7 +95,7 @@ const ForgotPassword = () => {
       </Box>
 
       <Button
-        onClick={ backToLogin } size='large' sx={ style.backButton }
+        onClick={ backToLogin } size='large' sx={ styles.backButton }
         variant='text'
       >
         { t('login.backToLogin') }
