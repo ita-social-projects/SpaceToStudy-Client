@@ -1,4 +1,4 @@
-import { screen, render, fireEvent } from '@testing-library/react'
+import { screen, render, fireEvent, waitFor } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
 import { ModalProvider } from '~/context/modal-context'
@@ -73,6 +73,6 @@ describe('Login dialog test', () => {
     const button = screen.getByText('common.labels.login')
     fireEvent.click(button)
 
-    expect(mockDispatch).toHaveBeenCalledTimes(1)
+    await waitFor(() => expect(mockDispatch).toHaveBeenCalledTimes(1))
   })
 })

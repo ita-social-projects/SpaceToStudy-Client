@@ -15,10 +15,10 @@ export default {
 }
 
 export const Desktop = ({ content }) => {
-  const { setModal } = useContext(ModalContext)
+  const { openModal } = useContext(ModalContext)
 
   const openDialog = () => {
-    setModal(<div style={{ width: '400px', height: '200px' }}>{content}</div>)
+    openModal({ component: <div style={{ width: '400px', height: '200px' }}>{content}</div> })
   }
 
   return <button onClick={openDialog}>Open modal</button>
