@@ -7,7 +7,7 @@ const MentorRoutes = () => {
   return (
     <Routes>
       <Route element={ <MentorHome /> } index />
-      <Route element={ <Navigate to={ errors.notFound.route } /> } path='*' />
+      <Route element={ <Navigate to={ errors.notFound.path } /> } path='*' />
     </Routes>
   )
 }
