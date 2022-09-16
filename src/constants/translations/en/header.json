@@ -6,5 +6,6 @@
   "categories": "Categories",
   "faq": "FAQ",
   "becomeMentor": "Become a mentor",
-  "loginButton": "Login"
+  "loginButton": "Login",
+  "logout": "Logout"
 }

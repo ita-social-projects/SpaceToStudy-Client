@@ -5,5 +5,8 @@ export const studentRoutes = {
     howItWorks: { label: 'howItWorks', route: '/student/#howItWorks' },
     faq: { label: 'faq', route: '/student/#faq' },
     becomeMentor: { label: 'becomeMentor', route: '/becomeMentor' }
+  },
+  accountMenu: {
+    logout: { label: 'logout', route: '/logout' }
   }
 }
