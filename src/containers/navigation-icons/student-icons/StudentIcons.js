@@ -89,12 +89,6 @@ const StudentIcons = ({ setIsSidebarOpen }) => {
           horizontal: 'right'
         } }
       >
-        { /* <MenuItem
-          component={ Link } onClick={ closeMenu } sx={ styles.menuItem }
-          to={ routes.logout.route }
-        >
-          { t('header.logout') }
-        </MenuItem> */ }
         { menuList }
       </Menu>
     </Box>
