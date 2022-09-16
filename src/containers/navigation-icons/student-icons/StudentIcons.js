@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
@@ -22,9 +22,10 @@ import { styles } from '~/containers/navigation-icons/NavigationIcons.styles'
 const StudentIcons = ({ setIsSidebarOpen }) => {
   const { t } = useTranslation()
   const [anchorEl, setAnchorEl] = useState(null)
+  const ref = useRef(null)
 
-  const openMenu = (e) => setAnchorEl(e.currentTarget)
-  const closeMenu = (e) => setAnchorEl(null)
+  const openMenu = () => setAnchorEl(ref.current)
+  const closeMenu = () => setAnchorEl(null)
 
   const menuList = Object.values(studentRoutes.accountMenu).map((item) => {
     return (
@@ -38,7 +39,7 @@ const StudentIcons = ({ setIsSidebarOpen }) => {
   })
 
   return (
-    <Box sx={ styles.iconBox }>
+    <Box ref={ ref } sx={ styles.iconBox }>
       <Tooltip arrow title={ t('iconsTooltip.language') }>
         <IconButton size='large' sx={ styles.langIcon }>
           <LanguageIcon color='primary' />
