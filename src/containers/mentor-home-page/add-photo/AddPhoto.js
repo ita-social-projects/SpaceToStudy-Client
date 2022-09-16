@@ -27,12 +27,10 @@ const AddPhoto = ({ btnsBox, handleErrors, errors, handleStepErrors, stepLabel, 
   }
 
   const photoPrewiew = data.photo.length ? (
-    <Box sx={ style.imgContainer }>
-      <Box
-        alt={ t('becomeTutor.photo.imageAlt') } component='img' src={ data.photo[0].src }
-        sx={ style.img }
-      />
-    </Box>
+    <Box
+      alt={ t('becomeTutor.photo.imageAlt') } component='img' src={ data.photo[0].src }
+      sx={ style.img }
+    />
   ) : (
     <Box sx={ style.preview }>
       <Typography>
@@ -43,7 +41,9 @@ const AddPhoto = ({ btnsBox, handleErrors, errors, handleStepErrors, stepLabel, 
 
   return (
     <Box sx={ style.root }>
-      { photoPrewiew }
+      <Box sx={ style.imgContainer }>
+        { photoPrewiew }
+      </Box>
       <Box sx={ style.rigthBox }>
         <Box>
           <Typography sx={ style.description }>
