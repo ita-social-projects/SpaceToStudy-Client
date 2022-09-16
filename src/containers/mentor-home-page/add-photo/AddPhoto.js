@@ -11,14 +11,15 @@ const AddPhoto = ({ btnsBox, handleErrors, errors, handleStepErrors, stepLabel, 
   const { t } = useTranslation()
 
   const addPhoto = ({ files, error }) => {
-    if (files && files.length) {
+    if (files?.length && !files[0]?.src) {
       const originalPhotoPath = URL.createObjectURL(files[0])
       const photoSizes = { newWidth: 580, newHeight: 580 }
       const photoName = files[0].name
       imageResize(originalPhotoPath, photoSizes).then((resizedPhoto) => {
-        handleAddFiles('photo', [{ src: resizedPhoto, name: photoName }])
+        handleAddFiles('photo', [{ src: resizedPhoto, name: photoName, type: 'image/png' }])
       })
-    } else {
+    }
+    if (files && !files.length) {
       handleAddFiles('photo', [])
     }
     handleErrors('photo', error)

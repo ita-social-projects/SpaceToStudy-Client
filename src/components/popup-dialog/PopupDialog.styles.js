@@ -6,6 +6,7 @@ export const styles = {
     justifyContent: 'center',
     height: { xl: '100%' }
   },
+  contentWraper: { overflowY: { lg: 'auto' } },
   icon: {
     color: 'primary.900',
     position: 'absolute',

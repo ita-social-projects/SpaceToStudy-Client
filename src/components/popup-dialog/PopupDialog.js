@@ -35,7 +35,7 @@ const PopupDialog = ({ content, closeModal, paperProps, timerId, closeModalAfter
         <IconButton onClick={ onClose } sx={ styles.icon }>
           <CloseIcon />
         </IconButton>
-        <Box>
+        <Box sx={ styles.contentWraper }>
           { content }
         </Box>
       </Box>

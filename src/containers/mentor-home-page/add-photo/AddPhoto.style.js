@@ -11,7 +11,8 @@ export const style = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    flex: '0.4 1 580px',
+    maxWidth: '580px',
+    width: '100%',
     aspectRatio: '1',
     border: 'dashed',
     borderColor: 'primary.200',
@@ -19,6 +20,7 @@ export const style = {
   },
   img: {
     width: '100%',
+    maxWidth: '580px',
     borderRadius: '20px'
   },
   rigthBox: {
@@ -32,6 +34,9 @@ export const style = {
     mb: 5
   },
   imgContainer: {
-    flex: '0.4 1 580px'
+    flex: 1,
+    maxWidth: '650px',
+    display: 'flex',
+    justifyContent: 'center'
   }
 }
