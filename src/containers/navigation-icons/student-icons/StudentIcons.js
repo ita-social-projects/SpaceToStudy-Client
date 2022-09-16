@@ -22,9 +22,9 @@ import { styles } from '~/containers/navigation-icons/NavigationIcons.styles'
 const StudentIcons = ({ setIsSidebarOpen }) => {
   const { t } = useTranslation()
   const [anchorEl, setAnchorEl] = useState(null)
-  const ref = useRef(null)
+  const anchorRef = useRef(null)
 
-  const openMenu = () => setAnchorEl(ref.current)
+  const openMenu = () => setAnchorEl(anchorRef.current)
   const closeMenu = () => setAnchorEl(null)
 
   const menuList = Object.values(studentRoutes.accountMenu).map((item) => {
@@ -39,7 +39,7 @@ const StudentIcons = ({ setIsSidebarOpen }) => {
   })
 
   return (
-    <Box ref={ ref } sx={ styles.iconBox }>
+    <Box ref={ anchorRef } sx={ styles.iconBox }>
       <Tooltip arrow title={ t('iconsTooltip.language') }>
         <IconButton size='large' sx={ styles.langIcon }>
           <LanguageIcon color='primary' />
