@@ -5,7 +5,6 @@ export const routes = {
   mentor: { route: '/mentor', nested: '/mentor/*' },
   about: { label: 'about', route: '/about' },
   privacyPolicy: { label: 'privacyPolicy', route: '/privacyPolicy' },
-  logout: { label: 'logout', route: '/logout' },
   termOfUse: { label: 'termOfUse', route: '/termOfUse' },
   guestNavBar: {
     whatCanYouDo: { label: 'whatCanYouDo', route: '/#whatCanYouDo' },

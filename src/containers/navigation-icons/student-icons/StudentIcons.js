@@ -29,7 +29,7 @@ const StudentIcons = ({ setIsSidebarOpen }) => {
   const menuList = Object.values(studentRoutes.accountMenu).map((item) => {
     return (
       <MenuItem
-        component={ Link } key={ Math.random() } onClick={ closeMenu }
+        component={ Link } key={ item.label } onClick={ closeMenu }
         sx={ styles.menuItem } to={ item.route }
       >
         { t(`header.${item.label}`) }
