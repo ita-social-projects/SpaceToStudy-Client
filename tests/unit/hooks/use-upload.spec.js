@@ -55,7 +55,7 @@ describe('useUpload custom hook test without errors', () => {
 
     act(() => result.current.dragDrop(getFakeTestEvent(fakeFile)))
 
-    expect(emitter).toHaveBeenCalledTimes(2)
+    expect(emitter).toHaveBeenCalledTimes(1)
   })
 
   it('should add fake file', () => {
@@ -63,7 +63,7 @@ describe('useUpload custom hook test without errors', () => {
 
     act(() => result.current.addFiles(getFakeTestEvent(fakeFile)))
 
-    expect(emitter).toHaveBeenCalledTimes(2)
+    expect(emitter).toHaveBeenCalledTimes(1)
   })
 
   it('should add fake file and delete', () => {

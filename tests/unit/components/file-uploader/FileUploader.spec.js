@@ -43,7 +43,7 @@ describe('FileUploader test', () => {
     fireEvent.drop(container, { dataTransfer: { files: [fakeFile] } })
     fireEvent.dragLeave(container)
 
-    expect(emitter).toHaveBeenCalledTimes(2)
+    expect(emitter).toHaveBeenCalledTimes(1)
   })
 })
 

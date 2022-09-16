@@ -50,7 +50,7 @@ describe('AddDocuments test', () => {
 
     const input = screen.getByLabelText('becomeTutor.documents.button')
     fireEvent.change(input, { target: { files: [fakeFile] } })
-    const error = { error: 'becomeTutor.documents.typeError' }
+    const error = { error: 'becomeTutor.documents.typeError', files: [] }
 
     await waitFor(() => expect(addDocuments).toHaveBeenCalledWith(error))
   })
@@ -61,7 +61,10 @@ describe('AddDocuments test', () => {
 
     const input = screen.getByLabelText('becomeTutor.documents.button')
     fireEvent.change(input, { target: { files: [fakeFile] } })
-    const error = { error: 'becomeTutor.documents.fileSizeError' }
+    const error = {
+      error: 'becomeTutor.documents.fileSizeError',
+      files: []
+    }
 
     await waitFor(() => expect(addDocuments).toHaveBeenCalledWith(error))
   })
