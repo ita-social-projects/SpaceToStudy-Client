@@ -30,7 +30,7 @@ const EmailConfirmModal = ({ confirmToken, openModal }) => {
     return (
       <Box sx={ styles.box }>
         <ImgTitleDescription
-          description={ t('modals.emailReject-badToken-description') }
+          description={ t('modals.emailReject.badToken') }
           img={ imgReject }
           style={ styles }
           title={ t('modals.emailNotConfirm') }
@@ -43,7 +43,7 @@ const EmailConfirmModal = ({ confirmToken, openModal }) => {
     return (
       <Box sx={ styles.box }>
         <ImgTitleDescription
-          description={ t('modals.emailReject-alreadyConfirmed-description') }
+          description={ t('modals.emailReject.alreadyConfirmed') }
           img={ imgReject }
           style={ styles }
           title={ t('modals.emailAlreadyConfirm') }
