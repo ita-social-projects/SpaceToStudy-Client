@@ -20,20 +20,16 @@ export const styles = {
   accountMenu: {
     '& .MuiPaper-root': {
       borderRadius: 0,
-      boxShadow: mainShadow,
-      '& :hover': {
-        backgroundColor: 'primary.50'
-      }
+      boxShadow: mainShadow
     },
     left: { xs: '28px', sm: '40px', md: '64px', xl: '32px' },
-    '& .MuiMenu-list': {
-      p: 0
-    }
+    '& .MuiMenu-list': { p: 0 }
   },
   menuItem: {
     minWidth: '300px',
     pl: 5,
     py: 2,
-    fontSize: '18px'
+    fontSize: '18px',
+    '& :hover': { backgroundColor: 'primary.50' }
   }
 }
