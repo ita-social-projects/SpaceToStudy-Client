@@ -33,7 +33,7 @@ const StepWrapper = ({ children, steps, handleSubmit, stepErrors }) => {
       sx={ [styles.defaultTab, index === activeStep && styles.activeTab] }
       typography='caption'
     >
-      { step }
+      { t(`becomeTutor.stepLabels.${step}`) }
     </Box>
   ))
 
