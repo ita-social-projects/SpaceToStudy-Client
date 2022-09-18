@@ -24,7 +24,7 @@ describe('EmailConfirmModal test', () => {
 
     const modalImg = screen.getByAltText('info')
     const title = screen.getByText('modals.emailNotConfirm')
-    const description = screen.getByText('modals.emailReject-badToken')
+    const description = screen.getByText('modals.emailReject.badToken')
 
     expect(modalImg).toBeInTheDocument()
     expect(title).toBeInTheDocument()
@@ -41,8 +41,8 @@ describe('EmailConfirmModal test', () => {
     renderWithProviders(<EmailConfirmModal { ...props } />)
 
     const modalImg = screen.getByAltText('info')
-    const title = screen.getByText('modals.emailNotConfirm')
-    const description = screen.getByText('modals.emailReject-alreadyConfirmed')
+    const title = screen.getByText('modals.emailAlreadyConfirm')
+    const description = screen.getByText('modals.emailReject.alreadyConfirmed')
 
     expect(modalImg).toBeInTheDocument()
     expect(title).toBeInTheDocument()

@@ -1,0 +1,9 @@
+{
+  "emailConfirm": "Your email has been successfully verified!",
+  "emailNotConfirm": "Your email address has not been verified!",
+  "emailAlreadyConfirm": "Your email address has already been verified!",
+  "emailReject" : {
+    "badToken" : "The confirmation is either invalid or has expired. Please sign up again and confirm your email address.",
+    "alreadyConfirmed" : "User email has been already confirmed."
+  }
+}
