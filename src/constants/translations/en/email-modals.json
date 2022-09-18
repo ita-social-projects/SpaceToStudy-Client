@@ -4,6 +4,6 @@
   "emailAlreadyConfirm": "Your email address has already been verified!",
   "emailReject" : {
     "badToken" : "The confirmation is either invalid or has expired. Please sign up again and confirm your email address.",
-    "alreadyConfirmed" : "User email has been already confirmed"
+    "alreadyConfirmed" : "User email has been already confirmed."
   }
 }
