@@ -42,7 +42,7 @@ describe('BecomeATutor test', () => {
     const fakeFile = new File(['certificate'], 'test-file.png', { type: 'image/png' })
     Object.defineProperty(fakeFile, 'size', { value: 55_000_000 })
 
-    const photo = screen.getByText(/Photo and Video/i)
+    const photo = screen.getByText(/becomeTutor.stepLabels.photoAndVideo/i)
     fireEvent.click(photo)
 
     const input = screen.getByLabelText('becomeTutor.photo.button')
@@ -57,7 +57,7 @@ describe('BecomeATutor test', () => {
     const fakeFile = new File(['certificate'], 'test-file.png', { type: 'image/png' })
     Object.defineProperty(fakeFile, 'size', { value: 9_000_000 })
 
-    const photo = screen.getByText(/Photo and Video/i)
+    const photo = screen.getByText(/becomeTutor.stepLabels.photoAndVideo/i)
     fireEvent.click(photo)
 
     const input = screen.getByLabelText('becomeTutor.photo.button')
