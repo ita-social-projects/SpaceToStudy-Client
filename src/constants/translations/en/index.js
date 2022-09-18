@@ -12,7 +12,7 @@ import iconsTooltip from './icons-tooltip.json'
 import signup from './signup.json'
 import footer from './footer.json'
 import becomeTutor from './become-tutor.json'
-import modals from './emailModals.json'
+import modals from './email-modals.json'
 import errors from './errors.json'
 
 const en = {
