@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import useForm from '~/hooks/use-form'
@@ -15,21 +15,34 @@ import AppTextField from '~/components/app-text-field/AppTextField'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import LoginDialog from '../login-dialog/LoginDialog'
 import Loader from '~/components/loader/Loader'
+import ImgTitleDescription from '~/components/img-title-description/ImgTitleDescription'
 
 import { confirmPassword, password } from '~/utils/validations/login'
 import { snackbarVariants } from '~/constants'
+import { styles } from './ResetPassword.styles'
+import imgSuccess from '~/assets/img/email-confirmation-modals/success-icon.svg'
 
-const styles = {
-  root: { p: { xs: '100px 10px', sm: '56px', md: '70px' }, width: '400px' },
-  wrapper: { maxWidth: '630px' },
-  title: { typography: 'h4' },
-  description: { typography: 'subtitle' },
-  form: { display: 'flex', flexDirection: 'column' }
-}
-
-const ResetPassword = ({ resetToken, setModal }) => {
+const ResetPassword = ({ resetToken, openModal }) => {
   const { t } = useTranslation()
   const { setAlert } = useContext(SnackBarContext)
+
+  const successNotification = useMemo(
+    () => (
+      <Box sx={ styles.box }>
+        <ImgTitleDescription img={ imgSuccess } style={ styles } title={ t('login.sucsessReset') } />
+        <Button
+          color='primary'
+          onClick={ () => openModal({ component: <LoginDialog /> }) }
+          size='large'
+          style={ styles.button }
+          variant='contained'
+        >
+          { t('button.goToLogin') }
+        </Button>
+      </Box>
+    ),
+    [openModal, t]
+  )
 
   const {
     response,
@@ -48,9 +61,9 @@ const ResetPassword = ({ resetToken, setModal }) => {
         message: `errors.${error.response.data.code}`
       })
     } else if (response) {
-      setModal(<LoginDialog />)
+      openModal({ component: successNotification }, 5000)
     }
-  }, [error, response, setAlert, setModal])
+  }, [error, openModal, response, setAlert, successNotification])
 
   const { handleSubmit, handleChange, handleBlur, errors, data } = useForm({
     onSubmit: () => sendResetPassword({ password: data.password }),
@@ -64,12 +77,12 @@ const ResetPassword = ({ resetToken, setModal }) => {
   )
 
   return (
-    <Box sx={ styles.root }>
+    <Box sx={ styles.container }>
       <TitleWithDescription
         description={ t('login.resetPasswordDesc') }
         descriptionStyles={ styles.description }
         title={ t('login.newPassword') }
-        titleStyles={ styles.title }
+        titleStyles={ styles.mainTitle }
       />
       <Box component='form' onSubmit={ handleSubmit } sx={ styles.form }>
         <AppTextField
