@@ -50,9 +50,9 @@ describe('AddDocuments test', () => {
 
     const input = screen.getByLabelText('becomeTutor.documents.button')
     fireEvent.change(input, { target: { files: [fakeFile] } })
-    const error = screen.queryByText('becomeTutor.documents.typeError')
+    const error = { error: 'becomeTutor.documents.typeError', files: [] }
 
-    await waitFor(() => expect(error).toBeInTheDocument())
+    await waitFor(() => expect(addDocuments).toHaveBeenCalledWith(error))
   })
 
   it('should render error after add wrong file size', async () => {
@@ -61,8 +61,11 @@ describe('AddDocuments test', () => {
 
     const input = screen.getByLabelText('becomeTutor.documents.button')
     fireEvent.change(input, { target: { files: [fakeFile] } })
-    const error = screen.queryByText('becomeTutor.documents.fileSizeError')
+    const error = {
+      error: 'becomeTutor.documents.fileSizeError',
+      files: []
+    }
 
-    await waitFor(() => expect(error).toBeInTheDocument())
+    await waitFor(() => expect(addDocuments).toHaveBeenCalledWith(error))
   })
 })

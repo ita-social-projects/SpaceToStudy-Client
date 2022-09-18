@@ -1,10 +1,8 @@
 import { useState } from 'react'
 import { filesValidation } from '~/utils/validations/files'
 
-const useUpload = ({ initialState, initialError, validationData }) => {
-  const [files, setFiles] = useState(initialState)
+const useUpload = ({ files, validationData, emitter }) => {
   const [isDrag, setIsDrag] = useState(false)
-  const [error, setError] = useState(initialError)
 
   const dragStart = (e) => {
     e.preventDefault()
@@ -17,21 +15,23 @@ const useUpload = ({ initialState, initialError, validationData }) => {
   const dragDrop = (e) => {
     e.preventDefault()
     const newFiles = [...files, ...e.dataTransfer.files].slice(0, validationData.maxQuantityFiles)
-    setFiles(newFiles)
+    const error = filesValidation(newFiles, validationData)
     setIsDrag(false)
-    setError(filesValidation(newFiles, validationData))
+    const filesForEmitter = error ? files : newFiles
+    emitter({ files: filesForEmitter, error })
   }
 
   const addFiles = (e) => {
     e.preventDefault()
-    const newFiles = [...files, ...e.target.files].slice(0, validationData.dataTransfermaxQuantityFiles)
-    setFiles(newFiles)
-    setError(filesValidation(newFiles, validationData))
+    const newFiles = [...files, ...e.target.files].slice(0, validationData.maxQuantityFiles)
+    const error = filesValidation(newFiles, validationData)
+    const filesForEmitter = error ? files : newFiles
+    emitter({ files: filesForEmitter, error })
   }
+
   const deleteFile = (file) => {
     const newFiles = files.filter((item) => item !== file)
-    setFiles(newFiles)
-    setError(filesValidation(newFiles, validationData))
+    emitter({ files: newFiles, error: filesValidation(newFiles, validationData) })
   }
 
   return {
@@ -40,9 +40,7 @@ const useUpload = ({ initialState, initialError, validationData }) => {
     dragDrop,
     addFiles,
     deleteFile,
-    files,
-    isDrag,
-    error
+    isDrag
   }
 }
 

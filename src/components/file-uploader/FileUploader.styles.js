@@ -32,5 +32,8 @@ export const styles = {
   close: {
     color: 'primary.700',
     fontSize: '20px'
+  },
+  uploadBtn: {
+    textAlign: 'center'
   }
 }

@@ -26,8 +26,7 @@ export const styles = {
   btnWrapper: {
     display: 'flex',
     justifyContent: 'space-between',
-    mt: '10px',
-    columnGap: 18
+    mt: '10px'
   },
   btn: {
     padding: '10px 20px',

@@ -1,10 +1,12 @@
-import { useState } from 'react'
-
+import { useCallback, useState } from 'react'
 import StepWrapper from '~/components/step-wrapper/StepWrapper'
 import TempComponent from './TempComponent'
+
 import GeneralInfo from '~/containers/mentor-home-page/general-info/GeneralInfo'
 import ExperienceStep from '~/containers/mentor-home-page/experience-step/ExperienceStep'
 import AddDocuments from '~/containers/mentor-home-page/add-documents/AddDocuments'
+import AddPhoto from '../add-photo/AddPhoto'
+
 import useForm from '~/hooks/use-form'
 
 import { initialValues, stepLabels, validations } from '~/containers/mentor-home-page/constants'
@@ -12,13 +14,18 @@ import { initialValues, stepLabels, validations } from '~/containers/mentor-home
 const BecomeATutor = () => {
   const [documents, setDocuments] = useState([])
   const [documentsError, setDocumentsError] = useState()
+  const [stepErrors, setStepErrors] = useState({})
 
-  const addDocuments = (documents, error) => {
-    setDocuments(documents)
+  const handleStepErrors = useCallback((stepLabel, isError) => {
+    setStepErrors((prevState) => ({ ...prevState, [stepLabel]: Boolean(isError) }))
+  }, [])
+
+  const addDocuments = ({ files, error }) => {
+    files && setDocuments(files)
     setDocumentsError(error)
   }
 
-  const { handleSubmit, handleChange, handleBlur, data, errors } = useForm({
+  const { handleSubmit, handleChange, handleBlur, handleErrors, handleAddFiles, data, errors } = useForm({
     initialValues,
     validations,
     onSubmit: async () => {
@@ -26,8 +33,6 @@ const BecomeATutor = () => {
       console.log(documents)
     }
   })
-
-  const [stepErrors, setStepErrors] = useState({})
 
   const childrenArr = [
     <GeneralInfo
@@ -55,7 +60,14 @@ const BecomeATutor = () => {
       key='5'
       setStepErrors={ setStepErrors }
     />,
-    <TempComponent key='6'>6</TempComponent>
+    <AddPhoto
+      data={ data }
+      errors={ errors }
+      handleAddFiles={ handleAddFiles }
+      handleErrors={ handleErrors }
+      handleStepErrors={ handleStepErrors }
+      key='6'
+    />
   ]
 
   return (
