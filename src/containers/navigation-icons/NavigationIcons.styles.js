@@ -22,7 +22,7 @@ export const styles = {
       borderRadius: 0,
       boxShadow: mainShadow
     },
-    left: { xs: '28px', sm: '40px', md: '64px', xl: '32px' },
+    left: { xs: '15px', sm: '20px', md: '32px' },
     '& .MuiMenu-list': { p: 0 }
   },
   menuItem: {
