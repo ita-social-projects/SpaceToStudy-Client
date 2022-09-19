@@ -7,6 +7,8 @@ import tooltip from './app.tooltip'
 import { svgIcon } from './app.svgicon'
 import { checkbox } from './app.checkbox'
 import { textField } from './app.textfield.js'
+import { menuItem } from './app.menu-item'
+import { menuList } from './app.menu-list'
 
 export const theme = createTheme({
   palette,
@@ -16,6 +18,8 @@ export const theme = createTheme({
     MuiButton: button,
     MuiCheckbox: checkbox,
     MuiTextField: textField,
-    MuiTooltip: tooltip
+    MuiTooltip: tooltip,
+    MuiMenuItem: menuItem,
+    MuiMenu: menuList
   }
 })

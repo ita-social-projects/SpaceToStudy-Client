@@ -1,5 +1,3 @@
-import { mainShadow } from '~/styles/app-theme/custom-shadows'
-
 export const styles = {
   iconBox: {
     mr: { xs: '14px', sm: '20px', md: '32px' },
@@ -19,17 +17,14 @@ export const styles = {
   studentIcons: { display: { xs: 'none', md: 'inherit' } },
   accountMenu: {
     '& .MuiPaper-root': {
-      borderRadius: 0,
-      boxShadow: mainShadow
+      borderRadius: 0
     },
-    left: { xs: '15px', sm: '20px', md: '32px' },
-    '& .MuiMenu-list': { p: 0 }
+    left: { xs: '15px', sm: '20px', md: '32px' }
   },
   menuItem: {
     minWidth: '300px',
     pl: 5,
     py: 2,
-    fontSize: '18px',
-    '& :hover': { backgroundColor: 'primary.50' }
+    fontSize: '18px'
   }
 }
