@@ -1,16 +1,19 @@
 import { Route, Routes, Navigate } from 'react-router-dom'
 
-import CookiePolicy from '~/pages/cookie-policy/CookiePolicy'
 import { guestRoutes } from '~/router/constants/guestRoutes'
 import { studentRoutes } from '~/router/constants/studentRoutes'
+import { adminRoutes } from '~/router/constants/adminRoutes'
 import { errorRoutes } from '~/router/constants/errorRoutes'
-import { mentor, student } from '~/constants'
+import { admin, mentor, student } from '~/constants'
+
 import PrivateRoute from './helpers/PrivateRoute'
 import GuestRoute from './helpers/GuestRoute'
 import StudentRoutes from './routes/StudentRoutes'
 import MentorRoutes from './routes/MentorRoutes'
+import CookiePolicy from '~/pages/cookie-policy/CookiePolicy'
 import Logout from '~/pages/logout/Logout'
 import ErrorRoutes from './routes/ErrorRoutes'
+import AdminRoutes from './routes/AdminRoutes'
 
 const AppRouter = ({ userRole }) => {
   return (
@@ -31,6 +34,14 @@ const AppRouter = ({ userRole }) => {
           </PrivateRoute>
         }
         path={ guestRoutes.mentor.nested }
+      />
+      <Route
+        element={
+          <PrivateRoute role={ admin } userRole={ userRole }>
+            <AdminRoutes />
+          </PrivateRoute>
+        }
+        path={ adminRoutes.admin.nested }
       />
       <Route element={ <CookiePolicy /> } path={ guestRoutes.privacyPolicy.route } />
       <Route element={ <Logout /> } path={ studentRoutes.accountMenu.logout.route } />

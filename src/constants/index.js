@@ -4,6 +4,7 @@ export const accessToken = 'accessToken'
 
 export const student = 'student'
 export const mentor = 'mentor'
+export const admin = 'admin'
 
 export const login = 'login'
 export const signup = 'signup'

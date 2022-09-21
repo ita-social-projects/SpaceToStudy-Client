@@ -76,6 +76,28 @@ describe('AppMain layout component test', () => {
     expect(mentorHome).toBeInTheDocument()
   })
 
+  it('should render AdminLayout', async () => {
+    useSelector.mockImplementation(() => ({
+      loading: false,
+      userRole: 'admin'
+    }))
+    render(
+      <MemoryRouter>
+        <ConfirmationDialogProvider>
+          <ModalProvider>
+            <ThemeProvider theme={ theme }>
+              <AppMain />
+            </ThemeProvider>
+          </ModalProvider>
+        </ConfirmationDialogProvider>
+      </MemoryRouter>
+    )
+
+    const adminHome = await screen.findByText(/Hello Admin!/)
+
+    expect(adminHome).toBeInTheDocument()
+  })
+
   it('should render GuestLayout', () => {
     useSelector.mockImplementation(() => ({
       loading: false,
