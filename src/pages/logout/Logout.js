@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 
 import Loader from '~/components/loader/Loader'
 import { logoutUser } from '~/redux/reducer'
-import { routes } from '~/constants/routes'
+import { guestRoutes } from '~/router/constants/guestRoutes'
 
 const Logout = () => {
   const dispatch = useDispatch()
@@ -12,7 +12,7 @@ const Logout = () => {
 
   useEffect(() => {
     dispatch(logoutUser()).unwrap()
-    navigate(routes.home.route)
+    navigate(guestRoutes.home.route)
   }, [dispatch, navigate])
 
   return <Loader size={ 70 } />
