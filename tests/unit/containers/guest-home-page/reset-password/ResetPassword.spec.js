@@ -1,15 +1,13 @@
 import { screen, fireEvent, waitFor } from '@testing-library/react'
-import useAxios from '~/hooks/use-axios'
 import ResetPassword from '~/containers/guest-home-page/reset-password/ResetPassword'
 import { SnackBarProvider } from '~/context/snackbar-context'
 import { renderWithProviders } from '~tests/test-utils'
-import { axiosInstance } from '~/services/auth-service'
 import MockAdapter from 'axios-mock-adapter'
 import { URLs } from '~/constants/request'
 import { axiosClient } from '~/plugins/axiosClient'
 
 const mockAxiosClient = new MockAdapter(axiosClient)
-const setModal = jest.fn()
+const openModal = jest.fn()
 const resetToken = 'test'
 const error = new Error()
 error.code = 'BAD_RESET_TOKEN'
@@ -20,7 +18,7 @@ describe('ResetPassword test', () => {
 
     renderWithProviders(
       <SnackBarProvider>
-        <ResetPassword resetToken={ resetToken } setModal={ setModal } />
+        <ResetPassword openModal={ openModal } resetToken={ resetToken } />
       </SnackBarProvider>
     )
 
@@ -35,7 +33,7 @@ describe('ResetPassword test', () => {
       fireEvent.click(button)
     })
 
-    expect(setModal).toHaveBeenCalled()
+    expect(openModal).toHaveBeenCalled()
   })
 
   it('should open snackbar with error after reject', async () => {
@@ -43,7 +41,7 @@ describe('ResetPassword test', () => {
 
     renderWithProviders(
       <SnackBarProvider>
-        <ResetPassword resetToken={ resetToken } setModal={ setModal } />
+        <ResetPassword resetToken={ resetToken } setModal={ openModal } />
       </SnackBarProvider>
     )
 

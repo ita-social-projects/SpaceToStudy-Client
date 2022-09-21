@@ -30,8 +30,8 @@ const GuestHomePage = () => {
   }, [search, openModal, navigate])
 
   useEffect(() => {
-    confirmToken && openModal({ component:<EmailConfirmModal confirmToken={ confirmToken } openModal={ openModal } /> })
-	 resetToken && openModal({ component:<ResetPassword openModal={ openModal } resetToken={ resetToken } /> })
+    confirmToken && openModal({ component: <EmailConfirmModal confirmToken={ confirmToken } openModal={ openModal } /> })
+    resetToken && openModal({ component: <ResetPassword openModal={ openModal } resetToken={ resetToken } /> })
 
     navigate('/')
   }, [confirmToken, openModal, navigate, resetToken])
