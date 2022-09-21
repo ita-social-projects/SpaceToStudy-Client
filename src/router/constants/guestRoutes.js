@@ -3,6 +3,7 @@ export const guestRoutes = {
   error: { nested: '/error/*' },
   student: { route: '/student', nested: '/student/*' },
   mentor: { route: '/mentor', nested: '/mentor/*' },
+  admin: { route: '/admin', nested: '/admin/*' },
   about: { label: 'about', route: '/about' },
   privacyPolicy: { label: 'privacyPolicy', route: '/privacyPolicy' },
   termOfUse: { label: 'termOfUse', route: '/termOfUse' },

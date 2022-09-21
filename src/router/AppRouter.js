@@ -1,16 +1,16 @@
 import { Route, Routes, Navigate } from 'react-router-dom'
 
-import CookiePolicy from '~/pages/cookie-policy/CookiePolicy'
-
 import { guestRoutes } from '~/router/constants/guestRoutes'
 import { studentRoutes } from '~/router/constants/studentRoutes'
 import { adminRoutes } from '~/router/constants/adminRoutes'
 import { errorRoutes } from '~/router/constants/errorRoutes'
 import { admin, mentor, student } from '~/constants'
+
 import PrivateRoute from './helpers/PrivateRoute'
 import GuestRoute from './helpers/GuestRoute'
 import StudentRoutes from './routes/StudentRoutes'
 import MentorRoutes from './routes/MentorRoutes'
+import CookiePolicy from '~/pages/cookie-policy/CookiePolicy'
 import Logout from '~/pages/logout/Logout'
 import ErrorRoutes from './routes/ErrorRoutes'
 import AdminRoutes from './routes/AdminRoutes'
