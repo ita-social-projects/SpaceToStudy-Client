@@ -11,7 +11,10 @@ const Logout = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    dispatch(logoutUser()).unwrap().then(navigate(guestRoutes.home.route))
+    ;(async () => {
+      await dispatch(logoutUser()).unwrap()
+      navigate(guestRoutes.home.route)
+    })()
   }, [dispatch, navigate])
 
   return <Loader size={ 70 } />
