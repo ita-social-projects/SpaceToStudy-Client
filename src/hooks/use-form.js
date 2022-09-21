@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { isEqual } from '~/utils/isEqual'
 
 export const useForm = ({ initialValues, validations, onSubmit }) => {
   const [data, setData] = useState(initialValues)
@@ -36,7 +37,7 @@ export const useForm = ({ initialValues, validations, onSubmit }) => {
   }
 
   const handleBlur = (key) => (event) => {
-    setDirty(data[key] !== initialValues[key])
+    setDirty(!isEqual(data, initialValues))
     const valid = validations[key](event.target.value, data)
     setErrors({
       ...errors,
