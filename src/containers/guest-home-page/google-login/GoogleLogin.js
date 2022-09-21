@@ -4,7 +4,7 @@ import { Box, Typography, Button } from '@mui/material'
 import HashLink from '~/components/hash-link/HashLink'
 
 import { ModalContext } from '~/context/modal-context'
-import { routes } from '~/constants/routes'
+import { guestRoutes } from '~/router/constants/guestRoutes'
 import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
 
 import { styles } from '~/containers/guest-home-page/google-login/GoogleLogin.styles'
@@ -12,7 +12,7 @@ import google from '~/assets/img/login-dialog/google.svg'
 
 const GoogleLogin = ({ type }) => {
   const { t } = useTranslation()
-  const { whatCanYouDo } = routes.guestNavBar
+  const { whatCanYouDo } = guestRoutes.navBar
   const { openModal, closeModal } = useContext(ModalContext)
 
   const openLoginDialog = () => {

@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 
-import { studentRoutes } from '~/constants/routes'
+import { studentRoutes } from '~/router/constants/studentRoutes'
 import { howItWorksCards } from '~/containers/student-home-page/student-how-it-works/HowItWorksCards'
 
 import { styles } from '~/containers/student-home-page/student-how-it-works/student-how-it-works.styles'

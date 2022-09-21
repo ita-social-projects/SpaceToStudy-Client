@@ -6,7 +6,7 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 
-import { routes } from '~/constants/routes'
+import { guestRoutes } from '~/router/constants/guestRoutes'
 import { styles } from '~/pages/error/styles/InternalServerError.styles'
 import backGround500 from '~/assets/img/error-page/500.svg'
 
@@ -24,7 +24,7 @@ const InternalServerError = () => {
             { t('errorPage.500.description') }
           </Typography>
           <Button
-            component={ Link } sx={ styles.homeBtn } to={ routes.home.route }
+            component={ Link } sx={ styles.homeBtn } to={ guestRoutes.home.route }
             variant='contained'
           >
             { t('button.toMain') }

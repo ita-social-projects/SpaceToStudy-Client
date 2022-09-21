@@ -5,11 +5,11 @@ import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 
-import { routes } from '~/constants/routes'
+import { guestRoutes } from '~/router/constants/guestRoutes'
 import { styles } from '~/containers/layout/footer/Footer.styles'
 
 const Footer = () => {
-  const { privacyPolicy, termOfUse } = routes
+  const { privacyPolicy, termOfUse } = guestRoutes
   const { t } = useTranslation()
 
   return (

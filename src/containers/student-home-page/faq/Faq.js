@@ -6,7 +6,7 @@ import Box from '@mui/material/Box'
 import { accordionItems } from '~/containers/student-home-page/faq/accordionItems'
 import Accordions from '~/components/accordion/Accordions'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
-import { studentRoutes } from '~/constants/routes'
+import { studentRoutes } from '~/router/constants/studentRoutes'
 
 const Faq = () => {
   const { t } = useTranslation()
