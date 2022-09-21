@@ -5,7 +5,7 @@ import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 
-import { routes } from '~/constants/routes'
+import { guestRoutes } from '~/router/constants/guestRoutes'
 import plantImg from '~/assets/img/error-page/404-plant.svg'
 import manImg from '~/assets/img/error-page/404-man.svg'
 import useBreakpoints from '~/hooks/use-breakpoints'
@@ -33,7 +33,7 @@ const NotFound = () => {
           titleStyles={ { typography: windowSizeTypography.title, lineHeight: '61px' } }
         />
         <Button
-          component={ Link } sx={ styles.button } to={ routes.home.route }
+          component={ Link } sx={ styles.button } to={ guestRoutes.home.route }
           variant='contained'
         >
           { t('button.toMain') }

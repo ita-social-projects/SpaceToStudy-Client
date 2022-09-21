@@ -9,7 +9,7 @@ import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import SearchIcon from '@mui/icons-material/Search'
 
-import { studentRoutes } from '~/constants/routes'
+import { studentRoutes } from '~/router/constants/studentRoutes'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { styles } from '~/containers/student-home-page/find-mentor-block/find-mentor-block.styles'
 import bag from '~/assets/img/student-home/bag.png'

@@ -6,7 +6,7 @@ import Container from '@mui/material/Container'
 import Button from '@mui/material/Button'
 
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
-import { routes } from '~/constants/routes'
+import { guestRoutes } from '~/router/constants/guestRoutes'
 import error401 from '~/assets/img/error-page/401.svg'
 
 import { styles } from '~/pages/error/styles/AuthPolicy.styles'
@@ -25,7 +25,7 @@ const AuthPolicy = () => {
           titleStyles={ styles.title }
         />
         <Button
-          component={ Link } size='extraLarge' to={ routes.home.route }
+          component={ Link } size='extraLarge' to={ guestRoutes.home.route }
           variant='contained'
         >
           { t('button.toMain') }

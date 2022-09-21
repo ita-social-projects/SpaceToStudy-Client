@@ -1,7 +1,8 @@
 import { Route, Routes, Navigate } from 'react-router-dom'
 
 import CookiePolicy from '~/pages/cookie-policy/CookiePolicy'
-import { errors, routes } from '~/constants/routes'
+import { guestRoutes } from '~/router/constants/guestRoutes'
+import { errorRoutes } from '~/router/constants/errorRoutes'
 import { mentor, student } from '~/constants'
 import PrivateRoute from './helpers/PrivateRoute'
 import GuestRoute from './helpers/GuestRoute'
@@ -12,14 +13,14 @@ import ErrorRoutes from './routes/ErrorRoutes'
 const AppRouter = ({ userRole }) => {
   return (
     <Routes>
-      <Route element={ <GuestRoute userRole={ userRole } /> } path={ routes.home.nested } />
+      <Route element={ <GuestRoute userRole={ userRole } /> } path={ guestRoutes.home.nested } />
       <Route
         element={
           <PrivateRoute role={ student } userRole={ userRole }>
             <StudentRoutes />
           </PrivateRoute>
         }
-        path={ routes.student.nested }
+        path={ guestRoutes.student.nested }
       />
       <Route
         element={
@@ -27,11 +28,11 @@ const AppRouter = ({ userRole }) => {
             <MentorRoutes />
           </PrivateRoute>
         }
-        path={ routes.mentor.nested }
+        path={ guestRoutes.mentor.nested }
       />
-      <Route element={ <CookiePolicy /> } path={ routes.privacyPolicy.route } />
-      <Route element={ <ErrorRoutes /> } path={ routes.error.nested } />
-      <Route element={ <Navigate to={ errors.notFound.path } /> } path='*' />
+      <Route element={ <CookiePolicy /> } path={ guestRoutes.privacyPolicy.route } />
+      <Route element={ <ErrorRoutes /> } path={ guestRoutes.error.nested } />
+      <Route element={ <Navigate to={ errorRoutes.notFound.path } /> } path='*' />
     </Routes>
   )
 }

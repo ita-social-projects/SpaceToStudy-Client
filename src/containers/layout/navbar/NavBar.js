@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { routes, studentRoutes } from '~/constants/routes'
+import { guestRoutes } from '~/router/constants/guestRoutes'
+import { studentRoutes } from '~/router/constants/studentRoutes'
 import { useTranslation } from 'react-i18next'
 
 import Typography from '@mui/material/Typography'
@@ -21,7 +22,7 @@ import { styles } from '~/containers/layout/navbar/NavBar.styles'
 const Navbar = () => {
   const { t } = useTranslation()
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
-  const [navigationItems, setNavigationItems] = useState(Object.values(routes.guestNavBar))
+  const [navigationItems, setNavigationItems] = useState(Object.values(guestRoutes.navBar))
   const { userRole } = useSelector((state) => state.appMain)
 
   useEffect(() => {
@@ -45,7 +46,7 @@ const Navbar = () => {
     <Box sx={ styles.header }>
       <Button
         component={ Link } size='small' sx={ styles.logoButton }
-        to={ routes.home.route }
+        to={ guestRoutes.home.route }
       >
         <Logo />
       </Button>
