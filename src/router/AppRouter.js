@@ -33,7 +33,7 @@ const AppRouter = ({ userRole }) => {
         path={ guestRoutes.mentor.nested }
       />
       <Route element={ <CookiePolicy /> } path={ guestRoutes.privacyPolicy.route } />
-      <Route element={ <Logout /> } path={ studentRoutes.logout.route } />
+      <Route element={ <Logout /> } path={ studentRoutes.accountMenu.logout.route } />
       <Route element={ <ErrorRoutes /> } path={ guestRoutes.error.nested } />
       <Route element={ <Navigate to={ errorRoutes.notFound.path } /> } path='*' />
     </Routes>

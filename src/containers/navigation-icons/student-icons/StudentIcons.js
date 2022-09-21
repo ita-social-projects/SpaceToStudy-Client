@@ -14,7 +14,6 @@ import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 
-import { guestRoutes } from '~/router/constants/guestRoutes'
 import { studentRoutes } from '~/router/constants/studentRoutes'
 
 import { styles } from '~/containers/navigation-icons/NavigationIcons.styles'
