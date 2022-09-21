@@ -27,6 +27,7 @@ const Navbar = () => {
 
   useEffect(() => {
     if (userRole === student) setNavigationItems(Object.values(studentRoutes.navBar))
+    else setNavigationItems(Object.values(guestRoutes.navBar))
   }, [userRole])
 
   const navigationList = navigationItems.map((item) => {

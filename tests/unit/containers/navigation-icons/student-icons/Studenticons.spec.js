@@ -1,4 +1,4 @@
-import { screen, fireEvent, waitFor } from '@testing-library/react'
+import { screen, fireEvent } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 import StudentIcons from '~/containers/navigation-icons/student-icons/StudentIcons'
 
@@ -29,5 +29,12 @@ describe('test with guest role', () => {
     const messagesTooltipTitle = await screen.findByText('iconsTooltip.messages')
 
     expect(messagesTooltipTitle).toBeInTheDocument()
+  })
+  it('should open account menu', async () => {
+    const accountMenuIcon = screen.getByTestId('AccountCircleOutlinedIcon')
+    fireEvent.click(accountMenuIcon)
+    const accountMenuLogout = await screen.findByText('header.logout')
+
+    expect(accountMenuLogout).toBeInTheDocument()
   })
 })

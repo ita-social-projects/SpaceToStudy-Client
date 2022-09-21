@@ -1,3 +1,5 @@
+import { useState, useRef } from 'react'
+import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
@@ -9,14 +11,34 @@ import MessageRoundedIcon from '@mui/icons-material/MessageRounded'
 import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded'
 import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded'
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined'
+import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
+
+import { studentRoutes } from '~/router/constants/studentRoutes'
 
 import { styles } from '~/containers/navigation-icons/NavigationIcons.styles'
 
 const StudentIcons = ({ setIsSidebarOpen }) => {
   const { t } = useTranslation()
+  const [anchorEl, setAnchorEl] = useState(null)
+  const anchorRef = useRef(null)
+
+  const openMenu = () => setAnchorEl(anchorRef.current)
+  const closeMenu = () => setAnchorEl(null)
+
+  const menuList = Object.values(studentRoutes.accountMenu).map((item) => {
+    return (
+      <MenuItem
+        component={ Link } key={ item.label } onClick={ closeMenu }
+        sx={ styles.menuItem } to={ item.route }
+      >
+        { t(`header.${item.label}`) }
+      </MenuItem>
+    )
+  })
 
   return (
-    <Box sx={ styles.iconBox }>
+    <Box ref={ anchorRef } sx={ styles.iconBox }>
       <Tooltip arrow title={ t('iconsTooltip.language') }>
         <IconButton size='large' sx={ styles.langIcon }>
           <LanguageIcon color='primary' />
@@ -42,7 +64,7 @@ const StudentIcons = ({ setIsSidebarOpen }) => {
       </Tooltip>
 
       <Tooltip arrow title={ t('iconsTooltip.account') }>
-        <IconButton>
+        <IconButton onClick={ openMenu }>
           <AccountCircleOutlinedIcon color='primary' />
         </IconButton>
       </Tooltip>
@@ -52,6 +74,23 @@ const StudentIcons = ({ setIsSidebarOpen }) => {
           <MenuIcon color='primary' />
         </IconButton>
       </Tooltip>
+
+      <Menu
+        anchorEl={ anchorEl }
+        anchorOrigin={ {
+          vertical: 'bottom',
+          horizontal: 'right'
+        } }
+        onClose={ closeMenu }
+        open={ !!anchorEl }
+        sx={ styles.accountMenu }
+        transformOrigin={ {
+          vertical: 'top',
+          horizontal: 'right'
+        } }
+      >
+        { menuList }
+      </Menu>
     </Box>
   )
 }

@@ -2,12 +2,14 @@ import { Route, Routes, Navigate } from 'react-router-dom'
 
 import CookiePolicy from '~/pages/cookie-policy/CookiePolicy'
 import { guestRoutes } from '~/router/constants/guestRoutes'
+import { studentRoutes } from '~/router/constants/studentRoutes'
 import { errorRoutes } from '~/router/constants/errorRoutes'
 import { mentor, student } from '~/constants'
 import PrivateRoute from './helpers/PrivateRoute'
 import GuestRoute from './helpers/GuestRoute'
 import StudentRoutes from './routes/StudentRoutes'
 import MentorRoutes from './routes/MentorRoutes'
+import Logout from '~/pages/logout/Logout'
 import ErrorRoutes from './routes/ErrorRoutes'
 
 const AppRouter = ({ userRole }) => {
@@ -31,6 +33,7 @@ const AppRouter = ({ userRole }) => {
         path={ guestRoutes.mentor.nested }
       />
       <Route element={ <CookiePolicy /> } path={ guestRoutes.privacyPolicy.route } />
+      <Route element={ <Logout /> } path={ studentRoutes.accountMenu.logout.route } />
       <Route element={ <ErrorRoutes /> } path={ guestRoutes.error.nested } />
       <Route element={ <Navigate to={ errorRoutes.notFound.path } /> } path='*' />
     </Routes>

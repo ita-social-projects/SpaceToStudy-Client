@@ -14,5 +14,17 @@ export const styles = {
     margin: '18px 10px'
   },
   loginIcon: { display: { md: 'none' } },
-  studentIcons: { display: { xs: 'none', md: 'inherit' } }
+  studentIcons: { display: { xs: 'none', md: 'inherit' } },
+  accountMenu: {
+    '& .MuiPaper-root': {
+      borderRadius: 0
+    },
+    left: { xs: '15px', sm: '20px', md: '32px' }
+  },
+  menuItem: {
+    minWidth: '300px',
+    pl: 5,
+    py: 2,
+    fontSize: '18px'
+  }
 }
