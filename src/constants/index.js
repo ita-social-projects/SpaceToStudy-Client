@@ -3,7 +3,7 @@ export const s2s = 's2s'
 export const accessToken = 'accessToken'
 
 export const student = 'student'
-export const mentor = 'mentor'
+export const tutor = 'tutor'
 export const admin = 'admin'
 
 export const login = 'login'

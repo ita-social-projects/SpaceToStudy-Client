@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import StepWrapper from '~/components/step-wrapper/StepWrapper'
-import TempComponent from '~/containers/mentor-home-page/become-a-tutor/TempComponent'
+import TempComponent from '~/containers/tutor-home-page/become-a-tutor/TempComponent'
 import { ModalProvider } from '~/context/modal-context'
 
 const stepsMock = ['General info', 'Languages', 'Study category']

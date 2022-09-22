@@ -1,9 +1,9 @@
 {
-  "findMentorBlock": {
+  "findTutorBlock": {
     "title": "A Global Network of Tutors",
-    "description": "A Space2Study platform is a place where you can learn from the best. Type what would you like to learn and find the best mentor for that.",
+    "description": "A Space2Study platform is a place where you can learn from the best. Type what would you like to learn and find the best tutor for that.",
     "label": "What would you like to learn",
-    "button": "Find mentor"
+    "button": "Find tutor"
   },
   "popularCategories": {
     "title": "Popular Categories",
@@ -13,21 +13,21 @@
   "howItWorks": {
     "title": "How It Works",
     "description": "4 steps to easy and funny learning with Space2Study",
-    "selectAMentor": {
-      "title": "Select a Mentor",
+    "selectATutor": {
+      "title": "Select a Tutor",
       "description": "Choose your perfect tutor from over 10 000 teachers from all over the world."
     },
     "sendRequest": {
       "title": "Send Request",
-      "description": "Describe what you would like to study and send a request to the mentor."
+      "description": "Describe what you would like to study and send a request to the tutor."
     },
     "startLearning": {
       "title": "Start Learning",
-      "description": "Describe what you would like to study and send a request to the mentor."
+      "description": "Describe what you would like to study and send a request to the tutor."
     },
     "writeFeedback": {
       "title": "Write Feedback",
-      "description": "Describe what you would like to study and send a request to the mentor."
+      "description": "Describe what you would like to study and send a request to the tutor."
     }
   },
   "faq": {

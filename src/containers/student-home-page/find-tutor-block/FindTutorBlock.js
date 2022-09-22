@@ -11,24 +11,24 @@ import SearchIcon from '@mui/icons-material/Search'
 
 import { studentRoutes } from '~/router/constants/studentRoutes'
 import useBreakpoints from '~/hooks/use-breakpoints'
-import { styles } from '~/containers/student-home-page/find-mentor-block/find-mentor-block.styles'
+import { styles } from '~/containers/student-home-page/find-tutor-block/find-tutor-block.styles'
 import bag from '~/assets/img/student-home/bag.png'
 
-const FindMentorBlock = () => {
+const FindTutorBlock = () => {
   const [filter, setFilter] = useState('')
   const { t } = useTranslation()
   const navigate = useNavigate()
   const { isDesktop, isMobile } = useBreakpoints()
 
-  const { findMentor } = studentRoutes.navBar
+  const { findTutor } = studentRoutes.navBar
 
   const onChange = (e) => {
     setFilter(e.target.value)
   }
 
   const redirect = useCallback(() => {
-    return navigate(findMentor.route, { state: { filter } })
-  }, [filter, findMentor.route, navigate])
+    return navigate(findTutor.route, { state: { filter } })
+  }, [filter, findTutor.route, navigate])
 
   const handleEnterPress = useCallback(
     (e) => {
@@ -43,10 +43,10 @@ const FindMentorBlock = () => {
     <Box className='section' sx={ styles.container }>
       <Box sx={ styles.info }>
         <Typography color='primary.900' mb={ 1 } variant='h4'>
-          { t('studentHomePage.findMentorBlock.title') }
+          { t('studentHomePage.findTutorBlock.title') }
         </Typography>
         <Typography color='primary.900' mb={ 6 } variant='subtitle1'>
-          { t('studentHomePage.findMentorBlock.description') }
+          { t('studentHomePage.findTutorBlock.description') }
         </Typography>
         <Box sx={ styles.form }>
           <TextField
@@ -59,7 +59,7 @@ const FindMentorBlock = () => {
               autoComplete: 'off'
             } }
             fullWidth={ isMobile }
-            label={ t('studentHomePage.findMentorBlock.label') }
+            label={ t('studentHomePage.findTutorBlock.label') }
             onChange={ onChange }
             onKeyPress={ handleEnterPress }
             sx={ styles.input }
@@ -69,7 +69,7 @@ const FindMentorBlock = () => {
             fullWidth={ isMobile } onClick={ redirect } size='extraLarge'
             variant='contained'
           >
-            { t('studentHomePage.findMentorBlock.button') }
+            { t('studentHomePage.findTutorBlock.button') }
           </Button>
         </Box>
       </Box>
@@ -78,4 +78,4 @@ const FindMentorBlock = () => {
   )
 }
 
-export default FindMentorBlock
+export default FindTutorBlock

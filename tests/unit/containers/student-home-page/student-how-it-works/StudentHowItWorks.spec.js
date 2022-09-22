@@ -16,12 +16,12 @@ describe('StudentHowItWorks test', () => {
     expect(description).toBeInTheDocument()
   })
 
-  it('should redirect to find mentor page when click on the find mentor button', async () => {
-    const findMentorButton = screen.getByText('studentHomePage.findMentorBlock.button')
-    fireEvent.click(findMentorButton)
-    const findMentorText = screen.getByText(/FindMentor/i)
+  it('should redirect to find tutor page when click on the find tutor button', async () => {
+    const findTutorButton = screen.getByText('studentHomePage.findTutorBlock.button')
+    fireEvent.click(findTutorButton)
+    const findTutorText = screen.getByText(/FindTutor/i)
 
-    expect(findMentorText).toBeInTheDocument()
+    expect(findTutorText).toBeInTheDocument()
   })
 
   it('should have start learning image, title and description', async () => {

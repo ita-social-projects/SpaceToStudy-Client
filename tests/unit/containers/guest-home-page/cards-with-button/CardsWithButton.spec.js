@@ -5,8 +5,8 @@ import { ModalProvider } from '~/context/modal-context'
 import { ConfirmationDialogProvider } from '~/context/confirm-context'
 import CardsWithButton from '~/containers/guest-home-page/cards-with-button/CardsWithButton'
 
-import howItWorksMentorFirst from '~/assets/img/guest-home-page/howItWorksMentorFirst.svg'
-import howItWorksMentorSecond from '~/assets/img/guest-home-page/howItWorksMentorSecond.svg'
+import howItWorksTutorFirst from '~/assets/img/guest-home-page/howItWorksTutorFirst.svg'
+import howItWorksTutorSecond from '~/assets/img/guest-home-page/howItWorksTutorSecond.svg'
 import { SnackBarProvider } from '~/context/snackbar-context'
 
 const mockDispatch = jest.fn()
@@ -20,14 +20,14 @@ jest.mock('react-redux', () => ({
 describe('CardsWithButton container', () => {
   const items = [
     {
-      image: howItWorksMentorFirst,
-      title: 'guestHomePage.howItWorks.mentor.signUp.title',
-      description: 'guestHomePage.howItWorks.mentor.signUp.description'
+      image: howItWorksTutorFirst,
+      title: 'guestHomePage.howItWorks.tutor.signUp.title',
+      description: 'guestHomePage.howItWorks.tutor.signUp.description'
     },
     {
-      image: howItWorksMentorSecond,
-      title: 'guestHomePage.howItWorks.mentor.createAMentorAccount.title',
-      description: 'guestHomePage.howItWorks.mentor.createAMentorAccount.description'
+      image: howItWorksTutorSecond,
+      title: 'guestHomePage.howItWorks.tutor.createATutorAccount.title',
+      description: 'guestHomePage.howItWorks.tutor.createATutorAccount.description'
     }
   ]
   beforeEach(() => {
@@ -36,7 +36,7 @@ describe('CardsWithButton container', () => {
         <SnackBarProvider>
           <ConfirmationDialogProvider>
             <ModalProvider>
-              <CardsWithButton array={ items } btnText={ 'Become a mentor' } role={ 'mentor' } />
+              <CardsWithButton array={ items } btnText={ 'Become a tutor' } role={ 'tutor' } />
             </ModalProvider>
           </ConfirmationDialogProvider>
         </SnackBarProvider>
@@ -45,7 +45,7 @@ describe('CardsWithButton container', () => {
   })
 
   it('should render popup after button click', () => {
-    const btn = screen.getByText('Become a mentor')
+    const btn = screen.getByText('Become a tutor')
     fireEvent.click(btn)
 
     const popup = screen.getByTestId('popup')

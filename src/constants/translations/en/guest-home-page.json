@@ -32,7 +32,7 @@
     "teach": {
       "title": "Share your experience",
       "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.established fact that a reader will be ",
-      "actionLabel": "Become a mentor"
+      "actionLabel": "Become a tutor"
     }
   },
   "howItWorks": {
@@ -44,8 +44,8 @@
         "title": "Sign Up",
         "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
       },
-      "selectAMentor": {
-        "title": "Select a Mentor",
+      "selectATutor": {
+        "title": "Select a Tutor",
         "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
       },
       "sendRequest": {
@@ -57,13 +57,13 @@
         "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
       }
     },
-    "mentor": {
+    "tutor": {
       "signUp": {
         "title": "Sign Up",
         "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
       },
-      "createAMentorAccount": {
-        "title": "Create a Mentor Account",
+      "createATutorAccount": {
+        "title": "Create a Tutor Account",
         "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
       },
       "getNewStudents": {

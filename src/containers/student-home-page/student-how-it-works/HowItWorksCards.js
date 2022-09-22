@@ -6,8 +6,8 @@ import howItWorksStudentFourth from '~/assets/img/guest-home-page/howItWorksStud
 export const howItWorksCards = [
   {
     image: howItWorksStudentSecond,
-    title: 'studentHomePage.howItWorks.selectAMentor.title',
-    description: 'studentHomePage.howItWorks.selectAMentor.description'
+    title: 'studentHomePage.howItWorks.selectATutor.title',
+    description: 'studentHomePage.howItWorks.selectATutor.description'
   },
   {
     image: howItWorksStudentThird,

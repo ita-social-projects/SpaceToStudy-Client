@@ -7,7 +7,7 @@ import InfoCard from '~/components/info-card/InfoCard'
 
 import SignupDialog from '~/containers/guest-home-page/signup-dialog/SignupDialog'
 import { ModalContext } from '~/context/modal-context'
-import { student, mentor } from '~/constants'
+import { student, tutor } from '~/constants'
 import { guestRoutes } from '~/router/constants/guestRoutes'
 
 import learnImg from '~/assets/img/guest-home-page/learnImg.png'
@@ -38,7 +38,7 @@ const cardData = [
     title: 'guestHomePage.whatCanYouDo.teach.title',
     description: 'guestHomePage.whatCanYouDo.teach.description',
     actionLabel: 'guestHomePage.whatCanYouDo.teach.actionLabel',
-    actionType: mentor,
+    actionType: tutor,
     cardWidth
   }
 ]

@@ -1,10 +1,10 @@
 export const studentRoutes = {
   navBar: {
-    findMentor: { label: 'findMentor', route: 'findMentor' },
+    findTutor: { label: 'findTutor', route: 'findTutor' },
     categories: { label: 'categories', route: '/student/#categories' },
     howItWorks: { label: 'howItWorks', route: '/student/#howItWorks' },
     faq: { label: 'faq', route: '/student/#faq' },
-    becomeMentor: { label: 'becomeMentor', route: '/becomeMentor' }
+    becomeTutor: { label: 'becomeTutor', route: '/becomeTutor' }
   },
   accountMenu: {
     logout: { label: 'logout', route: '/logout' }

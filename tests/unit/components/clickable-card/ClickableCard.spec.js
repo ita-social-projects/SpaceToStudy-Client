@@ -28,7 +28,7 @@ describe('ClickableCard component', () => {
     expect(title).toBeInTheDocument()
   })
 
-  it('should render mentors count', () => {
+  it('should render tutors count', () => {
     const count = screen.getByText(props.description)
 
     expect(count).toBeInTheDocument()

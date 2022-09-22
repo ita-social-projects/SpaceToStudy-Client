@@ -1,5 +1,5 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
-import BecomeATutor from '~/containers/mentor-home-page/become-a-tutor/BecomeATutor'
+import BecomeATutor from '~/containers/tutor-home-page/become-a-tutor/BecomeATutor'
 import { imageResize } from '~/utils/image-resize'
 
 jest.mock('~/utils/image-resize')

@@ -8,8 +8,8 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 
 import AppTextField from '~/components/app-text-field/AppTextField'
 
-import img from '~/assets/img/mentor-home-page/become-tutor/general-info.png'
-import { styles } from '~/containers/mentor-home-page/experience-step/experience-step.styles'
+import img from '~/assets/img/tutor-home-page/become-tutor/general-info.png'
+import { styles } from '~/containers/tutor-home-page/experience-step/experience-step.styles'
 
 const GeneralInfo = ({ data, handleChange, handleBlur, errors, btnsBox, setStepErrors, stepLabel }) => {
   const { t } = useTranslation()

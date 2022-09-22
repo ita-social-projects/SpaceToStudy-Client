@@ -54,10 +54,10 @@ describe('AppMain layout component test', () => {
     expect(studentHome).toBeInTheDocument()
   })
 
-  it('should render MentorLayout', async () => {
+  it('should render TutorLayout', async () => {
     useSelector.mockImplementation(() => ({
       loading: false,
-      userRole: 'mentor'
+      userRole: 'tutor'
     }))
     render(
       <MemoryRouter>
@@ -71,9 +71,9 @@ describe('AppMain layout component test', () => {
       </MemoryRouter>
     )
 
-    const mentorHome = await screen.findByTestId('mentorHome')
+    const tutorHome = await screen.findByTestId('tutorHome')
 
-    expect(mentorHome).toBeInTheDocument()
+    expect(tutorHome).toBeInTheDocument()
   })
 
   it('should render AdminLayout', async () => {
@@ -118,7 +118,7 @@ describe('AppMain layout component test', () => {
   it('should render AuthPolicy page if the path with role and user role do not match', () => {
     useSelector.mockImplementation(() => ({
       loading: false,
-      userRole: 'mentor'
+      userRole: 'tutor'
     }))
     render(
       <ModalProvider>

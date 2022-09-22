@@ -1,5 +1,5 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
-import AddPhoto from '~/containers/mentor-home-page/add-photo/AddPhoto'
+import AddPhoto from '~/containers/tutor-home-page/add-photo/AddPhoto'
 
 const btnsBox = (
   <div>
