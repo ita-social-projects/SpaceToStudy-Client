@@ -26,7 +26,7 @@ const BecomeATutor = () => {
     setDocumentsError(error)
   }
 
-  const { handleSubmit, handleChange, handleBlur, handleErrors, handleAddFiles, data, errors } = useForm({
+  const { handleSubmit, handleChange, setValue, handleBlur, handleErrors, handleAddFiles, data, errors } = useForm({
     initialValues,
     validations,
     onSubmit: async () => {
@@ -34,8 +34,6 @@ const BecomeATutor = () => {
       console.log(documents)
     }
   })
-
-  const [languages, setLanguages] = useState([{}])
 
   const childrenArr = [
     <GeneralInfo
@@ -46,7 +44,7 @@ const BecomeATutor = () => {
       key='1'
       setStepErrors={ setStepErrors }
     />,
-    <LanguagesStep key='2' languages={ languages } setLanguages={ setLanguages } />,
+    <LanguagesStep data={ data } key='2' setValue={ setValue } />,
     <TempComponent key='3'>3</TempComponent>,
     <ExperienceStep
       data={ data }

@@ -6,6 +6,7 @@ export const initialValues = {
   country: '',
   city: '',
   confirmAge: false,
+  languages: [{ language: null, level: null }],
   experience: '',
   photo: []
 }

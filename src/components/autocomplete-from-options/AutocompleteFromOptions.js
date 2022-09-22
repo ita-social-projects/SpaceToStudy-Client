@@ -10,18 +10,22 @@ import { styles } from '~/components/autocomplete-from-options/AutocompleteFromO
 
 const AutocompleteFromOptions = ({ options, formState, handleFormChange, btnText }) => {
   const handleChange = (field, idx) => (event, newValue) => {
-    const newItems = [...formState]
-    newItems[idx][field] = newValue
-    handleFormChange(newItems)
+    const itemsCopy = [...formState]
+    itemsCopy[idx][field] = newValue
+    handleFormChange(itemsCopy)
   }
 
   const removeItem = (idx) => () => {
-    const newItems = [...formState]
-    newItems.splice(idx, 1)
-    handleFormChange(newItems)
+    const itemsCopy = [...formState]
+    itemsCopy.splice(idx, 1)
+    handleFormChange(itemsCopy)
   }
 
-  const addItem = () => handleFormChange((prevState) => [...prevState, {}])
+  const addItem = () => {
+    const newItem = {}
+    Object.keys(options).forEach((key) => (newItem[key] = null))
+    handleFormChange([...formState, newItem])
+  }
 
   const disableOption = (label, currentOption) => (option) =>
     formState.some((elem) => elem[label] === option && option !== currentOption)
@@ -32,11 +36,12 @@ const AutocompleteFromOptions = ({ options, formState, handleFormChange, btnText
         <Autocomplete
           disablePortal
           getOptionDisabled={ inputParams.disableSelected && disableOption(key, inputData[key]) }
+          getOptionLabel={ inputParams.getOptionLabel }
           key={ key }
           onChange={ handleChange(key, idx) }
           options={ inputParams.options }
           renderInput={ (params) => <AppTextField { ...params } label={ inputParams.label } /> }
-          value={ inputData[key] || null }
+          value={ inputData[key] }
         />
       )
     })
@@ -59,8 +64,10 @@ const AutocompleteFromOptions = ({ options, formState, handleFormChange, btnText
           )
         }) }
       </Box>
-      <Button onClick={ addItem } sx={ styles.btn }>
-        <AddIcon />
+      <Button
+        onClick={ addItem } size='large' startIcon={ <AddIcon /> }
+        sx={ styles.btn }
+      >
         { btnText }
       </Button>
     </>

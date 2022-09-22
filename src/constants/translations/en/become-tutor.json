@@ -27,7 +27,40 @@
     "title": "Select the language you speak and your level of proficiency.",
     "languageLabel": "Language spoken",
     "levelLabel": "Level",
-    "btnText": "Add one more language"
+    "btnText": "Add one more language",
+    "languagesList": {
+      "zh": "Chinese",
+      "cs": "Czech",
+      "da": "Danish",
+      "nl": "Dutch",
+      "en": "English",
+      "et": "Estonian",
+      "fi": "Finnish",
+      "fr": "French",
+      "de": "German",
+      "hu": "Hungarian",
+      "is": "Icelandic",
+      "it": "Italian",
+      "ja": "Japanese",
+      "ko": "Korean",
+      "no": "Norwegian",
+      "pl": "Polish",
+      "pt_BR": "Portuguese (Brazil)",
+      "pt_PT": "Portuguese (Portugal)",
+      "ro": "Romanian",
+      "sk": "Slovak",
+      "es": "Spanish",
+      "sv": "Swedish",
+      "uk": "Ukrainian"
+    },
+    "levels": {
+      "a1": "A1 Beginner",
+      "a2": "A2 Pre-Intermediate",
+      "b1": "B1 Intermediate",
+      "b2": "B2 Upper-Intermediate",
+      "c1": "C1 Advanced",
+      "c2": "C2 Proficiency"
+    }
   },
   "photo": {
     "imageAlt": "Your photo",

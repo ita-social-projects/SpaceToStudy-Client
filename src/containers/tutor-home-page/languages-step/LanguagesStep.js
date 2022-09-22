@@ -4,15 +4,24 @@ import Typography from '@mui/material/Typography'
 import AutocompleteFromOptions from '~/components/autocomplete-from-options/AutocompleteFromOptions'
 
 import img from '~/assets/img/mentor-home-page/become-tutor/languages.jpg'
-import { languagesList, levels } from '~/containers/mentor-home-page/languages-step/constants'
+import { languages, levels } from '~/containers/mentor-home-page/languages-step/constants'
 import { styles } from '~/containers/mentor-home-page/languages-step/LanguagesStep.styles'
 
-const LanguagesStep = ({ btnsBox, languages, setLanguages }) => {
+const LanguagesStep = ({ btnsBox, data, setValue }) => {
   const { t } = useTranslation()
 
   const options = {
-    language: { options: languagesList, label: t('becomeTutor.languages.languageLabel'), disableSelected: true },
-    level: { options: levels, label: t('becomeTutor.languages.levelLabel') }
+    language: {
+      options: languages,
+      label: t('becomeTutor.languages.languageLabel'),
+      getOptionLabel: (lang) => t(`becomeTutor.languages.languagesList.${lang}`),
+      disableSelected: true
+    },
+    level: {
+      options: levels,
+      label: t('becomeTutor.languages.levelLabel'),
+      getOptionLabel: (level) => t(`becomeTutor.languages.levels.${level}`)
+    }
   }
 
   return (
@@ -27,8 +36,8 @@ const LanguagesStep = ({ btnsBox, languages, setLanguages }) => {
         </Typography>
         <AutocompleteFromOptions
           btnText={ t('becomeTutor.languages.btnText') }
-          formState={ languages }
-          handleFormChange={ setLanguages }
+          formState={ data.languages }
+          handleFormChange={ setValue('languages') }
           options={ options }
         />
         <Box sx={ styles.btnsBox }>
