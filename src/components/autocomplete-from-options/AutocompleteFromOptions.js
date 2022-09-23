@@ -9,7 +9,7 @@ import AppTextField from '~/components/app-text-field/AppTextField'
 import { styles } from '~/components/autocomplete-from-options/AutocompleteFromOptions.styles'
 
 const AutocompleteFromOptions = ({ options, formState, handleFormChange, btnText }) => {
-  const handleChange = (field, idx) => (event, newValue) => {
+  const handleChange = (idx, field) => (event, newValue) => {
     const itemsCopy = [...formState]
     itemsCopy[idx][field] = newValue
     handleFormChange(itemsCopy)
@@ -34,11 +34,10 @@ const AutocompleteFromOptions = ({ options, formState, handleFormChange, btnText
     Object.entries(options).map(([key, inputParams]) => {
       return (
         <Autocomplete
-          disablePortal
           getOptionDisabled={ inputParams.disableSelected && disableOption(key, inputData[key]) }
           getOptionLabel={ inputParams.getOptionLabel }
           key={ key }
-          onChange={ handleChange(key, idx) }
+          onChange={ handleChange(idx, key) }
           options={ inputParams.options }
           renderInput={ (params) => <AppTextField { ...params } label={ inputParams.label } /> }
           value={ inputData[key] }
@@ -66,7 +65,7 @@ const AutocompleteFromOptions = ({ options, formState, handleFormChange, btnText
       </Box>
       <Button
         onClick={ addItem } size='large' startIcon={ <AddIcon /> }
-        sx={ styles.btn }
+        sx={ { bgcolor: 'primary.50' } }
       >
         { btnText }
       </Button>

@@ -8,7 +8,15 @@ export const styles = {
     columnGap: 2,
     ...fadeAnimation
   },
+  imgContainer: {
+    flex: 1,
+    maxWidth: '650px',
+    display: 'flex',
+    justifyContent: 'center'
+  },
   img: {
+    width: '100%',
+    maxWidth: '580px',
     borderRadius: '20px'
   },
   rightBox: {

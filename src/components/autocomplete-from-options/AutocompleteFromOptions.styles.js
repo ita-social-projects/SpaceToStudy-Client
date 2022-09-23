@@ -12,8 +12,5 @@ export const styles = {
   },
   inputGroup: {
     flexGrow: '1'
-  },
-  btn: {
-    bgcolor: 'primary.50'
   }
 }

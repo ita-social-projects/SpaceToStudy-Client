@@ -1,7 +1,7 @@
 import { act, render, screen, fireEvent } from '@testing-library/react'
 import AutocompleteFromOptions from '~/components/autocomplete-from-options/AutocompleteFromOptions'
 
-const setStateItems = jest.fn()
+const handleFormChange = jest.fn()
 const btnText = 'Add more'
 const options = {
   language: { options: ['category1', 'category2'], label: 'Category', disableSelected: true },
@@ -12,7 +12,9 @@ describe('AutocompleteFromOptions test', () => {
   it('should render add button', () => {
     render(
       <AutocompleteFromOptions
-        btnText={ btnText } formState={ [{}] } handleFormChange={ setStateItems }
+        btnText={ btnText }
+        formState={ [{}] }
+        handleFormChange={ handleFormChange }
         options={ options }
       />
     )
@@ -23,7 +25,9 @@ describe('AutocompleteFromOptions test', () => {
   it('should handle selection', async () => {
     render(
       <AutocompleteFromOptions
-        btnText={ btnText } formState={ [{}] } handleFormChange={ setStateItems }
+        btnText={ btnText }
+        formState={ [{}] }
+        handleFormChange={ handleFormChange }
         options={ options }
       />
     )
@@ -37,7 +41,7 @@ describe('AutocompleteFromOptions test', () => {
       fireEvent.click(option)
     })
 
-    expect(setStateItems).toHaveBeenCalledTimes(1)
+    expect(handleFormChange).toHaveBeenCalledTimes(1)
   })
 
   it('should render delete button', async () => {
@@ -45,7 +49,7 @@ describe('AutocompleteFromOptions test', () => {
       <AutocompleteFromOptions
         btnText={ btnText }
         formState={ [{}, {}] }
-        handleFormChange={ setStateItems }
+        handleFormChange={ handleFormChange }
         options={ options }
       />
     )
@@ -59,7 +63,7 @@ describe('AutocompleteFromOptions test', () => {
       <AutocompleteFromOptions
         btnText={ btnText }
         formState={ [{}, {}] }
-        handleFormChange={ setStateItems }
+        handleFormChange={ handleFormChange }
         options={ options }
       />
     )
@@ -67,6 +71,6 @@ describe('AutocompleteFromOptions test', () => {
 
     fireEvent.click(deleteBtn[0])
 
-    expect(setStateItems).toHaveBeenCalledTimes(1)
+    expect(handleFormChange).toHaveBeenCalledTimes(1)
   })
 })

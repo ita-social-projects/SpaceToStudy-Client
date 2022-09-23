@@ -26,10 +26,12 @@ const LanguagesStep = ({ btnsBox, data, setValue }) => {
 
   return (
     <Box sx={ styles.container }>
-      <Box
-        alt='' component='img' src={ img }
-        sx={ styles.img }
-      />
+      <Box sx={ styles.imgContainer }>
+        <Box
+          alt='' component='img' src={ img }
+          sx={ styles.img }
+        />
+      </Box>
       <Box sx={ styles.rightBox }>
         <Typography mb='20px'>
           { t('becomeTutor.languages.title') }
