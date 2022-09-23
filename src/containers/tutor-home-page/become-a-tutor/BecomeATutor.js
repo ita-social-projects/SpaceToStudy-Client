@@ -2,14 +2,14 @@ import { useCallback, useState } from 'react'
 import StepWrapper from '~/components/step-wrapper/StepWrapper'
 import TempComponent from './TempComponent'
 
-import GeneralInfo from '~/containers/mentor-home-page/general-info/GeneralInfo'
-import ExperienceStep from '~/containers/mentor-home-page/experience-step/ExperienceStep'
-import AddDocuments from '~/containers/mentor-home-page/add-documents/AddDocuments'
+import GeneralInfo from '~/containers/tutor-home-page/general-info/GeneralInfo'
+import ExperienceStep from '~/containers/tutor-home-page/experience-step/ExperienceStep'
+import AddDocuments from '~/containers/tutor-home-page/add-documents/AddDocuments'
 import AddPhoto from '../add-photo/AddPhoto'
 
 import useForm from '~/hooks/use-form'
 
-import { initialValues, stepLabels, validations } from '~/containers/mentor-home-page/constants'
+import { initialValues, stepLabels, validations } from '~/containers/tutor-home-page/constants'
 
 const BecomeATutor = () => {
   const [documents, setDocuments] = useState([])

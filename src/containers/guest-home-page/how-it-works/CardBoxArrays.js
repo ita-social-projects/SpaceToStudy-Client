@@ -1,33 +1,33 @@
-import howItWorksMentorFirst from '~/assets/img/guest-home-page/howItWorksMentorFirst.svg'
-import howItWorksMentorSecond from '~/assets/img/guest-home-page/howItWorksMentorSecond.svg'
-import howItWorksMentorThird from '~/assets/img/guest-home-page/howItWorksMentorThird.svg'
-import howItWorksMentorFourth from '~/assets/img/guest-home-page/howItWorksMentorFourth.svg'
+import howItWorksTutorFirst from '~/assets/img/guest-home-page/howItWorksTutorFirst.svg'
+import howItWorksTutorSecond from '~/assets/img/guest-home-page/howItWorksTutorSecond.svg'
+import howItWorksTutorThird from '~/assets/img/guest-home-page/howItWorksTutorThird.svg'
+import howItWorksTutorFourth from '~/assets/img/guest-home-page/howItWorksTutorFourth.svg'
 
 import howItWorksStudentFirst from '~/assets/img/guest-home-page/howItWorksStudentFirst.svg'
 import howItWorksStudentSecond from '~/assets/img/guest-home-page/howItWorksStudentSecond.svg'
 import howItWorksStudentThird from '~/assets/img/guest-home-page/howItWorksStudentThird.svg'
 import howItWorksStudentFourth from '~/assets/img/guest-home-page/howItWorksStudentFourth.svg'
 
-export const mentorCardBoxArray = [
+export const tutorCardBoxArray = [
   {
-    icon: howItWorksMentorFirst,
-    title: 'guestHomePage.howItWorks.mentor.signUp.title',
-    description: 'guestHomePage.howItWorks.mentor.signUp.description'
+    icon: howItWorksTutorFirst,
+    title: 'guestHomePage.howItWorks.tutor.signUp.title',
+    description: 'guestHomePage.howItWorks.tutor.signUp.description'
   },
   {
-    icon: howItWorksMentorSecond,
-    title: 'guestHomePage.howItWorks.mentor.createAMentorAccount.title',
-    description: 'guestHomePage.howItWorks.mentor.createAMentorAccount.description'
+    icon: howItWorksTutorSecond,
+    title: 'guestHomePage.howItWorks.tutor.createATutorAccount.title',
+    description: 'guestHomePage.howItWorks.tutor.createATutorAccount.description'
   },
   {
-    icon: howItWorksMentorThird,
-    title: 'guestHomePage.howItWorks.mentor.getNewStudents.title',
-    description: 'guestHomePage.howItWorks.mentor.getNewStudents.description'
+    icon: howItWorksTutorThird,
+    title: 'guestHomePage.howItWorks.tutor.getNewStudents.title',
+    description: 'guestHomePage.howItWorks.tutor.getNewStudents.description'
   },
   {
-    icon: howItWorksMentorFourth,
-    title: 'guestHomePage.howItWorks.mentor.receiveFeedbacks.title',
-    description: 'guestHomePage.howItWorks.mentor.receiveFeedbacks.description'
+    icon: howItWorksTutorFourth,
+    title: 'guestHomePage.howItWorks.tutor.receiveFeedbacks.title',
+    description: 'guestHomePage.howItWorks.tutor.receiveFeedbacks.description'
   }
 ]
 
@@ -39,8 +39,8 @@ export const studentCardBoxArray = [
   },
   {
     icon: howItWorksStudentSecond,
-    title: 'guestHomePage.howItWorks.student.selectAMentor.title',
-    description: 'guestHomePage.howItWorks.student.selectAMentor.description'
+    title: 'guestHomePage.howItWorks.student.selectATutor.title',
+    description: 'guestHomePage.howItWorks.student.selectATutor.description'
   },
   {
     icon: howItWorksStudentThird,

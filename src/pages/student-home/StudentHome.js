@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 
-import FindMentorBlock from '~/containers/student-home-page/find-mentor-block/FindMentorBlock'
+import FindTutorBlock from '~/containers/student-home-page/find-tutor-block/FindTutorBlock'
 import PopularCategories from '~/containers/student-home-page/popular-categories/PopularCategories'
 import Faq from '~/containers/student-home-page/faq/Faq'
 import StudentHowItWorks from '~/containers/student-home-page/student-how-it-works/StudentHowItWorks'
@@ -10,7 +10,7 @@ const StudentHome = () => {
   return (
     <Box sx={ { backgroundColor: 'backgroundColor' } }>
       <Container data-testid='studentHome' sx={ { pt: 6 } }>
-        <FindMentorBlock />
+        <FindTutorBlock />
         <PopularCategories />
         <StudentHowItWorks />
         <Faq />

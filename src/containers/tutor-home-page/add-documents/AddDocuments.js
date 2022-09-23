@@ -5,9 +5,9 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
 import FileUploader from '~/components/file-uploader/FileUploader'
-import addDocumentsPNG from '~/assets/img/mentor-home-page/become-tutor/add-documents.png'
+import addDocumentsPNG from '~/assets/img/tutor-home-page/become-tutor/add-documents.png'
 
-import { styles } from '~/containers/mentor-home-page/add-documents/add-documents.style'
+import { styles } from '~/containers/tutor-home-page/add-documents/add-documents.style'
 
 const validationData = {
   maxFileSize: 10_000_000,

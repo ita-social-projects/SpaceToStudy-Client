@@ -1,5 +1,5 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
-import AddDocuments from '~/containers/mentor-home-page/add-documents/AddDocuments'
+import AddDocuments from '~/containers/tutor-home-page/add-documents/AddDocuments'
 
 const addDocuments = jest.fn()
 const documents = []

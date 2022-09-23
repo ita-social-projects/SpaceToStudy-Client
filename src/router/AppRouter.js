@@ -4,12 +4,12 @@ import { guestRoutes } from '~/router/constants/guestRoutes'
 import { studentRoutes } from '~/router/constants/studentRoutes'
 import { adminRoutes } from '~/router/constants/adminRoutes'
 import { errorRoutes } from '~/router/constants/errorRoutes'
-import { admin, mentor, student } from '~/constants'
+import { admin, tutor, student } from '~/constants'
 
 import PrivateRoute from './helpers/PrivateRoute'
 import GuestRoute from './helpers/GuestRoute'
 import StudentRoutes from './routes/StudentRoutes'
-import MentorRoutes from './routes/MentorRoutes'
+import TutorRoutes from './routes/TutorRoutes'
 import CookiePolicy from '~/pages/cookie-policy/CookiePolicy'
 import Logout from '~/pages/logout/Logout'
 import ErrorRoutes from './routes/ErrorRoutes'
@@ -29,11 +29,11 @@ const AppRouter = ({ userRole }) => {
       />
       <Route
         element={
-          <PrivateRoute role={ mentor } userRole={ userRole }>
-            <MentorRoutes />
+          <PrivateRoute role={ tutor } userRole={ userRole }>
+            <TutorRoutes />
           </PrivateRoute>
         }
-        path={ guestRoutes.mentor.nested }
+        path={ guestRoutes.tutor.nested }
       />
       <Route
         element={

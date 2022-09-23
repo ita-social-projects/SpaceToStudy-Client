@@ -8,8 +8,8 @@ import Switch from '@mui/material/Switch'
 
 import { guestRoutes } from '~/router/constants/guestRoutes'
 import CardsWithButton from '~/containers/guest-home-page/cards-with-button/CardsWithButton'
-import { mentorCardBoxArray, studentCardBoxArray } from '~/containers/guest-home-page/how-it-works/CardBoxArrays'
-import { mentor, student } from '~/constants'
+import { tutorCardBoxArray, studentCardBoxArray } from '~/containers/guest-home-page/how-it-works/CardBoxArrays'
+import { tutor, student } from '~/constants'
 
 import { styles } from '~/containers/guest-home-page/how-it-works/HowItWorks.styles'
 
@@ -26,8 +26,8 @@ const HowItWorks = () => {
 
   const cardsMap = isStudent ? (
     <CardsWithButton
-      array={ mentorCardBoxArray } btnText={ 'Become a mentor' } isStudent={ isStudent }
-      role={ mentor }
+      array={ tutorCardBoxArray } btnText={ 'Become a tutor' } isStudent={ isStudent }
+      role={ tutor }
     />
   ) : (
     <CardsWithButton

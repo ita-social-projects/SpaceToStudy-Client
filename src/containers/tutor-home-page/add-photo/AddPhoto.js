@@ -4,7 +4,7 @@ import { Box, Typography } from '@mui/material'
 import FileUploader from '~/components/file-uploader/FileUploader'
 import { imageResize } from '~/utils/image-resize'
 
-import { style } from '~/containers/mentor-home-page/add-photo/AddPhoto.style'
+import { style } from '~/containers/tutor-home-page/add-photo/AddPhoto.style'
 import { validationData } from './constants'
 
 const AddPhoto = ({ btnsBox, handleErrors, errors, handleStepErrors, stepLabel, data, handleAddFiles }) => {

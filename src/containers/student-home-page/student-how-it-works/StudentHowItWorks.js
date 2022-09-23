@@ -16,7 +16,7 @@ const sectionId = studentRoutes.navBar.howItWorks.label
 const StudentHowItWorks = () => {
   const { t } = useTranslation()
 
-  const { route } = studentRoutes.navBar.findMentor
+  const { route } = studentRoutes.navBar.findTutor
 
   const cards = howItWorksCards.map((item, index) => {
     return (
@@ -53,7 +53,7 @@ const StudentHowItWorks = () => {
         component={ Link } size='extraLarge' to={ route }
         variant='contained'
       >
-        { t('studentHomePage.findMentorBlock.button') }
+        { t('studentHomePage.findTutorBlock.button') }
       </Button>
     </Box>
   )

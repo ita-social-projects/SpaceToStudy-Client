@@ -17,7 +17,7 @@ import ImgTitleDescription from '~/components/img-title-description/ImgTitleDesc
 import { signupUser } from '~/redux/reducer'
 
 import student from '~/assets/img/signup-dialog/student.png'
-import mentor from '~/assets/img/signup-dialog/mentor.png'
+import tutor from '~/assets/img/signup-dialog/tutor.png'
 import info from '~/assets/img/guest-home-page/info.svg'
 
 import { styles } from '~/containers/guest-home-page/signup-dialog/SignupDialog.styles'
@@ -29,7 +29,7 @@ const SignupDialog = ({ type }) => {
   const { setAlert } = useContext(SnackBarContext)
   const dispatch = useDispatch()
 
-  const signupImg = { student, mentor }
+  const signupImg = { student, tutor }
 
   const { handleSubmit, handleChange, handleBlur, data, isDirty, errors } = useForm({
     onSubmit: async () => {

@@ -1,13 +1,13 @@
 {
   "head": {
-    "mentor": "Sign up as a mentor",
+    "tutor": "Sign up as a tutor",
     "student": "Sign up as a student"
   },
   "iAgree": "I agree to the",
   "and": "and",
   "googleButton": "Sign up with Google",
   "continue": "or continue",
-  "haveAccount": "Already have a mentor account?",
+  "haveAccount": "Already have a tutor account?",
   "joinUs": "Login!",
   "confirmEmailTitle": "Your email address needs to be verified",
   "confirmEmailMessage": "We sent a confirmation email to: ",

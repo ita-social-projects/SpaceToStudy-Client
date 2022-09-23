@@ -2,18 +2,18 @@ import { screen } from '@testing-library/react'
 
 import { ModalProvider } from '~/context/modal-context'
 import { ConfirmationDialogProvider } from '~/context/confirm-context'
-import MentorHome from '~/pages/mentor-home/MentorHome'
+import TutorHome from '~/pages/tutor-home/TutorHome'
 import { renderWithProviders } from '~tests/test-utils'
 
-const MentorHomeWithProviders = () => (
+const TutorHomeWithProviders = () => (
   <ConfirmationDialogProvider>
     <ModalProvider>
-      <MentorHome />
+      <TutorHome />
     </ModalProvider>
   </ConfirmationDialogProvider>
 )
 
-describe('MentorHome component', () => {
+describe('TutorHome component', () => {
   const firstLoginState = {
     appMain: { isFirstLogin: true }
   }
@@ -22,14 +22,14 @@ describe('MentorHome component', () => {
   }
 
   it('should render a BecomeATutor modal when logging in for the first time', () => {
-    renderWithProviders(<MentorHomeWithProviders />, { preloadedState: firstLoginState })
+    renderWithProviders(<TutorHomeWithProviders />, { preloadedState: firstLoginState })
 
     const firstTab = screen.getByText(/becomeTutor.generalInfo.title/i)
     expect(firstTab).toBeInTheDocument()
   })
 
   it('shouldn\'t render a BecomeATutor modal when logging in for the second time', () => {
-    renderWithProviders(<MentorHomeWithProviders />, { preloadedState: secondLoginState })
+    renderWithProviders(<TutorHomeWithProviders />, { preloadedState: secondLoginState })
 
     const titleToFind = screen.queryByText(/becomeTutor.generalInfo.title/i)
     expect(titleToFind).not.toBeInTheDocument()
