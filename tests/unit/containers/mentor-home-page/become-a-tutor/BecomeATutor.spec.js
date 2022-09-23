@@ -22,7 +22,15 @@ describe('BecomeATutor test', () => {
 
     const secondTab = screen.getByText(/becomeTutor.languages.title/i)
 
+    const autocomplete = screen.queryAllByRole('textbox')
+    fireEvent.mouseDown(autocomplete[0])
+    const langOption = screen.getByText(/becomeTutor.languages.languagesList.en/i)
+    fireEvent.mouseDown(autocomplete[1])
+    const levelOption = screen.getByText(/becomeTutor.languages.levels.b1/i)
+
     expect(secondTab).toBeInTheDocument()
+    expect(langOption).toBeInTheDocument()
+    expect(levelOption).toBeInTheDocument()
   })
 
   it('should open documents render error after add wrong file size', async () => {

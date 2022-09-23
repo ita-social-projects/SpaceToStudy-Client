@@ -1,15 +1,16 @@
-import { act, render, screen, fireEvent } from '@testing-library/react'
+import { render, screen, fireEvent } from '@testing-library/react'
 import AutocompleteFromOptions from '~/components/autocomplete-from-options/AutocompleteFromOptions'
 
 const handleFormChange = jest.fn()
+const getOptionLabel = jest.fn()
 const btnText = 'Add more'
 const options = {
-  language: { options: ['category1', 'category2'], label: 'Category', disableSelected: true },
-  level: { options: ['value1', 'value2'], label: 'Value' }
+  language: { options: ['category1', 'category2'], label: 'Category', getOptionLabel, disableSelected: true },
+  level: { options: ['value1', 'value2'], label: 'Value', getOptionLabel }
 }
 
 describe('AutocompleteFromOptions test', () => {
-  it('should render add button', () => {
+  it('should add inputs', () => {
     render(
       <AutocompleteFromOptions
         btnText={ btnText }
@@ -19,10 +20,13 @@ describe('AutocompleteFromOptions test', () => {
       />
     )
     const button = screen.getByText(/Add more/i)
+    fireEvent.click(button)
 
     expect(button).toBeInTheDocument()
+    expect(handleFormChange).toHaveBeenCalledTimes(1)
   })
   it('should handle selection', async () => {
+    getOptionLabel.mockImplementation((option) => option)
     render(
       <AutocompleteFromOptions
         btnText={ btnText }
@@ -32,14 +36,10 @@ describe('AutocompleteFromOptions test', () => {
       />
     )
     const autocomplete = screen.queryAllByRole('textbox')
-    act(() => {
-      fireEvent.mouseDown(autocomplete[0])
-    })
+    fireEvent.mouseDown(autocomplete[0])
 
     const option = screen.getByText('category1')
-    act(() => {
-      fireEvent.click(option)
-    })
+    fireEvent.click(option)
 
     expect(handleFormChange).toHaveBeenCalledTimes(1)
   })
