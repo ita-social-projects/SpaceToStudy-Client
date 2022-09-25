@@ -5,6 +5,8 @@ import { ModalProvider } from '~/context/modal-context'
 import AppContent from '~/containers/app-content/AppContent'
 
 describe('AppContent container', () => {
+  window.scrollTo = jest.fn()
+
   it('should render container on the page', () => {
     renderWithProviders(
       <ModalProvider>
