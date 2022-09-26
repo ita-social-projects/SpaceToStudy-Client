@@ -15,7 +15,7 @@ const AutocompleteFromOptions = ({ options, formState, handleFormChange, btnText
     handleFormChange(itemsCopy)
   }
 
-  const removeItem = (idx) => () => {
+  const removeItem = (idx) => {
     const itemsCopy = [...formState]
     itemsCopy.splice(idx, 1)
     handleFormChange(itemsCopy)
@@ -55,7 +55,7 @@ const AutocompleteFromOptions = ({ options, formState, handleFormChange, btnText
                 { getInputs(item, idx) }
               </Box>
               { formState.length > 1 && (
-                <IconButton data-testid='deleteBtn' onClick={ removeItem(idx) }>
+                <IconButton data-testid='deleteBtn' onClick={ () => removeItem(idx) }>
                   <CloseIcon color='primary' />
                 </IconButton>
               ) }

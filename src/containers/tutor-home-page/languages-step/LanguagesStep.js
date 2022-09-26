@@ -3,9 +3,9 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import AutocompleteFromOptions from '~/components/autocomplete-from-options/AutocompleteFromOptions'
 
-import img from '~/assets/img/mentor-home-page/become-tutor/languages.jpg'
-import { languages, levels } from '~/containers/mentor-home-page/languages-step/constants'
-import { styles } from '~/containers/mentor-home-page/languages-step/LanguagesStep.styles'
+import img from '~/assets/img/tutor-home-page/become-tutor/languages.jpg'
+import { languages, levels } from '~/containers/tutor-home-page/languages-step/constants'
+import { styles } from '~/containers/tutor-home-page/languages-step/LanguagesStep.styles'
 
 const LanguagesStep = ({ btnsBox, data, setValue }) => {
   const { t } = useTranslation()
