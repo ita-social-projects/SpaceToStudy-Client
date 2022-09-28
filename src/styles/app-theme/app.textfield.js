@@ -26,6 +26,9 @@ export const textField = {
             borderColor: palette.primary[900]
           }
         }
+      },
+      '& .MuiInput-root:before ': {
+        borderColor: palette.primary[500]
       }
     }
   }

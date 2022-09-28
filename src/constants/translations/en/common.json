@@ -6,6 +6,8 @@
   "back": "Back",
   "next": "Next",
   "finish": "Finish",
+  "search": "Search",
+  "delete": "Delete",
   "labels": {
     "email": "Email",
     "firstName": "First name",

@@ -1,0 +1,58 @@
+import { useTranslation } from 'react-i18next'
+
+import Checkbox from '@mui/material/Checkbox'
+import TableCell from '@mui/material/TableCell'
+import TableHead from '@mui/material/TableHead'
+import TableRow from '@mui/material/TableRow'
+
+import EnhancedTableCell from '../enhanced-table-cell/EnhancedTableCell'
+
+import { styles } from './EnhancedTableHead.styles'
+
+const EnhancedTableHead = ({
+  onSelectAllClick,
+  order,
+  orderBy,
+  itemsCount,
+  numSelected,
+  onRequestSort,
+  filtersObj,
+  setFiltersObj,
+  isSelection,
+  headCells
+}) => {
+  const { t } = useTranslation()
+
+  return (
+    <TableHead sx={ styles.tableHead }>
+      <TableRow>
+        { isSelection && (
+          <TableCell padding='checkbox'>
+            <Checkbox
+              checked={ itemsCount > 0 && numSelected === itemsCount }
+              color='primary'
+              indeterminate={ numSelected > 0 && numSelected < itemsCount }
+              onChange={ onSelectAllClick }
+            />
+          </TableCell>
+        ) }
+        { headCells.map((headCell) => (
+          <EnhancedTableCell
+            filterArr={ filtersObj[headCell.id] }
+            headCell={ headCell }
+            key={ headCell.id }
+            onRequestSort={ onRequestSort }
+            order={ order }
+            orderBy={ orderBy }
+            setFilter={ setFiltersObj[headCell.id] }
+          />
+        )) }
+        { isSelection && (<TableCell>
+          { t('table.actions') }
+        </TableCell>) }
+      </TableRow>
+    </TableHead>
+  )
+}
+
+export default EnhancedTableHead

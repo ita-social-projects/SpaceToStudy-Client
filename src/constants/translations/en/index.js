@@ -14,6 +14,8 @@ import footer from './footer.json'
 import becomeTutor from './become-tutor.json'
 import modals from './email-modals.json'
 import errors from './errors.json'
+import table from './table.json'
+import studentTable from './student-table.json'
 
 const en = {
   translations: {
@@ -32,7 +34,9 @@ const en = {
     footer,
     becomeTutor,
     modals,
-    errors
+    errors,
+    table,
+    studentTable
   }
 }
 
