@@ -63,8 +63,7 @@ const StudentTable = () => {
         filtersObj={ filtersObj }
         groupActionsArr={ groupActionsArr }
         headCells={ headCells(t) }
-        initialOrder={ 'asc' }
-        initialOrderBy={ 'email' }
+        initialSort={ { order: 'asc', orderBy: 'email' } }
         isSelection
         rowPropsArr={ rowPropsArr }
         setActiveTab={ setIsEmailConfirmed }

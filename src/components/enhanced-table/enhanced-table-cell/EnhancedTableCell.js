@@ -10,7 +10,7 @@ import FilterCheckbox from './filter-checkbox/FilterCheckbox'
 
 import { styles } from './EnhancedTableCell.styles'
 
-const EnhancedTableCell = ({ headCell, order, orderBy, setFilter, filterArr, onRequestSort }) => {
+const EnhancedTableCell = ({ headCell, sort, setFilter, filterArr, onRequestSort }) => {
   const [anchorEl, setAnchorEl] = useState(null)
 
   const handleClick = (e) => {
@@ -28,8 +28,8 @@ const EnhancedTableCell = ({ headCell, order, orderBy, setFilter, filterArr, onR
   return (
     <TableCell key={ headCell.id }>
       <TableSortLabel
-        active={ orderBy === headCell.id }
-        direction={ orderBy === headCell.id ? order : 'asc' }
+        active={ sort.orderBy === headCell.id }
+        direction={ sort.orderBy === headCell.id ? sort.order : 'asc' }
         onClick={ createSortHandler(headCell.id) }
         sx={ styles.sortLabel }
       >

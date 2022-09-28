@@ -11,8 +11,7 @@ import { styles } from './EnhancedTableHead.styles'
 
 const EnhancedTableHead = ({
   onSelectAllClick,
-  order,
-  orderBy,
+  sort,
   itemsCount,
   numSelected,
   onRequestSort,
@@ -43,9 +42,8 @@ const EnhancedTableHead = ({
             headCell={ headCell }
             key={ headCell.id }
             onRequestSort={ onRequestSort }
-            order={ order }
-            orderBy={ orderBy }
             setFilter={ getSetFilterByKey(headCell.id) }
+            sort={ sort }
           />
         )) }
         { isSelection && (<TableCell>

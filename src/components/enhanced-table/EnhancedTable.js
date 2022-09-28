@@ -22,8 +22,7 @@ const EnhancedTable = ({
   actionsArr,
   groupActionsArr,
   fetchService,
-  initialOrder,
-  initialOrderBy,
+  initialSort,
   filters,
   setActiveTab,
   activeTab,
@@ -35,8 +34,7 @@ const EnhancedTable = ({
   rowPropsArr
 }) => {
   const { t } = useTranslation()
-  const [order, setOrder] = useState(initialOrder)
-  const [orderBy, setOrderBy] = useState(initialOrderBy)
+  const [sort, setSort] = useState(initialSort)
   const [selected, setSelected] = useState([])
 
   const [items, setItems] = useState([])
@@ -52,12 +50,11 @@ const EnhancedTable = ({
       fetchService({
         skip: page * rowsPerPage,
         limit: rowsPerPage,
-        order,
-        orderBy,
+        sort,
         search,
         ...filters
       }),
-    [order, orderBy, search, filters, page, rowsPerPage, fetchService]
+    [sort, search, filters, page, rowsPerPage, fetchService]
   )
 
   const { loading, fetchData } = useAxios({ service: serviceFunction, fetchOnMount: false })
@@ -133,9 +130,8 @@ const EnhancedTable = ({
   }
 
   const handleRequestSort = (_e, property) => {
-    const isAsc = orderBy === property && order === 'asc'
-    setOrder(isAsc ? 'desc' : 'asc')
-    setOrderBy(property)
+    const isAsc = sort.orderBy === property && sort.order === 'asc'
+    setSort({ order: isAsc ? 'desc' : 'asc', orderBy: property })
     setSelected([])
   }
 
@@ -175,9 +171,8 @@ const EnhancedTable = ({
           numSelected={ selected.length }
           onRequestSort={ handleRequestSort }
           onSelectAllClick={ handleSelectAllClick }
-          order={ order }
-          orderBy={ orderBy }
           rowsPerPage={ rowsPerPage }
+          sort={ sort }
         />
         <TableBody>
           { rows }
