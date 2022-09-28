@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography'
 
 import { styles } from './EnhancedTablePagination.styles'
 
-const EnhancedTablePagination = ({ page, rowsPerPage, itemsCount, setPage, setRowsPerPage }) => {
+const EnhancedTablePagination = ({ page, rowsPerPage, itemsCount, setCurrentPage, setRowsPerPage }) => {
   const { t } = useTranslation()
   const [pageInput, setPageInput] = useState(1)
 
@@ -19,13 +19,13 @@ const EnhancedTablePagination = ({ page, rowsPerPage, itemsCount, setPage, setRo
   const handleSubmit = () => {
     if (pageInput > maxPages) {
       setPageInput(maxPages)
-      return setPage(maxPages - 1)
+      return setCurrentPage(maxPages - 1)
     }
     if (pageInput < 1) {
       setPageInput(1)
-      return setPage(0)
+      return setCurrentPage(0)
     }
-    setPage(pageInput - 1)
+    setCurrentPage(pageInput - 1)
   }
 
   const PaginationController = (currentPage, maxPages) => {
@@ -38,7 +38,7 @@ const EnhancedTablePagination = ({ page, rowsPerPage, itemsCount, setPage, setRo
         <Pagination
           count={ maxPages }
           onChange={ (_e, page) => {
-            setPage(page - 1)
+            setCurrentPage(page - 1)
           } }
           page={ currentPage + 1 }
         />
@@ -47,7 +47,7 @@ const EnhancedTablePagination = ({ page, rowsPerPage, itemsCount, setPage, setRo
   }
 
   const handleChangePage = (_e, newPage) => {
-    setPage(newPage)
+    setCurrentPage(newPage)
   }
 
   const handleChangePageInput = (e) => {
@@ -56,7 +56,7 @@ const EnhancedTablePagination = ({ page, rowsPerPage, itemsCount, setPage, setRo
 
   const handleChangeRowsPerPage = (e) => {
     setRowsPerPage(e.target.value)
-    setPage(0)
+    setCurrentPage(0)
   }
 
   const getDisplayedRowsLabel = (from, to, count) => `${from}-${to} ${t('table.of')} ${count}`

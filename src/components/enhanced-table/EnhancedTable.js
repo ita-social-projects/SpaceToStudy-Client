@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
@@ -39,6 +39,9 @@ const EnhancedTable = ({
   const [orderBy, setOrderBy] = useState(initialOrderBy)
   const [selected, setSelected] = useState([])
 
+  const [items, setItems] = useState([])
+  const [itemsCount, setItemsCount] = useState(0)
+
   const [search, setSearch] = useState('')
 
   const [page, setPage] = useState(0)
@@ -57,14 +60,32 @@ const EnhancedTable = ({
     [order, orderBy, search, filters, page, rowsPerPage, fetchService]
   )
 
-  const { response, loading, fetchData: fetchUsers } = useAxios({ service: serviceFunction })
+  const { loading, fetchData } = useAxios({ service: serviceFunction, fetchOnMount: false })
 
-  const itemsCount = response?.data.count
+  const getData = useCallback(async () => {
+    const res = await fetchData()
+    setItems(res.data.items)
+    setItemsCount(res.data.count)
+  }, [fetchData])
+
+  useEffect(() => {
+    getData()
+  }, [getData])
+
+  const getSetFilterByKey = (filterKey) => (filterValue) => {
+    setSelected([])
+    setFiltersObj[filterKey](filterValue)
+  }
+
+  const setCurrentSearch = (value) => {
+    setSelected([])
+    setSearch(value)
+  }
 
   const handleSelectAllClick = (e) => {
     if (e.target.checked) {
-      const newSelected = response.data.items.map((item) => item._id)
-      return setSelected((prev) => [...new Set(prev.concat(newSelected))])
+      const newSelected = items.map((item) => item._id)
+      return setSelected(newSelected)
     }
     setSelected([])
   }
@@ -75,25 +96,21 @@ const EnhancedTable = ({
 
     if (selectedIndex === -1) {
       newSelected = newSelected.concat(selected, id)
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1))
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1))
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1))
+    } else {
+      newSelected = selected.filter((selectedId) => selectedId !== id)
     }
 
     setSelected(newSelected)
   }
 
   const refetchData = () => {
-    fetchUsers()
+    getData()
     setSelected([])
   }
 
   const isSelected = (id) => selected.includes(id)
 
-  const rows = response?.data.items.map((item) => {
+  const rows = items.map((item) => {
     const isItemSelected = isSelected(item._id)
 
     return (
@@ -110,10 +127,16 @@ const EnhancedTable = ({
     )
   })
 
+  const setCurrentPage = (page) => {
+    setSelected([])
+    setPage(page)
+  }
+
   const handleRequestSort = (_e, property) => {
     const isAsc = orderBy === property && order === 'asc'
     setOrder(isAsc ? 'desc' : 'asc')
     setOrderBy(property)
+    setSelected([])
   }
 
   const setTab = (tab) => {
@@ -135,7 +158,7 @@ const EnhancedTable = ({
 
   const tableBody = loading ? (
     <Loader size={ 70 } sx={ { py: '170px' } } />
-  ) : response?.data.items.length === 0 ? (
+  ) : items.length === 0 ? (
     <Box sx={ styles.noMatches }>
       <ReportIcon color='secondary' />
       { t('table.noExactMatches') }
@@ -145,6 +168,7 @@ const EnhancedTable = ({
       <Table>
         <EnhancedTableHead
           filtersObj={ filtersObj }
+          getSetFilterByKey={ getSetFilterByKey }
           headCells={ headCells }
           isSelection={ isSelection }
           itemsCount={ itemsCount }
@@ -153,7 +177,7 @@ const EnhancedTable = ({
           onSelectAllClick={ handleSelectAllClick }
           order={ order }
           orderBy={ orderBy }
-          setFiltersObj={ setFiltersObj }
+          rowsPerPage={ rowsPerPage }
         />
         <TableBody>
           { rows }
@@ -177,16 +201,16 @@ const EnhancedTable = ({
           <Box sx={ styles.tabs }>
             { tabs }
           </Box>
-          <SearchInput search={ search } setSearch={ setSearch } />
+          <SearchInput search={ search } setCurrentSearch={ setCurrentSearch } />
         </Box>
         { tableBody }
       </Paper>
-      { loading || response?.data.items.length === 0 ? null : (
+      { loading || items.length === 0 ? null : (
         <EnhancedTablePagination
           itemsCount={ itemsCount }
           page={ page }
           rowsPerPage={ rowsPerPage }
-          setPage={ setPage }
+          setCurrentPage={ setCurrentPage }
           setRowsPerPage={ setRowsPerPage }
         />
       ) }

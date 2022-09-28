@@ -17,9 +17,10 @@ const EnhancedTableHead = ({
   numSelected,
   onRequestSort,
   filtersObj,
-  setFiltersObj,
+  getSetFilterByKey,
   isSelection,
-  headCells
+  headCells,
+  rowsPerPage
 }) => {
   const { t } = useTranslation()
 
@@ -29,9 +30,9 @@ const EnhancedTableHead = ({
         { isSelection && (
           <TableCell padding='checkbox'>
             <Checkbox
-              checked={ itemsCount > 0 && numSelected === itemsCount }
+              checked={ itemsCount > 0 && numSelected === rowsPerPage }
               color='primary'
-              indeterminate={ numSelected > 0 && numSelected < itemsCount }
+              indeterminate={ numSelected > 0 && numSelected < rowsPerPage }
               onChange={ onSelectAllClick }
             />
           </TableCell>
@@ -44,7 +45,7 @@ const EnhancedTableHead = ({
             onRequestSort={ onRequestSort }
             order={ order }
             orderBy={ orderBy }
-            setFilter={ setFiltersObj[headCell.id] }
+            setFilter={ getSetFilterByKey(headCell.id) }
           />
         )) }
         { isSelection && (<TableCell>

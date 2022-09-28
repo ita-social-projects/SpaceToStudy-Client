@@ -37,7 +37,7 @@ const EnhancedTableCell = ({ headCell, order, orderBy, setFilter, filterArr, onR
       </TableSortLabel>
       { headCell.filterCheckboxesArr && (
         <>
-          <IconButton onClick={ handleClick } sx={ [styles.iconBtn, filterArr.length && styles.visible] }>
+          <IconButton onClick={ handleClick } sx={ [styles.iconBtn, filterArr.length > 0 ? styles.visible : {}] }>
             <MoreVertIcon color='primary' sx={ styles.icon } />
           </IconButton>
           <Menu anchorEl={ anchorEl } onClose={ handleClose } open={ Boolean(anchorEl) }>

@@ -12,6 +12,7 @@ const useAxios = ({ service, fetchOnMount = true }) => {
         const res = await service(data)
         setResponse(res)
         setError(null)
+        return res
       } catch (e) {
         setError(e)
       } finally {
