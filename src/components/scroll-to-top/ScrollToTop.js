@@ -1,37 +1,14 @@
-import { useState, useEffect } from 'react'
-
-import IconButton from '@mui/material/IconButton'
-import Box from '@mui/material/Box'
-import ArrowUpwardRoundedIcon from '@mui/icons-material/ArrowUpwardRounded'
-
-import { styles } from '~/components/scroll-to-top/ScrollToTop.styles'
+import { useLayoutEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 
 const ScrollToTop = () => {
-  const [isVisible, setIsVisible] = useState(false)
+  const { pathname } = useLocation()
 
-  const scroll = () => (window.scrollY > 450 ? setIsVisible(true) : setIsVisible(false))
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0)
+  }, [pathname])
 
-  useEffect(() => {
-    window.addEventListener('scroll', scroll)
-    return () => window.removeEventListener('scroll', scroll)
-  }, [])
-
-  const goToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    })
-  }
-
-  return (
-    isVisible && (
-      <Box sx={ styles.root }>
-        <IconButton onClick={ goToTop } sx={ styles.button }>
-          <ArrowUpwardRoundedIcon sx={ styles.icon } />
-        </IconButton>
-      </Box>
-    )
-  )
+  return null
 }
 
 export default ScrollToTop
