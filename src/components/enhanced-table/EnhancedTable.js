@@ -19,8 +19,8 @@ import SearchInput from '../search-input/SearchInput'
 import { styles } from './EnhancedTable.styles'
 
 const EnhancedTable = ({
-  actionsArr,
-  groupActionsArr,
+  rowActions,
+  bulkActions,
   fetchService,
   initialSort,
   filters,
@@ -30,7 +30,7 @@ const EnhancedTable = ({
   filtersObj,
   tabLabels,
   isSelection,
-  headCells,
+  columns,
   rowPropsArr
 }) => {
   const { t } = useTranslation()
@@ -112,13 +112,13 @@ const EnhancedTable = ({
 
     return (
       <EnhancedTableRow
-        actionsArr={ actionsArr }
         handleSelectClick={ handleSelectClick }
         isItemSelected={ isItemSelected }
         isSelection={ isSelection }
         item={ item }
         key={ item._id }
         refetchData={ refetchData }
+        rowActions={ rowActions }
         rowPropsArr={ rowPropsArr }
       />
     )
@@ -152,20 +152,13 @@ const EnhancedTable = ({
     </Box>
   ))
 
-  const tableBody = loading ? (
-    <Loader size={ 70 } sx={ { py: '170px' } } />
-  ) : items.length === 0 ? (
-    <Box sx={ styles.noMatches }>
-      <ReportIcon color='secondary' />
-      { t('table.noExactMatches') }
-    </Box>
-  ) : (
+  const tableBody = (
     <TableContainer>
       <Table>
         <EnhancedTableHead
+          columns={ columns }
           filtersObj={ filtersObj }
           getSetFilterByKey={ getSetFilterByKey }
-          headCells={ headCells }
           isSelection={ isSelection }
           itemsCount={ itemsCount }
           numSelected={ selected.length }
@@ -181,11 +174,21 @@ const EnhancedTable = ({
     </TableContainer>
   )
 
+  const noMatchesBox = (
+    <Box sx={ styles.noMatches }>
+      <ReportIcon color='secondary' />
+      { t('table.noExactMatches') }
+    </Box>
+  )
+
+  const tableContent =
+    (loading && <Loader size={ 70 } sx={ { py: '170px' } } />) || (!items.length && noMatchesBox) || tableBody
+
   return (
     <Box sx={ styles.root }>
       <Box className={ selected.length > 0 ? 'visible' : 'hidden' }>
         <EnhancedTableToolbar
-          groupActionsArr={ groupActionsArr }
+          bulkActions={ bulkActions }
           itemIds={ selected }
           numSelected={ selected.length }
           refetchData={ refetchData }
@@ -198,7 +201,7 @@ const EnhancedTable = ({
           </Box>
           <SearchInput search={ search } setCurrentSearch={ setCurrentSearch } />
         </Box>
-        { tableBody }
+        { tableContent }
       </Paper>
       { loading || items.length === 0 ? null : (
         <EnhancedTablePagination

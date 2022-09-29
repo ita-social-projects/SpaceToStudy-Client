@@ -8,9 +8,9 @@ import MoreVertIcon from '@mui/icons-material/MoreVert'
 
 import FilterCheckbox from './filter-checkbox/FilterCheckbox'
 
-import { styles } from './EnhancedTableCell.styles'
+import { styles } from './EnhancedTableHeaderCell.styles'
 
-const EnhancedTableCell = ({ headCell, sort, setFilter, filterArr, onRequestSort }) => {
+const EnhancedTableHeaderCell = ({ column, sort, setFilter, filterArr, onRequestSort }) => {
   const [anchorEl, setAnchorEl] = useState(null)
 
   const handleClick = (e) => {
@@ -26,22 +26,22 @@ const EnhancedTableCell = ({ headCell, sort, setFilter, filterArr, onRequestSort
   }
 
   return (
-    <TableCell key={ headCell.id }>
+    <TableCell key={ column.id }>
       <TableSortLabel
-        active={ sort.orderBy === headCell.id }
-        direction={ sort.orderBy === headCell.id ? sort.order : 'asc' }
-        onClick={ createSortHandler(headCell.id) }
+        active={ sort.orderBy === column.id }
+        direction={ sort.orderBy === column.id ? sort.order : 'asc' }
+        onClick={ createSortHandler(column.id) }
         sx={ styles.sortLabel }
       >
-        { headCell.label }
+        { column.label }
       </TableSortLabel>
-      { headCell.filterCheckboxesArr && (
+      { column.filterCheckboxesArr && (
         <>
           <IconButton onClick={ handleClick } sx={ [styles.iconBtn, filterArr.length > 0 ? styles.visible : {}] }>
             <MoreVertIcon color='primary' sx={ styles.icon } />
           </IconButton>
           <Menu anchorEl={ anchorEl } onClose={ handleClose } open={ Boolean(anchorEl) }>
-            { headCell.filterCheckboxesArr.map((filter) => (
+            { column.filterCheckboxesArr.map((filter) => (
               <FilterCheckbox
                 filter={ filter } filterArr={ filterArr } key={ filter.value }
                 setFilter={ setFilter }
@@ -54,4 +54,4 @@ const EnhancedTableCell = ({ headCell, sort, setFilter, filterArr, onRequestSort
   )
 }
 
-export default EnhancedTableCell
+export default EnhancedTableHeaderCell

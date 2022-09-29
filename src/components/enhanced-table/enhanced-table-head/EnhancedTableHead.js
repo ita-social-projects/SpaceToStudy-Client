@@ -5,7 +5,7 @@ import TableCell from '@mui/material/TableCell'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 
-import EnhancedTableCell from '../enhanced-table-cell/EnhancedTableCell'
+import EnhancedTableHeaderCell from '../enhanced-table-header-cell/EnhancedTableHeaderCell'
 
 import { styles } from './EnhancedTableHead.styles'
 
@@ -18,7 +18,7 @@ const EnhancedTableHead = ({
   filtersObj,
   getSetFilterByKey,
   isSelection,
-  headCells,
+  columns,
   rowsPerPage
 }) => {
   const { t } = useTranslation()
@@ -36,13 +36,13 @@ const EnhancedTableHead = ({
             />
           </TableCell>
         ) }
-        { headCells.map((headCell) => (
-          <EnhancedTableCell
-            filterArr={ filtersObj[headCell.id] }
-            headCell={ headCell }
-            key={ headCell.id }
+        { columns.map((column) => (
+          <EnhancedTableHeaderCell
+            column={ column }
+            filterArr={ filtersObj[column.id] }
+            key={ column.id }
             onRequestSort={ onRequestSort }
-            setFilter={ getSetFilterByKey(headCell.id) }
+            setFilter={ getSetFilterByKey(column.id) }
             sort={ sort }
           />
         )) }

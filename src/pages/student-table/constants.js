@@ -6,7 +6,7 @@ export const tabLabels = (t) => [
   { label: t('studentTable.unactive'), value: false }
 ]
 
-export const headCells = (t) => [
+export const columns = (t) => [
   {
     label: t('studentTable.name'),
     id: 'firstName'

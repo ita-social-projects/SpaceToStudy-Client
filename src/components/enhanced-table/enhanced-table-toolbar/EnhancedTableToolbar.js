@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography'
 
 import { styles } from './EnhancedTableToolbar.styles'
 
-const EnhancedTableToolbar = ({ groupActionsArr, numSelected, itemIds, refetchData }) => {
+const EnhancedTableToolbar = ({ bulkActions, numSelected, itemIds, refetchData }) => {
   const { t } = useTranslation()
 
   const onAction = async (actionFunc) => {
@@ -21,7 +21,7 @@ const EnhancedTableToolbar = ({ groupActionsArr, numSelected, itemIds, refetchDa
         { `${numSelected} ${t('table.selected')}` }
       </Typography>
 
-      { groupActionsArr.map(({ title, func, icon }) => (
+      { bulkActions.map(({ title, func, icon }) => (
         <Tooltip key={ title } placement='top' title={ title }>
           <IconButton onClick={ () => onAction(func) }>
             { icon }

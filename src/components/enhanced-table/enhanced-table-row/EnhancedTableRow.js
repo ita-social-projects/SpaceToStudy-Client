@@ -15,7 +15,7 @@ const EnhancedTableRow = ({
   refetchData,
   isSelection,
   rowPropsArr,
-  actionsArr
+  rowActions
 }) => {
   const [anchorEl, setAnchorEl] = useState(null)
 
@@ -70,7 +70,7 @@ const EnhancedTableRow = ({
             anchorEl={ anchorEl } id={ item._id } onClose={ handleClose }
             open={ Boolean(anchorEl) }
           >
-            { actionsArr.map(({ label, func }) => (
+            { rowActions.map(({ label, func }) => (
               <MenuItem key={ label } onClick={ () => onAction(func) }>
                 { label }
               </MenuItem>

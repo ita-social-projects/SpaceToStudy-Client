@@ -8,7 +8,7 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import EnhancedTable from '~/components/enhanced-table/EnhancedTable'
 import useAxios from '~/hooks/use-axios'
 import { userService } from '~/services/user-service'
-import { headCells, rowPropsArr, tabLabels } from './constants'
+import { columns, rowPropsArr, tabLabels } from './constants'
 
 import { styles } from './StudentTable.styles'
 
@@ -35,14 +35,14 @@ const StudentTable = () => {
   const deleteAllFunction = useCallback((userIds) => userService.deleteUsers(userIds), [])
   const { fetchData: deleteUsers } = useAxios({ service: deleteAllFunction, fetchOnMount: false })
 
-  const actionsArr = [
+  const rowActions = [
     {
       label: t('common.delete'),
       func: deleteUser
     }
   ]
 
-  const groupActionsArr = [
+  const bulkActions = [
     {
       title: t('common.delete'),
       func: deleteUsers,
@@ -56,15 +56,15 @@ const StudentTable = () => {
         { t('studentTable.studentsTab') }
       </Typography>
       <EnhancedTable
-        actionsArr={ actionsArr }
         activeTab={ isEmailConfirmed }
+        bulkActions={ bulkActions }
+        columns={ columns(t) }
         fetchService={ userService.getUsers }
         filters={ filters }
         filtersObj={ filtersObj }
-        groupActionsArr={ groupActionsArr }
-        headCells={ headCells(t) }
         initialSort={ { order: 'asc', orderBy: 'email' } }
         isSelection
+        rowActions={ rowActions }
         rowPropsArr={ rowPropsArr }
         setActiveTab={ setIsEmailConfirmed }
         setFiltersObj={ setFiltersObj }
