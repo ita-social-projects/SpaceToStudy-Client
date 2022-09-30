@@ -8,7 +8,7 @@ const FilterCheckbox = ({ filterCheckbox, filterArr, setFilter }) => {
 
   const handleFilterChange = (e, checkboxValue) => {
     if (e.target.checked) {
-      setFilter((prevState) => [...prevState, checkboxValue])
+      setFilter([...filterArr, checkboxValue])
     } else {
       const newFilterArr = filterArr.filter((value) => value !== checkboxValue)
       setFilter(newFilterArr)
