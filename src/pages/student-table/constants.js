@@ -1,9 +1,9 @@
 import Box from '@mui/material/Box'
 
-export const tabLabels = (t) => [
-  { label: t('studentTable.all'), value: null },
-  { label: t('studentTable.active'), value: true },
-  { label: t('studentTable.unactive'), value: false }
+export const tabLabels = [
+  { label: 'studentTable.all', filterKey: 'isEmailConfirmed', value: null },
+  { label: 'studentTable.active', filterKey: 'isEmailConfirmed', value: true },
+  { label: 'studentTable.unactive', filterKey: 'isEmailConfirmed', value: false }
 ]
 
 export const columns = (t) => [

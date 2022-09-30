@@ -1,4 +1,3 @@
-import { fadeAnimation } from '~/styles/app-theme/custom-animations'
 import { mainShadow } from '~/styles/app-theme/custom-shadows'
 
 export const styles = {
@@ -14,18 +13,6 @@ export const styles = {
     justifyContent: 'space-between',
     alignItems: 'flex-end',
     mr: '20px'
-  },
-  defaultTab: {
-    px: '44px',
-    borderBottom: '1px solid',
-    cursor: 'pointer',
-    color: 'primary.300'
-  },
-  activeTab: {
-    color: 'primary.500',
-    borderBottom: '3px solid',
-    pb: '14px',
-    ...fadeAnimation
   },
   tabs: {
     display: 'flex',

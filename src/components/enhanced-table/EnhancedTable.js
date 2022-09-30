@@ -15,6 +15,7 @@ import EnhancedTableToolbar from './enhanced-table-toolbar/EnhancedTableToolbar'
 import EnhancedTableHead from './enhanced-table-head/EnhancedTableHead'
 import EnhancedTablePagination from './enhanced-table-pagination/EnhancedTablePagination'
 import SearchInput from '../search-input/SearchInput'
+import Tab from '~/components/tab/Tab'
 
 import { styles } from './EnhancedTable.styles'
 
@@ -23,11 +24,7 @@ const EnhancedTable = ({
   bulkActions,
   fetchService,
   initialSort,
-  filters,
-  setActiveTab,
-  activeTab,
-  setFiltersObj,
-  filtersObj,
+  initialFilters,
   tabLabels,
   isSelection,
   columns,
@@ -35,6 +32,7 @@ const EnhancedTable = ({
 }) => {
   const { t } = useTranslation()
   const [sort, setSort] = useState(initialSort)
+  const [filters, setFilters] = useState(initialFilters)
   const [selected, setSelected] = useState([])
 
   const [items, setItems] = useState([])
@@ -71,7 +69,8 @@ const EnhancedTable = ({
 
   const getSetFilterByKey = (filterKey) => (filterValue) => {
     setSelected([])
-    setFiltersObj[filterKey](filterValue)
+    setPage(0)
+    setFilters((prev) => ({ ...prev, [filterKey]: filterValue }))
   }
 
   const setCurrentSearch = (value) => {
@@ -136,20 +135,15 @@ const EnhancedTable = ({
   }
 
   const setTab = (tab) => {
-    setSelected([])
-    setPage(0)
+    const setActiveTab = getSetFilterByKey(tab.filterKey)
     setActiveTab(tab.value)
   }
 
   const tabs = tabLabels?.map((tab) => (
-    <Box
-      key={ tab.value }
-      onClick={ () => setTab(tab) }
-      sx={ [styles.defaultTab, tab.value === activeTab && styles.activeTab] }
-      typography='subtitle2'
-    >
-      { tab.label }
-    </Box>
+    <Tab
+      activeTab={ filters[tab.filterKey] } key={ tab.label } setTab={ setTab }
+      tab={ tab }
+    />
   ))
 
   const tableBody = (
@@ -157,7 +151,7 @@ const EnhancedTable = ({
       <Table>
         <EnhancedTableHead
           columns={ columns }
-          filtersObj={ filtersObj }
+          filters={ filters }
           getSetFilterByKey={ getSetFilterByKey }
           isSelection={ isSelection }
           itemsCount={ itemsCount }

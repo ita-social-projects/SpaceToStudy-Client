@@ -15,7 +15,7 @@ const EnhancedTableHead = ({
   itemsCount,
   numSelected,
   onRequestSort,
-  filtersObj,
+  filters,
   getSetFilterByKey,
   isSelection,
   columns,
@@ -39,7 +39,7 @@ const EnhancedTableHead = ({
         { columns.map((column) => (
           <EnhancedTableHeaderCell
             column={ column }
-            filterArr={ filtersObj[column.id] }
+            filterArr={ filters[column.id] }
             key={ column.id }
             onRequestSort={ onRequestSort }
             setFilter={ getSetFilterByKey(column.id) }

@@ -1,7 +1,7 @@
 import Checkbox from '@mui/material/Checkbox'
 import MenuItem from '@mui/material/MenuItem'
 
-const FilterCheckbox = ({ filter, filterArr, setFilter }) => {
+const FilterCheckbox = ({ filterCheckbox, filterArr, setFilter }) => {
   const handleFilterChange = (e, checkboxValue) => {
     if (e.target.checked) {
       setFilter((prevState) => [...prevState, checkboxValue])
@@ -14,11 +14,11 @@ const FilterCheckbox = ({ filter, filterArr, setFilter }) => {
   return (
     <MenuItem>
       <Checkbox
-        checked={ filterArr.includes(filter.value) }
+        checked={ filterArr.includes(filterCheckbox.value) }
         color='primary'
-        onChange={ (e) => handleFilterChange(e, filter.value) }
+        onChange={ (e) => handleFilterChange(e, filterCheckbox.value) }
       />
-      { filter.label }
+      { filterCheckbox.label }
     </MenuItem>
   )
 }

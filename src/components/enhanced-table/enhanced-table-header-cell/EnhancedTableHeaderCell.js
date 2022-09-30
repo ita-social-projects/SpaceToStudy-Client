@@ -41,9 +41,11 @@ const EnhancedTableHeaderCell = ({ column, sort, setFilter, filterArr, onRequest
             <MoreVertIcon color='primary' sx={ styles.icon } />
           </IconButton>
           <Menu anchorEl={ anchorEl } onClose={ handleClose } open={ Boolean(anchorEl) }>
-            { column.filterCheckboxesArr.map((filter) => (
+            { column.filterCheckboxesArr.map((filterCheckbox) => (
               <FilterCheckbox
-                filter={ filter } filterArr={ filterArr } key={ filter.value }
+                filterArr={ filterArr }
+                filterCheckbox={ filterCheckbox }
+                key={ filterCheckbox.value }
                 setFilter={ setFilter }
               />
             )) }

@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { useCallback, useState } from 'react'
+import { useCallback } from 'react'
 
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
@@ -15,19 +15,7 @@ import { styles } from './StudentTable.styles'
 const StudentTable = () => {
   const { t } = useTranslation()
 
-  const [isFirstLogin, setIsFirstLogin] = useState([])
-
-  const [isEmailConfirmed, setIsEmailConfirmed] = useState(null)
-
-  const setFiltersObj = {
-    isFirstLogin: setIsFirstLogin
-  }
-
-  const filtersObj = {
-    isFirstLogin: isFirstLogin
-  }
-
-  const filters = { isEmailConfirmed, isFirstLogin }
+  const initialFilters = { isFirstLogin: [], isEmailConfirmed: null }
 
   const deleteFunction = useCallback((userId) => userService.deleteUser(userId), [])
   const { fetchData: deleteUser } = useAxios({ service: deleteFunction, fetchOnMount: false })
@@ -56,19 +44,15 @@ const StudentTable = () => {
         { t('studentTable.studentsTab') }
       </Typography>
       <EnhancedTable
-        activeTab={ isEmailConfirmed }
         bulkActions={ bulkActions }
         columns={ columns(t) }
         fetchService={ userService.getUsers }
-        filters={ filters }
-        filtersObj={ filtersObj }
+        initialFilters={ initialFilters }
         initialSort={ { order: 'asc', orderBy: 'email' } }
         isSelection
         rowActions={ rowActions }
         rowPropsArr={ rowPropsArr }
-        setActiveTab={ setIsEmailConfirmed }
-        setFiltersObj={ setFiltersObj }
-        tabLabels={ tabLabels(t) }
+        tabLabels={ tabLabels }
       />
     </Box>
   )
