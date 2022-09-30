@@ -6,33 +6,33 @@ export const tabLabels = [
   { label: 'studentTable.unactive', filterKey: 'isEmailConfirmed', value: false }
 ]
 
-export const columns = (t) => [
+export const columns = [
   {
-    label: t('studentTable.name'),
+    label: 'studentTable.name',
     id: 'firstName'
   },
   {
-    label: t('studentTable.email'),
+    label: 'studentTable.email',
     id: 'email'
   },
   {
-    label: t('studentTable.role'),
+    label: 'studentTable.role',
     id: 'role'
   },
   {
-    label: t('studentTable.lastLogin'),
+    label: 'studentTable.lastLogin',
     id: 'lastLogin'
   },
   {
-    label: t('studentTable.firstLogin'),
+    label: 'studentTable.firstLogin',
     id: 'isFirstLogin',
     filterCheckboxesArr: [
       {
-        label: t('studentTable.firstLogin'),
+        label: 'studentTable.firstLogin',
         value: true
       },
       {
-        label: t('studentTable.notFirstLogin'),
+        label: 'studentTable.notFirstLogin',
         value: false
       }
     ]

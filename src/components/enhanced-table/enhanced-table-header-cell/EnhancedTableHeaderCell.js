@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import IconButton from '@mui/material/IconButton'
 import Menu from '@mui/material/Menu'
@@ -11,6 +12,7 @@ import FilterCheckbox from './filter-checkbox/FilterCheckbox'
 import { styles } from './EnhancedTableHeaderCell.styles'
 
 const EnhancedTableHeaderCell = ({ column, sort, setFilter, filterArr, onRequestSort }) => {
+  const { t } = useTranslation()
   const [anchorEl, setAnchorEl] = useState(null)
 
   const handleClick = (e) => {
@@ -33,7 +35,7 @@ const EnhancedTableHeaderCell = ({ column, sort, setFilter, filterArr, onRequest
         onClick={ createSortHandler(column.id) }
         sx={ styles.sortLabel }
       >
-        { column.label }
+        { t(column.label) }
       </TableSortLabel>
       { column.filterCheckboxesArr && (
         <>

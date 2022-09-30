@@ -1,7 +1,11 @@
+import { useTranslation } from 'react-i18next'
+
 import Checkbox from '@mui/material/Checkbox'
 import MenuItem from '@mui/material/MenuItem'
 
 const FilterCheckbox = ({ filterCheckbox, filterArr, setFilter }) => {
+  const { t } = useTranslation()
+
   const handleFilterChange = (e, checkboxValue) => {
     if (e.target.checked) {
       setFilter((prevState) => [...prevState, checkboxValue])
@@ -18,7 +22,7 @@ const FilterCheckbox = ({ filterCheckbox, filterArr, setFilter }) => {
         color='primary'
         onChange={ (e) => handleFilterChange(e, filterCheckbox.value) }
       />
-      { filterCheckbox.label }
+      { t(filterCheckbox.label) }
     </MenuItem>
   )
 }

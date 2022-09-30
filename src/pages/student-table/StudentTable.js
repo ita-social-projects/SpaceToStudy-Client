@@ -45,7 +45,7 @@ const StudentTable = () => {
       </Typography>
       <EnhancedTable
         bulkActions={ bulkActions }
-        columns={ columns(t) }
+        columns={ columns }
         fetchService={ userService.getUsers }
         initialFilters={ initialFilters }
         initialSort={ { order: 'asc', orderBy: 'email' } }
