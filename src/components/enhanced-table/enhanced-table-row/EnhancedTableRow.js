@@ -14,7 +14,7 @@ const EnhancedTableRow = ({
   handleSelectClick,
   refetchData,
   isSelection,
-  rowPropsArr,
+  columns,
   rowActions
 }) => {
   const [anchorEl, setAnchorEl] = useState(null)
@@ -32,18 +32,17 @@ const EnhancedTableRow = ({
     refetchData()
   }
 
-  const tableCells = rowPropsArr.map(({ propKey, component }) => {
+  const tableCells = columns.map(({ field, calculatedCellValue }) => {
     let propValue = ''
-    if (Array.isArray(propKey)) {
-      const propValues = propKey.map((prop) => item[prop])
-      propValue = propValues.join(' ')
+    if (calculatedCellValue) {
+      propValue = calculatedCellValue(item)
     } else {
-      propValue = item[propKey]?.toString()
+      propValue = item[field]?.toString()
     }
 
     return (
-      <TableCell key={ propKey.toString() }>
-        { component(propValue) }
+      <TableCell key={ field }>
+        { propValue }
       </TableCell>
     )
   })

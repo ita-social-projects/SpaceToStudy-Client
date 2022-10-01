@@ -1,5 +1,3 @@
-import Box from '@mui/material/Box'
-
 export const tabLabels = [
   { label: 'studentTable.all', filterKey: 'isEmailConfirmed', value: null },
   { label: 'studentTable.active', filterKey: 'isEmailConfirmed', value: true },
@@ -9,23 +7,25 @@ export const tabLabels = [
 export const columns = [
   {
     label: 'studentTable.name',
-    id: 'firstName'
+    field: 'firstName',
+    calculatedCellValue: (item) => `${item.firstName} ${item.lastName}`
   },
   {
     label: 'studentTable.email',
-    id: 'email'
+    field: 'email'
   },
   {
     label: 'studentTable.role',
-    id: 'role'
+    field: 'role'
   },
   {
     label: 'studentTable.lastLogin',
-    id: 'lastLogin'
+    field: 'lastLogin',
+    calculatedCellValue: (item) => new Date(item.lastLogin).toLocaleString()
   },
   {
     label: 'studentTable.firstLogin',
-    id: 'isFirstLogin',
+    field: 'isFirstLogin',
     filterCheckboxesArr: [
       {
         label: 'studentTable.firstLogin',
@@ -36,38 +36,5 @@ export const columns = [
         value: false
       }
     ]
-  }
-]
-
-export const rowPropsArr = [
-  {
-    propKey: ['firstName', 'lastName'],
-    component: (propValue) => (<Box>
-      { propValue }
-    </Box>)
-  },
-  {
-    propKey: 'email',
-    component: (propValue) => (<Box>
-      { propValue }
-    </Box>)
-  },
-  {
-    propKey: 'role',
-    component: (propValue) => (<Box>
-      { propValue }
-    </Box>)
-  },
-  {
-    propKey: 'lastLogin',
-    component: (propValue) => (<Box>
-      { propValue }
-    </Box>)
-  },
-  {
-    propKey: 'isFirstLogin',
-    component: (propValue) => (<Box>
-      { propValue }
-    </Box>)
   }
 ]

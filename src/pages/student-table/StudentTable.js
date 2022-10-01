@@ -8,7 +8,7 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import EnhancedTable from '~/components/enhanced-table/EnhancedTable'
 import useAxios from '~/hooks/use-axios'
 import { userService } from '~/services/user-service'
-import { columns, rowPropsArr, tabLabels } from './constants'
+import { columns, tabLabels } from './constants'
 
 import { styles } from './StudentTable.styles'
 
@@ -51,7 +51,6 @@ const StudentTable = () => {
         initialSort={ { order: 'asc', orderBy: 'email' } }
         isSelection
         rowActions={ rowActions }
-        rowPropsArr={ rowPropsArr }
         tabLabels={ tabLabels }
       />
     </Box>

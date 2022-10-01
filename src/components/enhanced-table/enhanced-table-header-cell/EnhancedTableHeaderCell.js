@@ -28,11 +28,11 @@ const EnhancedTableHeaderCell = ({ column, sort, setFilter, filterArr, onRequest
   }
 
   return (
-    <TableCell key={ column.id }>
+    <TableCell key={ column.field }>
       <TableSortLabel
-        active={ sort.orderBy === column.id }
-        direction={ sort.orderBy === column.id ? sort.order : 'asc' }
-        onClick={ createSortHandler(column.id) }
+        active={ sort.orderBy === column.field }
+        direction={ sort.orderBy === column.field ? sort.order : 'asc' }
+        onClick={ createSortHandler(column.field) }
         sx={ styles.sortLabel }
       >
         { t(column.label) }

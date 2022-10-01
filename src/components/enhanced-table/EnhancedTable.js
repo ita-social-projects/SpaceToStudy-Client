@@ -27,8 +27,7 @@ const EnhancedTable = ({
   initialFilters,
   tabLabels,
   isSelection,
-  columns,
-  rowPropsArr
+  columns
 }) => {
   const { t } = useTranslation()
   const [sort, setSort] = useState(initialSort)
@@ -111,6 +110,7 @@ const EnhancedTable = ({
 
     return (
       <EnhancedTableRow
+        columns={ columns }
         handleSelectClick={ handleSelectClick }
         isItemSelected={ isItemSelected }
         isSelection={ isSelection }
@@ -118,7 +118,6 @@ const EnhancedTable = ({
         key={ item._id }
         refetchData={ refetchData }
         rowActions={ rowActions }
-        rowPropsArr={ rowPropsArr }
       />
     )
   })

@@ -39,10 +39,10 @@ const EnhancedTableHead = ({
         { columns.map((column) => (
           <EnhancedTableHeaderCell
             column={ column }
-            filterArr={ filters[column.id] }
-            key={ column.id }
+            filterArr={ filters[column.field] }
+            key={ column.field }
             onRequestSort={ onRequestSort }
-            setFilter={ getSetFilterByKey(column.id) }
+            setFilter={ getSetFilterByKey(column.field) }
             sort={ sort }
           />
         )) }
