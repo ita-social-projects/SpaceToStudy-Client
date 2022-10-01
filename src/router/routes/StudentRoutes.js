@@ -13,7 +13,7 @@ const StudentRoutes = () => {
     <Suspense fallback={ <Loader size={ 70 } /> }>
       <Routes>
         <Route element={ <StudentHome /> } index />
-        <Route element={ <FindTutor /> } path={ studentRoutes.navBar.findMentor.route } />
+        <Route element={ <FindTutor /> } path={ studentRoutes.navBar.findTutor.route } />
         <Route element={ <Navigate to={ errorRoutes.notFound.path } /> } path='*' />
       </Routes>
     </Suspense>
