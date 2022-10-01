@@ -1,12 +1,11 @@
-import { useState } from 'react'
-
 import Checkbox from '@mui/material/Checkbox'
 import IconButton from '@mui/material/IconButton'
-import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
+
+import useMenu from '~/hooks/use-menu'
 
 const EnhancedTableRow = ({
   item,
@@ -17,16 +16,7 @@ const EnhancedTableRow = ({
   columns,
   rowActions
 }) => {
-  const [anchorEl, setAnchorEl] = useState(null)
-
-  const handleOpen = (e) => {
-    setAnchorEl(e.currentTarget)
-  }
-
-  const handleClose = () => {
-    setAnchorEl(null)
-  }
-
+  const { openMenu, renderMenu } = useMenu()
   const onAction = async (actionFunc) => {
     await actionFunc(item._id)
     refetchData()
@@ -47,6 +37,12 @@ const EnhancedTableRow = ({
     )
   })
 
+  const menuItems = rowActions.map(({ label, func }) => (
+    <MenuItem key={ label } onClick={ () => onAction(func) }>
+      { label }
+    </MenuItem>
+  ))
+
   return (
     <TableRow hover key={ item._id } selected={ isItemSelected }>
       { isSelection && (
@@ -57,7 +53,7 @@ const EnhancedTableRow = ({
       { tableCells }
       { isSelection && (
         <TableCell>
-          <IconButton onClick={ handleOpen }>
+          <IconButton onClick={ openMenu }>
             <MoreVertIcon
               color='primary'
               sx={ {
@@ -65,16 +61,7 @@ const EnhancedTableRow = ({
               } }
             />
           </IconButton>
-          <Menu
-            anchorEl={ anchorEl } id={ item._id } onClose={ handleClose }
-            open={ Boolean(anchorEl) }
-          >
-            { rowActions.map(({ label, func }) => (
-              <MenuItem key={ label } onClick={ () => onAction(func) }>
-                { label }
-              </MenuItem>
-            )) }
-          </Menu>
+          { renderMenu(menuItems) }
         </TableCell>
       ) }
     </TableRow>
