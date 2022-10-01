@@ -10,7 +10,7 @@ import { admin, tutor, student } from '~/constants'
 import PrivateRoute from './helpers/PrivateRoute'
 import GuestRoute from './helpers/GuestRoute'
 import StudentRoutes from './routes/StudentRoutes'
-import TutorRoutes from './routes/MentorRoutes'
+import TutorRoutes from './routes/TutorRoutes'
 import ErrorRoutes from './routes/ErrorRoutes'
 import AdminRoutes from './routes/AdminRoutes'
 
