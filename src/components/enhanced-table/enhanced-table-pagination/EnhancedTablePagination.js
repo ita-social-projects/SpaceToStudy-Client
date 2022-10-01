@@ -56,7 +56,6 @@ const EnhancedTablePagination = ({ page, rowsPerPage, itemsCount, setCurrentPage
 
   const handleChangeRowsPerPage = (e) => {
     setRowsPerPage(e.target.value)
-    setCurrentPage(0)
   }
 
   const getDisplayedRowsLabel = (from, to, count) => `${from}-${to} ${t('table.of')} ${count}`

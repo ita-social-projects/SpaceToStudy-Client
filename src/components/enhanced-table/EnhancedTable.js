@@ -65,16 +65,18 @@ const EnhancedTable = ({
 
   useEffect(() => {
     getData()
+    setSelected([])
   }, [getData])
 
-  const getSetFilterByKey = (filterKey) => (filterValue) => {
-    setSelected([])
+  useEffect(() => {
     setPage(0)
+  }, [search, filters, rowsPerPage, externalFilter])
+
+  const getSetFilterByKey = (filterKey) => (filterValue) => {
     setFilters((prev) => ({ ...prev, [filterKey]: filterValue }))
   }
 
   const setCurrentSearch = (value) => {
-    setSelected([])
     setSearch(value)
   }
 
@@ -123,15 +125,9 @@ const EnhancedTable = ({
     )
   })
 
-  const setCurrentPage = (page) => {
-    setSelected([])
-    setPage(page)
-  }
-
   const handleRequestSort = (_e, property) => {
     const isAsc = sort.orderBy === property && sort.order === 'asc'
     setSort({ order: isAsc ? 'desc' : 'asc', orderBy: property })
-    setSelected([])
   }
 
   const tableBody = (
@@ -190,7 +186,7 @@ const EnhancedTable = ({
           itemsCount={ itemsCount }
           page={ page }
           rowsPerPage={ rowsPerPage }
-          setCurrentPage={ setCurrentPage }
+          setCurrentPage={ setPage }
           setRowsPerPage={ setRowsPerPage }
         />
       ) }
