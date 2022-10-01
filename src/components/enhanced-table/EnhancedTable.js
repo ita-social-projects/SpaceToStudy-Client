@@ -15,7 +15,6 @@ import EnhancedTableToolbar from './enhanced-table-toolbar/EnhancedTableToolbar'
 import EnhancedTableHead from './enhanced-table-head/EnhancedTableHead'
 import EnhancedTablePagination from './enhanced-table-pagination/EnhancedTablePagination'
 import SearchInput from '../search-input/SearchInput'
-import Tab from '~/components/tab/Tab'
 
 import { styles } from './EnhancedTable.styles'
 
@@ -25,7 +24,8 @@ const EnhancedTable = ({
   fetchService,
   initialSort,
   initialFilters,
-  tabLabels,
+  tabs,
+  externalFilter,
   isSelection,
   columns
 }) => {
@@ -49,9 +49,10 @@ const EnhancedTable = ({
         limit: rowsPerPage,
         sort,
         search,
-        ...filters
+        ...filters,
+        ...externalFilter
       }),
-    [sort, search, filters, page, rowsPerPage, fetchService]
+    [sort, search, filters, page, rowsPerPage, fetchService, externalFilter]
   )
 
   const { loading, fetchData } = useAxios({ service: serviceFunction, fetchOnMount: false })
@@ -132,18 +133,6 @@ const EnhancedTable = ({
     setSort({ order: isAsc ? 'desc' : 'asc', orderBy: property })
     setSelected([])
   }
-
-  const setTab = (tab) => {
-    const setActiveTab = getSetFilterByKey(tab.filterKey)
-    setActiveTab(tab.value)
-  }
-
-  const tabs = tabLabels?.map((tab) => (
-    <Tab
-      activeTab={ filters[tab.filterKey] } key={ tab.label } setTab={ setTab }
-      tab={ tab }
-    />
-  ))
 
   const tableBody = (
     <TableContainer>

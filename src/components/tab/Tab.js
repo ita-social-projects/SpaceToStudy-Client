@@ -9,7 +9,7 @@ const Tab = ({ tab, setTab, activeTab }) => {
   return (
     <Box
       key={ tab.value }
-      onClick={ () => setTab(tab) }
+      onClick={ () => setTab({ [tab.key]: tab.value }) }
       sx={ [styles.defaultTab, tab.value === activeTab && styles.activeTab] }
       typography='subtitle2'
     >

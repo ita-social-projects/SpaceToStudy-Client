@@ -1,8 +1,25 @@
-export const tabLabels = [
-  { label: 'studentTable.all', filterKey: 'isEmailConfirmed', value: null },
-  { label: 'studentTable.active', filterKey: 'isEmailConfirmed', value: true },
-  { label: 'studentTable.unactive', filterKey: 'isEmailConfirmed', value: false }
-]
+import EnhancedTable from '~/components/enhanced-table/EnhancedTable'
+
+export const tabsInfo = {
+  null: {
+    label: 'studentTable.all',
+    key: 'isEmailConfirmed',
+    value: null,
+    component: (props) => <EnhancedTable { ...props } />
+  },
+  true: {
+    label: 'studentTable.active',
+    key: 'isEmailConfirmed',
+    value: true,
+    component: (props) => <EnhancedTable { ...props } />
+  },
+  false: {
+    label: 'studentTable.unactive',
+    key: 'isEmailConfirmed',
+    value: false,
+    component: (props) => <EnhancedTable { ...props } />
+  }
+}
 
 export const columns = [
   {
