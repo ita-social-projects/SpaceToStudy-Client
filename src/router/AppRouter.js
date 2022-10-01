@@ -36,7 +36,7 @@ const AppRouter = ({ userRole }) => {
               <TutorRoutes />
             </PrivateRoute>
           }
-          path={ guestRoutes.mentor.nested }
+          path={ guestRoutes.tutor.nested }
         />
         <Route
           element={
