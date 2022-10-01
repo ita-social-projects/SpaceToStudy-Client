@@ -9,11 +9,19 @@ import AppTextField from '~/components/app-text-field/AppTextField'
 import img from '~/assets/img/tutor-home-page/become-tutor/experience.png'
 import { styles } from '~/containers/tutor-home-page/experience-step/experience-step.styles'
 
-const ExperienceStep = ({ data, handleChange, handleBlur, errors, btnsBox, setStepErrors, stepLabel }) => {
+const ExperienceStep = ({
+  data,
+  handleChange,
+  handleBlur,
+  handleErrors,
+  errors,
+  btnsBox,
+  setStepErrors,
+  stepLabel
+}) => {
   const { t } = useTranslation()
 
   const [counterColor, setCounterColor] = useState('#263238')
-  const [focused, setFocused] = useState(false)
 
   useEffect(() => {
     setStepErrors((prevState) => ({ ...prevState, [stepLabel]: Boolean(errors.experience) }))
@@ -33,18 +41,15 @@ const ExperienceStep = ({ data, handleChange, handleBlur, errors, btnsBox, setSt
           </Typography>
           <AppTextField
             autoFocus
-            errorMsg={ focused ? t(errors.experience) : null }
+            errorMsg={ t(errors.experience) }
             fullWidth
             label={ t('becomeTutor.experience.textFieldLabel') }
             maxRows='17'
             minRows='6'
             multiline
-            onBlur={ () => {
-              handleBlur('experience')
-              setFocused(false)
-            } }
+            onBlur={ () => handleErrors('experience', undefined) }
             onChange={ handleChange('experience') }
-            onFocus={ () => setFocused(true) }
+            onFocus={ handleBlur('experience') }
             type='text'
             value={ data.experience }
           />
