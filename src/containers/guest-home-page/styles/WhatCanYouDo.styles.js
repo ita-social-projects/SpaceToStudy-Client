@@ -3,6 +3,11 @@ export const styles = {
     my: {
       sm: '80px',
       xs: '48px'
+    },
+    px: {
+      md: '52px',
+      sm: '24px',
+      xs: '8px'
     }
   },
   cards: {
@@ -28,6 +33,11 @@ export const styles = {
       md: '52px',
       sm: '48px',
       xs: '32px'
+    },
+    px: {
+      md: '52px',
+      sm: '32px',
+      xs: '16px'
     },
     backgroundColor: 'primary.50',
     borderRadius: {

@@ -3,20 +3,19 @@ export const styles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    px: '16px'
   },
   image: {
-    maxWidth: '320px',
-    maxHeight: '216px',
-    pb: '16px'
+    width: '100%',
+    height: 'auto'
   },
   text: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'flex-start',
     justifyContent: 'space-around',
-    width: '280px',
-    height: '144px',
+    minHeight: '144px',
     backgroundColor: 'primary.900',
     borderRadius: '6px',
     p: '16px'
