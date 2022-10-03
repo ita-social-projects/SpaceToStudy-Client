@@ -4,7 +4,8 @@ export const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column',
-    px: '16px'
+    px: '16px',
+    mb: '16px'
   },
   image: {
     width: '100%',
