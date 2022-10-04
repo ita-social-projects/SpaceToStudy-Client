@@ -6,7 +6,7 @@ import { errorRoutes } from '~/router/constants/errorRoutes'
 import { studentRoutes } from '~/router/constants/studentRoutes'
 
 const StudentHome = lazy(() => import('~/pages/student-home/StudentHome'))
-const FindTutor = lazy(() => import('~/pages/find-mentor/FindMentor'))
+const FindTutor = lazy(() => import('~/pages/find-tutor/FindTutor'))
 
 const StudentRoutes = () => {
   return (
