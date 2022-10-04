@@ -1,10 +1,7 @@
 export const styles = {
   container: {
     display: 'grid',
-    gridTemplateColumns: {
-      md: 'repeat(3, 1fr)',
-      sm: 'repeat(2, 1fr)'
-    },
+    gridTemplateColumns: 'repeat(auto-fit, minmax(288px, 1fr))',
     gridAutoRows: '126px',
     gridGap: '24px',
     mb: '32px'

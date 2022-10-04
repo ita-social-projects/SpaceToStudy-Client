@@ -2,10 +2,10 @@ import { commonHoverShadow, commonShadow } from '~/styles/app-theme/custom-shado
 
 export const styles = {
   card: {
+    flexGrow: '1',
     display: 'flex',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    maxWidth: '360px',
     p: '25px 32px',
     backgroundColor: 'basic.white',
     boxShadow: commonShadow,
