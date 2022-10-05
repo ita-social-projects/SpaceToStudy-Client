@@ -15,10 +15,6 @@ export const styles = {
     marginBottom: '24px'
   },
   cardTitle: {
-    maxWidth: {
-      md: '340px',
-      xs: '240px'
-    },
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis'

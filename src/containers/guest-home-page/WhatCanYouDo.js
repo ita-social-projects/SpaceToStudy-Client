@@ -17,11 +17,6 @@ import { styles } from '~/containers/guest-home-page/styles/WhatCanYouDo.styles'
 
 const sectionId = guestRoutes.navBar.whatCanYouDo.label
 
-const cardWidth = {
-  md: '427px',
-  xs: '343px'
-}
-
 const cardData = [
   {
     id: 1,
@@ -29,8 +24,7 @@ const cardData = [
     title: 'guestHomePage.whatCanYouDo.learn.title',
     description: 'guestHomePage.whatCanYouDo.learn.description',
     actionLabel: 'guestHomePage.whatCanYouDo.learn.actionLabel',
-    actionType: student,
-    cardWidth
+    actionType: student
   },
   {
     id: 2,
@@ -38,8 +32,7 @@ const cardData = [
     title: 'guestHomePage.whatCanYouDo.teach.title',
     description: 'guestHomePage.whatCanYouDo.teach.description',
     actionLabel: 'guestHomePage.whatCanYouDo.teach.actionLabel',
-    actionType: tutor,
-    cardWidth
+    actionType: tutor
   }
 ]
 
@@ -56,7 +49,6 @@ const WhatCanYouDo = () => {
       <InfoCard
         action={ () => openDialog(item.actionType) }
         actionLabel={ t(item.actionLabel) }
-        cardWidth={ item.cardWidth }
         description={ t(item.description) }
         img={ item.img }
         key={ item.id }
