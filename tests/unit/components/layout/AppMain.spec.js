@@ -98,7 +98,7 @@ describe('AppMain layout component test', () => {
     expect(adminHome).toBeInTheDocument()
   })
 
-  it('should render GuestLayout', () => {
+  it('should render GuestLayout', async () => {
     useSelector.mockImplementation(() => ({
       loading: false,
       userRole: ''
@@ -106,16 +106,19 @@ describe('AppMain layout component test', () => {
     render(
       <ModalProvider>
         <MemoryRouter>
-          <AppMain />
+          <ThemeProvider theme={ theme }>
+            <AppMain />
+          </ThemeProvider>
         </MemoryRouter>
       </ModalProvider>
     )
-    const guestHome = screen.getByTestId('guestHome')
+
+    const guestHome = await screen.findByTestId('guestHome')
 
     expect(guestHome).toBeInTheDocument()
   })
 
-  it('should render AuthPolicy page if the path with role and user role do not match', () => {
+  it('should render AuthPolicy page if the path with role and user role do not match', async () => {
     useSelector.mockImplementation(() => ({
       loading: false,
       userRole: 'tutor'
@@ -123,12 +126,14 @@ describe('AppMain layout component test', () => {
     render(
       <ModalProvider>
         <MemoryRouter initialEntries={ ['/student'] }>
-          <AppMain />
+          <ThemeProvider theme={ theme }>
+            <AppMain />
+          </ThemeProvider>
         </MemoryRouter>
       </ModalProvider>
     )
 
-    const errorTitle = screen.getByText(/errorPage.401.title/)
+    const errorTitle = await screen.findByText(/errorPage.401.title/)
 
     expect(errorTitle).toBeInTheDocument()
   })
@@ -141,7 +146,9 @@ describe('AppMain layout component test', () => {
     render(
       <ModalProvider>
         <MemoryRouter>
-          <AppMain />
+          <ThemeProvider theme={ theme }>
+            <AppMain />
+          </ThemeProvider>
         </MemoryRouter>
       </ModalProvider>
     )
