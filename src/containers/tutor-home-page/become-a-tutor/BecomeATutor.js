@@ -50,6 +50,7 @@ const BecomeATutor = () => {
       errors={ errors }
       handleBlur={ handleBlur }
       handleChange={ handleChange }
+      handleErrors={ handleErrors }
       key='4'
       setStepErrors={ setStepErrors }
     />,

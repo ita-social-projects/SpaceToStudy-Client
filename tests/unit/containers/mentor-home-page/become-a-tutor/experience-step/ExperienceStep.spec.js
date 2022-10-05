@@ -18,7 +18,7 @@ describe('Experience page test', () => {
     fireEvent.change(textField, {
       target: { value: 'New value' }
     })
-    fireEvent.blur(textField)
+    fireEvent.focus(textField)
     const shortTextError = screen.getByText(/common.errorMessages.shortText/i)
 
     expect(shortTextError).toBeInTheDocument()
@@ -29,7 +29,7 @@ describe('Experience page test', () => {
     fireEvent.change(textField, {
       target: { value: 'Some experience.'.repeat(100) }
     })
-    fireEvent.blur(textField)
+    fireEvent.focus(textField)
     const longTextError = screen.getByText(/common.errorMessages.longText/i)
 
     expect(longTextError).toBeInTheDocument()
