@@ -37,7 +37,7 @@ const PopularCategories = () => {
   })
 
   return (
-    <Box className='section' id={ sectionId } sx={ { flexDirection: 'column' } }>
+    <Box className='section' id={ sectionId } sx={ { flexDirection: 'column', alignItems: 'stretch' } }>
       <TitleWithDescription
         description={ t('studentHomePage.popularCategories.description') }
         descriptionStyles={ { typography: { sm: 'body1', xs: 'body2' } } }

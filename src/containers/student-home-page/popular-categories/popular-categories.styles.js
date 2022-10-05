@@ -2,8 +2,8 @@ export const styles = {
   container: {
     display: 'grid',
     gridTemplateColumns: {
-      md: 'repeat(3, 1fr)',
-      sm: 'repeat(2, 1fr)'
+      xs: 'repeat(auto-fit, minmax(288px, 1fr))',
+      sm: 'repeat(auto-fit, minmax(260px, 1fr))'
     },
     gridAutoRows: '126px',
     gridGap: '24px',

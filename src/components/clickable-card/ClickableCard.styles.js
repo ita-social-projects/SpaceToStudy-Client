@@ -5,7 +5,6 @@ export const styles = {
     display: 'flex',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    maxWidth: '360px',
     p: '25px 32px',
     backgroundColor: 'basic.white',
     boxShadow: commonShadow,
