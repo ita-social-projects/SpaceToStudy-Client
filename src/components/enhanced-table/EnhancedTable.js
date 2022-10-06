@@ -42,27 +42,21 @@ const EnhancedTable = ({
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
 
-  const serviceFunction = useCallback(
-    () =>
-      fetchService({
-        skip: page * rowsPerPage,
-        limit: rowsPerPage,
-        sort,
-        search,
-        ...filters,
-        ...externalFilter
-      }),
-    [sort, search, filters, page, rowsPerPage, fetchService, externalFilter]
-  )
-
-  const { loading, fetchData } = useAxios({ service: serviceFunction, fetchOnMount: false })
+  const { loading, fetchData } = useAxios({ service: fetchService, fetchOnMount: false })
 
   const getData = useCallback(async () => {
     setSelected([])
-    const res = await fetchData()
+    const res = await fetchData({
+      skip: page * rowsPerPage,
+      limit: rowsPerPage,
+      sort,
+      search,
+      ...filters,
+      ...externalFilter
+    })
     setItems(res.data.items)
     setItemsCount(res.data.count)
-  }, [fetchData])
+  }, [fetchData, externalFilter, page, search, sort, rowsPerPage, filters])
 
   useEffect(() => {
     getData()
