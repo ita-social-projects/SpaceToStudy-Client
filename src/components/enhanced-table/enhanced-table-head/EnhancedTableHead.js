@@ -16,7 +16,7 @@ const EnhancedTableHead = ({
   numSelected,
   onRequestSort,
   filters,
-  getSetFilterByKey,
+  setFilterByKey,
   isSelection,
   columns,
   rowsPerPage
@@ -42,7 +42,7 @@ const EnhancedTableHead = ({
             filterArr={ filters[column.field] }
             key={ column.field }
             onRequestSort={ onRequestSort }
-            setFilter={ getSetFilterByKey(column.field) }
+            setFilter={ setFilterByKey(column.field) }
             sort={ sort }
           />
         )) }

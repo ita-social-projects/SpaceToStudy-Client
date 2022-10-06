@@ -8,7 +8,7 @@ import SearchIcon from '@mui/icons-material/Search'
 
 import { styles } from './SearchInput.styles'
 
-const SearchInput = ({ search, setCurrentSearch }) => {
+const SearchInput = ({ search, setSearch }) => {
   const { t } = useTranslation()
   const [searchInput, setSearchInput] = useState(search)
 
@@ -21,7 +21,7 @@ const SearchInput = ({ search, setCurrentSearch }) => {
         startAdornment: (
           <IconButton
             onClick={ () => {
-              setCurrentSearch(searchInput)
+              setSearch(searchInput)
             } }
           >
             <SearchIcon color='primary' />
@@ -31,7 +31,7 @@ const SearchInput = ({ search, setCurrentSearch }) => {
           <IconButton
             className={ searchInput ? 'visible' : 'hidden' }
             onClick={ () => {
-              setCurrentSearch('')
+              setSearch('')
               setSearchInput('')
             } }
           >
@@ -44,7 +44,7 @@ const SearchInput = ({ search, setCurrentSearch }) => {
       onChange={ (e) => setSearchInput(e.target.value) }
       onKeyPress={ (e) => {
         if (e.key === 'Enter') {
-          setCurrentSearch(searchInput)
+          setSearch(searchInput)
         }
       } }
       sx={ styles.input }

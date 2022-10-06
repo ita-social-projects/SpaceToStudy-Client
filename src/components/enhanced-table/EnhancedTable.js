@@ -58,6 +58,7 @@ const EnhancedTable = ({
   const { loading, fetchData } = useAxios({ service: serviceFunction, fetchOnMount: false })
 
   const getData = useCallback(async () => {
+    setSelected([])
     const res = await fetchData()
     setItems(res.data.items)
     setItemsCount(res.data.count)
@@ -65,19 +66,14 @@ const EnhancedTable = ({
 
   useEffect(() => {
     getData()
-    setSelected([])
   }, [getData])
 
   useEffect(() => {
     setPage(0)
   }, [search, filters, rowsPerPage, externalFilter])
 
-  const getSetFilterByKey = (filterKey) => (filterValue) => {
+  const setFilterByKey = (filterKey) => (filterValue) => {
     setFilters((prev) => ({ ...prev, [filterKey]: filterValue }))
-  }
-
-  const setCurrentSearch = (value) => {
-    setSearch(value)
   }
 
   const handleSelectAllClick = (e) => {
@@ -101,11 +97,6 @@ const EnhancedTable = ({
     setSelected(newSelected)
   }
 
-  const refetchData = () => {
-    getData()
-    setSelected([])
-  }
-
   const isSelected = (id) => selected.includes(id)
 
   const rows = items.map((item) => {
@@ -119,7 +110,7 @@ const EnhancedTable = ({
         isSelection={ isSelection }
         item={ item }
         key={ item._id }
-        refetchData={ refetchData }
+        refetchData={ getData }
         rowActions={ rowActions }
       />
     )
@@ -136,13 +127,13 @@ const EnhancedTable = ({
         <EnhancedTableHead
           columns={ columns }
           filters={ filters }
-          getSetFilterByKey={ getSetFilterByKey }
           isSelection={ isSelection }
           itemsCount={ itemsCount }
           numSelected={ selected.length }
           onRequestSort={ handleRequestSort }
           onSelectAllClick={ handleSelectAllClick }
           rowsPerPage={ rowsPerPage }
+          setFilterByKey={ setFilterByKey }
           sort={ sort }
         />
         <TableBody>
@@ -169,7 +160,7 @@ const EnhancedTable = ({
           bulkActions={ bulkActions }
           itemIds={ selected }
           numSelected={ selected.length }
-          refetchData={ refetchData }
+          refetchData={ getData }
         />
       </Box>
       <Paper sx={ styles.paper }>
@@ -177,7 +168,7 @@ const EnhancedTable = ({
           <Box sx={ styles.tabs }>
             { tabs }
           </Box>
-          <SearchInput search={ search } setCurrentSearch={ setCurrentSearch } />
+          <SearchInput search={ search } setSearch={ setSearch } />
         </Box>
         { tableContent }
       </Paper>
