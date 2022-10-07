@@ -10,5 +10,9 @@ export const URLs = {
     confirm: '/auth/confirm-email',
     forgotPassword: '/auth/forgot-password',
     resetPassword: '/auth/reset-password'
+  },
+  users: {
+    get: '/users',
+    delete: '/users/delete'
   }
 }

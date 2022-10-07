@@ -4,7 +4,6 @@ import { Route, Routes, Navigate } from 'react-router-dom'
 import Loader from '~/components/loader/Loader'
 import { guestRoutes } from '~/router/constants/guestRoutes'
 import { studentRoutes } from '~/router/constants/studentRoutes'
-import { adminRoutes } from '~/router/constants/adminRoutes'
 import { errorRoutes } from '~/router/constants/errorRoutes'
 import { admin, tutor, student } from '~/constants'
 import PrivateRoute from './helpers/PrivateRoute'
@@ -44,7 +43,7 @@ const AppRouter = ({ userRole }) => {
               <AdminRoutes />
             </PrivateRoute>
           }
-          path={ adminRoutes.admin.nested }
+          path={ guestRoutes.admin.nested }
         />
         <Route element={ <CookiePolicy /> } path={ guestRoutes.privacyPolicy.route } />
         <Route element={ <Logout /> } path={ studentRoutes.accountMenu.logout.route } />

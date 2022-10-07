@@ -22,6 +22,13 @@ code {
   align-items: center;
 }
 
+.visible {
+  visibility: visible;
+}
+
+.hidden {
+  visibility: hidden;
+}
 
 ::-webkit-scrollbar {
   background: #DEE0E1
