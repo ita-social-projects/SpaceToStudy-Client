@@ -4,7 +4,8 @@ export const styles = {
     justifyContent: 'space-between',
     width: '300px',
     alignItems: 'center',
-    ml: '20px'
+    ml: '20px',
+    py: '5px'
   },
   selected: {
     flex: '1 1 100%'

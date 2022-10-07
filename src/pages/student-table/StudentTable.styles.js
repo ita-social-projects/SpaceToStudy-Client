@@ -4,6 +4,10 @@ export const styles = {
     width: '80%',
     m: '0 auto'
   },
+  tabs: {
+    display: 'flex',
+    mt: '20px'
+  },
   header: {
     color: 'primary.900'
   }

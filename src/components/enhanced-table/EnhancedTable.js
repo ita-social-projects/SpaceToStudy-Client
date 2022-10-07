@@ -24,7 +24,6 @@ const EnhancedTable = ({
   fetchService,
   initialSort,
   initialFilters,
-  tabs,
   externalFilter,
   isSelection,
   columns
@@ -158,12 +157,7 @@ const EnhancedTable = ({
         />
       </Box>
       <Paper sx={ styles.paper }>
-        <Box sx={ styles.tools }>
-          <Box sx={ styles.tabs }>
-            { tabs }
-          </Box>
-          <SearchInput search={ search } setSearch={ setSearch } />
-        </Box>
+        <SearchInput search={ search } setSearch={ setSearch } />
         { tableContent }
       </Paper>
       { loading || items.length === 0 ? null : (

@@ -64,6 +64,9 @@ const StudentTable = () => {
       <Typography sx={ styles.header } variant='h4'>
         { t('studentTable.studentsTab') }
       </Typography>
+      <Box sx={ styles.tabs }>
+        { tabs }
+      </Box>
       { tabsInfo[externalFilter.isEmailConfirmed].component(props) }
     </Box>
   )
