@@ -1,14 +1,19 @@
 import { useTranslation } from 'react-i18next'
+import { useContext } from 'react'
 
 import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 
+import { TableContext } from '~/context/table-context'
+
 import { styles } from './EnhancedTableToolbar.styles'
 
-const EnhancedTableToolbar = ({ bulkActions, numSelected, itemIds, refetchData }) => {
+const EnhancedTableToolbar = ({ refetchData }) => {
   const { t } = useTranslation()
+
+  const { numSelected, selected: itemIds, bulkActions } = useContext(TableContext)
 
   const onAction = async (actionFunc) => {
     await actionFunc({ itemIds })

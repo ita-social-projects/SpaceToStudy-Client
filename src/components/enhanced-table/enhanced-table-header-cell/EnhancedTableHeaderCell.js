@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next'
+import { useContext } from 'react'
 
 import IconButton from '@mui/material/IconButton'
 import TableCell from '@mui/material/TableCell'
@@ -7,11 +8,14 @@ import MoreVertIcon from '@mui/icons-material/MoreVert'
 
 import useMenu from '~/hooks/use-menu'
 import FilterCheckbox from './filter-checkbox/FilterCheckbox'
+import { TableContext } from '~/context/table-context'
 
 import { styles } from './EnhancedTableHeaderCell.styles'
 
-const EnhancedTableHeaderCell = ({ column, sort, setFilter, filterArr, onRequestSort }) => {
+const EnhancedTableHeaderCell = ({ column, setFilter, filterArr }) => {
   const { t } = useTranslation()
+  const { sort, onRequestSort } = useContext(TableContext)
+
   const { openMenu, renderMenu } = useMenu()
 
   const createSortHandler = (property) => (e) => {
