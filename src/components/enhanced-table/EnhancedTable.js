@@ -14,7 +14,7 @@ import EnhancedTableRow from './enhanced-table-row/EnhancedTableRow'
 import EnhancedTableToolbar from './enhanced-table-toolbar/EnhancedTableToolbar'
 import EnhancedTableHead from './enhanced-table-head/EnhancedTableHead'
 import EnhancedTablePagination from './enhanced-table-pagination/EnhancedTablePagination'
-import SearchInput from '../search-input/SearchInput'
+import FilterRow from './filter-row/FilterRow'
 import { TableContext } from '~/context/table-context'
 
 import { styles } from './EnhancedTable.styles'
@@ -27,8 +27,6 @@ const EnhancedTable = ({ fetchService, externalFilter }) => {
   const [items, setItems] = useState([])
   const [itemsCount, setItemsCount] = useState(0)
 
-  const [search, setSearch] = useState('')
-
   const { loading, fetchData } = useAxios({ service: fetchService, fetchOnMount: false })
 
   const getData = useCallback(async () => {
@@ -37,13 +35,12 @@ const EnhancedTable = ({ fetchService, externalFilter }) => {
       skip: page * rowsPerPage,
       limit: rowsPerPage,
       sort,
-      search,
       ...filters,
       ...externalFilter
     })
     setItems(res.data.items)
     setItemsCount(res.data.count)
-  }, [fetchData, externalFilter, page, search, sort, rowsPerPage, filters, setSelected])
+  }, [fetchData, externalFilter, page, sort, rowsPerPage, filters, setSelected])
 
   useEffect(() => {
     getData()
@@ -51,7 +48,7 @@ const EnhancedTable = ({ fetchService, externalFilter }) => {
 
   useEffect(() => {
     setPage(0)
-  }, [search, filters, rowsPerPage, setPage, externalFilter])
+  }, [filters, rowsPerPage, setPage, externalFilter])
 
   const rows = items.map((item) => {
     const isItemSelected = isSelected(item._id)
@@ -69,6 +66,7 @@ const EnhancedTable = ({ fetchService, externalFilter }) => {
       <Table>
         <EnhancedTableHead itemsCount={ itemsCount } onSelectAllClick={ createSelectAllHandler(items) } />
         <TableBody>
+          <FilterRow />
           { rows }
         </TableBody>
       </Table>
@@ -91,10 +89,9 @@ const EnhancedTable = ({ fetchService, externalFilter }) => {
         <EnhancedTableToolbar refetchData={ getData } />
       </Box>
       <Paper sx={ styles.paper }>
-        <SearchInput search={ search } setSearch={ setSearch } />
         { tableContent }
       </Paper>
-      { loading || items.length === 0 ? null : <EnhancedTablePagination itemsCount={ itemsCount } /> }
+      { loading || !items.length ? null : <EnhancedTablePagination itemsCount={ itemsCount } /> }
     </Box>
   )
 }

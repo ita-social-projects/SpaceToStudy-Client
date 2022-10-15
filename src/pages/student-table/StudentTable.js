@@ -9,7 +9,7 @@ import Tab from '~/components/tab/Tab'
 import useAxios from '~/hooks/use-axios'
 import { TableProvider } from '~/context/table-context'
 import { userService } from '~/services/user-service'
-import { columns, tabsInfo } from './constants'
+import { columns, tabsInfo, initialFilters, initialSort } from './constants'
 
 import { styles } from './StudentTable.styles'
 
@@ -17,9 +17,6 @@ const StudentTable = () => {
   const { t } = useTranslation()
 
   const [externalFilter, setExternalFilter] = useState({ isEmailConfirmed: null })
-
-  const initialFilters = { isFirstLogin: [] }
-  const initialSort = { order: 'asc', orderBy: 'email' }
 
   const deleteFunction = useCallback((userId) => userService.deleteUser(userId), [])
   const { fetchData: deleteUser } = useAxios({ service: deleteFunction, fetchOnMount: false })
@@ -59,9 +56,6 @@ const StudentTable = () => {
       <Typography sx={ styles.header } variant='h4'>
         { t('studentTable.studentsTab') }
       </Typography>
-      <Box sx={ styles.tabs }>
-        { tabs }
-      </Box>
       <TableProvider
         bulkActions={ bulkActions }
         columns={ columns }
@@ -70,6 +64,9 @@ const StudentTable = () => {
         isSelection
         rowActions={ rowActions }
       >
+        <Box sx={ styles.tabs }>
+          { tabs }
+        </Box>
         { tabsInfo[externalFilter.isEmailConfirmed].component(props) }
       </TableProvider>
     </Box>

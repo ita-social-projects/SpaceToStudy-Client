@@ -7,7 +7,15 @@ const useFilter = (initialFilters) => {
     setFilters((prev) => ({ ...prev, [filterKey]: filterValue }))
   }
 
-  return { filters, setFilterByKey }
+  const clearFilterByKey = (filterKey) => {
+    setFilters((prev) => ({ ...prev, [filterKey]: initialFilters[filterKey] }))
+  }
+
+  const clearFilters = () => {
+    setFilters(initialFilters)
+  }
+
+  return { filters, setFilterByKey, clearFilters, clearFilterByKey }
 }
 
 export default useFilter

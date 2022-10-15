@@ -3,14 +3,14 @@ import { useTranslation } from 'react-i18next'
 import Checkbox from '@mui/material/Checkbox'
 import MenuItem from '@mui/material/MenuItem'
 
-const FilterCheckbox = ({ filterCheckbox, filterArr, setFilter }) => {
+const FilterCheckbox = ({ filterCheckbox, filter, setFilter }) => {
   const { t } = useTranslation()
 
   const handleFilterChange = (e, checkboxValue) => {
     if (e.target.checked) {
-      setFilter([...filterArr, checkboxValue])
+      setFilter([...filter, checkboxValue])
     } else {
-      const newFilterArr = filterArr.filter((value) => value !== checkboxValue)
+      const newFilterArr = filter.filter((value) => value !== checkboxValue)
       setFilter(newFilterArr)
     }
   }
@@ -18,7 +18,7 @@ const FilterCheckbox = ({ filterCheckbox, filterArr, setFilter }) => {
   return (
     <MenuItem>
       <Checkbox
-        checked={ filterArr.includes(filterCheckbox.value) }
+        checked={ filter.includes(filterCheckbox.value) }
         color='primary'
         onChange={ (e) => handleFilterChange(e, filterCheckbox.value) }
       />

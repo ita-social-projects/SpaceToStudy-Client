@@ -1,5 +1,17 @@
 import EnhancedTable from '~/components/enhanced-table/EnhancedTable'
 
+export const initialFilters = {
+  firstName: '',
+  email: '',
+  lastLogin: {
+    from: '',
+    to: ''
+  },
+  isFirstLogin: []
+}
+
+export const initialSort = { order: 'asc', orderBy: 'email' }
+
 export const tabsInfo = {
   null: {
     label: 'studentTable.all',
@@ -25,25 +37,25 @@ export const columns = [
   {
     label: 'studentTable.name',
     field: 'firstName',
-    calculatedCellValue: (item) => `${item.firstName} ${item.lastName}`
+    calculatedCellValue: (item) => `${item.firstName} ${item.lastName}`,
+    dataType: 'string'
   },
   {
     label: 'studentTable.email',
-    field: 'email'
-  },
-  {
-    label: 'studentTable.role',
-    field: 'role'
+    field: 'email',
+    dataType: 'string'
   },
   {
     label: 'studentTable.lastLogin',
     field: 'lastLogin',
-    calculatedCellValue: (item) => new Date(item.lastLogin).toLocaleString()
+    calculatedCellValue: (item) => new Date(item.lastLogin).toLocaleString(),
+    dataType: 'date'
   },
   {
     label: 'studentTable.firstLogin',
     field: 'isFirstLogin',
-    filterCheckboxesArr: [
+    dataType: 'enums',
+    filterEnum: [
       {
         label: 'studentTable.firstLogin',
         value: true

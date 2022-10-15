@@ -14,7 +14,7 @@ import { styles } from './EnhancedTableHead.styles'
 const EnhancedTableHead = ({ itemsCount, onSelectAllClick }) => {
   const { t } = useTranslation()
 
-  const { filters, setFilterByKey, numSelected, isSelection, columns, rowsPerPage } = useContext(TableContext)
+  const { numSelected, isSelection, columns, rowsPerPage } = useContext(TableContext)
 
   return (
     <TableHead sx={ styles.tableHead }>
@@ -32,9 +32,7 @@ const EnhancedTableHead = ({ itemsCount, onSelectAllClick }) => {
         { columns.map((column) => (
           <EnhancedTableHeaderCell
             column={ column }
-            filterArr={ filters[column.field] }
             key={ column.field }
-            setFilter={ setFilterByKey(column.field) }
           />
         )) }
         { isSelection && (<TableCell>
