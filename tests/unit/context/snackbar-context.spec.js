@@ -32,13 +32,10 @@ describe('snackbar context', () => {
     fireEvent.change(inputPassword, { target: { value: '12345678a/A' } })
 
     const button = screen.getByText('common.labels.login')
-    await waitFor(() => fireEvent.click(button))
-  })
+    fireEvent.click(button)
+    const snackbar = await screen.findByText('errors.error')
 
-  it('should open snackbar', () => {
-    const snackbar = screen.getByText('errors.error')
-
-    expect(snackbar).toBeInTheDocument()
+    await waitFor(() => expect(snackbar).toBeInTheDocument())
   })
 
   it('should close snackbar on blur', async () => {

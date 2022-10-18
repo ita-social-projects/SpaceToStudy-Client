@@ -54,10 +54,10 @@ describe('ForgotPassword test', () => {
     fireEvent.change(input, { target: { value: 'test@gmail.com' } })
 
     const button = screen.getByText('login.sendPassword')
-    await waitFor(() => fireEvent.click(button))
-    const resetPasswordTitle = screen.getByText('login.passwordReset')
+    fireEvent.click(button)
+    const resetPasswordTitle = await screen.findByText('login.passwordReset')
 
-    expect(resetPasswordTitle).toBeInTheDocument()
+    await waitFor(() => expect(resetPasswordTitle).toBeInTheDocument())
   })
 
   it('should show error snackbar', async () => {
@@ -67,9 +67,9 @@ describe('ForgotPassword test', () => {
     fireEvent.change(input, { target: { value: 'error@gmail.com' } })
 
     const button = screen.getByText('login.sendPassword')
-    await waitFor(() => fireEvent.click(button))
-    const error = screen.getByText('errors.EMAIL_NOT_FOUND')
+    fireEvent.click(button)
+    const error = await screen.findByText('errors.EMAIL_NOT_FOUND')
 
-    expect(error).toBeInTheDocument()
+    await waitFor(() => expect(error).toBeInTheDocument())
   })
 })
