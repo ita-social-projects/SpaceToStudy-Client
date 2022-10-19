@@ -7,8 +7,9 @@ import DeleteIcon from '@mui/icons-material/Delete'
 
 import Tab from '~/components/tab/Tab'
 import useAxios from '~/hooks/use-axios'
+import { TableProvider } from '~/context/table-context'
 import { userService } from '~/services/user-service'
-import { columns, tabsInfo } from './constants'
+import { columns, tabsInfo, initialFilters, initialSort } from './constants'
 
 import { styles } from './StudentTable.styles'
 
@@ -16,8 +17,6 @@ const StudentTable = () => {
   const { t } = useTranslation()
 
   const [externalFilter, setExternalFilter] = useState({ isEmailConfirmed: null })
-
-  const initialFilters = { isFirstLogin: [] }
 
   const deleteFunction = useCallback((userId) => userService.deleteUser(userId), [])
   const { fetchData: deleteUser } = useAxios({ service: deleteFunction, fetchOnMount: false })
@@ -48,15 +47,8 @@ const StudentTable = () => {
   ))
 
   const props = {
-    bulkActions,
-    columns,
     fetchService: userService.getUsers,
-    initialFilters,
-    initialSort: { order: 'asc', orderBy: 'email' },
-    isSelection: true,
-    rowActions,
-    externalFilter,
-    tabs
+    externalFilter
   }
 
   return (
@@ -64,10 +56,19 @@ const StudentTable = () => {
       <Typography sx={ styles.header } variant='h4'>
         { t('studentTable.studentsTab') }
       </Typography>
-      <Box sx={ styles.tabs }>
-        { tabs }
-      </Box>
-      { tabsInfo[externalFilter.isEmailConfirmed].component(props) }
+      <TableProvider
+        bulkActions={ bulkActions }
+        columns={ columns }
+        initialFilters={ initialFilters }
+        initialSort={ initialSort }
+        isSelection
+        rowActions={ rowActions }
+      >
+        <Box sx={ styles.tabs }>
+          { tabs }
+        </Box>
+        { tabsInfo[externalFilter.isEmailConfirmed].component(props) }
+      </TableProvider>
     </Box>
   )
 }

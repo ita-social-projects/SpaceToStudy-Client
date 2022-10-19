@@ -1,4 +1,4 @@
-import { useCallback, useState, useEffect } from 'react'
+import { useCallback, useState, useEffect, useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
@@ -14,32 +14,18 @@ import EnhancedTableRow from './enhanced-table-row/EnhancedTableRow'
 import EnhancedTableToolbar from './enhanced-table-toolbar/EnhancedTableToolbar'
 import EnhancedTableHead from './enhanced-table-head/EnhancedTableHead'
 import EnhancedTablePagination from './enhanced-table-pagination/EnhancedTablePagination'
-import SearchInput from '../search-input/SearchInput'
+import FilterRow from './filter-row/FilterRow'
+import { TableContext } from '~/context/table-context'
 
 import { styles } from './EnhancedTable.styles'
 
-const EnhancedTable = ({
-  rowActions,
-  bulkActions,
-  fetchService,
-  initialSort,
-  initialFilters,
-  externalFilter,
-  isSelection,
-  columns
-}) => {
+const EnhancedTable = ({ fetchService, externalFilter }) => {
   const { t } = useTranslation()
-  const [sort, setSort] = useState(initialSort)
-  const [filters, setFilters] = useState(initialFilters)
-  const [selected, setSelected] = useState([])
+  const { sort, filters, setSelected, isSelected, numSelected, createSelectAllHandler, page, setPage, rowsPerPage } =
+    useContext(TableContext)
 
   const [items, setItems] = useState([])
   const [itemsCount, setItemsCount] = useState(0)
-
-  const [search, setSearch] = useState('')
-
-  const [page, setPage] = useState(0)
-  const [rowsPerPage, setRowsPerPage] = useState(5)
 
   const { loading, fetchData } = useAxios({ service: fetchService, fetchOnMount: false })
 
@@ -49,13 +35,12 @@ const EnhancedTable = ({
       skip: page * rowsPerPage,
       limit: rowsPerPage,
       sort,
-      search,
       ...filters,
       ...externalFilter
     })
     setItems(res.data.items)
     setItemsCount(res.data.count)
-  }, [fetchData, externalFilter, page, search, sort, rowsPerPage, filters])
+  }, [fetchData, externalFilter, page, sort, rowsPerPage, filters, setSelected])
 
   useEffect(() => {
     getData()
@@ -63,73 +48,25 @@ const EnhancedTable = ({
 
   useEffect(() => {
     setPage(0)
-  }, [search, filters, rowsPerPage, externalFilter])
-
-  const setFilterByKey = (filterKey) => (filterValue) => {
-    setFilters((prev) => ({ ...prev, [filterKey]: filterValue }))
-  }
-
-  const handleSelectAllClick = (e) => {
-    if (e.target.checked) {
-      const newSelected = items.map((item) => item._id)
-      return setSelected(newSelected)
-    }
-    setSelected([])
-  }
-
-  const handleSelectClick = (_e, id) => {
-    const selectedIndex = selected.indexOf(id)
-    let newSelected = []
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, id)
-    } else {
-      newSelected = selected.filter((selectedId) => selectedId !== id)
-    }
-
-    setSelected(newSelected)
-  }
-
-  const isSelected = (id) => selected.includes(id)
+  }, [filters, rowsPerPage, setPage, externalFilter])
 
   const rows = items.map((item) => {
     const isItemSelected = isSelected(item._id)
 
     return (
       <EnhancedTableRow
-        columns={ columns }
-        handleSelectClick={ handleSelectClick }
-        isItemSelected={ isItemSelected }
-        isSelection={ isSelection }
-        item={ item }
-        key={ item._id }
+        isItemSelected={ isItemSelected } item={ item } key={ item._id }
         refetchData={ getData }
-        rowActions={ rowActions }
       />
     )
   })
 
-  const handleRequestSort = (_e, property) => {
-    const isAsc = sort.orderBy === property && sort.order === 'asc'
-    setSort({ order: isAsc ? 'desc' : 'asc', orderBy: property })
-  }
-
   const tableBody = (
     <TableContainer>
       <Table>
-        <EnhancedTableHead
-          columns={ columns }
-          filters={ filters }
-          isSelection={ isSelection }
-          itemsCount={ itemsCount }
-          numSelected={ selected.length }
-          onRequestSort={ handleRequestSort }
-          onSelectAllClick={ handleSelectAllClick }
-          rowsPerPage={ rowsPerPage }
-          setFilterByKey={ setFilterByKey }
-          sort={ sort }
-        />
+        <EnhancedTableHead itemsCount={ itemsCount } onSelectAllClick={ createSelectAllHandler(items) } />
         <TableBody>
+          <FilterRow />
           { rows }
         </TableBody>
       </Table>
@@ -148,27 +85,13 @@ const EnhancedTable = ({
 
   return (
     <Box sx={ styles.root }>
-      <Box className={ selected.length > 0 ? 'visible' : 'hidden' }>
-        <EnhancedTableToolbar
-          bulkActions={ bulkActions }
-          itemIds={ selected }
-          numSelected={ selected.length }
-          refetchData={ getData }
-        />
+      <Box className={ numSelected > 0 ? 'visible' : 'hidden' }>
+        <EnhancedTableToolbar refetchData={ getData } />
       </Box>
       <Paper sx={ styles.paper }>
-        <SearchInput search={ search } setSearch={ setSearch } />
         { tableContent }
       </Paper>
-      { loading || items.length === 0 ? null : (
-        <EnhancedTablePagination
-          itemsCount={ itemsCount }
-          page={ page }
-          rowsPerPage={ rowsPerPage }
-          setCurrentPage={ setPage }
-          setRowsPerPage={ setRowsPerPage }
-        />
-      ) }
+      { loading || !items.length ? null : <EnhancedTablePagination itemsCount={ itemsCount } /> }
     </Box>
   )
 }

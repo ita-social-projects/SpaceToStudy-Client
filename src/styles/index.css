@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;800;900&display=swap');
 
 :root {
-   --scrollbar-border-radius: 10px;
+  --scrollbar-border-radius: 10px;
 }
 
 body {
@@ -33,25 +33,30 @@ code {
 ::-webkit-scrollbar {
   background: #DEE0E1
 }
+
 ::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 5px rgba(43, 49, 52, 0.3); 
+  box-shadow: inset 0 0 5px rgba(43, 49, 52, 0.3);
 }
+
 ::-webkit-scrollbar-thumb {
-  background: #9DA7AC; 
+  background: #9DA7AC;
 }
+
 ::-webkit-scrollbar-thumb:hover {
-  background: #727E84; 
+  background: #727E84;
 }
+
 body ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
   background: none;
   border-radius: var(--scrollbar-border-radius);
 }
+
 body ::-webkit-scrollbar-track {
   border-radius: var(--scrollbar-border-radius);
 }
-body ::-webkit-scrollbar-thumb { 
+
+body ::-webkit-scrollbar-thumb {
   border-radius: var(--scrollbar-border-radius);
 }
-
