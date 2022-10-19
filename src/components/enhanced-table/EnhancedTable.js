@@ -24,7 +24,7 @@ import { styles } from './EnhancedTable.styles'
 const EnhancedTable = ({ fetchService, externalFilter }) => {
   const { t } = useTranslation()
   const { sort, filters, numSelected, page, rowsPerPage } = useTableContext()
-  const { setPage } = usePagination()
+  const { clearPage } = usePagination()
   const { clearSelected, isSelected, createSelectAllHandler } = useSelect()
 
   const [items, setItems] = useState([])
@@ -50,8 +50,8 @@ const EnhancedTable = ({ fetchService, externalFilter }) => {
   }, [getData])
 
   useEffect(() => {
-    setPage(0)
-  }, [filters, rowsPerPage, setPage, externalFilter])
+    clearPage()
+  }, [filters, rowsPerPage, clearPage, externalFilter])
 
   const rows = items.map((item) => {
     const isItemSelected = isSelected(item._id)

@@ -31,8 +31,10 @@ const usePagination = () => {
     setPage(page - 1)
   }
 
+  const clearPage = () => setPage(0)
+
   return {
-    setPage,
+    clearPage,
     handleChangePage,
     handleChangeRowsPerPage,
     handlePageSubmit,
