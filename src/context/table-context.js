@@ -1,10 +1,12 @@
-import { createContext } from 'react'
+import { createContext, useContext } from 'react'
 import useFilter from '~/hooks/table-hooks/use-filter'
 import useSelect from '~/hooks/table-hooks/use-select'
 import usePagination from '~/hooks/table-hooks/use-pagination'
 import useSort from '~/hooks/table-hooks/use-sort'
 
 const TableContext = createContext()
+
+const useTableContext = () => useContext(TableContext)
 
 const TableProvider = ({ children, initialSort, initialFilters, isSelection, columns, rowActions, bulkActions }) => {
   const sortProps = useSort(initialSort)
@@ -30,4 +32,4 @@ const TableProvider = ({ children, initialSort, initialFilters, isSelection, col
   )
 }
 
-export { TableProvider, TableContext }
+export { TableProvider, TableContext, useTableContext }
