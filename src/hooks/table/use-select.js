@@ -1,9 +1,7 @@
-import { useState } from 'react'
+import { useTableContext } from '~/context/table-context'
 
 const useSelect = () => {
-  const [selected, setSelected] = useState([])
-
-  const numSelected = selected.length
+  const { selected, setSelected } = useTableContext()
 
   const handleSelectAllClick = (e, items) => {
     if (e.target.checked) {
@@ -30,7 +28,7 @@ const useSelect = () => {
 
   const isSelected = (id) => selected.includes(id)
 
-  return { selected, setSelected, isSelected, numSelected, createSelectAllHandler, handleSelectClick }
+  return { isSelected, setSelected, createSelectAllHandler, handleSelectClick }
 }
 
 export default useSelect

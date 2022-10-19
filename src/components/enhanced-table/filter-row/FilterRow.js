@@ -1,13 +1,14 @@
-import { useContext } from 'react'
-
 import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
 
-import { TableContext } from '~/context/table-context'
+import { useTableContext } from '~/context/table-context'
+import useFilter from '~/hooks/table/use-filter'
 import FilterCell from './filter-cell/FilterCell'
 
 const FilterRow = () => {
-  const { isSelection, columns, filters, setFilterByKey, clearFilterByKey } = useContext(TableContext)
+  const { isSelection, columns, filters } = useTableContext()
+
+  const { setFilterByKey, clearFilterByKey } = useFilter()
 
   const filterCells = columns.map((column) => (
     <FilterCell

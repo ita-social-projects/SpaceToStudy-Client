@@ -1,20 +1,19 @@
 import { useTranslation } from 'react-i18next'
-import { useContext } from 'react'
 
 import Checkbox from '@mui/material/Checkbox'
 import TableCell from '@mui/material/TableCell'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 
+import { useTableContext } from '~/context/table-context'
 import EnhancedTableHeaderCell from '../enhanced-table-header-cell/EnhancedTableHeaderCell'
-import { TableContext } from '~/context/table-context'
 
 import { styles } from './EnhancedTableHead.styles'
 
 const EnhancedTableHead = ({ itemsCount, onSelectAllClick }) => {
   const { t } = useTranslation()
 
-  const { numSelected, isSelection, columns, rowsPerPage } = useContext(TableContext)
+  const { numSelected, isSelection, columns, rowsPerPage } = useTableContext()
 
   return (
     <TableHead sx={ styles.tableHead }>
@@ -30,10 +29,7 @@ const EnhancedTableHead = ({ itemsCount, onSelectAllClick }) => {
           </TableCell>
         ) }
         { columns.map((column) => (
-          <EnhancedTableHeaderCell
-            column={ column }
-            key={ column.field }
-          />
+          <EnhancedTableHeaderCell column={ column } key={ column.field } />
         )) }
         { isSelection && (<TableCell>
           { t('table.actions') }

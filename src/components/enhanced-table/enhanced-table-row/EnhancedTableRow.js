@@ -1,5 +1,3 @@
-import { useContext } from 'react'
-
 import Checkbox from '@mui/material/Checkbox'
 import IconButton from '@mui/material/IconButton'
 import MenuItem from '@mui/material/MenuItem'
@@ -7,11 +5,13 @@ import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 
-import { TableContext } from '~/context/table-context'
 import useMenu from '~/hooks/use-menu'
+import useSelect from '~/hooks/table/use-select'
+import { useTableContext } from '~/context/table-context'
 
 const EnhancedTableRow = ({ item, isItemSelected, refetchData }) => {
-  const { handleSelectClick, isSelection, columns, rowActions } = useContext(TableContext)
+  const { isSelection, columns, rowActions } = useTableContext()
+  const { handleSelectClick } = useSelect()
 
   const { openMenu, renderMenu } = useMenu()
   const onAction = async (actionFunc) => {

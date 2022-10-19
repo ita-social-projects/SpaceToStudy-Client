@@ -1,4 +1,3 @@
-import { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
@@ -8,22 +7,22 @@ import TablePagination from '@mui/material/TablePagination'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 
-import { TableContext } from '~/context/table-context'
+import { useTableContext } from '~/context/table-context'
+import usePagination from '~/hooks/table/use-pagination'
 
 import { styles } from './EnhancedTablePagination.styles'
 
 const EnhancedTablePagination = ({ itemsCount }) => {
   const { t } = useTranslation()
+  const { page, pageInput, rowsPerPage } = useTableContext()
+
   const {
-    page,
-    pageInput,
-    rowsPerPage,
     handleChangePage,
     handleChangeRowsPerPage,
     handleChangePageInput,
     handlePageSubmit,
     handleChangePaginationController
-  } = useContext(TableContext)
+  } = usePagination()
 
   const maxPages = Math.ceil(itemsCount / rowsPerPage)
 

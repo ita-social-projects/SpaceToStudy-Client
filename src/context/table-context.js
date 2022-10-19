@@ -1,18 +1,19 @@
-import { createContext, useContext } from 'react'
-import useFilter from '~/hooks/table/use-filter'
-import useSelect from '~/hooks/table/use-select'
-import usePagination from '~/hooks/table/use-pagination'
-import useSort from '~/hooks/table/use-sort'
+import { createContext, useContext, useState } from 'react'
 
 const TableContext = createContext()
 
-const useTableContext = () => useContext(TableContext)
-
 const TableProvider = ({ children, initialSort, initialFilters, isSelection, columns, rowActions, bulkActions }) => {
-  const sortProps = useSort(initialSort)
-  const filterProps = useFilter(initialFilters)
-  const selectProps = useSelect()
-  const paginationProps = usePagination()
+  const [sort, setSort] = useState(initialSort)
+
+  const [filters, setFilters] = useState(initialFilters)
+
+  const [selected, setSelected] = useState([])
+
+  const numSelected = selected.length
+
+  const [page, setPage] = useState(0)
+  const [rowsPerPage, setRowsPerPage] = useState(5)
+  const [pageInput, setPageInput] = useState(1)
 
   return (
     <TableContext.Provider
@@ -21,10 +22,20 @@ const TableProvider = ({ children, initialSort, initialFilters, isSelection, col
         columns,
         rowActions,
         bulkActions,
-        ...sortProps,
-        ...filterProps,
-        ...selectProps,
-        ...paginationProps
+        initialFilters,
+        sort,
+        setSort,
+        filters,
+        setFilters,
+        selected,
+        numSelected,
+        setSelected,
+        page,
+        setPage,
+        rowsPerPage,
+        setRowsPerPage,
+        pageInput,
+        setPageInput
       } }
     >
       { children }
@@ -32,4 +43,6 @@ const TableProvider = ({ children, initialSort, initialFilters, isSelection, col
   )
 }
 
-export { TableProvider, TableContext, useTableContext }
+const useTableContext = () => useContext(TableContext)
+
+export { TableProvider, useTableContext }

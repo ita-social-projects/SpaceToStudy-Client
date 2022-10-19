@@ -1,4 +1,4 @@
-import { useCallback, useState, useEffect, useContext } from 'react'
+import { useCallback, useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
@@ -15,14 +15,17 @@ import EnhancedTableToolbar from './enhanced-table-toolbar/EnhancedTableToolbar'
 import EnhancedTableHead from './enhanced-table-head/EnhancedTableHead'
 import EnhancedTablePagination from './enhanced-table-pagination/EnhancedTablePagination'
 import FilterRow from './filter-row/FilterRow'
-import { TableContext } from '~/context/table-context'
+import { useTableContext } from '~/context/table-context'
+import useSelect from '~/hooks/table/use-select'
+import usePagination from '~/hooks/table/use-pagination'
 
 import { styles } from './EnhancedTable.styles'
 
 const EnhancedTable = ({ fetchService, externalFilter }) => {
   const { t } = useTranslation()
-  const { sort, filters, setSelected, isSelected, numSelected, createSelectAllHandler, page, setPage, rowsPerPage } =
-    useContext(TableContext)
+  const { sort, filters, numSelected, page, rowsPerPage } = useTableContext()
+  const { setPage } = usePagination()
+  const { setSelected, isSelected, createSelectAllHandler } = useSelect()
 
   const [items, setItems] = useState([])
   const [itemsCount, setItemsCount] = useState(0)
