@@ -1,8 +1,8 @@
 import { createContext, useContext } from 'react'
-import useFilter from '~/hooks/table-hooks/use-filter'
-import useSelect from '~/hooks/table-hooks/use-select'
-import usePagination from '~/hooks/table-hooks/use-pagination'
-import useSort from '~/hooks/table-hooks/use-sort'
+import useFilter from '~/hooks/table/use-filter'
+import useSelect from '~/hooks/table/use-select'
+import usePagination from '~/hooks/table/use-pagination'
+import useSort from '~/hooks/table/use-sort'
 
 const TableContext = createContext()
 
