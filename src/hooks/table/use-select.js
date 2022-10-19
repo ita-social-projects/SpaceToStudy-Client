@@ -28,7 +28,9 @@ const useSelect = () => {
 
   const isSelected = (id) => selected.includes(id)
 
-  return { isSelected, setSelected, createSelectAllHandler, handleSelectClick }
+  const clearSelected = () => setSelected([])
+
+  return { isSelected, clearSelected, createSelectAllHandler, handleSelectClick }
 }
 
 export default useSelect

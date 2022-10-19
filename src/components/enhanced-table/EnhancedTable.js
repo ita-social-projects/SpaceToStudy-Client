@@ -25,7 +25,7 @@ const EnhancedTable = ({ fetchService, externalFilter }) => {
   const { t } = useTranslation()
   const { sort, filters, numSelected, page, rowsPerPage } = useTableContext()
   const { setPage } = usePagination()
-  const { setSelected, isSelected, createSelectAllHandler } = useSelect()
+  const { clearSelected, isSelected, createSelectAllHandler } = useSelect()
 
   const [items, setItems] = useState([])
   const [itemsCount, setItemsCount] = useState(0)
@@ -33,7 +33,7 @@ const EnhancedTable = ({ fetchService, externalFilter }) => {
   const { loading, fetchData } = useAxios({ service: fetchService, fetchOnMount: false })
 
   const getData = useCallback(async () => {
-    setSelected([])
+    clearSelected()
     const res = await fetchData({
       skip: page * rowsPerPage,
       limit: rowsPerPage,
@@ -43,7 +43,7 @@ const EnhancedTable = ({ fetchService, externalFilter }) => {
     })
     setItems(res.data.items)
     setItemsCount(res.data.count)
-  }, [fetchData, externalFilter, page, sort, rowsPerPage, filters, setSelected])
+  }, [fetchData, externalFilter, page, sort, rowsPerPage, filters, clearSelected])
 
   useEffect(() => {
     getData()
