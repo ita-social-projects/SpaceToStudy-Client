@@ -1,4 +1,4 @@
-import { useCallback, useState, useEffect, useContext } from 'react'
+import { useCallback, useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
@@ -15,14 +15,17 @@ import EnhancedTableToolbar from './enhanced-table-toolbar/EnhancedTableToolbar'
 import EnhancedTableHead from './enhanced-table-head/EnhancedTableHead'
 import EnhancedTablePagination from './enhanced-table-pagination/EnhancedTablePagination'
 import FilterRow from './filter-row/FilterRow'
-import { TableContext } from '~/context/table-context'
+import { useTableContext } from '~/context/table-context'
+import useSelect from '~/hooks/table/use-select'
+import usePagination from '~/hooks/table/use-pagination'
 
 import { styles } from './EnhancedTable.styles'
 
 const EnhancedTable = ({ fetchService, externalFilter }) => {
   const { t } = useTranslation()
-  const { sort, filters, setSelected, isSelected, numSelected, createSelectAllHandler, page, setPage, rowsPerPage } =
-    useContext(TableContext)
+  const { sort, filters, numSelected, page, rowsPerPage } = useTableContext()
+  const { clearPage } = usePagination()
+  const { clearSelected, isSelected, createSelectAllHandler } = useSelect()
 
   const [items, setItems] = useState([])
   const [itemsCount, setItemsCount] = useState(0)
@@ -30,7 +33,7 @@ const EnhancedTable = ({ fetchService, externalFilter }) => {
   const { loading, fetchData } = useAxios({ service: fetchService, fetchOnMount: false })
 
   const getData = useCallback(async () => {
-    setSelected([])
+    clearSelected()
     const res = await fetchData({
       skip: page * rowsPerPage,
       limit: rowsPerPage,
@@ -40,15 +43,15 @@ const EnhancedTable = ({ fetchService, externalFilter }) => {
     })
     setItems(res.data.items)
     setItemsCount(res.data.count)
-  }, [fetchData, externalFilter, page, sort, rowsPerPage, filters, setSelected])
+  }, [fetchData, externalFilter, page, sort, rowsPerPage, filters, clearSelected])
 
   useEffect(() => {
     getData()
   }, [getData])
 
   useEffect(() => {
-    setPage(0)
-  }, [filters, rowsPerPage, setPage, externalFilter])
+    clearPage()
+  }, [filters, rowsPerPage, clearPage, externalFilter])
 
   const rows = items.map((item) => {
     const isItemSelected = isSelected(item._id)

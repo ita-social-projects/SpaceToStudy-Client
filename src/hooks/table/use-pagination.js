@@ -1,10 +1,7 @@
-import { useState } from 'react'
+import { useTableContext } from '~/context/table-context'
 
 const usePagination = () => {
-  const [page, setPage] = useState(0)
-  const [rowsPerPage, setRowsPerPage] = useState(5)
-
-  const [pageInput, setPageInput] = useState(1)
+  const { setPage, setRowsPerPage, setPageInput, pageInput } = useTableContext()
 
   const handleChangePage = (_e, newPage) => {
     setPage(newPage)
@@ -34,11 +31,10 @@ const usePagination = () => {
     setPage(page - 1)
   }
 
+  const clearPage = () => setPage(0)
+
   return {
-    page,
-    setPage,
-    pageInput,
-    rowsPerPage,
+    clearPage,
     handleChangePage,
     handleChangeRowsPerPage,
     handlePageSubmit,

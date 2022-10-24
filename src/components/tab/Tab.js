@@ -1,15 +1,14 @@
-import { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 
-import { TableContext } from '~/context/table-context'
+import useFilter from '~/hooks/table/use-filter'
 
 import { styles } from './Tab.styles'
 
 const Tab = ({ tab, setTab, activeTab }) => {
   const { t } = useTranslation()
 
-  const { clearFilters } = useContext(TableContext)
+  const { clearFilters } = useFilter()
 
   const handleClick = () => {
     clearFilters()

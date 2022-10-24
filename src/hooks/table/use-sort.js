@@ -1,14 +1,14 @@
-import { useState } from 'react'
+import { useTableContext } from '~/context/table-context'
 
-const useSort = (initialSort) => {
-  const [sort, setSort] = useState(initialSort)
+const useSort = () => {
+  const { sort, setSort } = useTableContext()
 
   const onRequestSort = (_e, property) => {
     const isAsc = sort.orderBy === property && sort.order === 'asc'
     setSort({ order: isAsc ? 'desc' : 'asc', orderBy: property })
   }
 
-  return { sort, onRequestSort }
+  return { onRequestSort }
 }
 
 export default useSort

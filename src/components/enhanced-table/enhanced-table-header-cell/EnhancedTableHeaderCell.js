@@ -1,16 +1,17 @@
 import { useTranslation } from 'react-i18next'
-import { useContext } from 'react'
 
 import TableCell from '@mui/material/TableCell'
 import TableSortLabel from '@mui/material/TableSortLabel'
 
-import { TableContext } from '~/context/table-context'
+import { useTableContext } from '~/context/table-context'
+import useSort from '~/hooks/table/use-sort'
 
 import { styles } from './EnhancedTableHeaderCell.styles'
 
 const EnhancedTableHeaderCell = ({ column }) => {
   const { t } = useTranslation()
-  const { sort, onRequestSort } = useContext(TableContext)
+  const { sort } = useTableContext()
+  const { onRequestSort } = useSort()
 
   const createSortHandler = (property) => (e) => {
     onRequestSort(e, property)
