@@ -26,3 +26,5 @@ export const renderWithProviders = (
   )
   return render(ui, { wrapper: Wrapper, ...renderOptions })
 }
+
+export const getFakeTestEvent = (key, value) => ({ preventDefault: jest.fn(), target: { [key]: value } })

@@ -3,12 +3,14 @@ import { useTableContext } from '~/context/table-context'
 const useSelect = () => {
   const { selected, setSelected } = useTableContext()
 
+  const clearSelected = () => setSelected([])
+
   const handleSelectAllClick = (e, items) => {
     if (e.target.checked) {
       const newSelected = items.map((item) => item._id)
       return setSelected(newSelected)
     }
-    setSelected([])
+    clearSelected()
   }
 
   const createSelectAllHandler = (items) => (e) => handleSelectAllClick(e, items)
@@ -28,9 +30,7 @@ const useSelect = () => {
 
   const isSelected = (id) => selected.includes(id)
 
-  const clearSelected = () => setSelected([])
-
-  return { isSelected, clearSelected, createSelectAllHandler, handleSelectClick }
+  return { selected, isSelected, clearSelected, createSelectAllHandler, handleSelectClick }
 }
 
 export default useSelect

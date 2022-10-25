@@ -1,7 +1,7 @@
 import { useTableContext } from '~/context/table-context'
 
 const usePagination = () => {
-  const { setPage, setRowsPerPage, setPageInput, pageInput } = useTableContext()
+  const { page, rowsPerPage, pageInput, setPage, setRowsPerPage, setPageInput } = useTableContext()
 
   const handleChangePage = (_e, newPage) => {
     setPage(newPage)
@@ -34,6 +34,9 @@ const usePagination = () => {
   const clearPage = () => setPage(0)
 
   return {
+    page,
+    rowsPerPage,
+    pageInput,
     clearPage,
     handleChangePage,
     handleChangeRowsPerPage,
