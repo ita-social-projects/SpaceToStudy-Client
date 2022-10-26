@@ -19,7 +19,7 @@ const useMenu = () => {
     </Menu>
   )
 
-  return { openMenu, renderMenu }
+  return { anchorEl, openMenu, closeMenu, renderMenu }
 }
 
 export default useMenu

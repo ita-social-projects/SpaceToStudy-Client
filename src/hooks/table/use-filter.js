@@ -1,7 +1,7 @@
 import { useTableContext } from '~/context/table-context'
 
 const useFilter = () => {
-  const { setFilters, initialFilters } = useTableContext()
+  const { filters, setFilters, initialFilters } = useTableContext()
 
   const setFilterByKey = (filterKey) => (filterValue) => {
     setFilters((prev) => ({ ...prev, [filterKey]: filterValue }))
@@ -15,7 +15,7 @@ const useFilter = () => {
     setFilters(initialFilters)
   }
 
-  return { setFilterByKey, clearFilters, clearFilterByKey }
+  return { filters, setFilterByKey, clearFilters, clearFilterByKey }
 }
 
 export default useFilter

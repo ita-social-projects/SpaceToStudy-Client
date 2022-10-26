@@ -8,7 +8,7 @@ const useSort = () => {
     setSort({ order: isAsc ? 'desc' : 'asc', orderBy: property })
   }
 
-  return { onRequestSort }
+  return { onRequestSort, sort }
 }
 
 export default useSort
