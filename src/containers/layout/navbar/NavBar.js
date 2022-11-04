@@ -15,7 +15,7 @@ import HashLink from '~/components/hash-link/HashLink'
 import Logo from '~/containers/logo/Logo'
 import Sidebar from '~/containers/layout/sidebar/Sidebar'
 import NavigationIcons from '~/containers/navigation-icons/NavigationIcons'
-import { student } from '~/constants'
+import { admin, student } from '~/constants'
 
 import { styles } from '~/containers/layout/navbar/NavBar.styles'
 
@@ -27,6 +27,7 @@ const Navbar = () => {
 
   useEffect(() => {
     if (userRole === student) setNavigationItems(Object.values(studentRoutes.navBar))
+    else if (userRole === admin) setNavigationItems([])
     else setNavigationItems(Object.values(guestRoutes.navBar))
   }, [userRole])
 
