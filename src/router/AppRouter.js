@@ -2,6 +2,7 @@ import { Suspense, lazy } from 'react'
 import { Route, Routes, Navigate } from 'react-router-dom'
 
 import Loader from '~/components/loader/Loader'
+import AdminPortal from '~/containers/layout/admin-portal/AdminPortal'
 import { guestRoutes } from '~/router/constants/guestRoutes'
 import { studentRoutes } from '~/router/constants/studentRoutes'
 import { errorRoutes } from '~/router/constants/errorRoutes'
@@ -11,7 +12,6 @@ import GuestRoute from './helpers/GuestRoute'
 import StudentRoutes from './routes/StudentRoutes'
 import TutorRoutes from './routes/TutorRoutes'
 import ErrorRoutes from './routes/ErrorRoutes'
-import AdminRoutes from './routes/AdminRoutes'
 
 const CookiePolicy = lazy(() => import('~/pages/cookie-policy/CookiePolicy'))
 const Logout = lazy(() => import('~/pages/logout/Logout'))
@@ -40,7 +40,7 @@ const AppRouter = ({ userRole }) => {
         <Route
           element={
             <PrivateRoute role={ admin } userRole={ userRole }>
-              <AdminRoutes />
+              <AdminPortal />
             </PrivateRoute>
           }
           path={ guestRoutes.admin.nested }
