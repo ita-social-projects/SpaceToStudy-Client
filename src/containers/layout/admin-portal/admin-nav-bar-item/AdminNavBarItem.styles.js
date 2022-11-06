@@ -17,5 +17,8 @@ export const styles = {
       content: '"•"',
       pr: 5
     }
+  },
+  active: {
+    fontWeight: 600
   }
 }

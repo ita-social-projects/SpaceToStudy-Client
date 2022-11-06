@@ -1,0 +1,10 @@
+{
+    "navBar": {
+        "roles": "roles",
+        "categories": "categories",
+        "complains": "complains",
+        "admins": "Admins",
+        "tutors": "Tutors",
+        "students": "Students"
+    }
+}

@@ -7,23 +7,27 @@ import ArticleIcon from '@mui/icons-material/Article'
 export const navBarItems = [
   {
     icon: <AccountCircleIcon />,
-    label: 'Roles',
-    childrens: [
-      { subLabel: 'Admins', path: adminRoutes.admins.route },
-      { subLabel: 'Tutors', path: adminRoutes.tutors.route },
-      { subLabel: 'Students', path: adminRoutes.students.route }
+    label: 'roles',
+    children: [
+      { subLabel: 'admins', path: adminRoutes.admins.route },
+      { subLabel: 'tutors', path: adminRoutes.tutors.route },
+      { subLabel: 'students', path: adminRoutes.students.route }
     ]
   },
   {
     icon: <CategoryIcon />,
-    label: 'Categories',
+    label: 'categories',
     path: adminRoutes.categories.route,
-    childrens: []
+    children: []
   },
   {
     icon: <ArticleIcon />,
-    label: 'Complains',
+    label: 'complains',
     path: adminRoutes.complains.route,
-    childrens: []
+    children: []
   }
 ]
+
+export const initialExpandSubItems = {
+  roles: false
+}
