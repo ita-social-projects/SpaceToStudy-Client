@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
@@ -9,6 +9,7 @@ import List from '@mui/material/List'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
+import Box from '@mui/material/Box'
 import { styles } from './AdminNavBarItem.styles'
 
 const AdminNavBarItem = ({
@@ -34,42 +35,48 @@ const AdminNavBarItem = ({
 
   const expandIcon = showSubItems ? <ExpandLess /> : <ExpandMore />
 
-  const subItems = children.map(({ subLabel, path }, index) => (
-    <Collapse in={ showSubItems } key={ subLabel }>
-      <List component='ul' disablePadding>
-        <ListItemButton
-          component={ Link } onClick={ () => setActiveSubItem(index) } sx={ styles.subItem }
-          to={ path }
-        >
-          <ListItemText
-            primary={ t(`admin.navBar.${subLabel}`) }
-            primaryTypographyProps={ { sx: [activeSubItem === index && styles.active] } }
-          />
-        </ListItemButton>
-      </List>
-    </Collapse>
-  ))
+  const subItems = useMemo(
+    () =>
+      children.map(({ subLabel, path }, index) => (
+        <Collapse in={ showSubItems } key={ subLabel }>
+          <List component='ul' disablePadding>
+            <ListItemButton
+              component={ Link } onClick={ () => setActiveSubItem(index) } sx={ styles.subItem }
+              to={ path }
+            >
+              <ListItemText
+                primary={ t(`admin.navBar.${subLabel}`) }
+                primaryTypographyProps={ { sx: [activeSubItem === index && styles.activeSubItem] } }
+              />
+            </ListItemButton>
+          </List>
+        </Collapse>
+      )),
+    [activeSubItem, children, showSubItems, t]
+  )
 
   return (
     <>
-      <ListItemButton
-        component={ Link }
-        key={ label }
-        onClick={ clickListItem }
-        selected={ active }
-        sx={ [styles.listItem, expanded && styles.stableWidth] }
-        to={ !children.length && path }
-      >
-        <ListItemIcon>
-          { icon }
-        </ListItemIcon>
-        { expanded && (
-          <>
-            <ListItemText primary={ t(`admin.navBar.${label}`).toUpperCase() } sx={ styles.label } />
-            { !!children.length && expandIcon }
-          </>
-        ) }
-      </ListItemButton>
+      <Box sx={ [styles.wrapper, expanded && styles.stableWidth] }>
+        <ListItemButton
+          component={ Link }
+          key={ label }
+          onClick={ clickListItem }
+          selected={ active }
+          to={ !children.length && path }
+        >
+          <ListItemIcon sx={ styles.icon }>
+            { icon }
+          </ListItemIcon>
+          { expanded && (
+            <>
+              <ListItemText primary={ t(`admin.navBar.${label}`).toUpperCase() } sx={ styles.label } />
+              { !!children.length && expandIcon }
+            </>
+          ) }
+        </ListItemButton>
+        { active && <Box sx={ styles.active } /> }
+      </Box>
       { children && subItems }
     </>
   )

@@ -1,10 +1,13 @@
 export const styles = {
   stableWidth: {
-    width: '220px'
+    width: '250px'
   },
-  listItem: {
-    marginTop: 2,
-    flexGrow: 0
+  wrapper: {
+    display: 'flex',
+    marginTop: 2
+  },
+  icon: {
+    justifyContent: 'center'
   },
   label: {
     margin: 0
@@ -19,6 +22,12 @@ export const styles = {
     }
   },
   active: {
+    backgroundColor: 'primary.500',
+    width: '2px',
+    float: 'right',
+    display: 'inline-block'
+  },
+  activeSubItem: {
     fontWeight: 600
   }
 }
