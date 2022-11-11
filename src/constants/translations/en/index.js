@@ -15,6 +15,7 @@ import becomeTutor from './become-tutor.json'
 import modals from './email-modals.json'
 import errors from './errors.json'
 import table from './table.json'
+import admin from './admin.json'
 import studentTable from './student-table.json'
 
 const en = {
@@ -36,7 +37,8 @@ const en = {
     modals,
     errors,
     table,
-    studentTable
+    studentTable,
+    admin
   }
 }
 

@@ -14,6 +14,10 @@ const AdminRoutes = () => {
       <Routes>
         <Route element={ <AdminHome /> } index />
         <Route element={ <StudentTable /> } path={ adminRoutes.students.route } />
+        <Route element={ <div>Admins</div> } path={ adminRoutes.admins.route } />
+        <Route element={ <div>Tutors</div> } path={ adminRoutes.tutors.route } />
+        <Route element={ <div>Complains</div> } path={ adminRoutes.complains.route } />
+        <Route element={ <div>Categories</div> } path={ adminRoutes.categories.route } />
         <Route element={ <Navigate to={ errorRoutes.notFound.path } /> } path='*' />
       </Routes>
     </Suspense>
