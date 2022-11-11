@@ -57,3 +57,21 @@ describe('test with student role', () => {
     expect(messageIcon).toBeInTheDocument()
   })
 })
+
+describe('test with admin role', () => {
+  const preloadedState = { appMain: { userRole: 'admin' } }
+  beforeEach(() => {
+    renderWithProviders(
+      <ModalProvider>
+        <NavigationIcons />
+      </ModalProvider>,
+      { preloadedState }
+    )
+  })
+
+  it('should render logout icon', () => {
+    const logoutIcon = screen.getByTestId('LogoutIcon')
+
+    expect(logoutIcon).toBeInTheDocument()
+  })
+})
