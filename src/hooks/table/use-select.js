@@ -1,9 +1,10 @@
+import { useCallback } from 'react'
 import { useTableContext } from '~/context/table-context'
 
 const useSelect = () => {
   const { selected, setSelected } = useTableContext()
 
-  const clearSelected = () => setSelected([])
+  const clearSelected = useCallback(() => setSelected([]), [setSelected])
 
   const handleSelectAllClick = (e, items) => {
     if (e.target.checked) {
