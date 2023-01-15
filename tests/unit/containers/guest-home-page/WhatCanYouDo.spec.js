@@ -14,6 +14,13 @@ jest.mock('react-redux', () => ({
   useSelector: () => mockSelector
 }))
 
+jest.mock('~/containers/guest-home-page/google-button/GoogleButton', () => ({
+  __esModule: true,
+  default: function () {
+    return <button>Google</button>
+  }
+}))
+
 describe('WhatCanYoDo component', () => {
   it('should render popup after button click', () => {
     render(

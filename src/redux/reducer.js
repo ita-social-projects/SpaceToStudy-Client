@@ -24,6 +24,16 @@ export const loginUser = createAsyncThunk('appMain/loginUser', async (userData, 
   }
 })
 
+export const googleAuth = createAsyncThunk('appMain/loginUser', async (userData, { rejectWithValue, dispatch }) => {
+  try {
+    const { data } = await AuthService.googleAuth(userData)
+    setToLocalStorage(accessToken, data.accessToken)
+    dispatch(setUser(data.accessToken))
+  } catch (e) {
+    return rejectWithValue(e.response.data.code)
+  }
+})
+
 export const signupUser = createAsyncThunk('appMain/signupUser', async (userData, { rejectWithValue, dispatch }) => {
   try {
     const { data } = await AuthService.signup(userData)

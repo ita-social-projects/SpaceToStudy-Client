@@ -12,6 +12,14 @@ jest.mock('~/hooks/use-confirm', () => {
     setNeedConfirmation: () => true
   })
 })
+
+jest.mock('~/containers/guest-home-page/google-button/GoogleButton', () => ({
+  __esModule: true,
+  default: function () {
+    return <button>Google</button>
+  }
+}))
+
 const mockAxiosClient = new MockAdapter(axiosClient)
 
 describe('ForgotPassword test', () => {

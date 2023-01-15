@@ -22,6 +22,13 @@ jest.mock('~/hooks/use-confirm', () => {
   })
 })
 
+jest.mock('~/containers/guest-home-page/google-button/GoogleButton', () => ({
+  __esModule: true,
+  default: function () {
+    return <button>Google</button>
+  }
+}))
+
 describe('Login dialog test', () => {
   beforeEach(() => {
     render(

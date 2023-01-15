@@ -15,11 +15,6 @@ export const styles = {
     whiteSpace: 'nowrap',
     margin: '0 10px'
   },
-  google: {
-    marginBottom: '16px',
-    width: '100%',
-    py: '15px'
-  },
   underlineText: {
     fontWeight: '500',
     color: 'primary.900',

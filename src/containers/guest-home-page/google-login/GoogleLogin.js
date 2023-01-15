@@ -1,16 +1,16 @@
 import { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Box, Typography, Button } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import HashLink from '~/components/hash-link/HashLink'
 
 import { ModalContext } from '~/context/modal-context'
 import { guestRoutes } from '~/router/constants/guestRoutes'
 import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
+import GoogleButton from '~/containers/guest-home-page/google-button/GoogleButton'
 
 import { styles } from '~/containers/guest-home-page/google-login/GoogleLogin.styles'
-import google from '~/assets/img/login-dialog/google.svg'
 
-const GoogleLogin = ({ type }) => {
+const GoogleLogin = ({ type, buttonWidth, role }) => {
   const { t } = useTranslation()
   const { whatCanYouDo } = guestRoutes.navBar
   const { openModal, closeModal } = useContext(ModalContext)
@@ -28,14 +28,10 @@ const GoogleLogin = ({ type }) => {
         </Typography>
       </Box>
 
-      <Button size='large' sx={ styles.google } variant='outlined'>
-        <Box
-          alt='google icon' component='img' src={ google }
-          sx={ { pr: 1 } }
-        />
-        { t(`${type}.googleButton`) }
-      </Button>
-
+      <GoogleButton
+        buttonWidth={ buttonWidth } role={ role } route={ whatCanYouDo.route }
+        type={ type }
+      />
       <Box sx={ styles.haveAccount }>
         <Typography sx={ { pr: 1 } } variant='body2'>
           { t(`${type}.haveAccount`) }

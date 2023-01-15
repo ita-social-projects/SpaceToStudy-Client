@@ -1,6 +1,5 @@
 export const styles = {
   form: {
-    maxWidth: { xs: '315px', sm: '343px' },
     padding: { sm: '50px 80px', md: '0' }
   },
   input: {
@@ -19,7 +18,7 @@ export const styles = {
   },
   loginButton: {
     width: '100%',
-    py: '18px'
+    py: '14px'
   },
   forgotPass: {
     cursor: 'pointer',
