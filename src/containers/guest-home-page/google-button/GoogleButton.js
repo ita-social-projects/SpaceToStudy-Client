@@ -7,6 +7,7 @@ import { useTheme } from '@mui/material/styles'
 import { googleAuth } from '~/redux/reducer'
 import { ModalContext } from '~/context/modal-context'
 import { SnackBarContext } from '~/context/snackbar-context'
+import { scrollToHash } from '~/utils/hash-scroll'
 import { snackbarVariants } from '~/constants'
 import { styles } from '~/containers/guest-home-page/google-button/GoogleButton.styles'
 
@@ -30,10 +31,7 @@ const GoogleButton = ({ role, route, buttonWidth, type }) => {
         })
         if (e === 'USER_NOT_FOUND') {
           closeModal()
-          setTimeout(() => {
-            const elementWithId = document.getElementById(ref.split('#').slice(1).join())
-            elementWithId && elementWithId.scrollIntoView({ behavior: 'smooth' })
-          }, 0)
+          scrollToHash(ref)
         }
       }
     },

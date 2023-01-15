@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link, useHref, useLinkClickHandler } from 'react-router-dom'
+import { scrollToHash } from '~/utils/hash-scroll'
 
 const HashLink = ({ onClick, replace = false, state, target, to, ...rest }, ref) => {
   let pathHash = useHref(to)
@@ -10,10 +11,7 @@ const HashLink = ({ onClick, replace = false, state, target, to, ...rest }, ref)
     onClick?.(event)
     if (!event.defaultPrevented) {
       handleClick(event)
-      setTimeout(() => {
-        const elementWithId = document.getElementById(pathHash.split('#').slice(1).join())
-        elementWithId && elementWithId.scrollIntoView({ behavior: 'smooth' })
-      }, 0)
+      scrollToHash(pathHash)
     }
   }
 
