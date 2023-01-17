@@ -1,11 +1,9 @@
 {
   "stepLabels": {
-    "generalInfo": "General info", 
+    "generalInfo": "General", 
     "languages": "Languages", 
-    "studyCategory": "Study category", 
-    "experience": "Experience", 
-    "documents": "Documents", 
-    "photoAndVideo": "Photo and Video"
+    "tutoringCategory": "Tutoring",
+    "photo": "Photo"
   },
   "generalInfo": {
     "title": "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.",

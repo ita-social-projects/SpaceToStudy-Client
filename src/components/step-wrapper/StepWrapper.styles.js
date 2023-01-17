@@ -7,7 +7,7 @@ export const styles = {
   defaultTab: {
     display: 'flex',
     justifyContent: 'center',
-    width: '107px',
+    minWidth: '108px',
     borderBottom: '1px solid',
     borderColor: 'primary.500',
     cursor: 'pointer'
@@ -21,6 +21,7 @@ export const styles = {
   },
   steps: {
     display: 'flex',
+    justifyContent: 'end',
     columnGap: '1px'
   },
   btnWrapper: {
