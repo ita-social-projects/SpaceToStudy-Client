@@ -1,4 +1,4 @@
-import { nameField } from '~/utils/validations/common'
+import { nameField, textField } from '~/utils/validations/common'
 
 export const initialValues = {
   firstName: '',
@@ -6,6 +6,7 @@ export const initialValues = {
   country: '',
   city: '',
   confirmAge: false,
+  experience: '',
   photo: []
 }
 
@@ -13,7 +14,8 @@ export const validations = {
   firstName: nameField,
   lastName: nameField,
   country: nameField,
-  city: nameField
+  city: nameField,
+  experience: textField(200, 1000)
 }
 
-export const stepLabels = ['generalInfo', 'tutoringCategory', 'languages', 'photo']
+export const stepLabels = ['generalInfo', 'subjects', 'languages', 'photo']
