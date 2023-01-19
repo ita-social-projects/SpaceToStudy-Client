@@ -7,7 +7,7 @@ export const styles = {
   defaultTab: {
     display: 'flex',
     justifyContent: 'center',
-    minWidth: '107px',
+    width: '107px',
     borderBottom: '1px solid',
     borderColor: 'primary.500',
     cursor: 'pointer'
