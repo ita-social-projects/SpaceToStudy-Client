@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react'
+import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
@@ -15,27 +16,42 @@ import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 
 import { studentRoutes } from '~/router/constants/studentRoutes'
+import { tutorRoutes } from '~/router/constants/tutorRoutes'
+import { student } from '~/constants'
 
 import { styles } from '~/containers/navigation-icons/NavigationIcons.styles'
 
-const StudentIcons = ({ setIsSidebarOpen }) => {
+const UserIcons = ({ setIsSidebarOpen }) => {
   const { t } = useTranslation()
   const [anchorEl, setAnchorEl] = useState(null)
   const anchorRef = useRef(null)
+  const { userRole } = useSelector((state) => state.appMain)
 
   const openMenu = () => setAnchorEl(anchorRef.current)
   const closeMenu = () => setAnchorEl(null)
 
-  const menuList = Object.values(studentRoutes.accountMenu).map((item) => {
-    return (
-      <MenuItem
-        component={ Link } key={ item.label } onClick={ closeMenu }
-        sx={ styles.menuItem } to={ item.route }
-      >
-        { t(`header.${item.label}`) }
-      </MenuItem>
-    )
-  })
+  const menuList =
+    userRole === student
+      ? Object.values(studentRoutes.accountMenu).map((item) => {
+        return (
+          <MenuItem
+            component={ Link } key={ item.label } onClick={ closeMenu }
+            sx={ styles.menuItem } to={ item.route }
+          >
+            { t(`header.${item.label}`) }
+          </MenuItem>
+        )
+      })
+      : Object.values(tutorRoutes.accountMenu).map((item) => {
+        return (
+          <MenuItem
+            component={ Link } key={ item.label } onClick={ closeMenu }
+            sx={ styles.menuItem } to={ item.route }
+          >
+            { t(`header.${item.label}`) }
+          </MenuItem>
+        )
+      })
 
   return (
     <Box ref={ anchorRef } sx={ styles.iconBox }>
@@ -95,4 +111,4 @@ const StudentIcons = ({ setIsSidebarOpen }) => {
   )
 }
 
-export default StudentIcons
+export default UserIcons

@@ -1,8 +1,12 @@
 {
-  "guestNavBar": {
-    "whatCanYouDo": "Що ти можеш",
-    "howItWorks": "Як це працює",
-    "whoWeAre": "Про нас"
-  },
-  "loginButton": "Увійти"
+  "whatCanYouDo": "Що ти можеш",
+  "howItWorks": "Як це працює",
+  "whoWeAre": "Про нас",
+  "findTutor": "Викладачі",
+  "categories": "Категорії",
+  "homePage": "Домашня сторінка",
+  "faq": "Поширені питання",
+  "becomeTutor": "Стати викладачем",
+  "loginButton": "Увійти",
+  "logout": "Вийти"
 }

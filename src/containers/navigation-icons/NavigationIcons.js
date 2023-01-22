@@ -3,10 +3,10 @@ import { useSelector } from 'react-redux'
 
 import GuestIcons from '~/containers/navigation-icons/guest-icons/GuestIcons'
 import AdminIcons from './admin-icons/AdminIcons'
-import StudentIcons from '~/containers/navigation-icons/student-icons/StudentIcons'
+import UserIcons from '~/containers/navigation-icons/user-icons/UserIcons'
 import { ModalContext } from '~/context/modal-context'
 import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
-import { admin, student } from '~/constants'
+import { admin, student, tutor } from '~/constants'
 
 const NavigationIcons = ({ setIsSidebarOpen }) => {
   const { userRole } = useSelector((state) => state.appMain)
@@ -16,7 +16,7 @@ const NavigationIcons = ({ setIsSidebarOpen }) => {
     openModal({ component: <LoginDialog /> })
   }, [openModal])
 
-  if (userRole === student) return <StudentIcons setIsSidebarOpen={ setIsSidebarOpen } />
+  if (userRole === student || userRole === tutor) return <UserIcons setIsSidebarOpen={ setIsSidebarOpen } />
   if (userRole === admin) return <AdminIcons />
 
   return <GuestIcons openLoginDialog={ openLoginDialog } setIsSidebarOpen={ setIsSidebarOpen } />
