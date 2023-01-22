@@ -5,6 +5,7 @@ export const tutorRoutes = {
     faq: { label: 'faq', route: '/tutor/#faq' }
   },
   accountMenu: {
+    myProfile: { label: 'myProfile', route: '/myProfile' },
     logout: { label: 'logout', route: '/logout' }
   }
 }
