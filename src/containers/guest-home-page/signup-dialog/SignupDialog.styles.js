@@ -10,7 +10,7 @@ export const styles = {
     maxHeight: { xs: 'calc(100vh - 56px)', sm: 'calc(100vh - 64px)' }
   },
   imgContainer: {
-    maxWidth: '50%',
+    maxWidth: { md: '50%', lg: '593px' },
     maxHeight: 'inherit',
     display: { xs: 'none', md: 'flex' }
   },
