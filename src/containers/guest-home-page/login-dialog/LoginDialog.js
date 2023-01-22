@@ -11,7 +11,7 @@ import useConfirm from '~/hooks/use-confirm'
 import { ModalContext } from '~/context/modal-context'
 import { SnackBarContext } from '~/context/snackbar-context'
 import { email, password } from '~/utils/validations/login'
-import loginImg from '~/assets/img/login-dialog/login.png'
+import loginImg from '~/assets/img/login-dialog/login.svg'
 import { login, snackbarVariants } from '~/constants'
 import { loginUser } from '~/redux/reducer'
 
