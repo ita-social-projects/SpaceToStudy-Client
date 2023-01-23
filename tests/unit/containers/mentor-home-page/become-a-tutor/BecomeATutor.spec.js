@@ -24,25 +24,11 @@ describe('BecomeATutor test', () => {
 
     expect(secondTab).toBeInTheDocument()
   })
-
-  it('should open documents render error after add wrong file size', async () => {
-    const fakeFile = new File(['certificate'], 'test-file.png', { type: 'image/png' })
-    Object.defineProperty(fakeFile, 'size', { value: 55_000_000 })
-
-    const documents = screen.getByText(/Documents/i)
-    fireEvent.click(documents)
-
-    const input = screen.getByLabelText('becomeTutor.documents.button')
-    fireEvent.change(input, { target: { files: [fakeFile] } })
-    const error = screen.queryByText('becomeTutor.documents.allFilesSizeError')
-
-    await waitFor(() => expect(error).toBeInTheDocument())
-  })
   it('should open photo render error after add wrong file size', async () => {
     const fakeFile = new File(['certificate'], 'test-file.png', { type: 'image/png' })
     Object.defineProperty(fakeFile, 'size', { value: 55_000_000 })
 
-    const photo = screen.getByText(/becomeTutor.stepLabels.photoAndVideo/i)
+    const photo = screen.getByText(/becomeTutor.stepLabels.photo/i)
     fireEvent.click(photo)
 
     const input = screen.getByLabelText('becomeTutor.photo.button')
@@ -57,7 +43,7 @@ describe('BecomeATutor test', () => {
     const fakeFile = new File(['certificate'], 'test-file.png', { type: 'image/png' })
     Object.defineProperty(fakeFile, 'size', { value: 9_000_000 })
 
-    const photo = screen.getByText(/becomeTutor.stepLabels.photoAndVideo/i)
+    const photo = screen.getByText(/becomeTutor.stepLabels.photo/i)
     fireEvent.click(photo)
 
     const input = screen.getByLabelText('becomeTutor.photo.button')

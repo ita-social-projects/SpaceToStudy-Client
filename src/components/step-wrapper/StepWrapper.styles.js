@@ -21,6 +21,7 @@ export const styles = {
   },
   steps: {
     display: 'flex',
+    justifyContent: 'end',
     columnGap: '1px'
   },
   btnWrapper: {
