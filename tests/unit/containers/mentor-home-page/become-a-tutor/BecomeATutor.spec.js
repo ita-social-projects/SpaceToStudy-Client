@@ -1,5 +1,6 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import BecomeATutor from '~/containers/tutor-home-page/become-a-tutor/BecomeATutor'
+import { ModalProvider } from '~/context/modal-context'
 import { imageResize } from '~/utils/image-resize'
 
 jest.mock('~/utils/image-resize')
@@ -7,7 +8,11 @@ jest.mock('~/utils/image-resize')
 describe('BecomeATutor test', () => {
   beforeEach(() => {
     window.URL.createObjectURL = jest.fn(() => 'image/png')
-    render(<BecomeATutor />)
+    render(
+      <ModalProvider>
+        <BecomeATutor />
+      </ModalProvider>
+    )
   })
 
   it('should render first tab', () => {
@@ -24,6 +29,7 @@ describe('BecomeATutor test', () => {
 
     expect(secondTab).toBeInTheDocument()
   })
+
   it('should open photo render error after add wrong file size', async () => {
     const fakeFile = new File(['certificate'], 'test-file.png', { type: 'image/png' })
     Object.defineProperty(fakeFile, 'size', { value: 55_000_000 })

@@ -8,10 +8,16 @@ import Box from '@mui/material/Box'
 import EastIcon from '@mui/icons-material/East'
 import WestIcon from '@mui/icons-material/West'
 
+import { useStepContext } from '~/context/step-context'
 import { styles } from '~/components/step-wrapper/StepWrapper.styles'
 
-const StepWrapper = ({ children, steps, handleSubmit, stepErrors }) => {
+const StepWrapper = ({ children, steps }) => {
   const [activeStep, setActiveStep] = useState(0)
+  const { handleSubmit, stepErrors } = useStepContext()
+
+  const findActiveErrors = (errors) => {
+    return errors && Boolean(Object.values(errors).filter((error) => error).length)
+  }
 
   const { t } = useTranslation()
 
@@ -24,18 +30,21 @@ const StepWrapper = ({ children, steps, handleSubmit, stepErrors }) => {
   const back = () => {
     setActiveStep((prev) => prev - 1)
   }
-
-  const stepLabels = steps.map((step, index) => (
-    <Box
-      color={ stepErrors[step] ? 'error.500' : 'primary.500' }
-      key={ step }
-      onClick={ () => setActiveStep(index) }
-      sx={ [styles.defaultTab, index === activeStep && styles.activeTab] }
-      typography='caption'
-    >
-      { t(`becomeTutor.stepLabels.${step}`) }
-    </Box>
-  ))
+  console.log(stepErrors)
+  const stepLabels = steps.map((step, index) => {
+    const hasActiveError = findActiveErrors(stepErrors[step])
+    return (
+      <Box
+        color={ hasActiveError ? 'error.500' : 'primary.500' }
+        key={ step }
+        onClick={ () => setActiveStep(index) }
+        sx={ [styles.defaultTab, index === activeStep && styles.activeTab] }
+        typography='caption'
+      >
+        { t(`becomeTutor.stepLabels.${step}`) }
+      </Box>
+    )
+  })
 
   const nextButton = isLastStep ? (
     <Button

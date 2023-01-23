@@ -5,16 +5,19 @@ import FileUploader from '~/components/file-uploader/FileUploader'
 import { imageResize } from '~/utils/image-resize'
 
 import { style } from '~/containers/tutor-home-page/add-photo/AddPhoto.style'
+import { useStepContext } from '~/context/step-context'
 import { validationData } from './constants'
 
-const AddPhoto = ({ btnsBox, handleErrors, errors, handleStepErrors, stepLabel, data, handleAddFiles }) => {
+const AddPhoto = ({ btnsBox, stepLabel }) => {
   const { t } = useTranslation()
-
+  const { stepData, stepErrors, handleStepData, handleStepErrors } = useStepContext()
+  const photo = stepData[stepLabel]
+  const photoErrors = stepErrors[stepLabel]
+  console.log('photo')
   const addPhoto = ({ files, error }) => {
-    files.length && !files[0].src ? resizeImage(files[0]) : handleAddFiles('photo', files)
+    files.length && !files[0].src ? resizeImage(files[0]) : handleStepData(stepLabel, files)
 
-    handleErrors('photo', error)
-    handleStepErrors(stepLabel, error)
+    handleStepErrors(stepLabel, { error })
   }
 
   const resizeImage = (photo) => {
@@ -22,13 +25,13 @@ const AddPhoto = ({ btnsBox, handleErrors, errors, handleStepErrors, stepLabel, 
     const photoSizes = { newWidth: 580, newHeight: 580 }
     const photoName = photo.name
     imageResize(originalPhotoPath, photoSizes).then((resizedPhoto) => {
-      handleAddFiles('photo', [{ src: resizedPhoto, name: photoName, type: 'image/png' }])
+      handleStepData(stepLabel, [{ src: resizedPhoto, name: photoName, type: 'image/png' }])
     })
   }
 
-  const photoPrewiew = data.photo.length ? (
+  const photoPrewiew = photo.length ? (
     <Box
-      alt={ t('becomeTutor.photo.imageAlt') } component='img' src={ data.photo[0].src }
+      alt={ t('becomeTutor.photo.imageAlt') } component='img' src={ photo[0].src }
       sx={ style.img }
     />
   ) : (
@@ -52,8 +55,8 @@ const AddPhoto = ({ btnsBox, handleErrors, errors, handleStepErrors, stepLabel, 
           <FileUploader
             buttonText={ t('becomeTutor.photo.button') }
             emitter={ addPhoto }
-            initialError={ errors.photo }
-            initialState={ data.photo }
+            initialError={ photoErrors.error }
+            initialState={ photo }
             validationData={ validationData }
           />
         </Box>
