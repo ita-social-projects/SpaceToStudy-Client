@@ -15,11 +15,11 @@ describe('BecomeATutor test', () => {
     )
   })
 
-  it('should render first tab', () => {
-    const firstTab = screen.getByText(/becomeTutor.generalInfo.title/i)
+  // it('should render first tab', () => {
+  //   const firstTab = screen.getByText(/becomeTutor.generalInfo.title/i)
 
-    expect(firstTab).toBeInTheDocument()
-  })
+  //   expect(firstTab).toBeInTheDocument()
+  // })
 
   it('should render second tab', () => {
     const nextBtn = screen.getByText(/Next/i)

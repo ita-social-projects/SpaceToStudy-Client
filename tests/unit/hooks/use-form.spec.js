@@ -13,6 +13,7 @@ describe('useForm custom hook test without errors', () => {
     expect(typeof result.current.handleChange).toBe('function')
     expect(typeof result.current.handleBlur).toBe('function')
     expect(typeof result.current.handleSubmit).toBe('function')
+    expect(typeof result.current.setFieldValue).toBe('function')
     expect(result.current.data).toEqual({ email: '' })
     expect(result.current.errors).toEqual({})
     expect(result.current.isDirty).toEqual(false)
@@ -84,5 +85,15 @@ describe('useForm custom hook test with errors', () => {
     expect(validations.email).toBeCalled()
     expect(result.current.errors).toEqual({ email: 'error' })
     expect(onSubmit).not.toBeCalled()
+  })
+
+  it('should set value to field', () => {
+    const validations = { email: jest.fn(() => undefined) }
+    const { result } = renderHook(() => useForm({ initialValues, validations, onSubmit }))
+
+    act(() => result.current.setFieldValue('email', 'testValue'))
+
+    expect(result.current.data).toEqual({ email: 'testValue' })
+    expect(result.current.errors).toEqual({})
   })
 })

@@ -25,7 +25,3 @@ export const textField = (min, max) => (value) => {
     return 'common.errorMessages.longText'
   }
 }
-
-export const selectField = (value) => {
-  return emptyField(value, '')
-}

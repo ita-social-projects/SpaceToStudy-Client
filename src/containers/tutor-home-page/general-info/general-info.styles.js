@@ -4,19 +4,30 @@ export const styles = {
   container: {
     display: 'flex',
     justifyContent: 'space-around',
-    columnGap: 2,
+    height: '485px',
+    // columnGap: 2,
     ...fadeAnimation
   },
-  imgDesktop: {
-    mb: '30px',
-    maxWidth: { lg: '418px', md: '45%' },
+  imgContainer: {
+    flex: 1,
+    display: 'flex',
+    justifyContent: 'flex-start',
+    padding: '0 122px 52px 0'
+  },
+  img: {
     width: '100%'
+    // borderRadius: '20px'
   },
-  imgMobile: {
-    display: 'block',
-    m: '0 auto 20px',
-    maxWidth: '70%'
-  },
+  // imgDesktop: {
+  //   mb: '30px',
+  //   maxWidth: { lg: '418px', md: '45%' },
+  //   width: '100%'
+  // },
+  // imgMobile: {
+  //   display: 'block',
+  //   m: '0 auto 20px',
+  //   maxWidth: '70%'
+  // },
   form: {
     maxWidth: '432px',
     display: 'flex',
@@ -28,8 +39,7 @@ export const styles = {
   formFieldsContainer: {
     display: 'grid',
     gridTemplateColumns: {
-      md: 'repeat(auto-fit, minmax(180px, 1fr))',
-      sm: 'repeat(auto-fit, minmax(200px, 1fr))'
+      sm: 'repeat(auto-fit, minmax(180px, 1fr))'
     },
     columnGap: 2
   },

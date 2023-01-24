@@ -1,30 +1,72 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
+import { LocationService } from '~/services/location-service'
 
+import { createFilterOptions } from '@mui/material'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Checkbox from '@mui/material/Checkbox'
 import FormControlLabel from '@mui/material/FormControlLabel'
-import MenuItem from '@mui/material/MenuItem'
 
 import AppTextField from '~/components/app-text-field/AppTextField'
+import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
 import useBreakpoints from '~/hooks/use-breakpoints'
+import useAxios from '~/hooks/use-axios'
 
 import img from '~/assets/img/tutor-home-page/become-tutor/general-info.png'
 import { styles } from '~/containers/tutor-home-page/general-info/general-info.styles'
 
 const GeneralInfo = ({ data, handleChange, handleBlur, errors, btnsBox, stepLabel }) => {
   const { t } = useTranslation()
+  const { isDesktop, isMobile } = useBreakpoints()
+  const [counterColor, setCounterColor] = useState('#263238')
+  const [fetched, setFetched] = useState(false)
+  const [cities, setCities] = useState([])
+
+  const filterOptions = (options, state) => {
+    const defaultFilterOptions = createFilterOptions()
+    return defaultFilterOptions(options, state).slice(0, 300)
+  }
+
+  const getCountries = useCallback(() => LocationService.getCountries(), [])
+  const getCities = useCallback(() => LocationService.getCities(data.country), [data.country])
+
+  const { response: countries } = useAxios({ service: getCountries })
+  const { fetchData: fetchCities } = useAxios({ service: getCities, fetchOnMount: false })
 
   useEffect(() => {
-    const fieldsWithValidation = ['firstName', 'lastName', 'country', 'city']
+    const fieldsWithValidation = ['firstName', 'lastName', 'experience']
     const stepHasError = fieldsWithValidation.some((field) => errors[field])
     setStepErrors((prevState) => ({ ...prevState, [stepLabel]: stepHasError }))
   }, [errors, setStepErrors, stepLabel])
 
+  useEffect(() => {
+    if (data.country) {
+      ;(async () => {
+        const res = await fetchCities()
+        res ? setCities(res) : setCities([])
+        setFetched(true)
+      })()
+    }
+
+    return () => {
+      setFetched(false)
+    }
+  }, [data.country, fetchCities])
+
+  useEffect(() => {
+    if (!data.country && data.city) {
+      setFieldValue('city', '')
+    }
+  }, [data.country, data.city, setFieldValue])
+
+  console.log(data)
+
   return (
     <Box sx={ styles.container }>
-      { isDesktop && <Box component='img' src={ img } sx={ styles.imgDesktop } /> }
+      <Box sx={ styles.imgContainer }>
+        { isDesktop && <Box component='img' src={ img } sx={ styles.img } /> }
+      </Box>
       <Box component='form' sx={ styles.form }>
         <Box>
           <Typography mb='30px'>
@@ -32,7 +74,7 @@ const GeneralInfo = ({ data, handleChange, handleBlur, errors, btnsBox, stepLabe
           </Typography>
 
           { isMobile && <Box component='img' src={ img } sx={ styles.imgMobile } /> }
-          <Box sx={ !isMobile && styles.formFieldsContainer }>
+          <Box sx={ styles.formFieldsContainer }>
             <AppTextField
               autoFocus
               errorMsg={ t(errors.firstName) }
@@ -57,35 +99,26 @@ const GeneralInfo = ({ data, handleChange, handleBlur, errors, btnsBox, stepLabe
               value={ data.lastName }
             />
 
-            <AppTextField
-              errorMsg={ t(errors.country) }
-              fullWidth
+            <AppAutoComplete
+              fieldName='country'
+              fieldValue={ data.country }
               label={ t('common.labels.country') }
-              onBlur={ handleBlur('country') }
-              onChange={ handleChange('country') }
-              required
-              select
-              sx={ { mb: '5px' } }
-              type='text'
-              value={ data.country }
-            >
-              { countries }
-            </AppTextField>
+              propOptions={ countries }
+              setFieldValue={ setFieldValue }
+              styles={ { mb: '30px' } }
+            />
 
-            <AppTextField
-              errorMsg={ t(errors.city) }
-              fullWidth
+            <AppAutoComplete
+              disableOption={ !data.country }
+              fieldName='city'
+              fieldValue={ data.city }
+              filterOptions={ filterOptions }
               label={ t('common.labels.city') }
-              onBlur={ handleBlur('city') }
-              onChange={ handleChange('city') }
-              required
-              select
-              sx={ { mb: '5px' } }
-              type='text'
-              value={ data.city }
-            >
-              { cities }
-            </AppTextField>
+              propOptions={ fetched && cities }
+              setFetched={ setFetched }
+              setFieldValue={ setFieldValue }
+              styles={ { mb: '30px' } }
+            />
           </Box>
 
           <AppTextField

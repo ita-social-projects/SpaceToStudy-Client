@@ -71,6 +71,13 @@ export const useForm = ({ initialValues, validations, onSubmit }) => {
     }
   }
 
+  const setFieldValue = (key, value) => {
+    setData({
+      ...data,
+      [key]: value
+    })
+  }
+
   return {
     data,
     isDirty,
@@ -79,7 +86,8 @@ export const useForm = ({ initialValues, validations, onSubmit }) => {
     handleAddFiles,
     handleBlur,
     handleErrors,
-    handleSubmit
+    handleSubmit,
+    setFieldValue
   }
 }
 
