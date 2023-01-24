@@ -1,13 +1,13 @@
 import { screen, fireEvent } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
-import StudentIcons from '~/containers/navigation-icons/student-icons/StudentIcons'
+import UserIcons from '~/containers/navigation-icons/user-icons/UserIcons'
 
 const openLoginDialog = jest.fn()
 const setIsSidebarOpen = jest.fn()
 
-describe('test with guest role', () => {
+describe('test with user role', () => {
   beforeEach(() => {
-    renderWithProviders(<StudentIcons openLoginDialog={ openLoginDialog } setIsSidebarOpen={ setIsSidebarOpen } />)
+    renderWithProviders(<UserIcons openLoginDialog={ openLoginDialog } setIsSidebarOpen={ setIsSidebarOpen } />)
   })
 
   it('should render login icon', () => {

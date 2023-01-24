@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { guestRoutes } from '~/router/constants/guestRoutes'
 import { studentRoutes } from '~/router/constants/studentRoutes'
+import { tutorRoutes } from '~/router/constants/tutorRoutes'
 import { useTranslation } from 'react-i18next'
 
 import Typography from '@mui/material/Typography'
@@ -15,7 +16,7 @@ import HashLink from '~/components/hash-link/HashLink'
 import Logo from '~/containers/logo/Logo'
 import Sidebar from '~/containers/layout/sidebar/Sidebar'
 import NavigationIcons from '~/containers/navigation-icons/NavigationIcons'
-import { admin, student } from '~/constants'
+import { admin, student, tutor } from '~/constants'
 
 import { styles } from '~/containers/layout/navbar/NavBar.styles'
 
@@ -27,6 +28,7 @@ const Navbar = () => {
 
   useEffect(() => {
     if (userRole === student) setNavigationItems(Object.values(studentRoutes.navBar))
+    else if (userRole === tutor) setNavigationItems(Object.values(tutorRoutes.navBar))
     else if (userRole === admin) setNavigationItems([])
     else setNavigationItems(Object.values(guestRoutes.navBar))
   }, [userRole])
