@@ -5,9 +5,7 @@ export const initialValues = {
   lastName: '',
   country: '',
   city: '',
-  confirmAge: false,
-  experience: '',
-  photo: []
+  confirmAge: false
 }
 
 export const validations = {
@@ -18,4 +16,4 @@ export const validations = {
   experience: textField(200, 1000)
 }
 
-export const stepLabels = ['generalInfo', 'languages', 'studyCategory', 'photoAndVideo']
+export const stepLabels = ['generalInfo', 'subjects', 'languages', 'photo']

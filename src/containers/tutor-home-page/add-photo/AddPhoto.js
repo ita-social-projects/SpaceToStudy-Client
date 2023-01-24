@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Box, Typography } from '@mui/material'
 
@@ -9,15 +10,15 @@ import { useStepContext } from '~/context/step-context'
 import { validationData } from './constants'
 
 const AddPhoto = ({ btnsBox, stepLabel }) => {
+  const [photoError, setPhotoError] = useState(null)
   const { t } = useTranslation()
-  const { stepData, stepErrors, handleStepData, handleStepErrors } = useStepContext()
+  const { stepData, handleStepData } = useStepContext()
   const photo = stepData[stepLabel]
-  const photoErrors = stepErrors[stepLabel]
-  console.log('photo')
+
   const addPhoto = ({ files, error }) => {
     files.length && !files[0].src ? resizeImage(files[0]) : handleStepData(stepLabel, files)
 
-    handleStepErrors(stepLabel, { error })
+    setPhotoError(error)
   }
 
   const resizeImage = (photo) => {
@@ -55,7 +56,7 @@ const AddPhoto = ({ btnsBox, stepLabel }) => {
           <FileUploader
             buttonText={ t('becomeTutor.photo.button') }
             emitter={ addPhoto }
-            initialError={ photoErrors.error }
+            initialError={ photoError }
             initialState={ photo }
             validationData={ validationData }
           />

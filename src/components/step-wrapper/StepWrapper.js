@@ -1,4 +1,4 @@
-import { useState, cloneElement } from 'react'
+import { cloneElement } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Button from '@mui/material/Button'
@@ -8,43 +8,25 @@ import Box from '@mui/material/Box'
 import EastIcon from '@mui/icons-material/East'
 import WestIcon from '@mui/icons-material/West'
 
-import { useStepContext } from '~/context/step-context'
+import useSteps from '~/hooks/use-steps'
 import { styles } from '~/components/step-wrapper/StepWrapper.styles'
 
 const StepWrapper = ({ children, steps }) => {
-  const [activeStep, setActiveStep] = useState(0)
-  const { handleSubmit, stepErrors } = useStepContext()
-
-  const findActiveErrors = (errors) => {
-    return errors && Boolean(Object.values(errors).filter((error) => error).length)
-  }
-
+  const { activeStep, stepErrors, isLastStep, stepOperation } = useSteps({ steps })
+  const { next, back, setActiveStep, handleSubmit } = stepOperation
   const { t } = useTranslation()
 
-  const isLastStep = activeStep === steps.length - 1
-
-  const next = () => {
-    setActiveStep((prev) => prev + 1)
-  }
-
-  const back = () => {
-    setActiveStep((prev) => prev - 1)
-  }
-  console.log(stepErrors)
-  const stepLabels = steps.map((step, index) => {
-    const hasActiveError = findActiveErrors(stepErrors[step])
-    return (
-      <Box
-        color={ hasActiveError ? 'error.500' : 'primary.500' }
-        key={ step }
-        onClick={ () => setActiveStep(index) }
-        sx={ [styles.defaultTab, index === activeStep && styles.activeTab] }
-        typography='caption'
-      >
-        { t(`becomeTutor.stepLabels.${step}`) }
-      </Box>
-    )
-  })
+  const stepLabels = steps.map((step, index) => (
+    <Box
+      color={ stepErrors[index] ? 'error.500' : 'primary.500' }
+      key={ step }
+      onClick={ () => setActiveStep(index) }
+      sx={ [styles.defaultTab, index === activeStep && styles.activeTab] }
+      typography='caption'
+    >
+      { t(`becomeTutor.stepLabels.${step}`) }
+    </Box>
+  ))
 
   const nextButton = isLastStep ? (
     <Button
