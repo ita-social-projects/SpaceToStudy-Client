@@ -1,5 +1,5 @@
 const FindTutor = () => {
-  return <div>FindTutor</div>
+  return <div>FindTutor Page Placeholder</div>
 }
 
 export default FindTutor
