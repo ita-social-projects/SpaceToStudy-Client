@@ -7,6 +7,7 @@ export const studentRoutes = {
     becomeTutor: { label: 'becomeTutor', route: '/becomeTutor' }
   },
   accountMenu: {
+    myProfile: { label: 'myProfile', route: '/myProfile' },
     logout: { label: 'logout', route: '/logout' }
   }
 }
