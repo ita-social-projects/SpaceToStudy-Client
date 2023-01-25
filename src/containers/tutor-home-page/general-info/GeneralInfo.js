@@ -13,7 +13,7 @@ import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import useAxios from '~/hooks/use-axios'
 
-import img from '~/assets/img/tutor-home-page/become-tutor/general-info.png'
+import img from '~/assets/img/tutor-home-page/become-tutor/general-info.svg'
 import { styles } from '~/containers/tutor-home-page/general-info/general-info.styles'
 
 const GeneralInfo = ({ data, handleChange, handleBlur, errors, btnsBox, stepLabel }) => {
@@ -56,7 +56,7 @@ const GeneralInfo = ({ data, handleChange, handleBlur, errors, btnsBox, stepLabe
 
   useEffect(() => {
     if (!data.country && data.city) {
-      setFieldValue('city', '')
+      setFieldValue('city', null)
     }
   }, [data.country, data.city, setFieldValue])
 
@@ -64,16 +64,22 @@ const GeneralInfo = ({ data, handleChange, handleBlur, errors, btnsBox, stepLabe
 
   return (
     <Box sx={ styles.container }>
-      <Box sx={ styles.imgContainer }>
-        { isDesktop && <Box component='img' src={ img } sx={ styles.img } /> }
-      </Box>
+      { isDesktop && (
+        <Box sx={ styles.imgContainer }>
+          <Box component='img' src={ img } sx={ styles.img } />
+        </Box>
+      ) }
       <Box component='form' sx={ styles.form }>
         <Box>
-          <Typography mb='30px'>
+          <Typography mb='20px'>
             { t('becomeTutor.generalInfo.title') }
           </Typography>
 
-          { isMobile && <Box component='img' src={ img } sx={ styles.imgMobile } /> }
+          { isMobile && (
+            <Box sx={ styles.imgContainer }>
+              <Box component='img' src={ img } sx={ styles.img } />
+            </Box>
+          ) }
           <Box sx={ styles.formFieldsContainer }>
             <AppTextField
               autoFocus

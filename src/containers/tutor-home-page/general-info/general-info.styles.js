@@ -4,29 +4,23 @@ export const styles = {
   container: {
     display: 'flex',
     justifyContent: 'space-around',
-    height: '485px',
-    // columnGap: 2,
+    height: { sm: '485px' },
     ...fadeAnimation
   },
   imgContainer: {
     flex: 1,
     display: 'flex',
     justifyContent: 'flex-start',
-    padding: '0 122px 52px 0'
+    padding: { lg: '0 122px 52px 0', md: '0 60px 52px 0' }
   },
   img: {
-    width: '100%'
-    // borderRadius: '20px'
+    width: '100%',
+    m: { sm: 0, xs: '0 auto 20px' },
+    maxWidth: { md: '100%', xs: '70%' }
   },
   // imgDesktop: {
-  //   mb: '30px',
   //   maxWidth: { lg: '418px', md: '45%' },
   //   width: '100%'
-  // },
-  // imgMobile: {
-  //   display: 'block',
-  //   m: '0 auto 20px',
-  //   maxWidth: '70%'
   // },
   form: {
     maxWidth: '432px',

@@ -2,7 +2,7 @@ import { fadeAnimation } from '~/styles/app-theme/custom-animations'
 
 export const styles = {
   root: {
-    p: { sm: '50px 90px' }
+    p: { lg: '50px 90px', sm: '40px 50px', xs: '40px 15px' }
   },
   defaultTab: {
     display: 'flex',
@@ -21,7 +21,8 @@ export const styles = {
   },
   steps: {
     display: 'flex',
-    justifyContent: 'end',
+    justifyContent: { md: 'end', sm: 'center' },
+    flexWrap: 'wrap',
     columnGap: '1px'
   },
   btnWrapper: {

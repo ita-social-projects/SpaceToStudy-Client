@@ -3,8 +3,8 @@ import { nameField, textField } from '~/utils/validations/common'
 export const initialValues = {
   firstName: '',
   lastName: '',
-  country: '',
-  city: '',
+  country: null,
+  city: null,
   confirmAge: false,
   experience: ''
 }

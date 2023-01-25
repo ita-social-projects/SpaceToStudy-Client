@@ -14,8 +14,6 @@ export const LocationService = {
       country
     })
 
-    console.log(res.data)
-
     return res.data.data
   }
 }

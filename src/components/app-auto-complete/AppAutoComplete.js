@@ -27,7 +27,7 @@ const AppAutoComplete = ({
 
   const loading = open && options.length === 0
 
-  const onChange = (_event, value) => setFieldValue(`${fieldName}`, value || '')
+  const onChange = (_event, value) => setFieldValue(`${fieldName}`, value || null)
 
   useEffect(() => {
     setActive(true)
