@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
@@ -11,14 +10,8 @@ import AppTextField from '~/components/app-text-field/AppTextField'
 import img from '~/assets/img/tutor-home-page/become-tutor/general-info.png'
 import { styles } from '~/containers/tutor-home-page/general-info/general-info.styles'
 
-const GeneralInfo = ({ data, handleChange, handleBlur, errors, btnsBox, setStepErrors, stepLabel }) => {
+const GeneralInfo = ({ data, handleChange, handleBlur, errors, btnsBox, stepLabel }) => {
   const { t } = useTranslation()
-
-  useEffect(() => {
-    const fieldsWithValidation = ['firstName', 'lastName', 'country', 'city']
-    const stepHasError = fieldsWithValidation.some((field) => errors[field])
-    setStepErrors((prevState) => ({ ...prevState, [stepLabel]: stepHasError }))
-  }, [errors, setStepErrors, stepLabel])
 
   return (
     <Box sx={ styles.container }>
