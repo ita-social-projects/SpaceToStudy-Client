@@ -24,7 +24,7 @@ const BecomeATutor = () => {
       data={ data } errors={ errors } handleBlur={ handleBlur }
       handleChange={ handleChange } key='1'
     />,
-    <Subjects data={ data } handleData={ handleData } key='2' />,
+    <Subjects key='2' />,
     <TempComponent key='3'>3</TempComponent>,
     <AddPhoto key='4' />
   ]

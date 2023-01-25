@@ -1,4 +1,4 @@
-export const categories = [
+export const categoriesMock = [
   { name: 'Languages' },
   { name: 'Mathematics' },
   { name: 'Computer science' },
@@ -6,7 +6,7 @@ export const categories = [
   { name: 'History' }
 ]
 
-export const languages = [
+export const languagesMock = [
   { name: 'Chinese' },
   { name: 'Czech' },
   { name: 'Danish' },

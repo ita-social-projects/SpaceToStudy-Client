@@ -1,7 +1,7 @@
 import { Autocomplete } from '@mui/material'
 import AppTextField from '~/components/app-text-field/AppTextField'
 
-const Autocoplete = ({ id, setData, value, options, label, error, ...props }) => {
+const Autocoplete = ({ id, setData, value, options, label, ...props }) => {
   const onChange = (_, value) => {
     setData(value)
   }

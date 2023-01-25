@@ -3,7 +3,7 @@ import { Chip, IconButton, Box, Typography } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import { styles } from '~/components/app-chips/AppChips-styles'
 
-const AppChip = ({ items, value, handleData, defaultQuantity }) => {
+const AppChip = ({ items, stepLabel, handleData, defaultQuantity }) => {
   const [amountOfChips, setAmountOfChips] = useState(null)
   const [arraySize, setArraySize] = useState(defaultQuantity)
 
@@ -20,7 +20,7 @@ const AppChip = ({ items, value, handleData, defaultQuantity }) => {
 
   const handleDelete = (item) => {
     const newItems = items.filter((el) => el.name !== item)
-    handleData(value, newItems)
+    handleData(stepLabel, newItems)
   }
 
   const showMore = () => {

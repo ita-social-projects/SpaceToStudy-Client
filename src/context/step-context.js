@@ -5,7 +5,7 @@ const StepContext = createContext()
 
 const StepProvider = ({ children }) => {
   const [generalData, setGeneralData] = useState({})
-  const [subject, setSubject] = useState({})
+  const [subject, setSubject] = useState([])
   const [languages, setLanguages] = useState({})
   const [photo, setPhoto] = useState([])
   const [generalLabel, subjectLabel, languagesLabel, photoLabel] = stepLabels

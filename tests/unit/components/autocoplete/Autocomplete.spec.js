@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, within, act } from '@testing-library/react'
+import { render, screen, fireEvent, within } from '@testing-library/react'
 import Autocoplete from '~/components/autocoplete/Autocomplete'
 
 const setData = jest.fn()
@@ -12,18 +12,10 @@ describe('Autocoplete test', () => {
     const autocomplete = screen.getByTestId('autocomplete-search')
     const input = within(autocomplete).getByRole('combobox')
 
-    act(() => {
-      fireEvent.click(input)
-    })
-    act(() => {
-      fireEvent.change(input, { target: { value: 'mat' } })
-    })
-    act(() => {
-      fireEvent.keyDown(autocomplete, { key: 'ArrowDown' })
-    })
-    act(() => {
-      fireEvent.keyDown(autocomplete, { key: 'Enter' })
-    })
+    fireEvent.click(input)
+    fireEvent.change(input, { target: { value: 'mat' } })
+    fireEvent.keyDown(autocomplete, { key: 'ArrowDown' })
+    fireEvent.keyDown(autocomplete, { key: 'Enter' })
 
     expect(input.value).toBe('Mathematics')
   })

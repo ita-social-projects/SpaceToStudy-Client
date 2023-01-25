@@ -49,13 +49,6 @@ export const useForm = ({ initialValues, validations, onSubmit }) => {
     })
   }
 
-  const handleData = (key, value) => {
-    setData({
-      ...data,
-      [key]: value
-    })
-  }
-
   const handleSubmit = async (event) => {
     event.preventDefault()
     let isValid = true
@@ -83,7 +76,6 @@ export const useForm = ({ initialValues, validations, onSubmit }) => {
     isDirty,
     errors,
     handleChange,
-    handleData,
     handleAddFiles,
     handleBlur,
     handleErrors,

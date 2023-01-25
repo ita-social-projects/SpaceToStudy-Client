@@ -2,14 +2,17 @@ import { Box, Button, FormHelperText, Typography } from '@mui/material'
 import { styles } from '~/containers/tutor-home-page/subjects/Subjects.styles'
 import img from '~/assets/img/tutor-home-page/become-tutor/study-category.svg'
 import { useTranslation } from 'react-i18next'
-import { categories, languages } from './constants'
+import { categoriesMock, languagesMock } from './constants'
 import AppChip from '~/components/app-chips/AppChips'
 import Autocoplete from '~/components/autocoplete/Autocomplete'
 import { useEffect, useState } from 'react'
+import { useStepContext } from '~/context/step-context'
 
-const Subjects = ({ data, handleData, btnsBox }) => {
+const Subjects = ({ stepLabel, btnsBox }) => {
   const { t } = useTranslation()
-  const { lessons } = data
+  const { stepData, handleStepData } = useStepContext()
+  const subjectData = stepData[stepLabel]
+
   const [category, setCategory] = useState(null)
   const [subject, setSubject] = useState(null)
   const [subjectError, setSubjectError] = useState('')
@@ -30,15 +33,14 @@ const Subjects = ({ data, handleData, btnsBox }) => {
       return
     }
 
-    const isSameLesson = lessons.some((lesson) => lesson.name === subject.name && lesson.category === category.name)
+    const isSameLesson = subjectData.some((lesson) => lesson.name === subject.name && lesson.category === category.name)
     if (isSameLesson) {
       setSubjectError(t('becomeTutor.categories.sameSubject'))
       return
     }
 
-    const newLesson = { category: category.name, name: subject.name }
-
-    handleData('lessons', [...lessons, newLesson])
+    const newSubject = { category: category.name, name: subject.name }
+    handleStepData(stepLabel, [...subjectData, newSubject])
   }
 
   return (
@@ -54,7 +56,7 @@ const Subjects = ({ data, handleData, btnsBox }) => {
           <Autocoplete
             id={ t('becomeTutor.categories.mainSubjectsLabel') }
             label={ t('becomeTutor.categories.mainSubjectsLabel') }
-            options={ categories }
+            options={ categoriesMock }
             setData={ setCategory }
             value={ category }
           />
@@ -62,7 +64,7 @@ const Subjects = ({ data, handleData, btnsBox }) => {
             disabled={ !category }
             id={ t('becomeTutor.categories.subjectLabel') }
             label={ t('becomeTutor.categories.subjectLabel') }
-            options={ languages }
+            options={ languagesMock }
             setData={ setSubject }
             value={ subject }
           />
@@ -78,8 +80,8 @@ const Subjects = ({ data, handleData, btnsBox }) => {
             { subjectError || ' ' }
           </FormHelperText>
           <AppChip
-            defaultQuantity={ 7 } handleData={ handleData } items={ lessons }
-            value='lessons'
+            defaultQuantity={ 7 } handleData={ handleStepData } items={ subjectData }
+            stepLabel={ stepLabel }
           />
         </Box>
         { btnsBox }

@@ -5,8 +5,7 @@ export const styles = {
     gap: '10px 5px',
     flexWrap: 'wrap',
     maxHeight: '74px',
-    overflowX: 'auto',
-    marginTop: '20px'
+    overflowX: 'auto'
   },
   deleteButton: {
     p: 0
