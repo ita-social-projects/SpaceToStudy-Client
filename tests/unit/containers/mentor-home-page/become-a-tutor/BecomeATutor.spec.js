@@ -25,7 +25,7 @@ describe('BecomeATutor test', () => {
     const nextBtn = screen.getByText(/Next/i)
     fireEvent.click(nextBtn)
 
-    const secondTab = screen.getByText(/2/i)
+    const secondTab = screen.getByText(/becomeTutor.categories.title/i)
 
     expect(secondTab).toBeInTheDocument()
   })
