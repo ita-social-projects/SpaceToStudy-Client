@@ -11,15 +11,15 @@ const AppChip = ({ items, stepLabel, handleData, defaultQuantity }) => {
     if (items.length <= defaultQuantity) {
       setAmountOfChips(null)
       setArraySize(defaultQuantity)
-    } else if (arraySize <= defaultQuantity) {
+    } else if (arraySize === defaultQuantity) {
       setAmountOfChips(items.length - defaultQuantity)
     } else {
       setArraySize(items.length)
     }
   }, [items, defaultQuantity, arraySize])
 
-  const handleDelete = (item) => {
-    const newItems = items.filter((el) => el.name !== item)
+  const handleDelete = (name) => {
+    const newItems = items.filter((item) => item.name !== name)
     handleData(stepLabel, newItems)
   }
 
