@@ -1,11 +1,7 @@
 import { Autocomplete } from '@mui/material'
 import AppTextField from '~/components/app-text-field/AppTextField'
 
-const Autocoplete = ({ id, setData, value, options, label, ...props }) => {
-  const onChange = (_, value) => {
-    setData(value)
-  }
-
+const Autocoplete = ({ id, onChange, value, options, label, ...props }) => {
   return (
     <Autocomplete
       ListboxProps={ { style: { maxHeight: '150px' } } }

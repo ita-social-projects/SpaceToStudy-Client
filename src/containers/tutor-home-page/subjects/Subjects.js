@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { categoriesMock, languagesMock } from './constants'
 import AppChip from '~/components/app-chips/AppChips'
 import Autocoplete from '~/components/autocoplete/Autocomplete'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useStepContext } from '~/context/step-context'
 
 const Subjects = ({ stepLabel, btnsBox }) => {
@@ -13,30 +13,32 @@ const Subjects = ({ stepLabel, btnsBox }) => {
   const { stepData, handleStepData } = useStepContext()
   const subjectData = stepData[stepLabel]
 
-  const [category, setCategory] = useState(null)
-  const [subject, setSubject] = useState(null)
+  const [subjects, setSubjects] = useState({ category: null, subject: null })
   const [subjectError, setSubjectError] = useState('')
 
-  useEffect(() => {
-    if (!category) {
-      setSubject(null)
-    }
+  const onChangeCategory = (_, value) => {
+    setSubjects((prev) => prev.category !== value && { category: value, subject: null })
+  }
 
-    if (category || subject) {
-      setSubjectError('')
-    }
-  }, [category, subject])
+  const onChangeSubject = (_, value) => {
+    setSubjects((prev) => ({ category: prev.category, subject: value }))
+    subjectError && setSubjectError('')
+  }
 
   const addSubject = () => {
-    if (!subject || !category) {
+    if (!subjects.subject || !subjects.category) {
       setSubjectError(t('becomeTutor.categories.emptyFields'))
       return
     }
+
+    const { subject, category } = subjects
 
     const isSameLesson = subjectData.some((lesson) => lesson.name === subject.name && lesson.category === category.name)
     if (isSameLesson) {
       setSubjectError(t('becomeTutor.categories.sameSubject'))
       return
+    } else {
+      setSubjectError('')
     }
 
     const newSubject = { category: category.name, name: subject.name }
@@ -56,17 +58,17 @@ const Subjects = ({ stepLabel, btnsBox }) => {
           <Autocoplete
             id={ t('becomeTutor.categories.mainSubjectsLabel') }
             label={ t('becomeTutor.categories.mainSubjectsLabel') }
+            onChange={ onChangeCategory }
             options={ categoriesMock }
-            setData={ setCategory }
-            value={ category }
+            value={ subjects.category }
           />
           <Autocoplete
-            disabled={ !category }
+            disabled={ !subjects.category }
             id={ t('becomeTutor.categories.subjectLabel') }
             label={ t('becomeTutor.categories.subjectLabel') }
+            onChange={ onChangeSubject }
             options={ languagesMock }
-            setData={ setSubject }
-            value={ subject }
+            value={ subjects.subject }
           />
           <Button
             data-testid='add-subject' fullWidth onClick={ addSubject }

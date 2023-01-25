@@ -1,36 +1,29 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Chip, IconButton, Box, Typography } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import { styles } from '~/components/app-chips/AppChips-styles'
 
 const AppChip = ({ items, stepLabel, handleData, defaultQuantity }) => {
-  const [amountOfChips, setAmountOfChips] = useState(null)
-  const [arraySize, setArraySize] = useState(defaultQuantity)
-
-  useEffect(() => {
-    if (items.length <= defaultQuantity) {
-      setAmountOfChips(null)
-      setArraySize(defaultQuantity)
-    } else if (arraySize === defaultQuantity) {
-      setAmountOfChips(items.length - defaultQuantity)
-    } else {
-      setArraySize(items.length)
-    }
-  }, [items, defaultQuantity, arraySize])
+  const [isOpen, setIsOpen] = useState(false)
+  const lengthOfArray = isOpen ? items.length : defaultQuantity
+  const itemsSlice = items.slice(0, lengthOfArray)
+  const amountOfChips = items.length - defaultQuantity > 0 ? items.length - defaultQuantity : null
 
   const handleDelete = (name) => {
     const newItems = items.filter((item) => item.name !== name)
+    if (newItems.length <= defaultQuantity) {
+      setIsOpen(false)
+    }
     handleData(stepLabel, newItems)
   }
 
   const showMore = () => {
-    setAmountOfChips(null)
-    setArraySize(items.length)
+    setIsOpen(true)
   }
 
   const listOfItems =
     items.length > 0 &&
-    items.slice(0, arraySize).map((item) => (
+    itemsSlice.map((item) => (
       <Chip
         data-testid='chip'
         deleteIcon={
@@ -53,7 +46,7 @@ const AppChip = ({ items, stepLabel, handleData, defaultQuantity }) => {
   return (
     <Box sx={ styles.feature }>
       { listOfItems }
-      { amountOfChips && (
+      { !isOpen && amountOfChips && (
         <Chip
           data-testid='amount-of-chips' label={ `+${amountOfChips}` } onClick={ showMore }
           sx={ styles.chip }
