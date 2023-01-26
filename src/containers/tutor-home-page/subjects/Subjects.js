@@ -3,10 +3,10 @@ import { styles } from '~/containers/tutor-home-page/subjects/Subjects.styles'
 import img from '~/assets/img/tutor-home-page/become-tutor/study-category.svg'
 import { useTranslation } from 'react-i18next'
 import { categoriesMock, languagesMock } from './constants'
-import AppChip from '~/components/app-chips/AppChips'
 import Autocoplete from '~/components/autocoplete/Autocomplete'
 import { useState } from 'react'
 import { useStepContext } from '~/context/step-context'
+import AppChipList from '~/components/app-chips-list/AppChipList'
 
 const Subjects = ({ stepLabel, btnsBox }) => {
   const { t } = useTranslation()
@@ -45,6 +45,13 @@ const Subjects = ({ stepLabel, btnsBox }) => {
     handleStepData(stepLabel, [...subjectData, newSubject])
   }
 
+  const handleChipDelete = (item) => {
+    const newItems = subjectData.filter((subject) => subject.name !== item)
+    handleStepData(stepLabel, newItems)
+  }
+
+  const listOfItems = subjectData.map((item) => item.name)
+
   return (
     <Box sx={ styles.container }>
       <Box sx={ styles.imgContainer }>
@@ -81,10 +88,7 @@ const Subjects = ({ stepLabel, btnsBox }) => {
           <FormHelperText data-testid='error-subject' error={ !!subjectError } sx={ { textAlign: 'center' } }>
             { subjectError || ' ' }
           </FormHelperText>
-          <AppChip
-            defaultQuantity={ 7 } handleData={ handleStepData } items={ subjectData }
-            stepLabel={ stepLabel }
-          />
+          <AppChipList defaultQuantity={ 7 } handleChipDelete={ handleChipDelete } items={ listOfItems } />
         </Box>
         { btnsBox }
       </Box>

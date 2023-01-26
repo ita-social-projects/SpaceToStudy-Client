@@ -19,37 +19,76 @@ describe('AddDocuments test with some data', () => {
         </StepProvider>
       </ModalProvider>
     )
-  })
-
-  it('should add new subject', async () => {
     const addSubject = screen.getByTestId('add-subject')
+    const firstField = screen.getAllByTestId('autocomplete-search')[0]
+    const firstInput = within(firstField).getByRole('combobox')
 
     expect(addSubject).toBeInTheDocument()
 
-    fireEvent.click(addSubject)
+    fireEvent.click(firstInput)
+    fireEvent.change(firstInput, { target: { value: 'Languages' } })
+    fireEvent.keyDown(firstField, { key: 'ArrowDown' })
+    fireEvent.keyDown(firstField, { key: 'Enter' })
 
-    setTimeout(() => {
-      const chips = screen.getAllByTestId('chip')
-      expect(chips.length).toBe(6)
-    }, 0)
+    const secondField = screen.getAllByTestId('autocomplete-search')[1]
+    const secondInput = within(secondField).getByRole('combobox')
+
+    fireEvent.click(secondInput)
+    fireEvent.change(secondInput, { target: { value: 'Danish' } })
+    fireEvent.keyDown(secondField, { key: 'ArrowDown' })
+    fireEvent.keyDown(secondField, { key: 'Enter' })
+    fireEvent.click(addSubject)
   })
 
-  it('should show an error message "All fields must be filled"', async () => {
+  it('should add a new subject', async () => {
     const addSubject = screen.getByTestId('add-subject')
+    const firstField = screen.getAllByTestId('autocomplete-search')[0]
+    const firstInput = within(firstField).getByRole('combobox')
 
     expect(addSubject).toBeInTheDocument()
 
-    fireEvent.click(addSubject)
+    fireEvent.click(firstInput)
+    fireEvent.change(firstInput, { target: { value: 'Languages' } })
+    fireEvent.keyDown(firstField, { key: 'ArrowDown' })
+    fireEvent.keyDown(firstField, { key: 'Enter' })
 
-    expect(screen.getByTestId('error-subject')).toHaveTextContent('becomeTutor.categories.emptyFields')
+    const secondField = screen.getAllByTestId('autocomplete-search')[1]
+    const secondInput = within(secondField).getByRole('combobox')
+
+    fireEvent.click(secondInput)
+    fireEvent.change(secondInput, { target: { value: 'English' } })
+    fireEvent.keyDown(secondField, { key: 'ArrowDown' })
+    fireEvent.keyDown(secondField, { key: 'Enter' })
+    fireEvent.click(addSubject)
+    const chips = await screen.findAllByTestId('chip')
+    expect(chips.length).toBe(2)
+  })
+
+  it('should delete a subject', () => {
+    const closeBtn = screen.queryAllByTestId('close-btn')
+
+    const firstChip = screen.queryAllByTestId('chip')[0]
+
+    expect(firstChip).toBeDefined()
+
+    fireEvent.click(closeBtn[0])
+
+    const newChips = screen.queryAllByTestId('chip')
+    expect(newChips.length).toBe(0)
+  })
+
+  it('should show an error message "All fields must be filled"', () => {
+    const addSubject = screen.getByTestId('add-subject')
+
+    expect(addSubject).toBeInTheDocument()
 
     const firstField = screen.getAllByTestId('autocomplete-search')[0]
     const input = within(firstField).getByRole('combobox')
-
     fireEvent.click(input)
-    fireEvent.change(input, { target: { value: 'Langu' } })
+    fireEvent.change(input, { target: { value: 'Mathemat' } })
     fireEvent.keyDown(firstField, { key: 'ArrowDown' })
     fireEvent.keyDown(firstField, { key: 'Enter' })
+
     fireEvent.click(addSubject)
 
     expect(screen.getByTestId('error-subject')).toHaveTextContent('becomeTutor.categories.emptyFields')
@@ -72,7 +111,7 @@ describe('AddDocuments test with some data', () => {
     const secondInput = within(secondField).getByRole('combobox')
 
     fireEvent.click(secondInput)
-    fireEvent.change(secondInput, { target: { value: 'Danish' } })
+    fireEvent.change(secondInput, { target: { value: 'Ukranian' } })
     fireEvent.keyDown(secondField, { key: 'ArrowDown' })
     fireEvent.keyDown(secondField, { key: 'Enter' })
     fireEvent.click(addSubject)
