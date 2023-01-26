@@ -7,12 +7,15 @@ const style = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
+    gap: { lg: '122px', md: '40px' },
     maxHeight: { xs: 'calc(100vh - 56px)', sm: 'calc(100vh - 64px)' }
   },
   imgContainer: {
-    maxWidth: { md: '50%', lg: '593px' },
+    width: '450px',
+    maxWidth: { md: '50%', lg: '450px' },
     maxHeight: 'inherit',
-    display: { xs: 'none', md: 'flex' }
+    display: { xs: 'none', md: 'flex' },
+    pl: { lg: '96px', md: '30px' }
   },
   img: {
     objectFit: 'contain',

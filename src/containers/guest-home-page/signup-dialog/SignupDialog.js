@@ -16,8 +16,8 @@ import SignupForm from '~/containers/guest-home-page/signup-form/SignupForm'
 import ImgTitleDescription from '~/components/img-title-description/ImgTitleDescription'
 import { signupUser } from '~/redux/reducer'
 
-import student from '~/assets/img/signup-dialog/student.png'
-import tutor from '~/assets/img/signup-dialog/tutor.png'
+import student from '~/assets/img/signup-dialog/student.svg'
+import tutor from '~/assets/img/signup-dialog/tutor.svg'
 import info from '~/assets/img/guest-home-page/info.svg'
 
 import { styles } from '~/containers/guest-home-page/signup-dialog/SignupDialog.styles'
