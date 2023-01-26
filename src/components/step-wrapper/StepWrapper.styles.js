@@ -2,7 +2,7 @@ import { fadeAnimation } from '~/styles/app-theme/custom-animations'
 
 export const styles = {
   root: {
-    my: 6
+    p: { sm: '50px 90px' }
   },
   defaultTab: {
     display: 'flex',
