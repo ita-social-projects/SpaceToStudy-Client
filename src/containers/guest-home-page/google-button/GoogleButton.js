@@ -36,8 +36,6 @@ const GoogleButton = ({ role, route, buttonWidth, type }) => {
     [dispatch, role, closeModal, setAlert, ref]
   )
 
-  console.log(process.env)
-
   useEffect(() => {
     const googleId = window.google.accounts.id
 
