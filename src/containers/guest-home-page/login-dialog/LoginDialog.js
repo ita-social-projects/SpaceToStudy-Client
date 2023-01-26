@@ -65,7 +65,7 @@ const LoginDialog = () => {
             handleChange={ handleChange }
             handleSubmit={ handleSubmit }
           />
-          <GoogleLogin type={ login } />
+          <GoogleLogin buttonWidth={ styles.form.maxWidth } type={ login } />
         </Box>
       </Box>
     </Box>

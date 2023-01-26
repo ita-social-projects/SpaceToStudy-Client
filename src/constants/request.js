@@ -4,6 +4,7 @@ export const URLs = {
   },
   auth: {
     login: '/auth/login',
+    googleAuth: '/auth/google-auth',
     signup: '/auth/signup',
     logout: '/auth/logout',
     refresh: '/auth/refresh',

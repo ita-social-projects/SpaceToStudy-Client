@@ -11,6 +11,9 @@ export const AuthService = {
   login: (userData) => {
     return axiosClient.post(URLs.auth.login, userData)
   },
+  googleAuth: (userData) => {
+    return axiosClient.post(URLs.auth.googleAuth, userData)
+  },
   signup: (userData) => {
     return axiosClient.post(URLs.auth.signup, userData)
   },

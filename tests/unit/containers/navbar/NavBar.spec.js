@@ -9,6 +9,12 @@ jest.mock('~/hooks/use-confirm', () => {
     setNeedConfirmation: () => true
   })
 })
+jest.mock('~/containers/guest-home-page/google-button/GoogleButton', () => ({
+  __esModule: true,
+  default: function () {
+    return <button>Google</button>
+  }
+}))
 
 describe('Guest NavBar test', () => {
   const preloadedState = { appMain: { loading: false, userRole: '' } }

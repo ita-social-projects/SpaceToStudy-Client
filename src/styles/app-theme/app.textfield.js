@@ -25,10 +25,16 @@ export const textField = {
           '& fieldset': {
             borderColor: palette.primary[900]
           }
+        },
+        '& .MuiOutlinedInput-input': {
+          padding: '12.5px 14px'
         }
       },
       '& .MuiInput-root:before ': {
         borderColor: palette.primary[500]
+      },
+      '& .MuiFormLabel-root': {
+        lineHeight: 'normal'
       }
     }
   }

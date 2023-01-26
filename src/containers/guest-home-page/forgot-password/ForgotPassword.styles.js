@@ -17,7 +17,7 @@ export const styles = {
   },
   sentPassword: {
     mb: 1,
-    p: '16px 0',
+    p: '14px 0',
     width: '100%'
   },
   backButton: {

@@ -8,13 +8,25 @@ import GoogleLogin from '~/containers/guest-home-page/google-login/GoogleLogin'
 import { renderWithProviders } from '~tests/test-utils'
 
 const mockCloseModal = jest.fn()
+const mockGoogle = { accounts: { id: { initialize: jest.fn(), renderButton: jest.fn() } } }
+
+const originalGoogle = global.google
+const buttonWidth = { xs: '300px', md: '400px' }
 
 describe('GoogleLogin component test for login', () => {
+  beforeAll(() => {
+    global.google = mockGoogle
+  })
+  afterAll(() => {
+    global.google = originalGoogle
+  })
   beforeEach(() => {
     renderWithProviders(
-      <ModalProvider value={ { closeModal: mockCloseModal } }>
-        <GoogleLogin type={ login } />
-      </ModalProvider>
+      <SnackBarProvider>
+        <ModalProvider value={ { closeModal: mockCloseModal } }>
+          <GoogleLogin buttonWidth={ buttonWidth } type={ login } />
+        </ModalProvider>
+      </SnackBarProvider>
     )
   })
 
@@ -22,17 +34,6 @@ describe('GoogleLogin component test for login', () => {
     const text = screen.getByText('login.continue')
 
     expect(text).toBeInTheDocument()
-  })
-
-  it('should have google logo', () => {
-    const logo = screen.getByAltText('google icon')
-
-    expect(logo).toBeInTheDocument()
-  })
-  it('should have button with "Login with Google" text', () => {
-    const button = screen.getByText('login.googleButton')
-
-    expect(button).toBeInTheDocument()
   })
 
   it('should have "have account" text', () => {
@@ -56,12 +57,19 @@ describe('GoogleLogin component test for login', () => {
 })
 
 describe('GoogleLogin component test for signup', () => {
+  beforeAll(() => {
+    global.google = mockGoogle
+  })
+  afterAll(() => {
+    global.google = originalGoogle
+  })
+
   beforeEach(() => {
     renderWithProviders(
       <SnackBarProvider>
         <ConfirmationDialogProvider>
           <ModalProvider>
-            <GoogleLogin type={ signup } />
+            <GoogleLogin buttonWidth={ buttonWidth } type={ signup } />
           </ModalProvider>
         </ConfirmationDialogProvider>
       </SnackBarProvider>

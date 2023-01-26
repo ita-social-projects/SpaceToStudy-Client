@@ -90,7 +90,7 @@ const SignupDialog = ({ type }) => {
             handleChange={ handleChange }
             handleSubmit={ handleSubmit }
           />
-          <GoogleLogin type={ signup } />
+          <GoogleLogin buttonWidth={ styles.form.maxWidth } role={ type } type={ signup } />
         </Box>
       </Box>
     </Box>

@@ -11,6 +11,13 @@ import { URLs } from '~/constants/request'
 const preloadedState = { appMain: { loading: false, userRole: '', error: '' } }
 const mockAxiosClient = new MockAdapter(axiosClient)
 
+jest.mock('~/containers/guest-home-page/google-button/GoogleButton', () => ({
+  __esModule: true,
+  default: function () {
+    return <button>Google</button>
+  }
+}))
+
 describe('snackbar context', () => {
   beforeEach(async () => {
     renderWithProviders(

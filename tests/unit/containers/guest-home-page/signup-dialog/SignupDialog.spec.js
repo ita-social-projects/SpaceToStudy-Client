@@ -12,6 +12,13 @@ const mockState = {
   appMain: { loading: true }
 }
 
+jest.mock('~/containers/guest-home-page/google-button/GoogleButton', () => ({
+  __esModule: true,
+  default: function () {
+    return <button>Google</button>
+  }
+}))
+
 jest.mock('react-redux', () => ({
   useDispatch: () => mockDispatch.mockReturnValue({ unwrap: () => '' }),
   useSelector: () => mockSelector.mockImplementation(mockState)

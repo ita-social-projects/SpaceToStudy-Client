@@ -19,7 +19,7 @@ export const styles = {
   },
   signupButton: {
     width: '100%',
-    padding: '18px 0px'
+    padding: '14px 0px'
   },
   underlineText: {
     color: 'primary.900',
