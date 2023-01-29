@@ -18,10 +18,6 @@ export const styles = {
     m: { sm: 0, xs: '0 auto 20px' },
     maxWidth: { md: '100%', xs: '70%' }
   },
-  // imgDesktop: {
-  //   maxWidth: { lg: '418px', md: '45%' },
-  //   width: '100%'
-  // },
   form: {
     maxWidth: '432px',
     display: 'flex',

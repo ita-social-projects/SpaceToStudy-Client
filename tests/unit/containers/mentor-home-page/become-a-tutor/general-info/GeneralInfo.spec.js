@@ -1,4 +1,4 @@
-import { screen, fireEvent, act, waitFor } from '@testing-library/react'
+import { screen, fireEvent } from '@testing-library/react'
 import { renderHook } from '@testing-library/react-hooks'
 import { initialValues } from '~/containers/tutor-home-page/constants'
 import GeneralInfo from '~/containers/tutor-home-page/general-info/GeneralInfo'
@@ -41,43 +41,31 @@ describe('GeneralInfo test', () => {
     )
   })
 
-  it('should change firstName input', async () => {
-    const firstNameInput = await screen.findByLabelText(/common.labels.firstName/i)
+  it('should change firstName input', () => {
+    const firstNameInput = screen.getByLabelText(/common.labels.firstName/i)
 
-    act(() => {
-      fireEvent.change(firstNameInput, { target: { value: 'testName' } })
-    })
+    fireEvent.change(firstNameInput, { target: { value: 'testName' } })
 
     expect(firstNameInput.value).toBe('testName')
   })
 
   it('should choose option in countries autocomplete', async () => {
-    const countriesAutoComplete = await screen.findByLabelText(/common.labels.country/i)
-    const cityAutoComplete = await screen.findByLabelText(/common.labels.city/i)
+    const countriesAutoComplete = screen.getByLabelText(/common.labels.country/i)
+    const cityAutoComplete = screen.getByLabelText(/common.labels.city/i)
 
-    act(() => {
-      fireEvent.mouseDown(countriesAutoComplete)
-    })
+    fireEvent.mouseDown(countriesAutoComplete)
 
-    const countryOption = await screen.findByText('Belgium')
+    const countryOption = screen.getByText('Belgium')
 
-    act(() => {
-      fireEvent.click(countryOption)
-    })
+    fireEvent.click(countryOption)
 
-    act(() => {
-      fireEvent.mouseDown(cityAutoComplete)
-    })
+    fireEvent.mouseDown(cityAutoComplete)
 
     const cityOption = await screen.findByText('Antwerp')
 
-    act(() => {
-      fireEvent.click(cityOption)
-    })
+    fireEvent.click(cityOption)
 
-    await waitFor(() => {
-      expect(countriesAutoComplete).toHaveAttribute('value', 'Belgium')
-      expect(cityAutoComplete).toHaveAttribute('value', 'Antwerp')
-    })
+    expect(countriesAutoComplete).toHaveAttribute('value', 'Belgium')
+    expect(cityAutoComplete).toHaveAttribute('value', 'Antwerp')
   })
 })
