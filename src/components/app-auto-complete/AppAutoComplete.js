@@ -12,22 +12,18 @@ const defaultFilterOptions = (options, state) => {
 
 const AppAutoComplete = ({
   disableOption = false,
-  fieldName,
   fieldValue,
   filterOptions = defaultFilterOptions,
   label,
+  onChangeHandler,
   propOptions,
-  setFieldValue,
   styles,
   textFieldType = 'text'
 }) => {
   const [open, setOpen] = useState(false)
   const [active, setActive] = useState(false)
   const [options, setOptions] = useState([])
-
   const loading = open && options.length === 0
-
-  const onChange = (_event, value) => setFieldValue(`${fieldName}`, value || null)
 
   useEffect(() => {
     setActive(true)
@@ -59,7 +55,7 @@ const AppAutoComplete = ({
       getOptionLabel={ (option) => option }
       isOptionEqualToValue={ (option, value) => option === value }
       loading={ loading }
-      onChange={ onChange }
+      onChange={ onChangeHandler }
       onClose={ () => setOpen(false) }
       onOpen={ () => setOpen(true) }
       open={ open }
@@ -80,7 +76,6 @@ const AppAutoComplete = ({
           label={ label }
           sx={ styles }
           type={ textFieldType }
-          value={ fieldValue }
         />
       ) }
       value={ fieldValue }

@@ -12,20 +12,39 @@ import AppTextField from '~/components/app-text-field/AppTextField'
 import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import useAxios from '~/hooks/use-axios'
+import useForm from '~/hooks/use-form'
 
 import img from '~/assets/img/tutor-home-page/become-tutor/general-info.svg'
+import { useStepContext } from '~/context/step-context'
+import { validations } from '~/containers/tutor-home-page/constants'
 import { styles } from '~/containers/tutor-home-page/general-info/general-info.styles'
 
-const GeneralInfo = ({ data, handleChange, handleBlur, errors, btnsBox, stepLabel }) => {
+const GeneralInfo = ({ btnsBox, stepLabel }) => {
   const { t } = useTranslation()
   const { isDesktop, isMobile } = useBreakpoints()
   const [counterColor, setCounterColor] = useState('#263238')
   const [fetched, setFetched] = useState(false)
   const [cities, setCities] = useState([])
+  const { stepData, handleStepData } = useStepContext()
+  const generalInfo = stepData[stepLabel]
+
+  const { handleChange, handleBlur, setData, data, errors } = useForm({
+    initialValues: generalInfo.data,
+    errorValues: generalInfo.errors,
+    validations
+  })
 
   const filterOptions = (options, state) => {
     const defaultFilterOptions = createFilterOptions()
     return defaultFilterOptions(options, state).slice(0, 300)
+  }
+
+  const onChangeCountry = (_, value) => {
+    setData((prev) => prev.country !== value && { ...data, country: value, city: null })
+  }
+
+  const onChangeCity = (_, value) => {
+    setData({ ...data, city: value })
   }
 
   const getCountries = useCallback(() => LocationService.getCountries(), [])
@@ -33,12 +52,6 @@ const GeneralInfo = ({ data, handleChange, handleBlur, errors, btnsBox, stepLabe
 
   const { response: countries } = useAxios({ service: getCountries })
   const { fetchData: fetchCities } = useAxios({ service: getCities, fetchOnMount: false })
-
-  useEffect(() => {
-    const fieldsWithValidation = ['firstName', 'lastName', 'experience']
-    const stepHasError = fieldsWithValidation.some((field) => errors[field])
-    setStepErrors((prevState) => ({ ...prevState, [stepLabel]: stepHasError }))
-  }, [errors, setStepErrors, stepLabel])
 
   useEffect(() => {
     if (data.country) {
@@ -55,12 +68,9 @@ const GeneralInfo = ({ data, handleChange, handleBlur, errors, btnsBox, stepLabe
   }, [data.country, fetchCities])
 
   useEffect(() => {
-    if (!data.country && data.city) {
-      setFieldValue('city', null)
-    }
-  }, [data.country, data.city, setFieldValue])
-
-  console.log(data)
+    handleStepData(stepLabel, { ...data }, { ...errors })
+    data.experience.length !== 200 ? setCounterColor('#263238') : setCounterColor('red')
+  }, [data, errors, stepLabel, handleStepData])
 
   return (
     <Box sx={ styles.container }>
@@ -106,37 +116,32 @@ const GeneralInfo = ({ data, handleChange, handleBlur, errors, btnsBox, stepLabe
             />
 
             <AppAutoComplete
-              fieldName='country'
               fieldValue={ data.country }
               label={ t('common.labels.country') }
+              onChangeHandler={ onChangeCountry }
               propOptions={ countries }
-              setFieldValue={ setFieldValue }
               styles={ { mb: '30px' } }
             />
 
             <AppAutoComplete
               disableOption={ !data.country }
-              fieldName='city'
               fieldValue={ data.city }
               filterOptions={ filterOptions }
               label={ t('common.labels.city') }
+              onChangeHandler={ onChangeCity }
               propOptions={ fetched && cities }
-              setFetched={ setFetched }
-              setFieldValue={ setFieldValue }
               styles={ { mb: '30px' } }
             />
           </Box>
 
           <AppTextField
-            errorMsg={ t(errors.experience) }
             fullWidth
+            inputProps={ { maxLength: 200 } }
             label={ t('becomeTutor.generalInfo.textFieldLabel') }
             maxRows='4'
             minRows='4'
             multiline
-            onBlur={ () => handleErrors('experience', undefined) }
             onChange={ handleChange('experience') }
-            onFocus={ handleBlur('experience') }
             type='text'
             value={ data.experience }
           />

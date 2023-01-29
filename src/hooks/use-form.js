@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import { isEqual } from '~/utils/isEqual'
 
-export const useForm = ({ initialValues, validations, onSubmit }) => {
+export const useForm = ({ initialValues, errorValues = {}, validations, onSubmit }) => {
   const [data, setData] = useState(initialValues)
   const [isDirty, setDirty] = useState(false)
-  const [errors, setErrors] = useState({})
+  const [errors, setErrors] = useState(errorValues)
   const [isTouched, setTouched] = useState({})
 
   const handleChange = (key) => (event) => {
@@ -71,13 +71,6 @@ export const useForm = ({ initialValues, validations, onSubmit }) => {
     }
   }
 
-  const setFieldValue = (key, value) => {
-    setData({
-      ...data,
-      [key]: value
-    })
-  }
-
   return {
     data,
     isDirty,
@@ -87,7 +80,7 @@ export const useForm = ({ initialValues, validations, onSubmit }) => {
     handleBlur,
     handleErrors,
     handleSubmit,
-    setFieldValue
+    setData
   }
 }
 

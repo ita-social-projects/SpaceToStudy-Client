@@ -3,11 +3,10 @@ import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
 import { renderWithProviders } from '~tests/test-utils'
 
 const props = {
-  fieldName: 'country',
   fieldValue: null,
   label: 'common.labels.country',
   propOptions: ['Finland', 'France', 'Georgia', 'Germany'],
-  setFieldValue: jest.fn(),
+  onChangeHandler: jest.fn(),
   styles: {}
 }
 
@@ -24,6 +23,6 @@ describe('AppAutoComplete test', () => {
     const option = screen.getByText('France')
     fireEvent.click(option)
 
-    expect(props.setFieldValue).toHaveBeenCalledWith('country', 'France')
+    expect(props.onChangeHandler).toHaveBeenCalled()
   })
 })
