@@ -31,7 +31,7 @@ export const lastName = (value) => {
 
 export const confirmPassword = (password, data) => {
   let helperText
-  if (password !== data.confirmPassword) {
+  if (password !== data.password) {
     helperText = 'common.errorMessages.passwordsDontMatch'
   }
   helperText = emptyField(password, helperText)

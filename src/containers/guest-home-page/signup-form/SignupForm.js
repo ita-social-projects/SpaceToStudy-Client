@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import HashLink from '~/components/hash-link/HashLink'
 import { useSelector } from 'react-redux'
@@ -18,6 +18,7 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors, clos
   const { t } = useTranslation()
   const { privacyPolicy, termOfUse } = guestRoutes
   const [buttonDisabled, setButtonDisabled] = useState(true)
+  const [checkDisabled, setCheckDisabled] = useState(true)
   const { inputVisibility: passwordVisibility, showInputText: showPassword } = useInputVisibility(errors.password)
   const { inputVisibility: confirmPasswordVisibility, showInputText: showConfirmPassword } = useInputVisibility(
     errors.confirmPassword
@@ -27,6 +28,14 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors, clos
   const handleOnAgreementChange = () => {
     setButtonDisabled(!buttonDisabled)
   }
+
+  const handleIsFormValid = () => {
+    return Object.values(errors).every((elem) => elem === undefined) && Object.values(data).every((elem) => elem !== '')
+  }
+
+  useEffect(() => {
+    handleIsFormValid() ? setCheckDisabled(false) : setCheckDisabled(true)
+  }, [errors, handleIsFormValid])
 
   const policyAgreement = (
     <Box sx={ styles.box }>
@@ -131,6 +140,7 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors, clos
       <Box sx={ styles.checkboxContainer }>
         <FormControlLabel
           control={ <Checkbox /> }
+          disabled={ checkDisabled }
           label={ policyAgreement }
           labelPlacement='end'
           onChange={ handleOnAgreementChange }
