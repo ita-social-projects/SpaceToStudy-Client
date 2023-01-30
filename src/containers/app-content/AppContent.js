@@ -5,19 +5,15 @@ import AppMain from '~/containers/layout/app-main/AppMain'
 import ScrollToTopButton from '~/components/scroll-to-top-button/ScrollToTopButton'
 import Footer from '~/containers/layout/footer/Footer'
 import ScrollToTop from '~/components/scroll-to-top/ScrollToTop'
+import AppBreadCrumbs from '~/containers/layout/app-breadcrumbs/AppBreadCrumbs'
 
 const styles = {
   content: {
     display: 'flex',
     flexDirection: 'column',
     height: '100vh',
-    '.MuiToolbar-root + div': {
-      flexGrow: 1,
-      mt: {
-        md: '16px',
-        sm: '8px',
-        xs: '0px'
-      }
+    '& div:nth-last-child(2)': {
+      flexGrow: 1
     }
   }
 }
@@ -26,6 +22,7 @@ const AppContent = () => {
   return (
     <Box data-testid='AppContent' sx={ styles.content }>
       <AppHeader />
+      <AppBreadCrumbs />
       <ScrollToTop />
       <AppMain />
       <ScrollToTopButton />

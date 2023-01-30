@@ -17,6 +17,7 @@ import errors from './errors.json'
 import table from './table.json'
 import admin from './admin.json'
 import studentTable from './student-table.json'
+import pageNames from './page-names.json'
 
 const en = {
   translations: {
@@ -38,7 +39,8 @@ const en = {
     errors,
     table,
     studentTable,
-    admin
+    admin,
+    pageNames
   }
 }
 

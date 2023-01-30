@@ -10,7 +10,6 @@ export const styles = {
   firstItemWrapper: {
     textAlign: 'center',
     backgroundColor: 'basic.grey',
-    mt: '30px',
     mb: '70px',
     p: '30px 0 50px',
     borderRadius: '20px'
