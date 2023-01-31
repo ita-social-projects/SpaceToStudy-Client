@@ -5,7 +5,7 @@ import { initialValues } from '~/containers/tutor-home-page/constants'
 const StepContext = createContext()
 
 const StepProvider = ({ children }) => {
-  const [generalData, setGeneralData] = useState({ data: { ...initialValues } })
+  const [generalData, setGeneralData] = useState({ data: initialValues })
   const [subject, setSubject] = useState([])
   const [languages, setLanguages] = useState({})
   const [photo, setPhoto] = useState([])

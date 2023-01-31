@@ -1,19 +1,15 @@
-import axios from 'axios'
-
-const API_URL = 'https://countriesnow.space/api/v0.1'
+import { URLs } from '~/constants/request'
+import { axiosClient } from '~/plugins/axiosClient'
 
 export const LocationService = {
   getCountries: async () => {
-    const res = await axios.get(`${API_URL}/countries/states`)
-    const countries = res.data.data.map((country) => country.name)
+    const res = await axiosClient.get(URLs.location.getCountries)
 
-    return [...new Set(countries)]
+    return res.data
   },
   getCities: async (country) => {
-    const res = await axios.post(`${API_URL}/countries/cities`, {
-      country
-    })
+    const res = await axiosClient.get(`${URLs.location.getCities}/${country}`)
 
-    return res.data.data
+    return res.data
   }
 }

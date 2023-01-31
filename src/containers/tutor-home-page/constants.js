@@ -5,7 +5,6 @@ export const initialValues = {
   lastName: '',
   country: null,
   city: null,
-  confirmAge: false,
   experience: ''
 }
 

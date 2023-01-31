@@ -1,4 +1,4 @@
-import { useState, useEffect, Fragment } from 'react'
+import { Fragment } from 'react'
 
 import TextField from '@mui/material/TextField'
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete'
@@ -11,55 +11,24 @@ const defaultFilterOptions = (options, state) => {
 }
 
 const AppAutoComplete = ({
-  disableOption = false,
+  disabled = false,
   fieldValue,
   filterOptions = defaultFilterOptions,
-  label,
-  onChangeHandler,
-  propOptions,
-  styles,
-  textFieldType = 'text'
+  loading = false,
+  onChange,
+  options,
+  ...props
 }) => {
-  const [open, setOpen] = useState(false)
-  const [active, setActive] = useState(false)
-  const [options, setOptions] = useState([])
-  const loading = open && options.length === 0
-
-  useEffect(() => {
-    setActive(true)
-
-    if (!loading) {
-      return
-    }
-
-    if (active && propOptions) {
-      setOptions([...propOptions])
-    }
-
-    return () => {
-      setActive(false)
-    }
-  }, [loading, propOptions, active])
-
-  useEffect(() => {
-    if (!open) {
-      setOptions([])
-    }
-  }, [open])
-
   return (
     <Autocomplete
       ListboxProps={ { style: { maxHeight: 150 } } }
-      disabled={ disableOption }
+      disabled={ disabled }
       filterOptions={ filterOptions }
       getOptionLabel={ (option) => option }
       isOptionEqualToValue={ (option, value) => option === value }
       loading={ loading }
-      onChange={ onChangeHandler }
-      onClose={ () => setOpen(false) }
-      onOpen={ () => setOpen(true) }
-      open={ open }
-      options={ options }
+      onChange={ onChange }
+      options={ options || [] }
       renderInput={ (params) => (
         <TextField
           { ...params }
@@ -67,15 +36,12 @@ const AppAutoComplete = ({
             ...params.InputProps,
             endAdornment: (
               <Fragment>
-                { loading ? <Loader size={ 20 } /> : null }
+                { loading ? <Loader size={ 20 } sx={ { color: 'primary.600' } } /> : null }
                 { params.InputProps.endAdornment }
               </Fragment>
             )
           } }
-          fullWidth
-          label={ label }
-          sx={ styles }
-          type={ textFieldType }
+          { ...props }
         />
       ) }
       value={ fieldValue }

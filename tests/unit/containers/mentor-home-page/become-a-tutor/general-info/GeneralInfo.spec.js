@@ -1,12 +1,17 @@
-import { screen, fireEvent } from '@testing-library/react'
+import { screen, fireEvent, waitFor } from '@testing-library/react'
 import { renderHook } from '@testing-library/react-hooks'
+import MockAdapter from 'axios-mock-adapter'
 import { initialValues } from '~/containers/tutor-home-page/constants'
 import GeneralInfo from '~/containers/tutor-home-page/general-info/GeneralInfo'
+import { axiosClient } from '~/plugins/axiosClient'
+import { renderWithProviders } from '~tests/test-utils'
 import { ModalProvider } from '~/context/modal-context'
 import { StepProvider } from '~/context/step-context'
 import useAxios from '~/hooks/use-axios'
 import useForm from '~/hooks/use-form'
-import { renderWithProviders } from '~tests/test-utils'
+import { URLs } from '~/constants/request'
+
+const mockAxiosClient = new MockAdapter(axiosClient)
 
 const validations = {
   firstName: jest.fn(() => undefined),
@@ -14,12 +19,12 @@ const validations = {
   experience: jest.fn(() => undefined)
 }
 
-const fakeData = {
-  response: ['Belgium', 'Canada'],
-  fetchData: () => jest.fn().mockReturnValue(['Antwerp', 'Brussels'])
-}
+const countriesDataMock = ['Ukraine', 'Belgium']
+const citiesDataMock = ['Antwerp', 'Brussels']
+const country = 'Belgium'
 
-jest.mock('~/hooks/use-axios')
+const getCountriesMock = jest.fn(() => ['Ukraine', 'Belgium'])
+const getCitiesMock = jest.fn(() => ['Antwerp', 'Brussels'])
 
 const btnsBox = (
   <div>
@@ -29,16 +34,23 @@ const btnsBox = (
 )
 
 describe('GeneralInfo test', () => {
-  beforeEach(() => {
+  beforeEach(async () => {
+    mockAxiosClient.onGet(URLs.location.getCountries).reply(200, countriesDataMock)
+    mockAxiosClient.onGet(`${URLs.location.getCities}/${country}`).reply(200, citiesDataMock)
+
     renderHook(() => useForm({ initialValues, errorValues: {}, validations }))
-    useAxios.mockImplementation(() => fakeData)
-    renderWithProviders(
-      <ModalProvider>
-        <StepProvider>
-          <GeneralInfo btnsBox={ btnsBox } stepLabel={ 'generalInfo' } />
-        </StepProvider>
-      </ModalProvider>
-    )
+    renderHook(() => useAxios({ service: getCountriesMock }))
+    renderHook(() => useAxios({ service: getCitiesMock, fetchOnMount: false }))
+
+    await waitFor(() => {
+      renderWithProviders(
+        <ModalProvider>
+          <StepProvider>
+            <GeneralInfo btnsBox={ btnsBox } stepLabel={ 'generalInfo' } />
+          </StepProvider>
+        </ModalProvider>
+      )
+    })
   })
 
   it('should change firstName input', () => {

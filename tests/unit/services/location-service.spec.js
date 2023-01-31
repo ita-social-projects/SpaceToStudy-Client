@@ -1,42 +1,28 @@
-import axios from 'axios'
+import MockAdapter from 'axios-mock-adapter'
+import { URLs } from '~/constants/request'
+import { axiosClient } from '~/plugins/axiosClient'
 import { LocationService } from '~/services/location-service'
 
-const countriesResponseMock = {
-  data: {
-    error: false,
-    msg: 'returned array of countries',
-    data: [{ name: 'Ukraine' }, { name: 'Belgium' }]
-  }
-}
+const mockAxiosClient = new MockAdapter(axiosClient)
 
-const citiesResponseMock = { data: { data: ['Antwerp', 'Brussels'] } }
-
-const endpoints = {
-  countries: 'https://countriesnow.space/api/v0.1/countries/states',
-  cities: {
-    url: 'https://countriesnow.space/api/v0.1/countries/cities',
-    body: { country: 'Belgium' }
-  }
-}
-
-jest.mock('axios')
+const countriesDataMock = ['Ukraine', 'Belgium']
+const citiesDataMock = ['Antwerp', 'Brussels']
+const country = 'Belgium'
 
 describe('locationService tests', () => {
   it('should return countries', async () => {
-    axios.get.mockResolvedValueOnce(countriesResponseMock)
+    mockAxiosClient.onGet(URLs.location.getCountries).reply(200, { data: countriesDataMock })
 
     const result = await LocationService.getCountries()
 
-    expect(axios.get).toHaveBeenCalledWith(endpoints.countries)
-    expect(result).toEqual(['Ukraine', 'Belgium'])
+    expect(result.data).toEqual(countriesDataMock)
   })
 
   it('should return cities', async () => {
-    axios.post.mockResolvedValueOnce(citiesResponseMock)
+    mockAxiosClient.onGet(`${URLs.location.getCities}/${country}`).reply(200, { data: citiesDataMock })
 
-    const result = await LocationService.getCities('Belgium')
+    const result = await LocationService.getCities(country)
 
-    expect(axios.post).toHaveBeenCalledWith(endpoints.cities.url, endpoints.cities.body)
-    expect(result).toEqual(['Antwerp', 'Brussels'])
+    expect(result.data).toEqual(citiesDataMock)
   })
 })

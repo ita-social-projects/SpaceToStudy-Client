@@ -5,8 +5,8 @@ import { renderWithProviders } from '~tests/test-utils'
 const props = {
   fieldValue: null,
   label: 'common.labels.country',
-  propOptions: ['Finland', 'France', 'Georgia', 'Germany'],
-  onChangeHandler: jest.fn(),
+  options: ['Finland', 'France', 'Georgia', 'Germany'],
+  onChange: jest.fn(),
   styles: {}
 }
 
@@ -15,14 +15,15 @@ describe('AppAutoComplete test', () => {
     renderWithProviders(<AppAutoComplete { ...props } />)
   })
 
-  test('Should render Autocomplete and choose option', async () => {
+  test('Should render Autocomplete and choose option', () => {
     const autocomplete = screen.getByLabelText(/common.labels.country/i)
 
     fireEvent.mouseDown(autocomplete)
 
     const option = screen.getByText('France')
+
     fireEvent.click(option)
 
-    expect(props.onChangeHandler).toHaveBeenCalled()
+    expect(props.onChange).toHaveBeenCalled()
   })
 })
