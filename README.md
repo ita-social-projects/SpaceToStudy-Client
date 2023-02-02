@@ -302,7 +302,7 @@ Only the release should merge into the main branch!!!
 #### License
 
 - **[MIT license](http://opensource.org/licenses/mit-license.php)**
-- Copyright 2020 © <a href="https://softserve.academy/" target="_blank"> SoftServe IT Academy</a>.
+- Copyright 2023 © <a href="https://softserve.academy/" target="_blank"> SoftServe IT Academy</a>.
 
 [MIT](https://choosealicense.com/licenses/mit/)
 
