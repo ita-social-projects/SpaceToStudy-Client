@@ -14,6 +14,27 @@ SpaceToStudy project is a platform where experts in various fields share their k
 
 ---
 
+- [Installation](#installation)
+  - [Required to install](#Required-to-install)
+  - [Clone](#Clone)
+  - [Setup](#Setup)
+  - [How to run local](#How-to-run-local)
+- [Usage](#Usage)
+  - [How to run tests](#How-to-run-tests)
+- [Documentation](#Documentation)
+  - [Rules and guidelines](#Rules-and-guidelines)
+  - [Testing](#Testing)
+  - [Generator](#Generator)
+- [Project deploy](#project-deploy)
+- [Contributing](#contributing)
+  - [git flow](#git-flow)
+  - [issue flow](#git-flow)
+- [FAQ](#faq)
+- [Support](#support)
+- [License](#license)
+
+---
+
 ## Installation
 
 - All the `code` required to get started
