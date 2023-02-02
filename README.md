@@ -228,7 +228,7 @@ Only the release should merge into the main branch!!!
 
 #### Step 3
 
-- 🔃 Create a new pull request using <a href="https://github.com/ita-social-projects/SpaceToStudy-Client/compare/" target="_blank">https://github.com/ita-social-projects/SpaceToStudy-Client/compare/</a>.
+- 🔃 Create a new pull request using <a href="https://github.com/ita-social-projects/SpaceToStudy-Client/compare/" target="_blank">github.com/ita-social-projects/SpaceToStudy-Client</a>.
 
 ---
 
