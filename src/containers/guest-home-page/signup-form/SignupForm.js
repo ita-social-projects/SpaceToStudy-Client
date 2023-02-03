@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useMemo, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import HashLink from '~/components/hash-link/HashLink'
 import { useSelector } from 'react-redux'
@@ -18,7 +18,6 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors, clos
   const { t } = useTranslation()
   const { privacyPolicy, termOfUse } = guestRoutes
   const [buttonDisabled, setButtonDisabled] = useState(true)
-  const [checkDisabled, setCheckDisabled] = useState(true)
   const { inputVisibility: passwordVisibility, showInputText: showPassword } = useInputVisibility(errors.password)
   const { inputVisibility: confirmPasswordVisibility, showInputText: showConfirmPassword } = useInputVisibility(
     errors.confirmPassword
@@ -29,13 +28,11 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors, clos
     setButtonDisabled(!buttonDisabled)
   }
 
-  const handleIsFormValid = () => {
-    return Object.values(errors).every((elem) => elem === undefined) && Object.values(data).every((elem) => elem !== '')
-  }
+  const hasErrors = useCallback(() => Object.values(errors).some((elem) => elem === undefined), [errors])
 
-  useEffect(() => {
-    handleIsFormValid() ? setCheckDisabled(false) : setCheckDisabled(true)
-  }, [errors, handleIsFormValid])
+  const emptyData = useCallback(() => Object.values(data).every((elem) => elem !== ''), [data])
+
+  const isValid = useMemo(() => hasErrors() && emptyData(), [emptyData, hasErrors])
 
   const policyAgreement = (
     <Box sx={ styles.box }>
@@ -140,7 +137,7 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors, clos
       <Box sx={ styles.checkboxContainer }>
         <FormControlLabel
           control={ <Checkbox /> }
-          disabled={ checkDisabled }
+          disabled={ isValid ? false : true }
           label={ policyAgreement }
           labelPlacement='end'
           onChange={ handleOnAgreementChange }
