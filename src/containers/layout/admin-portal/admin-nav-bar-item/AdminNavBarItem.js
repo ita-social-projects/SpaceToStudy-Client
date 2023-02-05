@@ -59,11 +59,11 @@ const AdminNavBarItem = ({
     <>
       <Box sx={ [styles.wrapper, expanded && styles.stableWidth] }>
         <ListItemButton
-          component={ Link }
+          component={ children.length ? ListItemButton : Link }
           key={ label }
           onClick={ clickListItem }
           selected={ active }
-          to={ !children.length && path }
+          to={ path }
         >
           <ListItemIcon sx={ styles.icon }>
             { icon }

@@ -17,7 +17,7 @@ import errors from './errors.json'
 import table from './table.json'
 import admin from './admin.json'
 import studentTable from './student-table.json'
-import pageNames from './page-names.json'
+import breadCrumbs from './breadcrumbs.json'
 
 const en = {
   translations: {
@@ -40,7 +40,7 @@ const en = {
     table,
     studentTable,
     admin,
-    pageNames
+    breadCrumbs
   }
 }
 

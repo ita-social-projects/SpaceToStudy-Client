@@ -11,7 +11,7 @@ import { howItWorksCards } from '~/containers/student-home-page/student-how-it-w
 
 import { styles } from '~/containers/student-home-page/student-how-it-works/student-how-it-works.styles'
 
-const sectionId = studentRoutes.navBar.howItWorks.label
+const sectionId = studentRoutes.navBar.howItWorks.route
 
 const StudentHowItWorks = () => {
   const { t } = useTranslation()

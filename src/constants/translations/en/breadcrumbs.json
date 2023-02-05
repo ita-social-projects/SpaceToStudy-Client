@@ -1,7 +1,6 @@
 {
-    "main": "Main",
+    "home": "Main",
     "findTutor": "Find tutor",
     "privacyPolicy": "Privacy policy",
-    "myProfile": "My profile",
-    "error": "Error"
+    "myProfile": "My profile"
 }

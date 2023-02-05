@@ -1,20 +1,21 @@
 import Box from '@mui/material/Box'
 
 import AppHeader from '~/containers/layout/app-header/AppHeader'
-import AppMain from '~/containers/layout/app-main/AppMain'
 import ScrollToTopButton from '~/components/scroll-to-top-button/ScrollToTopButton'
 import Footer from '~/containers/layout/footer/Footer'
 import ScrollToTop from '~/components/scroll-to-top/ScrollToTop'
 import AppBreadCrumbs from '~/containers/layout/app-breadcrumbs/AppBreadCrumbs'
+import AppMain from '../layout/app-main/AppMain'
 
 const styles = {
   content: {
     display: 'flex',
     flexDirection: 'column',
-    height: '100vh',
-    '& div:nth-last-child(2)': {
-      flexGrow: 1
-    }
+    height: '100vh'
+  },
+  main: {
+    display: 'grid',
+    flexGrow: 1
   }
 }
 
@@ -24,7 +25,9 @@ const AppContent = () => {
       <AppHeader />
       <AppBreadCrumbs />
       <ScrollToTop />
-      <AppMain />
+      <Box sx={ styles.main }>
+        <AppMain />
+      </Box>
       <ScrollToTopButton />
       <Footer />
     </Box>

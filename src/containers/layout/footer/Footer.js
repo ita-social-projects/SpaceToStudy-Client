@@ -20,10 +20,10 @@ const Footer = () => {
         </Typography>
         <Box sx={ styles.links }>
           <Typography component={ Link } to={ privacyPolicy.route } variant='caption'>
-            { t(`footer.${privacyPolicy.label}`) }
+            { t(`footer.${privacyPolicy.route}`) }
           </Typography>
           <Typography component={ Link } to={ termOfUse.route } variant='caption'>
-            { t(`footer.${termOfUse.label}`) }
+            { t(`footer.${termOfUse.route}`) }
           </Typography>
         </Box>
       </Container>

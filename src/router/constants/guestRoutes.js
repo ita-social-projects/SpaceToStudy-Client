@@ -1,15 +1,15 @@
 export const guestRoutes = {
-  home: { route: '/', nested: '//*' },
-  error: { nested: '/error/*' },
-  student: { route: '/student', nested: '/student/*' },
-  tutor: { route: '/tutor', nested: '/tutor/*' },
-  admin: { route: '/admin', nested: '/admin/*' },
-  about: { label: 'about', route: '/about' },
-  privacyPolicy: { label: 'privacyPolicy', route: '/privacyPolicy' },
-  termOfUse: { label: 'termOfUse', route: '/termOfUse' },
+  home: { route: '/' },
+  student: { route: 'student' },
+  tutor: { route: 'tutor' },
+  admin: { route: 'admin' },
+  error: { route: 'error' },
+  about: { route: 'about' },
+  privacyPolicy: { route: 'privacyPolicy' },
+  termOfUse: { route: 'termOfUse' },
   navBar: {
-    whatCanYouDo: { label: 'whatCanYouDo', route: '/#whatCanYouDo' },
-    howItWorks: { label: 'howItWorks', route: '/#howItWorks' },
-    whoWeAre: { label: 'whoWeAre', route: '/#whoWeAre' }
+    whatCanYouDo: { route: 'whatCanYouDo', path: '/#whatCanYouDo' },
+    howItWorks: { route: 'howItWorks', path: '/#howItWorks' },
+    whoWeAre: { route: 'whoWeAre', path: '/#whoWeAre' }
   }
 }

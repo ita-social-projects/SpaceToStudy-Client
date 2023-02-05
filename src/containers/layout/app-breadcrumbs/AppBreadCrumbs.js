@@ -1,62 +1,38 @@
-import { useLocation, Link as RouterLink, matchPath } from 'react-router-dom'
-import { Breadcrumbs, Link, Typography, Container } from '@mui/material'
-import { t } from 'i18next'
-
-import { guestRoutes } from '~/router/constants/guestRoutes'
+import { Link, useMatches } from 'react-router-dom'
+import { Breadcrumbs, Typography, Container } from '@mui/material'
 
 import { styles } from '~/containers/layout/app-breadcrumbs/AppBreadCrumbs.styles'
 
 const AppBreadCrumbs = () => {
-  const { pathname } = useLocation()
-  const { student, tutor, home, error } = guestRoutes
-  const hasError = matchPath({ path: error.nested }, pathname)
-  const locationWithoutHome = pathname.replace(student.route || tutor.route, '')
-  const routes = !hasError ? locationWithoutHome.split('/').filter((route) => route) : []
+  const matches = useMatches()
+  const crumbs = matches.filter((match) => Boolean(match.handle?.crumb)).map((match) => match.handle.crumb)
 
-  const homeCrumb = routes.length > 0 && (
-    <Link
-      component={ RouterLink } sx={ styles.link } to={ home.route }
-      underline='none' variant='caption'
-    >
-      { t('pageNames.main') }
-    </Link>
-  )
+  const breadCrumbs = crumbs.map((crumb, idx) => {
+    const isLast = idx === crumbs.length - 1
+    const component = isLast ? Typography : Link
 
-  const crumbs = routes.map((route, idx) => {
-    const href = `/${routes.slice(0, idx + 1).join('/')}`
-    const name = t(`pageNames.${route}`)
-    const isLast = idx === routes.length - 1
-
-    return isLast ? (
+    return (
       <Typography
-        data-testid='lastBreadCrumb' key={ href } sx={ styles.link }
-        variant='caption'
-      >
-        { name }
-      </Typography>
-    ) : (
-      <Link
-        component={ RouterLink }
+        component={ component }
         data-testid='breadCrumb'
-        key={ href }
+        key={ crumb.path }
         sx={ styles.link }
-        to={ href }
+        to={ crumb.path }
         underline='none'
         variant='caption'
       >
-        { name }
-      </Link>
+        { crumb.name }
+      </Typography>
     )
   })
 
   const separator = <Typography sx={ styles.separator } />
 
   return (
-    homeCrumb && (
+    crumbs.length > 1 && (
       <Container sx={ styles.root }>
         <Breadcrumbs separator={ separator }>
-          { homeCrumb }
-          { crumbs }
+          { breadCrumbs }
         </Breadcrumbs>
       </Container>
     )

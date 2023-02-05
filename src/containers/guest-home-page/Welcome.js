@@ -12,7 +12,7 @@ import titleXs from '~/assets/img/guest-home-page/titleXs.svg'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { guestRoutes } from '~/router/constants/guestRoutes'
 
-const scrollTo = guestRoutes.navBar.whatCanYouDo.route
+const scrollTo = guestRoutes.navBar.whatCanYouDo.path
 
 const Welcome = () => {
   const { t } = useTranslation()

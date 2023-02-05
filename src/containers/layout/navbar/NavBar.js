@@ -16,7 +16,7 @@ import HashLink from '~/components/hash-link/HashLink'
 import Logo from '~/containers/logo/Logo'
 import Sidebar from '~/containers/layout/sidebar/Sidebar'
 import NavigationIcons from '~/containers/navigation-icons/NavigationIcons'
-import { admin, student, tutor } from '~/constants'
+import { student, tutor } from '~/constants'
 
 import { styles } from '~/containers/layout/navbar/NavBar.styles'
 
@@ -29,18 +29,17 @@ const Navbar = () => {
   useEffect(() => {
     if (userRole === student) setNavigationItems(Object.values(studentRoutes.navBar))
     else if (userRole === tutor) setNavigationItems(Object.values(tutorRoutes.navBar))
-    else if (userRole === admin) setNavigationItems([])
     else setNavigationItems(Object.values(guestRoutes.navBar))
   }, [userRole])
 
   const navigationList = navigationItems.map((item) => {
     return (
-      <ListItem key={ item.label } sx={ styles.navItem }>
+      <ListItem key={ item.route } sx={ styles.navItem }>
         <Typography
-          component={ HashLink } sx={ styles.navItemText } to={ item.route }
+          component={ HashLink } sx={ styles.navItemText } to={ item.path || item.route }
           variant='subtitle2'
         >
-          { t(`header.${item.label}`) }
+          { t(`header.${item.route}`) }
         </Typography>
       </ListItem>
     )

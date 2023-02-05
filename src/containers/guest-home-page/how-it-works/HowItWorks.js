@@ -13,7 +13,7 @@ import { tutor, student } from '~/constants'
 
 import { styles } from '~/containers/guest-home-page/how-it-works/HowItWorks.styles'
 
-const sectionId = guestRoutes.navBar.howItWorks.label
+const sectionId = guestRoutes.navBar.howItWorks.route
 
 const HowItWorks = () => {
   const { t } = useTranslation()

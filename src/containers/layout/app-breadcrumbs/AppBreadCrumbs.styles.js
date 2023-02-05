@@ -1,6 +1,7 @@
 export const styles = {
   root: {
-    py: 4
+    pt: 4,
+    pb: 2
   },
   separator: {
     width: '4px',
@@ -10,6 +11,7 @@ export const styles = {
     backgroundColor: 'primary.400'
   },
   link: {
-    color: 'primary.900'
+    color: 'primary.900',
+    textDecoration: 'none'
   }
 }

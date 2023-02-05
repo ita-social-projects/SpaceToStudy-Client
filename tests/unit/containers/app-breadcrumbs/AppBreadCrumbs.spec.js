@@ -1,31 +1,52 @@
-import { screen } from '@testing-library/react'
-import { renderWithProviders } from '~tests/test-utils'
+import { render, screen } from '@testing-library/react'
 
 import AppBreadCrumbs from '~/containers/layout/app-breadcrumbs/AppBreadCrumbs'
+import { createMemoryRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom'
+
+const router = (children, initialEntries) =>
+  createMemoryRouter(
+    createRoutesFromElements(
+      <Route element={ <AppBreadCrumbs /> } handle={ { crumb: { name: 'home', path: '/' } } } path='/'>
+        { children }
+      </Route>
+    ),
+    {
+      initialEntries: [initialEntries]
+    }
+  )
 
 describe('AppBreadCrumbs container', () => {
-  it('should render breadcrumbs links and last breadcrumb as typography', () => {
-    renderWithProviders(<AppBreadCrumbs />, { initialEntries: '/student/example/path' })
+  it('should render all breadcrumbs', () => {
+    const children = (
+      <Route element={ <div>expample</div> } handle={ { crumb: { name: 'expample', path: 'example' } } } path='example'>
+        <Route element={ <div>test</div> } handle={ { crumb: { name: 'test', path: 'test' } } } path='test' />
+      </Route>
+    )
+    const initialEntries = '/example/test'
+    render(<RouterProvider router={ router(children, initialEntries) } />)
+
     const breadCrumbs = screen.getAllByTestId('breadCrumb')
-    const lastBreadCrumb = screen.getByTestId('lastBreadCrumb')
 
-    expect(breadCrumbs.length).toBe(1)
-    expect(lastBreadCrumb).toBeInTheDocument()
+    expect(breadCrumbs.length).toBe(3)
   })
-  it('should render only last breadcrumb', () => {
-    renderWithProviders(<AppBreadCrumbs />, { initialEntries: '/student/path' })
+  it('should render two breadcrumb', () => {
+    const children = (
+      <Route element={ <div>expample</div> } handle={ { crumb: { name: 'expample', path: 'example' } } } path='example' />
+    )
+    const initialEntries = '/example'
+    render(<RouterProvider router={ router(children, initialEntries) } />)
+
+    const breadCrumbs = screen.getAllByTestId('breadCrumb')
+
+    expect(breadCrumbs.length).toBe(2)
+  })
+  it('should not render breadcrumbs', () => {
+    const children = <Route element={ <div>expample</div> } path='example' />
+    const initialEntries = '/example'
+    render(<RouterProvider router={ router(children, initialEntries) } />)
+
     const breadCrumbs = screen.queryAllByTestId('breadCrumb')
-    const lastBreadCrumb = screen.getByTestId('lastBreadCrumb')
 
     expect(breadCrumbs.length).toBe(0)
-    expect(lastBreadCrumb).toBeInTheDocument()
-  })
-  it('should not render  breadcrumbs', () => {
-    renderWithProviders(<AppBreadCrumbs />, { initialEntries: '/student' })
-    const breadCrumbs = screen.queryAllByTestId('breadCrumb')
-    const lastBreadCrumb = screen.queryByTestId('lastBreadCrumb')
-
-    expect(breadCrumbs.length).toBe(0)
-    expect(lastBreadCrumb).not.toBeInTheDocument()
   })
 })

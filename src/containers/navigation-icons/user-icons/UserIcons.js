@@ -35,20 +35,20 @@ const UserIcons = ({ setIsSidebarOpen }) => {
       ? Object.values(studentRoutes.accountMenu).map((item) => {
         return (
           <MenuItem
-            component={ Link } key={ item.label } onClick={ closeMenu }
+            component={ Link } key={ item.route } onClick={ closeMenu }
             sx={ styles.menuItem } to={ item.route }
           >
-            { t(`header.${item.label}`) }
+            { t(`header.${item.route}`) }
           </MenuItem>
         )
       })
       : Object.values(tutorRoutes.accountMenu).map((item) => {
         return (
           <MenuItem
-            component={ Link } key={ item.label } onClick={ closeMenu }
+            component={ Link } key={ item.route } onClick={ closeMenu }
             sx={ styles.menuItem } to={ item.route }
           >
-            { t(`header.${item.label}`) }
+            { t(`header.${item.route}`) }
           </MenuItem>
         )
       })

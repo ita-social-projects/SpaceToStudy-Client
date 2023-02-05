@@ -1,21 +1,22 @@
+import { lazy, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
-import Loader from '~/components/loader/Loader'
 import { guestRoutes } from '~/router/constants/guestRoutes'
-import GuestRoutes from '../routes/GuestRoutes'
 
-const GuestRoute = ({ userRole }) => {
+const GuestHomePage = lazy(() => import('~/pages/guest-home-page/GuestHome'))
+
+const GuestRoute = () => {
   const navigate = useNavigate()
+  const { userRole } = useSelector((state) => state.appMain)
 
-  if (userRole) {
-    setTimeout(() => {
+  useEffect(() => {
+    if (userRole) {
       navigate(guestRoutes[userRole].route)
-    }, 0)
-  } else {
-    return <GuestRoutes />
-  }
+    }
+  }, [navigate, userRole])
 
-  return <Loader size={ 70 } />
+  return <GuestHomePage />
 }
 
 export default GuestRoute
