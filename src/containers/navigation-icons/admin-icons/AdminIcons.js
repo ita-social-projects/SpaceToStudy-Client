@@ -15,7 +15,7 @@ const AdminIcons = () => {
   return (
     <Box sx={ styles.iconBox }>
       <Tooltip arrow title={ t('iconsTooltip.logout') }>
-        <IconButton component={ Link } to={ studentRoutes.accountMenu.logout.route }>
+        <IconButton component={ Link } to={ studentRoutes.accountMenu.logout.path }>
           <LogoutIcon color='primary' />
         </IconButton>
       </Tooltip>

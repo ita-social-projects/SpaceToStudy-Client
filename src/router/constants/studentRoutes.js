@@ -1,13 +1,13 @@
 export const studentRoutes = {
   navBar: {
-    findTutor: { label: 'findTutor', route: '/student/findTutor', nested: '/findTutor' },
-    categories: { label: 'categories', route: '/student/#categories' },
-    howItWorks: { label: 'howItWorks', route: '/student/#howItWorks' },
-    faq: { label: 'faq', route: '/student/#faq' },
-    becomeTutor: { label: 'becomeTutor', route: '/becomeTutor' }
+    findTutor: { route: 'findTutor', path: '/student/findTutor' },
+    becomeTutor: { route: 'becomeTutor', path: '/student/becomeTutor' },
+    categories: { route: 'categories', path: '/student/#categories' },
+    howItWorks: { route: 'howItWorks', path: '/student/#howItWorks' },
+    faq: { route: 'faq', path: '/student/#faq' }
   },
   accountMenu: {
-    myProfile: { label: 'myProfile', route: '/student/myProfile', nested: '/myProfile' },
-    logout: { label: 'logout', route: '/logout' }
+    myProfile: { route: 'myProfile', path: '/student/myProfile' },
+    logout: { route: 'logout', path: '/logout' }
   }
 }

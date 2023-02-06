@@ -7,7 +7,7 @@ import TitleWithDescription from '~/components/title-with-description/TitleWithD
 import VideoBox from '~/components/video-box/VideoBox'
 import videoImg from '~/assets/img/guest-home-page/videoImg.png'
 
-const sectionId = guestRoutes.navBar.whoWeAre.label
+const sectionId = guestRoutes.navBar.whoWeAre.route
 
 const WhoWeAre = () => {
   const { t } = useTranslation()

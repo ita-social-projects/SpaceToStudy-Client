@@ -1,12 +1,12 @@
-import { useLayoutEffect } from 'react'
+import { Suspense, useLayoutEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { Outlet } from 'react-router-dom'
 
 import Loader from '~/components/loader/Loader'
 import { checkAuth } from '~/redux/reducer'
-import AppRouter from '~/router/AppRouter'
 
 const AppMain = () => {
-  const { loading, userRole } = useSelector((state) => state.appMain)
+  const { loading } = useSelector((state) => state.appMain)
   const dispatch = useDispatch()
 
   useLayoutEffect(() => {
@@ -14,10 +14,14 @@ const AppMain = () => {
   }, [dispatch])
 
   if (loading) {
-    return <Loader size={ 70 } />
+    return <Loader pageLoad size={ 70 } />
   }
 
-  return <AppRouter userRole={ userRole } />
+  return (
+    <Suspense fallback={ <Loader pageLoad size={ 70 } /> }>
+      <Outlet />
+    </Suspense>
+  )
 }
 
 export default AppMain

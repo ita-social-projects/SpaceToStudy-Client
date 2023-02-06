@@ -16,15 +16,15 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen, navigationItems }) => {
 
   const navigationList = navigationItems.map((item) => {
     return (
-      <ListItem key={ item.label }>
+      <ListItem key={ item.route }>
         <Typography
           component={ HashLink }
           onClick={ () => setIsSidebarOpen(false) }
           sx={ styles.listItem }
-          to={ item.route }
+          to={ item.path }
           variant='subtitle1'
         >
-          { t(`header.${item.label}`) }
+          { t(`header.${item.route}`) }
         </Typography>
       </ListItem>
     )

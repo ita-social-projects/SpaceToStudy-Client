@@ -1,22 +1,20 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { BrowserRouter } from 'react-router-dom'
+import { RouterProvider } from 'react-router-dom'
 import { Provider } from 'react-redux'
 
 import { store } from '~/redux/store'
 import { setupInterceptors } from '~/services/setup-interceptors'
-import App from '~/App'
+import { router } from '~/router/router'
 import '~/styles/index.css'
 import '~/plugins/i18n'
 
 ReactDOM.render(
-  <BrowserRouter>
-    <React.StrictMode>
-      <Provider store={ store }>
-        <App />
-      </Provider>
-    </React.StrictMode>
-  </BrowserRouter>,
+  <React.StrictMode>
+    <Provider store={ store }>
+      <RouterProvider router={ router } />
+    </Provider>
+  </React.StrictMode>,
   document.getElementById('root')
 )
 

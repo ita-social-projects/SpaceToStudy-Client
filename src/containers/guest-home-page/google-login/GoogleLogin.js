@@ -29,7 +29,7 @@ const GoogleLogin = ({ type, buttonWidth, role }) => {
       </Box>
 
       <GoogleButton
-        buttonWidth={ buttonWidth } role={ role } route={ whatCanYouDo.route }
+        buttonWidth={ buttonWidth } role={ role } route={ whatCanYouDo.path }
         type={ type }
       />
       <Box sx={ styles.haveAccount }>
@@ -46,7 +46,7 @@ const GoogleLogin = ({ type, buttonWidth, role }) => {
             component={ HashLink }
             onClick={ closeModal }
             sx={ styles.underlineText }
-            to={ whatCanYouDo.route }
+            to={ whatCanYouDo.path }
             variant='body2'
           >
             { t('login.joinUs') }

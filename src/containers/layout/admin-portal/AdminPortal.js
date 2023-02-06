@@ -1,11 +1,14 @@
+import { Suspense } from 'react'
+import { Outlet } from 'react-router-dom'
 import { Box } from '@mui/material'
-import AdminRoutes from '~/router/routes/AdminRoutes'
-import AdminNavBar from './admin-nav-bar/AdminNavBar'
+import Loader from '~/components/loader/Loader'
+import AdminNavBar from '~/containers/layout/admin-portal/admin-nav-bar/AdminNavBar'
 
 const AdminPortal = () => {
   const styles = {
     container: {
-      display: 'flex'
+      display: 'flex',
+      height: '100vh'
     },
     page: {
       flexGrow: 1
@@ -19,7 +22,9 @@ const AdminPortal = () => {
     <Box style={ styles.disableMargin } sx={ styles.container }>
       <AdminNavBar />
       <Box sx={ styles.page }>
-        <AdminRoutes />
+        <Suspense fallback={ <Loader pageLoad size={ 70 } /> }>
+          <Outlet />
+        </Suspense>
       </Box>
     </Box>
   )

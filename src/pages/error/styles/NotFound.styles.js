@@ -7,7 +7,8 @@ export const styles = {
     alignItems: 'center',
     flexDirection: { xs: 'column', md: 'row' },
     rowGap: '25px',
-    margin: { xs: '0 16px', sm: '0 60px' }
+    margin: { xs: '0 16px', sm: '0 60px' },
+    flex: 1
   },
   box: {
     display: 'flex',

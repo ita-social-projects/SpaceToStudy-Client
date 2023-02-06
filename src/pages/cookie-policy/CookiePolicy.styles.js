@@ -1,6 +1,7 @@
 export const styles = {
   container: {
-    color: 'primary.900'
+    color: 'primary.900',
+    flex: 1
   },
   wrapper: {
     m: '0 auto',
@@ -10,7 +11,6 @@ export const styles = {
   firstItemWrapper: {
     textAlign: 'center',
     backgroundColor: 'basic.grey',
-    mt: '30px',
     mb: '70px',
     p: '30px 0 50px',
     borderRadius: '20px'

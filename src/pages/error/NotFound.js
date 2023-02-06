@@ -33,7 +33,7 @@ const NotFound = () => {
           titleStyles={ { typography: windowSizeTypography.title, lineHeight: '61px' } }
         />
         <Button
-          component={ Link } sx={ styles.button } to={ guestRoutes.home.route }
+          component={ Link } sx={ styles.button } to={ guestRoutes.home.path }
           variant='contained'
         >
           { t('button.toMain') }

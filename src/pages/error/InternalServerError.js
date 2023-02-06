@@ -24,7 +24,7 @@ const InternalServerError = () => {
             { t('errorPage.500.description') }
           </Typography>
           <Button
-            component={ Link } sx={ styles.homeBtn } to={ guestRoutes.home.route }
+            component={ Link } sx={ styles.homeBtn } to={ guestRoutes.home.path }
             variant='contained'
           >
             { t('button.toMain') }

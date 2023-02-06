@@ -15,7 +15,7 @@ import teachImg from '~/assets/img/guest-home-page/teachImg.png'
 
 import { styles } from '~/containers/guest-home-page/styles/WhatCanYouDo.styles'
 
-const sectionId = guestRoutes.navBar.whatCanYouDo.label
+const sectionId = guestRoutes.navBar.whatCanYouDo.route
 
 const cardData = [
   {

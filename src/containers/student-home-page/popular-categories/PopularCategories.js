@@ -13,7 +13,7 @@ import { studentRoutes } from '~/router/constants/studentRoutes'
 
 import { styles } from '~/containers/student-home-page/popular-categories/popular-categories.styles'
 
-const sectionId = studentRoutes.navBar.categories.label
+const sectionId = studentRoutes.navBar.categories.route
 
 const PopularCategories = () => {
   const navigate = useNavigate()

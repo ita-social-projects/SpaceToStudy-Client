@@ -4,7 +4,8 @@ export const styles = {
   container: {
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    flex: 1
   },
   wrapper: {
     padding: { md: '64px' },

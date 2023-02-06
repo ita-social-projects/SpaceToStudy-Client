@@ -11,7 +11,8 @@ export const styles = {
     '& p': {
       textAlign: { md: 'left', sm: 'center' },
       fontWeight: 300
-    }
+    },
+    flex: 1
   },
   info: {
     display: 'flex',

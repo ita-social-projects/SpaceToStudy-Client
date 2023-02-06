@@ -37,7 +37,7 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors, clos
         component={ HashLink }
         onClick={ closeModal }
         sx={ styles.underlineText }
-        to={ termOfUse.route }
+        to={ termOfUse.path }
         variant='subtitle2'
       >
         { t('common.labels.terms') }
@@ -49,7 +49,7 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors, clos
         component={ HashLink }
         onClick={ closeModal }
         sx={ styles.underlineText }
-        to={ privacyPolicy.route }
+        to={ privacyPolicy.path }
         variant='subtitle2'
       >
         { t('common.labels.privacyPolicy') }
