@@ -8,9 +8,7 @@
     "plugin:react/recommended",
     "plugin:react/jsx-runtime",
     "plugin:storybook/recommended",
-    "react-app",
-    "react-app/jest",
-    "prettier"
+    "plugin:prettier/recommended"
   ],
   "parserOptions": {
     "ecmaFeatures": {

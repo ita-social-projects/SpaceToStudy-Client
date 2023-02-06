@@ -21,10 +21,7 @@ const StudentHowItWorks = () => {
   const cards = howItWorksCards.map((item, index) => {
     return (
       <Box key={ index } sx={ styles.cardWrapper }>
-        <Box
-          alt={ item.title } component='img' src={ item.image }
-          sx={ styles.cardImg }
-        ></Box>
+        <Box alt={item.title} component='img' src={item.image} sx={styles.cardImg}></Box>
 
         <TitleWithDescription
           description={ t(item.description) }
@@ -46,8 +43,8 @@ const StudentHowItWorks = () => {
       />
 
       <Box sx={ styles.cardsContainer }>
-        { cards }
-      </Box>
+{cards}
+</Box>
 
       <Button
         component={ Link } size='extraLarge' to={ path }

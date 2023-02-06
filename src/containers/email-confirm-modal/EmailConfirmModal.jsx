@@ -56,10 +56,7 @@ const EmailConfirmModal = ({ confirmToken, openModal }) => {
     return (
       <Box sx={ styles.box }>
         <ImgTitleDescription img={ imgSuccess } style={ styles } title={ t('modals.emailConfirm') } />
-        <Button
-          color='primary' onClick={ openLoginDialog } size='large'
-          style={ styles.button } variant='contained'
-        >
+        <Button color='primary' onClick={openLoginDialog} size='large' style={styles.button} variant='contained'>
           { t('button.goToLogin') }
         </Button>
       </Box>

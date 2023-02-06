@@ -22,10 +22,7 @@ const Welcome = () => {
 
   return (
     <Box className='section' sx={ styles.container }>
-      <Box
-        alt='Title' component='img' src={ image.toString() }
-        sx={ styles.title }
-      />
+      <Box alt='Title' component='img' src={image.toString()} sx={styles.title} />
       <Typography data-testid='welcomeDescription' sx={ styles.subtitle }>
         { t('guestHomePage.welcomeBlock.description') }
       </Typography>

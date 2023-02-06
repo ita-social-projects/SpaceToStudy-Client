@@ -40,10 +40,7 @@ const AdminNavBarItem = ({
       children.map(({ subLabel, path }, index) => (
         <Collapse in={ showSubItems } key={ subLabel }>
           <List component='ul' disablePadding>
-            <ListItemButton
-              component={ Link } onClick={ () => setActiveSubItem(index) } sx={ styles.subItem }
-              to={ path }
-            >
+            <ListItemButton component={Link} onClick={() => setActiveSubItem(index)} sx={styles.subItem} to={path}>
               <ListItemText
                 primary={ t(`admin.navBar.${subLabel}`) }
                 primaryTypographyProps={ { sx: [activeSubItem === index && styles.activeSubItem] } }
@@ -66,8 +63,8 @@ const AdminNavBarItem = ({
           to={ path }
         >
           <ListItemIcon sx={ styles.icon }>
-            { icon }
-          </ListItemIcon>
+{icon}
+</ListItemIcon>
           { expanded && (
             <>
               <ListItemText primary={ t(`admin.navBar.${label}`).toUpperCase() } sx={ styles.label } />

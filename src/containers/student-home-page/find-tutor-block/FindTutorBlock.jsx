@@ -65,10 +65,7 @@ const FindTutorBlock = () => {
             sx={ styles.input }
             value={ filter }
           />
-          <Button
-            fullWidth={ isMobile } onClick={ redirect } size='extraLarge'
-            variant='contained'
-          >
+          <Button fullWidth={isMobile} onClick={redirect} size='extraLarge' variant='contained'>
             { t('studentHomePage.findTutorBlock.button') }
           </Button>
         </Box>

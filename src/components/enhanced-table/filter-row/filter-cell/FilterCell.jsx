@@ -5,12 +5,7 @@ import DateFilter from '~/components/enhanced-table/date-filter/DateFilter'
 import EnumFilter from '~/components/enhanced-table/enum-filter/EnumFilter'
 
 const FilterCell = ({ column, filter, setFilter, clearFilter }) => {
-  const enums = (
-    <EnumFilter
-      clearFilter={ clearFilter } column={ column } filter={ filter }
-      setFilter={ setFilter }
-    />
-  )
+  const enums = <EnumFilter clearFilter={clearFilter} column={column} filter={filter} setFilter={setFilter} />
 
   const string = <SearchInput search={ filter } setSearch={ setFilter } />
 
@@ -22,11 +17,7 @@ const FilterCell = ({ column, filter, setFilter, clearFilter }) => {
     enums
   }
 
-  return (
-    <TableCell size='small'>
-      { dataTypes[column.dataType] }
-    </TableCell>
-  )
+  return <TableCell size='small'>{dataTypes[column.dataType]}</TableCell>
 }
 
 export default FilterCell

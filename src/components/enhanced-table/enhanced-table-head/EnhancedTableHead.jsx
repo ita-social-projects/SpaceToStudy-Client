@@ -31,9 +31,9 @@ const EnhancedTableHead = ({ itemsCount, onSelectAllClick }) => {
         { columns.map((column) => (
           <EnhancedTableHeaderCell column={ column } key={ column.field } />
         )) }
-        { isSelection && (<TableCell>
-          { t('table.actions') }
-        </TableCell>) }
+        { isSelection && <TableCell>
+{t('table.actions')}
+</TableCell> }
       </TableRow>
     </TableHead>
   )

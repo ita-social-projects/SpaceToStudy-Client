@@ -24,20 +24,14 @@ const PopupDialog = ({ content, closeModal, paperProps, timerId, closeModalAfter
   const handleMouseLeave = timerId ? () => closeModalAfterDelay() : null
 
   return (
-    <Dialog
-      PaperProps={ paperProps } data-testid='popup' fullScreen={ isMobile }
-      maxWidth='xl' onClose={ onClose } open
-    >
-      <Box
-        data-testid='popupContent' onMouseLeave={ handleMouseLeave } onMouseOver={ handleMouseOver }
-        sx={ styles.box }
-      >
+    <Dialog PaperProps={paperProps} data-testid='popup' fullScreen={isMobile} maxWidth='xl' onClose={onClose} open>
+      <Box data-testid='popupContent' onMouseLeave={handleMouseLeave} onMouseOver={handleMouseOver} sx={styles.box}>
         <IconButton onClick={ onClose } sx={ styles.icon }>
           <CloseIcon />
         </IconButton>
         <Box sx={ styles.contentWraper }>
-          { content }
-        </Box>
+{content}
+</Box>
       </Box>
     </Dialog>
   )

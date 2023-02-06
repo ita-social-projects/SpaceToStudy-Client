@@ -88,18 +88,12 @@ const ForgotPassword = () => {
           type='email'
           value={ data.email }
         />
-        <AppButton
-          loading={ loading } size='large' sx={ styles.sentPassword }
-          type='submit' variant='contained'
-        >
+        <AppButton loading={loading} size='large' sx={styles.sentPassword} type='submit' variant='contained'>
           { t('login.sendPassword') }
         </AppButton>
       </Box>
 
-      <Button
-        onClick={ backToLogin } size='large' sx={ styles.backButton }
-        variant='text'
-      >
+      <Button onClick={backToLogin} size='large' sx={styles.backButton} variant='text'>
         { t('login.backToLogin') }
       </Button>
     </Box>

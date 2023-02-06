@@ -28,10 +28,7 @@ const AddDocuments = ({ btnsBox, documents, documentsError, addDocuments, setSte
 
   return (
     <Box sx={ styles.root }>
-      <Box
-        alt={ t('becomeTutor.documents.imageAlt') } component='img' src={ addDocumentsPNG }
-        sx={ styles.img }
-      />
+      <Box alt={t('becomeTutor.documents.imageAlt')} component='img' src={addDocumentsPNG} sx={styles.img} />
 
       <Box sx={ styles.rigthBox }>
         <Box>

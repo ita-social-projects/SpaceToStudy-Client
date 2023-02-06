@@ -57,8 +57,8 @@ const EnhancedTablePagination = ({ itemsCount }) => {
       />
       <Box sx={ styles.pageInputBox }>
         <Typography variant='subtitle2'>
-          { t('table.goToPage') }
-        </Typography>
+{t('table.goToPage')}
+</Typography>
         <TextField
           onChange={ handleChangePageInput }
           size='small'
