@@ -1,5 +1,5 @@
 import { useEffect, useContext } from 'react'
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 
 import Box from '@mui/material/Box'
 import { descriptionTimes } from '~/components/accordion-with-image/accordion-with-image.constants'
@@ -15,29 +15,23 @@ import EmailConfirmModal from '~/containers/email-confirm-modal/EmailConfirmModa
 import ResetPassword from '~/containers/guest-home-page/reset-password/ResetPassword'
 
 const GuestHomePage = () => {
-  const { search } = useLocation()
-
   const { openModal } = useContext(ModalContext)
-  const navigate = useNavigate()
-
-  const [searchParams] = useSearchParams()
-  const confirmToken = searchParams.get('confirmToken')
-  const resetToken = searchParams.get('resetToken')
+  const [searchParams, setSearchParams] = useSearchParams()
 
   useEffect(() => {
-    search === '?login' && openModal({ component: <LoginDialog /> })
-    navigate('/')
-  }, [search, openModal, navigate])
+    const confirmToken = searchParams.get('confirmToken')
+    const resetToken = searchParams.get('resetToken')
+    const login = searchParams.get('login')
 
-  useEffect(() => {
     confirmToken && openModal({ component: <EmailConfirmModal confirmToken={ confirmToken } openModal={ openModal } /> })
     resetToken && openModal({ component: <ResetPassword openModal={ openModal } resetToken={ resetToken } /> })
+    login !== null && openModal({ component: <LoginDialog /> })
 
-    navigate('/')
-  }, [confirmToken, openModal, navigate, resetToken])
+    setSearchParams([])
+  }, [searchParams, setSearchParams, openModal])
 
   return (
-    <Box data-testid='guestHome'>
+    <Box data-testid='guestHome' sx={ { flex: 1 } }>
       <Welcome />
       <Box sx={ { maxWidth: '1128px', margin: '0 auto', overflowX: 'hidden' } }>
         <FeatureBlock items={ descriptionTimes } />

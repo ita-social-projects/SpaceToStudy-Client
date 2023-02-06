@@ -36,7 +36,7 @@ const Navbar = () => {
     return (
       <ListItem key={ item.route } sx={ styles.navItem }>
         <Typography
-          component={ HashLink } sx={ styles.navItemText } to={ item.path || item.route }
+          component={ HashLink } sx={ styles.navItemText } to={ item.path }
           variant='subtitle2'
         >
           { t(`header.${item.route}`) }
@@ -49,7 +49,7 @@ const Navbar = () => {
     <Box sx={ styles.header }>
       <Button
         component={ Link } size='small' sx={ styles.logoButton }
-        to={ guestRoutes.home.route }
+        to={ guestRoutes.home.path }
       >
         <Logo />
       </Button>

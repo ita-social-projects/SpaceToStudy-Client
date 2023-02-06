@@ -8,6 +8,6 @@ export const studentRoutes = {
   },
   accountMenu: {
     myProfile: { route: 'myProfile', path: '/student/myProfile' },
-    logout: { route: 'logout' }
+    logout: { route: 'logout', path: '/logout' }
   }
 }

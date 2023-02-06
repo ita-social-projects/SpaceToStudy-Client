@@ -12,10 +12,6 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     height: '100vh'
-  },
-  main: {
-    display: 'grid',
-    flexGrow: 1
   }
 }
 
@@ -25,9 +21,7 @@ const AppContent = () => {
       <AppHeader />
       <AppBreadCrumbs />
       <ScrollToTop />
-      <Box sx={ styles.main }>
-        <AppMain />
-      </Box>
+      <AppMain />
       <ScrollToTopButton />
       <Footer />
     </Box>

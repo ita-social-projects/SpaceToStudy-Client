@@ -25,7 +25,7 @@ const AuthPolicy = () => {
           titleStyles={ styles.title }
         />
         <Button
-          component={ Link } size='extraLarge' to={ guestRoutes.home.route }
+          component={ Link } size='extraLarge' to={ guestRoutes.home.path }
           variant='contained'
         >
           { t('button.toMain') }

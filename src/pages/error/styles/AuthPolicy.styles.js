@@ -13,7 +13,8 @@ export const styles = {
     },
     '& p': {
       fontWeight: '300'
-    }
+    },
+    flex: 1
   },
   errorInfo: {
     display: 'flex',

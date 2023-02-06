@@ -1,9 +1,9 @@
+import { lazy } from 'react'
 import { Route, Navigate, createBrowserRouter, createRoutesFromElements } from 'react-router-dom'
 import { t } from 'i18next'
 
 import App from '~/App'
 import AppContent from '~/containers/app-content/AppContent'
-import Logout from '~/pages/logout/Logout'
 import { guestRoutes } from '~/router/constants/guestRoutes'
 import { studentRoutes } from '~/router/constants/studentRoutes'
 import { errorRoutes } from '~/router/constants/errorRoutes'
@@ -15,6 +15,8 @@ import { guestRouter } from '~/router/routes/guestRouter'
 import PrivateRoute from '~/router/helpers/PrivateRoute'
 import GuestRoute from '~/router/helpers/GuestRoute'
 import { admin, tutor, student } from '~/constants'
+
+const Logout = lazy(() => import('~/pages/logout/Logout'))
 
 export const routerConfig = (
   <Route element={ <App /> } errorElement={ <Navigate to={ errorRoutes.notFound.path } /> } path={ guestRoutes.home.route }>
@@ -30,11 +32,11 @@ export const routerConfig = (
       <Route path={ guestRoutes.error.route }>
         { errorRouter }
       </Route>
+      <Route element={ <Logout /> } path={ studentRoutes.accountMenu.logout.route } />
     </Route>
     <Route element={ <PrivateRoute role={ admin } /> } path={ guestRoutes.admin.route }>
       { adminRouter }
     </Route>
-    <Route element={ <Logout /> } path={ studentRoutes.accountMenu.logout.route } />
   </Route>
 )
 

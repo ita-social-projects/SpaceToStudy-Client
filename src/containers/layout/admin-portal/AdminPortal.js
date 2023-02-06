@@ -22,7 +22,7 @@ const AdminPortal = () => {
     <Box style={ styles.disableMargin } sx={ styles.container }>
       <AdminNavBar />
       <Box sx={ styles.page }>
-        <Suspense fallback={ <Loader size={ 70 } /> }>
+        <Suspense fallback={ <Loader pageLoad size={ 70 } /> }>
           <Outlet />
         </Suspense>
       </Box>

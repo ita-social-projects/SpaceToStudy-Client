@@ -1,6 +1,7 @@
 export const styles = {
   container: {
-    color: 'primary.900'
+    color: 'primary.900',
+    flex: 1
   },
   wrapper: {
     m: '0 auto',

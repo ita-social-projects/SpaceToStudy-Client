@@ -126,8 +126,8 @@ describe('router test', () => {
     })
   })
   it('shoud render loader after logout', async () => {
-    renderWithRouter(createPath(studentRoutes.accountMenu.logout.route), {
-      appMain: { loding: false, userRole: student }
+    renderWithRouter(studentRoutes.accountMenu.logout.path, {
+      appMain: { loding: false, userRole: '' }
     })
     await waitFor(async () => expect(await screen.findByTestId('loader')).toBeInTheDocument())
   })
