@@ -21,11 +21,11 @@ describe('FileUploader test', () => {
   beforeEach(() => {
     render(
       <FileUploader
-        buttonText={ buttonText }
-        emitter={ emitter }
-        initialError={ initialError }
-        initialState={ initialState }
-        validationData={ validationData }
+        buttonText={buttonText}
+        emitter={emitter}
+        initialError={initialError}
+        initialState={initialState}
+        validationData={validationData}
       />
     )
   })
@@ -53,11 +53,11 @@ describe('FileUploader test with file', () => {
   beforeEach(() => {
     render(
       <FileUploader
-        buttonText={ buttonText }
-        emitter={ emitter }
-        initialError={ initialError }
-        initialState={ initialState }
-        validationData={ validationData }
+        buttonText={buttonText}
+        emitter={emitter}
+        initialError={initialError}
+        initialState={initialState}
+        validationData={validationData}
       />
     )
   })

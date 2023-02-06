@@ -18,9 +18,7 @@ describe('StepWrapper test', () => {
     render(
       <ModalProvider>
         <StepProvider>
-          <StepWrapper steps={ stepsMock }>
-            { childrenArrMock }
-          </StepWrapper>
+          <StepWrapper steps={stepsMock}>{childrenArrMock}</StepWrapper>
         </StepProvider>
       </ModalProvider>
     )

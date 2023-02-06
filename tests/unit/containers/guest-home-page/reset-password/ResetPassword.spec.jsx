@@ -19,7 +19,7 @@ describe('ResetPassword test', () => {
 
     renderWithProviders(
       <SnackBarProvider>
-        <ResetPassword openModal={ openModal } resetToken={ resetToken } />
+        <ResetPassword openModal={openModal} resetToken={resetToken} />
       </SnackBarProvider>
     )
 
@@ -42,7 +42,7 @@ describe('ResetPassword test', () => {
 
     renderWithProviders(
       <SnackBarProvider>
-        <ResetPassword resetToken={ resetToken } setModal={ openModal } />
+        <ResetPassword resetToken={resetToken} setModal={openModal} />
       </SnackBarProvider>
     )
 

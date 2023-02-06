@@ -12,7 +12,7 @@ describe('InfoCard component', () => {
   }
 
   beforeEach(() => {
-    render(<InfoCard { ...props } />)
+    render(<InfoCard {...props} />)
   })
 
   it('should contain image', () => {

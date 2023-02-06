@@ -14,7 +14,10 @@ const ConfirmDialog = ({ message, title, open, onConfirm, onDismiss }) => {
   const { t } = useTranslation()
 
   return (
-    <Dialog PaperProps={{ sx: styles.root }} data-testid='confirmDialog' onClose={onDismiss} open={open}>
+    <Dialog
+      PaperProps={ { sx: styles.root } } data-testid='confirmDialog' onClose={ onDismiss }
+      open={ open }
+    >
       <Typography sx={ styles.title } variant='h6'>
         { t(title) }
       </Typography>
@@ -23,8 +26,8 @@ const ConfirmDialog = ({ message, title, open, onConfirm, onDismiss }) => {
       </IconButton>
       <DialogContent dividers sx={ styles.content }>
         <Typography variant='subtitle1'>
-{t(message)}
-</Typography>
+          { t(message) }
+        </Typography>
       </DialogContent>
       <DialogActions sx={ styles.actions }>
         <Button onClick={ onConfirm } size='large' variant='tonal'>

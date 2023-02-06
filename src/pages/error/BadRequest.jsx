@@ -39,7 +39,10 @@ const BadRequest = () => {
           { t('button.toMain') }
         </Button>
       </Box>
-      <Box alt='man' component='img' src={img} sx={styles.img} />
+      <Box
+        alt='man' component='img' src={ img }
+        sx={ styles.img }
+      />
     </Container>
   )
 }

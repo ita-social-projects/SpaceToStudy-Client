@@ -15,7 +15,7 @@ vi.mock('react-redux', () => ({
   useSelector: () => mockSelector
 }))
 
-jest.mock('~/containers/guest-home-page/google-button/GoogleButton', () => ({
+vi.mock('~/containers/guest-home-page/google-button/GoogleButton', () => ({
   __esModule: true,
   default: function () {
     return <button>Google</button>

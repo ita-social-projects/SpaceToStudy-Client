@@ -23,7 +23,7 @@ export default {
   }
 }
 
-const Template = (args) => <TitleWithDescription {...args} />
+const Template = (args) => <TitleWithDescription { ...args } />
 
 export const Desktop = Template.bind({})
 

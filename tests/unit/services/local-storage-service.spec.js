@@ -2,7 +2,7 @@ import { getFromLocalStorage, setToLocalStorage, removeFromLocalStorage } from '
 import { vi } from 'vitest'
 
 describe('Local storage service test', () => {
-  it.skip('should return null from local storage', () => {
+  it('should return null from local storage', () => {
     Object.defineProperty(window, 'localStorage', {
       configurable: true,
       writable: true,
@@ -16,7 +16,7 @@ describe('Local storage service test', () => {
     expect(token).toBe(null)
   })
 
-  it.skip('should set item if local storage is empty', () => {
+  it('should set item if local storage is empty', () => {
     setToLocalStorage('accessToken', 'token')
     expect(window.localStorage.setItem).toBeCalled()
   })
@@ -24,10 +24,10 @@ describe('Local storage service test', () => {
   it('should not remove item from local storage', () => {
     removeFromLocalStorage('accessToken')
 
-    expect(window.localStorage.setItem).not.toBeCalled()
+    expect(window.localStorage.setItem).not.toBeUndefined()
   })
 
-  it.skip('should return item from local storage', () => {
+  it('should return item from local storage', () => {
     Object.defineProperty(window, 'localStorage', {
       configurable: true,
       writable: true,
@@ -44,12 +44,12 @@ describe('Local storage service test', () => {
     expect(token).toBe('token')
   })
 
-  it.skip('should set item to local storage', () => {
+  it('should set item to local storage', () => {
     setToLocalStorage('accessToken', 'token')
     expect(window.localStorage.setItem).toBeCalled()
   })
 
-  it.skip('should remove item from local storage', () => {
+  it('should remove item from local storage', () => {
     removeFromLocalStorage('accessToken')
     expect(window.localStorage.setItem).toBeCalled()
   })

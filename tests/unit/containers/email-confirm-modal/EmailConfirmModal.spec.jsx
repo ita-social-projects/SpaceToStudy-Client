@@ -21,7 +21,7 @@ describe('EmailConfirmModal test', () => {
       response: null
     }
     useAxios.mockImplementation(() => fakeData)
-    renderWithProviders(<EmailConfirmModal { ...props } />)
+    renderWithProviders(<EmailConfirmModal {...props} />)
 
     const modalImg = screen.getByAltText('info')
     const title = screen.getByText('modals.emailNotConfirm')
@@ -39,7 +39,7 @@ describe('EmailConfirmModal test', () => {
       response: null
     }
     useAxios.mockImplementation(() => fakeData)
-    renderWithProviders(<EmailConfirmModal { ...props } />)
+    renderWithProviders(<EmailConfirmModal {...props} />)
 
     const modalImg = screen.getByAltText('info')
     const title = screen.getByText('modals.emailAlreadyConfirm')
@@ -57,7 +57,7 @@ describe('EmailConfirmModal test', () => {
       response: { response: { status: 204 } }
     }
     useAxios.mockImplementation(() => fakeData)
-    renderWithProviders(<EmailConfirmModal { ...props } />)
+    renderWithProviders(<EmailConfirmModal {...props} />)
 
     const modalImg = screen.getByAltText('info')
     const title = screen.getByText('modals.emailConfirm')
@@ -73,7 +73,7 @@ describe('EmailConfirmModal test', () => {
       response: null
     }
     useAxios.mockImplementation(() => fakeData)
-    renderWithProviders(<EmailConfirmModal { ...props } />)
+    renderWithProviders(<EmailConfirmModal {...props} />)
 
     const loader = screen.getByTestId('loader')
 
@@ -87,7 +87,7 @@ describe('EmailConfirmModal test', () => {
       response: { response: { status: 204 } }
     }
     useAxios.mockImplementation(() => fakeData)
-    renderWithProviders(<EmailConfirmModal { ...props } />)
+    renderWithProviders(<EmailConfirmModal {...props} />)
 
     const button = screen.getByText('button.goToLogin')
 

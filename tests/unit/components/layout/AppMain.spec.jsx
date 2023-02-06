@@ -1,10 +1,10 @@
 import {  screen } from '@testing-library/react'
 import { vi } from 'vitest'
 import { ModalProvider } from '~/context/modal-context'
-
 import AppMain from '~/containers/layout/app-main/AppMain'
 import { ModalProvider } from '~/context/modal-context'
 import { renderWithProviders } from '~tests/test-utils'
+import { describe, it, expect } from 'vitest'
 
 const mockState = {
   appMain: { loading: true, userRole: '' }
@@ -44,7 +44,7 @@ describe('AppMain layout component test', () => {
         }
       }
     )
-    mockDispatch.mock.calls.length = 1 
+    mockDispatch.mock.calls.length = 1
     expect(mockDispatch).toHaveBeenCalledTimes(1)
   })
 })

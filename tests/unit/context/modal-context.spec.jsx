@@ -4,8 +4,10 @@ import { renderWithProviders } from '~tests/test-utils'
 import NavBar from '~/containers/layout/navbar/NavBar'
 import { ConfirmationDialogProvider } from '~/context/confirm-context'
 import { SnackBarProvider } from '~/context/snackbar-context'
+import { vi } from 'vitest'
+import { describe, it, expect, beforeEach } from 'vitest'
 
-jest.mock('~/containers/guest-home-page/google-button/GoogleButton', () => ({
+vi.mock('~/containers/guest-home-page/google-button/GoogleButton', () => ({
   __esModule: true,
   default: function () {
     return <button>Google</button>

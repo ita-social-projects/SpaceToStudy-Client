@@ -17,7 +17,7 @@ describe('CarouselWithImage component test', () => {
     }
   ]
   beforeEach(() => {
-    render(<CarouselWithImage items={ items } />)
+    render(<CarouselWithImage items={items} />)
   })
   it('Test image', () => {
     const mapLogo = screen.getByAltText('/src/assets/img/guest-home-page/map.svg')

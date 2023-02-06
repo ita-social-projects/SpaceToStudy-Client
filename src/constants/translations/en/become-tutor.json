@@ -1,7 +1,7 @@
 {
   "stepLabels": {
-    "generalInfo": "General", 
-    "languages": "Languages", 
+    "generalInfo": "General",
+    "languages": "Languages",
     "subjects": "Subjects",
     "photo": "Photo"
   },
@@ -24,11 +24,11 @@
     "sameSubject": "You have the same subject"
   },
   "photo": {
-	"imageAlt": "Your photo",
-	"button": "Upload your profile photo",
-	"placeholder":"Photo Preview",
-	"description":"Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.",
-	"typeError": "Wrong file type. Only .png/.jpg/.jpeg files are allowed.",
-	"fileSizeError": "Size for one file cannot be more than 10MB."
+    "imageAlt": "Your photo",
+    "button": "Upload your profile photo",
+    "placeholder": "Photo Preview",
+    "description": "Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.",
+    "typeError": "Wrong file type. Only .png/.jpg/.jpeg files are allowed.",
+    "fileSizeError": "Size for one file cannot be more than 10MB."
   }
 }

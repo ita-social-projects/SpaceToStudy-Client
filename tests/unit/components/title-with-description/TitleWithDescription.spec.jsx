@@ -9,7 +9,7 @@ describe('title-with-description component', () => {
   }
 
   beforeEach(() => {
-    render(<TitleWithDescription { ...props } />)
+    render(<TitleWithDescription {...props} />)
   })
 
   it('should have correct title', () => {

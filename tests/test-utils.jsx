@@ -2,7 +2,7 @@ import { createMemoryRouter, createRoutesFromElements, Route, RouterProvider } f
 import { Provider } from 'react-redux'
 import { configureStore } from '@reduxjs/toolkit'
 import reducer from '~/redux/reducer'
-import { ThemeProvider} from '@mui/material/styles'
+import { ThemeProvider } from '@mui/material/styles'
 import { render } from '@testing-library/react'
 import { theme } from '~/styles/app-theme/custom-mui.styles'
 import { vi } from 'vitest'

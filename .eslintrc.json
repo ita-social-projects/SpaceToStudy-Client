@@ -1,14 +1,15 @@
 {
   "env": {
     "browser": true,
-    "es2021": true
+    "es2021": true,
+    "node": true
   },
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:react/jsx-runtime",
     "plugin:storybook/recommended",
-    "plugin:prettier/recommended"
+    "prettier"
   ],
   "parserOptions": {
     "ecmaFeatures": {
@@ -18,7 +19,7 @@
     "sourceType": "module"
   },
   "plugins": ["react", "testing-library", "react-hooks"],
-  "ignorePatterns": ["*/stories/*"],
+
   "rules": {
     "prefer-arrow-callback": ["error"],
     "func-style": ["error", "expression"],

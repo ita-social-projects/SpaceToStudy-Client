@@ -10,7 +10,7 @@ describe('Sidebar test', () => {
 
   beforeEach(() => {
     renderWithProviders(
-      <Sidebar isSidebarOpen={ isSidebarOpen } navigationItems={ navigationItems } setIsSidebarOpen={ setIsSidebarOpen } />
+      <Sidebar isSidebarOpen={isSidebarOpen} navigationItems={navigationItems} setIsSidebarOpen={setIsSidebarOpen} />
     )
   })
 

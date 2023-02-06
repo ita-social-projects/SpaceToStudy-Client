@@ -110,7 +110,10 @@ const ResetPassword = ({ resetToken, openModal }) => {
           type={ showConfirmPassword ? 'text' : 'password' }
           value={ data.confirmPassword }
         />
-        <Button disabled={loading} fullWidth size='large' type='submit' variant='contained'>
+        <Button
+          disabled={ loading } fullWidth size='large'
+          type='submit' variant='contained'
+        >
           { loading ? <Loader size={ 20 } /> : t('login.savePassword') }
         </Button>
       </Box>

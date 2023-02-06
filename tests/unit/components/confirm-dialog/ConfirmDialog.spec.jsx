@@ -15,7 +15,7 @@ describe('Confirm dialog test', () => {
   }
 
   beforeEach(() => {
-    render(<ConfirmDialog { ...props } />)
+    render(<ConfirmDialog {...props} />)
   })
 
   it('should have title text', () => {

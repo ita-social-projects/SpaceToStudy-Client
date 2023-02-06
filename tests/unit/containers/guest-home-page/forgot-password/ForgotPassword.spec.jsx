@@ -8,9 +8,9 @@ import { axiosClient } from '~/plugins/axiosClient'
 import { URLs } from '~/constants/request'
 import { vi } from 'vitest'
 
-vi.mock("~/hooks/use-confirm", () => {
+vi.mock('~/hooks/use-confirm', () => {
   return {
-    default: () => ({setNeedConfirmation: () => true})
+    default: () => ({ setNeedConfirmation: () => true })
   }
 })
 

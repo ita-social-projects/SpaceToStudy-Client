@@ -13,7 +13,7 @@ const props = {
 
 describe('ClickableCard component', () => {
   beforeEach(() => {
-    renderWithProviders(<ClickableCard { ...props } />)
+    renderWithProviders(<ClickableCard {...props} />)
   })
 
   it('should render icon', () => {

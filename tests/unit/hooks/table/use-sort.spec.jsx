@@ -3,9 +3,7 @@ import { TableProvider } from '~/context/table-context'
 import useSort from '~/hooks/table/use-sort'
 
 describe('Use sort custom hook', () => {
-  const wrapper = ({ children, initialSort }) => (<TableProvider initialSort={ initialSort }>
-    { children }
-  </TableProvider>)
+  const wrapper = ({ children, initialSort }) => <TableProvider initialSort={initialSort}>{children}</TableProvider>
 
   it('should change sort order to desc', () => {
     const initialSort = { order: 'asc', orderBy: 'email' }

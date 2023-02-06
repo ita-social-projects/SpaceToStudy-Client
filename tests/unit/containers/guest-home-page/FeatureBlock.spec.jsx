@@ -19,7 +19,7 @@ describe('Carousel test', () => {
 
   it('Test should render carousel component', () => {
     useBreakpoints.mockImplementation(() => mobileData)
-    render(<FeatureBlock items={ items } />)
+    render(<FeatureBlock items={items} />)
     const carouselComponent = screen.getByTestId('carousel')
     const accordionComponent = screen.queryByTestId('accordion')
 
@@ -33,7 +33,7 @@ describe('Accordion test', () => {
 
   it('Test should render accordion component', () => {
     useBreakpoints.mockImplementation(() => desktopData)
-    render(<FeatureBlock items={ items } />)
+    render(<FeatureBlock items={items} />)
     const accordionComponent = screen.getByTestId('accordion')
     const carouselComponent = screen.queryByTestId('carousel')
 

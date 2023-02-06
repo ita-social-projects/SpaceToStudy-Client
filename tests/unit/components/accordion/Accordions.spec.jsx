@@ -21,7 +21,7 @@ describe('Accordion component without expandMoreIcon test', () => {
     showMoreIcon: false
   }
   beforeEach(() => {
-    render(<Accordions { ...props } />)
+    render(<Accordions {...props} />)
   })
   it('Test headings', () => {
     const firstTitle = screen.getByText('title1')
@@ -68,7 +68,7 @@ describe('Accordions test with expandMoreIcon', () => {
     activeIndex: '0'
   }
   beforeEach(() => {
-    render(<Accordions { ...props } />)
+    render(<Accordions {...props} />)
   })
   it('shuld render expand more icon', () => {
     const expandMoreIcon = screen.getAllByTestId('ExpandMoreRoundedIcon')

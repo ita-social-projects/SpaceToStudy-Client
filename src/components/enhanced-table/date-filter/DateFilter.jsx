@@ -75,8 +75,8 @@ const DateFilter = ({ filter, setFilter, clearFilter }) => {
       />
       <Box sx={ styles.datePickers }>
         <LocalizationProvider dateAdapter={ AdapterDateFns }>
-{datePickers}
-</LocalizationProvider>
+          { datePickers }
+        </LocalizationProvider>
       </Box>
     </>
   )

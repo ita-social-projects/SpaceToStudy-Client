@@ -4,9 +4,7 @@ import usePagination from '~/hooks/table/use-pagination'
 import { getFakeTestEvent } from '~tests/test-utils'
 
 describe('Use pagination custom hook', () => {
-  const wrapper = ({ children }) => (<TableProvider>
-    { children }
-  </TableProvider>)
+  const wrapper = ({ children }) => <TableProvider>{children}</TableProvider>
 
   let result
 

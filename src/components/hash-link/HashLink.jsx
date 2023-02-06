@@ -15,7 +15,12 @@ const HashLink = ({ onClick, replace = false, state, target, to, ...rest }, ref)
     }
   }
 
-  return <Link onClick={scroll} ref={ref} target={target} to={pathHash} {...rest} />
+  return (
+    <Link
+      onClick={ scroll } ref={ ref } target={ target }
+      to={ pathHash } { ...rest }
+    />
+  )
 }
 
 HashLink.displayName = 'HashLink'

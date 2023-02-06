@@ -41,8 +41,14 @@ const NotFound = () => {
       </Box>
 
       <Box sx={ styles.imgBox }>
-        <Box alt='man with bag' component='img' src={manImg} sx={styles.manImg} />
-        <Box alt='flowerpot' component='img' src={plantImg} sx={styles.plantImg} />
+        <Box
+          alt='man with bag' component='img' src={ manImg }
+          sx={ styles.manImg }
+        />
+        <Box
+          alt='flowerpot' component='img' src={ plantImg }
+          sx={ styles.plantImg }
+        />
       </Box>
     </Box>
   )

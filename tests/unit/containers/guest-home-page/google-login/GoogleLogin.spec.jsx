@@ -9,7 +9,7 @@ import { renderWithProviders } from '~tests/test-utils'
 import { vi } from 'vitest'
 
 const mockCloseModal = vi.fn()
-const mockGoogle = { accounts: { id: { initialize: jest.fn(), renderButton: jest.fn() } } }
+const mockGoogle = { accounts: { id: { initialize: vi.fn(), renderButton: vi.fn() } } }
 
 const originalGoogle = global.google
 const buttonWidth = { xs: '300px', md: '400px' }
@@ -24,8 +24,8 @@ describe('GoogleLogin component test for login', () => {
   beforeEach(() => {
     renderWithProviders(
       <SnackBarProvider>
-        <ModalProvider value={ { closeModal: mockCloseModal } }>
-          <GoogleLogin buttonWidth={ buttonWidth } type={ login } />
+        <ModalProvider value={{ closeModal: mockCloseModal }}>
+          <GoogleLogin buttonWidth={buttonWidth} type={login} />
         </ModalProvider>
       </SnackBarProvider>
     )
@@ -70,7 +70,7 @@ describe('GoogleLogin component test for signup', () => {
       <SnackBarProvider>
         <ConfirmationDialogProvider>
           <ModalProvider>
-            <GoogleLogin buttonWidth={ buttonWidth } type={ signup } />
+            <GoogleLogin buttonWidth={buttonWidth} type={signup} />
           </ModalProvider>
         </ConfirmationDialogProvider>
       </SnackBarProvider>

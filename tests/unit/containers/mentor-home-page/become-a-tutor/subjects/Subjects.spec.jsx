@@ -15,7 +15,7 @@ describe('AddDocuments test with some data', () => {
     render(
       <ModalProvider>
         <StepProvider>
-          <Subjects btnsBox={ btnsBox } stepLabel={ 'subjects' } />
+          <Subjects btnsBox={btnsBox} stepLabel={'subjects'} />
         </StepProvider>
       </ModalProvider>
     )
@@ -126,7 +126,7 @@ describe('AddDocuments test with empty data', () => {
     render(
       <ModalProvider>
         <StepProvider>
-          <Subjects btnsBox={ btnsBox } stepLabel={ 'subjects' } />
+          <Subjects btnsBox={btnsBox} stepLabel={'subjects'} />
         </StepProvider>
       </ModalProvider>
     )

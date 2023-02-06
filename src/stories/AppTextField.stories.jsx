@@ -13,6 +13,7 @@ export default {
     componentSubtitle: (
       <a
         href='https://design-system.aurora.io/?path=/story/material-ui-textfield-including-select--basic'
+        rel='noreferrer'
         target='_blank'
       >
         Full API
@@ -21,7 +22,7 @@ export default {
   }
 }
 
-const Template = (args) => <AppTextField {...args} />
+const Template = (args) => <AppTextField { ...args } />
 
 export const AppTextFieldWithError = Template.bind({})
 

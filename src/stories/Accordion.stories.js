@@ -27,7 +27,7 @@ export default {
   }
 }
 
-const Template = (args) => <Accordions {...args} />
+const Template = (args) => <Accordions { ...args } />
 
 export const Desktop = Template.bind({})
 

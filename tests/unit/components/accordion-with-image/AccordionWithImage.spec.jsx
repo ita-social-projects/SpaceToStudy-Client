@@ -17,7 +17,7 @@ describe('AccordionWithImage component test', () => {
     }
   ]
   beforeEach(() => {
-    render(<AccordionWithImage items={ items } />)
+    render(<AccordionWithImage items={items} />)
   })
   it('Test onChange id', () => {
     const id = screen.getByText('Second test title')

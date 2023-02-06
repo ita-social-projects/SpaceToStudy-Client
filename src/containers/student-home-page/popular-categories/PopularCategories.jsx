@@ -46,8 +46,8 @@ const PopularCategories = () => {
       />
 
       <Box sx={ { ...styles.container } }>
-{categories}
-</Box>
+        { categories }
+      </Box>
 
       <Button onClick={ showMore } sx={ { display: isExpandable ? 'block' : 'none' } } variant='tonal'>
         { t('studentHomePage.popularCategories.viewMore') }

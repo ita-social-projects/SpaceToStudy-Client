@@ -56,7 +56,12 @@ const EnhancedTable = ({ fetchService, externalFilter }) => {
   const rows = items.map((item) => {
     const isItemSelected = isSelected(item._id)
 
-    return <EnhancedTableRow isItemSelected={isItemSelected} item={item} key={item._id} refetchData={getData} />
+    return (
+      <EnhancedTableRow
+        isItemSelected={ isItemSelected } item={ item } key={ item._id }
+        refetchData={ getData }
+      />
+    )
   })
 
   const tableBody = (
@@ -87,8 +92,8 @@ const EnhancedTable = ({ fetchService, externalFilter }) => {
         <EnhancedTableToolbar refetchData={ getData } />
       </Box>
       <Paper sx={ styles.paper }>
-{tableContent}
-</Paper>
+        { tableContent }
+      </Paper>
       { loading || !items.length ? null : <EnhancedTablePagination itemsCount={ itemsCount } /> }
     </Box>
   )

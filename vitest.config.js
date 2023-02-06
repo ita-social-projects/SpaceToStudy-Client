@@ -1,11 +1,10 @@
-
-import { configDefaults, defineConfig } from 'vitest/config';
+import { configDefaults, defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
 import svgrPlugin from 'vite-plugin-svgr'
-const path = require('path');
+const path = require('path')
 
 export default defineConfig({
-  plugins: [ react(), svgrPlugin() ],
+  plugins: [react(), svgrPlugin()],
   define: { 'process.env': {} },
   resolve: {
     alias: {
@@ -20,8 +19,8 @@ export default defineConfig({
     globals: true,
     exclude: [...configDefaults.exclude, 'packages/template/*'],
     coverage: {
-        reporter: ['text', 'json', 'html'],
-        exclude: ['**/*.spec.jsx', './tests/setup-tests.js']
-    },
-  },
-});
+      reporter: ['text', 'json', 'html'],
+      exclude: ['**/*.spec.jsx', './tests/setup-tests.js']
+    }
+  }
+})

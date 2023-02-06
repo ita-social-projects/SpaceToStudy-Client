@@ -12,7 +12,7 @@ describe('AppTextField test', () => {
 
   it('should render input with error message', () => {
     const message = 'This field cannot be empty'
-    renderWithProviders(<AppTextField errorMsg={ message } />)
+    renderWithProviders(<AppTextField errorMsg={message} />)
     const errorMsg = screen.getByText(message)
 
     expect(errorMsg).toBeInTheDocument()
