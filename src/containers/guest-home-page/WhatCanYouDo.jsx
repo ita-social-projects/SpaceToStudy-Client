@@ -68,8 +68,8 @@ const WhatCanYouDo = () => {
       />
 
       <Box sx={ styles.cards }>
-{cards}
-</Box>
+        { cards }
+      </Box>
     </Box>
   )
 }

@@ -1,6 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
-import { vi } from 'vitest'
 
 import { ModalProvider } from '~/context/modal-context'
 import { ConfirmationDialogProvider } from '~/context/confirm-context'
@@ -9,6 +8,7 @@ import CardsWithButton from '~/containers/guest-home-page/cards-with-button/Card
 import howItWorksTutorFirst from '~/assets/img/guest-home-page/howItWorksTutorFirst.svg'
 import howItWorksTutorSecond from '~/assets/img/guest-home-page/howItWorksTutorSecond.svg'
 import { SnackBarProvider } from '~/context/snackbar-context'
+import { vi } from 'vitest'
 
 const mockDispatch = vi.fn()
 const mockSelector = vi.fn()
@@ -16,6 +16,13 @@ const mockSelector = vi.fn()
 vi.mock('react-redux', () => ({
   useDispatch: () => mockDispatch,
   useSelector: () => mockSelector
+}))
+
+vi.mock('~/containers/guest-home-page/google-button/GoogleButton', () => ({
+  __esModule: true,
+  default: function () {
+    return <button>Google</button>
+  }
 }))
 
 describe('CardsWithButton container', () => {

@@ -4,9 +4,7 @@ import useFilter from '~/hooks/table/use-filter'
 
 describe('Use filter custom hook', () => {
   const wrapper = ({ children, initialFilters }) => (
-    <TableProvider initialFilters={ initialFilters }>
-      { children }
-    </TableProvider>
+    <TableProvider initialFilters={initialFilters}>{children}</TableProvider>
   )
 
   it('should set filter by key', () => {

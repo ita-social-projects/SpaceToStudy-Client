@@ -26,7 +26,10 @@ const GuestIcons = ({ openLoginDialog, setIsSidebarOpen }) => {
           <LoginIcon color='primary' />
         </IconButton>
       </Tooltip>
-      <Button onClick={openLoginDialog} size='medium' sx={styles.loginButton} variant='contained'>
+      <Button
+        onClick={ openLoginDialog } size='medium' sx={ styles.loginButton }
+        variant='contained'
+      >
         { t('header.loginButton') }
       </Button>
 

@@ -12,7 +12,7 @@ export default {
   }
 }
 
-const Template = (args) => <VideoBox {...args} />
+const Template = (args) => <VideoBox { ...args } />
 
 export const Default = Template.bind({})
 

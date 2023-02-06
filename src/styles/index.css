@@ -11,8 +11,7 @@ body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
 .section {
@@ -31,7 +30,7 @@ code {
 }
 
 ::-webkit-scrollbar {
-  background: #DEE0E1
+  background: #dee0e1;
 }
 
 ::-webkit-scrollbar-track {
@@ -39,11 +38,11 @@ code {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #9DA7AC;
+  background: #9da7ac;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #727E84;
+  background: #727e84;
 }
 
 body ::-webkit-scrollbar {

@@ -21,12 +21,12 @@ describe('Signup form test', () => {
   beforeEach(() => {
     renderWithProviders(
       <SignupForm
-        closeModal={ closeModal }
-        data={ data }
-        errors={ errors }
-        handleBlur={ handleBlur }
-        handleChange={ handleChange }
-        handleSubmit={ handleSubmit }
+        closeModal={closeModal}
+        data={data}
+        errors={errors}
+        handleBlur={handleBlur}
+        handleChange={handleChange}
+        handleSubmit={handleSubmit}
       />,
       { preloadedState }
     )
@@ -124,11 +124,11 @@ describe('Signup form test with loading', () => {
   it('should render loader', () => {
     renderWithProviders(
       <SignupForm
-        data={ data }
-        errors={ errors }
-        handleBlur={ handleBlur }
-        handleChange={ handleChange }
-        handleSubmit={ handleSubmit }
+        data={data}
+        errors={errors}
+        handleBlur={handleBlur}
+        handleChange={handleChange}
+        handleSubmit={handleSubmit}
       />,
       { preloadedState }
     )

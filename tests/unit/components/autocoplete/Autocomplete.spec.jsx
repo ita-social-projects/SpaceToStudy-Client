@@ -6,7 +6,7 @@ const optionsMock = [{ name: 'Languages' }, { name: 'Mathematics' }]
 
 describe('Autocoplete test', () => {
   it('should show list of items', async () => {
-    render(<Autocoplete options={ optionsMock } value={ value } />)
+    render(<Autocoplete options={optionsMock} value={value} />)
 
     const autocomplete = screen.getByTestId('autocomplete-search')
     const input = within(autocomplete).getByRole('combobox')

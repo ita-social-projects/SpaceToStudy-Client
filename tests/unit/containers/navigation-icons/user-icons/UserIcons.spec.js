@@ -1,11 +1,7 @@
 import { screen, fireEvent } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
-<<<<<<<< HEAD:tests/unit/containers/navigation-icons/user-icons/UserIcons.spec.js
 import UserIcons from '~/containers/navigation-icons/user-icons/UserIcons'
-========
-import StudentIcons from '~/containers/navigation-icons/student-icons/StudentIcons'
 import { vi } from 'vitest'
->>>>>>>> c2cbb20 (migrate from jest to vitest):tests/unit/containers/navigation-icons/user-icons/Studenticons.spec.jsx
 
 const openLoginDialog = vi.fn()
 const setIsSidebarOpen = vi.fn()

@@ -17,7 +17,10 @@ const CarouselWithImage = ({ items }) => {
 
   const carouselWrapper = items.map((item, index) => (
     <Box data-testid='carousel' key={ index } sx={ styles.feature }>
-      <Box alt={item.image} component='img' src={item.image} sx={styles.image} />
+      <Box
+        alt={ item.image } component='img' src={ item.image }
+        sx={ styles.image }
+      />
       <Box sx={ styles.text }>
         <Typography sx={ { color: 'basic.white' } } variant={ 'h6' }>
           { t(item.title) }

@@ -16,16 +16,15 @@ const props = {
   setFullScreen
 }
 
-
-vi.mock("~/hooks/use-confirm", () => {
+vi.mock('~/hooks/use-confirm', () => {
   return {
-    default: () => ({checkConfirmation: () => true})
+    default: () => ({ checkConfirmation: () => true })
   }
 })
 
 describe('Popup dialog test', () => {
   beforeEach(() => {
-    render(<PopupDialog { ...props } />)
+    render(<PopupDialog {...props} />)
   })
 
   it('should have content text', () => {
@@ -45,7 +44,7 @@ describe('Popup dialog test', () => {
 describe('Popup dialog test with timerId', () => {
   const propsWithTimerId = { ...props, timerId: 21 }
   beforeEach(() => {
-    render(<PopupDialog { ...propsWithTimerId } />)
+    render(<PopupDialog {...propsWithTimerId} />)
   })
 
   it('should close popup after delay', async () => {

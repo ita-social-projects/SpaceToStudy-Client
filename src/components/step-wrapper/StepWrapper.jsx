@@ -29,11 +29,17 @@ const StepWrapper = ({ children, steps }) => {
   ))
 
   const nextButton = isLastStep ? (
-    <Button onClick={handleSubmit} size='small' sx={styles.btn} variant='contained'>
+    <Button
+      onClick={ handleSubmit } size='small' sx={ styles.btn }
+      variant='contained'
+    >
       { t('common.finish') }
     </Button>
   ) : (
-    <Button onClick={next} size='small' sx={styles.btn} variant='contained'>
+    <Button
+      onClick={ next } size='small' sx={ styles.btn }
+      variant='contained'
+    >
       { t('common.next') }
       <EastIcon fontSize='small' />
     </Button>
@@ -41,7 +47,10 @@ const StepWrapper = ({ children, steps }) => {
 
   const btnsBox = (
     <Box sx={ styles.btnWrapper }>
-      <Button disabled={activeStep === 0} onClick={back} size='small' sx={styles.btn} variant='outlined'>
+      <Button
+        disabled={ activeStep === 0 } onClick={ back } size='small'
+        sx={ styles.btn } variant='outlined'
+      >
         <WestIcon fontSize='small' />
         { t('common.back') }
       </Button>

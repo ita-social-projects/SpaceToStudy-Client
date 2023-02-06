@@ -5,9 +5,9 @@ import { SnackBarProvider } from '~/context/snackbar-context'
 import { ModalProvider } from '~/context/modal-context'
 import { vi } from 'vitest'
 
-vi.mock("~/hooks/use-confirm", () => {
+vi.mock('~/hooks/use-confirm', () => {
   return {
-    default: () => ({setNeedConfirmation: () => true})
+    default: () => ({ setNeedConfirmation: () => true })
   }
 })
 
@@ -24,11 +24,11 @@ describe('Login form test', () => {
       <SnackBarProvider>
         <ModalProvider>
           <LoginForm
-            data={ data }
-            errors={ errors }
-            handleBlur={ handleBlur }
-            handleChange={ handleChange }
-            handleSubmit={ handleSubmit }
+            data={data}
+            errors={errors}
+            handleBlur={handleBlur}
+            handleChange={handleChange}
+            handleSubmit={handleSubmit}
           />
         </ModalProvider>
       </SnackBarProvider>,
@@ -102,11 +102,11 @@ describe('Login form test with loading', () => {
     renderWithProviders(
       <ModalProvider>
         <LoginForm
-          data={ data }
-          errors={ errors }
-          handleBlur={ handleBlur }
-          handleChange={ handleChange }
-          handleSubmit={ handleSubmit }
+          data={data}
+          errors={errors}
+          handleBlur={handleBlur}
+          handleChange={handleChange}
+          handleSubmit={handleSubmit}
         />
       </ModalProvider>,
       { preloadedState }

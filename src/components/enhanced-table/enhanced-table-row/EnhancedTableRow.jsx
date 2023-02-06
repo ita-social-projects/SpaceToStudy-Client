@@ -27,7 +27,11 @@ const EnhancedTableRow = ({ item, isItemSelected, refetchData }) => {
       propValue = item[field]?.toString()
     }
 
-    return <TableCell key={field}>{propValue}</TableCell>
+    return (
+      <TableCell key={ field }>
+        { propValue }
+      </TableCell>
+    )
   })
 
   const menuItems = rowActions.map(({ label, func }) => (

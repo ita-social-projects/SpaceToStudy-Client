@@ -28,8 +28,8 @@ const EnhancedTableToolbar = ({ refetchData }) => {
       { bulkActions.map(({ title, func, icon }) => (
         <Tooltip key={ title } placement='top' title={ title }>
           <IconButton onClick={ () => onAction(func) }>
-{icon}
-</IconButton>
+            { icon }
+          </IconButton>
         </Tooltip>
       )) }
     </Box>

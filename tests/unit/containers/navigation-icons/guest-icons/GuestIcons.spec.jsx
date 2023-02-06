@@ -8,7 +8,7 @@ const setIsSidebarOpen = vi.fn()
 
 describe('test with guest role', () => {
   beforeEach(() => {
-    renderWithProviders(<GuestIcons openLoginDialog={ openLoginDialog } setIsSidebarOpen={ setIsSidebarOpen } />)
+    renderWithProviders(<GuestIcons openLoginDialog={openLoginDialog} setIsSidebarOpen={setIsSidebarOpen} />)
   })
 
   it('should render login icon', () => {

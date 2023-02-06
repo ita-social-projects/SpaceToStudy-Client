@@ -7,7 +7,7 @@ const mockNavigate = vi.fn()
 
 vi.mock('~/hooks/use-breakpoints')
 vi.mock('react-router', () => ({
-  ...vi.requireActual('react-router-dom'),
+  ...vi.importActual('react-router-dom'),
   useNavigate: () => mockNavigate
 }))
 

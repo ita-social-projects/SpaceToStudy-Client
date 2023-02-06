@@ -10,7 +10,10 @@ const EnumFilter = ({ column, filter, setFilter, clearFilter }) => {
   const { renderMenu, openMenu } = useMenu()
 
   const menuItems = column.filterEnum.map((filterEnum) => (
-    <FilterCheckbox filter={filter} filterCheckbox={filterEnum} key={filterEnum.value} setFilter={setFilter} />
+    <FilterCheckbox
+      filter={ filter } filterCheckbox={ filterEnum } key={ filterEnum.value }
+      setFilter={ setFilter }
+    />
   ))
 
   const endAdornment = (

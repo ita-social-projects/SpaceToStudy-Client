@@ -7,7 +7,10 @@ import { styles } from '~/components/info-card/InfoCard.styles'
 const InfoCard = ({ img, title, description, actionLabel, cardWidth, action }) => {
   return (
     <Box sx={ { ...styles.card, maxWidth: cardWidth } }>
-      <Box alt={title} component='img' src={img} sx={styles.cardImg}></Box>
+      <Box
+        alt={ title } component='img' src={ img }
+        sx={ styles.cardImg }
+      ></Box>
 
       <TitleWithDescription
         description={ description }

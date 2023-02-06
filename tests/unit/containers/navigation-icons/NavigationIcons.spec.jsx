@@ -5,12 +5,13 @@ import { ModalProvider } from '~/context/modal-context'
 import { SnackBarProvider } from '~/context/snackbar-context'
 import { vi } from 'vitest'
 
-vi.mock("~/hooks/use-confirm", () => {
+const setIsSidebarOpen = vi.fn()
+vi.mock('~/hooks/use-confirm', () => {
   return {
-    default: () => ({setNeedConfirmation: () => true})
+    default: () => ({ setNeedConfirmation: () => true })
   }
 })
-jest.mock('~/containers/guest-home-page/google-button/GoogleButton', () => ({
+vi.mock('~/containers/guest-home-page/google-button/GoogleButton', () => ({
   __esModule: true,
   default: function () {
     return <button>Google</button>

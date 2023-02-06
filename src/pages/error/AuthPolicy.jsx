@@ -31,7 +31,10 @@ const AuthPolicy = () => {
           { t('button.toMain') }
         </Button>
       </Box>
-      <Box alt='Authorization error' component='img' src={error401} sx={styles.errorImage} />
+      <Box
+        alt='Authorization error' component='img' src={ error401 }
+        sx={ styles.errorImage }
+      />
     </Container>
   )
 }

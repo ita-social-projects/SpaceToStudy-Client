@@ -25,9 +25,9 @@ vi.mock('react-redux', () => ({
   useSelector: () => mockSelector.mockImplementation(mockState)
 }))
 
-vi.mock("~/hooks/use-confirm", () => {
+vi.mock('~/hooks/use-confirm', () => {
   return {
-    default: () => ({setNeedConfirmation: () => true})
+    default: () => ({ setNeedConfirmation: () => true })
   }
 })
 
@@ -37,7 +37,7 @@ describe('Signup dialog test', () => {
       <MemoryRouter>
         <SnackBarProvider>
           <ModalProvider>
-            <SignupDialog type={ student } />
+            <SignupDialog type={student} />
           </ModalProvider>
         </SnackBarProvider>
       </MemoryRouter>

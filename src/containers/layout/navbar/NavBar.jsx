@@ -55,8 +55,8 @@ const Navbar = () => {
       </Button>
 
       <List sx={ styles.navList }>
-{navigationList}
-</List>
+        { navigationList }
+      </List>
 
       <NavigationIcons setIsSidebarOpen={ setIsSidebarOpen } />
 

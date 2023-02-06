@@ -17,13 +17,13 @@ vi.mock('react-redux', () => ({
   useSelector: () => mockSelector.mockReturnValue(mockState)
 }))
 
-vi.mock("~/hooks/use-confirm", () => {
+vi.mock('~/hooks/use-confirm', () => {
   return {
-    default: () => ({setNeedConfirmation: () => true})
+    default: () => ({ setNeedConfirmation: () => true })
   }
 })
 
-jest.mock('~/containers/guest-home-page/google-button/GoogleButton', () => ({
+vi.mock('~/containers/guest-home-page/google-button/GoogleButton', () => ({
   __esModule: true,
   default: function () {
     return <button>Google</button>

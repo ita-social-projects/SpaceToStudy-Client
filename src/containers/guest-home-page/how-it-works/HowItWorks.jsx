@@ -25,7 +25,10 @@ const HowItWorks = () => {
   }
 
   const cardsMap = isStudent ? (
-    <CardsWithButton array={tutorCardBoxArray} btnText={'Become a tutor'} isStudent={isStudent} role={tutor} />
+    <CardsWithButton
+      array={ tutorCardBoxArray } btnText={ 'Become a tutor' } isStudent={ isStudent }
+      role={ tutor }
+    />
   ) : (
     <CardsWithButton
       array={ studentCardBoxArray }
@@ -53,8 +56,8 @@ const HowItWorks = () => {
         </Stack>
 
         <Box sx={ { mt: '45px' } }>
-{cardsMap}
-</Box>
+          { cardsMap }
+        </Box>
       </Box>
     </Box>
   )

@@ -1,10 +1,10 @@
 {
-    "language": "Language",
-    "messages": "Messages",
-    "favorites": "Favorites",
-    "notifications": "Notifications",
-    "account": "Account",
-    "menu": "Menu",
-    "login": "Login",
-    "logout": "Logout"
+  "language": "Language",
+  "messages": "Messages",
+  "favorites": "Favorites",
+  "notifications": "Notifications",
+  "account": "Account",
+  "menu": "Menu",
+  "login": "Login",
+  "logout": "Logout"
 }

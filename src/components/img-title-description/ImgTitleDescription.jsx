@@ -12,7 +12,10 @@ const componentStyle = {
 const ImgTitleDescription = ({ img, title, description, style = componentStyle }) => {
   return (
     <Box sx={ style.root }>
-      <Box alt='info' component='img' src={img} sx={style.img} />
+      <Box
+        alt='info' component='img' src={ img }
+        sx={ style.img }
+      />
 
       <TitleWithDescription
         componentStyles={ style.wrapper }

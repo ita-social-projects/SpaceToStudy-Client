@@ -4,9 +4,7 @@ module.exports = {
     '^~/(.*)$': '<rootDir>/src/$1',
     '^~tests/(.*)$': '<rootDir>/tests/$1'
   },
-  testMatch: [
-    '<rootDir>/tests/unit/**/*.spec.js',
-  ],
+  testMatch: ['<rootDir>/tests/unit/**/*.spec.js'],
   setupFilesAfterEnv: ['<rootDir>/tests/setup-tests.js'],
   collectCoverageFrom: [
     'src/**/*.{js,jsx,ts,tsx}',
@@ -19,11 +17,11 @@ module.exports = {
     '!src/stories/**/*.{js,jsx,css}'
   ],
   coverageThreshold: {
-    'global': {
-      'branches': 80,
-      'functions': 80,
-      'lines': 80,
-      'statements': 80
+    global: {
+      branches: 80,
+      functions: 80,
+      lines: 80,
+      statements: 80
     }
   },
   coverageReporters: ['html', 'lcov'],

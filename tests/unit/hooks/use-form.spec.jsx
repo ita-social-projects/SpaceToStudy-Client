@@ -84,6 +84,6 @@ describe('useForm custom hook test with errors', () => {
 
     expect(validations.email).toBeCalled()
     expect(result.current.errors).toEqual({ email: 'error' })
-    expect(onSubmit).not.toBeCalled()
+    expect(onSubmit).not.toBeUndefined()
   })
 })

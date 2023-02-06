@@ -7,7 +7,10 @@ import { styles } from '~/components/clickable-card/ClickableCard.styles'
 const ClickableCard = ({ img, title, description, action }) => {
   return (
     <Box data-testid='clickable-card' onClick={ action } sx={ styles.card }>
-      <Box alt='Category image' component='img' src={img} sx={{ mr: '24px' }} />
+      <Box
+        alt='Category image' component='img' src={ img }
+        sx={ { mr: '24px' } }
+      />
       <TitleWithDescription
         componentStyles={ { margin: '0px', mb: '0px', textAlign: 'start' } }
         description={ description }

@@ -4,9 +4,7 @@ import useSelect from '~/hooks/table/use-select'
 import { getFakeTestEvent } from '~tests/test-utils'
 
 describe('Use select custom hook', () => {
-  const wrapper = ({ children }) => (<TableProvider>
-    { children }
-  </TableProvider>)
+  const wrapper = ({ children }) => <TableProvider>{children}</TableProvider>
 
   const items = [
     { _id: 1, value: 1 },

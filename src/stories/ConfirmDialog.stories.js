@@ -6,7 +6,7 @@ export default {
   argTypes: { onConfirm: { action: 'Confirmed' }, onDismiss: { action: 'Dismissed' } }
 }
 
-const Template = (args) => <ConfirmDialog {...args} />
+const Template = (args) => <ConfirmDialog { ...args } />
 
 export const Default = Template.bind({})
 
