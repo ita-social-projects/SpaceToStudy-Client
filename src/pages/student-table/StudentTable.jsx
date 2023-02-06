@@ -40,10 +40,7 @@ const StudentTable = () => {
   ]
 
   const tabs = Object.values(tabsInfo).map((tab) => (
-    <Tab
-      activeTab={ externalFilter.isEmailConfirmed } key={ tab.label } setTab={ setExternalFilter }
-      tab={ tab }
-    />
+    <Tab activeTab={externalFilter.isEmailConfirmed} key={tab.label} setTab={setExternalFilter} tab={tab} />
   ))
 
   const props = {
@@ -65,8 +62,8 @@ const StudentTable = () => {
         rowActions={ rowActions }
       >
         <Box sx={ styles.tabs }>
-          { tabs }
-        </Box>
+{tabs}
+</Box>
         { tabsInfo[externalFilter.isEmailConfirmed].component(props) }
       </TableProvider>
     </Box>

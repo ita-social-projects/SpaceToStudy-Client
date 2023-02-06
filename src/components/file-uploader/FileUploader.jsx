@@ -43,17 +43,14 @@ const FileUploader = ({ buttonText, emitter, initialState = [], initialError = '
         onDrop={ dragDrop }
         sx={ [styles.root, isDrag && styles.rootDrag] }
       >
-        { initialState.length > 0 && (<List sx={ { width: '100%' } }>
-          { filesList }
-        </List>) }
+        { initialState.length > 0 && <List sx={ { width: '100%' } }>
+{filesList}
+</List> }
 
         <Button component='label' sx={ styles.uploadBtn }>
           <CloudUploadIcon sx={ styles.icon } />
           { buttonText }
-          <input
-            hidden multiple onChange={ addFiles }
-            type='file'
-          />
+          <input hidden multiple onChange={addFiles} type='file' />
         </Button>
       </Box>
 

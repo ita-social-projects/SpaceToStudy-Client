@@ -47,10 +47,7 @@ const LoginDialog = () => {
   return (
     <Box sx={ styles.root }>
       <Box sx={ styles.imgContainer }>
-        <Box
-          alt='login' component='img' src={ loginImg }
-          sx={ styles.img }
-        />
+        <Box alt='login' component='img' src={loginImg} sx={styles.img} />
       </Box>
 
       <Box sx={ styles.formContainer }>

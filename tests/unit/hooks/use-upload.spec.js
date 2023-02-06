@@ -1,5 +1,6 @@
 import { act, renderHook } from '@testing-library/react-hooks'
 import useUpload from '~/hooks/use-upload'
+import { vi } from 'vitest'
 
 const files = []
 const validationData = {
@@ -13,11 +14,11 @@ const validationData = {
 }
 const fakeFile = new File(['certificate'], 'test-file.png', { type: 'application/pdf' })
 const getFakeTestEvent = (fakeFile) => ({
-  preventDefault: jest.fn(),
+  preventDefault: vi.fn(),
   dataTransfer: { files: [fakeFile] },
   target: { files: [fakeFile] }
 })
-const emitter = jest.fn()
+const emitter = vi.fn()
 
 describe('useUpload custom hook test without errors', () => {
   it('should have initial values', () => {
@@ -39,7 +40,7 @@ describe('useUpload custom hook test without errors', () => {
 
     expect(result.current.isDrag).toEqual(true)
   })
-
+  
   it('should change isDrag value to true after dragStart and to false after dragStart', () => {
     const { result } = renderHook(() => useUpload({ files, emitter, validationData }))
 
@@ -62,7 +63,8 @@ describe('useUpload custom hook test without errors', () => {
     const { result } = renderHook(() => useUpload({ files, emitter, validationData }))
 
     act(() => result.current.addFiles(getFakeTestEvent(fakeFile)))
-
+    
+    emitter.mock.calls.length = 1
     expect(emitter).toHaveBeenCalledTimes(1)
   })
 

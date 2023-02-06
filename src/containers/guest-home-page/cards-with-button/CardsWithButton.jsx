@@ -43,10 +43,7 @@ const CardsWithButton = ({ array, role, btnText, isStudent }) => {
             <Box sx={ styles[boxSide].clearBox } />
             <Box sx={ styles.image }>
               <Box component='img' src={ item.icon } />
-              <Box
-                className='dots' component='img' src={ dots }
-                sx={ styles.dots }
-              />
+              <Box className='dots' component='img' src={dots} sx={styles.dots} />
             </Box>
             <TitleWithDescription
               description={ t(item.description) }

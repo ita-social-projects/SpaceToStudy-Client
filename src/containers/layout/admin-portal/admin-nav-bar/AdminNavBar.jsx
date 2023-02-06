@@ -53,8 +53,8 @@ const AdminNavBar = () => {
     <List data-testid='AdminNavBar' sx={ [styles.navBar, expanded && styles.expanded] }>
       <ListItemButton onClick={ openNavBar } sx={ [styles.listItem, styles.openButton] }>
         <ListItemIcon sx={ styles.openButton }>
-          { expandIcon }
-        </ListItemIcon>
+{expandIcon}
+</ListItemIcon>
       </ListItemButton>
       <Divider sx={ styles.divider } />
       { navBarList }

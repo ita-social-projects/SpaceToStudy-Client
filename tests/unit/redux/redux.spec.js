@@ -1,4 +1,5 @@
 import MockAdapter from 'axios-mock-adapter'
+import { vi } from 'vitest'
 
 import { store } from '~/redux/store'
 import reducer, { logout, checkAuth, loginUser, logoutUser, signupUser } from '~/redux/reducer'
@@ -18,7 +19,7 @@ import {
   errorCode
 } from './redux.variables'
 
-jest.mock('~/services/local-storage-service', () => ({
+vi.mock('~/services/local-storage-service', () => ({
   __esModule: true,
   getFromLocalStorage: () => true,
   setToLocalStorage: () => true,

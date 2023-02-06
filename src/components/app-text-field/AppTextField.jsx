@@ -8,8 +8,8 @@ const AppTextField = ({ errorMsg, ...props }) => {
   const helperText = errorMsg ? (
     <Tooltip title={ errorMsg }>
       <Typography variant='caption'>
-        { errorMsg }
-      </Typography>
+{errorMsg}
+</Typography>
     </Tooltip>
   ) : (
     ' '

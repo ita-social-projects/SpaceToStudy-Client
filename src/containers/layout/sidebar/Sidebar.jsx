@@ -37,8 +37,8 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen, navigationItems }) => {
       </IconButton>
 
       <List sx={ styles.list }>
-        { navigationList }
-      </List>
+{navigationList}
+</List>
     </Drawer>
   )
 }

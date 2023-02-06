@@ -31,8 +31,8 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors, clos
   const policyAgreement = (
     <Box sx={ styles.box }>
       <Typography variant='subtitle2'>
-        { t('signup.iAgree') }
-      </Typography>
+{t('signup.iAgree')}
+</Typography>
       <Typography
         component={ HashLink }
         onClick={ closeModal }

@@ -23,10 +23,7 @@ const Faq = () => {
         titleStyles={ { typography: { xs: 'h5' } } }
       />
 
-      <Accordions
-        activeIndex={ activeItemId } items={ accordionItems } onChange={ changeAccordion }
-        showMoreIcon square
-      />
+      <Accordions activeIndex={activeItemId} items={accordionItems} onChange={changeAccordion} showMoreIcon square />
     </Box>
   )
 }

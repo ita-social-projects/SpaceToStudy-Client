@@ -30,29 +30,26 @@ const AddPhoto = ({ btnsBox, stepLabel }) => {
     })
   }
 
-  const photoPrewiew = photo.length ? (
-    <Box
-      alt={ t('becomeTutor.photo.imageAlt') } component='img' src={ photo[0].src }
-      sx={ style.img }
-    />
+  const photoPrewiew = data.photo.length ? (
+    <Box alt={t('becomeTutor.photo.imageAlt')} component='img' src={data.photo[0].src} sx={style.img} />
   ) : (
     <Box sx={ style.preview }>
       <Typography>
-        { t('becomeTutor.photo.placeholder') }
-      </Typography>
+{t('becomeTutor.photo.placeholder')}
+</Typography>
     </Box>
   )
 
   return (
     <Box sx={ style.root }>
       <Box sx={ style.imgContainer }>
-        { photoPrewiew }
-      </Box>
+{photoPrewiew}
+</Box>
       <Box sx={ style.rigthBox }>
         <Box>
           <Typography sx={ style.description }>
-            { t('becomeTutor.photo.description') }
-          </Typography>
+{t('becomeTutor.photo.description')}
+</Typography>
           <FileUploader
             buttonText={ t('becomeTutor.photo.button') }
             emitter={ addPhoto }
