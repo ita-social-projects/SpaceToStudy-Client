@@ -20,7 +20,6 @@
     "react-i18next": "^11.14.3",
     "react-redux": "^7.2.6",
     "react-router-dom": "^6.8.0",
-    "react-scripts": "4.0.3",
     "react-swipeable-views": "^0.14.0",
     "react-transition-group": "^4.4.5",
     "web-vitals": "^1.1.2"
@@ -36,11 +35,14 @@
     "@storybook/preset-create-react-app": "^3.2.0",
     "@storybook/react": "^6.5.9",
     "@storybook/testing-library": "^0.0.13",
-    "@testing-library/jest-dom": "^5.16.0",
+    "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^11.2.7",
     "@testing-library/react-hooks": "^7.0.2",
     "@testing-library/user-event": "^12.8.3",
+    "@vitejs/plugin-react": "^2.2.0",
+    "@vitest/coverage-c8": "^0.28.1",
     "axios-mock-adapter": "^1.20.0",
+    "c8": "^7.12.0",
     "cross-env": "^7.0.3",
     "css-mediaquery": "^0.1.2",
     "eslint": "^7.32.0",
@@ -50,21 +52,27 @@
     "eslint-plugin-storybook": "^0.6.1",
     "husky": "^8.0.1",
     "jest-sonar-reporter": "^2.0.0",
+    "jsdom": "^21.1.0",
     "lint-staged": "^13.0.3",
-    "prettier": "2.5.1"
+    "prettier": "2.5.1",
+    "vite": "^3.2.0",
+    "vite-plugin-html": "^3.2.0",
+    "vite-plugin-svgr": "0.3.0",
+    "vitest": "^0.28.1"
   },
   "scripts": {
-    "start": "craco start",
-    "build": "craco build",
-    "test": "cross-env CI=true craco test --coverage",
-    "lint": "eslint src/**/*.js --fix",
+    "start": "vite",
+    "build": "vite build",
+    "test": "cross-env CI=true jest test --coverage",
+    "serve": "vite preview",
+    "lint": "eslint src/**/*.jsx --fix",
     "storybook": "start-storybook -p 6006 -s build-story",
     "build-storybook": "build-storybook -o build-story",
     "prepare": "husky install",
     "pre-commit": "lint-staged"
   },
   "lint-staged": {
-    "*.{js}": [
+    "*.{js, jsx}": [
       "prettier --write",
       "eslint --fix"
     ]
