@@ -47,11 +47,12 @@ describe('imageResize', () => {
       }
     })
   })
-  it('should handle onload event and return url for new image', (done) => {
+  it('should handle onload event and return url for new image', () => {
+    vi.useFakeTimers('legacy')
     const newImageUrl = 'test.image.png'
     HTMLCanvasElement.prototype.toDataURL.mockReturnValue(newImageUrl)
     const newImage = imageResize('image-for-test.jpeg', 600, 600)
     onloadRef()
-    newImage.then((result) => expect(result).toBe(newImageUrl)).then(done)
+    newImage.then((result) => expect(result).toBe(newImageUrl)).then()
   })
 })

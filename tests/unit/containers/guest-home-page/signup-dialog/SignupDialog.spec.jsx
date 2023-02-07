@@ -37,7 +37,7 @@ describe('Signup dialog test', () => {
       <MemoryRouter>
         <SnackBarProvider>
           <ModalProvider>
-            <SignupDialog type={student} />
+            <SignupDialog type={ student } />
           </ModalProvider>
         </SnackBarProvider>
       </MemoryRouter>

@@ -40,7 +40,7 @@ const GoogleButton = ({ role, route, buttonWidth, type }) => {
     const googleId = window.google.accounts.id
 
     googleId.initialize({
-      client_id: process.env.REACT_APP_GMAIL_CLIENT_ID,
+      client_id: import.meta.env.VITE_GMAIL_CLIENT_ID,
       callback: handleCredentialResponse
     })
 

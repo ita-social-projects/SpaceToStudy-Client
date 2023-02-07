@@ -2,7 +2,6 @@ import {  screen } from '@testing-library/react'
 import { vi } from 'vitest'
 import { ModalProvider } from '~/context/modal-context'
 import AppMain from '~/containers/layout/app-main/AppMain'
-import { ModalProvider } from '~/context/modal-context'
 import { renderWithProviders } from '~tests/test-utils'
 import { describe, it, expect } from 'vitest'
 
@@ -18,6 +17,14 @@ vi.mock('react-redux', () => ({
   ...vi.importActual('react-redux'),
   useDispatch: () => mockDispatch
 }))
+// vi.mock("react-redux", async () => {
+//   const actual = await vi.importActual("react-redux")
+//   return {
+//     ...actual,
+//     useDispatch: () => mockDispatch
+//   },
+// })
+
 describe('AppMain layout component test', () => {
   it('should render loader', () => {
     renderWithProviders(
