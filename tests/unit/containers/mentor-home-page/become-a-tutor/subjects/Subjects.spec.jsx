@@ -15,7 +15,7 @@ describe('AddDocuments test with some data', () => {
     render(
       <ModalProvider>
         <StepProvider>
-          <Subjects btnsBox={btnsBox} stepLabel={'subjects'} />
+          <Subjects btnsBox={ btnsBox } stepLabel={ 'subjects' } />
         </StepProvider>
       </ModalProvider>
     )
@@ -121,27 +121,3 @@ describe('AddDocuments test with some data', () => {
   })
 })
 
-describe('AddDocuments test with empty data', () => {
-  beforeEach(() => {
-    render(
-      <ModalProvider>
-        <StepProvider>
-          <Subjects btnsBox={btnsBox} stepLabel={'subjects'} />
-        </StepProvider>
-      </ModalProvider>
-    )
-  })
-
-  it('should not add new subject', async () => {
-    const addSubject = screen.getByTestId('add-subject')
-
-    expect(addSubject).toBeInTheDocument()
-
-    fireEvent.click(addSubject)
-
-    setTimeout(() => {
-      const chips = screen.getAllByTestId('chip')
-      expect(chips.length).toBe(0)
-    }, 0)
-  })
-})

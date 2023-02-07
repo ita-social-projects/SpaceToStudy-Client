@@ -3,7 +3,7 @@ import { createMemoryRouter, createRoutesFromElements, RouterProvider } from 're
 import { Provider } from 'react-redux'
 import { configureStore } from '@reduxjs/toolkit'
 import reducer from '~/redux/reducer'
-import { ThemeProvider } from '@emotion/react'
+import { ThemeProvider } from '@mui/material/styles'
 import { theme } from '~/styles/app-theme/custom-mui.styles'
 import { admin, tutor, student } from '~/constants'
 
@@ -13,10 +13,11 @@ import { studentRoutes } from '~/router/constants/studentRoutes'
 import { errorRoutes } from '~/router/constants/errorRoutes'
 import { adminRoutes } from '~/router/constants/adminRoutes'
 import useAxios from '~/hooks/use-axios'
+import { vi } from 'vitest'
 
-jest.mock('~/hooks/use-axios')
+vi.mock('~/hooks/use-axios')
 
-window.scrollTo = jest.fn()
+window.scrollTo = vi.fn()
 
 const renderWithRouter = (initialEntries, preloadedState) => {
   const store = configureStore({ reducer: { appMain: reducer }, preloadedState })

@@ -62,11 +62,9 @@
   "scripts": {
     "start": "vite",
     "build": "vite build",
-    "test": "cross-env CI=true vitest",
+    "test": "cross-env CI=true vitest --coverage",
     "serve": "vite preview",
-    "lint:fix": "eslint ./src --ext .jsx,.js,.ts,.tsx --quiet --fix --ignore-path ./.gitignore",
-    "lint:format": "prettier  --loglevel warn --write \"./**/*.{js,jsx,ts,tsx,css,md,json}\" ",
-    "lint": "npm lint:format && npm lint:fix ",
+    "lint": "eslint ./src --ext .jsx,.js,.ts,.tsx --quiet --fix --ignore-path ./.gitignore",
     "storybook": "start-storybook -p 6006 -s build-story",
     "build-storybook": "build-storybook -o build-story",
     "prepare": "husky install",
