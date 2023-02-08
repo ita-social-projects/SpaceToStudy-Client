@@ -1,5 +1,8 @@
+import { Container } from '@mui/material'
 import { useEffect, useContext } from 'react'
 import { useSelector } from 'react-redux'
+import CompleteProfile from '~/components/complete-profile/CompleteProfile'
+import { profileItems } from '~/components/profile-item/complete-profile.constants'
 import BecomeATutor from '~/containers/tutor-home-page/become-a-tutor/BecomeATutor'
 import { ModalContext } from '~/context/modal-context'
 
@@ -16,7 +19,12 @@ const TutorHome = () => {
     }
   }, [openModal, isFirstLogin])
 
-  return <div data-testid='tutorHome'>Hello Tutor!</div>
+  return (
+    <Container data-testid='tutorHome' style={ { flex: 1 } }>
+      Hello Tutor!
+      <CompleteProfile data={ {} } profileItems={ profileItems } />
+    </Container>
+  )
 }
 
 export default TutorHome
