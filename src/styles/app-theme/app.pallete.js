@@ -6,7 +6,12 @@ const palette = {
   basic: {
     black: '#000000',
     white: '#FFFFFF',
-    grey: '#ECEFF1'
+    grey: '#ECEFF1',
+    carmenRed: '#B91F1B',
+    burntOrange: '#F56F36',
+    yellowBrown: '#F5D636',
+    yellowGreen: '#9BC541',
+    fruitSalad: '#4CAF50'
   },
   companyBlue: 'rgba(0, 167, 167, 0.2)',
   error: {

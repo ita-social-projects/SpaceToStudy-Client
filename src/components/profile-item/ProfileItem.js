@@ -1,7 +1,8 @@
-import { Typography } from '@mui/material'
-import { Box } from '@mui/system'
-import { styles } from './ProfileItem.styles'
+import Typography from '@mui/material/Typography'
+import Box from '@mui/system/Box'
 import CheckIcon from '@mui/icons-material/Check'
+
+import { styles } from '~/components/profile-item/ProfileItem.styles'
 import useBreakpoints from '~/hooks/use-breakpoints'
 
 const ProfileItem = ({ item, isFilled = false }) => {

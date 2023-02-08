@@ -1,6 +1,6 @@
-import { Container } from '@mui/material'
 import { useEffect, useContext } from 'react'
 import { useSelector } from 'react-redux'
+import Container from '@mui/material/Container'
 import CompleteProfile from '~/components/complete-profile/CompleteProfile'
 import { profileItems } from '~/components/profile-item/complete-profile.constants'
 import BecomeATutor from '~/containers/tutor-home-page/become-a-tutor/BecomeATutor'

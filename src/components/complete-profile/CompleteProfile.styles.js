@@ -1,9 +1,7 @@
-import palette from '~/styles/app-theme/app.pallete'
-
 export const styles = {
   wrapper: {
     padding: { xs: '14px 16px', sm: '44px' },
-    background: palette.basic.grey,
+    backgroundColor: 'primary.50',
     borderRadius: '8px',
     boxShadow: 'none',
     '& .MuiAccordionSummary-root': {

@@ -1,8 +1,9 @@
-import { Typography } from '@mui/material'
-import { Box } from '@mui/system'
+import Typography from '@mui/material/Typography'
+import Box from '@mui/system/Box'
+
 import useBreakpoints from '~/hooks/use-breakpoints'
-import { labelsValue } from '../profile-item/complete-profile.constants'
-import { styles } from './AppProgressBarLine.styles'
+import { labelsValue } from '~/components/profile-item/complete-profile.constants'
+import { styles } from '~/components/app-progress-bar-line/AppProgressBarLine.styles'
 
 const AppProgressBar = ({ value }) => {
   const { isMobile } = useBreakpoints()

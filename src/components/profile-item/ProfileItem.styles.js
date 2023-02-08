@@ -1,11 +1,9 @@
-import palette from '~/styles/app-theme/app.pallete'
-
 export const styles = {
   wrapper: {
     padding: { xs: '10px 14px', sm: '20px 35px' },
     borderRadius: '8px',
-    color: palette.primary[500],
-    backgroundColor: palette.basic.white,
+    color: 'primary.500',
+    backgroundColor: 'white',
     height: 'auto'
   },
   information: {
@@ -17,7 +15,7 @@ export const styles = {
     svg: {
       width: '40px',
       height: '40px',
-      color: palette.primary[500]
+      color: 'primary.500'
     }
   },
   text: {

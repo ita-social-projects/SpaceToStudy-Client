@@ -20,7 +20,7 @@ export const styles = {
     alignItems: 'center',
     width: '100%',
     height: '10px',
-    background: palette.primary[100],
+    backgroundColor: 'primary.100',
     borderRadius: '5px'
   },
   fillInPercent: {
@@ -30,6 +30,11 @@ export const styles = {
   },
   scale: {
     height: 'inherit',
-    background: 'linear-gradient(90deg, #B91F1B 0%, #F56F36 20%, #F5D636 40%, #9BC541 80%, #4CAF50 100%)'
+    background: `linear-gradient(90deg,
+      ${palette.basic.carmenRed} 0%,
+      ${palette.basic.burntOrange} 20%,
+      ${palette.basic.yellowBrown} 40%,
+      ${palette.basic.yellowGreen} 80%,
+      ${palette.basic.fruitSalad} 100%)`
   }
 }
