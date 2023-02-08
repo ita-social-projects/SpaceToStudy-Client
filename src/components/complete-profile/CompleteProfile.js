@@ -25,7 +25,9 @@ const CompleteProfile = ({ profileItems, data, expanded = false }) => {
   const { userRole } = useSelector((state) => state.appMain)
   const homePage = useMatch(guestRoutes[userRole].path)
   const linkToProfile =
-    userRole === 'student' ? studentRoutes.accountMenu.myProfile.path : tutorRoutes.accountMenu.myProfile.path
+    userRole === guestRoutes.student.path
+      ? studentRoutes.accountMenu.myProfile.path
+      : tutorRoutes.accountMenu.myProfile.path
   const [isOpen, setIsOpen] = useState(expanded)
 
   const checkProfileData = useMemo(() => profileItems.filter((item) => data[item.name]), [data, profileItems])
