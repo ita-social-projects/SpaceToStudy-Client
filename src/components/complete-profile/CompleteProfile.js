@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { Link, useMatch } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { useSelector } from 'react-redux'
 
 import Accordion from '@mui/material/Accordion'
 import AccordionDetails from '@mui/material/AccordionDetails'
@@ -19,10 +20,13 @@ import { tutorRoutes } from '~/router/constants/tutorRoutes.js'
 import { studentRoutes } from '~/router/constants/studentRoutes.js'
 import { guestRoutes } from '~/router/constants/guestRoutes'
 
-const CompleteProfile = ({ profileItems, data }) => {
+const CompleteProfile = ({ profileItems, data, expanded = false }) => {
   const { t } = useTranslation()
-  const isTutorOrStudent = useMatch(guestRoutes.tutor.route || guestRoutes.student.route)
-  const [isOpen, setIsOpen] = useState(false)
+  const { userRole } = useSelector((state) => state.appMain)
+  const homePage = useMatch(guestRoutes[userRole].path)
+  const linkToProfile =
+    userRole === 'student' ? studentRoutes.accountMenu.myProfile.path : tutorRoutes.accountMenu.myProfile.path
+  const [isOpen, setIsOpen] = useState(expanded)
 
   const checkProfileData = useMemo(() => profileItems.filter((item) => data[item.name]), [data, profileItems])
   const valueProgressBar = Math.floor((checkProfileData.length / profileItems.length) * 100)
@@ -38,20 +42,14 @@ const CompleteProfile = ({ profileItems, data }) => {
     setIsOpen((prev) => !prev)
   }
 
-  const icon = !isTutorOrStudent ? (
+  const icon = homePage ? (
+    <Link to={ linkToProfile }>
+      <ArrowForwardIcon color='secondary' />
+    </Link>
+  ) : (
     <IconButton data-testid='showOrHide' onClick={ handleClick } sx={ { padding: '0px' } }>
       { isOpen ? <ExpandLessIcon data-testid='icon-less' /> : <ExpandMoreIcon data-testid='icon-more' /> }
     </IconButton>
-  ) : (
-    <Link
-      to={
-        isTutorOrStudent.pattern.path === guestRoutes.tutor.path
-          ? tutorRoutes.accountMenu.myProfile.route
-          : studentRoutes.accountMenu.myProfile.route
-      }
-    >
-      <ArrowForwardIcon color='secondary' />
-    </Link>
   )
 
   return (
