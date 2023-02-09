@@ -12,18 +12,13 @@ const mockState = {
 const mockDispatch = vi.fn()
 
 vi.mock('~/services/local-storage-service')
-
-vi.mock('react-redux', () => ({
-  ...vi.importActual('react-redux'),
-  useDispatch: () => mockDispatch
-}))
-// vi.mock("react-redux", async () => {
-//   const actual = await vi.importActual("react-redux")
-//   return {
-//     ...actual,
-//     useDispatch: () => mockDispatch
-//   },
-// })
+vi.mock("react-redux", async () => {
+  const actual = await vi.importActual("react-redux")
+  return {
+    ...actual,
+    useDispatch: () => mockDispatch
+  }
+})
 
 describe('AppMain layout component test', () => {
   it('should render loader', () => {

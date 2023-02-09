@@ -69,9 +69,10 @@ describe('Login dialog test', () => {
     expect(inputPassword.value).toBe('test')
   })
 
-  it('should show error', () => {
-    const button = screen.getByText('common.labels.login')
-    fireEvent.click(button)
+  it('should show error',  () => {
+    const inputEmail = screen.getByLabelText(/common.labels.email/i)
+    fireEvent.focusOut(inputEmail)
+
     const error = screen.getByText('common.errorMessages.emptyField')
 
     expect(error).toBeInTheDocument()

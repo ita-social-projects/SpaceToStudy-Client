@@ -41,8 +41,9 @@ describe('ForgotPassword test', () => {
   })
 
   it('should show error after submit with empty input', () => {
-    const button = screen.getByText('login.sendPassword')
-    fireEvent.click(button)
+    const inputEmail = screen.getByLabelText(/common.labels.email/i)
+    fireEvent.focusOut(inputEmail)
+
     const error = screen.getByText('common.errorMessages.emptyField')
 
     expect(error).toBeInTheDocument()

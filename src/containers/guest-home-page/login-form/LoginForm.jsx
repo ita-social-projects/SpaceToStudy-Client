@@ -32,6 +32,7 @@ const LoginForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) => 
       <AppTextField
         autoFocus
         errorMsg={ t(errors.email) }
+        data-testid={'email'}
         fullWidth
         label={ t('common.labels.email') }
         onBlur={ handleBlur('email') }
