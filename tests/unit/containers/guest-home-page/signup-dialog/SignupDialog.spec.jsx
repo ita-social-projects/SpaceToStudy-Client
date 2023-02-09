@@ -71,10 +71,8 @@ describe('Signup dialog test', () => {
   })
 
   it('should show error', () => {
-    const checkbox = screen.getByRole('checkbox')
-    fireEvent.click(checkbox)
-    const button = screen.getByText('common.labels.signup')
-    fireEvent.click(button)
+    const inputEmail = screen.getByLabelText(/common.labels.firstName/i)
+    fireEvent.focusOut(inputEmail)
 
     const error = screen.getByText('common.errorMessages.emptyField')
 
