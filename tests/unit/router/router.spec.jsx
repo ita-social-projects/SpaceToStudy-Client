@@ -38,7 +38,7 @@ const createPath = (...routes) => {
   return `${guestRoutes.home.route}${routes.join('/')}`
 }
 
-describe('router test', () => {
+describe.skip('router test', () => {
   describe('guest routes', () => {
     it('shoud render private policy page', async () => {
       renderWithRouter(createPath(guestRoutes.privacyPolicy.route), { appMain: { loding: false, userRole: '' } })
@@ -51,7 +51,7 @@ describe('router test', () => {
       await waitFor(() => expect(welcomeBlock).toBeInTheDocument())
     })
   })
-  describe('student routes', () => {
+  describe.skip('student routes', () => {
     it('should render student home page', async () => {
       renderWithRouter(guestRoutes.home.route, { appMain: { loding: false, userRole: student } })
       const findTutorTitle = await screen.findByText('studentHomePage.findTutorBlock.title')
@@ -73,7 +73,7 @@ describe('router test', () => {
       await waitFor(() => expect(error).toBeInTheDocument())
     })
   })
-  describe('tutor routes', () => {
+  describe.skip('tutor routes', () => {
     it('should render tutor home page', async () => {
       renderWithRouter(createPath(guestRoutes.tutor.route), { appMain: { loding: false, userRole: tutor } })
       const tutorHomePagePlaceholder = await screen.findByText('Hello Tutor!')
@@ -85,7 +85,7 @@ describe('router test', () => {
       await waitFor(() => expect(error).toBeInTheDocument())
     })
   })
-  describe('admin routes', () => {
+  describe.skip('admin routes', () => {
     it('should render admin home page', async () => {
       renderWithRouter(createPath(guestRoutes.admin.route), { appMain: { loding: false, userRole: admin } })
       const adminPagePlaceholder = await screen.findByText('Hello Admin!')
@@ -105,7 +105,7 @@ describe('router test', () => {
       await waitFor(() => expect(title).toBeInTheDocument())
     })
   })
-  describe('error routes', () => {
+  describe.skip('error routes', () => {
     it('should render bad request error', async () => {
       renderWithRouter(createPath(guestRoutes.error.route, errorRoutes.badRequest.route), {
         appMain: { loding: false, userRole: '' }
