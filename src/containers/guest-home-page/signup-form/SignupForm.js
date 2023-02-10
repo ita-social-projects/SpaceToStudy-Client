@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from 'react'
+import { useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import HashLink from '~/components/hash-link/HashLink'
 import { useSelector } from 'react-redux'
@@ -28,11 +28,10 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors, clos
     setButtonDisabled(!buttonDisabled)
   }
 
-  const hasErrors = useCallback(() => Object.values(errors).some((elem) => elem === undefined), [errors])
-
-  const emptyData = useCallback(() => Object.values(data).every((elem) => elem !== ''), [data])
-
-  const isValid = useMemo(() => hasErrors() && emptyData(), [emptyData, hasErrors])
+  const isValid = useMemo(
+    () => Object.values(errors).some((elem) => elem === undefined) && Object.values(data).every((elem) => elem !== ''),
+    [data, errors]
+  )
 
   const policyAgreement = (
     <Box sx={ styles.box }>
