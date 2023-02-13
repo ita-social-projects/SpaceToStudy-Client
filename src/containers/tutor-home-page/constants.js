@@ -3,18 +3,15 @@ import { nameField, textField } from '~/utils/validations/common'
 export const initialValues = {
   firstName: '',
   lastName: '',
-  country: '',
-  city: '',
-  confirmAge: false,
+  country: null,
+  city: null,
   experience: ''
 }
 
 export const validations = {
   firstName: nameField,
   lastName: nameField,
-  country: nameField,
-  city: nameField,
-  experience: textField(200, 1000)
+  experience: textField(0, 70)
 }
 
 export const stepLabels = ['generalInfo', 'subjects', 'languages', 'photo']

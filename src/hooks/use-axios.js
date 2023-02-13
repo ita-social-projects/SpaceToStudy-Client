@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 
-const useAxios = ({ service, fetchOnMount = true }) => {
+const useAxios = ({ service, fetchOnMount = true, clearResponse = false }) => {
   const [response, setResponse] = useState(null)
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(fetchOnMount)
@@ -8,6 +8,7 @@ const useAxios = ({ service, fetchOnMount = true }) => {
   const fetchData = useCallback(
     async (data) => {
       try {
+        clearResponse && setResponse(null)
         setLoading(true)
         const res = await service(data)
         setResponse(res)
@@ -19,7 +20,7 @@ const useAxios = ({ service, fetchOnMount = true }) => {
         setLoading(false)
       }
     },
-    [service]
+    [service, clearResponse]
   )
 
   useEffect(() => {

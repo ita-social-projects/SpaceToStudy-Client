@@ -1,10 +1,11 @@
 import { createContext, useCallback, useContext, useState } from 'react'
 import { stepLabels } from '~/containers/tutor-home-page/constants'
+import { initialValues } from '~/containers/tutor-home-page/constants'
 
 const StepContext = createContext()
 
 const StepProvider = ({ children }) => {
-  const [generalData, setGeneralData] = useState({})
+  const [generalData, setGeneralData] = useState({ data: initialValues })
   const [subject, setSubject] = useState([])
   const [languages, setLanguages] = useState({})
   const [photo, setPhoto] = useState([])
