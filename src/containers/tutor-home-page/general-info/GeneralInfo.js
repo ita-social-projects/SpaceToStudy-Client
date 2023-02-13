@@ -124,7 +124,7 @@ const GeneralInfo = ({ btnsBox, stepLabel }) => {
 
           <AppTextField
             fullWidth
-            inputProps={ { maxLength: 200 } }
+            inputProps={ { maxLength: 70 } }
             label={ t('becomeTutor.generalInfo.textFieldLabel') }
             maxRows='4'
             minRows='4'
@@ -134,11 +134,11 @@ const GeneralInfo = ({ btnsBox, stepLabel }) => {
             value={ data.experience }
           />
           <Typography
-            color={ data.experience.length === 200 ? 'error' : 'text' }
+            color={ data.experience.length === 70 ? 'error' : 'text' }
             sx={ styles.experienceLength }
             variant='caption'
           >
-            { `${data.experience.length}/200` }
+            { `${data.experience.length}/70` }
           </Typography>
         </Box>
         { btnsBox }

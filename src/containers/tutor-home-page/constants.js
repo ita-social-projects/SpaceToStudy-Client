@@ -11,7 +11,7 @@ export const initialValues = {
 export const validations = {
   firstName: nameField,
   lastName: nameField,
-  experience: textField(0, 200)
+  experience: textField(0, 70)
 }
 
 export const stepLabels = ['generalInfo', 'subjects', 'languages', 'photo']

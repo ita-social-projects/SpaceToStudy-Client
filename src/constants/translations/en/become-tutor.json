@@ -12,7 +12,7 @@
     "helperText": "Inputs with the * sign are required"
   },
   "experience": {
-    "title": "Describe your professional experience. Minimum 200 characters.",
+    "title": "Describe your professional experience. Maximum 70 characters.",
     "textFieldLabel": "Text here"
   },
   "categories": {
