@@ -1,6 +1,19 @@
+import { t } from 'i18next'
 import { lazy } from 'react'
 import { Route } from 'react-router-dom'
 
-const TutorHome = lazy(() => import('~/pages/tutor-home/TutorHome'))
+import { tutorRoutes } from '~/router/constants/tutorRoutes'
 
-export const tutorRouter = <Route element={ <TutorHome /> } index />
+const TutorHome = lazy(() => import('~/pages/tutor-home/TutorHome'))
+const TutorProfile = lazy(() => import('~/pages/tutor-profile/TutorProfile'))
+
+export const tutorRouter = (
+  <>
+    <Route element={ <TutorHome /> } index />
+    <Route
+      element={ <TutorProfile /> }
+      handle={ { crumb: { name: t('breadCrumbs.myProfile'), path: tutorRoutes.accountMenu.myProfile.route } } }
+      path={ tutorRoutes.accountMenu.myProfile.route }
+    />
+  </>
+)
