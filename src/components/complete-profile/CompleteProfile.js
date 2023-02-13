@@ -20,7 +20,7 @@ import { tutorRoutes } from '~/router/constants/tutorRoutes.js'
 import { studentRoutes } from '~/router/constants/studentRoutes.js'
 import { guestRoutes } from '~/router/constants/guestRoutes'
 
-const CompleteProfile = ({ profileItems, data, expanded = false }) => {
+const CompleteProfile = ({ profileItems, data }) => {
   const { t } = useTranslation()
   const { userRole } = useSelector((state) => state.appMain)
   const homePage = useMatch(guestRoutes[userRole].path)
@@ -28,7 +28,7 @@ const CompleteProfile = ({ profileItems, data, expanded = false }) => {
     userRole === guestRoutes.student.path
       ? studentRoutes.accountMenu.myProfile.path
       : tutorRoutes.accountMenu.myProfile.path
-  const [isOpen, setIsOpen] = useState(expanded)
+  const [isOpen, setIsOpen] = useState(false)
 
   const checkProfileData = useMemo(() => profileItems.filter((item) => data[item.name]), [data, profileItems])
   const valueProgressBar = Math.floor((checkProfileData.length / profileItems.length) * 100)
