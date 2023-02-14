@@ -12,7 +12,10 @@ export const initialState = {
   userId: '',
   userRole: '',
   userEmail: '',
-  loading: true,
+  isCheckAuthLoading: true,
+  isLoginLoading: false,
+  isLogoutLoading: true,
+  isSignupLoading: false,
   error: '',
   isFirstLogin: true
 }
@@ -21,7 +24,10 @@ export const stateAfterLogin = {
   userId: '62f4fa49d39c988e347d833f',
   userRole: 'student',
   userEmail: 'johndoe@gmail.com',
-  loading: false,
+  isCheckAuthLoading: true,
+  isLoginLoading: false,
+  isLogoutLoading: true,
+  isSignupLoading: false,
   error: '',
   isFirstLogin: true
 }
@@ -29,7 +35,10 @@ export const stateAfterLogin = {
 export const stateAfterSignup = {
   userId: '',
   userRole: '',
-  loading: false,
+  isCheckAuthLoading: true,
+  isLoginLoading: false,
+  isLogoutLoading: true,
+  isSignupLoading: false,
   userEmail: 'johndoe@gmail.com',
   error: '',
   isFirstLogin: true

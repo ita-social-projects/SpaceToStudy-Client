@@ -9,7 +9,10 @@ const initialState = {
   userId: '',
   userRole: '',
   userEmail: '',
-  loading: true,
+  isCheckAuthLoading: true,
+  isLoginLoading: false,
+  isLogoutLoading: true,
+  isSignupLoading: false,
   error: '',
   isFirstLogin: true
 }
@@ -87,51 +90,51 @@ export const mainSlice = createSlice({
   },
   extraReducers: {
     [loginUser.pending]: (state) => {
-      state.loading = true
+      state.isLoginLoading = true
       state.error = ''
     },
     [loginUser.fulfilled]: (state) => {
-      state.loading = false
+      state.isLoginLoading = false
       state.error = ''
     },
     [loginUser.rejected]: (state, action) => {
-      state.loading = false
+      state.isLoginLoading = false
       state.error = action.payload
     },
     [signupUser.pending]: (state) => {
-      state.loading = true
+      state.isSignupLoading = true
       state.error = ''
     },
     [signupUser.fulfilled]: (state) => {
-      state.loading = false
+      state.isSignupLoading = false
       state.error = ''
     },
     [signupUser.rejected]: (state, action) => {
-      state.loading = false
+      state.isSignupLoading = false
       state.error = action.payload
     },
     [logoutUser.pending]: (state) => {
-      state.loading = true
+      state.isLogoutLoading = true
       state.error = ''
     },
     [logoutUser.fulfilled]: (state) => {
-      state.loading = false
+      state.isLogoutLoading = false
       state.error = ''
     },
     [logoutUser.rejected]: (state, action) => {
-      state.loading = false
+      state.isLogoutLoading = false
       state.error = action.payload
     },
     [checkAuth.pending]: (state) => {
-      state.loading = true
+      state.isCheckAuthLoading = true
       state.error = ''
     },
     [checkAuth.fulfilled]: (state) => {
-      state.loading = false
+      state.isCheckAuthLoading = false
       state.error = ''
     },
     [checkAuth.rejected]: (state, action) => {
-      state.loading = false
+      state.isCheckAuthLoading = false
       state.error = action.payload
     }
   }

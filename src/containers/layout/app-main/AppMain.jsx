@@ -6,14 +6,14 @@ import Loader from '~/components/loader/Loader'
 import { checkAuth } from '~/redux/reducer'
 
 const AppMain = () => {
-  const { loading } = useSelector((state) => state.appMain)
+  const { isCheckAuthLoading } = useSelector((state) => state.appMain)
   const dispatch = useDispatch()
 
   useLayoutEffect(() => {
     dispatch(checkAuth())
   }, [dispatch])
 
-  if (loading) {
+  if (isCheckAuthLoading) {
     return <Loader pageLoad size={ 70 } />
   }
 
