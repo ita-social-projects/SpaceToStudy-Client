@@ -62,7 +62,7 @@ describe('router test', () => {
       await waitFor(() => expect(studentPagePlaceholder).toBeInTheDocument())
     })
     it('should render student findTutor page', async () => {
-      renderWithRouter(studentRoutes.navBar.findTutor.path, { appMain: { loding: false, userRole: student } })
+      renderWithRouter(studentRoutes.findTutor.path, { appMain: { loding: false, userRole: student } })
       const findTutorPagePlaceholder = await screen.findByText('FindTutor Page Placeholder')
       await waitFor(() => expect(findTutorPagePlaceholder).toBeInTheDocument())
     })
