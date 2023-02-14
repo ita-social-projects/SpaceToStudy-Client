@@ -18,7 +18,7 @@ export const studentRouter = (
     />
     <Route
       element={ <StudentProfile /> }
-      handle={ { crumb: { name: t('breadCrumbs.myProfile'), path: studentRoutes.navBar.findTutor.route } } }
+      handle={ { crumb: { name: t('breadCrumbs.myProfile'), path: studentRoutes.accountMenu.myProfile.route } } }
       path={ studentRoutes.accountMenu.myProfile.route }
     />
   </>
