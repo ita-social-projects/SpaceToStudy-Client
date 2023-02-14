@@ -14,7 +14,6 @@ const styles = {
     height: '100vh'
   }
 }
-
 const AppContent = () => {
   return (
     <Box data-testid='AppContent' sx={ styles.content }>
