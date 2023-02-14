@@ -20,7 +20,7 @@ const FindTutorBlock = () => {
   const navigate = useNavigate()
   const { isDesktop, isMobile } = useBreakpoints()
 
-  const { findTutor } = studentRoutes.navBar
+  const { findTutor } = studentRoutes
 
   const onChange = (e) => {
     setFilter(e.target.value)

@@ -13,8 +13,8 @@ export const studentRouter = (
     <Route element={ <StudentHome /> } index />
     <Route
       element={ <FindTutor /> }
-      handle={ { crumb: { name: t('breadCrumbs.findTutor'), path: studentRoutes.navBar.findTutor.route } } }
-      path={ studentRoutes.navBar.findTutor.route }
+      handle={ { crumb: { name: t('breadCrumbs.findTutor'), path: studentRoutes.findTutor.route } } }
+      path={ studentRoutes.findTutor.route }
     />
     <Route
       element={ <StudentProfile /> }
