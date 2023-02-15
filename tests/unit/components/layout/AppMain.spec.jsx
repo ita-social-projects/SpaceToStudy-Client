@@ -5,7 +5,7 @@ import AppMain from '~/containers/layout/app-main/AppMain'
 import { renderWithProviders } from '~tests/test-utils'
 
 const mockState = {
-  appMain: { isCheckAuthLoading: true, userRole: '' }
+  appMain: { loading: true, userRole: '' }
 }
 
 const mockDispatch = vi.fn()
@@ -39,7 +39,7 @@ describe('AppMain layout component test', () => {
       {
         preloadedState: {
           appMain: {
-            isCheckAuthLoading: false,
+            loading: false,
             userRole: ''
           }
         }

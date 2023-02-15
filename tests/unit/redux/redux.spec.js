@@ -43,7 +43,7 @@ describe('redux test', () => {
     await store.dispatch(signupUser(signupUserData))
 
     expect(store.getState()).toEqual({
-      appMain: { ...initialState, isSignupLoading: false, error: errorCode }
+      appMain: { ...initialState, error: errorCode }
     })
   })
 
@@ -59,7 +59,7 @@ describe('redux test', () => {
     await store.dispatch(loginUser(loginUserData))
 
     expect(store.getState()).toEqual({
-      appMain: { ...stateAfterSignup, isLoginLoading: false, error: errorCode }
+      appMain: { ...stateAfterSignup, error: errorCode }
     })
   })
 
@@ -75,7 +75,7 @@ describe('redux test', () => {
     await store.dispatch(checkAuth())
 
     expect(store.getState()).toEqual({
-      appMain: { ...stateAfterLogin, isCheckAuthLoading: false, error: errorCode }
+      appMain: { ...stateAfterLogin, error: errorCode }
     })
   })
 
@@ -84,7 +84,7 @@ describe('redux test', () => {
     await store.dispatch(checkAuth())
 
     expect(store.getState()).toEqual({
-      appMain: { ...stateAfterLogin, isCheckAuthLoading: false }
+      appMain: { ...stateAfterLogin }
     })
   })
 
@@ -93,12 +93,7 @@ describe('redux test', () => {
     await store.dispatch(logoutUser())
 
     expect(store.getState()).toEqual({
-      appMain: {
-        ...stateAfterLogin,
-        isCheckAuthLoading: false,
-        isLogoutLoading: false,
-        error: errorCode
-      }
+      appMain: { ...stateAfterLogin, error: errorCode }
     })
   })
 
@@ -107,21 +102,11 @@ describe('redux test', () => {
     await store.dispatch(logoutUser())
 
     expect(store.getState()).toEqual({
-      appMain: {
-        ...initialState,
-        isLogoutLoading: false,
-        isLoginLoading: false,
-        isSignupLoading: false,
-        isCheckAuthLoading: false
-      }
+      appMain: { ...initialState }
     })
   })
 
   it('should clear user data from store', () => {
-    expect(reducer(stateAfterLogin, logout())).toEqual({
-      ...initialState,
-      isLoginLoading: false,
-      isSignupLoading: false
-    })
+    expect(reducer(stateAfterLogin, logout())).toEqual({ ...initialState })
   })
 })

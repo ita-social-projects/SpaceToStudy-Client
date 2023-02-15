@@ -17,7 +17,7 @@ const handleSubmit = vi.fn()
 const closeModal = vi.fn()
 
 describe('Signup form test', () => {
-  const preloadedState = { appMain: { isSignupLoading: false } }
+  const preloadedState = { appMain: { authLoading: false } }
   beforeEach(() => {
     renderWithProviders(
       <SignupForm
@@ -120,7 +120,7 @@ describe('Signup form test', () => {
 })
 
 describe('Signup form test with loading', () => {
-  const preloadedState = { appMain: { isSignupLoading: true } }
+  const preloadedState = { appMain: { authLoading: true } }
   it('should render loader', () => {
     renderWithProviders(
       <SignupForm

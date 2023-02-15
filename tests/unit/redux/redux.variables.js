@@ -12,10 +12,8 @@ export const initialState = {
   userId: '',
   userRole: '',
   userEmail: '',
-  isCheckAuthLoading: true,
-  isLoginLoading: false,
-  isLogoutLoading: true,
-  isSignupLoading: false,
+  loading: false,
+  authLoading: false,
   error: '',
   isFirstLogin: true
 }
@@ -24,10 +22,8 @@ export const stateAfterLogin = {
   userId: '62f4fa49d39c988e347d833f',
   userRole: 'student',
   userEmail: 'johndoe@gmail.com',
-  isCheckAuthLoading: true,
-  isLoginLoading: false,
-  isLogoutLoading: true,
-  isSignupLoading: false,
+  loading: false,
+  authLoading: false,
   error: '',
   isFirstLogin: true
 }
@@ -35,10 +31,8 @@ export const stateAfterLogin = {
 export const stateAfterSignup = {
   userId: '',
   userRole: '',
-  isCheckAuthLoading: true,
-  isLoginLoading: false,
-  isLogoutLoading: true,
-  isSignupLoading: false,
+  loading: false,
+  authLoading: false,
   userEmail: 'johndoe@gmail.com',
   error: '',
   isFirstLogin: true

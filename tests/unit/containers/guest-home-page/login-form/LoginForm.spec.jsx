@@ -18,7 +18,7 @@ const handleBlur = vi.fn()
 const handleSubmit = vi.fn()
 
 describe('Login form test', () => {
-  const preloadedState = { appMain: { isLoginLoading: false } }
+  const preloadedState = { appMain: { authLoading: false } }
   beforeEach(() => {
     renderWithProviders(
       <SnackBarProvider>
@@ -97,7 +97,7 @@ describe('Login form test', () => {
 })
 
 describe('Login form test with loading', () => {
-  const preloadedState = { appMain: { isLoginLoading: true } }
+  const preloadedState = { appMain: { authLoading: true } }
   it('should render loader', () => {
     renderWithProviders(
       <ModalProvider>

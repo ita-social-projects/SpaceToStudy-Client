@@ -10,7 +10,7 @@ const mockDispatch = vi.fn()
 const mockSelector = vi.fn()
 
 const mockState = {
-  appMain: { isSignupLoading: true }
+  appMain: { authLoading: true }
 }
 
 vi.mock('~/containers/guest-home-page/google-button/GoogleButton', () => ({
