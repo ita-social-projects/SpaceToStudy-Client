@@ -29,7 +29,7 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors, clos
   }
 
   const isValid = useMemo(
-    () => Object.values(errors).some((elem) => elem === undefined) && Object.values(data).every((elem) => elem !== ''),
+    () => Object.values(errors).every((elem) => elem === '') && Object.values(data).every((elem) => elem !== ''),
     [data, errors]
   )
 

@@ -6,7 +6,7 @@ export const emptyField = (value, helperText) => {
 }
 
 export const nameField = (value) => {
-  let helperText
+  let helperText = ''
   if (value.length > 30) {
     helperText = 'common.errorMessages.nameLength'
   }
