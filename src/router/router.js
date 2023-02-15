@@ -14,7 +14,7 @@ import { adminRouter } from '~/router/routes/adminRouter'
 import { guestRouter } from '~/router/routes/guestRouter'
 import PrivateRoute from '~/router/helpers/PrivateRoute'
 import GuestRoute from '~/router/helpers/GuestRoute'
-import { admin, tutor, student } from '~/constants'
+import { admin } from '~/constants'
 
 const Logout = lazy(() => import('~/pages/logout/Logout'))
 
@@ -23,12 +23,8 @@ export const routerConfig = (
     <Route element={ <AppContent /> } handle={ { crumb: { name: t('breadCrumbs.home'), path: guestRoutes.home.route } } }>
       <Route element={ <GuestRoute /> } index />
       { guestRouter }
-      <Route element={ <PrivateRoute role={ tutor } /> } path={ guestRoutes.tutor.route }>
-        { tutorRouter }
-      </Route>
-      <Route element={ <PrivateRoute role={ student } /> } path={ guestRoutes.student.route }>
-        { studentRouter }
-      </Route>
+      { tutorRouter }
+      { studentRouter }
       <Route path={ guestRoutes.error.route }>
         { errorRouter }
       </Route>
