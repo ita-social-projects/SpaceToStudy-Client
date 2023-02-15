@@ -32,9 +32,7 @@ const CompleteProfileBlock = ({ profileItems, data }) => {
   const valueProgressBar = Math.floor((checkProfileData.length / profileItems.length) * 100)
   const profileList = useMemo(
     () =>
-      profileItems.map((item) => (
-        <ProfileItem isFilled={ checkProfileData.includes(item) } item={ item } key={ item.title } />
-      )),
+      profileItems.map((item) => <ProfileItem isFilled={ checkProfileData.includes(item) } item={ item } key={ item.id } />),
     [profileItems, checkProfileData]
   )
 
