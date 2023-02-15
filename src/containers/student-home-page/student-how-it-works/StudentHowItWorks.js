@@ -16,7 +16,7 @@ const sectionId = studentRoutes.navBar.howItWorks.route
 const StudentHowItWorks = () => {
   const { t } = useTranslation()
 
-  const { path } = studentRoutes.navBar.findTutor
+  const { path } = studentRoutes.findTutor
 
   const cards = howItWorksCards.map((item, index) => {
     return (
