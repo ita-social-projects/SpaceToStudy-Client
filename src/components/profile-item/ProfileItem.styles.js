@@ -21,15 +21,7 @@ export const styles = {
   text: {
     margin: { xs: '0', sm: '0 35px 0 28px' }
   },
-  title: {
-    fontSize: { xs: '12px', sm: '18px' },
-    lineHeight: { xs: '18.2px', sm: '25.5px' }
-  },
-  subtitle: {
-    fontWeight: '400',
-    fontSize: { xs: '10px', sm: '14px' },
-    lineHeight: { xs: '16.8px', sm: '20px' }
-  },
+
   checkIcon: {
     color: '#12A03A',
     position: 'absolute',

@@ -21,14 +21,7 @@ export const styles = {
     alignItems: 'flex-start',
     justifyContent: 'space-between'
   },
-  title: {
-    marginRight: '18px',
-    fontSize: { xs: '16px', sm: '24px' },
-    lineHeight: { xs: '24px', sm: '36px' }
-  },
-  subtitle: {
-    fontWeight: { xs: '400', sm: '500' }
-  },
+
   profileItems: {
     marginTop: { xs: '20px', sm: '40px' },
     display: 'flex',

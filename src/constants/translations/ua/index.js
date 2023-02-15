@@ -7,9 +7,10 @@ import titles from './titles.json'
 import login from './login.json'
 import modals from './email-modals.json'
 import breadCrumbs from './breadcrumbs.json'
+import completeProfile from './complete-profile.json'
 
 const ua = {
-  translations: { common, errorPage, button, header, questions, titles, login, modals, breadCrumbs }
+  translations: { common, errorPage, button, header, questions, titles, login, modals, breadCrumbs, completeProfile }
 }
 
 export default ua

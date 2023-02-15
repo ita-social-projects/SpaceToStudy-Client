@@ -2,12 +2,12 @@ import Typography from '@mui/material/Typography'
 import Box from '@mui/system/Box'
 
 import useBreakpoints from '~/hooks/use-breakpoints'
-import { labelsValue } from '~/components/profile-item/complete-profile.constants'
 import { styles } from '~/components/app-progress-bar-line/AppProgressBarLine.styles'
 
 const AppProgressBar = ({ value }) => {
   const { isMobile } = useBreakpoints()
   const fillerRelativePercentage = (100 / value) * 100
+  const labelsValue = [0, 20, 40, 60, 80, 100]
 
   const labelsWithPercent = isMobile ? (
     <Typography color={ 'primary.500' } variant='subtitle2'>
