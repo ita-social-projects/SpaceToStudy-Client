@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import HashLink from '~/components/hash-link/HashLink'
 import { useSelector } from 'react-redux'
@@ -27,6 +27,11 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors, clos
   const handleOnAgreementChange = () => {
     setButtonDisabled(!buttonDisabled)
   }
+
+  const isValid = useMemo(
+    () => Object.values(errors).every((elem) => elem === '') && Object.values(data).every((elem) => elem !== ''),
+    [data, errors]
+  )
 
   const policyAgreement = (
     <Box sx={ styles.box }>
@@ -131,6 +136,7 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors, clos
       <Box sx={ styles.checkboxContainer }>
         <FormControlLabel
           control={ <Checkbox /> }
+          disabled={ !isValid }
           label={ policyAgreement }
           labelPlacement='end'
           onChange={ handleOnAgreementChange }

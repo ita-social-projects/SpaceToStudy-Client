@@ -1,7 +1,7 @@
 import { emptyField, nameField } from './common'
 
 export const email = (value) => {
-  let helperText
+  let helperText = ''
   if (!RegExp(/^([a-z\d]+([._-][a-z\d]+)*)@([a-z\d]+([.-][a-z\d]+)*\.[a-z]{2,})$/i).test(value)) {
     helperText = 'common.errorMessages.emailValid'
   }
@@ -10,7 +10,7 @@ export const email = (value) => {
 }
 
 export const password = (value) => {
-  let helperText
+  let helperText = ''
   if (!RegExp(/^(?=.*\d)(?=.*[a-zа-яєії])\S+$/i).test(value)) {
     helperText = 'common.errorMessages.passwordValid'
   }
@@ -30,8 +30,8 @@ export const lastName = (value) => {
 }
 
 export const confirmPassword = (password, data) => {
-  let helperText
-  if (password !== data.confirmPassword) {
+  let helperText = ''
+  if (password !== data.password) {
     helperText = 'common.errorMessages.passwordsDontMatch'
   }
   helperText = emptyField(password, helperText)
