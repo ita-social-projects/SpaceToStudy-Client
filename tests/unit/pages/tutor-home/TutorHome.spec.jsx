@@ -28,7 +28,7 @@ describe('TutorHome component', () => {
     expect(firstTab).toBeInTheDocument()
   })
 
-  it("shouldn't render a BecomeATutor modal when logging in for the second time", () => {
+  it('shouldn\'t render a BecomeATutor modal when logging in for the second time', () => {
     renderWithProviders(<TutorHomeWithProviders />, { preloadedState: secondLoginState })
 
     const titleToFind = screen.queryByText(/becomeTutor.generalInfo.title/i)
