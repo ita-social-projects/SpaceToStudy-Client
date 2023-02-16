@@ -28,7 +28,7 @@ const CompleteProfileBlock = ({ profileItems, data }) => {
   const linkToProfile = studentRoutes.accountMenu.myProfile.route
   const [isOpen, setIsOpen] = useState(false)
 
-  const checkProfileData = useMemo(() => profileItems.filter((item) => data[item.name]), [data, profileItems])
+  const checkProfileData = useMemo(() => profileItems.filter((item) => data[item.id]), [data, profileItems])
   const valueProgressBar = Math.floor((checkProfileData.length / profileItems.length) * 100)
   const profileList = useMemo(
     () =>

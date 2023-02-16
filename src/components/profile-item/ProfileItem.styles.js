@@ -23,7 +23,7 @@ export const styles = {
   },
 
   checkIcon: {
-    color: '#12A03A',
+    color: 'basic.orientalHerbs',
     position: 'absolute',
     right: { xs: '14px', sm: '35px' },
     top: { xs: '10px', sm: '50%' },
