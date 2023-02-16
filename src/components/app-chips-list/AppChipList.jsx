@@ -1,34 +1,45 @@
-import { useState } from 'react'
-import { Chip, Box } from '@mui/material'
-import { styles } from '~/components/app-chips-list/AppChipsList-styles'
-import AppChip from '../app-chip/AppChip'
+import Box from '@mui/material/Box'
+import Chip from '@mui/material/Chip'
 
-const AppChipList = ({ items, defaultQuantity, handleChipDelete }) => {
-  const [isOpen, setIsOpen] = useState(false)
-  const amountOfChips = isOpen ? items.length : defaultQuantity
-  const itemsForChips = items.slice(0, amountOfChips)
+import AppChip from '~/components/app-chip/AppChip'
+import AppPopover from '~/components/app-popover/AppPopover'
+
+import { styles } from '~/components/app-chips-list/AppChipsList-styles'
+
+const AppChipList = ({ items, defaultQuantity, handleChipDelete = null, icon }) => {
   const hideChips = items.length - defaultQuantity > 0 && items.length - defaultQuantity
 
-  const chips = itemsForChips.map((item) => (
-    <AppChip handleDelete={ () => handleChipDelete(item) } key={ item }>
-      { item }
-    </AppChip>
-  ))
+  const chips = items.map((item) =>
+    handleChipDelete ? (
+      <AppChip handleDelete={ () => handleChipDelete(item) } key={ item }>
+        { item }
+      </AppChip>
+    ) : (
+      <AppChip icon={ icon } key={ item }>
+        { item }
+      </AppChip>
+    )
+  )
 
-  const showMore = () => {
-    setIsOpen(true)
-  }
+  const initialItems = (<Box sx={ styles.feature }>
+    { chips.slice(0, defaultQuantity) }
+  </Box>)
+
+  const showMoreElem = <Chip data-testid='amount-of-chips' label={ `+${hideChips}` } sx={ styles.chip } />
 
   return (
-    <Box sx={ styles.feature }>
-      { chips }
-      { !isOpen && hideChips && (
-        <Chip
-          data-testid='amount-of-chips' label={ `+${hideChips}` } onClick={ showMore }
-          sx={ styles.chip }
-        />
-      ) }
-    </Box>
+    <AppPopover
+      PaperProps={ { sx: styles.paperProps } }
+      TransitionProps={ { timeout: 500 } }
+      hideElem
+      initialItems={ initialItems }
+      initialItemsWrapperStyle={ styles.initialItemsWrapperStyle }
+      showMoreElem={ hideChips && showMoreElem }
+    >
+      <Box sx={ { ...styles.feature, p: '15px 20px' } }>
+        { chips }
+      </Box>
+    </AppPopover>
   )
 }
 

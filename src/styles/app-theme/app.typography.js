@@ -45,6 +45,12 @@ const appTypography = {
     lineHeight: '20px',
     letterSpacing: '0.1px'
   },
+  subtitle3: {
+    fontWeight: 500,
+    fontSize: '16px',
+    lineHeight: '20px',
+    letterSpacing: '0.5px'
+  },
   body1: {
     fontWeight: 400,
     fontSize: '16px',

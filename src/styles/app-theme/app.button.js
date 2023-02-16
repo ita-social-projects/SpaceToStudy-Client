@@ -26,6 +26,13 @@ const button = {
       backgroundColor: palette.primary[900],
       color: palette.primary[50]
     },
+    containedLight: {
+      backgroundColor: palette.primary[500],
+      color: palette.basic.white,
+      '&:hover': {
+        backgroundColor: palette.primary[400]
+      }
+    },
     outlined: {
       color: palette.primary[900]
     },
