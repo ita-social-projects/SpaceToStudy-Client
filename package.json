@@ -67,7 +67,7 @@
     "build": "vite build",
     "test": "cross-env CI=true vitest --coverage",
     "serve": "vite preview",
-    "lint": "eslint ./src/**/* --ext .jsx,.js --quiet --fix --ignore-path ./.gitignore",
+    "lint": "eslint src/**/* --ext .jsx,.js,.ts,.tsx --fix",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "prepare": "husky install",
