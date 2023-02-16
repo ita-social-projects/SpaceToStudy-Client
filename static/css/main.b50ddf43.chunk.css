@@ -6,8 +6,7 @@ body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
 .section {
@@ -149,6 +148,5 @@ section .tip-wrapper svg {
 section .tip-wrapper svg path {
   fill: #1ea7fd;
 }
-
 
 /*# sourceMappingURL=main.b50ddf43.chunk.css.map*/
