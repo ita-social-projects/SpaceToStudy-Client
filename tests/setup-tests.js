@@ -1,4 +1,5 @@
 import '@testing-library/jest-dom'
+import createFetchMock from 'vitest-fetch-mock'
 import { vi } from 'vitest'
 
 vi.mock('react-i18next', () => ({
@@ -8,3 +9,6 @@ vi.mock('react-i18next', () => ({
     }
   }
 }))
+
+const fetchMock = createFetchMock(vi)
+fetchMock.enableMocks()
