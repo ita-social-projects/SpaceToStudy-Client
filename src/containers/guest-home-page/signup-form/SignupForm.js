@@ -136,7 +136,7 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors, clos
       <Box sx={ styles.checkboxContainer }>
         <FormControlLabel
           control={ <Checkbox /> }
-          disabled={ isValid ? false : true }
+          disabled={ !isValid }
           label={ policyAgreement }
           labelPlacement='end'
           onChange={ handleOnAgreementChange }
