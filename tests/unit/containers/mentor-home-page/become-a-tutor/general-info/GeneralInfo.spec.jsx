@@ -10,21 +10,22 @@ import { StepProvider } from '~/context/step-context'
 import useAxios from '~/hooks/use-axios'
 import useForm from '~/hooks/use-form'
 import { URLs } from '~/constants/request'
+import { vi } from 'vitest'
 
 const mockAxiosClient = new MockAdapter(axiosClient)
 
 const validations = {
-  firstName: jest.fn(() => undefined),
-  lastName: jest.fn(() => undefined),
-  experience: jest.fn(() => undefined)
+  firstName: vi.fn(() => undefined),
+  lastName: vi.fn(() => undefined),
+  experience: vi.fn(() => undefined)
 }
 
 const countriesDataMock = ['Ukraine', 'Belgium']
 const citiesDataMock = ['Antwerp', 'Brussels']
 const country = 'Belgium'
 
-const getCountriesMock = jest.fn(() => ['Ukraine', 'Belgium'])
-const getCitiesMock = jest.fn(() => ['Antwerp', 'Brussels'])
+const getCountriesMock = vi.fn(() => ['Ukraine', 'Belgium'])
+const getCitiesMock = vi.fn(() => ['Antwerp', 'Brussels'])
 
 const btnsBox = (
   <div>
