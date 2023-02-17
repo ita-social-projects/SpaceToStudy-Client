@@ -3,7 +3,6 @@ import BecomeATutor from '~/containers/tutor-home-page/become-a-tutor/BecomeATut
 import { ModalProvider } from '~/context/modal-context'
 import { imageResize } from '~/utils/image-resize'
 import { vi } from 'vitest'
-import { describe, it, expect, beforeEach } from 'vitest'
 
 vi.mock('~/utils/image-resize')
 

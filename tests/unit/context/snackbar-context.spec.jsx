@@ -8,7 +8,6 @@ import MockAdapter from 'axios-mock-adapter'
 import { axiosClient } from '~/plugins/axiosClient'
 import { URLs } from '~/constants/request'
 import { vi } from 'vitest'
-import { describe, it, expect, beforeEach } from 'vitest'
 
 const preloadedState = { appMain: { loading: false, userRole: '', error: '' } }
 const mockAxiosClient = new MockAdapter(axiosClient)

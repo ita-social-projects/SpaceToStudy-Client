@@ -3,7 +3,6 @@ import { vi } from 'vitest'
 import { ModalProvider } from '~/context/modal-context'
 import AppMain from '~/containers/layout/app-main/AppMain'
 import { renderWithProviders } from '~tests/test-utils'
-import { describe, it, expect } from 'vitest'
 
 const mockState = {
   appMain: { loading: true, userRole: '' }

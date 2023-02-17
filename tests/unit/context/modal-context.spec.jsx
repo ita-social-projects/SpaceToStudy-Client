@@ -5,7 +5,6 @@ import NavBar from '~/containers/layout/navbar/NavBar'
 import { ConfirmationDialogProvider } from '~/context/confirm-context'
 import { SnackBarProvider } from '~/context/snackbar-context'
 import { vi } from 'vitest'
-import { describe, it, expect, beforeEach } from 'vitest'
 
 vi.mock('~/containers/guest-home-page/google-button/GoogleButton', () => ({
   __esModule: true,

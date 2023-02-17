@@ -1,7 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react'
 import AppChipList from '~/components/app-chips-list/AppChipList'
 import { vi } from 'vitest'
-import { describe, it, expect } from 'vitest'
 
 const handleChipDelete = vi.fn()
 
@@ -20,7 +19,7 @@ const items = [
 
 describe('AppChip test', () => {
   it('should show chips', () => {
-    render(<AppChipList defaultQuantity={7} handleChipDelete={handleChipDelete} items={items} />)
+    render(<AppChipList defaultQuantity={ 7 } handleChipDelete={ handleChipDelete } items={ items } />)
     const firstChip = screen.getByText(/Chinese/i)
     const secondChip = screen.getByText(/English/i)
 
@@ -29,7 +28,7 @@ describe('AppChip test', () => {
   })
 
   it('should show chip with +3', () => {
-    render(<AppChipList defaultQuantity={7} handleChipDelete={handleChipDelete} items={items} />)
+    render(<AppChipList defaultQuantity={ 7 } handleChipDelete={ handleChipDelete } items={ items } />)
     const amountOfChips = screen.getByTestId('amount-of-chips')
     expect(amountOfChips).toBeInTheDocument()
 
@@ -38,13 +37,13 @@ describe('AppChip test', () => {
   })
 
   it('should show only 7 chips', () => {
-    render(<AppChipList defaultQuantity={7} handleChipDelete={handleChipDelete} items={items} />)
+    render(<AppChipList defaultQuantity={ 7 } handleChipDelete={ handleChipDelete } items={ items } />)
     const chip = screen.queryAllByTestId('chip')
     expect(chip.length).toBe(7)
   })
 
   it('should show only 10 chips', () => {
-    render(<AppChipList defaultQuantity={7} handleChipDelete={handleChipDelete} items={items} />)
+    render(<AppChipList defaultQuantity={ 7 } handleChipDelete={ handleChipDelete } items={ items } />)
     const chips = screen.queryAllByTestId('chip')
     expect(chips.length).toBe(7)
 
@@ -57,7 +56,7 @@ describe('AppChip test', () => {
   })
 
   it('should delete one chip', () => {
-    render(<AppChipList defaultQuantity={7} handleChipDelete={handleChipDelete} items={items} />)
+    render(<AppChipList defaultQuantity={ 7 } handleChipDelete={ handleChipDelete } items={ items } />)
     const closeBtn = screen.queryAllByTestId('close-btn')
 
     const firstChip = screen.queryAllByTestId('chip')[0]
