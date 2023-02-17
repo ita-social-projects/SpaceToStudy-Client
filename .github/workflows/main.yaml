@@ -12,6 +12,14 @@ jobs:
     steps:
       # Checkout the Repo
       - uses: actions/checkout@v3
+      # Docker Build
+      - uses: docker/build-push-action@v3
+        with:
+          push: false
+          file: ./Dockerfile
+          tags: front-stage:test
+          build-args: |
+            password=${{ secrets.DOCKER_PASS }}
 
       # Install Node 14
       - name: Setup Node
@@ -34,11 +42,3 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
            
-      # Docker Build
-      - uses: docker/build-push-action@v3
-        with:
-          push: false
-          file: ./Dockerfile
-          tags: front-stage:test
-          build-args: |
-            password=${{ secrets.DOCKER_PASS }}
