@@ -23,7 +23,7 @@ const appTypography = {
     lineHeight: '53px'
   },
   h5: {
-    fontWeight: 400,
+    fontWeight: 500,
     fontSize: '24px',
     lineHeight: '36px'
   },

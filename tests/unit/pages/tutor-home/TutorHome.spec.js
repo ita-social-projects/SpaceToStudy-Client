@@ -15,10 +15,10 @@ const TutorHomeWithProviders = () => (
 
 describe('TutorHome component', () => {
   const firstLoginState = {
-    appMain: { isFirstLogin: true }
+    appMain: { isFirstLogin: true, userRole: 'tutor' }
   }
   const secondLoginState = {
-    appMain: { isFirstLogin: false }
+    appMain: { isFirstLogin: false, userRole: 'tutor' }
   }
 
   it('should render a BecomeATutor modal when logging in for the first time', () => {

@@ -18,6 +18,7 @@ import table from './table.json'
 import admin from './admin.json'
 import studentTable from './student-table.json'
 import breadCrumbs from './breadcrumbs.json'
+import completeProfile from './complete-profile.json'
 
 const en = {
   translations: {
@@ -40,7 +41,8 @@ const en = {
     table,
     studentTable,
     admin,
-    breadCrumbs
+    breadCrumbs,
+    completeProfile
   }
 }
 
