@@ -13,7 +13,7 @@ RUN npm run build
 FROM nginx:stable-alpine
 VOLUME /sys/fs/cgroup
 ARG password
-COPY --from=build /app/build /usr/share/nginx/html
+COPY --from=build /app/dist /usr/share/nginx/html
 COPY --from=build /app/nginx.conf /etc/nginx/conf.d/default.conf
 RUN apk add --update --no-cache sudo openrc openssh bash \
     && mkdir /run/openrc/ && touch /run/openrc/softlevel \
