@@ -1,15 +1,16 @@
 {
   "env": {
     "browser": true,
-    "es2021": true
+    "es2021": true,
+    "node": true,
+    "vitest-globals/env": true
   },
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:react/jsx-runtime",
     "plugin:storybook/recommended",
-    "react-app",
-    "react-app/jest",
+    "plugin:vitest-globals/recommended",
     "prettier"
   ],
   "parserOptions": {
@@ -20,7 +21,11 @@
     "sourceType": "module"
   },
   "plugins": ["react", "testing-library", "react-hooks"],
-  "ignorePatterns": ["*/stories/*"],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
   "rules": {
     "prefer-arrow-callback": ["error"],
     "func-style": ["error", "expression"],
@@ -82,7 +87,7 @@
     "react/jsx-max-depth": [
       "error",
       {
-        "max": 4
+        "max": 5
       }
     ],
     "react/jsx-wrap-multilines": [

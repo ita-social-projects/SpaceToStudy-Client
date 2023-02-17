@@ -50,7 +50,7 @@ Description should be here.
 
 #### Components
 
-Folder for basic shared project components. Like inputs, forms, buttons, table grids, loaders etc. Components should be stateless. 
+Folder for basic shared project components. Like inputs, forms, buttons, table grids, loaders etc. Components should be stateless.
 
 #### Containers
 

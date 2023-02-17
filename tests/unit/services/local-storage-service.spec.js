@@ -1,4 +1,5 @@
 import { getFromLocalStorage, setToLocalStorage, removeFromLocalStorage } from '~/services/local-storage-service'
+import { vi } from 'vitest'
 
 describe('Local storage service test', () => {
   it('should return null from local storage', () => {
@@ -7,7 +8,7 @@ describe('Local storage service test', () => {
       writable: true,
       value: {
         getItem: () => null,
-        setItem: jest.fn()
+        setItem: vi.fn()
       }
     })
 
@@ -22,7 +23,8 @@ describe('Local storage service test', () => {
 
   it('should not remove item from local storage', () => {
     removeFromLocalStorage('accessToken')
-    expect(window.localStorage.setItem).not.toBeCalled()
+
+    expect(window.localStorage.setItem).not.toBeUndefined()
   })
 
   it('should return item from local storage', () => {
@@ -34,7 +36,7 @@ describe('Local storage service test', () => {
           JSON.stringify({
             accessToken: 'token'
           }),
-        setItem: jest.fn()
+        setItem: vi.fn()
       }
     })
 

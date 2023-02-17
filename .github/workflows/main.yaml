@@ -52,4 +52,3 @@ jobs:
           tags: front-stage:test
           build-args: |
             password=${{ secrets.DOCKER_PASS }}
-
