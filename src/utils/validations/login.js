@@ -34,6 +34,6 @@ export const confirmPassword = (password, data) => {
   if (password !== data.password) {
     helperText = 'common.errorMessages.passwordsDontMatch'
   }
-  helperText = emptyField(password, helperText)
-  return helperText
+  // helperText = emptyField(password, helperText)
+  return emptyField(password, helperText)
 }
