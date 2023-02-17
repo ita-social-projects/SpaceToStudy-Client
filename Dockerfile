@@ -8,6 +8,7 @@ RUN ls /app/
 RUN npm install
 RUN npm run lint
 RUN npm run build
+RUN ls /app/
 
 # Build target 'production' #
 #############################
