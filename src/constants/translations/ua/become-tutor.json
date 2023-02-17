@@ -8,7 +8,6 @@
   "generalInfo": {
     "title": "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.",
     "textFieldLabel": "Коротко опишіть свій професійний статус",
-    "checkboxLabel": "Я підтверджую, що мені більше 18 років",
     "helperText": "Поля зі знаком * є обов'язковими"
   },
   "experience": {

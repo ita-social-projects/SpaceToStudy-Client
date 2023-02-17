@@ -8,7 +8,6 @@
   "generalInfo": {
     "title": "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.",
     "textFieldLabel": "Describe in short your professional status",
-    "checkboxLabel": "I confirm that I am over 18 years old",
     "helperText": "Inputs with the * sign are required"
   },
   "experience": {
