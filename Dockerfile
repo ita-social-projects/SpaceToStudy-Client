@@ -1,10 +1,12 @@
 # Build target 'build' #
 ########################
-FROM node:18-alpine as build
+FROM node:18.14-alpine as build
 WORKDIR /app
-RUN apk add --no-cache git
+RUN apk add --no-cache git 
 COPY . /app/
 RUN npm install
+RUN npm -v
+RUN npm i -g lint
 RUN npm run lint
 RUN npm run build
 
