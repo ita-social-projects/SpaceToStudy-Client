@@ -1,5 +1,4 @@
 import { screen, fireEvent } from '@testing-library/react'
-import { MemoryRouter } from 'react-router-dom'
 import CompleteProfileBlock from '~/components/complete-profile/CompleteProfileBlock'
 import { profileItems } from '~/components/profile-item/complete-profile.constants'
 import { renderWithProviders } from '~tests/test-utils'

@@ -12,8 +12,8 @@ const mockState = {
 const mockDispatch = vi.fn()
 
 vi.mock('~/services/local-storage-service')
-vi.mock("react-redux", async () => {
-  const actual = await vi.importActual("react-redux")
+vi.mock('react-redux', async () => {
+  const actual = await vi.importActual('react-redux')
   return {
     ...actual,
     useDispatch: () => mockDispatch
