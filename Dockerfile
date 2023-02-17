@@ -7,6 +7,8 @@ COPY . /app/
 RUN npm install
 RUN npm run lint
 RUN npm run build
+RUN ls /app/build
+RUN ls /app/nginx.conf
 
 # Build target 'production' #
 #############################
