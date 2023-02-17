@@ -13,7 +13,7 @@ jobs:
       # Checkout the Repo
       - uses: actions/checkout@v3
 
-      # Install Node 14
+      # Install Node 18
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
@@ -37,6 +37,13 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
            
+  Test_Docker:
+    runs-on: ubuntu-latest
+    steps:
+
+      #Checkout Repository
+      - uses: actions/checkout@v3
+      
       # Docker Build
       - uses: docker/build-push-action@v3
         with:
