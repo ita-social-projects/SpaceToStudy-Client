@@ -4,11 +4,10 @@ FROM node:18.14.0-alpine as build
 WORKDIR /app
 RUN apk add --no-cache git
 COPY . /app/
+RUN ls /app/
 RUN npm install
 RUN npm run lint
 RUN npm run build
-RUN ls /app/build
-RUN ls /app/nginx.conf
 
 # Build target 'production' #
 #############################
