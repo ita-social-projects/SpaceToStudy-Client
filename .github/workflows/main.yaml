@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [main, develop]
+    branches: [feature/396/migrate-from-webpack-to-vite]
   pull_request:
-    branches: [main, develop]
+    branches: [feature/396/migrate-from-webpack-to-vite]
 
 jobs:
   tests:
@@ -17,7 +17,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: 18
 
       - name : Npm Install
         run: npm install
@@ -33,14 +33,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
-  Test_Docker:
-    runs-on: ubuntu-latest
-    steps:
-
-      #Checkout Repository
-      - uses: actions/checkout@v3
-      
+           
       # Docker Build
       - uses: docker/build-push-action@v3
         with:
@@ -49,4 +42,3 @@ jobs:
           tags: front-stage:test
           build-args: |
             password=${{ secrets.DOCKER_PASS }}
-
