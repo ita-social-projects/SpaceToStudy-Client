@@ -68,7 +68,7 @@
     "build": "vite build",
     "test": "cross-env CI=true vitest --coverage",
     "serve": "vite preview",
-    "lint": "eslint src/**/* --ext .jsx,.js,.ts,.tsx --fix",
+    "lint": "eslint \"src/**/*.{js,jsx}\" --fix",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "prepare": "husky install",
