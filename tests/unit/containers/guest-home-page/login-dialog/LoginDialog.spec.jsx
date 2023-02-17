@@ -9,7 +9,7 @@ const mockDispatch = vi.fn()
 const mockSelector = vi.fn()
 
 const mockState = {
-  appMain: { isLoading: { loginUser: false } }
+  appMain: { authLoading: false }
 }
 
 vi.mock('react-redux', () => ({
