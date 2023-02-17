@@ -28,6 +28,10 @@ export const styles = {
     flexWrap: 'wrap',
     columnGap: '1px'
   },
+  stepContent: {
+    display: { xs: 'flex', sm: 'block' },
+    flex: 1
+  },
   btnWrapper: {
     display: 'flex',
     justifyContent: 'space-between',
