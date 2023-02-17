@@ -13,14 +13,17 @@ jobs:
       # Checkout the Repo
       - uses: actions/checkout@v3
 
-      # Install Node 14
+      # Install Node 18
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: 18
 
       - name : Npm Install
         run: npm install
+        
+      - name : Lint
+        run : npm run lint
         
       - name : Test
         run: npm test
