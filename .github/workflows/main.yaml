@@ -18,6 +18,16 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
+      
+      # Docker Build
+      - uses: docker/build-push-action@v3
+        with:
+          push: false
+          file: ./Dockerfile
+          tags: front-stage:test
+          build-args: |
+            password=${{ secrets.DOCKER_PASS }}
+
 
       - name : Npm Install
         run: npm install
@@ -34,12 +44,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           
-      # Docker Build
-      - uses: docker/build-push-action@v3
-        with:
-          push: false
-          file: ./Dockerfile
-          tags: front-stage:test
-          build-args: |
-            password=${{ secrets.DOCKER_PASS }}
 
