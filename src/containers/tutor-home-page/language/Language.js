@@ -16,10 +16,7 @@ const Language = ({ stepLabel, btnsBox }) => {
   const languageData = stepData[stepLabel]
 
   const onChangeLanguage = (_, value) => {
-    if (value) {
-      handleStepData(stepLabel, value)
-    }
-    handleStepData(stepLabel, '')
+    handleStepData(stepLabel, value)
   }
 
   return (

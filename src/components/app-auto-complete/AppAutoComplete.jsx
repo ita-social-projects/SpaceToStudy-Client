@@ -25,7 +25,7 @@ const AppAutoComplete = ({
       disabled={ disabled }
       filterOptions={ filterOptions }
       getOptionLabel={ (option) => option }
-      isOptionEqualToValue={ (option, value) => option === value || value === '' }
+      isOptionEqualToValue={ (option, value) => option === value }
       loading={ loading }
       onChange={ onChange }
       options={ options || [] }

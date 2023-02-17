@@ -5,9 +5,9 @@ import { initialValues } from '~/containers/tutor-home-page/constants'
 const StepContext = createContext()
 
 const StepProvider = ({ children }) => {
-  const [generalData, setGeneralData] = useState({ data: initialValues })
+  const [generalData, setGeneralData] = useState({ data: initialValues, errors: {} })
   const [subject, setSubject] = useState([])
-  const [language, setLanguage] = useState('')
+  const [language, setLanguage] = useState(null)
   const [photo, setPhoto] = useState([])
   const [generalLabel, subjectLabel, languageLabel, photoLabel] = stepLabels
 
