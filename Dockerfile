@@ -5,7 +5,6 @@ WORKDIR /app
 RUN apk add --no-cache git 
 COPY . /app/
 RUN npm install
-RUN npm install eslint --save-dev
 RUN npm run lint
 RUN npm run build
 
