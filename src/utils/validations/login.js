@@ -5,8 +5,7 @@ export const email = (value) => {
   if (!RegExp(/^([a-z\d]+([._-][a-z\d]+)*)@([a-z\d]+([.-][a-z\d]+)*\.[a-z]{2,})$/i).test(value)) {
     helperText = 'common.errorMessages.emailValid'
   }
-  helperText = emptyField(value, helperText)
-  return helperText
+  return emptyField(value, helperText)
 }
 
 export const password = (value) => {
@@ -17,8 +16,7 @@ export const password = (value) => {
   if (value.length < 8 || value.length > 25) {
     helperText = 'common.errorMessages.passwordLength'
   }
-  helperText = emptyField(value, helperText)
-  return helperText
+  return emptyField(value, helperText)
 }
 
 export const firstName = (value) => {

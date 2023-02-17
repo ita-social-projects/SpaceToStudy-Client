@@ -13,8 +13,7 @@ export const nameField = (value) => {
   if (!RegExp(/^[a-zа-яєії]+$/i).test(value)) {
     helperText = 'common.errorMessages.nameAlphabeticOnly'
   }
-  helperText = emptyField(value, helperText)
-  return helperText
+  return emptyField(value, helperText)
 }
 
 export const textField = (min, max) => (value) => {
