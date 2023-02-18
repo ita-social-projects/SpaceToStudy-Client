@@ -5,7 +5,7 @@ import titleBar from '~/assets/img/guest-home-page/title-bar.png'
 
 const VideoBox = ({ video }) => {
   return (
-    <Box>
+    <Box data-testid='videoBox'>
       <Box
         alt='Title bar' component='img' src={ titleBar }
         sx={ styles.titleBar }

@@ -18,7 +18,7 @@ describe('Logout page', () => {
     renderWithProviders(<Logout />)
   })
 
-  it('should render lo', () => {
+  it('should render loader', () => {
     const loader = screen.getByTestId('loader')
 
     expect(loader).toBeInTheDocument()
