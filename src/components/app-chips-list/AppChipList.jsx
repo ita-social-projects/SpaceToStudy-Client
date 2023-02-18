@@ -9,17 +9,14 @@ import { styles } from '~/components/app-chips-list/AppChipsList-styles'
 const AppChipList = ({ items, defaultQuantity, handleChipDelete = null, icon }) => {
   const hideChips = items.length - defaultQuantity > 0 && items.length - defaultQuantity
 
-  const chips = items.map((item) =>
-    handleChipDelete ? (
-      <AppChip handleDelete={ () => handleChipDelete(item) } key={ item }>
-        { item }
-      </AppChip>
-    ) : (
-      <AppChip icon={ icon } key={ item }>
+  const chips = items.map((item) => {
+    const handleDelete = handleChipDelete && { handleDelete: () => handleChipDelete(item) }
+    return (
+      <AppChip { ...handleDelete } icon={ icon } key={ item }>
         { item }
       </AppChip>
     )
-  )
+  })
 
   const initialItems = (<Box sx={ styles.feature }>
     { chips.slice(0, defaultQuantity) }

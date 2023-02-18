@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { useSelector } from 'react-redux'
+import { useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
@@ -25,8 +25,13 @@ import { snackbarVariants } from '~/constants'
 const MainInfo = () => {
   const { t } = useTranslation()
   const { isDesktop, isMobile } = useBreakpoints()
-  const { userRole } = useSelector((state) => state.appMain)
+  const { pathname } = useLocation()
   const { setAlert } = useContext(SnackBarContext)
+
+  const isMyProfile = pathname.includes('/myProfile')
+  const defaultQuantity = isDesktop || isMobile ? 4 : 2
+
+  console.log(pathname)
 
   const copyProfileLink = () => {
     navigator.clipboard.writeText(window.location.href)
@@ -37,12 +42,11 @@ const MainInfo = () => {
     })
   }
 
-  const editOrCopyIcon =
-    userRole === 'student' ? (
-      <ContentCopyRoundedIcon color='primary' fontSize='small' />
-    ) : (
-      <EditOutlinedIcon color='primary' fontSize='small' />
-    )
+  const editOrCopyIcon = isMyProfile ? (
+    <EditOutlinedIcon color='primary' fontSize='small' />
+  ) : (
+    <ContentCopyRoundedIcon color='primary' fontSize='small' />
+  )
 
   const nameAndIcon = (
     <Box sx={ styles.nameAndIconWrapper }>
@@ -76,8 +80,6 @@ const MainInfo = () => {
     />
   ))
 
-  const defaultQuantity = isDesktop || isMobile ? 4 : 2
-
   return (
     <Box sx={ styles.container }>
       <Box sx={ styles.imgNameIconWrapper }>
@@ -93,7 +95,7 @@ const MainInfo = () => {
         <Box sx={ styles.chipsWrapper }>
           <AppChipList
             defaultQuantity={ 2 }
-            icon={ <SchoolIcon fontSize='small' sx={ { pl: '5px', fill: '#607D8B' } } /> }
+            icon={ <SchoolIcon fontSize='small' sx={ styles.schoolIcon } /> }
             items={ subjectChips }
           />
         </Box>
@@ -108,19 +110,21 @@ const MainInfo = () => {
           items={ doneItems }
         />
 
-        <Box sx={ styles.buttonGroup }>
-          <Button fullWidth size={ isDesktop ? 'extraLarge' : 'medium' } variant='containedLight'>
-            { t('tutorProfilePage.mainInfo.bookLesson') }
-          </Button>
+        { !isMyProfile && (
+          <Box sx={ styles.buttonGroup }>
+            <Button fullWidth size={ isDesktop ? 'extraLarge' : 'medium' } variant='containedLight'>
+              { t('tutorProfilePage.mainInfo.bookLesson') }
+            </Button>
 
-          <Button
-            fullWidth size={ isDesktop ? 'extraLarge' : 'medium' } sx={ { gap: 1 } }
-            variant='contained'
-          >
-            { isDesktop && <MailOutlineIcon fontSize='small' /> }
-            { t('tutorProfilePage.mainInfo.sendMessage') }
-          </Button>
-        </Box>
+            <Button
+              fullWidth size={ isDesktop ? 'extraLarge' : 'medium' } sx={ { gap: 1 } }
+              variant='contained'
+            >
+              { isDesktop && <MailOutlineIcon fontSize='small' /> }
+              { t('tutorProfilePage.mainInfo.sendMessage') }
+            </Button>
+          </Box>
+        ) }
       </Box>
     </Box>
   )

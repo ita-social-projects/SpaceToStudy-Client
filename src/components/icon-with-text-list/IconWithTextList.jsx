@@ -10,7 +10,7 @@ import { styles } from '~/components/icon-with-text-list/IconWithTextList.style'
 
 const IconWithTextList = ({ items, icon, defaultQuantity, style = styles }) => {
   const { t } = useTranslation()
-  const shouldShowMore = items.length <= defaultQuantity
+  const shouldShowMore = items.length > defaultQuantity
 
   const itemsList = items.map((item) => (
     <Box key={ item.title } sx={ style.root }>
@@ -43,7 +43,7 @@ const IconWithTextList = ({ items, icon, defaultQuantity, style = styles }) => {
       anchorOrigin={ styles.anchorOrigin }
       hideElem
       initialItems={ initialItems }
-      showMoreElem={ !shouldShowMore && showMoreElem }
+      showMoreElem={ shouldShowMore && showMoreElem }
     >
       <Box sx={ { ...styles.container } }>
         { itemsList }

@@ -1,10 +1,12 @@
+import palette from '~/styles/app-theme/app.pallete'
+
 export const styles = {
   container: {
     color: 'primary.900',
     display: { sm: 'flex' },
     justifyContent: 'space-between',
     gap: { sm: '30px', lg: '50px' },
-    mt: '50px',
+    my: '50px',
     px: '15px',
     maxHeight: '525px'
   },
@@ -35,14 +37,18 @@ export const styles = {
     backgroundColor: 'basic.grey'
   },
   name: {
-    typography: { xs: 'subtitle3', sm: 'h5', md: 'h4' },
+    typography: { xs: 'button', sm: 'h5', md: 'h4' },
     mb: '10px'
   },
   status: {
-    typography: { xs: 'body2', md: 'subtitle3' }
+    typography: { xs: 'body2', md: 'button' }
   },
   chipsWrapper: {
     py: '16px'
+  },
+  schoolIcon: {
+    pl: '5px',
+    fill: palette.primary[500]
   },
   accInfoWrapper: {
     display: 'flex',

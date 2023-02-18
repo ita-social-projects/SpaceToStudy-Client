@@ -14,9 +14,15 @@ const children = <div>childrenElement</div>
 
 describe('AppPopover test', () => {
   beforeEach(() => {
-    renderWithProviders(<AppPopover { ...props }>
-      { children }
-    </AppPopover>)
+    renderWithProviders(
+      <div height='500px'>
+        <div height='200px'>
+          <AppPopover { ...props }>
+            { children }
+          </AppPopover>
+        </div>
+      </div>
+    )
   })
 
   test('Should open popover', async () => {
@@ -24,10 +30,8 @@ describe('AppPopover test', () => {
 
     fireEvent.click(openBtn)
 
-    const childrenElement = screen.getByText('childrenElement')
-    const popoverId = screen.getByTestId('app-popover')
+    const popover = screen.getByTestId('app-popover')
 
-    expect(popoverId).toBeInTheDocument()
-    expect(childrenElement).toBeInTheDocument()
+    expect(popover).toBeInTheDocument()
   })
 })

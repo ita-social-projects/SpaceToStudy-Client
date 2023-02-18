@@ -24,11 +24,11 @@ describe('Login form test', () => {
       <SnackBarProvider>
         <ModalProvider>
           <LoginForm
-            data={data}
-            errors={errors}
-            handleBlur={handleBlur}
-            handleChange={handleChange}
-            handleSubmit={handleSubmit}
+            data={ data }
+            errors={ errors }
+            handleBlur={ handleBlur }
+            handleChange={ handleChange }
+            handleSubmit={ handleSubmit }
           />
         </ModalProvider>
       </SnackBarProvider>,
@@ -102,11 +102,11 @@ describe('Login form test with loading', () => {
     renderWithProviders(
       <ModalProvider>
         <LoginForm
-          data={data}
-          errors={errors}
-          handleBlur={handleBlur}
-          handleChange={handleChange}
-          handleSubmit={handleSubmit}
+          data={ data }
+          errors={ errors }
+          handleBlur={ handleBlur }
+          handleChange={ handleChange }
+          handleSubmit={ handleSubmit }
         />
       </ModalProvider>,
       { preloadedState }

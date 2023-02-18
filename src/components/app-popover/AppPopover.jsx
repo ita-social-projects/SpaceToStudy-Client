@@ -14,7 +14,6 @@ const AppPopover = ({ children, initialItems, initialItemsWrapperStyle, showMore
     setIsOpen(false)
   }
 
-  const testId = isOpen ? 'app-popover' : null
   const hideElement = hideElem && isOpen ? { visibility: 'hidden' } : null
 
   return (
@@ -27,8 +26,11 @@ const AppPopover = ({ children, initialItems, initialItemsWrapperStyle, showMore
       </Box>
 
       <Popover
-        anchorEl={ anchorEl.current } data-testid={ testId } onClose={ closePopover }
-        open={ isOpen } { ...props }
+        anchorEl={ anchorEl.current }
+        data-testid={ isOpen && 'app-popover' }
+        onClose={ closePopover }
+        open={ isOpen }
+        { ...props }
       >
         { children }
       </Popover>
