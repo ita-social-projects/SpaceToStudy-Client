@@ -2,6 +2,9 @@ import { fadeAnimation } from '~/styles/app-theme/custom-animations'
 
 export const styles = {
   root: {
+    display: { xs: 'flex' },
+    flexDirection: { xs: 'column' },
+    height: { xs: '100vh', sm: 'auto' },
     p: { lg: '50px 90px', sm: '40px 50px', xs: '40px 15px' }
   },
   defaultTab: {

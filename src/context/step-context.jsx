@@ -7,14 +7,14 @@ const StepContext = createContext()
 const StepProvider = ({ children }) => {
   const [generalData, setGeneralData] = useState({ data: initialValues })
   const [subject, setSubject] = useState([])
-  const [languages, setLanguages] = useState({})
+  const [language, setLanguage] = useState('')
   const [photo, setPhoto] = useState([])
-  const [generalLabel, subjectLabel, languagesLabel, photoLabel] = stepLabels
+  const [generalLabel, subjectLabel, languageLabel, photoLabel] = stepLabels
 
   const stepData = {
     [generalLabel]: generalData,
     [subjectLabel]: subject,
-    [languagesLabel]: languages,
+    [languageLabel]: language,
     [photoLabel]: photo
   }
 
@@ -27,8 +27,8 @@ const StepProvider = ({ children }) => {
       case subjectLabel:
         setSubject(data)
         break
-      case languagesLabel:
-        setLanguages(data)
+      case languageLabel:
+        setLanguage(data)
         break
       case photoLabel:
         setPhoto(data)
@@ -37,7 +37,7 @@ const StepProvider = ({ children }) => {
         return
       }
     },
-    [generalLabel, subjectLabel, languagesLabel, photoLabel]
+    [generalLabel, subjectLabel, languageLabel, photoLabel]
   )
 
   return (

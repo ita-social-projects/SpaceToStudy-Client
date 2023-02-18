@@ -1,7 +1,7 @@
 {
   "stepLabels": {
-    "generalInfo": "General",
-    "languages": "Languages",
+    "generalInfo": "General", 
+    "language": "Language", 
     "subjects": "Subjects",
     "photo": "Photo"
   },
@@ -14,6 +14,10 @@
   "experience": {
     "title": "Describe your professional experience. Maximum 70 characters.",
     "textFieldLabel": "Text here"
+  },
+  "languages": {
+    "title": "Velit officia consequat duis enim velit mollit. Other categories you can add in your account settings later.",
+    "autocompleteLabel": "Your native language"
   },
   "categories": {
     "title": "Velit officia consequat duis enim velit mollit. Other categories you can add in your account settings later.",
