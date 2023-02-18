@@ -15,13 +15,9 @@ const children = <div>childrenElement</div>
 describe('AppPopover test', () => {
   beforeEach(() => {
     renderWithProviders(
-      <div height='500px'>
-        <div height='200px'>
-          <AppPopover { ...props }>
-            { children }
-          </AppPopover>
-        </div>
-      </div>
+      <AppPopover { ...props }>
+        { children }
+      </AppPopover>
     )
   })
 
