@@ -8,7 +8,7 @@ const useSteps = ({ steps }) => {
   const { stepData } = useStepContext()
 
   const stepErrors = Object.values(stepData).map(
-    (data) => data.errors && Object.values(data.errors).find((error) => error)
+    (data) => data && data.errors && Object.values(data.errors).find((error) => error)
   )
 
   const next = () => {
