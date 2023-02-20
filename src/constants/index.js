@@ -15,3 +15,5 @@ export const snackbarVariants = {
   success: 'success',
   warning: 'warning'
 }
+
+export const myProfilePath = '/tutor/myProfile' || '/student/myProfile'

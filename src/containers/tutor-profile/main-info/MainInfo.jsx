@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useMatch } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
@@ -20,18 +20,16 @@ import { SnackBarContext } from '~/context/snackbar-context'
 import img from '~/assets/img/tutor-profile-page/avatar.png'
 import { accountInfo, subjectChips, doneItems } from '~/containers/tutor-profile/main-info/MainInfo.constants'
 import { styles } from '~/containers/tutor-profile/main-info/MainInfo.styles'
-import { snackbarVariants } from '~/constants'
+import { snackbarVariants, myProfilePath } from '~/constants'
 
 const MainInfo = () => {
   const { t } = useTranslation()
   const { isDesktop, isMobile } = useBreakpoints()
-  const { pathname } = useLocation()
   const { setAlert } = useContext(SnackBarContext)
-
-  const isMyProfile = pathname.includes('/myProfile')
+  const isMyProfile = useMatch(myProfilePath)
+  
   const defaultQuantity = isDesktop || isMobile ? 4 : 2
 
-  console.log(pathname)
 
   const copyProfileLink = () => {
     navigator.clipboard.writeText(window.location.href)
