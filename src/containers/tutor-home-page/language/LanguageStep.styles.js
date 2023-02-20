@@ -17,8 +17,7 @@ export const styles = {
   },
   img: {
     width: '100%',
-    m: { sm: 0, xs: '0 auto' },
-    maxWidth: { md: '100%', xs: '70%' }
+    m: { sm: 0, xs: '0 auto' }
   },
   rigthBox: {
     maxWidth: '432px',
