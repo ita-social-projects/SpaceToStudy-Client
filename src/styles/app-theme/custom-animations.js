@@ -36,9 +36,9 @@ export const fadeAnimation = {
 }
 
 export const slidesRightAnimation = {
-  animation: `${slidesRight} 1s ease-in-out`
+  animation: `${slidesRight} .3s ease-in-out`
 }
 
 export const slidesLeftAnimation = {
-  animation: `${slidesLeft} 1s ease-in-out`
+  animation: `${slidesLeft} .3s ease-in-out`
 }
