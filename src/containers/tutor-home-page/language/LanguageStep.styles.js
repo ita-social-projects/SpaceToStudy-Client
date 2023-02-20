@@ -12,7 +12,6 @@ export const styles = {
     display: 'flex',
     flex: 1,
     maxWidth: '432px',
-    minHeight: '200px',
     aspectRatio: { xs: '4/3', sm: 'auto' },
     pb: { xs: '16px', sm: '52px' }
   },

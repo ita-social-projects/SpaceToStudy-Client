@@ -2,14 +2,14 @@ import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
-import { styles } from '~/containers/tutor-home-page/language/Language.styles'
+import { styles } from '~/containers/tutor-home-page/language/LanguageStep.styles'
 import img from '~/assets/img/tutor-home-page/become-tutor/languages.svg'
 import { useStepContext } from '~/context/step-context'
 import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
 import { languages } from '~/containers/tutor-home-page/language/constants'
 import useBreakpoints from '~/hooks/use-breakpoints'
 
-const Language = ({ stepLabel, btnsBox }) => {
+const LanguageStep = ({ stepLabel, btnsBox }) => {
   const { t } = useTranslation()
   const { isDesktop, isMobile } = useBreakpoints()
   const { stepData, handleStepData } = useStepContext()
@@ -52,4 +52,4 @@ const Language = ({ stepLabel, btnsBox }) => {
   )
 }
 
-export default Language
+export default LanguageStep
