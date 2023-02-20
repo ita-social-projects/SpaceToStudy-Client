@@ -33,13 +33,20 @@ const EnhancedTable = ({ fetchService, externalFilter }) => {
   const { loading, fetchData } = useAxios({ service: fetchService, fetchOnMount: false })
 
   const getData = useCallback(async () => {
+    let status = null
+
+    if (externalFilter.status !== null) {
+      status = externalFilter.status === true ? ['active'] : ['blocked']
+    }
+
     clearSelected()
     const res = await fetchData({
       skip: page * rowsPerPage,
       limit: rowsPerPage,
       sort,
       ...filters,
-      ...externalFilter
+      ...externalFilter,
+      status
     })
     setItems(res.data.items)
     setItemsCount(res.data.count)
