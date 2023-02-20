@@ -3,7 +3,7 @@ import { URLs } from '~/constants/request'
 
 export const userService = {
   getUsers: (options) => {
-    return axiosClient.post(URLs.users.get, options)
+    return axiosClient.get(URLs.users.get, { params: options })
   },
   deleteUser: (userId) => {
     return axiosClient.delete(`${URLs.users.get}/${userId}`)

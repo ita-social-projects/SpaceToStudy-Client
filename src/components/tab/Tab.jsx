@@ -12,7 +12,7 @@ const Tab = ({ tab, setTab, activeTab }) => {
 
   const handleClick = () => {
     clearFilters()
-    setTab({ [tab.key]: tab.value })
+    setTab((prev) => ({ ...prev, [tab.key]: tab.value }))
   }
 
   return (
