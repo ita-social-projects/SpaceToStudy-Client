@@ -1,7 +1,7 @@
 import EnhancedTable from '~/components/enhanced-table/EnhancedTable'
 
 export const initialFilters = {
-  firstName: '',
+  name: '',
   email: '',
   lastLogin: {
     from: '',
@@ -36,8 +36,7 @@ export const tabsInfo = {
 export const columns = [
   {
     label: 'studentTable.name',
-    field: 'firstName',
-    calculatedCellValue: (item) => `${item.firstName} ${item.lastName}`,
+    field: 'name',
     dataType: 'string'
   },
   {

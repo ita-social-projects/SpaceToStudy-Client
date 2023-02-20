@@ -11,12 +11,13 @@ import { TableProvider } from '~/context/table-context'
 import { userService } from '~/services/user-service'
 import { columns, tabsInfo, initialFilters, initialSort } from './constants'
 
+import { student } from '~/constants'
 import { styles } from './StudentTable.styles'
 
 const StudentTable = () => {
   const { t } = useTranslation()
 
-  const [externalFilter, setExternalFilter] = useState({ isEmailConfirmed: null })
+  const [externalFilter, setExternalFilter] = useState({ isEmailConfirmed: null, role: student })
 
   const deleteFunction = useCallback((userId) => userService.deleteUser(userId), [])
   const { fetchData: deleteUser } = useAxios({ service: deleteFunction, fetchOnMount: false })

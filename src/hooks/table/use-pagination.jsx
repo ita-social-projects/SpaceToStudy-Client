@@ -1,3 +1,4 @@
+import { useCallback } from 'react'
 import { useTableContext } from '~/context/table-context'
 
 const usePagination = () => {
@@ -31,7 +32,7 @@ const usePagination = () => {
     setPage(page - 1)
   }
 
-  const clearPage = () => setPage(0)
+  const clearPage = useCallback(() => setPage(0), [setPage])
 
   return {
     page,
