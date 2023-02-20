@@ -1,5 +1,5 @@
 import { render, screen, fireEvent, within } from '@testing-library/react'
-import LanguageStep from '~/containers/tutor-home-page/language/LanguageStep'
+import LanguageStep from '~/containers/tutor-home-page/language-step/LanguageStep'
 import { ModalProvider } from '~/context/modal-context'
 import { StepProvider } from '~/context/step-context'
 

@@ -6,10 +6,10 @@ import AddPhoto from '../add-photo/AddPhoto'
 
 import { stepLabels } from '~/containers/tutor-home-page/constants'
 import Subjects from '~/containers/tutor-home-page/subjects/Subjects'
-import Language from '~/containers/tutor-home-page/language/LanguageStep'
+import LanguageStep from '~/containers/tutor-home-page/language-step/LanguageStep'
 
 const BecomeATutor = () => {
-  const childrenArr = [<GeneralInfo key='1' />, <Subjects key='2' />, <Language key='3' />, <AddPhoto key='4' />]
+  const childrenArr = [<GeneralInfo key='1' />, <Subjects key='2' />, <LanguageStep key='3' />, <AddPhoto key='4' />]
 
   return (
     <StepProvider>

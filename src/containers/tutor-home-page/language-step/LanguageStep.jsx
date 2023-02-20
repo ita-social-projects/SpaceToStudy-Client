@@ -2,11 +2,11 @@ import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
-import { styles } from '~/containers/tutor-home-page/language/LanguageStep.styles'
+import { styles } from '~/containers/tutor-home-page/language-step/LanguageStep.styles'
 import img from '~/assets/img/tutor-home-page/become-tutor/languages.svg'
 import { useStepContext } from '~/context/step-context'
 import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
-import { languages } from '~/containers/tutor-home-page/language/constants'
+import { languages } from '~/containers/tutor-home-page/language-step/constants'
 import useBreakpoints from '~/hooks/use-breakpoints'
 
 const LanguageStep = ({ stepLabel, btnsBox }) => {
