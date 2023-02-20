@@ -18,7 +18,7 @@ export default {
     },
     onChange: {
       type: 'function',
-      description: 'Function will be called when autocomplete item will be changed'
+      description: 'Function will be called when autocomplete item is changed'
     },
     options: {
       type: 'array',
@@ -39,7 +39,7 @@ Desktop.args = {
   disabled: false,
   fieldValue: 'Type AutoComplete item here',
   loading: false,
-  options: ['AutoCompleteItme-1', 'AutoCompleteItme-2', 'AutoCompleteItme-3']
+  options: ['AutoCompleteItem-1', 'AutoCompleteItem-2', 'AutoCompleteItem-3']
 }
 
 Desktop.decorators = [
