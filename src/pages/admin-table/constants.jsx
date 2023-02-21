@@ -55,11 +55,11 @@ export const columns = [
     filterEnum: [
       {
         label: 'adminTable.active',
-        value: ['active']
+        value: 'active'
       },
       {
         label: 'adminTable.blocked',
-        value: ['blocked']
+        value: 'blocked'
       }
     ]
   },

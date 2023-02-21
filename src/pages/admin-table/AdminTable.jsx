@@ -57,7 +57,7 @@ const AdminTable = () => {
   return (
     <Box sx={ styles.root }>
       <Typography sx={ styles.header } variant='h4'>
-        { t('studentTable.studentsTab') }
+        { t('adminTable.adminsTab') }
       </Typography>
       <TableProvider
         bulkActions={ bulkActions }

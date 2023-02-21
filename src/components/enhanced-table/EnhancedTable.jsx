@@ -34,7 +34,7 @@ const EnhancedTable = ({ fetchService, externalFilter }) => {
 
   const getData = useCallback(async () => {
     let status = null
-
+    
     if (externalFilter.status !== null) {
       status = externalFilter.status === true ? ['active'] : ['blocked']
     }
@@ -46,7 +46,7 @@ const EnhancedTable = ({ fetchService, externalFilter }) => {
       sort,
       ...filters,
       ...externalFilter,
-      status
+      status: status || filters.status
     })
     setItems(res.data.items)
     setItemsCount(res.data.count)

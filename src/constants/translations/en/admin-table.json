@@ -1,8 +1,7 @@
 {
-  "studentsTab": "Admins Tab",
+  "adminsTab": "Admins Tab",
   "name": "Name",
   "email": "Email",
-  "role": "Role",
   "lastLogin": "Last login",
   "signedUp": "Signed up",
   "all": "All",
