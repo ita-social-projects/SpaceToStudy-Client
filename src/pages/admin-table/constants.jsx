@@ -17,22 +17,28 @@ export const initialFilters = {
 export const initialSort = { order: 'asc', orderBy: 'email' }
 
 export const tabsInfo = {
-  null: {
+  all: {
     label: 'adminTable.all',
     key: 'status',
-    value: null,
+    value: 'all',
     component: (props) => <EnhancedTable { ...props } />
   },
-  true: {
+  active: {
     label: 'adminTable.active',
     key: 'status',
-    value: true,
+    value: 'active',
     component: (props) => <EnhancedTable { ...props } />
   },
-  false: {
+  blocked: {
     label: 'adminTable.blocked',
     key: 'status',
-    value: false,
+    value: 'blocked',
+    component: (props) => <EnhancedTable { ...props } />
+  },
+  invited: {
+    label: 'adminTable.invited',
+    key: 'status',
+    value: 'invited',
     component: (props) => <EnhancedTable { ...props } />
   }
 }

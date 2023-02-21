@@ -35,8 +35,8 @@ const EnhancedTable = ({ fetchService, externalFilter }) => {
   const getData = useCallback(async () => {
     let status = null
     
-    if (externalFilter.status !== null) {
-      status = externalFilter.status === true ? ['active'] : ['blocked']
+    if (externalFilter.status !== 'all') {
+      status = [externalFilter.status]
     }
 
     clearSelected()
@@ -84,10 +84,13 @@ const EnhancedTable = ({ fetchService, externalFilter }) => {
   )
 
   const noMatchesBox = (
-    <Box sx={ styles.noMatches }>
-      <ReportIcon color='secondary' />
-      { t('table.noExactMatches') }
-    </Box>
+    <>
+      { tableBody }
+      <Box sx={ styles.noMatches }>
+        <ReportIcon color='secondary' />
+        { t('table.noExactMatches') }
+      </Box>
+    </>
   )
 
   const tableContent =

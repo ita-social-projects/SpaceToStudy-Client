@@ -17,7 +17,7 @@ import { styles } from './AdminTable.styles'
 const AdminTable = () => {
   const { t } = useTranslation()
 
-  const [externalFilter, setExternalFilter] = useState({ status: null, role: admin })
+  const [externalFilter, setExternalFilter] = useState({ status: 'all', role: admin })
 
   const deleteFunction = useCallback((userId) => userService.deleteUser(userId), [])
   const { fetchData: deleteUser } = useAxios({ service: deleteFunction, fetchOnMount: false })
