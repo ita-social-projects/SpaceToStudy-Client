@@ -5,7 +5,7 @@ import VideoPresentation from '~/containers/tutor-profile-page/video-presentatio
 
 const TutorProfile = () => {
   return (
-    <Container data-testid='tutorProfile' style={ { flex: 1, maxWidth: '1128px', margin: '0 auto' } }>
+    <Container style={ { flex: 1, maxWidth: '1128px' } }>
       <CompleteProfileBlock data={ {} } profileItems={ profileItems } />
       <VideoPresentation />
     </Container>
