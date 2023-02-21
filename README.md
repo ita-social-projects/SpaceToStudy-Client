@@ -39,7 +39,7 @@ SpaceToStudy project is a platform where experts in various fields share their k
 
 ### Required to install
 
-- NodeJS (14.15.4)
+- NodeJS (18.14.0 LTS)
 
 ### Clone
 
