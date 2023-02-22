@@ -36,7 +36,7 @@ export const styles = {
     py: '16px'
   },
   schoolIcon: {
-    pl: '5px', //! maybe add padding to chip
+    pl: '5px',
     fill: palette.primary[500]
   },
   accInfoWrapper: {
