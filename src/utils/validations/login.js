@@ -1,22 +1,11 @@
-import { emptyField, nameField } from './common'
+import { helperTextHandler, nameField } from './common'
 
 export const email = (value) => {
-  let helperText = ''
-  if (!RegExp(/^([a-z\d]+([._-][a-z\d]+)*)@([a-z\d]+([.-][a-z\d]+)*\.[a-z]{2,})$/i).test(value)) {
-    helperText = 'common.errorMessages.emailValid'
-  }
-  return emptyField(value, helperText)
+  return helperTextHandler(value, 'email')
 }
 
 export const password = (value) => {
-  let helperText = ''
-  if (!RegExp(/^(?=.*\d)(?=.*[a-zа-яєії])\S+$/i).test(value)) {
-    helperText = 'common.errorMessages.passwordValid'
-  }
-  if (value.length < 8 || value.length > 25) {
-    helperText = 'common.errorMessages.passwordLength'
-  }
-  return emptyField(value, helperText)
+  return helperTextHandler(value, 'password')
 }
 
 export const firstName = (value) => {
@@ -28,9 +17,5 @@ export const lastName = (value) => {
 }
 
 export const confirmPassword = (password, data) => {
-  let helperText = ''
-  if (password !== data.password) {
-    helperText = 'common.errorMessages.passwordsDontMatch'
-  }
-  return emptyField(password, helperText)
+  return helperTextHandler('', 'confirmPassword', password, data)
 }
