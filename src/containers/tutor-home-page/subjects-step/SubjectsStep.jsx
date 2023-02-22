@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
@@ -55,9 +55,9 @@ const SubjectsStep = ({ stepLabel, btnsBox }) => {
   }
 
   const listOfItems = subjectData.map((item) => item.subject)
-  const categoriesMockOptions = useMemo(() => categoriesMock.map((item) => item.name), [])
-  const languagesMockOptions = useMemo(() => languagesMock.map((item) => item.name), [])
-
+  const categoriesMockOptions = categoriesMock.map((item) => item.name)
+  const languagesMockOptions = languagesMock.map((item) => item.name)
+  
   return (
     <Box sx={ styles.container }>
       <Box sx={ styles.imgContainer }>
