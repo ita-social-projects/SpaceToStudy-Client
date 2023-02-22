@@ -8,7 +8,7 @@ import StudentHowItWorks from '~/containers/student-home-page/student-how-it-wor
 
 const StudentHome = () => {
   return (
-    <Box sx={ { backgroundColor: 'backgroundColor', flex: 1 } }>
+    <Box sx={ { backgroundColor: 'backgroundColor', flex: 1, overflowY: 'auto' } }>
       <Container data-testid='studentHome' sx={ { pt: 6 } }>
         <FindTutorBlock />
         <PopularCategories />
