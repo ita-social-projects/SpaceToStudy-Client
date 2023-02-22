@@ -1,11 +1,10 @@
 import Box from '@mui/material/Box'
 
 import AppHeader from '~/containers/layout/app-header/AppHeader'
-import ScrollToTopButton from '~/components/scroll-to-top-button/ScrollToTopButton'
 import ScrollToTop from '~/components/scroll-to-top/ScrollToTop'
 import AppBreadCrumbs from '~/containers/layout/app-breadcrumbs/AppBreadCrumbs'
 import AppMain from '../layout/app-main/AppMain'
-import Footer from "~/containers/layout/footer/Footer";
+
 
 const styles = {
   content: {
@@ -22,8 +21,6 @@ const AppContent = () => {
       <AppBreadCrumbs />
       <ScrollToTop />
       <AppMain />
-      {/*<ScrollToTopButton />*/}
-      {/*  <Footer/>*/}
     </Box>
   )
 }
