@@ -8,31 +8,22 @@ const textStyles = {
 export const styles = {
   container: {
     maxWidth: '552px',
-    width: '100%',
-    display: { xs: 'block', sm: 'grid' },
-    gridColumnGap: '60px',
-    gridTemplateColumns: {
-      sm: 'repeat(auto-fit, minmax(150px, 240px))'
-    }
-  },
-  root: {
-    display: 'flex',
-    gap: '10px',
     pt: '10px',
-    flex: 1
+    display: 'grid',
+    rowGap: '5px',
+    justifyContent: 'space-between',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 240px))'
   },
-  wrapper: {
+  itemWrapper: {
     display: 'flex',
-    gap: '5px'
+    columnGap: '10px'
   },
-  title: {
-    ...textStyles
-  },
-  description: {
+  text: {
     ...textStyles
   },
   showMore: {
-    m: { xs: '5px 0 0 30px', md: '10px 0 0 33px' },
+    mt: '5px',
+    ml: { xs: '30px', md: '33px' },
     textDecoration: 'underline',
     cursor: 'pointer',
     ...textStyles
@@ -42,10 +33,8 @@ export const styles = {
     horizontal: 'left'
   },
   paperProps: {
-    maxWidth: '552px',
     p: '5px 15px',
     mr: '15px',
-    width: { sm: '100%' },
     boxShadow: commonHoverShadow
   }
 }

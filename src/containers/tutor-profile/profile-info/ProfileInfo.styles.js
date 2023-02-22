@@ -2,23 +2,13 @@ import palette from '~/styles/app-theme/app.pallete'
 
 export const styles = {
   container: {
+    position: 'relative',
     color: 'primary.900',
     display: { sm: 'flex' },
-    justifyContent: 'space-between',
     gap: { sm: '30px', lg: '50px' },
     my: '50px',
     px: '15px',
-    maxHeight: '525px'
-  },
-  imgNameIconWrapper: {
-    display: 'flex',
-    gap: '15px'
-  },
-  imgWrapper: {
-    display: 'flex',
-    flex: 1,
-    justifyContent: 'center',
-    maxWidth: '525px'
+    maxHeight: { sm: '525px' }
   },
   img: {
     width: '100%',
@@ -27,13 +17,12 @@ export const styles = {
     borderRadius: '15px'
   },
   infoWrapper: {
-    maxWidth: { xs: '552px' }
-  },
-  nameAndIconWrapper: {
-    display: 'flex',
-    alignItems: 'start'
+    maxWidth: '552px'
   },
   iconBtn: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
     backgroundColor: 'basic.grey'
   },
   name: {
@@ -47,16 +36,15 @@ export const styles = {
     py: '16px'
   },
   schoolIcon: {
-    pl: '5px',
+    pl: '5px', //! maybe add padding to chip
     fill: palette.primary[500]
   },
   accInfoWrapper: {
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'space-around',
-    gap: { xs: '20px 10px', md: '66px 10px' },
-    p: { md: '15px 20px', lg: '25px 20px' },
-    my: { xs: '15px', sm: 0 }
+    gap: '20px 10px',
+    py: { xs: '10px', lg: '25px' }
   },
   buttonGroup: {
     display: 'flex',
@@ -64,6 +52,7 @@ export const styles = {
     flexDirection: { xs: 'column', sm: 'row' },
     gap: { xs: 1, md: 3 },
     width: '100%',
+    minWidth: { sm: '313px' },
     top: '100%',
     pt: '20px'
   },

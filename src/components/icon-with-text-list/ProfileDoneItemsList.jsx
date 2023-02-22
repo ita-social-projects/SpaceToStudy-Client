@@ -6,30 +6,30 @@ import Typography from '@mui/material/Typography'
 import AppPopover from '../app-popover/AppPopover'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 
-import { styles } from '~/components/icon-with-text-list/IconWithTextList.style'
+import { styles } from '~/components/icon-with-text-list/ProfileDoneItemsList.style'
 
-const IconWithTextList = ({ items, icon, defaultQuantity, style = styles }) => {
+const ProfileDoneItemsList = ({ items, icon, defaultQuantity }) => {
   const { t } = useTranslation()
   const shouldShowMore = items.length > defaultQuantity
 
   const itemsList = items.map((item) => (
-    <Box key={ item.title } sx={ style.root }>
+    <Box key={ item.title } sx={ styles.itemWrapper }>
       <Box>
         { icon }
       </Box>
 
       <TitleWithDescription
         description={ item.description }
-        descriptionStyles={ style.description }
-        style={ { wrapper: style.wrapper } }
+        descriptionStyles={ styles.text }
+        style={ { wrapper: { ...styles.itemWrapper, gap: '5px' } } }
         title={ item.title }
-        titleStyles={ style.title }
+        titleStyles={ styles.text }
       />
     </Box>
   ))
 
   const showMoreElem = (<Typography sx={ styles.showMore }>
-    { t('tutorProfilePage.mainInfo.showMore') }
+    { t('tutorProfilePage.profileInfo.showMore') }
   </Typography>)
 
   const initialItems = (<Box sx={ styles.container }>
@@ -52,4 +52,4 @@ const IconWithTextList = ({ items, icon, defaultQuantity, style = styles }) => {
   )
 }
 
-export default IconWithTextList
+export default ProfileDoneItemsList

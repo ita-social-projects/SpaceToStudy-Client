@@ -2,7 +2,7 @@ import Typography from '@mui/material/Typography'
 import StarIcon from '@mui/icons-material/Star'
 import HashLink from '~/components/hash-link/HashLink'
 
-import { styles } from '~/containers/tutor-profile/main-info/MainInfo.styles'
+import { styles } from '~/containers/tutor-profile/profile-info/ProfileInfo.styles'
 
 const accountRating = (
   <>
@@ -20,7 +20,7 @@ const linkToReviews = (
   </Typography>
 )
 
-export const accountInfo = [
+export const accountInfoMock = [
   {
     title: '3 years',
     description: 'at space2study'
@@ -35,9 +35,9 @@ export const accountInfo = [
   }
 ]
 
-export const subjectChips = ['German', 'English', 'JavaScript', 'Computer Science', '3D Modeling', 'Design']
+export const subjectChipsMock = ['German', 'English', 'JavaScript', 'Computer Science', '3D Modeling', 'Design']
 
-export const doneItems = [
+export const doneItemsMock = [
   { title: '251', description: 'lessons' },
   { title: 'Native: ', description: 'English' },
   { title: 'Responds in', description: '5 hours' },

@@ -6,7 +6,7 @@ import AppPopover from '~/components/app-popover/AppPopover'
 
 import { styles } from '~/components/app-chips-list/AppChipsList-styles'
 
-const AppChipList = ({ items, defaultQuantity, handleChipDelete = null, icon }) => {
+const AppChipList = ({ items, defaultQuantity, handleChipDelete, icon }) => {
   const hideChips = items.length - defaultQuantity > 0 && items.length - defaultQuantity
 
   const chips = items.map((item) => {

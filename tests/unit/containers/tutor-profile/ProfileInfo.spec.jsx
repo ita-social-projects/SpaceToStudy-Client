@@ -4,7 +4,7 @@ import { vi } from 'vitest'
 import { SnackBarProvider } from '~/context/snackbar-context'
 import { renderWithProviders } from '~tests/test-utils'
 
-import MainInfo from '~/containers/tutor-profile/main-info/MainInfo'
+import ProfileInfo from '~/containers/tutor-profile/profile-info/ProfileInfo'
 
 Object.assign(window.navigator, {
   clipboard: {
@@ -12,7 +12,7 @@ Object.assign(window.navigator, {
   }
 })
 
-describe('MainInfo test in my profile', () => {
+describe('ProfileInfo test in my profile', () => {
   beforeEach(() => {
     vi.mock('react-router-dom', async () => {
       const actual = await vi.importActual('react-router-dom')
@@ -25,7 +25,7 @@ describe('MainInfo test in my profile', () => {
     })
     renderWithProviders(
       <SnackBarProvider>
-        <MainInfo />
+        <ProfileInfo />
       </SnackBarProvider>
     )
   })
@@ -39,7 +39,7 @@ describe('MainInfo test in my profile', () => {
   })
 
   it('should render send message button', () => {
-    const sendMessageBtn = screen.getByText(/tutorProfilePage.mainInfo.sendMessage/i)
+    const sendMessageBtn = screen.getByText(/tutorProfilePage.profileInfo.sendMessage/i)
 
     expect(sendMessageBtn).toBeInTheDocument()
   })
