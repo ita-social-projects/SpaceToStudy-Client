@@ -1,6 +1,6 @@
 export const styles = {
   titleBar: {
-    maxWidth: '100%',
+    width: '100%',
     mb: '-4px'
   },
   videoBg: {
