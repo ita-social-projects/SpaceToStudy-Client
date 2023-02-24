@@ -6,7 +6,7 @@ import AppPopover from '~/components/app-popover/AppPopover'
 
 import { styles } from '~/components/app-chips-list/AppChipsList-styles'
 
-const AppChipList = ({ items, defaultQuantity, handleChipDelete, icon }) => {
+const AppChipList = ({ items, defaultQuantity, handleChipDelete, icon, wrapperStyle }) => {
   const hideChips = items.length - defaultQuantity > 0 && items.length - defaultQuantity
 
   const chips = items.map((item) => {
@@ -25,18 +25,20 @@ const AppChipList = ({ items, defaultQuantity, handleChipDelete, icon }) => {
   const showMoreElem = <Chip data-testid='amount-of-chips' label={ `+${hideChips}` } sx={ styles.chip } />
 
   return (
-    <AppPopover
-      PaperProps={ { sx: styles.paperProps } }
-      TransitionProps={ { timeout: 500 } }
-      hideElem
-      initialItems={ initialItems }
-      initialItemsWrapperStyle={ styles.initialItemsWrapperStyle }
-      showMoreElem={ hideChips && showMoreElem }
-    >
-      <Box sx={ { ...styles.feature, p: '15px 20px' } }>
-        { chips }
-      </Box>
-    </AppPopover>
+    <Box sx={ wrapperStyle }>
+      <AppPopover
+        PaperProps={ { sx: styles.paperProps } }
+        TransitionProps={ { timeout: 500 } }
+        hideElem
+        initialItems={ initialItems }
+        initialItemsWrapperStyle={ styles.initialItemsWrapperStyle }
+        showMoreElem={ hideChips && showMoreElem }
+      >
+        <Box sx={ { ...styles.feature, p: '15px 20px' } }>
+          { chips }
+        </Box>
+      </AppPopover>
+    </Box>
   )
 }
 

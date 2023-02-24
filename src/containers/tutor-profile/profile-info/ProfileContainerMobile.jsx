@@ -20,7 +20,7 @@ const ProfileContainerMobile = ({ actionIcon, accInfo, buttonGroup, defaultQuant
         <TitleWithDescription
           description={ 'Senior lecturer at the Department of German Philology and Translation' }
           descriptionStyles={ styles.status }
-          style={ { wrapper: { textAlign: 'left' } } }
+          style={ { wrapper: { textAlign: 'left', pr: '20px' } } }
           title={ 'Esther Howard' }
           titleStyles={ styles.name }
         />
@@ -29,13 +29,12 @@ const ProfileContainerMobile = ({ actionIcon, accInfo, buttonGroup, defaultQuant
       { actionIcon }
 
       <Box sx={ styles.infoWrapper }>
-        <Box sx={ styles.chipsWrapper }>
-          <AppChipList
-            defaultQuantity={ 2 }
-            icon={ <SchoolIcon fontSize='small' sx={ styles.schoolIcon } /> }
-            items={ subjectChips }
-          />
-        </Box>
+        <AppChipList
+          defaultQuantity={ 2 }
+          icon={ <SchoolIcon fontSize='small' sx={ styles.schoolIcon } /> }
+          items={ subjectChips }
+          wrapperStyle={ styles.chipsWrapper }
+        />
 
         <Box sx={ styles.accInfoWrapper }>
           { accInfo }

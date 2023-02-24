@@ -30,13 +30,12 @@ const ProfileContainerDesktop = ({ actionIcon, accInfo, buttonGroup, defaultQuan
           titleStyles={ styles.name }
         />
 
-        <Box sx={ styles.chipsWrapper }>
-          <AppChipList
-            defaultQuantity={ 2 }
-            icon={ <SchoolIcon fontSize='small' sx={ styles.schoolIcon } /> }
-            items={ subjectChips }
-          />
-        </Box>
+        <AppChipList
+          defaultQuantity={ 2 }
+          icon={ <SchoolIcon fontSize='small' sx={ styles.schoolIcon } /> }
+          items={ subjectChips }
+          wrapperStyle={ styles.chipsWrapper }
+        />
 
         <Box sx={ styles.accInfoWrapper }>
           { accInfo }

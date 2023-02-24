@@ -1,7 +1,7 @@
 import { commonHoverShadow } from '~/styles/app-theme/custom-shadows'
 
 const textStyles = {
-  typography: { sm: 'subtitle2', md: 'button' },
+  typography: { xs: 'subtitle2', md: 'button' },
   color: 'primary.700'
 }
 
