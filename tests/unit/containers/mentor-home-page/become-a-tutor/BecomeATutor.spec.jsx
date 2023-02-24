@@ -1,18 +1,33 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { fireEvent, screen, waitFor } from '@testing-library/react'
+import MockAdapter from 'axios-mock-adapter'
+import { axiosClient } from '~/plugins/axiosClient'
 import BecomeATutor from '~/containers/tutor-home-page/become-a-tutor/BecomeATutor'
 import { ModalProvider } from '~/context/modal-context'
+import { renderWithProviders } from '~tests/test-utils'
 import { imageResize } from '~/utils/image-resize'
+import { URLs } from '~/constants/request'
 import { vi } from 'vitest'
 
 vi.mock('~/utils/image-resize')
 
+const mockAxiosClient = new MockAdapter(axiosClient)
+
+const userId = '63f5d0ebb'
+const userDataMock = { _id: userId, firstName: 'test', lastName: 'test' }
+
+const mockState = {
+  appMain: { userId: userId, loading: false }
+}
+
 describe('BecomeATutor test', () => {
+  mockAxiosClient.onGet(`${URLs.users.get}/${userId}`).reply(200, { data: userDataMock })
   beforeEach(() => {
     window.URL.createObjectURL = vi.fn(() => 'image/png')
-    render(
+    renderWithProviders(
       <ModalProvider>
         <BecomeATutor />
-      </ModalProvider>
+      </ModalProvider>,
+      { preloadedState: mockState }
     )
   })
 

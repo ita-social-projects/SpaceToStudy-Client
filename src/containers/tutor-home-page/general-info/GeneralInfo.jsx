@@ -1,6 +1,8 @@
 import { useEffect, useCallback } from 'react'
+import { useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 import { LocationService } from '~/services/location-service'
+import { userService } from '~/services/user-service'
 
 import { createFilterOptions } from '@mui/material'
 import Box from '@mui/material/Box'
@@ -8,6 +10,7 @@ import Typography from '@mui/material/Typography'
 
 import AppTextField from '~/components/app-text-field/AppTextField'
 import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
+import Loader from '~/components/loader/Loader'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import useAxios from '~/hooks/use-axios'
 import useForm from '~/hooks/use-form'
@@ -17,10 +20,11 @@ import { useStepContext } from '~/context/step-context'
 import { validations } from '~/containers/tutor-home-page/constants'
 import { styles } from '~/containers/tutor-home-page/general-info/general-info.styles'
 
-const GeneralInfo = ({ btnsBox, stepLabel }) => {
+const GeneralInfo = ({ btnsBox, stepLabel, isUserFetched, setIsUserFetched }) => {
   const { t } = useTranslation()
   const { isDesktop, isMobile } = useBreakpoints()
   const { stepData, handleStepData } = useStepContext()
+  const { userId } = useSelector((state) => state.appMain)
   const generalInfo = stepData[stepLabel]
 
   const { handleChange, handleBlur, setData, data, errors } = useForm({
@@ -43,9 +47,11 @@ const GeneralInfo = ({ btnsBox, stepLabel }) => {
     setData({ ...data, city: value })
   }
 
+  const getUserById = useCallback(() => userService.getUserById(userId), [userId])
   const getCountries = useCallback(() => LocationService.getCountries(), [])
   const getCities = useCallback((country) => LocationService.getCities(country), [])
 
+  const { response: user, loading: userLoading } = useAxios({ service: getUserById })
   const { response: countries } = useAxios({ service: getCountries })
   const {
     loading,
@@ -54,8 +60,25 @@ const GeneralInfo = ({ btnsBox, stepLabel }) => {
   } = useAxios({ service: getCities, fetchOnMount: false, clearResponse: true })
 
   useEffect(() => {
+    if (!userLoading && !isUserFetched) {
+      const { firstName, lastName } = user.data
+      setData({ ...data, firstName, lastName })
+      setIsUserFetched(true)
+    }
+  }, [isUserFetched, setIsUserFetched, user, userLoading, setData, data])
+
+  useEffect(() => {
     handleStepData(stepLabel, data, errors)
   }, [data, errors, stepLabel, handleStepData])
+
+
+  if (userLoading) {
+    return (
+      <Box sx={ styles.container }>
+        <Loader size={ 70 } />
+      </Box>
+    )
+  }
 
   return (
     <Box sx={ styles.container }>

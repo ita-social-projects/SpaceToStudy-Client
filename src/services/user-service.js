@@ -5,6 +5,9 @@ export const userService = {
   getUsers: (options) => {
     return axiosClient.get(URLs.users.get, { params: options })
   },
+  getUserById: (userId) => {
+    return axiosClient.get(`${URLs.users.get}/${userId}`)
+  },
   deleteUser: (userId) => {
     return axiosClient.delete(`${URLs.users.get}/${userId}`)
   },

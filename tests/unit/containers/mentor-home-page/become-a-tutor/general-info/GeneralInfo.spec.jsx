@@ -7,12 +7,13 @@ import { axiosClient } from '~/plugins/axiosClient'
 import { renderWithProviders } from '~tests/test-utils'
 import { ModalProvider } from '~/context/modal-context'
 import { StepProvider } from '~/context/step-context'
-import useAxios from '~/hooks/use-axios'
 import useForm from '~/hooks/use-form'
 import { URLs } from '~/constants/request'
 import { vi } from 'vitest'
 
 const mockAxiosClient = new MockAdapter(axiosClient)
+
+const setIsUserFetched = vi.fn()
 
 const validations = {
   firstName: vi.fn(() => undefined),
@@ -20,12 +21,15 @@ const validations = {
   experience: vi.fn(() => undefined)
 }
 
+const userId = '63f5d0ebb'
+const userDataMock = { _id: userId, firstName: 'test', lastName: 'test' }
 const countriesDataMock = ['Ukraine', 'Belgium']
 const citiesDataMock = ['Antwerp', 'Brussels']
 const country = 'Belgium'
 
-const getCountriesMock = vi.fn(() => ['Ukraine', 'Belgium'])
-const getCitiesMock = vi.fn(() => ['Antwerp', 'Brussels'])
+const mockState = {
+  appMain: { userId: userId, loading: false }
+}
 
 const btnsBox = (
   <div>
@@ -36,20 +40,25 @@ const btnsBox = (
 
 describe('GeneralInfo test', () => {
   beforeEach(async () => {
+    renderHook(() => useForm({ initialValues, errorValues: {}, validations }))
+
+    mockAxiosClient.onGet(`${URLs.users.get}/${userId}`).reply(200, { data: userDataMock })
     mockAxiosClient.onGet(URLs.location.getCountries).reply(200, countriesDataMock)
     mockAxiosClient.onGet(`${URLs.location.getCities}/${country}`).reply(200, citiesDataMock)
-
-    renderHook(() => useForm({ initialValues, errorValues: {}, validations }))
-    renderHook(() => useAxios({ service: getCountriesMock }))
-    renderHook(() => useAxios({ service: getCitiesMock, fetchOnMount: false }))
 
     await waitFor(() => {
       renderWithProviders(
         <ModalProvider>
           <StepProvider>
-            <GeneralInfo btnsBox={ btnsBox } stepLabel={ 'generalInfo' } />
+            <GeneralInfo
+              btnsBox={ btnsBox }
+              isUserFetched
+              setIsUserFetched={ setIsUserFetched }
+              stepLabel={ 'generalInfo' }
+            />
           </StepProvider>
-        </ModalProvider>
+        </ModalProvider>,
+        { preloadedState: mockState }
       )
     })
   })
