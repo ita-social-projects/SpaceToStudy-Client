@@ -33,11 +33,7 @@ const EnhancedTable = ({ fetchService, externalFilter }) => {
   const { loading, fetchData } = useAxios({ service: fetchService, fetchOnMount: false })
 
   const getData = useCallback(async () => {
-    let status = null
-    
-    if (externalFilter.status !== 'all') {
-      status = [externalFilter.status]
-    }
+    const status = externalFilter.status !== 'all' && [externalFilter.status]
 
     clearSelected()
     const res = await fetchData({
