@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import StepWrapper from '~/components/step-wrapper/StepWrapper'
 
 import GeneralInfo from '~/containers/tutor-home-page/general-info/GeneralInfo'
@@ -9,7 +10,14 @@ import Subjects from '~/containers/tutor-home-page/subjects/Subjects'
 import LanguageStep from '~/containers/tutor-home-page/language-step/LanguageStep'
 
 const BecomeATutor = () => {
-  const childrenArr = [<GeneralInfo key='1' />, <Subjects key='2' />, <LanguageStep key='3' />, <AddPhoto key='4' />]
+  const [isUserFetched, setIsUserFetched] = useState(false)
+
+  const childrenArr = [
+    <GeneralInfo isUserFetched={ isUserFetched } key='1' setIsUserFetched={ setIsUserFetched } />,
+    <Subjects key='2' />,
+    <LanguageStep key='3' />,
+    <AddPhoto key='4' />
+  ]
 
   return (
     <StepProvider>
