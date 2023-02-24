@@ -5,11 +5,11 @@ import { Box, Typography } from '@mui/material'
 import FileUploader from '~/components/file-uploader/FileUploader'
 import { imageResize } from '~/utils/image-resize'
 
-import { style } from '~/containers/tutor-home-page/add-photo/AddPhoto.style'
+import { style } from '~/containers/tutor-home-page/add-photo-step/AddPhotoStep.style'
 import { useStepContext } from '~/context/step-context'
 import { validationData } from './constants'
 
-const AddPhoto = ({ btnsBox, stepLabel }) => {
+const AddPhotoStep = ({ btnsBox, stepLabel }) => {
   const [photoError, setPhotoError] = useState(null)
   const { t } = useTranslation()
   const { stepData, handleStepData } = useStepContext()
@@ -68,4 +68,4 @@ const AddPhoto = ({ btnsBox, stepLabel }) => {
   )
 }
 
-export default AddPhoto
+export default AddPhotoStep

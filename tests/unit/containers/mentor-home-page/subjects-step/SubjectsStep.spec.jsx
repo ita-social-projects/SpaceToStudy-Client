@@ -1,5 +1,5 @@
-import { render, screen, fireEvent, within } from '@testing-library/react'
-import Subjects from '~/containers/tutor-home-page/subjects/Subjects'
+import { render, screen, fireEvent } from '@testing-library/react'
+import SubjectsStep from '~/containers/tutor-home-page/subjects-step/SubjectsStep'
 import { ModalProvider } from '~/context/modal-context'
 import { StepProvider } from '~/context/step-context'
 
@@ -10,31 +10,29 @@ const btnsBox = (
   </div>
 )
 
-describe('AddDocuments test with some data', () => {
+describe('SubjectsStep test with some data', () => {
   beforeEach(() => {
     render(
       <ModalProvider>
         <StepProvider>
-          <Subjects btnsBox={ btnsBox } stepLabel={ 'subjects' } />
+          <SubjectsStep btnsBox={ btnsBox } stepLabel={ 'subjects' } />
         </StepProvider>
       </ModalProvider>
     )
     const addSubject = screen.getByTestId('add-subject')
-    const firstField = screen.getAllByTestId('autocomplete-search')[0]
-    const firstInput = within(firstField).getByRole('combobox')
+    const firstField = screen.getByLabelText(/becomeTutor.categories.mainSubjectsLabel/i)
 
     expect(addSubject).toBeInTheDocument()
 
-    fireEvent.click(firstInput)
-    fireEvent.change(firstInput, { target: { value: 'Languages' } })
+    fireEvent.click(firstField)
+    fireEvent.change(firstField, { target: { value: 'Languages' } })
     fireEvent.keyDown(firstField, { key: 'ArrowDown' })
     fireEvent.keyDown(firstField, { key: 'Enter' })
 
-    const secondField = screen.getAllByTestId('autocomplete-search')[1]
-    const secondInput = within(secondField).getByRole('combobox')
+    const secondField = screen.getByLabelText(/becomeTutor.categories.subjectLabel/i)
 
-    fireEvent.click(secondInput)
-    fireEvent.change(secondInput, { target: { value: 'Danish' } })
+    fireEvent.click(secondField)
+    fireEvent.change(secondField, { target: { value: 'Danish' } })
     fireEvent.keyDown(secondField, { key: 'ArrowDown' })
     fireEvent.keyDown(secondField, { key: 'Enter' })
     fireEvent.click(addSubject)
@@ -42,21 +40,19 @@ describe('AddDocuments test with some data', () => {
 
   it('should add a new subject', async () => {
     const addSubject = screen.getByTestId('add-subject')
-    const firstField = screen.getAllByTestId('autocomplete-search')[0]
-    const firstInput = within(firstField).getByRole('combobox')
+    const firstField = screen.getByLabelText(/becomeTutor.categories.mainSubjectsLabel/i)
 
     expect(addSubject).toBeInTheDocument()
 
-    fireEvent.click(firstInput)
-    fireEvent.change(firstInput, { target: { value: 'Languages' } })
+    fireEvent.click(firstField)
+    fireEvent.change(firstField, { target: { value: 'Languages' } })
     fireEvent.keyDown(firstField, { key: 'ArrowDown' })
     fireEvent.keyDown(firstField, { key: 'Enter' })
 
-    const secondField = screen.getAllByTestId('autocomplete-search')[1]
-    const secondInput = within(secondField).getByRole('combobox')
+    const secondField = screen.getByLabelText(/becomeTutor.categories.subjectLabel/i)
 
-    fireEvent.click(secondInput)
-    fireEvent.change(secondInput, { target: { value: 'English' } })
+    fireEvent.click(secondField)
+    fireEvent.change(secondField, { target: { value: 'English' } })
     fireEvent.keyDown(secondField, { key: 'ArrowDown' })
     fireEvent.keyDown(secondField, { key: 'Enter' })
     fireEvent.click(addSubject)
@@ -65,16 +61,11 @@ describe('AddDocuments test with some data', () => {
   })
 
   it('should delete a subject', () => {
-    const closeBtn = screen.queryAllByTestId('close-btn')
-
-    const firstChip = screen.queryAllByTestId('chip')[0]
-
-    expect(firstChip).toBeDefined()
-
-    fireEvent.click(closeBtn[0])
-
-    const newChips = screen.queryAllByTestId('chip')
-    expect(newChips.length).toBe(0)
+    const closeBtn = screen.queryAllByTestId('close-btn')[0]
+    const firstChip = screen.queryAllByTestId('chip')
+    
+    expect(firstChip.length).toBe(1)
+    fireEvent.click(closeBtn)
   })
 
   it('should show an error message "All fields must be filled"', () => {
@@ -82,10 +73,10 @@ describe('AddDocuments test with some data', () => {
 
     expect(addSubject).toBeInTheDocument()
 
-    const firstField = screen.getAllByTestId('autocomplete-search')[0]
-    const input = within(firstField).getByRole('combobox')
-    fireEvent.click(input)
-    fireEvent.change(input, { target: { value: 'Mathemat' } })
+    const firstField = screen.getByLabelText(/becomeTutor.categories.mainSubjectsLabel/i)
+
+    fireEvent.click(firstField)
+    fireEvent.change(firstField, { target: { value: 'Mathemat' } })
     fireEvent.keyDown(firstField, { key: 'ArrowDown' })
     fireEvent.keyDown(firstField, { key: 'Enter' })
 
@@ -99,19 +90,17 @@ describe('AddDocuments test with some data', () => {
 
     expect(addSubject).toBeInTheDocument()
 
-    const firstField = screen.getAllByTestId('autocomplete-search')[0]
-    const firstInput = within(firstField).getByRole('combobox')
+    const firstField = screen.getByLabelText(/becomeTutor.categories.mainSubjectsLabel/i)
 
-    fireEvent.click(firstInput)
-    fireEvent.change(firstInput, { target: { value: 'Languages' } })
+    fireEvent.click(firstField)
+    fireEvent.change(firstField, { target: { value: 'Languages' } })
     fireEvent.keyDown(firstField, { key: 'ArrowDown' })
     fireEvent.keyDown(firstField, { key: 'Enter' })
 
-    const secondField = screen.getAllByTestId('autocomplete-search')[1]
-    const secondInput = within(secondField).getByRole('combobox')
+    const secondField = screen.getByLabelText(/becomeTutor.categories.subjectLabel/i)
 
-    fireEvent.click(secondInput)
-    fireEvent.change(secondInput, { target: { value: 'Ukranian' } })
+    fireEvent.click(secondField)
+    fireEvent.change(secondField, { target: { value: 'Ukranian' } })
     fireEvent.keyDown(secondField, { key: 'ArrowDown' })
     fireEvent.keyDown(secondField, { key: 'Enter' })
     fireEvent.click(addSubject)
@@ -120,4 +109,3 @@ describe('AddDocuments test with some data', () => {
     expect(screen.getByTestId('error-subject')).toHaveTextContent('becomeTutor.categories.sameSubject')
   })
 })
-

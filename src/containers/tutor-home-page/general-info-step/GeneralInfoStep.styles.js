@@ -11,6 +11,7 @@ export const styles = {
     flex: 1,
     display: 'flex',
     justifyContent: 'flex-start',
+    aspectRatio: { xs: '4/3', sm: 'auto' },
     padding: { lg: '0 122px 52px 0', md: '0 60px 52px 0' }
   },
   img: {
@@ -22,7 +23,7 @@ export const styles = {
     maxWidth: '432px',
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     m: { md: 0, xs: '0 auto' },
     pt: 0
   },

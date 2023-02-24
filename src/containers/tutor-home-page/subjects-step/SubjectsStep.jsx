@@ -1,14 +1,18 @@
-import { Box, Button, FormHelperText, Typography } from '@mui/material'
-import { styles } from '~/containers/tutor-home-page/subjects/Subjects.styles'
-import img from '~/assets/img/tutor-home-page/become-tutor/study-category.svg'
-import { useTranslation } from 'react-i18next'
-import { categoriesMock, languagesMock } from './constants'
-import Autocoplete from '~/components/autocoplete/Autocomplete'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import FormHelperText from '@mui/material/FormHelperText'
+import Typography from '@mui/material/Typography'
+
+import { styles } from '~/containers/tutor-home-page/subjects-step/SubjectsStep.styles'
+import img from '~/assets/img/tutor-home-page/become-tutor/study-category.svg'
+import { categoriesMock, languagesMock } from './constants'
+import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
 import { useStepContext } from '~/context/step-context'
 import AppChipList from '~/components/app-chips-list/AppChipList'
 
-const Subjects = ({ stepLabel, btnsBox }) => {
+const SubjectsStep = ({ stepLabel, btnsBox }) => {
   const { t } = useTranslation()
   const { stepData, handleStepData } = useStepContext()
   const subjectData = stepData[stepLabel]
@@ -33,7 +37,7 @@ const Subjects = ({ stepLabel, btnsBox }) => {
 
     const { subject, category } = subjects
 
-    const isSameLesson = subjectData.some((lesson) => lesson.name === subject.name && lesson.category === category.name)
+    const isSameLesson = subjectData.some((lesson) => lesson.subject === subject && lesson.category === category)
     if (isSameLesson) {
       setSubjectError(t('becomeTutor.categories.sameSubject'))
       return
@@ -41,7 +45,7 @@ const Subjects = ({ stepLabel, btnsBox }) => {
       setSubjectError('')
     }
 
-    const newSubject = { category: category.name, name: subject.name }
+    const newSubject = { category: category, subject: subject }
     handleStepData(stepLabel, [...subjectData, newSubject])
   }
 
@@ -50,8 +54,10 @@ const Subjects = ({ stepLabel, btnsBox }) => {
     handleStepData(stepLabel, newItems)
   }
 
-  const listOfItems = subjectData.map((item) => item.name)
-
+  const listOfItems = subjectData.map((item) => item.subject)
+  const categoriesMockOptions = categoriesMock.map((item) => item.name)
+  const languagesMockOptions = languagesMock.map((item) => item.name)
+  
   return (
     <Box sx={ styles.container }>
       <Box sx={ styles.imgContainer }>
@@ -59,23 +65,27 @@ const Subjects = ({ stepLabel, btnsBox }) => {
       </Box>
       <Box sx={ styles.rigthBox }>
         <Box>
-          <Typography mb='30px'>
+          <Typography mb='20px'>
             { t('becomeTutor.categories.title') }
           </Typography>
-          <Autocoplete
+          <AppAutoComplete
+            fieldValue={ subjects.category }
             id={ t('becomeTutor.categories.mainSubjectsLabel') }
             label={ t('becomeTutor.categories.mainSubjectsLabel') }
             onChange={ onChangeCategory }
-            options={ categoriesMock }
-            value={ subjects.category }
+            options={ categoriesMockOptions }
+            sx={ { mb: '20px' } }
+            type='text'
           />
-          <Autocoplete
+          <AppAutoComplete
             disabled={ !subjects.category }
+            fieldValue={ subjects.subject }
             id={ t('becomeTutor.categories.subjectLabel') }
             label={ t('becomeTutor.categories.subjectLabel') }
             onChange={ onChangeSubject }
-            options={ languagesMock }
-            value={ subjects.subject }
+            options={ languagesMockOptions }
+            sx={ { mb: '20px' } }
+            type='text'
           />
           <Button
             data-testid='add-subject' fullWidth onClick={ addSubject }
@@ -96,4 +106,4 @@ const Subjects = ({ stepLabel, btnsBox }) => {
   )
 }
 
-export default Subjects
+export default SubjectsStep
