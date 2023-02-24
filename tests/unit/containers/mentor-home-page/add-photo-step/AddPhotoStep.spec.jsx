@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react'
-import AddPhoto from '~/containers/tutor-home-page/add-photo/AddPhoto'
+import AddPhotoStep from '~/containers/tutor-home-page/add-photo-step/AddPhotoStep'
 import { ModalProvider } from '~/context/modal-context'
 import { StepProvider } from '~/context/step-context'
 import { vi } from 'vitest'
@@ -11,13 +11,13 @@ const btnsBox = (
   </div>
 )
 
-describe('AddPhoto test', () => {
+describe('AddPhotoStep test', () => {
   beforeEach(() => {
     window.URL.createObjectURL = vi.fn(() => 'image/png')
     render(
       <ModalProvider>
         <StepProvider>
-          <AddPhoto btnsBox={ btnsBox } stepLabel={ 'photo' } />
+          <AddPhotoStep btnsBox={ btnsBox } stepLabel={ 'photo' } />
         </StepProvider>
       </ModalProvider>
     )

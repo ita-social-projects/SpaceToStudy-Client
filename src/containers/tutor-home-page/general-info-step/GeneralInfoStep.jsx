@@ -18,9 +18,9 @@ import useForm from '~/hooks/use-form'
 import img from '~/assets/img/tutor-home-page/become-tutor/general-info.svg'
 import { useStepContext } from '~/context/step-context'
 import { validations } from '~/containers/tutor-home-page/constants'
-import { styles } from '~/containers/tutor-home-page/general-info/general-info.styles'
+import { styles } from '~/containers/tutor-home-page/general-info-step/GeneralInfoStep.styles'
 
-const GeneralInfo = ({ btnsBox, stepLabel, isUserFetched, setIsUserFetched }) => {
+const GeneralInfoStep = ({ btnsBox, stepLabel, isUserFetched, setIsUserFetched }) => {
   const { t } = useTranslation()
   const { isDesktop, isMobile } = useBreakpoints()
   const { stepData, handleStepData } = useStepContext()
@@ -170,4 +170,4 @@ const GeneralInfo = ({ btnsBox, stepLabel, isUserFetched, setIsUserFetched }) =>
   )
 }
 
-export default GeneralInfo
+export default GeneralInfoStep

@@ -2,7 +2,7 @@ import { screen, fireEvent, waitFor } from '@testing-library/react'
 import { renderHook } from '@testing-library/react-hooks'
 import MockAdapter from 'axios-mock-adapter'
 import { initialValues } from '~/containers/tutor-home-page/constants'
-import GeneralInfo from '~/containers/tutor-home-page/general-info/GeneralInfo'
+import GeneralInfoStep from '~/containers/tutor-home-page/general-info-step/GeneralInfoStep'
 import { axiosClient } from '~/plugins/axiosClient'
 import { renderWithProviders } from '~tests/test-utils'
 import { ModalProvider } from '~/context/modal-context'
@@ -38,7 +38,7 @@ const btnsBox = (
   </div>
 )
 
-describe('GeneralInfo test', () => {
+describe('GeneralInfoStep test', () => {
   beforeEach(async () => {
     renderHook(() => useForm({ initialValues, errorValues: {}, validations }))
 
@@ -50,7 +50,7 @@ describe('GeneralInfo test', () => {
       renderWithProviders(
         <ModalProvider>
           <StepProvider>
-            <GeneralInfo
+            <GeneralInfoStep
               btnsBox={ btnsBox }
               isUserFetched
               setIsUserFetched={ setIsUserFetched }

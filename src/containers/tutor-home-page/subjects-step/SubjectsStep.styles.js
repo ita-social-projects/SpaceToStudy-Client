@@ -4,22 +4,27 @@ export const styles = {
   container: {
     display: 'flex',
     justifyContent: 'space-between',
-    height: '485px',
+    gap: '40px',
+    height: { sm: '485px' },
     ...fadeAnimation
   },
   imgContainer: {
-    flex: 1,
     display: 'flex',
-    justifyContent: 'flex-start',
-    padding: '0 122px 52px 0'
+    flex: 1,
+    maxWidth: '432px',
+    aspectRatio: { xs: '4/3', sm: 'auto' },
+    pb: { xs: '16px', sm: '52px' }
   },
   img: {
-    width: '100%'
+    width: '100%',
+    m: { sm: 0, xs: '0 auto' }
   },
   rigthBox: {
+    maxWidth: '432px',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    flex: '0 1 435px'
+    m: { md: 0, xs: '0 auto' },
+    pt: 0
   }
 }

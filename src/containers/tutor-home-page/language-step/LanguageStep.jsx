@@ -28,7 +28,7 @@ const LanguageStep = ({ stepLabel, btnsBox }) => {
       ) }
       <Box sx={ styles.rigthBox }>
         <Box>
-          <Typography mb='30px'>
+          <Typography mb='20px'>
             { t('becomeTutor.languages.title') }
           </Typography>
           { isMobile && (
