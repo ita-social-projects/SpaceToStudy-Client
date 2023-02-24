@@ -33,13 +33,16 @@ const EnhancedTable = ({ fetchService, externalFilter }) => {
   const { loading, fetchData } = useAxios({ service: fetchService, fetchOnMount: false })
 
   const getData = useCallback(async () => {
+    const status = externalFilter.status !== 'all' && [externalFilter.status]
+
     clearSelected()
     const res = await fetchData({
       skip: page * rowsPerPage,
       limit: rowsPerPage,
       sort,
       ...filters,
-      ...externalFilter
+      ...externalFilter,
+      status: status || filters.status
     })
     setItems(res.data.items)
     setItemsCount(res.data.count)
@@ -77,10 +80,13 @@ const EnhancedTable = ({ fetchService, externalFilter }) => {
   )
 
   const noMatchesBox = (
-    <Box sx={ styles.noMatches }>
-      <ReportIcon color='secondary' />
-      { t('table.noExactMatches') }
-    </Box>
+    <>
+      { tableBody }
+      <Box sx={ styles.noMatches }>
+        <ReportIcon color='secondary' />
+        { t('table.noExactMatches') }
+      </Box>
+    </>
   )
 
   const tableContent =

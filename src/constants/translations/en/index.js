@@ -20,6 +20,7 @@ import studentTable from './student-table.json'
 import breadCrumbs from './breadcrumbs.json'
 import completeProfile from './complete-profile.json'
 import tutorProfilePage from './tutor-profile-page.json'
+import adminTable from './admin-table.json'
 
 const en = {
   translations: {
@@ -44,7 +45,8 @@ const en = {
     admin,
     breadCrumbs,
     completeProfile,
-    tutorProfilePage
+    tutorProfilePage,
+    adminTable
   }
 }
 

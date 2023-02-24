@@ -1,0 +1,12 @@
+{
+  "adminsTab": "Admins Tab",
+  "name": "Name",
+  "email": "Email",
+  "lastLogin": "Last login",
+  "signedUp": "Signed up",
+  "all": "All",
+  "status": "Status",
+  "active": "Active",
+  "blocked": "Blocked",
+  "invited": "Invited"
+}
