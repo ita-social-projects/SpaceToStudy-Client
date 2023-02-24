@@ -16,7 +16,7 @@ const userId = '63f5d0ebb'
 const userDataMock = { _id: userId, firstName: 'test', lastName: 'test' }
 
 const mockState = {
-  appMain: { userId: userId, loading: false }
+  appMain: { userId, loading: false }
 }
 
 describe('BecomeATutor test', () => {

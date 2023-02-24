@@ -28,7 +28,7 @@ const citiesDataMock = ['Antwerp', 'Brussels']
 const country = 'Belgium'
 
 const mockState = {
-  appMain: { userId: userId, loading: false }
+  appMain: { userId, loading: false }
 }
 
 const btnsBox = (

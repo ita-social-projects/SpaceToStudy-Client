@@ -25,10 +25,10 @@ describe('TutorHome component', () => {
   mockAxiosClient.onGet(`${URLs.users.get}/${userId}`).reply(200, { data: userDataMock })
 
   const firstLoginState = {
-    appMain: { isFirstLogin: true, userRole: 'tutor', userId: userId }
+    appMain: { isFirstLogin: true, userRole: 'tutor', userId }
   }
   const secondLoginState = {
-    appMain: { isFirstLogin: false, userRole: 'tutor', userId: userId }
+    appMain: { isFirstLogin: false, userRole: 'tutor', userId }
   }
 
   it('should render a BecomeATutor modal when logging in for the first time', async () => {
