@@ -7,5 +7,5 @@
     }
   },
   "exclude": ["node_modules", "**/node_modules/*"],
-  "skipLibCheck": true,
+  "skipLibCheck": true
 }
