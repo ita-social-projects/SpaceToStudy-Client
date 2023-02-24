@@ -13,11 +13,13 @@ export const SnackBarProvider = ({ children }) => {
   const [show, setShow] = useState(false)
   const [severity, setSeverity] = useState(snackbarVariants.info)
   const [message, setMessage] = useState('')
+  const [duration, setDuration] = useState(0)
 
   const setAlert = useCallback((options) => {
     setShow(true)
     setSeverity(options.severity)
     setMessage(options.message)
+    setDuration(options.duration || 4000)
   }, [])
 
   const handleClose = () => {
@@ -29,11 +31,11 @@ export const SnackBarProvider = ({ children }) => {
       { children }
       <Snackbar
         anchorOrigin={ { vertical: 'top', horizontal: 'center' } }
-        autoHideDuration={ 4000 }
+        autoHideDuration={ duration }
         onClose={ handleClose }
         open={ show }
       >
-        <Alert severity={ severity } variant='filled'>
+        <Alert severity={ severity } sx={ { color: 'basic.white' } } variant='filled'>
           { t(message) }
         </Alert>
       </Snackbar>

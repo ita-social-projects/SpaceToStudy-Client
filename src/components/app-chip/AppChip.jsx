@@ -2,7 +2,7 @@ import { Chip, IconButton, Typography } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import { styles } from '~/components/app-chips-list/AppChipsList-styles'
 
-const AppChip = ({ handleDelete, children }) => {
+const AppChip = ({ handleDelete, children, icon }) => {
   return (
     <Chip
       data-testid='chip'
@@ -14,7 +14,8 @@ const AppChip = ({ handleDelete, children }) => {
           <CloseIcon color='transparent' />
         </IconButton>
       }
-      label={ <Typography variant='body2'>
+      icon={ icon }
+      label={ <Typography sx={ { typography: 'subtitle2' } }>
         { children }
       </Typography> }
       onDelete={ handleDelete }

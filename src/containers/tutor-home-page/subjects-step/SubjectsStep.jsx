@@ -98,7 +98,7 @@ const SubjectsStep = ({ stepLabel, btnsBox }) => {
           <FormHelperText data-testid='error-subject' error={ !!subjectError } sx={ { textAlign: 'center' } }>
             { subjectError || ' ' }
           </FormHelperText>
-          <AppChipList defaultQuantity={ 7 } handleChipDelete={ handleChipDelete } items={ listOfItems } />
+          <AppChipList defaultQuantity={ 2 } handleChipDelete={ handleChipDelete } items={ listOfItems } />
         </Box>
         { btnsBox }
       </Box>

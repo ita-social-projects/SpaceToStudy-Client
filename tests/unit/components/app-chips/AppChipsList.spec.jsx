@@ -52,7 +52,7 @@ describe('AppChip test', () => {
     fireEvent.click(amountOfChips)
 
     const newChips = screen.queryAllByTestId('chip')
-    expect(newChips.length).toBe(10)
+    expect(newChips.length).toBe(17)
   })
 
   it('should delete one chip', () => {

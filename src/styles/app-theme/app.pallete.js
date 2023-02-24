@@ -7,6 +7,7 @@ const palette = {
     black: '#000000',
     white: '#FFFFFF',
     grey: '#ECEFF1',
+    yellow: '#FFB000',
     carmenRed: '#B91F1B',
     burntOrange: '#F56F36',
     yellowBrown: '#F5D636',
