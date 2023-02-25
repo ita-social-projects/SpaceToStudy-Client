@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { parseJwt } from '~/utils/helper-functions'
-import { createAsyncThunk } from '@reduxjs/toolkit'
+import { createAsyncThunk, isPending, isFulfilled, isRejected } from '@reduxjs/toolkit'
 import { AuthService } from '~/services/auth-service'
 import { getFromLocalStorage, removeFromLocalStorage, setToLocalStorage } from '~/services/local-storage-service'
 import { accessToken } from '~/constants'
@@ -9,8 +9,8 @@ const initialState = {
   userId: '',
   userRole: '',
   userEmail: '',
-  loading: false,
-  authLoading: false,
+  loading:false,
+  authLoading:false,
   error: '',
   isFirstLogin: true
 }
@@ -86,55 +86,32 @@ export const mainSlice = createSlice({
       state.isFirstLogin = initialState.isFirstLogin
     }
   },
-  extraReducers: {
-    [loginUser.pending]: (state) => {
-      state.authLoading = true
-      state.error = ''
-    },
-    [loginUser.fulfilled]: (state) => {
-      state.authLoading = false
-      state.error = ''
-    },
-    [loginUser.rejected]: (state, action) => {
-      state.authLoading = false
+  extraReducers: builder => {
+
+    builder.addMatcher(isPending, (state, action) => {
+      const isAuthLoadingType = action.type === loginUser.pending.type || action.type === signupUser.pending.type
+      const isLoadingType = action.type === checkAuth.pending.type || action.type === logoutUser.pending.type
+
+      if(isAuthLoadingType) state.authLoading = true 
+      if(isLoadingType) state.loading = true
+      state.error = '' 
+    })
+    builder.addMatcher(isFulfilled, (state, action) => { 
+      const isAuthLoadingType = action.type === loginUser.fulfilled.type || action.type === signupUser.fulfilled.type
+      const isLoadingType = action.type === checkAuth.fulfilled.type || action.type === logoutUser.fulfilled.type
+
+      if(isAuthLoadingType ) state.authLoading = false 
+      if(isLoadingType) state.loading = false 
+      state.error = '' 
+    }) 
+    builder.addMatcher(isRejected, (state, action) => { 
+      const isAuthLoadingType = action.type === loginUser.rejected.type || action.type === signupUser.rejected.type
+      const isLoadingType = action.type === checkAuth.rejected.type || action.type === logoutUser.rejected.type
+      
+      if(isAuthLoadingType) state.authLoading = false 
+      if(isLoadingType) state.loading = false 
       state.error = action.payload
-    },
-    [signupUser.pending]: (state) => {
-      state.authLoading = true
-      state.error = ''
-    },
-    [signupUser.fulfilled]: (state) => {
-      state.authLoading = false
-      state.error = ''
-    },
-    [signupUser.rejected]: (state, action) => {
-      state.authLoading = false
-      state.error = action.payload
-    },
-    [logoutUser.pending]: (state) => {
-      state.loading = true
-      state.error = ''
-    },
-    [logoutUser.fulfilled]: (state) => {
-      state.loading = false
-      state.error = ''
-    },
-    [logoutUser.rejected]: (state, action) => {
-      state.loading = false
-      state.error = action.payload
-    },
-    [checkAuth.pending]: (state) => {
-      state.loading = true
-      state.error = ''
-    },
-    [checkAuth.fulfilled]: (state) => {
-      state.loading = false
-      state.error = ''
-    },
-    [checkAuth.rejected]: (state, action) => {
-      state.loading = false
-      state.error = action.payload
-    }
+    })
   }
 })
 
