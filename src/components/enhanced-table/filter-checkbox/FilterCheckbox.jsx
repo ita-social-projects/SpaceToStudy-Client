@@ -20,6 +20,7 @@ const FilterCheckbox = ({ filterCheckbox, filter, setFilter }) => {
       <Checkbox
         checked={ filter.includes(filterCheckbox.value) }
         color='primary'
+        inputProps={ { 'aria-label':'filter-checkbox' } }
         onChange={ (e) => handleFilterChange(e, filterCheckbox.value) }
       />
       { t(filterCheckbox.label) }
