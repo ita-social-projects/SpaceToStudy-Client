@@ -1,7 +1,10 @@
 export const styles = {
+  videoBox: {
+    display: 'flex',
+    flexDirection: 'column'
+  },
   titleBar: {
-    maxWidth: '100%',
-    mb: '-4px'
+    width: '100%'
   },
   videoBg: {
     padding: {
