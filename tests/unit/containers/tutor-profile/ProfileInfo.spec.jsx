@@ -4,7 +4,7 @@ import { vi } from 'vitest'
 import { SnackBarProvider } from '~/context/snackbar-context'
 import { renderWithProviders } from '~tests/test-utils'
 
-import ProfileInfo from '~/containers/tutor-profile/profile-info/ProfileInfo'
+import ProfileInfo from '~/containers/tutor-profile-page/profile-info/ProfileInfo'
 
 Object.assign(window.navigator, {
   clipboard: {

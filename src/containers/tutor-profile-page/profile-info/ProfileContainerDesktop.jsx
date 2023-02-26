@@ -8,7 +8,7 @@ import ProfileDoneItemsList from '~/components/icon-with-text-list/ProfileDoneIt
 import useBreakpoints from '~/hooks/use-breakpoints'
 
 import img from '~/assets/img/tutor-profile-page/avatar.png'
-import { styles } from '~/containers/tutor-profile/profile-info/ProfileInfo.styles'
+import { styles } from '~/containers/tutor-profile-page/profile-info/ProfileInfo.styles'
 
 const ProfileContainerDesktop = ({ actionIcon, accInfo, buttonGroup, defaultQuantity, subjectChips, doneItems }) => {
   const { isDesktop } = useBreakpoints()

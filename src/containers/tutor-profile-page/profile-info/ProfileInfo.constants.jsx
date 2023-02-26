@@ -2,7 +2,7 @@ import Typography from '@mui/material/Typography'
 import StarIcon from '@mui/icons-material/Star'
 import HashLink from '~/components/hash-link/HashLink'
 
-import { styles } from '~/containers/tutor-profile/profile-info/ProfileInfo.styles'
+import { styles } from '~/containers/tutor-profile-page/profile-info/ProfileInfo.styles'
 
 const accountRating = (
   <>

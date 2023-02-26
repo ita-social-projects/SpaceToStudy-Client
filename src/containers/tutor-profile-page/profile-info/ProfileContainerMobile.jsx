@@ -7,7 +7,7 @@ import AppChipList from '~/components/app-chips-list/AppChipList'
 import ProfileDoneItemsList from '~/components/icon-with-text-list/ProfileDoneItemsList'
 
 import img from '~/assets/img/tutor-profile-page/avatar.png'
-import { styles } from '~/containers/tutor-profile/profile-info/ProfileInfo.styles'
+import { styles } from '~/containers/tutor-profile-page/profile-info/ProfileInfo.styles'
 
 const ProfileContainerMobile = ({ actionIcon, accInfo, buttonGroup, defaultQuantity, subjectChips, doneItems }) => {
   return (

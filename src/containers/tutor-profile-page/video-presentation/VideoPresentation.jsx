@@ -10,7 +10,7 @@ const VideoPresentation = () => {
 
   return (
     <Box className='section' sx={ { flexDirection: 'column' } }>
-      <Typography sx={ { my: '32px' } } variant={ 'h4' }>
+      <Typography sx={ { my: '32px', typography: { md: 'h4', xs: 'h5' } } } >
         { t('tutorProfilePage.videoPresentation.title') } 
       </Typography>
       <VideoBox video={ videoImg } />

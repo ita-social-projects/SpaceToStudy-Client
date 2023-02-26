@@ -8,8 +8,8 @@ import IconButton from '@mui/material/IconButton'
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
 import CopyRoundedIcon from '@mui/icons-material/ContentCopyRounded'
 
-import ProfileContainerDesktop from '~/containers/tutor-profile/profile-info/ProfileContainerDesktop'
-import ProfileContainerMobile from '~/containers/tutor-profile/profile-info/ProfileContainerMobile'
+import ProfileContainerDesktop from '~/containers/tutor-profile-page/profile-info/ProfileContainerDesktop'
+import ProfileContainerMobile from '~/containers/tutor-profile-page/profile-info/ProfileContainerMobile'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import useBreakpoints from '~/hooks/use-breakpoints'
 
@@ -18,8 +18,8 @@ import {
   accountInfoMock,
   subjectChipsMock,
   doneItemsMock
-} from '~/containers/tutor-profile/profile-info/ProfileInfo.constants'
-import { styles } from '~/containers/tutor-profile/profile-info/ProfileInfo.styles'
+} from '~/containers/tutor-profile-page/profile-info/ProfileInfo.constants'
+import { styles } from '~/containers/tutor-profile-page/profile-info/ProfileInfo.styles'
 import { snackbarVariants, myProfilePath } from '~/constants'
 
 const ProfileInfo = () => {

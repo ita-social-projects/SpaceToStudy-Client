@@ -1,5 +1,5 @@
 import Container from '@mui/material/Container'
-import ProfileInfo from '~/containers/tutor-profile/profile-info/ProfileInfo'
+import ProfileInfo from '~/containers/tutor-profile-page/profile-info/ProfileInfo'
 import CompleteProfileBlock from '~/components/complete-profile/CompleteProfileBlock'
 import { profileItems } from '~/components/profile-item/complete-profile.constants'
 import VideoPresentation from '~/containers/tutor-profile-page/video-presentation/VideoPresentation'
