@@ -4,39 +4,41 @@ export const style = {
   root: {
     display: 'flex',
     justifyContent: 'space-between',
-    gap: '32px',
+    gap: '40px',
+    height: { sm: '485px' },
     ...fadeAnimation
   },
   preview: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    maxWidth: '580px',
+    maxWidth: '440px',
     width: '100%',
     aspectRatio: '1',
-    border: 'dashed',
+    border: '2px dashed',
     borderColor: 'primary.200',
     borderRadius: '20px'
   },
   img: {
     width: '100%',
-    maxWidth: '580px',
+    maxWidth: '440px',
     borderRadius: '20px'
   },
   rigthBox: {
+    maxWidth: '432px',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    flex: '0 2 360px',
-    pt: 12
+    m: { md: 0, xs: '0 auto' }
   },
   description: {
-    mb: 5
+    mb: '20px'
   },
   imgContainer: {
-    flex: 1,
-    maxWidth: '650px',
     display: 'flex',
-    justifyContent: 'center'
+    flex: 1,
+    maxWidth: '440px',
+    aspectRatio: { xs: '4/3', sm: 'auto' },
+    pb: { xs: '16px', sm: '52px' }
   }
 }

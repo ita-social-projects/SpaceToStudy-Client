@@ -33,6 +33,17 @@ const FileUploader = ({ buttonText, emitter, initialState = [], initialError = '
     </ListItem>
   ))
 
+  const uploadButton = (
+    <Button component='label' sx={ styles.uploadBtn }>
+      <CloudUploadIcon sx={ styles.icon } />
+      { buttonText }
+      <input
+        hidden multiple onChange={ addFiles }
+        type='file'
+      />
+    </Button>
+  )
+
   return (
     <>
       <Box
@@ -43,20 +54,14 @@ const FileUploader = ({ buttonText, emitter, initialState = [], initialError = '
         onDrop={ dragDrop }
         sx={ [styles.root, isDrag && styles.rootDrag] }
       >
-        { initialState.length > 0 && (<List sx={ { width: '100%' } }>
+        { initialState.length > 0 ? (<List sx={ { width: '100%' } }> 
           { filesList }
-        </List>) }
-
-        <Button component='label' sx={ styles.uploadBtn }>
-          <CloudUploadIcon sx={ styles.icon } />
-          { buttonText }
-          <input
-            hidden multiple onChange={ addFiles }
-            type='file'
-          />
-        </Button>
+        </List>) 
+          : uploadButton }
       </Box>
-
+      <Typography sx={ { mt:'10px' } } variant={ 'body2' }>
+        { t('becomeTutor.photo.fileSize') }
+      </Typography>
       { initialError && (
         <Typography color='error' ml={ 1 } variant='caption'>
           { t(initialError) }

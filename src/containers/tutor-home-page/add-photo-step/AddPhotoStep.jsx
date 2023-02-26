@@ -23,7 +23,7 @@ const AddPhotoStep = ({ btnsBox, stepLabel }) => {
 
   const resizeImage = (photo) => {
     const originalPhotoPath = URL.createObjectURL(photo)
-    const photoSizes = { newWidth: 580, newHeight: 580 }
+    const photoSizes = { newWidth: 440, newHeight: 440 }
     const photoName = photo.name
     imageResize(originalPhotoPath, photoSizes).then((resizedPhoto) => {
       handleStepData(stepLabel, [{ src: resizedPhoto, name: photoName, type: 'image/png' }])
