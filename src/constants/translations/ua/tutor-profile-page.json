@@ -4,5 +4,9 @@
       "showMore": "Показати більше...",
       "bookLesson": "Записатися на урок",
       "sendMessage": "Надіслати повідомлення"
+    }, 
+    "videoPresentation": {
+      "title": "Відео Презентація"
     }
   }
+

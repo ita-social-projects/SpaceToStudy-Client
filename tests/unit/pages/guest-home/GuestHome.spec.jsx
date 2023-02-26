@@ -9,7 +9,7 @@ describe('GuestHomePage test', () => {
   it('should render without opening login modal', () => {
     const defaultRoute = '/'
     renderWithProviders(
-      <ModalProvider value={{ openModal: mockSetModal }}>
+      <ModalProvider value={ { openModal: mockSetModal } }>
         <GuestHomePage />
       </ModalProvider>,
       { initialEntries: defaultRoute }
@@ -19,7 +19,7 @@ describe('GuestHomePage test', () => {
   it('shoud open login modal when login query in url', () => {
     const routeWithSeaechParam = '/?login'
     renderWithProviders(
-      <ModalProvider value={{ openModal: mockSetModal }}>
+      <ModalProvider value={ { openModal: mockSetModal } }>
         <GuestHomePage />
       </ModalProvider>,
       { initialEntries: routeWithSeaechParam }
