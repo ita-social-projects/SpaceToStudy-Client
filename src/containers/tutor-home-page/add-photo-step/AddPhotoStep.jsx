@@ -4,6 +4,7 @@ import { Box, Typography } from '@mui/material'
 
 import FileUploader from '~/components/file-uploader/FileUploader'
 import { imageResize } from '~/utils/image-resize'
+import useUpload from '~/hooks/use-upload'
 
 import { style } from '~/containers/tutor-home-page/add-photo-step/AddPhotoStep.style'
 import { useStepContext } from '~/context/step-context'
@@ -30,13 +31,19 @@ const AddPhotoStep = ({ btnsBox, stepLabel }) => {
     })
   }
 
+  const { dragStart, dragLeave, dragDrop, isDrag } = useUpload({
+    files: photo,
+    emitter: addPhoto,
+    validationData
+  })
+
   const photoPrewiew = photo.length ? (
     <Box
       alt={ t('becomeTutor.photo.imageAlt') } component='img' src={ photo[0].src }
       sx={ style.img }
     />
   ) : (
-    <Box sx={ style.preview }>
+    <Box sx={ [style.preview, isDrag && style.rootDrag] }>
       <Typography>
         { t('becomeTutor.photo.placeholder') }
       </Typography>
@@ -45,7 +52,14 @@ const AddPhotoStep = ({ btnsBox, stepLabel }) => {
 
   return (
     <Box sx={ style.root }>
-      <Box sx={ style.imgContainer }>
+      <Box 
+        data-testid='drop'
+        onDragLeave={ dragLeave }
+        onDragOver={ dragStart }
+        onDragStart={ dragStart }
+        onDrop={ dragDrop }
+        sx={ style.imgContainer }
+      >
         { photoPrewiew }
       </Box>
       <Box sx={ style.rigthBox }>

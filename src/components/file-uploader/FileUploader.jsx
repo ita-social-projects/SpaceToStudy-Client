@@ -16,7 +16,7 @@ import { styles } from '~/components/file-uploader/FileUploader.styles'
 const FileUploader = ({ buttonText, emitter, initialState = [], initialError = '', validationData }) => {
   const { t } = useTranslation()
 
-  const { dragStart, dragLeave, dragDrop, addFiles, deleteFile, isDrag } = useUpload({
+  const { addFiles, deleteFile } = useUpload({
     files: initialState,
     emitter: emitter,
     validationData
@@ -46,14 +46,7 @@ const FileUploader = ({ buttonText, emitter, initialState = [], initialError = '
 
   return (
     <>
-      <Box
-        data-testid='drop'
-        onDragLeave={ dragLeave }
-        onDragOver={ dragStart }
-        onDragStart={ dragStart }
-        onDrop={ dragDrop }
-        sx={ [styles.root, isDrag && styles.rootDrag] }
-      >
+      <Box data-testid='drop' sx={ styles.root }>
         { initialState.length > 0 ? (<List sx={ { width: '100%' } }> 
           { filesList }
         </List>) 
