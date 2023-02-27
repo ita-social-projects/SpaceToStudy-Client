@@ -18,46 +18,33 @@ export const textField = (min, max) => (value) => {
   }
 }
 
-export const helperTextHandler = (value, marker, password, data) => {
-  let helperText = ''
-
-  const validations = {
-    nameField: () => {
-      if (value.length > 30) {
-        helperText = 'common.errorMessages.nameLength'
-      }
-      if (!RegExp(/^[a-zа-яєії]+$/i).test(value)) {
-        helperText = 'common.errorMessages.nameAlphabeticOnly'
-      }
-    },
-    password: () => {
-      if (!RegExp(/^(?=.*\d)(?=.*[a-zа-яєії])\S+$/i).test(value)) {
-        helperText = 'common.errorMessages.passwordValid'
-      }
-      if (value.length < 8 || value.length > 25) {
-        helperText = 'common.errorMessages.passwordLength'
-      }
-    },
-    email: () => {
-      if (!RegExp(/^([a-z\d]+([._-][a-z\d]+)*)@([a-z\d]+([.-][a-z\d]+)*\.[a-z]{2,})$/i).test(value)) {
-        helperText = 'common.errorMessages.emailValid'
-      }
-    },
-    confirmPassword: () => {
-      if (password !== data.password) {
-        helperText = 'common.errorMessages.passwordsDontMatch'
-      }
+const validations = {
+  nameField: (value) => {
+    if (value.length > 30) {
+      return 'common.errorMessages.nameLength'
     }
-  }
-
-  for (const validationsKey in validations) {
-    if (marker === validationsKey) {
-      validations[validationsKey](value)
+    if (!RegExp(/^[a-zа-яєії]+$/i).test(value)) {
+      return 'common.errorMessages.nameAlphabeticOnly'
     }
+    return ''
+  },
+  password: (value) => {
+    if (!RegExp(/^(?=.*\d)(?=.*[a-zа-яєії])\S+$/i).test(value)) {
+      return 'common.errorMessages.passwordValid'
+    }
+    if (value.length < 8 || value.length > 25) {
+      return 'common.errorMessages.passwordLength'
+    }
+    return ''
+  },
+  email: (value) => {
+    if (!RegExp(/^([a-z\d]+([._-][a-z\d]+)*)@([a-z\d]+([.-][a-z\d]+)*\.[a-z]{2,})$/i).test(value)) {
+      return 'common.errorMessages.emailValid'
+    }
+    return ''
   }
+}
 
-  if (marker === 'confirmPassword') {
-    return emptyField(password, helperText)
-  }
-  return emptyField(value, helperText)
+export const helperTextHandler = (value, marker) => {
+  return emptyField(value, validations[marker](value))
 }

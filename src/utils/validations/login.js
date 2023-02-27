@@ -1,4 +1,4 @@
-import { helperTextHandler, nameField } from './common'
+import { helperTextHandler, nameField, emptyField } from './common'
 
 export const email = (value) => {
   return helperTextHandler(value, 'email')
@@ -17,5 +17,5 @@ export const lastName = (value) => {
 }
 
 export const confirmPassword = (password, data) => {
-  return helperTextHandler('', 'confirmPassword', password, data)
+  return emptyField(password, password !== data.password ? 'common.errorMessages.passwordsDontMatch' : '')
 }
