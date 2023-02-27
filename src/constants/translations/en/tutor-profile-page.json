@@ -4,5 +4,8 @@
     "showMore": "Show more...",
     "bookLesson": "Book a lesson",
     "sendMessage": "Send message"
+  },
+  "videoPresentation": {
+    "title": "Video Presentation"
   }
 }
