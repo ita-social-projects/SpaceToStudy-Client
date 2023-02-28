@@ -4,13 +4,15 @@ import { Box, Typography } from '@mui/material'
 
 import FileUploader from '~/components/file-uploader/FileUploader'
 import { imageResize } from '~/utils/image-resize'
-import useUpload from '~/hooks/use-upload'
 
 import { style } from '~/containers/tutor-home-page/add-photo-step/AddPhotoStep.style'
 import { useStepContext } from '~/context/step-context'
+import useUpload from '~/hooks/use-upload'
+import useBreakpoints from '~/hooks/use-breakpoints'
 import { validationData } from './constants'
 
 const AddPhotoStep = ({ btnsBox, stepLabel }) => {
+  const { isDesktop, isTablet, isMobile } = useBreakpoints()
   const [photoError, setPhotoError] = useState(null)
   const { t } = useTranslation()
   const { stepData, handleStepData } = useStepContext()
@@ -52,16 +54,18 @@ const AddPhotoStep = ({ btnsBox, stepLabel }) => {
 
   return (
     <Box sx={ style.root }>
-      <Box 
-        data-testid='drop'
-        onDragLeave={ dragLeave }
-        onDragOver={ dragStart }
-        onDragStart={ dragStart }
-        onDrop={ dragDrop }
-        sx={ style.imgContainer }
-      >
-        { photoPrewiew }
-      </Box>
+      { isDesktop && (
+        <Box 
+          data-testid='drop'
+          onDragLeave={ dragLeave }
+          onDragOver={ dragStart }
+          onDragStart={ dragStart }
+          onDrop={ dragDrop }
+          sx={ style.imgContainer }
+        >
+          { photoPrewiew }
+        </Box>
+      ) }
       <Box sx={ style.rigthBox }>
         <Box>
           <Typography sx={ style.description }>
@@ -75,7 +79,18 @@ const AddPhotoStep = ({ btnsBox, stepLabel }) => {
             validationData={ validationData }
           />
         </Box>
-
+        { (isMobile || isTablet ) && (
+          <Box 
+            data-testid='drop'  
+            onDragLeave={ dragLeave }
+            onDragOver={ dragStart }
+            onDragStart={ dragStart }
+            onDrop={ dragDrop }
+            sx={ style.imgContainer }
+          >
+            { photoPrewiew }
+          </Box>
+        ) }
         { btnsBox }
       </Box>
     </Box>

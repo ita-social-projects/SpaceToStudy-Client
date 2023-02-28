@@ -46,7 +46,7 @@ const FileUploader = ({ buttonText, emitter, initialState = [], initialError = '
 
   return (
     <>
-      <Box data-testid='drop' sx={ styles.root }>
+      <Box data-testid='upload' sx={ styles.root }>
         { initialState.length > 0 ? (<List sx={ { width: '100%' } }> 
           { filesList }
         </List>) 
