@@ -6,9 +6,11 @@ import { ModalProvider } from '~/context/modal-context'
 import { renderWithProviders } from '~tests/test-utils'
 import { imageResize } from '~/utils/image-resize'
 import { URLs } from '~/constants/request'
+import useBreakpoints from '~/hooks/use-breakpoints'
 import { vi } from 'vitest'
 
 vi.mock('~/utils/image-resize')
+vi.mock('~/hooks/use-breakpoints')
 
 const mockAxiosClient = new MockAdapter(axiosClient)
 
@@ -21,7 +23,10 @@ const mockState = {
 
 describe('BecomeATutor test', () => {
   mockAxiosClient.onGet(`${URLs.users.get}/${userId}`).reply(200, { data: userDataMock })
+  const desktopData = { isDesktop: true, isMobile: false, isTablet: false }
+  
   beforeEach(() => {
+    useBreakpoints.mockImplementation(() => desktopData)
     window.URL.createObjectURL = vi.fn(() => 'image/png')
     renderWithProviders(
       <ModalProvider>

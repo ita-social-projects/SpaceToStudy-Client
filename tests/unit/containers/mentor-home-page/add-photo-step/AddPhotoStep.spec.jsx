@@ -2,7 +2,10 @@ import { render, screen, fireEvent } from '@testing-library/react'
 import AddPhotoStep from '~/containers/tutor-home-page/add-photo-step/AddPhotoStep'
 import { ModalProvider } from '~/context/modal-context'
 import { StepProvider } from '~/context/step-context'
+import useBreakpoints from '~/hooks/use-breakpoints'
 import { vi } from 'vitest'
+
+vi.mock('~/hooks/use-breakpoints')
 
 const btnsBox = (
   <div>
@@ -12,7 +15,10 @@ const btnsBox = (
 )
 
 describe('AddPhotoStep test', () => {
+  const desktopData = { isDesktop: true, isMobile: false, isTablet: false }
+
   beforeEach(() => {
+    useBreakpoints.mockImplementation(() => desktopData)
     window.URL.createObjectURL = vi.fn(() => 'image/png')
     render(
       <ModalProvider>
