@@ -20,31 +20,33 @@ const GuestHomePage = () => {
   const { openModal } = useContext(ModalContext)
   const [searchParams, setSearchParams] = useSearchParams()
 
-  const element = useRef()
+  const element = useRef(null)
+  console.log(element)
 
   useEffect(() => {
+    console.log(element)
     const confirmToken = searchParams.get('confirmToken')
     const resetToken = searchParams.get('resetToken')
     const login = searchParams.get('login')
-
     confirmToken && openModal({ component: <EmailConfirmModal confirmToken={ confirmToken } openModal={ openModal } /> })
     resetToken && openModal({ component: <ResetPassword openModal={ openModal } resetToken={ resetToken } /> })
     login !== null && openModal({ component: <LoginDialog /> })
 
     setSearchParams([])
   }, [searchParams, setSearchParams, openModal])
+ 
 
   return (
     <Box data-testid='guestHome' ref={ element } sx={ { flex: 1, overflowY: 'auto' } }>
       <Welcome />
-      <Box sx={ { maxWidth: '1128px', margin: '0 auto', overflowX: 'hidden' } }>
+      <Box sx={ { maxWidth: '1128px', margin: '0 auto', overflowX: 'hidden' } } >
         <FeatureBlock items={ descriptionTimes } />
         <WhatCanYouDo />
         <HowItWorks />
         <WhoWeAre />
       </Box>
       <ScrollToTopButton element={ element } />
-      <Footer />
+      <Footer  />
     </Box>
   )
 }

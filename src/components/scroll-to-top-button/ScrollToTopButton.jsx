@@ -7,10 +7,10 @@ import { styles } from '~/components/scroll-to-top-button/ScrollToTopButton.styl
 
 
 const ScrollToTopButton = ({ element }) => {
-  const [isVisible, setIsVisible] = useState(false)
- 
+  const [isVisible, setIsVisible] = useState(true)
+  
 
-   useEffect(() => {
+  useEffect(() => {
     const scrollVariable = element.current
     const scroll = () => (scrollVariable.scrollTop > 450 ? setIsVisible(true) : setIsVisible(false))
     scrollVariable.addEventListener('scroll', scroll)
