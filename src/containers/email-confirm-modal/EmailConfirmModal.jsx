@@ -35,6 +35,9 @@ const EmailConfirmModal = ({ confirmToken, openModal }) => {
           style={ styles }
           title={ t('modals.emailNotConfirm') }
         />
+        <Button onClick={ openLoginDialog } size='large' variant='contained'>
+          { t('button.confirmButton') }
+        </Button>
       </Box>
     )
   }
@@ -48,6 +51,9 @@ const EmailConfirmModal = ({ confirmToken, openModal }) => {
           style={ styles }
           title={ t('modals.emailAlreadyConfirm') }
         />
+        <Button onClick={ openLoginDialog } size='large' variant='contained'>
+          { t('button.confirmButton') }
+        </Button>
       </Box>
     )
   }
@@ -56,10 +62,7 @@ const EmailConfirmModal = ({ confirmToken, openModal }) => {
     return (
       <Box sx={ styles.box }>
         <ImgTitleDescription img={ imgSuccess } style={ styles } title={ t('modals.emailConfirm') } />
-        <Button
-          color='primary' onClick={ openLoginDialog } size='large'
-          style={ styles.button } variant='contained'
-        >
+        <Button onClick={ openLoginDialog } size='large' variant='contained'>
           { t('button.goToLogin') }
         </Button>
       </Box>

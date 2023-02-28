@@ -1,4 +1,5 @@
 {
   "toMain": "Home Page",
-  "goToLogin": "Go to Login"
+  "goToLogin": "Go to login",
+  "confirmButton": "OK"
 }

@@ -11,5 +11,6 @@
   "joinUs": "Login!",
   "confirmEmailTitle": "Your email address needs to be verified",
   "confirmEmailMessage": "We sent a confirmation email to: ",
-  "confirmEmailDesc": " Check your email and click on the confirmation button to continue."
+  "confirmEmailDesc": " Check your email and click on the confirmation button to continue.",
+  "confirmButtonMessage": "OK"
 }

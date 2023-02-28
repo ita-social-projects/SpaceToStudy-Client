@@ -15,5 +15,6 @@
   "newPassword": "Create new password",
   "resetPasswordDesc": "Your new password must be different from previous used passwords.",
   "savePassword": "Save password",
-  "sucsessReset": "Your password has been successfully updated!"
+  "sucsessReset": "Your password has been successfully updated!",
+  "confirmButton": "OK"
 }
