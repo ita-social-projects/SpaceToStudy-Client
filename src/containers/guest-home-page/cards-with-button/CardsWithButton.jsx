@@ -31,7 +31,7 @@ const CardsWithButton = ({ array, role, btnText, isStudent }) => {
     const boxSide = key % 2 === 0 ? 'right' : 'left'
 
     return (
-      <Transition in={ isStudent } key={ key } timeout={ 1000 }>
+      <Transition in={ isStudent } key={ key } timeout={ 300 }>
         { (state) => (
           <Box
             sx={ [
