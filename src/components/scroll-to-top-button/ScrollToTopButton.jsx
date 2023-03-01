@@ -3,21 +3,22 @@ import { useState, useEffect } from 'react'
 import IconButton from '@mui/material/IconButton'
 import Box from '@mui/material/Box'
 import ArrowUpwardRoundedIcon from '@mui/icons-material/ArrowUpwardRounded'
-
 import { styles } from '~/components/scroll-to-top-button/ScrollToTopButton.styles'
 
-const ScrollToTopButton = () => {
-  const [isVisible, setIsVisible] = useState(false)
 
-  const scroll = () => (window.scrollY > 450 ? setIsVisible(true) : setIsVisible(false))
+const ScrollToTopButton = ({ element }) => {
+  const [isVisible, setIsVisible] = useState(true)
+  
 
   useEffect(() => {
-    window.addEventListener('scroll', scroll)
-    return () => window.removeEventListener('scroll', scroll)
-  }, [])
+    const scrollVariable = element.current
+    const scroll = () => (scrollVariable.scrollTop > 450 ? setIsVisible(true) : setIsVisible(false))
+    scrollVariable.addEventListener('scroll', scroll)
+    return () => scrollVariable.removeEventListener('scroll', scroll)
+  }, [element])
 
   const goToTop = () => {
-    window.scrollTo({
+    element.current.scrollTo({
       top: 0,
       behavior: 'smooth'
     })
