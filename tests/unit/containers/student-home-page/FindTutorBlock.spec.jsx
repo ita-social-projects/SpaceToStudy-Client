@@ -20,7 +20,7 @@ describe('FindTutorBlock test', () => {
   })
 
   it('should render image for desktop window size', async () => {
-    const img = screen.getByAltText('Bag')
+    const img = screen.getByAltText('icon')
 
     expect(img).toBeInTheDocument()
   })
