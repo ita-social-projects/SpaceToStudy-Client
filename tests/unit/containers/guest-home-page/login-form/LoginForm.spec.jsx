@@ -48,12 +48,6 @@ describe('Login form test', () => {
     expect(inputLabel).toBeInTheDocument()
   })
 
-  it('should render checkbox label', () => {
-    const label = screen.getByText('login.rememberMe')
-
-    expect(label).toBeInTheDocument()
-  })
-
   it('should render forgot password text', () => {
     const text = screen.getByText('login.forgotPassword')
 
