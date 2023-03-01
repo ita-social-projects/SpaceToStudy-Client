@@ -66,7 +66,7 @@ const SignupDialog = ({ type }) => {
 
       <Box mt={ 2 }>
         <Button onClick={ closeModal } size='large' variant='contained'>
-          { t('signup.confirmButtonMessage') }
+          { t('common.confirmButton') }
         </Button>
       </Box>
     </>

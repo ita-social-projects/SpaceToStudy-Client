@@ -8,6 +8,7 @@
   "finish": "Finish",
   "search": "Search",
   "delete": "Delete",
+  "confirmButton": "OK",
   "labels": {
     "email": "Email",
     "firstName": "First name",

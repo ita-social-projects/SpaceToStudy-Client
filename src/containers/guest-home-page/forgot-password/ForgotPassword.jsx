@@ -63,7 +63,7 @@ const ForgotPassword = () => {
       { t('login.emailArrive') }
       <Box mt={ 2 }>
         <Button onClick={ closeModal } size='large' variant='contained'>
-          { t('login.confirmButton') }
+          { t('common.confirmButton') }
         </Button>
       </Box>
     </>
