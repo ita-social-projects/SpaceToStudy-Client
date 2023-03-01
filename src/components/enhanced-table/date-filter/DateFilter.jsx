@@ -33,7 +33,11 @@ const DateFilter = ({ filter, setFilter, clearFilter }) => {
   }, [])
 
   const endAdornment = (
-    <IconButton className={ filter.from || filter.to ? 'visible' : 'hidden' } onClick={ clearFilter }>
+    <IconButton
+      className={ filter.from || filter.to ? 'visible' : 'hidden' }
+      data-testid='clear-icon'
+      onClick={ clearFilter }
+    >
       <ClearIcon color='primary' />
     </IconButton>
   )
@@ -41,6 +45,7 @@ const DateFilter = ({ filter, setFilter, clearFilter }) => {
   const datePickers = datePickersOptions.map(({ placement, direction }) => (
     <DesktopDatePicker
       PopperProps={ { placement: placement } }
+      inputProps={ { 'aria-label': `date-filter-${direction}` } }
       key={ direction }
       onChange={ handleChange(direction) }
       onClose={ () => handleClose(direction) }
@@ -57,6 +62,7 @@ const DateFilter = ({ filter, setFilter, clearFilter }) => {
         InputProps={ {
           startAdornment: (
             <IconButton
+              data-testid='calendar-icon'
               onClick={ () =>
                 setOpen({
                   from: true,
