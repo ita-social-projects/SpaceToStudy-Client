@@ -9,8 +9,8 @@ import IconButton from '@mui/material/IconButton'
 import TurnedIn from '@mui/icons-material/TurnedIn'
 import TurnedInNot from '@mui/icons-material/TurnedInNot'
 
-import AppButton from '../app-button/AppButton'
-import AppChip from '../app-chip/AppChip'
+import AppButton from '~/components/app-button/AppButton'
+import AppChip from '~/components/app-chip/AppChip'
 
 import { styles } from './OfferCard.styles'
 
