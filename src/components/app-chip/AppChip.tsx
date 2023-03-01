@@ -15,7 +15,7 @@ interface AppChipProps {
 }
 
 
-const AppChip:React.FC<AppChipProps> = ({ handleDelete, children, icon }) => {
+const AppChip:React.FC<AppChipProps> = ({ handleDelete, children, icon, sx }) => {
   
   return (
     <Chip
@@ -32,7 +32,7 @@ const AppChip:React.FC<AppChipProps> = ({ handleDelete, children, icon }) => {
         { children }
       </Typography> }
       onDelete={ handleDelete }
-      sx={ styles.chip }
+      sx={ { ...styles.chip, ...sx } }
     />
   )
 }
