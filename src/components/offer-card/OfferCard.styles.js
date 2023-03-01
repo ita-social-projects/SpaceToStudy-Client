@@ -1,6 +1,13 @@
 import { commonShadow } from '~/styles/app-theme/custom-shadows'
 
-import { blueGrey, green } from '@mui/material/colors'
+const ellipsisTextStyle = (linesCount) => ({
+  display: '-webkit-box',
+  WebkitLineClamp: linesCount,
+  lineClamp: linesCount,
+  WebkitBoxOrient: 'vertical',
+  boxOrient: 'vertical',
+  overflow: 'hidden'
+})
 
 export const styles = {
   container: {
@@ -29,12 +36,7 @@ export const styles = {
     mr: '5px'
   },
   bio: {
-    display: '-webkit-box',
-    WebkitLineClamp: 2,
-    lineClamp: 2,
-    WebkitBoxOrient: 'vertical',
-    boxOrient: 'vertical',
-    overflow: 'hidden',
+    ...ellipsisTextStyle(2),
     mb: '10px'
   },
   chipsContainer: {
@@ -43,16 +45,13 @@ export const styles = {
   },
   subjectChip: {
     mr: '4px',
-    backgroundColor: green[300]
+    backgroundColor: 'green.300'
+  },
+  levelChip: {
+    backgroundColor: 'green.50'
   },
   description: {
-    display: '-webkit-box',
-    WebkitLineClamp: 4,
-    lineClamp: 4,
-    WebkitBoxOrient: 'vertical',
-    boxOrient: 'vertical',
-    overflow: 'hidden',
-    color: 'primary.600',
+    ...ellipsisTextStyle(4),
     mb: '10px'
   },
   languagesContainer: {
@@ -60,7 +59,7 @@ export const styles = {
     alignItems: 'center'
   },
   languageIcon: {
-    color: blueGrey[400],
+    color: 'primary.400',
     marginRight: '8px'
   },
   languages: {
@@ -85,7 +84,7 @@ export const styles = {
     width: '100%',
     mb: '16px'
   },
-  viewProfileButton: {
+  viewDetailsButton: {
     width: '100%',
     backgroundColor: 'primary.50',
     color: 'primary.900',

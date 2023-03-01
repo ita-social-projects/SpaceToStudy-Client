@@ -12,7 +12,7 @@ import TurnedInNot from '@mui/icons-material/TurnedInNot'
 import AppButton from '~/components/app-button/AppButton'
 import AppChip from '~/components/app-chip/AppChip'
 
-import { styles } from './OfferCard.styles'
+import { styles } from '~/components/offer-card/OfferCard.styles'
 
 const OfferCard = ({
   imgSrc,
@@ -47,7 +47,7 @@ const OfferCard = ({
             </Typography>
           </AppChip>
 
-          <AppChip>
+          <AppChip style={ styles.levelChip }>
             <Typography variant='body2'>
               { `${t('common.beginner')} - ${level}`.toUpperCase() }
             </Typography>
@@ -56,19 +56,19 @@ const OfferCard = ({
         
         <Typography variant='body2' sx={ styles.description }>{ description }</Typography>
         <Box sx={ styles.languagesContainer }>
-          <LanguageIcon style={ styles.languageIcon } />
+          <LanguageIcon sx={ styles.languageIcon } />
           <Typography variant='body2' sx={ styles.languages }>{ languages.join(', ') }</Typography>
         </Box>
       </Box>
 
       <Box sx={ styles.rightContainer }>
-        <Box sx={styles.rightContainerTop}>
+        <Box sx={ styles.rightContainerTop }>
           <Box>
             <Typography variant='h6'>{ price } { t('common.uah') }</Typography>
             <Typography variant='body2'>/{ t('common.hour') }</Typography>
           </Box>
           
-          <IconButton sx={styles.bookmarkButton}>
+          <IconButton sx={ styles.bookmarkButton }>
             {isBookmarked ? <TurnedIn /> : <TurnedInNot />}
           </IconButton>
         </Box>
@@ -83,7 +83,7 @@ const OfferCard = ({
         <AppButton
           size='large'
           variant='contained'
-          sx={styles.viewProfileButton}
+          sx={styles.viewDetailsButton}
         >
           { t('common.labels.viewDetails') }
         </AppButton>
