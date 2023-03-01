@@ -8,9 +8,22 @@ import login from './login.json'
 import modals from './email-modals.json'
 import breadCrumbs from './breadcrumbs.json'
 import completeProfile from './complete-profile.json'
+import findOffer from './find-offer-page.json'
 
 const ua = {
-  translations: { common, errorPage, button, header, questions, titles, login, modals, breadCrumbs, completeProfile }
+  translations: {
+    common,
+    errorPage,
+    button,
+    header,
+    questions,
+    titles,
+    login,
+    modals,
+    breadCrumbs,
+    completeProfile,
+    findOffer
+  }
 }
 
 export default ua
