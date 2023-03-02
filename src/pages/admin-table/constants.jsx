@@ -47,7 +47,8 @@ export const columns = [
   {
     label: 'adminTable.name',
     field: 'name',
-    dataType: 'string'
+    dataType: 'string',
+    calculatedCellValue: (item) => `${item.firstName} ${item.lastName}`,
   },
   {
     label: 'adminTable.email',
