@@ -53,7 +53,7 @@ const FileUploader = ({ buttonText, emitter, initialState = [], initialError = '
           : uploadButton }
       </Box>
       <Typography sx={ { mt:'10px' } } variant={ 'body2' }>
-        { t('becomeTutor.photo.fileSize') }
+        { t('constant.fileSize', { size: '10 Mb' }) }
       </Typography>
       { initialError && (
         <Typography color='error' ml={ 1 } variant='caption'>
