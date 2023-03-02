@@ -8,7 +8,20 @@ export const style = {
     height: { sm: '485px' },
     ...fadeAnimation
   },
-  preview: {
+  img: {
+    width: '100%',
+    borderRadius: '20px',
+    mt: { xs: '20px', md: '0px' }
+  },
+  imgContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    maxWidth: '440px',
+    width: '100%',
+    flex: 1,
+    pb: { xs: '16px', sm: '26px', md: '52px' }
+  },
+  uploadBox: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -18,20 +31,11 @@ export const style = {
     border: '2px dashed',
     borderColor: 'primary.200',
     borderRadius: '20px',
-    mt: { xs: '20px', sm: '20px', md: '0px' }
+    mt: { xs: '20px', md: '0px' }
   },
-  img: {
-    width: '100%',
-    borderRadius: '20px',
-    mt: { xs: '20px', sm: '20px', md: '0px' }
-  },
-  imgContainer: {
-    display: 'flex',
-    alignItems: 'center',
-    maxWidth: '440px',
-    width: '100%',
-    flex: 1,
-    pb: { xs: '16px', sm: '26px', md: '52px' }
+  activeDrag: {
+    border: '2px primary',
+    borderColor: 'primary.900'
   },
   rigthBox: {
     display: 'flex',
@@ -43,9 +47,5 @@ export const style = {
   },
   description: {
     mb: '20px'
-  },
-  rootDrag: {
-    border: '2px primary',
-    borderColor: 'primary.900'
   }
 }
