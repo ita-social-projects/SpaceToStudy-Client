@@ -9,7 +9,7 @@
   "hour": "ГОДИНУ",
   "beginner": "Початковий",
   "labels": {
-    "sendMessage": "Send message",
-    "viewDetails": "View details"
+    "sendMessage": "Надіслати повідомлення",
+    "viewDetails": "Переглянути деталі"
   }
 }
