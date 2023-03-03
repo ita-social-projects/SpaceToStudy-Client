@@ -41,16 +41,18 @@ const OfferCard = ({
         <Typography sx={ styles.bio }>{ bio }</Typography>
 
         <Box sx={ styles.chipsContainer }>
-          <AppChip style={ styles.subjectChip }>
-            <Typography variant='subtitle2'>
+          <AppChip
+            style={ styles.subjectChip }
+            labelStyle={ styles.subjectChipLabel }
+          >
               { subject.toUpperCase() }
-            </Typography>
           </AppChip>
 
-          <AppChip style={ styles.levelChip }>
-            <Typography variant='body2'>
+          <AppChip
+            style={ styles.levelChip }
+            labelStyle={ styles.levelChipLabel }
+          >
               { `${t('common.beginner')} - ${level}`.toUpperCase() }
-            </Typography>
           </AppChip>
         </Box>
         

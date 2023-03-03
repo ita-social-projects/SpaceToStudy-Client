@@ -6,7 +6,6 @@ import { SxProps } from '@mui/system'
 
 import { styles } from '~/components/app-chips-list/AppChipsList-styles'
 
-
 interface AppChipProps {
   handleDelete:() => void,
   children:ReactNode,

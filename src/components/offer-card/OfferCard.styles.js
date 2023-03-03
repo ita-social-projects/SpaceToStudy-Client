@@ -13,7 +13,8 @@ export const styles = {
   container: {
     display: 'flex',
     padding: '30px 20px',
-    boxShadow: commonShadow
+    boxShadow: commonShadow,
+    borderRadius: '6px'
   },
   leftContainer: {
     display: 'flex',
@@ -45,13 +46,23 @@ export const styles = {
   },
   subjectChip: {
     mr: '4px',
-    backgroundColor: 'green.300'
+    backgroundColor: 'green.300',
+    color: 'green.900'
   },
   levelChip: {
-    backgroundColor: 'green.50'
+    backgroundColor: 'green.50',
+    color: 'primary.700'
+  },
+  subjectChipLabel: {
+    typography: 'overline',
+    fontWeight: 500
+  },
+  levelChipLabel: {
+    typography: 'overline'
   },
   description: {
     ...ellipsisTextStyle(4),
+    color: 'primary.600',
     mb: '10px'
   },
   languagesContainer: {
@@ -78,7 +89,8 @@ export const styles = {
   bookmarkButton: {
     position: 'absolute',
     right: 0,
-    top: 0
+    top: 0,
+    color: 'basic.black'
   },
   sendMessageButton: {
     width: '100%',
