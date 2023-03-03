@@ -10,27 +10,33 @@ export const styles = {
   defaultTab: {
     display: 'flex',
     justifyContent: 'center',
-    width: '107px',
-    borderBottom: '1px solid',
-    borderColor: 'primary.500',
-    cursor: 'pointer'
+    alignItems: { xs: 'center', sm: 'flex-start' },
+    width: { sm: '107px' },
+    borderBottom: { sm: '1px solid' },
+    borderColor: { sm: 'primary.500' },
+    cursor: 'pointer',
+    p: { xs: '6px 8px', sm: '0 0 14px 0' }
   },
   activeTab: {
     color: 'text',
     fontWeight: 600,
-    borderBottom: '3px solid',
-    pb: '14px',
+    borderBottom: { sm: '3px solid' },
+    borderColor: { sm: 'primary.500' },
+    p: { xs: '6px 8px', sm: '0 0 14px 0' },
+    backgroundColor: { xs: 'basic.grey', sm: 'transparent' },
+    borderRadius: { xs: '5px', sm: '0' },
     ...fadeAnimation
   },
   steps: {
     display: 'flex',
-    justifyContent: { md: 'end', sm: 'center' },
+    justifyContent: { xs: 'center', md: 'end', sm: 'center' },
     flexWrap: 'wrap',
     columnGap: '1px'
   },
   stepContent: {
     display: { xs: 'flex', sm: 'block' },
-    flex: 1
+    flex: 1,
+    mt: { xs: '24px', sm: '30px' }
   },
   btnWrapper: {
     display: 'flex',

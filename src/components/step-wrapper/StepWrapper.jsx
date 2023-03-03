@@ -62,8 +62,8 @@ const StepWrapper = ({ children, steps }) => {
     <Container sx={ styles.root }>
       <Box sx={ styles.steps }>
         { stepLabels }
-      </Box>
-      <Box mt='30px' sx={ styles.stepContent }>
+      </Box> 
+      <Box sx={ styles.stepContent }>
         { cloneElement(children[activeStep], { btnsBox, stepLabel: steps[activeStep] }) }
       </Box>
     </Container>
