@@ -27,6 +27,7 @@ SpaceToStudy project is a platform where experts in various fields share their k
 - [Contributing](#contributing)
   - [git flow](#git-flow)
   - [issue flow](#git-flow)
+- [Teams](#teams) 
 - [FAQ](#faq)
 - [Support](#support)
 - [License](#license)
