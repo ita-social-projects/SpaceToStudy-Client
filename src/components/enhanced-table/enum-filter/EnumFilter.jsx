@@ -11,13 +11,20 @@ const EnumFilter = ({ column, filter, setFilter, clearFilter }) => {
 
   const menuItems = column.filterEnum.map((filterEnum) => (
     <FilterCheckbox
-      filter={ filter } filterCheckbox={ filterEnum } key={ filterEnum.value }
+      data-testid='filter-checkbox'
+      filter={ filter }
+      filterCheckbox={ filterEnum }
+      key={ filterEnum.value }
       setFilter={ setFilter }
     />
   ))
 
   const endAdornment = (
-    <IconButton className={ filter.length ? 'visible' : 'hidden' } onClick={ clearFilter }>
+    <IconButton
+      className={ filter.length ? 'visible' : 'hidden' }
+      data-testid='clear-icon'
+      onClick={ clearFilter }
+    >
       <ClearIcon color='primary' />
     </IconButton>
   )
@@ -27,7 +34,10 @@ const EnumFilter = ({ column, filter, setFilter, clearFilter }) => {
       <TextField
         InputProps={ {
           startAdornment: (
-            <IconButton onClick={ openMenu }>
+            <IconButton
+              data-testid='filter-icon'
+              onClick={ openMenu }
+            >
               <FilterAltIcon color='primary' />
             </IconButton>
           ),
