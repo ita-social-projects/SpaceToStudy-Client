@@ -42,7 +42,9 @@ describe('redux test', () => {
     mockAxiosClient.onPost(URLs.auth.signup).reply(404, error)
     await store.dispatch(signupUser(signupUserData))
 
-    expect(store.getState()).toEqual({ appMain: { ...initialState, loading: false, error: errorCode } })
+    expect(store.getState()).toEqual({
+      appMain: { ...initialState, error: errorCode }
+    })
   })
 
   it('should set user email to store after signup', async () => {
@@ -56,7 +58,9 @@ describe('redux test', () => {
     mockAxiosClient.onPost(URLs.auth.login).reply(404, error)
     await store.dispatch(loginUser(loginUserData))
 
-    expect(store.getState()).toEqual({ appMain: { ...stateAfterSignup, error: errorCode } })
+    expect(store.getState()).toEqual({
+      appMain: { ...stateAfterSignup, error: errorCode }
+    })
   })
 
   it('should set user data to store after login', async () => {
@@ -70,31 +74,39 @@ describe('redux test', () => {
     mockAxiosInstance.onGet(URLs.auth.refresh).reply(404, error)
     await store.dispatch(checkAuth())
 
-    expect(store.getState()).toEqual({ appMain: { ...stateAfterLogin, error: errorCode } })
+    expect(store.getState()).toEqual({
+      appMain: { ...stateAfterLogin, error: errorCode }
+    })
   })
 
   it('should set user data to store after checkAuth', async () => {
     mockAxiosInstance.onGet(URLs.auth.refresh).reply(200, { accessToken })
     await store.dispatch(checkAuth())
 
-    expect(store.getState()).toEqual({ appMain: stateAfterLogin })
+    expect(store.getState()).toEqual({
+      appMain: { ...stateAfterLogin }
+    })
   })
 
   it('should set an error to store after logout', async () => {
     mockAxiosClient.onPost(URLs.auth.logout).reply(404, error)
     await store.dispatch(logoutUser())
 
-    expect(store.getState()).toEqual({ appMain: { ...stateAfterLogin, error: errorCode } })
+    expect(store.getState()).toEqual({
+      appMain: { ...stateAfterLogin, error: errorCode }
+    })
   })
 
   it('should remove user data from store after logout', async () => {
     mockAxiosClient.onPost(URLs.auth.logout).reply(200, { count: 'deletedCount: 1' })
     await store.dispatch(logoutUser())
 
-    expect(store.getState()).toEqual({ appMain: { ...initialState, loading: false } })
+    expect(store.getState()).toEqual({
+      appMain: { ...initialState }
+    })
   })
 
   it('should clear user data from store', () => {
-    expect(reducer(stateAfterLogin, logout())).toEqual({ ...initialState, loading: false })
+    expect(reducer(stateAfterLogin, logout())).toEqual({ ...initialState })
   })
 })

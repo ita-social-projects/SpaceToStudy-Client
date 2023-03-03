@@ -17,7 +17,7 @@ import { styles } from '~/containers/guest-home-page/login-form/LoginForm.styles
 
 const LoginForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) => {
   const { inputVisibility: passwordVisibility, showInputText: showPassword } = useInputVisibility(errors.password)
-  const { loading } = useSelector((state) => state.appMain)
+  const { authLoading } = useSelector((state) => state.appMain)
 
   const { openModal } = useContext(ModalContext)
 
@@ -72,7 +72,7 @@ const LoginForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) => 
       </Box>
 
       <AppButton
-        loading={ loading } size='large' sx={ styles.loginButton }
+        loading={ authLoading } size='large' sx={ styles.loginButton }
         type='submit' variant='contained'
       >
         { t('common.labels.login') }

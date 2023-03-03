@@ -22,7 +22,7 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors, clos
   const { inputVisibility: confirmPasswordVisibility, showInputText: showConfirmPassword } = useInputVisibility(
     errors.confirmPassword
   )
-  const { loading } = useSelector((state) => state.appMain)
+  const { authLoading } = useSelector((state) => state.appMain)
 
   const handleOnAgreementChange = () => {
     setButtonDisabled(!buttonDisabled)
@@ -148,7 +148,7 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors, clos
 
       <AppButton
         disabled={ buttonDisabled }
-        loading={ loading }
+        loading={ authLoading }
         size='large'
         sx={ styles.signupButton }
         type='submit'
