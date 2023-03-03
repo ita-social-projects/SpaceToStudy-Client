@@ -22,6 +22,10 @@ const SubjectsStep = ({ stepLabel, btnsBox }) => {
   const [subjects, setSubjects] = useState({ category: null, subject: null })
   const [subjectError, setSubjectError] = useState('')
 
+  const imageBlock = (<Box sx={ styles.imgContainer  }>
+    <Box component='img' src={ img } sx={ styles.img } />
+  </Box>)
+
   const onChangeCategory = (_, value) => {
     setSubjects((prev) => prev.category !== value && { category: value, subject: null })
   }
@@ -62,17 +66,13 @@ const SubjectsStep = ({ stepLabel, btnsBox }) => {
   
   return (
     <Box sx={ styles.container }>
-      { isDesktop && (<Box sx={ styles.imgContainer  }>
-        <Box component='img' src={ img } sx={ styles.img } />
-      </Box>) }
+      { isDesktop && imageBlock }
       <Box sx={ styles.rigthBox }>
         <Box>
           <Typography mb='20px'>
             { t('becomeTutor.categories.title') }
           </Typography>
-          { isMobile && (<Box sx={ styles.imgContainer  }>
-            <Box component='img' src={ img } sx={ styles.img } />
-          </Box>) }
+          { isMobile && imageBlock }
           <AppAutoComplete
             fieldValue={ subjects.category }
             id={ t('becomeTutor.categories.mainSubjectsLabel') }
