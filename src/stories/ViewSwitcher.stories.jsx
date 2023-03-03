@@ -21,5 +21,6 @@ const Template = (args) => <ViewSwitcher { ...args } />
 export const Default = Template.bind({})
 
 Default.args = {
-  setOffersView: (view) => console.log('Updated view: ',view)
+  setOffersView: (view) => console.log('Updated view: ',view),
+  offersView:'inline'
 }
