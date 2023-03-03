@@ -3,19 +3,12 @@ import { render, fireEvent, screen } from '@testing-library/react'
 
 import EnumFilter from '~/components/enhanced-table/enum-filter/EnumFilter'
 
-const props = {
+const mockedProps = {
   column: {
-    label: 'adminTable.status',
-    field: '', 
-    dataType: 'enums',
     filterEnum: [
       {
         label: 'adminTable.active',
         value: 'active'
-      },
-      {
-        label: 'adminTable.blocked',
-        value: 'blocked'
       }
     ]
   },
@@ -25,28 +18,64 @@ const props = {
 }
 
 describe('EnumFilter test', () => {
-  beforeEach(() => {
-    render(
-      <EnumFilter { ...props } />
-    )
-  })
 
   it('should open menu after clicking on filter icon', () => {
+    const { rerender } = render(<EnumFilter { ...mockedProps } />) 
+    rerender(<EnumFilter { ...mockedProps } />)
+    
     const filterIcon = screen.getByTestId('filter-icon')
     fireEvent.click(filterIcon)
+
     const filterMenu = screen.getByRole('menu') 
     expect(filterMenu).toBeInTheDocument()
   })
 
-  it('should clear filtered values in the table', () => {
-    const clearIcon = screen.getByTestId('clear-icon')
-    fireEvent.click(clearIcon)
-    expect(props.clearFilter).toHaveBeenCalled()
-  })
+  it('should NOT display clearIcon before setting filter', () => {
+    const { rerender } = render(<EnumFilter { ...mockedProps } />) 
+    rerender(<EnumFilter { ...mockedProps } />)
 
-  it('should NOT display clearIcon before adding filters', () => {
-    const clearIcon = screen.getByTestId('clear-icon')
+    const clearIcon = screen.getByTestId('clear-icon-in-filter')
     expect(clearIcon).toHaveClass('hidden')
   })
 
+  it('should display clearIcon after setting filter', () => {
+    const { rerender } = render(<EnumFilter { ...mockedProps } />) 
+    rerender(<EnumFilter { ...mockedProps } />)
+    
+    const filterIcon = screen.getByTestId('filter-icon')
+    fireEvent.click(filterIcon)
+
+    const filterCheckbox = screen.getByLabelText('filter-checkbox')
+    fireEvent.click(filterCheckbox)
+
+    mockedProps.filter = filterCheckbox.value
+
+    rerender(<EnumFilter { ...mockedProps } />)
+
+    const clearIcon = screen.getByTestId('clear-icon-in-filter')
+    expect(clearIcon).toHaveClass('visible')
+  })
+
+  it('should set filter after checking filterCheckbox', () => {
+    const { rerender } = render(<EnumFilter { ...mockedProps } />) 
+    rerender(<EnumFilter { ...mockedProps } />)
+    
+    const filterIcon = screen.getByTestId('filter-icon')
+    fireEvent.click(filterIcon)
+
+    const filterCheckbox = screen.getByLabelText('filter-checkbox')
+    fireEvent.click(filterCheckbox)
+
+    expect(mockedProps.setFilter).toHaveBeenCalled()
+  })
+
+  it('should clear filter after clicking clearIcon', () => {
+    const { rerender } = render(<EnumFilter { ...mockedProps } />) 
+    rerender(<EnumFilter { ...mockedProps } />)
+    
+    const clearIcon = screen.getByTestId('clear-icon-in-filter')
+    fireEvent.click(clearIcon)
+
+    expect(mockedProps.clearFilter).toHaveBeenCalled()
+  })
 })
