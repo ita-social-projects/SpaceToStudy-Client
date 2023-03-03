@@ -5,7 +5,7 @@ import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted'
 import GridViewIcon from '@mui/icons-material/GridView'
 
 import { cardsViews } from '~/constants'
-import { styles } from './ViewSwitcher.styles'
+import { styles } from '~/components/view-switcher/ViewSwitcher.styles'
 
 const ViewSwitcher = ({ setOffersView }) => {
   const [cardsView, setCardsView ] = useState(cardsViews.inline)
@@ -28,7 +28,8 @@ const ViewSwitcher = ({ setOffersView }) => {
       <ToggleButton
         aria-label='grid card view'
         onClick={ changeCardsView }
-        selected={ cardsView === cardsViews.grid } sx={ { ...styles.toggleButton } }
+        selected={ cardsView === cardsViews.grid }
+        sx={ styles.toggleButton }
         value={ cardsViews.grid }
       >
         <GridViewIcon sx={ styles.icon }  />
