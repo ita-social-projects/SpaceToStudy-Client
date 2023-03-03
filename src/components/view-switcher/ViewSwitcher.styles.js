@@ -1,14 +1,16 @@
 export const styles = {
   icon: {
     fontSize: '24px',
-    color: 'primary.900',
+    color: 'primary.900'
   },
-  toggleButton:{
-    borderColor:'primary.200',
-    '&.Mui-selected':{
-      borderColor:'primary.900',
-      transition:'.16s ease',
-      backgroundColor:'transparent'
+  toggleButton: {
+    borderColor: 'primary.200',
+    '&.Mui-selected': {
+      borderColor: 'primary.900',
+      transition: '.16s ease',
+      backgroundColor: 'transparent'
     }
-  }
+  },
+  gridButton: this.toggleButton,
+  inlineButton: { ...this.toggleButton, marginRight: '8px' }
 }
