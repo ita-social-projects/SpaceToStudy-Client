@@ -7,6 +7,11 @@ export default {
     setOffersView:{
       type:'function',
       description:'change offers card view'
+    },
+    offersView:{
+      options: ['inline', 'grid'],
+      control: { type: 'radio' },
+      description:'offers view state'
     }
   }
 }
