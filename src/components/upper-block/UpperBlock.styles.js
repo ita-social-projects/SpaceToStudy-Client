@@ -9,6 +9,14 @@ export const styles = {
   info: {
     flexBasis: { lg: '55%' }
   },
+  title: {
+    color: 'primary.900',
+    mb: 1
+  },
+  description: {
+    color: 'primary.900',
+    mb: 6
+  },
   form: {
     display: 'flex',
     justifyContent: 'space-between',

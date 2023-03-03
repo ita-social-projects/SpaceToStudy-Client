@@ -12,6 +12,7 @@ import { studentRoutes } from '~/router/constants/studentRoutes'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { styles } from '~/containers/student-home-page/find-tutor-block/find-tutor-block.styles'
 import bag from '~/assets/img/student-home/bag.png'
+import { translationKey } from '~/containers/student-home-page/find-tutor-block/constants' 
 
 const FindTutorBlock = () => {
   const [filter, setFilter] = useState('')
@@ -39,7 +40,7 @@ const FindTutorBlock = () => {
   )
 
   return (
-    <UpperBlock img={ bag } path='studentHomePage.findTutorBlock'>
+    <UpperBlock img={ bag } translationKey={ translationKey } >
       <TextField
         InputProps={ {
           endAdornment: (
@@ -50,7 +51,7 @@ const FindTutorBlock = () => {
           autoComplete: 'off'
         } }
         fullWidth={ isMobile }
-        label={ t('studentHomePage.findTutorBlock.label') }
+        label={ t(`${translationKey}.label`) }
         onChange={ onChange }
         onKeyPress={ handleEnterPress }
         sx={ styles.input }
@@ -60,7 +61,7 @@ const FindTutorBlock = () => {
         fullWidth={ isMobile } onClick={ redirect } size='extraLarge'
         variant='contained'
       >
-        { t('studentHomePage.findTutorBlock.button') }
+        { t(`${translationKey}.button`) }
       </Button>
     </UpperBlock>
     

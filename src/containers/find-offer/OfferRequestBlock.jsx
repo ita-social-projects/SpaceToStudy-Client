@@ -5,18 +5,20 @@ import UpperBlock from '~/components/upper-block/UpperBlock'
 import Button from '@mui/material/Button'
 import icon from '~/assets/img/find-offer/subject_icon.png'
 
+import { translationKey } from '~/containers/find-offer/constants'
+
 const OfferRequestBlock = () => {
   const { t } = useTranslation()
   const { isMobile } = useBreakpoints()
 
   return (
-    <UpperBlock img={ icon } path='findOffer.offerRequestBlock' >
+    <UpperBlock img={ icon } translationKey={ translationKey } >
       <Button
         fullWidth={ isMobile } 
         size='extraLarge'
         variant='contained'
       >
-        { t('findOffer.offerRequestBlock.button') }
+        { t(`${translationKey}.button`) }
       </Button>
     </UpperBlock>
   )

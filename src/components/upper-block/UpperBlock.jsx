@@ -6,18 +6,18 @@ import Typography from '@mui/material/Typography'
 import { styles } from '~/components/upper-block/UpperBlock.styles'
 import useBreakpoints from '~/hooks/use-breakpoints'
 
-const UpperBlock = ({ img, path, children }) => {
+const UpperBlock = ({ img, translationKey, children }) => {
   const { t } = useTranslation()
   const { isDesktop } = useBreakpoints()
 
   return (
     <Box className='section' sx={ styles.container }>
       <Box sx={ styles.info }>
-        <Typography color='primary.900' mb={ 1 } variant='h4'>
-          { t(`${path}.title`) }
+        <Typography sx={ styles.title } variant='h4'>
+          { t(`${translationKey}.title`) }
         </Typography>
-        <Typography color='primary.900' mb={ 6 } variant='subtitle1'>
-          { t(`${path}.description`) }
+        <Typography sx={ styles.description } variant='subtitle1'>
+          { t(`${translationKey}.description`) }
         </Typography>
         <Box sx={ styles.form }>
           { children }
