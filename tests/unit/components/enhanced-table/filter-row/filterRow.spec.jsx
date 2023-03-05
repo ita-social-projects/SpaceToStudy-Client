@@ -1,7 +1,7 @@
-import FilterRow from '~/components/enhanced-table/filter-row/FilterRow'
-import { useTableContext } from '~/context/table-context'
 import { vi } from 'vitest'
-import { fireEvent, screen, render, renderWithProviders } from '@testing-library/react'
+import { fireEvent, screen, render } from '@testing-library/react'
+import { useTableContext } from '~/context/table-context'
+import FilterRow from '~/components/enhanced-table/filter-row/FilterRow'
 
 
 vi.mock('~/context/table-context', () => ({
