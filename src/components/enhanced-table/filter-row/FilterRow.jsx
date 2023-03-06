@@ -9,7 +9,7 @@ const FilterRow = () => {
   const { isSelection, columns, filters } = useTableContext()
 
   const { setFilterByKey, clearFilterByKey } = useFilter()
-
+ 
   const filterCells = columns.map((column) => (
     <FilterCell
       clearFilter={ () => clearFilterByKey(column.field) }

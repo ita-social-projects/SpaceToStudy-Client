@@ -11,7 +11,7 @@ const FilterCell = ({ column, filter, setFilter, clearFilter }) => {
       setFilter={ setFilter }
     />)
 
-  const string = <SearchInput search={ filter } setSearch={ setFilter } />
+  const string = <SearchInput data-testid="searchInput" search={ filter } setSearch={ setFilter } />
 
   const date = <DateFilter clearFilter={ clearFilter } filter={ filter } setFilter={ setFilter } />
 
