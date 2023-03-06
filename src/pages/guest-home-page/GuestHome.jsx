@@ -21,10 +21,8 @@ const GuestHomePage = () => {
   const [searchParams, setSearchParams] = useSearchParams()
 
   const element = useRef(null)
-  console.log(element)
 
   useEffect(() => {
-    console.log(element)
     const confirmToken = searchParams.get('confirmToken')
     const resetToken = searchParams.get('resetToken')
     const login = searchParams.get('login')
