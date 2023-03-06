@@ -19,8 +19,9 @@ export default defineConfig({
     globals: true,
     exclude: [...configDefaults.exclude, 'packages/template/*'],
     coverage: {
-      reporter: ['text', 'json', 'html'],
-      exclude: ['**/*.spec.jsx', './tests/setup-tests.js']
+      all: true,
+      include: ['src/**/*.jsx'],
+      exclude: ['src/stories/*', './tests/setup-tests.js']
     }
   }
 })
