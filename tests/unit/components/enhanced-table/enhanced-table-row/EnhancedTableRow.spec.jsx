@@ -47,7 +47,7 @@ describe('EnhancedTableRow component', () => {
     render(<EnhancedTableRow isItemSelected={ false } item={ mockItem } refetchData={ refetchDataMock } />)
   })
 
-  it('renders table row with all columns', async() => {
+  it('renders table row with all columns', () => {
     expect(screen.getByText('John Smith')).toBeInTheDocument()
     expect(screen.getByText('john@email.com')).toBeInTheDocument()
     expect(calculatedCellValueMock).toHaveBeenCalled()
