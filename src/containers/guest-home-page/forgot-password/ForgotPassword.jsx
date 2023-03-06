@@ -22,7 +22,7 @@ import AppButton from '~/components/app-button/AppButton'
 
 const ForgotPassword = () => {
   const { t } = useTranslation()
-  const { openModal } = useContext(ModalContext)
+  const { openModal, closeModal } = useContext(ModalContext)
   const [loading, setLoading] = useState(false)
   const { setAlert } = useContext(SnackBarContext)
 
@@ -61,6 +61,11 @@ const ForgotPassword = () => {
         { data.email }
       </Typography>
       { t('login.emailArrive') }
+      <Box mt={ 2 }>
+        <Button onClick={ closeModal } size='large' variant='contained'>
+          { t('common.confirmButton') }
+        </Button>
+      </Box>
     </>
   )
 

@@ -20,6 +20,8 @@ import student from '~/assets/img/signup-dialog/student.svg'
 import tutor from '~/assets/img/signup-dialog/tutor.svg'
 import info from '~/assets/img/guest-home-page/info.svg'
 
+import Button from '@mui/material/Button'
+
 import { styles } from '~/containers/guest-home-page/signup-dialog/SignupDialog.styles'
 
 const SignupDialog = ({ type }) => {
@@ -61,6 +63,12 @@ const SignupDialog = ({ type }) => {
         { data.email }
       </Typography>
       { t('signup.confirmEmailDesc') }
+
+      <Box mt={ 2 }>
+        <Button onClick={ closeModal } size='large' variant='contained'>
+          { t('common.confirmButton') }
+        </Button>
+      </Box>
     </>
   )
 
