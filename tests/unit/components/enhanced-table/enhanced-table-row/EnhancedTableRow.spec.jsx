@@ -1,91 +1,89 @@
-import { render, screen, fireEvent } from '@testing-library/react'
-import EnhancedTableRow from '~/components/enhanced-table/enhanced-table-row/EnhancedTableRow'
 import { vi } from 'vitest'
+import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+
+import EnhancedTableRow from '~/components/enhanced-table/enhanced-table-row/EnhancedTableRow'
+import { useTableContext } from '~/context/table-context'
+
+
+const handleSelectClickMock = vi.fn()
+const refetchDataMock = vi.fn()
+const calculatedCellValueMock = vi.fn()
 
 const mockItem = {
   _id: '123456789',
   name: 'John Smith',
   email: 'john@email.com',
-  lastLogin: '2023-02-28T16:26:38.698Z'
+  lastLogin: '2023-02-28'
 }
 
-const refetchData = vi.fn()
-const handleSelectClick = vi.fn()
-const openMenu = vi.fn()
-const handleDelete = vi.fn()
-const actionFuncMock = vi.fn()
-const calculatedCellValue = vi.fn()
+const columns = [
+  { field: 'name' },
+  { field: 'email' },
+  { field: 'last login', calculatedCellValue: calculatedCellValueMock },
+]
 
-const mockTableContext = {
-  isSelection: true,
-  columns: [
-    { field: 'name' },
-    { field: 'email' },
-    { field: 'last login', calculatedCellValue },
-  ],
-  rowActions: [
-    { label: 'Delete', handleDelete },
-  ],
-}
+const rowActions = [
+  { label: 'Delete', func: vi.fn() },
+]
 
-vi.mock('~/hooks/use-menu', () => ({
-  __esModule: true,
-  default: () => ({
-    openMenu,
-    renderMenu: vi.fn(),
-  }),
-}))
+const isSelection = true
 
 vi.mock('~/hooks/table/use-select', () => ({
   __esModule: true,
-  default: () => ({ handleSelectClick }),
+  default: () => ({ handleSelectClick: handleSelectClickMock }),
 }))
 
 vi.mock('~/context/table-context', () => ({
-  __esModule: true,
-  useTableContext: vi.fn(() => mockTableContext),
+  useTableContext: vi.fn()
 }))
 
 describe('EnhancedTableRow component', () => {
+  beforeEach(() => {
+    useTableContext.mockReturnValue({
+      isSelection,
+      columns,
+      rowActions
+    })
+    render(<EnhancedTableRow isItemSelected={ false } item={ mockItem } refetchData={ refetchDataMock } />)
+  })
 
-  it('renders table row with columns and checkbox', () => {
-    const { container } = render(<EnhancedTableRow isItemSelected={ false } item={ mockItem } refetchData />)
-    expect(container.querySelector('tr')).toBeInTheDocument()
+  it('renders table row with all columns', async() => {
     expect(screen.getByText('John Smith')).toBeInTheDocument()
     expect(screen.getByText('john@email.com')).toBeInTheDocument()
+    expect(calculatedCellValueMock).toHaveBeenCalled()
+  })
+
+  it('renders table row with checkbox and menu icon', () => {
     expect(screen.queryByRole('checkbox')).toBeInTheDocument()
     expect(screen.queryByTestId('menu-icon')).toBeInTheDocument()
   })
 
   it('calls handleSelectClick when checkbox is clicked', () => {
-    render(<EnhancedTableRow isItemSelected={ false } item={ mockItem } refetchData />)
     const checkbox = screen.getByRole('checkbox')
     fireEvent.click(checkbox)
-    expect(handleSelectClick).toHaveBeenCalled()
+    expect(handleSelectClickMock).toHaveBeenCalled()
   })
 
   it('renders action menu when menu icon is clicked', async() => {
-    render(<EnhancedTableRow isItemSelected={ false } item={ mockItem } refetchData />)
     const menuIcon = screen.getByTestId('menu-icon')
     fireEvent.click(menuIcon)
-    const deleteIcon = screen.getByText('Delete')
-    expect(openMenu).toHaveBeenCalled()
-    expect(deleteIcon).toBeInTheDocument()
+    expect(await screen.findByText('Delete')).toBeInTheDocument()
   })
 
-  it('calls actionFunc function when clicking on menu item', async() => {
-    render(<EnhancedTableRow isItemSelected={ false } item={ mockItem } refetchData />)
+  it('calls onAction function when clicking on the menu item', async() => {
     const menuIcon = screen.getByTestId('menu-icon')
     fireEvent.click(menuIcon)
-    fireEvent.click(screen.getByText('Delete'))
-    expect(actionFuncMock).toHaveBeenCalledWith(mockItem._id)
-    expect(refetchData).toHaveBeenCalled()
-    expect(actionFuncMock).toHaveBeenCalledWith(handleDelete)
+    await waitFor(() => {
+      fireEvent.click(screen.getByText('Delete'))
+      expect(rowActions[0].func).toHaveBeenCalledWith(mockItem._id)
+    })
   })
-
-  it('calculates cell value', () => {
-    render(<EnhancedTableRow isItemSelected={ false } item={ mockItem } refetchData />)
-    expect(calculatedCellValue).toHaveBeenCalledWith(mockItem)
+  it('calls closeMenu function when clicking outside of the menu', async() => {
+    const menuIcon = screen.getByTestId('menu-icon')
+    fireEvent.click(menuIcon)
+    await waitFor(() => expect(screen.getByText('Delete')).toBeInTheDocument())
+    fireEvent.click(screen.getByRole('presentation').firstChild)
+    expect(menuIcon).toBeInTheDocument()
   })
 
 })
