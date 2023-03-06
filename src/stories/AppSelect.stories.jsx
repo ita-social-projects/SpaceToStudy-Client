@@ -14,7 +14,7 @@ export default {
       control: { type: 'radio' },
       description:'offers view state'
     },
-    sortingFields: {
+    fields: {
       type: 'array',
       description: 'Array of fields for sorting by them'
     },
@@ -32,7 +32,7 @@ export const Default = Template.bind({})
 Default.args = {
   setSortedValue:(e) => console.log('Updated sortBy:', e.target.value),
   sortedValue:'popularity',
-  sortingFields:[
+  fields:[
     { value:sortByFields.newest,title:'Newest' },
     { value:sortByFields.popularity,title:'Popularity' },
     { value:sortByFields.tutorRating,title:'Tutor rating' },

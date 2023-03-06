@@ -1,0 +1,8 @@
+{   
+    "sortByTitle":"Сортувати за",
+    "sortByFields":{
+        "newest":"Найновішими",
+        "popularity":"Популярністю",
+        "tutorRating":"Рейтингом репетитора"
+    }
+}
