@@ -3,10 +3,10 @@ import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
-import { styles } from '~/components/upper-block/UpperBlock.styles'
+import { styles } from '~/components/title-block/TitleBlock.styles'
 import useBreakpoints from '~/hooks/use-breakpoints'
 
-const UpperBlock = ({ img, translationKey, children }) => {
+const TitleBlock = ({ img, translationKey, children }) => {
   const { t } = useTranslation()
   const { isDesktop } = useBreakpoints()
 
@@ -28,4 +28,4 @@ const UpperBlock = ({ img, translationKey, children }) => {
   )
 }
 
-export default UpperBlock
+export default TitleBlock

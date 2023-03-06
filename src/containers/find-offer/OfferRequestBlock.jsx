@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import useBreakpoints from '~/hooks/use-breakpoints'
 
-import UpperBlock from '~/components/upper-block/UpperBlock'
+import TitleBlock from '~/components/title-block/TitleBlock'
 import Button from '@mui/material/Button'
 import icon from '~/assets/img/find-offer/subject_icon.png'
 
@@ -12,7 +12,7 @@ const OfferRequestBlock = () => {
   const { isMobile } = useBreakpoints()
 
   return (
-    <UpperBlock img={ icon } translationKey={ translationKey } >
+    <TitleBlock img={ icon } translationKey={ translationKey } >
       <Button
         fullWidth={ isMobile } 
         size='extraLarge'
@@ -20,7 +20,7 @@ const OfferRequestBlock = () => {
       >
         { t(`${translationKey}.button`) }
       </Button>
-    </UpperBlock>
+    </TitleBlock>
   )
 }
 

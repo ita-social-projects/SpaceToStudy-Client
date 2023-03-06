@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { useTranslation } from 'react-i18next'
 
-import UpperBlock from '~/components/upper-block/UpperBlock'
+import TitleBlock from '~/components/title-block/TitleBlock'
 import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
 import TextField from '@mui/material/TextField'
@@ -40,7 +40,7 @@ const FindTutorBlock = () => {
   )
 
   return (
-    <UpperBlock img={ bag } translationKey={ translationKey } >
+    <TitleBlock img={ bag } translationKey={ translationKey } >
       <TextField
         InputProps={ {
           endAdornment: (
@@ -63,7 +63,7 @@ const FindTutorBlock = () => {
       >
         { t(`${translationKey}.button`) }
       </Button>
-    </UpperBlock>
+    </TitleBlock>
     
   )
 }
