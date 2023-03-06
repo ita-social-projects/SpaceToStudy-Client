@@ -8,6 +8,13 @@ vi.mock('~/context/table-context', () => ({
   useTableContext: vi.fn()
 }))
 
+vi.mock('~/hooks/table/use-filter', () => {
+  return {
+    default: () => ({ setFilterByKey: () => {}, clearFilterByKey: () => {} })
+  }
+})
+
+
 const isSelection = true
 const columns = [
   { label: 'studentTable.name', field: 'name', dataType: 'string' },
@@ -60,6 +67,18 @@ describe('FilterRow tests', () => {
     const menu = screen.getByRole('menu')
 
     expect(menu).toBeInTheDocument()
+  })
+
+  it('Should clear filters', () => {
+    const filterIcon = screen.getByTestId('FilterAltIcon')
+
+    fireEvent.click(filterIcon)
+
+    const menu = screen.getByRole('menu')
+    expect(menu).toBeInTheDocument()
+   
+    const clearIcon = screen.getAllByTestId('ClearIcon')
+    fireEvent.click(clearIcon[3])
   })
   
 })
