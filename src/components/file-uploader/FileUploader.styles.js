@@ -3,11 +3,10 @@ export const styles = {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-around',
-    alignItems: 'center',
-    minHeight: '100px',
-    border: 'dashed',
+    border: '1px solid',
     borderColor: 'primary.200',
-    borderRadius: '4px',
+    borderRadius: '5px',
+    maxWidth: '270px',
     overflow: 'auto'
   },
   rootDrag: {

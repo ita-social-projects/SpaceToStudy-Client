@@ -4,39 +4,48 @@ export const style = {
   root: {
     display: 'flex',
     justifyContent: 'space-between',
-    gap: '32px',
+    gap: '40px',
+    height: { sm: '485px' },
     ...fadeAnimation
-  },
-  preview: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    maxWidth: '580px',
-    width: '100%',
-    aspectRatio: '1',
-    border: 'dashed',
-    borderColor: 'primary.200',
-    borderRadius: '20px'
   },
   img: {
     width: '100%',
-    maxWidth: '580px',
-    borderRadius: '20px'
+    borderRadius: '20px',
+    mt: { xs: '20px', md: '0px' }
+  },
+  imgContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    maxWidth: '440px',
+    width: '100%',
+    flex: 1,
+    pb: { xs: '16px', sm: '26px', md: '52px' }
+  },
+  uploadBox: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    maxWidth: '440px',
+    width: '100%',
+    aspectRatio: '1',
+    border: '2px dashed',
+    borderColor: 'primary.200',
+    borderRadius: '20px',
+    mt: { xs: '20px', md: '0px' }
+  },
+  activeDrag: {
+    border: '2px primary',
+    borderColor: 'primary.900'
   },
   rigthBox: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    flex: '0 2 360px',
-    pt: 12
+    maxWidth: '432px',
+    m: { md: 0, xs: '0 auto' },
+    pt: 0
   },
   description: {
-    mb: 5
-  },
-  imgContainer: {
-    flex: 1,
-    maxWidth: '650px',
-    display: 'flex',
-    justifyContent: 'center'
+    mb: '20px'
   }
 }

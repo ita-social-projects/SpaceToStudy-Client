@@ -16,7 +16,7 @@ import { styles } from '~/components/file-uploader/FileUploader.styles'
 const FileUploader = ({ buttonText, emitter, initialState = [], initialError = '', validationData }) => {
   const { t } = useTranslation()
 
-  const { dragStart, dragLeave, dragDrop, addFiles, deleteFile, isDrag } = useUpload({
+  const { addFiles, deleteFile } = useUpload({
     files: initialState,
     emitter: emitter,
     validationData
@@ -33,30 +33,28 @@ const FileUploader = ({ buttonText, emitter, initialState = [], initialError = '
     </ListItem>
   ))
 
+  const uploadButton = (
+    <Button component='label' sx={ styles.uploadBtn }>
+      <CloudUploadIcon sx={ styles.icon } />
+      { buttonText }
+      <input
+        hidden multiple onChange={ addFiles }
+        type='file'
+      />
+    </Button>
+  )
+
   return (
     <>
-      <Box
-        data-testid='drop'
-        onDragLeave={ dragLeave }
-        onDragOver={ dragStart }
-        onDragStart={ dragStart }
-        onDrop={ dragDrop }
-        sx={ [styles.root, isDrag && styles.rootDrag] }
-      >
-        { initialState.length > 0 && (<List sx={ { width: '100%' } }>
+      <Box sx={ styles.root }>
+        { initialState.length > 0 ? (<List sx={ { width: '100%' } }> 
           { filesList }
-        </List>) }
-
-        <Button component='label' sx={ styles.uploadBtn }>
-          <CloudUploadIcon sx={ styles.icon } />
-          { buttonText }
-          <input
-            hidden multiple onChange={ addFiles }
-            type='file'
-          />
-        </Button>
+        </List>) 
+          : uploadButton }
       </Box>
-
+      <Typography sx={ { mt:'10px' } } variant={ 'body2' }>
+        { t('constant.fileSize', { size: '10 Mb' }) }
+      </Typography>
       { initialError && (
         <Typography color='error' ml={ 1 } variant='caption'>
           { t(initialError) }

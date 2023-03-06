@@ -3,13 +3,16 @@ import { useTranslation } from 'react-i18next'
 import { Box, Typography } from '@mui/material'
 
 import FileUploader from '~/components/file-uploader/FileUploader'
+import DragAndDrop from '~/components/drag-and-drop/DragAndDrop'
 import { imageResize } from '~/utils/image-resize'
 
 import { style } from '~/containers/tutor-home-page/add-photo-step/AddPhotoStep.style'
 import { useStepContext } from '~/context/step-context'
+import useBreakpoints from '~/hooks/use-breakpoints'
 import { validationData } from './constants'
 
 const AddPhotoStep = ({ btnsBox, stepLabel }) => {
+  const { isDesktop, isTablet, isMobile } = useBreakpoints()
   const [photoError, setPhotoError] = useState(null)
   const { t } = useTranslation()
   const { stepData, handleStepData } = useStepContext()
@@ -23,7 +26,7 @@ const AddPhotoStep = ({ btnsBox, stepLabel }) => {
 
   const resizeImage = (photo) => {
     const originalPhotoPath = URL.createObjectURL(photo)
-    const photoSizes = { newWidth: 580, newHeight: 580 }
+    const photoSizes = { newWidth: 440, newHeight: 440 }
     const photoName = photo.name
     imageResize(originalPhotoPath, photoSizes).then((resizedPhoto) => {
       handleStepData(stepLabel, [{ src: resizedPhoto, name: photoName, type: 'image/png' }])
@@ -31,23 +34,30 @@ const AddPhotoStep = ({ btnsBox, stepLabel }) => {
   }
 
   const photoPrewiew = photo.length ? (
-    <Box
-      alt={ t('becomeTutor.photo.imageAlt') } component='img' src={ photo[0].src }
-      sx={ style.img }
-    />
+    <Box sx={ style.imgContainer }>
+      <Box
+        alt={ t('becomeTutor.photo.imageAlt') } component='img' src={ photo[0].src }
+        sx={ style.img }
+      />
+    </Box>
   ) : (
-    <Box sx={ style.preview }>
+    <DragAndDrop 
+      emitter={ addPhoto }
+      initialState={ photo }
+      style={ { root: style.imgContainer, uploadBox: style.uploadBox, activeDrag: style.activeDrag  } }
+      validationData={ validationData }
+    >   
       <Typography>
         { t('becomeTutor.photo.placeholder') }
       </Typography>
-    </Box>
+    </DragAndDrop>
   )
 
   return (
     <Box sx={ style.root }>
-      <Box sx={ style.imgContainer }>
-        { photoPrewiew }
-      </Box>
+      { isDesktop && 
+         photoPrewiew 
+      }
       <Box sx={ style.rigthBox }>
         <Box>
           <Typography sx={ style.description }>
@@ -61,7 +71,9 @@ const AddPhotoStep = ({ btnsBox, stepLabel }) => {
             validationData={ validationData }
           />
         </Box>
-
+        { (isMobile || isTablet ) && 
+           photoPrewiew 
+        }
         { btnsBox }
       </Box>
     </Box>

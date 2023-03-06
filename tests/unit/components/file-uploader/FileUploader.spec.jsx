@@ -21,11 +21,11 @@ describe('FileUploader test', () => {
   beforeEach(() => {
     render(
       <FileUploader
-        buttonText={buttonText}
-        emitter={emitter}
-        initialError={initialError}
-        initialState={initialState}
-        validationData={validationData}
+        buttonText={ buttonText }
+        emitter={ emitter }
+        initialError={ initialError }
+        initialState={ initialState }
+        validationData={ validationData }
       />
     )
   })
@@ -37,15 +37,6 @@ describe('FileUploader test', () => {
     expect(icon).toBeInTheDocument()
     expect(button).toBeInTheDocument()
   })
-
-  it('should drop file', () => {
-    const container = screen.getByTestId('drop')
-    fireEvent.dragStart(container, { dataTransfer: { files: [fakeFile] } })
-    fireEvent.drop(container, { dataTransfer: { files: [fakeFile] } })
-    fireEvent.dragLeave(container)
-
-    expect(emitter).toHaveBeenCalledTimes(1)
-  })
 })
 
 describe('FileUploader test with file', () => {
@@ -53,11 +44,11 @@ describe('FileUploader test with file', () => {
   beforeEach(() => {
     render(
       <FileUploader
-        buttonText={buttonText}
-        emitter={emitter}
-        initialError={initialError}
-        initialState={initialState}
-        validationData={validationData}
+        buttonText={ buttonText }
+        emitter={ emitter }
+        initialError={ initialError }
+        initialState={ initialState }
+        validationData={ validationData }
       />
     )
   })
