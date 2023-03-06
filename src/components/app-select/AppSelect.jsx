@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography'
 import { styles } from '~/components/app-select/AppSelect.styles'
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 const AppSelect = ({ setValue, value, fields, selectTitle = '' }) => {
   const { t } = useTranslation()
 
@@ -16,9 +17,12 @@ const AppSelect = ({ setValue, value, fields, selectTitle = '' }) => {
   const sortingFieldsList = fields.map(field => (
 =======
 const AppSelect = ({ setSortBy, sortBy, sortingFields, selectTitle = '' }) => {
+=======
+const AppSelect = ({ setSortedValue, sortedValue, sortingFields, selectTitle = '' }) => {
+>>>>>>> b2a9a38 (changed unit test and updated vars name)
   const { t } = useTranslation()
 
-  const changeSortBy = (e) => setSortBy(e.target.value)
+  const changeSortedValue = (e) => setSortedValue(e.target.value)
 
   const sortingFieldsList = sortingFields.map(field => (
 >>>>>>> 2bdaee9 (add mapping separately and updated component and connected files names)
@@ -51,11 +55,15 @@ const AppSelect = ({ setSortBy, sortBy, sortingFields, selectTitle = '' }) => {
         :
       </Typography>
       <Select
-        inputProps={ { 'data-testid': 'sort-by-select' } }
-        onChange={ changeSortBy }
+        inputProps={ { 'data-testid': 'app-select' } }
+        onChange={ changeSortedValue }
         sx={ styles.selectField }
+<<<<<<< HEAD
         value={ sortBy }
 >>>>>>> 2bdaee9 (add mapping separately and updated component and connected files names)
+=======
+        value={ sortedValue }
+>>>>>>> b2a9a38 (changed unit test and updated vars name)
       >
         { sortingFieldsList }
       </Select>

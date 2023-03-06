@@ -22,12 +22,18 @@ describe('AppSelect component', () => {
         sortedValue={ sortByFields.newest }
         sortingFields={ mockedSortingFields }
       />)
+<<<<<<< HEAD
 
     const mockedSelect = screen.getByTestId(selectId)
     expect(mockedSelect.value).toBe(sortByFields.newest)
 
     fireEvent.change(mockedSelect, { target: { value: sortByFields.popularity } })
     
+=======
+    const mockedSelect = screen.getByTestId(selectId)
+    expect(mockedSelect.value).toBe(sortByFields.newest)
+    fireEvent.change(mockedSelect, { target: { value: sortByFields.popularity } })
+>>>>>>> b2a9a38 (changed unit test and updated vars name)
     expect(mockedSetSortedValue).toBeCalledWith(sortByFields.popularity)
   })
 })
