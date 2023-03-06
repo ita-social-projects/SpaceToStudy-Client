@@ -21,7 +21,10 @@ const EnhancedTableToolbar = ({ refetchData }) => {
 
   return (
     <Box sx={ styles.root }>
-      <Typography component='div' sx={ styles.selected } variant='subtitle2'>
+      <Typography
+        component='div' data-testid='amountOfSelected' sx={ styles.selected }
+        variant='subtitle2'
+      >
         { `${numSelected} ${t('table.selected')}` }
       </Typography>
 
