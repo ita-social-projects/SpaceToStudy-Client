@@ -12,16 +12,16 @@ const mockedProps = {
       }
     ]
   },
-  filter: '',
   setFilter: vi.fn(),
   clearFilter: vi.fn()
 }
 
+const mockedFilterBeforeClick = ''
+
 describe('EnumFilter test', () => {
   beforeEach(() => {
     render(
-      <EnumFilter { ...mockedProps } />
-
+      <EnumFilter { ...mockedProps } filter={ mockedFilterBeforeClick } />
     )
   })
  
@@ -45,11 +45,11 @@ describe('EnumFilter test', () => {
     const filterCheckbox = screen.getByLabelText('filter-checkbox')
     fireEvent.click(filterCheckbox)
 
-    mockedProps.filter = filterCheckbox.value
+    const mockedFilterAfterClick = 'name'
     
     cleanup()
 
-    render(<EnumFilter { ...mockedProps } />)
+    render(<EnumFilter { ...mockedProps } filter={ mockedFilterAfterClick } />)
 
     const clearIcon = screen.getByTestId('clear-icon-in-filter')
     expect(clearIcon).toHaveClass('visible')
