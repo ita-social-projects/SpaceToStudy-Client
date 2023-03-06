@@ -4,9 +4,7 @@ import useInputVisibility from '~/hooks/use-input-visibility'
 import { useSelector } from 'react-redux'
 
 import Box from '@mui/material/Box'
-import FormControlLabel from '@mui/material/FormControlLabel'
 import Typography from '@mui/material/Typography'
-import Checkbox from '@mui/material/Checkbox'
 
 import { ModalContext } from '~/context/modal-context'
 import ForgotPassword from '~/containers/guest-home-page/forgot-password/ForgotPassword'
@@ -56,20 +54,9 @@ const LoginForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) => 
         value={ data.password }
       />
 
-      <Box sx={ styles.checkboxContainer }>
-        <FormControlLabel
-          control={ <Checkbox /> }
-          disabled
-          label={ t('login.rememberMe') }
-          labelPlacement='end'
-          size='large'
-          sx={ styles.checkboxLabel }
-          variant='subtitle2'
-        />
-        <Typography onClick={ openForgotPassword } sx={ styles.forgotPass } variant='subtitle2'>
-          { t('login.forgotPassword') }
-        </Typography>
-      </Box>
+      <Typography onClick={ openForgotPassword } sx={ styles.forgotPass } variant='subtitle2'>
+        { t('login.forgotPassword') }
+      </Typography>
 
       <AppButton
         loading={ authLoading } size='large' sx={ styles.loginButton }

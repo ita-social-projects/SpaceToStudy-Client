@@ -2,7 +2,6 @@
   "head": "Welcome back",
   "email": "Email",
   "password": "Password",
-  "rememberMe": "Remember me",
   "forgotPassword": "Forgot password?",
   "loginButton": "Login",
   "googleButton": "Login with Google",

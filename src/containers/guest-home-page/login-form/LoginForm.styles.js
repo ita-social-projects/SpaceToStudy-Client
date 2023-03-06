@@ -5,17 +5,6 @@ export const styles = {
   input: {
     maxWidth: '343px'
   },
-  checkboxContainer: {
-    mb: '20px',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center'
-  },
-  checkboxLabel: {
-    '& .MuiFormControlLabel-label': {
-      typography: 'subtitle2'
-    }
-  },
   loginButton: {
     width: '100%',
     py: '14px'
@@ -24,6 +13,9 @@ export const styles = {
     cursor: 'pointer',
     '&:hover': {
       textDecoration: 'underline'
-    }
+    },
+    mb: '20px',
+    display: 'flex',
+    justifyContent: 'flex-end'
   }
 }
