@@ -1,10 +1,11 @@
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
+import TitleWithDescription from '../title-with-description/TitleWithDescription'
 
 import { styles } from '~/components/title-block/TitleBlock.styles'
 import useBreakpoints from '~/hooks/use-breakpoints'
+
 
 const TitleBlock = ({ img, translationKey, children }) => {
   const { t } = useTranslation()
@@ -13,12 +14,13 @@ const TitleBlock = ({ img, translationKey, children }) => {
   return (
     <Box className='section' sx={ styles.container }>
       <Box sx={ styles.info }>
-        <Typography sx={ styles.title } variant='h4'>
-          { t(`${translationKey}.title`) }
-        </Typography>
-        <Typography sx={ styles.description } variant='subtitle1'>
-          { t(`${translationKey}.description`) }
-        </Typography>
+        <TitleWithDescription 
+          componentStyles={ styles.textWrapper }
+          description={ t(`${translationKey}.description`) }
+          descriptionStyles={ styles.description }
+          title={ t(`${translationKey}.title`) } 
+          titleStyles={ styles.title } 
+        />
         <Box sx={ styles.form }>
           { children }
         </Box>

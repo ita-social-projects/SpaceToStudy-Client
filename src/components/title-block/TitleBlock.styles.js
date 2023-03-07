@@ -9,11 +9,16 @@ export const styles = {
   info: {
     flexBasis: { lg: '55%' }
   },
+  textWrapper: {
+    textAlign: 'left'
+  },
   title: {
+    typography: 'h4',
     color: 'primary.900',
     mb: 1
   },
   description: {
+    typography: 'subtitle1',
     color: 'primary.900',
     mb: 6
   },
