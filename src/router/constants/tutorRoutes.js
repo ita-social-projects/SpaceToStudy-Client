@@ -6,5 +6,6 @@ export const tutorRoutes = {
   accountMenu: {
     myProfile: { route: 'myProfile', path: '/tutor/myProfile' },
     logout: { route: 'logout', path: '/logout' }
-  }
+  },
+  categories: { route: 'categories', path: '/tutor/categories' }
 }
