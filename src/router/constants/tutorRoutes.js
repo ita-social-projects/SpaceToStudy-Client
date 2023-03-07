@@ -7,5 +7,6 @@ export const tutorRoutes = {
     myProfile: { route: 'myProfile', path: '/tutor/myProfile' },
     logout: { route: 'logout', path: '/logout' }
   },
-  categories: { route: 'categories', path: '/tutor/categories' }
+  categories: { route: 'categories', path: '/tutor/categories' },
+  subjects: { route: 'subjects', path: '/tutor/subjects' }
 }

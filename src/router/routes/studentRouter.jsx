@@ -11,6 +11,7 @@ const StudentHome = lazy(() => import('~/pages/student-home/StudentHome'))
 const FindTutor = lazy(() => import('~/pages/find-tutor/FindTutor'))
 const StudentProfile = lazy(() => import('~/pages/student-profile/StudentProfile'))
 const StudentCategories = lazy(()=> import('~/pages/student-categories/StudentCategories'))
+const StudentSubjects = lazy(()=>import('~/pages/student-subjects/StudentSubjects'))
 
 export const studentRouter = (
   <Route element={ <PrivateRoute role={ student } /> } path={ guestRoutes.student.route }>
@@ -26,5 +27,6 @@ export const studentRouter = (
       path={ studentRoutes.accountMenu.myProfile.route }
     />
     <Route element={ <StudentCategories /> } path={ studentRoutes.categories.route } />
+    <Route element={ <StudentSubjects /> } path={ studentRoutes.subjects.route } />
   </Route>
 )

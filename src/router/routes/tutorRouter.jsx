@@ -10,6 +10,7 @@ import { tutor } from '~/constants'
 const TutorHome = lazy(() => import('~/pages/tutor-home/TutorHome'))
 const TutorProfile = lazy(() => import('~/pages/tutor-profile/TutorProfile'))
 const TutorCategories = lazy(()=> import('~/pages/tutor-categories/TutorCategories'))
+const TutorSubjects = lazy(()=>import('~/pages/tutor-subjects/TutorSubjects'))
 
 export const tutorRouter = (
   <Route element={ <PrivateRoute role={ tutor } /> } path={ guestRoutes.tutor.route }>
@@ -20,5 +21,6 @@ export const tutorRouter = (
       path={ tutorRoutes.accountMenu.myProfile.route }
     />
     <Route element={ <TutorCategories /> } path={ tutorRoutes.categories.route } />
+    <Route element={ <TutorSubjects /> } path={ tutorRoutes.subjects.route } />
   </Route>
 )
