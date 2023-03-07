@@ -18,6 +18,7 @@ export const URLs = {
   },
   users: {
     get: '/users',
-    delete: '/users/delete'
+    delete: '/users/delete',
+    myProfile: '/users/myProfile'
   }
 }

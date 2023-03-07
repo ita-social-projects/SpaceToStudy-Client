@@ -13,5 +13,14 @@ export const userService = {
   },
   deleteUsers: (userIds) => {
     return axiosClient.post(URLs.users.delete, userIds)
+  },
+  getUserReviews: (userId, options) => {
+    return axiosClient.get(`${URLs.users.get}/${userId}`, { params: options })
+  },
+  getOneUser: (userId, userRole) => {
+    return axiosClient.get(`${URLs.users.get}/${userId}/${userRole}`)
+  },
+  myProfile: () => {
+    return axiosClient.get(URLs.users.myProfile)
   }
 }
