@@ -22,6 +22,7 @@ import completeProfile from './complete-profile.json'
 import tutorProfilePage from './tutor-profile-page.json'
 import adminTable from './admin-table.json'
 import constant from './constant.json'
+import findOffer from './find-offer-page.json'
 
 const en = {
   translations: {
@@ -48,7 +49,8 @@ const en = {
     completeProfile,
     tutorProfilePage,
     adminTable,
-    constant
+    constant,
+    findOffer
   }
 }
 
