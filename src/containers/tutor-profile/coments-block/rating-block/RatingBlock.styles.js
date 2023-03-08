@@ -3,7 +3,7 @@ export const styles = {
     display: 'flex',
     flexDirection: { xs: 'column', sm: 'row' },
     width: '100%',
-    columnGap: '80px',
+    columnGap: { sm: '30px', md: '80px' },
     alignItems: 'center',
     justifyContent: 'center',
     pt: { xs: '16px', sm: '32px' },

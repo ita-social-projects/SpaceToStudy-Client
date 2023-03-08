@@ -13,7 +13,7 @@ import { styles } from '~/containers/tutor-profile/coments-block/ComentsBlock.st
 import { responseMock, loadingMock, commentsCount } from '~/containers/tutor-profile/coments-block/constants'
 
 
-const ComentsBlock = ({ userId, userRole, averageRating, totalReviews, reviewsCount }) => {
+const ComentsBlock = ({ averageRating, totalReviews, reviewsCount }) => {
   const [filter, setFilter] = useState(null)
   const [amountToShow, setAmountToShow] = useState(commentsCount.default)
   const { t } = useTranslation()
