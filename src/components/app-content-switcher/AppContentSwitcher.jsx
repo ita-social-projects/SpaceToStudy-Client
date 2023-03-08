@@ -9,7 +9,7 @@ const AppContentSwitcher = ({ active, handleChange, switchOptions, typographyVar
   const renderBlock = (options, active) => (
     options && (<Tooltip arrow title={ options.tooltip }>
       <Typography
-        data-testid='text' sx={ active ? defaultStyles.colorActive : defaultStyles.colorInActive }
+        sx={ active ? defaultStyles.colorActive : defaultStyles.colorInActive }
         variant={ typographyVariant }
       >
         { options.text }
