@@ -53,8 +53,8 @@ const RatingBlock = ({ setFilter, averageRating, totalReviews, reviewsCount, act
     >
       <Box>
         <AppRating
-          bigNumber 
           mobile={ isMobile } 
+          numberVariant={ 'big' } 
           readOnly
           reviews={ totalReviews }
           spacing={ 2 }

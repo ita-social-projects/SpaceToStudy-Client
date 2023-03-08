@@ -28,14 +28,10 @@ export default {
         type: 'boolean'
       }
     },
-    smallNumber: {
+    numberVariant:{
       control: {
-        type: 'boolean'
-      }
-    },
-    bigNumber: {
-      control: {
-        type: 'boolean'
+        type: 'inline-radio',
+        options: ['big', 'small', '']
       }
     },
     mobile: {
@@ -56,9 +52,8 @@ const Template = (args) => <AppRating { ...args } />
 export const Default = Template.bind({})
 Default.args = {
   value: 4.5,
-  smallNumber: true,
   withBackground: true,
   spacing: 1,
   mobile: false,
-  bigNumber: false,
+  numberVariant:''
 }

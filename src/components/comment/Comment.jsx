@@ -36,7 +36,7 @@ const Comment = ({ review }) => {
           { coopDetails }
         </Typography>
         <AppRating
-          readOnly smallNumber value={ rating }
+          numberVariant={ 'small' } readOnly value={ rating }
           withBackground
         />
         <Typography sx={ styles.comment }>

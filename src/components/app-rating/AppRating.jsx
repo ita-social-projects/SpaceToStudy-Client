@@ -8,14 +8,21 @@ import { styles } from '~/components/app-rating/AppRating.styles'
 
 const starsSize = { small: 'body2', medium: 'body1', large: 'h6' }
 
-const AppRating = ({ value = '', smallNumber, bigNumber, size = 'small', withBackground, mobile, reviews, spacing = 1, ...props }) => {
+const AppRating = ({ value = '', numberVariant , size = 'small', withBackground, mobile, reviews, spacing = 1, ...props }) => {
   const { t } = useTranslation()
+
   const optionalStyles = {
     backgroundColor: withBackground && 'primary.50',
-    flexDirection: bigNumber && 'column'
+    flexDirection: numberVariant === 'big' && 'column'
   }
 
-  const bigNumberVariant = bigNumber && ( 
+  const smallnumberVariant = numberVariant === 'small' && (
+    <Typography sx={ styles.smallNumber } variant={ 'caption' }>
+      { value }
+    </Typography>
+  )
+
+  const bigNumberVariant = numberVariant === 'big' && ( 
     <Box data-testid='big-number-box' sx={ styles.bigNumber }>
       { mobile && <StarSharp data-testid='star-icon' sx={ styles.starMobile } /> }
       <Typography variant={ mobile ? 'h6' : 'h4' }  >
@@ -27,7 +34,7 @@ const AppRating = ({ value = '', smallNumber, bigNumber, size = 'small', withBac
   return (
     <Box sx={ [styles.root, optionalStyles] }>
       { bigNumberVariant }
-      { !(bigNumber && mobile) && (
+      { !(numberVariant && mobile) && (
         <Rating
           emptyIcon={ <StarSharp fontSize='inherit' style={ styles.emptyIcon } /> }
           name='feedback'
@@ -39,11 +46,7 @@ const AppRating = ({ value = '', smallNumber, bigNumber, size = 'small', withBac
           value={ value }
           { ...props }
         />) }
-      { smallNumber && (
-        <Typography sx={ styles.smallNumber } variant={ 'caption' }>
-          { value }
-        </Typography>
-      ) }
+      { smallnumberVariant  }
       { reviews > 0 && (
         <Typography variant={ mobile ? 'caption' : 'body1' }>
           { t('tutorProfilePage.reviews.reviewsCount',{ count: reviews }) }

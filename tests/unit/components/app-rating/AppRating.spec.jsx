@@ -11,7 +11,7 @@ describe('AppRating component', () => {
   })
 
   it('displays big number when bigNumber prop is true', () => {
-    const props = { bigNumber: true, reviews: 5, value: 4.5 }
+    const props = { numberVariant:'big', reviews: 5, value: 4.5 }
     const { getByText, queryByTestId } = render(<AppRating  { ...props } />)
 
     const bigNumberBox = queryByTestId('big-number-box')
@@ -22,7 +22,7 @@ describe('AppRating component', () => {
   })
 
   it('displays star icon whe mobile is true', () => {
-    const props = { bigNumber: true, mobile: true, value: 4.5 }
+    const props = { numberVariant:'big', mobile: true, value: 4.5 }
     render(<AppRating { ...props } />)
     const starIcom = screen.queryByTestId('star-icon')
 
@@ -30,7 +30,7 @@ describe('AppRating component', () => {
   })
 
   it('should display the small number when smallNumber prop is true', () => {
-    const props = { value: 3.5, smallNumber: true,withBackground: true }
+    const props = { value: 3.5, numberVariant:'small',withBackground: true }
     render(<AppRating { ...props } />)
     const smallNumberElement = screen.getByText(props.value.toString())
 
