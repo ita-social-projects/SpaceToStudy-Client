@@ -4,33 +4,27 @@ import Switch from '@mui/material/Switch'
 import Stack from '@mui/material/Stack'
 import { defaultStyles } from '~/components/app-content-switcher/AppContentSwitcher.styles'
 
-const AppContentSwitcher = (props) => {
-  const { active, handleChange, tooltipRight, tooltipLeft, spacing, leftText, rightText, colorActive, colorInActive, typographyVariant, styles } = props
+const AppContentSwitcher = ({ active, handleChange, switchOptions, typographyVariant, styles }) => {
 
-  const blocks = [
-    { text: leftText, tooltip: tooltipLeft },
-    { text: rightText, tooltip: tooltipRight },
-  ]
-
-  const renderBlock = ({ text, tooltip }, index) => (
-    <Tooltip arrow key={ index } title={ tooltip }>
-      <Typography color={ index === 0 ? colorActive : colorInActive } data-testid='text' variant={ typographyVariant }>
-        { text }
+  const renderBlock = (options, active) => (
+    options && (<Tooltip arrow title={ options.tooltip }>
+      <Typography
+        data-testid='text' sx={ active ? defaultStyles.colorActive : defaultStyles.colorInActive }
+        variant={ typographyVariant }
+      >
+        { options.text }
       </Typography>
-    </Tooltip>
+    </Tooltip>)
   )
 
   return (
     <Stack
-      alignItems='center' direction='row' spacing={ spacing }
+      alignItems='center' direction='row'
       sx={ defaultStyles && styles }
     >
-      { blocks.map((block, index) => (
-        <>
-          { index !== 0 && <Switch checked={ active } data-testid='switch' onChange={ handleChange } /> }
-          { renderBlock(block, index) }
-        </>
-      )) }
+      { renderBlock(switchOptions.left, active) }
+      <Switch checked={ active } data-testid='switch' onChange={ handleChange } />
+      { renderBlock(switchOptions.right, !active) }
     </Stack>
   )
 }
