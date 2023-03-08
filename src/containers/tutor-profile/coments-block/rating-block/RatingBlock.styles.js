@@ -19,5 +19,15 @@ export const styles = {
     width: { md: '360px', sm: '240px', xs: '190px' },
     backgroundColor: 'primary.50',
     '& span': { backgroundColor: 'basic.yellow', borderRadius: '6px' }
+  },
+  typography: { typography: { xs: 'caption', sm: 'body2', md: 'body1' }, minWidth: '55px' },
+  progressBarRoot: { position: 'relative' },
+  resetButton: {
+    position: 'absolute',
+    left: 0,
+    typography: { xs: 'caption', sm: 'subtitle2', md: 'button' },
+    cursor: 'pointer',
+    fontWeight: { xs: 500 },
+    color: 'primary.600'
   }
 }

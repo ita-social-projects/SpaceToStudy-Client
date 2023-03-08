@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import StarSharp from '@mui/icons-material/StarSharp'
 import Box from '@mui/material/Box'
 import Rating from '@mui/material/Rating'
@@ -5,31 +6,33 @@ import Typography from '@mui/material/Typography'
 
 import { styles } from '~/components/app-rating/AppRating.styles'
 
-const numberVariant = { small: 'body2', medium: 'body1', large: 'h6' }
+const starsSize = { small: 'body2', medium: 'body1', large: 'h6' }
 
-const AppRating = ({ value = '', smallNumber, bigNumber, size = 'small', withBackground, mobile, reviews,spacing = '1px', ...props }) => {
+const AppRating = ({ value = '', smallNumber, bigNumber, size = 'small', withBackground, mobile, reviews, spacing = '1px', ...props }) => {
+  const { t } = useTranslation()
   const optionalStyles = {
     backgroundColor: withBackground && 'primary.50',
     flexDirection: bigNumber && 'column'
   }
 
+  const bigNumberVariant = bigNumber && ( 
+    <Box data-testid='big-number-box' sx={ styles.bigNumber }>
+      { mobile && <StarSharp data-testid='star-icon' sx={ styles.starMobile } /> }
+      <Typography variant={ mobile ? 'h6' : 'h4' }  >
+        { value }
+      </Typography>
+    </Box>
+  ) 
+
   return (
-    <Box sx={ { ...styles.root, ...optionalStyles } }>
-      { bigNumber && ( 
-        <Box sx={ styles.bigNumber }>
-          { mobile && <StarSharp sx={ styles.starMobile } /> }
-          <Typography variant={ mobile ? 'h6' : 'h4' }  >
-            { value }
-          </Typography>
-        </Box>
-      ) }
-      { !mobile && (
+    <Box sx={ [styles.root, optionalStyles] }>
+      { bigNumberVariant }
+      { !(bigNumber && mobile) && (
         <Rating
           emptyIcon={ <StarSharp fontSize='inherit' style={ styles.emptyIcon } /> }
           name='feedback'
           precision={ 1 }
-          size={ size }
-          sx={ { typography: numberVariant[size],
+          sx={ { typography: starsSize[size],
             '& .MuiRating-icon': {
               mx: spacing
             } } }
@@ -41,9 +44,9 @@ const AppRating = ({ value = '', smallNumber, bigNumber, size = 'small', withBac
           { value }
         </Typography>
       ) }
-      { reviews && (
+      { reviews > 0 && (
         <Typography variant={ mobile ? 'caption' : 'body1' }>
-          { `${reviews} rewievs` }
+          { t('tutorProfilePage.reviews.reviewsCount',{ count: reviews }) }
         </Typography>
       ) }
     </Box>

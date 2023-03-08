@@ -7,5 +7,15 @@
   }, 
   "videoPresentation": {
     "title": "Відео Презентація"
-  }
+  },
+    "reviews": {
+      "title": "Що говорять студенти",
+      "buttonTitle": "Переглянути всі відгуки",
+      "starsCount_one": "{{count}} зірка",
+      "starsCount_5": "{{count}} зірок",
+      "starsCount_other": "{{count}} зірки",
+      "reviewsCount_one": "{{count}} відгук",
+      "reviewsCount_2-4": "{{count}} відгуки",
+      "reviewsCount_other": "{{count}} відгуків"
+    }
 }

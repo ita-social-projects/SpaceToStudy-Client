@@ -5,24 +5,25 @@ import AppRating from '~/components/app-rating/AppRating'
 import { styles } from '~/components/comment/Comment.styles'
 
 const Comment = ({ review }) => {
-  console.log(review)
   const { comment, author, rating, createdAt, offer } = review
   const { firstName, lastName, photo } = author
   const { category, subject, proficiencyLevel } = offer
 
   const timestamp = new Date(createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
 
+  const createNamePart = (value) => (
+    <Typography component={ 'span' } variant='body2'>
+      { value }
+    </Typography>
+  )
+
   const userName = (
     <>
-      <Typography component={ 'span' } variant='body2'>
-        { firstName }
-      </Typography>
-      <Typography component={ 'span' } variant='body2'>
-        { lastName }
-      </Typography>
+      { createNamePart(firstName) }
+      { createNamePart(lastName) }
     </>
   )
-  const cooperationDetails = `${category.name} - ${subject.name} - ${proficiencyLevel}`
+  const coopDetails = `${category.name} - ${subject.name} - ${proficiencyLevel}`
 
   return (
     <Box sx={ styles.root }>
@@ -30,15 +31,15 @@ const Comment = ({ review }) => {
         description={ timestamp } img={ photo } style={ styles.userInfo }
         title={ userName }
       />
-      <Box sx={ { textAlign: 'start', display: 'flex', flexDirection: 'column', gap: '12px' } }>
-        <Typography sx={ { color: 'primary.500',typography:{ xs:'subtitle2',sm:'button' } } }>
-          { cooperationDetails }
+      <Box sx={ styles.description }>
+        <Typography sx={ styles.coopDetails }>
+          { coopDetails }
         </Typography>
         <AppRating
           readOnly smallNumber value={ rating }
           withBackground
         />
-        <Typography sx={ { typography:{ xs:'caption',sm:'body1' } } }>
+        <Typography sx={ styles.comment }>
           { comment }
         </Typography>
       </Box>

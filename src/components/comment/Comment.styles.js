@@ -8,7 +8,9 @@ export const styles = {
     borderColor: 'primary.100',
     py: '20px'
   },
-  coopDetails: { display: 'flex', gap: '12px', my: '12px' },
+  coopDetails: { color: 'primary.500', typography: { xs: 'subtitle2', sm: 'button' } },
+  description: { textAlign: 'start', display: 'flex', flexDirection: 'column', gap: '12px' },
+  comment: { typography: { xs: 'caption', sm: 'body1' } },
   userInfo: {
     root: {
       display: 'flex',

@@ -1,74 +1,26 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
+import KeyboardArrowDownSharpIcon from '@mui/icons-material/KeyboardArrowDownSharp'
+
 import Comment from '~/components/comment/Comment'
 import RatingBlock from '~/containers/tutor-profile/coments-block/rating-block/RatingBlock'
-import { styles } from '~/containers/tutor-profile/coments-block/ComentsBlock.styles'
-import useAxios from '~/hooks/use-axios'
-import { userService } from '~/services/user-service'
 import AppButton from '~/components/app-button/AppButton'
-import KeyboardArrowDownSharpIcon from '@mui/icons-material/KeyboardArrowDownSharp'
 import Loader from '~/components/loader/Loader'
 
-const response = { 
-  count:1,
-  items:[{
-    '_id': '6400f540307bdcc5da14aa5e',
-    'comment': 'great',
-    'rating': 5,
-    'author': {
-      '_id': '63f905d3237ccffcf95d88da',
-      'role': [
-        'student'
-      ],
-      'firstName': 'Tart',
-      'lastName': 'Drilling',
-      'email': 'tartdrilling@gmail.com',
-      'categories': [],
-      'totalReviews': 0,
-      'averageRating': 3,
-      'lastLogin': '2023-03-03T21:01:30.973Z',
-      'createdAt': '2023-02-24T18:45:39.298Z',
-      'updatedAt': '2023-03-03T21:01:30.975Z',
-      '__v': 0
-    },
-    'targetUserId': '63f21d357a3b08831a22b257',
-    'targetUserRole': 'tutor',
-    'offer': {
-      '_id': '640092c8c729d4db9788d9d0',
-      'price': 15,
-      'proficiencyLevel': 'Beginner',
-      'description': 'test description',
-      'languages': [
-        'English'
-      ],
-      'authorRole': 'student',
-      'userId': '63f21d357a3b08831a22b257',
-      'subject': { '_id':'63da8767c9ad4c9a0b0eacd3','name':'English' },
-      'category':  { '_id':'63da8767c9ad4c9a0b0eacd3','name':'Languages' },
-      'createdAt': '2023-03-02T12:12:56.598Z',
-      'updatedAt': '2023-03-02T12:12:56.598Z',
-      '__v': 0
-    },
-    'createdAt': '2023-03-02T19:13:04.074Z',
-    'updatedAt': '2023-03-02T19:13:04.074Z',
-    '__v': 0
-  }] }
+import { styles } from '~/containers/tutor-profile/coments-block/ComentsBlock.styles'
+import { responseMock, loadingMock, commentsCount } from '~/containers/tutor-profile/coments-block/constants'
 
 
 const ComentsBlock = ({ userId, userRole, averageRating, totalReviews, reviewsCount }) => {
   const [filter, setFilter] = useState(null)
-  const [amountToShow, setAmountToShow] = useState(4)
-  const { count, items } = response
-  const loading = false
-  // const {
-  //   loading,
-  //   fetchData,
-  //   response:{ body:{ count, items } }
-  // } = useAxios({ service: () => userService.getUserReviews(userId, userRole) })
+  const [amountToShow, setAmountToShow] = useState(commentsCount.default)
+  const { t } = useTranslation()
+  const { count, items } = responseMock
 
   const itemsList = (
-    <Box sx={ { width:'100%' } }>
+    <Box sx={ styles.commentList }>
       { items.map((review) => (
         <Comment key={ review._id } review={ review } />
       )) }
@@ -76,11 +28,7 @@ const ComentsBlock = ({ userId, userRole, averageRating, totalReviews, reviewsCo
   )
 
   const handleShowMoreComments = () => {
-    setAmountToShow(prev => {
-      const showCount = prev + 10
-      // fetchData(showCount)
-      return showCount
-    })
+    setAmountToShow(prev => prev + commentsCount.increment)
   }
 
   const handleFilterChange = (value) => {
@@ -89,34 +37,34 @@ const ComentsBlock = ({ userId, userRole, averageRating, totalReviews, reviewsCo
     }
   }
   
-  const showMoreButton =  !(count < amountToShow) && (
+  const showMoreButton =  count > amountToShow && (
     <AppButton
-      endIcon={ !loading && <KeyboardArrowDownSharpIcon /> } 
-      loading={ loading && items.length }
+      endIcon={ !loadingMock && <KeyboardArrowDownSharpIcon /> } 
+      loading={ loadingMock && items.length }
       onClick={ handleShowMoreComments }
       size='large'
-      sx={ { minWidth:'195px' } }
+      sx={ styles.button }
       variant='contained'
     >
-      See all reviews
+      { t('tutorProfilePage.reviews.buttonTitle') }
     </AppButton>
   ) 
 
   return (
     <Box sx={ styles.root }>
       <Typography sx={ styles.title }>
-        What Students Say
+        { t('tutorProfilePage.reviews.title') }
       </Typography>
-      { (loading && !items.length) ?(
+      { (loadingMock && !items.length) ?(
         <Loader size={ 70 } />
       ):(
         <>
           <RatingBlock
             activeFilter={ filter }
             averageRating={ averageRating }
-            ratings={ reviewsCount }
-            reviewsAmount={ totalReviews }
+            reviewsCount={ reviewsCount }
             setFilter={ handleFilterChange }
+            totalReviews={ totalReviews }
           />
           { itemsList }
           { showMoreButton }
