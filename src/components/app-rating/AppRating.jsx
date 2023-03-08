@@ -8,7 +8,7 @@ import { styles } from '~/components/app-rating/AppRating.styles'
 
 const starsSize = { small: 'body2', medium: 'body1', large: 'h6' }
 
-const AppRating = ({ value = '', smallNumber, bigNumber, size = 'small', withBackground, mobile, reviews, spacing = '1px', ...props }) => {
+const AppRating = ({ value = '', smallNumber, bigNumber, size = 'small', withBackground, mobile, reviews, spacing = 1, ...props }) => {
   const { t } = useTranslation()
   const optionalStyles = {
     backgroundColor: withBackground && 'primary.50',
@@ -34,7 +34,7 @@ const AppRating = ({ value = '', smallNumber, bigNumber, size = 'small', withBac
           precision={ 1 }
           sx={ { typography: starsSize[size],
             '& .MuiRating-icon': {
-              mx: spacing
+              mx: `${spacing}px`
             } } }
           value={ value }
           { ...props }

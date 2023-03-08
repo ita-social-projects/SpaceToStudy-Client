@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next'
 const RatingBlock = ({ setFilter, averageRating, totalReviews, reviewsCount, activeFilter }) => {
   const { isMobile } = useBreakpoints()
   const { t } = useTranslation()
-  const ratings = reviewsCount.reduce((acc,{ count, rating })=>{
+  const ratings = reviewsCount.reduce((acc,{ count, rating }) => {
     acc[rating] = count
     return acc
   },Array(6).fill(0))
@@ -57,6 +57,7 @@ const RatingBlock = ({ setFilter, averageRating, totalReviews, reviewsCount, act
           mobile={ isMobile } 
           readOnly
           reviews={ totalReviews }
+          spacing={ 2 }
           value={ averageRating }
         />
       </Box>

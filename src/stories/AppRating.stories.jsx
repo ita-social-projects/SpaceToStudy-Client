@@ -45,7 +45,7 @@ export default {
     },
     spacing: {
       control: {
-        type: 'text'
+        type: 'number'
       }
     }
   }
@@ -58,7 +58,7 @@ Default.args = {
   value: 4.5,
   smallNumber: true,
   withBackground: true,
-  spacing:'1px',
+  spacing: 1,
   mobile: false,
   bigNumber: false,
 }
