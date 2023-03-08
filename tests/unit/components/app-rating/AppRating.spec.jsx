@@ -17,7 +17,7 @@ describe('AppRating component', () => {
     const bigNumberBox = queryByTestId('big-number-box')
     expect(bigNumberBox).toBeInTheDocument()
 
-    const ratingValue = getByText(props.rating.toString())
+    const ratingValue = getByText(props.value.toString())
     expect(ratingValue).toBeInTheDocument()
   })
 
