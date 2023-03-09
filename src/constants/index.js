@@ -16,4 +16,9 @@ export const snackbarVariants = {
   warning: 'warning'
 }
 
+export const cardsViews = {
+  inline:'inline',
+  grid:'grid'
+}
+
 export const myProfilePath = '/tutor/myProfile' || '/student/myProfile'
