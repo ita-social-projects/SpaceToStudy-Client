@@ -5,31 +5,32 @@ import SearchInput from '~/components/search-input/SearchInput'
 
 const searchMock = ''
 const setSearchMock = vi.fn()
+const textValue = 'test'
 
 describe('SearchInput tests', () => {
+  beforeEach(() => {
+    render(<SearchInput search={ searchMock } setSearch={ setSearchMock } />)
+  })
 
   it('should render text correctly', () => {
-    render(<SearchInput search={ searchMock } setSearch={ setSearchMock } />)
     const input = screen.getByTestId('form').querySelector('input')
 
-    fireEvent.change(input, { target: { value: 'test' } })
+    fireEvent.change(input, { target: { value: textValue } })
 
-    expect(input.value).toBe('test')
+    expect(input.value).toBe(textValue)
   })
 
   it('should call setSearch when search icon is clicked', () => {
-    render(<SearchInput search={ searchMock } setSearch={ setSearchMock } />)
     const input = screen.getByTestId('form').querySelector('input')
     const searchIcon = screen.getByTestId('search-icon')
 
-    fireEvent.change(input, { target: { value: 'test' } })
+    fireEvent.change(input, { target: { value: textValue } })
     fireEvent.click(searchIcon)
 
-    expect(setSearchMock).toHaveBeenCalledWith('test')
+    expect(setSearchMock).toHaveBeenCalledWith(textValue)
   })
 
   it('should call setState with empty string when delete icon is clicked', () => {
-    render(<SearchInput search={ searchMock } setSearch={ setSearchMock } />)
     const deleteIcon = screen.getByTestId('delete-icon')
 
     fireEvent.click(deleteIcon)
@@ -38,24 +39,28 @@ describe('SearchInput tests', () => {
   })
 
   it('should call setSearch when enter is pressed', () => {
-    render(<SearchInput search={ searchMock } setSearch={ setSearchMock } />)
     const input = screen.getByTestId('form').querySelector('input')
 
-    fireEvent.change(input, { target: { value: 'test' } })
+    fireEvent.change(input, { target: { value: textValue } })
     fireEvent.keyPress(input, { key: 'Enter', code: 13, charCode: 13 })
 
-    expect(setSearchMock).toHaveBeenCalledWith('test')
+    expect(setSearchMock).toHaveBeenCalledWith(textValue)
   })
 
-  it('should dynamically change visibility of delete button', () => {
-    const { rerender } = render(<SearchInput search={ searchMock } setSearch={ setSearchMock } />)
-    const input = screen.getByTestId('form').querySelector('input')
+  it('should have hidden class if search is empty', () => {
     const deleteIcon = screen.getByTestId('delete-icon')
 
     expect(deleteIcon).toHaveClass('hidden')
+  })
+})
 
-    fireEvent.change(input, { target: { value: 'test' } })
-    rerender(<SearchInput search="test" setSearch={ setSearchMock } />)
+describe('SearchInput test', () => {
+  beforeEach(() => {
+    render(<SearchInput search={ textValue } setSearch={ setSearchMock } />)
+  })
+  
+  it('should have visible class if search is not empty', () => {
+    const deleteIcon = screen.getByTestId('delete-icon')
 
     expect(deleteIcon).toHaveClass('visible')
   })
