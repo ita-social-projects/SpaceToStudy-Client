@@ -41,9 +41,9 @@ describe('EnhancedTableHead', () => {
     expect(emailColumn).toBeInTheDocument()
   })
   it('Should show table actions when isSelection is true', () => {
-    const actionColumn = screen.getByText('table.actions')
+    const tableActions = screen.getByText('table.actions')
 
-    expect(actionColumn).toBeInTheDocument()
+    expect(tableActions).toBeInTheDocument()
   })
   it('Should call function onSelectAllClick when checkbox value is changed', () => {
     const actionColumn = screen.getByRole('checkbox')
