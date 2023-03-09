@@ -4,7 +4,7 @@
         "sortByFields":{
             "newest":"Newest",
             "popularity":"Popularity",
-        "tutorRating":"Tutor rating"
+            "tutorRating":"Tutor rating"
         }
     }
 }
