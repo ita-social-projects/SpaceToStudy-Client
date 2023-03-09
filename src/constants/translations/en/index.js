@@ -22,12 +22,8 @@ import completeProfile from './complete-profile.json'
 import tutorProfilePage from './tutor-profile-page.json'
 import adminTable from './admin-table.json'
 import constant from './constant.json'
-<<<<<<< HEAD
 import findOffer from './find-offer-page.json'
 import filters from './filters.json'
-=======
-import appSelect from './app-select.json'
->>>>>>> 2bdaee9 (add mapping separately and updated component and connected files names)
 
 const en = {
   translations: {
@@ -55,12 +51,8 @@ const en = {
     tutorProfilePage,
     adminTable,
     constant,
-<<<<<<< HEAD
     findOffer,
     filters
-=======
-    appSelect
->>>>>>> 2bdaee9 (add mapping separately and updated component and connected files names)
   }
 }
 
