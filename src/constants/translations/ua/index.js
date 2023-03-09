@@ -26,5 +26,6 @@ const ua = {
     findOffer,
     filters
   }
+}
 
 export default ua
