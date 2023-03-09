@@ -9,6 +9,7 @@ import modals from './email-modals.json'
 import breadCrumbs from './breadcrumbs.json'
 import completeProfile from './complete-profile.json'
 import findOffer from './find-offer-page.json'
+import filters from './filters.json'
 
 const ua = {
   translations: {
@@ -22,7 +23,8 @@ const ua = {
     modals,
     breadCrumbs,
     completeProfile,
-    findOffer
+    findOffer,
+    filters
   }
 }
 
