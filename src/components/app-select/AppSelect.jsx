@@ -58,7 +58,7 @@ const AppSelect = ({ setValue, value, fields, selectTitle = '' }) => {
 
   return (
     <Box sx={ styles.selectContainer } >
-      <Typography sx={ styles.selectTitle } variant='subtitle1' >
+      <Typography sx={ { ...styles.selectTitle, marginRight:selectTitle.length ? '8px' : 0 } } variant='subtitle1' >
         { t(selectTitle) }
         :
       </Typography>
