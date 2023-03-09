@@ -13,7 +13,7 @@ describe('SearchInput tests', () => {
   })
 
   it('should render text correctly', () => {
-    const input = screen.getByTestId('form').querySelector('input')
+    const input = screen.getByRole('textbox')
 
     fireEvent.change(input, { target: { value: textValue } })
 
@@ -21,7 +21,7 @@ describe('SearchInput tests', () => {
   })
 
   it('should call setSearch when search icon is clicked', () => {
-    const input = screen.getByTestId('form').querySelector('input')
+    const input = screen.getByRole('textbox')
     const searchIcon = screen.getByTestId('search-icon')
 
     fireEvent.change(input, { target: { value: textValue } })
@@ -39,7 +39,7 @@ describe('SearchInput tests', () => {
   })
 
   it('should call setSearch when enter is pressed', () => {
-    const input = screen.getByTestId('form').querySelector('input')
+    const input = screen.getByRole('textbox')
 
     fireEvent.change(input, { target: { value: textValue } })
     fireEvent.keyPress(input, { key: 'Enter', code: 13, charCode: 13 })

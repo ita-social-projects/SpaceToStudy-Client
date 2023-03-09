@@ -36,7 +36,6 @@ const SearchInput = ({ search, setSearch }) => {
         ),
         autoComplete: 'off'
       } }
-      data-testid='form'
       onChange={ (e) => setSearchInput(e.target.value) }
       onKeyPress={ (e) => {
         if (e.key === 'Enter') {
