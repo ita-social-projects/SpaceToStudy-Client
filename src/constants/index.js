@@ -20,5 +20,10 @@ export const cardsViews = {
   inline:'inline',
   grid:'grid'
 }
+export const sortByFields = {
+  newest:'newest',
+  tutorRating:'tutorRating',
+  popularity:'popularity'
+}
 
 export const myProfilePath = '/tutor/myProfile' || '/student/myProfile'
