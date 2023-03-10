@@ -7,5 +7,9 @@
   "topMenu": {
     "tutorsOffers": "Tutors’ offers",
     "studentsRequests": "Students’ requests"
+  },
+  "contentSwitcher": {
+    "switcher-tutor": "Offers from tutors for classes in various categories and subjects",
+    "switcher-student": "Offers from students for classes in various categories and subjects"
   }
 }
