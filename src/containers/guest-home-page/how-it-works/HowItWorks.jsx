@@ -3,8 +3,6 @@ import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import Stack from '@mui/material/Stack'
-import Switch from '@mui/material/Switch'
 
 import { guestRoutes } from '~/router/constants/guestRoutes'
 import CardsWithButton from '~/containers/guest-home-page/cards-with-button/CardsWithButton'
@@ -12,6 +10,7 @@ import { tutorCardBoxArray, studentCardBoxArray } from '~/containers/guest-home-
 import { tutor, student } from '~/constants'
 
 import { styles } from '~/containers/guest-home-page/how-it-works/HowItWorks.styles'
+import AppContentSwitcher from '~/components/app-content-switcher/AppContentSwitcher'
 
 const sectionId = guestRoutes.navBar.howItWorks.route
 
@@ -38,6 +37,15 @@ const HowItWorks = () => {
     />
   )
 
+  const switchOptions = {
+    left: {
+      text: t('guestHomePage.howItWorks.learnFromExperts')
+    },
+    right: {
+      text: t('guestHomePage.howItWorks.shareYourExperience')
+    }
+  }
+
   return (
     <Box id={ sectionId } sx={ styles.block }>
       <Box sx={ styles.container }>
@@ -45,15 +53,13 @@ const HowItWorks = () => {
           { t('guestHomePage.howItWorks.title') }
         </Typography>
 
-        <Stack alignItems='center' spacing={ 1 } sx={ styles.switch }>
-          <Typography color={ isStudent ? 'primary.500' : 'primary.900' } variant={ 'h6' }>
-            { t('guestHomePage.howItWorks.learnFromExperts') }
-          </Typography>
-          <Switch checked={ isStudent } data-testid='switch' onChange={ handleChange } />
-          <Typography color={ isStudent ? 'primary.900' : 'primary.500' } variant={ 'h6' }>
-            { t('guestHomePage.howItWorks.shareYourExperience') }
-          </Typography>
-        </Stack>
+        <AppContentSwitcher
+          active={ isStudent }
+          handleChange={ handleChange }
+          styles={ styles.switch }
+          switchOptions={ switchOptions }
+          typographyVariant={ 'h6' }
+        />
 
         <Box sx={ { mt: '45px' } }>
           { cardsMap }

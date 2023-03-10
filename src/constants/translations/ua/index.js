@@ -8,7 +8,7 @@ import login from './login.json'
 import modals from './email-modals.json'
 import breadCrumbs from './breadcrumbs.json'
 import completeProfile from './complete-profile.json'
-import findOffer from './find-offer-page.json'
+import findOffers from './find-offer-page.json'
 import filters from './filters.json'
 
 const ua = {
@@ -23,7 +23,7 @@ const ua = {
     modals,
     breadCrumbs,
     completeProfile,
-    findOffer,
+    findOffers,
     filters
   }
 }

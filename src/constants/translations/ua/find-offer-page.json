@@ -3,5 +3,9 @@
     "title": "Репетитори для приватних уроків",
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     "button": "Створити запит"
+  },
+  "topMenu": {
+    "tutorsOffers": "Пропозиції репетитора",
+    "studentsRequests": "Запити студентів"
   }
 }

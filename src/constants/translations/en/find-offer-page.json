@@ -3,5 +3,9 @@
     "title": "Tutors for private lessons",
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     "button": "Create request"
+  },
+  "topMenu": {
+    "tutorsOffers": "Tutors’ offers",
+    "studentsRequests": "Students’ requests"
   }
 }
