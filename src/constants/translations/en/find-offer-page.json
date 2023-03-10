@@ -3,5 +3,13 @@
     "title": "Tutors for private lessons",
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     "button": "Create request"
+  },
+  "topMenu": {
+    "tutorsOffers": "Tutors’ offers",
+    "studentsRequests": "Students’ requests"
+  },
+  "contentSwitcher": {
+    "switcher-tutor": "Offers from tutors for classes in various categories and subjects",
+    "switcher-student": "Offers from students for classes in various categories and subjects"
   }
 }
