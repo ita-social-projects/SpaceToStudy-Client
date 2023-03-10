@@ -60,6 +60,7 @@ const EnhancedTablePagination = ({ itemsCount }) => {
           { t('table.goToPage') }
         </Typography>
         <TextField
+          inputProps={ { 'data-testid': 'testid-page-input' } }
           onChange={ handleChangePageInput }
           size='small'
           sx={ styles.pageInput }
