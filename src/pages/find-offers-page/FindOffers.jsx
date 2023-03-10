@@ -13,11 +13,11 @@ const FindOffers = () => {
 
   const switchOptions = {
     left: {
-      text: t('guestHomePage.howItWorks.learnFromExperts'),
+      text: t('findOffers.topMenu.tutorsOffers'),
       tooltip: t('findOffers.contentSwitcher.switcher-tutor')
     },
     right: {
-      text: t('guestHomePage.howItWorks.shareYourExperience'),
+      text: t('findOffers.topMenu.studentsRequests'),
       tooltip: t('findOffers.contentSwitcher.switcher-student')
     }
   }
