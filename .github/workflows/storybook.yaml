@@ -16,7 +16,8 @@ jobs:
       - name : Npm Install and Build
         run: |
           npm install
-          npm run build-storybook
+          npx sb init --builder storybook-builder-vite
+         # npm run build-storybook
       # Deploy Storybook to GitHub Pages
       - name: Deploy Storybook
         uses: JamesIves/github-pages-deploy-action@3.6.2
