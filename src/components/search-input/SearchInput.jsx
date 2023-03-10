@@ -15,6 +15,7 @@ const SearchInput = ({ search, setSearch }) => {
       InputProps={ {
         startAdornment: (
           <IconButton
+            data-testid='search-icon'
             onClick={ () => {
               setSearch(searchInput)
             } }
@@ -25,6 +26,7 @@ const SearchInput = ({ search, setSearch }) => {
         endAdornment: (
           <IconButton
             className={ search ? 'visible' : 'hidden' }
+            data-testid='delete-icon'
             onClick={ () => {
               setSearch('')
             } }
