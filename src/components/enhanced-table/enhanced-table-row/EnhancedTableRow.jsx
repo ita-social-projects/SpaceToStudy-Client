@@ -50,7 +50,7 @@ const EnhancedTableRow = ({ item, isItemSelected, refetchData }) => {
       { tableCells }
       { isSelection && (
         <TableCell>
-          <IconButton onClick={ openMenu }>
+          <IconButton data-testid='menu-icon' onClick={ openMenu }>
             <MoreVertIcon
               color='primary'
               sx={ {
