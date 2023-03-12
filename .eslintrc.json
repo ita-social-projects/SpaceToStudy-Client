@@ -7,12 +7,14 @@
   },
   "extends": [
     "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
     "plugin:react/jsx-runtime",
     "plugin:storybook/recommended",
     "plugin:vitest-globals/recommended",
     "prettier"
   ],
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
@@ -20,7 +22,7 @@
     "ecmaVersion": 2021,
     "sourceType": "module"
   },
-  "plugins": ["react", "testing-library", "react-hooks"],
+  "plugins": ["react", "testing-library", "react-hooks", "@typescript-eslint"],
   "settings": {
     "react": {
       "version": "detect"
@@ -34,6 +36,7 @@
     "semi": ["error", "never"],
     "object-curly-spacing": ["error", "always"],
     "eol-last": ["error", "always"],
+    "comma-dangle": ["error", "never"],
     "no-multiple-empty-lines": [
       "error",
       {

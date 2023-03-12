@@ -1,10 +1,17 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import svgrPlugin from 'vite-plugin-svgr'
-const path = require('path')
+import tsconfigPaths from 'vite-tsconfig-paths'
+import checker from 'vite-plugin-checker'
+import path from 'path'
 
 export default defineConfig({
-  plugins: [react(), svgrPlugin()],
+  plugins: [react(), svgrPlugin(), tsconfigPaths(), 
+    checker({
+      typescript: true, 
+      eslint: {
+        lintCommand: 'eslint "./src/**/*.{ts,tsx}"'
+      } })],
   base: './',
   server: {
     port: 3000,
@@ -12,7 +19,7 @@ export default defineConfig({
     host: true
   },
   esbuild: {
-    loader: 'jsx'
+    loader: 'tsx'
   },
   resolve: {
     alias: {
