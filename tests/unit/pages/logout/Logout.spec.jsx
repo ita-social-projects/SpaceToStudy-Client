@@ -5,11 +5,19 @@ import { vi } from 'vitest'
 
 const mockDispatch = vi.fn()
 
+vi.mock('react-router-dom', async () => {
+  const actual = await vi.importActual('react-router-dom')
+  return {
+    ...actual,
+    useNavigate: () => vi.fn()
+  }
+})
+
 vi.mock('react-redux', async () => {
   const actual = await vi.importActual('react-redux')
   return {
     ...actual,
-    useDispatch: () => mockDispatch.mockReturnValue({ unwrap: () => '' }),
+    useDispatch: () => mockDispatch.mockReturnValue({ unwrap: () => '' })
   }
 })
 
