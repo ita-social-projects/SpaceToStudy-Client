@@ -6,23 +6,22 @@ import Typography from '@mui/material/Typography'
 
 import { styles } from '~/components/app-rating/AppRating.styles'
 
-const starsSize = { small: 'body2', medium: 'body1', large: 'h6' }
-
-const AppRating = ({ value = '', numberVariant , size = 'small', withBackground, mobile, reviews, spacing = 1, ...props }) => {
+const AppRating = ({ value = '', sx={}, numberVariant, mobile, reviews, ...props }) => {
   const { t } = useTranslation()
+  const bigNumber = numberVariant === 'big'
+  const smallNumber = numberVariant === 'small'
 
   const optionalStyles = {
-    backgroundColor: withBackground && 'primary.50',
-    flexDirection: numberVariant === 'big' && 'column'
+    flexDirection: bigNumber && 'column'
   }
 
-  const smallnumberVariant = numberVariant === 'small' && (
+  const smallnumberVariant = smallNumber && (
     <Typography sx={ styles.smallNumber } variant={ 'caption' }>
       { value }
     </Typography>
   )
 
-  const bigNumberVariant = numberVariant === 'big' && ( 
+  const bigNumberVariant = bigNumber && ( 
     <Box data-testid='big-number-box' sx={ styles.bigNumber }>
       { mobile && <StarSharp data-testid='star-icon' sx={ styles.starMobile } /> }
       <Typography variant={ mobile ? 'h6' : 'h4' }  >
@@ -32,17 +31,13 @@ const AppRating = ({ value = '', numberVariant , size = 'small', withBackground,
   ) 
 
   return (
-    <Box sx={ [styles.root, optionalStyles] }>
+    <Box sx={ [styles.root, optionalStyles, sx.root] }>
       { bigNumberVariant }
-      { !(numberVariant && mobile) && (
+      { !(bigNumber  && mobile) && (
         <Rating
           emptyIcon={ <StarSharp fontSize='inherit' style={ styles.emptyIcon } /> }
           name='feedback'
-          precision={ 1 }
-          sx={ { typography: starsSize[size],
-            '& .MuiRating-icon': {
-              mx: `${spacing}px`
-            } } }
+          sx={ [styles.stars, sx.stars] }
           value={ value }
           { ...props }
         />) }

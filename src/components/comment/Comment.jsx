@@ -11,16 +11,14 @@ const Comment = ({ review }) => {
 
   const timestamp = new Date(createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
 
-  const createNamePart = (value) => (
-    <Typography component={ 'span' } variant='body2'>
-      { value }
-    </Typography>
-  )
-
   const userName = (
     <>
-      { createNamePart(firstName) }
-      { createNamePart(lastName) }
+      <Typography component={ 'span' } variant='body2'>
+        { firstName }
+      </Typography>
+      <Typography component={ 'span' } variant='body2'>
+        { lastName }
+      </Typography>
     </>
   )
   const coopDetails = `${category.name} - ${subject.name} - ${proficiencyLevel}`
@@ -36,8 +34,10 @@ const Comment = ({ review }) => {
           { coopDetails }
         </Typography>
         <AppRating
-          numberVariant={ 'small' } readOnly value={ rating }
-          withBackground
+          numberVariant={ 'small' } 
+          readOnly 
+          sx={ styles.rating }
+          value={ rating }
         />
         <Typography sx={ styles.comment }>
           { comment }

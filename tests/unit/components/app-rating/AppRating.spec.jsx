@@ -30,7 +30,7 @@ describe('AppRating component', () => {
   })
 
   it('should display the small number when smallNumber prop is true', () => {
-    const props = { value: 3.5, numberVariant:'small',withBackground: true }
+    const props = { value: 3.5, numberVariant:'small' }
     render(<AppRating { ...props } />)
     const smallNumberElement = screen.getByText(props.value.toString())
 

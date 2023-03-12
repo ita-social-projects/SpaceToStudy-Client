@@ -46,5 +46,13 @@ export const styles = {
       typography: 'overline',
       color: 'primary.500'
     }
+  },
+  rating: {
+    root: { backgroundColor: 'primary.50' },
+    stars: {
+      '& .MuiRating-icon': {
+        mx: '1px'
+      }
+    }
   }
 }

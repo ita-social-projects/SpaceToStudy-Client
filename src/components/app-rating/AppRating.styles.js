@@ -11,5 +11,6 @@ export const styles = {
   smallNumber: { lineHeight: 'normal' },
   starMobile: { color: 'basic.yellow', height: '18px' },
   emptyIcon: { opacity: 0.6 },
-  bigNumber: { display: 'flex', alignItems: 'center' }
+  bigNumber: { display: 'flex', alignItems: 'center' },
+  stars: { typography: 'body2' }
 }

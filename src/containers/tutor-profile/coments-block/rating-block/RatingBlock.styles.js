@@ -29,5 +29,12 @@ export const styles = {
     cursor: 'pointer',
     fontWeight: { xs: 500 },
     color: 'primary.600'
+  },
+  rating: {
+    stars: {
+      '& .MuiRating-icon': {
+        mx: '1px'
+      }
+    }
   }
 }

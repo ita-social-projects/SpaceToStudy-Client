@@ -57,7 +57,7 @@ const RatingBlock = ({ setFilter, averageRating, totalReviews, reviewsCount, act
           numberVariant={ 'big' } 
           readOnly
           reviews={ totalReviews }
-          spacing={ 2 }
+          sx={ styles.rating }
           value={ averageRating }
         />
       </Box>
