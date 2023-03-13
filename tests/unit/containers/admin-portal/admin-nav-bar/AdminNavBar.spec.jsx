@@ -3,20 +3,12 @@ import { fireEvent, screen } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 import AdminNavBar from '~/containers/layout/admin-portal/admin-nav-bar/AdminNavBar'
 
-vi.mock('react-router-dom', async () => {
-  const actual = await vi.importActual('react-router-dom')
-  return {
-    ...actual,
-    useLinkClickHandler: () => vi.fn(),
-  }
-})
-
 describe('Admin nav bar test', () => {
   beforeEach(() => {
     renderWithProviders(<AdminNavBar />)
   })
 
-  it.skip('should open nav bar', () => {
+  it('should open nav bar', () => {
     const adminNavBar = screen.getByTestId('AdminNavBar')
     const expandButton = screen.getByTestId('ArrowCircleRightIcon')
     fireEvent.click(expandButton)
@@ -24,7 +16,7 @@ describe('Admin nav bar test', () => {
     expect(getComputedStyle(adminNavBar).width).toBe('250px')
   })
 
-  it.skip('should open sub items', () => {
+  it('should open sub items', () => {
     const rolesButton = screen.getByTestId('AccountCircleIcon')
     fireEvent.click(rolesButton)
 
@@ -35,16 +27,6 @@ describe('Admin nav bar test', () => {
     expect(admins).toBeInTheDocument()
     expect(tutors).toBeInTheDocument()
     expect(students).toBeInTheDocument()
-  })
-
-  it.skip('should set clicked item to active', () => {
-    const rolesButton = screen.getByTestId('AccountCircleIcon')
-    fireEvent.click(rolesButton)
-
-    const admins = screen.getByText('admin.navBar.admins')
-    fireEvent.click(admins)
-
-    expect(getComputedStyle(admins).fontWeight).toBe('600')
   })
 
   it('should close nav bar', () => {

@@ -107,13 +107,6 @@ describe('Signup form test', () => {
     })
   })
 
-  it.skip('should close signup modal page after click', async () => {
-    const link = screen.getByText('common.labels.privacyPolicy')
-    fireEvent.click(link)
-
-    expect(closeModal).toHaveBeenCalled()
-  })
-
   it('should submit form', async () => {
     handleSubmit.mockImplementation((event) => {
       event.preventDefault()
