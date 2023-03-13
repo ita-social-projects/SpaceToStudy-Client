@@ -30,7 +30,7 @@ const StepWrapper = ({ children, steps }) => {
 
   const nextButton = isLastStep ? (
     <Button
-      onClick={ handleSubmit } size='small' sx={ styles.btn }
+      onClick={ handleSubmit } size='small' sx={ styles.finishBtn }
       variant='contained'
     >
       { t('common.finish') }
