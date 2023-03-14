@@ -1,6 +1,6 @@
 import { vi } from 'vitest'
 import { screen, render, fireEvent } from '@testing-library/react'
-import FilterCell from '../../../../../../src/components/enhanced-table/filter-row/filter-cell/FilterCell'
+import FilterCell from '~/components/enhanced-table/filter-row/filter-cell/FilterCell'
 
 
 const mockedPropsForSearch = {
@@ -27,16 +27,15 @@ const mockedPropsForFirstLogin = {
 
 
 describe('FilterRow tests', () => {
-    
     it('Should render Search Name block', () => {
-    render(<FilterCell {...mockedPropsForSearch} />)
-      const searchIcon = screen.getByTestId('SearchIcon')
+      render(<FilterCell {...mockedPropsForSearch} />)
+        const searchIcon = screen.getByTestId('SearchIcon')
 
-      expect(searchIcon).toBeInTheDocument()
+        expect(searchIcon).toBeInTheDocument()
 
-      const deleteIcon = screen.getByTestId('delete-icon')
+        const deleteIcon = screen.getByTestId('delete-icon')
 
-      expect(deleteIcon).toBeInTheDocument()
+        expect(deleteIcon).toBeInTheDocument()
     })
 
     it('Should render Last login block', () => {
@@ -53,14 +52,13 @@ describe('FilterRow tests', () => {
         })
 
     it('Should render First login block', () => {
-            render(<FilterCell {...mockedPropsForFirstLogin} />)
-              const searchIcon = screen.getByTestId('FilterAltIcon')
+        render(<FilterCell {...mockedPropsForFirstLogin} />)
+          const searchIcon = screen.getByTestId('FilterAltIcon')
         
-              expect(searchIcon).toBeInTheDocument()
+          expect(searchIcon).toBeInTheDocument()
 
-              const clearIcon = screen.getByTestId('ClearIcon')
+          const clearIcon = screen.getByTestId('ClearIcon')
     
           expect(clearIcon).toBeInTheDocument()
-            })
-    
+        })
   })
