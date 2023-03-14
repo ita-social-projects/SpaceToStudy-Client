@@ -1,7 +1,7 @@
 import { configDefaults, defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
 import svgrPlugin from 'vite-plugin-svgr'
-const path = require('path')
+import path from 'path'
 
 export default defineConfig({
   plugins: [react(), svgrPlugin()],
@@ -20,7 +20,7 @@ export default defineConfig({
     exclude: [...configDefaults.exclude, 'packages/template/*'],
     coverage: {
       all: true,
-      include: ['src/**/*.jsx'],
+      include: ['src/**/*.jsx','src/**/*.tsx'],
       exclude: ['src/stories/*', './tests/setup-tests.js']
     }
   }

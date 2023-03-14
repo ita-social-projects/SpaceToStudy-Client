@@ -1,10 +1,11 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import svgrPlugin from 'vite-plugin-svgr'
-const path = require('path')
+import tsconfigPaths from 'vite-tsconfig-paths'
+import path from 'path'
 
 export default defineConfig({
-  plugins: [react(), svgrPlugin()],
+  plugins: [react(), svgrPlugin(), tsconfigPaths() ],
   base: './',
   server: {
     port: 3000,
@@ -12,7 +13,7 @@ export default defineConfig({
     host: true
   },
   esbuild: {
-    loader: 'jsx'
+    loader: 'tsx'
   },
   resolve: {
     alias: {
