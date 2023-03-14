@@ -15,8 +15,20 @@ export const guestRouter = (
       handle={ { crumb: { name: t('breadCrumbs.privacyPolicy'), path: guestRoutes.privacyPolicy.route } } }
       path={ guestRoutes.privacyPolicy.route }
     />
-    <Route element={ <Categories /> } path={ guestRoutes.categories.route } />
-    <Route element={ <Subjects /> } path={ guestRoutes.subjects.route } />
-    <Route element={ <FindOffers /> } path={ guestRoutes.findOffers.route } />
+    <Route
+      element={ <Categories /> } 
+      handle={ { crumb: { name: t('breadCrumbs.categories'), path: guestRoutes.categories.route } } } 
+      path={ guestRoutes.categories.route }
+    />
+    <Route
+      element={ <Subjects /> } 
+      handle={ { crumb: { name: t('breadCrumbs.subjects'), path: guestRoutes.subjects.route } } } 
+      path={ guestRoutes.subjects.route }
+    />
+    <Route
+      element={ <FindOffers /> } 
+      handle={ { crumb: { name: t('breadCrumbs.findOffers'), path: guestRoutes.findOffers.route } } } 
+      path={ guestRoutes.findOffers.route }
+    />
   </Route>
 )

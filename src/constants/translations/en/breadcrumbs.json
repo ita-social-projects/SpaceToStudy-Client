@@ -2,5 +2,8 @@
     "home": "Main",
     "findTutor": "Find tutor",
     "privacyPolicy": "Privacy policy",
-    "myProfile": "My profile"
+    "myProfile": "My profile",
+    "categories": "Categories",
+    "subjects": "Subjects",
+    "findOffers": "FindOffers"
 }

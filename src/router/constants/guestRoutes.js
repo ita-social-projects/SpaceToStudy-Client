@@ -13,6 +13,6 @@ export const guestRoutes = {
     whoWeAre: { route: 'whoWeAre', path: '/#whoWeAre' }
   },
   categories: { route: 'categories', path: '/categories' },
-  subjects: { route: 'subjects', path: '/subjects' },
-  findOffers: { route: 'findOffers', path: '/findOffers' }
+  subjects: { route: 'categories/subjects', path: '/categories/subjects' },
+  findOffers: { route: 'categories/subjects/findOffers', path: '/categories/subjects/findOffers' }
 }
