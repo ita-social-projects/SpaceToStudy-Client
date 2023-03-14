@@ -3,12 +3,12 @@ import Button, { ButtonProps } from '@mui/material/Button'
 
 import Loader from '~/components/loader/Loader'
 
-type AppButtonProps = {
-  loading: boolean
+interface AppButtonProps extends ButtonProps {
+  loading: boolean,
   disabled: boolean
-}
+  }
 
-const AppButton: FC<AppButtonProps & ButtonProps> = ({
+const AppButton: FC<AppButtonProps> = ({
   children,
   loading,
   disabled,

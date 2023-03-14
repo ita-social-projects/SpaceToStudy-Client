@@ -2,9 +2,9 @@ import { FC } from 'react'
 import Box from '@mui/material/Box'
 import CircularProgress from '@mui/material/CircularProgress'
 
-type LoaderProps = {
-  size: number
-  sx?: { [key: string]: number | string }
+interface LoaderProps {
+  size: number,
+  sx?: { [key: string]: number | string },
   pageLoad?: boolean
 }
 
