@@ -1,4 +1,4 @@
-import { render, getByLabelText, fireEvent } from '@testing-library/react'
+import { render , fireEvent } from '@testing-library/react'
 import { vi, describe, it, expect } from 'vitest'
 import CheckboxList from '~/components/checkbox-list/CheckboxList';
 
@@ -14,9 +14,9 @@ describe('CheckboxList component', () => {
     
     const checkbox = getByLabelText('Beginner')
     expect(checkbox.checked).toBe(false)
-
-    fireEvent.change(checkbox, { target:{ checked: true }})
-
-    expect(mockedGetCheckbox).toHaveBeenCalled()
+    
+    // fireEvent.change(checkbox, { target:{ checked: true }})
+    fireEvent.click(checkbox)
+    expect(mockedGetCheckbox).toHaveBeenCalledWith(mockedItemToChange)
   })
 })
