@@ -36,6 +36,7 @@ const SearchInput = ({ search, setSearch }) => {
         ),
         autoComplete: 'off'
       } }
+      
       onChange={ (e) => setSearchInput(e.target.value) }
       onKeyPress={ (e) => {
         if (e.key === 'Enter') {
@@ -45,6 +46,7 @@ const SearchInput = ({ search, setSearch }) => {
       sx={ styles.input }
       value={ searchInput }
       variant='standard'
+      
     />
   )
 }

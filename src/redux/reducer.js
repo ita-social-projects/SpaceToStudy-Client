@@ -7,7 +7,7 @@ import { accessToken } from '~/constants'
 
 const initialState = {
   userId: '',
-  userRole: 'admin',
+  userRole: '',
   userEmail: '',
   loading: false,
   authLoading: false,
