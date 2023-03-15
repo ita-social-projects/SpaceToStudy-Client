@@ -22,11 +22,13 @@ const CheckboxList: FC<CheckboxListProps> = ({ items, title = '', getCheckbox })
     <Box key={ item.title } sx={ styles.itemContainer }>
       <Checkbox
         onChange={ () => getCheckbox(item) }
-        inputProps={{ "aria-label":item.title }}
+        inputProps={{ 'aria-label':item.title }}
         sx={ styles.checkbox }
         value={ item.checked }
       />
-      <Typography>{ t(item.title) }</Typography>
+      <Typography>
+        { t(item.title) }
+      </Typography>
     </Box>
   ))
 

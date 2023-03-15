@@ -1,15 +1,16 @@
 export const styles = {
   itemContainer: {
     display:'flex',
-    alignItems:'center'
+    alignItems:'center',
+    mb:'8px'
   },
   title:{
-    color:'primary.700',
+    color:'primary.700'
   },
   checkbox:{
-    ml:'-10px',
     '&.MuiCheckbox-root':{
-      padding:0
+      p:0,
+      mr:'8px',
     }
   }
 }
