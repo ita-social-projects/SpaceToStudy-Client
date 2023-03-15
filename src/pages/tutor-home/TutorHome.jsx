@@ -16,7 +16,11 @@ const TutorHome = () => {
     }
   }, [openModal, isFirstLogin])
 
-  return <div data-testid='tutorHome'>Hello Tutor!</div>
+  return (
+    <div data-testid='tutorHome'>
+      Hello Tutor!
+    </div>
+  )
 }
 
 export default TutorHome

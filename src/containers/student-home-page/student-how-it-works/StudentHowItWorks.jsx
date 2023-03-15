@@ -10,13 +10,14 @@ import { studentRoutes } from '~/router/constants/studentRoutes'
 import { howItWorksCards } from '~/containers/student-home-page/student-how-it-works/HowItWorksCards'
 
 import { styles } from '~/containers/student-home-page/student-how-it-works/student-how-it-works.styles'
+import { guestRoutes } from '~/router/constants/guestRoutes'
 
 const sectionId = studentRoutes.navBar.howItWorks.route
 
 const StudentHowItWorks = () => {
   const { t } = useTranslation()
 
-  const { path } = studentRoutes.findTutor
+  const { path } = guestRoutes.findOffers
 
   const cards = howItWorksCards.map((item, index) => {
     return (
