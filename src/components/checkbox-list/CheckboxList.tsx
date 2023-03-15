@@ -28,7 +28,6 @@ const CheckboxList: FC<CheckboxListProps> = ({ items, title = '', getCheckbox })
         inputProps={{ "aria-label":item.title }}
         sx={styles.checkbox}
         value={item.checked}
-    
       />
       <Typography>{t(item.title)}</Typography>
     </Box>
