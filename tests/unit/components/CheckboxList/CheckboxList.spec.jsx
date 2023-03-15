@@ -15,8 +15,8 @@ describe('CheckboxList component', () => {
     const checkbox = getByLabelText('Beginner')
     expect(checkbox.checked).toBe(false)
     
-    // fireEvent.change(checkbox, { target:{ checked: true }})
     fireEvent.click(checkbox)
+
     expect(mockedGetCheckbox).toHaveBeenCalledWith(mockedItemToChange)
   })
 })
