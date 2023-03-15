@@ -5,7 +5,8 @@ export const styles = {
     mb:'8px'
   },
   title:{
-    color:'primary.700'
+    color:'primary.700',
+    mb:'15px'
   },
   checkbox:{
     '&.MuiCheckbox-root':{
