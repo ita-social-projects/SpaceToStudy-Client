@@ -44,7 +44,8 @@ export const style = {
     justifyContent: 'space-between',
     maxWidth: '432px',
     m: { md: 0, xs: '0 auto' },
-    pt: 0
+    pt: 0,
+    pb:{ xs:'30px', sm:'0' }
   },
   description: {
     mb: '20px'

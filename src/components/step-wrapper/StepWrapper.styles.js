@@ -52,6 +52,6 @@ export const styles = {
   btn: btnStyle,
   finishBtn:{
     ...btnStyle,
-    width:'96px'
+    minWidth:'96px'
   }
 }

@@ -27,5 +27,6 @@ export const styles = {
     justifyContent: 'space-between',
     m: { md: 0, xs: '0 auto' },
     pt: 0
-  }
+  },
+  contentBox: { mb:{ xs:'30px', sm:'0' } }
 }
