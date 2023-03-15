@@ -22,14 +22,14 @@ const CheckboxList: FC<CheckboxListProps> = ({ items, title = '', getCheckbox })
   const { t } = useTranslation()
 
   const checkboxesList = items.map((item) => (
-    <Box key={item.title} sx={styles.itemContainer}>
+    <Box key={ item.title } sx={ styles.itemContainer }>
       <Checkbox
-        onChange={() => getCheckbox(item)}
+        onChange={ () => getCheckbox(item) }
         inputProps={{ "aria-label":item.title }}
-        sx={styles.checkbox}
-        value={item.checked}
+        sx={ styles.checkbox }
+        value={ item.checked }
       />
-      <Typography>{t(item.title)}</Typography>
+      <Typography>{ t(item.title) }</Typography>
     </Box>
   ))
 
