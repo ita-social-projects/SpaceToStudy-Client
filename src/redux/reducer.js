@@ -9,8 +9,8 @@ const initialState = {
   userId: '',
   userRole: '',
   userEmail: '',
-  loading:false,
-  authLoading:false,
+  loading: false,
+  authLoading: false,
   error: '',
   isFirstLogin: true
 }
@@ -86,30 +86,29 @@ export const mainSlice = createSlice({
       state.isFirstLogin = initialState.isFirstLogin
     }
   },
-  extraReducers: builder => {
-
+  extraReducers: (builder) => {
     builder.addMatcher(isPending, (state, action) => {
       const isAuthLoadingType = action.type === loginUser.pending.type || action.type === signupUser.pending.type
       const isLoadingType = action.type === checkAuth.pending.type || action.type === logoutUser.pending.type
 
-      if(isAuthLoadingType) state.authLoading = true 
-      if(isLoadingType) state.loading = true
-      state.error = '' 
+      if (isAuthLoadingType) state.authLoading = true
+      if (isLoadingType) state.loading = true
+      state.error = ''
     })
-    builder.addMatcher(isFulfilled, (state, action) => { 
+    builder.addMatcher(isFulfilled, (state, action) => {
       const isAuthLoadingType = action.type === loginUser.fulfilled.type || action.type === signupUser.fulfilled.type
       const isLoadingType = action.type === checkAuth.fulfilled.type || action.type === logoutUser.fulfilled.type
 
-      if(isAuthLoadingType ) state.authLoading = false 
-      if(isLoadingType) state.loading = false 
-      state.error = '' 
-    }) 
-    builder.addMatcher(isRejected, (state, action) => { 
+      if (isAuthLoadingType) state.authLoading = false
+      if (isLoadingType) state.loading = false
+      state.error = ''
+    })
+    builder.addMatcher(isRejected, (state, action) => {
       const isAuthLoadingType = action.type === loginUser.rejected.type || action.type === signupUser.rejected.type
       const isLoadingType = action.type === checkAuth.rejected.type || action.type === logoutUser.rejected.type
-      
-      if(isAuthLoadingType) state.authLoading = false 
-      if(isLoadingType) state.loading = false 
+
+      if (isAuthLoadingType) state.authLoading = false
+      if (isLoadingType) state.loading = false
       state.error = action.payload
     })
   }
