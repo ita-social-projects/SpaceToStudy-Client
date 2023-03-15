@@ -8,11 +8,11 @@ import IconButton from '@mui/material/IconButton'
 import TextField from '@mui/material/TextField'
 import SearchIcon from '@mui/icons-material/Search'
 
-import { studentRoutes } from '~/router/constants/studentRoutes'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { styles } from '~/containers/student-home-page/find-tutor-block/find-tutor-block.styles'
 import bag from '~/assets/img/student-home/bag.png'
 import { translationKey } from '~/containers/student-home-page/find-tutor-block/constants' 
+import { guestRoutes } from '~/router/constants/guestRoutes'
 
 const FindTutorBlock = () => {
   const [filter, setFilter] = useState('')
@@ -20,15 +20,15 @@ const FindTutorBlock = () => {
   const navigate = useNavigate()
   const { isMobile } = useBreakpoints()
 
-  const { findTutor } = studentRoutes
+  const { findOffers } = guestRoutes
 
   const onChange = (e) => {
     setFilter(e.target.value)
   }
 
   const redirect = useCallback(() => {
-    return navigate(findTutor.route, { state: { filter } })
-  }, [filter, findTutor.route, navigate])
+    return navigate(findOffers.route, { state: { filter } })
+  }, [filter, findOffers.route, navigate])
 
   const handleEnterPress = useCallback(
     (e) => {
