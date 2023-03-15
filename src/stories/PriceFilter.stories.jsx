@@ -1,5 +1,4 @@
-import { Story } from '@storybook/react/types-6-0'
-import PriceFilter, { PriceFilterProps } from '~/components/price-filter/PriceFilter'
+import PriceFilter from '~/components/price-filter/PriceFilter'
 
 export default {
   title: 'PriceFilter',
@@ -18,7 +17,7 @@ export default {
   }
 }
 
-const Template: Story<PriceFilterProps> = (args) => <PriceFilter { ...args } />
+const Template = (args) => <PriceFilter { ...args } />
 
 export const Default = Template.bind({})
 Default.args = {

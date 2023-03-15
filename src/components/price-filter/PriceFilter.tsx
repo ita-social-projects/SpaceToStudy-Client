@@ -11,7 +11,7 @@ import { useDebounce } from '~/hooks/use-debounce'
 
 import { styles } from '~/components/price-filter/PriceFilter.styles'
 
-export interface PriceFilterProps {
+interface PriceFilterProps {
   min: number,
   max: number,
   onChange: (value: [number, number]) => void
