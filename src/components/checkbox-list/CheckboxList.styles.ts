@@ -8,5 +8,8 @@ export const styles = {
   },
   checkbox:{
     ml:'-10px',
+    '&.MuiCheckbox-root':{
+      padding:0
+    }
   }
 }

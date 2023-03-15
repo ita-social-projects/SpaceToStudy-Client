@@ -7,15 +7,12 @@ import Typography from '@mui/material/Typography'
 
 import { styles } from './CheckboxList.styles'
 
-type Checkbox = {
-  title: string
-  checked: boolean
-}
+import { CheckboxType } from './CheckboxList.types'
 
-type CheckboxListProps = {
-  items: Checkbox[]
-  title: string
-  getCheckbox: (checkbox: Checkbox) => void
+interface CheckboxListProps {
+  items: CheckboxType[]
+  title?: string
+  getCheckbox: (checkbox: CheckboxType) => void
 }
 
 const CheckboxList: FC<CheckboxListProps> = ({ items, title = '', getCheckbox }) => {
