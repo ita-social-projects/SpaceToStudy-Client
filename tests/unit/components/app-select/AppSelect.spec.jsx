@@ -19,8 +19,8 @@ describe('AppSelect component', () => {
       <AppSelect
         fields={ mockedSortingFields }
         selectTitle={ 'Sort by' }  
-        setSortedValue={ mockedSetSortedValue }
-        sortedValue={ sortByFields.newest }
+        setValue={ mockedSetSortedValue }
+        value={ sortByFields.newest }
       />)
 
     const mockedSelect = screen.getByTestId(selectId)

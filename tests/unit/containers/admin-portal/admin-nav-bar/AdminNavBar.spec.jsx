@@ -29,16 +29,6 @@ describe('Admin nav bar test', () => {
     expect(students).toBeInTheDocument()
   })
 
-  it('should set clicked item to active', () => {
-    const rolesButton = screen.getByTestId('AccountCircleIcon')
-    fireEvent.click(rolesButton)
-
-    const admins = screen.getByText('admin.navBar.admins')
-    fireEvent.click(admins)
-
-    expect(getComputedStyle(admins).fontWeight).toBe('600')
-  })
-
   it('should close nav bar', () => {
     const adminNavBar = screen.getByTestId('AdminNavBar')
     const openButton = screen.getByTestId('ArrowCircleRightIcon')

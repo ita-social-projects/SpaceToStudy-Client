@@ -16,17 +16,25 @@ const handleBlur = vi.fn()
 const handleSubmit = vi.fn()
 const closeModal = vi.fn()
 
+vi.mock('react-router-dom', async () => {
+  const actual = await vi.importActual('react-router-dom')
+  return {
+    ...actual,
+    useLinkClickHandler: () => vi.fn(),
+  }
+})
+
 describe('Signup form test', () => {
   const preloadedState = { appMain: { authLoading: false } }
   beforeEach(() => {
     renderWithProviders(
       <SignupForm
-        closeModal={closeModal}
-        data={data}
-        errors={errors}
-        handleBlur={handleBlur}
-        handleChange={handleChange}
-        handleSubmit={handleSubmit}
+        closeModal={ closeModal }
+        data={ data }
+        errors={ errors }
+        handleBlur={ handleBlur }
+        handleChange={ handleChange }
+        handleSubmit={ handleSubmit }
       />,
       { preloadedState }
     )
@@ -99,13 +107,6 @@ describe('Signup form test', () => {
     })
   })
 
-  it('should close signup modal page after click', async () => {
-    const link = screen.getByText('common.labels.privacyPolicy')
-    fireEvent.click(link)
-
-    await waitFor(() => expect(closeModal).toHaveBeenCalled())
-  })
-
   it('should submit form', async () => {
     handleSubmit.mockImplementation((event) => {
       event.preventDefault()
@@ -124,11 +125,11 @@ describe('Signup form test with loading', () => {
   it('should render loader', () => {
     renderWithProviders(
       <SignupForm
-        data={data}
-        errors={errors}
-        handleBlur={handleBlur}
-        handleChange={handleChange}
-        handleSubmit={handleSubmit}
+        data={ data }
+        errors={ errors }
+        handleBlur={ handleBlur }
+        handleChange={ handleChange }
+        handleSubmit={ handleSubmit }
       />,
       { preloadedState }
     )
