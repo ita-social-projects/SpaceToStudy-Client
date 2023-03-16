@@ -21,14 +21,14 @@ const CheckboxList: FC<CheckboxListProps> = ({ items, title = '', getCheckboxes 
   const { t } = useTranslation()
 
   const handleCheckbox = (checkbox: CheckboxType) => {
-    setCheckboxes(prevCheckboxes => prevCheckboxes.map((prevCheckbox) => {
+    const updatedCheckboxes = checkboxes.map((prevCheckbox) => {
       if (prevCheckbox.title === checkbox.title) 
         return { ...prevCheckbox, checked: !prevCheckbox.checked }
       else 
         return prevCheckbox
     })
-    )
-    getCheckboxes(checkboxes)
+    setCheckboxes(updatedCheckboxes)
+    getCheckboxes(updatedCheckboxes)
   }
 
   const checkboxesList = checkboxes.map((checkbox) => (
