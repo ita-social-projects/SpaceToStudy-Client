@@ -11,31 +11,22 @@ export default {
         max: 5,
         step: 0.1
       },
-      description: 'The rating value, ranging from 1 to 5 with a step of 0.1',
+      description: 'The rating value, ranging from 1 to 5 with a step of 0.1'
     },
-    reviews: {
-      control: {
-        type: 'number'
-      },
-      description: 'The number of reviews',
-    },
-    numberVariant:{
-      control: {
-        type: 'inline-radio',
-        options: ['big', 'small', '']
-      },
-      description: 'The variant of the number of reviews, either big or small'
-    },
-    mobile: {
+    showNumber: {
       control: {
         type: 'boolean'
       },
-      description: 'Whether to display the component in mobile view'
+      description: 'Whether to show the rating value or not'
     },
     sx: {
       control: null,
       description: 'The style props of the component'
     },
+    precision: {
+      control: 'number',
+      description: 'The step of the rating component'
+    }
   }
 }
 
@@ -44,14 +35,9 @@ const Template = (args) => <AppRating { ...args } />
 export const Default = Template.bind({})
 Default.args = {
   value: 4.5,
-  mobile: false,
-  sx:{
-    root:{ backgroundColor:'primary.50' },
-    stars: {
-      '& .MuiRating-icon': {
-        mx: '1px'
-      }
-    },
-  },
-  numberVariant:''
+  showNumber: true,
+  precision: 0.1,
+  sx: {
+    backgroundColor: 'primary.50'  
+  }
 }

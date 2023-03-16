@@ -1,10 +1,18 @@
+import { FC } from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
+
 import ImgTitleDescription from '~/components/img-title-description/ImgTitleDescription'
 import AppRating from '~/components/app-rating/AppRating'
-import { styles } from '~/components/comment/Comment.styles'
 
-const Comment = ({ review }) => {
+import { styles } from '~/components/comment/Comment.styles'
+import { ReviewInterface } from '~/types/common/interfaces/common.interfaces'
+
+interface CommentProps {
+  review: ReviewInterface
+}
+
+const Comment:FC<CommentProps> = ({ review }) => {
   const { comment, author, rating, createdAt, offer } = review
   const { firstName, lastName, photo } = author
   const { category, subject, proficiencyLevel } = offer
@@ -34,8 +42,8 @@ const Comment = ({ review }) => {
           { coopDetails }
         </Typography>
         <AppRating
-          numberVariant={ 'small' } 
-          readOnly 
+          readOnly
+          showNumber 
           sx={ styles.rating }
           value={ rating }
         />

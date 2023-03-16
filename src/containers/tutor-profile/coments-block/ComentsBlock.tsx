@@ -5,17 +5,22 @@ import Typography from '@mui/material/Typography'
 import KeyboardArrowDownSharpIcon from '@mui/icons-material/KeyboardArrowDownSharp'
 
 import Comment from '~/components/comment/Comment'
-import RatingBlock from '~/containers/tutor-profile/coments-block/rating-block/RatingBlock'
+import RatingBlock, { RatingType } from '~/containers/tutor-profile/coments-block/rating-block/RatingBlock'
 import AppButton from '~/components/app-button/AppButton'
 import Loader from '~/components/loader/Loader'
 
 import { styles } from '~/containers/tutor-profile/coments-block/ComentsBlock.styles'
 import { responseMock, loadingMock, commentsCount } from '~/containers/tutor-profile/coments-block/constants'
 
+interface ComentsBlockProps {
+  averageRating: number
+  totalReviews: number
+  reviewsCount: RatingType[]
+}
 
-const ComentsBlock = ({ averageRating, totalReviews, reviewsCount }) => {
-  const [filter, setFilter] = useState(null)
-  const [amountToShow, setAmountToShow] = useState(commentsCount.default)
+const ComentsBlock = ({ averageRating, totalReviews, reviewsCount }: ComentsBlockProps) => {
+  const [filter, setFilter] = useState<number | null>(null)
+  const [amountToShow, setAmountToShow] = useState<number>(commentsCount.default)
   const { t } = useTranslation()
   const { count, items } = responseMock
 
@@ -31,7 +36,7 @@ const ComentsBlock = ({ averageRating, totalReviews, reviewsCount }) => {
     setAmountToShow(prev => prev + commentsCount.increment)
   }
 
-  const handleFilterChange = (value) => {
+  const handleFilterChange = (value: number | null) => {
     if(value !== filter){
       setFilter(value)
     }

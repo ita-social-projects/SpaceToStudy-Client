@@ -48,11 +48,6 @@ export const styles = {
     }
   },
   rating: {
-    root: { backgroundColor: 'primary.50' },
-    stars: {
-      '& .MuiRating-icon': {
-        mx: '1px'
-      }
-    }
+    backgroundColor: 'primary.50' 
   }
 }
