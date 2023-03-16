@@ -10,6 +10,7 @@ export default {
       description: 'Title of this component'
     },
 <<<<<<< HEAD
+<<<<<<< HEAD
     getCheckboxes: {
       type: 'function',
       description: 'Function for getting value of all checkboxes',
@@ -18,6 +19,11 @@ export default {
       type: 'function',
       description: 'Function for getting value of changed checkbox',
 >>>>>>> e50220b (added line and stories updated)
+=======
+    getCheckboxes: {
+      type: 'function',
+      description: 'Function for getting value of all checkboxes',
+>>>>>>> f086cc4 (updated AppSelect component to tsx and added som unit tests)
       action:'changed'
     }
   }
@@ -31,6 +37,7 @@ const defaultItems = [{ title: 'Beginner', checked: false }, { title: 'Intermedi
 
 Default.args = {
 <<<<<<< HEAD
+<<<<<<< HEAD
   items:defaultItems,
   title:'Level',
   getCheckboxes:(checkboxes) => console.log('Checkboxes: ', checkboxes)
@@ -39,4 +46,9 @@ Default.args = {
     title:'Level',
     getCheckbox:(checkbox) => console.log('Changed checkbox:', checkbox)
 >>>>>>> e50220b (added line and stories updated)
+=======
+  items:defaultItems,
+  title:'Level',
+  getCheckboxes:(checkboxes) => console.log('Checkboxes: ', checkboxes)
+>>>>>>> f086cc4 (updated AppSelect component to tsx and added som unit tests)
 }
