@@ -25,7 +25,6 @@ describe('CheckboxList component', () => {
     render(<CheckboxList getCheckboxes={ mockedGetCheckbox } items={ mockedItems } />)
     
     const title = screen.queryByLabelText(titleId)
-    console.log(title)
 
     expect(title).toBeNull()
   })
