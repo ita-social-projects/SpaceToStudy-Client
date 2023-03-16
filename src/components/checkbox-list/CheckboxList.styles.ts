@@ -11,7 +11,7 @@ export const styles = {
   checkbox:{
     '&.MuiCheckbox-root':{
       p:0,
-      mr:'8px',
+      mr:'8px'
     }
   }
 }
