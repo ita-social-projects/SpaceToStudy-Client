@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useState } from 'react'
+import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Checkbox from '@mui/material/Checkbox'
@@ -12,10 +12,10 @@ import { CheckboxType } from './CheckboxList.types'
 interface CheckboxListProps {
   items: CheckboxType[]
   title?: string
-  getCheckbox: (checkbox: CheckboxType[]) => void
+  getCheckboxes: (checkbox: CheckboxType[]) => void
 }
 
-const CheckboxList: FC<CheckboxListProps> = ({ items, title = '', getCheckbox }) => {
+const CheckboxList: FC<CheckboxListProps> = ({ items, title = '', getCheckboxes }) => {
   const [checkboxes,setCheckboxes] = useState<CheckboxType[]>(items)
  
   const { t } = useTranslation()
@@ -28,7 +28,7 @@ const CheckboxList: FC<CheckboxListProps> = ({ items, title = '', getCheckbox })
         return prevCheckbox
     })
     )
-    getCheckbox(checkboxes)
+    getCheckboxes(checkboxes)
   }
 
   const checkboxesList = checkboxes.map((checkbox) => (
@@ -45,11 +45,15 @@ const CheckboxList: FC<CheckboxListProps> = ({ items, title = '', getCheckbox })
     </Box>
   ))
 
+  const checkboxesTitle = title.length ? (
+    <Typography aria-label='checkboxes-list-title' sx={ styles.title } variant='h6' >
+      { t(title) }
+    </Typography>
+  ) : null
+
   return (
     <Box>
-      <Typography sx={ styles.title } variant='h6'>
-        { t(title) }
-      </Typography>
+      { checkboxesTitle }
       { checkboxesList }
     </Box>
   )

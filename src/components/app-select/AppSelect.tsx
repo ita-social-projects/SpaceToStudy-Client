@@ -1,16 +1,24 @@
 import { useTranslation } from 'react-i18next'
 
 import MenuItem from '@mui/material/MenuItem'
-import Select from '@mui/material/Select'
+import Select, { SelectChangeEvent } from '@mui/material/Select'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
+import { SelectField } from '~/components/app-select/AppSelect.types'
 import { styles } from '~/components/app-select/AppSelect.styles'
 
-const AppSelect = ({ setValue, value, fields, selectTitle = '' }) => {
+interface AppSelectProps {
+  setValue:(value:string) => void
+  value:string,
+  fields:SelectField[],
+  selectTitle?:string,
+}
+
+const AppSelect = ({ setValue, value, fields, selectTitle = '' }:AppSelectProps) => {
   const { t } = useTranslation()
 
-  const changeValue = (e) => setValue(e.target.value)
+  const changeValue = (e:SelectChangeEvent<string>) => setValue(e.target.value)
 
   const fieldsList = fields.map(field => (
     <MenuItem key={ field.value } value={ field.value }>
@@ -18,7 +26,7 @@ const AppSelect = ({ setValue, value, fields, selectTitle = '' }) => {
     </MenuItem>)
   )
   const titleEl = selectTitle.length ? (
-    <Typography sx={ styles.selectTitle } variant='subtitle1' >
+    <Typography aria-label='select-title'  sx={ styles.selectTitle } variant='subtitle1' >
       { t(selectTitle) }
       :
     </Typography>
