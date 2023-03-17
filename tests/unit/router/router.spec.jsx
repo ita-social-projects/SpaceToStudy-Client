@@ -101,7 +101,7 @@ describe.skip('router test', () => {
       renderWithRouter(createPath(guestRoutes.admin.route, adminRoutes.students.route), {
         appMain: { loding: false, userRole: admin }
       })
-      const title = await screen.findByText('studentTable.studentsTab')
+      const title = await screen.findByText('baseUserTable.studentsTab')
       await waitFor(() => expect(title).toBeInTheDocument())
     })
   })

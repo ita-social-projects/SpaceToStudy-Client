@@ -17,10 +17,10 @@ vi.mock('~/hooks/table/use-filter', () => {
 
 const isSelection = true
 const columns = [
-  { label: 'studentTable.name', field: 'name', dataType: 'string' },
-  { label: 'studentTable.email', field: 'email', dataType: 'string' },
-  { label: 'studentTable.lastLogin', field: 'lastLogin', dataType: 'date', calculatedCellValue: vi.fn() },
-  { label: 'studentTable.firstLogin', field: 'isFirstLogin', dataType: 'enums', filterEnum: Array(2) }
+  { label: 'baseUserTable.name', field: 'name', dataType: 'string' },
+  { label: 'baseUserTable.email', field: 'email', dataType: 'string' },
+  { label: 'baseUserTable.lastLogin', field: 'lastLogin', dataType: 'date', calculatedCellValue: vi.fn() },
+  { label: 'baseUserTable.firstLogin', field: 'isFirstLogin', dataType: 'enums', filterEnum: Array(2) }
 ]
 const filters = { name: '', email: '', lastLogin: '', isFirstLogin: Array(0) }
 

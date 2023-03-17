@@ -6,7 +6,7 @@ import FilterCheckbox from '~/components/enhanced-table/filter-checkbox/FilterCh
 const mockedSetFilter = vi.fn()
 
 const mockedFilterCheckbox = {
-  label: 'adminTable.active',
+  label: 'baseUserTable.active',
   value: 'active'
 }
 

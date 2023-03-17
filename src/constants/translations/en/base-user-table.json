@@ -1,11 +1,14 @@
 {
   "adminsTab": "Admins Tab",
+  "tutorsTab": "Tutors Tab",
+  "studentsTab": "Students Tab",
   "name": "Name",
   "email": "Email",
+  "status": "Status",
+  "rating": "Rating",
   "lastLogin": "Last login",
   "signedUp": "Signed up",
   "all": "All",
-  "status": "Status",
   "active": "Active",
   "blocked": "Blocked",
   "invited": "Invited"

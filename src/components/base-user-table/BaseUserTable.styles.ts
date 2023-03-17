@@ -1,8 +1,9 @@
 export const styles = {
   root: {
-    pt: '25px',
-    width: '80%',
-    m: '0 auto'
+    width: '100%',
+    maxWidth: '1222px',
+    m: '0 auto',
+    py: '25px'
   },
   tabs: {
     display: 'flex',
