@@ -24,4 +24,4 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
-          folder: build-story # output folder from package.json build-storybook     
+          folder: build-story #  output folder from package.json build-storybook     
