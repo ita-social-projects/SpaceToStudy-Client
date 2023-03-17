@@ -4,8 +4,8 @@ import Button, { ButtonProps } from '@mui/material/Button'
 import Loader from '~/components/loader/Loader'
 
 interface AppButtonProps extends ButtonProps {
-  loading: boolean,
-  disabled: boolean
+  loading?: boolean,
+  disabled?: boolean
   }
 
 const AppButton: FC<AppButtonProps> = ({

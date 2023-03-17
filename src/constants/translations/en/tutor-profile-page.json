@@ -7,5 +7,13 @@
   },
   "videoPresentation": {
     "title": "Video Presentation"
+  },
+  "reviews":{
+    "title":"What Students Say",
+    "buttonTitle":"See all reviews",
+    "starsCount_one": "{{count}} star",
+    "starsCount_other": "{{count}} stars",
+    "reviewsCount_one": "{{count}} review",
+    "reviewsCount_other": "{{count}} reviews"
   }
 }
