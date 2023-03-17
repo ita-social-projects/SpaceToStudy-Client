@@ -9,18 +9,17 @@ import Typography from '@mui/material/Typography'
 
 import { useDebounce } from '~/hooks/use-debounce'
 
+import { InputPriceArrayType, PriceArrayType } from '~/types/components/price-filter/types/price-filter.types'
 import { styles } from '~/components/price-filter/PriceFilter.styles'
 
 interface PriceFilterProps {
   min: number,
   max: number,
   onChange: (value: [number, number]) => void
-};
-type PriceArray = [number, number]
-type InputPriceArray = [number|string, number|string]
+}
 
 const PriceFilter: FC<PriceFilterProps> = ({ min, max, onChange }) => {
-  const [prices, setPrices] = useState<InputPriceArray>([min, max])
+  const [prices, setPrices] = useState<InputPriceArrayType>([min, max])
   const { t } = useTranslation()
 
   const marks = [
@@ -31,12 +30,12 @@ const PriceFilter: FC<PriceFilterProps> = ({ min, max, onChange }) => {
   const debouncedHandlePriceChange = useDebounce( onChange )
 
   const handleSliderChange = (_ : Event, value: number | number[]) => {
-    const prices = value as PriceArray
+    const prices = value as PriceArrayType
     setPrices(prices)
     debouncedHandlePriceChange(prices)
   }
 
-  const pricesSort = (prices:InputPriceArray) => prices.map(Number).sort((a, b) => a - b) as PriceArray
+  const pricesSort = (prices:InputPriceArrayType) => prices.map(Number).sort((a, b) => a - b) as PriceArrayType
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = event.target
@@ -47,7 +46,7 @@ const PriceFilter: FC<PriceFilterProps> = ({ min, max, onChange }) => {
       return
     }
 
-    const newPrices = [...prices] as InputPriceArray
+    const newPrices = [...prices] as InputPriceArrayType
     newPrices[Number(id)] = inputPrice
 
     const sortedPrices = pricesSort(newPrices)
@@ -65,7 +64,7 @@ const PriceFilter: FC<PriceFilterProps> = ({ min, max, onChange }) => {
       return
     }
 
-    const newPrices = [...prices] as InputPriceArray
+    const newPrices = [...prices] as InputPriceArrayType
     newPrices[inputIndex] = constrainedPrice
 
     const sortedPrices = pricesSort(newPrices)
