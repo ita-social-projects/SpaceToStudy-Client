@@ -1,3 +1,4 @@
+import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import MenuItem from '@mui/material/MenuItem'
@@ -15,7 +16,7 @@ interface AppSelectProps {
   selectTitle?:string,
 }
 
-const AppSelect = ({ setValue, value, fields, selectTitle = '' }:AppSelectProps) => {
+const AppSelect:FC<AppSelectProps> = ({ setValue, value, fields, selectTitle = '' }) => {
   const { t } = useTranslation()
 
   const changeValue = (e:SelectChangeEvent<string>) => setValue(e.target.value)
