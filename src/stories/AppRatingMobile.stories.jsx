@@ -1,8 +1,8 @@
-import  AppRatingBig  from '~/components/app-rating-big/AppRatingBig'
+import  AppRatingMobile  from '~/components/app-rating-mobile/AppRatingMobile'
 
 export default {
   title: 'AppRatingBig',
-  component: AppRatingBig,
+  component: AppRatingMobile,
   argTypes: {
     value: {
       control: {
@@ -18,21 +18,14 @@ export default {
         type: 'number'
       },
       description: 'The number of reviews'
-    },
-    mobile: {
-      control: {
-        type: 'boolean'
-      },
-      description: 'Whether to display the component in mobile view'
     }
   }
 }
 
-const Template = (args) => <AppRatingBig { ...args } />
+const Template = (args) => <AppRatingMobile { ...args } />
 
 export const Default = Template.bind({})
 Default.args = {
   value: 4.5,
-  mobile: false,
   reviewsCount: 100
 }

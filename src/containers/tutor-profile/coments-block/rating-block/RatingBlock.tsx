@@ -1,20 +1,17 @@
 import { FC } from 'react'
+import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import LinearProgress from '@mui/material/LinearProgress'
 import Typography from '@mui/material/Typography'
 
 import AppRatingLarge from '~/components/app-rating-large/AppRatingLarge'
+import AppRatingMobile from '~/components/app-rating-mobile/AppRatingMobile'
 import useBreakpoints from '~/hooks/use-breakpoints'
 
+import { RatingType } from '~/types/tutorProfile/types/tutorProfile.types'
 import { styles } from '~/containers/tutor-profile/coments-block/rating-block/RatingBlock.styles'
-import { useTranslation } from 'react-i18next'
 
-export type RatingType = {
-  rating: number;
-  count: number;
-};
-
-interface Props {
+interface RatingBlockProps {
   setFilter: ((filter: number | null) => void)
   averageRating: number
   totalReviews: number
@@ -22,7 +19,7 @@ interface Props {
   activeFilter: number|null
 };
 
-const RatingBlock: FC<Props> = ({ setFilter, averageRating, totalReviews, reviewsCount, activeFilter }) => {
+const RatingBlock: FC<RatingBlockProps> = ({ setFilter, averageRating, totalReviews, reviewsCount, activeFilter }) => {
   const { isMobile } = useBreakpoints()
   const { t } = useTranslation()
   const ratings = reviewsCount.reduce((acc, { count, rating }) => {
@@ -59,17 +56,23 @@ const RatingBlock: FC<Props> = ({ setFilter, averageRating, totalReviews, review
     )
   }).reverse()
 
+  const ratingComponent = isMobile  ? (
+    <AppRatingMobile
+      reviewsCount={ totalReviews }
+      value={ averageRating }
+    />
+  ) : (
+    <AppRatingLarge
+      readOnly
+      reviewsCount={ totalReviews }
+      sx={ styles.rating }
+      value={ averageRating }
+    />
+  )
+
   return (
     <Box sx={ styles.root }>
-      <Box>
-        <AppRatingLarge
-          mobile={ isMobile }
-          readOnly
-          reviewsCount={ totalReviews }
-          sx={ styles.rating }
-          value={ averageRating }
-        />
-      </Box>
+      { ratingComponent }
       <Box sx={ styles.progressBarRoot }>
         { progresBars }
         { activeFilter && (

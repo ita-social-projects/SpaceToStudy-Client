@@ -1,32 +1,32 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
+import StarSharp from '@mui/icons-material/StarSharp'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { RatingProps } from '@mui/material/Rating'
 
-import AppRating from '~/components/app-rating/AppRating'
-import { styles } from '~/components/app-rating-large/AppRatingLarge.styles'
+import { styles } from '~/components/app-rating-mobile/AppRatingMobile.styles'
 
-interface AppRatingLargeProps extends RatingProps {
+interface AppRatingMobileProps extends RatingProps {
     reviewsCount: number
 }
 
-const AppRatingLarge:FC<AppRatingLargeProps> = ({ value, reviewsCount, ...ratingProps }) => {
+const AppRatingMobile:FC<AppRatingMobileProps> = ({ value, reviewsCount }) => {
   const { t } = useTranslation()
 
   return (
     <Box sx={ styles.root }>
       <Box data-testid='number-box' sx={ styles.number }>
-        <Typography variant={ 'h4' }  >
+        <StarSharp data-testid='star-icon' sx={ styles.starMobile } />
+        <Typography variant={ 'h6' }  >
           { value }
         </Typography>
       </Box>
-      <AppRating value={ value } { ...ratingProps } />
-      <Typography variant={ 'body1' }>
+      <Typography variant={ 'caption' }>
         { t('tutorProfilePage.reviews.reviewsCount',{ count: reviewsCount }) }
       </Typography>
     </Box>
   )
 }
 
-export default AppRatingLarge
+export default AppRatingMobile
