@@ -1,14 +1,24 @@
+import { FC, MouseEvent } from 'react'
+
 import ToggleButton from '@mui/material/ToggleButton'
 import Box from '@mui/material/Box'
 
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted'
 import GridViewIcon from '@mui/icons-material/GridView'
 
-import { cardsViews } from '~/constants'
-import { styles } from '~/components/view-switcher/ViewSwitcher.styles'
 
-const ViewSwitcher = ({ setOffersView, offersView }) => {
-  const changeOffersView = (_event, view) => setOffersView(view)
+import { styles } from '~/components/view-switcher/ViewSwitcher.styles'
+import { cardsViews } from '~/constants'
+import { CardsViewTypes } from './ViewSwitcher.types'
+
+
+interface ViewSwitcherProps {
+  setOffersView:(value: CardsViewTypes) => void
+  offersView: CardsViewTypes
+}
+
+const ViewSwitcher:FC<ViewSwitcherProps> = ({ setOffersView, offersView }) => {
+  const changeOffersView = (_event:MouseEvent<HTMLElement>, view: CardsViewTypes) => setOffersView(view)
 
   return (
     <Box>
