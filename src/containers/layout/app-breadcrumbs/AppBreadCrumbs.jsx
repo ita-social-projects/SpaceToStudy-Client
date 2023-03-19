@@ -5,7 +5,7 @@ import { styles } from '~/containers/layout/app-breadcrumbs/AppBreadCrumbs.style
 
 const AppBreadCrumbs = () => {
   const matches = useMatches()
-  const crumbs = matches.filter((match) => Boolean(match.handle?.crumb)).map((match) => match.handle.crumb)
+  const crumbs = matches.filter((match) => Boolean(match.handle?.crumb)).map((match) => match.handle.crumb).flat()
 
   const breadCrumbs = crumbs.map((crumb, idx) => {
     const isLast = idx === crumbs.length - 1
@@ -16,7 +16,7 @@ const AppBreadCrumbs = () => {
         component={ component }
         data-testid='breadCrumb'
         key={ crumb.path }
-        sx={ styles.link }
+        sx={ isLast ? styles.link : styles.previous }
         to={ crumb.path }
         underline='none'
         variant='caption'
