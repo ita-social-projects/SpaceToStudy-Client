@@ -2,7 +2,16 @@ import { Chip, IconButton, Typography } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import { styles } from '~/components/app-chips-list/AppChipsList-styles'
 
-const AppChip = ({ handleDelete, children, icon }) => {
+
+interface AppChipProps {
+  handleDelete(): void,
+  children:string,
+  icon:object
+}
+
+const AppChip:React.FC<AppChipProps> = ({ handleDelete, children, icon }) => {
+
+  
   return (
     <Chip
       data-testid='chip'
