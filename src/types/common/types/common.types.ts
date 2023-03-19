@@ -1,10 +1,5 @@
 import { EnhancedTableProps } from '../interfaces/common.interfaces'
 
-export type Address = {
-  country: string
-  city: string
-}
-
 export type Category = {
   _id: string
   name: string
@@ -46,7 +41,7 @@ export type InitialSort = {
 }
 
 export type TabsInfoItem<T> = {
-  key: string  
+  key: string
   component: React.FC<EnhancedTableProps<T>>
 } & FilterEnum
 

@@ -11,7 +11,7 @@ import { TableProvider } from '~/context/table-context'
 import { userService } from '~/services/user-service.js'
 
 import { BulkAction, ExternalFilter, InitialSort, Options, RowAction, TabsInfo } from '~/types/common/types/common.types'
-import { userInterface, Column } from '~/types/common/interfaces/common.interfaces'
+import { UserInterface, Column } from '~/types/common/interfaces/common.interfaces'
 import { UserInitialFilters } from '~/types/user-table/types/user-table.types'
 import { baseColumns, baseInitialFilters, baseInitialSort, baseTabsInfo } from '~/components/base-user-table/constants'
 import { styles } from '~/components/base-user-table/BaseUserTable.styles'
@@ -19,7 +19,7 @@ import { styles } from '~/components/base-user-table/BaseUserTable.styles'
 interface BaseUserTableProps {
   role: string
   tabsInfo?: TabsInfo<Options<UserInitialFilters>>
-  columns?: Column<userInterface>[]
+  columns?: Column<UserInterface>[]
   initialFilters?: UserInitialFilters
   initialSort?: InitialSort
 }
@@ -57,7 +57,7 @@ const BaseUserTable: FC<BaseUserTableProps> = ({
   ]
 
   const tabs = Object.values(tabsInfo).map((tab) => (
-    <Tab<userInterface, UserInitialFilters>
+    <Tab<UserInterface, UserInitialFilters>
       activeTab={ externalFilter.status }
       key={ tab.label }
       setTab={ setExternalFilter }
@@ -75,7 +75,7 @@ const BaseUserTable: FC<BaseUserTableProps> = ({
       <Typography sx={ styles.header } variant='h4'>
         { t(`baseUserTable.${role}sTab`) }
       </Typography>
-      <TableProvider<userInterface, UserInitialFilters>
+      <TableProvider<UserInterface, UserInitialFilters>
         bulkActions={ bulkActions }
         columns={ columns }
         initialFilters={ initialFilters }

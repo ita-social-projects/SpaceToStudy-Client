@@ -1,7 +1,7 @@
 import EnhancedTable from '~/components/enhanced-table/EnhancedTable'
 import { InitialSort, TabsInfo, Column } from '~/types'
 
-import { userInterface, Column } from '~/types/common/interfaces/common.interfaces'
+import { UserInterface, Column } from '~/types/common/interfaces/common.interfaces'
 import { InitialSort, TabsInfo, Options } from '~/types/common/types/common.types'
 import { UserInitialFilters } from '~/types/user-table/types/user-table.types'
 
@@ -42,7 +42,7 @@ export const baseTabsInfo: TabsInfo<Options<UserInitialFilters>> = {
   }
 }
 
-export const baseColumns: Column<userInterface>[] = [
+export const baseColumns: Column<UserInterface>[] = [
   {
     label: 'baseUserTable.name',
     field: 'name',
