@@ -2,6 +2,9 @@ import { t } from 'i18next'
 import { lazy } from 'react'
 import { Route } from 'react-router-dom'
 import { guestRoutes } from '../constants/guestRoutes'
+import { categories } from '../constants/crumbs'
+import { subjects } from '../constants/crumbs'
+import { findOffers } from '../constants/crumbs'
 
 const CookiePolicy = lazy(() => import('~/pages/cookie-policy/CookiePolicy'))
 const Subjects = lazy(()=> import('~/pages/subjects/Subjects'))
@@ -17,17 +20,17 @@ export const guestRouter = (
     />
     <Route
       element={ <Categories /> } 
-      handle={ { crumb: { name: t('breadCrumbs.categories'), path: guestRoutes.categories.route } } } 
+      handle={ { crumb: categories } } 
       path={ guestRoutes.categories.route }
     />
     <Route
       element={ <Subjects /> } 
-      handle={  { crumb: [ { name: t('breadCrumbs.categories'), path: guestRoutes.categories.route } , { name: t('breadCrumbs.subjects'), path: guestRoutes.subjects.route }  ] } } 
+      handle={  { crumb: [ categories , subjects ] } } 
       path={ guestRoutes.subjects.route }
     />
     <Route
       element={ <FindOffers /> } 
-      handle={ { crumb: [ { name: t('breadCrumbs.categories'), path: guestRoutes.categories.route } , { name: t('breadCrumbs.subjects'), path: guestRoutes.subjects.route }, { name: t('breadCrumbs.findOffers'), path: guestRoutes.findOffers.route } ] } } 
+      handle={ { crumb: [ categories , subjects, findOffers ] } } 
       path={ guestRoutes.findOffers.route }
     />
   </Route>
