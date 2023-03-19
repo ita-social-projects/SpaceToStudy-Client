@@ -1,4 +1,4 @@
-import { CreateOfferResponse } from '~/types'
+import { Address, CreateOfferResponse } from '~/types'
 
 export interface CommonEntityFields {
   _id: string
@@ -6,11 +6,25 @@ export interface CommonEntityFields {
   updatedAt: string
 }
 export interface UserInterface {
+  _id: string
+  role: string[]
   firstName: string
   lastName: string
+  email: string
+  address?: Address
   photo?: string
-  averageRating: number
-  totalReviews: number
+  categories?: string[]
+  education?: string
+  nativeLanguage?: string
+  isEmailConfirmed?: boolean
+  isFirstLogin?: boolean
+  lastLogin: string
+  appLanguage?: string
+  status: string
+  lastLoginAs?: string
+  bookmarkedOffers?: string[]
+  createdAt: string
+  updatedAt: string
 }
 
 export interface CategoryInterface {

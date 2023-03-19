@@ -12,7 +12,7 @@ type UseFilterReturnType<U> = {
 }
 
 const useFilter = <T, U>(): UseFilterReturnType<U> => {
-  const { filters, setFilters, initialFilters } = useTableContext() as unknown as TableContextType<T, U>
+  const { filters, setFilters, initialFilters } = useTableContext() as TableContextType<T, U>
 
   const setFilterByKey =
     (filterKey: keyof U) =>

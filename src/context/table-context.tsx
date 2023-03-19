@@ -1,10 +1,9 @@
 import { createContext, useContext, useState } from 'react'
 
-import { TableContextType, TableProviderProps } from '~/types/common/interfaces/common.interfaces'
+import { TableProviderProps } from '~/types/common/interfaces/common.interfaces'
 import { InitialSort } from '~/types/common/types/common.types'
-import { UserInitialFilters } from '~/types/user-table/types/user-table.types'
 
-const TableContext = createContext<TableContextType<any, UserInitialFilters> | null>(null)
+const TableContext = createContext<unknown>(null)
 
 const TableProvider = <T, U>({
   children,
@@ -55,7 +54,6 @@ const TableProvider = <T, U>({
   )
 }
 
-const useTableContext = (): TableContextType<any, UserInitialFilters> | null => useContext(TableContext)
-// const useTableContext = <T, U> (): TableContextType<T, U> | null => useContext(TableContext)
+const useTableContext = () => useContext(TableContext)
 
 export { TableProvider, useTableContext }

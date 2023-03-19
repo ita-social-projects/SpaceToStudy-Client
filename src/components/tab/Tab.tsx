@@ -4,16 +4,16 @@ import Box from '@mui/material/Box'
 
 import useFilter from '~/hooks/table/use-filter'
 
-import { TabsInfoItem } from '~/types/common/types/common.types'
+import { TabsInfoItem, ExternalFilter, Options } from '~/types/common/types/common.types'
 import { styles } from '~/components/tab/Tab.styles'
 
-interface TabProps<V, W> {
-  tab: TabsInfoItem<V, W>
-  setTab: Dispatch<SetStateAction<V>>
+interface TabProps<U> {
+  tab: TabsInfoItem<Options<U>>
+  setTab: Dispatch<SetStateAction<ExternalFilter>>
   activeTab: string
 }
 
-const Tab = <T, U, V, W>({ tab, setTab, activeTab }: TabProps<V, W>) => {
+const Tab = <T, U>({ tab, setTab, activeTab }: TabProps<U>) => {
   const { t } = useTranslation()
 
   const { clearFilters } = useFilter<T, U>()

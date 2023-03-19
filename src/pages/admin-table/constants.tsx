@@ -1,9 +1,9 @@
 import EnhancedTable from '~/components/enhanced-table/EnhancedTable'
 
-import { TabsInfo } from '~/types/common/types/common.types'
-import { UserExternalFilter, UserOptions } from '~/types/user-table/types/user-table.types'
+import { Options, TabsInfo } from '~/types/common/types/common.types'
+import { UserInitialFilters } from '~/types/user-table/types/user-table.types'
 
-export const tabsInfo: TabsInfo<UserExternalFilter, UserOptions> = {
+export const tabsInfo: TabsInfo<Options<UserInitialFilters>> = {
   all: {
     label: 'baseUserTable.all',
     key: 'status',

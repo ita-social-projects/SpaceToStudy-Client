@@ -1,4 +1,4 @@
-import { EnhancedTableProps } from '~/types/common/interfaces/common.interfaces'
+import { EnhancedTableProps } from '../interfaces/common.interfaces'
 
 export type Address = {
   country: string
@@ -35,26 +35,33 @@ export type DateFilter = {
   to: string
 }
 
+export type Address = {
+  country: string
+  city: string
+}
+
 export type InitialSort = {
   order: 'asc' | 'desc'
   orderBy: string
 }
 
-export type TabsInfoItem<T, U> = {
-  key: string
-  component: React.FC<EnhancedTableProps<T, U>>
+export type TabsInfoItem<T> = {
+  key: string  
+  component: React.FC<EnhancedTableProps<T>>
 } & FilterEnum
 
-export type TabsInfo<T, U> = {
-  [key: string]: TabsInfoItem<T, U>
+export type TabsInfo<T> = {
+  [key: string]: TabsInfoItem<T>
 }
 
-export type Column<T> = {
-  label: string
-  field: string
-  dataType: 'string' | 'enums' | 'date'
-  calculatedCellValue?: (item: T) => string
-  filterEnum?: FilterEnum[]
+export type Options<T> = {
+  skip: number
+  limit: number
+  sort: InitialSort
+} & T
+
+export type ExternalFilter = {
+  [key: string]: string
 }
 
 export type RowAction = {

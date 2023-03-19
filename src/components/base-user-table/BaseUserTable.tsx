@@ -10,16 +10,16 @@ import useAxios from '~/hooks/use-axios'
 import { TableProvider } from '~/context/table-context'
 import { userService } from '~/services/user-service.js'
 
-import { BulkAction, Column, InitialSort, RowAction, TabsInfo } from '~/types/common/types/common.types'
-import { EnhancedTableProps } from '~/types/common/interfaces/common.interfaces'
-import { UserExternalFilter, UserInitialFilters, UserOptions } from '~/types/user-table/types/user-table.types'
+import { BulkAction, ExternalFilter, InitialSort, Options, RowAction, TabsInfo } from '~/types/common/types/common.types'
+import { userInterface, Column } from '~/types/common/interfaces/common.interfaces'
+import { UserInitialFilters } from '~/types/user-table/types/user-table.types'
 import { baseColumns, baseInitialFilters, baseInitialSort, baseTabsInfo } from '~/components/base-user-table/constants'
 import { styles } from '~/components/base-user-table/BaseUserTable.styles'
 
 interface BaseUserTableProps {
   role: string
-  tabsInfo?: TabsInfo<UserExternalFilter, UserOptions>
-  columns?: Column<any>[] //TODO add common user type
+  tabsInfo?: TabsInfo<Options<UserInitialFilters>>
+  columns?: Column<userInterface>[]
   initialFilters?: UserInitialFilters
   initialSort?: InitialSort
 }
@@ -33,7 +33,7 @@ const BaseUserTable: FC<BaseUserTableProps> = ({
 }) => {
   const { t } = useTranslation()
 
-  const [externalFilter, setExternalFilter] = useState<UserExternalFilter>({ status: 'all', role })
+  const [externalFilter, setExternalFilter] = useState<ExternalFilter>({ status: 'all', role })
 
   const deleteFunction = useCallback((userId: string) => userService.deleteUser(userId), [])
   const { fetchData: deleteUser } = useAxios({ service: deleteFunction, fetchOnMount: false })
@@ -57,13 +57,15 @@ const BaseUserTable: FC<BaseUserTableProps> = ({
   ]
 
   const tabs = Object.values(tabsInfo).map((tab) => (
-    <Tab<any, UserInitialFilters, UserExternalFilter, UserOptions>
-      activeTab={ externalFilter.status } key={ tab.label } setTab={ setExternalFilter }
+    <Tab<userInterface, UserInitialFilters>
+      activeTab={ externalFilter.status }
+      key={ tab.label }
+      setTab={ setExternalFilter }
       tab={ tab }
     />
   ))
 
-  const props: EnhancedTableProps<UserExternalFilter, UserOptions> = {
+  const props = {
     fetchService: userService.getUsers,
     externalFilter
   }
@@ -73,7 +75,7 @@ const BaseUserTable: FC<BaseUserTableProps> = ({
       <Typography sx={ styles.header } variant='h4'>
         { t(`baseUserTable.${role}sTab`) }
       </Typography>
-      <TableProvider<any, UserInitialFilters>
+      <TableProvider<userInterface, UserInitialFilters>
         bulkActions={ bulkActions }
         columns={ columns }
         initialFilters={ initialFilters }
