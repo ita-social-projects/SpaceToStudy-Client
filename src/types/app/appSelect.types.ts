@@ -1,4 +1,4 @@
-export type SelectField = {
+export type SelectFieldType = {
     value:string,
     title:string
 }

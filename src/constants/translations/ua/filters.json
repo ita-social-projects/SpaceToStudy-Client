@@ -1,6 +1,6 @@
 {   
     "sortBy":{
-    	"sortByTitle":"Сортувати за",
+    	"sortByTitle":"Сортувати за:",
     	"sortByFields":{
         	"newest":"Найновішими",
        		"popularity":"Популярністю",

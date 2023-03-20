@@ -6,13 +6,13 @@ import Select, { SelectChangeEvent } from '@mui/material/Select'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
-import { SelectField } from '~/components/app-select/AppSelect.types'
 import { styles } from '~/components/app-select/AppSelect.styles'
+import { SelectFieldType } from '~/types/app/appSelect.types'
 
 interface AppSelectProps {
   setValue:(value:string) => void
   value:string,
-  fields:SelectField[],
+  fields:SelectFieldType[],
   selectTitle?:string,
 }
 
@@ -29,7 +29,6 @@ const AppSelect:FC<AppSelectProps> = ({ setValue, value, fields, selectTitle = '
   const titleEl = selectTitle.length ? (
     <Typography aria-label='select-title'  sx={ styles.selectTitle } variant='subtitle1' >
       { t(selectTitle) }
-      :
     </Typography>
   ) : null 
 
