@@ -9,7 +9,7 @@ import GridViewIcon from '@mui/icons-material/GridView'
 
 import { styles } from '~/components/view-switcher/ViewSwitcher.styles'
 import { cardsViews } from '~/constants'
-import { CardsViewTypes } from './ViewSwitcher.types'
+import { CardsViewTypes } from '~/types/findOffers/viewSwitcher.types'
 
 
 interface ViewSwitcherProps {
@@ -17,7 +17,7 @@ interface ViewSwitcherProps {
   offersView: CardsViewTypes
 }
 
-const ViewSwitcher:FC<ViewSwitcherProps> = ({ setOffersView, offersView }) => {
+const ViewSwitcher: FC<ViewSwitcherProps> = ({ setOffersView, offersView }) => {
   const changeOffersView = (_event:MouseEvent<HTMLElement>, view: CardsViewTypes) => setOffersView(view)
 
   return (
