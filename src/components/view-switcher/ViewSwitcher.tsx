@@ -6,11 +6,9 @@ import Box from '@mui/material/Box'
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted'
 import GridViewIcon from '@mui/icons-material/GridView'
 
-
 import { styles } from '~/components/view-switcher/ViewSwitcher.styles'
 import { cardsViews } from '~/constants'
 import { CardsViewTypes } from '~/types/findOffers/viewSwitcher.types'
-
 
 interface ViewSwitcherProps {
   setOffersView:(value: CardsViewTypes) => void
