@@ -10,9 +10,21 @@ import { styles } from '~/components/app-chips-list/AppChipsList-styles'
 interface AppChipListProps  {
   items:string[],
   defaultQuantity:number,
-  handleChipDelete(item:string):void,
-  icon:object,
-  wrapperStyle:object
+  handleChipDelete:(item:string) => void,
+  icon:{
+    $$typeof: symbol,
+    key:string,
+    props:object,
+    ref:string,
+    type:object,
+    _owner:object,
+    _store:{
+      validated:boolean
+    }
+  }
+  wrapperStyle:{
+    py:string
+  }
 }
 
 const AppChipList:React.FC<AppChipListProps> = ({ items, defaultQuantity, handleChipDelete, icon, wrapperStyle }) => {
