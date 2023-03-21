@@ -7,6 +7,7 @@ const columnMock = { dataType: 'string', field: 'email', label: 'adminTable.emai
 const sort = { order: 'asc', orderBy: 'email' }
 const setSort = vi.fn()
 const onRequestSort = vi.fn()
+const tableCortLableId = 'tableSortLable'
 
 vi.mock('~/context/table-context', () => ({
   useTableContext: vi.fn()
@@ -28,13 +29,13 @@ describe('EnhancedTableHeadercell', () => {
   })
 
   it('render column header cell in the table', () => {
-    const tableSortLable = screen.getByTestId('tableSortLable')
+    const tableSortLable = screen.getByTestId(tableCortLableId)
 
     expect(tableSortLable).toBeInTheDocument()
   })
 
   it('click to change direction in the column', async () => {
-    const tableSortLable = screen.getByTestId('tableSortLable')
+    const tableSortLable = screen.getByTestId(tableCortLableId)
     fireEvent.click(tableSortLable)
 
     expect(onRequestSort).toHaveBeenCalled()
