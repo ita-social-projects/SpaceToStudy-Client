@@ -3,7 +3,7 @@ import { useRef, useEffect } from 'react'
 type TimerType = ReturnType<typeof setTimeout>;
 type CallbackType<T> = (...args: T[]) => void;
 
-export const useDebounce = <T extends unknown[]>(callback: CallbackType<T>, delay = 500): CallbackType<T> => {
+export const useDebounce = <T,>(callback: CallbackType<T>, delay = 500): CallbackType<T> => {
   const timer = useRef<TimerType>()
 
   useEffect(() => {

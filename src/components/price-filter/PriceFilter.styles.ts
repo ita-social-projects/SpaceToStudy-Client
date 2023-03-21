@@ -43,7 +43,7 @@ export const styles = {
       padding: '5px',
       fontSize: '14px'
     } },
-  optionalInput:{ 
+  inactiveStyle:{ 
     '& .MuiOutlinedInput-root': {
       '& fieldset': {
         borderColor: 'primary.100'

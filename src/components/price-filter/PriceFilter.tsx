@@ -10,12 +10,13 @@ import Typography from '@mui/material/Typography'
 import { useDebounce } from '~/hooks/use-debounce'
 
 import { InputPriceArrayType, PriceArrayType } from '~/types/components/price-filter/types/price-filter.types'
+import { checkIfPricesValid, checkPriceInput, checkPriceIsInRange, createNewState, pricesSort } from '~/utils/price-filter'
 import { styles } from '~/components/price-filter/PriceFilter.styles'
 
 interface PriceFilterProps {
-  min: number,
-  max: number,
-  onChange: (value: [number, number]) => void
+  min: number
+  max: number
+  onChange: (value: PriceArrayType) => void
 }
 
 const PriceFilter: FC<PriceFilterProps> = ({ min, max, onChange }) => {
@@ -27,52 +28,47 @@ const PriceFilter: FC<PriceFilterProps> = ({ min, max, onChange }) => {
     { value: max, label: max.toString() }
   ]
 
-  const debouncedHandlePriceChange = useDebounce( onChange )
+  const debouncedOnChange = useDebounce((prices:InputPriceArrayType) => {
+    const sortedPrices = pricesSort(prices)
+    onChange(sortedPrices)
+  } )
 
-  const handleSliderChange = (_ : Event, value: number | number[]) => {
+  const handleSliderChange = (_: Event, value: number | number[]) => {
     const prices = value as PriceArrayType
+    
     setPrices(prices)
-    debouncedHandlePriceChange(prices)
+    debouncedOnChange(prices)
   }
 
-  const pricesSort = (prices:InputPriceArrayType) => prices.map(Number).sort((a, b) => a - b) as PriceArrayType
-
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { id, value } = event.target
-    const inputPrice = value === '' ? '' : Number(value)
-    const inputRegexp = /^$|^[0-9]+$/
-
-    if (!inputRegexp.test(value)) {
+  const handleInputChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
+    const inputIndex  = Number(target.id)
+    const inputValue = target.value ? Number(target.value) : null
+    const notValidInput = checkPriceInput(inputValue)
+    
+    if (notValidInput) {
       return
     }
 
-    const newPrices = [...prices] as InputPriceArrayType
-    newPrices[Number(id)] = inputPrice
-
-    const sortedPrices = pricesSort(newPrices)
-
+    const newPrices = createNewState({ prices, inputValue, inputIndex })
     setPrices(newPrices)
-    debouncedHandlePriceChange(sortedPrices)
+    debouncedOnChange(newPrices)
   }
 
   const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     const inputIndex  = Number(event.target.id)
-    const inputValue = Number(event.target.value)
-    const constrainedPrice = Math.min(Math.max(inputValue, min), max)
+    const inputValue = prices[inputIndex]
+    const constrainedPrice = checkPriceIsInRange({ inputValue, min, max })
+    const inputsDontNeedChange = checkIfPricesValid({ inputValue, prices, constrainedPrice })
 
-    if (prices[inputIndex] === constrainedPrice && prices[0] <= prices[1]) {
+    if (inputsDontNeedChange) {
       return
     }
 
-    const newPrices = [...prices] as InputPriceArrayType
-    newPrices[inputIndex] = constrainedPrice
-
-    const sortedPrices = pricesSort(newPrices)
-
-    setPrices(sortedPrices)
+    const newPrices = createNewState({ prices, inputValue: constrainedPrice, inputIndex, sort: true })
+    setPrices(newPrices)
   }
 
-  const valueLabel = ({ value, children }: SliderValueLabelProps) => (
+  const sliderValueTooltip = ({ value, children }: SliderValueLabelProps) => (
     <Tooltip arrow placement="bottom" title={ value }>
       { children }
     </Tooltip>
@@ -80,9 +76,10 @@ const PriceFilter: FC<PriceFilterProps> = ({ min, max, onChange }) => {
 
   const priceInputs = prices.map((value, idx) => {
     const title = (idx ? t('common.to') : t('common.from')).toLowerCase()
-    const optionalStyle = (idx ? value === max : value === min) && styles.optionalInput
+    const inActivelStyle = (idx ? value === max : value === min) && styles.inactiveStyle
+
     return (
-      <Box key={ idx } sx={ styles.inputBlock }>
+      <Box key={ title } sx={ styles.inputBlock }>
         <Typography sx={ styles.inputTitle } variant={ 'body2' }>
           { title } 
         </Typography>  
@@ -93,9 +90,9 @@ const PriceFilter: FC<PriceFilterProps> = ({ min, max, onChange }) => {
           } }
           onBlur={ handleInputBlur }
           onChange={ handleInputChange }
-          sx={ [styles.inputContainer, optionalStyle ]  }
+          sx={ [styles.inputContainer, inActivelStyle ]  }
           type="text"
-          value={ value }
+          value={ value ?? '' }
         />
       </Box>
     )})
@@ -109,7 +106,7 @@ const PriceFilter: FC<PriceFilterProps> = ({ min, max, onChange }) => {
         onChange={ handleSliderChange }
         size='small'
         slots={ {
-          valueLabel: valueLabel         
+          valueLabel: sliderValueTooltip         
         } }
         sx={ styles.slider }
         value={ prices.map(Number) }
