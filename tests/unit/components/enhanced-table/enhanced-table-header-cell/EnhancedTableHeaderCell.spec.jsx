@@ -33,11 +33,10 @@ describe('EnhancedTableHeadercell', () => {
     expect(tableSortLable).toBeInTheDocument()
   })
 
-  it('click to change direction', async () => {
+  it('click to change direction in the column', async () => {
     const tableSortLable = screen.getByTestId('tableSortLable')
-
     fireEvent.click(tableSortLable)
 
-    await waitFor(() => expect(onRequestSort).toHaveBeenCalled())
+    expect(onRequestSort).toHaveBeenCalled()
   })
 })
