@@ -11,6 +11,7 @@ import { URLs } from '~/constants/request'
 const mockAxiosClient = new MockAdapter(axiosClient)
 
 const userId = '63f5d0ebb'
+const userRole = 'tutor'
 const userDataMock = { _id: userId, firstName: 'test', lastName: 'test' }
 
 const TutorHomeWithProviders = () => (
@@ -22,7 +23,7 @@ const TutorHomeWithProviders = () => (
 )
 
 describe('TutorHome component', () => {
-  mockAxiosClient.onGet(`${URLs.users.get}/${userId}`).reply(200, { data: userDataMock })
+  mockAxiosClient.onGet(`${URLs.users.get}/${userId}/${userRole}`).reply(200, { data: userDataMock })
 
   const firstLoginState = {
     appMain: { isFirstLogin: true, userRole: 'tutor', userId }

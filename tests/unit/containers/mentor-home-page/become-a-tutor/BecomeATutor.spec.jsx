@@ -15,14 +15,15 @@ vi.mock('~/hooks/use-breakpoints')
 const mockAxiosClient = new MockAdapter(axiosClient)
 
 const userId = '63f5d0ebb'
+const userRole = 'admin'
 const userDataMock = { _id: userId, firstName: 'test', lastName: 'test' }
 
 const mockState = {
-  appMain: { userId, loading: false }
+  appMain: { userId, userRole, loading: false }
 }
 
 describe('BecomeATutor test', () => {
-  mockAxiosClient.onGet(`${URLs.users.get}/${userId}`).reply(200, { data: userDataMock })
+  mockAxiosClient.onGet(`${URLs.users.get}/${userId}/${userRole}`).reply(200, { data: userDataMock })
   const desktopData = { isDesktop: true, isMobile: false, isTablet: false }
   
   beforeEach(() => {
