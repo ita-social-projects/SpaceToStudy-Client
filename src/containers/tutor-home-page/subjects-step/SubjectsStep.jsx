@@ -68,7 +68,7 @@ const SubjectsStep = ({ stepLabel, btnsBox }) => {
     <Box sx={ styles.container }>
       { isDesktop && imageBlock }
       <Box sx={ styles.rigthBox }>
-        <Box>
+        <Box sx={ styles.contentBox } >
           <Typography mb='20px'>
             { t('becomeTutor.categories.title') }
           </Typography>
@@ -103,7 +103,9 @@ const SubjectsStep = ({ stepLabel, btnsBox }) => {
           <FormHelperText data-testid='error-subject' error={ !!subjectError } sx={ { textAlign: 'center' } }>
             { subjectError || ' ' }
           </FormHelperText>
-          <AppChipList defaultQuantity={ 2 } handleChipDelete={ handleChipDelete } items={ listOfItems } />
+          <AppChipList
+            defaultQuantity={ 2 } handleChipDelete={ handleChipDelete } items={ listOfItems }
+          />
         </Box>
         { btnsBox }
       </Box>
