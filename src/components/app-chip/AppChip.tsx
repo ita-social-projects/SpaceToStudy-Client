@@ -1,5 +1,6 @@
-import { Chip, IconButton, Typography } from '@mui/material'
+import { Chip, IconButton, SvgIconProps, Typography } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
+import { SxProps } from '@mui/system'
 import { styles } from '~/components/app-chips-list/AppChipsList-styles'
 import { ReactNode } from 'react'
 
@@ -7,22 +8,12 @@ import { ReactNode } from 'react'
 interface AppChipProps {
   handleDelete:() => void,
   children:ReactNode,
-  icon:{
-    $$typeof: symbol,
-    key:string,
-    props:object,
-    ref:string,
-    type:object,
-    _owner:object,
-    _store:{
-      validated:boolean
-    }
-  }
+  icon:React.ReactElement<SvgIconProps>,
+  sx?: SxProps,
 }
 
 
 const AppChip:React.FC<AppChipProps> = ({ handleDelete, children, icon }) => {
-  console.log(icon)
   
   return (
     <Chip
@@ -30,9 +21,8 @@ const AppChip:React.FC<AppChipProps> = ({ handleDelete, children, icon }) => {
       deleteIcon={
         <IconButton
           data-testid='close-btn' size='small' sx={ styles.deleteButton }
-          variant='plain'
         >
-          <CloseIcon color='transparent' />
+          <CloseIcon htmlColor='transparent' />
         </IconButton>
       }
       icon={ icon }
