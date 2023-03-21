@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [main, develop, bugfix/547/sonarcloud-fix]
+    branches: [main, develop]
   pull_request:
     branches: [main, develop]
 
@@ -35,11 +35,10 @@ jobs:
       
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
+        if: success() || failure()
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        with:
-          args: -X
 
   Test_Docker:
     runs-on: ubuntu-latest
