@@ -1,6 +1,6 @@
 {   
     "sortBy":{
-        "sortByTitle":"Sort by",
+        "sortByTitle":"Sort by:",
         "sortByFields":{
             "newest":"Newest",
             "popularity":"Popularity",
