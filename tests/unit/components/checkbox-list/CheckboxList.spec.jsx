@@ -1,5 +1,5 @@
 import { render , fireEvent, screen } from '@testing-library/react'
-import { vi, expect } from 'vitest'
+import { vi } from 'vitest'
 import CheckboxList from '~/components/checkbox-list/CheckboxList'
 
 const mockedItemToChange = { title: 'Beginner', checked: false }
