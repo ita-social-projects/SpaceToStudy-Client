@@ -9,18 +9,18 @@ import Typography from '@mui/material/Typography'
 
 import { useDebounce } from '~/hooks/use-debounce'
 
-import { InputPriceArrayType, PriceArrayType } from '~/types/components/price-filter/types/price-filter.types'
+import { InputPriceArray, PriceArray } from '~/types'
 import { checkIfPricesValid, checkPriceInput, checkPriceIsInRange, createNewState, pricesSort } from '~/utils/price-filter'
 import { styles } from '~/components/price-filter/PriceFilter.styles'
 
 interface PriceFilterProps {
   min: number
   max: number
-  onChange: (value: PriceArrayType) => void
+  onChange: (value: PriceArray) => void
 }
 
 const PriceFilter: FC<PriceFilterProps> = ({ min, max, onChange }) => {
-  const [prices, setPrices] = useState<InputPriceArrayType>([min, max])
+  const [prices, setPrices] = useState<InputPriceArray>([min, max])
   const { t } = useTranslation()
 
   const marks = [
@@ -28,13 +28,13 @@ const PriceFilter: FC<PriceFilterProps> = ({ min, max, onChange }) => {
     { value: max, label: max.toString() }
   ]
 
-  const debouncedOnChange = useDebounce((prices:InputPriceArrayType) => {
+  const debouncedOnChange = useDebounce((prices:InputPriceArray) => {
     const sortedPrices = pricesSort(prices)
     onChange(sortedPrices)
   } )
 
   const handleSliderChange = (_: Event, value: number | number[]) => {
-    const prices = value as PriceArrayType
+    const prices = value as PriceArray
     
     setPrices(prices)
     debouncedOnChange(prices)
