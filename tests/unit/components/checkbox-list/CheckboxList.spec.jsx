@@ -7,7 +7,7 @@ const mockedItemChanged = { ...mockedItemToChange, checked: true }
 
 const mockedItems =  [ { title: 'Intermediate', checked: false }, { title: 'Advanced', checked: false } ]
 
-const mockedGetCheckbox = vi.fn((...args) => console.log(...args))
+const mockedGetCheckbox = vi.fn()
 
 const titleId = 'checkboxes-list-title'
 
