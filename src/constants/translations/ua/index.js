@@ -3,6 +3,7 @@ import errorPage from './error-page.json'
 import button from './button.json'
 import header from './header.json'
 import questions from './questions.json'
+import categoriesPage from './categories-page.json'
 import titles from './titles.json'
 import login from './login.json'
 import modals from './email-modals.json'
@@ -23,6 +24,7 @@ const ua = {
     modals,
     breadCrumbs,
     completeProfile,
+    categoriesPage,
     findOffers,
     filters
   }
