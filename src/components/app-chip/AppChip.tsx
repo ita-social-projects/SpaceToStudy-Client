@@ -1,8 +1,10 @@
+import { ReactNode } from 'react'
+
 import { Chip, IconButton, SvgIconProps, Typography } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import { SxProps } from '@mui/system'
+
 import { styles } from '~/components/app-chips-list/AppChipsList-styles'
-import { ReactNode } from 'react'
 
 
 interface AppChipProps {
