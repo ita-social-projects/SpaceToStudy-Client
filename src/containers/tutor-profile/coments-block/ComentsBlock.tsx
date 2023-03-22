@@ -5,10 +5,11 @@ import Typography from '@mui/material/Typography'
 import KeyboardArrowDownSharpIcon from '@mui/icons-material/KeyboardArrowDownSharp'
 
 import Comment from '~/components/comment/Comment'
-import RatingBlock, { RatingType } from '~/containers/tutor-profile/coments-block/rating-block/RatingBlock'
+import RatingBlock from '~/containers/tutor-profile/coments-block/rating-block/RatingBlock'
 import AppButton from '~/components/app-button/AppButton'
 import Loader from '~/components/loader/Loader'
 
+import { RatingType } from '~/types'
 import { styles } from '~/containers/tutor-profile/coments-block/ComentsBlock.styles'
 import { responseMock, loadingMock, commentsCount } from '~/containers/tutor-profile/coments-block/constants'
 

@@ -8,7 +8,7 @@ import AppRatingLarge from '~/components/app-rating-large/AppRatingLarge'
 import AppRatingMobile from '~/components/app-rating-mobile/AppRatingMobile'
 import useBreakpoints from '~/hooks/use-breakpoints'
 
-import { RatingType } from '~/types/tutorProfile/types/tutorProfile.types'
+import { RatingType } from '~/types'
 import { styles } from '~/containers/tutor-profile/coments-block/rating-block/RatingBlock.styles'
 
 interface RatingBlockProps {

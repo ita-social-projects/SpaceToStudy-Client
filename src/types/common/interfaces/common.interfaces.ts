@@ -12,7 +12,6 @@ export interface SubjectInterface {
     name: string
   }
 
-
 export interface OfferInterface  {
     category: CategoryInterface
     subject: SubjectInterface
