@@ -1,0 +1,20 @@
+import { CheckInputChange, InputRange, CreateNewState, InputRangeArray, CheckRangeIsInRange, RangeArray } from '~/types'
+
+export const checkRangeInput = (value: InputRange ):boolean => !(value != null && isNaN(value))
+
+export const rangeSort = (range: InputRangeArray): RangeArray => {
+  const numericPrices  = range.map(Number)
+  return [Math.min(...numericPrices ), Math.max(...numericPrices )]
+}
+
+export const createNewState = ({ range, inputValue, inputIndex, sort }:CreateNewState):InputRangeArray => {
+  const newState:InputRangeArray = [...range]
+  newState[inputIndex] = inputValue
+  
+  return sort ? rangeSort(newState) : newState
+}
+
+export const checkNumberIsInRange = ({ inputValue, min, max }:CheckRangeIsInRange):number =>  Math.min(Math.max(Number(inputValue), min), max)
+
+export const checkIfRangeValid = ({ inputValue, range, constrainedNumber }:CheckInputChange):boolean => !(inputValue === constrainedNumber && Number(range[0]) <= Number(range[1]))
+

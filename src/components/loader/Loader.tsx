@@ -1,10 +1,11 @@
 import { FC } from 'react'
+import { SxProps } from '@mui/system'
 import Box from '@mui/material/Box'
 import CircularProgress from '@mui/material/CircularProgress'
 
 interface LoaderProps {
   size: number,
-  sx?: { [key: string]: number | string },
+  sx?: SxProps,
   pageLoad?: boolean
 }
 

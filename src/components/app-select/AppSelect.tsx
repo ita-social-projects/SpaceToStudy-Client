@@ -7,7 +7,7 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
 import { styles } from '~/components/app-select/AppSelect.styles'
-import { SelectFieldType } from '~/types/app/appSelect.types'
+import { SelectFieldType } from '~/types'
 
 interface AppSelectProps {
   setValue:(value:string) => void
