@@ -3,7 +3,7 @@ import SignupForm from '~/containers/guest-home-page/signup-form/SignupForm'
 import { renderWithProviders } from '~tests/test-utils'
 import { vi } from 'vitest'
 
-const errors = { firstName: false, lastName: false, email: false, password: false, confirmPassword: false }
+const errors = { firstName: '', lastName: '', email: '', password: '', confirmPassword: '' }
 const data = {
   firstName: 'John',
   lastName: 'Doe',
@@ -20,7 +20,7 @@ vi.mock('react-router-dom', async () => {
   const actual = await vi.importActual('react-router-dom')
   return {
     ...actual,
-    useLinkClickHandler: () => vi.fn(),
+    useLinkClickHandler: () => vi.fn()
   }
 })
 
