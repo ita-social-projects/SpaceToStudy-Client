@@ -9,18 +9,18 @@ import Typography from '@mui/material/Typography'
 
 import { useDebounce } from '~/hooks/use-debounce'
 
-import { InputPriceArray, PriceArray } from '~/types'
-import { checkIfPricesValid, checkPriceInput, checkPriceIsInRange, createNewState, pricesSort } from '~/utils/price-filter'
-import { styles } from '~/components/price-filter/PriceFilter.styles'
+import { InputRangeArray, RangeArray } from '~/types'
+import { checkIfRangeValid, checkRangeInput, checkNumberIsInRange, createNewState, rangeSort } from '~/utils/range-filter'
+import { styles } from '~/components/app-range/AppRange.styles'
 
-interface PriceFilterProps {
+interface AppRangeProps {
   min: number
   max: number
-  onChange: (value: PriceArray) => void
+  onChange: (value: RangeArray) => void
 }
 
-const PriceFilter: FC<PriceFilterProps> = ({ min, max, onChange }) => {
-  const [prices, setPrices] = useState<InputPriceArray>([min, max])
+const AppRange: FC<AppRangeProps> = ({ min, max, onChange }) => {
+  const [range, setRange] = useState<InputRangeArray>([min, max])
   const { t } = useTranslation()
 
   const marks = [
@@ -28,44 +28,38 @@ const PriceFilter: FC<PriceFilterProps> = ({ min, max, onChange }) => {
     { value: max, label: max.toString() }
   ]
 
-  const debouncedOnChange = useDebounce((prices:InputPriceArray) => {
-    const sortedPrices = pricesSort(prices)
-    onChange(sortedPrices)
+  const debouncedOnChange = useDebounce((range:InputRangeArray) => {
+    const sortedRange = rangeSort(range)
+    onChange(sortedRange)
   } )
 
   const handleSliderChange = (_: Event, value: number | number[]) => {
-    const prices = value as PriceArray
+    const range = value as RangeArray
     
-    setPrices(prices)
-    debouncedOnChange(prices)
+    setRange(range)
+    debouncedOnChange(range)
   }
 
   const handleInputChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
     const inputIndex  = Number(target.id)
     const inputValue = target.value ? Number(target.value) : null
-    const notValidInput = checkPriceInput(inputValue)
     
-    if (notValidInput) {
-      return
+    if (checkRangeInput(inputValue)) {
+      const newRange = createNewState({ range, inputValue, inputIndex })
+      setRange(newRange)
+      debouncedOnChange(newRange)
     }
-
-    const newPrices = createNewState({ prices, inputValue, inputIndex })
-    setPrices(newPrices)
-    debouncedOnChange(newPrices)
   }
 
   const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     const inputIndex  = Number(event.target.id)
-    const inputValue = prices[inputIndex]
-    const constrainedPrice = checkPriceIsInRange({ inputValue, min, max })
-    const inputsDontNeedChange = checkIfPricesValid({ inputValue, prices, constrainedPrice })
+    const inputValue = range[inputIndex]
+    const constrainedNumber = checkNumberIsInRange({ inputValue, min, max })
 
-    if (inputsDontNeedChange) {
-      return
+    if (checkIfRangeValid({ inputValue, range, constrainedNumber })) {
+      const newRange = createNewState({ range, inputValue: constrainedNumber, inputIndex, sort: true })
+      setRange(newRange)
     }
-
-    const newPrices = createNewState({ prices, inputValue: constrainedPrice, inputIndex, sort: true })
-    setPrices(newPrices)
   }
 
   const sliderValueTooltip = ({ value, children }: SliderValueLabelProps) => (
@@ -74,7 +68,7 @@ const PriceFilter: FC<PriceFilterProps> = ({ min, max, onChange }) => {
     </Tooltip>
   )
 
-  const priceInputs = prices.map((value, idx) => {
+  const rangeInputs = range.map((value, idx) => {
     const title = (idx ? t('common.to') : t('common.from')).toLowerCase()
     const inActivelStyle = (idx ? value === max : value === min) && styles.inactiveStyle
 
@@ -109,13 +103,14 @@ const PriceFilter: FC<PriceFilterProps> = ({ min, max, onChange }) => {
           valueLabel: sliderValueTooltip         
         } }
         sx={ styles.slider }
-        value={ prices.map(Number) }
+        value={ range.map(Number) }
         valueLabelDisplay="auto"
       />       
       <Box style={ styles.priceInputs }> 
-        { priceInputs }
+        { rangeInputs }
       </Box>
     </Stack>
   )
 }
-export default PriceFilter
+
+export default AppRange

@@ -1,20 +1,20 @@
-export type InputPrice = number|null
-export type PriceArray = [number, number]
-export type InputPriceArray = [InputPrice, InputPrice]
+export type InputRange = number|null
+export type RangeArray = [number, number]
+export type InputRangeArray = [InputRange, InputRange]
 
 export interface CheckInputChange {
-    inputValue: InputPrice
-    prices: InputPriceArray
-    constrainedPrice: number
+    inputValue: InputRange
+    range: InputRangeArray
+    constrainedNumber: number
 }
 
-export interface CheckPriceIsInRange {
-    inputValue: InputPrice
+export interface CheckRangeIsInRange {
+    inputValue: InputRange
     min: number
     max: number
 }
 
-export interface CreateNewState extends Omit<CheckInputChange, 'constrainedPrice'> {
+export interface CreateNewState extends Omit<CheckInputChange, 'constrainedNumber'> {
     inputIndex: number
     sort?: boolean
 }

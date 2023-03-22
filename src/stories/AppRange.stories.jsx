@@ -1,8 +1,8 @@
-import PriceFilter from '~/components/price-filter/PriceFilter'
+import AppRange from '~/components/app-range/AppRange'
 
 export default {
-  title: 'PriceFilter',
-  component: PriceFilter,
+  title: 'AppRange',
+  component: AppRange,
   argTypes: {
     min: {
       description: 'The minimum value for the filter'
@@ -17,7 +17,7 @@ export default {
   }
 }
 
-const Template = (args) => <PriceFilter { ...args } />
+const Template = (args) => <AppRange { ...args } />
 
 export const Default = Template.bind({})
 Default.args = {

@@ -1,5 +1,5 @@
 import { render, fireEvent, screen } from '@testing-library/react'
-import PriceFilter from '~/components/price-filter/PriceFilter'
+import AppRange from '~/components/app-range/AppRange'
 
 const onChangeMock = vi.fn()
 
@@ -8,10 +8,10 @@ const maxPrice = 1000
 
 const delay = 500
 
-describe('PriceFilter', () => {
+describe('AppRange', () => {
   beforeEach(() => {
     vi.useFakeTimers()
-    render(<PriceFilter max={ maxPrice } min={ minPrice } onChange={ onChangeMock } />)
+    render(<AppRange max={ maxPrice } min={ minPrice } onChange={ onChangeMock } />)
   })
     
   afterEach(() => {
