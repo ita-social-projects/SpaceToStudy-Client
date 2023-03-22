@@ -20,6 +20,7 @@ const EnhancedTableHeaderCell = ({ column }) => {
   return (
     <TableCell key={ column.field } sx={ styles.root }>
       <TableSortLabel
+        data-testid='tableSortLable'
         active={ sort.orderBy === column.field }
         direction={ sort.orderBy === column.field ? sort.order : 'asc' }
         onClick={ createSortHandler(column.field) }
