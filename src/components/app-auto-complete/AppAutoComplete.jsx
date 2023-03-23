@@ -1,5 +1,4 @@
 import { Fragment } from 'react'
-
 import TextField from '@mui/material/TextField'
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete'
 
@@ -19,6 +18,7 @@ const AppAutoComplete = ({
   loading = false,
   onChange,
   onInputChange,
+  autocompleteStyles,
   options,
   ...props
 }) => {
@@ -52,10 +52,9 @@ const AppAutoComplete = ({
           }}
         />
       )}
-      sx={{ flex: 1 }}
+      sx={autocompleteStyles}
       value={fieldValue}
     />
   )
 }
-
 export default AppAutoComplete

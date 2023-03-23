@@ -4,6 +4,7 @@ export const styles = {
     mb: '50px',
     p: '30px 45px',
     borderRadius: '70px',
+    boxShadow: '0px 3px 16px 2px rgba(144, 164, 174, 0.12)',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center'

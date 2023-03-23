@@ -12,6 +12,7 @@ import completeProfile from './complete-profile.json'
 import findOffers from './find-offer-page.json'
 import filters from './filters.json'
 import iconsTooltip from './icons-tooltip.json'
+import subjectsPage from './subjects-page.json'
 
 const ua = {
   translations: {
@@ -28,7 +29,8 @@ const ua = {
     categoriesPage,
     findOffers,
     filters,
-    iconsTooltip
+    iconsTooltip,
+    subjectsPage
   }
 }
 

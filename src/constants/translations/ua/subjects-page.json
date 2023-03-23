@@ -1,0 +1,12 @@
+{
+  "subjects": {
+    "title": "{{category}} Предмети",
+    "description": "Досліджуйте предметами, якими ви захоплюєтеся.",
+    "showAllOffers": "Показати всі пропозиції",
+    "backToAllCategories": "Назад до всіх категорій",
+    "searchLabel": "Чого б ви хотіли навчитися?",
+    "clearBtn": "Очистити",
+    "searchBtn": "Пошук",
+    "viewMore": "Переглянути більше"
+  }
+}

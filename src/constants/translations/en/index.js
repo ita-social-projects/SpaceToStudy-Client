@@ -25,6 +25,7 @@ import adminTable from './admin-table.json'
 import constant from './constant.json'
 import findOffers from './find-offer-page.json'
 import filters from './filters.json'
+import subjectsPage from './subjects-page.json'
 
 const en = {
   translations: {
@@ -54,7 +55,8 @@ const en = {
     adminTable,
     constant,
     findOffers,
-    filters
+    filters,
+    subjectsPage
   }
 }
 
