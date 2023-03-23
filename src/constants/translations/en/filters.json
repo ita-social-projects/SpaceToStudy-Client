@@ -6,5 +6,6 @@
             "popularity":"Popularity",
             "tutorRating":"Tutor rating"
         }
-    }
+    },
+    "filtersListTitle": "Filters"
 }

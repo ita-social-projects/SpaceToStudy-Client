@@ -6,5 +6,6 @@
        		"popularity":"Популярністю",
         	"tutorRating":"Рейтингом репетитора"
     	}
-    }
+    },
+	"filtersListTitle": "Фільтри"
 }
