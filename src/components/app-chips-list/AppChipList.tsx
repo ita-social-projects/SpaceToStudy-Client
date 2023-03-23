@@ -1,3 +1,4 @@
+import { SvgIconProps } from '@mui/material'
 import Box from '@mui/material/Box'
 import Chip from '@mui/material/Chip'
 
@@ -11,17 +12,7 @@ interface AppChipListProps  {
   items:string[],
   defaultQuantity:number,
   handleChipDelete:(item:string) => void,
-  icon:{
-    $$typeof: symbol,
-    key:string,
-    props:object,
-    ref:string,
-    type:object,
-    _owner:object,
-    _store:{
-      validated:boolean
-    }
-  }
+  icon:React.ReactElement<SvgIconProps>,
   wrapperStyle:{
     py:string
   }
