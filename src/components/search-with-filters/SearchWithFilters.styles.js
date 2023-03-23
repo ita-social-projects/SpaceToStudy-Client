@@ -1,10 +1,12 @@
+import { commonShadow } from '~/styles/app-theme/custom-shadows'
+
 export const styles = {
   container: {
     backgroundColor: 'basic.white',
     mb: '50px',
     p: '30px 45px',
     borderRadius: '70px',
-    boxShadow: '0px 3px 16px 2px rgba(144, 164, 174, 0.12)',
+    boxShadow: commonShadow,
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center'
