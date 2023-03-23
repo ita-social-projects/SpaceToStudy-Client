@@ -14,6 +14,8 @@ import {
   mockOffer,
   defaultFilters
 } from '~/pages/find-offers/FindOffers.constants'
+import PopularCategories from '~/containers/find-offer/popular-categories/PopularCategories'
+import { categoriesListMock } from '~/containers/student-home-page/popular-categories/categories-list-mock'
 
 const FindOffers = () => {
   const { filters, countActiveFilters, filterQueryActions } = useFilterQuery({
@@ -70,6 +72,7 @@ const FindOffers = () => {
         setCurrentPage={setCurrentPage}
         size={size}
       />
+      <PopularCategories items={categoriesListMock} />
     </Container>
   )
 }
