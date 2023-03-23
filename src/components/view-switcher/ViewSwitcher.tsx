@@ -8,11 +8,10 @@ import GridViewIcon from '@mui/icons-material/GridView'
 
 import { styles } from '~/components/view-switcher/ViewSwitcher.styles'
 
-import { CardsViewEnums } from '~/types/findOffers/enums/viewSwitcher.enums'
-import { CardsViewTypes } from '~/types/findOffers/types/viewSwitcher.types'
+import { CardsViewEnums, CardsViewTypes } from '~/types'
 
 interface ViewSwitcherProps {
-  setOffersView:(value: CardsViewTypes) => void
+  setOffersView: (value: CardsViewTypes) => void
   offersView: CardsViewTypes
 }
 
