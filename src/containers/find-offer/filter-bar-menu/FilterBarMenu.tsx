@@ -1,4 +1,5 @@
-import { FC, useState } from 'react'
+import { FC, useState, ChangeEvent } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
 
@@ -9,18 +10,12 @@ import AppSelect from '~/components/app-select/AppSelect'
 import ViewSwitcher from '~/components/view-switcher/ViewSwitcher'
 import FiltersTitle from '~/components/filters-title/FiltersTitle'
 
-// TODO: FILTER imports
-import { styles } from '~/containers/find-offer/FilterBarMenu/FilterBarMenu.styles'
-import { useTranslation } from 'react-i18next'
+import { styles } from '~/containers/find-offer/filter-bar-menu/FilterBarMenu.styles'
+import { switcherOptions, sortByFields, initialBarMenuFilters } from '~/containers/find-offer/filter-bar-menu/FilterBarMenu.constants'
 
+import { BarMenuFilters } from '~/types/findOffers/interfaces/filterBarMenu.interfaces'
+import { CardsViewTypes } from '~/types/findOffers/types/viewSwitcher.types'
 
-// TODO:ADD text from i18 not HARDCODED !!!!!
-
-interface BarMenuFilters {
-  activeOffersType: boolean
-  sortBy: string
-  view: 'inline' | 'grid'
-}
 
 interface FilterBarMenuProps {
   chosenFiltersQty:number,
@@ -29,21 +24,28 @@ interface FilterBarMenuProps {
 }
 
 const FilterBarMenu: FC<FilterBarMenuProps> = ({ chosenFiltersQty, openFilters, getFilters }) => {
-  const [barMenuFilters, setBarMenuFilters] = useState<BarMenuFilters>({
-    activeOffersType: false,
-    sortBy: 'newest',
-    view: 'inline'
-  })
+  const [barMenuFilters, setBarMenuFilters] = useState<BarMenuFilters>(initialBarMenuFilters)
 
   const { isDesktop, isMobile } = useBreakpoints()
 
   const { t } = useTranslation()
-
-  const handleOffersType = (_: any, activeOffersType: boolean) => {
+  
+  const translatedSwitcherOptions = {
+    left:{
+      text:t(switcherOptions.left.text),
+      tooltip:t(switcherOptions.left.tooltip)
+    },
+    right:{
+      text:t(switcherOptions.right.text),
+      tooltip:t(switcherOptions.right.tooltip)
+    }
+  }
+  
+  const handleOffersType = (event: ChangeEvent<HTMLInputElement>, isActiveOffersType: boolean) => {
     setBarMenuFilters((filters) => {
       const updatedFilters = {
         ...filters,
-        activeOffersType
+        isActiveOffersType
       }
       getFilters(updatedFilters)
 
@@ -60,7 +62,7 @@ const FilterBarMenu: FC<FilterBarMenuProps> = ({ chosenFiltersQty, openFilters, 
     })
   }
 
-  const handleCardView = (view: 'grid' | 'inline') => {
+  const handleCardView = (view: CardsViewTypes) => {
     setBarMenuFilters((filters) => {
       const updatedFilters = { ...filters, view }
       getFilters(updatedFilters)
@@ -68,16 +70,17 @@ const FilterBarMenu: FC<FilterBarMenuProps> = ({ chosenFiltersQty, openFilters, 
       return updatedFilters
     })
   }
+  
 
   return (
     <Box sx={ isMobile ? styles.mobileContainer : styles.container } >
       <FiltersTitle chosenFiltersQty={ chosenFiltersQty } handleOpenFilters={ openFilters } />
       { isDesktop ? (
         <AppContentSwitcher
-          active={ barMenuFilters.activeOffersType }
+          active={ barMenuFilters.isActiveOffersType }
           handleChange={ handleOffersType }
           styles={ {} }
-          switchOptions={ switcherOptions }
+          switchOptions={ translatedSwitcherOptions }
           typographyVariant='h6'
         />
       ) : null }
