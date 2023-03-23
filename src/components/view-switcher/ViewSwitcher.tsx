@@ -7,8 +7,9 @@ import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted'
 import GridViewIcon from '@mui/icons-material/GridView'
 
 import { styles } from '~/components/view-switcher/ViewSwitcher.styles'
-import { cardsViews } from '~/constants'
-import { CardsViewTypes } from '~/types/findOffers/viewSwitcher.types'
+
+import { CardsViewEnums } from '~/types/findOffers/enums/viewSwitcher.enums'
+import { CardsViewTypes } from '~/types/findOffers/types/viewSwitcher.types'
 
 interface ViewSwitcherProps {
   setOffersView:(value: CardsViewTypes) => void
@@ -23,18 +24,18 @@ const ViewSwitcher: FC<ViewSwitcherProps> = ({ setOffersView, offersView }) => {
       <ToggleButton
         aria-label='inline card view'
         onClick={ changeOffersView }
-        selected={ offersView === cardsViews.inline }
+        selected={ offersView === CardsViewEnums.Inline }
         sx={ styles.inlineButton }
-        value={ cardsViews.inline }
+        value={ CardsViewEnums.Inline }
       >
         <FormatListBulletedIcon sx={ styles.icon } />
       </ToggleButton>
       <ToggleButton
         aria-label='grid card view'
         onClick={ changeOffersView }
-        selected={ offersView === cardsViews.grid }
+        selected={ offersView === CardsViewEnums.Grid }
         sx={ styles.gridButton }
-        value={ cardsViews.grid }
+        value={ CardsViewEnums.Grid }
       >
         <GridViewIcon sx={ styles.icon } />
       </ToggleButton>
