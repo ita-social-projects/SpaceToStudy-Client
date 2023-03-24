@@ -26,3 +26,4 @@ jobs:
           BRANCH: gh-pages
           CLEAN: true
           FOLDER: build-story #  output folder from package.json build-storybook     
+          FORCE: true
