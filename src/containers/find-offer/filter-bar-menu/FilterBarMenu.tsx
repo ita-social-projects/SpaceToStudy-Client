@@ -87,9 +87,9 @@ const FilterBarMenu: FC<FilterBarMenuProps> = ({ chosenFiltersQty, openFilters, 
         <Box sx={ styles.rightContainer }>
           <AppSelect
             fields={ sortByFields }
-            placingStyles={ isDesktop ? styles.selectContainer : {} }
             selectTitle={ t('filters.sortBy.sortByTitle') }
             setValue={ handleSortBy }
+            sx={ isDesktop ? styles.selectContainer : {} }
             value={ barMenuFilters.sortBy }
           />
           { isDesktop ? <ViewSwitcher offersView={ barMenuFilters.view } setOffersView={ handleCardView } /> : null }
