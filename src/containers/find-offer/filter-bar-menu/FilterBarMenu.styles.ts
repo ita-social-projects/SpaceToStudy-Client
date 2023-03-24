@@ -9,5 +9,5 @@ export const styles = {
   rightContainer:{ ...container },
   selectContainer:{ marginRight: '50px' },
   filterListTitle: { justifyContent:'center' },
-  mobileContainer:{ ...container, justifyContent:'center' }
+  mobileContainer:{ ...container, justifyContent:'center', mt:'100px', mb:'100px' }
 }
