@@ -4,7 +4,6 @@ import AppHeader from '~/containers/layout/app-header/AppHeader'
 import ScrollToTop from '~/components/scroll-to-top/ScrollToTop'
 import AppBreadCrumbs from '~/containers/layout/app-breadcrumbs/AppBreadCrumbs'
 import AppMain from '../layout/app-main/AppMain'
-import FilterBarMenu from '~/containers/find-offer/filter-bar-menu/FilterBarMenu'
 
 
 const styles = {
@@ -21,7 +20,6 @@ const AppContent = () => {
       <AppHeader />
       <AppBreadCrumbs />
       <ScrollToTop />
-      <FilterBarMenu />
       <AppMain />
     </Box>
   )
