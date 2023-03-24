@@ -10,13 +10,13 @@ const categoriesData = [{ id: '1', name: 'Language' }]
 const subjectsData = [{ id: '1', name: 'Ukrainian' }]
 
 describe('ExploreSubjects component', () => {
-  beforeEach(async () => {
+  beforeEach( () => {
     mockAxiosClient.onGet(URLs.categories.get).reply(200, categoriesData)
     mockAxiosClient.onGet(URLs.subjects.get).reply(200, subjectsData)
 
     renderWithProviders(<ExploreSubjects />)
   })
-  it('renders the component with expected elements', async () => {
+  it('renders the component with expected elements',  () => {
     expect(screen.getByText('subjectsPage.subjects.title')).toBeInTheDocument()
     expect(screen.getByText('subjectsPage.subjects.description')).toBeInTheDocument()
     expect(screen.getByText('subjectsPage.subjects.backToAllCategories')).toBeInTheDocument()

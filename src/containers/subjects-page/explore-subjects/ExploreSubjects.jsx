@@ -15,7 +15,7 @@ import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
 import { styles } from '~/containers/subjects-page/explore-subjects/ExploreSubjects.styles'
 import { guestRoutes } from '~/router/constants/guestRoutes'
 import { categoryService } from '~/services/category-service'
-import { subjectService } from '../../../services/subject-service'
+import { subjectService } from '~/services/subject-service'
 
 const ExploreSubjects = () => {
   const { t } = useTranslation()
