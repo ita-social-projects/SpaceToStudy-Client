@@ -4,7 +4,8 @@
     	"sortByFields":{
         	"newest":"Найновішими",
        		"popularity":"Популярністю",
-        	"tutorRating":"Рейтингом репетитора"
+        	"tutorRating":"Рейтингом репетитора",
+			"price":"Ціною"
     	}
     },
 	"filtersListTitle": "Фільтри"
