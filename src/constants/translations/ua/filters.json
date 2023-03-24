@@ -2,8 +2,10 @@
     "sortBy":{
     	"sortByTitle":"Сортувати за:",
     	"sortByFields":{
-        	"proficiencyLevel":"Рівнем володіння",
-			"price":"Ціною"
+        	"tutorRating":"Рейтингом викладача",
+            "ascendingPrice":"Зростанням ціни",
+            "descendingPrice": "Спаданням ціни",
+            "creationTime": "Часом створення"
     	}
     },
 	"filtersListTitle": "Фільтри"

@@ -1,15 +1,23 @@
 export const sortByFields = [
   {
-    value: 'proficiencyLevel',
-    title: 'filters.sortBy.sortByFields.proficiencyLevel'
+    value: 'creationTime',
+    title: 'filters.sortBy.sortByFields.creationTime'
   },
   {
-    value: 'price',
-    title: 'filters.sortBy.sortByFields.price'
+    value: 'ascendingPrice',
+    title: 'filters.sortBy.sortByFields.ascendingPrice'
+  },
+  {
+    value: 'descendingPrice',
+    title: 'filters.sortBy.sortByFields.descendingPrice'
+  },
+  {
+    value: 'tutorRating',
+    title: 'filters.sortBy.sortByFields.tutorRating'
   }
 ]
 
 export const initialBarMenuFilters = {
   isActiveOffersType: false,
-  sortBy: 'proficiencyLevel'
+  sortBy: 'creationTime'
 }

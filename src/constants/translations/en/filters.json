@@ -2,8 +2,10 @@
     "sortBy":{
         "sortByTitle":"Sort by:",
         "sortByFields":{
-            "proficiencyLevel":"Proficiency level",
-            "price":"Price"
+            "tutorRating":"Tutor rating",
+            "ascendingPrice":"Ascending price",
+            "descendingPrice": "Descending price",
+            "creationTime": "Creation time"
         }
     },
     "filtersListTitle": "Filters"
