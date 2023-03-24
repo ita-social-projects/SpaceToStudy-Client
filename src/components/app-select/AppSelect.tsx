@@ -16,10 +16,10 @@ interface AppSelectProps {
   value:string,
   fields:SelectFieldType[],
   selectTitle?:string,
-  placingStyles?:SxProps
+  sx?:SxProps
 }
 
-const AppSelect:FC<AppSelectProps> = ({ setValue, value, fields, selectTitle = '', placingStyles = {} }) => {
+const AppSelect:FC<AppSelectProps> = ({ setValue, value, fields, selectTitle = '', sx = {} }) => {
   const { t } = useTranslation()
 
   const changeValue = (e:SelectChangeEvent<string>) => setValue(e.target.value)
@@ -36,7 +36,7 @@ const AppSelect:FC<AppSelectProps> = ({ setValue, value, fields, selectTitle = '
   ) : null 
 
   return (
-    <Box sx={ { ...styles.selectContainer, ...placingStyles } } >
+    <Box sx={ { ...styles.selectContainer, ...sx } } >
       { titleEl }
       <Select
         inputProps={ { 'data-testid': 'app-select' } }
