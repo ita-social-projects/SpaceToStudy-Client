@@ -70,7 +70,6 @@ const FilterBarMenu: FC<FilterBarMenuProps> = ({ chosenFiltersQty, openFilters, 
         <AppContentSwitcher
           active={ barMenuFilters.isActiveOffersType }
           handleChange={ handleOffersType }
-          styles={ {} }
           switchOptions={ translatedSwitcherOptions }
           typographyVariant='h6'
         />
