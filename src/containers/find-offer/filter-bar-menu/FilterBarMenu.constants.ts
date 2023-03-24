@@ -1,15 +1,7 @@
 export const sortByFields = [
   {
-    value: 'popularity',
-    title: 'filters.sortBy.sortByFields.popularity'
-  },
-  {
-    value: 'newest',
-    title: 'filters.sortBy.sortByFields.newest'
-  },
-  {
-    value: 'tutorRating',
-    title: 'filters.sortBy.sortByFields.tutorRating'
+    value: 'proficiencyLevel',
+    title: 'filters.sortBy.sortByFields.proficiencyLevel'
   },
   {
     value: 'price',
@@ -19,5 +11,5 @@ export const sortByFields = [
 
 export const initialBarMenuFilters = {
   isActiveOffersType: false,
-  sortBy: 'newest'
+  sortBy: 'proficiencyLevel'
 }
