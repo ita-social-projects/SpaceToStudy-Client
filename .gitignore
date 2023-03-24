@@ -12,7 +12,6 @@ test-report.xml
 
 # production
 /build
-/build-story
 
 # misc
 /.idea
