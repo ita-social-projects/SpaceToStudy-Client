@@ -64,7 +64,7 @@ const FilterBarMenu: FC<FilterBarMenuProps> = ({ chosenFiltersQty, openFilters, 
   }
   
   return (
-    <Box sx={ isMobile ? styles.mobileContainer : { ...styles.container, marginTop:'100px', marginBottom:'100px' } } >
+    <Box sx={ isMobile ? styles.mobileContainer : styles.container } >
       <FiltersTitle chosenFiltersQty={ chosenFiltersQty } handleOpenFilters={ openFilters } />
       { isDesktop ? (
         <AppContentSwitcher
