@@ -37,6 +37,8 @@ const SearchWithFilters = ({ options, search, setSearch, ...props }) => {
         InputLabelProps={{ style: styles.inputLabel }}
         InputProps={{ disableUnderline: true }}
         ListboxProps={{ style: styles.listBox }}
+        autocompleteStyles={{ flex: 1 }}
+        data-testid='searchWithFilters'
         fieldValue={searchInput}
         filterOptions={filterOptions}
         freeSolo
