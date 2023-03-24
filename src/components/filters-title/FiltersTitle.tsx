@@ -16,16 +16,18 @@ const FiltersTitle:FC<FiltersTitleProps> = ({ chosenFiltersQty = 0, handleOpenFi
   const { t } = useTranslation()
   
   return (
-    <Box sx={ { ...styles.container } } >
-      <Box onClick={ handleOpenFilters } sx={ styles.cursorContainer } >
+    <Box sx={ { ...styles.container } }>
+      <Box onClick={ handleOpenFilters } sx={ styles.cursorContainer }>
         <FilterListIcon sx={ styles.icon } />
-        <Typography sx={ styles.title } variant='h6' >
+        <Typography sx={ styles.title } variant='h6'>
           { t('filters.filtersListTitle') }
         </Typography>
       </Box>
-      <Typography sx={ styles.chosenFiltersQty } >
-        { chosenFiltersQty }
-      </Typography>
+      { chosenFiltersQty ? (
+        <Typography sx={ styles.chosenFiltersQty } variant='subtitle2'>
+          { chosenFiltersQty }
+        </Typography>
+      ) : null }
     </Box>
   )
 }

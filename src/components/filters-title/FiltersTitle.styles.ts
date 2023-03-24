@@ -20,12 +20,10 @@ export const styles = {
   chosenFiltersQty :{
     borderRadius: '50%',
     width: '24px',
-    height: '25px',
     backgroundColor: 'primary.400',
     color:'white',
-    fontWeight:'500',
+    p:'2.5px 0',
     textAlign: 'center',
-    fontSize: '14px',
     userSelect:'none'
   }
 }
