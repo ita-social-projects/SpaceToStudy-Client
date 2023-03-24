@@ -62,7 +62,7 @@ const FilterBarMenu: FC<FilterBarMenuProps> = ({ chosenFiltersQty, openFilters, 
       return updatedFilters
     })
   }
-
+  
   return (
     <Box sx={ isMobile ? styles.mobileContainer : styles.container } >
       <FiltersTitle chosenFiltersQty={ chosenFiltersQty } handleOpenFilters={ openFilters } />

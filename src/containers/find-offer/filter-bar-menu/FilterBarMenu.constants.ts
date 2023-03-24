@@ -1,5 +1,3 @@
-import { CardsViewEnums } from '~/types/findOffers/enums/viewSwitcher.enums'
-  
 export const sortByFields = [
   {
     value: 'popularity',
@@ -21,6 +19,5 @@ export const sortByFields = [
 
 export const initialBarMenuFilters = {
   isActiveOffersType: false,
-  sortBy: 'newest',
-  view: CardsViewEnums.Inline
+  sortBy: 'newest'
 }
