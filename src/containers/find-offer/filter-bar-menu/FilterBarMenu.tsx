@@ -84,7 +84,7 @@ const FilterBarMenu: FC<FilterBarMenuProps> = ({ chosenFiltersQty, openFilters, 
         />
       ) : null }
       { !isMobile ? (
-        <Box sx={ styles.rightContainer }>
+        <Box sx={ styles.container }>
           <AppSelect
             fields={ sortByFields }
             selectTitle={ t('filters.sortBy.sortByTitle') }
