@@ -31,12 +31,12 @@ const FilterBarMenu: FC<FilterBarMenuProps> = ({ chosenFiltersQty, openFilters, 
   
   const translatedSwitcherOptions = {
     left:{
-      text:t(switcherOptions.left.text),
-      tooltip:t(switcherOptions.left.tooltip)
+      text:t('findOffers.topMenu.tutorsOffers'),
+      tooltip:t('findOffers.contentSwitcher.switcher-tutor')
     },
     right:{
-      text:t(switcherOptions.right.text),
-      tooltip:t(switcherOptions.right.tooltip)
+      text:t('findOffers.topMenu.studentsRequests'),
+      tooltip:t('findOffers.contentSwitcher.switcher-student')
     }
   }
   

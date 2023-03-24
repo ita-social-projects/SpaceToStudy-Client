@@ -1,16 +1,4 @@
 import { CardsViewEnums } from '~/types/findOffers/enums/viewSwitcher.enums'
-
-
-export const switcherOptions = {
-  left: {
-    text: 'findOffers.topMenu.tutorsOffers',
-    tooltip: 'findOffers.contentSwitcher.switcher-tutor'
-  },
-  right: {
-    text: 'findOffers.topMenu.studentsRequests',
-    tooltip: 'findOffers.contentSwitcher.switcher-student'
-  }
-}
   
 export const sortByFields = [
   {
