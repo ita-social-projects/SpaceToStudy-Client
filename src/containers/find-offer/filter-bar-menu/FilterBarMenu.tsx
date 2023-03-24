@@ -1,4 +1,4 @@
-import { FC, useState, ChangeEvent } from 'react'
+import { FC, ChangeEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
@@ -11,21 +11,22 @@ import ViewSwitcher from '~/components/view-switcher/ViewSwitcher'
 import FiltersTitle from '~/components/filters-title/FiltersTitle'
 
 import { styles } from '~/containers/find-offer/filter-bar-menu/FilterBarMenu.styles'
-import { sortByFields, initialBarMenuFilters } from '~/containers/find-offer/filter-bar-menu/FilterBarMenu.constants'
+import { sortByFields } from '~/containers/find-offer/filter-bar-menu/FilterBarMenu.constants'
 
 import { BarMenuFilters, CardsViewTypes } from '~/types'
 
 
 interface FilterBarMenuProps {
-  chosenFiltersQty:number,
+  chosenFiltersQty: number,
   openFilters: () => void,
   getFilters: (filters: BarMenuFilters) => void,
-  handleOffersView:(view: CardsViewTypes) => void,
-  offersView: CardsViewTypes
+  handleOffersView: (view: CardsViewTypes) => void,
+  offersView: CardsViewTypes,
+  setFilters: (filters: BarMenuFilters) => void
+  filters: BarMenuFilters
 }
 
-const FilterBarMenu: FC<FilterBarMenuProps> = ({ chosenFiltersQty, openFilters, getFilters, handleOffersView, offersView }) => {
-  const [barMenuFilters, setBarMenuFilters] = useState<BarMenuFilters>(initialBarMenuFilters)
+const FilterBarMenu: FC<FilterBarMenuProps> = ({ chosenFiltersQty, openFilters, setFilters, filters, handleOffersView, offersView }) => {
 
   const { isDesktop, isMobile } = useBreakpoints()
 
@@ -43,24 +44,11 @@ const FilterBarMenu: FC<FilterBarMenuProps> = ({ chosenFiltersQty, openFilters, 
   }
   
   const handleOffersType = (event: ChangeEvent<HTMLInputElement>, isActiveOffersType: boolean) => {
-    setBarMenuFilters((filters) => {
-      const updatedFilters = {
-        ...filters,
-        isActiveOffersType
-      }
-      getFilters(updatedFilters)
-
-      return updatedFilters
-    })
+    setFilters({ ...filters, isActiveOffersType })
   }
 
   const handleSortBy = (sortBy: string) => {
-    setBarMenuFilters((filters) => {
-      const updatedFilters = { ...filters, sortBy }
-      getFilters(updatedFilters)
-
-      return updatedFilters
-    })
+    setFilters({ ...filters, sortBy })
   }
   
   return (
@@ -68,7 +56,7 @@ const FilterBarMenu: FC<FilterBarMenuProps> = ({ chosenFiltersQty, openFilters, 
       <FiltersTitle chosenFiltersQty={ chosenFiltersQty } handleOpenFilters={ openFilters } />
       { isDesktop ? (
         <AppContentSwitcher
-          active={ barMenuFilters.isActiveOffersType }
+          active={ filters.isActiveOffersType }
           handleChange={ handleOffersType }
           switchOptions={ translatedSwitcherOptions }
           typographyVariant='h6'
@@ -81,7 +69,7 @@ const FilterBarMenu: FC<FilterBarMenuProps> = ({ chosenFiltersQty, openFilters, 
             selectTitle={ t('filters.sortBy.sortByTitle') }
             setValue={ handleSortBy }
             sx={ isDesktop ? styles.selectContainer : {} }
-            value={ barMenuFilters.sortBy }
+            value={ filters.sortBy }
           />
           { isDesktop ? <ViewSwitcher offersView={ offersView } setOffersView={ handleOffersView } /> : null }
         </Box>
