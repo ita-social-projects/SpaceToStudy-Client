@@ -11,7 +11,7 @@ import ViewSwitcher from '~/components/view-switcher/ViewSwitcher'
 import FiltersTitle from '~/components/filters-title/FiltersTitle'
 
 import { styles } from '~/containers/find-offer/filter-bar-menu/FilterBarMenu.styles'
-import { switcherOptions, sortByFields, initialBarMenuFilters } from '~/containers/find-offer/filter-bar-menu/FilterBarMenu.constants'
+import { sortByFields, initialBarMenuFilters } from '~/containers/find-offer/filter-bar-menu/FilterBarMenu.constants'
 
 import { BarMenuFilters, CardsViewTypes } from '~/types'
 
@@ -19,10 +19,12 @@ import { BarMenuFilters, CardsViewTypes } from '~/types'
 interface FilterBarMenuProps {
   chosenFiltersQty:number,
   openFilters: () => void,
-  getFilters: (filters: BarMenuFilters) => void
+  getFilters: (filters: BarMenuFilters) => void,
+  handleOffersView:(view: CardsViewTypes) => void,
+  offersView: CardsViewTypes
 }
 
-const FilterBarMenu: FC<FilterBarMenuProps> = ({ chosenFiltersQty, openFilters, getFilters }) => {
+const FilterBarMenu: FC<FilterBarMenuProps> = ({ chosenFiltersQty, openFilters, getFilters, handleOffersView, offersView }) => {
   const [barMenuFilters, setBarMenuFilters] = useState<BarMenuFilters>(initialBarMenuFilters)
 
   const { isDesktop, isMobile } = useBreakpoints()
@@ -61,16 +63,6 @@ const FilterBarMenu: FC<FilterBarMenuProps> = ({ chosenFiltersQty, openFilters, 
     })
   }
 
-  const handleCardView = (view: CardsViewTypes) => {
-    setBarMenuFilters((filters) => {
-      const updatedFilters = { ...filters, view }
-      getFilters(updatedFilters)
-
-      return updatedFilters
-    })
-  }
-  
-
   return (
     <Box sx={ isMobile ? styles.mobileContainer : styles.container } >
       <FiltersTitle chosenFiltersQty={ chosenFiltersQty } handleOpenFilters={ openFilters } />
@@ -92,7 +84,7 @@ const FilterBarMenu: FC<FilterBarMenuProps> = ({ chosenFiltersQty, openFilters, 
             sx={ isDesktop ? styles.selectContainer : {} }
             value={ barMenuFilters.sortBy }
           />
-          { isDesktop ? <ViewSwitcher offersView={ barMenuFilters.view } setOffersView={ handleCardView } /> : null }
+          { isDesktop ? <ViewSwitcher offersView={ offersView } setOffersView={ handleOffersView } /> : null }
         </Box>
       ) : null } 
     </Box>
