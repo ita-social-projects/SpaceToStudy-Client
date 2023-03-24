@@ -13,8 +13,7 @@ import FiltersTitle from '~/components/filters-title/FiltersTitle'
 import { styles } from '~/containers/find-offer/filter-bar-menu/FilterBarMenu.styles'
 import { switcherOptions, sortByFields, initialBarMenuFilters } from '~/containers/find-offer/filter-bar-menu/FilterBarMenu.constants'
 
-import { BarMenuFilters } from '~/types/findOffers/interfaces/filterBarMenu.interfaces'
-import { CardsViewTypes } from '~/types/findOffers/types/viewSwitcher.types'
+import { BarMenuFilters, CardsViewTypes } from '~/types'
 
 
 interface FilterBarMenuProps {
