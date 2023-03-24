@@ -11,19 +11,19 @@ import { styles } from '~/components/view-switcher/ViewSwitcher.styles'
 import { CardsViewEnums, CardsViewTypes } from '~/types'
 
 interface ViewSwitcherProps {
-  setOffersView: (value: CardsViewTypes) => void
-  offersView: CardsViewTypes
+  onChange: (value: CardsViewTypes) => void
+  value: CardsViewTypes
 }
 
-const ViewSwitcher: FC<ViewSwitcherProps> = ({ setOffersView, offersView }) => {
-  const changeOffersView = (_event:MouseEvent<HTMLElement>, view: CardsViewTypes) => setOffersView(view)
+const ViewSwitcher: FC<ViewSwitcherProps> = ({ onChange, value }) => {
+  const changeOffersView = (_event:MouseEvent<HTMLElement>, view: CardsViewTypes) => onChange(view)
 
   return (
     <Box>
       <ToggleButton
         aria-label='inline card view'
         onClick={ changeOffersView }
-        selected={ offersView === CardsViewEnums.Inline }
+        selected={ value === CardsViewEnums.Inline }
         sx={ styles.inlineButton }
         value={ CardsViewEnums.Inline }
       >
@@ -32,7 +32,7 @@ const ViewSwitcher: FC<ViewSwitcherProps> = ({ setOffersView, offersView }) => {
       <ToggleButton
         aria-label='grid card view'
         onClick={ changeOffersView }
-        selected={ offersView === CardsViewEnums.Grid }
+        selected={ value === CardsViewEnums.Grid }
         sx={ styles.gridButton }
         value={ CardsViewEnums.Grid }
       >
