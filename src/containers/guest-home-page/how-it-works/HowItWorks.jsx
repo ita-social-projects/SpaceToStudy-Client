@@ -19,7 +19,7 @@ const HowItWorks = () => {
 
   const [isStudent, setIsStudent] = useState(false)
 
-  const handleChange = () => {
+  const onChange = () => {
     setIsStudent(!isStudent)
   }
 
@@ -55,7 +55,7 @@ const HowItWorks = () => {
 
         <AppContentSwitcher
           active={ isStudent }
-          handleChange={ handleChange }
+          onChange={ onChange }
           styles={ styles.switch }
           switchOptions={ switchOptions }
           typographyVariant={ 'h6' }
