@@ -6,7 +6,7 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 
-import { RadioButtonType } from './RadioButtonList.types'
+import { RadioButtonType } from '~/types'
 import { styles } from './RadioButtonList.styles'
 
 interface RadioButtonListProps extends Omit<RadioGroupProps, 'onChange'> {
@@ -14,7 +14,7 @@ interface RadioButtonListProps extends Omit<RadioGroupProps, 'onChange'> {
   onChange: (value: string) => void
 }
 
-const RadioButtonList: FC<RadioButtonListProps> = ({ onChange, items, value, title = 'Rating' }) => {
+const RadioButtonList: FC<RadioButtonListProps> = ({ onChange, items, value, title }) => {
   const handleValueUpdate = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChange(event.target.value)
   }
