@@ -1,5 +1,5 @@
 import type { SelectFieldType } from '~/types/components/appSelect/appSelect.types'
-import type { RadioButtonType } from '~/types/components/radioButtonList/RadioButtonList.types'
+import type { RadioButtonType } from '~/types/components/radioButtonInputs/RadioButtonInputs.types'
 import type {
   CheckInputChange,
   InputRange,
