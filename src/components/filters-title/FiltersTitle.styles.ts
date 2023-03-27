@@ -9,13 +9,11 @@ export const styles = {
   title:{
     color:'primary.700',
     mr:'7px',
-    userSelect:'none',
-    cursor:'pointer'
+    userSelect:'none'
   },
   icon:{
     color:'primary.700',
-    mr:'7px',
-    cursor:'pointer'
+    mr:'7px'
   },
   chosenFiltersQty :{
     borderRadius: '50%',
