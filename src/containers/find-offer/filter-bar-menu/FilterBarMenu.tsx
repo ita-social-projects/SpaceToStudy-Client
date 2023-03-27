@@ -26,7 +26,7 @@ interface FilterBarMenuProps {
   filters: BarMenuFilters
 }
 
-const FilterBarMenu: FC<FilterBarMenuProps> = ({ chosenFiltersQty, toggleFilters, setFilters, filters, handleOffersView, offersView }) => {
+const FilterBarMenu: FC<FilterBarMenuProps> = ({ chosenFiltersQty, toggleFilters, setFilters, filters, handleOffersView }) => {
 
   const { isDesktop, isMobile } = useBreakpoints()
 
