@@ -5,19 +5,19 @@ import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import FilterListIcon from '@mui/icons-material/FilterList'
 
-import { styles } from '~/components/filters-title/FiltersTitle.styles'
+import { styles } from '~/components/filters-title/FiltersToggle.styles'
 
-interface FiltersTitleProps {
+interface FiltersToggleProps {
     chosenFiltersQty?:number,
-    handleOpenFilters: () => void,
+    handleToggle: () => void,
 }
 
-const FiltersTitle:FC<FiltersTitleProps> = ({ chosenFiltersQty = 0, handleOpenFilters }) => {
+const FiltersToggle:FC<FiltersToggleProps> = ({ chosenFiltersQty = 0, handleToggle }) => {
   const { t } = useTranslation()
   
   return (
     <Box sx={ styles.container }>
-      <Box onClick={ handleOpenFilters } sx={ styles.cursorContainer }>
+      <Box onClick={ handleToggle } sx={ styles.cursorContainer }>
         <FilterListIcon sx={ styles.icon } />
         <Typography sx={ styles.title } variant='h6'>
           { t('filters.filtersListTitle') }
@@ -32,4 +32,4 @@ const FiltersTitle:FC<FiltersTitleProps> = ({ chosenFiltersQty = 0, handleOpenFi
   )
 }
 
-export default FiltersTitle
+export default FiltersToggle

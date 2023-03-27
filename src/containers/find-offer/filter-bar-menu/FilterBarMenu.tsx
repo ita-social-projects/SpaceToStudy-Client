@@ -8,7 +8,7 @@ import useBreakpoints from '~/hooks/use-breakpoints'
 import AppContentSwitcher from '~/components/app-content-switcher/AppContentSwitcher'
 import AppSelect from '~/components/app-select/AppSelect'
 import ViewSwitcher from '~/components/view-switcher/ViewSwitcher'
-import FiltersTitle from '~/components/filters-title/FiltersTitle'
+import FiltersToggle from '~/components/filters-title/FiltersToggle'
 
 import { styles } from '~/containers/find-offer/filter-bar-menu/FilterBarMenu.styles'
 import { sortByFields } from '~/containers/find-offer/filter-bar-menu/FilterBarMenu.constants'
@@ -18,7 +18,7 @@ import { BarMenuFilters, CardsViewTypes } from '~/types'
 
 interface FilterBarMenuProps {
   chosenFiltersQty: number,
-  openFilters: () => void,
+  toggleFilters: () => void,
   getFilters: (filters: BarMenuFilters) => void,
   handleOffersView: (view: CardsViewTypes) => void,
   offersView: CardsViewTypes,
@@ -26,7 +26,7 @@ interface FilterBarMenuProps {
   filters: BarMenuFilters
 }
 
-const FilterBarMenu: FC<FilterBarMenuProps> = ({ chosenFiltersQty, openFilters, setFilters, filters, handleOffersView, offersView }) => {
+const FilterBarMenu: FC<FilterBarMenuProps> = ({ chosenFiltersQty, toggleFilters, setFilters, filters, handleOffersView, offersView }) => {
 
   const { isDesktop, isMobile } = useBreakpoints()
 
@@ -53,7 +53,7 @@ const FilterBarMenu: FC<FilterBarMenuProps> = ({ chosenFiltersQty, openFilters, 
   
   return (
     <Box sx={ isMobile ? styles.mobileContainer : styles.container } >
-      <FiltersTitle chosenFiltersQty={ chosenFiltersQty } handleOpenFilters={ openFilters } />
+      <FiltersToggle chosenFiltersQty={ chosenFiltersQty } handleToggle={ toggleFilters } />
       { isDesktop ? (
         <AppContentSwitcher
           active={ filters.isActiveOffersType }

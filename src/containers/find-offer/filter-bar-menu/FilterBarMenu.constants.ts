@@ -16,8 +16,3 @@ export const sortByFields = [
     title: 'filters.sortBy.sortByFields.tutorRating'
   }
 ]
-
-export const initialBarMenuFilters = {
-  isActiveOffersType: false,
-  sortBy: 'creationTime'
-}

@@ -1,5 +1,5 @@
 export interface BarMenuFilters {
+  [key: string]: string | boolean,
   isActiveOffersType: boolean,
   sortBy: string,
-  [key: string]: string | boolean,
 }
