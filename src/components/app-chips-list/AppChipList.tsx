@@ -1,3 +1,4 @@
+import { SvgIconProps, SxProps } from '@mui/material'
 import Box from '@mui/material/Box'
 import Chip from '@mui/material/Chip'
 
@@ -6,7 +7,17 @@ import AppPopover from '~/components/app-popover/AppPopover'
 
 import { styles } from '~/components/app-chips-list/AppChipsList-styles'
 
-const AppChipList = ({ items, defaultQuantity, handleChipDelete, icon, wrapperStyle }) => {
+
+interface AppChipListProps  {
+  items:string[],
+  defaultQuantity:number,
+  handleChipDelete:(item:string) => void,
+  icon:React.ReactElement<SvgIconProps>,
+  wrapperStyle?: SxProps,
+}
+
+const AppChipList:React.FC<AppChipListProps> = ({ items, defaultQuantity, handleChipDelete, icon, wrapperStyle }) => {
+
   const hideChips = items.length - defaultQuantity > 0 && items.length - defaultQuantity
 
   const chips = items.map((item) => {
