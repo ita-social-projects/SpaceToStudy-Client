@@ -10,10 +10,7 @@ export default {
     },
     handleToggle: {
       type: 'function',
-      description: 'Toggling filters',
-      control:{
-        type:'radio'
-      }
+      description: 'Toggling filters'
     }
   }
 }
