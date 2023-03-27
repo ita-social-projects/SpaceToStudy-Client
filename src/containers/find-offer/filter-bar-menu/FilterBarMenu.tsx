@@ -20,13 +20,11 @@ interface FilterBarMenuProps {
   chosenFiltersQty: number,
   toggleFilters: () => void,
   getFilters: (filters: BarMenuFilters) => void,
-  handleOffersView: (view: CardsViewTypes) => void,
-  offersView: CardsViewTypes,
   setFilters: (filters: BarMenuFilters) => void
   filters: BarMenuFilters
 }
 
-const FilterBarMenu: FC<FilterBarMenuProps> = ({ chosenFiltersQty, toggleFilters, setFilters, filters, handleOffersView }) => {
+const FilterBarMenu: FC<FilterBarMenuProps> = ({ chosenFiltersQty, toggleFilters, setFilters, filters }) => {
 
   const { isDesktop, isMobile } = useBreakpoints()
 
@@ -50,6 +48,10 @@ const FilterBarMenu: FC<FilterBarMenuProps> = ({ chosenFiltersQty, toggleFilters
   const handleSortBy = (sortBy: string) => {
     setFilters({ ...filters, sortBy })
   }
+
+  const handleOffersView = (offersView: CardsViewTypes) => {
+    setFilters({ ...filters, offersView })
+  }
   
   return (
     <Box sx={ isMobile ? styles.mobileContainer : styles.container } >
@@ -71,7 +73,7 @@ const FilterBarMenu: FC<FilterBarMenuProps> = ({ chosenFiltersQty, toggleFilters
             sx={ isDesktop ? styles.selectContainer : {} }
             value={ filters.sortBy }
           />
-          { isDesktop ? <ViewSwitcher offersView={ offersView } setOffersView={ handleOffersView } /> : null }
+          { isDesktop ? <ViewSwitcher offersView={ filters.offersView } setOffersView={ handleOffersView } /> : null }
         </Box>
       ) : null } 
     </Box>
