@@ -1,4 +1,4 @@
-import { SvgIconProps } from '@mui/material'
+import { SvgIconProps, SxProps } from '@mui/material'
 import Box from '@mui/material/Box'
 import Chip from '@mui/material/Chip'
 
@@ -13,9 +13,7 @@ interface AppChipListProps  {
   defaultQuantity:number,
   handleChipDelete:(item:string) => void,
   icon:React.ReactElement<SvgIconProps>,
-  wrapperStyle:{
-    py:string
-  }
+  wrapperStyle?: SxProps,
 }
 
 const AppChipList:React.FC<AppChipListProps> = ({ items, defaultQuantity, handleChipDelete, icon, wrapperStyle }) => {
