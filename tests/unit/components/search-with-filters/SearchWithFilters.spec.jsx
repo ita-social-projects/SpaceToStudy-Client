@@ -10,11 +10,12 @@ const onCategoryChange = vi.fn()
 const categoryItems = ['Language', 'Music']
 const filters = (
   <AppAutoComplete
-    autocompleteStyles={ { width: '100%', maxWidth: '220px', mr: '30px' } }
-    fieldValue={ category }
-    label='Categories'
     onChange={ onCategoryChange }
     options={ categoryItems }
+    textFieldProps={ {
+      label: 'breadCrumbs.categories'
+    } }
+    value={ category }
   />
 )
 
@@ -23,7 +24,7 @@ describe('SearchWithFilters', () => {
     render(<SearchWithFilters
       filters={ filters } options={ options } search=''
       setSearch={ setSearch }
-    />)
+           />)
   })
 
   it('renders the search input and filters', () => {
@@ -31,9 +32,9 @@ describe('SearchWithFilters', () => {
 
     expect(autocomplete).toBeInTheDocument()
 
-    const categoryAutocomplete = screen.queryAllByText('Categories')
+    const categoryAutocomplete = screen.queryAllByText('breadCrumbs.categories')
     const categoryLabel = categoryAutocomplete.find((el) => el.tagName === 'LABEL')
-    
+
     expect(categoryLabel).toBeInTheDocument()
   })
 
@@ -49,7 +50,7 @@ describe('SearchWithFilters', () => {
   })
 
   it('calls the onSearch function when search button is clicked', () => {
-    const searchButton = screen.getByText('subjectsPage.subjects.searchBtn')
+    const searchButton = screen.getByText('common.search')
     fireEvent.click(searchButton)
 
     expect(setSearch).toHaveBeenCalled()

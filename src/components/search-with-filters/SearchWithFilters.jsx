@@ -42,6 +42,7 @@ const SearchWithFilters = ({
 
       <AppAutoComplete
         ListboxProps={{ style: styles.listBox }}
+        data-testid='searchWithFilters'
         filterOptions={filterOptions}
         freeSolo
         hideCLearIcon

@@ -3,17 +3,26 @@ import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
 import { renderWithProviders } from '~tests/test-utils'
 import { vi } from 'vitest'
 
-const props = {
-  fieldValue: null,
-  label: 'common.labels.country',
-  options: ['Finland', 'France', 'Georgia', 'Germany'],
-  onChange: vi.fn(),
-  styles: {}
-}
+const value = null
+const label = 'common.labels.country'
+const options = ['Finland', 'France', 'Georgia', 'Germany']
+const onChange = vi.fn()
+const styles = {}
 
 describe('AppAutoComplete test', () => {
   beforeEach(() => {
-    renderWithProviders(<AppAutoComplete { ...props } />)
+    renderWithProviders(
+      <AppAutoComplete
+        onChange={ onChange }
+        options={ options }
+        sx={ styles }
+        textFieldProps={ {
+          label: label
+        } }
+        type='text'
+        value={ value }
+      />
+    )
   })
 
   test('Should render Autocomplete and choose option', () => {
@@ -25,6 +34,6 @@ describe('AppAutoComplete test', () => {
 
     fireEvent.click(option)
 
-    expect(props.onChange).toHaveBeenCalled()
+    expect(onChange).toHaveBeenCalled()
   })
 })

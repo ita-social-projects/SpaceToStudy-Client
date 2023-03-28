@@ -55,7 +55,10 @@ const GeneralInfoStep = ({
     setData({ ...data, city: value })
   }
 
-  const getUserById = useCallback(() => userService.getUserById(userId, userRole), [userId, userRole])
+  const getUserById = useCallback(
+    () => userService.getUserById(userId, userRole),
+    [userId, userRole]
+  )
 
   const getCountries = useCallback(() => LocationService.getCountries(), [])
   const getCities = useCallback(
@@ -137,24 +140,28 @@ const GeneralInfoStep = ({
             />
 
             <AppAutoComplete
-              fieldValue={data.country}
-              label={t('common.labels.country')}
               onChange={onChangeCountry}
               options={countries}
               sx={{ mb: '30px' }}
+              textFieldProps={{
+                label: t('common.labels.country')
+              }}
               type='text'
+              value={data.country}
             />
 
             <AppAutoComplete
               disabled={!data.country}
-              fieldValue={data.city}
               filterOptions={filterOptions}
-              label={t('common.labels.city')}
               loading={loading}
               onChange={onChangeCity}
               options={cities}
               sx={{ mb: '30px' }}
+              textFieldProps={{
+                label: t('common.labels.city')
+              }}
               type='text'
+              value={data.city}
             />
           </Box>
 
