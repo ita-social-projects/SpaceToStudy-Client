@@ -1,32 +1,40 @@
+import { FC, MouseEvent } from 'react'
+
 import ToggleButton from '@mui/material/ToggleButton'
 import Box from '@mui/material/Box'
 
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted'
 import GridViewIcon from '@mui/icons-material/GridView'
 
-import { cardsViews } from '~/constants'
 import { styles } from '~/components/view-switcher/ViewSwitcher.styles'
 
-const ViewSwitcher = ({ setOffersView, offersView }) => {
-  const changeOffersView = (_event, view) => setOffersView(view)
+import { CardsViewEnums, CardsViewTypes } from '~/types'
+
+interface ViewSwitcherProps {
+  onChange: (value: CardsViewTypes) => void
+  value: CardsViewTypes
+}
+
+const ViewSwitcher: FC<ViewSwitcherProps> = ({ onChange, value }) => {
+  const changeOffersView = (_event:MouseEvent<HTMLElement>, view: CardsViewTypes) => onChange(view)
 
   return (
     <Box>
       <ToggleButton
         aria-label='inline card view'
         onClick={ changeOffersView }
-        selected={ offersView === cardsViews.inline }
+        selected={ value === CardsViewEnums.Inline }
         sx={ styles.inlineButton }
-        value={ cardsViews.inline }
+        value={ CardsViewEnums.Inline }
       >
         <FormatListBulletedIcon sx={ styles.icon } />
       </ToggleButton>
       <ToggleButton
         aria-label='grid card view'
         onClick={ changeOffersView }
-        selected={ offersView === cardsViews.grid }
+        selected={ value === CardsViewEnums.Grid }
         sx={ styles.gridButton }
-        value={ cardsViews.grid }
+        value={ CardsViewEnums.Grid }
       >
         <GridViewIcon sx={ styles.icon } />
       </ToggleButton>
