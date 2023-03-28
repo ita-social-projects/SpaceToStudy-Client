@@ -11,5 +11,12 @@
   "contentSwitcher": {
     "switcher-tutor": "Offers from tutors for classes in various categories and subjects",
     "switcher-student": "Offers from students for classes in various categories and subjects"
+  },
+  "radioFilter": {
+    "rating": "Rating",
+    "any": "Any rating",
+    "5stars": "5 stars",
+    "4stars": "4 and above",
+    "3stars": "3 and above"
   }
 }
