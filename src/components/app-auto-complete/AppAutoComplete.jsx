@@ -23,7 +23,7 @@ const AppAutoComplete = ({
       ListboxProps={ListboxProps}
       filterOptions={filterOptions}
       isOptionEqualToValue={(option, value) => option === value}
-      options={options}
+      options={options || []}
       {...props}
       renderInput={(params) => (
         <TextField
