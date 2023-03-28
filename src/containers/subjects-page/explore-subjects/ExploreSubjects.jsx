@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useSearchParams } from 'react-router-dom'
 
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
@@ -19,9 +20,12 @@ import { subjectService } from '~/services/subject-service'
 
 const ExploreSubjects = () => {
   const { t } = useTranslation()
+  const [searchParams, setSearchParams] = useSearchParams()
+  const categoryId = searchParams.get('catId')
+  const categoryIdConvertType = categoryId === 'null' ? null : categoryId
 
   const [searchValue, setSearchValue] = useState('')
-  const [category, setCategory] = useState(null)
+  const [category, setCategory] = useState(categoryIdConvertType)
 
   const getCategories = useCallback(() => categoryService.getCategories(), [])
   const getSubjects = useCallback(() => subjectService.getSubjects(), [])
@@ -34,15 +38,18 @@ const ExploreSubjects = () => {
 
   const onCategoryChange = (_, value) => {
     setCategory(value)
+    setSearchParams({ catId: value })
   }
 
   const filters = (
     <AppAutoComplete
-      autocompleteStyles={ { width: '100%', maxWidth: '220px', mr: '30px' } }
-      fieldValue={ category }
-      label='Categories'
       onChange={ onCategoryChange }
       options={ categoryItems }
+      sx={ styles.categoryInput }
+      textFieldProps={ {
+        label: t('breadCrumbs.categories')
+      } }
+      value={ category }
     />
   )
 
@@ -75,10 +82,12 @@ const ExploreSubjects = () => {
 
       <SearchWithFilters
         filters={ filters }
-        label={ t('subjectsPage.subjects.searchLabel') }
         options={ optionItems }
         search={ searchValue }
         setSearch={ setSearchValue }
+        textFieldProps={ {
+          label: t('subjectsPage.subjects.searchLabel')
+        } }
       />
     </Box>
   )

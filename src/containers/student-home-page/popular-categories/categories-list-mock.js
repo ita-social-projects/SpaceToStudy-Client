@@ -6,14 +6,14 @@ export const categoriesListMock = [
     img: serviceIcon,
     description: '234 offers',
     title: 'Languages',
-    link: '#'
+    link: '/categories/subjects?catId=languages'
   },
   {
     id: '2',
     img: serviceIcon,
     description: '234 offers',
     title: 'Mathematics',
-    link: '#'
+    link: '/categories/subjects?catId=mathematics'
   },
   {
     id: '3',

@@ -1,4 +1,5 @@
 import { Fragment } from 'react'
+
 import TextField from '@mui/material/TextField'
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete'
 
@@ -10,51 +11,42 @@ const defaultFilterOptions = (options, state) => {
 }
 
 const AppAutoComplete = ({
-  disabled = false,
-  freeSolo = false,
-  fieldValue,
   filterOptions = defaultFilterOptions,
   ListboxProps = { style: { maxHeight: 150 } },
-  loading = false,
-  onChange,
-  onInputChange,
-  autocompleteStyles,
-  options,
+  options = [],
+  hideCLearIcon = false,
+  textFieldProps,
   ...props
 }) => {
   return (
     <Autocomplete
       ListboxProps={ListboxProps}
-      disabled={disabled}
       filterOptions={filterOptions}
-      freeSolo={freeSolo}
-      getOptionLabel={(option) => option}
       isOptionEqualToValue={(option, value) => option === value}
-      loading={loading}
-      onChange={onChange}
-      onInputChange={onInputChange}
-      options={options || []}
+      options={options}
+      {...props}
       renderInput={(params) => (
         <TextField
           {...params}
-          {...props}
+          {...textFieldProps}
           InputProps={{
             ...params.InputProps,
-            ...props.InputProps,
+            ...textFieldProps.InputProps,
             endAdornment: (
               <Fragment>
-                {loading ? (
+                {props.loading ? (
                   <Loader size={20} sx={{ color: 'primary.600' }} />
                 ) : null}
-                {params.InputProps.endAdornment}
+                {props.value &&
+                  !hideCLearIcon &&
+                  params.InputProps.endAdornment}
               </Fragment>
             )
           }}
         />
       )}
-      sx={autocompleteStyles}
-      value={fieldValue}
     />
   )
 }
+
 export default AppAutoComplete

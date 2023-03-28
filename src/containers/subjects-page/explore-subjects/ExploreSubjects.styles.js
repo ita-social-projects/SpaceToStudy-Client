@@ -7,6 +7,11 @@ export const styles = {
   sectionTitle: {
     typography: { sm: 'h4', xs: 'h5' }
   },
+  categoryInput: {
+    width: '100%',
+    maxWidth: '220px',
+    mr: '30px'
+  },
   navigation: {
     display: 'flex',
     justifyContent: 'space-between'

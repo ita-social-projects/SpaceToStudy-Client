@@ -10,7 +10,14 @@ import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
 
 import { styles } from '~/components/search-with-filters/SearchWithFilters.styles'
 
-const SearchWithFilters = ({ options, search, setSearch, ...props }) => {
+const SearchWithFilters = ({
+  filters,
+  options,
+  search,
+  setSearch,
+  textFieldProps,
+  ...props
+}) => {
   const { t } = useTranslation()
   const [searchInput, setSearchInput] = useState(search)
 
@@ -27,30 +34,33 @@ const SearchWithFilters = ({ options, search, setSearch, ...props }) => {
     setSearch(searchInput)
   }
 
-  const optionItems = options.map((item) => item.title)
-
   return (
     <Box sx={styles.container}>
+      {filters}
+
       <SearchIcon sx={styles.searchIcon} />
 
       <AppAutoComplete
-        InputLabelProps={{ style: styles.inputLabel }}
-        InputProps={{ disableUnderline: true }}
         ListboxProps={{ style: styles.listBox }}
-        autocompleteStyles={{ flex: 1 }}
-        data-testid='searchWithFilters'
-        fieldValue={searchInput}
         filterOptions={filterOptions}
         freeSolo
+        hideCLearIcon
         onInputChange={onInputChange}
-        options={optionItems}
-        sx={styles.input}
-        variant='standard'
+        options={options}
+        sx={{ flex: 1 }}
+        textFieldProps={{
+          ...textFieldProps,
+          InputLabelProps: { style: styles.inputLabel },
+          InputProps: { disableUnderline: true },
+          sx: styles.input,
+          variant: 'standard'
+        }}
+        value={searchInput}
         {...props}
       />
 
       <Button onClick={onSearch} sx={styles.searchBtn} variant='contained'>
-        {t('categoriesPage.categories.searchBtn')}
+        {t('common.search')}
       </Button>
     </Box>
   )
