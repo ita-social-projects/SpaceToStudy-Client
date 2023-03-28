@@ -23,7 +23,7 @@ import completeProfile from './complete-profile.json'
 import tutorProfilePage from './tutor-profile-page.json'
 import adminTable from './admin-table.json'
 import constant from './constant.json'
-import findOffers from './find-offer-page.json'
+import findOffer from './find-offer-page.json'
 import filters from './filters.json'
 
 const en = {
@@ -53,7 +53,7 @@ const en = {
     tutorProfilePage,
     adminTable,
     constant,
-    findOffers,
+    findOffer,
     filters
   }
 }
