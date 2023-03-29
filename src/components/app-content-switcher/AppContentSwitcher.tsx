@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import { TypographyProps } from '@mui/material/Typography'
 import { Typography } from '@mui/material'
+import { SxProps } from '@mui/system'
 import Tooltip from '@mui/material/Tooltip'
 import Switch from '@mui/material/Switch'
 import Stack from '@mui/material/Stack'
@@ -12,7 +13,7 @@ interface SwitcherProps {
     onChange: () => void;
     switchOptions: SwitchOptions
     typographyVariant: TypographyProps['variant'];
-    styles?: object;
+    styles?: SxProps;
 }
 
 const AppContentSwitcher: FC<SwitcherProps> = ({ active, onChange, switchOptions, typographyVariant, styles }) => {
