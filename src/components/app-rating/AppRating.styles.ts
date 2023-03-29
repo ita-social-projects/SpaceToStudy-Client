@@ -8,11 +8,16 @@ export const styles = {
     width: 'fit-content',
     height: 'fit-content'
   },
-  number: { lineHeight: 'normal' },
-  emptyIcon: { color:'primary.200' },
+  number: {
+    lineHeight: 'normal'
+  },
+  emptyIcon: {
+    color: 'primary.200'
+  },
   stars: { 
     typography: 'body2',
     '& .MuiRating-icon': {
       mx: '1px'
-    } }
+    }
+  }
 }

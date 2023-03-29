@@ -11,6 +11,9 @@
   "search": "Search",
   "delete": "Delete",
   "confirmButton": "OK",
+  "uah": "UAH",
+  "hour": "HOUR",
+  "beginner": "Beginner",
   "labels": {
     "email": "Email",
     "firstName": "First name",
@@ -22,7 +25,9 @@
     "login": "Login",
     "signup": "Sign up",
     "country": "Country",
-    "city": "City"
+    "city": "City",
+    "sendMessage": "Send message",
+    "viewDetails": "View details"
   },
   "errorMessages": {
     "emailValid": "Email should be of the following format: “local-part@domain.com”",

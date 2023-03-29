@@ -6,17 +6,15 @@ import { SxProps } from '@mui/system'
 
 import { styles } from '~/components/app-chips-list/AppChipsList-styles'
 
-
 interface AppChipProps {
-  handleDelete:() => void,
-  children:ReactNode,
-  icon:React.ReactElement<SvgIconProps>,
+  handleDelete: () => void,
+  children: ReactNode,
+  icon: React.ReactElement<SvgIconProps>,
   sx?: SxProps,
+  labelSx?: SxProps
 }
 
-
-const AppChip:React.FC<AppChipProps> = ({ handleDelete, children, icon }) => {
-  
+const AppChip: React.FC<AppChipProps> = ({ handleDelete, children, icon, sx, labelSx }) => {
   return (
     <Chip
       data-testid='chip'
@@ -28,11 +26,11 @@ const AppChip:React.FC<AppChipProps> = ({ handleDelete, children, icon }) => {
         </IconButton>
       }
       icon={ icon }
-      label={ <Typography sx={ { typography: 'subtitle2' } }>
+      label={ <Typography sx={ { typography: 'subtitle2', ...labelSx } }>
         { children }
       </Typography> }
       onDelete={ handleDelete }
-      sx={ styles.chip }
+      sx={ { ...styles.chip, ...sx } }
     />
   )
 }

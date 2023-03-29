@@ -1,7 +1,8 @@
-import { blueGrey } from '@mui/material/colors'
+import { blueGrey, green } from '@mui/material/colors'
 
 const palette = {
   primary: blueGrey,
+  green,
   backgroundColor: '#F7F7F7',
   basic: {
     black: '#000000',
