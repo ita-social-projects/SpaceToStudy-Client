@@ -1,10 +1,21 @@
 import { useState } from 'react'
 
+import Container from '@mui/material/Container'
+
 import useBreakpoints from '~/hooks/use-breakpoints'
 import OfferCard from '~/components/offer-card/OfferCard'
 import AppPagination from '~/components/app-pagination/AppPagination'
+import OfferFilterBlock from '~/containers/find-offer/offer-filter-block/OfferFilterBlock'
+import { useFilterQuery } from '~/hooks/use-filter-query'
+
+const defaultFilters = {
+  sort: 'createdAt',
+  language: 'All languages',
+  native: 'false' 
+}
 
 const FindOffers = () => {
+  const { filters, updateFilter, resetFilters, updateQueryParams } = useFilterQuery({ defaultFilters })
   const { isMobile } = useBreakpoints()
   const size = isMobile ? 'small' : 'medium'
   const [currentPage, setCurrentPage] = useState(1)
@@ -29,25 +40,31 @@ const FindOffers = () => {
     pageSize: 5
   }
 
-  const onBookmarkClick = (id) => {}
+  const onBookmarkClick = (id) => {console.log(id)}
 
   return (
-    <div>
+    <Container sx={ { flex:1 } }>
       FindOffers Page Placeholder
 
       <OfferCard
-        offer={mockOffer}
+        offer={ mockOffer }
         onBookmarkClick={ () => onBookmarkClick(mockOffer.id) }
       />
 
+      <OfferFilterBlock
+        filters={ filters } 
+        resetFilters={ resetFilters } 
+        setFilters={ updateFilter }
+        setFiltersToQuery={ updateQueryParams }
+      /> 
       <AppPagination
-        itemsCount={mockDataPagination.itemsCount}
-        page={mockDataPagination.page}
-        pageSize={mockDataPagination.pageSize}
-        setCurrentPage={setCurrentPage}
-        size={size}
+        itemsCount={ mockDataPagination.itemsCount }
+        page={ mockDataPagination.page }
+        pageSize={ mockDataPagination.pageSize }
+        setCurrentPage={ setCurrentPage }
+        size={ size }
       />
-    </div>
+    </Container>
   )
 }
 

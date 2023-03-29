@@ -1,58 +1,50 @@
-import { FC, useState } from 'react'
+import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Checkbox from '@mui/material/Checkbox'
 import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
+import Typography, { TypographyProps } from '@mui/material/Typography'
+import FormControlLabel from '@mui/material/FormControlLabel'
 
 import { styles } from './CheckboxList.styles'
 
-import { CheckboxType } from './CheckboxList.types'
-
-interface CheckboxListProps {
-  items: CheckboxType[]
+interface CheckboxListProps extends Pick<TypographyProps, 'variant'> {
+  items: string[]
+  value: string[]
   title?: string
-  getCheckboxes: (checkbox: CheckboxType[]) => void
+  onChange: (checkbox: string[]) => void
 }
 
-const CheckboxList: FC<CheckboxListProps> = ({ items, title = '', getCheckboxes }) => {
-  const [checkboxes,setCheckboxes] = useState<CheckboxType[]>(items)
-
+const CheckboxList: FC<CheckboxListProps> = ({ items, value=[], title, variant, onChange }) => { 
   const { t } = useTranslation()
 
-  const handleCheckbox = (checkbox: CheckboxType) => {
-    const updatedCheckboxes = checkboxes.map((prevCheckbox) => {
-      if (prevCheckbox.title === checkbox.title) 
-        return { ...prevCheckbox, checked: !prevCheckbox.checked }
-      else 
-        return prevCheckbox
-    })
-    setCheckboxes(updatedCheckboxes)
-    getCheckboxes(updatedCheckboxes)
+  const handleCheckbox = (checkbox: string) => {
+    const updatedCheckboxes = value.includes(checkbox) ? value.filter(el => el!==checkbox) : [...value, checkbox]
+    onChange(updatedCheckboxes)
   }
 
-  const checkboxesList = checkboxes.map((checkbox) => (
-    <Box key={ checkbox.title } sx={ styles.itemContainer }>
-      <Checkbox
-        inputProps={ { 'aria-label': checkbox.title } }
-        onChange={ () => handleCheckbox(checkbox) }
-        sx={ styles.checkbox }
-        value={ checkbox.checked }
-      />
-      <Typography>
-        { t(checkbox.title) }
-      </Typography>
-    </Box>
+  const checkboxesList = items.map((checkbox) => (
+    <FormControlLabel
+      checked={ value.includes(checkbox) }
+      control={ <Checkbox inputProps={ { 'aria-label': checkbox } } sx={ styles.checkbox  } /> } 
+      key={ checkbox }
+      label={ 
+        <Typography variant={ variant }>
+          { t(checkbox) }
+        </Typography> 
+      }
+      onChange={ () => handleCheckbox(checkbox) }
+    />
   ))
 
-  const checkboxesTitle = title.length ? (
+  const checkboxesTitle = title && (
     <Typography aria-label='checkboxes-list-title' sx={ styles.title } variant='h6' >
       { t(title) }
     </Typography>
-  ) : null
+  )
 
   return (
-    <Box>
+    <Box sx={ styles.root }>
       { checkboxesTitle }
       { checkboxesList }
     </Box>
