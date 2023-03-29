@@ -4,7 +4,7 @@ import Switch from '@mui/material/Switch'
 import Stack from '@mui/material/Stack'
 import { defaultStyles } from '~/components/app-content-switcher/AppContentSwitcher.styles'
 
-const AppContentSwitcher = ({ active, handleChange, switchOptions, typographyVariant, styles }) => {
+const AppContentSwitcher = ({ active, handleChange, switchOptions, typographyVariant, styles = {} }) => {
 
   const renderBlock = (options, active) => (
     options && (<Tooltip arrow title={ options.tooltip }>

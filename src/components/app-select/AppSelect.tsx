@@ -6,6 +6,8 @@ import Select, { SelectChangeEvent } from '@mui/material/Select'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
+import { SxProps } from '@mui/material'
+
 import { styles } from '~/components/app-select/AppSelect.styles'
 import { SelectFieldType } from '~/types'
 
@@ -14,9 +16,10 @@ interface AppSelectProps {
   value:string,
   fields:SelectFieldType[],
   selectTitle?:string,
+  sx?:SxProps
 }
 
-const AppSelect:FC<AppSelectProps> = ({ setValue, value, fields, selectTitle = '' }) => {
+const AppSelect:FC<AppSelectProps> = ({ setValue, value, fields, selectTitle = '', sx = {} }) => {
   const { t } = useTranslation()
 
   const changeValue = (e:SelectChangeEvent<string>) => setValue(e.target.value)
@@ -33,7 +36,7 @@ const AppSelect:FC<AppSelectProps> = ({ setValue, value, fields, selectTitle = '
   ) : null 
 
   return (
-    <Box sx={ styles.selectContainer } >
+    <Box sx={ { ...styles.selectContainer, ...sx } } >
       { titleEl }
       <Select
         inputProps={ { 'data-testid': 'app-select' } }

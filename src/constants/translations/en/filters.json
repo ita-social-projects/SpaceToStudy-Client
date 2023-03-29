@@ -2,9 +2,11 @@
     "sortBy":{
         "sortByTitle":"Sort by:",
         "sortByFields":{
-            "newest":"Newest",
-            "popularity":"Popularity",
-            "tutorRating":"Tutor rating"
+            "tutorRating":"Tutor rating",
+            "ascendingPrice":"Ascending price",
+            "descendingPrice": "Descending price",
+            "creationTime": "Creation time"
         }
-    }
+    },
+    "filtersListTitle": "Filters"
 }

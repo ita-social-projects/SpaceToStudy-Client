@@ -2,9 +2,11 @@
     "sortBy":{
     	"sortByTitle":"Сортувати за:",
     	"sortByFields":{
-        	"newest":"Найновішими",
-       		"popularity":"Популярністю",
-        	"tutorRating":"Рейтингом репетитора"
+        	"tutorRating":"Рейтингом викладача",
+            "ascendingPrice":"Зростанням ціни",
+            "descendingPrice": "Спаданням ціни",
+            "creationTime": "Часом створення"
     	}
-    }
+    },
+	"filtersListTitle": "Фільтри"
 }
