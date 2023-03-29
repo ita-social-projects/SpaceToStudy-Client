@@ -18,25 +18,24 @@ describe('RadioButtonInputs test', () => {
     render(<RadioButtonInputs { ...mockedProps } />)
   })
 
-  it('Should render radio buttons title correctly'),
-  () => {
+  it('Should render radio buttons title correctly', () => {
     const radioButtonTitle = screen.getByLabelText('First Radio Title')
 
-    expect(radioButtonTitle).toBeInDocument()
-  }
-  it('Should call onChange function with the selected value'),
-  () => {
+    expect(radioButtonTitle).toBeInTheDocument()
+  })
+
+  it('Should call onChange function with the selected value', () => {
     const radioButton = screen.getByLabelText('Third Radio Title')
 
     fireEvent.click(radioButton)
 
     expect(mockedProps.onChange).toHaveBeenCalled(1)
-    expect(mockedProps.onChange).toHaveBeenCalledWith('Third Radio Title')
-  }
-  it('Should render title if it provided'),
-  () => {
+    expect(mockedProps.onChange).toHaveBeenCalledWith('2')
+  })
+
+  it('Should render title if it provided', () => {
     const titleElement = screen.getByText('Rating')
 
     expect(titleElement).toBeInTheDocument()
-  }
+  })
 })

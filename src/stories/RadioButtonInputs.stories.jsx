@@ -1,5 +1,5 @@
-import RadioButtonInputs from '~/components/radio-button-inputs/RadioButtonInputs'
 import { useState } from 'react'
+import RadioButtonInputs from '~/components/radio-button-inputs/RadioButtonInputs'
 
 export default {
   title: 'RadioButtonInputs',
