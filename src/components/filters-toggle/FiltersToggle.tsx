@@ -14,7 +14,7 @@ interface FiltersToggleProps {
 
 const FiltersToggle:FC<FiltersToggleProps> = ({ chosenFiltersQty = 0, handleToggle }) => {
   const { t } = useTranslation()
-  
+
   return (
     <Box sx={ styles.container }>
       <Box onClick={ handleToggle } sx={ styles.cursorContainer }>

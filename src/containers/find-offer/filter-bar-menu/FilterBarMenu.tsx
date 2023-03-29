@@ -8,7 +8,7 @@ import useBreakpoints from '~/hooks/use-breakpoints'
 import AppContentSwitcher from '~/components/app-content-switcher/AppContentSwitcher'
 import AppSelect from '~/components/app-select/AppSelect'
 import ViewSwitcher from '~/components/view-switcher/ViewSwitcher'
-import FiltersToggle from '~/components/filters-title/FiltersToggle'
+import FiltersToggle from '~/components/filters-toggle/FiltersToggle'
 
 import { styles } from '~/containers/find-offer/filter-bar-menu/FilterBarMenu.styles'
 import { sortByFields } from '~/containers/find-offer/filter-bar-menu/FilterBarMenu.constants'
