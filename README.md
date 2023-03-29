@@ -289,6 +289,8 @@ Only the release should merge into the main branch!!!
 ### DevOps team
 
 [![@redbearddog](https://avatars.githubusercontent.com/u/54843443?v=4)](https://github.com/redbearddog)
+[![@abohatyrov](https://avatars.githubusercontent.com/u/52012169?v=4)](https://github.com/abohatyrov)
+[![@panasyg](https://avatars.githubusercontent.com/u/91308486?v=4)](https://github.com/panasyg)
 
 ### Designer team
 
