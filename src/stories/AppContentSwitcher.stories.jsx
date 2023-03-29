@@ -6,8 +6,8 @@ export default {
   component: AppContentSwitcher,
   title: 'AppContentSwitcher',
   argTypes: {
-    handleChange:{
-      action: 'handleChange',
+    onChange:{
+      action: 'onChange',
       type:'function',
       description:'changes state that shows the content'
     },
@@ -25,7 +25,7 @@ export default {
 
 const Template = (args) => {
   const [active, setActive] = useState(true)
-  const handleChange = () => {
+  const onChange = () => {
     setActive(!active)
     action('set new state')(active)
   }
@@ -33,7 +33,7 @@ const Template = (args) => {
     <AppContentSwitcher
       { ...args }
       active={ active }
-      handleChange={ handleChange }
+      onChange={ onChange }
     />
   )
 }
@@ -45,14 +45,14 @@ const switchOptions = {
   },
   right: {
     text: 'right text',
-    tooltip: 'right tooltip',
+    tooltip: 'right tooltip'
   }
 }
 
 export const Default = Template.bind({})
 Default.args = {
   switchOptions: switchOptions,
-  typographyVariant: 'h6',
+  typographyVariant: 'h6'
 }
 
 export const WithCustomStyles = Template.bind({})
