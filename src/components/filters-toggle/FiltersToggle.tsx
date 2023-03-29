@@ -17,14 +17,14 @@ const FiltersToggle:FC<FiltersToggleProps> = ({ chosenFiltersQty = 0, handleTogg
 
   return (
     <Box sx={ styles.container }>
-      <Box onClick={ handleToggle } sx={ styles.cursorContainer }>
+      <Box data-testid='toggle-button' onClick={ handleToggle } sx={ styles.cursorContainer } >
         <FilterListIcon sx={ styles.icon } />
         <Typography sx={ styles.title } variant='h6'>
           { t('filters.filtersListTitle') }
         </Typography>
       </Box>
       { chosenFiltersQty ? (
-        <Typography sx={ styles.chosenFiltersQty } variant='subtitle2'>
+        <Typography data-testid='filters-qty' sx={ styles.chosenFiltersQty } variant='subtitle2'>
           { chosenFiltersQty }
         </Typography>
       ) : null }
