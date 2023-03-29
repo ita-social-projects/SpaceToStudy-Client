@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import FilterListIcon from '@mui/icons-material/FilterList'
 
-import { styles } from '~/components/filters-title/FiltersToggle.styles'
+import { styles } from '~/components/filters-toggle/FiltersToggle.styles'
 
 interface FiltersToggleProps {
     chosenFiltersQty?:number,
