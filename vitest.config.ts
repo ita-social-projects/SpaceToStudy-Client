@@ -20,12 +20,12 @@ export default defineConfig({
     exclude: [...configDefaults.exclude, 'packages/template/*'],
     coverage: {
       all: true,
-      reporter: 'lcov',
+      reporter: ['lcov', 'text'],
       include: ['src/**/*.jsx','src/**/*.tsx'],
       exclude: ['src/stories/*', './tests/setup-tests.js'],
       reportsDirectory: './tests/coverage'
     },
-    reporters: 'vitest-sonar-reporter',
+    reporters: ['vitest-sonar-reporter', 'default'],
     outputFile: 'test-report.xml'
   }
 })
