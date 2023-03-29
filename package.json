@@ -81,7 +81,7 @@
     "serve": "vite preview",
     "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\" --fix",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook",
+    "build-storybook": "build-storybook -o build-story",
     "prepare": "husky install",
     "pre-commit": "lint-staged"
   },
