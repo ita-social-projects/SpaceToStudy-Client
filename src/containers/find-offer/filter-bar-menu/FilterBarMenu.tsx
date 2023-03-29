@@ -71,7 +71,7 @@ const FilterBarMenu: FC<FilterBarMenuProps> = ({ chosenFiltersQty, toggleFilters
             sx={ isDesktop ? styles.selectContainer : {} }
             value={ filters.sortBy }
           />
-          { isDesktop ? <ViewSwitcher offersView={ offersView } setOffersView={ handleOffersView } /> : null }
+          { isDesktop ? <ViewSwitcher onChange={ handleOffersView } value={ offersView } /> : null }
         </Box>
       ) : null } 
     </Box>
