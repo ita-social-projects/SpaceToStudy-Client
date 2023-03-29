@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { createFilterOptions } from '@mui/material'
@@ -10,7 +10,15 @@ import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
 
 import { styles } from '~/components/search-with-filters/SearchWithFilters.styles'
 
-const SearchWithFilters = ({
+interface SearchWithFiltersProps {
+  filters: React.ReactNode
+  options: string[]
+  search: string
+  setSearch: (value: string) => void
+  textFieldProps?: Record<string, unknown>
+}
+
+const SearchWithFilters: FC<SearchWithFiltersProps> = ({
   filters,
   options,
   search,
@@ -19,14 +27,17 @@ const SearchWithFilters = ({
   ...props
 }) => {
   const { t } = useTranslation()
-  const [searchInput, setSearchInput] = useState(search)
+  const [searchInput, setSearchInput] = useState<string>(search)
 
-  const filterOptions = (options, state) => {
-    const defaultFilterOptions = createFilterOptions()
+  const filterOptions = (
+    options: string[],
+    state: { inputValue: string; getOptionLabel: (option: string) => string }
+  ) => {
+    const defaultFilterOptions = createFilterOptions<string>()
     return defaultFilterOptions(options, state).slice(0, 6)
   }
 
-  const onInputChange = (_, value) => {
+  const onInputChange = (_: React.ChangeEvent, value: string) => {
     setSearchInput(value)
   }
 

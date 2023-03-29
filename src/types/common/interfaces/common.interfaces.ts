@@ -5,11 +5,21 @@ export interface UserInterface {
 }
 
 export interface CategoryInterface {
+  _id: string
   name: string
+  categoryIcon: string
+  totalOffers: number
+  createdAt: string
+  updatedAt: string
 }
 
 export interface SubjectInterface {
+  _id: string
   name: string
+  category: string
+  totalOffers: number
+  createdAt: string
+  updatedAt: string
 }
 
 export interface OfferInterface {

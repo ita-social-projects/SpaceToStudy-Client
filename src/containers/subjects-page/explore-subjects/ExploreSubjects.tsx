@@ -17,6 +17,7 @@ import { styles } from '~/containers/subjects-page/explore-subjects/ExploreSubje
 import { guestRoutes } from '~/router/constants/guestRoutes'
 import { categoryService } from '~/services/category-service'
 import { subjectService } from '~/services/subject-service'
+import { CategoryInterface, SubjectInterface } from '~/types'
 
 const ExploreSubjects = () => {
   const { t } = useTranslation()
@@ -24,21 +25,25 @@ const ExploreSubjects = () => {
   const categoryId = searchParams.get('catId')
   const categoryIdConvertType = categoryId === 'null' ? null : categoryId
 
-  const [searchValue, setSearchValue] = useState('')
-  const [category, setCategory] = useState(categoryIdConvertType)
+  const [searchValue, setSearchValue] = useState<string>('')
+  const [category, setCategory] = useState<string | null>(categoryIdConvertType)
 
   const getCategories = useCallback(() => categoryService.getCategories(), [])
   const getSubjects = useCallback(() => subjectService.getSubjects(), [])
 
-  const { loading: categoriesLoading, response: catogoriesData } = useAxios({ service: getCategories })
-  const { loading: subjectsLoading, response: subjectsData } = useAxios({ service: getSubjects })
+  const { loading: categoriesLoading, response: catogoriesData } = useAxios<CategoryInterface[]>({
+    service: getCategories
+  })
+  const { loading: subjectsLoading, response: subjectsData } = useAxios<SubjectInterface[]>({ service: getSubjects })
 
-  const categoryItems = !categoriesLoading ? catogoriesData.data.map((item) => item.name) : []
-  const optionItems = !subjectsLoading ? subjectsData.data.map((item) => item.name) : []
+  const categoryItems = !categoriesLoading
+    ? catogoriesData.data.map((item: Pick<CategoryInterface, 'name'>) => item.name)
+    : []
+  const optionItems = !subjectsLoading ? subjectsData.data.map((item: Pick<SubjectInterface, 'name'>) => item.name) : []
 
-  const onCategoryChange = (_, value) => {
+  const onCategoryChange = (_: React.ChangeEvent, value: string | null) => {
     setCategory(value)
-    setSearchParams({ catId: value })
+    setSearchParams({ catId: value?.toString() ?? 'null' })
   }
 
   const filters = (
