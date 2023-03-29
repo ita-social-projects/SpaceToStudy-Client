@@ -123,24 +123,28 @@ const GeneralInfoStep = ({ btnsBox, stepLabel, isUserFetched, setIsUserFetched }
             />
 
             <AppAutoComplete
-              fieldValue={ data.country }
-              label={ t('common.labels.country') }
+              freeSolo
               onChange={ onChangeCountry }
               options={ countries }
-              sx={ { mb: '30px' } }
-              type='text'
+              textFieldProps={ {
+                label: t('common.labels.country'),
+                sx: { mb: '30px' }
+              } }
+              value={ data.country }
             />
 
             <AppAutoComplete
               disabled={ !data.country }
-              fieldValue={ data.city }
               filterOptions={ filterOptions }
-              label={ t('common.labels.city') }
+              freeSolo
               loading={ loading }
               onChange={ onChangeCity }
               options={ cities }
-              sx={ { mb: '30px' } }
-              type='text'
+              textFieldProps={ {
+                label: t('common.labels.city'),
+                sx: { mb: '30px' }
+              } }
+              value={ data.city }
             />
           </Box>
 

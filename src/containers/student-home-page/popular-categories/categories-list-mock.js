@@ -2,129 +2,129 @@ import serviceIcon from '~/assets/img/student-home-page/service_icon.png'
 
 export const categoriesListMock = [
   {
-    id: '1',
+    _id: '1',
     img: serviceIcon,
-    description: '234 offers',
-    title: 'Languages',
+    totalOffers: '234',
+    name: 'Languages',
     link: '#'
   },
   {
-    id: '2',
+    _id: '2',
     img: serviceIcon,
-    description: '234 offers',
-    title: 'Mathematics',
+    totalOffers: '234',
+    name: 'Mathematics',
     link: '#'
   },
   {
-    id: '3',
+    _id: '3',
     img: serviceIcon,
-    description: '234 offers',
-    title: 'Computer science',
+    totalOffers: '234',
+    name: 'Computer science',
     link: '#'
   },
   {
-    id: '4',
+    _id: '4',
     img: serviceIcon,
-    description: '234 offers',
-    title: 'Music',
+    totalOffers: '234',
+    name: 'Music',
     link: '#'
   },
   {
-    id: '5',
+    _id: '5',
     img: serviceIcon,
-    description: '234 offers',
-    title: 'Design',
+    totalOffers: '234',
+    name: 'Design',
     link: '#'
   },
   {
-    id: '6',
+    _id: '6',
     img: serviceIcon,
-    description: '234 offers',
-    title: 'History',
+    totalOffers: '234',
+    name: 'History',
     link: '#'
   },
   {
-    id: '7',
+    _id: '7',
     img: serviceIcon,
-    description: '234 offers',
-    title: 'Biology',
+    totalOffers: '234',
+    name: 'Biology',
     link: '#'
   },
   {
-    id: '8',
+    _id: '8',
     img: serviceIcon,
-    description: '234 offers',
-    title: 'Painting',
+    totalOffers: '234',
+    name: 'Painting',
     link: '#'
   },
   {
-    id: '9',
+    _id: '9',
     img: serviceIcon,
-    description: '234 offers',
-    title: 'Finances',
+    totalOffers: '234',
+    name: 'Finances',
     link: '#'
   },
   {
-    id: '10',
+    _id: '10',
     img: serviceIcon,
-    description: '234 offers',
-    title: 'Audit',
+    totalOffers: '234',
+    name: 'Audit',
     link: '#'
   },
   {
-    id: '11',
+    _id: '11',
     img: serviceIcon,
-    description: '234 offers',
-    title: 'Chemistry',
+    totalOffers: '234',
+    name: 'Chemistry',
     link: '#'
   },
   {
-    id: '12',
+    _id: '12',
     img: serviceIcon,
-    description: '234 offers',
-    title: 'Astronomy',
+    totalOffers: '234',
+    name: 'Astronomy',
     link: '#'
   },
   {
-    id: '13',
+    _id: '13',
     img: serviceIcon,
-    description: '234 offers',
-    title: 'Investing',
+    totalOffers: '234',
+    name: 'Investing',
     link: '#'
   },
   {
-    id: '14',
+    _id: '14',
     img: serviceIcon,
-    description: '234 offers',
-    title: 'Meditation',
+    totalOffers: '234',
+    name: 'Meditation',
     link: '#'
   },
   {
-    id: '15',
+    _id: '15',
     img: serviceIcon,
-    description: '234 offers',
-    title: 'Physics',
+    totalOffers: '234',
+    name: 'Physics',
     link: '#'
   },
   {
-    id: '16',
+    _id: '16',
     img: serviceIcon,
-    description: '234 offers',
-    title: 'Art',
+    totalOffers: '234',
+    name: 'Art',
     link: '#'
   },
   {
-    id: '17',
+    _id: '17',
     img: serviceIcon,
-    description: '234 offers',
-    title: 'Astronomy',
+    totalOffers: '234',
+    name: 'Astronomy',
     link: '#'
   },
   {
-    id: '18',
+    _id: '18',
     img: serviceIcon,
-    description: '234 offers',
-    title: 'Anatomy',
+    totalOffers: '234',
+    name: 'Anatomy',
     link: '#'
   }
 ]

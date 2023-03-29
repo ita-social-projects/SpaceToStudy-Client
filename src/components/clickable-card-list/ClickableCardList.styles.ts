@@ -2,12 +2,15 @@ export const styles = {
   cardsContainer: {
     display: 'grid',
     gridTemplateColumns: {
-      xs: 'repeat(auto-fit, minmax(288px, 1fr))',
-      sm: 'repeat(auto-fit, minmax(360px, 1fr))'
+      xs: 'repeat(auto-fit, 288px)',
+      sm: 'repeat(auto-fit, 368px)'
     },
     gridAutoRows: '126px',
     gridGap: '24px',
     mb: '32px'
   },
-  btn: { m: '0 auto' }
+  btn: {
+    display: 'block',
+    m: '0 auto'
+  }
 }

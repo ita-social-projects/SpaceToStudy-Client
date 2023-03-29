@@ -1,11 +1,10 @@
 {
-  "categories": {
-    "title": "Categories",
-    "description": "Explore categories you're passionate about.",
-    "showAllOffers": "Show all offers",
-    "searchLabel": "What would you like to learn?",
-    "clearBtn": "Clear",
-    "searchBtn": "Search",
-    "viewMore": "View more"
-  }
+  "title": "Categories",
+  "description": "Explore categories you're passionate about.",
+  "showAllOffers": "Show all offers",
+  "searchLabel": "What would you like to learn?",
+  "clearBtn": "Clear",
+  "searchBtn": "Search",
+  "viewMore": "View more",
+  "offers": "offers"
 }

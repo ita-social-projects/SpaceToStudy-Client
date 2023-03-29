@@ -1,10 +1,11 @@
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 
-import useBreakpoints from '~/hooks/use-breakpoints'
 import ClickableCardList from '~/components/clickable-card-list/ClickableCardList'
+import ClickableCard from '~/components/clickable-card/ClickableCard'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 
+import serviceIcon from '~/assets/img/student-home-page/service_icon.png'
 import { categoriesListMock } from '~/containers/student-home-page/popular-categories/categories-list-mock'
 import { studentRoutes } from '~/router/constants/studentRoutes'
 
@@ -12,10 +13,17 @@ const sectionId = studentRoutes.navBar.categories.route
 
 const PopularCategories = () => {
   const { t } = useTranslation()
-  const { isDesktop, isTablet, isMobile } = useBreakpoints()
 
-  const itemsToShow = (isDesktop && 6) || (isTablet && 6) || (isMobile && 4)
-  const itemsToAdd = (isDesktop && 6) || (isTablet && 4) || (isMobile && 4)
+  const cards = categoriesListMock.slice(0, 6).map((item) => {
+    return (
+      <ClickableCard
+        description={ `${item.totalOffers} ${t('categoriesPage.offers')}` }
+        img={ serviceIcon }
+        key={ item._id }
+        title={ item.name }
+      />
+    )
+  })
 
   return (
     <Box className='section' id={ sectionId } sx={ { flexDirection: 'column', alignItems: 'stretch' } }>
@@ -27,10 +35,9 @@ const PopularCategories = () => {
       />
       
       <ClickableCardList
-        allItems={ categoriesListMock }
         btnText={ t('studentHomePage.popularCategories.viewMore') }
-        itemsToAdd={ itemsToAdd }
-        itemsToShow={ itemsToShow }
+        cards={ cards }
+        isExpandable
       />
     </Box>
   )

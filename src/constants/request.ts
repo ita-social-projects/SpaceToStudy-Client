@@ -20,5 +20,9 @@ export const URLs = {
     get: '/users',
     delete: '/users/delete',
     myProfile: '/users/myProfile'
+  },
+  categories: {
+    get: '/categories',
+    getNames: '/categories/names'
   }
 }

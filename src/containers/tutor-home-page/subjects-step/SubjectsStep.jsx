@@ -74,23 +74,25 @@ const SubjectsStep = ({ stepLabel, btnsBox }) => {
           </Typography>
           { isMobile && imageBlock }
           <AppAutoComplete
-            fieldValue={ subjects.category }
-            id={ t('becomeTutor.categories.mainSubjectsLabel') }
-            label={ t('becomeTutor.categories.mainSubjectsLabel') }
             onChange={ onChangeCategory }
             options={ categoriesMockOptions }
-            sx={ { mb: '20px' } }
-            type='text'
+            textFieldProps={ {
+              label: t('becomeTutor.categories.mainSubjectsLabel'),
+              id: t('becomeTutor.categories.mainSubjectsLabel'),
+              sx: { mb: '20px' }
+            } }
+            value={ subjects.category }
           />
           <AppAutoComplete
             disabled={ !subjects.category }
-            fieldValue={ subjects.subject }
-            id={ t('becomeTutor.categories.subjectLabel') }
-            label={ t('becomeTutor.categories.subjectLabel') }
             onChange={ onChangeSubject }
             options={ languagesMockOptions }
-            sx={ { mb: '20px' } }
-            type='text'
+            textFieldProps={ {
+              label: t('becomeTutor.categories.subjectLabel'),
+              id: t('becomeTutor.categories.subjectLabel'),
+              sx: { mb: '20px' }
+            } }
+            value={ subjects.subject }
           />
           <Button
             data-testid='add-subject' fullWidth onClick={ addSubject }

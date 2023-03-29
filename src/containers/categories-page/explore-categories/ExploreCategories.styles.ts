@@ -1,8 +1,7 @@
 export const styles = {
   container: {
-    flexDirection: 'column',
-    alignItems: 'stretch',
-    mt: '80px'
+    textAlign: 'right',
+    my: '80px'
   },
   sectionTitle: {
     typography: { sm: 'h4', xs: 'h5' }
@@ -11,8 +10,7 @@ export const styles = {
     typography: { sm: 'body1', xs: 'body2' }
   },
   showAllOffers: {
-    display: 'flex',
-    justifyContent: 'end',
+    display: 'inline-flex',
     alignItems: 'center',
     columnGap: '10px',
     color: 'primary.500',
