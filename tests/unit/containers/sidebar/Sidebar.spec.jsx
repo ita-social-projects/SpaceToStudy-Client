@@ -10,7 +10,7 @@ describe('Sidebar test', () => {
 
   beforeEach(() => {
     renderWithProviders(
-      <Sidebar isSidebarOpen={isSidebarOpen} navigationItems={navigationItems} setIsSidebarOpen={setIsSidebarOpen} />
+      <Sidebar isSidebarOpen={ isSidebarOpen } navigationItems={ navigationItems } setIsSidebarOpen={ setIsSidebarOpen } />
     )
   })
 
@@ -29,7 +29,7 @@ describe('Sidebar test', () => {
   })
 
   it('should call setIsSidebarOpen with false after click button', async () => {
-    const closeIcon = screen.getByTestId('CloseIcon')
+    const closeIcon = screen.getByTestId('CloseRoundedIcon')
     fireEvent.click(closeIcon)
 
     await waitFor(() => expect(setIsSidebarOpen).toHaveBeenCalledWith(false))

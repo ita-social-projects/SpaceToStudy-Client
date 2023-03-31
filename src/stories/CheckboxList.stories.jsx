@@ -21,7 +21,7 @@ const Template = (args) => <CheckboxList { ...args } />
 
 export const Default = Template.bind({})
 
-const defaultItems = [{ title: 'Beginner', checked: false }, { title: 'Intermediate', checked: false }, { title: 'Advanced', checked: false }]
+const defaultItems = ['Beginner', 'Intermediate', 'Advanced']
 
 Default.args = {
   items:defaultItems,

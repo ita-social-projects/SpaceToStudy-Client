@@ -5,7 +5,7 @@ const container = {
 
 export const styles = {
   container,
-  cursorContainer:{ ...container, cursor:'pointer' },
+  cursorContainer: (clickable: boolean) => ({ ...container, cursor: clickable ? 'pointer' : 'standart' }),
   title:{
     color:'primary.700',
     mr:'7px',

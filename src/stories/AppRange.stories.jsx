@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import AppRange from '~/components/app-range/AppRange'
 
 export default {
@@ -5,21 +6,35 @@ export default {
   component: AppRange,
   argTypes: {
     min: {
-      description: 'The minimum value for the filter'
+      type: 'number',
+      description: 'The minimum value for the range slider'
     },
     max: {
-      description: 'The maximum value for the filter'
+      type: 'number',
+      description: 'The maximum value for the range slider'
+    },
+    value: {
+      type: 'array',
+      description: 'The current value of the range slider'
     },
     onChange: {
-      description: 'A callback function that is called when the filter value changes',
+      description: 'A callback function that is called when the range value changes',
       action: 'Changed'
     }
   }
 }
 
-const Template = (args) => <AppRange { ...args } />
+export const Default = ({ min, max, value: initialValue }) => {
+  const [ value, setValue ] = useState(initialValue)
 
-export const Default = Template.bind({})
+  return (
+    <AppRange
+      max={ max } min={ min } onChange={ setValue }
+      value={ value }
+    />
+  )
+}
+
 Default.args = {
   min: 0,
   max: 1000

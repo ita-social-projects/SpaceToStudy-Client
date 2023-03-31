@@ -31,7 +31,7 @@ const FindOffers = () => {
   const handleShowingTutorOffers = () => setShowingTutorOffers(prev => !prev)
   
   return (
-    <Container sx={ { flex: 1 ,display: 'flex', flexDirection: 'column' } }>
+    <Container sx={ { flex: 1 ,display: 'flex', flexDirection: 'column',gap: 1 } }>
       FindOffers Page Placeholder
 
       <FilterBarMenu
@@ -42,11 +42,12 @@ const FindOffers = () => {
       />
       <Box sx={ { display: 'flex' } }>
         <OfferFilterBlock
-          anchor={ openFilters }
           closeFilters={ handleToggleOpenFilters }
+          countActiveFilters={ countActiveFilters }
           filterActions={ filterQueryActions }
           filters={ filters }
           onToggleTutorOffers={ handleShowingTutorOffers }
+          open={ openFilters }
           showingTutorOffers={ showingTutorOffers }
         /> 
         <OfferCard

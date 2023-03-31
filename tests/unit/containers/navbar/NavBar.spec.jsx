@@ -53,7 +53,7 @@ describe('Guest NavBar test', () => {
     expect(menuIcon).toBeInTheDocument()
 
     fireEvent.click(menuIcon)
-    const closeIcon = screen.getByTestId('CloseIcon')
+    const closeIcon = screen.getByTestId('CloseRoundedIcon')
 
     await waitFor(() => expect(closeIcon).toBeInTheDocument())
   })

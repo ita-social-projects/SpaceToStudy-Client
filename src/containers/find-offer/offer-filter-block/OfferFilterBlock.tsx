@@ -1,12 +1,15 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Stack,  Drawer } from '@mui/material'
+import Stack from '@mui/material/Stack'
+import Divider from '@mui/material/Divider'
 
 import AppButton from '~/components/app-button/AppButton'
 import AppContentSwitcher from '~/components/app-content-switcher/AppContentSwitcher'
 import AppSelect from '~/components/app-select/AppSelect'
-import useBreakpoints from '~/hooks/use-breakpoints'
 import OfferFilterList from '~/containers/find-offer/offer-filter-block/offer-filter-list/OfferFilterList'
+import AppDrawer from '~/components/app-drawer/AppDrawer'
+import FiltersToggle from '~/components/filters-toggle/FiltersToggle'
+import useBreakpoints from '~/hooks/use-breakpoints'
 import { FindOfferFilterTypes, FindOffersFilters, FindOffersFiltersActions } from '~/types'
 
 import { sortTranslationKeys } from '~/containers/find-offer/offer-filter-block/OfferFilterBlock.constants'
@@ -18,7 +21,8 @@ interface OfferFilterBlockProps {
   showingTutorOffers: boolean;
   onToggleTutorOffers: () => void;
   closeFilters: () => void;
-  anchor: null | HTMLElement;
+  open: boolean;
+  countActiveFilters: number
 }
 
 const OfferFilterBlock: FC<OfferFilterBlockProps> = ({
@@ -26,8 +30,9 @@ const OfferFilterBlock: FC<OfferFilterBlockProps> = ({
   filterActions,
   showingTutorOffers,
   onToggleTutorOffers,
+  countActiveFilters,
   closeFilters,
-  anchor
+  open
 }) => {
   const { t } = useTranslation()
   const { isMobile } = useBreakpoints()
@@ -44,6 +49,8 @@ const OfferFilterBlock: FC<OfferFilterBlockProps> = ({
 
   const mobileFields = isMobile && (
     <>
+      <FiltersToggle chosenFiltersQty={ countActiveFilters }  />
+      <Divider />
       <AppContentSwitcher
         active={ showingTutorOffers } 
         onChange={ onToggleTutorOffers } 
@@ -66,7 +73,7 @@ const OfferFilterBlock: FC<OfferFilterBlockProps> = ({
   const filtersBlock = (
     <Stack
       spacing={ 2 }
-      sx={ styles.root(Boolean(anchor)) }
+      sx={ styles.root(open) }
     >      
       { mobileFields }
       <OfferFilterList
@@ -83,9 +90,9 @@ const OfferFilterBlock: FC<OfferFilterBlockProps> = ({
     </Stack>)
   
   return ( isMobile ? (
-    <Drawer anchor={ 'left' } onClose={ closeFilters } open={ Boolean(anchor) }>
+    <AppDrawer onClose={ closeFilters } open={ open }>
       { filtersBlock }
-    </Drawer>
+    </AppDrawer>
   )  :
     filtersBlock
   )
