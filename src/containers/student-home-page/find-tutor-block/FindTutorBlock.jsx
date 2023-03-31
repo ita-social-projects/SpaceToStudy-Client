@@ -20,15 +20,13 @@ const FindTutorBlock = () => {
   const navigate = useNavigate()
   const { isMobile } = useBreakpoints()
 
-  const { findOffers } = guestRoutes
-
   const onChange = (e) => {
     setFilter(e.target.value)
   }
 
   const redirect = useCallback(() => {
-    return navigate(findOffers.route, { state: { filter } })
-  }, [filter, findOffers.route, navigate])
+    return navigate(guestRoutes.findOffers.path, { state: { filter } })
+  }, [filter, navigate])
 
   const handleEnterPress = useCallback(
     (e) => {
