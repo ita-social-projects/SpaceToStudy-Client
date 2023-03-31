@@ -59,7 +59,7 @@ const FilterBarMenu: FC<FilterBarMenuProps> = ({ chosenFiltersQty, toggleFilters
           active={ filters.isActiveOffersType }
           handleChange={ handleOffersType }
           switchOptions={ translatedSwitcherOptions }
-          typographyVariant='h6'
+          typographyVariant='button'
         />
       ) : null }
       { !isMobile ? (

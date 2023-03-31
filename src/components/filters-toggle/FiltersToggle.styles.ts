@@ -18,10 +18,13 @@ export const styles = {
   chosenFiltersQty :{
     borderRadius: '50%',
     width: '24px',
+    height: '24px',
+    display: 'flex',
+    justifyContent: 'center',
+    lineHeight: 'inherit',
+    alignItems: 'center',
     backgroundColor: 'primary.400',
-    color:'white',
-    p:'2.5px 0',
-    textAlign: 'center',
+    color:'basic.white',
     userSelect:'none'
   }
 }

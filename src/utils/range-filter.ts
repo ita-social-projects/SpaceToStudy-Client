@@ -18,3 +18,14 @@ export const checkNumberIsInRange = ({ inputValue, min, max }:CheckRangeIsInRang
 
 export const checkIfRangeValid = ({ inputValue, range, constrainedNumber }:CheckInputChange):boolean => !(inputValue === constrainedNumber && Number(range[0]) <= Number(range[1]))
 
+export const checkRangeEquality = ( range:RangeArray, value:RangeArray ):boolean => range[0] !== Number(value[0]) || range[1] !== Number(value[1])
+
+
+export const isDefaultPrice = (value: string | string[], defauitPrice: RangeArray): boolean => {
+  return Number(value[0]) === defauitPrice[0] && Number(value[1]) === defauitPrice[1]
+}
+
+export const isEmptyArray = <T,>(value: T ): boolean => {
+  return Array.isArray(value) && value.length === 0
+}
+

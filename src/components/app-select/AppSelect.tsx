@@ -2,27 +2,24 @@ import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import MenuItem from '@mui/material/MenuItem'
-import Select, { SelectChangeEvent } from '@mui/material/Select'
+import Select, { SelectChangeEvent, SelectProps } from '@mui/material/Select'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
-import { SxProps } from '@mui/material'
-
-import { styles } from '~/components/app-select/AppSelect.styles'
 import { SelectFieldType } from '~/types'
+import { styles } from '~/components/app-select/AppSelect.styles'
 
-interface AppSelectProps {
+interface AppSelectProps extends SelectProps<string>{
   setValue:(value:string) => void
   value:string,
   fields:SelectFieldType[],
   selectTitle?:string,
-  sx?:SxProps
 }
 
-const AppSelect:FC<AppSelectProps> = ({ setValue, value, fields, selectTitle = '', sx = {} }) => {
+const AppSelect:FC<AppSelectProps> = ({ setValue, value, fields, selectTitle = '', sx, ...props }) => {
   const { t } = useTranslation()
 
-  const changeValue = (e:SelectChangeEvent<string>) => setValue(e.target.value)
+  const changeValue = (event: SelectChangeEvent) => setValue(event.target.value)
 
   const fieldsList = fields.map(field => (
     <MenuItem key={ field.value } value={ field.value }>
@@ -30,7 +27,7 @@ const AppSelect:FC<AppSelectProps> = ({ setValue, value, fields, selectTitle = '
     </MenuItem>)
   )
   const titleEl = selectTitle.length ? (
-    <Typography aria-label='select-title'  sx={ styles.selectTitle } variant='subtitle1' >
+    <Typography aria-label='select-title'  sx={ styles.selectTitle } variant='body2' >
       { t(selectTitle) }
     </Typography>
   ) : null 
@@ -43,6 +40,7 @@ const AppSelect:FC<AppSelectProps> = ({ setValue, value, fields, selectTitle = '
         onChange={ changeValue }
         sx={ styles.selectField }
         value={ value }
+        { ...props }
       >
         { fieldsList }
       </Select>

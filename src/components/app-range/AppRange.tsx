@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useEffect, useState, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import Slider, { SliderValueLabelProps } from '@mui/material/Slider'
 import TextField from '@mui/material/TextField'
@@ -10,18 +10,26 @@ import Typography from '@mui/material/Typography'
 import { useDebounce } from '~/hooks/use-debounce'
 
 import { InputRangeArray, RangeArray } from '~/types'
-import { checkIfRangeValid, checkRangeInput, checkNumberIsInRange, createNewState, rangeSort } from '~/utils/range-filter'
+import { checkIfRangeValid, checkRangeInput, checkNumberIsInRange, createNewState, rangeSort, checkRangeEquality } from '~/utils/range-filter'
 import { styles } from '~/components/app-range/AppRange.styles'
 
 interface AppRangeProps {
   min: number
   max: number
   onChange: (value: RangeArray) => void
+  value?: RangeArray
 }
 
-const AppRange: FC<AppRangeProps> = ({ min, max, onChange }) => {
-  const [range, setRange] = useState<InputRangeArray>([min, max])
+const AppRange: FC<AppRangeProps> = ({ min, max, value=[min,max], onChange }) => {
+  const [range, setRange] = useState<InputRangeArray>(value)
+  const commitedValue = useRef<RangeArray>(value)
   const { t } = useTranslation()
+
+  useEffect(()=>{
+    if(checkRangeEquality(commitedValue.current, value)) {
+      setRange( value ) 
+    }  
+  },[value])
 
   const marks = [
     { value: min, label: min.toString() },
@@ -30,6 +38,7 @@ const AppRange: FC<AppRangeProps> = ({ min, max, onChange }) => {
 
   const debouncedOnChange = useDebounce((range:InputRangeArray) => {
     const sortedRange = rangeSort(range)
+    commitedValue.current = sortedRange
     onChange(sortedRange)
   } )
 

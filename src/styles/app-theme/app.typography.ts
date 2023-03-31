@@ -33,6 +33,11 @@ const appTypography = {
     lineHeight: '28px',
     letterSpacing: '0.15px'
   },
+  midTitle:{
+    fontWeight: 500,
+    fontSize: '18px',
+    lineHeight: '24px'
+  },
   subtitle1: {
     fontWeight: 400,
     fontSize: '16px',

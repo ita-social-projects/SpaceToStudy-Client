@@ -16,8 +16,8 @@ const FiltersToggle:FC<FiltersToggleProps> = ({ chosenFiltersQty = 0, handleTogg
   const { t } = useTranslation()
 
   return (
-    <Box sx={ styles.container }>
-      <Box data-testid='toggle-button' onClick={ handleToggle } sx={ styles.cursorContainer } >
+    <Box onClick={ handleToggle } sx={ styles.container }>
+      <Box data-testid='toggle-button' sx={ styles.cursorContainer } >
         <FilterListIcon sx={ styles.icon } />
         <Typography sx={ styles.title } variant='h6'>
           { t('filters.filtersListTitle') }

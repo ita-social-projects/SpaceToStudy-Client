@@ -1,8 +1,8 @@
 export const styles = {
-  itemContainer: {
+  root: {
     display:'flex',
-    alignItems:'center',
-    mb:'8px'
+    flexDirection: 'column',
+    alignItems:'start'
   },
   title:{
     color:'primary.700',
@@ -10,8 +10,7 @@ export const styles = {
   },
   checkbox:{
     '&.MuiCheckbox-root':{
-      p:0,
-      mr:'8px'
+      py:'6px'
     }
   }
 }

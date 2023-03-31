@@ -4,5 +4,5 @@ export type SwitchContent = {
 }
 
 export type SwitchOptions= {
-    [key in 'left' | 'right' ]: SwitchContent
+    [key in 'left' | 'right' ]?: SwitchContent
 }
