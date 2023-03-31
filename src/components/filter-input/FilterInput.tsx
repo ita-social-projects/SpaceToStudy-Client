@@ -11,7 +11,6 @@ interface FilterInputProps extends Omit<TextFieldProps, 'onChange'> {
     value?: string
 }
 
-
 const FilterInput:FC<FilterInputProps> = ({ value, onChange, ...props }) => {
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChange(event.target.value)

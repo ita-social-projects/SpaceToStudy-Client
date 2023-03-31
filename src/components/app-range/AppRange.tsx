@@ -17,7 +17,7 @@ interface AppRangeProps {
   min: number
   max: number
   onChange: (value: RangeArray) => void
-  value?: RangeArray
+  value: RangeArray
 }
 
 const AppRange: FC<AppRangeProps> = ({ min, max, value, onChange }) => {
@@ -26,10 +26,7 @@ const AppRange: FC<AppRangeProps> = ({ min, max, value, onChange }) => {
   const { t } = useTranslation()
 
   useEffect(()=>{
-    if(!value) {
-      setRange([min,max])
-    }    
-    else if(checkRangeEquality(commitedValue.current, value)) {
+    if(checkRangeEquality(commitedValue.current, value)) {
       setRange( value ) 
     }  
   },[value, min, max])
