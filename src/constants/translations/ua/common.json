@@ -10,6 +10,25 @@
   "beginner": "Початковий",
   "labels": {
     "sendMessage": "Надіслати повідомлення",
-    "viewDetails": "Переглянути деталі"
-  }
+    "viewDetails": "Переглянути деталі",
+    "sortBy": "Сортувати за:" 
+  },
+  "levels": {
+    "beginner": "Початковий",
+    "intermediate": "Середній",
+    "advanced": "Високий",
+    "testPreparation": "Підготовка до тесту",
+    "professional": "Професійний",
+    "specialized": "Спеціалізований"
+    },
+    "languages": {
+    "allLanguages": "Усі мови",
+    "english": "Англійська",
+    "ukrainian": "Українська",
+    "polish": "Польська",
+    "german": "Німецька",
+    "french": "Французька",
+    "spanish": "Іспанська",
+    "arabic": "Арабська"
+    }
 }

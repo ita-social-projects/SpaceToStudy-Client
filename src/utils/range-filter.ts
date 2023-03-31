@@ -20,3 +20,12 @@ export const checkIfRangeValid = ({ inputValue, range, constrainedNumber }:Check
 
 export const checkRangeEquality = ( range:RangeArray, value:RangeArray ):boolean => range[0] !== Number(value[0]) || range[1] !== Number(value[1])
 
+
+export const isDefaultPrice = (value: string | string[], defauitPrice: RangeArray): boolean => {
+  return Number(value[0]) === defauitPrice[0] && Number(value[1]) === defauitPrice[1]
+}
+
+export const isEmptyArray = <T,>(value: T ): boolean => {
+  return Array.isArray(value) && value.length === 0
+}
+

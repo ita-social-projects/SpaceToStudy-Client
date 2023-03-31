@@ -10,7 +10,7 @@ import { styles } from './CheckboxList.styles'
 
 interface CheckboxListProps extends Pick<TypographyProps, 'variant'> {
   items: string[]
-  value: string[]
+  value?: string[]
   title?: string
   onChange: (checkbox: string[]) => void
 }

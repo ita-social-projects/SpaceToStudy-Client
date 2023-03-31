@@ -18,5 +18,19 @@
     "5stars": "5 зірок",
     "4stars": "4 і вище",
     "3stars": "3 і вище"
+  },
+  "filterTitles": {
+    "rating": "Рейтинг",
+    "level": "Рівень",
+    "language": "Мова",
+    "price": "Ціна",
+    "search": "Пошук за ім'ям",
+    "nativeSpeaker": "Носій рідної мови"
+  },
+  "sortTitles": {
+    "newest": "Найновіші",
+    "rating": "Рейтинг",
+    "priceAsc": "Ціна від низької до високої",
+    "priceDesc": "Ціна від високої до низької"
   }
 }

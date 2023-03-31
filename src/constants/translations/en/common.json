@@ -27,7 +27,8 @@
     "country": "Country",
     "city": "City",
     "sendMessage": "Send message",
-    "viewDetails": "View details"
+    "viewDetails": "View details",
+    "sortBy":"Sort by:"
   },
   "errorMessages": {
     "emailValid": "Email should be of the following format: “local-part@domain.com”",
@@ -39,5 +40,23 @@
     "passwordsDontMatch": "Passwords do not match",
     "shortText": "This text is too short",
     "longText": "This text is too long"
+  },
+  "levels": {
+    "beginner":"Beginner",
+    "intermediate":"Intermediate",
+    "advanced":"Advanced", 
+    "testPreparation":"Test Preparation",
+    "professional":"Professional",
+    "specialized": "Specialized"
+  },
+  "languages":{
+      "allLanguages": "All languages",
+      "english": "English",
+      "ukrainian": "Ukrainian",
+      "polish": "Polish",
+      "german": "German",
+      "french": "French",
+      "spanish": "Spanish",
+      "arabic": "Arabic"
   }
 }
