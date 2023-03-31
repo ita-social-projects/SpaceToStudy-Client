@@ -26,7 +26,6 @@ const OfferFilterList:FC<OfferFilterListProps> = ({ updateFilter, updateFilterBy
 
   const handleLanguagesChange = (_: MouseEvent<HTMLLIElement>, value: string | null) => value && updateFilter(value, 'language')
   const handleChecked = (_: SyntheticEvent<Element, Event>, checked: boolean) => updateFilter(checked.toString(), 'native')
-  const checked = JSON.parse(filters.native)
  
   const languagesFilter = (
     <Box>
@@ -37,7 +36,7 @@ const OfferFilterList:FC<OfferFilterListProps> = ({ updateFilter, updateFilterBy
         size='small'
       />
       <FormControlLabel
-        checked={ checked }
+        checked={ JSON.parse(filters.native) }
         control={ <Checkbox /> }
         label={ 
           <Typography variant='body2'>

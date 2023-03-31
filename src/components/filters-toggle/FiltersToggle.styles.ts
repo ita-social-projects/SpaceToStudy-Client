@@ -24,7 +24,7 @@ export const styles = {
     lineHeight: 'inherit',
     alignItems: 'center',
     backgroundColor: 'primary.400',
-    color:'white',
+    color:'basic.white',
     userSelect:'none'
   }
 }
