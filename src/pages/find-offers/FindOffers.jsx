@@ -14,7 +14,7 @@ import { mockOffer, defaultFilters } from '~/pages/find-offers/FindOffers.consta
 
 const FindOffers = () => {
   const { filters, countActiveFilters,filterQueryActions } = useFilterQuery({ defaultFilters })
-  const [openFilters, setOpenFilters] = useState(null)
+  const [openFilters, setOpenFilters] = useState(false)
   const [showingTutorOffers, setShowingTutorOffers] = useState(false)
   const { isMobile } = useBreakpoints()
   const size = isMobile ? 'small' : 'medium'
@@ -27,7 +27,7 @@ const FindOffers = () => {
   }
 
   const onBookmarkClick = (id) => {console.log(id)}
-  const handleToggleOpenFilters = (event) => setOpenFilters(prev => prev ? null : event.currentTarget)
+  const handleToggleOpenFilters = () => setOpenFilters(prev => !prev)
   const handleShowingTutorOffers = () => setShowingTutorOffers(prev => !prev)
   
   return (

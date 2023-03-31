@@ -17,12 +17,12 @@ interface AppRangeProps {
   min: number
   max: number
   onChange: (value: RangeArray) => void
-  value: RangeArray
+  value?: RangeArray
 }
 
-const AppRange: FC<AppRangeProps> = ({ min, max, value, onChange }) => {
-  const [range, setRange] = useState<InputRangeArray>([min, max])
-  const commitedValue = useRef<RangeArray>([min, max])
+const AppRange: FC<AppRangeProps> = ({ min, max, value=[min,max], onChange }) => {
+  const [range, setRange] = useState<InputRangeArray>(value)
+  const commitedValue = useRef<RangeArray>(value)
   const { t } = useTranslation()
 
   useEffect(()=>{
