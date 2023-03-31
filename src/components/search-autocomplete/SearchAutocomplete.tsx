@@ -21,10 +21,9 @@ import ClearIcon from '@mui/icons-material/Clear'
 import SearchIcon from '@mui/icons-material/Search'
 
 import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
+import { styles } from '~/components/search-autocomplete/SearchAutocomplete.styles'
 
-import { styles } from '~/components/search-with-filters/SearchWithFilters.styles'
-
-interface SearchWithFiltersProps
+interface SearchAutocompleteProps
   extends Omit<AutocompleteProps<string, false, true, true>, 'renderInput'> {
   search: string
   setSearch: Dispatch<SetStateAction<string>>
@@ -32,12 +31,12 @@ interface SearchWithFiltersProps
   renderInput?: (params: AutocompleteRenderInputParams) => ReactNode
 }
 
-const SearchWithFilters = ({
+const SearchAutocomplete = ({
   search,
   setSearch,
   textFieldProps,
   ...props
-}: SearchWithFiltersProps) => {
+}: SearchAutocompleteProps) => {
   const { t } = useTranslation()
   const [searchInput, setSearchInput] = useState<string>(search)
 
@@ -106,4 +105,4 @@ const SearchWithFilters = ({
   )
 }
 
-export default SearchWithFilters
+export default SearchAutocomplete

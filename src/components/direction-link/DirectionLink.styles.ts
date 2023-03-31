@@ -6,6 +6,6 @@ export const styles = {
     columnGap: '10px',
     color: 'primary.500',
     textDecoration: 'none',
-    m: '0 45px 20px 0'
+    m: '0 45px 20px'
   }
 }

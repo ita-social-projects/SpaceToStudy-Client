@@ -4,27 +4,27 @@ import { useSearchParams } from 'react-router-dom'
 
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 
-import SearchWithFilters from '~/components/search-with-filters/SearchWithFilters'
+import SearchWithFilters from '~/components/search-autocomplete/SearchAutocomplete'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
 
 import { styles } from '~/pages/subjects/Subjects.styles'
 import { guestRoutes } from '~/router/constants/guestRoutes'
-import useCategories from '~/hooks/use-categories'
-import useSubjects from '~/hooks/use-subjects'
 import { CategoryInterface } from '~/types'
 import DirectionLink from '~/components/direction-link/DirectionLink'
 import AppToolbar from '~/components/app-toolbar/AppToolbar'
+import useCategoriesNames from '~/hooks/use-categories-names'
+import useSubjectsNames from '~/hooks/use-subjects-names'
 
 const Subjects = () => {
   const { t } = useTranslation()
   const [searchParams, setSearchParams] = useSearchParams()
   const categoryId = searchParams.get('categoryId')
 
-  const { categoriesNamesLoading, categoriesNamesItems } = useCategories({
-    fetchOnMount: { categories: false, categoriesNames: true }
-  })
+  const { categoriesNamesLoading, categoriesNamesItems } = useCategoriesNames()
 
   const [searchValue, setSearchValue] = useState<string>('')
   const [category, setCategory] = useState<Pick<CategoryInterface, '_id' | 'name'> | null>(null)
@@ -36,12 +36,8 @@ const Subjects = () => {
     }
   }, [categoriesNamesLoading, categoryId, categoriesNamesItems, category])
 
-  const { subjectsNamesItems } = useSubjects({
-    category: '6421ed8ed991d46a84721dfa',
-    fetchOnMount: {
-      subjects: true,
-      subjectsNames: true
-    }
+  const { subjectsNamesItems } = useSubjectsNames({
+    category: '6421ed8ed991d46a84721dfa'
   })
 
   const onCategoryChange = (_: React.ChangeEvent, value: Pick<CategoryInterface, '_id' | 'name'> | null) => {
@@ -65,12 +61,14 @@ const Subjects = () => {
 
           <Box sx={ styles.navigation }>
             <DirectionLink
+              before={ <ArrowBackIcon fontSize='small' /> }
               directionArray='before'
               linkTo={ guestRoutes.categories.path }
               title={ t('subjectsPage.subjects.backToAllCategories') }
             />
 
             <DirectionLink
+              after={ <ArrowForwardIcon fontSize='small' /> }
               directionArray='after'
               linkTo={ guestRoutes.findOffers.path }
               title={ t('subjectsPage.subjects.showAllOffers') }
