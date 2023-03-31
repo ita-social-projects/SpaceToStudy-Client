@@ -9,7 +9,7 @@ import Tooltip from '@mui/material/Tooltip'
 import LanguageIcon from '@mui/icons-material/Language'
 import MenuIcon from '@mui/icons-material/Menu'
 import MessageRoundedIcon from '@mui/icons-material/MessageRounded'
-import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded'
+import BookmarkIcon from '@mui/icons-material/Bookmark'
 import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded'
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined'
 import Menu from '@mui/material/Menu'
@@ -67,9 +67,9 @@ const UserIcons = ({ setIsSidebarOpen }) => {
         </IconButton>
       </Tooltip>
 
-      <Tooltip arrow title={ t('iconsTooltip.favorites') }>
+      <Tooltip arrow title={ t('iconsTooltip.bookmarks') }>
         <IconButton sx={ styles.studentIcons }>
-          <FavoriteRoundedIcon color='primary' />
+          <BookmarkIcon color='primary' />
         </IconButton>
       </Tooltip>
 

@@ -1,11 +1,11 @@
 {
-  "head": "Welcome back",
-  "email": "Email",
-  "password": "Password",
-  "forgotPassword": "Forgot password?",
-  "loginButton": "Login",
-  "googleButton": "Login with Google",
-  "continue": "or continue",
-  "haveAccount": "Don`t have an account yet?",
-  "joinUs": "Join us for free"
+  "head": "З поверненням",
+  "email": "Електронна пошта",
+  "password": "Пароль",
+  "forgotPassword": "Забули пароль?",
+  "loginButton": "Увійти",
+  "googleButton": "Увійти за допомогою Google",
+  "continue": "або продовжити",
+  "haveAccount": "Ще не маєте акаунту?",
+  "joinUs": "Приєднуйтесь до нас безкоштовно"
 }
