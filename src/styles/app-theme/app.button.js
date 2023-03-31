@@ -1,4 +1,4 @@
-import palette from './app.pallete.js'
+import palette from './app.pallete'
 
 const button = {
   styleOverrides: {

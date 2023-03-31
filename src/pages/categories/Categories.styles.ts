@@ -1,7 +1,8 @@
 export const styles = {
   container: {
+    flex: 1,
     textAlign: 'right',
-    my: '80px'
+    p: '50px 0 80px 0'
   },
   sectionTitle: {
     typography: { sm: 'h4', xs: 'h5' }
@@ -16,5 +17,8 @@ export const styles = {
     color: 'primary.500',
     textDecoration: 'none',
     m: '0 45px 20px 0'
+  },
+  searchToolbar: {  
+    borderRadius: '70px'
   }
 }

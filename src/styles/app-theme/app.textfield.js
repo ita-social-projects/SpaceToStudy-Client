@@ -1,4 +1,4 @@
-import palette from './app.pallete.js'
+import palette from './app.pallete'
 import { textfieldScrollbar } from '~/styles/app-theme/custom-scrollbar'
 
 export const textField = {

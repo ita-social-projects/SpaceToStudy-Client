@@ -14,7 +14,7 @@ const AppAutoComplete = ({
   filterOptions = defaultFilterOptions,
   ListboxProps = { style: { maxHeight: 150 } },
   options,
-  hideCLearIcon = false,
+  hideClearIcon = false,
   textFieldProps,
   ...props
 }) => {
@@ -35,7 +35,7 @@ const AppAutoComplete = ({
             endAdornment: (
               <Fragment>
                 { props.loading ? <Loader size={ 20 } sx={ { color: 'primary.600' } } /> : null }
-                { (props.value && !hideCLearIcon) && params.InputProps.endAdornment }
+                { (props.value && !hideClearIcon) && params.InputProps.endAdornment }
               </Fragment>
             )
           } }

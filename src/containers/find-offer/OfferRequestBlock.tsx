@@ -15,7 +15,7 @@ const OfferRequestBlock = () => {
     <TitleBlock img={ icon } translationKey={ translationKey } >
       <Button
         fullWidth={ isMobile } 
-        size='extraLarge'
+        size='large'
         variant='contained'
       >
         { t(`${translationKey}.button`) }

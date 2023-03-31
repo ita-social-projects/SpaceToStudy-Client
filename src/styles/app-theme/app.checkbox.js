@@ -1,5 +1,5 @@
 import { checkboxClasses } from '@mui/material/Checkbox'
-import palette from './app.pallete.js'
+import palette from './app.pallete'
 
 export const checkbox = {
   styleOverrides: {

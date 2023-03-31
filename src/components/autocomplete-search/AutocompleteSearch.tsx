@@ -1,37 +1,37 @@
-import { useState, Dispatch, SetStateAction, FC } from 'react'
+import { useState, ReactNode, Dispatch, SetStateAction, ChangeEvent, KeyboardEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { createFilterOptions, FilterOptionsState } from '@mui/material'
+import { AutocompleteProps, AutocompleteRenderInputParams } from '@mui/material/Autocomplete'
 import { TextFieldProps } from '@mui/material/TextField'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
-import SearchIcon from '@mui/icons-material/Search'
 import ClearIcon from '@mui/icons-material/Clear'
+import SearchIcon from '@mui/icons-material/Search'
 
 import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
 
-import { styles } from '~/components/search-with-filters/SearchWithFilters.styles'
+import { styles } from '~/components/autocomplete-search/AutocompleteSearch.styles'
 
-interface SearchWithFiltersProps {
-  loading?: boolean
-  options: string[]
+interface AutocompleteSearchProps
+  extends Omit<AutocompleteProps<string, false, true, true>, 'renderInput'> {
   search: string
   setSearch: Dispatch<SetStateAction<string>>
   textFieldProps: TextFieldProps
+  renderInput?: (params: AutocompleteRenderInputParams) => ReactNode
 }
 
-const SearchWithFilters: FC<SearchWithFiltersProps> = ({ options, search, setSearch, textFieldProps, ...props }) => {
+const AutocompleteSearch = ({ search, setSearch, textFieldProps, ...props }: AutocompleteSearchProps) => {
   const { t } = useTranslation()
-  const [searchInput, setSearchInput] = useState(search)
-  const [focused, setFocused] = useState(false)
+  const [searchInput, setSearchInput] = useState<string>(search)
 
   const filterOptions = (options: string[], state: FilterOptionsState<string>) => {
     const defaultFilterOptions = createFilterOptions<string>()
     return defaultFilterOptions(options, state).slice(0, 6)
   }
 
-  const onInputChange = (_: Event, value: string) => {
+  const onInputChange = (_: ChangeEvent<HTMLInputElement>, value: string) => {
     setSearchInput(value)
   }
 
@@ -44,15 +44,11 @@ const SearchWithFilters: FC<SearchWithFiltersProps> = ({ options, search, setSea
     setSearch('')
   }
 
-  const onFocus = () => {
-    setFocused(true)
+  const onEnterPress = (event: KeyboardEvent<HTMLInputElement>) => {
+    event.key === 'Enter' && onSearch()
   }
 
-  const onBlur = () => {
-    setFocused(false)
-  }
-
-  const hideLabel = (focused || searchInput) && { visibility: 'hidden' }
+  const labelStyle = { ...styles.inputLabel, visibility: searchInput && 'hidden' }
   const clearIconVisibility = { visibility: searchInput ? 'visible' : 'hidden' }
 
   return (
@@ -61,35 +57,32 @@ const SearchWithFilters: FC<SearchWithFiltersProps> = ({ options, search, setSea
 
       <AppAutoComplete
         ListboxProps={ { style: styles.listBox } }
-        autoComplete
         filterOptions={ filterOptions }
         freeSolo
-        hideCLearIcon
+        hideClearIcon
         inputValue={ searchInput }
-        onBlur={ onBlur }
-        onFocus={ onFocus }
         onInputChange={ onInputChange }
-        options={ options }
-        sx={ { flex: 1 } }
+        sx={ styles.autocomplete }
         textFieldProps={ {
-          ...textFieldProps,
-          InputLabelProps: { style: { ...styles.inputLabel, ...hideLabel }, shrink: false },
+          InputLabelProps: { style: labelStyle, shrink: false },
           InputProps: { disableUnderline: true },
+          onKeyDown: onEnterPress,
+          variant: 'standard',
           sx: styles.input,
-          variant: 'standard'
+          ...textFieldProps
         } }
         { ...props }
       />
 
-      <IconButton onClick={ onClear } sx={  clearIconVisibility  }>
+      <IconButton onClick={ onClear } sx={ clearIconVisibility }>
         <ClearIcon fontSize='small' />
       </IconButton>
 
       <Button onClick={ onSearch } sx={ styles.searchBtn } variant='contained'>
-        { t('categoriesPage.searchBtn') }
+        { t('common.search') }
       </Button>
     </Box>
   )
 }
 
-export default SearchWithFilters
+export default AutocompleteSearch
