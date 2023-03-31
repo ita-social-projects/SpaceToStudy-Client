@@ -29,7 +29,7 @@ const AppRange: FC<AppRangeProps> = ({ min, max, value=[min,max], onChange }) =>
     if(checkRangeEquality(commitedValue.current, value)) {
       setRange( value ) 
     }  
-  },[value, min, max])
+  },[value])
 
   const marks = [
     { value: min, label: min.toString() },
