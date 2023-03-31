@@ -1,1 +1,1 @@
-export const translationKey = 'findOffer.offerRequestBlock'
+export const translationKey = 'findOffers.offerRequestBlock'

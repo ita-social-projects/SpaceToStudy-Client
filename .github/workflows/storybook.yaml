@@ -15,13 +15,15 @@ jobs:
       # Install Dependencies and Build Storybook
       - name : Npm Install and Build
         run: |
-          npm install
+          npm ci
           npm run build-storybook
-      #    npx sb init --builder storybook-builder-vite
+          
       # Deploy Storybook to GitHub Pages
       - name: Deploy Storybook
         uses: JamesIves/github-pages-deploy-action@3.6.2
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          branch: gh-pages
-          folder: build-story # output folder from package.json build-storybook     
+          BRANCH: gh-pages
+          CLEAN: true
+          FOLDER: build-story #  output folder from package.json build-storybook     
+          FORCE: true

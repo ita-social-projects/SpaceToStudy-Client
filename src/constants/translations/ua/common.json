@@ -2,5 +2,14 @@
   "title": "Study space",
   "about": "Про нас",
   "yes": "Так",
-  "no": "Ні"
+  "no": "Ні",
+  "from": "Від",
+  "to": "До",
+  "uah": "ГРН",
+  "hour": "ГОДИНУ",
+  "beginner": "Початковий",
+  "labels": {
+    "sendMessage": "Надіслати повідомлення",
+    "viewDetails": "Переглянути деталі"
+  }
 }

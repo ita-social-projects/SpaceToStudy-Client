@@ -15,5 +15,5 @@ export const styles = {
     display:'flex',
     alignItems:'center'
   },
-  selectTitle:{ color:'primary.500' }
+  selectTitle:{ color:'primary.500', mr:'8px' }
 }

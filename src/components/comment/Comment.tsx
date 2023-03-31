@@ -5,8 +5,8 @@ import Typography from '@mui/material/Typography'
 import ImgTitleDescription from '~/components/img-title-description/ImgTitleDescription'
 import AppRating from '~/components/app-rating/AppRating'
 
+import { ReviewInterface } from '~/types'
 import { styles } from '~/components/comment/Comment.styles'
-import { ReviewInterface } from '~/types/common/interfaces/common.interfaces'
 
 interface CommentProps {
   review: ReviewInterface

@@ -12,6 +12,7 @@ import SearchWithFilters from '~/components/search-with-filters/SearchWithFilter
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 
 import { guestRoutes}  from '~/router/constants/guestRoutes'
+
 import { categoriesListMock } from '~/containers/student-home-page/popular-categories/categories-list-mock'
 import { styles } from '~/containers/categories-page/explore-categories/ExploreCategories.styles'
 

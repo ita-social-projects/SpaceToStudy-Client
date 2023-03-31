@@ -9,9 +9,11 @@
 /coverage
 /tests/coverage
 test-report.xml
+.scannerwork
 
 # production
 /build
+/build-story
 
 # misc
 /.idea

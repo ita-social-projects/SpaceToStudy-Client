@@ -17,7 +17,7 @@ interface CheckboxListProps {
 
 const CheckboxList: FC<CheckboxListProps> = ({ items, title = '', getCheckboxes }) => {
   const [checkboxes,setCheckboxes] = useState<CheckboxType[]>(items)
- 
+
   const { t } = useTranslation()
 
   const handleCheckbox = (checkbox: CheckboxType) => {

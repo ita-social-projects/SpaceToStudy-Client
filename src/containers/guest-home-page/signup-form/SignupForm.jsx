@@ -17,7 +17,7 @@ import { styles } from '~/containers/guest-home-page/signup-form/SignupForm.styl
 const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors, closeModal }) => {
   const { t } = useTranslation()
   const { privacyPolicy, termOfUse } = guestRoutes
-  const [buttonDisabled, setButtonDisabled] = useState(true)
+  const [isAgreementChecked, setIsAgreementChecked] = useState(false)
   const { inputVisibility: passwordVisibility, showInputText: showPassword } = useInputVisibility(errors.password)
   const { inputVisibility: confirmPasswordVisibility, showInputText: showConfirmPassword } = useInputVisibility(
     errors.confirmPassword
@@ -25,7 +25,7 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors, clos
   const { authLoading } = useSelector((state) => state.appMain)
 
   const handleOnAgreementChange = () => {
-    setButtonDisabled(!buttonDisabled)
+    setIsAgreementChecked(prev => !prev)
   }
 
   const isValid = useMemo(
@@ -73,7 +73,6 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors, clos
           onBlur={ handleBlur('firstName') }
           onChange={ handleChange('firstName') }
           required
-          size='large'
           sx={ { mb: '5px' } }
           type='text'
           value={ data.firstName }
@@ -86,7 +85,6 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors, clos
           onBlur={ handleBlur('lastName') }
           onChange={ handleChange('lastName') }
           required
-          size='large'
           sx={ { mb: '5px' } }
           type='text'
           value={ data.lastName }
@@ -100,7 +98,6 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors, clos
         onBlur={ handleBlur('email') }
         onChange={ handleChange('email') }
         required
-        size='large'
         sx={ { mb: '5px' } }
         type='email'
         value={ data.email }
@@ -114,7 +111,6 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors, clos
         onBlur={ handleBlur('password') }
         onChange={ handleChange('password') }
         required
-        size='large'
         sx={ { mb: '5px' } }
         type={ showPassword ? 'text' : 'password' }
         value={ data.password }
@@ -128,7 +124,6 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors, clos
         onBlur={ handleBlur('confirmPassword') }
         onChange={ handleChange('confirmPassword') }
         required
-        size='large'
         type={ showConfirmPassword ? 'text' : 'password' }
         value={ data.confirmPassword }
       />
@@ -136,23 +131,19 @@ const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors, clos
       <Box sx={ styles.checkboxContainer }>
         <FormControlLabel
           control={ <Checkbox /> }
-          disabled={ !isValid }
           label={ policyAgreement }
           labelPlacement='end'
           onChange={ handleOnAgreementChange }
-          size='large'
           sx={ styles.checkboxLabel }
-          variant='subtitle2'
+          value={ isAgreementChecked }
         />
       </Box>
 
       <AppButton
-        disabled={ buttonDisabled }
+        disabled={ !isValid || !isAgreementChecked }
         loading={ authLoading }
-        size='large'
         sx={ styles.signupButton }
         type='submit'
-        variant='contained'
       >
         { t('common.labels.signup') }
       </AppButton>

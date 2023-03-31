@@ -15,17 +15,17 @@ const testSwitchOptions = {
 }
 
 describe('test AppContentSwitcher component', () => {
-  const handleChangeMock = vi.fn()
+  const onChangeMock = vi.fn()
 
   afterEach(() => {
-    handleChangeMock.mockClear()
+    onChangeMock.mockClear()
   })
 
   it('should render with the correct props', () => {
     render(
       <AppContentSwitcher
-        handleChange={ handleChangeMock }
         isStudent
+        onChange={ onChangeMock }
         switchOptions={ testSwitchOptions }
         typographyVariant="h6"
       />
@@ -36,11 +36,11 @@ describe('test AppContentSwitcher component', () => {
     expect(screen.getByTestId('switch')).toBeInTheDocument()
   })
 
-  it('should call the handleChange function when the switch is clicked', () => {
+  it('should call the onChange function when the switch is clicked', () => {
     const { getByRole } = render(
       <AppContentSwitcher
-        handleChange={ handleChangeMock }
         isStudent
+        onChange={ onChangeMock }
         switchOptions={ testSwitchOptions }
         typographyVariant="h6"
       />
@@ -48,14 +48,14 @@ describe('test AppContentSwitcher component', () => {
 
     getByRole('checkbox').click()
 
-    expect(handleChangeMock).toHaveBeenCalled()
+    expect(onChangeMock).toHaveBeenCalled()
   })
 
   it('renders tooltips when tooltip props are passed', async () => {
     render(
       <AppContentSwitcher
-        handleChange={ handleChangeMock }
         isStudent
+        onChange={ onChangeMock }
         switchOptions={ testSwitchOptions }
         typographyVariant="h6"
       />

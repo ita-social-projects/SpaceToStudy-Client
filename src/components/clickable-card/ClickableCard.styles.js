@@ -9,6 +9,7 @@ export const styles = {
     backgroundColor: 'basic.white',
     boxShadow: commonShadow,
     borderRadius: '6px',
+    cursor: 'pointer',
     '&:hover': {
       boxShadow: commonHoverShadow
     }
