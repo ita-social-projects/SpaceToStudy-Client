@@ -22,9 +22,11 @@ export const URLs = {
     myProfile: '/users/myProfile'
   },
   categories: {
-    get: '/categories'
+    get: '/categories',
+    getNames: '/categories/names'
   },
   subjects: {
-    get: '/subjects'
+    get: '/subjects',
+    getNames: '/subjects/names'
   }
 }

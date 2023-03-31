@@ -6,14 +6,14 @@ export const categoriesListMock = [
     img: serviceIcon,
     description: '234 offers',
     title: 'Languages',
-    link: '/categories/subjects?catId=languages'
+    link: '/categories/subjects?categoryId=6421ed8ed991d46a84721dee'
   },
   {
     id: '2',
     img: serviceIcon,
     description: '234 offers',
     title: 'Mathematics',
-    link: '/categories/subjects?catId=mathematics'
+    link: '#'
   },
   {
     id: '3',
@@ -27,7 +27,7 @@ export const categoriesListMock = [
     img: serviceIcon,
     description: '234 offers',
     title: 'Music',
-    link: '#'
+    link: '/categories/subjects?categoryId=6421ed8ed991d46a84721dfa'
   },
   {
     id: '5',

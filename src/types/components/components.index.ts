@@ -12,6 +12,7 @@ import type {
   SwitchContent,
   SwitchOptions
 } from '~/types/components/appContentSwitcher/appContentSwitcher.types'
+import type { DirectionLinkProps } from '~/types/components/direction-link/DirectionLink.types'
 
 export {
   SelectFieldType,
@@ -23,5 +24,6 @@ export {
   RangeArray,
   RadioButtonType,
   SwitchContent,
-  SwitchOptions
+  SwitchOptions,
+  DirectionLinkProps
 }

@@ -19,6 +19,9 @@ export const styles = {
   sectionDescription: {
     typography: { sm: 'body1', xs: 'body2' }
   },
+  searchToolbar: {
+    borderRadius: '70px'
+  },
   showAllOffers: {
     display: 'flex',
     justifyContent: 'end',

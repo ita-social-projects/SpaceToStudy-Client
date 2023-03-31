@@ -1,28 +1,28 @@
-import { commonShadow } from '~/styles/app-theme/custom-shadows'
+import palette from '~/styles/app-theme/app.pallete'
 
 export const styles = {
   container: {
+    width: '100%',
     backgroundColor: 'basic.white',
-    mb: '50px',
-    p: '30px 45px',
     borderRadius: '70px',
-    boxShadow: commonShadow,
     display: 'flex',
-    justifyContent: 'space-between',
     alignItems: 'center'
+  },
+  autocomplete: {
+    flex: 1
+  },
+  listBox: {
+    maxHeight: 250
   },
   searchIcon: {
     color: 'primary.700',
     mr: '15px'
   },
   input: {
-    '& .MuiInput-root': { mt: 0 }
+    bottom: '8px'
   },
   inputLabel: {
-    top: '-16px'
-  },
-  listBox: {
-    maxHeight: 250
+    color: palette.primary[300]
   },
   searchBtn: {
     ml: '25px'
