@@ -7,7 +7,7 @@ import Container from '@mui/material/Container'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 
-import SearchWithFilters from '~/components/search-autocomplete/SearchAutocomplete'
+import SearchAutocomplete from '~/components/search-autocomplete/SearchAutocomplete'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
 
@@ -24,7 +24,7 @@ const Subjects = () => {
   const [searchParams, setSearchParams] = useSearchParams()
   const categoryId = searchParams.get('categoryId')
 
-  const { categoriesNamesLoading, categoriesNamesItems } = useCategoriesNames()
+  const { loading: categoriesNamesLoading, responseItems: categoriesNamesItems } = useCategoriesNames()
 
   const [searchValue, setSearchValue] = useState<string>('')
   const [category, setCategory] = useState<Pick<CategoryInterface, '_id' | 'name'> | null>(null)
@@ -36,7 +36,7 @@ const Subjects = () => {
     }
   }, [categoriesNamesLoading, categoryId, categoriesNamesItems, category])
 
-  const { subjectsNamesItems } = useSubjectsNames({
+  const { responseItems: subjectsNamesItems } = useSubjectsNames({
     category: '6421ed8ed991d46a84721dfa'
   })
 
@@ -49,58 +49,56 @@ const Subjects = () => {
   const optionsSubjects = subjectsNamesItems.map((item) => item.name)
 
   return (
-    <Box sx={ { backgroundColor: 'backgroundColor', flex: 1 } }>
-      <Container>
-        <Box className='section' sx={ styles.container }>
-          <TitleWithDescription
-            description={ t('subjectsPage.subjects.description') }
-            descriptionStyles={ styles.sectionDescription }
-            title={ t('subjectsPage.subjects.title', { category: category?.name }) }
-            titleStyles={ styles.sectionTitle }
+    <Container sx={ { flex: 1 } }>
+      <Box className='section' sx={ styles.container }>
+        <TitleWithDescription
+          description={ t('subjectsPage.subjects.description') }
+          descriptionStyles={ styles.sectionDescription }
+          title={ t('subjectsPage.subjects.title', { category: category?.name }) }
+          titleStyles={ styles.sectionTitle }
+        />
+
+        <Box sx={ styles.navigation }>
+          <DirectionLink
+            before={ <ArrowBackIcon fontSize='small' /> }
+            directionArray='before'
+            linkTo={ guestRoutes.categories.path }
+            title={ t('subjectsPage.subjects.backToAllCategories') }
           />
 
-          <Box sx={ styles.navigation }>
-            <DirectionLink
-              before={ <ArrowBackIcon fontSize='small' /> }
-              directionArray='before'
-              linkTo={ guestRoutes.categories.path }
-              title={ t('subjectsPage.subjects.backToAllCategories') }
-            />
-
-            <DirectionLink
-              after={ <ArrowForwardIcon fontSize='small' /> }
-              directionArray='after'
-              linkTo={ guestRoutes.findOffers.path }
-              title={ t('subjectsPage.subjects.showAllOffers') }
-            />
-          </Box>
-          <AppToolbar sx={ styles.searchToolbar }>
-            <AppAutoComplete
-              getOptionLabel={ (option: Pick<CategoryInterface, 'name'>) => option?.name || '' }
-              isOptionEqualToValue={ (option: Pick<CategoryInterface, '_id'>, value: Pick<CategoryInterface, '_id'>) =>
-                option?._id === value?._id
-              }
-              loading={ categoriesNamesLoading }
-              onChange={ onCategoryChange }
-              options={ categoriesNamesItems }
-              sx={ styles.categoryInput }
-              textFieldProps={ {
-                label: t('breadCrumbs.categories')
-              } }
-              value={ category }
-            />
-            <SearchWithFilters
-              options={ optionsSubjects }
-              search={ searchValue }
-              setSearch={ setSearchValue }
-              textFieldProps={ {
-                label: t('subjectsPage.subjects.searchLabel')
-              } }
-            />
-          </AppToolbar>
+          <DirectionLink
+            after={ <ArrowForwardIcon fontSize='small' /> }
+            directionArray='after'
+            linkTo={ guestRoutes.findOffers.path }
+            title={ t('subjectsPage.subjects.showAllOffers') }
+          />
         </Box>
-      </Container>
-    </Box>
+        <AppToolbar sx={ styles.searchToolbar }>
+          <AppAutoComplete
+            getOptionLabel={ (option: Pick<CategoryInterface, 'name'>) => option?.name || '' }
+            isOptionEqualToValue={ (option: Pick<CategoryInterface, '_id'>, value: Pick<CategoryInterface, '_id'>) =>
+              option?._id === value?._id
+            }
+            loading={ categoriesNamesLoading }
+            onChange={ onCategoryChange }
+            options={ categoriesNamesItems }
+            sx={ styles.categoryInput }
+            textFieldProps={ {
+              label: t('breadCrumbs.categories')
+            } }
+            value={ category }
+          />
+          <SearchAutocomplete
+            options={ optionsSubjects }
+            search={ searchValue }
+            setSearch={ setSearchValue }
+            textFieldProps={ {
+              label: t('subjectsPage.subjects.searchLabel')
+            } }
+          />
+        </AppToolbar>
+      </Box>
+    </Container>
   )
 }
 

@@ -10,25 +10,25 @@ interface useSubjectsNamesProps {
 }
 
 interface useSubjectsNamesResult {
-  subjectsNamesLoading: boolean
-  subjectsNamesItems: Pick<SubjectInterface, '_id' | 'name'>[]
-  fetchSubjectsNames: Promise<AxiosResponse>
+  loading: boolean
+  responseItems: Pick<SubjectInterface, '_id' | 'name'>[]
+  fetchData: Promise<AxiosResponse>
 }
 
 const useSubjectsNames = ({ category }: useSubjectsNamesProps): useSubjectsNamesResult => {
   const getSubjectsNames = useCallback(() => subjectService.getSubjectsNames(category), [category])
 
   const {
-    loading: subjectsNamesLoading,
-    response: subjectsNamesData,
-    fetchData: fetchSubjectsNames
+    loading,
+    response,
+    fetchData
   } = useAxios<string[]>({
     service: getSubjectsNames
   })
 
-  const subjectsNamesItems = useMemo(() => subjectsNamesData?.data || [], [subjectsNamesData])
+  const responseItems = useMemo(() => response?.data || [], [response])
 
-  return { subjectsNamesLoading, subjectsNamesItems, fetchSubjectsNames }
+  return { loading, responseItems, fetchData }
 }
 
 export default useSubjectsNames

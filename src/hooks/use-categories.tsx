@@ -10,28 +10,28 @@ interface useCategoriesProps {
 }
 
 interface UseCategoriesResult {
-  categoriesLoading: boolean
-  categoriesItems: CategoryInterface[]
-  fetchCategories: Promise<AxiosResponse>
+  loading: boolean
+  responseItems: CategoryInterface[]
+  fetchData: Promise<AxiosResponse>
 }
 
 const useCategories = ({ params }: useCategoriesProps): UseCategoriesResult => {
   const getCategories = useCallback(() => categoryService.getCategories(params), [params])
 
   const {
-    loading: categoriesLoading,
-    response: catogoriesData,
-    fetchData: fetchCategories
+    loading,
+    response,
+    fetchData
   } = useAxios<CategoryInterface[]>({
     service: getCategories
   })
 
-  const categoriesItems = useMemo(() => catogoriesData?.data || [], [catogoriesData])
+  const responseItems = useMemo(() => response?.data || [], [response])
 
   return {
-    categoriesLoading,
-    categoriesItems,
-    fetchCategories
+    loading,
+    responseItems,
+    fetchData
   }
 }
 

@@ -6,28 +6,28 @@ import { categoryService } from '~/services/category-service'
 import { CategoryInterface } from '~/types'
 
 interface UseCategoriesNamesResult {
-  categoriesNamesLoading: boolean
-  categoriesNamesItems: Pick<CategoryInterface, '_id' | 'name'>[]
-  fetchCategoriesNames: Promise<AxiosResponse>
+  loading: boolean
+  responseItems: Pick<CategoryInterface, '_id' | 'name'>[]
+  fetchData: Promise<AxiosResponse>
 }
 
 const useCategoriesNames = (): UseCategoriesNamesResult => {
   const getCategoriesNames = useCallback(() => categoryService.getCategoriesNames(), [])
 
   const {
-    loading: categoriesNamesLoading,
-    response: categoriesNamesData,
-    fetchData: fetchCategoriesNames
+    loading,
+    response,
+    fetchData
   } = useAxios<CategoryInterface[]>({
     service: getCategoriesNames
   })
 
-  const categoriesNamesItems = useMemo(() => categoriesNamesData?.data || [], [categoriesNamesData])
+  const responseItems = useMemo(() => response?.data || [], [response])
 
   return {
-    categoriesNamesLoading,
-    categoriesNamesItems,
-    fetchCategoriesNames
+    loading,
+    responseItems,
+    fetchData
   }
 }
 

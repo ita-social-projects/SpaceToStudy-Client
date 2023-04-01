@@ -6,23 +6,23 @@ import { subjectService } from '~/services/subject-service'
 import { SubjectInterface } from '~/types'
 
 interface useSubjectsResult {
-  subjectsLoading: boolean
-  subjectsItems: SubjectInterface[]
-  fetchSubjects: Promise<AxiosResponse>
+  loading: boolean
+  responseItems: SubjectInterface[]
+  fetchData: Promise<AxiosResponse>
 }
 
 const useSubjects = (): useSubjectsResult => {
   const getSubjects = useCallback(() => subjectService.getSubjects(), [])
 
   const {
-    loading: subjectsLoading,
-    response: subjectsData,
-    fetchData: fetchSubjects
+    loading,
+    response,
+    fetchData
   } = useAxios<SubjectInterface[]>({ service: getSubjects })
 
-  const subjectsItems = useMemo(() => subjectsData?.data || [], [subjectsData])
+  const responseItems = useMemo(() => response?.data || [], [response])
 
-  return { subjectsLoading, subjectsItems, fetchSubjects }
+  return { loading, responseItems, fetchData }
 }
 
 export default useSubjects

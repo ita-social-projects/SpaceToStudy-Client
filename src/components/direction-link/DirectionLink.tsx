@@ -5,10 +5,7 @@ import Typography from '@mui/material/Typography'
 import HashLink from '~/components/hash-link/HashLink'
 import { styles } from '~/components/direction-link/DirectionLink.styles'
 
-type DirectionArray = 'before' | 'after'
-
 export interface DirectionLinkProps {
-  directionArray: DirectionArray
   linkTo: string
   before?: React.ReactElement
   after?: React.ReactElement
