@@ -14,49 +14,51 @@ import ClickableCard from '~/components/clickable-card/ClickableCard'
 import Loader from '~/components/loader/Loader'
 import HashLink from '~/components/hash-link/HashLink'
 import ClickableCardList from '~/components/clickable-card-list/ClickableCardList'
-import AutocompleteSearch from '~/components/autocomplete-search/AutocompleteSearch'
+import SearchAutocomplete from '~/components/search-autocomplete/SearchAutocomplete'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import AppToolbar from '~/components/app-toolbar/AppToolbar'
 
-import { CategoryInterface } from '~/types'
+import { CategoryInterface, Params } from '~/types'
+import { guestRoutes } from '~/router/constants/guestRoutes'
 import serviceIcon from '~/assets/img/student-home-page/service_icon.png'
 import { styles } from '~/pages/categories/Categories.styles'
 
-const ExploreCategories = () => {
+const Categories = () => {
   const { t } = useTranslation()
   const [match, setMatch] = useState('')
-  const [limit, setLimit] = useState(12)
 
   const getCategoriesNames = useCallback(() => categoryService.getCategoriesNames(), [])
-  const getCategories = useCallback(() => categoryService.getCategories({ match, limit }), [match, limit])
+  const getCategories = useCallback((params: Params) => categoryService.getCategories(params), [])
 
-  const { response, loading, fetchData } = useAxios({ service: getCategoriesNames })
-  const { response: categories, loading: categoriesLoading } = useAxios({ service: getCategories })
-  const { isExpandable, showMore } = useShowMore<CategoryInterface>({
-    limit, 
-    increaseCount: 5, 
-    setLimit, 
-    loading: categoriesLoading, 
-    response: categories
+  const { response, loading } = useAxios<CategoryInterface[]>({ service: getCategoriesNames })
+  const {
+    responseData: categories,
+    loading: categoriesLoading,
+    fetchData: fetchCategories,
+    showMore,
+    isExpandable,
+    limit
+  } = useShowMore({
+    service: getCategories,
+    pageSize: 12,
+    fetchOnMount: false
   })
 
   useEffect(() => {
-    fetchData()
-  }, [fetchData])
+    fetchCategories({ limit, match })
+  }, [fetchCategories, limit, match])
 
-  const cards =
-    categories &&
-    categories.data.map((item: CategoryInterface) => {
-      return (
-        <ClickableCard
-          description={ `${item.totalOffers} ${t('categoriesPage.offers')}` }
-          img={ serviceIcon }
-          key={ item._id }
-          onClick={ () => null }
-          title={ item.name }
-        />
-      )
-    })
+  const cards = categories.map((item: CategoryInterface) => {
+    return (
+      <ClickableCard
+        description={ `${item.totalOffers} ${t('categoriesPage.offers')}` }
+        img={ serviceIcon }
+        key={ item._id }
+        onClick={ () => null }
+        title={ item.name }
+      />
+    )
+  })
 
   const options = !loading && response.data.map((option: CategoryInterface) => option.name)
 
@@ -72,7 +74,7 @@ const ExploreCategories = () => {
       />
 
       <Typography
-        component={ HashLink } sx={ styles.showAllOffers } to={ '#' }
+        component={ HashLink } sx={ styles.showAllOffers } to={ guestRoutes.findOffers.path }
         variant='button'
       >
         { t('categoriesPage.showAllOffers') }
@@ -80,7 +82,7 @@ const ExploreCategories = () => {
       </Typography>
 
       <AppToolbar sx={ styles.searchToolbar }>
-        <AutocompleteSearch
+        <SearchAutocomplete
           loading={ loading }
           options={ options }
           search={ match }
@@ -106,4 +108,4 @@ const ExploreCategories = () => {
   )
 }
 
-export default ExploreCategories
+export default Categories

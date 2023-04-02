@@ -1,21 +1,44 @@
-import { Dispatch, SetStateAction, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
+import { AxiosResponse } from 'axios'
 
-interface UseShowMoreProps<T> {
-  limit: number,
-  increaseCount: number,
-  setLimit: Dispatch<SetStateAction<number>>,
-  loading: boolean,
-  response: { data: T[] }
+import useAxios from '~/hooks/use-axios'
+
+import { Params } from '~/types'
+
+interface UseShowMoreReturn<T> {
+  responseData: T
+  loading: boolean
+  fetchData: (params: Params) => Promise<AxiosResponse<T>>
+  showMore: () => void
+  isExpandable: boolean
+  limit: number
 }
 
-const useShowMore = <T,>({ limit, increaseCount, setLimit, loading, response }: UseShowMoreProps<T>) => {
-  const isExpandable = useMemo(() => !loading && limit <= response.data.length, [limit, loading, response])
+interface UseShowMoreProps<T> {
+  service: (params: Params) => Promise<AxiosResponse<T>>
+  pageSize: number
+  fetchOnMount?: boolean
+}
+
+const useShowMore = <T,>({ service, pageSize, fetchOnMount = true }: UseShowMoreProps<T>): UseShowMoreReturn<T> => {
+  const [limit, setLimit] = useState<number>(pageSize)
 
   const showMore = () => {
-    setLimit((prevState) => prevState + increaseCount)
+    setLimit((prevState) => prevState + pageSize)
   }
 
-  return { isExpandable, showMore }
+  const { response, loading, fetchData } = useAxios({ service, fetchOnMount: false })
+
+  useEffect(() => {
+    if (fetchOnMount) {
+      fetchData({ limit })
+    }
+  }, [fetchData, fetchOnMount, limit])
+
+  const responseData = useMemo(() => response?.data || [], [response])
+  const isExpandable = useMemo(() => limit <= responseData.length, [limit, responseData])
+
+  return { responseData, loading, fetchData, showMore, isExpandable, limit }
 }
 
 export default useShowMore

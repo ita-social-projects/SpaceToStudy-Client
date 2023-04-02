@@ -12,9 +12,9 @@ import SearchIcon from '@mui/icons-material/Search'
 
 import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
 
-import { styles } from '~/components/autocomplete-search/AutocompleteSearch.styles'
+import { styles } from '~/components/search-autocomplete/SearchAutocomplete.styles'
 
-interface AutocompleteSearchProps
+interface SearchAutocompleteProps
   extends Omit<AutocompleteProps<string, false, true, true>, 'renderInput'> {
   search: string
   setSearch: Dispatch<SetStateAction<string>>
@@ -22,7 +22,7 @@ interface AutocompleteSearchProps
   renderInput?: (params: AutocompleteRenderInputParams) => ReactNode
 }
 
-const AutocompleteSearch = ({ search, setSearch, textFieldProps, ...props }: AutocompleteSearchProps) => {
+const SearchAutocomplete = ({ search, setSearch, textFieldProps, ...props }: SearchAutocompleteProps) => {
   const { t } = useTranslation()
   const [searchInput, setSearchInput] = useState<string>(search)
 
@@ -85,4 +85,4 @@ const AutocompleteSearch = ({ search, setSearch, textFieldProps, ...props }: Aut
   )
 }
 
-export default AutocompleteSearch
+export default SearchAutocomplete

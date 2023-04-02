@@ -6,7 +6,7 @@ import Box from '@mui/material/Box'
 import { styles } from '~/components/app-toolbar/AppToolbar.styles'
 
 interface AppToolbarProps {
-    sx: SxProps
+    sx?: SxProps
     children: ReactNode
 }
 
