@@ -5,18 +5,18 @@ import useAxios from '~/hooks/use-axios'
 import { subjectService } from '~/services/subject-service'
 import { ErrorResponce, SubjectNameInterface } from '~/types'
 
-interface useSubjectsNamesProps {
+interface UseSubjectsNamesProps {
   category: string | null
   fetchOnMount?: boolean
 }
 
-interface useSubjectsNamesResult {
+interface UseSubjectsNamesResult {
   loading: boolean
   data: SubjectNameInterface[]
   fetchData: Promise<AxiosResponse>
   error: Promise<ErrorResponce>
 }
-const useSubjectsNames = ({ category, fetchOnMount = true }: useSubjectsNamesProps): useSubjectsNamesResult => {
+const useSubjectsNames = ({ category, fetchOnMount = true }: UseSubjectsNamesProps): UseSubjectsNamesResult => {
   const getSubjectsNames = useCallback(() => subjectService.getSubjectsNames(category), [category])
 
   const { loading, data, fetchData, error } = useAxios({
