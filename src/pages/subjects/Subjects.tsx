@@ -27,7 +27,7 @@ const Subjects = () => {
   const { loading: categoriesNamesLoading, responseItems: categoriesNamesItems } = useCategoriesNames()
 
   const [searchValue, setSearchValue] = useState<string>('')
-  const [category, setCategory] = useState<Pick<CategoryInterface, '_id' | 'name'> | null>(null)
+  const [category, setCategory] = useState<Partial<CategoryInterface> | null>(null)
 
   useEffect(() => {
     if (!category && categoryId && !categoriesNamesLoading) {
@@ -40,7 +40,7 @@ const Subjects = () => {
     category: '6421ed8ed991d46a84721dfa'
   })
 
-  const onCategoryChange = (_: React.ChangeEvent, value: Pick<CategoryInterface, '_id' | 'name'> | null) => {
+  const onCategoryChange = (_: React.ChangeEvent, value: Partial<CategoryInterface> | null) => {
     searchParams.set('categoryId', value?._id || '')
     setSearchParams(searchParams)
     setCategory(value)
@@ -61,22 +61,20 @@ const Subjects = () => {
         <Box sx={ styles.navigation }>
           <DirectionLink
             before={ <ArrowBackIcon fontSize='small' /> }
-            directionArray='before'
             linkTo={ guestRoutes.categories.path }
             title={ t('subjectsPage.subjects.backToAllCategories') }
           />
 
           <DirectionLink
             after={ <ArrowForwardIcon fontSize='small' /> }
-            directionArray='after'
             linkTo={ guestRoutes.findOffers.path }
             title={ t('subjectsPage.subjects.showAllOffers') }
           />
         </Box>
         <AppToolbar sx={ styles.searchToolbar }>
           <AppAutoComplete
-            getOptionLabel={ (option: Pick<CategoryInterface, 'name'>) => option?.name || '' }
-            isOptionEqualToValue={ (option: Pick<CategoryInterface, '_id'>, value: Pick<CategoryInterface, '_id'>) =>
+            getOptionLabel={ (option: Partial<CategoryInterface>) => option.name || '' }
+            isOptionEqualToValue={ (option: Partial<CategoryInterface>, value: Partial<CategoryInterface>) =>
               option?._id === value?._id
             }
             loading={ categoriesNamesLoading }

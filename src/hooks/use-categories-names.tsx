@@ -3,12 +3,13 @@ import { useCallback, useMemo } from 'react'
 
 import useAxios from '~/hooks/use-axios'
 import { categoryService } from '~/services/category-service'
-import { CategoryInterface } from '~/types'
+import { CategoryInterface, ErrorResponce } from '~/types'
 
 interface UseCategoriesNamesResult {
   loading: boolean
   responseItems: Pick<CategoryInterface, '_id' | 'name'>[]
-  fetchData: Promise<AxiosResponse>
+  fetchData: Promise<AxiosResponse>,
+  error: Promise<ErrorResponce>
 }
 
 const useCategoriesNames = (): UseCategoriesNamesResult => {
@@ -17,8 +18,9 @@ const useCategoriesNames = (): UseCategoriesNamesResult => {
   const {
     loading,
     response,
-    fetchData
-  } = useAxios<CategoryInterface[]>({
+    fetchData,
+    error
+  } = useAxios({
     service: getCategoriesNames
   })
 
@@ -27,7 +29,8 @@ const useCategoriesNames = (): UseCategoriesNamesResult => {
   return {
     loading,
     responseItems,
-    fetchData
+    fetchData,
+    error
   }
 }
 

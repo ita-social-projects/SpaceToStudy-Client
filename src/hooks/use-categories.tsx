@@ -3,7 +3,7 @@ import { useCallback, useMemo } from 'react'
 
 import useAxios from '~/hooks/use-axios'
 import { categoryService } from '~/services/category-service'
-import { CategoryInterface, Params } from '~/types'
+import { CategoryInterface, ErrorResponce, Params } from '~/types'
 
 interface useCategoriesProps {
   params: Params
@@ -12,7 +12,8 @@ interface useCategoriesProps {
 interface UseCategoriesResult {
   loading: boolean
   responseItems: CategoryInterface[]
-  fetchData: Promise<AxiosResponse>
+  fetchData: Promise<AxiosResponse>,
+  error: Promise<ErrorResponce>
 }
 
 const useCategories = ({ params }: useCategoriesProps): UseCategoriesResult => {
@@ -21,8 +22,9 @@ const useCategories = ({ params }: useCategoriesProps): UseCategoriesResult => {
   const {
     loading,
     response,
-    fetchData
-  } = useAxios<CategoryInterface[]>({
+    fetchData,
+    error
+  } = useAxios({
     service: getCategories
   })
 
@@ -31,7 +33,8 @@ const useCategories = ({ params }: useCategoriesProps): UseCategoriesResult => {
   return {
     loading,
     responseItems,
-    fetchData
+    fetchData,
+    error
   }
 }
 

@@ -3,7 +3,7 @@ import { useCallback, useMemo } from 'react'
 
 import useAxios from '~/hooks/use-axios'
 import { subjectService } from '~/services/subject-service'
-import { SubjectInterface } from '~/types'
+import { ErrorResponce, SubjectInterface } from '~/types'
 
 interface useSubjectsNamesProps {
   category?: string
@@ -12,7 +12,8 @@ interface useSubjectsNamesProps {
 interface useSubjectsNamesResult {
   loading: boolean
   responseItems: Pick<SubjectInterface, '_id' | 'name'>[]
-  fetchData: Promise<AxiosResponse>
+  fetchData: Promise<AxiosResponse>,
+  error: Promise<ErrorResponce>
 }
 
 const useSubjectsNames = ({ category }: useSubjectsNamesProps): useSubjectsNamesResult => {
@@ -21,14 +22,15 @@ const useSubjectsNames = ({ category }: useSubjectsNamesProps): useSubjectsNames
   const {
     loading,
     response,
-    fetchData
-  } = useAxios<string[]>({
+    fetchData,
+    error
+  } = useAxios({
     service: getSubjectsNames
   })
 
   const responseItems = useMemo(() => response?.data || [], [response])
 
-  return { loading, responseItems, fetchData }
+  return { loading, responseItems, fetchData, error }
 }
 
 export default useSubjectsNames

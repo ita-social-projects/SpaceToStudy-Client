@@ -29,3 +29,14 @@ export interface UserResponse {
   createdAt: string
   updatedAt: string
 }
+
+export type Params = {
+  match: string
+  limit: number
+}
+
+export interface ErrorResponce {
+  code: string
+  message: string
+  status: number
+}
