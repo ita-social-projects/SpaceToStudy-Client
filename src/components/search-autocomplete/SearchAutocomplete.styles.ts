@@ -25,6 +25,7 @@ export const styles = {
     color: palette.primary[300]
   },
   searchBtn: {
-    ml: '25px'
+    ml: '25px',
+    height: '48px'
   }
 }

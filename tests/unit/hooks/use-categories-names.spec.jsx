@@ -19,14 +19,14 @@ describe('useCategoriesNames', () => {
     const { result, waitForNextUpdate } = renderHook(() => useCategoriesNames({}))
 
     expect(result.current.loading).toBe(true)
-    expect(result.current.responseItems).toEqual([])
+    expect(result.current.data).toEqual([])
 
     await waitForNextUpdate()
 
     expect(categoryService.getCategoriesNames).toHaveBeenCalled()
 
     expect(result.current.loading).toBe(false)
-    expect(result.current.responseItems).toEqual(mockCategoriesNames)
+    expect(result.current.data).toEqual(mockCategoriesNames)
   })
 
   it('handles API errors', async () => {
@@ -35,7 +35,7 @@ describe('useCategoriesNames', () => {
     const { result, waitForNextUpdate } = renderHook(() => useCategoriesNames({}))
 
     expect(result.current.loading).toBe(true)
-    expect(result.current.responseItems).toEqual([])
+    expect(result.current.data).toEqual([])
 
     await waitForNextUpdate()
 

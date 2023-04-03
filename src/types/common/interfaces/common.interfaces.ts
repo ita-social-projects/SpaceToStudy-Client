@@ -13,6 +13,11 @@ export interface CategoryInterface {
   updatedAt: string
 }
 
+export interface CategoryNameInterface {
+  _id: string
+  name: string
+}
+
 export interface SubjectInterface {
   _id: string
   name: string
@@ -20,6 +25,11 @@ export interface SubjectInterface {
   totalOffers: number
   createdAt: string
   updatedAt: string
+}
+
+export interface SubjectNameInterface {
+  _id: string
+  name: string
 }
 
 export interface OfferInterface {

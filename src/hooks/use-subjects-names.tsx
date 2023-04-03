@@ -1,33 +1,30 @@
 import { AxiosResponse } from 'axios'
-import { useCallback, useMemo } from 'react'
+import { useCallback } from 'react'
 
 import useAxios from '~/hooks/use-axios'
 import { subjectService } from '~/services/subject-service'
-import { ErrorResponce, SubjectInterface } from '~/types'
+import { ErrorResponce, SubjectNameInterface } from '~/types'
 
 interface useSubjectsNamesProps {
-  category?: string
+  category: string | null
   fetchOnMount?: boolean
 }
 
 interface useSubjectsNamesResult {
   loading: boolean
-  responseItems: Pick<SubjectInterface, '_id' | 'name'>[]
+  data: SubjectNameInterface[]
   fetchData: Promise<AxiosResponse>
   error: Promise<ErrorResponce>
 }
-
 const useSubjectsNames = ({ category, fetchOnMount = true }: useSubjectsNamesProps): useSubjectsNamesResult => {
   const getSubjectsNames = useCallback(() => subjectService.getSubjectsNames(category), [category])
 
-  const { loading, response, fetchData, error } = useAxios({
+  const { loading, data, fetchData, error } = useAxios({
     service: getSubjectsNames,
     fetchOnMount
   })
 
-  const responseItems = useMemo(() => response?.data || [], [response])
-
-  return { loading, responseItems, fetchData, error }
+  return { loading, data, fetchData, error }
 }
 
 export default useSubjectsNames

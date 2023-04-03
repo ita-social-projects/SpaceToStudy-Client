@@ -1,4 +1,4 @@
-import { afterEach, vi } from 'vitest'
+import { vi } from 'vitest'
 import Subjects from '~/pages/subjects/Subjects'
 import { render, fireEvent, screen } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
@@ -7,7 +7,7 @@ vi.mock('~/hooks/use-categories-names', () => ({
   __esModule: true,
   default: () => ({
     loading: false,
-    responseItems: [
+    data: [
       { _id: '123', name: 'Category 1' },
       { _id: '456', name: 'Category 2' },
       { _id: '789', name: '' }
@@ -19,7 +19,7 @@ vi.mock('~/hooks/use-subjects-names', () => ({
   __esModule: true,
   default: () => ({
     loading: false,
-    responseItems: [
+    data: [
       { _id: '123', name: 'Subject 1' },
       { _id: '456', name: 'Subject 2' }
     ]
@@ -61,7 +61,7 @@ describe('Subjects', () => {
     fireEvent.change(autocomplete, { target: { value: 'Category 2' } })
     fireEvent.keyDown(autocomplete, { key: 'ArrowDown' })
     fireEvent.keyDown(autocomplete, { key: 'Enter' })
-    
+
     expect(autocomplete.value).toBe('Category 2')
   })
 

@@ -24,7 +24,7 @@ describe('useSubjectsNames', () => {
     await waitForNextUpdate()
 
     expect(result.current.loading).toBe(false)
-    expect(result.current.responseItems).toEqual(mockSubjectsNames)
+    expect(result.current.data).toEqual(mockSubjectsNames)
   })
 
   it('handles API errors', async () => {

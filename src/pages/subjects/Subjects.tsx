@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router-dom'
 
@@ -13,40 +13,39 @@ import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
 
 import { styles } from '~/pages/subjects/Subjects.styles'
 import { guestRoutes } from '~/router/constants/guestRoutes'
-import { CategoryInterface } from '~/types'
+import { CategoryNameInterface } from '~/types'
 import DirectionLink from '~/components/direction-link/DirectionLink'
 import AppToolbar from '~/components/app-toolbar/AppToolbar'
 import useCategoriesNames from '~/hooks/use-categories-names'
 import useSubjectsNames from '~/hooks/use-subjects-names'
 
 const Subjects = () => {
+  const [searchValue, setSearchValue] = useState<string>('')
+
   const { t } = useTranslation()
   const [searchParams, setSearchParams] = useSearchParams()
   const categoryId = searchParams.get('categoryId')
 
-  const { loading: categoriesNamesLoading, responseItems: categoriesNamesItems } = useCategoriesNames({})
-
-  const [searchValue, setSearchValue] = useState<string>('')
-  const [category, setCategory] = useState<Partial<CategoryInterface> | null>(null)
-
-  useEffect(() => {
-    if (!category && categoryId && !categoriesNamesLoading) {
-      const categoryOption = categoriesNamesItems.find((option) => option._id === categoryId)
-      categoryOption && setCategory(categoryOption)
-    }
-  }, [categoriesNamesLoading, categoryId, categoriesNamesItems, category])
-
-  const { responseItems: subjectsNamesItems } = useSubjectsNames({
-    category: category?._id
+  const { loading: categoriesNamesLoading, data: categoriesNamesItems } = useCategoriesNames({})
+  const { data: subjectsNamesItems } = useSubjectsNames({
+    category: categoryId
   })
 
-  const onCategoryChange = (_: React.ChangeEvent, value: Partial<CategoryInterface> | null) => {
+  const category = useMemo(
+    () => categoriesNamesItems.find((option) => option._id === categoryId) || null,
+    [categoriesNamesItems, categoryId]
+  )
+
+  const onCategoryChange = (_: React.ChangeEvent, value: CategoryNameInterface | null) => {
     searchParams.set('categoryId', value?._id || '')
     setSearchParams(searchParams)
-    setCategory(value)
   }
 
   const optionsSubjects = subjectsNamesItems.map((item) => item.name)
+
+  const getOptionLabelCategory = (option: CategoryNameInterface) => option.name || ''
+  const isOptionEqualToValueCategory = (option: CategoryNameInterface, value: CategoryNameInterface) =>
+    option?._id === value?._id
 
   return (
     <Container sx={ { flex: 1 } }>
@@ -73,10 +72,8 @@ const Subjects = () => {
         </Box>
         <AppToolbar sx={ styles.searchToolbar }>
           <AppAutoComplete
-            getOptionLabel={ (option: Partial<CategoryInterface>) => option.name || '' }
-            isOptionEqualToValue={ (option: Partial<CategoryInterface>, value: Partial<CategoryInterface>) =>
-              option?._id === value?._id
-            }
+            getOptionLabel={ getOptionLabelCategory }
+            isOptionEqualToValue={ isOptionEqualToValueCategory }
             loading={ categoriesNamesLoading }
             onChange={ onCategoryChange }
             options={ categoriesNamesItems }

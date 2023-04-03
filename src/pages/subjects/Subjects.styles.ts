@@ -10,7 +10,13 @@ export const styles = {
   categoryInput: {
     width: '100%',
     maxWidth: '220px',
-    mr: '30px'
+    mr: '30px',
+    '& .MuiOutlinedInput-root': {
+      padding: '5px 9px'
+    },
+    label: {
+      lineHeight: '20px'
+    }
   },
   navigation: {
     display: 'flex',
@@ -20,7 +26,8 @@ export const styles = {
     typography: { sm: 'body1', xs: 'body2' }
   },
   searchToolbar: {
-    borderRadius: '70px'
+    borderRadius: '70px',
+    height: '48px'
   },
   showAllOffers: {
     display: 'flex',
