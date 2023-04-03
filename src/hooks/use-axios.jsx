@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useMemo } from 'react'
 
-const useAxios = ({ dafaultResponce = [], service, fetchOnMount = true, clearResponse = false }) => {
+const useAxios = ({  service, defaultResponse = [], fetchOnMount = true, clearResponse = false }) => {
   const [response, setResponse] = useState(null)
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(fetchOnMount)
@@ -23,7 +23,7 @@ const useAxios = ({ dafaultResponce = [], service, fetchOnMount = true, clearRes
     [service, clearResponse]
   )
 
-  const data = useMemo(() => response?.data || dafaultResponce, [response, dafaultResponce])
+  const data = useMemo(() => response?.data || defaultResponse, [response, defaultResponse])
 
   useEffect(() => {
     if (fetchOnMount) {
