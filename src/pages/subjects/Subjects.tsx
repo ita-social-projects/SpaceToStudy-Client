@@ -24,7 +24,7 @@ const Subjects = () => {
   const [searchParams, setSearchParams] = useSearchParams()
   const categoryId = searchParams.get('categoryId')
 
-  const { loading: categoriesNamesLoading, responseItems: categoriesNamesItems } = useCategoriesNames()
+  const { loading: categoriesNamesLoading, responseItems: categoriesNamesItems } = useCategoriesNames({})
 
   const [searchValue, setSearchValue] = useState<string>('')
   const [category, setCategory] = useState<Partial<CategoryInterface> | null>(null)

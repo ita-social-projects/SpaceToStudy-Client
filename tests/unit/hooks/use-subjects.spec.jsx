@@ -17,7 +17,7 @@ describe('useSubjects', () => {
   it('fetches subjects successfully', async () => {
     subjectService.getSubjects.mockResolvedValueOnce({ data: mockSubjects })
 
-    const { result, waitForNextUpdate } = renderHook(() => useSubjects(null))
+    const { result, waitForNextUpdate } = renderHook(() => useSubjects({}))
 
     expect(result.current.loading).toBe(true)
     expect(result.current.responseItems).toEqual([])
@@ -33,7 +33,7 @@ describe('useSubjects', () => {
   it('handles API errors', async () => {
     subjectService.getSubjects.mockRejectedValueOnce(mockError)
 
-    const { result, waitForNextUpdate } = renderHook(() => useSubjects(null))
+    const { result, waitForNextUpdate } = renderHook(() => useSubjects({}))
 
     expect(result.current.loading).toBe(true)
     expect(result.current.responseItems).toEqual([])

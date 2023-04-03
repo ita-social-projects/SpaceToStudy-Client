@@ -6,7 +6,8 @@ import { categoryService } from '~/services/category-service'
 import { CategoryInterface, ErrorResponce, Params } from '~/types'
 
 interface useCategoriesProps {
-  params: Params
+  params: Params,
+  fetchOnMount?: boolean
 }
 
 interface UseCategoriesResult {
@@ -16,7 +17,7 @@ interface UseCategoriesResult {
   error: Promise<ErrorResponce>
 }
 
-const useCategories = ({ params }: useCategoriesProps): UseCategoriesResult => {
+const useCategories = ({ params, fetchOnMount = true }: useCategoriesProps): UseCategoriesResult => {
   const getCategories = useCallback(() => categoryService.getCategories(params), [params])
 
   const {
@@ -25,7 +26,8 @@ const useCategories = ({ params }: useCategoriesProps): UseCategoriesResult => {
     fetchData,
     error
   } = useAxios({
-    service: getCategories
+    service: getCategories,
+    fetchOnMount
   })
 
   const responseItems = useMemo(() => response?.data || [], [response])
