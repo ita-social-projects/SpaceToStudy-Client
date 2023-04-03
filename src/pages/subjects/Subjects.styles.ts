@@ -26,8 +26,7 @@ export const styles = {
     typography: { sm: 'body1', xs: 'body2' }
   },
   searchToolbar: {
-    borderRadius: '70px',
-    height: '48px'
+    borderRadius: '70px'
   },
   showAllOffers: {
     display: 'flex',
