@@ -11,6 +11,7 @@ import breadCrumbs from './breadcrumbs.json'
 import completeProfile from './complete-profile.json'
 import findOffers from './find-offer-page.json'
 import filters from './filters.json'
+import iconsTooltip from './icons-tooltip.json'
 
 const ua = {
   translations: {
@@ -26,7 +27,8 @@ const ua = {
     completeProfile,
     categoriesPage,
     findOffers,
-    filters
+    filters,
+    iconsTooltip
   }
 }
 
