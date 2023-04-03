@@ -37,7 +37,7 @@ const Subjects = () => {
   }, [categoriesNamesLoading, categoryId, categoriesNamesItems, category])
 
   const { responseItems: subjectsNamesItems } = useSubjectsNames({
-    category: '6421ed8ed991d46a84721dfa'
+    category: category?._id
   })
 
   const onCategoryChange = (_: React.ChangeEvent, value: Partial<CategoryInterface> | null) => {
