@@ -19,7 +19,7 @@ export const useFilterQuery = ({ defaultFilters }:UseFilterQueryOptions): Filter
   const [filters, setFilters] = useState<FindOffersFilters>(defaultFilters)
 
   useEffect(() => {
-    const parsedFilters = parseQueryParams(searchParams)
+    const parsedFilters = parseQueryParams(searchParams, defaultFilters)   
     parsedFilters ? setFilters({ ...defaultFilters, ...parsedFilters }) : setFilters(defaultFilters)
   }, [searchParams, defaultFilters])
 
@@ -44,7 +44,7 @@ export const useFilterQuery = ({ defaultFilters }:UseFilterQueryOptions): Filter
   }, [defaultFilters, setSearchParams])
 
   const countActiveFilters = useMemo(() => {
-    const filtersFromQuery = parseQueryParams(searchParams) || {}
+    const filtersFromQuery = parseQueryParams(searchParams, defaultFilters) || {}
     return Object.entries(filtersFromQuery).reduce((count, [key, value]) => {
       if (key === 'sort') {
         return count

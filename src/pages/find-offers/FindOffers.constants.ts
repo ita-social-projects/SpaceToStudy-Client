@@ -3,7 +3,9 @@ export const defaultFilters = {
   language: 'All languages',
   native: 'false',
   rating: '0' ,
-  price: [150, 500]
+  price: [150, 500],
+  name:'',
+  level:''
 }
 
 

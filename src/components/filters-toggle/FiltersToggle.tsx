@@ -9,7 +9,7 @@ import { styles } from '~/components/filters-toggle/FiltersToggle.styles'
 
 interface FiltersToggleProps {
     chosenFiltersQty?:number,
-    handleToggle: () => void,
+    handleToggle?: () => void,
 }
 
 const FiltersToggle:FC<FiltersToggleProps> = ({ chosenFiltersQty = 0, handleToggle }) => {
@@ -17,7 +17,7 @@ const FiltersToggle:FC<FiltersToggleProps> = ({ chosenFiltersQty = 0, handleTogg
 
   return (
     <Box onClick={ handleToggle } sx={ styles.container }>
-      <Box data-testid='toggle-button' sx={ styles.cursorContainer } >
+      <Box data-testid='toggle-button' sx={ styles.cursorContainer(Boolean(handleToggle)) } >
         <FilterListIcon sx={ styles.icon } />
         <Typography sx={ styles.title } variant='h6'>
           { t('filters.filtersListTitle') }
