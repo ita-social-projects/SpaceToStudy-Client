@@ -5,7 +5,7 @@ import useAxios from '~/hooks/use-axios'
 
 import { Params } from '~/types'
 
-interface useLoadMoreReturn<T> {
+interface UseLoadMoreReturn<T> {
   data: T
   loading: boolean
   fetchData: (params: Params) => Promise<AxiosResponse<T>>
@@ -14,13 +14,13 @@ interface useLoadMoreReturn<T> {
   limit: number
 }
 
-interface useLoadMoreProps<T> {
+interface UseLoadMoreProps<T> {
   service: (params: Params) => Promise<AxiosResponse<T>>
   pageSize: number
   fetchOnMount?: boolean
 }
 
-const useLoadMore = <T,>({ service, pageSize, fetchOnMount = true }: useLoadMoreProps<T>): useLoadMoreReturn<T> => {
+const useLoadMore = <T,>({ service, pageSize, fetchOnMount = true }: UseLoadMoreProps<T>): UseLoadMoreReturn<T> => {
   const [limit, setLimit] = useState<number>(pageSize)
 
   const loadMore = () => {

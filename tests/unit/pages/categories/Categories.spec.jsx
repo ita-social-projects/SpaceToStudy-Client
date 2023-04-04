@@ -11,11 +11,11 @@ const mockAxiosClient = new MockAdapter(axiosClient)
 
 const fetchCategoriesMock = vi.fn()
 
-vi.mock('~/hooks/use-show-more', () => ({
+vi.mock('~/hooks/use-load-more', () => ({
   __esModule: true,
   default: () => ({
     loading: false,
-    responseData: [
+    data: [
       { _id: '1', name: 'Languages', totalOffers: 0 },
       {  _id: '2', name: 'Music', totalOffers: 0 }
     ],

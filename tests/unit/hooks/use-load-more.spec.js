@@ -48,7 +48,7 @@ describe('useLoadMore custom hook', () => {
     expect(result.current.loading).toBe(false)
 
     act(() => {
-      result.current.showMore()
+      result.current.loadMore()
     })
 
     expect(result.current.loading).toBe(true)
