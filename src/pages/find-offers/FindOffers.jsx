@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Container from '@mui/material/Container'
@@ -39,12 +39,11 @@ const FindOffers = () => {
   const handleToggleOpenFilters = () => setOpenFilters(prev => !prev)
   const handleShowingTutorOffers = () => setShowingTutorOffers(prev => !prev)
 
-  const offerCards = mockOffers.map(el => (<OfferCard
-    key={ el.id }
-    offer={ el }
-    onBookmarkClick={ () => onBookmarkClick(el.id) }
-  // eslint-disable-next-line react/jsx-closing-bracket-location
-  />))
+  const currentOffersOnPage = useMemo(() => {
+    const firstPageNumber = (currentPage - 1) * mockDataPagination.pageSize
+    const lastPageNumber = firstPageNumber + mockDataPagination.pageSize
+    return mockOffers.slice(firstPageNumber, lastPageNumber)
+  }, [currentPage, mockDataPagination.pageSize])
   
   return (
     <Container sx={ { flex: 1 ,display: 'flex', flexDirection: 'column',gap: 1 } }>
@@ -88,7 +87,12 @@ const FindOffers = () => {
           showingTutorOffers={ showingTutorOffers }
         /> 
         <Box>
-          { offerCards }
+          { currentOffersOnPage.map(el => (<OfferCard
+            key={ el.id }
+            offer={ el }
+            onBookmarkClick={ () => onBookmarkClick(el.id) }
+            // eslint-disable-next-line react/jsx-closing-bracket-location
+          />)) }
         </Box>
       </Box>
       <AppPagination
