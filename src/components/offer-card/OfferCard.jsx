@@ -14,24 +14,24 @@ const OfferCard = ({ offer, onBookmarkClick }) => {
     price,
     isBookmarked,
     subject,
-    level,
+    level
   } = offer
   
   return (
     <AppCard isClickable={ false }>
       <OfferAvatarAndRating imgSrc={ imgSrc } rating={ rating } />
       <OfferDetails
-        name={ name }
         bio={ bio }
         description={ description }
         languages={ languages }
-        subject={ subject }
         level={ level }
+        name={ name }
+        subject={ subject }
       />
       <OfferActions
-        price={ price }
         isBookmarked={ isBookmarked }
         onBookmarkClick={ onBookmarkClick }
+        price={ price }
       />
     </AppCard>
   )

@@ -1,6 +1,6 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useMemo  } from 'react'
 
-const useAxios = ({ service, fetchOnMount = true, clearResponse = false }) => {
+const useAxios = ({ service, defaultResponse = [], fetchOnMount = true, clearResponse = false }) => {
   const [response, setResponse] = useState(null)
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(fetchOnMount)
@@ -23,13 +23,15 @@ const useAxios = ({ service, fetchOnMount = true, clearResponse = false }) => {
     [service, clearResponse]
   )
 
+  const data = useMemo(() => response?.data || defaultResponse, [response, defaultResponse])
+
   useEffect(() => {
     if (fetchOnMount) {
       fetchData()
     }
   }, [fetchData, fetchOnMount])
 
-  return { response, error, loading, fetchData }
+  return { response, data, error, loading, fetchData }
 }
 
 export default useAxios

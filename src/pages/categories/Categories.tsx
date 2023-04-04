@@ -1,4 +1,5 @@
 import { useCallback, useState, useEffect } from 'react'
+import { useNavigate } from 'react-router'
 import { useTranslation } from 'react-i18next'
 import { categoryService } from '~/services/category-service'
 
@@ -7,7 +8,7 @@ import Typography from '@mui/material/Typography'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 
 import useAxios from '~/hooks/use-axios'
-import useShowMore from '~/hooks/use-show-more'
+import useLoadMore from '~/hooks/use-load-more'
 
 import OfferRequestBlock from '~/containers/find-offer/OfferRequestBlock'
 import ClickableCard from '~/components/clickable-card/ClickableCard'
@@ -25,20 +26,21 @@ import { styles } from '~/pages/categories/Categories.styles'
 
 const Categories = () => {
   const { t } = useTranslation()
+  const navigate = useNavigate()
   const [match, setMatch] = useState('')
 
   const getCategoriesNames = useCallback(() => categoryService.getCategoriesNames(), [])
   const getCategories = useCallback((params: Params) => categoryService.getCategories(params), [])
 
-  const { response, loading } = useAxios<CategoryInterface[]>({ service: getCategoriesNames })
+  const { data, loading } = useAxios<CategoryInterface>({ service: getCategoriesNames })
   const {
-    responseData: categories,
+    data: categories,
     loading: categoriesLoading,
     fetchData: fetchCategories,
-    showMore,
+    loadMore,
     isExpandable,
     limit
-  } = useShowMore({
+  } = useLoadMore({
     service: getCategories,
     pageSize: 12,
     fetchOnMount: false
@@ -48,19 +50,23 @@ const Categories = () => {
     fetchCategories({ limit, match })
   }, [fetchCategories, limit, match])
 
+  const chooseCategory = useCallback((id) => {
+    return navigate(`subjects?categoryId=${id}`)
+  }, [navigate])
+
   const cards = categories.map((item: CategoryInterface) => {
     return (
       <ClickableCard
         description={ `${item.totalOffers} ${t('categoriesPage.offers')}` }
         img={ serviceIcon }
         key={ item._id }
-        onClick={ () => null }
+        onClick={ () => chooseCategory(item._id) }
         title={ item.name }
       />
     )
   })
 
-  const options = !loading && response.data.map((option: CategoryInterface) => option.name)
+  const options = data.map((option: CategoryInterface) => option.name)
 
   return (
     <Container sx={ styles.container }>
@@ -101,7 +107,7 @@ const Categories = () => {
           cards={ cards }
           isBlur={ categoriesLoading }
           isExpandable={ isExpandable }
-          onClick={ showMore }
+          onClick={ loadMore }
         />
       ) }
     </Container>

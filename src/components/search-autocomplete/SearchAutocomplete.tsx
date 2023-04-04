@@ -78,7 +78,10 @@ const SearchAutocomplete = ({ search, setSearch, textFieldProps, ...props }: Sea
         <ClearIcon fontSize='small' />
       </IconButton>
 
-      <Button onClick={ onSearch } sx={ styles.searchBtn } variant='contained'>
+      <Button
+        onClick={ onSearch } size='large' sx={ styles.searchBtn }
+        variant='contained'
+      >
         { t('common.search') }
       </Button>
     </Box>

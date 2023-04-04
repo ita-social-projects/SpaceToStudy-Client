@@ -2,7 +2,7 @@ import { renderHook, act } from '@testing-library/react-hooks'
 import MockAdapter from 'axios-mock-adapter'
 
 import { axiosClient } from '~/plugins/axiosClient'
-import useShowMore from '~/hooks/use-show-more'
+import useLoadMore from '~/hooks/use-load-more'
 
 const mockAxiosClient = new MockAdapter(axiosClient)
 
@@ -15,8 +15,8 @@ const mockResponse = { data: mockResponseData }
 
 const mockService = vi.fn((params) => {
   const { limit } = params
-  const responseData = mockResponseData.slice(0, limit)
-  return Promise.resolve({ data: responseData })
+  const data = mockResponseData.slice(0, limit)
+  return Promise.resolve({ data: data })
 })
 
 const props = {
@@ -25,26 +25,26 @@ const props = {
   fetchOnMount: true
 }
 
-describe('useShowMore custom hook', () => {
+describe('useLoadMore custom hook', () => {
   mockAxiosClient.onAny().reply(200, mockResponse)
 
   it('should return array with length equal to 1', async () => {
-    const { result, waitForNextUpdate } = renderHook(() => useShowMore({ ...props }))
+    const { result, waitForNextUpdate } = renderHook(() => useLoadMore({ ...props }))
 
     expect(result.current.loading).toBe(true)
 
     await waitForNextUpdate()
 
     expect(result.current.loading).toBe(false)
-    expect(result.current.responseData).toEqual(mockResponseData.slice(0, mockParams.limit))
+    expect(result.current.data).toEqual(mockResponseData.slice(0, mockParams.limit))
   })
 
   it('should call showMore and return array with length equal to 2', async () => {
-    const { result, waitForNextUpdate } = renderHook(() => useShowMore({ ...props }))
+    const { result, waitForNextUpdate } = renderHook(() => useLoadMore({ ...props }))
 
     await waitForNextUpdate()
 
-    expect(result.current.responseData).toEqual(mockResponseData.slice(0, mockParams.limit))
+    expect(result.current.data).toEqual(mockResponseData.slice(0, mockParams.limit))
     expect(result.current.loading).toBe(false)
 
     act(() => {
@@ -55,6 +55,6 @@ describe('useShowMore custom hook', () => {
 
     await waitForNextUpdate()
 
-    expect(result.current.responseData).toEqual(mockResponseData)
+    expect(result.current.data).toEqual(mockResponseData)
   })
 })
