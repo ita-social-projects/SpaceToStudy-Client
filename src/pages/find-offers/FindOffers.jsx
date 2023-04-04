@@ -1,10 +1,15 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
 
+import useAxios from '~/hooks/use-axios'
+import { categoryService } from '~/services/category-service'
+
 import useBreakpoints from '~/hooks/use-breakpoints'
 import OfferCard from '~/components/offer-card/OfferCard'
+import PopularCategories from '~/components/popular-categories/PopularCategories'
 import AppPagination from '~/components/app-pagination/AppPagination'
 import OfferFilterBlock from '~/containers/find-offer/offer-filter-block/OfferFilterBlock'
 import FilterBarMenu from '~/containers/find-offer/filter-bar-menu/FilterBarMenu'
@@ -14,8 +19,6 @@ import {
   mockOffer,
   defaultFilters
 } from '~/pages/find-offers/FindOffers.constants'
-import PopularCategories from '~/containers/find-offer/popular-categories/PopularCategories'
-import { categoriesListMock } from '~/containers/student-home-page/popular-categories/categories-list-mock'
 
 const FindOffers = () => {
   const { filters, countActiveFilters, filterQueryActions } = useFilterQuery({
@@ -26,6 +29,16 @@ const FindOffers = () => {
   const { isMobile } = useBreakpoints()
   const size = isMobile ? 'small' : 'medium'
   const [currentPage, setCurrentPage] = useState(1)
+
+  const { t } = useTranslation()
+
+  const getCategories = useCallback(
+    () => categoryService.getCategories({ limit: 9 }),
+    []
+  )
+  const { data: categoriesData, loading: categoriesLoading } = useAxios({
+    service: getCategories
+  })
 
   const mockDataPagination = {
     itemsCount: 100,
@@ -72,7 +85,11 @@ const FindOffers = () => {
         setCurrentPage={setCurrentPage}
         size={size}
       />
-      <PopularCategories items={categoriesListMock} />
+      <PopularCategories
+        items={categoriesData}
+        loading={categoriesLoading}
+        title={t('common.popularCategories')}
+      />
     </Container>
   )
 }

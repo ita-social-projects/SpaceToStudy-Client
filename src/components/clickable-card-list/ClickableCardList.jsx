@@ -1,44 +1,26 @@
-import { useNavigate } from 'react-router-dom'
-
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 
-import useShowMore from '~/hooks/use-show-more'
-import ClickableCard from '~/components/clickable-card/ClickableCard'
-
 import { styles } from '~/components/clickable-card-list/ClickableCardList.styles'
 
-const ClickableCardList = ({ allItems, itemsToShow, itemsToAdd, btnText }) => {
-  const navigate = useNavigate()
-
-  const { items, isExpandable, showMore } = useShowMore(
-    allItems,
-    itemsToShow,
-    itemsToAdd
-  )
-
-  const cards = items.map((item) => {
-    return (
-      <ClickableCard
-        action={() => navigate(item.link)}
-        description={item.description}
-        img={item.img}
-        key={item.id}
-        title={item.title}
-      />
-    )
-  })
-
-  const hideBtn = { display: isExpandable ? 'block' : 'none' }
+const ClickableCardList = ({
+  btnText,
+  cards,
+  isBlur,
+  isExpandable,
+  onClick
+}) => {
+  const hideBtn = !isExpandable && { visibility: 'hidden' }
+  const blurCards = isBlur && { filter: 'blur(10px)' }
 
   return (
     <Box>
-      <Box sx={styles.cardsContainer}>{cards}</Box>
+      <Box sx={[styles.cardsContainer, blurCards]}>{cards}</Box>
 
       <Button
-        onClick={showMore}
+        onClick={onClick}
         size='extraLarge'
-        sx={[hideBtn, styles.btn]}
+        sx={[styles.btn, hideBtn]}
         variant='tonal'
       >
         {btnText}
@@ -46,5 +28,4 @@ const ClickableCardList = ({ allItems, itemsToShow, itemsToAdd, btnText }) => {
     </Box>
   )
 }
-
 export default ClickableCardList
