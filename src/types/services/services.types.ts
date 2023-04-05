@@ -1,6 +1,6 @@
 import { CreatedAt, LastLogin, Sort, Address, Category } from '~/types/types/common.types'
 
-export interface getUsersParams {
+export interface GetUsersParams {
   createdAt: CreatedAt
   email: string
   lastLogin: LastLogin
