@@ -61,7 +61,7 @@ describe('userService tests', () => {
   })
 
   it('should return a user by userId and userRole', async () => {
-    mockAxiosClient.onGet(`${URLs.users.get}/${userId}/${userRole}`).reply(200, userDataMock)
+    mockAxiosClient.onGet(`${URLs.users.get}/${userId}?role=${userRole}`).reply(200, userDataMock)
 
     const result = await userService.getOneUser(userId, userRole)
 

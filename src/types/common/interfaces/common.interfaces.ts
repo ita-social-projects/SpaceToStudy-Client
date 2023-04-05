@@ -1,4 +1,4 @@
-import { Address, Category, CreatedAt, LastLogin, Sort } from '~/types/types/common.types'
+import { Address, Category } from '~/types/types/common.types'
 
 export interface UserInterface {
   firstName: string
@@ -44,16 +44,4 @@ export interface User {
   lastLogin: string
   createdAt: string
   updatedAt: string
-}
-
-export interface Options {
-  createdAt: CreatedAt
-  email: string
-  lastLogin: LastLogin
-  limit: number
-  name: string
-  role: string
-  skip: number
-  sort: Sort
-  status: string[]
 }

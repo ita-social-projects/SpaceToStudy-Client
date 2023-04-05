@@ -23,7 +23,7 @@ const mockState = {
 }
 
 describe('BecomeATutor test', () => {
-  mockAxiosClient.onGet(`${URLs.users.get}/${userId}/${userRole}`).reply(200, { data: userDataMock })
+  mockAxiosClient.onGet(`${URLs.users.get}/${userId}?role=${userRole}`).reply(200, { data: userDataMock })
   const desktopData = { isDesktop: true, isMobile: false, isTablet: false }
   
   beforeEach(() => {
