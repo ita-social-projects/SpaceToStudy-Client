@@ -4,8 +4,7 @@ import type {
   OfferInterface,
   ReviewInterface,
   SubjectInterface,
-  UserInterface,
-  User
+  UserInterface
 } from '~/types/common/interfaces/common.interfaces'
 
-export { Address, CategoryInterface, OfferInterface, ReviewInterface, SubjectInterface, UserInterface, User }
+export { Address, CategoryInterface, OfferInterface, ReviewInterface, SubjectInterface, UserInterface }

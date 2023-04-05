@@ -1,5 +1,3 @@
-import { Address, Category } from '~/types/types/common.types'
-
 export interface UserInterface {
   firstName: string
   lastName: string
@@ -26,22 +24,4 @@ export interface ReviewInterface {
   comment: string
   rating: number
   createdAt: string
-}
-
-export interface User {
-  _id: string
-  role: string[]
-  firstName: string
-  lastName: string
-  email: string
-  categories: Category[]
-  totalReviews: number
-  averageRating: number
-  nativeLanguage: string
-  address: Address
-  education: string
-  photo: string
-  lastLogin: string
-  createdAt: string
-  updatedAt: string
 }
