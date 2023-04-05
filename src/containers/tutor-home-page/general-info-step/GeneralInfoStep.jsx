@@ -47,11 +47,11 @@ const GeneralInfoStep = ({ btnsBox, stepLabel, isUserFetched, setIsUserFetched }
     setData({ ...data, city: value })
   }
 
-  const getOneUser = useCallback(() => userService.getOneUser(userId, userRole), [userId, userRole])
+  const getUserById = useCallback(() => userService.getUserById(userId, userRole), [userId, userRole])
   const getCountries = useCallback(() => LocationService.getCountries(), [])
   const getCities = useCallback((country) => LocationService.getCities(country), [])
 
-  const { response: user, loading: userLoading } = useAxios({ service: getOneUser })
+  const { response: user, loading: userLoading } = useAxios({ service: getUserById })
   const { response: countries } = useAxios({ service: getCountries })
   const {
     loading,

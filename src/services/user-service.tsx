@@ -7,7 +7,7 @@ export const userService = {
   getUsers: async (params: GetUsersParams): Promise<AxiosResponse<UserResponse[]>> => {
     return await axiosClient.get(URLs.users.get, { params })
   },
-  getOneUser: (userId: string, userRole: string): Promise<AxiosResponse<UserResponse>> => {
+  getUserById: (userId: string, userRole: string): Promise<AxiosResponse<UserResponse>> => {
     return axiosClient.get(`${URLs.users.get}/${userId}?role=${userRole}`)
   },
   deleteUser: (userId: string): Promise<AxiosResponse<null>> => {
