@@ -24,7 +24,7 @@ export const mockOffer = {
   level: 'Beginner'
 }
 
-export const mockOfferTS = {
+export const mockOfferSquareCard = {
   id: 'id',
   photo:
     'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80',
@@ -38,5 +38,6 @@ export const mockOfferTS = {
   price: 100,
   subject: 'English',
   proficiencyLevel: 'Beginner',
-  totalReviews: 33
+  totalReviews: 33,
+  averageRating: 4.8
 }
