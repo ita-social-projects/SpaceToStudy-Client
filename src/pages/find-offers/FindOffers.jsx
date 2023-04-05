@@ -5,7 +5,7 @@ import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
 
 import useBreakpoints from '~/hooks/use-breakpoints'
-import OfferCard from '~/components/offer-card/OfferCard'
+import OfferContainer from '~/containers/OfferContainer/OfferContainer'
 import PopularCategories from '~/components/popular-categories/PopularCategories'
 import AppPagination from '~/components/app-pagination/AppPagination'
 import OfferFilterBlock from '~/containers/find-offer/offer-filter-block/OfferFilterBlock'
@@ -35,18 +35,18 @@ const FindOffers = () => {
     pageSize: 5
   }
 
-  const onBookmarkClick = (id) => {console.log(id)}
+
   const handleToggleOpenFilters = () => setOpenFilters(prev => !prev)
   const handleShowingTutorOffers = () => setShowingTutorOffers(prev => !prev)
 
   const currentOffersOnPage = useMemo(() => {
-    const firstPageNumber = (currentPage - 1) * mockDataPagination.pageSize
-    const lastPageNumber = firstPageNumber + mockDataPagination.pageSize
-    return mockOffers.slice(firstPageNumber, lastPageNumber)
+    const firstPageIndex = (currentPage - 1) * mockDataPagination.pageSize
+    const lastPageIndex = firstPageIndex + mockDataPagination.pageSize
+    return mockOffers.slice(firstPageIndex, lastPageIndex)
   }, [currentPage, mockDataPagination.pageSize])
   
   return (
-    <Container sx={ { flex: 1 ,display: 'flex', flexDirection: 'column',gap: 1 } }>
+    <Container sx={ { flex: 1 ,display: 'flex', flexDirection: 'column', gap: 1 } }>
       FindOffers Page Placeholder
 
   const toggleFiltersOpen = () => (isOpen ? closeDrawer() : openDrawer())
@@ -71,10 +71,10 @@ const FindOffers = () => {
     >
       FindOffers Page Placeholder
       <FilterBarMenu
-        chosenFiltersQty={countActiveFilters}
-        filters={filters}
-        setFilters={filterQueryActions.updateFilter}
-        toggleFilters={toggleFiltersOpen}
+        chosenFiltersQty={ countActiveFilters }
+        filters={ filters }
+        setFilters={ filterQueryActions.updateFilter }
+        toggleFilters={ handleToggleOpenFilters }
       />
       <Box sx={ { display: 'flex' } }>
         <OfferFilterBlock
@@ -86,14 +86,7 @@ const FindOffers = () => {
           open={ openFilters }
           showingTutorOffers={ showingTutorOffers }
         /> 
-        <Box>
-          { currentOffersOnPage.map(el => (<OfferCard
-            key={ el.id }
-            offer={ el }
-            onBookmarkClick={ () => onBookmarkClick(el.id) }
-            // eslint-disable-next-line react/jsx-closing-bracket-location
-          />)) }
-        </Box>
+        <OfferContainer offerCards={ currentOffersOnPage } /> 
       </Box>
       <AppPagination
         itemsCount={mockDataPagination.itemsCount}
