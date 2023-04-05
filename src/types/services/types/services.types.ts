@@ -1,4 +1,4 @@
 export type Params = {
-    match: string
+    name?: string
     limit: number
   }

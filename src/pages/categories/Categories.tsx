@@ -1,4 +1,4 @@
-import { useCallback, useState, useEffect } from 'react'
+import { useCallback, useMemo, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router'
 import { useTranslation } from 'react-i18next'
 import { categoryService } from '~/services/category-service'
@@ -47,26 +47,33 @@ const Categories = () => {
   })
 
   useEffect(() => {
-    fetchCategories({ limit, match })
+    fetchCategories({ limit, name: match })
   }, [fetchCategories, limit, match])
 
-  const chooseCategory = useCallback((id) => {
-    return navigate(`subjects?categoryId=${id}`)
-  }, [navigate])
+  const chooseCategory = useCallback(
+    (id) => {
+      return navigate(`${guestRoutes.subjects.path}?categoryId=${id}`)
+    },
+    [navigate]
+  )
 
-  const cards = categories.map((item: CategoryInterface) => {
-    return (
-      <ClickableCard
-        description={ `${item.totalOffers} ${t('categoriesPage.offers')}` }
-        img={ serviceIcon }
-        key={ item._id }
-        onClick={ () => chooseCategory(item._id) }
-        title={ item.name }
-      />
-    )
-  })
+  const cards = useMemo(
+    () =>
+      categories.map((item: CategoryInterface) => {
+        return (
+          <ClickableCard
+            description={ `${item.totalOffers} ${t('categoriesPage.offers')}` }
+            img={ serviceIcon }
+            key={ item._id }
+            onClick={ () => chooseCategory(item._id) }
+            title={ item.name }
+          />
+        )
+      }),
+    [categories, chooseCategory, t]
+  )
 
-  const options = data.map((option: CategoryInterface) => option.name)
+  const options = useMemo(() => data.map((option: CategoryInterface) => option.name), [data])
 
   return (
     <Container sx={ styles.container }>
