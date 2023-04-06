@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react'
+import { createContext, useMemo, useState } from 'react'
 import ConfirmDialog from '~/components/confirm-dialog/ConfirmDialog'
 
 export const ConfirmationDialogContext = createContext({})
@@ -23,10 +23,13 @@ export const ConfirmationDialogProvider = ({ children }) => {
     setDialogOpen(false)
   }
 
+  const contextValue = useMemo(
+    () => ({ openDialog, needConfirmation, setNeedConfirmation }),
+    [needConfirmation]
+  )
+
   return (
-    <ConfirmationDialogContext.Provider
-      value={{ openDialog, needConfirmation, setNeedConfirmation }}
-    >
+    <ConfirmationDialogContext.Provider value={contextValue}>
       <ConfirmDialog
         message={dialogConfig.message}
         onConfirm={onConfirm}
