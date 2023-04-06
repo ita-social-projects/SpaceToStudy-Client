@@ -7,33 +7,32 @@ import { TextFieldProps } from '@mui/material/TextField'
 import AppTextField from '~/components/app-text-field/AppTextField'
 
 interface FilterInputProps extends Omit<TextFieldProps, 'onChange'> {
-    onChange: (value:string) => void
-    value?: string
+  onChange: (value: string) => void
+  value?: string
 }
 
-const FilterInput:FC<FilterInputProps> = ({ value, onChange, ...props }) => {
+const FilterInput: FC<FilterInputProps> = ({ value, onChange, ...props }) => {
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChange(event.target.value)
   }
 
   const inputProps = {
     endAdornment: value ? (
-      <IconButton
-        onClick={ () => onChange('') }
-        sx={ { p:0 } }
-      >
+      <IconButton onClick={() => onChange('')} sx={{ p: 0 }}>
         <ClearIcon color='secondary' />
       </IconButton>
-    ) : (<SearchIcon color='primary' />)
-  } 
-    
+    ) : (
+      <SearchIcon color='primary' />
+    )
+  }
+
   return (
     <AppTextField
-      InputProps={ inputProps } 
-      onChange={ handleInputChange } 
+      InputProps={inputProps}
+      onChange={handleInputChange}
       size='small'
-      value={ value }
-      { ...props }
+      value={value}
+      {...props}
     />
   )
 }

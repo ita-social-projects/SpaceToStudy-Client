@@ -5,7 +5,10 @@ import { initialValues } from '~/containers/tutor-home-page/constants'
 const StepContext = createContext()
 
 const StepProvider = ({ children }) => {
-  const [generalData, setGeneralData] = useState({ data: initialValues, errors: {} })
+  const [generalData, setGeneralData] = useState({
+    data: initialValues,
+    errors: {}
+  })
   const [subject, setSubject] = useState([])
   const [language, setLanguage] = useState(null)
   const [photo, setPhoto] = useState([])
@@ -21,28 +24,28 @@ const StepProvider = ({ children }) => {
   const handleStepData = useCallback(
     (stepLabel, data, errors) => {
       switch (stepLabel) {
-      case generalLabel:
-        setGeneralData({ data, errors })
-        break
-      case subjectLabel:
-        setSubject(data)
-        break
-      case languageLabel:
-        setLanguage(data)
-        break
-      case photoLabel:
-        setPhoto(data)
-        break
-      default:
-        return
+        case generalLabel:
+          setGeneralData({ data, errors })
+          break
+        case subjectLabel:
+          setSubject(data)
+          break
+        case languageLabel:
+          setLanguage(data)
+          break
+        case photoLabel:
+          setPhoto(data)
+          break
+        default:
+          return
       }
     },
     [generalLabel, subjectLabel, languageLabel, photoLabel]
   )
 
   return (
-    <StepContext.Provider value={ { stepData, handleStepData } }>
-      { children }
+    <StepContext.Provider value={{ stepData, handleStepData }}>
+      {children}
     </StepContext.Provider>
   )
 }

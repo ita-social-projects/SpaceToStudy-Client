@@ -10,7 +10,14 @@ import Typography from '@mui/material/Typography'
 import { useDebounce } from '~/hooks/use-debounce'
 
 import { InputRangeArray, RangeArray } from '~/types'
-import { checkIfRangeValid, checkRangeInput, checkNumberIsInRange, createNewState, rangeSort, checkRangeEquality } from '~/utils/range-filter'
+import {
+  checkIfRangeValid,
+  checkRangeInput,
+  checkNumberIsInRange,
+  createNewState,
+  rangeSort,
+  checkRangeEquality
+} from '~/utils/range-filter'
 import { styles } from '~/components/app-range/AppRange.styles'
 
 interface AppRangeProps {
@@ -20,39 +27,46 @@ interface AppRangeProps {
   value?: RangeArray
 }
 
-const AppRange: FC<AppRangeProps> = ({ min, max, value=[min,max], onChange }) => {
+const AppRange: FC<AppRangeProps> = ({
+  min,
+  max,
+  value = [min, max],
+  onChange
+}) => {
   const [range, setRange] = useState<InputRangeArray>(value)
   const commitedValue = useRef<RangeArray>(value)
   const { t } = useTranslation()
 
-  useEffect(()=>{
-    if(checkRangeEquality(commitedValue.current, value)) {
-      setRange( value ) 
-    }  
-  },[value])
+  useEffect(() => {
+    if (checkRangeEquality(commitedValue.current, value)) {
+      setRange(value)
+    }
+  }, [value])
 
   const marks = [
     { value: min, label: min.toString() },
     { value: max, label: max.toString() }
   ]
 
-  const debouncedOnChange = useDebounce((range:InputRangeArray) => {
+  const debouncedOnChange = useDebounce((range: InputRangeArray) => {
     const sortedRange = rangeSort(range)
     commitedValue.current = sortedRange
     onChange(sortedRange)
-  } )
+  })
 
   const handleSliderChange = (_: Event, value: number | number[]) => {
     const range = value as RangeArray
-    
+
     setRange(range)
     debouncedOnChange(range)
   }
 
-  const handleInputChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
-    const inputIndex  = Number(target.id)
+  const handleInputChange = ({
+    target
+  }: React.ChangeEvent<HTMLInputElement>) => {
+    const inputIndex = Number(target.id)
     const inputValue = target.value ? Number(target.value) : null
-    
+
     if (checkRangeInput(inputValue)) {
       const newRange = createNewState({ range, inputValue, inputIndex })
       setRange(newRange)
@@ -61,63 +75,68 @@ const AppRange: FC<AppRangeProps> = ({ min, max, value=[min,max], onChange }) =>
   }
 
   const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-    const inputIndex  = Number(event.target.id)
+    const inputIndex = Number(event.target.id)
     const inputValue = range[inputIndex]
     const constrainedNumber = checkNumberIsInRange({ inputValue, min, max })
 
     if (checkIfRangeValid({ inputValue, range, constrainedNumber })) {
-      const newRange = createNewState({ range, inputValue: constrainedNumber, inputIndex, sort: true })
+      const newRange = createNewState({
+        range,
+        inputValue: constrainedNumber,
+        inputIndex,
+        sort: true
+      })
       setRange(newRange)
     }
   }
 
   const sliderValueTooltip = ({ value, children }: SliderValueLabelProps) => (
-    <Tooltip arrow placement="bottom" title={ value }>
-      { children }
+    <Tooltip arrow placement='bottom' title={value}>
+      {children}
     </Tooltip>
   )
 
   const rangeInputs = range.map((value, idx) => {
     const title = (idx ? t('common.to') : t('common.from')).toLowerCase()
-    const inActivelStyle = (idx ? value === max : value === min) && styles.inactiveStyle
+    const inActivelStyle =
+      (idx ? value === max : value === min) && styles.inactiveStyle
 
     return (
-      <Box key={ title } sx={ styles.inputBlock }>
-        <Typography sx={ styles.inputTitle } variant={ 'body2' }>
-          { title } 
-        </Typography>  
+      <Box key={title} sx={styles.inputBlock}>
+        <Typography sx={styles.inputTitle} variant={'body2'}>
+          {title}
+        </Typography>
         <TextField
-          id={ idx.toString() }
-          inputProps={ {
+          id={idx.toString()}
+          inputProps={{
             inputMode: 'numeric'
-          } }
-          onBlur={ handleInputBlur }
-          onChange={ handleInputChange }
-          sx={ [styles.inputContainer, inActivelStyle ]  }
-          type="text"
-          value={ value ?? '' }
+          }}
+          onBlur={handleInputBlur}
+          onChange={handleInputChange}
+          sx={[styles.inputContainer, inActivelStyle]}
+          type='text'
+          value={value ?? ''}
         />
       </Box>
-    )})
+    )
+  })
 
   return (
-    <Stack spacing={ 2 } sx={ styles.root }>
+    <Stack spacing={2} sx={styles.root}>
       <Slider
-        marks={ marks }
-        max={ max }
-        min={ min }
-        onChange={ handleSliderChange }
+        marks={marks}
+        max={max}
+        min={min}
+        onChange={handleSliderChange}
         size='small'
-        slots={ {
-          valueLabel: sliderValueTooltip         
-        } }
-        sx={ styles.slider }
-        value={ range.map(Number) }
-        valueLabelDisplay="auto"
-      />       
-      <Box style={ styles.priceInputs }> 
-        { rangeInputs }
-      </Box>
+        slots={{
+          valueLabel: sliderValueTooltip
+        }}
+        sx={styles.slider}
+        value={range.map(Number)}
+        valueLabelDisplay='auto'
+      />
+      <Box style={styles.priceInputs}>{rangeInputs}</Box>
     </Stack>
   )
 }

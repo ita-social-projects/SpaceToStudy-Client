@@ -9,12 +9,15 @@ const StudentTable = lazy(() => import('~/pages/student-table/StudentTable'))
 const AdminTable = lazy(() => import('~/pages/admin-table/AdminTable'))
 
 export const adminRouter = (
-  <Route element={ <AdminPortal /> }>
-    <Route element={ <AdminHome /> } index />
-    <Route element={ <StudentTable /> } path={ adminRoutes.students.route } />
-    <Route element={ <AdminTable /> } path={ adminRoutes.admins.route } />
-    <Route element={ <div>Tutors</div> } path={ adminRoutes.tutors.route } />
-    <Route element={ <div>Complains</div> } path={ adminRoutes.complains.route } />
-    <Route element={ <div>Categories</div> } path={ adminRoutes.categories.route } />
+  <Route element={<AdminPortal />}>
+    <Route element={<AdminHome />} index />
+    <Route element={<StudentTable />} path={adminRoutes.students.route} />
+    <Route element={<AdminTable />} path={adminRoutes.admins.route} />
+    <Route element={<div>Tutors</div>} path={adminRoutes.tutors.route} />
+    <Route element={<div>Complains</div>} path={adminRoutes.complains.route} />
+    <Route
+      element={<div>Categories</div>}
+      path={adminRoutes.categories.route}
+    />
   </Route>
 )

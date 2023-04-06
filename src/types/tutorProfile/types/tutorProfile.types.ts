@@ -1,5 +1,4 @@
 export type RatingType = {
-    rating: number;
-    count: number;
-  };
-  
+  rating: number
+  count: number
+}

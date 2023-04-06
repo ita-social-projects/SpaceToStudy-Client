@@ -13,41 +13,39 @@ const ProfileDoneItemsList = ({ items, icon, defaultQuantity }) => {
   const shouldShowMore = items.length > defaultQuantity
 
   const itemsList = items.map((item) => (
-    <Box key={ item.title } sx={ styles.itemWrapper }>
-      <Box>
-        { icon }
-      </Box>
+    <Box key={item.title} sx={styles.itemWrapper}>
+      <Box>{icon}</Box>
 
       <TitleWithDescription
-        description={ item.description }
-        descriptionStyles={ styles.text }
-        style={ { wrapper: { ...styles.itemWrapper, gap: '5px' } } }
-        title={ item.title }
-        titleStyles={ styles.text }
+        description={item.description}
+        descriptionStyles={styles.text}
+        style={{ wrapper: { ...styles.itemWrapper, gap: '5px' } }}
+        title={item.title}
+        titleStyles={styles.text}
       />
     </Box>
   ))
 
-  const showMoreElem = (<Typography sx={ styles.showMore }>
-    { t('tutorProfilePage.profileInfo.showMore') }
-  </Typography>)
+  const showMoreElem = (
+    <Typography sx={styles.showMore}>
+      {t('tutorProfilePage.profileInfo.showMore')}
+    </Typography>
+  )
 
-  const initialItems = (<Box sx={ styles.container }>
-    { itemsList.slice(0, defaultQuantity) }
-  </Box>)
+  const initialItems = (
+    <Box sx={styles.container}>{itemsList.slice(0, defaultQuantity)}</Box>
+  )
 
   return (
     <AppPopover
-      PaperProps={ { sx: styles.paperProps } }
-      TransitionProps={ { timeout: 500 } }
-      anchorOrigin={ styles.anchorOrigin }
+      PaperProps={{ sx: styles.paperProps }}
+      TransitionProps={{ timeout: 500 }}
+      anchorOrigin={styles.anchorOrigin}
       hideElem
-      initialItems={ initialItems }
-      showMoreElem={ shouldShowMore && showMoreElem }
+      initialItems={initialItems}
+      showMoreElem={shouldShowMore && showMoreElem}
     >
-      <Box sx={ { ...styles.container } }>
-        { itemsList }
-      </Box>
+      <Box sx={{ ...styles.container }}>{itemsList}</Box>
     </AppPopover>
   )
 }

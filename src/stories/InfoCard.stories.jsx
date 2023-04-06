@@ -32,7 +32,7 @@ export default {
   }
 }
 
-const Template = (args) => <InfoCard { ...args } />
+const Template = (args) => <InfoCard {...args} />
 
 export const Default = Template.bind({})
 

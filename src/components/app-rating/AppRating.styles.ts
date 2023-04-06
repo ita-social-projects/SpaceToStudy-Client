@@ -14,7 +14,7 @@ export const styles = {
   emptyIcon: {
     color: 'primary.200'
   },
-  stars: { 
+  stars: {
     typography: 'body2',
     '& .MuiRating-icon': {
       mx: '1px'

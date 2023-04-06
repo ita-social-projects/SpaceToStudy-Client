@@ -9,14 +9,14 @@ const FilterRow = () => {
   const { isSelection, columns, filters } = useTableContext()
 
   const { setFilterByKey, clearFilterByKey } = useFilter()
- 
+
   const filterCells = columns.map((column) => (
     <FilterCell
-      clearFilter={ () => clearFilterByKey(column.field) }
-      column={ column }
-      filter={ filters[column.field] }
-      key={ column.field }
-      setFilter={ setFilterByKey(column.field) }
+      clearFilter={() => clearFilterByKey(column.field)}
+      column={column}
+      filter={filters[column.field]}
+      key={column.field}
+      setFilter={setFilterByKey(column.field)}
     />
   ))
 
@@ -24,9 +24,9 @@ const FilterRow = () => {
 
   return (
     <TableRow>
-      { emptyCell }
-      { filterCells }
-      { emptyCell }
+      {emptyCell}
+      {filterCells}
+      {emptyCell}
     </TableRow>
   )
 }

@@ -11,8 +11,8 @@ import '~/plugins/i18n'
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={ store }>
-      <RouterProvider router={ router } />
+    <Provider store={store}>
+      <RouterProvider router={router} />
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

@@ -31,7 +31,7 @@ export default {
   }
 }
 
-const Template = (args) => <AppAutoComplete { ...args } />
+const Template = (args) => <AppAutoComplete {...args} />
 
 export const Desktop = Template.bind({})
 
@@ -44,7 +44,7 @@ Desktop.args = {
 
 Desktop.decorators = [
   (Story) => (
-    <div style={ { maxWidth: '500px' } }>
+    <div style={{ maxWidth: '500px' }}>
       <Story />
     </div>
   )

@@ -13,14 +13,18 @@ const WhoWeAre = () => {
   const { t } = useTranslation()
 
   return (
-    <Box className='section' id={ sectionId } sx={ { flexDirection: 'column', px: '16px' } }>
+    <Box
+      className='section'
+      id={sectionId}
+      sx={{ flexDirection: 'column', px: '16px' }}
+    >
       <TitleWithDescription
-        description={ t('guestHomePage.whoWeAre.description') }
-        descriptionStyles={ { typography: { xs: 'subtitle1' } } }
-        title={ t('guestHomePage.whoWeAre.title') }
-        titleStyles={ { typography: { md: 'h3', xs: 'h4' } } }
+        description={t('guestHomePage.whoWeAre.description')}
+        descriptionStyles={{ typography: { xs: 'subtitle1' } }}
+        title={t('guestHomePage.whoWeAre.title')}
+        titleStyles={{ typography: { md: 'h3', xs: 'h4' } }}
       />
-      <VideoBox video={ videoImg } />
+      <VideoBox video={videoImg} />
     </Box>
   )
 }

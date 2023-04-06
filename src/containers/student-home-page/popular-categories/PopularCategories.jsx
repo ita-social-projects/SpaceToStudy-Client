@@ -18,19 +18,23 @@ const PopularCategories = () => {
   const itemsToAdd = (isDesktop && 6) || (isTablet && 4) || (isMobile && 4)
 
   return (
-    <Box className='section' id={ sectionId } sx={ { flexDirection: 'column', alignItems: 'stretch' } }>
+    <Box
+      className='section'
+      id={sectionId}
+      sx={{ flexDirection: 'column', alignItems: 'stretch' }}
+    >
       <TitleWithDescription
-        description={ t('studentHomePage.popularCategories.description') }
-        descriptionStyles={ { typography: { sm: 'body1', xs: 'body2' } } }
-        title={ t('studentHomePage.popularCategories.title') }
-        titleStyles={ { typography: { sm: 'h4', xs: 'h5' } } }
+        description={t('studentHomePage.popularCategories.description')}
+        descriptionStyles={{ typography: { sm: 'body1', xs: 'body2' } }}
+        title={t('studentHomePage.popularCategories.title')}
+        titleStyles={{ typography: { sm: 'h4', xs: 'h5' } }}
       />
-      
+
       <ClickableCardList
-        allItems={ categoriesListMock }
-        btnText={ t('studentHomePage.popularCategories.viewMore') }
-        itemsToAdd={ itemsToAdd }
-        itemsToShow={ itemsToShow }
+        allItems={categoriesListMock}
+        btnText={t('studentHomePage.popularCategories.viewMore')}
+        itemsToAdd={itemsToAdd}
+        itemsToShow={itemsToShow}
       />
     </Box>
   )

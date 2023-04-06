@@ -12,7 +12,7 @@ export default {
   }
 }
 
-export const Default = (args) => <Loader { ...args } />
+export const Default = (args) => <Loader {...args} />
 
 Default.args = {
   size: 70,

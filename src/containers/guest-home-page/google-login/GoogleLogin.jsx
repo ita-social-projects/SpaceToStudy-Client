@@ -22,36 +22,42 @@ const GoogleLogin = ({ type, buttonWidth, role }) => {
 
   return (
     <Box>
-      <Box sx={ styles.linesBox }>
-        <Typography sx={ styles.continue } variant='body2'>
-          { t(`${type}.continue`) }
+      <Box sx={styles.linesBox}>
+        <Typography sx={styles.continue} variant='body2'>
+          {t(`${type}.continue`)}
         </Typography>
       </Box>
 
       <GoogleButton
-        buttonWidth={ buttonWidth } role={ role } route={ whatCanYouDo.path }
-        type={ type }
+        buttonWidth={buttonWidth}
+        role={role}
+        route={whatCanYouDo.path}
+        type={type}
       />
-      <Box sx={ styles.haveAccount }>
-        <Typography sx={ { pr: 1 } } variant='body2'>
-          { t(`${type}.haveAccount`) }
+      <Box sx={styles.haveAccount}>
+        <Typography sx={{ pr: 1 }} variant='body2'>
+          {t(`${type}.haveAccount`)}
         </Typography>
 
-        { type === 'signup' ? (
-          <Typography onClick={ openLoginDialog } sx={ styles.underlineText } variant='body2'>
-            { t('signup.joinUs') }
+        {type === 'signup' ? (
+          <Typography
+            onClick={openLoginDialog}
+            sx={styles.underlineText}
+            variant='body2'
+          >
+            {t('signup.joinUs')}
           </Typography>
         ) : (
           <Typography
-            component={ HashLink }
-            onClick={ closeModal }
-            sx={ styles.underlineText }
-            to={ whatCanYouDo.path }
+            component={HashLink}
+            onClick={closeModal}
+            sx={styles.underlineText}
+            to={whatCanYouDo.path}
             variant='body2'
           >
-            { t('login.joinUs') }
+            {t('login.joinUs')}
           </Typography>
-        ) }
+        )}
       </Box>
     </Box>
   )

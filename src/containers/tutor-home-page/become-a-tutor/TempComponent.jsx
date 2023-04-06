@@ -1,8 +1,8 @@
 const TempComponent = ({ btnsBox, children }) => {
   return (
     <>
-      { children }
-      { btnsBox }
+      {children}
+      {btnsBox}
     </>
   )
 }

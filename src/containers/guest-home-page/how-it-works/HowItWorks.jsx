@@ -6,7 +6,10 @@ import Typography from '@mui/material/Typography'
 
 import { guestRoutes } from '~/router/constants/guestRoutes'
 import CardsWithButton from '~/containers/guest-home-page/cards-with-button/CardsWithButton'
-import { tutorCardBoxArray, studentCardBoxArray } from '~/containers/guest-home-page/how-it-works/CardBoxArrays'
+import {
+  tutorCardBoxArray,
+  studentCardBoxArray
+} from '~/containers/guest-home-page/how-it-works/CardBoxArrays'
 import { tutor, student } from '~/constants'
 
 import { styles } from '~/containers/guest-home-page/how-it-works/HowItWorks.styles'
@@ -25,15 +28,17 @@ const HowItWorks = () => {
 
   const cardsMap = isStudent ? (
     <CardsWithButton
-      array={ tutorCardBoxArray } btnText={ 'Become a tutor' } isStudent={ isStudent }
-      role={ tutor }
+      array={tutorCardBoxArray}
+      btnText={'Become a tutor'}
+      isStudent={isStudent}
+      role={tutor}
     />
   ) : (
     <CardsWithButton
-      array={ studentCardBoxArray }
-      btnText={ 'Start learning today' }
-      isStudent={ isStudent }
-      role={ student }
+      array={studentCardBoxArray}
+      btnText={'Start learning today'}
+      isStudent={isStudent}
+      role={student}
     />
   )
 
@@ -47,23 +52,21 @@ const HowItWorks = () => {
   }
 
   return (
-    <Box id={ sectionId } sx={ styles.block }>
-      <Box sx={ styles.container }>
-        <Typography sx={ { mb: '32px' } } variant={ 'h3' }>
-          { t('guestHomePage.howItWorks.title') }
+    <Box id={sectionId} sx={styles.block}>
+      <Box sx={styles.container}>
+        <Typography sx={{ mb: '32px' }} variant={'h3'}>
+          {t('guestHomePage.howItWorks.title')}
         </Typography>
 
         <AppContentSwitcher
-          active={ isStudent }
-          onChange={ onChange }
-          styles={ styles.switch }
-          switchOptions={ switchOptions }
-          typographyVariant={ 'h6' }
+          active={isStudent}
+          onChange={onChange}
+          styles={styles.switch}
+          switchOptions={switchOptions}
+          typographyVariant={'h6'}
         />
 
-        <Box sx={ { mt: '45px' } }>
-          { cardsMap }
-        </Box>
+        <Box sx={{ mt: '45px' }}>{cardsMap}</Box>
       </Box>
     </Box>
   )

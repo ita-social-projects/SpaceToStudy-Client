@@ -41,35 +41,33 @@ const WhatCanYouDo = () => {
   const { openModal } = useContext(ModalContext)
 
   const openDialog = (type) => {
-    openModal({ component: <SignupDialog type={ type } /> })
+    openModal({ component: <SignupDialog type={type} /> })
   }
 
   const cards = cardData.map((item) => {
     return (
       <InfoCard
-        action={ () => openDialog(item.actionType) }
-        actionLabel={ t(item.actionLabel) }
-        description={ t(item.description) }
-        img={ item.img }
-        key={ item.id }
-        link={ item.link }
-        title={ t(item.title) }
+        action={() => openDialog(item.actionType)}
+        actionLabel={t(item.actionLabel)}
+        description={t(item.description)}
+        img={item.img}
+        key={item.id}
+        link={item.link}
+        title={t(item.title)}
       />
     )
   })
 
   return (
-    <Box id={ sectionId } sx={ styles.container }>
+    <Box id={sectionId} sx={styles.container}>
       <TitleWithDescription
-        description={ t('guestHomePage.whatCanYouDo.description') }
-        descriptionStyles={ { typography: { xs: 'subtitle1' } } }
-        title={ t('guestHomePage.whatCanYouDo.title') }
-        titleStyles={ { typography: { md: 'h3', xs: 'h4' } } }
+        description={t('guestHomePage.whatCanYouDo.description')}
+        descriptionStyles={{ typography: { xs: 'subtitle1' } }}
+        title={t('guestHomePage.whatCanYouDo.title')}
+        titleStyles={{ typography: { md: 'h3', xs: 'h4' } }}
       />
 
-      <Box sx={ styles.cards }>
-        { cards }
-      </Box>
+      <Box sx={styles.cards}>{cards}</Box>
     </Box>
   )
 }

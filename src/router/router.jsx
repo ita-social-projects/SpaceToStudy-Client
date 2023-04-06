@@ -1,5 +1,10 @@
 import { lazy } from 'react'
-import { Route, Navigate, createBrowserRouter, createRoutesFromElements } from 'react-router-dom'
+import {
+  Route,
+  Navigate,
+  createBrowserRouter,
+  createRoutesFromElements
+} from 'react-router-dom'
 import { t } from 'i18next'
 
 import App from '~/App'
@@ -19,21 +24,36 @@ import { admin } from '~/constants'
 const Logout = lazy(() => import('~/pages/logout/Logout'))
 
 export const routerConfig = (
-  <Route element={ <App /> } errorElement={ <Navigate to={ errorRoutes.notFound.path } /> } path={ guestRoutes.home.route }>
-    <Route element={ <AppContent /> } handle={ { crumb: { name: t('breadCrumbs.home'), path: guestRoutes.home.route } } }>
-      <Route element={ <GuestRoute /> } index />
-      { guestRouter }
-      { tutorRouter }
-      { studentRouter }
-      <Route path={ guestRoutes.error.route }>
-        { errorRouter }
-      </Route>
-      <Route element={ <Logout /> } path={ studentRoutes.accountMenu.logout.route } />
+  <Route
+    element={<App />}
+    errorElement={<Navigate to={errorRoutes.notFound.path} />}
+    path={guestRoutes.home.route}
+  >
+    <Route
+      element={<AppContent />}
+      handle={{
+        crumb: { name: t('breadCrumbs.home'), path: guestRoutes.home.route }
+      }}
+    >
+      <Route element={<GuestRoute />} index />
+      {guestRouter}
+      {tutorRouter}
+      {studentRouter}
+      <Route path={guestRoutes.error.route}>{errorRouter}</Route>
+      <Route
+        element={<Logout />}
+        path={studentRoutes.accountMenu.logout.route}
+      />
     </Route>
-    <Route element={ <PrivateRoute role={ admin } /> } path={ guestRoutes.admin.route }>
-      { adminRouter }
+    <Route
+      element={<PrivateRoute role={admin} />}
+      path={guestRoutes.admin.route}
+    >
+      {adminRouter}
     </Route>
   </Route>
 )
 
-export const router = createBrowserRouter(createRoutesFromElements(routerConfig))
+export const router = createBrowserRouter(
+  createRoutesFromElements(routerConfig)
+)

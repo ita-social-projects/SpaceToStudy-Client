@@ -1,4 +1,4 @@
 export enum CardsViewEnums {
-    Grid = 'grid',
-    Inline = 'inline'
+  Grid = 'grid',
+  Inline = 'inline'
 }

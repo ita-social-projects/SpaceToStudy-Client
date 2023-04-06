@@ -11,7 +11,7 @@ export const initialFilters = {
   createdAt: {
     from: '',
     to: ''
-  },
+  }
 }
 
 export const initialSort = { order: 'asc', orderBy: 'email' }
@@ -21,25 +21,25 @@ export const tabsInfo = {
     label: 'adminTable.all',
     key: 'status',
     value: 'all',
-    component: (props) => <EnhancedTable { ...props } />
+    component: (props) => <EnhancedTable {...props} />
   },
   active: {
     label: 'adminTable.active',
     key: 'status',
     value: 'active',
-    component: (props) => <EnhancedTable { ...props } />
+    component: (props) => <EnhancedTable {...props} />
   },
   blocked: {
     label: 'adminTable.blocked',
     key: 'status',
     value: 'blocked',
-    component: (props) => <EnhancedTable { ...props } />
+    component: (props) => <EnhancedTable {...props} />
   },
   invited: {
     label: 'adminTable.invited',
     key: 'status',
     value: 'invited',
-    component: (props) => <EnhancedTable { ...props } />
+    component: (props) => <EnhancedTable {...props} />
   }
 }
 
@@ -48,7 +48,7 @@ export const columns = [
     label: 'adminTable.name',
     field: 'name',
     dataType: 'string',
-    calculatedCellValue: (item) => `${item.firstName} ${item.lastName}`,
+    calculatedCellValue: (item) => `${item.firstName} ${item.lastName}`
   },
   {
     label: 'adminTable.email',
@@ -81,5 +81,5 @@ export const columns = [
     field: 'createdAt',
     calculatedCellValue: (item) => new Date(item.createdAt).toLocaleString(),
     dataType: 'date'
-  },
+  }
 ]

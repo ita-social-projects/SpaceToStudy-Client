@@ -33,17 +33,17 @@ const ModalProvider = (props) => {
   )
 
   return (
-    <ModalContext.Provider value={ { openModal, closeModal } } { ...props }>
-      { props.children }
-      { modal && (
+    <ModalContext.Provider value={{ openModal, closeModal }} {...props}>
+      {props.children}
+      {modal && (
         <PopupDialog
-          closeModal={ closeModal }
-          closeModalAfterDelay={ closeModalAfterDelay }
-          content={ modal }
-          paperProps={ paperProps }
-          timerId={ timer }
+          closeModal={closeModal}
+          closeModalAfterDelay={closeModalAfterDelay}
+          content={modal}
+          paperProps={paperProps}
+          timerId={timer}
         />
-      ) }
+      )}
     </ModalContext.Provider>
   )
 }

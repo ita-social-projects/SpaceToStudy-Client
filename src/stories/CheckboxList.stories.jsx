@@ -12,19 +12,19 @@ export default {
     getCheckboxes: {
       type: 'function',
       description: 'Function for getting value of all checkboxes',
-      action:'changed'
+      action: 'changed'
     }
   }
 }
 
-const Template = (args) => <CheckboxList { ...args } />
+const Template = (args) => <CheckboxList {...args} />
 
 export const Default = Template.bind({})
 
 const defaultItems = ['Beginner', 'Intermediate', 'Advanced']
 
 Default.args = {
-  items:defaultItems,
-  title:'Level',
-  getCheckboxes:(checkboxes) => console.log('Checkboxes: ', checkboxes)
+  items: defaultItems,
+  title: 'Level',
+  getCheckboxes: (checkboxes) => console.log('Checkboxes: ', checkboxes)
 }

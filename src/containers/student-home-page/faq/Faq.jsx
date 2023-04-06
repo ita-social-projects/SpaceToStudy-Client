@@ -12,20 +12,28 @@ const Faq = () => {
   const { t } = useTranslation()
   const [activeItemId, setActiveItemId] = useState(null)
 
-  const changeAccordion = (id) => (activeItemId === id ? setActiveItemId(null) : setActiveItemId(id))
+  const changeAccordion = (id) =>
+    activeItemId === id ? setActiveItemId(null) : setActiveItemId(id)
 
   return (
-    <Box className='section' id={ studentRoutes.navBar.faq.route } sx={ { flexDirection: 'column', mb: 0, pb: 10 } }>
+    <Box
+      className='section'
+      id={studentRoutes.navBar.faq.route}
+      sx={{ flexDirection: 'column', mb: 0, pb: 10 }}
+    >
       <TitleWithDescription
-        description={ t('studentHomePage.faq.subtitle') }
-        descriptionStyles={ { typography: { xs: 'subtitle1' } } }
-        title={ t('studentHomePage.faq.title') }
-        titleStyles={ { typography: { xs: 'h5' } } }
+        description={t('studentHomePage.faq.subtitle')}
+        descriptionStyles={{ typography: { xs: 'subtitle1' } }}
+        title={t('studentHomePage.faq.title')}
+        titleStyles={{ typography: { xs: 'h5' } }}
       />
 
       <Accordions
-        activeIndex={ activeItemId } items={ accordionItems } onChange={ changeAccordion }
-        showMoreIcon square
+        activeIndex={activeItemId}
+        items={accordionItems}
+        onChange={changeAccordion}
+        showMoreIcon
+        square
       />
     </Box>
   )

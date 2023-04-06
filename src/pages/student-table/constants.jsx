@@ -17,19 +17,19 @@ export const tabsInfo = {
     label: 'studentTable.all',
     key: 'isEmailConfirmed',
     value: null,
-    component: (props) => <EnhancedTable { ...props } />
+    component: (props) => <EnhancedTable {...props} />
   },
   true: {
     label: 'studentTable.active',
     key: 'isEmailConfirmed',
     value: true,
-    component: (props) => <EnhancedTable { ...props } />
+    component: (props) => <EnhancedTable {...props} />
   },
   false: {
     label: 'studentTable.unactive',
     key: 'isEmailConfirmed',
     value: false,
-    component: (props) => <EnhancedTable { ...props } />
+    component: (props) => <EnhancedTable {...props} />
   }
 }
 

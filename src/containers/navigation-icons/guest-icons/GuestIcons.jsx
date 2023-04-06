@@ -14,27 +14,29 @@ const GuestIcons = ({ openLoginDialog, setIsSidebarOpen }) => {
   const { t } = useTranslation()
 
   return (
-    <Box sx={ styles.iconBox }>
-      <Tooltip arrow title={ t('iconsTooltip.language') }>
-        <IconButton sx={ styles.langIcon }>
+    <Box sx={styles.iconBox}>
+      <Tooltip arrow title={t('iconsTooltip.language')}>
+        <IconButton sx={styles.langIcon}>
           <LanguageIcon color='primary' />
         </IconButton>
       </Tooltip>
 
-      <Tooltip arrow title={ t('iconsTooltip.login') }>
-        <IconButton onClick={ openLoginDialog } sx={ { display: { md: 'none' } } }>
+      <Tooltip arrow title={t('iconsTooltip.login')}>
+        <IconButton onClick={openLoginDialog} sx={{ display: { md: 'none' } }}>
           <LoginIcon color='primary' />
         </IconButton>
       </Tooltip>
       <Button
-        onClick={ openLoginDialog } size='medium' sx={ styles.loginButton }
+        onClick={openLoginDialog}
+        size='medium'
+        sx={styles.loginButton}
         variant='contained'
       >
-        { t('header.loginButton') }
+        {t('header.loginButton')}
       </Button>
 
-      <Tooltip arrow title={ t('iconsTooltip.menu') }>
-        <IconButton onClick={ () => setIsSidebarOpen(true) } sx={ styles.menuIcon }>
+      <Tooltip arrow title={t('iconsTooltip.menu')}>
+        <IconButton onClick={() => setIsSidebarOpen(true)} sx={styles.menuIcon}>
           <MenuIcon color='primary' />
         </IconButton>
       </Tooltip>

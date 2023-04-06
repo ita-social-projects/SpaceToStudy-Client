@@ -4,23 +4,23 @@ export default {
   title: 'ViewSwitcher',
   component: ViewSwitcher,
   argTypes: {
-    onChange:{
-      type:'function',
-      description:'change offers card view'
+    onChange: {
+      type: 'function',
+      description: 'change offers card view'
     },
-    value:{
+    value: {
       options: ['inline', 'grid'],
       control: { type: 'radio' },
-      description:'offers view state'
+      description: 'offers view state'
     }
   }
 }
 
-const Template = (args) => <ViewSwitcher { ...args } />
+const Template = (args) => <ViewSwitcher {...args} />
 
 export const Default = Template.bind({})
 
 Default.args = {
-  onChange: (view) => console.log('Updated view: ',view),
-  value:'inline'
+  onChange: (view) => console.log('Updated view: ', view),
+  value: 'inline'
 }

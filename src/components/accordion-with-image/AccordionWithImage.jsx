@@ -9,13 +9,13 @@ const AccordionWithImage = ({ items }) => {
   const [activeItemId, setActiveItemId] = useState(0)
 
   return (
-    <Box className='section' data-testid='accordion' sx={ styles.feature }>
-      <Box component='img' src={ items[activeItemId].image } sx={ styles.image } />
+    <Box className='section' data-testid='accordion' sx={styles.feature}>
+      <Box component='img' src={items[activeItemId].image} sx={styles.image} />
       <Accordions
-        activeIndex={ activeItemId }
-        items={ items }
-        onChange={ (id) => setActiveItemId(id) }
-        style={ styles.accordions }
+        activeIndex={activeItemId}
+        items={items}
+        onChange={(id) => setActiveItemId(id)}
+        style={styles.accordions}
       />
     </Box>
   )

@@ -11,36 +11,38 @@ import AppDrawer from '~/components/app-drawer/AppDrawer'
 import { styles } from '~/containers/layout/sidebar/Sidebar.styles'
 
 interface SidebarProps {
-  isSidebarOpen: boolean,
-  setIsSidebarOpen: (value:boolean) => void
-  navigationItems:{ route:string, path:string }[]
+  isSidebarOpen: boolean
+  setIsSidebarOpen: (value: boolean) => void
+  navigationItems: { route: string; path: string }[]
 }
 
-const Sidebar:FC<SidebarProps> = ({ isSidebarOpen, setIsSidebarOpen, navigationItems }) => {
+const Sidebar: FC<SidebarProps> = ({
+  isSidebarOpen,
+  setIsSidebarOpen,
+  navigationItems
+}) => {
   const { t } = useTranslation()
 
   const handleCloseSidebar = () => setIsSidebarOpen(false)
 
   const navigationList = navigationItems.map(({ route, path }) => {
     return (
-      <ListItem key={ route }>
+      <ListItem key={route}>
         <Typography
-          component={ HashLink }
-          onClick={ handleCloseSidebar }
-          sx={ styles.listItem }
-          to={ path }
+          component={HashLink}
+          onClick={handleCloseSidebar}
+          sx={styles.listItem}
+          to={path}
         >
-          { t(`header.${route}`) }
+          {t(`header.${route}`)}
         </Typography>
       </ListItem>
     )
   })
 
   return (
-    <AppDrawer onClose={ handleCloseSidebar } open={ isSidebarOpen }> 
-      <List sx={ styles.list }>
-        { navigationList }
-      </List>
+    <AppDrawer onClose={handleCloseSidebar} open={isSidebarOpen}>
+      <List sx={styles.list}>{navigationList}</List>
     </AppDrawer>
   )
 }

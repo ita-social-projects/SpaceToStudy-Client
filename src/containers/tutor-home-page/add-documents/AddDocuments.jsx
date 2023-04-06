@@ -19,35 +19,47 @@ const validationData = {
   maxQuantityFiles: 7
 }
 
-const AddDocuments = ({ btnsBox, documents, documentsError, addDocuments, setStepErrors, stepLabel }) => {
+const AddDocuments = ({
+  btnsBox,
+  documents,
+  documentsError,
+  addDocuments,
+  setStepErrors,
+  stepLabel
+}) => {
   const { t } = useTranslation()
 
   useEffect(() => {
-    setStepErrors((prevState) => ({ ...prevState, [stepLabel]: Boolean(documentsError) }))
+    setStepErrors((prevState) => ({
+      ...prevState,
+      [stepLabel]: Boolean(documentsError)
+    }))
   }, [documentsError, setStepErrors, stepLabel])
 
   return (
-    <Box sx={ styles.root }>
+    <Box sx={styles.root}>
       <Box
-        alt={ t('becomeTutor.documents.imageAlt') } component='img' src={ addDocumentsPNG }
-        sx={ styles.img }
+        alt={t('becomeTutor.documents.imageAlt')}
+        component='img'
+        src={addDocumentsPNG}
+        sx={styles.img}
       />
 
-      <Box sx={ styles.rigthBox }>
+      <Box sx={styles.rigthBox}>
         <Box>
-          <Typography mb={ 5 } variant='body1'>
-            { t('becomeTutor.documents.description') }
+          <Typography mb={5} variant='body1'>
+            {t('becomeTutor.documents.description')}
           </Typography>
           <FileUploader
-            buttonText={ t('becomeTutor.documents.button') }
-            emitter={ addDocuments }
-            initialError={ documentsError }
-            initialState={ documents }
-            validationData={ validationData }
+            buttonText={t('becomeTutor.documents.button')}
+            emitter={addDocuments}
+            initialError={documentsError}
+            initialState={documents}
+            validationData={validationData}
           />
         </Box>
 
-        { btnsBox }
+        {btnsBox}
       </Box>
     </Box>
   )

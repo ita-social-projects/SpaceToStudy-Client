@@ -17,12 +17,12 @@ const Tab = ({ tab, setTab, activeTab }) => {
 
   return (
     <Box
-      key={ tab.value }
-      onClick={ handleClick }
-      sx={ [styles.defaultTab, tab.value === activeTab && styles.activeTab] }
+      key={tab.value}
+      onClick={handleClick}
+      sx={[styles.defaultTab, tab.value === activeTab && styles.activeTab]}
       typography='subtitle2'
     >
-      { t(tab.label) }
+      {t(tab.label)}
     </Box>
   )
 }

@@ -1,16 +1,16 @@
 export const styles = {
   root: {
-    display:'flex',
+    display: 'flex',
     flexDirection: 'column',
-    alignItems:'start'
+    alignItems: 'start'
   },
-  title:{
-    color:'primary.700',
-    mb:'15px'
+  title: {
+    color: 'primary.700',
+    mb: '15px'
   },
-  checkbox:{
-    '&.MuiCheckbox-root':{
-      py:'6px'
+  checkbox: {
+    '&.MuiCheckbox-root': {
+      py: '6px'
     }
   }
 }

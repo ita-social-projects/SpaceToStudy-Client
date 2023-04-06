@@ -5,14 +5,13 @@ import Box from '@mui/material/Box'
 import ArrowUpwardRoundedIcon from '@mui/icons-material/ArrowUpwardRounded'
 import { styles } from '~/components/scroll-to-top-button/ScrollToTopButton.styles'
 
-
 const ScrollToTopButton = ({ element }) => {
   const [isVisible, setIsVisible] = useState(true)
-  
 
   useEffect(() => {
     const scrollVariable = element.current
-    const scroll = () => (scrollVariable.scrollTop > 450 ? setIsVisible(true) : setIsVisible(false))
+    const scroll = () =>
+      scrollVariable.scrollTop > 450 ? setIsVisible(true) : setIsVisible(false)
     scrollVariable.addEventListener('scroll', scroll)
     return () => scrollVariable.removeEventListener('scroll', scroll)
   }, [element])
@@ -26,9 +25,9 @@ const ScrollToTopButton = ({ element }) => {
 
   return (
     isVisible && (
-      <Box sx={ styles.root }>
-        <IconButton onClick={ goToTop } sx={ styles.button }>
-          <ArrowUpwardRoundedIcon sx={ styles.icon } />
+      <Box sx={styles.root}>
+        <IconButton onClick={goToTop} sx={styles.button}>
+          <ArrowUpwardRoundedIcon sx={styles.icon} />
         </IconButton>
       </Box>
     )

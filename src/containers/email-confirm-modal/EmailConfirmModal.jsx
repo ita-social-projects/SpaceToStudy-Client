@@ -16,7 +16,10 @@ const EmailConfirmModal = ({ confirmToken, openModal }) => {
   const { t } = useTranslation()
   const { closeModal } = useContext(ModalContext)
 
-  const serviceFunction = useCallback(() => AuthService.confirmEmail(confirmToken), [confirmToken])
+  const serviceFunction = useCallback(
+    () => AuthService.confirmEmail(confirmToken),
+    [confirmToken]
+  )
 
   const { response, error, loading } = useAxios({ service: serviceFunction })
 
@@ -25,20 +28,20 @@ const EmailConfirmModal = ({ confirmToken, openModal }) => {
   }
 
   if (loading) {
-    return <Loader size={ 100 } />
+    return <Loader size={100} />
   }
 
   if (error && error.response.data.code === 'BAD_CONFIRM_TOKEN') {
     return (
-      <Box sx={ styles.box }>
+      <Box sx={styles.box}>
         <ImgTitleDescription
-          description={ t('modals.emailReject.badToken') }
-          img={ imgReject }
-          style={ styles }
-          title={ t('modals.emailNotConfirm') }
+          description={t('modals.emailReject.badToken')}
+          img={imgReject}
+          style={styles}
+          title={t('modals.emailNotConfirm')}
         />
-        <Button onClick={ closeModal } size='large' variant='contained'>
-          { t('common.confirmButton') }
+        <Button onClick={closeModal} size='large' variant='contained'>
+          {t('common.confirmButton')}
         </Button>
       </Box>
     )
@@ -46,15 +49,15 @@ const EmailConfirmModal = ({ confirmToken, openModal }) => {
 
   if (error && error.response.data.code === 'EMAIL_ALREADY_CONFIRMED') {
     return (
-      <Box sx={ styles.box }>
+      <Box sx={styles.box}>
         <ImgTitleDescription
-          description={ t('modals.emailReject.alreadyConfirmed') }
-          img={ imgReject }
-          style={ styles }
-          title={ t('modals.emailAlreadyConfirm') }
+          description={t('modals.emailReject.alreadyConfirmed')}
+          img={imgReject}
+          style={styles}
+          title={t('modals.emailAlreadyConfirm')}
         />
-        <Button onClick={ openLoginDialog } size='large' variant='contained'>
-          { t('common.confirmButton') }
+        <Button onClick={openLoginDialog} size='large' variant='contained'>
+          {t('common.confirmButton')}
         </Button>
       </Box>
     )
@@ -62,10 +65,14 @@ const EmailConfirmModal = ({ confirmToken, openModal }) => {
 
   if (response) {
     return (
-      <Box sx={ styles.box }>
-        <ImgTitleDescription img={ imgSuccess } style={ styles } title={ t('modals.emailConfirm') } />
-        <Button onClick={ openLoginDialog } size='large' variant='contained'>
-          { t('button.goToLogin') }
+      <Box sx={styles.box}>
+        <ImgTitleDescription
+          img={imgSuccess}
+          style={styles}
+          title={t('modals.emailConfirm')}
+        />
+        <Button onClick={openLoginDialog} size='large' variant='contained'>
+          {t('button.goToLogin')}
         </Button>
       </Box>
     )

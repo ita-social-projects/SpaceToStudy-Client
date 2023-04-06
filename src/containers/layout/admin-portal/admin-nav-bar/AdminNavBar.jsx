@@ -24,40 +24,54 @@ const AdminNavBar = () => {
 
   const handleShowSubItems = useCallback(
     (label) => {
-      const isExpandedItem = Object.prototype.hasOwnProperty.call(initialExpandSubItems, label)
+      const isExpandedItem = Object.prototype.hasOwnProperty.call(
+        initialExpandSubItems,
+        label
+      )
       !expanded && isExpandedItem && setExpanded(true)
-      setExpandSubItems((prev) => ({ ...initialExpandSubItems, [label]: !prev[label] }))
+      setExpandSubItems((prev) => ({
+        ...initialExpandSubItems,
+        [label]: !prev[label]
+      }))
     },
     [expanded]
   )
 
-  const expandIcon = expanded ? <ArrowCircleLeftIcon /> : <ArrowCircleRightIcon />
+  const expandIcon = expanded ? (
+    <ArrowCircleLeftIcon />
+  ) : (
+    <ArrowCircleRightIcon />
+  )
 
   const navBarList = useMemo(
     () =>
       navBarItems.map((item, index) => (
         <AdminNavBarItem
-          active={ active === index }
-          expanded={ expanded }
-          handleActive={ () => setActive(index) }
-          handleShowSubItems={ handleShowSubItems }
-          key={ item.label }
-          showSubItems={ expandSubItems[item.label] }
-          { ...item }
+          active={active === index}
+          expanded={expanded}
+          handleActive={() => setActive(index)}
+          handleShowSubItems={handleShowSubItems}
+          key={item.label}
+          showSubItems={expandSubItems[item.label]}
+          {...item}
         />
       )),
     [active, expandSubItems, expanded, handleShowSubItems]
   )
 
   return (
-    <List data-testid='AdminNavBar' sx={ [styles.navBar, expanded && styles.expanded] }>
-      <ListItemButton onClick={ openNavBar } sx={ [styles.listItem, styles.openButton] }>
-        <ListItemIcon sx={ styles.openButton }>
-          { expandIcon }
-        </ListItemIcon>
+    <List
+      data-testid='AdminNavBar'
+      sx={[styles.navBar, expanded && styles.expanded]}
+    >
+      <ListItemButton
+        onClick={openNavBar}
+        sx={[styles.listItem, styles.openButton]}
+      >
+        <ListItemIcon sx={styles.openButton}>{expandIcon}</ListItemIcon>
       </ListItemButton>
-      <Divider sx={ styles.divider } />
-      { navBarList }
+      <Divider sx={styles.divider} />
+      {navBarList}
     </List>
   )
 }

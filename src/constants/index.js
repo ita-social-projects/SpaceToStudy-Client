@@ -17,13 +17,13 @@ export const snackbarVariants = {
 }
 
 export const cardsViews = {
-  inline:'inline',
-  grid:'grid'
+  inline: 'inline',
+  grid: 'grid'
 }
 export const sortByFields = {
-  newest:'newest',
-  tutorRating:'tutorRating',
-  popularity:'popularity'
+  newest: 'newest',
+  tutorRating: 'tutorRating',
+  popularity: 'popularity'
 }
 
 export const myProfilePath = '/tutor/myProfile' || '/student/myProfile'

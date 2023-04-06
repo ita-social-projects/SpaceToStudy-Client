@@ -6,7 +6,7 @@ export const style = {
     justifyContent: 'space-between',
     gap: '40px',
     height: { sm: '485px' },
-    paddingBottom:{ sm:'210px', md:'0px' },
+    paddingBottom: { sm: '210px', md: '0px' },
     ...fadeAnimation
   },
   img: {
@@ -45,7 +45,7 @@ export const style = {
     maxWidth: '432px',
     m: { md: 0, xs: '0 auto' },
     pt: 0,
-    pb:{ xs:'30px', sm:'0' }
+    pb: { xs: '30px', sm: '0' }
   },
   description: {
     mb: '20px'

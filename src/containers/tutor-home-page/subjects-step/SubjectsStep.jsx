@@ -22,12 +22,16 @@ const SubjectsStep = ({ stepLabel, btnsBox }) => {
   const [subjects, setSubjects] = useState({ category: null, subject: null })
   const [subjectError, setSubjectError] = useState('')
 
-  const imageBlock = (<Box sx={ styles.imgContainer  }>
-    <Box component='img' src={ img } sx={ styles.img } />
-  </Box>)
+  const imageBlock = (
+    <Box sx={styles.imgContainer}>
+      <Box component='img' src={img} sx={styles.img} />
+    </Box>
+  )
 
   const onChangeCategory = (_, value) => {
-    setSubjects((prev) => prev.category !== value && { category: value, subject: null })
+    setSubjects(
+      (prev) => prev.category !== value && { category: value, subject: null }
+    )
   }
 
   const onChangeSubject = (_, value) => {
@@ -43,7 +47,9 @@ const SubjectsStep = ({ stepLabel, btnsBox }) => {
 
     const { subject, category } = subjects
 
-    const isSameLesson = subjectData.some((lesson) => lesson.subject === subject && lesson.category === category)
+    const isSameLesson = subjectData.some(
+      (lesson) => lesson.subject === subject && lesson.category === category
+    )
     if (isSameLesson) {
       setSubjectError(t('becomeTutor.categories.sameSubject'))
       return
@@ -63,51 +69,57 @@ const SubjectsStep = ({ stepLabel, btnsBox }) => {
   const listOfItems = subjectData.map((item) => item.subject)
   const categoriesMockOptions = categoriesMock.map((item) => item.name)
   const languagesMockOptions = languagesMock.map((item) => item.name)
-  
+
   return (
-    <Box sx={ styles.container }>
-      { isDesktop && imageBlock }
-      <Box sx={ styles.rigthBox }>
-        <Box sx={ styles.contentBox } >
-          <Typography mb='20px'>
-            { t('becomeTutor.categories.title') }
-          </Typography>
-          { isMobile && imageBlock }
+    <Box sx={styles.container}>
+      {isDesktop && imageBlock}
+      <Box sx={styles.rigthBox}>
+        <Box sx={styles.contentBox}>
+          <Typography mb='20px'>{t('becomeTutor.categories.title')}</Typography>
+          {isMobile && imageBlock}
           <AppAutoComplete
-            fieldValue={ subjects.category }
-            id={ t('becomeTutor.categories.mainSubjectsLabel') }
-            label={ t('becomeTutor.categories.mainSubjectsLabel') }
-            onChange={ onChangeCategory }
-            options={ categoriesMockOptions }
-            sx={ { mb: '20px' } }
+            fieldValue={subjects.category}
+            id={t('becomeTutor.categories.mainSubjectsLabel')}
+            label={t('becomeTutor.categories.mainSubjectsLabel')}
+            onChange={onChangeCategory}
+            options={categoriesMockOptions}
+            sx={{ mb: '20px' }}
             type='text'
           />
           <AppAutoComplete
-            disabled={ !subjects.category }
-            fieldValue={ subjects.subject }
-            id={ t('becomeTutor.categories.subjectLabel') }
-            label={ t('becomeTutor.categories.subjectLabel') }
-            onChange={ onChangeSubject }
-            options={ languagesMockOptions }
-            sx={ { mb: '20px' } }
+            disabled={!subjects.category}
+            fieldValue={subjects.subject}
+            id={t('becomeTutor.categories.subjectLabel')}
+            label={t('becomeTutor.categories.subjectLabel')}
+            onChange={onChangeSubject}
+            options={languagesMockOptions}
+            sx={{ mb: '20px' }}
             type='text'
           />
           <Button
-            data-testid='add-subject' fullWidth onClick={ addSubject }
-            sx={ { bgcolor: 'primary.50' } }
+            data-testid='add-subject'
+            fullWidth
+            onClick={addSubject}
+            sx={{ bgcolor: 'primary.50' }}
           >
             <Typography variant='button'>
-              { t('becomeTutor.categories.btnText') }
+              {t('becomeTutor.categories.btnText')}
             </Typography>
           </Button>
-          <FormHelperText data-testid='error-subject' error={ !!subjectError } sx={ { textAlign: 'center' } }>
-            { subjectError || ' ' }
+          <FormHelperText
+            data-testid='error-subject'
+            error={!!subjectError}
+            sx={{ textAlign: 'center' }}
+          >
+            {subjectError || ' '}
           </FormHelperText>
           <AppChipList
-            defaultQuantity={ 2 } handleChipDelete={ handleChipDelete } items={ listOfItems }
+            defaultQuantity={2}
+            handleChipDelete={handleChipDelete}
+            items={listOfItems}
           />
         </Box>
-        { btnsBox }
+        {btnsBox}
       </Box>
     </Box>
   )

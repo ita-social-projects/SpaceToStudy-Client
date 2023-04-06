@@ -15,65 +15,78 @@ import { sortByFields } from '~/containers/find-offer/filter-bar-menu/FilterBarM
 
 import { BarMenuFilters, CardsViewTypes } from '~/types'
 
-
 interface FilterBarMenuProps {
-  chosenFiltersQty: number,
-  toggleFilters: () => void,
-  getFilters: (filters: BarMenuFilters) => void,
-  handleOffersView: (view: CardsViewTypes) => void,
-  offersView: CardsViewTypes,
+  chosenFiltersQty: number
+  toggleFilters: () => void
+  getFilters: (filters: BarMenuFilters) => void
+  handleOffersView: (view: CardsViewTypes) => void
+  offersView: CardsViewTypes
   setFilters: (filters: BarMenuFilters) => void
   filters: BarMenuFilters
 }
 
-const FilterBarMenu: FC<FilterBarMenuProps> = ({ chosenFiltersQty, toggleFilters, setFilters, filters, handleOffersView, offersView }) => {
-
+const FilterBarMenu: FC<FilterBarMenuProps> = ({
+  chosenFiltersQty,
+  toggleFilters,
+  setFilters,
+  filters,
+  handleOffersView,
+  offersView
+}) => {
   const { isDesktop, isMobile } = useBreakpoints()
 
   const { t } = useTranslation()
-  
+
   const translatedSwitcherOptions = {
-    left:{
-      text:t('findOffers.topMenu.tutorsOffers'),
-      tooltip:t('findOffers.contentSwitcher.switcher-tutor')
+    left: {
+      text: t('findOffers.topMenu.tutorsOffers'),
+      tooltip: t('findOffers.contentSwitcher.switcher-tutor')
     },
-    right:{
-      text:t('findOffers.topMenu.studentsRequests'),
-      tooltip:t('findOffers.contentSwitcher.switcher-student')
+    right: {
+      text: t('findOffers.topMenu.studentsRequests'),
+      tooltip: t('findOffers.contentSwitcher.switcher-student')
     }
   }
-  
-  const handleOffersType = (event: ChangeEvent<HTMLInputElement>, isActiveOffersType: boolean) => {
+
+  const handleOffersType = (
+    event: ChangeEvent<HTMLInputElement>,
+    isActiveOffersType: boolean
+  ) => {
     setFilters({ ...filters, isActiveOffersType })
   }
 
   const handleSortBy = (sortBy: string) => {
     setFilters({ ...filters, sortBy })
   }
-  
+
   return (
-    <Box sx={ isMobile ? styles.mobileContainer : styles.container } >
-      <FiltersToggle chosenFiltersQty={ chosenFiltersQty } handleToggle={ toggleFilters } />
-      { isDesktop ? (
+    <Box sx={isMobile ? styles.mobileContainer : styles.container}>
+      <FiltersToggle
+        chosenFiltersQty={chosenFiltersQty}
+        handleToggle={toggleFilters}
+      />
+      {isDesktop ? (
         <AppContentSwitcher
-          active={ filters.isActiveOffersType }
-          handleChange={ handleOffersType }
-          switchOptions={ translatedSwitcherOptions }
+          active={filters.isActiveOffersType}
+          handleChange={handleOffersType}
+          switchOptions={translatedSwitcherOptions}
           typographyVariant='button'
         />
-      ) : null }
-      { !isMobile ? (
-        <Box sx={ styles.container }>
+      ) : null}
+      {!isMobile ? (
+        <Box sx={styles.container}>
           <AppSelect
-            fields={ sortByFields }
-            selectTitle={ t('filters.sortBy.sortByTitle') }
-            setValue={ handleSortBy }
-            sx={ isDesktop ? styles.selectContainer : {} }
-            value={ filters.sortBy }
+            fields={sortByFields}
+            selectTitle={t('filters.sortBy.sortByTitle')}
+            setValue={handleSortBy}
+            sx={isDesktop ? styles.selectContainer : {}}
+            value={filters.sortBy}
           />
-          { isDesktop ? <ViewSwitcher onChange={ handleOffersView } value={ offersView } /> : null }
+          {isDesktop ? (
+            <ViewSwitcher onChange={handleOffersView} value={offersView} />
+          ) : null}
         </Box>
-      ) : null } 
+      ) : null}
     </Box>
   )
 }

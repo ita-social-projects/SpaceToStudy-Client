@@ -11,12 +11,17 @@ const TutorHome = lazy(() => import('~/pages/tutor-home/TutorHome'))
 const TutorProfile = lazy(() => import('~/pages/tutor-profile/TutorProfile'))
 
 export const tutorRouter = (
-  <Route element={ <PrivateRoute role={ tutor } /> } path={ guestRoutes.tutor.route }>
-    <Route element={ <TutorHome /> } index />
+  <Route element={<PrivateRoute role={tutor} />} path={guestRoutes.tutor.route}>
+    <Route element={<TutorHome />} index />
     <Route
-      element={ <TutorProfile /> }
-      handle={ { crumb: { name: t('breadCrumbs.myProfile'), path: tutorRoutes.accountMenu.myProfile.route } } }
-      path={ tutorRoutes.accountMenu.myProfile.route }
+      element={<TutorProfile />}
+      handle={{
+        crumb: {
+          name: t('breadCrumbs.myProfile'),
+          path: tutorRoutes.accountMenu.myProfile.route
+        }
+      }}
+      path={tutorRoutes.accountMenu.myProfile.route}
     />
   </Route>
 )

@@ -16,27 +16,30 @@ interface ViewSwitcherProps {
 }
 
 const ViewSwitcher: FC<ViewSwitcherProps> = ({ onChange, value }) => {
-  const changeOffersView = (_event:MouseEvent<HTMLElement>, view: CardsViewTypes) => onChange(view)
+  const changeOffersView = (
+    _event: MouseEvent<HTMLElement>,
+    view: CardsViewTypes
+  ) => onChange(view)
 
   return (
     <Box>
       <ToggleButton
         aria-label='inline card view'
-        onClick={ changeOffersView }
-        selected={ value === CardsViewEnums.Inline }
-        sx={ styles.inlineButton }
-        value={ CardsViewEnums.Inline }
+        onClick={changeOffersView}
+        selected={value === CardsViewEnums.Inline}
+        sx={styles.inlineButton}
+        value={CardsViewEnums.Inline}
       >
-        <FormatListBulletedIcon sx={ styles.icon } />
+        <FormatListBulletedIcon sx={styles.icon} />
       </ToggleButton>
       <ToggleButton
         aria-label='grid card view'
-        onClick={ changeOffersView }
-        selected={ value === CardsViewEnums.Grid }
-        sx={ styles.gridButton }
-        value={ CardsViewEnums.Grid }
+        onClick={changeOffersView}
+        selected={value === CardsViewEnums.Grid}
+        sx={styles.gridButton}
+        value={CardsViewEnums.Grid}
       >
-        <GridViewIcon sx={ styles.icon } />
+        <GridViewIcon sx={styles.icon} />
       </ToggleButton>
     </Box>
   )

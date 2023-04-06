@@ -6,11 +6,11 @@ export default {
   title: 'Example/Page',
   component: Page,
   parameters: {
-    layout: 'fullscreen',
-  },
+    layout: 'fullscreen'
+  }
 }
 
-const Template = (args) => <Page { ...args } />
+const Template = (args) => <Page {...args} />
 
 export const LoggedOut = Template.bind({})
 

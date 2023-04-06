@@ -19,7 +19,9 @@ const AddPhotoStep = ({ btnsBox, stepLabel }) => {
   const photo = stepData[stepLabel]
 
   const addPhoto = ({ files, error }) => {
-    files.length && !files[0].src ? resizeImage(files[0]) : handleStepData(stepLabel, files)
+    files.length && !files[0].src
+      ? resizeImage(files[0])
+      : handleStepData(stepLabel, files)
 
     setPhotoError(error)
   }
@@ -29,52 +31,54 @@ const AddPhotoStep = ({ btnsBox, stepLabel }) => {
     const photoSizes = { newWidth: 440, newHeight: 440 }
     const photoName = photo.name
     imageResize(originalPhotoPath, photoSizes).then((resizedPhoto) => {
-      handleStepData(stepLabel, [{ src: resizedPhoto, name: photoName, type: 'image/png' }])
+      handleStepData(stepLabel, [
+        { src: resizedPhoto, name: photoName, type: 'image/png' }
+      ])
     })
   }
 
   const photoPrewiew = photo.length ? (
-    <Box sx={ style.imgContainer }>
+    <Box sx={style.imgContainer}>
       <Box
-        alt={ t('becomeTutor.photo.imageAlt') } component='img' src={ photo[0].src }
-        sx={ style.img }
+        alt={t('becomeTutor.photo.imageAlt')}
+        component='img'
+        src={photo[0].src}
+        sx={style.img}
       />
     </Box>
   ) : (
-    <DragAndDrop 
-      emitter={ addPhoto }
-      initialState={ photo }
-      style={ { root: style.imgContainer, uploadBox: style.uploadBox, activeDrag: style.activeDrag  } }
-      validationData={ validationData }
-    >   
-      <Typography>
-        { t('becomeTutor.photo.placeholder') }
-      </Typography>
+    <DragAndDrop
+      emitter={addPhoto}
+      initialState={photo}
+      style={{
+        root: style.imgContainer,
+        uploadBox: style.uploadBox,
+        activeDrag: style.activeDrag
+      }}
+      validationData={validationData}
+    >
+      <Typography>{t('becomeTutor.photo.placeholder')}</Typography>
     </DragAndDrop>
   )
 
   return (
-    <Box sx={ style.root }>
-      { isDesktop && 
-         photoPrewiew 
-      }
-      <Box sx={ style.rigthBox }>
+    <Box sx={style.root}>
+      {isDesktop && photoPrewiew}
+      <Box sx={style.rigthBox}>
         <Box>
-          <Typography sx={ style.description }>
-            { t('becomeTutor.photo.description') }
+          <Typography sx={style.description}>
+            {t('becomeTutor.photo.description')}
           </Typography>
           <FileUploader
-            buttonText={ t('becomeTutor.photo.button') }
-            emitter={ addPhoto }
-            initialError={ photoError }
-            initialState={ photo }
-            validationData={ validationData }
+            buttonText={t('becomeTutor.photo.button')}
+            emitter={addPhoto}
+            initialError={photoError}
+            initialState={photo}
+            validationData={validationData}
           />
         </Box>
-        { (isMobile || isTablet ) && 
-           photoPrewiew 
-        }
-        { btnsBox }
+        {(isMobile || isTablet) && photoPrewiew}
+        {btnsBox}
       </Box>
     </Box>
   )

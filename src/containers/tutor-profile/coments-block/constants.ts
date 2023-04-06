@@ -41,7 +41,8 @@ export const responseMock = {
     },
     {
       _id: '6400f540307bdcc5da14aa5e',
-      comment: 'i spent a lot of money, but my english only got worse after lesson',
+      comment:
+        'i spent a lot of money, but my english only got worse after lesson',
       rating: 3,
       author: {
         _id: '63f905d3237ccffcf95d88da',

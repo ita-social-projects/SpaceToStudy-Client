@@ -1,11 +1,11 @@
 export const styles = {
-  root: (open: boolean)=> ({
+  root: (open: boolean) => ({
     maxWidth: '240px',
     color: 'primary.700',
     whiteSpace: 'nowrap',
-    py: { xs:'20px', sm: 0 },
+    py: { xs: '20px', sm: 0 },
     px: open ? '48px' : 0,
-    width: open ? '100%': 0,
+    width: open ? '100%' : 0,
     overflow: open ? 'visible' : 'hidden',
     opacity: open ? 1 : 0,
     transition: 'all 0.3s',

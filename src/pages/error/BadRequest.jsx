@@ -21,28 +21,29 @@ const BadRequest = () => {
   const mobileTypography = { title: 'h4', description: 'subtitle2' }
 
   const windowSizeTypography =
-    (isDesktop && desktopTypography) || (isTablet && tabletTypography) || (isMobile && mobileTypography)
+    (isDesktop && desktopTypography) ||
+    (isTablet && tabletTypography) ||
+    (isMobile && mobileTypography)
 
   return (
-    <Container sx={ styles.container }>
-      <Box sx={ styles.info }>
+    <Container sx={styles.container}>
+      <Box sx={styles.info}>
         <TitleWithDescription
-          description={ t('errorPage.400.description') }
-          descriptionStyles={ { typography: windowSizeTypography.description } }
-          title={ t('errorPage.400.title') }
-          titleStyles={ { typography: windowSizeTypography.title } }
+          description={t('errorPage.400.description')}
+          descriptionStyles={{ typography: windowSizeTypography.description }}
+          title={t('errorPage.400.title')}
+          titleStyles={{ typography: windowSizeTypography.title }}
         />
         <Button
-          component={ Link } size='extraLarge' to={ guestRoutes.home.path }
+          component={Link}
+          size='extraLarge'
+          to={guestRoutes.home.path}
           variant='contained'
         >
-          { t('button.toMain') }
+          {t('button.toMain')}
         </Button>
       </Box>
-      <Box
-        alt='man' component='img' src={ img }
-        sx={ styles.img }
-      />
+      <Box alt='man' component='img' src={img} sx={styles.img} />
     </Container>
   )
 }

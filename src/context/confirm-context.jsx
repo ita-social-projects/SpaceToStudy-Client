@@ -24,15 +24,17 @@ export const ConfirmationDialogProvider = ({ children }) => {
   }
 
   return (
-    <ConfirmationDialogContext.Provider value={ { openDialog, needConfirmation, setNeedConfirmation } }>
+    <ConfirmationDialogContext.Provider
+      value={{ openDialog, needConfirmation, setNeedConfirmation }}
+    >
       <ConfirmDialog
-        message={ dialogConfig.message }
-        onConfirm={ onConfirm }
-        onDismiss={ onDismiss }
-        open={ dialogOpen }
-        title={ dialogConfig.title }
+        message={dialogConfig.message}
+        onConfirm={onConfirm}
+        onDismiss={onDismiss}
+        open={dialogOpen}
+        title={dialogConfig.title}
       />
-      { children }
+      {children}
     </ConfirmationDialogContext.Provider>
   )
 }

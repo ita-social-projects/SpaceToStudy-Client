@@ -9,40 +9,51 @@ import Typography from '@mui/material/Typography'
 import { SelectFieldType } from '~/types'
 import { styles } from '~/components/app-select/AppSelect.styles'
 
-interface AppSelectProps extends SelectProps<string>{
-  setValue:(value:string) => void
-  value:string,
-  fields:SelectFieldType[],
-  selectTitle?:string,
+interface AppSelectProps extends SelectProps<string> {
+  setValue: (value: string) => void
+  value: string
+  fields: SelectFieldType[]
+  selectTitle?: string
 }
 
-const AppSelect:FC<AppSelectProps> = ({ setValue, value, fields, selectTitle = '', sx, ...props }) => {
+const AppSelect: FC<AppSelectProps> = ({
+  setValue,
+  value,
+  fields,
+  selectTitle = '',
+  sx,
+  ...props
+}) => {
   const { t } = useTranslation()
 
   const changeValue = (event: SelectChangeEvent) => setValue(event.target.value)
 
-  const fieldsList = fields.map(field => (
-    <MenuItem key={ field.value } value={ field.value }>
-      { t(field.title) }
-    </MenuItem>)
-  )
+  const fieldsList = fields.map((field) => (
+    <MenuItem key={field.value} value={field.value}>
+      {t(field.title)}
+    </MenuItem>
+  ))
   const titleEl = selectTitle.length ? (
-    <Typography aria-label='select-title'  sx={ styles.selectTitle } variant='body2' >
-      { t(selectTitle) }
+    <Typography
+      aria-label='select-title'
+      sx={styles.selectTitle}
+      variant='body2'
+    >
+      {t(selectTitle)}
     </Typography>
-  ) : null 
+  ) : null
 
   return (
-    <Box sx={ { ...styles.selectContainer, ...sx } } >
-      { titleEl }
+    <Box sx={{ ...styles.selectContainer, ...sx }}>
+      {titleEl}
       <Select
-        inputProps={ { 'data-testid': 'app-select' } }
-        onChange={ changeValue }
-        sx={ styles.selectField }
-        value={ value }
-        { ...props }
+        inputProps={{ 'data-testid': 'app-select' }}
+        onChange={changeValue}
+        sx={styles.selectField}
+        value={value}
+        {...props}
       >
-        { fieldsList }
+        {fieldsList}
       </Select>
     </Box>
   )

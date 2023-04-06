@@ -7,13 +7,28 @@ import EnumFilter from '~/components/enhanced-table/enum-filter/EnumFilter'
 const FilterCell = ({ column, filter, setFilter, clearFilter }) => {
   const enums = (
     <EnumFilter
-      clearFilter={ clearFilter } column={ column } filter={ filter }
-      setFilter={ setFilter }
-    />)
+      clearFilter={clearFilter}
+      column={column}
+      filter={filter}
+      setFilter={setFilter}
+    />
+  )
 
-  const string = <SearchInput data-testid="searchInput" search={ filter } setSearch={ setFilter } />
+  const string = (
+    <SearchInput
+      data-testid='searchInput'
+      search={filter}
+      setSearch={setFilter}
+    />
+  )
 
-  const date = <DateFilter clearFilter={ clearFilter } filter={ filter } setFilter={ setFilter } />
+  const date = (
+    <DateFilter
+      clearFilter={clearFilter}
+      filter={filter}
+      setFilter={setFilter}
+    />
+  )
 
   const dataTypes = {
     string,
@@ -21,11 +36,7 @@ const FilterCell = ({ column, filter, setFilter, clearFilter }) => {
     enums
   }
 
-  return (
-    <TableCell size='small'>
-      { dataTypes[column.dataType] }
-    </TableCell>
-  )
+  return <TableCell size='small'>{dataTypes[column.dataType]}</TableCell>
 }
 
 export default FilterCell

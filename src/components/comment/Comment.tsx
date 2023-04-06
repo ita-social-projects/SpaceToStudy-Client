@@ -12,44 +12,41 @@ interface CommentProps {
   review: ReviewInterface
 }
 
-const Comment:FC<CommentProps> = ({ review }) => {
+const Comment: FC<CommentProps> = ({ review }) => {
   const { comment, author, rating, createdAt, offer } = review
   const { firstName, lastName, photo } = author
   const { category, subject, proficiencyLevel } = offer
 
-  const timestamp = new Date(createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+  const timestamp = new Date(createdAt).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  })
 
   const userName = (
     <>
-      <Typography component={ 'span' } variant='body2'>
-        { firstName }
+      <Typography component={'span'} variant='body2'>
+        {firstName}
       </Typography>
-      <Typography component={ 'span' } variant='body2'>
-        { lastName }
+      <Typography component={'span'} variant='body2'>
+        {lastName}
       </Typography>
     </>
   )
   const coopDetails = `${category.name} - ${subject.name} - ${proficiencyLevel}`
 
   return (
-    <Box sx={ styles.root }>
+    <Box sx={styles.root}>
       <ImgTitleDescription
-        description={ timestamp } img={ photo } style={ styles.userInfo }
-        title={ userName }
+        description={timestamp}
+        img={photo}
+        style={styles.userInfo}
+        title={userName}
       />
-      <Box sx={ styles.description }>
-        <Typography sx={ styles.coopDetails }>
-          { coopDetails }
-        </Typography>
-        <AppRating
-          readOnly
-          showNumber 
-          sx={ styles.rating }
-          value={ rating }
-        />
-        <Typography sx={ styles.comment }>
-          { comment }
-        </Typography>
+      <Box sx={styles.description}>
+        <Typography sx={styles.coopDetails}>{coopDetails}</Typography>
+        <AppRating readOnly showNumber sx={styles.rating} value={rating} />
+        <Typography sx={styles.comment}>{comment}</Typography>
       </Box>
     </Box>
   )

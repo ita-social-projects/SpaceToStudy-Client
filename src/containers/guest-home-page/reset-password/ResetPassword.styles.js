@@ -1,5 +1,8 @@
 export const styles = {
-  container: { p: { xs: '100px 10px', sm: '56px', md: '70px' }, maxWidth: '400px' },
+  container: {
+    p: { xs: '100px 10px', sm: '56px', md: '70px' },
+    maxWidth: '400px'
+  },
   wrapper: { maxWidth: '630px' },
   mainTitle: { typography: 'h4' },
   title: {

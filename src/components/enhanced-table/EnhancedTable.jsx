@@ -30,7 +30,10 @@ const EnhancedTable = ({ fetchService, externalFilter }) => {
   const [items, setItems] = useState([])
   const [itemsCount, setItemsCount] = useState(0)
 
-  const { loading, fetchData } = useAxios({ service: fetchService, fetchOnMount: false })
+  const { loading, fetchData } = useAxios({
+    service: fetchService,
+    fetchOnMount: false
+  })
 
   const getData = useCallback(async () => {
     const status = externalFilter.status !== 'all' && [externalFilter.status]
@@ -46,7 +49,15 @@ const EnhancedTable = ({ fetchService, externalFilter }) => {
     })
     setItems(res.data.items)
     setItemsCount(res.data.count)
-  }, [fetchData, externalFilter, page, sort, rowsPerPage, filters, clearSelected])
+  }, [
+    fetchData,
+    externalFilter,
+    page,
+    sort,
+    rowsPerPage,
+    filters,
+    clearSelected
+  ])
 
   useEffect(() => {
     getData()
@@ -61,8 +72,10 @@ const EnhancedTable = ({ fetchService, externalFilter }) => {
 
     return (
       <EnhancedTableRow
-        isItemSelected={ isItemSelected } item={ item } key={ item._id }
-        refetchData={ getData }
+        isItemSelected={isItemSelected}
+        item={item}
+        key={item._id}
+        refetchData={getData}
       />
     )
   })
@@ -70,10 +83,13 @@ const EnhancedTable = ({ fetchService, externalFilter }) => {
   const tableBody = (
     <TableContainer>
       <Table>
-        <EnhancedTableHead itemsCount={ itemsCount } onSelectAllClick={ createSelectAllHandler(items) } />
+        <EnhancedTableHead
+          itemsCount={itemsCount}
+          onSelectAllClick={createSelectAllHandler(items)}
+        />
         <TableBody>
           <FilterRow />
-          { rows }
+          {rows}
         </TableBody>
       </Table>
     </TableContainer>
@@ -81,26 +97,28 @@ const EnhancedTable = ({ fetchService, externalFilter }) => {
 
   const noMatchesBox = (
     <>
-      { tableBody }
-      <Box sx={ styles.noMatches }>
+      {tableBody}
+      <Box sx={styles.noMatches}>
         <ReportIcon color='secondary' />
-        { t('table.noExactMatches') }
+        {t('table.noExactMatches')}
       </Box>
     </>
   )
 
   const tableContent =
-    (loading && <Loader size={ 70 } sx={ { py: '170px' } } />) || (!items.length && noMatchesBox) || tableBody
+    (loading && <Loader size={70} sx={{ py: '170px' }} />) ||
+    (!items.length && noMatchesBox) ||
+    tableBody
 
   return (
-    <Box sx={ styles.root }>
-      <Box className={ numSelected > 0 ? 'visible' : 'hidden' }>
-        <EnhancedTableToolbar refetchData={ getData } />
+    <Box sx={styles.root}>
+      <Box className={numSelected > 0 ? 'visible' : 'hidden'}>
+        <EnhancedTableToolbar refetchData={getData} />
       </Box>
-      <Paper sx={ styles.paper }>
-        { tableContent }
-      </Paper>
-      { loading || !items.length ? null : <EnhancedTablePagination itemsCount={ itemsCount } /> }
+      <Paper sx={styles.paper}>{tableContent}</Paper>
+      {loading || !items.length ? null : (
+        <EnhancedTablePagination itemsCount={itemsCount} />
+      )}
     </Box>
   )
 }

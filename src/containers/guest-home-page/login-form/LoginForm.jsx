@@ -13,8 +13,15 @@ import AppButton from '~/components/app-button/AppButton'
 
 import { styles } from '~/containers/guest-home-page/login-form/LoginForm.styles'
 
-const LoginForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) => {
-  const { inputVisibility: passwordVisibility, showInputText: showPassword } = useInputVisibility(errors.password)
+const LoginForm = ({
+  handleSubmit,
+  handleChange,
+  handleBlur,
+  data,
+  errors
+}) => {
+  const { inputVisibility: passwordVisibility, showInputText: showPassword } =
+    useInputVisibility(errors.password)
   const { authLoading } = useSelector((state) => state.appMain)
 
   const { openModal } = useContext(ModalContext)
@@ -26,43 +33,50 @@ const LoginForm = ({ handleSubmit, handleChange, handleBlur, data, errors }) => 
   }
 
   return (
-    <Box component='form' onSubmit={ handleSubmit }>
+    <Box component='form' onSubmit={handleSubmit}>
       <AppTextField
         autoFocus
-        data-testid={ 'email' }
-        errorMsg={ t(errors.email) }
+        data-testid={'email'}
+        errorMsg={t(errors.email)}
         fullWidth
-        label={ t('common.labels.email') }
-        onBlur={ handleBlur('email') }
-        onChange={ handleChange('email') }
+        label={t('common.labels.email')}
+        onBlur={handleBlur('email')}
+        onChange={handleChange('email')}
         required
         size='large'
-        sx={ { mb: '5px' } }
+        sx={{ mb: '5px' }}
         type='email'
-        value={ data.email }
+        value={data.email}
       />
 
       <AppTextField
-        InputProps={ passwordVisibility }
-        errorMsg={ t(errors.password) }
+        InputProps={passwordVisibility}
+        errorMsg={t(errors.password)}
         fullWidth
-        label={ t('common.labels.password') }
-        onBlur={ handleBlur('password') }
-        onChange={ handleChange('password') }
+        label={t('common.labels.password')}
+        onBlur={handleBlur('password')}
+        onChange={handleChange('password')}
         required
-        type={ showPassword ? 'text' : 'password' }
-        value={ data.password }
+        type={showPassword ? 'text' : 'password'}
+        value={data.password}
       />
 
-      <Typography onClick={ openForgotPassword } sx={ styles.forgotPass } variant='subtitle2'>
-        { t('login.forgotPassword') }
+      <Typography
+        onClick={openForgotPassword}
+        sx={styles.forgotPass}
+        variant='subtitle2'
+      >
+        {t('login.forgotPassword')}
       </Typography>
 
       <AppButton
-        loading={ authLoading } size='large' sx={ styles.loginButton }
-        type='submit' variant='contained'
+        loading={authLoading}
+        size='large'
+        sx={styles.loginButton}
+        type='submit'
+        variant='contained'
       >
-        { t('common.labels.login') }
+        {t('common.labels.login')}
       </AppButton>
     </Box>
   )

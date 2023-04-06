@@ -11,7 +11,11 @@ import Loader from '~/components/loader/Loader'
 
 import { RatingType } from '~/types'
 import { styles } from '~/containers/tutor-profile/coments-block/ComentsBlock.styles'
-import { responseMock, loadingMock, commentsCount } from '~/containers/tutor-profile/coments-block/constants'
+import {
+  responseMock,
+  loadingMock,
+  commentsCount
+} from '~/containers/tutor-profile/coments-block/constants'
 
 interface ComentsBlockProps {
   averageRating: number
@@ -19,63 +23,69 @@ interface ComentsBlockProps {
   reviewsCount: RatingType[]
 }
 
-const ComentsBlock = ({ averageRating, totalReviews, reviewsCount }: ComentsBlockProps) => {
+const ComentsBlock = ({
+  averageRating,
+  totalReviews,
+  reviewsCount
+}: ComentsBlockProps) => {
   const [filter, setFilter] = useState<number | null>(null)
-  const [amountToShow, setAmountToShow] = useState<number>(commentsCount.default)
+  const [amountToShow, setAmountToShow] = useState<number>(
+    commentsCount.default
+  )
   const { t } = useTranslation()
   const { count, items } = responseMock
 
   const itemsList = (
-    <Box sx={ styles.commentList }>
-      { items.map((review) => (
-        <Comment key={ review._id } review={ review } />
-      )) }
+    <Box sx={styles.commentList}>
+      {items.map((review) => (
+        <Comment key={review._id} review={review} />
+      ))}
     </Box>
   )
 
   const handleShowMoreComments = () => {
-    setAmountToShow(prev => prev + commentsCount.increment)
+    setAmountToShow((prev) => prev + commentsCount.increment)
   }
 
   const handleFilterChange = (value: number | null) => {
-    if(value !== filter){
+    if (value !== filter) {
       setFilter(value)
     }
   }
-  
-  const showMoreButton =  count > amountToShow && (
+
+  const showMoreButton = count > amountToShow && (
     <AppButton
-      endIcon={ !loadingMock && <KeyboardArrowDownSharpIcon /> } 
-      loading={ loadingMock && items.length }
-      onClick={ handleShowMoreComments }
+      endIcon={!loadingMock && <KeyboardArrowDownSharpIcon />}
+      loading={loadingMock && items.length}
+      onClick={handleShowMoreComments}
       size='large'
-      sx={ styles.button }
+      sx={styles.button}
       variant='contained'
     >
-      { t('tutorProfilePage.reviews.buttonTitle') }
+      {t('tutorProfilePage.reviews.buttonTitle')}
     </AppButton>
-  ) 
+  )
 
   return (
-    <Box sx={ styles.root }>
-      <Typography sx={ styles.title }>
-        { t('tutorProfilePage.reviews.title') }
+    <Box sx={styles.root}>
+      <Typography sx={styles.title}>
+        {t('tutorProfilePage.reviews.title')}
       </Typography>
-      { (loadingMock && !items.length) ?(
-        <Loader size={ 70 } />
-      ):(
+      {loadingMock && !items.length ? (
+        <Loader size={70} />
+      ) : (
         <>
           <RatingBlock
-            activeFilter={ filter }
-            averageRating={ averageRating }
-            reviewsCount={ reviewsCount }
-            setFilter={ handleFilterChange }
-            totalReviews={ totalReviews }
+            activeFilter={filter}
+            averageRating={averageRating}
+            reviewsCount={reviewsCount}
+            setFilter={handleFilterChange}
+            totalReviews={totalReviews}
           />
-          { itemsList }
-          { showMoreButton }
-        </>) 
-      }
+          {itemsList}
+          {showMoreButton}
+        </>
+      )}
     </Box>
   )
 }

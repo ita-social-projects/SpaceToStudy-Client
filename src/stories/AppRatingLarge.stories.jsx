@@ -1,4 +1,4 @@
-import  AppRatingLarge  from '~/components/app-rating-large/AppRatingLarge'
+import AppRatingLarge from '~/components/app-rating-large/AppRatingLarge'
 
 export default {
   title: 'AppRatingBig',
@@ -22,7 +22,7 @@ export default {
   }
 }
 
-const Template = (args) => <AppRatingLarge { ...args } />
+const Template = (args) => <AppRatingLarge {...args} />
 
 export const Default = Template.bind({})
 Default.args = {

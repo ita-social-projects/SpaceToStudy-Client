@@ -12,38 +12,38 @@ const SearchInput = ({ search, setSearch }) => {
 
   return (
     <TextField
-      InputProps={ {
+      InputProps={{
         startAdornment: (
           <IconButton
             data-testid='search-icon'
-            onClick={ () => {
+            onClick={() => {
               setSearch(searchInput)
-            } }
+            }}
           >
             <SearchIcon color='primary' />
           </IconButton>
         ),
         endAdornment: (
           <IconButton
-            className={ search ? 'visible' : 'hidden' }
+            className={search ? 'visible' : 'hidden'}
             data-testid='delete-icon'
-            onClick={ () => {
+            onClick={() => {
               setSearch('')
-            } }
+            }}
           >
             <ClearIcon color='secondary' />
           </IconButton>
         ),
         autoComplete: 'off'
-      } }
-      onChange={ (e) => setSearchInput(e.target.value) }
-      onKeyPress={ (e) => {
+      }}
+      onChange={(e) => setSearchInput(e.target.value)}
+      onKeyPress={(e) => {
         if (e.key === 'Enter') {
           setSearch(searchInput)
         }
-      } }
-      sx={ styles.input }
-      value={ searchInput }
+      }}
+      sx={styles.input}
+      value={searchInput}
       variant='standard'
     />
   )

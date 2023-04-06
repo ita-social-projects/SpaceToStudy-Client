@@ -7,47 +7,58 @@ import AppPopover from '~/components/app-popover/AppPopover'
 
 import { styles } from '~/components/app-chips-list/AppChipsList-styles'
 
-
-interface AppChipListProps  {
-  items:string[],
-  defaultQuantity:number,
-  handleChipDelete:(item:string) => void,
-  icon:React.ReactElement<SvgIconProps>,
-  wrapperStyle?: SxProps,
+interface AppChipListProps {
+  items: string[]
+  defaultQuantity: number
+  handleChipDelete: (item: string) => void
+  icon: React.ReactElement<SvgIconProps>
+  wrapperStyle?: SxProps
 }
 
-const AppChipList:React.FC<AppChipListProps> = ({ items, defaultQuantity, handleChipDelete, icon, wrapperStyle }) => {
-
-  const hideChips = items.length - defaultQuantity > 0 && items.length - defaultQuantity
+const AppChipList: React.FC<AppChipListProps> = ({
+  items,
+  defaultQuantity,
+  handleChipDelete,
+  icon,
+  wrapperStyle
+}) => {
+  const hideChips =
+    items.length - defaultQuantity > 0 && items.length - defaultQuantity
 
   const chips = items.map((item) => {
-    const handleDelete = handleChipDelete && { handleDelete: () => handleChipDelete(item) }
+    const handleDelete = handleChipDelete && {
+      handleDelete: () => handleChipDelete(item)
+    }
     return (
-      <AppChip { ...handleDelete } icon={ icon } key={ item }>
-        { item }
+      <AppChip {...handleDelete} icon={icon} key={item}>
+        {item}
       </AppChip>
     )
   })
 
-  const initialItems = (<Box sx={ styles.feature }>
-    { chips.slice(0, defaultQuantity) }
-  </Box>)
+  const initialItems = (
+    <Box sx={styles.feature}>{chips.slice(0, defaultQuantity)}</Box>
+  )
 
-  const showMoreElem = <Chip data-testid='amount-of-chips' label={ `+${hideChips}` } sx={ styles.chip } />
+  const showMoreElem = hideChips && (
+    <Chip
+      data-testid='amount-of-chips'
+      label={`+${hideChips}`}
+      sx={styles.chip}
+    />
+  )
 
   return (
-    <Box sx={ wrapperStyle }>
+    <Box sx={wrapperStyle}>
       <AppPopover
-        PaperProps={ { sx: styles.paperProps } }
-        TransitionProps={ { timeout: 500 } }
+        PaperProps={{ sx: styles.paperProps }}
+        TransitionProps={{ timeout: 500 }}
         hideElem
-        initialItems={ initialItems }
-        initialItemsWrapperStyle={ styles.initialItemsWrapperStyle }
-        showMoreElem={ hideChips && showMoreElem }
+        initialItems={initialItems}
+        initialItemsWrapperStyle={styles.initialItemsWrapperStyle}
+        showMoreElem={showMoreElem}
       >
-        <Box sx={ { ...styles.feature, p: '15px 20px' } }>
-          { chips }
-        </Box>
+        <Box sx={{ ...styles.feature, p: '15px 20px' }}>{chips}</Box>
       </AppPopover>
     </Box>
   )

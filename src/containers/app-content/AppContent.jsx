@@ -5,7 +5,6 @@ import ScrollToTop from '~/components/scroll-to-top/ScrollToTop'
 import AppBreadCrumbs from '~/containers/layout/app-breadcrumbs/AppBreadCrumbs'
 import AppMain from '../layout/app-main/AppMain'
 
-
 const styles = {
   content: {
     display: 'flex',
@@ -16,7 +15,7 @@ const styles = {
 
 const AppContent = () => {
   return (
-    <Box data-testid='AppContent' sx={ styles.content }>
+    <Box data-testid='AppContent' sx={styles.content}>
       <AppHeader />
       <AppBreadCrumbs />
       <ScrollToTop />

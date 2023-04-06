@@ -35,7 +35,15 @@ const ForgotPassword = () => {
       setLoading(true)
       await AuthService.forgotPassword(data)
       openModal(
-        { component: <ImgTitleDescription description={ description } img={ info } title={ t('login.passwordReset') } /> },
+        {
+          component: (
+            <ImgTitleDescription
+              description={description}
+              img={info}
+              title={t('login.passwordReset')}
+            />
+          )
+        },
         5000
       )
     } catch (e) {
@@ -56,56 +64,61 @@ const ForgotPassword = () => {
 
   const description = (
     <>
-      { t('login.weSentEmail') }
+      {t('login.weSentEmail')}
       <Typography component='span' variant='subtitle2'>
-        { data.email }
+        {data.email}
       </Typography>
-      { t('login.emailArrive') }
-      <Box mt={ 2 }>
-        <Button onClick={ closeModal } size='large' variant='contained'>
-          { t('common.confirmButton') }
+      {t('login.emailArrive')}
+      <Box mt={2}>
+        <Button onClick={closeModal} size='large' variant='contained'>
+          {t('common.confirmButton')}
         </Button>
       </Box>
     </>
   )
 
   return (
-    <Box sx={ styles.root }>
+    <Box sx={styles.root}>
       <TitleWithDescription
-        componentStyles={ styles.wrapper }
-        description={ t('login.enterEmail') }
-        descriptionStyles={ styles.description }
-        title={ t('login.forgotPassword') }
-        titleStyles={ styles.title }
+        componentStyles={styles.wrapper}
+        description={t('login.enterEmail')}
+        descriptionStyles={styles.description}
+        title={t('login.forgotPassword')}
+        titleStyles={styles.title}
       />
 
-      <Box component='form' onSubmit={ handleSubmit }>
+      <Box component='form' onSubmit={handleSubmit}>
         <AppTextField
           autoFocus
-          errorMsg={ t(errors.email) }
+          errorMsg={t(errors.email)}
           fullWidth
-          label={ t('common.labels.email') }
-          onBlur={ handleBlur('email') }
-          onChange={ handleChange('email') }
+          label={t('common.labels.email')}
+          onBlur={handleBlur('email')}
+          onChange={handleChange('email')}
           required
           size='large'
-          sx={ { mb: '5px' } }
+          sx={{ mb: '5px' }}
           type='email'
-          value={ data.email }
+          value={data.email}
         />
         <AppButton
-          loading={ loading } size='large' sx={ styles.sentPassword }
-          type='submit' variant='contained'
+          loading={loading}
+          size='large'
+          sx={styles.sentPassword}
+          type='submit'
+          variant='contained'
         >
-          { t('login.sendPassword') }
+          {t('login.sendPassword')}
         </AppButton>
       </Box>
 
       <Button
-        onClick={ backToLogin } size='large' sx={ styles.backButton }
+        onClick={backToLogin}
+        size='large'
+        sx={styles.backButton}
         variant='text'
       >
-        { t('login.backToLogin') }
+        {t('login.backToLogin')}
       </Button>
     </Box>
   )

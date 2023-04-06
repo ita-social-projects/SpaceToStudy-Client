@@ -12,7 +12,7 @@ export default {
   }
 }
 
-const Template = (args) => <AccordionWithImage { ...args } />
+const Template = (args) => <AccordionWithImage {...args} />
 
 export const Default = Template.bind({})
 

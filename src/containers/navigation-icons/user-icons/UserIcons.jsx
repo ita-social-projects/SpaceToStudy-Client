@@ -33,79 +33,85 @@ const UserIcons = ({ setIsSidebarOpen }) => {
   const menuList =
     userRole === student
       ? Object.values(studentRoutes.accountMenu).map((item) => {
-        return (
-          <MenuItem
-            component={ Link } key={ item.path } onClick={ closeMenu }
-            sx={ styles.menuItem } to={ item.path }
-          >
-            { t(`header.${item.route}`) }
-          </MenuItem>
-        )
-      })
+          return (
+            <MenuItem
+              component={Link}
+              key={item.path}
+              onClick={closeMenu}
+              sx={styles.menuItem}
+              to={item.path}
+            >
+              {t(`header.${item.route}`)}
+            </MenuItem>
+          )
+        })
       : Object.values(tutorRoutes.accountMenu).map((item) => {
-        return (
-          <MenuItem
-            component={ Link } key={ item.path } onClick={ closeMenu }
-            sx={ styles.menuItem } to={ item.path }
-          >
-            { t(`header.${item.route}`) }
-          </MenuItem>
-        )
-      })
+          return (
+            <MenuItem
+              component={Link}
+              key={item.path}
+              onClick={closeMenu}
+              sx={styles.menuItem}
+              to={item.path}
+            >
+              {t(`header.${item.route}`)}
+            </MenuItem>
+          )
+        })
 
   return (
-    <Box ref={ anchorRef } sx={ styles.iconBox }>
-      <Tooltip arrow title={ t('iconsTooltip.language') }>
-        <IconButton size='large' sx={ styles.langIcon }>
+    <Box ref={anchorRef} sx={styles.iconBox}>
+      <Tooltip arrow title={t('iconsTooltip.language')}>
+        <IconButton size='large' sx={styles.langIcon}>
           <LanguageIcon color='primary' />
         </IconButton>
       </Tooltip>
 
-      <Tooltip arrow title={ t('iconsTooltip.messages') }>
-        <IconButton sx={ styles.studentIcons }>
+      <Tooltip arrow title={t('iconsTooltip.messages')}>
+        <IconButton sx={styles.studentIcons}>
           <MessageRoundedIcon color='primary' />
         </IconButton>
       </Tooltip>
 
-      <Tooltip arrow title={ t('iconsTooltip.bookmarks') }>
-        <IconButton sx={ styles.studentIcons }>
+      <Tooltip arrow title={t('iconsTooltip.bookmarks')}>
+        <IconButton sx={styles.studentIcons}>
           <BookmarkIcon color='primary' />
         </IconButton>
       </Tooltip>
 
-      <Tooltip arrow title={ t('iconsTooltip.notifications') }>
-        <IconButton sx={ styles.studentIcons }>
+      <Tooltip arrow title={t('iconsTooltip.notifications')}>
+        <IconButton sx={styles.studentIcons}>
           <NotificationsRoundedIcon color='primary' />
         </IconButton>
       </Tooltip>
 
-      <Tooltip arrow title={ t('iconsTooltip.account') }>
-        <IconButton onClick={ openMenu }>
+      <Tooltip arrow title={t('iconsTooltip.account')}>
+        <IconButton onClick={openMenu}>
           <AccountCircleOutlinedIcon color='primary' />
         </IconButton>
       </Tooltip>
 
-      <Tooltip arrow title={ t('iconsTooltip.menu') }>
-        <IconButton onClick={ () => setIsSidebarOpen(true) } sx={ styles.menuIcon }>
+      <Tooltip arrow title={t('iconsTooltip.menu')}>
+        <IconButton onClick={() => setIsSidebarOpen(true)} sx={styles.menuIcon}>
           <MenuIcon color='primary' />
         </IconButton>
       </Tooltip>
 
       <Menu
-        anchorEl={ anchorEl }
-        anchorOrigin={ {
+        anchorEl={anchorEl}
+        anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'right'
-        } }
-        onClose={ closeMenu }
-        open={ !!anchorEl }
-        sx={ styles.accountMenu }
-        transformOrigin={ {
+        }}
+        onClose={closeMenu}
+        open={!!anchorEl}
+        sx={styles.accountMenu}
+        transformOrigin={{
           vertical: 'top',
           horizontal: 'right'
-        } }
+        }}
       >
-        { menuList }
+        {menuList}
       </Menu>
     </Box>
   )

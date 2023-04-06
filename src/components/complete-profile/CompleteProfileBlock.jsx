@@ -28,11 +28,24 @@ const CompleteProfileBlock = ({ profileItems, data }) => {
   const linkToProfile = studentRoutes.accountMenu.myProfile.route
   const [isOpen, setIsOpen] = useState(false)
 
-  const checkProfileData = useMemo(() => profileItems.filter((item) => data[item.id]), [data, profileItems])
-  const valueProgressBar = Math.floor((checkProfileData.length / profileItems.length) * 100)
+  const checkProfileData = useMemo(
+    () => profileItems.filter((item) => data[item.id]),
+    [data, profileItems]
+  )
+
+  const valueProgressBar = Math.floor(
+    (checkProfileData.length / profileItems.length) * 100
+  )
+
   const profileList = useMemo(
     () =>
-      profileItems.map((item) => <ProfileItem isFilled={ checkProfileData.includes(item) } item={ item } key={ item.id } />),
+      profileItems.map((item) => (
+        <ProfileItem
+          isFilled={checkProfileData.includes(item)}
+          item={item}
+          key={item.id}
+        />
+      )),
     [profileItems, checkProfileData]
   )
 
@@ -41,33 +54,45 @@ const CompleteProfileBlock = ({ profileItems, data }) => {
   }
 
   const icon = homePage ? (
-    <Link to={ linkToProfile }>
+    <Link to={linkToProfile}>
       <ArrowForwardIcon color='secondary' />
     </Link>
   ) : (
-    <IconButton data-testid='showOrHide' onClick={ handleToggleMenu } sx={ { padding: '0px' } }>
-      { isOpen ? <ExpandLessIcon data-testid='icon-less' /> : <ExpandMoreIcon data-testid='icon-more' /> }
+    <IconButton
+      data-testid='showOrHide'
+      onClick={handleToggleMenu}
+      sx={{ padding: '0px' }}
+    >
+      {isOpen ? (
+        <ExpandLessIcon data-testid='icon-less' />
+      ) : (
+        <ExpandMoreIcon data-testid='icon-more' />
+      )}
     </IconButton>
   )
 
   return (
-    <Accordion expanded={ isOpen } sx={ styles.wrapper }>
+    <Accordion expanded={isOpen} sx={styles.wrapper}>
       <AccordionSummary>
-        <Box sx={ styles.headerProgressBar }>
+        <Box sx={styles.headerProgressBar}>
           <Box>
-            <Typography sx={ styles.title } variant={ isMobile ? 'button' : 'h5' }>
-              { t('completeProfile.title') }
+            <Typography sx={styles.title} variant={isMobile ? 'button' : 'h5'}>
+              {t('completeProfile.title')}
             </Typography>
-            <Typography color={ 'primary.500' } sx={ styles.subtitle } variant={ isMobile ? 'body2' : 'subtitle2' }>
-              { t('completeProfile.subtitle') }
+            <Typography
+              color={'primary.500'}
+              sx={styles.subtitle}
+              variant={isMobile ? 'body2' : 'subtitle2'}
+            >
+              {t('completeProfile.subtitle')}
             </Typography>
           </Box>
-          { icon }
+          {icon}
         </Box>
-        <AppProgressBar value={ valueProgressBar } />
+        <AppProgressBar value={valueProgressBar} />
       </AccordionSummary>
-      <AccordionDetails sx={ styles.profileItems }>
-        { profileList }
+      <AccordionDetails sx={styles.profileItems}>
+        {profileList}
       </AccordionDetails>
     </Accordion>
   )

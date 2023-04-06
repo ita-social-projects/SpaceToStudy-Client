@@ -15,12 +15,11 @@ export default {
   }
 }
 
-const Template = (args) => <FiltersToggle { ...args } />
+const Template = (args) => <FiltersToggle {...args} />
 
 export const Default = Template.bind({})
 
-
 Default.args = {
-  chosenFiltersQty:0,
-  handleToggle:() => console.log('Toggle')
+  chosenFiltersQty: 0,
+  handleToggle: () => console.log('Toggle')
 }

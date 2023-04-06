@@ -12,59 +12,64 @@ import useSteps from '~/hooks/use-steps'
 import { styles } from '~/components/step-wrapper/StepWrapper.styles'
 
 const StepWrapper = ({ children, steps }) => {
-  const { activeStep, stepErrors, isLastStep, stepOperation } = useSteps({ steps })
+  const { activeStep, stepErrors, isLastStep, stepOperation } = useSteps({
+    steps
+  })
   const { next, back, setActiveStep, handleSubmit } = stepOperation
   const { t } = useTranslation()
 
   const stepLabels = steps.map((step, index) => (
     <Box
-      color={ stepErrors[index] ? 'error.500' : 'primary.500' }
-      key={ step }
-      onClick={ () => setActiveStep(index) }
-      sx={ [styles.defaultTab, index === activeStep && styles.activeTab] }
+      color={stepErrors[index] ? 'error.500' : 'primary.500'}
+      key={step}
+      onClick={() => setActiveStep(index)}
+      sx={[styles.defaultTab, index === activeStep && styles.activeTab]}
       typography='caption'
     >
-      { t(`becomeTutor.stepLabels.${step}`) }
+      {t(`becomeTutor.stepLabels.${step}`)}
     </Box>
   ))
 
   const nextButton = isLastStep ? (
     <Button
-      onClick={ handleSubmit } size='small' sx={ styles.finishBtn }
+      onClick={handleSubmit}
+      size='small'
+      sx={styles.finishBtn}
       variant='contained'
     >
-      { t('common.finish') }
+      {t('common.finish')}
     </Button>
   ) : (
-    <Button
-      onClick={ next } size='small' sx={ styles.btn }
-      variant='contained'
-    >
-      { t('common.next') }
+    <Button onClick={next} size='small' sx={styles.btn} variant='contained'>
+      {t('common.next')}
       <EastIcon fontSize='small' />
     </Button>
   )
 
   const btnsBox = (
-    <Box sx={ styles.btnWrapper }>
+    <Box sx={styles.btnWrapper}>
       <Button
-        disabled={ activeStep === 0 } onClick={ back } size='small'
-        sx={ styles.btn } variant='outlined'
+        disabled={activeStep === 0}
+        onClick={back}
+        size='small'
+        sx={styles.btn}
+        variant='outlined'
       >
         <WestIcon fontSize='small' />
-        { t('common.back') }
+        {t('common.back')}
       </Button>
-      { nextButton }
+      {nextButton}
     </Box>
   )
 
   return (
-    <Container sx={ styles.root }>
-      <Box sx={ styles.steps }>
-        { stepLabels }
-      </Box> 
-      <Box sx={ styles.stepContent }>
-        { cloneElement(children[activeStep], { btnsBox, stepLabel: steps[activeStep] }) }
+    <Container sx={styles.root}>
+      <Box sx={styles.steps}>{stepLabels}</Box>
+      <Box sx={styles.stepContent}>
+        {cloneElement(children[activeStep], {
+          btnsBox,
+          stepLabel: steps[activeStep]
+        })}
       </Box>
     </Container>
   )

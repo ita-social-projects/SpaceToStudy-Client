@@ -13,17 +13,21 @@ const Footer = () => {
   const { t } = useTranslation()
 
   return (
-    <Box sx={ styles.footer }>
-      <Container sx={ styles.container }>
+    <Box sx={styles.footer}>
+      <Container sx={styles.container}>
         <Typography color='primary.50' variant='caption'>
-          { t('footer.allRightsReserved') }
+          {t('footer.allRightsReserved')}
         </Typography>
-        <Box sx={ styles.links }>
-          <Typography component={ Link } to={ privacyPolicy.path } variant='caption'>
-            { t(`footer.${privacyPolicy.route}`) }
+        <Box sx={styles.links}>
+          <Typography
+            component={Link}
+            to={privacyPolicy.path}
+            variant='caption'
+          >
+            {t(`footer.${privacyPolicy.route}`)}
           </Typography>
-          <Typography component={ Link } to={ termOfUse.path } variant='caption'>
-            { t(`footer.${termOfUse.route}`) }
+          <Typography component={Link} to={termOfUse.path} variant='caption'>
+            {t(`footer.${termOfUse.route}`)}
           </Typography>
         </Box>
       </Container>

@@ -1,9 +1,9 @@
 import { fadeAnimation } from '~/styles/app-theme/custom-animations'
 
-const btnStyle =  {
-  padding:'10px 20px',
-  display:'flex',
-  columnGap:1
+const btnStyle = {
+  padding: '10px 20px',
+  display: 'flex',
+  columnGap: 1
 }
 
 export const styles = {
@@ -50,8 +50,8 @@ export const styles = {
     mt: '10px'
   },
   btn: btnStyle,
-  finishBtn:{
+  finishBtn: {
     ...btnStyle,
-    minWidth:'96px'
+    minWidth: '96px'
   }
 }

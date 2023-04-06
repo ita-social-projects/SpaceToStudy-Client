@@ -18,26 +18,29 @@ const Welcome = () => {
   const { t } = useTranslation()
   const { isDesktop, isTablet, isMobile } = useBreakpoints()
 
-  const image = (isDesktop && titleMd) || (isTablet && titleSm) || (isMobile && titleXs)
+  const image =
+    (isDesktop && titleMd) || (isTablet && titleSm) || (isMobile && titleXs)
 
   return (
-    <Box className='section' sx={ styles.container }>
+    <Box className='section' sx={styles.container}>
       <Box
-        alt='Title' component='img' src={ image.toString() }
-        sx={ styles.title }
+        alt='Title'
+        component='img'
+        src={image.toString()}
+        sx={styles.title}
       />
-      <Typography data-testid='welcomeDescription' sx={ styles.subtitle }>
-        { t('guestHomePage.welcomeBlock.description') }
+      <Typography data-testid='welcomeDescription' sx={styles.subtitle}>
+        {t('guestHomePage.welcomeBlock.description')}
       </Typography>
 
       <Button
-        component={ HashLink }
+        component={HashLink}
         data-testid='welcomeGetStarted'
-        sx={ styles.getStartBtn }
-        to={ scrollTo }
+        sx={styles.getStartBtn}
+        to={scrollTo}
         variant='contained'
       >
-        { t('guestHomePage.welcomeBlock.getStarted') }
+        {t('guestHomePage.welcomeBlock.getStarted')}
       </Button>
     </Box>
   )

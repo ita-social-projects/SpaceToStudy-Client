@@ -14,11 +14,11 @@ const AppMain = () => {
   }, [dispatch])
 
   if (loading) {
-    return <Loader pageLoad size={ 70 } />
+    return <Loader pageLoad size={70} />
   }
 
   return (
-    <Suspense fallback={ <Loader pageLoad size={ 70 } /> }>
+    <Suspense fallback={<Loader pageLoad size={70} />}>
       <Outlet />
     </Suspense>
   )

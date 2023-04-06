@@ -12,18 +12,18 @@ const EnumFilter = ({ column, filter, setFilter, clearFilter }) => {
   const menuItems = column.filterEnum.map((filterEnum) => (
     <FilterCheckbox
       data-testid='filter-checkbox'
-      filter={ filter }
-      filterCheckbox={ filterEnum }
-      key={ filterEnum.value }
-      setFilter={ setFilter }
+      filter={filter}
+      filterCheckbox={filterEnum}
+      key={filterEnum.value}
+      setFilter={setFilter}
     />
   ))
 
   const endAdornment = (
     <IconButton
-      className={ filter.length ? 'visible' : 'hidden' }
+      className={filter.length ? 'visible' : 'hidden'}
       data-testid='clear-icon-in-filter'
-      onClick={ clearFilter }
+      onClick={clearFilter}
     >
       <ClearIcon color='primary' />
     </IconButton>
@@ -32,22 +32,19 @@ const EnumFilter = ({ column, filter, setFilter, clearFilter }) => {
   return (
     <>
       <TextField
-        InputProps={ {
+        InputProps={{
           startAdornment: (
-            <IconButton
-              data-testid='filter-icon'
-              onClick={ openMenu }
-            >
+            <IconButton data-testid='filter-icon' onClick={openMenu}>
               <FilterAltIcon color='primary' />
             </IconButton>
           ),
           endAdornment: endAdornment,
           readOnly: true
-        } }
-        sx={ { width: '70%' } }
+        }}
+        sx={{ width: '70%' }}
         variant='standard'
       />
-      { renderMenu(menuItems) }
+      {renderMenu(menuItems)}
     </>
   )
 }

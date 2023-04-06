@@ -9,7 +9,13 @@ import useConfirm from '~/hooks/use-confirm'
 import { ModalContext } from '~/context/modal-context'
 import { SnackBarContext } from '~/context/snackbar-context'
 
-import { firstName, lastName, confirmPassword, email, password } from '~/utils/validations/login'
+import {
+  firstName,
+  lastName,
+  confirmPassword,
+  email,
+  password
+} from '~/utils/validations/login'
 import { signup, snackbarVariants } from '~/constants'
 import GoogleLogin from '~/containers/guest-home-page/google-login/GoogleLogin'
 import SignupForm from '~/containers/guest-home-page/signup-form/SignupForm'
@@ -33,40 +39,51 @@ const SignupDialog = ({ type }) => {
 
   const signupImg = { student, tutor }
 
-  const { handleSubmit, handleChange, handleBlur, data, isDirty, errors } = useForm({
-    onSubmit: async () => {
-      try {
-        await dispatch(signupUser({ ...data, role: type })).unwrap()
-        openModal(
-          {
-            component: (
-              <ImgTitleDescription description={ description } img={ info } title={ t('signup.confirmEmailTitle') } />
-            )
-          },
-          5000
-        )
-      } catch (e) {
-        setAlert({
-          severity: snackbarVariants.error,
-          message: `errors.${e}`
-        })
-      }
-    },
-    initialValues: { firstName: '', lastName: '', email: '', password: '', confirmPassword: '' },
-    validations: { firstName, lastName, email, password, confirmPassword }
-  })
+  const { handleSubmit, handleChange, handleBlur, data, isDirty, errors } =
+    useForm({
+      onSubmit: async () => {
+        try {
+          await dispatch(signupUser({ ...data, role: type })).unwrap()
+          openModal(
+            {
+              component: (
+                <ImgTitleDescription
+                  description={description}
+                  img={info}
+                  title={t('signup.confirmEmailTitle')}
+                />
+              )
+            },
+            5000
+          )
+        } catch (e) {
+          setAlert({
+            severity: snackbarVariants.error,
+            message: `errors.${e}`
+          })
+        }
+      },
+      initialValues: {
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+        confirmPassword: ''
+      },
+      validations: { firstName, lastName, email, password, confirmPassword }
+    })
 
   const description = (
     <>
-      { t('signup.confirmEmailMessage') }
+      {t('signup.confirmEmailMessage')}
       <Typography component='span' variant='subtitle2'>
-        { data.email }
+        {data.email}
       </Typography>
-      { t('signup.confirmEmailDesc') }
+      {t('signup.confirmEmailDesc')}
 
-      <Box mt={ 2 }>
-        <Button onClick={ closeModal } size='large' variant='contained'>
-          { t('common.confirmButton') }
+      <Box mt={2}>
+        <Button onClick={closeModal} size='large' variant='contained'>
+          {t('common.confirmButton')}
         </Button>
       </Box>
     </>
@@ -77,28 +94,34 @@ const SignupDialog = ({ type }) => {
   }, [isDirty, setNeedConfirmation])
 
   return (
-    <Box sx={ styles.root }>
-      <Box sx={ styles.imgContainer }>
+    <Box sx={styles.root}>
+      <Box sx={styles.imgContainer}>
         <Box
-          alt='signup' component='img' src={ signupImg[type] }
-          sx={ styles.img }
+          alt='signup'
+          component='img'
+          src={signupImg[type]}
+          sx={styles.img}
         />
       </Box>
 
-      <Box sx={ styles.formContainer }>
-        <Typography sx={ styles.title } variant='h2'>
-          { t('signup.head', { returnObjects: true })[type] }
+      <Box sx={styles.formContainer}>
+        <Typography sx={styles.title} variant='h2'>
+          {t('signup.head', { returnObjects: true })[type]}
         </Typography>
-        <Box sx={ styles.form }>
+        <Box sx={styles.form}>
           <SignupForm
-            closeModal={ closeModal }
-            data={ data }
-            errors={ errors }
-            handleBlur={ handleBlur }
-            handleChange={ handleChange }
-            handleSubmit={ handleSubmit }
+            closeModal={closeModal}
+            data={data}
+            errors={errors}
+            handleBlur={handleBlur}
+            handleChange={handleChange}
+            handleSubmit={handleSubmit}
           />
-          <GoogleLogin buttonWidth={ styles.form.maxWidth } role={ type } type={ signup } />
+          <GoogleLogin
+            buttonWidth={styles.form.maxWidth}
+            role={type}
+            type={signup}
+          />
         </Box>
       </Box>
     </Box>

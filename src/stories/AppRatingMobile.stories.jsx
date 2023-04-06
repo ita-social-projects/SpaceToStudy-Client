@@ -1,4 +1,4 @@
-import  AppRatingMobile  from '~/components/app-rating-mobile/AppRatingMobile'
+import AppRatingMobile from '~/components/app-rating-mobile/AppRatingMobile'
 
 export default {
   title: 'AppRatingBig',
@@ -22,7 +22,7 @@ export default {
   }
 }
 
-const Template = (args) => <AppRatingMobile { ...args } />
+const Template = (args) => <AppRatingMobile {...args} />
 
 export const Default = Template.bind({})
 Default.args = {

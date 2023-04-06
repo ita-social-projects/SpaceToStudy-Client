@@ -24,49 +24,55 @@ const CardsWithButton = ({ array, role, btnText, isStudent }) => {
   const { openModal } = useContext(ModalContext)
 
   const openDialog = (type) => {
-    openModal({ component: <SignupDialog type={ type } /> })
+    openModal({ component: <SignupDialog type={type} /> })
   }
 
   const cards = array.map((item, key) => {
     const boxSide = key % 2 === 0 ? 'right' : 'left'
 
     return (
-      <Transition in={ isStudent } key={ key } timeout={ 300 }>
-        { (state) => (
+      <Transition in={isStudent} key={key} timeout={300}>
+        {(state) => (
           <Box
-            sx={ [
+            sx={[
               styles[boxSide].box,
               state === 'exiting' && styles[boxSide].slidesIn,
               state === 'entering' && styles[boxSide].slidesIn
-            ] }
+            ]}
           >
-            <Box sx={ styles[boxSide].clearBox } />
-            <Box sx={ styles.image }>
-              <Box component='img' src={ item.icon } />
+            <Box sx={styles[boxSide].clearBox} />
+            <Box sx={styles.image}>
+              <Box component='img' src={item.icon} />
               <Box
-                className='dots' component='img' src={ dots }
-                sx={ styles.dots }
+                className='dots'
+                component='img'
+                src={dots}
+                sx={styles.dots}
               />
             </Box>
             <TitleWithDescription
-              description={ t(item.description) }
-              descriptionStyles={ descriptionStyles }
-              style={ styles[boxSide] }
-              title={ t(item.title) }
-              titleStyles={ titleStyles }
+              description={t(item.description)}
+              descriptionStyles={descriptionStyles}
+              style={styles[boxSide]}
+              title={t(item.title)}
+              titleStyles={titleStyles}
             />
           </Box>
-        ) }
+        )}
       </Transition>
     )
   })
 
   return (
-    <Box sx={ styles.wrap }>
-      { cards }
+    <Box sx={styles.wrap}>
+      {cards}
 
-      <Button onClick={ () => openDialog(role) } sx={ styles.button } variant='contained'>
-        { btnText }
+      <Button
+        onClick={() => openDialog(role)}
+        sx={styles.button}
+        variant='contained'
+      >
+        {btnText}
       </Button>
     </Box>
   )

@@ -10,7 +10,11 @@ import OfferFilterList from '~/containers/find-offer/offer-filter-block/offer-fi
 import AppDrawer from '~/components/app-drawer/AppDrawer'
 import FiltersToggle from '~/components/filters-toggle/FiltersToggle'
 import useBreakpoints from '~/hooks/use-breakpoints'
-import { FindOfferFilterTypes, FindOffersFilters, FindOffersFiltersActions } from '~/types'
+import {
+  FindOfferFilterTypes,
+  FindOffersFilters,
+  FindOffersFiltersActions
+} from '~/types'
 
 import { sortTranslationKeys } from '~/containers/find-offer/offer-filter-block/OfferFilterBlock.constants'
 import { styles } from '~/containers/find-offer/offer-filter-block/OfferFilterBlock.styles'
@@ -18,10 +22,10 @@ import { styles } from '~/containers/find-offer/offer-filter-block/OfferFilterBl
 interface OfferFilterBlockProps {
   filters: FindOffersFilters
   filterActions: FindOffersFiltersActions
-  showingTutorOffers: boolean;
-  onToggleTutorOffers: () => void;
-  closeFilters: () => void;
-  open: boolean;
+  showingTutorOffers: boolean
+  onToggleTutorOffers: () => void
+  closeFilters: () => void
+  open: boolean
   countActiveFilters: number
 }
 
@@ -38,10 +42,20 @@ const OfferFilterBlock: FC<OfferFilterBlockProps> = ({
   const { isMobile } = useBreakpoints()
   const { updateFilter, resetFilters, updateQueryParams } = filterActions
 
-  const switchOptions = { left:{ text: showingTutorOffers ? t('findOffers.topMenu.tutorsOffers') : t('findOffers.topMenu.studentsRequests') } }
-  const sortOptions = sortTranslationKeys.map(({ title, value })=>({ title: t(title), value }))
+  const switchOptions = {
+    left: {
+      text: showingTutorOffers
+        ? t('findOffers.topMenu.tutorsOffers')
+        : t('findOffers.topMenu.studentsRequests')
+    }
+  }
+  const sortOptions = sortTranslationKeys.map(({ title, value }) => ({
+    title: t(title),
+    value
+  }))
 
-  const updateFilterByKey = (key: string) => (value: FindOfferFilterTypes) => updateFilter(value, key)
+  const updateFilterByKey = (key: string) => (value: FindOfferFilterTypes) =>
+    updateFilter(value, key)
   const handleApplyFilters = () => {
     updateQueryParams()
     isMobile && closeFilters()
@@ -49,51 +63,49 @@ const OfferFilterBlock: FC<OfferFilterBlockProps> = ({
 
   const mobileFields = isMobile && (
     <>
-      <FiltersToggle chosenFiltersQty={ countActiveFilters }  />
+      <FiltersToggle chosenFiltersQty={countActiveFilters} />
       <Divider />
       <AppContentSwitcher
-        active={ showingTutorOffers } 
-        onChange={ onToggleTutorOffers } 
-        styles={ styles.switchWrapper }
-        switchOptions={ switchOptions }
-        typographyVariant={ 'subtitle2' }
+        active={showingTutorOffers}
+        onChange={onToggleTutorOffers}
+        styles={styles.switchWrapper}
+        switchOptions={switchOptions}
+        typographyVariant={'subtitle2'}
       />
       <AppSelect
-        fields={ sortOptions } 
-        fullWidth 
-        selectTitle={ t('common.labels.sortBy') }
-        setValue={ updateFilterByKey('sort') }
+        fields={sortOptions}
+        fullWidth
+        selectTitle={t('common.labels.sortBy')}
+        setValue={updateFilterByKey('sort')}
         size='small'
-        sx={ styles.selectWrapper }
-        value={ filters.sort }
+        sx={styles.selectWrapper}
+        value={filters.sort}
       />
     </>
   )
 
   const filtersBlock = (
-    <Stack
-      spacing={ 2 }
-      sx={ styles.root(open) }
-    >      
-      { mobileFields }
+    <Stack spacing={2} sx={styles.root(open)}>
+      {mobileFields}
       <OfferFilterList
-        filters={ filters } 
-        updateFilter={ updateFilter } 
-        updateFilterByKey={ updateFilterByKey }
+        filters={filters}
+        updateFilter={updateFilter}
+        updateFilterByKey={updateFilterByKey}
       />
-      <AppButton onClick={ handleApplyFilters } sx={ styles.applyButton }>
-        { t('button.applyFilters') }
+      <AppButton onClick={handleApplyFilters} sx={styles.applyButton}>
+        {t('button.applyFilters')}
       </AppButton>
-      <AppButton onClick={ resetFilters } variant='tonal'>
-        { t('button.clearFilters') }
+      <AppButton onClick={resetFilters} variant='tonal'>
+        {t('button.clearFilters')}
       </AppButton>
-    </Stack>)
-  
-  return ( isMobile ? (
-    <AppDrawer onClose={ closeFilters } open={ open }>
-      { filtersBlock }
+    </Stack>
+  )
+
+  return isMobile ? (
+    <AppDrawer onClose={closeFilters} open={open}>
+      {filtersBlock}
     </AppDrawer>
-  )  :
+  ) : (
     filtersBlock
   )
 }
