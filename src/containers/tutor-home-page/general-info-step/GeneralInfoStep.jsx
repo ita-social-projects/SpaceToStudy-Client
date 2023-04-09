@@ -59,7 +59,6 @@ const GeneralInfoStep = ({
     () => userService.getUserById(userId, userRole),
     [userId, userRole]
   )
-
   const getCountries = useCallback(() => LocationService.getCountries(), [])
   const getCities = useCallback(
     (country) => LocationService.getCities(country),
@@ -67,18 +66,27 @@ const GeneralInfoStep = ({
   )
 
   const { response: user, loading: userLoading } = useAxios({
-    service: getUserById
+    service: getUserById,
+    defaultResponse: { firstName: '', lastName: '' }
   })
-  const { response: countries } = useAxios({ service: getCountries })
+  const { response: countries } = useAxios({
+    service: getCountries,
+    defaultResponse: []
+  })
   const {
     loading,
     fetchData: fetchCities,
     response: cities
-  } = useAxios({ service: getCities, fetchOnMount: false, clearResponse: true })
+  } = useAxios({
+    service: getCities,
+    fetchOnMount: false,
+    clearResponse: true,
+    defaultResponse: []
+  })
 
   useEffect(() => {
     if (!userLoading && !isUserFetched) {
-      const { firstName, lastName } = user.data
+      const { firstName, lastName } = user
       setData({ ...data, firstName, lastName })
       setIsUserFetched(true)
     }

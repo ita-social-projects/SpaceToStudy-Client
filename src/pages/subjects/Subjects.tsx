@@ -26,8 +26,8 @@ const Subjects = () => {
   const [searchParams, setSearchParams] = useSearchParams()
   const categoryId = searchParams.get('categoryId')
 
-  const { loading: categoriesNamesLoading, data: categoriesNamesItems } = useCategoriesNames({})
-  const { data: subjectsNamesItems } = useSubjectsNames({
+  const { loading: categoriesNamesLoading, response: categoriesNamesItems } = useCategoriesNames({})
+  const { response: subjectsNamesItems, mapArrayByField } = useSubjectsNames({
     category: categoryId
   })
 
@@ -41,7 +41,7 @@ const Subjects = () => {
     setSearchParams(searchParams)
   }
 
-  const optionsSubjects = subjectsNamesItems.map((item) => item.name)
+  const optionsSubjects = mapArrayByField(subjectsNamesItems, 'name')
 
   const getOptionLabelCategory = (option: CategoryNameInterface) => option.name || ''
   const isOptionEqualToValueCategory = (option: CategoryNameInterface, value: CategoryNameInterface) =>

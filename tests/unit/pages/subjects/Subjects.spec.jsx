@@ -7,7 +7,7 @@ vi.mock('~/hooks/use-categories-names', () => ({
   __esModule: true,
   default: () => ({
     loading: false,
-    data: [
+    response: [
       { _id: '123', name: 'Category 1' },
       { _id: '456', name: 'Category 2' },
       { _id: '789', name: '' }
@@ -19,10 +19,11 @@ vi.mock('~/hooks/use-subjects-names', () => ({
   __esModule: true,
   default: () => ({
     loading: false,
-    data: [
+    response: [
       { _id: '123', name: 'Subject 1' },
       { _id: '456', name: 'Subject 2' }
-    ]
+    ],
+    mapArrayByField: () => ['Subject 1', 'Subject 2']
   })
 }))
 
@@ -47,9 +48,13 @@ describe('Subjects', () => {
   })
 
   it('should update search value when search input is changed', () => {
-    fireEvent.change(screen.getByLabelText('subjectsPage.subjects.searchLabel'), { target: { value: 'Subject' } })
+    const searchLabel = screen.getByLabelText('subjectsPage.subjects.searchLabel')
+    
+    fireEvent.change(searchLabel, { target: { value: 'Subject' } })
 
-    expect(screen.getByDisplayValue('Subject')).toBeInTheDocument()
+    const subject = screen.getByDisplayValue('Subject')
+
+    expect(subject).toBeInTheDocument()
   })
 
   it('should change autocomplete', () => {

@@ -1,9 +1,9 @@
-import { AxiosResponse } from 'axios'
+import { AxiosError } from 'axios'
 import { useCallback } from 'react'
 
 import useAxios from '~/hooks/use-axios'
 import { categoryService } from '~/services/category-service'
-import { CategoryNameInterface, ErrorResponce } from '~/types'
+import { CategoryNameInterface, ErrorResponse } from '~/types'
 
 interface UseCategoriesNameProps {
   fetchOnMount?: boolean
@@ -11,20 +11,22 @@ interface UseCategoriesNameProps {
 
 interface UseCategoriesNamesResult {
   loading: boolean
-  data: CategoryNameInterface[]
-  fetchData: Promise<AxiosResponse>
-  error: Promise<ErrorResponce>
+  response: CategoryNameInterface[]
+  mapArrayByField: (data: CategoryNameInterface[], field: string) => string[]
+  fetchData: () => void
+  error: AxiosError<ErrorResponse> | null
 }
 
 const useCategoriesNames = ({ fetchOnMount = true }: UseCategoriesNameProps): UseCategoriesNamesResult => {
   const getCategoriesNames = useCallback(() => categoryService.getCategoriesNames(), [])
 
-  const { loading, data, fetchData, error } = useAxios({
+  const { loading, response, mapArrayByField, fetchData, error } = useAxios<CategoryNameInterface[]>({
     service: getCategoriesNames,
-    fetchOnMount
+    fetchOnMount,
+    defaultResponse: []
   })
 
-  return { loading, data, fetchData, error }
+  return { loading, response, mapArrayByField, fetchData, error }
 }
 
 export default useCategoriesNames

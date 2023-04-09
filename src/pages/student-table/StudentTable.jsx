@@ -28,7 +28,8 @@ const StudentTable = () => {
   )
   const { fetchData: deleteUser } = useAxios({
     service: deleteFunction,
-    fetchOnMount: false
+    fetchOnMount: false,
+    defaultResponse: null
   })
 
   const deleteAllFunction = useCallback(
@@ -37,7 +38,8 @@ const StudentTable = () => {
   )
   const { fetchData: deleteUsers } = useAxios({
     service: deleteAllFunction,
-    fetchOnMount: false
+    fetchOnMount: false,
+    defaultResponse: null
   })
 
   const rowActions = [

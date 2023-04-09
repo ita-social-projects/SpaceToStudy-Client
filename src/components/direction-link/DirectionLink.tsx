@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography'
 import HashLink from '~/components/hash-link/HashLink'
 import { styles } from '~/components/direction-link/DirectionLink.styles'
 
-export interface DirectionLinkProps {
+interface DirectionLinkProps {
   linkTo: string
   before?: React.ReactElement
   after?: React.ReactElement

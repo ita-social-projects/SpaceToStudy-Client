@@ -1,9 +1,9 @@
-import { AxiosResponse } from 'axios'
+import { AxiosError } from 'axios'
 import { useCallback } from 'react'
 
 import useAxios from '~/hooks/use-axios'
 import { subjectService } from '~/services/subject-service'
-import { ErrorResponce, SubjectNameInterface } from '~/types'
+import { ErrorResponse, SubjectNameInterface } from '~/types'
 
 interface UseSubjectsNamesProps {
   category: string | null
@@ -12,19 +12,21 @@ interface UseSubjectsNamesProps {
 
 interface UseSubjectsNamesResult {
   loading: boolean
-  data: SubjectNameInterface[]
-  fetchData: Promise<AxiosResponse>
-  error: Promise<ErrorResponce>
+  response: SubjectNameInterface[]
+  mapArrayByField: (data: SubjectNameInterface[], field: string) => string[]
+  fetchData: () => void
+  error: AxiosError<ErrorResponse> | null
 }
 const useSubjectsNames = ({ category, fetchOnMount = true }: UseSubjectsNamesProps): UseSubjectsNamesResult => {
   const getSubjectsNames = useCallback(() => subjectService.getSubjectsNames(category), [category])
 
-  const { loading, data, fetchData, error } = useAxios({
+  const { loading, response, mapArrayByField, fetchData, error } = useAxios<SubjectNameInterface[]>({
     service: getSubjectsNames,
-    fetchOnMount
+    fetchOnMount,
+    defaultResponse: []
   })
 
-  return { loading, data, fetchData, error }
+  return { loading, response, mapArrayByField, fetchData, error }
 }
 
 export default useSubjectsNames

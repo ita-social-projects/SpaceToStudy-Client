@@ -19,29 +19,29 @@ describe('useCategoriesNames', () => {
     const { result, waitForNextUpdate } = renderHook(() => useCategoriesNames({}))
 
     expect(result.current.loading).toBe(true)
-    expect(result.current.data).toEqual([])
+    expect(result.current.response).toEqual([])
 
     await waitForNextUpdate()
 
     expect(categoryService.getCategoriesNames).toHaveBeenCalled()
 
     expect(result.current.loading).toBe(false)
-    expect(result.current.data).toEqual(mockCategoriesNames)
+    expect(result.current.response).toEqual(mockCategoriesNames)
   })
 
   it('handles API errors', async () => {
-    categoryService.getCategoriesNames.mockRejectedValueOnce(mockError )
+    categoryService.getCategoriesNames.mockRejectedValueOnce(mockError)
 
     const { result, waitForNextUpdate } = renderHook(() => useCategoriesNames({}))
 
     expect(result.current.loading).toBe(true)
-    expect(result.current.data).toEqual([])
+    expect(result.current.response).toEqual([])
 
     await waitForNextUpdate()
 
     expect(categoryService.getCategoriesNames).toHaveBeenCalled()
 
     expect(result.current.loading).toBe(false)
-    expect(result.current.error).toEqual(mockError)
+    expect(result.current.error).toBe(mockError)
   })
 })
