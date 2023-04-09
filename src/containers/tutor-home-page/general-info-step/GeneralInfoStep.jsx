@@ -24,7 +24,7 @@ const GeneralInfoStep = ({ btnsBox, stepLabel, isUserFetched, setIsUserFetched }
   const { t } = useTranslation()
   const { isDesktop, isMobile } = useBreakpoints()
   const { stepData, handleStepData } = useStepContext()
-  const { userId } = useSelector((state) => state.appMain)
+  const { userId, userRole } = useSelector((state) => state.appMain)
   const generalInfo = stepData[stepLabel]
 
   const { handleChange, handleBlur, setData, data, errors } = useForm({
@@ -47,7 +47,7 @@ const GeneralInfoStep = ({ btnsBox, stepLabel, isUserFetched, setIsUserFetched }
     setData({ ...data, city: value })
   }
 
-  const getUserById = useCallback(() => userService.getUserById(userId), [userId])
+  const getUserById = useCallback(() => userService.getUserById(userId, userRole), [userId, userRole])
   const getCountries = useCallback(() => LocationService.getCountries(), [])
   const getCities = useCallback((country) => LocationService.getCities(country), [])
 
@@ -70,7 +70,6 @@ const GeneralInfoStep = ({ btnsBox, stepLabel, isUserFetched, setIsUserFetched }
   useEffect(() => {
     handleStepData(stepLabel, data, errors)
   }, [data, errors, stepLabel, handleStepData])
-
 
   if (userLoading) {
     return (
