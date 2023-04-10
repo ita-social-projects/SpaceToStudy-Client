@@ -4,14 +4,16 @@ import SearchAutocomplete from '~/components/search-autocomplete/SearchAutocompl
 import userEvent from '@testing-library/user-event'
 
 describe('SearchAutocomplete', () => {
+  const setSearch = vi.fn()
+  const resetData = vi.fn()
   const options = ['Finland', 'France', 'Georgia', 'Germany']
 
   it('renders autocomplete with search input', () => {
-    const setSearch = vi.fn()
     render(
       <SearchAutocomplete
         options={ options }
-        search=""
+        resetData={ resetData }
+        search=''
         setSearch={ setSearch }
         textFieldProps={ { label: 'Search' } }
       />
@@ -22,43 +24,37 @@ describe('SearchAutocomplete', () => {
   })
 
   it('renders autocomplete with search input value', () => {
-    const setSearch = vi.fn()
     render(
       <SearchAutocomplete
         options={ options }
-        search="France"
+        resetData={ resetData }
+        search='France'
         setSearch={ setSearch }
         textFieldProps={ { label: 'Search' } }
       />
     )
 
-    const searchInput = screen.getByLabelText('Search') 
+    const searchInput = screen.getByLabelText('Search')
     expect(searchInput.value).toBe('France')
   })
 
   it('updates search input on typing', () => {
-    const setSearch = vi.fn()
     render(
       <SearchAutocomplete
-        options={ options }
-        search=""
-        setSearch={ setSearch }
+        options={ options } search='' setSearch={ setSearch }
         textFieldProps={ { label: 'Search' } }
       />
     )
 
-    const searchInput = screen.getByLabelText('Search') 
+    const searchInput = screen.getByLabelText('Search')
     userEvent.type(searchInput, 'Finland')
     expect(searchInput.value).toBe('Finland')
   })
 
   it('filters options on typing', () => {
-    const setSearch = vi.fn()
     render(
       <SearchAutocomplete
-        options={ options }
-        search=""
-        setSearch={ setSearch }
+        options={ options } search='' setSearch={ setSearch }
         textFieldProps={ { label: 'Search' } }
       />
     )
@@ -70,17 +66,15 @@ describe('SearchAutocomplete', () => {
   })
 
   it('selects an option on click', () => {
-    const setSearch = vi.fn()
     render(
       <SearchAutocomplete
-        options={ options }
-        search=""
+        options={ options } resetData={ resetData } search=''
         setSearch={ setSearch }
         textFieldProps={ { label: 'Search' } }
       />
     )
 
-    const searchInput = screen.getByLabelText('Search') 
+    const searchInput = screen.getByLabelText('Search')
     fireEvent.mouseDown(searchInput)
     const option = screen.getByText('France')
     fireEvent.click(option)
@@ -88,11 +82,11 @@ describe('SearchAutocomplete', () => {
   })
 
   it('clears search input on clear icon click', () => {
-    const setSearch = vi.fn()
     render(
       <SearchAutocomplete
         options={ options }
-        search="France"
+        resetData={ resetData }
+        search='France'
         setSearch={ setSearch }
         textFieldProps={ { label: 'Search' } }
       />
@@ -105,11 +99,11 @@ describe('SearchAutocomplete', () => {
   })
 
   it('triggers search on search button click', () => {
-    const setSearch = vi.fn()
     render(
       <SearchAutocomplete
         options={ options }
-        search="France"
+        resetData={ resetData }
+        search='France'
         setSearch={ setSearch }
         textFieldProps={ { label: 'Search' } }
       />
@@ -119,5 +113,4 @@ describe('SearchAutocomplete', () => {
     fireEvent.click(searchBtn)
     expect(setSearch).toHaveBeenCalledWith('France')
   })
-
 })

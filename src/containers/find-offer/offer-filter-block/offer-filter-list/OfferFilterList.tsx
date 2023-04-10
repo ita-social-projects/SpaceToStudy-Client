@@ -30,10 +30,12 @@ const OfferFilterList:FC<OfferFilterListProps> = ({ updateFilter, updateFilterBy
   const languagesFilter = (
     <Box>
       <AppAutoComplete
-        fieldValue={ filters.language } 
         onChange={ handleLanguagesChange } 
-        options={ languageOptions }
-        size='small'
+        options={ languageOptions } 
+        textFieldProps={ {
+          size: 'small'
+        } }
+        value={ filters.language }
       />
       <FormControlLabel
         checked={ JSON.parse(filters.native) }

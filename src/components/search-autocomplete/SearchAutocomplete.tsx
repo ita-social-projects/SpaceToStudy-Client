@@ -14,15 +14,15 @@ import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
 
 import { styles } from '~/components/search-autocomplete/SearchAutocomplete.styles'
 
-interface SearchAutocompleteProps
-  extends Omit<AutocompleteProps<string, false, true, true>, 'renderInput'> {
+interface SearchAutocompleteProps extends Omit<AutocompleteProps<string, false, true, true>, 'renderInput'> {
   search: string
   setSearch: Dispatch<SetStateAction<string>>
+  resetData: () => void
   textFieldProps: TextFieldProps
   renderInput?: (params: AutocompleteRenderInputParams) => ReactNode
 }
 
-const SearchAutocomplete = ({ search, setSearch, textFieldProps, ...props }: SearchAutocompleteProps) => {
+const SearchAutocomplete = ({ search, setSearch, resetData, textFieldProps, ...props }: SearchAutocompleteProps) => {
   const { t } = useTranslation()
   const [searchInput, setSearchInput] = useState<string>(search)
 
@@ -36,10 +36,12 @@ const SearchAutocomplete = ({ search, setSearch, textFieldProps, ...props }: Sea
   }
 
   const onSearch = () => {
+    resetData()
     setSearch(searchInput)
   }
 
   const onClear = () => {
+    resetData()
     setSearchInput('')
     setSearch('')
   }

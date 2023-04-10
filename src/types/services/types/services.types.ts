@@ -1,4 +1,5 @@
 export type Params = {
     name?: string
-    limit: number
+    limit?: number,
+    skip?: number 
   }

@@ -51,7 +51,8 @@ const ResetPassword = ({ resetToken, openModal }) => {
     fetchData: sendResetPassword
   } = useAxios({
     service: (newPassword) => AuthService.resetPassword(resetToken, newPassword),
-    fetchOnMount: false
+    fetchOnMount: false,
+    defaultResponse: null
   })
 
   useEffect(() => {
@@ -60,7 +61,7 @@ const ResetPassword = ({ resetToken, openModal }) => {
         severity: snackbarVariants.error,
         message: `errors.${error.response.data.code}`
       })
-    } else if (response) {
+    } else if (response !== null) {
       openModal({ component: successNotification }, 5000)
     }
   }, [error, openModal, response, setAlert, successNotification])

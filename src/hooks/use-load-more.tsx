@@ -1,43 +1,51 @@
-import { useState, useMemo, useEffect } from 'react'
+import { useState, useMemo, useEffect, useCallback } from 'react'
 import { AxiosResponse } from 'axios'
 
 import useAxios from '~/hooks/use-axios'
 
 import { Params } from '~/types'
 
-interface UseLoadMoreReturn<T> {
-  data: T
+interface useLoadMoreReturn<T> {
+  data: T[]
   loading: boolean
-  fetchData: (params: Params) => Promise<AxiosResponse<T>>
+  fetchData: (params: Params) => Promise<AxiosResponse<T[]>>
+  resetData: () => void
   loadMore: () => void
   isExpandable: boolean
   limit: number
+  skip: number
 }
 
-interface UseLoadMoreProps<T> {
-  service: (params: Params) => Promise<AxiosResponse<T>>
-  pageSize: number
+interface useLoadMoreProps<T> {
+  service: (params: Params) => Promise<AxiosResponse<T[]>>
+  limit: number
   fetchOnMount?: boolean
 }
 
-const useLoadMore = <T,>({ service, pageSize, fetchOnMount = true }: UseLoadMoreProps<T>): UseLoadMoreReturn<T> => {
-  const [limit, setLimit] = useState<number>(pageSize)
+const useLoadMore = <T,>({ service, limit, fetchOnMount = true }: useLoadMoreProps<T>): useLoadMoreReturn<T> => {
+  const [skip, setSkip] = useState<number>(0)
+  const [data, setData] = useState<T[] | []>([])
 
-  const loadMore = () => {
-    setLimit((prevState) => prevState + pageSize)
-  }
+  const loadMore = useCallback(() => setSkip((prevState) => prevState + limit), [limit])
 
-  const { data, loading, fetchData } = useAxios({ service, fetchOnMount: false })
+  const resetData = useCallback(() => {
+    setSkip(0)
+    setData([])
+  }, [])
+
+  const { response, loading, fetchData } = useAxios({ service, defaultResponse: [], fetchOnMount: false })
 
   useEffect(() => {
-    if (fetchOnMount) {
-      fetchData({ limit })
-    }
-  }, [fetchData, fetchOnMount, limit])
+    fetchOnMount && fetchData({ limit, skip })
+  }, [fetchData, fetchOnMount, limit, skip])
 
-  const isExpandable = useMemo(() => limit <= data.length, [limit, data])
+  useEffect(() => {
+    response.length && setData((prevState) => [...prevState, ...response])
+  }, [response])
 
-  return { data, loading, fetchData, loadMore, isExpandable, limit }
+  const isExpandable = useMemo(() => limit <= response.length, [limit, response])
+
+  return { data, loading, fetchData, resetData, loadMore, isExpandable, limit, skip }
 }
 
 export default useLoadMore

@@ -1,24 +1,32 @@
 import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
+
+import AppButton from '~/components/app-button/AppButton'
+import Loader from '~/components/loader/Loader'
 
 import { styles } from '~/components/clickable-card-list/ClickableCardList.styles'
 
-const ClickableCardList = ({ btnText, cards, isBlur, isExpandable, onClick }) => {
+const ClickableCardList = ({ btnText, cards, isExpandable, loading, onClick }) => {
   const hideBtn = !isExpandable && { visibility: 'hidden' }
-  const blurCards = isBlur && { filter: 'blur(10px)' }
 
   return (
-    <Box>
-      <Box sx={ [styles.cardsContainer, blurCards] }>
-        { cards }
-      </Box>
+    <Box sx={ styles.container }>
+      { loading && !cards.length ? (
+        <Loader size={ 50 } wrapperStyles={ styles.container } />
+      ) : (
+        <>
+          <Box sx={ styles.cardsContainer }>
+            { cards }
+          </Box>
 
-      <Button
-        onClick={ onClick } size='extraLarge' sx={ [styles.btn, hideBtn] }
-        variant='tonal'
-      >
-        { btnText }
-      </Button>
+          <AppButton
+            loading={ loading } onClick={ onClick } size='extraLarge'
+            sx={ [styles.btn, hideBtn] }
+            variant='tonal'
+          >
+            { btnText }
+          </AppButton>
+        </>
+      ) }
     </Box>
   )
 }

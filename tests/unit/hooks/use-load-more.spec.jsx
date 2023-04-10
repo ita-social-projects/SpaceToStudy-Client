@@ -14,14 +14,14 @@ const mockResponseData = [
 const mockResponse = { data: mockResponseData }
 
 const mockService = vi.fn((params) => {
-  const { limit } = params
-  const data = mockResponseData.slice(0, limit)
+  const { limit, skip } = params
+  const data = mockResponseData.slice(skip, limit + skip)
   return Promise.resolve({ data: data })
 })
 
 const props = {
   service: mockService,
-  pageSize: mockParams.limit,
+  limit: mockParams.limit,
   fetchOnMount: true
 }
 
@@ -56,5 +56,20 @@ describe('useLoadMore custom hook', () => {
     await waitForNextUpdate()
 
     expect(result.current.data).toEqual(mockResponseData)
+  })
+
+  it('should call resetData and return empty data', async () => {
+    const { result, waitForNextUpdate } = renderHook(() => useLoadMore({ ...props }))
+
+    await waitForNextUpdate()
+
+    expect(result.current.data).toEqual(mockResponseData.slice(0, mockParams.limit))
+    expect(result.current.loading).toBe(false)
+
+    act(() => {
+      result.current.resetData()
+    })
+
+    expect(result.current.data).toEqual([])
   })
 })

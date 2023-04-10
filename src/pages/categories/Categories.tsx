@@ -1,5 +1,4 @@
 import { useCallback, useMemo, useState, useEffect } from 'react'
-import { useNavigate } from 'react-router'
 import { useTranslation } from 'react-i18next'
 import { categoryService } from '~/services/category-service'
 
@@ -12,7 +11,6 @@ import useLoadMore from '~/hooks/use-load-more'
 
 import OfferRequestBlock from '~/containers/find-offer/OfferRequestBlock'
 import ClickableCard from '~/components/clickable-card/ClickableCard'
-import Loader from '~/components/loader/Loader'
 import HashLink from '~/components/hash-link/HashLink'
 import ClickableCardList from '~/components/clickable-card-list/ClickableCardList'
 import SearchAutocomplete from '~/components/search-autocomplete/SearchAutocomplete'
@@ -26,36 +24,30 @@ import { styles } from '~/pages/categories/Categories.styles'
 
 const Categories = () => {
   const { t } = useTranslation()
-  const navigate = useNavigate()
-  const [match, setMatch] = useState('')
+  const [match, setMatch] = useState<string>('')
 
   const getCategoriesNames = useCallback(() => categoryService.getCategoriesNames(), [])
   const getCategories = useCallback((params: Params) => categoryService.getCategories(params), [])
 
-  const { data, loading } = useAxios<CategoryInterface>({ service: getCategoriesNames })
+  const { response, loading } = useAxios({ service: getCategoriesNames, defaultResponse: [] })
   const {
     data: categories,
     loading: categoriesLoading,
     fetchData: fetchCategories,
+    resetData,
     loadMore,
     isExpandable,
-    limit
-  } = useLoadMore({
+    limit,
+    skip
+  } = useLoadMore<CategoryInterface>({
     service: getCategories,
-    pageSize: 12,
+    limit: 12,
     fetchOnMount: false
   })
 
   useEffect(() => {
-    fetchCategories({ limit, name: match })
-  }, [fetchCategories, limit, match])
-
-  const chooseCategory = useCallback(
-    (id) => {
-      return navigate(`${guestRoutes.subjects.path}?categoryId=${id}`)
-    },
-    [navigate]
-  )
+    fetchCategories({ limit, name: match, skip })
+  }, [fetchCategories, limit, match, skip])
 
   const cards = useMemo(
     () =>
@@ -65,15 +57,15 @@ const Categories = () => {
             description={ `${item.totalOffers} ${t('categoriesPage.offers')}` }
             img={ serviceIcon }
             key={ item._id }
-            onClick={ () => chooseCategory(item._id) }
+            link={ `${guestRoutes.subjects.path}?categoryId=${item._id}` }
             title={ item.name }
           />
         )
       }),
-    [categories, chooseCategory, t]
+    [categories, t]
   )
 
-  const options = useMemo(() => data.map((option: CategoryInterface) => option.name), [data])
+  const options = useMemo(() => response.map((option: CategoryInterface) => option.name), [response])
 
   return (
     <Container sx={ styles.container }>
@@ -98,6 +90,7 @@ const Categories = () => {
         <SearchAutocomplete
           loading={ loading }
           options={ options }
+          resetData={ resetData }
           search={ match }
           setSearch={ setMatch }
           textFieldProps={ {
@@ -106,17 +99,13 @@ const Categories = () => {
         />
       </AppToolbar>
 
-      { categoriesLoading && !categories ? (
-        <Loader size={ 70 } />
-      ) : (
-        <ClickableCardList
-          btnText={ t('categoriesPage.viewMore') }
-          cards={ cards }
-          isBlur={ categoriesLoading }
-          isExpandable={ isExpandable }
-          onClick={ loadMore }
-        />
-      ) }
+      <ClickableCardList
+        btnText={ t('categoriesPage.viewMore') }
+        cards={ cards }
+        isExpandable={ isExpandable }
+        loading={ categoriesLoading }
+        onClick={ loadMore }
+      />
     </Container>
   )
 }

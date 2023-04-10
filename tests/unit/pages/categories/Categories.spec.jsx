@@ -10,6 +10,8 @@ import { URLs } from '~/constants/request'
 const mockAxiosClient = new MockAdapter(axiosClient)
 
 const fetchCategoriesMock = vi.fn()
+const resetDataMock = vi.fn()
+const loadMoreMock = vi.fn()
 
 vi.mock('~/hooks/use-load-more', () => ({
   __esModule: true,
@@ -19,7 +21,12 @@ vi.mock('~/hooks/use-load-more', () => ({
       { _id: '1', name: 'Languages', totalOffers: 0 },
       {  _id: '2', name: 'Music', totalOffers: 0 }
     ],
-    fetchData: fetchCategoriesMock
+    fetchData: fetchCategoriesMock,
+    resetData: resetDataMock,
+    loadMore: loadMoreMock,
+    isExpandable: true,
+    limit: 1,
+    skip: 0
   })
 }))
 

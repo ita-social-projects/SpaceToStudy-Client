@@ -7,6 +7,8 @@ export const styles = {
     boxShadow: commonShadow,
     borderRadius: '6px',
     cursor: 'pointer',
+    textDecoration: 'none',
+    color: 'basic.black',
     '&:hover': isClickable && {
       boxShadow: commonHoverShadow
     }
