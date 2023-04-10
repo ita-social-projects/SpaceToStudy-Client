@@ -2,16 +2,18 @@ import palette from './app.pallete'
 
 declare module '@mui/material/styles' {
   interface ButtonVariants {
-    tonal: React.CSSProperties;
+    tonal: React.CSSProperties
+    containedLight: React.CSSProperties
   }
 }
 
 declare module '@mui/material/Button' {
   interface ButtonPropsSizeOverrides {
-    extraLarge: true
+    sizeExtraLarge: true
   }
   interface ButtonPropsVariantOverrides {
     tonal: true
+    containedLight: true
   }
 }
 
