@@ -9,7 +9,7 @@ declare module '@mui/material/styles' {
 
 declare module '@mui/material/Button' {
   interface ButtonPropsSizeOverrides {
-    sizeExtraLarge: true
+    extraLarge: true
   }
   interface ButtonPropsVariantOverrides {
     tonal: true
