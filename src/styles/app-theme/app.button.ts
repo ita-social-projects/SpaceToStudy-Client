@@ -1,4 +1,19 @@
-import palette from './app.pallete.js'
+import palette from './app.pallete'
+
+declare module '@mui/material/styles' {
+  interface ButtonVariants {
+    tonal: React.CSSProperties;
+  }
+}
+
+declare module '@mui/material/Button' {
+  interface ButtonPropsSizeOverrides {
+    extraLarge: true
+  }
+  interface ButtonPropsVariantOverrides {
+    tonal: true
+  }
+}
 
 const button = {
   styleOverrides: {
