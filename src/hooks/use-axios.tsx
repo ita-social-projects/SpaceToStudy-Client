@@ -1,44 +1,42 @@
 import { useState, useEffect, useCallback } from 'react'
 import { AxiosError, AxiosResponse } from 'axios'
 import { ErrorResponse } from '~/types'
+import { mapArrayByField } from '~/utils/map-array-by-field'
 
-interface UseAxiosProps<T, D> {
+interface UseAxiosProps<T, R, D> {
   service: (data?: D) => Promise<AxiosResponse<T>>
-  defaultResponse: T
+  defaultResponse: R
   fetchOnMount?: boolean
   clearResponse?: boolean
+  transform?: string | null
 }
 
-interface UseAxiosReturn<T, D> {
-  response: T | []
-  mapArrayByField: (data: T, field: string) => string[]
+interface UseAxiosReturn<R, D> {
+  response: R
   error: AxiosError<ErrorResponse> | null
   loading: boolean
   fetchData: (data?: D) => void
 }
 
-const useAxios = <T, D = unknown>({
+const useAxios = <T, R = T, D = unknown>({
   service,
   defaultResponse,
   fetchOnMount = true,
-  clearResponse = false
-}: UseAxiosProps<T, D>): UseAxiosReturn<T, D> => {
-  const [response, setResponse] = useState<T | []>(defaultResponse)
+  clearResponse = false,
+  transform = null
+}: UseAxiosProps<T, R, D>): UseAxiosReturn<R, D> => {
+  const [response, setResponse] = useState<R>(defaultResponse)
   const [error, setError] = useState<AxiosError<ErrorResponse> | null>(null)
   const [loading, setLoading] = useState<boolean>(fetchOnMount)
-
-  const mapArrayByField = useCallback(
-    (data: T, field: string) => Array.isArray(data) && data.reduce((acc, item) => [...acc, item[field]], []),
-    []
-  )
 
   const fetchData = useCallback(
     async (data?: D) => {
       try {
-        clearResponse && setResponse([])
+        clearResponse && setResponse(defaultResponse)
         setLoading(true)
         const res = await service(data)
-        setResponse(res.data)
+        const responseData = (transform && mapArrayByField(res.data, transform)) || res.data
+        setResponse(responseData)
         setError(null)
       } catch (e) {
         setError(e as AxiosError<ErrorResponse>)
@@ -46,7 +44,7 @@ const useAxios = <T, D = unknown>({
         setLoading(false)
       }
     },
-    [service, clearResponse]
+    [service, clearResponse, mapArrayByField, transform]
   )
 
   useEffect(() => {
@@ -55,7 +53,7 @@ const useAxios = <T, D = unknown>({
     }
   }, [fetchData, fetchOnMount])
 
-  return { response, mapArrayByField, error, loading, fetchData }
+  return { response, error, loading, fetchData }
 }
 
 export default useAxios

@@ -19,11 +19,7 @@ vi.mock('~/hooks/use-subjects-names', () => ({
   __esModule: true,
   default: () => ({
     loading: false,
-    response: [
-      { _id: '123', name: 'Subject 1' },
-      { _id: '456', name: 'Subject 2' }
-    ],
-    mapArrayByField: () => ['Subject 1', 'Subject 2']
+    response: ['Subject 1',  'Subject 2']
   })
 }))
 
@@ -49,7 +45,7 @@ describe('Subjects', () => {
 
   it('should update search value when search input is changed', () => {
     const searchLabel = screen.getByLabelText('subjectsPage.subjects.searchLabel')
-    
+
     fireEvent.change(searchLabel, { target: { value: 'Subject' } })
 
     const subject = screen.getByDisplayValue('Subject')

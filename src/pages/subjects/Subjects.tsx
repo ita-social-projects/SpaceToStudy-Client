@@ -27,7 +27,7 @@ const Subjects = () => {
   const categoryId = searchParams.get('categoryId')
 
   const { loading: categoriesNamesLoading, response: categoriesNamesItems } = useCategoriesNames({})
-  const { response: subjectsNamesItems, mapArrayByField } = useSubjectsNames({
+  const { response: subjectsNamesItems } = useSubjectsNames({
     category: categoryId
   })
 
@@ -40,8 +40,6 @@ const Subjects = () => {
     searchParams.set('categoryId', value?._id || '')
     setSearchParams(searchParams)
   }
-
-  const optionsSubjects = mapArrayByField(subjectsNamesItems, 'name')
 
   const getOptionLabelCategory = (option: CategoryNameInterface) => option.name || ''
   const isOptionEqualToValueCategory = (option: CategoryNameInterface, value: CategoryNameInterface) =>
@@ -84,7 +82,7 @@ const Subjects = () => {
             value={ category }
           />
           <SearchAutocomplete
-            options={ optionsSubjects }
+            options={ subjectsNamesItems }
             search={ searchValue }
             setSearch={ setSearchValue }
             textFieldProps={ {

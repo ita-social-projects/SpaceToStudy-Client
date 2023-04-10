@@ -12,21 +12,21 @@ interface UseSubjectsNamesProps {
 
 interface UseSubjectsNamesResult {
   loading: boolean
-  response: SubjectNameInterface[]
-  mapArrayByField: (data: SubjectNameInterface[], field: string) => string[]
+  response: string[]
   fetchData: () => void
   error: AxiosError<ErrorResponse> | null
 }
 const useSubjectsNames = ({ category, fetchOnMount = true }: UseSubjectsNamesProps): UseSubjectsNamesResult => {
   const getSubjectsNames = useCallback(() => subjectService.getSubjectsNames(category), [category])
 
-  const { loading, response, mapArrayByField, fetchData, error } = useAxios<SubjectNameInterface[]>({
+  const { loading, response, fetchData, error } = useAxios<SubjectNameInterface[], string[]>({
     service: getSubjectsNames,
     fetchOnMount,
-    defaultResponse: []
+    defaultResponse: [],
+    transform: 'name'
   })
 
-  return { loading, response, mapArrayByField, fetchData, error }
+  return { loading, response, fetchData, error }
 }
 
 export default useSubjectsNames

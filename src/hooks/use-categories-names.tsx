@@ -12,7 +12,6 @@ interface UseCategoriesNameProps {
 interface UseCategoriesNamesResult {
   loading: boolean
   response: CategoryNameInterface[]
-  mapArrayByField: (data: CategoryNameInterface[], field: string) => string[]
   fetchData: () => void
   error: AxiosError<ErrorResponse> | null
 }
@@ -20,13 +19,13 @@ interface UseCategoriesNamesResult {
 const useCategoriesNames = ({ fetchOnMount = true }: UseCategoriesNameProps): UseCategoriesNamesResult => {
   const getCategoriesNames = useCallback(() => categoryService.getCategoriesNames(), [])
 
-  const { loading, response, mapArrayByField, fetchData, error } = useAxios<CategoryNameInterface[]>({
+  const { loading, response,  fetchData, error } = useAxios<CategoryNameInterface[]>({
     service: getCategoriesNames,
     fetchOnMount,
     defaultResponse: []
   })
 
-  return { loading, response, mapArrayByField, fetchData, error }
+  return { loading, response,  fetchData, error }
 }
 
 export default useCategoriesNames
