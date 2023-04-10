@@ -27,7 +27,7 @@ const Categories = () => {
   const [match, setMatch] = useState<string>('')
 
   const getCategoriesNames = useCallback(() => categoryService.getCategoriesNames(), [])
-  const getCategories = useCallback((params: Params) => categoryService.getCategories(params), [])
+  const getCategories = useCallback((params: Partial<Params>) => categoryService.getCategories(params), [])
 
   const { response, loading } = useAxios({ service: getCategoriesNames, defaultResponse: [] })
   const {

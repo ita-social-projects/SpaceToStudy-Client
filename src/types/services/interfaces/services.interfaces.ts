@@ -1,14 +1,11 @@
-import { CreatedAt, LastLogin, Sort, Address, Category } from '~/types/types/common.types'
+import { CreatedAt, LastLogin, Address, Category } from '~/types/types/common.types'
+import { Params } from '~/types/services/services.index'
 
-export interface GetUsersParams {
+export interface GetUsersParams extends Params {
   createdAt: CreatedAt
   email: string
   lastLogin: LastLogin
-  limit: number
-  name: string
   role: string
-  skip: number
-  sort: Sort
   status: string[]
 }
 

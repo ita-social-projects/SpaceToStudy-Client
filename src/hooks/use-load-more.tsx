@@ -8,7 +8,7 @@ import { Params } from '~/types'
 interface useLoadMoreReturn<T> {
   data: T[]
   loading: boolean
-  fetchData: (params: Params) => Promise<AxiosResponse<T[]>>
+  fetchData: (params: Partial<Params>) => Promise<AxiosResponse<T[]>>
   resetData: () => void
   loadMore: () => void
   isExpandable: boolean
@@ -17,7 +17,7 @@ interface useLoadMoreReturn<T> {
 }
 
 interface useLoadMoreProps<T> {
-  service: (params: Params) => Promise<AxiosResponse<T[]>>
+  service: (params: Partial<Params>) => Promise<AxiosResponse<T[]>>
   limit: number
   fetchOnMount?: boolean
 }
