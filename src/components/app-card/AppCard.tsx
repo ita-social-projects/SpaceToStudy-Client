@@ -1,19 +1,21 @@
-import { FC, MouseEventHandler, ReactNode } from 'react'
-import Box from '@mui/material/Box'
+import { FC, ReactNode } from 'react'
+import { Link as RouterLink } from 'react-router-dom'
 
 import { styles } from '~/components/app-card/AppCard.styles'
+import Link from '@mui/material/Link'
+import { Box } from '@mui/material'
 
 interface AppCardProps {
   children: ReactNode
   isClickable?: boolean
-  onClick?: MouseEventHandler<HTMLDivElement>
+  link: string
 }
 
-const AppCard: FC<AppCardProps> = ({ children, isClickable = true, onClick }) => {
+const AppCard: FC<AppCardProps> = ({ children, isClickable = true, link }) => {
   return (
-    <Box onClick={ onClick } sx={ styles.container(isClickable) }>
+    <Link component={ isClickable ? RouterLink : Box } sx={ styles.container(isClickable) } to={ link }>
       { children }
-    </Box>
+    </Link>
   )
 }
 

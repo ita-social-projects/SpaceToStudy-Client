@@ -10,12 +10,12 @@ interface ClickableCardProps {
   img: string
   title: string
   description: string
-  onClick: () => void
+  link: string
 }
 
-const ClickableCard: FC<ClickableCardProps> = ({ img, title, description, onClick }) => {
+const ClickableCard: FC<ClickableCardProps> = ({ img, title, description, link }) => {
   return (
-    <AppCard onClick={ onClick }>
+    <AppCard link={ link }>
       <Box
         alt='item image' component='img' src={ img }
         sx={ styles.img }

@@ -1,4 +1,4 @@
-import { FC, useCallback, useMemo } from 'react'
+import { FC, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 
@@ -26,14 +26,18 @@ const PopularCategories: FC<PopularCategoriesProps> = ({ title, description, ite
   const navigate = useNavigate()
   const { isDesktop, isTablet, isMobile } = useBreakpoints()
 
-  const itemsToShow = (isDesktop && 9) || (isTablet && 6) || (isMobile && 4) || 9
-
-  const onClickCard = useCallback(
-    (id) => {
-      navigate(`${guestRoutes.subjects.path}?categoryId=${id}`)
-    },
-    [navigate]
-  )
+  const itemsToShow = useMemo(() => {
+    switch (true) {
+    case isDesktop:
+      return 9
+    case isTablet:
+      return 6
+    case isMobile:
+      return 4
+    default:
+      return 9
+    }
+  }, [isDesktop, isTablet, isMobile])
 
   const cards = useMemo(
     () =>
@@ -43,12 +47,12 @@ const PopularCategories: FC<PopularCategoriesProps> = ({ title, description, ite
             description={ `${item.totalOffers} ${t('common.offers')}` }
             img={ serviceIcon }
             key={ item._id }
-            onClick={ () => onClickCard(item._id) }
+            link={ `${guestRoutes.subjects.path}?categoryId=${item._id}` }
             title={ item.name }
           />
         )
       }),
-    [items, t, onClickCard, itemsToShow]
+    [items, t, itemsToShow]
   )
 
   const onClickButton = () => {

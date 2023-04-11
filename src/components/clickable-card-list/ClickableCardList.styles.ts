@@ -3,10 +3,11 @@ export const styles = {
     display: 'grid',
     justifyContent: 'center',
     gridTemplateColumns: {
-      xs: 'repeat(auto-fit, 288px)',
-      sm: 'repeat(auto-fit, 368px)'
+      xs: 'repeat(1, minmax(264px, 1fr))',
+      sm: 'repeat(2, minmax(264px, 1fr))',
+      md: 'repeat(3, minmax(264px, 1fr))'
     },
-    gridAutoRows: '126px',
+    gridAutoRows: '112px',
     gridGap: '24px',
     mb: '32px'
   },

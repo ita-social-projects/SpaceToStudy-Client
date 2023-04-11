@@ -6,7 +6,8 @@ import {
 export const styles = {
   container: (isClickable: boolean) => ({
     display: 'flex',
-    padding: '30px 20px',
+    padding: '20px 30px',
+    textDecoration: 'none',
     boxShadow: commonShadow,
     borderRadius: '6px',
     cursor: 'pointer',
