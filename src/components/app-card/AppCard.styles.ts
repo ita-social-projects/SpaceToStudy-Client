@@ -10,7 +10,6 @@ export const styles = {
     textDecoration: 'none',
     boxShadow: commonShadow,
     borderRadius: '6px',
-    cursor: 'pointer',
     '&:hover': isClickable && {
       boxShadow: commonHoverShadow
     }
