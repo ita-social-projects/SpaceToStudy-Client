@@ -35,7 +35,7 @@ const OfferFilterList: FC<OfferFilterListProps> = ({
   const languageOptions = languagesTranslationKeys.map((language) =>
     t(language)
   )
-  const levelOptions = levelsTranslationKeys.map((radio) => t(radio))
+  const levelOptions = levelsTranslationKeys.map((level) => t(level))
   const radioOptions = radioButtonsTranslationKeys.map(({ title, value }) => ({
     title: t(title),
     value

@@ -13,7 +13,6 @@ export const radioButtonsTranslationKeys = [
   { title: 'findOffers.radioFilter.3stars', value: 3 }
 ]
 export const languagesTranslationKeys = [
-  'common.languages.allLanguages',
   'common.languages.english',
   'common.languages.ukrainian',
   'common.languages.polish',

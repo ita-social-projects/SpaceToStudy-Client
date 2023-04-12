@@ -2,5 +2,6 @@
   "toMain": "Home Page",
   "goToLogin": "Go to login",
   "applyFilters": "Apply filters",
-  "clearFilters": "Clear filters"
+  "clearFilters": "Clear filters",
+  "addToDrafts": "Add to drafts"
 }

@@ -12,11 +12,13 @@ interface CheckboxListProps extends Pick<TypographyProps, 'variant'> {
   items: string[]
   value?: string[]
   title?: string
+  error?: string
   onChange: (checkbox: string[]) => void
 }
 
 const CheckboxList: FC<CheckboxListProps> = ({
   items,
+  error = '',
   value = [],
   title,
   variant,
@@ -56,10 +58,17 @@ const CheckboxList: FC<CheckboxListProps> = ({
     </Typography>
   )
 
+  const helperText = (
+    <Typography sx={styles.error} variant='caption'>
+      {error}
+    </Typography>
+  )
+
   return (
     <Box sx={styles.root}>
       {checkboxesTitle}
       {checkboxesList}
+      {helperText}
     </Box>
   )
 }

@@ -3,14 +3,14 @@ import Sidebar from '~/containers/layout/sidebar/Sidebar'
 import { renderWithProviders } from '~tests/test-utils'
 import { vi } from 'vitest'
 
+
 describe('Sidebar test', () => {
-  const isSidebarOpen = true
   const setIsSidebarOpen = vi.fn()
   const navigationItems = [{ route: 'label-test', path: '/#route-test' }]
 
   beforeEach(() => {
     renderWithProviders(
-      <Sidebar isSidebarOpen={ isSidebarOpen } navigationItems={ navigationItems } setIsSidebarOpen={ setIsSidebarOpen } />
+      <Sidebar navigationItems={ navigationItems } onClose={ setIsSidebarOpen } />
     )
   })
 
@@ -25,13 +25,6 @@ describe('Sidebar test', () => {
     expect(linkElement).toHaveAttribute('href', '/#route-test')
 
     fireEvent.click(linkElement)
-    await waitFor(() => expect(setIsSidebarOpen).toHaveBeenCalledWith(false))
-  })
-
-  it('should call setIsSidebarOpen with false after click button', async () => {
-    const closeIcon = screen.getByTestId('CloseRoundedIcon')
-    fireEvent.click(closeIcon)
-
-    await waitFor(() => expect(setIsSidebarOpen).toHaveBeenCalledWith(false))
+    await waitFor(() => expect(setIsSidebarOpen).toHaveBeenCalled())
   })
 })

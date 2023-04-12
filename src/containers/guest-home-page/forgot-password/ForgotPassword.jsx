@@ -4,7 +4,7 @@ import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import { useTranslation } from 'react-i18next'
 
-import { SnackBarContext } from '~/context/snackbar-context'
+import { useSnackBarContext } from '~/context/snackbar-context'
 import { ModalContext } from '~/context/modal-context'
 import useForm from '~/hooks/use-form'
 
@@ -24,7 +24,7 @@ const ForgotPassword = () => {
   const { t } = useTranslation()
   const { openModal, closeModal } = useContext(ModalContext)
   const [loading, setLoading] = useState(false)
-  const { setAlert } = useContext(SnackBarContext)
+  const { setAlert } = useSnackBarContext()
 
   const backToLogin = () => {
     openModal({ component: <LoginDialog /> })
@@ -56,11 +56,13 @@ const ForgotPassword = () => {
     }
   }
 
-  const { handleSubmit, handleChange, handleBlur, errors, data } = useForm({
-    onSubmit: async () => sendEmail(data),
-    initialValues: { email: '' },
-    validations: { email }
-  })
+  const { handleSubmit, handleInputChange, handleBlur, errors, data } = useForm(
+    {
+      onSubmit: async () => sendEmail(data),
+      initialValues: { email: '' },
+      validations: { email }
+    }
+  )
 
   const description = (
     <>
@@ -94,7 +96,7 @@ const ForgotPassword = () => {
           fullWidth
           label={t('common.labels.email')}
           onBlur={handleBlur('email')}
-          onChange={handleChange('email')}
+          onChange={handleInputChange('email')}
           required
           size='large'
           sx={{ mb: '5px' }}

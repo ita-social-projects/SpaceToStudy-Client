@@ -10,8 +10,8 @@ import { styles } from '~/components/app-chips-list/AppChipsList-styles'
 interface AppChipListProps {
   items: string[]
   defaultQuantity: number
-  handleChipDelete: (item: string) => void
-  icon: React.ReactElement<SvgIconProps>
+  handleChipDelete?: (item: string) => void
+  icon?: React.ReactElement<SvgIconProps>
   wrapperStyle?: SxProps
 }
 

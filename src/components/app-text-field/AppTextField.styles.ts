@@ -1,7 +1,8 @@
 export const styles = {
-  helperText: {
+  helperText: (multiline?: boolean) => ({
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap'
-  }
+    whiteSpace: 'nowrap',
+    mr: multiline ? '48px' : '14px'
+  })
 }

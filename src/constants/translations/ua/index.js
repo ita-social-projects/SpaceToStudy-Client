@@ -13,6 +13,7 @@ import findOffers from './find-offer-page.json'
 import filters from './filters.json'
 import iconsTooltip from './icons-tooltip.json'
 import subjectsPage from './subjects-page.json'
+import offerPage from './offer-page.json'
 
 const ua = {
   translations: {
@@ -30,7 +31,8 @@ const ua = {
     findOffers,
     filters,
     iconsTooltip,
-    subjectsPage
+    subjectsPage,
+    offerPage
   }
 }
 

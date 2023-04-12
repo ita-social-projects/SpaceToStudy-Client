@@ -9,6 +9,7 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
 import AppTextField from '~/components/app-text-field/AppTextField'
+import AppTextArea from '~/components/app-text-area/AppTextArea'
 import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
 import Loader from '~/components/loader/Loader'
 import useBreakpoints from '~/hooks/use-breakpoints'
@@ -33,9 +34,15 @@ const GeneralInfoStep = ({
   const { userId, userRole } = useSelector((state) => state.appMain)
   const generalInfo = stepData[stepLabel]
 
-  const { handleChange, handleBlur, setData, data, errors } = useForm({
+  const {
+    handleInputChange,
+    handleBlur,
+    handleNonInputValueChange,
+    data,
+    errors
+  } = useForm({
     initialValues: generalInfo.data,
-    errorValues: generalInfo.errors,
+    initialErrors: generalInfo.errors,
     validations
   })
 
@@ -45,21 +52,22 @@ const GeneralInfoStep = ({
   }
 
   const onChangeCountry = async (_, value) => {
-    setData(
-      (prev) =>
-        prev.country !== value && { ...data, country: value, city: null }
-    )
+    if (data.country !== value) {
+      handleNonInputValueChange('city', null)
+      handleNonInputValueChange('country', value)
+    }
     if (value) await fetchCities(value)
   }
 
   const onChangeCity = (_, value) => {
-    setData({ ...data, city: value })
+    handleNonInputValueChange('city', value)
   }
 
   const getUserById = useCallback(
     () => userService.getUserById(userId, userRole),
     [userId, userRole]
   )
+
   const getCountries = useCallback(() => LocationService.getCountries(), [])
   const getCities = useCallback(
     (country) => LocationService.getCities(country),
@@ -89,10 +97,19 @@ const GeneralInfoStep = ({
   useEffect(() => {
     if (!userLoading && !isUserFetched) {
       const { firstName, lastName } = user
-      setData({ ...data, firstName, lastName })
+      handleNonInputValueChange('firstName', firstName)
+      handleNonInputValueChange('lastName', lastName)
+
       setIsUserFetched(true)
     }
-  }, [isUserFetched, setIsUserFetched, user, userLoading, setData, data])
+  }, [
+    isUserFetched,
+    setIsUserFetched,
+    user,
+    userLoading,
+    handleNonInputValueChange,
+    data
+  ])
 
   useEffect(() => {
     handleStepData(stepLabel, data, errors)
@@ -131,7 +148,7 @@ const GeneralInfoStep = ({
               fullWidth
               label={t('common.labels.firstName')}
               onBlur={handleBlur('firstName')}
-              onChange={handleChange('firstName')}
+              onChange={handleInputChange('firstName')}
               required
               sx={{ mb: '5px' }}
               type='text'
@@ -142,7 +159,7 @@ const GeneralInfoStep = ({
               fullWidth
               label={t('common.labels.lastName')}
               onBlur={handleBlur('lastName')}
-              onChange={handleChange('lastName')}
+              onChange={handleInputChange('lastName')}
               required
               sx={{ mb: '5px' }}
               type='text'
@@ -174,25 +191,14 @@ const GeneralInfoStep = ({
               value={data.city}
             />
           </Box>
-
-          <AppTextField
+          <AppTextArea
             fullWidth
-            inputProps={{ maxLength: 70 }}
             label={t('becomeTutor.generalInfo.textFieldLabel')}
-            maxRows='4'
-            minRows='4'
-            multiline
-            onChange={handleChange('experience')}
+            maxLength={70}
+            onChange={handleInputChange('experience')}
             type='text'
             value={data.experience}
           />
-          <Typography
-            color={data.experience.length === 70 ? 'error' : 'text'}
-            sx={styles.experienceLength}
-            variant='caption'
-          >
-            {`${data.experience.length}/70`}
-          </Typography>
         </Box>
         {btnsBox}
       </Box>

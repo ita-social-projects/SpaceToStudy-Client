@@ -2,5 +2,6 @@
   "toMain": "На Головну",
   "goToLogin": "Перейти до Входу",
   "applyFilters": "Застосувати фільтри",
-  "clearFilters": "Очистити фільтри"
+  "clearFilters": "Очистити фільтри",
+  "addToDrafts": "Додати в збережені"
 }

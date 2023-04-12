@@ -1,4 +1,4 @@
-import { useContext, useEffect, useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import useForm from '~/hooks/use-form'
@@ -6,7 +6,7 @@ import useAxios from '~/hooks/use-axios'
 import useInputVisibility from '~/hooks/use-input-visibility'
 
 import { AuthService } from '~/services/auth-service'
-import { SnackBarContext } from '~/context/snackbar-context'
+import { useSnackBarContext } from '~/context/snackbar-context'
 
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
@@ -24,7 +24,7 @@ import imgSuccess from '~/assets/img/email-confirmation-modals/success-icon.svg'
 
 const ResetPassword = ({ resetToken, openModal }) => {
   const { t } = useTranslation()
-  const { setAlert } = useContext(SnackBarContext)
+  const { setAlert } = useSnackBarContext()
 
   const successNotification = useMemo(
     () => (
@@ -71,7 +71,7 @@ const ResetPassword = ({ resetToken, openModal }) => {
     }
   }, [error, openModal, response, setAlert, successNotification])
 
-  const { handleSubmit, handleChange, handleBlur, errors, data } = useForm({
+  const { handleSubmit, handleInputChange , handleBlur, errors, data } = useForm({
     onSubmit: () => sendResetPassword({ password: data.password }),
     initialValues: { password: '', confirmPassword: '' },
     validations: { password, confirmPassword }
@@ -97,9 +97,9 @@ const ResetPassword = ({ resetToken, openModal }) => {
           InputProps={passwordVisibility}
           errorMsg={t(errors.password)}
           fullWidth
-          label={t('common.labels.password')}
-          onBlur={handleBlur('password')}
-          onChange={handleChange('password')}
+          label={ t('common.labels.password') }
+          onBlur={ handleBlur('password') }
+          onChange={ handleInputChange ('password') }
           required
           size='large'
           sx={{ mb: '5px' }}
@@ -110,9 +110,9 @@ const ResetPassword = ({ resetToken, openModal }) => {
           InputProps={confirmPasswordVisibility}
           errorMsg={t(errors.confirmPassword)}
           fullWidth
-          label={t('common.labels.confirmPassword')}
-          onBlur={handleBlur('confirmPassword')}
-          onChange={handleChange('confirmPassword')}
+          label={ t('common.labels.confirmPassword') }
+          onBlur={ handleBlur('confirmPassword') }
+          onChange={ handleInputChange ('confirmPassword') }
           required
           size='large'
           type={showConfirmPassword ? 'text' : 'password'}

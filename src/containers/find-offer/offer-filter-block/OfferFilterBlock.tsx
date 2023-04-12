@@ -7,7 +7,6 @@ import AppButton from '~/components/app-button/AppButton'
 import AppContentSwitcher from '~/components/app-content-switcher/AppContentSwitcher'
 import AppSelect from '~/components/app-select/AppSelect'
 import OfferFilterList from '~/containers/find-offer/offer-filter-block/offer-filter-list/OfferFilterList'
-import AppDrawer from '~/components/app-drawer/AppDrawer'
 import FiltersToggle from '~/components/filters-toggle/FiltersToggle'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import {
@@ -84,7 +83,7 @@ const OfferFilterBlock: FC<OfferFilterBlockProps> = ({
     </>
   )
 
-  const filtersBlock = (
+  return (
     <Stack spacing={2} sx={styles.root(open)}>
       {mobileFields}
       <OfferFilterList
@@ -99,14 +98,6 @@ const OfferFilterBlock: FC<OfferFilterBlockProps> = ({
         {t('button.clearFilters')}
       </AppButton>
     </Stack>
-  )
-
-  return isMobile ? (
-    <AppDrawer onClose={closeFilters} open={open}>
-      {filtersBlock}
-    </AppDrawer>
-  ) : (
-    filtersBlock
   )
 }
 

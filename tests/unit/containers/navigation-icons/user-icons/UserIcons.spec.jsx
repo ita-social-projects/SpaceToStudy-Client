@@ -8,7 +8,7 @@ const setIsSidebarOpen = vi.fn()
 
 describe('test with user role', () => {
   beforeEach(() => {
-    renderWithProviders(<UserIcons openLoginDialog={ openLoginDialog } setIsSidebarOpen={ setIsSidebarOpen } />)
+    renderWithProviders(<UserIcons openLoginDialog={ openLoginDialog } setSidebarOpen={ setIsSidebarOpen } />)
   })
 
   it('should render login icon', () => {
@@ -21,7 +21,7 @@ describe('test with user role', () => {
     const menuIcon = screen.getByTestId('MenuIcon')
     fireEvent.click(menuIcon)
 
-    expect(setIsSidebarOpen).toBeCalledWith(true)
+    expect(setIsSidebarOpen).toBeCalled()
   })
 
   it('should render tooltip title', async () => {

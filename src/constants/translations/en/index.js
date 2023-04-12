@@ -26,6 +26,7 @@ import constant from './constant.json'
 import findOffers from './find-offer-page.json'
 import filters from './filters.json'
 import subjectsPage from './subjects-page.json'
+import offerPage from './offer-page.json'
 
 const en = {
   translations: {
@@ -56,7 +57,8 @@ const en = {
     constant,
     findOffers,
     filters,
-    subjectsPage
+    subjectsPage,
+    offerPage
   }
 }
 

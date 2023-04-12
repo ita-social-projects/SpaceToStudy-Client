@@ -1,4 +1,3 @@
-import { useContext } from 'react'
 import { useMatch } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
@@ -13,7 +12,7 @@ import ProfileContainerMobile from '~/containers/tutor-profile/profile-info/Prof
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import useBreakpoints from '~/hooks/use-breakpoints'
 
-import { SnackBarContext } from '~/context/snackbar-context'
+import { useSnackBarContext } from '~/context/snackbar-context'
 import {
   accountInfoMock,
   subjectChipsMock,
@@ -25,7 +24,7 @@ import { snackbarVariants, myProfilePath } from '~/constants'
 const ProfileInfo = () => {
   const { t } = useTranslation()
   const { isDesktop, isMobile } = useBreakpoints()
-  const { setAlert } = useContext(SnackBarContext)
+  const { setAlert } = useSnackBarContext()
   const isMyProfile = useMatch(myProfilePath)
 
   const copyProfileLink = () => {

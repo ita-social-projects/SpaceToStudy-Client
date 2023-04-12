@@ -1,17 +1,31 @@
-import { createContext, useCallback, useState } from 'react'
+import { createContext, useCallback, useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Snackbar from '@mui/material/Snackbar'
-import Alert from '@mui/material/Alert'
+import Alert,{ AlertColor } from '@mui/material/Alert'
 
 import { snackbarVariants } from '~/constants'
 
-export const SnackBarContext = createContext()
+interface SnackBarProviderProps {
+  children: React.ReactNode
+}
 
-export const SnackBarProvider = ({ children }) => {
+interface SetAllertProps {
+  severity?: AlertColor
+  message: string
+  duration?: number
+}
+
+interface SnackBarContextOutput {
+  setAlert: (options:SetAllertProps) => void
+}
+
+const SnackBarContext = createContext({} as SnackBarContextOutput)
+
+export const SnackBarProvider = ({ children }:SnackBarProviderProps) => {
   const { t } = useTranslation()
   const [show, setShow] = useState(false)
-  const [severity, setSeverity] = useState(snackbarVariants.info)
+  const [severity, setSeverity] = useState<AlertColor>(snackbarVariants.info)
   const [message, setMessage] = useState('')
   const [duration, setDuration] = useState(0)
 
@@ -46,3 +60,6 @@ export const SnackBarProvider = ({ children }) => {
     </SnackBarContext.Provider>
   )
 }
+
+export const useSnackBarContext = () => useContext(SnackBarContext)
+

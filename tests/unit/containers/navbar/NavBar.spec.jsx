@@ -3,6 +3,7 @@ import NavBar from '~/containers/layout/navbar/NavBar'
 import { renderWithProviders } from '~tests/test-utils'
 import { ModalProvider } from '~/context/modal-context'
 import { SnackBarProvider } from '~/context/snackbar-context'
+import { DrawerProvider } from '~/context/drawer-context'
 import { vi } from 'vitest'
 
 vi.mock('~/hooks/use-confirm', () => {
@@ -23,7 +24,9 @@ describe('Guest NavBar test', () => {
     renderWithProviders(
       <SnackBarProvider>
         <ModalProvider>
-          <NavBar />
+          <DrawerProvider>
+            <NavBar />
+          </DrawerProvider>
         </ModalProvider>
       </SnackBarProvider>,
       { preloadedState }

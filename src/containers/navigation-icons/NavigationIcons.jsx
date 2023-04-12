@@ -8,7 +8,7 @@ import { ModalContext } from '~/context/modal-context'
 import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
 import { admin, student, tutor } from '~/constants'
 
-const NavigationIcons = ({ setIsSidebarOpen }) => {
+const NavigationIcons = ({ setSidebarOpen }) => {
   const { userRole } = useSelector((state) => state.appMain)
   const { openModal } = useContext(ModalContext)
 
@@ -17,13 +17,13 @@ const NavigationIcons = ({ setIsSidebarOpen }) => {
   }, [openModal])
 
   if (userRole === student || userRole === tutor)
-    return <UserIcons setIsSidebarOpen={setIsSidebarOpen} />
+    return <UserIcons setSidebarOpen={setSidebarOpen} />
   if (userRole === admin) return <AdminIcons />
 
   return (
     <GuestIcons
       openLoginDialog={openLoginDialog}
-      setIsSidebarOpen={setIsSidebarOpen}
+      setSidebarOpen={setSidebarOpen}
     />
   )
 }

@@ -1,7 +1,7 @@
 import { ReactNode, ReactElement } from 'react'
 
 import { Chip, IconButton, SvgIconProps, Typography } from '@mui/material'
-import CloseIcon from '@mui/icons-material/Close'
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded'
 import { SxProps } from '@mui/system'
 
 import { styles } from '~/components/app-chips-list/AppChipsList-styles'
@@ -25,13 +25,15 @@ const AppChip: React.FC<AppChipProps> = ({
     <Chip
       data-testid='chip'
       deleteIcon={
-        <IconButton
-          data-testid='close-btn'
-          size='small'
-          sx={styles.deleteButton}
-        >
-          <CloseIcon htmlColor='transparent' />
-        </IconButton>
+        handleDelete && (
+          <IconButton
+            data-testid='close-btn'
+            size='small'
+            sx={styles.deleteButton}
+          >
+            <CloseRoundedIcon fontSize='small' />
+          </IconButton>
+        )
       }
       icon={icon}
       label={

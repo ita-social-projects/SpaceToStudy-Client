@@ -9,7 +9,7 @@ import LoginForm from '~/containers/guest-home-page/login-form/LoginForm'
 import useForm from '~/hooks/use-form'
 import useConfirm from '~/hooks/use-confirm'
 import { ModalContext } from '~/context/modal-context'
-import { SnackBarContext } from '~/context/snackbar-context'
+import { useSnackBarContext } from '~/context/snackbar-context'
 import { email, password } from '~/utils/validations/login'
 import loginImg from '~/assets/img/login-dialog/login.svg'
 import { login, snackbarVariants } from '~/constants'
@@ -21,10 +21,10 @@ const LoginDialog = () => {
   const { t } = useTranslation()
   const { setNeedConfirmation } = useConfirm()
   const { closeModal } = useContext(ModalContext)
-  const { setAlert } = useContext(SnackBarContext)
+  const { setAlert } = useSnackBarContext()
   const dispatch = useDispatch()
 
-  const { handleSubmit, handleChange, handleBlur, data, isDirty, errors } =
+  const { handleSubmit, handleInputChange, handleBlur, data, isDirty, errors } =
     useForm({
       onSubmit: async () => {
         try {
@@ -60,7 +60,7 @@ const LoginDialog = () => {
             data={data}
             errors={errors}
             handleBlur={handleBlur}
-            handleChange={handleChange}
+            handleChange={handleInputChange}
             handleSubmit={handleSubmit}
           />
           <GoogleLogin buttonWidth={styles.form.maxWidth} type={login} />

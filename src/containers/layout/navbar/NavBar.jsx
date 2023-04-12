@@ -16,17 +16,18 @@ import HashLink from '~/components/hash-link/HashLink'
 import Logo from '~/containers/logo/Logo'
 import Sidebar from '~/containers/layout/sidebar/Sidebar'
 import NavigationIcons from '~/containers/navigation-icons/NavigationIcons'
+import { useDrawerContext } from '~/context/drawer-context'
 import { student, tutor } from '~/constants'
 
 import { styles } from '~/containers/layout/navbar/NavBar.styles'
 
 const Navbar = () => {
-  const { t } = useTranslation()
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const [navigationItems, setNavigationItems] = useState(
     Object.values(guestRoutes.navBar)
   )
   const { userRole } = useSelector((state) => state.appMain)
+  const { openDrawer, closeDrawer } = useDrawerContext()
+  const { t } = useTranslation()
 
   useEffect(() => {
     if (userRole === student)
@@ -35,6 +36,14 @@ const Navbar = () => {
       setNavigationItems(Object.values(tutorRoutes.navBar))
     else setNavigationItems(Object.values(guestRoutes.navBar))
   }, [userRole])
+
+  const handleOpenSidebar = () => {
+    openDrawer({
+      component: (
+        <Sidebar navigationItems={navigationItems} onClose={closeDrawer} />
+      )
+    })
+  }
 
   const navigationList = navigationItems.map((item) => {
     return (
@@ -64,13 +73,7 @@ const Navbar = () => {
 
       <List sx={styles.navList}>{navigationList}</List>
 
-      <NavigationIcons setIsSidebarOpen={setIsSidebarOpen} />
-
-      <Sidebar
-        isSidebarOpen={isSidebarOpen}
-        navigationItems={navigationItems}
-        setIsSidebarOpen={setIsSidebarOpen}
-      />
+      <NavigationIcons setSidebarOpen={handleOpenSidebar} />
     </Box>
   )
 }
