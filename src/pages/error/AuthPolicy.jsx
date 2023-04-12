@@ -15,25 +15,29 @@ const AuthPolicy = () => {
   const { t } = useTranslation()
 
   return (
-    <Container sx={ styles.container }>
-      <Box sx={ styles.errorInfo }>
+    <Container sx={styles.container}>
+      <Box sx={styles.errorInfo}>
         <TitleWithDescription
-          componentStyles={ styles.titleWithDescr }
-          description={ t('errorPage.401.description') }
-          descriptionStyles={ styles.description }
-          title={ t('errorPage.401.title') }
-          titleStyles={ styles.title }
+          componentStyles={styles.titleWithDescr}
+          description={t('errorPage.401.description')}
+          descriptionStyles={styles.description}
+          title={t('errorPage.401.title')}
+          titleStyles={styles.title}
         />
         <Button
-          component={ Link } size='extraLarge' to={ guestRoutes.home.path }
+          component={Link}
+          size='extraLarge'
+          to={guestRoutes.home.path}
           variant='contained'
         >
-          { t('button.toMain') }
+          {t('button.toMain')}
         </Button>
       </Box>
       <Box
-        alt='Authorization error' component='img' src={ error401 }
-        sx={ styles.errorImage }
+        alt='Authorization error'
+        component='img'
+        src={error401}
+        sx={styles.errorImage}
       />
     </Container>
   )

@@ -52,7 +52,7 @@ const GoogleButton = ({ role, route, buttonWidth, type }) => {
     })
   }, [handleCredentialResponse, buttonWidth, type, mediaQuery])
 
-  return <button id='googleButton' style={ styles.google } />
+  return <button id='googleButton' style={styles.google} />
 }
 
 export default GoogleButton

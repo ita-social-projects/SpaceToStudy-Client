@@ -17,13 +17,28 @@ import { styles } from './StudentTable.styles'
 const StudentTable = () => {
   const { t } = useTranslation()
 
-  const [externalFilter, setExternalFilter] = useState({ isEmailConfirmed: null, role: student })
+  const [externalFilter, setExternalFilter] = useState({
+    isEmailConfirmed: null,
+    role: student
+  })
 
-  const deleteFunction = useCallback((userId) => userService.deleteUser(userId), [])
-  const { fetchData: deleteUser } = useAxios({ service: deleteFunction, fetchOnMount: false })
+  const deleteFunction = useCallback(
+    (userId) => userService.deleteUser(userId),
+    []
+  )
+  const { fetchData: deleteUser } = useAxios({
+    service: deleteFunction,
+    fetchOnMount: false
+  })
 
-  const deleteAllFunction = useCallback((userIds) => userService.deleteUsers(userIds), [])
-  const { fetchData: deleteUsers } = useAxios({ service: deleteAllFunction, fetchOnMount: false })
+  const deleteAllFunction = useCallback(
+    (userIds) => userService.deleteUsers(userIds),
+    []
+  )
+  const { fetchData: deleteUsers } = useAxios({
+    service: deleteAllFunction,
+    fetchOnMount: false
+  })
 
   const rowActions = [
     {
@@ -42,8 +57,10 @@ const StudentTable = () => {
 
   const tabs = Object.values(tabsInfo).map((tab) => (
     <Tab
-      activeTab={ externalFilter.isEmailConfirmed } key={ tab.label } setTab={ setExternalFilter }
-      tab={ tab }
+      activeTab={externalFilter.isEmailConfirmed}
+      key={tab.label}
+      setTab={setExternalFilter}
+      tab={tab}
     />
   ))
 
@@ -53,22 +70,20 @@ const StudentTable = () => {
   }
 
   return (
-    <Box sx={ styles.root }>
-      <Typography sx={ styles.header } variant='h4'>
-        { t('studentTable.studentsTab') }
+    <Box sx={styles.root}>
+      <Typography sx={styles.header} variant='h4'>
+        {t('studentTable.studentsTab')}
       </Typography>
       <TableProvider
-        bulkActions={ bulkActions }
-        columns={ columns }
-        initialFilters={ initialFilters }
-        initialSort={ initialSort }
+        bulkActions={bulkActions}
+        columns={columns}
+        initialFilters={initialFilters}
+        initialSort={initialSort}
         isSelection
-        rowActions={ rowActions }
+        rowActions={rowActions}
       >
-        <Box sx={ styles.tabs }>
-          { tabs }
-        </Box>
-        { tabsInfo[externalFilter.isEmailConfirmed].component(props) }
+        <Box sx={styles.tabs}>{tabs}</Box>
+        {tabsInfo[externalFilter.isEmailConfirmed].component(props)}
       </TableProvider>
     </Box>
   )

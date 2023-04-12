@@ -18,15 +18,15 @@ const EnhancedTableHeaderCell = ({ column }) => {
   }
 
   return (
-    <TableCell key={ column.field } sx={ styles.root }>
+    <TableCell key={column.field} sx={styles.root}>
       <TableSortLabel
+        active={sort.orderBy === column.field}
         data-testid='tableSortLable'
-        active={ sort.orderBy === column.field }
-        direction={ sort.orderBy === column.field ? sort.order : 'asc' }
-        onClick={ createSortHandler(column.field) }
-        sx={ styles.sortLabel }
+        direction={sort.orderBy === column.field ? sort.order : 'asc'}
+        onClick={createSortHandler(column.field)}
+        sx={styles.sortLabel}
       >
-        { t(column.label) }
+        {t(column.label)}
       </TableSortLabel>
     </TableCell>
   )

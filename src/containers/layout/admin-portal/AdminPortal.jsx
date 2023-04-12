@@ -19,10 +19,10 @@ const AdminPortal = () => {
   }
 
   return (
-    <Box style={ styles.disableMargin } sx={ styles.container }>
+    <Box style={styles.disableMargin} sx={styles.container}>
       <AdminNavBar />
-      <Box sx={ styles.page }>
-        <Suspense fallback={ <Loader pageLoad size={ 70 } /> }>
+      <Box sx={styles.page}>
+        <Suspense fallback={<Loader pageLoad size={70} />}>
           <Outlet />
         </Suspense>
       </Box>

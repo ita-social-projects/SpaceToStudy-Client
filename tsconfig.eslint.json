@@ -1,0 +1,8 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "esModuleInterop": true
+  },
+  "include": ["src", "vite.config.ts", "vitest.config.ts", ".eslintrc.js"],
+  "exclude": ["node_modules", "dist", "coverage", "tests"]
+}

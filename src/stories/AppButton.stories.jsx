@@ -24,11 +24,15 @@ export default {
 export const Default = (args) => {
   return (
     <div
-      style={ { maxWidth: '200px', margin: '0 auto', display: 'flex', justifyContent: 'center', alignItems: 'center' } }
+      style={{
+        maxWidth: '200px',
+        margin: '0 auto',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+      }}
     >
-      <AppButton { ...args }>
-        { args.label }
-      </AppButton>
+      <AppButton {...args}>{args.label}</AppButton>
     </div>
   )
 }

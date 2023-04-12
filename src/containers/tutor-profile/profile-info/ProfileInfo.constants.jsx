@@ -6,17 +6,19 @@ import { styles } from '~/containers/tutor-profile/profile-info/ProfileInfo.styl
 
 const accountRating = (
   <>
-    <StarIcon sx={ styles.ratingIcon } />
-    { '5' }
+    <StarIcon sx={styles.ratingIcon} />
+    {'5'}
   </>
 )
 
 const linkToReviews = (
   <Typography
-    component={ HashLink } sx={ { color: 'text.primary' } } to={ '#' }
+    component={HashLink}
+    sx={{ color: 'text.primary' }}
+    to={'#'}
     variant='overline'
   >
-    { '23 reviews' }
+    {'23 reviews'}
   </Typography>
 )
 
@@ -35,7 +37,14 @@ export const accountInfoMock = [
   }
 ]
 
-export const subjectChipsMock = ['German', 'English', 'JavaScript', 'Computer Science', '3D Modeling', 'Design']
+export const subjectChipsMock = [
+  'German',
+  'English',
+  'JavaScript',
+  'Computer Science',
+  '3D Modeling',
+  'Design'
+]
 
 export const doneItemsMock = [
   { title: '251', description: 'lessons' },

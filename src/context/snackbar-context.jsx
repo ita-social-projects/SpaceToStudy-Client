@@ -27,16 +27,20 @@ export const SnackBarProvider = ({ children }) => {
   }
 
   return (
-    <SnackBarContext.Provider value={ { setAlert } }>
-      { children }
+    <SnackBarContext.Provider value={{ setAlert }}>
+      {children}
       <Snackbar
-        anchorOrigin={ { vertical: 'top', horizontal: 'center' } }
-        autoHideDuration={ duration }
-        onClose={ handleClose }
-        open={ show }
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        autoHideDuration={duration}
+        onClose={handleClose}
+        open={show}
       >
-        <Alert severity={ severity } sx={ { color: 'basic.white' } } variant='filled'>
-          { t(message) }
+        <Alert
+          severity={severity}
+          sx={{ color: 'basic.white' }}
+          variant='filled'
+        >
+          {t(message)}
         </Alert>
       </Snackbar>
     </SnackBarContext.Provider>

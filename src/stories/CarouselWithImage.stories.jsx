@@ -12,7 +12,7 @@ export default {
   }
 }
 
-const Template = (args) => <CarouselWithImage { ...args } />
+const Template = (args) => <CarouselWithImage {...args} />
 
 export const Default = Template.bind({})
 

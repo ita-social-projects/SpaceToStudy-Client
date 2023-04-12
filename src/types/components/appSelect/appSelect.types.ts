@@ -1,4 +1,4 @@
 export type SelectFieldType = {
-    value:string,
-    title:string
+  value: string
+  title: string
 }

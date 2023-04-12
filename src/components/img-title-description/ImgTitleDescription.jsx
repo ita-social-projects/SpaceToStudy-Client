@@ -9,20 +9,22 @@ const componentStyle = {
   description: { typography: 'subtitle' }
 }
 
-const ImgTitleDescription = ({ img, title, description, style = componentStyle }) => {
+const ImgTitleDescription = ({
+  img,
+  title,
+  description,
+  style = componentStyle
+}) => {
   return (
-    <Box sx={ style.root }>
-      <Box
-        alt='info' component='img' src={ img }
-        sx={ style.img }
-      />
+    <Box sx={style.root}>
+      <Box alt='info' component='img' src={img} sx={style.img} />
 
       <TitleWithDescription
-        componentStyles={ style.wrapper }
-        description={ description }
-        descriptionStyles={ style.description }
-        title={ title }
-        titleStyles={ style.title }
+        componentStyles={style.wrapper}
+        description={description}
+        descriptionStyles={style.description}
+        title={title}
+        titleStyles={style.title}
       />
     </Box>
   )

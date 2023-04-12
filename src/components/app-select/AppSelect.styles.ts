@@ -1,8 +1,8 @@
 export const styles = {
   selectField: {
-    minWidth:'115px',
-    '&.MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline':{
-      borderColor:'primary.200'
+    minWidth: '115px',
+    '&.MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+      borderColor: 'primary.200'
     },
     '.MuiSelect-icon': {
       color: 'primary.500'
@@ -11,9 +11,9 @@ export const styles = {
       borderColor: 'primary.500'
     }
   },
-  selectContainer:{
-    display:'flex',
-    alignItems:'center'
+  selectContainer: {
+    display: 'flex',
+    alignItems: 'center'
   },
-  selectTitle:{ color:'primary.500', mr:'8px' }
+  selectTitle: { color: 'primary.500', mr: '8px' }
 }

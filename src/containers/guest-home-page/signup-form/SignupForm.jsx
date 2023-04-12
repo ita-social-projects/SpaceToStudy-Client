@@ -14,138 +14,147 @@ import AppButton from '~/components/app-button/AppButton'
 
 import { styles } from '~/containers/guest-home-page/signup-form/SignupForm.styles'
 
-const SignupForm = ({ handleSubmit, handleChange, handleBlur, data, errors, closeModal }) => {
+const SignupForm = ({
+  handleSubmit,
+  handleChange,
+  handleBlur,
+  data,
+  errors,
+  closeModal
+}) => {
   const { t } = useTranslation()
   const { privacyPolicy, termOfUse } = guestRoutes
   const [isAgreementChecked, setIsAgreementChecked] = useState(false)
-  const { inputVisibility: passwordVisibility, showInputText: showPassword } = useInputVisibility(errors.password)
-  const { inputVisibility: confirmPasswordVisibility, showInputText: showConfirmPassword } = useInputVisibility(
-    errors.confirmPassword
-  )
+  const { inputVisibility: passwordVisibility, showInputText: showPassword } =
+    useInputVisibility(errors.password)
+  const {
+    inputVisibility: confirmPasswordVisibility,
+    showInputText: showConfirmPassword
+  } = useInputVisibility(errors.confirmPassword)
   const { authLoading } = useSelector((state) => state.appMain)
 
   const handleOnAgreementChange = () => {
-    setIsAgreementChecked(prev => !prev)
+    setIsAgreementChecked((prev) => !prev)
   }
 
   const isValid = useMemo(
-    () => Object.values(errors).every((elem) => elem === '') && Object.values(data).every((elem) => elem !== ''),
+    () =>
+      Object.values(errors).every((elem) => elem === '') &&
+      Object.values(data).every((elem) => elem !== ''),
     [data, errors]
   )
 
   const policyAgreement = (
-    <Box sx={ styles.box }>
-      <Typography variant='subtitle2'>
-        { t('signup.iAgree') }
-      </Typography>
+    <Box sx={styles.box}>
+      <Typography variant='subtitle2'>{t('signup.iAgree')}</Typography>
       <Typography
-        component={ HashLink }
-        onClick={ closeModal }
-        sx={ styles.underlineText }
-        to={ termOfUse.path }
+        component={HashLink}
+        onClick={closeModal}
+        sx={styles.underlineText}
+        to={termOfUse.path}
         variant='subtitle2'
       >
-        { t('common.labels.terms') }
+        {t('common.labels.terms')}
       </Typography>
-      <Typography sx={ { ml: '5px' } } variant='subtitle2'>
-        { t('signup.and') }
+      <Typography sx={{ ml: '5px' }} variant='subtitle2'>
+        {t('signup.and')}
       </Typography>
       <Typography
-        component={ HashLink }
-        onClick={ closeModal }
-        sx={ styles.underlineText }
-        to={ privacyPolicy.path }
+        component={HashLink}
+        onClick={closeModal}
+        sx={styles.underlineText}
+        to={privacyPolicy.path}
         variant='subtitle2'
       >
-        { t('common.labels.privacyPolicy') }
+        {t('common.labels.privacyPolicy')}
       </Typography>
     </Box>
   )
 
   return (
-    <Box component='form' onSubmit={ handleSubmit }>
-      <Box sx={ { display: { md: 'block', lg: 'flex' }, gap: '15px' } }>
+    <Box component='form' onSubmit={handleSubmit}>
+      <Box sx={{ display: { md: 'block', lg: 'flex' }, gap: '15px' }}>
         <AppTextField
           autoFocus
-          errorMsg={ t(errors.firstName) }
+          errorMsg={t(errors.firstName)}
           fullWidth
-          label={ t('common.labels.firstName') }
-          onBlur={ handleBlur('firstName') }
-          onChange={ handleChange('firstName') }
+          label={t('common.labels.firstName')}
+          onBlur={handleBlur('firstName')}
+          onChange={handleChange('firstName')}
           required
-          sx={ { mb: '5px' } }
+          sx={{ mb: '5px' }}
           type='text'
-          value={ data.firstName }
+          value={data.firstName}
         />
 
         <AppTextField
-          errorMsg={ t(errors.lastName) }
+          errorMsg={t(errors.lastName)}
           fullWidth
-          label={ t('common.labels.lastName') }
-          onBlur={ handleBlur('lastName') }
-          onChange={ handleChange('lastName') }
+          label={t('common.labels.lastName')}
+          onBlur={handleBlur('lastName')}
+          onChange={handleChange('lastName')}
           required
-          sx={ { mb: '5px' } }
+          sx={{ mb: '5px' }}
           type='text'
-          value={ data.lastName }
+          value={data.lastName}
         />
       </Box>
 
       <AppTextField
-        errorMsg={ t(errors.email) }
+        errorMsg={t(errors.email)}
         fullWidth
-        label={ t('common.labels.email') }
-        onBlur={ handleBlur('email') }
-        onChange={ handleChange('email') }
+        label={t('common.labels.email')}
+        onBlur={handleBlur('email')}
+        onChange={handleChange('email')}
         required
-        sx={ { mb: '5px' } }
+        sx={{ mb: '5px' }}
         type='email'
-        value={ data.email }
+        value={data.email}
       />
 
       <AppTextField
-        InputProps={ passwordVisibility }
-        errorMsg={ t(errors.password) }
+        InputProps={passwordVisibility}
+        errorMsg={t(errors.password)}
         fullWidth
-        label={ t('common.labels.password') }
-        onBlur={ handleBlur('password') }
-        onChange={ handleChange('password') }
+        label={t('common.labels.password')}
+        onBlur={handleBlur('password')}
+        onChange={handleChange('password')}
         required
-        sx={ { mb: '5px' } }
-        type={ showPassword ? 'text' : 'password' }
-        value={ data.password }
+        sx={{ mb: '5px' }}
+        type={showPassword ? 'text' : 'password'}
+        value={data.password}
       />
 
       <AppTextField
-        InputProps={ confirmPasswordVisibility }
-        errorMsg={ t(errors.confirmPassword) }
+        InputProps={confirmPasswordVisibility}
+        errorMsg={t(errors.confirmPassword)}
         fullWidth
-        label={ t('common.labels.confirmPassword') }
-        onBlur={ handleBlur('confirmPassword') }
-        onChange={ handleChange('confirmPassword') }
+        label={t('common.labels.confirmPassword')}
+        onBlur={handleBlur('confirmPassword')}
+        onChange={handleChange('confirmPassword')}
         required
-        type={ showConfirmPassword ? 'text' : 'password' }
-        value={ data.confirmPassword }
+        type={showConfirmPassword ? 'text' : 'password'}
+        value={data.confirmPassword}
       />
 
-      <Box sx={ styles.checkboxContainer }>
+      <Box sx={styles.checkboxContainer}>
         <FormControlLabel
-          control={ <Checkbox /> }
-          label={ policyAgreement }
+          control={<Checkbox />}
+          label={policyAgreement}
           labelPlacement='end'
-          onChange={ handleOnAgreementChange }
-          sx={ styles.checkboxLabel }
-          value={ isAgreementChecked }
+          onChange={handleOnAgreementChange}
+          sx={styles.checkboxLabel}
+          value={isAgreementChecked}
         />
       </Box>
 
       <AppButton
-        disabled={ !isValid || !isAgreementChecked }
-        loading={ authLoading }
-        sx={ styles.signupButton }
+        disabled={!isValid || !isAgreementChecked}
+        loading={authLoading}
+        sx={styles.signupButton}
         type='submit'
       >
-        { t('common.labels.signup') }
+        {t('common.labels.signup')}
       </AppButton>
     </Box>
   )

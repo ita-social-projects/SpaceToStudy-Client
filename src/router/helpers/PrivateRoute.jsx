@@ -6,7 +6,7 @@ const PrivateRoute = ({ role, children }) => {
   const { userRole } = useSelector((state) => state.appMain)
 
   if (userRole !== role) {
-    return <Navigate replace to={ errorRoutes.authPolicy.path } />
+    return <Navigate replace to={errorRoutes.authPolicy.path} />
   }
 
   return children ? children : <Outlet />

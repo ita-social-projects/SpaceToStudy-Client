@@ -23,44 +23,54 @@ import { styles } from '~/containers/layout/navbar/NavBar.styles'
 const Navbar = () => {
   const { t } = useTranslation()
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
-  const [navigationItems, setNavigationItems] = useState(Object.values(guestRoutes.navBar))
+  const [navigationItems, setNavigationItems] = useState(
+    Object.values(guestRoutes.navBar)
+  )
   const { userRole } = useSelector((state) => state.appMain)
 
   useEffect(() => {
-    if (userRole === student) setNavigationItems(Object.values(studentRoutes.navBar))
-    else if (userRole === tutor) setNavigationItems(Object.values(tutorRoutes.navBar))
+    if (userRole === student)
+      setNavigationItems(Object.values(studentRoutes.navBar))
+    else if (userRole === tutor)
+      setNavigationItems(Object.values(tutorRoutes.navBar))
     else setNavigationItems(Object.values(guestRoutes.navBar))
   }, [userRole])
 
   const navigationList = navigationItems.map((item) => {
     return (
-      <ListItem key={ item.route } sx={ styles.navItem }>
+      <ListItem key={item.route} sx={styles.navItem}>
         <Typography
-          component={ HashLink } sx={ styles.navItemText } to={ item.path }
+          component={HashLink}
+          sx={styles.navItemText}
+          to={item.path}
           variant='subtitle2'
         >
-          { t(`header.${item.route}`) }
+          {t(`header.${item.route}`)}
         </Typography>
       </ListItem>
     )
   })
 
   return (
-    <Box sx={ styles.header }>
+    <Box sx={styles.header}>
       <Button
-        component={ Link } size='small' sx={ styles.logoButton }
-        to={ guestRoutes.home.path }
+        component={Link}
+        size='small'
+        sx={styles.logoButton}
+        to={guestRoutes.home.path}
       >
         <Logo />
       </Button>
 
-      <List sx={ styles.navList }>
-        { navigationList }
-      </List>
+      <List sx={styles.navList}>{navigationList}</List>
 
-      <NavigationIcons setIsSidebarOpen={ setIsSidebarOpen } />
+      <NavigationIcons setIsSidebarOpen={setIsSidebarOpen} />
 
-      <Sidebar isSidebarOpen={ isSidebarOpen } navigationItems={ navigationItems } setIsSidebarOpen={ setIsSidebarOpen } />
+      <Sidebar
+        isSidebarOpen={isSidebarOpen}
+        navigationItems={navigationItems}
+        setIsSidebarOpen={setIsSidebarOpen}
+      />
     </Box>
   )
 }

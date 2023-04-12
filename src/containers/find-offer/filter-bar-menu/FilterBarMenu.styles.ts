@@ -6,6 +6,6 @@ const container = {
 
 export const styles = {
   container,
-  selectContainer:{ marginRight: '50px' },
-  mobileContainer:{ ...container, justifyContent:'center' }
+  selectContainer: { marginRight: '50px' },
+  mobileContainer: { ...container, justifyContent: 'center' }
 }

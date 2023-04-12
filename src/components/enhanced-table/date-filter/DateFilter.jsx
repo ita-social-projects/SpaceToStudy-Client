@@ -34,9 +34,9 @@ const DateFilter = ({ filter, setFilter, clearFilter }) => {
 
   const endAdornment = (
     <IconButton
-      className={ filter.from || filter.to ? 'visible' : 'hidden' }
+      className={filter.from || filter.to ? 'visible' : 'hidden'}
       data-testid='clear-icon'
-      onClick={ clearFilter }
+      onClick={clearFilter}
     >
       <ClearIcon color='primary' />
     </IconButton>
@@ -44,26 +44,28 @@ const DateFilter = ({ filter, setFilter, clearFilter }) => {
 
   const datePickers = datePickersOptions.map(({ placement, direction }) => (
     <DesktopDatePicker
-      PopperProps={ { placement: placement } }
-      inputProps={ { 'aria-label': `date-filter-${direction}` } }
-      key={ direction }
-      onChange={ handleChange(direction) }
-      onClose={ () => handleClose(direction) }
-      onOpen={ () => handleOpen(direction) }
-      open={ open[direction] }
-      renderInput={ (params) => <TextField sx={ styles.datePicker } variant='standard' { ...params } /> }
-      value={ filter[direction] }
+      PopperProps={{ placement: placement }}
+      inputProps={{ 'aria-label': `date-filter-${direction}` }}
+      key={direction}
+      onChange={handleChange(direction)}
+      onClose={() => handleClose(direction)}
+      onOpen={() => handleOpen(direction)}
+      open={open[direction]}
+      renderInput={(params) => (
+        <TextField sx={styles.datePicker} variant='standard' {...params} />
+      )}
+      value={filter[direction]}
     />
   ))
 
   return (
     <>
       <TextField
-        InputProps={ {
+        InputProps={{
           startAdornment: (
             <IconButton
               data-testid='calendar-icon'
-              onClick={ () =>
+              onClick={() =>
                 setOpen({
                   from: true,
                   to: true
@@ -75,13 +77,13 @@ const DateFilter = ({ filter, setFilter, clearFilter }) => {
           ),
           endAdornment: endAdornment,
           readOnly: true
-        } }
-        sx={ styles.input }
+        }}
+        sx={styles.input}
         variant='standard'
       />
-      <Box sx={ styles.datePickers }>
-        <LocalizationProvider dateAdapter={ AdapterDateFns }>
-          { datePickers }
+      <Box sx={styles.datePickers}>
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          {datePickers}
         </LocalizationProvider>
       </Box>
     </>

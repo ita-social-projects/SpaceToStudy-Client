@@ -28,16 +28,20 @@ const ResetPassword = ({ resetToken, openModal }) => {
 
   const successNotification = useMemo(
     () => (
-      <Box sx={ styles.box }>
-        <ImgTitleDescription img={ imgSuccess } style={ styles } title={ t('login.sucsessReset') } />
+      <Box sx={styles.box}>
+        <ImgTitleDescription
+          img={imgSuccess}
+          style={styles}
+          title={t('login.sucsessReset')}
+        />
         <Button
           color='primary'
-          onClick={ () => openModal({ component: <LoginDialog /> }) }
+          onClick={() => openModal({ component: <LoginDialog /> })}
           size='large'
-          style={ styles.button }
+          style={styles.button}
           variant='contained'
         >
-          { t('button.goToLogin') }
+          {t('button.goToLogin')}
         </Button>
       </Box>
     ),
@@ -50,7 +54,8 @@ const ResetPassword = ({ resetToken, openModal }) => {
     loading,
     fetchData: sendResetPassword
   } = useAxios({
-    service: (newPassword) => AuthService.resetPassword(resetToken, newPassword),
+    service: (newPassword) =>
+      AuthService.resetPassword(resetToken, newPassword),
     fetchOnMount: false
   })
 
@@ -71,50 +76,55 @@ const ResetPassword = ({ resetToken, openModal }) => {
     validations: { password, confirmPassword }
   })
 
-  const { inputVisibility: passwordVisibility, showInputText: showPassword } = useInputVisibility(errors.password)
-  const { inputVisibility: confirmPasswordVisibility, showInputText: showConfirmPassword } = useInputVisibility(
-    errors.confirmPassword
-  )
+  const { inputVisibility: passwordVisibility, showInputText: showPassword } =
+    useInputVisibility(errors.password)
+  const {
+    inputVisibility: confirmPasswordVisibility,
+    showInputText: showConfirmPassword
+  } = useInputVisibility(errors.confirmPassword)
 
   return (
-    <Box sx={ styles.container }>
+    <Box sx={styles.container}>
       <TitleWithDescription
-        description={ t('login.resetPasswordDesc') }
-        descriptionStyles={ styles.description }
-        title={ t('login.newPassword') }
-        titleStyles={ styles.mainTitle }
+        description={t('login.resetPasswordDesc')}
+        descriptionStyles={styles.description}
+        title={t('login.newPassword')}
+        titleStyles={styles.mainTitle}
       />
-      <Box component='form' onSubmit={ handleSubmit } sx={ styles.form }>
+      <Box component='form' onSubmit={handleSubmit} sx={styles.form}>
         <AppTextField
-          InputProps={ passwordVisibility }
-          errorMsg={ t(errors.password) }
+          InputProps={passwordVisibility}
+          errorMsg={t(errors.password)}
           fullWidth
-          label={ t('common.labels.password') }
-          onBlur={ handleBlur('password') }
-          onChange={ handleChange('password') }
+          label={t('common.labels.password')}
+          onBlur={handleBlur('password')}
+          onChange={handleChange('password')}
           required
           size='large'
-          sx={ { mb: '5px' } }
-          type={ showPassword ? 'text' : 'password' }
-          value={ data.password }
+          sx={{ mb: '5px' }}
+          type={showPassword ? 'text' : 'password'}
+          value={data.password}
         />
         <AppTextField
-          InputProps={ confirmPasswordVisibility }
-          errorMsg={ t(errors.confirmPassword) }
+          InputProps={confirmPasswordVisibility}
+          errorMsg={t(errors.confirmPassword)}
           fullWidth
-          label={ t('common.labels.confirmPassword') }
-          onBlur={ handleBlur('confirmPassword') }
-          onChange={ handleChange('confirmPassword') }
+          label={t('common.labels.confirmPassword')}
+          onBlur={handleBlur('confirmPassword')}
+          onChange={handleChange('confirmPassword')}
           required
           size='large'
-          type={ showConfirmPassword ? 'text' : 'password' }
-          value={ data.confirmPassword }
+          type={showConfirmPassword ? 'text' : 'password'}
+          value={data.confirmPassword}
         />
         <Button
-          disabled={ loading } fullWidth size='large'
-          type='submit' variant='contained'
+          disabled={loading}
+          fullWidth
+          size='large'
+          type='submit'
+          variant='contained'
         >
-          { loading ? <Loader size={ 20 } /> : t('login.savePassword') }
+          {loading ? <Loader size={20} /> : t('login.savePassword')}
         </Button>
       </Box>
     </Box>

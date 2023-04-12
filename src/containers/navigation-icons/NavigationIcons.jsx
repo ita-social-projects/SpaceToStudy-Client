@@ -16,10 +16,16 @@ const NavigationIcons = ({ setIsSidebarOpen }) => {
     openModal({ component: <LoginDialog /> })
   }, [openModal])
 
-  if (userRole === student || userRole === tutor) return <UserIcons setIsSidebarOpen={ setIsSidebarOpen } />
+  if (userRole === student || userRole === tutor)
+    return <UserIcons setIsSidebarOpen={setIsSidebarOpen} />
   if (userRole === admin) return <AdminIcons />
 
-  return <GuestIcons openLoginDialog={ openLoginDialog } setIsSidebarOpen={ setIsSidebarOpen } />
+  return (
+    <GuestIcons
+      openLoginDialog={openLoginDialog}
+      setIsSidebarOpen={setIsSidebarOpen}
+    />
+  )
 }
 
 export default NavigationIcons

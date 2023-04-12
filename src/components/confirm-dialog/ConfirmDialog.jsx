@@ -15,26 +15,26 @@ const ConfirmDialog = ({ message, title, open, onConfirm, onDismiss }) => {
 
   return (
     <Dialog
-      PaperProps={ { sx: styles.root } } data-testid='confirmDialog' onClose={ onDismiss }
-      open={ open }
+      PaperProps={{ sx: styles.root }}
+      data-testid='confirmDialog'
+      onClose={onDismiss}
+      open={open}
     >
-      <Typography sx={ styles.title } variant='h6'>
-        { t(title) }
+      <Typography sx={styles.title} variant='h6'>
+        {t(title)}
       </Typography>
-      <IconButton onClick={ onDismiss } sx={ styles.icon }>
+      <IconButton onClick={onDismiss} sx={styles.icon}>
         <CloseIcon />
       </IconButton>
-      <DialogContent dividers sx={ styles.content }>
-        <Typography variant='subtitle1'>
-          { t(message) }
-        </Typography>
+      <DialogContent dividers sx={styles.content}>
+        <Typography variant='subtitle1'>{t(message)}</Typography>
       </DialogContent>
-      <DialogActions sx={ styles.actions }>
-        <Button onClick={ onConfirm } size='large' variant='tonal'>
-          { t('common.yes') }
+      <DialogActions sx={styles.actions}>
+        <Button onClick={onConfirm} size='large' variant='tonal'>
+          {t('common.yes')}
         </Button>
-        <Button onClick={ onDismiss } size='large' variant='contained'>
-          { t('common.no') }
+        <Button onClick={onDismiss} size='large' variant='contained'>
+          {t('common.no')}
         </Button>
       </DialogActions>
     </Dialog>

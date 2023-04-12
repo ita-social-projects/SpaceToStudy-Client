@@ -20,21 +20,21 @@ const EnhancedTableToolbar = ({ refetchData }) => {
   }
 
   return (
-    <Box sx={ styles.root }>
+    <Box sx={styles.root}>
       <Typography
-        component='div' data-testid='amountOfSelected' sx={ styles.selected }
+        component='div'
+        data-testid='amountOfSelected'
+        sx={styles.selected}
         variant='subtitle2'
       >
-        { `${numSelected} ${t('table.selected')}` }
+        {`${numSelected} ${t('table.selected')}`}
       </Typography>
 
-      { bulkActions.map(({ title, func, icon }) => (
-        <Tooltip key={ title } placement='top' title={ title }>
-          <IconButton onClick={ () => onAction(func) }>
-            { icon }
-          </IconButton>
+      {bulkActions.map(({ title, func, icon }) => (
+        <Tooltip key={title} placement='top' title={title}>
+          <IconButton onClick={() => onAction(func)}>{icon}</IconButton>
         </Tooltip>
-      )) }
+      ))}
     </Box>
   )
 }

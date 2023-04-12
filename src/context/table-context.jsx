@@ -2,7 +2,15 @@ import { createContext, useContext, useState } from 'react'
 
 const TableContext = createContext()
 
-const TableProvider = ({ children, initialSort, initialFilters, isSelection, columns, rowActions, bulkActions }) => {
+const TableProvider = ({
+  children,
+  initialSort,
+  initialFilters,
+  isSelection,
+  columns,
+  rowActions,
+  bulkActions
+}) => {
   const [sort, setSort] = useState(initialSort)
 
   const [filters, setFilters] = useState(initialFilters)
@@ -17,7 +25,7 @@ const TableProvider = ({ children, initialSort, initialFilters, isSelection, col
 
   return (
     <TableContext.Provider
-      value={ {
+      value={{
         isSelection,
         columns,
         rowActions,
@@ -36,9 +44,9 @@ const TableProvider = ({ children, initialSort, initialFilters, isSelection, col
         setRowsPerPage,
         pageInput,
         setPageInput
-      } }
+      }}
     >
-      { children }
+      {children}
     </TableContext.Provider>
   )
 }

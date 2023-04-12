@@ -17,9 +17,7 @@ export default {
   }
 }
 
-const Chip = (args) => (<AppChip { ...args }>
-  { args.label }
-</AppChip>)
+const Chip = (args) => <AppChip {...args}>{args.label}</AppChip>
 
 export const Default = Chip.bind({})
 
@@ -29,7 +27,13 @@ Default.args = {
 
 Default.decorators = [
   (Story) => (
-    <div style={ { display: 'flex', justifyContent: 'center', alignItems: 'center' } }>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+      }}
+    >
       <Story />
     </div>
   )

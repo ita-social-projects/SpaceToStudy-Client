@@ -17,7 +17,7 @@ const Logout = () => {
     })()
   }, [dispatch, navigate])
 
-  return <Loader size={ 70 } />
+  return <Loader size={70} />
 }
 
 export default Logout

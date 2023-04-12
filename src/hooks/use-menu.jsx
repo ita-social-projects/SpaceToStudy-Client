@@ -14,8 +14,8 @@ const useMenu = () => {
   }
 
   const renderMenu = (menuItems) => (
-    <Menu anchorEl={ anchorEl } onClose={ closeMenu } open={ Boolean(anchorEl) }>
-      { menuItems }
+    <Menu anchorEl={anchorEl} onClose={closeMenu} open={Boolean(anchorEl)}>
+      {menuItems}
     </Menu>
   )
 

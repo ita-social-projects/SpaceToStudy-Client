@@ -21,33 +21,44 @@ const NotFound = () => {
   const mobileTypography = { title: 'h4', description: 'subtitle2' }
 
   const windowSizeTypography =
-    (isDesktop && desktopTypography) || (isTablet && tabletTypography) || (isMobile && mobileTypography)
+    (isDesktop && desktopTypography) ||
+    (isTablet && tabletTypography) ||
+    (isMobile && mobileTypography)
 
   return (
-    <Box sx={ styles.root }>
-      <Box sx={ styles.box }>
+    <Box sx={styles.root}>
+      <Box sx={styles.box}>
         <TitleWithDescription
-          description={ t('errorPage.404.description') }
-          descriptionStyles={ { typography: windowSizeTypography.description } }
-          title={ t('errorPage.404.title') }
-          titleStyles={ { typography: windowSizeTypography.title, lineHeight: '61px' } }
+          description={t('errorPage.404.description')}
+          descriptionStyles={{ typography: windowSizeTypography.description }}
+          title={t('errorPage.404.title')}
+          titleStyles={{
+            typography: windowSizeTypography.title,
+            lineHeight: '61px'
+          }}
         />
         <Button
-          component={ Link } sx={ styles.button } to={ guestRoutes.home.path }
+          component={Link}
+          sx={styles.button}
+          to={guestRoutes.home.path}
           variant='contained'
         >
-          { t('button.toMain') }
+          {t('button.toMain')}
         </Button>
       </Box>
 
-      <Box sx={ styles.imgBox }>
+      <Box sx={styles.imgBox}>
         <Box
-          alt='man with bag' component='img' src={ manImg }
-          sx={ styles.manImg }
+          alt='man with bag'
+          component='img'
+          src={manImg}
+          sx={styles.manImg}
         />
         <Box
-          alt='flowerpot' component='img' src={ plantImg }
-          sx={ styles.plantImg }
+          alt='flowerpot'
+          component='img'
+          src={plantImg}
+          sx={styles.plantImg}
         />
       </Box>
     </Box>

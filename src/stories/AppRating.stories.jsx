@@ -30,7 +30,7 @@ export default {
   }
 }
 
-const Template = (args) => <AppRating { ...args } />
+const Template = (args) => <AppRating {...args} />
 
 export const Default = Template.bind({})
 Default.args = {
@@ -38,6 +38,6 @@ Default.args = {
   showNumber: true,
   precision: 0.1,
   sx: {
-    backgroundColor: 'primary.50'  
+    backgroundColor: 'primary.50'
   }
 }

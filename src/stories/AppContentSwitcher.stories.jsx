@@ -6,14 +6,14 @@ export default {
   component: AppContentSwitcher,
   title: 'AppContentSwitcher',
   argTypes: {
-    onChange:{
+    onChange: {
       action: 'onChange',
-      type:'function',
-      description:'changes state that shows the content'
+      type: 'function',
+      description: 'changes state that shows the content'
     },
-    active:{
-      type:'boolean',
-      description:'the state that shows the content'
+    active: {
+      type: 'boolean',
+      description: 'the state that shows the content'
     },
     styles: {
       type: 'object',
@@ -29,13 +29,7 @@ const Template = (args) => {
     setActive(!active)
     action('set new state')(active)
   }
-  return (
-    <AppContentSwitcher
-      { ...args }
-      active={ active }
-      onChange={ onChange }
-    />
-  )
+  return <AppContentSwitcher {...args} active={active} onChange={onChange} />
 }
 
 const switchOptions = {

@@ -8,22 +8,20 @@ import { RatingProps } from '@mui/material/Rating'
 import { styles } from '~/components/app-rating-mobile/AppRatingMobile.styles'
 
 interface AppRatingMobileProps extends RatingProps {
-    reviewsCount: number
+  reviewsCount: number
 }
 
-const AppRatingMobile:FC<AppRatingMobileProps> = ({ value, reviewsCount }) => {
+const AppRatingMobile: FC<AppRatingMobileProps> = ({ value, reviewsCount }) => {
   const { t } = useTranslation()
 
   return (
-    <Box sx={ styles.root }>
-      <Box data-testid='number-box' sx={ styles.number }>
-        <StarSharp data-testid='star-icon' sx={ styles.starMobile } />
-        <Typography variant={ 'h6' }  >
-          { value }
-        </Typography>
+    <Box sx={styles.root}>
+      <Box data-testid='number-box' sx={styles.number}>
+        <StarSharp data-testid='star-icon' sx={styles.starMobile} />
+        <Typography variant={'h6'}>{value}</Typography>
       </Box>
-      <Typography variant={ 'caption' }>
-        { t('tutorProfilePage.reviews.reviewsCount',{ count: reviewsCount }) }
+      <Typography variant={'caption'}>
+        {t('tutorProfilePage.reviews.reviewsCount', { count: reviewsCount })}
       </Typography>
     </Box>
   )

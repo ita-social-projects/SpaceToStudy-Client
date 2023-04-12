@@ -11,7 +11,7 @@ import SearchIcon from '@mui/icons-material/Search'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { styles } from '~/containers/student-home-page/find-tutor-block/find-tutor-block.styles'
 import bag from '~/assets/img/student-home/bag.png'
-import { translationKey } from '~/containers/student-home-page/find-tutor-block/constants' 
+import { translationKey } from '~/containers/student-home-page/find-tutor-block/constants'
 import { guestRoutes } from '~/router/constants/guestRoutes'
 
 const FindTutorBlock = () => {
@@ -38,31 +38,32 @@ const FindTutorBlock = () => {
   )
 
   return (
-    <TitleBlock img={ bag } translationKey={ translationKey } >
+    <TitleBlock img={bag} translationKey={translationKey}>
       <TextField
-        InputProps={ {
+        InputProps={{
           endAdornment: (
-            <IconButton onClick={ redirect }>
+            <IconButton onClick={redirect}>
               <SearchIcon position='end' />
             </IconButton>
           ),
           autoComplete: 'off'
-        } }
-        fullWidth={ isMobile }
-        label={ t(`${translationKey}.label`) }
-        onChange={ onChange }
-        onKeyPress={ handleEnterPress }
-        sx={ styles.input }
-        value={ filter }
+        }}
+        fullWidth={isMobile}
+        label={t(`${translationKey}.label`)}
+        onChange={onChange}
+        onKeyPress={handleEnterPress}
+        sx={styles.input}
+        value={filter}
       />
       <Button
-        fullWidth={ isMobile } onClick={ redirect } size='extraLarge'
+        fullWidth={isMobile}
+        onClick={redirect}
+        size='extraLarge'
         variant='contained'
       >
-        { t(`${translationKey}.button`) }
+        {t(`${translationKey}.button`)}
       </Button>
     </TitleBlock>
-    
   )
 }
 

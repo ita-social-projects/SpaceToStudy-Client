@@ -18,12 +18,12 @@ const FilterCheckbox = ({ filterCheckbox, filter, setFilter }) => {
   return (
     <MenuItem>
       <Checkbox
-        checked={ filter.includes(filterCheckbox.value) }
+        checked={filter.includes(filterCheckbox.value)}
         color='primary'
-        inputProps={ { 'aria-label':'filter-checkbox' } }
-        onChange={ (e) => handleFilterChange(e, filterCheckbox.value) }
+        inputProps={{ 'aria-label': 'filter-checkbox' }}
+        onChange={(e) => handleFilterChange(e, filterCheckbox.value)}
       />
-      { t(filterCheckbox.label) }
+      {t(filterCheckbox.label)}
     </MenuItem>
   )
 }

@@ -18,21 +18,17 @@ export default {
       description: 'The current value of the range slider'
     },
     onChange: {
-      description: 'A callback function that is called when the range value changes',
+      description:
+        'A callback function that is called when the range value changes',
       action: 'Changed'
     }
   }
 }
 
 export const Default = ({ min, max, value: initialValue }) => {
-  const [ value, setValue ] = useState(initialValue)
+  const [value, setValue] = useState(initialValue)
 
-  return (
-    <AppRange
-      max={ max } min={ min } onChange={ setValue }
-      value={ value }
-    />
-  )
+  return <AppRange max={max} min={min} onChange={setValue} value={value} />
 }
 
 Default.args = {

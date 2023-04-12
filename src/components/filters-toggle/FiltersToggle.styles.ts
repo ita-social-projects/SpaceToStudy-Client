@@ -1,21 +1,24 @@
 const container = {
-  display:'flex',
-  alignItems:'center'
+  display: 'flex',
+  alignItems: 'center'
 }
 
 export const styles = {
   container,
-  cursorContainer: (clickable: boolean) => ({ ...container, cursor: clickable ? 'pointer' : 'standart' }),
-  title:{
-    color:'primary.700',
-    mr:'7px',
-    userSelect:'none'
+  cursorContainer: (clickable: boolean) => ({
+    ...container,
+    cursor: clickable ? 'pointer' : 'standart'
+  }),
+  title: {
+    color: 'primary.700',
+    mr: '7px',
+    userSelect: 'none'
   },
-  icon:{
-    color:'primary.700',
-    mr:'7px'
+  icon: {
+    color: 'primary.700',
+    mr: '7px'
   },
-  chosenFiltersQty :{
+  chosenFiltersQty: {
     borderRadius: '50%',
     width: '24px',
     height: '24px',
@@ -24,7 +27,7 @@ export const styles = {
     lineHeight: 'inherit',
     alignItems: 'center',
     backgroundColor: 'primary.400',
-    color:'basic.white',
-    userSelect:'none'
+    color: 'basic.white',
+    userSelect: 'none'
   }
 }

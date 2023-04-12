@@ -13,9 +13,9 @@ const AdminIcons = () => {
   const { t } = useTranslation()
 
   return (
-    <Box sx={ styles.iconBox }>
-      <Tooltip arrow title={ t('iconsTooltip.logout') }>
-        <IconButton component={ Link } to={ studentRoutes.accountMenu.logout.path }>
+    <Box sx={styles.iconBox}>
+      <Tooltip arrow title={t('iconsTooltip.logout')}>
+        <IconButton component={Link} to={studentRoutes.accountMenu.logout.path}>
           <LogoutIcon color='primary' />
         </IconButton>
       </Tooltip>

@@ -4,9 +4,9 @@ import Button, { ButtonProps } from '@mui/material/Button'
 import Loader from '~/components/loader/Loader'
 
 interface AppButtonProps extends ButtonProps {
-  loading?: boolean,
+  loading?: boolean
   disabled?: boolean
-  }
+}
 
 const AppButton: FC<AppButtonProps> = ({
   children,
@@ -16,14 +16,18 @@ const AppButton: FC<AppButtonProps> = ({
   size = 'large',
   ...props
 }) => {
-  const loader = <Loader size={ 20 } sx={ { opacity: '0.6', color: 'basic.black' } } />
+  const loader = (
+    <Loader size={20} sx={{ opacity: '0.6', color: 'basic.black' }} />
+  )
 
   return (
     <Button
-      disabled={ loading || disabled } size={ size } variant={ variant }
-      { ...props }
+      disabled={loading || disabled}
+      size={size}
+      variant={variant}
+      {...props}
     >
-      { loading ? loader : children }
+      {loading ? loader : children}
     </Button>
   )
 }

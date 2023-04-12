@@ -13,7 +13,11 @@ const BecomeATutor = () => {
   const [isUserFetched, setIsUserFetched] = useState(false)
 
   const childrenArr = [
-    <GeneralInfoStep isUserFetched={ isUserFetched } key='1' setIsUserFetched={ setIsUserFetched } />,
+    <GeneralInfoStep
+      isUserFetched={isUserFetched}
+      key='1'
+      setIsUserFetched={setIsUserFetched}
+    />,
     <SubjectsStep key='2' />,
     <LanguageStep key='3' />,
     <AddPhotoStep key='4' />
@@ -21,9 +25,7 @@ const BecomeATutor = () => {
 
   return (
     <StepProvider>
-      <StepWrapper steps={ stepLabels }>
-        { childrenArr }
-      </StepWrapper>
+      <StepWrapper steps={stepLabels}>{childrenArr}</StepWrapper>
     </StepProvider>
   )
 }

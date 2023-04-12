@@ -1,1 +1,9 @@
-export const languages = ['English', 'Ukrainian', 'Polish', 'German', 'French', 'Spanish', 'Arabic']
+export const languages = [
+  'English',
+  'Ukrainian',
+  'Polish',
+  'German',
+  'French',
+  'Spanish',
+  'Arabic'
+]

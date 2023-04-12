@@ -20,33 +20,31 @@ const LanguageStep = ({ stepLabel, btnsBox }) => {
   }
 
   return (
-    <Box sx={ styles.container }>
-      { isDesktop && (
-        <Box sx={ styles.imgContainer }>
-          <Box component='img' src={ img } sx={ styles.img } />
+    <Box sx={styles.container}>
+      {isDesktop && (
+        <Box sx={styles.imgContainer}>
+          <Box component='img' src={img} sx={styles.img} />
         </Box>
-      ) }
-      <Box sx={ styles.rigthBox }>
+      )}
+      <Box sx={styles.rigthBox}>
         <Box>
-          <Typography mb='20px'>
-            { t('becomeTutor.languages.title') }
-          </Typography>
-          { isMobile && (
-            <Box sx={ styles.imgContainer }>
-              <Box component='img' src={ img } sx={ styles.img } />
+          <Typography mb='20px'>{t('becomeTutor.languages.title')}</Typography>
+          {isMobile && (
+            <Box sx={styles.imgContainer}>
+              <Box component='img' src={img} sx={styles.img} />
             </Box>
-          ) }
+          )}
           <AppAutoComplete
             data-testid='language'
-            fieldValue={ languageData }
-            label={ t('becomeTutor.languages.autocompleteLabel') }
-            onChange={ onChangeLanguage }
-            options={ languages }
-            sx={ { mb: '30px' } }
+            fieldValue={languageData}
+            label={t('becomeTutor.languages.autocompleteLabel')}
+            onChange={onChangeLanguage}
+            options={languages}
+            sx={{ mb: '30px' }}
             type='text'
           />
         </Box>
-        { btnsBox }
+        {btnsBox}
       </Box>
     </Box>
   )

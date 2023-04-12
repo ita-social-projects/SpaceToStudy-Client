@@ -3,16 +3,16 @@ import { smallHoverShadow } from '~/styles/app-theme/custom-shadows'
 export const styles = {
   root: {
     maxWidth: '240px',
-    display: 'flex', 
+    display: 'flex',
     flexDirection: 'column',
     alignItems: 'start',
-    pt: '24px' 
+    pt: '24px'
   },
   slider: {
-    maxWidth:'220px',
-    alignSelf:'center',
+    maxWidth: '220px',
+    alignSelf: 'center',
     color: 'primary.700',
-    '& .MuiSlider-rail':{
+    '& .MuiSlider-rail': {
       backgroundColor: 'primary.100'
     },
     '& .MuiSlider-thumb': {
@@ -31,29 +31,31 @@ export const styles = {
       height: '10px',
       width: '10px',
       ml: '-4px',
-      borderRadius:'5px',
+      borderRadius: '5px',
       color: 'primary.100'
     }
   },
-  inputBlock:{ 
-    display:'flex',
-    alignItems:'center',
-    gap:'8px',
+  inputBlock: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px',
     '& input': {
       padding: '5px',
       fontSize: '14px'
-    } },
-  inactiveStyle:{ 
+    }
+  },
+  inactiveStyle: {
     '& .MuiOutlinedInput-root': {
       '& fieldset': {
         borderColor: 'primary.100'
-      } },
-    '& input': { color: 'primary.500' } 
+      }
+    },
+    '& input': { color: 'primary.500' }
   },
-  inputContainer:{ maxWidth: '60px'  },
+  inputContainer: { maxWidth: '60px' },
   inputTitle: { color: 'primary.600' },
-  priceInputs:{
-    display:'flex',
-    gap:'24px'
+  priceInputs: {
+    display: 'flex',
+    gap: '24px'
   }
 }

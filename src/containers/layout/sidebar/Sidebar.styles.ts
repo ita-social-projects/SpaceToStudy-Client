@@ -8,6 +8,6 @@ export const styles = {
     padding: '10px 8px',
     textDecoration: 'none',
     typography: 'midTitle',
-    color:'primary.900'
+    color: 'primary.900'
   }
 }

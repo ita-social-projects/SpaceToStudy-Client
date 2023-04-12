@@ -8,17 +8,20 @@ import type {
   CheckRangeIsInRange,
   RangeArray
 } from '~/types/components/price-filter/price-filter.types'
-import type { SwitchContent, SwitchOptions } from '~/types/components/appContentSwitcher/appContentSwitcher.types'
+import type {
+  SwitchContent,
+  SwitchOptions
+} from '~/types/components/appContentSwitcher/appContentSwitcher.types'
 
-export { 
-  SelectFieldType, 
-  CheckInputChange, 
-  InputRange, 
-  CreateNewState, 
-  InputRangeArray, 
-  CheckRangeIsInRange, 
+export {
+  SelectFieldType,
+  CheckInputChange,
+  InputRange,
+  CreateNewState,
+  InputRangeArray,
+  CheckRangeIsInRange,
   RangeArray,
   RadioButtonType,
-  SwitchContent, 
+  SwitchContent,
   SwitchOptions
 }

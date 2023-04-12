@@ -24,48 +24,46 @@ const LoginDialog = () => {
   const { setAlert } = useContext(SnackBarContext)
   const dispatch = useDispatch()
 
-  const { handleSubmit, handleChange, handleBlur, data, isDirty, errors } = useForm({
-    onSubmit: async () => {
-      try {
-        await dispatch(loginUser(data)).unwrap()
-        closeModal()
-      } catch (e) {
-        setAlert({
-          severity: snackbarVariants.error,
-          message: `errors.${e}`
-        })
-      }
-    },
-    initialValues: { email: '', password: '' },
-    validations: { email, password }
-  })
+  const { handleSubmit, handleChange, handleBlur, data, isDirty, errors } =
+    useForm({
+      onSubmit: async () => {
+        try {
+          await dispatch(loginUser(data)).unwrap()
+          closeModal()
+        } catch (e) {
+          setAlert({
+            severity: snackbarVariants.error,
+            message: `errors.${e}`
+          })
+        }
+      },
+      initialValues: { email: '', password: '' },
+      validations: { email, password }
+    })
 
   useEffect(() => {
     setNeedConfirmation(isDirty)
   }, [isDirty, setNeedConfirmation])
 
   return (
-    <Box sx={ styles.root }>
-      <Box sx={ styles.imgContainer }>
-        <Box
-          alt='login' component='img' src={ loginImg }
-          sx={ styles.img }
-        />
+    <Box sx={styles.root}>
+      <Box sx={styles.imgContainer}>
+        <Box alt='login' component='img' src={loginImg} sx={styles.img} />
       </Box>
 
-      <Box sx={ styles.formContainer }>
-        <Typography sx={ styles.title } variant='h2'>
-          { t('login.head') }
+      <Box sx={styles.formContainer}>
+        <Typography sx={styles.title} variant='h2'>
+          {t('login.head')}
         </Typography>
-        <Box sx={ styles.form }>
+        <Box sx={styles.form}>
           <LoginForm
-            data={ data }
-            errors={ errors }
-            handleBlur={ handleBlur }
-            handleChange={ handleChange }
-            handleSubmit={ handleSubmit }
+            data={data}
+            errors={errors}
+            handleBlur={handleBlur}
+            handleChange={handleChange}
+            handleSubmit={handleSubmit}
           />
-          <GoogleLogin buttonWidth={ styles.form.maxWidth } type={ login } />
+          <GoogleLogin buttonWidth={styles.form.maxWidth} type={login} />
         </Box>
       </Box>
     </Box>

@@ -10,12 +10,10 @@ const TitleWithDescription = ({
   componentStyles
 }) => {
   return (
-    <Box sx={ { ...style.wrapper, ...componentStyles } }>
-      <Typography sx={ { ...titleStyles, ...style.title } }>
-        { title }
-      </Typography>
-      <Typography sx={ { ...descriptionStyles, ...style.description } }>
-        { description }
+    <Box sx={{ ...style.wrapper, ...componentStyles }}>
+      <Typography sx={{ ...titleStyles, ...style.title }}>{title}</Typography>
+      <Typography sx={{ ...descriptionStyles, ...style.description }}>
+        {description}
       </Typography>
     </Box>
   )

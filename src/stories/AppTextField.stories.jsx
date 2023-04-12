@@ -22,7 +22,7 @@ export default {
   }
 }
 
-const Template = (args) => <AppTextField { ...args } />
+const Template = (args) => <AppTextField {...args} />
 
 export const AppTextFieldWithError = Template.bind({})
 

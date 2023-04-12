@@ -12,7 +12,12 @@ export const styles = {
     borderTop: '1px solid',
     borderColor: 'primary.100'
   },
-  progressBar: { display: 'flex', alignItems: 'center', gap: { xs: '12px', sm: '30px' }, my: '12px' },
+  progressBar: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: { xs: '12px', sm: '30px' },
+    my: '12px'
+  },
   linearProgress: {
     height: '12px',
     borderRadius: '6px',
@@ -20,7 +25,10 @@ export const styles = {
     backgroundColor: 'primary.50',
     '& span': { backgroundColor: 'basic.yellow', borderRadius: '6px' }
   },
-  typography: { typography: { xs: 'caption', sm: 'body2', md: 'body1' }, minWidth: '55px' },
+  typography: {
+    typography: { xs: 'caption', sm: 'body2', md: 'body1' },
+    minWidth: '55px'
+  },
   progressBarRoot: { position: 'relative' },
   resetButton: {
     position: 'absolute',

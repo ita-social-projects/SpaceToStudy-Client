@@ -12,7 +12,8 @@ export default {
     },
     onChange: {
       type: 'function',
-      description: 'function that provides value of radio input to top level component',
+      description:
+        'function that provides value of radio input to top level component',
       action: 'changed'
     },
     value: {
@@ -25,7 +26,13 @@ export default {
 const Template = (args) => {
   const [value, setValue] = useState(2)
 
-  return <RadioButtonInputs { ...args } onChange={ (value) => setValue(Number(value)) } value={ value } />
+  return (
+    <RadioButtonInputs
+      {...args}
+      onChange={(value) => setValue(Number(value))}
+      value={value}
+    />
+  )
 }
 
 const defaultItems = [

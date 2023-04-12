@@ -16,24 +16,22 @@ const EnhancedTableHead = ({ itemsCount, onSelectAllClick }) => {
   const { numSelected, isSelection, columns, rowsPerPage } = useTableContext()
 
   return (
-    <TableHead sx={ styles.tableHead }>
+    <TableHead sx={styles.tableHead}>
       <TableRow>
-        { isSelection && (
+        {isSelection && (
           <TableCell padding='checkbox'>
             <Checkbox
-              checked={ itemsCount > 0 && numSelected === rowsPerPage }
+              checked={itemsCount > 0 && numSelected === rowsPerPage}
               color='primary'
-              indeterminate={ numSelected > 0 && numSelected < rowsPerPage }
-              onChange={ onSelectAllClick }
+              indeterminate={numSelected > 0 && numSelected < rowsPerPage}
+              onChange={onSelectAllClick}
             />
           </TableCell>
-        ) }
-        { columns.map((column) => (
-          <EnhancedTableHeaderCell column={ column } key={ column.field } />
-        )) }
-        { isSelection && (<TableCell>
-          { t('table.actions') }
-        </TableCell>) }
+        )}
+        {columns.map((column) => (
+          <EnhancedTableHeaderCell column={column} key={column.field} />
+        ))}
+        {isSelection && <TableCell>{t('table.actions')}</TableCell>}
       </TableRow>
     </TableHead>
   )

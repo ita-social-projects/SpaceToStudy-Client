@@ -7,7 +7,7 @@ import { styles } from '~/pages/categories/Categories.styles'
 
 const Categories = () => {
   return (
-    <Container sx={ styles.container } >
+    <Container sx={styles.container}>
       <OfferRequestBlock />
       <ExploreCategories />
     </Container>

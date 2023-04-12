@@ -29,7 +29,7 @@ export default {
   }
 }
 
-const Template = (args) => <AppPagination { ...args } />
+const Template = (args) => <AppPagination {...args} />
 
 export const Default = Template.bind({})
 

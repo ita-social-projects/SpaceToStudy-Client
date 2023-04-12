@@ -46,54 +46,54 @@ const ProfileInfo = () => {
   const actionIconBtn = (
     <IconButton
       data-testid='icon-btn'
-      onClick={ copyProfileLink }
-      size={ isDesktop ? 'large' : 'small' }
-      sx={ styles.iconBtn }
+      onClick={copyProfileLink}
+      size={isDesktop ? 'large' : 'small'}
+      sx={styles.iconBtn}
     >
-      { actionIcon }
+      {actionIcon}
     </IconButton>
   )
 
   const accInfo = accountInfoMock.map((item) => (
     <TitleWithDescription
-      description={ item.description }
-      descriptionStyles={ { typography: 'overline' } }
-      key={ item.description }
-      style={ { wrapper: { textAlign: 'center' } } }
-      title={ item.title }
-      titleStyles={ { typography: { md: 'h5' } } }
+      description={item.description}
+      descriptionStyles={{ typography: 'overline' }}
+      key={item.description}
+      style={{ wrapper: { textAlign: 'center' } }}
+      title={item.title}
+      titleStyles={{ typography: { md: 'h5' } }}
     />
   ))
 
   const buttonGroup = !isMyProfile && (
-    <Box sx={ styles.buttonGroup }>
-      <Button fullWidth size={ isDesktop ? 'extraLarge' : 'medium' } variant='containedLight'>
-        { t('tutorProfilePage.profileInfo.bookLesson') }
+    <Box sx={styles.buttonGroup}>
+      <Button fullWidth size={isDesktop ? 'extraLarge' : 'medium'} variant='containedLight'>
+        {t('tutorProfilePage.profileInfo.bookLesson')}
       </Button>
 
-      <Button fullWidth size={ isDesktop ? 'extraLarge' : 'medium' } variant='contained'>
-        { t('tutorProfilePage.profileInfo.sendMessage') }
+      <Button fullWidth size={isDesktop ? 'extraLarge' : 'medium'} variant='contained'>
+        {t('tutorProfilePage.profileInfo.sendMessage')}
       </Button>
     </Box>
   )
 
   return !isMobile ? (
     <ProfileContainerDesktop
-      accInfo={ accInfo }
-      actionIcon={ actionIconBtn }
-      buttonGroup={ buttonGroup }
-      defaultQuantity={ isDesktop ? 4 : 2 }
-      doneItems={ doneItemsMock }
-      subjectChips={ subjectChipsMock }
+      accInfo={accInfo}
+      actionIcon={actionIconBtn}
+      buttonGroup={buttonGroup}
+      defaultQuantity={isDesktop ? 4 : 2}
+      doneItems={doneItemsMock}
+      subjectChips={subjectChipsMock}
     />
   ) : (
     <ProfileContainerMobile
-      accInfo={ accInfo }
-      actionIcon={ actionIconBtn }
-      buttonGroup={ buttonGroup }
-      defaultQuantity={ 4 }
-      doneItems={ doneItemsMock }
-      subjectChips={ subjectChipsMock }
+      accInfo={accInfo}
+      actionIcon={actionIconBtn}
+      buttonGroup={buttonGroup}
+      defaultQuantity={4}
+      doneItems={doneItemsMock}
+      subjectChips={subjectChipsMock}
     />
   )
 }

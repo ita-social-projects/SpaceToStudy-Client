@@ -9,34 +9,37 @@ import { defaultStyles } from '~/components/app-content-switcher/AppContentSwitc
 import { SwitchContent, SwitchOptions } from '~/types'
 
 interface SwitcherProps {
-    active: boolean;
-    onChange: () => void;
-    switchOptions: SwitchOptions
-    typographyVariant: TypographyProps['variant'];
-    styles?: SxProps;
+  active: boolean
+  onChange: () => void
+  switchOptions: SwitchOptions
+  typographyVariant: TypographyProps['variant']
+  styles?: SxProps
 }
 
-const AppContentSwitcher: FC<SwitcherProps> = ({ active, onChange, switchOptions, typographyVariant, styles }) => {
-
-  const renderBlock = (options: SwitchContent | undefined, active: boolean) => (
-    options && (<Tooltip arrow title={ options.tooltip }>
-      <Typography
-        sx={ active ? defaultStyles.colorActive : defaultStyles.colorInActive }
-        variant={ typographyVariant }
-      >
-        { options.text }
-      </Typography>
-    </Tooltip>)
-  )
+const AppContentSwitcher: FC<SwitcherProps> = ({
+  active,
+  onChange,
+  switchOptions,
+  typographyVariant,
+  styles
+}) => {
+  const renderBlock = (options: SwitchContent | undefined, active: boolean) =>
+    options && (
+      <Tooltip arrow title={options.tooltip}>
+        <Typography
+          sx={active ? defaultStyles.colorActive : defaultStyles.colorInActive}
+          variant={typographyVariant}
+        >
+          {options.text}
+        </Typography>
+      </Tooltip>
+    )
 
   return (
-    <Stack
-      alignItems='center' direction='row'
-      sx={ defaultStyles && styles }
-    >
-      { renderBlock(switchOptions.left, active) }
-      <Switch checked={ active } data-testid='switch' onChange={ onChange } />
-      { renderBlock(switchOptions.right, !active) }
+    <Stack alignItems='center' direction='row' sx={defaultStyles && styles}>
+      {renderBlock(switchOptions.left, active)}
+      <Switch checked={active} data-testid='switch' onChange={onChange} />
+      {renderBlock(switchOptions.right, !active)}
     </Stack>
   )
 }

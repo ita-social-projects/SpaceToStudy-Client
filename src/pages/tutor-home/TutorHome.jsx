@@ -11,16 +11,19 @@ const TutorHome = () => {
     if (isFirstLogin) {
       openModal({
         component: <BecomeATutor />,
-        paperProps: { sx: { maxHeight: { sm: '652px' }, height: '100%', maxWidth: '1130px', width: '100%' } }
+        paperProps: {
+          sx: {
+            maxHeight: { sm: '652px' },
+            height: '100%',
+            maxWidth: '1130px',
+            width: '100%'
+          }
+        }
       })
     }
   }, [openModal, isFirstLogin])
 
-  return (
-    <div data-testid='tutorHome'>
-      Hello Tutor!
-    </div>
-  )
+  return <div data-testid='tutorHome'>Hello Tutor!</div>
 }
 
 export default TutorHome

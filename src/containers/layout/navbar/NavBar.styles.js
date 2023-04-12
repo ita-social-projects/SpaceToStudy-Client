@@ -7,7 +7,9 @@ export const styles = {
     maxWidth: 'xl',
     width: { xl: '100%' }
   },
-  logoButton: { m: { xs: '10px', sm: '18px', md: '22px 6px 22px 24px', lg: '22px 24px' } },
+  logoButton: {
+    m: { xs: '10px', sm: '18px', md: '22px 6px 22px 24px', lg: '22px 24px' }
+  },
   navList: {
     display: { xs: 'none', md: 'flex' },
     alignItems: 'center'

@@ -17,13 +17,28 @@ import { styles } from './AdminTable.styles'
 const AdminTable = () => {
   const { t } = useTranslation()
 
-  const [externalFilter, setExternalFilter] = useState({ status: 'all', role: admin })
+  const [externalFilter, setExternalFilter] = useState({
+    status: 'all',
+    role: admin
+  })
 
-  const deleteFunction = useCallback((userId) => userService.deleteUser(userId), [])
-  const { fetchData: deleteUser } = useAxios({ service: deleteFunction, fetchOnMount: false })
+  const deleteFunction = useCallback(
+    (userId) => userService.deleteUser(userId),
+    []
+  )
+  const { fetchData: deleteUser } = useAxios({
+    service: deleteFunction,
+    fetchOnMount: false
+  })
 
-  const deleteAllFunction = useCallback((userIds) => userService.deleteUsers(userIds), [])
-  const { fetchData: deleteUsers } = useAxios({ service: deleteAllFunction, fetchOnMount: false })
+  const deleteAllFunction = useCallback(
+    (userIds) => userService.deleteUsers(userIds),
+    []
+  )
+  const { fetchData: deleteUsers } = useAxios({
+    service: deleteAllFunction,
+    fetchOnMount: false
+  })
 
   const rowActions = [
     {
@@ -42,35 +57,33 @@ const AdminTable = () => {
 
   const tabs = Object.values(tabsInfo).map((tab) => (
     <Tab
-      activeTab={ externalFilter.status }
-      key={ tab.label }
-      setTab={ setExternalFilter }
-      tab={ tab }
+      activeTab={externalFilter.status}
+      key={tab.label}
+      setTab={setExternalFilter}
+      tab={tab}
     />
   ))
-  
+
   const props = {
     fetchService: userService.getUsers,
     externalFilter
   }
 
   return (
-    <Box sx={ styles.root }>
-      <Typography sx={ styles.header } variant='h4'>
-        { t('adminTable.adminsTab') }
+    <Box sx={styles.root}>
+      <Typography sx={styles.header} variant='h4'>
+        {t('adminTable.adminsTab')}
       </Typography>
       <TableProvider
-        bulkActions={ bulkActions }
-        columns={ columns }
-        initialFilters={ initialFilters }
-        initialSort={ initialSort }
+        bulkActions={bulkActions}
+        columns={columns}
+        initialFilters={initialFilters}
+        initialSort={initialSort}
         isSelection
-        rowActions={ rowActions }
+        rowActions={rowActions}
       >
-        <Box sx={ styles.tabs }>
-          { tabs }
-        </Box>
-        { tabsInfo[externalFilter.status].component(props) }
+        <Box sx={styles.tabs}>{tabs}</Box>
+        {tabsInfo[externalFilter.status].component(props)}
       </TableProvider>
     </Box>
   )

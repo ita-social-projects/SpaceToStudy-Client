@@ -13,8 +13,15 @@ const useInputVisibility = (inputError) => {
   const inputVisibility = {
     endAdornment: (
       <InputAdornment position='end'>
-        <IconButton aria-label='toggle input visibility' onClick={ () => setShowInputText(!showInputText) }>
-          { showInputText ? <Visibility color={ iconColor } /> : <VisibilityOff color={ iconColor } /> }
+        <IconButton
+          aria-label='toggle input visibility'
+          onClick={() => setShowInputText(!showInputText)}
+        >
+          {showInputText ? (
+            <Visibility color={iconColor} />
+          ) : (
+            <VisibilityOff color={iconColor} />
+          )}
         </IconButton>
       </InputAdornment>
     )

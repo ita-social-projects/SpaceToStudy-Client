@@ -27,40 +27,40 @@ const EnhancedTableRow = ({ item, isItemSelected, refetchData }) => {
       propValue = item[field]?.toString()
     }
 
-    return (
-      <TableCell key={ field }>
-        { propValue }
-      </TableCell>
-    )
+    return <TableCell key={field}>{propValue}</TableCell>
   })
 
   const menuItems = rowActions.map(({ label, func }) => (
-    <MenuItem key={ label } onClick={ () => onAction(func) }>
-      { label }
+    <MenuItem key={label} onClick={() => onAction(func)}>
+      {label}
     </MenuItem>
   ))
 
   return (
-    <TableRow hover key={ item._id } selected={ isItemSelected }>
-      { isSelection && (
+    <TableRow hover key={item._id} selected={isItemSelected}>
+      {isSelection && (
         <TableCell padding='checkbox'>
-          <Checkbox checked={ isItemSelected } color='primary' onChange={ (e) => handleSelectClick(e, item._id) } />
+          <Checkbox
+            checked={isItemSelected}
+            color='primary'
+            onChange={(e) => handleSelectClick(e, item._id)}
+          />
         </TableCell>
-      ) }
-      { tableCells }
-      { isSelection && (
+      )}
+      {tableCells}
+      {isSelection && (
         <TableCell>
-          <IconButton data-testid='menu-icon' onClick={ openMenu }>
+          <IconButton data-testid='menu-icon' onClick={openMenu}>
             <MoreVertIcon
               color='primary'
-              sx={ {
+              sx={{
                 fontSize: '20px'
-              } }
+              }}
             />
           </IconButton>
-          { renderMenu(menuItems) }
+          {renderMenu(menuItems)}
         </TableCell>
-      ) }
+      )}
     </TableRow>
   )
 }

@@ -3,10 +3,13 @@ import ConfirmDialog from '~/components/confirm-dialog/ConfirmDialog'
 export default {
   title: 'ConfirmDialog',
   component: ConfirmDialog,
-  argTypes: { onConfirm: { action: 'Confirmed' }, onDismiss: { action: 'Dismissed' } }
+  argTypes: {
+    onConfirm: { action: 'Confirmed' },
+    onDismiss: { action: 'Dismissed' }
+  }
 }
 
-const Template = (args) => <ConfirmDialog { ...args } />
+const Template = (args) => <ConfirmDialog {...args} />
 
 export const Default = Template.bind({})
 

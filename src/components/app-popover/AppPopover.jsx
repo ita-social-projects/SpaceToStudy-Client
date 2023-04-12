@@ -17,22 +17,22 @@ const AppPopover = ({ children, initialItems, initialItemsWrapperStyle, showMore
   const hideElement = hideElem && isOpen ? { visibility: 'hidden' } : null
 
   return (
-    <Box ref={ anchorEl }>
-      <Box sx={ { ...hideElement, ...initialItemsWrapperStyle } }>
-        { initialItems }
-        <Box onClick={ openPopover } sx={ { display: 'inline-block' } }>
-          { showMoreElem }
+    <Box ref={anchorEl}>
+      <Box sx={{ ...hideElement, ...initialItemsWrapperStyle }}>
+        {initialItems}
+        <Box onClick={openPopover} sx={{ display: 'inline-block' }}>
+          {showMoreElem}
         </Box>
       </Box>
 
       <Popover
-        anchorEl={ anchorEl.current }
-        data-testid={ isOpen && 'app-popover' }
-        onClose={ closePopover }
-        open={ isOpen }
-        { ...props }
+        anchorEl={anchorEl.current}
+        data-testid={isOpen && 'app-popover'}
+        onClose={closePopover}
+        open={isOpen}
+        {...props}
       >
-        { children }
+        {children}
       </Popover>
     </Box>
   )

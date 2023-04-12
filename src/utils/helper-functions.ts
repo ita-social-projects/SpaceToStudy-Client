@@ -14,14 +14,18 @@ export const parseJwt = (token: string) => {
       .join('')
   )
 
-  return JSON.parse(jsonPayload)
+  return JSON.parse(jsonPayload) as object
 }
 
-export const parseQueryParams = (searchParams: URLSearchParams, defaultFilters: FindOffersFilters):FilterFromQuery|null => {
-  const filtersFromQuery:FilterFromQuery = {}
-  searchParams.forEach((value, key) => {  
-    if(key in defaultFilters){
-      const convertedValue = (key === 'price' || key === 'level') && value.split(',') 
+export const parseQueryParams = (
+  searchParams: URLSearchParams,
+  defaultFilters: FindOffersFilters
+): FilterFromQuery | null => {
+  const filtersFromQuery: FilterFromQuery = {}
+  searchParams.forEach((value, key) => {
+    if (key in defaultFilters) {
+      const convertedValue =
+        (key === 'price' || key === 'level') && value.split(',')
       filtersFromQuery[key] = convertedValue || value
     }
   })

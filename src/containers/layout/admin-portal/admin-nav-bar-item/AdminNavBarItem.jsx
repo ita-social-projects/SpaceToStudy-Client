@@ -38,15 +38,19 @@ const AdminNavBarItem = ({
   const subItems = useMemo(
     () =>
       children.map(({ subLabel, path }, index) => (
-        <Collapse in={ showSubItems } key={ subLabel }>
+        <Collapse in={showSubItems} key={subLabel}>
           <List component='ul' disablePadding>
             <ListItemButton
-              component={ Link } onClick={ () => setActiveSubItem(index) } sx={ styles.subItem }
-              to={ path }
+              component={Link}
+              onClick={() => setActiveSubItem(index)}
+              sx={styles.subItem}
+              to={path}
             >
               <ListItemText
-                primary={ t(`admin.navBar.${subLabel}`) }
-                primaryTypographyProps={ { sx: [activeSubItem === index && styles.activeSubItem] } }
+                primary={t(`admin.navBar.${subLabel}`)}
+                primaryTypographyProps={{
+                  sx: [activeSubItem === index && styles.activeSubItem]
+                }}
               />
             </ListItemButton>
           </List>
@@ -57,27 +61,28 @@ const AdminNavBarItem = ({
 
   return (
     <>
-      <Box sx={ [styles.wrapper, expanded && styles.stableWidth] }>
+      <Box sx={[styles.wrapper, expanded && styles.stableWidth]}>
         <ListItemButton
-          component={ children.length ? ListItemButton : Link }
-          key={ label }
-          onClick={ clickListItem }
-          selected={ active }
-          to={ path }
+          component={children.length ? ListItemButton : Link}
+          key={label}
+          onClick={clickListItem}
+          selected={active}
+          to={path}
         >
-          <ListItemIcon sx={ styles.icon }>
-            { icon }
-          </ListItemIcon>
-          { expanded && (
+          <ListItemIcon sx={styles.icon}>{icon}</ListItemIcon>
+          {expanded && (
             <>
-              <ListItemText primary={ t(`admin.navBar.${label}`).toUpperCase() } sx={ styles.label } />
-              { !!children.length && expandIcon }
+              <ListItemText
+                primary={t(`admin.navBar.${label}`).toUpperCase()}
+                sx={styles.label}
+              />
+              {!!children.length && expandIcon}
             </>
-          ) }
+          )}
         </ListItemButton>
-        { active && <Box sx={ styles.active } /> }
+        {active && <Box sx={styles.active} />}
       </Box>
-      { children && subItems }
+      {children && subItems}
     </>
   )
 }

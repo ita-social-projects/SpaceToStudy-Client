@@ -29,46 +29,55 @@ const EnhancedTablePagination = ({ itemsCount }) => {
   const PaginationController = (currentPage, maxPages) => {
     return (
       <Box
-        sx={ {
+        sx={{
           flexShrink: 0
-        } }
+        }}
       >
-        <Pagination count={ maxPages } onChange={ handleChangePaginationController } page={ currentPage + 1 } />
+        <Pagination
+          count={maxPages}
+          onChange={handleChangePaginationController}
+          page={currentPage + 1}
+        />
       </Box>
     )
   }
 
-  const getDisplayedRowsLabel = (from, to, count) => `${from}-${to} ${t('table.of')} ${count}`
+  const getDisplayedRowsLabel = (from, to, count) =>
+    `${from}-${to} ${t('table.of')} ${count}`
 
   return (
-    <Box sx={ styles.root }>
+    <Box sx={styles.root}>
       <TablePagination
-        ActionsComponent={ () => PaginationController(page, maxPages) }
+        ActionsComponent={() => PaginationController(page, maxPages)}
         component='div'
-        count={ itemsCount }
-        labelDisplayedRows={ ({ from, to, count }) => getDisplayedRowsLabel(from, to, count) }
-        labelRowsPerPage={ t('table.numberOfRows') }
-        onPageChange={ handleChangePage }
-        onRowsPerPageChange={ handleChangeRowsPerPage }
-        page={ page }
-        rowsPerPage={ rowsPerPage }
-        rowsPerPageOptions={ [5, 10, 25, 50] }
-        sx={ styles.tablePagination }
+        count={itemsCount}
+        labelDisplayedRows={({ from, to, count }) =>
+          getDisplayedRowsLabel(from, to, count)
+        }
+        labelRowsPerPage={t('table.numberOfRows')}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+        page={page}
+        rowsPerPage={rowsPerPage}
+        rowsPerPageOptions={[5, 10, 25, 50]}
+        sx={styles.tablePagination}
       />
-      <Box sx={ styles.pageInputBox }>
-        <Typography variant='subtitle2'>
-          { t('table.goToPage') }
-        </Typography>
+      <Box sx={styles.pageInputBox}>
+        <Typography variant='subtitle2'>{t('table.goToPage')}</Typography>
         <TextField
-          inputProps={ { 'data-testid': 'testid-page-input' } }
-          onChange={ handleChangePageInput }
+          inputProps={{ 'data-testid': 'testid-page-input' }}
+          onChange={handleChangePageInput}
           size='small'
-          sx={ styles.pageInput }
+          sx={styles.pageInput}
           type='number'
-          value={ pageInput }
+          value={pageInput}
         />
-        <Button onClick={ () => handlePageSubmit(maxPages) } sx={ styles.btn } variant='outlined'>
-          { t('table.go') }
+        <Button
+          onClick={() => handlePageSubmit(maxPages)}
+          sx={styles.btn}
+          variant='outlined'
+        >
+          {t('table.go')}
         </Button>
       </Box>
     </Box>

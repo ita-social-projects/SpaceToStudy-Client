@@ -9,7 +9,7 @@ import { theme } from './styles/app-theme/custom-mui.styles'
 
 const App = () => {
   return (
-    <ThemeProvider theme={ theme }>
+    <ThemeProvider theme={theme}>
       <SnackBarProvider>
         <ConfirmationDialogProvider>
           <ModalProvider>

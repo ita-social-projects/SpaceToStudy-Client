@@ -1,7 +1,7 @@
 export const levelsTranslationKeys = [
   'common.levels.beginner',
   'common.levels.intermediate',
-  'common.levels.advanced', 
+  'common.levels.advanced',
   'common.levels.testPreparation',
   'common.levels.professional',
   'common.levels.specialized'

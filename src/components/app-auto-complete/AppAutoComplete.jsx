@@ -24,34 +24,36 @@ const AppAutoComplete = ({
 }) => {
   return (
     <Autocomplete
-      ListboxProps={ ListboxProps }
-      disabled={ disabled }
-      filterOptions={ filterOptions }
-      freeSolo={ freeSolo }
-      getOptionLabel={ (option) => option }
-      isOptionEqualToValue={ (option, value) => option === value }
-      loading={ loading }
-      onChange={ onChange }
-      onInputChange={ onInputChange }
-      options={ options || [] }
-      renderInput={ (params) => (
+      ListboxProps={ListboxProps}
+      disabled={disabled}
+      filterOptions={filterOptions}
+      freeSolo={freeSolo}
+      getOptionLabel={(option) => option}
+      isOptionEqualToValue={(option, value) => option === value}
+      loading={loading}
+      onChange={onChange}
+      onInputChange={onInputChange}
+      options={options || []}
+      renderInput={(params) => (
         <TextField
-          { ...params }
-          { ...props }
-          InputProps={ {
+          {...params}
+          {...props}
+          InputProps={{
             ...params.InputProps,
             ...props.InputProps,
             endAdornment: (
               <Fragment>
-                { loading ? <Loader size={ 20 } sx={ { color: 'primary.600' } } /> : null }
-                { params.InputProps.endAdornment }
+                {loading ? (
+                  <Loader size={20} sx={{ color: 'primary.600' }} />
+                ) : null}
+                {params.InputProps.endAdornment}
               </Fragment>
             )
-          } }
+          }}
         />
-      ) }
-      sx={ { flex: 1 } }
-      value={ fieldValue }
+      )}
+      sx={{ flex: 1 }}
+      value={fieldValue}
     />
   )
 }

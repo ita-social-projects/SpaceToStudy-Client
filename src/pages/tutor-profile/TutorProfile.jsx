@@ -8,24 +8,24 @@ import ComentsBlock from '~/containers/tutor-profile/coments-block/ComentsBlock'
 
 import { responseMock } from '~/pages/tutor-profile/constants'
 
-
 const TutorProfile = () => {
   const { user } = responseMock
-  const { averageRating, reviews,totalReviews } = user.reviewStats || {}
+  const { averageRating, reviews, totalReviews } = user.reviewStats || {}
 
   return (
-    <Container style={ { flex: 1 } }>
+    <Container style={{ flex: 1 }}>
       <ProfileInfo />
-      <CompleteProfileBlock data={ {} } profileItems={ profileItems } />
+      <CompleteProfileBlock data={{}} profileItems={profileItems} />
       <VideoPresentation />
-      { user.reviewStats && (
+      {user.reviewStats && (
         <ComentsBlock
-          averageRating={ averageRating } 
-          reviewsCount={ reviews } 
-          totalReviews={ totalReviews }
-          userId={ user._id } 
-          userRole={ user.lastLoginAs }
-        />) }
+          averageRating={averageRating}
+          reviewsCount={reviews}
+          totalReviews={totalReviews}
+          userId={user._id}
+          userRole={user.lastLoginAs}
+        />
+      )}
     </Container>
   )
 }

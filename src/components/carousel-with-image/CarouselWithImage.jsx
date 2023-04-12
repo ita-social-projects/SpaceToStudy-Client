@@ -16,17 +16,22 @@ const CarouselWithImage = ({ items }) => {
   }
 
   const carouselWrapper = items.map((item, index) => (
-    <Box data-testid='carousel' key={ index } sx={ styles.feature }>
+    <Box data-testid='carousel' key={index} sx={styles.feature}>
       <Box
-        alt={ item.image } component='img' src={ item.image }
-        sx={ styles.image }
+        alt={item.image}
+        component='img'
+        src={item.image}
+        sx={styles.image}
       />
-      <Box sx={ styles.text }>
-        <Typography sx={ { color: 'basic.white' } } variant={ 'h6' }>
-          { t(item.title) }
+      <Box sx={styles.text}>
+        <Typography sx={{ color: 'basic.white' }} variant={'h6'}>
+          {t(item.title)}
         </Typography>
-        <Typography sx={ { color: 'basic.white', fontSize: '14px' } } variant={ 'subtitle1' }>
-          { t(item.description) }
+        <Typography
+          sx={{ color: 'basic.white', fontSize: '14px' }}
+          variant={'subtitle1'}
+        >
+          {t(item.description)}
         </Typography>
       </Box>
     </Box>
@@ -34,14 +39,23 @@ const CarouselWithImage = ({ items }) => {
 
   return (
     <>
-      <SwipeableViews enableMouseEvents index={ activeStep } onChangeIndex={ handleStepChange }>
-        { carouselWrapper }
+      <SwipeableViews
+        enableMouseEvents
+        index={activeStep}
+        onChangeIndex={handleStepChange}
+      >
+        {carouselWrapper}
       </SwipeableViews>
       <MobileStepper
-        activeStep={ activeStep }
+        activeStep={activeStep}
         position='static'
-        steps={ maxSteps }
-        sx={ { display: 'flex', justifyContent: 'center', pt: '16px', boxShadow: 'none' } }
+        steps={maxSteps}
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          pt: '16px',
+          boxShadow: 'none'
+        }}
         variant='dots'
       />
     </>

@@ -12,13 +12,9 @@ const OfferRequestBlock = () => {
   const { isMobile } = useBreakpoints()
 
   return (
-    <TitleBlock img={ icon } translationKey={ translationKey } >
-      <Button
-        fullWidth={ isMobile } 
-        size='extraLarge'
-        variant='contained'
-      >
-        { t(`${translationKey}.button`) }
+    <TitleBlock img={icon} translationKey={translationKey}>
+      <Button fullWidth={isMobile} size='extraLarge' variant='contained'>
+        {t(`${translationKey}.button`)}
       </Button>
     </TitleBlock>
   )

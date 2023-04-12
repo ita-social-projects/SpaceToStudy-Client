@@ -12,26 +12,25 @@ import { styles } from '~/components/offer-card/offer-actions/OfferActions.style
 
 const OfferActions = ({ price, isBookmarked, onBookmarkClick }) => {
   return (
-    <Box sx={ styles.container }>
-      <Box sx={ styles.containerTop }>
+    <Box sx={styles.container}>
+      <Box sx={styles.containerTop}>
         <Box>
-          <Typography variant='h6'>{ price } { t('common.uah') }</Typography>
-          <Typography variant='body2'>/{ t('common.hour') }</Typography>
+          <Typography variant='h6'>
+            {price} {t('common.uah')}
+          </Typography>
+          <Typography variant='body2'>/{t('common.hour')}</Typography>
         </Box>
-          
-        <IconButton
-          sx={ styles.bookmarkButton }
-          onClick={ onBookmarkClick }
-        >
-          { isBookmarked ? <TurnedIn /> : <TurnedInNot /> }
+
+        <IconButton onClick={onBookmarkClick} sx={styles.bookmarkButton}>
+          {isBookmarked ? <TurnedIn /> : <TurnedInNot />}
         </IconButton>
       </Box>
-        
-      <AppButton sx={ styles.sendMessageButton }>
-        { t('common.labels.sendMessage') }
+
+      <AppButton sx={styles.sendMessageButton}>
+        {t('common.labels.sendMessage')}
       </AppButton>
-      <AppButton sx={ styles.viewDetailsButton }>
-        { t('common.labels.viewDetails') }
+      <AppButton sx={styles.viewDetailsButton}>
+        {t('common.labels.viewDetails')}
       </AppButton>
     </Box>
   )
