@@ -22,6 +22,7 @@ const validations = {
 }
 
 const userId = '63f5d0ebb'
+const userRole = 'tutor'
 const userDataMock = { _id: userId, firstName: 'test', lastName: 'test' }
 const countriesDataMock = ['Ukraine', 'Belgium']
 const citiesDataMock = ['Antwerp', 'Brussels']
@@ -42,7 +43,7 @@ describe('GeneralInfoStep test', () => {
   beforeEach(async () => {
     renderHook(() => useForm({ initialValues, errorValues: {}, validations }))
 
-    mockAxiosClient.onGet(`${URLs.users.get}/${userId}`).reply(200, { data: userDataMock })
+    mockAxiosClient.onGet(`${URLs.users.get}/${userId}?role=${userRole}`).reply(200, { data: userDataMock })
     mockAxiosClient.onGet(URLs.location.getCountries).reply(200, countriesDataMock)
     mockAxiosClient.onGet(`${URLs.location.getCities}/${country}`).reply(200, citiesDataMock)
 
