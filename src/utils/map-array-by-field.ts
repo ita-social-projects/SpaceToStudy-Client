@@ -1,2 +1,2 @@
-export const mapArrayByField = <T,>(data: T, transform: string) =>
-  Array.isArray(data) && data.reduce((acc, item) => [...acc, item[transform]], [])
+export const mapArrayByField = <T extends Array<any>>(data: T, transform: string): string[] =>
+  data.map((item) => item[transform])

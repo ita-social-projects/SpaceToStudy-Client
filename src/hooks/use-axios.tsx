@@ -1,50 +1,52 @@
 import { useState, useEffect, useCallback } from 'react'
 import { AxiosError, AxiosResponse } from 'axios'
 import { ErrorResponse } from '~/types'
-import { mapArrayByField } from '~/utils/map-array-by-field'
 
-interface UseAxiosProps<T, R, D> {
-  service: (data?: D) => Promise<AxiosResponse<T>>
+interface UseAxiosProps<T, R> {
+  service: (data?: unknown) => Promise<AxiosResponse<T>>
   defaultResponse: R
   fetchOnMount?: boolean
-  clearResponse?: boolean
-  transform?: string | null
+  transform?: (data: T) => R
+  onResponse?: () => void
+  onResponseError?: () => void
 }
 
-interface UseAxiosReturn<R, D> {
+interface UseAxiosReturn<R> {
   response: R
   error: AxiosError<ErrorResponse> | null
   loading: boolean
-  fetchData: (data?: D) => void
+  fetchData: (data?: unknown) => void
 }
 
-const useAxios = <T, R = T, D = unknown>({
+const useAxios = <T, R = T>({
   service,
   defaultResponse,
   fetchOnMount = true,
-  clearResponse = false,
-  transform = null
-}: UseAxiosProps<T, R, D>): UseAxiosReturn<R, D> => {
+  transform,
+  onResponse,
+  onResponseError
+}: UseAxiosProps<T, R>): UseAxiosReturn<R> => {
   const [response, setResponse] = useState<R>(defaultResponse)
   const [error, setError] = useState<AxiosError<ErrorResponse> | null>(null)
   const [loading, setLoading] = useState<boolean>(fetchOnMount)
 
   const fetchData = useCallback(
-    async (data?: D) => {
+    async (data?: unknown) => {
       try {
-        clearResponse && setResponse(defaultResponse)
         setLoading(true)
         const res = await service(data)
-        const responseData = (transform && mapArrayByField(res.data, transform)) || res.data
-        setResponse(responseData)
+        const responseData = transform ? transform(res.data) : res.data
+        setResponse(responseData as R)
         setError(null)
+        onResponse && onResponse()
       } catch (e) {
         setError(e as AxiosError<ErrorResponse>)
+        onResponseError && onResponseError()
       } finally {
         setLoading(false)
       }
     },
-    [service, clearResponse, mapArrayByField, transform]
+    [service, transform, onResponse, onResponseError]
   )
 
   useEffect(() => {

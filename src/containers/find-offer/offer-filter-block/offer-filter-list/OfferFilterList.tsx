@@ -32,7 +32,6 @@ const OfferFilterList: FC<OfferFilterListProps> = ({
   filters
 }) => {
   const { t } = useTranslation()
-
   const languageOptions = languagesTranslationKeys.map((language) =>
     t(language)
   )
@@ -52,13 +51,16 @@ const OfferFilterList: FC<OfferFilterListProps> = ({
   const languagesFilter = (
     <Box>
       <AppAutoComplete
-        fieldValue={filters.language}
         onChange={handleLanguagesChange}
         options={languageOptions}
         size='small'
+        textFieldProps={{
+          id: t('findOffers.filterTitles.language')
+        }}
+        value={filters.language}
       />
       <FormControlLabel
-        checked={Boolean(JSON.parse(filters.native))}
+        checked={JSON.parse(filters.native)}
         control={<Checkbox />}
         label={
           <Typography variant='body2'>

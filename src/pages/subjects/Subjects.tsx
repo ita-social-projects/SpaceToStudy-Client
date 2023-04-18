@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router-dom'
 
@@ -18,6 +18,7 @@ import DirectionLink from '~/components/direction-link/DirectionLink'
 import AppToolbar from '~/components/app-toolbar/AppToolbar'
 import useCategoriesNames from '~/hooks/use-categories-names'
 import useSubjectsNames from '~/hooks/use-subjects-names'
+import { mapArrayByField } from '~/utils/map-array-by-field'
 
 const Subjects = () => {
   const [searchValue, setSearchValue] = useState<string>('')
@@ -27,8 +28,12 @@ const Subjects = () => {
   const categoryId = searchParams.get('categoryId')
 
   const { loading: categoriesNamesLoading, response: categoriesNamesItems } = useCategoriesNames({})
+
+  const transform = useCallback((data) => mapArrayByField(data, 'name'), [])
+  
   const { response: subjectsNamesItems } = useSubjectsNames({
-    category: categoryId
+    category: categoryId,
+    transform
   })
 
   const category = useMemo(

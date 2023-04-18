@@ -11,8 +11,6 @@ const mockSubjectsNames = [
   { _id: '2', name: 'Subject 2' }
 ]
 
-const mockResponceSubject = ['Subject 1', 'Subject 2']
-
 const mockError = { status: 404, code: 'NOT_FOUND', message: 'The requested URL was not found.' }
 
 describe('useSubjectsNames', () => {
@@ -26,7 +24,7 @@ describe('useSubjectsNames', () => {
     await waitForNextUpdate()
 
     expect(result.current.loading).toBe(false)
-    expect(result.current.response).toEqual(mockResponceSubject)
+    expect(result.current.response).toEqual(mockSubjectsNames)
   })
 
   it('handles API errors', async () => {

@@ -1,5 +1,6 @@
 import { AxiosError } from 'axios'
 import { useCallback } from 'react'
+import { defaultResponses } from '~/constants'
 
 import useAxios from '~/hooks/use-axios'
 import { categoryService } from '~/services/category-service'
@@ -22,7 +23,7 @@ const useCategoriesNames = ({ fetchOnMount = true }: UseCategoriesNameProps): Us
   const { loading, response,  fetchData, error } = useAxios<CategoryNameInterface[]>({
     service: getCategoriesNames,
     fetchOnMount,
-    defaultResponse: []
+    defaultResponse: defaultResponses.array
   })
 
   return { loading, response,  fetchData, error }

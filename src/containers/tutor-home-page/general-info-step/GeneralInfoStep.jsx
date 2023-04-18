@@ -19,6 +19,7 @@ import img from '~/assets/img/tutor-home-page/become-tutor/general-info.svg'
 import { useStepContext } from '~/context/step-context'
 import { validations } from '~/containers/tutor-home-page/constants'
 import { styles } from '~/containers/tutor-home-page/general-info-step/GeneralInfoStep.styles'
+import { defaultResponses } from '~/constants'
 
 const GeneralInfoStep = ({
   btnsBox,
@@ -71,8 +72,9 @@ const GeneralInfoStep = ({
   })
   const { response: countries } = useAxios({
     service: getCountries,
-    defaultResponse: []
+    defaultResponse: defaultResponses.array
   })
+
   const {
     loading,
     fetchData: fetchCities,
@@ -81,7 +83,7 @@ const GeneralInfoStep = ({
     service: getCities,
     fetchOnMount: false,
     clearResponse: true,
-    defaultResponse: []
+    defaultResponse: defaultResponses.array
   })
 
   useEffect(() => {
