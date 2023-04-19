@@ -16,7 +16,7 @@ const validations:Validations = {
     return ''
   },
   numberField: (value) => {     
-    if (!RegExp(/^-?\d*\.?\d+$/).test(value)) {
+    if (!RegExp(/^-?(?:\d+|\d*\.\d+)(?:[eE][+-]?\d+)?$/).test(value)) {
       return 'common.errorMessages.numbersOnly'
     }
     if(Number(value) < 0){

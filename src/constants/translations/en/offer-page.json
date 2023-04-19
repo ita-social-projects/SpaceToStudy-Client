@@ -7,11 +7,11 @@
       },
       "firstStep": {
         "tutor": "Pick Your Specialization",
-        "student": "Describe Your Learning Needs"
+        "student": "Describe Your Needs"
       },
       "secondStep": {
         "tutor": "Teaching parameters",
-        "student": "Preferred Teaching Parameters"
+        "student": "Preferred Parameters"
       }
     },
     "description": {

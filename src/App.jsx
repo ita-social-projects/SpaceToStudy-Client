@@ -4,7 +4,6 @@ import { ThemeProvider } from '@mui/material/styles'
 import { ModalProvider } from '~/context/modal-context'
 import { ConfirmationDialogProvider } from '~/context/confirm-context'
 import { SnackBarProvider } from '~/context/snackbar-context'
-import { DrawerProvider } from '~/context/drawer-context'
 
 
 import { theme } from './styles/app-theme/custom-mui.styles'
@@ -15,9 +14,7 @@ const App = () => {
       <SnackBarProvider>
         <ConfirmationDialogProvider>
           <ModalProvider>
-            <DrawerProvider>
-              <Outlet />
-            </DrawerProvider>
+            <Outlet />
           </ModalProvider>
         </ConfirmationDialogProvider>
       </SnackBarProvider>

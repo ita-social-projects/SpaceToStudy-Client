@@ -16,7 +16,8 @@ import HashLink from '~/components/hash-link/HashLink'
 import Logo from '~/containers/logo/Logo'
 import Sidebar from '~/containers/layout/sidebar/Sidebar'
 import NavigationIcons from '~/containers/navigation-icons/NavigationIcons'
-import { useDrawerContext } from '~/context/drawer-context'
+import AppDrawer from '~/components/app-drawer/AppDrawer'
+import { useDrawer } from '~/hooks/use-drawer'
 import { student, tutor } from '~/constants'
 
 import { styles } from '~/containers/layout/navbar/NavBar.styles'
@@ -26,7 +27,7 @@ const Navbar = () => {
     Object.values(guestRoutes.navBar)
   )
   const { userRole } = useSelector((state) => state.appMain)
-  const { openDrawer, closeDrawer } = useDrawerContext()
+  const { openDrawer, closeDrawer, open } = useDrawer()
   const { t } = useTranslation()
 
   useEffect(() => {
@@ -38,11 +39,7 @@ const Navbar = () => {
   }, [userRole])
 
   const handleOpenSidebar = () => {
-    openDrawer({
-      component: (
-        <Sidebar navigationItems={navigationItems} onClose={closeDrawer} />
-      )
-    })
+    openDrawer()
   }
 
   const navigationList = navigationItems.map((item) => {
@@ -74,6 +71,9 @@ const Navbar = () => {
       <List sx={styles.navList}>{navigationList}</List>
 
       <NavigationIcons setSidebarOpen={handleOpenSidebar} />
+      <AppDrawer onClose={closeDrawer} open={open}>
+        <Sidebar navigationItems={navigationItems} onClose={closeDrawer} />
+      </AppDrawer>
     </Box>
   )
 }

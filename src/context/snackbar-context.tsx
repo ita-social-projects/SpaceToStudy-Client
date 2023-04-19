@@ -1,8 +1,14 @@
-import { createContext, useCallback, useContext, useState } from 'react'
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useState
+} from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Snackbar from '@mui/material/Snackbar'
-import Alert,{ AlertColor } from '@mui/material/Alert'
+import Alert, { AlertColor } from '@mui/material/Alert'
 
 import { snackbarVariants } from '~/constants'
 
@@ -17,17 +23,17 @@ interface SetAllertProps {
 }
 
 interface SnackBarContextOutput {
-  setAlert: (options:SetAllertProps) => void
+  setAlert: (options: SetAllertProps) => void
 }
 
 const SnackBarContext = createContext({} as SnackBarContextOutput)
 
-export const SnackBarProvider = ({ children }:SnackBarProviderProps) => {
+export const SnackBarProvider = ({ children }: SnackBarProviderProps) => {
   const { t } = useTranslation()
-  const [show, setShow] = useState(false)
+  const [show, setShow] = useState<boolean>(false)
   const [severity, setSeverity] = useState<AlertColor>(snackbarVariants.info)
-  const [message, setMessage] = useState('')
-  const [duration, setDuration] = useState(0)
+  const [message, setMessage] = useState<string>('')
+  const [duration, setDuration] = useState<number>(0)
 
   const setAlert = useCallback((options) => {
     setShow(true)
@@ -40,8 +46,10 @@ export const SnackBarProvider = ({ children }:SnackBarProviderProps) => {
     setShow(false)
   }
 
+  const contextValue = useMemo(() => ({ setAlert }), [setAlert])
+
   return (
-    <SnackBarContext.Provider value={{ setAlert }}>
+    <SnackBarContext.Provider value={contextValue}>
       {children}
       <Snackbar
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
@@ -62,4 +70,3 @@ export const SnackBarProvider = ({ children }:SnackBarProviderProps) => {
 }
 
 export const useSnackBarContext = () => useContext(SnackBarContext)
-

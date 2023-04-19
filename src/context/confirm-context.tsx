@@ -1,4 +1,4 @@
-import { FC, ReactNode, createContext, useState } from 'react'
+import { FC, ReactNode, createContext, useMemo, useState } from 'react'
 import ConfirmDialog from '~/components/confirm-dialog/ConfirmDialog'
 
 interface OpenDialogProps {
@@ -23,15 +23,13 @@ export const ConfirmationDialogContext =
 export const ConfirmationDialogProvider: FC<
   ConfirmationDialogProviderProps
 > = ({ children }) => {
-  const [dialogOpen, setDialogOpen] = useState(false)
-  const [dialogConfig, setDialogConfig] = useState({
-    sendConfirm: (value: boolean) => {
-      value
-    },
+  const [dialogOpen, setDialogOpen] = useState<boolean>(false)
+  const [dialogConfig, setDialogConfig] = useState<OpenDialogProps>({
+    sendConfirm: (value: boolean) => value,
     message: '',
     title: ''
   })
-  const [needConfirmation, setNeedConfirmation] = useState(false)
+  const [needConfirmation, setNeedConfirmation] = useState<boolean>(false)
 
   const openDialog = ({ sendConfirm, message, title }: OpenDialogProps) => {
     setDialogOpen(true)
@@ -48,10 +46,13 @@ export const ConfirmationDialogProvider: FC<
     setDialogOpen(false)
   }
 
+  const contextValue = useMemo(
+    () => ({ openDialog, needConfirmation, setNeedConfirmation }),
+    [needConfirmation]
+  )
+
   return (
-    <ConfirmationDialogContext.Provider
-      value={{ openDialog, needConfirmation, setNeedConfirmation }}
-    >
+    <ConfirmationDialogContext.Provider value={contextValue}>
       <ConfirmDialog
         message={dialogConfig.message}
         onConfirm={onConfirm}

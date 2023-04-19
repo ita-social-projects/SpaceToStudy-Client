@@ -1,32 +1,31 @@
-import { FC } from 'react'
 import { useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 
-import CounterTwo_icon from '~/assets/img/find-offer/counter_two.svg'
 import UAH_icon from '~/assets/img/find-offer/currency_uah.svg'
 import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import AppChipList from '~/components/app-chips-list/AppChipList'
 import AppTextArea from '~/components/app-text-area/AppTextArea'
+import OrderedListItem from '~/components/ordered-list-item/OrderedListItem'
 import { CreateOfferData } from '~/containers/offer-page/create-offer/CreateOffer'
 
 import { languagesTranslationKeys } from '~/containers/find-offer/offer-filter-block/offer-filter-list/OfferFilterList.constants'
 import { styles } from '~/containers/offer-page/create-offer/CreateOffer.styles'
 
 
-interface TeachingBlockProps{
-    data: CreateOfferData,
-    errors: {[K in keyof CreateOfferData]: string}
-    handleNonInputValueChange: (key: keyof CreateOfferData, value: CreateOfferData[keyof CreateOfferData]) => void
-    handleInputChange: (key: keyof CreateOfferData) => (event: React.ChangeEvent<HTMLInputElement>) => void;
-    handleBlur: (key: keyof CreateOfferData) => (event: React.FocusEvent<HTMLInputElement>) => void;
-    handleAutocompleteChange: (key: keyof CreateOfferData ) => (_: React.ChangeEvent<HTMLInputElement>, value: string | null) => void
+interface TeachingBlockProps<T> {
+    data: T,
+    errors: {[K in keyof T]: string}
+    handleNonInputValueChange: <K extends keyof T>(key: K, value: T[K]) => void
+    handleInputChange: (key: keyof T) => (event: React.ChangeEvent<HTMLInputElement>) => void;
+    handleBlur: (key: keyof T) => (event: React.FocusEvent<HTMLInputElement>) => void;
+    handleAutocompleteChange: (key: keyof T ) => (_: React.ChangeEvent<HTMLInputElement>, value: string | null) => void
 }
 
-const TeachingBlock:FC<TeachingBlockProps> = ({ data, errors, handleBlur, handleInputChange, handleNonInputValueChange, handleAutocompleteChange }) => {
+const TeachingBlock = <T extends CreateOfferData>({ data, errors, handleBlur, handleInputChange, handleNonInputValueChange, handleAutocompleteChange }:TeachingBlockProps<T>) => {
   const { userRole } = useSelector((state) => state.appMain)
 
   const { t } = useTranslation()
@@ -41,15 +40,7 @@ const TeachingBlock:FC<TeachingBlockProps> = ({ data, errors, handleBlur, handle
   }
 
   return (
-    <Box>
-      <Typography sx={ styles.title }> 
-        <Box
-          component="img"
-          src={ CounterTwo_icon }
-          sx={ styles.icon }
-        />
-        { t(`offerPage.createOffer.title.secondStep.${userRole}`) }
-      </Typography>
+    <OrderedListItem number={ 2 } title={ t(`offerPage.createOffer.title.secondStep.${userRole}`) }>
       <Box sx={ styles.specialization }>
         <Box sx={ styles.inputBlock }>
           <Typography sx={ styles.description }>
@@ -106,7 +97,7 @@ const TeachingBlock:FC<TeachingBlockProps> = ({ data, errors, handleBlur, handle
           />
         </Box>
       </Box>
-    </Box>
+    </OrderedListItem>
   )
 }
 

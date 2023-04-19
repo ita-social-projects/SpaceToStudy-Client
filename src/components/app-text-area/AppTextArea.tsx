@@ -24,7 +24,7 @@ const AppTextArea:FC<AppTextAreaProps> = ({ minRows = 4, maxRows = 4, maxLength 
         value={ value }
         { ...props }
       />
-      { maxLength  &&  (
+      { Boolean(maxLength) && (
         <Typography
           color={ value.length === maxLength ? 'error' : 'text' }
           sx={ styles.textLength }

@@ -12,16 +12,7 @@ export const styles = {
     boxSizing:'border-box',
     ...column
   },
-  specialization:{
-    ...column,
-    pl: { sm: '32px' },
-    gap:'10px'
-  },
-  inputBlock:{
-    ...column,
-    gap:'12px'
-  },
-  title : { 
+  title:{
     display:'flex',
     alignItems:'center',
     mb: '14px',
@@ -30,6 +21,15 @@ export const styles = {
     pt: { xs: '5px', sm: 0 },
     width:'100%' ,
     whiteSpace: 'nowrap'
+  },
+  specialization:{
+    ...column,
+    pl: { sm: '32px' },
+    gap:'10px'
+  },
+  inputBlock:{
+    ...column,
+    gap:'12px'
   },
   icon: { 
     width:{ xs:'16px', sm: '20px' } 
@@ -49,8 +49,5 @@ export const styles = {
   },
   inputs:{
     mb: '6px'
-  } ,
-  specializationWrap:{
-    mt:'20px'
-  }
+  } 
 }

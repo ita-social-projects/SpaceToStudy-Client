@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { FC, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 
@@ -14,7 +14,6 @@ import SpecializationBlock from '~/containers/offer-page/create-offer/specializa
 import AppButton from '~/components/app-button/AppButton'
 import { OfferService } from '~/services/offer-service'
 import { useSnackBarContext } from '~/context/snackbar-context'
-import { useDrawerContext } from '~/context/drawer-context'
 
 import { snackbarVariants } from '~/constants'
 import { initialValues, validations } from '~/containers/offer-page/create-offer/CreateOffer.constants'
@@ -29,16 +28,21 @@ export interface CreateOfferData {
   price: string
 }
 
-const CreateOffer = () => {
+interface CreateOfferProps {
+  closeDrawer: () => void
+}
+
+const CreateOffer:FC<CreateOfferProps> = ({ closeDrawer }) => {
   const { userRole } = useSelector((state) => state.appMain)
   const { setNeedConfirmation } = useConfirm()
-  const { closeDrawer } = useDrawerContext()
   const { setAlert } = useSnackBarContext()
 
   const { t } = useTranslation()
 
+  const postOffer  = () => OfferService.createOffer(data)
+
   const { response, error, loading, fetchData: createOffer } = useAxios({
-    service: (offerData: CreateOfferData) => OfferService.createOffer(offerData),
+    service: postOffer,
     fetchOnMount: false
   })
 
@@ -46,7 +50,7 @@ const CreateOffer = () => {
     { initialValues,
       validations,
       onSubmit: async () => {
-        await createOffer(data)
+        await createOffer()
       }
     })
   
