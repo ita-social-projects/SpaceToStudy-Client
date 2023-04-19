@@ -2,31 +2,30 @@ import { useCallback, useState } from 'react'
 import useConfirm from './use-confirm'
 
 interface UseDrawerProps {
-    open: boolean
-    openDrawer: ( confirmation?: boolean ) => void
-    closeDrawer: () => void
-  }
+  open: boolean
+  openDrawer: (confirmation?: boolean) => void
+  closeDrawer: () => void
+}
 
-export const useDrawer = () : UseDrawerProps => {
+export const useDrawer = (): UseDrawerProps => {
   const [open, setOpen] = useState<boolean>(false)
   const { setNeedConfirmation } = useConfirm()
-  
-  
+
   const closeDrawer = useCallback(() => {
     setOpen(false)
   }, [setOpen])
-  
+
   const openDrawer = useCallback(
-    ( confirmation ) => {
+    (confirmation?: boolean) => {
       setOpen(true)
-      setNeedConfirmation(confirmation)
+      setNeedConfirmation(Boolean(confirmation))
     },
     [setOpen, setNeedConfirmation]
   )
-  
+
   return {
     open,
     openDrawer,
     closeDrawer
   }
-} 
+}

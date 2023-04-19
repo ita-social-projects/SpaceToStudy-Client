@@ -11,13 +11,18 @@ interface OpenDialogProps extends ConfirmationDialogProps {
 }
 
 interface UseConfirmResult {
-  checkConfirmation: ({ message, title }: ConfirmationDialogProps) => boolean | Promise<boolean>
+  checkConfirmation: ({
+    message,
+    title
+  }: ConfirmationDialogProps) => boolean | Promise<boolean>
   setNeedConfirmation: (value: boolean) => void
   openDialog: ({ sendConfirm, message, title }: OpenDialogProps) => void
 }
 
 const useConfirm = (): UseConfirmResult => {
-  const { openDialog, needConfirmation, setNeedConfirmation } = useContext(ConfirmationDialogContext)
+  const { openDialog, needConfirmation, setNeedConfirmation } = useContext(
+    ConfirmationDialogContext
+  )
 
   useEffect(() => {
     return () => {
@@ -25,9 +30,12 @@ const useConfirm = (): UseConfirmResult => {
     }
   }, [setNeedConfirmation])
 
-  const checkConfirmation = ({ message, title }: ConfirmationDialogProps): boolean | Promise<boolean> => {
+  const checkConfirmation = ({
+    message,
+    title
+  }: ConfirmationDialogProps): boolean | Promise<boolean> => {
     if (needConfirmation) {
-      return new Promise((res) => {        
+      return new Promise((res) => {
         openDialog({ sendConfirm: res, message, title })
       })
     }

@@ -1,30 +1,30 @@
 export const styles = {
-  number:{
+  number: {
     display: 'flex',
-    justifyContent:'center',
-    alignItems:'center',
-    borderColor: 'primary.700',  
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderColor: 'primary.700',
     borderRadius: '50%',
     border: '2px solid',
     textAlign: 'center',
-    typography: { xs:'caption', sm: 'subtitle2' } ,
+    typography: { xs: 'caption', sm: 'subtitle2' },
     fontWeight: { xs: 500 },
-    minWidth:{ xs:'14px', sm: '18px' } ,
-    height: { xs:'14px', sm: '18px' },
-    lineHeight: { xs:'14px', sm: '18px' }
+    minWidth: { xs: '14px', sm: '18px' },
+    height: { xs: '14px', sm: '18px' },
+    lineHeight: { xs: 'initial', sm: 'initial' }
   },
-  title:  {
-    display:'flex',
-    alignItems:'center',
-    gap:'10px',
-    typography: { xs:'midTitle', sm:'h5' },
+  title: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '10px',
+    typography: { xs: 'midTitle', sm: 'h5' },
     pt: { xs: '5px', sm: 0 },
-    width:'100%' ,
+    width: '100%',
     whiteSpace: 'nowrap'
   },
-  blockTitle:{
+  blockTitle: {
     title: {
-      mb:'14px'
+      mb: '14px'
     }
   }
 }

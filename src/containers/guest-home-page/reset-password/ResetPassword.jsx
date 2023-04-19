@@ -71,11 +71,13 @@ const ResetPassword = ({ resetToken, openModal }) => {
     }
   }, [error, openModal, response, setAlert, successNotification])
 
-  const { handleSubmit, handleInputChange , handleBlur, errors, data } = useForm({
-    onSubmit: () => sendResetPassword({ password: data.password }),
-    initialValues: { password: '', confirmPassword: '' },
-    validations: { password, confirmPassword }
-  })
+  const { handleSubmit, handleInputChange, handleBlur, errors, data } = useForm(
+    {
+      onSubmit: () => sendResetPassword({ password: data.password }),
+      initialValues: { password: '', confirmPassword: '' },
+      validations: { password, confirmPassword }
+    }
+  )
 
   const { inputVisibility: passwordVisibility, showInputText: showPassword } =
     useInputVisibility(errors.password)
@@ -97,9 +99,9 @@ const ResetPassword = ({ resetToken, openModal }) => {
           InputProps={passwordVisibility}
           errorMsg={t(errors.password)}
           fullWidth
-          label={ t('common.labels.password') }
-          onBlur={ handleBlur('password') }
-          onChange={ handleInputChange ('password') }
+          label={t('common.labels.password')}
+          onBlur={handleBlur('password')}
+          onChange={handleInputChange('password')}
           required
           size='large'
           sx={{ mb: '5px' }}
@@ -110,9 +112,9 @@ const ResetPassword = ({ resetToken, openModal }) => {
           InputProps={confirmPasswordVisibility}
           errorMsg={t(errors.confirmPassword)}
           fullWidth
-          label={ t('common.labels.confirmPassword') }
-          onBlur={ handleBlur('confirmPassword') }
-          onChange={ handleInputChange ('confirmPassword') }
+          label={t('common.labels.confirmPassword')}
+          onBlur={handleBlur('confirmPassword')}
+          onChange={handleInputChange('confirmPassword')}
           required
           size='large'
           type={showConfirmPassword ? 'text' : 'password'}

@@ -23,11 +23,11 @@ const AppDrawer: FC<AppDrawerProps> = ({
   const { checkConfirmation } = useConfirm()
 
   const handleCloseDrawer = async () => {
-    const confirmed = await checkConfirmation({
+    const confirmed = checkConfirmation({
       message: 'questions.unsavedChanges',
       title: 'titles.confirmTitle'
     })
-    if (confirmed) {
+    if (await confirmed) {
       onClose()
     }
   }
@@ -36,12 +36,15 @@ const AppDrawer: FC<AppDrawerProps> = ({
     <Drawer
       PaperProps={{ sx: styles.root }}
       anchor={anchor}
-      onClose={handleCloseDrawer}
+      onClose={() => void handleCloseDrawer()}
       open={open}
       {...props}
     >
       {closeIcon && (
-        <IconButton onClick={handleCloseDrawer} sx={styles.closeButton}>
+        <IconButton
+          onClick={() => void handleCloseDrawer()}
+          sx={styles.closeButton}
+        >
           <CloseRounded sx={styles.closeIcon} />
         </IconButton>
       )}

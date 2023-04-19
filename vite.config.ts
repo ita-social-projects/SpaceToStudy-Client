@@ -13,7 +13,7 @@ export default defineConfig({
     tsconfigPaths(),
     eslintPlugin({
       cache: true,
-      fix: true
+      failOnError: false
     })
   ],
 

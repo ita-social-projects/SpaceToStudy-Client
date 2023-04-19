@@ -117,6 +117,11 @@ const SignupDialog = ({ type }) => {
             handleChange={handleInputChange}
             handleSubmit={handleSubmit}
           />
+          <GoogleLogin
+            buttonWidth={styles.form.maxWidth}
+            role={type}
+            type={signup}
+          />
         </Box>
       </Box>
     </Box>

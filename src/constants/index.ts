@@ -11,7 +11,7 @@ export const admin = 'admin'
 export const login = 'login'
 export const signup = 'signup'
 
-export const snackbarVariants:{[key: string] : AlertColor} = {
+export const snackbarVariants: { [key: string]: AlertColor } = {
   error: 'error',
   info: 'info',
   success: 'success',

@@ -44,4 +44,3 @@ export const getEmptyValues = <T extends object, R>(
     {} as { [K in keyof T]: R }
   )
 }
-

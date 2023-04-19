@@ -17,7 +17,7 @@ interface SnackBarProviderProps {
 }
 
 interface SetAllertProps {
-  severity?: AlertColor
+  severity: AlertColor
   message: string
   duration?: number
 }
@@ -35,7 +35,7 @@ export const SnackBarProvider = ({ children }: SnackBarProviderProps) => {
   const [message, setMessage] = useState<string>('')
   const [duration, setDuration] = useState<number>(0)
 
-  const setAlert = useCallback((options) => {
+  const setAlert = useCallback((options: SetAllertProps) => {
     setShow(true)
     setSeverity(options.severity)
     setMessage(options.message)

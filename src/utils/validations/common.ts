@@ -1,11 +1,11 @@
 interface Validations {
-  nameField: (value: string) => string,
-  numberField: (value: string) => string,
-  password: (value: string) => string,
-  email: (value: string) => string,
+  nameField: (value: string) => string
+  numberField: (value: string) => string
+  password: (value: string) => string
+  email: (value: string) => string
 }
 
-const validations:Validations = {
+const validations: Validations = {
   nameField: (value) => {
     if (value.length > 30) {
       return 'common.errorMessages.nameLength'
@@ -15,11 +15,11 @@ const validations:Validations = {
     }
     return ''
   },
-  numberField: (value) => {     
+  numberField: (value) => {
     if (!RegExp(/^-?(?:\d+|\d*\.\d+)(?:[eE][+-]?\d+)?$/).test(value)) {
       return 'common.errorMessages.numbersOnly'
     }
-    if(Number(value) < 0){
+    if (Number(value) < 0) {
       return 'common.errorMessages.positiveNumbersOnly'
     }
     return ''
@@ -34,14 +34,22 @@ const validations:Validations = {
     return ''
   },
   email: (value) => {
-    if (!RegExp(/^([a-z\d]+([._-][a-z\d]+)*)@([a-z\d]+([.-][a-z\d]+)*\.[a-z]{2,})$/i).test(value)) {
+    if (
+      !RegExp(
+        /^([a-z\d]+([._-][a-z\d]+)*)@([a-z\d]+([.-][a-z\d]+)*\.[a-z]{2,})$/i
+      ).test(value)
+    ) {
       return 'common.errorMessages.emailValid'
     }
     return ''
   }
 }
 
-export const emptyField = (value: string|null, emtyMessage = 'common.errorMessages.emptyField', helperText?: string) => {
+export const emptyField = (
+  value: string | null,
+  emtyMessage = 'common.errorMessages.emptyField',
+  helperText?: string
+) => {
   if (!value) {
     return emtyMessage
   }
@@ -56,15 +64,21 @@ export const numberField = (value: string, errorMessage: string) => {
   return helperTextHandler(value, 'numberField', errorMessage)
 }
 
-export const textField = (min: number, max: number) => (value: string): string|undefined => {
-  if (value.length !== 0 && value.length < min) {
-    return 'common.errorMessages.shortText'
+export const textField =
+  (min: number, max: number) =>
+  (value: string): string | undefined => {
+    if (value.length !== 0 && value.length < min) {
+      return 'common.errorMessages.shortText'
+    }
+    if (value.length > max) {
+      return 'common.errorMessages.longText'
+    }
   }
-  if (value.length > max) {
-    return 'common.errorMessages.longText'
-  }
-}
 
-export const helperTextHandler = (value: string, marker: keyof Validations, emptyMessage?: string) => {
+export const helperTextHandler = (
+  value: string,
+  marker: keyof Validations,
+  emptyMessage?: string
+) => {
   return emptyField(value, emptyMessage, validations[marker](value))
 }
