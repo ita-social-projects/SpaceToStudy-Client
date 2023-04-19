@@ -9,7 +9,7 @@ interface HourRatePriceProps {
   price: number
 }
 
-const HourRatePrice: FC<HourRatePriceProps> = ({ price }) => {
+const HourPrice: FC<HourRatePriceProps> = ({ price }) => {
   return (
     <Box>
       <Typography variant='h6'>
@@ -23,4 +23,4 @@ const HourRatePrice: FC<HourRatePriceProps> = ({ price }) => {
     </Box>
   )
 }
-export default HourRatePrice
+export default HourPrice

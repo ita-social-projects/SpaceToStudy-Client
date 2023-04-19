@@ -12,7 +12,7 @@ import ImgTitleDescription from '~/components/img-title-description/ImgTitleDesc
 import AppChip from '~/components/app-chip/AppChip'
 import AppRatingMobile from '~/components/app-rating-mobile/AppRatingMobile'
 import AppButton from '~/components/app-button/AppButton'
-import HourRatePrice from '~/components/hour-rate-price/HourRatePrice'
+import HourPrice from '~/components/hour-price/HourPrice'
 
 import { OfferCard } from '~/types'
 
@@ -69,6 +69,7 @@ const OfferCardSquare: React.FC<OfferCardSquareProps> = ({ offer }) => {
         </Box>
 
         <Box sx={styles.priceContainer}>
+          <HourPrice price={price} />
           <Box>
             <Typography variant='h6'>
               {price}
