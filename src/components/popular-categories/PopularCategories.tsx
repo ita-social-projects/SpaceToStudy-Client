@@ -21,21 +21,26 @@ interface PopularCategoriesProps {
   loading: boolean
 }
 
-const PopularCategories: FC<PopularCategoriesProps> = ({ title, description, items, loading }) => {
+const PopularCategories: FC<PopularCategoriesProps> = ({
+  title,
+  description,
+  items,
+  loading
+}) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const { isDesktop, isTablet, isMobile } = useBreakpoints()
 
   const itemsToShow = useMemo(() => {
     switch (true) {
-    case isDesktop:
-      return 9
-    case isTablet:
-      return 6
-    case isMobile:
-      return 4
-    default:
-      return 9
+      case isDesktop:
+        return 9
+      case isTablet:
+        return 6
+      case isMobile:
+        return 4
+      default:
+        return 9
     }
   }, [isDesktop, isTablet, isMobile])
 
@@ -44,11 +49,11 @@ const PopularCategories: FC<PopularCategoriesProps> = ({ title, description, ite
       items.slice(0, itemsToShow).map((item) => {
         return (
           <ClickableCard
-            description={ `${item.totalOffers} ${t('common.offers')}` }
-            img={ serviceIcon }
-            key={ item._id }
-            link={ `${guestRoutes.subjects.path}?categoryId=${item._id}` }
-            title={ item.name }
+            description={`${item.totalOffers} ${t('common.offers')}`}
+            img={serviceIcon}
+            key={item._id}
+            link={`${guestRoutes.subjects.path}?categoryId=${item._id}`}
+            title={item.name}
           />
         )
       }),
@@ -60,23 +65,24 @@ const PopularCategories: FC<PopularCategoriesProps> = ({ title, description, ite
   }
 
   return (
-    <Box sx={ styles.wrapper }>
+    <Box sx={styles.wrapper}>
       <TitleWithDescription
-        description={ description }
-        descriptionStyles={ styles.descriptionStyles }
-        title={ title }
-        titleStyles={ styles.titleStyles }
+        description={description}
+        descriptionStyles={styles.descriptionStyles}
+        title={title}
+        titleStyles={styles.titleStyles}
       />
-      { loading && !items ? (
-        <Loader size={ 70 } />
+      {loading && !items ? (
+        <Loader size={70} />
       ) : (
         <ClickableCardList
-          btnText={ t('common.viewAllName', { name: 'categories' }) }
-          cards={ cards }
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+          btnText={t('common.viewAllName', { name: 'categories' })}
+          cards={cards}
           isExpandable
-          onClick={ onClickButton }
+          onClick={onClickButton}
         />
-      ) }
+      )}
     </Box>
   )
 }

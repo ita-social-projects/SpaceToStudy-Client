@@ -15,8 +15,13 @@ import StudentHowItWorks from '~/containers/student-home-page/student-how-it-wor
 const StudentHome = () => {
   const { t } = useTranslation()
 
-  const getCategories = useCallback(() => categoryService.getCategories({ limit: 9 }), [])
-  const { data: categoriesData, loading: categoriesLoading } = useAxios({ service: getCategories })
+  const getCategories = useCallback(
+    () => categoryService.getCategories({ limit: 9 }),
+    []
+  )
+  const { data: categoriesData, loading: categoriesLoading } = useAxios({
+    service: getCategories
+  })
 
   return (
     <Box
@@ -25,10 +30,10 @@ const StudentHome = () => {
       <Container data-testid='studentHome' sx={{ pt: 6 }}>
         <FindTutorBlock />
         <PopularCategories
-          description={ t('studentHomePage.popularCategories.description') }
-          items={ categoriesData }
-          loading={ categoriesLoading }
-          title={ t('studentHomePage.popularCategories.title') }
+          description={t('studentHomePage.popularCategories.description')}
+          items={categoriesData}
+          loading={categoriesLoading}
+          title={t('studentHomePage.popularCategories.title')}
         />
         <StudentHowItWorks />
         <Faq />

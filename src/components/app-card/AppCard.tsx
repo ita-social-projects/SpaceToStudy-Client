@@ -13,8 +13,12 @@ interface AppCardProps {
 
 const AppCard: FC<AppCardProps> = ({ children, isClickable = true, link }) => {
   return (
-    <Box component={ link ? Link : Box } sx={ styles.container(isClickable) } to={ link }>
-      { children }
+    <Box
+      component={link ? Link : Box}
+      sx={styles.container(isClickable)}
+      to={link}
+    >
+      {children}
     </Box>
   )
 }

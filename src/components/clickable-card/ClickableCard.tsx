@@ -13,19 +13,21 @@ interface ClickableCardProps {
   link: string
 }
 
-const ClickableCard: FC<ClickableCardProps> = ({ img, title, description, link }) => {
+const ClickableCard: FC<ClickableCardProps> = ({
+  img,
+  title,
+  description,
+  link
+}) => {
   return (
-    <AppCard link={ link }>
-      <Box
-        alt='item image' component='img' src={ img }
-        sx={ styles.img }
-      />
+    <AppCard link={link}>
+      <Box alt='item image' component='img' src={img} sx={styles.img} />
       <TitleWithDescription
-        componentStyles={ styles.titleWithDescription }
-        description={ description }
-        descriptionStyles={ styles.description }
-        title={ title }
-        titleStyles={ styles.title }
+        componentStyles={styles.titleWithDescription}
+        description={description}
+        descriptionStyles={styles.description}
+        title={title}
+        titleStyles={styles.title}
       />
     </AppCard>
   )
