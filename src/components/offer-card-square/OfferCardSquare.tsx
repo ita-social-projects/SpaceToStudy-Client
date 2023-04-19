@@ -14,7 +14,7 @@ import AppRatingMobile from '~/components/app-rating-mobile/AppRatingMobile'
 import AppButton from '~/components/app-button/AppButton'
 import HourPrice from '~/components/hour-price/HourPrice'
 
-import { OfferCard } from '~/types'
+import { OfferCard, ProficiencyLevelEnums } from '~/types'
 
 import { styles } from '~/components/offer-card-square/OfferCardSquare.styles'
 
@@ -37,7 +37,7 @@ const OfferCardSquare: React.FC<OfferCardSquareProps> = ({ offer }) => {
   } = offer
 
   const levelText =
-    proficiencyLevel === 'Beginner'
+    proficiencyLevel === ProficiencyLevelEnums.Beginner
       ? t('common.beginner')
       : `${t('common.beginner')} - ${proficiencyLevel}`.toUpperCase()
 

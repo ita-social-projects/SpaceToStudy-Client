@@ -10,6 +10,7 @@ import { categoryService } from '~/services/category-service'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import OfferCard from '~/components/offer-card/OfferCard'
 import PopularCategories from '~/components/popular-categories/PopularCategories'
+import OfferCardSquare from '~/components/offer-card-square/OfferCardSquare'
 import AppPagination from '~/components/app-pagination/AppPagination'
 import OfferFilterBlock from '~/containers/find-offer/offer-filter-block/OfferFilterBlock'
 import FilterBarMenu from '~/containers/find-offer/filter-bar-menu/FilterBarMenu'
@@ -18,7 +19,8 @@ import { defaultResponses } from '~/constants'
 
 import {
   mockOffer,
-  defaultFilters
+  defaultFilters,
+  mockOfferSquareCard
 } from '~/pages/find-offers/FindOffers.constants'
 
 const FindOffers = () => {
@@ -79,6 +81,7 @@ const FindOffers = () => {
           offer={mockOffer}
           onBookmarkClick={() => onBookmarkClick(mockOffer.id)}
         />
+        <OfferCardSquare offer={mockOfferSquareCard} />
       </Box>
       <AppPagination
         itemsCount={mockDataPagination.itemsCount}
