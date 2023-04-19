@@ -92,5 +92,12 @@ export const styles = {
     '&:hover': {
       backgroundColor: 'primary.50'
     }
-  }
+  },
+  componentStyles: {
+    textAlign: 'left',
+    margin: 0,
+    mb: 0
+  },
+  descriptionStyles: { typography: 'caption' },
+  titleStyles: { typography: 'h6', mb: 0 }
 }

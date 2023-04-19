@@ -1,4 +1,8 @@
-import { CategoryInterface, SubjectInterface, ProficiencyLevelEnums } from '~/types'
+import {
+  CategoryInterface,
+  SubjectInterface,
+  ProficiencyLevelEnums
+} from '~/types'
 
 export interface OfferResponse {
   category: CategoryInterface
