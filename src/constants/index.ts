@@ -27,3 +27,8 @@ export const sortByFields = {
 }
 
 export const myProfilePath = '/tutor/myProfile' || '/student/myProfile'
+
+export const defaultResponses = {
+  array: [],
+  object: {}
+}

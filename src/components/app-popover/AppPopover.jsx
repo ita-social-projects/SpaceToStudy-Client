@@ -2,7 +2,14 @@ import { useState, useRef } from 'react'
 import Popover from '@mui/material/Popover'
 import Box from '@mui/material/Box'
 
-const AppPopover = ({ children, initialItems, initialItemsWrapperStyle, showMoreElem, hideElem = false, ...props }) => {
+const AppPopover = ({
+  children,
+  initialItems,
+  initialItemsWrapperStyle,
+  showMoreElem,
+  hideElem = false,
+  ...props
+}) => {
   const [isOpen, setIsOpen] = useState(false)
   const anchorEl = useRef(null)
 

@@ -35,13 +35,16 @@ const LanguageStep = ({ stepLabel, btnsBox }) => {
             </Box>
           )}
           <AppAutoComplete
-            data-testid='language'
-            fieldValue={languageData}
-            label={t('becomeTutor.languages.autocompleteLabel')}
             onChange={onChangeLanguage}
             options={languages}
-            sx={{ mb: '30px' }}
+            textFieldProps={{
+              InputProps: { disableUnderline: true },
+              label: t('becomeTutor.languages.autocompleteLabel'),
+              'data-testid': 'language',
+              sx: { mb: '30px' }
+            }}
             type='text'
+            value={languageData}
           />
         </Box>
         {btnsBox}

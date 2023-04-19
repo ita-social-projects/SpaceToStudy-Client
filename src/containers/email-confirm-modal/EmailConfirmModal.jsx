@@ -21,7 +21,10 @@ const EmailConfirmModal = ({ confirmToken, openModal }) => {
     [confirmToken]
   )
 
-  const { response, error, loading } = useAxios({ service: serviceFunction })
+  const { response, error, loading } = useAxios({
+    service: serviceFunction,
+    defaultResponse: null
+  })
 
   const openLoginDialog = () => {
     openModal({ component: <LoginDialog /> })
@@ -31,7 +34,10 @@ const EmailConfirmModal = ({ confirmToken, openModal }) => {
     return <Loader size={100} />
   }
 
-  if (error && error.response.data.code === 'BAD_CONFIRM_TOKEN') {
+  if (
+    (error && error.code === 'BAD_CONFIRM_TOKEN') ||
+    (error && error.code === 'DOCUMENT_NOT_FOUND' && response === null)
+  ) {
     return (
       <Box sx={styles.box}>
         <ImgTitleDescription
@@ -47,7 +53,7 @@ const EmailConfirmModal = ({ confirmToken, openModal }) => {
     )
   }
 
-  if (error && error.response.data.code === 'EMAIL_ALREADY_CONFIRMED') {
+  if (error && error.code === 'EMAIL_ALREADY_CONFIRMED') {
     return (
       <Box sx={styles.box}>
         <ImgTitleDescription
@@ -63,7 +69,7 @@ const EmailConfirmModal = ({ confirmToken, openModal }) => {
     )
   }
 
-  if (response) {
+  if (response !== null) {
     return (
       <Box sx={styles.box}>
         <ImgTitleDescription

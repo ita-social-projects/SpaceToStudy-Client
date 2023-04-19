@@ -19,6 +19,7 @@ import img from '~/assets/img/tutor-home-page/become-tutor/general-info.svg'
 import { useStepContext } from '~/context/step-context'
 import { validations } from '~/containers/tutor-home-page/constants'
 import { styles } from '~/containers/tutor-home-page/general-info-step/GeneralInfoStep.styles'
+import { defaultResponses } from '~/constants'
 
 const GeneralInfoStep = ({
   btnsBox,
@@ -55,8 +56,10 @@ const GeneralInfoStep = ({
     setData({ ...data, city: value })
   }
 
-  const getUserById = useCallback(() => userService.getUserById(userId, userRole), [userId, userRole])
-
+  const getUserById = useCallback(
+    () => userService.getUserById(userId, userRole),
+    [userId, userRole]
+  )
   const getCountries = useCallback(() => LocationService.getCountries(), [])
   const getCities = useCallback(
     (country) => LocationService.getCities(country),
@@ -64,18 +67,28 @@ const GeneralInfoStep = ({
   )
 
   const { response: user, loading: userLoading } = useAxios({
-    service: getUserById
+    service: getUserById,
+    defaultResponse: { firstName: '', lastName: '' }
   })
-  const { response: countries } = useAxios({ service: getCountries })
+  const { response: countries } = useAxios({
+    service: getCountries,
+    defaultResponse: defaultResponses.array
+  })
+
   const {
     loading,
     fetchData: fetchCities,
     response: cities
-  } = useAxios({ service: getCities, fetchOnMount: false, clearResponse: true })
+  } = useAxios({
+    service: getCities,
+    fetchOnMount: false,
+    clearResponse: true,
+    defaultResponse: defaultResponses.array
+  })
 
   useEffect(() => {
     if (!userLoading && !isUserFetched) {
-      const { firstName, lastName } = user.data
+      const { firstName, lastName } = user
       setData({ ...data, firstName, lastName })
       setIsUserFetched(true)
     }
@@ -137,24 +150,28 @@ const GeneralInfoStep = ({
             />
 
             <AppAutoComplete
-              fieldValue={data.country}
-              label={t('common.labels.country')}
               onChange={onChangeCountry}
               options={countries}
               sx={{ mb: '30px' }}
+              textFieldProps={{
+                label: t('common.labels.country')
+              }}
               type='text'
+              value={data.country}
             />
 
             <AppAutoComplete
               disabled={!data.country}
-              fieldValue={data.city}
               filterOptions={filterOptions}
-              label={t('common.labels.city')}
               loading={loading}
               onChange={onChangeCity}
               options={cities}
               sx={{ mb: '30px' }}
+              textFieldProps={{
+                label: t('common.labels.city')
+              }}
               type='text'
+              value={data.city}
             />
           </Box>
 

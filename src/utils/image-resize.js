@@ -18,7 +18,17 @@ export const imageResize = async (photoPath, { newHeight, newWidth }) => {
         newWidth,
         newHeight
       )
-      ctx.drawImage(originalImage, newX, newY, cutInWidth, cutInHeith, 0, 0, newWidth, newHeight)
+      ctx.drawImage(
+        originalImage,
+        newX,
+        newY,
+        cutInWidth,
+        cutInHeith,
+        0,
+        0,
+        newWidth,
+        newHeight
+      )
       const newPicturePath = canvas.toDataURL('image/png', 1)
 
       resolve(newPicturePath)
@@ -26,7 +36,12 @@ export const imageResize = async (photoPath, { newHeight, newWidth }) => {
   })
 }
 
-export const calculatePhotoCut = (originalWidth, originalHeight, newWidth, newHeight) => {
+export const calculatePhotoCut = (
+  originalWidth,
+  originalHeight,
+  newWidth,
+  newHeight
+) => {
   let newX = 0
   let newY = 0
   let cutInHeith = originalHeight

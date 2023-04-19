@@ -21,7 +21,7 @@ export const setupInterceptors = (store) => {
     },
     async (error) => {
       const originalRequest = error.config
-      if (error.response.data.code === 'UNAUTHORIZED' && error.config) {
+      if (error.code === 'UNAUTHORIZED' && error.config) {
         try {
           const { data } = await AuthService.refresh()
           setToLocalStorage(accessToken, data.accessToken)

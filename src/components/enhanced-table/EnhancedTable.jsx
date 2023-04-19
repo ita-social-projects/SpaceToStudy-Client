@@ -1,4 +1,4 @@
-import { useCallback, useState, useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
@@ -27,19 +27,19 @@ const EnhancedTable = ({ fetchService, externalFilter }) => {
   const { clearPage } = usePagination()
   const { clearSelected, isSelected, createSelectAllHandler } = useSelect()
 
-  const [items, setItems] = useState([])
-  const [itemsCount, setItemsCount] = useState(0)
-
-  const { loading, fetchData } = useAxios({
+  const { loading, response, fetchData } = useAxios({
     service: fetchService,
-    fetchOnMount: false
+    fetchOnMount: false,
+    defaultResponse: { items: [], count: 0 }
   })
+
+  const { items, count: itemsCount } = response
 
   const getData = useCallback(async () => {
     const status = externalFilter.status !== 'all' && [externalFilter.status]
 
     clearSelected()
-    const res = await fetchData({
+    await fetchData({
       skip: page * rowsPerPage,
       limit: rowsPerPage,
       sort,
@@ -47,8 +47,6 @@ const EnhancedTable = ({ fetchService, externalFilter }) => {
       ...externalFilter,
       status: status || filters.status
     })
-    setItems(res.data.items)
-    setItemsCount(res.data.count)
   }, [
     fetchData,
     externalFilter,

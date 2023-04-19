@@ -6,7 +6,7 @@ export const categoriesListMock = [
     img: serviceIcon,
     description: '234 offers',
     title: 'Languages',
-    link: '#'
+    link: '/categories/subjects?categoryId=6421ed8ed991d46a84721dee'
   },
   {
     id: '2',
@@ -27,7 +27,7 @@ export const categoriesListMock = [
     img: serviceIcon,
     description: '234 offers',
     title: 'Music',
-    link: '#'
+    link: '/categories/subjects?categoryId=6421ed8ed991d46a84721dfa'
   },
   {
     id: '5',

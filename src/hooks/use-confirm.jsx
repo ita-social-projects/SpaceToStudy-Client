@@ -2,7 +2,9 @@ import { useContext, useEffect } from 'react'
 import { ConfirmationDialogContext } from '~/context/confirm-context'
 
 const useConfirm = () => {
-  const { openDialog, needConfirmation, setNeedConfirmation } = useContext(ConfirmationDialogContext)
+  const { openDialog, needConfirmation, setNeedConfirmation } = useContext(
+    ConfirmationDialogContext
+  )
 
   useEffect(() => {
     return () => {

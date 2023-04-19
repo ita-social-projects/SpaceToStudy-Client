@@ -4,10 +4,15 @@ import { URLs } from '~/constants/request'
 import { GetUsersParams, UserResponse } from '~/types'
 
 export const userService = {
-  getUsers: async (params: GetUsersParams): Promise<AxiosResponse<UserResponse[]>> => {
+  getUsers: async (
+    params: GetUsersParams
+  ): Promise<AxiosResponse<UserResponse[]>> => {
     return await axiosClient.get(URLs.users.get, { params })
   },
-  getUserById: (userId: string, userRole: string): Promise<AxiosResponse<UserResponse>> => {
+  getUserById: (
+    userId: string,
+    userRole: string
+  ): Promise<AxiosResponse<UserResponse>> => {
     return axiosClient.get(`${URLs.users.get}/${userId}?role=${userRole}`)
   },
   deleteUser: (userId: string): Promise<AxiosResponse<null>> => {

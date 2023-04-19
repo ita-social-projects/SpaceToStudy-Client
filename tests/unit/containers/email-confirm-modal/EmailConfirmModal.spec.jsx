@@ -17,14 +17,14 @@ describe('EmailConfirmModal test', () => {
 
   it('should render negative-scenario image and message (BAD_CONFIRM_TOKEN)', async () => {
     const fakeData = {
-      error: { response: { data: { code: 'BAD_CONFIRM_TOKEN' } } },
+      error: { code: 'BAD_CONFIRM_TOKEN' },
       loading: false,
       response: null
     }
     useAxios.mockImplementation(() => fakeData)
     renderWithProviders(
       <ModalProvider>
-        <EmailConfirmModal { ...props } />
+        <EmailConfirmModal {...props} />
       </ModalProvider>
     )
 
@@ -39,14 +39,14 @@ describe('EmailConfirmModal test', () => {
 
   it('should render negative-scenario image and message (EMAIL_ALREADY_CONFIRMED)', async () => {
     const fakeData = {
-      error: { response: { data: { code: 'EMAIL_ALREADY_CONFIRMED' } } },
+      error: { code: 'EMAIL_ALREADY_CONFIRMED' },
       loading: false,
       response: null
     }
     useAxios.mockImplementation(() => fakeData)
     renderWithProviders(
       <ModalProvider>
-        <EmailConfirmModal { ...props } />
+        <EmailConfirmModal {...props} />
       </ModalProvider>
     )
 
@@ -68,7 +68,7 @@ describe('EmailConfirmModal test', () => {
     useAxios.mockImplementation(() => fakeData)
     renderWithProviders(
       <ModalProvider>
-        <EmailConfirmModal { ...props } />
+        <EmailConfirmModal {...props} />
       </ModalProvider>
     )
 
@@ -88,7 +88,7 @@ describe('EmailConfirmModal test', () => {
     useAxios.mockImplementation(() => fakeData)
     renderWithProviders(
       <ModalProvider>
-        <EmailConfirmModal { ...props } />
+        <EmailConfirmModal {...props} />
       </ModalProvider>
     )
 
@@ -106,7 +106,7 @@ describe('EmailConfirmModal test', () => {
     useAxios.mockImplementation(() => fakeData)
     renderWithProviders(
       <ModalProvider>
-        <EmailConfirmModal { ...props } />
+        <EmailConfirmModal {...props} />
       </ModalProvider>
     )
 

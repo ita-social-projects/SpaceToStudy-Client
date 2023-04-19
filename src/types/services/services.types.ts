@@ -1,4 +1,10 @@
-import { CreatedAt, LastLogin, Sort, Address, Category } from '~/types/types/common.types'
+import {
+  CreatedAt,
+  LastLogin,
+  Sort,
+  Address,
+  Category
+} from '~/types/common/types/common.types'
 
 export interface GetUsersParams {
   createdAt: CreatedAt
@@ -28,4 +34,15 @@ export interface UserResponse {
   lastLogin: string
   createdAt: string
   updatedAt: string
+}
+
+export type Params = {
+  match: string
+  limit: number
+}
+
+export interface ErrorResponse {
+  code: string
+  message: string
+  status: number
 }
