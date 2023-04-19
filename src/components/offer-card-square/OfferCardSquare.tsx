@@ -22,7 +22,7 @@ interface OfferCardSquareProps {
   offer: OfferCard
 }
 
-const OfferCardSquare: React.FC<OfferCardSquareProps> = ({ offer }) => {
+const OfferCardSquare: FC<OfferCardSquareProps> = ({ offer }) => {
   const {
     bio,
     photo,
