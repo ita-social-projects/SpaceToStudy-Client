@@ -7,9 +7,9 @@ import { SxProps } from '@mui/system'
 import { styles } from '~/components/app-chips-list/AppChipsList-styles'
 
 interface AppChipProps {
-  handleDelete: () => void
+  handleDelete?: () => void
   children: ReactNode
-  icon: React.ReactElement<SvgIconProps>
+  icon?: React.ReactElement<SvgIconProps>
   sx?: SxProps
   labelSx?: SxProps
 }
