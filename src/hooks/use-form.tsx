@@ -23,7 +23,7 @@ interface UseFormOutput<T> {
     key: keyof T
   ) => (event: React.FocusEvent<HTMLInputElement>) => void
   handleErrors: (key: keyof T, error: string) => void
-  handleSubmit: (event: React.FormEvent<HTMLFormElement>) => Promise<void>
+  handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void
 }
 
 export const useForm = <T extends object>({
@@ -108,7 +108,7 @@ export const useForm = <T extends object>({
       }))
     }
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     let isValid = true
     const newErrors = { ...errors }
@@ -124,7 +124,7 @@ export const useForm = <T extends object>({
       }
     }
 
-    isValid ? await onSubmit() : setErrors(newErrors)
+    isValid ? void onSubmit() : setErrors(newErrors)
   }
 
   return {
