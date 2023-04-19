@@ -3,6 +3,7 @@ import palette from '~/styles/app-theme/app.pallete'
 export const styles = {
   container: {
     width: '100%',
+    maxHeight: '48px',
     backgroundColor: 'basic.white',
     borderRadius: '70px',
     display: 'flex',
@@ -22,7 +23,9 @@ export const styles = {
     bottom: '8px'
   },
   inputLabel: {
-    color: palette.primary[300]
+    color: palette.primary[300],
+    left: '5px',
+    top: '8px'
   },
   searchBtn: {
     ml: '25px'
