@@ -5,7 +5,9 @@ const useShowMore = (allItems, itemsToShow, itemsToAdd) => {
   const [items, setItems] = useState([])
 
   const totalPages = useMemo(() => {
-    return allItems.length > itemsToShow ? Math.ceil((allItems.length - itemsToShow) / itemsToAdd) : 0
+    return allItems.length > itemsToShow
+      ? Math.ceil((allItems.length - itemsToShow) / itemsToAdd)
+      : 0
   }, [allItems, itemsToShow, itemsToAdd])
 
   const isExpandable = currentPage < totalPages

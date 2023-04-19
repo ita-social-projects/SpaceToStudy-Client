@@ -1,4 +1,10 @@
-import { CreatedAt, LastLogin, Sort, Address, Category } from '~/types/common/types/common.types'
+import {
+  CreatedAt,
+  LastLogin,
+  Sort,
+  Address,
+  Category
+} from '~/types/common/types/common.types'
 
 export interface GetUsersParams {
   createdAt: CreatedAt

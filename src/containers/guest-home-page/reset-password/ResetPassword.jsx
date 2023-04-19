@@ -64,7 +64,7 @@ const ResetPassword = ({ resetToken, openModal }) => {
     if (error) {
       setAlert({
         severity: snackbarVariants.error,
-        message: `errors.${error.response.data.code}`
+        message: `errors.${error.code}`
       })
     } else if (response !== null) {
       openModal({ component: successNotification }, 5000)

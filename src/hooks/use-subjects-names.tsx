@@ -1,4 +1,3 @@
-import { AxiosError } from 'axios'
 import { useCallback } from 'react'
 import { defaultResponses } from '~/constants'
 
@@ -16,7 +15,7 @@ interface UseSubjectsNamesResult {
   loading: boolean
   response: string[]
   fetchData: () => Promise<void>
-  error: AxiosError<ErrorResponse> | null
+  error: ErrorResponse | null
 }
 
 const useSubjectsNames = ({

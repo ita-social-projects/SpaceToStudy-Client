@@ -13,7 +13,7 @@ interface UseAxiosProps<T, R> {
 
 interface UseAxiosReturn<R> {
   response: R
-  error: AxiosError<ErrorResponse> | null
+  error: ErrorResponse | null
   loading: boolean
   fetchData: (data?: unknown) => Promise<void>
 }
@@ -27,7 +27,7 @@ const useAxios = <T, R = T>({
   onResponseError
 }: UseAxiosProps<T, R>): UseAxiosReturn<R> => {
   const [response, setResponse] = useState<R>(defaultResponse)
-  const [error, setError] = useState<AxiosError<ErrorResponse> | null>(null)
+  const [error, setError] = useState<ErrorResponse | null>(null)
   const [loading, setLoading] = useState<boolean>(fetchOnMount)
 
   const fetchData = useCallback(
@@ -40,7 +40,8 @@ const useAxios = <T, R = T>({
         setError(null)
         onResponse && onResponse()
       } catch (e) {
-        setError(e as AxiosError<ErrorResponse>)
+        const error = e as AxiosError<ErrorResponse>
+        error && error.response && setError(error.response.data)
         onResponseError && onResponseError()
       } finally {
         setLoading(false)

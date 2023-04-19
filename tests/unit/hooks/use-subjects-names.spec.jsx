@@ -36,7 +36,11 @@ describe('useSubjectsNames', () => {
   })
 
   it('handles API errors', async () => {
-    subjectService.getSubjectsNames.mockRejectedValueOnce(mockError)
+    subjectService.getSubjectsNames.mockRejectedValueOnce({
+      response: {
+        data: mockError
+      }
+    })
 
     const { result, waitForNextUpdate } = renderHook(() =>
       useSubjects({ category: 'category' })

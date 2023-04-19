@@ -30,25 +30,25 @@ const SearchWithFilters = ({ options, search, setSearch, ...props }) => {
   const optionItems = options.map((item) => item.title)
 
   return (
-    <Box sx={ styles.container }>
-      <SearchIcon sx={ styles.searchIcon } />
+    <Box sx={styles.container}>
+      <SearchIcon sx={styles.searchIcon} />
 
       <AppAutoComplete
-        InputLabelProps={ { style: styles.inputLabel } }
-        InputProps={ { disableUnderline: true } }
-        ListboxProps={ { style: styles.listBox } }
-        fieldValue={ searchInput }
-        filterOptions={ filterOptions }
+        InputLabelProps={{ style: styles.inputLabel }}
+        InputProps={{ disableUnderline: true }}
+        ListboxProps={{ style: styles.listBox }}
+        fieldValue={searchInput}
+        filterOptions={filterOptions}
         freeSolo
-        onInputChange={ onInputChange }
-        options={ optionItems }
-        sx={ styles.input }
+        onInputChange={onInputChange}
+        options={optionItems}
+        sx={styles.input}
         variant='standard'
-        { ...props }
+        {...props}
       />
 
-      <Button onClick={ onSearch } sx={ styles.searchBtn } variant='contained'>
-        { t('categoriesPage.categories.searchBtn') }
+      <Button onClick={onSearch} sx={styles.searchBtn} variant='contained'>
+        {t('categoriesPage.categories.searchBtn')}
       </Button>
     </Box>
   )

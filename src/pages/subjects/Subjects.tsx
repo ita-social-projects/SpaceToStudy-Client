@@ -31,7 +31,7 @@ const Subjects = () => {
     useCategoriesNames({})
 
   const transform = useCallback(
-    (data: SubjectNameInterface[]) => mapArrayByField(data, 'name'),
+    (data: SubjectNameInterface[]): string[] => mapArrayByField(data, 'name'),
     []
   )
 
@@ -65,8 +65,10 @@ const Subjects = () => {
     <Container sx={{ flex: 1 }}>
       <Box className='section' sx={styles.container}>
         <TitleWithDescription
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           description={t('subjectsPage.subjects.description')}
           descriptionStyles={styles.sectionDescription}
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           title={t('subjectsPage.subjects.title', {
             category: category?.name
           })}

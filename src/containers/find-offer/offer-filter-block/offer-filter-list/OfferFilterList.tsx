@@ -60,7 +60,7 @@ const OfferFilterList: FC<OfferFilterListProps> = ({
         value={filters.language}
       />
       <FormControlLabel
-        checked={JSON.parse(filters.native)}
+        checked={Boolean(JSON.parse(filters.native))}
         control={<Checkbox />}
         label={
           <Typography variant='body2'>

@@ -10,13 +10,21 @@ const mockCategoriesNames = [
   { _id: '2', name: 'Category 2' }
 ]
 
-const mockError = { status: 404, code: 'NOT_FOUND', message: 'The requested URL was not found.' }
+const mockError = {
+  status: 404,
+  code: 'NOT_FOUND',
+  message: 'The requested URL was not found.'
+}
 
 describe('useCategoriesNames', () => {
   it('fetches categories names successfully', async () => {
-    categoryService.getCategoriesNames.mockResolvedValueOnce({ data: mockCategoriesNames })
+    categoryService.getCategoriesNames.mockResolvedValueOnce({
+      data: mockCategoriesNames
+    })
 
-    const { result, waitForNextUpdate } = renderHook(() => useCategoriesNames({}))
+    const { result, waitForNextUpdate } = renderHook(() =>
+      useCategoriesNames({})
+    )
 
     expect(result.current.loading).toBe(true)
     expect(result.current.response).toEqual([])
@@ -30,9 +38,13 @@ describe('useCategoriesNames', () => {
   })
 
   it('handles API errors', async () => {
-    categoryService.getCategoriesNames.mockRejectedValueOnce(mockError)
+    categoryService.getCategoriesNames.mockRejectedValueOnce({
+      response: { data: mockError }
+    })
 
-    const { result, waitForNextUpdate } = renderHook(() => useCategoriesNames({}))
+    const { result, waitForNextUpdate } = renderHook(() =>
+      useCategoriesNames({})
+    )
 
     expect(result.current.loading).toBe(true)
     expect(result.current.response).toEqual([])

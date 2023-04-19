@@ -1,4 +1,7 @@
-import { commonHoverShadow, commonShadow } from '~/styles/app-theme/custom-shadows'
+import {
+  commonHoverShadow,
+  commonShadow
+} from '~/styles/app-theme/custom-shadows'
 
 export const styles = {
   card: {
