@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { ReactNode, ReactElement } from 'react'
 
 import { Chip, IconButton, SvgIconProps, Typography } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
@@ -9,7 +9,7 @@ import { styles } from '~/components/app-chips-list/AppChipsList-styles'
 interface AppChipProps {
   handleDelete?: () => void
   children: ReactNode
-  icon?: React.ReactElement<SvgIconProps>
+  icon?: ReactElement<SvgIconProps>
   sx?: SxProps
   labelSx?: SxProps
 }

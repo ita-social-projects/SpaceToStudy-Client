@@ -1,3 +1,5 @@
+import { FC } from 'react'
+
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import LanguageIcon from '@mui/icons-material/Language'
@@ -7,9 +9,10 @@ import TurnedInNot from '@mui/icons-material/TurnedInNot'
 import { t } from 'i18next'
 import AppCard from '~/components/app-card/AppCard'
 import ImgTitleDescription from '~/components/img-title-description/ImgTitleDescription'
-import AppChip from '../app-chip/AppChip'
-import AppRatingMobile from '../app-rating-mobile/AppRatingMobile'
+import AppChip from '~/components/app-chip/AppChip'
+import AppRatingMobile from '~/components/app-rating-mobile/AppRatingMobile'
 import AppButton from '~/components/app-button/AppButton'
+import HourRatePrice from '~/components/hour-rate-price/HourRatePrice'
 
 import { OfferCard } from '~/types'
 

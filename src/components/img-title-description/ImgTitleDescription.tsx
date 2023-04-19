@@ -1,3 +1,5 @@
+import { FC } from 'react'
+
 import Box from '@mui/material/Box'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import { SxProps } from '@mui/system'
@@ -13,7 +15,7 @@ interface ImgTitleDescriptionProps {
   }
 }
 
-const ImgTitleDescription: React.FC<ImgTitleDescriptionProps> = ({
+const ImgTitleDescription: FC<ImgTitleDescriptionProps> = ({
   img,
   title,
   description,
