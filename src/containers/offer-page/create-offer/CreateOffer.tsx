@@ -101,11 +101,7 @@ const CreateOffer: FC<CreateOfferProps> = ({ closeDrawer }) => {
     }
 
   return (
-    <Box
-      component='form'
-      onSubmit={(e) => void handleSubmit(e)}
-      sx={styles.root}
-    >
+    <Box component='form' onSubmit={(e) => handleSubmit(e)} sx={styles.root}>
       <Typography sx={styles.title}>
         <LeakAddSharpIcon sx={styles.icon} />
         {t(`offerPage.createOffer.title.main.${userRole}`)}
