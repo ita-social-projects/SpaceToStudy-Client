@@ -38,7 +38,11 @@ const validations = {
     return ''
   },
   email: (value) => {
-    if (!RegExp(/^([a-z\d]+([._-][a-z\d]+)*)@([a-z\d]+([.-][a-z\d]+)*\.[a-z]{2,})$/i).test(value)) {
+    if (
+      !RegExp(
+        /^([a-z\d]+([._-][a-z\d]+)*)@([a-z\d]+([.-][a-z\d]+)*\.[a-z]{2,})$/i
+      ).test(value)
+    ) {
       return 'common.errorMessages.emailValid'
     }
     return ''

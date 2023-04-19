@@ -1,4 +1,7 @@
-import { slidesRightAnimation, slidesLeftAnimation } from '~/styles/app-theme/custom-animations'
+import {
+  slidesRightAnimation,
+  slidesLeftAnimation
+} from '~/styles/app-theme/custom-animations'
 
 export const styles = {
   wrap: {

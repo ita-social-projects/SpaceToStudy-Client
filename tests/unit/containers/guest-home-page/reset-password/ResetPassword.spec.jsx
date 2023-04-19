@@ -15,16 +15,20 @@ error.code = 'BAD_RESET_TOKEN'
 
 describe('ResetPassword test', () => {
   it('should open login dilog after positive response', async () => {
-    mockAxiosClient.onPatch(`${URLs.auth.resetPassword}/${resetToken}`).reply(200)
+    mockAxiosClient
+      .onPatch(`${URLs.auth.resetPassword}/${resetToken}`)
+      .reply(200)
 
     renderWithProviders(
       <SnackBarProvider>
-        <ResetPassword openModal={ openModal } resetToken={ resetToken } />
+        <ResetPassword openModal={openModal} resetToken={resetToken} />
       </SnackBarProvider>
     )
 
     const passwordInput = screen.getByLabelText(/common.labels.password/i)
-    const confirmPasswordInput = screen.getByLabelText(/common.labels.confirmPassword/i)
+    const confirmPasswordInput = screen.getByLabelText(
+      /common.labels.confirmPassword/i
+    )
     const button = screen.getByText('login.savePassword')
 
     fireEvent.change(passwordInput, { target: { value: '12345qwertY' } })
@@ -38,16 +42,20 @@ describe('ResetPassword test', () => {
   })
 
   it('should open snackbar with error after reject', async () => {
-    mockAxiosClient.onPatch(`${URLs.auth.resetPassword}/${resetToken}`).reply(404, error)
+    mockAxiosClient
+      .onPatch(`${URLs.auth.resetPassword}/${resetToken}`)
+      .reply(404, error)
 
     renderWithProviders(
       <SnackBarProvider>
-        <ResetPassword resetToken={ resetToken } setModal={ openModal } />
+        <ResetPassword resetToken={resetToken} setModal={openModal} />
       </SnackBarProvider>
     )
 
     const passwordInput = screen.getByLabelText(/common.labels.password/i)
-    const confirmPasswordInput = screen.getByLabelText(/common.labels.confirmPassword/i)
+    const confirmPasswordInput = screen.getByLabelText(
+      /common.labels.confirmPassword/i
+    )
     const button = screen.getByText('login.savePassword')
 
     fireEvent.change(passwordInput, { target: { value: '12345qwertY' } })

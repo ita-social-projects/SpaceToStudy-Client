@@ -17,7 +17,8 @@ export const tutorCardBoxArray = [
   {
     icon: howItWorksTutorSecond,
     title: 'guestHomePage.howItWorks.tutor.createATutorAccount.title',
-    description: 'guestHomePage.howItWorks.tutor.createATutorAccount.description'
+    description:
+      'guestHomePage.howItWorks.tutor.createATutorAccount.description'
   },
   {
     icon: howItWorksTutorThird,

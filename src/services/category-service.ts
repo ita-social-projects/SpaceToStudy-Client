@@ -5,7 +5,9 @@ import { URLs } from '~/constants/request'
 import { CategoryInterface, CategoryNameInterface, Params } from '~/types'
 
 export const categoryService = {
-  getCategories: (params?: Params): Promise<AxiosResponse<CategoryInterface[]>> => {
+  getCategories: (
+    params?: Params
+  ): Promise<AxiosResponse<CategoryInterface[]>> => {
     return axiosClient.get(URLs.categories.get, { params })
   },
   getCategoriesNames: (): Promise<AxiosResponse<CategoryNameInterface[]>> => {

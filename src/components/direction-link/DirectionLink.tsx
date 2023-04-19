@@ -12,15 +12,22 @@ interface DirectionLinkProps {
   title: string
 }
 
-const DirectionLink: FC<DirectionLinkProps> = ({ linkTo, title, before, after }) => {
+const DirectionLink: FC<DirectionLinkProps> = ({
+  linkTo,
+  title,
+  before,
+  after
+}) => {
   return (
     <Typography
-      component={ HashLink } sx={ styles.showAllOffers } to={ linkTo }
+      component={HashLink}
+      sx={styles.showAllOffers}
+      to={linkTo}
       variant='button'
     >
-      { before }
-      { title }
-      { after }
+      {before}
+      {title}
+      {after}
     </Typography>
   )
 }

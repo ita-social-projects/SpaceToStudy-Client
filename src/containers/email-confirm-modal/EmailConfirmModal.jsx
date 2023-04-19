@@ -21,7 +21,10 @@ const EmailConfirmModal = ({ confirmToken, openModal }) => {
     [confirmToken]
   )
 
-  const { response, error, loading } = useAxios({ service: serviceFunction, defaultResponse: null })
+  const { response, error, loading } = useAxios({
+    service: serviceFunction,
+    defaultResponse: null
+  })
 
   const openLoginDialog = () => {
     openModal({ component: <LoginDialog /> })
@@ -33,7 +36,9 @@ const EmailConfirmModal = ({ confirmToken, openModal }) => {
 
   if (
     (error && error.response.data.code === 'BAD_CONFIRM_TOKEN') ||
-    (error && error.response.data.code === 'DOCUMENT_NOT_FOUND' && response === null)
+    (error &&
+      error.response.data.code === 'DOCUMENT_NOT_FOUND' &&
+      response === null)
   ) {
     return (
       <Box sx={styles.box}>

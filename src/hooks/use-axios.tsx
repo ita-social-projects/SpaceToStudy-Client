@@ -15,7 +15,7 @@ interface UseAxiosReturn<R> {
   response: R
   error: AxiosError<ErrorResponse> | null
   loading: boolean
-  fetchData: (data?: unknown) => void
+  fetchData: (data?: unknown) => Promise<void>
 }
 
 const useAxios = <T, R = T>({
@@ -51,7 +51,7 @@ const useAxios = <T, R = T>({
 
   useEffect(() => {
     if (fetchOnMount) {
-      fetchData()
+      void fetchData()
     }
   }, [fetchData, fetchOnMount])
 

@@ -14,7 +14,10 @@ const useUpload = ({ files, validationData, emitter }) => {
   }
   const dragDrop = (e) => {
     e.preventDefault()
-    const newFiles = [...files, ...e.dataTransfer.files].slice(0, validationData.maxQuantityFiles)
+    const newFiles = [...files, ...e.dataTransfer.files].slice(
+      0,
+      validationData.maxQuantityFiles
+    )
     const error = filesValidation(newFiles, validationData)
     setIsDrag(false)
     const filesForEmitter = error ? files : newFiles
@@ -23,7 +26,10 @@ const useUpload = ({ files, validationData, emitter }) => {
 
   const addFiles = (e) => {
     e.preventDefault()
-    const newFiles = [...files, ...e.target.files].slice(0, validationData.maxQuantityFiles)
+    const newFiles = [...files, ...e.target.files].slice(
+      0,
+      validationData.maxQuantityFiles
+    )
     const error = filesValidation(newFiles, validationData)
     const filesForEmitter = error ? files : newFiles
     emitter({ files: filesForEmitter, error })
@@ -31,7 +37,10 @@ const useUpload = ({ files, validationData, emitter }) => {
 
   const deleteFile = (file) => {
     const newFiles = files.filter((item) => item !== file)
-    emitter({ files: newFiles, error: filesValidation(newFiles, validationData) })
+    emitter({
+      files: newFiles,
+      error: filesValidation(newFiles, validationData)
+    })
   }
 
   return {

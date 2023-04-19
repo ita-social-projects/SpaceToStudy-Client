@@ -8,8 +8,12 @@ export const subjectService = {
   getSubjects: (): Promise<AxiosResponse<SubjectInterface[]>> => {
     return axiosClient.get(URLs.subjects.get)
   },
-  getSubjectsNames: (categoryId: string | null): Promise<AxiosResponse<SubjectNameInterface[]>> => {
+  getSubjectsNames: (
+    categoryId: string | null
+  ): Promise<AxiosResponse<SubjectNameInterface[]>> => {
     const categoryParam = categoryId ? `/${categoryId}` : ''
-    return axiosClient.get(`${URLs.categories.get}${categoryParam}${URLs.subjects.getNames}`)
+    return axiosClient.get(
+      `${URLs.categories.get}${categoryParam}${URLs.subjects.getNames}`
+    )
   }
 }

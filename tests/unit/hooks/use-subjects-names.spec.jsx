@@ -11,13 +11,21 @@ const mockSubjectsNames = [
   { _id: '2', name: 'Subject 2' }
 ]
 
-const mockError = { status: 404, code: 'NOT_FOUND', message: 'The requested URL was not found.' }
+const mockError = {
+  status: 404,
+  code: 'NOT_FOUND',
+  message: 'The requested URL was not found.'
+}
 
 describe('useSubjectsNames', () => {
   it('fetches subjects with a category successfully', async () => {
-    subjectService.getSubjectsNames.mockResolvedValueOnce({ data: mockSubjectsNames })
+    subjectService.getSubjectsNames.mockResolvedValueOnce({
+      data: mockSubjectsNames
+    })
 
-    const { result, waitForNextUpdate } = renderHook(() => useSubjects({ category: 'category' }))
+    const { result, waitForNextUpdate } = renderHook(() =>
+      useSubjects({ category: 'category' })
+    )
 
     expect(subjectService.getSubjectsNames).toHaveBeenCalledWith('category')
 
@@ -30,7 +38,9 @@ describe('useSubjectsNames', () => {
   it('handles API errors', async () => {
     subjectService.getSubjectsNames.mockRejectedValueOnce(mockError)
 
-    const { result, waitForNextUpdate } = renderHook(() => useSubjects({ category: 'category' }))
+    const { result, waitForNextUpdate } = renderHook(() =>
+      useSubjects({ category: 'category' })
+    )
 
     expect(subjectService.getSubjectsNames).toHaveBeenCalledWith('category')
 

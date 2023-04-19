@@ -4,7 +4,8 @@ import welcomeBgXs from '~/assets/img/guest-home-page/welcomeBgXs.svg'
 
 import { mainShadow } from '~/styles/app-theme/custom-shadows'
 
-const gradient = 'radial-gradient(ellipse at top, rgba(192, 229, 228, 0.4), transparent 80%'
+const gradient =
+  'radial-gradient(ellipse at top, rgba(192, 229, 228, 0.4), transparent 80%'
 
 export const styles = {
   container: {
