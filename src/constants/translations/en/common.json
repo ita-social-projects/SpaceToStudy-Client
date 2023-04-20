@@ -13,6 +13,7 @@
   "confirmButton": "OK",
   "uah": "UAH",
   "hour": "HOUR",
+  "hourSlash": "/ HOUR",
   "beginner": "Beginner",
   "offers": "offers",
   "popularCategories": "Popular Categories",
@@ -31,7 +32,7 @@
     "city": "City",
     "sendMessage": "Send message",
     "viewDetails": "View details",
-    "sortBy":"Sort by:"
+    "sortBy": "Sort by:"
   },
   "errorMessages": {
     "emailValid": "Email should be of the following format: “local-part@domain.com”",
@@ -45,21 +46,21 @@
     "longText": "This text is too long"
   },
   "levels": {
-    "beginner":"Beginner",
-    "intermediate":"Intermediate",
-    "advanced":"Advanced", 
-    "testPreparation":"Test Preparation",
-    "professional":"Professional",
+    "beginner": "Beginner",
+    "intermediate": "Intermediate",
+    "advanced": "Advanced",
+    "testPreparation": "Test Preparation",
+    "professional": "Professional",
     "specialized": "Specialized"
   },
-  "languages":{
-      "allLanguages": "All languages",
-      "english": "English",
-      "ukrainian": "Ukrainian",
-      "polish": "Polish",
-      "german": "German",
-      "french": "French",
-      "spanish": "Spanish",
-      "arabic": "Arabic"
+  "languages": {
+    "allLanguages": "All languages",
+    "english": "English",
+    "ukrainian": "Ukrainian",
+    "polish": "Polish",
+    "german": "German",
+    "french": "French",
+    "spanish": "Spanish",
+    "arabic": "Arabic"
   }
 }

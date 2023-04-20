@@ -16,7 +16,7 @@ import TitleWithDescripiton from '~/components/title-with-description/TitleWithD
 
 import { OfferCard, ProficiencyLevelEnums } from '~/types'
 
-import { styles } from '~/components/offer-card-square/OfferCardSquare.styles'
+import { styles } from '~/containers/find-offer/offer-card-square/OfferCardSquare.styles'
 
 interface OfferCardSquareProps {
   offer: OfferCard
@@ -61,7 +61,7 @@ const OfferCardSquare: FC<OfferCardSquareProps> = ({ offer }) => {
         </Box>
         <Box sx={styles.chipsContainer}>
           <AppChip labelSx={styles.subjectChipLabel} sx={styles.subjectChip}>
-            {subject.toUpperCase()}
+            {subject}
           </AppChip>
           <AppChip labelSx={styles.levelChipLabel} sx={styles.levelChip}>
             {levelText}
@@ -71,7 +71,7 @@ const OfferCardSquare: FC<OfferCardSquareProps> = ({ offer }) => {
         <Box sx={styles.priceContainer}>
           <TitleWithDescripiton
             componentStyles={styles.componentStyles}
-            description={`/${t('common.hour')}`}
+            description={`${t('common.hourSlash')}`}
             descriptionStyles={styles.descriptionStyles}
             title={`${price} ${t('common.uah')}`}
             titleStyles={styles.titleStyles}
@@ -86,7 +86,7 @@ const OfferCardSquare: FC<OfferCardSquareProps> = ({ offer }) => {
         <AppButton sx={styles.sendMessageButton}>
           {t('common.labels.sendMessage')}
         </AppButton>
-        <AppButton sx={styles.viewDetailsButton}>
+        <AppButton fullWidth sx={styles.viewDetailsButton}>
           {t('common.labels.viewDetails')}
         </AppButton>
       </Box>

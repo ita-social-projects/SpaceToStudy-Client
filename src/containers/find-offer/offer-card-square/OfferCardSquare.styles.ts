@@ -86,7 +86,6 @@ export const styles = {
     mb: '16px'
   },
   viewDetailsButton: {
-    width: '100%',
     backgroundColor: 'primary.50',
     color: 'primary.900',
     '&:hover': {
