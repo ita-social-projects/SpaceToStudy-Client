@@ -86,17 +86,6 @@ const CreateOffer: FC<CreateOfferProps> = ({ closeDrawer }) => {
     setNeedConfirmation(isDirty)
   }, [setNeedConfirmation, isDirty])
 
-  const handleAutocompleteChange =
-    (key: keyof CreateOfferData) =>
-    (_: React.ChangeEvent<HTMLInputElement>, value: string | null) => {
-      if (key === 'languages' && value) {
-        !data.languages.includes(value) &&
-          handleNonInputValueChange(key, [...data.languages, value])
-      } else {
-        handleNonInputValueChange(key, value)
-      }
-    }
-
   return (
     <Box component='form' onSubmit={(e) => handleSubmit(e)} sx={styles.root}>
       <Typography sx={styles.title}>
@@ -115,7 +104,6 @@ const CreateOffer: FC<CreateOfferProps> = ({ closeDrawer }) => {
       <TeachingBlock
         data={data}
         errors={errors}
-        handleAutocompleteChange={handleAutocompleteChange}
         handleBlur={handleBlur}
         handleInputChange={handleInputChange}
         handleNonInputValueChange={handleNonInputValueChange}

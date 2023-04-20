@@ -17,9 +17,6 @@ import { CreateOfferBlockProps } from '~/types'
 import { styles } from '~/containers/offer-page/create-offer/CreateOffer.styles'
 
 interface TeachingBlockProps<T> extends CreateOfferBlockProps<T> {
-  handleAutocompleteChange: (
-    key: keyof T
-  ) => (_: React.ChangeEvent<HTMLInputElement>, value: string | null) => void
   handleInputChange: (
     key: keyof T
   ) => (event: React.ChangeEvent<HTMLInputElement>) => void
@@ -30,14 +27,23 @@ const TeachingBlock = <T extends CreateOfferData>({
   errors,
   handleBlur,
   handleInputChange,
-  handleNonInputValueChange,
-  handleAutocompleteChange
+  handleNonInputValueChange
 }: TeachingBlockProps<T>) => {
   const { userRole } = useSelector((state) => state.appMain)
 
   const { t } = useTranslation()
 
   const languages = languagesTranslationKeys.map((lang) => t(lang))
+
+  const handleLanguageChange = (
+    _: React.ChangeEvent<HTMLInputElement>,
+    value: string | null
+  ) => {
+    if (value) {
+      !data.languages.includes(value) &&
+        handleNonInputValueChange('languages', [...data.languages, value])
+    }
+  }
 
   const handleLanguageDelete = (value: string) => {
     handleNonInputValueChange(
@@ -76,7 +82,7 @@ const TeachingBlock = <T extends CreateOfferData>({
             {t(`offerPage.createOffer.description.languages.${userRole}`)}
           </Typography>
           <AppAutoComplete
-            onChange={handleAutocompleteChange('languages')}
+            onChange={handleLanguageChange}
             options={languages}
             textFieldProps={{
               error: Boolean(errors.languages),
@@ -103,6 +109,7 @@ const TeachingBlock = <T extends CreateOfferData>({
             errorMsg={t(errors.price)}
             fullWidth={false}
             inputProps={{
+              'data-testid': 'price-input',
               inputMode: 'numeric'
             }}
             onBlur={handleBlur('price')}
