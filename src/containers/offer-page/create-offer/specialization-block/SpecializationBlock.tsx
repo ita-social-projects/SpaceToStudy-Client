@@ -44,6 +44,9 @@ const SpecializationBlock = <T extends CreateOfferData>({
       handleNonInputValueChange(key, value?._id || '')
     }
 
+  const handleCheckboxesChange = (value: string[]) =>
+    handleNonInputValueChange('proficiencyLevel', value)
+
   const getLabel = (option: CategoryNameInterface) => option.name || ''
 
   const isOptionEqualToValue = (
@@ -101,9 +104,7 @@ const SpecializationBlock = <T extends CreateOfferData>({
           <CheckboxList
             error={t(errors.proficiencyLevel)}
             items={levelOptions}
-            onChange={(value) =>
-              handleNonInputValueChange('proficiencyLevel', value)
-            }
+            onChange={handleCheckboxesChange}
             value={data.proficiencyLevel}
           />
         </Box>

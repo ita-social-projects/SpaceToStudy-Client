@@ -2,7 +2,7 @@ export const styles = {
   number: {
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'start',
     borderColor: 'primary.700',
     borderRadius: '50%',
     border: '2px solid',
@@ -10,8 +10,7 @@ export const styles = {
     typography: { xs: 'caption', sm: 'subtitle2' },
     fontWeight: { xs: 500 },
     minWidth: { xs: '14px', sm: '18px' },
-    height: { xs: '14px', sm: '18px' },
-    lineHeight: { xs: 'initial', sm: 'initial' }
+    height: { xs: '14px', sm: '18px' }
   },
   title: {
     display: 'flex',

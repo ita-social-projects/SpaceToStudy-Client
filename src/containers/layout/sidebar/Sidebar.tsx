@@ -10,7 +10,6 @@ import HashLink from '~/components/hash-link/HashLink'
 import { styles } from '~/containers/layout/sidebar/Sidebar.styles'
 
 interface SidebarProps {
-  isSidebarOpen: boolean
   onClose: () => void
   navigationItems: { route: string; path: string }[]
 }
