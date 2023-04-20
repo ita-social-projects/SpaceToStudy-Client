@@ -1,19 +1,25 @@
+import { FC } from 'react'
+
 import Box from '@mui/material/Box'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
+import { SxProps } from '@mui/system'
 
-const componentStyle = {
-  root: { m: { xs: '100px 10px', sm: '56px', md: '80px' } },
-  img: { display: 'block', margin: '0 auto' },
-  wrapper: { maxWidth: '630px' },
-  title: { typography: 'h5' },
-  description: { typography: 'subtitle' }
+import { styles } from '~/components/img-title-description/ImgTitleDescription.styles'
+
+interface ImgTitleDescriptionProps {
+  img?: string
+  title: string
+  description: string
+  style?: {
+    [key: string]: SxProps
+  }
 }
 
-const ImgTitleDescription = ({
+const ImgTitleDescription: FC<ImgTitleDescriptionProps> = ({
   img,
   title,
   description,
-  style = componentStyle
+  style = styles
 }) => {
   return (
     <Box sx={style.root}>

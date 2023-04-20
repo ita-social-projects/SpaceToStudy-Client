@@ -1,4 +1,5 @@
 import type { Address } from '~/types/common/types/common.types'
+import { ProficiencyLevelEnums } from '~/types/common/enums/common.enums'
 import type {
   CategoryInterface,
   CategoryNameInterface,
@@ -13,9 +14,10 @@ export {
   Address,
   CategoryInterface,
   CategoryNameInterface,
+  SubjectNameInterface,
   OfferInterface,
   ReviewInterface,
   SubjectInterface,
-  SubjectNameInterface,
-  UserInterface
+  UserInterface,
+  ProficiencyLevelEnums
 }

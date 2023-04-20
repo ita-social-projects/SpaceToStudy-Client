@@ -11,8 +11,8 @@ const TitleWithDescription = ({
 }) => {
   return (
     <Box sx={{ ...style.wrapper, ...componentStyles }}>
-      <Typography sx={{ ...titleStyles, ...style.title }}>{title}</Typography>
-      <Typography sx={{ ...descriptionStyles, ...style.description }}>
+      <Typography sx={{ ...style.title, ...titleStyles }}>{title}</Typography>
+      <Typography sx={{ ...style.description, ...descriptionStyles }}>
         {description}
       </Typography>
     </Box>

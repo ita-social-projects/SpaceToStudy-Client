@@ -1,7 +1,11 @@
+import { OfferResponse } from '~/types'
+
 export interface UserInterface {
   firstName: string
   lastName: string
   photo?: string
+  averageRating: number
+  totalReviews: number
 }
 
 export interface CategoryInterface {
@@ -32,14 +36,8 @@ export interface SubjectNameInterface {
   name: string
 }
 
-export interface OfferInterface {
-  category: CategoryInterface
-  subject: SubjectInterface
-  proficiencyLevel: string
-}
-
 export interface ReviewInterface {
-  offer: OfferInterface
+  offer: OfferResponse
   author: UserInterface
   comment: string
   rating: number
