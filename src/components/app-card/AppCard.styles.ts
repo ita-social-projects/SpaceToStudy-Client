@@ -4,17 +4,14 @@ import {
 } from '~/styles/app-theme/custom-shadows'
 
 export const styles = {
-  card: {
+  container: (isClickable: boolean) => ({
     display: 'flex',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    p: '25px 32px',
-    backgroundColor: 'basic.white',
+    padding: '20px 30px',
+    textDecoration: 'none',
     boxShadow: commonShadow,
     borderRadius: '6px',
-    cursor: 'pointer',
-    '&:hover': {
+    '&:hover': isClickable && {
       boxShadow: commonHoverShadow
     }
-  }
+  })
 }

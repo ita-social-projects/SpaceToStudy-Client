@@ -1,14 +1,20 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
 
+import useAxios from '~/hooks/use-axios'
+import { categoryService } from '~/services/category-service'
+
 import useBreakpoints from '~/hooks/use-breakpoints'
 import OfferCard from '~/components/offer-card/OfferCard'
+import PopularCategories from '~/components/popular-categories/PopularCategories'
 import AppPagination from '~/components/app-pagination/AppPagination'
 import OfferFilterBlock from '~/containers/find-offer/offer-filter-block/OfferFilterBlock'
 import FilterBarMenu from '~/containers/find-offer/filter-bar-menu/FilterBarMenu'
 import { useFilterQuery } from '~/hooks/use-filter-query'
+import { defaultResponses } from '~/constants'
 
 import {
   mockOffer,
@@ -24,6 +30,17 @@ const FindOffers = () => {
   const { isMobile } = useBreakpoints()
   const size = isMobile ? 'small' : 'medium'
   const [currentPage, setCurrentPage] = useState(1)
+
+  const { t } = useTranslation()
+
+  const getCategories = useCallback(
+    () => categoryService.getCategories({ limit: 9 }),
+    []
+  )
+  const { response: categoriesData, loading: categoriesLoading } = useAxios({
+    service: getCategories,
+    defaultResponse: defaultResponses.array
+  })
 
   const mockDataPagination = {
     itemsCount: 100,
@@ -69,6 +86,11 @@ const FindOffers = () => {
         pageSize={mockDataPagination.pageSize}
         setCurrentPage={setCurrentPage}
         size={size}
+      />
+      <PopularCategories
+        items={categoriesData}
+        loading={categoriesLoading}
+        title={t('common.popularCategories')}
       />
     </Container>
   )

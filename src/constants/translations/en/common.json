@@ -14,6 +14,9 @@
   "uah": "UAH",
   "hour": "HOUR",
   "beginner": "Beginner",
+  "offers": "offers",
+  "popularCategories": "Popular Categories",
+  "viewAllName": "View all {{name}}",
   "labels": {
     "email": "Email",
     "firstName": "First name",
