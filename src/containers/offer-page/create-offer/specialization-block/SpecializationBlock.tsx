@@ -42,6 +42,9 @@ const SpecializationBlock = <T extends CreateOfferData>({
     (key: keyof Pick<T, 'categoryId' | 'subjectId'>) =>
     (_: React.ChangeEvent, value: CategoryNameInterface | null) => {
       handleNonInputValueChange(key, value?._id || '')
+      if (!value) {
+        handleNonInputValueChange('subjectId', '')
+      }
     }
 
   const handleCheckboxesChange = (value: string[]) =>
@@ -55,6 +58,7 @@ const SpecializationBlock = <T extends CreateOfferData>({
   ) => option?._id === value?._id
 
   const levelOptions = levelsTranslationKeys.map((level) => t(level))
+  const subjectError = data.categoryId && errors.subjectId
 
   return (
     <OrderedListItem
@@ -90,8 +94,8 @@ const SpecializationBlock = <T extends CreateOfferData>({
             onChange={handleAutocompleteChange('subjectId')}
             options={subjectsItems}
             textFieldProps={{
-              error: Boolean(data.categoryId && errors.subjectId),
-              helperText: data.categoryId ? t(errors.subjectId) : ' ',
+              error: Boolean(subjectError),
+              helperText: subjectError ? t(errors.subjectId) : ' ',
               label: t('offerPage.createOffer.labels.subject')
             }}
             value={getValue(subjectsItems, 'subjectId')}

@@ -24,8 +24,7 @@ export const styles = {
   },
   specialization: {
     ...column,
-    pl: { sm: '32px' },
-    gap: '10px'
+    pl: { sm: '32px' }
   },
   inputBlock: {
     ...column,
