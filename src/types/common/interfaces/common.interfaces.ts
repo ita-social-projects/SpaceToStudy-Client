@@ -16,10 +16,6 @@ export interface CategoryInterface {
 export interface CategoryNameInterface {
   _id: string
   name: string
-  categoryIcon: string
-  totalOffers: number
-  createdAt: string
-  updatedAt: string
 }
 
 export interface SubjectInterface {

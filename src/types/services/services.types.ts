@@ -37,7 +37,7 @@ export interface UserResponse {
 }
 
 export type Params = {
-  match: string
+  match?: string
   limit: number
 }
 

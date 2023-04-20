@@ -14,6 +14,7 @@ import AppPagination from '~/components/app-pagination/AppPagination'
 import OfferFilterBlock from '~/containers/find-offer/offer-filter-block/OfferFilterBlock'
 import FilterBarMenu from '~/containers/find-offer/filter-bar-menu/FilterBarMenu'
 import { useFilterQuery } from '~/hooks/use-filter-query'
+import { defaultResponses } from '~/constants'
 
 import {
   mockOffer,
@@ -36,8 +37,9 @@ const FindOffers = () => {
     () => categoryService.getCategories({ limit: 9 }),
     []
   )
-  const { data: categoriesData, loading: categoriesLoading } = useAxios({
-    service: getCategories
+  const { response: categoriesData, loading: categoriesLoading } = useAxios({
+    service: getCategories,
+    defaultResponse: defaultResponses.array
   })
 
   const mockDataPagination = {

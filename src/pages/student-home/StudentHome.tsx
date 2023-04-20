@@ -11,6 +11,8 @@ import FindTutorBlock from '~/containers/student-home-page/find-tutor-block/Find
 import PopularCategories from '~/components/popular-categories/PopularCategories'
 import Faq from '~/containers/student-home-page/faq/Faq'
 import StudentHowItWorks from '~/containers/student-home-page/student-how-it-works/StudentHowItWorks'
+import { defaultResponses } from '~/constants'
+import { CategoryInterface } from '~/types'
 
 const StudentHome = () => {
   const { t } = useTranslation()
@@ -19,8 +21,11 @@ const StudentHome = () => {
     () => categoryService.getCategories({ limit: 9 }),
     []
   )
-  const { data: categoriesData, loading: categoriesLoading } = useAxios({
-    service: getCategories
+  const { response: categoriesData, loading: categoriesLoading } = useAxios<
+    CategoryInterface[]
+  >({
+    service: getCategories,
+    defaultResponse: defaultResponses.array
   })
 
   return (
