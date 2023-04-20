@@ -1,9 +1,4 @@
 export const styles = {
-  container: {
-    flexDirection: 'column',
-    alignItems: 'stretch',
-    mt: '80px'
-  },
   sectionTitle: {
     typography: { sm: 'h4', xs: 'h5' }
   },

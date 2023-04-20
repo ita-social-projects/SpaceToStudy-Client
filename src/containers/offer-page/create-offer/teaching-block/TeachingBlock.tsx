@@ -64,7 +64,7 @@ const TeachingBlock = <T extends CreateOfferData>({
           <AppTextArea
             errorMsg={t(errors.description)}
             fullWidth
-            label={'Describe your offer'}
+            label={t(`offerPage.createOffer.labels.describe.${userRole}`)}
             maxLength={1000}
             onBlur={handleBlur('description')}
             onChange={handleInputChange('description')}
@@ -76,11 +76,13 @@ const TeachingBlock = <T extends CreateOfferData>({
             {t(`offerPage.createOffer.description.languages.${userRole}`)}
           </Typography>
           <AppAutoComplete
-            error={Boolean(errors.languages)}
-            helperText={t(errors.languages) || ' '}
-            label={'Language'}
             onChange={handleAutocompleteChange('languages')}
             options={languages}
+            textFieldProps={{
+              error: Boolean(errors.languages),
+              helperText: t(errors.languages) || ' ',
+              label: t('offerPage.createOffer.labels.language')
+            }}
           />
           <AppChipList
             defaultQuantity={3}

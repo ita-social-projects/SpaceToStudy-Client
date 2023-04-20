@@ -13,8 +13,12 @@ export const styles = {
       py: '6px'
     }
   },
-  error:{
-    color:'error.500',
+  error: {
+    color: 'error.500',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    width: { xs: '230px' },
     m: '3px 14px',
     minHeight: '20px'
   }

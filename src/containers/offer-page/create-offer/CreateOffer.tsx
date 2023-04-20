@@ -1,4 +1,5 @@
 import { FC, useEffect } from 'react'
+import { AxiosResponse } from 'axios'
 import { useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 
@@ -21,10 +22,11 @@ import {
   validations
 } from '~/containers/offer-page/create-offer/CreateOffer.constants'
 import { styles } from '~/containers/offer-page/create-offer/CreateOffer.styles'
+import { ErrorResponse } from '~/types'
 
 export interface CreateOfferData {
-  category: string | null
-  subject: string | null
+  categoryId: string
+  subjectId: string
   proficiencyLevel: string[]
   languages: string[]
   description: string
@@ -42,16 +44,28 @@ const CreateOffer: FC<CreateOfferProps> = ({ closeDrawer }) => {
 
   const { t } = useTranslation()
 
-  const postOffer = () => OfferService.createOffer(data)
+  const handleResponseError = (error: ErrorResponse) => {
+    setAlert({
+      severity: snackbarVariants.error,
+      message: error ? `errors.${error.code}` : ''
+    })
+  }
+  const handleResponse = () => {
+    setAlert({
+      severity: snackbarVariants.success,
+      message: 'offerPage.createOffer.successMessage'
+    })
+    closeDrawer()
+  }
 
-  const {
-    response,
-    error,
-    loading,
-    fetchData: createOffer
-  } = useAxios({
+  const postOffer = (): Promise<AxiosResponse> => OfferService.createOffer(data)
+
+  const { loading, fetchData } = useAxios({
     service: postOffer,
-    fetchOnMount: false
+    fetchOnMount: false,
+    defaultResponse: null,
+    onResponse: handleResponse,
+    onResponseError: handleResponseError
   })
 
   const {
@@ -65,35 +79,18 @@ const CreateOffer: FC<CreateOfferProps> = ({ closeDrawer }) => {
   } = useForm<CreateOfferData>({
     initialValues,
     validations,
-    onSubmit: createOffer
+    onSubmit: fetchData
   })
 
   useEffect(() => {
     setNeedConfirmation(isDirty)
   }, [setNeedConfirmation, isDirty])
 
-  useEffect(() => {
-    if (error) {
-      setAlert({
-        severity: snackbarVariants.error,
-        message: `errors.${error}`
-      })
-    }
-    if (response) {
-      setAlert({
-        severity: snackbarVariants.success,
-        message: 'offerPage.createOffer.successMessage'
-      })
-      closeDrawer()
-    }
-  }, [error, response, setAlert, closeDrawer])
-
   const handleAutocompleteChange =
     (key: keyof CreateOfferData) =>
     (_: React.ChangeEvent<HTMLInputElement>, value: string | null) => {
-      if (key === 'languages') {
-        value &&
-          !data.languages.includes(value) &&
+      if (key === 'languages' && value) {
+        !data.languages.includes(value) &&
           handleNonInputValueChange(key, [...data.languages, value])
       } else {
         handleNonInputValueChange(key, value)
@@ -112,7 +109,6 @@ const CreateOffer: FC<CreateOfferProps> = ({ closeDrawer }) => {
       <SpecializationBlock
         data={data}
         errors={errors}
-        handleAutocompleteChange={handleAutocompleteChange}
         handleBlur={handleBlur}
         handleNonInputValueChange={handleNonInputValueChange}
       />

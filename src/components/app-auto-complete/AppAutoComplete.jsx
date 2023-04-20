@@ -15,7 +15,7 @@ const AppAutoComplete = ({
   ListboxProps = { style: { maxHeight: 150 } },
   options = [],
   hideClearIcon = false,
-  textFieldProps,
+  textFieldProps = {},
   ...props
 }) => {
   return (

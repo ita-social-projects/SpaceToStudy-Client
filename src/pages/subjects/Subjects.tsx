@@ -16,6 +16,7 @@ import { guestRoutes } from '~/router/constants/guestRoutes'
 import { CategoryNameInterface, SubjectNameInterface } from '~/types'
 import DirectionLink from '~/components/direction-link/DirectionLink'
 import AppToolbar from '~/components/app-toolbar/AppToolbar'
+import OfferRequestBlock from '~/containers/find-offer/OfferRequestBlock'
 import useCategoriesNames from '~/hooks/use-categories-names'
 import useSubjectsNames from '~/hooks/use-subjects-names'
 import { mapArrayByField } from '~/utils/map-array-by-field'
@@ -62,55 +63,51 @@ const Subjects = () => {
   ) => option?._id === value?._id
 
   return (
-    <Container sx={{ flex: 1 }}>
-      <Box className='section' sx={styles.container}>
-        <TitleWithDescription
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-          description={t('subjectsPage.subjects.description')}
-          descriptionStyles={styles.sectionDescription}
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-          title={t('subjectsPage.subjects.title', {
-            category: category?.name
-          })}
-          titleStyles={styles.sectionTitle}
+    <Container sx={{ flex: 1, mt: '80px' }}>
+      <OfferRequestBlock />
+      <TitleWithDescription
+        description={t('subjectsPage.subjects.description')}
+        descriptionStyles={styles.sectionDescription}
+        title={t('subjectsPage.subjects.title', {
+          category: category?.name
+        })}
+        titleStyles={styles.sectionTitle}
+      />
+
+      <Box sx={styles.navigation}>
+        <DirectionLink
+          before={<ArrowBackIcon fontSize='small' />}
+          linkTo={guestRoutes.categories.path}
+          title={t('subjectsPage.subjects.backToAllCategories')}
         />
-
-        <Box sx={styles.navigation}>
-          <DirectionLink
-            before={<ArrowBackIcon fontSize='small' />}
-            linkTo={guestRoutes.categories.path}
-            title={t('subjectsPage.subjects.backToAllCategories')}
-          />
-
-          <DirectionLink
-            after={<ArrowForwardIcon fontSize='small' />}
-            linkTo={guestRoutes.findOffers.path}
-            title={t('subjectsPage.subjects.showAllOffers')}
-          />
-        </Box>
-        <AppToolbar sx={styles.searchToolbar}>
-          <AppAutoComplete
-            getOptionLabel={getOptionLabelCategory}
-            isOptionEqualToValue={isOptionEqualToValueCategory}
-            loading={categoriesNamesLoading}
-            onChange={onCategoryChange}
-            options={categoriesNamesItems}
-            sx={styles.categoryInput}
-            textFieldProps={{
-              label: t('breadCrumbs.categories')
-            }}
-            value={category}
-          />
-          <SearchAutocomplete
-            options={subjectsNamesItems}
-            search={searchValue}
-            setSearch={setSearchValue}
-            textFieldProps={{
-              label: t('subjectsPage.subjects.searchLabel')
-            }}
-          />
-        </AppToolbar>
+        <DirectionLink
+          after={<ArrowForwardIcon fontSize='small' />}
+          linkTo={guestRoutes.findOffers.path}
+          title={t('subjectsPage.subjects.showAllOffers')}
+        />
       </Box>
+      <AppToolbar sx={styles.searchToolbar}>
+        <AppAutoComplete
+          getOptionLabel={getOptionLabelCategory}
+          isOptionEqualToValue={isOptionEqualToValueCategory}
+          loading={categoriesNamesLoading}
+          onChange={onCategoryChange}
+          options={categoriesNamesItems}
+          sx={styles.categoryInput}
+          textFieldProps={{
+            label: t('breadCrumbs.categories')
+          }}
+          value={category}
+        />
+        <SearchAutocomplete
+          options={subjectsNamesItems}
+          search={searchValue}
+          setSearch={setSearchValue}
+          textFieldProps={{
+            label: t('subjectsPage.subjects.searchLabel')
+          }}
+        />
+      </AppToolbar>
     </Container>
   )
 }

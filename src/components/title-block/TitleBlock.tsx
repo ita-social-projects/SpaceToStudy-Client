@@ -22,10 +22,8 @@ const TitleBlock: FC<TitleBlockProps> = ({ img, translationKey, children }) => {
       <Box sx={styles.info}>
         <TitleWithDescription
           componentStyles={styles.textWrapper}
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           description={t(`${translationKey}.description`)}
           descriptionStyles={styles.description}
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           title={t(`${translationKey}.title`)}
           titleStyles={styles.title}
         />

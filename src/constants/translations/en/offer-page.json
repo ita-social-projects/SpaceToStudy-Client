@@ -53,6 +53,15 @@
     "buttonTitles":{
         "tutor": "Create offer",
         "student": "Create request"
+    },
+    "labels":{
+      "category": "Category",
+      "subject": "Subject",
+      "describe":{
+        "tutor": "Describe your offer",
+        "student": "Describe your request"
+      } ,
+      "language": "Language"
     }
   }
 }

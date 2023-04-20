@@ -1,3 +1,4 @@
+import { useCallback, useMemo } from 'react'
 import { useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 
@@ -9,19 +10,46 @@ import CheckboxList from '~/components/checkbox-list/CheckboxList'
 import { CreateOfferData } from '~/containers/offer-page/create-offer/CreateOffer'
 
 import { levelsTranslationKeys } from '~/containers/find-offer/offer-filter-block/offer-filter-list/OfferFilterList.constants'
-import { CreateOfferBlockProps } from '~/types'
+import { CategoryNameInterface, CreateOfferBlockProps } from '~/types'
 import OrderedListItem from '~/components/ordered-list-item/OrderedListItem'
 import { styles } from '~/containers/offer-page/create-offer/CreateOffer.styles'
+import useCategoriesNames from '~/hooks/use-categories-names'
+import useSubjectsNames from '~/hooks/use-subjects-names'
 
 const SpecializationBlock = <T extends CreateOfferData>({
   data,
   errors,
   handleBlur,
-  handleNonInputValueChange,
-  handleAutocompleteChange
+  handleNonInputValueChange
 }: CreateOfferBlockProps<T>) => {
   const { t } = useTranslation()
   const { userRole } = useSelector((state) => state.appMain)
+  const { response: categoriesItems, loading: categoriesLoading } =
+    useCategoriesNames()
+
+  const { response: subjectsItems, loading: subjectsLoading } =
+    useSubjectsNames({
+      category: data.categoryId
+    })
+
+  const getValue = useCallback(
+    (array: CategoryNameInterface[], key: keyof T) =>
+      array.find((option) => option._id === data[key]) || null,
+    [data]
+  )
+
+  const handleAutocompleteChange =
+    (key: keyof Pick<T, 'categoryId' | 'subjectId'>) =>
+    (_: React.ChangeEvent, value: CategoryNameInterface | null) => {
+      handleNonInputValueChange(key, value?._id || '')
+    }
+
+  const getLabel = (option: CategoryNameInterface) => option.name || ''
+
+  const isOptionEqualToValue = (
+    option: CategoryNameInterface,
+    value: CategoryNameInterface
+  ) => option?._id === value?._id
 
   const levelOptions = levelsTranslationKeys.map((level) => t(level))
 
@@ -36,23 +64,34 @@ const SpecializationBlock = <T extends CreateOfferData>({
             {t(`offerPage.createOffer.description.category.${userRole}`)}
           </Typography>
           <AppAutoComplete
-            error={Boolean(errors.category)}
-            helperText={t(errors.category) || ' '}
-            label='Category'
-            onBlur={handleBlur('category')}
-            onChange={handleAutocompleteChange('category')}
-            options={[]}
+            getOptionLabel={getLabel}
+            isOptionEqualToValue={isOptionEqualToValue}
+            loading={categoriesLoading}
+            onBlur={handleBlur('categoryId')}
+            onChange={handleAutocompleteChange('categoryId')}
+            options={categoriesItems}
             sx={styles.inputs}
-            value={data.category}
+            textFieldProps={{
+              label: t('offerPage.createOffer.labels.category'),
+              error: Boolean(errors.categoryId),
+              helperText: t(errors.categoryId) || ' '
+            }}
+            value={getValue(categoriesItems, 'categoryId')}
           />
           <AppAutoComplete
-            disabled={!data.category}
-            error={Boolean(data.category && errors.subject)}
-            helperText={data.category ? t(errors.subject) : ' '}
-            label='Subject'
-            onBlur={handleBlur('subject')}
-            onChange={handleAutocompleteChange('subject')}
-            value={data.subject}
+            disabled={!data.categoryId}
+            getOptionLabel={getLabel}
+            isOptionEqualToValue={isOptionEqualToValue}
+            loading={subjectsLoading}
+            onBlur={handleBlur('subjectId')}
+            onChange={handleAutocompleteChange('subjectId')}
+            options={subjectsItems}
+            textFieldProps={{
+              error: Boolean(data.categoryId && errors.subjectId),
+              helperText: data.categoryId ? t(errors.subjectId) : ' ',
+              label: t('offerPage.createOffer.labels.subject')
+            }}
+            value={getValue(subjectsItems, 'subjectId')}
           />
         </Box>
         <Box sx={styles.inputBlock}>

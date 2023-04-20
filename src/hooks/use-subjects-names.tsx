@@ -5,24 +5,24 @@ import useAxios from '~/hooks/use-axios'
 import { subjectService } from '~/services/subject-service'
 import { ErrorResponse, SubjectNameInterface } from '~/types'
 
-interface UseSubjectsNamesProps {
+interface UseSubjectsNamesProps<T> {
   category: string | null
   fetchOnMount?: boolean
-  transform: (data: SubjectNameInterface[]) => string[]
+  transform?: (data: SubjectNameInterface[]) => T[]
 }
 
-interface UseSubjectsNamesResult {
+interface UseSubjectsNamesResult<T> {
   loading: boolean
-  response: string[]
+  response: T[]
   fetchData: () => Promise<void>
   error: ErrorResponse | null
 }
 
-const useSubjectsNames = ({
+const useSubjectsNames = <T = SubjectNameInterface,>({
   category,
   fetchOnMount = true,
   transform
-}: UseSubjectsNamesProps): UseSubjectsNamesResult => {
+}: UseSubjectsNamesProps<T>): UseSubjectsNamesResult<T> => {
   const getSubjectsNames = useCallback(
     () => subjectService.getSubjectsNames(category),
     [category]
@@ -30,7 +30,7 @@ const useSubjectsNames = ({
 
   const { loading, response, fetchData, error } = useAxios<
     SubjectNameInterface[],
-    string[]
+    T[]
   >({
     service: getSubjectsNames,
     fetchOnMount,

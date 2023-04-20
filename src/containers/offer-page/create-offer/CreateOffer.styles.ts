@@ -41,8 +41,8 @@ export const styles = {
   buttonBox: {
     display: 'flex',
     flexDirection: { xs: 'column', sm: 'row' },
-    gap: '30px',
-    mt: '20px'
+    gap: { xs: '16px', sm: '30px' },
+    mt: { xs: '8px', sm: '16px' }
   },
   category: {
     mb: '12px'

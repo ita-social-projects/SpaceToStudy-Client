@@ -1,4 +1,4 @@
-export const isEqual = <T>(x: T, y: T): boolean => {
+export const isEqual = <T,>(x: T, y: T): boolean => {
   const ok = Object.keys,
     tx = typeof x,
     ty = typeof y

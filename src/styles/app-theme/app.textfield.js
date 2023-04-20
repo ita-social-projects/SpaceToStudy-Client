@@ -15,7 +15,7 @@ export const textField = {
         },
         color: palette.primary[500]
       },
-      '& .MuiAutocomplete-inputRoot': {
+      '& .MuiAutocomplete-inputRoot.MuiOutlinedInput-root ': {
         padding: '5px'
       },
       '& .MuiInputBase-input': {
