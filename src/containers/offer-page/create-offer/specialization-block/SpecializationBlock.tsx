@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react'
+import { useCallback } from 'react'
 import { useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 
