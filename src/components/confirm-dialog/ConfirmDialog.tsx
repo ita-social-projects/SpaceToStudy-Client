@@ -1,3 +1,4 @@
+import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Button from '@mui/material/Button'
@@ -9,12 +10,13 @@ import Typography from '@mui/material/Typography'
 import CloseIcon from '@mui/icons-material/Close'
 
 import { styles } from '~/components/confirm-dialog/ConfirmDialog.styles'
-import { FC } from 'react'
 
 interface ConfirmDialogProps {
   message: string
   title: string
-  open: () => void
+  open: boolean
+  onConfirm: () => void
+  onDismiss: () => void
 }
 
 const ConfirmDialog: FC<ConfirmDialogProps> = ({
