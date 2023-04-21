@@ -10,7 +10,7 @@ interface AppPaginationProps {
   size?: SizeEnums
   page: number
   itemsCount: number
-  pageSize: number
+  itemsPerPage: number
   setCurrentPage: (page: number) => void
 }
 
@@ -18,10 +18,10 @@ const AppPagination: FC<AppPaginationProps> = ({
   size = SizeEnums.Medium,
   page,
   itemsCount,
-  pageSize,
+  itemsPerPage,
   setCurrentPage
 }) => {
-  const pageCount = Math.ceil(itemsCount / pageSize)
+  const pageCount = Math.ceil(itemsCount / itemsPerPage)
 
   const handlePageChange = (_event: ChangeEvent<unknown>, page: number) => {
     setCurrentPage(page)
