@@ -62,7 +62,7 @@ const SubjectsStep = ({ stepLabel, btnsBox }) => {
   }
 
   const handleChipDelete = (item) => {
-    const newItems = subjectData.filter((subject) => subject.name !== item)
+    const newItems = subjectData.filter(({ subject }) => subject !== item)
     handleStepData(stepLabel, newItems)
   }
 

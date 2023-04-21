@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 
 import Checkbox from '@mui/material/Checkbox'
 import Box from '@mui/material/Box'
+import Tooltip from '@mui/material/Tooltip'
 import Typography, { TypographyProps } from '@mui/material/Typography'
 import FormControlLabel from '@mui/material/FormControlLabel'
 
@@ -12,11 +13,13 @@ interface CheckboxListProps extends Pick<TypographyProps, 'variant'> {
   items: string[]
   value?: string[]
   title?: string
+  error?: string
   onChange: (checkbox: string[]) => void
 }
 
 const CheckboxList: FC<CheckboxListProps> = ({
   items,
+  error = '',
   value = [],
   title,
   variant,
@@ -56,10 +59,19 @@ const CheckboxList: FC<CheckboxListProps> = ({
     </Typography>
   )
 
+  const helperText = (
+    <Tooltip title={error}>
+      <Typography sx={styles.error} variant='caption'>
+        {error}
+      </Typography>
+    </Tooltip>
+  )
+
   return (
     <Box sx={styles.root}>
       {checkboxesTitle}
       {checkboxesList}
+      {helperText}
     </Box>
   )
 }

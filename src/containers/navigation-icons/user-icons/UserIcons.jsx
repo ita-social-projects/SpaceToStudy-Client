@@ -21,7 +21,7 @@ import { student } from '~/constants'
 
 import { styles } from '~/containers/navigation-icons/NavigationIcons.styles'
 
-const UserIcons = ({ setIsSidebarOpen }) => {
+const UserIcons = ({ setSidebarOpen }) => {
   const { t } = useTranslation()
   const [anchorEl, setAnchorEl] = useState(null)
   const anchorRef = useRef(null)
@@ -92,7 +92,7 @@ const UserIcons = ({ setIsSidebarOpen }) => {
       </Tooltip>
 
       <Tooltip arrow title={t('iconsTooltip.menu')}>
-        <IconButton onClick={() => setIsSidebarOpen(true)} sx={styles.menuIcon}>
+        <IconButton onClick={setSidebarOpen} sx={styles.menuIcon}>
           <MenuIcon color='primary' />
         </IconButton>
       </Tooltip>

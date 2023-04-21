@@ -10,7 +10,7 @@ import LoginIcon from '@mui/icons-material/Login'
 
 import { styles } from '~/containers/navigation-icons/NavigationIcons.styles'
 
-const GuestIcons = ({ openLoginDialog, setIsSidebarOpen }) => {
+const GuestIcons = ({ openLoginDialog, setSidebarOpen }) => {
   const { t } = useTranslation()
 
   return (
@@ -36,7 +36,7 @@ const GuestIcons = ({ openLoginDialog, setIsSidebarOpen }) => {
       </Button>
 
       <Tooltip arrow title={t('iconsTooltip.menu')}>
-        <IconButton onClick={() => setIsSidebarOpen(true)} sx={styles.menuIcon}>
+        <IconButton onClick={setSidebarOpen} sx={styles.menuIcon}>
           <MenuIcon color='primary' />
         </IconButton>
       </Tooltip>

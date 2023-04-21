@@ -13,6 +13,9 @@ import PopularCategories from '~/components/popular-categories/PopularCategories
 import AppPagination from '~/components/app-pagination/AppPagination'
 import OfferFilterBlock from '~/containers/find-offer/offer-filter-block/OfferFilterBlock'
 import FilterBarMenu from '~/containers/find-offer/filter-bar-menu/FilterBarMenu'
+import AppDrawer from '~/components/app-drawer/AppDrawer'
+import { useDrawer } from '~/hooks/use-drawer'
+
 import { useFilterQuery } from '~/hooks/use-filter-query'
 import { defaultResponses } from '~/constants'
 
@@ -22,14 +25,14 @@ import {
 } from '~/pages/find-offers/FindOffers.constants'
 
 const FindOffers = () => {
+  const [currentPage, setCurrentPage] = useState(1)
+  const { openDrawer, closeDrawer, isOpen } = useDrawer()
   const { filters, countActiveFilters, filterQueryActions } = useFilterQuery({
     defaultFilters
   })
-  const [openFilters, setOpenFilters] = useState(false)
   const [showingTutorOffers, setShowingTutorOffers] = useState(false)
   const { isMobile } = useBreakpoints()
   const size = isMobile ? 'small' : 'medium'
-  const [currentPage, setCurrentPage] = useState(1)
 
   const { t } = useTranslation()
 
@@ -51,8 +54,22 @@ const FindOffers = () => {
   const onBookmarkClick = (id) => {
     console.log(id)
   }
-  const handleToggleOpenFilters = () => setOpenFilters((prev) => !prev)
+
+  const toggleFiltersOpen = () => (isOpen ? closeDrawer() : openDrawer())
+
   const handleShowingTutorOffers = () => setShowingTutorOffers((prev) => !prev)
+
+  const filtersComponent = (
+    <OfferFilterBlock
+      closeFilters={closeDrawer}
+      countActiveFilters={countActiveFilters}
+      filterActions={filterQueryActions}
+      filters={filters}
+      onToggleTutorOffers={handleShowingTutorOffers}
+      open={isOpen}
+      showingTutorOffers={showingTutorOffers}
+    />
+  )
 
   return (
     <Container
@@ -63,18 +80,16 @@ const FindOffers = () => {
         chosenFiltersQty={countActiveFilters}
         filters={filters}
         setFilters={filterQueryActions.updateFilter}
-        toggleFilters={handleToggleOpenFilters}
+        toggleFilters={toggleFiltersOpen}
       />
       <Box sx={{ display: 'flex' }}>
-        <OfferFilterBlock
-          closeFilters={handleToggleOpenFilters}
-          countActiveFilters={countActiveFilters}
-          filterActions={filterQueryActions}
-          filters={filters}
-          onToggleTutorOffers={handleShowingTutorOffers}
-          open={openFilters}
-          showingTutorOffers={showingTutorOffers}
-        />
+        {!isMobile ? (
+          filtersComponent
+        ) : (
+          <AppDrawer onClose={closeDrawer} open={isOpen}>
+            {filtersComponent}
+          </AppDrawer>
+        )}
         <OfferCard
           offer={mockOffer}
           onBookmarkClick={() => onBookmarkClick(mockOffer.id)}

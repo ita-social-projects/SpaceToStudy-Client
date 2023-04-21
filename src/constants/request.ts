@@ -21,6 +21,9 @@ export const URLs = {
     delete: '/users/delete',
     myProfile: '/users/myProfile'
   },
+  offers: {
+    create: '/offers'
+  },
   categories: {
     get: '/categories',
     getNames: '/categories/names'

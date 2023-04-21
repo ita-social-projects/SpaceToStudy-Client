@@ -34,3 +34,13 @@ export const parseQueryParams = (
 
   return result
 }
+
+export const getEmptyValues = <T extends object, R>(
+  initialValues: T,
+  defaultValue: R
+): { [K in keyof T]: R } => {
+  return Object.keys(initialValues).reduce(
+    (acc, key) => ({ ...acc, [key]: defaultValue }),
+    {} as { [K in keyof T]: R }
+  )
+}

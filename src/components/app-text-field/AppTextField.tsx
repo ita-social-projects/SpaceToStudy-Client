@@ -10,7 +10,11 @@ interface AppTextFieldProps
   errorMsg?: string
 }
 
-const AppTextField: FC<AppTextFieldProps> = ({ errorMsg, ...props }) => {
+const AppTextField: FC<AppTextFieldProps> = ({
+  errorMsg,
+  multiline,
+  ...props
+}) => {
   const helperText = errorMsg ? (
     <Tooltip title={errorMsg}>
       <Typography variant='caption'>{errorMsg}</Typography>
@@ -21,9 +25,10 @@ const AppTextField: FC<AppTextFieldProps> = ({ errorMsg, ...props }) => {
 
   return (
     <TextField
-      FormHelperTextProps={{ sx: styles.helperText }}
+      FormHelperTextProps={{ sx: styles.helperText(multiline) }}
       error={Boolean(errorMsg)}
       helperText={helperText}
+      multiline={multiline}
       {...props}
     />
   )

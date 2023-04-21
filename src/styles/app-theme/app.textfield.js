@@ -6,6 +6,7 @@ export const textField = {
     root: {
       ...textfieldScrollbar,
       '& label': {
+        lineHeight: 'inherit',
         '&.Mui-focused': {
           color: palette.primary[900]
         },
@@ -14,7 +15,14 @@ export const textField = {
         },
         color: palette.primary[500]
       },
-      '& .MuiOutlinedInput-root': {
+      '& .MuiAutocomplete-inputRoot.MuiOutlinedInput-root ': {
+        padding: '5px'
+      },
+      '& .MuiInputBase-input': {
+        padding: '12.5px 14px',
+        '&.MuiInputBase-inputMultiline': {
+          padding: 0
+        },
         '& fieldset': {
           borderColor: palette.primary[500]
         },

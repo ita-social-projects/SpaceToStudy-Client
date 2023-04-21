@@ -1,12 +1,19 @@
+import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-
 import Box from '@mui/material/Box'
-import TitleWithDescription from '../title-with-description/TitleWithDescription'
 
-import { styles } from '~/components/title-block/TitleBlock.styles'
+import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import useBreakpoints from '~/hooks/use-breakpoints'
 
-const TitleBlock = ({ img, translationKey, children }) => {
+import { styles } from '~/components/title-block/TitleBlock.styles'
+
+type TitleBlockProps = {
+  img: string
+  translationKey: string
+  children: React.ReactNode
+}
+
+const TitleBlock: FC<TitleBlockProps> = ({ img, translationKey, children }) => {
   const { t } = useTranslation()
   const { isDesktop } = useBreakpoints()
 

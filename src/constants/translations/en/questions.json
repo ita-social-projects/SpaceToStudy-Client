@@ -1,3 +1,4 @@
 {
-  "confirmation": "Do you want to exit this page?"
+  "confirmation": "Do you want to exit this page?",
+  "unsavedChanges": "Are you certain you want to close? Any unsaved changes will be lost"
 }

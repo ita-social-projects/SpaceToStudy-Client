@@ -23,3 +23,12 @@ export interface FindOffersFiltersActions {
   resetFilters: () => void
   updateQueryParams: () => void
 }
+
+export interface CreateOfferBlockProps<T> {
+  data: T
+  errors: { [K in keyof T]: string }
+  handleNonInputValueChange: <K extends keyof T>(key: K, value: T[K]) => void
+  handleBlur: (
+    key: keyof T
+  ) => (event: React.FocusEvent<HTMLInputElement>) => void
+}

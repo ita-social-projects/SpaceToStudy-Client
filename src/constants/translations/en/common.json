@@ -43,7 +43,9 @@
     "nameAlphabeticOnly": "This field can contain alphabetic characters only",
     "passwordsDontMatch": "Passwords do not match",
     "shortText": "This text is too short",
-    "longText": "This text is too long"
+    "longText": "This text is too long",
+    "numbersOnly": "Please enter a valid number",
+    "positiveNumbersOnly": "Please enter a positive number"
   },
   "levels": {
     "beginner": "Beginner",

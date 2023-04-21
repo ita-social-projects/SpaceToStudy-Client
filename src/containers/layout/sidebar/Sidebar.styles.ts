@@ -1,13 +1,16 @@
 export const styles = {
   list: {
-    mt: '54px',
+    mt: '30px',
     p: 0,
-    width: '311px'
+    width: '248px'
   },
-  listItem: {
-    padding: '10px 8px',
+  listTitle: {
+    py: '10px',
     textDecoration: 'none',
     typography: 'midTitle',
     color: 'primary.900'
+  },
+  listItem: {
+    px: 0
   }
 }

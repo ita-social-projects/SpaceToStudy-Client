@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux'
 import useForm from '~/hooks/use-form'
 import useConfirm from '~/hooks/use-confirm'
 import { ModalContext } from '~/context/modal-context'
-import { SnackBarContext } from '~/context/snackbar-context'
+import { useSnackBarContext } from '~/context/snackbar-context'
 
 import {
   firstName,
@@ -34,12 +34,12 @@ const SignupDialog = ({ type }) => {
   const { t } = useTranslation()
   const { setNeedConfirmation } = useConfirm()
   const { openModal, closeModal } = useContext(ModalContext)
-  const { setAlert } = useContext(SnackBarContext)
+  const { setAlert } = useSnackBarContext()
   const dispatch = useDispatch()
 
   const signupImg = { student, tutor }
 
-  const { handleSubmit, handleChange, handleBlur, data, isDirty, errors } =
+  const { handleSubmit, handleInputChange, handleBlur, data, isDirty, errors } =
     useForm({
       onSubmit: async () => {
         try {
@@ -114,7 +114,7 @@ const SignupDialog = ({ type }) => {
             data={data}
             errors={errors}
             handleBlur={handleBlur}
-            handleChange={handleChange}
+            handleChange={handleInputChange}
             handleSubmit={handleSubmit}
           />
           <GoogleLogin

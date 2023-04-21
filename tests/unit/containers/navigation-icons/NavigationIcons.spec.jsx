@@ -24,7 +24,7 @@ describe('test with guest role', () => {
     renderWithProviders(
       <SnackBarProvider>
         <ModalProvider>
-          <NavigationIcons setIsSidebarOpen={ setIsSidebarOpen } />
+          <NavigationIcons setSidebarOpen={ setIsSidebarOpen } />
         </ModalProvider>
       </SnackBarProvider>,
       { preloadedState }
@@ -43,7 +43,7 @@ describe('test with guest role', () => {
     const menuIcon = screen.getByTestId('MenuIcon')
     fireEvent.click(menuIcon)
 
-    expect(setIsSidebarOpen).toBeCalledWith(true)
+    expect(setIsSidebarOpen).toBeCalled()
   })
 })
 
@@ -52,7 +52,7 @@ describe('test with student role', () => {
   beforeEach(() => {
     renderWithProviders(
       <ModalProvider>
-        <NavigationIcons setIsSidebarOpen={ setIsSidebarOpen } />
+        <NavigationIcons setSidebarOpen={ setIsSidebarOpen } />
       </ModalProvider>,
       { preloadedState }
     )

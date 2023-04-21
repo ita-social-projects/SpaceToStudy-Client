@@ -1,6 +1,6 @@
 export const styles = {
   container: {
-    pt: 6,
-    flex: 1
+    flex: 1,
+    mt: '80px'
   }
 }
