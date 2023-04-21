@@ -6,3 +6,9 @@ export enum ProficiencyLevelEnums {
   Professional = 'Professional',
   Specialized = 'Specialized'
 }
+
+export enum Size {
+  Medium = 'medium',
+  Large = 'large',
+  Small = 'small'
+}

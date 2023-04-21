@@ -1,9 +1,21 @@
+import { ChangeEvent, FC } from 'react'
+
 import Pagination from '@mui/material/Pagination'
 import Box from '@mui/system/Box'
+
+import { Size } from '~/types'
 import { styles } from '~/components/app-pagination/AppPagination.styles'
 
-const AppPagination = ({
-  size = 'medium',
+interface AppPaginationProps {
+  size?: Size
+  page: number
+  itemsCount: number
+  pageSize: number
+  setCurrentPage: (page: number) => void
+}
+
+const AppPagination: FC<AppPaginationProps> = ({
+  size = Size.Medium,
   page,
   itemsCount,
   pageSize,
@@ -11,7 +23,7 @@ const AppPagination = ({
 }) => {
   const pageCount = Math.ceil(itemsCount / pageSize)
 
-  const handlePageChange = (event, page) => {
+  const handlePageChange = (_event: ChangeEvent<unknown>, page: number) => {
     setCurrentPage(page)
   }
 
