@@ -12,7 +12,7 @@ import { translationKey } from '~/containers/find-offer/constants'
 const OfferRequestBlock = () => {
   const { t } = useTranslation()
   const { isMobile } = useBreakpoints()
-  const { openDrawer, closeDrawer, open } = useDrawer()
+  const { openDrawer, closeDrawer, isOpen } = useDrawer()
 
   const handleOpenDrawer = () => {
     openDrawer()
@@ -27,7 +27,7 @@ const OfferRequestBlock = () => {
       >
         {t(`${translationKey}.button`)}
       </AppButton>
-      <AppDrawer onClose={closeDrawer} open={open}>
+      <AppDrawer onClose={closeDrawer} open={isOpen}>
         <CreateOffer closeDrawer={closeDrawer} />
       </AppDrawer>
     </TitleBlock>

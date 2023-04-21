@@ -27,7 +27,7 @@ const Navbar = () => {
     Object.values(guestRoutes.navBar)
   )
   const { userRole } = useSelector((state) => state.appMain)
-  const { openDrawer, closeDrawer, open } = useDrawer()
+  const { openDrawer, closeDrawer, isOpen } = useDrawer()
   const { t } = useTranslation()
 
   useEffect(() => {
@@ -71,7 +71,7 @@ const Navbar = () => {
       <List sx={styles.navList}>{navigationList}</List>
 
       <NavigationIcons setSidebarOpen={handleOpenSidebar} />
-      <AppDrawer onClose={closeDrawer} open={open}>
+      <AppDrawer onClose={closeDrawer} open={isOpen}>
         <Sidebar navigationItems={navigationItems} onClose={closeDrawer} />
       </AppDrawer>
     </Box>

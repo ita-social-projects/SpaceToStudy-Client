@@ -26,7 +26,7 @@ import {
 
 const FindOffers = () => {
   const [currentPage, setCurrentPage] = useState(1)
-  const { openDrawer, closeDrawer, open } = useDrawer()
+  const { openDrawer, closeDrawer, isOpen } = useDrawer()
   const { filters, countActiveFilters, filterQueryActions } = useFilterQuery({
     defaultFilters
   })
@@ -55,7 +55,7 @@ const FindOffers = () => {
     console.log(id)
   }
 
-  const toggleFiltersOpen = () => (open ? closeDrawer() : openDrawer())
+  const toggleFiltersOpen = () => (isOpen ? closeDrawer() : openDrawer())
 
   const handleShowingTutorOffers = () => setShowingTutorOffers((prev) => !prev)
 
@@ -66,7 +66,7 @@ const FindOffers = () => {
       filterActions={filterQueryActions}
       filters={filters}
       onToggleTutorOffers={handleShowingTutorOffers}
-      open={open}
+      open={isOpen}
       showingTutorOffers={showingTutorOffers}
     />
   )
@@ -86,7 +86,7 @@ const FindOffers = () => {
         {!isMobile ? (
           filtersComponent
         ) : (
-          <AppDrawer onClose={closeDrawer} open={open}>
+          <AppDrawer onClose={closeDrawer} open={isOpen}>
             {filtersComponent}
           </AppDrawer>
         )}

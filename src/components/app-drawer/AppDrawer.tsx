@@ -16,7 +16,6 @@ const AppDrawer: FC<AppDrawerProps> = ({
   children,
   onClose,
   anchor = 'right',
-  open,
   closeIcon = true,
   ...props
 }) => {
@@ -37,7 +36,6 @@ const AppDrawer: FC<AppDrawerProps> = ({
       PaperProps={{ sx: styles.root }}
       anchor={anchor}
       onClose={() => void handleCloseDrawer()}
-      open={open}
       {...props}
     >
       {closeIcon && (
