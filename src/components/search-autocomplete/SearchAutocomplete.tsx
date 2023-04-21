@@ -104,7 +104,7 @@ const SearchAutocomplete = ({
         onClick={onSearch}
         size={isMobile ? 'small' : 'large'}
         sx={styles.searchBtn}
-        variant='contained'
+        variant='containedLight'
       >
         {isMobile ? <SearchIcon /> : t('common.search')}
       </Button>
