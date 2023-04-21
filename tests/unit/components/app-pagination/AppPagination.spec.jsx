@@ -8,7 +8,7 @@ describe('AppPagination', () => {
   beforeEach(() => {
     render(<AppPagination
       itemsCount={100} page={1} itemsPerPage={5}
-      setCurrentPage={setCurrentPage}
+      onChange={setCurrentPage}
     />)
   })
 

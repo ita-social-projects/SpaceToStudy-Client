@@ -16,9 +16,9 @@ export default {
       type: 'number',
       description: 'Set number of items'
     },
-    setCurrentPage: {
+    onChange: {
       type: 'function',
-      action: 'setCurrentPage',
+      action: 'onChange',
       description: 'Function that handles delete'
     },
     size: {
@@ -38,5 +38,5 @@ Default.args = {
   itemsCount: 100,
   itemsPerPage: 5,
   size: 'medium',
-  setCurrentPage: undefined
+  onChange: undefined
 }

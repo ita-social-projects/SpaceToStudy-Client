@@ -11,7 +11,7 @@ interface AppPaginationProps {
   page: number
   itemsCount: number
   itemsPerPage: number
-  setCurrentPage: (page: number) => void
+  onChange: (page: number) => void
 }
 
 const AppPagination: FC<AppPaginationProps> = ({
@@ -19,12 +19,12 @@ const AppPagination: FC<AppPaginationProps> = ({
   page,
   itemsCount,
   itemsPerPage,
-  setCurrentPage
+  onChange
 }) => {
   const pageCount = Math.ceil(itemsCount / itemsPerPage)
 
   const handlePageChange = (_event: ChangeEvent<unknown>, page: number) => {
-    setCurrentPage(page)
+    onChange(page)
   }
 
   return (
