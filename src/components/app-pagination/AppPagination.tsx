@@ -3,11 +3,11 @@ import { ChangeEvent, FC } from 'react'
 import Pagination from '@mui/material/Pagination'
 import Box from '@mui/system/Box'
 
-import { Size } from '~/types'
+import { SizeEnums } from '~/types'
 import { styles } from '~/components/app-pagination/AppPagination.styles'
 
 interface AppPaginationProps {
-  size?: Size
+  size?: SizeEnums
   page: number
   itemsCount: number
   pageSize: number
@@ -15,7 +15,7 @@ interface AppPaginationProps {
 }
 
 const AppPagination: FC<AppPaginationProps> = ({
-  size = Size.Medium,
+  size = SizeEnums.Medium,
   page,
   itemsCount,
   pageSize,
