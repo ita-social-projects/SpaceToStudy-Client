@@ -83,6 +83,7 @@ const Subjects = () => {
     <Container sx={{ flex: 1, mt: '80px' }}>
       <OfferRequestBlock />
       <TitleWithDescription
+        componentStyles={styles.componentStyles}
         description={t('subjectsPage.subjects.description')}
         descriptionStyles={styles.sectionDescription}
         title={t('subjectsPage.subjects.title', {

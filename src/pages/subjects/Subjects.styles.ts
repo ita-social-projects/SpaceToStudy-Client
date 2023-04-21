@@ -15,7 +15,7 @@ export const styles = {
   },
   categoryInput: {
     width: '100%',
-    maxWidth: { sm: '220px' },
+    maxWidth: { sm: '160px', md: '220px' },
     mr: '30px',
     '& .MuiOutlinedInput-root': {
       padding: '5px 9px'
