@@ -23,6 +23,7 @@ import SearchIcon from '@mui/icons-material/Search'
 import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { styles } from '~/components/search-autocomplete/SearchAutocomplete.styles'
+import { SizeEnum, VariantEnum, VisibilityEnum } from '~/types'
 
 interface SearchAutocompleteProps
   extends Omit<AutocompleteProps<string, false, true, true>, 'renderInput'> {
@@ -38,9 +39,13 @@ const SearchAutocomplete = ({
   textFieldProps,
   ...props
 }: SearchAutocompleteProps) => {
+  const [searchInput, setSearchInput] = useState<string>(search)
+
   const { t } = useTranslation()
   const { isMobile } = useBreakpoints()
-  const [searchInput, setSearchInput] = useState<string>(search)
+  const { Small, Large } = SizeEnum
+  const { ContainedLight, Standard } = VariantEnum
+  const { Visible, Hidden } = VisibilityEnum
 
   const filterOptions = (
     options: string[],
@@ -69,9 +74,9 @@ const SearchAutocomplete = ({
 
   const labelStyle = {
     ...styles.inputLabel,
-    visibility: searchInput && 'hidden'
+    visibility: searchInput && Hidden
   }
-  const clearIconVisibility = { visibility: searchInput ? 'visible' : 'hidden' }
+  const clearIconVisibility = { visibility: searchInput ? Visible : Hidden }
 
   return (
     <Box sx={styles.container}>
@@ -89,7 +94,7 @@ const SearchAutocomplete = ({
           InputLabelProps: { style: labelStyle, shrink: false },
           InputProps: { disableUnderline: true },
           onKeyDown: onEnterPress,
-          variant: 'standard',
+          variant: Standard,
           sx: styles.input,
           ...textFieldProps
         }}
@@ -97,14 +102,14 @@ const SearchAutocomplete = ({
       />
 
       <IconButton onClick={onClear} sx={clearIconVisibility}>
-        <ClearIcon fontSize='small' />
+        <ClearIcon fontSize={Small} />
       </IconButton>
 
       <Button
         onClick={onSearch}
-        size={isMobile ? 'small' : 'large'}
+        size={isMobile ? Small : Large}
         sx={styles.searchBtn}
-        variant='containedLight'
+        variant={ContainedLight}
       >
         {isMobile ? <SearchIcon /> : t('common.search')}
       </Button>
