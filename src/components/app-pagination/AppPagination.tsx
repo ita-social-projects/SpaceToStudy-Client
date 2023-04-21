@@ -1,14 +1,14 @@
 import { ChangeEvent, FC } from 'react'
 
-import Pagination from '@mui/material/Pagination'
+import Pagination, { PaginationProps } from '@mui/material/Pagination'
 import Box from '@mui/system/Box'
 
 import { SizeEnums } from '~/types'
 import { styles } from '~/components/app-pagination/AppPagination.styles'
 
-interface AppPaginationProps {
+interface AppPaginationProps
+  extends Omit<PaginationProps, 'page' | 'onChange'> {
   size?: SizeEnums
-  page: number
   itemsCount: number
   itemsPerPage: number
   onChange: (page: number) => void
@@ -16,10 +16,10 @@ interface AppPaginationProps {
 
 const AppPagination: FC<AppPaginationProps> = ({
   size = SizeEnums.Medium,
-  page,
   itemsCount,
   itemsPerPage,
-  onChange
+  onChange,
+  ...props
 }) => {
   const pageCount = Math.ceil(itemsCount / itemsPerPage)
 
@@ -33,8 +33,8 @@ const AppPagination: FC<AppPaginationProps> = ({
         count={pageCount}
         defaultPage={1}
         onChange={handlePageChange}
-        page={page}
         size={size}
+        {...props}
       />
     </Box>
   )
