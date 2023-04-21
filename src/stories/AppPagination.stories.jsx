@@ -12,7 +12,7 @@ export default {
       type: 'number',
       description: 'Label of the chip'
     },
-    pageSize: {
+    itemsPerPage: {
       type: 'number',
       description: 'Set number of items'
     },
@@ -36,7 +36,7 @@ export const Default = Template.bind({})
 Default.args = {
   page: 1,
   itemsCount: 100,
-  pageSize: 5,
+  itemsPerPage: 5,
   size: 'medium',
   setCurrentPage: undefined
 }
