@@ -9,8 +9,21 @@ import Typography from '@mui/material/Typography'
 import CloseIcon from '@mui/icons-material/Close'
 
 import { styles } from '~/components/confirm-dialog/ConfirmDialog.styles'
+import { FC } from 'react'
 
-const ConfirmDialog = ({ message, title, open, onConfirm, onDismiss }) => {
+interface ConfirmDialogProps {
+  message: string
+  title: string
+  open: () => void
+}
+
+const ConfirmDialog: FC<ConfirmDialogProps> = ({
+  message,
+  title,
+  open,
+  onConfirm,
+  onDismiss
+}) => {
   const { t } = useTranslation()
 
   return (
