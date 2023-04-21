@@ -3,9 +3,10 @@ export const styles = {
     display: 'flex',
     justifyContent: 'end',
     alignItems: 'center',
-    columnGap: '10px',
+    columnGap: { sm: '10px' },
     color: 'primary.500',
+    fontWeight: '500',
     textDecoration: 'none',
-    m: '0 45px 20px'
+    m: { xs: '4px 0', sm: '0 45px 20px' }
   }
 }

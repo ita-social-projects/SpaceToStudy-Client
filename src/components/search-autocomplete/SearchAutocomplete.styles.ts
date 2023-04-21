@@ -28,6 +28,8 @@ export const styles = {
     top: '8px'
   },
   searchBtn: {
-    ml: '25px'
+    minWidth: { xs: '44px' },
+    p: { xs: '7px 12px', sm: '12px 24px' },
+    ml: { xs: '5px', sm: '25px' }
   }
 }

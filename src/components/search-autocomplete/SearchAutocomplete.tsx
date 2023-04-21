@@ -21,6 +21,7 @@ import ClearIcon from '@mui/icons-material/Clear'
 import SearchIcon from '@mui/icons-material/Search'
 
 import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
+import useBreakpoints from '~/hooks/use-breakpoints'
 import { styles } from '~/components/search-autocomplete/SearchAutocomplete.styles'
 
 interface SearchAutocompleteProps
@@ -38,6 +39,7 @@ const SearchAutocomplete = ({
   ...props
 }: SearchAutocompleteProps) => {
   const { t } = useTranslation()
+  const { isMobile } = useBreakpoints()
   const [searchInput, setSearchInput] = useState<string>(search)
 
   const filterOptions = (
@@ -73,7 +75,7 @@ const SearchAutocomplete = ({
 
   return (
     <Box sx={styles.container}>
-      <SearchIcon sx={styles.searchIcon} />
+      {!isMobile && <SearchIcon sx={styles.searchIcon} />}
 
       <AppAutoComplete
         ListboxProps={{ style: styles.listBox }}
@@ -100,11 +102,11 @@ const SearchAutocomplete = ({
 
       <Button
         onClick={onSearch}
-        size='large'
+        size={isMobile ? 'small' : 'large'}
         sx={styles.searchBtn}
         variant='contained'
       >
-        {t('common.search')}
+        {isMobile ? <SearchIcon /> : t('common.search')}
       </Button>
     </Box>
   )

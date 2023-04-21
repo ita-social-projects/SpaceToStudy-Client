@@ -6,7 +6,7 @@ export const styles = {
     display: 'flex',
     alignItems: 'center',
     boxShadow: commonShadow,
-    mb: '50px',
-    p: '30px 45px'
+    mb: { xs: '20px', sm: '50px' },
+    p: { xs: '10px 14px', sm: '30px 45px' }
   }
 }

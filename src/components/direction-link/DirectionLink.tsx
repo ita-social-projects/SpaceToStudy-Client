@@ -4,6 +4,7 @@ import Typography from '@mui/material/Typography'
 
 import HashLink from '~/components/hash-link/HashLink'
 import { styles } from '~/components/direction-link/DirectionLink.styles'
+import useBreakpoints from '~/hooks/use-breakpoints'
 
 interface DirectionLinkProps {
   linkTo: string
@@ -18,12 +19,13 @@ const DirectionLink: FC<DirectionLinkProps> = ({
   before,
   after
 }) => {
+  const { isMobile } = useBreakpoints()
   return (
     <Typography
       component={HashLink}
       sx={styles.showAllOffers}
       to={linkTo}
-      variant='button'
+      variant={isMobile ? 'caption' : 'button'}
     >
       {before}
       {title}

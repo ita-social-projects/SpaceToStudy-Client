@@ -1,10 +1,21 @@
 export const styles = {
+  container: {
+    flexDirection: 'column',
+    alignItems: 'stretch',
+    mt: '80px'
+  },
+  componentStyles: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    mb: { xs: '20px', sx: '30px' }
+  },
   sectionTitle: {
     typography: { sm: 'h4', xs: 'h5' }
   },
   categoryInput: {
     width: '100%',
-    maxWidth: '220px',
+    maxWidth: { sm: '220px' },
     mr: '30px',
     '& .MuiOutlinedInput-root': {
       padding: '5px 9px'
@@ -18,6 +29,7 @@ export const styles = {
     justifyContent: 'space-between'
   },
   sectionDescription: {
+    maxWidth: { xs: '200px', sm: '100%' },
     typography: { sm: 'body1', xs: 'body2' }
   },
   searchToolbar: {
