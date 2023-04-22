@@ -1,23 +1,20 @@
 import { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { useAppDispatch } from '~/hooks/use-redux'
 
-import Loader from '~/components/loader/Loader'
 import { logoutUser } from '~/redux/reducer'
 import { guestRoutes } from '~/router/constants/guestRoutes'
 
 const Logout = () => {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
   useEffect(() => {
-    ;(async () => {
-      await dispatch(logoutUser()).unwrap()
-      navigate(guestRoutes.home.route)
-    })()
+    void dispatch(logoutUser())
+    navigate(guestRoutes.home.route)
   }, [dispatch, navigate])
 
-  return <Loader size={70} />
+  return null
 }
 
 export default Logout

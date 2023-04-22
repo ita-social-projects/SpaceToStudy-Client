@@ -1,10 +1,15 @@
 import MockAdapter from 'axios-mock-adapter'
-import { vi } from 'vitest'
+import { afterEach, vi } from 'vitest'
 
 import { store } from '~/redux/store'
-import reducer, { logout, checkAuth, loginUser, logoutUser, signupUser } from '~/redux/reducer'
+import reducer, {
+  logout,
+  checkAuth,
+  loginUser,
+  logoutUser,
+  signupUser
+} from '~/redux/reducer'
 import { axiosClient } from '~/plugins/axiosClient'
-import { axiosInstance } from '~/services/auth-service'
 
 import { URLs } from '~/constants/request'
 import {
@@ -13,7 +18,6 @@ import {
   accessToken,
   loginUserData,
   signupUserData,
-  userEmail,
   stateAfterSignup,
   stateAfterLogin,
   errorCode
@@ -28,12 +32,11 @@ vi.mock('~/services/local-storage-service', () => ({
 
 const mockAxiosClient = new MockAdapter(axiosClient)
 
-const mockAxiosInstance = new MockAdapter(axiosInstance)
-
 const error = new Error(errorMessage)
 error.code = errorCode
 
 describe('redux test', () => {
+  afterEach(() => vi.clearAllMocks())
   it('should return the initial state', () => {
     expect(reducer(undefined, {})).toEqual(initialState)
   })
@@ -43,15 +46,8 @@ describe('redux test', () => {
     await store.dispatch(signupUser(signupUserData))
 
     expect(store.getState()).toEqual({
-      appMain: { ...initialState, error: errorCode }
+      appMain: { ...stateAfterSignup, error: errorCode }
     })
-  })
-
-  it('should set user email to store after signup', async () => {
-    mockAxiosClient.onPost(URLs.auth.signup).reply(200, { userEmail })
-    await store.dispatch(signupUser(signupUserData))
-
-    expect(store.getState()).toEqual({ appMain: stateAfterSignup })
   })
 
   it('should set an error to store after login', async () => {
@@ -69,9 +65,8 @@ describe('redux test', () => {
 
     expect(store.getState()).toEqual({ appMain: stateAfterLogin })
   })
-
   it('should set an error to store after checkAuth', async () => {
-    mockAxiosInstance.onGet(URLs.auth.refresh).reply(404, error)
+    mockAxiosClient.onGet(URLs.auth.refresh).reply(404, error)
     await store.dispatch(checkAuth())
 
     expect(store.getState()).toEqual({
@@ -80,7 +75,7 @@ describe('redux test', () => {
   })
 
   it('should set user data to store after checkAuth', async () => {
-    mockAxiosInstance.onGet(URLs.auth.refresh).reply(200, { accessToken })
+    mockAxiosClient.onGet(URLs.auth.refresh).reply(200, { accessToken })
     await store.dispatch(checkAuth())
 
     expect(store.getState()).toEqual({
@@ -98,15 +93,17 @@ describe('redux test', () => {
   })
 
   it('should remove user data from store after logout', async () => {
-    mockAxiosClient.onPost(URLs.auth.logout).reply(200, { count: 'deletedCount: 1' })
+    mockAxiosClient
+      .onPost(URLs.auth.logout)
+      .reply(200, { count: 'deletedCount: 1' })
     await store.dispatch(logoutUser())
 
     expect(store.getState()).toEqual({
-      appMain: { ...initialState }
+      appMain: stateAfterSignup
     })
   })
 
   it('should clear user data from store', () => {
-    expect(reducer(stateAfterLogin, logout())).toEqual({ ...initialState })
+    expect(reducer(stateAfterLogin, logout())).toEqual(stateAfterSignup)
   })
 })

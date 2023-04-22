@@ -1,5 +1,4 @@
 import { useCallback } from 'react'
-import { useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 
 import Typography from '@mui/material/Typography'
@@ -9,6 +8,7 @@ import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
 import CheckboxList from '~/components/checkbox-list/CheckboxList'
 import { CreateOfferData } from '~/containers/offer-page/create-offer/CreateOffer'
 
+import { useAppSelector } from '~/hooks/use-redux'
 import { levelsTranslationKeys } from '~/containers/find-offer/offer-filter-block/offer-filter-list/OfferFilterList.constants'
 import { CategoryNameInterface, CreateOfferBlockProps } from '~/types'
 import OrderedListItem from '~/components/ordered-list-item/OrderedListItem'
@@ -23,7 +23,7 @@ const SpecializationBlock = <T extends CreateOfferData>({
   handleNonInputValueChange
 }: CreateOfferBlockProps<T>) => {
   const { t } = useTranslation()
-  const { userRole } = useSelector((state) => state.appMain)
+  const { userRole } = useAppSelector((state) => state.appMain)
   const { response: categoriesItems, loading: categoriesLoading } =
     useCategoriesNames()
 

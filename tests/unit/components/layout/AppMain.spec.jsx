@@ -1,11 +1,11 @@
-import {  screen } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 import { vi } from 'vitest'
 import { ModalProvider } from '~/context/modal-context'
 import AppMain from '~/containers/layout/app-main/AppMain'
 import { renderWithProviders } from '~tests/test-utils'
 
 const mockState = {
-  appMain: { loading: true, userRole: '' }
+  appMain: { authLoading: true, userRole: '' }
 }
 
 const mockDispatch = vi.fn()
@@ -39,7 +39,7 @@ describe('AppMain layout component test', () => {
       {
         preloadedState: {
           appMain: {
-            loading: false,
+            authLoading: false,
             userRole: ''
           }
         }

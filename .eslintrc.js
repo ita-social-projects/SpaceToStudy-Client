@@ -76,7 +76,18 @@ module.exports = {
         'plugin:@typescript-eslint/recommended',
         'plugin:@typescript-eslint/recommended-requiring-type-checking'
       ],
-      plugins: ['@typescript-eslint']
+      plugins: ['@typescript-eslint'],
+      rules: {
+        '@typescript-eslint/no-restricted-imports': [
+          'warn',
+          {
+            name: 'react-redux',
+            importNames: ['useSelector', 'useDispatch'],
+            message:
+              'Use typed hooks `useAppDispatch` and `useAppSelector` instead.'
+          }
+        ]
+      }
     },
     {
       files: ['**/tests/**/*.*.js', '**/tests/**/*.js'],

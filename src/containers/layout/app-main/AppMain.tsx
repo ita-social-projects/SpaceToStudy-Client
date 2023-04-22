@@ -1,19 +1,19 @@
 import { Suspense, useLayoutEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { Outlet } from 'react-router-dom'
 
+import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 import Loader from '~/components/loader/Loader'
 import { checkAuth } from '~/redux/reducer'
 
 const AppMain = () => {
-  const { loading } = useSelector((state) => state.appMain)
-  const dispatch = useDispatch()
+  const { authLoading } = useAppSelector((state) => state.appMain)
+  const dispatch = useAppDispatch()
 
   useLayoutEffect(() => {
-    dispatch(checkAuth())
+    void dispatch(checkAuth())
   }, [dispatch])
 
-  if (loading) {
+  if (authLoading) {
     return <Loader pageLoad size={70} />
   }
 
