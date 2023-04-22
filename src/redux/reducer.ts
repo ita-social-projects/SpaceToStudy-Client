@@ -19,12 +19,13 @@ import {
   ErrorResponse,
   GoogleAuthParams,
   LoginParams,
-  SignupParams
+  SignupParams,
+  UserRole
 } from '~/types'
 
 interface UserState {
   userId: string
-  userRole: string
+  userRole: UserRole
   authLoading: boolean
   error: string
   isFirstLogin: boolean
@@ -113,7 +114,7 @@ export const mainSlice = createSlice({
   initialState,
   reducers: {
     setUser(state, action: PayloadAction<string>) {
-      const userData = parseJwt<AccessToken>(action.payload)
+      const userData: AccessToken = parseJwt(action.payload)
       state.userId = userData.id
       state.userRole = userData.role
       state.isFirstLogin = userData.isFirstLogin

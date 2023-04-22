@@ -1,4 +1,11 @@
-import { CreatedAt, LastLogin, Sort, Address, Category } from '~/types'
+import {
+  CreatedAt,
+  LastLogin,
+  Sort,
+  Address,
+  Category,
+  UserRole
+} from '~/types'
 
 export interface LocalStorage {
   accessToken?: string
@@ -10,7 +17,7 @@ export interface GetUsersParams {
   lastLogin: LastLogin
   limit: number
   name: string
-  role: string
+  role: UserRole
   skip: number
   sort: Sort
   status: string[]
@@ -18,7 +25,7 @@ export interface GetUsersParams {
 
 export interface UserResponse {
   _id: string
-  role: string[]
+  role: UserRole[]
   firstName: string
   lastName: string
   email: string
@@ -45,7 +52,7 @@ export interface LoginResponse {
 
 export interface GoogleAuthParams {
   token: string
-  role?: string
+  role?: UserRole
 }
 
 export interface SignupParams {
@@ -54,7 +61,7 @@ export interface SignupParams {
   email: string
   password: string
   confirmPassword: string
-  role: string
+  role: UserRole
 }
 
 export interface SignupRespornse {
@@ -64,6 +71,6 @@ export interface SignupRespornse {
 
 export interface AccessToken {
   id: string
-  role: string
+  role: UserRole
   isFirstLogin: boolean
 }
