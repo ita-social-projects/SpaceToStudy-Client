@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios'
 import { axiosClient } from '~/plugins/axiosClient'
-import { URLs as Urls, URLs } from '~/constants/request'
+import { URLs } from '~/constants/request'
 import {
   GoogleAuthParams,
   LoginParams,
@@ -28,7 +28,7 @@ export const AuthService = {
     return axiosClient.get(URLs.auth.refresh)
   },
   confirmEmail: (confirmToken: string): Promise<AxiosResponse> => {
-    const confirmUrl = `${Urls.auth.confirm}/${confirmToken}`
+    const confirmUrl = `${URLs.auth.confirm}/${confirmToken}`
     return axiosClient.get(confirmUrl)
   },
   forgotPassword: (userEmail: string): Promise<AxiosResponse> => {
@@ -38,7 +38,7 @@ export const AuthService = {
     resetToken: string,
     newPassword: string
   ): Promise<AxiosResponse> => {
-    const confirmUrl = `${Urls.auth.resetPassword}/${resetToken}`
+    const confirmUrl = `${URLs.auth.resetPassword}/${resetToken}`
     return axiosClient.patch(confirmUrl, newPassword)
   }
 }
