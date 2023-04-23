@@ -6,7 +6,7 @@ import Box from '@mui/material/Box'
 
 import Loader from '~/components/loader/Loader'
 import ClickableCard from '~/components/clickable-card/ClickableCard'
-import { guestRoutes } from '~/router/constants/guestRoutes'
+import { authRoutes } from '~/router/constants/authRoutes'
 import { styles } from '~/components/popular-categories/PopularCategories.styles'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import serviceIcon from '~/assets/img/student-home-page/service_icon.png'
@@ -52,7 +52,7 @@ const PopularCategories: FC<PopularCategoriesProps> = ({
             description={`${item.totalOffers} ${t('common.offers')}`}
             img={serviceIcon}
             key={item._id}
-            link={`${guestRoutes.subjects.path}?categoryId=${item._id}`}
+            link={`${authRoutes.subjects.path}?categoryId=${item._id}`}
             title={item.name}
           />
         )
@@ -61,7 +61,7 @@ const PopularCategories: FC<PopularCategoriesProps> = ({
   )
 
   const onClickButton = () => {
-    navigate(guestRoutes.categories.path)
+    navigate(authRoutes.categories.path)
   }
 
   return (
@@ -76,7 +76,6 @@ const PopularCategories: FC<PopularCategoriesProps> = ({
         <Loader size={70} />
       ) : (
         <ClickableCardList
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           btnText={t('common.viewAllName', { name: 'categories' })}
           cards={cards}
           isExpandable

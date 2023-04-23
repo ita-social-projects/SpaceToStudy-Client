@@ -11,7 +11,7 @@ import ClickableCardList from '~/components/clickable-card-list/ClickableCardLis
 import SearchWithFilters from '~/components/search-with-filters/SearchWithFilters'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 
-import { guestRoutes } from '~/router/constants/guestRoutes'
+import { authRoutes } from '~/router/constants/authRoutes'
 import { categoriesListMock } from '~/containers/student-home-page/popular-categories/categories-list-mock'
 import { styles } from '~/containers/categories-page/explore-categories/ExploreCategories.styles'
 
@@ -23,7 +23,7 @@ const ExploreCategories = () => {
   const itemsToShow = (isDesktop && 15) || (isTablet && 6) || (isMobile && 4)
   const itemsToAdd = (isDesktop && 6) || (isTablet && 4) || (isMobile && 4)
 
-  const { path } = guestRoutes.findOffers
+  const { path } = authRoutes.findOffers
   return (
     <Box className='section' sx={styles.container}>
       <TitleWithDescription

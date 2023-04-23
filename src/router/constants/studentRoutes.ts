@@ -1,8 +1,8 @@
-import { guestRoutes } from '~/router/constants/guestRoutes'
+import { authRoutes } from '~/router/constants/authRoutes'
 
 export const studentRoutes = {
   navBar: {
-    categories: { route: 'categories', path: guestRoutes.categories.path },
+    categories: { route: 'categories', path: authRoutes.categories.path },
     howItWorks: { route: 'howItWorks', path: '/student/#howItWorks' },
     faq: { route: 'faq', path: '/student/#faq' }
   },

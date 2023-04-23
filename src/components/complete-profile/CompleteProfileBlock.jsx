@@ -16,7 +16,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import AppProgressBar from '~/components/app-progress-bar-line/AppProgressBarLine.jsx'
 import ProfileItem from '~/components/profile-item/ProfileItem.jsx'
 import { styles } from '~/components/complete-profile/CompleteProfileBlock.styles.js'
-import { studentRoutes } from '~/router/constants/studentRoutes.js'
+import { studentRoutes } from '~/router/constants/studentRoutes'
 import { guestRoutes } from '~/router/constants/guestRoutes'
 import useBreakpoints from '~/hooks/use-breakpoints'
 

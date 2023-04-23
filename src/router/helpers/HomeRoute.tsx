@@ -6,7 +6,7 @@ import { guestRoutes } from '~/router/constants/guestRoutes'
 
 const GuestHomePage = lazy(() => import('~/pages/guest-home-page/GuestHome'))
 
-const GuestRoute = () => {
+const HomeRoute = () => {
   const navigate = useNavigate()
   const { userRole } = useSelector((state) => state.appMain)
 
@@ -19,4 +19,4 @@ const GuestRoute = () => {
   return <GuestHomePage />
 }
 
-export default GuestRoute
+export default HomeRoute

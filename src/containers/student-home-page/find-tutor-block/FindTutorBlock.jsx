@@ -12,7 +12,7 @@ import useBreakpoints from '~/hooks/use-breakpoints'
 import { styles } from '~/containers/student-home-page/find-tutor-block/find-tutor-block.styles'
 import bag from '~/assets/img/student-home/bag.png'
 import { translationKey } from '~/containers/student-home-page/find-tutor-block/constants'
-import { guestRoutes } from '~/router/constants/guestRoutes'
+import { authRoutes } from '~/router/constants/authRoutes'
 
 const FindTutorBlock = () => {
   const [filter, setFilter] = useState('')
@@ -25,7 +25,7 @@ const FindTutorBlock = () => {
   }
 
   const redirect = useCallback(() => {
-    return navigate(guestRoutes.findOffers.path, { state: { filter } })
+    return navigate(authRoutes.findOffers.path, { state: { filter } })
   }, [filter, navigate])
 
   const handleEnterPress = useCallback(
