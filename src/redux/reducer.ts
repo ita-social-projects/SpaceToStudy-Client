@@ -25,7 +25,7 @@ import {
 
 interface UserState {
   userId: string
-  userRole: UserRole
+  userRole: UserRole | ''
   authLoading: boolean
   error: string
   isFirstLogin: boolean
