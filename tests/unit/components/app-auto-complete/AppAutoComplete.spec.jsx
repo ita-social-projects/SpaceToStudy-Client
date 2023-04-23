@@ -13,14 +13,14 @@ describe('AppAutoComplete test', () => {
   beforeEach(() => {
     renderWithProviders(
       <AppAutoComplete
-        onChange={ onChange }
-        options={ options }
-        sx={ styles }
-        textFieldProps={ {
+        onChange={onChange}
+        options={options}
+        sx={styles}
+        textFieldProps={{
           label: label
-        } }
+        }}
         type='text'
-        value={ value }
+        value={value}
       />
     )
   })

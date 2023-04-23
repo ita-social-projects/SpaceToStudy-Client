@@ -1,4 +1,7 @@
 export const styles = {
+  container: {
+    minHeight: '500px'
+  },
   cardsContainer: {
     display: 'grid',
     justifyContent: 'center',
@@ -12,6 +15,7 @@ export const styles = {
     mb: '32px'
   },
   btn: {
+    minWidth: '148px',
     display: 'block',
     m: '0 auto'
   }

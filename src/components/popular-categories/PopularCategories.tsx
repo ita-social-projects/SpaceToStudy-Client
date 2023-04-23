@@ -86,7 +86,6 @@ const PopularCategories: FC<PopularCategoriesProps> = ({
         <ClickableCardList
           btnText={t('common.viewAllName', { name: 'categories' })}
           cards={cards}
-          isExpandable
           onClick={onClickButton}
         />
       )}

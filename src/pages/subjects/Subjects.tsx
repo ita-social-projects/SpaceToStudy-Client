@@ -31,7 +31,7 @@ const Subjects = () => {
   const categoryId = searchParams.get('categoryId')
 
   const { loading: categoriesNamesLoading, response: categoriesNamesItems } =
-    useCategoriesNames()
+    useCategoriesNames({})
 
   const transform = useCallback(
     (data: SubjectNameInterface[]): string[] => mapArrayByField(data, 'name'),

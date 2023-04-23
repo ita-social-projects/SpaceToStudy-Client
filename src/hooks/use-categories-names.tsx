@@ -5,25 +5,35 @@ import useAxios from '~/hooks/use-axios'
 import { categoryService } from '~/services/category-service'
 import { CategoryNameInterface, ErrorResponse } from '~/types'
 
-interface UseCategoriesNamesResult {
+interface UseCategoriesNamesResult<T> {
   loading: boolean
-  response: CategoryNameInterface[]
+  response: T[]
   fetchData: () => Promise<void>
   error: ErrorResponse | null
 }
 
-const useCategoriesNames = (fetchOnMount = true): UseCategoriesNamesResult => {
+interface UseCategoriesNamesProps<T> {
+  fetchOnMount?: boolean
+  transform?: (data: CategoryNameInterface[]) => T[]
+}
+
+const useCategoriesNames = <T = CategoryNameInterface,>({
+  fetchOnMount = true,
+  transform
+}: UseCategoriesNamesProps<T>): UseCategoriesNamesResult<T> => {
   const getCategoriesNames = useCallback(
     () => categoryService.getCategoriesNames(),
     []
   )
 
   const { loading, response, fetchData, error } = useAxios<
-    CategoryNameInterface[]
+    CategoryNameInterface[],
+    T[]
   >({
     service: getCategoriesNames,
     fetchOnMount,
-    defaultResponse: defaultResponses.array
+    defaultResponse: defaultResponses.array,
+    transform
   })
 
   return { loading, response, fetchData, error }
