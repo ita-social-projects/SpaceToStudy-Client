@@ -1,9 +1,9 @@
-import { useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 
+import { useAppSelector } from '~/hooks/use-redux'
 import UAH_icon from '~/assets/img/find-offer/currency_uah.svg'
 import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
 import AppTextField from '~/components/app-text-field/AppTextField'
@@ -29,7 +29,7 @@ const TeachingBlock = <T extends CreateOfferData>({
   handleInputChange,
   handleNonInputValueChange
 }: TeachingBlockProps<T>) => {
-  const { userRole } = useSelector((state) => state.appMain)
+  const { userRole } = useAppSelector((state) => state.appMain)
 
   const { t } = useTranslation()
 

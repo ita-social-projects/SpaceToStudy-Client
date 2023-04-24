@@ -1,12 +1,12 @@
 import { FC, useEffect } from 'react'
 import { AxiosResponse } from 'axios'
-import { useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 
 import LeakAddSharpIcon from '@mui/icons-material/LeakAddSharp'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 
+import { useAppSelector } from '~/hooks/use-redux'
 import useForm from '~/hooks/use-form'
 import useConfirm from '~/hooks/use-confirm'
 import useAxios from '~/hooks/use-axios'
@@ -38,7 +38,7 @@ interface CreateOfferProps {
 }
 
 const CreateOffer: FC<CreateOfferProps> = ({ closeDrawer }) => {
-  const { userRole } = useSelector((state) => state.appMain)
+  const { userRole } = useAppSelector((state) => state.appMain)
   const { setNeedConfirmation } = useConfirm()
   const { setAlert } = useSnackBarContext()
 

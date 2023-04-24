@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios'
 import { axiosClient } from '~/plugins/axiosClient'
 import { URLs } from '~/constants/request'
-import { GetUsersParams, UserResponse } from '~/types'
+import { GetUsersParams, UserResponse, UserRole } from '~/types'
 
 export const userService = {
   getUsers: async (
@@ -11,7 +11,7 @@ export const userService = {
   },
   getUserById: (
     userId: string,
-    userRole: string
+    userRole: UserRole
   ): Promise<AxiosResponse<UserResponse>> => {
     return axiosClient.get(`${URLs.users.get}/${userId}?role=${userRole}`)
   },

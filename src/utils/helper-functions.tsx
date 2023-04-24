@@ -1,7 +1,7 @@
 import { URLSearchParams } from 'node:url'
 import { FilterFromQuery, FindOffersFilters } from '~/types'
 
-export const parseJwt = (token: string) => {
+export const parseJwt = <T,>(token: string): T => {
   const base64Url = token.split('.')[1]
   const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
   const jsonPayload = decodeURIComponent(
@@ -14,7 +14,7 @@ export const parseJwt = (token: string) => {
       .join('')
   )
 
-  return JSON.parse(jsonPayload) as object
+  return JSON.parse(jsonPayload) as T
 }
 
 export const parseQueryParams = (

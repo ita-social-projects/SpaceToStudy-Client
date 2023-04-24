@@ -1,34 +1,29 @@
-import { screen } from '@testing-library/react'
-import { renderWithProviders } from '~tests/test-utils'
+import { render, waitFor } from '@testing-library/react'
+import { useNavigate } from 'react-router-dom'
+import { useAppDispatch } from '~/hooks/use-redux'
+import { guestRoutes } from '~/router/constants/guestRoutes'
 import Logout from '~/pages/logout/Logout'
-import { vi } from 'vitest'
 
-const mockDispatch = vi.fn()
+vi.mock('react-router-dom', () => ({
+  useNavigate: vi.fn()
+}))
 
-vi.mock('react-router-dom', async () => {
-  const actual = await vi.importActual('react-router-dom')
-  return {
-    ...actual,
-    useNavigate: () => vi.fn()
-  }
-})
+vi.mock('~/hooks/use-redux', () => ({
+  useAppDispatch: vi.fn()
+}))
 
-vi.mock('react-redux', async () => {
-  const actual = await vi.importActual('react-redux')
-  return {
-    ...actual,
-    useDispatch: () => mockDispatch.mockReturnValue({ unwrap: () => '' })
-  }
-})
+const dispatch = vi.fn()
+useAppDispatch.mockReturnValue(dispatch)
+const navigate = vi.fn()
+useNavigate.mockReturnValue(navigate)
 
-describe('Logout page', () => {
-  beforeEach(() => {
-    renderWithProviders(<Logout />)
-  })
-
-  it('should render lo', () => {
-    const loader = screen.getByTestId('loader')
-
-    expect(loader).toBeInTheDocument()
+describe('Logout', () => {
+  it('dispatches logoutUser action and redirects to home route', async () => {
+    render(<Logout />)
+    await waitFor(() => {
+      expect(dispatch).toHaveBeenCalledTimes(1)
+      expect(navigate).toHaveBeenCalledTimes(1)
+      expect(navigate).toHaveBeenCalledWith(guestRoutes.home.route)
+    })
   })
 })

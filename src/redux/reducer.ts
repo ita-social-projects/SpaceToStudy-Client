@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { parseJwt } from '~/utils/helper-functions'
 import {
   createAsyncThunk,
@@ -13,51 +13,68 @@ import {
   setToLocalStorage
 } from '~/services/local-storage-service'
 import { accessToken } from '~/constants'
+import { AxiosError } from 'axios'
+import {
+  AccessToken,
+  ErrorResponse,
+  GoogleAuthParams,
+  LoginParams,
+  SignupParams,
+  UserRole
+} from '~/types'
 
-const initialState = {
+interface UserState {
+  userId: string
+  userRole: UserRole | ''
+  authLoading: boolean
+  error: string
+  isFirstLogin: boolean
+}
+
+const initialState: UserState = {
   userId: '',
   userRole: '',
-  userEmail: '',
-  loading: false,
-  authLoading: false,
+  authLoading: true,
   error: '',
   isFirstLogin: true
 }
 
 export const loginUser = createAsyncThunk(
   'appMain/loginUser',
-  async (userData, { rejectWithValue, dispatch }) => {
+  async (userData: LoginParams, { rejectWithValue, dispatch }) => {
     try {
       const { data } = await AuthService.login(userData)
       setToLocalStorage(accessToken, data.accessToken)
       dispatch(setUser(data.accessToken))
     } catch (e) {
-      return rejectWithValue(e.response.data.code)
+      const error = e as AxiosError<ErrorResponse>
+      return rejectWithValue(error.response?.data.code)
     }
   }
 )
 
 export const googleAuth = createAsyncThunk(
-  'appMain/loginUser',
-  async (userData, { rejectWithValue, dispatch }) => {
+  'appMain/googleAuth',
+  async (userData: GoogleAuthParams, { rejectWithValue, dispatch }) => {
     try {
       const { data } = await AuthService.googleAuth(userData)
       setToLocalStorage(accessToken, data.accessToken)
       dispatch(setUser(data.accessToken))
     } catch (e) {
-      return rejectWithValue(e.response.data.code)
+      const error = e as AxiosError<ErrorResponse>
+      return rejectWithValue(error.response?.data.code)
     }
   }
 )
 
 export const signupUser = createAsyncThunk(
   'appMain/signupUser',
-  async (userData, { rejectWithValue, dispatch }) => {
+  async (userData: SignupParams, { rejectWithValue }) => {
     try {
-      const { data } = await AuthService.signup(userData)
-      dispatch(setUserEmail(data.userEmail))
+      await AuthService.signup(userData)
     } catch (e) {
-      return rejectWithValue(e.response.data.code)
+      const error = e as AxiosError<ErrorResponse>
+      return rejectWithValue(error.response?.data.code)
     }
   }
 )
@@ -70,7 +87,8 @@ export const logoutUser = createAsyncThunk(
       removeFromLocalStorage(accessToken)
       dispatch(logout())
     } catch (e) {
-      return rejectWithValue(e.response.data.code)
+      const error = e as AxiosError<ErrorResponse>
+      return rejectWithValue(error.response?.data.code)
     }
   }
 )
@@ -85,7 +103,8 @@ export const checkAuth = createAsyncThunk(
         dispatch(setUser(data.accessToken))
       }
     } catch (e) {
-      return rejectWithValue(e.response.data.code)
+      const error = e as AxiosError<ErrorResponse>
+      return rejectWithValue(error.response?.data.code)
     }
   }
 )
@@ -94,64 +113,38 @@ export const mainSlice = createSlice({
   name: 'appMain',
   initialState,
   reducers: {
-    setUser(state, action) {
-      const userData = parseJwt(action.payload)
+    setUser(state, action: PayloadAction<string>) {
+      const userData: AccessToken = parseJwt(action.payload)
       state.userId = userData.id
       state.userRole = userData.role
       state.isFirstLogin = userData.isFirstLogin
     },
-    setUserEmail(state, action) {
-      state.userEmail = action.payload
-    },
     logout(state) {
       state.userId = initialState.userId
       state.userRole = initialState.userRole
-      state.userEmail = initialState.userEmail
       state.isFirstLogin = initialState.isFirstLogin
     }
   },
   extraReducers: (builder) => {
-    builder.addMatcher(isPending, (state, action) => {
-      const isAuthLoadingType =
-        action.type === loginUser.pending.type ||
-        action.type === signupUser.pending.type
-      const isLoadingType =
-        action.type === checkAuth.pending.type ||
-        action.type === logoutUser.pending.type
-
-      if (isAuthLoadingType) state.authLoading = true
-      if (isLoadingType) state.loading = true
+    builder.addMatcher(isPending, (state) => {
+      state.authLoading = true
       state.error = ''
     })
-    builder.addMatcher(isFulfilled, (state, action) => {
-      const isAuthLoadingType =
-        action.type === loginUser.fulfilled.type ||
-        action.type === signupUser.fulfilled.type
-      const isLoadingType =
-        action.type === checkAuth.fulfilled.type ||
-        action.type === logoutUser.fulfilled.type
-
-      if (isAuthLoadingType) state.authLoading = false
-      if (isLoadingType) state.loading = false
+    builder.addMatcher(isFulfilled, (state) => {
+      state.authLoading = false
       state.error = ''
     })
     builder.addMatcher(isRejected, (state, action) => {
-      const isAuthLoadingType =
-        action.type === loginUser.rejected.type ||
-        action.type === signupUser.rejected.type
-      const isLoadingType =
-        action.type === checkAuth.rejected.type ||
-        action.type === logoutUser.rejected.type
-
-      if (isAuthLoadingType) state.authLoading = false
-      if (isLoadingType) state.loading = false
-      state.error = action.payload
+      state.authLoading = false
+      if (typeof action.payload === 'string') {
+        state.error = action.payload
+      }
     })
   }
 })
 
 const { actions, reducer } = mainSlice
 
-export const { setUser, setUserEmail, logout } = actions
+export const { setUser, logout } = actions
 
 export default reducer

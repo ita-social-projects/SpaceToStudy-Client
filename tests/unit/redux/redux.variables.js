@@ -11,9 +11,7 @@ export const signupUserData = {
 export const initialState = {
   userId: '',
   userRole: '',
-  userEmail: '',
-  loading: false,
-  authLoading: false,
+  authLoading: true,
   error: '',
   isFirstLogin: true
 }
@@ -21,8 +19,6 @@ export const initialState = {
 export const stateAfterLogin = {
   userId: '62f4fa49d39c988e347d833f',
   userRole: 'student',
-  userEmail: 'johndoe@gmail.com',
-  loading: false,
   authLoading: false,
   error: '',
   isFirstLogin: true
@@ -31,14 +27,10 @@ export const stateAfterLogin = {
 export const stateAfterSignup = {
   userId: '',
   userRole: '',
-  loading: false,
   authLoading: false,
-  userEmail: 'johndoe@gmail.com',
   error: '',
   isFirstLogin: true
 }
-
-export const userEmail = 'johndoe@gmail.com'
 
 export const errorMessage = 'Request failed with status code 404'
 export const errorCode = 'USER_NOT_REGISTERED'
