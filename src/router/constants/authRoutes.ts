@@ -4,5 +4,6 @@ export const authRoutes = {
   findOffers: {
     route: 'categories/subjects/findOffers',
     path: '/categories/subjects/findOffers'
-  }
+  },
+  offerDetails: { route: 'offerDetails/:id', path: 'offerDetails/:id' }
 }
