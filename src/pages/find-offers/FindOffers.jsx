@@ -15,10 +15,7 @@ import { useDrawer } from '~/hooks/use-drawer'
 
 import { useFilterQuery } from '~/hooks/use-filter-query'
 
-import {
-  mockOffer,
-  defaultFilters
-} from '~/pages/find-offers/FindOffers.constants'
+import { defaultFilters, mockOffers } from '~/pages/find-offers/FindOffers.constants'
 
 const FindOffers = () => {
   const [currentPage, setCurrentPage] = useState(1)
@@ -38,9 +35,20 @@ const FindOffers = () => {
     pageSize: 5
   }
 
-  const onBookmarkClick = (id) => {
-    console.log(id)
-  }
+  const onBookmarkClick = (id) => {console.log(id)}
+  const handleToggleOpenFilters = () => setOpenFilters(prev => !prev)
+  const handleShowingTutorOffers = () => setShowingTutorOffers(prev => !prev)
+
+  const offerCards = mockOffers.map(el => (<OfferCard
+    key={ el.id }
+    offer={ el }
+    onBookmarkClick={ () => onBookmarkClick(el.id) }
+  // eslint-disable-next-line react/jsx-closing-bracket-location
+  />))
+  
+  return (
+    <Container sx={ { flex: 1 ,display: 'flex', flexDirection: 'column',gap: 1 } }>
+      FindOffers Page Placeholder
 
   const toggleFiltersOpen = () => (isOpen ? closeDrawer() : openDrawer())
 
@@ -69,18 +77,19 @@ const FindOffers = () => {
         setFilters={filterQueryActions.updateFilter}
         toggleFilters={toggleFiltersOpen}
       />
-      <Box sx={{ display: 'flex' }}>
-        {!isMobile ? (
-          filtersComponent
-        ) : (
-          <AppDrawer onClose={closeDrawer} open={isOpen}>
-            {filtersComponent}
-          </AppDrawer>
-        )}
-        <OfferCard
-          offer={mockOffer}
-          onBookmarkClick={() => onBookmarkClick(mockOffer.id)}
-        />
+      <Box sx={ { display: 'flex' } }>
+        <OfferFilterBlock
+          closeFilters={ handleToggleOpenFilters }
+          countActiveFilters={ countActiveFilters }
+          filterActions={ filterQueryActions }
+          filters={ filters }
+          onToggleTutorOffers={ handleShowingTutorOffers }
+          open={ openFilters }
+          showingTutorOffers={ showingTutorOffers }
+        /> 
+        <Box>
+          { offerCards }
+        </Box>
       </Box>
       <AppPagination
         itemsCount={mockDataPagination.itemsCount}
