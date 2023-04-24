@@ -11,7 +11,9 @@ const country = 'Belgium'
 
 describe('locationService tests', () => {
   it('should return countries', async () => {
-    mockAxiosClient.onGet(URLs.location.getCountries).reply(200, countriesDataMock)
+    mockAxiosClient
+      .onGet(URLs.location.getCountries)
+      .reply(200, countriesDataMock)
 
     const result = await LocationService.getCountries()
 
@@ -19,7 +21,9 @@ describe('locationService tests', () => {
   })
 
   it('should return cities', async () => {
-    mockAxiosClient.onGet(`${URLs.location.getCities}/${country}`).reply(200, citiesDataMock)
+    mockAxiosClient
+      .onGet(`${URLs.location.getCities}/${country}`)
+      .reply(200, citiesDataMock)
 
     const result = await LocationService.getCities(country)
 
