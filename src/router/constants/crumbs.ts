@@ -36,3 +36,7 @@ export const findOffers = {
   name: t('breadCrumbs.findOffers'),
   path: authRoutes.findOffers.route
 }
+export const offerDetails = {
+  name: t('breadCrumbs.offerDetails'),
+  path: authRoutes.offerDetails.route
+}
