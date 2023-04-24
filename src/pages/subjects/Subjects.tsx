@@ -12,7 +12,7 @@ import TitleWithDescription from '~/components/title-with-description/TitleWithD
 import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
 
 import { styles } from '~/pages/subjects/Subjects.styles'
-import { guestRoutes } from '~/router/constants/guestRoutes'
+import { authRoutes } from '~/router/constants/authRoutes'
 import { CategoryNameInterface, SubjectNameInterface } from '~/types'
 import DirectionLink from '~/components/direction-link/DirectionLink'
 import AppToolbar from '~/components/app-toolbar/AppToolbar'
@@ -77,12 +77,12 @@ const Subjects = () => {
       <Box sx={styles.navigation}>
         <DirectionLink
           before={<ArrowBackIcon fontSize='small' />}
-          linkTo={guestRoutes.categories.path}
+          linkTo={authRoutes.categories.path}
           title={t('subjectsPage.subjects.backToAllCategories')}
         />
         <DirectionLink
           after={<ArrowForwardIcon fontSize='small' />}
-          linkTo={guestRoutes.findOffers.path}
+          linkTo={authRoutes.findOffers.path}
           title={t('subjectsPage.subjects.showAllOffers')}
         />
       </Box>

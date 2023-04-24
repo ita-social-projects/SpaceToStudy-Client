@@ -11,11 +11,5 @@ export const guestRoutes = {
     whatCanYouDo: { route: 'whatCanYouDo', path: '/#whatCanYouDo' },
     howItWorks: { route: 'howItWorks', path: '/#howItWorks' },
     whoWeAre: { route: 'whoWeAre', path: '/#whoWeAre' }
-  },
-  categories: { route: 'categories', path: '/categories' },
-  subjects: { route: 'categories/subjects', path: '/categories/subjects' },
-  findOffers: {
-    route: 'categories/subjects/findOffers',
-    path: '/categories/subjects/findOffers'
   }
 }

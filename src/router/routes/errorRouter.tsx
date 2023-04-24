@@ -5,8 +5,8 @@ import { errorRoutes } from '~/router/constants/errorRoutes'
 
 const AuthPolicy = lazy(() => import('~/pages/error/AuthPolicy'))
 const BadRequest = lazy(() => import('~/pages/error/BadRequest'))
-const InternalServerError = lazy(() =>
-  import('~/pages/error/InternalServerError')
+const InternalServerError = lazy(
+  () => import('~/pages/error/InternalServerError')
 )
 const NotFound = lazy(() => import('~/pages/error/NotFound'))
 
