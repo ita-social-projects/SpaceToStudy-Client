@@ -15,7 +15,10 @@ import { useDrawer } from '~/hooks/use-drawer'
 
 import { useFilterQuery } from '~/hooks/use-filter-query'
 
-import { defaultFilters, mockOffers } from '~/pages/find-offers/FindOffers.constants'
+import {
+  defaultFilters,
+  mockOffers
+} from '~/pages/find-offers/FindOffers.constants'
 
 const FindOffers = () => {
   const [currentPage, setCurrentPage] = useState(1)
@@ -35,19 +38,18 @@ const FindOffers = () => {
     pageSize: 5
   }
 
-
-  const handleToggleOpenFilters = () => setOpenFilters(prev => !prev)
-  const handleShowingTutorOffers = () => setShowingTutorOffers(prev => !prev)
+  const handleToggleOpenFilters = () => setOpenFilters((prev) => !prev)
+  // const handleShowingTutorOffers = () => setShowingTutorOffers(prev => !prev)
 
   const currentOffersOnPage = useMemo(() => {
     const firstPageIndex = (currentPage - 1) * mockDataPagination.pageSize
     const lastPageIndex = firstPageIndex + mockDataPagination.pageSize
     return mockOffers.slice(firstPageIndex, lastPageIndex)
   }, [currentPage, mockDataPagination.pageSize])
-  
-  return (
-    <Container sx={ { flex: 1 ,display: 'flex', flexDirection: 'column', gap: 1 } }>
-      FindOffers Page Placeholder
+
+  // return (
+  //   <Container sx={ { flex: 1 ,display: 'flex', flexDirection: 'column', gap: 1 } }>
+  //     FindOffers Page Placeholder
 
   const toggleFiltersOpen = () => (isOpen ? closeDrawer() : openDrawer())
 
@@ -71,22 +73,22 @@ const FindOffers = () => {
     >
       FindOffers Page Placeholder
       <FilterBarMenu
-        chosenFiltersQty={ countActiveFilters }
-        filters={ filters }
-        setFilters={ filterQueryActions.updateFilter }
-        toggleFilters={ handleToggleOpenFilters }
+        chosenFiltersQty={countActiveFilters}
+        filters={filters}
+        setFilters={filterQueryActions.updateFilter}
+        toggleFilters={handleToggleOpenFilters}
       />
-      <Box sx={ { display: 'flex' } }>
+      <Box sx={{ display: 'flex' }}>
         <OfferFilterBlock
-          closeFilters={ handleToggleOpenFilters }
-          countActiveFilters={ countActiveFilters }
-          filterActions={ filterQueryActions }
-          filters={ filters }
-          onToggleTutorOffers={ handleShowingTutorOffers }
-          open={ openFilters }
-          showingTutorOffers={ showingTutorOffers }
-        /> 
-        <OfferContainer offerCards={ currentOffersOnPage } /> 
+          closeFilters={handleToggleOpenFilters}
+          countActiveFilters={countActiveFilters}
+          filterActions={filterQueryActions}
+          filters={filters}
+          onToggleTutorOffers={handleShowingTutorOffers}
+          open={toggleFiltersOpen}
+          showingTutorOffers={showingTutorOffers}
+        />
+        <OfferContainer offerCards={currentOffersOnPage} />
       </Box>
       <AppPagination
         itemsCount={mockDataPagination.itemsCount}
