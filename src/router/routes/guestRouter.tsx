@@ -7,13 +7,11 @@ import { privacyPolicy } from '~/router/constants/crumbs'
 const CookiePolicy = lazy(() => import('~/pages/cookie-policy/CookiePolicy'))
 
 export const guestRouter = (
-  <Route>
-    <Route
-      element={<CookiePolicy />}
-      handle={{
-        crumb: privacyPolicy
-      }}
-      path={guestRoutes.privacyPolicy.route}
-    />
-  </Route>
+  <Route
+    element={<CookiePolicy />}
+    handle={{
+      crumb: privacyPolicy
+    }}
+    path={guestRoutes.privacyPolicy.route}
+  />
 )
