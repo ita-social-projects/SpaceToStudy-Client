@@ -9,7 +9,7 @@ const OfferAvatarAndRating = ({ imgSrc, rating }) => {
   return (
     <Box sx={styles.container}>
       <Avatar src={imgSrc} sx={styles.avatar} />
-      <AppRating disabled showNumber sx={styles.rating} value={rating} />
+      <AppRating readOnly showNumber sx={styles.rating} value={rating} />
     </Box>
   )
 }

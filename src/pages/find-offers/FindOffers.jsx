@@ -5,19 +5,19 @@ import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
 
 import useBreakpoints from '~/hooks/use-breakpoints'
-import OfferContainer from '~/containers/OfferContainer/OfferContainer'
 import PopularCategories from '~/components/popular-categories/PopularCategories'
 import AppPagination from '~/components/app-pagination/AppPagination'
 import OfferFilterBlock from '~/containers/find-offer/offer-filter-block/OfferFilterBlock'
 import FilterBarMenu from '~/containers/find-offer/filter-bar-menu/FilterBarMenu'
 import AppDrawer from '~/components/app-drawer/AppDrawer'
+import OfferContainer from '~/containers/OfferContainer/OfferContainer'
 import { useDrawer } from '~/hooks/use-drawer'
 
 import { useFilterQuery } from '~/hooks/use-filter-query'
 
 import {
-  defaultFilters,
-  mockOffers
+  mockOffers,
+  defaultFilters
 } from '~/pages/find-offers/FindOffers.constants'
 
 const FindOffers = () => {
@@ -38,22 +38,15 @@ const FindOffers = () => {
     pageSize: 5
   }
 
-  const handleToggleOpenFilters = () => setOpenFilters((prev) => !prev)
-  // const handleShowingTutorOffers = () => setShowingTutorOffers(prev => !prev)
+  const toggleFiltersOpen = () => (isOpen ? closeDrawer() : openDrawer())
+
+  const handleShowingTutorOffers = () => setShowingTutorOffers((prev) => !prev)
 
   const currentOffersOnPage = useMemo(() => {
     const firstPageIndex = (currentPage - 1) * mockDataPagination.pageSize
     const lastPageIndex = firstPageIndex + mockDataPagination.pageSize
     return mockOffers.slice(firstPageIndex, lastPageIndex)
   }, [currentPage, mockDataPagination.pageSize])
-
-  // return (
-  //   <Container sx={ { flex: 1 ,display: 'flex', flexDirection: 'column', gap: 1 } }>
-  //     FindOffers Page Placeholder
-
-  const toggleFiltersOpen = () => (isOpen ? closeDrawer() : openDrawer())
-
-  const handleShowingTutorOffers = () => setShowingTutorOffers((prev) => !prev)
 
   const filtersComponent = (
     <OfferFilterBlock
@@ -76,18 +69,16 @@ const FindOffers = () => {
         chosenFiltersQty={countActiveFilters}
         filters={filters}
         setFilters={filterQueryActions.updateFilter}
-        toggleFilters={handleToggleOpenFilters}
+        toggleFilters={toggleFiltersOpen}
       />
       <Box sx={{ display: 'flex' }}>
-        <OfferFilterBlock
-          closeFilters={handleToggleOpenFilters}
-          countActiveFilters={countActiveFilters}
-          filterActions={filterQueryActions}
-          filters={filters}
-          onToggleTutorOffers={handleShowingTutorOffers}
-          open={toggleFiltersOpen}
-          showingTutorOffers={showingTutorOffers}
-        />
+        {!isMobile ? (
+          filtersComponent
+        ) : (
+          <AppDrawer onClose={closeDrawer} open={isOpen}>
+            {filtersComponent}
+          </AppDrawer>
+        )}
         <OfferContainer offerCards={currentOffersOnPage} />
       </Box>
       <AppPagination
