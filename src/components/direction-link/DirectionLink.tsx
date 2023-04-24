@@ -21,13 +21,12 @@ const DirectionLink: FC<DirectionLinkProps> = ({
   after
 }) => {
   const { isMobile } = useBreakpoints()
-  const { Caption, Button } = VariantEnum
   return (
     <Typography
       component={HashLink}
       sx={styles.showAllOffers}
       to={linkTo}
-      variant={isMobile ? Caption : Button}
+      variant={isMobile ? VariantEnum.Caption : VariantEnum.Button}
     >
       {before}
       {title}

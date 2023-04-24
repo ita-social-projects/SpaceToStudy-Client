@@ -43,9 +43,6 @@ const SearchAutocomplete = ({
 
   const { t } = useTranslation()
   const { isMobile } = useBreakpoints()
-  const { Small, Large } = SizeEnum
-  const { ContainedLight, Standard } = VariantEnum
-  const { Visible, Hidden } = VisibilityEnum
 
   const filterOptions = (
     options: string[],
@@ -74,9 +71,11 @@ const SearchAutocomplete = ({
 
   const labelStyle = {
     ...styles.inputLabel,
-    visibility: searchInput && Hidden
+    visibility: searchInput && VisibilityEnum.Hidden
   }
-  const clearIconVisibility = { visibility: searchInput ? Visible : Hidden }
+  const clearIconVisibility = {
+    visibility: searchInput ? VisibilityEnum.Visible : VisibilityEnum.Hidden
+  }
 
   return (
     <Box sx={styles.container}>
@@ -94,7 +93,7 @@ const SearchAutocomplete = ({
           InputLabelProps: { style: labelStyle, shrink: false },
           InputProps: { disableUnderline: true },
           onKeyDown: onEnterPress,
-          variant: Standard,
+          variant: VariantEnum.Standard,
           sx: styles.input,
           ...textFieldProps
         }}
@@ -102,14 +101,14 @@ const SearchAutocomplete = ({
       />
 
       <IconButton onClick={onClear} sx={clearIconVisibility}>
-        <ClearIcon fontSize={Small} />
+        <ClearIcon fontSize={SizeEnum.Small} />
       </IconButton>
 
       <Button
         onClick={onSearch}
-        size={isMobile ? Small : Large}
+        size={isMobile ? SizeEnum.Small : SizeEnum.Large}
         sx={styles.searchBtn}
-        variant={ContainedLight}
+        variant={VariantEnum.ContainedLight}
       >
         {isMobile ? <SearchIcon /> : t('common.search')}
       </Button>

@@ -1,11 +1,8 @@
-import { useState, useCallback } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
-
-import useAxios from '~/hooks/use-axios'
-import { categoryService } from '~/services/category-service'
 
 import useBreakpoints from '~/hooks/use-breakpoints'
 import OfferCard from '~/components/offer-card/OfferCard'
@@ -17,7 +14,6 @@ import AppDrawer from '~/components/app-drawer/AppDrawer'
 import { useDrawer } from '~/hooks/use-drawer'
 
 import { useFilterQuery } from '~/hooks/use-filter-query'
-import { defaultResponses } from '~/constants'
 
 import {
   mockOffer,
@@ -35,15 +31,6 @@ const FindOffers = () => {
   const size = isMobile ? 'small' : 'medium'
 
   const { t } = useTranslation()
-
-  const getCategories = useCallback(
-    () => categoryService.getCategories({ limit: 9 }),
-    []
-  )
-  const { response: categoriesData, loading: categoriesLoading } = useAxios({
-    service: getCategories,
-    defaultResponse: defaultResponses.array
-  })
 
   const mockDataPagination = {
     itemsCount: 100,
@@ -97,16 +84,12 @@ const FindOffers = () => {
       </Box>
       <AppPagination
         itemsCount={mockDataPagination.itemsCount}
-        page={mockDataPagination.page}
         itemsPerPage={mockDataPagination.itemsPerPage}
         onChange={setCurrentPage}
+        page={mockDataPagination.page}
         size={size}
       />
-      <PopularCategories
-        items={categoriesData}
-        loading={categoriesLoading}
-        title={t('common.popularCategories')}
-      />
+      <PopularCategories title={t('common.popularCategories')} />
     </Container>
   )
 }

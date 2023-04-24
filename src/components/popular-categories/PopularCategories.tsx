@@ -1,8 +1,11 @@
-import { FC, useMemo } from 'react'
+import { FC, useMemo, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 
 import Box from '@mui/material/Box'
+
+import useAxios from '~/hooks/use-axios'
+import { categoryService } from '~/services/category-service'
 
 import Loader from '~/components/loader/Loader'
 import ClickableCard from '~/components/clickable-card/ClickableCard'
@@ -13,23 +16,29 @@ import serviceIcon from '~/assets/img/student-home-page/service_icon.png'
 import ClickableCardList from '~/components/clickable-card-list/ClickableCardList'
 import { CategoryInterface } from '~/types'
 import useBreakpoints from '~/hooks/use-breakpoints'
+import { defaultResponses } from '~/constants'
 
 interface PopularCategoriesProps {
   title: string
-  description: string
-  items: CategoryInterface[]
-  loading: boolean
+  description?: string
 }
 
 const PopularCategories: FC<PopularCategoriesProps> = ({
   title,
-  description,
-  items,
-  loading
+  description
 }) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const { isDesktop, isTablet, isMobile } = useBreakpoints()
+
+  const getCategories = useCallback(
+    () => categoryService.getCategories({ limit: 9 }),
+    []
+  )
+  const { response, loading } = useAxios<CategoryInterface[]>({
+    service: getCategories,
+    defaultResponse: defaultResponses.array
+  })
 
   const itemsToShow = useMemo(() => {
     switch (true) {
@@ -46,7 +55,7 @@ const PopularCategories: FC<PopularCategoriesProps> = ({
 
   const cards = useMemo(
     () =>
-      items.slice(0, itemsToShow).map((item) => {
+      response.slice(0, itemsToShow).map((item) => {
         return (
           <ClickableCard
             description={`${item.totalOffers} ${t('common.offers')}`}
@@ -57,7 +66,7 @@ const PopularCategories: FC<PopularCategoriesProps> = ({
           />
         )
       }),
-    [items, t, itemsToShow]
+    [response, t, itemsToShow]
   )
 
   const onClickButton = () => {
@@ -72,7 +81,7 @@ const PopularCategories: FC<PopularCategoriesProps> = ({
         title={title}
         titleStyles={styles.titleStyles}
       />
-      {loading && !items ? (
+      {loading && !response ? (
         <Loader size={70} />
       ) : (
         <ClickableCardList
