@@ -20,11 +20,13 @@ import OfferRequestBlock from '~/containers/find-offer/OfferRequestBlock'
 import useCategoriesNames from '~/hooks/use-categories-names'
 import useSubjectsNames from '~/hooks/use-subjects-names'
 import { mapArrayByField } from '~/utils/map-array-by-field'
+import useBreakpoints from '~/hooks/use-breakpoints'
 
 const Subjects = () => {
   const [searchValue, setSearchValue] = useState<string>('')
 
   const { t } = useTranslation()
+  const { isMobile } = useBreakpoints()
   const [searchParams, setSearchParams] = useSearchParams()
   const categoryId = searchParams.get('categoryId')
 
@@ -62,10 +64,26 @@ const Subjects = () => {
     value: CategoryNameInterface
   ) => option?._id === value?._id
 
+  const autoCompleteCategories = (
+    <AppAutoComplete
+      getOptionLabel={getOptionLabelCategory}
+      isOptionEqualToValue={isOptionEqualToValueCategory}
+      loading={categoriesNamesLoading}
+      onChange={onCategoryChange}
+      options={categoriesNamesItems}
+      sx={styles.categoryInput}
+      textFieldProps={{
+        label: t('breadCrumbs.categories')
+      }}
+      value={category}
+    />
+  )
+
   return (
     <Container sx={{ flex: 1, mt: '80px' }}>
       <OfferRequestBlock />
       <TitleWithDescription
+        componentStyles={styles.componentStyles}
         description={t('subjectsPage.subjects.description')}
         descriptionStyles={styles.sectionDescription}
         title={t('subjectsPage.subjects.title', {
@@ -87,18 +105,7 @@ const Subjects = () => {
         />
       </Box>
       <AppToolbar sx={styles.searchToolbar}>
-        <AppAutoComplete
-          getOptionLabel={getOptionLabelCategory}
-          isOptionEqualToValue={isOptionEqualToValueCategory}
-          loading={categoriesNamesLoading}
-          onChange={onCategoryChange}
-          options={categoriesNamesItems}
-          sx={styles.categoryInput}
-          textFieldProps={{
-            label: t('breadCrumbs.categories')
-          }}
-          value={category}
-        />
+        {!isMobile && autoCompleteCategories}
         <SearchAutocomplete
           options={subjectsNamesItems}
           search={searchValue}
@@ -108,6 +115,7 @@ const Subjects = () => {
           }}
         />
       </AppToolbar>
+      {isMobile && autoCompleteCategories}
     </Container>
   )
 }

@@ -23,11 +23,11 @@ export const styles = {
     bottom: '8px'
   },
   inputLabel: {
-    color: palette.primary[300],
-    left: '5px',
-    top: '8px'
+    color: palette.primary[300]
   },
   searchBtn: {
-    ml: '25px'
+    minWidth: { xs: '44px' },
+    p: { xs: '7px 12px', sm: '12px 24px' },
+    ml: { xs: '5px', sm: '25px' }
   }
 }

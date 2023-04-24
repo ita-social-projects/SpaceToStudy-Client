@@ -21,7 +21,9 @@ import ClearIcon from '@mui/icons-material/Clear'
 import SearchIcon from '@mui/icons-material/Search'
 
 import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
+import useBreakpoints from '~/hooks/use-breakpoints'
 import { styles } from '~/components/search-autocomplete/SearchAutocomplete.styles'
+import { SizeEnum, VariantEnum, VisibilityEnum } from '~/types'
 
 interface SearchAutocompleteProps
   extends Omit<AutocompleteProps<string, false, true, true>, 'renderInput'> {
@@ -37,8 +39,10 @@ const SearchAutocomplete = ({
   textFieldProps,
   ...props
 }: SearchAutocompleteProps) => {
-  const { t } = useTranslation()
   const [searchInput, setSearchInput] = useState<string>(search)
+
+  const { t } = useTranslation()
+  const { isMobile } = useBreakpoints()
 
   const filterOptions = (
     options: string[],
@@ -67,13 +71,15 @@ const SearchAutocomplete = ({
 
   const labelStyle = {
     ...styles.inputLabel,
-    visibility: searchInput && 'hidden'
+    visibility: searchInput && VisibilityEnum.Hidden
   }
-  const clearIconVisibility = { visibility: searchInput ? 'visible' : 'hidden' }
+  const clearIconVisibility = {
+    visibility: searchInput ? VisibilityEnum.Visible : VisibilityEnum.Hidden
+  }
 
   return (
     <Box sx={styles.container}>
-      <SearchIcon sx={styles.searchIcon} />
+      {!isMobile && <SearchIcon sx={styles.searchIcon} />}
 
       <AppAutoComplete
         ListboxProps={{ style: styles.listBox }}
@@ -87,7 +93,7 @@ const SearchAutocomplete = ({
           InputLabelProps: { style: labelStyle, shrink: false },
           InputProps: { disableUnderline: true },
           onKeyDown: onEnterPress,
-          variant: 'standard',
+          variant: VariantEnum.Standard,
           sx: styles.input,
           ...textFieldProps
         }}
@@ -95,16 +101,16 @@ const SearchAutocomplete = ({
       />
 
       <IconButton onClick={onClear} sx={clearIconVisibility}>
-        <ClearIcon fontSize='small' />
+        <ClearIcon fontSize={SizeEnum.Small} />
       </IconButton>
 
       <Button
         onClick={onSearch}
-        size='large'
+        size={isMobile ? SizeEnum.Small : SizeEnum.Large}
         sx={styles.searchBtn}
-        variant='contained'
+        variant={VariantEnum.ContainedLight}
       >
-        {t('common.search')}
+        {isMobile ? <SearchIcon /> : t('common.search')}
       </Button>
     </Box>
   )
