@@ -7,8 +7,8 @@ const setCurrentPage = vi.fn()
 describe('AppPagination', () => {
   beforeEach(() => {
     render(<AppPagination
-      itemsCount={ 100 } page={ 1 } pageSize={ 5 }
-      setCurrentPage={ setCurrentPage }
+      itemsCount={100} page={1} itemsPerPage={5}
+      onChange={setCurrentPage}
     />)
   })
 

@@ -98,8 +98,8 @@ const FindOffers = () => {
       <AppPagination
         itemsCount={mockDataPagination.itemsCount}
         page={mockDataPagination.page}
-        pageSize={mockDataPagination.pageSize}
-        setCurrentPage={setCurrentPage}
+        itemsPerPage={mockDataPagination.itemsPerPage}
+        onChange={setCurrentPage}
         size={size}
       />
       <PopularCategories
