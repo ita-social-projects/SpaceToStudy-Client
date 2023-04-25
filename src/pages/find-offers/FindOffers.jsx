@@ -16,7 +16,7 @@ import { useDrawer } from '~/hooks/use-drawer'
 import { useFilterQuery } from '~/hooks/use-filter-query'
 
 import {
-  mockOffers,
+  mockOffer,
   defaultFilters
 } from '~/pages/find-offers/FindOffers.constants'
 
@@ -42,11 +42,13 @@ const FindOffers = () => {
 
   const handleShowingTutorOffers = () => setShowingTutorOffers((prev) => !prev)
 
+  const mockOffers = new Array(10).fill(mockOffer)
+
   const currentOffersOnPage = useMemo(() => {
     const firstPageIndex = (currentPage - 1) * mockDataPagination.pageSize
     const lastPageIndex = firstPageIndex + mockDataPagination.pageSize
     return mockOffers.slice(firstPageIndex, lastPageIndex)
-  }, [currentPage, mockDataPagination.pageSize])
+  }, [currentPage, mockDataPagination.pageSize, mockOffers])
 
   const filtersComponent = (
     <OfferFilterBlock
@@ -79,7 +81,7 @@ const FindOffers = () => {
             {filtersComponent}
           </AppDrawer>
         )}
-        <OfferContainer offerCards={currentOffersOnPage} />
+        <OfferContainer offerCards={currentOffersOnPage} viewMode={'grid'} />
       </Box>
       <AppPagination
         itemsCount={mockDataPagination.itemsCount}
