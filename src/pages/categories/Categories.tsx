@@ -1,44 +1,46 @@
 import { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { categoryService } from '~/services/category-service'
-
 import Container from '@mui/material/Container'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 
+import { categoryService } from '~/services/category-service'
 import useLoadMore from '~/hooks/use-load-more'
 import useCategoriesNames from '~/hooks/use-categories-names'
+import useBreakpoints from '~/hooks/use-breakpoints'
 
 import OfferRequestBlock from '~/containers/find-offer/OfferRequestBlock'
-import ClickableCard from '~/components/clickable-card/ClickableCard'
-import ClickableCardList from '~/components/clickable-card-list/ClickableCardList'
+import CardWithLink from '~/components/card-with-link/CardWithLink'
+import CardsList from '~/components/cards-list/CardsList'
 import SearchAutocomplete from '~/components/search-autocomplete/SearchAutocomplete'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import AppToolbar from '~/components/app-toolbar/AppToolbar'
 import DirectionLink from '~/components/direction-link/DirectionLink'
 
-import { CategoryInterface, CategoryNameInterface, Params } from '~/types'
-import { guestRoutes } from '~/router/constants/guestRoutes'
-import { mapArrayByField } from '~/utils/map-array-by-field'
+import {
+  CategoryInterface,
+  CategoryNameInterface,
+  CategoriesParams
+} from '~/types'
+import { itemsLoadLimit } from '~/constants'
+import { authRoutes } from '~/router/constants/authRoutes'
 import serviceIcon from '~/assets/img/student-home-page/service_icon.png'
 import { styles } from '~/pages/categories/Categories.styles'
 
 const Categories = () => {
   const { t } = useTranslation()
+  const { isMobile } = useBreakpoints()
   const [match, setMatch] = useState<string>('')
   const params = useMemo(() => ({ name: match }), [match])
 
-  const transform = useCallback(
-    (data: CategoryNameInterface[]): string[] => mapArrayByField(data, 'name'),
-    []
-  )
+  const cardsLimit = isMobile ? itemsLoadLimit.mobile : itemsLoadLimit.desktop
 
   const getCategories = useCallback(
-    (params: Partial<Params>) => categoryService.getCategories(params),
+    (data: Partial<CategoriesParams>) => categoryService.getCategories(data),
     []
   )
 
   const { loading: categoriesNamesLoading, response: categoriesNamesItems } =
-    useCategoriesNames<string>({ transform })
+    useCategoriesNames()
 
   const {
     data: categories,
@@ -48,7 +50,7 @@ const Categories = () => {
     isExpandable
   } = useLoadMore<CategoryInterface>({
     service: getCategories,
-    limit: 12,
+    limit: cardsLimit,
     params
   })
 
@@ -56,16 +58,22 @@ const Categories = () => {
     () =>
       categories.map((item: CategoryInterface) => {
         return (
-          <ClickableCard
+          <CardWithLink
             description={`${item.totalOffers} ${t('categoriesPage.offers')}`}
             img={serviceIcon}
             key={item._id}
-            link={`${guestRoutes.subjects.path}?categoryId=${item._id}`}
+            link={`${authRoutes.subjects.path}?categoryId=${item._id}`}
             title={item.name}
           />
         )
       }),
     [categories, t]
+  )
+
+  const options = useMemo(
+    () =>
+      categoriesNamesItems.map((option: CategoryNameInterface) => option.name),
+    [categoriesNamesItems]
   )
 
   return (
@@ -81,15 +89,15 @@ const Categories = () => {
 
       <DirectionLink
         after={<ArrowForwardIcon fontSize='small' />}
-        linkTo={guestRoutes.findOffers.path}
+        linkTo={authRoutes.findOffers.path}
         title={t('categoriesPage.showAllOffers')}
       />
 
       <AppToolbar sx={styles.searchToolbar}>
         <SearchAutocomplete
           loading={categoriesNamesLoading}
-          options={categoriesNamesItems}
-          resetData={resetData}
+          onSearchChange={resetData}
+          options={options}
           search={match}
           setSearch={setMatch}
           textFieldProps={{
@@ -98,7 +106,7 @@ const Categories = () => {
         />
       </AppToolbar>
 
-      <ClickableCardList
+      <CardsList
         btnText={t('categoriesPage.viewMore')}
         cards={cards}
         isExpandable={isExpandable}

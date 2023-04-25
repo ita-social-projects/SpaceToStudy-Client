@@ -4,16 +4,16 @@ import Box from '@mui/material/Box'
 import AppCard from '~/components/app-card/AppCard'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 
-import { styles } from '~/components/clickable-card/ClickableCard.styles'
+import { styles } from '~/components/card-with-link/CardWithLink.styles'
 
-interface ClickableCardProps {
+interface CardWithLinkProps {
   img: string
   title: string
   description: string
   link: string
 }
 
-const ClickableCard: FC<ClickableCardProps> = ({
+const CardWithLink: FC<CardWithLinkProps> = ({
   img,
   title,
   description,
@@ -31,4 +31,4 @@ const ClickableCard: FC<ClickableCardProps> = ({
   )
 }
 
-export default ClickableCard
+export default CardWithLink

@@ -11,7 +11,10 @@ vi.mock('~/hooks/use-categories-names', () => ({
   __esModule: true,
   default: () => ({
     loading: false,
-    response: ['Languages', 'Music']
+    response: [
+      { _id: '1', name: 'Languages' },
+      { _id: '2', name: 'Music' }
+    ]
   })
 }))
 

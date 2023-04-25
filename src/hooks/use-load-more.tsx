@@ -3,7 +3,7 @@ import { AxiosResponse } from 'axios'
 
 import useAxios from '~/hooks/use-axios'
 
-import { Params } from '~/types'
+import { CategoriesParams } from '~/types'
 import { defaultResponses } from '~/constants'
 
 interface useLoadMoreReturn<T> {
@@ -15,9 +15,9 @@ interface useLoadMoreReturn<T> {
 }
 
 interface useLoadMoreProps<T> {
-  service: (params: Partial<Params>) => Promise<AxiosResponse<T[]>>
+  service: (data: Partial<CategoriesParams>) => Promise<AxiosResponse<T[]>>
   limit: number
-  params?: Partial<Params>
+  params?: Partial<CategoriesParams>
 }
 
 const useLoadMore = <T,>({

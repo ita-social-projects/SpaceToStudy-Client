@@ -3,7 +3,8 @@ import { AxiosError, AxiosResponse } from 'axios'
 import { ErrorResponse } from '~/types'
 
 interface UseAxiosProps<T, R> {
-  service: (data?: unknown) => Promise<AxiosResponse<T>>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  service: (data?: any) => Promise<AxiosResponse<T>>
   defaultResponse: R
   fetchOnMount?: boolean
   transform?: (data: T) => R
@@ -15,7 +16,8 @@ interface UseAxiosReturn<R> {
   response: R
   error: ErrorResponse | null
   loading: boolean
-  fetchData: (data?: unknown) => Promise<void>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  fetchData: (data?: any) => Promise<void>
 }
 
 const useAxios = <T, R = T>({
@@ -31,7 +33,8 @@ const useAxios = <T, R = T>({
   const [loading, setLoading] = useState<boolean>(fetchOnMount)
 
   const fetchData = useCallback(
-    async (data?: unknown) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    async (data?: any) => {
       try {
         setLoading(true)
         const res = await service(data)

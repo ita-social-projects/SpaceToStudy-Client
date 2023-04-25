@@ -22,9 +22,7 @@ describe('useCategoriesNames', () => {
       data: mockCategoriesNames
     })
 
-    const { result, waitForNextUpdate } = renderHook(() =>
-      useCategoriesNames({})
-    )
+    const { result, waitForNextUpdate } = renderHook(() => useCategoriesNames())
 
     expect(result.current.loading).toBe(true)
     expect(result.current.response).toEqual([])
@@ -42,9 +40,7 @@ describe('useCategoriesNames', () => {
       response: { data: mockError }
     })
 
-    const { result, waitForNextUpdate } = renderHook(() =>
-      useCategoriesNames({})
-    )
+    const { result, waitForNextUpdate } = renderHook(() => useCategoriesNames())
 
     expect(result.current.loading).toBe(true)
     expect(result.current.response).toEqual([])

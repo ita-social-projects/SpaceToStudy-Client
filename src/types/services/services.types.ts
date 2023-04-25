@@ -1,5 +1,6 @@
-export type Params = {
-  name?: string
+import { Sort } from '../common/common.index'
+
+export interface RequestParams {
   limit: number
   skip: number
   sort: Sort

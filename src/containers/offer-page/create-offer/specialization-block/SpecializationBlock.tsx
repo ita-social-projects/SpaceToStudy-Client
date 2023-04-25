@@ -25,7 +25,7 @@ const SpecializationBlock = <T extends CreateOfferData>({
   const { t } = useTranslation()
   const { userRole } = useAppSelector((state) => state.appMain)
   const { response: categoriesItems, loading: categoriesLoading } =
-    useCategoriesNames({})
+    useCategoriesNames()
 
   const { response: subjectsItems, loading: subjectsLoading } =
     useSubjectsNames({

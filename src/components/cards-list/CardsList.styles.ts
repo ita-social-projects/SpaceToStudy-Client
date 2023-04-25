@@ -1,7 +1,4 @@
 export const styles = {
-  container: {
-    minHeight: '500px'
-  },
   cardsContainer: {
     display: 'grid',
     justifyContent: 'center',

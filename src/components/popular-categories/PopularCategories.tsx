@@ -8,12 +8,12 @@ import useAxios from '~/hooks/use-axios'
 import { categoryService } from '~/services/category-service'
 
 import Loader from '~/components/loader/Loader'
-import ClickableCard from '~/components/clickable-card/ClickableCard'
+import CardWithLink from '~/components/card-with-link/CardWithLink'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { styles } from '~/components/popular-categories/PopularCategories.styles'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import serviceIcon from '~/assets/img/student-home-page/service_icon.png'
-import ClickableCardList from '~/components/clickable-card-list/ClickableCardList'
+import CardsList from '~/components/cards-list/CardsList'
 import { CategoryInterface } from '~/types'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { defaultResponses } from '~/constants'
@@ -57,7 +57,7 @@ const PopularCategories: FC<PopularCategoriesProps> = ({
     () =>
       response.slice(0, itemsToShow).map((item) => {
         return (
-          <ClickableCard
+          <CardWithLink
             description={`${item.totalOffers} ${t('common.offers')}`}
             img={serviceIcon}
             key={item._id}
@@ -83,7 +83,7 @@ const PopularCategories: FC<PopularCategoriesProps> = ({
       {loading && !response ? (
         <Loader size={70} />
       ) : (
-        <ClickableCardList
+        <CardsList
           btnText={t('common.viewAllName', { name: 'categories' })}
           cards={cards}
           onClick={onClickButton}
