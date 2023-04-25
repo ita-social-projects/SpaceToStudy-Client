@@ -28,10 +28,8 @@ const ProfileContainerMobile = ({
           description={
             'Senior lecturer at the Department of German Philology and Translation'
           }
-          descriptionStyles={styles.status}
-          style={{ wrapper: { textAlign: 'left', pr: '20px' } }}
+          style={{ ...styles.titleComp, wrapper: { pr: '20px' } }}
           title={'Esther Howard'}
-          titleStyles={styles.name}
         />
       </Box>
 

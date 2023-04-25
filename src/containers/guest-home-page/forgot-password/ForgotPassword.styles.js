@@ -3,18 +3,7 @@ export const styles = {
     maxWidth: '350px',
     padding: { xs: '50px 16px', sm: '70px', md: '96px' }
   },
-  wrapper: {
-    textAlign: 'start',
-    m: 0
-  },
-  title: {
-    typography: 'h5',
-    fontWeight: 500,
-    mb: 1
-  },
-  description: {
-    typography: 'body2'
-  },
+
   sentPassword: {
     mb: 1,
     p: '14px 0',
@@ -24,5 +13,20 @@ export const styles = {
     textDecoration: 'underline',
     width: '100%',
     p: '16px 0'
+  },
+  titleComp: {
+    wrapper: {
+      textAlign: 'start',
+      m: 0
+    },
+    title: {
+      typography: 'h5',
+      fontWeight: 500,
+      mb: '16px'
+    },
+    description: {
+      typography: 'body2',
+      mb: '32px'
+    }
   }
 }

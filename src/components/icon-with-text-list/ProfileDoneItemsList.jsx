@@ -18,10 +18,8 @@ const ProfileDoneItemsList = ({ items, icon, defaultQuantity }) => {
 
       <TitleWithDescription
         description={item.description}
-        descriptionStyles={styles.text}
-        style={{ wrapper: { ...styles.itemWrapper, gap: '5px' } }}
+        style={styles.titleComp}
         title={item.title}
-        titleStyles={styles.text}
       />
     </Box>
   ))

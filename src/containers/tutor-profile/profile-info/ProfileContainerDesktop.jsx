@@ -33,10 +33,8 @@ const ProfileContainerDesktop = ({
           description={
             'Senior lecturer at the Department of German Philology and Translation'
           }
-          descriptionStyles={styles.status}
-          style={{ wrapper: { textAlign: 'left' } }}
+          style={styles.titleComp}
           title={'Esther Howard'}
-          titleStyles={styles.name}
         />
 
         <AppChipList

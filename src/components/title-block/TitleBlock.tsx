@@ -21,11 +21,9 @@ const TitleBlock: FC<TitleBlockProps> = ({ img, translationKey, children }) => {
     <Box className='section' sx={styles.container}>
       <Box sx={styles.info}>
         <TitleWithDescription
-          componentStyles={styles.textWrapper}
           description={t(`${translationKey}.description`)}
-          descriptionStyles={styles.description}
+          style={styles.titleComp}
           title={t(`${translationKey}.title`)}
-          titleStyles={styles.title}
         />
         <Box sx={styles.form}>{children}</Box>
       </Box>

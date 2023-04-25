@@ -5,13 +5,7 @@ export const styles = {
   },
   wrapper: { maxWidth: '630px' },
   mainTitle: { typography: 'h4' },
-  title: {
-    marginTop: '30px',
-    fontSize: '21px',
-    fontWeight: 'bold',
-    color: 'palette.grey.500'
-  },
-  description: { typography: 'subtitle' },
+
   form: { display: 'flex', flexDirection: 'column' },
   box: {
     margin: { xs: '0 auto', sm: 0 },
@@ -24,5 +18,19 @@ export const styles = {
     marginTop: '30px',
     backgroundColor: '#262738',
     textTransform: 'none'
+  },
+
+  titleComp: {
+    wrapper: {
+      mb: '32px',
+      textAlign: 'center'
+    },
+    title: {
+      typography: 'h4',
+      mb: '16px'
+    },
+    description: {
+      typography: 'subtitle'
+    }
   }
 }

@@ -26,13 +26,6 @@ export const styles = {
     right: 0,
     backgroundColor: 'basic.grey'
   },
-  name: {
-    typography: { xs: 'button', sm: 'h5', md: 'h4' },
-    mb: '10px'
-  },
-  status: {
-    typography: { xs: 'body2', md: 'button' }
-  },
   chipsWrapper: {
     py: '16px'
   },
@@ -63,5 +56,28 @@ export const styles = {
     color: 'basic.yellow',
     width: { xs: '18px', md: '24px' },
     height: { xs: '18px', md: '24px' }
+  },
+  titleComp: {
+    wrapper: {
+      textAlign: 'left'
+    },
+    title: {
+      typography: { xs: 'button', sm: 'h5', md: 'h4' },
+      mb: 1
+    },
+    description: {
+      typography: { xs: 'body2', md: 'button' }
+    }
+  },
+  profileTitleComp: {
+    wrapper: {
+      textAlign: 'center'
+    },
+    title: {
+      typography: { md: 'h5' }
+    },
+    description: {
+      typography: 'overline'
+    }
   }
 }

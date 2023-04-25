@@ -7,22 +7,19 @@ import TitleWithDescription from '~/components/title-with-description/TitleWithD
 import VideoBox from '~/components/video-box/VideoBox'
 import videoImg from '~/assets/img/guest-home-page/videoImg.png'
 
+import { styles } from '~/containers/guest-home-page/who-we-are/WhoWeAre.styles.js'
+
 const sectionId = guestRoutes.navBar.whoWeAre.route
 
 const WhoWeAre = () => {
   const { t } = useTranslation()
 
   return (
-    <Box
-      className='section'
-      id={sectionId}
-      sx={{ flexDirection: 'column', px: '16px' }}
-    >
+    <Box className='section' id={sectionId} sx={styles.container}>
       <TitleWithDescription
         description={t('guestHomePage.whoWeAre.description')}
-        descriptionStyles={{ typography: { xs: 'subtitle1' } }}
+        style={styles.titleComp}
         title={t('guestHomePage.whoWeAre.title')}
-        titleStyles={{ typography: { md: 'h3', xs: 'h4' } }}
       />
       <VideoBox video={videoImg} />
     </Box>

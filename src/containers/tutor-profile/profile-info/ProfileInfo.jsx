@@ -56,21 +56,27 @@ const ProfileInfo = () => {
   const accInfo = accountInfoMock.map((item) => (
     <TitleWithDescription
       description={item.description}
-      descriptionStyles={{ typography: 'overline' }}
       key={item.description}
-      style={{ wrapper: { textAlign: 'center' } }}
+      style={styles.profileTitleComp}
       title={item.title}
-      titleStyles={{ typography: { md: 'h5' } }}
     />
   ))
 
   const buttonGroup = !isMyProfile && (
     <Box sx={styles.buttonGroup}>
-      <Button fullWidth size={isDesktop ? 'extraLarge' : 'medium'} variant='containedLight'>
+      <Button
+        fullWidth
+        size={isDesktop ? 'extraLarge' : 'medium'}
+        variant='containedLight'
+      >
         {t('tutorProfilePage.profileInfo.bookLesson')}
       </Button>
 
-      <Button fullWidth size={isDesktop ? 'extraLarge' : 'medium'} variant='contained'>
+      <Button
+        fullWidth
+        size={isDesktop ? 'extraLarge' : 'medium'}
+        variant='contained'
+      >
         {t('tutorProfilePage.profileInfo.sendMessage')}
       </Button>
     </Box>

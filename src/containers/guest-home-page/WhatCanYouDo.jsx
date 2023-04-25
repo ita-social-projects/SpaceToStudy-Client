@@ -62,9 +62,8 @@ const WhatCanYouDo = () => {
     <Box id={sectionId} sx={styles.container}>
       <TitleWithDescription
         description={t('guestHomePage.whatCanYouDo.description')}
-        descriptionStyles={{ typography: { xs: 'subtitle1' } }}
+        style={styles.titleComp}
         title={t('guestHomePage.whatCanYouDo.title')}
-        titleStyles={{ typography: { md: 'h3', xs: 'h4' } }}
       />
 
       <Box sx={styles.cards}>{cards}</Box>

@@ -26,11 +26,9 @@ const ImgTitleDescription: FC<ImgTitleDescriptionProps> = ({
       <Box alt='info' component='img' src={img} sx={style.img} />
 
       <TitleWithDescription
-        componentStyles={style.wrapper}
         description={description}
-        descriptionStyles={style.description}
+        style={styles.titleComp}
         title={title}
-        titleStyles={style.title}
       />
     </Box>
   )

@@ -31,9 +31,8 @@ const StudentHowItWorks = () => {
 
         <TitleWithDescription
           description={t(item.description)}
-          descriptionStyles={styles.cardDescription}
+          style={styles.titleComp}
           title={t(item.title)}
-          titleStyles={styles.cardTitle}
         />
       </Box>
     )
@@ -44,6 +43,7 @@ const StudentHowItWorks = () => {
       <TitleWithDescription
         description={t('studentHomePage.howItWorks.description')}
         descriptionStyles={styles.sectionDescription}
+        style={styles.sectionTitleComp}
         title={t('studentHomePage.howItWorks.title')}
         titleStyles={styles.sectionTitle}
       />

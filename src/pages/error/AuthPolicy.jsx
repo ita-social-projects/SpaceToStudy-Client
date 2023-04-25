@@ -18,11 +18,9 @@ const AuthPolicy = () => {
     <Container sx={styles.container}>
       <Box sx={styles.errorInfo}>
         <TitleWithDescription
-          componentStyles={styles.titleWithDescr}
           description={t('errorPage.401.description')}
-          descriptionStyles={styles.description}
+          style={styles.titleComp}
           title={t('errorPage.401.title')}
-          titleStyles={styles.title}
         />
         <Button
           component={Link}

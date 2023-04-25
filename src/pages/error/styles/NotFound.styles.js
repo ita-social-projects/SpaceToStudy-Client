@@ -47,5 +47,32 @@ export const styles = {
     alignSelf: 'flex-end',
     maxWidth: { xs: '110px', md: '170px' },
     overflow: 'auto'
+  },
+  titleComp: {
+    wrapper: {
+      textAlign: {
+        md: 'left',
+        xs: 'center'
+      },
+      mb: '32px'
+    },
+    title: {
+      typography: {
+        md: 'h2',
+        sm: 'h3',
+        xs: 'h4'
+      },
+      mb: '16px',
+      lineHeight: {
+        md: '61px'
+      }
+    },
+    description: {
+      typography: {
+        md: 'subtitle1',
+        sm: 'subtitle1',
+        xs: 'subtitle2'
+      }
+    }
   }
 }
