@@ -64,58 +64,53 @@ const Subjects = () => {
     value: CategoryNameInterface
   ) => option?._id === value?._id
 
-  const autoCompleteCategories = (
-    <AppAutoComplete
-      getOptionLabel={getOptionLabelCategory}
-      isOptionEqualToValue={isOptionEqualToValueCategory}
-      loading={categoriesNamesLoading}
-      onChange={onCategoryChange}
-      options={categoriesNamesItems}
-      sx={styles.categoryInput}
-      textFieldProps={{
-        label: t('breadCrumbs.categories')
-      }}
-      value={category}
-    />
-  )
-
   return (
-    <Container sx={{ flex: 1, mt: '80px' }}>
-      <OfferRequestBlock />
-      <TitleWithDescription
-        componentStyles={styles.componentStyles}
-        description={t('subjectsPage.subjects.description')}
-        descriptionStyles={styles.sectionDescription}
-        title={t('subjectsPage.subjects.title', {
-          category: category?.name
-        })}
-        titleStyles={styles.sectionTitle}
-      />
+    <Container sx={{ flex: 1 }}>
+      <Box className='section' sx={styles.container}>
+        <TitleWithDescription
+          description={t('subjectsPage.subjects.description')}
+          style={styles.titleComp}
+          title={t('subjectsPage.subjects.title', {
+            category: category?.name
+          })}
+        />
 
-      <Box sx={styles.navigation}>
-        <DirectionLink
-          before={<ArrowBackIcon fontSize='small' />}
-          linkTo={authRoutes.categories.path}
-          title={t('subjectsPage.subjects.backToAllCategories')}
-        />
-        <DirectionLink
-          after={<ArrowForwardIcon fontSize='small' />}
-          linkTo={authRoutes.findOffers.path}
-          title={t('subjectsPage.subjects.showAllOffers')}
-        />
+        <Box sx={styles.navigation}>
+          <DirectionLink
+            before={<ArrowBackIcon fontSize='small' />}
+            linkTo={guestRoutes.categories.path}
+            title={t('subjectsPage.subjects.backToAllCategories')}
+          />
+
+          <DirectionLink
+            after={<ArrowForwardIcon fontSize='small' />}
+            linkTo={guestRoutes.findOffers.path}
+            title={t('subjectsPage.subjects.showAllOffers')}
+          />
+        </Box>
+        <AppToolbar sx={styles.searchToolbar}>
+          <AppAutoComplete
+            getOptionLabel={getOptionLabelCategory}
+            isOptionEqualToValue={isOptionEqualToValueCategory}
+            loading={categoriesNamesLoading}
+            onChange={onCategoryChange}
+            options={categoriesNamesItems}
+            sx={styles.categoryInput}
+            textFieldProps={{
+              label: t('breadCrumbs.categories')
+            }}
+            value={category}
+          />
+          <SearchAutocomplete
+            options={subjectsNamesItems}
+            search={searchValue}
+            setSearch={setSearchValue}
+            textFieldProps={{
+              label: t('subjectsPage.subjects.searchLabel')
+            }}
+          />
+        </AppToolbar>
       </Box>
-      <AppToolbar sx={styles.searchToolbar}>
-        {!isMobile && autoCompleteCategories}
-        <SearchAutocomplete
-          options={subjectsNamesItems}
-          search={searchValue}
-          setSearch={setSearchValue}
-          textFieldProps={{
-            label: t('subjectsPage.subjects.searchLabel')
-          }}
-        />
-      </AppToolbar>
-      {isMobile && autoCompleteCategories}
     </Container>
   )
 }

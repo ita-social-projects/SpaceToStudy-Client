@@ -3,10 +3,14 @@ export const styles = {
     margin: '100px 0',
     minHeight: '500px'
   },
-  titleStyles: {
-    typography: { md: 'h4', xs: 'h5' }
-  },
-  descriptionStyles: {
-    typography: { sm: 'body1', xs: 'body2' }
+  titleComp: {
+    title: {
+      typography: { md: 'h4', xs: 'h5' },
+      marginBottom: '16px'
+    },
+    description: {
+      typography: { sm: 'body1', xs: 'body2' },
+      color: 'primary.500'
+    }
   }
 }

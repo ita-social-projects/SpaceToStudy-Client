@@ -42,10 +42,8 @@ const StudentHowItWorks = () => {
     <Box className='section' id={sectionId} sx={styles.container}>
       <TitleWithDescription
         description={t('studentHomePage.howItWorks.description')}
-        descriptionStyles={styles.sectionDescription}
         style={styles.sectionTitleComp}
         title={t('studentHomePage.howItWorks.title')}
-        titleStyles={styles.sectionTitle}
       />
 
       <Box sx={styles.cardsContainer}>{cards}</Box>
