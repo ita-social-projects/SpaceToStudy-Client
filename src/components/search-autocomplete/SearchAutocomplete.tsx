@@ -59,7 +59,7 @@ const SearchAutocomplete = ({
   }
 
   const onSearch = () => {
-    onSearchChange && onSearchChange()
+    onSearchChange && searchInput !== search && onSearchChange()
     setSearch(searchInput)
   }
 
