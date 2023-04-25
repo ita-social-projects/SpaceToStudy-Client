@@ -6,7 +6,7 @@ import useAxios from '~/hooks/use-axios'
 import { CategoriesParams } from '~/types'
 import { defaultResponses } from '~/constants'
 
-interface useLoadMoreReturn<T> {
+interface UseLoadMoreReturn<T> {
   data: T[]
   loading: boolean
   resetData: () => void
@@ -14,7 +14,7 @@ interface useLoadMoreReturn<T> {
   isExpandable: boolean
 }
 
-interface useLoadMoreProps<T> {
+interface UseLoadMoreProps<T> {
   service: (data: Partial<CategoriesParams>) => Promise<AxiosResponse<T[]>>
   limit: number
   params?: Partial<CategoriesParams>
@@ -24,7 +24,7 @@ const useLoadMore = <T,>({
   service,
   limit,
   params
-}: useLoadMoreProps<T>): useLoadMoreReturn<T> => {
+}: UseLoadMoreProps<T>): UseLoadMoreReturn<T> => {
   const [skip, setSkip] = useState<number>(0)
   const [data, setData] = useState<T[] | []>([])
 
