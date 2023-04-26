@@ -23,17 +23,17 @@ const OfferContainer: FC<OfferContainerProps> = ({ viewMode, offerCards }) => {
     </Grid>
   ))
 
+  const columnNumber = viewMode === CardsViewEnums.Grid ? 12 : 1
+
   return (
     <Box sx={{ flexGrow: 1 }}>
-      {viewMode === CardsViewEnums.Grid ? (
-        <Grid columns={{ md: 12, xl: 12 }} container spacing={{ md: 3 }}>
-          {arrayOfCards}
-        </Grid>
-      ) : (
-        <Grid columns={{ md: 12, xl: 1 }} container spacing={{ md: 3 }}>
-          {arrayOfCards}
-        </Grid>
-      )}
+      <Grid
+        columns={{ md: 12, xl: columnNumber }}
+        container
+        spacing={{ md: 3 }}
+      >
+        {arrayOfCards}
+      </Grid>
     </Box>
   )
 }
