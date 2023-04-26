@@ -1,15 +1,6 @@
 export const styles = {
   selectField: {
-    minWidth: '115px',
-    '&.MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
-      borderColor: 'primary.200'
-    },
-    '.MuiSelect-icon': {
-      color: 'primary.500'
-    },
-    '&.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
-      borderColor: 'primary.500'
-    }
+    minWidth: '115px'
   },
   selectContainer: {
     display: 'flex',

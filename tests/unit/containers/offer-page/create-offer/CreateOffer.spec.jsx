@@ -6,7 +6,6 @@ import { renderWithProviders } from '~tests/test-utils'
 import { ConfirmationDialogProvider } from '~/context/confirm-context'
 import { categoryService } from '~/services/category-service'
 
-
 vi.mock('axios')
 vi.mock('~/services/category-service')
 
@@ -48,12 +47,12 @@ describe('CreateOffer component', () => {
 
     fireEvent.click(languageInput)
     fireEvent.change(languageInput, {
-      target: { value: 'common.languages.spanish' }
+      target: { value: 'Spanish' }
     })
     fireEvent.keyDown(languageInput, { key: 'ArrowDown' })
     fireEvent.keyDown(languageInput, { key: 'Enter' })
 
-    expect(screen.getByText('common.languages.spanish')).toBeInTheDocument()
+    expect(screen.getByText('Spanish')).toBeInTheDocument()
 
     const deleteChipIcon = screen.getByTestId('close-btn')
 
@@ -99,9 +98,7 @@ describe('CreateOffer component', () => {
     expect(categoryInput.value).toBe('')
   })
   it('should change checkboxes', () => {
-    const checkboxProfessional = screen.getByLabelText(
-      'common.levels.professional'
-    )
+    const checkboxProfessional = screen.getByLabelText('Professional')
     fireEvent.click(checkboxProfessional)
 
     expect(checkboxProfessional).toBeChecked()

@@ -9,8 +9,11 @@ import CheckboxList from '~/components/checkbox-list/CheckboxList'
 import { CreateOfferData } from '~/containers/offer-page/create-offer/CreateOffer'
 
 import { useAppSelector } from '~/hooks/use-redux'
-import { levelsTranslationKeys } from '~/containers/find-offer/offer-filter-block/offer-filter-list/OfferFilterList.constants'
-import { CategoryNameInterface, CreateOfferBlockProps } from '~/types'
+import {
+  CategoryNameInterface,
+  CreateOfferBlockProps,
+  ProficiencyLevelEnums
+} from '~/types'
 import OrderedListItem from '~/components/ordered-list-item/OrderedListItem'
 import { styles } from '~/containers/offer-page/create-offer/CreateOffer.styles'
 import useCategoriesNames from '~/hooks/use-categories-names'
@@ -57,7 +60,7 @@ const SpecializationBlock = <T extends CreateOfferData>({
     value: CategoryNameInterface
   ) => option?._id === value?._id
 
-  const levelOptions = levelsTranslationKeys.map((level) => t(level))
+  const levelOptions = Object.values(ProficiencyLevelEnums)
   const subjectError = data.categoryId && errors.subjectId
 
   return (

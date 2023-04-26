@@ -8,36 +8,34 @@ import GridViewIcon from '@mui/icons-material/GridView'
 
 import { styles } from '~/components/view-switcher/ViewSwitcher.styles'
 
-import { CardsViewEnums, CardsViewTypes } from '~/types'
+import { CardsViewEnum, CardsView } from '~/types'
 
 interface ViewSwitcherProps {
-  onChange: (value: CardsViewTypes) => void
-  value: CardsViewTypes
+  onChange: (value: CardsView) => void
+  value: CardsView
 }
 
 const ViewSwitcher: FC<ViewSwitcherProps> = ({ onChange, value }) => {
-  const changeOffersView = (
-    _event: MouseEvent<HTMLElement>,
-    view: CardsViewTypes
-  ) => onChange(view)
+  const changeOffersView = (_event: MouseEvent<HTMLElement>, view: CardsView) =>
+    onChange(view)
 
   return (
     <Box>
       <ToggleButton
         aria-label='inline card view'
         onClick={changeOffersView}
-        selected={value === CardsViewEnums.Inline}
+        selected={value === CardsViewEnum.Inline}
         sx={styles.inlineButton}
-        value={CardsViewEnums.Inline}
+        value={CardsViewEnum.Inline}
       >
         <FormatListBulletedIcon sx={styles.icon} />
       </ToggleButton>
       <ToggleButton
         aria-label='grid card view'
         onClick={changeOffersView}
-        selected={value === CardsViewEnums.Grid}
+        selected={value === CardsViewEnum.Grid}
         sx={styles.gridButton}
-        value={CardsViewEnums.Grid}
+        value={CardsViewEnum.Grid}
       >
         <GridViewIcon sx={styles.icon} />
       </ToggleButton>

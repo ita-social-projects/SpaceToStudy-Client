@@ -1,4 +1,4 @@
-import { FC, MouseEvent, SyntheticEvent } from 'react'
+import { FC, MouseEvent, SyntheticEvent, useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Typography, Checkbox, FormControlLabel, Box } from '@mui/material'
 
@@ -9,21 +9,27 @@ import FilterInput from '~/components/filter-input/FilterInput'
 import RadioButtonInputs from '~/components/radio-button-inputs/RadioButtonInputs'
 
 import {
-  languagesTranslationKeys,
-  levelsTranslationKeys,
+  languageValues,
+  defaultResponse,
   radioButtonsTranslationKeys
 } from '~/containers/find-offer/offer-filter-block/offer-filter-list/OfferFilterList.constants'
 import { styles } from '~/containers/find-offer/offer-filter-block/offer-filter-list/OfferFilterList.styles'
 import {
-  FindOfferFilterTypes,
   FindOffersFilters,
-  FindOffersUpdateFilter
+  FindOffersUpdateFilter,
+  LanguageFilter,
+  LanguagesEnum,
+  ProficiencyLevelEnums
 } from '~/types'
+import useAxios from '~/hooks/use-axios'
+import { OfferService } from '~/services/offer-service'
 
 interface OfferFilterListProps {
   filters: FindOffersFilters
-  updateFilterByKey: (key: string) => (value: FindOfferFilterTypes) => void
-  updateFilter: FindOffersUpdateFilter
+  updateFilterByKey: <K extends keyof FindOffersFilters>(
+    key: K
+  ) => (value: FindOffersFilters[K]) => void
+  updateFilter: FindOffersUpdateFilter<FindOffersFilters>
 }
 
 const OfferFilterList: FC<OfferFilterListProps> = ({
@@ -32,28 +38,44 @@ const OfferFilterList: FC<OfferFilterListProps> = ({
   filters
 }) => {
   const { t } = useTranslation()
-  const languageOptions = languagesTranslationKeys.map((language) =>
-    t(language)
-  )
-  const levelOptions = levelsTranslationKeys.map((level) => t(level))
+  const levelOptions = Object.values(ProficiencyLevelEnums)
+
   const radioOptions = radioButtonsTranslationKeys.map(({ title, value }) => ({
     title: t(title),
     value
   }))
 
+  const getPricaRange = useCallback(
+    () => OfferService.getPriceRange({ authorRole: filters.authorRole }),
+    [filters.authorRole]
+  )
+
+  const { response, fetchData } = useAxios({
+    service: getPricaRange,
+    fetchOnMount: false,
+    defaultResponse
+  })
+
+  useEffect(() => {
+    void fetchData()
+  }, [fetchData])
+
   const handleLanguagesChange = (
     _: MouseEvent<HTMLLIElement>,
-    value: string | null
-  ) => value && updateFilter(value, 'language')
+    value: LanguagesEnum | null
+  ) => updateFilter(value || '', 'language')
+
   const handleChecked = (_: SyntheticEvent<Element, Event>, checked: boolean) =>
     updateFilter(checked.toString(), 'native')
 
   const languagesFilter = (
     <Box>
       <AppAutoComplete
+        getOptionLabel={(option: LanguageFilter) =>
+          option || t('common.languages.allLanguages')
+        }
         onChange={handleLanguagesChange}
-        options={languageOptions}
-        size='small'
+        options={languageValues}
         textFieldProps={{
           id: t('findOffers.filterTitles.language')
         }}
@@ -90,8 +112,8 @@ const OfferFilterList: FC<OfferFilterListProps> = ({
       {languagesFilter}
       {filterTitle(t('findOffers.filterTitles.price'))}
       <AppRange
-        max={550}
-        min={150}
+        max={response.maxPrice}
+        min={response.minPrice}
         onChange={updateFilterByKey('price')}
         value={filters.price}
       />

@@ -1,5 +1,5 @@
 import { URLSearchParams } from 'node:url'
-import { FilterFromQuery, FindOffersFilters } from '~/types'
+import { FilterFromQuery } from '~/types'
 
 export const parseJwt = <T,>(token: string): T => {
   const base64Url = token.split('.')[1]
@@ -17,16 +17,18 @@ export const parseJwt = <T,>(token: string): T => {
   return JSON.parse(jsonPayload) as T
 }
 
-export const parseQueryParams = (
+export const parseQueryParams = <T extends object>(
   searchParams: URLSearchParams,
-  defaultFilters: FindOffersFilters
+  defaultFilters: T
 ): FilterFromQuery | null => {
   const filtersFromQuery: FilterFromQuery = {}
   searchParams.forEach((value, key) => {
     if (key in defaultFilters) {
-      const convertedValue =
-        (key === 'price' || key === 'level') && value.split(',')
-      filtersFromQuery[key] = convertedValue || value
+      if (key === 'price' || key === 'level') {
+        filtersFromQuery[key] = value ? value.split(',') : []
+      } else {
+        filtersFromQuery[key] = value
+      }
     }
   })
 

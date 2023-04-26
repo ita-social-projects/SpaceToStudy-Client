@@ -27,7 +27,8 @@ export const URLs = {
   },
   categories: {
     get: '/categories',
-    getNames: '/categories/names'
+    getNames: '/categories/names',
+    priceRange: '/price-range'
   },
   subjects: {
     get: '/subjects',

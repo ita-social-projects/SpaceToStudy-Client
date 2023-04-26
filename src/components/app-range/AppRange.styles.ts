@@ -39,8 +39,8 @@ export const styles = {
     display: 'flex',
     alignItems: 'center',
     gap: '8px',
-    '& input': {
-      padding: '5px',
+    '& .MuiInputBase-input.MuiOutlinedInput-input': {
+      padding: '7px',
       fontSize: '14px'
     }
   },

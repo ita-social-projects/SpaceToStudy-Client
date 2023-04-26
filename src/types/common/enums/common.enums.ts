@@ -7,6 +7,16 @@ export enum ProficiencyLevelEnum {
   Specialized = 'Specialized'
 }
 
+export enum LanguagesEnum {
+  English = 'English',
+  Ukrainian = 'Ukrainian',
+  Polish = 'Polish',
+  German = 'German',
+  French = 'French',
+  Spanish = 'Spanish',
+  Arabic = 'Arabic'
+}
+
 export enum SizeEnum {
   Small = 'small',
   Medium = 'medium',
