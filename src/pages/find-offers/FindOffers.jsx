@@ -5,23 +5,22 @@ import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
 
 import useBreakpoints from '~/hooks/use-breakpoints'
-import OfferCard from '~/components/offer-card/OfferCard'
 import PopularCategories from '~/components/popular-categories/PopularCategories'
 import AppPagination from '~/components/app-pagination/AppPagination'
 import OfferFilterBlock from '~/containers/find-offer/offer-filter-block/OfferFilterBlock'
 import FilterBarMenu from '~/containers/find-offer/filter-bar-menu/FilterBarMenu'
 import AppDrawer from '~/components/app-drawer/AppDrawer'
+import OfferContainer from '~/containers/OfferContainer/OfferContainer'
 import { useDrawer } from '~/hooks/use-drawer'
-
+import { CardsViewEnums } from '~/types'
 import { useFilterQuery } from '~/hooks/use-filter-query'
 
 import {
-  mockOffer,
+  mockOfferSquareCard,
   defaultFilters
 } from '~/pages/find-offers/FindOffers.constants'
 
 const FindOffers = () => {
-  const [currentPage, setCurrentPage] = useState(1)
   const { openDrawer, closeDrawer, isOpen } = useDrawer()
   const { filters, countActiveFilters, filterQueryActions } = useFilterQuery({
     defaultFilters
@@ -32,19 +31,11 @@ const FindOffers = () => {
 
   const { t } = useTranslation()
 
-  const mockDataPagination = {
-    itemsCount: 100,
-    page: currentPage,
-    pageSize: 5
-  }
-
-  const onBookmarkClick = (id) => {
-    console.log(id)
-  }
-
   const toggleFiltersOpen = () => (isOpen ? closeDrawer() : openDrawer())
 
   const handleShowingTutorOffers = () => setShowingTutorOffers((prev) => !prev)
+
+  const mockOffers = new Array(10).fill(mockOfferSquareCard)
 
   const filtersComponent = (
     <OfferFilterBlock
@@ -77,16 +68,15 @@ const FindOffers = () => {
             {filtersComponent}
           </AppDrawer>
         )}
-        <OfferCard
-          offer={mockOffer}
-          onBookmarkClick={() => onBookmarkClick(mockOffer.id)}
+        <OfferContainer
+          offerCards={mockOffers}
+          viewMode={CardsViewEnums.Grid}
         />
       </Box>
       <AppPagination
-        itemsCount={mockDataPagination.itemsCount}
-        itemsPerPage={mockDataPagination.itemsPerPage}
-        onChange={setCurrentPage}
-        page={mockDataPagination.page}
+        itemsCount={mockOffers.itemsCount}
+        itemsPerPage={mockOffers.itemsPerPage}
+        page={mockOffers.page}
         size={size}
       />
       <PopularCategories title={t('common.popularCategories')} />
