@@ -19,7 +19,8 @@ import DirectionLink from '~/components/direction-link/DirectionLink'
 import {
   CategoryInterface,
   CategoryNameInterface,
-  CategoriesParams
+  CategoriesParams,
+  SizeEnum
 } from '~/types'
 import { itemsLoadLimit } from '~/constants'
 import { authRoutes } from '~/router/constants/authRoutes'
@@ -88,7 +89,7 @@ const Categories = () => {
       />
 
       <DirectionLink
-        after={<ArrowForwardIcon fontSize='small' />}
+        after={<ArrowForwardIcon fontSize={SizeEnum.Small} />}
         linkTo={authRoutes.findOffers.path}
         title={t('categoriesPage.showAllOffers')}
       />
