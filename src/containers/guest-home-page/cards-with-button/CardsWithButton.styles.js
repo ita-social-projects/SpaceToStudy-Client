@@ -42,11 +42,13 @@ export const styles = {
     },
 
     title: {
+      typography: { xs: 'h6' },
       marginBottom: '8px',
       textAlign: { sm: 'end', xs: 'start' }
     },
     description: {
-      textAlign: { sm: 'end', xs: 'start' }
+      textAlign: { sm: 'end', xs: 'start' },
+      typography: { xs: 'subtitle2' }
     },
     slidesIn: slidesRightAnimation
   },
@@ -66,11 +68,13 @@ export const styles = {
       flexBasis: '466px'
     },
     title: {
+      typography: { xs: 'h6' },
       marginBottom: '8px',
       textAlign: 'start'
     },
     description: {
-      textAlign: 'start'
+      textAlign: 'start',
+      typography: { xs: 'subtitle2' }
     },
     slidesIn: slidesLeftAnimation
   }

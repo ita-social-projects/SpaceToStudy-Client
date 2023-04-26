@@ -44,5 +44,19 @@ export const styles = {
       md: '20px',
       xs: '16px'
     }
+  },
+  titleCtitleWithDescriptionomp: {
+    wrapper: {
+      margin: '0 auto',
+      marginBottom: '32px',
+      textAlign: 'center'
+    },
+    title: {
+      typography: { md: 'h3', xs: 'h4' },
+      marginBottom: '16px'
+    },
+    description: {
+      typography: { xs: 'subtitle1' }
+    }
   }
 }

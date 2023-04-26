@@ -20,6 +20,7 @@ import {
 } from '~/containers/tutor-profile/profile-info/ProfileInfo.constants'
 import { styles } from '~/containers/tutor-profile/profile-info/ProfileInfo.styles'
 import { snackbarVariants, myProfilePath } from '~/constants'
+import { SizeEnum } from '~/types'
 
 const ProfileInfo = () => {
   const { t } = useTranslation()
@@ -46,7 +47,7 @@ const ProfileInfo = () => {
     <IconButton
       data-testid='icon-btn'
       onClick={copyProfileLink}
-      size={isDesktop ? 'large' : 'small'}
+      size={isDesktop ? SizeEnum.Large : SizeEnum.Small}
       sx={styles.iconBtn}
     >
       {actionIcon}
@@ -56,21 +57,27 @@ const ProfileInfo = () => {
   const accInfo = accountInfoMock.map((item) => (
     <TitleWithDescription
       description={item.description}
-      descriptionStyles={{ typography: 'overline' }}
       key={item.description}
-      style={{ wrapper: { textAlign: 'center' } }}
+      style={styles.profileTitleComp}
       title={item.title}
-      titleStyles={{ typography: { md: 'h5' } }}
     />
   ))
 
   const buttonGroup = !isMyProfile && (
     <Box sx={styles.buttonGroup}>
-      <Button fullWidth size={isDesktop ? 'extraLarge' : 'medium'} variant='containedLight'>
+      <Button
+        fullWidth
+        size={isDesktop ? SizeEnum.ExtraLarge : SizeEnum.Medium}
+        variant='containedLight'
+      >
         {t('tutorProfilePage.profileInfo.bookLesson')}
       </Button>
 
-      <Button fullWidth size={isDesktop ? 'extraLarge' : 'medium'} variant='contained'>
+      <Button
+        fullWidth
+        size={isDesktop ? SizeEnum.ExtraLarge : SizeEnum.Medium}
+        variant='contained'
+      >
         {t('tutorProfilePage.profileInfo.sendMessage')}
       </Button>
     </Box>

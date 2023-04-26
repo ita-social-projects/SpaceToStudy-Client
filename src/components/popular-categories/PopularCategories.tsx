@@ -77,9 +77,8 @@ const PopularCategories: FC<PopularCategoriesProps> = ({
     <Box sx={styles.wrapper}>
       <TitleWithDescription
         description={description}
-        descriptionStyles={styles.descriptionStyles}
+        style={styles.titleWithDescription}
         title={title}
-        titleStyles={styles.titleStyles}
       />
       {loading && !response ? (
         <Loader size={70} />

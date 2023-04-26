@@ -22,7 +22,27 @@ export default {
     }
   }
 }
-
+const styles = {
+  titleWithDescription: {
+    wrapper: {
+      textAlign: 'center',
+      mb: '32px'
+    },
+    title: {
+      typography: {
+        sm: 'h2',
+        xs: 'h4'
+      },
+      mb: '16px'
+    },
+    description: {
+      typography: {
+        sm: 'subtitle1',
+        xs: 'subtitle2'
+      }
+    }
+  }
+}
 const Template = (args) => <TitleWithDescription {...args} />
 
 export const Desktop = Template.bind({})
@@ -30,24 +50,5 @@ export const Desktop = Template.bind({})
 Desktop.args = {
   title: 'Title',
   description: 'Description',
-  titleStyles: { typography: 'h2' },
-  descriptionStyles: { typography: 'subtitle1' }
-}
-
-export const Tablet = Template.bind({})
-
-Tablet.args = {
-  title: 'Title',
-  description: 'Description',
-  titleStyles: { typography: 'h3' },
-  descriptionStyles: { typography: 'subtitle1' }
-}
-
-export const Mobile = Template.bind({})
-
-Mobile.args = {
-  title: 'Title',
-  description: 'Description',
-  titleStyles: { typography: 'h4' },
-  descriptionStyles: { typography: 'subtitle2' }
+  style: styles.titleWithDescription
 }

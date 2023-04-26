@@ -46,7 +46,7 @@ const EmailConfirmModal = ({ confirmToken, openModal }) => {
           style={styles}
           title={t('modals.emailNotConfirm')}
         />
-        <Button onClick={closeModal} size='large' variant='contained'>
+        <Button onClick={closeModal} sx={styles.button} variant='contained'>
           {t('common.confirmButton')}
         </Button>
       </Box>
@@ -62,7 +62,11 @@ const EmailConfirmModal = ({ confirmToken, openModal }) => {
           style={styles}
           title={t('modals.emailAlreadyConfirm')}
         />
-        <Button onClick={openLoginDialog} size='large' variant='contained'>
+        <Button
+          onClick={openLoginDialog}
+          sx={styles.button}
+          variant='contained'
+        >
           {t('common.confirmButton')}
         </Button>
       </Box>
@@ -77,7 +81,11 @@ const EmailConfirmModal = ({ confirmToken, openModal }) => {
           style={styles}
           title={t('modals.emailConfirm')}
         />
-        <Button onClick={openLoginDialog} size='large' variant='contained'>
+        <Button
+          onClick={openLoginDialog}
+          sx={styles.button}
+          variant='contained'
+        >
           {t('button.goToLogin')}
         </Button>
       </Box>
