@@ -2,7 +2,7 @@ import { FC } from 'react'
 import Box from '@mui/material/Box'
 import { Grid } from '@mui/material'
 import { CardsViewTypes, OfferResponse, CardsViewEnums } from '~/types'
-import OfferCardSquare from '../find-offer/offer-card-square/OfferCardSquare'
+import OfferCardSquare from '../offer-card-square/OfferCardSquare'
 import OfferCard from '~/components/offer-card/OfferCard'
 
 interface OfferContainerProps {
