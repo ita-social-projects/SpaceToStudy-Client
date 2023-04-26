@@ -1,6 +1,5 @@
 import { FC } from 'react'
 import Box from '@mui/material/Box'
-import OfferCard from '~/components/offer-card/OfferCard'
 import { Grid } from '@mui/material'
 import { CardsViewTypes, OfferResponse, CardsViewEnums } from '~/types'
 import OfferCardSquare from '../find-offer/offer-card-square/OfferCardSquare'
