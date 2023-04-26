@@ -23,5 +23,32 @@ export const styles = {
   img: {
     maxWidth: { sm: '590px', xs: '320px' },
     overflow: 'auto'
+  },
+  titleWithDescription: {
+    wrapper: {
+      textAlign: {
+        md: 'left',
+        xs: 'center'
+      },
+      mb: '32px'
+    },
+    title: {
+      typography: {
+        md: 'h2',
+        sm: 'h3',
+        xs: 'h4'
+      },
+      mb: '16px',
+      lineHeight: {
+        md: '61px'
+      }
+    },
+    description: {
+      typography: {
+        md: 'subtitle1',
+        sm: 'subtitle1',
+        xs: 'subtitle2'
+      }
+    }
   }
 }

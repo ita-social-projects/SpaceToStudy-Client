@@ -28,9 +28,8 @@ const ExploreCategories = () => {
     <Box className='section' sx={styles.container}>
       <TitleWithDescription
         description={t('categoriesPage.categories.description')}
-        descriptionStyles={styles.sectionDescription}
+        style={styles.titleWithDescription}
         title={t('categoriesPage.categories.title')}
-        titleStyles={styles.sectionTitle}
       />
 
       <Typography

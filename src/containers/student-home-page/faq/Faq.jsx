@@ -8,6 +8,8 @@ import Accordions from '~/components/accordion/Accordions'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import { studentRoutes } from '~/router/constants/studentRoutes'
 
+import { styles } from '~/containers/student-home-page/faq/Faq.styles.js'
+
 const Faq = () => {
   const { t } = useTranslation()
   const [activeItemId, setActiveItemId] = useState(null)
@@ -19,13 +21,12 @@ const Faq = () => {
     <Box
       className='section'
       id={studentRoutes.navBar.faq.route}
-      sx={{ flexDirection: 'column', mb: 0, pb: 10 }}
+      sx={styles.container}
     >
       <TitleWithDescription
         description={t('studentHomePage.faq.subtitle')}
-        descriptionStyles={{ typography: { xs: 'subtitle1' } }}
+        style={styles.titleWithDescription}
         title={t('studentHomePage.faq.title')}
-        titleStyles={{ typography: { xs: 'h5' } }}
       />
 
       <Accordions

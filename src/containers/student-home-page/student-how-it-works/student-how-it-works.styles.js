@@ -5,12 +5,6 @@ export const styles = {
     textAlign: 'center',
     p: '35px 40px'
   },
-  sectionTitle: {
-    typography: { sm: 'h4', xs: 'h5' }
-  },
-  sectionDescription: {
-    typography: { sm: 'body1', xs: 'body2' }
-  },
   cardsContainer: {
     display: 'flex',
     flexWrap: 'wrap',
@@ -24,11 +18,27 @@ export const styles = {
   cardImg: {
     maxHeight: '89px'
   },
-  cardTitle: {
-    typography: 'h6',
-    mt: '25px'
+  titleWithDescription: {
+    wrapper: {
+      mb: '32px',
+      textAlign: 'center'
+    },
+    title: {
+      typography: 'h6',
+      mt: '25px',
+      mb: '16px'
+    },
+    description: {
+      typography: 'body2'
+    }
   },
-  cardDescription: {
-    typography: 'body2'
+  sectionTitleComp: {
+    title: {
+      typography: { sm: 'h4', xs: 'h5' },
+      mb: '16px'
+    },
+    description: {
+      typography: { sm: 'body1', xs: 'body2' }
+    }
   }
 }

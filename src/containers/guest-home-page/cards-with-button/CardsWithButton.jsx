@@ -11,14 +11,6 @@ import SignupDialog from '~/containers/guest-home-page/signup-dialog/SignupDialo
 import { styles } from '~/containers/guest-home-page/cards-with-button/CardsWithButton.styles'
 import dots from '~/assets/img/guest-home-page/dots.svg'
 
-const titleStyles = {
-  typography: { xs: 'h6' }
-}
-
-const descriptionStyles = {
-  typography: { xs: 'subtitle2' }
-}
-
 const CardsWithButton = ({ array, role, btnText, isStudent }) => {
   const { t } = useTranslation()
   const { openModal } = useContext(ModalContext)
@@ -52,10 +44,8 @@ const CardsWithButton = ({ array, role, btnText, isStudent }) => {
             </Box>
             <TitleWithDescription
               description={t(item.description)}
-              descriptionStyles={descriptionStyles}
               style={styles[boxSide]}
               title={t(item.title)}
-              titleStyles={titleStyles}
             />
           </Box>
         )}

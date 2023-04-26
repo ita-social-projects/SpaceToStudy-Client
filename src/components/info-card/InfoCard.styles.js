@@ -21,5 +21,17 @@ export const styles = {
   },
   cardDescription: {
     marginBottom: '24px'
+  },
+  titleWithDescription: {
+    wrapper: {
+      margin: '0 auto 32px'
+    },
+    title: {
+      typography: { md: 'h4', xs: 'h5' },
+      marginBottom: '16px'
+    },
+    description: {
+      typography: { md: 'body1', xs: 'body2' }
+    }
   }
 }

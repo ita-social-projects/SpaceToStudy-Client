@@ -18,9 +18,8 @@ const InfoCard = ({
 
       <TitleWithDescription
         description={description}
-        descriptionStyles={{ typography: { md: 'body1', xs: 'body2' } }}
+        style={styles.titleWithDescription}
         title={title}
-        titleStyles={{ typography: { md: 'h4', xs: 'h5' } }}
       />
 
       <Button onClick={action} variant='contained'>

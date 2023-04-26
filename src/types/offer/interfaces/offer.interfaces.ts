@@ -1,10 +1,12 @@
 import {
   CategoryInterface,
   SubjectInterface,
-  ProficiencyLevelEnums
+  ProficiencyLevelEnums,
+  UserInterface
 } from '~/types'
 
-export interface OfferResponse {
+export interface OfferResponse extends UserInterface {
+  _id: string
   category: CategoryInterface
   subject: SubjectInterface
   proficiencyLevel: ProficiencyLevelEnums

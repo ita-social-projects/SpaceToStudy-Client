@@ -4,15 +4,6 @@ export const styles = {
     alignItems: 'stretch',
     mt: '80px'
   },
-  componentStyles: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    mb: { xs: '20px', sx: '30px' }
-  },
-  sectionTitle: {
-    typography: { sm: 'h4', xs: 'h5' }
-  },
   categoryInput: {
     width: '100%',
     maxWidth: { sm: '160px', md: '220px' },
@@ -28,10 +19,6 @@ export const styles = {
     display: 'flex',
     justifyContent: 'space-between'
   },
-  sectionDescription: {
-    maxWidth: { xs: '200px', sm: '100%' },
-    typography: { sm: 'body1', xs: 'body2' }
-  },
   searchToolbar: {
     borderRadius: '70px'
   },
@@ -43,5 +30,18 @@ export const styles = {
     color: 'primary.500',
     textDecoration: 'none',
     m: '0 45px 20px 0'
+  },
+  titleWithDescription: {
+    wrapper: {
+      mb: '32px',
+      textAlign: 'center'
+    },
+    title: {
+      typography: { sm: 'h4', xs: 'h5' }
+    },
+    description: {
+      typography: { sm: 'body1', xs: 'body2' },
+      color: 'primary.500'
+    }
   }
 }

@@ -18,9 +18,6 @@ export const styles = {
     display: 'flex',
     columnGap: '10px'
   },
-  text: {
-    ...textStyles
-  },
   showMore: {
     mt: '5px',
     ml: { xs: '30px', md: '33px' },
@@ -36,5 +33,19 @@ export const styles = {
     p: '5px 15px',
     mr: '15px',
     boxShadow: commonHoverShadow
+  },
+  titleWithDescription: {
+    wrapper: {
+      display: 'flex',
+      columnGap: '10px',
+      gap: '5px',
+      marginBottom: '32px'
+    },
+    title: {
+      ...textStyles
+    },
+    description: {
+      ...textStyles
+    }
   }
 }

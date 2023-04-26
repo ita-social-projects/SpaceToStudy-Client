@@ -5,20 +5,22 @@ import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
 
 import useBreakpoints from '~/hooks/use-breakpoints'
-import OfferContainer from '~/containers/OfferContainer/OfferContainer'
 import PopularCategories from '~/components/popular-categories/PopularCategories'
 import AppPagination from '~/components/app-pagination/AppPagination'
 import OfferFilterBlock from '~/containers/find-offer/offer-filter-block/OfferFilterBlock'
 import FilterBarMenu from '~/containers/find-offer/filter-bar-menu/FilterBarMenu'
 import AppDrawer from '~/components/app-drawer/AppDrawer'
+import OfferContainer from '~/containers/OfferContainer/OfferContainer'
 import { useDrawer } from '~/hooks/use-drawer'
-
+import { CardsViewEnums } from '~/types'
 import { useFilterQuery } from '~/hooks/use-filter-query'
 
-import { defaultFilters, mockOffers } from '~/pages/find-offers/FindOffers.constants'
+import {
+  mockOfferSquareCard,
+  defaultFilters
+} from '~/pages/find-offers/FindOffers.constants'
 
 const FindOffers = () => {
-  const [currentPage, setCurrentPage] = useState(1)
   const { openDrawer, closeDrawer, isOpen } = useDrawer()
   const { filters, countActiveFilters, filterQueryActions } = useFilterQuery({
     defaultFilters
@@ -29,29 +31,11 @@ const FindOffers = () => {
 
   const { t } = useTranslation()
 
-  const mockDataPagination = {
-    itemsCount: 100,
-    page: currentPage,
-    pageSize: 5
-  }
-
-
-  const handleToggleOpenFilters = () => setOpenFilters(prev => !prev)
-  const handleShowingTutorOffers = () => setShowingTutorOffers(prev => !prev)
-
-  const currentOffersOnPage = useMemo(() => {
-    const firstPageIndex = (currentPage - 1) * mockDataPagination.pageSize
-    const lastPageIndex = firstPageIndex + mockDataPagination.pageSize
-    return mockOffers.slice(firstPageIndex, lastPageIndex)
-  }, [currentPage, mockDataPagination.pageSize])
-  
-  return (
-    <Container sx={ { flex: 1 ,display: 'flex', flexDirection: 'column', gap: 1 } }>
-      FindOffers Page Placeholder
-
   const toggleFiltersOpen = () => (isOpen ? closeDrawer() : openDrawer())
 
   const handleShowingTutorOffers = () => setShowingTutorOffers((prev) => !prev)
+
+  const mockOffers = new Array(10).fill(mockOfferSquareCard)
 
   const filtersComponent = (
     <OfferFilterBlock
@@ -71,28 +55,28 @@ const FindOffers = () => {
     >
       FindOffers Page Placeholder
       <FilterBarMenu
-        chosenFiltersQty={ countActiveFilters }
-        filters={ filters }
-        setFilters={ filterQueryActions.updateFilter }
-        toggleFilters={ handleToggleOpenFilters }
+        chosenFiltersQty={countActiveFilters}
+        filters={filters}
+        setFilters={filterQueryActions.updateFilter}
+        toggleFilters={toggleFiltersOpen}
       />
-      <Box sx={ { display: 'flex' } }>
-        <OfferFilterBlock
-          closeFilters={ handleToggleOpenFilters }
-          countActiveFilters={ countActiveFilters }
-          filterActions={ filterQueryActions }
-          filters={ filters }
-          onToggleTutorOffers={ handleShowingTutorOffers }
-          open={ openFilters }
-          showingTutorOffers={ showingTutorOffers }
-        /> 
-        <OfferContainer offerCards={ currentOffersOnPage } /> 
+      <Box sx={{ display: 'flex' }}>
+        {!isMobile ? (
+          filtersComponent
+        ) : (
+          <AppDrawer onClose={closeDrawer} open={isOpen}>
+            {filtersComponent}
+          </AppDrawer>
+        )}
+        <OfferContainer
+          offerCards={mockOffers}
+          viewMode={CardsViewEnums.Grid}
+        />
       </Box>
       <AppPagination
-        itemsCount={mockDataPagination.itemsCount}
-        itemsPerPage={mockDataPagination.itemsPerPage}
-        onChange={setCurrentPage}
-        page={mockDataPagination.page}
+        itemsCount={mockOffers.itemsCount}
+        itemsPerPage={mockOffers.itemsPerPage}
+        page={mockOffers.page}
         size={size}
       />
       <PopularCategories title={t('common.popularCategories')} />

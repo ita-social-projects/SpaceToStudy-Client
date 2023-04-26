@@ -28,27 +28,30 @@ export const styles = {
       xs: '530px'
     }
   },
-  titleWithDescr: {
-    textAlign: {
-      md: 'left',
-      xs: 'center'
-    }
-  },
-  title: {
-    typography: {
-      md: 'h2',
-      sm: 'h3',
-      xs: 'h4'
-    }
-  },
-  description: {
-    typography: {
-      sm: 'body1',
-      xs: 'body2'
-    }
-  },
   errorImage: {
     maxWidth: '100%',
     overflow: 'auto'
+  },
+  titleWithDescription: {
+    wrapper: {
+      textAlign: {
+        md: 'left',
+        xs: 'center'
+      },
+      mb: '32px'
+    },
+    title: {
+      typography: {
+        md: 'h2',
+        sm: 'h3',
+        xs: 'h4'
+      }
+    },
+    description: {
+      typography: {
+        sm: 'body1',
+        xs: 'body2'
+      }
+    }
   }
 }
