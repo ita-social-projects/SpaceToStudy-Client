@@ -34,7 +34,9 @@ const OfferDetails = () => {
     console.log(id)
   }
 
-  if (loading) <Loader pageLoad size={70} />
+  if (loading) {
+    return <Loader pageLoad size={70} />
+  }
 
   const buttonActions = [
     {
