@@ -30,7 +30,6 @@ const styles = {
     },
     title: {
       typography: {
-        md: 'h2',
         sm: 'h2',
         xs: 'h4'
       },
@@ -38,7 +37,6 @@ const styles = {
     },
     description: {
       typography: {
-        md: 'subtitle1',
         sm: 'subtitle1',
         xs: 'subtitle2'
       }

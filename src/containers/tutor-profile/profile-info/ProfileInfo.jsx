@@ -20,6 +20,7 @@ import {
 } from '~/containers/tutor-profile/profile-info/ProfileInfo.constants'
 import { styles } from '~/containers/tutor-profile/profile-info/ProfileInfo.styles'
 import { snackbarVariants, myProfilePath } from '~/constants'
+import { SizeEnum } from '~/types'
 
 const ProfileInfo = () => {
   const { t } = useTranslation()
@@ -46,7 +47,7 @@ const ProfileInfo = () => {
     <IconButton
       data-testid='icon-btn'
       onClick={copyProfileLink}
-      size={isDesktop ? 'large' : 'small'}
+      size={isDesktop ? SizeEnum.Large : SizeEnum.Small}
       sx={styles.iconBtn}
     >
       {actionIcon}
@@ -66,7 +67,7 @@ const ProfileInfo = () => {
     <Box sx={styles.buttonGroup}>
       <Button
         fullWidth
-        size={isDesktop ? 'extraLarge' : 'medium'}
+        size={isDesktop ? SizeEnum.ExtraLarge : SizeEnum.Medium}
         variant='containedLight'
       >
         {t('tutorProfilePage.profileInfo.bookLesson')}
@@ -74,7 +75,7 @@ const ProfileInfo = () => {
 
       <Button
         fullWidth
-        size={isDesktop ? 'extraLarge' : 'medium'}
+        size={isDesktop ? SizeEnum.ExtraLarge : SizeEnum.Medium}
         variant='contained'
       >
         {t('tutorProfilePage.profileInfo.sendMessage')}

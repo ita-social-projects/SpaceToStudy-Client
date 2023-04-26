@@ -5,7 +5,9 @@ interface TitleWithDescriptionProps {
   title: string
   description: string
   style?: {
-    [key: string]: SxProps
+    wrapper?: SxProps
+    title?: SxProps
+    description?: SxProps
   }
 }
 

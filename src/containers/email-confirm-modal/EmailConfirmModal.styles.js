@@ -6,16 +6,14 @@ export const styles = {
     boxShadow: 'none',
     borderRadius: '8px'
   },
-  button: {
-    marginTop: '30px',
-    backgroundColor: '#262738',
-    textTransform: 'none',
-    height: '56px'
-  },
   title: {
     marginTop: '30px',
     fontSize: '21px',
     fontWeight: 'bold',
     color: 'palette.grey.500'
+  },
+  button: {
+    size: 'large',
+    mt: '32px'
   }
 }
