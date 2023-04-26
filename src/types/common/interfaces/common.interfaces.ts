@@ -1,4 +1,4 @@
-import { OfferResponse } from '~/types'
+import { CreateOfferResponse } from '~/types'
 
 export interface UserInterface {
   firstName: string
@@ -37,7 +37,7 @@ export interface SubjectNameInterface {
 }
 
 export interface ReviewInterface {
-  offer: OfferResponse
+  offer: CreateOfferResponse
   author: UserInterface
   comment: string
   rating: number

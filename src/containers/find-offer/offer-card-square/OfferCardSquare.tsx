@@ -42,7 +42,7 @@ const OfferCardSquare: FC<OfferCardSquareProps> = ({ offer }) => {
       : `${t('common.beginner')} - ${proficiencyLevel}`.toUpperCase()
 
   return (
-    <AppCard isClickable={false} sx={styles.containerCard}>
+    <AppCard sx={styles.containerCard}>
       <Box sx={styles.container}>
         <ImgTitleDescription
           description={bio}

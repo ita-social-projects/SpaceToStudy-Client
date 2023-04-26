@@ -1,3 +1,3 @@
-import { OfferResponse, UserInterface } from '~/types'
+import { CreateOfferResponse, UserInterface } from '~/types'
 
-export type OfferCard = OfferResponse & UserInterface
+export type OfferCard = CreateOfferResponse & UserInterface

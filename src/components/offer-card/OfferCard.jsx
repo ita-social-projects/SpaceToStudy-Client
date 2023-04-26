@@ -1,9 +1,8 @@
-import AppCard from '~/components/app-card/AppCard'
 import OfferAvatarAndRating from '~/components/offer-card/offer-avatar-and-rating/OfferAvatarAndRating'
 import OfferDetails from '~/components/offer-card/offer-details/OfferDetails'
 import OfferActions from '~/components/offer-card/offer-actions/OfferActions'
 
-const OfferCard = ({ offer, onBookmarkClick }) => {
+const OfferCard = ({ isHideField, offer, onBookmarkClick, buttonActions }) => {
   const {
     imgSrc,
     rating,
@@ -18,22 +17,23 @@ const OfferCard = ({ offer, onBookmarkClick }) => {
   } = offer
 
   return (
-    <AppCard isClickable={false}>
+    <>
       <OfferAvatarAndRating imgSrc={imgSrc} rating={rating} />
       <OfferDetails
         bio={bio}
-        description={description}
+        description={!isHideField && description}
         languages={languages}
         level={level}
         name={name}
         subject={subject}
       />
       <OfferActions
+        buttonActions={buttonActions}
         isBookmarked={isBookmarked}
         onBookmarkClick={onBookmarkClick}
         price={price}
       />
-    </AppCard>
+    </>
   )
 }
 

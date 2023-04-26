@@ -16,10 +16,11 @@ const OfferDetails = ({
   description,
   languages
 }) => {
+  const lastLevel = level[level.length - 1]
   const levelText =
     level === 'Beginner'
       ? t('common.beginner')
-      : `${t('common.beginner')} - ${level}`.toUpperCase()
+      : `${t('common.beginner')} - ${lastLevel}`.toUpperCase()
 
   return (
     <Box sx={styles.container}>

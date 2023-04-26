@@ -1,3 +1,4 @@
+import { FC } from 'react'
 import { t } from 'i18next'
 
 import Box from '@mui/material/Box'
@@ -9,8 +10,32 @@ import TurnedInNot from '@mui/icons-material/TurnedInNot'
 import AppButton from '~/components/app-button/AppButton'
 
 import { styles } from '~/components/offer-card/offer-actions/OfferActions.styles'
+import { VariantEnum } from '~/types'
 
-const OfferActions = ({ price, isBookmarked, onBookmarkClick }) => {
+interface OfferActionsProps {
+  price: string
+  isBookmarked: boolean
+  onBookmarkClick: () => void
+  buttonActions: { label: string; handleClick: () => void }[]
+}
+
+const OfferActions: FC<OfferActionsProps> = ({
+  price,
+  isBookmarked,
+  onBookmarkClick,
+  buttonActions
+}) => {
+  const buttons = buttonActions.map((elem, index) => (
+    <AppButton
+      fullWidth
+      key={elem.label}
+      onClick={elem.handleClick}
+      variant={index !== 0 ? VariantEnum.Tonal : VariantEnum.Contained}
+    >
+      {elem.label}
+    </AppButton>
+  ))
+
   return (
     <Box sx={styles.container}>
       <Box sx={styles.containerTop}>
@@ -21,17 +46,16 @@ const OfferActions = ({ price, isBookmarked, onBookmarkClick }) => {
           <Typography variant='body2'>/{t('common.hour')}</Typography>
         </Box>
 
-        <IconButton onClick={onBookmarkClick} sx={styles.bookmarkButton}>
+        <IconButton
+          data-testid='iconButton'
+          onClick={onBookmarkClick}
+          sx={styles.bookmarkButton}
+        >
           {isBookmarked ? <TurnedIn /> : <TurnedInNot />}
         </IconButton>
       </Box>
 
-      <AppButton sx={styles.sendMessageButton}>
-        {t('common.labels.sendMessage')}
-      </AppButton>
-      <AppButton sx={styles.viewDetailsButton}>
-        {t('common.labels.viewDetails')}
-      </AppButton>
+      <Box sx={styles.buttons}>{buttons}</Box>
     </Box>
   )
 }

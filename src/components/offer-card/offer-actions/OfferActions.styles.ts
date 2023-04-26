@@ -12,16 +12,9 @@ export const styles = {
     top: 0,
     color: 'basic.black'
   },
-  sendMessageButton: {
-    width: '100%',
-    mb: '16px'
-  },
-  viewDetailsButton: {
-    width: '100%',
-    backgroundColor: 'primary.50',
-    color: 'primary.900',
-    '&:hover': {
-      backgroundColor: 'primary.50'
-    }
+  buttons: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '10px'
   }
 }

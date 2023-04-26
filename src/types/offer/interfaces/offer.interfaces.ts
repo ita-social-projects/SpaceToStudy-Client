@@ -15,3 +15,20 @@ export interface OfferResponse extends UserInterface {
   bio: string
   price: number
 }
+
+export interface OfferResponce {
+  _id: string
+  price: string
+  proficiencyLevel: string[]
+  description: string
+  languages: string[]
+  authorRole: string
+  authorFirstName: string
+  authorLastName: string
+  authorAvgRating: number
+  authorId: string
+  subjectId: string
+  categoryId: string
+  createdAt: string
+  updatedAt: string
+}
