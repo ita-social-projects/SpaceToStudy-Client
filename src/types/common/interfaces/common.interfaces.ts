@@ -1,5 +1,10 @@
 import { CreateOfferResponse } from '~/types'
 
+export interface CommonResponse {
+  _id: string
+  createdAt: string
+  updatedAt: string
+}
 export interface UserInterface {
   firstName: string
   lastName: string

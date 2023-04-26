@@ -10,13 +10,13 @@ import TurnedInNot from '@mui/icons-material/TurnedInNot'
 import AppButton from '~/components/app-button/AppButton'
 
 import { styles } from '~/components/offer-card/offer-actions/OfferActions.styles'
-import { VariantEnum } from '~/types'
+import { ButtonActions, VariantEnum } from '~/types'
 
 interface OfferActionsProps {
   price: string
   isBookmarked: boolean
   onBookmarkClick: () => void
-  buttonActions: { label: string; handleClick: () => void }[]
+  buttonActions: ButtonActions[]
 }
 
 const OfferActions: FC<OfferActionsProps> = ({

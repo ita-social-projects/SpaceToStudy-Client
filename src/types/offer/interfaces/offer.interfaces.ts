@@ -3,6 +3,7 @@ import {
   SubjectInterface,
   ProficiencyLevelEnums,
   UserInterface
+  CommonResponse
 } from '~/types'
 
 export interface OfferResponse extends UserInterface {
@@ -16,8 +17,7 @@ export interface OfferResponse extends UserInterface {
   price: number
 }
 
-export interface OfferResponce {
-  _id: string
+export interface OfferResponse extends CommonResponse {
   price: string
   proficiencyLevel: string[]
   description: string
@@ -29,6 +29,9 @@ export interface OfferResponce {
   authorId: string
   subjectId: string
   categoryId: string
-  createdAt: string
-  updatedAt: string
+}
+
+export interface ButtonActions {
+  label: string
+  handleClick: () => void
 }

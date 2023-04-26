@@ -17,17 +17,18 @@ import Loader from '~/components/loader/Loader'
 
 const OfferDetails = () => {
   const { t } = useTranslation()
-  const { id } = useParams()
+  const { id = '' } = useParams()
   const navigate = useNavigate()
 
   const getOffer = useCallback(() => OfferService.getOffer(id), [id])
-  const { response, loading } = useAxios({
+  const responseError = useCallback(
+    () => navigate(errorRoutes.notFound.path),
+    [navigate]
+  )
+  const { loading } = useAxios({
     service: getOffer,
     defaultResponse: defaultResponses.array,
-    onResponseError: useCallback(
-      () => navigate(errorRoutes.notFound.path),
-      [navigate]
-    )
+    onResponseError: responseError
   })
 
   const onBookmarkClick = (id: string) => {
@@ -56,7 +57,7 @@ const OfferDetails = () => {
           buttonActions={buttonActions}
           isHideField
           offer={mockOffer}
-          onBookmarkClick={() => onBookmarkClick(mockOffer.id)}
+          onBookmarkClick={onBookmarkClick}
         />
       </AppCard>
       <AppCard sx={styles.wrapper}>

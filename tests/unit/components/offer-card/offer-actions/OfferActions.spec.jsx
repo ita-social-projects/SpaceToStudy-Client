@@ -1,5 +1,5 @@
 import { vi } from 'vitest'
-import { screen, render, fireEvent, getByTestId } from '@testing-library/react'
+import { screen, render, fireEvent } from '@testing-library/react'
 import OfferActions from '~/components/offer-card/offer-actions/OfferActions'
 
 const price = '100'
