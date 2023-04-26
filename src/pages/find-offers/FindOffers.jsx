@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Container from '@mui/material/Container'
@@ -21,7 +21,6 @@ import {
 } from '~/pages/find-offers/FindOffers.constants'
 
 const FindOffers = () => {
-  const [currentPage, setCurrentPage] = useState(1)
   const { openDrawer, closeDrawer, isOpen } = useDrawer()
   const { filters, countActiveFilters, filterQueryActions } = useFilterQuery({
     defaultFilters
@@ -32,23 +31,11 @@ const FindOffers = () => {
 
   const { t } = useTranslation()
 
-  const mockDataPagination = {
-    itemsCount: 100,
-    page: currentPage,
-    pageSize: 5
-  }
-
   const toggleFiltersOpen = () => (isOpen ? closeDrawer() : openDrawer())
 
   const handleShowingTutorOffers = () => setShowingTutorOffers((prev) => !prev)
 
   const mockOffers = new Array(10).fill(mockOfferSquareCard)
-
-  const currentOffersOnPage = useMemo(() => {
-    const firstPageIndex = (currentPage - 1) * mockDataPagination.pageSize
-    const lastPageIndex = firstPageIndex + mockDataPagination.pageSize
-    return mockOffers.slice(firstPageIndex, lastPageIndex)
-  }, [currentPage, mockDataPagination.pageSize, mockOffers])
 
   const filtersComponent = (
     <OfferFilterBlock
@@ -82,15 +69,14 @@ const FindOffers = () => {
           </AppDrawer>
         )}
         <OfferContainer
-          offerCards={currentOffersOnPage}
+          offerCards={mockOffers}
           viewMode={CardsViewEnums.Grid}
         />
       </Box>
       <AppPagination
-        itemsCount={mockDataPagination.itemsCount}
-        itemsPerPage={mockDataPagination.itemsPerPage}
-        onChange={setCurrentPage}
-        page={mockDataPagination.page}
+        itemsCount={mockOffers.itemsCount}
+        itemsPerPage={mockOffers.itemsPerPage}
+        page={mockOffers.page}
         size={size}
       />
       <PopularCategories title={t('common.popularCategories')} />
