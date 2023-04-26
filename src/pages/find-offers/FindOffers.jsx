@@ -12,11 +12,11 @@ import FilterBarMenu from '~/containers/find-offer/filter-bar-menu/FilterBarMenu
 import AppDrawer from '~/components/app-drawer/AppDrawer'
 import OfferContainer from '~/containers/OfferContainer/OfferContainer'
 import { useDrawer } from '~/hooks/use-drawer'
-
+import { CardsViewEnums } from '~/types'
 import { useFilterQuery } from '~/hooks/use-filter-query'
 
 import {
-  mockOffer,
+  mockOfferSquareCard,
   defaultFilters
 } from '~/pages/find-offers/FindOffers.constants'
 
@@ -37,12 +37,12 @@ const FindOffers = () => {
     page: currentPage,
     pageSize: 5
   }
-
+  console.log(CardsViewEnums)
   const toggleFiltersOpen = () => (isOpen ? closeDrawer() : openDrawer())
 
   const handleShowingTutorOffers = () => setShowingTutorOffers((prev) => !prev)
 
-  const mockOffers = new Array(10).fill(mockOffer)
+  const mockOffers = new Array(10).fill(mockOfferSquareCard)
 
   const currentOffersOnPage = useMemo(() => {
     const firstPageIndex = (currentPage - 1) * mockDataPagination.pageSize
@@ -81,7 +81,10 @@ const FindOffers = () => {
             {filtersComponent}
           </AppDrawer>
         )}
-        <OfferContainer offerCards={currentOffersOnPage} viewMode={'grid'} />
+        <OfferContainer
+          offerCards={currentOffersOnPage}
+          viewMode={CardsViewEnums.Grid}
+        />
       </Box>
       <AppPagination
         itemsCount={mockDataPagination.itemsCount}
