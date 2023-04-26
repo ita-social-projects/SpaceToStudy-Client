@@ -1,32 +1,30 @@
 import { useState, useMemo, useEffect, useCallback } from 'react'
-import { AxiosResponse } from 'axios'
 
 import useAxios from '~/hooks/use-axios'
-
-import { CategoriesParams } from '~/types'
 import { defaultResponses } from '~/constants'
+import { ServiceFunction } from '~/types'
 
-interface UseLoadMoreReturn<T> {
-  data: T[]
+interface UseLoadMoreReturn<Response> {
+  data: Response[]
   loading: boolean
   resetData: () => void
   loadMore: () => void
   isExpandable: boolean
 }
 
-interface UseLoadMoreProps<T> {
-  service: (data: Partial<CategoriesParams>) => Promise<AxiosResponse<T[]>>
+interface UseLoadMoreProps<Response, Data> {
+  service: ServiceFunction<Response[], Data>
   limit: number
-  params?: Partial<CategoriesParams>
+  params?: Data
 }
 
-const useLoadMore = <T,>({
+const useLoadMore = <Response, Data>({
   service,
   limit,
   params
-}: UseLoadMoreProps<T>): UseLoadMoreReturn<T> => {
+}: UseLoadMoreProps<Response, Data>): UseLoadMoreReturn<Response> => {
   const [skip, setSkip] = useState<number>(0)
-  const [data, setData] = useState<T[] | []>([])
+  const [data, setData] = useState<Response[] | []>([])
 
   const loadMore = useCallback(
     () => setSkip((prevState) => prevState + limit),
@@ -38,14 +36,14 @@ const useLoadMore = <T,>({
     setData([])
   }, [])
 
-  const { response, loading, fetchData } = useAxios({
+  const { response, loading, fetchData } = useAxios<Response[], Data>({
     service,
     defaultResponse: defaultResponses.array,
     fetchOnMount: false
   })
 
   useEffect(() => {
-    void fetchData({ ...params, limit, skip })
+    void fetchData({ ...params, limit, skip } as Data)
   }, [fetchData, limit, skip, params])
 
   useEffect(() => {

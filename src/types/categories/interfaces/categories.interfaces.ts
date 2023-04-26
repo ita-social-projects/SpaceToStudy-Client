@@ -1,5 +1,5 @@
-import { RequestParams } from '~/types/services/services.types'
+import { RequestParams } from '~/types/services/types/services.types'
 
 export interface CategoriesParams extends RequestParams {
-  name?: string
+  name: string
 }

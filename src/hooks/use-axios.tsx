@@ -1,45 +1,45 @@
 import { useState, useEffect, useCallback } from 'react'
-import { AxiosError, AxiosResponse } from 'axios'
-import { ErrorResponse } from '~/types'
+import { AxiosError } from 'axios'
+import { ErrorResponse, ServiceFunction } from '~/types'
 
-interface UseAxiosProps<T, R> {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  service: (data?: any) => Promise<AxiosResponse<T>>
-  defaultResponse: R
+interface UseAxiosProps<Response, TransformedResponse, Data> {
+  service: ServiceFunction<Response, Data>
+  defaultResponse: TransformedResponse
   fetchOnMount?: boolean
-  transform?: (data: T) => R
+  transform?: (data: Response) => TransformedResponse
   onResponse?: () => void
   onResponseError?: (error: ErrorResponse) => void
 }
 
-interface UseAxiosReturn<R> {
-  response: R
+interface UseAxiosReturn<TransformedResponse, Data> {
+  response: TransformedResponse
   error: ErrorResponse | null
   loading: boolean
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  fetchData: (data?: any) => Promise<void>
+  fetchData: (data?: Data) => Promise<void>
 }
 
-const useAxios = <T, R = T>({
+const useAxios = <Response, Data = undefined, TransformedResponse = Response>({
   service,
   defaultResponse,
   fetchOnMount = true,
   transform,
   onResponse,
   onResponseError
-}: UseAxiosProps<T, R>): UseAxiosReturn<R> => {
-  const [response, setResponse] = useState<R>(defaultResponse)
+}: UseAxiosProps<Response, TransformedResponse, Data>): UseAxiosReturn<
+  TransformedResponse,
+  Data
+> => {
+  const [response, setResponse] = useState<TransformedResponse>(defaultResponse)
   const [error, setError] = useState<ErrorResponse | null>(null)
   const [loading, setLoading] = useState<boolean>(fetchOnMount)
 
   const fetchData = useCallback(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    async (data?: any) => {
+    async (data?: Data) => {
       try {
         setLoading(true)
         const res = await service(data)
         const responseData = transform ? transform(res.data) : res.data
-        setResponse(responseData as R)
+        setResponse(responseData as TransformedResponse)
         setError(null)
         onResponse && onResponse()
       } catch (e) {

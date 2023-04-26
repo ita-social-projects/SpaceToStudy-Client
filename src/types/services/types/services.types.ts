@@ -1,4 +1,4 @@
-import { Sort } from '../common/common.index'
+import { Sort } from '~/types/common/common.index'
 
 export interface RequestParams {
   limit: number

@@ -36,7 +36,7 @@ const Categories = () => {
   const cardsLimit = isMobile ? itemsLoadLimit.mobile : itemsLoadLimit.desktop
 
   const getCategories = useCallback(
-    (data: Partial<CategoriesParams>) => categoryService.getCategories(data),
+    (data?: Partial<CategoriesParams>) => categoryService.getCategories(data),
     []
   )
 
@@ -49,7 +49,7 @@ const Categories = () => {
     resetData,
     loadMore,
     isExpandable
-  } = useLoadMore<CategoryInterface>({
+  } = useLoadMore<CategoryInterface, Partial<CategoriesParams>>({
     service: getCategories,
     limit: cardsLimit,
     params
