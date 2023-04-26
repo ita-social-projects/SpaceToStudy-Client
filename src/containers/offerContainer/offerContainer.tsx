@@ -10,16 +10,9 @@ interface OfferContainerProps {
 }
 
 const OfferContainer: FC<OfferContainerProps> = ({ viewMode, offerCards }) => {
-  const onBookmarkClick = (id: string) => {
-    console.log(id)
-  }
-
   const arrayOfCards = offerCards.map((el) => (
     <Grid item key={el._id} sm={4}>
-      <OfferCardSquare
-        offer={el}
-        onBookmarkClick={() => onBookmarkClick(el._id)}
-      />
+      <OfferCardSquare offer={el} />
     </Grid>
   ))
 

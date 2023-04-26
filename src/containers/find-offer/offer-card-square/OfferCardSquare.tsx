@@ -22,8 +22,13 @@ interface OfferCardSquareProps {
   offer: OfferCard
 }
 
+const onBookmarkClick = (id: string) => {
+  console.log(id)
+}
+
 const OfferCardSquare: FC<OfferCardSquareProps> = ({ offer }) => {
   const {
+    _id,
     bio,
     photo,
     firstName,
@@ -50,7 +55,7 @@ const OfferCardSquare: FC<OfferCardSquareProps> = ({ offer }) => {
           style={styles.mainInfo}
           title={`${firstName} ${lastName}`}
         />
-        <IconButton sx={styles.iconButton}>
+        <IconButton onClick={() => onBookmarkClick(_id)} sx={styles.iconButton}>
           <TurnedInNot />
         </IconButton>
         <Box sx={styles.languagesContainer}>
