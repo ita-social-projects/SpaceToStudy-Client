@@ -5,7 +5,6 @@ import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
 
 import useBreakpoints from '~/hooks/use-breakpoints'
-import OfferCard from '~/components/offer-card/OfferCard'
 import PopularCategories from '~/components/popular-categories/PopularCategories'
 import AppPagination from '~/components/app-pagination/AppPagination'
 import OfferFilterBlock from '~/containers/find-offer/offer-filter-block/OfferFilterBlock'
@@ -24,11 +23,12 @@ import { CardsViewEnums, FilterQueryHook } from '~/types'
 import { styles } from '~/pages/find-offers/FindOffers.styles'
 
 import {
-  mockOffer,
+  mockOfferSquareCard,
   defaultFilters
 } from '~/pages/find-offers/FindOffers.constants'
 import { countActiveFilters } from '~/utils/count-active-filters'
 import { CardsViewEnum, CardsView, SizeEnum, UserRoleEnum } from '~/types'
+import OfferContainer from '~/containers/offerContainer/offerContainer'
 
 const FindOffers = () => {
   const [currentPage, setCurrentPage] = useState(1)
@@ -51,10 +51,7 @@ const FindOffers = () => {
     pageSize: 5
   }
 
-  const onBookmarkClick = (id: string) => {
-    console.log(id)
-  }
-
+  const mockOffers = new Array(10).fill(mockOfferSquareCard)
   const toggleFiltersOpen = () => (isOpen ? closeDrawer() : openDrawer())
 
   const handleShowingTutorOffers = () => {
