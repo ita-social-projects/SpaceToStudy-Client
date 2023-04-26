@@ -9,26 +9,33 @@ import PopularCategories from '~/components/popular-categories/PopularCategories
 import AppPagination from '~/components/app-pagination/AppPagination'
 import OfferFilterBlock from '~/containers/find-offer/offer-filter-block/OfferFilterBlock'
 import FilterBarMenu from '~/containers/find-offer/filter-bar-menu/FilterBarMenu'
+import OfferSearchToolbar from '~/containers/find-offer/offer-search-toolbar/OfferSearchToolbar'
+
 import AppDrawer from '~/components/app-drawer/AppDrawer'
 import OfferContainer from '~/containers/find-offer/offer-container/OfferContainer'
 import { useDrawer } from '~/hooks/use-drawer'
 import { CardsViewEnums } from '~/types'
 import { useFilterQuery } from '~/hooks/use-filter-query'
 
+import { styles } from '~/pages/find-offers/FindOffers.styles'
+
 import {
   mockOffer,
   defaultFilters
 } from '~/pages/find-offers/FindOffers.constants'
 
+import { FilterQueryHook } from '~/types'
+
 const FindOffers = () => {
   const { openDrawer, closeDrawer, isOpen } = useDrawer()
-  const { filters, countActiveFilters, filterQueryActions } = useFilterQuery({
-    defaultFilters
-  })
-  const [showingTutorOffers, setShowingTutorOffers] = useState(false)
+  const { filters, countActiveFilters, filterQueryActions }: FilterQueryHook =
+    useFilterQuery({
+      defaultFilters
+    })
+  const [showingTutorOffers, setShowingTutorOffers] = useState<boolean>(false)
   const { isMobile } = useBreakpoints()
   const size = isMobile ? 'small' : 'medium'
-
+  const [searchValue, setSearchValue] = useState<string>('')
   const { t } = useTranslation()
 
   const toggleFiltersOpen = () => (isOpen ? closeDrawer() : openDrawer())
@@ -50,17 +57,15 @@ const FindOffers = () => {
   )
 
   return (
-    <Container
-      sx={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1 }}
-    >
-      FindOffers Page Placeholder
+    <Container sx={styles.container}>
+      <OfferSearchToolbar search={searchValue} setSearch={setSearchValue} />
       <FilterBarMenu
         chosenFiltersQty={countActiveFilters}
         filters={filters}
         setFilters={filterQueryActions.updateFilter}
         toggleFilters={toggleFiltersOpen}
       />
-      <Box sx={{ display: 'flex' }}>
+      <Box sx={styles.filterSection}>
         {!isMobile ? (
           filtersComponent
         ) : (
