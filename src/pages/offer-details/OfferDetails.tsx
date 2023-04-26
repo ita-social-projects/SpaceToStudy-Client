@@ -6,14 +6,14 @@ import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 
 import OfferCard from '~/components/offer-card/OfferCard'
-import { defaultResponses } from '~/constants'
 import useAxios from '~/hooks/use-axios'
-import { mockOffer } from '~/pages/find-offers/FindOffers.constants'
 import { OfferService } from '~/services/offer-service'
 import AppCard from '~/components/app-card/AppCard'
 import { errorRoutes } from '~/router/constants/errorRoutes'
 import { styles } from '~/pages/offer-details/OfferDetails.styles'
 import Loader from '~/components/loader/Loader'
+import { defaultResponce } from '~/pages/offer-details/constants'
+import { Offer } from '~/types'
 
 const OfferDetails = () => {
   const { t } = useTranslation()
@@ -25,9 +25,9 @@ const OfferDetails = () => {
     () => navigate(errorRoutes.notFound.path),
     [navigate]
   )
-  const { loading } = useAxios({
+  const { response, loading } = useAxios<Offer>({
     service: getOffer,
-    defaultResponse: defaultResponses.array,
+    defaultResponse: defaultResponce,
     onResponseError: responseError
   })
 
@@ -56,7 +56,7 @@ const OfferDetails = () => {
         <OfferCard
           buttonActions={buttonActions}
           isHideField
-          offer={mockOffer}
+          offer={response}
           onBookmarkClick={onBookmarkClick}
         />
       </AppCard>

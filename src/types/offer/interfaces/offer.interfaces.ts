@@ -1,34 +1,27 @@
 import {
   CategoryInterface,
   SubjectInterface,
-  ProficiencyLevelEnums,
-  UserInterface
-  CommonResponse
+  ProficiencyLevelEnum,
+  CommonEntityFields,
+  UserRole,
+  UserResponse
 } from '~/types'
 
-export interface OfferResponse extends UserInterface {
-  _id: string
-  category: CategoryInterface
-  subject: SubjectInterface
-  proficiencyLevel: ProficiencyLevelEnums
-  description: string
-  languages: []
-  bio: string
+export interface Offer extends CommonEntityFields {
   price: number
-}
-
-export interface OfferResponse extends CommonResponse {
-  price: string
-  proficiencyLevel: string[]
-  description: string
+  proficiencyLevel: ProficiencyLevelEnum[]
+  description?: string
   languages: string[]
-  authorRole: string
+  authorRole: UserRole
   authorFirstName: string
   authorLastName: string
   authorAvgRating: number
-  authorId: string
-  subjectId: string
-  categoryId: string
+  author: Pick<
+    UserResponse,
+    '_id' | 'totalReviews' | 'photo' | 'professionalSummary'
+  >
+  subject: Pick<SubjectInterface, '_id' | 'name'>
+  category: Pick<CategoryInterface, '_id'>
 }
 
 export interface ButtonActions {

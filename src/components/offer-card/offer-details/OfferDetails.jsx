@@ -18,7 +18,7 @@ const OfferDetails = ({
 }) => {
   const lastLevel = level[level.length - 1]
   const levelText =
-    level === 'Beginner'
+    lastLevel === 'Beginner'
       ? t('common.beginner')
       : `${t('common.beginner')} - ${lastLevel}`.toUpperCase()
 

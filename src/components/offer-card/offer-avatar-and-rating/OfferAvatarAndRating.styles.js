@@ -3,7 +3,7 @@ export const styles = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    mr: '20px'
+    mr: '50px'
   },
   avatar: {
     height: '80px',

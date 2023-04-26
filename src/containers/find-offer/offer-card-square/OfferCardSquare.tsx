@@ -14,41 +14,42 @@ import AppRatingMobile from '~/components/app-rating-mobile/AppRatingMobile'
 import AppButton from '~/components/app-button/AppButton'
 import TitleWithDescripiton from '~/components/title-with-description/TitleWithDescription'
 
-import { OfferCard, ProficiencyLevelEnums } from '~/types'
+import { Offer, ProficiencyLevelEnum } from '~/types'
 
 import { styles } from '~/containers/find-offer/offer-card-square/OfferCardSquare.styles'
 
 interface OfferCardSquareProps {
-  offer: OfferCard
+  offer: Offer
 }
 
 const OfferCardSquare: FC<OfferCardSquareProps> = ({ offer }) => {
   const {
-    bio,
-    photo,
-    firstName,
-    lastName,
+    authorAvgRating,
     languages,
-    subject,
-    proficiencyLevel,
     price,
-    averageRating,
-    totalReviews
+    author,
+    authorFirstName,
+    authorLastName,
+    subject,
+    proficiencyLevel
   } = offer
 
+  const lastLevel = proficiencyLevel[proficiencyLevel.length - 1]
   const levelText =
-    proficiencyLevel === ProficiencyLevelEnums.Beginner
+    lastLevel === ProficiencyLevelEnum.Beginner
       ? t('common.beginner')
-      : `${t('common.beginner')} - ${proficiencyLevel}`.toUpperCase()
+      : `${t('common.beginner')} - ${lastLevel}`.toUpperCase()
+
+  const fullName = `${authorFirstName} ${authorLastName}`
 
   return (
     <AppCard sx={styles.containerCard}>
       <Box sx={styles.container}>
         <ImgTitleDescription
-          description={bio}
-          img={photo}
+          description={author.professionalSummary}
+          img={author.photo}
           style={styles.mainInfo}
-          title={`${firstName} ${lastName}`}
+          title={fullName}
         />
         <IconButton sx={styles.iconButton}>
           <TurnedInNot />
@@ -61,7 +62,7 @@ const OfferCardSquare: FC<OfferCardSquareProps> = ({ offer }) => {
         </Box>
         <Box sx={styles.chipsContainer}>
           <AppChip labelSx={styles.subjectChipLabel} sx={styles.subjectChip}>
-            {subject}
+            {subject.name}
           </AppChip>
           <AppChip labelSx={styles.levelChipLabel} sx={styles.levelChip}>
             {levelText}
@@ -78,8 +79,8 @@ const OfferCardSquare: FC<OfferCardSquareProps> = ({ offer }) => {
           />
           <Box>
             <AppRatingMobile
-              reviewsCount={totalReviews}
-              value={averageRating}
+              reviewsCount={author.totalReviews}
+              value={authorAvgRating}
             />
           </Box>
         </Box>

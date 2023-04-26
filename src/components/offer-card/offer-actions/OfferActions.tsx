@@ -13,13 +13,15 @@ import { styles } from '~/components/offer-card/offer-actions/OfferActions.style
 import { ButtonActions, VariantEnum } from '~/types'
 
 interface OfferActionsProps {
-  price: string
+  id: string
+  price: number
   isBookmarked: boolean
-  onBookmarkClick: () => void
+  onBookmarkClick: (id: string) => void
   buttonActions: ButtonActions[]
 }
 
 const OfferActions: FC<OfferActionsProps> = ({
+  id,
   price,
   isBookmarked,
   onBookmarkClick,
@@ -48,7 +50,7 @@ const OfferActions: FC<OfferActionsProps> = ({
 
         <IconButton
           data-testid='iconButton'
-          onClick={onBookmarkClick}
+          onClick={() => onBookmarkClick(id)}
           sx={styles.bookmarkButton}
         >
           {isBookmarked ? <TurnedIn /> : <TurnedInNot />}

@@ -1,6 +1,6 @@
 import { CreateOfferResponse } from '~/types'
 
-export interface CommonResponse {
+export interface CommonEntityFields {
   _id: string
   createdAt: string
   updatedAt: string
