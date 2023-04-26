@@ -22,7 +22,7 @@ export const styles = {
   cardDescription: {
     marginBottom: '24px'
   },
-  titleComp: {
+  titleWithDescription: {
     wrapper: {
       margin: '0 auto 32px'
     },

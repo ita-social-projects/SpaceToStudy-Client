@@ -62,7 +62,7 @@ const WhatCanYouDo = () => {
     <Box id={sectionId} sx={styles.container}>
       <TitleWithDescription
         description={t('guestHomePage.whatCanYouDo.description')}
-        style={styles.titleComp}
+        style={styles.titleWithDescription}
         title={t('guestHomePage.whatCanYouDo.title')}
       />
 

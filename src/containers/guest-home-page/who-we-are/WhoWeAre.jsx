@@ -18,7 +18,7 @@ const WhoWeAre = () => {
     <Box className='section' id={sectionId} sx={styles.container}>
       <TitleWithDescription
         description={t('guestHomePage.whoWeAre.description')}
-        style={styles.titleComp}
+        style={styles.titleWithDescription}
         title={t('guestHomePage.whoWeAre.title')}
       />
       <VideoBox video={videoImg} />

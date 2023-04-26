@@ -57,7 +57,7 @@ export const styles = {
     width: { xs: '18px', md: '24px' },
     height: { xs: '18px', md: '24px' }
   },
-  titleComp: {
+  titleWithDescription: {
     wrapper: {
       textAlign: 'left'
     },

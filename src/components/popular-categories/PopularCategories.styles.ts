@@ -3,7 +3,7 @@ export const styles = {
     margin: '100px 0',
     minHeight: '500px'
   },
-  titleComp: {
+  titleWithDescription: {
     title: {
       typography: { md: 'h4', xs: 'h5' },
       marginBottom: '16px'

@@ -19,7 +19,7 @@ const AuthPolicy = () => {
       <Box sx={styles.errorInfo}>
         <TitleWithDescription
           description={t('errorPage.401.description')}
-          style={styles.titleComp}
+          style={styles.titleWithDescription}
           title={t('errorPage.401.title')}
         />
         <Button

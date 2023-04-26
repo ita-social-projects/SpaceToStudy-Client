@@ -20,7 +20,7 @@ export const styles = {
     textTransform: 'none'
   },
 
-  titleComp: {
+  titleWithDescription: {
     wrapper: {
       mb: '32px',
       textAlign: 'center'

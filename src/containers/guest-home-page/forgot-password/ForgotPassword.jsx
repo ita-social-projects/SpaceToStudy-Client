@@ -83,7 +83,7 @@ const ForgotPassword = () => {
     <Box sx={styles.root}>
       <TitleWithDescription
         description={t('login.enterEmail')}
-        style={styles.titleComp}
+        style={styles.titleWithDescription}
         title={t('login.forgotPassword')}
       />
 

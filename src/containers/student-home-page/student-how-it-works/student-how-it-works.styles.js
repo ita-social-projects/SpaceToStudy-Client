@@ -18,7 +18,7 @@ export const styles = {
   cardImg: {
     maxHeight: '89px'
   },
-  titleComp: {
+  titleWithDescription: {
     wrapper: {
       mb: '32px',
       textAlign: 'center'

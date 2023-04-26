@@ -48,7 +48,7 @@ export const styles = {
     maxWidth: { xs: '110px', md: '170px' },
     overflow: 'auto'
   },
-  titleComp: {
+  titleWithDescription: {
     wrapper: {
       textAlign: {
         md: 'left',

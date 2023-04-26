@@ -19,7 +19,7 @@ export const styles = {
     textDecoration: 'none',
     m: '0 45px 20px 0'
   },
-  titleComp: {
+  titleWithDescription: {
     wrapper: {
       maxWidth: '1128px',
       margin: '0 auto',

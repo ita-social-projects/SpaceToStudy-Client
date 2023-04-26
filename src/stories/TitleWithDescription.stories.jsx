@@ -23,7 +23,7 @@ export default {
   }
 }
 const styles = {
-  titleComp: {
+  titleWithDescription: {
     wrapper: {
       textAlign: 'center',
       mb: '32px'
@@ -50,5 +50,5 @@ export const Desktop = Template.bind({})
 Desktop.args = {
   title: 'Title',
   description: 'Description',
-  style: styles.titleComp
+  style: styles.titleWithDescription
 }

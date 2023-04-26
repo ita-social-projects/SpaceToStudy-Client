@@ -4,7 +4,7 @@ export const styles = {
     maxWidth: '62px',
     maxHeight: '62px'
   },
-  titleComp: {
+  titleWithDescription: {
     wrapper: {
       minWidth: '110px',
       margin: 0,

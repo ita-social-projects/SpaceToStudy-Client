@@ -22,7 +22,7 @@ const TitleBlock: FC<TitleBlockProps> = ({ img, translationKey, children }) => {
       <Box sx={styles.info}>
         <TitleWithDescription
           description={t(`${translationKey}.description`)}
-          style={styles.titleComp}
+          style={styles.titleWithDescription}
           title={t(`${translationKey}.title`)}
         />
         <Box sx={styles.form}>{children}</Box>

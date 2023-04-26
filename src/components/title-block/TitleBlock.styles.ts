@@ -14,7 +14,7 @@ export const styles = {
     justifyContent: 'space-between',
     flexWrap: { sm: 'nowrap', xs: 'wrap' }
   },
-  titleComp: {
+  titleWithDescription: {
     wrapper: {
       textAlign: 'left',
       marginBottom: '32px'

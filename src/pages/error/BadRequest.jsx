@@ -19,7 +19,7 @@ const BadRequest = () => {
       <Box sx={styles.info}>
         <TitleWithDescription
           description={t('errorPage.400.description')}
-          style={styles.titleComp}
+          style={styles.titleWithDescription}
           title={t('errorPage.400.title')}
         />
         <Button

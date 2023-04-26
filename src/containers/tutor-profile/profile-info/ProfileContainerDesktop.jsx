@@ -33,7 +33,7 @@ const ProfileContainerDesktop = ({
           description={
             'Senior lecturer at the Department of German Philology and Translation'
           }
-          style={styles.titleComp}
+          style={styles.titleWithDescription}
           title={'Esther Howard'}
         />
 

@@ -77,7 +77,7 @@ const PopularCategories: FC<PopularCategoriesProps> = ({
     <Box sx={styles.wrapper}>
       <TitleWithDescription
         description={description}
-        style={styles.titleComp}
+        style={styles.titleWithDescription}
         title={title}
       />
       {loading && !response ? (

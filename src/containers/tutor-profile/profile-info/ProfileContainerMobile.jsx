@@ -28,7 +28,7 @@ const ProfileContainerMobile = ({
           description={
             'Senior lecturer at the Department of German Philology and Translation'
           }
-          style={{ ...styles.titleComp, wrapper: { pr: '20px' } }}
+          style={{ ...styles.titleWithDescription, wrapper: { pr: '20px' } }}
           title={'Esther Howard'}
         />
       </Box>

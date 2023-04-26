@@ -31,7 +31,7 @@ export const styles = {
     textDecoration: 'none',
     m: '0 45px 20px 0'
   },
-  titleComp: {
+  titleWithDescription: {
     wrapper: {
       mb: '32px',
       textAlign: 'center'

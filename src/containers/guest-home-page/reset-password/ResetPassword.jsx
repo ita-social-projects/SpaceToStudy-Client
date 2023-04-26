@@ -90,7 +90,7 @@ const ResetPassword = ({ resetToken, openModal }) => {
     <Box sx={styles.container}>
       <TitleWithDescription
         description={t('login.resetPasswordDesc')}
-        style={styles.titleComp}
+        style={styles.titleWithDescription}
         title={t('login.newPassword')}
       />
       <Box component='form' onSubmit={handleSubmit} sx={styles.form}>

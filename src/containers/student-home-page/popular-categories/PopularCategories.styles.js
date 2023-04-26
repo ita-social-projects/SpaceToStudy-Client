@@ -3,7 +3,7 @@ export const styles = {
     flexDirection: 'column',
     alignItems: 'stretch'
   },
-  titleComp: {
+  titleWithDescription: {
     wrapper: {
       mb: '32px',
       textAlign: 'center'

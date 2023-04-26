@@ -24,7 +24,7 @@ const ClickableCard: FC<ClickableCardProps> = ({
       <Box alt='item image' component='img' src={img} sx={styles.img} />
       <TitleWithDescription
         description={description}
-        style={styles.titleComp}
+        style={styles.titleWithDescription}
         title={title}
       />
     </AppCard>

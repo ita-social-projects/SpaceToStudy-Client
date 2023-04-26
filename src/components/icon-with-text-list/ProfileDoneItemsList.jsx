@@ -18,7 +18,7 @@ const ProfileDoneItemsList = ({ items, icon, defaultQuantity }) => {
 
       <TitleWithDescription
         description={item.description}
-        style={styles.titleComp}
+        style={styles.titleWithDescription}
         title={item.title}
       />
     </Box>

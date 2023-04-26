@@ -25,7 +25,7 @@ const Faq = () => {
     >
       <TitleWithDescription
         description={t('studentHomePage.faq.subtitle')}
-        style={styles.titleComp}
+        style={styles.titleWithDescription}
         title={t('studentHomePage.faq.title')}
       />
 

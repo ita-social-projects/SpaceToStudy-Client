@@ -28,7 +28,7 @@ const ExploreCategories = () => {
     <Box className='section' sx={styles.container}>
       <TitleWithDescription
         description={t('categoriesPage.categories.description')}
-        style={styles.titleComp}
+        style={styles.titleWithDescription}
         title={t('categoriesPage.categories.title')}
       />
 

@@ -34,7 +34,7 @@ export const styles = {
     mr: '15px',
     boxShadow: commonHoverShadow
   },
-  titleComp: {
+  titleWithDescription: {
     wrapper: {
       display: 'flex',
       columnGap: '10px',

@@ -84,7 +84,7 @@ const Subjects = () => {
       <OfferRequestBlock />
       <TitleWithDescription
         description={t('subjectsPage.subjects.description')}
-        style={styles.titleComp}
+        style={styles.titleWithDescription}
         title={t('subjectsPage.subjects.title', {
           category: category?.name
         })}

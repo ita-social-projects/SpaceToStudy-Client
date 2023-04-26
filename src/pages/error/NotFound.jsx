@@ -19,7 +19,7 @@ const NotFound = () => {
       <Box sx={styles.box}>
         <TitleWithDescription
           description={t('errorPage.404.description')}
-          style={styles.titleComp}
+          style={styles.titleWithDescription}
           title={t('errorPage.404.title')}
         />
         <Button

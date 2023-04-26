@@ -4,7 +4,7 @@ export const styles = {
     mb: 0,
     pb: 10
   },
-  titleComp: {
+  titleWithDescription: {
     wrapper: {
       textAlign: 'center',
       mb: '32px'
