@@ -37,7 +37,7 @@ const FindOffers = () => {
     page: currentPage,
     pageSize: 5
   }
-  console.log(CardsViewEnums)
+
   const toggleFiltersOpen = () => (isOpen ? closeDrawer() : openDrawer())
 
   const handleShowingTutorOffers = () => setShowingTutorOffers((prev) => !prev)
