@@ -12,17 +12,17 @@ interface UseLoadMoreReturn<Response> {
   isExpandable: boolean
 }
 
-interface UseLoadMoreProps<Response, Data> {
-  service: ServiceFunction<Response[], Data>
+interface UseLoadMoreProps<Response, Params> {
+  service: ServiceFunction<Response[], Params>
   limit: number
-  params?: Data
+  params?: Params
 }
 
-const useLoadMore = <Response, Data>({
+const useLoadMore = <Response, Params>({
   service,
   limit,
   params
-}: UseLoadMoreProps<Response, Data>): UseLoadMoreReturn<Response> => {
+}: UseLoadMoreProps<Response, Params>): UseLoadMoreReturn<Response> => {
   const [skip, setSkip] = useState<number>(0)
   const [data, setData] = useState<Response[] | []>([])
 
@@ -36,14 +36,14 @@ const useLoadMore = <Response, Data>({
     setData([])
   }, [])
 
-  const { response, loading, fetchData } = useAxios<Response[], Data>({
+  const { response, loading, fetchData } = useAxios<Response[], Params>({
     service,
     defaultResponse: defaultResponses.array,
     fetchOnMount: false
   })
 
   useEffect(() => {
-    void fetchData({ ...params, limit, skip } as Data)
+    void fetchData({ ...params, limit, skip } as Params)
   }, [fetchData, limit, skip, params])
 
   useEffect(() => {

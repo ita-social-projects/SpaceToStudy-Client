@@ -2,42 +2,46 @@ import { useState, useEffect, useCallback } from 'react'
 import { AxiosError } from 'axios'
 import { ErrorResponse, ServiceFunction } from '~/types'
 
-interface UseAxiosProps<Response, TransformedResponse, Data> {
-  service: ServiceFunction<Response, Data>
+interface UseAxiosProps<Response, TransformedResponse, Params> {
+  service: ServiceFunction<Response, Params>
   defaultResponse: TransformedResponse
   fetchOnMount?: boolean
-  transform?: (data: Response) => TransformedResponse
+  transform?: (params: Response) => TransformedResponse
   onResponse?: () => void
   onResponseError?: (error: ErrorResponse) => void
 }
 
-interface UseAxiosReturn<TransformedResponse, Data> {
+interface UseAxiosReturn<TransformedResponse, Params> {
   response: TransformedResponse
   error: ErrorResponse | null
   loading: boolean
-  fetchData: (data?: Data) => Promise<void>
+  fetchData: (params?: Params) => Promise<void>
 }
 
-const useAxios = <Response, Data = undefined, TransformedResponse = Response>({
+const useAxios = <
+  Response,
+  Params = undefined,
+  TransformedResponse = Response
+>({
   service,
   defaultResponse,
   fetchOnMount = true,
   transform,
   onResponse,
   onResponseError
-}: UseAxiosProps<Response, TransformedResponse, Data>): UseAxiosReturn<
+}: UseAxiosProps<Response, TransformedResponse, Params>): UseAxiosReturn<
   TransformedResponse,
-  Data
+  Params
 > => {
   const [response, setResponse] = useState<TransformedResponse>(defaultResponse)
   const [error, setError] = useState<ErrorResponse | null>(null)
   const [loading, setLoading] = useState<boolean>(fetchOnMount)
 
   const fetchData = useCallback(
-    async (data?: Data) => {
+    async (params?: Params) => {
       try {
         setLoading(true)
-        const res = await service(data)
+        const res = await service(params)
         const responseData = transform ? transform(res.data) : res.data
         setResponse(responseData as TransformedResponse)
         setError(null)
