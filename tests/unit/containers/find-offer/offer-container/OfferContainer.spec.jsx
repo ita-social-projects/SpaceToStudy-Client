@@ -1,5 +1,9 @@
 import { render, screen } from '@testing-library/react'
 import OfferContainer from '~/containers/find-offer/offer-container/OfferContainer'
+import useBreakpoints from '~/hooks/use-breakpoints'
+import { vi } from 'vitest'
+
+vi.mock('~/hooks/use-breakpoints')
 
 const mockOfferSquareCard = {
   id: 'id',
@@ -26,16 +30,62 @@ const cardsViewEnums = {
 
 const mockOffers = new Array(6).fill(mockOfferSquareCard)
 
-describe('OfferContainer test', () => {
-  it('Test should render OfferContainer component', () => {
+describe('OfferContainer test on modile', () => {
+  const mobileData = { isDesktop: false, isMobile: true, isTablet: false }
+
+  it('Test should render square card component on modile', () => {
+    useBreakpoints.mockImplementation(() => mobileData)
     render(
       <OfferContainer
         offerCards={mockOffers}
         viewMode={cardsViewEnums.inline}
       />
     )
-    const offerContainer = screen.getByTestId('OfferContainer')
+    const starIcon = screen.getAllByTestId('star-icon')
 
-    expect(offerContainer).toBeInTheDocument()
+    expect(starIcon).toHaveLength(6)
+  })
+})
+
+describe('OfferContainer test on tablet', () => {
+  const mobileData = { isDesktop: false, isMobile: false, isTablet: true }
+
+  it('Test should render rectangular card on tablet', () => {
+    useBreakpoints.mockImplementation(() => mobileData)
+    render(
+      <OfferContainer offerCards={mockOffers} viewMode={cardsViewEnums.grid} />
+    )
+    const ratingIcon = screen.getAllByTestId('app-rating')
+
+    expect(ratingIcon).toHaveLength(6)
+  })
+})
+
+describe('OfferContainer test on desktop', () => {
+  const mobileData = { isDesktop: true, isMobile: false, isTablet: false }
+
+  it('Test should render rectangular card on desktop with grid viewMode', () => {
+    useBreakpoints.mockImplementation(() => mobileData)
+    render(
+      <OfferContainer offerCards={mockOffers} viewMode={cardsViewEnums.grid} />
+    )
+
+    const starIcon = screen.getAllByTestId('star-icon')
+
+    expect(starIcon).toHaveLength(6)
+  })
+
+  it('Test should render rectangular card on desktop with inline viewMode', () => {
+    useBreakpoints.mockImplementation(() => mobileData)
+    render(
+      <OfferContainer
+        offerCards={mockOffers}
+        viewMode={cardsViewEnums.inline}
+      />
+    )
+
+    const ratingIcon = screen.getAllByTestId('app-rating')
+
+    expect(ratingIcon).toHaveLength(6)
   })
 })
