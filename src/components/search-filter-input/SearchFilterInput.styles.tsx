@@ -1,5 +1,3 @@
-import palette from '~/styles/app-theme/app.pallete'
-
 export const styles = {
   container: {
     width: '100%',
@@ -17,7 +15,7 @@ export const styles = {
     flex: 1
   },
   inputLabel: {
-    color: palette.primary[300],
+    color: 'primary.300',
     top: '8px',
     left: '15px'
   },

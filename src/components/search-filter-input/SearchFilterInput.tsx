@@ -9,7 +9,9 @@ import Box from '@mui/material/Box'
 import ClearIcon from '@mui/icons-material/Clear'
 import IconButton from '@mui/material/IconButton'
 
-import { styles } from './SearchFilterInput.styles'
+import { SizeEnum, VariantEnum } from '~/types'
+
+import { styles } from '~/components/search-filter-input/SearchFilterInput.styles'
 
 interface SearchFilterInputProps {
   updateFilter: (value: string) => void
@@ -23,7 +25,7 @@ const SearchFilterInput = ({
   const [search, setSearch] = useState<string>('')
   const { t } = useTranslation()
 
-  const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value)
   }
 
@@ -54,23 +56,23 @@ const SearchFilterInput = ({
       <AppTextField
         InputLabelProps={{ style: labelStyle, shrink: false }}
         InputProps={{ disableUnderline: true }}
-        onChange={onInputChange}
+        onChange={onChange}
         onKeyPress={onEnterPress}
         sx={styles.input}
         value={search}
-        variant='standard'
+        variant={VariantEnum.Standard}
         {...textFieldProps}
       />
 
       <IconButton onClick={onClear} sx={clearIconVisibility}>
-        <ClearIcon fontSize='small' />
+        <ClearIcon fontSize={SizeEnum.Large} />
       </IconButton>
 
       <Button
         onClick={onSearch}
-        size='large'
+        size={SizeEnum.Large}
         sx={styles.searchBtn}
-        variant='contained'
+        variant={VariantEnum.Contained}
       >
         {t('common.search')}
       </Button>
