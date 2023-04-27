@@ -9,7 +9,7 @@ import { styles } from '~/components/img-title-description/ImgTitleDescription.s
 interface ImgTitleDescriptionProps {
   img?: string
   title: string
-  description: string | undefined
+  description?: string
   style?: {
     [key: string]: SxProps
   }
