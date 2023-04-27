@@ -37,7 +37,9 @@ export const styles = {
       '& h6': {
         color: 'basic.white'
       }
-    }
+    },
+    summary: {},
+    details: {}
   },
   withShowMoreIcon: {
     root: { maxWidth: '928px', mt: '18px' },

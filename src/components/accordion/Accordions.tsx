@@ -1,3 +1,4 @@
+import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Typography from '@mui/material/Typography'
@@ -7,9 +8,25 @@ import AccordionSummary from '@mui/material/AccordionSummary'
 import AccordionDetails from '@mui/material/AccordionDetails'
 import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded'
 
-import { styles } from '~/components/accordion/Accordion.styles.js'
+import { styles } from '~/components/accordion/Accordion.styles'
 
-const Accordions = ({ items, onChange, activeIndex, showMoreIcon, square }) => {
+import { AccordionItem } from '~/types'
+
+interface AccordionsProps {
+  items: AccordionItem[]
+  onChange: (value: number) => void
+  activeIndex: number
+  showMoreIcon: boolean
+  square: boolean
+}
+
+const Accordions: FC<AccordionsProps> = ({
+  items,
+  onChange,
+  activeIndex,
+  showMoreIcon,
+  square
+}) => {
   const { t } = useTranslation()
 
   const accordionStyle =
@@ -33,7 +50,16 @@ const Accordions = ({ items, onChange, activeIndex, showMoreIcon, square }) => {
           ]}
         >
           <AccordionSummary
-            expandIcon={showMoreIcon && <ExpandMoreRoundedIcon />}
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center'
+            }}
+            expandIcon={
+              showMoreIcon && (
+                <ExpandMoreRoundedIcon sx={{ marginRight: '10px' }} />
+              )
+            }
             sx={accordionStyle.summary}
           >
             <Typography sx={accordionStyle.title} variant={'h6'}>

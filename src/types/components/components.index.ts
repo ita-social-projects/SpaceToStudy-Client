@@ -12,7 +12,8 @@ import type {
   SwitchContent,
   SwitchOptions
 } from '~/types/components/appContentSwitcher/appContentSwitcher.types'
-import type { DirectionLinkProps } from '~/types/components/direction-link/DirectionLink.types'
+import type { AccordionItem } from './accordions/accordions.interface'
+import { IconPositionEnum } from './accordions/accordions.enum'
 
 export {
   SelectFieldType,
@@ -25,5 +26,6 @@ export {
   RadioButtonType,
   SwitchContent,
   SwitchOptions,
-  DirectionLinkProps
+  AccordionItem,
+  IconPositionEnum
 }

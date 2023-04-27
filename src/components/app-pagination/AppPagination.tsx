@@ -4,6 +4,7 @@ import Pagination, { PaginationProps } from '@mui/material/Pagination'
 import Box from '@mui/system/Box'
 
 import { styles } from '~/components/app-pagination/AppPagination.styles'
+import { SizeEnum } from '~/types'
 
 interface AppPaginationProps extends Omit<PaginationProps, 'count'> {
   pageCount: number
