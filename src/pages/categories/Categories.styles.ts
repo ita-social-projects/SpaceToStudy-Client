@@ -4,11 +4,18 @@ export const styles = {
     textAlign: 'right',
     py: '80px'
   },
-  sectionTitle: {
-    typography: { sm: 'h4', xs: 'h5' }
-  },
-  sectionDescription: {
-    typography: { sm: 'body1', xs: 'body2' }
+  titleWithDescription: {
+    wrapper: {
+      mb: '32px',
+      textAlign: 'center'
+    },
+    title: {
+      typography: { sm: 'h4', xs: 'h5' }
+    },
+    description: {
+      typography: { sm: 'body1', xs: 'body2' },
+      color: 'primary.500'
+    }
   },
   showAllOffers: {
     display: 'inline-flex',

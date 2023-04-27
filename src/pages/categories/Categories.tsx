@@ -83,9 +83,8 @@ const Categories = () => {
 
       <TitleWithDescription
         description={t('categoriesPage.description')}
-        descriptionStyles={styles.sectionDescription}
+        style={styles.titleWithDescription}
         title={t('categoriesPage.title')}
-        titleStyles={styles.sectionTitle}
       />
 
       <DirectionLink
