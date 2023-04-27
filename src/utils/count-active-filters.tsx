@@ -8,7 +8,7 @@ export const countActiveFilters = (
 ) => {
   const filtersFromQuery = parseQueryParams(searchParams, defaultFilters) || {}
   return Object.entries(filtersFromQuery).reduce((count, [key, value]) => {
-    if (key === 'sort') {
+    if (key === 'sort' || key === 'authorRole') {
       return count
     }
     if (key === 'price' && isDefaultPrice(value, defaultFilters.price)) {

@@ -18,7 +18,11 @@ const FilterInput: FC<FilterInputProps> = ({ value, onChange, ...props }) => {
 
   const inputProps = {
     endAdornment: value ? (
-      <IconButton onClick={() => onChange('')} sx={{ p: 0 }}>
+      <IconButton
+        data-testid='clear-button'
+        onClick={() => onChange('')}
+        sx={{ p: 0 }}
+      >
         <ClearIcon color='secondary' />
       </IconButton>
     ) : (
