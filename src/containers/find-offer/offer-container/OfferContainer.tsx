@@ -16,24 +16,19 @@ const OfferContainer: FC<OfferContainerProps> = ({ viewMode, offerCards }) => {
   }
 
   const columnNumber = viewMode === CardsViewEnums.Grid ? 12 : 1
-  const cardsArray =
-    viewMode === CardsViewEnums.Grid
-      ? offerCards.map((el) => (
-          <Grid item key={el._id} sm={4}>
-            <OfferCardSquare
-              offer={el}
-              onBookmarkClick={() => onBookmarkClick(el._id)}
-            />
-          </Grid>
-        ))
-      : offerCards.map((el) => (
-          <Grid item key={el._id} sm={4}>
-            <OfferCard
-              offer={el}
-              onBookmarkClick={() => onBookmarkClick(el._id)}
-            />
-          </Grid>
-        ))
+
+  const cardsArray = offerCards.map((el) => (
+    <Grid item key={el._id} sm={4}>
+      {viewMode === CardsViewEnums.Grid ? (
+        <OfferCardSquare
+          offer={el}
+          onBookmarkClick={() => onBookmarkClick(el._id)}
+        />
+      ) : (
+        <OfferCard offer={el} onBookmarkClick={() => onBookmarkClick(el._id)} />
+      )}
+    </Grid>
+  ))
 
   return (
     <Box sx={{ flexGrow: 1 }}>
