@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useMemo } from 'react'
+import { useMemo } from 'react'
 
 import { useSearchParams } from 'react-router-dom'
 import useCategoriesNames from '~/hooks/use-categories-names'
@@ -10,16 +10,20 @@ import SearchFilterInput from '~/components/search-filter-input/SearchFilterInpu
 import AppToolbar from '~/components/app-toolbar/AppToolbar'
 import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
 
-import { CategoryNameInterface, SubjectNameInterface } from '~/types'
+import {
+  CategoryNameInterface,
+  FindOfferFilterTypes,
+  FindOffersUpdateFilter,
+  SubjectNameInterface
+} from '~/types'
 
 import { styles } from '~/containers/find-offer/offer-search-toolbar/OfferSearchToolbar.styles'
 
 interface OfferSearchToolbarProps {
-  search: string
-  setSearch: Dispatch<SetStateAction<string>>
+  updateFilter: FindOffersUpdateFilter
 }
 
-const OfferSearchToolbar = ({ search, setSearch }: OfferSearchToolbarProps) => {
+const OfferSearchToolbar = ({ updateFilter }: OfferSearchToolbarProps) => {
   const { t } = useTranslation()
   const { isDesktop, isMobile } = useBreakpoints()
 
@@ -69,6 +73,9 @@ const OfferSearchToolbar = ({ search, setSearch }: OfferSearchToolbarProps) => {
     value: CategoryNameInterface | SubjectNameInterface
   ) => option?._id === value?._id
 
+  const updateFilterByKey = (key: string) => (value: FindOfferFilterTypes) =>
+    updateFilter(value, key)
+
   const AppAutoCompleteList = (
     <>
       <AppAutoComplete
@@ -104,11 +111,10 @@ const OfferSearchToolbar = ({ search, setSearch }: OfferSearchToolbarProps) => {
         {!isMobile && AppAutoCompleteList}
         {isDesktop && (
           <SearchFilterInput
-            search={search}
-            setSearch={setSearch}
             textFieldProps={{
               label: t('findOffers.searchToolbar.label')
             }}
+            updateFilter={updateFilterByKey('name')}
           />
         )}
       </AppToolbar>

@@ -1,4 +1,4 @@
-import { useState, Dispatch, SetStateAction, KeyboardEvent } from 'react'
+import { useState, KeyboardEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import AppTextField from '~/components/app-text-field/AppTextField'
@@ -12,30 +12,28 @@ import IconButton from '@mui/material/IconButton'
 import { styles } from './SearchFilterInput.styles'
 
 interface SearchFilterInputProps {
-  search: string
-  setSearch: Dispatch<SetStateAction<string>>
+  updateFilter: (value: string) => void
   textFieldProps: TextFieldProps
 }
 
 const SearchFilterInput = ({
-  search,
-  setSearch,
+  updateFilter,
   textFieldProps
 }: SearchFilterInputProps) => {
+  const [search, setSearch] = useState<string>('')
   const { t } = useTranslation()
-  const [searchInput, setSearchInput] = useState<string>(search)
 
   const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchInput(event.target.value)
+    setSearch(event.target.value)
   }
 
   const onSearch = () => {
-    setSearch(searchInput)
+    updateFilter(search)
   }
 
   const onClear = () => {
-    setSearchInput('')
     setSearch('')
+    updateFilter('')
   }
 
   const onEnterPress = (event: KeyboardEvent<HTMLInputElement>) => {
@@ -44,10 +42,10 @@ const SearchFilterInput = ({
 
   const labelStyle = {
     ...styles.inputLabel,
-    visibility: searchInput && 'hidden'
+    visibility: search && 'hidden'
   }
 
-  const clearIconVisibility = { visibility: searchInput ? 'visible' : 'hidden' }
+  const clearIconVisibility = { visibility: search ? 'visible' : 'hidden' }
 
   return (
     <Box sx={styles.container}>
@@ -59,7 +57,7 @@ const SearchFilterInput = ({
         onChange={onInputChange}
         onKeyPress={onEnterPress}
         sx={styles.input}
-        value={searchInput}
+        value={search}
         variant='standard'
         {...textFieldProps}
       />

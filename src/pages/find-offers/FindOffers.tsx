@@ -14,8 +14,9 @@ import OfferSearchToolbar from '~/containers/find-offer/offer-search-toolbar/Off
 import AppDrawer from '~/components/app-drawer/AppDrawer'
 import OfferContainer from '~/containers/find-offer/offer-container/OfferContainer'
 import { useDrawer } from '~/hooks/use-drawer'
-import { CardsViewEnums } from '~/types'
 import { useFilterQuery } from '~/hooks/use-filter-query'
+
+import { CardsViewEnums, FilterQueryHook } from '~/types'
 
 import { styles } from '~/pages/find-offers/FindOffers.styles'
 
@@ -23,8 +24,6 @@ import {
   mockOffer,
   defaultFilters
 } from '~/pages/find-offers/FindOffers.constants'
-
-import { FilterQueryHook } from '~/types'
 
 const FindOffers = () => {
   const { openDrawer, closeDrawer, isOpen } = useDrawer()
@@ -35,7 +34,6 @@ const FindOffers = () => {
   const [showingTutorOffers, setShowingTutorOffers] = useState<boolean>(false)
   const { isMobile } = useBreakpoints()
   const size = isMobile ? 'small' : 'medium'
-  const [searchValue, setSearchValue] = useState<string>('')
   const { t } = useTranslation()
 
   const toggleFiltersOpen = () => (isOpen ? closeDrawer() : openDrawer())
@@ -58,7 +56,7 @@ const FindOffers = () => {
 
   return (
     <Container sx={styles.container}>
-      <OfferSearchToolbar search={searchValue} setSearch={setSearchValue} />
+      <OfferSearchToolbar updateFilter={filterQueryActions.updateFilter} />
       <FilterBarMenu
         chosenFiltersQty={countActiveFilters}
         filters={filters}
