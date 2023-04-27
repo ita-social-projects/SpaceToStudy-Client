@@ -31,7 +31,7 @@ import { CardsViewEnum, CardsView, SizeEnum, UserRoleEnum } from '~/types'
 import OfferContainer from '~/containers/offerContainer/offerContainer'
 
 const FindOffers = () => {
-  const [currentPage, setCurrentPage] = useState(1)
+  const [currentPage, setCurrentPage] = useState<number>(1)
   const [cardsView, setCardsView] = useState<CardsView>(CardsViewEnum.Inline)
   const { openDrawer, closeDrawer, isOpen } = useDrawer()
   const [showingTutorOffers, setShowingTutorOffers] = useState<boolean>(false)

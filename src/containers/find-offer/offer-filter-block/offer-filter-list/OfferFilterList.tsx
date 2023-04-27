@@ -19,16 +19,15 @@ import {
   FindOffersUpdateFilter,
   LanguageFilter,
   LanguagesEnum,
-  ProficiencyLevelEnums
+  ProficiencyLevelEnums,
+  UpdateOfferFilterByKey
 } from '~/types'
 import useAxios from '~/hooks/use-axios'
 import { OfferService } from '~/services/offer-service'
 
 interface OfferFilterListProps {
   filters: FindOffersFilters
-  updateFilterByKey: <K extends keyof FindOffersFilters>(
-    key: K
-  ) => (value: FindOffersFilters[K]) => void
+  updateFilterByKey: UpdateOfferFilterByKey
   updateFilter: FindOffersUpdateFilter<FindOffersFilters>
 }
 

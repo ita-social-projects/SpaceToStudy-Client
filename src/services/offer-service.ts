@@ -11,7 +11,7 @@ import {
 
 export const OfferService = {
   getOffers: async (params: FindOffersFilters): Promise<AxiosResponse> =>
-    await axiosClient.get(URLs.offers.getOrCreate, { params }),
+    await axiosClient.get(URLs.offers.get, { params }),
 
   createOffer: async (data: CreateOfferData): Promise<AxiosResponse> =>
     await axiosClient.post(URLs.offers.create, data),

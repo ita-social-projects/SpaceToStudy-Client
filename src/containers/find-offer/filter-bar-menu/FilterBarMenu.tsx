@@ -18,7 +18,7 @@ import {
   FindOffersUpdateFilter,
   UserRoleEnum
 } from '~/types'
-import { sortTranslationKeys } from '../offer-filter-block/OfferFilterBlock.constants'
+import { sortTranslationKeys } from '~/containers/find-offer/offer-filter-block/OfferFilterBlock.constants'
 
 interface FilterBarMenuProps {
   chosenFiltersQty?: number
