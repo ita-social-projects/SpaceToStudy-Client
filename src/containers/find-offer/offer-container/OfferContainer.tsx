@@ -12,7 +12,7 @@ interface OfferContainerProps {
 }
 
 const OfferContainer: FC<OfferContainerProps> = ({ viewMode, offerCards }) => {
-  const { isMobile, isTablet, isDesktop } = useBreakpoints()
+  const { isMobile, isDesktop } = useBreakpoints()
   const onBookmarkClick = (id: string) => {
     console.log(id)
   }
@@ -22,7 +22,6 @@ const OfferContainer: FC<OfferContainerProps> = ({ viewMode, offerCards }) => {
   const renderSquareCard =
     isMobile || (isDesktop && viewMode === CardsViewEnums.Grid) ? true : false
 
-  console.log(renderSquareCard, viewMode)
   const offerItems = offerCards.map((el) => (
     <Grid item key={el._id} sm={4}>
       {renderSquareCard ? (
@@ -37,7 +36,7 @@ const OfferContainer: FC<OfferContainerProps> = ({ viewMode, offerCards }) => {
   ))
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box data-testid='OfferContainer' sx={{ flexGrow: 1 }}>
       <Grid
         columns={{ sx: 1, sm: 1, md: columnNumber }}
         container
