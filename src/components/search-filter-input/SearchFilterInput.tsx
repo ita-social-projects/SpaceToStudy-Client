@@ -1,14 +1,15 @@
 import { useState, Dispatch, SetStateAction, KeyboardEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import TextField, { TextFieldProps } from '@mui/material/TextField'
+import AppTextField from '~/components/app-text-field/AppTextField'
+import { TextFieldProps } from '@mui/material/TextField'
 import SearchIcon from '@mui/icons-material/Search'
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
-
-import { styles } from './SearchFilterInput.styles'
 import ClearIcon from '@mui/icons-material/Clear'
 import IconButton from '@mui/material/IconButton'
+
+import { styles } from './SearchFilterInput.styles'
 
 interface SearchFilterInputProps {
   search: string
@@ -52,7 +53,7 @@ const SearchFilterInput = ({
     <Box sx={styles.container}>
       <SearchIcon sx={styles.searchIcon} />
 
-      <TextField
+      <AppTextField
         InputLabelProps={{ style: labelStyle, shrink: false }}
         InputProps={{ disableUnderline: true }}
         onChange={onInputChange}

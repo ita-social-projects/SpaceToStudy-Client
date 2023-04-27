@@ -1,7 +1,7 @@
 export const styles = {
   autocomplete: {
     width: '100%',
-    maxWidth: '220px',
+    maxWidth: { md: '220px' },
     mr: '30px',
     '& .MuiOutlinedInput-root': {
       padding: '5px 9px'

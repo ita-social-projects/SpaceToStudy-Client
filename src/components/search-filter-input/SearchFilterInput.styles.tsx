@@ -14,12 +14,12 @@ export const styles = {
     mr: '15px'
   },
   input: {
-    bottom: '8px',
     flex: 1
   },
   inputLabel: {
     color: palette.primary[300],
-    left: '5px'
+    top: '8px',
+    left: '15px'
   },
   searchBtn: {
     ml: '25px'

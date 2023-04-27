@@ -4,6 +4,7 @@ import { useSearchParams } from 'react-router-dom'
 import useCategoriesNames from '~/hooks/use-categories-names'
 import useSubjectsNames from '~/hooks/use-subjects-names'
 import { useTranslation } from 'react-i18next'
+import useBreakpoints from '~/hooks/use-breakpoints'
 
 import SearchFilterInput from '~/components/search-filter-input/SearchFilterInput'
 import AppToolbar from '~/components/app-toolbar/AppToolbar'
@@ -20,13 +21,14 @@ interface OfferSearchToolbarProps {
 
 const OfferSearchToolbar = ({ search, setSearch }: OfferSearchToolbarProps) => {
   const { t } = useTranslation()
+  const { isDesktop, isMobile } = useBreakpoints()
 
   const [searchParams, setSearchParams] = useSearchParams()
   const categoryId = searchParams.get('categoryId')
   const subjectId = searchParams.get('subjectId')
 
   const { loading: categoriesNamesLoading, response: categoriesNamesItems } =
-    useCategoriesNames({})
+    useCategoriesNames()
 
   const { loading: subjectsNamesLoading, response: subjectsNamesItems } =
     useSubjectsNames({
@@ -67,8 +69,8 @@ const OfferSearchToolbar = ({ search, setSearch }: OfferSearchToolbarProps) => {
     value: CategoryNameInterface | SubjectNameInterface
   ) => option?._id === value?._id
 
-  return (
-    <AppToolbar sx={styles.searchToolbar}>
+  const AppAutoCompleteList = (
+    <>
       <AppAutoComplete
         getOptionLabel={getOptionLabel}
         isOptionEqualToValue={isOptionEqualToValue}
@@ -93,14 +95,25 @@ const OfferSearchToolbar = ({ search, setSearch }: OfferSearchToolbarProps) => {
         }}
         value={subject}
       />
-      <SearchFilterInput
-        search={search}
-        setSearch={setSearch}
-        textFieldProps={{
-          label: t('findOffers.searchToolbar.label')
-        }}
-      />
-    </AppToolbar>
+    </>
+  )
+
+  return (
+    <>
+      <AppToolbar sx={styles.searchToolbar}>
+        {!isMobile && AppAutoCompleteList}
+        {isDesktop && (
+          <SearchFilterInput
+            search={search}
+            setSearch={setSearch}
+            textFieldProps={{
+              label: t('findOffers.searchToolbar.label')
+            }}
+          />
+        )}
+      </AppToolbar>
+      {isMobile && AppAutoCompleteList}
+    </>
   )
 }
 
