@@ -42,11 +42,11 @@ const OfferCard: FC<OfferCardProps> = ({
       <OfferAvatarAndRating imgSrc={author.photo} rating={authorAvgRating} />
       <Box sx={styles.wrapper}>
         <OfferDetails
-          bio={author.professionalSummary}
           description={!isHideField && description}
           languages={languages}
           level={proficiencyLevel}
           name={fullName}
+          professionalSummary={author.professionalSummary}
           subject={subject.name}
         />
         <OfferActions

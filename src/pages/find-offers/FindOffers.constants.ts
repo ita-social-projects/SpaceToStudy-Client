@@ -32,7 +32,7 @@ export const mockOffer = {
     id: '12345',
     name: 'English'
   },
-  proficiencyLevel: 'Beginner'
+  proficiencyLevel: ['Beginner', 'Advanced']
 }
 
 export const mockOfferSquareCard = {

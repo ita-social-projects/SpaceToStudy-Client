@@ -10,13 +10,13 @@ import { styles } from '~/components/offer-card/offer-details/OfferDetails.style
 
 const OfferDetails = ({
   name,
-  bio,
+  professionalSummary,
   subject,
   level,
   description,
   languages
 }) => {
-  const lastLevel = level[level.length - 1]
+  const lastLevel = level.length > 1 ? level[level.length - 1] : level[0]
   const levelText =
     lastLevel === 'Beginner'
       ? t('common.beginner')
@@ -25,7 +25,7 @@ const OfferDetails = ({
   return (
     <Box sx={styles.container}>
       <Typography variant='h6'>{name}</Typography>
-      <Typography sx={styles.bio}>{bio}</Typography>
+      <Typography sx={styles.bio}>{professionalSummary}</Typography>
 
       <Box sx={styles.chipsContainer}>
         <AppChip labelSx={styles.subjectChipLabel} sx={styles.subjectChip}>

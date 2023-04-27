@@ -8,9 +8,6 @@ const ellipsisTextStyle = (linesCount: number) => ({
 })
 
 export const styles = {
-  containerCard: {
-    maxWidth: '320px'
-  },
   container: {
     position: 'relative'
   },
