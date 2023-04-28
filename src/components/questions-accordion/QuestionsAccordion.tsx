@@ -23,6 +23,8 @@ const QuestionsAccordion: FC<QuestionsAccordion> = ({
   title = '',
   showIcon = true
 }) => {
+  const { t } = useTranslation()
+
   const [activeQuestions, setActiveQuestions] = useState<number[]>([])
 
   const onChange = (activeQuestion: number) => {
@@ -37,7 +39,46 @@ const QuestionsAccordion: FC<QuestionsAccordion> = ({
     })
   }
 
-  const { t } = useTranslation()
+  const accordionList = items.map((item, index) => (
+    <Box sx={styles.accordion.container} key={`${item}_${index}`}>
+      <Accordion
+        expanded={activeQuestions.includes(index)}
+        disableGutters
+        onChange={() => onChange(index)}
+        elevation={0}
+        style={styles.accordion.root}
+      >
+        <AccordionSummary
+          sx={styles.accordion.summary}
+          data-testid={`accordion-summary-${index}`}
+          expandIcon={
+            showIcon ? (
+              <ArrowForwardIosSharpIcon
+                sx={styles.icon}
+                data-testid='accordion-icon'
+              />
+            ) : null
+          }
+        >
+          <Typography
+            sx={styles.accordion.title(activeQuestions.includes(index))}
+            variant={'h6'}
+          >
+            {t(item.title)}
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography
+            sx={styles.accordion.caption(showIcon)}
+            data-testid={`accordion-description-${index}`}
+            variant={'body2'}
+          >
+            {t(item.description)}
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
+    </Box>
+  ))
 
   return (
     <Box sx={title ? styles.container : {}}>
@@ -46,46 +87,7 @@ const QuestionsAccordion: FC<QuestionsAccordion> = ({
           {t(title)}
         </Typography>
       ) : null}
-      {items.map((item, index) => (
-        <Box sx={styles.accordion.container} key={`${item}_${index}`}>
-          <Accordion
-            expanded={activeQuestions.includes(index)}
-            disableGutters
-            onChange={() => onChange(index)}
-            elevation={0}
-            style={styles.accordion.root}
-          >
-            <AccordionSummary
-              sx={styles.accordion.summary}
-              data-testid={`accordion-summary-${index}`}
-              expandIcon={
-                showIcon ? (
-                  <ArrowForwardIosSharpIcon
-                    sx={styles.icon}
-                    data-testid='accordion-icon'
-                  />
-                ) : null
-              }
-            >
-              <Typography
-                sx={styles.accordion.title(activeQuestions.includes(index))}
-                variant={'h6'}
-              >
-                {t(item.title)}
-              </Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography
-                sx={styles.accordion.caption(showIcon)}
-                data-testid={`accordion-description-${index}`}
-                variant={'body2'}
-              >
-                {t(item.description)}
-              </Typography>
-            </AccordionDetails>
-          </Accordion>
-        </Box>
-      ))}
+      {accordionList}
     </Box>
   )
 }
