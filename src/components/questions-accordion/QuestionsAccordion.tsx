@@ -9,7 +9,7 @@ import AccordionDetails from '@mui/material/AccordionDetails'
 
 import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp'
 
-import { AccordionItem } from '~/types'
+import { AccordionItem, VariantEnum } from '~/types'
 import { styles } from '~/components/questions-accordion/QuestionsAccordion.styles'
 
 interface QuestionsAccordion {
@@ -39,6 +39,12 @@ const QuestionsAccordion: FC<QuestionsAccordion> = ({
     })
   }
 
+  const accordionTitle = title && (
+    <Typography sx={styles.title} variant={VariantEnum.H5}>
+      {t(title)}
+    </Typography>
+  )
+
   const accordionList = items.map((item, index) => (
     <Box sx={styles.accordion.container} key={`${item}_${index}`}>
       <Accordion
@@ -52,17 +58,17 @@ const QuestionsAccordion: FC<QuestionsAccordion> = ({
           sx={styles.accordion.summary}
           data-testid={`accordion-summary-${index}`}
           expandIcon={
-            showIcon ? (
+            showIcon && (
               <ArrowForwardIosSharpIcon
                 sx={styles.icon}
                 data-testid='accordion-icon'
               />
-            ) : null
+            )
           }
         >
           <Typography
             sx={styles.accordion.title(activeQuestions.includes(index))}
-            variant={'h6'}
+            variant={VariantEnum.H6}
           >
             {t(item.title)}
           </Typography>
@@ -71,7 +77,7 @@ const QuestionsAccordion: FC<QuestionsAccordion> = ({
           <Typography
             sx={styles.accordion.caption(showIcon)}
             data-testid={`accordion-description-${index}`}
-            variant={'body2'}
+            variant={VariantEnum.Body2}
           >
             {t(item.description)}
           </Typography>
@@ -82,11 +88,7 @@ const QuestionsAccordion: FC<QuestionsAccordion> = ({
 
   return (
     <Box sx={title ? styles.container : {}}>
-      {title ? (
-        <Typography sx={styles.title} variant='h5'>
-          {t(title)}
-        </Typography>
-      ) : null}
+      {accordionTitle}
       {accordionList}
     </Box>
   )
