@@ -50,16 +50,7 @@ const Accordions: FC<AccordionsProps> = ({
           ]}
         >
           <AccordionSummary
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center'
-            }}
-            expandIcon={
-              showMoreIcon && (
-                <ExpandMoreRoundedIcon sx={{ marginRight: '10px' }} />
-              )
-            }
+            expandIcon={showMoreIcon && <ExpandMoreRoundedIcon />}
             sx={accordionStyle.summary}
           >
             <Typography sx={accordionStyle.title} variant={'h6'}>
