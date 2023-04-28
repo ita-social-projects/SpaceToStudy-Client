@@ -34,3 +34,8 @@ export const defaultResponses = {
   array: [],
   object: {}
 }
+
+export const itemsLoadLimit = {
+  desktop: 12,
+  mobile: 6
+}

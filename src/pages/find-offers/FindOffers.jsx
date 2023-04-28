@@ -10,7 +10,7 @@ import AppPagination from '~/components/app-pagination/AppPagination'
 import OfferFilterBlock from '~/containers/find-offer/offer-filter-block/OfferFilterBlock'
 import FilterBarMenu from '~/containers/find-offer/filter-bar-menu/FilterBarMenu'
 import AppDrawer from '~/components/app-drawer/AppDrawer'
-import OfferContainer from '~/containers/OfferContainer/OfferContainer'
+import OfferContainer from '~/containers/find-offer/offer-container/OfferContainer'
 import { useDrawer } from '~/hooks/use-drawer'
 import { CardsViewEnums } from '~/types'
 import { useFilterQuery } from '~/hooks/use-filter-query'
@@ -35,7 +35,7 @@ const FindOffers = () => {
 
   const handleShowingTutorOffers = () => setShowingTutorOffers((prev) => !prev)
 
-  const mockOffers = new Array(10).fill(mockOfferSquareCard)
+  const mockOffers = new Array(6).fill(mockOfferSquareCard)
 
   const filtersComponent = (
     <OfferFilterBlock
@@ -70,7 +70,7 @@ const FindOffers = () => {
         )}
         <OfferContainer
           offerCards={mockOffers}
-          viewMode={CardsViewEnums.Grid}
+          viewMode={CardsViewEnums.Inline}
         />
       </Box>
       <AppPagination

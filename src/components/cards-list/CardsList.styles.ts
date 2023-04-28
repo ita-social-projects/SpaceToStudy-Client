@@ -12,6 +12,7 @@ export const styles = {
     mb: '32px'
   },
   btn: {
+    minWidth: '148px',
     display: 'block',
     m: '0 auto'
   }

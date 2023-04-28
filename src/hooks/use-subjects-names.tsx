@@ -30,6 +30,7 @@ const useSubjectsNames = <T = SubjectNameInterface,>({
 
   const { loading, response, fetchData, error } = useAxios<
     SubjectNameInterface[],
+    undefined,
     T[]
   >({
     service: getSubjectsNames,

@@ -8,12 +8,14 @@ describe('SearchAutocomplete', () => {
 
   it('renders autocomplete with search input', () => {
     const setSearch = vi.fn()
+    const resetData = vi.fn()
     render(
       <SearchAutocomplete
-        options={ options }
-        search=""
-        setSearch={ setSearch }
-        textFieldProps={ { label: 'Search' } }
+        options={options}
+        resetData={resetData}
+        search=''
+        setSearch={setSearch}
+        textFieldProps={{ label: 'Search' }}
       />
     )
 
@@ -23,43 +25,49 @@ describe('SearchAutocomplete', () => {
 
   it('renders autocomplete with search input value', () => {
     const setSearch = vi.fn()
+    const resetData = vi.fn()
     render(
       <SearchAutocomplete
-        options={ options }
-        search="France"
-        setSearch={ setSearch }
-        textFieldProps={ { label: 'Search' } }
+        options={options}
+        resetData={resetData}
+        search='France'
+        setSearch={setSearch}
+        textFieldProps={{ label: 'Search' }}
       />
     )
 
-    const searchInput = screen.getByLabelText('Search') 
+    const searchInput = screen.getByLabelText('Search')
     expect(searchInput.value).toBe('France')
   })
 
   it('updates search input on typing', () => {
     const setSearch = vi.fn()
+    const resetData = vi.fn()
     render(
       <SearchAutocomplete
-        options={ options }
-        search=""
-        setSearch={ setSearch }
-        textFieldProps={ { label: 'Search' } }
+        options={options}
+        resetData={resetData}
+        search=''
+        setSearch={setSearch}
+        textFieldProps={{ label: 'Search' }}
       />
     )
 
-    const searchInput = screen.getByLabelText('Search') 
+    const searchInput = screen.getByLabelText('Search')
     userEvent.type(searchInput, 'Finland')
     expect(searchInput.value).toBe('Finland')
   })
 
   it('filters options on typing', () => {
     const setSearch = vi.fn()
+    const resetData = vi.fn()
     render(
       <SearchAutocomplete
-        options={ options }
-        search=""
-        setSearch={ setSearch }
-        textFieldProps={ { label: 'Search' } }
+        options={options}
+        resetData={resetData}
+        search=''
+        setSearch={setSearch}
+        textFieldProps={{ label: 'Search' }}
       />
     )
 
@@ -71,16 +79,18 @@ describe('SearchAutocomplete', () => {
 
   it('selects an option on click', () => {
     const setSearch = vi.fn()
+    const resetData = vi.fn()
     render(
       <SearchAutocomplete
-        options={ options }
-        search=""
-        setSearch={ setSearch }
-        textFieldProps={ { label: 'Search' } }
+        options={options}
+        resetData={resetData}
+        search=''
+        setSearch={setSearch}
+        textFieldProps={{ label: 'Search' }}
       />
     )
 
-    const searchInput = screen.getByLabelText('Search') 
+    const searchInput = screen.getByLabelText('Search')
     fireEvent.mouseDown(searchInput)
     const option = screen.getByText('France')
     fireEvent.click(option)
@@ -89,12 +99,14 @@ describe('SearchAutocomplete', () => {
 
   it('clears search input on clear icon click', () => {
     const setSearch = vi.fn()
+    const resetData = vi.fn()
     render(
       <SearchAutocomplete
-        options={ options }
-        search="France"
-        setSearch={ setSearch }
-        textFieldProps={ { label: 'Search' } }
+        options={options}
+        resetData={resetData}
+        search='France'
+        setSearch={setSearch}
+        textFieldProps={{ label: 'Search' }}
       />
     )
 
@@ -106,12 +118,14 @@ describe('SearchAutocomplete', () => {
 
   it('triggers search on search button click', () => {
     const setSearch = vi.fn()
+    const resetData = vi.fn()
     render(
       <SearchAutocomplete
-        options={ options }
-        search="France"
-        setSearch={ setSearch }
-        textFieldProps={ { label: 'Search' } }
+        options={options}
+        resetData={resetData}
+        search='France'
+        setSearch={setSearch}
+        textFieldProps={{ label: 'Search' }}
       />
     )
 
@@ -119,5 +133,4 @@ describe('SearchAutocomplete', () => {
     fireEvent.click(searchBtn)
     expect(setSearch).toHaveBeenCalledWith('France')
   })
-
 })
