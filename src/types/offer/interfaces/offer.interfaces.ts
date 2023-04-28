@@ -1,10 +1,10 @@
 import {
   CategoryInterface,
-  SubjectInterface,
   ProficiencyLevelEnum,
   CommonEntityFields,
   UserRole,
-  UserResponse
+  UserResponse,
+  SubjectNameInterface
 } from '~/types'
 
 export interface Offer extends CommonEntityFields {
@@ -20,7 +20,7 @@ export interface Offer extends CommonEntityFields {
     UserResponse,
     '_id' | 'totalReviews' | 'photo' | 'professionalSummary'
   >
-  subject: Pick<SubjectInterface, '_id' | 'name'>
+  subject: SubjectNameInterface
   category: Pick<CategoryInterface, '_id'>
 }
 
