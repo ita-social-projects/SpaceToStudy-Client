@@ -95,7 +95,7 @@ const UserTable: FC<UserTableProps> = ({
   return (
     <Box sx={styles.root}>
       <Typography sx={styles.header} variant='h4'>
-        {t(`baseUserTable.${role}sTab`)}
+        {t(`userTable.${role}sTab`)}
       </Typography>
       <EnhancedTableWrapper
         bulkActions={bulkActions}

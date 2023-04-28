@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, ReactNode } from 'react'
+import { createContext, useContext, useState, ReactNode, useMemo } from 'react'
 import { BulkAction, Column, InitialSort, RowAction } from '~/types'
 
 export interface TableProviderProps<T, U> {
@@ -34,32 +34,43 @@ const TableProvider = <Entity, Filters>({
   const [rowsPerPage, setRowsPerPage] = useState<number>(5)
   const [pageInput, setPageInput] = useState<number>(1)
 
-  return (
-    <TableContext.Provider
-      value={{
-        isSelection,
-        columns,
-        rowActions,
-        bulkActions,
-        initialFilters,
-        sort,
-        setSort,
-        filters,
-        setFilters,
-        selected,
-        numSelected,
-        setSelected,
-        page,
-        setPage,
-        rowsPerPage,
-        setRowsPerPage,
-        pageInput,
-        setPageInput
-      }}
-    >
-      {children}
-    </TableContext.Provider>
-  )
+  const value = useMemo(() => {
+    return {
+      isSelection,
+      columns,
+      rowActions,
+      bulkActions,
+      initialFilters,
+      sort,
+      setSort,
+      filters,
+      setFilters,
+      selected,
+      numSelected,
+      setSelected,
+      page,
+      setPage,
+      rowsPerPage,
+      setRowsPerPage,
+      pageInput,
+      setPageInput
+    }
+  }, [
+    isSelection,
+    columns,
+    rowActions,
+    bulkActions,
+    initialFilters,
+    sort,
+    filters,
+    selected,
+    numSelected,
+    page,
+    rowsPerPage,
+    pageInput
+  ])
+
+  return <TableContext.Provider value={value}>{children}</TableContext.Provider>
 }
 
 const useTableContext = () => useContext(TableContext)

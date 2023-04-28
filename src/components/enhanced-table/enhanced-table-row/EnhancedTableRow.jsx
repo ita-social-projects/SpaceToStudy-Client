@@ -25,7 +25,7 @@ const EnhancedTableRow = ({ item, isItemSelected, refetchData, role }) => {
       if (calculatedCellValue) {
         propValue = calculatedCellValue(item)
       } else {
-        propValue = (filterEnum ? item[field]?.[role] : item[field]).toString()
+        propValue = (filterEnum ? item[field][role] : item[field]).toString()
       }
 
       return <TableCell key={field}>{propValue}</TableCell>

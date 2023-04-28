@@ -20,7 +20,7 @@ import admin from './admin.json'
 import breadCrumbs from './breadcrumbs.json'
 import completeProfile from './complete-profile.json'
 import tutorProfilePage from './tutor-profile-page.json'
-import baseUserTable from './base-user-table.json'
+import userTable from './user-table.json'
 import constant from './constant.json'
 import findOffers from './find-offer-page.json'
 import filters from './filters.json'
@@ -47,7 +47,7 @@ const en = {
     modals,
     errors,
     table,
-    baseUserTable,
+    userTable,
     admin,
     breadCrumbs,
     completeProfile,
