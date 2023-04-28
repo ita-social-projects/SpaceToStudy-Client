@@ -16,7 +16,7 @@ interface AccordionsProps
   extends Omit<AccordionProps, 'onChange' | 'children'> {
   items: AccordionItem[]
   onChange: (value: number) => void
-  activeIndex: number[] | number
+  activeIndex: number[] | number | null
   multiple?: boolean
   icon?: ReactNode
   sx?: { [key: string]: any }
