@@ -37,7 +37,7 @@ const OfferContainer: FC<OfferContainerProps> = ({ viewMode, offerCards }) => {
 
   return (
     <Box data-testid='OfferContainer' sx={{ flexGrow: 1 }}>
-      <Grid columns={{ sx: 1, md: columnNumber }} container spacing={{ md: 3 }}>
+      <Grid columns={{ xs: 1, md: columnNumber }} container spacing={{ md: 3 }}>
         {offerItems}
       </Grid>
     </Box>
