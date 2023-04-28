@@ -10,7 +10,7 @@ import AccordionDetails from '@mui/material/AccordionDetails'
 import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp'
 
 import { AccordionItem } from '~/types'
-import { styles } from './QuestionsAccordion.styles'
+import { styles } from '~/components/questions-accordion/QuestionsAccordion.styles'
 
 interface QuestionsAccordion {
   items: AccordionItem[]
@@ -57,8 +57,14 @@ const QuestionsAccordion: FC<QuestionsAccordion> = ({
           >
             <AccordionSummary
               sx={styles.accordion.summary}
+              data-testid={`accordion-summary-${index}`}
               expandIcon={
-                showIcon ? <ArrowForwardIosSharpIcon sx={styles.icon} /> : null
+                showIcon ? (
+                  <ArrowForwardIosSharpIcon
+                    sx={styles.icon}
+                    data-testid='accordion-icon'
+                  />
+                ) : null
               }
             >
               <Typography sx={styles.accordion.title} variant={'h6'}>
@@ -66,7 +72,11 @@ const QuestionsAccordion: FC<QuestionsAccordion> = ({
               </Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography sx={styles.accordion.caption} variant={'body2'}>
+              <Typography
+                sx={styles.accordion.caption}
+                data-testid={`accordion-description-${index}`}
+                variant={'body2'}
+              >
                 {t(item.description)}
               </Typography>
             </AccordionDetails>
