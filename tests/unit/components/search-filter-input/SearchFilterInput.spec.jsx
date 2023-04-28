@@ -27,7 +27,7 @@ describe('SearchFilterInput component', () => {
 
     fireEvent.change(input, { target: { value: textValue } })
 
-    expect(input).toHaveTextContent(textValue)
+    expect(input.value).toBe(textValue)
   })
 
   it('should delete typed text when delete button is clicked', () => {
@@ -37,7 +37,7 @@ describe('SearchFilterInput component', () => {
     const clearIcon = screen.getByTestId('clearIcon')
     fireEvent.click(clearIcon)
 
-    expect(input).toHaveTextContent('')
+    expect(input.value).toBe('')
     expect(updateFilterMock).toHaveBeenCalledWith('')
   })
 

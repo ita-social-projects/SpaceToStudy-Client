@@ -67,7 +67,7 @@ const SearchFilterInput = ({
       />
 
       <IconButton onClick={onClear} sx={clearIconVisibility}>
-        <ClearIcon data-testId='clearIcon' fontSize={SizeEnum.Large} />
+        <ClearIcon data-testid='clearIcon' fontSize={SizeEnum.Large} />
       </IconButton>
 
       <Button
