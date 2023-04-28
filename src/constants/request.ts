@@ -22,7 +22,8 @@ export const URLs = {
     myProfile: '/users/myProfile'
   },
   offers: {
-    create: '/offers'
+    create: '/offers',
+    get: '/offers'
   },
   categories: {
     get: '/categories',

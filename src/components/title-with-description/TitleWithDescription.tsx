@@ -3,7 +3,7 @@ import { styles } from '~/components/title-with-description/TitleWithDescription
 
 interface TitleWithDescriptionProps {
   title: string
-  description: string
+  description?: string
   style?: {
     wrapper?: SxProps
     title?: SxProps

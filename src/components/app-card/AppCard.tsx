@@ -8,21 +8,15 @@ import { styles } from '~/components/app-card/AppCard.styles'
 
 interface AppCardProps {
   children: ReactNode
-  isClickable?: boolean
   link?: string
   sx?: SxProps
 }
 
-const AppCard: FC<AppCardProps> = ({
-  children,
-  isClickable = true,
-  link,
-  sx = {}
-}) => {
+const AppCard: FC<AppCardProps> = ({ children, link, sx = {} }) => {
   return (
     <Box
       component={link ? Link : Box}
-      sx={{ ...styles.container(isClickable), ...sx }}
+      sx={{ ...styles.container(Boolean(link)), ...sx }}
       to={link}
     >
       {children}

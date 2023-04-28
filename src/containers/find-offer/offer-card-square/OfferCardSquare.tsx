@@ -7,90 +7,96 @@ import IconButton from '@mui/material/IconButton'
 import TurnedInNot from '@mui/icons-material/TurnedInNot'
 
 import { t } from 'i18next'
-import AppCard from '~/components/app-card/AppCard'
 import ImgTitleDescription from '~/components/img-title-description/ImgTitleDescription'
 import AppChip from '~/components/app-chip/AppChip'
 import AppRatingMobile from '~/components/app-rating-mobile/AppRatingMobile'
 import AppButton from '~/components/app-button/AppButton'
 import TitleWithDescripiton from '~/components/title-with-description/TitleWithDescription'
 
-import { OfferCard, ProficiencyLevelEnums } from '~/types'
+import { Offer, ProficiencyLevelEnum } from '~/types'
 
 import { styles } from '~/containers/find-offer/offer-card-square/OfferCardSquare.styles'
 
 interface OfferCardSquareProps {
-  offer: OfferCard
+  offer: Offer
+  onBookmarkClick: (id: string) => void
 }
 
-const OfferCardSquare: FC<OfferCardSquareProps> = ({ offer }) => {
+const OfferCardSquare: FC<OfferCardSquareProps> = ({
+  offer,
+  onBookmarkClick
+}) => {
   const {
-    bio,
-    photo,
-    firstName,
-    lastName,
+    _id,
+    authorAvgRating,
     languages,
-    subject,
-    proficiencyLevel,
     price,
-    averageRating,
-    totalReviews
+    author,
+    authorFirstName,
+    authorLastName,
+    subject,
+    proficiencyLevel
   } = offer
 
+  const lastLevel =
+    proficiencyLevel.length > 1
+      ? proficiencyLevel[proficiencyLevel.length - 1]
+      : proficiencyLevel[0]
   const levelText =
-    proficiencyLevel === ProficiencyLevelEnums.Beginner
+    lastLevel === ProficiencyLevelEnum.Beginner
       ? t('common.beginner')
-      : `${t('common.beginner')} - ${proficiencyLevel}`.toUpperCase()
+      : `${t('common.beginner')} - ${lastLevel}`.toUpperCase()
+
+  const fullName = `${authorFirstName} ${authorLastName}`
 
   return (
-    <AppCard isClickable={false} sx={styles.containerCard}>
-      <Box sx={styles.container}>
-        <ImgTitleDescription
-          description={bio}
-          img={photo}
-          style={styles.mainInfo}
-          title={`${firstName} ${lastName}`}
-        />
-        <IconButton sx={styles.iconButton}>
-          <TurnedInNot />
-        </IconButton>
-        <Box sx={styles.languagesContainer}>
-          <LanguageIcon sx={styles.languageIcon} />
-          <Typography sx={styles.languages} variant='body2'>
-            {languages.join(', ')}
-          </Typography>
-        </Box>
-        <Box sx={styles.chipsContainer}>
-          <AppChip labelSx={styles.subjectChipLabel} sx={styles.subjectChip}>
-            {subject}
-          </AppChip>
-          <AppChip labelSx={styles.levelChipLabel} sx={styles.levelChip}>
-            {levelText}
-          </AppChip>
-        </Box>
-
-        <Box sx={styles.priceContainer}>
-          <TitleWithDescripiton
-            componentStyles={styles.componentStyles}
-            description={`${t('common.hourSlash')}`}
-            descriptionStyles={styles.descriptionStyles}
-            title={`${price} ${t('common.uah')}`}
-            titleStyles={styles.titleStyles}
-          />
-          <Box>
-            <AppRatingMobile
-              reviewsCount={totalReviews}
-              value={averageRating}
-            />
-          </Box>
-        </Box>
-        <AppButton sx={styles.sendMessageButton}>
-          {t('common.labels.sendMessage')}
-        </AppButton>
-        <AppButton fullWidth sx={styles.viewDetailsButton}>
-          {t('common.labels.viewDetails')}
-        </AppButton>
+    <Box sx={styles.container}>
+      <ImgTitleDescription
+        description={author.professionalSummary}
+        img={author.photo}
+        style={styles.mainInfo}
+        title={fullName}
+      />
+      <IconButton onClick={() => onBookmarkClick(_id)} sx={styles.iconButton}>
+        <TurnedInNot />
+      </IconButton>
+      <Box sx={styles.languagesContainer}>
+        <LanguageIcon sx={styles.languageIcon} />
+        <Typography sx={styles.languages} variant='body2'>
+          {languages.join(', ')}
+        </Typography>
       </Box>
-    </AppCard>
+      <Box sx={styles.chipsContainer}>
+        <AppChip labelSx={styles.subjectChipLabel} sx={styles.subjectChip}>
+          {subject.name}
+        </AppChip>
+        <AppChip labelSx={styles.levelChipLabel} sx={styles.levelChip}>
+          {levelText}
+        </AppChip>
+      </Box>
+
+      <Box sx={styles.priceContainer}>
+        <TitleWithDescripiton
+          componentStyles={styles.componentStyles}
+          description={`${t('common.hourSlash')}`}
+          descriptionStyles={styles.descriptionStyles}
+          title={`${price} ${t('common.uah')}`}
+          titleStyles={styles.titleStyles}
+        />
+        <Box>
+          <AppRatingMobile
+            reviewsCount={author.totalReviews}
+            value={authorAvgRating}
+          />
+        </Box>
+      </Box>
+      <AppButton sx={styles.sendMessageButton}>
+        {t('common.labels.sendMessage')}
+      </AppButton>
+      <AppButton fullWidth sx={styles.viewDetailsButton}>
+        {t('common.labels.viewDetails')}
+      </AppButton>
+    </Box>
   )
 }
 export default OfferCardSquare
