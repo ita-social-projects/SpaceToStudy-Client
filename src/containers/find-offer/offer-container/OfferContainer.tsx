@@ -20,7 +20,7 @@ const OfferContainer: FC<OfferContainerProps> = ({ viewMode, offerCards }) => {
   const columnNumber = viewMode === CardsViewEnums.Grid ? 12 : 1
 
   const renderSquareCard =
-    isMobile || (isDesktop && viewMode === CardsViewEnums.Grid) ? true : false
+    isMobile || (isDesktop && viewMode === CardsViewEnums.Grid)
 
   const offerItems = offerCards.map((el) => (
     <Grid item key={el._id} sm={4}>
@@ -37,11 +37,7 @@ const OfferContainer: FC<OfferContainerProps> = ({ viewMode, offerCards }) => {
 
   return (
     <Box data-testid='OfferContainer' sx={{ flexGrow: 1 }}>
-      <Grid
-        columns={{ sx: 1, sm: 1, md: columnNumber }}
-        container
-        spacing={{ md: 3 }}
-      >
+      <Grid columns={{ sx: 1, md: columnNumber }} container spacing={{ md: 3 }}>
         {offerItems}
       </Grid>
     </Box>

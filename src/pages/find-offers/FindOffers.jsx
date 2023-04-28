@@ -70,7 +70,7 @@ const FindOffers = () => {
         )}
         <OfferContainer
           offerCards={mockOffers}
-          viewMode={CardsViewEnums.Grid}
+          viewMode={CardsViewEnums.Inline}
         />
       </Box>
       <AppPagination
