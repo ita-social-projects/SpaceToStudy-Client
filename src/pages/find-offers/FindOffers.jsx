@@ -16,7 +16,7 @@ import { CardsViewEnums } from '~/types'
 import { useFilterQuery } from '~/hooks/use-filter-query'
 
 import {
-  mockOfferSquareCard,
+  mockOffer,
   defaultFilters
 } from '~/pages/find-offers/FindOffers.constants'
 
@@ -35,7 +35,7 @@ const FindOffers = () => {
 
   const handleShowingTutorOffers = () => setShowingTutorOffers((prev) => !prev)
 
-  const mockOffers = new Array(6).fill(mockOfferSquareCard)
+  const mockOffers = new Array(6).fill(mockOffer)
 
   const filtersComponent = (
     <OfferFilterBlock

@@ -1,26 +1,36 @@
+import { vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import OfferContainer from '~/containers/find-offer/offer-container/OfferContainer'
 import useBreakpoints from '~/hooks/use-breakpoints'
-import { vi } from 'vitest'
+import { renderWithProviders } from '~tests/test-utils'
 
 vi.mock('~/hooks/use-breakpoints')
 
-const mockOfferSquareCard = {
-  id: 'id',
-  photo:
-    'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80',
-  rating: 4.3,
-  firstName: 'Andrew',
-  lastName: 'Wilson',
-  bio: 'Senior lecturer at the Department of German Philology and Translation Department of English Philology Senior lecturer at the Department of German Philology and Translation Department of English Philology Senior lecturer at the Department of German Philology and Translation Department of English Philology',
+const mockOffer = {
+  _id: 'id',
+  authorAvgRating: 4.3,
+  authorFirstName: 'James',
+  authorLastName: 'Wilson',
   description:
     'Hello. There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which.',
   languages: ['Ukrainian', 'English'],
+  author: {
+    totalReviews: {
+      student: 0,
+      tutor: 0
+    },
+    photo:
+      'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80',
+    professionalSummary:
+      'Senior lecturer at the Department of German Philology and Translation Department of English Philology Senior lecturer at the Department of German Philology and Translation Department of English Philology Senior lecturer at the Department of German Philology and Translation Department of English Philology'
+  },
   price: 100,
-  subject: 'English',
-  proficiencyLevel: 'Beginner',
-  totalReviews: 33,
-  averageRating: 4.8
+  isBookmarked: false,
+  subject: {
+    id: '12345',
+    name: 'English'
+  },
+  proficiencyLevel: ['Beginner', 'Advanced']
 }
 
 const cardsViewEnums = {
@@ -28,14 +38,14 @@ const cardsViewEnums = {
   inline: 'inline'
 }
 
-const mockOffers = new Array(6).fill(mockOfferSquareCard)
+const mockOffers = new Array(6).fill(mockOffer)
 
 describe('OfferContainer test on modile', () => {
   const mobileData = { isDesktop: false, isMobile: true, isTablet: false }
 
   it('Test should render square card component on modile', () => {
     useBreakpoints.mockImplementation(() => mobileData)
-    render(
+    renderWithProviders(
       <OfferContainer
         offerCards={mockOffers}
         viewMode={cardsViewEnums.inline}
@@ -52,7 +62,7 @@ describe('OfferContainer test on tablet', () => {
 
   it('Test should render rectangular card on tablet', () => {
     useBreakpoints.mockImplementation(() => mobileData)
-    render(
+    renderWithProviders(
       <OfferContainer offerCards={mockOffers} viewMode={cardsViewEnums.grid} />
     )
     const ratingIcon = screen.getAllByTestId('app-rating')
@@ -66,7 +76,7 @@ describe('OfferContainer test on desktop', () => {
 
   it('Test should render rectangular card on desktop with grid viewMode', () => {
     useBreakpoints.mockImplementation(() => mobileData)
-    render(
+    renderWithProviders(
       <OfferContainer offerCards={mockOffers} viewMode={cardsViewEnums.grid} />
     )
 
@@ -77,7 +87,7 @@ describe('OfferContainer test on desktop', () => {
 
   it('Test should render rectangular card on desktop with inline viewMode', () => {
     useBreakpoints.mockImplementation(() => mobileData)
-    render(
+    renderWithProviders(
       <OfferContainer
         offerCards={mockOffers}
         viewMode={cardsViewEnums.inline}

@@ -10,14 +10,14 @@ import { styles } from '~/components/offer-card/OfferCard.styles'
 import { ButtonActions, Offer } from '~/types'
 
 interface OfferCardProps {
-  isHideField: boolean
+  isHideField?: boolean
   offer: Offer
   onBookmarkClick: (id: string) => void
   buttonActions: ButtonActions[]
 }
 
 const OfferCard: FC<OfferCardProps> = ({
-  isHideField,
+  isHideField = false,
   offer,
   onBookmarkClick,
   buttonActions

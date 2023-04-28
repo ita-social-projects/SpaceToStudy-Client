@@ -19,10 +19,15 @@ import { styles } from '~/containers/find-offer/offer-card-square/OfferCardSquar
 
 interface OfferCardSquareProps {
   offer: Offer
+  onBookmarkClick: (id: string) => void
 }
 
-const OfferCardSquare: FC<OfferCardSquareProps> = ({ offer }) => {
+const OfferCardSquare: FC<OfferCardSquareProps> = ({
+  offer,
+  onBookmarkClick
+}) => {
   const {
+    _id,
     authorAvgRating,
     languages,
     price,
@@ -52,7 +57,7 @@ const OfferCardSquare: FC<OfferCardSquareProps> = ({ offer }) => {
         style={styles.mainInfo}
         title={fullName}
       />
-      <IconButton sx={styles.iconButton}>
+      <IconButton onClick={() => onBookmarkClick(_id)} sx={styles.iconButton}>
         <TurnedInNot />
       </IconButton>
       <Box sx={styles.languagesContainer}>
