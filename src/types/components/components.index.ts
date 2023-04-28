@@ -29,3 +29,4 @@ export {
   AccordionItem,
   IconPositionEnum
 }
+export * from './accordion-with-image/accordionWithImage.interface'

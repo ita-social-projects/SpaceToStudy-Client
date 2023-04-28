@@ -12,6 +12,10 @@ import { styles } from '~/components/accordion/Accordion.styles'
 import { AccordionItem } from '~/types'
 import { Variant } from '@mui/material/styles/createTypography'
 
+interface Sx {
+  [key: string]: any
+}
+
 interface AccordionsProps
   extends Omit<AccordionProps, 'onChange' | 'children'> {
   items: AccordionItem[]
@@ -19,7 +23,7 @@ interface AccordionsProps
   activeIndex: number[] | number | null
   multiple?: boolean
   icon?: ReactNode
-  sx?: { [key: string]: any }
+  sx?: Sx
   titleVariant: Variant
   descriptionVariant: Variant
 }

@@ -10,7 +10,7 @@ import TitleWithDescription from '~/components/title-with-description/TitleWithD
 import { studentRoutes } from '~/router/constants/studentRoutes'
 import { VariantEnum } from '~/types'
 
-import { styles } from '~/containers/student-home-page/faq/Faq.styles.js'
+import { styles } from '~/containers/student-home-page/faq/Faq.styles'
 
 const Faq = () => {
   const { t } = useTranslation()
