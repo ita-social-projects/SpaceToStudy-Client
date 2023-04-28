@@ -73,7 +73,7 @@ const QuestionsAccordion: FC<QuestionsAccordion> = ({
             </AccordionSummary>
             <AccordionDetails>
               <Typography
-                sx={styles.accordion.caption}
+                sx={styles.accordion.caption(showIcon)}
                 data-testid={`accordion-description-${index}`}
                 variant={'body2'}
               >

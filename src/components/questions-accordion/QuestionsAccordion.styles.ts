@@ -28,8 +28,8 @@ export const styles = {
         title: {
             ml: '13px',
         },
-        caption: {
-            ml: '27px'
-        },
+        caption: (text: boolean) => ({
+            ml: text ? '27px' : '13px'
+        }),
     }
 }
