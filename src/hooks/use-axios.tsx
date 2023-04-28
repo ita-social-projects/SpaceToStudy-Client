@@ -1,42 +1,49 @@
 import { useState, useEffect, useCallback } from 'react'
-import { AxiosError, AxiosResponse } from 'axios'
-import { ErrorResponse } from '~/types'
+import { AxiosError } from 'axios'
+import { ErrorResponse, ServiceFunction } from '~/types'
 
-interface UseAxiosProps<T, R> {
-  service: (data?: unknown) => Promise<AxiosResponse<T>>
-  defaultResponse: R
+interface UseAxiosProps<Response, TransformedResponse, Params> {
+  service: ServiceFunction<Response, Params>
+  defaultResponse: TransformedResponse
   fetchOnMount?: boolean
-  transform?: (data: T) => R
+  transform?: (params: Response) => TransformedResponse
   onResponse?: () => void
   onResponseError?: (error: ErrorResponse) => void
 }
 
-interface UseAxiosReturn<R> {
-  response: R
+interface UseAxiosReturn<TransformedResponse, Params> {
+  response: TransformedResponse
   error: ErrorResponse | null
   loading: boolean
-  fetchData: (data?: unknown) => Promise<void>
+  fetchData: (params?: Params) => Promise<void>
 }
 
-const useAxios = <T, R = T>({
+const useAxios = <
+  Response,
+  Params = undefined,
+  TransformedResponse = Response
+>({
   service,
   defaultResponse,
   fetchOnMount = true,
   transform,
   onResponse,
   onResponseError
-}: UseAxiosProps<T, R>): UseAxiosReturn<R> => {
-  const [response, setResponse] = useState<R>(defaultResponse)
+}: UseAxiosProps<Response, TransformedResponse, Params>): UseAxiosReturn<
+  TransformedResponse,
+  Params
+> => {
+  const [response, setResponse] = useState<TransformedResponse>(defaultResponse)
   const [error, setError] = useState<ErrorResponse | null>(null)
   const [loading, setLoading] = useState<boolean>(fetchOnMount)
 
   const fetchData = useCallback(
-    async (data?: unknown) => {
+    async (params?: Params) => {
       try {
         setLoading(true)
-        const res = await service(data)
+        const res = await service(params)
         const responseData = transform ? transform(res.data) : res.data
-        setResponse(responseData as R)
+        setResponse(responseData as TransformedResponse)
         setError(null)
         onResponse && onResponse()
       } catch (e) {
