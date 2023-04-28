@@ -18,7 +18,7 @@ export const userService = {
   deleteUser: (userId: string): Promise<AxiosResponse<null>> => {
     return axiosClient.delete(`${URLs.users.get}/${userId}`)
   },
-  deleteUsers: (userIds: string): Promise<AxiosResponse<null>> => {
+  deleteUsers: (userIds: string[]): Promise<AxiosResponse<null>> => {
     return axiosClient.post(URLs.users.delete, userIds)
   }
 }

@@ -1,9 +1,9 @@
 import EnhancedTable from '~/components/enhanced-table/EnhancedTable'
 import {
-  Column,
   InitialSort,
-  Options,
   TabsInfo,
+  Column,
+  Options,
   UserInitialFilters,
   UserInterface
 } from '~/types'
@@ -41,12 +41,6 @@ export const tabsInfo: TabsInfo<Options<UserInitialFilters>> = {
     label: 'baseUserTable.blocked',
     key: 'status',
     value: 'blocked',
-    component: (props) => <EnhancedTable {...props} />
-  },
-  invited: {
-    label: 'baseUserTable.invited',
-    key: 'status',
-    value: 'invited',
     component: (props) => <EnhancedTable {...props} />
   }
 }

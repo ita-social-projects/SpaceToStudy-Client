@@ -1,11 +1,19 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useState, ReactNode } from 'react'
+import { BulkAction, Column, InitialSort, RowAction } from '~/types'
 
-import { TableProviderProps } from '~/types/common/interfaces/common.interfaces'
-import { InitialSort } from '~/types/common/types/common.types'
+export interface TableProviderProps<T, U> {
+  children: ReactNode
+  isSelection: boolean
+  columns: Column<T>[]
+  initialFilters: U
+  initialSort: InitialSort
+  rowActions: RowAction[]
+  bulkActions: BulkAction[]
+}
 
 const TableContext = createContext<unknown>(null)
 
-const TableProvider = <T, U>({
+const TableProvider = <Entity, Filters>({
   children,
   initialSort,
   initialFilters,
@@ -13,10 +21,10 @@ const TableProvider = <T, U>({
   columns,
   rowActions,
   bulkActions
-}: TableProviderProps<T, U>) => {
+}: TableProviderProps<Entity, Filters>) => {
   const [sort, setSort] = useState<InitialSort>(initialSort)
 
-  const [filters, setFilters] = useState<U>(initialFilters)
+  const [filters, setFilters] = useState<Filters>(initialFilters)
 
   const [selected, setSelected] = useState<string[]>([])
 
@@ -28,7 +36,7 @@ const TableProvider = <T, U>({
 
   return (
     <TableContext.Provider
-      value={ {
+      value={{
         isSelection,
         columns,
         rowActions,
@@ -47,9 +55,9 @@ const TableProvider = <T, U>({
         setRowsPerPage,
         pageInput,
         setPageInput
-      } }
+      }}
     >
-      { children }
+      {children}
     </TableContext.Provider>
   )
 }

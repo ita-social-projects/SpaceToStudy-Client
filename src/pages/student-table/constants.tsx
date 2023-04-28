@@ -1,11 +1,14 @@
 import EnhancedTable from '~/components/enhanced-table/EnhancedTable'
-import { InitialSort, TabsInfo, Column } from '~/types'
+import {
+  InitialSort,
+  TabsInfo,
+  Column,
+  Options,
+  UserInitialFilters,
+  UserInterface
+} from '~/types'
 
-import { UserInterface, Column } from '~/types/common/interfaces/common.interfaces'
-import { InitialSort, TabsInfo, Options } from '~/types/common/types/common.types'
-import { UserInitialFilters } from '~/types/user-table/types/user-table.types'
-
-export const baseInitialFilters: UserInitialFilters = {
+export const initialFilters: UserInitialFilters = {
   name: '',
   email: '',
   status: [],
@@ -19,9 +22,9 @@ export const baseInitialFilters: UserInitialFilters = {
   }
 }
 
-export const baseInitialSort: InitialSort = { order: 'asc', orderBy: 'email' }
+export const initialSort: InitialSort = { order: 'asc', orderBy: 'email' }
 
-export const baseTabsInfo: TabsInfo<Options<UserInitialFilters>> = {
+export const tabsInfo: TabsInfo<Options<UserInitialFilters>> = {
   all: {
     label: 'baseUserTable.all',
     key: 'status',
@@ -42,7 +45,7 @@ export const baseTabsInfo: TabsInfo<Options<UserInitialFilters>> = {
   }
 }
 
-export const baseColumns: Column<UserInterface>[] = [
+export const columns: Column<UserInterface>[] = [
   {
     label: 'baseUserTable.name',
     field: 'name',

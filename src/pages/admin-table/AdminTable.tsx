@@ -1,13 +1,21 @@
-import BaseUserTable from '~/components/base-user-table/BaseUserTable'
+import UserTable from '~/components/user-table/UserTable'
 
-import { tabsInfo } from '~/pages/admin-table/constants'
 import { admin } from '~/constants'
+import {
+  columns,
+  initialFilters,
+  initialSort,
+  tabsInfo
+} from '~/pages/admin-table/constants'
 
 const AdminTable = () => {
   return (
-    <BaseUserTable
-      role={ admin }
-      tabsInfo={ tabsInfo }
+    <UserTable
+      columns={columns}
+      initialFilters={initialFilters}
+      initialSort={initialSort}
+      role={admin}
+      tabsInfo={tabsInfo}
     />
   )
 }

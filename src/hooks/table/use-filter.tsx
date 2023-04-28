@@ -1,6 +1,5 @@
 import { useTableContext } from '~/context/table-context'
-
-import { TableContextType } from '~/types/common/interfaces/common.interfaces'
+import { TableContextType } from '~/types'
 
 type FilterValue = (string | number)[]
 
@@ -12,16 +11,20 @@ type UseFilterReturnType<U> = {
 }
 
 const useFilter = <T, U>(): UseFilterReturnType<U> => {
-  const { filters, setFilters, initialFilters } = useTableContext() as TableContextType<T, U>
+  const { filters, setFilters, initialFilters } =
+    useTableContext() as TableContextType<T, U>
 
   const setFilterByKey =
     (filterKey: keyof U) =>
-      (filterValue: FilterValue): void => {
-        setFilters((prev) => ({ ...prev, [filterKey]: filterValue }))
-      }
+    (filterValue: FilterValue): void => {
+      setFilters((prev) => ({ ...prev, [filterKey]: filterValue }))
+    }
 
   const clearFilterByKey = (filterKey: keyof U) => {
-    setFilters((prev) => ({ ...prev, [filterKey]: initialFilters[filterKey as keyof U] }))
+    setFilters((prev) => ({
+      ...prev,
+      [filterKey]: initialFilters[filterKey]
+    }))
   }
 
   const clearFilters = () => {

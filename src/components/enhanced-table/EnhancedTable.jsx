@@ -82,6 +82,7 @@ const EnhancedTable = ({ fetchService, externalFilter }) => {
         item={item}
         key={item._id}
         refetchData={getData}
+        role={externalFilter.role}
       />
     )
   })
