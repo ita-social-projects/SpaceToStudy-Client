@@ -3,63 +3,69 @@ import { useTranslation } from 'react-i18next'
 
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
+import Accordion from '@mui/material/Accordion'
+import AccordionSummary from '@mui/material/AccordionSummary'
+import AccordionDetails from '@mui/material/AccordionDetails'
+
 import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp'
 
-import { AccordionItem, IconPositionEnum } from '~/types'
-import Accordion from '@mui/material/Accordion'
-import { AccordionDetails, AccordionSummary } from '@mui/material'
-import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded'
+import { AccordionItem } from '~/types'
 import { styles } from './QuestionsAccordion.styles'
 
 interface QuestionsAccordion {
   items: AccordionItem[]
+  title?: string
+  showIcon?: boolean
 }
 
-const QuestionsAccordion: FC<QuestionsAccordion> = ({ items }) => {
-  const [activeQuestion, setActiveQuestion] = useState(0)
+const QuestionsAccordion: FC<QuestionsAccordion> = ({
+  items,
+  title = '',
+  showIcon = true
+}) => {
+  const [activeQuestions, setActiveQuestions] = useState<number[]>([])
+
+  const onChange = (activeQuestion: number) => {
+    setActiveQuestions((prevActiveQuestions) => {
+      if (prevActiveQuestions.includes(activeQuestion)) {
+        return prevActiveQuestions.filter(
+          (prevActiveQuestion) => prevActiveQuestion !== activeQuestion
+        )
+      } else {
+        return [...prevActiveQuestions, activeQuestion]
+      }
+    })
+  }
 
   const { t } = useTranslation()
 
-  const accordionStyle = {
-    summary: {},
-    title: {},
-    details: {},
-    description: {}
-  }
-
   return (
-    <Box>
-      {/* change variant of typography */}
-      <Typography sx={styles.title} variant='h5'>
-        Frequently Asked questions
-      </Typography>
+    <Box sx={title ? styles.container : {}}>
+      {title ? (
+        <Typography sx={styles.title} variant='h5'>
+          {t(title)}
+        </Typography>
+      ) : null}
       {items.map((item, index) => (
-        <Box sx={styles.accordion.container}>
+        <Box sx={styles.accordion.container} key={index}>
           <Accordion
-            // expanded={Boolean(activeQuestion)}
-            // disableGutters
-            onChange={(e, w) => console.log(e, w)}
-            key={index}
-            square={true}
+            expanded={activeQuestions.includes(index)}
+            disableGutters
+            onChange={() => onChange(index)}
             elevation={0}
-            sx={{}}
+            style={styles.accordion.root}
           >
             <AccordionSummary
               sx={styles.accordion.summary}
               expandIcon={
-                // showMoreIcon && (
-                <ArrowForwardIosSharpIcon
-                  sx={{ color: 'primary.500', fontSize: '0.9rem' }}
-                />
-                // )
+                showIcon ? <ArrowForwardIosSharpIcon sx={styles.icon} /> : null
               }
-              // sx={styles.accordion.title}
             >
               <Typography sx={styles.accordion.title} variant={'h6'}>
                 {t(item.title)}
               </Typography>
             </AccordionSummary>
-            <AccordionDetails sx={accordionStyle.details}>
+            <AccordionDetails>
               <Typography sx={styles.accordion.caption} variant={'body2'}>
                 {t(item.description)}
               </Typography>

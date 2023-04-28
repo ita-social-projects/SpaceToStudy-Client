@@ -1,15 +1,20 @@
+const borderStyles = {
+    borderWidth: '1px',
+    borderColor: 'primary.100',
+    borderStyle: 'solid',
+    borderRadius: '6px'
+}
+
 export const styles = {
     title: {
         color: 'primary.700',
         mb: '18px',
     },
+    icon: { color: 'primary.500', fontSize: '13px' },
+    container: { padding: '35px 60px', ...borderStyles, margin: '10px' },
     accordion: {
-        container: {
-            borderWidth: '1px',
-            borderColor: 'primary.100',
-            borderStyle: 'solid'
-            // border: '2px solid black'
-        },
+        root: { borderRadius: '6px' },
+        container: { ...borderStyles, mb: '16px', '&:last-child': { mb: 0 } },
         summary: {
             color: 'primary.500',
             display: 'flex',
@@ -18,13 +23,13 @@ export const styles = {
             '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
                 transform: 'rotate(90deg)',
             },
-            mb: '0'
+            mb: '0',
         },
         title: {
             ml: '13px',
         },
         caption: {
             ml: '27px'
-        }
+        },
     }
 }
