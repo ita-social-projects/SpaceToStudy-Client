@@ -47,7 +47,7 @@ const QuestionsAccordion: FC<QuestionsAccordion> = ({
         </Typography>
       ) : null}
       {items.map((item, index) => (
-        <Box sx={styles.accordion.container} key={index}>
+        <Box sx={styles.accordion.container} key={`${item}_${index}`}>
           <Accordion
             expanded={activeQuestions.includes(index)}
             disableGutters
