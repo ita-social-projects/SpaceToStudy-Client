@@ -1,4 +1,4 @@
-import { useState, KeyboardEvent } from 'react'
+import { KeyboardEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import AppTextField from '~/components/app-text-field/AppTextField'
@@ -9,7 +9,7 @@ import Box from '@mui/material/Box'
 import ClearIcon from '@mui/icons-material/Clear'
 import IconButton from '@mui/material/IconButton'
 
-import { SizeEnum, VariantEnum } from '~/types'
+import { SizeEnum, VariantEnum, VisibilityEnum } from '~/types'
 
 import { styles } from '~/components/search-filter-input/SearchFilterInput.styles'
 
@@ -44,10 +44,12 @@ const SearchFilterInput = ({
 
   const labelStyle = {
     ...styles.inputLabel,
-    visibility: search && 'hidden'
+    visibility: search && VisibilityEnum.Hidden
   }
 
-  const clearIconVisibility = { visibility: search ? 'visible' : 'hidden' }
+  const clearIconVisibility = {
+    visibility: search ? VisibilityEnum.Visible : VisibilityEnum.Hidden
+  }
 
   return (
     <Box sx={styles.container}>
@@ -65,7 +67,7 @@ const SearchFilterInput = ({
       />
 
       <IconButton onClick={onClear} sx={clearIconVisibility}>
-        <ClearIcon fontSize={SizeEnum.Large} />
+        <ClearIcon data-testId='clearIcon' fontSize={SizeEnum.Large} />
       </IconButton>
 
       <Button
