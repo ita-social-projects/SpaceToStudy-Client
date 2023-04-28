@@ -16,7 +16,7 @@ export const styles = {
         root: { borderRadius: '6px' },
         container: { ...borderStyles, mb: '16px', '&:last-child': { mb: 0 } },
         summary: {
-            color: 'primary.500',
+
             display: 'flex',
             flexDirection: 'row-reverse',
             alignItems: 'center',
@@ -25,9 +25,10 @@ export const styles = {
             },
             mb: '0',
         },
-        title: {
+        title: (isActive: boolean) => ({
             ml: '13px',
-        },
+            color: isActive ? 'primary.500' : 'primary.700'
+        }),
         caption: (icon: boolean) => ({
             ml: icon ? '27px' : '13px'
         }),

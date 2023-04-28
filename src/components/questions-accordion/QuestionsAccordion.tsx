@@ -67,7 +67,10 @@ const QuestionsAccordion: FC<QuestionsAccordion> = ({
                 ) : null
               }
             >
-              <Typography sx={styles.accordion.title} variant={'h6'}>
+              <Typography
+                sx={styles.accordion.title(activeQuestions.includes(index))}
+                variant={'h6'}
+              >
                 {t(item.title)}
               </Typography>
             </AccordionSummary>
