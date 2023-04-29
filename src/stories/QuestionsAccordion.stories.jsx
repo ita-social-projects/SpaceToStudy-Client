@@ -8,10 +8,6 @@ export default {
             type: 'string',
             description: 'The title of accordion'
         },
-        showIcon: {
-            type: 'boolean',
-            description: 'If true, rounded show an arrow icon'
-        },
         items: {
             type: 'array',
             description: 'Array of accordion items to show'
@@ -25,7 +21,6 @@ export const Desktop = Template.bind({})
 
 Desktop.args = {
     title: 'Here is some title',
-    showIcon: true,
     items: [
         {
             title: 'Title 1',

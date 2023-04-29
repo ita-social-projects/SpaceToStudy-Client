@@ -49,7 +49,6 @@ const Accordions: FC<AccordionsProps> = ({
     <Box sx={accordionStyle.root}>
       {items.map((item, index) => (
         <Accordion
-          data-testid={`${index}-${activeIndex === index}`}
           disableGutters
           expanded={
             isMultiple ? activeIndex.includes(index) : activeIndex === index
@@ -67,6 +66,7 @@ const Accordions: FC<AccordionsProps> = ({
         >
           <AccordionSummary expandIcon={icon} sx={accordionStyle.summary}>
             <Typography
+              data-testid={`accordion-title-${index}`}
               sx={
                 isMultiple && accordionStyle.title instanceof Function
                   ? accordionStyle.title(activeIndex.includes(index))
@@ -79,6 +79,7 @@ const Accordions: FC<AccordionsProps> = ({
           </AccordionSummary>
           <AccordionDetails sx={accordionStyle.details}>
             <Typography
+              data-testid={`accordion-description-${index}`}
               sx={accordionStyle.description}
               variant={descriptionVariant}
             >

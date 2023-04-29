@@ -1,4 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react'
+import React, { useState as useStateMock } from 'react';
+import { vi } from 'vitest';
 import QuestionsAccordion from '~/components/questions-accordion/QuestionsAccordion';
 
 const items = [
@@ -12,16 +14,13 @@ const items = [
     }
 ]
 
-const iconId = 'accordion-icon'
-
-const firstAccordionSummaryId = 'accordion-summary-0'
-const firstAccordionDescriptionId = 'accordion-description-0'
-
 const mockedTitle = 'some-title'
 
-describe('QuestionsAccordion component with icon test', () => {
+const iconId = 'accordion-icon'
+
+describe('QuestionsAccordion component with title test', () => {
     beforeEach(() => {
-        render(<QuestionsAccordion items={items} showIcon={true} />)
+        render(<QuestionsAccordion items={items} title={mockedTitle} />)
     })
 
     it('Test headings', () => {
@@ -40,45 +39,38 @@ describe('QuestionsAccordion component with icon test', () => {
         expect(secondDescription).toBeInTheDocument()
     })
 
+    it('should render with title', () => {
+        const title = screen.getByText(mockedTitle)
 
-    it('should render icon', () => {
-        const expandIcon = screen.queryAllByTestId(iconId)
-
-        expect(expandIcon).toHaveLength(items.length)
+        expect(title).toBeVisible()
     })
 
-    it('should click on first accordion item and description be shown', () => {
-        const accordionItem = screen.getByTestId(firstAccordionSummaryId)
+    it('should render icon', () => {
+        const icon = screen.getAllByTestId(iconId)
 
-        fireEvent.click(accordionItem)
-
-        const description = screen.getByTestId(firstAccordionDescriptionId)
-
-        expect(description).toBeVisible()
+        expect(icon).toHaveLength(2)
     })
 })
 
 describe('QuestionsAccordion component without title test', () => {
 
     beforeEach(() => {
-        render(<QuestionsAccordion items={items} showIcon={true} title={mockedTitle} />)
+        render(<QuestionsAccordion items={items} icon={true} title={mockedTitle} />)
+    })
+
+    it('should add index of active accordion', () => {
+        const firstAccordion = screen.getByTestId('accordion-title-0')
+
+        fireEvent.click(firstAccordion)
+
+        const firstAccordionDescription = screen.getByTestId('accordion-description-0')
+
+        expect(firstAccordionDescription).toBeVisible()
     })
 
     it('should render with title', () => {
         const title = screen.getByText(mockedTitle)
 
         expect(title).toBeVisible()
-    })
-})
-
-describe('QuestionsAccordion component without icon test', () => {
-    beforeEach(() => {
-        render(<QuestionsAccordion items={items} showIcon={false} title={mockedTitle} />)
-    })
-
-    it('should render without icon', () => {
-        const icon = screen.queryAllByTestId(iconId)
-
-        expect(icon).toHaveLength(0)
     })
 })

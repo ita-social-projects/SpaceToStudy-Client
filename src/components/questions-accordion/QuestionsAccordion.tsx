@@ -43,7 +43,12 @@ const QuestionsAccordion: FC<QuestionsAccordion> = ({ items, title = '' }) => {
       items={items}
       onChange={onChange}
       activeIndex={activeQuestions}
-      icon={<ArrowForwardIosSharpIcon sx={styles.icon} />}
+      icon={
+        <ArrowForwardIosSharpIcon
+          sx={styles.icon}
+          data-testid='accordion-icon'
+        />
+      }
       multiple={true}
       sx={styles}
       titleVariant={VariantEnum.H6}

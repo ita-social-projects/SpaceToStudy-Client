@@ -1,8 +1,19 @@
 import { render, screen, fireEvent } from '@testing-library/react'
 import Accordions from '~/components/accordion/Accordions'
+import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp'
 import { vi } from 'vitest'
 
 const onChangeMock = vi.fn()
+
+const iconId = 'accordion-icon'
+
+const mockedTitleStyle = vi.fn()
+
+const mockedStyles = {
+  withShowMoreIcon: {
+    title: mockedTitleStyle
+  }
+}
 
 describe('Accordion component without expandMoreIcon test', () => {
   const props = {
@@ -51,7 +62,7 @@ describe('Accordion component without expandMoreIcon test', () => {
   })
 })
 
-describe('Accordions test with expandMoreIcon', () => {
+describe('Accordions test with icon', () => {
   const props = {
     items: [
       {
@@ -63,16 +74,22 @@ describe('Accordions test with expandMoreIcon', () => {
         description: 'description2'
       }
     ],
-    showMoreIcon: true,
+    icon: <ArrowForwardIosSharpIcon data-testid={iconId} />,
     onChange: onChangeMock,
-    activeIndex: '0'
+    activeIndex: 0,
+    sx: mockedStyles,
+    isMultiple: true
   }
   beforeEach(() => {
     render(<Accordions {...props} />)
   })
-  it('shuld render expand more icon', () => {
-    const expandMoreIcon = screen.getAllByTestId('ExpandMoreRoundedIcon')
+  it('should render expand more icon', () => {
+    const expandMoreIcon = screen.getAllByTestId(iconId)
 
     expect(expandMoreIcon).toHaveLength(2)
+  })
+
+  it('should perform title function', () => {
+    expect(mockedTitleStyle).toHaveBeenCalled()
   })
 })
