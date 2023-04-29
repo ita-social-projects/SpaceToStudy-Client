@@ -1,39 +1,36 @@
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import ScrollToTopButton from '~/components/scroll-to-top-button/ScrollToTopButton'
 import { vi } from 'vitest'
-import GuestHomePage from '~/pages/guest-home-page/GuestHome'
 const jsdom = require('jsdom')
 const { JSDOM } = jsdom
 
 describe('ScrollToTopButton dialog test', () => {
-
-  const dom = new JSDOM(<GuestHomePage />)
-
+  const dom = new JSDOM('<!DOCTYPE html>')
 
   const listener = vi.fn()
- 
+
   const mockData = {
-    element:{
+    element: {
       current: {
-        addEventListener:listener,
-        removeEventListener:listener
+        addEventListener: listener,
+        removeEventListener: listener
       }
     }
   }
 
   beforeEach(() => {
-    render(<ScrollToTopButton { ...mockData } />)
-  })  
-
-  it('should show ArrowUpwardRoundedIcon', () => {
-    fireEvent.scroll(dom.window, { target: { scrollY: 500 } })
-    const icon = screen.getByTestId('ArrowUpwardRoundedIcon')
-    expect(icon).toBeInTheDocument()
+    render(<ScrollToTopButton {...mockData} />)
   })
 
-  it('should show scroll to top', () => {
+  it('should show ArrowUpwardRoundedIcon', async () => {
     fireEvent.scroll(dom.window, { target: { scrollY: 500 } })
-    const button = screen.getByRole('button')
-    expect(button).toBeInTheDocument()
+    waitFor(() =>
+      expect(screen.findByTestId('ArrowUpwardRoundedIcon')).toBeInTheDocument()
+    )
+  })
+
+  it('should show scroll to top', async () => {
+    fireEvent.scroll(dom.window, { target: { scrollY: 500 } })
+    waitFor(() => expect(screen.findByRole('button')).toBeInTheDocument())
   })
 })

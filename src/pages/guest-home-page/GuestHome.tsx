@@ -1,4 +1,4 @@
-import { useEffect, useContext, useRef } from 'react'
+import { useEffect, useContext } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import Box from '@mui/material/Box'
@@ -13,14 +13,10 @@ import HowItWorks from '~/containers/guest-home-page/how-it-works/HowItWorks'
 import WhoWeAre from '~/containers/guest-home-page/who-we-are/WhoWeAre'
 import EmailConfirmModal from '~/containers/email-confirm-modal/EmailConfirmModal'
 import ResetPassword from '~/containers/guest-home-page/reset-password/ResetPassword'
-import Footer from '~/containers/layout/footer/Footer'
-import ScrollToTopButton from '~/components/scroll-to-top-button/ScrollToTopButton'
 
 const GuestHomePage = () => {
   const { openModal } = useContext(ModalContext)
   const [searchParams, setSearchParams] = useSearchParams()
-
-  const element = useRef(null)
 
   useEffect(() => {
     const confirmToken = searchParams.get('confirmToken')
@@ -47,11 +43,7 @@ const GuestHomePage = () => {
   }, [searchParams, setSearchParams, openModal])
 
   return (
-    <Box
-      data-testid='guestHome'
-      ref={element}
-      sx={{ flex: 1, overflowY: 'auto' }}
-    >
+    <Box data-testid='guestHome' sx={{ flex: 1 }}>
       <Welcome />
       <Box sx={{ maxWidth: '1128px', margin: '0 auto', overflowX: 'hidden' }}>
         <FeatureBlock items={descriptionTimes} />
@@ -59,8 +51,6 @@ const GuestHomePage = () => {
         <HowItWorks />
         <WhoWeAre />
       </Box>
-      <ScrollToTopButton element={element} />
-      <Footer />
     </Box>
   )
 }
