@@ -1,11 +1,13 @@
-export const defaultFilters = {
+import { FindOffersFilters } from '~/types'
+
+export const defaultFilters: FindOffersFilters = {
   sort: 'createdAt',
   language: 'All languages',
   native: 'false',
   rating: '0',
   price: [150, 500],
   name: '',
-  level: ''
+  level: []
 }
 
 export const mockOffer = {

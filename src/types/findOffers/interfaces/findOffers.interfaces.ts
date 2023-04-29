@@ -10,7 +10,7 @@ export interface FindOffersDefaultFilters {
   sort: string
   language: string
   native: string
-  rating: number
+  rating: string
   price: RangeArray
 }
 export interface FindOffersFilters extends FindOffersDefaultFilters {
@@ -31,4 +31,10 @@ export interface CreateOfferBlockProps<T> {
   handleBlur: (
     key: keyof T
   ) => (event: React.FocusEvent<HTMLInputElement>) => void
+}
+
+export interface FilterQueryHook {
+  filters: FindOffersFilters
+  countActiveFilters: number
+  filterQueryActions: FindOffersFiltersActions
 }
