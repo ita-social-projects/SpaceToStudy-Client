@@ -49,6 +49,9 @@ const Accordions: FC<AccordionsProps> = ({
     <Box sx={accordionStyle.root}>
       {items.map((item, index) => (
         <Accordion
+          data-testid={`${index}-${
+            isMultiple ? activeIndex.includes(index) : activeIndex === index
+          }`}
           disableGutters
           expanded={
             isMultiple ? activeIndex.includes(index) : activeIndex === index
