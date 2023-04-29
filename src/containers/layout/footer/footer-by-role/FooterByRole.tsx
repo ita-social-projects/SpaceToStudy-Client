@@ -17,6 +17,7 @@ import { tutorRoutes } from '~/router/constants/tutorRoutes'
 import { studentRoutes } from '~/router/constants/studentRoutes'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { styles } from './FooterByRole.styles'
+import { guestRoutes } from '~/router/constants/guestRoutes'
 
 interface FooterByRoleProps {
   userRole: UserRoleEnum
@@ -55,7 +56,11 @@ const FooterByRole: FC<FooterByRoleProps> = ({ userRole }) => {
     </Box>
   )
 
-  const logo = <Logo light sx={styles.logo} />
+  const logo = (
+    <Link component={HashLink} to={guestRoutes.home.path}>
+      <Logo light sx={styles.logo} />
+    </Link>
+  )
 
   return (
     <>
