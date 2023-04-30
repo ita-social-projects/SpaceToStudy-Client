@@ -14,29 +14,22 @@ import OfferSearchToolbar from '~/containers/find-offer/offer-search-toolbar/Off
 import AppDrawer from '~/components/app-drawer/AppDrawer'
 import OfferContainer from '~/containers/find-offer/offer-container/OfferContainer'
 import OfferRequestBlock from '~/containers/find-offer/OfferRequestBlock'
+import { countActiveFilters } from '~/utils/count-active-filters'
 import { useDrawer } from '~/hooks/use-drawer'
-
 import { useFilterQuery } from '~/hooks/use-filter-query'
 
-import { CardsViewEnums, FilterQueryHook } from '~/types'
-
+import { CardsViewEnum, CardsView, SizeEnum, UserRoleEnum } from '~/types'
 import { styles } from '~/pages/find-offers/FindOffers.styles'
-
 import {
-  mockOfferSquareCard,
+  mockOffer,
   defaultFilters
 } from '~/pages/find-offers/FindOffers.constants'
-import { countActiveFilters } from '~/utils/count-active-filters'
-import { CardsViewEnum, CardsView, SizeEnum, UserRoleEnum } from '~/types'
-import OfferContainer from '~/containers/offerContainer/offerContainer'
 
 const FindOffers = () => {
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [cardsView, setCardsView] = useState<CardsView>(CardsViewEnum.Inline)
   const { openDrawer, closeDrawer, isOpen } = useDrawer()
-  const [showingTutorOffers, setShowingTutorOffers] = useState<boolean>(false)
   const { isMobile } = useBreakpoints()
-  const size = isMobile ? 'small' : 'medium'
 
   const { t } = useTranslation()
 
@@ -51,7 +44,6 @@ const FindOffers = () => {
     pageSize: 5
   }
 
-  const mockOffers = new Array(10).fill(mockOfferSquareCard)
   const toggleFiltersOpen = () => (isOpen ? closeDrawer() : openDrawer())
 
   const handleShowingTutorOffers = () => {
@@ -98,7 +90,7 @@ const FindOffers = () => {
         )}
         <OfferContainer
           offerCards={mockOffers}
-          viewMode={CardsViewEnums.Inline}
+          viewMode={CardsViewEnum.Inline}
         />
       </Box>
       <AppPagination

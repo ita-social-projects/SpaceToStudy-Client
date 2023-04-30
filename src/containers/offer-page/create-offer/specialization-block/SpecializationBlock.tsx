@@ -12,7 +12,7 @@ import { useAppSelector } from '~/hooks/use-redux'
 import {
   CategoryNameInterface,
   CreateOfferBlockProps,
-  ProficiencyLevelEnums
+  ProficiencyLevelEnum
 } from '~/types'
 import OrderedListItem from '~/components/ordered-list-item/OrderedListItem'
 import { styles } from '~/containers/offer-page/create-offer/CreateOffer.styles'
@@ -60,7 +60,7 @@ const SpecializationBlock = <T extends CreateOfferData>({
     value: CategoryNameInterface
   ) => option?._id === value?._id
 
-  const levelOptions = Object.values(ProficiencyLevelEnums)
+  const levelOptions = Object.values(ProficiencyLevelEnum)
   const subjectError = data.categoryId && errors.subjectId
 
   return (

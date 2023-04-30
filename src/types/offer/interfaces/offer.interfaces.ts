@@ -4,9 +4,7 @@ import {
   CommonEntityFields,
   UserRole,
   UserResponse,
-  SubjectNameInterface
-  SubjectInterface,
-  UserInterface,
+  SubjectNameInterface,
   UserRoleEnum
 } from '~/types'
 

@@ -19,7 +19,7 @@ import {
   FindOffersUpdateFilter,
   LanguageFilter,
   LanguagesEnum,
-  ProficiencyLevelEnums,
+  ProficiencyLevelEnum,
   UpdateOfferFilterByKey
 } from '~/types'
 import useAxios from '~/hooks/use-axios'
@@ -37,7 +37,7 @@ const OfferFilterList: FC<OfferFilterListProps> = ({
   filters
 }) => {
   const { t } = useTranslation()
-  const levelOptions = Object.values(ProficiencyLevelEnums)
+  const levelOptions = Object.values(ProficiencyLevelEnum)
 
   const radioOptions = radioButtonsTranslationKeys.map(({ title, value }) => ({
     title: t(title),

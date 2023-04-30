@@ -12,7 +12,7 @@ import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
 
 import {
   CategoryNameInterface,
-  FindOfferFilterTypes,
+  FindOffersFilters,
   FindOffersUpdateFilter,
   SubjectNameInterface
 } from '~/types'
@@ -20,7 +20,7 @@ import {
 import { styles } from '~/containers/find-offer/offer-search-toolbar/OfferSearchToolbar.styles'
 
 interface OfferSearchToolbarProps {
-  updateFilter: FindOffersUpdateFilter
+  updateFilter: FindOffersUpdateFilter<FindOffersFilters>
 }
 
 const OfferSearchToolbar = ({ updateFilter }: OfferSearchToolbarProps) => {
@@ -73,8 +73,10 @@ const OfferSearchToolbar = ({ updateFilter }: OfferSearchToolbarProps) => {
     value: CategoryNameInterface | SubjectNameInterface
   ) => option?._id === value?._id
 
-  const updateFilterByKey = (key: string) => (value: FindOfferFilterTypes) =>
-    updateFilter(value, key)
+  const updateFilterByKey =
+    <K extends keyof FindOffersFilters>(key: K) =>
+    (value: FindOffersFilters[K]) =>
+      updateFilter(value, key)
 
   const AppAutoCompleteList = (
     <>
