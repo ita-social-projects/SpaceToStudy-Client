@@ -4,7 +4,8 @@ import {
   CommonEntityFields,
   UserRole,
   UserResponse,
-  SubjectNameInterface
+  SubjectNameInterface,
+  UserRoleEnum
 } from '~/types'
 
 export interface Offer extends CommonEntityFields {
@@ -27,4 +28,15 @@ export interface Offer extends CommonEntityFields {
 export interface ButtonActions {
   label: string
   handleClick: () => void
+}
+
+export interface PriceRangeParams {
+  authorRole: UserRoleEnum
+  categoryId?: string
+  subjectId?: string
+}
+
+export interface PriceRangeResponse {
+  minPrice: number
+  maxPrice: number
 }

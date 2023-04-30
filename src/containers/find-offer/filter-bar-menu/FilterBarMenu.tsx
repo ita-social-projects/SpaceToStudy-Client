@@ -1,4 +1,4 @@
-import { FC, ChangeEvent } from 'react'
+import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
@@ -11,26 +11,32 @@ import ViewSwitcher from '~/components/view-switcher/ViewSwitcher'
 import FiltersToggle from '~/components/filters-toggle/FiltersToggle'
 
 import { styles } from '~/containers/find-offer/filter-bar-menu/FilterBarMenu.styles'
-import { sortByFields } from '~/containers/find-offer/filter-bar-menu/FilterBarMenu.constants'
 
-import { BarMenuFilters, CardsViewTypes } from '~/types'
+import {
+  CardsView,
+  FindOffersFilters,
+  FindOffersUpdateFilter,
+  UserRoleEnum
+} from '~/types'
+import { sortTranslationKeys } from '~/containers/find-offer/offer-filter-block/OfferFilterBlock.constants'
 
 interface FilterBarMenuProps {
-  chosenFiltersQty: number
+  chosenFiltersQty?: number
   toggleFilters: () => void
-  getFilters: (filters: BarMenuFilters) => void
-  handleOffersView: (view: CardsViewTypes) => void
-  offersView: CardsViewTypes
-  setFilters: (filters: BarMenuFilters) => void
-  filters: BarMenuFilters
+  handleOffersView: (view: CardsView) => void
+  offersView: CardsView
+  onToggleTutorOffers: () => void
+  updateFilter: FindOffersUpdateFilter<FindOffersFilters>
+  filters: FindOffersFilters
 }
 
 const FilterBarMenu: FC<FilterBarMenuProps> = ({
   chosenFiltersQty,
   toggleFilters,
-  setFilters,
+  updateFilter,
   filters,
   handleOffersView,
+  onToggleTutorOffers,
   offersView
 }) => {
   const { isDesktop, isMobile } = useBreakpoints()
@@ -48,16 +54,13 @@ const FilterBarMenu: FC<FilterBarMenuProps> = ({
     }
   }
 
-  const handleOffersType = (
-    event: ChangeEvent<HTMLInputElement>,
-    isActiveOffersType: boolean
-  ) => {
-    setFilters({ ...filters, isActiveOffersType })
+  const handleSortBy = (value: string) => {
+    updateFilter(value, 'sort')
   }
-
-  const handleSortBy = (sortBy: string) => {
-    setFilters({ ...filters, sortBy })
-  }
+  const sortOptions = sortTranslationKeys.map(({ title, value }) => ({
+    title: t(title),
+    value
+  }))
 
   return (
     <Box sx={isMobile ? styles.mobileContainer : styles.container}>
@@ -67,8 +70,8 @@ const FilterBarMenu: FC<FilterBarMenuProps> = ({
       />
       {isDesktop ? (
         <AppContentSwitcher
-          active={filters.isActiveOffersType}
-          handleChange={handleOffersType}
+          active={filters.authorRole === UserRoleEnum.Student}
+          onChange={onToggleTutorOffers}
           switchOptions={translatedSwitcherOptions}
           typographyVariant='button'
         />
@@ -76,11 +79,11 @@ const FilterBarMenu: FC<FilterBarMenuProps> = ({
       {!isMobile ? (
         <Box sx={styles.container}>
           <AppSelect
-            fields={sortByFields}
+            fields={sortOptions}
             selectTitle={t('filters.sortBy.sortByTitle')}
             setValue={handleSortBy}
             sx={isDesktop ? styles.selectContainer : {}}
-            value={filters.sortBy}
+            value={filters.sort}
           />
           {isDesktop ? (
             <ViewSwitcher onChange={handleOffersView} value={offersView} />

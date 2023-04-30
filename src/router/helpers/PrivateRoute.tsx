@@ -1,6 +1,6 @@
 import { FC } from 'react'
-import { useSelector } from 'react-redux'
 import { Navigate, Outlet } from 'react-router-dom'
+import { useAppSelector } from '~/hooks/use-redux'
 import { errorRoutes } from '~/router/constants/errorRoutes'
 import { UserRole } from '~/types'
 
@@ -9,9 +9,9 @@ interface PrivateRouteProps {
 }
 
 const PrivateRoute: FC<PrivateRouteProps> = ({ role }) => {
-  const { userRole } = useSelector((state) => state.appMain)
+  const { userRole } = useAppSelector((state) => state.appMain)
 
-  if (!role.includes(userRole)) {
+  if (!userRole || !role.includes(userRole)) {
     return <Navigate replace to={errorRoutes.authPolicy.path} />
   }
 

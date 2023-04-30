@@ -1,13 +1,14 @@
-import { FindOffersFilters } from '~/types'
+import { FindOffersFilters, UserRoleEnum } from '~/types'
 
 export const defaultFilters: FindOffersFilters = {
   sort: 'createdAt',
-  language: 'All languages',
+  language: '',
   native: 'false',
   rating: '0',
-  price: [150, 500],
+  authorRole: UserRoleEnum.Tutor,
   name: '',
-  level: []
+  level: [],
+  price: undefined
 }
 
 export const mockOffer = {

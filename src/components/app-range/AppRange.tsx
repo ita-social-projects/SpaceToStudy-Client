@@ -1,4 +1,4 @@
-import { FC, useEffect, useState, useRef } from 'react'
+import { FC, useEffect, useState, useRef, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import Slider, { SliderValueLabelProps } from '@mui/material/Slider'
 import TextField from '@mui/material/TextField'
@@ -27,21 +27,20 @@ interface AppRangeProps {
   value?: RangeArray
 }
 
-const AppRange: FC<AppRangeProps> = ({
-  min,
-  max,
-  value = [min, max],
-  onChange
-}) => {
-  const [range, setRange] = useState<InputRangeArray>(value)
-  const commitedValue = useRef<RangeArray>(value)
+const AppRange: FC<AppRangeProps> = ({ min, max, value, onChange }) => {
+  const defaultValue: RangeArray = useMemo(
+    () => value || [min, max],
+    [min, max, value]
+  )
+  const [range, setRange] = useState<InputRangeArray>(defaultValue)
+  const commitedValue = useRef<RangeArray>(defaultValue)
   const { t } = useTranslation()
 
   useEffect(() => {
-    if (checkRangeEquality(commitedValue.current, value)) {
-      setRange(value)
+    if (checkRangeEquality(commitedValue.current, defaultValue)) {
+      setRange(defaultValue)
     }
-  }, [value])
+  }, [defaultValue])
 
   const marks = [
     { value: min, label: min.toString() },
