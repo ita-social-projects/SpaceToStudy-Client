@@ -16,6 +16,6 @@ interface AccordionStyles {
     description?: SxProps
 }
 export interface AccordionSx {
-    withIcon: AccordionStyles
-    noIcon: AccordionStyles
+    withIcon?: AccordionStyles
+    noIcon?: AccordionStyles
 }
