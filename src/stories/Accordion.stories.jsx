@@ -6,7 +6,7 @@ export default {
   component: Accordions,
   argTypes: {
     activeIndex: {
-      type: 'number',
+      type: ['number', 'array'],
       description: 'The index of the active item in the accordion'
     },
     icon: {
@@ -20,10 +20,6 @@ export default {
     onChange: {
       type: 'function',
       description: 'Function to be called when the accordion item is changed'
-    },
-    multiple: {
-      type: 'boolean',
-      description: 'If true, it will be able to open several accordion items'
     },
     sx: {
       type: 'object',

@@ -1,8 +1,9 @@
-import QuestionsAccordion from '~/components/questions-accordion/QuestionsAccordion';
+import MultiAccordionWithTitle from '~/components/multi-accordion-with-title/MultiAccordionWIthTitle'
+
 
 export default {
-    title: 'QuestionsAccordion',
-    component: QuestionsAccordion,
+    title: 'MultiAccordionWithTitle',
+    component: MultiAccordionWithTitle,
     argTypes: {
         title: {
             type: 'string',
@@ -12,10 +13,18 @@ export default {
             type: 'array',
             description: 'Array of accordion items to show'
         },
+        icon: {
+            type: 'object',
+            description: 'Icon for accordion'
+        },
+        sx: {
+            type: 'object',
+            description: 'Styles for accordion'
+        }
     }
 }
 
-const Template = (args) => <QuestionsAccordion {...args} />
+const Template = (args) => <MultiAccordionWithTitle {...args} />
 
 export const Desktop = Template.bind({})
 

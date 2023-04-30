@@ -1,4 +1,4 @@
 export enum IconPositionEnum {
-    Left = 'left',
-    Right = 'right'
+  Left = 'left',
+  Right = 'right'
 }

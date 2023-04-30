@@ -1,7 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react'
-import React, { useState as useStateMock } from 'react';
-import { vi } from 'vitest';
-import QuestionsAccordion from '~/components/questions-accordion/QuestionsAccordion';
+import React from 'react';
+import MultiAccordionWithTitle from '../../../../src/components/multi-accordion-with-title/MultiAccordionWIthTitle';
 
 const items = [
     {
@@ -18,9 +17,9 @@ const mockedTitle = 'some-title'
 
 const iconId = 'accordion-icon'
 
-describe('QuestionsAccordion component with title test', () => {
+describe('MultiAccordionWithTitle component with title test', () => {
     beforeEach(() => {
-        render(<QuestionsAccordion items={items} title={mockedTitle} />)
+        render(<MultiAccordionWithTitle items={items} title={mockedTitle} />)
     })
 
     it('Test headings', () => {
@@ -52,10 +51,10 @@ describe('QuestionsAccordion component with title test', () => {
     })
 })
 
-describe('QuestionsAccordion component without title test', () => {
+describe('MultiAccordionWithTitle component without title test', () => {
 
     beforeEach(() => {
-        render(<QuestionsAccordion items={items} icon={true} title={mockedTitle} />)
+        render(<MultiAccordionWithTitle items={items} title={mockedTitle} />)
     })
 
     it('should add index of active accordion', () => {

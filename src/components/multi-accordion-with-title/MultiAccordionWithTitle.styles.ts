@@ -12,7 +12,7 @@ export const styles = {
     },
     container: { padding: '30px 60px 65px', ...borderStyles, margin: '10px' },
     icon: { color: 'primary.500', fontSize: '13px' },
-    withShowMoreIcon: {
+    withIcon: {
         accordion: { ...borderStyles, mb: '16px', '&:last-child': { mb: 0 }, '&::before': { display: 'none' } },
         summary: {
             display: 'flex',
@@ -23,13 +23,17 @@ export const styles = {
             },
             mb: '0',
         },
-        title: (isActive: boolean) => ({
+        titleActive: {
             ml: '13px',
-            color: isActive ? 'primary.500' : 'primary.700'
-        }),
-        description: (icon: boolean) => ({
-            ml: icon ? '27px' : '13px'
-        })
+            color: 'primary.500'
+        },
+        titleInactive: {
+            ml: '13px',
+            color: 'primary.700'
+        },
+        description: {
+            ml: '27px'
+        }
     },
-    noShowMoreIcon: {}
+    noIcon: {}
 }

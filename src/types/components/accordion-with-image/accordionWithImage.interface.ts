@@ -1,5 +1,5 @@
-import { AccordionItem } from "~/types";
+import { AccordionItem } from '~/types'
 
 export interface AccordionWithImageItem extends AccordionItem {
-    image: string
+  image: string
 }

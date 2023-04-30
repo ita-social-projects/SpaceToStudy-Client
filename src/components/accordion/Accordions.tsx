@@ -9,21 +9,17 @@ import AccordionDetails from '@mui/material/AccordionDetails'
 
 import { styles } from '~/components/accordion/Accordion.styles'
 
-import { AccordionItem } from '~/types'
+import { AccordionItem, AccordionSx } from '~/types'
 import { Variant } from '@mui/material/styles/createTypography'
 
-interface Sx {
-  [key: string]: any
-}
-
 interface AccordionsProps
-  extends Omit<AccordionProps, 'onChange' | 'children'> {
+  extends Omit<AccordionProps, 'onChange' | 'children' | 'sx'> {
   items: AccordionItem[]
   onChange: (value: number) => void
   activeIndex: number[] | number | null
   multiple?: boolean
   icon?: ReactNode
-  sx?: Sx
+  sx?: AccordionSx
   titleVariant: Variant
   descriptionVariant: Variant
 }
@@ -32,7 +28,6 @@ const Accordions: FC<AccordionsProps> = ({
   items,
   onChange,
   activeIndex,
-  multiple = false,
   icon,
   sx = styles,
   titleVariant,
@@ -41,56 +36,56 @@ const Accordions: FC<AccordionsProps> = ({
 }) => {
   const { t } = useTranslation()
 
-  const isMultiple = multiple && activeIndex instanceof Array
+  const isMultiple = Array.isArray(activeIndex)
 
-  const accordionStyle = sx[icon ? 'withShowMoreIcon' : 'noShowMoreIcon']
+  const accordionStyle = sx[icon ? 'withIcon' : 'noIcon']
 
   return (
     <Box sx={accordionStyle.root}>
-      {items.map((item, index) => (
-        <Accordion
-          data-testid={`${index}-${
-            isMultiple ? activeIndex.includes(index) : activeIndex === index
-          }`}
-          disableGutters
-          expanded={
-            isMultiple ? activeIndex.includes(index) : activeIndex === index
-          }
-          key={index}
-          onChange={() => onChange(index)}
-          square={props.square}
-          sx={[
-            accordionStyle.accordion,
-            activeIndex === index || (isMultiple && activeIndex.includes(index))
-              ? accordionStyle.active
-              : accordionStyle.inactive
-          ]}
-          {...props}
-        >
-          <AccordionSummary expandIcon={icon} sx={accordionStyle.summary}>
-            <Typography
-              data-testid={`accordion-title-${index}`}
-              sx={
-                isMultiple && accordionStyle.title instanceof Function
-                  ? accordionStyle.title(activeIndex.includes(index))
-                  : accordionStyle.title
-              }
-              variant={titleVariant}
-            >
-              {t(item.title)}
-            </Typography>
-          </AccordionSummary>
-          <AccordionDetails sx={accordionStyle.details}>
-            <Typography
-              data-testid={`accordion-description-${index}`}
-              sx={accordionStyle.description}
-              variant={descriptionVariant}
-            >
-              {t(item.description)}
-            </Typography>
-          </AccordionDetails>
-        </Accordion>
-      ))}
+      {items.map((item, index) => {
+        const active = isMultiple
+          ? activeIndex.includes(index)
+          : activeIndex === index
+        const activeAccordionStyle = {
+          ...accordionStyle.accordion,
+          ...(active ? accordionStyle.active : accordionStyle.inactive)
+        }
+        return (
+          <Accordion
+            data-testid={`${index}-${active}`}
+            disableGutters
+            expanded={active}
+            key={index}
+            onChange={() => onChange(index)}
+            square={props.square}
+            sx={activeAccordionStyle}
+            {...props}
+          >
+            <AccordionSummary expandIcon={icon} sx={accordionStyle.summary}>
+              <Typography
+                data-testid={`accordion-title-${index}`}
+                sx={
+                  active
+                    ? accordionStyle.titleActive
+                    : accordionStyle.titleInactive
+                }
+                variant={titleVariant}
+              >
+                {t(item.title)}
+              </Typography>
+            </AccordionSummary>
+            <AccordionDetails sx={accordionStyle.details}>
+              <Typography
+                data-testid={`accordion-description-${index}`}
+                sx={accordionStyle.description}
+                variant={descriptionVariant}
+              >
+                {t(item.description)}
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
+        )
+      })}
     </Box>
   )
 }

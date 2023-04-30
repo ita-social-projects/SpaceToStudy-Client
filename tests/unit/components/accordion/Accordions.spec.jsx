@@ -7,14 +7,6 @@ const onChangeMock = vi.fn()
 
 const iconId = 'accordion-icon'
 
-const mockedTitleStyle = vi.fn()
-
-const mockedStyles = {
-  withShowMoreIcon: {
-    title: mockedTitleStyle
-  }
-}
-
 describe('Accordion component without expandMoreIcon test', () => {
   const props = {
     items: [
@@ -29,7 +21,6 @@ describe('Accordion component without expandMoreIcon test', () => {
     ],
     onChange: onChangeMock,
     activeIndex: '0',
-    showMoreIcon: false
   }
   beforeEach(() => {
     render(<Accordions {...props} />)
@@ -77,7 +68,6 @@ describe('Accordions test with icon', () => {
     icon: <ArrowForwardIosSharpIcon data-testid={iconId} />,
     onChange: onChangeMock,
     activeIndex: 0,
-    sx: mockedStyles,
     isMultiple: true
   }
   beforeEach(() => {
@@ -87,9 +77,5 @@ describe('Accordions test with icon', () => {
     const expandMoreIcon = screen.getAllByTestId(iconId)
 
     expect(expandMoreIcon).toHaveLength(2)
-  })
-
-  it('should perform title function', () => {
-    expect(mockedTitleStyle).toHaveBeenCalled()
   })
 })

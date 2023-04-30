@@ -12,7 +12,6 @@ import type {
   SwitchContent,
   SwitchOptions
 } from '~/types/components/appContentSwitcher/appContentSwitcher.types'
-import type { AccordionItem } from './accordions/accordions.interface'
 import { IconPositionEnum } from './accordions/accordions.enum'
 
 export {
@@ -26,7 +25,8 @@ export {
   RadioButtonType,
   SwitchContent,
   SwitchOptions,
-  AccordionItem,
   IconPositionEnum
 }
 export * from './accordion-with-image/accordionWithImage.interface'
+export * from './accordions/accordions.interface'
+export * from './multi-accordion-with-title/multiAccordionWithTitle.interface'
