@@ -4,10 +4,18 @@ export interface AccordionItem {
     title: string
     description: string
 }
-interface NestedStyles {
-    [key: string]: string | number | NestedStyles
+interface AccordionStyles {
+    root?: SxProps
+    accordion?: SxProps
+    active?: SxProps
+    inactive?: SxProps
+    summary?: SxProps
+    titleActive?: SxProps
+    titleInactive?: SxProps
+    details?: SxProps
+    description?: SxProps
 }
 export interface AccordionSx {
-    withIcon: { [key: string]: SxProps | NestedStyles }
-    noIcon: { [key: string]: SxProps | NestedStyles }
+    withIcon: AccordionStyles
+    noIcon: AccordionStyles
 }
