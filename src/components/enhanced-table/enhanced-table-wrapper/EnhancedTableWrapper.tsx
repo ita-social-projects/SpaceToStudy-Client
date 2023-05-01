@@ -2,14 +2,14 @@ import { ReactNode } from 'react'
 
 import { TableProvider } from '~/context/table-context'
 
-import { BulkAction, Column, InitialSort, RowAction } from '~/types'
+import { BulkAction, Column, Sort, RowAction } from '~/types'
 
 interface EnhancedTableWrapperProps<Entity, Filters> {
   children: ReactNode
   bulkActions: BulkAction[]
   columns: Column<Entity>[]
   initialFilters: Filters
-  initialSort: InitialSort
+  initialSort: Sort
   isSelection: boolean
   rowActions: RowAction[]
 }

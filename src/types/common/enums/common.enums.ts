@@ -49,3 +49,8 @@ export enum ComponentEnum {
   Footer = 'footer',
   Form = 'form'
 }
+
+export enum SortEnum {
+  Asc = 'asc',
+  Desc = 'desc'
+}

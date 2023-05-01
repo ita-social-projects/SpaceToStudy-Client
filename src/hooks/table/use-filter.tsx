@@ -3,24 +3,26 @@ import { TableContextType } from '~/types'
 
 type FilterValue = (string | number)[]
 
-type UseFilterReturnType<U> = {
-  filters: U
-  setFilterByKey: (filterKey: keyof U) => (filterValue: FilterValue) => void
-  clearFilterByKey: (filterKey: keyof U) => void
+type UseFilterReturnType<Filters> = {
+  filters: Filters
+  setFilterByKey: (
+    filterKey: keyof Filters
+  ) => (filterValue: FilterValue) => void
+  clearFilterByKey: (filterKey: keyof Filters) => void
   clearFilters: () => void
 }
 
-const useFilter = <T, U>(): UseFilterReturnType<U> => {
+const useFilter = <Entity, Filters>(): UseFilterReturnType<Filters> => {
   const { filters, setFilters, initialFilters } =
-    useTableContext() as TableContextType<T, U>
+    useTableContext() as TableContextType<Entity, Filters>
 
   const setFilterByKey =
-    (filterKey: keyof U) =>
+    (filterKey: keyof Filters) =>
     (filterValue: FilterValue): void => {
       setFilters((prev) => ({ ...prev, [filterKey]: filterValue }))
     }
 
-  const clearFilterByKey = (filterKey: keyof U) => {
+  const clearFilterByKey = (filterKey: keyof Filters) => {
     setFilters((prev) => ({
       ...prev,
       [filterKey]: initialFilters[filterKey]

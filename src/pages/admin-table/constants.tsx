@@ -1,8 +1,9 @@
 import EnhancedTable from '~/components/enhanced-table/EnhancedTable'
 import {
   Column,
-  InitialSort,
-  Options,
+  GetUsersParams,
+  Sort,
+  SortEnum,
   TabsInfo,
   UserInitialFilters,
   UserInterface
@@ -22,9 +23,9 @@ export const initialFilters: UserInitialFilters = {
   }
 }
 
-export const initialSort: InitialSort = { order: 'asc', orderBy: 'email' }
+export const initialSort: Sort = { order: SortEnum.Asc, orderBy: 'email' }
 
-export const tabsInfo: TabsInfo<Options<UserInitialFilters>> = {
+export const tabsInfo: TabsInfo<GetUsersParams> = {
   all: {
     label: 'userTable.all',
     key: 'status',

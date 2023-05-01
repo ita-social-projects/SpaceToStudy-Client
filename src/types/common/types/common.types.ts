@@ -1,3 +1,5 @@
+import { SortEnum } from '../common.index'
+
 export type Category = {
   _id: string
   name: string
@@ -14,7 +16,7 @@ export type LastLogin = {
 }
 
 export type Sort = {
-  order: string
+  order: SortEnum
   orderBy: string
 }
 

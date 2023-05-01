@@ -5,7 +5,13 @@ import Box from '@mui/material/Box'
 import useFilter from '~/hooks/table/use-filter'
 
 import { styles } from '~/components/tab/Tab.styles'
-import { ExternalFilter, Options, TabsInfoItem } from '~/types'
+import { ExternalFilter, Sort, TabsInfoItem } from '~/types'
+
+type Options<T> = {
+  limit: number
+  skip: number
+  sort: Sort
+} & T
 
 interface TabProps<Filters> {
   tab: TabsInfoItem<Options<Filters>>

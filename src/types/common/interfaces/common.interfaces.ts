@@ -1,12 +1,11 @@
-import { Address, CreateOfferResponse } from '~/types'
+import { Address, Offer } from '~/types'
 
 export interface CommonEntityFields {
   _id: string
   createdAt: string
   updatedAt: string
 }
-export interface UserInterface {
-  _id: string
+export interface UserInterface extends CommonEntityFields {
   role: string[]
   firstName: string
   lastName: string
@@ -23,8 +22,6 @@ export interface UserInterface {
   status: string
   lastLoginAs?: string
   bookmarkedOffers?: string[]
-  createdAt: string
-  updatedAt: string
 }
 
 export interface CategoryInterface {
@@ -56,8 +53,8 @@ export interface SubjectNameInterface {
 }
 
 export interface ReviewInterface {
-  offer: CreateOfferResponse
-  author: UserInterface
+  offer: Offer
+  author: Pick<UserInterface, 'firstName' | 'lastName' | 'photo'>
   comment: string
   rating: number
   createdAt: string

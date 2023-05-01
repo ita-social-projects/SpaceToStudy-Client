@@ -44,6 +44,11 @@ export interface UserResponse {
   updatedAt: string
 }
 
+export interface UserInitialFilters
+  extends Omit<GetUsersParams, 'skip' | 'limit' | 'sort' | 'role'> {
+  role?: UserRole
+}
+
 export interface LoginParams {
   email: string
   password: string

@@ -1,7 +1,6 @@
 export const styles = {
   root: {
-    width: '100%',
-    maxWidth: '1222px',
+    width: '90%',
     m: '0 auto',
     py: '25px'
   },

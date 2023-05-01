@@ -10,25 +10,25 @@ import Tab from '~/components/tab/Tab'
 import useAxios from '~/hooks/use-axios'
 import { userService } from '~/services/user-service.js'
 
-import { UserInitialFilters } from '~/types/user-table/types/user-table.types'
 import { styles } from '~/components/user-table/UserTable.styles'
 import {
   BulkAction,
   Column,
   ExternalFilter,
-  InitialSort,
-  Options,
+  GetUsersParams,
+  Sort,
   RowAction,
   TabsInfo,
-  UserInterface
+  UserInterface,
+  UserInitialFilters
 } from '~/types'
 
 interface UserTableProps {
   role: string
-  tabsInfo: TabsInfo<Options<UserInitialFilters>>
+  tabsInfo: TabsInfo<GetUsersParams>
   columns: Column<UserInterface>[]
   initialFilters: UserInitialFilters
-  initialSort: InitialSort
+  initialSort: Sort
 }
 
 const UserTable: FC<UserTableProps> = ({
@@ -51,7 +51,8 @@ const UserTable: FC<UserTableProps> = ({
   )
   const { fetchData: deleteUser } = useAxios({
     service: deleteFunction,
-    fetchOnMount: false
+    fetchOnMount: false,
+    defaultResponse: null
   })
 
   const deleteAllFunction = useCallback(
@@ -60,7 +61,8 @@ const UserTable: FC<UserTableProps> = ({
   )
   const { fetchData: deleteUsers } = useAxios({
     service: deleteAllFunction,
-    fetchOnMount: false
+    fetchOnMount: false,
+    defaultResponse: null
   })
 
   const rowActions: RowAction[] = [
@@ -97,7 +99,7 @@ const UserTable: FC<UserTableProps> = ({
       <Typography sx={styles.header} variant='h4'>
         {t(`userTable.${role}sTab`)}
       </Typography>
-      <EnhancedTableWrapper
+      <EnhancedTableWrapper<UserInterface, UserInitialFilters>
         bulkActions={bulkActions}
         columns={columns}
         initialFilters={initialFilters}

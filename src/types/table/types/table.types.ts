@@ -5,11 +5,6 @@ export type FilterEnum = {
   value: string
 }
 
-export type InitialSort = {
-  order: 'asc' | 'desc'
-  orderBy: string
-}
-
 export type TabsInfoItem<T> = {
   key: string
   component: React.FC<EnhancedTableProps<T>>
@@ -18,12 +13,6 @@ export type TabsInfoItem<T> = {
 export type TabsInfo<T> = {
   [key: string]: TabsInfoItem<T>
 }
-
-export type Options<T> = {
-  skip: number
-  limit: number
-  sort: InitialSort
-} & T
 
 export type ExternalFilter = {
   [key: string]: string

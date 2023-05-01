@@ -1,12 +1,12 @@
 import { createContext, useContext, useState, ReactNode, useMemo } from 'react'
-import { BulkAction, Column, InitialSort, RowAction } from '~/types'
+import { BulkAction, Column, Sort, RowAction } from '~/types'
 
 export interface TableProviderProps<T, U> {
   children: ReactNode
   isSelection: boolean
   columns: Column<T>[]
   initialFilters: U
-  initialSort: InitialSort
+  initialSort: Sort
   rowActions: RowAction[]
   bulkActions: BulkAction[]
 }
@@ -22,7 +22,7 @@ const TableProvider = <Entity, Filters>({
   rowActions,
   bulkActions
 }: TableProviderProps<Entity, Filters>) => {
-  const [sort, setSort] = useState<InitialSort>(initialSort)
+  const [sort, setSort] = useState<Sort>(initialSort)
 
   const [filters, setFilters] = useState<Filters>(initialFilters)
 

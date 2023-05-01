@@ -3,7 +3,7 @@ import { AxiosResponse } from 'axios'
 
 import {
   BulkAction,
-  InitialSort,
+  Sort,
   RowAction,
   ExternalFilter,
   FilterEnum
@@ -23,8 +23,8 @@ export interface TableContextType<T, U> {
   initialFilters: U
   rowActions: RowAction[]
   bulkActions: BulkAction[]
-  sort: InitialSort
-  setSort: Dispatch<SetStateAction<InitialSort>>
+  sort: Sort
+  setSort: Dispatch<SetStateAction<Sort>>
   filters: U
   setFilters: Dispatch<SetStateAction<U>>
   numSelected: number
