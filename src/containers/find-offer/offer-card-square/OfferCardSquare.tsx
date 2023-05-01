@@ -6,7 +6,8 @@ import LanguageIcon from '@mui/icons-material/Language'
 import IconButton from '@mui/material/IconButton'
 import TurnedInNot from '@mui/icons-material/TurnedInNot'
 
-import { t } from 'i18next'
+import { useTranslation } from 'react-i18next'
+
 import ImgTitleDescription from '~/components/img-title-description/ImgTitleDescription'
 import AppChip from '~/components/app-chip/AppChip'
 import AppRatingMobile from '~/components/app-rating-mobile/AppRatingMobile'
@@ -26,6 +27,8 @@ const OfferCardSquare: FC<OfferCardSquareProps> = ({
   offer,
   onBookmarkClick
 }) => {
+  const { t } = useTranslation()
+
   const {
     _id,
     authorAvgRating,
@@ -77,11 +80,9 @@ const OfferCardSquare: FC<OfferCardSquareProps> = ({
 
       <Box sx={styles.priceContainer}>
         <TitleWithDescripiton
-          componentStyles={styles.componentStyles}
-          description={`${t('common.hourSlash')}`}
-          descriptionStyles={styles.descriptionStyles}
+          description={t('common.hourSlash')}
+          style={styles.titleWithDescription}
           title={`${price} ${t('common.uah')}`}
-          titleStyles={styles.titleStyles}
         />
         <Box>
           <AppRatingMobile
