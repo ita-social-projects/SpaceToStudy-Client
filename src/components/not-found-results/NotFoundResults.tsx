@@ -7,7 +7,7 @@ import AppButton from '~/components/app-button/AppButton'
 import { styles } from '~/components/not-found-results/NotFoundResults.styles'
 import howItWorksStudentSecond from '~/assets/img/find-offer/search_icon.svg'
 import { VariantEnum } from '~/types'
-import ImgTitleDescription from '../img-title-description/ImgTitleDescription'
+import ImgTitleDescription from '~/components/img-title-description/ImgTitleDescription'
 
 interface NotFoundResultsProps {
   description: string
