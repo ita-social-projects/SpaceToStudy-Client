@@ -11,13 +11,13 @@ import Box from '@mui/material/Box'
 
 import Logo from '~/containers/logo/Logo'
 import HashLink from '~/components/hash-link/HashLink'
+import useBreakpoints from '~/hooks/use-breakpoints'
 
 import { UserRoleEnum } from '~/types'
 import { tutorRoutes } from '~/router/constants/tutorRoutes'
 import { studentRoutes } from '~/router/constants/studentRoutes'
-import useBreakpoints from '~/hooks/use-breakpoints'
-import { styles } from './FooterByRole.styles'
 import { guestRoutes } from '~/router/constants/guestRoutes'
+import { styles } from '~/containers/layout/footer/footer-by-role/FooterByRole.styles'
 
 interface FooterByRoleProps {
   userRole: UserRoleEnum

@@ -2,6 +2,7 @@ export const styles = {
   root: {
     display: 'flex',
     flexDirection: { xs: 'column', sm: 'row' },
+    alignItems: { sm: 'center' },
     rowGap: '24px',
     justifyContent: 'space-between',
     py: '24px'
@@ -28,6 +29,7 @@ export const styles = {
   linksWrapper: {
     display: 'grid',
     gridTemplateColumns: 'repeat(2,auto)',
+    justifyContent: { xs: 'space-around' },
     columnGap: { xs: '40px', sm: '80px' },
     rowGap: '8px'
   },
