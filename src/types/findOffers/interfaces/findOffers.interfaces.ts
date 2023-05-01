@@ -1,25 +1,23 @@
-import { FindOffersUpdateFilter, RangeArray } from '~/types'
+import {
+  FindOffersUpdateFilter,
+  LanguageFilter,
+  RangeArray,
+  UserRole
+} from '~/types'
 
-export interface BarMenuFilters {
-  [key: string]: string | boolean
-  isActiveOffersType: boolean
-  sortBy: string
-}
-
-export interface FindOffersDefaultFilters {
+export interface FindOffersFilters {
   sort: string
-  language: string
+  language: LanguageFilter
   native: string
-  rating: number
-  price: RangeArray
-}
-export interface FindOffersFilters extends FindOffersDefaultFilters {
-  level?: string[]
-  name?: string
+  rating: string
+  authorRole: UserRole
+  price?: RangeArray
+  name: string
+  level: string[]
 }
 
-export interface FindOffersFiltersActions {
-  updateFilter: FindOffersUpdateFilter
+export interface FindOffersFiltersActions<T> {
+  updateFilter: FindOffersUpdateFilter<T>
   resetFilters: () => void
   updateQueryParams: () => void
 }
@@ -31,4 +29,10 @@ export interface CreateOfferBlockProps<T> {
   handleBlur: (
     key: keyof T
   ) => (event: React.FocusEvent<HTMLInputElement>) => void
+}
+
+export interface FilterQueryHook {
+  filters: FindOffersFilters
+  countActiveFilters: number
+  filterQueryActions: FindOffersFiltersActions
 }

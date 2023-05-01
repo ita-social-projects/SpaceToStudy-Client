@@ -1,43 +1,40 @@
-import { useState, useEffect, useMemo, useCallback } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import {
-  FindOfferFilterTypes,
-  FindOffersDefaultFilters,
-  FindOffersFilters,
-  FindOffersFiltersActions
-} from '~/types'
+import { FindOffersFiltersActions } from '~/types'
 import { parseQueryParams } from '~/utils/helper-functions'
-import { isDefaultPrice, isEmptyArray } from '~/utils/range-filter'
 
-interface UseFilterQueryOptions {
-  defaultFilters: FindOffersDefaultFilters
+interface UseFilterQueryOptions<T> {
+  defaultFilters: T
+  countActiveFilters?: (
+    searchParams: URLSearchParams,
+    defaultFilters: T
+  ) => number
 }
 
-interface FilterQueryHook {
-  filters: FindOffersFilters
-  countActiveFilters: number
-  filterQueryActions: FindOffersFiltersActions
+interface FilterQueryHook<T> {
+  filters: T
+  filterQueryActions: FindOffersFiltersActions<T>
+  activeFilterCount?: number
 }
 
-export const useFilterQuery = ({
-  defaultFilters
-}: UseFilterQueryOptions): FilterQueryHook => {
+export const useFilterQuery = <T extends object>({
+  defaultFilters,
+  countActiveFilters
+}: UseFilterQueryOptions<T>): FilterQueryHook<T> => {
   const [searchParams, setSearchParams] = useSearchParams()
-  const [filters, setFilters] = useState<FindOffersFilters>(defaultFilters)
+  const [filters, setFilters] = useState<T>(defaultFilters)
 
   useEffect(() => {
     const parsedFilters = parseQueryParams(searchParams, defaultFilters)
     parsedFilters
       ? setFilters({ ...defaultFilters, ...parsedFilters })
       : setFilters(defaultFilters)
-  }, [searchParams, defaultFilters])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
-  const updateFilter = useCallback(
-    (value: FindOfferFilterTypes, key: string) => {
-      setFilters((prevFilters) => ({ ...prevFilters, [key]: value }))
-    },
-    []
-  )
+  const updateFilter = useCallback(<K extends keyof T>(value: T[K], key: K) => {
+    setFilters((prevFilters) => ({ ...prevFilters, [key]: value }))
+  }, [])
 
   const updateQueryParams = useCallback(() => {
     Object.entries(filters).forEach(([key, value]) => {
@@ -55,31 +52,12 @@ export const useFilterQuery = ({
     setFilters(defaultFilters)
   }, [defaultFilters, setSearchParams])
 
-  const countActiveFilters = useMemo(() => {
-    const filtersFromQuery =
-      parseQueryParams(searchParams, defaultFilters) || {}
-    return Object.entries(filtersFromQuery).reduce((count, [key, value]) => {
-      if (key === 'sort') {
-        return count
-      }
-      if (key === 'price' && isDefaultPrice(value, defaultFilters.price)) {
-        return count
-      }
-      if (isEmptyArray(value)) {
-        return count
-      }
-      return (
-        count +
-        (value !== defaultFilters[key as keyof FindOffersDefaultFilters]
-          ? 1
-          : 0)
-      )
-    }, 0)
-  }, [searchParams, defaultFilters])
+  const activeFilterCount =
+    countActiveFilters && countActiveFilters(searchParams, defaultFilters)
 
   return {
     filters,
-    countActiveFilters,
+    activeFilterCount,
     filterQueryActions: { updateFilter, resetFilters, updateQueryParams }
   }
 }

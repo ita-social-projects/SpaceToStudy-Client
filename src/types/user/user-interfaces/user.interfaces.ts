@@ -4,7 +4,8 @@ import {
   Sort,
   Address,
   Category,
-  UserRole
+  UserRole,
+  UserRoleEnum
 } from '~/types'
 
 export interface LocalStorage {
@@ -23,6 +24,11 @@ export interface GetUsersParams {
   status: string[]
 }
 
+export interface TotalReviews {
+  [UserRoleEnum.Student]: number
+  [UserRoleEnum.Tutor]: number
+}
+
 export interface UserResponse {
   _id: string
   role: UserRole[]
@@ -30,12 +36,12 @@ export interface UserResponse {
   lastName: string
   email: string
   categories: Category[]
-  totalReviews: number
+  totalReviews: TotalReviews
   averageRating: number
   nativeLanguage: string
   address: Address
-  education: string
-  photo: string
+  professionalSummary?: string
+  photo?: string
   lastLogin: string
   createdAt: string
   updatedAt: string

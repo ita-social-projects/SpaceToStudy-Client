@@ -32,6 +32,7 @@
     "city": "City",
     "sendMessage": "Send message",
     "viewDetails": "View details",
+    "enrollOffer":"Enroll offer",
     "sortBy": "Sort by:"
   },
   "errorMessages": {

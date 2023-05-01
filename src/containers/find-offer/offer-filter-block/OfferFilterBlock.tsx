@@ -10,9 +10,9 @@ import OfferFilterList from '~/containers/find-offer/offer-filter-block/offer-fi
 import FiltersToggle from '~/components/filters-toggle/FiltersToggle'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import {
-  FindOfferFilterTypes,
   FindOffersFilters,
-  FindOffersFiltersActions
+  FindOffersFiltersActions,
+  UserRoleEnum
 } from '~/types'
 
 import { sortTranslationKeys } from '~/containers/find-offer/offer-filter-block/OfferFilterBlock.constants'
@@ -20,32 +20,31 @@ import { styles } from '~/containers/find-offer/offer-filter-block/OfferFilterBl
 
 interface OfferFilterBlockProps {
   filters: FindOffersFilters
-  filterActions: FindOffersFiltersActions
-  showingTutorOffers: boolean
+  filterActions: FindOffersFiltersActions<FindOffersFilters>
   onToggleTutorOffers: () => void
   closeFilters: () => void
   open: boolean
-  countActiveFilters: number
+  activeFilterCount?: number
 }
 
 const OfferFilterBlock: FC<OfferFilterBlockProps> = ({
   filters,
   filterActions,
-  showingTutorOffers,
   onToggleTutorOffers,
-  countActiveFilters,
+  activeFilterCount,
   closeFilters,
   open
 }) => {
   const { t } = useTranslation()
   const { isMobile } = useBreakpoints()
   const { updateFilter, resetFilters, updateQueryParams } = filterActions
+  const showingTutorOffers = filters.authorRole === UserRoleEnum.Student
 
   const switchOptions = {
     left: {
       text: showingTutorOffers
-        ? t('findOffers.topMenu.tutorsOffers')
-        : t('findOffers.topMenu.studentsRequests')
+        ? t('findOffers.topMenu.studentsRequests')
+        : t('findOffers.topMenu.tutorsOffers')
     }
   }
   const sortOptions = sortTranslationKeys.map(({ title, value }) => ({
@@ -53,8 +52,10 @@ const OfferFilterBlock: FC<OfferFilterBlockProps> = ({
     value
   }))
 
-  const updateFilterByKey = (key: string) => (value: FindOfferFilterTypes) =>
-    updateFilter(value, key)
+  const updateFilterByKey =
+    <K extends keyof FindOffersFilters>(key: K) =>
+    (value: FindOffersFilters[K]) =>
+      updateFilter(value, key)
   const handleApplyFilters = () => {
     updateQueryParams()
     isMobile && closeFilters()
@@ -62,7 +63,7 @@ const OfferFilterBlock: FC<OfferFilterBlockProps> = ({
 
   const mobileFields = isMobile && (
     <>
-      <FiltersToggle chosenFiltersQty={countActiveFilters} />
+      <FiltersToggle chosenFiltersQty={activeFilterCount} />
       <Divider />
       <AppContentSwitcher
         active={showingTutorOffers}

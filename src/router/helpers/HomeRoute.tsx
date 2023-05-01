@@ -1,6 +1,6 @@
 import { lazy, useEffect } from 'react'
-import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { useAppSelector } from '~/hooks/use-redux'
 
 import { guestRoutes } from '~/router/constants/guestRoutes'
 
@@ -8,7 +8,7 @@ const GuestHomePage = lazy(() => import('~/pages/guest-home-page/GuestHome'))
 
 const HomeRoute = () => {
   const navigate = useNavigate()
-  const { userRole } = useSelector((state) => state.appMain)
+  const { userRole } = useAppSelector((state) => state.appMain)
 
   useEffect(() => {
     if (userRole) {

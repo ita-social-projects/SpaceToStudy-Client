@@ -6,12 +6,15 @@ import Typography from '@mui/material/Typography'
 import { RatingProps } from '@mui/material/Rating'
 
 import { styles } from '~/components/app-rating-mobile/AppRatingMobile.styles'
+import { useAppSelector } from '~/hooks/use-redux'
+import { TotalReviews, UserRoleEnum } from '~/types'
 
 interface AppRatingMobileProps extends RatingProps {
-  reviewsCount: number
+  reviewsCount: TotalReviews
 }
 
 const AppRatingMobile: FC<AppRatingMobileProps> = ({ value, reviewsCount }) => {
+  const { userRole } = useAppSelector((state) => state.appMain)
   const { t } = useTranslation()
 
   return (
@@ -21,7 +24,12 @@ const AppRatingMobile: FC<AppRatingMobileProps> = ({ value, reviewsCount }) => {
         <Typography variant={'h6'}>{value}</Typography>
       </Box>
       <Typography variant={'caption'}>
-        {t('tutorProfilePage.reviews.reviewsCount', { count: reviewsCount })}
+        {t('tutorProfilePage.reviews.reviewsCount', {
+          count:
+            userRole === UserRoleEnum.Student
+              ? reviewsCount.student
+              : reviewsCount.tutor
+        })}
       </Typography>
     </Box>
   )

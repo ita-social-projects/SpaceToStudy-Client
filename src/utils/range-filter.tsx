@@ -48,10 +48,11 @@ export const checkRangeEquality = (
 
 export const isDefaultPrice = (
   value: string | string[],
-  defauitPrice: RangeArray
+  defauitPrice?: RangeArray
 ): boolean => {
   return (
-    Number(value[0]) === defauitPrice[0] && Number(value[1]) === defauitPrice[1]
+    Number(value[0]) === defauitPrice?.[0] &&
+    Number(value[1]) === defauitPrice?.[1]
   )
 }
 

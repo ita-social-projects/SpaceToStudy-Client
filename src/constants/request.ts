@@ -22,11 +22,13 @@ export const URLs = {
     myProfile: '/users/myProfile'
   },
   offers: {
-    create: '/offers'
+    create: '/offers',
+    get: '/offers'
   },
   categories: {
     get: '/categories',
-    getNames: '/categories/names'
+    getNames: '/categories/names',
+    priceRange: '/price-range'
   },
   subjects: {
     get: '/subjects',

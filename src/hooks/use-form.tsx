@@ -33,7 +33,7 @@ export const useForm = <T extends object>({
   onSubmit
 }: UseFormProps<T>): UseFormOutput<T> => {
   const [data, setData] = useState<T>(initialValues)
-  const [isDirty, setDirty] = useState(false)
+  const [isDirty, setDirty] = useState<boolean>(false)
   const [errors, setErrors] =
     useState<{ [K in keyof T]: string }>(initialErrors)
   const [isTouched, setTouched] = useState<{ [K in keyof T]: boolean }>(

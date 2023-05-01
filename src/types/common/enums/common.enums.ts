@@ -1,10 +1,20 @@
-export enum ProficiencyLevelEnums {
+export enum ProficiencyLevelEnum {
   Beginner = 'Beginner',
   Intermediate = 'Intermediate',
   Advanced = 'Advanced',
   TestPreparation = 'Test Preparation',
   Professional = 'Professional',
   Specialized = 'Specialized'
+}
+
+export enum LanguagesEnum {
+  English = 'English',
+  Ukrainian = 'Ukrainian',
+  Polish = 'Polish',
+  German = 'German',
+  French = 'French',
+  Spanish = 'Spanish',
+  Arabic = 'Arabic'
 }
 
 export enum SizeEnum {

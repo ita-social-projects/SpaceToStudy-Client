@@ -12,8 +12,7 @@ import AppTextArea from '~/components/app-text-area/AppTextArea'
 import OrderedListItem from '~/components/ordered-list-item/OrderedListItem'
 import { CreateOfferData } from '~/containers/offer-page/create-offer/CreateOffer'
 
-import { languagesTranslationKeys } from '~/containers/find-offer/offer-filter-block/offer-filter-list/OfferFilterList.constants'
-import { CreateOfferBlockProps } from '~/types'
+import { CreateOfferBlockProps, LanguagesEnum } from '~/types'
 import { styles } from '~/containers/offer-page/create-offer/CreateOffer.styles'
 
 interface TeachingBlockProps<T> extends CreateOfferBlockProps<T> {
@@ -32,8 +31,6 @@ const TeachingBlock = <T extends CreateOfferData>({
   const { userRole } = useAppSelector((state) => state.appMain)
 
   const { t } = useTranslation()
-
-  const languages = languagesTranslationKeys.map((lang) => t(lang))
 
   const handleLanguageChange = (
     _: React.ChangeEvent<HTMLInputElement>,
@@ -83,7 +80,7 @@ const TeachingBlock = <T extends CreateOfferData>({
           </Typography>
           <AppAutoComplete
             onChange={handleLanguageChange}
-            options={languages}
+            options={Object.values(LanguagesEnum)}
             textFieldProps={{
               error: Boolean(errors.languages),
               helperText: t(errors.languages) || ' ',

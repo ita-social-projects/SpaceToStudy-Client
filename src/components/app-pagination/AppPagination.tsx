@@ -3,19 +3,16 @@ import { ChangeEvent, FC } from 'react'
 import Pagination, { PaginationProps } from '@mui/material/Pagination'
 import Box from '@mui/system/Box'
 
-import { SizeEnum } from '~/types'
 import { styles } from '~/components/app-pagination/AppPagination.styles'
 
 interface AppPaginationProps
-  extends Omit<PaginationProps, 'page' | 'onChange'> {
-  size?: SizeEnum
+  extends Omit<PaginationProps, 'count' | 'onChange'> {
   itemsCount: number
   itemsPerPage: number
   onChange: (page: number) => void
 }
 
 const AppPagination: FC<AppPaginationProps> = ({
-  size = SizeEnum.Medium,
   itemsCount,
   itemsPerPage,
   onChange,
@@ -33,7 +30,6 @@ const AppPagination: FC<AppPaginationProps> = ({
         count={pageCount}
         defaultPage={1}
         onChange={handlePageChange}
-        size={size}
         {...props}
       />
     </Box>
