@@ -27,8 +27,7 @@ export const styles = {
       },
       title: {
         textAlign: 'center',
-        mb: '5px',
-        mt: '5px',
+        my: '5px',
         typography: 'h6'
       },
       description: {
@@ -94,13 +93,10 @@ export const styles = {
   },
   titleWithDescription: {
     wrapper: {
-      textAlign: 'left',
-      margin: 0,
-      mb: 0
+      textAlign: 'left'
     },
     title: {
-      typography: 'h6',
-      mb: 0
+      typography: 'h6'
     },
     description: {
       typography: 'caption'
