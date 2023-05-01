@@ -1,8 +1,9 @@
-import { fireEvent, screen } from '@testing-library/react'
 import { vi } from 'vitest'
+import { fireEvent, screen } from '@testing-library/react'
 
 import { renderWithProviders } from '~tests/test-utils'
 import Categories from '~/pages/categories/Categories'
+import useLoadMore from '~/hooks/use-load-more'
 
 const resetDataMock = vi.fn()
 const loadMoreMock = vi.fn()
@@ -18,21 +19,25 @@ vi.mock('~/hooks/use-categories-names', () => ({
   })
 }))
 
-vi.mock('~/hooks/use-load-more', () => ({
-  __esModule: true,
-  default: () => ({
-    loading: false,
-    data: [
-      { _id: '1', name: 'Languages', totalOffers: 0 },
-      { _id: '2', name: 'Music', totalOffers: 0 }
-    ],
-    resetData: resetDataMock,
-    loadMore: loadMoreMock,
-    isExpandable: true
-  })
-}))
+vi.mock('~/hooks/use-load-more')
 
 describe('Categories page', () => {
+  beforeAll(() => {
+    useLoadMore.mockImplementation(() => ({
+      loading: false,
+      data: [
+        { _id: '1', name: 'Languages', totalOffers: 0 },
+        { _id: '2', name: 'Music', totalOffers: 0 }
+      ],
+      resetData: resetDataMock,
+      loadMore: loadMoreMock,
+      isExpandable: true
+    }))
+  })
+
+  afterAll(() => {
+    vi.clearAllMocks()
+  })
   beforeEach(() => {
     renderWithProviders(<Categories />)
   })
@@ -69,5 +74,28 @@ describe('Categories page', () => {
     fireEvent.keyDown(autocomplete, { key: 'Enter' })
 
     expect(autocomplete.value).toBe('')
+  })
+})
+
+describe('Categories page with empty data', () => {
+  beforeAll(() => {
+    useLoadMore.mockImplementation(() => ({
+      loading: false,
+      data: [],
+      resetData: resetDataMock,
+      loadMore: loadMoreMock,
+      isExpandable: true
+    }))
+  })
+  afterAll(() => {
+    vi.clearAllMocks()
+  })
+  beforeEach(() => {
+    renderWithProviders(<Categories />)
+  })
+
+  it('should render not found results when no categories are found', () => {
+    const newNotFound = screen.getByText('constant.resultsNotFound')
+    expect(newNotFound).toBeInTheDocument()
   })
 })

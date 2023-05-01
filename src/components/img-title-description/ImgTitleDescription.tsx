@@ -27,7 +27,7 @@ const ImgTitleDescription: FC<ImgTitleDescriptionProps> = ({
 
       <TitleWithDescription
         description={description}
-        style={styles.titleWithDescription}
+        style={style.titleWithDescription}
         title={title}
       />
     </Box>
