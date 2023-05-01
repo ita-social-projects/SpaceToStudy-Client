@@ -1,81 +1,96 @@
-import { render, screen } from '@testing-library/react'
+import { vi } from 'vitest'
+
+import { screen, fireEvent } from '@testing-library/react'
 import { beforeEach, expect } from 'vitest'
 import OfferCardSquare from '~/containers/find-offer/offer-card-square/OfferCardSquare'
+import { renderWithProviders } from '~tests/test-utils'
 
-const mockedOffer = {
-  id: 'id',
-  photo:
-    'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80',
-  rating: 4.3,
-  firstName: 'Andrew',
-  lastName: 'Wilson',
-  bio: 'Senior lecturer at the Department of German Philology and Translation Department of English Philology Senior lecturer at the Department of German Philology and Translation Department of English Philology Senior lecturer at the Department of German Philology and Translation Department of English Philology',
+const mockOffer = {
+  _id: 'id',
+  authorAvgRating: 4.3,
+  authorFirstName: 'James',
+  authorLastName: 'Wilson',
   description:
     'Hello. There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which.',
   languages: ['Ukrainian', 'English'],
+  author: {
+    totalReviews: {
+      student: 0,
+      tutor: 0
+    },
+    photo:
+      'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80',
+    professionalSummary:
+      'Senior lecturer at the Department of German Philology and Translation Department of English Philology Senior lecturer at the Department of German Philology and Translation Department of English Philology Senior lecturer at the Department of German Philology and Translation Department of English Philology'
+  },
   price: 100,
-  subject: 'English',
-  proficiencyLevel: 'Beginner',
-  totalReviews: 33,
-  averageRating: 4.8
+  isBookmarked: false,
+  subject: {
+    id: '12345',
+    name: 'English'
+  },
+  proficiencyLevel: ['Beginner', 'Advanced']
 }
-const intermediatMockOffer = {
-  ...mockedOffer,
-  proficiencyLevel: 'Intermediate'
-}
+
+const onBookmarkClick = vi.fn()
 
 describe('OfferCardSquare test', () => {
   beforeEach(() => {
-    render(<OfferCardSquare offer={mockedOffer} />)
+    renderWithProviders(
+      <OfferCardSquare offer={mockOffer} onBookmarkClick={onBookmarkClick} />
+    )
   })
 
   it('Should render first name correctly', () => {
-    const fullName = screen.getByText(
-      `${mockedOffer.firstName} ${mockedOffer.lastName}`
-    )
+    const fullName = screen.getByText('James Wilson')
 
     expect(fullName).toBeInTheDocument()
   })
 
-  it('Should render the languages correctly', () => {
-    const languages = screen.getByText('Ukrainian, English')
+  it('Should render languages correctly', () => {
+    const language = screen.getByText(`${mockOffer.languages.join(', ')}`)
 
-    expect(languages).toBeInTheDocument()
+    expect(language).toBeInTheDocument()
   })
 
-  it('Should render the subject correctly', () => {
-    const subject = screen.getByText('English')
-
-    expect(subject).toBeInTheDocument()
-  })
-  it('Should render price correctly', () => {
+  it('Should correctly display price', () => {
     const price = screen.getByText('100 common.uah')
 
     expect(price).toBeInTheDocument()
   })
 
-  it('renders "Beginner" level text for offer with Beginner proficiency level', () => {
-    const levelBeginner = screen.getByText(/Beginner/i)
+  it('renders the author photo', () => {
+    const authorPhoto = screen.getByRole('img')
 
-    expect(levelBeginner).toBeInTheDocument()
+    expect(authorPhoto).toBeInTheDocument()
   })
 
-  it('renders "Intermediate" level text for offer with Intermediate proficiency level', () => {
-    render(<OfferCardSquare offer={intermediatMockOffer} />)
-    const levelIntermediate = screen.getByText(/Beginner - INTERMEDIATE/i)
+  it('renders the proficiency level', () => {
+    const proficiencyLevel = screen.getByText('COMMON.BEGINNER - ADVANCED')
 
-    expect(levelIntermediate).toBeInTheDocument()
+    expect(proficiencyLevel).toBeInTheDocument()
   })
 
-  it('Should render correctly SendMessage button', () => {
-    const button = screen.getByText('common.labels.sendMessage')
+  it('renders the send message button', () => {
+    const sendMessageButton = screen.getByRole('button', {
+      name: 'common.labels.sendMessage'
+    })
 
-    expect(button).toBeInTheDocument()
+    expect(sendMessageButton).toBeInTheDocument()
   })
 
-  it('Should render correctly viewDetailsButton button', () => {
-    const button = screen.getByText('common.labels.viewDetails')
+  it('renders the view details button', () => {
+    const viewDetailsButton = screen.getByRole('button', {
+      name: 'common.labels.viewDetails'
+    })
+    expect(viewDetailsButton).toBeInTheDocument()
+  })
 
-    expect(button).toBeInTheDocument()
+  it('renders the bookmark button', () => {
+    const bookmarkButton = screen.getByTestId('bookmark-icon')
+
+    fireEvent.click(bookmarkButton)
+
+    expect(onBookmarkClick).toHaveBeenCalledWith('id')
   })
 })

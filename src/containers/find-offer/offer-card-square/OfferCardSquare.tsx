@@ -60,7 +60,11 @@ const OfferCardSquare: FC<OfferCardSquareProps> = ({
         style={styles.mainInfo}
         title={fullName}
       />
-      <IconButton onClick={() => onBookmarkClick(_id)} sx={styles.iconButton}>
+      <IconButton
+        data-testid='bookmark-icon'
+        onClick={() => onBookmarkClick(_id)}
+        sx={styles.iconButton}
+      >
         <TurnedInNot />
       </IconButton>
       <Box sx={styles.languagesContainer}>
