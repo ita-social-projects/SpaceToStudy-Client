@@ -3,6 +3,7 @@ import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import useBreakpoints from '~/hooks/use-breakpoints'
 
+import Box from '@mui/material/Box'
 import SearchFilterInput from '~/components/search-filter-input/SearchFilterInput'
 import AppToolbar from '~/components/app-toolbar/AppToolbar'
 
@@ -81,20 +82,22 @@ const OfferSearchToolbar = ({
   )
 
   return (
-    <>
-      <AppToolbar sx={styles.searchToolbar}>
-        {!isMobile && AppAutoCompleteList}
-        {isDesktop && (
-          <SearchFilterInput
-            textFieldProps={{
-              label: t('findOffers.searchToolbar.label')
-            }}
-            updateFilter={updateName}
-          />
-        )}
-      </AppToolbar>
+    <Box sx={styles.container}>
+      {!isMobile && (
+        <AppToolbar sx={styles.searchToolbar}>
+          {AppAutoCompleteList}
+          {isDesktop && (
+            <SearchFilterInput
+              textFieldProps={{
+                label: t('findOffers.searchToolbar.label')
+              }}
+              updateFilter={updateName}
+            />
+          )}
+        </AppToolbar>
+      )}
       {isMobile && AppAutoCompleteList}
-    </>
+    </Box>
   )
 }
 

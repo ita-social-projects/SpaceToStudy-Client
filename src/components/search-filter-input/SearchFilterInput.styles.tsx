@@ -16,7 +16,7 @@ export const styles = {
   },
   inputLabel: {
     color: 'primary.300',
-    top: '8px',
+    top: '12px',
     left: '15px'
   },
   searchBtn: {
