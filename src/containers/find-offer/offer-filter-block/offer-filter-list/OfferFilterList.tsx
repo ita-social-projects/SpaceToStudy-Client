@@ -62,7 +62,7 @@ const OfferFilterList: FC<OfferFilterListProps> = ({
   const handleLanguagesChange = (
     _: MouseEvent<HTMLLIElement>,
     value: LanguagesEnum | null
-  ) => updateFilter(value || '', 'language')
+  ) => updateFilter(value ?? '', 'language')
 
   const handleChecked = (_: SyntheticEvent<Element, Event>, checked: boolean) =>
     updateFilter(checked.toString(), 'native')
