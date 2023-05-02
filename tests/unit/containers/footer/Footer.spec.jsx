@@ -23,3 +23,16 @@ describe('Footer component test', () => {
     expect(link).toBeInTheDocument()
   })
 })
+
+describe('Footer with role component test', () => {
+  beforeEach(() => {
+    renderWithProviders(<Footer />, {
+      preloadedState: { appMain: { userRole: 'tutor' } }
+    })
+  })
+  it('should have Logo', () => {
+    const logo = screen.getByAltText('logo')
+
+    expect(logo).toBeInTheDocument()
+  })
+})

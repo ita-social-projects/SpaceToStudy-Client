@@ -45,7 +45,7 @@ export const styles = {
       xs: '16px'
     }
   },
-  titleCtitleWithDescriptionomp: {
+  titleWithDescription: {
     wrapper: {
       margin: '0 auto',
       marginBottom: '32px',

@@ -39,3 +39,10 @@ export enum VisibilityEnum {
   Visible = 'visible',
   Hidden = 'hidden'
 }
+
+export enum ComponentEnum {
+  Img = 'img',
+  Span = 'span',
+  Footer = 'footer',
+  Form = 'form'
+}
