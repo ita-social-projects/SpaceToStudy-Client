@@ -2,13 +2,14 @@ import { parseQueryParams } from '~/utils/helper-functions'
 import { isDefaultPrice, isEmptyArray } from '~/utils/range-filter'
 import { FindOffersFilters } from '~/types'
 
-export const countActiveFilters = (
+export const countActiveOfferFilters = (
   searchParams: URLSearchParams,
   defaultFilters: FindOffersFilters
 ) => {
   const filtersFromQuery = parseQueryParams(searchParams, defaultFilters) || {}
+  const ignoredFields = ['sort', 'authorRole', 'categoryId', 'subjectId']
   return Object.entries(filtersFromQuery).reduce((count, [key, value]) => {
-    if (key === 'sort' || key === 'authorRole') {
+    if (ignoredFields.includes(key)) {
       return count
     }
     if (key === 'price' && isDefaultPrice(value, defaultFilters.price)) {

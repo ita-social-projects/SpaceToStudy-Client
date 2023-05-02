@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router-dom'
 
@@ -9,29 +9,26 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 
 import SearchAutocomplete from '~/components/search-autocomplete/SearchAutocomplete'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
-import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
 
-import { styles } from '~/pages/subjects/Subjects.styles'
+import { categoryService } from '~/services/category-service'
 import { authRoutes } from '~/router/constants/authRoutes'
-import { CategoryNameInterface, SubjectNameInterface } from '~/types'
 import DirectionLink from '~/components/direction-link/DirectionLink'
 import AppToolbar from '~/components/app-toolbar/AppToolbar'
 import OfferRequestBlock from '~/containers/find-offer/OfferRequestBlock'
-import useCategoriesNames from '~/hooks/use-categories-names'
+import AsyncAutocomplete from '~/components/async-autocomlete/AsyncAutocomplete'
 import useSubjectsNames from '~/hooks/use-subjects-names'
-import { mapArrayByField } from '~/utils/map-array-by-field'
 import useBreakpoints from '~/hooks/use-breakpoints'
+import { CategoryNameInterface, SubjectNameInterface } from '~/types'
+import { mapArrayByField } from '~/utils/map-array-by-field'
+import { styles } from '~/pages/subjects/Subjects.styles'
 
 const Subjects = () => {
   const [searchValue, setSearchValue] = useState<string>('')
-
+  const [categoryName, setCategoryName] = useState<string>('')
   const { t } = useTranslation()
   const { isMobile } = useBreakpoints()
   const [searchParams, setSearchParams] = useSearchParams()
   const categoryId = searchParams.get('categoryId')
-
-  const { loading: categoriesNamesLoading, response: categoriesNamesItems } =
-    useCategoriesNames()
 
   const transform = useCallback(
     (data: SubjectNameInterface[]): string[] => mapArrayByField(data, 'name'),
@@ -43,39 +40,26 @@ const Subjects = () => {
     transform
   })
 
-  const category = useMemo(
-    () =>
-      categoriesNamesItems.find((option) => option._id === categoryId) || null,
-    [categoriesNamesItems, categoryId]
-  )
-
   const onCategoryChange = (
-    _: React.ChangeEvent,
+    _: React.SyntheticEvent,
     value: CategoryNameInterface | null
   ) => {
     searchParams.set('categoryId', value?._id || '')
+    setCategoryName(value?.name || '')
     setSearchParams(searchParams)
   }
 
-  const getOptionLabelCategory = (option: CategoryNameInterface) =>
-    option.name || ''
-  const isOptionEqualToValueCategory = (
-    option: CategoryNameInterface,
-    value: CategoryNameInterface
-  ) => option?._id === value?._id
-
   const autoCompleteCategories = (
-    <AppAutoComplete
-      getOptionLabel={getOptionLabelCategory}
-      isOptionEqualToValue={isOptionEqualToValueCategory}
-      loading={categoriesNamesLoading}
+    <AsyncAutocomplete
+      labelField='name'
       onChange={onCategoryChange}
-      options={categoriesNamesItems}
+      service={categoryService.getCategoriesNames}
       sx={styles.categoryInput}
       textFieldProps={{
         label: t('breadCrumbs.categories')
       }}
-      value={category}
+      value={categoryId}
+      valueField='_id'
     />
   )
 
@@ -86,7 +70,7 @@ const Subjects = () => {
         description={t('subjectsPage.subjects.description')}
         style={styles.titleWithDescription}
         title={t('subjectsPage.subjects.title', {
-          category: category?.name
+          category: categoryName
         })}
       />
 
