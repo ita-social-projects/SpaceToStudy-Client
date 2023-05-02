@@ -1,4 +1,5 @@
-import { Sort } from '~/types/common/common.index'
+import { Sort } from '~/types'
+import { AxiosResponse } from 'axios'
 
 export interface RequestParams {
   limit: number
@@ -11,3 +12,7 @@ export interface ErrorResponse {
   message: string
   status: number
 }
+
+export type ServiceFunction<Response, Params = undefined> = (
+  params?: Params
+) => Promise<AxiosResponse<Response>>

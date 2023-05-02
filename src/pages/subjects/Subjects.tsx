@@ -44,8 +44,8 @@ const Subjects = () => {
     _: React.SyntheticEvent,
     value: CategoryNameInterface | null
   ) => {
-    searchParams.set('categoryId', value?._id || '')
-    setCategoryName(value?.name || '')
+    searchParams.set('categoryId', value?._id ?? '')
+    setCategoryName(value?.name ?? '')
     setSearchParams(searchParams)
   }
 

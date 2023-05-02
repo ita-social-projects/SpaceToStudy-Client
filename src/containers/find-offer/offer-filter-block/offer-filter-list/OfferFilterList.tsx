@@ -75,9 +75,6 @@ const OfferFilterList: FC<OfferFilterListProps> = ({
         }
         onChange={handleLanguagesChange}
         options={languageValues}
-        textFieldProps={{
-          id: t('findOffers.filterTitles.language')
-        }}
         value={filters.language}
       />
       <FormControlLabel

@@ -40,7 +40,7 @@ const OfferSearchToolbar = ({
     _: React.SyntheticEvent,
     value: CategoryNameInterface | null
   ) => {
-    updateFilterInQuery(value?._id || '', 'categoryId')
+    updateFilterInQuery(value?._id ?? '', 'categoryId')
     updateFilterInQuery('', 'subjectId')
   }
 
@@ -48,7 +48,7 @@ const OfferSearchToolbar = ({
     _: React.SyntheticEvent,
     value: SubjectNameInterface | null
   ) => {
-    updateFilterInQuery(value?._id || '', 'subjectId')
+    updateFilterInQuery(value?._id ?? '', 'subjectId')
   }
 
   const updateName = (value: string) => updateFilterInQuery(value, 'name')

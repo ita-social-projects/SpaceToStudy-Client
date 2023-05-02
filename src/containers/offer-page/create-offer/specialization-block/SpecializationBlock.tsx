@@ -35,7 +35,7 @@ const SpecializationBlock = <T extends CreateOfferData>({
   const handleAutocompleteChange =
     (key: keyof Pick<T, 'category' | 'subject'>) =>
     (_: React.SyntheticEvent, value: CategoryNameInterface | null) => {
-      handleNonInputValueChange(key, value?._id || '')
+      handleNonInputValueChange(key, value?._id ?? '')
       if (!value) {
         handleNonInputValueChange('subject', '')
       }
@@ -66,7 +66,7 @@ const SpecializationBlock = <T extends CreateOfferData>({
             textFieldProps={{
               label: t('offerPage.createOffer.labels.category'),
               error: Boolean(errors.category),
-              helperText: t(errors.category) || ' '
+              helperText: errors.category ? t(errors.category) : ' '
             }}
             value={data.category}
             valueField='_id'
