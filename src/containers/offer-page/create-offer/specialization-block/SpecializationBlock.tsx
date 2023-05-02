@@ -32,7 +32,7 @@ const SpecializationBlock = <T extends CreateOfferData>({
 
   const { response: subjectsItems, loading: subjectsLoading } =
     useSubjectsNames({
-      category: data.categoryId
+      category: data.category
     })
 
   const getValue = useCallback(
@@ -42,11 +42,11 @@ const SpecializationBlock = <T extends CreateOfferData>({
   )
 
   const handleAutocompleteChange =
-    (key: keyof Pick<T, 'categoryId' | 'subjectId'>) =>
+    (key: keyof Pick<T, 'category' | 'subject'>) =>
     (_: React.ChangeEvent, value: CategoryNameInterface | null) => {
       handleNonInputValueChange(key, value?._id || '')
       if (!value) {
-        handleNonInputValueChange('subjectId', '')
+        handleNonInputValueChange('subject', '')
       }
     }
 
@@ -61,7 +61,7 @@ const SpecializationBlock = <T extends CreateOfferData>({
   ) => option?._id === value?._id
 
   const levelOptions = Object.values(ProficiencyLevelEnum)
-  const subjectError = data.categoryId && errors.subjectId
+  const subjectError = data.category && errors.subject
 
   return (
     <OrderedListItem
@@ -77,31 +77,31 @@ const SpecializationBlock = <T extends CreateOfferData>({
             getOptionLabel={getLabel}
             isOptionEqualToValue={isOptionEqualToValue}
             loading={categoriesLoading}
-            onBlur={handleBlur('categoryId')}
-            onChange={handleAutocompleteChange('categoryId')}
+            onBlur={handleBlur('category')}
+            onChange={handleAutocompleteChange('category')}
             options={categoriesItems}
             sx={styles.inputs}
             textFieldProps={{
               label: t('offerPage.createOffer.labels.category'),
-              error: Boolean(errors.categoryId),
-              helperText: t(errors.categoryId) || ' '
+              error: Boolean(errors.category),
+              helperText: t(errors.category) || ' '
             }}
-            value={getValue(categoriesItems, 'categoryId')}
+            value={getValue(categoriesItems, 'category')}
           />
           <AppAutoComplete
-            disabled={!data.categoryId}
+            disabled={!data.category}
             getOptionLabel={getLabel}
             isOptionEqualToValue={isOptionEqualToValue}
             loading={subjectsLoading}
-            onBlur={handleBlur('subjectId')}
-            onChange={handleAutocompleteChange('subjectId')}
+            onBlur={handleBlur('subject')}
+            onChange={handleAutocompleteChange('subject')}
             options={subjectsItems}
             textFieldProps={{
               error: Boolean(subjectError),
-              helperText: subjectError ? t(errors.subjectId) : ' ',
+              helperText: subjectError ? t(errors.subject) : ' ',
               label: t('offerPage.createOffer.labels.subject')
             }}
-            value={getValue(subjectsItems, 'subjectId')}
+            value={getValue(subjectsItems, 'subject')}
           />
         </Box>
         <Box sx={styles.inputBlock}>

@@ -1,8 +1,8 @@
 import { emptyField, numberField, textField } from '~/utils/validations/common'
 
 export const initialValues = {
-  categoryId: '',
-  subjectId: '',
+  category: '',
+  subject: '',
   proficiencyLevel: [],
   languages: [],
   description: '',
@@ -15,9 +15,9 @@ export const validations = {
       value && value.toString(),
       'offerPage.createOffer.errorMessages.languages'
     ),
-  categoryId: (value: string | null) =>
+  category: (value: string | null) =>
     emptyField(value, 'offerPage.createOffer.errorMessages.category'),
-  subjectId: (value: string | null) =>
+  subject: (value: string | null) =>
     emptyField(value, 'offerPage.createOffer.errorMessages.subject'),
   price: (value: string) =>
     numberField(value, 'offerPage.createOffer.errorMessages.price'),
