@@ -3,6 +3,7 @@ import {
   commonShadow,
   commonHoverShadow
 } from '~/styles/app-theme/custom-shadows'
+import { AccordionSx } from '~/types'
 
 const noIconTitleStyles = {
   fontSize: { typography: { md: 'h6', sm: 'body2' } },
@@ -12,7 +13,7 @@ const noIconTitleStyles = {
 
 const withIconTitleStyles = { color: 'primary.900' }
 
-export const styles = {
+export const styles: AccordionSx = {
   noIcon: {
     root: { maxWidth: { md: '360px', sm: '229px' } },
     accordion: {
@@ -42,8 +43,6 @@ export const styles = {
         color: 'basic.white'
       }
     },
-    summary: {},
-    details: {}
   },
   withIcon: {
     root: { maxWidth: '928px', mt: '18px' },
