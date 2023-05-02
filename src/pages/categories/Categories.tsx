@@ -107,7 +107,7 @@ const Categories = () => {
         />
       </AppToolbar>
 
-      {categories.length > 0 ? (
+      {categories.length ? (
         <CardsList
           btnText={t('categoriesPage.viewMore')}
           cards={cards}
@@ -117,7 +117,7 @@ const Categories = () => {
         />
       ) : (
         <NotFoundResults
-          buttonName={t('constant.buttonRequest', { name: 'categories' })}
+          buttonText={t('constant.buttonRequest', { name: 'categories' })}
           description={t('constant.tryAgainText', { name: 'categories' })}
         />
       )}

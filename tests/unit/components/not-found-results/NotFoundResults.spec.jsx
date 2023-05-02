@@ -3,12 +3,12 @@ import { describe } from 'vitest'
 import NotFoundResults from '~/components/not-found-results/NotFoundResults'
 
 const description = 'constant.tryAgainText'
-const buttonName = 'constant.buttonRequest'
+const buttonText = 'constant.buttonRequest'
 
 describe('NotFoundResults', () => {
   test('renders NotFoundResults component', () => {
     render(
-      <NotFoundResults buttonName={buttonName} description={description} />
+      <NotFoundResults buttonText={buttonText} description={description} />
     )
 
     const title = screen.getByText('constant.resultsNotFound')

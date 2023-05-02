@@ -4,20 +4,21 @@ import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 
 import AppButton from '~/components/app-button/AppButton'
-import { styles } from '~/components/not-found-results/NotFoundResults.styles'
-import howItWorksStudentSecond from '~/assets/img/find-offer/search_icon.svg'
-import { VariantEnum } from '~/types'
 import ImgTitleDescription from '~/components/img-title-description/ImgTitleDescription'
+
+import { VariantEnum } from '~/types'
+import howItWorksStudentSecond from '~/assets/img/find-offer/search_icon.svg'
+import { styles } from '~/components/not-found-results/NotFoundResults.styles'
 
 interface NotFoundResultsProps {
   description: string
-  buttonName: string
+  buttonText: string
   onClick?: () => void
 }
 
 const NotFoundResults: FC<NotFoundResultsProps> = ({
   description,
-  buttonName,
+  buttonText,
   onClick
 }) => {
   const { t } = useTranslation()
@@ -35,7 +36,7 @@ const NotFoundResults: FC<NotFoundResultsProps> = ({
         sx={styles.button}
         variant={VariantEnum.Tonal}
       >
-        {buttonName}
+        {buttonText}
       </AppButton>
     </Box>
   )
