@@ -15,7 +15,7 @@ export const styles = {
   },
   container: {
     mb: '30px',
-    height: '110px',
+    minHeight: '110px',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between'
