@@ -32,10 +32,7 @@ export enum VariantEnum {
   Tonal = 'tonal',
   Standard = 'standard',
   Caption = 'caption',
-  Button = 'button',
-  H5 = 'h5',
-  Body1 = 'body1',
-  Body2 = 'body2'
+  Button = 'button'
 }
 
 export enum VisibilityEnum {

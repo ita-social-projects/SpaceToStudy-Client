@@ -12,11 +12,13 @@ import ImgTitleDescription from '~/components/img-title-description/ImgTitleDesc
 interface NotFoundResultsProps {
   description: string
   buttonName: string
+  onClick?: () => void
 }
 
 const NotFoundResults: FC<NotFoundResultsProps> = ({
   description,
-  buttonName
+  buttonName,
+  onClick
 }) => {
   const { t } = useTranslation()
 
@@ -28,7 +30,11 @@ const NotFoundResults: FC<NotFoundResultsProps> = ({
         style={styles.imgTitleDescription}
         title={t('constant.resultsNotFound')}
       />
-      <AppButton sx={styles.button} variant={VariantEnum.Tonal}>
+      <AppButton
+        onClick={onClick}
+        sx={styles.button}
+        variant={VariantEnum.Tonal}
+      >
         {buttonName}
       </AppButton>
     </Box>
