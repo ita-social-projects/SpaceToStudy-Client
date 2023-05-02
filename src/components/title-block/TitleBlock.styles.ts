@@ -20,7 +20,7 @@ export const styles = {
       mb: '32px'
     },
     title: {
-      typography: { sm: 'h4', xs: 'h5' },
+      typography: { md: 'h4', xs: 'h5' },
       color: 'primary.900',
       mb: 1
     },
