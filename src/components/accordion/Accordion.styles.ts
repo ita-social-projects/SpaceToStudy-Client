@@ -5,7 +5,7 @@ import {
 } from '~/styles/app-theme/custom-shadows'
 
 const noIconTitleStyles = {
-  fontSize: { md: '20px', sm: '13px' },
+  fontSize: { typography: { md: 'h6', sm: 'body2' } },
   lineHeight: { md: '28px', sm: '18px' },
   color: 'primary.900'
 }

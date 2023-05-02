@@ -1,4 +1,3 @@
-import { SxProps } from "@mui/material"
 
 export type Address = {
   country: string
