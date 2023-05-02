@@ -15,6 +15,7 @@ import SearchAutocomplete from '~/components/search-autocomplete/SearchAutocompl
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import AppToolbar from '~/components/app-toolbar/AppToolbar'
 import DirectionLink from '~/components/direction-link/DirectionLink'
+import NotFoundResults from '~/components/not-found-results/NotFoundResults'
 
 import {
   CategoryInterface,
@@ -106,13 +107,20 @@ const Categories = () => {
         />
       </AppToolbar>
 
-      <CardsList
-        btnText={t('categoriesPage.viewMore')}
-        cards={cards}
-        isExpandable={isExpandable}
-        loading={categoriesLoading}
-        onClick={loadMore}
-      />
+      {categories.length ? (
+        <CardsList
+          btnText={t('categoriesPage.viewMore')}
+          cards={cards}
+          isExpandable={isExpandable}
+          loading={categoriesLoading}
+          onClick={loadMore}
+        />
+      ) : (
+        <NotFoundResults
+          buttonText={t('constant.buttonRequest', { name: 'categories' })}
+          description={t('constant.tryAgainText', { name: 'categories' })}
+        />
+      )}
     </Container>
   )
 }
