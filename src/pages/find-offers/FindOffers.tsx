@@ -88,10 +88,7 @@ const FindOffers = () => {
             {filtersComponent}
           </AppDrawer>
         )}
-        <OfferContainer
-          offerCards={mockOffers}
-          viewMode={CardsViewEnum.Inline}
-        />
+        <OfferContainer offerCards={mockOffers} viewMode={CardsViewEnum.Grid} />
       </Box>
       <AppPagination
         itemsCount={mockDataPagination.itemsCount}
