@@ -1,8 +1,8 @@
 export const styles = {
   container: {
-    flexDirection: 'column',
-    alignItems: 'stretch',
-    mt: '80px'
+    flex: 1,
+    textAlign: 'right',
+    pb: '80px'
   },
   categoryInput: {
     width: '100%',

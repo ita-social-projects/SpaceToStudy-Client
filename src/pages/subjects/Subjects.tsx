@@ -116,7 +116,7 @@ const Subjects = () => {
   )
 
   return (
-    <Container sx={{ flex: 1, mt: '80px' }}>
+    <Container sx={styles.container}>
       <OfferRequestBlock />
       <TitleWithDescription
         description={t('subjectsPage.subjects.description')}
