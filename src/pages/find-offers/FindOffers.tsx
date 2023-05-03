@@ -75,12 +75,6 @@ const FindOffers = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetchData, searchParams, itemsPerPage])
 
-  console.log('filters:', filters)
-
-  if (!offersLoading) {
-    console.log(offers)
-  }
-
   const toggleFiltersOpen = () => (isOpen ? closeDrawer() : openDrawer())
 
   const handleShowingTutorOffers = () => {
