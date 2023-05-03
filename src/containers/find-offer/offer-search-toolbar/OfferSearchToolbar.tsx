@@ -1,108 +1,81 @@
-import { useMemo } from 'react'
+import { useCallback } from 'react'
 
-import { useSearchParams } from 'react-router-dom'
-import useCategoriesNames from '~/hooks/use-categories-names'
-import useSubjectsNames from '~/hooks/use-subjects-names'
 import { useTranslation } from 'react-i18next'
 import useBreakpoints from '~/hooks/use-breakpoints'
 
 import SearchFilterInput from '~/components/search-filter-input/SearchFilterInput'
 import AppToolbar from '~/components/app-toolbar/AppToolbar'
-import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
 
 import {
   CategoryNameInterface,
   FindOffersFilters,
-  FindOffersUpdateFilter,
+  FindOffersFiltersActions,
   SubjectNameInterface
 } from '~/types'
 
 import { styles } from '~/containers/find-offer/offer-search-toolbar/OfferSearchToolbar.styles'
+import { categoryService } from '~/services/category-service'
+import { subjectService } from '~/services/subject-service'
+import AsyncAutocomplete from '~/components/async-autocomlete/AsyncAutocomplete'
 
 interface OfferSearchToolbarProps {
-  updateFilter: FindOffersUpdateFilter<FindOffersFilters>
+  filters: FindOffersFilters
+  filterActions: FindOffersFiltersActions<FindOffersFilters>
 }
 
-const OfferSearchToolbar = ({ updateFilter }: OfferSearchToolbarProps) => {
+const OfferSearchToolbar = ({
+  filters,
+  filterActions
+}: OfferSearchToolbarProps) => {
   const { t } = useTranslation()
   const { isDesktop, isMobile } = useBreakpoints()
+  const { updateFilterInQuery } = filterActions
 
-  const [searchParams, setSearchParams] = useSearchParams()
-  const categoryId = searchParams.get('categoryId')
-  const subjectId = searchParams.get('subjectId')
-
-  const { loading: categoriesNamesLoading, response: categoriesNamesItems } =
-    useCategoriesNames()
-
-  const { loading: subjectsNamesLoading, response: subjectsNamesItems } =
-    useSubjectsNames({
-      category: categoryId
-    })
-
-  const category = useMemo(
-    () =>
-      categoriesNamesItems.find((option) => option._id === categoryId) || null,
-    [categoriesNamesItems, categoryId]
-  )
-  const subject = useMemo(
-    () => subjectsNamesItems.find((option) => option._id === subjectId) || null,
-    [subjectsNamesItems, subjectId]
+  const getSubjectsNames = useCallback(
+    () => subjectService.getSubjectsNames(filters.categoryId),
+    [filters.categoryId]
   )
 
   const onCategoryChange = (
-    _: React.ChangeEvent,
+    _: React.SyntheticEvent,
     value: CategoryNameInterface | null
   ) => {
-    searchParams.set('categoryId', value?._id || '')
-    setSearchParams(searchParams)
+    updateFilterInQuery(value?._id ?? '', 'categoryId')
+    updateFilterInQuery('', 'subjectId')
   }
 
   const onSubjectChange = (
-    _: React.ChangeEvent,
+    _: React.SyntheticEvent,
     value: SubjectNameInterface | null
   ) => {
-    searchParams.set('subjectId', value?._id || '')
-    setSearchParams(searchParams)
+    updateFilterInQuery(value?._id ?? '', 'subjectId')
   }
 
-  const getOptionLabel = (
-    option: CategoryNameInterface | SubjectNameInterface
-  ) => option.name || ''
-  const isOptionEqualToValue = (
-    option: CategoryNameInterface | SubjectNameInterface,
-    value: CategoryNameInterface | SubjectNameInterface
-  ) => option?._id === value?._id
-
-  const updateFilterByKey =
-    <K extends keyof FindOffersFilters>(key: K) =>
-    (value: FindOffersFilters[K]) =>
-      updateFilter(value, key)
+  const updateName = (value: string) => updateFilterInQuery(value, 'name')
 
   const AppAutoCompleteList = (
     <>
-      <AppAutoComplete
-        getOptionLabel={getOptionLabel}
-        isOptionEqualToValue={isOptionEqualToValue}
-        loading={categoriesNamesLoading}
+      <AsyncAutocomplete
+        labelField='name'
         onChange={onCategoryChange}
-        options={categoriesNamesItems}
+        service={categoryService.getCategoriesNames}
         sx={styles.autocomplete}
         textFieldProps={{
           label: t('breadCrumbs.categories')
         }}
-        value={category}
+        value={filters.categoryId}
+        valueField='_id'
       />
-      <AppAutoComplete
-        getOptionLabel={getOptionLabel}
-        isOptionEqualToValue={isOptionEqualToValue}
-        loading={subjectsNamesLoading}
+      <AsyncAutocomplete
+        labelField='name'
         onChange={onSubjectChange}
-        options={subjectsNamesItems}
+        service={getSubjectsNames}
         sx={styles.autocomplete}
         textFieldProps={{
           label: t('breadCrumbs.subjects')
         }}
-        value={subject}
+        value={filters.subjectId}
+        valueField='_id'
       />
     </>
   )
@@ -116,7 +89,7 @@ const OfferSearchToolbar = ({ updateFilter }: OfferSearchToolbarProps) => {
             textFieldProps={{
               label: t('findOffers.searchToolbar.label')
             }}
-            updateFilter={updateFilterByKey('name')}
+            updateFilter={updateName}
           />
         )}
       </AppToolbar>

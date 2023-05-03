@@ -1,6 +1,8 @@
 import { FindOffersFilters, UserRoleEnum } from '~/types'
 
 export const defaultFilters: FindOffersFilters = {
+  categoryId: '',
+  subjectId: '',
   sort: 'createdAt',
   language: '',
   native: 'false',

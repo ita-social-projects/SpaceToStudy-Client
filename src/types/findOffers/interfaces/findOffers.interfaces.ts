@@ -6,6 +6,8 @@ import {
 } from '~/types'
 
 export interface FindOffersFilters {
+  categoryId: string
+  subjectId: string
   sort: string
   language: LanguageFilter
   native: string
@@ -19,6 +21,7 @@ export interface FindOffersFilters {
 
 export interface FindOffersFiltersActions<T> {
   updateFilter: FindOffersUpdateFilter<T>
+  updateFilterInQuery: FindOffersUpdateFilter<T>
   resetFilters: () => void
   updateQueryParams: () => void
 }
@@ -32,8 +35,8 @@ export interface CreateOfferBlockProps<T> {
   ) => (event: React.FocusEvent<HTMLInputElement>) => void
 }
 
-export interface FilterQueryHook {
+export interface FilterQueryHook<T> {
   filters: FindOffersFilters
   countActiveFilters: number
-  filterQueryActions: FindOffersFiltersActions
+  filterQueryActions: FindOffersFiltersActions<T>
 }

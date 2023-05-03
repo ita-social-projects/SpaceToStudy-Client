@@ -14,7 +14,7 @@ import OfferSearchToolbar from '~/containers/find-offer/offer-search-toolbar/Off
 import AppDrawer from '~/components/app-drawer/AppDrawer'
 import OfferContainer from '~/containers/find-offer/offer-container/OfferContainer'
 import OfferRequestBlock from '~/containers/find-offer/OfferRequestBlock'
-import { countActiveFilters } from '~/utils/count-active-filters'
+import { countActiveOfferFilters } from '~/utils/count-active-filters'
 import { useDrawer } from '~/hooks/use-drawer'
 import { useFilterQuery } from '~/hooks/use-filter-query'
 import usePagination from '~/hooks/table/use-pagination'
@@ -35,7 +35,7 @@ const FindOffers = () => {
 
   const { filters, activeFilterCount, filterQueryActions } = useFilterQuery({
     defaultFilters,
-    countActiveFilters
+    countActiveFilters: countActiveOfferFilters
   })
   const { page, pageCount, handleChangePaginationController } = usePagination({
     defaultPage: Number(filters.page),
@@ -50,7 +50,7 @@ const FindOffers = () => {
         ? UserRoleEnum.Tutor
         : UserRoleEnum.Student
 
-    filterQueryActions.updateFilter(updatedRole, 'authorRole')
+    filterQueryActions.updateFilterInQuery(updatedRole, 'authorRole')
   }
   const mockOffers = new Array(6).fill(mockOffer)
 
@@ -68,7 +68,10 @@ const FindOffers = () => {
   return (
     <Container sx={styles.container}>
       <OfferRequestBlock />
-      <OfferSearchToolbar updateFilter={filterQueryActions.updateFilter} />
+      <OfferSearchToolbar
+        filterActions={filterQueryActions}
+        filters={filters}
+      />
       <FilterBarMenu
         chosenFiltersQty={activeFilterCount}
         filters={filters}
@@ -76,7 +79,7 @@ const FindOffers = () => {
         offersView={cardsView}
         onToggleTutorOffers={handleShowingTutorOffers}
         toggleFilters={toggleFiltersOpen}
-        updateFilter={filterQueryActions.updateFilter}
+        updateFilter={filterQueryActions.updateFilterInQuery}
       />
       <Box sx={styles.filterSection}>
         {!isMobile ? (
