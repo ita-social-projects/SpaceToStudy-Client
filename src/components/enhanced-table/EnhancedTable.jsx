@@ -66,7 +66,7 @@ const EnhancedTable = ({ fetchService, externalFilter }) => {
   ])
 
   useEffect(() => {
-    getData()
+    void getData()
   }, [getData])
 
   useEffect(() => {
