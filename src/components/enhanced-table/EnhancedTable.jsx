@@ -17,20 +17,28 @@ import EnhancedTablePagination from './enhanced-table-pagination/EnhancedTablePa
 import FilterRow from './filter-row/FilterRow'
 import { useTableContext } from '~/context/table-context'
 import useSelect from '~/hooks/table/use-select'
-import usePagination from '~/hooks/table/use-pagination'
 
 import { styles } from './EnhancedTable.styles'
 
 const EnhancedTable = ({ fetchService, externalFilter }) => {
   const { t } = useTranslation()
-  const { sort, filters, numSelected, page, rowsPerPage } = useTableContext()
-  const { clearPage } = usePagination()
+  const { sort, filters, numSelected, setItemsCount, pagination } =
+    useTableContext()
+  const { page, rowsPerPage, clearPage } = pagination
   const { clearSelected, isSelected, createSelectAllHandler } = useSelect()
+
+  const setItemsResponse = useCallback(
+    (response) => {
+      setItemsCount(response.count)
+    },
+    [setItemsCount]
+  )
 
   const { loading, response, fetchData } = useAxios({
     service: fetchService,
     fetchOnMount: false,
-    defaultResponse: { items: [], count: 0 }
+    defaultResponse: { items: [], count: 0 },
+    onResponse: setItemsResponse
   })
 
   const { items, count: itemsCount } = response
@@ -40,7 +48,7 @@ const EnhancedTable = ({ fetchService, externalFilter }) => {
 
     clearSelected()
     await fetchData({
-      skip: page * rowsPerPage,
+      skip: (page - 1) * rowsPerPage,
       limit: rowsPerPage,
       sort,
       ...filters,

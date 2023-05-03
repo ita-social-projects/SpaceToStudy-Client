@@ -14,6 +14,7 @@ export interface FindOffersFilters {
   price?: RangeArray
   name: string
   level: string[]
+  page: string
 }
 
 export interface FindOffersFiltersActions<T> {

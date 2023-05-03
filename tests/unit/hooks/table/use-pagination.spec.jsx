@@ -27,7 +27,7 @@ describe('Use pagination custom hook', () => {
       result.current.clearPage()
     })
 
-    expect(result.current.page).toEqual(0)
+    expect(result.current.page).toEqual(1)
   })
 
   it('should change page input', () => {
@@ -53,7 +53,7 @@ describe('Use pagination custom hook', () => {
       result.current.handleChangePaginationController(null, 5)
     })
 
-    expect(result.current.page).toEqual(4)
+    expect(result.current.page).toEqual(5)
   })
 
   it('should submit page', () => {
@@ -66,7 +66,7 @@ describe('Use pagination custom hook', () => {
       result.current.handlePageSubmit(5)
     })
 
-    expect(result.current.page).toEqual(2)
+    expect(result.current.page).toEqual(3)
   })
 
   it('should set page to maxPages if page input is greater than maxPages', () => {
@@ -79,7 +79,7 @@ describe('Use pagination custom hook', () => {
       result.current.handlePageSubmit(5)
     })
 
-    expect(result.current.page).toEqual(4)
+    expect(result.current.page).toEqual(5)
     expect(result.current.pageInput).toEqual(5)
   })
 
@@ -93,7 +93,7 @@ describe('Use pagination custom hook', () => {
       result.current.handlePageSubmit(5)
     })
 
-    expect(result.current.page).toEqual(0)
+    expect(result.current.page).toEqual(1)
     expect(result.current.pageInput).toEqual(1)
   })
 })

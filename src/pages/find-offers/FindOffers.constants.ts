@@ -8,7 +8,8 @@ export const defaultFilters: FindOffersFilters = {
   authorRole: UserRoleEnum.Tutor,
   name: '',
   level: [],
-  price: undefined
+  price: undefined,
+  page: '1'
 }
 
 export const mockOffer = {

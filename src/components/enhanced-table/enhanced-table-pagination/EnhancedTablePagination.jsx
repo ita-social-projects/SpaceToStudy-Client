@@ -8,25 +8,26 @@ import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 
 import { useTableContext } from '~/context/table-context'
-import usePagination from '~/hooks/table/use-pagination'
 
 import { styles } from './EnhancedTablePagination.styles'
 
 const EnhancedTablePagination = ({ itemsCount }) => {
   const { t } = useTranslation()
-  const { page, pageInput, rowsPerPage } = useTableContext()
+  const { pagination } = useTableContext()
 
   const {
+    page,
+    pageInput,
+    rowsPerPage,
+    pageCount,
     handleChangePage,
     handleChangeRowsPerPage,
     handleChangePageInput,
     handlePageSubmit,
     handleChangePaginationController
-  } = usePagination()
+  } = pagination
 
-  const maxPages = Math.ceil(itemsCount / rowsPerPage)
-
-  const PaginationController = (currentPage, maxPages) => {
+  const PaginationController = (currentPage, pageCount) => {
     return (
       <Box
         sx={{
@@ -34,9 +35,9 @@ const EnhancedTablePagination = ({ itemsCount }) => {
         }}
       >
         <Pagination
-          count={maxPages}
+          count={pageCount}
           onChange={handleChangePaginationController}
-          page={currentPage + 1}
+          page={currentPage}
         />
       </Box>
     )
@@ -48,7 +49,7 @@ const EnhancedTablePagination = ({ itemsCount }) => {
   return (
     <Box sx={styles.root}>
       <TablePagination
-        ActionsComponent={() => PaginationController(page, maxPages)}
+        ActionsComponent={() => PaginationController(page, pageCount)}
         component='div'
         count={itemsCount}
         labelDisplayedRows={({ from, to, count }) =>
@@ -57,7 +58,7 @@ const EnhancedTablePagination = ({ itemsCount }) => {
         labelRowsPerPage={t('table.numberOfRows')}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
-        page={page}
+        page={page - 1}
         rowsPerPage={rowsPerPage}
         rowsPerPageOptions={[5, 10, 25, 50]}
         sx={styles.tablePagination}
@@ -73,7 +74,7 @@ const EnhancedTablePagination = ({ itemsCount }) => {
           value={pageInput}
         />
         <Button
-          onClick={() => handlePageSubmit(maxPages)}
+          onClick={() => handlePageSubmit(pageCount)}
           sx={styles.btn}
           variant='outlined'
         >

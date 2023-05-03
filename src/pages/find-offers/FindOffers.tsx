@@ -17,6 +17,7 @@ import OfferRequestBlock from '~/containers/find-offer/OfferRequestBlock'
 import { countActiveFilters } from '~/utils/count-active-filters'
 import { useDrawer } from '~/hooks/use-drawer'
 import { useFilterQuery } from '~/hooks/use-filter-query'
+import usePagination from '~/hooks/table/use-pagination'
 
 import { CardsViewEnum, CardsView, SizeEnum, UserRoleEnum } from '~/types'
 import { styles } from '~/pages/find-offers/FindOffers.styles'
@@ -26,7 +27,6 @@ import {
 } from '~/pages/find-offers/FindOffers.constants'
 
 const FindOffers = () => {
-  const [currentPage, setCurrentPage] = useState<number>(1)
   const [cardsView, setCardsView] = useState<CardsView>(CardsViewEnum.Inline)
   const { openDrawer, closeDrawer, isOpen } = useDrawer()
   const { isMobile } = useBreakpoints()
@@ -37,12 +37,10 @@ const FindOffers = () => {
     defaultFilters,
     countActiveFilters
   })
-
-  const mockDataPagination = {
-    itemsCount: 100,
-    page: currentPage,
-    pageSize: 5
-  }
+  const { page, pageCount, handleChangePaginationController } = usePagination({
+    defaultPage: Number(filters.page),
+    itemsCount: 100
+  })
 
   const toggleFiltersOpen = () => (isOpen ? closeDrawer() : openDrawer())
 
@@ -91,10 +89,9 @@ const FindOffers = () => {
         <OfferContainer offerCards={mockOffers} viewMode={CardsViewEnum.Grid} />
       </Box>
       <AppPagination
-        itemsCount={mockDataPagination.itemsCount}
-        itemsPerPage={mockDataPagination.pageSize}
-        onChange={setCurrentPage}
-        page={mockDataPagination.page}
+        onChange={handleChangePaginationController}
+        page={page}
+        pageCount={pageCount}
         size={isMobile ? SizeEnum.Small : SizeEnum.Medium}
       />
       <PopularCategories title={t('common.popularCategories')} />
