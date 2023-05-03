@@ -6,11 +6,13 @@ export const styles = {
     boxShadow: 'none',
     borderRadius: '8px'
   },
-  title: {
-    marginTop: '30px',
-    fontSize: '21px',
-    fontWeight: 'bold',
-    color: 'palette.grey.500'
+  titleWithDescription: {
+    title: {
+      fontSize: '21px',
+      fontWeight: 'bold',
+      color: 'palette.grey.500',
+      my: '16px'
+    }
   },
   button: {
     size: 'large',

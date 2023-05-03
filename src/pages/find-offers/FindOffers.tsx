@@ -54,6 +54,15 @@ const FindOffers = () => {
 
     filterQueryActions.updateFilter(updatedRole, 'authorRole')
   }
+
+  const handleViewToggle = () => {
+    setCardsView((prevCardsView) =>
+      prevCardsView === CardsViewEnum.Grid
+        ? CardsViewEnum.Inline
+        : CardsViewEnum.Grid
+    )
+  }
+
   const mockOffers = new Array(6).fill(mockOffer)
 
   const filtersComponent = (
@@ -74,7 +83,7 @@ const FindOffers = () => {
       <FilterBarMenu
         chosenFiltersQty={activeFilterCount}
         filters={filters}
-        handleOffersView={setCardsView}
+        handleOffersView={handleViewToggle}
         offersView={cardsView}
         onToggleTutorOffers={handleShowingTutorOffers}
         toggleFilters={toggleFiltersOpen}
@@ -88,7 +97,7 @@ const FindOffers = () => {
             {filtersComponent}
           </AppDrawer>
         )}
-        <OfferContainer offerCards={mockOffers} viewMode={CardsViewEnum.Grid} />
+        <OfferContainer offerCards={mockOffers} viewMode={cardsView} />
       </Box>
       <AppPagination
         itemsCount={mockDataPagination.itemsCount}

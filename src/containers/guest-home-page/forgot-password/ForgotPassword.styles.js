@@ -14,6 +14,7 @@ export const styles = {
     width: '100%',
     p: '16px 0'
   },
+
   titleWithDescription: {
     wrapper: {
       textAlign: 'start',
