@@ -7,6 +7,6 @@ export const styles = {
     color: 'primary.500',
     fontWeight: '500',
     textDecoration: 'none',
-    m: { xs: '4px 0', sm: '0 45px 20px' }
+    m: { xs: '8px 16px', sm: '12px 24px', md: '20px 40px' }
   }
 }

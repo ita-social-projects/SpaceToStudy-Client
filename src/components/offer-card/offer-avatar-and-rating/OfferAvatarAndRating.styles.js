@@ -2,8 +2,7 @@ export const styles = {
   container: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
-    mr: '50px'
+    alignItems: 'center'
   },
   avatar: {
     height: '80px',

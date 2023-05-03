@@ -8,15 +8,14 @@ const ellipsisTextStyle = (linesCount) => ({
 })
 
 export const styles = {
-  container: {
-    mr: '50px'
-  },
   bio: {
     ...ellipsisTextStyle(2),
     mb: '10px'
   },
   chipsContainer: {
     display: 'flex',
+    flexWrap: 'wrap',
+    gap: '5px',
     mb: '10px'
   },
   subjectChip: {

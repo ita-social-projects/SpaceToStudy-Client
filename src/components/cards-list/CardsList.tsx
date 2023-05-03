@@ -22,8 +22,6 @@ const CardsList: FC<CardsListProps> = ({
   loading,
   onClick
 }) => {
-  const hideBtn = !isExpandable && { visibility: 'hidden' }
-
   if (loading && !cards.length) {
     return <Loader pageLoad size={50} />
   }
@@ -32,15 +30,17 @@ const CardsList: FC<CardsListProps> = ({
     <Box>
       <Box sx={styles.cardsContainer}>{cards}</Box>
 
-      <AppButton
-        loading={loading}
-        onClick={onClick}
-        size={SizeEnum.ExtraLarge}
-        sx={[styles.btn, hideBtn]}
-        variant={VariantEnum.Tonal}
-      >
-        {btnText}
-      </AppButton>
+      {isExpandable && (
+        <AppButton
+          loading={loading}
+          onClick={onClick}
+          size={SizeEnum.ExtraLarge}
+          sx={styles.btn}
+          variant={VariantEnum.Tonal}
+        >
+          {btnText}
+        </AppButton>
+      )}
     </Box>
   )
 }

@@ -10,7 +10,8 @@ export const styles = {
     typography: { xs: 'caption', sm: 'subtitle2' },
     fontWeight: { xs: 500 },
     minWidth: { xs: '14px', sm: '18px' },
-    height: { xs: '14px', sm: '18px' }
+    height: { xs: '14px', sm: '18px' },
+    lineHeight: { xs: '14px', sm: '20px' }
   },
   title: {
     display: 'flex',
