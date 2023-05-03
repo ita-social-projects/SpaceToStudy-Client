@@ -22,6 +22,28 @@ describe('Use pagination custom hook', () => {
     expect(result.current.page).toEqual(5)
   })
 
+  it('should return checked page as 1', () => {
+    const { result } = renderHook(
+      () => usePagination({ defaultPage: 0, itemsPerPage: 5, itemsCount: 10 }),
+      {
+        wrapper
+      }
+    )
+
+    expect(result.current.page).toEqual(1)
+  })
+
+  it('should return checked page as 2', () => {
+    const { result } = renderHook(
+      () => usePagination({ defaultPage: 15, itemsPerPage: 5, itemsCount: 10 }),
+      {
+        wrapper
+      }
+    )
+
+    expect(result.current.page).toEqual(2)
+  })
+
   it('should clear page', () => {
     act(() => {
       result.current.clearPage()
