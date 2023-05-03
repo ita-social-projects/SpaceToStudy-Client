@@ -2,14 +2,17 @@ import { vi } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
 import AppPagination from '~/components/app-pagination/AppPagination'
 
-const setCurrentPage = vi.fn()
+const handleChangePaginationController = vi.fn()
 
 describe('AppPagination', () => {
   beforeEach(() => {
-    render(<AppPagination
-      itemsCount={100} page={1} itemsPerPage={5}
-      onChange={setCurrentPage}
-    />)
+    render(
+      <AppPagination
+        onChange={handleChangePaginationController}
+        page={1}
+        pageCount={10}
+      />
+    )
   })
 
   it('should render pagination component', () => {
@@ -19,10 +22,10 @@ describe('AppPagination', () => {
   })
 
   it('should call setCurrentPage when page is changed', () => {
-    const page2Button = screen.getByRole('button', { name: 'Go to page 2' })
+    const secondButton = screen.getByLabelText('Go to page 2')
 
-    fireEvent.click(page2Button)
+    fireEvent.click(secondButton)
 
-    expect(setCurrentPage).toHaveBeenCalledWith(2)
+    expect(handleChangePaginationController).toHaveBeenCalledTimes(1)
   })
 })

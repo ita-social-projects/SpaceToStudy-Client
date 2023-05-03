@@ -13,7 +13,8 @@ import { styles } from './EnhancedTableHead.styles'
 const EnhancedTableHead = ({ itemsCount, onSelectAllClick }) => {
   const { t } = useTranslation()
 
-  const { numSelected, isSelection, columns, rowsPerPage } = useTableContext()
+  const { numSelected, isSelection, columns, pagination } = useTableContext()
+  const { rowsPerPage } = pagination
 
   return (
     <TableHead sx={styles.tableHead}>
