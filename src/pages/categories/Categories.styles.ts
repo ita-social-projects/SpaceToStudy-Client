@@ -2,7 +2,7 @@ export const styles = {
   container: {
     flex: 1,
     textAlign: 'right',
-    py: '80px'
+    pb: '80px'
   },
   titleWithDescription: {
     wrapper: {
