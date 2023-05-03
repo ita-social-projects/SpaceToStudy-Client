@@ -56,6 +56,8 @@ export const styles = {
   },
   chipsContainer: {
     display: 'flex',
+    flexWrap: 'wrap',
+    gap: '5px',
     mb: '50px'
   },
   subjectChipLabel: {

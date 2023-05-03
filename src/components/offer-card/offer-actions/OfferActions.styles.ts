@@ -1,7 +1,4 @@
 export const styles = {
-  container: {
-    minWidth: '166px'
-  },
   containerTop: {
     position: 'relative',
     mb: '30px'
@@ -16,5 +13,6 @@ export const styles = {
     display: 'flex',
     flexDirection: 'column',
     gap: '10px'
-  }
+  },
+  button: { whiteSpace: 'nowrap' }
 }

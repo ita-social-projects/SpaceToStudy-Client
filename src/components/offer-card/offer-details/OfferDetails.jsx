@@ -23,7 +23,7 @@ const OfferDetails = ({
       : `${t('common.beginner')} - ${lastLevel}`.toUpperCase()
 
   return (
-    <Box sx={styles.container}>
+    <Box>
       <Typography variant='h6'>{name}</Typography>
       <Typography sx={styles.bio}>{professionalSummary}</Typography>
 

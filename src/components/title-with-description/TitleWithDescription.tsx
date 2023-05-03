@@ -1,8 +1,9 @@
+import { ReactElement } from 'react'
 import { Box, Typography, SxProps } from '@mui/material'
 import { styles } from '~/components/title-with-description/TitleWithDescription.styles'
 
 interface TitleWithDescriptionProps {
-  title: string
+  title: string | ReactElement
   description?: string
   style?: {
     wrapper?: SxProps

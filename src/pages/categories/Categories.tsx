@@ -107,18 +107,18 @@ const Categories = () => {
         />
       </AppToolbar>
 
-      {categories.length ? (
+      {!categories.length && !categoriesLoading ? (
+        <NotFoundResults
+          buttonText={t('constant.buttonRequest', { name: 'categories' })}
+          description={t('constant.tryAgainText', { name: 'categories' })}
+        />
+      ) : (
         <CardsList
           btnText={t('categoriesPage.viewMore')}
           cards={cards}
           isExpandable={isExpandable}
           loading={categoriesLoading}
           onClick={loadMore}
-        />
-      ) : (
-        <NotFoundResults
-          buttonText={t('constant.buttonRequest', { name: 'categories' })}
-          description={t('constant.tryAgainText', { name: 'categories' })}
         />
       )}
     </Container>

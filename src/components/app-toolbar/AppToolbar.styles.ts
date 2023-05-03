@@ -7,6 +7,6 @@ export const styles = {
     alignItems: 'center',
     boxShadow: commonShadow,
     mb: { xs: '20px', sm: '50px' },
-    p: { xs: '10px 14px', sm: '30px 45px' }
+    p: { xs: '10px 24px', sm: '25px 45px' }
   }
 }

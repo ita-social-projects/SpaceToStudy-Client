@@ -8,12 +8,11 @@ export const styles = {
       md: 'repeat(3, minmax(264px, 1fr))'
     },
     gridAutoRows: '112px',
-    gridGap: '24px',
-    mb: '32px'
+    gridGap: '24px'
   },
   btn: {
     minWidth: '148px',
     display: 'block',
-    m: '0 auto'
+    m: '32px auto 0'
   }
 }

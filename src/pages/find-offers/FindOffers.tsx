@@ -29,7 +29,7 @@ import {
 const FindOffers = () => {
   const [cardsView, setCardsView] = useState<CardsView>(CardsViewEnum.Inline)
   const { openDrawer, closeDrawer, isOpen } = useDrawer()
-  const { isMobile } = useBreakpoints()
+  const { isMobile, isDesktop } = useBreakpoints()
 
   const { t } = useTranslation()
 
@@ -82,14 +82,18 @@ const FindOffers = () => {
         updateFilter={filterQueryActions.updateFilterInQuery}
       />
       <Box sx={styles.filterSection}>
-        {!isMobile ? (
+        {isDesktop ? (
           filtersComponent
         ) : (
           <AppDrawer onClose={closeDrawer} open={isOpen}>
             {filtersComponent}
           </AppDrawer>
         )}
-        <OfferContainer offerCards={mockOffers} viewMode={CardsViewEnum.Grid} />
+        <OfferContainer
+          isFiltersOpen={isOpen}
+          offerCards={mockOffers}
+          viewMode={cardsView}
+        />
       </Box>
       <AppPagination
         onChange={handleChangePaginationController}

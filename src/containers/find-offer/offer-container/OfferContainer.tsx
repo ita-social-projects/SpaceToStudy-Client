@@ -12,9 +12,14 @@ import AppCard from '~/components/app-card/AppCard'
 interface OfferContainerProps {
   viewMode: CardsView
   offerCards: Offer[]
+  isFiltersOpen: boolean
 }
 
-const OfferContainer: FC<OfferContainerProps> = ({ viewMode, offerCards }) => {
+const OfferContainer: FC<OfferContainerProps> = ({
+  viewMode,
+  offerCards,
+  isFiltersOpen
+}) => {
   const { t } = useTranslation()
   const { isMobile, isDesktop } = useBreakpoints()
 
@@ -39,13 +44,13 @@ const OfferContainer: FC<OfferContainerProps> = ({ viewMode, offerCards }) => {
   ]
 
   const offerItems = offerCards.map((el) => (
-    <Grid item key={el._id} sm={4}>
+    <Grid item key={el._id} sm={isDesktop && isFiltersOpen ? 6 : 4}>
       {renderSquareCard ? (
-        <AppCard sx={{ maxWidth: '320px' }}>
+        <AppCard>
           <OfferCardSquare offer={el} onBookmarkClick={onBookmarkClick} />
         </AppCard>
       ) : (
-        <AppCard>
+        <AppCard sx={{ padding: { sm: '20px', md: '30px 20px' } }}>
           <OfferCard
             buttonActions={buttonActions}
             offer={el}
@@ -57,8 +62,13 @@ const OfferContainer: FC<OfferContainerProps> = ({ viewMode, offerCards }) => {
   ))
 
   return (
-    <Box data-testid='OfferContainer' sx={{ flexGrow: 1 }}>
-      <Grid columns={{ xs: 1, md: columnNumber }} container spacing={{ md: 3 }}>
+    <Box data-testid='OfferContainer' sx={{ flexGrow: 1, my: '20px' }}>
+      <Grid
+        columns={{ xs: 1, md: columnNumber }}
+        container
+        justifyContent={'center'}
+        spacing={3}
+      >
         {offerItems}
       </Grid>
     </Box>

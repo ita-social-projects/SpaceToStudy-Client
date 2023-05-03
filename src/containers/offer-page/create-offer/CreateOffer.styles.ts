@@ -5,7 +5,7 @@ const column = {
 
 export const styles = {
   root: {
-    maxWidth: { xs: '250px', sm: '450px', md: '650px' },
+    maxWidth: { sm: '500px', md: '700px' },
     px: { sm: '16px', md: '32px' },
     color: 'primary.700',
     gap: '12px',

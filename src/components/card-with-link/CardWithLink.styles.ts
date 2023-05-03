@@ -1,6 +1,7 @@
 export const styles = {
   img: {
     width: '100%',
+    alignSelf: 'center',
     mr: '24px',
     maxWidth: '62px',
     maxHeight: '62px'
