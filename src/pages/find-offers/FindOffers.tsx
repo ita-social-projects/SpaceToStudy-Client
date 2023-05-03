@@ -64,11 +64,11 @@ const FindOffers = () => {
     fetchData
   } = useAxios({
     service: getOffers,
-    defaultResponse: { items: [], count: 0 },
+    defaultResponse: { offers: [], count: 0 },
     fetchOnMount: false
   })
 
-  const { items: offers, count: offersCount } = offersResponse
+  const { offers, count: offersCount } = offersResponse
 
   useEffect(() => {
     void fetchData({ ...filters, limit: itemsPerPage })
