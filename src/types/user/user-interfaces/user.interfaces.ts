@@ -1,26 +1,23 @@
 import {
   CreatedAt,
   LastLogin,
-  Sort,
   Address,
   Category,
   UserRole,
-  UserRoleEnum
+  UserRoleEnum,
+  RequestParams
 } from '~/types'
 
 export interface LocalStorage {
   accessToken?: string
 }
 
-export interface GetUsersParams {
+export interface GetUsersParams extends RequestParams {
   createdAt: CreatedAt
   email: string
   lastLogin: LastLogin
-  limit: number
   name: string
   role: UserRole
-  skip: number
-  sort: Sort
   status: string[]
 }
 

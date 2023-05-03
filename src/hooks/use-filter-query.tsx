@@ -14,6 +14,7 @@ interface UseFilterQueryOptions<T> {
 interface FilterQueryHook<T> {
   filters: T
   filterQueryActions: FindOffersFiltersActions<T>
+  searchParams: URLSearchParams
   activeFilterCount: number | null
 }
 
@@ -68,6 +69,7 @@ export const useFilterQuery = <T extends object>({
   return {
     filters,
     activeFilterCount,
+    searchParams,
     filterQueryActions: {
       updateFilter,
       resetFilters,

@@ -4,6 +4,8 @@ export const defaultFilters: FindOffersFilters = {
   categoryId: '',
   subjectId: '',
   sort: 'createdAt',
+  skip: 0,
+  limit: 4,
   language: '',
   native: 'false',
   rating: '0',

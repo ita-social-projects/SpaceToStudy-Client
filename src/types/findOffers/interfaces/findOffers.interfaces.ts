@@ -2,10 +2,11 @@ import {
   FindOffersUpdateFilter,
   LanguageFilter,
   RangeArray,
+  RequestParams,
   UserRole
 } from '~/types'
 
-export interface FindOffersFilters {
+export interface FindOffersFilters extends Omit<RequestParams, 'sort'> {
   categoryId: string
   subjectId: string
   sort: string

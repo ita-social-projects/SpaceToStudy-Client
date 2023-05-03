@@ -10,7 +10,7 @@ import {
 } from '~/types'
 
 export const OfferService = {
-  getOffers: async (params: FindOffersFilters): Promise<AxiosResponse> =>
+  getOffers: async (params?: FindOffersFilters): Promise<AxiosResponse> =>
     await axiosClient.get(URLs.offers.get, { params }),
 
   createOffer: async (data: CreateOfferData): Promise<AxiosResponse> =>
