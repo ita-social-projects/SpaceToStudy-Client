@@ -1,8 +1,11 @@
 import { render, screen, fireEvent } from '@testing-library/react'
 import Accordions from '~/components/accordion/Accordions'
+import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp'
 import { vi } from 'vitest'
 
 const onChangeMock = vi.fn()
+
+const iconId = 'accordion-icon'
 
 describe('Accordion component without expandMoreIcon test', () => {
   const props = {
@@ -18,7 +21,6 @@ describe('Accordion component without expandMoreIcon test', () => {
     ],
     onChange: onChangeMock,
     activeIndex: '0',
-    showMoreIcon: false
   }
   beforeEach(() => {
     render(<Accordions {...props} />)
@@ -51,7 +53,7 @@ describe('Accordion component without expandMoreIcon test', () => {
   })
 })
 
-describe('Accordions test with expandMoreIcon', () => {
+describe('Accordions test with icon', () => {
   const props = {
     items: [
       {
@@ -63,15 +65,16 @@ describe('Accordions test with expandMoreIcon', () => {
         description: 'description2'
       }
     ],
-    showMoreIcon: true,
+    icon: <ArrowForwardIosSharpIcon data-testid={iconId} />,
     onChange: onChangeMock,
-    activeIndex: '0'
+    activeIndex: 0,
+    isMultiple: true
   }
   beforeEach(() => {
     render(<Accordions {...props} />)
   })
-  it('shuld render expand more icon', () => {
-    const expandMoreIcon = screen.getAllByTestId('ExpandMoreRoundedIcon')
+  it('should render expand more icon', () => {
+    const expandMoreIcon = screen.getAllByTestId(iconId)
 
     expect(expandMoreIcon).toHaveLength(2)
   })

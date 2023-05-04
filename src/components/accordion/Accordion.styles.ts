@@ -3,9 +3,18 @@ import {
   commonShadow,
   commonHoverShadow
 } from '~/styles/app-theme/custom-shadows'
+import { AccordionSx } from '~/types'
 
-export const styles = {
-  noShowMoreIcon: {
+const noIconTitleStyles = {
+  fontSize: { typography: { md: 'h6', sm: 'body2' } },
+  lineHeight: { md: '28px', sm: '18px' },
+  color: 'primary.900'
+}
+
+const withIconTitleStyles = { color: 'primary.900' }
+
+export const styles: AccordionSx = {
+  noIcon: {
     root: { maxWidth: { md: '360px', sm: '229px' } },
     accordion: {
       borderRadius: '6px',
@@ -21,11 +30,7 @@ export const styles = {
         display: 'none'
       }
     },
-    title: {
-      fontSize: { md: '20px', sm: '13px' },
-      lineHeight: { md: '28px', sm: '18px' },
-      color: 'primary.900'
-    },
+    titleActive: noIconTitleStyles, titleInactive: noIconTitleStyles,
     description: {
       fontSize: { md: '14px', sm: '8px' },
       lineHeight: { md: '24px', sm: '12px' },
@@ -37,9 +42,9 @@ export const styles = {
       '& h6': {
         color: 'basic.white'
       }
-    }
+    },
   },
-  withShowMoreIcon: {
+  withIcon: {
     root: { maxWidth: '928px', mt: '18px' },
     accordion: { mb: 2 },
     inactive: {
@@ -53,7 +58,7 @@ export const styles = {
         m: '24px 0'
       }
     },
-    title: { color: 'primary.900' },
+    titleActive: withIconTitleStyles, titleInactive: withIconTitleStyles,
     details: { p: { xs: '0 16px', sm: '0 32px' } },
     description: {
       pb: '24px',
