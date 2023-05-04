@@ -100,7 +100,7 @@ const FindOffers = () => {
     void fetchData({
       ...filters,
       limit: itemsPerPage,
-      skip: (page > 0 ? page - 1 : page) * itemsPerPage
+      skip
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetchData, searchParams, itemsPerPage, skip])
