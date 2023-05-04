@@ -39,5 +39,8 @@
     "rating": "Rating",
     "priceAsc": "Price low-high",
     "priceDesc": "Price high-low"
+  },
+  "notFound":{
+    "description": "We couldn’t find what you were searching for."
   }
 }

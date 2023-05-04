@@ -12,13 +12,15 @@ import { styles } from '~/components/not-found-results/NotFoundResults.styles'
 
 interface NotFoundResultsProps {
   description: string
-  buttonText: string
+  buttonText?: string
+  isHide?: boolean
   onClick?: () => void
 }
 
 const NotFoundResults: FC<NotFoundResultsProps> = ({
   description,
   buttonText,
+  isHide = false,
   onClick
 }) => {
   const { t } = useTranslation()
@@ -31,13 +33,15 @@ const NotFoundResults: FC<NotFoundResultsProps> = ({
         style={styles.imgTitleDescription}
         title={t('constant.resultsNotFound')}
       />
-      <AppButton
-        onClick={onClick}
-        sx={styles.button}
-        variant={VariantEnum.Tonal}
-      >
-        {buttonText}
-      </AppButton>
+      {!isHide && (
+        <AppButton
+          onClick={onClick}
+          sx={styles.button}
+          variant={VariantEnum.Tonal}
+        >
+          {buttonText}
+        </AppButton>
+      )}
     </Box>
   )
 }

@@ -3,6 +3,7 @@ export const styles = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    justifyContent: 'center',
     maxWidth: '488px',
     mx: 'auto',
     my: { xs: '50px', sm: '75px', md: '100px' }
