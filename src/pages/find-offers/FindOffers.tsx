@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Container from '@mui/material/Container'
@@ -40,18 +40,13 @@ const FindOffers = () => {
 
   const { t } = useTranslation()
 
-  const itemsPerPage = cardsView === CardsViewEnum.Grid ? 4 : 6
+  const itemsPerPage = cardsView === CardsViewEnum.Inline ? 4 : 6
 
   const { filters, activeFilterCount, searchParams, filterQueryActions } =
     useFilterQuery({
       defaultFilters,
       countActiveFilters: countActiveOfferFilters
     })
-
-  const { page, pageCount, handleChangePaginationController } = usePagination({
-    defaultPage: Number(filters.page),
-    itemsCount: 100
-  })
 
   const getOffers = useCallback(
     (params?: FindOffersFilters) => OfferService.getOffers(params),
@@ -70,10 +65,37 @@ const FindOffers = () => {
 
   const { offers, count: offersCount } = offersResponse
 
+  const {
+    page,
+    setPage,
+    pageCount,
+    rowsPerPage,
+    handleChangePaginationController
+  } = usePagination({
+    defaultPage: Number(filters.page),
+    itemsCount: offersCount,
+    itemsPerPage
+  })
+
   useEffect(() => {
-    void fetchData({ ...filters, limit: itemsPerPage })
+    setPage(1)
+  }, [searchParams, setPage])
+
+  const skip = useMemo(() => {
+    if (!page) {
+      return 0
+    }
+    return (page - 1) * rowsPerPage
+  }, [page, rowsPerPage])
+
+  useEffect(() => {
+    void fetchData({
+      ...filters,
+      limit: itemsPerPage,
+      skip
+    })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fetchData, searchParams, itemsPerPage])
+  }, [fetchData, searchParams, itemsPerPage, skip])
 
   const toggleFiltersOpen = () => (isOpen ? closeDrawer() : openDrawer())
 
