@@ -1,3 +1,5 @@
+import { MultiAccordionWithTitleSx } from "~/types"
+
 const borderStyles = {
     borderWidth: '1px',
     borderColor: 'primary.100',
@@ -5,7 +7,7 @@ const borderStyles = {
     borderRadius: '6px'
 }
 
-export const styles = {
+export const styles: MultiAccordionWithTitleSx = {
     title: {
         color: 'primary.700',
         mb: '18px',
