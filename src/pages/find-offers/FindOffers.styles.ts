@@ -2,16 +2,14 @@ export const styles = {
   container: {
     flex: 1,
     display: 'flex',
-    flexDirection: 'column',
-    gap: 1,
-    mt: '80px'
+    flexDirection: 'column'
   },
   filterSection: {
     display: 'flex'
   },
   titleWithDescription: {
     wrapper: {
-      mb: '32px',
+      mb: { xs: '20px', sm: '32px' },
       textAlign: 'center'
     },
     title: {

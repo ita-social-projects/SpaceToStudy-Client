@@ -36,6 +36,7 @@ import {
 } from '~/types'
 import { styles } from '~/pages/find-offers/FindOffers.styles'
 import { defaultFilters } from '~/pages/find-offers/FindOffers.constants'
+import NotFoundResults from '~/components/not-found-results/NotFoundResults'
 
 const FindOffers = () => {
   const [cardsView, setCardsView] = useState<CardsView>(CardsViewEnum.Inline)
@@ -168,6 +169,8 @@ const FindOffers = () => {
         )}
         {offersLoading ? (
           <Loader pageLoad size={70} />
+        ) : !offers.length && !offersLoading ? (
+          <NotFoundResults description={t('findOffers.notFound.description')} />
         ) : (
           <OfferContainer
             isFiltersOpen={isOpen}
