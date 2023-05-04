@@ -38,7 +38,7 @@ const Accordions: FC<AccordionsProps> = ({
 
   const isMultiple = Array.isArray(activeIndex)
 
-  const accordionStyle = sx[icon ? 'withIcon' : 'noIcon'] || {}
+  const accordionStyle = sx[icon ? 'withIcon' : 'noIcon'] ?? {}
 
   const accordionList = items.map((item, index) => {
     const active = isMultiple

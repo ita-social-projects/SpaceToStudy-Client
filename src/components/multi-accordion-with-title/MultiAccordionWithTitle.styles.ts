@@ -37,5 +37,4 @@ export const styles: MultiAccordionWithTitleSx = {
             ml: '27px'
         }
     },
-    noIcon: {}
 }
