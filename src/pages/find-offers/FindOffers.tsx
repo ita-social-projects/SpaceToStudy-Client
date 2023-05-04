@@ -170,10 +170,7 @@ const FindOffers = () => {
         {offersLoading ? (
           <Loader pageLoad size={70} />
         ) : !offers.length && !offersLoading ? (
-          <NotFoundResults
-            description={t('findOffers.notFound.description')}
-            isHide
-          />
+          <NotFoundResults description={t('findOffers.notFound.description')} />
         ) : (
           <OfferContainer
             isFiltersOpen={isOpen}
