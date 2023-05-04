@@ -4,15 +4,20 @@ import { CreateOfferData } from '~/containers/offer-page/create-offer/CreateOffe
 import { axiosClient } from '~/plugins/axiosClient'
 import {
   Offer,
-  FindOffersFilters,
   PriceRangeParams,
-  PriceRangeResponse
+  PriceRangeResponse,
+  GetOffersPrarams
 } from '~/types'
 
 export const OfferService = {
-  getOffers: async (params?: FindOffersFilters): Promise<AxiosResponse> =>
-    await axiosClient.get(URLs.offers.get, { params }),
-
+  getOffers: async (params?: GetOffersPrarams): Promise<AxiosResponse> => {
+    const category = params?.categoryId ? `/${params.categoryId}` : ''
+    const subject = params?.subjectId ? `/${params.subjectId}` : ''
+    return await axiosClient.get(
+      `${URLs.categories.get}${category}${URLs.subjects.get}${subject}${URLs.offers.get}`,
+      { params }
+    )
+  },
   createOffer: async (data: CreateOfferData): Promise<AxiosResponse> =>
     await axiosClient.post(URLs.offers.create, data),
 

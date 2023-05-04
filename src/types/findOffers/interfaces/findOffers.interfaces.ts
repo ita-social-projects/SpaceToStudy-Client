@@ -2,11 +2,10 @@ import {
   FindOffersUpdateFilter,
   LanguageFilter,
   RangeArray,
-  RequestParams,
   UserRole
 } from '~/types'
 
-export interface FindOffersFilters extends Omit<RequestParams, 'sort'> {
+export interface FindOffersFilters {
   categoryId: string
   subjectId: string
   sort: string
@@ -41,3 +40,7 @@ export interface FilterQueryHook<T> {
   countActiveFilters: number
   filterQueryActions: FindOffersFiltersActions<T>
 }
+
+export interface GetOffersPrarams
+  extends FindOffersFilters,
+    Omit<RequestParams, 'sort'> {}
