@@ -11,6 +11,10 @@ import AppPagination from '~/components/app-pagination/AppPagination'
 import OfferFilterBlock from '~/containers/find-offer/offer-filter-block/OfferFilterBlock'
 import FilterBarMenu from '~/containers/find-offer/filter-bar-menu/FilterBarMenu'
 import OfferSearchToolbar from '~/containers/find-offer/offer-search-toolbar/OfferSearchToolbar'
+import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
+import DirectionLink from '~/components/direction-link/DirectionLink'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'
+import { authRoutes } from '~/router/constants/authRoutes'
 
 import AppDrawer from '~/components/app-drawer/AppDrawer'
 import Loader from '~/components/loader/Loader'
@@ -129,6 +133,18 @@ const FindOffers = () => {
   return (
     <Container sx={styles.container}>
       <OfferRequestBlock />
+      <TitleWithDescription
+        description={t('findOffers.titleWithDescription.description')}
+        style={styles.titleWithDescription}
+        title={t('findOffers.titleWithDescription.title')}
+      />
+      <Box sx={styles.navigation}>
+        <DirectionLink
+          before={<ArrowBackIcon fontSize='small' />}
+          linkTo={authRoutes.subjects.path}
+          title={t('findOffers.backToAllSubjects')}
+        />
+      </Box>
       <OfferSearchToolbar
         filterActions={filterQueryActions}
         filters={filters}

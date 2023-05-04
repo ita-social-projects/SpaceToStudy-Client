@@ -12,5 +12,12 @@ export const styles = {
   },
   searchToolbar: {
     borderRadius: '70px'
+  },
+  container: {
+    mb: '30px',
+    minHeight: '110px',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between'
   }
 }

@@ -8,7 +8,7 @@ import useLoadMore from '~/hooks/use-load-more'
 import useCategoriesNames from '~/hooks/use-categories-names'
 import useBreakpoints from '~/hooks/use-breakpoints'
 
-import OfferRequestBlock from '~/containers/find-offer/OfferRequestBlock'
+import OfferRequestBlock from '~/containers/find-offer/offer-request-block/OfferRequestBlock'
 import CardWithLink from '~/components/card-with-link/CardWithLink'
 import CardsList from '~/components/cards-list/CardsList'
 import SearchAutocomplete from '~/components/search-autocomplete/SearchAutocomplete'

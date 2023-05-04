@@ -4,6 +4,11 @@
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     "button": "Create request"
   },
+  "titleWithDescription": {
+    "title": "Explore Offers",
+    "description": "Discover offers in your area of interest"
+  },
+  "backToAllSubjects": "Back to all subjects",
   "searchToolbar": {
     "label": "Search by tutor name"
   },
