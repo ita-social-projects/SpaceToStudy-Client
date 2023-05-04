@@ -7,7 +7,13 @@ export const countActiveOfferFilters = (
   defaultFilters: FindOffersFilters
 ) => {
   const filtersFromQuery = parseQueryParams(searchParams, defaultFilters) ?? {}
-  const ignoredFields = ['sort', 'authorRole', 'categoryId', 'subjectId']
+  const ignoredFields = [
+    'sort',
+    'authorRole',
+    'categoryId',
+    'subjectId',
+    'page'
+  ]
   return Object.entries(filtersFromQuery).reduce((count, [key, value]) => {
     if (ignoredFields.includes(key)) {
       return count

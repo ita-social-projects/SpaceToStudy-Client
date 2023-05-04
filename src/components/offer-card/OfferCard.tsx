@@ -5,7 +5,6 @@ import Box from '@mui/material/Box'
 import OfferAvatarAndRating from '~/components/offer-card/offer-avatar-and-rating/OfferAvatarAndRating'
 import OfferDetails from '~/components/offer-card/offer-details/OfferDetails'
 import OfferActions from '~/components/offer-card/offer-actions/OfferActions'
-import { mockOffer } from '~/pages/find-offers/FindOffers.constants'
 import { styles } from '~/components/offer-card/OfferCard.styles'
 import { ButtonActions, Offer } from '~/types'
 
@@ -51,7 +50,7 @@ const OfferCard: FC<OfferCardProps> = ({
       <OfferActions
         buttonActions={buttonActions}
         id={_id}
-        isBookmarked={mockOffer.isBookmarked}
+        isBookmarked={false}
         onBookmarkClick={onBookmarkClick}
         price={price}
       />

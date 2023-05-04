@@ -31,11 +31,14 @@ import {
   CardsView,
   SizeEnum,
   UserRoleEnum,
-  FindOffersFilters,
-  VisibilityEnum
+  VisibilityEnum,
+  GetOffersPrarams
 } from '~/types'
 import { styles } from '~/pages/find-offers/FindOffers.styles'
-import { defaultFilters } from '~/pages/find-offers/FindOffers.constants'
+import {
+  defaultFilters,
+  defaultResponse
+} from '~/pages/find-offers/FindOffers.constants'
 import NotFoundResults from '~/components/not-found-results/NotFoundResults'
 
 const FindOffers = () => {
@@ -54,7 +57,7 @@ const FindOffers = () => {
     })
 
   const getOffers = useCallback(
-    (params?: FindOffersFilters) => OfferService.getOffers(params),
+    (params?: GetOffersPrarams) => OfferService.getOffers(params),
     []
   )
 
@@ -64,7 +67,7 @@ const FindOffers = () => {
     fetchData
   } = useAxios({
     service: getOffers,
-    defaultResponse: { offers: [], count: 0 },
+    defaultResponse,
     fetchOnMount: false
   })
 

@@ -6,7 +6,6 @@ import { MemoryRouter } from 'react-router-dom'
 import { axiosClient } from '~/plugins/axiosClient'
 import { URLs } from '~/constants/request'
 import OfferDetails from '~/pages/offer-details/OfferDetails'
-import { mockOffer } from '~/pages/find-offers/FindOffers.constants'
 
 const mockAxiosClient = new MockAdapter(axiosClient)
 
@@ -37,7 +36,7 @@ describe('OfferDetails', () => {
       .reply(200, mockData)
 
     render(
-      <MemoryRouter initialEntries={[`/offers/${mockOffer.id}`]}>
+      <MemoryRouter initialEntries={[`/offers/${mockData.id}`]}>
         <OfferDetails />
       </MemoryRouter>
     )

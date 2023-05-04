@@ -17,7 +17,7 @@ const AppPagination: FC<AppPaginationProps> = ({
   sx,
   ...props
 }) => {
-  return (
+  return pageCount > 1 ? (
     <Box sx={{ ...styles.wrapper, ...sx }}>
       <Pagination
         count={pageCount}
@@ -26,7 +26,7 @@ const AppPagination: FC<AppPaginationProps> = ({
         {...props}
       />
     </Box>
-  )
+  ) : null
 }
 
 export default AppPagination
