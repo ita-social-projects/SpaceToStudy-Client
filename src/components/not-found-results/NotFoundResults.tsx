@@ -12,7 +12,7 @@ import { styles } from '~/components/not-found-results/NotFoundResults.styles'
 
 interface NotFoundResultsProps {
   description: string
-  buttonText: string
+  buttonText?: string
   onClick?: () => void
 }
 
@@ -31,13 +31,15 @@ const NotFoundResults: FC<NotFoundResultsProps> = ({
         style={styles.imgTitleDescription}
         title={t('constant.resultsNotFound')}
       />
-      <AppButton
-        onClick={onClick}
-        sx={styles.button}
-        variant={VariantEnum.Tonal}
-      >
-        {buttonText}
-      </AppButton>
+      {buttonText && (
+        <AppButton
+          onClick={onClick}
+          sx={styles.button}
+          variant={VariantEnum.Tonal}
+        >
+          {buttonText}
+        </AppButton>
+      )}
     </Box>
   )
 }

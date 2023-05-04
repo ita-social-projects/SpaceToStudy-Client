@@ -1,4 +1,10 @@
 export const styles = {
+  container: {
+    minHeight: '110px',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between'
+  },
   autocomplete: {
     width: '100%',
     maxWidth: { md: '220px' },
@@ -12,12 +18,5 @@ export const styles = {
   },
   searchToolbar: {
     borderRadius: '70px'
-  },
-  container: {
-    mb: '30px',
-    minHeight: '110px',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between'
   }
 }
