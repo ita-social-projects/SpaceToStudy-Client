@@ -1,6 +1,6 @@
 export const styles = {
   wrapper: {
-    margin: '100px 0',
+    margin: { xs: '40px 0', sm: '75px 0', md: '100px 0' },
     minHeight: '500px'
   },
   titleWithDescription: {
