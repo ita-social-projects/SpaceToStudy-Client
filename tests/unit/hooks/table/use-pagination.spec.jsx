@@ -22,12 +22,34 @@ describe('Use pagination custom hook', () => {
     expect(result.current.page).toEqual(5)
   })
 
+  it('should return checked page as 1', () => {
+    const { result } = renderHook(
+      () => usePagination({ defaultPage: 0, itemsPerPage: 5, itemsCount: 10 }),
+      {
+        wrapper
+      }
+    )
+
+    expect(result.current.page).toEqual(1)
+  })
+
+  it('should return checked page as 2', () => {
+    const { result } = renderHook(
+      () => usePagination({ defaultPage: 15, itemsPerPage: 5, itemsCount: 10 }),
+      {
+        wrapper
+      }
+    )
+
+    expect(result.current.page).toEqual(2)
+  })
+
   it('should clear page', () => {
     act(() => {
       result.current.clearPage()
     })
 
-    expect(result.current.page).toEqual(0)
+    expect(result.current.page).toEqual(1)
   })
 
   it('should change page input', () => {
@@ -53,7 +75,7 @@ describe('Use pagination custom hook', () => {
       result.current.handleChangePaginationController(null, 5)
     })
 
-    expect(result.current.page).toEqual(4)
+    expect(result.current.page).toEqual(5)
   })
 
   it('should submit page', () => {
@@ -66,7 +88,7 @@ describe('Use pagination custom hook', () => {
       result.current.handlePageSubmit(5)
     })
 
-    expect(result.current.page).toEqual(2)
+    expect(result.current.page).toEqual(3)
   })
 
   it('should set page to maxPages if page input is greater than maxPages', () => {
@@ -79,7 +101,7 @@ describe('Use pagination custom hook', () => {
       result.current.handlePageSubmit(5)
     })
 
-    expect(result.current.page).toEqual(4)
+    expect(result.current.page).toEqual(5)
     expect(result.current.pageInput).toEqual(5)
   })
 
@@ -93,7 +115,7 @@ describe('Use pagination custom hook', () => {
       result.current.handlePageSubmit(5)
     })
 
-    expect(result.current.page).toEqual(0)
+    expect(result.current.page).toEqual(1)
     expect(result.current.pageInput).toEqual(1)
   })
 })

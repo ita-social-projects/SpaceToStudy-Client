@@ -8,13 +8,14 @@ import useLoadMore from '~/hooks/use-load-more'
 import useCategoriesNames from '~/hooks/use-categories-names'
 import useBreakpoints from '~/hooks/use-breakpoints'
 
-import OfferRequestBlock from '~/containers/find-offer/OfferRequestBlock'
+import OfferRequestBlock from '~/containers/find-offer/offer-request-block/OfferRequestBlock'
 import CardWithLink from '~/components/card-with-link/CardWithLink'
 import CardsList from '~/components/cards-list/CardsList'
 import SearchAutocomplete from '~/components/search-autocomplete/SearchAutocomplete'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import AppToolbar from '~/components/app-toolbar/AppToolbar'
 import DirectionLink from '~/components/direction-link/DirectionLink'
+import NotFoundResults from '~/components/not-found-results/NotFoundResults'
 
 import {
   CategoryInterface,
@@ -106,13 +107,20 @@ const Categories = () => {
         />
       </AppToolbar>
 
-      <CardsList
-        btnText={t('categoriesPage.viewMore')}
-        cards={cards}
-        isExpandable={isExpandable}
-        loading={categoriesLoading}
-        onClick={loadMore}
-      />
+      {!categories.length && !categoriesLoading ? (
+        <NotFoundResults
+          buttonText={t('constant.buttonRequest', { name: 'categories' })}
+          description={t('constant.tryAgainText', { name: 'categories' })}
+        />
+      ) : (
+        <CardsList
+          btnText={t('categoriesPage.viewMore')}
+          cards={cards}
+          isExpandable={isExpandable}
+          loading={categoriesLoading}
+          onClick={loadMore}
+        />
+      )}
     </Container>
   )
 }

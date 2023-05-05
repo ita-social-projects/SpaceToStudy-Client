@@ -8,7 +8,7 @@ describe('EnhancedTablePagination test', () => {
   beforeEach(() => {
     render(
       <TableProvider>
-        <EnhancedTablePagination itemsCount={ itemsCountMock } />
+        <EnhancedTablePagination itemsCount={itemsCountMock} />
       </TableProvider>
     )
   })

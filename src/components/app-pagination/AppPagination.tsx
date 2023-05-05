@@ -1,39 +1,32 @@
-import { ChangeEvent, FC } from 'react'
+import { FC } from 'react'
 
 import Pagination, { PaginationProps } from '@mui/material/Pagination'
 import Box from '@mui/system/Box'
+import { SxProps } from '@mui/material'
 
 import { styles } from '~/components/app-pagination/AppPagination.styles'
 
-interface AppPaginationProps
-  extends Omit<PaginationProps, 'count' | 'onChange'> {
-  itemsCount: number
-  itemsPerPage: number
-  onChange: (page: number) => void
+interface AppPaginationProps extends Omit<PaginationProps, 'count'> {
+  pageCount: number
+  sx: SxProps
 }
 
 const AppPagination: FC<AppPaginationProps> = ({
-  itemsCount,
-  itemsPerPage,
-  onChange,
+  pageCount,
+  page,
+  sx,
   ...props
 }) => {
-  const pageCount = Math.ceil(itemsCount / itemsPerPage)
-
-  const handlePageChange = (_event: ChangeEvent<unknown>, page: number) => {
-    onChange(page)
-  }
-
-  return (
-    <Box sx={styles.wrapper}>
+  return pageCount > 1 ? (
+    <Box sx={{ ...styles.wrapper, ...sx }}>
       <Pagination
         count={pageCount}
         defaultPage={1}
-        onChange={handlePageChange}
+        page={Number(page)}
         {...props}
       />
     </Box>
-  )
+  ) : null
 }
 
 export default AppPagination

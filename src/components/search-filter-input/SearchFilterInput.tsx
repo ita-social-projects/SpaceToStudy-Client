@@ -44,7 +44,7 @@ const SearchFilterInput = ({
 
   const labelStyle = {
     ...styles.inputLabel,
-    visibility: search && VisibilityEnum.Hidden
+    visibility: search ? VisibilityEnum.Hidden : VisibilityEnum.Visible
   }
 
   const clearIconVisibility = {

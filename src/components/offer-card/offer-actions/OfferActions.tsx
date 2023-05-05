@@ -32,6 +32,7 @@ const OfferActions: FC<OfferActionsProps> = ({
       fullWidth
       key={elem.label}
       onClick={elem.handleClick}
+      sx={styles.button}
       variant={index !== 0 ? VariantEnum.Tonal : VariantEnum.Contained}
     >
       {elem.label}
@@ -39,7 +40,7 @@ const OfferActions: FC<OfferActionsProps> = ({
   ))
 
   return (
-    <Box sx={styles.container}>
+    <Box>
       <Box sx={styles.containerTop}>
         <Box>
           <Typography variant='h6'>

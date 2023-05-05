@@ -3,8 +3,9 @@ export const styles = {
     justifyContent: 'space-between',
     backgroundColor: 'companyBlue',
     borderRadius: 2,
-    px: { md: 10, sm: 6, xs: 2 },
-    py: { md: 6, sm: 4, xs: 5 }
+    px: { md: 10, sm: 3, xs: 3 },
+    py: { md: 6, sm: 4, xs: 4 },
+    mb: '30px'
   },
   info: {
     flexBasis: { lg: '55%' }
@@ -17,15 +18,15 @@ export const styles = {
   titleWithDescription: {
     wrapper: {
       textAlign: 'left',
-      marginBottom: '32px'
+      mb: '32px'
     },
     title: {
-      typography: 'h4',
+      typography: { md: 'h4', xs: 'h5' },
       color: 'primary.900',
       mb: 1
     },
     description: {
-      typography: 'subtitle1',
+      typography: { sm: 'body1', xs: 'body2' },
       color: 'primary.900',
       mb: 6
     }

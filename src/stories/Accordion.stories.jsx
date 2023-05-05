@@ -1,20 +1,17 @@
 import Accordions from '~/components/accordion/Accordions'
+import { ArrowForwardIosSharpIcon } from '@mui/icons-material/ArrowForwardIosSharp';
 
 export default {
   title: 'Accordion',
   component: Accordions,
   argTypes: {
     activeIndex: {
-      type: 'number',
+      type: ['number', 'array'],
       description: 'The index of the active item in the accordion'
     },
-    showMoreIcon: {
-      type: 'boolean',
-      description: 'Whether to show more icon'
-    },
-    square: {
-      type: 'boolean',
-      description: 'If true, rounded corners are disabled'
+    icon: {
+      type: 'object',
+      description: 'Icon of accordion, if to pass, style of accordion will be changed'
     },
     items: {
       type: 'array',
@@ -23,6 +20,18 @@ export default {
     onChange: {
       type: 'function',
       description: 'Function to be called when the accordion item is changed'
+    },
+    sx: {
+      type: 'object',
+      description: 'Style for accordion'
+    },
+    titleVariant: {
+      type: 'string',
+      description: 'Variant of accordion titles'
+    },
+    descriptionVariant: {
+      type: 'string',
+      description: 'Variant of accordion descriptions'
     }
   }
 }
@@ -33,8 +42,6 @@ export const Desktop = Template.bind({})
 
 Desktop.args = {
   activeIndex: 0,
-  showMoreIcon: false,
-  square: true,
   items: [
     {
       title: 'Title 1',
@@ -45,5 +52,7 @@ Desktop.args = {
       description: 'Description 2'
     }
   ],
-  onChange: undefined
+  onChange: undefined,
+  titleVariant: 'h6',
+  descriptionVariant: 'body2'
 }

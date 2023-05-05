@@ -5,8 +5,15 @@ import { URLs } from '~/constants/request'
 import { SubjectInterface, SubjectNameInterface } from '~/types'
 
 export const subjectService = {
-  getSubjects: (): Promise<AxiosResponse<SubjectInterface[]>> => {
-    return axiosClient.get(URLs.subjects.get)
+  getSubjects: (
+    params?: Pick<SubjectInterface, 'name'>,
+    categoryId?: string
+  ): Promise<AxiosResponse<SubjectInterface[]>> => {
+    const categoryParam = categoryId ? `/${categoryId}` : ''
+    return axiosClient.get(
+      `${URLs.categories.get}${categoryParam}${URLs.subjects.get}`,
+      { params }
+    )
   },
   getSubjectsNames: (
     categoryId: string | null

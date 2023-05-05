@@ -4,20 +4,19 @@ import { useTranslation } from 'react-i18next'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 
-import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
 import CheckboxList from '~/components/checkbox-list/CheckboxList'
 import { CreateOfferData } from '~/containers/offer-page/create-offer/CreateOffer'
-
 import { useAppSelector } from '~/hooks/use-redux'
+import OrderedListItem from '~/components/ordered-list-item/OrderedListItem'
+import AsyncAutocomplete from '~/components/async-autocomlete/AsyncAutocomplete'
+import { categoryService } from '~/services/category-service'
+import { subjectService } from '~/services/subject-service'
 import {
   CategoryNameInterface,
   CreateOfferBlockProps,
   ProficiencyLevelEnum
 } from '~/types'
-import OrderedListItem from '~/components/ordered-list-item/OrderedListItem'
 import { styles } from '~/containers/offer-page/create-offer/CreateOffer.styles'
-import useCategoriesNames from '~/hooks/use-categories-names'
-import useSubjectsNames from '~/hooks/use-subjects-names'
 
 const SpecializationBlock = <T extends CreateOfferData>({
   data,
@@ -27,41 +26,26 @@ const SpecializationBlock = <T extends CreateOfferData>({
 }: CreateOfferBlockProps<T>) => {
   const { t } = useTranslation()
   const { userRole } = useAppSelector((state) => state.appMain)
-  const { response: categoriesItems, loading: categoriesLoading } =
-    useCategoriesNames()
 
-  const { response: subjectsItems, loading: subjectsLoading } =
-    useSubjectsNames({
-      category: data.categoryId
-    })
-
-  const getValue = useCallback(
-    (array: CategoryNameInterface[], key: keyof T) =>
-      array.find((option) => option._id === data[key]) || null,
-    [data]
+  const getSubjectsNames = useCallback(
+    () => subjectService.getSubjectsNames(data.category),
+    [data.category]
   )
 
   const handleAutocompleteChange =
-    (key: keyof Pick<T, 'categoryId' | 'subjectId'>) =>
-    (_: React.ChangeEvent, value: CategoryNameInterface | null) => {
-      handleNonInputValueChange(key, value?._id || '')
+    (key: keyof Pick<T, 'category' | 'subject'>) =>
+    (_: React.SyntheticEvent, value: CategoryNameInterface | null) => {
+      handleNonInputValueChange(key, value?._id ?? '')
       if (!value) {
-        handleNonInputValueChange('subjectId', '')
+        handleNonInputValueChange('subject', '')
       }
     }
 
   const handleCheckboxesChange = (value: string[]) =>
     handleNonInputValueChange('proficiencyLevel', value)
 
-  const getLabel = (option: CategoryNameInterface) => option.name || ''
-
-  const isOptionEqualToValue = (
-    option: CategoryNameInterface,
-    value: CategoryNameInterface
-  ) => option?._id === value?._id
-
   const levelOptions = Object.values(ProficiencyLevelEnum)
-  const subjectError = data.categoryId && errors.subjectId
+  const subjectError = data.category && errors.subject
 
   return (
     <OrderedListItem
@@ -73,35 +57,33 @@ const SpecializationBlock = <T extends CreateOfferData>({
           <Typography sx={[styles.description, styles.category]}>
             {t(`offerPage.createOffer.description.category.${userRole}`)}
           </Typography>
-          <AppAutoComplete
-            getOptionLabel={getLabel}
-            isOptionEqualToValue={isOptionEqualToValue}
-            loading={categoriesLoading}
-            onBlur={handleBlur('categoryId')}
-            onChange={handleAutocompleteChange('categoryId')}
-            options={categoriesItems}
+          <AsyncAutocomplete
+            labelField='name'
+            onBlur={handleBlur('category')}
+            onChange={handleAutocompleteChange('category')}
+            service={categoryService.getCategoriesNames}
             sx={styles.inputs}
             textFieldProps={{
               label: t('offerPage.createOffer.labels.category'),
-              error: Boolean(errors.categoryId),
-              helperText: t(errors.categoryId) || ' '
+              error: Boolean(errors.category),
+              helperText: errors.category ? t(errors.category) : ' '
             }}
-            value={getValue(categoriesItems, 'categoryId')}
+            value={data.category}
+            valueField='_id'
           />
-          <AppAutoComplete
-            disabled={!data.categoryId}
-            getOptionLabel={getLabel}
-            isOptionEqualToValue={isOptionEqualToValue}
-            loading={subjectsLoading}
-            onBlur={handleBlur('subjectId')}
-            onChange={handleAutocompleteChange('subjectId')}
-            options={subjectsItems}
+          <AsyncAutocomplete
+            labelField='name'
+            onBlur={handleBlur('subject')}
+            onChange={handleAutocompleteChange('subject')}
+            service={getSubjectsNames}
+            sx={styles.inputs}
             textFieldProps={{
               error: Boolean(subjectError),
-              helperText: subjectError ? t(errors.subjectId) : ' ',
+              helperText: subjectError ? t(errors.subject) : ' ',
               label: t('offerPage.createOffer.labels.subject')
             }}
-            value={getValue(subjectsItems, 'subjectId')}
+            value={data.subject}
+            valueField='_id'
           />
         </Box>
         <Box sx={styles.inputBlock}>

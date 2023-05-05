@@ -25,8 +25,8 @@ import { styles } from '~/containers/offer-page/create-offer/CreateOffer.styles'
 import { ErrorResponse } from '~/types'
 
 export interface CreateOfferData {
-  categoryId: string
-  subjectId: string
+  category: string
+  subject: string
   proficiencyLevel: string[]
   languages: string[]
   description: string

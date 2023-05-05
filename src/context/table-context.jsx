@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from 'react'
+import usePagination from '../hooks/table/use-pagination'
 
 const TableContext = createContext()
 
@@ -19,9 +20,9 @@ const TableProvider = ({
 
   const numSelected = selected.length
 
-  const [page, setPage] = useState(0)
-  const [rowsPerPage, setRowsPerPage] = useState(5)
-  const [pageInput, setPageInput] = useState(1)
+  const [itemsCount, setItemsCount] = useState()
+
+  const pagination = usePagination({ itemsCount })
 
   return (
     <TableContext.Provider
@@ -38,12 +39,8 @@ const TableProvider = ({
         selected,
         numSelected,
         setSelected,
-        page,
-        setPage,
-        rowsPerPage,
-        setRowsPerPage,
-        pageInput,
-        setPageInput
+        setItemsCount,
+        pagination
       }}
     >
       {children}

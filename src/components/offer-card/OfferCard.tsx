@@ -5,7 +5,6 @@ import Box from '@mui/material/Box'
 import OfferAvatarAndRating from '~/components/offer-card/offer-avatar-and-rating/OfferAvatarAndRating'
 import OfferDetails from '~/components/offer-card/offer-details/OfferDetails'
 import OfferActions from '~/components/offer-card/offer-actions/OfferActions'
-import { mockOffer } from '~/pages/find-offers/FindOffers.constants'
 import { styles } from '~/components/offer-card/OfferCard.styles'
 import { ButtonActions, Offer } from '~/types'
 
@@ -38,26 +37,24 @@ const OfferCard: FC<OfferCardProps> = ({
   const fullName = `${authorFirstName} ${authorLastName}`
 
   return (
-    <>
+    <Box sx={styles.wrapper}>
       <OfferAvatarAndRating imgSrc={author.photo} rating={authorAvgRating} />
-      <Box sx={styles.wrapper}>
-        <OfferDetails
-          description={!isHideField && description}
-          languages={languages}
-          level={proficiencyLevel}
-          name={fullName}
-          professionalSummary={author.professionalSummary}
-          subject={subject.name}
-        />
-        <OfferActions
-          buttonActions={buttonActions}
-          id={_id}
-          isBookmarked={mockOffer.isBookmarked}
-          onBookmarkClick={onBookmarkClick}
-          price={price}
-        />
-      </Box>
-    </>
+      <OfferDetails
+        description={!isHideField && description}
+        languages={languages}
+        level={proficiencyLevel}
+        name={fullName}
+        professionalSummary={author.professionalSummary}
+        subject={subject.name}
+      />
+      <OfferActions
+        buttonActions={buttonActions}
+        id={_id}
+        isBookmarked={false}
+        onBookmarkClick={onBookmarkClick}
+        price={price}
+      />
+    </Box>
   )
 }
 

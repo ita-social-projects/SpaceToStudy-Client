@@ -7,7 +7,7 @@ interface UseAxiosProps<Response, TransformedResponse, Params> {
   defaultResponse: TransformedResponse
   fetchOnMount?: boolean
   transform?: (params: Response) => TransformedResponse
-  onResponse?: () => void
+  onResponse?: (responseData: TransformedResponse) => void
   onResponseError?: (error: ErrorResponse) => void
 }
 
@@ -45,7 +45,7 @@ const useAxios = <
         const responseData = transform ? transform(res.data) : res.data
         setResponse(responseData as TransformedResponse)
         setError(null)
-        onResponse && onResponse()
+        onResponse && onResponse(responseData as TransformedResponse)
       } catch (e) {
         const error = e as AxiosError<ErrorResponse>
         if (error.response) {

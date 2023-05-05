@@ -21,17 +21,19 @@ export const styles = {
       width: '80px',
       borderRadius: '50%'
     },
-    description: {
-      ...ellipsisTextStyle(2),
-      textAlign: 'left'
-    },
-    title: {
-      mb: '5px',
-      mt: '5px',
-      typography: 'h6'
-    },
-    wrapper: {
-      mb: '5px'
+    titleWithDescription: {
+      wrapper: {
+        mb: '5px'
+      },
+      title: {
+        textAlign: 'center',
+        my: '5px',
+        typography: 'h6'
+      },
+      description: {
+        ...ellipsisTextStyle(2),
+        textAlign: 'left'
+      }
     }
   },
   iconButton: {
@@ -54,6 +56,8 @@ export const styles = {
   },
   chipsContainer: {
     display: 'flex',
+    flexWrap: 'wrap',
+    gap: '5px',
     mb: '50px'
   },
   subjectChipLabel: {
@@ -89,11 +93,15 @@ export const styles = {
       backgroundColor: 'primary.50'
     }
   },
-  componentStyles: {
-    textAlign: 'left',
-    margin: 0,
-    mb: 0
-  },
-  descriptionStyles: { typography: 'caption' },
-  titleStyles: { typography: 'h6', mb: 0 }
+  titleWithDescription: {
+    wrapper: {
+      textAlign: 'left'
+    },
+    title: {
+      typography: 'h6'
+    },
+    description: {
+      typography: 'caption'
+    }
+  }
 }

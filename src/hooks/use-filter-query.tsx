@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useCallback } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { FindOffersFiltersActions } from '~/types'
 import { parseQueryParams } from '~/utils/helper-functions'
@@ -14,7 +14,8 @@ interface UseFilterQueryOptions<T> {
 interface FilterQueryHook<T> {
   filters: T
   filterQueryActions: FindOffersFiltersActions<T>
-  activeFilterCount?: number
+  searchParams: URLSearchParams
+  activeFilterCount: number | null
 }
 
 export const useFilterQuery = <T extends object>({
@@ -22,19 +23,28 @@ export const useFilterQuery = <T extends object>({
   countActiveFilters
 }: UseFilterQueryOptions<T>): FilterQueryHook<T> => {
   const [searchParams, setSearchParams] = useSearchParams()
-  const [filters, setFilters] = useState<T>(defaultFilters)
-
-  useEffect(() => {
-    const parsedFilters = parseQueryParams(searchParams, defaultFilters)
-    parsedFilters
-      ? setFilters({ ...defaultFilters, ...parsedFilters })
-      : setFilters(defaultFilters)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  const parsedFilters = parseQueryParams(searchParams, defaultFilters)
+  const [filters, setFilters] = useState<T>({
+    ...defaultFilters,
+    ...parsedFilters
+  })
 
   const updateFilter = useCallback(<K extends keyof T>(value: T[K], key: K) => {
     setFilters((prevFilters) => ({ ...prevFilters, [key]: value }))
   }, [])
+
+  const updateFilterInQuery = useCallback(
+    <K extends keyof T>(value: T[K], key: K) => {
+      updateFilter(value, key)
+      if (value) {
+        searchParams.set(String(key), String(value))
+      } else {
+        searchParams.delete(String(key))
+      }
+      setSearchParams(searchParams)
+    },
+    [searchParams, setSearchParams, updateFilter]
+  )
 
   const updateQueryParams = useCallback(() => {
     Object.entries(filters).forEach(([key, value]) => {
@@ -52,12 +62,19 @@ export const useFilterQuery = <T extends object>({
     setFilters(defaultFilters)
   }, [defaultFilters, setSearchParams])
 
-  const activeFilterCount =
-    countActiveFilters && countActiveFilters(searchParams, defaultFilters)
+  const activeFilterCount = countActiveFilters
+    ? countActiveFilters(searchParams, defaultFilters)
+    : null
 
   return {
     filters,
     activeFilterCount,
-    filterQueryActions: { updateFilter, resetFilters, updateQueryParams }
+    searchParams,
+    filterQueryActions: {
+      updateFilter,
+      resetFilters,
+      updateQueryParams,
+      updateFilterInQuery
+    }
   }
 }

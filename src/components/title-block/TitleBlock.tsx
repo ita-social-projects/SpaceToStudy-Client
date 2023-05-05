@@ -15,7 +15,7 @@ type TitleBlockProps = {
 
 const TitleBlock: FC<TitleBlockProps> = ({ img, translationKey, children }) => {
   const { t } = useTranslation()
-  const { isDesktop } = useBreakpoints()
+  const { isMobile } = useBreakpoints()
 
   return (
     <Box className='section' sx={styles.container}>
@@ -27,7 +27,7 @@ const TitleBlock: FC<TitleBlockProps> = ({ img, translationKey, children }) => {
         />
         <Box sx={styles.form}>{children}</Box>
       </Box>
-      {isDesktop && <Box alt='icon' component='img' src={img}></Box>}
+      {!isMobile && <Box alt='icon' component='img' src={img}></Box>}
     </Box>
   )
 }

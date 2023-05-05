@@ -4,6 +4,14 @@
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     "button": "Створити запит"
   },
+  "titleWithDescription": {
+    "title": "Досліджуйте пропозиції",
+    "description": "Відкрийте для себе пропозиції у вашій області інтересів"
+  },
+  "backToAllSubjects": "Повернутися до всіх предметів",
+  "searchToolbar": {
+    "label": "Пошук за іменем репетитора"
+  },
   "topMenu": {
     "tutorsOffers": "Пропозиції репетитора",
     "studentsRequests": "Запити студентів"
