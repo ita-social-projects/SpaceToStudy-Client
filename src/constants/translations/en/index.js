@@ -13,6 +13,7 @@ import iconsTooltip from './icons-tooltip.json'
 import signup from './signup.json'
 import footer from './footer.json'
 import becomeTutor from './become-tutor.json'
+import step from './step.json'
 import modals from './email-modals.json'
 import errors from './errors.json'
 import table from './table.json'
@@ -45,6 +46,7 @@ const en = {
     cookiePolicyPage,
     footer,
     becomeTutor,
+    step,
     modals,
     errors,
     table,

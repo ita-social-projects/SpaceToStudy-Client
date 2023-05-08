@@ -1,9 +1,15 @@
+import { vi } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
+
 import AddPhotoStep from '~/containers/tutor-home-page/add-photo-step/AddPhotoStep'
 import { ModalProvider } from '~/context/modal-context'
 import { StepProvider } from '~/context/step-context'
 import useBreakpoints from '~/hooks/use-breakpoints'
-import { vi } from 'vitest'
+
+import {
+  initialValues,
+  tutorStepLabels
+} from '~/components/user-steps-wrapper/constants'
 
 vi.mock('~/hooks/use-breakpoints')
 
@@ -22,8 +28,11 @@ describe('AddPhotoStep test', () => {
     window.URL.createObjectURL = vi.fn(() => 'image/png')
     render(
       <ModalProvider>
-        <StepProvider>
-          <AddPhotoStep btnsBox={ btnsBox } stepLabel={ 'photo' } />
+        <StepProvider
+          initialValues={initialValues}
+          stepLabels={tutorStepLabels}
+        >
+          <AddPhotoStep btnsBox={btnsBox} stepLabel={'photo'} />
         </StepProvider>
       </ModalProvider>
     )
@@ -50,7 +59,9 @@ describe('AddPhotoStep test', () => {
   })
 
   it('should render error text after add wrong file type', async () => {
-    const fakeFile = new File(['photo'], 'test-file.pdf', { type: 'application/pdf' })
+    const fakeFile = new File(['photo'], 'test-file.pdf', {
+      type: 'application/pdf'
+    })
 
     const input = screen.getByLabelText('becomeTutor.photo.button')
     fireEvent.change(input, { target: { files: [fakeFile] } })

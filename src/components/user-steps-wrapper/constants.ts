@@ -14,4 +14,10 @@ export const validations = {
   experience: textField(0, 70)
 }
 
-export const stepLabels = ['generalInfo', 'subjects', 'language', 'photo']
+export const tutorStepLabels = ['generalInfo', 'subjects', 'language', 'photo']
+export const studentStepLabels = [
+  'generalInfo',
+  'interests',
+  'language',
+  'photo'
+]

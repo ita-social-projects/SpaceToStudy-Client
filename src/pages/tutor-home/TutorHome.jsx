@@ -1,16 +1,17 @@
 import { useEffect, useContext } from 'react'
 import { useSelector } from 'react-redux'
-import BecomeATutor from '~/containers/tutor-home-page/become-a-tutor/BecomeATutor'
+
+import UserStepsWrapper from '~/components/user-steps-wrapper/UserStepsWrapper'
 import { ModalContext } from '~/context/modal-context'
 
 const TutorHome = () => {
   const { openModal } = useContext(ModalContext)
-  const { isFirstLogin } = useSelector((state) => state.appMain)
+  const { isFirstLogin, userRole } = useSelector((state) => state.appMain)
 
   useEffect(() => {
     if (isFirstLogin) {
       openModal({
-        component: <BecomeATutor />,
+        component: <UserStepsWrapper userRole={userRole} />,
         paperProps: {
           sx: {
             maxHeight: { sm: '652px' },
@@ -21,7 +22,7 @@ const TutorHome = () => {
         }
       })
     }
-  }, [openModal, isFirstLogin])
+  }, [openModal, isFirstLogin, userRole])
 
   return <div data-testid='tutorHome'>Hello Tutor!</div>
 }

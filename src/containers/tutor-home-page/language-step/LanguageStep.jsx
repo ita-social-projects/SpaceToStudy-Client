@@ -38,7 +38,6 @@ const LanguageStep = ({ stepLabel, btnsBox }) => {
             onChange={onChangeLanguage}
             options={languages}
             textFieldProps={{
-              InputProps: { disableUnderline: true },
               label: t('becomeTutor.languages.autocompleteLabel'),
               'data-testid': 'language',
               sx: { mb: '30px' }

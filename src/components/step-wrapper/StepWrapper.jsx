@@ -26,7 +26,7 @@ const StepWrapper = ({ children, steps }) => {
       sx={[styles.defaultTab, index === activeStep && styles.activeTab]}
       typography='caption'
     >
-      {t(`becomeTutor.stepLabels.${step}`)}
+      {t(`step.stepLabels.${step}`)}
     </Box>
   ))
 

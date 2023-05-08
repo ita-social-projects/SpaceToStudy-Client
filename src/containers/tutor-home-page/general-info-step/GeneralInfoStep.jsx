@@ -18,7 +18,7 @@ import useForm from '~/hooks/use-form'
 
 import img from '~/assets/img/tutor-home-page/become-tutor/general-info.svg'
 import { useStepContext } from '~/context/step-context'
-import { validations } from '~/containers/tutor-home-page/constants'
+import { validations } from '~/components/user-steps-wrapper/constants'
 import { styles } from '~/containers/tutor-home-page/general-info-step/GeneralInfoStep.styles'
 import { defaultResponses } from '~/constants'
 
