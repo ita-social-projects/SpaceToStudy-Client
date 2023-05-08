@@ -1,4 +1,6 @@
 import { createContext, useContext, useState, ReactNode, useMemo } from 'react'
+
+import usePagination from '../hooks/table/use-pagination'
 import { BulkAction, Column, Sort, RowAction } from '~/types'
 
 export interface TableProviderProps<T, U> {
@@ -30,9 +32,9 @@ const TableProvider = <Entity, Filters>({
 
   const numSelected = selected.length
 
-  const [page, setPage] = useState<number>(0)
-  const [rowsPerPage, setRowsPerPage] = useState<number>(5)
-  const [pageInput, setPageInput] = useState<number>(1)
+  const [itemsCount, setItemsCount] = useState<number>()
+
+  const pagination = usePagination({ itemsCount })
 
   const value = useMemo(() => {
     return {
@@ -48,12 +50,8 @@ const TableProvider = <Entity, Filters>({
       selected,
       numSelected,
       setSelected,
-      page,
-      setPage,
-      rowsPerPage,
-      setRowsPerPage,
-      pageInput,
-      setPageInput
+      setItemsCount,
+      pagination
     }
   }, [
     isSelection,
@@ -65,9 +63,7 @@ const TableProvider = <Entity, Filters>({
     filters,
     selected,
     numSelected,
-    page,
-    rowsPerPage,
-    pageInput
+    pagination
   ])
 
   return <TableContext.Provider value={value}>{children}</TableContext.Provider>

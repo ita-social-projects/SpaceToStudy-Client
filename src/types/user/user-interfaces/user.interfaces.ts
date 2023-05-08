@@ -17,7 +17,7 @@ export interface GetUsersParams extends RequestParams {
   email: string
   lastLogin: LastLogin
   name: string
-  role: UserRole
+  role?: UserRole
   status: string[]
 }
 
@@ -44,10 +44,7 @@ export interface UserResponse {
   updatedAt: string
 }
 
-export interface UserInitialFilters
-  extends Omit<GetUsersParams, 'skip' | 'limit' | 'sort' | 'role'> {
-  role?: UserRole
-}
+export type UserInitialFilters = Omit<GetUsersParams, keyof RequestParams>
 
 export interface LoginParams {
   email: string

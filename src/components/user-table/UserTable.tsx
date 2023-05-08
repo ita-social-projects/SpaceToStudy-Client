@@ -81,7 +81,7 @@ const UserTable: FC<UserTableProps> = ({
   ]
 
   const tabs = Object.values(tabsInfo).map((tab) => (
-    <Tab<UserInterface, UserInitialFilters>
+    <Tab<UserInterface, GetUsersParams>
       activeTab={externalFilter.status}
       key={tab.label}
       setTab={setExternalFilter}

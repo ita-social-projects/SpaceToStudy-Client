@@ -17,6 +17,15 @@ export interface Column<T> {
   filterEnum?: FilterEnum[]
 }
 
+export interface Pagination {
+  page: number
+  setPage: Dispatch<SetStateAction<number>>
+  rowsPerPage: number
+  setRowsPerPage: Dispatch<SetStateAction<number>>
+  pageInput: number
+  setPageInput: Dispatch<SetStateAction<number>>
+}
+
 export interface TableContextType<T, U> {
   isSelection: boolean
   columns: Column<T>[]
@@ -30,12 +39,8 @@ export interface TableContextType<T, U> {
   numSelected: number
   selected: string[]
   setSelected: Dispatch<SetStateAction<string[]>>
-  page: number
-  setPage: Dispatch<SetStateAction<number>>
-  rowsPerPage: number
-  setRowsPerPage: Dispatch<SetStateAction<number>>
-  pageInput: number
-  setPageInput: Dispatch<SetStateAction<number>>
+  setItemsCount: Dispatch<SetStateAction<number>>
+  pagination: Pagination
 }
 
 export interface EnhancedTableProps<T> {
