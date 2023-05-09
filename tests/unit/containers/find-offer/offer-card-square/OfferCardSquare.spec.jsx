@@ -86,15 +86,15 @@ describe('OfferCardSquare test', () => {
 
   it('renders the send message button', () => {
     const sendMessageButton = screen.getByRole('button', {
-      name: 'common.labels.sendMessage'
+      name: 'Action 1'
     })
 
     expect(sendMessageButton).toBeInTheDocument()
   })
 
   it('renders the view details button', () => {
-    const viewDetailsButton = screen.getByRole('link', {
-      name: 'common.labels.viewDetails'
+    const viewDetailsButton = screen.getByRole('button', {
+      name: 'Action 2'
     })
     expect(viewDetailsButton).toBeInTheDocument()
   })
