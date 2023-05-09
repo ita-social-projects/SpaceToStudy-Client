@@ -23,7 +23,7 @@ const setIsUserFetched = vi.fn()
 const validations = {
   firstName: vi.fn(() => undefined),
   lastName: vi.fn(() => undefined),
-  experience: vi.fn(() => undefined)
+  professionalSummary: vi.fn(() => undefined)
 }
 
 const userId = '63f5d0ebb'
