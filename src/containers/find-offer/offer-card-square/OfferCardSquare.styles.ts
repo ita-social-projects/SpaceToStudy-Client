@@ -82,17 +82,6 @@ export const styles = {
     justifyContent: 'space-between',
     mb: '10px'
   },
-  sendMessageButton: {
-    width: '100%',
-    mb: '16px'
-  },
-  viewDetailsButton: {
-    backgroundColor: 'primary.50',
-    color: 'primary.900',
-    '&:hover': {
-      backgroundColor: 'primary.50'
-    }
-  },
   titleWithDescription: {
     wrapper: {
       textAlign: 'left'
