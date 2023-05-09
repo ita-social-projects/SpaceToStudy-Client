@@ -1,5 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
 
 import useBreakpoints from '~/hooks/use-breakpoints'
 import Box from '@mui/material/Box'
@@ -8,6 +9,8 @@ import { CardsView, Offer, CardsViewEnum } from '~/types'
 import OfferCardSquare from '~/containers/find-offer/offer-card-square/OfferCardSquare'
 import OfferCard from '~/components/offer-card/OfferCard'
 import AppCard from '~/components/app-card/AppCard'
+
+import { authRoutes } from '~/router/constants/authRoutes'
 
 interface OfferContainerProps {
   viewMode: CardsView
@@ -32,23 +35,39 @@ const OfferContainer: FC<OfferContainerProps> = ({
   const renderSquareCard =
     isMobile || (isDesktop && viewMode === CardsViewEnum.Grid)
 
-  const offerItems = offerCards.map((el) => (
-    <Grid item key={el._id} sm={isDesktop && isFiltersOpen ? 6 : 4}>
-      {renderSquareCard ? (
-        <AppCard>
-          <OfferCardSquare
-            buttonActions={buttonActions}
-            offer={el}
-            onBookmarkClick={onBookmarkClick}
-          />
-        </AppCard>
-      ) : (
-        <AppCard sx={{ padding: { sm: '20px', md: '30px 20px' } }}>
-          <OfferCard offer={el} onBookmarkClick={onBookmarkClick} />
-        </AppCard>
-      )}
-    </Grid>
-  ))
+  const offerItems = offerCards.map((el) => {
+    const buttonActions = [
+      {
+        label: t('common.labels.sendMessage'),
+        handleClick: () => null
+      },
+      {
+        label: t('common.labels.viewDetails'),
+        handleClick: () => null,
+        buttonProps: {
+          component: Link,
+          to: `${authRoutes.offerDetails.path}/${el._id}`
+        }
+      }
+    ]
+    return (
+      <Grid item key={el._id} sm={isDesktop && isFiltersOpen ? 6 : 4}>
+        {renderSquareCard ? (
+          <AppCard>
+            <OfferCardSquare offer={el} onBookmarkClick={onBookmarkClick} />
+          </AppCard>
+        ) : (
+          <AppCard sx={{ padding: { sm: '20px', md: '30px 20px' } }}>
+            <OfferCard
+              buttonActions={buttonActions}
+              offer={el}
+              onBookmarkClick={onBookmarkClick}
+            />
+          </AppCard>
+        )}
+      </Grid>
+    )
+  })
 
   return (
     <Box data-testid='OfferContainer' sx={{ flexGrow: 1, my: '20px' }}>

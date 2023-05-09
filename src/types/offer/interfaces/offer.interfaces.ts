@@ -8,6 +8,7 @@ import {
   UserRoleEnum,
   LanguagesEnum
 } from '~/types'
+import { LinkProps } from 'react-router-dom'
 
 export interface Offer extends CommonEntityFields {
   price: number
@@ -29,6 +30,7 @@ export interface Offer extends CommonEntityFields {
 export interface ButtonActions {
   label: string
   handleClick: () => void
+  buttonProps?: LinkProps
 }
 
 export interface PriceRangeParams {

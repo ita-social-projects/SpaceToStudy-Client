@@ -1,6 +1,5 @@
 import { FC } from 'react'
 import { t } from 'i18next'
-import { Link } from 'react-router-dom'
 
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
@@ -10,25 +9,36 @@ import TurnedInNot from '@mui/icons-material/TurnedInNot'
 
 import AppButton from '~/components/app-button/AppButton'
 
-import { authRoutes } from '~/router/constants/authRoutes'
-
 import { styles } from '~/components/offer-card/offer-actions/OfferActions.styles'
-import { VariantEnum } from '~/types'
+import { ButtonActions, VariantEnum } from '~/types'
 
 interface OfferActionsProps {
   id: string
   price: number
   isBookmarked: boolean
   onBookmarkClick: (id: string) => void
+  buttonActions: ButtonActions[]
 }
 
 const OfferActions: FC<OfferActionsProps> = ({
   id,
   price,
   isBookmarked,
-  onBookmarkClick
+  onBookmarkClick,
+  buttonActions
 }) => {
-  const viewDetailsLink = `${authRoutes.offerDetails.path}/${id}`
+  const buttons = buttonActions.map((elem, index) => (
+    <AppButton
+      fullWidth
+      key={elem.label}
+      onClick={elem.handleClick}
+      sx={styles.button}
+      {...elem.buttonProps}
+      variant={index !== 0 ? VariantEnum.Tonal : VariantEnum.Contained}
+    >
+      {elem.label}
+    </AppButton>
+  ))
 
   return (
     <Box>
@@ -49,20 +59,7 @@ const OfferActions: FC<OfferActionsProps> = ({
         </IconButton>
       </Box>
 
-      <Box sx={styles.buttons}>
-        <AppButton sx={styles.button} variant={VariantEnum.Contained}>
-          {t('common.labels.sendMessage')}
-        </AppButton>
-        <AppButton
-          component={Link}
-          fullWidth
-          sx={styles.button}
-          to={viewDetailsLink}
-          variant={VariantEnum.Tonal}
-        >
-          {t('common.labels.viewDetails')}
-        </AppButton>
-      </Box>
+      <Box sx={styles.buttons}>{buttons}</Box>
     </Box>
   )
 }
