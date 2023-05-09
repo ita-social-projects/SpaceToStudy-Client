@@ -38,6 +38,10 @@ const mockOffer = {
 }
 
 const onBookmarkClick = vi.fn()
+const buttonActions = [
+  { label: 'Action 1', handleClick: vi.fn() },
+  { label: 'Action 2', handleClick: vi.fn() }
+]
 
 describe('OfferCardSquare test', () => {
   beforeEach(() => {
