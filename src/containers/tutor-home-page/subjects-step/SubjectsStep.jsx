@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
@@ -8,9 +8,10 @@ import useBreakpoints from '~/hooks/use-breakpoints'
 
 import { styles } from '~/containers/tutor-home-page/subjects-step/SubjectsStep.styles'
 import img from '~/assets/img/tutor-home-page/become-tutor/study-category.svg'
-import { categoriesMock, languagesMock } from './constants'
 import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
 import { useStepContext } from '~/context/step-context'
+import useSubjectsNames from '~/hooks/use-subjects-names'
+import useCategoriesNames from '~/hooks/use-categories-names'
 import AppChipList from '~/components/app-chips-list/AppChipList'
 
 const SubjectsStep = ({ stepLabel, btnsBox }) => {
@@ -19,8 +20,25 @@ const SubjectsStep = ({ stepLabel, btnsBox }) => {
   const { stepData, handleStepData } = useStepContext()
   const subjectData = stepData[stepLabel]
 
-  const [subjects, setSubjects] = useState({ category: null, subject: null })
+  const [subjects, setSubjects] = useState({
+    category: null,
+    subject: null,
+    categoryId: null
+  })
   const [subjectError, setSubjectError] = useState('')
+  const { response: categoriesNamesItems } = useCategoriesNames()
+  const { response: subjectsNamesItems } = useSubjectsNames({
+    category: subjects.categoryId
+  })
+
+  subjects.categoryId = useMemo(() => {
+    const category = categoriesNamesItems.find(
+      (el) => el.name === subjects.category
+    )
+    const result = !category ? '' : category._id
+
+    return result
+  }, [subjects.category, categoriesNamesItems])
 
   const imageBlock = (
     <Box sx={styles.imgContainer}>
@@ -67,8 +85,8 @@ const SubjectsStep = ({ stepLabel, btnsBox }) => {
   }
 
   const listOfItems = subjectData.map((item) => item.subject)
-  const categoriesMockOptions = categoriesMock.map((item) => item.name)
-  const languagesMockOptions = languagesMock.map((item) => item.name)
+  const categoryOptions = categoriesNamesItems.map((el) => el.name)
+  const subjectOptions = subjectsNamesItems.map((el) => el.name)
 
   return (
     <Box sx={styles.container}>
@@ -79,7 +97,7 @@ const SubjectsStep = ({ stepLabel, btnsBox }) => {
           {isMobile && imageBlock}
           <AppAutoComplete
             onChange={onChangeCategory}
-            options={categoriesMockOptions}
+            options={categoryOptions}
             sx={{ mb: '20px' }}
             textFieldProps={{
               id: t('becomeTutor.categories.mainSubjectsLabel'),
@@ -91,7 +109,7 @@ const SubjectsStep = ({ stepLabel, btnsBox }) => {
           <AppAutoComplete
             disabled={!subjects.category}
             onChange={onChangeSubject}
-            options={languagesMockOptions}
+            options={subjectOptions}
             sx={{ mb: '20px' }}
             textFieldProps={{
               id: t('becomeTutor.categories.subjectLabel'),
