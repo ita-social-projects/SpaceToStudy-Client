@@ -32,17 +32,6 @@ const OfferContainer: FC<OfferContainerProps> = ({
   const renderSquareCard =
     isMobile || (isDesktop && viewMode === CardsViewEnum.Grid)
 
-  const buttonActions = [
-    {
-      label: t('common.labels.sendMessage'),
-      handleClick: () => null
-    },
-    {
-      label: t('common.labels.viewDetails'),
-      handleClick: () => null
-    }
-  ]
-
   const offerItems = offerCards.map((el) => (
     <Grid item key={el._id} sm={isDesktop && isFiltersOpen ? 6 : 4}>
       {renderSquareCard ? (
@@ -55,11 +44,7 @@ const OfferContainer: FC<OfferContainerProps> = ({
         </AppCard>
       ) : (
         <AppCard sx={{ padding: { sm: '20px', md: '30px 20px' } }}>
-          <OfferCard
-            buttonActions={buttonActions}
-            offer={el}
-            onBookmarkClick={onBookmarkClick}
-          />
+          <OfferCard offer={el} onBookmarkClick={onBookmarkClick} />
         </AppCard>
       )}
     </Grid>

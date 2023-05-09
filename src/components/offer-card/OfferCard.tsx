@@ -6,20 +6,18 @@ import OfferAvatarAndRating from '~/components/offer-card/offer-avatar-and-ratin
 import OfferDetails from '~/components/offer-card/offer-details/OfferDetails'
 import OfferActions from '~/components/offer-card/offer-actions/OfferActions'
 import { styles } from '~/components/offer-card/OfferCard.styles'
-import { ButtonActions, Offer } from '~/types'
+import { Offer } from '~/types'
 
 interface OfferCardProps {
   isHideField?: boolean
   offer: Offer
   onBookmarkClick: (id: string) => void
-  buttonActions: ButtonActions[]
 }
 
 const OfferCard: FC<OfferCardProps> = ({
   isHideField = false,
   offer,
-  onBookmarkClick,
-  buttonActions
+  onBookmarkClick
 }) => {
   const {
     _id,
@@ -48,7 +46,6 @@ const OfferCard: FC<OfferCardProps> = ({
         subject={subject.name}
       />
       <OfferActions
-        buttonActions={buttonActions}
         id={_id}
         isBookmarked={false}
         onBookmarkClick={onBookmarkClick}

@@ -5,5 +5,5 @@ export const authRoutes = {
     route: 'categories/subjects/find-offers',
     path: '/categories/subjects/find-offers'
   },
-  offerDetails: { route: 'offer-details/:id', path: 'offer-details/:id' }
+  offerDetails: { route: 'offer-details/:id', path: '/offer-details' }
 }
