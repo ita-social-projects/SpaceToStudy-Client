@@ -18,11 +18,19 @@ const AppTextArea: FC<AppTextAreaProps> = ({
   minRows = 4,
   maxRows = 4,
   maxLength,
+  title,
   value,
+  sx,
   ...props
 }) => {
+  const titleEl = title && (
+    <Typography sx={styles.title} variant='body2'>
+      {title}
+    </Typography>
+  )
   return (
-    <Box sx={styles.root}>
+    <Box sx={{ position: 'relative', ...sx }}>
+      {titleEl}
       <AppTextField
         inputProps={{ maxLength }}
         maxRows={minRows}

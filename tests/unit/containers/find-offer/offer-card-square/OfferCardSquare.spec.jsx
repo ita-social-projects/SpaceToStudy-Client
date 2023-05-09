@@ -5,6 +5,11 @@ import { beforeEach, expect } from 'vitest'
 import OfferCardSquare from '~/containers/find-offer/offer-card-square/OfferCardSquare'
 import { renderWithProviders } from '~tests/test-utils'
 
+const buttonActions = [
+  { label: 'common.labels.viewDetails', handleClick: vi.fn() },
+  { label: 'common.labels.sendMessage', handleClick: vi.fn() }
+]
+
 const mockOffer = {
   _id: 'id',
   authorAvgRating: 4.3,
@@ -37,7 +42,11 @@ const onBookmarkClick = vi.fn()
 describe('OfferCardSquare test', () => {
   beforeEach(() => {
     renderWithProviders(
-      <OfferCardSquare offer={mockOffer} onBookmarkClick={onBookmarkClick} />
+      <OfferCardSquare
+        buttonActions={buttonActions}
+        offer={mockOffer}
+        onBookmarkClick={onBookmarkClick}
+      />
     )
   })
 

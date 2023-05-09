@@ -2,6 +2,7 @@ import { vi } from 'vitest'
 import MockAdapter from 'axios-mock-adapter'
 import { render, screen } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
+import { ModalProvider } from '~/context/modal-context'
 
 import { axiosClient } from '~/plugins/axiosClient'
 import { URLs } from '~/constants/request'
@@ -37,7 +38,9 @@ describe('OfferDetails', () => {
 
     render(
       <MemoryRouter initialEntries={[`/offers/${mockData.id}`]}>
-        <OfferDetails />
+        <ModalProvider>
+          <OfferDetails />
+        </ModalProvider>
       </MemoryRouter>
     )
   })

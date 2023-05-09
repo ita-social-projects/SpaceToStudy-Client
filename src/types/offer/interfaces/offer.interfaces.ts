@@ -5,14 +5,15 @@ import {
   UserRole,
   UserResponse,
   SubjectNameInterface,
-  UserRoleEnum
+  UserRoleEnum,
+  LanguagesEnum
 } from '~/types'
 
 export interface Offer extends CommonEntityFields {
   price: number
   proficiencyLevel: ProficiencyLevelEnum[]
   description?: string
-  languages: string[]
+  languages: LanguagesEnum[]
   authorRole: UserRole
   authorFirstName: string
   authorLastName: string
