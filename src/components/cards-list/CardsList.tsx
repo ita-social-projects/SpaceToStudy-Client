@@ -22,13 +22,15 @@ const CardsList: FC<CardsListProps> = ({
   loading,
   onClick
 }) => {
-  if (loading && !cards.length) {
-    return <Loader pageLoad size={50} />
-  }
-
   return (
     <Box>
-      <Box sx={styles.cardsContainer}>{cards}</Box>
+      {loading && !cards.length ? (
+        <Box sx={styles.loaderContainer}>
+          <Loader pageLoad size={50} />
+        </Box>
+      ) : (
+        <Box sx={styles.cardsContainer}>{cards}</Box>
+      )}
 
       {isExpandable && (
         <AppButton
