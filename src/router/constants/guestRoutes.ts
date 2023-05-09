@@ -5,11 +5,11 @@ export const guestRoutes = {
   admin: { route: 'admin', path: 'admin' },
   error: { route: 'error', path: 'error' },
   about: { route: 'about', path: 'about' },
-  privacyPolicy: { route: 'privacyPolicy', path: 'privacyPolicy' },
-  termOfUse: { route: 'termOfUse', path: 'termOfUse' },
+  privacyPolicy: { route: 'privacy-policy', path: 'privacy-policy' },
+  termOfUse: { route: 'term-of-use', path: 'term-of-use' },
   navBar: {
-    whatCanYouDo: { route: 'whatCanYouDo', path: '/#whatCanYouDo' },
-    howItWorks: { route: 'howItWorks', path: '/#howItWorks' },
-    whoWeAre: { route: 'whoWeAre', path: '/#whoWeAre' }
+    whatCanYouDo: { route: 'what-сan-you-do', path: '/#what-сan-you-do' },
+    howItWorks: { route: 'how-it-works', path: '/#how-it-works' },
+    whoWeAre: { route: 'who-we-are', path: '/#who-we-are' }
   }
 }
