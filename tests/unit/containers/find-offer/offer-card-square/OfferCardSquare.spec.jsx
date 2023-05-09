@@ -89,7 +89,7 @@ describe('OfferCardSquare test', () => {
   })
 
   it('renders the view details button', () => {
-    const viewDetailsButton = screen.getByRole('button', {
+    const viewDetailsButton = screen.getByRole('link', {
       name: 'common.labels.viewDetails'
     })
     expect(viewDetailsButton).toBeInTheDocument()
