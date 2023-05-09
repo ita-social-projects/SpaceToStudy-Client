@@ -59,18 +59,16 @@ const OfferCardSquare: FC<OfferCardSquareProps> = ({
 
   const fullName = `${authorFirstName} ${authorLastName}`
 
-  const buttons =
-    buttonActions &&
-    buttonActions.map((elem, index) => (
-      <AppButton
-        fullWidth
-        key={elem.label}
-        onClick={elem.handleClick}
-        variant={index !== 0 ? VariantEnum.Tonal : VariantEnum.Contained}
-      >
-        {elem.label}
-      </AppButton>
-    ))
+  const buttons = buttonActions?.map((elem, index) => (
+    <AppButton
+      fullWidth
+      key={elem.label}
+      onClick={elem.handleClick}
+      variant={index !== 0 ? VariantEnum.Tonal : VariantEnum.Contained}
+    >
+      {elem.label}
+    </AppButton>
+  ))
 
   return (
     <Box sx={styles.container}>
