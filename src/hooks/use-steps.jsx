@@ -29,7 +29,7 @@ const useSteps = ({ steps }) => {
     closeModal()
   }
 
-  const { fetchData } = useAxios({
+  const { loading, fetchData } = useAxios({
     service: updateUser,
     fetchOnMount: false,
     defaultResponse: null,
@@ -80,7 +80,7 @@ const useSteps = ({ steps }) => {
     setActiveStep
   }
 
-  return { activeStep, stepErrors, isLastStep, stepOperation }
+  return { activeStep, stepErrors, isLastStep, stepOperation, loading }
 }
 
 export default useSteps

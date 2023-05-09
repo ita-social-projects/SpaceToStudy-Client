@@ -9,12 +9,14 @@ import EastIcon from '@mui/icons-material/East'
 import WestIcon from '@mui/icons-material/West'
 
 import useSteps from '~/hooks/use-steps'
+import Loader from '~/components/loader/Loader'
 import { styles } from '~/components/step-wrapper/StepWrapper.styles'
 
 const StepWrapper = ({ children, steps }) => {
-  const { activeStep, stepErrors, isLastStep, stepOperation } = useSteps({
-    steps
-  })
+  const { activeStep, stepErrors, isLastStep, loading, stepOperation } =
+    useSteps({
+      steps
+    })
   const { next, back, setActiveStep, handleSubmit } = stepOperation
   const { t } = useTranslation()
 
@@ -32,12 +34,13 @@ const StepWrapper = ({ children, steps }) => {
 
   const nextButton = isLastStep ? (
     <Button
+      disabled={loading}
       onClick={handleSubmit}
       size='small'
       sx={styles.finishBtn}
       variant='contained'
     >
-      {t('common.finish')}
+      {loading ? <Loader size={20} /> : t('common.finish')}
     </Button>
   ) : (
     <Button onClick={next} size='small' sx={styles.btn} variant='contained'>
