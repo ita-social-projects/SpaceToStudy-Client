@@ -13,7 +13,7 @@ export const styles = {
   titleWithDescription: {
     title: {
       typography: 'h6',
-      color: 'palette.grey.500',
+      color: 'primary.900',
       fontWeight: '600',
       my: '14px'
     }

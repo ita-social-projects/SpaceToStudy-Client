@@ -16,7 +16,7 @@ export const styles = {
     m: '32px auto 0'
   },
   loaderContainer: {
-    height: '50vh',
+    minHeight: '350px',
     display: 'flex'
   }
 }
