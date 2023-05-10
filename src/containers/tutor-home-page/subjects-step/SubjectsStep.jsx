@@ -22,23 +22,18 @@ const SubjectsStep = ({ stepLabel, btnsBox }) => {
 
   const [subjects, setSubjects] = useState({
     category: null,
-    subject: null,
-    categoryId: null
+    subject: null
   })
+
+  const categoryId = useMemo(() => {
+    return !subjects.category ? '' : subjects.category._id
+  }, [subjects.category])
+
   const [subjectError, setSubjectError] = useState('')
   const { response: categoriesNamesItems } = useCategoriesNames()
   const { response: subjectsNamesItems } = useSubjectsNames({
-    category: subjects.categoryId
+    category: categoryId
   })
-
-  subjects.categoryId = useMemo(() => {
-    const category = categoriesNamesItems.find(
-      (el) => el.name === subjects.category
-    )
-    const result = !category ? '' : category._id
-
-    return result
-  }, [subjects.category, categoriesNamesItems])
 
   const imageBlock = (
     <Box sx={styles.imgContainer}>
@@ -85,7 +80,10 @@ const SubjectsStep = ({ stepLabel, btnsBox }) => {
   }
 
   const listOfItems = subjectData.map((item) => item.subject)
-  const categoryOptions = categoriesNamesItems.map((el) => el.name)
+  const categoryOptions = categoriesNamesItems.map((el) => {
+    return { label: el.name, _id: el._id }
+  })
+
   const subjectOptions = subjectsNamesItems.map((el) => el.name)
 
   return (
@@ -96,6 +94,9 @@ const SubjectsStep = ({ stepLabel, btnsBox }) => {
           <Typography mb='20px'>{t('becomeTutor.categories.title')}</Typography>
           {isMobile && imageBlock}
           <AppAutoComplete
+            isOptionEqualToValue={(option, value) =>
+              option.label === value.label
+            }
             onChange={onChangeCategory}
             options={categoryOptions}
             sx={{ mb: '20px' }}
