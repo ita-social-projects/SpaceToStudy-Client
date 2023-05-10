@@ -22,8 +22,6 @@ const TutorProfile = () => {
           averageRating={averageRating}
           reviewsCount={reviews}
           totalReviews={totalReviews}
-          userId={user._id}
-          userRole={user.lastLoginAs}
         />
       )}
     </Container>

@@ -9,11 +9,22 @@ export const styles = {
     display: 'flex',
     flexDirection: 'column',
     flex: 1,
-    gap: '20px'
+    gap: '20px',
+    mb: '100px'
   },
   wrapper: {
     ...border,
     p: '35px 60px'
   },
-  offerCard: border
+  offerCard: border,
+  commentTitle: {
+    typography: 'h5',
+    color: 'primary.700',
+    marginRight: 'auto',
+    lineHeight: '28px'
+  },
+  commentList: {
+    borderTop: '1px solid',
+    borderColor: 'primary.100'
+  }
 }

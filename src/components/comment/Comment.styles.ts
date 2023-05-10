@@ -41,18 +41,20 @@ export const styles = {
       mb: 0,
       m: 0
     },
-    title: {
-      display: 'flex',
-      flexDirection: { sm: 'column' },
-      columnGap: { xs: '12px' },
-      mb: 0,
-      m: 0,
-      fontSize: 'subtitle2',
-      textAlign: 'start'
-    },
-    description: {
-      typography: 'overline',
-      color: 'primary.500'
+    titleWithDescription: {
+      title: {
+        display: 'flex',
+        flexDirection: { sm: 'column' },
+        columnGap: { xs: '12px' },
+        mb: 0,
+        m: 0,
+        fontSize: 'subtitle2',
+        textAlign: 'start'
+      },
+      description: {
+        typography: 'overline',
+        color: 'primary.500'
+      }
     }
   },
   rating: {
