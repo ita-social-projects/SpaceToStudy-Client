@@ -24,18 +24,31 @@ export const studentProfile = {
   path: studentRoutes.accountMenu.myProfile.route
 }
 
+export const tutorCooperations = {
+  name: t('breadCrumbs.myCooperations'),
+  path: tutorRoutes.accountMenu.myCooperations.route
+}
+
+export const studentCooperations = {
+  name: t('breadCrumbs.myCooperations'),
+  path: studentRoutes.accountMenu.myCooperations.route
+}
+
 export const categories = {
   name: t('breadCrumbs.categories'),
   path: authRoutes.categories.route
 }
+
 export const subjects = {
   name: t('breadCrumbs.subjects'),
   path: authRoutes.subjects.route
 }
+
 export const findOffers = {
   name: t('breadCrumbs.findOffers'),
   path: authRoutes.findOffers.route
 }
+
 export const offerDetails = {
   name: t('breadCrumbs.offerDetails'),
   path: authRoutes.offerDetails.route
