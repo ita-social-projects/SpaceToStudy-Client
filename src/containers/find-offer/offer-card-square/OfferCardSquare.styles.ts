@@ -56,9 +56,10 @@ export const styles = {
   },
   chipsContainer: {
     display: 'flex',
+    minHeight: '75px',
     flexWrap: 'wrap',
     gap: '5px',
-    mb: '50px'
+    mb: '16px'
   },
   subjectChipLabel: {
     typography: 'overline',

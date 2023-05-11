@@ -7,10 +7,11 @@ import Container from '@mui/material/Container'
 
 import useAxios from '~/hooks/use-axios'
 import OfferCard from '~/components/offer-card/OfferCard'
-import AppCard from '~/components/app-card/AppCard'
 import Loader from '~/components/loader/Loader'
 import CommentsBlock from '~/containers/tutor-profile/comments-block/CommentBlock'
 import { OfferService } from '~/services/offer-service'
+import AppCard from '~/components/app-card/AppCard'
+import OfferCarousel from '~/containers/offer-details/offer-carousel/OfferCarousel'
 import { errorRoutes } from '~/router/constants/errorRoutes'
 import EnrollOffer from '~/containers/offer-details/enroll-offer/EnrollOffer'
 import { ModalContext } from '~/context/modal-context'
@@ -86,6 +87,7 @@ const OfferDetails = () => {
       <AppCard sx={styles.wrapper}>
         <Box>For Example</Box>
       </AppCard>
+      <OfferCarousel offer={response} />
     </Container>
   )
 }

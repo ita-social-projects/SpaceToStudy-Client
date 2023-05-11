@@ -1,12 +1,14 @@
 import {
+  CategoryInterface,
   FindOffersUpdateFilter,
   LanguageFilter,
   RangeArray,
+  RequestParams,
   UserRole
 } from '~/types'
 
 export interface FindOffersFilters {
-  categoryId: string
+  categoryId: CategoryInterface['_id']
   subjectId: string
   sort: string
   language: LanguageFilter
@@ -42,5 +44,5 @@ export interface FilterQueryHook<T> {
 }
 
 export interface GetOffersPrarams
-  extends FindOffersFilters,
-    Omit<RequestParams, 'sort'> {}
+  extends Partial<FindOffersFilters>,
+    Partial<Omit<RequestParams, 'sort'>> {}

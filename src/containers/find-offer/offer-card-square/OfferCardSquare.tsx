@@ -26,7 +26,7 @@ import { styles } from '~/containers/find-offer/offer-card-square/OfferCardSquar
 interface OfferCardSquareProps {
   buttonActions: ButtonActions[]
   offer: Offer
-  onBookmarkClick: (id: string) => void
+  onBookmarkClick?: (id: string) => void
 }
 
 const OfferCardSquare: FC<OfferCardSquareProps> = ({
