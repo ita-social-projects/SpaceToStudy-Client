@@ -1,10 +1,4 @@
 {
-  "stepLabels": {
-    "generalInfo": "General", 
-    "language": "Language", 
-    "subjects": "Subjects",
-    "photo": "Photo"
-  },
   "generalInfo": {
     "title": "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.",
     "textFieldLabel": "Describe in short your professional status",
