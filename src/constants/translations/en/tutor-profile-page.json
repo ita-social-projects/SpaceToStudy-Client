@@ -9,8 +9,8 @@
     "title": "Video Presentation"
   },
   "reviews":{
-    "title":"What Students Say",
-    "buttonTitle":"See all reviews",
+    "title":"What students say",
+    "buttonTitle":"More reviews",
     "starsCount_one": "{{count}} star",
     "starsCount_other": "{{count}} stars",
     "reviewsCount_one": "{{count}} review",

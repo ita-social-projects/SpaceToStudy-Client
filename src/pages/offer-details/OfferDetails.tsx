@@ -5,23 +5,31 @@ import { useParams, useNavigate } from 'react-router-dom'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 
-import OfferCard from '~/components/offer-card/OfferCard'
 import useAxios from '~/hooks/use-axios'
-import { OfferService } from '~/services/offer-service'
+import OfferCard from '~/components/offer-card/OfferCard'
 import AppCard from '~/components/app-card/AppCard'
-import { errorRoutes } from '~/router/constants/errorRoutes'
 import Loader from '~/components/loader/Loader'
+import CommentsBlock from '~/containers/tutor-profile/comments-block/CommentBlock'
+import { OfferService } from '~/services/offer-service'
+import { errorRoutes } from '~/router/constants/errorRoutes'
 import EnrollOffer from '~/containers/offer-details/enroll-offer/EnrollOffer'
 import { ModalContext } from '~/context/modal-context'
 import { defaultResponse } from '~/pages/offer-details/constants'
 import { styles } from '~/pages/offer-details/OfferDetails.styles'
 import { Offer } from '~/types'
 
+import {
+  responseMock,
+  loadingMock
+} from '~/containers/tutor-profile/comments-with-rating-block/constants'
+
 const OfferDetails = () => {
   const { t } = useTranslation()
   const { id = '' } = useParams()
   const { openModal } = useContext(ModalContext)
   const navigate = useNavigate()
+
+  const { items } = responseMock
 
   const getOffer = useCallback(() => OfferService.getOffer(id), [id])
   const responseError = useCallback(
@@ -64,6 +72,15 @@ const OfferDetails = () => {
           isHideField
           offer={response}
           onBookmarkClick={onBookmarkClick}
+        />
+      </AppCard>
+      <AppCard sx={styles.wrapper}>
+        <CommentsBlock
+          data={items}
+          isExpandable
+          loadMore={() => null}
+          loading={loadingMock}
+          title={t('tutorProfilePage.reviews.title')}
         />
       </AppCard>
       <AppCard sx={styles.wrapper}>
