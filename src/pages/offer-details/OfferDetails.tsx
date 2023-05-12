@@ -12,11 +12,13 @@ import Loader from '~/components/loader/Loader'
 import CommentsBlock from '~/containers/tutor-profile/comments-block/CommentBlock'
 import { OfferService } from '~/services/offer-service'
 import { errorRoutes } from '~/router/constants/errorRoutes'
+import ShowMoreCollapse from '~/components/show-more-collapse/ShowMoreCollapse'
 import EnrollOffer from '~/containers/offer-details/enroll-offer/EnrollOffer'
 import { ModalContext } from '~/context/modal-context'
 import { defaultResponse } from '~/pages/offer-details/constants'
-import { styles } from '~/pages/offer-details/OfferDetails.styles'
+
 import { Offer } from '~/types'
+import { styles } from '~/pages/offer-details/OfferDetails.styles'
 
 import {
   responseMock,
@@ -74,6 +76,14 @@ const OfferDetails = () => {
           onBookmarkClick={onBookmarkClick}
         />
       </AppCard>
+
+      <AppCard sx={styles.wrapper}>
+        <ShowMoreCollapse
+          description={response.description || ''}
+          title={t('common.aboutOffer')}
+        />
+      </AppCard>
+
       <AppCard sx={styles.wrapper}>
         <CommentsBlock
           data={items}
