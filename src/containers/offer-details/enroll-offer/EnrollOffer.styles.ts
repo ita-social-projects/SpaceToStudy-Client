@@ -2,13 +2,13 @@ export const styles = {
   root: {
     display: 'flex',
     maxWidth: '935px',
-    p: '40px 90px',
+    p: { xs: '40px 60px', lg: '70px 90px' },
     justifyContent: 'space-between',
-    gap: { xs: '60px', lg: '120px' },
+    gap: { xs: '60px', md: '120px', lg: '180px' },
     alignItems: 'center'
   },
   offerCard: {
-    p: '10px 20px',
+    p: '20px',
     maxWidth: '300px'
   },
   form: {

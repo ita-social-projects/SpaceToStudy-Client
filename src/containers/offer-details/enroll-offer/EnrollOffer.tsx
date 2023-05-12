@@ -29,12 +29,6 @@ const EnrollOffer: FC<EnrollOfferProps> = ({ offer }) => {
   const { setAlert } = useSnackBarContext()
   const { t } = useTranslation()
 
-  const initialValues = {
-    language: offer.languages[0],
-    proficiencyLevel: offer.proficiencyLevel[0],
-    info: ''
-  }
-
   const handleResponseError = (error: ErrorResponse) => {
     setAlert({
       severity: snackbarVariants.error,
@@ -50,13 +44,12 @@ const EnrollOffer: FC<EnrollOfferProps> = ({ offer }) => {
   }
 
   const postOffer = (): Promise<AxiosResponse> => {
-    const params = {
+    return cooperationService.createCooperation({
       ...data,
       recipientUserId: offer.author._id,
       price: offer.price,
       offerId: offer._id
-    }
-    return cooperationService.createCooperation(params)
+    })
   }
 
   const { loading, fetchData } = useAxios({
@@ -69,7 +62,11 @@ const EnrollOffer: FC<EnrollOfferProps> = ({ offer }) => {
 
   const { data, handleInputChange, handleNonInputValueChange, handleSubmit } =
     useForm<EnrollOfferForm>({
-      initialValues,
+      initialValues: {
+        proficiencyLevel: offer.proficiencyLevel[0],
+        language: offer.languages[0],
+        info: ''
+      },
       onSubmit: fetchData
     })
 
@@ -125,7 +122,7 @@ const EnrollOffer: FC<EnrollOfferProps> = ({ offer }) => {
         <AppTextArea
           fullWidth
           label={t('offerDetailsPage.enrollOffer.labels.info')}
-          maxLength={400}
+          maxLength={1000}
           onChange={handleInputChange('info')}
           sx={styles.textArea}
           title={t('offerDetailsPage.enrollOffer.inputs.info')}

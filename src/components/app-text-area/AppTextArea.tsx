@@ -5,6 +5,7 @@ import { TextFieldProps } from '@mui/material/TextField'
 
 import AppTextField from '~/components/app-text-field/AppTextField'
 
+import { VariantEnum } from '~/types'
 import { styles } from '~/components/app-text-area/AppTextArea.styles'
 
 interface AppTextAreaProps
@@ -24,7 +25,7 @@ const AppTextArea: FC<AppTextAreaProps> = ({
   ...props
 }) => {
   const titleEl = title && (
-    <Typography sx={styles.title} variant='body2'>
+    <Typography sx={styles.title} variant={VariantEnum.Body2}>
       {title}
     </Typography>
   )
