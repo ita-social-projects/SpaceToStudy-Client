@@ -8,6 +8,10 @@ export const studentRoutes = {
   },
   accountMenu: {
     myProfile: { route: 'my-profile', path: '/student/my-profile' },
+    myCooperations: {
+      route: 'my-cooperations',
+      path: '/student/my-cooperations'
+    },
     logout: { route: 'logout', path: '/logout' }
   }
 }
