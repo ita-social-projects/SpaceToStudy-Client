@@ -1,13 +1,13 @@
 {
-  "whatCanYouDo": "Що ти можеш",
-  "howItWorks": "Як це працює",
-  "whoWeAre": "Про нас",
+  "what-сan-you-do": "Що ти можеш",
+  "how-it-works": "Як це працює",
+  "who-we-are": "Про нас",
   "findTutor": "Викладачі",
   "categories": "Категорії",
   "homePage": "Домашня сторінка",
   "faq": "Поширені питання",
   "becomeTutor": "Стати викладачем",
   "loginButton": "Увійти",
-  "myProfile": "Мій профіль",
+  "my-profile": "Мій профіль",
   "logout": "Вийти"
 }

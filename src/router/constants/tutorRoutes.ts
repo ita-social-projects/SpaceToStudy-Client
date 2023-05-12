@@ -4,7 +4,7 @@ export const tutorRoutes = {
     faq: { route: 'faq', path: '/tutor/#faq' }
   },
   accountMenu: {
-    myProfile: { route: 'myProfile', path: '/tutor/myProfile' },
+    myProfile: { route: 'my-profile', path: '/tutor/my-profile' },
     logout: { route: 'logout', path: '/logout' }
   }
 }

@@ -36,7 +36,7 @@ describe('Guest NavBar test', () => {
     expect(logo).toBeInTheDocument()
   })
   it('should render navigation item with guestNavBar text', () => {
-    const text = screen.getByText('header.whatCanYouDo')
+    const text = screen.getByText('header.what-сan-you-do')
 
     expect(text).toBeInTheDocument()
   })
