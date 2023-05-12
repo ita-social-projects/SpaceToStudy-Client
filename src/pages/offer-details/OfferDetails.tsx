@@ -79,7 +79,7 @@ const OfferDetails = () => {
 
       <AppCard sx={styles.wrapper}>
         <ShowMoreCollapse
-          description={response.description || ''}
+          description={response.description ?? ''}
           title={t('common.aboutOffer')}
         />
       </AppCard>
