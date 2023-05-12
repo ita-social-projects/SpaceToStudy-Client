@@ -5,11 +5,6 @@ import { beforeEach, expect } from 'vitest'
 import OfferCardSquare from '~/containers/find-offer/offer-card-square/OfferCardSquare'
 import { renderWithProviders } from '~tests/test-utils'
 
-const buttonActions = [
-  { label: 'common.labels.viewDetails', handleClick: vi.fn() },
-  { label: 'common.labels.sendMessage', handleClick: vi.fn() }
-]
-
 const mockOffer = {
   _id: 'id',
   authorAvgRating: 4.3,
@@ -38,6 +33,10 @@ const mockOffer = {
 }
 
 const onBookmarkClick = vi.fn()
+const buttonActions = [
+  { label: 'Action 1', handleClick: vi.fn() },
+  { label: 'Action 2', handleClick: vi.fn() }
+]
 
 describe('OfferCardSquare test', () => {
   beforeEach(() => {
@@ -82,7 +81,7 @@ describe('OfferCardSquare test', () => {
 
   it('renders the send message button', () => {
     const sendMessageButton = screen.getByRole('button', {
-      name: 'common.labels.sendMessage'
+      name: 'Action 1'
     })
 
     expect(sendMessageButton).toBeInTheDocument()
@@ -90,7 +89,7 @@ describe('OfferCardSquare test', () => {
 
   it('renders the view details button', () => {
     const viewDetailsButton = screen.getByRole('button', {
-      name: 'common.labels.viewDetails'
+      name: 'Action 2'
     })
     expect(viewDetailsButton).toBeInTheDocument()
   })

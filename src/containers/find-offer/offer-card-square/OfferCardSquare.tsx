@@ -24,14 +24,14 @@ import {
 import { styles } from '~/containers/find-offer/offer-card-square/OfferCardSquare.styles'
 
 interface OfferCardSquareProps {
+  buttonActions: ButtonActions[]
   offer: Offer
-  onBookmarkClick?: (id: string) => void
-  buttonActions?: ButtonActions[]
+  onBookmarkClick: (id: string) => void
 }
 
 const OfferCardSquare: FC<OfferCardSquareProps> = ({
-  offer,
   buttonActions,
+  offer,
   onBookmarkClick
 }) => {
   const { t } = useTranslation()
@@ -64,6 +64,7 @@ const OfferCardSquare: FC<OfferCardSquareProps> = ({
       fullWidth
       key={elem.label}
       onClick={elem.handleClick}
+      {...elem.buttonProps}
       variant={index !== 0 ? VariantEnum.Tonal : VariantEnum.Contained}
     >
       {elem.label}
