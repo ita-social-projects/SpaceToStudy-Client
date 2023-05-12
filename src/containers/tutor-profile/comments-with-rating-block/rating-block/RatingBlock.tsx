@@ -9,7 +9,7 @@ import AppRatingMobile from '~/components/app-rating-mobile/AppRatingMobile'
 import useBreakpoints from '~/hooks/use-breakpoints'
 
 import { RatingType } from '~/types'
-import { styles } from '~/containers/tutor-profile/coments-block/rating-block/RatingBlock.styles'
+import { styles } from '~/containers/tutor-profile/comments-with-rating-block/rating-block/RatingBlock.styles'
 
 interface RatingBlockProps {
   setFilter: (filter: number | null) => void

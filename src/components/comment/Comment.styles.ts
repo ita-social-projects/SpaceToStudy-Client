@@ -33,21 +33,11 @@ export const styles = {
       borderRadius: '50%',
       borderColor: 'primary.900'
     },
-    wrapper: {
-      display: 'flex',
-      flexDirection: 'column',
-      gap: '4px',
-      alignItems: 'start',
-      mb: 0,
-      m: 0
-    },
     titleWithDescription: {
       title: {
         display: 'flex',
         flexDirection: { sm: 'column' },
         columnGap: { xs: '12px' },
-        mb: 0,
-        m: 0,
         fontSize: 'subtitle2',
         textAlign: 'start'
       },

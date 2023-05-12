@@ -7,8 +7,6 @@ export const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     pt: { xs: '16px', sm: '32px' },
-    pb: { xs: '32px', md: '48px' },
-    borderBottom: '1px solid',
     borderTop: '1px solid',
     borderColor: 'primary.100'
   },

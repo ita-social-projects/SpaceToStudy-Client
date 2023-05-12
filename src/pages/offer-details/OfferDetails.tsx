@@ -9,7 +9,7 @@ import useAxios from '~/hooks/use-axios'
 import OfferCard from '~/components/offer-card/OfferCard'
 import AppCard from '~/components/app-card/AppCard'
 import Loader from '~/components/loader/Loader'
-import ComentsBlock from '~/containers/tutor-profile/coments-block/ComentsBlock'
+import CommentsBlock from '~/containers/tutor-profile/comments-block/CommentBlock'
 import { OfferService } from '~/services/offer-service'
 import { errorRoutes } from '~/router/constants/errorRoutes'
 import EnrollOffer from '~/containers/offer-details/enroll-offer/EnrollOffer'
@@ -18,7 +18,10 @@ import { defaultResponse } from '~/pages/offer-details/constants'
 import { styles } from '~/pages/offer-details/OfferDetails.styles'
 import { Offer } from '~/types'
 
-import { responseMock } from '~/pages/tutor-profile/constants'
+import {
+  responseMock,
+  loadingMock
+} from '~/containers/tutor-profile/comments-with-rating-block/constants'
 
 const OfferDetails = () => {
   const { t } = useTranslation()
@@ -26,8 +29,7 @@ const OfferDetails = () => {
   const { openModal } = useContext(ModalContext)
   const navigate = useNavigate()
 
-  const { user } = responseMock
-  const { reviews, totalReviews } = user.reviewStats || {}
+  const { items } = responseMock
 
   const getOffer = useCallback(() => OfferService.getOffer(id), [id])
   const responseError = useCallback(
@@ -73,11 +75,12 @@ const OfferDetails = () => {
         />
       </AppCard>
       <AppCard sx={styles.wrapper}>
-        <ComentsBlock
-          commentListStyles={styles.commentList}
-          reviewsCount={reviews}
-          titleStyles={styles.commentTitle}
-          totalReviews={totalReviews}
+        <CommentsBlock
+          data={items}
+          isExpandable
+          loadMore={() => null}
+          loading={loadingMock}
+          title={t('tutorProfilePage.reviews.title')}
         />
       </AppCard>
       <AppCard sx={styles.wrapper}>

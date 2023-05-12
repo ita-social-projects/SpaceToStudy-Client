@@ -7,6 +7,4 @@ export const styles = {
     alignItems: 'center'
   },
   title: { typography: { xs: 'button', sm: 'h5', md: 'h4' } },
-  commentList: { width: '100%' },
-  button: { minWidth: '195px' }
 }

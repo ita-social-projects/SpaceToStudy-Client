@@ -16,15 +16,5 @@ export const styles = {
     ...border,
     p: '35px 60px'
   },
-  offerCard: border,
-  commentTitle: {
-    typography: 'h5',
-    color: 'primary.700',
-    marginRight: 'auto',
-    lineHeight: '28px'
-  },
-  commentList: {
-    borderTop: '1px solid',
-    borderColor: 'primary.100'
-  }
+  offerCard: border
 }
