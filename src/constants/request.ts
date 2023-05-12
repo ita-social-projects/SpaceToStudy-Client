@@ -33,5 +33,8 @@ export const URLs = {
   subjects: {
     get: '/subjects',
     getNames: '/subjects/names'
+  },
+  cooperations: {
+    create: '/cooperations'
   }
 }

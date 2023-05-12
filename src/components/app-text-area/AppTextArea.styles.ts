@@ -1,4 +1,4 @@
 export const styles = {
-  root: { position: 'relative' },
-  textLength: { position: 'absolute', right: 0, bottom: 0 }
+  textLength: { position: 'absolute', right: 0, bottom: 0 },
+  title: { color: 'primary.500', mr: '8px' }
 }

@@ -47,7 +47,11 @@ const OfferContainer: FC<OfferContainerProps> = ({
     <Grid item key={el._id} sm={isDesktop && isFiltersOpen ? 6 : 4}>
       {renderSquareCard ? (
         <AppCard>
-          <OfferCardSquare offer={el} onBookmarkClick={onBookmarkClick} />
+          <OfferCardSquare
+            buttonActions={buttonActions}
+            offer={el}
+            onBookmarkClick={onBookmarkClick}
+          />
         </AppCard>
       ) : (
         <AppCard sx={{ padding: { sm: '20px', md: '30px 20px' } }}>

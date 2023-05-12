@@ -103,5 +103,10 @@ export const styles = {
     description: {
       typography: 'caption'
     }
+  },
+  buttonContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '16px'
   }
 }

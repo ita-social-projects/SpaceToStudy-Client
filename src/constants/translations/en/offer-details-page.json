@@ -1,0 +1,17 @@
+{
+  "enrollOffer": {
+    "title": "Enroll offer",
+    "description": "Send a Request to Create a Cooperation",
+    "inputs": {
+      "level": "Choose the appropriate level of tutoring you require.",
+      "language": "Select the language of tutoring to be conducted in.",
+      "info": "Ask the questions you have, describe your learning needs or specify your preferred teaching approach."
+    },
+    "labels": {
+      "level": "Your required level",
+      "language": "Tutoring language",
+      "info": "Additional information"
+    },
+    "successMessage":"Request for cooperation sent successfully"
+  }
+}

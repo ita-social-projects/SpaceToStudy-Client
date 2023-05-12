@@ -4,7 +4,14 @@ export const styles = {
   },
   selectContainer: {
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
+    flex: 1
   },
-  selectTitle: { color: 'primary.500', mr: '8px' }
+  selectTitle: { color: 'primary.500', mr: '8px', minWidth: '55px' },
+  formControl: {
+    '& label': {
+      lineHeight: 'inherit',
+      color: 'primary.500'
+    }
+  }
 }

@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+import { useCallback, useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams, useNavigate } from 'react-router-dom'
 
@@ -10,14 +10,17 @@ import useAxios from '~/hooks/use-axios'
 import { OfferService } from '~/services/offer-service'
 import AppCard from '~/components/app-card/AppCard'
 import { errorRoutes } from '~/router/constants/errorRoutes'
-import { styles } from '~/pages/offer-details/OfferDetails.styles'
 import Loader from '~/components/loader/Loader'
-import { defaultResponce } from '~/pages/offer-details/constants'
+import EnrollOffer from '~/containers/offer-details/enroll-offer/EnrollOffer'
+import { ModalContext } from '~/context/modal-context'
+import { defaultResponse } from '~/pages/offer-details/constants'
+import { styles } from '~/pages/offer-details/OfferDetails.styles'
 import { Offer } from '~/types'
 
 const OfferDetails = () => {
   const { t } = useTranslation()
   const { id = '' } = useParams()
+  const { openModal } = useContext(ModalContext)
   const navigate = useNavigate()
 
   const getOffer = useCallback(() => OfferService.getOffer(id), [id])
@@ -27,7 +30,7 @@ const OfferDetails = () => {
   )
   const { response, loading } = useAxios<Offer>({
     service: getOffer,
-    defaultResponse: defaultResponce,
+    defaultResponse,
     onResponseError: responseError
   })
 
@@ -39,10 +42,13 @@ const OfferDetails = () => {
     return <Loader pageLoad size={70} />
   }
 
+  const handleEnrollOfferClick = () =>
+    openModal({ component: <EnrollOffer offer={response} /> })
+
   const buttonActions = [
     {
       label: t('common.labels.enrollOffer'),
-      handleClick: () => {}
+      handleClick: handleEnrollOfferClick
     },
     {
       label: t('common.labels.sendMessage'),

@@ -27,6 +27,7 @@ import findOffers from './find-offer-page.json'
 import filters from './filters.json'
 import subjectsPage from './subjects-page.json'
 import offerPage from './offer-page.json'
+import offerDetailsPage from './offer-details-page.json'
 
 const en = {
   translations: {
@@ -58,7 +59,8 @@ const en = {
     findOffers,
     filters,
     subjectsPage,
-    offerPage
+    offerPage,
+    offerDetailsPage
   }
 }
 
