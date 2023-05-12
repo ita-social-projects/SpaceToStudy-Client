@@ -49,7 +49,6 @@ const SubjectsStep = ({ stepLabel, btnsBox }) => {
   }
 
   const onChangeSubject = (_, value) => {
-    console.log(value)
     setSubjects((prev) => ({ category: prev.category, subject: value }))
     subjectError && setSubjectError('')
   }
