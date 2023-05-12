@@ -7,7 +7,7 @@ export const styles = {
     alignItems: 'center'
   },
   title: {
-    typography: 'h5',
+    typography: {xs: 'h6', sm: 'h5'},
     color: 'primary.700',
     marginRight: 'auto',
     lineHeight: '28px'

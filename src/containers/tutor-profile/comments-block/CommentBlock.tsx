@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next'
+
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import KeyboardArrowDownSharpIcon from '@mui/icons-material/KeyboardArrowDownSharp'
@@ -6,6 +7,7 @@ import KeyboardArrowDownSharpIcon from '@mui/icons-material/KeyboardArrowDownSha
 import Comment from '~/components/comment/Comment'
 import AppButton from '~/components/app-button/AppButton'
 
+import useBreakpoints from '~/hooks/use-breakpoints'
 import { Offer, SizeEnum, VariantEnum } from '~/types'
 import { styles } from '~/containers/tutor-profile/comments-block/CommentsBlock.styles'
 
@@ -25,6 +27,7 @@ const ComentsBlock = ({
   isExpandable
 }: ComentsBlockProps) => {
   const { t } = useTranslation()
+  const { isMobile } = useBreakpoints()
 
   const itemsList = (
     <Box sx={styles.commentList}>
@@ -40,6 +43,7 @@ const ComentsBlock = ({
       loading={loading}
       onClick={loadMore}
       size={SizeEnum.Large}
+      fullWidth={isMobile}
       sx={styles.button}
       variant={VariantEnum.Contained}
     >
