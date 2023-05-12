@@ -3,6 +3,26 @@ import SubjectsStep from '~/containers/tutor-home-page/subjects-step/SubjectsSte
 import { ModalProvider } from '~/context/modal-context'
 import { StepProvider } from '~/context/step-context'
 
+vi.mock('~/hooks/use-categories-names', () => ({
+  __esModule: true,
+  default: () => ({
+    loading: false,
+    response: [
+      { _id: '123', name: 'Category 1' },
+      { _id: '456', name: 'Category 2' },
+      { _id: '789', name: '' }
+    ]
+  })
+}))
+
+vi.mock('~/hooks/use-subjects-names', () => ({
+  __esModule: true,
+  default: () => ({
+    loading: false,
+    response: ['Subject 1', 'Subject 2']
+  })
+}))
+
 const btnsBox = (
   <div>
     <button>back</button>
@@ -15,12 +35,14 @@ describe('SubjectsStep test with some data', () => {
     render(
       <ModalProvider>
         <StepProvider>
-          <SubjectsStep btnsBox={ btnsBox } stepLabel={ 'subjects' } />
+          <SubjectsStep btnsBox={btnsBox} stepLabel={'subjects'} />
         </StepProvider>
       </ModalProvider>
     )
     const addSubject = screen.getByTestId('add-subject')
-    const firstField = screen.getByLabelText(/becomeTutor.categories.mainSubjectsLabel/i)
+    const firstField = screen.getByLabelText(
+      /becomeTutor.categories.mainSubjectsLabel/i
+    )
 
     expect(addSubject).toBeInTheDocument()
 
@@ -29,7 +51,9 @@ describe('SubjectsStep test with some data', () => {
     fireEvent.keyDown(firstField, { key: 'ArrowDown' })
     fireEvent.keyDown(firstField, { key: 'Enter' })
 
-    const secondField = screen.getByLabelText(/becomeTutor.categories.subjectLabel/i)
+    const secondField = screen.getByLabelText(
+      /becomeTutor.categories.subjectLabel/i
+    )
 
     fireEvent.click(secondField)
     fireEvent.change(secondField, { target: { value: 'Danish' } })
@@ -40,7 +64,9 @@ describe('SubjectsStep test with some data', () => {
 
   it('should add a new subject', async () => {
     const addSubject = screen.getByTestId('add-subject')
-    const firstField = screen.getByLabelText(/becomeTutor.categories.mainSubjectsLabel/i)
+    const firstField = screen.getByLabelText(
+      /becomeTutor.categories.mainSubjectsLabel/i
+    )
 
     expect(addSubject).toBeInTheDocument()
 
@@ -49,7 +75,9 @@ describe('SubjectsStep test with some data', () => {
     fireEvent.keyDown(firstField, { key: 'ArrowDown' })
     fireEvent.keyDown(firstField, { key: 'Enter' })
 
-    const secondField = screen.getByLabelText(/becomeTutor.categories.subjectLabel/i)
+    const secondField = screen.getByLabelText(
+      /becomeTutor.categories.subjectLabel/i
+    )
 
     fireEvent.click(secondField)
     fireEvent.change(secondField, { target: { value: 'English' } })
@@ -63,7 +91,7 @@ describe('SubjectsStep test with some data', () => {
   it('should delete a subject', () => {
     const closeBtn = screen.queryAllByTestId('close-btn')[0]
     const firstChip = screen.queryAllByTestId('chip')
-    
+
     expect(firstChip.length).toBe(1)
     fireEvent.click(closeBtn)
   })
@@ -73,7 +101,9 @@ describe('SubjectsStep test with some data', () => {
 
     expect(addSubject).toBeInTheDocument()
 
-    const firstField = screen.getByLabelText(/becomeTutor.categories.mainSubjectsLabel/i)
+    const firstField = screen.getByLabelText(
+      /becomeTutor.categories.mainSubjectsLabel/i
+    )
 
     fireEvent.click(firstField)
     fireEvent.change(firstField, { target: { value: 'Mathemat' } })
@@ -82,7 +112,9 @@ describe('SubjectsStep test with some data', () => {
 
     fireEvent.click(addSubject)
 
-    expect(screen.getByTestId('error-subject')).toHaveTextContent('becomeTutor.categories.emptyFields')
+    expect(screen.getByTestId('error-subject')).toHaveTextContent(
+      'becomeTutor.categories.emptyFields'
+    )
   })
 
   it('should show an error message "You have the same subject"', async () => {
@@ -90,14 +122,18 @@ describe('SubjectsStep test with some data', () => {
 
     expect(addSubject).toBeInTheDocument()
 
-    const firstField = screen.getByLabelText(/becomeTutor.categories.mainSubjectsLabel/i)
+    const firstField = screen.getByLabelText(
+      /becomeTutor.categories.mainSubjectsLabel/i
+    )
 
     fireEvent.click(firstField)
     fireEvent.change(firstField, { target: { value: 'Languages' } })
     fireEvent.keyDown(firstField, { key: 'ArrowDown' })
     fireEvent.keyDown(firstField, { key: 'Enter' })
 
-    const secondField = screen.getByLabelText(/becomeTutor.categories.subjectLabel/i)
+    const secondField = screen.getByLabelText(
+      /becomeTutor.categories.subjectLabel/i
+    )
 
     fireEvent.click(secondField)
     fireEvent.change(secondField, { target: { value: 'Ukranian' } })
@@ -106,6 +142,8 @@ describe('SubjectsStep test with some data', () => {
     fireEvent.click(addSubject)
     fireEvent.click(addSubject)
 
-    expect(screen.getByTestId('error-subject')).toHaveTextContent('becomeTutor.categories.sameSubject')
+    expect(screen.getByTestId('error-subject')).toHaveTextContent(
+      'becomeTutor.categories.sameSubject'
+    )
   })
 })
