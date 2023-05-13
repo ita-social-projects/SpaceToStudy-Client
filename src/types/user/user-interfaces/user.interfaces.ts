@@ -2,10 +2,11 @@ import {
   CreatedAt,
   LastLogin,
   Address,
-  Category,
   UserRole,
   UserRoleEnum,
-  RequestParams
+  RequestParams,
+  SubjectInterface,
+  SubjectNameInterface
 } from '~/types'
 
 export interface LocalStorage {
@@ -32,7 +33,7 @@ export interface UserResponse {
   firstName: string
   lastName: string
   email: string
-  categories: Category[]
+  mainSubjects: SubjectInterface[]
   totalReviews: TotalReviews
   averageRating: number
   nativeLanguage: string
@@ -42,6 +43,19 @@ export interface UserResponse {
   lastLogin: string
   createdAt: string
   updatedAt: string
+}
+
+export interface UpdateUserParams
+  extends Pick<
+    UserResponse,
+    | 'photo'
+    | 'firstName'
+    | 'lastName'
+    | 'address'
+    | 'professionalSummary'
+    | 'nativeLanguage'
+  > {
+  mainSubjects: SubjectNameInterface[]
 }
 
 export interface LoginParams {

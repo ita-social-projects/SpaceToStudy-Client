@@ -195,9 +195,9 @@ const GeneralInfoStep = ({
             fullWidth
             label={t('becomeTutor.generalInfo.textFieldLabel')}
             maxLength={70}
-            onChange={handleInputChange('experience')}
+            onChange={handleInputChange('professionalSummary')}
             type='text'
-            value={data.experience}
+            value={data.professionalSummary}
           />
         </Box>
         {btnsBox}

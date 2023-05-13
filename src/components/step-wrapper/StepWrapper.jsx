@@ -1,20 +1,21 @@
 import { cloneElement } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import Button from '@mui/material/Button'
 import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
 
 import EastIcon from '@mui/icons-material/East'
 import WestIcon from '@mui/icons-material/West'
 
+import AppButton from '~/components/app-button/AppButton'
 import useSteps from '~/hooks/use-steps'
 import { styles } from '~/components/step-wrapper/StepWrapper.styles'
 
 const StepWrapper = ({ children, steps }) => {
-  const { activeStep, stepErrors, isLastStep, stepOperation } = useSteps({
-    steps
-  })
+  const { activeStep, stepErrors, isLastStep, loading, stepOperation } =
+    useSteps({
+      steps
+    })
   const { next, back, setActiveStep, handleSubmit } = stepOperation
   const { t } = useTranslation()
 
@@ -31,24 +32,25 @@ const StepWrapper = ({ children, steps }) => {
   ))
 
   const nextButton = isLastStep ? (
-    <Button
+    <AppButton
+      loading={loading}
       onClick={handleSubmit}
       size='small'
       sx={styles.finishBtn}
       variant='contained'
     >
       {t('common.finish')}
-    </Button>
+    </AppButton>
   ) : (
-    <Button onClick={next} size='small' sx={styles.btn} variant='contained'>
+    <AppButton onClick={next} size='small' sx={styles.btn} variant='contained'>
       {t('common.next')}
       <EastIcon fontSize='small' />
-    </Button>
+    </AppButton>
   )
 
   const btnsBox = (
     <Box sx={styles.btnWrapper}>
-      <Button
+      <AppButton
         disabled={activeStep === 0}
         onClick={back}
         size='small'
@@ -57,7 +59,7 @@ const StepWrapper = ({ children, steps }) => {
       >
         <WestIcon fontSize='small' />
         {t('common.back')}
-      </Button>
+      </AppButton>
       {nextButton}
     </Box>
   )
