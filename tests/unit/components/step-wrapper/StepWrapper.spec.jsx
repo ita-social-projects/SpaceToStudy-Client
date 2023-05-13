@@ -1,20 +1,25 @@
 import { vi } from 'vitest'
 import { fireEvent, screen } from '@testing-library/react'
 
+import { ModalProvider } from '~/context/modal-context'
 import { StepProvider } from '~/context/step-context'
 import StepWrapper from '~/components/step-wrapper/StepWrapper'
 import TempComponent from './TempComponent'
+import {
+  studentStepLabels,
+  tutorStepLabels,
+  initialValues
+} from '~/components/user-steps-wrapper/constants'
 
-import { initialValues } from '~/components/user-steps-wrapper/constants'
 import { renderWithProviders } from '~tests/test-utils'
-import { ModalProvider } from '~/context/modal-context'
 
-const stepsMock = ['General info', 'Languages', 'Study category']
+const stepsMock = tutorStepLabels || studentStepLabels
 
 const childrenArrMock = [
   <TempComponent key='1'>1</TempComponent>,
   <TempComponent key='2'>2</TempComponent>,
-  <TempComponent key='3'>3</TempComponent>
+  <TempComponent key='3'>3</TempComponent>,
+  <TempComponent key='4'>4</TempComponent>
 ]
 
 describe('StepWrapper test', () => {
@@ -29,17 +34,20 @@ describe('StepWrapper test', () => {
   })
 
   it('should render second children after click on tab', () => {
-    const secondTab = screen.getByText(/Languages/i)
+    const secondTab = screen.getByText(/step.stepLabels.language/i)
 
     fireEvent.click(secondTab)
 
-    const secondChildren = screen.getByText(/2/i)
+    const secondChildren = screen.getByText(/3/i)
 
     expect(secondChildren).toBeInTheDocument()
   })
 
   it('should render finish button', () => {
     let nextBtn = screen.getByText(/Next/i)
+    fireEvent.click(nextBtn)
+
+    nextBtn = screen.getByText(/Next/i)
     fireEvent.click(nextBtn)
 
     nextBtn = screen.getByText(/Next/i)
