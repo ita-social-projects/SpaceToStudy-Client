@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react'
+import { useEffect } from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { useTranslation } from 'react-i18next'
@@ -8,7 +8,7 @@ import GoogleLogin from '~/containers/guest-home-page/google-login/GoogleLogin'
 import LoginForm from '~/containers/guest-home-page/login-form/LoginForm'
 import useForm from '~/hooks/use-form'
 import useConfirm from '~/hooks/use-confirm'
-import { ModalContext } from '~/context/modal-context'
+import { useModalContext } from '~/context/modal-context'
 import { useSnackBarContext } from '~/context/snackbar-context'
 import { email, password } from '~/utils/validations/login'
 import loginImg from '~/assets/img/login-dialog/login.svg'
@@ -20,7 +20,7 @@ import styles from '~/containers/guest-home-page/login-dialog/LoginDialog.styles
 const LoginDialog = () => {
   const { t } = useTranslation()
   const { setNeedConfirmation } = useConfirm()
-  const { closeModal } = useContext(ModalContext)
+  const { closeModal } = useModalContext()
   const { setAlert } = useSnackBarContext()
   const dispatch = useDispatch()
 

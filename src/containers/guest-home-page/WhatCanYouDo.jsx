@@ -1,4 +1,3 @@
-import { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
@@ -6,7 +5,7 @@ import TitleWithDescription from '~/components/title-with-description/TitleWithD
 import InfoCard from '~/components/info-card/InfoCard'
 
 import SignupDialog from '~/containers/guest-home-page/signup-dialog/SignupDialog'
-import { ModalContext } from '~/context/modal-context'
+import { useModalContext } from '~/context/modal-context'
 import { student, tutor } from '~/constants'
 import { guestRoutes } from '~/router/constants/guestRoutes'
 
@@ -38,7 +37,7 @@ const cardData = [
 
 const WhatCanYouDo = () => {
   const { t } = useTranslation()
-  const { openModal } = useContext(ModalContext)
+  const { openModal } = useModalContext()
 
   const openDialog = (type) => {
     openModal({ component: <SignupDialog type={type} /> })

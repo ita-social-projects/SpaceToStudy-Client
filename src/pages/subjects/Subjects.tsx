@@ -15,6 +15,7 @@ import CardWithLink from '~/components/card-with-link/CardWithLink'
 import useLoadMore from '~/hooks/use-load-more'
 import { subjectService } from '~/services/subject-service'
 
+import { useModalContext } from '~/context/modal-context'
 import { categoryService } from '~/services/category-service'
 import { authRoutes } from '~/router/constants/authRoutes'
 import {
@@ -26,6 +27,7 @@ import {
 import { itemsLoadLimit } from '~/constants'
 import serviceIcon from '~/assets/img/student-home-page/service_icon.png'
 import DirectionLink from '~/components/direction-link/DirectionLink'
+import CreateSubjectModal from '~/containers/find-offer/create-new-subject/CreateNewSubject'
 import AppToolbar from '~/components/app-toolbar/AppToolbar'
 import OfferRequestBlock from '~/containers/find-offer/offer-request-block/OfferRequestBlock'
 import AsyncAutocomplete from '~/components/async-autocomlete/AsyncAutocomplete'
@@ -41,6 +43,7 @@ const Subjects = () => {
 
   const { t } = useTranslation()
   const { isMobile } = useBreakpoints()
+  const { openModal } = useModalContext()
   const [searchParams, setSearchParams] = useSearchParams()
   const categoryId = searchParams.get('categoryId') ?? ''
 
@@ -115,6 +118,8 @@ const Subjects = () => {
     />
   )
 
+  const handleOpenModal = () => openModal({ component: <CreateSubjectModal /> })
+
   return (
     <Container sx={styles.container}>
       <OfferRequestBlock />
@@ -156,6 +161,7 @@ const Subjects = () => {
         <NotFoundResults
           buttonText={t('constant.buttonRequest', { name: 'subjects' })}
           description={t('constant.tryAgainText', { name: 'subjects' })}
+          onClick={handleOpenModal}
         />
       ) : (
         <CardsList

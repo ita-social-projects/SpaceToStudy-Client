@@ -1,10 +1,10 @@
-import { useEffect, useContext } from 'react'
+import { useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import Box from '@mui/material/Box'
 import { descriptionTimes } from '~/components/accordion-with-image/accordion-with-image.constants'
 
-import { ModalContext } from '~/context/modal-context'
+import { useModalContext } from '~/context/modal-context'
 import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
 import Welcome from '~/containers/guest-home-page/Welcome'
 import FeatureBlock from '~/containers/guest-home-page/FeatureBlock'
@@ -15,7 +15,7 @@ import EmailConfirmModal from '~/containers/email-confirm-modal/EmailConfirmModa
 import ResetPassword from '~/containers/guest-home-page/reset-password/ResetPassword'
 
 const GuestHomePage = () => {
-  const { openModal } = useContext(ModalContext)
+  const { openModal } = useModalContext()
   const [searchParams, setSearchParams] = useSearchParams()
 
   useEffect(() => {

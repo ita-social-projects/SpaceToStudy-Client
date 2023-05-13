@@ -1,7 +1,6 @@
-import { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import Transition from 'react-transition-group/Transition'
-import { ModalContext } from '~/context/modal-context'
+import { useModalContext } from '~/context/modal-context'
 
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
@@ -13,7 +12,7 @@ import dots from '~/assets/img/guest-home-page/dots.svg'
 
 const CardsWithButton = ({ array, role, btnText, isStudent }) => {
   const { t } = useTranslation()
-  const { openModal } = useContext(ModalContext)
+  const { openModal } = useModalContext()
 
   const openDialog = (type) => {
     openModal({ component: <SignupDialog type={type} /> })

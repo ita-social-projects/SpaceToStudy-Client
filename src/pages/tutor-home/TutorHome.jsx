@@ -1,11 +1,11 @@
-import { useEffect, useContext } from 'react'
+import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 
 import UserStepsWrapper from '~/components/user-steps-wrapper/UserStepsWrapper'
-import { ModalContext } from '~/context/modal-context'
+import { useModalContext } from '~/context/modal-context'
 
 const TutorHome = () => {
-  const { openModal } = useContext(ModalContext)
+  const { openModal } = useModalContext()
   const { isFirstLogin, userRole } = useSelector((state) => state.appMain)
 
   useEffect(() => {

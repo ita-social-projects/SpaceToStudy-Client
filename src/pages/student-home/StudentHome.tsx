@@ -1,10 +1,10 @@
-import { useContext, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Container from '@mui/material/Container'
 
 import { useAppSelector } from '~/hooks/use-redux'
-import { ModalContext } from '~/context/modal-context'
+import { useModalContext } from '~/context/modal-context'
 import UserStepsWrapper from '~/components/user-steps-wrapper/UserStepsWrapper'
 import FindTutorBlock from '~/containers/student-home-page/find-tutor-block/FindTutorBlock'
 import PopularCategories from '~/components/popular-categories/PopularCategories'
@@ -14,7 +14,7 @@ import StudentHowItWorks from '~/containers/student-home-page/student-how-it-wor
 const StudentHome = () => {
   const { t } = useTranslation()
 
-  const { openModal } = useContext(ModalContext)
+  const { openModal } = useModalContext()
   const { isFirstLogin, userRole } = useAppSelector((state) => state.appMain)
 
   useEffect(() => {

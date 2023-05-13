@@ -4,6 +4,7 @@ import Container from '@mui/material/Container'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 
 import { categoryService } from '~/services/category-service'
+import { useModalContext } from '~/context/modal-context'
 import useLoadMore from '~/hooks/use-load-more'
 import useCategoriesNames from '~/hooks/use-categories-names'
 import useBreakpoints from '~/hooks/use-breakpoints'
@@ -16,6 +17,7 @@ import TitleWithDescription from '~/components/title-with-description/TitleWithD
 import AppToolbar from '~/components/app-toolbar/AppToolbar'
 import DirectionLink from '~/components/direction-link/DirectionLink'
 import NotFoundResults from '~/components/not-found-results/NotFoundResults'
+import CreateSubjectModal from '~/containers/find-offer/create-new-subject/CreateNewSubject'
 
 import {
   CategoryInterface,
@@ -33,6 +35,7 @@ const Categories = () => {
   const { isMobile } = useBreakpoints()
   const [match, setMatch] = useState<string>('')
   const params = useMemo(() => ({ name: match }), [match])
+  const { openModal } = useModalContext()
 
   const cardsLimit = isMobile ? itemsLoadLimit.mobile : itemsLoadLimit.desktop
 
@@ -78,6 +81,8 @@ const Categories = () => {
     [categoriesNamesItems]
   )
 
+  const handleOpenModal = () => openModal({ component: <CreateSubjectModal /> })
+
   return (
     <Container sx={styles.container}>
       <OfferRequestBlock />
@@ -111,6 +116,7 @@ const Categories = () => {
         <NotFoundResults
           buttonText={t('constant.buttonRequest', { name: 'categories' })}
           description={t('constant.tryAgainText', { name: 'categories' })}
+          onClick={handleOpenModal}
         />
       ) : (
         <CardsList

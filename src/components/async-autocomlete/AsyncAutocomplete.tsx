@@ -7,9 +7,9 @@ import useAxios from '~/hooks/use-axios'
 import { defaultResponses } from '~/constants'
 import { ServiceFunction } from '~/types'
 
-interface AsyncAutocompleteProps<T>
+interface AsyncAutocompleteProps<T, F extends boolean | undefined>
   extends Omit<
-    AutocompleteProps<T, undefined, undefined, undefined>,
+    AutocompleteProps<T, undefined, undefined, F>,
     'value' | 'options' | 'renderInput'
   > {
   service: ServiceFunction<T[]>
@@ -19,14 +19,14 @@ interface AsyncAutocompleteProps<T>
   textFieldProps?: TextFieldProps
 }
 
-const AsyncAutocomplete = <T,>({
+const AsyncAutocomplete = <T, F extends boolean | undefined = undefined>({
   textFieldProps,
   valueField,
   labelField,
   value,
   service,
   ...props
-}: AsyncAutocompleteProps<T>) => {
+}: AsyncAutocompleteProps<T, F>) => {
   const { loading, response } = useAxios<T[]>({
     service,
     defaultResponse: defaultResponses.array

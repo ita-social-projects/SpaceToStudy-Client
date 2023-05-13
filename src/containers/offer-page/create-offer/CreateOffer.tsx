@@ -22,7 +22,7 @@ import {
   validations
 } from '~/containers/offer-page/create-offer/CreateOffer.constants'
 import { styles } from '~/containers/offer-page/create-offer/CreateOffer.styles'
-import { ErrorResponse } from '~/types'
+import { ComponentEnum, ErrorResponse } from '~/types'
 
 export interface CreateOfferData {
   category: string
@@ -87,7 +87,11 @@ const CreateOffer: FC<CreateOfferProps> = ({ closeDrawer }) => {
   }, [setNeedConfirmation, isDirty])
 
   return (
-    <Box component='form' onSubmit={(e) => handleSubmit(e)} sx={styles.root}>
+    <Box
+      component={ComponentEnum.Form}
+      onSubmit={handleSubmit}
+      sx={styles.root}
+    >
       <Typography sx={styles.title}>
         <LeakAddSharpIcon sx={styles.icon} />
         {t(`offerPage.createOffer.title.main.${userRole}`)}

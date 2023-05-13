@@ -44,7 +44,7 @@ const AppTextArea: FC<AppTextAreaProps> = ({
         <Typography
           color={value.length === maxLength ? 'error' : 'text'}
           sx={styles.textLength}
-          variant='caption'
+          variant={VariantEnum.Body2}
         >
           {`${value.length}/${maxLength}`}
         </Typography>

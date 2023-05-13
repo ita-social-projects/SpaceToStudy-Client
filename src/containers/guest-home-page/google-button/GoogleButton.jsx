@@ -1,9 +1,9 @@
-import { useCallback, useContext, useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useHref } from 'react-router-dom'
 
 import { googleAuth } from '~/redux/reducer'
-import { ModalContext } from '~/context/modal-context'
+import { useModalContext } from '~/context/modal-context'
 import { useSnackBarContext } from '~/context/snackbar-context'
 import { scrollToHash } from '~/utils/hash-scroll'
 import useBreakpoints from '~/hooks/use-breakpoints'
@@ -14,7 +14,7 @@ import { styles } from '~/containers/guest-home-page/google-button/GoogleButton.
 const GoogleButton = ({ role, route, buttonWidth, type }) => {
   const dispatch = useDispatch()
   const mediaQuery = useBreakpoints().isDesktop ? 'md' : 'xs'
-  const { closeModal } = useContext(ModalContext)
+  const { closeModal } = useModalContext()
   const { setAlert } = useSnackBarContext()
   const ref = useHref(route)
 

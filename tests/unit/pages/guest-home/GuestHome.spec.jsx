@@ -14,12 +14,22 @@ vi.mock('react-router-dom', async () => {
   }
 })
 
+vi.mock('~/context/modal-context', async () => {
+  const actual = await vi.importActual('~/context/modal-context')
+  return {
+    ...actual,
+    useModalContext: () => ({
+      openModal: mockSetModal
+    })
+  }
+})
+
 describe('GuestHomePage test', () => {
   it('should render without opening login modal', () => {
     const defaultRoute = '/'
     mockGet.mockReturnValue(null)
     renderWithProviders(
-      <ModalProvider value={ { openModal: mockSetModal } }>
+      <ModalProvider>
         <GuestHomePage />
       </ModalProvider>,
       { initialEntries: defaultRoute }
@@ -30,7 +40,7 @@ describe('GuestHomePage test', () => {
     const routeWithSeaechParam = '/?login'
     mockGet.mockReturnValue(true)
     renderWithProviders(
-      <ModalProvider value={ { openModal: mockSetModal } }>
+      <ModalProvider>
         <GuestHomePage />
       </ModalProvider>,
       { initialEntries: routeWithSeaechParam }

@@ -1,11 +1,11 @@
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import { useTranslation } from 'react-i18next'
 
 import { useSnackBarContext } from '~/context/snackbar-context'
-import { ModalContext } from '~/context/modal-context'
+import { useModalContext } from '~/context/modal-context'
 import useForm from '~/hooks/use-form'
 
 import AppTextField from '~/components/app-text-field/AppTextField'
@@ -22,7 +22,7 @@ import AppButton from '~/components/app-button/AppButton'
 
 const ForgotPassword = () => {
   const { t } = useTranslation()
-  const { openModal, closeModal } = useContext(ModalContext)
+  const { openModal, closeModal } = useModalContext()
   const [loading, setLoading] = useState(false)
   const { setAlert } = useSnackBarContext()
 
