@@ -33,6 +33,7 @@ const OfferActions: FC<OfferActionsProps> = ({
       key={elem.label}
       onClick={elem.handleClick}
       sx={styles.button}
+      {...elem.buttonProps}
       variant={index !== 0 ? VariantEnum.Tonal : VariantEnum.Contained}
     >
       {elem.label}

@@ -33,11 +33,19 @@ const mockOffer = {
 }
 
 const onBookmarkClick = vi.fn()
+const buttonActions = [
+  { label: 'Action 1', handleClick: vi.fn() },
+  { label: 'Action 2', handleClick: vi.fn() }
+]
 
 describe('OfferCardSquare test', () => {
   beforeEach(() => {
     renderWithProviders(
-      <OfferCardSquare offer={mockOffer} onBookmarkClick={onBookmarkClick} />
+      <OfferCardSquare
+        buttonActions={buttonActions}
+        offer={mockOffer}
+        onBookmarkClick={onBookmarkClick}
+      />
     )
   })
 
@@ -73,7 +81,7 @@ describe('OfferCardSquare test', () => {
 
   it('renders the send message button', () => {
     const sendMessageButton = screen.getByRole('button', {
-      name: 'common.labels.sendMessage'
+      name: 'Action 1'
     })
 
     expect(sendMessageButton).toBeInTheDocument()
@@ -81,7 +89,7 @@ describe('OfferCardSquare test', () => {
 
   it('renders the view details button', () => {
     const viewDetailsButton = screen.getByRole('button', {
-      name: 'common.labels.viewDetails'
+      name: 'Action 2'
     })
     expect(viewDetailsButton).toBeInTheDocument()
   })

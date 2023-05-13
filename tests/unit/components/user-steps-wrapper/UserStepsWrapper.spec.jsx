@@ -1,13 +1,15 @@
+import { vi } from 'vitest'
 import { fireEvent, screen, waitFor } from '@testing-library/react'
 import MockAdapter from 'axios-mock-adapter'
+
 import { axiosClient } from '~/plugins/axiosClient'
-import BecomeATutor from '~/containers/tutor-home-page/become-a-tutor/BecomeATutor'
+import useBreakpoints from '~/hooks/use-breakpoints'
+import UserStepsWrapper from '~/components/user-steps-wrapper/UserStepsWrapper'
 import { ModalProvider } from '~/context/modal-context'
 import { renderWithProviders } from '~tests/test-utils'
+
 import { imageResize } from '~/utils/image-resize'
 import { URLs } from '~/constants/request'
-import useBreakpoints from '~/hooks/use-breakpoints'
-import { vi } from 'vitest'
 
 vi.mock('~/utils/image-resize')
 vi.mock('~/hooks/use-breakpoints')
@@ -22,16 +24,18 @@ const mockState = {
   appMain: { userId, userRole, loading: false }
 }
 
-describe('BecomeATutor test', () => {
-  mockAxiosClient.onGet(`${URLs.users.get}/${userId}?role=${userRole}`).reply(200, { data: userDataMock })
+describe('UserStepsWrapper test', () => {
+  mockAxiosClient
+    .onGet(`${URLs.users.get}/${userId}?role=${userRole}`)
+    .reply(200, { data: userDataMock })
   const desktopData = { isDesktop: true, isMobile: false, isTablet: false }
-  
+
   beforeEach(() => {
     useBreakpoints.mockImplementation(() => desktopData)
     window.URL.createObjectURL = vi.fn(() => 'image/png')
     renderWithProviders(
       <ModalProvider>
-        <BecomeATutor />
+        <UserStepsWrapper userRole='tutor' />
       </ModalProvider>,
       { preloadedState: mockState }
     )
@@ -53,10 +57,12 @@ describe('BecomeATutor test', () => {
   })
 
   it('should open photo render error after add wrong file size', async () => {
-    const fakeFile = new File(['certificate'], 'test-file.png', { type: 'image/png' })
+    const fakeFile = new File(['certificate'], 'test-file.png', {
+      type: 'image/png'
+    })
     Object.defineProperty(fakeFile, 'size', { value: 55_000_000 })
 
-    const photo = screen.getByText(/becomeTutor.stepLabels.photo/i)
+    const photo = screen.getByText(/step.stepLabels.photo/i)
     fireEvent.click(photo)
 
     const input = screen.getByLabelText('becomeTutor.photo.button')
@@ -68,15 +74,19 @@ describe('BecomeATutor test', () => {
 
   it('should resize and show photo after adding photo', async () => {
     imageResize.mockImplementation(() => Promise.resolve('image.png'))
-    const fakeFile = new File(['certificate'], 'test-file.png', { type: 'image/png' })
+    const fakeFile = new File(['certificate'], 'test-file.png', {
+      type: 'image/png'
+    })
     Object.defineProperty(fakeFile, 'size', { value: 9_000_000 })
 
-    const photo = screen.getByText(/becomeTutor.stepLabels.photo/i)
+    const photo = screen.getByText(/step.stepLabels.photo/i)
     fireEvent.click(photo)
 
     const input = screen.getByLabelText('becomeTutor.photo.button')
     fireEvent.change(input, { target: { files: [fakeFile] } })
-    const photoPreview = await screen.findByAltText('becomeTutor.photo.imageAlt')
+    const photoPreview = await screen.findByAltText(
+      'becomeTutor.photo.imageAlt'
+    )
     await waitFor(() => expect(photoPreview).toBeInTheDocument())
   })
 })

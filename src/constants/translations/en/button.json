@@ -3,5 +3,6 @@
   "goToLogin": "Go to login",
   "applyFilters": "Apply filters",
   "clearFilters": "Clear filters",
-  "addToDrafts": "Add to drafts"
+  "addToDrafts": "Add to drafts",
+  "createCooperation": "Send cooperation request"
 }

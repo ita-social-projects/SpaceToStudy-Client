@@ -14,6 +14,7 @@ import filters from './filters.json'
 import iconsTooltip from './icons-tooltip.json'
 import subjectsPage from './subjects-page.json'
 import offerPage from './offer-page.json'
+import offerDetailsPage from './offer-details-page.json'
 
 const ua = {
   translations: {
@@ -32,7 +33,8 @@ const ua = {
     filters,
     iconsTooltip,
     subjectsPage,
-    offerPage
+    offerPage,
+    offerDetailsPage
   }
 }
 

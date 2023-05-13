@@ -10,7 +10,7 @@
   },
     "reviews": {
       "title": "Що говорять студенти",
-      "buttonTitle": "Переглянути всі відгуки",
+      "buttonTitle": "Більше відгуків",
       "starsCount_one": "{{count}} зірка",
       "starsCount_5": "{{count}} зірок",
       "starsCount_other": "{{count}} зірки",

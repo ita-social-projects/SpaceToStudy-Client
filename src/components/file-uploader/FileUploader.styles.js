@@ -21,7 +21,7 @@ export const styles = {
   listItem: {
     display: 'flex',
     justifyContent: 'space-between',
-    p: 0
+    p: '0 10px'
   },
   fileName: {
     textOverflow: 'ellipsis',

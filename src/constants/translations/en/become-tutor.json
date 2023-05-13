@@ -1,10 +1,4 @@
 {
-  "stepLabels": {
-    "generalInfo": "General", 
-    "language": "Language", 
-    "subjects": "Subjects",
-    "photo": "Photo"
-  },
   "generalInfo": {
     "title": "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.",
     "textFieldLabel": "Describe in short your professional status",
@@ -33,5 +27,6 @@
     "description": "Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.",
     "typeError": "Wrong file type. Only .png/.jpg/.jpeg files are allowed.",
     "fileSizeError": "Size for one file cannot be more than 10MB."
-  }
+  },
+  "successMessage": "Success! Your data were added."
 }

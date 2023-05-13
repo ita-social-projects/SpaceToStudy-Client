@@ -1,11 +1,11 @@
 import { UserRoleEnum } from '~/types'
 
-export const defaultResponce = {
+export const defaultResponse = {
   _id: '',
   price: 0,
   proficiencyLevel: [],
   description: '',
-  languages: ['', ''],
+  languages: [],
   authorRole: UserRoleEnum.Tutor,
   authorFirstName: '',
   authorLastName: '',

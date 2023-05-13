@@ -1,13 +1,14 @@
 {
-  "whatCanYouDo": "What can you do",
-  "howItWorks": "How it works",
-  "whoWeAre": "Who we are",
+  "what-сan-you-do": "What can you do",
+  "how-it-works": "How it works",
+  "who-we-are": "Who we are",
   "findTutor": "Tutors",
   "categories": "Categories",
   "homePage": "Home page",
   "faq": "FAQ",
   "becomeTutor": "Become a tutor",
   "loginButton": "Login",
-  "myProfile": "My Profile",
+  "my-profile": "My Profile",
+  "my-cooperations": "My cooperations",
   "logout": "Log out"
 }

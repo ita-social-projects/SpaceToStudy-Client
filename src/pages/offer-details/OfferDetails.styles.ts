@@ -9,7 +9,8 @@ export const styles = {
     display: 'flex',
     flexDirection: 'column',
     flex: 1,
-    gap: '20px'
+    gap: '20px',
+    mb: '100px'
   },
   wrapper: {
     ...border,

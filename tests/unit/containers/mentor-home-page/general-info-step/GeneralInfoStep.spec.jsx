@@ -1,15 +1,20 @@
+import { vi } from 'vitest'
 import { screen, fireEvent, waitFor } from '@testing-library/react'
 import { renderHook } from '@testing-library/react-hooks'
 import MockAdapter from 'axios-mock-adapter'
-import { initialValues } from '~/containers/tutor-home-page/constants'
+
 import GeneralInfoStep from '~/containers/tutor-home-page/general-info-step/GeneralInfoStep'
 import { axiosClient } from '~/plugins/axiosClient'
 import { renderWithProviders } from '~tests/test-utils'
 import { ModalProvider } from '~/context/modal-context'
 import { StepProvider } from '~/context/step-context'
 import useForm from '~/hooks/use-form'
+
+import {
+  initialValues,
+  tutorStepLabels
+} from '~/components/user-steps-wrapper/constants'
 import { URLs } from '~/constants/request'
-import { vi } from 'vitest'
 
 const mockAxiosClient = new MockAdapter(axiosClient)
 
@@ -18,7 +23,7 @@ const setIsUserFetched = vi.fn()
 const validations = {
   firstName: vi.fn(() => undefined),
   lastName: vi.fn(() => undefined),
-  experience: vi.fn(() => undefined)
+  professionalSummary: vi.fn(() => undefined)
 }
 
 const userId = '63f5d0ebb'
@@ -43,19 +48,28 @@ describe('GeneralInfoStep test', () => {
   beforeEach(async () => {
     renderHook(() => useForm({ initialValues, errorValues: {}, validations }))
 
-    mockAxiosClient.onGet(`${URLs.users.get}/${userId}?role=${userRole}`).reply(200, { data: userDataMock })
-    mockAxiosClient.onGet(URLs.location.getCountries).reply(200, countriesDataMock)
-    mockAxiosClient.onGet(`${URLs.location.getCities}/${country}`).reply(200, citiesDataMock)
+    mockAxiosClient
+      .onGet(`${URLs.users.get}/${userId}?role=${userRole}`)
+      .reply(200, { data: userDataMock })
+    mockAxiosClient
+      .onGet(URLs.location.getCountries)
+      .reply(200, countriesDataMock)
+    mockAxiosClient
+      .onGet(`${URLs.location.getCities}/${country}`)
+      .reply(200, citiesDataMock)
 
     await waitFor(() => {
       renderWithProviders(
         <ModalProvider>
-          <StepProvider>
+          <StepProvider
+            initialValues={initialValues}
+            stepLabels={tutorStepLabels}
+          >
             <GeneralInfoStep
-              btnsBox={ btnsBox }
+              btnsBox={btnsBox}
               isUserFetched
-              setIsUserFetched={ setIsUserFetched }
-              stepLabel={ 'generalInfo' }
+              setIsUserFetched={setIsUserFetched}
+              stepLabel={'generalInfo'}
             />
           </StepProvider>
         </ModalProvider>,
@@ -73,7 +87,9 @@ describe('GeneralInfoStep test', () => {
   })
 
   it('should choose option in countries autocomplete', async () => {
-    const countriesAutoComplete = screen.getByLabelText(/common.labels.country/i)
+    const countriesAutoComplete = screen.getByLabelText(
+      /common.labels.country/i
+    )
     const cityAutoComplete = screen.getByLabelText(/common.labels.city/i)
 
     fireEvent.mouseDown(countriesAutoComplete)

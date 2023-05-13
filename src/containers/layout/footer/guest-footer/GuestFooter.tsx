@@ -24,14 +24,14 @@ const GuestFooter = () => {
           to={privacyPolicy.path}
           variant={VariantEnum.Caption}
         >
-          {t(`footer.${privacyPolicy.route}`)}
+          {t('footer.privacyPolicy')}
         </Typography>
         <Typography
           component={RouterLink}
           to={termOfUse.path}
           variant={VariantEnum.Caption}
         >
-          {t(`footer.${termOfUse.route}`)}
+          {t('footer.termOfUse')}
         </Typography>
       </Box>
     </Container>

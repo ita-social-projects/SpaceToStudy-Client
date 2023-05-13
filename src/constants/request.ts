@@ -18,6 +18,7 @@ export const URLs = {
   },
   users: {
     get: '/users',
+    update: '/users',
     delete: '/users/delete',
     myProfile: '/users/myProfile'
   },
@@ -33,5 +34,8 @@ export const URLs = {
   subjects: {
     get: '/subjects',
     getNames: '/subjects/names'
+  },
+  cooperations: {
+    create: '/cooperations'
   }
 }

@@ -1,27 +1,47 @@
-import { render, screen } from '@testing-library/react'
+import { screen, waitFor } from '@testing-library/react'
+
+import { ModalProvider } from '~/context/modal-context'
 import StudentHome from '~/pages/student-home/StudentHome'
-import { MemoryRouter } from 'react-router-dom'
-import { categoryService } from '~/services/category-service'
 
-vi.mock('~/services/category-service')
+import { renderWithProviders } from '~tests/test-utils'
 
-const mockCategoriesNames = [
-  { _id: '1', name: 'Category 1' },
-  { _id: '2', name: 'Category 2' }
-]
+const userId = '63f5d0ebb'
 
-describe('StudentHome', () => {
-  it('should render correctly', async () => {
-    render(
-      <MemoryRouter>
-        <StudentHome />
-      </MemoryRouter>
+const firstLoginState = {
+  appMain: { isFirstLogin: true, userRole: 'student', userId }
+}
+const secondLoginState = {
+  appMain: { isFirstLogin: false, userRole: 'student', userId }
+}
+
+const StudentsHomeWithProviders = () => (
+  <ModalProvider>
+    <StudentHome />
+  </ModalProvider>
+)
+
+describe('StudentsHome component', () => {
+  it('should render modal when logging in for the first time', async () => {
+    renderWithProviders(<StudentsHomeWithProviders />, {
+      preloadedState: firstLoginState
+    })
+
+    await waitFor(() =>
+      expect(
+        screen.getByText(/becomeTutor.generalInfo.title/i)
+      ).toBeInTheDocument()
     )
-    categoryService.getCategories.mockResolvedValueOnce({ data: mockCategoriesNames })
+  })
 
-    expect(screen.getByTestId('studentHome')).toBeInTheDocument()
+  it('should not render modal when logging in for the second time', () => {
+    renderWithProviders(<StudentsHomeWithProviders />, {
+      preloadedState: secondLoginState
+    })
 
-    expect(screen.getByText('studentHomePage.findTutorBlock.title')).toBeInTheDocument()
-    expect(screen.getByText('studentHomePage.popularCategories.title')).toBeInTheDocument()
+    const firstStepTitle = screen.queryByText(/becomeTutor.generalInfo.title/i)
+    const studentHomePage = screen.getByTestId('studentHome')
+
+    expect(firstStepTitle).not.toBeInTheDocument()
+    expect(studentHomePage).toBeInTheDocument()
   })
 })

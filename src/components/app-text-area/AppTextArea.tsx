@@ -5,6 +5,7 @@ import { TextFieldProps } from '@mui/material/TextField'
 
 import AppTextField from '~/components/app-text-field/AppTextField'
 
+import { VariantEnum } from '~/types'
 import { styles } from '~/components/app-text-area/AppTextArea.styles'
 
 interface AppTextAreaProps
@@ -18,11 +19,19 @@ const AppTextArea: FC<AppTextAreaProps> = ({
   minRows = 4,
   maxRows = 4,
   maxLength,
+  title,
   value,
+  sx,
   ...props
 }) => {
+  const titleEl = title && (
+    <Typography sx={styles.title} variant={VariantEnum.Body2}>
+      {title}
+    </Typography>
+  )
   return (
-    <Box sx={styles.root}>
+    <Box sx={{ position: 'relative', ...sx }}>
+      {titleEl}
       <AppTextField
         inputProps={{ maxLength }}
         maxRows={minRows}

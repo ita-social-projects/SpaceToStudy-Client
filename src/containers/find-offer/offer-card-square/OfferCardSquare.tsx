@@ -14,16 +14,23 @@ import AppRatingMobile from '~/components/app-rating-mobile/AppRatingMobile'
 import AppButton from '~/components/app-button/AppButton'
 import TitleWithDescripiton from '~/components/title-with-description/TitleWithDescription'
 
-import { Offer, ProficiencyLevelEnum } from '~/types'
+import {
+  ButtonActions,
+  Offer,
+  ProficiencyLevelEnum,
+  VariantEnum
+} from '~/types'
 
 import { styles } from '~/containers/find-offer/offer-card-square/OfferCardSquare.styles'
 
 interface OfferCardSquareProps {
+  buttonActions: ButtonActions[]
   offer: Offer
   onBookmarkClick: (id: string) => void
 }
 
 const OfferCardSquare: FC<OfferCardSquareProps> = ({
+  buttonActions,
   offer,
   onBookmarkClick
 }) => {
@@ -52,6 +59,18 @@ const OfferCardSquare: FC<OfferCardSquareProps> = ({
 
   const fullName = `${authorFirstName} ${authorLastName}`
 
+  const buttons = buttonActions?.map((elem, index) => (
+    <AppButton
+      fullWidth
+      key={elem.label}
+      onClick={elem.handleClick}
+      {...elem.buttonProps}
+      variant={index !== 0 ? VariantEnum.Tonal : VariantEnum.Contained}
+    >
+      {elem.label}
+    </AppButton>
+  ))
+
   return (
     <Box sx={styles.container}>
       <ImgTitleDescription
@@ -60,13 +79,15 @@ const OfferCardSquare: FC<OfferCardSquareProps> = ({
         style={styles.mainInfo}
         title={fullName}
       />
-      <IconButton
-        data-testid='bookmark-icon'
-        onClick={() => onBookmarkClick(_id)}
-        sx={styles.iconButton}
-      >
-        <TurnedInNot />
-      </IconButton>
+      {onBookmarkClick && (
+        <IconButton
+          data-testid='bookmark-icon'
+          onClick={() => onBookmarkClick(_id)}
+          sx={styles.iconButton}
+        >
+          <TurnedInNot />
+        </IconButton>
+      )}
       <Box sx={styles.languagesContainer}>
         <LanguageIcon sx={styles.languageIcon} />
         <Typography sx={styles.languages} variant='body2'>
@@ -95,12 +116,7 @@ const OfferCardSquare: FC<OfferCardSquareProps> = ({
           />
         </Box>
       </Box>
-      <AppButton sx={styles.sendMessageButton}>
-        {t('common.labels.sendMessage')}
-      </AppButton>
-      <AppButton fullWidth sx={styles.viewDetailsButton}>
-        {t('common.labels.viewDetails')}
-      </AppButton>
+      <Box sx={styles.buttonContainer}>{buttons}</Box>
     </Box>
   )
 }

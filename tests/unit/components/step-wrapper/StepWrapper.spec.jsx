@@ -1,23 +1,32 @@
-import { fireEvent, render, screen } from '@testing-library/react'
-import StepWrapper from '~/components/step-wrapper/StepWrapper'
-import TempComponent from '~/containers/tutor-home-page/become-a-tutor/TempComponent'
+import { vi } from 'vitest'
+import { fireEvent, screen } from '@testing-library/react'
+
 import { ModalProvider } from '~/context/modal-context'
 import { StepProvider } from '~/context/step-context'
-import { vi } from 'vitest'
+import StepWrapper from '~/components/step-wrapper/StepWrapper'
+import TempComponent from './TempComponent'
+import {
+  studentStepLabels,
+  tutorStepLabels,
+  initialValues
+} from '~/components/user-steps-wrapper/constants'
 
-const stepsMock = ['General info', 'Languages', 'Study category']
+import { renderWithProviders } from '~tests/test-utils'
+
+const stepsMock = tutorStepLabels || studentStepLabels
 
 const childrenArrMock = [
   <TempComponent key='1'>1</TempComponent>,
   <TempComponent key='2'>2</TempComponent>,
-  <TempComponent key='3'>3</TempComponent>
+  <TempComponent key='3'>3</TempComponent>,
+  <TempComponent key='4'>4</TempComponent>
 ]
 
 describe('StepWrapper test', () => {
   beforeEach(() => {
-    render(
+    renderWithProviders(
       <ModalProvider>
-        <StepProvider>
+        <StepProvider initialValues={initialValues} stepLabels={stepsMock}>
           <StepWrapper steps={stepsMock}>{childrenArrMock}</StepWrapper>
         </StepProvider>
       </ModalProvider>
@@ -25,17 +34,20 @@ describe('StepWrapper test', () => {
   })
 
   it('should render second children after click on tab', () => {
-    const secondTab = screen.getByText(/Languages/i)
+    const secondTab = screen.getByText(/step.stepLabels.language/i)
 
     fireEvent.click(secondTab)
 
-    const secondChildren = screen.getByText(/2/i)
+    const secondChildren = screen.getByText(/3/i)
 
     expect(secondChildren).toBeInTheDocument()
   })
 
   it('should render finish button', () => {
     let nextBtn = screen.getByText(/Next/i)
+    fireEvent.click(nextBtn)
+
+    nextBtn = screen.getByText(/Next/i)
     fireEvent.click(nextBtn)
 
     nextBtn = screen.getByText(/Next/i)
