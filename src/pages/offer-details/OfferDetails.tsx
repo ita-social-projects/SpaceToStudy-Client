@@ -2,7 +2,6 @@ import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams, useNavigate } from 'react-router-dom'
 
-import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 
 import useAxios from '~/hooks/use-axios'
@@ -26,6 +25,7 @@ import {
   responseMock,
   loadingMock
 } from '~/containers/tutor-profile/comments-with-rating-block/constants'
+import OfferCardSquare from '~/containers/find-offer/offer-card-square/OfferCardSquare'
 
 const OfferDetails = () => {
   const { t } = useTranslation()
@@ -71,14 +71,24 @@ const OfferDetails = () => {
 
   return (
     <Container sx={styles.container}>
-      <AppCard sx={styles.offerCard}>
-        <OfferCard
-          buttonActions={buttonActions}
-          isHideField
-          offer={response}
-          onBookmarkClick={onBookmarkClick}
-        />
-      </AppCard>
+      {isMobile ? (
+        <AppCard sx={styles.offerCardSquare}>
+          <OfferCardSquare
+            buttonActions={buttonActions}
+            offer={response}
+            onBookmarkClick={onBookmarkClick}
+          />
+        </AppCard>
+      ) : (
+        <AppCard sx={styles.offerCard}>
+          <OfferCard
+            buttonActions={buttonActions}
+            isHideField
+            offer={response}
+            onBookmarkClick={onBookmarkClick}
+          />
+        </AppCard>
+      )}
 
       <AppCard sx={styles.wrapper}>
         <ShowMoreCollapse
@@ -97,9 +107,7 @@ const OfferDetails = () => {
           title={t('tutorProfilePage.reviews.title')}
         />
       </AppCard>
-      <AppCard sx={styles.wrapper}>
-        <Box>For Example</Box>
-      </AppCard>
+
       <OfferCarousel offer={response} />
     </Container>
   )
