@@ -1,10 +1,11 @@
 import { SxProps } from "@mui/material"
+import { AccordionStyleChecker } from "~/types"
 
 export interface AccordionItem {
     title: string
     description: string
 }
-interface AccordionStyles {
+export interface AccordionStyles {
     root?: SxProps
     accordion?: SxProps
     active?: SxProps
@@ -16,6 +17,6 @@ interface AccordionStyles {
     description?: SxProps
 }
 export interface AccordionSx {
-    withIcon?: AccordionStyles
+    withIcon?: AccordionStyles | AccordionStyleChecker
     noIcon?: AccordionStyles
 }

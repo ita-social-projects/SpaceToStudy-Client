@@ -29,4 +29,5 @@ export {
 }
 export * from './accordion-with-image/accordionWithImage.interface'
 export * from './accordions/accordions.interface'
+export * from './accordions/accordions.types'
 export * from './multi-accordion-with-title/multiAccordionWithTitle.interface'

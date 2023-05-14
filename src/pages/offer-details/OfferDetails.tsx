@@ -17,9 +17,11 @@ import { errorRoutes } from '~/router/constants/errorRoutes'
 import ShowMoreCollapse from '~/components/show-more-collapse/ShowMoreCollapse'
 import EnrollOffer from '~/containers/offer-details/enroll-offer/EnrollOffer'
 import { useModalContext } from '~/context/modal-context'
-import { defaultResponse } from '~/pages/offer-details/constants'
 import topBlockIcon from '~/assets/img/offer-details/top-block-icon.png'
-
+import {
+  defaultResponse,
+  mockedFAQItems
+} from '~/pages/offer-details/constants'
 import { styles } from '~/pages/offer-details/OfferDetails.styles'
 import { useAppSelector } from '~/hooks/use-redux'
 import { Offer, VariantEnum } from '~/types'
@@ -29,6 +31,7 @@ import {
   loadingMock
 } from '~/containers/tutor-profile/comments-with-rating-block/constants'
 import OfferCardSquare from '~/containers/find-offer/offer-card-square/OfferCardSquare'
+import MultiAccordionWithTitle from '~/components/multi-accordion-with-title/MultiAccordionWIthTitle'
 
 const OfferDetails = () => {
   const { t } = useTranslation()
@@ -108,7 +111,6 @@ const OfferDetails = () => {
           title={t('common.aboutOffer')}
         />
       </AppCard>
-
       <AppCard sx={styles.wrapper}>
         <CommentsBlock
           data={items}

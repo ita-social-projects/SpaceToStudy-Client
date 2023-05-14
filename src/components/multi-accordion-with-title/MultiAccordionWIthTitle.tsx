@@ -8,12 +8,13 @@ import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp'
 import { AccordionItem, MultiAccordionWithTitleSx, VariantEnum } from '~/types'
 import { styles } from '~/components/multi-accordion-with-title/MultiAccordionWithTitle.styles'
 import Accordions from '~/components/accordion/Accordions'
+import useBreakpoints from '~/hooks/use-breakpoints'
 
 interface MultiAccordionWithTitleProps {
   items: AccordionItem[]
   title?: string
-  icon: ReactNode
-  sx: MultiAccordionWithTitleSx
+  icon?: ReactNode
+  sx?: MultiAccordionWithTitleSx
 }
 
 const MultiAccordionWithTitle: FC<MultiAccordionWithTitleProps> = ({
@@ -23,6 +24,8 @@ const MultiAccordionWithTitle: FC<MultiAccordionWithTitleProps> = ({
   icon = <ArrowForwardIosSharpIcon sx={sx.icon} data-testid='accordion-icon' />
 }) => {
   const { t } = useTranslation()
+
+  const { isMobile } = useBreakpoints()
 
   const [activeItems, setActiveItems] = useState<number[]>([])
 
@@ -39,7 +42,10 @@ const MultiAccordionWithTitle: FC<MultiAccordionWithTitleProps> = ({
   }
 
   const accordionTitle = title && (
-    <Typography sx={sx.title} variant={VariantEnum.H5}>
+    <Typography
+      sx={{ ...sx.title, ...(isMobile && { m: '16px 20px 10px' }) }}
+      variant={isMobile ? VariantEnum.H6 : VariantEnum.H5}
+    >
       {t(title)}
     </Typography>
   )
@@ -51,8 +57,14 @@ const MultiAccordionWithTitle: FC<MultiAccordionWithTitleProps> = ({
       activeIndex={activeItems}
       icon={icon}
       multiple={true}
-      sx={{ withIcon: sx.withIcon, noIcon: sx.noIcon }}
-      titleVariant={VariantEnum.H6}
+      sx={{
+        withIcon:
+          typeof sx.withIcon === 'function'
+            ? sx.withIcon(isMobile)
+            : sx.withIcon,
+        noIcon: sx.noIcon
+      }}
+      titleVariant={isMobile ? VariantEnum.Subtitle2 : VariantEnum.H6}
       descriptionVariant={VariantEnum.Body2}
       elevation={0}
     />
