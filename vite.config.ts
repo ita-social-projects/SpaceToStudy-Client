@@ -16,8 +16,6 @@ export default defineConfig({
       failOnError: false
     })
   ],
-
-  base: './',
   server: {
     port: 3000,
     open: true,
