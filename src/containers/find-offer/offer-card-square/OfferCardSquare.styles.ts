@@ -9,17 +9,22 @@ const ellipsisTextStyle = (linesCount: number) => ({
 
 export const styles = {
   container: {
-    position: 'relative'
+    position: 'relative',
+    minHeight: '500px',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between'
   },
   mainInfo: {
     root: {
+      width: '100%',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center'
     },
     img: {
-      width: '80px',
-      borderRadius: '50%'
+      height: '80px',
+      width: '80px'
     },
     titleWithDescription: {
       wrapper: {
@@ -80,7 +85,7 @@ export const styles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    mb: '10px'
+    mb: '16px'
   },
   titleWithDescription: {
     wrapper: {

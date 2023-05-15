@@ -74,6 +74,7 @@ const OfferCardSquare: FC<OfferCardSquareProps> = ({
   return (
     <Box sx={styles.container}>
       <ImgTitleDescription
+        component={'avatar'}
         description={author.professionalSummary}
         img={author.photo}
         style={styles.mainInfo}
@@ -103,20 +104,22 @@ const OfferCardSquare: FC<OfferCardSquareProps> = ({
         </AppChip>
       </Box>
 
-      <Box sx={styles.priceContainer}>
-        <TitleWithDescripiton
-          description={t('common.hourSlash')}
-          style={styles.titleWithDescription}
-          title={`${price} ${t('common.uah')}`}
-        />
-        <Box>
-          <AppRatingMobile
-            reviewsCount={author.totalReviews}
-            value={authorAvgRating}
+      <Box>
+        <Box sx={styles.priceContainer}>
+          <TitleWithDescripiton
+            description={t('common.hourSlash')}
+            style={styles.titleWithDescription}
+            title={`${price} ${t('common.uah')}`}
           />
+          <Box>
+            <AppRatingMobile
+              reviewsCount={author.totalReviews}
+              value={authorAvgRating}
+            />
+          </Box>
         </Box>
+        <Box sx={styles.buttonContainer}>{buttons}</Box>
       </Box>
-      <Box sx={styles.buttonContainer}>{buttons}</Box>
     </Box>
   )
 }
