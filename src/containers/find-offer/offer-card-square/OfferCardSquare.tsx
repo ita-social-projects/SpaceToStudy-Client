@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography'
 import LanguageIcon from '@mui/icons-material/Language'
 import IconButton from '@mui/material/IconButton'
 import TurnedInNot from '@mui/icons-material/TurnedInNot'
+import Avatar from '@mui/material/Avatar'
 
 import { useTranslation } from 'react-i18next'
 
@@ -76,7 +77,7 @@ const OfferCardSquare: FC<OfferCardSquareProps> = ({
       <ImgTitleDescription
         description={author.professionalSummary}
         img={author.photo}
-        imgComponent={'avatar'}
+        imgComponent={Avatar}
         style={styles.mainInfo}
         title={fullName}
       />

@@ -11,13 +11,13 @@ export const styles = {
   container: {
     position: 'relative',
     minHeight: '500px',
+    width: '100%',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between'
   },
   mainInfo: {
     root: {
-      width: '100%',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center'
