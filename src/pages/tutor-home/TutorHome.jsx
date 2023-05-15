@@ -7,7 +7,7 @@ import { useModalContext } from '~/context/modal-context'
 const TutorHome = () => {
   const { openModal } = useModalContext()
   const { isFirstLogin, userRole } = useSelector((state) => state.appMain)
-  console.log(isFirstLogin)
+
   useEffect(() => {
     if (isFirstLogin) {
       openModal({
