@@ -7,11 +7,6 @@ const borderStyles = {
     borderRadius: '6px'
 }
 
-const accordionTitleStyles = (isMobile: boolean) => ({
-    ml: '13px',
-    ...(isMobile && { mb: '10px' })
-})
-
 export const styles: MultiAccordionWithTitleSx = {
     title: {
         color: 'primary.700',
@@ -32,7 +27,7 @@ export const styles: MultiAccordionWithTitleSx = {
         },
         titleActive: {
             ml: '13px',
-            color: 'primary.500'
+            color: 'primary.500's
         },
         titleInactive: {
             ml: '13px',
