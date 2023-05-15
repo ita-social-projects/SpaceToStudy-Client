@@ -14,7 +14,7 @@ export const styles = {
   },
   wrapper: {
     ...border,
-    p: '35px 60px'
+    p: { xs: '25px', sm: '35px 60px' }
   },
   offerCard: border
 }

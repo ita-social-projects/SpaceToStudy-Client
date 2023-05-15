@@ -10,6 +10,7 @@ import OfferCard from '~/components/offer-card/OfferCard'
 import AppCard from '~/components/app-card/AppCard'
 import Loader from '~/components/loader/Loader'
 import CommentsBlock from '~/containers/tutor-profile/comments-block/CommentBlock'
+import useBreakpoints from '~/hooks/use-breakpoints'
 import { OfferService } from '~/services/offer-service'
 import { errorRoutes } from '~/router/constants/errorRoutes'
 import ShowMoreCollapse from '~/components/show-more-collapse/ShowMoreCollapse'
@@ -27,6 +28,7 @@ import {
 
 const OfferDetails = () => {
   const { t } = useTranslation()
+  const { isMobile } = useBreakpoints()
   const { id = '' } = useParams()
   const { openModal } = useContext(ModalContext)
   const navigate = useNavigate()
@@ -79,6 +81,7 @@ const OfferDetails = () => {
 
       <AppCard sx={styles.wrapper}>
         <ShowMoreCollapse
+          collapsedSize={isMobile ? 80 : 70}
           description={response.description ?? ''}
           title={t('common.aboutOffer')}
         />

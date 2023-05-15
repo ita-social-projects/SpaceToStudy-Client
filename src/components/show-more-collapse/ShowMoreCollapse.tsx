@@ -2,11 +2,11 @@ import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Box } from '@mui/material'
 import Typography from '@mui/material/Typography'
-import Collapse from '@mui/material/Collapse'
+import Collapse, { CollapseProps } from '@mui/material/Collapse'
 
 import { styles } from '~/components/show-more-collapse/ShowMoreCollapse.styles'
 
-interface ShowMoreCollapseProps {
+interface ShowMoreCollapseProps extends CollapseProps {
   title: string
   description: string
   collapsedSize?: number
