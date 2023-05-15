@@ -74,9 +74,9 @@ const OfferCardSquare: FC<OfferCardSquareProps> = ({
   return (
     <Box sx={styles.container}>
       <ImgTitleDescription
-        component={'avatar'}
         description={author.professionalSummary}
         img={author.photo}
+        imgComponent={'avatar'}
         style={styles.mainInfo}
         title={fullName}
       />

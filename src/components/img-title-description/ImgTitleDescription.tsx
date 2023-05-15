@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import {ElementType, FC} from 'react'
 
 import Box from '@mui/material/Box'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
@@ -8,7 +8,7 @@ import Avatar from '@mui/material/Avatar'
 import { styles } from '~/components/img-title-description/ImgTitleDescription.styles'
 
 interface ImgTitleDescriptionProps {
-  component?: string
+  imgComponent?: string
   img?: string
   title: string
   description?: string
@@ -18,7 +18,7 @@ interface ImgTitleDescriptionProps {
 }
 
 const ImgTitleDescription: FC<ImgTitleDescriptionProps> = ({
-  component,
+  imgComponent = 'img',
   img,
   title,
   description,
@@ -26,10 +26,10 @@ const ImgTitleDescription: FC<ImgTitleDescriptionProps> = ({
 }) => {
   return (
     <Box sx={style.root}>
-      {component === 'avatar' ? (
+      {imgComponent === 'avatar' ? (
         <Avatar src={img} sx={style.img} />
       ) : (
-        <Box alt='info' component='img' src={img} sx={style.img} />
+        <Box alt='info' component={imgComponent} src={img} sx={style.img} />
       )}
 
       <TitleWithDescription
