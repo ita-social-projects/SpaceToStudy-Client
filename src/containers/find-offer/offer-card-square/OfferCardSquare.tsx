@@ -1,8 +1,6 @@
 import { FC } from 'react'
 
 import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
-import LanguageIcon from '@mui/icons-material/Language'
 import IconButton from '@mui/material/IconButton'
 import TurnedInNot from '@mui/icons-material/TurnedInNot'
 import Avatar from '@mui/material/Avatar'
@@ -13,6 +11,7 @@ import ImgTitleDescription from '~/components/img-title-description/ImgTitleDesc
 import AppChip from '~/components/app-chip/AppChip'
 import AppRatingMobile from '~/components/app-rating-mobile/AppRatingMobile'
 import AppButton from '~/components/app-button/AppButton'
+import LanguagesListWithIcon from '~/components/languages-list-with-icon/LanguagesListWithIcon'
 import TitleWithDescripiton from '~/components/title-with-description/TitleWithDescription'
 
 import { ButtonActions, Offer, ProficiencyLevelEnum } from '~/types'
@@ -88,12 +87,7 @@ const OfferCardSquare: FC<OfferCardSquareProps> = ({
           <TurnedInNot />
         </IconButton>
       )}
-      <Box sx={styles.languagesContainer}>
-        <LanguageIcon sx={styles.languageIcon} />
-        <Typography sx={styles.languages} variant='body2'>
-          {languages.join(', ')}
-        </Typography>
-      </Box>
+      <LanguagesListWithIcon languages={languages} />
       <Box sx={styles.chipsContainer}>
         <AppChip labelSx={styles.subjectChipLabel} sx={styles.subjectChip}>
           {subject.name}

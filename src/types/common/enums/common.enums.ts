@@ -49,3 +49,9 @@ export enum ComponentEnum {
   Footer = 'footer',
   Form = 'form'
 }
+
+export enum StatusEnum {
+  Pending = 'pending',
+  Active = 'active',
+  Closed = 'closed'
+}

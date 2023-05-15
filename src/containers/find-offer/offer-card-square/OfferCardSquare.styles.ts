@@ -47,18 +47,6 @@ export const styles = {
     top: 0,
     right: 0
   },
-  languagesContainer: {
-    display: 'flex',
-    alignItems: 'center',
-    mb: '5px'
-  },
-  languageIcon: {
-    color: 'primary.400',
-    marginRight: '8px'
-  },
-  languages: {
-    color: 'primary.400'
-  },
   chipsContainer: {
     display: 'flex',
     flexWrap: 'wrap',

@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography'
 import ImgTitleDescription from '~/components/img-title-description/ImgTitleDescription'
 import AppRating from '~/components/app-rating/AppRating'
 
+import { getFormatedDate } from '~/utils/helper-functions'
 import { ReviewInterface } from '~/types'
 import { styles } from '~/components/comment/Comment.styles'
 
@@ -17,11 +18,7 @@ const Comment: FC<CommentProps> = ({ review }) => {
   const { firstName, lastName, photo } = author
   const { category, subject, proficiencyLevel } = offer
 
-  const timestamp = new Date(createdAt).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  })
+  const timestamp = getFormatedDate(createdAt)
 
   const userName = (
     <>

@@ -1,9 +1,6 @@
-import Box from '@mui/material/Box'
-import Container from '@mui/material/Container'
 import CooperationCard from '~/containers/my-cooperations/cooperation-card/CooperationCard'
 
-import { styles } from '~/pages/my-cooperations/MyCooperations.styles'
-import { LanguagesEnum, ProficiencyLevelEnum, StatusEnum } from '~/types'
+import { render, screen } from '@testing-library/react'
 
 const mockedCoop = {
   offer: {
@@ -12,25 +9,24 @@ const mockedCoop = {
     subject: { _id: 'id', name: 'Quantum Mechanics' }
   },
   user: {
-    firstName: 'Tolik',
-    lastName: 'Bolik',
+    firstName: 'Kathryn',
+    lastName: 'Murphy',
     photo:
       'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80'
   },
   price: 1800,
-  requiredProficiencyLevel: ProficiencyLevelEnum.Beginner,
-  requiredLanguage: LanguagesEnum.Ukrainian,
-  status: StatusEnum.Pending,
+  requiredProficiencyLevel: 'Beginner',
+  requiredLanguage: 'Ukrainian',
+  status: 'pending',
   createdAt: '2023-05-13T13:44:25.716Z'
 }
 
-const MyCooperations = () => {
-  return (
-    <Container sx={styles.container}>
-      <Box>My Cooperations</Box>
-      <CooperationCard cooperation={mockedCoop} />
-    </Container>
-  )
-}
+describe('CooperationCard component ', () => {
+  it('should render card', () => {
+    render(<CooperationCard cooperation={mockedCoop} />)
 
-export default MyCooperations
+    const language = screen.getByText(mockedCoop.requiredLanguage)
+
+    expect(language).toBeInTheDocument()
+  })
+})
