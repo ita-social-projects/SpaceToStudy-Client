@@ -1,3 +1,4 @@
+import { ButtonProps } from '@mui/material/Button'
 import {
   CategoryInterface,
   ProficiencyLevelEnum,
@@ -6,7 +7,8 @@ import {
   UserResponse,
   SubjectNameInterface,
   UserRoleEnum,
-  LanguagesEnum
+  LanguagesEnum,
+  VariantEnum
 } from '~/types'
 import { LinkProps } from 'react-router-dom'
 
@@ -30,7 +32,8 @@ export interface Offer extends CommonEntityFields {
 export interface ButtonActions {
   label: string
   handleClick: () => void
-  buttonProps?: LinkProps
+  variant: VariantEnum
+  buttonProps?: Omit<LinkProps, 'onClick'> | Omit<ButtonProps, 'onClick'>
 }
 
 export interface PriceRangeParams {

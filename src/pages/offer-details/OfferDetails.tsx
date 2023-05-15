@@ -17,9 +17,9 @@ import ShowMoreCollapse from '~/components/show-more-collapse/ShowMoreCollapse'
 import EnrollOffer from '~/containers/offer-details/enroll-offer/EnrollOffer'
 import { useModalContext } from '~/context/modal-context'
 import { defaultResponse } from '~/pages/offer-details/constants'
-
-import { Offer } from '~/types'
 import { styles } from '~/pages/offer-details/OfferDetails.styles'
+import { useAppSelector } from '~/hooks/use-redux'
+import { Offer, VariantEnum } from '~/types'
 
 import {
   responseMock,
@@ -33,6 +33,7 @@ const OfferDetails = () => {
   const { id = '' } = useParams()
   const { openModal } = useModalContext()
   const navigate = useNavigate()
+  const { userRole } = useAppSelector((state) => state.appMain)
 
   const { items } = responseMock
 
@@ -59,13 +60,17 @@ const OfferDetails = () => {
     openModal({ component: <EnrollOffer offer={response} /> })
 
   const buttonActions = [
-    {
-      label: t('common.labels.enrollOffer'),
-      handleClick: handleEnrollOfferClick
-    },
+    response.authorRole !== userRole
+      ? {
+          label: t('common.labels.enrollOffer'),
+          handleClick: handleEnrollOfferClick,
+          variant: VariantEnum.Contained
+        }
+      : null,
     {
       label: t('common.labels.sendMessage'),
-      handleClick: () => {}
+      handleClick: () => null,
+      variant: VariantEnum.Tonal
     }
   ]
 
