@@ -1,9 +1,9 @@
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import { AutocompleteProps } from '@mui/material/Autocomplete'
 import { TextFieldProps } from '@mui/material/TextField'
 
 import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
-import useAxios from '~/hooks/use-axios'
+import useAxios, { UseAxiosProps } from '~/hooks/use-axios'
 import { defaultResponses } from '~/constants'
 import { ServiceFunction } from '~/types'
 
@@ -17,6 +17,7 @@ interface AsyncAutocompleteProps<T, F extends boolean | undefined>
   labelField?: keyof T
   value: T[keyof T] | null
   textFieldProps?: TextFieldProps
+  axiosProps: Pick<UseAxiosProps<T[]>, 'onResponse' | 'onResponseError'>
 }
 
 const AsyncAutocomplete = <T, F extends boolean | undefined = undefined>({
@@ -25,12 +26,20 @@ const AsyncAutocomplete = <T, F extends boolean | undefined = undefined>({
   labelField,
   value,
   service,
+  axiosProps,
   ...props
 }: AsyncAutocompleteProps<T, F>) => {
-  const { loading, response } = useAxios<T[]>({
+  const { loading, response, fetchData } = useAxios<T[]>({
     service,
-    defaultResponse: defaultResponses.array
+    fetchOnMount: false,
+    defaultResponse: defaultResponses.array,
+    ...axiosProps
   })
+
+  useEffect(() => {
+    void fetchData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [service])
 
   const valueOption = useMemo(
     () =>

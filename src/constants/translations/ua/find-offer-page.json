@@ -1,7 +1,10 @@
 {
   "offerRequestBlock": {
-    "title": "Репетитори для приватних уроків",
-    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    "title": {
+      "student": "Студент для приватних уроків",
+      "tutor": "Репетитор для приватних уроків"
+    },
+    "description": "Давно встановлено, що читач відволікатиметься на читабельний вміст сторінки, дивлячись на її макет.",
     "button": "Створити запит"
   },
   "titleWithDescription": {

@@ -49,7 +49,7 @@ describe('PopularCategories', () => {
   })
 
   it('navigates to the categories page when the view all button is clicked', async () => {
-    const button = screen.getByText('common.viewAllName', { exact: false })
+    const button = screen.getByText('common.goToName', { exact: false })
     fireEvent.click(button)
     await waitFor(() => {
       expect(window.location.pathname).toBe('/categories')

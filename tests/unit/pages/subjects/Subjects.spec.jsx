@@ -1,7 +1,8 @@
 import { vi } from 'vitest'
 import Subjects from '~/pages/subjects/Subjects'
-import { render, fireEvent, screen } from '@testing-library/react'
-import { MemoryRouter } from 'react-router-dom'
+import { fireEvent, screen } from '@testing-library/react'
+import { ModalProvider } from '~/context/modal-context'
+import { renderWithProviders } from '~tests/test-utils'
 
 vi.mock('~/hooks/use-categories-names', () => ({
   __esModule: true,
@@ -19,32 +20,56 @@ vi.mock('~/hooks/use-subjects-names', () => ({
   __esModule: true,
   default: () => ({
     loading: false,
-    response: ['Subject 1',  'Subject 2']
+    response: ['Subject 1', 'Subject 2']
   })
 }))
 
+const route = '/categories/subjects?categoryId=123'
+
+const mockState = {
+  appMain: { userRole: 'tutor' }
+}
+
 describe('Subjects', () => {
   beforeEach(() => {
-    render(
-      <MemoryRouter initialEntries={ ['/categories/subjects?categoryId=123'] }>
+    renderWithProviders(
+      <ModalProvider>
         <Subjects />
-      </MemoryRouter>
+      </ModalProvider>,
+      {
+        initialEntries: route,
+        preloadedState: mockState
+      }
     )
   })
   afterEach(() => {
     vi.clearAllMocks()
   })
   it('should render correctly', () => {
-    expect(screen.getByText('subjectsPage.subjects.description')).toBeInTheDocument()
-    expect(screen.getByText('subjectsPage.subjects.title', { category: 'Category 1' })).toBeInTheDocument()
+    expect(
+      screen.getByText('subjectsPage.subjects.description')
+    ).toBeInTheDocument()
+    expect(
+      screen.getByText('subjectsPage.subjects.title', {
+        category: 'Category 1'
+      })
+    ).toBeInTheDocument()
     expect(screen.getByLabelText('breadCrumbs.categories')).toBeInTheDocument()
-    expect(screen.getByLabelText('subjectsPage.subjects.searchLabel')).toBeInTheDocument()
-    expect(screen.getByText('subjectsPage.subjects.backToAllCategories')).toBeInTheDocument()
-    expect(screen.getByText('subjectsPage.subjects.showAllOffers')).toBeInTheDocument()
+    expect(
+      screen.getByLabelText('subjectsPage.subjects.searchLabel')
+    ).toBeInTheDocument()
+    expect(
+      screen.getByText('subjectsPage.subjects.backToAllCategories')
+    ).toBeInTheDocument()
+    expect(
+      screen.getByText('subjectsPage.subjects.showAllOffers')
+    ).toBeInTheDocument()
   })
 
   it('should update search value when search input is changed', () => {
-    const searchLabel = screen.getByLabelText('subjectsPage.subjects.searchLabel')
+    const searchLabel = screen.getByLabelText(
+      'subjectsPage.subjects.searchLabel'
+    )
 
     fireEvent.change(searchLabel, { target: { value: 'Subject' } })
 
