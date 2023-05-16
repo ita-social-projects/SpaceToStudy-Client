@@ -14,5 +14,9 @@ export const styles = {
     minWidth: '148px',
     display: 'block',
     m: '32px auto 0'
+  },
+  loaderContainer: {
+    minHeight: '350px',
+    display: 'flex'
   }
 }

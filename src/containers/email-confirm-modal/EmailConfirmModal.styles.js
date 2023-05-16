@@ -6,14 +6,15 @@ export const styles = {
     boxShadow: 'none',
     borderRadius: '8px'
   },
-  title: {
-    marginTop: '30px',
-    fontSize: '21px',
-    fontWeight: 'bold',
-    color: 'palette.grey.500'
-  },
   button: {
     size: 'large',
     mt: '32px'
+  },
+  titleWithDescription: {
+    title: {
+      typography: 'h6',
+      color: 'primary.900',
+      my: '14px'
+    }
   }
 }
