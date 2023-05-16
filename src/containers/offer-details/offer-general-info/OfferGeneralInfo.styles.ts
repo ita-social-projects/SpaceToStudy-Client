@@ -33,24 +33,26 @@ export const styles = {
         height: '40px'
       }
     },
-    textWrapper: {
-      display: 'flex',
-      flexDirection: 'column',
-      rowGap: { xs: '10px', sm: '15px' },
-      mx: { xs: 0, sm: '20px', md: '35px' }
-    },
-    title: {
-      typography: { xs: 'subtitle2', sm: 'h6' }
-    },
-    description: {
-      display: 'grid',
-      gridTemplateColumns: {
-        xs: 'repeat(1, minmax(170px, 1fr))',
-        sm: 'repeat(2, minmax(170px, 1fr))',
-        md: 'repeat(3, minmax(170px, 1fr))'
+    titleWithDescription: {
+      wrapper: {
+        display: 'flex',
+        flexDirection: 'column',
+        rowGap: { xs: '10px', sm: '15px' },
+        mx: { xs: 0, sm: '20px', md: '35px' }
       },
-      gap: { xs: '10px 0px', md: '10px 40px' },
-      typography: { xs: 'body2', sm: 'body1' }
+      title: {
+        typography: { xs: 'subtitle2', sm: 'h6' }
+      },
+      description: {
+        display: 'grid',
+        gridTemplateColumns: {
+          xs: 'repeat(1, 1fr)',
+          sm: 'repeat(2, max-content)',
+          md: 'repeat(3, max-content)'
+        },
+        gap: { xs: '10px', sm: '10px 40px' },
+        typography: { xs: 'body2', sm: 'body1' }
+      }
     }
   }
 }

@@ -16,7 +16,7 @@ interface OfferGeneralInfo {
 
 const OfferGeneralInfo: FC<OfferGeneralInfo> = ({ offer }) => {
   const { t } = useTranslation()
-  const items = offerGeneralInfoMock(offer)
+  const items = offerGeneralInfoMock(offer, t)
 
   const generalInfoCards = useMemo(
     () =>
@@ -26,11 +26,11 @@ const OfferGeneralInfo: FC<OfferGeneralInfo> = ({ offer }) => {
             description={item.description}
             icon={item.icon}
             sx={styles.iconTitleDescription}
-            title={t(item.title)}
+            title={item.title}
           />
         </AppCard>
       )),
-    [items, t]
+    [items]
   )
 
   return (

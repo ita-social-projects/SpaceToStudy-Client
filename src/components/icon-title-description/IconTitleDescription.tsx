@@ -1,17 +1,25 @@
-import { FC, ReactNode } from 'react'
+import { FC, ReactElement, ReactNode } from 'react'
 import { SxProps } from '@mui/material'
-import Typography from '@mui/material/Typography'
-import Box from '@mui/system/Box'
+import Box from '@mui/material/Box'
+
+import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 
 import { styles } from '~/components/icon-title-description/IconTitleDescription.styles'
 
-interface IconTitleDescriptionProps {
-  icon: ReactNode
-  title: string
-  description?: string | ReactNode
-  sx?: {
-    [key: string]: SxProps
+type Sx = {
+  container?: SxProps
+  icon?: SxProps
+  titleWithDescription?: {
+    wrapper?: SxProps
+    title?: SxProps
+    description?: SxProps
   }
+}
+interface IconTitleDescriptionProps {
+  icon: ReactElement
+  title: string | ReactElement
+  description?: string | ReactNode
+  sx?: Sx
 }
 
 const IconTitleDescription: FC<IconTitleDescriptionProps> = ({
@@ -24,11 +32,11 @@ const IconTitleDescription: FC<IconTitleDescriptionProps> = ({
     <Box sx={sx.container}>
       <Box sx={sx.icon}>{icon}</Box>
 
-      <Box sx={sx.textWrapper}>
-        <Typography sx={sx.title}>{title}</Typography>
-
-        {description && <Box sx={sx.description}>{description}</Box>}
-      </Box>
+      <TitleWithDescription
+        description={description}
+        style={sx.titleWithDescription}
+        title={title}
+      />
     </Box>
   )
 }

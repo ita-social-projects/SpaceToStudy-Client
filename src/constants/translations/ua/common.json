@@ -13,6 +13,7 @@
   "showLess": "Показати менше",
   "uah": "ГРН",
   "hour": "ГОДИНУ",
+  "uahSlashHour": "ГРН/годину",
   "beginner": "Початковий",
   "labels": {
     "sendMessage": "Надіслати повідомлення",
