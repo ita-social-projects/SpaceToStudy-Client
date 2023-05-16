@@ -2,6 +2,8 @@ import {
   CategoryInterface,
   FindOffersUpdateFilter,
   LanguageFilter,
+  Offer,
+  ProficiencyLevelEnum,
   RangeArray,
   RequestParams,
   UserRole
@@ -17,7 +19,7 @@ export interface FindOffersFilters {
   authorRole: UserRole
   price?: RangeArray
   name: string
-  level: string[]
+  proficiencyLevel: ProficiencyLevelEnum[]
   page: string
 }
 
@@ -45,4 +47,7 @@ export interface FilterQueryHook<T> {
 
 export interface GetOffersPrarams
   extends Partial<FindOffersFilters>,
-    Partial<Omit<RequestParams, 'sort'>> {}
+    Partial<Omit<RequestParams, 'sort'>> {
+  excludedOfferId: Offer['_id']
+  languages: Offer['languages']
+}

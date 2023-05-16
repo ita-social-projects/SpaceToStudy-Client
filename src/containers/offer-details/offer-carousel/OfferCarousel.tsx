@@ -1,4 +1,4 @@
-import { FC, useCallback, useMemo } from 'react'
+import { FC, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
@@ -22,30 +22,29 @@ const OfferCarousel: FC<OfferCarouselProps> = ({ offer }) => {
   const { isDesktop, isTablet } = useBreakpoints()
   const { t } = useTranslation()
 
-  const params = useMemo(
-    () => ({
-      authorRole: offer.authorRole,
-      subjectId: offer.subject._id,
-      proficiencyLevel: offer.proficiencyLevel,
-      languages: offer.languages
-    }),
+  const getOffers = useCallback(
+    () =>
+      OfferService.getOffers({
+        authorRole: offer.authorRole,
+        subjectId: offer.subject._id,
+        proficiencyLevel: offer.proficiencyLevel,
+        languages: offer.languages,
+        excludedOfferId: offer._id,
+        limit: 9
+      }),
     [offer]
   )
-
-  const getOffers = useCallback(() => OfferService.getOffers(params), [params])
 
   const { response } = useAxios<GetOffersResponse>({
     service: getOffers,
     defaultResponse
   })
 
-  const itemsToShow = response.offers
-    .filter((item) => item._id !== offer._id)
-    .map((item) => (
-      <AppCard key={item._id} sx={styles.offerCard}>
-        <OfferCardSquare offer={item} />
-      </AppCard>
-    ))
+  const itemsToShow = response.offers.map((item) => (
+    <AppCard key={item._id} sx={styles.offerCard}>
+      <OfferCardSquare offer={item} />
+    </AppCard>
+  ))
 
   const carouselSettings = {
     slidesToShow: isDesktop ? 3 : isTablet ? 2 : 1,
