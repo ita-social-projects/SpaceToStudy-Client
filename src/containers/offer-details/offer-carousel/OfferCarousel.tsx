@@ -1,4 +1,5 @@
 import { FC, useCallback } from 'react'
+import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
@@ -9,9 +10,10 @@ import useAxios from '~/hooks/use-axios'
 import AppCard from '~/components/app-card/AppCard'
 import OfferCardSquare from '~/containers/find-offer/offer-card-square/OfferCardSquare'
 import AppCarousel from '~/components/app-carousel/AppCarousel'
-import { GetOffersResponse, Offer } from '~/types'
+import { GetOffersResponse, Offer, VariantEnum } from '~/types'
 import { OfferService } from '~/services/offer-service'
 import { defaultResponse } from '~/pages/find-offers/FindOffers.constants'
+import { authRoutes } from '~/router/constants/authRoutes'
 import { styles } from '~/containers/offer-details/offer-carousel/OfferCarousel.styles'
 
 interface OfferCarouselProps {
@@ -40,11 +42,28 @@ const OfferCarousel: FC<OfferCarouselProps> = ({ offer }) => {
     defaultResponse
   })
 
-  const itemsToShow = response.offers.map((item) => (
-    <AppCard key={item._id} sx={styles.offerCard}>
-      <OfferCardSquare offer={item} />
-    </AppCard>
-  ))
+  const itemsToShow = response.offers.map((item) => {
+    const buttonActions = [
+      {
+        label: t('common.labels.sendMessage'),
+        handleClick: () => null
+      },
+      {
+        label: t('common.labels.viewDetails'),
+        handleClick: () => null,
+        variant: VariantEnum.Tonal,
+        buttonProps: {
+          component: Link,
+          to: `${authRoutes.offerDetails.path}/${item._id}`
+        }
+      }
+    ]
+    return (
+      <AppCard key={item._id} sx={styles.offerCard}>
+        <OfferCardSquare buttonActions={buttonActions} offer={item} />
+      </AppCard>
+    )
+  })
 
   const carouselSettings = {
     slidesToShow: isDesktop ? 3 : isTablet ? 2 : 1,
