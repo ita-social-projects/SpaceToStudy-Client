@@ -10,15 +10,15 @@ const borderStyles = {
 export const styles: MultiAccordionWithTitleSx = {
     title: {
         color: 'primary.700',
-        m: {sx: '16px 20px 10px', xl:'35px 60px 18px 60px'},
+        m: { xs: '16px 20px 10px', md: '35px 60px 18px 60px' },
     },
     container: { ...borderStyles, pb: '65px', backgroundColor: 'white' },
     icon: { color: 'primary.500', fontSize: '13px' },
     withIcon: {
-        accordion: { ...borderStyles, mb: '16px', '&:last-child': { mb: 0 }, '&::before': { display: 'none' }, m: { sx: '10px 14px', xl: '0 60px 16px' }, p: '12px 0' },
+        accordion: { ...borderStyles, mb: '16px', '&:last-child': { mb: 0 }, '&::before': { display: 'none' }, m: { xs: '10px 14px', md: '0 60px 16px' }, p: '12px 0' },
         summary: {
             display: 'flex',
-             flexDirection: {sx:'row-reverse'},
+            flexDirection: { xs: 'row-reverse', md:'row' },
             alignItems: 'center',
             '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
                 transform: 'rotate(90deg)',
@@ -34,8 +34,8 @@ export const styles: MultiAccordionWithTitleSx = {
             color: 'primary.700'
         },
         description: {
-            ml: { sx: '14px', xl: '27px' },
-            color: {sx:'primary.600'}
+            ml: { xs: '14px', md: '15px' },
+            color: { xs: 'primary.600' }
         }
     }
 }
