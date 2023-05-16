@@ -48,6 +48,6 @@ export interface FilterQueryHook<T> {
 export interface GetOffersPrarams
   extends Partial<FindOffersFilters>,
     Partial<Omit<RequestParams, 'sort'>> {
-  excludedOfferId: Offer['_id']
-  languages: Offer['languages']
+  excludedOfferId?: Offer['_id']
+  languages?: Offer['languages']
 }
