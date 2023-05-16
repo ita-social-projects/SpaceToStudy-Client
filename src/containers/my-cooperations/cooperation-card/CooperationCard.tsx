@@ -1,3 +1,4 @@
+import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
@@ -12,7 +13,6 @@ import TitleWithDescription from '~/components/title-with-description/TitleWithD
 import { getFormatedDate } from '~/utils/helper-functions'
 import { Cooperation } from '~/types'
 import { styles } from '~/containers/my-cooperations/cooperation-card/CooperationCard.styles'
-import { FC } from 'react'
 
 interface CooperationCardProps {
   cooperation: Cooperation

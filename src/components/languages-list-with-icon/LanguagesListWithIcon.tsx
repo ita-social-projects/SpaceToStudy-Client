@@ -1,10 +1,10 @@
+import { FC } from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import LanguageIcon from '@mui/icons-material/Language'
 
-import { styles } from '~/components/languages-list-with-icon/LanguagesListWithIcon.styles'
 import { LanguagesEnum } from '~/types'
-import { FC } from 'react'
+import { styles } from '~/components/languages-list-with-icon/LanguagesListWithIcon.styles'
 
 interface LanguagesListWithIconProps {
   languages: LanguagesEnum[] | LanguagesEnum
