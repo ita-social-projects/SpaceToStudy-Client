@@ -4,19 +4,21 @@ import { useParams, useNavigate } from 'react-router-dom'
 
 import Container from '@mui/material/Container'
 
+import { OfferService } from '~/services/offer-service'
+import { useModalContext } from '~/context/modal-context'
 import useAxios from '~/hooks/use-axios'
 import OfferCard from '~/components/offer-card/OfferCard'
 import Loader from '~/components/loader/Loader'
 import TitleBlock from '~/components/title-block/TitleBlock'
 import CommentsBlock from '~/containers/tutor-profile/comments-block/CommentBlock'
 import useBreakpoints from '~/hooks/use-breakpoints'
-import { OfferService } from '~/services/offer-service'
-import AppCard from '~/components/app-card/AppCard'
+import EnrollOffer from '~/containers/offer-details/enroll-offer/EnrollOffer'
 import OfferCarousel from '~/containers/offer-details/offer-carousel/OfferCarousel'
+import OfferGeneralInfo from '~/containers/offer-details/offer-general-info/OfferGeneralInfo'
+import AppCard from '~/components/app-card/AppCard'
 import { errorRoutes } from '~/router/constants/errorRoutes'
 import ShowMoreCollapse from '~/components/show-more-collapse/ShowMoreCollapse'
-import EnrollOffer from '~/containers/offer-details/enroll-offer/EnrollOffer'
-import { useModalContext } from '~/context/modal-context'
+
 import topBlockIcon from '~/assets/img/offer-details/top-block-icon.png'
 import {
   defaultResponse,
@@ -110,6 +112,10 @@ const OfferDetails = () => {
           description={response.description ?? ''}
           title={t('common.aboutOffer')}
         />
+      </AppCard>
+
+      <AppCard sx={styles.wrapper}>
+        <OfferGeneralInfo offer={response} />
       </AppCard>
       <AppCard sx={styles.wrapper}>
         <MultiAccordionWithTitle
