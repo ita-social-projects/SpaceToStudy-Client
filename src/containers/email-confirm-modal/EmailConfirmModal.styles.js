@@ -14,7 +14,6 @@ export const styles = {
     title: {
       typography: 'h6',
       color: 'primary.900',
-      fontWeight: '600',
       my: '14px'
     }
   }
