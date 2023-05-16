@@ -85,6 +85,7 @@ export const styles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
+    mt: 'auto',
     mb: '16px'
   },
   titleWithDescription: {

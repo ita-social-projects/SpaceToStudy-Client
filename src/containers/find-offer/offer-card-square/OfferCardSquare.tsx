@@ -105,22 +105,20 @@ const OfferCardSquare: FC<OfferCardSquareProps> = ({
         </AppChip>
       </Box>
 
-      <Box>
-        <Box sx={styles.priceContainer}>
-          <TitleWithDescripiton
-            description={t('common.hourSlash')}
-            style={styles.titleWithDescription}
-            title={`${price} ${t('common.uah')}`}
+      <Box sx={styles.priceContainer}>
+        <TitleWithDescripiton
+          description={t('common.hourSlash')}
+          style={styles.titleWithDescription}
+          title={`${price} ${t('common.uah')}`}
+        />
+        <Box>
+          <AppRatingMobile
+            reviewsCount={author.totalReviews}
+            value={authorAvgRating}
           />
-          <Box>
-            <AppRatingMobile
-              reviewsCount={author.totalReviews}
-              value={authorAvgRating}
-            />
-          </Box>
         </Box>
-        <Box sx={styles.buttonContainer}>{buttons}</Box>
       </Box>
+      <Box sx={styles.buttonContainer}>{buttons}</Box>
     </Box>
   )
 }
