@@ -58,10 +58,7 @@ const MultiAccordionWithTitle: FC<MultiAccordionWithTitleProps> = ({
       icon={icon}
       multiple={true}
       sx={{
-        withIcon:
-          typeof sx.withIcon === 'function'
-            ? sx.withIcon(isMobile)
-            : sx.withIcon,
+        withIcon:sx.withIcon,
         noIcon: sx.noIcon
       }}
       titleVariant={isMobile ? VariantEnum.Subtitle2 : VariantEnum.H6}
