@@ -10,7 +10,7 @@ const borderStyles = {
 export const styles: MultiAccordionWithTitleSx = {
     title: {
         color: 'primary.700',
-        m: '35px 60px 18px 60px',
+        m: {sx: '16px 20px 10px', xl:'35px 60px 18px 60px'},
     },
     container: { ...borderStyles, pb: '65px', backgroundColor: 'white' },
     icon: { color: 'primary.500', fontSize: '13px' },
