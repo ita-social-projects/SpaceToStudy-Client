@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
@@ -8,10 +8,11 @@ import useBreakpoints from '~/hooks/use-breakpoints'
 
 import { styles } from '~/containers/tutor-home-page/subjects-step/SubjectsStep.styles'
 import img from '~/assets/img/tutor-home-page/become-tutor/study-category.svg'
-import { categoriesMock, languagesMock } from './constants'
-import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
+import AsyncAutocomplete from '~/components/async-autocomlete/AsyncAutocomplete'
 import { useStepContext } from '~/context/step-context'
 import AppChipList from '~/components/app-chips-list/AppChipList'
+import { categoryService } from '~/services/category-service'
+import { subjectService } from '~/services/subject-service'
 
 const SubjectsStep = ({ stepLabel, btnsBox }) => {
   const { t } = useTranslation()
@@ -19,8 +20,17 @@ const SubjectsStep = ({ stepLabel, btnsBox }) => {
   const { stepData, handleStepData } = useStepContext()
   const subjectData = stepData[stepLabel]
 
-  const [subjects, setSubjects] = useState({ category: null, subject: null })
+  const [subjects, setSubjects] = useState({
+    category: null,
+    subject: null
+  })
+
   const [subjectError, setSubjectError] = useState('')
+
+  const getSubjectsNames = useCallback(
+    () => subjectService.getSubjectsNames(subjects.category._id),
+    [subjects.category]
+  )
 
   const imageBlock = (
     <Box sx={styles.imgContainer}>
@@ -30,7 +40,11 @@ const SubjectsStep = ({ stepLabel, btnsBox }) => {
 
   const onChangeCategory = (_, value) => {
     setSubjects(
-      (prev) => prev.category !== value && { category: value, subject: null }
+      (prev) =>
+        prev.category?._id !== value?._id && {
+          category: value,
+          subject: null
+        }
     )
   }
 
@@ -45,11 +59,10 @@ const SubjectsStep = ({ stepLabel, btnsBox }) => {
       return
     }
 
-    const { subject, category } = subjects
-
     const isSameLesson = subjectData.some(
-      (lesson) => lesson.subject === subject && lesson.category === category
+      (lesson) => lesson?._id === subjects.subject?._id
     )
+
     if (isSameLesson) {
       setSubjectError(t('becomeTutor.categories.sameSubject'))
       return
@@ -57,18 +70,14 @@ const SubjectsStep = ({ stepLabel, btnsBox }) => {
       setSubjectError('')
     }
 
-    const newSubject = { category: category, subject: subject }
-    handleStepData(stepLabel, [...subjectData, newSubject])
+    handleStepData(stepLabel, [...subjectData, subjects.subject])
   }
 
   const handleChipDelete = (item) => {
-    const newItems = subjectData.filter(({ subject }) => subject !== item)
+    const newItems = subjectData.filter(({ name }) => name !== item)
     handleStepData(stepLabel, newItems)
   }
-
-  const listOfItems = subjectData.map((item) => item.subject)
-  const categoriesMockOptions = categoriesMock.map((item) => item.name)
-  const languagesMockOptions = languagesMock.map((item) => item.name)
+  const listOfItems = subjectData.map((item) => item.name)
 
   return (
     <Box sx={styles.container}>
@@ -77,28 +86,28 @@ const SubjectsStep = ({ stepLabel, btnsBox }) => {
         <Box sx={styles.contentBox}>
           <Typography mb='20px'>{t('becomeTutor.categories.title')}</Typography>
           {isMobile && imageBlock}
-          <AppAutoComplete
+          <AsyncAutocomplete
+            labelField='name'
             onChange={onChangeCategory}
-            options={categoriesMockOptions}
+            service={categoryService.getCategoriesNames}
             sx={{ mb: '20px' }}
             textFieldProps={{
-              id: t('becomeTutor.categories.mainSubjectsLabel'),
               label: t('becomeTutor.categories.mainSubjectsLabel')
             }}
-            type='text'
-            value={subjects.category}
+            value={subjects.category?._id ?? null}
+            valueField='_id'
           />
-          <AppAutoComplete
+          <AsyncAutocomplete
             disabled={!subjects.category}
+            labelField='name'
             onChange={onChangeSubject}
-            options={languagesMockOptions}
+            service={getSubjectsNames}
             sx={{ mb: '20px' }}
             textFieldProps={{
-              id: t('becomeTutor.categories.subjectLabel'),
               label: t('becomeTutor.categories.subjectLabel')
             }}
-            type='text'
-            value={subjects.subject}
+            value={subjects.subject?._id ?? null}
+            valueField='_id'
           />
           <Button
             data-testid='add-subject'
