@@ -1,4 +1,3 @@
-import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Checkbox from '@mui/material/Checkbox'
@@ -9,25 +8,25 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 
 import { styles } from './CheckboxList.styles'
 
-interface CheckboxListProps extends Pick<TypographyProps, 'variant'> {
-  items: string[]
-  value?: string[]
+interface CheckboxListProps<T> extends Pick<TypographyProps, 'variant'> {
+  items: T[]
+  value?: T[]
   title?: string
   error?: string
-  onChange: (checkbox: string[]) => void
+  onChange: (checkbox: T[]) => void
 }
 
-const CheckboxList: FC<CheckboxListProps> = ({
+const CheckboxList = <T extends string>({
   items,
   error = '',
   value = [],
   title,
   variant,
   onChange
-}) => {
+}: CheckboxListProps<T>) => {
   const { t } = useTranslation()
 
-  const handleCheckbox = (checkbox: string) => {
+  const handleCheckbox = (checkbox: T) => {
     const updatedCheckboxes = value.includes(checkbox)
       ? value.filter((el) => el !== checkbox)
       : [...value, checkbox]

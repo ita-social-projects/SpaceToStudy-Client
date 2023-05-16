@@ -100,8 +100,8 @@ const OfferFilterList: FC<OfferFilterListProps> = ({
       {filterTitle(t('findOffers.filterTitles.level'))}
       <CheckboxList
         items={levelOptions}
-        onChange={updateFilterByKey('level')}
-        value={filters.level}
+        onChange={updateFilterByKey('proficiencyLevel')}
+        value={filters.proficiencyLevel}
         variant={'body2'}
       />
       {filterTitle(t('findOffers.filterTitles.language'))}

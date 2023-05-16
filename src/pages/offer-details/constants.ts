@@ -23,7 +23,7 @@ export const defaultResponse = {
     _id: '',
     name: ''
   },
-  category: { _id: '' },
+  category: '',
   createdAt: '',
   updatedAt: ''
 }

@@ -9,7 +9,7 @@ export const defaultFilters: FindOffersFilters = {
   rating: '0',
   authorRole: UserRoleEnum.Tutor,
   name: '',
-  level: [],
+  proficiencyLevel: [],
   price: undefined,
   page: '1'
 }

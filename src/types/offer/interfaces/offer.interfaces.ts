@@ -24,7 +24,7 @@ export interface Offer extends CommonEntityFields {
     '_id' | 'totalReviews' | 'photo' | 'professionalSummary'
   >
   subject: SubjectNameInterface
-  category: Pick<CategoryInterface, '_id'>
+  category: CategoryInterface['_id']
 }
 
 export interface ButtonActions {
@@ -42,4 +42,9 @@ export interface PriceRangeParams {
 export interface PriceRangeResponse {
   minPrice: number
   maxPrice: number
+}
+
+export interface GetOffersResponse {
+  offers: Offer[]
+  count: number
 }

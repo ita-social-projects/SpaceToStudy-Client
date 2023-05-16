@@ -32,7 +32,8 @@ import {
   SizeEnum,
   UserRoleEnum,
   VisibilityEnum,
-  GetOffersPrarams
+  GetOffersPrarams,
+  GetOffersResponse
 } from '~/types'
 import { styles } from '~/pages/find-offers/FindOffers.styles'
 import {
@@ -65,7 +66,7 @@ const FindOffers = () => {
     response: offersResponse,
     loading: offersLoading,
     fetchData
-  } = useAxios({
+  } = useAxios<GetOffersResponse, GetOffersPrarams>({
     service: getOffers,
     defaultResponse,
     fetchOnMount: false
