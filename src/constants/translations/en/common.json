@@ -10,6 +10,8 @@
   "finish": "Finish",
   "search": "Search",
   "delete": "Delete",
+  "showMore": "Show more",
+  "showLess": "Show less",
   "confirmButton": "OK",
   "uah": "UAH",
   "hour": "HOUR",
@@ -17,6 +19,7 @@
   "beginner": "Beginner",
   "offers": "offers",
   "popularCategories": "Popular Categories",
+  "aboutOffer": "About Offer",
   "viewAllName": "View all {{name}}",
   "labels": {
     "email": "Email",

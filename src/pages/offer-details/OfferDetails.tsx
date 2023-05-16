@@ -9,15 +9,18 @@ import useAxios from '~/hooks/use-axios'
 import OfferCard from '~/components/offer-card/OfferCard'
 import Loader from '~/components/loader/Loader'
 import CommentsBlock from '~/containers/tutor-profile/comments-block/CommentBlock'
+import useBreakpoints from '~/hooks/use-breakpoints'
 import { OfferService } from '~/services/offer-service'
 import AppCard from '~/components/app-card/AppCard'
 import OfferCarousel from '~/containers/offer-details/offer-carousel/OfferCarousel'
 import { errorRoutes } from '~/router/constants/errorRoutes'
+import ShowMoreCollapse from '~/components/show-more-collapse/ShowMoreCollapse'
 import EnrollOffer from '~/containers/offer-details/enroll-offer/EnrollOffer'
 import { ModalContext } from '~/context/modal-context'
 import { defaultResponse } from '~/pages/offer-details/constants'
-import { styles } from '~/pages/offer-details/OfferDetails.styles'
+
 import { Offer } from '~/types'
+import { styles } from '~/pages/offer-details/OfferDetails.styles'
 
 import {
   responseMock,
@@ -26,6 +29,7 @@ import {
 
 const OfferDetails = () => {
   const { t } = useTranslation()
+  const { isMobile } = useBreakpoints()
   const { id = '' } = useParams()
   const { openModal } = useContext(ModalContext)
   const navigate = useNavigate()
@@ -75,6 +79,15 @@ const OfferDetails = () => {
           onBookmarkClick={onBookmarkClick}
         />
       </AppCard>
+
+      <AppCard sx={styles.wrapper}>
+        <ShowMoreCollapse
+          collapsedSize={isMobile ? 80 : 70}
+          description={response.description ?? ''}
+          title={t('common.aboutOffer')}
+        />
+      </AppCard>
+
       <AppCard sx={styles.wrapper}>
         <CommentsBlock
           data={items}
