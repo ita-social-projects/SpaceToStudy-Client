@@ -14,11 +14,11 @@ export const styles: MultiAccordionWithTitleSx = {
     },
     container: { ...borderStyles, pb: '65px', backgroundColor: 'white' },
     icon: { color: 'primary.500', fontSize: '13px' },
-    withIcon: (isMobile) => ({
-        accordion: { ...borderStyles, mb: '16px', '&:last-child': { mb: 0 }, '&::before': { display: 'none' }, m: isMobile ? '10px 14px' : '0 60px 16px', p: '12px 0' },
+    withIcon: {
+        accordion: { ...borderStyles, mb: '16px', '&:last-child': { mb: 0 }, '&::before': { display: 'none' }, m: { sx: '10px 14px', xl: '0 60px 16px' }, p: '12px 0' },
         summary: {
             display: 'flex',
-            ...(!isMobile && { flexDirection: 'row-reverse' }),
+             flexDirection: {sx:'row-reverse'},
             alignItems: 'center',
             '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
                 transform: 'rotate(90deg)',
@@ -27,15 +27,15 @@ export const styles: MultiAccordionWithTitleSx = {
         },
         titleActive: {
             ml: '13px',
-            color: 'primary.500's
+            color: 'primary.500'
         },
         titleInactive: {
             ml: '13px',
             color: 'primary.700'
         },
         description: {
-            ml: isMobile ? '14px' : '27px',
-            ...(isMobile && { color: 'primary.600' })
+            ml: { sx: '14px', xl: '27px' },
+            color: {sx:'primary.600'}
         }
-    }),
+    }
 }
