@@ -1,4 +1,4 @@
-import { FC, useContext } from 'react'
+import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AxiosResponse } from 'axios'
 
@@ -6,7 +6,7 @@ import Box from '@mui/material/Box'
 
 import useAxios from '~/hooks/use-axios'
 import useForm from '~/hooks/use-form'
-import { ModalContext } from '~/context/modal-context'
+import { useModalContext } from '~/context/modal-context'
 import { useSnackBarContext } from '~/context/snackbar-context'
 import OfferCardSquare from '~/containers/find-offer/offer-card-square/OfferCardSquare'
 import AppTextArea from '~/components/app-text-area/AppTextArea'
@@ -25,7 +25,7 @@ interface EnrollOfferProps {
 }
 
 const EnrollOffer: FC<EnrollOfferProps> = ({ offer }) => {
-  const { closeModal } = useContext(ModalContext)
+  const { closeModal } = useModalContext()
   const { setAlert } = useSnackBarContext()
   const { t } = useTranslation()
 

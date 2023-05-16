@@ -1,7 +1,6 @@
 import PopupDialog from '~/components/popup-dialog/PopupDialog'
 import { MemoryRouter } from 'react-router-dom'
-import { ModalContext, ModalProvider } from '~/context/modal-context'
-import { useContext } from 'react'
+import { useModalContext, ModalProvider } from '~/context/modal-context'
 
 export default {
   title: 'PopupDialog',
@@ -15,7 +14,7 @@ export default {
 }
 
 export const Desktop = ({ content }) => {
-  const { openModal } = useContext(ModalContext)
+  const { openModal } = useModalContext()
 
   const openDialog = () => {
     openModal({

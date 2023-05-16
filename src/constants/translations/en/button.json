@@ -4,5 +4,6 @@
   "applyFilters": "Apply filters",
   "clearFilters": "Clear filters",
   "addToDrafts": "Add to drafts",
-  "createCooperation": "Send cooperation request"
+  "createCooperation": "Send cooperation request",
+  "sendRequest" : "Send request"
 }

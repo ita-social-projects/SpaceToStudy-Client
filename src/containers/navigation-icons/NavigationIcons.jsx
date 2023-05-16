@@ -1,16 +1,16 @@
-import { useContext, useCallback } from 'react'
+import { useCallback } from 'react'
 import { useSelector } from 'react-redux'
 
 import GuestIcons from '~/containers/navigation-icons/guest-icons/GuestIcons'
 import AdminIcons from './admin-icons/AdminIcons'
 import UserIcons from '~/containers/navigation-icons/user-icons/UserIcons'
-import { ModalContext } from '~/context/modal-context'
+import { useModalContext } from '~/context/modal-context'
 import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
 import { admin, student, tutor } from '~/constants'
 
 const NavigationIcons = ({ setSidebarOpen }) => {
   const { userRole } = useSelector((state) => state.appMain)
-  const { openModal } = useContext(ModalContext)
+  const { openModal } = useModalContext()
 
   const openLoginDialog = useCallback(() => {
     openModal({ component: <LoginDialog /> })

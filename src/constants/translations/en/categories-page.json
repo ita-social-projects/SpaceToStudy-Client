@@ -4,5 +4,14 @@
   "showAllOffers": "Show all offers",
   "searchLabel": "What would you like to learn?",
   "viewMore": "View more",
-  "offers": "offers"
+  "offers": "offers",
+  "newSubject": {
+    "successMessage": "Request send successfully",
+    "title": "Request a new study",
+    "description": "If you can’t find a specific category or subject that you need, you can submit a request to our team to review your request and take necessary actions.",
+    "subject": "Create a new subject",
+    "category": "Add subject to existing category or create a new one.",
+    "info": "Provide a brief explanation of why you believe this subject or category should be added.",
+    "labels": { "subject": "New subject" }
+  }
 }

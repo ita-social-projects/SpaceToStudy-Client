@@ -1,8 +1,8 @@
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import { styles } from '~/containers/email-confirm-modal/EmailConfirmModal.styles'
-import { useCallback, useContext } from 'react'
-import { ModalContext } from '~/context/modal-context'
+import { useCallback } from 'react'
+import { useModalContext } from '~/context/modal-context'
 import { useTranslation } from 'react-i18next'
 import imgSuccess from '~/assets/img/email-confirmation-modals/success-icon.svg'
 import imgReject from '~/assets/img/email-confirmation-modals/not-success-icon.svg'
@@ -14,7 +14,7 @@ import ImgTitleDescription from '~/components/img-title-description/ImgTitleDesc
 
 const EmailConfirmModal = ({ confirmToken, openModal }) => {
   const { t } = useTranslation()
-  const { closeModal } = useContext(ModalContext)
+  const { closeModal } = useModalContext()
 
   const serviceFunction = useCallback(
     () => AuthService.confirmEmail(confirmToken),

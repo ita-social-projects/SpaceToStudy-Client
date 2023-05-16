@@ -9,7 +9,21 @@ import { renderWithProviders } from '~tests/test-utils'
 import { vi } from 'vitest'
 
 const mockCloseModal = vi.fn()
-const mockGoogle = { accounts: { id: { initialize: vi.fn(), renderButton: vi.fn() } } }
+const mockOpenModal = vi.fn()
+
+vi.mock('~/context/modal-context', async () => {
+  const actual = await vi.importActual('~/context/modal-context')
+  return {
+    ...actual,
+    useModalContext: () => ({
+      closeModal: mockCloseModal,
+      openModal: mockOpenModal
+    })
+  }
+})
+const mockGoogle = {
+  accounts: { id: { initialize: vi.fn(), renderButton: vi.fn() } }
+}
 
 const originalGoogle = global.google
 const buttonWidth = { xs: '300px', md: '400px' }
@@ -24,7 +38,7 @@ describe('GoogleLogin component test for login', () => {
   beforeEach(() => {
     renderWithProviders(
       <SnackBarProvider>
-        <ModalProvider value={{ closeModal: mockCloseModal }}>
+        <ModalProvider>
           <GoogleLogin buttonWidth={buttonWidth} type={login} />
         </ModalProvider>
       </SnackBarProvider>
@@ -80,8 +94,7 @@ describe('GoogleLogin component test for signup', () => {
   it('should render login popup', async () => {
     const link = screen.getByText('signup.joinUs')
     fireEvent.click(link)
-    const popup = await screen.findByTestId('popup')
 
-    expect(popup).toBeInTheDocument()
+    await waitFor(() => expect(mockOpenModal).toHaveBeenCalled())
   })
 })

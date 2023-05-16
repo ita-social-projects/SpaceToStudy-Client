@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react'
+import { useEffect } from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { useTranslation } from 'react-i18next'
@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux'
 
 import useForm from '~/hooks/use-form'
 import useConfirm from '~/hooks/use-confirm'
-import { ModalContext } from '~/context/modal-context'
+import { useModalContext } from '~/context/modal-context'
 import { useSnackBarContext } from '~/context/snackbar-context'
 
 import {
@@ -33,7 +33,7 @@ import { styles } from '~/containers/guest-home-page/signup-dialog/SignupDialog.
 const SignupDialog = ({ type }) => {
   const { t } = useTranslation()
   const { setNeedConfirmation } = useConfirm()
-  const { openModal, closeModal } = useContext(ModalContext)
+  const { openModal, closeModal } = useModalContext()
   const { setAlert } = useSnackBarContext()
   const dispatch = useDispatch()
 

@@ -4,5 +4,6 @@
   "applyFilters": "Застосувати фільтри",
   "clearFilters": "Очистити фільтри",
   "addToDrafts": "Додати в збережені",
-  "createCooperation": "Відправити запит на співпрацю"
+  "createCooperation": "Відправити запит на співпрацю",
+  "sendRequest": "Надіслати запит"
 }

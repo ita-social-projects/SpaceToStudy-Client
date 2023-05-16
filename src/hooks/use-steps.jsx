@@ -1,9 +1,9 @@
-import { useCallback, useContext, useState } from 'react'
+import { useCallback, useState } from 'react'
 
 import useAxios from '~/hooks/use-axios'
 import { useAppSelector } from '~/hooks/use-redux'
 
-import { ModalContext } from '~/context/modal-context'
+import { useModalContext } from '~/context/modal-context'
 import { useStepContext } from '~/context/step-context'
 import { useSnackBarContext } from '~/context/snackbar-context'
 import { userService } from '~/services/user-service'
@@ -11,7 +11,7 @@ import { snackbarVariants } from '~/constants'
 
 const useSteps = ({ steps }) => {
   const [activeStep, setActiveStep] = useState(0)
-  const { closeModal } = useContext(ModalContext)
+  const { closeModal } = useModalContext()
   const { stepData } = useStepContext()
   const { setAlert } = useSnackBarContext()
   const { userId } = useAppSelector((state) => state.appMain)

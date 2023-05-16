@@ -1,4 +1,3 @@
-import { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import useInputVisibility from '~/hooks/use-input-visibility'
 import { useSelector } from 'react-redux'
@@ -6,7 +5,7 @@ import { useSelector } from 'react-redux'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
-import { ModalContext } from '~/context/modal-context'
+import { useModalContext } from '~/context/modal-context'
 import ForgotPassword from '~/containers/guest-home-page/forgot-password/ForgotPassword'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import AppButton from '~/components/app-button/AppButton'
@@ -24,7 +23,7 @@ const LoginForm = ({
     useInputVisibility(errors.password)
   const { authLoading } = useSelector((state) => state.appMain)
 
-  const { openModal } = useContext(ModalContext)
+  const { openModal } = useModalContext()
 
   const { t } = useTranslation()
 

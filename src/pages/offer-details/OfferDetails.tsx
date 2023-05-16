@@ -1,4 +1,4 @@
-import { useCallback, useContext } from 'react'
+import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams, useNavigate } from 'react-router-dom'
 
@@ -16,7 +16,7 @@ import OfferCarousel from '~/containers/offer-details/offer-carousel/OfferCarous
 import { errorRoutes } from '~/router/constants/errorRoutes'
 import ShowMoreCollapse from '~/components/show-more-collapse/ShowMoreCollapse'
 import EnrollOffer from '~/containers/offer-details/enroll-offer/EnrollOffer'
-import { ModalContext } from '~/context/modal-context'
+import { useModalContext } from '~/context/modal-context'
 import { defaultResponse } from '~/pages/offer-details/constants'
 
 import { Offer } from '~/types'
@@ -31,7 +31,7 @@ const OfferDetails = () => {
   const { t } = useTranslation()
   const { isMobile } = useBreakpoints()
   const { id = '' } = useParams()
-  const { openModal } = useContext(ModalContext)
+  const { openModal } = useModalContext()
   const navigate = useNavigate()
 
   const { items } = responseMock
