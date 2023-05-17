@@ -9,7 +9,7 @@ import useMenu from '~/hooks/use-menu'
 import useSelect from '~/hooks/table/use-select'
 import { useTableContext } from '~/context/table-context'
 
-const EnhancedTableRow = ({ item, isItemSelected, refetchData }) => {
+const EnhancedTableRow = ({ item, isItemSelected, refetchData, role }) => {
   const { isSelection, columns, rowActions } = useTableContext()
   const { handleSelectClick } = useSelect()
 
@@ -19,16 +19,17 @@ const EnhancedTableRow = ({ item, isItemSelected, refetchData }) => {
     refetchData()
   }
 
-  const tableCells = columns.map(({ field, calculatedCellValue }) => {
-    let propValue = ''
-    if (calculatedCellValue) {
-      propValue = calculatedCellValue(item)
-    } else {
-      propValue = item[field]?.toString()
+  const tableCells = columns.map(
+    ({ field, calculatedCellValue, filterEnum }) => {
+      let propValue = ''
+      if (calculatedCellValue) {
+        propValue = calculatedCellValue(item)
+      } else {
+        propValue = (filterEnum ? item[field][role] : item[field]).toString()
+      }
+      return <TableCell key={field}>{propValue}</TableCell>
     }
-
-    return <TableCell key={field}>{propValue}</TableCell>
-  })
+  )
 
   const menuItems = rowActions.map(({ label, func }) => (
     <MenuItem key={label} onClick={() => onAction(func)}>

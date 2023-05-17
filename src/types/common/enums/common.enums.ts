@@ -52,6 +52,11 @@ export enum ComponentEnum {
   Form = 'form'
 }
 
+export enum SortEnum {
+  Asc = 'asc',
+  Desc = 'desc'
+}
+
 export enum StatusEnum {
   Pending = 'pending',
   Active = 'active',

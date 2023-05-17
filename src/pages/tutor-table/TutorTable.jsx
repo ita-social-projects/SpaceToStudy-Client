@@ -5,19 +5,19 @@ import {
   initialFilters,
   initialSort,
   tabsInfo
-} from '~/pages/admin-table/constants'
+} from '~/pages/tutor-table/constants'
 import { UserRoleEnum } from '~/types'
 
-const AdminTable = () => {
+const TutorTable = () => {
   return (
     <UserTable
       columns={columns}
       initialFilters={initialFilters}
       initialSort={initialSort}
-      role={UserRoleEnum.Admin}
+      role={UserRoleEnum.Tutor}
       tabsInfo={tabsInfo}
     />
   )
 }
 
-export default AdminTable
+export default TutorTable
