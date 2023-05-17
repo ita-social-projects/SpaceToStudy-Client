@@ -24,7 +24,7 @@ export const styles = {
   },
   blockTitle: {
     title: {
-      mb: '14px'
+      mb: '12px'
     }
   }
 }

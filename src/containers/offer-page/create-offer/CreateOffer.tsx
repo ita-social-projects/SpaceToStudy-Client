@@ -12,6 +12,7 @@ import useConfirm from '~/hooks/use-confirm'
 import useAxios from '~/hooks/use-axios'
 import TeachingBlock from '~/containers/offer-page/create-offer/teaching-block/TeachingBlock'
 import SpecializationBlock from '~/containers/offer-page/create-offer/specialization-block/SpecializationBlock'
+import FaqBlock from '~/containers/offer-page/create-offer/faq-block/FaqBlock'
 import AppButton from '~/components/app-button/AppButton'
 import { OfferService } from '~/services/offer-service'
 import { useSnackBarContext } from '~/context/snackbar-context'
@@ -21,17 +22,9 @@ import {
   initialValues,
   validations
 } from '~/containers/offer-page/create-offer/CreateOffer.constants'
+import { findFullObjects } from '~/utils/helper-functions'
 import { styles } from '~/containers/offer-page/create-offer/CreateOffer.styles'
-import { ComponentEnum, ErrorResponse } from '~/types'
-
-export interface CreateOfferData {
-  category: string
-  subject: string
-  proficiencyLevel: string[]
-  languages: string[]
-  description: string
-  price: string
-}
+import { ComponentEnum, CreateOfferData, ErrorResponse } from '~/types'
 
 interface CreateOfferProps {
   closeDrawer: () => void
@@ -58,7 +51,8 @@ const CreateOffer: FC<CreateOfferProps> = ({ closeDrawer }) => {
     closeDrawer()
   }
 
-  const postOffer = (): Promise<AxiosResponse> => OfferService.createOffer(data)
+  const postOffer = (): Promise<AxiosResponse> =>
+    OfferService.createOffer({ ...data, faq: findFullObjects(data.faq) })
 
   const { loading, fetchData } = useAxios({
     service: postOffer,
@@ -110,6 +104,10 @@ const CreateOffer: FC<CreateOfferProps> = ({ closeDrawer }) => {
         errors={errors}
         handleBlur={handleBlur}
         handleInputChange={handleInputChange}
+        handleNonInputValueChange={handleNonInputValueChange}
+      />
+      <FaqBlock
+        data={data}
         handleNonInputValueChange={handleNonInputValueChange}
       />
       <Box sx={styles.buttonBox}>

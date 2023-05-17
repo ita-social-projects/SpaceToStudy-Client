@@ -12,7 +12,7 @@ interface AppTextAreaProps
   extends Omit<TextFieldProps, 'error' | 'helperText'> {
   maxLength?: number
   errorMsg?: string
-  value: string
+  value?: string
 }
 
 const AppTextArea: FC<AppTextAreaProps> = ({
@@ -37,16 +37,17 @@ const AppTextArea: FC<AppTextAreaProps> = ({
         maxRows={minRows}
         minRows={maxRows}
         multiline
+        sx={styles.textarea}
         value={value}
         {...props}
       />
       {maxLength && (
         <Typography
-          color={value.length === maxLength ? 'error' : 'text'}
+          color={value?.length === maxLength ? 'error' : 'text'}
           sx={styles.textLength}
           variant={VariantEnum.Body2}
         >
-          {`${value.length}/${maxLength}`}
+          {`${Number(value?.length)}/${maxLength}`}
         </Typography>
       )}
     </Box>

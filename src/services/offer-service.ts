@@ -1,12 +1,12 @@
 import { AxiosResponse } from 'axios'
 import { URLs } from '~/constants/request'
-import { CreateOfferData } from '~/containers/offer-page/create-offer/CreateOffer'
 import { axiosClient } from '~/plugins/axiosClient'
 import {
   Offer,
   PriceRangeParams,
   PriceRangeResponse,
-  GetOffersPrarams
+  GetOffersPrarams,
+  CreateOfferData
 } from '~/types'
 
 export const OfferService = {

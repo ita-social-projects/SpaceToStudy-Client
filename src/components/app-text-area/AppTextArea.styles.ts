@@ -5,5 +5,10 @@ export const styles = {
     right: 0,
     bottom: 0
   },
-  title: { color: 'primary.500', mr: '8px' }
+  title: { color: 'primary.500', mr: '8px' },
+  textarea: {
+    '& .MuiInputBase-root': {
+      p: '12.5px 14px'
+    }
+  }
 }

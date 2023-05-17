@@ -48,3 +48,8 @@ export interface ReviewInterface {
   rating: number
   createdAt: string
 }
+
+export interface Faq {
+  question: string
+  answer: string
+}

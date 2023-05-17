@@ -6,14 +6,16 @@ import {
   UserResponse,
   SubjectNameInterface,
   UserRoleEnum,
-  LanguagesEnum
+  LanguagesEnum,
+  Faq
 } from '~/types'
 import { LinkProps } from 'react-router-dom'
 
 export interface Offer extends CommonEntityFields {
+  title: string
   price: number
   proficiencyLevel: ProficiencyLevelEnum[]
-  description?: string
+  description: string
   languages: LanguagesEnum[]
   authorRole: UserRole
   authorFirstName: string
@@ -25,6 +27,7 @@ export interface Offer extends CommonEntityFields {
   >
   subject: SubjectNameInterface
   category: CategoryInterface['_id']
+  faq: Faq[]
 }
 
 export interface ButtonActions {

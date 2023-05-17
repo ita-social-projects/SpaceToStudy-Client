@@ -5,8 +5,10 @@ export const initialValues = {
   subject: '',
   proficiencyLevel: [],
   languages: [],
+  title: '',
   description: '',
-  price: ''
+  price: '',
+  faq: [{ question: '', answer: '' }]
 }
 
 export const validations = {
@@ -26,6 +28,12 @@ export const validations = {
       value,
       'offerPage.createOffer.errorMessages.description',
       textField(20, 1000)(value)
+    ),
+  title: (value: string) =>
+    emptyField(
+      value,
+      'offerPage.createOffer.errorMessages.title',
+      textField(0, 100)(value)
     ),
   proficiencyLevel: (value: string[] | string) =>
     emptyField(
