@@ -1,13 +1,22 @@
+import { commonHoverShadow } from '~/styles/app-theme/custom-shadows'
+
 export const styles = {
-  root: {
-    // width: '1360px',
-    // height: '88px',
-    display: 'flex',
+  main: {
     position: 'sticky',
+    top: '10px',
+    zIndex: '2'
+  },
+  root: {
+    display: 'flex',
+    width: '100%',
+    position: 'absolute',
     padding: '20px',
+    boxSizing: 'border-box',
     alignItems: 'center',
-    gap: '50px',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    boxShadow: commonHoverShadow,
+    borderRadius: '6px',
+    backgroundColor: 'white'
   },
   mainBlock: {
     display: 'flex',
@@ -19,9 +28,7 @@ export const styles = {
     gap: '10px'
   },
   button: {
-    whiteSpace: 'nowrap',
-    width: '152px',
-    height: '48px'
+    whiteSpace: 'nowrap'
   },
   bookmarkButton: {
     color: 'blueGrey.500'

@@ -53,3 +53,6 @@ export interface Faq {
   question: string
   answer: string
 }
+export interface OutletContext {
+  pageRef: React.RefObject<HTMLDivElement> | null
+}

@@ -17,7 +17,6 @@ import OfferAvatarAndName from './offer-avatar-and-name/OfferAvatarAndName'
 import { useTranslation } from 'react-i18next'
 
 interface OfferBannerProps {
-  isHideField?: boolean
   offer: Offer
   buttonActions: ButtonActions[]
 }
@@ -49,26 +48,28 @@ const OfferBanner: FC<OfferBannerProps> = ({ offer, buttonActions }) => {
       : `${t('common.beginner')} - ${lastLevel}`.toUpperCase()
 
   return (
-    <Box sx={styles.root}>
-      <Box sx={styles.mainBlock}>
-        <OfferAvatarAndName
-          authorFirstName={authorFirstName}
-          authorLastName={authorLastName}
-          imgSrc={author.photo}
-        />
-        <AppChip labelSx={styles.subjectChipLabel} sx={styles.subjectChip}>
-          {subject.name}
-        </AppChip>
-        <AppChip labelSx={styles.levelChipLabel} sx={styles.levelChip}>
-          {levelText}
-        </AppChip>
-      </Box>
-      <Box sx={styles.buttonsBlock}>
-        <Box sx={styles.buttons}>{buttons}</Box>
-        <IconButton data-testid='iconButton' sx={styles.bookmarkButton}>
-          <TurnedInNot />
-        </IconButton>
-        <Typography sx={styles.bookmarkButtonText}>Save Offer</Typography>
+    <Box sx={styles.main}>
+      <Box sx={styles.root}>
+        <Box sx={styles.mainBlock}>
+          <OfferAvatarAndName
+            authorFirstName={authorFirstName}
+            authorLastName={authorLastName}
+            imgSrc={author.photo}
+          />
+          <AppChip labelSx={styles.subjectChipLabel} sx={styles.subjectChip}>
+            {subject.name}
+          </AppChip>
+          <AppChip labelSx={styles.levelChipLabel} sx={styles.levelChip}>
+            {levelText}
+          </AppChip>
+        </Box>
+        <Box sx={styles.buttonsBlock}>
+          <Box sx={styles.buttons}>{buttons}</Box>
+          <IconButton data-testid='iconButton' sx={styles.bookmarkButton}>
+            <TurnedInNot />
+          </IconButton>
+          <Typography sx={styles.bookmarkButtonText}>Save Offer</Typography>
+        </Box>
       </Box>
     </Box>
   )
