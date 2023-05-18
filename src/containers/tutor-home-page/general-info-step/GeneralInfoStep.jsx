@@ -78,13 +78,19 @@ const GeneralInfoStep = ({
     service: getUserById,
     defaultResponse: { firstName: '', lastName: '' }
   })
-  const { response: countries } = useAxios({
+
+  const {
+    loading: loadingCountries,
+    response: countries,
+    fetchData: getCountriesFetch
+  } = useAxios({
     service: getCountries,
+    fetchOnMount: false,
     defaultResponse: defaultResponses.array
   })
 
   const {
-    loading,
+    loading: loadingCities,
     fetchData: fetchCities,
     response: cities
   } = useAxios({
@@ -114,6 +120,9 @@ const GeneralInfoStep = ({
   useEffect(() => {
     handleStepData(stepLabel, data, errors)
   }, [data, errors, stepLabel, handleStepData])
+
+  const onFocusCountry =
+    !data.country && !countries.length ? getCountriesFetch : undefined
 
   if (userLoading) {
     return (
@@ -167,7 +176,9 @@ const GeneralInfoStep = ({
             />
 
             <AppAutoComplete
+              loading={loadingCountries}
               onChange={onChangeCountry}
+              onFocus={onFocusCountry}
               options={countries}
               sx={{ mb: '30px' }}
               textFieldProps={{
@@ -180,7 +191,7 @@ const GeneralInfoStep = ({
             <AppAutoComplete
               disabled={!data.country}
               filterOptions={filterOptions}
-              loading={loading}
+              loading={loadingCities}
               onChange={onChangeCity}
               options={cities}
               sx={{ mb: '30px' }}

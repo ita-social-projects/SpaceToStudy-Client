@@ -41,6 +41,7 @@ export const styles = {
   },
   stepContent: {
     display: { xs: 'flex', sm: 'block' },
+    justifyContent: 'center',
     flex: 1,
     mt: { xs: '24px', sm: '30px' }
   },
