@@ -12,9 +12,10 @@ import {
 import { styles } from '~/components/offer-banner/OfferBanner.styles'
 import AppChip from '~/components/app-chip/AppChip'
 import AppButton from '~/components/app-button/AppButton'
-import OfferAvatarAndName from './offer-avatar-and-name/OfferAvatarAndName'
 
 import { useTranslation } from 'react-i18next'
+import ImgTitleDescription from '~/components/img-title-description/ImgTitleDescription'
+import useBreakpoints from '~/hooks/use-breakpoints'
 
 interface OfferBannerProps {
   offer: Offer
@@ -23,6 +24,7 @@ interface OfferBannerProps {
 
 const OfferBanner: FC<OfferBannerProps> = ({ offer, buttonActions }) => {
   const { t } = useTranslation()
+  const { isDesktop } = useBreakpoints()
   const { author, authorFirstName, authorLastName, subject, proficiencyLevel } =
     offer
 
@@ -46,29 +48,36 @@ const OfferBanner: FC<OfferBannerProps> = ({ offer, buttonActions }) => {
     lastLevel === ProficiencyLevelEnum.Beginner
       ? t('common.beginner')
       : `${t('common.beginner')} - ${lastLevel}`.toUpperCase()
+  const fullName = `${authorFirstName} ${authorLastName}`
 
   return (
     <Box sx={styles.main}>
       <Box sx={styles.root}>
         <Box sx={styles.mainBlock}>
-          <OfferAvatarAndName
-            authorFirstName={authorFirstName}
-            authorLastName={authorLastName}
-            imgSrc={author.photo}
+          <ImgTitleDescription
+            img={author.photo}
+            style={styles.userInfo}
+            title={fullName}
           />
-          <AppChip labelSx={styles.subjectChipLabel} sx={styles.subjectChip}>
-            {subject.name}
-          </AppChip>
-          <AppChip labelSx={styles.levelChipLabel} sx={styles.levelChip}>
-            {levelText}
-          </AppChip>
+          {isDesktop ? (
+            <AppChip labelSx={styles.subjectChipLabel} sx={styles.subjectChip}>
+              {subject.name}
+            </AppChip>
+          ) : null}
+          {isDesktop ? (
+            <AppChip labelSx={styles.levelChipLabel} sx={styles.levelChip}>
+              {levelText}
+            </AppChip>
+          ) : null}
         </Box>
         <Box sx={styles.buttonsBlock}>
           <Box sx={styles.buttons}>{buttons}</Box>
           <IconButton data-testid='iconButton' sx={styles.bookmarkButton}>
             <TurnedInNot />
           </IconButton>
-          <Typography sx={styles.bookmarkButtonText}>Save Offer</Typography>
+          {isDesktop ? (
+            <Typography sx={styles.bookmarkButtonText}>Save Offer</Typography>
+          ) : null}
         </Box>
       </Box>
     </Box>

@@ -18,6 +18,24 @@ export const styles = {
     borderRadius: '6px',
     backgroundColor: 'white'
   },
+  userInfo: {
+    root: {
+      display: 'flex',
+      alignItems: 'center'
+    },
+    img: {
+      width: '48px',
+      height: '48px',
+      border: '1px solid',
+      borderRadius: '50%'
+    },
+    titleWithDescription: {
+      title: {
+        typography: 'h6',
+        padding: '12px'
+      }
+    }
+  },
   mainBlock: {
     display: 'flex',
     alignItems: 'center'
