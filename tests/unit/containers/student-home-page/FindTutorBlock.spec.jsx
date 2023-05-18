@@ -1,7 +1,8 @@
-import { screen, fireEvent, render } from '@testing-library/react'
+import { vi } from 'vitest'
+import { screen, fireEvent } from '@testing-library/react'
 import FindTutorBlock from '~/containers/student-home-page/find-tutor-block/FindTutorBlock'
 import useBreakpoints from '~/hooks/use-breakpoints'
-import { vi } from 'vitest'
+import { renderWithProviders } from '~tests/test-utils'
 
 const mockNavigate = vi.fn()
 
@@ -11,12 +12,18 @@ vi.mock('react-router', () => ({
   useNavigate: () => mockNavigate
 }))
 
+const mockState = {
+  appMain: { userRole: 'tutor' }
+}
+
 describe('FindTutorBlock test', () => {
   const desktopData = { isDesktop: true, isMobile: false, isTablet: false }
 
   beforeEach(() => {
     useBreakpoints.mockImplementation(() => desktopData)
-    render(<FindTutorBlock />)
+    renderWithProviders(<FindTutorBlock />, {
+      preloadedState: mockState
+    })
   })
 
   it('should render image for desktop window size', async () => {
@@ -25,7 +32,9 @@ describe('FindTutorBlock test', () => {
     expect(img).toBeInTheDocument()
   })
   it('should navigate if click on find tutor button', async () => {
-    const findTutorButton = screen.getByText('studentHomePage.findTutorBlock.button')
+    const findTutorButton = screen.getByText(
+      'studentHomePage.findTutorBlock.button'
+    )
     fireEvent.click(findTutorButton)
 
     expect(mockNavigate).toHaveBeenCalled()

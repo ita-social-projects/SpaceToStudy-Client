@@ -84,7 +84,7 @@ const PopularCategories: FC<PopularCategoriesProps> = ({
         <Loader size={70} />
       ) : (
         <CardsList
-          btnText={t('common.viewAllName', { name: 'categories' })}
+          btnText={t('common.goToName', { name: 'categories' })}
           cards={cards}
           onClick={onClickButton}
         />
