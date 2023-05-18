@@ -112,6 +112,12 @@ const OfferDetails = () => {
         />
       </AppCard>
       <AppCard sx={styles.wrapper}>
+        <MultiAccordionWithTitle
+          items={mockedFAQItems}
+          title='offerDetailsPage.faqTitle'
+        />
+      </AppCard>
+      <AppCard sx={styles.wrapper}>
         <CommentsBlock
           data={items}
           isExpandable

@@ -58,7 +58,7 @@ const MultiAccordionWithTitle: FC<MultiAccordionWithTitleProps> = ({
       icon={icon}
       multiple={true}
       sx={{
-        withIcon:sx.withIcon,
+        withIcon: sx.withIcon,
         noIcon: sx.noIcon
       }}
       titleVariant={isMobile ? VariantEnum.Subtitle2 : VariantEnum.H6}
@@ -66,7 +66,7 @@ const MultiAccordionWithTitle: FC<MultiAccordionWithTitleProps> = ({
       elevation={0}
     />
   )
-  
+
   return (
     <Box>
       {accordionTitle}
