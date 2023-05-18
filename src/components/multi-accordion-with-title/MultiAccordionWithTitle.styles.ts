@@ -15,10 +15,15 @@ export const styles: MultiAccordionWithTitleSx = {
     container: { ...borderStyles, pb: '65px', backgroundColor: 'white' },
     icon: { color: 'primary.500', fontSize: '13px' },
     withIcon: {
-        accordion: { ...borderStyles, mb: '16px', '&:last-child': { mb: 0 }, '&::before': { display: 'none' }, m: { xs: '10px 14px', md: '0 60px 16px' }, p: '12px 0' },
+        accordion: {
+            ...borderStyles, mb: '16px', '&:last-child': { mb: 0 }, '&::before': { display: 'none' },
+            // m:{xs:'10px'},
+            // m: { xs: '10px 14px', md: '0 60px 16px' },
+            p: '12px 0'
+        },
         summary: {
             display: 'flex',
-            flexDirection: { xs: 'row-reverse', md:'row' },
+            flexDirection: { md: 'row-reverse', xs:'row' },
             alignItems: 'center',
             '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
                 transform: 'rotate(90deg)',
@@ -34,7 +39,7 @@ export const styles: MultiAccordionWithTitleSx = {
             color: 'primary.700'
         },
         description: {
-            ml: { xs: '14px', md: '15px' },
+            ml: { xs: '14px', md: '27px' },
             color: { xs: 'primary.600' }
         }
     }
