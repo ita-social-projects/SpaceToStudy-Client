@@ -1,7 +1,11 @@
-import { Box, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useAppSelector } from '~/hooks/use-redux'
+
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded'
+import Box from '@mui/material/Box'
+import IconButton from '@mui/material/IconButton'
+import Typography from '@mui/material/Typography'
 
 import AppButton from '~/components/app-button/AppButton'
 import AppTextArea from '~/components/app-text-area/AppTextArea'
@@ -44,21 +48,33 @@ const FaqBlock = <T extends CreateOfferData>({
     }
   }
 
-  const questionsAnswers = data.faq.map((el, idx) => (
-    <Box key={idx}>
-      <AppTextField
-        fullWidth
-        label={t('offerPage.createOffer.labels.question')}
-        onChange={handleInputChange('question', idx)}
-        value={el.question}
-      />
-      <AppTextArea
-        fullWidth
-        label={t('offerPage.createOffer.labels.answer')}
-        maxRows={3}
-        onChange={handleInputChange('answer', idx)}
-        value={el.answer}
-      />
+  const removeQuestion = (index: number) => {
+    const updatedFaq = data.faq.filter((_, idx) => idx !== index)
+    handleNonInputValueChange('faq', updatedFaq)
+  }
+
+  const questionsAnswers = data.faq.map((el, idx, array) => (
+    <Box key={idx} sx={styles.faqInputsBlock}>
+      <Box sx={styles.faqInputs}>
+        <AppTextField
+          fullWidth
+          label={t('offerPage.createOffer.labels.question')}
+          onChange={handleInputChange('question', idx)}
+          value={el.question}
+        />
+        <AppTextArea
+          fullWidth
+          label={t('offerPage.createOffer.labels.answer')}
+          maxRows={3}
+          onChange={handleInputChange('answer', idx)}
+          value={el.answer}
+        />
+      </Box>
+      {array.length > 1 && (
+        <IconButton onClick={() => removeQuestion(idx)}>
+          <CloseRoundedIcon />
+        </IconButton>
+      )}
     </Box>
   ))
 

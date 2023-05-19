@@ -54,5 +54,7 @@ export const styles = {
   faqButton: {
     width: 'fit-content',
     alignSelf: 'start'
-  }
+  },
+  faqInputsBlock: { display: 'flex', gap: '12px', alignItems: 'start' },
+  faqInputs: { flex: 1 }
 }
