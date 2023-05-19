@@ -1,10 +1,12 @@
+import { VariantEnum } from '~/types'
+
 export const styles = {
   container: {
     width: '100%'
   },
   title: {
     color: 'primary.700',
-    typography: { xs: 'h6', sm: 'h5' }
+    typography: { xs: VariantEnum.H6, sm: VariantEnum.H6 }
   },
   cardsContainer: {
     mt: { xs: '20px', sm: '30px' },
@@ -41,7 +43,7 @@ export const styles = {
         mx: { xs: 0, sm: '20px', md: '35px' }
       },
       title: {
-        typography: { xs: 'subtitle2', sm: 'h6' }
+        typography: { xs: VariantEnum.Subtitle2, sm: VariantEnum.H6 }
       },
       description: {
         display: 'grid',
@@ -51,8 +53,22 @@ export const styles = {
           md: 'repeat(3, max-content)'
         },
         gap: { xs: '10px', sm: '10px 40px' },
-        typography: { xs: 'body2', sm: 'body1' }
+        typography: { xs: VariantEnum.Body2, sm: VariantEnum.Body1 }
       }
     }
-  }
+  },
+  titleWithDescription: {
+    wrapper: {
+      display: 'flex',
+      columnGap: '5px'
+    },
+    title: {
+      display: 'flex',
+      alignItems: 'center'
+    },
+    description: {
+      typography: { xs: VariantEnum.Body2, sm: VariantEnum.Body1 }
+    }
+  },
+  doneIcon: { color: 'basic.orientalHerbs' }
 }

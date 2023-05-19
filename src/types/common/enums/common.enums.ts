@@ -35,7 +35,9 @@ export enum VariantEnum {
   Button = 'button',
   H5 = 'h5',
   H6 = 'h6',
-  Body2 = 'body2'
+  Body2 = 'body2',
+  Body1 = 'body1',
+  Subtitle2 = 'subtitle2'
 }
 
 export enum VisibilityEnum {
