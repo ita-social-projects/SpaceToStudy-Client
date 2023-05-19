@@ -27,7 +27,6 @@ const OfferBanner: FC<OfferBannerProps> = ({ offer, buttonActions }) => {
   const { isDesktop } = useBreakpoints()
   const { author, authorFirstName, authorLastName, subject, proficiencyLevel } =
     offer
-
   const buttons = buttonActions.map((elem, index) => (
     <AppButton
       fullWidth
@@ -48,6 +47,7 @@ const OfferBanner: FC<OfferBannerProps> = ({ offer, buttonActions }) => {
     lastLevel === ProficiencyLevelEnum.Beginner
       ? t('common.beginner')
       : `${t('common.beginner')} - ${lastLevel}`.toUpperCase()
+
   const fullName = `${authorFirstName} ${authorLastName}`
 
   return (
@@ -75,9 +75,11 @@ const OfferBanner: FC<OfferBannerProps> = ({ offer, buttonActions }) => {
           <IconButton data-testid='iconButton' sx={styles.bookmarkButton}>
             <TurnedInNot />
           </IconButton>
-          {isDesktop ? (
-            <Typography sx={styles.bookmarkButtonText}>Save Offer</Typography>
-          ) : null}
+          {isDesktop && (
+            <Typography sx={styles.bookmarkButtonText}>
+              {t('offerDetailsPage.offerBanner.saveOfferButton')}
+            </Typography>
+          )}
         </Box>
       </Box>
     </Box>

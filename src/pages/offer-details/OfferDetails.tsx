@@ -87,7 +87,7 @@ const OfferDetails = () => {
 
   return (
     <Container ref={offerDetailsPage} sx={styles.container}>
-      {!isMobile ? (
+      {!isMobile && (
         <ScrollVisibilityWrapper heightToShow={610} pageRef={pageRef}>
           <OfferBanner buttonActions={buttonActions} offer={response} />
         </ScrollVisibilityWrapper>
