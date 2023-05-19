@@ -82,7 +82,7 @@ const GeneralInfoStep = ({
   const {
     loading: loadingCountries,
     response: countries,
-    fetchData: getCountriesFetch
+    fetchData: fetchCountries
   } = useAxios({
     service: getCountries,
     fetchOnMount: false,
@@ -122,7 +122,7 @@ const GeneralInfoStep = ({
   }, [data, errors, stepLabel, handleStepData])
 
   const onFocusCountry =
-    !data.country && !countries.length ? getCountriesFetch : undefined
+    !data.country && !countries.length ? fetchCountries : undefined
 
   if (userLoading) {
     return (
