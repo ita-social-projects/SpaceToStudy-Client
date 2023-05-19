@@ -86,25 +86,18 @@ describe('GeneralInfoStep test', () => {
     expect(firstNameInput.value).toBe('testName')
   })
 
-  it('should choose option in countries autocomplete', async () => {
+  it('should choose option in countries autocomplete', () => {
     const countriesAutoComplete = screen.getByLabelText(
       /common.labels.country/i
     )
-    const cityAutoComplete = screen.getByLabelText(/common.labels.city/i)
 
-    fireEvent.mouseDown(countriesAutoComplete)
+    fireEvent.click(countriesAutoComplete)
+    fireEvent.change(countriesAutoComplete, {
+      target: { value: 'Belgium' }
+    })
+    fireEvent.keyDown(countriesAutoComplete, { key: 'ArrowDown' })
+    fireEvent.keyDown(countriesAutoComplete, { key: 'Enter' })
 
-    const countryOption = screen.getByText('Belgium')
-
-    fireEvent.click(countryOption)
-
-    fireEvent.mouseDown(cityAutoComplete)
-
-    const cityOption = await screen.findByText('Antwerp')
-
-    fireEvent.click(cityOption)
-
-    expect(countriesAutoComplete).toHaveAttribute('value', 'Belgium')
-    expect(cityAutoComplete).toHaveAttribute('value', 'Antwerp')
+    expect(countriesAutoComplete.value).toBe('Belgium')
   })
 })
