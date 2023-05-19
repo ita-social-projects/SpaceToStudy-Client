@@ -5,5 +5,6 @@
   "clearFilters": "Очистити фільтри",
   "addToDrafts": "Додати в збережені",
   "createCooperation": "Відправити запит на співпрацю",
-  "sendRequest": "Надіслати запит"
+  "sendRequest": "Надіслати запит",
+  "addQuestion": "Додати ще один предмет"
 }

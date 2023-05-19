@@ -15,7 +15,7 @@ export const styles = {
   title: {
     display: 'flex',
     alignItems: 'center',
-    mb: '14px',
+    mb: '12px',
     gap: '10px',
     typography: { xs: 'midTitle', sm: 'h5' },
     pt: { xs: '5px', sm: 0 },
@@ -31,9 +31,10 @@ export const styles = {
     gap: '12px'
   },
   icon: {
-    width: { xs: '16px', sm: '20px' }
+    width: { xs: '18px', sm: '22px' }
   },
   description: {
+    color: 'primary.500',
     typography: { xs: 'body2', sm: 'body1' }
   },
   currencyIcon: { width: '10px' },
@@ -41,12 +42,19 @@ export const styles = {
     display: 'flex',
     flexDirection: { xs: 'column', sm: 'row' },
     gap: { xs: '16px', sm: '30px' },
-    mt: { xs: '8px', sm: '16px' }
+    mt: { xs: '16px', sm: '24px' }
   },
   category: {
     mb: '12px'
   },
   inputs: {
     mb: '6px'
-  }
+  },
+  faqError: { minHeight: '20px', typography: 'caption', color: 'error.500' },
+  faqButton: {
+    width: 'fit-content',
+    alignSelf: 'start'
+  },
+  faqInputsBlock: { display: 'flex', gap: '12px', alignItems: 'start' },
+  faqInputs: { flex: 1 }
 }

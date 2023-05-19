@@ -10,16 +10,9 @@ import AppTextField from '~/components/app-text-field/AppTextField'
 import AppChipList from '~/components/app-chips-list/AppChipList'
 import AppTextArea from '~/components/app-text-area/AppTextArea'
 import OrderedListItem from '~/components/ordered-list-item/OrderedListItem'
-import { CreateOfferData } from '~/containers/offer-page/create-offer/CreateOffer'
 
-import { CreateOfferBlockProps, LanguagesEnum } from '~/types'
+import { CreateOfferBlockProps, LanguagesEnum, CreateOfferData } from '~/types'
 import { styles } from '~/containers/offer-page/create-offer/CreateOffer.styles'
-
-interface TeachingBlockProps<T> extends CreateOfferBlockProps<T> {
-  handleInputChange: (
-    key: keyof T
-  ) => (event: React.ChangeEvent<HTMLInputElement>) => void
-}
 
 const TeachingBlock = <T extends CreateOfferData>({
   data,
@@ -27,14 +20,14 @@ const TeachingBlock = <T extends CreateOfferData>({
   handleBlur,
   handleInputChange,
   handleNonInputValueChange
-}: TeachingBlockProps<T>) => {
+}: CreateOfferBlockProps<T>) => {
   const { userRole } = useAppSelector((state) => state.appMain)
 
   const { t } = useTranslation()
 
   const handleLanguageChange = (
     _: React.ChangeEvent<HTMLInputElement>,
-    value: string | null
+    value: LanguagesEnum | null
   ) => {
     if (value) {
       !data.languages.includes(value) &&
@@ -60,6 +53,21 @@ const TeachingBlock = <T extends CreateOfferData>({
       title={t(`offerPage.createOffer.title.secondStep.${userRole}`)}
     >
       <Box sx={styles.specialization}>
+        <Box sx={styles.inputBlock}>
+          <Typography sx={styles.description}>
+            {t(`offerPage.createOffer.description.title.${userRole}`)}
+          </Typography>
+          <AppTextArea
+            errorMsg={t(errors.title)}
+            fullWidth
+            label={t(`offerPage.createOffer.labels.title`)}
+            maxLength={100}
+            maxRows={1}
+            onBlur={handleBlur('title')}
+            onChange={handleInputChange('title')}
+            value={data.title}
+          />
+        </Box>
         <Box sx={styles.inputBlock}>
           <Typography sx={styles.description}>
             {t(`offerPage.createOffer.description.describe.${userRole}`)}
@@ -91,6 +99,7 @@ const TeachingBlock = <T extends CreateOfferData>({
             defaultQuantity={3}
             handleChipDelete={handleLanguageDelete}
             items={data.languages}
+            wrapperStyle={styles.inputs}
           />
         </Box>
         <Box sx={styles.inputBlock}>

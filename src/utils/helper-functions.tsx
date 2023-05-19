@@ -46,3 +46,6 @@ export const getEmptyValues = <T extends object, R>(
     {} as { [K in keyof T]: R }
   )
 }
+
+export const findFullObjects = <T extends object>(array: T[]) =>
+  array.filter((el) => Object.values(el).every((el) => el))

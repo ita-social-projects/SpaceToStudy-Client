@@ -5,7 +5,6 @@ import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 
 import CheckboxList from '~/components/checkbox-list/CheckboxList'
-import { CreateOfferData } from '~/containers/offer-page/create-offer/CreateOffer'
 import { useAppSelector } from '~/hooks/use-redux'
 import OrderedListItem from '~/components/ordered-list-item/OrderedListItem'
 import AsyncAutocomplete from '~/components/async-autocomlete/AsyncAutocomplete'
@@ -14,6 +13,7 @@ import { subjectService } from '~/services/subject-service'
 import {
   CategoryNameInterface,
   CreateOfferBlockProps,
+  CreateOfferData,
   ProficiencyLevelEnum
 } from '~/types'
 import { styles } from '~/containers/offer-page/create-offer/CreateOffer.styles'
@@ -23,7 +23,7 @@ const SpecializationBlock = <T extends CreateOfferData>({
   errors,
   handleBlur,
   handleNonInputValueChange
-}: CreateOfferBlockProps<T>) => {
+}: Omit<CreateOfferBlockProps<T>, 'handleInputChange'>) => {
   const { t } = useTranslation()
   const { userRole } = useAppSelector((state) => state.appMain)
 
@@ -41,9 +41,9 @@ const SpecializationBlock = <T extends CreateOfferData>({
       }
     }
 
-  const handleCheckboxesChange = (value: string[]) =>
+  const handleCheckboxesChange = (value: ProficiencyLevelEnum[]) => {
     handleNonInputValueChange('proficiencyLevel', value)
-
+  }
   const levelOptions = Object.values(ProficiencyLevelEnum)
   const subjectError = data.category && errors.subject
 
@@ -72,6 +72,7 @@ const SpecializationBlock = <T extends CreateOfferData>({
             valueField='_id'
           />
           <AsyncAutocomplete
+            disabled={!data.category}
             labelField='name'
             onBlur={handleBlur('subject')}
             onChange={handleAutocompleteChange('subject')}
@@ -92,6 +93,7 @@ const SpecializationBlock = <T extends CreateOfferData>({
           </Typography>
           <CheckboxList
             error={t(errors.proficiencyLevel)}
+            fillRange
             items={levelOptions}
             onChange={handleCheckboxesChange}
             value={data.proficiencyLevel}

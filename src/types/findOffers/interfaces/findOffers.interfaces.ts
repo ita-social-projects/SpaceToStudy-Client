@@ -1,11 +1,13 @@
 import {
   CategoryInterface,
+  CategoryNameInterface,
   FindOffersUpdateFilter,
   LanguageFilter,
   Offer,
   ProficiencyLevelEnum,
   RangeArray,
   RequestParams,
+  SubjectNameInterface,
   UserRole
 } from '~/types'
 
@@ -37,6 +39,9 @@ export interface CreateOfferBlockProps<T> {
   handleBlur: (
     key: keyof T
   ) => (event: React.FocusEvent<HTMLInputElement>) => void
+  handleInputChange: (
+    key: keyof T
+  ) => (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 export interface FilterQueryHook<T> {
@@ -50,4 +55,14 @@ export interface GetOffersPrarams
     Partial<Omit<RequestParams, 'sort'>> {
   excludedOfferId?: Offer['_id']
   languages?: Offer['languages']
+}
+
+export interface CreateOfferData
+  extends Pick<
+    Offer,
+    'proficiencyLevel' | 'languages' | 'description' | 'title' | 'faq'
+  > {
+  category: CategoryNameInterface['name']
+  subject: SubjectNameInterface['name']
+  price: string
 }
