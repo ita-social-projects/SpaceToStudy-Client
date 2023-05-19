@@ -3,12 +3,7 @@ import Box from '@mui/material/Box'
 import { Typography } from '@mui/material'
 import IconButton from '@mui/material/IconButton'
 import TurnedInNot from '@mui/icons-material/TurnedInNot'
-import {
-  ButtonActions,
-  Offer,
-  ProficiencyLevelEnum,
-  VariantEnum
-} from '~/types'
+import { ButtonActions, Offer, ProficiencyLevelEnum } from '~/types'
 import { styles } from '~/components/offer-banner/OfferBanner.styles'
 import AppChip from '~/components/app-chip/AppChip'
 import AppButton from '~/components/app-button/AppButton'
@@ -27,17 +22,21 @@ const OfferBanner: FC<OfferBannerProps> = ({ offer, buttonActions }) => {
   const { isDesktop } = useBreakpoints()
   const { author, authorFirstName, authorLastName, subject, proficiencyLevel } =
     offer
-  const buttons = buttonActions.map((elem, index) => (
-    <AppButton
-      fullWidth
-      key={elem.label}
-      onClick={elem.handleClick}
-      sx={styles.button}
-      variant={index !== 0 ? VariantEnum.Tonal : VariantEnum.Contained}
-    >
-      {elem.label}
-    </AppButton>
-  ))
+  const buttons = buttonActions.map(
+    (elem) =>
+      elem && (
+        <AppButton
+          fullWidth
+          key={elem.label}
+          onClick={elem.handleClick}
+          {...elem.buttonProps}
+          sx={styles.button}
+          variant={elem.variant}
+        >
+          {elem.label}
+        </AppButton>
+      )
+  )
 
   const lastLevel =
     proficiencyLevel.length > 1
