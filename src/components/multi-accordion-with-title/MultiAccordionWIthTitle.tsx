@@ -25,8 +25,6 @@ const MultiAccordionWithTitle: FC<MultiAccordionWithTitleProps> = ({
 }) => {
   const { t } = useTranslation()
 
-  const { isMobile } = useBreakpoints()
-
   const [activeItems, setActiveItems] = useState<number[]>([])
 
   const onChange = (activeItem: number) => {
