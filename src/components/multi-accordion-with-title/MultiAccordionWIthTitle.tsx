@@ -8,7 +8,6 @@ import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp'
 import { AccordionItem, MultiAccordionWithTitleSx, VariantEnum } from '~/types'
 import { styles } from '~/components/multi-accordion-with-title/MultiAccordionWithTitle.styles'
 import Accordions from '~/components/accordion/Accordions'
-import useBreakpoints from '~/hooks/use-breakpoints'
 
 interface MultiAccordionWithTitleProps {
   items: AccordionItem[]
