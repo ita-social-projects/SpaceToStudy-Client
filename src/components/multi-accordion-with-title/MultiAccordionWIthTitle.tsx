@@ -44,7 +44,6 @@ const MultiAccordionWithTitle: FC<MultiAccordionWithTitleProps> = ({
   const accordionTitle = title && (
     <Typography
       sx={sx.title}
-      variant={isMobile ? VariantEnum.H6 : VariantEnum.H5}
     >
       {t(title)}
     </Typography>
@@ -61,7 +60,6 @@ const MultiAccordionWithTitle: FC<MultiAccordionWithTitleProps> = ({
         withIcon: sx.withIcon,
         noIcon: sx.noIcon
       }}
-      titleVariant={isMobile ? VariantEnum.Subtitle2 : VariantEnum.H6}
       descriptionVariant={VariantEnum.Body2}
       elevation={0}
     />

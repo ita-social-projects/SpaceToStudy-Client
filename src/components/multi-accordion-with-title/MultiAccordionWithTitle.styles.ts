@@ -4,6 +4,7 @@ export const styles: MultiAccordionWithTitleSx = {
     title: {
         color: 'primary.700',
         m: { xs: '16px 20px 10px', md: '35px 60px 30px 0' },
+        typography: { xs: 'h6', md: 'h5' }
     },
     icon: { color: 'primary.500', fontSize: '13px' },
     withIcon: {
