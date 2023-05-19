@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
-import { CardsView, Offer, CardsViewEnum } from '~/types'
+import { CardsView, Offer, CardsViewEnum, VariantEnum } from '~/types'
 import OfferCardSquare from '~/containers/find-offer/offer-card-square/OfferCardSquare'
 import OfferCard from '~/components/offer-card/OfferCard'
 import AppCard from '~/components/app-card/AppCard'
@@ -39,11 +39,13 @@ const OfferContainer: FC<OfferContainerProps> = ({
     const buttonActions = [
       {
         label: t('common.labels.sendMessage'),
-        handleClick: () => null
+        handleClick: () => null,
+        variant: VariantEnum.Contained
       },
       {
         label: t('common.labels.viewDetails'),
         handleClick: () => null,
+        variant: VariantEnum.Tonal,
         buttonProps: {
           component: Link,
           to: `${authRoutes.offerDetails.path}/${el._id}`

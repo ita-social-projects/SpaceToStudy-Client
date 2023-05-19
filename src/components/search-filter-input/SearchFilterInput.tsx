@@ -74,7 +74,7 @@ const SearchFilterInput = ({
         onClick={onSearch}
         size={SizeEnum.Large}
         sx={styles.searchBtn}
-        variant={VariantEnum.Contained}
+        variant={VariantEnum.ContainedLight}
       >
         {t('common.search')}
       </Button>

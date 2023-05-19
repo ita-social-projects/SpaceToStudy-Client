@@ -20,7 +20,7 @@
   "offers": "offers",
   "popularCategories": "Popular Categories",
   "aboutOffer": "About Offer",
-  "viewAllName": "View all {{name}}",
+  "goToName": "Go to {{name}}",
   "labels": {
     "email": "Email",
     "firstName": "First name",

@@ -1,5 +1,5 @@
 import { vi } from 'vitest'
-import { render, screen } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 import OfferContainer from '~/containers/find-offer/offer-container/OfferContainer'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { renderWithProviders } from '~tests/test-utils'

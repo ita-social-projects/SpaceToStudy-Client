@@ -21,8 +21,13 @@ export const styles = {
     backgroundColor: 'basic.grey',
     color: 'primary.700',
     typography: 'subtitle2',
-    py: { md: '17px' },
-    borderRadius: '10px'
+    borderRadius: '10px',
+    height: 'fit-content',
+    '& .MuiChip-label': {
+      p: '7px 14px',
+      display: 'block',
+      whiteSpace: 'normal'
+    }
   },
   paperProps: {
     maxWidth: '410px',

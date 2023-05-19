@@ -1,7 +1,10 @@
 {
   "offerRequestBlock": {
-    "title": "Tutors for private lessons",
-    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    "title": {
+      "student": "Student for private lessons",
+      "tutor": "Tutor for private lessons"
+    },
+    "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
     "button": "Create request"
   },
   "titleWithDescription": {

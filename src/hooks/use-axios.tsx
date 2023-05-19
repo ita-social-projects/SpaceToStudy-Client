@@ -2,7 +2,11 @@ import { useState, useEffect, useCallback } from 'react'
 import { AxiosError } from 'axios'
 import { ErrorResponse, ServiceFunction } from '~/types'
 
-interface UseAxiosProps<Response, TransformedResponse, Params> {
+export interface UseAxiosProps<
+  Response,
+  Params = undefined,
+  TransformedResponse = Response
+> {
   service: ServiceFunction<Response, Params>
   defaultResponse: TransformedResponse
   fetchOnMount?: boolean
@@ -29,7 +33,7 @@ const useAxios = <
   transform,
   onResponse,
   onResponseError
-}: UseAxiosProps<Response, TransformedResponse, Params>): UseAxiosReturn<
+}: UseAxiosProps<Response, Params, TransformedResponse>): UseAxiosReturn<
   TransformedResponse,
   Params
 > => {

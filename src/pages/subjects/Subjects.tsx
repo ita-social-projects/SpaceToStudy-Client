@@ -104,8 +104,14 @@ const Subjects = () => {
     resetData()
   }
 
+  const onResponseCategory = (response: CategoryNameInterface[]) => {
+    const category = response.find((option) => option._id === categoryId)
+    setCategoryName(category?.name ?? '')
+  }
+
   const autoCompleteCategories = (
     <AsyncAutocomplete
+      axiosProps={{ onResponse: onResponseCategory }}
       labelField='name'
       onChange={onCategoryChange}
       service={categoryService.getCategoriesNames}
