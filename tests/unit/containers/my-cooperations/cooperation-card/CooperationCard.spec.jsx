@@ -16,7 +16,6 @@ const mockedCoop = {
   },
   price: 1800,
   requiredProficiencyLevel: 'Beginner',
-  requiredLanguage: 'Ukrainian',
   status: 'pending',
   createdAt: '2023-05-13T13:44:25.716Z'
 }
@@ -25,8 +24,8 @@ describe('CooperationCard component ', () => {
   it('should render card', () => {
     render(<CooperationCard cooperation={mockedCoop} />)
 
-    const language = screen.getByText(mockedCoop.requiredLanguage)
+    const level = screen.getByText(mockedCoop.requiredProficiencyLevel)
 
-    expect(language).toBeInTheDocument()
+    expect(level).toBeInTheDocument()
   })
 })
