@@ -79,10 +79,10 @@ const OfferDetails = () => {
 
   return (
     <Container sx={styles.container}>
-      <TitleBlock
+      {/* <TitleBlock
         img={topBlockIcon}
         translationKey='offerDetailsPage.topBlock'
-      />
+      /> */}
       {isMobile ? (
         <AppCard sx={styles.offerCardSquare}>
           <OfferCardSquare
@@ -101,14 +101,6 @@ const OfferDetails = () => {
           />
         </AppCard>
       )}
-      <AppCard sx={styles.offerCard}>
-        <OfferCard
-          buttonActions={buttonActions}
-          isHideField
-          offer={response}
-          onBookmarkClick={onBookmarkClick}
-        />
-      </AppCard>
       <AppCard sx={styles.wrapper}>
         <ShowMoreCollapse
           collapsedSize={isMobile ? 80 : 70}
