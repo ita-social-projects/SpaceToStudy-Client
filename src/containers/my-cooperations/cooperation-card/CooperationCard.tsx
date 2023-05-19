@@ -7,7 +7,6 @@ import Typography from '@mui/material/Typography'
 import AppCard from '~/components/app-card/AppCard'
 import AppChip from '~/components/app-chip/AppChip'
 import ImgTitleDescription from '~/components/img-title-description/ImgTitleDescription'
-import LanguagesListWithIcon from '~/components/languages-list-with-icon/LanguagesListWithIcon'
 import StatusChip from '~/components/status-chip/StatusChip'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import { getFormatedDate } from '~/utils/helper-functions'
@@ -32,12 +31,13 @@ const CooperationCard: FC<CooperationCardProps> = ({ cooperation }) => {
         <Box sx={styles.priceWithStatus}>
           <StatusChip status={cooperation.status} />
           <TitleWithDescription
-            description={t('common.hourSlash')}
+            description={`/ ${t('common.hour')}`}
             style={styles.price}
             title={`${cooperation.price} ${t('common.uah')}`}
           />
         </Box>
       </Box>
+      <Typography sx={styles.title}>{cooperation.offer.title}</Typography>
       <Box sx={styles.chipBox}>
         <AppChip labelSx={styles.chipLabel}>
           {cooperation.offer.subject.name}
@@ -46,7 +46,6 @@ const CooperationCard: FC<CooperationCardProps> = ({ cooperation }) => {
           {cooperation.requiredProficiencyLevel}
         </AppChip>
       </Box>
-      <LanguagesListWithIcon languages={cooperation.requiredLanguage} />
       <Typography sx={styles.description}>
         {cooperation.offer.description}
       </Typography>

@@ -3,10 +3,12 @@ import Container from '@mui/material/Container'
 import CooperationCard from '~/containers/my-cooperations/cooperation-card/CooperationCard'
 
 import { styles } from '~/pages/my-cooperations/MyCooperations.styles'
-import { LanguagesEnum, ProficiencyLevelEnum, StatusEnum } from '~/types'
+import { ProficiencyLevelEnum, StatusEnum } from '~/types'
 
 const mockedCoop = {
   offer: {
+    title:
+      'Hello. There are many variations of passages of There are many variations of passages of...',
     description:
       'Hello. There are many variations of passages of There are many variations of passages of... Hello. There are many variations of passages of There are many variations of passages of... Hello. There are many variations of passages of There are many variations of passages of... Hello. There are many variations of passages of There are many variations of passages of... Hello. There are many variations of passages of There are many variations of passages of... Hello. There are many variations of passages of There are many variations of passages of... Hello. There are many variations of passages of There are many variations of passages of... ',
     subject: { _id: 'id', name: 'Quantum Mechanics' }
@@ -19,7 +21,6 @@ const mockedCoop = {
   },
   price: 1800,
   requiredProficiencyLevel: ProficiencyLevelEnum.Beginner,
-  requiredLanguage: LanguagesEnum.Ukrainian,
   status: StatusEnum.Pending,
   createdAt: '2023-05-13T13:44:25.716Z'
 }

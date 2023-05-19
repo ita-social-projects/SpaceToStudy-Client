@@ -1,23 +1,30 @@
+const cutText = (lines: number) => ({
+  display: '-webkit-box',
+  WebkitLineClamp: lines,
+  lineClamp: lines,
+  WebkitBoxOrient: 'vertical',
+  boxOrient: 'vertical',
+  overflow: 'hidden'
+})
+
 export const styles = {
   root: {
     p: '16px 20px',
     maxWidth: '368px',
+    maxHeight: '340px',
     height: '100%',
-    maxHeight: { xs: '306px', sm: '318px' },
     boxShadow: 'none',
     border: '1px solid',
     borderColor: 'primary.100',
     display: 'flex',
     flexDirection: 'column',
-    gap: '14px'
+    gap: '12px'
   },
   userInfo: {
     display: 'flex',
-    pb: '14px',
+
     justifyContent: 'space-between',
-    width: '100%',
-    borderBottom: '1px solid',
-    borderColor: 'primary.50'
+    width: '100%'
   },
   imgTitleDescription: {
     img: {
@@ -60,7 +67,14 @@ export const styles = {
       textAlign: 'left'
     }
   },
-  chipBox: { display: 'flex', flexWrap: 'wrap', gap: '6px' },
+  chipBox: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: '6px',
+    pt: '12px',
+    borderTop: '1px solid',
+    borderColor: 'primary.50'
+  },
   chipLabel: {
     typography: 'overline',
     fontWeight: 500
@@ -68,11 +82,11 @@ export const styles = {
   description: {
     typography: 'body2',
     color: 'primary.600',
-    display: '-webkit-box',
-    WebkitLineClamp: 5,
-    lineClamp: 5,
-    WebkitBoxOrient: 'vertical',
-    boxOrient: 'vertical',
-    overflow: 'hidden'
+    ...cutText(5)
+  },
+  title: {
+    typography: 'button',
+    minHeight: '48px',
+    ...cutText(2)
   }
 }
