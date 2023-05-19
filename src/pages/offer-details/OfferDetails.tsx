@@ -79,10 +79,10 @@ const OfferDetails = () => {
 
   return (
     <Container sx={styles.container}>
-      {/* <TitleBlock
+      <TitleBlock
         img={topBlockIcon}
         translationKey='offerDetailsPage.topBlock'
-      /> */}
+      />
       {isMobile ? (
         <AppCard sx={styles.offerCardSquare}>
           <OfferCardSquare
