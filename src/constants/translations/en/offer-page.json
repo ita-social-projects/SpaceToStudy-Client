@@ -45,8 +45,8 @@
         "student": "Set the preferred offer value per lesson."
       },
       "title": {
-        "tutor": "Create а brief title for your offer",
-        "student": "Create а brief title for your request"
+        "tutor": "Add a title that briefly describes your offer.",
+        "student": "Add a title that briefly describes your request."
       }
     },
     "successMessage": "Great news! Your submission has been successfully added.",
