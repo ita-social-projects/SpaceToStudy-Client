@@ -7,6 +7,7 @@ import Container from '@mui/material/Container'
 import useAxios from '~/hooks/use-axios'
 import OfferCard from '~/components/offer-card/OfferCard'
 import Loader from '~/components/loader/Loader'
+import TitleBlock from '~/components/title-block/TitleBlock'
 import CommentsBlock from '~/containers/tutor-profile/comments-block/CommentBlock'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { OfferService } from '~/services/offer-service'
@@ -17,6 +18,8 @@ import ShowMoreCollapse from '~/components/show-more-collapse/ShowMoreCollapse'
 import EnrollOffer from '~/containers/offer-details/enroll-offer/EnrollOffer'
 import { useModalContext } from '~/context/modal-context'
 import { defaultResponse } from '~/pages/offer-details/constants'
+import topBlockIcon from '~/assets/img/offer-details/top-block-icon.png'
+
 import { styles } from '~/pages/offer-details/OfferDetails.styles'
 import { useAppSelector } from '~/hooks/use-redux'
 import { Offer, VariantEnum } from '~/types'
@@ -76,6 +79,10 @@ const OfferDetails = () => {
 
   return (
     <Container sx={styles.container}>
+      <TitleBlock
+        img={topBlockIcon}
+        translationKey='offerDetailsPage.topBlock'
+      />
       {isMobile ? (
         <AppCard sx={styles.offerCardSquare}>
           <OfferCardSquare
@@ -94,7 +101,6 @@ const OfferDetails = () => {
           />
         </AppCard>
       )}
-
       <AppCard sx={styles.wrapper}>
         <ShowMoreCollapse
           collapsedSize={isMobile ? 80 : 70}

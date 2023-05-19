@@ -11,7 +11,7 @@ import { styles } from '~/components/title-block/TitleBlock.styles'
 type TitleBlockProps = {
   img: string
   translationKey: string
-  children: React.ReactNode
+  children?: React.ReactNode
 }
 
 const TitleBlock: FC<TitleBlockProps> = ({ img, translationKey, children }) => {
@@ -27,7 +27,7 @@ const TitleBlock: FC<TitleBlockProps> = ({ img, translationKey, children }) => {
           style={styles.titleWithDescription}
           title={t(`${translationKey}.title.${userRole}`)}
         />
-        <Box sx={styles.form}>{children}</Box>
+        {children && <Box sx={styles.form}>{children}</Box>}
       </Box>
       {!isMobile && <Box alt='icon' component='img' src={img}></Box>}
     </Box>
