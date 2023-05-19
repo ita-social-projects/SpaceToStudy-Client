@@ -27,18 +27,20 @@ const OfferActions: FC<OfferActionsProps> = ({
   onBookmarkClick,
   buttonActions
 }) => {
-  const buttons = buttonActions.map((elem, index) => (
-    <AppButton
-      fullWidth
-      key={elem.label}
-      onClick={elem.handleClick}
-      sx={styles.button}
-      {...elem.buttonProps}
-      variant={index !== 0 ? VariantEnum.Tonal : VariantEnum.Contained}
-    >
-      {elem.label}
-    </AppButton>
-  ))
+  const buttons = buttonActions.map(
+    (elem) =>
+      elem && (
+        <AppButton
+          fullWidth
+          key={elem.label}
+          onClick={elem.handleClick}
+          {...elem.buttonProps}
+          variant={elem.variant}
+        >
+          {elem.label}
+        </AppButton>
+      )
+  )
 
   return (
     <Box>

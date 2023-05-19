@@ -14,7 +14,11 @@ export const styles = {
   },
   wrapper: {
     ...border,
-    p: { xs: '25px', sm: '35px 60px' }
+    p: { xs: '16px 20px', sm: '35px 60px' }
   },
-  offerCard: border
+  offerCard: {
+    ...border,
+    p: { sm: '20px 20px', md: '20px 30px' }
+  },
+  offerCardSquare: border
 }

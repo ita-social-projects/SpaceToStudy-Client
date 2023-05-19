@@ -2,7 +2,6 @@ import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams, useNavigate } from 'react-router-dom'
 
-import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 
 import useAxios from '~/hooks/use-axios'
@@ -18,14 +17,15 @@ import ShowMoreCollapse from '~/components/show-more-collapse/ShowMoreCollapse'
 import EnrollOffer from '~/containers/offer-details/enroll-offer/EnrollOffer'
 import { useModalContext } from '~/context/modal-context'
 import { defaultResponse } from '~/pages/offer-details/constants'
-
-import { Offer } from '~/types'
 import { styles } from '~/pages/offer-details/OfferDetails.styles'
+import { useAppSelector } from '~/hooks/use-redux'
+import { Offer, VariantEnum } from '~/types'
 
 import {
   responseMock,
   loadingMock
 } from '~/containers/tutor-profile/comments-with-rating-block/constants'
+import OfferCardSquare from '~/containers/find-offer/offer-card-square/OfferCardSquare'
 
 const OfferDetails = () => {
   const { t } = useTranslation()
@@ -33,6 +33,7 @@ const OfferDetails = () => {
   const { id = '' } = useParams()
   const { openModal } = useModalContext()
   const navigate = useNavigate()
+  const { userRole } = useAppSelector((state) => state.appMain)
 
   const { items } = responseMock
 
@@ -59,26 +60,40 @@ const OfferDetails = () => {
     openModal({ component: <EnrollOffer offer={response} /> })
 
   const buttonActions = [
-    {
-      label: t('common.labels.enrollOffer'),
-      handleClick: handleEnrollOfferClick
-    },
+    response.authorRole !== userRole
+      ? {
+          label: t('common.labels.enrollOffer'),
+          handleClick: handleEnrollOfferClick,
+          variant: VariantEnum.Contained
+        }
+      : null,
     {
       label: t('common.labels.sendMessage'),
-      handleClick: () => {}
+      handleClick: () => null,
+      variant: VariantEnum.Tonal
     }
   ]
 
   return (
     <Container sx={styles.container}>
-      <AppCard sx={styles.offerCard}>
-        <OfferCard
-          buttonActions={buttonActions}
-          isHideField
-          offer={response}
-          onBookmarkClick={onBookmarkClick}
-        />
-      </AppCard>
+      {isMobile ? (
+        <AppCard sx={styles.offerCardSquare}>
+          <OfferCardSquare
+            buttonActions={buttonActions}
+            offer={response}
+            onBookmarkClick={onBookmarkClick}
+          />
+        </AppCard>
+      ) : (
+        <AppCard sx={styles.offerCard}>
+          <OfferCard
+            buttonActions={buttonActions}
+            isHideField
+            offer={response}
+            onBookmarkClick={onBookmarkClick}
+          />
+        </AppCard>
+      )}
 
       <AppCard sx={styles.wrapper}>
         <ShowMoreCollapse
@@ -97,9 +112,7 @@ const OfferDetails = () => {
           title={t('tutorProfilePage.reviews.title')}
         />
       </AppCard>
-      <AppCard sx={styles.wrapper}>
-        <Box>For Example</Box>
-      </AppCard>
+
       <OfferCarousel offer={response} />
     </Container>
   )
