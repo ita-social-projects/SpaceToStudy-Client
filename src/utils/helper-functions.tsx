@@ -49,3 +49,11 @@ export const getEmptyValues = <T extends object, R>(
 
 export const findFullObjects = <T extends object>(array: T[]) =>
   array.filter((el) => Object.values(el).every((el) => el))
+
+export const getFormatedDate = (date: Date | string): string => {
+  return new Date(date).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  })
+}

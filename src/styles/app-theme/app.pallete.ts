@@ -6,6 +6,7 @@ const palette = {
   backgroundColor: '#F7F7F7',
   basic: {
     black: '#000000',
+    blue: '#0B8AF8',
     white: '#FFFFFF',
     grey: '#ECEFF1',
     yellow: '#FFB000',

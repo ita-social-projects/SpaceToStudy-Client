@@ -2,7 +2,7 @@ import { t } from 'i18next'
 
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import LanguageIcon from '@mui/icons-material/Language'
+import LanguagesListWithIcon from '~/components/languages-list-with-icon/LanguagesListWithIcon'
 
 import AppChip from '~/components/app-chip/AppChip'
 
@@ -40,12 +40,7 @@ const OfferDetails = ({
       <Typography sx={styles.description} variant='body2'>
         {description}
       </Typography>
-      <Box sx={styles.languagesContainer}>
-        <LanguageIcon sx={styles.languageIcon} />
-        <Typography sx={styles.languages} variant='body2'>
-          {languages.join(', ')}
-        </Typography>
-      </Box>
+      <LanguagesListWithIcon languages={languages} />
     </Box>
   )
 }

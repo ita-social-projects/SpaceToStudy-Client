@@ -38,16 +38,5 @@ export const styles = {
     ...ellipsisTextStyle(4),
     color: 'primary.600',
     mb: '10px'
-  },
-  languagesContainer: {
-    display: 'flex',
-    alignItems: 'center'
-  },
-  languageIcon: {
-    color: 'primary.400',
-    marginRight: '8px'
-  },
-  languages: {
-    color: 'primary.400'
   }
 }
