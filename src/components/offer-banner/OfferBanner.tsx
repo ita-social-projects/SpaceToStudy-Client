@@ -60,16 +60,19 @@ const OfferBanner: FC<OfferBannerProps> = ({ offer, buttonActions }) => {
             style={styles.userInfo}
             title={fullName}
           />
-          {isDesktop ? (
-            <AppChip labelSx={styles.subjectChipLabel} sx={styles.subjectChip}>
-              {subject.name}
-            </AppChip>
-          ) : null}
-          {isDesktop ? (
-            <AppChip labelSx={styles.levelChipLabel} sx={styles.levelChip}>
-              {levelText}
-            </AppChip>
-          ) : null}
+          {isDesktop && (
+            <>
+              <AppChip
+                labelSx={styles.subjectChipLabel}
+                sx={styles.subjectChip}
+              >
+                {subject.name}
+              </AppChip>
+              <AppChip labelSx={styles.levelChipLabel} sx={styles.levelChip}>
+                {levelText}
+              </AppChip>
+            </>
+          )}
         </Box>
         <Box sx={styles.buttonsBlock}>
           <Box sx={styles.buttons}>{buttons}</Box>
