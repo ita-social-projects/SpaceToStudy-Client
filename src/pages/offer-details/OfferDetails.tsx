@@ -91,7 +91,7 @@ const OfferDetails = () => {
         <ScrollVisibilityWrapper heightToShow={610} pageRef={pageRef}>
           <OfferBanner buttonActions={buttonActions} offer={response} />
         </ScrollVisibilityWrapper>
-      ) : null}
+      )}
       <TitleBlock
         img={topBlockIcon}
         translationKey='offerDetailsPage.topBlock'

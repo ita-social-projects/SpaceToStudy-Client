@@ -24,12 +24,6 @@ export const styles = {
       display: 'flex',
       alignItems: 'center'
     },
-    img: {
-      width: '48px',
-      height: '48px',
-      border: '1px solid',
-      borderRadius: '50%'
-    },
     titleWithDescription: {
       title: {
         typography: 'h6',

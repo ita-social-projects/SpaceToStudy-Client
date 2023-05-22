@@ -2,6 +2,7 @@ import { FC } from 'react'
 import Box from '@mui/material/Box'
 import { Typography } from '@mui/material'
 import IconButton from '@mui/material/IconButton'
+import Avatar from '@mui/material/Avatar'
 import TurnedInNot from '@mui/icons-material/TurnedInNot'
 import { ButtonActions, Offer, ProficiencyLevelEnum } from '~/types'
 import { styles } from '~/components/offer-banner/OfferBanner.styles'
@@ -55,6 +56,7 @@ const OfferBanner: FC<OfferBannerProps> = ({ offer, buttonActions }) => {
         <Box sx={styles.mainBlock}>
           <ImgTitleDescription
             img={author.photo}
+            imgComponent={Avatar}
             style={styles.userInfo}
             title={fullName}
           />
