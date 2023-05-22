@@ -10,7 +10,8 @@ export const styles = {
     display: 'flex',
     width: '100%',
     position: 'absolute',
-    padding: '20px',
+    padding: '10px',
+    gap: '10px',
     boxSizing: 'border-box',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -42,16 +43,17 @@ export const styles = {
   },
   buttons: {
     display: 'flex',
+    flexDirection: 'row',
     gap: '10px'
   },
   button: {
     whiteSpace: 'nowrap'
   },
   bookmarkButton: {
-    color: 'primary.500'
+    color: 'blueGrey.500'
   },
   bookmarkButtonText: {
-    color: 'primary.500',
+    color: 'blueGrey.500',
     display: 'flex',
     alignItems: 'center'
   },
