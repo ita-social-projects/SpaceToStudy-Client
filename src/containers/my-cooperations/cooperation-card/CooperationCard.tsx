@@ -37,7 +37,6 @@ const CooperationCard: FC<CooperationCardProps> = ({ cooperation }) => {
           />
         </Box>
       </Box>
-      <Typography sx={styles.title}>{cooperation.offer.title}</Typography>
       <Box sx={styles.chipBox}>
         <AppChip labelSx={styles.chipLabel}>
           {cooperation.offer.subject.name}
@@ -46,9 +45,7 @@ const CooperationCard: FC<CooperationCardProps> = ({ cooperation }) => {
           {cooperation.requiredProficiencyLevel}
         </AppChip>
       </Box>
-      <Typography sx={styles.description}>
-        {cooperation.offer.description}
-      </Typography>
+      <Typography sx={styles.title}>{cooperation.offer.title}</Typography>
     </AppCard>
   )
 }

@@ -1,28 +1,19 @@
-const cutText = (lines: number) => ({
-  display: '-webkit-box',
-  WebkitLineClamp: lines,
-  lineClamp: lines,
-  WebkitBoxOrient: 'vertical',
-  boxOrient: 'vertical',
-  overflow: 'hidden'
-})
-
 export const styles = {
   root: {
     p: '16px 20px',
-    maxWidth: '368px',
-    maxHeight: '340px',
+    maxWidth: { xs: '290px', sm: '320px' },
+    maxHeight: { xs: '290px', sm: '320px' },
     height: '100%',
     boxShadow: 'none',
     border: '1px solid',
     borderColor: 'primary.100',
     display: 'flex',
     flexDirection: 'column',
-    gap: '12px'
+    gap: '14px'
   },
   userInfo: {
     display: 'flex',
-
+    gap: '14px',
     justifyContent: 'space-between',
     width: '100%'
   },
@@ -69,9 +60,11 @@ export const styles = {
   },
   chipBox: {
     display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'start',
     flexWrap: 'wrap',
-    gap: '6px',
-    pt: '12px',
+    gap: '8px',
+    pt: '14px',
     borderTop: '1px solid',
     borderColor: 'primary.50'
   },
@@ -79,14 +72,7 @@ export const styles = {
     typography: 'overline',
     fontWeight: 500
   },
-  description: {
-    typography: 'body2',
-    color: 'primary.600',
-    ...cutText(5)
-  },
   title: {
-    typography: 'button',
-    minHeight: '48px',
-    ...cutText(2)
+    typography: { xs: 'body2', sm: 'body1' }
   }
 }

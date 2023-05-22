@@ -7,7 +7,7 @@ import { Offer } from '~/types/offer/offer.index'
 import { UserResponse } from '~/types/user/user.index'
 
 export interface Cooperation extends CommonEntityFields {
-  offer: Pick<Offer, 'description' | 'subject' | 'title'>
+  offer: Pick<Offer, 'subject' | 'title'>
   user: Pick<UserResponse, 'firstName' | 'lastName' | 'photo'>
   price: Offer['price']
   requiredProficiencyLevel: ProficiencyLevelEnum

@@ -8,9 +8,7 @@ import { ProficiencyLevelEnum, StatusEnum } from '~/types'
 const mockedCoop = {
   offer: {
     title:
-      'Hello. There are many variations of passages of There are many variations of passages of...',
-    description:
-      'Hello. There are many variations of passages of There are many variations of passages of... Hello. There are many variations of passages of There are many variations of passages of... Hello. There are many variations of passages of There are many variations of passages of... Hello. There are many variations of passages of There are many variations of passages of... Hello. There are many variations of passages of There are many variations of passages of... Hello. There are many variations of passages of There are many variations of passages of... Hello. There are many variations of passages of There are many variations of passages of... ',
+      'Hello. There are many variations of passages of There are many variations of passages of...asfjtkspe',
     subject: { _id: 'id', name: 'Quantum Mechanics' }
   },
   user: {
