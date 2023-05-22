@@ -114,6 +114,7 @@ const OfferDetails = () => {
       <AppCard sx={styles.wrapper}>
         <MultiAccordionWithTitle
           items={mockedFAQItems}
+          sx={styles.faqAccordion}
           title='offerDetailsPage.faqTitle'
         />
       </AppCard>

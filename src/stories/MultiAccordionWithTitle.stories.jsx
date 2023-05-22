@@ -1,4 +1,5 @@
 import MultiAccordionWithTitle from '~/components/multi-accordion-with-title/MultiAccordionWIthTitle'
+import { styles } from '~/pages/offer-details/OfferDetails.styles'
 
 
 export default {
@@ -40,4 +41,5 @@ Desktop.args = {
             description: 'Description 2'
         }
     ],
+    sx:styles.faqAccordion
 }

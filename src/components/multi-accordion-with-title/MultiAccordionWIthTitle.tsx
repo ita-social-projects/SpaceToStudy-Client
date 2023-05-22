@@ -19,7 +19,7 @@ interface MultiAccordionWithTitleProps {
 const MultiAccordionWithTitle: FC<MultiAccordionWithTitleProps> = ({
   items,
   title = '',
-  sx = styles,
+  sx = {},
   icon = <ArrowForwardIosSharpIcon sx={sx.icon} data-testid='accordion-icon' />
 }) => {
   const { t } = useTranslation()
@@ -39,11 +39,7 @@ const MultiAccordionWithTitle: FC<MultiAccordionWithTitleProps> = ({
   }
 
   const accordionTitle = title && (
-    <Typography
-      sx={sx.title}
-    >
-      {t(title)}
-    </Typography>
+    <Typography sx={sx.title}>{t(title)}</Typography>
   )
 
   const accordionList = (
