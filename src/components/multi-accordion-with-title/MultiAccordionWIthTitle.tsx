@@ -6,7 +6,6 @@ import Box from '@mui/material/Box'
 import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp'
 
 import { AccordionItem, MultiAccordionWithTitleSx, VariantEnum } from '~/types'
-import { styles } from '~/components/multi-accordion-with-title/MultiAccordionWithTitle.styles'
 import Accordions from '~/components/accordion/Accordions'
 
 interface MultiAccordionWithTitleProps {

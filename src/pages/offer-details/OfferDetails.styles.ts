@@ -1,10 +1,12 @@
+import { MultiAccordionWithTitleSx } from "~/types"
+
 const border = {
   boxShadow: 'none',
   border: '1px solid',
   borderColor: 'primary.100'
 }
 
-const faqAccordion = {
+const faqAccordion:MultiAccordionWithTitleSx = {
   title: {
       color: 'primary.700',
       m: { xs: '16px 20px 10px', md: '35px 60px 30px 0' },
