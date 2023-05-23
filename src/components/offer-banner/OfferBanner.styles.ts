@@ -15,9 +15,7 @@ export const styles = {
     boxSizing: 'border-box',
     alignItems: 'center',
     justifyContent: 'space-between',
-    boxShadow: commonHoverShadow,
-    borderRadius: '6px',
-    backgroundColor: 'white'
+    boxShadow: commonHoverShadow
   },
   userInfo: {
     root: {
@@ -37,17 +35,16 @@ export const styles = {
   },
   buttons: {
     display: 'flex',
-    flexDirection: 'row',
     gap: '10px'
   },
   button: {
     whiteSpace: 'nowrap'
   },
   bookmarkButton: {
-    color: 'blueGrey.500'
+    color: 'primary.500'
   },
   bookmarkButtonText: {
-    color: 'blueGrey.500',
+    color: 'primary.500',
     display: 'flex',
     alignItems: 'center'
   },

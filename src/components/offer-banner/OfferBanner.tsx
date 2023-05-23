@@ -7,6 +7,7 @@ import TurnedInNot from '@mui/icons-material/TurnedInNot'
 import { ButtonActions, Offer, ProficiencyLevelEnum } from '~/types'
 import { styles } from '~/components/offer-banner/OfferBanner.styles'
 import AppChip from '~/components/app-chip/AppChip'
+import AppCard from '~/components/app-card/AppCard'
 import AppButton from '~/components/app-button/AppButton'
 
 import { useTranslation } from 'react-i18next'
@@ -52,7 +53,7 @@ const OfferBanner: FC<OfferBannerProps> = ({ offer, buttonActions }) => {
 
   return (
     <Box sx={styles.main}>
-      <Box sx={styles.root}>
+      <AppCard sx={styles.root}>
         <Box sx={styles.mainBlock}>
           <ImgTitleDescription
             img={author.photo}
@@ -85,7 +86,7 @@ const OfferBanner: FC<OfferBannerProps> = ({ offer, buttonActions }) => {
             </Typography>
           )}
         </Box>
-      </Box>
+      </AppCard>
     </Box>
   )
 }

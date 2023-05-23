@@ -14,7 +14,7 @@ const ScrollVisibilityWrapper: FC<ScrollVisibilityWrapperProps> = ({
   const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
-    const scrollVariable = pageRef && pageRef.current
+    const scrollVariable = pageRef?.current
 
     if (scrollVariable) {
       const scroll = () =>
