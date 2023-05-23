@@ -15,7 +15,7 @@
   "confirmButton": "OK",
   "uah": "UAH",
   "hour": "HOUR",
-  "hourSlash": "/ HOUR",
+  "uahSlashHour": "UAH/hour",
   "beginner": "Beginner",
   "offers": "offers",
   "popularCategories": "Popular Categories",

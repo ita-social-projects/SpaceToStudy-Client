@@ -21,5 +21,12 @@
     },
     "description": "Here, you can access all the essential details about the offer you've selected. This page includes details about the chosen offer. Take a moment to review this information and make an informed decision about your tutoring needs."
   },
+  "generalInfo": {
+    "title": "General information",
+    "subject": "Tutoring subject",
+    "levels": "Preparation levels",
+    "languages": "Tutoring languages",
+    "price": "Pricing"
+  },
   "faqTitle": "Frequently asked questions"
 }

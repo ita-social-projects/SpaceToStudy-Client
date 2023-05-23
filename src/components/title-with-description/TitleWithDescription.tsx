@@ -1,10 +1,10 @@
-import { ReactElement } from 'react'
+import { ReactElement, ReactNode } from 'react'
 import { Box, Typography, SxProps } from '@mui/material'
 import { styles } from '~/components/title-with-description/TitleWithDescription.styles'
 
 interface TitleWithDescriptionProps {
   title: string | ReactElement
-  description?: string
+  description?: string | ReactNode
   style?: {
     wrapper?: SxProps
     title?: SxProps
@@ -20,7 +20,9 @@ const TitleWithDescription = ({
   return (
     <Box sx={style.wrapper}>
       <Typography sx={style.title}>{title}</Typography>
-      <Typography sx={style.description}>{description}</Typography>
+      <Typography component={'span'} sx={style.description}>
+        {description}
+      </Typography>
     </Box>
   )
 }

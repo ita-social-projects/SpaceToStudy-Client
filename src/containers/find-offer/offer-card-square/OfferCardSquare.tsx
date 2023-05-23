@@ -99,7 +99,7 @@ const OfferCardSquare: FC<OfferCardSquareProps> = ({
 
       <Box sx={styles.priceContainer}>
         <TitleWithDescripiton
-          description={t('common.hourSlash')}
+          description={`/ ${t('common.hour')}`}
           style={styles.titleWithDescription}
           title={`${price} ${t('common.uah')}`}
         />
