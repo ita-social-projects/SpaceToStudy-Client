@@ -20,7 +20,7 @@ const ViewSwitcher: FC<ViewSwitcherProps> = ({ onChange, value }) => {
     onChange(view)
 
   return (
-    <Box>
+    <Box sx={styles.root}>
       <ToggleButton
         aria-label='inline card view'
         onClick={changeOffersView}

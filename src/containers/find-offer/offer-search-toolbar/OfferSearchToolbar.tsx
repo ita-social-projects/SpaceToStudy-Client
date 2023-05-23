@@ -89,7 +89,7 @@ const OfferSearchToolbar = ({
           {isDesktop && (
             <SearchFilterInput
               textFieldProps={{
-                label: t('findOffers.searchToolbar.label')
+                placeholder: t('findOffers.searchToolbar.label')
               }}
               updateFilter={updateName}
             />

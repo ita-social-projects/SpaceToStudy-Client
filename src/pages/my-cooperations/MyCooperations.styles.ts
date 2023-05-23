@@ -1,8 +1,9 @@
 export const styles = {
-  container: {
+  titleBlock: {
     display: 'flex',
-    flexDirection: 'column',
-    flex: 1,
-    gap: '20px'
-  }
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    mb: '40px'
+  },
+  title: { typography: 'h4' }
 }

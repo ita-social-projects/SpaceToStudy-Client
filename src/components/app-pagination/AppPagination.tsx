@@ -8,7 +8,7 @@ import { styles } from '~/components/app-pagination/AppPagination.styles'
 
 interface AppPaginationProps extends Omit<PaginationProps, 'count'> {
   pageCount: number
-  sx: SxProps
+  sx?: SxProps
 }
 
 const AppPagination: FC<AppPaginationProps> = ({

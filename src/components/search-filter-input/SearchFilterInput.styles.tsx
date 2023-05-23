@@ -8,8 +8,7 @@ export const styles = {
     alignItems: 'center'
   },
   searchIcon: {
-    color: 'primary.700',
-    mr: '15px'
+    color: 'primary.700'
   },
   input: {
     flex: 1
