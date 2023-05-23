@@ -4,7 +4,7 @@ export interface AccordionItem {
     title: string
     description: string
 }
-interface AccordionStyles {
+export interface AccordionStyles {
     root?: SxProps
     accordion?: SxProps
     active?: SxProps

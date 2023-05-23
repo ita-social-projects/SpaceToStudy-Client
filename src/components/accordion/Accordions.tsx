@@ -20,7 +20,7 @@ interface AccordionsProps
   multiple?: boolean
   icon?: ReactNode
   sx?: AccordionSx
-  titleVariant: Variant
+  titleVariant?: Variant
   descriptionVariant: Variant
 }
 

@@ -6,20 +6,19 @@ import Box from '@mui/material/Box'
 import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp'
 
 import { AccordionItem, MultiAccordionWithTitleSx, VariantEnum } from '~/types'
-import { styles } from '~/components/multi-accordion-with-title/MultiAccordionWithTitle.styles'
 import Accordions from '~/components/accordion/Accordions'
 
 interface MultiAccordionWithTitleProps {
   items: AccordionItem[]
   title?: string
-  icon: ReactNode
-  sx: MultiAccordionWithTitleSx
+  icon?: ReactNode
+  sx?: MultiAccordionWithTitleSx
 }
 
 const MultiAccordionWithTitle: FC<MultiAccordionWithTitleProps> = ({
   items,
   title = '',
-  sx = styles,
+  sx = {},
   icon = <ArrowForwardIosSharpIcon sx={sx.icon} data-testid='accordion-icon' />
 }) => {
   const { t } = useTranslation()
@@ -39,9 +38,7 @@ const MultiAccordionWithTitle: FC<MultiAccordionWithTitleProps> = ({
   }
 
   const accordionTitle = title && (
-    <Typography sx={sx.title} variant={VariantEnum.H5}>
-      {t(title)}
-    </Typography>
+    <Typography sx={sx.title}>{t(title)}</Typography>
   )
 
   const accordionList = (
@@ -51,16 +48,17 @@ const MultiAccordionWithTitle: FC<MultiAccordionWithTitleProps> = ({
       activeIndex={activeItems}
       icon={icon}
       multiple={true}
-      sx={{ withIcon: sx.withIcon, noIcon: sx.noIcon }}
-      titleVariant={VariantEnum.H6}
+      sx={{
+        withIcon: sx.withIcon,
+        noIcon: sx.noIcon
+      }}
       descriptionVariant={VariantEnum.Body2}
       elevation={0}
     />
   )
-  const containerStyle = title ? sx.container : {}
 
   return (
-    <Box sx={containerStyle}>
+    <Box>
       {accordionTitle}
       {accordionList}
     </Box>

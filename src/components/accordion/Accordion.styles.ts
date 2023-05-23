@@ -6,9 +6,11 @@ import {
 import { AccordionSx } from '~/types'
 
 const noIconTitleStyles = {
-  fontSize: { typography: { md: 'h6', sm: 'body2' } },
+  fontSize: { typography: { xs:'body2', md: 'h6', sm: 'body2' } },
   lineHeight: { md: '28px', sm: '18px' },
-  color: 'primary.900'
+  color: 'primary.900',
+  typography:{ xs:'subtitle2', md:'h6'}
+  
 }
 
 const withIconTitleStyles = { color: 'primary.900' }
