@@ -13,6 +13,7 @@ import { guestRoutes } from '~/router/constants/guestRoutes'
 import AppButton from '~/components/app-button/AppButton'
 
 import { styles } from '~/containers/guest-home-page/signup-form/SignupForm.styles'
+import { confirmPassword } from "~/utils/validations/login";
 
 const SignupForm = ({
   handleSubmit,
@@ -127,7 +128,7 @@ const SignupForm = ({
 
       <AppTextField
         InputProps={confirmPasswordVisibility}
-        errorMsg={t(errors.confirmPassword)}
+        errorMsg={data.confirmPassword && t(errors.confirmPassword)}
         fullWidth
         label={t('common.labels.confirmPassword')}
         onBlur={handleBlur('confirmPassword')}
