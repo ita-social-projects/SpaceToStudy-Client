@@ -4,12 +4,13 @@ export const styles = {
     maxWidth: '935px',
     p: { xs: '40px 60px', lg: '70px 90px' },
     justifyContent: 'space-between',
-    gap: { xs: '60px', md: '120px', lg: '180px' },
+    gap: { xs: '60px', md: '120px', lg: '140px' },
     alignItems: 'center'
   },
   offerCard: {
     p: '20px',
-    maxWidth: '300px'
+    maxWidth: '320px',
+    width: '100%'
   },
   form: {
     display: 'flex',

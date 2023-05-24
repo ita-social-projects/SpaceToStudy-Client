@@ -18,5 +18,5 @@ export const styles = {
     strokeWidth: 2
   }),
   arrow: { typography: 'h5', color: 'primary.500' },
-  offerCard: { p: '20px' }
+  offerCard: { p: '20px', minHeight: '480px' }
 }
