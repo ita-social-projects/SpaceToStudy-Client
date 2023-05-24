@@ -1,9 +1,6 @@
-import MockAdapter from 'axios-mock-adapter'
 import { URLs } from '~/constants/request'
-import { axiosClient } from '~/plugins/axiosClient'
+import { mockAxiosClient } from '~tests/test-utils'
 import { LocationService } from '~/services/location-service'
-
-const mockAxiosClient = new MockAdapter(axiosClient)
 
 const countriesDataMock = ['Ukraine', 'Belgium']
 const citiesDataMock = ['Antwerp', 'Brussels']

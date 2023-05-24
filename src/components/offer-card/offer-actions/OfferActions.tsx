@@ -10,7 +10,7 @@ import TurnedInNot from '@mui/icons-material/TurnedInNot'
 import AppButton from '~/components/app-button/AppButton'
 
 import { styles } from '~/components/offer-card/offer-actions/OfferActions.styles'
-import { ButtonActions, VariantEnum } from '~/types'
+import { ButtonActions } from '~/types'
 
 interface OfferActionsProps {
   id: string

@@ -1,10 +1,6 @@
 import { renderHook, act } from '@testing-library/react-hooks'
-import MockAdapter from 'axios-mock-adapter'
-
-import { axiosClient } from '~/plugins/axiosClient'
+import { mockAxiosClient } from '~tests/test-utils'
 import useLoadMore from '~/hooks/use-load-more'
-
-const mockAxiosClient = new MockAdapter(axiosClient)
 
 const mockParams = { limit: 1 }
 const mockResponseData = [

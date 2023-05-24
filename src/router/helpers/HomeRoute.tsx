@@ -1,10 +1,8 @@
-import { lazy, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAppSelector } from '~/hooks/use-redux'
-
+import GuestHomePage from '~/pages/guest-home-page/GuestHome'
 import { guestRoutes } from '~/router/constants/guestRoutes'
-
-const GuestHomePage = lazy(() => import('~/pages/guest-home-page/GuestHome'))
 
 const HomeRoute = () => {
   const navigate = useNavigate()

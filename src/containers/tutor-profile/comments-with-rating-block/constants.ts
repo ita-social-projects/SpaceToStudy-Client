@@ -24,7 +24,7 @@ export const responseMock = {
       offer: {
         _id: '640092c8c729d4db9788d9d0',
         price: 15,
-        proficiencyLevel: 'Beginner',
+        proficiencyLevel: ['Beginner'],
         description: 'test description',
         languages: ['English'],
         authorRole: 'student',
@@ -63,7 +63,7 @@ export const responseMock = {
       offer: {
         _id: '640092c8c729d4db9788d9d0',
         price: 15,
-        proficiencyLevel: 'Beginner',
+        proficiencyLevel: ['Beginner'],
         description: 'test description',
         languages: ['English'],
         authorRole: 'student',
@@ -101,7 +101,7 @@ export const responseMock = {
       offer: {
         _id: '640092c8c729d4db9788d9d0',
         price: 15,
-        proficiencyLevel: 'Beginner',
+        proficiencyLevel: ['Beginner'],
         description: 'test description',
         languages: ['English'],
         authorRole: 'student',
@@ -139,7 +139,7 @@ export const responseMock = {
       offer: {
         _id: '640092c8c729d4db9788d9d0',
         price: 15,
-        proficiencyLevel: 'Beginner',
+        proficiencyLevel: ['Beginner'],
         description: 'test description',
         languages: ['English'],
         authorRole: 'student',
@@ -177,7 +177,7 @@ export const responseMock = {
       offer: {
         _id: '640092c8c729d4db9788d9d0',
         price: 15,
-        proficiencyLevel: 'Beginner',
+        proficiencyLevel: ['Beginner'],
         description: 'test description',
         languages: ['English'],
         authorRole: 'student',

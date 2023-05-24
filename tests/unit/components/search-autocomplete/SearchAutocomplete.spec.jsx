@@ -8,11 +8,9 @@ describe('SearchAutocomplete', () => {
 
   it('renders autocomplete with search input', () => {
     const setSearch = vi.fn()
-    const resetData = vi.fn()
     render(
       <SearchAutocomplete
         options={options}
-        resetData={resetData}
         search=''
         setSearch={setSearch}
         textFieldProps={{ label: 'Search' }}
@@ -25,11 +23,9 @@ describe('SearchAutocomplete', () => {
 
   it('renders autocomplete with search input value', () => {
     const setSearch = vi.fn()
-    const resetData = vi.fn()
     render(
       <SearchAutocomplete
         options={options}
-        resetData={resetData}
         search='France'
         setSearch={setSearch}
         textFieldProps={{ label: 'Search' }}
@@ -42,11 +38,9 @@ describe('SearchAutocomplete', () => {
 
   it('updates search input on typing', () => {
     const setSearch = vi.fn()
-    const resetData = vi.fn()
     render(
       <SearchAutocomplete
         options={options}
-        resetData={resetData}
         search=''
         setSearch={setSearch}
         textFieldProps={{ label: 'Search' }}
@@ -60,11 +54,9 @@ describe('SearchAutocomplete', () => {
 
   it('filters options on typing', () => {
     const setSearch = vi.fn()
-    const resetData = vi.fn()
     render(
       <SearchAutocomplete
         options={options}
-        resetData={resetData}
         search=''
         setSearch={setSearch}
         textFieldProps={{ label: 'Search' }}
@@ -79,11 +71,9 @@ describe('SearchAutocomplete', () => {
 
   it('selects an option on click', () => {
     const setSearch = vi.fn()
-    const resetData = vi.fn()
     render(
       <SearchAutocomplete
         options={options}
-        resetData={resetData}
         search=''
         setSearch={setSearch}
         textFieldProps={{ label: 'Search' }}
@@ -99,11 +89,9 @@ describe('SearchAutocomplete', () => {
 
   it('clears search input on clear icon click', () => {
     const setSearch = vi.fn()
-    const resetData = vi.fn()
     render(
       <SearchAutocomplete
         options={options}
-        resetData={resetData}
         search='France'
         setSearch={setSearch}
         textFieldProps={{ label: 'Search' }}
@@ -118,11 +106,9 @@ describe('SearchAutocomplete', () => {
 
   it('triggers search on search button click', () => {
     const setSearch = vi.fn()
-    const resetData = vi.fn()
     render(
       <SearchAutocomplete
         options={options}
-        resetData={resetData}
         search='France'
         setSearch={setSearch}
         textFieldProps={{ label: 'Search' }}

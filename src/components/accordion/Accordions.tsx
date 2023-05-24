@@ -50,7 +50,7 @@ const Accordions: FC<AccordionsProps> = ({
     }
     return (
       <Accordion
-        data-testid={`${index}-${active}`}
+        data-testid={`${index}-${String(active)}`}
         disableGutters
         expanded={active}
         key={item.title}

@@ -1,14 +1,9 @@
 import { vi } from 'vitest'
-import { screen, fireEvent, waitFor } from '@testing-library/react'
-import { renderHook } from '@testing-library/react-hooks'
-import MockAdapter from 'axios-mock-adapter'
+import { screen, fireEvent } from '@testing-library/react'
 
 import GeneralInfoStep from '~/containers/tutor-home-page/general-info-step/GeneralInfoStep'
-import { axiosClient } from '~/plugins/axiosClient'
-import { renderWithProviders } from '~tests/test-utils'
-import { ModalProvider } from '~/context/modal-context'
+import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 import { StepProvider } from '~/context/step-context'
-import useForm from '~/hooks/use-form'
 
 import {
   initialValues,
@@ -16,15 +11,7 @@ import {
 } from '~/components/user-steps-wrapper/constants'
 import { URLs } from '~/constants/request'
 
-const mockAxiosClient = new MockAdapter(axiosClient)
-
 const setIsUserFetched = vi.fn()
-
-const validations = {
-  firstName: vi.fn(() => undefined),
-  lastName: vi.fn(() => undefined),
-  professionalSummary: vi.fn(() => undefined)
-}
 
 const userId = '63f5d0ebb'
 const userRole = 'tutor'
@@ -44,38 +31,27 @@ const btnsBox = (
   </div>
 )
 
+mockAxiosClient
+  .onGet(`${URLs.users.get}/${userId}?role=${userRole}`)
+  .reply(200, userDataMock)
+mockAxiosClient.onGet(URLs.location.getCountries).reply(200, countriesDataMock)
+mockAxiosClient
+  .onGet(`${URLs.location.getCities}/${country}`)
+  .reply(200, citiesDataMock)
+
 describe('GeneralInfoStep test', () => {
-  beforeEach(async () => {
-    renderHook(() => useForm({ initialValues, errorValues: {}, validations }))
-
-    mockAxiosClient
-      .onGet(`${URLs.users.get}/${userId}?role=${userRole}`)
-      .reply(200, { data: userDataMock })
-    mockAxiosClient
-      .onGet(URLs.location.getCountries)
-      .reply(200, countriesDataMock)
-    mockAxiosClient
-      .onGet(`${URLs.location.getCities}/${country}`)
-      .reply(200, citiesDataMock)
-
-    await waitFor(() => {
-      renderWithProviders(
-        <ModalProvider>
-          <StepProvider
-            initialValues={initialValues}
-            stepLabels={tutorStepLabels}
-          >
-            <GeneralInfoStep
-              btnsBox={btnsBox}
-              isUserFetched
-              setIsUserFetched={setIsUserFetched}
-              stepLabel={'generalInfo'}
-            />
-          </StepProvider>
-        </ModalProvider>,
-        { preloadedState: mockState }
-      )
-    })
+  beforeEach(() => {
+    renderWithProviders(
+      <StepProvider initialValues={initialValues} stepLabels={tutorStepLabels}>
+        <GeneralInfoStep
+          btnsBox={btnsBox}
+          isUserFetched={false}
+          setIsUserFetched={setIsUserFetched}
+          stepLabel={'generalInfo'}
+        />
+      </StepProvider>,
+      { preloadedState: mockState }
+    )
   })
 
   it('should change firstName input', () => {

@@ -1,11 +1,17 @@
-import { createMemoryRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom'
+import { MemoryRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { configureStore } from '@reduxjs/toolkit'
 import reducer from '~/redux/reducer'
 import { ThemeProvider } from '@mui/material/styles'
 import { render } from '@testing-library/react'
 import { theme } from '~/styles/app-theme/custom-mui.styles'
+import { ModalProvider } from '~/context/modal-context'
+import { ConfirmationDialogProvider } from '~/context/confirm-context'
+import { SnackBarProvider } from '~/context/snackbar-context'
+
 import { vi } from 'vitest'
+import MockAdapter from 'axios-mock-adapter'
+import { axiosClient } from '~/plugins/axiosClient'
 
 export const renderWithProviders = (
   ui,
@@ -16,19 +22,25 @@ export const renderWithProviders = (
     ...renderOptions
   } = {}
 ) => {
-  const router = (element) =>
-    createMemoryRouter(createRoutesFromElements(<Route element={ element } path='/*' />), {
-      initialEntries: [initialEntries]
-    })
-
   const Wrapper = ({ children }) => (
-    <Provider store={ store }>
-      <ThemeProvider theme={ theme }>
-        <RouterProvider router={ router(children) } />
-      </ThemeProvider>
+    <Provider store={store}>
+      <MemoryRouter initialEntries={[initialEntries]}>
+        <ThemeProvider theme={theme}>
+          <SnackBarProvider>
+            <ConfirmationDialogProvider>
+              <ModalProvider>{children}</ModalProvider>
+            </ConfirmationDialogProvider>
+          </SnackBarProvider>
+        </ThemeProvider>
+      </MemoryRouter>
     </Provider>
   )
   return render(ui, { wrapper: Wrapper, ...renderOptions })
 }
 
-export const getFakeTestEvent = (key, value) => ({ preventDefault: vi.fn(), target: { [key]: value } })
+export const getFakeTestEvent = (key, value) => ({
+  preventDefault: vi.fn(),
+  target: { [key]: value }
+})
+
+export const mockAxiosClient = new MockAdapter(axiosClient)

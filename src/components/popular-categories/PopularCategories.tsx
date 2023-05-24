@@ -31,15 +31,6 @@ const PopularCategories: FC<PopularCategoriesProps> = ({
   const navigate = useNavigate()
   const { isDesktop, isTablet, isMobile } = useBreakpoints()
 
-  const getCategories = useCallback(
-    () => categoryService.getCategories({ limit: 9 }),
-    []
-  )
-  const { response, loading } = useAxios<CategoryInterface[]>({
-    service: getCategories,
-    defaultResponse: defaultResponses.array
-  })
-
   const itemsToShow = useMemo(() => {
     switch (true) {
       case isDesktop:
@@ -53,9 +44,18 @@ const PopularCategories: FC<PopularCategoriesProps> = ({
     }
   }, [isDesktop, isTablet, isMobile])
 
+  const getCategories = useCallback(
+    () => categoryService.getCategories({ limit: itemsToShow }),
+    [itemsToShow]
+  )
+  const { response, loading } = useAxios<CategoryInterface[]>({
+    service: getCategories,
+    defaultResponse: defaultResponses.array
+  })
+
   const cards = useMemo(
     () =>
-      response.slice(0, itemsToShow).map((item) => {
+      response.map((item) => {
         return (
           <CardWithLink
             description={`${item.totalOffers} ${t('common.offers')}`}
@@ -66,7 +66,7 @@ const PopularCategories: FC<PopularCategoriesProps> = ({
           />
         )
       }),
-    [response, t, itemsToShow]
+    [response, t]
   )
 
   const onClickButton = () => {

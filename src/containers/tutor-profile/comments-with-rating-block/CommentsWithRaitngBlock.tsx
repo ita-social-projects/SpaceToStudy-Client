@@ -54,7 +54,7 @@ const CommentsWithRatingBlock = ({
           />
           <CommentsBlock
             data={items}
-            isExpandable={true}
+            isExpandable
             loadMore={() => null}
             loading={loadingMock}
           />

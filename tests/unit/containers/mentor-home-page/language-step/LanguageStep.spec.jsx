@@ -1,7 +1,6 @@
 import { render, screen, fireEvent, within } from '@testing-library/react'
 
 import LanguageStep from '~/containers/tutor-home-page/language-step/LanguageStep'
-import { ModalProvider } from '~/context/modal-context'
 import { StepProvider } from '~/context/step-context'
 
 import {
@@ -19,14 +18,9 @@ const btnsBox = (
 describe('Autocomplete test', () => {
   beforeEach(() => {
     render(
-      <ModalProvider>
-        <StepProvider
-          initialValues={initialValues}
-          stepLabels={tutorStepLabels}
-        >
-          <LanguageStep btnsBox={btnsBox} stepLabel={'language'} />
-        </StepProvider>
-      </ModalProvider>
+      <StepProvider initialValues={initialValues} stepLabels={tutorStepLabels}>
+        <LanguageStep btnsBox={btnsBox} stepLabel={'language'} />
+      </StepProvider>
     )
   })
   it('Shoult select some data', () => {

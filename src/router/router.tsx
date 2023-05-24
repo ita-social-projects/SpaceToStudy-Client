@@ -18,10 +18,10 @@ import { adminRouter } from '~/router/routes/adminRouter'
 import { guestRouter } from '~/router/routes/guestRouter'
 import { authRouter } from '~/router/routes/authRouter'
 import PrivateRoute from '~/router/helpers/PrivateRoute'
-import HomeRoute from '~/router/helpers/HomeRoute'
 import { UserRoleEnum } from '~/types'
 import { home } from '~/router/constants/crumbs'
 
+const HomeRoute = lazy(() => import('~/router/helpers/HomeRoute'))
 const Logout = lazy(() => import('~/pages/logout/Logout'))
 
 export const routerConfig = (

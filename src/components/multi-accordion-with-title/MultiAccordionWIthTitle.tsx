@@ -19,7 +19,7 @@ const MultiAccordionWithTitle: FC<MultiAccordionWithTitleProps> = ({
   items,
   title = '',
   sx = {},
-  icon = <ArrowForwardIosSharpIcon sx={sx.icon} data-testid='accordion-icon' />
+  icon = <ArrowForwardIosSharpIcon data-testid='accordion-icon' sx={sx.icon} />
 }) => {
   const { t } = useTranslation()
 
@@ -43,17 +43,17 @@ const MultiAccordionWithTitle: FC<MultiAccordionWithTitleProps> = ({
 
   const accordionList = (
     <Accordions
-      items={items}
-      onChange={onChange}
       activeIndex={activeItems}
+      descriptionVariant={VariantEnum.Body2}
+      elevation={0}
       icon={icon}
-      multiple={true}
+      items={items}
+      multiple
+      onChange={onChange}
       sx={{
         withIcon: sx.withIcon,
         noIcon: sx.noIcon
       }}
-      descriptionVariant={VariantEnum.Body2}
-      elevation={0}
     />
   )
 

@@ -2,7 +2,6 @@ import { vi } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
 
 import AddPhotoStep from '~/containers/tutor-home-page/add-photo-step/AddPhotoStep'
-import { ModalProvider } from '~/context/modal-context'
 import { StepProvider } from '~/context/step-context'
 import useBreakpoints from '~/hooks/use-breakpoints'
 
@@ -27,14 +26,9 @@ describe('AddPhotoStep test', () => {
     useBreakpoints.mockImplementation(() => desktopData)
     window.URL.createObjectURL = vi.fn(() => 'image/png')
     render(
-      <ModalProvider>
-        <StepProvider
-          initialValues={initialValues}
-          stepLabels={tutorStepLabels}
-        >
-          <AddPhotoStep btnsBox={btnsBox} stepLabel={'photo'} />
-        </StepProvider>
-      </ModalProvider>
+      <StepProvider initialValues={initialValues} stepLabels={tutorStepLabels}>
+        <AddPhotoStep btnsBox={btnsBox} stepLabel={'photo'} />
+      </StepProvider>
     )
   })
 

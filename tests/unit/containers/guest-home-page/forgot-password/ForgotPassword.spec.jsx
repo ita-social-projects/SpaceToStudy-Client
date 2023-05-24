@@ -1,10 +1,6 @@
 import { screen, fireEvent, waitFor } from '@testing-library/react'
 import ForgotPassword from '~/containers/guest-home-page/forgot-password/ForgotPassword'
-import { ModalProvider } from '~/context/modal-context'
-import { SnackBarProvider } from '~/context/snackbar-context'
-import { renderWithProviders } from '~tests/test-utils'
-import MockAdapter from 'axios-mock-adapter'
-import { axiosClient } from '~/plugins/axiosClient'
+import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
 import { vi } from 'vitest'
 
@@ -21,17 +17,9 @@ vi.mock('~/containers/guest-home-page/google-button/GoogleButton', () => ({
   }
 }))
 
-const mockAxiosClient = new MockAdapter(axiosClient)
-
 describe('ForgotPassword test', () => {
   beforeEach(async () => {
-    renderWithProviders(
-      <SnackBarProvider>
-        <ModalProvider>
-          <ForgotPassword />
-        </ModalProvider>
-      </SnackBarProvider>
-    )
+    renderWithProviders(<ForgotPassword />)
   })
 
   it('should render title', () => {
@@ -71,7 +59,9 @@ describe('ForgotPassword test', () => {
   })
 
   it('should show error snackbar', async () => {
-    mockAxiosClient.onPost(URLs.auth.forgotPassword).reply(404, { code: 'EMAIL_NOT_FOUND' })
+    mockAxiosClient
+      .onPost(URLs.auth.forgotPassword)
+      .reply(404, { code: 'EMAIL_NOT_FOUND' })
 
     const input = screen.getByLabelText(/common.labels.email/i)
     fireEvent.change(input, { target: { value: 'error@gmail.com' } })

@@ -1,19 +1,19 @@
-import { fireEvent, render, screen } from '@testing-library/react'
-import { MemoryRouter } from 'react-router-dom'
+import { fireEvent, screen } from '@testing-library/react'
 import { vi } from 'vitest'
-
-import { ModalProvider } from '~/context/modal-context'
-import { ConfirmationDialogProvider } from '~/context/confirm-context'
+import { renderWithProviders } from '~tests/test-utils'
 import WhatCanYouDo from '~/containers/guest-home-page/WhatCanYouDo'
-import { SnackBarProvider } from '~/context/snackbar-context'
 
 const mockDispatch = vi.fn()
 const mockSelector = vi.fn()
 
-vi.mock('react-redux', () => ({
-  useDispatch: () => mockDispatch,
-  useSelector: () => mockSelector
-}))
+vi.mock('react-redux', async () => {
+  const actual = await vi.importActual('react-redux')
+  return {
+    ...actual,
+    useDispatch: () => mockDispatch,
+    useSelector: () => mockSelector
+  }
+})
 
 vi.mock('~/containers/guest-home-page/google-button/GoogleButton', () => ({
   __esModule: true,
@@ -24,17 +24,7 @@ vi.mock('~/containers/guest-home-page/google-button/GoogleButton', () => ({
 
 describe('WhatCanYoDo component', () => {
   it('should render popup after button click', () => {
-    render(
-      <MemoryRouter>
-        <SnackBarProvider>
-          <ConfirmationDialogProvider>
-            <ModalProvider>
-              <WhatCanYouDo />
-            </ModalProvider>
-          </ConfirmationDialogProvider>
-        </SnackBarProvider>
-      </MemoryRouter>
-    )
+    renderWithProviders(<WhatCanYouDo />)
 
     const btn = screen.getByText(/guestHomePage.whatCanYouDo.teach.actionLabel/)
     fireEvent.click(btn)

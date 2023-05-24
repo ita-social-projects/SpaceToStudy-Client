@@ -1,9 +1,5 @@
 import { renderWithProviders } from '~tests/test-utils'
-
 import { fireEvent, screen } from '@testing-library/react'
-import { ModalProvider } from '~/context/modal-context'
-import { SnackBarProvider } from '~/context/snackbar-context'
-
 import EnrollOffer from '~/containers/offer-details/enroll-offer/EnrollOffer'
 
 const mockData = {
@@ -45,13 +41,7 @@ describe('EnrollOffer', () => {
         createCooperation: () => mockFetchData()
       }
     }))
-    renderWithProviders(
-      <SnackBarProvider>
-        <ModalProvider>
-          <EnrollOffer offer={mockData} />
-        </ModalProvider>
-      </SnackBarProvider>
-    )
+    renderWithProviders(<EnrollOffer offer={mockData} />)
   })
 
   it('should display EnrollOffer form', () => {

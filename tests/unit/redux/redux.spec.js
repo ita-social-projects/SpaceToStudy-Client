@@ -1,4 +1,3 @@
-import MockAdapter from 'axios-mock-adapter'
 import { afterEach, vi } from 'vitest'
 
 import { store } from '~/redux/store'
@@ -9,7 +8,7 @@ import reducer, {
   logoutUser,
   signupUser
 } from '~/redux/reducer'
-import { axiosClient } from '~/plugins/axiosClient'
+import { mockAxiosClient } from '~tests/test-utils'
 
 import { URLs } from '~/constants/request'
 import {
@@ -29,8 +28,6 @@ vi.mock('~/services/local-storage-service', () => ({
   setToLocalStorage: () => true,
   removeFromLocalStorage: () => true
 }))
-
-const mockAxiosClient = new MockAdapter(axiosClient)
 
 const error = new Error(errorMessage)
 error.code = errorCode

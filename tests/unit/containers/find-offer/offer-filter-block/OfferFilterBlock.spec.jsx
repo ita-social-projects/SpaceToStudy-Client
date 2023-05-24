@@ -1,8 +1,10 @@
 import { render, screen, fireEvent } from '@testing-library/react'
 import { beforeEach } from 'vitest'
 import OfferFilterBlock from '~/containers/find-offer/offer-filter-block/OfferFilterBlock'
+import { mockAxiosClient } from '~tests/test-utils'
 import { defaultFilters } from '~/pages/find-offers/FindOffers.constants'
 import useBreakpoints from '~/hooks/use-breakpoints'
+import { URLs } from '~/constants/request'
 
 vi.mock('~/hooks/use-breakpoints')
 
@@ -11,12 +13,17 @@ const filterActions = {
   resetFilters: vi.fn(),
   updateQueryParams: vi.fn()
 }
-
+const priceRangeMock = { min: 0, max: 100 }
 const onToggleTutorOffers = vi.fn()
 const closeFilters = vi.fn()
 const activeFilterCount = 2
 const open = true
 useBreakpoints.mockImplementation(() => ({ isMobile: true }))
+mockAxiosClient
+  .onGet(
+    `${URLs.categories.get}{URLs.subjects.get}${URLs.categories.priceRange}`
+  )
+  .reply(200, priceRangeMock)
 
 describe('OfferFilterBlock', () => {
   beforeEach(() => {
