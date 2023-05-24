@@ -1,42 +1,46 @@
 import { vi } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
-import { TableProvider } from '~/context/table-context'
+
 import EnhancedTableHead from '~/components/enhanced-table/enhanced-table-head/EnhancedTableHead'
 
 const columnsMock = [
   {
     label: 'Name',
     field: 'name',
-    dataType: 'string',
+    dataType: 'string'
   },
   {
     label: 'Email',
     field: 'email',
     dataType: 'string'
-  },
+  }
 ]
-const initialSortMock = { order: 'asc', orderBy: 'email' }
-const itemsCountMock = 10
-const onSelectAllClickMock = vi.fn()
+const sort = { order: 'asc', orderBy: 'email' }
+const selected = []
+const count = 10
+const createSelectAllHandler = vi.fn()
+const onRequestSort = vi.fn()
 
 describe('EnhancedTableHead', () => {
-  beforeEach(()=>{
+  beforeEach(() => {
     render(
-      <TableProvider columns={ columnsMock } initialSort={ initialSortMock } isSelection>
-        <table>
-          <EnhancedTableHead
-            itemsCount={ itemsCountMock }
-            onSelectAllClick={ onSelectAllClickMock }
-          />
-        </table>
-      </TableProvider>
+      <table>
+        <EnhancedTableHead
+          columns={columnsMock}
+          data={{ count }}
+          isSelection
+          rowsPerPage={5}
+          select={{ selected, createSelectAllHandler }}
+          sort={{ sort, onRequestSort }}
+        />
+      </table>
     )
   })
 
   it('renders all columns in the table', () => {
     const nameColumn = screen.getByText(columnsMock[0].label)
     const emailColumn = screen.getByText(columnsMock[1].label)
-    
+
     expect(nameColumn).toBeInTheDocument()
     expect(emailColumn).toBeInTheDocument()
   })
@@ -49,6 +53,6 @@ describe('EnhancedTableHead', () => {
     const actionColumn = screen.getByRole('checkbox')
     fireEvent.click(actionColumn)
 
-    expect(onSelectAllClickMock).toHaveBeenCalled()
+    expect(createSelectAllHandler).toHaveBeenCalled()
   })
 })

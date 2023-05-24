@@ -2,7 +2,6 @@ import { vi } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
 
 import EnhancedTableToolbar from '~/components/enhanced-table/enhanced-table-toolbar/EnhancedTableToolbar'
-import { useTableContext } from '~/context/table-context'
 
 vi.mock('~/context/table-context', () => ({
   useTableContext: vi.fn()
@@ -20,23 +19,20 @@ const bulkActions = [
     icon: <span>Bulk action 2 icon</span>
   }
 ]
-const numSelected = 2
 const selected = ['63edddaccd1767170312c8fc', '63ff48ca11df3fb83ce11305']
 
 describe('EnhancedTableToolbar test', () => {
-  beforeEach(() => {
-    useTableContext.mockReturnValue({
-      bulkActions,
-      numSelected,
-      selected
-    })
-  })
-
   it('should render the correct number of selected items', () => {
-    render(<EnhancedTableToolbar refetchData={ refetchData } />)
+    render(
+      <EnhancedTableToolbar
+        bulkActions={bulkActions}
+        itemIds={selected}
+        refetchData={refetchData}
+      />
+    )
 
     const amountOfSelected = screen.getByTestId('amountOfSelected')
-    const result = `${numSelected} table.selected`
+    const result = `${selected.length} table.selected`
 
     expect(amountOfSelected).toHaveTextContent(result)
   })
@@ -45,8 +41,13 @@ describe('EnhancedTableToolbar test', () => {
     const { func } = bulkActions[0]
     const tooltipTitle = bulkActions[0].title
 
-    render(<EnhancedTableToolbar refetchData={ refetchData } />)
-
+    render(
+      <EnhancedTableToolbar
+        bulkActions={bulkActions}
+        itemIds={selected}
+        refetchData={refetchData}
+      />
+    )
     const button = screen.getByLabelText(tooltipTitle)
 
     fireEvent.click(button)

@@ -1,8 +1,7 @@
-import { useCallback } from 'react'
-import { useTableContext } from '~/context/table-context'
+import { useCallback, useState } from 'react'
 
 const useSelect = () => {
-  const { selected, setSelected } = useTableContext()
+  const [selected, setSelected] = useState([])
 
   const clearSelected = useCallback(() => setSelected([]), [setSelected])
 
@@ -14,7 +13,8 @@ const useSelect = () => {
     clearSelected()
   }
 
-  const createSelectAllHandler = (items) => (e) => handleSelectAllClick(e, items)
+  const createSelectAllHandler = (items) => (e) =>
+    handleSelectAllClick(e, items)
 
   const handleSelectClick = (_e, id) => {
     const selectedIndex = selected.indexOf(id)
@@ -31,7 +31,13 @@ const useSelect = () => {
 
   const isSelected = (id) => selected.includes(id)
 
-  return { selected, isSelected, clearSelected, createSelectAllHandler, handleSelectClick }
+  return {
+    selected,
+    isSelected,
+    clearSelected,
+    createSelectAllHandler,
+    handleSelectClick
+  }
 }
 
 export default useSelect

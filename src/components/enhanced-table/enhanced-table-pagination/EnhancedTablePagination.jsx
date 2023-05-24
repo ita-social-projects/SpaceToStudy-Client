@@ -7,19 +7,17 @@ import TablePagination from '@mui/material/TablePagination'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 
-import { useTableContext } from '~/context/table-context'
-
 import { styles } from './EnhancedTablePagination.styles'
 
-const EnhancedTablePagination = ({ itemsCount }) => {
+const EnhancedTablePagination = ({ pagination }) => {
   const { t } = useTranslation()
-  const { pagination } = useTableContext()
 
   const {
     page,
     pageInput,
     rowsPerPage,
     pageCount,
+    itemsCount,
     handleChangePage,
     handleChangeRowsPerPage,
     handleChangePageInput,
@@ -66,7 +64,7 @@ const EnhancedTablePagination = ({ itemsCount }) => {
       <Box sx={styles.pageInputBox}>
         <Typography variant='subtitle2'>{t('table.goToPage')}</Typography>
         <TextField
-          inputProps={{ 'data-testid': 'testid-page-input' }}
+          inputProps={{ 'data-testid': 'pagination-page-input' }}
           onChange={handleChangePageInput}
           size='small'
           sx={styles.pageInput}

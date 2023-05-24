@@ -21,5 +21,6 @@ export const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     columnGap: 1
-  }
+  },
+  loader: { py: '170px' }
 }

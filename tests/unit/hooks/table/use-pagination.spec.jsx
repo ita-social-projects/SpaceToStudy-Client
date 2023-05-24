@@ -1,17 +1,14 @@
 import { act, renderHook } from '@testing-library/react-hooks'
-import { TableProvider } from '~/context/table-context'
+
 import usePagination from '~/hooks/table/use-pagination'
 import { getFakeTestEvent } from '~tests/test-utils'
 
 describe('Use pagination custom hook', () => {
-  const wrapper = ({ children }) => <TableProvider>{children}</TableProvider>
-
   let result
 
   beforeEach(() => {
-    result = renderHook(() => usePagination(), {
-      wrapper
-    }).result
+    const { result: renderedHookResult } = renderHook(() => usePagination())
+    result = renderedHookResult
   })
 
   it('should change page', () => {
@@ -23,22 +20,16 @@ describe('Use pagination custom hook', () => {
   })
 
   it('should return checked page as 1', () => {
-    const { result } = renderHook(
-      () => usePagination({ defaultPage: 0, itemsPerPage: 5, itemsCount: 10 }),
-      {
-        wrapper
-      }
+    const { result } = renderHook(() =>
+      usePagination({ defaultPage: 0, itemsPerPage: 5, itemsCount: 10 })
     )
 
     expect(result.current.page).toEqual(1)
   })
 
   it('should return checked page as 2', () => {
-    const { result } = renderHook(
-      () => usePagination({ defaultPage: 15, itemsPerPage: 5, itemsCount: 10 }),
-      {
-        wrapper
-      }
+    const { result } = renderHook(() =>
+      usePagination({ defaultPage: 15, itemsPerPage: 5, itemsCount: 10 })
     )
 
     expect(result.current.page).toEqual(2)

@@ -1,19 +1,8 @@
 import { vi } from 'vitest'
 import { fireEvent, screen, render } from '@testing-library/react'
-import { useTableContext } from '~/context/table-context'
+
 import FilterRow from '~/components/enhanced-table/filter-row/FilterRow'
 
-vi.mock('~/context/table-context', () => ({
-  useTableContext: vi.fn()
-}))
-
-vi.mock('~/hooks/table/use-filter', () => {
-  return {
-    default: () => ({ setFilterByKey: () => {}, clearFilterByKey: () => {} })
-  }
-})
-
-const isSelection = true
 const columns = [
   { label: 'userTable.name', field: 'name', dataType: 'string' },
   { label: 'userTable.email', field: 'email', dataType: 'string' },
@@ -31,15 +20,18 @@ const columns = [
   }
 ]
 const filters = { name: '', email: '', lastLogin: '', isFirstLogin: Array(0) }
+const setFilterByKey = vi.fn()
+const clearFilterByKey = vi.fn()
 
 describe('FilterRow tests', () => {
   beforeEach(() => {
-    useTableContext.mockReturnValue({
-      isSelection,
-      columns,
-      filters
-    })
-    render(<FilterRow />)
+    render(
+      <FilterRow
+        columns={columns}
+        filter={{ filters, setFilterByKey, clearFilterByKey }}
+        isSelection
+      />
+    )
   })
 
   it('Should render all filter icons', () => {

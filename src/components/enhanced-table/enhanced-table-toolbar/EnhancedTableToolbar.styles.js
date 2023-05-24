@@ -8,6 +8,7 @@ export const styles = {
     py: '5px'
   },
   selected: {
-    flex: '1 1 100%'
+    flex: '1 1 100%',
+    typography: 'subtitle2'
   }
 }
