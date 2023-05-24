@@ -33,12 +33,12 @@ const Faq = () => {
 
       <Accordions
         activeIndex={activeItemId}
+        descriptionVariant={VariantEnum.Body2}
+        icon={<ExpandMoreRoundedIcon />}
         items={accordionItems}
         onChange={changeAccordion}
-        icon={<ExpandMoreRoundedIcon />}
         square
         titleVariant={VariantEnum.H6}
-        descriptionVariant={VariantEnum.Body2}
       />
     </Box>
   )

@@ -30,7 +30,7 @@ const Comment: FC<CommentProps> = ({ review }) => {
       </Typography>
     </>
   )
-  const coopDetails = `${category.name} - ${subject.name} - ${proficiencyLevel}`
+  const coopDetails = `${category.name} - ${subject.name} - ${proficiencyLevel[0]}`
 
   return (
     <Box sx={styles.root}>

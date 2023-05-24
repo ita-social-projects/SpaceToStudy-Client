@@ -1,7 +1,6 @@
 import { vi } from 'vitest'
 import Subjects from '~/pages/subjects/Subjects'
 import { fireEvent, screen } from '@testing-library/react'
-import { ModalProvider } from '~/context/modal-context'
 import { renderWithProviders } from '~tests/test-utils'
 
 vi.mock('~/hooks/use-categories-names', () => ({
@@ -32,15 +31,10 @@ const mockState = {
 
 describe('Subjects', () => {
   beforeEach(() => {
-    renderWithProviders(
-      <ModalProvider>
-        <Subjects />
-      </ModalProvider>,
-      {
-        initialEntries: route,
-        preloadedState: mockState
-      }
-    )
+    renderWithProviders(<Subjects />, {
+      initialEntries: route,
+      preloadedState: mockState
+    })
   })
   afterEach(() => {
     vi.clearAllMocks()

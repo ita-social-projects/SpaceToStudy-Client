@@ -10,15 +10,15 @@ import useForm from '~/hooks/use-form'
 
 import AppTextField from '~/components/app-text-field/AppTextField'
 import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
+import AppButton from '~/components/app-button/AppButton'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
-import ImgTitleDescription from '~/components/img-title-description/ImgTitleDescription'
+import NotificationModal from '~/containers/guest-home-page/notification-modal/NotificationModal'
 import info from '~/assets/img/guest-home-page/info.svg'
 import { AuthService } from '~/services/auth-service'
 
 import { snackbarVariants } from '~/constants'
 import { email } from '~/utils/validations/login'
 import { styles } from '~/containers/guest-home-page/forgot-password/ForgotPassword.styles'
-import AppButton from '~/components/app-button/AppButton'
 
 const ForgotPassword = () => {
   const { t } = useTranslation()
@@ -37,9 +37,11 @@ const ForgotPassword = () => {
       openModal(
         {
           component: (
-            <ImgTitleDescription
+            <NotificationModal
+              buttonTitle={t('common.confirmButton')}
               description={description}
               img={info}
+              onClose={closeModal}
               title={t('login.passwordReset')}
             />
           )
@@ -65,18 +67,13 @@ const ForgotPassword = () => {
   )
 
   const description = (
-    <>
+    <Typography component='span'>
       {t('login.weSentEmail')}
       <Typography component='span' variant='subtitle2'>
         {data.email}
       </Typography>
       {t('login.emailArrive')}
-      <Box mt={2}>
-        <Button onClick={closeModal} size='large' variant='contained'>
-          {t('common.confirmButton')}
-        </Button>
-      </Box>
-    </>
+    </Typography>
   )
 
   return (
@@ -101,13 +98,7 @@ const ForgotPassword = () => {
           type='email'
           value={data.email}
         />
-        <AppButton
-          loading={loading}
-          size='large'
-          sx={styles.sentPassword}
-          type='submit'
-          variant='contained'
-        >
+        <AppButton loading={loading} sx={styles.sentPassword} type='submit'>
           {t('login.sendPassword')}
         </AppButton>
       </Box>

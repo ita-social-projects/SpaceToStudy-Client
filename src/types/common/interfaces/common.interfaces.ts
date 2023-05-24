@@ -1,4 +1,4 @@
-import { CreateOfferResponse } from '~/types'
+import { Offer } from '~/types'
 
 export interface CommonEntityFields {
   _id: string
@@ -42,7 +42,7 @@ export interface SubjectNameInterface {
 }
 
 export interface ReviewInterface {
-  offer: CreateOfferResponse
+  offer: Offer
   author: UserInterface
   comment: string
   rating: number

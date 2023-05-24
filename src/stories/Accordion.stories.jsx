@@ -1,5 +1,4 @@
 import Accordions from '~/components/accordion/Accordions'
-import { ArrowForwardIosSharpIcon } from '@mui/icons-material/ArrowForwardIosSharp';
 
 export default {
   title: 'Accordion',
@@ -11,7 +10,8 @@ export default {
     },
     icon: {
       type: 'object',
-      description: 'Icon of accordion, if to pass, style of accordion will be changed'
+      description:
+        'Icon of accordion, if to pass, style of accordion will be changed'
     },
     items: {
       type: 'array',

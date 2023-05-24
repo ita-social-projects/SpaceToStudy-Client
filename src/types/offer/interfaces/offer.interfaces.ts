@@ -1,6 +1,5 @@
 import { ButtonProps } from '@mui/material/Button'
 import {
-  CategoryInterface,
   ProficiencyLevelEnum,
   CommonEntityFields,
   UserRole,
@@ -9,7 +8,8 @@ import {
   UserRoleEnum,
   LanguagesEnum,
   Faq,
-  VariantEnum
+  VariantEnum,
+  CategoryNameInterface
 } from '~/types'
 import { LinkProps } from 'react-router-dom'
 
@@ -28,7 +28,7 @@ export interface Offer extends CommonEntityFields {
     '_id' | 'totalReviews' | 'photo' | 'professionalSummary'
   >
   subject: SubjectNameInterface
-  category: CategoryInterface['_id']
+  category: CategoryNameInterface
   faq: Faq[]
 }
 

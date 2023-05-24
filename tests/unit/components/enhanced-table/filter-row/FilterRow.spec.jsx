@@ -3,7 +3,6 @@ import { fireEvent, screen, render } from '@testing-library/react'
 import { useTableContext } from '~/context/table-context'
 import FilterRow from '~/components/enhanced-table/filter-row/FilterRow'
 
-
 vi.mock('~/context/table-context', () => ({
   useTableContext: vi.fn()
 }))
@@ -14,16 +13,24 @@ vi.mock('~/hooks/table/use-filter', () => {
   }
 })
 
-
 const isSelection = true
 const columns = [
   { label: 'studentTable.name', field: 'name', dataType: 'string' },
   { label: 'studentTable.email', field: 'email', dataType: 'string' },
-  { label: 'studentTable.lastLogin', field: 'lastLogin', dataType: 'date', calculatedCellValue: vi.fn() },
-  { label: 'studentTable.firstLogin', field: 'isFirstLogin', dataType: 'enums', filterEnum: Array(2) }
+  {
+    label: 'studentTable.lastLogin',
+    field: 'lastLogin',
+    dataType: 'date',
+    calculatedCellValue: vi.fn()
+  },
+  {
+    label: 'studentTable.firstLogin',
+    field: 'isFirstLogin',
+    dataType: 'enums',
+    filterEnum: Array(2)
+  }
 ]
 const filters = { name: '', email: '', lastLogin: '', isFirstLogin: Array(0) }
-
 
 describe('FilterRow tests', () => {
   beforeEach(() => {
@@ -32,16 +39,22 @@ describe('FilterRow tests', () => {
       columns,
       filters
     })
-    render(<FilterRow  />)
+    render(
+      <table>
+        <tbody>
+          <FilterRow />
+        </tbody>
+      </table>
+    )
   })
-  
+
   it('Should render all filter icons', () => {
     const searchIcon = screen.getAllByTestId('SearchIcon')
-    
+
     expect(searchIcon.length).toBe(2)
 
     const calendarIcon = screen.getByTestId('CalendarMonthIcon')
-  
+
     expect(calendarIcon).toBeInTheDocument()
 
     const filterIcon = screen.getByTestId('FilterAltIcon')
@@ -51,7 +64,7 @@ describe('FilterRow tests', () => {
 
   it('Should render calender', () => {
     const calendarIcon = screen.getByTestId('CalendarMonthIcon')
-    
+
     fireEvent.click(calendarIcon)
 
     const calendar = screen.getAllByRole('dialog')
@@ -61,7 +74,7 @@ describe('FilterRow tests', () => {
 
   it('Should render filters', () => {
     const filterIcon = screen.getByTestId('FilterAltIcon')
-    
+
     fireEvent.click(filterIcon)
 
     const menu = screen.getByRole('menu')
@@ -76,9 +89,8 @@ describe('FilterRow tests', () => {
 
     const menu = screen.getByRole('menu')
     expect(menu).toBeInTheDocument()
-   
+
     const clearIcon = screen.getAllByTestId('ClearIcon')
     fireEvent.click(clearIcon[3])
   })
-  
 })

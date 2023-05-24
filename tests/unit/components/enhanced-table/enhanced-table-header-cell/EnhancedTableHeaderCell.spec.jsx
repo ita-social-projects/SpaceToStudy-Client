@@ -1,9 +1,13 @@
 import { vi } from 'vitest'
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import { render, screen, fireEvent } from '@testing-library/react'
 import EnhancedTableHeaderCell from '~/components/enhanced-table/enhanced-table-header-cell/EnhancedTableHeaderCell'
 import { useTableContext } from '~/context/table-context'
 
-const columnMock = { dataType: 'string', field: 'email', label: 'adminTable.email' }
+const columnMock = {
+  dataType: 'string',
+  field: 'email',
+  label: 'adminTable.email'
+}
 const sort = { order: 'asc', orderBy: 'email' }
 const setSort = vi.fn()
 const onRequestSort = vi.fn()
@@ -14,9 +18,9 @@ vi.mock('~/context/table-context', () => ({
 }))
 
 vi.mock('~/hooks/table/use-sort', () => ({
-    __esModule: true,
-    default: () => ({ onRequestSort: onRequestSort }),
-  }))
+  __esModule: true,
+  default: () => ({ onRequestSort: onRequestSort })
+}))
 
 describe('EnhancedTableHeadercell', () => {
   beforeEach(() => {
@@ -25,7 +29,15 @@ describe('EnhancedTableHeadercell', () => {
       setSort
     })
 
-    render(<EnhancedTableHeaderCell column={columnMock} />)
+    render(
+      <table>
+        <tbody>
+          <tr>
+            <EnhancedTableHeaderCell column={columnMock} />
+          </tr>
+        </tbody>
+      </table>
+    )
   })
 
   it('render column header cell in the table', () => {

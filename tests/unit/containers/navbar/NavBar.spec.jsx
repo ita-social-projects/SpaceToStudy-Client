@@ -1,8 +1,6 @@
 import { screen, fireEvent, waitFor } from '@testing-library/react'
 import NavBar from '~/containers/layout/navbar/NavBar'
 import { renderWithProviders } from '~tests/test-utils'
-import { ModalProvider } from '~/context/modal-context'
-import { SnackBarProvider } from '~/context/snackbar-context'
 import { vi } from 'vitest'
 
 vi.mock('~/hooks/use-confirm', () => {
@@ -20,14 +18,7 @@ vi.mock('~/containers/guest-home-page/google-button/GoogleButton', () => ({
 describe('Guest NavBar test', () => {
   const preloadedState = { appMain: { loading: false, userRole: '' } }
   beforeEach(() => {
-    renderWithProviders(
-      <SnackBarProvider>
-        <ModalProvider>
-          <NavBar />
-        </ModalProvider>
-      </SnackBarProvider>,
-      { preloadedState }
-    )
+    renderWithProviders(<NavBar />, { preloadedState })
   })
 
   it('should render logo element', () => {
@@ -63,12 +54,7 @@ describe('Student NavBar test', () => {
   const preloadedState = { appMain: { loading: false, userRole: 'student' } }
 
   beforeEach(() => {
-    renderWithProviders(
-      <ModalProvider>
-        <NavBar />
-      </ModalProvider>,
-      { preloadedState }
-    )
+    renderWithProviders(<NavBar />, { preloadedState })
   })
 
   it('should render navigation item with navBar text', () => {

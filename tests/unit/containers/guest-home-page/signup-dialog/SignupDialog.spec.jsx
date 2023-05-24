@@ -1,9 +1,9 @@
-import { screen, fireEvent, render, waitFor } from '@testing-library/react'
-import { MemoryRouter } from 'react-router-dom'
+import { screen, fireEvent, waitFor } from '@testing-library/react'
 import { student } from '~/constants'
 import SignupDialog from '~/containers/guest-home-page/signup-dialog/SignupDialog'
-import { ModalProvider } from '~/context/modal-context'
-import { SnackBarProvider } from '~/context/snackbar-context'
+
+import { renderWithProviders } from '~tests/test-utils'
+
 import { vi } from 'vitest'
 
 const mockDispatch = vi.fn()
@@ -20,10 +20,14 @@ vi.mock('~/containers/guest-home-page/google-button/GoogleButton', () => ({
   }
 }))
 
-vi.mock('react-redux', () => ({
-  useDispatch: () => mockDispatch.mockReturnValue({ unwrap: () => '' }),
-  useSelector: () => mockSelector.mockImplementation(mockState)
-}))
+vi.mock('react-redux', async () => {
+  const actual = await vi.importActual('react-redux')
+  return {
+    ...actual,
+    useDispatch: () => mockDispatch.mockReturnValue({ unwrap: () => '' }),
+    useSelector: () => mockSelector.mockImplementation(mockState)
+  }
+})
 
 vi.mock('~/hooks/use-confirm', () => {
   return {
@@ -33,15 +37,7 @@ vi.mock('~/hooks/use-confirm', () => {
 
 describe('Signup dialog test', () => {
   beforeEach(() => {
-    render(
-      <MemoryRouter>
-        <SnackBarProvider>
-          <ModalProvider>
-            <SignupDialog type={ student } />
-          </ModalProvider>
-        </SnackBarProvider>
-      </MemoryRouter>
-    )
+    renderWithProviders(<SignupDialog type={student} />)
   })
 
   it('should render img', () => {
@@ -78,7 +74,6 @@ describe('Signup dialog test', () => {
 
     expect(error).toBeInTheDocument()
   })
-  screen.debug()
 
   it('should dispatch after button submit', async () => {
     const inputFirstName = screen.getByLabelText(/common.labels.firstName/i)
@@ -93,7 +88,9 @@ describe('Signup dialog test', () => {
     const inputPassword = screen.getByLabelText(/common.labels.password/i)
     fireEvent.change(inputPassword, { target: { value: '12345678a/A' } })
 
-    const inputConfirmPassword = screen.getByLabelText(/common.labels.confirmPassword/i)
+    const inputConfirmPassword = screen.getByLabelText(
+      /common.labels.confirmPassword/i
+    )
     fireEvent.change(inputConfirmPassword, { target: { value: '12345678a/A' } })
 
     const checkbox = screen.getByRole('checkbox')

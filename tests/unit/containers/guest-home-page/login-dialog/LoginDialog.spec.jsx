@@ -1,8 +1,6 @@
-import { screen, render, fireEvent, waitFor } from '@testing-library/react'
-import { MemoryRouter } from 'react-router-dom'
+import { screen, fireEvent, waitFor } from '@testing-library/react'
 import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
-import { ModalProvider } from '~/context/modal-context'
-import { SnackBarProvider } from '~/context/snackbar-context'
+import { renderWithProviders } from '~tests/test-utils'
 import { vi } from 'vitest'
 
 const mockDispatch = vi.fn()
@@ -12,10 +10,14 @@ const mockState = {
   appMain: { authLoading: false }
 }
 
-vi.mock('react-redux', () => ({
-  useDispatch: () => mockDispatch.mockReturnValue({ unwrap: () => '' }),
-  useSelector: () => mockSelector.mockReturnValue(mockState)
-}))
+vi.mock('react-redux', async () => {
+  const actual = await vi.importActual('react-redux')
+  return {
+    ...actual,
+    useDispatch: () => mockDispatch.mockReturnValue({ unwrap: () => '' }),
+    useSelector: () => mockSelector.mockReturnValue(mockState)
+  }
+})
 
 vi.mock('~/hooks/use-confirm', () => {
   return {
@@ -32,15 +34,7 @@ vi.mock('~/containers/guest-home-page/google-button/GoogleButton', () => ({
 
 describe('Login dialog test', () => {
   beforeEach(() => {
-    render(
-      <MemoryRouter>
-        <SnackBarProvider>
-          <ModalProvider>
-            <LoginDialog />
-          </ModalProvider>
-        </SnackBarProvider>
-      </MemoryRouter>
-    )
+    renderWithProviders(<LoginDialog />)
   })
 
   it('should render img', () => {
@@ -69,7 +63,7 @@ describe('Login dialog test', () => {
     expect(inputPassword.value).toBe('test')
   })
 
-  it('should show error',  () => {
+  it('should show error', () => {
     const inputEmail = screen.getByLabelText(/common.labels.email/i)
     fireEvent.focusOut(inputEmail)
 

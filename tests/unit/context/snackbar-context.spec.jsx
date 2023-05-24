@@ -1,16 +1,10 @@
 import { screen, fireEvent, waitFor } from '@testing-library/react'
-import { ModalProvider } from '~/context/modal-context'
-import { renderWithProviders } from '~tests/test-utils'
-import { ConfirmationDialogProvider } from '~/context/confirm-context'
-import { SnackBarProvider } from '~/context/snackbar-context'
+import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
-import MockAdapter from 'axios-mock-adapter'
-import { axiosClient } from '~/plugins/axiosClient'
 import { URLs } from '~/constants/request'
 import { vi } from 'vitest'
 
 const preloadedState = { appMain: { loading: false, userRole: '', error: '' } }
-const mockAxiosClient = new MockAdapter(axiosClient)
 
 vi.mock('~/containers/guest-home-page/google-button/GoogleButton', () => ({
   __esModule: true,
@@ -21,16 +15,7 @@ vi.mock('~/containers/guest-home-page/google-button/GoogleButton', () => ({
 
 describe('snackbar context', () => {
   beforeEach(async () => {
-    renderWithProviders(
-      <SnackBarProvider>
-        <ConfirmationDialogProvider>
-          <ModalProvider>
-            <LoginDialog />
-          </ModalProvider>
-        </ConfirmationDialogProvider>
-      </SnackBarProvider>,
-      { preloadedState }
-    )
+    renderWithProviders(<LoginDialog />, { preloadedState })
 
     mockAxiosClient.onPost(URLs.auth.login).reply(404, { code: 'error' })
     const inputEmail = screen.getByLabelText(/common.labels.email/i)

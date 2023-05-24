@@ -1,20 +1,15 @@
 import { vi } from 'vitest'
 import { fireEvent, screen, waitFor } from '@testing-library/react'
-import MockAdapter from 'axios-mock-adapter'
 
-import { axiosClient } from '~/plugins/axiosClient'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import UserStepsWrapper from '~/components/user-steps-wrapper/UserStepsWrapper'
-import { ModalProvider } from '~/context/modal-context'
-import { renderWithProviders } from '~tests/test-utils'
+import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 
 import { imageResize } from '~/utils/image-resize'
 import { URLs } from '~/constants/request'
 
 vi.mock('~/utils/image-resize')
 vi.mock('~/hooks/use-breakpoints')
-
-const mockAxiosClient = new MockAdapter(axiosClient)
 
 const userId = '63f5d0ebb'
 const userRole = 'admin'
@@ -24,21 +19,18 @@ const mockState = {
   appMain: { userId, userRole, loading: false }
 }
 
-describe('UserStepsWrapper test', () => {
-  mockAxiosClient
-    .onGet(`${URLs.users.get}/${userId}?role=${userRole}`)
-    .reply(200, { data: userDataMock })
-  const desktopData = { isDesktop: true, isMobile: false, isTablet: false }
+mockAxiosClient
+  .onGet(`${URLs.users.get}/${userId}?role=${userRole}`)
+  .reply(200, { data: userDataMock })
+const desktopData = { isDesktop: true, isMobile: false, isTablet: false }
 
+describe('UserStepsWrapper test', () => {
   beforeEach(() => {
     useBreakpoints.mockImplementation(() => desktopData)
     window.URL.createObjectURL = vi.fn(() => 'image/png')
-    renderWithProviders(
-      <ModalProvider>
-        <UserStepsWrapper userRole='tutor' />
-      </ModalProvider>,
-      { preloadedState: mockState }
-    )
+    renderWithProviders(<UserStepsWrapper userRole='tutor' />, {
+      preloadedState: mockState
+    })
   })
 
   it('should render first tab', () => {

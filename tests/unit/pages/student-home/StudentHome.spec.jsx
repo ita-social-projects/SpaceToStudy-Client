@@ -1,6 +1,5 @@
 import { screen, waitFor } from '@testing-library/react'
 
-import { ModalProvider } from '~/context/modal-context'
 import StudentHome from '~/pages/student-home/StudentHome'
 
 import { renderWithProviders } from '~tests/test-utils'
@@ -14,15 +13,9 @@ const secondLoginState = {
   appMain: { isFirstLogin: false, userRole: 'student', userId }
 }
 
-const StudentsHomeWithProviders = () => (
-  <ModalProvider>
-    <StudentHome />
-  </ModalProvider>
-)
-
 describe('StudentsHome component', () => {
   it('should render modal when logging in for the first time', async () => {
-    renderWithProviders(<StudentsHomeWithProviders />, {
+    renderWithProviders(<StudentHome />, {
       preloadedState: firstLoginState
     })
 
@@ -34,7 +27,7 @@ describe('StudentsHome component', () => {
   })
 
   it('should not render modal when logging in for the second time', () => {
-    renderWithProviders(<StudentsHomeWithProviders />, {
+    renderWithProviders(<StudentHome />, {
       preloadedState: secondLoginState
     })
 

@@ -1,13 +1,10 @@
 import { screen, fireEvent, waitFor } from '@testing-library/react'
 import ResetPassword from '~/containers/guest-home-page/reset-password/ResetPassword'
 import { SnackBarProvider } from '~/context/snackbar-context'
-import { renderWithProviders } from '~tests/test-utils'
-import MockAdapter from 'axios-mock-adapter'
+import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
-import { axiosClient } from '~/plugins/axiosClient'
 import { vi } from 'vitest'
 
-const mockAxiosClient = new MockAdapter(axiosClient)
 const openModal = vi.fn()
 const resetToken = 'test'
 const error = new Error()
@@ -47,9 +44,7 @@ describe('ResetPassword test', () => {
       .reply(404, error)
 
     renderWithProviders(
-      <SnackBarProvider>
-        <ResetPassword resetToken={resetToken} setModal={openModal} />
-      </SnackBarProvider>
+      <ResetPassword resetToken={resetToken} setModal={openModal} />
     )
 
     const passwordInput = screen.getByLabelText(/common.labels.password/i)

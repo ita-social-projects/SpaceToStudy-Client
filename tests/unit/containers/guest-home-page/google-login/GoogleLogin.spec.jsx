@@ -1,8 +1,5 @@
 import { screen, fireEvent, waitFor } from '@testing-library/react'
 
-import { SnackBarProvider } from '~/context/snackbar-context'
-import { ConfirmationDialogProvider } from '~/context/confirm-context'
-import { ModalProvider } from '~/context/modal-context'
 import { login, signup } from '~/constants'
 import GoogleLogin from '~/containers/guest-home-page/google-login/GoogleLogin'
 import { renderWithProviders } from '~tests/test-utils'
@@ -36,13 +33,7 @@ describe('GoogleLogin component test for login', () => {
     global.google = originalGoogle
   })
   beforeEach(() => {
-    renderWithProviders(
-      <SnackBarProvider>
-        <ModalProvider>
-          <GoogleLogin buttonWidth={buttonWidth} type={login} />
-        </ModalProvider>
-      </SnackBarProvider>
-    )
+    renderWithProviders(<GoogleLogin buttonWidth={buttonWidth} type={login} />)
   })
 
   it('should have "or continue" text', () => {
@@ -80,15 +71,7 @@ describe('GoogleLogin component test for signup', () => {
   })
 
   beforeEach(() => {
-    renderWithProviders(
-      <SnackBarProvider>
-        <ConfirmationDialogProvider>
-          <ModalProvider>
-            <GoogleLogin buttonWidth={buttonWidth} type={signup} />
-          </ModalProvider>
-        </ConfirmationDialogProvider>
-      </SnackBarProvider>
-    )
+    renderWithProviders(<GoogleLogin buttonWidth={buttonWidth} type={signup} />)
   })
 
   it('should render login popup', async () => {
