@@ -28,8 +28,9 @@ const EnhancedTableRow = ({
     if (calculatedCellValue) {
       propValue = calculatedCellValue(item)
     } else {
-      propValue = item[field].toString()
+      propValue = item[field]?.toString()
     }
+
     return <TableCell key={field}>{propValue}</TableCell>
   })
 
