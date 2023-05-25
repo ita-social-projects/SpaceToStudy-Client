@@ -25,15 +25,19 @@ interface OfferFilterBlockProps {
   closeFilters: () => void
   open: boolean
   activeFilterCount?: number
+  sx?: {
+    maxHeight: string
+    overflowY?: string
+  }
 }
-
 const OfferFilterBlock: FC<OfferFilterBlockProps> = ({
   filters,
   filterActions,
   onToggleTutorOffers,
   activeFilterCount,
   closeFilters,
-  open
+  open,
+  sx
 }) => {
   const { t } = useTranslation()
   const { isDesktop } = useBreakpoints()
@@ -85,7 +89,7 @@ const OfferFilterBlock: FC<OfferFilterBlockProps> = ({
   )
 
   return (
-    <Stack spacing={2} sx={styles.root(open)}>
+    <Stack spacing={2} sx={{ ...styles.root(open), ...sx }}>
       {mobileFields}
       <OfferFilterList
         filters={filters}

@@ -112,6 +112,17 @@ const FindOffers = () => {
     filterQueryActions.updateFilterInQuery(updatedRole, 'authorRole')
   }
 
+  const getFilterSectionStyles = useMemo(() => {
+    return !offers.length && isDesktop
+      ? {
+          maxHeight: '500px',
+          overflowY: 'auto'
+        }
+      : {
+          maxHeight: '100%'
+        }
+  }, [offers.length, isDesktop])
+
   const filtersComponent = (
     <OfferFilterBlock
       activeFilterCount={activeFilterCount}
@@ -120,6 +131,7 @@ const FindOffers = () => {
       filters={filters}
       onToggleTutorOffers={handleShowingTutorOffers}
       open={isOpen}
+      sx={getFilterSectionStyles}
     />
   )
 
@@ -166,6 +178,7 @@ const FindOffers = () => {
             {filtersComponent}
           </AppDrawer>
         )}
+
         {offersLoading ? (
           <Loader pageLoad size={70} />
         ) : !offers.length && !offersLoading ? (
