@@ -21,7 +21,11 @@ const CooperationToolbar = () => {
         sx={styles.input}
       />
       <Box sx={styles.actionBlock}>
-        <AppSelect fields={[]} sx={styles.select} />
+        <AppSelect
+          fields={[{ value: '', title: 'test' }]}
+          sx={styles.select}
+          value={''}
+        />
         {!isMobile && <ViewSwitcher value={CardsViewEnum.Grid} />}
       </Box>
     </Box>
