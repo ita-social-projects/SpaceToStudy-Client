@@ -25,6 +25,7 @@ const useLoadMore = <Response, Params>({
 }: UseLoadMoreProps<Response, Params>): UseLoadMoreReturn<Response> => {
   const [skip, setSkip] = useState<number>(0)
   const [data, setData] = useState<Response[] | []>([])
+  const [previousLimit, setPreviousLimit] = useState<number>(0)
 
   const loadMore = useCallback(
     () => setSkip((prevState) => prevState + limit),
@@ -43,8 +44,14 @@ const useLoadMore = <Response, Params>({
   })
 
   useEffect(() => {
+    if (previousLimit !== limit) {
+      resetData()
+      setPreviousLimit(limit)
+      return
+    }
+
     void fetchData({ ...params, limit, skip } as Params)
-  }, [fetchData, limit, skip, params])
+  }, [fetchData, limit, previousLimit, resetData, skip, params])
 
   useEffect(() => {
     response.length && setData((prevState) => [...prevState, ...response])
