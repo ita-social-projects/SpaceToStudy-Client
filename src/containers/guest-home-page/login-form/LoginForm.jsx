@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import useInputVisibility from '~/hooks/use-input-visibility'
 import { useSelector } from 'react-redux'
@@ -21,6 +22,9 @@ const LoginForm = ({
 }) => {
   const { inputVisibility: passwordVisibility, showInputText: showPassword } =
     useInputVisibility(errors.password)
+
+  const [inputsIsValid, setInputsIsValid] = useState(false)
+
   const { authLoading } = useSelector((state) => state.appMain)
 
   const { openModal } = useModalContext()
@@ -30,6 +34,17 @@ const LoginForm = ({
   const openForgotPassword = () => {
     openModal({ component: <ForgotPassword /> })
   }
+
+  useEffect(() => {
+    const { email: emailError, password: passwordError } = errors
+    const { email: emailData, password: passwordData } = data
+
+    if (!emailError && !passwordError && emailData && passwordData) {
+      setInputsIsValid(true)
+    } else {
+      setInputsIsValid(false)
+    }
+  }, [errors, data])
 
   return (
     <Box component='form' onSubmit={handleSubmit}>
@@ -69,6 +84,7 @@ const LoginForm = ({
       </Typography>
 
       <AppButton
+        disabled={!inputsIsValid}
         loading={authLoading}
         size='large'
         sx={styles.loginButton}
