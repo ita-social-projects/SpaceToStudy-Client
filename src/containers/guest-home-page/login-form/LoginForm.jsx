@@ -33,10 +33,7 @@ const LoginForm = ({
     openModal({ component: <ForgotPassword /> })
   }
 
-  const inputsAreValid = useMemo(() => {
-    const { email: emailData, password: passwordData } = data
-    return emailData && passwordData
-  }, [data])
+  const inputsAreValid = useMemo(() => data.email && data.password)
 
   return (
     <Box component='form' onSubmit={handleSubmit}>
