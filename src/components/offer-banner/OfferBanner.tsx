@@ -1,18 +1,20 @@
 import { FC } from 'react'
+
 import Box from '@mui/material/Box'
 import { Typography } from '@mui/material'
 import IconButton from '@mui/material/IconButton'
 import Avatar from '@mui/material/Avatar'
 import TurnedInNot from '@mui/icons-material/TurnedInNot'
-import { ButtonActions, Offer, ProficiencyLevelEnum } from '~/types'
-import { styles } from '~/components/offer-banner/OfferBanner.styles'
+import { useTranslation } from 'react-i18next'
 import AppChip from '~/components/app-chip/AppChip'
 import AppCard from '~/components/app-card/AppCard'
 import AppButton from '~/components/app-button/AppButton'
-
-import { useTranslation } from 'react-i18next'
 import ImgTitleDescription from '~/components/img-title-description/ImgTitleDescription'
+
+import { styles } from '~/components/offer-banner/OfferBanner.styles'
 import useBreakpoints from '~/hooks/use-breakpoints'
+
+import { ButtonActions, Offer, ProficiencyLevelEnum } from '~/types'
 
 interface OfferBannerProps {
   offer: Offer

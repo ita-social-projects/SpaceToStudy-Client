@@ -4,7 +4,7 @@ import IconButton from '@mui/material/IconButton'
 import Box from '@mui/material/Box'
 import ArrowUpwardRoundedIcon from '@mui/icons-material/ArrowUpwardRounded'
 import { styles } from '~/components/scroll-to-top-button/ScrollToTopButton.styles'
-import ScrollVisibilityWrapper from '../scroll-visibility-wrapper/ScrollVisibilityWrapper'
+import ScrollVisibilityWrapper from '~/components/scroll-visibility-wrapper/ScrollVisibilityWrapper'
 
 interface ScrollToTopButtonProps {
   element: React.RefObject<HTMLDivElement>
