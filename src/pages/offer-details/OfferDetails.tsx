@@ -28,7 +28,6 @@ import {
   mockedFAQItems
 } from '~/pages/offer-details/constants'
 import { styles } from '~/pages/offer-details/OfferDetails.styles'
-import { useAppSelector } from '~/hooks/use-redux'
 import { Offer, VariantEnum, OutletContext } from '~/types'
 import ScrollVisibilityWrapper from '~/components/scroll-visibility-wrapper/ScrollVisibilityWrapper'
 import OfferBanner from '~/components/offer-banner/OfferBanner'
