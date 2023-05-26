@@ -28,6 +28,7 @@ export const styles = {
     },
     title: {
       typography: { md: 'h4', xs: 'h5' },
+      letterSpacing: '0',
       marginBottom: '16px'
     },
     description: {
