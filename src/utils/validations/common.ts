@@ -10,7 +10,7 @@ const validations: Validations = {
     if (value.length > 30) {
       return 'common.errorMessages.nameLength'
     }
-    if (!RegExp(/^[a-zа-яєії]+$/i).test(value)) {
+    if (!RegExp(/^[a-zа-яєії\s]+$/i).test(value)) {
       return 'common.errorMessages.nameAlphabeticOnly'
     }
     return ''
@@ -66,14 +66,14 @@ export const numberField = (value: string, errorMessage: string) => {
 
 export const textField =
   (min: number, max: number) =>
-  (value: string): string | undefined => {
-    if (value.length !== 0 && value.length < min) {
-      return 'common.errorMessages.shortText'
+    (value: string): string | undefined => {
+      if (value.length !== 0 && value.length < min) {
+        return 'common.errorMessages.shortText'
+      }
+      if (value.length > max) {
+        return 'common.errorMessages.longText'
+      }
     }
-    if (value.length > max) {
-      return 'common.errorMessages.longText'
-    }
-  }
 
 export const helperTextHandler = (
   value: string,
