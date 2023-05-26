@@ -11,16 +11,17 @@ import { TotalReviews, UserRoleEnum } from '~/types'
 
 interface AppRatingMobileProps extends RatingProps {
   reviewsCount: TotalReviews
+  showStar?: boolean
 }
 
-const AppRatingMobile: FC<AppRatingMobileProps> = ({ value, reviewsCount }) => {
+const AppRatingMobile: FC<AppRatingMobileProps> = ({ value, reviewsCount, showStar = true }) => {
   const { userRole } = useAppSelector((state) => state.appMain)
   const { t } = useTranslation()
 
   return (
     <Box sx={styles.root}>
       <Box data-testid='number-box' sx={styles.number}>
-        <StarSharp data-testid='star-icon' sx={styles.starMobile} />
+        {showStar && <StarSharp data-testid='star-icon' sx={styles.starMobile} />}
         <Typography variant={'h6'}>{value}</Typography>
       </Box>
       <Typography variant={'caption'}>

@@ -12,7 +12,7 @@ interface OfferCardProps {
   isHideField?: boolean
   offer: Offer
   onBookmarkClick: (id: string) => void
-  buttonActions: (ButtonActions | null)[]
+  buttonActions: ButtonActions[]
 }
 
 const OfferCard: FC<OfferCardProps> = ({
@@ -38,7 +38,7 @@ const OfferCard: FC<OfferCardProps> = ({
 
   return (
     <Box sx={styles.wrapper}>
-      <OfferAvatarAndRating imgSrc={author.photo} rating={authorAvgRating} />
+      <OfferAvatarAndRating imgSrc={author.photo} rating={authorAvgRating} totalReviews={author.totalReviews} />
       <OfferDetails
         description={!isHideField && description}
         languages={languages}
