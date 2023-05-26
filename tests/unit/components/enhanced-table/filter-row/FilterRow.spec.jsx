@@ -26,11 +26,15 @@ const clearFilterByKey = vi.fn()
 describe('FilterRow tests', () => {
   beforeEach(() => {
     render(
-      <FilterRow
-        columns={columns}
-        filter={{ filters, setFilterByKey, clearFilterByKey }}
-        isSelection
-      />
+      <table>
+        <tbody>
+          <FilterRow
+            columns={columns}
+            filter={{ filters, setFilterByKey, clearFilterByKey }}
+            isSelection
+          />
+        </tbody>
+      </table>
     )
   })
 

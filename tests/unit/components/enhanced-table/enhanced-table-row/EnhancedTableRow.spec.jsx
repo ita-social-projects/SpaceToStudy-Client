@@ -26,14 +26,18 @@ const rowActions = [{ label: 'Delete', func: vi.fn() }]
 describe('EnhancedTableRow component', () => {
   beforeEach(() => {
     render(
-      <EnhancedTableRow
-        columns={columns}
-        isSelection
-        item={mockItem}
-        refetchData={refetchData}
-        rowActions={rowActions}
-        select={{ isSelected, handleSelectClick }}
-      />
+      <table>
+        <tbody>
+          <EnhancedTableRow
+            columns={columns}
+            isSelection
+            item={mockItem}
+            refetchData={refetchData}
+            rowActions={rowActions}
+            select={{ isSelected, handleSelectClick }}
+          />
+        </tbody>
+      </table>
     )
   })
 

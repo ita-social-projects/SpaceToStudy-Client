@@ -15,10 +15,16 @@ const tableSortLabelId = 'tableSortLabel'
 describe('EnhancedTableHeaderCell', () => {
   beforeEach(() => {
     render(
-      <EnhancedTableHeaderCell
-        column={columnMock}
-        sort={{ sort, onRequestSort }}
-      />
+      <table>
+        <tbody>
+          <tr>
+            <EnhancedTableHeaderCell
+              column={columnMock}
+              sort={{ sort, onRequestSort }}
+            />
+          </tr>
+        </tbody>
+      </table>
     )
   })
 
