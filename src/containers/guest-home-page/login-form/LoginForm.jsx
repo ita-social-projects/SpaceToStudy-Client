@@ -1,4 +1,3 @@
-import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import useInputVisibility from '~/hooks/use-input-visibility'
 import { useSelector } from 'react-redux'
@@ -32,8 +31,6 @@ const LoginForm = ({
   const openForgotPassword = () => {
     openModal({ component: <ForgotPassword /> })
   }
-
-  const inputsAreValid = useMemo(() => data.email && data.password)
 
   return (
     <Box component='form' onSubmit={handleSubmit}>
@@ -73,7 +70,7 @@ const LoginForm = ({
       </Typography>
 
       <AppButton
-        disabled={!inputsAreValid}
+        disabled={!data.email || !data.password}
         loading={authLoading}
         sx={styles.loginButton}
         type='submit'
