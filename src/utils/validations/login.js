@@ -19,7 +19,7 @@ export const lastName = (value) => {
 export const confirmPassword = (password, data) => {
   return emptyField(
     password,
-    !password ? 'common.errorMessages.emptyField' : '',
+    'common.errorMessages.emptyField',
     password !== data.password ? 'common.errorMessages.passwordsDontMatch' : ''
   )
 }
