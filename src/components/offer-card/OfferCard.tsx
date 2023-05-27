@@ -12,7 +12,7 @@ interface OfferCardProps {
   isHideField?: boolean
   offer: Offer
   onBookmarkClick: (id: string) => void
-  buttonActions: ButtonActions[]
+  buttonActions: (ButtonActions | null)[]
 }
 
 const OfferCard: FC<OfferCardProps> = ({

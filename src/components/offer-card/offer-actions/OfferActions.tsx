@@ -17,7 +17,7 @@ interface OfferActionsProps {
   price: number
   isBookmarked: boolean
   onBookmarkClick: (id: string) => void
-  buttonActions: ButtonActions[]
+  buttonActions: (ButtonActions | null)[]
 }
 
 const OfferActions: FC<OfferActionsProps> = ({

@@ -11,5 +11,12 @@ export const styles = {
   },
   rating: {
     backgroundColor: 'primary.50'
+  },
+  reviewsCountContainer: {
+    textAlign: 'left',
+    width: '100%'
+  },
+  reviewsCountContent: {
+    display: 'flex'
   }
 }
