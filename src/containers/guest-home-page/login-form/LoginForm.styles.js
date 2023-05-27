@@ -17,6 +17,10 @@ export const styles = {
     '&:hover': {
       textDecoration: 'underline'
     },
+    '&:focus': {
+      outline: '2px solid',
+      borderRadius: '2px'
+    },
     mb: '20px',
     alignSelf: 'end'
   }
