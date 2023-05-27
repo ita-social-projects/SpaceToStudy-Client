@@ -11,10 +11,8 @@ const OfferAvatarAndRating = ({ imgSrc, rating, totalReviews }) => {
     <Box sx={styles.container}>
       <Avatar src={imgSrc} sx={styles.avatar} />
       <AppRating readOnly showNumber sx={styles.rating} value={rating} />
-      <Box sx={styles.reviewsCountContainer}>
-        <Box sx={styles.reviewsCountContent}>
-          <AppRatingMobile reviewsCount={totalReviews} hideStar={true} />
-        </Box>
+      <Box sx={styles.reviewsCountContent}>
+        <AppRatingMobile reviewsCount={totalReviews} hideStar={true} />
       </Box>
     </Box>
   )
