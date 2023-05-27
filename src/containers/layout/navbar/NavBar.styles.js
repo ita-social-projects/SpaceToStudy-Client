@@ -16,7 +16,10 @@ export const styles = {
   },
   navItemText: {
     color: 'primary.900',
-    textDecoration: 'none'
+    textDecoration: 'none',
+    '&:focus': {
+      color: 'primary.500'
+    }
   },
   navItem: {
     '&:last-child': {
