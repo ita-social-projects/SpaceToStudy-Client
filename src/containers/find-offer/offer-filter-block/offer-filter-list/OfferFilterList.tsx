@@ -121,8 +121,8 @@ const OfferFilterList: FC<OfferFilterListProps> = ({
       />
       {filterTitle(t('findOffers.filterTitles.search'))}
       <FilterInput
-        onChange={updateFilterByKey('name')}
-        value={filters.name || ''}
+        onChange={updateFilterByKey('search')}
+        value={filters.search || ''}
       />
     </>
   )
