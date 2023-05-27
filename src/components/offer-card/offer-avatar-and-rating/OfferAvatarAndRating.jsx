@@ -6,7 +6,6 @@ import AppRatingMobile from '~/components/app-rating-mobile/AppRatingMobile'
 
 import { styles } from '~/components/offer-card/offer-avatar-and-rating/OfferAvatarAndRating.styles'
 
-
 const OfferAvatarAndRating = ({ imgSrc, rating, totalReviews }) => {
   return (
     <Box sx={styles.container}>
@@ -18,7 +17,7 @@ const OfferAvatarAndRating = ({ imgSrc, rating, totalReviews }) => {
         </Box>
       </Box>
     </Box>
-  );
+  )
 }
 
 export default OfferAvatarAndRating
