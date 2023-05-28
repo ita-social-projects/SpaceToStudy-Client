@@ -10,7 +10,7 @@ const validations: Validations = {
     if (value.length > 30) {
       return 'common.errorMessages.nameLength'
     }
-    if (!RegExp(/^[a-zа-яєії]+$/i).test(value)) {
+    if (!RegExp(/^[a-zа-яєії ]+$/i).test(value)) {
       return 'common.errorMessages.nameAlphabeticOnly'
     }
     return ''

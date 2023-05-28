@@ -26,6 +26,7 @@ module.exports = {
     }
   },
   rules: {
+    'prettier/prettier': 0,
     'prefer-arrow-callback': ['error'],
     'react/jsx-boolean-value': 'error',
     'react/jsx-closing-bracket-location': 'error',
