@@ -2,18 +2,19 @@ export const styles = {
   container: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'left'
+    alignItems: 'left',
+    gap: '4px'
   },
   avatar: {
     height: '80px',
     width: '80px',
-    mb: '16px',
+    mb: '12px',
     alignSelf: 'center'
   },
   rating: {
     backgroundColor: 'primary.50'
   },
-  reviewsCountContent: {
-    display: 'flex'
+  reviews: {
+    color: 'primary.500'
   }
 }

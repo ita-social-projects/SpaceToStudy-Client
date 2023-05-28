@@ -1,19 +1,23 @@
 import Box from '@mui/material/Box'
 import Avatar from '@mui/material/Avatar'
+import { useTranslation } from 'react-i18next'
 
+import Typography from '@mui/material/Typography'
 import AppRating from '~/components/app-rating/AppRating'
-import AppRatingMobile from '~/components/app-rating-mobile/AppRatingMobile'
 
 import { styles } from '~/components/offer-card/offer-avatar-and-rating/OfferAvatarAndRating.styles'
 
 const OfferAvatarAndRating = ({ imgSrc, rating, totalReviews }) => {
+  const { t } = useTranslation()
   return (
     <Box sx={styles.container}>
       <Avatar src={imgSrc} sx={styles.avatar} />
       <AppRating readOnly showNumber sx={styles.rating} value={rating} />
-      <Box sx={styles.reviewsCountContent}>
-        <AppRatingMobile reviewsCount={totalReviews} hideStar={true} />
-      </Box>
+      <Typography variant={'caption'} sx={styles.reviews}>
+        {t('tutorProfilePage.reviews.reviewsCount', {
+          count: totalReviews
+        })}
+      </Typography>
     </Box>
   )
 }
