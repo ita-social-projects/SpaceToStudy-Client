@@ -21,6 +21,13 @@ const useSteps = ({ steps }) => {
     [userId]
   )
 
+  const handleResponseError = (error) => {
+    setAlert({
+      severity: snackbarVariants.error,
+      message: error ? `errors.${error.code}` : ''
+    })
+  }
+
   const handleResponse = () => {
     setAlert({
       severity: snackbarVariants.success,
@@ -33,7 +40,8 @@ const useSteps = ({ steps }) => {
     service: updateUser,
     fetchOnMount: false,
     defaultResponse: null,
-    onResponse: handleResponse
+    onResponse: handleResponse,
+    onResponseError: handleResponseError
   })
 
   const stepErrors = Object.values(stepData).map(

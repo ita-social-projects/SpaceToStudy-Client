@@ -25,10 +25,16 @@ const useLoadMore = <Response, Params>({
 }: UseLoadMoreProps<Response, Params>): UseLoadMoreReturn<Response> => {
   const [skip, setSkip] = useState<number>(0)
   const [data, setData] = useState<Response[] | []>([])
+  const [previousLimit, setPreviousLimit] = useState<number>(limit)
 
   const loadMore = useCallback(
     () => setSkip((prevState) => prevState + limit),
     [limit]
+  )
+
+  const handleResponse = useCallback(
+    (data: Response[]) => setData((prevState) => [...prevState, ...data]),
+    []
   )
 
   const resetData = useCallback(() => {
@@ -39,20 +45,22 @@ const useLoadMore = <Response, Params>({
   const { response, loading, fetchData } = useAxios<Response[], Params>({
     service,
     defaultResponse: defaultResponses.array,
-    fetchOnMount: false
+    fetchOnMount: false,
+    onResponse: handleResponse
   })
 
   useEffect(() => {
-    void fetchData({ ...params, limit, skip } as Params)
-  }, [fetchData, limit, skip, params])
-
-  useEffect(() => {
-    response.length && setData((prevState) => [...prevState, ...response])
-  }, [response])
+    if (previousLimit === limit) {
+      void fetchData({ ...params, limit, skip } as Params)
+    } else {
+      resetData()
+      setPreviousLimit(limit)
+    }
+  }, [fetchData, limit, previousLimit, resetData, skip, params])
 
   const isExpandable = useMemo(
-    () => limit <= response.length,
-    [limit, response]
+    () => data.length > 0 && limit <= response.length,
+    [limit, data, response]
   )
 
   return {
