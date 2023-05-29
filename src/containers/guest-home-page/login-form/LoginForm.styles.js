@@ -1,6 +1,7 @@
 export const styles = {
   form: {
-    padding: { sm: '50px 80px', md: '0' }
+    display: 'flex',
+    flexDirection: 'column'
   },
   input: {
     maxWidth: '343px'
@@ -11,11 +12,16 @@ export const styles = {
   },
   forgotPass: {
     cursor: 'pointer',
+    textDecoration: 'none',
+    color: 'primary.900',
     '&:hover': {
       textDecoration: 'underline'
     },
+    '&:focus': {
+      outline: '2px solid',
+      borderRadius: '2px'
+    },
     mb: '20px',
-    display: 'flex',
-    justifyContent: 'flex-end'
+    alignSelf: 'end'
   }
 }

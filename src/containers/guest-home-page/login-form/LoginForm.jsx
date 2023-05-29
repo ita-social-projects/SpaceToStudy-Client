@@ -3,8 +3,8 @@ import useInputVisibility from '~/hooks/use-input-visibility'
 import { useSelector } from 'react-redux'
 
 import Box from '@mui/material/Box'
+import ButtonBase from '@mui/material/ButtonBase'
 import Typography from '@mui/material/Typography'
-
 import { useModalContext } from '~/context/modal-context'
 import ForgotPassword from '~/containers/guest-home-page/forgot-password/ForgotPassword'
 import AppTextField from '~/components/app-text-field/AppTextField'
@@ -32,7 +32,7 @@ const LoginForm = ({
   }
 
   return (
-    <Box component='form' onSubmit={handleSubmit}>
+    <Box component='form' onSubmit={handleSubmit} sx={styles.form}>
       <AppTextField
         autoFocus
         data-testid={'email'}
@@ -61,6 +61,7 @@ const LoginForm = ({
       />
 
       <Typography
+        component={ButtonBase}
         onClick={openForgotPassword}
         sx={styles.forgotPass}
         variant='subtitle2'
