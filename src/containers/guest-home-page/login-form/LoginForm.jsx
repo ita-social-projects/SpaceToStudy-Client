@@ -21,6 +21,7 @@ const LoginForm = ({
 }) => {
   const { inputVisibility: passwordVisibility, showInputText: showPassword } =
     useInputVisibility(errors.password)
+
   const { authLoading } = useSelector((state) => state.appMain)
 
   const { openModal } = useModalContext()
@@ -70,11 +71,10 @@ const LoginForm = ({
       </Typography>
 
       <AppButton
+        disabled={!data.email || !data.password}
         loading={authLoading}
-        size='large'
         sx={styles.loginButton}
         type='submit'
-        variant='contained'
       >
         {t('common.labels.login')}
       </AppButton>
