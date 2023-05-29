@@ -45,6 +45,7 @@ const PopupDialog: FC<PopupDialogProps> = ({
       data-testid='popup'
       fullScreen={isMobile}
       maxWidth='xl'
+      onClick={(e) => e.stopPropagation()}
       onClose={handleClose}
       open
     >
