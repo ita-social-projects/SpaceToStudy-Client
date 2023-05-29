@@ -27,8 +27,7 @@ export const styles = {
       margin: '0 auto 32px'
     },
     title: {
-      typography: { md: 'h4', xs: 'h5' },
-      letterSpacing: '0',
+      typography: 'h5',
       marginBottom: '16px'
     },
     description: {
