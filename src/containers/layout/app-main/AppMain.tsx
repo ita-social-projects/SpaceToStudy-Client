@@ -29,7 +29,7 @@ const AppMain = () => {
       <Box ref={mainWithFooter} sx={styles.content}>
         <AppBreadCrumbs />
         <ScrollToTop />
-        <Outlet />
+        <Outlet context={{ pageRef: mainWithFooter }} />
         <ScrollToTopButton element={mainWithFooter} />
         <Footer />
       </Box>

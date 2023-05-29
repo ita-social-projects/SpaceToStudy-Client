@@ -1,6 +1,7 @@
-import { useCallback } from 'react'
+import { useCallback, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, useOutletContext } from 'react-router-dom'
+
 import Container from '@mui/material/Container'
 
 import { OfferService } from '~/services/offer-service'
@@ -27,8 +28,9 @@ import {
   mockedFAQItems
 } from '~/pages/offer-details/constants'
 import { styles } from '~/pages/offer-details/OfferDetails.styles'
-import { Offer, VariantEnum } from '~/types'
-
+import { Offer, VariantEnum, OutletContext } from '~/types'
+import ScrollVisibilityWrapper from '~/components/scroll-visibility-wrapper/ScrollVisibilityWrapper'
+import OfferBanner from '~/components/offer-banner/OfferBanner'
 import {
   responseMock,
   loadingMock
@@ -42,6 +44,8 @@ const OfferDetails = () => {
   const navigate = useNavigate()
   const { userRole } = useAppSelector((state) => state.appMain)
 
+  const offerDetailsPage = useRef(null)
+  const { pageRef } = useOutletContext<OutletContext>()
   const { items } = responseMock
 
   const getOffer = useCallback(() => OfferService.getOffer(id), [id])
@@ -82,7 +86,12 @@ const OfferDetails = () => {
   ]
 
   return (
-    <Container sx={styles.container}>
+    <Container ref={offerDetailsPage} sx={styles.container}>
+      {!isMobile && (
+        <ScrollVisibilityWrapper heightToShow={610} pageRef={pageRef}>
+          <OfferBanner buttonActions={buttonActions} offer={response} />
+        </ScrollVisibilityWrapper>
+      )}
       <TitleBlock
         img={topBlockIcon}
         translationKey='offerDetailsPage.topBlock'
