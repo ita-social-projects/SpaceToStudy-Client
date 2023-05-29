@@ -3,7 +3,8 @@ export const styles = {
     display: 'flex',
     alignItems: 'center',
     color: 'primary.400',
-    gap: '8px'
+    gap: '8px',
+    my: '4px'
   },
   languageIcon: {
     typography: 'midTitle'

@@ -10,7 +10,6 @@ const ellipsisTextStyle = (linesCount: number) => ({
 export const styles = {
   container: {
     position: 'relative',
-    minHeight: '500px',
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
@@ -27,12 +26,9 @@ export const styles = {
       width: '80px'
     },
     titleWithDescription: {
-      wrapper: {
-        mb: '5px'
-      },
       title: {
         textAlign: 'center',
-        my: '5px',
+        my: '10px',
         color: 'primary.500',
         fontWeight: 500
       },
