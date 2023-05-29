@@ -12,6 +12,7 @@ const mockData = {
   authorAvgRating: 4.3,
   authorFirstName: 'James',
   authorLastName: 'Wilson',
+  title: 'Hello',
   description:
     'Hello. There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which.',
   languages: ['Ukrainian', 'English'],
@@ -66,17 +67,15 @@ describe('OfferDetails on desktop', () => {
   it('should display the offer details correctly', async () => {
     const price = await screen.findByText(mockData.price)
     const authorAvgRating = await screen.findByText(mockData.authorAvgRating)
-    const professionalSummary = await screen.findByText(
-      mockData.author.professionalSummary
-    )
+    const title = await screen.findByText(mockData.title)
     const name = await screen.findByText(
-      `${mockData.authorFirstName} ${mockData.authorLastName}`
+      `${mockData.authorFirstName} ${mockData.authorLastName[0]}.`
     )
     const subject = await screen.findByText(mockData.subject.name.toUpperCase())
 
     expect(price).toBeInTheDocument()
     expect(authorAvgRating).toBeInTheDocument()
-    expect(professionalSummary).toBeInTheDocument()
+    expect(title).toBeInTheDocument()
     expect(name).toBeInTheDocument()
     expect(subject).toBeInTheDocument()
   })
@@ -94,15 +93,13 @@ describe('OfferDetails on mobile', () => {
 
   it('should display the offer details correctly', async () => {
     const authorAvgRating = await screen.findByText(mockData.authorAvgRating)
-    const professionalSummary = await screen.findByText(
-      mockData.author.professionalSummary
-    )
+    const title = await screen.findByText(mockData.title)
     const name = await screen.findByText(
       `${mockData.authorFirstName} ${mockData.authorLastName}`
     )
 
     expect(authorAvgRating).toBeInTheDocument()
-    expect(professionalSummary).toBeInTheDocument()
+    expect(title).toBeInTheDocument()
     expect(name).toBeInTheDocument()
   })
 })
