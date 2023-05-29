@@ -33,11 +33,15 @@ export const styles = {
       title: {
         textAlign: 'center',
         my: '5px',
-        typography: 'h6'
+        color: 'primary.500',
+        fontWeight: 500
       },
       description: {
         ...ellipsisTextStyle(2),
-        textAlign: 'left'
+        textAlign: 'left',
+        typography: 'midTitle',
+        fontWeight: 600,
+        color: 'primary.700'
       }
     }
   },

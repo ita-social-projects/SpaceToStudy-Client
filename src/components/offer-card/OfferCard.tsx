@@ -24,6 +24,7 @@ const OfferCard: FC<OfferCardProps> = ({
   const {
     _id,
     authorAvgRating,
+    title,
     description,
     languages,
     price,
@@ -34,18 +35,21 @@ const OfferCard: FC<OfferCardProps> = ({
     proficiencyLevel
   } = offer
 
-  const fullName = `${authorFirstName} ${authorLastName}`
+  const fullName = `${authorFirstName} ${authorLastName[0]}.`
 
   return (
     <Box sx={styles.wrapper}>
-      <OfferAvatarAndRating imgSrc={author.photo} rating={authorAvgRating} />
+      <OfferAvatarAndRating
+        imgSrc={author.photo}
+        name={fullName}
+        rating={authorAvgRating}
+      />
       <OfferDetails
         description={!isHideField && description}
         languages={languages}
         level={proficiencyLevel}
-        name={fullName}
-        professionalSummary={author.professionalSummary}
         subject={subject.name}
+        title={title}
       />
       <OfferActions
         buttonActions={buttonActions}

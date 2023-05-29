@@ -12,11 +12,14 @@ export const styles = {
     ...ellipsisTextStyle(2),
     mb: '10px'
   },
+  title: {
+    color: 'primary.700'
+  },
   chipsContainer: {
     display: 'flex',
     flexWrap: 'wrap',
     gap: '5px',
-    mb: '10px'
+    my: '10px'
   },
   subjectChip: {
     mr: '4px',

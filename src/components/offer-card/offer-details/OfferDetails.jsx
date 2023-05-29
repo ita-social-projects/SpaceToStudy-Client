@@ -8,14 +8,7 @@ import AppChip from '~/components/app-chip/AppChip'
 
 import { styles } from '~/components/offer-card/offer-details/OfferDetails.styles'
 
-const OfferDetails = ({
-  name,
-  professionalSummary,
-  subject,
-  level,
-  description,
-  languages
-}) => {
+const OfferDetails = ({ subject, level, title, description, languages }) => {
   const lastLevel = level.length > 1 ? level[level.length - 1] : level[0]
   const levelText =
     lastLevel === 'Beginner'
@@ -24,8 +17,9 @@ const OfferDetails = ({
 
   return (
     <Box sx={{ flex: 1 }}>
-      <Typography variant='h6'>{name}</Typography>
-      <Typography sx={styles.bio}>{professionalSummary}</Typography>
+      <Typography sx={styles.title} variant='h6'>
+        {title}
+      </Typography>
 
       <Box sx={styles.chipsContainer}>
         <AppChip labelSx={styles.subjectChipLabel} sx={styles.subjectChip}>
