@@ -10,11 +10,15 @@ vi.mock('react-router-dom', async () => {
   const actual = await vi.importActual('react-router-dom')
   return {
     ...actual,
+    useParams: () => ({
+      id: mockData.id
+    }),
     useOutletContext: () => ({
       data: mockData
     })
   }
 })
+
 const mockData = {
   id: '64480bb14ee3d89a58631730',
   authorAvgRating: 4.3,
@@ -46,16 +50,6 @@ const mockData = {
 const mockState = {
   appMain: { userRole: 'tutor' }
 }
-
-vi.mock('react-router-dom', async () => {
-  const actual = await vi.importActual('react-router-dom')
-  return {
-    ...actual,
-    useParams: () => ({
-      id: mockData.id
-    })
-  }
-})
 
 mockAxiosClient.onGet(`${URLs.offers.get}/${mockData.id}`).reply(200, mockData)
 mockAxiosClient
