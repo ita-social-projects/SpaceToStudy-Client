@@ -11,7 +11,7 @@ describe('calculatePhotoCut', () => {
       newSizes.width,
       newSizes.height
     )
-    const result = { cutInHeith: 1080, cutInWidth: 1080, newX: 420, newY: 0 }
+    const result = { cutInHeight: 1080, cutInWidth: 1080, newX: 420, newY: 0 }
     expect(calculatedSizes).toMatchObject(result)
   })
   it('shoud resize picture with height > width', () => {
@@ -23,7 +23,7 @@ describe('calculatePhotoCut', () => {
       newSizes.width,
       newSizes.height
     )
-    const result = { cutInHeith: 1080, cutInWidth: 1080, newX: 0, newY: 420 }
+    const result = { cutInHeight: 1080, cutInWidth: 1080, newX: 0, newY: 420 }
     expect(calculatedSizes).toMatchObject(result)
   })
 })
