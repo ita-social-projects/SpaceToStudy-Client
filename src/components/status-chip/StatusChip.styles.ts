@@ -22,6 +22,7 @@ export const styles = (status: StatusEnum) => ({
   },
   status: {
     typography: 'overline',
+    lineHeight: '14px',
     color: statusColors[status]
   }
 })

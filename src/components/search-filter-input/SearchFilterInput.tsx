@@ -1,21 +1,19 @@
 import { KeyboardEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import AppTextField from '~/components/app-text-field/AppTextField'
-import { TextFieldProps } from '@mui/material/TextField'
+import { InputBaseProps } from '@mui/material/InputBase'
 import SearchIcon from '@mui/icons-material/Search'
-import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
-import ClearIcon from '@mui/icons-material/Clear'
-import IconButton from '@mui/material/IconButton'
 
-import { SizeEnum, VariantEnum, VisibilityEnum } from '~/types'
+import AppButton from '~/components/app-button/AppButton'
+import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
 
+import { VariantEnum } from '~/types'
 import { styles } from '~/components/search-filter-input/SearchFilterInput.styles'
 
 interface SearchFilterInputProps {
   updateFilter: (value: string) => void
-  textFieldProps: TextFieldProps
+  textFieldProps: InputBaseProps
 }
 
 const SearchFilterInput = ({
@@ -42,42 +40,25 @@ const SearchFilterInput = ({
     event.key === 'Enter' && onSearch()
   }
 
-  const labelStyle = {
-    ...styles.inputLabel,
-    visibility: search ? VisibilityEnum.Hidden : VisibilityEnum.Visible
-  }
-
-  const clearIconVisibility = {
-    visibility: search ? VisibilityEnum.Visible : VisibilityEnum.Hidden
-  }
-
   return (
     <Box sx={styles.container}>
-      <SearchIcon sx={styles.searchIcon} />
-
-      <AppTextField
-        InputLabelProps={{ style: labelStyle, shrink: false }}
-        InputProps={{ disableUnderline: true }}
+      <InputWithIcon
         onChange={onChange}
+        onClear={onClear}
         onKeyPress={onEnterPress}
+        startIcon={<SearchIcon sx={styles.searchIcon} />}
         sx={styles.input}
         value={search}
-        variant={VariantEnum.Standard}
         {...textFieldProps}
       />
 
-      <IconButton onClick={onClear} sx={clearIconVisibility}>
-        <ClearIcon data-testid='clearIcon' fontSize={SizeEnum.Large} />
-      </IconButton>
-
-      <Button
+      <AppButton
         onClick={onSearch}
-        size={SizeEnum.Large}
         sx={styles.searchBtn}
         variant={VariantEnum.ContainedLight}
       >
         {t('common.search')}
-      </Button>
+      </AppButton>
     </Box>
   )
 }

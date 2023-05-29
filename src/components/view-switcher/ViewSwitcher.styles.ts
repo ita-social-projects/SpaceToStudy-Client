@@ -7,6 +7,7 @@ const toggleButtonStyle = {
   }
 }
 export const styles = {
+  root: { minWidth: '110px' },
   icon: {
     fontSize: '24px',
     color: 'primary.900'

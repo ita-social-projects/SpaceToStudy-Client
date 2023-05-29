@@ -1,12 +1,10 @@
 export const styles = {
   root: {
+    flex: 1,
     p: '16px 20px',
-    maxWidth: { xs: '290px', sm: '320px' },
-    maxHeight: { xs: '290px', sm: '320px' },
-    height: '100%',
-    boxShadow: 'none',
-    border: '1px solid',
-    borderColor: 'primary.100',
+    boxSizing: 'border-box',
+    minWidth: '300px',
+    minHeight: { xs: '280px', sm: '340px' },
     display: 'flex',
     flexDirection: 'column',
     gap: '14px'

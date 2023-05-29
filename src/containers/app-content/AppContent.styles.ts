@@ -4,7 +4,12 @@ const layout = {
 }
 
 export const styles = {
-  root: { height: '100vh', backgroundColor: 'backgroundColor', ...layout },
+  root: {
+    height: '100vh',
+    color: 'primary.900',
+    backgroundColor: 'backgroundColor',
+    ...layout
+  },
   content: {
     overflowY: 'auto',
     flex: 1,
