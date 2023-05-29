@@ -43,6 +43,7 @@ const PopupDialog: FC<PopupDialogProps> = ({
     <Dialog
       PaperProps={paperProps}
       data-testid='popup'
+      disableRestoreFocus
       fullScreen={isMobile}
       maxWidth='xl'
       onClose={handleClose}
