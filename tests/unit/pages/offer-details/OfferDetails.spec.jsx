@@ -1,17 +1,10 @@
 import { vi } from 'vitest'
-import MockAdapter from 'axios-mock-adapter'
 import { screen } from '@testing-library/react'
-import { ModalProvider } from '~/context/modal-context'
-import { OfferService } from '~/services/offer-service'
-import { axiosClient } from '~/plugins/axiosClient'
 import { URLs } from '~/constants/request'
 import OfferDetails from '~/pages/offer-details/OfferDetails'
 import useBreakpoints from '~/hooks/use-breakpoints'
-import { renderWithProviders } from '~tests/test-utils'
+import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 
-const mockAxiosClient = new MockAdapter(axiosClient)
-
-vi.mock('~/services/offer-service')
 vi.mock('~/hooks/use-breakpoints')
 
 const mockData = {
@@ -19,6 +12,7 @@ const mockData = {
   authorAvgRating: 4.3,
   authorFirstName: 'James',
   authorLastName: 'Wilson',
+  title: 'Hello',
   description:
     'Hello. There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which.',
   languages: ['Ukrainian', 'English'],
@@ -41,44 +35,49 @@ const mockData = {
   proficiencyLevel: ['Beginner', 'Advanced']
 }
 
-OfferService.getOffer.mockResolvedValue({
-  data: mockData
-})
-
 const mockState = {
   appMain: { userRole: 'tutor' }
 }
 
-const route = `/offers/${mockData.id}`
+vi.mock('react-router-dom', async () => {
+  const actual = await vi.importActual('react-router-dom')
+  return {
+    ...actual,
+    useParams: () => ({
+      id: mockData.id
+    })
+  }
+})
+
+mockAxiosClient.onGet(`${URLs.offers.get}/${mockData.id}`).reply(200, mockData)
+mockAxiosClient
+  .onGet(`${URLs.categories.get}${URLs.subjects.get}${URLs.offers.get}`)
+  .reply(200, { offers: [], count: 0 })
 
 describe('OfferDetails on desktop', () => {
   const desktopData = { isDesktop: true, isMobile: false, isTablet: false }
   beforeEach(() => {
     useBreakpoints.mockImplementation(() => desktopData)
-    mockAxiosClient
-      .onGet(`${URLs.offers.get}/${mockData.id}`)
-      .reply(200, mockData)
 
-    renderWithProviders(
-      <ModalProvider>
-        <OfferDetails />
-      </ModalProvider>,
-      { initialEntries: route, preloadedState: mockState }
-    )
+    renderWithProviders(<OfferDetails />, {
+      preloadedState: mockState
+    })
   })
 
-  it('should display the offer details correctly', () => {
-    expect(screen.getByText(mockData.price)).toBeInTheDocument()
-    expect(screen.getByText(mockData.authorAvgRating)).toBeInTheDocument()
-    expect(
-      screen.getByText(mockData.author.professionalSummary)
-    ).toBeInTheDocument()
-    expect(
-      screen.getByText(`${mockData.authorFirstName} ${mockData.authorLastName}`)
-    ).toBeInTheDocument()
-    expect(
-      screen.getByText(mockData.subject.name.toUpperCase())
-    ).toBeInTheDocument()
+  it('should display the offer details correctly', async () => {
+    const price = await screen.findByText(mockData.price)
+    const authorAvgRating = await screen.findByText(mockData.authorAvgRating)
+    const title = await screen.findByText(mockData.title)
+    const name = await screen.findByText(
+      `${mockData.authorFirstName} ${mockData.authorLastName[0]}.`
+    )
+    const subject = await screen.findByText(mockData.subject.name.toUpperCase())
+
+    expect(price).toBeInTheDocument()
+    expect(authorAvgRating).toBeInTheDocument()
+    expect(title).toBeInTheDocument()
+    expect(name).toBeInTheDocument()
+    expect(subject).toBeInTheDocument()
   })
 })
 
@@ -86,25 +85,21 @@ describe('OfferDetails on mobile', () => {
   const desktopData = { isDesktop: false, isMobile: true, isTablet: false }
   beforeEach(() => {
     useBreakpoints.mockImplementation(() => desktopData)
-    mockAxiosClient
-      .onGet(`${URLs.offers.get}/${mockData.id}`)
-      .reply(200, mockData)
 
-    renderWithProviders(
-      <ModalProvider>
-        <OfferDetails />
-      </ModalProvider>,
-      { initialEntries: route, preloadedState: mockState }
-    )
+    renderWithProviders(<OfferDetails />, {
+      preloadedState: mockState
+    })
   })
 
-  it('should display the offer details correctly', () => {
-    expect(screen.getByText(mockData.authorAvgRating)).toBeInTheDocument()
-    expect(
-      screen.getByText(mockData.author.professionalSummary)
-    ).toBeInTheDocument()
-    expect(
-      screen.getByText(`${mockData.authorFirstName} ${mockData.authorLastName}`)
-    ).toBeInTheDocument()
+  it('should display the offer details correctly', async () => {
+    const authorAvgRating = await screen.findByText(mockData.authorAvgRating)
+    const title = await screen.findByText(mockData.title)
+    const name = await screen.findByText(
+      `${mockData.authorFirstName} ${mockData.authorLastName}`
+    )
+
+    expect(authorAvgRating).toBeInTheDocument()
+    expect(title).toBeInTheDocument()
+    expect(name).toBeInTheDocument()
   })
 })

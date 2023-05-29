@@ -1,4 +1,4 @@
-import { ElementType, FC } from 'react'
+import { ElementType, FC, ReactElement } from 'react'
 
 import Box from '@mui/material/Box'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
@@ -10,7 +10,7 @@ interface ImgTitleDescriptionProps {
   imgComponent?: ElementType
   img?: string
   title: string
-  description?: string
+  description?: string | ReactElement
   style?: {
     [key: string]: SxProps
   }

@@ -19,14 +19,12 @@ import {
 import { signup, snackbarVariants } from '~/constants'
 import GoogleLogin from '~/containers/guest-home-page/google-login/GoogleLogin'
 import SignupForm from '~/containers/guest-home-page/signup-form/SignupForm'
-import ImgTitleDescription from '~/components/img-title-description/ImgTitleDescription'
+import NotificationModal from '~/containers/guest-home-page/notification-modal/NotificationModal'
 import { signupUser } from '~/redux/reducer'
 
 import student from '~/assets/img/signup-dialog/student.svg'
 import tutor from '~/assets/img/signup-dialog/tutor.svg'
 import info from '~/assets/img/guest-home-page/info.svg'
-
-import Button from '@mui/material/Button'
 
 import { styles } from '~/containers/guest-home-page/signup-dialog/SignupDialog.styles'
 
@@ -47,9 +45,11 @@ const SignupDialog = ({ type }) => {
           openModal(
             {
               component: (
-                <ImgTitleDescription
+                <NotificationModal
+                  buttonTitle={t('common.confirmButton')}
                   description={description}
                   img={info}
+                  onClose={closeModal}
                   title={t('signup.confirmEmailTitle')}
                 />
               )
@@ -74,21 +74,14 @@ const SignupDialog = ({ type }) => {
     })
 
   const description = (
-    <>
+    <Typography component='span'>
       {t('signup.confirmEmailMessage')}
       <Typography component='span' variant='subtitle2'>
         {data.email}
       </Typography>
       {t('signup.confirmEmailDesc')}
-
-      <Box mt={2}>
-        <Button onClick={closeModal} size='large' variant='contained'>
-          {t('common.confirmButton')}
-        </Button>
-      </Box>
-    </>
+    </Typography>
   )
-
   useEffect(() => {
     setNeedConfirmation(isDirty)
   }, [isDirty, setNeedConfirmation])

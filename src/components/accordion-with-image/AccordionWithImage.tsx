@@ -18,10 +18,10 @@ const AccordionWithImage: FC<AccordionWithImageProps> = ({ items }) => {
       <Box component='img' src={items[activeItemId].image} sx={styles.image} />
       <Accordions
         activeIndex={activeItemId}
+        descriptionVariant={VariantEnum.Body2}
         items={items}
         onChange={(id) => setActiveItemId(id)}
         titleVariant={VariantEnum.H6}
-        descriptionVariant={VariantEnum.Body2}
       />
     </Box>
   )

@@ -1,7 +1,6 @@
 import { vi } from 'vitest'
 import { fireEvent, screen } from '@testing-library/react'
 
-import { ModalProvider } from '~/context/modal-context'
 import { StepProvider } from '~/context/step-context'
 import StepWrapper from '~/components/step-wrapper/StepWrapper'
 import TempComponent from './TempComponent'
@@ -25,11 +24,9 @@ const childrenArrMock = [
 describe('StepWrapper test', () => {
   beforeEach(() => {
     renderWithProviders(
-      <ModalProvider>
-        <StepProvider initialValues={initialValues} stepLabels={stepsMock}>
-          <StepWrapper steps={stepsMock}>{childrenArrMock}</StepWrapper>
-        </StepProvider>
-      </ModalProvider>
+      <StepProvider initialValues={initialValues} stepLabels={stepsMock}>
+        <StepWrapper steps={stepsMock}>{childrenArrMock}</StepWrapper>
+      </StepProvider>
     )
   })
 

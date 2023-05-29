@@ -1,5 +1,4 @@
 import { renderWithProviders } from '~tests/test-utils'
-import { ModalProvider } from '~/context/modal-context'
 import GuestHomePage from '~/pages/guest-home-page/GuestHome'
 import { vi } from 'vitest'
 
@@ -28,23 +27,15 @@ describe('GuestHomePage test', () => {
   it('should render without opening login modal', () => {
     const defaultRoute = '/'
     mockGet.mockReturnValue(null)
-    renderWithProviders(
-      <ModalProvider>
-        <GuestHomePage />
-      </ModalProvider>,
-      { initialEntries: defaultRoute }
-    )
+    renderWithProviders(<GuestHomePage />, { initialEntries: defaultRoute })
     expect(mockSetModal).not.toBeCalled()
   })
   it('shoud open login modal when login query in url', () => {
     const routeWithSeaechParam = '/?login'
     mockGet.mockReturnValue(true)
-    renderWithProviders(
-      <ModalProvider>
-        <GuestHomePage />
-      </ModalProvider>,
-      { initialEntries: routeWithSeaechParam }
-    )
+    renderWithProviders(<GuestHomePage />, {
+      initialEntries: routeWithSeaechParam
+    })
     expect(mockSetModal).toBeCalled()
   })
 })

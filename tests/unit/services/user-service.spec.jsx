@@ -1,9 +1,6 @@
-import MockAdapter from 'axios-mock-adapter'
 import { URLs } from '~/constants/request'
-import { axiosClient } from '~/plugins/axiosClient'
+import { mockAxiosClient } from '~tests/test-utils'
 import { userService } from '~/services/user-service'
-
-const mockAxiosClient = new MockAdapter(axiosClient)
 
 const userId = '6255bc080a75adf9223df444'
 const userRole = 'admin'
@@ -61,7 +58,9 @@ describe('userService tests', () => {
   })
 
   it('should return a user by userId and userRole', async () => {
-    mockAxiosClient.onGet(`${URLs.users.get}/${userId}?role=${userRole}`).reply(200, userDataMock)
+    mockAxiosClient
+      .onGet(`${URLs.users.get}/${userId}?role=${userRole}`)
+      .reply(200, userDataMock)
 
     const result = await userService.getUserById(userId, userRole)
 

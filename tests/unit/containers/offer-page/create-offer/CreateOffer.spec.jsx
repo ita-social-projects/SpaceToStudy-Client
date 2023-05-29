@@ -6,7 +6,6 @@ import { renderWithProviders } from '~tests/test-utils'
 import { ConfirmationDialogProvider } from '~/context/confirm-context'
 import { categoryService } from '~/services/category-service'
 
-vi.mock('axios')
 vi.mock('~/services/category-service')
 
 const mockSubjectsNames = [

@@ -20,7 +20,7 @@ describe('Accordion component without expandMoreIcon test', () => {
       }
     ],
     onChange: onChangeMock,
-    activeIndex: '0',
+    activeIndex: '0'
   }
   beforeEach(() => {
     render(<Accordions {...props} />)
@@ -67,8 +67,7 @@ describe('Accordions test with icon', () => {
     ],
     icon: <ArrowForwardIosSharpIcon data-testid={iconId} />,
     onChange: onChangeMock,
-    activeIndex: 0,
-    isMultiple: true
+    activeIndex: 0
   }
   beforeEach(() => {
     render(<Accordions {...props} />)

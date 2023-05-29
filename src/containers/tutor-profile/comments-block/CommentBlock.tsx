@@ -40,10 +40,10 @@ const ComentsBlock = ({
   const showMoreButton = isExpandable && (
     <AppButton
       endIcon={!loading && <KeyboardArrowDownSharpIcon />}
+      fullWidth={isMobile}
       loading={loading}
       onClick={loadMore}
       size={SizeEnum.Large}
-      fullWidth={isMobile}
       sx={styles.button}
       variant={VariantEnum.Contained}
     >

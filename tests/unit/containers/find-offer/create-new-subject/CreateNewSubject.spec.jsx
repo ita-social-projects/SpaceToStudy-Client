@@ -5,7 +5,6 @@ import CreateSubjectModal from '~/containers/find-offer/create-new-subject/Creat
 import { categoryService } from '~/services/category-service'
 import { beforeEach } from 'vitest'
 
-vi.mock('axios')
 vi.mock('~/services/category-service')
 
 const mockSubjectsNames = [

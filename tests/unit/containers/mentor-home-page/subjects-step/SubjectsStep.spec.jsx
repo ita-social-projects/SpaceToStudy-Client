@@ -1,13 +1,11 @@
 import { screen, fireEvent } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 import SubjectsStep from '~/containers/tutor-home-page/subjects-step/SubjectsStep'
-import { ModalProvider } from '~/context/modal-context'
 import { StepProvider } from '~/context/step-context'
 
 import { categoryService } from '~/services/category-service'
 import { subjectService } from '~/services/subject-service'
 
-vi.mock('axios')
 vi.mock('~/services/category-service')
 vi.mock('~/services/subject-service')
 
@@ -46,14 +44,9 @@ const btnsBox = (
 describe('SubjectsStep test with some data', () => {
   beforeEach(() => {
     renderWithProviders(
-      <ModalProvider>
-        <StepProvider
-          initialValues={initialValues}
-          stepLabels={tutorStepLabels}
-        >
-          <SubjectsStep btnsBox={btnsBox} stepLabel={'subjects'} />
-        </StepProvider>
-      </ModalProvider>
+      <StepProvider initialValues={initialValues} stepLabels={tutorStepLabels}>
+        <SubjectsStep btnsBox={btnsBox} stepLabel={'subjects'} />
+      </StepProvider>
     )
   })
 

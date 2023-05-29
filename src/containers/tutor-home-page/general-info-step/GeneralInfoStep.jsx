@@ -74,10 +74,27 @@ const GeneralInfoStep = ({
     []
   )
 
-  const { response: user, loading: userLoading } = useAxios({
+  const updateUserName = useCallback(
+    (user) => {
+      handleNonInputValueChange('firstName', user.firstName)
+      handleNonInputValueChange('lastName', user.lastName)
+
+      setIsUserFetched(true)
+    },
+    [handleNonInputValueChange, setIsUserFetched]
+  )
+
+  const { loading: userLoading, fetchData: fetchUser } = useAxios({
     service: getUserById,
-    defaultResponse: { firstName: '', lastName: '' }
+    defaultResponse: { firstName: '', lastName: '' },
+    fetchOnMount: false,
+    onResponse: updateUserName
   })
+
+  useEffect(() => {
+    !isUserFetched && fetchUser()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const {
     loading: loadingCountries,
@@ -99,23 +116,6 @@ const GeneralInfoStep = ({
     clearResponse: true,
     defaultResponse: defaultResponses.array
   })
-
-  useEffect(() => {
-    if (!userLoading && !isUserFetched) {
-      const { firstName, lastName } = user
-      handleNonInputValueChange('firstName', firstName)
-      handleNonInputValueChange('lastName', lastName)
-
-      setIsUserFetched(true)
-    }
-  }, [
-    isUserFetched,
-    setIsUserFetched,
-    user,
-    userLoading,
-    handleNonInputValueChange,
-    data
-  ])
 
   useEffect(() => {
     handleStepData(stepLabel, data, errors)

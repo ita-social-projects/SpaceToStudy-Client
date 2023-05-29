@@ -1,27 +1,20 @@
-import { fireEvent, render, screen } from '@testing-library/react'
-import { MemoryRouter } from 'react-router-dom'
-
-import { ModalProvider } from '~/context/modal-context'
-import { ConfirmationDialogProvider } from '~/context/confirm-context'
+import { fireEvent, screen } from '@testing-library/react'
 import HowItWorks from '~/containers/guest-home-page/how-it-works/HowItWorks'
+import { renderWithProviders } from '~tests/test-utils'
 import { vi } from 'vitest'
 
 const mockDispatch = vi.fn()
 
-vi.mock('react-redux', () => ({
-  useDispatch: () => mockDispatch
-}))
+vi.mock('react-redux', async () => {
+  const actual = await vi.importActual('react-redux')
+  return {
+    ...actual,
+    useDispatch: () => mockDispatch
+  }
+})
 
 describe('HowItWorks container', () => {
-  render(
-    <MemoryRouter>
-      <ConfirmationDialogProvider>
-        <ModalProvider>
-          <HowItWorks />
-        </ModalProvider>
-      </ConfirmationDialogProvider>
-    </MemoryRouter>
-  )
+  renderWithProviders(<HowItWorks />)
 
   it('should change info by clicking on switch', () => {
     const checkbox = screen.getByRole('checkbox')

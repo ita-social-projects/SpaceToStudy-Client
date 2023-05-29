@@ -1,8 +1,6 @@
 import { screen, fireEvent, waitFor } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 import LoginForm from '~/containers/guest-home-page/login-form/LoginForm'
-import { SnackBarProvider } from '~/context/snackbar-context'
-import { ModalProvider } from '~/context/modal-context'
 import { vi } from 'vitest'
 
 vi.mock('~/hooks/use-confirm', () => {
@@ -21,17 +19,13 @@ describe('Login form test', () => {
   const preloadedState = { appMain: { authLoading: false } }
   beforeEach(() => {
     renderWithProviders(
-      <SnackBarProvider>
-        <ModalProvider>
-          <LoginForm
-            data={ data }
-            errors={ errors }
-            handleBlur={ handleBlur }
-            handleChange={ handleChange }
-            handleSubmit={ handleSubmit }
-          />
-        </ModalProvider>
-      </SnackBarProvider>,
+      <LoginForm
+        data={data}
+        errors={errors}
+        handleBlur={handleBlur}
+        handleChange={handleChange}
+        handleSubmit={handleSubmit}
+      />,
       { preloadedState }
     )
   })
@@ -94,15 +88,13 @@ describe('Login form test with loading', () => {
   const preloadedState = { appMain: { authLoading: true } }
   it('should render loader', () => {
     renderWithProviders(
-      <ModalProvider>
-        <LoginForm
-          data={ data }
-          errors={ errors }
-          handleBlur={ handleBlur }
-          handleChange={ handleChange }
-          handleSubmit={ handleSubmit }
-        />
-      </ModalProvider>,
+      <LoginForm
+        data={data}
+        errors={errors}
+        handleBlur={handleBlur}
+        handleChange={handleChange}
+        handleSubmit={handleSubmit}
+      />,
       { preloadedState }
     )
 

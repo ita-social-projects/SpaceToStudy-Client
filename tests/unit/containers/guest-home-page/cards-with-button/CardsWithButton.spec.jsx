@@ -1,22 +1,21 @@
-import { fireEvent, render, screen } from '@testing-library/react'
-import { MemoryRouter } from 'react-router-dom'
-
-import { ModalProvider } from '~/context/modal-context'
-import { ConfirmationDialogProvider } from '~/context/confirm-context'
+import { fireEvent, screen } from '@testing-library/react'
 import CardsWithButton from '~/containers/guest-home-page/cards-with-button/CardsWithButton'
-
+import { renderWithProviders } from '~tests/test-utils'
 import howItWorksTutorFirst from '~/assets/img/guest-home-page/howItWorksTutorFirst.svg'
 import howItWorksTutorSecond from '~/assets/img/guest-home-page/howItWorksTutorSecond.svg'
-import { SnackBarProvider } from '~/context/snackbar-context'
 import { vi } from 'vitest'
 
 const mockDispatch = vi.fn()
 const mockSelector = vi.fn()
 
-vi.mock('react-redux', () => ({
-  useDispatch: () => mockDispatch,
-  useSelector: () => mockSelector
-}))
+vi.mock('react-redux', async () => {
+  const actual = await vi.importActual('react-redux')
+  return {
+    ...actual,
+    useDispatch: () => mockDispatch,
+    useSelector: () => mockSelector
+  }
+})
 
 vi.mock('~/containers/guest-home-page/google-button/GoogleButton', () => ({
   __esModule: true,
@@ -35,20 +34,17 @@ describe('CardsWithButton container', () => {
     {
       image: howItWorksTutorSecond,
       title: 'guestHomePage.howItWorks.tutor.createATutorAccount.title',
-      description: 'guestHomePage.howItWorks.tutor.createATutorAccount.description'
+      description:
+        'guestHomePage.howItWorks.tutor.createATutorAccount.description'
     }
   ]
   beforeEach(() => {
-    render(
-      <MemoryRouter>
-        <SnackBarProvider>
-          <ConfirmationDialogProvider>
-            <ModalProvider>
-              <CardsWithButton array={ items } btnText={ 'Become a tutor' } role={ 'tutor' } />
-            </ModalProvider>
-          </ConfirmationDialogProvider>
-        </SnackBarProvider>
-      </MemoryRouter>
+    renderWithProviders(
+      <CardsWithButton
+        array={items}
+        btnText={'Become a tutor'}
+        role={'tutor'}
+      />
     )
   })
 

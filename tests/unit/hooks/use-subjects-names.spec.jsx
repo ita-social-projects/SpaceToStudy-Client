@@ -3,7 +3,6 @@ import { renderHook } from '@testing-library/react-hooks'
 import useSubjects from '~/hooks/use-subjects-names'
 import { subjectService } from '~/services/subject-service'
 
-vi.mock('axios')
 vi.mock('~/services/subject-service')
 
 const mockSubjectsNames = [

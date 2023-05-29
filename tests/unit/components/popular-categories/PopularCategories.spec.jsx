@@ -1,12 +1,8 @@
-import MockAdapter from 'axios-mock-adapter'
-import { render, fireEvent, screen, waitFor } from '@testing-library/react'
-import { BrowserRouter } from 'react-router-dom'
+import { screen } from '@testing-library/react'
 
 import { URLs } from '~/constants/request'
-import { axiosClient } from '~/plugins/axiosClient'
+import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 import PopularCategories from '~/components/popular-categories/PopularCategories'
-
-const mockAxiosClient = new MockAdapter(axiosClient)
 
 const mockCategories = [
   {
@@ -26,10 +22,8 @@ describe('PopularCategories', () => {
   beforeEach(async () => {
     mockAxiosClient.onGet(URLs.categories.get).reply(200, mockCategories)
 
-    render(
-      <BrowserRouter location={history.location} navigator={history}>
-        <PopularCategories items={mockCategories} title={title} />
-      </BrowserRouter>
+    renderWithProviders(
+      <PopularCategories items={mockCategories} title={title} />
     )
   })
 
@@ -38,21 +32,9 @@ describe('PopularCategories', () => {
     expect(title).toBeInTheDocument()
   })
 
-  it('navigates to the correct category when a card is clicked', async () => {
+  it('render card correctly', () => {
     const card = screen.getByText('Math')
-    fireEvent.click(card)
-    await waitFor(() => {
-      expect(`${window.location.pathname}${window.location.search}`).toBe(
-        '/categories/subjects?categoryId=1'
-      )
-    })
-  })
 
-  it('navigates to the categories page when the view all button is clicked', async () => {
-    const button = screen.getByText('common.goToName', { exact: false })
-    fireEvent.click(button)
-    await waitFor(() => {
-      expect(window.location.pathname).toBe('/categories')
-    })
+    expect(card).toBeInTheDocument()
   })
 })

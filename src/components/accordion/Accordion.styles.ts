@@ -6,11 +6,10 @@ import {
 import { AccordionSx } from '~/types'
 
 const noIconTitleStyles = {
-  fontSize: { typography: { xs:'body2', md: 'h6', sm: 'body2' } },
+  fontSize: { typography: { xs: 'body2', md: 'h6', sm: 'body2' } },
   lineHeight: { md: '28px', sm: '18px' },
   color: 'primary.900',
-  typography:{ xs:'subtitle2', md:'h6'}
-  
+  typography: { xs: 'subtitle2', md: 'h6' }
 }
 
 const withIconTitleStyles = { color: 'primary.900' }
@@ -32,7 +31,8 @@ export const styles: AccordionSx = {
         display: 'none'
       }
     },
-    titleActive: noIconTitleStyles, titleInactive: noIconTitleStyles,
+    titleActive: noIconTitleStyles,
+    titleInactive: noIconTitleStyles,
     description: {
       fontSize: { md: '14px', sm: '8px' },
       lineHeight: { md: '24px', sm: '12px' },
@@ -44,7 +44,7 @@ export const styles: AccordionSx = {
       '& h6': {
         color: 'basic.white'
       }
-    },
+    }
   },
   withIcon: {
     root: { maxWidth: '928px', mt: '18px' },
@@ -60,7 +60,8 @@ export const styles: AccordionSx = {
         m: '24px 0'
       }
     },
-    titleActive: withIconTitleStyles, titleInactive: withIconTitleStyles,
+    titleActive: withIconTitleStyles,
+    titleInactive: withIconTitleStyles,
     details: { p: { xs: '0 16px', sm: '0 32px' } },
     description: {
       pb: '24px',
