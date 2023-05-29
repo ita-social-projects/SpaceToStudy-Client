@@ -1,4 +1,7 @@
-export const imageResize = async (photoPath, { newHeight, newWidth }) => {
+export const imageResize = async (
+  photoPath: string,
+  { newHeight, newWidth }: { newHeight: number; newWidth: number }
+): Promise<string> => {
   return new Promise((resolve) => {
     const originalImage = new Image()
     originalImage.src = photoPath
@@ -12,18 +15,18 @@ export const imageResize = async (photoPath, { newHeight, newWidth }) => {
     originalImage.onload = () => {
       const originalWidth = originalImage.naturalWidth
       const originalHeight = originalImage.naturalHeight
-      const { newX, newY, cutInHeith, cutInWidth } = calculatePhotoCut(
+      const { newX, newY, cutInHeight, cutInWidth } = calculatePhotoCut(
         originalWidth,
         originalHeight,
         newWidth,
         newHeight
       )
-      ctx.drawImage(
+      ctx?.drawImage(
         originalImage,
         newX,
         newY,
         cutInWidth,
-        cutInHeith,
+        cutInHeight,
         0,
         0,
         newWidth,
@@ -37,26 +40,29 @@ export const imageResize = async (photoPath, { newHeight, newWidth }) => {
 }
 
 export const calculatePhotoCut = (
-  originalWidth,
-  originalHeight,
-  newWidth,
-  newHeight
+  originalWidth: number,
+  originalHeight: number,
+  newWidth: number,
+  newHeight: number
 ) => {
   let newX = 0
   let newY = 0
-  let cutInHeith = originalHeight
+  let cutInHeight = originalHeight
   let cutInWidth = originalWidth
+
   if (originalWidth < originalHeight) {
-    cutInHeith = (originalWidth / newWidth) * newHeight
+    cutInHeight = (originalWidth / newWidth) * newHeight
     if (originalHeight > newHeight) {
-      newY = (originalHeight - cutInHeith) / 2
+      newY = (originalHeight - cutInHeight) / 2
     }
   }
+
   if (originalWidth > originalHeight) {
     cutInWidth = (originalHeight / newHeight) * newWidth
     if (originalWidth > newWidth) {
       newX = (originalWidth - cutInWidth) / 2
     }
   }
-  return { newX, newY, cutInHeith, cutInWidth }
+
+  return { newX, newY, cutInHeight, cutInWidth }
 }

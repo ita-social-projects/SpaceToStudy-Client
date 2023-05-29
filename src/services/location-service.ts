@@ -5,7 +5,7 @@ export const LocationService = {
   getCountries: () => {
     return axiosClient.get(URLs.location.getCountries)
   },
-  getCities: (country) => {
+  getCities: (country: string) => {
     return axiosClient.get(`${URLs.location.getCities}/${country}`)
   }
 }
