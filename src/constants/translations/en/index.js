@@ -18,11 +18,10 @@ import modals from './email-modals.json'
 import errors from './errors.json'
 import table from './table.json'
 import admin from './admin.json'
-import studentTable from './student-table.json'
 import breadCrumbs from './breadcrumbs.json'
 import completeProfile from './complete-profile.json'
 import tutorProfilePage from './tutor-profile-page.json'
-import adminTable from './admin-table.json'
+import userTable from './user-table.json'
 import constant from './constant.json'
 import findOffers from './find-offer-page.json'
 import filters from './filters.json'
@@ -51,12 +50,11 @@ const en = {
     modals,
     errors,
     table,
-    studentTable,
     admin,
     breadCrumbs,
     completeProfile,
     tutorProfilePage,
-    adminTable,
+    userTable,
     constant,
     findOffers,
     filters,

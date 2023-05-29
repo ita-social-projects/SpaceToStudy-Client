@@ -3,15 +3,11 @@ import { useTranslation } from 'react-i18next'
 import TableCell from '@mui/material/TableCell'
 import TableSortLabel from '@mui/material/TableSortLabel'
 
-import { useTableContext } from '~/context/table-context'
-import useSort from '~/hooks/table/use-sort'
+import { styles } from '~/components/enhanced-table/enhanced-table-header-cell/EnhancedTableHeaderCell.styles'
 
-import { styles } from './EnhancedTableHeaderCell.styles'
-
-const EnhancedTableHeaderCell = ({ column }) => {
+const EnhancedTableHeaderCell = ({ column, sort }) => {
   const { t } = useTranslation()
-  const { sort } = useTableContext()
-  const { onRequestSort } = useSort()
+  const { sort: sortParams, onRequestSort } = sort
 
   const createSortHandler = (property) => (e) => {
     onRequestSort(e, property)
@@ -20,9 +16,11 @@ const EnhancedTableHeaderCell = ({ column }) => {
   return (
     <TableCell key={column.field} sx={styles.root}>
       <TableSortLabel
-        active={sort.orderBy === column.field}
-        data-testid='tableSortLable'
-        direction={sort.orderBy === column.field ? sort.order : 'asc'}
+        active={sortParams.orderBy === column.field}
+        data-testid='tableSortLabel'
+        direction={
+          sortParams.orderBy === column.field ? sortParams.order : 'asc'
+        }
         onClick={createSortHandler(column.field)}
         sx={styles.sortLabel}
       >

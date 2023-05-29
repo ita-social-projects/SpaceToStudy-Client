@@ -68,6 +68,7 @@ const usePagination = ({
     pageInput,
     setPageInput,
     pageCount,
+    itemsCount,
     clearPage,
     handleChangePage,
     handleChangeRowsPerPage,

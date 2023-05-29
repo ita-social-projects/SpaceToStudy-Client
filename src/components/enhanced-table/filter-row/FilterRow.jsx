@@ -1,14 +1,10 @@
 import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
 
-import { useTableContext } from '~/context/table-context'
-import useFilter from '~/hooks/table/use-filter'
-import FilterCell from './filter-cell/FilterCell'
+import FilterCell from '~/components/enhanced-table/filter-row/filter-cell/FilterCell'
 
-const FilterRow = () => {
-  const { isSelection, columns, filters } = useTableContext()
-
-  const { setFilterByKey, clearFilterByKey } = useFilter()
+const FilterRow = ({ columns, filter, isSelection }) => {
+  const { filters, setFilterByKey, clearFilterByKey } = filter
 
   const filterCells = columns.map((column) => (
     <FilterCell

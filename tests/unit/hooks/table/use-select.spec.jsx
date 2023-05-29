@@ -1,11 +1,9 @@
 import { act, renderHook } from '@testing-library/react-hooks'
-import { TableProvider } from '~/context/table-context'
+
 import useSelect from '~/hooks/table/use-select'
 import { getFakeTestEvent } from '~tests/test-utils'
 
 describe('Use select custom hook', () => {
-  const wrapper = ({ children }) => <TableProvider>{children}</TableProvider>
-
   const items = [
     { _id: 1, value: 1 },
     { _id: 2, value: 2 },
@@ -15,9 +13,8 @@ describe('Use select custom hook', () => {
   let result
 
   beforeEach(() => {
-    result = renderHook(() => useSelect(), {
-      wrapper
-    }).result
+    const { result: renderedHookResult } = renderHook(() => useSelect())
+    result = renderedHookResult
   })
 
   it('should select all', () => {

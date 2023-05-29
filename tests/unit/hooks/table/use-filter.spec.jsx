@@ -1,23 +1,14 @@
 import { act, renderHook } from '@testing-library/react-hooks'
-import { TableProvider } from '~/context/table-context'
+
 import useFilter from '~/hooks/table/use-filter'
 
 describe('Use filter custom hook', () => {
-  const wrapper = ({ children, initialFilters }) => (
-    <TableProvider initialFilters={initialFilters}>{children}</TableProvider>
-  )
-
   it('should set filter by key', () => {
     const initialFilters = {
       firstName: ''
     }
 
-    const { result } = renderHook(() => useFilter(), {
-      wrapper,
-      initialProps: {
-        initialFilters
-      }
-    })
+    const { result } = renderHook(() => useFilter({ initialFilters }))
 
     act(() => {
       result.current.setFilterByKey('firstName')('Rostyslav')
@@ -31,12 +22,7 @@ describe('Use filter custom hook', () => {
       firstName: ''
     }
 
-    const { result } = renderHook(() => useFilter(), {
-      wrapper,
-      initialProps: {
-        initialFilters
-      }
-    })
+    const { result } = renderHook(() => useFilter({ initialFilters }))
 
     act(() => {
       result.current.setFilterByKey('firstName')('Rostyslav')
@@ -52,12 +38,7 @@ describe('Use filter custom hook', () => {
       email: ''
     }
 
-    const { result } = renderHook(() => useFilter(), {
-      wrapper,
-      initialProps: {
-        initialFilters
-      }
-    })
+    const { result } = renderHook(() => useFilter({ initialFilters }))
 
     act(() => {
       result.current.setFilterByKey('firstName')('Rostyslav')

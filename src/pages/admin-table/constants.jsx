@@ -1,5 +1,7 @@
 import EnhancedTable from '~/components/enhanced-table/EnhancedTable'
 
+import { SortEnum } from '~/types'
+
 export const initialFilters = {
   name: '',
   email: '',
@@ -14,29 +16,29 @@ export const initialFilters = {
   }
 }
 
-export const initialSort = { order: 'asc', orderBy: 'email' }
+export const initialSort = { order: SortEnum.Asc, orderBy: 'email' }
 
 export const tabsInfo = {
   all: {
-    label: 'adminTable.all',
+    label: 'userTable.all',
     key: 'status',
     value: 'all',
     component: (props) => <EnhancedTable {...props} />
   },
   active: {
-    label: 'adminTable.active',
+    label: 'userTable.active',
     key: 'status',
     value: 'active',
     component: (props) => <EnhancedTable {...props} />
   },
   blocked: {
-    label: 'adminTable.blocked',
+    label: 'userTable.blocked',
     key: 'status',
     value: 'blocked',
     component: (props) => <EnhancedTable {...props} />
   },
   invited: {
-    label: 'adminTable.invited',
+    label: 'userTable.invited',
     key: 'status',
     value: 'invited',
     component: (props) => <EnhancedTable {...props} />
@@ -45,39 +47,39 @@ export const tabsInfo = {
 
 export const columns = [
   {
-    label: 'adminTable.name',
+    label: 'userTable.name',
     field: 'name',
     dataType: 'string',
     calculatedCellValue: (item) => `${item.firstName} ${item.lastName}`
   },
   {
-    label: 'adminTable.email',
+    label: 'userTable.email',
     field: 'email',
     dataType: 'string'
   },
   {
-    label: 'adminTable.status',
+    label: 'userTable.status',
     field: 'status',
     dataType: 'enums',
     filterEnum: [
       {
-        label: 'adminTable.active',
+        label: 'userTable.active',
         value: 'active'
       },
       {
-        label: 'adminTable.blocked',
+        label: 'userTable.blocked',
         value: 'blocked'
       }
     ]
   },
   {
-    label: 'adminTable.lastLogin',
+    label: 'userTable.lastLogin',
     field: 'lastLogin',
     calculatedCellValue: (item) => new Date(item.lastLogin).toLocaleString(),
     dataType: 'date'
   },
   {
-    label: 'adminTable.signedUp',
+    label: 'userTable.signedUp',
     field: 'createdAt',
     calculatedCellValue: (item) => new Date(item.createdAt).toLocaleString(),
     dataType: 'date'

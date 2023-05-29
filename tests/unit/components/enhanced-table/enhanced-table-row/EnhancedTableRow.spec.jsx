@@ -2,12 +2,11 @@ import { vi } from 'vitest'
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 
 import EnhancedTableRow from '~/components/enhanced-table/enhanced-table-row/EnhancedTableRow'
-import { useTableContext } from '~/context/table-context'
 
-
-const handleSelectClickMock = vi.fn()
-const refetchDataMock = vi.fn()
-const calculatedCellValueMock = vi.fn()
+const handleSelectClick = vi.fn()
+const refetchData = vi.fn()
+const calculatedCellValue = vi.fn()
+const isSelected = vi.fn().mockReturnValue(false)
 
 const mockItem = {
   _id: '123456789',
@@ -19,37 +18,32 @@ const mockItem = {
 const columns = [
   { field: 'name' },
   { field: 'email' },
-  { field: 'last login', calculatedCellValue: calculatedCellValueMock },
+  { field: 'last login', calculatedCellValue }
 ]
 
-const rowActions = [
-  { label: 'Delete', func: vi.fn() },
-]
-
-const isSelection = true
-
-vi.mock('~/hooks/table/use-select', () => ({
-  __esModule: true,
-  default: () => ({ handleSelectClick: handleSelectClickMock }),
-}))
-
-vi.mock('~/context/table-context', () => ({
-  useTableContext: vi.fn()
-}))
+const rowActions = [{ label: 'Delete', func: vi.fn() }]
 
 describe('EnhancedTableRow component', () => {
   beforeEach(() => {
-    useTableContext.mockReturnValue({
-      isSelection,
-      columns,
-      rowActions
-    })
-    render(<EnhancedTableRow isItemSelected={ false } item={ mockItem } refetchData={ refetchDataMock } />)
+    render(
+      <table>
+        <tbody>
+          <EnhancedTableRow
+            columns={columns}
+            isSelection
+            item={mockItem}
+            refetchData={refetchData}
+            rowActions={rowActions}
+            select={{ isSelected, handleSelectClick }}
+          />
+        </tbody>
+      </table>
+    )
   })
 
   it('should render table row with correct data', () => {
     expect(screen.getByText('John Smith')).toBeInTheDocument()
-    expect(calculatedCellValueMock).toHaveBeenCalled()
+    expect(calculatedCellValue).toHaveBeenCalled()
   })
 
   it('should call handleSelectClick when checkbox is clicked', () => {
@@ -57,10 +51,10 @@ describe('EnhancedTableRow component', () => {
 
     fireEvent.click(checkbox)
 
-    expect(handleSelectClickMock).toHaveBeenCalled()
+    expect(handleSelectClick).toHaveBeenCalled()
   })
 
-  it('should render action menu when menu icon is clicked', async() => {
+  it('should render action menu when menu icon is clicked', async () => {
     const menuIcon = screen.getByTestId('menu-icon')
 
     fireEvent.click(menuIcon)
@@ -70,7 +64,7 @@ describe('EnhancedTableRow component', () => {
     expect(menuItem).toBeInTheDocument()
   })
 
-  it('should call  onAction function when clicking on the menu item', async() => {
+  it('should call  onAction function when clicking on the menu item', async () => {
     const menuIcon = screen.getByTestId('menu-icon')
 
     fireEvent.click(menuIcon)
@@ -79,10 +73,12 @@ describe('EnhancedTableRow component', () => {
 
     fireEvent.click(menuItem)
 
-    await waitFor(() => expect(rowActions[0].func).toHaveBeenCalledWith(mockItem._id))
+    await waitFor(() =>
+      expect(rowActions[0].func).toHaveBeenCalledWith(mockItem._id)
+    )
   })
 
-  it('should close menu when "escape" is pressed', async() => {
+  it('should close menu when "escape" is pressed', async () => {
     const menuIcon = screen.getByTestId('menu-icon')
 
     fireEvent.click(menuIcon)
@@ -98,5 +94,4 @@ describe('EnhancedTableRow component', () => {
 
     await waitFor(() => expect(screen.queryByText('Delete')).toBeNull())
   })
-
 })

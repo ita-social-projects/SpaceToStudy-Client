@@ -1,37 +1,45 @@
 import { useTranslation } from 'react-i18next'
-
 import Checkbox from '@mui/material/Checkbox'
 import TableCell from '@mui/material/TableCell'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 
-import { useTableContext } from '~/context/table-context'
-import EnhancedTableHeaderCell from '../enhanced-table-header-cell/EnhancedTableHeaderCell'
+import EnhancedTableHeaderCell from '~/components/enhanced-table/enhanced-table-header-cell/EnhancedTableHeaderCell'
 
-import { styles } from './EnhancedTableHead.styles'
+import { styles } from '~/components/enhanced-table/enhanced-table-head/EnhancedTableHead.styles'
 
-const EnhancedTableHead = ({ itemsCount, onSelectAllClick }) => {
+const EnhancedTableHead = ({
+  columns,
+  data,
+  isSelection,
+  rowsPerPage,
+  select,
+  sort
+}) => {
   const { t } = useTranslation()
+  const { selected, createSelectAllHandler } = select
+  const { items, count: itemsCount } = data
 
-  const { numSelected, isSelection, columns, pagination } = useTableContext()
-  const { rowsPerPage } = pagination
+  const checkboxCell = (
+    <TableCell padding='checkbox'>
+      <Checkbox
+        checked={itemsCount > 0 && selected.length === rowsPerPage}
+        color='primary'
+        indeterminate={selected.length > 0 && selected.length < rowsPerPage}
+        onChange={createSelectAllHandler(items)}
+      />
+    </TableCell>
+  )
+
+  const headerCells = columns.map((column) => (
+    <EnhancedTableHeaderCell column={column} key={column.field} sort={sort} />
+  ))
 
   return (
     <TableHead sx={styles.tableHead}>
       <TableRow>
-        {isSelection && (
-          <TableCell padding='checkbox'>
-            <Checkbox
-              checked={itemsCount > 0 && numSelected === rowsPerPage}
-              color='primary'
-              indeterminate={numSelected > 0 && numSelected < rowsPerPage}
-              onChange={onSelectAllClick}
-            />
-          </TableCell>
-        )}
-        {columns.map((column) => (
-          <EnhancedTableHeaderCell column={column} key={column.field} />
-        ))}
+        {isSelection && checkboxCell}
+        {headerCells}
         {isSelection && <TableCell>{t('table.actions')}</TableCell>}
       </TableRow>
     </TableHead>

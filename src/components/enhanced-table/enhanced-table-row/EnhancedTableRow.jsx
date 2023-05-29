@@ -6,14 +6,18 @@ import TableRow from '@mui/material/TableRow'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 
 import useMenu from '~/hooks/use-menu'
-import useSelect from '~/hooks/table/use-select'
-import { useTableContext } from '~/context/table-context'
 
-const EnhancedTableRow = ({ item, isItemSelected, refetchData }) => {
-  const { isSelection, columns, rowActions } = useTableContext()
-  const { handleSelectClick } = useSelect()
-
+const EnhancedTableRow = ({
+  columns,
+  isSelection,
+  item,
+  refetchData,
+  rowActions,
+  select
+}) => {
   const { openMenu, renderMenu } = useMenu()
+  const { isSelected, handleSelectClick } = select
+
   const onAction = async (actionFunc) => {
     await actionFunc(item._id)
     refetchData()
@@ -37,11 +41,11 @@ const EnhancedTableRow = ({ item, isItemSelected, refetchData }) => {
   ))
 
   return (
-    <TableRow hover key={item._id} selected={isItemSelected}>
+    <TableRow hover key={item._id} selected={isSelected(item._id)}>
       {isSelection && (
         <TableCell padding='checkbox'>
           <Checkbox
-            checked={isItemSelected}
+            checked={isSelected(item._id)}
             color='primary'
             onChange={(e) => handleSelectClick(e, item._id)}
           />

@@ -5,19 +5,21 @@ import IconButton from '@mui/material/IconButton'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 
-import { useTableContext } from '~/context/table-context'
-
 import { styles } from './EnhancedTableToolbar.styles'
 
-const EnhancedTableToolbar = ({ refetchData }) => {
+const EnhancedTableToolbar = ({ refetchData, itemIds, bulkActions }) => {
   const { t } = useTranslation()
-
-  const { numSelected, selected: itemIds, bulkActions } = useTableContext()
 
   const onAction = async (actionFunc) => {
     await actionFunc({ itemIds })
     refetchData()
   }
+
+  const actionButtons = bulkActions.map(({ title, func, icon }) => (
+    <Tooltip key={title} placement='top' title={title}>
+      <IconButton onClick={() => onAction(func)}>{icon}</IconButton>
+    </Tooltip>
+  ))
 
   return (
     <Box sx={styles.root}>
@@ -25,16 +27,11 @@ const EnhancedTableToolbar = ({ refetchData }) => {
         component='div'
         data-testid='amountOfSelected'
         sx={styles.selected}
-        variant='subtitle2'
       >
-        {`${numSelected} ${t('table.selected')}`}
+        {`${itemIds.length} ${t('table.selected')}`}
       </Typography>
 
-      {bulkActions.map(({ title, func, icon }) => (
-        <Tooltip key={title} placement='top' title={title}>
-          <IconButton onClick={() => onAction(func)}>{icon}</IconButton>
-        </Tooltip>
-      ))}
+      {actionButtons}
     </Box>
   )
 }

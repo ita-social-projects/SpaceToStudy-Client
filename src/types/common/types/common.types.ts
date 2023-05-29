@@ -1,3 +1,4 @@
+import { SortEnum } from '../common.index'
 
 export type Address = {
   country: string
@@ -20,6 +21,6 @@ export type LastLogin = {
 }
 
 export type Sort = {
-  order: string
+  order: SortEnum
   orderBy: string
 }
