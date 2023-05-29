@@ -5,10 +5,6 @@ import OfferDetails from '~/pages/offer-details/OfferDetails'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 
-import { useOutletContext } from 'react-router-dom'
-const mockAxiosClient = new MockAdapter(axiosClient)
-
-vi.mock('~/services/offer-service')
 vi.mock('~/hooks/use-breakpoints')
 vi.mock('react-router-dom', async () => {
   const actual = await vi.importActual('react-router-dom')
@@ -19,7 +15,6 @@ vi.mock('react-router-dom', async () => {
     })
   }
 })
-
 const mockData = {
   id: '64480bb14ee3d89a58631730',
   authorAvgRating: 4.3,
