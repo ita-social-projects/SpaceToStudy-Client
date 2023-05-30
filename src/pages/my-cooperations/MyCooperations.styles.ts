@@ -3,7 +3,13 @@ export const styles = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    mb: '40px'
+    mb: '24px'
   },
-  title: { typography: 'h4' }
+  title: { typography: 'h4' },
+  tabs: {
+    display: 'flex',
+    mb: '20px',
+    borderBottom: '1px solid',
+    borderColor: 'primary.100'
+  }
 }

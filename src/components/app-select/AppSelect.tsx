@@ -18,7 +18,7 @@ interface AppSelectProps<T> extends SelectProps<T> {
   selectTitle?: string
 }
 
-const AppSelect = <T extends string | number>({
+const AppSelect = <T,>({
   setValue,
   value,
   fields,
@@ -32,11 +32,16 @@ const AppSelect = <T extends string | number>({
   const changeValue = (event: SelectChangeEvent<T>) =>
     setValue(event.target.value as T)
 
-  const fieldsList = fields.map((field) => (
-    <MenuItem key={field.title} value={field.value}>
-      {t(field.title)}
-    </MenuItem>
-  ))
+  const fieldsList = fields.map(({ title, value }) => {
+    if (typeof value === 'string' || typeof value === 'number') {
+      return (
+        <MenuItem key={title} value={value}>
+          {t(title)}
+        </MenuItem>
+      )
+    }
+  })
+
   const titleEl = selectTitle && (
     <Typography
       aria-label='select-title'

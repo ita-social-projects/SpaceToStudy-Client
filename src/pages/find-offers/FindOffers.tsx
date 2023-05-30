@@ -74,17 +74,12 @@ const FindOffers = () => {
 
   const { offers, count: offersCount } = offersResponse
 
-  const {
-    page,
-    setPage,
-    pageCount,
-    rowsPerPage,
-    handleChangePaginationController
-  } = usePagination({
-    defaultPage: Number(filters.page),
-    itemsCount: offersCount,
-    itemsPerPage
-  })
+  const { page, setPage, pageCount, rowsPerPage, handleChangePage } =
+    usePagination({
+      defaultPage: Number(filters.page),
+      itemsCount: offersCount,
+      itemsPerPage
+    })
 
   useEffect(() => {
     setPage(1)
@@ -184,7 +179,7 @@ const FindOffers = () => {
         )}
       </Box>
       <AppPagination
-        onChange={handleChangePaginationController}
+        onChange={handleChangePage}
         page={page}
         pageCount={pageCount}
         size={isMobile ? SizeEnum.Small : SizeEnum.Medium}

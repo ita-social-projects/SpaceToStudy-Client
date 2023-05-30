@@ -23,7 +23,7 @@ const CooperationCard: FC<CooperationCardProps> = ({ cooperation }) => {
     <AppCard sx={styles.root}>
       <Box sx={styles.userInfo}>
         <ImgTitleDescription
-          description={getFormatedDate(cooperation.createdAt)}
+          description={getFormatedDate(cooperation.updatedAt)}
           img={cooperation.user.photo}
           style={styles.imgTitleDescription}
           title={`${cooperation.user.firstName} ${cooperation.user.lastName}`}

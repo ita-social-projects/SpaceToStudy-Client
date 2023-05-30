@@ -36,6 +36,7 @@ export const URLs = {
     getNames: '/subjects/names'
   },
   cooperations: {
+    get: '/cooperations',
     create: '/cooperations'
   }
 }

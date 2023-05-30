@@ -3,13 +3,14 @@ import { fadeAnimation } from '~/styles/app-theme/custom-animations'
 export const styles = {
   defaultTab: {
     px: '44px',
-    borderBottom: '1px solid',
     cursor: 'pointer',
-    color: 'primary.300'
+    color: 'primary.300',
+    typography: 'subtitle2',
+    borderRadius: 0
   },
   activeTab: {
-    color: 'primary.500',
-    borderBottom: '3px solid',
+    color: 'primary.600',
+    borderBottom: '2px solid',
     pb: '14px',
     ...fadeAnimation
   }

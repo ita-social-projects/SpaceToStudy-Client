@@ -15,7 +15,7 @@ interface FilterQueryHook<T> {
   filters: T
   filterQueryActions: FindOffersFiltersActions<T>
   searchParams: URLSearchParams
-  activeFilterCount: number | null
+  activeFilterCount?: number
 }
 
 export const useFilterQuery = <T extends object>({
@@ -62,9 +62,8 @@ export const useFilterQuery = <T extends object>({
     setFilters(defaultFilters)
   }, [defaultFilters, setSearchParams])
 
-  const activeFilterCount = countActiveFilters
-    ? countActiveFilters(searchParams, defaultFilters)
-    : null
+  const activeFilterCount =
+    countActiveFilters && countActiveFilters(searchParams, defaultFilters)
 
   return {
     filters,

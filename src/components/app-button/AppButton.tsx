@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, ElementType } from 'react'
 import Button, { ButtonProps } from '@mui/material/Button'
 
 import Loader from '~/components/loader/Loader'
@@ -7,6 +7,7 @@ import { SizeEnum, VariantEnum } from '~/types'
 interface AppButtonProps extends ButtonProps {
   loading?: boolean
   disabled?: boolean
+  component?: ElementType
 }
 
 const AppButton: FC<AppButtonProps> = ({
