@@ -1,4 +1,14 @@
-const appTypography = {
+import {
+  TypographyOptions,
+  TypographyStyleOptions
+} from '@mui/material/styles/createTypography'
+
+interface AppTypography extends TypographyOptions {
+  midTitle: TypographyStyleOptions
+  button1: TypographyStyleOptions
+}
+
+const appTypography: AppTypography = {
   fontFamily: ['Rubik', '-apple-system', 'Arial', 'sans-serif'].join(','),
   h1: {
     fontWeight: 800,
