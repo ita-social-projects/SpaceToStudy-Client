@@ -19,7 +19,7 @@ export interface Offer extends CommonEntityFields {
   proficiencyLevel: ProficiencyLevelEnum[]
   description: string
   languages: LanguagesEnum[]
-  authorRole: UserRole
+  authorRole: UserRoleEnum.Tutor | UserRoleEnum.Student
   authorFirstName: string
   authorLastName: string
   authorAvgRating: number
