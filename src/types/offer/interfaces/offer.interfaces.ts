@@ -2,7 +2,6 @@ import { ButtonProps } from '@mui/material/Button'
 import {
   ProficiencyLevelEnum,
   CommonEntityFields,
-  UserRole,
   UserResponse,
   SubjectNameInterface,
   UserRoleEnum,
