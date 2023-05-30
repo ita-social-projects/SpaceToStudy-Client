@@ -20,7 +20,7 @@ export interface FindOffersFilters {
   rating: string
   authorRole: UserRole
   price?: RangeArray
-  name: string
+  search: string
   proficiencyLevel: ProficiencyLevelEnum[]
   page: string
 }

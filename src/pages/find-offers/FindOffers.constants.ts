@@ -8,7 +8,7 @@ export const defaultFilters: FindOffersFilters = {
   native: 'false',
   rating: '0',
   authorRole: UserRoleEnum.Tutor,
-  name: '',
+  search: '',
   proficiencyLevel: [],
   price: undefined,
   page: '1'
