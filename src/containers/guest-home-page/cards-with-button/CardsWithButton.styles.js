@@ -48,7 +48,10 @@ export const styles = {
     },
     description: {
       textAlign: { sm: 'end', xs: 'start' },
-      typography: { xs: 'subtitle2' }
+      fontWeight: 400,
+      fontSize: '14px',
+      lineHeight: '20px',
+      letterSpacing: '0.1px'
     },
     slidesIn: slidesRightAnimation
   },
@@ -74,7 +77,10 @@ export const styles = {
     },
     description: {
       textAlign: 'start',
-      typography: { xs: 'subtitle2' }
+      fontWeight: 400,
+      fontSize: '14px',
+      lineHeight: '20px',
+      letterSpacing: '0.1px'
     },
     slidesIn: slidesLeftAnimation
   }
