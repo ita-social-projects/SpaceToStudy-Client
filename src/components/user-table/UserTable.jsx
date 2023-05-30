@@ -128,13 +128,17 @@ const UserTable = ({
     }
   ]
 
+  const handleTabClick = (tab) => {
+    clearFilters()
+    setExternalFilter((prev) => ({ ...prev, [tab.key]: tab.value }))
+  }
+
   const tabs = Object.values(tabsInfo).map((tab) => (
     <Tab
-      activeTab={externalFilter.status}
-      clearFilters={clearFilters}
+      activeTab={externalFilter.status === tab.value}
       key={tab.label}
-      setTab={setExternalFilter}
-      tab={tab}
+      label={tab.label}
+      onClick={() => handleTabClick(tab)}
     />
   ))
 

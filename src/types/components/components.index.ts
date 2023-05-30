@@ -30,3 +30,4 @@ export {
 export * from './accordion-with-image/accordionWithImage.interface'
 export * from './accordions/accordions.interface'
 export * from './multi-accordion-with-title/multiAccordionWithTitle.interface'
+export * from '~/types/components/tab/tab.types'

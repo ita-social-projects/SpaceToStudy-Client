@@ -1,3 +1,9 @@
 {
-  "title": "My Cooperations"
+  "title": "My Cooperations",
+  "tabs":{
+    "all":"All",
+    "active": "Active",
+    "pending": "Pending",
+    "closed": "Closed"
+  }
 }

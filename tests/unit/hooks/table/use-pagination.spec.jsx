@@ -63,7 +63,7 @@ describe('Use pagination custom hook', () => {
 
   it('should change page by pagination controller', () => {
     act(() => {
-      result.current.handleChangePaginationController(null, 5)
+      result.current.handleChangePage(null, 5)
     })
 
     expect(result.current.page).toEqual(5)

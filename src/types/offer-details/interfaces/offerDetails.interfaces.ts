@@ -9,6 +9,6 @@ export interface EnrollOfferForm {
 export interface CreateCooperationsParams
   extends EnrollOfferForm,
     Pick<Offer, 'price'> {
-  offerId: string
-  recipientUserId: string
+  offer: string
+  receiver: string
 }

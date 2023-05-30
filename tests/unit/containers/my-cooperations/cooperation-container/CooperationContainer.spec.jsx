@@ -20,9 +20,23 @@ const mockedCoop = {
   createdAt: '2023-05-13T13:44:25.716Z'
 }
 
+const filterOptionsMock = {
+  filters: {
+    sort: 'name',
+    search: '',
+    status: '',
+    view: 'grid'
+  }
+}
+
 describe('CooperationContainer component ', () => {
   it('should render card in container', () => {
-    render(<CooperationContainer items={[mockedCoop]} />)
+    render(
+      <CooperationContainer
+        filterOptions={filterOptionsMock}
+        items={[mockedCoop]}
+      />
+    )
 
     const level = screen.getByText(mockedCoop.requiredProficiencyLevel)
 

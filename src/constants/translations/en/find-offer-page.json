@@ -41,7 +41,8 @@
     "newest": "Newest",
     "rating": "Rating",
     "priceAsc": "Price low-high",
-    "priceDesc": "Price high-low"
+    "priceDesc": "Price high-low",
+    "name":"Name"
   },
   "notFound":{
     "description": "We couldn’t find what you were searching for."

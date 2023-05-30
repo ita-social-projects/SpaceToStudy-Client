@@ -8,7 +8,7 @@ const FilterRow = ({ columns, filter, isSelection }) => {
 
   const filterCells = columns.map((column) => (
     <FilterCell
-      clearFilter={() => clearFilterByKey(column.field)}
+      clearFilter={clearFilterByKey(column.field)}
       column={column}
       filter={filters[column.field]}
       key={column.field}

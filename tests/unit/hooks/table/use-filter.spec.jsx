@@ -26,7 +26,7 @@ describe('Use filter custom hook', () => {
 
     act(() => {
       result.current.setFilterByKey('firstName')('Rostyslav')
-      result.current.clearFilterByKey('firstName')
+      result.current.clearFilterByKey('firstName')()
     })
 
     expect(result.current.filters.firstName).toEqual('')

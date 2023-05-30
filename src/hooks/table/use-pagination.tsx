@@ -27,7 +27,7 @@ const usePagination = ({
     setPage(checkedPage)
   }, [checkedPage])
 
-  const handleChangePage = (_e: ChangeEvent, newPage: number) => {
+  const handleChangePage = (_e: ChangeEvent<unknown>, newPage: number) => {
     setPage(newPage)
   }
 
@@ -51,13 +51,6 @@ const usePagination = ({
     setPageInput(e.target.value)
   }
 
-  const handleChangePaginationController = (
-    _e: ChangeEvent<unknown>,
-    page: number
-  ) => {
-    setPage(page)
-  }
-
   const clearPage = useCallback(() => setPage(1), [setPage])
 
   return {
@@ -73,8 +66,7 @@ const usePagination = ({
     handleChangePage,
     handleChangeRowsPerPage,
     handlePageSubmit,
-    handleChangePageInput,
-    handleChangePaginationController
+    handleChangePageInput
   }
 }
 
