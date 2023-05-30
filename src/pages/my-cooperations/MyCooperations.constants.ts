@@ -30,19 +30,19 @@ export const itemsPerPage = 12
 
 export const tabsInfo = {
   all: {
-    label: 'userTable.all',
+    label: 'cooperationsPage.tabs.all',
     value: ''
   },
   active: {
-    label: 'userTable.active',
+    label: 'cooperationsPage.tabs.active',
     value: 'active'
   },
   pending: {
-    label: 'userTable.pending',
+    label: 'cooperationsPage.tabs.pending',
     value: 'pending'
   },
   closed: {
-    label: 'userTable.closed',
+    label: 'cooperationsPage.tabs.closed',
     value: 'closed'
   }
 }
