@@ -1,9 +1,9 @@
 export const styles = {
   root: {
     flex: 1,
-    p: '16px 20px',
+    p: '16px',
     boxSizing: 'border-box',
-    minWidth: '300px',
+    minWidth: '260px',
     minHeight: { xs: '280px', sm: '340px' },
     display: 'flex',
     flexDirection: 'column',
@@ -20,7 +20,6 @@ export const styles = {
       width: '48px',
       height: '48px',
       border: '1px solid',
-      borderRadius: '50%',
       borderColor: 'primary.900'
     },
     titleWithDescription: {

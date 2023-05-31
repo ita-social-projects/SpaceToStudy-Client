@@ -7,7 +7,7 @@ export const sortTranslationKeys = [
   },
   {
     title: 'findOffers.sortTitles.name',
-    value: JSON.stringify({ fullname: 1 })
+    value: JSON.stringify({ 'user.firstName': 1, 'user.lastName': 1 })
   },
   {
     title: 'findOffers.sortTitles.priceAsc',
@@ -25,8 +25,6 @@ export const initialFilters = {
   status: '',
   view: CardsViewEnum.Grid
 }
-
-export const itemsPerPage = 12
 
 export const tabsInfo = {
   all: {

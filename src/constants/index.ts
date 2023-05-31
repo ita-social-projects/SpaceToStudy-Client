@@ -27,5 +27,7 @@ export const defaultResponses = {
 
 export const itemsLoadLimit = {
   desktop: 12,
-  mobile: 6
+  tablet: 12,
+  mobile: 6,
+  default: 12
 }
