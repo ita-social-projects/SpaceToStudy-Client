@@ -24,7 +24,6 @@ export const styles = {
     },
     pl: '0',
     pr: { md: '8px', lg: '20px' },
-    position: 'relative',
     width: 'auto',
     '&::after': {
       content: '"/"',
