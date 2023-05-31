@@ -2,7 +2,6 @@ import { ButtonProps } from '@mui/material/Button'
 import {
   ProficiencyLevelEnum,
   CommonEntityFields,
-  UserRole,
   UserResponse,
   SubjectNameInterface,
   UserRoleEnum,
@@ -19,7 +18,7 @@ export interface Offer extends CommonEntityFields {
   proficiencyLevel: ProficiencyLevelEnum[]
   description: string
   languages: LanguagesEnum[]
-  authorRole: UserRole
+  authorRole: UserRoleEnum.Tutor | UserRoleEnum.Student
   authorFirstName: string
   authorLastName: string
   authorAvgRating: number

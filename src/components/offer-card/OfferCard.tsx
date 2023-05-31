@@ -31,6 +31,7 @@ const OfferCard: FC<OfferCardProps> = ({
     author,
     authorFirstName,
     authorLastName,
+    authorRole,
     subject,
     proficiencyLevel
   } = offer
@@ -43,6 +44,7 @@ const OfferCard: FC<OfferCardProps> = ({
         imgSrc={author.photo}
         name={fullName}
         rating={authorAvgRating}
+        totalReviews={author.totalReviews[authorRole]}
       />
       <OfferDetails
         description={!isHideField && description}
