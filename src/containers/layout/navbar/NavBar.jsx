@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
 import { guestRoutes } from '~/router/constants/guestRoutes'
 import { studentRoutes } from '~/router/constants/studentRoutes'
 import { tutorRoutes } from '~/router/constants/tutorRoutes'
@@ -60,10 +59,10 @@ const Navbar = () => {
   return (
     <Box sx={styles.header}>
       <Button
-        component={Link}
+        component={HashLink}
         size='small'
         sx={styles.logoButton}
-        to={guestRoutes.home.path}
+        to={guestRoutes.home.path + '#welcome'}
       >
         <Logo />
       </Button>
