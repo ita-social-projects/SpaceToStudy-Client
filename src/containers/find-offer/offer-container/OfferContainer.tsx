@@ -26,7 +26,6 @@ const OfferContainer: FC<OfferContainerProps> = ({
 }) => {
   const { t } = useTranslation()
   const { isMobile, isDesktop } = useBreakpoints()
-
   const onBookmarkClick = (id: string) => {
     console.log(id)
   }

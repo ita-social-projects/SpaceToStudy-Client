@@ -23,5 +23,17 @@ export const styles = {
   navigation: {
     display: 'flex',
     justifyContent: 'space-between'
-  }
+  },
+  offerContainerHeight: {
+    width: '100%',
+    paddingLeft: '30px'
+  },
+  filterSectionNotFound: (height: number) => ({
+    maxHeight: `${height}px`,
+    overflowY: 'auto'
+  }),
+  filterSectionStyles: (isDesktop: boolean, height: number) => ({
+    maxHeight: !isDesktop ? '100%' : `${height}px`,
+    overflowY: !isDesktop ? 'visible' : 'auto'
+  })
 }

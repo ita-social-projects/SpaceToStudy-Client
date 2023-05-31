@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Container from '@mui/material/Container'
@@ -112,16 +112,24 @@ const FindOffers = () => {
     filterQueryActions.updateFilterInQuery(updatedRole, 'authorRole')
   }
 
+  const offerContainerRef = useRef<HTMLDivElement>(null)
+  const [height, setHeight] = useState<number>(0)
+
+  const updateOfferContainerHeight = () => {
+    if (offerContainerRef.current) {
+      setHeight(offerContainerRef.current.offsetHeight)
+    }
+  }
+
+  useEffect(() => {
+    updateOfferContainerHeight()
+  }, [filterQueryActions])
+  console.log(offers.length)
   const getFilterSectionStyles = useMemo(() => {
     return !offers.length && isDesktop
-      ? {
-          maxHeight: '500px',
-          overflowY: 'auto'
-        }
-      : {
-          maxHeight: '100%'
-        }
-  }, [offers.length, isDesktop])
+      ? styles.filterSectionNotFound(height)
+      : styles.filterSectionStyles(isDesktop, height)
+  }, [offers.length, isDesktop, height])
 
   const filtersComponent = (
     <OfferFilterBlock
@@ -170,6 +178,7 @@ const FindOffers = () => {
         toggleFilters={toggleFiltersOpen}
         updateFilter={filterQueryActions.updateFilterInQuery}
       />
+
       <Box sx={styles.filterSection}>
         {isDesktop ? (
           filtersComponent
@@ -178,17 +187,29 @@ const FindOffers = () => {
             {filtersComponent}
           </AppDrawer>
         )}
-
         {offersLoading ? (
           <Loader pageLoad size={70} />
-        ) : !offers.length && !offersLoading ? (
-          <NotFoundResults description={t('findOffers.notFound.description')} />
         ) : (
-          <OfferContainer
-            isFiltersOpen={isOpen}
-            offerCards={offers}
-            viewMode={cardsView}
-          />
+          <Box
+            onLoad={updateOfferContainerHeight}
+            sx={styles.offerContainerHeight}
+          >
+            {!offers.length && !offersLoading ? (
+              <Box ref={offerContainerRef}>
+                <NotFoundResults
+                  description={t('findOffers.notFound.description')}
+                />
+              </Box>
+            ) : (
+              <Box ref={offerContainerRef}>
+                <OfferContainer
+                  isFiltersOpen={isOpen}
+                  offerCards={offers}
+                  viewMode={cardsView}
+                />
+              </Box>
+            )}
+          </Box>
         )}
       </Box>
       <AppPagination

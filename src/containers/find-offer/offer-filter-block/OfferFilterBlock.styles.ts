@@ -9,7 +9,8 @@ export const styles = {
     overflow: open ? 'visible' : 'hidden',
     opacity: open ? 1 : 0,
     transition: 'all .3s',
-    transformOrigin: 'left'
+    transformOrigin: 'left',
+    minHeight: '550px'
   }),
   switchWrapper: {
     display: 'flex',
