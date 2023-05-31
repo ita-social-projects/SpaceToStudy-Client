@@ -36,7 +36,6 @@ const MyCooperations = () => {
   })
 
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
-  console.log(itemsPerPage)
 
   const getMyCooperations = useCallback(
     () =>

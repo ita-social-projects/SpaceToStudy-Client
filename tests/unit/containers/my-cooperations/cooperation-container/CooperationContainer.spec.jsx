@@ -16,8 +16,7 @@ const mockedCoop = {
   },
   price: 1800,
   proficiencyLevel: 'Beginner',
-  status: 'pending',
-  createdAt: '2023-05-13T13:44:25.716Z'
+  status: 'pending'
 }
 
 const filterOptionsMock = {
