@@ -42,7 +42,7 @@ export const styles = {
     },
 
     title: {
-      typography: { xs: 'h5' },
+      typography: 'h5',
       marginBottom: '8px',
       textAlign: { sm: 'end', xs: 'start' }
     },
@@ -68,7 +68,7 @@ export const styles = {
       flexBasis: '466px'
     },
     title: {
-      typography: { xs: 'h5' },
+      typography: 'h5',
       marginBottom: '8px',
       textAlign: 'start'
     },
