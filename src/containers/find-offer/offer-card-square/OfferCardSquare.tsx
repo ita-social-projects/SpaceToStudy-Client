@@ -18,6 +18,8 @@ import { ButtonActions, Offer, ProficiencyLevelEnum } from '~/types'
 
 import { styles } from '~/containers/find-offer/offer-card-square/OfferCardSquare.styles'
 
+const imgUserUrl = import.meta.env.VITE_APP_IMG_USER_URL
+
 interface OfferCardSquareProps {
   buttonActions: (ButtonActions | null)[]
   offer: Offer
@@ -74,7 +76,7 @@ const OfferCardSquare: FC<OfferCardSquareProps> = ({
     <Box sx={styles.container}>
       <ImgTitleDescription
         description={title}
-        img={author.photo}
+        img={author.photo && `${imgUserUrl}${author.photo}`}
         imgComponent={Avatar}
         style={styles.mainInfo}
         title={fullName}

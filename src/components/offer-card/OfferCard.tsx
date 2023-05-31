@@ -41,7 +41,7 @@ const OfferCard: FC<OfferCardProps> = ({
   return (
     <Box sx={styles.wrapper}>
       <OfferAvatarAndRating
-        imgSrc={author.photo}
+        img={author.photo}
         name={fullName}
         rating={authorAvgRating}
         totalReviews={author.totalReviews[authorRole]}
