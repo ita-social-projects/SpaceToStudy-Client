@@ -46,6 +46,9 @@ const PopupDialog: FC<PopupDialogProps> = ({
       disableRestoreFocus
       fullScreen={isMobile}
       maxWidth='xl'
+      onClick={(e) => {
+        e.stopPropagation()
+      }}
       onClose={handleClose}
       open
     >
