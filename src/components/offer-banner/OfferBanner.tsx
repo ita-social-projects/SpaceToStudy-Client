@@ -19,7 +19,7 @@ import { ButtonActions, Offer, ProficiencyLevelEnum } from '~/types'
 
 interface OfferBannerProps {
   offer: Offer
-  buttonActions: ButtonActions[]
+  buttonActions: (ButtonActions | null)[]
 }
 
 const OfferBanner: FC<OfferBannerProps> = ({ offer, buttonActions }) => {

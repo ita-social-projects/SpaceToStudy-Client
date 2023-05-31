@@ -4,11 +4,11 @@ import {
   CommonEntityFields,
   UserResponse,
   SubjectNameInterface,
-  UserRoleEnum,
   LanguagesEnum,
   Faq,
   VariantEnum,
-  CategoryNameInterface
+  CategoryNameInterface,
+  UserRoleEnum
 } from '~/types'
 import { LinkProps } from 'react-router-dom'
 
