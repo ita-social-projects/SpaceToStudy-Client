@@ -124,7 +124,7 @@ const FindOffers = () => {
   useEffect(() => {
     updateOfferContainerHeight()
   }, [filterQueryActions])
-  console.log(offers.length)
+
   const getFilterSectionStyles = useMemo(() => {
     return !offers.length && isDesktop
       ? styles.filterSectionNotFound(height)
