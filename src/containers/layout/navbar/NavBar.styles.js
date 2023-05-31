@@ -27,7 +27,8 @@ export const styles = {
     width: 'auto',
     '&::after': {
       content: '"/"',
-      fontFamily: 'Poppins',
+      fontWeight: 500,
+      fontFamily: 'Rubik',
       padding: { md: '0 0 0 8px', lg: '0 0 0 20px' }
     },
     '&:last-child::after': {
