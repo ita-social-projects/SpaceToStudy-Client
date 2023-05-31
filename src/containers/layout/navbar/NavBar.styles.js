@@ -24,10 +24,13 @@ export const styles = {
     },
     pl: '0',
     pr: { md: '8px', lg: '20px' },
+    position: 'relative',
     width: 'auto',
     '&::after': {
       content: '"/"',
-      padding: { md: '0 0 3px 8px', lg: '0 0 3px 20px' }
+      lineHeight: '24px',
+      fontFamily: 'Poppins,-apple-system,Arial,sans-serif',
+      padding: { md: '0 0 0 8px', lg: '0 0 0 20px' }
     },
     '&:last-child::after': {
       content: '""'
