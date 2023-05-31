@@ -23,10 +23,7 @@ import Loader from '~/components/loader/Loader'
 
 import { errorRoutes } from '~/router/constants/errorRoutes'
 import topBlockIcon from '~/assets/img/offer-details/top-block-icon.png'
-import {
-  defaultResponse,
-  mockedFAQItems
-} from '~/pages/offer-details/constants'
+import { mockedFAQItems } from '~/pages/offer-details/constants'
 import { styles } from '~/pages/offer-details/OfferDetails.styles'
 import { Offer, VariantEnum, OutletContext } from '~/types'
 import ScrollVisibilityWrapper from '~/components/scroll-visibility-wrapper/ScrollVisibilityWrapper'
@@ -53,9 +50,9 @@ const OfferDetails = () => {
     () => navigate(errorRoutes.notFound.path),
     [navigate]
   )
-  const { response, loading } = useAxios<Offer>({
+  const { response, loading } = useAxios<Offer | null>({
     service: getOffer,
-    defaultResponse,
+    defaultResponse: null,
     onResponseError: responseError
   })
 
@@ -63,15 +60,11 @@ const OfferDetails = () => {
     console.log(id)
   }
 
-  if (loading) {
-    return <Loader pageLoad size={70} />
-  }
-
   const handleEnrollOfferClick = () =>
-    openModal({ component: <EnrollOffer offer={response} /> })
+    response && openModal({ component: <EnrollOffer offer={response} /> })
 
   const buttonActions = [
-    response.authorRole !== userRole
+    response?.authorRole !== userRole
       ? {
           label: t('common.labels.enrollOffer'),
           handleClick: handleEnrollOfferClick,
@@ -84,6 +77,14 @@ const OfferDetails = () => {
       variant: VariantEnum.Tonal
     }
   ]
+
+  if (loading) {
+    return <Loader pageLoad size={70} />
+  }
+
+  if (!response) {
+    return null
+  }
 
   return (
     <Container ref={offerDetailsPage} sx={styles.container}>
