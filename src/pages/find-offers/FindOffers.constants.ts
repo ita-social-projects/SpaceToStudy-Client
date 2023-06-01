@@ -1,13 +1,12 @@
-import { FindOffersFilters, UserRoleEnum } from '~/types'
+import { FindOffersFilters } from '~/types'
 
-export const defaultFilters: FindOffersFilters = {
+export const defaultFilters: Omit<FindOffersFilters, 'authorRole'> = {
   categoryId: '',
   subjectId: '',
   sort: 'createdAt',
   language: '',
   native: 'false',
   rating: '0',
-  authorRole: UserRoleEnum.Tutor,
   search: '',
   proficiencyLevel: [],
   price: undefined,
