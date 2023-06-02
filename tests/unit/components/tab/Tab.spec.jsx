@@ -19,22 +19,17 @@ describe('Tab', () => {
   })
 
   it('applies activeTab if it is true', () => {
-    const tabButtonRole = 'button'
-    const tabButton = screen.getByRole(tabButtonRole)
-    if (tabButton.classList.contains('activeTab')) {
-      expect(tabButton).toHaveClass('activeTab')
-    }
+    const tabButton = screen.getByRole('button')
+    expect(tabButton.classList.contains('activeTab'))
   })
 
   it('does not apply activeTab if it is false', () => {
-    const tabButtonRole = 'button'
-    const tabButton = screen.getByRole(tabButtonRole)
+    const tabButton = screen.getByRole('button')
     expect(tabButton).not.toHaveClass('activeTab')
   })
 
   it('calls onClick function when clicked', () => {
-    const tabButtonRole = 'button'
-    const tabButton = screen.getByRole(tabButtonRole)
+    const tabButton = screen.getByRole('button')
     fireEvent.click(tabButton)
     expect(onClick).toHaveBeenCalled()
   })
