@@ -58,10 +58,7 @@ const FindOffers = () => {
 
   const { filters, activeFilterCount, searchParams, filterQueryActions } =
     useFilterQuery({
-      defaultFilters: {
-        ...defaultFilters,
-        authorRole: oppositeRole
-      },
+      defaultFilters: defaultFilters(oppositeRole),
       countActiveFilters: countActiveOfferFilters
     })
 

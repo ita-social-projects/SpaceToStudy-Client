@@ -32,7 +32,7 @@ describe('OfferFilterBlock', () => {
         activeFilterCount={activeFilterCount}
         closeFilters={closeFilters}
         filterActions={filterActions}
-        filters={defaultFilters}
+        filters={defaultFilters('student')}
         onToggleTutorOffers={onToggleTutorOffers}
         open={open}
       />

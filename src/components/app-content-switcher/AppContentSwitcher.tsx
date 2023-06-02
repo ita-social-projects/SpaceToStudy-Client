@@ -27,7 +27,7 @@ const AppContentSwitcher: FC<SwitcherProps> = ({
     options && (
       <Tooltip arrow title={options.tooltip}>
         <Typography
-          sx={active ? defaultStyles.colorActive : defaultStyles.colorInActive}
+          sx={active ? defaultStyles.colorActive : {}}
           variant={typographyVariant}
         >
           {options.text}
@@ -36,9 +36,14 @@ const AppContentSwitcher: FC<SwitcherProps> = ({
     )
 
   return (
-    <Stack alignItems='center' direction='row' sx={defaultStyles && styles}>
+    <Stack sx={{ ...defaultStyles.stack, ...styles } as SxProps}>
       {renderBlock(switchOptions.left, active)}
-      <Switch checked={active} data-testid='switch' onChange={onChange} />
+      <Switch
+        checked={active}
+        data-testid='switch'
+        onChange={onChange}
+        sx={defaultStyles.switch}
+      />
       {renderBlock(switchOptions.right, !active)}
     </Stack>
   )
