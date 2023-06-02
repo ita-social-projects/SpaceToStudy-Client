@@ -39,7 +39,7 @@ const UserProfileInfo: FC<UserProfileInfoProps> = ({
       />
       <Box sx={spliceSx(styles.info, sx.info)}>
         <Typography sx={spliceSx(styles.name, sx.name)}>{name}</Typography>
-        {Number.isInteger(rating) && (
+        {!isNaN(Number(rating)) && (
           <AppRating
             readOnly
             showNumber
@@ -47,7 +47,7 @@ const UserProfileInfo: FC<UserProfileInfoProps> = ({
             value={rating}
           />
         )}
-        {Number.isInteger(rating) && (
+        {!isNaN(Number(rating)) && (
           <Typography
             sx={spliceSx(styles.reviews, sx.reviews)}
             variant={'caption'}
