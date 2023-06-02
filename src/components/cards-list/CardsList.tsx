@@ -5,7 +5,7 @@ import AppButton from '~/components/app-button/AppButton'
 import Loader from '~/components/loader/Loader'
 
 import { styles } from '~/components/cards-list/CardsList.styles'
-import { SizeEnum, VariantEnum } from '~/types'
+import { SizeEnum, ButtonVariantEnum } from '~/types'
 
 interface CardsListProps {
   btnText: string
@@ -38,7 +38,7 @@ const CardsList: FC<CardsListProps> = ({
           onClick={onClick}
           size={SizeEnum.ExtraLarge}
           sx={styles.btn}
-          variant={VariantEnum.Tonal}
+          variant={ButtonVariantEnum.Tonal}
         >
           {btnText}
         </AppButton>

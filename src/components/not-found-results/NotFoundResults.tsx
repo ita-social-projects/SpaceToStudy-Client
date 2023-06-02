@@ -6,7 +6,7 @@ import Box from '@mui/material/Box'
 import AppButton from '~/components/app-button/AppButton'
 import ImgTitleDescription from '~/components/img-title-description/ImgTitleDescription'
 
-import { VariantEnum } from '~/types'
+import { ButtonVariantEnum } from '~/types'
 import howItWorksStudentSecond from '~/assets/img/find-offer/search_icon.svg'
 import { styles } from '~/components/not-found-results/NotFoundResults.styles'
 
@@ -35,7 +35,7 @@ const NotFoundResults: FC<NotFoundResultsProps> = ({
         <AppButton
           onClick={onClick}
           sx={styles.button}
-          variant={VariantEnum.Tonal}
+          variant={ButtonVariantEnum.Tonal}
         >
           {buttonText}
         </AppButton>

@@ -19,14 +19,12 @@ export const styles = {
   },
   userInfo: {
     root: {
-      display: 'flex',
+      flexDirection: 'row',
       alignItems: 'center'
     },
-    titleWithDescription: {
-      title: {
-        typography: 'h6',
-        padding: '12px'
-      }
+    name: {
+      typography: 'h6',
+      padding: '12px'
     }
   },
   mainBlock: {

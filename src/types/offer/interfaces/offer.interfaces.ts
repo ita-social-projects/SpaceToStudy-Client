@@ -6,11 +6,9 @@ import {
   SubjectNameInterface,
   LanguagesEnum,
   Faq,
-  VariantEnum,
   CategoryNameInterface,
   UserRoleEnum
 } from '~/types'
-import { LinkProps } from 'react-router-dom'
 
 export interface Offer extends CommonEntityFields {
   title: string
@@ -33,9 +31,7 @@ export interface Offer extends CommonEntityFields {
 
 export interface ButtonActions {
   label: string
-  handleClick: () => void
-  variant: VariantEnum
-  buttonProps?: Omit<LinkProps, 'onClick'> | Omit<ButtonProps, 'onClick'>
+  buttonProps?: ButtonProps
 }
 
 export interface PriceRangeParams {

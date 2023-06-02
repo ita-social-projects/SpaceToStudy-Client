@@ -4,7 +4,7 @@ import Accordions from '~/components/accordion/Accordions'
 import Box from '@mui/material/Box'
 
 import { styles } from '~/components/accordion-with-image/AccordionWithImage.styles'
-import { AccordionWithImageItem, VariantEnum } from '~/types'
+import { AccordionWithImageItem, TypographyVariantEnum } from '~/types'
 
 interface AccordionWithImageProps {
   items: AccordionWithImageItem[]
@@ -18,10 +18,10 @@ const AccordionWithImage: FC<AccordionWithImageProps> = ({ items }) => {
       <Box component='img' src={items[activeItemId].image} sx={styles.image} />
       <Accordions
         activeIndex={activeItemId}
-        descriptionVariant={VariantEnum.Body2}
+        descriptionVariant={TypographyVariantEnum.Body2}
         items={items}
         onChange={(id) => setActiveItemId(id)}
-        titleVariant={VariantEnum.H6}
+        titleVariant={TypographyVariantEnum.H6}
       />
     </Box>
   )

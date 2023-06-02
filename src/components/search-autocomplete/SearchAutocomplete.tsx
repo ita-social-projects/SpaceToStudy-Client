@@ -23,7 +23,12 @@ import SearchIcon from '@mui/icons-material/Search'
 import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { styles } from '~/components/search-autocomplete/SearchAutocomplete.styles'
-import { SizeEnum, VariantEnum, VisibilityEnum } from '~/types'
+import {
+  SizeEnum,
+  ButtonVariantEnum,
+  VisibilityEnum,
+  TextFieldVariantEnum
+} from '~/types'
 
 interface SearchAutocompleteProps
   extends Omit<AutocompleteProps<string, false, true, true>, 'renderInput'> {
@@ -97,7 +102,7 @@ const SearchAutocomplete = ({
           InputLabelProps: { style: labelStyle, shrink: false },
           InputProps: { disableUnderline: true },
           onKeyDown: onEnterPress,
-          variant: VariantEnum.Standard,
+          variant: TextFieldVariantEnum.Standard,
           sx: styles.input,
           ...textFieldProps
         }}
@@ -112,7 +117,7 @@ const SearchAutocomplete = ({
         onClick={onSearch}
         size={isMobile ? SizeEnum.Small : SizeEnum.Large}
         sx={styles.searchBtn}
-        variant={VariantEnum.ContainedLight}
+        variant={ButtonVariantEnum.ContainedLight}
       >
         {isMobile ? <SearchIcon /> : t('common.search')}
       </Button>

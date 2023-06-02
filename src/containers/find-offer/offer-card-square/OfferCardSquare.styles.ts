@@ -13,33 +13,23 @@ export const styles = {
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
+    gap: '8px',
     justifyContent: 'space-between'
   },
-  mainInfo: {
+  userInfo: {
     root: {
-      display: 'flex',
-      flexDirection: 'column',
       alignItems: 'center'
     },
-    img: {
+    avatar: {
       height: '80px',
       width: '80px'
-    },
-    titleWithDescription: {
-      title: {
-        textAlign: 'center',
-        my: '10px',
-        color: 'primary.500',
-        fontWeight: 500
-      },
-      description: {
-        ...ellipsisTextStyle(2),
-        textAlign: 'left',
-        typography: 'midTitle',
-        fontWeight: 600,
-        color: 'primary.700'
-      }
     }
+  },
+  description: {
+    ...ellipsisTextStyle(2),
+    typography: 'midTitle',
+    fontWeight: 600,
+    color: 'primary.700'
   },
   iconButton: {
     color: 'basic.black',

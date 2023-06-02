@@ -8,7 +8,7 @@ import Box from '@mui/material/Box'
 import AppButton from '~/components/app-button/AppButton'
 import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
 
-import { VariantEnum } from '~/types'
+import { ButtonVariantEnum } from '~/types'
 import { styles } from '~/components/search-filter-input/SearchFilterInput.styles'
 
 interface SearchFilterInputProps {
@@ -55,7 +55,7 @@ const SearchFilterInput = ({
       <AppButton
         onClick={onSearch}
         sx={styles.searchBtn}
-        variant={VariantEnum.ContainedLight}
+        variant={ButtonVariantEnum.ContainedLight}
       >
         {t('common.search')}
       </AppButton>

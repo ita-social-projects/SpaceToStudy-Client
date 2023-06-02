@@ -1,4 +1,5 @@
 import { URLSearchParams } from 'node:url'
+import { SxProps } from '@mui/material'
 import { Breakpoints, FilterFromQuery, ScreenBasedLimits } from '~/types'
 
 export const parseJwt = <T,>(token: string): T => {
@@ -75,3 +76,9 @@ export const getScreenBasedLimit = (
       return limits.default
   }
 }
+
+export const spliceSx = (defaultStyles?: SxProps, newStyles?: SxProps) =>
+  ({
+    ...defaultStyles,
+    ...newStyles
+  } as SxProps)

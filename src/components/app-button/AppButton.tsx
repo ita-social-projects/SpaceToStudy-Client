@@ -2,7 +2,7 @@ import { FC, ElementType } from 'react'
 import Button, { ButtonProps } from '@mui/material/Button'
 
 import Loader from '~/components/loader/Loader'
-import { SizeEnum, VariantEnum } from '~/types'
+import { ButtonVariantEnum, SizeEnum } from '~/types'
 
 interface AppButtonProps extends ButtonProps {
   loading?: boolean
@@ -14,7 +14,7 @@ const AppButton: FC<AppButtonProps> = ({
   children,
   loading,
   disabled,
-  variant = VariantEnum.Contained,
+  variant = ButtonVariantEnum.Contained,
   size = SizeEnum.Large,
   ...props
 }) => {

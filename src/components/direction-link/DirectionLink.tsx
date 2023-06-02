@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography'
 import HashLink from '~/components/hash-link/HashLink'
 import { styles } from '~/components/direction-link/DirectionLink.styles'
 import useBreakpoints from '~/hooks/use-breakpoints'
-import { VariantEnum } from '~/types'
+import { TypographyVariantEnum } from '~/types'
 
 interface DirectionLinkProps {
   linkTo: string
@@ -26,7 +26,9 @@ const DirectionLink: FC<DirectionLinkProps> = ({
       component={HashLink}
       sx={styles.showAllOffers}
       to={linkTo}
-      variant={isMobile ? VariantEnum.Caption : VariantEnum.Button}
+      variant={
+        isMobile ? TypographyVariantEnum.Caption : TypographyVariantEnum.Button
+      }
     >
       {before}
       {title}

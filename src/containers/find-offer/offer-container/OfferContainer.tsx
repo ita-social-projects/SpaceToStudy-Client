@@ -6,7 +6,7 @@ import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 
 import useBreakpoints from '~/hooks/use-breakpoints'
-import { CardsView, Offer, CardsViewEnum, VariantEnum } from '~/types'
+import { CardsView, Offer, CardsViewEnum, ButtonVariantEnum } from '~/types'
 import OfferCardSquare from '~/containers/find-offer/offer-card-square/OfferCardSquare'
 import OfferCard from '~/components/offer-card/OfferCard'
 import AppCard from '~/components/app-card/AppCard'
@@ -39,17 +39,17 @@ const OfferContainer: FC<OfferContainerProps> = ({
   const offerItems = offerCards.map((el) => {
     const buttonActions = [
       {
-        label: t('common.labels.sendMessage'),
-        handleClick: () => null,
-        variant: VariantEnum.Contained
-      },
-      {
         label: t('common.labels.viewDetails'),
-        handleClick: () => null,
-        variant: VariantEnum.Tonal,
         buttonProps: {
           component: Link,
           to: `${authRoutes.offerDetails.path}/${el._id}`
+        }
+      },
+      {
+        label: t('common.labels.sendMessage'),
+        buttonProps: {
+          variant: ButtonVariantEnum.Tonal,
+          disabled: true
         }
       }
     ]

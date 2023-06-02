@@ -5,7 +5,11 @@ import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp'
 
-import { AccordionItem, MultiAccordionWithTitleSx, VariantEnum } from '~/types'
+import {
+  AccordionItem,
+  MultiAccordionWithTitleSx,
+  TypographyVariantEnum
+} from '~/types'
 import Accordions from '~/components/accordion/Accordions'
 
 interface MultiAccordionWithTitleProps {
@@ -44,7 +48,7 @@ const MultiAccordionWithTitle: FC<MultiAccordionWithTitleProps> = ({
   const accordionList = (
     <Accordions
       activeIndex={activeItems}
-      descriptionVariant={VariantEnum.Body2}
+      descriptionVariant={TypographyVariantEnum.Body2}
       elevation={0}
       icon={icon}
       items={items}

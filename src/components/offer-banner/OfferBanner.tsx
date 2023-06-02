@@ -1,21 +1,19 @@
 import { FC } from 'react'
 
 import Box from '@mui/material/Box'
-import { Typography } from '@mui/material'
+import Typography from '@mui/material/Typography'
 import IconButton from '@mui/material/IconButton'
-import Avatar from '@mui/material/Avatar'
 import TurnedInNot from '@mui/icons-material/TurnedInNot'
 import { useTranslation } from 'react-i18next'
 
+import useBreakpoints from '~/hooks/use-breakpoints'
 import AppChip from '~/components/app-chip/AppChip'
 import AppCard from '~/components/app-card/AppCard'
 import AppButton from '~/components/app-button/AppButton'
-import ImgTitleDescription from '~/components/img-title-description/ImgTitleDescription'
-
-import { styles } from '~/components/offer-banner/OfferBanner.styles'
-import useBreakpoints from '~/hooks/use-breakpoints'
+import UserProfileInfo from '~/components/user-profile-info/UserProfileInfo'
 
 import { ButtonActions, Offer, ProficiencyLevelEnum } from '~/types'
+import { styles } from '~/components/offer-banner/OfferBanner.styles'
 
 interface OfferBannerProps {
   offer: Offer
@@ -33,10 +31,8 @@ const OfferBanner: FC<OfferBannerProps> = ({ offer, buttonActions }) => {
         <AppButton
           fullWidth
           key={elem.label}
-          onClick={elem.handleClick}
-          {...elem.buttonProps}
           sx={styles.button}
-          variant={elem.variant}
+          {...elem.buttonProps}
         >
           {elem.label}
         </AppButton>
@@ -52,17 +48,15 @@ const OfferBanner: FC<OfferBannerProps> = ({ offer, buttonActions }) => {
       ? t('common.beginner')
       : `${t('common.beginner')} - ${lastLevel}`.toUpperCase()
 
-  const fullName = `${authorFirstName} ${authorLastName}`
-
   return (
     <Box sx={styles.main}>
       <AppCard sx={styles.root}>
         <Box sx={styles.mainBlock}>
-          <ImgTitleDescription
-            img={author.photo}
-            imgComponent={Avatar}
-            style={styles.userInfo}
-            title={fullName}
+          <UserProfileInfo
+            firstName={authorFirstName}
+            lastName={authorLastName}
+            photo={author.photo}
+            sx={styles.userInfo}
           />
           {isDesktop && (
             <>
