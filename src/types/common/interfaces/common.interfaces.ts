@@ -56,3 +56,9 @@ export interface Faq {
 export interface OutletContext {
   pageRef: React.RefObject<HTMLDivElement> | null
 }
+
+export interface Breakpoints {
+  isDesktop: boolean
+  isTablet: boolean
+  isMobile: boolean
+}

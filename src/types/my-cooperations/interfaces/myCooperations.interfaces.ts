@@ -11,3 +11,10 @@ export interface MyCooperationsFilters {
 export interface GetCooperationsParams
   extends Partial<MyCooperationsFilters>,
     Omit<RequestParams, 'sort'> {}
+
+export interface ScreenBasedLimits {
+  desktop: number
+  tablet: number
+  mobile: number
+  default: number
+}

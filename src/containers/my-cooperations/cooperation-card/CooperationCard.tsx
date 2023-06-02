@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
+import Avatar from '@mui/material/Avatar'
 
 import AppCard from '~/components/app-card/AppCard'
 import AppChip from '~/components/app-chip/AppChip'
@@ -25,6 +26,7 @@ const CooperationCard: FC<CooperationCardProps> = ({ cooperation }) => {
         <ImgTitleDescription
           description={getFormatedDate(cooperation.updatedAt)}
           img={cooperation.user.photo}
+          imgComponent={Avatar}
           style={styles.imgTitleDescription}
           title={`${cooperation.user.firstName} ${cooperation.user.lastName}`}
         />
@@ -42,7 +44,7 @@ const CooperationCard: FC<CooperationCardProps> = ({ cooperation }) => {
           {cooperation.offer.subject.name}
         </AppChip>
         <AppChip labelSx={styles.chipLabel}>
-          {cooperation.requiredProficiencyLevel}
+          {cooperation.proficiencyLevel}
         </AppChip>
       </Box>
       <Typography sx={styles.title}>{cooperation.offer.title}</Typography>

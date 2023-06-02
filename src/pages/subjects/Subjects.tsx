@@ -33,6 +33,7 @@ import OfferRequestBlock from '~/containers/find-offer/offer-request-block/Offer
 import AsyncAutocomplete from '~/components/async-autocomlete/AsyncAutocomplete'
 import useSubjectsNames from '~/hooks/use-subjects-names'
 import useBreakpoints from '~/hooks/use-breakpoints'
+import { getScreenBasedLimit } from '~/utils/helper-functions'
 import { mapArrayByField } from '~/utils/map-array-by-field'
 import { styles } from '~/pages/subjects/Subjects.styles'
 
@@ -42,12 +43,12 @@ const Subjects = () => {
   const params = useMemo(() => ({ name: match }), [match])
 
   const { t } = useTranslation()
-  const { isMobile } = useBreakpoints()
+  const breakpoints = useBreakpoints()
   const { openModal } = useModalContext()
   const [searchParams, setSearchParams] = useSearchParams()
   const categoryId = searchParams.get('categoryId') ?? ''
 
-  const cardsLimit = isMobile ? itemsLoadLimit.mobile : itemsLoadLimit.desktop
+  const cardsLimit = getScreenBasedLimit(breakpoints, itemsLoadLimit)
 
   const transform = useCallback(
     (data: SubjectNameInterface[]): string[] => mapArrayByField(data, 'name'),
@@ -150,7 +151,7 @@ const Subjects = () => {
         />
       </Box>
       <AppToolbar sx={styles.searchToolbar}>
-        {!isMobile && autoCompleteCategories}
+        {!breakpoints.isMobile && autoCompleteCategories}
         <SearchAutocomplete
           loading={subjectNamesLoading}
           onSearchChange={resetData}
@@ -162,7 +163,7 @@ const Subjects = () => {
           }}
         />
       </AppToolbar>
-      {isMobile && autoCompleteCategories}
+      {breakpoints.isMobile && autoCompleteCategories}
       {!subjects.length && !subjectsLoading ? (
         <NotFoundResults
           buttonText={t('constant.buttonRequest', { name: 'subjects' })}

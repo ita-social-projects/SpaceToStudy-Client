@@ -10,6 +10,6 @@ export interface Cooperation extends CommonEntityFields {
   offer: Pick<Offer, 'subject' | 'title'>
   user: Pick<UserResponse, 'firstName' | 'lastName' | 'photo'>
   price: Offer['price']
-  requiredProficiencyLevel: ProficiencyLevelEnum
+  proficiencyLevel: ProficiencyLevelEnum
   status: StatusEnum
 }

@@ -16,7 +16,9 @@ import serviceIcon from '~/assets/img/student-home-page/service_icon.png'
 import CardsList from '~/components/cards-list/CardsList'
 import { CategoryInterface } from '~/types'
 import useBreakpoints from '~/hooks/use-breakpoints'
+import { getScreenBasedLimit } from '~/utils/helper-functions'
 import { defaultResponses } from '~/constants'
+import { itemsLoadLimit } from '~/components/popular-categories/PopularCategories.constants'
 
 interface PopularCategoriesProps {
   title: string
@@ -29,20 +31,9 @@ const PopularCategories: FC<PopularCategoriesProps> = ({
 }) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const { isDesktop, isTablet, isMobile } = useBreakpoints()
+  const breakpoints = useBreakpoints()
 
-  const itemsToShow = useMemo(() => {
-    switch (true) {
-      case isDesktop:
-        return 9
-      case isTablet:
-        return 6
-      case isMobile:
-        return 4
-      default:
-        return 9
-    }
-  }, [isDesktop, isTablet, isMobile])
+  const itemsToShow = getScreenBasedLimit(breakpoints, itemsLoadLimit)
 
   const getCategories = useCallback(
     () => categoryService.getCategories({ limit: itemsToShow }),

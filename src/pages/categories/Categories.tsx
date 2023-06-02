@@ -18,6 +18,8 @@ import AppToolbar from '~/components/app-toolbar/AppToolbar'
 import DirectionLink from '~/components/direction-link/DirectionLink'
 import NotFoundResults from '~/components/not-found-results/NotFoundResults'
 import CreateSubjectModal from '~/containers/find-offer/create-new-subject/CreateNewSubject'
+import serviceIcon from '~/assets/img/student-home-page/service_icon.png'
+import { getScreenBasedLimit } from '~/utils/helper-functions'
 
 import {
   CategoryInterface,
@@ -27,17 +29,16 @@ import {
 } from '~/types'
 import { itemsLoadLimit } from '~/constants'
 import { authRoutes } from '~/router/constants/authRoutes'
-import serviceIcon from '~/assets/img/student-home-page/service_icon.png'
 import { styles } from '~/pages/categories/Categories.styles'
 
 const Categories = () => {
   const { t } = useTranslation()
-  const { isMobile } = useBreakpoints()
+  const breakpoints = useBreakpoints()
   const [match, setMatch] = useState<string>('')
   const params = useMemo(() => ({ name: match }), [match])
   const { openModal } = useModalContext()
 
-  const cardsLimit = isMobile ? itemsLoadLimit.mobile : itemsLoadLimit.desktop
+  const cardsLimit = getScreenBasedLimit(breakpoints, itemsLoadLimit)
 
   const getCategories = useCallback(
     (data?: Partial<CategoriesParams>) => categoryService.getCategories(data),

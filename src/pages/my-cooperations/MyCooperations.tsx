@@ -6,52 +6,36 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import usePagination from '~/hooks/table/use-pagination'
 import useAxios from '~/hooks/use-axios'
+import useBreakpoints from '~/hooks/use-breakpoints'
 import useFilter from '~/hooks/table/use-filter'
 import Tab from '~/components/tab/Tab'
+import Loader from '~/components/loader/Loader'
 import AppButton from '~/components/app-button/AppButton'
 import AppPagination from '~/components/app-pagination/AppPagination'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import CooperationToolbar from '~/containers/my-cooperations/cooperation-toolbar/CooperationToolbar'
 import CooperationContainer from '~/containers/my-cooperations/cooperations-container/CooperationContainer'
 import { cooperationService } from '~/services/cooperation-service'
+import { getScreenBasedLimit } from '~/utils/helper-functions'
 
 import {
   sortTranslationKeys,
   initialFilters,
-  itemsPerPage,
   tabsInfo
 } from '~/pages/my-cooperations/MyCooperations.constants'
-import { defaultResponses } from '~/constants'
-import { ProficiencyLevelEnum, TabType, StatusEnum } from '~/types'
+import { defaultResponses, itemsLoadLimit } from '~/constants'
+import { TabType } from '~/types'
 import { styles } from '~/pages/my-cooperations/MyCooperations.styles'
-
-const mockedCoop = {
-  _id: 'mockId',
-  offer: {
-    title:
-      'Hello. There are many variations of passages of There are many variations of passages of...asfjtkspe',
-    subject: { _id: 'id', name: 'Quantum Mechanics' }
-  },
-  user: {
-    firstName: 'Kathryn',
-    lastName: 'Murphy',
-    photo:
-      'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80'
-  },
-  price: 1800,
-  requiredProficiencyLevel: ProficiencyLevelEnum.Beginner,
-  status: StatusEnum.Pending,
-  createdAt: '2023-05-13T13:44:25.716Z',
-  updatedAt: '2023-05-13T13:44:25.716Z'
-}
 
 const MyCooperations = () => {
   const { t } = useTranslation()
+  const { page, handleChangePage } = usePagination()
+  const breakpoints = useBreakpoints()
   const filterOptions = useFilter({
     initialFilters
   })
 
-  const { page, handleChangePage } = usePagination()
+  const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
 
   const getMyCooperations = useCallback(
     () =>
@@ -61,7 +45,7 @@ const MyCooperations = () => {
         skip: (page - 1) * itemsPerPage
       }),
 
-    [filterOptions.filters, page]
+    [filterOptions.filters, page, itemsPerPage]
   )
 
   const handleTabClick = (tab: TabType<string>) => {
@@ -78,12 +62,10 @@ const MyCooperations = () => {
     />
   ))
 
-  const { response } = useAxios({
+  const { loading, response } = useAxios({
     service: getMyCooperations,
-    defaultResponse: defaultResponses.array
+    defaultResponse: { items: defaultResponses.array, count: 0 }
   })
-
-  console.log(response)
 
   const sortOptions = sortTranslationKeys.map(({ title, value }) => ({
     title: t(title),
@@ -101,8 +83,18 @@ const MyCooperations = () => {
         filterOptions={filterOptions}
         sortOptions={sortOptions}
       />
-      <CooperationContainer items={new Array(12).fill(mockedCoop)} />
-      <AppPagination onChange={handleChangePage} page={page} pageCount={4} />
+      {loading ? (
+        <Loader pageLoad size={50} />
+      ) : (
+        <>
+          <CooperationContainer items={response.items} />
+          <AppPagination
+            onChange={handleChangePage}
+            page={page}
+            pageCount={Math.ceil(response.count / itemsPerPage)}
+          />
+        </>
+      )}
     </PageWrapper>
   )
 }

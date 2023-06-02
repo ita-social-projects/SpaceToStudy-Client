@@ -1,5 +1,5 @@
 import { URLSearchParams } from 'node:url'
-import { FilterFromQuery } from '~/types'
+import { Breakpoints, FilterFromQuery, ScreenBasedLimits } from '~/types'
 
 export const parseJwt = <T,>(token: string): T => {
   const base64Url = token.split('.')[1]
@@ -56,4 +56,22 @@ export const getFormatedDate = (date: Date | string): string => {
     month: 'long',
     day: 'numeric'
   })
+}
+
+export const getScreenBasedLimit = (
+  breakpoints: Breakpoints,
+  limits: ScreenBasedLimits
+) => {
+  const { isDesktop, isTablet, isMobile } = breakpoints
+
+  switch (true) {
+    case isDesktop:
+      return limits.desktop
+    case isTablet:
+      return limits.tablet
+    case isMobile:
+      return limits.mobile
+    default:
+      return limits.default
+  }
 }
