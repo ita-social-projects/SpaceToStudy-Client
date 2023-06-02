@@ -1,6 +1,8 @@
+import { authRoutes } from '~/router/constants/authRoutes'
+
 export const tutorRoutes = {
   navBar: {
-    categories: { route: 'categories', path: '/tutor/#categories' },
+    categories: { route: 'categories', path: authRoutes.categories.path },
     faq: { route: 'faq', path: '/tutor/#faq' }
   },
   accountMenu: {
