@@ -1,5 +1,5 @@
 export const styles = {
-  container: {
+  root: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'left',
