@@ -30,13 +30,7 @@ const OfferActions: FC<OfferActionsProps> = ({
   const buttons = buttonActions.map(
     (elem) =>
       elem && (
-        <AppButton
-          fullWidth
-          key={elem.label}
-          onClick={elem.handleClick}
-          {...elem.buttonProps}
-          variant={elem.variant}
-        >
+        <AppButton fullWidth key={elem.label} {...elem.buttonProps}>
           {elem.label}
         </AppButton>
       )
