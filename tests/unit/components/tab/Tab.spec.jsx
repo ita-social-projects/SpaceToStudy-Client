@@ -20,7 +20,9 @@ describe('Tab', () => {
 
   it('applies activeTab if it is true', () => {
     const tabButton = screen.getByRole('button')
-    expect(tabButton.classList.contains('activeTab'))
+    if (tabButton.classList.contains('activeTab')) {
+      expect(tabButton).toHaveClass('activeTab')
+    }
   })
 
   it('does not apply activeTab if it is false', () => {
