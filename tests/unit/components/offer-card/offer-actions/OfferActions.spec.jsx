@@ -6,8 +6,8 @@ const price = '100'
 const isBookmarked = false
 const onBookmarkClick = vi.fn()
 const buttonActions = [
-  { label: 'Action 1', butttonProps: { onClick: vi.fn() } },
-  { label: 'Action 2', butttonProps: { onClick: vi.fn() } }
+  { label: 'Action 1', buttonProps: { onClick: vi.fn() } },
+  { label: 'Action 2', buttonProps: { onClick: vi.fn() } }
 ]
 
 describe('OfferActions', () => {
@@ -40,6 +40,6 @@ describe('OfferActions', () => {
   it('calls the handleClick function when a button is clicked', () => {
     const actionButton = screen.getByText('Action 1')
     fireEvent.click(actionButton)
-    expect(buttonActions[0].butttonProps.onClick).toHaveBeenCalled()
+    expect(buttonActions[0].buttonProps.onClick).toHaveBeenCalled()
   })
 })
