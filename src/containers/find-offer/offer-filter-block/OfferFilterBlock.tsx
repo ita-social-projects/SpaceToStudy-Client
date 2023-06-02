@@ -68,7 +68,6 @@ const OfferFilterBlock: FC<OfferFilterBlockProps> = ({
       <AppContentSwitcher
         active={showingTutorOffers}
         onChange={onToggleTutorOffers}
-        styles={styles.switchWrapper}
         switchOptions={switchOptions}
         typographyVariant={'subtitle2'}
       />

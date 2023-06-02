@@ -23,6 +23,7 @@ import OfferRequestBlock from '~/containers/find-offer/offer-request-block/Offer
 import { countActiveOfferFilters } from '~/utils/count-active-filters'
 import { useDrawer } from '~/hooks/use-drawer'
 import { useFilterQuery } from '~/hooks/use-filter-query'
+import { useAppSelector } from '~/hooks/use-redux'
 import usePagination from '~/hooks/table/use-pagination'
 import useAxios from '~/hooks/use-axios'
 
@@ -44,6 +45,7 @@ import NotFoundResults from '~/components/not-found-results/NotFoundResults'
 
 const FindOffers = () => {
   const [cardsView, setCardsView] = useState<CardsView>(CardsViewEnum.Inline)
+  const { userRole } = useAppSelector((state) => state.appMain)
   const { openDrawer, closeDrawer, isOpen } = useDrawer()
   const { isMobile, isDesktop } = useBreakpoints()
 
@@ -51,9 +53,12 @@ const FindOffers = () => {
 
   const itemsPerPage = cardsView === CardsViewEnum.Inline ? 4 : 6
 
+  const oppositeRole =
+    userRole === UserRoleEnum.Tutor ? UserRoleEnum.Student : UserRoleEnum.Tutor
+
   const { filters, activeFilterCount, searchParams, filterQueryActions } =
     useFilterQuery({
-      defaultFilters,
+      defaultFilters: defaultFilters(oppositeRole),
       countActiveFilters: countActiveOfferFilters
     })
 

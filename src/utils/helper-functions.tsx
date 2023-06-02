@@ -24,7 +24,7 @@ export const parseQueryParams = <T extends object>(
   const filtersFromQuery: FilterFromQuery = {}
   searchParams.forEach((value, key) => {
     if (key in defaultFilters) {
-      if (key === 'price' || key === 'level') {
+      if (key === 'price' || key === 'proficiencyLevel') {
         filtersFromQuery[key] = value ? value.split(',') : []
       } else {
         filtersFromQuery[key] = value

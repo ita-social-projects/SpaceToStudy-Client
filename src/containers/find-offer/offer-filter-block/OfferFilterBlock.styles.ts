@@ -11,10 +11,6 @@ export const styles = {
     transition: 'all 0.3s',
     transformOrigin: 'left'
   }),
-  switchWrapper: {
-    display: 'flex',
-    justifyContent: 'space-between'
-  },
   selectWrapper: {
     display: 'flex',
     flexDirection: 'column',
