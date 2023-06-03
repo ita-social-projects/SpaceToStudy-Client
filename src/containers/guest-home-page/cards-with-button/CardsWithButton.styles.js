@@ -48,7 +48,7 @@ export const styles = {
     },
     description: {
       textAlign: { sm: 'end', xs: 'start' },
-      typography: { xs: 'subtitle2' }
+      typography: 'body2'
     },
     slidesIn: slidesRightAnimation
   },
@@ -74,7 +74,7 @@ export const styles = {
     },
     description: {
       textAlign: 'start',
-      typography: { xs: 'subtitle2' }
+      typography: 'body2'
     },
     slidesIn: slidesLeftAnimation
   }
