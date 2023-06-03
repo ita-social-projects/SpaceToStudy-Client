@@ -62,7 +62,7 @@ const Navbar = () => {
         component={HashLink}
         size='small'
         sx={styles.logoButton}
-        to={guestRoutes.home.path}
+        to={guestRoutes.home.path + guestRoutes.welcome.path}
       >
         <Logo />
       </Button>
