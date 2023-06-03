@@ -9,19 +9,20 @@ const EnhancedTableHeaderCell = ({ column, sort }) => {
   const { t } = useTranslation()
   const { sort: sortParams, onRequestSort } = sort
 
-  const createSortHandler = (property) => (e) => {
-    onRequestSort(e, property)
+  const createSortHandler = () => {
+    onRequestSort(column.field)
   }
 
   return (
-    <TableCell key={column.field} sx={styles.root}>
+    <TableCell sx={styles.root}>
       <TableSortLabel
         active={sortParams.orderBy === column.field}
         data-testid='tableSortLabel'
         direction={
           sortParams.orderBy === column.field ? sortParams.order : 'asc'
         }
-        onClick={createSortHandler(column.field)}
+        disabled={!column.field}
+        onClick={createSortHandler}
         sx={styles.sortLabel}
       >
         {t(column.label)}

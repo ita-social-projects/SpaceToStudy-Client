@@ -3,7 +3,8 @@ export const styles = {
     display: 'flex',
     justifyContent: 'space-between',
     gap: { xs: '14px', sm: '40px' },
-    flexDirection: { xs: 'column', sm: 'row' }
+    flexDirection: { xs: 'column', sm: 'row' },
+    mb: '20px'
   },
   searchIcon: { color: 'primary.700' },
   input: {

@@ -16,9 +16,9 @@ const mockItem = {
 }
 
 const columns = [
-  { field: 'name' },
-  { field: 'email' },
-  { field: 'last login', calculatedCellValue }
+  { label: 'name', field: 'name' },
+  { label: 'email', field: 'email' },
+  { label: 'login', field: 'last login', calculatedCellValue }
 ]
 
 const rowActions = [{ label: 'Delete', func: vi.fn() }]

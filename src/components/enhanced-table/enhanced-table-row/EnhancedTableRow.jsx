@@ -13,7 +13,7 @@ const EnhancedTableRow = ({
   item,
   refetchData,
   rowActions,
-  select
+  select = {}
 }) => {
   const { openMenu, renderMenu } = useMenu()
   const { isSelected, handleSelectClick } = select
@@ -23,7 +23,7 @@ const EnhancedTableRow = ({
     refetchData()
   }
 
-  const tableCells = columns.map(({ field, calculatedCellValue }) => {
+  const tableCells = columns.map(({ field, label, calculatedCellValue }) => {
     let propValue = ''
     if (calculatedCellValue) {
       propValue = calculatedCellValue(item)
@@ -31,17 +31,21 @@ const EnhancedTableRow = ({
       propValue = item[field]?.toString()
     }
 
-    return <TableCell key={field}>{propValue}</TableCell>
+    return <TableCell key={label}>{propValue}</TableCell>
   })
 
-  const menuItems = rowActions.map(({ label, func }) => (
+  const menuItems = rowActions?.map(({ label, func }) => (
     <MenuItem key={label} onClick={() => onAction(func)}>
       {label}
     </MenuItem>
   ))
 
   return (
-    <TableRow hover key={item._id} selected={isSelected(item._id)}>
+    <TableRow
+      hover
+      key={item._id}
+      selected={isSelection && isSelected(item._id)}
+    >
       {isSelection && (
         <TableCell padding='checkbox'>
           <Checkbox

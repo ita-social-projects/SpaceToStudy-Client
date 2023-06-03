@@ -1,9 +1,17 @@
 {
   "title": "My Cooperations",
-  "tabs":{
-    "all":"All",
+  "tabs": {
+    "all": "All",
     "active": "Active",
     "pending": "Pending",
     "closed": "Closed"
+  },
+  "tableHeaders": {
+    "name": "Name",
+    "title": "Offer title",
+    "subject": "Subject",
+    "price": "Price",
+    "updated": "Last update",
+    "status": "Status"
   }
 }

@@ -13,14 +13,14 @@ const EnhancedTableHead = ({
   data,
   isSelection,
   rowsPerPage,
-  select,
+  select = {},
   sort
 }) => {
   const { t } = useTranslation()
   const { selected, createSelectAllHandler } = select
   const { items, count: itemsCount } = data
 
-  const checkboxCell = (
+  const checkboxCell = isSelection && (
     <TableCell padding='checkbox'>
       <Checkbox
         checked={itemsCount > 0 && selected.length === rowsPerPage}
@@ -32,7 +32,7 @@ const EnhancedTableHead = ({
   )
 
   const headerCells = columns.map((column) => (
-    <EnhancedTableHeaderCell column={column} key={column.field} sort={sort} />
+    <EnhancedTableHeaderCell column={column} key={column.label} sort={sort} />
   ))
 
   return (

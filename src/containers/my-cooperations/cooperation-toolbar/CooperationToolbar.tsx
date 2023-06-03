@@ -11,19 +11,29 @@ import { useDebounce } from '~/hooks/use-debounce'
 
 import { styles } from '~/containers/my-cooperations/cooperation-toolbar/CooperationToolbar.styles'
 import { FilterHook } from '~/hooks/table/use-filter'
-import { MyCooperationsFilters, SelectFieldType } from '~/types'
+import { CardsViewEnum, MyCooperationsFilters, SelectFieldType } from '~/types'
+import { SortHook } from '~/hooks/table/use-sort'
 
 interface CooperationToolbarProps {
   filterOptions: FilterHook<MyCooperationsFilters>
-  sortOptions: SelectFieldType<string>[]
+  sortFields: SelectFieldType<string>[]
+  withoutSort?: boolean
+  sortOptions: SortHook
+  view: CardsViewEnum
+  onChangeView: (value: CardsViewEnum) => void
 }
 
 const CooperationToolbar: FC<CooperationToolbarProps> = ({
   filterOptions,
+  sortFields,
+  withoutSort,
+  view,
+  onChangeView,
   sortOptions
 }) => {
   const { filters, setFilterByKey } = filterOptions
   const [inputValue, setInputValue] = useState(filters.search)
+  const { sort, onRequestSort } = sortOptions
   const { isMobile } = useBreakpoints()
   const { t } = useTranslation()
 
@@ -51,18 +61,15 @@ const CooperationToolbar: FC<CooperationToolbarProps> = ({
         value={inputValue}
       />
       <Box sx={styles.actionBlock}>
-        <AppSelect
-          fields={sortOptions}
-          setValue={setFilterByKey('sort')}
-          sx={styles.select}
-          value={filters.sort}
-        />
-        {!isMobile && (
-          <ViewSwitcher
-            onChange={setFilterByKey('view')}
-            value={filters.view}
+        {!withoutSort && (
+          <AppSelect
+            fields={sortFields}
+            setValue={onRequestSort}
+            sx={styles.select}
+            value={`${sort.orderBy} ${sort.order}`}
           />
         )}
+        {!isMobile && <ViewSwitcher onChange={onChangeView} value={view} />}
       </Box>
     </Box>
   )

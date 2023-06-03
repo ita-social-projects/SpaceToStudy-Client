@@ -36,7 +36,9 @@ const FilterCell = ({ column, filter, setFilter, clearFilter }) => {
     enums
   }
 
-  return <TableCell size='small'>{dataTypes[column.dataType]}</TableCell>
+  return column.dataType ? (
+    <TableCell size='small'>{dataTypes[column.dataType]}</TableCell>
+  ) : null
 }
 
 export default FilterCell

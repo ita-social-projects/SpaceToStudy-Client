@@ -1,15 +1,14 @@
-import { mainShadow } from '~/styles/app-theme/custom-shadows'
-
 export const styles = {
   root: {
-    mb: '35px',
+    mb: '40px',
     '& .MuiPaper-root': {
       mt: '0'
     }
   },
   paper: {
     mt: '10px',
-    boxShadow: mainShadow
+    boxShadow: 'none',
+    backgroundColor: 'inherit'
   },
   noMatches: {
     backgroundColor: 'basic.grey',

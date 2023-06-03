@@ -3,18 +3,20 @@ import TableCell from '@mui/material/TableCell'
 
 import FilterCell from '~/components/enhanced-table/filter-row/filter-cell/FilterCell'
 
-const FilterRow = ({ columns, filter, isSelection }) => {
+const FilterRow = ({ columns, filter = {}, isSelection }) => {
   const { filters, setFilterByKey, clearFilterByKey } = filter
 
-  const filterCells = columns.map((column) => (
-    <FilterCell
-      clearFilter={clearFilterByKey(column.field)}
-      column={column}
-      filter={filters[column.field]}
-      key={column.field}
-      setFilter={setFilterByKey(column.field)}
-    />
-  ))
+  const filterCells =
+    filters &&
+    columns.map((column) => (
+      <FilterCell
+        clearFilter={clearFilterByKey(column.field)}
+        column={column}
+        filter={filters[column.field]}
+        key={column.field}
+        setFilter={setFilterByKey(column.field)}
+      />
+    ))
 
   const emptyCell = isSelection && <TableCell />
 
