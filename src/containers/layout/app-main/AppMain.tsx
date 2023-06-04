@@ -13,27 +13,27 @@ import { styles } from '~/containers/app-content/AppContent.styles'
 
 const AppMain = () => {
   const mainWithFooter = useRef(null)
-  const { authLoading } = useAppSelector((state) => state.appMain)
+  const { loading } = useAppSelector((state) => state.appMain)
   const dispatch = useAppDispatch()
 
   useLayoutEffect(() => {
     void dispatch(checkAuth())
   }, [dispatch])
 
-  if (authLoading) {
+  if (loading) {
     return <Loader pageLoad size={70} />
   }
 
   return (
-    <Suspense fallback={<Loader pageLoad size={70} />}>
-      <Box ref={mainWithFooter} sx={styles.content}>
+    <Box ref={mainWithFooter} sx={styles.content}>
+      <Suspense fallback={<Loader pageLoad size={70} />}>
         <AppBreadCrumbs />
-        <ScrollToTop />
+        <ScrollToTop element={mainWithFooter} />
         <Outlet context={{ pageRef: mainWithFooter }} />
         <ScrollToTopButton element={mainWithFooter} />
         <Footer />
-      </Box>
-    </Suspense>
+      </Suspense>
+    </Box>
   )
 }
 
