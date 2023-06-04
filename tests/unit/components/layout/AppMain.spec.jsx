@@ -14,7 +14,7 @@ vi.mock('react-router-dom', async () => {
 })
 
 const mockState = {
-  appMain: { authLoading: true, userRole: '' }
+  appMain: { loading: true, userRole: '' }
 }
 
 const mockDispatch = vi.fn()
