@@ -1,7 +1,7 @@
 export const styles = {
   title: {
     color: 'primary.500',
-    typography: 'body1'
+    typography: 'body2'
   },
   slider: {
     display: 'block',
@@ -12,7 +12,7 @@ export const styles = {
     borderColor: 'primary.200',
     borderRadius: '5px',
     boxSizing: 'border-box',
-    mb: '8px',
+    my: '8px',
 
     '& .MuiSlider-rail': {
       background: 'primary.100',

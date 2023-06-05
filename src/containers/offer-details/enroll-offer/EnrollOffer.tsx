@@ -19,6 +19,7 @@ import SliderWithInput from '~/components/slider-with-input/SliderWithInput'
 import { cooperationService } from '~/services/cooperation-service'
 import { snackbarVariants } from '~/constants'
 import { styles } from '~/containers/offer-details/enroll-offer/EnrollOffer.styles'
+import useBreakpoints from '~/hooks/use-breakpoints'
 import { minMaxPrice } from '~/utils/range-filter'
 
 import { ComponentEnum, ErrorResponse, Offer, EnrollOfferForm } from '~/types'
@@ -28,6 +29,7 @@ interface EnrollOfferProps {
 }
 
 const EnrollOffer: FC<EnrollOfferProps> = ({ offer }) => {
+  const { isDesktop } = useBreakpoints()
   const { closeModal } = useModalContext()
   const { setAlert } = useSnackBarContext()
   const { t } = useTranslation()
@@ -87,9 +89,11 @@ const EnrollOffer: FC<EnrollOfferProps> = ({ offer }) => {
 
   return (
     <Box sx={styles.root}>
-      <AppCard sx={styles.offerCard}>
-        <OfferCardSquare offer={offer} />
-      </AppCard>
+      {isDesktop && (
+        <AppCard sx={styles.offerCard}>
+          <OfferCardSquare offer={offer} />
+        </AppCard>
+      )}
       <Box
         component={ComponentEnum.Form}
         onSubmit={handleSubmit}

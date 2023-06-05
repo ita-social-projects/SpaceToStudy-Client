@@ -8,7 +8,7 @@ export const styles = {
     flex: 1
   },
   selectTitle: {
-    typography: 'body1',
+    typography: 'body2',
     color: 'primary.500',
     mr: '8px',
     minWidth: '55px'
