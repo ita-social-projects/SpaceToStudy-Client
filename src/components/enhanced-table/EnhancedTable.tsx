@@ -13,8 +13,27 @@ import FilterRow from '~/components/enhanced-table/filter-row/FilterRow'
 import Loader from '~/components/loader/Loader'
 
 import { styles } from '~/components/enhanced-table/EnhancedTable.styles'
+import {
+  TableColumn,
+  TableData,
+  TableFilter,
+  TableRowAction,
+  TableSelect,
+  TableSort
+} from '~/types'
 
-const EnhancedTable = ({
+interface EnhancedTableProps<F> {
+  columns: TableColumn[]
+  isSelection: boolean
+  rowActions: TableRowAction[]
+  select: TableSelect
+  filter: TableFilter<F>
+  sort: TableSort
+  rowsPerPage: number
+  data: TableData
+}
+
+const EnhancedTable = <F,>({
   columns,
   isSelection,
   rowActions,
@@ -24,7 +43,7 @@ const EnhancedTable = ({
   rowsPerPage,
   data,
   ...props
-}) => {
+}: EnhancedTableProps<F>) => {
   const { t } = useTranslation()
   const { items, loading, getData } = data
 

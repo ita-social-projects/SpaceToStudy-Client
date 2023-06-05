@@ -25,8 +25,9 @@ export {
   SwitchContent,
   SwitchOptions
 }
-export * from './accordion-with-image/accordionWithImage.interface'
-export * from './accordions/accordions.interface'
-export * from './multi-accordion-with-title/multiAccordionWithTitle.interface'
+export * from '~/types/components/accordion-with-image/accordionWithImage.interface'
+export * from '~/types/components/accordions/accordions.interface'
+export * from '~/types/components/multi-accordion-with-title/multiAccordionWithTitle.interface'
 export * from '~/types/components/tab/tab.types'
 export * from '~/types/components/user-profike-info/userProfileInfo.interface'
+export * from '~/types/components/enhanced-table/enhancedTable.interface'
