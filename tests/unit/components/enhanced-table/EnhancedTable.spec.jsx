@@ -31,7 +31,7 @@ describe('EnhancedTable component', () => {
     expect(loader).toBeVisible()
   })
 
-  it('render without loader and with noMatchedBox', () => {
+  it('render without loader and with noMatchesBox', () => {
     render(
       <EnhancedTable
         data={{ loading: false, items: [] }}
