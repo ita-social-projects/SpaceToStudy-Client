@@ -72,10 +72,11 @@ const SubjectsStep = ({ stepLabel, btnsBox }) => {
 
     handleStepData(stepLabel, [...subjectData, subjects.subject])
 
-    setSubjects({
-      category: null,
-      subject: null
-    })
+    !subjectError &&
+      setSubjects({
+        category: null,
+        subject: null
+      })
   }
 
   const handleChipDelete = (item) => {
