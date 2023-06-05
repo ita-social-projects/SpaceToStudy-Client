@@ -60,7 +60,7 @@ const EnhancedTable = <F,>({
   ))
 
   const tableBody = (
-    <TableContainer>
+    <TableContainer data-testid='table-container'>
       <Table {...props}>
         <EnhancedTableHead
           columns={columns}
@@ -85,7 +85,7 @@ const EnhancedTable = <F,>({
   const noMatchesBox = (
     <>
       {tableBody}
-      <Box sx={styles.noMatches}>
+      <Box data-testid='no-matches-box' sx={styles.noMatches}>
         <ReportIcon color='secondary' />
         {t('table.noExactMatches')}
       </Box>
