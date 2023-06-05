@@ -1,7 +1,8 @@
 export const styles = {
   footer: {
     backgroundColor: 'primary.900',
-    color: 'primary.50'
+    color: 'primary.50',
+    marginTop: 'auto'
   },
   container: {
     display: 'flex',
