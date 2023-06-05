@@ -66,14 +66,16 @@ const ProfileInfo = () => {
   const buttonGroup = !isMyProfile && (
     <Box sx={styles.buttonGroup}>
       <Button
+        disabled
         fullWidth
         size={isDesktop ? SizeEnum.ExtraLarge : SizeEnum.Medium}
-        variant='containedLight'
+        variant='contained' // default: containedLight
       >
         {t('tutorProfilePage.profileInfo.bookLesson')}
       </Button>
 
       <Button
+        disabled
         fullWidth
         size={isDesktop ? SizeEnum.ExtraLarge : SizeEnum.Medium}
         variant='contained'

@@ -28,6 +28,7 @@ const GuestFooter = () => {
         </Typography>
         <Typography
           component={RouterLink}
+          sx={styles.disabledLink}
           to={termOfUse.path}
           variant={TypographyVariantEnum.Caption}
         >

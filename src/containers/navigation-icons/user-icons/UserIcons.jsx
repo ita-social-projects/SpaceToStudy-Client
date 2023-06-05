@@ -62,26 +62,26 @@ const UserIcons = ({ setSidebarOpen }) => {
   return (
     <Box ref={anchorRef} sx={styles.iconBox}>
       <Tooltip arrow title={t('iconsTooltip.language')}>
-        <IconButton size='large' sx={styles.langIcon}>
-          <LanguageIcon color='primary' />
+        <IconButton disabled size='large' sx={styles.langIcon}>
+          <LanguageIcon color='disabled' />
         </IconButton>
       </Tooltip>
 
       <Tooltip arrow title={t('iconsTooltip.messages')}>
-        <IconButton sx={styles.studentIcons}>
-          <MessageRoundedIcon color='primary' />
+        <IconButton disabled sx={styles.studentIcons}>
+          <MessageRoundedIcon color='disabled' />
         </IconButton>
       </Tooltip>
 
       <Tooltip arrow title={t('iconsTooltip.bookmarks')}>
-        <IconButton sx={styles.studentIcons}>
-          <BookmarkIcon color='primary' />
+        <IconButton disabled sx={styles.studentIcons}>
+          <BookmarkIcon color='disabled' />
         </IconButton>
       </Tooltip>
 
       <Tooltip arrow title={t('iconsTooltip.notifications')}>
-        <IconButton sx={styles.studentIcons}>
-          <NotificationsRoundedIcon color='primary' />
+        <IconButton disabled sx={styles.studentIcons}>
+          <NotificationsRoundedIcon color='disabled' />
         </IconButton>
       </Tooltip>
 
