@@ -19,7 +19,7 @@ import { ButtonActions, Offer, ProficiencyLevelEnum } from '~/types'
 import { styles } from '~/containers/find-offer/offer-card-square/OfferCardSquare.styles'
 
 interface OfferCardSquareProps {
-  buttonActions: (ButtonActions | null)[]
+  buttonActions?: (ButtonActions | null)[]
   offer: Offer
   onBookmarkClick?: (id: string) => void
 }

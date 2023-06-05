@@ -24,11 +24,8 @@ const AppTextArea: FC<AppTextAreaProps> = ({
   sx,
   ...props
 }) => {
-  const titleEl = title && (
-    <Typography sx={styles.title} variant={TypographyVariantEnum.Body2}>
-      {title}
-    </Typography>
-  )
+  const titleEl = title && <Typography sx={styles.title}>{title}</Typography>
+
   return (
     <Box sx={{ position: 'relative', ...sx }}>
       {titleEl}

@@ -1,14 +1,11 @@
-import { LanguagesEnum, Offer, ProficiencyLevelEnum } from '~/types'
+import { Offer, ProficiencyLevelEnum } from '~/types'
 
-export interface EnrollOfferForm {
+export interface EnrollOfferForm extends Pick<Offer, 'price'> {
   proficiencyLevel: ProficiencyLevelEnum
-  language: LanguagesEnum
   info: string
 }
 
-export interface CreateCooperationsParams
-  extends EnrollOfferForm,
-    Pick<Offer, 'price'> {
+export interface CreateCooperationsParams extends EnrollOfferForm {
   offer: string
   receiver: string
 }

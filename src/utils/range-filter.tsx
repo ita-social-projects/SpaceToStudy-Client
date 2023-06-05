@@ -7,6 +7,17 @@ import {
   RangeArray
 } from '~/types'
 
+export const createMarks = (min: number, max: number) => [
+  {
+    value: min,
+    label: min.toString()
+  },
+  {
+    value: max,
+    label: max.toString()
+  }
+]
+
 export const checkRangeInput = (value: InputRange): boolean =>
   !(value != null && isNaN(value))
 
@@ -58,3 +69,7 @@ export const isDefaultPrice = (
 
 export const isEmptyArray = <T,>(value: T): boolean =>
   Array.isArray(value) && value.length === 0
+
+export const minMaxPrice = (value: number, step: number) => {
+  return [Math.round(value - value * step), Math.round(value + value * step)]
+}

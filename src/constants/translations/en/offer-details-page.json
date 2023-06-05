@@ -4,12 +4,11 @@
     "description": "Send a Request to Create a Cooperation",
     "inputs": {
       "level": "Choose the appropriate level of tutoring you require.",
-      "language": "Select the language of tutoring to be conducted in.",
       "info": "Ask the questions you have, describe your learning needs or specify your preferred teaching approach."
     },
     "labels": {
       "level": "Your required level",
-      "language": "Tutoring language",
+      "prefferedPrice": "Set your preferred price for the lesson. Keep in mind that choosing a lower or higher price may affect tutor availability.",
       "info": "Additional information"
     },
 
