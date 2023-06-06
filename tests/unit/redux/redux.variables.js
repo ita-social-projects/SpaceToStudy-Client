@@ -11,7 +11,8 @@ export const signupUserData = {
 export const initialState = {
   userId: '',
   userRole: '',
-  authLoading: true,
+  authLoading: false,
+  loading: true,
   error: '',
   isFirstLogin: true
 }
@@ -20,6 +21,7 @@ export const stateAfterLogin = {
   userId: '62f4fa49d39c988e347d833f',
   userRole: 'student',
   authLoading: false,
+  loading: false,
   error: '',
   isFirstLogin: true
 }
@@ -27,6 +29,7 @@ export const stateAfterLogin = {
 export const stateAfterSignup = {
   userId: '',
   userRole: '',
+  loading: false,
   authLoading: false,
   error: '',
   isFirstLogin: true

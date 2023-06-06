@@ -39,7 +39,7 @@ const AppCarousel: FC<AppCarouselProps> = ({ children, settings }) => {
       renderCenterLeftControls={leftArrow}
       renderCenterRightControls={rightArrow}
       style={{ paddingBottom: '36px' }}
-      withoutControls={Number(settings?.slidesToShow) > children.length}
+      withoutControls={Number(settings?.slidesToShow) >= children.length}
       wrapAround={children.length > Number(settings?.slidesToShow)}
       {...settings}
     >

@@ -39,6 +39,7 @@ const ComentsBlock = ({
 
   const showMoreButton = isExpandable && (
     <AppButton
+      disabled
       endIcon={!loading && <KeyboardArrowDownSharpIcon />}
       fullWidth={isMobile}
       loading={loading}

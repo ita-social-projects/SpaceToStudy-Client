@@ -1,4 +1,4 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit'
+import { PayloadAction, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { parseJwt } from '~/utils/helper-functions'
 import {
   createAsyncThunk,
@@ -29,12 +29,14 @@ interface UserState {
   authLoading: boolean
   error: string
   isFirstLogin: boolean
+  loading: boolean
 }
 
 const initialState: UserState = {
   userId: '',
   userRole: '',
-  authLoading: true,
+  authLoading: false,
+  loading: true,
   error: '',
   isFirstLogin: true
 }
@@ -126,15 +128,24 @@ export const mainSlice = createSlice({
     }
   },
   extraReducers: (builder) => {
-    builder.addMatcher(isPending, (state) => {
-      state.authLoading = true
+    builder.addMatcher(isPending, (state, action) => {
+      if (isAnyOf(checkAuth.pending, logoutUser.pending)(action)) {
+        state.loading = true
+      } else {
+        state.authLoading = true
+      }
       state.error = ''
     })
-    builder.addMatcher(isFulfilled, (state) => {
-      state.authLoading = false
+    builder.addMatcher(isFulfilled, (state, action) => {
+      if (isAnyOf(checkAuth.fulfilled, logoutUser.fulfilled)(action)) {
+        state.loading = false
+      } else {
+        state.authLoading = false
+      }
       state.error = ''
     })
     builder.addMatcher(isRejected, (state, action) => {
+      state.loading = false
       state.authLoading = false
       if (typeof action.payload === 'string') {
         state.error = action.payload

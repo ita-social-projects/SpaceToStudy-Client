@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { useTranslation } from 'react-i18next'
@@ -7,10 +6,9 @@ import { useDispatch } from 'react-redux'
 import GoogleLogin from '~/containers/guest-home-page/google-login/GoogleLogin'
 import LoginForm from '~/containers/guest-home-page/login-form/LoginForm'
 import useForm from '~/hooks/use-form'
-import useConfirm from '~/hooks/use-confirm'
 import { useModalContext } from '~/context/modal-context'
 import { useSnackBarContext } from '~/context/snackbar-context'
-import { email, password } from '~/utils/validations/login'
+import { email } from '~/utils/validations/login'
 import loginImg from '~/assets/img/login-dialog/login.svg'
 import { login, snackbarVariants } from '~/constants'
 import { loginUser } from '~/redux/reducer'
@@ -19,13 +17,12 @@ import styles from '~/containers/guest-home-page/login-dialog/LoginDialog.styles
 
 const LoginDialog = () => {
   const { t } = useTranslation()
-  const { setNeedConfirmation } = useConfirm()
   const { closeModal } = useModalContext()
   const { setAlert } = useSnackBarContext()
   const dispatch = useDispatch()
 
-  const { handleSubmit, handleInputChange, handleBlur, data, isDirty, errors } =
-    useForm({
+  const { handleSubmit, handleInputChange, handleBlur, data, errors } = useForm(
+    {
       onSubmit: async () => {
         try {
           await dispatch(loginUser(data)).unwrap()
@@ -38,12 +35,9 @@ const LoginDialog = () => {
         }
       },
       initialValues: { email: '', password: '' },
-      validations: { email, password }
-    })
-
-  useEffect(() => {
-    setNeedConfirmation(isDirty)
-  }, [isDirty, setNeedConfirmation])
+      validations: { email }
+    }
+  )
 
   return (
     <Box sx={styles.root}>
