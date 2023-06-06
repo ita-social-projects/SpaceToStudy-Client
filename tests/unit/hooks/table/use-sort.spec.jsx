@@ -8,7 +8,7 @@ describe('Use sort custom hook', () => {
 
     const { result } = renderHook(() => useSort({ initialSort }))
 
-    act(() => result.current.onRequestSort(null, 'email'))
+    act(() => result.current.onRequestSort('email'))
 
     expect(result.current.sort.order).toEqual('desc')
   })
@@ -18,7 +18,7 @@ describe('Use sort custom hook', () => {
 
     const { result } = renderHook(() => useSort({ initialSort }))
 
-    act(() => result.current.onRequestSort(null, 'email'))
+    act(() => result.current.onRequestSort('email'))
 
     expect(result.current.sort.order).toEqual('asc')
   })

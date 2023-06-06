@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+import { useCallback, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
@@ -6,6 +6,7 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import usePagination from '~/hooks/table/use-pagination'
 import useAxios from '~/hooks/use-axios'
+import useSort from '~/hooks/table/use-sort'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import useFilter from '~/hooks/table/use-filter'
 import Tab from '~/components/tab/Tab'
@@ -21,41 +22,55 @@ import { getScreenBasedLimit } from '~/utils/helper-functions'
 import {
   sortTranslationKeys,
   initialFilters,
+  initialSort,
   tabsInfo
 } from '~/pages/my-cooperations/MyCooperations.constants'
 import { defaultResponses, itemsLoadLimit } from '~/constants'
-import { TabType } from '~/types'
+import { CardsViewEnum, SortEnum, TabType } from '~/types'
 import { styles } from '~/pages/my-cooperations/MyCooperations.styles'
 
 const MyCooperations = () => {
+  const [itemsView, setItemsView] = useState<CardsViewEnum>(
+    CardsViewEnum.Inline
+  )
   const { t } = useTranslation()
-  const { page, handleChangePage } = usePagination()
   const breakpoints = useBreakpoints()
   const filterOptions = useFilter({
     initialFilters
   })
+  const sortOptions = useSort({
+    initialSort
+  })
+  const { page, handleChangePage } = usePagination()
+  const { sort, resetSort } = sortOptions
+  const { filters, clearFilters, setFilterByKey } = filterOptions
 
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
+  const showTable = !breakpoints.isMobile && itemsView === CardsViewEnum.Inline
 
   const getMyCooperations = useCallback(
     () =>
       cooperationService.getCooperations({
-        ...filterOptions.filters,
+        ...filters,
+        sort: {
+          [sort.orderBy]: sort.order === SortEnum.Asc ? 1 : -1
+        },
         limit: itemsPerPage,
         skip: (page - 1) * itemsPerPage
       }),
 
-    [filterOptions.filters, page, itemsPerPage]
+    [filters, page, itemsPerPage, sort]
   )
 
   const handleTabClick = (tab: TabType<string>) => {
-    filterOptions.clearFilters()
-    filterOptions.setFilterByKey('status')(tab.value)
+    clearFilters()
+    resetSort()
+    setFilterByKey('status')(tab.value)
   }
 
   const tabs = Object.values(tabsInfo).map((tab) => (
     <Tab
-      activeTab={filterOptions.filters.status === tab.value}
+      activeTab={filters.status === tab.value}
       key={tab.label}
       label={tab.label}
       onClick={() => handleTabClick(tab)}
@@ -67,7 +82,7 @@ const MyCooperations = () => {
     defaultResponse: { items: defaultResponses.array, count: 0 }
   })
 
-  const sortOptions = sortTranslationKeys.map(({ title, value }) => ({
+  const sortFields = sortTranslationKeys.map(({ title, value }) => ({
     title: t(title),
     value
   }))
@@ -76,18 +91,28 @@ const MyCooperations = () => {
     <PageWrapper>
       <Box sx={styles.titleBlock}>
         <Typography sx={styles.title}>{t('cooperationsPage.title')}</Typography>
-        <AppButton component={Link}>{t('button.viewMyOffers')}</AppButton>
+        <AppButton component={Link} disabled>
+          {t('button.viewMyOffers')}
+        </AppButton>
       </Box>
       <Box sx={styles.tabs}>{tabs}</Box>
       <CooperationToolbar
         filterOptions={filterOptions}
+        onChangeView={setItemsView}
+        sortFields={sortFields}
         sortOptions={sortOptions}
+        view={itemsView}
+        withoutSort={showTable}
       />
       {loading ? (
         <Loader pageLoad size={50} />
       ) : (
         <>
-          <CooperationContainer items={response.items} />
+          <CooperationContainer
+            items={response.items}
+            showTable={showTable}
+            sort={sortOptions}
+          />
           <AppPagination
             onChange={handleChangePage}
             page={page}

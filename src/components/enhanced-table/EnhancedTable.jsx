@@ -22,7 +22,8 @@ const EnhancedTable = ({
   filter,
   sort,
   rowsPerPage,
-  data
+  data,
+  ...props
 }) => {
   const { t } = useTranslation()
   const { items, loading, getData } = data
@@ -41,7 +42,7 @@ const EnhancedTable = ({
 
   const tableBody = (
     <TableContainer>
-      <Table>
+      <Table {...props}>
         <EnhancedTableHead
           columns={columns}
           data={data}

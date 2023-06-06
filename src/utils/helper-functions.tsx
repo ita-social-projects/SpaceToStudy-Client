@@ -1,6 +1,12 @@
 import { URLSearchParams } from 'node:url'
 import { SxProps } from '@mui/material'
-import { Breakpoints, FilterFromQuery, ScreenBasedLimits } from '~/types'
+import {
+  Breakpoints,
+  CooperationTableColumns,
+  FilterFromQuery,
+  RemoveColumnRules,
+  ScreenBasedLimits
+} from '~/types'
 
 export const parseJwt = <T,>(token: string): T => {
   const base64Url = token.split('.')[1]
@@ -74,6 +80,27 @@ export const getScreenBasedLimit = (
       return limits.mobile
     default:
       return limits.default
+  }
+}
+
+export const ajustColumns = (
+  breakpoints: Breakpoints,
+  columns: CooperationTableColumns[],
+  rules: RemoveColumnRules
+) => {
+  const { isDesktop, isTablet, isMobile } = breakpoints
+  const removeColumns = (rule: RemoveColumnRules[keyof RemoveColumnRules]) =>
+    columns.filter(({ label }) => !rule?.includes(label))
+
+  switch (true) {
+    case isDesktop:
+      return removeColumns(rules.desktop)
+    case isTablet:
+      return removeColumns(rules.tablet)
+    case isMobile:
+      return removeColumns(rules.mobile)
+    default:
+      return columns
   }
 }
 

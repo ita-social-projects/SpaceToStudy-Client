@@ -1,30 +1,30 @@
-import { CardsViewEnum } from '~/types'
+import { SortEnum } from '~/types'
 
 export const sortTranslationKeys = [
   {
     title: 'findOffers.sortTitles.newest',
-    value: JSON.stringify({ updatedAt: 1 })
+    value: 'updatedAt asc'
   },
   {
     title: 'findOffers.sortTitles.name',
-    value: JSON.stringify({ 'user.firstName': 1, 'user.lastName': 1 })
+    value: 'name asc'
   },
   {
     title: 'findOffers.sortTitles.priceAsc',
-    value: JSON.stringify({ price: 1 })
+    value: 'price asc'
   },
   {
     title: 'findOffers.sortTitles.priceDesc',
-    value: JSON.stringify({ price: -1 })
+    value: 'price desc'
   }
 ]
 
 export const initialFilters = {
-  sort: sortTranslationKeys[0].value,
   search: '',
-  status: '',
-  view: CardsViewEnum.Grid
+  status: ''
 }
+
+export const initialSort = { order: SortEnum.Asc, orderBy: 'updatedAt' }
 
 export const tabsInfo = {
   all: {

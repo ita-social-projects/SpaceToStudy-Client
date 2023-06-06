@@ -3,21 +3,24 @@ import CooperationToolbar from '~/containers/my-cooperations/cooperation-toolbar
 
 const filterOptionsMock = {
   filters: {
-    sort: 'name',
     search: '',
-    status: '',
-    view: 'grid'
+    status: ''
   },
   setFilterByKey: () => vi.fn()
 }
-const sortOptionsMock = [{ title: 'test', value: 'name' }]
+const sortFieldsMock = [{ title: 'test', value: 'name asc' }]
+const sortOptions = {
+  sort: { orderBy: 'name', order: 'asc' },
+  onRequestSort: () => vi.fn()
+}
 
 describe('CooperationContainer component ', () => {
   it('should render card in container', () => {
     render(
       <CooperationToolbar
         filterOptions={filterOptionsMock}
-        sortOptions={sortOptionsMock}
+        sortFields={sortFieldsMock}
+        sortOptions={sortOptions}
       />
     )
 

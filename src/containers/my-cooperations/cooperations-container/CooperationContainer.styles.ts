@@ -9,7 +9,27 @@ export const styles = {
     },
     gridAutoRows: 'auto',
     gap: '20px',
-    mt: '20px',
     mb: '40px'
+  },
+  chips: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'start',
+    gap: '4px'
+  },
+  chip: {
+    typography: 'overline'
+  },
+  table: {
+    '& td,th': {
+      '&:first-of-type': {
+        borderTopLeftRadius: '10px',
+        borderBottomLeftRadius: '10px'
+      },
+      '&:last-of-type': {
+        borderTopRightRadius: '10px',
+        borderBottomRightRadius: '10px'
+      }
+    }
   }
 }
