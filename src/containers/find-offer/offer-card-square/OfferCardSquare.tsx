@@ -3,22 +3,20 @@ import { FC } from 'react'
 import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
 import TurnedInNot from '@mui/icons-material/TurnedInNot'
-import Avatar from '@mui/material/Avatar'
+import Typography from '@mui/material/Typography'
 
 import { useTranslation } from 'react-i18next'
 
-import ImgTitleDescription from '~/components/img-title-description/ImgTitleDescription'
 import AppChip from '~/components/app-chip/AppChip'
 import AppRatingMobile from '~/components/app-rating-mobile/AppRatingMobile'
 import AppButton from '~/components/app-button/AppButton'
+import UserProfileInfo from '~/components/user-profile-info/UserProfileInfo'
 import LanguagesListWithIcon from '~/components/languages-list-with-icon/LanguagesListWithIcon'
 import TitleWithDescripiton from '~/components/title-with-description/TitleWithDescription'
 
 import { ButtonActions, Offer, ProficiencyLevelEnum } from '~/types'
 
 import { styles } from '~/containers/find-offer/offer-card-square/OfferCardSquare.styles'
-
-const imgUserUrl = import.meta.env.VITE_APP_IMG_USER_URL
 
 interface OfferCardSquareProps {
   buttonActions: (ButtonActions | null)[]
@@ -55,18 +53,10 @@ const OfferCardSquare: FC<OfferCardSquareProps> = ({
       ? t('common.beginner')
       : `${t('common.beginner')} - ${lastLevel}`.toUpperCase()
 
-  const fullName = `${authorFirstName} ${authorLastName}`
-
   const buttons = buttonActions?.map(
     (elem) =>
       elem && (
-        <AppButton
-          fullWidth
-          key={elem.label}
-          onClick={elem.handleClick}
-          {...elem.buttonProps}
-          variant={elem.variant}
-        >
+        <AppButton fullWidth key={elem.label} {...elem.buttonProps}>
           {elem.label}
         </AppButton>
       )
@@ -74,13 +64,13 @@ const OfferCardSquare: FC<OfferCardSquareProps> = ({
 
   return (
     <Box sx={styles.container}>
-      <ImgTitleDescription
-        description={title}
-        img={author.photo && `${imgUserUrl}${author.photo}`}
-        imgComponent={Avatar}
-        style={styles.mainInfo}
-        title={fullName}
+      <UserProfileInfo
+        firstName={authorFirstName}
+        lastName={authorLastName}
+        photo={author.photo}
+        sx={styles.userInfo}
       />
+      <Typography sx={styles.description}>{title}</Typography>
       {onBookmarkClick && (
         <IconButton
           data-testid='bookmark-icon'

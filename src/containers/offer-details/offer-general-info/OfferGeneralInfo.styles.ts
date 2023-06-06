@@ -1,4 +1,4 @@
-import { VariantEnum } from '~/types'
+import { TypographyVariantEnum } from '~/types'
 
 export const styles = {
   container: {
@@ -6,7 +6,7 @@ export const styles = {
   },
   title: {
     color: 'primary.700',
-    typography: { xs: VariantEnum.H6, sm: VariantEnum.H6 }
+    typography: { xs: TypographyVariantEnum.H6, sm: TypographyVariantEnum.H6 }
   },
   cardsContainer: {
     mt: { xs: '20px', sm: '30px' },
@@ -43,7 +43,10 @@ export const styles = {
         mx: { xs: 0, sm: '20px', md: '35px' }
       },
       title: {
-        typography: { xs: VariantEnum.Subtitle2, sm: VariantEnum.H6 }
+        typography: {
+          xs: TypographyVariantEnum.Subtitle2,
+          sm: TypographyVariantEnum.H6
+        }
       },
       description: {
         display: 'grid',
@@ -53,7 +56,10 @@ export const styles = {
           md: 'repeat(3, max-content)'
         },
         gap: { xs: '10px', sm: '10px 40px' },
-        typography: { xs: VariantEnum.Body2, sm: VariantEnum.Body1 }
+        typography: {
+          xs: TypographyVariantEnum.Body2,
+          sm: TypographyVariantEnum.Body1
+        }
       }
     }
   },
@@ -67,7 +73,10 @@ export const styles = {
       alignItems: 'center'
     },
     description: {
-      typography: { xs: VariantEnum.Body2, sm: VariantEnum.Body1 }
+      typography: {
+        xs: TypographyVariantEnum.Body2,
+        sm: TypographyVariantEnum.Body1
+      }
     }
   },
   doneIcon: { color: 'basic.orientalHerbs' }

@@ -8,7 +8,7 @@ import Comment from '~/components/comment/Comment'
 import AppButton from '~/components/app-button/AppButton'
 
 import useBreakpoints from '~/hooks/use-breakpoints'
-import { Offer, SizeEnum, VariantEnum } from '~/types'
+import { Offer } from '~/types'
 import { styles } from '~/containers/tutor-profile/comments-block/CommentsBlock.styles'
 
 interface ComentsBlockProps {
@@ -43,9 +43,7 @@ const ComentsBlock = ({
       fullWidth={isMobile}
       loading={loading}
       onClick={loadMore}
-      size={SizeEnum.Large}
       sx={styles.button}
-      variant={VariantEnum.Contained}
     >
       {t('tutorProfilePage.reviews.buttonTitle')}
     </AppButton>

@@ -24,13 +24,7 @@ export enum SizeEnum {
   ExtraLarge = 'extraLarge'
 }
 
-export enum VariantEnum {
-  Contained = 'contained',
-  ContainedLight = 'containedLight',
-  Outlined = 'outlined',
-  Text = 'text',
-  Tonal = 'tonal',
-  Standard = 'standard',
+export enum TypographyVariantEnum {
   Caption = 'caption',
   Button = 'button',
   H5 = 'h5',
@@ -40,6 +34,17 @@ export enum VariantEnum {
   Subtitle2 = 'subtitle2'
 }
 
+export enum TextFieldVariantEnum {
+  Standard = 'standard'
+}
+
+export enum ButtonVariantEnum {
+  Contained = 'contained',
+  ContainedLight = 'containedLight',
+  Outlined = 'outlined',
+  Text = 'text',
+  Tonal = 'tonal'
+}
 export enum VisibilityEnum {
   Visible = 'visible',
   Hidden = 'hidden'

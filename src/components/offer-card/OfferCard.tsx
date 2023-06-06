@@ -2,7 +2,7 @@ import { FC } from 'react'
 
 import Box from '@mui/material/Box'
 
-import OfferAvatarAndRating from '~/components/offer-card/offer-avatar-and-rating/OfferAvatarAndRating'
+import UserProfileInfo from '~/components/user-profile-info/UserProfileInfo'
 import OfferDetails from '~/components/offer-card/offer-details/OfferDetails'
 import OfferActions from '~/components/offer-card/offer-actions/OfferActions'
 import { styles } from '~/components/offer-card/OfferCard.styles'
@@ -36,15 +36,15 @@ const OfferCard: FC<OfferCardProps> = ({
     proficiencyLevel
   } = offer
 
-  const fullName = `${authorFirstName} ${authorLastName[0]}.`
-
   return (
     <Box sx={styles.wrapper}>
-      <OfferAvatarAndRating
-        img={author.photo}
-        name={fullName}
+      <UserProfileInfo
+        firstName={authorFirstName}
+        lastName={`${authorLastName[0]}.`}
+        photo={author.photo}
         rating={authorAvgRating}
-        totalReviews={author.totalReviews[authorRole]}
+        reviewsCount={author.totalReviews[authorRole]}
+        sx={styles.userInfo}
       />
       <OfferDetails
         description={!isHideField && description}

@@ -25,7 +25,7 @@ import { errorRoutes } from '~/router/constants/errorRoutes'
 import topBlockIcon from '~/assets/img/offer-details/top-block-icon.png'
 import { mockedFAQItems } from '~/pages/offer-details/constants'
 import { styles } from '~/pages/offer-details/OfferDetails.styles'
-import { Offer, VariantEnum, OutletContext } from '~/types'
+import { Offer, ButtonVariantEnum, OutletContext } from '~/types'
 import ScrollVisibilityWrapper from '~/components/scroll-visibility-wrapper/ScrollVisibilityWrapper'
 import OfferBanner from '~/components/offer-banner/OfferBanner'
 import {
@@ -67,14 +67,17 @@ const OfferDetails = () => {
     response?.authorRole !== userRole
       ? {
           label: t('common.labels.enrollOffer'),
-          handleClick: handleEnrollOfferClick,
-          variant: VariantEnum.Contained
+          buttonProps: {
+            onClick: handleEnrollOfferClick
+          }
         }
       : null,
     {
       label: t('common.labels.sendMessage'),
-      handleClick: () => null,
-      variant: VariantEnum.Tonal
+      buttonProps: {
+        disabled: true,
+        variant: ButtonVariantEnum.Tonal
+      }
     }
   ]
 

@@ -1,24 +1,31 @@
 export const styles = {
-  container: {
+  root: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'left',
+    gap: '6px'
+  },
+  info: {
+    display: 'flex',
+    flexDirection: 'column',
     gap: '4px'
   },
   avatar: {
-    height: '80px',
-    width: '80px',
-    mb: '12px',
-    alignSelf: 'center'
+    height: '48px',
+    width: '48px'
   },
   name: {
     color: 'primary.500',
-    fontWeight: 500
+    typography: 'button'
   },
   rating: {
     backgroundColor: 'primary.50'
   },
   reviews: {
+    typography: 'caption',
     color: 'primary.500'
+  },
+  date: {
+    typography: 'body2',
+    color: 'primary.400'
   }
 }

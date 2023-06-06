@@ -15,23 +15,10 @@ export const styles = {
     justifyContent: 'space-between',
     width: '100%'
   },
-  imgTitleDescription: {
-    img: {
-      width: '48px',
-      height: '48px',
-      border: '1px solid',
-      borderColor: 'primary.900'
-    },
-    titleWithDescription: {
-      title: {
-        typography: { xs: 'button', sm: 'h6' },
-        textAlign: 'start',
-        color: 'primary.700'
-      },
-      description: {
-        typography: 'body2',
-        color: 'primary.400'
-      }
+  userProfileInfo: {
+    name: {
+      typography: { xs: 'button', sm: 'h6' },
+      color: 'primary.700'
     }
   },
   priceWithStatus: {

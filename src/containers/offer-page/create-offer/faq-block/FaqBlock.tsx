@@ -13,10 +13,10 @@ import AppTextField from '~/components/app-text-field/AppTextField'
 import OrderedListItem from '~/components/ordered-list-item/OrderedListItem'
 import { useDebounce } from '~/hooks/use-debounce'
 import {
+  ButtonVariantEnum,
   CreateOfferBlockProps,
   CreateOfferData,
-  Faq,
-  VariantEnum
+  Faq
 } from '~/types'
 import { styles } from '~/containers/offer-page/create-offer/CreateOffer.styles'
 
@@ -92,7 +92,7 @@ const FaqBlock = <T extends CreateOfferData>({
         <AppButton
           onClick={addMoreQuestion}
           sx={styles.faqButton}
-          variant={VariantEnum.Tonal}
+          variant={ButtonVariantEnum.Tonal}
         >
           {t('button.addQuestion')}
         </AppButton>

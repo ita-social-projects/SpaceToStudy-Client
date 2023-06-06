@@ -5,7 +5,7 @@ import { TextFieldProps } from '@mui/material/TextField'
 
 import AppTextField from '~/components/app-text-field/AppTextField'
 
-import { VariantEnum } from '~/types'
+import { TypographyVariantEnum } from '~/types'
 import { styles } from '~/components/app-text-area/AppTextArea.styles'
 
 interface AppTextAreaProps
@@ -25,7 +25,7 @@ const AppTextArea: FC<AppTextAreaProps> = ({
   ...props
 }) => {
   const titleEl = title && (
-    <Typography sx={styles.title} variant={VariantEnum.Body2}>
+    <Typography sx={styles.title} variant={TypographyVariantEnum.Body2}>
       {title}
     </Typography>
   )
@@ -45,7 +45,7 @@ const AppTextArea: FC<AppTextAreaProps> = ({
         <Typography
           color={value?.length === maxLength ? 'error' : 'text'}
           sx={styles.textLength}
-          variant={VariantEnum.Body2}
+          variant={TypographyVariantEnum.Body2}
         >
           {`${Number(value?.length)}/${maxLength}`}
         </Typography>

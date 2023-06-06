@@ -21,29 +21,19 @@ export const styles = {
   comment: { typography: { xs: 'caption', sm: 'body1' } },
   userInfo: {
     root: {
-      display: 'flex',
       flexDirection: { sm: 'column' },
+      alignItems: { xs: 'center', sm: 'start' },
       minWidth: '130px',
-      gap: '8px'
+      gap: { xs: '10px', sm: '4px' }
     },
-    img: {
-      width: { xs: '32px', sm: '48px' },
-      height: { xs: '32px', sm: '48px' },
-      border: '1px solid',
-      borderRadius: '50%',
-      borderColor: 'primary.900'
-    },
-    titleWithDescription: {
-      title: {
-        display: 'flex',
-        flexDirection: { sm: 'column' },
-        columnGap: { xs: '12px' },
-        fontSize: 'subtitle2',
-        textAlign: 'start'
+    avatar: {
+      width: { xs: '34px', sm: '48px' },
+      height: { xs: '34px', sm: '48px' },
+      name: {
+        typography: { xs: 'caption', sm: 'subtitle2' }
       },
-      description: {
-        typography: 'overline',
-        color: 'primary.500'
+      date: {
+        typography: 'overline'
       }
     }
   },
