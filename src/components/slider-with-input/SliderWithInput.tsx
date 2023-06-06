@@ -5,11 +5,11 @@ import Slider from '@mui/material/Slider'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 
-import { styles } from '~/components/slider-with-input/SliderWithInput.styles'
-
-import UAH_icon from '~/assets/img/find-offer/currency_uah.svg'
-import { checkNumberIsInRange, createMarks } from '~/utils/range-filter'
 import { useDebounce } from '~/hooks/use-debounce'
+import { checkNumberIsInRange, createMarks } from '~/utils/range-filter'
+import UAH_icon from '~/assets/img/find-offer/currency_uah.svg'
+
+import { styles } from '~/components/slider-with-input/SliderWithInput.styles'
 
 interface SliderWithInputProps {
   defaultValue: number

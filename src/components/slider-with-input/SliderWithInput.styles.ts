@@ -7,7 +7,6 @@ export const styles = {
     display: 'block',
     width: '100%',
     p: '20px 30px',
-    borderRight: '1px solid',
     border: '1px solid',
     borderColor: 'primary.200',
     borderRadius: '5px',
@@ -26,7 +25,6 @@ export const styles = {
       width: '10px',
       borderRadius: '50%',
       backgroundColor: 'primary.100',
-
       transform: 'translate(-50%, -50%)'
     },
     '& .MuiSlider-track': {
