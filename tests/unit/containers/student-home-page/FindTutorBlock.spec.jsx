@@ -40,7 +40,9 @@ describe('FindTutorBlock test', () => {
     expect(mockNavigate).toHaveBeenCalled()
   })
   it('should navigate if press enter', async () => {
-    const input = screen.getByLabelText(/studentHomePage.findTutorBlock.label/i)
+    const input = screen.getByPlaceholderText(
+      /studentHomePage.findTutorBlock.label/i
+    )
     fireEvent.change(input, { target: { value: 'test' } })
     fireEvent.keyPress(input, { key: 'Enter', code: 'Enter', charCode: 13 })
 

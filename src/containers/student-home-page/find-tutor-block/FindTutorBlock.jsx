@@ -4,8 +4,6 @@ import { useTranslation } from 'react-i18next'
 
 import TitleBlock from '~/components/title-block/TitleBlock'
 import Button from '@mui/material/Button'
-import IconButton from '@mui/material/IconButton'
-import TextField from '@mui/material/TextField'
 import SearchIcon from '@mui/icons-material/Search'
 
 import useBreakpoints from '~/hooks/use-breakpoints'
@@ -13,6 +11,7 @@ import { styles } from '~/containers/student-home-page/find-tutor-block/find-tut
 import bag from '~/assets/img/student-home/bag.png'
 import { translationKey } from '~/containers/student-home-page/find-tutor-block/constants'
 import { authRoutes } from '~/router/constants/authRoutes'
+import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
 
 const FindTutorBlock = () => {
   const [filter, setFilter] = useState('')
@@ -39,19 +38,12 @@ const FindTutorBlock = () => {
 
   return (
     <TitleBlock img={bag} translationKey={translationKey}>
-      <TextField
-        InputProps={{
-          startAdornment: (
-            <IconButton onClick={redirect}>
-              <SearchIcon position='end' />
-            </IconButton>
-          ),
-          autoComplete: 'off'
-        }}
+      <InputWithIcon
         fullWidth={isMobile}
         onChange={onChange}
         onKeyPress={handleEnterPress}
         placeholder={t(`${translationKey}.label`)}
+        startIcon={<SearchIcon />}
         sx={styles.input}
         value={filter}
       />
