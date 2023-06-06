@@ -3,7 +3,8 @@ export const styles = {
     width: '100%',
     display: 'flex',
     justifyContent: 'space-between',
-    gap: { sm: '24px', md: '40px' }
+    gap: { sm: '24px', md: '40px' },
+    flexWrap: 'wrap'
   },
   userInfo: {
     root: { gap: '4px' },
