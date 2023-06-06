@@ -3,6 +3,7 @@ import {
   ReactNode,
   Dispatch,
   SetStateAction,
+  SyntheticEvent,
   ChangeEvent,
   KeyboardEvent
 } from 'react'
@@ -58,6 +59,11 @@ const SearchAutocomplete = ({
     setSearchInput(value)
   }
 
+  const handleAutoCompleteChange = (_: SyntheticEvent, value: string) => {
+    onSearchChange && onSearchChange()
+    setSearch(value)
+  }
+
   const onSearch = () => {
     onSearchChange && searchInput !== search && onSearchChange()
     setSearch(searchInput)
@@ -91,6 +97,7 @@ const SearchAutocomplete = ({
         freeSolo
         hideClearIcon
         inputValue={searchInput}
+        onChange={handleAutoCompleteChange}
         onInputChange={onInputChange}
         sx={{ flex: 1 }}
         textFieldProps={{

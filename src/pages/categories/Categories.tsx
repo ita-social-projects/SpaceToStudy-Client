@@ -45,8 +45,11 @@ const Categories = () => {
     []
   )
 
-  const { loading: categoriesNamesLoading, response: categoriesNamesItems } =
-    useCategoriesNames()
+  const {
+    loading: categoriesNamesLoading,
+    response: categoriesNamesItems,
+    fetchData
+  } = useCategoriesNames({ fetchOnMount: false })
 
   const {
     data: categories,
@@ -82,6 +85,9 @@ const Categories = () => {
     [categoriesNamesItems]
   )
 
+  const getCategoryNames = () =>
+    !categoriesNamesItems.length && void fetchData()
+
   const handleOpenModal = () => openModal({ component: <CreateSubjectModal /> })
 
   return (
@@ -103,6 +109,7 @@ const Categories = () => {
       <AppToolbar sx={styles.searchToolbar}>
         <SearchAutocomplete
           loading={categoriesNamesLoading}
+          onFocus={getCategoryNames}
           onSearchChange={resetData}
           options={options}
           search={match}

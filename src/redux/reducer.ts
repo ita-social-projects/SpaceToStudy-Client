@@ -123,6 +123,9 @@ export const mainSlice = createSlice({
       state.userId = initialState.userId
       state.userRole = initialState.userRole
       state.isFirstLogin = initialState.isFirstLogin
+    },
+    markFirstLoginComplete(state) {
+      state.isFirstLogin = false
     }
   },
   extraReducers: (builder) => {
@@ -145,6 +148,6 @@ export const mainSlice = createSlice({
 
 const { actions, reducer } = mainSlice
 
-export const { setUser, logout } = actions
+export const { setUser, logout, markFirstLoginComplete } = actions
 
 export default reducer

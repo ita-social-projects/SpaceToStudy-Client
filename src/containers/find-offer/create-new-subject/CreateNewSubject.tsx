@@ -117,6 +117,7 @@ const CreateSubjectModal = () => {
           {t('categoriesPage.newSubject.category')}
         </Typography>
         <AsyncAutocomplete
+          fetchOnFocus
           freeSolo
           labelField='name'
           onBlur={handleBlur('category')}

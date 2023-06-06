@@ -1,6 +1,7 @@
 import { FC, useEffect } from 'react'
 import { AxiosResponse } from 'axios'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
 
 import LeakAddSharpIcon from '@mui/icons-material/LeakAddSharp'
 import Typography from '@mui/material/Typography'
@@ -24,7 +25,8 @@ import {
 } from '~/containers/offer-page/create-offer/CreateOffer.constants'
 import { findFullObjects } from '~/utils/helper-functions'
 import { styles } from '~/containers/offer-page/create-offer/CreateOffer.styles'
-import { ComponentEnum, CreateOfferData, ErrorResponse } from '~/types'
+import { ComponentEnum, CreateOfferData, ErrorResponse, Offer } from '~/types'
+import { authRoutes } from '~/router/constants/authRoutes'
 
 interface CreateOfferProps {
   closeDrawer: () => void
@@ -34,6 +36,7 @@ const CreateOffer: FC<CreateOfferProps> = ({ closeDrawer }) => {
   const { userRole } = useAppSelector((state) => state.appMain)
   const { setNeedConfirmation } = useConfirm()
   const { setAlert } = useSnackBarContext()
+  const navigate = useNavigate()
 
   const { t } = useTranslation()
 
@@ -43,18 +46,19 @@ const CreateOffer: FC<CreateOfferProps> = ({ closeDrawer }) => {
       message: error ? `errors.${error.code}` : ''
     })
   }
-  const handleResponse = () => {
+  const handleResponse = (response: Offer | null) => {
     setAlert({
       severity: snackbarVariants.success,
       message: 'offerPage.createOffer.successMessage'
     })
     closeDrawer()
+    navigate(`${authRoutes.offerDetails.path}/${response?._id ?? ''}`)
   }
 
   const postOffer = (): Promise<AxiosResponse> =>
     OfferService.createOffer({ ...data, faq: findFullObjects(data.faq) })
 
-  const { loading, fetchData } = useAxios({
+  const { loading, fetchData } = useAxios<Offer | null>({
     service: postOffer,
     fetchOnMount: false,
     defaultResponse: null,
@@ -119,7 +123,7 @@ const CreateOffer: FC<CreateOfferProps> = ({ closeDrawer }) => {
         >
           {t(`offerPage.createOffer.buttonTitles.${userRole}`)}
         </AppButton>
-        <AppButton size='extraLarge' variant='tonal'>
+        <AppButton disabled size='extraLarge' variant='tonal'>
           {t('button.addToDrafts')}
         </AppButton>
       </Box>

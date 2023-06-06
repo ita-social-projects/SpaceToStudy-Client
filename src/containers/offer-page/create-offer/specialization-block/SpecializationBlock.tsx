@@ -36,7 +36,7 @@ const SpecializationBlock = <T extends CreateOfferData>({
     (key: keyof Pick<T, 'category' | 'subject'>) =>
     (_: React.SyntheticEvent, value: CategoryNameInterface | null) => {
       handleNonInputValueChange(key, value?._id ?? '')
-      if (!value) {
+      if (key === 'category') {
         handleNonInputValueChange('subject', '')
       }
     }
@@ -58,6 +58,7 @@ const SpecializationBlock = <T extends CreateOfferData>({
             {t(`offerPage.createOffer.description.category.${userRole}`)}
           </Typography>
           <AsyncAutocomplete
+            fetchOnFocus
             labelField='name'
             onBlur={handleBlur('category')}
             onChange={handleAutocompleteChange('category')}
@@ -73,6 +74,7 @@ const SpecializationBlock = <T extends CreateOfferData>({
           />
           <AsyncAutocomplete
             disabled={!data.category}
+            fetchCondition={Boolean(data.category)}
             labelField='name'
             onBlur={handleBlur('subject')}
             onChange={handleAutocompleteChange('subject')}
