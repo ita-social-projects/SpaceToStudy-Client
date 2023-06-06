@@ -175,6 +175,18 @@ describe('SubjectsStep test with some data', () => {
     fireEvent.keyDown(await secondField, { key: 'ArrowDown' })
     fireEvent.keyDown(await secondField, { key: 'Enter' })
     fireEvent.click(addSubject)
+
+    fireEvent.click(firstField)
+    fireEvent.change(firstField, { target: { value: 'Category 2' } })
+    fireEvent.keyDown(firstField, { key: 'ArrowDown' })
+    fireEvent.keyDown(firstField, { key: 'Enter' })
+
+    fireEvent.click(await secondField)
+    fireEvent.change(await secondField, {
+      target: { value: 'Subject 2' }
+    })
+    fireEvent.keyDown(await secondField, { key: 'ArrowDown' })
+    fireEvent.keyDown(await secondField, { key: 'Enter' })
     fireEvent.click(addSubject)
 
     expect(screen.getByTestId('error-subject')).toHaveTextContent(
