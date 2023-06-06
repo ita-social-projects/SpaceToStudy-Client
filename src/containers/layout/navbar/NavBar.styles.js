@@ -17,8 +17,11 @@ export const styles = {
   navItemText: {
     color: 'primary.900',
     textDecoration: 'none',
-    '&:focus': {
+    '&:hover': {
       color: 'primary.500'
+    },
+    '&:focus': {
+      textDecoration: 'underline'
     }
   },
   navItem: {
