@@ -23,10 +23,5 @@ export const styles = {
         color: 'primary.100'
       }
     }
-  },
-  disabledLink: {
-    color: 'primary.600',
-    cursor: 'default',
-    pointerEvents: 'none'
   }
 }

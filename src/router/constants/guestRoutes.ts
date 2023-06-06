@@ -6,7 +6,7 @@ export const guestRoutes = {
   error: { route: 'error', path: 'error' },
   about: { route: 'about', path: 'about' },
   privacyPolicy: { route: 'privacy-policy', path: 'privacy-policy' },
-  termOfUse: { route: 'term-of-use', path: 'term-of-use' },
+  termOfUse: { route: '#', path: '#' },
   navBar: {
     whatCanYouDo: { route: 'what-сan-you-do', path: '/#what-сan-you-do' },
     howItWorks: { route: 'how-it-works', path: '/#how-it-works' },

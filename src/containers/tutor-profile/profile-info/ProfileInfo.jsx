@@ -69,7 +69,7 @@ const ProfileInfo = () => {
         disabled
         fullWidth
         size={isDesktop ? SizeEnum.ExtraLarge : SizeEnum.Medium}
-        variant='contained' // default: containedLight
+        variant='containedLight'
       >
         {t('tutorProfilePage.profileInfo.bookLesson')}
       </Button>
