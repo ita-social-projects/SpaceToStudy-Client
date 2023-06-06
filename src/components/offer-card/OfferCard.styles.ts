@@ -4,7 +4,8 @@ export const styles = {
     display: 'flex',
     justifyContent: 'space-between',
     gap: { sm: '24px', md: '40px' },
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+    wordBreak: 'break-word'
   },
   userInfo: {
     root: { gap: '4px' },
