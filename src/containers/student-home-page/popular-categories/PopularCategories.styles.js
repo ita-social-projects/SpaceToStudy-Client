@@ -5,8 +5,7 @@ export const styles = {
   },
   titleWithDescription: {
     wrapper: {
-      mb: '32px',
-      textAlign: 'center'
+      mb: '32px'
     },
     title: {
       typography: { sm: 'h4', xs: 'h5' },

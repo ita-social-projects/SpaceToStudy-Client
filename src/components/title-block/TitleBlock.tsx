@@ -16,7 +16,7 @@ type TitleBlockProps = {
 
 const TitleBlock: FC<TitleBlockProps> = ({ img, translationKey, children }) => {
   const { t } = useTranslation()
-  const { isMobile } = useBreakpoints()
+  const { isTablet, isMobile } = useBreakpoints()
   const { userRole } = useAppSelector((state) => state.appMain)
 
   return (
@@ -25,11 +25,13 @@ const TitleBlock: FC<TitleBlockProps> = ({ img, translationKey, children }) => {
         <TitleWithDescription
           description={t(`${translationKey}.description`)}
           style={styles.titleWithDescription}
-          title={t(`${translationKey}.title.${userRole}`)}
+          title={t(`${translationKey}.title`)}
         />
         {children && <Box sx={styles.form}>{children}</Box>}
       </Box>
-      {!isMobile && <Box alt='icon' component='img' src={img}></Box>}
+      {!isTablet && !isMobile && (
+        <Box alt='icon' component='img' src={img}></Box>
+      )}
     </Box>
   )
 }

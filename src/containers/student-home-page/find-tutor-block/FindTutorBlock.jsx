@@ -41,7 +41,7 @@ const FindTutorBlock = () => {
     <TitleBlock img={bag} translationKey={translationKey}>
       <TextField
         InputProps={{
-          endAdornment: (
+          startAdornment: (
             <IconButton onClick={redirect}>
               <SearchIcon position='end' />
             </IconButton>
@@ -49,16 +49,16 @@ const FindTutorBlock = () => {
           autoComplete: 'off'
         }}
         fullWidth={isMobile}
-        label={t(`${translationKey}.label`)}
         onChange={onChange}
         onKeyPress={handleEnterPress}
+        placeholder={t(`${translationKey}.label`)}
         sx={styles.input}
         value={filter}
       />
       <Button
         fullWidth={isMobile}
         onClick={redirect}
-        size='extraLarge'
+        size='large'
         variant='contained'
       >
         {t(`${translationKey}.button`)}
