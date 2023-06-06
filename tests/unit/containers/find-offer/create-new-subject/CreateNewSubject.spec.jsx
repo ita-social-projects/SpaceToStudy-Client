@@ -38,7 +38,7 @@ describe('CreateSubjectModal container', () => {
     fireEvent.change(categoryInput, {
       target: { value: 'Category 1' }
     })
-    fireEvent.keyDown(categoryInput, { key: 'Enter' })
+    fireEvent.keyDown(categoryInput, { key: 'Escape' })
 
     expect(categoryInput.value).toBe('Category 1')
 

@@ -16,11 +16,15 @@ interface AsyncAutocompleteProps<T, F extends boolean | undefined>
   valueField?: keyof T
   labelField?: keyof T
   value: T[keyof T] | null
+  fetchCondition?: boolean
   textFieldProps?: TextFieldProps
-  axiosProps: Pick<UseAxiosProps<T[]>, 'onResponse' | 'onResponseError'>
+  fetchOnFocus?: boolean
+  axiosProps?: Pick<UseAxiosProps<T[]>, 'onResponse' | 'onResponseError'>
 }
 
 const AsyncAutocomplete = <T, F extends boolean | undefined = undefined>({
+  fetchOnFocus,
+  fetchCondition = true,
   textFieldProps,
   valueField,
   labelField,
@@ -37,7 +41,7 @@ const AsyncAutocomplete = <T, F extends boolean | undefined = undefined>({
   })
 
   useEffect(() => {
-    void fetchData()
+    !fetchOnFocus && fetchCondition && void fetchData()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [service])
 
@@ -61,11 +65,14 @@ const AsyncAutocomplete = <T, F extends boolean | undefined = undefined>({
     return option === value
   }
 
+  const handleFocus = () => !response.length && fetchOnFocus && fetchData()
+
   return (
     <AppAutoComplete
       getOptionLabel={getOptionLabel}
       isOptionEqualToValue={isOptionEqualToValue}
       loading={loading}
+      onFocus={handleFocus}
       options={response}
       textFieldProps={textFieldProps}
       value={valueOption}

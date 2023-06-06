@@ -1,4 +1,6 @@
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
+import { useAppDispatch } from '~/hooks/use-redux'
+import { markFirstLoginComplete } from '~/redux/reducer'
 import StepWrapper from '~/components/step-wrapper/StepWrapper'
 
 import { StepProvider } from '~/context/step-context'
@@ -21,6 +23,11 @@ interface UserStepsWrapperProps {
 
 const UserStepsWrapper: FC<UserStepsWrapperProps> = ({ userRole }) => {
   const [isUserFetched, setIsUserFetched] = useState(false)
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    dispatch(markFirstLoginComplete())
+  }, [dispatch])
 
   const childrenArr = [
     <GeneralInfoStep

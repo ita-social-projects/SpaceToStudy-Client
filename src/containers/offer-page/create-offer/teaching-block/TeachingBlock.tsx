@@ -87,6 +87,7 @@ const TeachingBlock = <T extends CreateOfferData>({
             {t(`offerPage.createOffer.description.languages.${userRole}`)}
           </Typography>
           <AppAutoComplete
+            blurOnSelect
             onChange={handleLanguageChange}
             options={Object.values(LanguagesEnum)}
             textFieldProps={{
@@ -94,6 +95,7 @@ const TeachingBlock = <T extends CreateOfferData>({
               helperText: t(errors.languages) || ' ',
               label: t('offerPage.createOffer.labels.language')
             }}
+            value={null}
           />
           <AppChipList
             defaultQuantity={3}
