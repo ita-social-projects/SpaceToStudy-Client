@@ -1,4 +1,4 @@
-import { FC, ReactNode, useState } from 'react'
+import { FC, ReactNode } from 'react'
 import IconButton from '@mui/material/IconButton'
 import ClearRoundedIcon from '@mui/icons-material/ClearRounded'
 import Box from '@mui/material/Box'
@@ -9,33 +9,23 @@ import { styles } from '~/components/input-with-icon/InputWithIcon.styles'
 
 interface InputWithIconProps extends InputBaseProps {
   startIcon?: ReactNode
+  onClear: () => void
 }
 
 const InputWithIcon: FC<InputWithIconProps> = ({
   value,
+  onClear,
   startIcon,
   sx,
   ...props
 }) => {
-  const [inputValue, setInputValue] = useState(value)
-  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setInputValue(e.target.value)
-  const handleClear = () => {
-    setInputValue('')
-  }
-
   return (
     <Box sx={[styles.root, sx] as SxProps}>
       {startIcon}
-      <InputBase
-        sx={styles.input}
-        value={inputValue}
-        {...props}
-        onInput={handleInput}
-      />
-      {inputValue && (
-        <IconButton onClick={handleClear}>
-          <ClearRoundedIcon data-testid='clearIcon' sx={styles.clearIcon} />
+      <InputBase sx={styles.input} value={value} {...props} />
+      {value && (
+        <IconButton data-testid='clearIcon' onClick={onClear}>
+          <ClearRoundedIcon sx={styles.clearIcon} />
         </IconButton>
       )}
     </Box>

@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router'
 import { useTranslation } from 'react-i18next'
 
 import TitleBlock from '~/components/title-block/TitleBlock'
-import Button from '@mui/material/Button'
 import SearchIcon from '@mui/icons-material/Search'
 
 import useBreakpoints from '~/hooks/use-breakpoints'
@@ -12,49 +11,49 @@ import bag from '~/assets/img/student-home/bag.png'
 import { translationKey } from '~/containers/student-home-page/find-tutor-block/constants'
 import { authRoutes } from '~/router/constants/authRoutes'
 import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
+import AppButton from '~/components/app-button/AppButton'
+import { Link } from 'react-router-dom'
 
 const FindTutorBlock = () => {
-  const [filter, setFilter] = useState('')
+  const [inputValue, setInputValue] = useState('')
   const { t } = useTranslation()
   const navigate = useNavigate()
   const { isMobile } = useBreakpoints()
 
   const onChange = (e) => {
-    setFilter(e.target.value)
+    setInputValue(e.target.value)
   }
-
-  const redirect = useCallback(() => {
-    return navigate(authRoutes.findOffers.path, { state: { filter } })
-  }, [filter, navigate])
 
   const handleEnterPress = useCallback(
     (e) => {
-      if (e.key === 'Enter' && filter) {
-        redirect()
+      if (e.key === 'Enter' && inputValue) {
+        navigate(authRoutes.findOffers.path, { state: { inputValue } })
       }
     },
-    [filter, redirect]
+    [inputValue]
   )
+
+  const onClear = () => setInputValue('')
 
   return (
     <TitleBlock img={bag} translationKey={translationKey}>
       <InputWithIcon
         fullWidth={isMobile}
         onChange={onChange}
+        onClear={onClear}
         onKeyPress={handleEnterPress}
         placeholder={t(`${translationKey}.label`)}
         startIcon={<SearchIcon />}
         sx={styles.input}
-        value={filter}
+        value={inputValue}
       />
-      <Button
+      <AppButton
+        component={Link}
         fullWidth={isMobile}
-        onClick={redirect}
-        size='large'
-        variant='contained'
+        to={`${authRoutes.findOffers.path}?search=${inputValue}`}
       >
         {t(`${translationKey}.button`)}
-      </Button>
+      </AppButton>
     </TitleBlock>
   )
 }
