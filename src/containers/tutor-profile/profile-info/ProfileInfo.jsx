@@ -1,4 +1,5 @@
 import { useMatch } from 'react-router-dom'
+import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
@@ -21,6 +22,10 @@ import { styles } from '~/containers/tutor-profile/profile-info/ProfileInfo.styl
 import { snackbarVariants, myProfilePath, student } from '~/constants'
 import { SizeEnum } from '~/types'
 import { getDifferenceDates } from '~/utils/helper-functions'
+import { userService } from '~/services/user-service'
+import useAxios from '~/hooks/use-axios'
+import { defaultResponses } from '~/constants'
+import { parseJwt } from '~/utils/helper-functions'
 
 const ProfileInfo = ({ userData }) => {
   const { t } = useTranslation()
@@ -38,6 +43,31 @@ const ProfileInfo = ({ userData }) => {
       duration: 2000
     })
   }
+
+  //------------------------//
+
+  const { id, role } = parseJwt(localStorage.getItem('s2s'))
+
+  const useUserInfo = ({ fetchOnMount = true, id, role } = {}) => {
+    const getUserData = useCallback(() => userService.getUserById(id, role), [])
+
+    const { loading, response, fetchData, error } = useAxios({
+      service: getUserData,
+      fetchOnMount,
+      defaultResponse: defaultResponses.array
+    })
+
+    return { loading, response, fetchData, error }
+  }
+
+  const { response: userData } = useUserInfo({
+    id,
+    role
+  })
+
+  console.log(userData)
+
+  //------------------------//
 
   const navigateToEditPtofile =
     userRole === student
