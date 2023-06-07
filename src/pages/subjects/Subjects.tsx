@@ -26,15 +26,14 @@ import AppToolbar from '~/components/app-toolbar/AppToolbar'
 import OfferRequestBlock from '~/containers/find-offer/offer-request-block/OfferRequestBlock'
 import AsyncAutocomplete from '~/components/async-autocomlete/AsyncAutocomplete'
 import useBreakpoints from '~/hooks/use-breakpoints'
-import { getScreenBasedLimit } from '~/utils/helper-functions'
+import { getScreenBasedLimit, studentOrTutor } from '~/utils/helper-functions'
 import { mapArrayByField } from '~/utils/map-array-by-field'
 
 import {
   CategoryNameInterface,
   SizeEnum,
   SubjectInterface,
-  SubjectNameInterface,
-  UserRoleEnum
+  SubjectNameInterface
 } from '~/types'
 import { itemsLoadLimit } from '~/constants'
 import { authRoutes } from '~/router/constants/authRoutes'
@@ -83,8 +82,7 @@ const Subjects = () => {
     params
   })
 
-  const currentRole =
-    userRole === UserRoleEnum.Tutor ? UserRoleEnum.Tutor : UserRoleEnum.Student
+  const currentRole = studentOrTutor(userRole)
 
   const cards = useMemo(
     () =>

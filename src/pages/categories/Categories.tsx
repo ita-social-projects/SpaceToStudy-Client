@@ -20,14 +20,13 @@ import DirectionLink from '~/components/direction-link/DirectionLink'
 import NotFoundResults from '~/components/not-found-results/NotFoundResults'
 import CreateSubjectModal from '~/containers/find-offer/create-new-subject/CreateNewSubject'
 import serviceIcon from '~/assets/img/student-home-page/service_icon.png'
-import { getScreenBasedLimit } from '~/utils/helper-functions'
+import { getScreenBasedLimit, studentOrTutor } from '~/utils/helper-functions'
 
 import {
   CategoryInterface,
   CategoryNameInterface,
   CategoriesParams,
-  SizeEnum,
-  UserRoleEnum
+  SizeEnum
 } from '~/types'
 import { itemsLoadLimit } from '~/constants'
 import { authRoutes } from '~/router/constants/authRoutes'
@@ -66,8 +65,7 @@ const Categories = () => {
     params
   })
 
-  const currentRole =
-    userRole === UserRoleEnum.Tutor ? UserRoleEnum.Tutor : UserRoleEnum.Student
+  const currentRole = studentOrTutor(userRole)
 
   const cards = useMemo(
     () =>

@@ -5,7 +5,9 @@ import {
   TableColumns,
   FilterFromQuery,
   RemoveColumnRules,
-  ScreenBasedLimits
+  ScreenBasedLimits,
+  UserRole,
+  UserRoleEnum
 } from '~/types'
 
 export const parseJwt = <T,>(token: string): T => {
@@ -109,3 +111,6 @@ export const spliceSx = (defaultStyles?: SxProps, newStyles?: SxProps) =>
     ...defaultStyles,
     ...newStyles
   } as SxProps)
+
+export const studentOrTutor = (userRole: '' | UserRole) =>
+  userRole === UserRoleEnum.Tutor ? UserRoleEnum.Tutor : UserRoleEnum.Student

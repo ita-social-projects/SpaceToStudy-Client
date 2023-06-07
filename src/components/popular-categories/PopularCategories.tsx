@@ -15,9 +15,9 @@ import { styles } from '~/components/popular-categories/PopularCategories.styles
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import serviceIcon from '~/assets/img/student-home-page/service_icon.png'
 import CardsList from '~/components/cards-list/CardsList'
-import { CategoryInterface, UserRoleEnum } from '~/types'
+import { CategoryInterface } from '~/types'
 import useBreakpoints from '~/hooks/use-breakpoints'
-import { getScreenBasedLimit } from '~/utils/helper-functions'
+import { getScreenBasedLimit, studentOrTutor } from '~/utils/helper-functions'
 import { defaultResponses } from '~/constants'
 import { itemsLoadLimit } from '~/components/popular-categories/PopularCategories.constants'
 
@@ -46,8 +46,7 @@ const PopularCategories: FC<PopularCategoriesProps> = ({
     defaultResponse: defaultResponses.array
   })
 
-  const currentRole =
-    userRole === UserRoleEnum.Tutor ? UserRoleEnum.Tutor : UserRoleEnum.Student
+  const currentRole = studentOrTutor(userRole)
 
   const cards = useMemo(
     () =>
