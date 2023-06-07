@@ -7,7 +7,12 @@ export const styles = {
     alignItems: 'center',
     flex: 1
   },
-  selectTitle: { color: 'primary.500', mr: '8px', minWidth: '55px' },
+  selectTitle: {
+    typography: 'body2',
+    color: 'primary.500',
+    mr: '8px',
+    minWidth: '55px'
+  },
   formControl: {
     '& label': {
       lineHeight: 'inherit',

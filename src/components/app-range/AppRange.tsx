@@ -16,7 +16,8 @@ import {
   checkNumberIsInRange,
   createNewState,
   rangeSort,
-  checkRangeEquality
+  checkRangeEquality,
+  createMarks
 } from '~/utils/range-filter'
 import { styles } from '~/components/app-range/AppRange.styles'
 
@@ -42,10 +43,7 @@ const AppRange: FC<AppRangeProps> = ({ min, max, value, onChange }) => {
     }
   }, [defaultValue])
 
-  const marks = [
-    { value: min, label: min.toString() },
-    { value: max, label: max.toString() }
-  ]
+  const marks = createMarks(min, max)
 
   const debouncedOnChange = useDebounce((range: InputRangeArray) => {
     const sortedRange = rangeSort(range)

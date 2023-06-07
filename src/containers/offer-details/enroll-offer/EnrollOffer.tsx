@@ -14,10 +14,14 @@ import AppCard from '~/components/app-card/AppCard'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import AppSelect from '~/components/app-select/AppSelect'
 import AppButton from '~/components/app-button/AppButton'
+import SliderWithInput from '~/components/slider-with-input/SliderWithInput'
 
 import { cooperationService } from '~/services/cooperation-service'
 import { snackbarVariants } from '~/constants'
 import { styles } from '~/containers/offer-details/enroll-offer/EnrollOffer.styles'
+import useBreakpoints from '~/hooks/use-breakpoints'
+import { minMaxPrice } from '~/utils/range-filter'
+
 import { ComponentEnum, ErrorResponse, Offer, EnrollOfferForm } from '~/types'
 
 interface EnrollOfferProps {
@@ -25,9 +29,12 @@ interface EnrollOfferProps {
 }
 
 const EnrollOffer: FC<EnrollOfferProps> = ({ offer }) => {
+  const { isDesktop } = useBreakpoints()
   const { closeModal } = useModalContext()
   const { setAlert } = useSnackBarContext()
   const { t } = useTranslation()
+
+  const [minPrice, maxPrice] = minMaxPrice(offer.price, 0.25)
 
   const handleResponseError = (error: ErrorResponse) => {
     setAlert({
@@ -47,7 +54,6 @@ const EnrollOffer: FC<EnrollOfferProps> = ({ offer }) => {
     return cooperationService.createCooperation({
       ...data,
       receiver: offer.author._id,
-      price: offer.price,
       offer: offer._id
     })
   }
@@ -64,23 +70,18 @@ const EnrollOffer: FC<EnrollOfferProps> = ({ offer }) => {
     useForm<EnrollOfferForm>({
       initialValues: {
         proficiencyLevel: offer.proficiencyLevel[0],
-        language: offer.languages[0],
+        price: offer.price,
         info: ''
       },
       onSubmit: fetchData
     })
-
-  const languagelOptions = offer.languages.map((language) => ({
-    title: t(`common.languages.${language.toLowerCase()}`),
-    value: language
-  }))
 
   const levelOptions = offer.proficiencyLevel.map((level) => ({
     title: t(`common.levels.${level.toLowerCase()}`),
     value: level
   }))
 
-  const handleSelectChange =
+  const handleFieldChange =
     <K extends keyof EnrollOfferForm>(key: K) =>
     (value: EnrollOfferForm[K]) => {
       handleNonInputValueChange(key, value)
@@ -88,9 +89,11 @@ const EnrollOffer: FC<EnrollOfferProps> = ({ offer }) => {
 
   return (
     <Box sx={styles.root}>
-      <AppCard sx={styles.offerCard}>
-        <OfferCardSquare offer={offer} />
-      </AppCard>
+      {isDesktop && (
+        <AppCard sx={styles.offerCard}>
+          <OfferCardSquare offer={offer} />
+        </AppCard>
+      )}
       <Box
         component={ComponentEnum.Form}
         onSubmit={handleSubmit}
@@ -106,18 +109,16 @@ const EnrollOffer: FC<EnrollOfferProps> = ({ offer }) => {
           fullWidth
           label={t('offerDetailsPage.enrollOffer.labels.level')}
           selectTitle={t('offerDetailsPage.enrollOffer.inputs.level')}
-          setValue={handleSelectChange('proficiencyLevel')}
+          setValue={handleFieldChange('proficiencyLevel')}
           sx={styles.select}
           value={data.proficiencyLevel}
         />
-        <AppSelect
-          fields={languagelOptions}
-          fullWidth
-          label={t('offerDetailsPage.enrollOffer.labels.language')}
-          selectTitle={t('offerDetailsPage.enrollOffer.inputs.language')}
-          setValue={handleSelectChange('language')}
-          sx={styles.select}
-          value={data.language}
+        <SliderWithInput
+          defaultValue={offer.price}
+          max={maxPrice}
+          min={minPrice}
+          onChange={handleFieldChange('price')}
+          title={t('offerDetailsPage.enrollOffer.labels.prefferedPrice')}
         />
         <AppTextArea
           fullWidth

@@ -2,7 +2,7 @@ export const styles = {
   root: {
     display: 'flex',
     maxWidth: '935px',
-    p: { xs: '40px 60px', lg: '70px 90px' },
+    p: { xs: '30px 16px', sm: '40px 60px', lg: '70px 90px' },
     justifyContent: 'space-between',
     gap: { xs: '60px', md: '120px', lg: '140px' },
     alignItems: 'center'
@@ -16,7 +16,7 @@ export const styles = {
     display: 'flex',
     flexDirection: 'column',
     gap: '20px',
-    minWidth: '360px',
+    minWidth: '280px',
     pb: '35px'
   },
   titleDescription: {
@@ -24,12 +24,16 @@ export const styles = {
     title: { typography: 'h4' },
     description: { typography: 'midTitle' }
   },
-  select: { flexDirection: 'column', alignItems: 'start', gap: '8px' },
+  select: { flexDirection: 'column', alignItems: 'start', gap: '15px' },
   textArea: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'start',
-    gap: '8px'
+    gap: '15px'
   },
-  button: { p: '12px 24px', width: 'fit-content', minWidth: '280px' }
+  button: {
+    p: '12px 24px',
+    width: { xs: '100%', sm: 'fit-content' },
+    minWidth: '280px'
+  }
 }

@@ -43,11 +43,7 @@ const AppSelect = <T,>({
   })
 
   const titleEl = selectTitle && (
-    <Typography
-      aria-label='select-title'
-      sx={styles.selectTitle}
-      variant='body2'
-    >
+    <Typography aria-label='select-title' sx={styles.selectTitle}>
       {t(selectTitle)}
     </Typography>
   )
