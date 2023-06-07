@@ -8,6 +8,7 @@ import { useModalContext } from '~/context/modal-context'
 import useLoadMore from '~/hooks/use-load-more'
 import useCategoriesNames from '~/hooks/use-categories-names'
 import useBreakpoints from '~/hooks/use-breakpoints'
+import { useAppSelector } from '~/hooks/use-redux'
 
 import OfferRequestBlock from '~/containers/find-offer/offer-request-block/OfferRequestBlock'
 import CardWithLink from '~/components/card-with-link/CardWithLink'
@@ -25,7 +26,8 @@ import {
   CategoryInterface,
   CategoryNameInterface,
   CategoriesParams,
-  SizeEnum
+  SizeEnum,
+  UserRoleEnum
 } from '~/types'
 import { itemsLoadLimit } from '~/constants'
 import { authRoutes } from '~/router/constants/authRoutes'
@@ -33,6 +35,7 @@ import { styles } from '~/pages/categories/Categories.styles'
 
 const Categories = () => {
   const { t } = useTranslation()
+  const { userRole } = useAppSelector((state) => state.appMain)
   const breakpoints = useBreakpoints()
   const [match, setMatch] = useState<string>('')
   const params = useMemo(() => ({ name: match }), [match])
@@ -63,12 +66,17 @@ const Categories = () => {
     params
   })
 
+  const currentRole =
+    userRole === UserRoleEnum.Tutor ? UserRoleEnum.Tutor : UserRoleEnum.Student
+
   const cards = useMemo(
     () =>
       categories.map((item: CategoryInterface) => {
         return (
           <CardWithLink
-            description={`${item.totalOffers} ${t('categoriesPage.offers')}`}
+            description={`${item.totalOffers[currentRole]} ${t(
+              'categoriesPage.offers'
+            )}`}
             img={serviceIcon}
             key={item._id}
             link={`${authRoutes.subjects.path}?categoryId=${item._id}`}
@@ -76,7 +84,7 @@ const Categories = () => {
           />
         )
       }),
-    [categories, t]
+    [categories, currentRole, t]
   )
 
   const options = useMemo(

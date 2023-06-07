@@ -3,11 +3,11 @@ import {
   LastLogin,
   Address,
   UserRole,
-  UserRoleEnum,
   RequestParams,
   SubjectInterface,
   SubjectNameInterface,
-  Faq
+  Faq,
+  DataByRole
 } from '~/types'
 
 export interface LocalStorage {
@@ -23,11 +23,6 @@ export interface GetUsersParams extends RequestParams {
   status: string[]
 }
 
-export interface TotalReviews {
-  [UserRoleEnum.Student]: number
-  [UserRoleEnum.Tutor]: number
-}
-
 export interface UserResponse {
   _id: string
   role: UserRole[]
@@ -35,8 +30,8 @@ export interface UserResponse {
   lastName: string
   email: string
   mainSubjects: SubjectInterface[]
-  totalReviews: TotalReviews
-  averageRating: TotalReviews
+  totalReviews: DataByRole<number>
+  averageRating: DataByRole<number>
   nativeLanguage: string
   address: Address
   professionalSummary?: string
@@ -44,10 +39,7 @@ export interface UserResponse {
   lastLogin: string
   createdAt: string
   updatedAt: string
-  FAQ: {
-    [UserRoleEnum.Student]: Faq[]
-    [UserRoleEnum.Tutor]: Faq[]
-  }
+  FAQ: DataByRole<Faq[]>
 }
 
 export interface UpdateUserParams

@@ -1,3 +1,4 @@
+import { UserRoleEnum } from './../../user/user-enums/user.enums'
 import { Offer } from '~/types'
 
 export interface CommonEntityFields {
@@ -18,11 +19,16 @@ export interface CategoryAppearance {
   color: string
 }
 
+export interface DataByRole<T> {
+  [UserRoleEnum.Student]: T
+  [UserRoleEnum.Tutor]: T
+}
+
 export interface CategoryInterface {
   _id: string
   name: string
   appearance: CategoryAppearance
-  totalOffers: number
+  totalOffers: DataByRole<number>
   createdAt: string
   updatedAt: string
 }
@@ -36,7 +42,7 @@ export interface SubjectInterface {
   _id: string
   name: string
   category: string
-  totalOffers: number
+  totalOffers: DataByRole<number>
   createdAt: string
   updatedAt: string
 }
