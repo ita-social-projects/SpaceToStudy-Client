@@ -1,4 +1,5 @@
 import { useMatch } from 'react-router-dom'
+import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
@@ -40,6 +41,31 @@ const ProfileInfo = ({ userData }) => {
       duration: 2000
     })
   }
+
+  //------------------------//
+
+  const { id, role } = parseJwt(localStorage.getItem('s2s'))
+
+  const useUserInfo = ({ fetchOnMount = true, id, role } = {}) => {
+    const getUserData = useCallback(() => userService.getUserById(id, role), [])
+
+    const { loading, response, fetchData, error } = useAxios({
+      service: getUserData,
+      fetchOnMount,
+      defaultResponse: defaultResponses.array
+    })
+
+    return { loading, response, fetchData, error }
+  }
+
+  const { response: userData } = useUserInfo({
+    id,
+    role
+  })
+
+  console.log(userData)
+
+  //------------------------//
 
   const navigateToEditPtofile =
     userRole === student
