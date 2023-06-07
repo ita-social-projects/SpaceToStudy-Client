@@ -60,7 +60,7 @@ const EnhancedTable = <F,>({
   ))
 
   const tableBody = (
-    <TableContainer data-testid='table-container'>
+    <TableContainer data-testid='enhance-table-container'>
       <Table {...props}>
         <EnhancedTableHead
           columns={columns}
