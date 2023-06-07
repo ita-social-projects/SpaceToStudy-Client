@@ -5,6 +5,7 @@ import UserStepsWrapper from '~/components/user-steps-wrapper/UserStepsWrapper'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import { useModalContext } from '~/context/modal-context'
 import { styles } from '~/pages/tutor-home/TutorHome.styles'
+import OfferRequestBlock from '~/containers/find-offer/offer-request-block/OfferRequestBlock'
 
 const TutorHome = () => {
   const { openModal } = useModalContext()
@@ -22,8 +23,8 @@ const TutorHome = () => {
   }, [openModal, isFirstLogin, userRole])
 
   return (
-    <PageWrapper>
-      <div data-testid='tutorHome'>Hello Tutor!</div>
+    <PageWrapper data-testid='tutorHome'>
+      <OfferRequestBlock />
     </PageWrapper>
   )
 }

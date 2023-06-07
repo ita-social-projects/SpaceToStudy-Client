@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box'
 
 import { useAppSelector } from '~/hooks/use-redux'
-import FooterByRole from '~/containers/layout/footer/footer-by-role/FooterByRole'
+import UserFooter from '~/containers/layout/footer/user-footer/UserFooter'
 import GuestFooter from '~/containers/layout/footer/guest-footer/GuestFooter'
 
 import { styles } from '~/containers/layout/footer/Footer.styles'
@@ -12,7 +12,7 @@ const Footer = () => {
 
   return (
     <Box component={ComponentEnum.Footer} sx={styles.footer}>
-      {userRole ? <FooterByRole userRole={userRole} /> : <GuestFooter />}
+      {userRole ? <UserFooter /> : <GuestFooter />}
     </Box>
   )
 }

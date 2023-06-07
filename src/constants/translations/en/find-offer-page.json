@@ -1,8 +1,8 @@
 {
   "offerRequestBlock": {
     "title": {
-      "student": "Student for private lessons",
-      "tutor": "Tutor for private lessons"
+      "tutor": "Student for private lessons",
+      "student": "Tutor for private lessons"
     },
     "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
     "button": "Create request"

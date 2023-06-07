@@ -1,4 +1,3 @@
-import { FC, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import FacebookIcon from '@mui/icons-material/Facebook'
@@ -13,37 +12,12 @@ import Logo from '~/containers/logo/Logo'
 import HashLink from '~/components/hash-link/HashLink'
 import useBreakpoints from '~/hooks/use-breakpoints'
 
-import { UserRoleEnum } from '~/types'
-import { tutorRoutes } from '~/router/constants/tutorRoutes'
-import { studentRoutes } from '~/router/constants/studentRoutes'
 import { guestRoutes } from '~/router/constants/guestRoutes'
-import { styles } from '~/containers/layout/footer/footer-by-role/FooterByRole.styles'
+import { styles } from '~/containers/layout/footer/user-footer/UserFooter.styles'
 
-interface FooterByRoleProps {
-  userRole: UserRoleEnum
-}
-
-const FooterByRole: FC<FooterByRoleProps> = ({ userRole }) => {
+const UserFooter = () => {
   const { t } = useTranslation()
   const { isMobile } = useBreakpoints()
-  const routes = useMemo(
-    () =>
-      userRole === UserRoleEnum.Tutor
-        ? Object.values(tutorRoutes.navBar)
-        : Object.values(studentRoutes.navBar),
-    [userRole]
-  )
-
-  const links = routes.map((link) => (
-    <Typography
-      component={HashLink}
-      key={link.path}
-      sx={styles.link}
-      to={link.path}
-    >
-      {t(`header.${link.route}`)}
-    </Typography>
-  ))
 
   const socialLinks = (
     <Box sx={styles.socialLinks}>
@@ -63,26 +37,21 @@ const FooterByRole: FC<FooterByRoleProps> = ({ userRole }) => {
   )
 
   return (
-    <>
-      <Container sx={styles.root}>
-        {!isMobile && logo}
+    <Container sx={styles.root}>
+      {!isMobile && logo}
+      {isMobile && (
         <Box sx={styles.linksWrapper}>
-          {isMobile && (
-            <>
-              {logo}
-              {socialLinks}
-            </>
-          )}
-          {links}
+          {logo}
+          {socialLinks}
         </Box>
-        {!isMobile && socialLinks}
-      </Container>
-      <Divider sx={styles.divider} />
+      )}
+      {isMobile && <Divider sx={styles.divider} />}
       <Typography sx={styles.copyRight}>
         {t('footer.allRightsReserved')}
       </Typography>
-    </>
+      {!isMobile && socialLinks}
+    </Container>
   )
 }
 
-export default FooterByRole
+export default UserFooter
