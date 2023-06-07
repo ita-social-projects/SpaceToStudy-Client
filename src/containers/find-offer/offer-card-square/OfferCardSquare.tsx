@@ -83,7 +83,7 @@ const OfferCardSquare: FC<OfferCardSquareProps> = ({
         />
         <Box>
           <AppRatingMobile
-            reviewsCount={author.totalReviews}
+            reviewsCount={author.totalReviews[authorRole]}
             value={author.averageRating[authorRole]}
           />
         </Box>

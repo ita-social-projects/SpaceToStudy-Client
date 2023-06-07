@@ -6,6 +6,7 @@ import Box from '@mui/material/Box'
 
 import useAxios from '~/hooks/use-axios'
 import { categoryService } from '~/services/category-service'
+import { useAppSelector } from '~/hooks/use-redux'
 
 import Loader from '~/components/loader/Loader'
 import CardWithLink from '~/components/card-with-link/CardWithLink'
@@ -14,7 +15,7 @@ import { styles } from '~/components/popular-categories/PopularCategories.styles
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import serviceIcon from '~/assets/img/student-home-page/service_icon.png'
 import CardsList from '~/components/cards-list/CardsList'
-import { CategoryInterface } from '~/types'
+import { CategoryInterface, UserRoleEnum } from '~/types'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { getScreenBasedLimit } from '~/utils/helper-functions'
 import { defaultResponses } from '~/constants'
@@ -30,6 +31,7 @@ const PopularCategories: FC<PopularCategoriesProps> = ({
   description
 }) => {
   const { t } = useTranslation()
+  const { userRole } = useAppSelector((state) => state.appMain)
   const navigate = useNavigate()
   const breakpoints = useBreakpoints()
 
@@ -44,12 +46,17 @@ const PopularCategories: FC<PopularCategoriesProps> = ({
     defaultResponse: defaultResponses.array
   })
 
+  const currentRole =
+    userRole === UserRoleEnum.Tutor ? UserRoleEnum.Tutor : UserRoleEnum.Student
+
   const cards = useMemo(
     () =>
       response.map((item) => {
         return (
           <CardWithLink
-            description={`${item.totalOffers} ${t('common.offers')}`}
+            description={`${item.totalOffers[currentRole]} ${t(
+              'common.offers'
+            )}`}
             img={serviceIcon}
             key={item._id}
             link={`${authRoutes.subjects.path}?categoryId=${item._id}`}
@@ -57,7 +64,7 @@ const PopularCategories: FC<PopularCategoriesProps> = ({
           />
         )
       }),
-    [response, t]
+    [response, currentRole, t]
   )
 
   const onClickButton = () => {
