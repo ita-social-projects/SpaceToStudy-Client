@@ -3,7 +3,7 @@ export const styles = {
     display: 'flex',
     alignItems: 'center',
     px: '8px',
-    py: { xs: '7px', sm: 0 },
+    height: '48px',
     gap: '8px'
   },
   input: {
