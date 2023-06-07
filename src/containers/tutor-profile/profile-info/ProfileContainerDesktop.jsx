@@ -10,6 +10,7 @@ import img from '~/assets/img/tutor-profile-page/avatar.png'
 import { styles } from '~/containers/tutor-profile/profile-info/ProfileInfo.styles'
 
 const ProfileContainerDesktop = ({
+  userData,
   actionIcon,
   accInfo,
   buttonGroup,
@@ -31,7 +32,7 @@ const ProfileContainerDesktop = ({
             'Senior lecturer at the Department of German Philology and Translation'
           }
           style={styles.titleWithDescription}
-          title={'Esther Howard'}
+          title={`${userData.firstName} ${userData.lastName}`}
         />
 
         <AppChipList
