@@ -71,13 +71,14 @@ const FilterBarMenu: FC<FilterBarMenuProps> = ({
       {isDesktop ? (
         <AppContentSwitcher
           active={filters.authorRole === UserRoleEnum.Student}
+          data-testid='switch'
           onChange={onToggleTutorOffers}
           switchOptions={translatedSwitcherOptions}
           typographyVariant='button'
         />
       ) : null}
       {!isMobile ? (
-        <Box sx={styles.container}>
+        <Box data-testid='app-select-block' sx={styles.container}>
           <AppSelect
             fields={sortOptions}
             selectTitle={t('filters.sortBy.sortByTitle')}
