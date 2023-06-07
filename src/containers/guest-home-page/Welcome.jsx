@@ -22,7 +22,7 @@ const Welcome = () => {
     (isDesktop && titleMd) || (isTablet && titleSm) || (isMobile && titleXs)
 
   return (
-    <Box className='section' sx={styles.container}>
+    <Box className='section' id={'welcome'} sx={styles.container}>
       <Box
         alt='Title'
         component='img'
