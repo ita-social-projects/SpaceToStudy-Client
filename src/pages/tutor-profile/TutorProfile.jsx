@@ -13,12 +13,16 @@ import useAxios from '~/hooks/use-axios'
 import { profileItems } from '~/components/profile-item/complete-profile.constants'
 import { defaultResponses } from '~/constants'
 import { responseMock } from '~/pages/tutor-profile/constants'
+import { parseJwt } from '~/utils/helper-functions'
+import useUserInfo from '~/hooks/use-user-info'
+import Loader from '~/components/loader/Loader'
 
 const TutorProfile = () => {
   const { user } = responseMock
-  const { reviews } = user.reviewStats || {}
+  const { averageRating, reviews, totalReviews } = user.reviewStats || {}
 
   const { userId, userRole } = useAppSelector((state) => state.appMain)
+  
 
   const getUserData = useCallback(
     () => userService.getUserById(userId, userRole),
@@ -34,6 +38,16 @@ const TutorProfile = () => {
   if (loading) {
     return <Loader pageLoad size={70} />
   }
+
+  const { id, role } = parseJwt(localStorage.getItem('s2s'))
+
+  const { loading, response: userData } = useUserInfo({ id, role })
+
+  if (loading) {
+    return <Loader pageLoad size={70} />
+  }
+
+
 
   return (
     <PageWrapper>
