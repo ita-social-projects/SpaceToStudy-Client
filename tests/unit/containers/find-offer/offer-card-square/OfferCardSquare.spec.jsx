@@ -8,12 +8,12 @@ import { renderWithProviders } from '~tests/test-utils'
 const mockOffer = {
   _id: 'id',
   authorAvgRating: 4.3,
-  authorFirstName: 'James',
-  authorLastName: 'Wilson',
   description:
     'Hello. There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which.',
   languages: ['Ukrainian', 'English'],
   author: {
+    firstName: 'James',
+    lastName: 'Wilson',
     totalReviews: {
       student: 0,
       tutor: 0
@@ -25,6 +25,9 @@ const mockOffer = {
   },
   price: 100,
   isBookmarked: false,
+  category: {
+    appearance: 'test'
+  },
   subject: {
     id: '12345',
     name: 'English'
@@ -74,7 +77,9 @@ describe('OfferCardSquare test', () => {
   })
 
   it('renders the proficiency level', () => {
-    const proficiencyLevel = screen.getByText('COMMON.BEGINNER - ADVANCED')
+    const proficiencyLevel = screen.getByText(
+      `${mockOffer.proficiencyLevel[0]} - ${mockOffer.proficiencyLevel[1]}`
+    )
 
     expect(proficiencyLevel).toBeInTheDocument()
   })

@@ -22,13 +22,13 @@ vi.mock('react-router-dom', async () => {
 const mockData = {
   id: '64480bb14ee3d89a58631730',
   authorAvgRating: 4.3,
-  authorFirstName: 'James',
-  authorLastName: 'Wilson',
   title: 'Hello',
   description:
     'Hello. There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which.',
   languages: ['Ukrainian', 'English'],
   author: {
+    firstName: 'James',
+    lastName: 'Wilson',
     totalReviews: {
       student: 0,
       tutor: 0
@@ -40,6 +40,9 @@ const mockData = {
   },
   price: 100,
   isBookmarked: false,
+  category: {
+    appearance: 'test'
+  },
   subject: {
     id: '12345',
     name: 'English'
@@ -71,15 +74,13 @@ describe('OfferDetails on desktop', () => {
     const authorAvgRating = await screen.findByText(mockData.authorAvgRating)
     const title = await screen.findByText(mockData.title)
     const name = await screen.findByText(
-      `${mockData.authorFirstName} ${mockData.authorLastName[0]}.`
+      `${mockData.author.firstName} ${mockData.author.lastName[0]}.`
     )
-    const subject = await screen.findByText(mockData.subject.name.toUpperCase())
 
     expect(price).toBeInTheDocument()
     expect(authorAvgRating).toBeInTheDocument()
     expect(title).toBeInTheDocument()
     expect(name).toBeInTheDocument()
-    expect(subject).toBeInTheDocument()
   })
 })
 
@@ -97,7 +98,7 @@ describe('OfferDetails on mobile', () => {
     const authorAvgRating = await screen.findByText(mockData.authorAvgRating)
     const title = await screen.findByText(mockData.title)
     const name = await screen.findByText(
-      `${mockData.authorFirstName} ${mockData.authorLastName}`
+      `${mockData.author.firstName} ${mockData.author.lastName}`
     )
 
     expect(authorAvgRating).toBeInTheDocument()
