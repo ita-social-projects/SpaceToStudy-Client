@@ -164,23 +164,19 @@ const FindOffers = () => {
         updateFilter={filterQueryActions.updateFilterInQuery}
       />
       <Box sx={styles.filterSection}>
-        {isDesktop ? (
-          filtersComponent
-        ) : (
-          <AppDrawer onClose={closeDrawer} open={isOpen}>
-            {filtersComponent}
-          </AppDrawer>
-        )}
+        <AppDrawer
+          anchor={isDesktop ? 'left' : undefined}
+          onClose={closeDrawer}
+          open={isOpen}
+        >
+          {filtersComponent}
+        </AppDrawer>
         {offersLoading ? (
           <Loader pageLoad size={70} />
         ) : !offers.length && !offersLoading ? (
           <NotFoundResults description={t('findOffers.notFound.description')} />
         ) : (
-          <OfferContainer
-            isFiltersOpen={isOpen}
-            offerCards={offers}
-            viewMode={cardsView}
-          />
+          <OfferContainer offerCards={offers} viewMode={cardsView} />
         )}
       </Box>
       <AppPagination
