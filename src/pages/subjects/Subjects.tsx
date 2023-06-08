@@ -34,7 +34,6 @@ import AsyncAutocomplete from '~/components/async-autocomlete/AsyncAutocomplete'
 import useSubjectsNames from '~/hooks/use-subjects-names'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { getScreenBasedLimit } from '~/utils/helper-functions'
-import { mapArrayByField } from '~/utils/map-array-by-field'
 import { styles } from '~/pages/subjects/Subjects.styles'
 
 const Subjects = () => {
@@ -50,16 +49,14 @@ const Subjects = () => {
 
   const cardsLimit = getScreenBasedLimit(breakpoints, itemsLoadLimit)
 
-  const transform = useCallback(
-    (data: SubjectNameInterface[]): string[] => mapArrayByField(data, 'name'),
-    []
-  )
-
-  const { loading: subjectNamesLoading, response: subjectsNamesItems } =
-    useSubjectsNames({
-      category: categoryId,
-      transform
-    })
+  const {
+    loading: subjectNamesLoading,
+    response: subjectsNamesItems,
+    fetchData
+  } = useSubjectsNames({
+    fetchOnMount: false,
+    category: categoryId
+  })
 
   const getSubjects = useCallback(
     (data?: Pick<SubjectInterface, 'name'>) =>
@@ -125,6 +122,13 @@ const Subjects = () => {
     />
   )
 
+  const options = useMemo(
+    () => subjectsNamesItems.map((option: SubjectNameInterface) => option.name),
+    [subjectsNamesItems]
+  )
+
+  const getSubjectNames = () => !subjectsNamesItems.length && void fetchData()
+
   const handleOpenModal = () => openModal({ component: <CreateSubjectModal /> })
 
   return (
@@ -154,8 +158,9 @@ const Subjects = () => {
         {!breakpoints.isMobile && autoCompleteCategories}
         <SearchAutocomplete
           loading={subjectNamesLoading}
+          onFocus={getSubjectNames}
           onSearchChange={resetData}
-          options={subjectsNamesItems}
+          options={options}
           search={match}
           setSearch={setMatch}
           textFieldProps={{

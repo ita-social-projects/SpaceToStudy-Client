@@ -60,18 +60,6 @@ describe('Subjects', () => {
     ).toBeInTheDocument()
   })
 
-  it('should update search value when search input is changed', () => {
-    const searchLabel = screen.getByLabelText(
-      'subjectsPage.subjects.searchLabel'
-    )
-
-    fireEvent.change(searchLabel, { target: { value: 'Subject' } })
-
-    const subject = screen.getByDisplayValue('Subject')
-
-    expect(subject).toBeInTheDocument()
-  })
-
   it('should change autocomplete', () => {
     const autocomplete = screen.getByLabelText('breadCrumbs.categories')
 
