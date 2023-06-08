@@ -1,6 +1,7 @@
 import {
   CategoryInterface,
   CategoryNameInterface,
+  Faq,
   FindOffersUpdateFilter,
   LanguageFilter,
   Offer,
@@ -60,7 +61,7 @@ export interface GetOffersPrarams
 export interface CreateOfferData
   extends Pick<
     Offer,
-    'proficiencyLevel' | 'languages' | 'description' | 'title' | 'faq'
+    'proficiencyLevel' | 'languages' | 'description' | 'title' | 'FAQ'
   > {
   category: CategoryNameInterface['name']
   subject: SubjectNameInterface['name']
