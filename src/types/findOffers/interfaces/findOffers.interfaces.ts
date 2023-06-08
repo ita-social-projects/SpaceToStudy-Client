@@ -1,7 +1,6 @@
 import {
   CategoryInterface,
   CategoryNameInterface,
-  Faq,
   FindOffersUpdateFilter,
   LanguageFilter,
   Offer,

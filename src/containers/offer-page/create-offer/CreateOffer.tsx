@@ -56,7 +56,7 @@ const CreateOffer: FC<CreateOfferProps> = ({ closeDrawer }) => {
   }
 
   const postOffer = (): Promise<AxiosResponse> =>
-    OfferService.createOffer({ ...data, faq: findFullObjects(data.faq) })
+    OfferService.createOffer({ ...data, FAQ: findFullObjects(data.FAQ) })
 
   const { loading, fetchData } = useAxios<Offer | null>({
     service: postOffer,

@@ -8,7 +8,7 @@ export const initialValues = {
   title: '',
   description: '',
   price: '',
-  faq: [{ question: '', answer: '' }]
+  FAQ: [{ question: '', answer: '' }]
 }
 
 export const validations = {
