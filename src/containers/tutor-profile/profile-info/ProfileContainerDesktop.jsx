@@ -6,7 +6,6 @@ import TitleWithDescription from '~/components/title-with-description/TitleWithD
 import AppChipList from '~/components/app-chips-list/AppChipList'
 import ProfileDoneItemsList from '~/components/icon-with-text-list/ProfileDoneItemsList'
 
-import img from '~/assets/img/tutor-profile-page/avatar.png'
 import { styles } from '~/containers/tutor-profile/profile-info/ProfileInfo.styles'
 
 const ProfileContainerDesktop = ({
@@ -15,22 +14,23 @@ const ProfileContainerDesktop = ({
   accInfo,
   buttonGroup,
   defaultQuantity,
-  subjectChips,
   doneItems
 }) => {
+  const { isDesktop } = useBreakpoints()
+
+  const subjectData = userData.mainSubjects.tutor.map((item) => item.name)
+
   return (
     <Box sx={styles.container}>
       <Box>
-        <Box component='img' src={img} sx={styles.img} />
+        <Box component='img' src={userData.photo} sx={styles.img} />
       </Box>
 
       {actionIcon}
 
       <Box sx={styles.infoWrapper}>
         <TitleWithDescription
-          description={
-            'Senior lecturer at the Department of German Philology and Translation'
-          }
+          description={userData.professionalSummary}
           style={styles.titleWithDescription}
           title={`${userData.firstName} ${userData.lastName}`}
         />
@@ -38,7 +38,7 @@ const ProfileContainerDesktop = ({
         <AppChipList
           defaultQuantity={2}
           icon={<SchoolIcon fontSize='small' sx={styles.schoolIcon} />}
-          items={subjectChips}
+          items={subjectData}
           wrapperStyle={styles.chipsWrapper}
         />
 
