@@ -33,7 +33,7 @@ const AppBreadCrumbs = () => {
 
   return (
     crumbs.length > 1 && (
-      <Container sx={styles.root}>
+      <Container maxWidth='xl' sx={styles.root}>
         <Breadcrumbs separator={separator}>{breadCrumbs}</Breadcrumbs>
       </Container>
     )

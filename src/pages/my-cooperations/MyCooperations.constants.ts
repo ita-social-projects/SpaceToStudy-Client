@@ -1,3 +1,4 @@
+import { defaultResponses } from '~/constants'
 import { SortEnum } from '~/types'
 
 export const sortTranslationKeys = [
@@ -43,4 +44,10 @@ export const tabsInfo = {
     label: 'cooperationsPage.tabs.closed',
     value: 'closed'
   }
+}
+
+export const defaultResponse = {
+  items: defaultResponses.array,
+  count: 0,
+  countByStatus: defaultResponses.object
 }

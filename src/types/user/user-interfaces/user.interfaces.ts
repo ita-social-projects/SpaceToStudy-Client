@@ -6,7 +6,8 @@ import {
   UserRoleEnum,
   RequestParams,
   SubjectInterface,
-  SubjectNameInterface
+  SubjectNameInterface,
+  Faq
 } from '~/types'
 
 export interface LocalStorage {
@@ -43,6 +44,10 @@ export interface UserResponse {
   lastLogin: string
   createdAt: string
   updatedAt: string
+  FAQ: {
+    [UserRoleEnum.Student]: Faq[]
+    [UserRoleEnum.Tutor]: Faq[]
+  }
 }
 
 export interface UpdateUserParams

@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useState } from 'react'
+import { ChangeEvent, FC, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import SearchIcon from '@mui/icons-material/Search'
@@ -11,7 +11,12 @@ import { useDebounce } from '~/hooks/use-debounce'
 
 import { styles } from '~/containers/my-cooperations/cooperation-toolbar/CooperationToolbar.styles'
 import { FilterHook } from '~/hooks/table/use-filter'
-import { CardsViewEnum, MyCooperationsFilters, SelectFieldType } from '~/types'
+import {
+  CardsView,
+  CardsViewEnum,
+  MyCooperationsFilters,
+  SelectFieldType
+} from '~/types'
 import { SortHook } from '~/hooks/table/use-sort'
 
 interface CooperationToolbarProps {
@@ -33,12 +38,21 @@ const CooperationToolbar: FC<CooperationToolbarProps> = ({
 }) => {
   const { filters, setFilterByKey } = filterOptions
   const [inputValue, setInputValue] = useState(filters.search)
-  const { sort, onRequestSort } = sortOptions
+  const { sort, onRequestSort, resetSort } = sortOptions
   const { isMobile } = useBreakpoints()
   const { t } = useTranslation()
 
+  useEffect(() => {
+    setInputValue('')
+  }, [filters.status])
+
   const changeSearch = setFilterByKey('search')
   const deboucedSearchChange = useDebounce(changeSearch)
+
+  const handleViewChange = (value: CardsView) => {
+    resetSort()
+    onChangeView(value)
+  }
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value)
@@ -55,7 +69,7 @@ const CooperationToolbar: FC<CooperationToolbarProps> = ({
       <InputWithIcon
         onChange={handleInputChange}
         onClear={handleInputReset}
-        placeholder={t('common.search')}
+        placeholder={t('cooperationsPage.search')}
         startIcon={<SearchIcon sx={styles.searchIcon} />}
         sx={styles.input}
         value={inputValue}
@@ -69,7 +83,7 @@ const CooperationToolbar: FC<CooperationToolbarProps> = ({
             value={`${sort.orderBy} ${sort.order}`}
           />
         )}
-        {!isMobile && <ViewSwitcher onChange={onChangeView} value={view} />}
+        {!isMobile && <ViewSwitcher onChange={handleViewChange} value={view} />}
       </Box>
     </Box>
   )

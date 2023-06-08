@@ -48,21 +48,5 @@ export const styles = {
   },
   buttonsBlock: {
     display: 'flex'
-  },
-  subjectChip: {
-    mr: '4px',
-    backgroundColor: 'green.300',
-    color: 'green.900'
-  },
-  levelChip: {
-    backgroundColor: 'green.50',
-    color: 'primary.700'
-  },
-  subjectChipLabel: {
-    typography: 'overline',
-    fontWeight: 500
-  },
-  levelChipLabel: {
-    typography: 'overline'
   }
 }

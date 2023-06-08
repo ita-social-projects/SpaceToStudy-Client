@@ -8,11 +8,7 @@ export interface MyCooperationsFilters {
 
 export interface GetCooperationsParams
   extends Partial<MyCooperationsFilters>,
-    Omit<RequestParams, 'sort'> {
-  sort: {
-    [key: string]: number
-  }
-}
+    RequestParams {}
 
 export interface ScreenBasedLimits {
   desktop: number
@@ -22,12 +18,12 @@ export interface ScreenBasedLimits {
 }
 
 export interface RemoveColumnRules {
-  desktop?: string[]
-  tablet?: string[]
-  mobile?: string[]
+  desktop?: TableColumns['label'][]
+  tablet?: TableColumns['label'][]
+  mobile?: TableColumns['label'][]
 }
 
-export interface CooperationTableColumns {
+export interface TableColumns {
   label: string
   calculatedCellValue: (item: Cooperation) => string | React.ReactNode
   field?: string

@@ -5,7 +5,7 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
 import AppCard from '~/components/app-card/AppCard'
-import AppChip from '~/components/app-chip/AppChip'
+import SubjectLevelChips from '~/components/subject-level-chips/SubjectLevelChips'
 import StatusChip from '~/components/status-chip/StatusChip'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import UserProfileInfo from '~/components/user-profile-info/UserProfileInfo'
@@ -18,33 +18,34 @@ interface CooperationCardProps {
 
 const CooperationCard: FC<CooperationCardProps> = ({ cooperation }) => {
   const { t } = useTranslation()
+  const { user, offer, updatedAt, proficiencyLevel, price, status } =
+    cooperation
+
   return (
     <AppCard sx={styles.root}>
       <Box sx={styles.userInfo}>
         <UserProfileInfo
-          date={cooperation.updatedAt}
-          firstName={cooperation.user.firstName}
-          lastName={cooperation.user.lastName}
-          photo={cooperation.user.photo}
+          date={updatedAt}
+          firstName={user.firstName}
+          lastName={user.lastName}
+          photo={user.photo}
           sx={styles.userProfileInfo}
         />
         <Box sx={styles.priceWithStatus}>
-          <StatusChip status={cooperation.status} />
+          <StatusChip status={status} />
           <TitleWithDescription
             description={`/ ${t('common.hour')}`}
             style={styles.price}
-            title={`${cooperation.price} ${t('common.uah')}`}
+            title={`${price} ${t('common.uah')}`}
           />
         </Box>
       </Box>
-      <Box sx={styles.chipBox}>
-        <AppChip labelSx={styles.chipLabel}>
-          {cooperation.offer.subject.name}
-        </AppChip>
-        <AppChip labelSx={styles.chipLabel}>
-          {cooperation.proficiencyLevel}
-        </AppChip>
-      </Box>
+      <SubjectLevelChips
+        color={offer.category.appearance.color}
+        proficiencyLevel={proficiencyLevel}
+        subject={offer.subject.name}
+        sx={styles.chipBox}
+      />
       <Typography sx={styles.title}>{cooperation.offer.title}</Typography>
     </AppCard>
   )

@@ -13,5 +13,6 @@
     "price": "Price",
     "updated": "Last update",
     "status": "Status"
-  }
+  },
+  "search": "Search user name or title"
 }

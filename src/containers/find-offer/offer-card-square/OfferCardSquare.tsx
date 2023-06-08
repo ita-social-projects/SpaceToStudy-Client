@@ -1,21 +1,19 @@
 import { FC } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
 import TurnedInNot from '@mui/icons-material/TurnedInNot'
 import Typography from '@mui/material/Typography'
 
-import { useTranslation } from 'react-i18next'
-
-import AppChip from '~/components/app-chip/AppChip'
 import AppRatingMobile from '~/components/app-rating-mobile/AppRatingMobile'
 import AppButton from '~/components/app-button/AppButton'
 import UserProfileInfo from '~/components/user-profile-info/UserProfileInfo'
 import LanguagesListWithIcon from '~/components/languages-list-with-icon/LanguagesListWithIcon'
 import TitleWithDescripiton from '~/components/title-with-description/TitleWithDescription'
+import SubjectLevelChips from '~/components/subject-level-chips/SubjectLevelChips'
 
-import { ButtonActions, Offer, ProficiencyLevelEnum } from '~/types'
-
+import { ButtonActions, Offer } from '~/types'
 import { styles } from '~/containers/find-offer/offer-card-square/OfferCardSquare.styles'
 
 interface OfferCardSquareProps {
@@ -38,20 +36,10 @@ const OfferCardSquare: FC<OfferCardSquareProps> = ({
     price,
     author,
     title,
-    authorFirstName,
-    authorLastName,
     subject,
+    category,
     proficiencyLevel
   } = offer
-
-  const lastLevel =
-    proficiencyLevel.length > 1
-      ? proficiencyLevel[proficiencyLevel.length - 1]
-      : proficiencyLevel[0]
-  const levelText =
-    lastLevel === ProficiencyLevelEnum.Beginner
-      ? t('common.beginner')
-      : `${t('common.beginner')} - ${lastLevel}`.toUpperCase()
 
   const buttons = buttonActions?.map(
     (elem) =>
@@ -65,8 +53,8 @@ const OfferCardSquare: FC<OfferCardSquareProps> = ({
   return (
     <Box sx={styles.container}>
       <UserProfileInfo
-        firstName={authorFirstName}
-        lastName={authorLastName}
+        firstName={author.firstName}
+        lastName={author.lastName}
         photo={author.photo}
         sx={styles.userInfo}
       />
@@ -81,15 +69,12 @@ const OfferCardSquare: FC<OfferCardSquareProps> = ({
         </IconButton>
       )}
       <LanguagesListWithIcon languages={languages} />
-      <Box sx={styles.chipsContainer}>
-        <AppChip labelSx={styles.subjectChipLabel} sx={styles.subjectChip}>
-          {subject.name}
-        </AppChip>
-        <AppChip labelSx={styles.levelChipLabel} sx={styles.levelChip}>
-          {levelText}
-        </AppChip>
-      </Box>
-
+      <SubjectLevelChips
+        color={category.appearance.color}
+        proficiencyLevel={proficiencyLevel}
+        subject={subject.name}
+        sx={styles.chipContainer}
+      />
       <Box sx={styles.priceContainer}>
         <TitleWithDescripiton
           description={`/ ${t('common.hour')}`}

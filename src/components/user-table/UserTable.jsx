@@ -137,9 +137,10 @@ const UserTable = ({
     <Tab
       activeTab={externalFilter.status === tab.value}
       key={tab.label}
-      label={tab.label}
       onClick={() => handleTabClick(tab)}
-    />
+    >
+      {t(tab.label)}
+    </Tab>
   ))
 
   const props = {
