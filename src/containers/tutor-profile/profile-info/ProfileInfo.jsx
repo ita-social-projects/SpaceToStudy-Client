@@ -66,6 +66,7 @@ const ProfileInfo = () => {
   const buttonGroup = !isMyProfile && (
     <Box sx={styles.buttonGroup}>
       <Button
+        disabled
         fullWidth
         size={isDesktop ? SizeEnum.ExtraLarge : SizeEnum.Medium}
         variant='containedLight'
@@ -74,6 +75,7 @@ const ProfileInfo = () => {
       </Button>
 
       <Button
+        disabled
         fullWidth
         size={isDesktop ? SizeEnum.ExtraLarge : SizeEnum.Medium}
         variant='contained'
