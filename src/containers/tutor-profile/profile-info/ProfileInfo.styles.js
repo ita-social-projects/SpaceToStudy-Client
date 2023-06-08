@@ -15,7 +15,8 @@ export const styles = {
     height: '100%',
     minWidth: '150px',
     minHeight: '150px',
-    borderRadius: '15px'
+    borderRadius: '15px',
+    maxWidth: '500px'
   },
   infoWrapper: {
     maxWidth: '552px'
