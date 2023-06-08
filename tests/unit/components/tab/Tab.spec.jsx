@@ -3,23 +3,22 @@ import { vi } from 'vitest'
 
 import Tab from '~/components/tab/Tab'
 
+let label = 'text'
+let onClick = vi.fn()
 describe('Tab', () => {
-  let label
-  let onClick
-
   beforeEach(() => {
-    label = 'label text'
-    onClick = vi.fn()
     render(<Tab activeTab label={label} onClick={onClick} />)
   })
 
   it('renders the label', () => {
     const tabLabel = screen.getByText(label)
+
     expect(tabLabel).toBeInTheDocument()
   })
 
   it('applies activeTab if it is true', () => {
     const tabButton = screen.getByRole('button')
+
     if (tabButton.classList.contains('activeTab')) {
       expect(tabButton).toHaveClass('activeTab')
     }
@@ -27,12 +26,15 @@ describe('Tab', () => {
 
   it('does not apply activeTab if it is false', () => {
     const tabButton = screen.getByRole('button')
+
     expect(tabButton).not.toHaveClass('activeTab')
   })
 
   it('calls onClick function when clicked', () => {
     const tabButton = screen.getByRole('button')
+
     fireEvent.click(tabButton)
+
     expect(onClick).toHaveBeenCalled()
   })
 })
