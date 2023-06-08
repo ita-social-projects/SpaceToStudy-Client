@@ -2,9 +2,9 @@ export const styles = {
   root: {
     display: 'flex',
     alignItems: 'center',
-    px: '8px',
-    height: '48px',
-    gap: '8px'
+    px: '14px',
+    py: { xs: '7px', sm: 0 },
+    gap: '12px'
   },
   input: {
     flex: 1

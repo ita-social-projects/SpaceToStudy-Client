@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
+import { SxProps } from '@mui/material'
 
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import useBreakpoints from '~/hooks/use-breakpoints'
@@ -12,26 +13,32 @@ type TitleBlockProps = {
   img: string
   translationKey: string
   children?: React.ReactNode
+  sx: SxProps
+  mt: SxProps
 }
 
-const TitleBlock: FC<TitleBlockProps> = ({ img, translationKey, children }) => {
+const TitleBlock: FC<TitleBlockProps> = ({
+  img,
+  translationKey,
+  children,
+  sx,
+  mt
+}) => {
   const { t } = useTranslation()
-  const { isTablet, isMobile } = useBreakpoints()
+  const { isMobile } = useBreakpoints()
   const { userRole } = useAppSelector((state) => state.appMain)
 
   return (
-    <Box className='section' sx={styles.container}>
+    <Box className='section' sx={{ ...styles.container, mt }}>
       <Box sx={styles.info}>
         <TitleWithDescription
           description={t(`${translationKey}.description`)}
           style={styles.titleWithDescription}
-          title={t(`${translationKey}.title`)}
+          title={t(`${translationKey}.title.${userRole}`)}
         />
         {children && <Box sx={styles.form}>{children}</Box>}
       </Box>
-      {!isTablet && !isMobile && (
-        <Box alt='icon' component='img' src={img}></Box>
-      )}
+      {!isMobile && <Box alt='icon' component='img' src={img} sx={sx}></Box>}
     </Box>
   )
 }

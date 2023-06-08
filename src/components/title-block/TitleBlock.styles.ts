@@ -4,12 +4,10 @@ export const styles = {
     backgroundColor: 'companyBlue',
     borderRadius: 2,
     px: { md: 7, sm: 3, xs: 3 },
-    py: { md: 6, sm: 4, xs: 4 },
-    mb: '30px',
-    mt: { lg: '48px', xs: '24px' }
+    py: { md: 6, sm: 4, xs: 4 }
   },
   info: {
-    flexBasis: { md: '65%', lg: '55%' }
+    flexBasis: { lg: '55%' }
   },
   form: {
     display: 'flex',

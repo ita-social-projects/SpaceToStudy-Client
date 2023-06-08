@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
 
 import TitleBlock from '~/components/title-block/TitleBlock'
 import SearchIcon from '@mui/icons-material/Search'
@@ -12,13 +13,13 @@ import { translationKey } from '~/containers/student-home-page/find-tutor-block/
 import { authRoutes } from '~/router/constants/authRoutes'
 import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
 import AppButton from '~/components/app-button/AppButton'
-import { Link } from 'react-router-dom'
 
 const FindTutorBlock = () => {
   const [inputValue, setInputValue] = useState('')
   const { t } = useTranslation()
   const navigate = useNavigate()
   const { isMobile } = useBreakpoints()
+  const findOffers = `${authRoutes.findOffers.path}?search=${inputValue}`
 
   const onChange = (e) => {
     setInputValue(e.target.value)
@@ -30,13 +31,18 @@ const FindTutorBlock = () => {
         navigate(authRoutes.findOffers.path, { state: { inputValue } })
       }
     },
-    [inputValue]
+    [inputValue, navigate]
   )
 
   const onClear = () => setInputValue('')
 
   return (
-    <TitleBlock img={bag} translationKey={translationKey}>
+    <TitleBlock
+      img={bag}
+      mt={{ ...styles.root }}
+      sx={{ ...styles.img }}
+      translationKey={translationKey}
+    >
       <InputWithIcon
         fullWidth={isMobile}
         onChange={onChange}
@@ -47,11 +53,7 @@ const FindTutorBlock = () => {
         sx={styles.input}
         value={inputValue}
       />
-      <AppButton
-        component={Link}
-        fullWidth={isMobile}
-        to={`${authRoutes.findOffers.path}?search=${inputValue}`}
-      >
+      <AppButton component={Link} fullWidth={isMobile} to={findOffers}>
         {t(`${translationKey}.button`)}
       </AppButton>
     </TitleBlock>
