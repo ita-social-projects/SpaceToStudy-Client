@@ -19,8 +19,8 @@ const ProfileContainerMobile = ({
   const subjectData = userData.mainSubjects.tutor.map((item) => item.name)
   return (
     <Box sx={styles.container}>
-      <Box sx={{ display: 'flex', gap: '10px' }}>
-        <Box sx={{ flex: 1 }}>
+      <Box sx={styles.wrapperForImageAndName}>
+        <Box sx={styles.imageContainer}>
           <Box component='img' src={userData.photo} sx={styles.img} />
         </Box>
 

@@ -84,5 +84,12 @@ export const styles = {
     description: {
       typography: 'overline'
     }
+  },
+  imageContainer: {
+    flex: 1
+  },
+  wrapperForImageAndName: {
+    display: 'flex',
+    gap: '10px'
   }
 }
