@@ -5,8 +5,7 @@ export const styles = {
   },
   titleWithDescription: {
     wrapper: {
-      margin: { xs: '40px 0', sm: '75px 0', md: '100px 0' },
-      minHeight: '500px'
+      margin: { xs: '40px 0', sm: '75px 0', md: '100px 0' }
     },
     title: {
       typography: { sm: 'h4', xs: 'h5' },

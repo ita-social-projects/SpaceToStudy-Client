@@ -13,23 +13,21 @@ type TitleBlockProps = {
   img: string
   translationKey: string
   children?: React.ReactNode
-  sx: SxProps
-  mt: SxProps
+  style: SxProps
 }
 
 const TitleBlock: FC<TitleBlockProps> = ({
   img,
   translationKey,
   children,
-  sx,
-  mt
+  style
 }) => {
   const { t } = useTranslation()
   const { isMobile } = useBreakpoints()
   const { userRole } = useAppSelector((state) => state.appMain)
 
   return (
-    <Box className='section' sx={{ ...styles.container, mt }}>
+    <Box className='section' sx={{ ...styles.container, ...style }}>
       <Box sx={styles.info}>
         <TitleWithDescription
           description={t(`${translationKey}.description`)}
@@ -38,7 +36,7 @@ const TitleBlock: FC<TitleBlockProps> = ({
         />
         {children && <Box sx={styles.form}>{children}</Box>}
       </Box>
-      {!isMobile && <Box alt='icon' component='img' src={img} sx={sx}></Box>}
+      {!isMobile && <Box alt='icon' component='img' src={img}></Box>}
     </Box>
   )
 }

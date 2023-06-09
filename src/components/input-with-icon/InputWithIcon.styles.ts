@@ -9,5 +9,8 @@ export const styles = {
   input: {
     flex: 1
   },
-  clearIcon: { color: 'primary.700' }
+  clearIcon: {
+    py: 0,
+    color: 'primary.700'
+  }
 }

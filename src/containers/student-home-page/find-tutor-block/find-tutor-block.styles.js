@@ -1,13 +1,13 @@
 export const styles = {
-  img: {
-    '@media (max-width: 900px)': {
-      display: 'none'
-    }
-  },
-  root: {
-    marginTop: '48px',
-    '@media (max-width: 900px)': {
-      marginTop: '24px'
+  container: {
+    mt: {
+      xs: '24px',
+      md: '48px'
+    },
+
+    img: {
+      xs: { display: 'none' },
+      md: { display: 'block' }
     }
   },
   input: {

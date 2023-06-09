@@ -39,8 +39,7 @@ const FindTutorBlock = () => {
   return (
     <TitleBlock
       img={bag}
-      mt={{ ...styles.root }}
-      sx={{ ...styles.img }}
+      style={styles.container}
       translationKey={translationKey}
     >
       <InputWithIcon
