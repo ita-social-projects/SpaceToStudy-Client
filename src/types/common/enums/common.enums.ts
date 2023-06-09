@@ -67,3 +67,7 @@ export enum StatusEnum {
   Active = 'active',
   Closed = 'closed'
 }
+export enum DrawerAnchorEnum {
+  Left = 'left',
+  Right = 'right'
+}

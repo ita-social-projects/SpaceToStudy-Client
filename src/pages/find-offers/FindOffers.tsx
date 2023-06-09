@@ -26,6 +26,7 @@ import { useFilterQuery } from '~/hooks/use-filter-query'
 import { useAppSelector } from '~/hooks/use-redux'
 import usePagination from '~/hooks/table/use-pagination'
 import useAxios from '~/hooks/use-axios'
+import { DrawerAnchorEnum } from '~/types'
 
 import {
   CardsViewEnum,
@@ -165,7 +166,7 @@ const FindOffers = () => {
       />
       <Box sx={styles.filterSection}>
         <AppDrawer
-          anchor={isDesktop ? 'left' : undefined}
+          anchor={isDesktop ? DrawerAnchorEnum.Left : DrawerAnchorEnum.Right}
           onClose={closeDrawer}
           open={isOpen}
         >
