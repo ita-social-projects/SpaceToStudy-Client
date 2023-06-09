@@ -2,6 +2,7 @@ import { renderWithProviders } from '~tests/test-utils'
 import OfferBanner from '~/components/offer-banner/OfferBanner'
 import { screen } from '@testing-library/react'
 import useBreakpoints from '~/hooks/use-breakpoints'
+import { mockOffer } from '~tests/unit/pages/offer-details/OfferDetails.spec.constants'
 
 vi.mock('~/hooks/use-breakpoints')
 
@@ -9,36 +10,6 @@ const buttonActions = [
   { label: 'Action 1', handleClick: vi.fn() },
   { label: 'Action 2', handleClick: vi.fn() }
 ]
-
-const mockOffer = {
-  _id: 'id',
-  authorAvgRating: 4.3,
-  description:
-    'Hello. There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which.',
-  languages: ['Ukrainian', 'English'],
-  author: {
-    firstName: 'James',
-    lastName: 'Wilson',
-    totalReviews: {
-      student: 0,
-      tutor: 0
-    },
-    photo:
-      'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80',
-    professionalSummary:
-      'Senior lecturer at the Department of German Philology and Translation Department of English Philology Senior lecturer at the Department of German Philology and Translation Department of English Philology Senior lecturer at the Department of German Philology and Translation Department of English Philology'
-  },
-  price: 100,
-  isBookmarked: false,
-  category: {
-    appearance: 'test'
-  },
-  subject: {
-    id: '12345',
-    name: 'English'
-  },
-  proficiencyLevel: ['Beginner', 'Advanced']
-}
 
 describe('OfferDetails on desktop', () => {
   const desktopData = { isDesktop: true, isMobile: false, isTablet: false }
@@ -53,7 +24,7 @@ describe('OfferDetails on desktop', () => {
   })
 
   it('should display chips', () => {
-    const chip = screen.getByText('English')
+    const chip = screen.getByText(mockOffer.subject.name)
     expect(chip).toBeInTheDocument()
   })
 })
@@ -68,7 +39,7 @@ describe('OfferDetails on desktop', () => {
   })
 
   it('should not display chips', () => {
-    const chip = screen.queryByText('English')
+    const chip = screen.queryByText(mockOffer.subject.name)
     expect(chip).not.toBeInTheDocument()
   })
 })

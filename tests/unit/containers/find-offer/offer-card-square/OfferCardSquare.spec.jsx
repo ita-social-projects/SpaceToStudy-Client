@@ -4,36 +4,7 @@ import { screen, fireEvent } from '@testing-library/react'
 import { beforeEach, expect } from 'vitest'
 import OfferCardSquare from '~/containers/find-offer/offer-card-square/OfferCardSquare'
 import { renderWithProviders } from '~tests/test-utils'
-
-const mockOffer = {
-  _id: 'id',
-  authorAvgRating: 4.3,
-  description:
-    'Hello. There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which.',
-  languages: ['Ukrainian', 'English'],
-  author: {
-    firstName: 'James',
-    lastName: 'Wilson',
-    totalReviews: {
-      student: 0,
-      tutor: 0
-    },
-    photo:
-      'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80',
-    professionalSummary:
-      'Senior lecturer at the Department of German Philology and Translation Department of English Philology Senior lecturer at the Department of German Philology and Translation Department of English Philology Senior lecturer at the Department of German Philology and Translation Department of English Philology'
-  },
-  price: 100,
-  isBookmarked: false,
-  category: {
-    appearance: 'test'
-  },
-  subject: {
-    id: '12345',
-    name: 'English'
-  },
-  proficiencyLevel: ['Beginner', 'Advanced']
-}
+import { mockOffer } from '~tests/unit/pages/offer-details/OfferDetails.spec.constants'
 
 const onBookmarkClick = vi.fn()
 const buttonActions = [
@@ -53,7 +24,9 @@ describe('OfferCardSquare test', () => {
   })
 
   it('Should render first name correctly', () => {
-    const fullName = screen.getByText('James Wilson')
+    const fullName = screen.getByText(
+      `${mockOffer.author.firstName} ${mockOffer.author.lastName}`
+    )
 
     expect(fullName).toBeInTheDocument()
   })
@@ -65,20 +38,22 @@ describe('OfferCardSquare test', () => {
   })
 
   it('Should correctly display price', () => {
-    const price = screen.getByText('100 common.uah')
+    const price = screen.getByText(`${mockOffer.price} common.uah`)
 
     expect(price).toBeInTheDocument()
   })
 
   it('renders the author photo', () => {
-    const authorPhoto = screen.getByRole('img')
+    const authorPhoto = screen.getByTestId('PersonIcon')
 
     expect(authorPhoto).toBeInTheDocument()
   })
 
   it('renders the proficiency level', () => {
     const proficiencyLevel = screen.getByText(
-      `${mockOffer.proficiencyLevel[0]} - ${mockOffer.proficiencyLevel[1]}`
+      `${mockOffer.proficiencyLevel[0]} - ${
+        mockOffer.proficiencyLevel[mockOffer.proficiencyLevel.length - 1]
+      }`
     )
 
     expect(proficiencyLevel).toBeInTheDocument()
@@ -104,6 +79,6 @@ describe('OfferCardSquare test', () => {
 
     fireEvent.click(bookmarkButton)
 
-    expect(onBookmarkClick).toHaveBeenCalledWith('id')
+    expect(onBookmarkClick).toHaveBeenCalledWith(mockOffer._id)
   })
 })

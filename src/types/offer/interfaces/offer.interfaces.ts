@@ -17,7 +17,6 @@ export interface Offer extends CommonEntityFields {
   description: string
   languages: LanguagesEnum[]
   authorRole: UserRoleEnum.Tutor | UserRoleEnum.Student
-  authorAvgRating: number
   author: Pick<
     UserResponse,
     | '_id'
@@ -27,6 +26,7 @@ export interface Offer extends CommonEntityFields {
     | 'firstName'
     | 'lastName'
     | 'FAQ'
+    | 'averageRating'
   >
   subject: SubjectNameInterface
   category: CategoryInterface

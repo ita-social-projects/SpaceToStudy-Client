@@ -31,7 +31,7 @@ const OfferCardSquare: FC<OfferCardSquareProps> = ({
 
   const {
     _id,
-    authorAvgRating,
+    authorRole,
     languages,
     price,
     author,
@@ -84,7 +84,7 @@ const OfferCardSquare: FC<OfferCardSquareProps> = ({
         <Box>
           <AppRatingMobile
             reviewsCount={author.totalReviews}
-            value={authorAvgRating}
+            value={author.averageRating[authorRole]}
           />
         </Box>
       </Box>

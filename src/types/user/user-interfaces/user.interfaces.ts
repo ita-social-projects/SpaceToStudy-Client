@@ -36,7 +36,7 @@ export interface UserResponse {
   email: string
   mainSubjects: SubjectInterface[]
   totalReviews: TotalReviews
-  averageRating: number
+  averageRating: TotalReviews
   nativeLanguage: string
   address: Address
   professionalSummary?: string

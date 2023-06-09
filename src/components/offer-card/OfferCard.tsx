@@ -23,7 +23,6 @@ const OfferCard: FC<OfferCardProps> = ({
 }) => {
   const {
     _id,
-    authorAvgRating,
     title,
     description,
     languages,
@@ -41,7 +40,7 @@ const OfferCard: FC<OfferCardProps> = ({
         firstName={author.firstName}
         lastName={`${author.lastName[0]}.`}
         photo={author.photo}
-        rating={authorAvgRating}
+        rating={author.averageRating[authorRole]}
         reviewsCount={author.totalReviews[authorRole]}
         sx={styles.userInfo}
       />

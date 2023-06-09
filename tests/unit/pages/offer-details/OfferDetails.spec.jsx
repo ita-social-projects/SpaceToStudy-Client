@@ -4,6 +4,7 @@ import { URLs } from '~/constants/request'
 import OfferDetails from '~/pages/offer-details/OfferDetails'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
+import { mockOffer } from '~tests/unit/pages/offer-details/OfferDetails.spec.constants'
 
 vi.mock('~/hooks/use-breakpoints')
 vi.mock('react-router-dom', async () => {
@@ -11,50 +12,21 @@ vi.mock('react-router-dom', async () => {
   return {
     ...actual,
     useParams: () => ({
-      id: mockData.id
+      id: mockOffer._id
     }),
     useOutletContext: () => ({
-      data: mockData
+      data: mockOffer
     })
   }
 })
-
-const mockData = {
-  id: '64480bb14ee3d89a58631730',
-  authorAvgRating: 4.3,
-  title: 'Hello',
-  description:
-    'Hello. There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which.',
-  languages: ['Ukrainian', 'English'],
-  author: {
-    firstName: 'James',
-    lastName: 'Wilson',
-    totalReviews: {
-      student: 0,
-      tutor: 0
-    },
-    photo:
-      'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80',
-    professionalSummary:
-      'Senior lecturer at the Department of German Philology and Translation Department of English Philology Senior lecturer at the Department of German Philology and Translation Department of English Philology Senior lecturer at the Department of German Philology and Translation Department of English Philology'
-  },
-  price: 100,
-  isBookmarked: false,
-  category: {
-    appearance: 'test'
-  },
-  subject: {
-    id: '12345',
-    name: 'English'
-  },
-  proficiencyLevel: ['Beginner', 'Advanced']
-}
 
 const mockState = {
   appMain: { userRole: 'tutor' }
 }
 
-mockAxiosClient.onGet(`${URLs.offers.get}/${mockData.id}`).reply(200, mockData)
+mockAxiosClient
+  .onGet(`${URLs.offers.get}/${mockOffer._id}`)
+  .reply(200, mockOffer)
 mockAxiosClient
   .onGet(`${URLs.categories.get}${URLs.subjects.get}${URLs.offers.get}`)
   .reply(200, { offers: [], count: 0 })
@@ -70,11 +42,13 @@ describe('OfferDetails on desktop', () => {
   })
 
   it('should display the offer details correctly', async () => {
-    const price = await screen.findByText(mockData.price)
-    const authorAvgRating = await screen.findByText(mockData.authorAvgRating)
-    const title = await screen.findByText(mockData.title)
+    const price = await screen.findByText(mockOffer.price)
+    const authorAvgRating = screen.getByText(
+      mockOffer.author.averageRating.tutor
+    )
+    const title = await screen.findByText(mockOffer.title)
     const name = await screen.findByText(
-      `${mockData.author.firstName} ${mockData.author.lastName[0]}.`
+      `${mockOffer.author.firstName} ${mockOffer.author.lastName[0]}.`
     )
 
     expect(price).toBeInTheDocument()
@@ -95,10 +69,12 @@ describe('OfferDetails on mobile', () => {
   })
 
   it('should display the offer details correctly', async () => {
-    const authorAvgRating = await screen.findByText(mockData.authorAvgRating)
-    const title = await screen.findByText(mockData.title)
+    const authorAvgRating = screen.getByText(
+      mockOffer.author.averageRating.tutor
+    )
+    const title = await screen.findByText(mockOffer.title)
     const name = await screen.findByText(
-      `${mockData.author.firstName} ${mockData.author.lastName}`
+      `${mockOffer.author.firstName} ${mockOffer.author.lastName}`
     )
 
     expect(authorAvgRating).toBeInTheDocument()
