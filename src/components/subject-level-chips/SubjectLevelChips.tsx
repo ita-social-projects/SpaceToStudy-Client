@@ -1,12 +1,14 @@
 import { FC, useMemo } from 'react'
+
 import Box from '@mui/material/Box'
 import { SxProps } from '@mui/material'
-import AppChip from '~/components/app-chip/AppChip'
 
+import AppChip from '~/components/app-chip/AppChip'
 import palette from '~/styles/app-theme/app.pallete'
-import { styles } from '~/components/subject-level-chips/SubjectLevelChips.styles'
 import { spliceSx } from '~/utils/helper-functions'
+
 import { ProficiencyLevelEnum } from '~/types'
+import { styles } from '~/components/subject-level-chips/SubjectLevelChips.styles'
 
 interface SubjectLevelChipsProps {
   sx?: SxProps

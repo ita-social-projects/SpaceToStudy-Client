@@ -38,5 +38,6 @@ export const styles = {
       typography: 'body2',
       color: 'primary.900'
     }
-  }
+  },
+  title: { maxWidth: '360px' }
 }

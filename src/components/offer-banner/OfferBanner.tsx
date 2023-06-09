@@ -10,7 +10,7 @@ import useBreakpoints from '~/hooks/use-breakpoints'
 import AppCard from '~/components/app-card/AppCard'
 import AppButton from '~/components/app-button/AppButton'
 import UserProfileInfo from '~/components/user-profile-info/UserProfileInfo'
-import SubjectLevelChips from '../subject-level-chips/SubjectLevelChips'
+import SubjectLevelChips from '~/components/subject-level-chips/SubjectLevelChips'
 
 import { ButtonActions, Offer } from '~/types'
 import { styles } from '~/components/offer-banner/OfferBanner.styles'

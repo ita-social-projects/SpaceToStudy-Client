@@ -1,10 +1,12 @@
+import Typography from '@mui/material/Typography'
+
 import { getFormatedDate } from '~/utils/helper-functions'
 import StatusChip from '~/components/status-chip/StatusChip'
 import UserProfileInfo from '~/components/user-profile-info/UserProfileInfo'
 import SubjectLevelChips from '~/components/subject-level-chips/SubjectLevelChips'
+
 import { Cooperation } from '~/types'
 import { styles } from '~/containers/my-cooperations/cooperations-container/CooperationContainer.styles'
-import { Typography } from '@mui/material'
 
 export const columns = [
   {
@@ -22,7 +24,7 @@ export const columns = [
   {
     label: 'cooperationsPage.tableHeaders.title',
     calculatedCellValue: (item: Cooperation) => (
-      <Typography sx={{ maxWidth: '360px' }}>{item.offer.title}</Typography>
+      <Typography sx={styles.title}>{item.offer.title}</Typography>
     )
   },
   {
