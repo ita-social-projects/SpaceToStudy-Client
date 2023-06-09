@@ -1,6 +1,9 @@
 import Box from '@mui/material/Box'
 import SchoolIcon from '@mui/icons-material/School'
 import DoneIcon from '@mui/icons-material/Done'
+import Avatar from '@mui/material/Avatar'
+
+import _ from 'lodash'
 
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import AppChipList from '~/components/app-chips-list/AppChipList'
@@ -17,12 +20,23 @@ const ProfileContainerMobile = ({
   userData
 }) => {
   const subjectData = userData.mainSubjects.tutor.map((item) => item.name)
+
+  const profilePhoto = _.isEmpty(userData.photo) ? (
+    <Box sx={styles.avatarContainerStyles}>
+      <Avatar
+        sx={styles.avatarStyles}
+      >{`${userData.firstName[0]}${userData.lastName[0]}`}</Avatar>
+    </Box>
+  ) : (
+    <Box sx={styles.wrapperForPhoto}>
+      <Box component='img' src={userData.photo} sx={styles.img} />
+    </Box>
+  )
+
   return (
     <Box sx={styles.container}>
-      <Box sx={styles.wrapperForImageAndName}>
-        <Box sx={styles.imageContainer}>
-          <Box component='img' src={userData.photo} sx={styles.img} />
-        </Box>
+      <Box sx={styles.wrapperForPhoto}>
+        {profilePhoto}
 
         <TitleWithDescription
           description={userData.professionalSummary}

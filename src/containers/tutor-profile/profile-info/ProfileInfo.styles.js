@@ -8,7 +8,6 @@ export const styles = {
     justifyContent: 'space-between',
     gap: { sm: '30px', lg: '50px' },
     mb: '50px',
-    px: '15px',
     maxHeight: { sm: '525px' }
   },
   img: {
@@ -88,8 +87,18 @@ export const styles = {
   imageContainer: {
     flex: 1
   },
-  wrapperForImageAndName: {
+  wrapperForPhoto: {
     display: 'flex',
     gap: '10px'
+  },
+  avatarStyles: {
+    width: 156,
+    height: 156,
+    fontSize: '56px'
+  },
+  avatarContainerStyles: {
+    display: 'flex',
+    alignItems: 'center',
+    margin: '0 auto'
   }
 }
