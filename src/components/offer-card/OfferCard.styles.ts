@@ -8,7 +8,10 @@ export const styles = {
     wordBreak: 'break-word'
   },
   userInfo: {
-    root: { gap: '4px' },
+    root: {
+      gap: '4px',
+      maxWidth: '112px'
+    },
     avatar: {
       width: '80px',
       height: '80px',
