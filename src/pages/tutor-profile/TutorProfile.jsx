@@ -29,7 +29,7 @@ const TutorProfile = () => {
   return (
     <Container sx={{ flex: 1, pb: '100px' }}>
       <ProfileInfo userData={userData} />
-      <CompleteProfileBlock data={{}} profileItems={profileItems} />
+      <CompleteProfileBlock data={userData} profileItems={profileItems} />
       <VideoPresentation />
       <CommentsWithRatingBlock
         averageRating={averageRating}
