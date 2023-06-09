@@ -52,7 +52,7 @@ describe('EnhancedTable component', () => {
         {...mockedCommonProps}
       />
     )
-    const tableContainer = screen.getByTestId('table-container')
+    const tableContainer = screen.getByTestId('enhance-table-container')
 
     expect(tableContainer).toBeVisible()
   })
