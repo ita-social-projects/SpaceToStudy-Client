@@ -7,7 +7,7 @@ import VideoPresentation from '~/containers/tutor-profile/video-presentation/Vid
 import CommentsWithRatingBlock from '~/containers/tutor-profile/comments-with-rating-block/CommentsWithRaitngBlock'
 
 import { responseMock } from '~/pages/tutor-profile/constants'
-import { parseJwt } from '~/utils/helper-functions'
+import { useAppSelector } from '~/hooks/use-redux'
 import useUserInfo from '~/hooks/use-user-info'
 import Loader from '~/components/loader/Loader'
 
@@ -15,11 +15,14 @@ const TutorProfile = () => {
   const { user } = responseMock
   const { averageRating, reviews, totalReviews } = user.reviewStats || {}
 
-  const { id, role } = parseJwt(localStorage.getItem('s2s'))
+  const { userId, userRole } = useAppSelector((state) => state.appMain)
 
-  const { loading, response: userData } = useUserInfo({ id, role })
+  const { loading: userDataLoading, response: userData } = useUserInfo({
+    id: userId,
+    role: userRole
+  })
 
-  if (loading) {
+  if (userDataLoading) {
     return <Loader pageLoad size={70} />
   }
 
