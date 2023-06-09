@@ -21,6 +21,18 @@ const ProfileContainerDesktop = ({
 
   const subjectData = userData.mainSubjects.tutor.map((item) => item.name)
 
+  const profilePhoto = _.isEmpty(userData.photo) ? (
+    <Box sx={styles.avatarContainerStyles}>
+      <Avatar
+        sx={styles.avatarStyles}
+      >{`${userData.firstName[0]}${userData.lastName[0]}`}</Avatar>
+    </Box>
+  ) : (
+    <Box sx={styles.wrapperForPhoto}>
+      <Box component='img' src={userData.photo} sx={styles.img} />
+    </Box>
+  )
+
   return (
     <Box sx={styles.container}>
       <Box sx={{ width: '45%' }}>

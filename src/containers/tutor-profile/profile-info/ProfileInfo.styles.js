@@ -86,5 +86,15 @@ export const styles = {
   wrapperForPhoto: {
     display: 'flex',
     gap: '10px'
+  },
+  avatarStyles: {
+    width: 156,
+    height: 156,
+    fontSize: '56px'
+  },
+  avatarContainerStyles: {
+    display: 'flex',
+    alignItems: 'center',
+    margin: '0 auto'
   }
 }
