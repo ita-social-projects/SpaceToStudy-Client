@@ -16,9 +16,11 @@ const GuestIcons = ({ openLoginDialog, setSidebarOpen }) => {
   return (
     <Box sx={styles.iconBox}>
       <Tooltip arrow title={t('iconsTooltip.language')}>
-        <IconButton disabled sx={styles.langIcon}>
-          <LanguageIcon color='disabled' />
-        </IconButton>
+        <Box>
+          <IconButton disabled sx={styles.langIcon}>
+            <LanguageIcon color='disabled' />
+          </IconButton>
+        </Box>
       </Tooltip>
 
       <Tooltip arrow title={t('iconsTooltip.login')}>
