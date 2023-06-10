@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState, useEffect } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router-dom'
 
@@ -66,16 +66,16 @@ const Subjects = () => {
     transform
   })
 
-  useEffect(() => setIsFetched(false), [categoryId])
-
   const getSubjectNames = () => {
     !isFetched && void fetchData()
     setIsFetched(true)
   }
 
   const getSubjects = useCallback(
-    (data?: Pick<SubjectInterface, 'name'>) =>
-      subjectService.getSubjects(data, categoryId),
+    (data?: Pick<SubjectInterface, 'name'>) => {
+      setIsFetched(false)
+      return subjectService.getSubjects(data, categoryId)
+    },
     [categoryId]
   )
 
