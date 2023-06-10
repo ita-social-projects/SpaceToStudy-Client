@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useMemo, useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router-dom'
 
@@ -40,6 +40,7 @@ import { styles } from '~/pages/subjects/Subjects.styles'
 const Subjects = () => {
   const [match, setMatch] = useState<string>('')
   const [categoryName, setCategoryName] = useState<string>('')
+  const [isFetched, setIsFetched] = useState<boolean>(false)
   const params = useMemo(() => ({ name: match }), [match])
 
   const { t } = useTranslation()
@@ -65,7 +66,12 @@ const Subjects = () => {
     transform
   })
 
-  const getSubjectNames = () => void fetchData()
+  useEffect(() => setIsFetched(false), [categoryId])
+
+  const getSubjectNames = () => {
+    !isFetched && void fetchData()
+    setIsFetched(true)
+  }
 
   const getSubjects = useCallback(
     (data?: Pick<SubjectInterface, 'name'>) =>
