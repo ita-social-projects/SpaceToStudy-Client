@@ -72,10 +72,8 @@ const Subjects = () => {
   }
 
   const getSubjects = useCallback(
-    (data?: Pick<SubjectInterface, 'name'>) => {
-      setIsFetched(false)
-      return subjectService.getSubjects(data, categoryId)
-    },
+    (data?: Pick<SubjectInterface, 'name'>) =>
+      subjectService.getSubjects(data, categoryId),
     [categoryId]
   )
 
@@ -111,6 +109,7 @@ const Subjects = () => {
     _: React.SyntheticEvent,
     value: CategoryNameInterface | null
   ) => {
+    setIsFetched(false)
     searchParams.set('categoryId', value?._id ?? '')
     setCategoryName(value?.name ?? '')
     setSearchParams(searchParams)
