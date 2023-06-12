@@ -25,7 +25,7 @@ const Navbar = () => {
   const [navigationItems, setNavigationItems] = useState(
     Object.values(guestRoutes.navBar)
   )
-  const [accountItems, setAccountItems] = useState(Object.values(guestRoutes))
+  const [accountItems, setAccountItems] = useState([])
 
   const { userRole } = useSelector((state) => state.appMain)
   const { openDrawer, closeDrawer, isOpen } = useDrawer()
@@ -40,7 +40,7 @@ const Navbar = () => {
       setAccountItems(Object.values(tutorRoutes.accountMenu))
     } else {
       setNavigationItems(Object.values(guestRoutes.navBar))
-      setAccountItems(Object.values(guestRoutes))
+      setAccountItems([])
     }
   }, [userRole])
 
