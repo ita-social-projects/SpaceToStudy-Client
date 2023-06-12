@@ -6,6 +6,9 @@ import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
 import CopyRoundedIcon from '@mui/icons-material/ContentCopyRounded'
+import StarIcon from '@mui/icons-material/Star'
+import HashLink from '~/components/hash-link/HashLink'
+import Typography from '@mui/material/Typography'
 
 import ProfileContainerDesktop from '~/containers/tutor-profile/profile-info/ProfileContainerDesktop'
 import ProfileContainerMobile from '~/containers/tutor-profile/profile-info/ProfileContainerMobile'
@@ -16,14 +19,10 @@ import useBreakpoints from '~/hooks/use-breakpoints'
 import { tutorRoutes } from '~/router/constants/tutorRoutes'
 import { studentRoutes } from '~/router/constants/studentRoutes'
 import { useSnackBarContext } from '~/context/snackbar-context'
-import {
-  accountInfoMock,
-  subjectChipsMock,
-  doneItemsMock
-} from '~/containers/tutor-profile/profile-info/ProfileInfo.constants'
 import { styles } from '~/containers/tutor-profile/profile-info/ProfileInfo.styles'
 import { snackbarVariants, myProfilePath, student } from '~/constants'
 import { SizeEnum } from '~/types'
+import { getNumberOfYears } from '~/utils/helper-functions'
 
 const ProfileInfo = ({ userData }) => {
   const { t } = useTranslation()
@@ -64,6 +63,42 @@ const ProfileInfo = ({ userData }) => {
     </IconButton>
   )
 
+  const accountRating = (
+    <>
+      <StarIcon sx={styles.ratingIcon} />
+      {userData.averageRating.tutor}
+    </>
+  )
+
+  const linkToReviews = (
+    <Typography
+      component={HashLink}
+      sx={{ color: 'text.primary' }}
+      to={'#'}
+      variant='overline'
+    >
+      {`${userData.totalReviews.tutor} reviews`}
+    </Typography>
+  )
+
+  const accountInfoMock = [
+    {
+      title: `${getNumberOfYears(
+        userData.createdAt,
+        userData.updatedAt
+      )} years`,
+      description: 'at space2study'
+    },
+    {
+      title: accountRating,
+      description: linkToReviews
+    },
+    {
+      title: '75 UAH',
+      description: 'hourly rate'
+    }
+  ]
+
   const accInfo = accountInfoMock.map((item) => (
     <TitleWithDescription
       description={item.description}
@@ -72,6 +107,14 @@ const ProfileInfo = ({ userData }) => {
       title={item.title}
     />
   ))
+
+  const doneItems = [
+    { title: 'Native: ', description: userData.nativeLanguage },
+    {
+      title: 'Based in',
+      description: `${userData.address.city}, ${userData.address.country}`
+    }
+  ]
 
   const buttonGroup = !isMyProfile && (
     <Box sx={styles.buttonGroup}>
@@ -101,8 +144,7 @@ const ProfileInfo = ({ userData }) => {
       actionIcon={actionIconBtn}
       buttonGroup={buttonGroup}
       defaultQuantity={isLaptopAndAbove ? 4 : 2}
-      doneItems={doneItemsMock}
-      subjectChips={subjectChipsMock}
+      doneItems={doneItems}
       userData={userData}
     />
   ) : (
@@ -111,8 +153,7 @@ const ProfileInfo = ({ userData }) => {
       actionIcon={actionIconBtn}
       buttonGroup={buttonGroup}
       defaultQuantity={4}
-      doneItems={doneItemsMock}
-      subjectChips={subjectChipsMock}
+      doneItems={doneItems}
       userData={userData}
     />
   )

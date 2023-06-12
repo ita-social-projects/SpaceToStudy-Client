@@ -14,6 +14,9 @@ export const styles = {
     },
     '& .MuiAccordionSummary-content.Mui-expanded': {
       margin: 0
+    },
+    '&::before': {
+      backgroundColor: 'backgroundColor'
     }
   },
   headerProgressBar: {

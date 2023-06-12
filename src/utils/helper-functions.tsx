@@ -146,3 +146,11 @@ export const createUrlPath = (
 
   return `${URL}${paramsString}${queryParamsString}`
 }
+
+export const getNumberOfYears = function (
+  createdAt: string,
+  updatedAt: string
+) {
+  const difference: number = new Date(updatedAt) - new Date(createdAt)
+  return Math.round(difference / (1000 * 3600 * 24) / 365)
+}

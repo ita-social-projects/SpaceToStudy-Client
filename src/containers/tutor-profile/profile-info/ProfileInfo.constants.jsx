@@ -32,15 +32,6 @@ export const accountInfoMock = [
   }
 ]
 
-export const subjectChipsMock = [
-  'German',
-  'English',
-  'JavaScript',
-  'Computer Science',
-  '3D Modeling',
-  'Design'
-]
-
 export const doneItemsMock = [
   { title: '251', description: 'lessons' },
   { title: 'Native: ', description: 'English' },
