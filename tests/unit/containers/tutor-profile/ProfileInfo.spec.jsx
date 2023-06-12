@@ -43,7 +43,17 @@ const userData = {
   },
   photo: '../src/John_Shepard_29.jpeg',
   professionalSummary:
-    'Some amount of text regarding the proficiency.Some amount of text rega'
+    'Some amount of text regarding the proficiency.Some amount of text rega',
+  address: {
+    city: 'Lviv',
+    location: 'Ukraine'
+  },
+  averageRating: {
+    tutor: 2
+  },
+  totalReviews: {
+    tutor: 22
+  }
 }
 
 describe('ProfileInfo test in my profile', () => {
