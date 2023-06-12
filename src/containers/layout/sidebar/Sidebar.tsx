@@ -6,9 +6,9 @@ import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 
 import HashLink from '~/components/hash-link/HashLink'
+import useBreakpoints from '~/hooks/use-breakpoints'
 
 import { styles } from '~/containers/layout/sidebar/Sidebar.styles'
-import useBreakpoints from '~/hooks/use-breakpoints'
 
 interface SidebarProps {
   onClose: () => void
