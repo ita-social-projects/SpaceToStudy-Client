@@ -7,7 +7,8 @@ import {
   LanguagesEnum,
   Faq,
   UserRoleEnum,
-  CategoryInterface
+  CategoryInterface,
+  StatusEnum
 } from '~/types'
 
 export interface Offer extends CommonEntityFields {
@@ -31,11 +32,12 @@ export interface Offer extends CommonEntityFields {
   subject: SubjectNameInterface
   category: CategoryInterface
   FAQ: Faq[]
+  status: StatusEnum
 }
 
 export interface ButtonActions {
   label: string
-  buttonProps?: ButtonProps
+  buttonProps?: ButtonProps<'button', { to?: string }>
 }
 
 export interface PriceRangeParams {

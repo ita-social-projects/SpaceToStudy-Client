@@ -54,6 +54,7 @@ const OfferContainer: FC<OfferContainerProps> = ({ viewMode, offerCards }) => {
               buttonActions={buttonActions}
               offer={el}
               onBookmarkClick={onBookmarkClick}
+              showUser
             />
           </AppCard>
         ) : (

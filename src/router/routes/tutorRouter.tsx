@@ -6,6 +6,7 @@ import { guestRoutes } from '~/router/constants/guestRoutes'
 import { tutorRoutes } from '~/router/constants/tutorRoutes'
 import {
   tutorCooperations,
+  tutorOffers,
   tutorEditProfile,
   tutorProfile
 } from '~/router/constants/crumbs'
@@ -17,6 +18,7 @@ const MyCooperations = lazy(
   () => import('~/pages/my-cooperations/MyCooperations')
 )
 const EditProfile = lazy(() => import('~/pages/edit-profile/EditProfile'))
+const MyOffers = lazy(() => import('~/pages/my-offers/MyOffers'))
 
 export const tutorRouter = (
   <Route
@@ -38,6 +40,11 @@ export const tutorRouter = (
       element={<EditProfile />}
       handle={{ crumb: [tutorProfile, tutorEditProfile] }}
       path={tutorRoutes.editProfile.route}
+    />
+    <Route
+      element={<MyOffers />}
+      handle={{ crumb: tutorOffers }}
+      path={tutorRoutes.accountMenu.myOffers.route}
     />
   </Route>
 )

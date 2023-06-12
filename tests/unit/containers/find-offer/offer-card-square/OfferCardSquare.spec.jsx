@@ -19,6 +19,7 @@ describe('OfferCardSquare test', () => {
         buttonActions={buttonActions}
         offer={mockOffer}
         onBookmarkClick={onBookmarkClick}
+        showUser
       />
     )
   })

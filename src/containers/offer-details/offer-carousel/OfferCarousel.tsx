@@ -66,7 +66,7 @@ const OfferCarousel: FC<OfferCarouselProps> = ({ offer }) => {
     ]
     return (
       <AppCard key={item._id} sx={styles.offerCard}>
-        <OfferCardSquare buttonActions={buttonActions} offer={item} />
+        <OfferCardSquare buttonActions={buttonActions} offer={item} showUser />
       </AppCard>
     )
   })

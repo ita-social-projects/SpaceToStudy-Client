@@ -1,4 +1,3 @@
-import { Cooperation } from '~/types/cooperation/cooperation.index'
 import { RequestParams } from '~/types/services/services.index'
 
 export interface MyCooperationsFilters {
@@ -25,8 +24,8 @@ export interface RemoveColumnRules {
   mobile?: TableColumns['label'][]
 }
 
-export interface TableColumns {
+export interface TableColumns<T> {
   label: string
-  calculatedCellValue: (item: Cooperation) => string | React.ReactNode
+  calculatedCellValue: (item: T) => string | React.ReactNode
   field?: string
 }
