@@ -19,7 +19,8 @@ const userData = {
   lastName: 'Shepard',
   email: 'rubber883@gmail.com',
   mainSubjects: {
-    student: [
+    student: [],
+    tutor: [
       {
         _id: '645b9f4a1c0272f5cde0e11e',
         name: 'Danish',
@@ -38,8 +39,7 @@ const userData = {
         category: '6421ed8ed991d46a84721df4',
         totalOffers: 9
       }
-    ],
-    tutor: []
+    ]
   },
   photo: '../src/John_Shepard_29.jpeg',
   professionalSummary:

@@ -3,8 +3,6 @@ import SchoolIcon from '@mui/icons-material/School'
 import DoneIcon from '@mui/icons-material/Done'
 import Avatar from '@mui/material/Avatar'
 
-import _ from 'lodash'
-
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import AppChipList from '~/components/app-chips-list/AppChipList'
 import ProfileDoneItemsList from '~/components/icon-with-text-list/ProfileDoneItemsList'
@@ -23,22 +21,17 @@ const ProfileContainerDesktop = ({
 
   const subjectData = userData.mainSubjects.tutor.map((item) => item.name)
 
-  const profilePhoto = _.isEmpty(userData.photo) ? (
-    <Box sx={styles.avatarContainerStyles}>
-      <Avatar
-        sx={styles.avatarStyles}
-      >{`${userData.firstName[0]}${userData.lastName[0]}`}</Avatar>
-    </Box>
-  ) : (
-    <Box sx={styles.wrapperForPhoto}>
-      <Box component='img' src={userData.photo} sx={styles.img} />
-    </Box>
-  )
-
   return (
     <Box sx={styles.container}>
-      {profilePhoto}
-
+      <Box sx={{ width: '45%' }}>
+        <Avatar
+          src={
+            userData.photo &&
+            `${import.meta.env.VITE_APP_IMG_USER_URL}${userData.photo}`
+          }
+          sx={styles.img}
+        ></Avatar>
+      </Box>
       {actionIcon}
 
       <Box sx={styles.infoWrapper}>
