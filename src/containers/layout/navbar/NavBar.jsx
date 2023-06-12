@@ -25,16 +25,23 @@ const Navbar = () => {
   const [navigationItems, setNavigationItems] = useState(
     Object.values(guestRoutes.navBar)
   )
+  const [accountItems, setAccountItems] = useState(Object.values(guestRoutes))
+
   const { userRole } = useSelector((state) => state.appMain)
   const { openDrawer, closeDrawer, isOpen } = useDrawer()
   const { t } = useTranslation()
 
   useEffect(() => {
-    if (userRole === student)
+    if (userRole === student) {
       setNavigationItems(Object.values(studentRoutes.navBar))
-    else if (userRole === tutor)
+      setAccountItems(Object.values(studentRoutes.accountMenu))
+    } else if (userRole === tutor) {
       setNavigationItems(Object.values(tutorRoutes.navBar))
-    else setNavigationItems(Object.values(guestRoutes.navBar))
+      setAccountItems(Object.values(tutorRoutes.accountMenu))
+    } else {
+      setNavigationItems(Object.values(guestRoutes.navBar))
+      setAccountItems(Object.values(guestRoutes))
+    }
   }, [userRole])
 
   const handleOpenSidebar = () => {
@@ -71,7 +78,11 @@ const Navbar = () => {
 
       <NavigationIcons setSidebarOpen={handleOpenSidebar} />
       <AppDrawer onClose={closeDrawer} open={isOpen}>
-        <Sidebar navigationItems={navigationItems} onClose={closeDrawer} />
+        <Sidebar
+          accountItems={accountItems}
+          navigationItems={navigationItems}
+          onClose={closeDrawer}
+        />
       </AppDrawer>
     </Box>
   )

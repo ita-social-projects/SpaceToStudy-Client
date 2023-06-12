@@ -20,12 +20,14 @@ import { tutorRoutes } from '~/router/constants/tutorRoutes'
 import { student } from '~/constants'
 
 import { styles } from '~/containers/navigation-icons/NavigationIcons.styles'
+import useBreakpoints from '~/hooks/use-breakpoints'
 
 const UserIcons = ({ setSidebarOpen }) => {
   const { t } = useTranslation()
   const [anchorEl, setAnchorEl] = useState(null)
   const anchorRef = useRef(null)
   const { userRole } = useSelector((state) => state.appMain)
+  const { isMobile } = useBreakpoints()
 
   const openMenu = () => setAnchorEl(anchorRef.current)
   const closeMenu = () => setAnchorEl(null)
@@ -85,11 +87,13 @@ const UserIcons = ({ setSidebarOpen }) => {
         </IconButton>
       </Tooltip>
 
-      <Tooltip arrow title={t('iconsTooltip.account')}>
-        <IconButton onClick={openMenu}>
-          <AccountCircleOutlinedIcon color='primary' />
-        </IconButton>
-      </Tooltip>
+      {!isMobile && (
+        <Tooltip arrow title={t('iconsTooltip.account')}>
+          <IconButton onClick={openMenu}>
+            <AccountCircleOutlinedIcon color='primary' />
+          </IconButton>
+        </Tooltip>
+      )}
 
       <Tooltip arrow title={t('iconsTooltip.menu')}>
         <IconButton onClick={setSidebarOpen} sx={styles.menuIcon}>
