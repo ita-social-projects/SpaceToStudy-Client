@@ -10,7 +10,7 @@ import {
   columns,
   removeColumnRules
 } from '~/pages/my-offers/MyOffers.constants'
-import { styles } from '~/containers/my-offers/my-offers-container/MyOffersContainer.styles'
+import { styles } from '~/containers/my-cooperations/cooperations-container/CooperationContainer.styles'
 import { Link } from 'react-router-dom'
 import { authRoutes } from '~/router/constants/authRoutes'
 import OfferCardSquare from '~/containers/find-offer/offer-card-square/OfferCardSquare'

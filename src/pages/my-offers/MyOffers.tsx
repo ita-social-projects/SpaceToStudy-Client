@@ -15,10 +15,10 @@ import {
   initialSort,
   button,
   title,
-  defaultResponse
+  defaultResponse,
+  sortTranslationKeys
 } from '~/pages/my-offers/MyOffers.constants'
 import { itemsLoadLimit } from '~/constants'
-import { sortTranslationKeys } from '~/pages/my-offers/MyOffers.constants'
 import { CardsViewEnum } from '~/types'
 
 import MyPageWrapper from '~/components/my-page-wrapper/MyPageWrapper'
