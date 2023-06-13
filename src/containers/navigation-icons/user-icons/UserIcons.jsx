@@ -8,19 +8,19 @@ import IconButton from '@mui/material/IconButton'
 import Tooltip from '@mui/material/Tooltip'
 import LanguageIcon from '@mui/icons-material/Language'
 import MenuIcon from '@mui/icons-material/Menu'
+import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
 import MessageRoundedIcon from '@mui/icons-material/MessageRounded'
 import BookmarkIcon from '@mui/icons-material/Bookmark'
 import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded'
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined'
-import Menu from '@mui/material/Menu'
-import MenuItem from '@mui/material/MenuItem'
 
+import useBreakpoints from '~/hooks/use-breakpoints'
 import { studentRoutes } from '~/router/constants/studentRoutes'
 import { tutorRoutes } from '~/router/constants/tutorRoutes'
 import { student } from '~/constants'
 
 import { styles } from '~/containers/navigation-icons/NavigationIcons.styles'
-import useBreakpoints from '~/hooks/use-breakpoints'
 
 const UserIcons = ({ setSidebarOpen }) => {
   const { t } = useTranslation()

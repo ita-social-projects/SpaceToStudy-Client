@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useMemo } from 'react'
 import { useSelector } from 'react-redux'
 import { guestRoutes } from '~/router/constants/guestRoutes'
 import { studentRoutes } from '~/router/constants/studentRoutes'
@@ -22,26 +22,20 @@ import { student, tutor } from '~/constants'
 import { styles } from '~/containers/layout/navbar/NavBar.styles'
 
 const Navbar = () => {
-  const [navigationItems, setNavigationItems] = useState(
-    Object.values(guestRoutes.navBar)
-  )
-  const [accountItems, setAccountItems] = useState([])
-
   const { userRole } = useSelector((state) => state.appMain)
   const { openDrawer, closeDrawer, isOpen } = useDrawer()
   const { t } = useTranslation()
 
-  useEffect(() => {
-    if (userRole === student) {
-      setNavigationItems(Object.values(studentRoutes.navBar))
-      setAccountItems(Object.values(studentRoutes.accountMenu))
-    } else if (userRole === tutor) {
-      setNavigationItems(Object.values(tutorRoutes.navBar))
-      setAccountItems(Object.values(tutorRoutes.accountMenu))
-    } else {
-      setNavigationItems(Object.values(guestRoutes.navBar))
-      setAccountItems([])
-    }
+  const navigationItems = useMemo(() => {
+    if (userRole === student) return Object.values(studentRoutes.navBar)
+    else if (userRole === tutor) return Object.values(tutorRoutes.navBar)
+    else return Object.values(guestRoutes.navBar)
+  }, [userRole])
+
+  const accountItems = useMemo(() => {
+    if (userRole === student) return Object.values(studentRoutes.accountMenu)
+    else if (userRole === tutor) return Object.values(tutorRoutes.accountMenu)
+    else return []
   }, [userRole])
 
   const handleOpenSidebar = () => {
