@@ -12,6 +12,10 @@ export const studentRoutes = {
       route: 'my-cooperations',
       path: '/student/my-cooperations'
     },
+    editProfile: {
+      route: 'edit-profile',
+      path: '/student/edit-profile'
+    },
     logout: { route: 'logout', path: '/logout' }
   }
 }

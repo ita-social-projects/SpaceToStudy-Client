@@ -10,8 +10,12 @@ import CopyRoundedIcon from '@mui/icons-material/ContentCopyRounded'
 import ProfileContainerDesktop from '~/containers/tutor-profile/profile-info/ProfileContainerDesktop'
 import ProfileContainerMobile from '~/containers/tutor-profile/profile-info/ProfileContainerMobile'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
+import { useAppSelector } from '~/hooks/use-redux'
 import useBreakpoints from '~/hooks/use-breakpoints'
 
+import { tutorRoutes } from '~/router/constants/tutorRoutes'
+import { studentRoutes } from '~/router/constants/studentRoutes'
+import { student } from '~/constants'
 import { useSnackBarContext } from '~/context/snackbar-context'
 import {
   accountInfoMock,
@@ -26,6 +30,7 @@ const ProfileInfo = () => {
   const { t } = useTranslation()
   const { isDesktop, isMobile } = useBreakpoints()
   const { setAlert } = useSnackBarContext()
+  const { userRole } = useAppSelector((state) => state.appMain)
   const isMyProfile = useMatch(myProfilePath)
 
   const copyProfileLink = () => {
@@ -37,6 +42,11 @@ const ProfileInfo = () => {
     })
   }
 
+  const navigateToEditPtofile =
+    userRole === student
+      ? studentRoutes.accountMenu.editProfile.path
+      : tutorRoutes.accountMenu.editProfile.path
+
   const actionIcon = isMyProfile ? (
     <EditOutlinedIcon color='primary' fontSize='small' />
   ) : (
@@ -46,7 +56,8 @@ const ProfileInfo = () => {
   const actionIconBtn = (
     <IconButton
       data-testid='icon-btn'
-      onClick={copyProfileLink}
+      href={isMyProfile && navigateToEditPtofile}
+      onClick={!isMyProfile && copyProfileLink}
       size={isDesktop ? SizeEnum.Large : SizeEnum.Small}
       sx={styles.iconBtn}
     >

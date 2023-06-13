@@ -24,6 +24,16 @@ export const studentProfile = {
   path: studentRoutes.accountMenu.myProfile.route
 }
 
+export const tutorEditProfile = {
+  name: t('breadCrumbs.editProfile'),
+  path: tutorRoutes.accountMenu.editProfile.route
+}
+
+export const studentEditProfile = {
+  name: t('breadCrumbs.editProfile'),
+  path: studentRoutes.accountMenu.editProfile.route
+}
+
 export const tutorCooperations = {
   name: t('breadCrumbs.myCooperations'),
   path: tutorRoutes.accountMenu.myCooperations.route
