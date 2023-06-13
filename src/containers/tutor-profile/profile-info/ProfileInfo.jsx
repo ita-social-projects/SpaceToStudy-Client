@@ -31,6 +31,8 @@ const ProfileInfo = ({ userData }) => {
   const { userRole } = useAppSelector((state) => state.appMain)
   const isMyProfile = useMatch(myProfilePath)
 
+  console.log(t('tutorProfilePage.profileInfo.sendMessage'))
+
   const copyProfileLink = () => {
     navigator.clipboard.writeText(window.location.href)
     setAlert({
@@ -77,17 +79,18 @@ const ProfileInfo = ({ userData }) => {
       to={'#'}
       variant='overline'
     >
-      {`${userData.totalReviews.tutor} reviews`}
+      {`${userData.totalReviews.tutor} ${t(
+        'tutorProfilePage.profileInfo.reviews'
+      )}`}
     </Typography>
   )
 
   const accountInfo = [
     {
-      title: `${getNumberOfYears(
-        userData.createdAt,
-        userData.updatedAt
-      )} years`,
-      description: 'at space2study'
+      title: `${getNumberOfYears(userData.createdAt, userData.updatedAt)} ${t(
+        'tutorProfilePage.profileInfo.timeForMonth'
+      )}`,
+      description: t('tutorProfilePage.profileInfo.withS2S')
     },
     {
       title: accountRating,
@@ -105,9 +108,12 @@ const ProfileInfo = ({ userData }) => {
   ))
 
   const doneItems = [
-    { title: 'Native: ', description: userData.nativeLanguage },
     {
-      title: 'Based in',
+      title: t('tutorProfilePage.profileInfo.nativeLanguage'),
+      description: userData.nativeLanguage
+    },
+    {
+      title: t('tutorProfilePage.profileInfo.location'),
       description: `${userData.address.city}, ${userData.address.country}`
     }
   ]

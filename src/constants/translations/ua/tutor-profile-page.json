@@ -3,7 +3,15 @@
     "copyProfileLink": "Посилання на профіль скопійовано",
     "showMore": "Показати більше...",
     "bookLesson": "Записатися на урок",
-    "sendMessage": "Надіслати повідомлення"
+    "sendMessage": "Надіслати повідомлення",
+    "withS2S":"з space2study",
+    "reviews": "відгуків",
+    "nativeLanguage" : "Рідна мова: ",
+    "location" : "Родом із",
+    "timeForYear" : " років",
+    "timeForMonth" : " місяців",
+    "timeForWeek" : " тижнів",
+    "timeForDay" : " днів"
   }, 
   "videoPresentation": {
     "title": "Відео Презентація"

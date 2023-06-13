@@ -152,5 +152,5 @@ export const getNumberOfYears = function (
   updatedAt: string
 ) {
   const difference: number = new Date(updatedAt) - new Date(createdAt)
-  return Math.round(difference / (1000 * 3600 * 24) / 365)
+  return difference / (1000 * 3600 * 24)
 }
