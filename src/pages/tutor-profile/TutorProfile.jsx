@@ -10,12 +10,11 @@ import Loader from '~/components/loader/Loader'
 import { userService } from '~/services/user-service'
 import useAxios from '~/hooks/use-axios'
 
-import { profileItems } from '~/components/profile-item/complete-profile.constants'
-import { defaultResponses } from '~/constants'
-import { responseMock } from '~/pages/tutor-profile/constants'
 import { useAppSelector } from '~/hooks/use-redux'
 import useUserInfo from '~/hooks/use-user-info'
 import Loader from '~/components/loader/Loader'
+import { responseMock } from '~/pages/tutor-profile/constants'
+import { styles } from '~/pages/tutor-profile/TutorProfile.styles'
 
 const TutorProfile = () => {
   const { user } = responseMock
