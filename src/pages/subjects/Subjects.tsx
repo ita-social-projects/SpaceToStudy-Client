@@ -7,17 +7,28 @@ import Container from '@mui/material/Container'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 
+import { useAppSelector } from '~/hooks/use-redux'
+import useLoadMore from '~/hooks/use-load-more'
+import useSubjectsNames from '~/hooks/use-subjects-names'
+import { subjectService } from '~/services/subject-service'
+import { categoryService } from '~/services/category-service'
+import { useModalContext } from '~/context/modal-context'
+
 import SearchAutocomplete from '~/components/search-autocomplete/SearchAutocomplete'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import NotFoundResults from '~/components/not-found-results/NotFoundResults'
 import CardsList from '~/components/cards-list/CardsList'
 import CardWithLink from '~/components/card-with-link/CardWithLink'
-import useLoadMore from '~/hooks/use-load-more'
-import { subjectService } from '~/services/subject-service'
+import DirectionLink from '~/components/direction-link/DirectionLink'
+import CreateSubjectModal from '~/containers/find-offer/create-new-subject/CreateNewSubject'
+import AppToolbar from '~/components/app-toolbar/AppToolbar'
+import OfferRequestBlock from '~/containers/find-offer/offer-request-block/OfferRequestBlock'
+import AsyncAutocomplete from '~/components/async-autocomlete/AsyncAutocomplete'
+import useBreakpoints from '~/hooks/use-breakpoints'
+import serviceIcon from '~/assets/img/student-home-page/service_icon.png'
+import { getScreenBasedLimit, studentOrTutor } from '~/utils/helper-functions'
+import { mapArrayByField } from '~/utils/map-array-by-field'
 
-import { useModalContext } from '~/context/modal-context'
-import { categoryService } from '~/services/category-service'
-import { authRoutes } from '~/router/constants/authRoutes'
 import {
   CategoryNameInterface,
   SizeEnum,
@@ -25,16 +36,7 @@ import {
   SubjectNameInterface
 } from '~/types'
 import { itemsLoadLimit } from '~/constants'
-import serviceIcon from '~/assets/img/student-home-page/service_icon.png'
-import DirectionLink from '~/components/direction-link/DirectionLink'
-import CreateSubjectModal from '~/containers/find-offer/create-new-subject/CreateNewSubject'
-import AppToolbar from '~/components/app-toolbar/AppToolbar'
-import OfferRequestBlock from '~/containers/find-offer/offer-request-block/OfferRequestBlock'
-import AsyncAutocomplete from '~/components/async-autocomlete/AsyncAutocomplete'
-import useSubjectsNames from '~/hooks/use-subjects-names'
-import useBreakpoints from '~/hooks/use-breakpoints'
-import { getScreenBasedLimit } from '~/utils/helper-functions'
-import { mapArrayByField } from '~/utils/map-array-by-field'
+import { authRoutes } from '~/router/constants/authRoutes'
 import { styles } from '~/pages/subjects/Subjects.styles'
 
 const Subjects = () => {
@@ -43,6 +45,7 @@ const Subjects = () => {
   const params = useMemo(() => ({ name: match }), [match])
 
   const { t } = useTranslation()
+  const { userRole } = useAppSelector((state) => state.appMain)
   const breakpoints = useBreakpoints()
   const { openModal } = useModalContext()
   const [searchParams, setSearchParams] = useSearchParams()
@@ -79,12 +82,16 @@ const Subjects = () => {
     params
   })
 
+  const currentRole = studentOrTutor(userRole)
+
   const cards = useMemo(
     () =>
       subjects.map((item: SubjectInterface) => {
         return (
           <CardWithLink
-            description={`${item.totalOffers} ${t('categoriesPage.offers')}`}
+            description={`${item.totalOffers[currentRole]} ${t(
+              'categoriesPage.offers'
+            )}`}
             img={serviceIcon}
             key={item._id}
             link={`${authRoutes.findOffers.path}?categoryId=${categoryId}&subjectId=${item._id}`}
@@ -92,7 +99,7 @@ const Subjects = () => {
           />
         )
       }),
-    [subjects, categoryId, t]
+    [subjects, categoryId, currentRole, t]
   )
 
   const onCategoryChange = (
