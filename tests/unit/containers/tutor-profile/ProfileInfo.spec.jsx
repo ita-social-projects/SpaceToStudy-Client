@@ -53,7 +53,9 @@ const userData = {
   },
   totalReviews: {
     tutor: 22
-  }
+  },
+  createdAt: '2023-06-12T18:26:22.625+00:00',
+  updatedAt: '2023-07-12T19:33:43.616+00:00'
 }
 
 describe('ProfileInfo test in my profile', () => {
