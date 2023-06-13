@@ -27,8 +27,6 @@ const TutorProfile = () => {
     return <Loader pageLoad size={70} />
   }
 
-  console.log(userData)
-
   return (
     <Container sx={styles.containerStyles}>
       <ProfileInfo userData={userData} />

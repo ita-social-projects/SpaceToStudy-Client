@@ -8,10 +8,14 @@
     "reviews": "відгуків",
     "nativeLanguage" : "Рідна мова: ",
     "location" : "Родом із",
-    "timeForYear" : " років",
-    "timeForMonth" : " місяців",
-    "timeForWeek" : " тижнів",
-    "timeForDay" : " днів"
+    "timeForYears" : " років",
+    "timeForYear" : " рік",
+    "timeForMonths" : " місяців",
+    "timeForMonth" : " місяць",
+    "timeForWeeks" : " тижнів",
+    "timeForWeek" : " тиждень",
+    "timeForDays" : " днів",
+    "timeForDay" : " день"
   }, 
   "videoPresentation": {
     "title": "Відео Презентація"

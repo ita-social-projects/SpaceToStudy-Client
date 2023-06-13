@@ -30,8 +30,10 @@ const ProfileInfo = ({ userData }) => {
   const { setAlert } = useSnackBarContext()
   const { userRole } = useAppSelector((state) => state.appMain)
   const isMyProfile = useMatch(myProfilePath)
-
-  console.log(t('tutorProfilePage.profileInfo.sendMessage'))
+  const { number, format } = getNumberOfYears(
+    userData.createdAt,
+    userData.updatedAt
+  )
 
   const copyProfileLink = () => {
     navigator.clipboard.writeText(window.location.href)
@@ -87,9 +89,7 @@ const ProfileInfo = ({ userData }) => {
 
   const accountInfo = [
     {
-      title: `${getNumberOfYears(userData.createdAt, userData.updatedAt)} ${t(
-        'tutorProfilePage.profileInfo.timeForMonth'
-      )}`,
+      title: `${number} ${t(`tutorProfilePage.profileInfo.timeFor${format}`)}`,
       description: t('tutorProfilePage.profileInfo.withS2S')
     },
     {

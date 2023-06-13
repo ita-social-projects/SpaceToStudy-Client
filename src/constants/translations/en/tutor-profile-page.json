@@ -8,10 +8,14 @@
     "reviews": "reviews",
     "nativeLanguage" : "Native: ",
     "location" : "Based in",
-    "timeForYear" : " years",
-    "timeForMonth" : " months",
-    "timeForWeek" : " weeks",
-    "timeForDay" : " days"
+    "timeForYears" : " years",
+    "timeForYear" : " year",
+    "timeForMonths" : " months",
+    "timeForMonth" : " month",
+    "timeForWeeks" : " weeks",
+    "timeForWeek" : " week",
+    "timeForDays" : " days",
+    "timeForDay" : " day"
   },
   "videoPresentation": {
     "title": "Video Presentation"
