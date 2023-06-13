@@ -1,5 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useAppSelector } from '~/hooks/use-redux'
 
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
@@ -9,7 +10,7 @@ import SubjectLevelChips from '~/components/subject-level-chips/SubjectLevelChip
 import StatusChip from '~/components/status-chip/StatusChip'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import UserProfileInfo from '~/components/user-profile-info/UserProfileInfo'
-import { Cooperation } from '~/types'
+import { Cooperation, UserRoleEnum } from '~/types'
 import { styles } from '~/containers/my-cooperations/cooperation-card/CooperationCard.styles'
 
 interface CooperationCardProps {
@@ -21,14 +22,21 @@ const CooperationCard: FC<CooperationCardProps> = ({ cooperation }) => {
   const { user, offer, updatedAt, proficiencyLevel, price, status } =
     cooperation
 
+  const { userRole } = useAppSelector((state) => state.appMain)
+
+  const coopRole =
+    userRole === UserRoleEnum.Tutor ? UserRoleEnum.Student : UserRoleEnum.Tutor
+
   return (
     <AppCard sx={styles.root}>
       <Box sx={styles.userInfo}>
         <UserProfileInfo
+          _id={cooperation.user._id}
           date={updatedAt}
           firstName={user.firstName}
           lastName={user.lastName}
           photo={user.photo}
+          role={coopRole}
           sx={styles.userProfileInfo}
         />
         <Box sx={styles.priceWithStatus}>

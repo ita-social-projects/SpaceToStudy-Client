@@ -14,6 +14,7 @@ import { GetOffersResponse, Offer, ButtonVariantEnum } from '~/types'
 import { OfferService } from '~/services/offer-service'
 import { defaultResponse } from '~/pages/find-offers/FindOffers.constants'
 import { authRoutes } from '~/router/constants/authRoutes'
+import { createUrlPath } from '~/utils/helper-functions'
 import { styles } from '~/containers/offer-details/offer-carousel/OfferCarousel.styles'
 
 interface OfferCarouselProps {
@@ -48,7 +49,7 @@ const OfferCarousel: FC<OfferCarouselProps> = ({ offer }) => {
         label: t('common.labels.viewDetails'),
         buttonProps: {
           component: Link,
-          to: `${authRoutes.offerDetails.path}/${item._id}`
+          to: createUrlPath(authRoutes.offerDetails.path, item._id)
         }
       },
       {

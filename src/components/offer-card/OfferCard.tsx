@@ -37,11 +37,13 @@ const OfferCard: FC<OfferCardProps> = ({
   return (
     <Box sx={styles.wrapper}>
       <UserProfileInfo
+        _id={author._id}
         firstName={author.firstName}
         lastName={`${author.lastName[0]}.`}
         photo={author.photo}
         rating={author.averageRating[authorRole]}
         reviewsCount={author.totalReviews[authorRole]}
+        role={authorRole}
         sx={styles.userInfo}
       />
       <OfferDetails

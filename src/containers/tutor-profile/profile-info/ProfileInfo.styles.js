@@ -7,7 +7,7 @@ export const styles = {
     display: { sm: 'flex' },
     justifyContent: 'space-between',
     gap: { sm: '30px', lg: '50px' },
-    my: '50px',
+    mb: '50px',
     px: '15px',
     maxHeight: { sm: '525px' }
   },

@@ -8,7 +8,7 @@ import { UserResponse } from '~/types/user/user.index'
 
 export interface Cooperation extends CommonEntityFields {
   offer: Pick<Offer, 'subject' | 'title' | 'category'>
-  user: Pick<UserResponse, 'firstName' | 'lastName' | 'photo'>
+  user: Pick<UserResponse, 'firstName' | 'lastName' | 'photo' | '_id'>
   price: Offer['price']
   proficiencyLevel: ProficiencyLevelEnum
   status: StatusEnum

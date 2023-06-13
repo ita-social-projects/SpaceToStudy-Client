@@ -13,5 +13,6 @@ export const styles = {
     mb: '20px',
     borderBottom: '1px solid',
     borderColor: 'primary.100'
-  }
+  },
+  pagination: { marginTop: 'auto' }
 }

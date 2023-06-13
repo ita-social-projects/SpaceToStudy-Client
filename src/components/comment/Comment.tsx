@@ -14,18 +14,20 @@ interface CommentProps {
 
 const Comment: FC<CommentProps> = ({ review }) => {
   const { comment, author, rating, createdAt, offer } = review
-  const { firstName, lastName, photo } = author
-  const { category, subject, proficiencyLevel } = offer
+  const { firstName, lastName, photo, _id } = author
+  const { category, subject, proficiencyLevel, authorRole } = offer
 
   const coopDetails = `${category.name} - ${subject.name} - ${proficiencyLevel[0]}`
 
   return (
     <Box sx={styles.root}>
       <UserProfileInfo
+        _id={_id}
         date={createdAt}
         firstName={firstName}
         lastName={`${lastName[0]}.`}
         photo={photo}
+        role={authorRole}
         sx={styles.userInfo}
       />
       <Box sx={styles.description}>

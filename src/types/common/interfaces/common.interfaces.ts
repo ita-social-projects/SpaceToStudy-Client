@@ -1,5 +1,4 @@
-import { UserRoleEnum } from './../../user/user-enums/user.enums'
-import { Offer } from '~/types'
+import { Offer, UserResponse, UserRoleEnum } from '~/types'
 
 export interface ItemsWithCount<T> {
   count: number
@@ -58,7 +57,7 @@ export interface SubjectNameInterface {
 
 export interface ReviewInterface {
   offer: Offer
-  author: UserInterface
+  author: UserResponse
   comment: string
   rating: number
   createdAt: string

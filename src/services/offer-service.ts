@@ -1,6 +1,7 @@
 import { AxiosResponse } from 'axios'
 import { URLs } from '~/constants/request'
 import { axiosClient } from '~/plugins/axiosClient'
+import { createUrlPath } from '~/utils/helper-functions'
 import {
   Offer,
   PriceRangeParams,
@@ -11,27 +12,26 @@ import {
 
 export const OfferService = {
   getOffers: async (params?: GetOffersPrarams): Promise<AxiosResponse> => {
-    const category = params?.categoryId ? `/${params.categoryId}` : ''
-    const subject = params?.subjectId ? `/${params.subjectId}` : ''
-    return await axiosClient.get(
-      `${URLs.categories.get}${category}${URLs.subjects.get}${subject}${URLs.offers.get}`,
-      { params }
-    )
+    const category = createUrlPath(URLs.categories.get, params?.categoryId)
+    const subject = createUrlPath(URLs.subjects.get, params?.subjectId)
+    return await axiosClient.get(`${category}${subject}${URLs.offers.get}`, {
+      params
+    })
   },
   createOffer: async (data: CreateOfferData): Promise<AxiosResponse> =>
     await axiosClient.post(URLs.offers.create, data),
 
   getOffer: async (id: string): Promise<AxiosResponse<Offer>> =>
-    await axiosClient.get(`${URLs.offers.get}/${id}`),
+    await axiosClient.get(createUrlPath(URLs.offers.get, id)),
 
   getPriceRange: async (
     data: PriceRangeParams
   ): Promise<AxiosResponse<PriceRangeResponse>> => {
-    const category = data.categoryId ? `/${data.categoryId}` : ''
-    const subject = data.subjectId ? `/${data.subjectId}` : ''
+    const category = createUrlPath(URLs.categories.get, data.categoryId)
+    const subject = createUrlPath(URLs.subjects.get, data.subjectId)
 
     return await axiosClient.get(
-      `${URLs.categories.get}${category}${URLs.subjects.get}${subject}${URLs.categories.priceRange}`,
+      `${category}${subject}${URLs.categories.priceRange}`,
       { params: { authorRole: data.authorRole } }
     )
   }

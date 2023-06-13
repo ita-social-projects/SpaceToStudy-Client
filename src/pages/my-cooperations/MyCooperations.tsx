@@ -116,6 +116,7 @@ const MyCooperations = () => {
             onChange={handleChangePage}
             page={page}
             pageCount={Math.ceil(response.count / itemsPerPage)}
+            sx={styles.pagination}
           />
         </>
       )}

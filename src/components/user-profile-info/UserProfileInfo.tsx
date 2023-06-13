@@ -1,21 +1,29 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
 
 import Box from '@mui/material/Box'
 import Avatar from '@mui/material/Avatar'
 import Typography from '@mui/material/Typography'
 import AppRating from '~/components/app-rating/AppRating'
-import { getFormatedDate, spliceSx } from '~/utils/helper-functions'
 
-import { UserProfileInfoSx, UserResponse } from '~/types'
+import {
+  createUrlPath,
+  getFormatedDate,
+  spliceSx
+} from '~/utils/helper-functions'
+
+import { UserProfileInfoSx, UserResponse, UserRole } from '~/types'
 import { styles } from '~/components/user-profile-info/UserProfileInfo.styles'
+import { authRoutes } from '~/router/constants/authRoutes'
 
 interface UserProfileInfoProps
-  extends Pick<UserResponse, 'photo' | 'firstName' | 'lastName'> {
+  extends Pick<UserResponse, 'photo' | 'firstName' | 'lastName' | '_id'> {
   rating?: number
   reviewsCount?: number
   date?: string
   sx?: UserProfileInfoSx
+  role: UserRole
 }
 
 const UserProfileInfo: FC<UserProfileInfoProps> = ({
@@ -25,20 +33,30 @@ const UserProfileInfo: FC<UserProfileInfoProps> = ({
   lastName,
   date,
   reviewsCount,
-  sx = {}
+  sx = {},
+  _id,
+  role
 }) => {
   const { t } = useTranslation()
 
   const name = `${firstName} ${lastName}`
 
+  const userURL = createUrlPath(authRoutes.userProfile.path, _id, {
+    role
+  })
+
   return (
     <Box sx={spliceSx(styles.root, sx.root)}>
-      <Avatar
-        src={photo && `${import.meta.env.VITE_APP_IMG_USER_URL}${photo}`}
-        sx={spliceSx(styles.avatar, sx.avatar)}
-      />
+      <Link to={userURL}>
+        <Avatar
+          src={photo && `${import.meta.env.VITE_APP_IMG_USER_URL}${photo}`}
+          sx={spliceSx(styles.avatar, sx.avatar)}
+        />
+      </Link>
       <Box sx={spliceSx(styles.info, sx.info)}>
-        <Typography sx={spliceSx(styles.name, sx.name)}>{name}</Typography>
+        <Link style={{ textDecoration: 'none' }} to={userURL}>
+          <Typography sx={spliceSx(styles.name, sx.name)}>{name}</Typography>
+        </Link>
         {!isNaN(Number(rating)) && (
           <AppRating
             readOnly
