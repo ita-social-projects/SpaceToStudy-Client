@@ -13,7 +13,6 @@ export const styles = {
   img: {
     width: '100%',
     height: '100%',
-    // maxWidth: '440px',
     minWidth: '150px',
     minHeight: '150px',
     borderRadius: '15px'

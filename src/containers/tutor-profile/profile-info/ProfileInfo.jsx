@@ -81,7 +81,7 @@ const ProfileInfo = ({ userData }) => {
     </Typography>
   )
 
-  const accountInfoMock = [
+  const accountInfo = [
     {
       title: `${getNumberOfYears(
         userData.createdAt,
@@ -99,7 +99,7 @@ const ProfileInfo = ({ userData }) => {
     }
   ]
 
-  const accInfo = accountInfoMock.map((item) => (
+  const accInfo = accountInfo.map((item) => (
     <TitleWithDescription
       description={item.description}
       key={item.description}

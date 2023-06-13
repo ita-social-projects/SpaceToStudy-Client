@@ -13,7 +13,7 @@ import Loader from '~/components/loader/Loader'
 
 const TutorProfile = () => {
   const { user } = responseMock
-  const { averageRating, reviews, totalReviews } = user.reviewStats || {}
+  const { reviews } = user.reviewStats || {}
 
   const { userId, userRole } = useAppSelector((state) => state.appMain)
 
@@ -26,15 +26,17 @@ const TutorProfile = () => {
     return <Loader pageLoad size={70} />
   }
 
+  console.log(userData)
+
   return (
     <Container sx={{ flex: 1, pb: '100px' }}>
       <ProfileInfo userData={userData} />
       <CompleteProfileBlock data={userData} profileItems={profileItems} />
       <VideoPresentation />
       <CommentsWithRatingBlock
-        averageRating={averageRating}
+        averageRating={userData.averageRating.tutor}
         reviewsCount={reviews}
-        totalReviews={totalReviews}
+        totalReviews={userData.totalReviews.tutor}
       />
     </Container>
   )
