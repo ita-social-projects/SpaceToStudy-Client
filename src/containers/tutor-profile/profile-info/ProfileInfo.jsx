@@ -92,10 +92,6 @@ const ProfileInfo = ({ userData }) => {
     {
       title: accountRating,
       description: linkToReviews
-    },
-    {
-      title: '75 UAH',
-      description: 'hourly rate'
     }
   ]
 

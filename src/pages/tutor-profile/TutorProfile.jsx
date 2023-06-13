@@ -6,10 +6,11 @@ import { profileItems } from '~/components/profile-item/complete-profile.constan
 import VideoPresentation from '~/containers/tutor-profile/video-presentation/VideoPresentation'
 import CommentsWithRatingBlock from '~/containers/tutor-profile/comments-with-rating-block/CommentsWithRaitngBlock'
 
-import { responseMock } from '~/pages/tutor-profile/constants'
 import { useAppSelector } from '~/hooks/use-redux'
 import useUserInfo from '~/hooks/use-user-info'
 import Loader from '~/components/loader/Loader'
+import { responseMock } from '~/pages/tutor-profile/constants'
+import { styles } from '~/pages/tutor-profile/TutorProfile.styles'
 
 const TutorProfile = () => {
   const { user } = responseMock
@@ -29,7 +30,7 @@ const TutorProfile = () => {
   console.log(userData)
 
   return (
-    <Container sx={{ flex: 1, pb: '100px' }}>
+    <Container sx={styles.containerStyles}>
       <ProfileInfo userData={userData} />
       <CompleteProfileBlock data={userData} profileItems={profileItems} />
       <VideoPresentation />
