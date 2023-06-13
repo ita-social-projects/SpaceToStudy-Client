@@ -15,7 +15,6 @@ import useBreakpoints from '~/hooks/use-breakpoints'
 
 import { tutorRoutes } from '~/router/constants/tutorRoutes'
 import { studentRoutes } from '~/router/constants/studentRoutes'
-import { student } from '~/constants'
 import { useSnackBarContext } from '~/context/snackbar-context'
 import {
   accountInfoMock,
@@ -23,7 +22,7 @@ import {
   doneItemsMock
 } from '~/containers/tutor-profile/profile-info/ProfileInfo.constants'
 import { styles } from '~/containers/tutor-profile/profile-info/ProfileInfo.styles'
-import { snackbarVariants, myProfilePath } from '~/constants'
+import { snackbarVariants, myProfilePath, student } from '~/constants'
 import { SizeEnum } from '~/types'
 
 const ProfileInfo = () => {
@@ -57,7 +56,7 @@ const ProfileInfo = () => {
     <IconButton
       data-testid='icon-btn'
       href={isMyProfile && navigateToEditPtofile}
-      onClick={!isMyProfile && copyProfileLink}
+      onClick={!isMyProfile ? copyProfileLink : undefined}
       size={isDesktop ? SizeEnum.Large : SizeEnum.Small}
       sx={styles.iconBtn}
     >

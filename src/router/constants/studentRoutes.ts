@@ -15,7 +15,7 @@ export const studentRoutes = {
     logout: { route: 'logout', path: '/logout' }
   },
   editProfile: {
-    route: 'edit-profile',
-    path: '/student/edit-profile'
+    route: 'my-profile/edit',
+    path: '/student/my-profile/edit'
   }
 }

@@ -36,7 +36,7 @@ export const tutorRouter = (
     />
     <Route
       element={<EditProfile />}
-      handle={{ crumb: tutorEditProfile }}
+      handle={{ crumb: [tutorProfile, tutorEditProfile] }}
       path={tutorRoutes.editProfile.route}
     />
   </Route>

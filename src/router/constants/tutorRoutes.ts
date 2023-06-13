@@ -13,7 +13,7 @@ export const tutorRoutes = {
     logout: { route: 'logout', path: '/logout' }
   },
   editProfile: {
-    route: 'edit-profile',
-    path: '/tutor/edit-profile'
+    route: 'my-profile/edit',
+    path: '/tutor/my-profile/edit'
   }
 }
