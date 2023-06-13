@@ -12,6 +12,8 @@ const TutorProfile = () => {
   const { user } = responseMock
   const { averageRating, reviews, totalReviews } = user.reviewStats || {}
 
+  console.log(userData)
+
   return (
     <Container sx={{ flex: 1, pb: '100px' }}>
       <ProfileInfo />
