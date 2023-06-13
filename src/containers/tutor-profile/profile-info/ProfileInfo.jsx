@@ -22,7 +22,7 @@ import { useSnackBarContext } from '~/context/snackbar-context'
 import { styles } from '~/containers/tutor-profile/profile-info/ProfileInfo.styles'
 import { snackbarVariants, myProfilePath, student } from '~/constants'
 import { SizeEnum } from '~/types'
-import { getNumberOfYears } from '~/utils/helper-functions'
+import { getTimeAtS2S } from '~/utils/helper-functions'
 
 const ProfileInfo = ({ userData }) => {
   const { t } = useTranslation()
@@ -30,7 +30,10 @@ const ProfileInfo = ({ userData }) => {
   const { setAlert } = useSnackBarContext()
   const { userRole } = useAppSelector((state) => state.appMain)
   const isMyProfile = useMatch(myProfilePath)
-  const { number, format } = getNumberOfYears(userData.createdAt, new Date())
+  const { number, format } = getTimeAtS2S(
+    userData.createdAt,
+    new Date().toISOString()
+  )
 
   const copyProfileLink = () => {
     navigator.clipboard.writeText(window.location.href)

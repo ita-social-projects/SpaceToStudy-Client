@@ -155,37 +155,55 @@ export const getNumberOfYears = function (
 
   const conversionToDays: number = Math.round(difference / (1000 * 3600 * 24))
 
-  switch (true) {
-    case conversionToDays >= 365: {
-      const value = Math.floor(conversionToDays / 365)
-      if (value === 1) {
-        return { number: value, format: 'Year' }
-      }
-      return { number: value, format: 'Years' }
-      break
-    }
-    case conversionToDays >= 30 && conversionToDays < 365: {
-      const value = Math.floor(conversionToDays / 30)
-      if (value === 1) {
-        return { number: value, format: 'Month' }
-      }
-      return { number: value, format: 'Months' }
-      break
-    }
-    case conversionToDays >= 7 && conversionToDays < 30: {
-      const value = Math.floor(conversionToDays / 7)
-      if (value === 1) {
-        return { number: value, format: 'Week' }
-      }
-      return { number: value, format: 'Weeks' }
-      break
-    }
-    case conversionToDays < 7: {
-      if (conversionToDays === 1) {
-        return { number: conversionToDays, format: 'Day' }
-      }
-      return { number: conversionToDays, format: 'Days' }
-      break
+  if (conversionToDays >= 365) {
+    const years = Math.floor(conversionToDays / 365)
+    return { number: years, format: years === 1 ? 'Year' : 'Years' }
+  }
+
+  if (conversionToDays >= 30 && conversionToDays < 365) {
+    const months = Math.floor(conversionToDays / 30)
+    return { number: months, format: months === 1 ? 'Month' : 'Months' }
+  }
+
+  if (conversionToDays >= 7 && conversionToDays < 30) {
+    const weeks = Math.floor(conversionToDays / 7)
+    return { number: weeks, format: weeks === 1 ? 'Week' : 'Weeks' }
+  }
+
+  if (conversionToDays < 7) {
+    return {
+      number: conversionToDays,
+      format: conversionToDays === 1 ? 'Day' : 'Days'
     }
   }
+
+  // switch (true) {
+  //   case conversionToDays >= 365: {
+  //     const value = Math.floor(conversionToDays / 365)
+  //     if (value === 1) {
+  //       return { number: value, format: 'Year' }
+  //     }
+  //     return { number: value, format: 'Years' }
+  //   }
+  //   case conversionToDays >= 30 && conversionToDays < 365: {
+  //     const value = Math.floor(conversionToDays / 30)
+  //     if (value === 1) {
+  //       return { number: value, format: 'Month' }
+  //     }
+  //     return { number: value, format: 'Months' }
+  //   }
+  //   case conversionToDays >= 7 && conversionToDays < 30: {
+  //     const value = Math.floor(conversionToDays / 7)
+  //     if (value === 1) {
+  //       return { number: value, format: 'Week' }
+  //     }
+  //     return { number: value, format: 'Weeks' }
+  //   }
+  //   case conversionToDays < 7: {
+  //     if (conversionToDays === 1) {
+  //       return { number: conversionToDays, format: 'Day' }
+  //     }
+  //     return { number: conversionToDays, format: 'Days' }
+  //   }
+  // }
 }
