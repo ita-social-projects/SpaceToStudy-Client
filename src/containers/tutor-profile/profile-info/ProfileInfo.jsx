@@ -7,7 +7,6 @@ import IconButton from '@mui/material/IconButton'
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
 import CopyRoundedIcon from '@mui/icons-material/ContentCopyRounded'
 import StarIcon from '@mui/icons-material/Star'
-import HashLink from '~/components/hash-link/HashLink'
 import Typography from '@mui/material/Typography'
 
 import AppRatingMobile from '~/components/app-rating-mobile/AppRatingMobile'
@@ -16,6 +15,7 @@ import ProfileContainerMobile from '~/containers/tutor-profile/profile-info/Prof
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import { useAppSelector } from '~/hooks/use-redux'
 import useBreakpoints from '~/hooks/use-breakpoints'
+import HashLink from '~/components/hash-link/HashLink'
 
 import { tutorRoutes } from '~/router/constants/tutorRoutes'
 import { studentRoutes } from '~/router/constants/studentRoutes'
