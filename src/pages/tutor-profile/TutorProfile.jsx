@@ -19,7 +19,7 @@ import Loader from '~/components/loader/Loader'
 
 const TutorProfile = () => {
   const { user } = responseMock
-  const { averageRating, reviews, totalReviews } = user.reviewStats || {}
+  const { reviews } = user.reviewStats || {}
 
   const { userId, userRole } = useAppSelector((state) => state.appMain)
   
