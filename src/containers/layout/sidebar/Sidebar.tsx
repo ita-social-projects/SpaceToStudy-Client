@@ -12,10 +12,15 @@ import useBreakpoints from '~/hooks/use-breakpoints'
 
 import { styles } from '~/containers/layout/sidebar/Sidebar.styles'
 
+interface RouteItem {
+  route: string
+  path: string
+}
+
 interface SidebarProps {
   onClose: () => void
-  navigationItems: { route: string; path: string }[]
-  accountItems: { route: string; path: string }[]
+  navigationItems: RouteItem[]
+  accountItems: RouteItem[]
 }
 
 const Sidebar: FC<SidebarProps> = ({
@@ -26,7 +31,7 @@ const Sidebar: FC<SidebarProps> = ({
   const { isMobile } = useBreakpoints()
   const { t } = useTranslation()
 
-  const renderListItems = (items: { route: string; path: string }[]) => (
+  const renderListItems = (items: RouteItem[]) => (
     <List sx={styles.list}>
       {items.map(({ route, path }) => (
         <ListItem key={route} sx={styles.listItem}>
