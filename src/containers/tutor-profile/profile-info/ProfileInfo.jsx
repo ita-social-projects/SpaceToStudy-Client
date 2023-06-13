@@ -30,10 +30,7 @@ const ProfileInfo = ({ userData }) => {
   const { setAlert } = useSnackBarContext()
   const { userRole } = useAppSelector((state) => state.appMain)
   const isMyProfile = useMatch(myProfilePath)
-  const { number, format } = getNumberOfYears(
-    userData.createdAt,
-    userData.updatedAt
-  )
+  const { number, format } = getNumberOfYears(userData.createdAt, new Date())
 
   const copyProfileLink = () => {
     navigator.clipboard.writeText(window.location.href)
