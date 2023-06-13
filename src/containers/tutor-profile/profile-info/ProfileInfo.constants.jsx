@@ -12,12 +12,7 @@ const accountRating = (
 )
 
 const linkToReviews = (
-  <Typography
-    component={HashLink}
-    sx={{ color: 'text.primary' }}
-    to={'#'}
-    variant='overline'
-  >
+  <Typography component={HashLink} to={'#'} variant='overline'>
     {'23 reviews'}
   </Typography>
 )

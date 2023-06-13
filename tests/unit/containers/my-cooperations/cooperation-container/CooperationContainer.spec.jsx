@@ -6,7 +6,8 @@ const mockedCoop = {
   offer: {
     description:
       'Hello. There are many variations of passages of There are many variations of passages of... Hello. There are many variations of passages of There are many variations of passages of... Hello. There are many variations of passages of There are many variations of passages of... Hello. There are many variations of passages of There are many variations of passages of... Hello. There are many variations of passages of There are many variations of passages of... Hello. There are many variations of passages of There are many variations of passages of... Hello. There are many variations of passages of There are many variations of passages of... ',
-    subject: { _id: 'id', name: 'Quantum Mechanics' }
+    subject: { _id: 'id', name: 'Quantum Mechanics' },
+    category: { appearance: 'test' }
   },
   user: {
     firstName: 'Kathryn',

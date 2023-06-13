@@ -1,24 +1,21 @@
-import { useTranslation } from 'react-i18next'
+import { FC } from 'react'
 import Button from '@mui/material/Button'
 
 import { styles } from '~/components/tab/Tab.styles'
-import { FC } from 'react'
 
 interface TabProps {
   activeTab: boolean
   onClick: () => void
-  label: string
+  children: React.ReactNode
 }
 
-const Tab: FC<TabProps> = ({ activeTab, onClick, label }) => {
-  const { t } = useTranslation()
-
+const Tab: FC<TabProps> = ({ activeTab, onClick, children }) => {
   return (
     <Button
       onClick={onClick}
       sx={[styles.defaultTab, activeTab && styles.activeTab]}
     >
-      {t(label)}
+      {children}
     </Button>
   )
 }

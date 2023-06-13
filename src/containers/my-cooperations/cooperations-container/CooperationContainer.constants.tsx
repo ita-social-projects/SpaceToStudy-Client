@@ -1,7 +1,10 @@
-import Box from '@mui/material/Box'
-import StatusChip from '~/components/status-chip/StatusChip'
-import AppChip from '~/components/app-chip/AppChip'
+import Typography from '@mui/material/Typography'
+
 import { getFormatedDate } from '~/utils/helper-functions'
+import StatusChip from '~/components/status-chip/StatusChip'
+import UserProfileInfo from '~/components/user-profile-info/UserProfileInfo'
+import SubjectLevelChips from '~/components/subject-level-chips/SubjectLevelChips'
+
 import { Cooperation } from '~/types'
 import { styles } from '~/containers/my-cooperations/cooperations-container/CooperationContainer.styles'
 
@@ -9,20 +12,29 @@ export const columns = [
   {
     label: 'cooperationsPage.tableHeaders.name',
     field: 'name',
-    calculatedCellValue: (item: Cooperation) =>
-      `${item.user.firstName} ${item.user.lastName}`
+    calculatedCellValue: (item: Cooperation) => (
+      <UserProfileInfo
+        firstName={item.user.firstName}
+        lastName={item.user.lastName}
+        photo={item.user.photo}
+        sx={styles.profileInfo}
+      />
+    )
   },
   {
     label: 'cooperationsPage.tableHeaders.title',
-    calculatedCellValue: (item: Cooperation) => item.offer.title
+    calculatedCellValue: (item: Cooperation) => (
+      <Typography sx={styles.title}>{item.offer.title}</Typography>
+    )
   },
   {
     label: 'cooperationsPage.tableHeaders.subject',
     calculatedCellValue: (item: Cooperation) => (
-      <Box sx={styles.chips}>
-        <AppChip labelSx={styles.chip}>{item.offer.subject.name}</AppChip>
-        <AppChip labelSx={styles.chip}>{item.proficiencyLevel}</AppChip>
-      </Box>
+      <SubjectLevelChips
+        proficiencyLevel={item.proficiencyLevel}
+        subject={item.offer.subject.name}
+        sx={styles.chips}
+      />
     )
   },
   {

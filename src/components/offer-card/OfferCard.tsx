@@ -1,12 +1,12 @@
 import { FC } from 'react'
 
 import Box from '@mui/material/Box'
-
 import UserProfileInfo from '~/components/user-profile-info/UserProfileInfo'
 import OfferDetails from '~/components/offer-card/offer-details/OfferDetails'
 import OfferActions from '~/components/offer-card/offer-actions/OfferActions'
-import { styles } from '~/components/offer-card/OfferCard.styles'
+
 import { ButtonActions, Offer } from '~/types'
+import { styles } from '~/components/offer-card/OfferCard.styles'
 
 interface OfferCardProps {
   isHideField?: boolean
@@ -23,30 +23,29 @@ const OfferCard: FC<OfferCardProps> = ({
 }) => {
   const {
     _id,
-    authorAvgRating,
     title,
     description,
     languages,
     price,
     author,
-    authorFirstName,
-    authorLastName,
     authorRole,
     subject,
+    category,
     proficiencyLevel
   } = offer
 
   return (
     <Box sx={styles.wrapper}>
       <UserProfileInfo
-        firstName={authorFirstName}
-        lastName={`${authorLastName[0]}.`}
+        firstName={author.firstName}
+        lastName={`${author.lastName[0]}.`}
         photo={author.photo}
-        rating={authorAvgRating}
+        rating={author.averageRating[authorRole]}
         reviewsCount={author.totalReviews[authorRole]}
         sx={styles.userInfo}
       />
       <OfferDetails
+        chipsColor={category.appearance.color}
         description={!isHideField && description}
         languages={languages}
         level={proficiencyLevel}

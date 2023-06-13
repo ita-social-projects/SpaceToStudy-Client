@@ -33,27 +33,27 @@ const FaqBlock = <T extends CreateOfferData>({
   const handleInputChange =
     (key: keyof Faq, index: number) =>
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      const updatedFaq = [...data.faq]
-      updatedFaq[index] = { ...data.faq[index], [key]: e.target.value }
-      handleNonInputValueChange('faq', updatedFaq)
+      const updatedFaq = [...data.FAQ]
+      updatedFaq[index] = { ...data.FAQ[index], [key]: e.target.value }
+      handleNonInputValueChange('FAQ', updatedFaq)
     }
 
   const addMoreQuestion = () => {
-    if (data.faq.length < 5) {
-      const updatedFaq = [...data.faq, { question: '', answer: '' }]
-      handleNonInputValueChange('faq', updatedFaq)
+    if (data.FAQ.length < 5) {
+      const updatedFaq = [...data.FAQ, { question: '', answer: '' }]
+      handleNonInputValueChange('FAQ', updatedFaq)
     } else {
-      setMaxFaqError(t('offerPage.createOffer.errorMessages.faq'))
+      setMaxFaqError(t('offerPage.createOffer.errorMessages.FAQ'))
       resetError()
     }
   }
 
   const removeQuestion = (index: number) => {
-    const updatedFaq = data.faq.filter((_, idx) => idx !== index)
-    handleNonInputValueChange('faq', updatedFaq)
+    const updatedFaq = data.FAQ.filter((_, idx) => idx !== index)
+    handleNonInputValueChange('FAQ', updatedFaq)
   }
 
-  const questionsAnswers = data.faq.map((el, idx, array) => (
+  const questionsAnswers = data.FAQ.map((el, idx, array) => (
     <Box key={idx} sx={styles.faqInputsBlock}>
       <Box sx={styles.faqInputs}>
         <AppTextField

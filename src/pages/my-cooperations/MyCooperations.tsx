@@ -20,13 +20,14 @@ import { cooperationService } from '~/services/cooperation-service'
 import { getScreenBasedLimit } from '~/utils/helper-functions'
 
 import {
+  defaultResponse,
   sortTranslationKeys,
   initialFilters,
   initialSort,
   tabsInfo
 } from '~/pages/my-cooperations/MyCooperations.constants'
-import { defaultResponses, itemsLoadLimit } from '~/constants'
-import { CardsViewEnum, SortEnum, TabType } from '~/types'
+import { itemsLoadLimit } from '~/constants'
+import { CardsViewEnum, TabType } from '~/types'
 import { styles } from '~/pages/my-cooperations/MyCooperations.styles'
 
 const MyCooperations = () => {
@@ -52,15 +53,17 @@ const MyCooperations = () => {
     () =>
       cooperationService.getCooperations({
         ...filters,
-        sort: {
-          [sort.orderBy]: sort.order === SortEnum.Asc ? 1 : -1
-        },
+        sort,
         limit: itemsPerPage,
         skip: (page - 1) * itemsPerPage
       }),
-
     [filters, page, itemsPerPage, sort]
   )
+
+  const { loading, response } = useAxios({
+    service: getMyCooperations,
+    defaultResponse
+  })
 
   const handleTabClick = (tab: TabType<string>) => {
     clearFilters()
@@ -72,15 +75,11 @@ const MyCooperations = () => {
     <Tab
       activeTab={filters.status === tab.value}
       key={tab.label}
-      label={tab.label}
       onClick={() => handleTabClick(tab)}
-    />
+    >
+      {t(tab.label)}
+    </Tab>
   ))
-
-  const { loading, response } = useAxios({
-    service: getMyCooperations,
-    defaultResponse: { items: defaultResponses.array, count: 0 }
-  })
 
   const sortFields = sortTranslationKeys.map(({ title, value }) => ({
     title: t(title),

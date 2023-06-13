@@ -43,18 +43,10 @@ export const styles = {
     }
   },
   chipBox: {
-    display: 'flex',
     flexDirection: 'column',
-    alignItems: 'start',
-    flexWrap: 'wrap',
-    gap: '8px',
     pt: '14px',
     borderTop: '1px solid',
     borderColor: 'primary.50'
-  },
-  chipLabel: {
-    typography: 'overline',
-    fontWeight: 500
   },
   title: {
     typography: { xs: 'body2', sm: 'body1' }

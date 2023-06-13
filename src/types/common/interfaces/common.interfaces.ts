@@ -13,10 +13,15 @@ export interface UserInterface {
   totalReviews: number
 }
 
+export interface CategoryAppearance {
+  icon: string
+  color: string
+}
+
 export interface CategoryInterface {
   _id: string
   name: string
-  categoryIcon: string
+  appearance: CategoryAppearance
   totalOffers: number
   createdAt: string
   updatedAt: string

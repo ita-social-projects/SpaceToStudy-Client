@@ -6,8 +6,8 @@ import {
   SubjectNameInterface,
   LanguagesEnum,
   Faq,
-  CategoryNameInterface,
-  UserRoleEnum
+  UserRoleEnum,
+  CategoryInterface
 } from '~/types'
 
 export interface Offer extends CommonEntityFields {
@@ -17,16 +17,20 @@ export interface Offer extends CommonEntityFields {
   description: string
   languages: LanguagesEnum[]
   authorRole: UserRoleEnum.Tutor | UserRoleEnum.Student
-  authorFirstName: string
-  authorLastName: string
-  authorAvgRating: number
   author: Pick<
     UserResponse,
-    '_id' | 'totalReviews' | 'photo' | 'professionalSummary'
+    | '_id'
+    | 'totalReviews'
+    | 'photo'
+    | 'professionalSummary'
+    | 'firstName'
+    | 'lastName'
+    | 'FAQ'
+    | 'averageRating'
   >
   subject: SubjectNameInterface
-  category: CategoryNameInterface
-  faq: Faq[]
+  category: CategoryInterface
+  FAQ: Faq[]
 }
 
 export interface ButtonActions {

@@ -11,15 +11,7 @@ export const styles = {
     gap: '20px',
     mb: '40px'
   },
-  chips: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'start',
-    gap: '4px'
-  },
-  chip: {
-    typography: 'overline'
-  },
+  chips: { flexDirection: 'column' },
   table: {
     '& td,th': {
       '&:first-of-type': {
@@ -31,5 +23,21 @@ export const styles = {
         borderBottomRightRadius: '10px'
       }
     }
-  }
+  },
+  profileInfo: {
+    avatar: {
+      height: '30px',
+      width: '30px',
+      ml: '4px'
+    },
+    root: {
+      flexDirection: 'row',
+      alignItems: 'center'
+    },
+    name: {
+      typography: 'body2',
+      color: 'primary.900'
+    }
+  },
+  title: { maxWidth: '360px' }
 }

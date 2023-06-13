@@ -2,7 +2,7 @@ import { URLSearchParams } from 'node:url'
 import { SxProps } from '@mui/material'
 import {
   Breakpoints,
-  CooperationTableColumns,
+  TableColumns,
   FilterFromQuery,
   RemoveColumnRules,
   ScreenBasedLimits
@@ -83,9 +83,9 @@ export const getScreenBasedLimit = (
   }
 }
 
-export const ajustColumns = (
+export const ajustColumns = <T extends TableColumns>(
   breakpoints: Breakpoints,
-  columns: CooperationTableColumns[],
+  columns: T[],
   rules: RemoveColumnRules
 ) => {
   const { isDesktop, isTablet, isMobile } = breakpoints

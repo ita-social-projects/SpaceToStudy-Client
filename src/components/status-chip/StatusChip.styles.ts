@@ -4,7 +4,7 @@ import { StatusEnum } from '~/types'
 
 const statusColors = {
   pending: palette.basic.blue,
-  active: palette.green[600],
+  active: palette.success[600],
   closed: palette.primary[400]
 }
 

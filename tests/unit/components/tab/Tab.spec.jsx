@@ -7,7 +7,11 @@ let label = 'text'
 let onClick = vi.fn()
 describe('Tab', () => {
   beforeEach(() => {
-    render(<Tab activeTab label={label} onClick={onClick} />)
+    render(
+      <Tab activeTab onClick={onClick}>
+        {label}
+      </Tab>
+    )
   })
 
   it('renders the label', () => {

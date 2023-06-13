@@ -37,27 +37,8 @@ export const styles = {
     top: 0,
     right: 0
   },
-  chipsContainer: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    gap: '5px',
+  chipContainer: {
     mb: '16px'
-  },
-  subjectChipLabel: {
-    typography: 'overline',
-    fontWeight: 500
-  },
-  subjectChip: {
-    mr: '4px',
-    backgroundColor: 'green.300',
-    color: 'green.900'
-  },
-  levelChipLabel: {
-    typography: 'overline'
-  },
-  levelChip: {
-    backgroundColor: 'green.50',
-    color: 'primary.700'
   },
   priceContainer: {
     display: 'flex',
