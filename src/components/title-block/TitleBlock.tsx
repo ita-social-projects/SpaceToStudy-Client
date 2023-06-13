@@ -13,7 +13,7 @@ type TitleBlockProps = {
   img: string
   translationKey: string
   children?: React.ReactNode
-  style: SxProps
+  style?: SxProps
 }
 
 const TitleBlock: FC<TitleBlockProps> = ({

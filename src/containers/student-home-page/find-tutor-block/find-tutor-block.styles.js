@@ -1,15 +1,13 @@
 export const styles = {
   container: {
-    mt: {
-      xs: '24px',
-      md: '48px'
-    },
+    mt: { xs: '64px', md: '84px' },
 
     img: {
       xs: { display: 'none' },
       md: { display: 'block' }
     }
   },
+
   input: {
     display: 'flex',
     flexGrow: '1',
