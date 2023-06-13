@@ -1,6 +1,6 @@
+import { screen } from '@testing-library/react'
 import CooperationCard from '~/containers/my-cooperations/cooperation-card/CooperationCard'
-
-import { render, screen } from '@testing-library/react'
+import { renderWithProviders } from '~tests/test-utils'
 
 const mockedCoop = {
   offer: {
@@ -21,9 +21,15 @@ const mockedCoop = {
   createdAt: '2023-05-13T13:44:25.716Z'
 }
 
+const preloadedState = {
+  appMain: { userRole: 'tutor' }
+}
+
 describe('CooperationCard component ', () => {
   it('should render card', () => {
-    render(<CooperationCard cooperation={mockedCoop} />)
+    renderWithProviders(<CooperationCard cooperation={mockedCoop} />, {
+      preloadedState
+    })
 
     const level = screen.getByText(mockedCoop.proficiencyLevel)
 
