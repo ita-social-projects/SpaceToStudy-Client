@@ -4,7 +4,11 @@ import { Route } from 'react-router-dom'
 import PrivateRoute from '~/router/helpers/PrivateRoute'
 import { studentRoutes } from '~/router/constants/studentRoutes'
 import { guestRoutes } from '~/router/constants/guestRoutes'
-import { studentCooperations, studentProfile } from '~/router/constants/crumbs'
+import {
+  studentCooperations,
+  studentEditProfile,
+  studentProfile
+} from '~/router/constants/crumbs'
 import { UserRoleEnum } from '~/types'
 
 const StudentHome = lazy(() => import('~/pages/student-home/StudentHome'))
@@ -14,6 +18,7 @@ const StudentProfile = lazy(
 const MyCooperations = lazy(
   () => import('~/pages/my-cooperations/MyCooperations')
 )
+const EditProfile = lazy(() => import('~/pages/edit-profile/EditProfile'))
 
 export const studentRouter = (
   <Route
@@ -30,6 +35,11 @@ export const studentRouter = (
       element={<MyCooperations />}
       handle={{ crumb: studentCooperations }}
       path={studentRoutes.accountMenu.myCooperations.route}
+    />
+    <Route
+      element={<EditProfile />}
+      handle={{ crumb: studentEditProfile }}
+      path={studentRoutes.editProfile.route}
     />
   </Route>
 )

@@ -10,10 +10,10 @@ export const tutorRoutes = {
       route: 'my-cooperations',
       path: '/tutor/my-cooperations'
     },
-    editProfile: {
-      route: 'edit-profile',
-      path: '/tutor/edit-profile'
-    },
     logout: { route: 'logout', path: '/logout' }
+  },
+  editProfile: {
+    route: 'edit-profile',
+    path: '/tutor/edit-profile'
   }
 }

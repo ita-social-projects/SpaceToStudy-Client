@@ -44,8 +44,8 @@ const ProfileInfo = () => {
 
   const navigateToEditPtofile =
     userRole === student
-      ? studentRoutes.accountMenu.editProfile.path
-      : tutorRoutes.accountMenu.editProfile.path
+      ? studentRoutes.editProfile.path
+      : tutorRoutes.editProfile.path
 
   const actionIcon = isMyProfile ? (
     <EditOutlinedIcon color='primary' fontSize='small' />
