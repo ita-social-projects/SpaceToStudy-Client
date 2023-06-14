@@ -21,9 +21,8 @@ import { studentRoutes } from '~/router/constants/studentRoutes'
 import { useSnackBarContext } from '~/context/snackbar-context'
 import { styles } from '~/containers/tutor-profile/profile-info/ProfileInfo.styles'
 import { snackbarVariants, myProfilePath, student } from '~/constants'
-import { SizeEnum } from '~/types'
-import { getTimeAtS2S } from '~/utils/helper-functions'
-import { TypographyVariantEnum } from '~/types'
+import { SizeEnum, TypographyVariantEnum } from '~/types'
+import { getDifferenceDates } from '~/utils/helper-functions'
 
 const ProfileInfo = ({ userData }) => {
   const { t } = useTranslation()
@@ -31,7 +30,7 @@ const ProfileInfo = ({ userData }) => {
   const { setAlert } = useSnackBarContext()
   const { userRole } = useAppSelector((state) => state.appMain)
   const isMyProfile = useMatch(myProfilePath)
-  const { number, format } = getTimeAtS2S(
+  const { number, format } = getDifferenceDates(
     userData.createdAt,
     new Date().toISOString()
   )

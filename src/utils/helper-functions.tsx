@@ -153,27 +153,28 @@ export const getNumberOfYears = function (
 ) {
   const difference: number = new Date(updatedAt) - new Date(createdAt)
 
-  const conversionToDays: number = Math.round(difference / (1000 * 3600 * 24))
+  const conversionToDays: number = Math.abs(
+    Math.round(difference / (1000 * 3600 * 24))
+  )
 
   if (conversionToDays >= 365) {
     const years = Math.floor(conversionToDays / 365)
+
     return { number: years, format: years === 1 ? 'Year' : 'Years' }
   }
 
   if (conversionToDays >= 30 && conversionToDays < 365) {
-    const months = Math.floor(conversionToDays / 30)
+    const months = Math.abs(conversionToDays / 30)
     return { number: months, format: months === 1 ? 'Month' : 'Months' }
   }
 
   if (conversionToDays >= 7 && conversionToDays < 30) {
-    const weeks = Math.floor(conversionToDays / 7)
+    const weeks = Math.abs(conversionToDays / 7)
     return { number: weeks, format: weeks === 1 ? 'Week' : 'Weeks' }
   }
 
-  if (conversionToDays < 7) {
-    return {
-      number: conversionToDays,
-      format: conversionToDays === 1 ? 'Day' : 'Days'
-    }
+  return {
+    number: conversionToDays || 1,
+    format: conversionToDays === 1 ? 'Day' : 'Days'
   }
 }
