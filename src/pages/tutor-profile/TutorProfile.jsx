@@ -1,13 +1,17 @@
+import { useCallback } from 'react'
+import { useAppSelector } from '~/hooks/use-redux'
+
 import ProfileInfo from '~/containers/tutor-profile/profile-info/ProfileInfo'
 import CompleteProfileBlock from '~/components/complete-profile/CompleteProfileBlock'
-import { profileItems } from '~/components/profile-item/complete-profile.constants'
 import VideoPresentation from '~/containers/tutor-profile/video-presentation/VideoPresentation'
 import CommentsWithRatingBlock from '~/containers/tutor-profile/comments-with-rating-block/CommentsWithRaitngBlock'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
-
-import { useAppSelector } from '~/hooks/use-redux'
-import useUserInfo from '~/hooks/use-user-info'
 import Loader from '~/components/loader/Loader'
+import { userService } from '~/services/user-service'
+import useAxios from '~/hooks/use-axios'
+
+import { profileItems } from '~/components/profile-item/complete-profile.constants'
+import { defaultResponses } from '~/constants'
 import { responseMock } from '~/pages/tutor-profile/constants'
 import { styles } from '~/pages/tutor-profile/TutorProfile.styles'
 
@@ -17,24 +21,30 @@ const TutorProfile = () => {
 
   const { userId, userRole } = useAppSelector((state) => state.appMain)
 
-  const { loading: userDataLoading, response: userData } = useUserInfo({
-    id: userId,
-    role: userRole
+  const getUserData = useCallback(
+    () => userService.getUserById(userId, userRole),
+    [userId, userRole]
+  )
+
+  const { loading, response } = useAxios({
+    service: getUserData,
+    fetchOnMount: true,
+    defaultResponse: defaultResponses.array
   })
 
-  if (userDataLoading) {
+  if (loading) {
     return <Loader pageLoad size={70} />
   }
 
   return (
     <PageWrapper sx={styles.containerStyles}>
-      <ProfileInfo userData={userData} />
-      <CompleteProfileBlock data={userData} profileItems={profileItems} />
+      <ProfileInfo userData={response} />
+      <CompleteProfileBlock data={response} profileItems={profileItems} />
       <VideoPresentation />
       <CommentsWithRatingBlock
-        averageRating={userData.averageRating.tutor}
+        averageRating={response.averageRating.tutor}
         reviewsCount={reviews}
-        totalReviews={userData.totalReviews.tutor}
+        totalReviews={response.totalReviews.tutor}
       />
     </PageWrapper>
   )

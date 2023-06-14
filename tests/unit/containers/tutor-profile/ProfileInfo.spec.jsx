@@ -49,9 +49,11 @@ const userData = {
     location: 'Ukraine'
   },
   averageRating: {
+    student: 3,
     tutor: 2
   },
   totalReviews: {
+    student: 1,
     tutor: 22
   },
   createdAt: '2023-06-12T18:26:22.625+00:00',
