@@ -54,7 +54,7 @@ const UserProfileInfo: FC<UserProfileInfoProps> = ({
         />
       </Link>
       <Box sx={spliceSx(styles.info, sx.info)}>
-        <Link style={{ textDecoration: 'none' }} to={userURL}>
+        <Link style={styles.link} to={userURL}>
           <Typography sx={spliceSx(styles.name, sx.name)}>{name}</Typography>
         </Link>
         {!isNaN(Number(rating)) && (
@@ -66,10 +66,7 @@ const UserProfileInfo: FC<UserProfileInfoProps> = ({
           />
         )}
         {!isNaN(Number(rating)) && (
-          <Typography
-            sx={spliceSx(styles.reviews, sx.reviews)}
-            variant={'caption'}
-          >
+          <Typography sx={spliceSx(styles.reviews, sx.reviews)}>
             {t('tutorProfilePage.reviews.reviewsCount', {
               count: reviewsCount
             })}

@@ -27,5 +27,6 @@ export const styles = {
   date: {
     typography: 'body2',
     color: 'primary.400'
-  }
+  },
+  link: { textDecoration: 'none' }
 }

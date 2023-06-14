@@ -114,6 +114,9 @@ export const spliceSx = (defaultStyles?: SxProps, newStyles?: SxProps) =>
 export const studentOrTutor = (userRole: '' | UserRole) =>
   userRole === UserRoleEnum.Tutor ? UserRoleEnum.Tutor : UserRoleEnum.Student
 
+export const getOpositeRole = (role: UserRole | '') =>
+  role === UserRoleEnum.Tutor ? UserRoleEnum.Student : UserRoleEnum.Tutor
+
 const createQueryParamsString = (query: { [key: string]: string }) => {
   const queryParams = new URLSearchParams()
 

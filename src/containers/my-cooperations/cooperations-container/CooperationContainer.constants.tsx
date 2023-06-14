@@ -12,14 +12,18 @@ export const columns = [
   {
     label: 'cooperationsPage.tableHeaders.name',
     field: 'name',
-    calculatedCellValue: (item: Cooperation) => (
-      <UserProfileInfo
-        firstName={item.user.firstName}
-        lastName={item.user.lastName}
-        photo={item.user.photo}
-        sx={styles.profileInfo}
-      />
-    )
+    calculatedCellValue: (item: Cooperation) => {
+      return (
+        <UserProfileInfo
+          _id={item.user._id}
+          firstName={item.user.firstName}
+          lastName={item.user.lastName}
+          photo={item.user.photo}
+          role={item.user.role}
+          sx={styles.profileInfo}
+        />
+      )
+    }
   },
   {
     label: 'cooperationsPage.tableHeaders.title',
