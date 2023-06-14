@@ -21,6 +21,7 @@ import admin from './admin.json'
 import breadCrumbs from './breadcrumbs.json'
 import completeProfile from './complete-profile.json'
 import tutorProfilePage from './tutor-profile-page.json'
+import tutorHomePage from './tutor-home-page.json'
 import userTable from './user-table.json'
 import constant from './constant.json'
 import findOffers from './find-offer-page.json'
@@ -55,6 +56,7 @@ const en = {
     breadCrumbs,
     completeProfile,
     tutorProfilePage,
+    tutorHomePage,
     userTable,
     constant,
     findOffers,
