@@ -5,13 +5,14 @@ import { URLs } from '~/constants/request'
 import {
   CategoryInterface,
   CategoryNameInterface,
-  CategoriesParams
+  CategoriesParams,
+  ItemsWithCount
 } from '~/types'
 
 export const categoryService = {
   getCategories: (
     params?: Partial<CategoriesParams>
-  ): Promise<AxiosResponse<CategoryInterface[]>> => {
+  ): Promise<AxiosResponse<ItemsWithCount<CategoryInterface>>> => {
     return axiosClient.get(URLs.categories.get, { params })
   },
   getCategoriesNames: (): Promise<AxiosResponse<CategoryNameInterface[]>> => {

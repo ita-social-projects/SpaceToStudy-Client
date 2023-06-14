@@ -1,6 +1,10 @@
 import { UserRoleEnum } from './../../user/user-enums/user.enums'
 import { Offer } from '~/types'
 
+export interface ItemsWithCount<T> {
+  count: number
+  items: T[]
+}
 export interface CommonEntityFields {
   _id: string
   createdAt: string

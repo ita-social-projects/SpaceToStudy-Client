@@ -69,7 +69,7 @@ const Categories = () => {
 
   const cards = useMemo(
     () =>
-      categories.map((item: CategoryInterface) => {
+      categories.map((item) => {
         return (
           <CardWithLink
             description={`${item.totalOffers[currentRole]} ${t(
