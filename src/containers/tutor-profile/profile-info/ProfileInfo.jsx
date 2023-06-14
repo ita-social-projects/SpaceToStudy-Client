@@ -24,10 +24,6 @@ import { styles } from '~/containers/tutor-profile/profile-info/ProfileInfo.styl
 import { snackbarVariants, myProfilePath, student } from '~/constants'
 import { SizeEnum } from '~/types'
 import { getDifferenceDates } from '~/utils/helper-functions'
-import { userService } from '~/services/user-service'
-import useAxios from '~/hooks/use-axios'
-import { defaultResponses } from '~/constants'
-import { parseJwt } from '~/utils/helper-functions'
 
 const ProfileInfo = ({ userData }) => {
   const { t } = useTranslation()

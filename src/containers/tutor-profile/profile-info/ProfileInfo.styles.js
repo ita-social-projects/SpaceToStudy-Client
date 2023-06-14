@@ -88,22 +88,5 @@ export const styles = {
   wrapperForPhoto: {
     display: 'flex',
     gap: '10px'
-  },
-  avatarContainer: {
-    flex: 1,
-    maxWidth: '650px'
-  },
-  avatarContainerMobile: { flex: 1 },
-  linkToReviews: { color: 'primary.900' },
-  appRating: {
-    starMobile: {
-      height: '24px'
-    },
-    rating: {
-      typography: TypographyVariantEnum.H5
-    },
-    reviews: {
-      typography: TypographyVariantEnum.Overline
-    }
   }
 }
