@@ -1,44 +1,42 @@
-import { ChangeEvent, MouseEventHandler } from 'react'
+import { ChangeEvent } from 'react'
 import { Sort } from '~/types/common/common.index'
+import { TableActionFunc } from './enhancedTable.types'
 
-export interface TableColumn {
+export interface TableColumn<I> {
   field: string
-  calculatedCellValue?: () => string
+  label: string
+  calculatedCellValue?: (item: I) => string
 }
 
 export interface TableRowAction {
   label: string
-  func: (id: string) => Promise<void>
+  func: TableActionFunc
 }
 
 export interface TableItem {
   _id: string
-  [key: string]: string | number
 }
 
-export interface TableSelect {
+export interface TableSelect<I> {
   selected: string[]
-  createSelectAllHandler: (items: TableItem[]) => void
+  createSelectAllHandler: (items: I[]) => void
   handleSelectClick: (e: ChangeEvent<HTMLInputElement>, item: string) => void
   isSelected: (id: string) => boolean
 }
 
 export interface TableFilter<F> {
   filters: F
-  setFilterByKey: (columnField: string) => void
-  clearFilterByKey: (columnField: string) => void
+  setFilterByKey: (columnField: keyof F) => void
+  clearFilterByKey: (columnField: keyof F) => void
 }
 
 export interface TableSort {
   sort: Sort
-  onRequestSort: (
-    e: MouseEventHandler<HTMLSpanElement>,
-    property: string
-  ) => void
+  onRequestSort: (columnField: string) => void
 }
 
-export interface TableData {
-  items: TableItem[]
+export interface TableData<I> {
+  items: I[]
   loading: boolean
   getData: () => void
 }
