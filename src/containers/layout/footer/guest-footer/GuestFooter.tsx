@@ -14,27 +14,29 @@ const GuestFooter = () => {
   const { t } = useTranslation()
 
   return (
-    <Container sx={styles.container}>
-      <Typography variant={TypographyVariantEnum.Caption}>
-        {t('footer.allRightsReserved')}
-      </Typography>
-      <Box sx={styles.links}>
-        <Typography
-          component={RouterLink}
-          to={privacyPolicy.path}
-          variant={TypographyVariantEnum.Caption}
-        >
-          {t('footer.privacyPolicy')}
+
+      <Container sx={styles.container}>
+        <Typography sx={styles.title} variant={TypographyVariantEnum.Caption}>
+          {t('footer.allRightsReserved')}
         </Typography>
-        <Typography
-          component={RouterLink}
-          to={termOfUse.path}
-          variant={TypographyVariantEnum.Caption}
-        >
-          {t('footer.termOfUse')}
-        </Typography>
-      </Box>
-    </Container>
+        <Box sx={styles.links}>
+          <Typography
+            component={RouterLink}
+            to={privacyPolicy.path}
+            variant={TypographyVariantEnum.Caption}
+          >
+            {t('footer.privacyPolicy')}
+          </Typography>
+          <Typography
+            component={RouterLink}
+            to={termOfUse.path}
+            variant={TypographyVariantEnum.Caption}
+          >
+            {t('footer.termOfUse')}
+          </Typography>
+        </Box>
+      </Container>
+
   )
 }
 
