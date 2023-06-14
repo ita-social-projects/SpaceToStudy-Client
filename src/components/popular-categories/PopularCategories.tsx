@@ -46,12 +46,11 @@ const PopularCategories: FC<PopularCategoriesProps> = ({
     defaultResponse: defaultResponses.itemsWithCount
   })
 
-  const { items } = response
   const currentRole = studentOrTutor(userRole)
 
   const cards = useMemo(
     () =>
-      items.map((item) => {
+      response.items.map((item) => {
         return (
           <CardWithLink
             description={`${item.totalOffers[currentRole]} ${t(
@@ -64,7 +63,7 @@ const PopularCategories: FC<PopularCategoriesProps> = ({
           />
         )
       }),
-    [items, currentRole, t]
+    [response.items, currentRole, t]
   )
 
   const onClickButton = () => {

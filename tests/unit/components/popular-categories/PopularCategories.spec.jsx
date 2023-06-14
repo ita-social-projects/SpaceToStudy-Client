@@ -4,7 +4,7 @@ import { URLs } from '~/constants/request'
 import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 import PopularCategories from '~/components/popular-categories/PopularCategories'
 
-const mockCategories = [
+const items = [
   {
     _id: '1',
     name: 'Math',
@@ -16,14 +16,18 @@ const mockCategories = [
     totalOffers: 20
   }
 ]
+
+const mockResponse = { count: items.length, items }
+
 const title = 'common.popularCategories'
+const description = 'studentHomePage.popularCategories.description'
 
 describe('PopularCategories', () => {
   beforeEach(async () => {
-    mockAxiosClient.onGet(URLs.categories.get).reply(200, mockCategories)
+    mockAxiosClient.onGet(URLs.categories.get).reply(200, mockResponse)
 
     renderWithProviders(
-      <PopularCategories items={mockCategories} title={title} />
+      <PopularCategories description={description} title={title} />
     )
   })
 
