@@ -12,7 +12,6 @@ import type {
   SwitchContent,
   SwitchOptions
 } from '~/types/components/appContentSwitcher/appContentSwitcher.types'
-import { IconPositionEnum } from './accordions/accordions.enum'
 
 export {
   SelectFieldType,
@@ -24,8 +23,7 @@ export {
   RangeArray,
   RadioButtonType,
   SwitchContent,
-  SwitchOptions,
-  IconPositionEnum
+  SwitchOptions
 }
 export * from './accordion-with-image/accordionWithImage.interface'
 export * from './accordions/accordions.interface'

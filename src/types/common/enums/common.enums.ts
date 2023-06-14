@@ -67,3 +67,7 @@ export enum StatusEnum {
   Active = 'active',
   Closed = 'closed'
 }
+export enum PositionEnum {
+  Left = 'left',
+  Right = 'right'
+}

@@ -20,7 +20,7 @@ describe('OfferFilterBlock', () => {
     render(
       <FilterBarMenu
         chosenFiltersQty={mockChosenFiltersQty}
-        filters={defaultFilters}
+        filters={defaultFilters('createdAt')}
         handleOffersView={mockHandleOffersView}
         onToggleTutorOffers={mockOnToggleTutorOffers}
         toggleFilters={toggleFilters}
@@ -59,7 +59,7 @@ describe('OfferBarMenu tests on tablet size', () => {
     render(
       <FilterBarMenu
         chosenFiltersQty={mockChosenFiltersQty}
-        filters={defaultFilters}
+        filters={defaultFilters('createdAt')}
         handleOffersView={mockHandleOffersView}
         onToggleTutorOffers={mockOnToggleTutorOffers}
         toggleFilters={toggleFilters}
@@ -79,7 +79,7 @@ describe('OfferBarMenu tests on mobile size', () => {
     render(
       <FilterBarMenu
         chosenFiltersQty={mockChosenFiltersQty}
-        filters={defaultFilters}
+        filters={defaultFilters('createdAt')}
         handleOffersView={mockHandleOffersView}
         onToggleTutorOffers={mockOnToggleTutorOffers}
         toggleFilters={toggleFilters}

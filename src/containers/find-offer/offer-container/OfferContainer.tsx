@@ -16,14 +16,9 @@ import { authRoutes } from '~/router/constants/authRoutes'
 interface OfferContainerProps {
   viewMode: CardsView
   offerCards: Offer[]
-  isFiltersOpen: boolean
 }
 
-const OfferContainer: FC<OfferContainerProps> = ({
-  viewMode,
-  offerCards,
-  isFiltersOpen
-}) => {
+const OfferContainer: FC<OfferContainerProps> = ({ viewMode, offerCards }) => {
   const { t } = useTranslation()
   const { isMobile, isDesktop } = useBreakpoints()
 
@@ -54,12 +49,7 @@ const OfferContainer: FC<OfferContainerProps> = ({
       }
     ]
     return (
-      <Grid
-        item
-        key={el._id}
-        sm={isDesktop && isFiltersOpen ? 6 : 4}
-        sx={styles.gridItem}
-      >
+      <Grid item key={el._id} sm={4} sx={styles.gridItem}>
         {renderSquareCard ? (
           <AppCard sx={styles.appCardSquare}>
             <OfferCardSquare

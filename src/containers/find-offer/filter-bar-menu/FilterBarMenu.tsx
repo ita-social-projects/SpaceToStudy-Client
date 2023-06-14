@@ -61,7 +61,6 @@ const FilterBarMenu: FC<FilterBarMenuProps> = ({
     title: t(title),
     value
   }))
-
   return (
     <Box sx={isMobile ? styles.mobileContainer : styles.container}>
       <FiltersToggle

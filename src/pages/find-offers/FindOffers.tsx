@@ -26,6 +26,7 @@ import { useFilterQuery } from '~/hooks/use-filter-query'
 import { useAppSelector } from '~/hooks/use-redux'
 import usePagination from '~/hooks/table/use-pagination'
 import useAxios from '~/hooks/use-axios'
+import { PositionEnum } from '~/types'
 
 import {
   CardsViewEnum,
@@ -164,23 +165,19 @@ const FindOffers = () => {
         updateFilter={filterQueryActions.updateFilterInQuery}
       />
       <Box sx={styles.filterSection}>
-        {isDesktop ? (
-          filtersComponent
-        ) : (
-          <AppDrawer onClose={closeDrawer} open={isOpen}>
-            {filtersComponent}
-          </AppDrawer>
-        )}
+        <AppDrawer
+          anchor={isDesktop ? PositionEnum.Left : PositionEnum.Right}
+          onClose={closeDrawer}
+          open={isOpen}
+        >
+          {filtersComponent}
+        </AppDrawer>
         {offersLoading ? (
           <Loader pageLoad size={70} />
         ) : !offers.length && !offersLoading ? (
           <NotFoundResults description={t('findOffers.notFound.description')} />
         ) : (
-          <OfferContainer
-            isFiltersOpen={isOpen}
-            offerCards={offers}
-            viewMode={cardsView}
-          />
+          <OfferContainer offerCards={offers} viewMode={cardsView} />
         )}
       </Box>
       <AppPagination
