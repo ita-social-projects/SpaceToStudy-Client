@@ -27,7 +27,6 @@ import { useFilterQuery } from '~/hooks/use-filter-query'
 import { useAppSelector } from '~/hooks/use-redux'
 import usePagination from '~/hooks/table/use-pagination'
 import useAxios from '~/hooks/use-axios'
-import { PositionEnum } from '~/types'
 import { getOpositeRole } from '~/utils/helper-functions'
 
 import {
@@ -36,7 +35,8 @@ import {
   SizeEnum,
   VisibilityEnum,
   GetOffersPrarams,
-  GetOffersResponse
+  GetOffersResponse,
+  PositionEnum
 } from '~/types'
 import {
   defaultFilters,
