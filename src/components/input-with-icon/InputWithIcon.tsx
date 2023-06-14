@@ -24,8 +24,12 @@ const InputWithIcon: FC<InputWithIconProps> = ({
       {startIcon}
       <InputBase sx={styles.input} value={value} {...props} />
       {value && (
-        <IconButton onClick={onClear}>
-          <ClearRoundedIcon data-testid='clearIcon' sx={styles.clearIcon} />
+        <IconButton
+          data-testid='clearIcon'
+          onClick={onClear}
+          sx={styles.clearIcon}
+        >
+          <ClearRoundedIcon sx={styles.clearIcon} />
         </IconButton>
       )}
     </Box>

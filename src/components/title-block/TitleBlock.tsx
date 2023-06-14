@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
+import { SxProps } from '@mui/material'
 
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import useBreakpoints from '~/hooks/use-breakpoints'
@@ -12,15 +13,21 @@ type TitleBlockProps = {
   img: string
   translationKey: string
   children?: React.ReactNode
+  style?: SxProps
 }
 
-const TitleBlock: FC<TitleBlockProps> = ({ img, translationKey, children }) => {
+const TitleBlock: FC<TitleBlockProps> = ({
+  img,
+  translationKey,
+  children,
+  style
+}) => {
   const { t } = useTranslation()
   const { isMobile } = useBreakpoints()
   const { userRole } = useAppSelector((state) => state.appMain)
 
   return (
-    <Box className='section' sx={styles.container}>
+    <Box className='section' sx={{ ...styles.container, ...style }}>
       <Box sx={styles.info}>
         <TitleWithDescription
           description={t(`${translationKey}.description`)}

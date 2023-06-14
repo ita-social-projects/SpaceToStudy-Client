@@ -4,8 +4,7 @@ export const styles = {
     backgroundColor: 'companyBlue',
     borderRadius: 2,
     px: { md: 7, sm: 3, xs: 3 },
-    py: { md: 6, sm: 4, xs: 4 },
-    mb: '30px'
+    py: { md: 6, sm: 4, xs: 4 }
   },
   info: {
     flexBasis: { lg: '55%' }
@@ -28,7 +27,8 @@ export const styles = {
     description: {
       typography: { sm: 'body1', xs: 'body2' },
       color: 'primary.900',
-      mb: 6
+      mb: 6,
+      flexBasis: { lg: '55%' }
     }
   }
 }

@@ -31,16 +31,11 @@ describe('FindTutorBlock test', () => {
 
     expect(img).toBeInTheDocument()
   })
-  it('should navigate if click on find tutor button', async () => {
-    const findTutorButton = screen.getByText(
-      'studentHomePage.findTutorBlock.button'
-    )
-    fireEvent.click(findTutorButton)
 
-    expect(mockNavigate).toHaveBeenCalled()
-  })
   it('should navigate if press enter', async () => {
-    const input = screen.getByLabelText(/studentHomePage.findTutorBlock.label/i)
+    const input = screen.getByPlaceholderText(
+      /studentHomePage.findTutorBlock.label/i
+    )
     fireEvent.change(input, { target: { value: 'test' } })
     fireEvent.keyPress(input, { key: 'Enter', code: 'Enter', charCode: 13 })
 

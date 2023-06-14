@@ -1,8 +1,11 @@
 {
   "findTutorBlock": {
-    "title": "A Global Network of Tutors",
+    "title": {
+      "student": "A Global Network of Tutors",
+      "tutor": "A Global Network of Students"
+    },
     "description": "A Space2Study platform is a place where you can learn from the best. Type what would you like to learn and find the best tutor for that.",
-    "label": "What would you like to learn",
+    "label": "What would you like to learn ?",
     "button": "Find tutor"
   },
   "popularCategories": {
