@@ -14,7 +14,7 @@ import { styles } from '~/components/popular-categories/PopularCategories.styles
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import serviceIcon from '~/assets/img/student-home-page/service_icon.png'
 import CardsList from '~/components/cards-list/CardsList'
-import { CategoryInterface } from '~/types'
+import { CategoryInterface, ItemsWithCount } from '~/types'
 import useBreakpoints from '~/hooks/use-breakpoints'
 
 import { getScreenBasedLimit, studentOrTutor } from '~/utils/helper-functions'
@@ -41,16 +41,17 @@ const PopularCategories: FC<PopularCategoriesProps> = ({
     () => categoryService.getCategories({ limit: itemsToShow }),
     [itemsToShow]
   )
-  const { response, loading } = useAxios<CategoryInterface[]>({
+  const { response, loading } = useAxios<ItemsWithCount<CategoryInterface>>({
     service: getCategories,
-    defaultResponse: defaultResponses.array
+    defaultResponse: defaultResponses.itemsWithCount
   })
 
+  const { items } = response
   const currentRole = studentOrTutor(userRole)
 
   const cards = useMemo(
     () =>
-      response.map((item) => {
+      items.map((item) => {
         return (
           <CardWithLink
             description={`${item.totalOffers[currentRole]} ${t(
@@ -63,7 +64,7 @@ const PopularCategories: FC<PopularCategoriesProps> = ({
           />
         )
       }),
-    [response, currentRole, t]
+    [items, currentRole, t]
   )
 
   const onClickButton = () => {
