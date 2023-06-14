@@ -86,5 +86,10 @@ export const styles = {
   wrapperForPhoto: {
     display: 'flex',
     gap: '10px'
-  }
+  },
+  avatarContainer: {
+    width: '45%'
+  },
+  avatarContainerMobile: { flex: 1 },
+  linkToReviews: { color: 'text.primary' }
 }

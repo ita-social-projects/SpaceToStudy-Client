@@ -23,6 +23,7 @@ import { styles } from '~/containers/tutor-profile/profile-info/ProfileInfo.styl
 import { snackbarVariants, myProfilePath, student } from '~/constants'
 import { SizeEnum } from '~/types'
 import { getTimeAtS2S } from '~/utils/helper-functions'
+import { TypographyVariantEnum } from '~/types'
 
 const ProfileInfo = ({ userData }) => {
   const { t } = useTranslation()
@@ -77,9 +78,8 @@ const ProfileInfo = ({ userData }) => {
   const linkToReviews = (
     <Typography
       component={HashLink}
-      sx={{ color: 'text.primary' }}
-      to={'#'}
-      variant='overline'
+      sx={styles.linkToReviews}
+      variant={TypographyVariantEnum.Overline}
     >
       {`${userData.totalReviews.tutor} ${t(
         'tutorProfilePage.profileInfo.reviews'

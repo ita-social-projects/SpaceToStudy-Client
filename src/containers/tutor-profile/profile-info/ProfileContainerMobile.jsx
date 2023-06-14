@@ -22,7 +22,7 @@ const ProfileContainerMobile = ({
   return (
     <Box sx={styles.container}>
       <Box sx={styles.wrapperForPhoto}>
-        <Box sx={{ flex: 1 }}>
+        <Box sx={styles.avatarContainerMobile}>
           <Avatar
             src={
               userData.photo &&

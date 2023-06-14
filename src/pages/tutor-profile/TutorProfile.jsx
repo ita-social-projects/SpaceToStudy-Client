@@ -1,10 +1,9 @@
-import Container from '@mui/material/Container'
-
 import ProfileInfo from '~/containers/tutor-profile/profile-info/ProfileInfo'
 import CompleteProfileBlock from '~/components/complete-profile/CompleteProfileBlock'
 import { profileItems } from '~/components/profile-item/complete-profile.constants'
 import VideoPresentation from '~/containers/tutor-profile/video-presentation/VideoPresentation'
 import CommentsWithRatingBlock from '~/containers/tutor-profile/comments-with-rating-block/CommentsWithRaitngBlock'
+import PageWrapper from '~/components/page-wrapper/PageWrapper'
 
 import { useAppSelector } from '~/hooks/use-redux'
 import useUserInfo from '~/hooks/use-user-info'
@@ -28,7 +27,7 @@ const TutorProfile = () => {
   }
 
   return (
-    <Container sx={styles.containerStyles}>
+    <PageWrapper sx={styles.containerStyles}>
       <ProfileInfo userData={userData} />
       <CompleteProfileBlock data={userData} profileItems={profileItems} />
       <VideoPresentation />
@@ -37,7 +36,7 @@ const TutorProfile = () => {
         reviewsCount={reviews}
         totalReviews={userData.totalReviews.tutor}
       />
-    </Container>
+    </PageWrapper>
   )
 }
 

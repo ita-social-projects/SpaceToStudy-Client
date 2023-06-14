@@ -23,7 +23,7 @@ const ProfileContainerDesktop = ({
 
   return (
     <Box sx={styles.container}>
-      <Box sx={{ width: '45%' }}>
+      <Box sx={styles.avatarContainer}>
         <Avatar
           src={
             userData.photo &&
