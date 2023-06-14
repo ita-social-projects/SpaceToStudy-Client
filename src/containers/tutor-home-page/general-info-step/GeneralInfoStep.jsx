@@ -205,7 +205,7 @@ const GeneralInfoStep = ({
           <AppTextArea
             fullWidth
             label={t('becomeTutor.generalInfo.textFieldLabel')}
-            maxLength={70}
+            maxLength={200}
             onChange={handleInputChange('professionalSummary')}
             type='text'
             value={data.professionalSummary}
