@@ -27,10 +27,16 @@ const SubjectsStep = ({ stepLabel, btnsBox }) => {
 
   const [subjectError, setSubjectError] = useState('')
 
+  const [categoryFetched, setCategoryIsFetched] = useState(false)
+  const [subjectFetched, setSubjectIsFetched] = useState(false)
+
   const getSubjectsNames = useCallback(
     () => subjectService.getSubjectsNames(subjects.category._id),
     [subjects.category]
   )
+
+  const handleCategoryFetch = () => setCategoryIsFetched(true)
+  const handleSubjectFetch = () => setSubjectIsFetched(true)
 
   const imageBlock = (
     <Box sx={styles.imgContainer}>
@@ -95,7 +101,8 @@ const SubjectsStep = ({ stepLabel, btnsBox }) => {
           <AsyncAutocomplete
             labelField='name'
             onChange={onChangeCategory}
-            service={categoryService.getCategoriesNames}
+            onFocus={handleCategoryFetch}
+            service={categoryFetched && categoryService.getCategoriesNames}
             sx={{ mb: '20px' }}
             textFieldProps={{
               label: t('becomeTutor.categories.mainSubjectsLabel')
@@ -107,7 +114,8 @@ const SubjectsStep = ({ stepLabel, btnsBox }) => {
             disabled={!subjects.category}
             labelField='name'
             onChange={onChangeSubject}
-            service={getSubjectsNames}
+            onFocus={handleSubjectFetch}
+            service={subjectFetched && getSubjectsNames}
             sx={{ mb: '20px' }}
             textFieldProps={{
               label: t('becomeTutor.categories.subjectLabel')
