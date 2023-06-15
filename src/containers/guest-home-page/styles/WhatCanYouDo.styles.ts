@@ -6,7 +6,7 @@ export const styles = {
       xs: 'column'
     },
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: { xs: 'center', sm: 'stretch' },
     columnGap: {
       lg: '64px',
       sm: '24px'
