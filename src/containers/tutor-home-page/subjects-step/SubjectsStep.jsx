@@ -28,6 +28,8 @@ const SubjectsStep = ({ stepLabel, btnsBox }) => {
   const [subjectError, setSubjectError] = useState('')
   const [subjectFetched, setSubjectIsFetched] = useState(false)
 
+  const fetchSubjectHandler = () => setSubjectIsFetched(true)
+
   const getSubjectsNames = useCallback(
     () => subjectService.getSubjectsNames(subjects.category._id),
     [subjects.category]
@@ -107,7 +109,7 @@ const SubjectsStep = ({ stepLabel, btnsBox }) => {
             valueField='_id'
           />
           <AsyncAutocomplete
-            axiosProps={{ onResponse: () => setSubjectIsFetched(true) }}
+            axiosProps={{ onResponse: fetchSubjectHandler }}
             disabled={!subjects.category}
             fetchCondition={!subjectFetched}
             fetchOnFocus
