@@ -1,20 +1,40 @@
 import { useTranslation } from 'react-i18next'
 
+import ReportIcon from '@mui/icons-material/Report'
 import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableContainer from '@mui/material/TableContainer'
-import ReportIcon from '@mui/icons-material/Report'
 
-import EnhancedTableRow from '~/components/enhanced-table/enhanced-table-row/EnhancedTableRow'
 import EnhancedTableHead from '~/components/enhanced-table/enhanced-table-head/EnhancedTableHead'
+import EnhancedTableRow from '~/components/enhanced-table/enhanced-table-row/EnhancedTableRow'
 import FilterRow from '~/components/enhanced-table/filter-row/FilterRow'
 import Loader from '~/components/loader/Loader'
 
 import { styles } from '~/components/enhanced-table/EnhancedTable.styles'
+import {
+  TableColumn,
+  TableData,
+  TableFilter,
+  TableItem,
+  TableRowAction,
+  TableSelect,
+  TableSort
+} from '~/types'
 
-const EnhancedTable = ({
+interface EnhancedTableProps<F, I> {
+  columns: TableColumn<I>[]
+  isSelection: boolean
+  rowActions: TableRowAction[]
+  select: TableSelect<I>
+  filter: TableFilter<F>
+  sort: TableSort
+  rowsPerPage: number
+  data: TableData<I>
+}
+
+const EnhancedTable = <F, I extends TableItem>({
   columns,
   isSelection,
   rowActions,
@@ -24,7 +44,7 @@ const EnhancedTable = ({
   rowsPerPage,
   data,
   ...props
-}) => {
+}: EnhancedTableProps<F, I>) => {
   const { t } = useTranslation()
   const { items, loading, getData } = data
 
@@ -41,7 +61,7 @@ const EnhancedTable = ({
   ))
 
   const tableBody = (
-    <TableContainer>
+    <TableContainer data-testid='enhance-table-container'>
       <Table {...props}>
         <EnhancedTableHead
           columns={columns}
@@ -66,7 +86,7 @@ const EnhancedTable = ({
   const noMatchesBox = (
     <>
       {tableBody}
-      <Box sx={styles.noMatches}>
+      <Box data-testid='no-matches-box' sx={styles.noMatches}>
         <ReportIcon color='secondary' />
         {t('table.noExactMatches')}
       </Box>
