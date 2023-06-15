@@ -33,8 +33,6 @@ const SubjectsStep = ({ stepLabel, btnsBox }) => {
     [subjects.category]
   )
 
-  const handleSubjectFetch = () => setSubjectIsFetched(true)
-
   const imageBlock = (
     <Box sx={styles.imgContainer}>
       <Box component='img' src={img} sx={styles.img} />
@@ -109,11 +107,13 @@ const SubjectsStep = ({ stepLabel, btnsBox }) => {
             valueField='_id'
           />
           <AsyncAutocomplete
+            axiosProps={{ onResponse: () => setSubjectIsFetched(true) }}
             disabled={!subjects.category}
+            fetchCondition={!subjectFetched}
+            fetchOnFocus
             labelField='name'
             onChange={onChangeSubject}
-            onFocus={handleSubjectFetch}
-            service={subjectFetched && getSubjectsNames}
+            service={getSubjectsNames}
             sx={{ mb: '20px' }}
             textFieldProps={{
               label: t('becomeTutor.categories.subjectLabel')
