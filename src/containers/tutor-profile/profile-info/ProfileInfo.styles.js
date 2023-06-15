@@ -88,7 +88,8 @@ export const styles = {
     gap: '10px'
   },
   avatarContainer: {
-    width: '45%'
+    flex: 1,
+    maxWidth: '650px'
   },
   avatarContainerMobile: { flex: 1 },
   linkToReviews: { color: 'text.primary' }

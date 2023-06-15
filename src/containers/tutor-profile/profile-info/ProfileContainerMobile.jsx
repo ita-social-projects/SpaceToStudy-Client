@@ -29,7 +29,7 @@ const ProfileContainerMobile = ({
               `${import.meta.env.VITE_APP_IMG_USER_URL}${userData.photo}`
             }
             sx={styles.img}
-          ></Avatar>
+          />
         </Box>
 
         <TitleWithDescription
