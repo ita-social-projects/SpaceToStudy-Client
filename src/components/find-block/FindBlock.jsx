@@ -28,12 +28,11 @@ const FindBlock = ({ translationKey }) => {
   const handleEnterPress = useCallback(
     (e) => {
       if (e.key === 'Enter' && inputValue) {
-        navigate(path, { state: { inputValue } })
+        navigate(findOffers)
       }
     },
-    [inputValue, navigate, authRoutes]
+    [inputValue, navigate, findOffers]
   )
-
   const onClear = () => setInputValue('')
 
   return (
