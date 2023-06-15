@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Typography from '@mui/material/Typography'
@@ -9,13 +9,9 @@ import Box from '@mui/material/Box'
 
 import HashLink from '~/components/hash-link/HashLink'
 import useBreakpoints from '~/hooks/use-breakpoints'
+import { RouteItem } from '~/types/common/interfaces/common.interfaces'
 
 import { styles } from '~/containers/layout/sidebar/Sidebar.styles'
-
-interface RouteItem {
-  route: string
-  path: string
-}
 
 interface SidebarProps {
   onClose: () => void
@@ -48,17 +44,22 @@ const Sidebar: FC<SidebarProps> = ({
     </List>
   )
 
-  return (
-    <Box>
-      {renderListItems(navigationItems)}
-      {isMobile && accountItems.length > 0 && (
-        <>
-          <Divider />
-          {renderListItems(accountItems)}
-        </>
-      )}
-    </Box>
+  const navigationContent = useMemo(
+    () => (
+      <>
+        {renderListItems(navigationItems)}
+        {isMobile && accountItems.length > 0 && (
+          <>
+            <Divider />
+            {renderListItems(accountItems)}
+          </>
+        )}
+      </>
+    ),
+    [navigationItems, accountItems]
   )
+
+  return navigationContent
 }
 
 export default Sidebar

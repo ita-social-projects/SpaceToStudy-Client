@@ -27,15 +27,19 @@ const Navbar = () => {
   const { t } = useTranslation()
 
   const navigationItems = useMemo(() => {
-    if (userRole === student) return Object.values(studentRoutes.navBar)
-    else if (userRole === tutor) return Object.values(tutorRoutes.navBar)
-    else return Object.values(guestRoutes.navBar)
+    return userRole === student
+      ? Object.values(studentRoutes.navBar)
+      : userRole === tutor
+      ? Object.values(tutorRoutes.navBar)
+      : Object.values(guestRoutes.navBar)
   }, [userRole])
 
   const accountItems = useMemo(() => {
-    if (userRole === student) return Object.values(studentRoutes.accountMenu)
-    else if (userRole === tutor) return Object.values(tutorRoutes.accountMenu)
-    else return []
+    return userRole === student
+      ? Object.values(studentRoutes.accountMenu)
+      : userRole === tutor
+      ? Object.values(tutorRoutes.accountMenu)
+      : []
   }, [userRole])
 
   const handleOpenSidebar = () => {
