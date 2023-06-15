@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
 import StarSharp from '@mui/icons-material/StarSharp'
 import Box from '@mui/material/Box'
@@ -9,9 +9,14 @@ import { styles } from '~/components/app-rating-mobile/AppRatingMobile.styles'
 
 interface AppRatingMobileProps extends RatingProps {
   reviewsCount: number
+  linkHash: ReactElement
 }
 
-const AppRatingMobile: FC<AppRatingMobileProps> = ({ value, reviewsCount }) => {
+const AppRatingMobile: FC<AppRatingMobileProps> = ({
+  value,
+  reviewsCount,
+  linkHash
+}) => {
   const { t } = useTranslation()
 
   return (
@@ -20,7 +25,7 @@ const AppRatingMobile: FC<AppRatingMobileProps> = ({ value, reviewsCount }) => {
         <StarSharp data-testid='star-icon' sx={styles.starMobile} />
         <Typography variant={'h6'}>{value}</Typography>
       </Box>
-      <Typography variant={'caption'}>
+      <Typography component={linkHash} variant={'caption'}>
         {t('tutorProfilePage.reviews.reviewsCount', {
           count: reviewsCount
         })}

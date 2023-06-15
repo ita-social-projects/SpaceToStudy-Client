@@ -6,9 +6,8 @@ import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
 import CopyRoundedIcon from '@mui/icons-material/ContentCopyRounded'
-import StarIcon from '@mui/icons-material/Star'
-import Typography from '@mui/material/Typography'
 
+import AppRatingMobile from '~/components/app-rating-mobile/AppRatingMobile'
 import ProfileContainerDesktop from '~/containers/tutor-profile/profile-info/ProfileContainerDesktop'
 import ProfileContainerMobile from '~/containers/tutor-profile/profile-info/ProfileContainerMobile'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
@@ -68,32 +67,22 @@ const ProfileInfo = ({ userData }) => {
   )
 
   const accountRating = (
-    <>
-      <StarIcon sx={styles.ratingIcon} />
-      {userData.averageRating.tutor}
-    </>
-  )
-
-  const linkToReviews = (
-    <Typography
-      component={HashLink}
-      sx={styles.linkToReviews}
-      variant={TypographyVariantEnum.Overline}
-    >
-      {`${userData.totalReviews.tutor} ${t(
-        'tutorProfilePage.profileInfo.reviews'
-      )}`}
-    </Typography>
+    <AppRatingMobile
+      linkHash={HashLink}
+      reviewsCount={userData.totalReviews[userData.role]}
+      value={userData.averageRating[userData.role]}
+    />
   )
 
   const accountInfo = [
     {
-      title: `${number} ${t(`tutorProfilePage.profileInfo.timeFor${format}`)}`,
+      title: t(`tutorProfilePage.profileInfo.timeFor${format}`, {
+        count: number
+      }),
       description: t('tutorProfilePage.profileInfo.withS2S')
     },
     {
-      title: accountRating,
-      description: linkToReviews
+      title: accountRating
     }
   ]
 

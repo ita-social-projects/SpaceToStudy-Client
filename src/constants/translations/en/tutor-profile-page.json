@@ -8,14 +8,14 @@
     "reviews": "reviews",
     "nativeLanguage" : "Native: ",
     "location" : "Based in",
-    "timeForYears" : " years",
-    "timeForYear" : " year",
-    "timeForMonths" : " months",
-    "timeForMonth" : " month",
-    "timeForWeeks" : " weeks",
-    "timeForWeek" : " week",
-    "timeForDays" : " days",
-    "timeForDay" : " day"
+    "timeForYear_one" : "{{count}} year",
+    "timeForYear_other" : "{{count}} years",
+    "timeForMonth_one" : "{{count}} month",
+    "timeForMonth_other" : "{{count}} months",
+    "timeForWeek_one" : "{{count}} week",
+    "timeForWeek_other" : "{{count}} weeks",
+    "timeForDay_one" : "{{count}} day",
+    "timeForDay_other" : "{{count}} days"
   },
   "videoPresentation": {
     "title": "Video Presentation"
@@ -25,7 +25,7 @@
     "buttonTitle":"More reviews",
     "starsCount_one": "{{count}} star",
     "starsCount_other": "{{count}} stars",
-    "reviewsCount_one": "{{count}} review",
-    "reviewsCount_other": "{{count}} reviews"
+    "reviewsCount_one": "{{count}} REVIEW",
+    "reviewsCount_other": "{{count}} REVIEWS"
   }
 }

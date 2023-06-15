@@ -159,21 +159,21 @@ export const getNumberOfYears = function (
 
   if (conversionToDays >= 365) {
     const years = Math.floor(conversionToDays / 365)
-    return { number: years, format: years === 1 ? 'Year' : 'Years' }
+    return { number: years, format: 'Year' }
   }
 
   if (conversionToDays >= 31) {
     const months = Math.floor(conversionToDays / 31)
-    return { number: months, format: months === 1 ? 'Month' : 'Months' }
+    return { number: months, format: 'Month' }
   }
 
   if (conversionToDays >= 7 && conversionToDays < 31) {
     const weeks = Math.floor(conversionToDays / 7)
-    return { number: weeks, format: weeks === 1 ? 'Week' : 'Weeks' }
+    return { number: weeks, format: 'Week' }
   }
 
   return {
     number: conversionToDays || 1,
-    format: conversionToDays === 1 ? 'Day' : 'Days'
+    format: 'Day'
   }
 }

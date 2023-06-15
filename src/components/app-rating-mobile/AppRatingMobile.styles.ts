@@ -7,6 +7,10 @@ export const styles = {
     padding: '3px 6px',
     borderRadius: '5px'
   },
-  starMobile: { color: 'basic.yellow', height: '18px' },
+  starMobile: {
+    color: 'basic.yellow',
+    width: { xs: '18px', md: '24px' },
+    height: { xs: '18px', md: '24px' }
+  },
   number: { display: 'flex', alignItems: 'center' }
 }
