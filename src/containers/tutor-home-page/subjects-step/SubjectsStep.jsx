@@ -26,8 +26,6 @@ const SubjectsStep = ({ stepLabel, btnsBox }) => {
   })
 
   const [subjectError, setSubjectError] = useState('')
-
-  const [categoryFetched, setCategoryIsFetched] = useState(false)
   const [subjectFetched, setSubjectIsFetched] = useState(false)
 
   const getSubjectsNames = useCallback(
@@ -35,7 +33,6 @@ const SubjectsStep = ({ stepLabel, btnsBox }) => {
     [subjects.category]
   )
 
-  const handleCategoryFetch = () => setCategoryIsFetched(true)
   const handleSubjectFetch = () => setSubjectIsFetched(true)
 
   const imageBlock = (
@@ -52,6 +49,7 @@ const SubjectsStep = ({ stepLabel, btnsBox }) => {
           subject: null
         }
     )
+    setSubjectIsFetched(false)
   }
 
   const onChangeSubject = (_, value) => {
@@ -99,10 +97,10 @@ const SubjectsStep = ({ stepLabel, btnsBox }) => {
           <Typography mb='20px'>{t('becomeTutor.categories.title')}</Typography>
           {isMobile && imageBlock}
           <AsyncAutocomplete
+            fetchOnFocus
             labelField='name'
             onChange={onChangeCategory}
-            onFocus={handleCategoryFetch}
-            service={categoryFetched && categoryService.getCategoriesNames}
+            service={categoryService.getCategoriesNames}
             sx={{ mb: '20px' }}
             textFieldProps={{
               label: t('becomeTutor.categories.mainSubjectsLabel')
