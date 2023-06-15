@@ -6,8 +6,6 @@ import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
 import CopyRoundedIcon from '@mui/icons-material/ContentCopyRounded'
-import StarIcon from '@mui/icons-material/Star'
-import Typography from '@mui/material/Typography'
 
 import AppRatingMobile from '~/components/app-rating-mobile/AppRatingMobile'
 import ProfileContainerDesktop from '~/containers/tutor-profile/profile-info/ProfileContainerDesktop'

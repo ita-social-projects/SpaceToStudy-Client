@@ -25,7 +25,7 @@
     "buttonTitle":"More reviews",
     "starsCount_one": "{{count}} star",
     "starsCount_other": "{{count}} stars",
-    "reviewsCount_one": "{{count}} review",
-    "reviewsCount_other": "{{count}} reviews"
+    "reviewsCount_one": "{{count}} REVIEW",
+    "reviewsCount_other": "{{count}} REVIEWS"
   }
 }
