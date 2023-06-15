@@ -5,7 +5,6 @@ import Typography from '@mui/material/Typography'
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import Divider from '@mui/material/Divider'
-import Box from '@mui/material/Box'
 
 import HashLink from '~/components/hash-link/HashLink'
 import useBreakpoints from '~/hooks/use-breakpoints'
