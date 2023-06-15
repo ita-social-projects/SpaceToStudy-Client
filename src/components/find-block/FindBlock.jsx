@@ -1,25 +1,25 @@
 import { useCallback, useState } from 'react'
 import { useNavigate } from 'react-router'
-import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
-
-import TitleBlock from '~/components/title-block/TitleBlock'
+import { useTranslation } from 'react-i18next'
 import SearchIcon from '@mui/icons-material/Search'
 
 import useBreakpoints from '~/hooks/use-breakpoints'
-import { styles } from '~/containers/tutor-home-page/find-student-block/find-student-block.styles'
-import bag from '~/assets/img/tutor-home-page/bag.png'
-import { translationKey } from '~/containers/tutor-home-page/find-student-block/constants'
-import { authRoutes } from '~/router/constants/authRoutes'
+import TitleBlock from '~/components/title-block/TitleBlock'
 import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
 import AppButton from '~/components/app-button/AppButton'
 
-const FindStudentBlock = () => {
+import bag from '~/assets/img/student-home/bag.png'
+import { authRoutes } from '~/router/constants/authRoutes'
+import { styles } from '~/components/find-block/find-block.styles'
+
+const FindBlock = ({ translationKey }) => {
   const [inputValue, setInputValue] = useState('')
   const { t } = useTranslation()
   const navigate = useNavigate()
   const { isMobile } = useBreakpoints()
-  const findOffers = `${authRoutes.findOffers.path}?search=${inputValue}`
+  const path = authRoutes.findOffers.path
+  const findOffers = `${path}?search=${inputValue}`
 
   const onChange = (e) => {
     setInputValue(e.target.value)
@@ -28,10 +28,10 @@ const FindStudentBlock = () => {
   const handleEnterPress = useCallback(
     (e) => {
       if (e.key === 'Enter' && inputValue) {
-        navigate(authRoutes.findOffers.path, { state: { inputValue } })
+        navigate(path, { state: { inputValue } })
       }
     },
-    [inputValue, navigate]
+    [inputValue, navigate, authRoutes]
   )
 
   const onClear = () => setInputValue('')
@@ -59,4 +59,4 @@ const FindStudentBlock = () => {
   )
 }
 
-export default FindStudentBlock
+export default FindBlock
