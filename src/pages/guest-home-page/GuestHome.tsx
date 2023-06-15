@@ -2,7 +2,6 @@ import { useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import Box from '@mui/material/Box'
-import { descriptionTimes } from '~/components/accordion-with-image/accordion-with-image.constants'
 
 import { useModalContext } from '~/context/modal-context'
 import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
@@ -13,6 +12,9 @@ import HowItWorks from '~/containers/guest-home-page/how-it-works/HowItWorks'
 import WhoWeAre from '~/containers/guest-home-page/who-we-are/WhoWeAre'
 import EmailConfirmModal from '~/containers/email-confirm-modal/EmailConfirmModal'
 import ResetPassword from '~/containers/guest-home-page/reset-password/ResetPassword'
+import PageWrapper from '~/components/page-wrapper/PageWrapper'
+import { descriptionTimes } from '~/components/accordion-with-image/accordion-with-image.constants'
+import { styles } from '~/pages/guest-home-page/GuestHome.styles'
 
 const GuestHomePage = () => {
   const { openModal } = useModalContext()
@@ -21,7 +23,6 @@ const GuestHomePage = () => {
   useEffect(() => {
     const confirmToken = searchParams.get('confirmToken')
     const resetToken = searchParams.get('resetToken')
-    const login = searchParams.get('login')
     confirmToken &&
       openModal({
         component: (
@@ -37,20 +38,21 @@ const GuestHomePage = () => {
           <ResetPassword openModal={openModal} resetToken={resetToken} />
         )
       })
-    login !== null && openModal({ component: <LoginDialog /> })
+    searchParams.get('login') !== null &&
+      openModal({ component: <LoginDialog /> })
 
     setSearchParams([])
   }, [searchParams, setSearchParams, openModal])
 
   return (
-    <Box data-testid='guestHome' sx={{ flex: 1 }}>
+    <Box sx={styles.root}>
       <Welcome />
-      <Box sx={{ maxWidth: '1128px', margin: '0 auto', overflowX: 'hidden' }}>
+      <PageWrapper sx={styles.sectionsWrapper}>
         <FeatureBlock items={descriptionTimes} />
         <WhatCanYouDo />
         <HowItWorks />
         <WhoWeAre />
-      </Box>
+      </PageWrapper>
     </Box>
   )
 }

@@ -20,9 +20,7 @@ export const styles = {
       sm: `url(${welcomeBgSm}), ${gradient})`,
       xs: `url(${welcomeBgXs}), ${gradient})`
     },
-    backgroundPosition: 'center',
-    backgroundSize: 'contain',
-    backgroundRepeat: 'no-repeat'
+    background: 'center / contain no-repeat'
   },
   title: {
     maxWidth: '100%',
@@ -30,18 +28,17 @@ export const styles = {
   },
   subtitle: {
     typography: {
-      sm: 'subtitle1',
+      sm: 'body1',
       xs: 'body2'
     },
     px: '24px',
-    maxWidth: '798px',
+    maxWidth: { lg: '1000px', xs: '798px' },
     marginBottom: '32px',
-    color: 'primary.900',
     textAlign: 'center'
   },
   getStartBtn: {
-    padding: '16px 51px',
-    boxShadow: mainShadow,
-    textTransform: 'none'
+    py: '16px',
+    px: { lg: '60px', xs: '32px' },
+    boxShadow: mainShadow
   }
 }

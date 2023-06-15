@@ -15,13 +15,13 @@ describe('Welcome component', () => {
   })
 
   it('should have correct description', () => {
-    const title = screen.getByTestId('welcomeDescription')
+    const title = screen.getByText('guestHomePage.welcomeBlock.description')
 
     expect(title).toBeInTheDocument()
   })
 
   it('should have button with correct text', () => {
-    const btn = screen.getByTestId('welcomeGetStarted')
+    const btn = screen.getByText('guestHomePage.welcomeBlock.getStarted')
 
     expect(btn).toBeInTheDocument()
   })

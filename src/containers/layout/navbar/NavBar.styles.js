@@ -4,7 +4,7 @@ export const styles = {
     justifyContent: 'space-between',
     padding: '0px',
     margin: { xs: '0', xl: 'auto' },
-    maxWidth: 'xl',
+    maxWidth: '1800px',
     width: { xl: '100%' }
   },
   logoButton: {

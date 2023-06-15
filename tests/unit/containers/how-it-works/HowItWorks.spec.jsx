@@ -21,7 +21,9 @@ describe('HowItWorks container', () => {
     checkbox.click()
 
     fireEvent.change(checkbox, { target: { checked: 'false' } })
-    const btnText = screen.getByText('Become a tutor')
+    const btnText = screen.getByText(
+      'guestHomePage.whatCanYouDo.learn.actionLabel'
+    )
 
     expect(btnText).toBeInTheDocument()
   })

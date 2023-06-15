@@ -1,15 +1,4 @@
 export const styles = {
-  container: {
-    my: {
-      sm: '80px',
-      xs: '48px'
-    },
-    px: {
-      md: '52px',
-      sm: '24px',
-      xs: '8px'
-    }
-  },
   cards: {
     display: 'flex',
     flexDirection: {
@@ -17,25 +6,19 @@ export const styles = {
       xs: 'column'
     },
     justifyContent: 'center',
-    alignItems: {
-      sm: 'inherit',
-      xs: 'center'
-    },
+    alignItems: 'center',
     columnGap: {
-      md: '64px',
+      lg: '64px',
       sm: '24px'
     },
     rowGap: '24px',
-    boxSizing: 'border-box',
-    maxWidth: '1124px',
-    margin: '0 auto',
     py: {
-      md: '52px',
+      lg: '52px',
       sm: '48px',
       xs: '32px'
     },
     px: {
-      md: '52px',
+      lg: '52px',
       sm: '32px',
       xs: '16px'
     },
@@ -47,7 +30,6 @@ export const styles = {
   },
   titleWithDescription: {
     wrapper: {
-      margin: '0 auto',
       marginBottom: '32px',
       textAlign: 'center'
     },
