@@ -1,20 +1,19 @@
 import { useCallback, useState } from 'react'
 import { useNavigate } from 'react-router'
-import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
-
-import TitleBlock from '~/components/title-block/TitleBlock'
+import { useTranslation } from 'react-i18next'
 import SearchIcon from '@mui/icons-material/Search'
 
 import useBreakpoints from '~/hooks/use-breakpoints'
-import { styles } from '~/containers/student-home-page/find-tutor-block/find-tutor-block.styles'
-import bag from '~/assets/img/student-home/bag.png'
-import { translationKey } from '~/containers/student-home-page/find-tutor-block/constants'
-import { authRoutes } from '~/router/constants/authRoutes'
+import TitleBlock from '~/components/title-block/TitleBlock'
 import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
 import AppButton from '~/components/app-button/AppButton'
 
-const FindTutorBlock = () => {
+import bag from '~/assets/img/student-home/bag.png'
+import { authRoutes } from '~/router/constants/authRoutes'
+import { styles } from '~/components/find-block/find-block.styles'
+
+const FindBlock = ({ translationKey }) => {
   const [inputValue, setInputValue] = useState('')
   const { t } = useTranslation()
   const navigate = useNavigate()
@@ -28,12 +27,11 @@ const FindTutorBlock = () => {
   const handleEnterPress = useCallback(
     (e) => {
       if (e.key === 'Enter' && inputValue) {
-        navigate(authRoutes.findOffers.path, { state: { inputValue } })
+        navigate(findOffers)
       }
     },
-    [inputValue, navigate]
+    [inputValue, navigate, findOffers]
   )
-
   const onClear = () => setInputValue('')
 
   return (
@@ -59,4 +57,4 @@ const FindTutorBlock = () => {
   )
 }
 
-export default FindTutorBlock
+export default FindBlock

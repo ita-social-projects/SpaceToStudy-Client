@@ -1,0 +1,11 @@
+{
+    "findStudentBlock": {
+      "title": {
+        "tutor": "A Global Network of Students"
+      },
+      "description": "A Space2Study platform is a place where you can learn from the best. Type what would you like to teach and find students for that.",
+      "label": "What would you like to teach?",
+      "button": "Find student"
+    }
+  }
+  

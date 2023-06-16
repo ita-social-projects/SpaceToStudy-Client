@@ -1,8 +1,10 @@
 import { vi } from 'vitest'
 import { screen, fireEvent } from '@testing-library/react'
-import FindTutorBlock from '~/containers/student-home-page/find-tutor-block/FindTutorBlock'
+import FindBlock from '~/components/find-block/FindBlock'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { renderWithProviders } from '~tests/test-utils'
+
+import { translationKey } from '~/components/find-block/find-student-constants'
 
 const mockNavigate = vi.fn()
 
@@ -16,12 +18,12 @@ const mockState = {
   appMain: { userRole: 'tutor' }
 }
 
-describe('FindTutorBlock test', () => {
+describe('FindBlock test', () => {
   const desktopData = { isDesktop: true, isMobile: false, isTablet: false }
 
   beforeEach(() => {
     useBreakpoints.mockImplementation(() => desktopData)
-    renderWithProviders(<FindTutorBlock />, {
+    renderWithProviders(<FindBlock translationKey={translationKey} />, {
       preloadedState: mockState
     })
   })
@@ -33,9 +35,8 @@ describe('FindTutorBlock test', () => {
   })
 
   it('should navigate if press enter', async () => {
-    const input = screen.getByPlaceholderText(
-      /studentHomePage.findTutorBlock.label/i
-    )
+    const input = screen.getByRole('textbox')
+
     fireEvent.change(input, { target: { value: 'test' } })
     fireEvent.keyPress(input, { key: 'Enter', code: 'Enter', charCode: 13 })
 
