@@ -11,5 +11,9 @@ export const tutorRoutes = {
       path: '/tutor/my-cooperations'
     },
     logout: { route: 'logout', path: '/logout' }
+  },
+  editProfile: {
+    route: 'my-profile/edit',
+    path: '/tutor/my-profile/edit'
   }
 }

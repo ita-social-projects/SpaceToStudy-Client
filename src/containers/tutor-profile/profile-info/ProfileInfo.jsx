@@ -10,8 +10,11 @@ import CopyRoundedIcon from '@mui/icons-material/ContentCopyRounded'
 import ProfileContainerDesktop from '~/containers/tutor-profile/profile-info/ProfileContainerDesktop'
 import ProfileContainerMobile from '~/containers/tutor-profile/profile-info/ProfileContainerMobile'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
+import { useAppSelector } from '~/hooks/use-redux'
 import useBreakpoints from '~/hooks/use-breakpoints'
 
+import { tutorRoutes } from '~/router/constants/tutorRoutes'
+import { studentRoutes } from '~/router/constants/studentRoutes'
 import { useSnackBarContext } from '~/context/snackbar-context'
 import {
   accountInfoMock,
@@ -19,13 +22,14 @@ import {
   doneItemsMock
 } from '~/containers/tutor-profile/profile-info/ProfileInfo.constants'
 import { styles } from '~/containers/tutor-profile/profile-info/ProfileInfo.styles'
-import { snackbarVariants, myProfilePath } from '~/constants'
+import { snackbarVariants, myProfilePath, student } from '~/constants'
 import { SizeEnum } from '~/types'
 
 const ProfileInfo = () => {
   const { t } = useTranslation()
   const { isDesktop, isMobile } = useBreakpoints()
   const { setAlert } = useSnackBarContext()
+  const { userRole } = useAppSelector((state) => state.appMain)
   const isMyProfile = useMatch(myProfilePath)
 
   const copyProfileLink = () => {
@@ -37,6 +41,11 @@ const ProfileInfo = () => {
     })
   }
 
+  const navigateToEditPtofile =
+    userRole === student
+      ? studentRoutes.editProfile.path
+      : tutorRoutes.editProfile.path
+
   const actionIcon = isMyProfile ? (
     <EditOutlinedIcon color='primary' fontSize='small' />
   ) : (
@@ -46,7 +55,8 @@ const ProfileInfo = () => {
   const actionIconBtn = (
     <IconButton
       data-testid='icon-btn'
-      onClick={copyProfileLink}
+      href={isMyProfile && navigateToEditPtofile}
+      onClick={!isMyProfile ? copyProfileLink : undefined}
       size={isDesktop ? SizeEnum.Large : SizeEnum.Small}
       sx={styles.iconBtn}
     >

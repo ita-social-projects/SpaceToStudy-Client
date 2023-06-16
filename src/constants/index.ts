@@ -18,7 +18,7 @@ export const snackbarVariants: { [key: string]: AlertColor } = {
   warning: 'warning'
 }
 
-export const myProfilePath = '/tutor/myProfile' || '/student/myProfile'
+export const myProfilePath = '/tutor/my-profile' || '/student/my-profile'
 
 export const defaultResponses = {
   array: [],
