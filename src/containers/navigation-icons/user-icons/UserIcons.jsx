@@ -62,27 +62,35 @@ const UserIcons = ({ setSidebarOpen }) => {
   return (
     <Box ref={anchorRef} sx={styles.iconBox}>
       <Tooltip arrow title={t('iconsTooltip.language')}>
-        <IconButton disabled size='large' sx={styles.langIcon}>
-          <LanguageIcon color='disabled' />
-        </IconButton>
+        <Box>
+          <IconButton disabled size='large' sx={styles.langIcon}>
+            <LanguageIcon color='disabled' />
+          </IconButton>
+        </Box>
       </Tooltip>
 
       <Tooltip arrow title={t('iconsTooltip.messages')}>
-        <IconButton disabled sx={styles.studentIcons}>
-          <MessageRoundedIcon color='disabled' />
-        </IconButton>
+        <Box>
+          <IconButton disabled sx={styles.studentIcons}>
+            <MessageRoundedIcon color='disabled' />
+          </IconButton>
+        </Box>
       </Tooltip>
 
       <Tooltip arrow title={t('iconsTooltip.bookmarks')}>
-        <IconButton disabled sx={styles.studentIcons}>
-          <BookmarkIcon color='disabled' />
-        </IconButton>
+        <Box>
+          <IconButton disabled sx={styles.studentIcons}>
+            <BookmarkIcon color='disabled' />
+          </IconButton>
+        </Box>
       </Tooltip>
 
       <Tooltip arrow title={t('iconsTooltip.notifications')}>
-        <IconButton disabled sx={styles.studentIcons}>
-          <NotificationsRoundedIcon color='disabled' />
-        </IconButton>
+        <Box>
+          <IconButton disabled sx={styles.studentIcons}>
+            <NotificationsRoundedIcon color='disabled' />
+          </IconButton>
+        </Box>
       </Tooltip>
 
       <Tooltip arrow title={t('iconsTooltip.account')}>

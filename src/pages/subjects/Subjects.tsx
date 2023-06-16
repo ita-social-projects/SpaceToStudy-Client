@@ -42,6 +42,7 @@ import { styles } from '~/pages/subjects/Subjects.styles'
 const Subjects = () => {
   const [match, setMatch] = useState<string>('')
   const [categoryName, setCategoryName] = useState<string>('')
+  const [isFetched, setIsFetched] = useState<boolean>(false)
   const params = useMemo(() => ({ name: match }), [match])
 
   const { t } = useTranslation()
@@ -58,11 +59,20 @@ const Subjects = () => {
     []
   )
 
-  const { loading: subjectNamesLoading, response: subjectsNamesItems } =
-    useSubjectsNames({
-      category: categoryId,
-      transform
-    })
+  const {
+    loading: subjectNamesLoading,
+    response: subjectsNamesItems,
+    fetchData
+  } = useSubjectsNames({
+    fetchOnMount: false,
+    category: categoryId,
+    transform
+  })
+
+  const getSubjectNames = () => {
+    !isFetched && void fetchData()
+    setIsFetched(true)
+  }
 
   const getSubjects = useCallback(
     (data?: Pick<SubjectInterface, 'name'>) =>
@@ -106,6 +116,7 @@ const Subjects = () => {
     _: React.SyntheticEvent,
     value: CategoryNameInterface | null
   ) => {
+    setIsFetched(false)
     searchParams.set('categoryId', value?._id ?? '')
     setCategoryName(value?.name ?? '')
     setSearchParams(searchParams)
@@ -161,6 +172,7 @@ const Subjects = () => {
         {!breakpoints.isMobile && autoCompleteCategories}
         <SearchAutocomplete
           loading={subjectNamesLoading}
+          onFocus={getSubjectNames}
           onSearchChange={resetData}
           options={subjectsNamesItems}
           search={match}
