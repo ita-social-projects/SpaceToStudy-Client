@@ -34,7 +34,7 @@ const WhatCanYouDo = () => {
   const { t } = useTranslation()
   const { openModal } = useModalContext()
 
-  const openDialog = (type: string) => {
+  const openDialog = (type: UserRoleEnum) => {
     openModal({ component: <SignupDialog type={type} /> })
   }
 
