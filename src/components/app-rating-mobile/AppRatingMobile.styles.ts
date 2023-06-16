@@ -1,3 +1,5 @@
+import { TypographyVariantEnum } from '~/types'
+
 export const styles = {
   root: {
     display: 'flex',
@@ -11,5 +13,11 @@ export const styles = {
     color: 'basic.yellow',
     height: '18px'
   },
-  number: { display: 'flex', alignItems: 'center' }
+  number: { display: 'flex', alignItems: 'center' },
+  rating: {
+    typography: TypographyVariantEnum.H6
+  },
+  reviews: {
+    typography: TypographyVariantEnum.Caption
+  }
 }

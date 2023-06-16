@@ -13,14 +13,13 @@ import ProfileContainerMobile from '~/containers/tutor-profile/profile-info/Prof
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import { useAppSelector } from '~/hooks/use-redux'
 import useBreakpoints from '~/hooks/use-breakpoints'
-import HashLink from '~/components/hash-link/HashLink'
 
 import { tutorRoutes } from '~/router/constants/tutorRoutes'
 import { studentRoutes } from '~/router/constants/studentRoutes'
 import { useSnackBarContext } from '~/context/snackbar-context'
 import { styles } from '~/containers/tutor-profile/profile-info/ProfileInfo.styles'
 import { snackbarVariants, myProfilePath, student } from '~/constants'
-import { SizeEnum, TypographyVariantEnum } from '~/types'
+import { SizeEnum } from '~/types'
 import { getDifferenceDates } from '~/utils/helper-functions'
 
 const ProfileInfo = ({ userData }) => {
@@ -29,10 +28,7 @@ const ProfileInfo = ({ userData }) => {
   const { setAlert } = useSnackBarContext()
   const { userRole } = useAppSelector((state) => state.appMain)
   const isMyProfile = useMatch(myProfilePath)
-  const { number, format } = getDifferenceDates(
-    userData.createdAt,
-    new Date().toISOString()
-  )
+  const { number, format } = getDifferenceDates(userData.createdAt, new Date())
 
   const copyProfileLink = () => {
     navigator.clipboard.writeText(window.location.href)
@@ -68,9 +64,9 @@ const ProfileInfo = ({ userData }) => {
 
   const accountRating = (
     <AppRatingMobile
-      linkHash={HashLink}
+      link={'#'}
       reviewsCount={userData.totalReviews[userData.role]}
-      style={styles.stylesForAppRating}
+      sx={styles.appRating}
       value={userData.averageRating[userData.role]}
     />
   )

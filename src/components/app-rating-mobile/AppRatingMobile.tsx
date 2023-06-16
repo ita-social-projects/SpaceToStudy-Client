@@ -1,19 +1,21 @@
-import { FC, ReactElement } from 'react'
+import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import StarSharp from '@mui/icons-material/StarSharp'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { RatingProps } from '@mui/material/Rating'
+import { SxProps } from '@mui/material'
+
+import HashLink from '~/components/hash-link/HashLink'
+import { spliceSx } from '~/utils/helper-functions'
 
 import { styles } from '~/components/app-rating-mobile/AppRatingMobile.styles'
 
 interface AppRatingMobileProps extends RatingProps {
   reviewsCount: number
-  linkHash?: ReactElement
-  style?: {
-    variantOption?: string
-    fontSize?: string
-    starMobile?: object
+  link?: string
+  sx?: {
+    starMobile?: SxProps
     reviews?: object
     rating?: object
   }
@@ -22,8 +24,8 @@ interface AppRatingMobileProps extends RatingProps {
 const AppRatingMobile: FC<AppRatingMobileProps> = ({
   value,
   reviewsCount,
-  linkHash,
-  style
+  link,
+  sx
 }) => {
   const { t } = useTranslation()
 
@@ -32,17 +34,15 @@ const AppRatingMobile: FC<AppRatingMobileProps> = ({
       <Box data-testid='number-box' sx={styles.number}>
         <StarSharp
           data-testid='star-icon'
-          sx={style?.starMobile ? style?.starMobile : styles.starMobile}
+          sx={spliceSx(styles.starMobile, sx?.starMobile)}
         />
-        <Typography sx={style?.rating} variant={'h6'}>
+        <Typography sx={spliceSx(styles.rating, sx?.rating)}>
           {value}
         </Typography>
       </Box>
       <Typography
-        component={linkHash}
-        sx={style?.reviews}
-        to={'#'}
-        variant={style?.variantOption}
+        component={link ? HashLink : Typography}
+        sx={spliceSx(styles.reviews, sx?.reviews)}
       >
         {t('tutorProfilePage.reviews.reviewsCount', {
           count: reviewsCount

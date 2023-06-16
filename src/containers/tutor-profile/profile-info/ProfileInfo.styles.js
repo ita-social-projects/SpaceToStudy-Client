@@ -1,4 +1,5 @@
 import palette from '~/styles/app-theme/app.pallete'
+import { TypographyVariantEnum } from '~/types'
 
 export const styles = {
   container: {
@@ -93,18 +94,16 @@ export const styles = {
   },
   avatarContainerMobile: { flex: 1 },
   linkToReviews: { color: 'text.primary' },
-  stylesForAppRating: {
-    variantOption: 'overline',
-    fontSize: '10px',
+  appRating: {
     starMobile: {
       color: 'basic.yellow',
       height: '24px'
     },
     rating: {
-      fortSize: '24px'
+      typography: TypographyVariantEnum.H5
     },
     reviews: {
-      marginTop: '7px'
+      typography: TypographyVariantEnum.Overline
     }
   }
 }
