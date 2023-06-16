@@ -167,7 +167,7 @@ export const getNumberOfYears = function (
     return { number: months, format: 'Month' }
   }
 
-  if (conversionToDays >= 7 && conversionToDays < 31) {
+  if (conversionToDays >= 7) {
     const weeks = Math.floor(conversionToDays / 7)
     return { number: weeks, format: 'Week' }
   }

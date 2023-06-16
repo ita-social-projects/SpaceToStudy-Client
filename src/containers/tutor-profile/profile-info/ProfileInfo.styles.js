@@ -92,5 +92,19 @@ export const styles = {
     maxWidth: '650px'
   },
   avatarContainerMobile: { flex: 1 },
-  linkToReviews: { color: 'text.primary' }
+  linkToReviews: { color: 'text.primary' },
+  stylesForAppRating: {
+    variantOption: 'overline',
+    fontSize: '10px',
+    starMobile: {
+      color: 'basic.yellow',
+      height: '24px'
+    },
+    rating: {
+      fortSize: '24px'
+    },
+    reviews: {
+      marginTop: '7px'
+    }
+  }
 }

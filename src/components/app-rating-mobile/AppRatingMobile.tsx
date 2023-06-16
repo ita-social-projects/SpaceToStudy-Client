@@ -9,23 +9,41 @@ import { styles } from '~/components/app-rating-mobile/AppRatingMobile.styles'
 
 interface AppRatingMobileProps extends RatingProps {
   reviewsCount: number
-  linkHash: ReactElement
+  linkHash?: ReactElement
+  style?: {
+    variantOption?: string
+    fontSize?: string
+    starMobile?: object
+    reviews?: object
+    rating?: object
+  }
 }
 
 const AppRatingMobile: FC<AppRatingMobileProps> = ({
   value,
   reviewsCount,
-  linkHash
+  linkHash,
+  style
 }) => {
   const { t } = useTranslation()
 
   return (
     <Box sx={styles.root}>
       <Box data-testid='number-box' sx={styles.number}>
-        <StarSharp data-testid='star-icon' sx={styles.starMobile} />
-        <Typography variant={'h6'}>{value}</Typography>
+        <StarSharp
+          data-testid='star-icon'
+          sx={style?.starMobile ? style?.starMobile : styles.starMobile}
+        />
+        <Typography sx={style?.rating} variant={'h6'}>
+          {value}
+        </Typography>
       </Box>
-      <Typography component={linkHash} variant={'caption'}>
+      <Typography
+        component={linkHash}
+        sx={style?.reviews}
+        to={'#'}
+        variant={style?.variantOption}
+      >
         {t('tutorProfilePage.reviews.reviewsCount', {
           count: reviewsCount
         })}

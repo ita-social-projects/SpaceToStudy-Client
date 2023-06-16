@@ -70,6 +70,7 @@ const ProfileInfo = ({ userData }) => {
     <AppRatingMobile
       linkHash={HashLink}
       reviewsCount={userData.totalReviews[userData.role]}
+      style={styles.stylesForAppRating}
       value={userData.averageRating[userData.role]}
     />
   )

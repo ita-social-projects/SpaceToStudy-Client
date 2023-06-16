@@ -9,8 +9,7 @@ export const styles = {
   },
   starMobile: {
     color: 'basic.yellow',
-    width: { xs: '18px', md: '24px' },
-    height: { xs: '18px', md: '24px' }
+    height: '18px'
   },
   number: { display: 'flex', alignItems: 'center' }
 }
