@@ -26,6 +26,8 @@ const Sidebar: FC<SidebarProps> = ({
   const { isMobile } = useBreakpoints()
   const { t } = useTranslation()
 
+  const accountItemsLength = isMobile && accountItems.length > 0
+
   const renderListItems = (items: RouteItem[]) => (
     <List sx={styles.list}>
       {items.map(({ route, path }) => (
@@ -43,11 +45,11 @@ const Sidebar: FC<SidebarProps> = ({
     </List>
   )
 
-  const navigationContent = useMemo(
+  return useMemo(
     () => (
       <>
         {renderListItems(navigationItems)}
-        {isMobile && accountItems.length > 0 && (
+        {accountItemsLength && (
           <>
             <Divider />
             {renderListItems(accountItems)}
@@ -57,8 +59,6 @@ const Sidebar: FC<SidebarProps> = ({
     ),
     [navigationItems, accountItems]
   )
-
-  return navigationContent
 }
 
 export default Sidebar
