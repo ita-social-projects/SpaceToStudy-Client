@@ -1,4 +1,5 @@
-import { render, screen } from '@testing-library/react'
+import { screen } from '@testing-library/react'
+import { renderWithProviders } from '~tests/test-utils'
 import CooperationContainer from '~/containers/my-cooperations/cooperations-container/CooperationContainer'
 
 const mockedCoop = {
@@ -29,13 +30,18 @@ const filterOptionsMock = {
   }
 }
 
+const preloadedState = {
+  appMain: { userRole: 'tutor' }
+}
+
 describe('CooperationContainer component ', () => {
   it('should render card in container', () => {
-    render(
+    renderWithProviders(
       <CooperationContainer
         filterOptions={filterOptionsMock}
         items={[mockedCoop]}
-      />
+      />,
+      { preloadedState }
     )
 
     const level = screen.getByText(mockedCoop.proficiencyLevel)

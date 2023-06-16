@@ -10,8 +10,9 @@ import { CardsView, Offer, CardsViewEnum, ButtonVariantEnum } from '~/types'
 import OfferCardSquare from '~/containers/find-offer/offer-card-square/OfferCardSquare'
 import OfferCard from '~/components/offer-card/OfferCard'
 import AppCard from '~/components/app-card/AppCard'
-import { styles } from '~/containers/find-offer/offer-container/OfferContainer.styles'
+import { createUrlPath } from '~/utils/helper-functions'
 import { authRoutes } from '~/router/constants/authRoutes'
+import { styles } from '~/containers/find-offer/offer-container/OfferContainer.styles'
 
 interface OfferContainerProps {
   viewMode: CardsView
@@ -37,7 +38,7 @@ const OfferContainer: FC<OfferContainerProps> = ({ viewMode, offerCards }) => {
         label: t('common.labels.viewDetails'),
         buttonProps: {
           component: Link,
-          to: `${authRoutes.offerDetails.path}/${el._id}`
+          to: createUrlPath(authRoutes.offerDetails.path, el._id)
         }
       },
       {

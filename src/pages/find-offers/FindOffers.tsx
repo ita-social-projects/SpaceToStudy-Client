@@ -20,29 +20,29 @@ import AppDrawer from '~/components/app-drawer/AppDrawer'
 import Loader from '~/components/loader/Loader'
 import OfferContainer from '~/containers/find-offer/offer-container/OfferContainer'
 import OfferRequestBlock from '~/containers/find-offer/offer-request-block/OfferRequestBlock'
+import NotFoundResults from '~/components/not-found-results/NotFoundResults'
 import { countActiveOfferFilters } from '~/utils/count-active-filters'
 import { useDrawer } from '~/hooks/use-drawer'
 import { useFilterQuery } from '~/hooks/use-filter-query'
 import { useAppSelector } from '~/hooks/use-redux'
 import usePagination from '~/hooks/table/use-pagination'
 import useAxios from '~/hooks/use-axios'
-import { PositionEnum } from '~/types'
+import { getOpositeRole } from '~/utils/helper-functions'
 
 import {
   CardsViewEnum,
   CardsView,
   SizeEnum,
-  UserRoleEnum,
   VisibilityEnum,
   GetOffersPrarams,
-  GetOffersResponse
+  GetOffersResponse,
+  PositionEnum
 } from '~/types'
-import { styles } from '~/pages/find-offers/FindOffers.styles'
 import {
   defaultFilters,
   defaultResponse
 } from '~/pages/find-offers/FindOffers.constants'
-import NotFoundResults from '~/components/not-found-results/NotFoundResults'
+import { styles } from '~/pages/find-offers/FindOffers.styles'
 
 const FindOffers = () => {
   const [cardsView, setCardsView] = useState<CardsView>(CardsViewEnum.Inline)
@@ -54,8 +54,7 @@ const FindOffers = () => {
 
   const itemsPerPage = cardsView === CardsViewEnum.Inline ? 4 : 6
 
-  const oppositeRole =
-    userRole === UserRoleEnum.Tutor ? UserRoleEnum.Student : UserRoleEnum.Tutor
+  const oppositeRole = getOpositeRole(userRole)
 
   const { filters, activeFilterCount, searchParams, filterQueryActions } =
     useFilterQuery({
@@ -110,10 +109,7 @@ const FindOffers = () => {
   const toggleFiltersOpen = () => (isOpen ? closeDrawer() : openDrawer())
 
   const handleShowingTutorOffers = () => {
-    const updatedRole =
-      filters.authorRole === UserRoleEnum.Student
-        ? UserRoleEnum.Tutor
-        : UserRoleEnum.Student
+    const updatedRole = getOpositeRole(filters.authorRole)
 
     filterQueryActions.updateFilterInQuery(updatedRole, 'authorRole')
   }

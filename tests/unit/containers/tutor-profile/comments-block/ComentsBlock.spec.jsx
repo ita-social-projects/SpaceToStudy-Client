@@ -1,4 +1,5 @@
-import { fireEvent, render, screen } from '@testing-library/react'
+import { fireEvent, screen } from '@testing-library/react'
+import { renderWithProviders } from '~tests/test-utils'
 import CommentsWithRatingBlock from '~/containers/tutor-profile/comments-with-rating-block/CommentsWithRaitngBlock'
 
 const props = {
@@ -14,7 +15,7 @@ const props = {
 
 describe('CommentsWithRatingBlock', () => {
   beforeEach(() => {
-    render(<CommentsWithRatingBlock {...props} />)
+    renderWithProviders(<CommentsWithRatingBlock {...props} />)
   })
   it('should render the comments block', () => {
     const titleElement = screen.getByText('tutorProfilePage.reviews.title')

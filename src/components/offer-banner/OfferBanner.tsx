@@ -23,7 +23,8 @@ interface OfferBannerProps {
 const OfferBanner: FC<OfferBannerProps> = ({ offer, buttonActions }) => {
   const { t } = useTranslation()
   const { isDesktop } = useBreakpoints()
-  const { author, subject, category, proficiencyLevel } = offer
+  const { author, subject, category, proficiencyLevel, authorRole } = offer
+
   const buttons = buttonActions.map(
     (elem) =>
       elem && (
@@ -43,9 +44,11 @@ const OfferBanner: FC<OfferBannerProps> = ({ offer, buttonActions }) => {
       <AppCard sx={styles.root}>
         <Box sx={styles.mainBlock}>
           <UserProfileInfo
+            _id={author._id}
             firstName={author.firstName}
             lastName={author.lastName}
             photo={author.photo}
+            role={authorRole}
             sx={styles.userInfo}
           />
           {isDesktop && (

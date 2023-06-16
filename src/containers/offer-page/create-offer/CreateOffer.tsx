@@ -23,10 +23,10 @@ import {
   initialValues,
   validations
 } from '~/containers/offer-page/create-offer/CreateOffer.constants'
-import { findFullObjects } from '~/utils/helper-functions'
-import { styles } from '~/containers/offer-page/create-offer/CreateOffer.styles'
+import { createUrlPath, findFullObjects } from '~/utils/helper-functions'
 import { ComponentEnum, CreateOfferData, ErrorResponse, Offer } from '~/types'
 import { authRoutes } from '~/router/constants/authRoutes'
+import { styles } from '~/containers/offer-page/create-offer/CreateOffer.styles'
 
 interface CreateOfferProps {
   closeDrawer: () => void
@@ -52,7 +52,7 @@ const CreateOffer: FC<CreateOfferProps> = ({ closeDrawer }) => {
       message: 'offerPage.createOffer.successMessage'
     })
     closeDrawer()
-    navigate(`${authRoutes.offerDetails.path}/${response?._id ?? ''}`)
+    navigate(createUrlPath(authRoutes.offerDetails.path, response?._id))
   }
 
   const postOffer = (): Promise<AxiosResponse> =>

@@ -1,7 +1,6 @@
 export const styles = {
   textLength: {
     position: 'absolute',
-    color: 'primary.300',
     right: 0,
     bottom: 0
   },

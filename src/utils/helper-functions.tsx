@@ -1,4 +1,3 @@
-import { URLSearchParams } from 'node:url'
 import { SxProps } from '@mui/material'
 import {
   Breakpoints,
@@ -114,3 +113,28 @@ export const spliceSx = (defaultStyles?: SxProps, newStyles?: SxProps) =>
 
 export const studentOrTutor = (userRole: '' | UserRole) =>
   userRole === UserRoleEnum.Tutor ? UserRoleEnum.Tutor : UserRoleEnum.Student
+
+export const getOpositeRole = (role: UserRole | '') =>
+  role === UserRoleEnum.Tutor ? UserRoleEnum.Student : UserRoleEnum.Tutor
+
+const createQueryParamsString = (query: { [key: string]: string }) => {
+  const queryParams = new URLSearchParams()
+
+  Object.entries(query).forEach(([key, value]) => {
+    queryParams.append(key, value)
+  })
+
+  return queryParams.toString()
+}
+
+export const createUrlPath = (
+  URL: string,
+  params: string | null = '',
+  query = {}
+) => {
+  const queryParams = createQueryParamsString(query)
+  const queryParamsString = queryParams ? `?${queryParams}` : ''
+  const paramsString = params ? `/${params}` : ''
+
+  return `${URL}${paramsString}${queryParamsString}`
+}

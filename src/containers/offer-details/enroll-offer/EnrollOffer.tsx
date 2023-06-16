@@ -54,6 +54,7 @@ const EnrollOffer: FC<EnrollOfferProps> = ({ offer }) => {
     return cooperationService.createCooperation({
       ...data,
       receiver: offer.author._id,
+      receiverRole: offer.authorRole,
       offer: offer._id
     })
   }

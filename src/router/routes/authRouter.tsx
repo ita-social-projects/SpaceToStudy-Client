@@ -6,15 +6,18 @@ import {
   subjects,
   findOffers,
   categories,
-  offerDetails
+  offerDetails,
+  userProfile
 } from '~/router/constants/crumbs'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { UserRoleEnum } from '~/types'
+import { userProfileLoader } from '../constants/loaders'
 
 const Subjects = lazy(() => import('~/pages/subjects/Subjects'))
 const Categories = lazy(() => import('~/pages/categories/Categories'))
 const FindOffers = lazy(() => import('~/pages/find-offers/FindOffers'))
 const OfferDetails = lazy(() => import('~/pages/offer-details/OfferDetails'))
+const TutorProfile = lazy(() => import('~/pages/tutor-profile/TutorProfile'))
 
 export const authRouter = (
   <Route
@@ -39,6 +42,12 @@ export const authRouter = (
       element={<OfferDetails />}
       handle={{ crumb: [categories, subjects, findOffers, offerDetails] }}
       path={authRoutes.offerDetails.route}
+    />
+    <Route
+      element={<TutorProfile />}
+      handle={{ crumb: userProfile }}
+      loader={userProfileLoader}
+      path={authRoutes.userProfile.route}
     />
   </Route>
 )

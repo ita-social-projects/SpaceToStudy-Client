@@ -53,9 +53,11 @@ const OfferCardSquare: FC<OfferCardSquareProps> = ({
   return (
     <Box sx={styles.container}>
       <UserProfileInfo
+        _id={author._id}
         firstName={author.firstName}
         lastName={author.lastName}
         photo={author.photo}
+        role={authorRole}
         sx={styles.userInfo}
       />
       <Typography sx={styles.description}>{title}</Typography>
