@@ -24,7 +24,7 @@ interface AsyncAutocompleteProps<T, F extends boolean | undefined>
 
 const AsyncAutocomplete = <T, F extends boolean | undefined = undefined>({
   fetchOnFocus,
-  fetchCondition = true,
+  fetchCondition,
   textFieldProps,
   valueField,
   labelField,
@@ -41,7 +41,7 @@ const AsyncAutocomplete = <T, F extends boolean | undefined = undefined>({
   })
 
   useEffect(() => {
-    !fetchOnFocus && fetchCondition && void fetchData()
+    !fetchOnFocus && (fetchCondition ?? true) && void fetchData()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [service])
 
@@ -65,7 +65,10 @@ const AsyncAutocomplete = <T, F extends boolean | undefined = undefined>({
     return option === value
   }
 
-  const handleFocus = () => !response.length && fetchOnFocus && fetchData()
+  const handleFocus = () => {
+    const fetchFocusCondition = fetchCondition ?? !response.length
+    fetchOnFocus && fetchFocusCondition && void fetchData()
+  }
 
   return (
     <AppAutoComplete

@@ -26,6 +26,9 @@ const SubjectsStep = ({ stepLabel, btnsBox }) => {
   })
 
   const [subjectError, setSubjectError] = useState('')
+  const [subjectFetched, setSubjectIsFetched] = useState(false)
+
+  const fetchSubjectHandler = () => setSubjectIsFetched(true)
 
   const getSubjectsNames = useCallback(
     () => subjectService.getSubjectsNames(subjects.category._id),
@@ -46,6 +49,7 @@ const SubjectsStep = ({ stepLabel, btnsBox }) => {
           subject: null
         }
     )
+    setSubjectIsFetched(false)
   }
 
   const onChangeSubject = (_, value) => {
@@ -93,6 +97,7 @@ const SubjectsStep = ({ stepLabel, btnsBox }) => {
           <Typography mb='20px'>{t('becomeTutor.categories.title')}</Typography>
           {isMobile && imageBlock}
           <AsyncAutocomplete
+            fetchOnFocus
             labelField='name'
             onChange={onChangeCategory}
             service={categoryService.getCategoriesNames}
@@ -104,7 +109,10 @@ const SubjectsStep = ({ stepLabel, btnsBox }) => {
             valueField='_id'
           />
           <AsyncAutocomplete
+            axiosProps={{ onResponse: fetchSubjectHandler }}
             disabled={!subjects.category}
+            fetchCondition={!subjectFetched}
+            fetchOnFocus
             labelField='name'
             onChange={onChangeSubject}
             service={getSubjectsNames}
