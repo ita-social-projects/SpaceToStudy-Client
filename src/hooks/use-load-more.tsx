@@ -1,30 +1,23 @@
 import { useState, useMemo, useEffect, useCallback } from 'react'
 
 import useAxios from '~/hooks/use-axios'
+
 import { defaultResponses } from '~/constants'
-import { ServiceFunction } from '~/types'
+import { ServiceFunction, ItemsWithCount } from '~/types'
 
-interface UseLoadMoreReturn<Response> {
-  data: Response[]
-  loading: boolean
-  resetData: () => void
-  loadMore: () => void
-  isExpandable: boolean
-}
-
-interface UseLoadMoreProps<Response, Params> {
-  service: ServiceFunction<Response[], Params>
+interface UseLoadMoreProps<Data, Params> {
+  service: ServiceFunction<ItemsWithCount<Data>, Params>
   limit: number
   params?: Params
 }
 
-const useLoadMore = <Response, Params>({
+const useLoadMore = <Data, Params>({
   service,
   limit,
   params
-}: UseLoadMoreProps<Response, Params>): UseLoadMoreReturn<Response> => {
+}: UseLoadMoreProps<Data, Params>) => {
   const [skip, setSkip] = useState<number>(0)
-  const [data, setData] = useState<Response[] | []>([])
+  const [data, setData] = useState<Data[]>([])
   const [previousLimit, setPreviousLimit] = useState<number>(limit)
 
   const loadMore = useCallback(
@@ -33,7 +26,8 @@ const useLoadMore = <Response, Params>({
   )
 
   const handleResponse = useCallback(
-    (data: Response[]) => setData((prevState) => [...prevState, ...data]),
+    (data: ItemsWithCount<Data>) =>
+      setData((prevState) => [...prevState, ...data.items]),
     []
   )
 
@@ -42,9 +36,12 @@ const useLoadMore = <Response, Params>({
     setData([])
   }, [])
 
-  const { response, loading, fetchData } = useAxios<Response[], Params>({
+  const { response, loading, fetchData } = useAxios<
+    ItemsWithCount<Data>,
+    Params
+  >({
     service,
-    defaultResponse: defaultResponses.array,
+    defaultResponse: defaultResponses.itemsWithCount,
     fetchOnMount: false,
     onResponse: handleResponse
   })
@@ -59,8 +56,8 @@ const useLoadMore = <Response, Params>({
   }, [fetchData, limit, previousLimit, resetData, skip, params])
 
   const isExpandable = useMemo(
-    () => data.length > 0 && limit <= response.length,
-    [limit, data, response]
+    () => data.length < response.count,
+    [data, response]
   )
 
   return {

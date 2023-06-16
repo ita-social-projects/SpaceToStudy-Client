@@ -7,12 +7,14 @@ const mockResponseData = [
   { _id: '1', name: 'test' },
   { _id: '2', name: 'test2' }
 ]
-const mockResponse = { data: mockResponseData }
+const getData = (items) => ({ count: mockResponseData.length, items })
+
+const mockResponse = { data: getData(mockResponseData) }
 
 const mockService = vi.fn((params) => {
   const { limit, skip } = params
   const data = mockResponseData.slice(skip, limit + skip)
-  return Promise.resolve({ data: data })
+  return Promise.resolve({ data: getData(data) })
 })
 
 const props = {

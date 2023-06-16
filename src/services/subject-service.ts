@@ -2,13 +2,13 @@ import { axiosClient } from '~/plugins/axiosClient'
 import { AxiosResponse } from 'axios'
 
 import { URLs } from '~/constants/request'
-import { SubjectInterface, SubjectNameInterface } from '~/types'
+import { ItemsWithCount, SubjectInterface, SubjectNameInterface } from '~/types'
 
 export const subjectService = {
   getSubjects: (
     params?: Pick<SubjectInterface, 'name'>,
     categoryId?: string
-  ): Promise<AxiosResponse<SubjectInterface[]>> => {
+  ): Promise<AxiosResponse<ItemsWithCount<SubjectInterface>>> => {
     const categoryParam = categoryId ? `/${categoryId}` : ''
     return axiosClient.get(
       `${URLs.categories.get}${categoryParam}${URLs.subjects.get}`,

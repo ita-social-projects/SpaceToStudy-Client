@@ -22,7 +22,8 @@ export const myProfilePath = '/tutor/myProfile' || '/student/myProfile'
 
 export const defaultResponses = {
   array: [],
-  object: {}
+  object: {},
+  itemsWithCount: { count: 0, items: [] }
 }
 
 export const itemsLoadLimit = {
