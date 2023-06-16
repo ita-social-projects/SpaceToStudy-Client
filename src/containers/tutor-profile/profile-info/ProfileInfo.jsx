@@ -13,14 +13,13 @@ import ProfileContainerMobile from '~/containers/tutor-profile/profile-info/Prof
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import { useAppSelector } from '~/hooks/use-redux'
 import useBreakpoints from '~/hooks/use-breakpoints'
-import HashLink from '~/components/hash-link/HashLink'
 
 import { tutorRoutes } from '~/router/constants/tutorRoutes'
 import { studentRoutes } from '~/router/constants/studentRoutes'
 import { useSnackBarContext } from '~/context/snackbar-context'
 import { styles } from '~/containers/tutor-profile/profile-info/ProfileInfo.styles'
 import { snackbarVariants, myProfilePath, student } from '~/constants'
-import { SizeEnum, TypographyVariantEnum } from '~/types'
+import { SizeEnum } from '~/types'
 import { getDifferenceDates } from '~/utils/helper-functions'
 
 const ProfileInfo = ({ userData }) => {
