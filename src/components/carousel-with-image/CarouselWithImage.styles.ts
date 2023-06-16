@@ -4,12 +4,10 @@ export const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column',
-    px: '16px',
     mb: '16px'
   },
   image: {
-    width: '100%',
-    height: 'auto'
+    width: '100%'
   },
   text: {
     display: 'flex',
@@ -17,8 +15,17 @@ export const styles = {
     alignItems: 'flex-start',
     justifyContent: 'space-around',
     minHeight: '144px',
-    backgroundColor: 'primary.900',
+    backgroundColor: 'primary.800',
     borderRadius: '6px',
     p: '16px'
-  }
+  },
+  steper: {
+    display: 'flex',
+    justifyContent: 'center',
+    backgroundColor: 'backgroundColor',
+    pt: '16px',
+    boxShadow: 'none'
+  },
+  description: { color: 'basic.white', typography: 'body2' },
+  title: { color: 'basic.white', typography: 'h6' }
 }

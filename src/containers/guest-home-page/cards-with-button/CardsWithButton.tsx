@@ -1,28 +1,47 @@
+import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import Transition from 'react-transition-group/Transition'
-import { useModalContext } from '~/context/modal-context'
 
 import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
+import { useModalContext } from '~/context/modal-context'
+import AppButton from '~/components/app-button/AppButton'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
-
 import SignupDialog from '~/containers/guest-home-page/signup-dialog/SignupDialog'
-import { styles } from '~/containers/guest-home-page/cards-with-button/CardsWithButton.styles'
 import dots from '~/assets/img/guest-home-page/dots.svg'
 
-const CardsWithButton = ({ array, role, btnText, isStudent }) => {
+import {
+  AccordionWithImageItem,
+  PositionEnum,
+  SizeEnum,
+  UserRoleEnum
+} from '~/types'
+import { styles } from '~/containers/guest-home-page/cards-with-button/CardsWithButton.styles'
+
+interface CardsWithButtonProps {
+  array: AccordionWithImageItem[]
+  role: UserRoleEnum
+  btnText: string
+  isStudent: boolean
+}
+
+const CardsWithButton: FC<CardsWithButtonProps> = ({
+  array,
+  role,
+  btnText,
+  isStudent
+}) => {
   const { t } = useTranslation()
   const { openModal } = useModalContext()
 
-  const openDialog = (type) => {
-    openModal({ component: <SignupDialog type={type} /> })
+  const openDialog = () => {
+    openModal({ component: <SignupDialog type={role} /> })
   }
 
   const cards = array.map((item, key) => {
-    const boxSide = key % 2 === 0 ? 'right' : 'left'
+    const boxSide = key % 2 === 0 ? PositionEnum.Right : PositionEnum.Left
 
     return (
-      <Transition in={isStudent} key={key} timeout={300}>
+      <Transition in={isStudent} key={item.title} timeout={300}>
         {(state) => (
           <Box
             sx={[
@@ -33,13 +52,8 @@ const CardsWithButton = ({ array, role, btnText, isStudent }) => {
           >
             <Box sx={styles[boxSide].clearBox} />
             <Box sx={styles.image}>
-              <Box component='img' src={item.icon} />
-              <Box
-                className='dots'
-                component='img'
-                src={dots}
-                sx={styles.dots}
-              />
+              <Box component='img' src={item.image} />
+              <Box className='dots' component='img' src={dots} />
             </Box>
             <TitleWithDescription
               description={t(item.description)}
@@ -53,17 +67,16 @@ const CardsWithButton = ({ array, role, btnText, isStudent }) => {
   })
 
   return (
-    <Box sx={styles.wrap}>
+    <>
       {cards}
-
-      <Button
-        onClick={() => openDialog(role)}
+      <AppButton
+        onClick={openDialog}
+        size={SizeEnum.ExtraLarge}
         sx={styles.button}
-        variant='contained'
       >
         {btnText}
-      </Button>
-    </Box>
+      </AppButton>
+    </>
   )
 }
 

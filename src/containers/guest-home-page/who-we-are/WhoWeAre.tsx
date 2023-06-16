@@ -9,13 +9,15 @@ import videoImg from '~/assets/img/guest-home-page/videoImg.png'
 
 import { styles } from '~/containers/guest-home-page/who-we-are/WhoWeAre.styles.js'
 
-const sectionId = guestRoutes.navBar.whoWeAre.route
-
 const WhoWeAre = () => {
   const { t } = useTranslation()
 
   return (
-    <Box className='section' id={sectionId} sx={styles.container}>
+    <Box
+      className='section'
+      id={guestRoutes.navBar.whoWeAre.route}
+      sx={styles.container}
+    >
       <TitleWithDescription
         description={t('guestHomePage.whoWeAre.description')}
         style={styles.titleWithDescription}

@@ -8,6 +8,7 @@ interface AppButtonProps extends ButtonProps {
   loading?: boolean
   disabled?: boolean
   component?: ElementType
+  to?: string
 }
 
 const AppButton: FC<AppButtonProps> = ({

@@ -1,11 +1,11 @@
 export const styles = {
   feature: {
-    px: '24px',
     overflow: 'auto'
   },
   image: {
-    maxHeight: '470px',
+    width: '100%',
+    maxWidth: '860px',
     overflow: 'auto',
-    mr: '24px'
+    mr: { lg: '60px', xs: '24px' }
   }
 }

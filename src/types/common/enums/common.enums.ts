@@ -27,6 +27,8 @@ export enum SizeEnum {
 export enum TypographyVariantEnum {
   Caption = 'caption',
   Button = 'button',
+  H3 = 'h3',
+  H4 = 'h4',
   H5 = 'h5',
   H6 = 'h6',
   Body2 = 'body2',

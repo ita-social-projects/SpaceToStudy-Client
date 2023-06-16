@@ -4,18 +4,16 @@ import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
-import { guestRoutes } from '~/router/constants/guestRoutes'
 import CardsWithButton from '~/containers/guest-home-page/cards-with-button/CardsWithButton'
+import AppContentSwitcher from '~/components/app-content-switcher/AppContentSwitcher'
 import {
   tutorCardBoxArray,
   studentCardBoxArray
 } from '~/containers/guest-home-page/how-it-works/CardBoxArrays'
-import { tutor, student } from '~/constants'
+import { guestRoutes } from '~/router/constants/guestRoutes'
 
+import { TypographyVariantEnum, UserRoleEnum } from '~/types'
 import { styles } from '~/containers/guest-home-page/how-it-works/HowItWorks.styles'
-import AppContentSwitcher from '~/components/app-content-switcher/AppContentSwitcher'
-
-const sectionId = guestRoutes.navBar.howItWorks.route
 
 const HowItWorks = () => {
   const { t } = useTranslation()
@@ -25,22 +23,6 @@ const HowItWorks = () => {
   const onChange = () => {
     setIsStudent(!isStudent)
   }
-
-  const cardsMap = isStudent ? (
-    <CardsWithButton
-      array={tutorCardBoxArray}
-      btnText={'Become a tutor'}
-      isStudent={isStudent}
-      role={tutor}
-    />
-  ) : (
-    <CardsWithButton
-      array={studentCardBoxArray}
-      btnText={'Start learning today'}
-      isStudent={isStudent}
-      role={student}
-    />
-  )
 
   const switchOptions = {
     left: {
@@ -52,21 +34,28 @@ const HowItWorks = () => {
   }
 
   return (
-    <Box id={sectionId} sx={styles.block}>
+    <Box id={guestRoutes.navBar.howItWorks.route}>
       <Box sx={styles.container}>
-        <Typography sx={{ mb: '32px' }} variant={'h3'}>
+        <Typography sx={styles.title}>
           {t('guestHomePage.howItWorks.title')}
         </Typography>
-
         <AppContentSwitcher
           active={isStudent}
           onChange={onChange}
           styles={styles.switch}
           switchOptions={switchOptions}
-          typographyVariant={'h6'}
+          typographyVariant={TypographyVariantEnum.H6}
         />
-
-        <Box sx={{ mt: '45px' }}>{cardsMap}</Box>
+        <CardsWithButton
+          array={isStudent ? tutorCardBoxArray : studentCardBoxArray}
+          btnText={
+            isStudent
+              ? t('guestHomePage.whatCanYouDo.learn.actionLabel')
+              : t('guestHomePage.whatCanYouDo.teach.actionLabel')
+          }
+          isStudent={isStudent}
+          role={isStudent ? UserRoleEnum.Tutor : UserRoleEnum.Student}
+        />
       </Box>
     </Box>
   )

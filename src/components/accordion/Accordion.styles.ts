@@ -16,7 +16,7 @@ const withIconTitleStyles = { color: 'primary.900' }
 
 export const styles: AccordionSx = {
   noIcon: {
-    root: { maxWidth: { md: '360px', sm: '229px' } },
+    root: { maxWidth: { lg: '540px', md: '360px', sm: '229px' } },
     accordion: {
       borderRadius: '6px',
       mb: { md: '16px', sm: '8px' }
@@ -24,8 +24,7 @@ export const styles: AccordionSx = {
     inactive: {
       boxShadow: 'none',
       '&:hover': {
-        backgroundColor: 'primary.50',
-        borderRadius: '6px'
+        backgroundColor: 'primary.50'
       },
       '&::before': {
         display: 'none'

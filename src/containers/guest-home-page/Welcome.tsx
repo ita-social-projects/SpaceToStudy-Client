@@ -1,47 +1,45 @@
+import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import Button from '@mui/material/Button'
+import useBreakpoints from '~/hooks/use-breakpoints'
 import HashLink from '~/components/hash-link/HashLink'
+import AppButton from '~/components/app-button/AppButton'
 
-import { styles } from '~/containers/guest-home-page/styles/Welcome.styles.js'
 import titleMd from '~/assets/img/guest-home-page/titleMd.svg'
 import titleSm from '~/assets/img/guest-home-page/titleSm.svg'
 import titleXs from '~/assets/img/guest-home-page/titleXs.svg'
-import useBreakpoints from '~/hooks/use-breakpoints'
 import { guestRoutes } from '~/router/constants/guestRoutes'
-
-const scrollTo = guestRoutes.navBar.whatCanYouDo.path
+import { styles } from '~/containers/guest-home-page/styles/Welcome.styles.js'
 
 const Welcome = () => {
   const { t } = useTranslation()
   const { isDesktop, isTablet, isMobile } = useBreakpoints()
 
-  const image =
-    (isDesktop && titleMd) || (isTablet && titleSm) || (isMobile && titleXs)
+  const image = useMemo(() => {
+    if (isDesktop) return titleMd
+    if (isTablet) return titleSm
+    if (isMobile) return titleXs
+  }, [isDesktop, isTablet, isMobile])
 
   return (
-    <Box className='section' id={'welcome'} sx={styles.container}>
-      <Box
-        alt='Title'
-        component='img'
-        src={image.toString()}
-        sx={styles.title}
-      />
-      <Typography data-testid='welcomeDescription' sx={styles.subtitle}>
+    <Box
+      className='section'
+      id={guestRoutes.welcome.route}
+      sx={styles.container}
+    >
+      <Box alt='Title' component='img' src={image} sx={styles.title} />
+      <Typography sx={styles.subtitle}>
         {t('guestHomePage.welcomeBlock.description')}
       </Typography>
-
-      <Button
+      <AppButton
         component={HashLink}
-        data-testid='welcomeGetStarted'
         sx={styles.getStartBtn}
-        to={scrollTo}
-        variant='contained'
+        to={guestRoutes.navBar.whatCanYouDo.path}
       >
         {t('guestHomePage.welcomeBlock.getStarted')}
-      </Button>
+      </AppButton>
     </Box>
   )
 }
