@@ -98,7 +98,7 @@ const EnrollOffer: FC<EnrollOfferProps> = ({ offer }) => {
     <Box sx={styles.root}>
       {isLaptopAndAbove && (
         <AppCard sx={styles.offerCard}>
-          <OfferCardSquare offer={offer} showUser />
+          <OfferCardSquare offer={offer} />
         </AppCard>
       )}
       <Box

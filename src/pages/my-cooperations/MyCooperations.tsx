@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
-import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
 
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
@@ -9,6 +9,7 @@ import useAxios from '~/hooks/use-axios'
 import useSort from '~/hooks/table/use-sort'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import useFilter from '~/hooks/table/use-filter'
+import { useAppSelector } from '~/hooks/use-redux'
 import Tab from '~/components/tab/Tab'
 import Loader from '~/components/loader/Loader'
 import AppButton from '~/components/app-button/AppButton'
@@ -18,6 +19,8 @@ import CooperationToolbar from '~/containers/my-cooperations/cooperation-toolbar
 import CooperationContainer from '~/containers/my-cooperations/cooperations-container/CooperationContainer'
 import { cooperationService } from '~/services/cooperation-service'
 import { getScreenBasedLimit } from '~/utils/helper-functions'
+import { studentRoutes } from '~/router/constants/studentRoutes'
+import { tutorRoutes } from '~/router/constants/tutorRoutes'
 
 import {
   defaultResponse,
@@ -90,13 +93,26 @@ const MyCooperations = () => {
     value
   }))
 
+  const { userRole } = useAppSelector((state) => state.appMain)
+
+  const buttonPath =
+    userRole === 'student'
+      ? studentRoutes.accountMenu.myOffers.path
+      : tutorRoutes.accountMenu.myOffers.path
+
+  const button = {
+    label: 'button.viewMyOffers',
+    buttonProps: {
+      component: Link,
+      to: buttonPath
+    }
+  }
+
   return (
     <PageWrapper>
       <Box sx={styles.titleBlock}>
         <Typography sx={styles.title}>{t('cooperationsPage.title')}</Typography>
-        <AppButton component={Link} disabled>
-          {t('button.viewMyOffers')}
-        </AppButton>
+        <AppButton {...button.buttonProps}>{t(button.label)}</AppButton>
       </Box>
       <Box sx={styles.tabs}>{tabs}</Box>
       <CooperationToolbar

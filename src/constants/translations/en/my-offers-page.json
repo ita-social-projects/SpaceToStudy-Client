@@ -3,7 +3,7 @@
   "tabs": {
     "all": "All",
     "active": "Active",
-    "pending": "Pending",
+    "draft": "Draft",
     "closed": "Closed"
   },
   "tableHeaders": {

@@ -108,7 +108,6 @@ const OfferDetails = () => {
             buttonActions={buttonActions}
             offer={response}
             onBookmarkClick={onBookmarkClick}
-            showUser
           />
         </AppCard>
       ) : (

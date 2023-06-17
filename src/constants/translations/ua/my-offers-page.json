@@ -3,7 +3,7 @@
   "tabs": {
     "all": "Всі",
     "active": "Активні",
-    "pending": "В очікуванні",
+    "draft": "Чернетки",
     "closed": "Закриті"
   },
   "tableHeaders": {

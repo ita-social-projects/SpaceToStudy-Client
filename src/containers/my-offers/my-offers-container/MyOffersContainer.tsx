@@ -9,13 +9,13 @@ import { ButtonVariantEnum, Offer, SizeEnum } from '~/types'
 import {
   columns,
   removeColumnRules
-} from '~/pages/my-offers/MyOffers.constants'
+} from '~/containers/my-offers/my-offers-container/MyOffersContainer.constants'
 import { styles } from '~/containers/my-cooperations/cooperations-container/CooperationContainer.styles'
 import { Link } from 'react-router-dom'
 import { authRoutes } from '~/router/constants/authRoutes'
-import OfferCardSquare from '~/containers/find-offer/offer-card-square/OfferCardSquare'
 import AppCard from '~/components/app-card/AppCard'
 import { SortHook } from '~/hooks/table/use-sort'
+import MyOffersCard from '~/containers/my-offers/my-offers-card/MyOffersCard'
 
 interface MyOffersContainerProps {
   items: Offer[]
@@ -53,12 +53,8 @@ const MyOffersContainer: FC<MyOffersContainerProps> = ({
           }
         ]
         return (
-          <AppCard key={item._id} sx={{ minHeight: '380px' }}>
-            <OfferCardSquare
-              buttonActions={buttonActions}
-              offer={item}
-              showStatus
-            />
+          <AppCard key={item._id}>
+            <MyOffersCard buttonActions={buttonActions} offer={item} />
           </AppCard>
         )
       })}
