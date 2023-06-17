@@ -1,4 +1,4 @@
-import { FC, useMemo } from 'react'
+import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Typography from '@mui/material/Typography'
@@ -26,8 +26,6 @@ const Sidebar: FC<SidebarProps> = ({
   const { isMobile } = useBreakpoints()
   const { t } = useTranslation()
 
-  const accountItemsLength = isMobile && accountItems.length > 0
-
   const renderListItems = (items: RouteItem[]) => (
     <List sx={styles.list}>
       {items.map(({ route, path }) => (
@@ -45,19 +43,18 @@ const Sidebar: FC<SidebarProps> = ({
     </List>
   )
 
-  return useMemo(
-    () => (
-      <>
-        {renderListItems(navigationItems)}
-        {accountItemsLength && (
-          <>
-            <Divider />
-            {renderListItems(accountItems)}
-          </>
-        )}
-      </>
-    ),
-    [navigationItems, accountItems]
+  const accountItemsSection = isMobile && accountItems.length > 0 && (
+    <>
+      <Divider />
+      {renderListItems(accountItems)}
+    </>
+  )
+
+  return (
+    <>
+      {renderListItems(navigationItems)}
+      {accountItemsSection}
+    </>
   )
 }
 
