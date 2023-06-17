@@ -60,7 +60,8 @@ export const styles = {
   },
   titleWithDescription: {
     wrapper: {
-      textAlign: 'left'
+      textAlign: 'left',
+      pr: '20px'
     },
     title: {
       typography: { xs: 'button', sm: 'h5', md: 'h4' },
@@ -93,10 +94,9 @@ export const styles = {
     maxWidth: '650px'
   },
   avatarContainerMobile: { flex: 1 },
-  linkToReviews: { color: 'text.primary' },
+  linkToReviews: { color: 'primary.900' },
   appRating: {
     starMobile: {
-      color: 'basic.yellow',
       height: '24px'
     },
     rating: {

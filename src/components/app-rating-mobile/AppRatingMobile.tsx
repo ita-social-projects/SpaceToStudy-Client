@@ -16,8 +16,8 @@ interface AppRatingMobileProps extends RatingProps {
   link?: string
   sx?: {
     starMobile?: SxProps
-    reviews?: object
-    rating?: object
+    reviews?: SxProps
+    rating?: SxProps
   }
 }
 

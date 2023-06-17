@@ -34,7 +34,7 @@ const ProfileContainerMobile = ({
 
         <TitleWithDescription
           description={userData.professionalSummary}
-          style={{ ...styles.titleWithDescription, wrapper: { pr: '20px' } }}
+          style={styles.titleWithDescription}
           title={`${userData.firstName} ${userData.lastName}`}
         />
       </Box>
