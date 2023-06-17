@@ -3,10 +3,15 @@ export const styles = {
     width: '100%',
     display: 'flex',
     justifyContent: 'space-between',
-    gap: { sm: '24px', md: '40px' }
+    gap: { sm: '24px', md: '40px' },
+    flexWrap: 'wrap',
+    wordBreak: 'break-word'
   },
   userInfo: {
-    root: { gap: '4px' },
+    root: {
+      gap: '4px',
+      maxWidth: '112px'
+    },
     avatar: {
       width: '80px',
       height: '80px',

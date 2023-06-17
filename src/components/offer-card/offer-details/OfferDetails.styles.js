@@ -13,7 +13,8 @@ export const styles = {
     mb: '10px'
   },
   title: {
-    color: 'primary.700'
+    color: 'primary.700',
+    ...ellipsisTextStyle(3)
   },
   chipContainer: {
     my: '10px'
