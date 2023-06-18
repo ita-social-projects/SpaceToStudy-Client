@@ -38,7 +38,7 @@ const sortOptionsMock = {
 describe('MyOffersContainer component ', () => {
   beforeEach(() => {
     renderWithProviders(
-      <MyOffersContainer items={[offerMock]} sort={sortOptionsMock} />
+      <MyOffersContainer items={[offerMock]} showTable sort={sortOptionsMock} />
     )
   })
 

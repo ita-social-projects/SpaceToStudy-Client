@@ -47,7 +47,7 @@ const OfferCarousel: FC<OfferCarouselProps> = ({ offer }) => {
     defaultResponse
   })
 
-  const itemsToShow = response.offers.map((item) => {
+  const itemsToShow = response.items.map((item) => {
     const buttonActions = [
       {
         label: t('common.labels.viewDetails'),

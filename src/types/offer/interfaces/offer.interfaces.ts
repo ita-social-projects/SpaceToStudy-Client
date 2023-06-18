@@ -52,6 +52,6 @@ export interface PriceRangeResponse {
 }
 
 export interface GetOffersResponse {
-  offers: Offer[]
+  items: Offer[]
   count: number
 }
