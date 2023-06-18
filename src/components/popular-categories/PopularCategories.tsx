@@ -17,8 +17,11 @@ import CardsList from '~/components/cards-list/CardsList'
 import { CategoryInterface, ItemsWithCount } from '~/types'
 import useBreakpoints from '~/hooks/use-breakpoints'
 
-import { getScreenBasedLimit, studentOrTutor } from '~/utils/helper-functions'
-import { spliceSx } from '~/utils/helper-functions'
+import {
+  getScreenBasedLimit,
+  studentOrTutor,
+  spliceSx
+} from '~/utils/helper-functions'
 import { styles } from '~/components/popular-categories/PopularCategories.styles'
 import { defaultResponses } from '~/constants'
 import { itemsLoadLimit } from '~/components/popular-categories/PopularCategories.constants'
