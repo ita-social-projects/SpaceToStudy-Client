@@ -1,4 +1,4 @@
-import { SxProps } from '@mui/material'
+import { SxProps, Theme } from '@mui/material'
 import {
   Breakpoints,
   TableColumns,
@@ -105,7 +105,10 @@ export const ajustColumns = <T extends TableColumns>(
   }
 }
 
-export const spliceSx = (defaultStyles?: SxProps, newStyles?: SxProps) =>
+export const spliceSx = (
+  defaultStyles?: SxProps<Theme>,
+  newStyles?: SxProps<Theme>
+) =>
   ({
     ...defaultStyles,
     ...newStyles

@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import Container from '@mui/material/Container'
+
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 
 import { categoryService } from '~/services/category-service'
@@ -10,6 +10,7 @@ import useCategoriesNames from '~/hooks/use-categories-names'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { useAppSelector } from '~/hooks/use-redux'
 
+import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import OfferRequestBlock from '~/containers/find-offer/offer-request-block/OfferRequestBlock'
 import CardWithLink from '~/components/card-with-link/CardWithLink'
 import CardsList from '~/components/cards-list/CardsList'
@@ -97,7 +98,7 @@ const Categories = () => {
   const handleOpenModal = () => openModal({ component: <CreateSubjectModal /> })
 
   return (
-    <Container sx={styles.container}>
+    <PageWrapper>
       <OfferRequestBlock />
 
       <TitleWithDescription
@@ -141,7 +142,7 @@ const Categories = () => {
           onClick={loadMore}
         />
       )}
-    </Container>
+    </PageWrapper>
   )
 }
 

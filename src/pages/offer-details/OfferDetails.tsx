@@ -2,13 +2,12 @@ import { useCallback, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams, useNavigate, useOutletContext } from 'react-router-dom'
 
-import Container from '@mui/material/Container'
-
 import { OfferService } from '~/services/offer-service'
 import { useModalContext } from '~/context/modal-context'
 import { useAppSelector } from '~/hooks/use-redux'
 import useAxios from '~/hooks/use-axios'
 import useBreakpoints from '~/hooks/use-breakpoints'
+import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import CommentsBlock from '~/containers/tutor-profile/comments-block/CommentBlock'
 import OfferCardSquare from '~/containers/find-offer/offer-card-square/OfferCardSquare'
 import EnrollOffer from '~/containers/offer-details/enroll-offer/EnrollOffer'
@@ -90,7 +89,7 @@ const OfferDetails = () => {
   }
 
   return (
-    <Container ref={offerDetailsPage} sx={styles.container}>
+    <PageWrapper ref={offerDetailsPage} sx={styles.container}>
       {!isMobile && (
         <ScrollVisibilityWrapper heightToShow={610} pageRef={pageRef}>
           <OfferBanner buttonActions={buttonActions} offer={response} />
@@ -147,7 +146,7 @@ const OfferDetails = () => {
       </AppCard>
 
       <OfferCarousel offer={response} />
-    </Container>
+    </PageWrapper>
   )
 }
 

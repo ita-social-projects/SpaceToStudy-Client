@@ -1,15 +1,10 @@
 export const styles = {
-  container: {
-    flex: 1,
-    display: 'flex',
-    flexDirection: 'column'
-  },
   filterSection: {
     display: 'flex'
   },
   titleWithDescription: {
     wrapper: {
-      mb: { xs: '20px', sm: '32px' },
+      my: { xs: '20px', sm: '30px' },
       textAlign: 'center'
     },
     title: {
@@ -23,5 +18,11 @@ export const styles = {
   navigation: {
     display: 'flex',
     justifyContent: 'space-between'
+  },
+  popularCategories: {
+    margin: { xs: '64px 0 0', sm: '80px 0 0', md: '104px 0 0' },
+    p: {
+      textAlign: 'start'
+    }
   }
 }

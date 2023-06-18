@@ -1,6 +1,6 @@
 export const itemsLoadLimit = {
-  desktop: 9,
+  desktop: 12,
   tablet: 6,
   mobile: 4,
-  default: 9
+  default: 12
 }

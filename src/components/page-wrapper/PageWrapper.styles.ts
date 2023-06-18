@@ -3,7 +3,6 @@ export const styles = {
     flex: 1,
     display: 'flex',
     flexDirection: 'column',
-    mb: '100px',
-    mt: { xs: 0, sm: '16px' }
+    mb: '100px'
   }
 }

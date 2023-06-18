@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 
 import Box from '@mui/material/Box'
+import { SxProps } from '@mui/material/styles'
 
 import useAxios from '~/hooks/use-axios'
 import { categoryService } from '~/services/category-service'
@@ -10,7 +11,6 @@ import { useAppSelector } from '~/hooks/use-redux'
 import Loader from '~/components/loader/Loader'
 import CardWithLink from '~/components/card-with-link/CardWithLink'
 import { authRoutes } from '~/router/constants/authRoutes'
-import { styles } from '~/components/popular-categories/PopularCategories.styles'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import serviceIcon from '~/assets/img/student-home-page/service_icon.png'
 import CardsList from '~/components/cards-list/CardsList'
@@ -18,17 +18,21 @@ import { CategoryInterface, ItemsWithCount } from '~/types'
 import useBreakpoints from '~/hooks/use-breakpoints'
 
 import { getScreenBasedLimit, studentOrTutor } from '~/utils/helper-functions'
+import { spliceSx } from '~/utils/helper-functions'
+import { styles } from '~/components/popular-categories/PopularCategories.styles'
 import { defaultResponses } from '~/constants'
 import { itemsLoadLimit } from '~/components/popular-categories/PopularCategories.constants'
 
 interface PopularCategoriesProps {
   title: string
   description?: string
+  sx?: SxProps
 }
 
 const PopularCategories: FC<PopularCategoriesProps> = ({
   title,
-  description
+  description,
+  sx
 }) => {
   const { t } = useTranslation()
   const { userRole } = useAppSelector((state) => state.appMain)
@@ -71,7 +75,7 @@ const PopularCategories: FC<PopularCategoriesProps> = ({
   }
 
   return (
-    <Box sx={styles.wrapper}>
+    <Box sx={spliceSx(styles.wrapper, sx)}>
       <TitleWithDescription
         description={description}
         style={styles.titleWithDescription}
