@@ -8,7 +8,7 @@ export const styles = {
       ? {
           xs: '1fr',
           md: 'repeat(3, 1fr)',
-          xl: 'repeat(4, 1fr)'
+          lg: 'repeat(4, 1fr)'
         }
       : '1fr'
   }),

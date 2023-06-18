@@ -20,14 +20,14 @@ interface OfferContainerProps {
 
 const OfferContainer: FC<OfferContainerProps> = ({ viewMode, offerCards }) => {
   const { t } = useTranslation()
-  const { isMobile, isDesktop } = useBreakpoints()
+  const { isMobile, isLaptopAndAbove } = useBreakpoints()
 
   const onBookmarkClick = (id: string) => {
     console.log(id)
   }
 
   const renderSquareCard =
-    isMobile || (isDesktop && viewMode === CardsViewEnum.Grid)
+    isMobile || (isLaptopAndAbove && viewMode === CardsViewEnum.Grid)
 
   const offerItems = offerCards.map((el) => {
     const buttonActions = [

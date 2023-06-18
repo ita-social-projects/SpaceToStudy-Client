@@ -16,7 +16,7 @@ const mockOnToggleTutorOffers = vi.fn()
 
 describe('OfferFilterBlock', () => {
   beforeEach(() => {
-    useBreakpoints.mockImplementation(() => ({ isDesktop: true }))
+    useBreakpoints.mockImplementation(() => ({ isLaptopAndAbove: true }))
     render(
       <FilterBarMenu
         chosenFiltersQty={mockChosenFiltersQty}
@@ -55,7 +55,7 @@ describe('OfferFilterBlock', () => {
 
 describe('OfferBarMenu tests on tablet size', () => {
   beforeEach(() => {
-    useBreakpoints.mockImplementation(() => ({ isDesktop: false }))
+    useBreakpoints.mockImplementation(() => ({ isLaptopAndAbove: false }))
     render(
       <FilterBarMenu
         chosenFiltersQty={mockChosenFiltersQty}

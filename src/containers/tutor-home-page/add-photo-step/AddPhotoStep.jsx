@@ -12,7 +12,7 @@ import useBreakpoints from '~/hooks/use-breakpoints'
 import { validationData } from './constants'
 
 const AddPhotoStep = ({ btnsBox, stepLabel }) => {
-  const { isDesktop, isTablet, isMobile } = useBreakpoints()
+  const { isLaptopAndAbove, isTablet, isMobile } = useBreakpoints()
   const [photoError, setPhotoError] = useState(null)
   const { t } = useTranslation()
   const { stepData, handleStepData } = useStepContext()
@@ -63,7 +63,7 @@ const AddPhotoStep = ({ btnsBox, stepLabel }) => {
 
   return (
     <Box sx={style.root}>
-      {isDesktop && photoPrewiew}
+      {isLaptopAndAbove && photoPrewiew}
       <Box sx={style.rigthBox}>
         <Box>
           <Typography sx={style.description}>

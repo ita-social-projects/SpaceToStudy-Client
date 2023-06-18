@@ -8,11 +8,11 @@ export const styles = {
     mb: '24px',
     typography: { xs: 'h5', sm: 'h4' }
   },
-  dotStyles: (isDesktop: boolean) => ({
-    display: isDesktop ? 'none' : 'block'
+  dotStyles: (isLaptopAndAbove: boolean) => ({
+    display: isLaptopAndAbove ? 'none' : 'block'
   }),
-  button: (isDesktop: boolean, side: string) => ({
-    display: !isDesktop ? 'none' : 'inline-flex',
+  button: (isLaptopAndAbove: boolean, side: string) => ({
+    display: !isLaptopAndAbove ? 'none' : 'inline-flex',
     [side]: '-34px',
     stroke: palette.primary[500],
     strokeWidth: 2

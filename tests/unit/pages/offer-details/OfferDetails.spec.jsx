@@ -32,7 +32,11 @@ mockAxiosClient
   .reply(200, { offers: [], count: 0 })
 
 describe('OfferDetails on desktop', () => {
-  const desktopData = { isDesktop: true, isMobile: false, isTablet: false }
+  const desktopData = {
+    isLaptopAndAbove: true,
+    isMobile: false,
+    isTablet: false
+  }
   beforeEach(() => {
     useBreakpoints.mockImplementation(() => desktopData)
 
@@ -59,7 +63,11 @@ describe('OfferDetails on desktop', () => {
 })
 
 describe('OfferDetails on mobile', () => {
-  const desktopData = { isDesktop: false, isMobile: true, isTablet: false }
+  const desktopData = {
+    isLaptopAndAbove: false,
+    isMobile: true,
+    isTablet: false
+  }
   beforeEach(() => {
     useBreakpoints.mockImplementation(() => desktopData)
 

@@ -29,7 +29,7 @@ const OfferSearchToolbar = ({
   filterActions
 }: OfferSearchToolbarProps) => {
   const { t } = useTranslation()
-  const { isDesktop, isMobile } = useBreakpoints()
+  const { isLaptopAndAbove, isMobile } = useBreakpoints()
   const { updateFilterInQuery } = filterActions
 
   const getSubjectsNames = useCallback(
@@ -86,7 +86,7 @@ const OfferSearchToolbar = ({
       {!isMobile && (
         <AppToolbar sx={styles.searchToolbar}>
           {AppAutoCompleteList}
-          {isDesktop && (
+          {isLaptopAndAbove && (
             <SearchFilterInput
               textFieldProps={{
                 placeholder: t('findOffers.searchToolbar.label')

@@ -39,7 +39,7 @@ const FilterBarMenu: FC<FilterBarMenuProps> = ({
   onToggleTutorOffers,
   offersView
 }) => {
-  const { isDesktop, isMobile } = useBreakpoints()
+  const { isLaptopAndAbove, isMobile } = useBreakpoints()
 
   const { t } = useTranslation()
 
@@ -67,7 +67,7 @@ const FilterBarMenu: FC<FilterBarMenuProps> = ({
         chosenFiltersQty={chosenFiltersQty}
         handleToggle={toggleFilters}
       />
-      {isDesktop ? (
+      {isLaptopAndAbove ? (
         <AppContentSwitcher
           active={filters.authorRole === UserRoleEnum.Student}
           data-testid='switch'
@@ -82,10 +82,10 @@ const FilterBarMenu: FC<FilterBarMenuProps> = ({
             fields={sortOptions}
             selectTitle={t('filters.sortBy.sortByTitle')}
             setValue={handleSortBy}
-            sx={isDesktop ? styles.selectContainer : {}}
+            sx={isLaptopAndAbove ? styles.selectContainer : {}}
             value={filters.sort}
           />
-          {isDesktop ? (
+          {isLaptopAndAbove ? (
             <ViewSwitcher onChange={handleOffersView} value={offersView} />
           ) : null}
         </Box>

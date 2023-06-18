@@ -18,7 +18,7 @@ const ProfileContainerDesktop = ({
   subjectChips,
   doneItems
 }) => {
-  const { isDesktop } = useBreakpoints()
+  const { isLaptopAndAbove } = useBreakpoints()
 
   return (
     <Box sx={styles.container}>
@@ -51,7 +51,7 @@ const ProfileContainerDesktop = ({
           icon={
             <DoneIcon
               color='success'
-              fontSize={isDesktop ? 'medium' : 'small'}
+              fontSize={isLaptopAndAbove ? 'medium' : 'small'}
             />
           }
           items={doneItems}

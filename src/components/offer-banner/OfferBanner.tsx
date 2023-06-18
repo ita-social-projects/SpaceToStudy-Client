@@ -22,7 +22,7 @@ interface OfferBannerProps {
 
 const OfferBanner: FC<OfferBannerProps> = ({ offer, buttonActions }) => {
   const { t } = useTranslation()
-  const { isDesktop } = useBreakpoints()
+  const { isLaptopAndAbove } = useBreakpoints()
   const { author, subject, category, proficiencyLevel, authorRole } = offer
 
   const buttons = buttonActions.map(
@@ -51,7 +51,7 @@ const OfferBanner: FC<OfferBannerProps> = ({ offer, buttonActions }) => {
             role={authorRole}
             sx={styles.userInfo}
           />
-          {isDesktop && (
+          {isLaptopAndAbove && (
             <SubjectLevelChips
               color={category.appearance.color}
               proficiencyLevel={proficiencyLevel}
@@ -64,7 +64,7 @@ const OfferBanner: FC<OfferBannerProps> = ({ offer, buttonActions }) => {
           <IconButton data-testid='iconButton' sx={styles.bookmarkButton}>
             <TurnedInNot />
           </IconButton>
-          {isDesktop && (
+          {isLaptopAndAbove && (
             <Typography sx={styles.bookmarkButtonText}>
               {t('offerDetailsPage.offerBanner.saveOfferButton')}
             </Typography>

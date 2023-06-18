@@ -27,7 +27,7 @@ import { SizeEnum } from '~/types'
 
 const ProfileInfo = () => {
   const { t } = useTranslation()
-  const { isDesktop, isMobile } = useBreakpoints()
+  const { isLaptopAndAbove, isMobile } = useBreakpoints()
   const { setAlert } = useSnackBarContext()
   const { userRole } = useAppSelector((state) => state.appMain)
   const isMyProfile = useMatch(myProfilePath)
@@ -57,7 +57,7 @@ const ProfileInfo = () => {
       data-testid='icon-btn'
       href={isMyProfile && navigateToEditPtofile}
       onClick={!isMyProfile ? copyProfileLink : undefined}
-      size={isDesktop ? SizeEnum.Large : SizeEnum.Small}
+      size={isLaptopAndAbove ? SizeEnum.Large : SizeEnum.Small}
       sx={styles.iconBtn}
     >
       {actionIcon}
@@ -78,7 +78,7 @@ const ProfileInfo = () => {
       <Button
         disabled
         fullWidth
-        size={isDesktop ? SizeEnum.ExtraLarge : SizeEnum.Medium}
+        size={isLaptopAndAbove ? SizeEnum.ExtraLarge : SizeEnum.Medium}
         variant='containedLight'
       >
         {t('tutorProfilePage.profileInfo.bookLesson')}
@@ -87,7 +87,7 @@ const ProfileInfo = () => {
       <Button
         disabled
         fullWidth
-        size={isDesktop ? SizeEnum.ExtraLarge : SizeEnum.Medium}
+        size={isLaptopAndAbove ? SizeEnum.ExtraLarge : SizeEnum.Medium}
         variant='contained'
       >
         {t('tutorProfilePage.profileInfo.sendMessage')}
@@ -100,7 +100,7 @@ const ProfileInfo = () => {
       accInfo={accInfo}
       actionIcon={actionIconBtn}
       buttonGroup={buttonGroup}
-      defaultQuantity={isDesktop ? 4 : 2}
+      defaultQuantity={isLaptopAndAbove ? 4 : 2}
       doneItems={doneItemsMock}
       subjectChips={subjectChipsMock}
     />

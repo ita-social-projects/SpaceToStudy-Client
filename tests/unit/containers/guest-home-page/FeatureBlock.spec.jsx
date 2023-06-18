@@ -15,7 +15,11 @@ const items = [
 ]
 
 describe('Carousel test', () => {
-  const mobileData = { isDesktop: false, isMobile: true, isTablet: false }
+  const mobileData = {
+    isLaptopAndAbove: false,
+    isMobile: true,
+    isTablet: false
+  }
 
   it('Test should render carousel component', () => {
     useBreakpoints.mockImplementation(() => mobileData)
@@ -29,7 +33,11 @@ describe('Carousel test', () => {
 })
 
 describe('Accordion test', () => {
-  const desktopData = { isDesktop: true, isMobile: false, isTablet: false }
+  const desktopData = {
+    isLaptopAndAbove: true,
+    isMobile: false,
+    isTablet: false
+  }
 
   it('Test should render accordion component', () => {
     useBreakpoints.mockImplementation(() => desktopData)

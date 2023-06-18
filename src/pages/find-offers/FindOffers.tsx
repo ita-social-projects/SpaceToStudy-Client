@@ -49,7 +49,7 @@ const FindOffers = () => {
   const [cardsView, setCardsView] = useState<CardsView>(CardsViewEnum.Inline)
   const { userRole } = useAppSelector((state) => state.appMain)
   const { openDrawer, closeDrawer, isOpen } = useDrawer()
-  const { isMobile, isDesktop } = useBreakpoints()
+  const { isMobile, isLaptopAndAbove } = useBreakpoints()
 
   const { t } = useTranslation()
 
@@ -162,7 +162,7 @@ const FindOffers = () => {
       />
       <Box sx={styles.filterSection}>
         <AppDrawer
-          anchor={isDesktop ? PositionEnum.Left : PositionEnum.Right}
+          anchor={isLaptopAndAbove ? PositionEnum.Left : PositionEnum.Right}
           onClose={closeDrawer}
           open={isOpen}
         >

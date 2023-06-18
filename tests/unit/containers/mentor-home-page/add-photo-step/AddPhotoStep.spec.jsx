@@ -20,7 +20,11 @@ const btnsBox = (
 )
 
 describe('AddPhotoStep test', () => {
-  const desktopData = { isDesktop: true, isMobile: false, isTablet: false }
+  const desktopData = {
+    isLaptopAndAbove: true,
+    isMobile: false,
+    isTablet: false
+  }
 
   beforeEach(() => {
     useBreakpoints.mockImplementation(() => desktopData)

@@ -29,7 +29,7 @@ const GeneralInfoStep = ({
   setIsUserFetched
 }) => {
   const { t } = useTranslation()
-  const { isDesktop, isMobile } = useBreakpoints()
+  const { isLaptopAndAbove, isMobile } = useBreakpoints()
   const { stepData, handleStepData } = useStepContext()
   const { userId, userRole } = useSelector((state) => state.appMain)
   const generalInfo = stepData[stepLabel]
@@ -134,7 +134,7 @@ const GeneralInfoStep = ({
 
   return (
     <Box sx={styles.container}>
-      {isDesktop && (
+      {isLaptopAndAbove && (
         <Box sx={styles.imgContainer}>
           <Box component='img' src={img} sx={styles.img} />
         </Box>

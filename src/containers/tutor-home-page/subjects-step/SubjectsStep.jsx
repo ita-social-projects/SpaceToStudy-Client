@@ -16,7 +16,7 @@ import { subjectService } from '~/services/subject-service'
 
 const SubjectsStep = ({ stepLabel, btnsBox }) => {
   const { t } = useTranslation()
-  const { isDesktop, isMobile } = useBreakpoints()
+  const { isLaptopAndAbove, isMobile } = useBreakpoints()
   const { stepData, handleStepData } = useStepContext()
   const subjectData = stepData[stepLabel]
 
@@ -91,7 +91,7 @@ const SubjectsStep = ({ stepLabel, btnsBox }) => {
 
   return (
     <Box sx={styles.container}>
-      {isDesktop && imageBlock}
+      {isLaptopAndAbove && imageBlock}
       <Box sx={styles.rigthBox}>
         <Box sx={styles.contentBox}>
           <Typography mb='20px'>{t('becomeTutor.categories.title')}</Typography>

@@ -11,7 +11,9 @@ export interface GetCooperationsParams
     RequestParams {}
 
 export interface ScreenBasedLimits {
-  desktop: number
+  desktop?: number
+  laptopAndDesktop?: number
+  laptop?: number
   tablet: number
   mobile: number
   default: number
