@@ -125,11 +125,14 @@ const ProfileInfo = ({ userData }) => {
     </Box>
   )
 
+  const subjectData = userData.mainSubjects.tutor.map((item) => item.name)
+
   return !isMobile ? (
     <ProfileContainerDesktop
       accInfo={accInfo}
       actionIcon={actionIconBtn}
       buttonGroup={buttonGroup}
+      chipItems={subjectData}
       defaultQuantity={isLaptopAndAbove ? 4 : 2}
       doneItems={doneItems}
       userData={userData}
@@ -139,6 +142,7 @@ const ProfileInfo = ({ userData }) => {
       accInfo={accInfo}
       actionIcon={actionIconBtn}
       buttonGroup={buttonGroup}
+      chipItems={subjectData}
       defaultQuantity={4}
       doneItems={doneItems}
       userData={userData}

@@ -15,11 +15,10 @@ const ProfileContainerDesktop = ({
   accInfo,
   buttonGroup,
   defaultQuantity,
-  doneItems
+  doneItems,
+  chipItems
 }) => {
   const { isDesktop } = useBreakpoints()
-
-  const subjectData = userData.mainSubjects.tutor.map((item) => item.name)
 
   return (
     <Box sx={styles.container}>
@@ -44,7 +43,7 @@ const ProfileContainerDesktop = ({
         <AppChipList
           defaultQuantity={2}
           icon={<SchoolIcon fontSize='small' sx={styles.schoolIcon} />}
-          items={subjectData}
+          items={chipItems}
           wrapperStyle={styles.chipsWrapper}
         />
 

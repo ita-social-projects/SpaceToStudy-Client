@@ -15,10 +15,9 @@ const ProfileContainerMobile = ({
   buttonGroup,
   defaultQuantity,
   doneItems,
-  userData
+  userData,
+  chipItems
 }) => {
-  const subjectData = userData.mainSubjects.tutor.map((item) => item.name)
-
   return (
     <Box sx={styles.container}>
       <Box sx={styles.wrapperForPhoto}>
@@ -45,7 +44,7 @@ const ProfileContainerMobile = ({
         <AppChipList
           defaultQuantity={2}
           icon={<SchoolIcon fontSize='small' sx={styles.schoolIcon} />}
-          items={subjectData}
+          items={chipItems}
           wrapperStyle={styles.chipsWrapper}
         />
 
