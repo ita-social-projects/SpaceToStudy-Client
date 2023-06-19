@@ -27,6 +27,7 @@ import constant from './constant.json'
 import findOffers from './find-offer-page.json'
 import filters from './filters.json'
 import subjectsPage from './subjects-page.json'
+import offerCardSquare from './offer-card-square.json'
 import offerPage from './offer-page.json'
 import offerDetailsPage from './offer-details-page.json'
 import cooperationsPage from './cooperations-page.json'
@@ -63,6 +64,7 @@ const en = {
     findOffers,
     filters,
     subjectsPage,
+    offerCardSquare,
     offerPage,
     offerDetailsPage,
     cooperationsPage,

@@ -6,7 +6,6 @@ export const styles = {
     alignItems: 'center',
     flexDirection: 'column',
     columnGap: '4px',
-    padding: '3px 6px',
     borderRadius: '5px'
   },
   starMobile: {
