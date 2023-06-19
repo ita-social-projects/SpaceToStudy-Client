@@ -1,3 +1,5 @@
+import { TypographyVariantEnum } from '~/types'
+
 export const styles = {
   root: {
     display: 'grid',
@@ -35,7 +37,7 @@ export const styles = {
       alignItems: 'center'
     },
     name: {
-      typography: 'body2',
+      typography: TypographyVariantEnum.Body2,
       color: 'primary.900'
     }
   },

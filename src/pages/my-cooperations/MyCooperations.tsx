@@ -100,19 +100,13 @@ const MyCooperations = () => {
       ? studentRoutes.accountMenu.myOffers.path
       : tutorRoutes.accountMenu.myOffers.path
 
-  const button = {
-    label: 'button.viewMyOffers',
-    buttonProps: {
-      component: Link,
-      to: buttonPath
-    }
-  }
-
   return (
     <PageWrapper>
       <Box sx={styles.titleBlock}>
         <Typography sx={styles.title}>{t('cooperationsPage.title')}</Typography>
-        <AppButton {...button.buttonProps}>{t(button.label)}</AppButton>
+        <AppButton component={Link} to={buttonPath}>
+          {t('button.viewMyOffers')}
+        </AppButton>
       </Box>
       <Box sx={styles.tabs}>{tabs}</Box>
       <CooperationOfferToolbar

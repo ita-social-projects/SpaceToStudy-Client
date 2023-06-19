@@ -34,6 +34,7 @@ export enum TypographyVariantEnum {
   Body2 = 'body2',
   Body1 = 'body1',
   Subtitle2 = 'subtitle2',
+  MidTitle = 'midTitle',
   Overline = 'overline'
 }
 
@@ -74,6 +75,7 @@ export enum StatusEnum {
   Pending = 'pending',
   Active = 'active',
   Closed = 'closed',
+  Draft = 'draft',
   NeedAction = 'need action'
 }
 export enum PositionEnum {

@@ -20,10 +20,7 @@ interface OfferCardSquareProps {
   offer: Offer
 }
 
-const OfferCardSquare: FC<OfferCardSquareProps> = ({
-  buttonActions,
-  offer
-}) => {
+const MyOffersCard: FC<OfferCardSquareProps> = ({ buttonActions, offer }) => {
   const { t } = useTranslation()
 
   const { price, title, subject, category, status, proficiencyLevel } = offer
@@ -65,4 +62,4 @@ const OfferCardSquare: FC<OfferCardSquareProps> = ({
     </Box>
   )
 }
-export default OfferCardSquare
+export default MyOffersCard

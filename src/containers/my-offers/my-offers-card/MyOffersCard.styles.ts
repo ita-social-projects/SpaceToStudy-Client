@@ -1,3 +1,5 @@
+import { TypographyVariantEnum } from '~/types'
+
 const ellipsisTextStyle = (linesCount: number) => ({
   display: '-webkit-box',
   WebkitLineClamp: linesCount,
@@ -18,7 +20,7 @@ export const styles = {
   },
   title: {
     ...ellipsisTextStyle(2),
-    typography: 'midTitle',
+    typography: TypographyVariantEnum.MidTitle,
     fontWeight: 600,
     color: 'primary.700'
   },
@@ -33,10 +35,10 @@ export const styles = {
       textAlign: 'left'
     },
     title: {
-      typography: 'h6'
+      typography: TypographyVariantEnum.H6
     },
     description: {
-      typography: 'caption'
+      typography: TypographyVariantEnum.Caption
     }
   },
   buttonContainer: {

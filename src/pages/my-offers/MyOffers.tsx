@@ -51,9 +51,7 @@ const MyOffers = () => {
   const { sort, resetSort } = sortOptions
   const { filters, clearFilters, setFilterByKey } = filterOptions
 
-  const handleOpenDrawer = () => {
-    openDrawer()
-  }
+  const handleOpenDrawer = () => openDrawer()
 
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
   const showTable = !breakpoints.isMobile && itemsView === CardsViewEnum.Inline

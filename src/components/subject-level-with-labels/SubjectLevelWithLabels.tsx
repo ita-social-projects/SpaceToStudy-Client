@@ -1,11 +1,11 @@
-import { FC, useMemo } from 'react'
+import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
 import { SxProps } from '@mui/material'
 import Typography from '@mui/material/Typography'
+import SubjectLevelChips from '~/components/subject-level-chips/SubjectLevelChips'
 
-import AppChip from '~/components/app-chip/AppChip'
 import palette from '~/styles/app-theme/app.pallete'
 import { spliceSx } from '~/utils/helper-functions'
 
@@ -27,31 +27,18 @@ const SubjectLevelWithlabels: FC<SubjectLevelChipsProps> = ({
 }) => {
   const { t } = useTranslation()
 
-  const proficiencyLevelText = useMemo(() => {
-    if (!Array.isArray(proficiencyLevel)) return proficiencyLevel
-    if (proficiencyLevel.length === 1) return proficiencyLevel[0]
-    return `${proficiencyLevel[0]} - ${
-      proficiencyLevel[proficiencyLevel.length - 1]
-    }`
-  }, [proficiencyLevel])
-
   return (
-    <Box sx={spliceSx(styles.chips, sx)}>
-      <Typography sx={styles.labels}>{t('common.labels.subject')}</Typography>
-      <Box>
-        <AppChip
-          labelSx={styles.subjectChipLabel}
-          sx={styles.subjectChip(color)}
-        >
-          {subject}
-        </AppChip>
+    <Box sx={spliceSx(styles.container, sx)}>
+      <Box sx={styles.labels}>
+        <Typography sx={styles.label}>{t('common.labels.subject')}</Typography>
+        <Typography sx={styles.label}>{t('common.labels.level')}</Typography>
       </Box>
-      <Typography sx={styles.labels}>{t('common.labels.level')}</Typography>
-      <Box>
-        <AppChip labelSx={styles.levelChipLabel} sx={styles.levelChip(color)}>
-          {proficiencyLevelText}
-        </AppChip>
-      </Box>
+      <SubjectLevelChips
+        color={color}
+        proficiencyLevel={proficiencyLevel}
+        subject={subject}
+        sx={styles.chips}
+      />
     </Box>
   )
 }

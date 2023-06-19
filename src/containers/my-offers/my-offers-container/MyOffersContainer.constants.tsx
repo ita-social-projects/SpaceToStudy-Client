@@ -1,8 +1,15 @@
+import { useTranslation } from 'react-i18next'
+
 import StatusChip from '~/components/status-chip/StatusChip'
 import SubjectLevelChips from '~/components/subject-level-chips/SubjectLevelChips'
 
 import { getFormatedDate } from '~/utils/helper-functions'
 import { Offer, RemoveColumnRules } from '~/types'
+
+const GetPriceCellValue = (item: Offer) => {
+  const { t } = useTranslation()
+  return `${item.price} ${t('common.uah')}`
+}
 
 export const columns = [
   {
@@ -22,7 +29,7 @@ export const columns = [
   {
     label: 'myOffersPage.tableHeaders.price',
     field: 'price',
-    calculatedCellValue: (item: Offer) => `${item.price} UAH`
+    calculatedCellValue: GetPriceCellValue
   },
   {
     label: 'myOffersPage.tableHeaders.updated',

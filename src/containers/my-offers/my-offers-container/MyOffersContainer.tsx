@@ -1,9 +1,14 @@
 import { FC } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
+
+import useBreakpoints from '~/hooks/use-breakpoints'
+import { SortHook } from '~/hooks/table/use-sort'
 import Box from '@mui/material/Box'
 import EnhancedTable from '~/components/enhanced-table/EnhancedTable'
-import useBreakpoints from '~/hooks/use-breakpoints'
-import { ajustColumns } from '~/utils/helper-functions'
-import { useTranslation } from 'react-i18next'
+import AppCard from '~/components/app-card/AppCard'
+import MyOffersCard from '~/containers/my-offers/my-offers-card/MyOffersCard'
+import { ajustColumns, createUrlPath } from '~/utils/helper-functions'
 
 import { ButtonVariantEnum, Offer, SizeEnum } from '~/types'
 import {
@@ -11,11 +16,7 @@ import {
   removeColumnRules
 } from '~/containers/my-offers/my-offers-container/MyOffersContainer.constants'
 import { styles } from '~/containers/my-cooperations/cooperations-container/CooperationContainer.styles'
-import { Link } from 'react-router-dom'
 import { authRoutes } from '~/router/constants/authRoutes'
-import AppCard from '~/components/app-card/AppCard'
-import { SortHook } from '~/hooks/table/use-sort'
-import MyOffersCard from '~/containers/my-offers/my-offers-card/MyOffersCard'
 
 interface MyOffersContainerProps {
   items: Offer[]
@@ -52,7 +53,7 @@ const MyOffersContainer: FC<MyOffersContainerProps> = ({
             label: t('common.labels.viewDetails'),
             buttonProps: {
               component: Link,
-              to: `${authRoutes.offerDetails.path}/${item._id}`
+              to: createUrlPath(authRoutes.offerDetails.path, item._id)
             }
           }
         ]

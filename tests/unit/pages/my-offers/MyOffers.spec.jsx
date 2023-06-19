@@ -4,8 +4,6 @@ import { URLs } from '~/constants/request'
 
 import MyOffers from '~/pages/my-offers/MyOffers'
 
-const userId = 'userId'
-
 const mockData = {
   offers: [
     {
@@ -13,7 +11,7 @@ const mockData = {
       authorRole: 'tutor',
       title: 'Test title',
       author: {
-        _id: userId,
+        _id: 'id',
         firstName: 'Kathryn',
         lastName: 'Murphy',
         averageRating: {
@@ -37,6 +35,8 @@ const mockData = {
   ],
   count: 0
 }
+
+const userId = mockData.offers.author._id
 
 mockAxiosClient
   .onGet(`${URLs.users.get}/${userId}${URLs.offers.get}`)
