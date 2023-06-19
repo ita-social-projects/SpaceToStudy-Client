@@ -20,7 +20,7 @@ import DirectionLink from '~/components/direction-link/DirectionLink'
 import NotFoundResults from '~/components/not-found-results/NotFoundResults'
 import CreateSubjectModal from '~/containers/find-offer/create-new-subject/CreateNewSubject'
 import serviceIcon from '~/assets/img/student-home-page/service_icon.png'
-import { getScreenBasedLimit, studentOrTutor } from '~/utils/helper-functions'
+import { getOpositeRole, getScreenBasedLimit } from '~/utils/helper-functions'
 
 import {
   CategoryInterface,
@@ -65,14 +65,14 @@ const Categories = () => {
     params
   })
 
-  const currentRole = studentOrTutor(userRole)
+  const oppositeRole = getOpositeRole(userRole)
 
   const cards = useMemo(
     () =>
       categories.map((item) => {
         return (
           <CardWithLink
-            description={`${item.totalOffers[currentRole]} ${t(
+            description={`${item.totalOffers[oppositeRole]} ${t(
               'categoriesPage.offers'
             )}`}
             img={serviceIcon}
@@ -82,7 +82,7 @@ const Categories = () => {
           />
         )
       }),
-    [categories, currentRole, t]
+    [categories, oppositeRole, t]
   )
 
   const options = useMemo(
