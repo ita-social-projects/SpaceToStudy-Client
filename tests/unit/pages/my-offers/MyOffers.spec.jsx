@@ -36,10 +36,8 @@ const mockData = {
   count: 0
 }
 
-const userId = mockData.offers.author._id
-
 mockAxiosClient
-  .onGet(`${URLs.users.get}/${userId}${URLs.offers.get}`)
+  .onGet(`${URLs.users.get}/_id/${URLs.offers.get}`)
   .reply(200, mockData)
 
 describe('MyOffers', () => {
