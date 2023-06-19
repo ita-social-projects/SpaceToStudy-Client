@@ -1,4 +1,5 @@
 import { RequestParams } from '~/types/services/services.index'
+import { Cooperation, Offer } from '~/types'
 
 export interface MyCooperationsFilters {
   status: string
@@ -18,10 +19,10 @@ export interface ScreenBasedLimits {
   default: number
 }
 
-export interface RemoveColumnRules {
-  desktop?: TableColumns['label'][]
-  tablet?: TableColumns['label'][]
-  mobile?: TableColumns['label'][]
+export interface RemoveColumnRules<T extends Cooperation | Offer> {
+  desktop?: TableColumns<T>['label'][]
+  tablet?: TableColumns<T>['label'][]
+  mobile?: TableColumns<T>['label'][]
 }
 
 export interface TableColumns<T> {

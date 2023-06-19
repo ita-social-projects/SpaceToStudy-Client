@@ -8,12 +8,12 @@ import { useTranslation } from 'react-i18next'
 import AppButton from '~/components/app-button/AppButton'
 import TitleWithDescripiton from '~/components/title-with-description/TitleWithDescription'
 import StatusChip from '~/components/status-chip/StatusChip'
+import SubjectLevelWithLabels from '~/components/subject-level-with-labels/SubjectLevelWithLabels'
 
 import { ButtonActions, Offer, SizeEnum } from '~/types'
 
 import { styles } from '~/containers/my-offers/my-offers-card/MyOffersCard.styles'
 import Divider from '@mui/material/Divider'
-import SubjectLevelChips from '~/components/subject-level-chips/SubjectLevelChips'
 
 interface OfferCardSquareProps {
   buttonActions?: (ButtonActions | null)[]
@@ -49,11 +49,10 @@ const OfferCardSquare: FC<OfferCardSquareProps> = ({
       </Box>
       <Typography sx={styles.title}>{title}</Typography>
       <Divider />
-      <SubjectLevelChips
+      <SubjectLevelWithLabels
         color={category.appearance.color}
         proficiencyLevel={proficiencyLevel}
         subject={subject.name}
-        sx={styles.chipsContainer}
       />
       <Box sx={styles.priceContainer}>
         <TitleWithDescripiton

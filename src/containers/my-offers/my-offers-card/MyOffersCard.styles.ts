@@ -22,27 +22,6 @@ export const styles = {
     fontWeight: 600,
     color: 'primary.700'
   },
-  chipsContainer: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    gap: '5px'
-  },
-  subjectChipLabel: {
-    typography: 'overline',
-    fontWeight: 500
-  },
-  subjectChip: {
-    mr: '4px',
-    backgroundColor: 'green.300',
-    color: 'green.900'
-  },
-  levelChipLabel: {
-    typography: 'overline'
-  },
-  levelChip: {
-    backgroundColor: 'green.50',
-    color: 'primary.700'
-  },
   priceContainer: {
     display: 'flex',
     alignItems: 'center',

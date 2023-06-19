@@ -32,7 +32,11 @@ const CooperationContainer: FC<CooperationContainerProps> = ({
   const breakpoints = useBreakpoints()
   const { openModal } = useModalContext()
 
-  const columnsToShow = ajustColumns(breakpoints, columns, removeColumnRules)
+  const columnsToShow = ajustColumns<Cooperation>(
+    breakpoints,
+    columns,
+    removeColumnRules
+  )
 
   const handleCardClick = (item: Cooperation) => {
     item.status === StatusEnum.Pending &&

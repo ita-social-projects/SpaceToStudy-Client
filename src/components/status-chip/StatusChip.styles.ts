@@ -6,6 +6,7 @@ const statusColors = {
   [StatusEnum.Pending]: palette.basic.blue,
   [StatusEnum.Active]: palette.success[600],
   [StatusEnum.Closed]: palette.primary[400],
+  [StatusEnum.Draft]: palette.basic.blue
   [StatusEnum.NeedAction]: palette.error[600]
 }
 

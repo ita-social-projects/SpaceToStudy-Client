@@ -17,7 +17,7 @@ import AppPagination from '~/components/app-pagination/AppPagination'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import AppDrawer from '~/components/app-drawer/AppDrawer'
 import CreateOffer from '~/containers/offer-page/create-offer/CreateOffer'
-import CooperationToolbar from '~/containers/my-cooperations/cooperation-toolbar/CooperationToolbar'
+import CooperationOfferToolbar from '~/containers/my-cooperations/cooperation-offer-toolbar/CooperationOfferToolbar'
 import MyOffersContainer from '~/containers/my-offers/my-offers-container/MyOffersContainer'
 import { OfferService } from '~/services/offer-service'
 import { getScreenBasedLimit } from '~/utils/helper-functions'
@@ -111,7 +111,7 @@ const MyOffers = () => {
         </AppDrawer>
       </Box>
       <Box sx={styles.tabs}>{tabs}</Box>
-      <CooperationToolbar
+      <CooperationOfferToolbar
         filterOptions={filterOptions}
         onChangeView={setItemsView}
         sortFields={sortFields}

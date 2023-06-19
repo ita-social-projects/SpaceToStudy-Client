@@ -1,9 +1,8 @@
-import Box from '@mui/material/Box'
 import StatusChip from '~/components/status-chip/StatusChip'
-import AppChip from '~/components/app-chip/AppChip'
+import SubjectLevelChips from '~/components/subject-level-chips/SubjectLevelChips'
+
 import { getFormatedDate } from '~/utils/helper-functions'
-import { Offer } from '~/types'
-import { styles } from '~/containers/my-cooperations/cooperations-container/CooperationContainer.styles'
+import { Offer, RemoveColumnRules } from '~/types'
 
 export const columns = [
   {
@@ -13,10 +12,11 @@ export const columns = [
   {
     label: 'myOffersPage.tableHeaders.subject',
     calculatedCellValue: (item: Offer) => (
-      <Box sx={styles.chips}>
-        <AppChip labelSx={styles.chip}>{item.subject.name}</AppChip>
-        <AppChip labelSx={styles.chip}>{item.proficiencyLevel}</AppChip>
-      </Box>
+      <SubjectLevelChips
+        color={item.category.appearance.color}
+        proficiencyLevel={item.proficiencyLevel}
+        subject={item.subject.name}
+      />
     )
   },
   {
@@ -35,7 +35,7 @@ export const columns = [
   }
 ]
 
-export const removeColumnRules = {
+export const removeColumnRules: RemoveColumnRules<Offer> = {
   tablet: [
     'myOffersPage.tableHeaders.updated',
     'myOffersPage.tableHeaders.status'

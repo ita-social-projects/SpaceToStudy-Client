@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import CooperationToolbar from '~/containers/my-cooperations/cooperation-toolbar/CooperationToolbar'
+import CooperationOfferToolbar from '~/containers/my-cooperations/cooperation-offer-toolbar/CooperationOfferToolbar'
 
 const filterOptionsMock = {
   filters: {
@@ -17,7 +17,7 @@ const sortOptions = {
 describe('CooperationContainer component ', () => {
   it('should render card in container', () => {
     render(
-      <CooperationToolbar
+      <CooperationOfferToolbar
         filterOptions={filterOptionsMock}
         sortFields={sortFieldsMock}
         sortOptions={sortOptions}

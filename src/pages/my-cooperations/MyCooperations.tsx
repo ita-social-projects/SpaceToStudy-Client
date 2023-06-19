@@ -15,7 +15,7 @@ import Loader from '~/components/loader/Loader'
 import AppButton from '~/components/app-button/AppButton'
 import AppPagination from '~/components/app-pagination/AppPagination'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
-import CooperationToolbar from '~/containers/my-cooperations/cooperation-toolbar/CooperationToolbar'
+import CooperationOfferToolbar from '~/containers/my-cooperations/cooperation-offer-toolbar/CooperationOfferToolbar'
 import CooperationContainer from '~/containers/my-cooperations/cooperations-container/CooperationContainer'
 import { cooperationService } from '~/services/cooperation-service'
 import { getScreenBasedLimit } from '~/utils/helper-functions'
@@ -115,7 +115,7 @@ const MyCooperations = () => {
         <AppButton {...button.buttonProps}>{t(button.label)}</AppButton>
       </Box>
       <Box sx={styles.tabs}>{tabs}</Box>
-      <CooperationToolbar
+      <CooperationOfferToolbar
         filterOptions={filterOptions}
         onChangeView={setItemsView}
         sortFields={sortFields}

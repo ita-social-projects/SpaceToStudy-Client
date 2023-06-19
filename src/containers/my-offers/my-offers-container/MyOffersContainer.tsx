@@ -31,7 +31,11 @@ const MyOffersContainer: FC<MyOffersContainerProps> = ({
   const breakpoints = useBreakpoints()
   const { t } = useTranslation()
 
-  const columnsToShow = ajustColumns(breakpoints, columns, removeColumnRules)
+  const columnsToShow = ajustColumns<Offer>(
+    breakpoints,
+    columns,
+    removeColumnRules
+  )
 
   const myOffersGrid = (
     <Box sx={styles.root}>

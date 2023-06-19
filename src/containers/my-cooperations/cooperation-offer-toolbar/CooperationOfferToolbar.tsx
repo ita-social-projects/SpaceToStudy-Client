@@ -9,7 +9,7 @@ import AppSelect from '~/components/app-select/AppSelect'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { useDebounce } from '~/hooks/use-debounce'
 
-import { styles } from '~/containers/my-cooperations/cooperation-toolbar/CooperationToolbar.styles'
+import { styles } from '~/containers/my-cooperations/cooperation-offer-toolbar/CooperationOfferToolbar.styles'
 import { FilterHook } from '~/hooks/table/use-filter'
 import {
   CardsView,
@@ -19,7 +19,7 @@ import {
 } from '~/types'
 import { SortHook } from '~/hooks/table/use-sort'
 
-interface CooperationToolbarProps {
+interface CooperationOfferToolbarProps {
   filterOptions: FilterHook<MyCooperationsFilters>
   sortFields: SelectFieldType<string>[]
   withoutSort?: boolean
@@ -28,7 +28,7 @@ interface CooperationToolbarProps {
   onChangeView: (value: CardsViewEnum) => void
 }
 
-const CooperationToolbar: FC<CooperationToolbarProps> = ({
+const CooperationOfferToolbar: FC<CooperationOfferToolbarProps> = ({
   filterOptions,
   sortFields,
   withoutSort,
@@ -89,4 +89,4 @@ const CooperationToolbar: FC<CooperationToolbarProps> = ({
   )
 }
 
-export default CooperationToolbar
+export default CooperationOfferToolbar
