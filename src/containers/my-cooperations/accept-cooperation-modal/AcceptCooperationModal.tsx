@@ -121,6 +121,8 @@ const AcceptCooperationModal: FC<AcceptCooperationModalProps> = ({
     handleNonInputValueChange('price', value)
   }
 
+  const onCooperationAccept = () => void handleAcceptCooperation()
+
   const buttons = loading ? (
     <Loader size={50} />
   ) : (
@@ -136,7 +138,7 @@ const AcceptCooperationModal: FC<AcceptCooperationModalProps> = ({
       )}
       <Box sx={styles.buttonRow}>
         {needAction && (
-          <AppButton onClick={() => void handleAcceptCooperation()}>
+          <AppButton onClick={onCooperationAccept}>
             {t('cooperationsPage.acceptModal.accept')}
           </AppButton>
         )}

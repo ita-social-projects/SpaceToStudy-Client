@@ -1,3 +1,5 @@
+import { TypographyVariantEnum } from '~/types'
+
 export const styles = {
   root: {
     display: 'flex',
@@ -13,11 +15,13 @@ export const styles = {
     gap: '36px',
     alignItems: 'start'
   },
-  title: { typography: 'h4' },
+  title: {
+    typography: { xs: TypographyVariantEnum.H5, sm: TypographyVariantEnum.H4 }
+  },
   card: { width: '360px' },
   titleDescription: {
     wrapper: { display: 'flex', alignItems: 'center' },
-    title: { typography: 'h6', mr: '20px' },
+    title: { typography: TypographyVariantEnum.H6, mr: '20px' },
     description: { lineHeight: 'inherit' }
   },
   buttons: {

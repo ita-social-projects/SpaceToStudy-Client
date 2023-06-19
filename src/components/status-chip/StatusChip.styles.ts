@@ -1,12 +1,12 @@
 import { alpha } from '@mui/material/styles'
 import palette from '~/styles/app-theme/app.pallete'
-import { StatusEnum } from '~/types'
+import { StatusEnum, TypographyVariantEnum } from '~/types'
 
 const statusColors = {
-  pending: palette.basic.blue,
-  active: palette.success[600],
-  closed: palette.primary[400],
-  'need action': palette.error[600]
+  [StatusEnum.Pending]: palette.basic.blue,
+  [StatusEnum.Active]: palette.success[600],
+  [StatusEnum.Closed]: palette.primary[400],
+  [StatusEnum.NeedAction]: palette.error[600]
 }
 
 export const styles = (status: StatusEnum) => ({
@@ -25,7 +25,7 @@ export const styles = (status: StatusEnum) => ({
     borderRadius: '50%'
   },
   status: {
-    typography: 'overline',
+    typography: TypographyVariantEnum.Overline,
     lineHeight: '14px',
     color: statusColors[status]
   }

@@ -1,4 +1,5 @@
 import palette from '~/styles/app-theme/app.pallete'
+import { TypographyVariantEnum } from '~/types'
 
 export const styles = {
   root: {
@@ -20,7 +21,7 @@ export const styles = {
   },
   name: {
     color: 'primary.500',
-    typography: 'button',
+    typography: TypographyVariantEnum.Button,
     '&:hover': {
       textDecoration: 'underline',
       textDecorationColor: palette.primary[300]
@@ -30,11 +31,11 @@ export const styles = {
     backgroundColor: 'primary.50'
   },
   reviews: {
-    typography: 'caption',
+    typography: TypographyVariantEnum.Caption,
     color: 'primary.500'
   },
   date: {
-    typography: 'body2',
+    typography: TypographyVariantEnum.Body2,
     color: 'primary.400'
   },
   link: { textDecoration: 'none' }

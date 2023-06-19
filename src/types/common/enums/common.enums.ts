@@ -33,7 +33,8 @@ export enum TypographyVariantEnum {
   H6 = 'h6',
   Body2 = 'body2',
   Body1 = 'body1',
-  Subtitle2 = 'subtitle2'
+  Subtitle2 = 'subtitle2',
+  Overline = 'overline'
 }
 
 export enum TextFieldVariantEnum {
