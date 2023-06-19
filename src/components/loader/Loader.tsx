@@ -7,14 +7,20 @@ import { styles } from '~/components/loader/Loader.styles'
 
 interface LoaderProps {
   size?: number
-  sx?: SxProps
+  sx?: {
+    container?: SxProps
+    loader?: SxProps
+  }
   pageLoad?: boolean
 }
 
 const Loader: FC<LoaderProps> = ({ size = 70, sx, pageLoad = false }) => {
   return (
-    <Box data-testid='loader' sx={styles.container(pageLoad)}>
-      <CircularProgress size={size} sx={{ ...sx, ...styles.loader }} />
+    <Box
+      data-testid='loader'
+      sx={{ ...styles.container(pageLoad), ...sx?.container }}
+    >
+      <CircularProgress size={size} sx={{ ...styles.loader, ...sx?.loader }} />
     </Box>
   )
 }

@@ -35,7 +35,7 @@ const AppAutoComplete = ({
             endAdornment: (
               <Fragment>
                 {props.loading ? (
-                  <Loader size={20} sx={{ color: 'primary.600' }} />
+                  <Loader size={20} sx={{ loader: { color: 'primary.600' } }} />
                 ) : null}
                 {props.value &&
                   !hideClearIcon &&
