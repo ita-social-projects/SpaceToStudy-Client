@@ -41,7 +41,7 @@ const EnhancedTableRow = ({
     </MenuItem>
   ))
 
-  const handleRowClick = () => onRowClick && onRowClick(item)
+  const handleRowClick = () => (onRowClick ? onRowClick(item) : null)
 
   return (
     <TableRow
