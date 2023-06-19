@@ -23,7 +23,6 @@ import Loader from '~/components/loader/Loader'
 
 import { errorRoutes } from '~/router/constants/errorRoutes'
 import topBlockIcon from '~/assets/img/offer-details/top-block-icon.png'
-import { mockedFAQItems } from '~/pages/offer-details/constants'
 import { styles } from '~/pages/offer-details/OfferDetails.styles'
 import { Offer, ButtonVariantEnum, OutletContext } from '~/types'
 import ScrollVisibilityWrapper from '~/components/scroll-visibility-wrapper/ScrollVisibilityWrapper'
@@ -89,6 +88,11 @@ const OfferDetails = () => {
     return null
   }
 
+  const faqItems = response.FAQ.map((item) => ({
+    title: item.question,
+    description: item.answer
+  }))
+
   return (
     <Container ref={offerDetailsPage} sx={styles.container}>
       {!isMobile && (
@@ -129,13 +133,15 @@ const OfferDetails = () => {
       <AppCard sx={styles.wrapper}>
         <OfferGeneralInfo offer={response} />
       </AppCard>
-      <AppCard sx={styles.wrapper}>
-        <MultiAccordionWithTitle
-          items={mockedFAQItems}
-          sx={styles.faqAccordion}
-          title='offerDetailsPage.faqTitle'
-        />
-      </AppCard>
+      {faqItems.length > 0 ? (
+        <AppCard sx={styles.wrapper}>
+          <MultiAccordionWithTitle
+            items={faqItems}
+            sx={styles.faqAccordion}
+            title='offerDetailsPage.faqTitle'
+          />
+        </AppCard>
+      ) : null}
       <AppCard sx={styles.wrapper}>
         <CommentsBlock
           data={items}
