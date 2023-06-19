@@ -26,7 +26,7 @@ import OfferRequestBlock from '~/containers/find-offer/offer-request-block/Offer
 import AsyncAutocomplete from '~/components/async-autocomlete/AsyncAutocomplete'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import serviceIcon from '~/assets/img/student-home-page/service_icon.png'
-import { getScreenBasedLimit, studentOrTutor } from '~/utils/helper-functions'
+import { getOpositeRole, getScreenBasedLimit } from '~/utils/helper-functions'
 import { mapArrayByField } from '~/utils/map-array-by-field'
 
 import {
@@ -92,14 +92,14 @@ const Subjects = () => {
     params
   })
 
-  const currentRole = studentOrTutor(userRole)
+  const oppositeRole = getOpositeRole(userRole)
 
   const cards = useMemo(
     () =>
       subjects.map((item: SubjectInterface) => {
         return (
           <CardWithLink
-            description={`${item.totalOffers[currentRole]} ${t(
+            description={`${item.totalOffers[oppositeRole]} ${t(
               'categoriesPage.offers'
             )}`}
             img={serviceIcon}
@@ -109,7 +109,7 @@ const Subjects = () => {
           />
         )
       }),
-    [subjects, categoryId, currentRole, t]
+    [subjects, categoryId, oppositeRole, t]
   )
 
   const onCategoryChange = (
