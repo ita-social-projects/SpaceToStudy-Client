@@ -92,7 +92,6 @@ const OfferDetails = () => {
     title: item.question,
     description: item.answer
   }))
-
   return (
     <Container ref={offerDetailsPage} sx={styles.container}>
       {!isMobile && (
@@ -133,7 +132,7 @@ const OfferDetails = () => {
       <AppCard sx={styles.wrapper}>
         <OfferGeneralInfo offer={response} />
       </AppCard>
-      {faqItems.length > 0 ? (
+      {faqItems.length > 0 && (
         <AppCard sx={styles.wrapper}>
           <MultiAccordionWithTitle
             items={faqItems}
@@ -141,7 +140,7 @@ const OfferDetails = () => {
             title='offerDetailsPage.faqTitle'
           />
         </AppCard>
-      ) : null}
+      )}
       <AppCard sx={styles.wrapper}>
         <CommentsBlock
           data={items}
