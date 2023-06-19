@@ -5,7 +5,6 @@ import DoneIcon from '@mui/icons-material/Done'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import AppChipList from '~/components/app-chips-list/AppChipList'
 import ProfileDoneItemsList from '~/components/icon-with-text-list/ProfileDoneItemsList'
-import useBreakpoints from '~/hooks/use-breakpoints'
 
 import img from '~/assets/img/tutor-profile-page/avatar.png'
 import { styles } from '~/containers/tutor-profile/profile-info/ProfileInfo.styles'
@@ -18,8 +17,6 @@ const ProfileContainerDesktop = ({
   subjectChips,
   doneItems
 }) => {
-  const { isLaptopAndAbove } = useBreakpoints()
-
   return (
     <Box sx={styles.container}>
       <Box>
@@ -48,12 +45,7 @@ const ProfileContainerDesktop = ({
 
         <ProfileDoneItemsList
           defaultQuantity={defaultQuantity}
-          icon={
-            <DoneIcon
-              color='success'
-              fontSize={isLaptopAndAbove ? 'medium' : 'small'}
-            />
-          }
+          icon={<DoneIcon sx={styles.doneIcon} />}
           items={doneItems}
         />
 
