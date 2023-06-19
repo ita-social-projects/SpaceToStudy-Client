@@ -1,11 +1,13 @@
 import {
   FC,
+  useEffect,
   createContext,
   useCallback,
   useContext,
   useMemo,
   useState
 } from 'react'
+import { useLocation } from 'react-router-dom'
 import PopupDialog from '~/components/popup-dialog/PopupDialog'
 import { PaperProps } from '@mui/material/Paper'
 
@@ -31,12 +33,18 @@ const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
   const [modal, setModal] = useState<React.ReactElement | null>(null)
   const [paperProps, setPaperProps] = useState<PaperProps>({})
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null)
+  const { pathname } = useLocation()
 
   const closeModal = useCallback(() => {
     setModal(null)
     setPaperProps({})
     setTimer(null)
   }, [setModal, setPaperProps, setTimer])
+
+  useEffect(() => {
+    modal && closeModal()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname])
 
   const closeModalAfterDelay = useCallback(
     (delay?: number) => {

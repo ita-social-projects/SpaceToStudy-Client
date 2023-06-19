@@ -127,7 +127,7 @@ const GeneralInfoStep = ({
   if (userLoading) {
     return (
       <Box sx={styles.container}>
-        <Loader size={70} />
+        <Loader />
       </Box>
     )
   }

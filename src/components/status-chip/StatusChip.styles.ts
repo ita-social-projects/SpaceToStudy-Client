@@ -5,13 +5,17 @@ import { StatusEnum } from '~/types'
 const statusColors = {
   pending: palette.basic.blue,
   active: palette.success[600],
-  closed: palette.primary[400]
+  closed: palette.primary[400],
+  'need action': palette.error[600]
 }
 
 export const styles = (status: StatusEnum) => ({
   root: {
     backgroundColor: alpha(statusColors[status], 0.2),
-    py: 0
+    py: 0,
+    border: '1px solid',
+    borderColor: statusColors[status],
+    cursor: 'inherit'
   },
   label: { display: 'flex', gap: '5px', alignItems: 'center' },
   dot: {

@@ -7,7 +7,8 @@ export const styles = {
     minHeight: { xs: '280px', sm: '340px' },
     display: 'flex',
     flexDirection: 'column',
-    gap: '14px'
+    gap: '14px',
+    cursor: 'pointer'
   },
   userInfo: {
     display: 'flex',

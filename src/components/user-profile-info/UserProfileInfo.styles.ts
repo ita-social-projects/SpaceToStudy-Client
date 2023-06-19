@@ -1,3 +1,5 @@
+import palette from '~/styles/app-theme/app.pallete'
+
 export const styles = {
   root: {
     display: 'flex',
@@ -11,11 +13,18 @@ export const styles = {
   },
   avatar: {
     height: '48px',
-    width: '48px'
+    width: '48px',
+    '&:hover': {
+      transform: 'scale(1.1)'
+    }
   },
   name: {
     color: 'primary.500',
-    typography: 'button'
+    typography: 'button',
+    '&:hover': {
+      textDecoration: 'underline',
+      textDecorationColor: palette.primary[300]
+    }
   },
   rating: {
     backgroundColor: 'primary.50'

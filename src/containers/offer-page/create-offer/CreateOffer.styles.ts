@@ -56,5 +56,6 @@ export const styles = {
     alignSelf: 'start'
   },
   faqInputsBlock: { display: 'flex', gap: '12px', alignItems: 'start' },
-  faqInputs: { flex: 1 }
+  faqInputs: { flex: 1 },
+  submit: { minWidth: '166px' }
 }

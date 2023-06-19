@@ -14,5 +14,21 @@
     "updated": "Last update",
     "status": "Status"
   },
+  "acceptModal": {
+    "title": "Accept new cooperation",
+    "resend": "Re-send cooperation",
+    "accept": "Accept cooperation",
+    "decline": "Decline cooperation",
+    "level": "Appropriate level:",
+    "price": "Price in offer:",
+    "suggested": "Suggested price:",
+    "riseOrLow": "Rise or lower the price:",
+    "confirm": {
+      "resend": "Are you sure you want to resend cooperation for {{price}} UAH",
+      "accept": "Are you sure you want to accept cooperation for {{price}} UAH",
+      "decline": "Are you sure you want to decline this cooperation"
+    },
+    "successMessage":"Cooperation updated successfully"
+  },
   "search": "Search user name or title"
 }

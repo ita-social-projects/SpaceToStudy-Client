@@ -41,7 +41,7 @@ const CardsWithButton: FC<CardsWithButtonProps> = ({
     const boxSide = key % 2 === 0 ? PositionEnum.Right : PositionEnum.Left
 
     return (
-      <Transition in={isStudent} key={item.title} timeout={300}>
+      <Transition in={isStudent} key={key} timeout={300}>
         {(state) => (
           <Box
             sx={[

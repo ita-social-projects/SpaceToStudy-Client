@@ -5,7 +5,7 @@ import { renderWithProviders } from '~tests/test-utils'
 
 describe('Loader test', () => {
   it('should render loader', () => {
-    renderWithProviders(<Loader size={70} />)
+    renderWithProviders(<Loader />)
     const loader = screen.getByTestId('loader')
 
     expect(loader).toBeInTheDocument()

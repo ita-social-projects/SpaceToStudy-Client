@@ -42,7 +42,7 @@ const CommentsWithRatingBlock = ({
         {t('tutorProfilePage.reviews.title')}
       </Typography>
       {loadingMock && !items.length ? (
-        <Loader size={70} />
+        <Loader />
       ) : (
         <>
           <RatingBlock

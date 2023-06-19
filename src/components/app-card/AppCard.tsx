@@ -1,23 +1,21 @@
-import { FC, ReactNode } from 'react'
+import { FC } from 'react'
 import { Link } from 'react-router-dom'
 
-import Box from '@mui/material/Box'
-import { SxProps } from '@mui/material'
+import Box, { BoxProps } from '@mui/material/Box'
 
 import { styles } from '~/components/app-card/AppCard.styles'
 
-interface AppCardProps {
-  children: ReactNode
+interface AppCardProps extends BoxProps {
   link?: string
-  sx?: SxProps
 }
 
-const AppCard: FC<AppCardProps> = ({ children, link, sx = {} }) => {
+const AppCard: FC<AppCardProps> = ({ children, link, sx = {}, ...props }) => {
   return (
     <Box
       component={link ? Link : Box}
       sx={{ ...styles.container(Boolean(link)), ...sx }}
       to={link}
+      {...props}
     >
       {children}
     </Box>

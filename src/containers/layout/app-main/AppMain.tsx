@@ -21,12 +21,12 @@ const AppMain = () => {
   }, [dispatch])
 
   if (loading) {
-    return <Loader pageLoad size={70} />
+    return <Loader pageLoad />
   }
 
   return (
     <Box ref={mainWithFooter} sx={styles.content}>
-      <Suspense fallback={<Loader pageLoad size={70} />}>
+      <Suspense fallback={<Loader pageLoad />}>
         <AppBreadCrumbs />
         <ScrollToTop element={mainWithFooter} />
         <Outlet context={{ pageRef: mainWithFooter }} />

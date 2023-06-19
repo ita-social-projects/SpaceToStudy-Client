@@ -4,6 +4,7 @@ import { ConfirmationDialogContext } from '~/context/confirm-context'
 interface ConfirmationDialogProps {
   message: string
   title: string
+  check?: boolean
 }
 
 interface OpenDialogProps extends ConfirmationDialogProps {
@@ -32,9 +33,10 @@ const useConfirm = (): UseConfirmResult => {
 
   const checkConfirmation = ({
     message,
-    title
+    title,
+    check
   }: ConfirmationDialogProps): boolean | Promise<boolean> => {
-    if (needConfirmation) {
+    if (needConfirmation || check) {
       return new Promise((res) => {
         openDialog({ sendConfirm: res, message, title })
       })

@@ -60,7 +60,11 @@ const MyCooperations = () => {
     [filters, page, itemsPerPage, sort]
   )
 
-  const { loading, response } = useAxios({
+  const {
+    loading,
+    response,
+    fetchData: getCooperations
+  } = useAxios({
     service: getMyCooperations,
     defaultResponse
   })
@@ -108,6 +112,7 @@ const MyCooperations = () => {
       ) : (
         <>
           <CooperationContainer
+            getCooperations={getCooperations}
             items={response.items}
             showTable={showTable}
             sort={sortOptions}

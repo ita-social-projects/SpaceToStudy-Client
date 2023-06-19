@@ -5,7 +5,7 @@ import StatusChip from '~/components/status-chip/StatusChip'
 import UserProfileInfo from '~/components/user-profile-info/UserProfileInfo'
 import SubjectLevelChips from '~/components/subject-level-chips/SubjectLevelChips'
 
-import { Cooperation } from '~/types'
+import { Cooperation, StatusEnum } from '~/types'
 import { styles } from '~/containers/my-cooperations/cooperations-container/CooperationContainer.styles'
 
 export const columns = [
@@ -53,9 +53,13 @@ export const columns = [
   },
   {
     label: 'cooperationsPage.tableHeaders.status',
-    calculatedCellValue: (item: Cooperation) => (
-      <StatusChip status={item.status} />
-    )
+    calculatedCellValue: ({ user, needAction, status }: Cooperation) => {
+      const cooperationStatus =
+        user.role !== needAction && status === StatusEnum.Pending
+          ? StatusEnum.NeedAction
+          : status
+      return <StatusChip status={cooperationStatus} />
+    }
   }
 ]
 

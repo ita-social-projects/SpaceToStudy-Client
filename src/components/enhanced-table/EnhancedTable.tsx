@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import ReportIcon from '@mui/icons-material/Report'
 import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
-import Table from '@mui/material/Table'
+import Table, { TableProps } from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableContainer from '@mui/material/TableContainer'
 
@@ -23,28 +23,30 @@ import {
   TableSort
 } from '~/types'
 
-interface EnhancedTableProps<F, I> {
+interface EnhancedTableProps<I, F> extends TableProps {
   columns: TableColumn<I>[]
-  isSelection: boolean
-  rowActions: TableRowAction[]
-  select: TableSelect<I>
-  filter: TableFilter<F>
+  isSelection?: boolean
+  rowActions?: TableRowAction[]
+  select?: TableSelect<I>
+  filter?: TableFilter<F>
   sort: TableSort
-  rowsPerPage: number
+  rowsPerPage?: number
   data: TableData<I>
+  onRowClick?: (item: I) => void
 }
 
-const EnhancedTable = <F, I extends TableItem>({
+const EnhancedTable = <I extends TableItem, F = undefined>({
   columns,
   isSelection,
   rowActions,
+  onRowClick,
   select,
   filter,
   sort,
   rowsPerPage,
   data,
   ...props
-}: EnhancedTableProps<F, I>) => {
+}: EnhancedTableProps<I, F>) => {
   const { t } = useTranslation()
   const { items, loading, getData } = data
 
@@ -54,6 +56,7 @@ const EnhancedTable = <F, I extends TableItem>({
       isSelection={isSelection}
       item={item}
       key={item._id}
+      onRowClick={onRowClick}
       refetchData={getData}
       rowActions={rowActions}
       select={select}
@@ -94,7 +97,7 @@ const EnhancedTable = <F, I extends TableItem>({
   )
 
   const tableContent =
-    (loading && <Loader size={70} sx={styles.loader} />) ||
+    (loading && <Loader sx={styles.loader} />) ||
     (!items.length && noMatchesBox) ||
     tableBody
 

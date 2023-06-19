@@ -169,7 +169,7 @@ const FindOffers = () => {
           {filtersComponent}
         </AppDrawer>
         {offersLoading ? (
-          <Loader pageLoad size={70} />
+          <Loader pageLoad />
         ) : !offers.length && !offersLoading ? (
           <NotFoundResults description={t('findOffers.notFound.description')} />
         ) : (
