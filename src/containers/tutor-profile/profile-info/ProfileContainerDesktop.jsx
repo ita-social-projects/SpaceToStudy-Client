@@ -20,8 +20,6 @@ const ProfileContainerDesktop = ({
 }) => {
   const { isDesktop } = useBreakpoints()
 
-  const subjectData = userData.mainSubjects.tutor.map((item) => item.name)
-
   return (
     <Box sx={styles.container}>
       <Box sx={styles.avatarContainer}>
