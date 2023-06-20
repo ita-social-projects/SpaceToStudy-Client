@@ -18,8 +18,6 @@ const ProfileContainerDesktop = ({
   doneItems,
   chipItems
 }) => {
-  const { isDesktop } = useBreakpoints()
-
   return (
     <Box sx={styles.container}>
       <Box sx={styles.avatarContainer}>

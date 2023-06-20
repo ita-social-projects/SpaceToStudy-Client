@@ -10,12 +10,6 @@ import Loader from '~/components/loader/Loader'
 import { userService } from '~/services/user-service'
 import useAxios from '~/hooks/use-axios'
 
-import { useAppSelector } from '~/hooks/use-redux'
-import useUserInfo from '~/hooks/use-user-info'
-import Loader from '~/components/loader/Loader'
-import { userService } from '~/services/user-service'
-import useAxios from '~/hooks/use-axios'
-
 import { profileItems } from '~/components/profile-item/complete-profile.constants'
 import { defaultResponses } from '~/constants'
 import { responseMock } from '~/pages/tutor-profile/constants'
@@ -25,7 +19,6 @@ const TutorProfile = () => {
   const { reviews } = user.reviewStats || {}
 
   const { userId, userRole } = useAppSelector((state) => state.appMain)
-  
 
   const getUserData = useCallback(
     () => userService.getUserById(userId, userRole),
@@ -41,19 +34,6 @@ const TutorProfile = () => {
   if (loading) {
     return <Loader pageLoad size={70} />
   }
-
-  const { id, role } = parseJwt(localStorage.getItem('s2s'))
-
-  const { loading: userDataLoading, response: userData } = useUserInfo({
-    id: userId,
-    role: userRole
-  })
-
-  if (loading) {
-    return <Loader pageLoad size={70} />
-  }
-
-
 
   return (
     <PageWrapper>
