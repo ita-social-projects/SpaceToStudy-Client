@@ -14,7 +14,7 @@ export const styles = {
   },
   title: {
     position: { xs: 'static', sm: 'absolute' },
-    marginLeft: { xs: '0', sm: '-60vw' }
+    left: { xs: '0', sm: '0' }
   },
   links: {
     display: { xs: 'flex', sm: 'block' },
