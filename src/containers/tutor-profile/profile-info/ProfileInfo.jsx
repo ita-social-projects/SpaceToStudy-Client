@@ -97,10 +97,14 @@ const ProfileInfo = ({ userData }) => {
       title: t('tutorProfilePage.profileInfo.nativeLanguage'),
       description: userData.nativeLanguage
     },
-    {
-      title: t('tutorProfilePage.profileInfo.location'),
-      description: `${userData.address.city}, ${userData.address.country}`
-    }
+    ...(userData.address.country === ''
+      ? []
+      : [
+          {
+            title: t('tutorProfilePage.profileInfo.location'),
+            description: `${userData.address.city}, ${userData.address.country}`
+          }
+        ])
   ]
 
   const buttonGroup = !isMyProfile && (
