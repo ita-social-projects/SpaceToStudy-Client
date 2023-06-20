@@ -9,26 +9,10 @@ export const styles = {
     gap: '24px',
     justifyContent: 'space-between'
   },
-  cardTopContent: {
+  cardContent: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'flex-start',
-    padding: '0px',
-    gap: '16px',
-    flex: 'none',
-    flexGrow: '0',
-    order: '0',
-    alignSelf: 'stretch'
-  },
-  cardBottomContent: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    padding: '0px',
-    gap: '16px',
-    flex: 'none',
-    order: '1',
-    flexGrow: '0'
+    gap: '16px'
   },
   userInfo: {
     root: {
@@ -50,9 +34,6 @@ export const styles = {
     fontWeight: 600,
     color: 'primary.700'
   },
-  devider: {
-    width: '100%'
-  },
   iconButton: {
     color: 'basic.black',
     position: 'absolute',
@@ -60,22 +41,20 @@ export const styles = {
     right: 0
   },
   chipContainer: {
-    chips: {
-      mb: '16px',
-      flexDirection: 'row'
+    container: {
+      gap: '10px'
     },
-    chipsContainer: {
-      flexDirection: 'column',
-      alignItems: 'flex-start',
-      m: '0'
+    label: {
+      fontSize: '10px',
+      textTransform: 'uppercase',
+      color: 'primary.500'
     }
   },
   priceContainer: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    mt: 'auto',
-    width: '100%'
+    mt: 'auto'
   },
   titleWithDescription: {
     wrapper: {
@@ -91,7 +70,6 @@ export const styles = {
   buttonContainer: {
     display: 'flex',
     flexDirection: 'column',
-    gap: '16px',
-    width: '100%'
+    gap: '16px'
   }
 }

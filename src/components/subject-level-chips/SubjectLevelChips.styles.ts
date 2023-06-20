@@ -5,24 +5,7 @@ export const styles = {
     display: 'flex',
     flexWrap: 'wrap',
     alignItems: 'start',
-    gap: '10px',
-    mb: '0'
-  },
-  chipsContainer: {
-    display: 'flex',
-    gap: '4px',
-    m: '10px 0'
-  },
-  titleContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-around',
-    height: '100%'
-  },
-  title: {
-    color: 'primary.500',
-    textTransform: 'uppercase',
-    fontSize: '10px'
+    gap: '4px'
   },
   subjectChipLabel: {
     typography: 'overline',

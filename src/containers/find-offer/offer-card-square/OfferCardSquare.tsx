@@ -11,10 +11,10 @@ import AppRatingMobile from '~/components/app-rating-mobile/AppRatingMobile'
 import AppButton from '~/components/app-button/AppButton'
 import UserProfileInfo from '~/components/user-profile-info/UserProfileInfo'
 import TitleWithDescripiton from '~/components/title-with-description/TitleWithDescription'
-import SubjectLevelChips from '~/components/subject-level-chips/SubjectLevelChips'
 
 import { ButtonActions, Offer, SizeEnum } from '~/types'
 import { styles } from '~/containers/find-offer/offer-card-square/OfferCardSquare.styles'
+import SubjectLevelWithLabels from '~/components/subject-level-with-labels/SubjectLevelWithLabels'
 
 interface OfferCardSquareProps {
   buttonActions?: (ButtonActions | null)[]
@@ -57,7 +57,7 @@ const OfferCardSquare: FC<OfferCardSquareProps> = ({
 
   return (
     <Box sx={styles.container}>
-      <Box sx={styles.cardTopContent}>
+      <Box sx={styles.cardContent}>
         <UserProfileInfo
           _id={author._id}
           firstName={author.firstName}
@@ -65,10 +65,11 @@ const OfferCardSquare: FC<OfferCardSquareProps> = ({
           lastName={author.lastName}
           photo={author.photo}
           role={authorRole}
+          showLanguage
           sx={styles.userInfo}
         />
         <Typography sx={styles.description}>{title}</Typography>
-        <Divider sx={styles.devider} />
+        <Divider />
         {onBookmarkClick && (
           <IconButton
             data-testid='bookmark-icon'
@@ -78,27 +79,24 @@ const OfferCardSquare: FC<OfferCardSquareProps> = ({
             <TurnedInNot />
           </IconButton>
         )}
-        <SubjectLevelChips
-          cardSquareStyle
+        <SubjectLevelWithLabels
           color={category.appearance.color}
           proficiencyLevel={proficiencyLevel}
           subject={subject.name}
           sx={styles.chipContainer}
         />
       </Box>
-      <Box sx={styles.cardBottomContent}>
+      <Box sx={styles.cardContent}>
         <Box sx={styles.priceContainer}>
           <TitleWithDescripiton
             description={`/ ${t('common.hour')}`}
             style={styles.titleWithDescription}
             title={`${price} ${t('common.uah')}`}
           />
-          <Box>
-            <AppRatingMobile
-              reviewsCount={author.totalReviews[authorRole]}
-              value={author.averageRating[authorRole]}
-            />
-          </Box>
+          <AppRatingMobile
+            reviewsCount={author.totalReviews[authorRole]}
+            value={author.averageRating[authorRole]}
+          />
         </Box>
         <Box sx={styles.buttonContainer}>{buttons}</Box>
       </Box>

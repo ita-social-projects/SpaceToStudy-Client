@@ -1,33 +1,28 @@
 import { FC, useMemo } from 'react'
-import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
+import { SxProps } from '@mui/material'
 
 import AppChip from '~/components/app-chip/AppChip'
 import palette from '~/styles/app-theme/app.pallete'
 import { spliceSx } from '~/utils/helper-functions'
 
-import { ProficiencyLevelEnum, SubjectLevelChipsSx } from '~/types'
+import { ProficiencyLevelEnum } from '~/types'
 import { styles } from '~/components/subject-level-chips/SubjectLevelChips.styles'
 
 interface SubjectLevelChipsProps {
-  cardSquareStyle: boolean
-  sx?: SubjectLevelChipsSx
+  sx?: SxProps
   proficiencyLevel: ProficiencyLevelEnum | ProficiencyLevelEnum[]
   subject: string
   color?: string
 }
 
 const SubjectLevelChips: FC<SubjectLevelChipsProps> = ({
-  cardSquareStyle = false,
   proficiencyLevel,
   subject,
   color = palette.success[600],
-  sx = {}
+  sx
 }) => {
-  const { t } = useTranslation()
-
   const proficiencyLevelText = useMemo(() => {
     if (!Array.isArray(proficiencyLevel)) return proficiencyLevel
     if (proficiencyLevel.length === 1) return proficiencyLevel[0]
@@ -37,28 +32,13 @@ const SubjectLevelChips: FC<SubjectLevelChipsProps> = ({
   }, [proficiencyLevel])
 
   return (
-    <Box sx={spliceSx(styles.chips, sx?.chips)}>
-      {cardSquareStyle && (
-        <Box sx={styles.titleContainer}>
-          <Typography sx={styles.title}>
-            {t('offerCardSquare.chips.subject')}
-          </Typography>
-          <Typography sx={styles.title}>
-            {t('offerCardSquare.chips.level')}
-          </Typography>
-        </Box>
-      )}
-      <Box sx={spliceSx(styles.chipsContainer, sx?.chipsContainer)}>
-        <AppChip
-          labelSx={styles.subjectChipLabel}
-          sx={styles.subjectChip(color)}
-        >
-          {subject}
-        </AppChip>
-        <AppChip labelSx={styles.levelChipLabel} sx={styles.levelChip(color)}>
-          {proficiencyLevelText}
-        </AppChip>
-      </Box>
+    <Box sx={spliceSx(styles.chips, sx)}>
+      <AppChip labelSx={styles.subjectChipLabel} sx={styles.subjectChip(color)}>
+        {subject}
+      </AppChip>
+      <AppChip labelSx={styles.levelChipLabel} sx={styles.levelChip(color)}>
+        {proficiencyLevelText}
+      </AppChip>
     </Box>
   )
 }

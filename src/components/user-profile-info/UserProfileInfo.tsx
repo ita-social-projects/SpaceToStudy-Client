@@ -28,6 +28,7 @@ interface UserProfileInfoProps
   languages: LanguagesEnum | LanguagesEnum[]
   rating?: number
   reviewsCount?: number
+  showLanguage?: boolean
   date?: string
   sx?: UserProfileInfoSx
   role: UserRole
@@ -41,6 +42,7 @@ const UserProfileInfo: FC<UserProfileInfoProps> = ({
   languages,
   date,
   reviewsCount,
+  showLanguage = false,
   sx = {},
   _id,
   role
@@ -89,7 +91,7 @@ const UserProfileInfo: FC<UserProfileInfoProps> = ({
             {getFormatedDate(date)}
           </Typography>
         )}
-        <LanguagesListWithIcon languages={languages} />
+        {showLanguage && <LanguagesListWithIcon languages={languages} />}
       </Box>
     </Box>
   )
