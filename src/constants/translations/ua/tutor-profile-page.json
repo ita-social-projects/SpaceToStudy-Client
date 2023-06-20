@@ -3,7 +3,19 @@
     "copyProfileLink": "Посилання на профіль скопійовано",
     "showMore": "Показати більше...",
     "bookLesson": "Записатися на урок",
-    "sendMessage": "Надіслати повідомлення"
+    "sendMessage": "Надіслати повідомлення",
+    "withS2S":"з space2study",
+    "reviews": "відгуків",
+    "nativeLanguage" : "Рідна мова: ",
+    "location" : "Родом із",
+    "timeForYear_one" : "{{count}} рік",
+    "timeForYear_other" : "{{count}} років",
+    "timeForMonth_one" : "{{count}} місяць",
+    "timeForMonth_other" : "{{count}} місяців",
+    "timeForWeek_one" : "{{count}} тиждень",
+    "timeForWeek_other" : "{{count}} тижнів",
+    "timeForDay_one" : "{{count}} день",
+    "timeForDay_other" : "{{count}} днів"
   }, 
   "videoPresentation": {
     "title": "Відео Презентація"

@@ -3,7 +3,19 @@
     "copyProfileLink": "Link to profile is copied",
     "showMore": "Show more...",
     "bookLesson": "Book a lesson",
-    "sendMessage": "Send message"
+    "sendMessage": "Send message",
+    "withS2S":"at space2study",
+    "reviews": "reviews",
+    "nativeLanguage" : "Native: ",
+    "location" : "Based in",
+    "timeForYear_one" : "{{count}} year",
+    "timeForYear_other" : "{{count}} years",
+    "timeForMonth_one" : "{{count}} month",
+    "timeForMonth_other" : "{{count}} months",
+    "timeForWeek_one" : "{{count}} week",
+    "timeForWeek_other" : "{{count}} weeks",
+    "timeForDay_one" : "{{count}} day",
+    "timeForDay_other" : "{{count}} days"
   },
   "videoPresentation": {
     "title": "Video Presentation"

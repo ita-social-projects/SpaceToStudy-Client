@@ -7,6 +7,7 @@ import IconButton from '@mui/material/IconButton'
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
 import CopyRoundedIcon from '@mui/icons-material/ContentCopyRounded'
 
+import AppRatingMobile from '~/components/app-rating-mobile/AppRatingMobile'
 import ProfileContainerDesktop from '~/containers/tutor-profile/profile-info/ProfileContainerDesktop'
 import ProfileContainerMobile from '~/containers/tutor-profile/profile-info/ProfileContainerMobile'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
@@ -16,21 +17,18 @@ import useBreakpoints from '~/hooks/use-breakpoints'
 import { tutorRoutes } from '~/router/constants/tutorRoutes'
 import { studentRoutes } from '~/router/constants/studentRoutes'
 import { useSnackBarContext } from '~/context/snackbar-context'
-import {
-  accountInfoMock,
-  subjectChipsMock,
-  doneItemsMock
-} from '~/containers/tutor-profile/profile-info/ProfileInfo.constants'
 import { styles } from '~/containers/tutor-profile/profile-info/ProfileInfo.styles'
 import { snackbarVariants, myProfilePath, student } from '~/constants'
 import { SizeEnum } from '~/types'
+import { getDifferenceDates } from '~/utils/helper-functions'
 
-const ProfileInfo = () => {
+const ProfileInfo = ({ userData }) => {
   const { t } = useTranslation()
   const { isLaptopAndAbove, isMobile } = useBreakpoints()
   const { setAlert } = useSnackBarContext()
   const { userRole } = useAppSelector((state) => state.appMain)
   const isMyProfile = useMatch(myProfilePath)
+  const { number, format } = getDifferenceDates(userData.createdAt, new Date())
 
   const copyProfileLink = () => {
     navigator.clipboard.writeText(window.location.href)
@@ -64,7 +62,28 @@ const ProfileInfo = () => {
     </IconButton>
   )
 
-  const accInfo = accountInfoMock.map((item) => (
+  const accountRating = (
+    <AppRatingMobile
+      link={'#'}
+      reviewsCount={userData.totalReviews[userData.role]}
+      sx={styles.appRating}
+      value={userData.averageRating[userData.role]}
+    />
+  )
+
+  const accountInfo = [
+    {
+      title: t(`tutorProfilePage.profileInfo.timeFor${format}`, {
+        count: number
+      }),
+      description: t('tutorProfilePage.profileInfo.withS2S')
+    },
+    {
+      title: accountRating
+    }
+  ]
+
+  const accInfo = accountInfo.map((item) => (
     <TitleWithDescription
       description={item.description}
       key={item.description}
@@ -72,6 +91,17 @@ const ProfileInfo = () => {
       title={item.title}
     />
   ))
+
+  const doneItems = [
+    {
+      title: t('tutorProfilePage.profileInfo.nativeLanguage'),
+      description: userData.nativeLanguage
+    },
+    {
+      title: t('tutorProfilePage.profileInfo.location'),
+      description: `${userData.address.city}, ${userData.address.country}`
+    }
+  ]
 
   const buttonGroup = !isMyProfile && (
     <Box sx={styles.buttonGroup}>
@@ -95,23 +125,27 @@ const ProfileInfo = () => {
     </Box>
   )
 
+  const subjectData = userData.mainSubjects.tutor.map((item) => item.name)
+
   return !isMobile ? (
     <ProfileContainerDesktop
       accInfo={accInfo}
       actionIcon={actionIconBtn}
       buttonGroup={buttonGroup}
+      chipItems={subjectData}
       defaultQuantity={isLaptopAndAbove ? 4 : 2}
-      doneItems={doneItemsMock}
-      subjectChips={subjectChipsMock}
+      doneItems={doneItems}
+      userData={userData}
     />
   ) : (
     <ProfileContainerMobile
       accInfo={accInfo}
       actionIcon={actionIconBtn}
       buttonGroup={buttonGroup}
+      chipItems={subjectData}
       defaultQuantity={4}
-      doneItems={doneItemsMock}
-      subjectChips={subjectChipsMock}
+      doneItems={doneItems}
+      userData={userData}
     />
   )
 }

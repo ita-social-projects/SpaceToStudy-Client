@@ -146,3 +146,31 @@ export const createUrlPath = (
 
   return `${URL}${paramsString}${queryParamsString}`
 }
+
+export const getDifferenceDates = (startDate: Date, endDate: Date) => {
+  const difference: number = new Date(endDate) - new Date(startDate)
+
+  const conversionToDays: number = Math.abs(
+    Math.round(difference / (1000 * 3600 * 24))
+  )
+
+  if (conversionToDays >= 365) {
+    const years = Math.floor(conversionToDays / 365)
+    return { number: years, format: 'Year' }
+  }
+
+  if (conversionToDays >= 31) {
+    const months = Math.floor(conversionToDays / 31)
+    return { number: months, format: 'Month' }
+  }
+
+  if (conversionToDays >= 7) {
+    const weeks = Math.floor(conversionToDays / 7)
+    return { number: weeks, format: 'Week' }
+  }
+
+  return {
+    number: conversionToDays || 1,
+    format: 'Day'
+  }
+}

@@ -1,4 +1,5 @@
 import palette from '~/styles/app-theme/app.pallete'
+import { TypographyVariantEnum } from '~/types'
 
 export const styles = {
   container: {
@@ -8,11 +9,11 @@ export const styles = {
     justifyContent: 'space-between',
     gap: { sm: '30px', lg: '50px' },
     mb: '50px',
-    px: '15px',
     maxHeight: { sm: '525px' }
   },
   img: {
     width: '100%',
+    height: '100%',
     minWidth: '150px',
     minHeight: '150px',
     borderRadius: '15px'
@@ -59,7 +60,8 @@ export const styles = {
   },
   titleWithDescription: {
     wrapper: {
-      textAlign: 'left'
+      textAlign: 'left',
+      pr: '20px'
     },
     title: {
       typography: { xs: 'button', sm: 'h5', md: 'h4' },
@@ -81,6 +83,27 @@ export const styles = {
     },
     description: {
       typography: 'overline'
+    }
+  },
+  wrapperForPhoto: {
+    display: 'flex',
+    gap: '10px'
+  },
+  avatarContainer: {
+    flex: 1,
+    maxWidth: '650px'
+  },
+  avatarContainerMobile: { flex: 1 },
+  linkToReviews: { color: 'primary.900' },
+  appRating: {
+    starMobile: {
+      height: '24px'
+    },
+    rating: {
+      typography: TypographyVariantEnum.H5
+    },
+    reviews: {
+      typography: TypographyVariantEnum.Overline
     }
   }
 }
