@@ -4,35 +4,58 @@ import { useTranslation } from 'react-i18next'
 import Typography from '@mui/material/Typography'
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
+import Divider from '@mui/material/Divider'
 
 import HashLink from '~/components/hash-link/HashLink'
+import useBreakpoints from '~/hooks/use-breakpoints'
+import { RouteItem } from '~/types/common/interfaces/common.interfaces'
 
 import { styles } from '~/containers/layout/sidebar/Sidebar.styles'
 
 interface SidebarProps {
   onClose: () => void
-  navigationItems: { route: string; path: string }[]
+  navigationItems: RouteItem[]
+  accountItems: RouteItem[]
 }
 
-const Sidebar: FC<SidebarProps> = ({ onClose, navigationItems }) => {
+const Sidebar: FC<SidebarProps> = ({
+  onClose,
+  navigationItems,
+  accountItems
+}) => {
+  const { isMobile } = useBreakpoints()
   const { t } = useTranslation()
 
-  const navigationList = navigationItems.map(({ route, path }) => {
-    return (
-      <ListItem key={route} sx={styles.listItem}>
-        <Typography
-          component={HashLink}
-          onClick={onClose}
-          sx={styles.listTitle}
-          to={path}
-        >
-          {t(`header.${route}`)}
-        </Typography>
-      </ListItem>
-    )
-  })
+  const renderListItems = (items: RouteItem[]) => (
+    <List sx={styles.list}>
+      {items.map(({ route, path }) => (
+        <ListItem key={route} sx={styles.listItem}>
+          <Typography
+            component={HashLink}
+            onClick={onClose}
+            sx={styles.listTitle}
+            to={path}
+          >
+            {t(`header.${route}`)}
+          </Typography>
+        </ListItem>
+      ))}
+    </List>
+  )
 
-  return <List sx={styles.list}>{navigationList}</List>
+  const accountItemsSection = isMobile && accountItems.length > 0 && (
+    <>
+      <Divider />
+      {renderListItems(accountItems)}
+    </>
+  )
+
+  return (
+    <>
+      {renderListItems(navigationItems)}
+      {accountItemsSection}
+    </>
+  )
 }
 
 export default Sidebar

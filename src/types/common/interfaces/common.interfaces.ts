@@ -76,3 +76,7 @@ export interface Breakpoints {
   isTablet: boolean
   isMobile: boolean
 }
+export interface RouteItem {
+  route: string
+  path: string
+}

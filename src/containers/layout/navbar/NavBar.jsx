@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useMemo } from 'react'
 import { useSelector } from 'react-redux'
 import { guestRoutes } from '~/router/constants/guestRoutes'
 import { studentRoutes } from '~/router/constants/studentRoutes'
@@ -22,19 +22,20 @@ import { student, tutor } from '~/constants'
 import { styles } from '~/containers/layout/navbar/NavBar.styles'
 
 const Navbar = () => {
-  const [navigationItems, setNavigationItems] = useState(
-    Object.values(guestRoutes.navBar)
-  )
   const { userRole } = useSelector((state) => state.appMain)
   const { openDrawer, closeDrawer, isOpen } = useDrawer()
   const { t } = useTranslation()
 
-  useEffect(() => {
-    if (userRole === student)
-      setNavigationItems(Object.values(studentRoutes.navBar))
-    else if (userRole === tutor)
-      setNavigationItems(Object.values(tutorRoutes.navBar))
-    else setNavigationItems(Object.values(guestRoutes.navBar))
+  const navigationItems = useMemo(() => {
+    if (userRole === student) return Object.values(studentRoutes.navBar)
+    else if (userRole === tutor) return Object.values(tutorRoutes.navBar)
+    return Object.values(guestRoutes.navBar)
+  }, [userRole])
+
+  const accountItems = useMemo(() => {
+    if (userRole === student) return Object.values(studentRoutes.accountMenu)
+    else if (userRole === tutor) return Object.values(tutorRoutes.accountMenu)
+    return []
   }, [userRole])
 
   const handleOpenSidebar = () => {
@@ -71,7 +72,11 @@ const Navbar = () => {
 
       <NavigationIcons setSidebarOpen={handleOpenSidebar} />
       <AppDrawer onClose={closeDrawer} open={isOpen}>
-        <Sidebar navigationItems={navigationItems} onClose={closeDrawer} />
+        <Sidebar
+          accountItems={accountItems}
+          navigationItems={navigationItems}
+          onClose={closeDrawer}
+        />
       </AppDrawer>
     </Box>
   )
