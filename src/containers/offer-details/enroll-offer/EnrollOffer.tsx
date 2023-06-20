@@ -22,7 +22,13 @@ import { styles } from '~/containers/offer-details/enroll-offer/EnrollOffer.styl
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { minMaxPrice } from '~/utils/range-filter'
 
-import { ComponentEnum, ErrorResponse, Offer, EnrollOfferForm } from '~/types'
+import {
+  ComponentEnum,
+  ErrorResponse,
+  Offer,
+  EnrollOfferForm,
+  ButtonTypeEnum
+} from '~/types'
 
 interface EnrollOfferProps {
   offer: Offer
@@ -130,7 +136,11 @@ const EnrollOffer: FC<EnrollOfferProps> = ({ offer }) => {
           title={t('offerDetailsPage.enrollOffer.inputs.info')}
           value={data.info}
         />
-        <AppButton loading={loading} sx={styles.button} type='submit'>
+        <AppButton
+          loading={loading}
+          sx={styles.button}
+          type={ButtonTypeEnum.Submit}
+        >
           {t('button.createCooperation')}
         </AppButton>
       </Box>

@@ -34,15 +34,13 @@ const AppBreadCrumbs = () => {
 
   const separator = <Typography sx={styles.separator} />
 
-  return (
-    crumbs.length > 1 && (
-      <Container sx={styles.root}>
-        <Breadcrumbs separator={separator} sx={styles.breadCrumbs}>
-          {breadCrumbs}
-        </Breadcrumbs>
-      </Container>
-    )
-  )
+  return crumbs.length > 1 ? (
+    <Container sx={styles.root}>
+      <Breadcrumbs separator={separator} sx={styles.breadCrumbs}>
+        {breadCrumbs}
+      </Breadcrumbs>
+    </Container>
+  ) : null
 }
 
 export default AppBreadCrumbs

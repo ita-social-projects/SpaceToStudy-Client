@@ -37,6 +37,7 @@ export const URLs = {
   },
   cooperations: {
     get: '/cooperations',
-    create: '/cooperations'
+    create: '/cooperations',
+    update: '/cooperations'
   }
 }

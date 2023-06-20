@@ -82,7 +82,7 @@ const OfferDetails = () => {
   ]
 
   if (loading) {
-    return <Loader pageLoad size={70} />
+    return <Loader pageLoad />
   }
 
   if (!response) {

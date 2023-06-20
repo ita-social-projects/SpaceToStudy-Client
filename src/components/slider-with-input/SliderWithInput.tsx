@@ -62,7 +62,7 @@ const SliderWithInput: FC<SliderWithInputProps> = ({
   }
 
   return (
-    <Box>
+    <Box sx={styles.root}>
       <Typography sx={styles.title}>{title}</Typography>
 
       <Box sx={styles.slider}>

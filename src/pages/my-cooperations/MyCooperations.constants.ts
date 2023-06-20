@@ -4,7 +4,7 @@ import { SortEnum } from '~/types'
 export const sortTranslationKeys = [
   {
     title: 'findOffers.sortTitles.newest',
-    value: 'updatedAt asc'
+    value: 'updatedAt desc'
   },
   {
     title: 'findOffers.sortTitles.name',
@@ -25,7 +25,7 @@ export const initialFilters = {
   status: ''
 }
 
-export const initialSort = { order: SortEnum.Asc, orderBy: 'updatedAt' }
+export const initialSort = { order: SortEnum.Desc, orderBy: 'updatedAt' }
 
 export const tabsInfo = {
   all: {

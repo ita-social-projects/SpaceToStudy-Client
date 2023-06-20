@@ -18,6 +18,7 @@ vi.mock('~/context/modal-context', async () => {
   return {
     ...actual,
     useModalContext: () => ({
+      closeModal: mockSetModal,
       openModal: mockSetModal
     })
   }

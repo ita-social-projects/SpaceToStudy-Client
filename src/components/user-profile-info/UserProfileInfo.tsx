@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, MouseEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
@@ -45,16 +45,20 @@ const UserProfileInfo: FC<UserProfileInfoProps> = ({
     role
   })
 
+  const handleLinkClick = (e: MouseEvent<HTMLAnchorElement>) => {
+    e.stopPropagation()
+  }
+
   return (
     <Box sx={spliceSx(styles.root, sx.root)}>
-      <Link to={userURL}>
+      <Link onClick={handleLinkClick} to={userURL}>
         <Avatar
           src={photo && `${import.meta.env.VITE_APP_IMG_USER_URL}${photo}`}
           sx={spliceSx(styles.avatar, sx.avatar)}
         />
       </Link>
       <Box sx={spliceSx(styles.info, sx.info)}>
-        <Link style={styles.link} to={userURL}>
+        <Link onClick={handleLinkClick} style={styles.link} to={userURL}>
           <Typography sx={spliceSx(styles.name, sx.name)}>{name}</Typography>
         </Link>
         {!isNaN(Number(rating)) && (

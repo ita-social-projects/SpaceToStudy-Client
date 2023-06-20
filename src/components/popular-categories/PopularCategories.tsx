@@ -78,7 +78,7 @@ const PopularCategories: FC<PopularCategoriesProps> = ({
         title={title}
       />
       {loading && !response ? (
-        <Loader size={70} />
+        <Loader />
       ) : (
         <CardsList
           btnText={t('common.goToName', { name: 'categories' })}

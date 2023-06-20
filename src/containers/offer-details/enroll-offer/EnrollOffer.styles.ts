@@ -1,6 +1,7 @@
 export const styles = {
   root: {
     display: 'flex',
+    flexDirection: { sm: 'column', md: 'row' },
     maxWidth: '935px',
     p: { xs: '30px 16px', sm: '40px 60px', lg: '70px 90px' },
     justifyContent: 'space-between',

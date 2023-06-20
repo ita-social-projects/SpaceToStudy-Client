@@ -1,4 +1,5 @@
 export const styles = {
+  root: { width: '100%' },
   title: {
     color: 'primary.500',
     typography: 'body2'

@@ -17,7 +17,12 @@ import AppButton from '~/components/app-button/AppButton'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import AsyncAutocomplete from '~/components/async-autocomlete/AsyncAutocomplete'
 
-import { CategoryNameInterface, ComponentEnum, ErrorResponse } from '~/types'
+import {
+  ButtonTypeEnum,
+  CategoryNameInterface,
+  ComponentEnum,
+  ErrorResponse
+} from '~/types'
 import { snackbarVariants } from '~/constants'
 import { categoryService } from '~/services/category-service'
 import { validations } from '~/containers/find-offer/create-new-subject/CreateNewSubject.constants'
@@ -143,7 +148,11 @@ const CreateSubjectModal = () => {
           title={t('categoriesPage.newSubject.info')}
           value={data.info}
         />
-        <AppButton loading={loading} sx={styles.button} type='submit'>
+        <AppButton
+          loading={loading}
+          sx={styles.button}
+          type={ButtonTypeEnum.Submit}
+        >
           {t('button.sendRequest')}
         </AppButton>
       </Box>

@@ -16,9 +16,11 @@ export const styles = {
     typography: 'overline'
   },
   subjectChip: (color: string) => ({
-    backgroundColor: alpha(color, 0.6)
+    backgroundColor: alpha(color, 0.6),
+    cursor: 'inherit'
   }),
   levelChip: (color: string) => ({
-    backgroundColor: alpha(color, 0.2)
+    backgroundColor: alpha(color, 0.2),
+    cursor: 'inherit'
   })
 }

@@ -13,6 +13,7 @@ const EnhancedTableRow = ({
   item,
   refetchData,
   rowActions,
+  onRowClick,
   select = {}
 }) => {
   const { openMenu, renderMenu } = useMenu()
@@ -40,11 +41,15 @@ const EnhancedTableRow = ({
     </MenuItem>
   ))
 
+  const handleRowClick = () => (onRowClick ? onRowClick(item) : null)
+
   return (
     <TableRow
       hover
       key={item._id}
+      onClick={handleRowClick}
       selected={isSelection && isSelected(item._id)}
+      sx={{ cursor: onRowClick && 'pointer' }}
     >
       {isSelection && (
         <TableCell padding='checkbox'>

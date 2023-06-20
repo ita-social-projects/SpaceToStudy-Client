@@ -1,5 +1,6 @@
 export const styles = {
   container: (pageLoad: boolean) => ({
+    alignSelf: 'center',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',

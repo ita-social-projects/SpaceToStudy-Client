@@ -24,7 +24,15 @@ import {
   validations
 } from '~/containers/offer-page/create-offer/CreateOffer.constants'
 import { createUrlPath, findFullObjects } from '~/utils/helper-functions'
-import { ComponentEnum, CreateOfferData, ErrorResponse, Offer } from '~/types'
+import {
+  ButtonTypeEnum,
+  ButtonVariantEnum,
+  ComponentEnum,
+  CreateOfferData,
+  ErrorResponse,
+  Offer,
+  SizeEnum
+} from '~/types'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { styles } from '~/containers/offer-page/create-offer/CreateOffer.styles'
 
@@ -117,13 +125,17 @@ const CreateOffer: FC<CreateOfferProps> = ({ closeDrawer }) => {
       <Box sx={styles.buttonBox}>
         <AppButton
           loading={loading}
-          size='extraLarge'
-          sx={{ minWidth: '166px' }}
-          type='submit'
+          size={SizeEnum.ExtraLarge}
+          sx={styles.submit}
+          type={ButtonTypeEnum.Submit}
         >
           {t(`offerPage.createOffer.buttonTitles.${userRole}`)}
         </AppButton>
-        <AppButton disabled size='extraLarge' variant='tonal'>
+        <AppButton
+          disabled
+          size={SizeEnum.ExtraLarge}
+          variant={ButtonVariantEnum.Tonal}
+        >
           {t('button.addToDrafts')}
         </AppButton>
       </Box>

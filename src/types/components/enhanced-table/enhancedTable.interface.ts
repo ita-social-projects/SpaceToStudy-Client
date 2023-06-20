@@ -1,11 +1,11 @@
-import { ChangeEvent } from 'react'
+import { ChangeEvent, ReactElement } from 'react'
 import { Sort } from '~/types/common/common.index'
 import { TableActionFunc } from './enhancedTable.types'
 
 export interface TableColumn<I> {
-  field: string
+  field?: string
   label: string
-  calculatedCellValue?: (item: I) => string
+  calculatedCellValue?: (item: I) => string | ReactElement
 }
 
 export interface TableRowAction {
@@ -37,6 +37,6 @@ export interface TableSort {
 
 export interface TableData<I> {
   items: I[]
-  loading: boolean
-  getData: () => void
+  loading?: boolean
+  getData?: () => void
 }

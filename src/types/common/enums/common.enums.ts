@@ -33,7 +33,8 @@ export enum TypographyVariantEnum {
   H6 = 'h6',
   Body2 = 'body2',
   Body1 = 'body1',
-  Subtitle2 = 'subtitle2'
+  Subtitle2 = 'subtitle2',
+  Overline = 'overline'
 }
 
 export enum TextFieldVariantEnum {
@@ -47,6 +48,11 @@ export enum ButtonVariantEnum {
   Text = 'text',
   Tonal = 'tonal'
 }
+
+export enum ButtonTypeEnum {
+  Submit = 'submit'
+}
+
 export enum VisibilityEnum {
   Visible = 'visible',
   Hidden = 'hidden'
@@ -67,7 +73,8 @@ export enum SortEnum {
 export enum StatusEnum {
   Pending = 'pending',
   Active = 'active',
-  Closed = 'closed'
+  Closed = 'closed',
+  NeedAction = 'need action'
 }
 export enum PositionEnum {
   Left = 'left',
