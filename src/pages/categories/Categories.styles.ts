@@ -1,12 +1,7 @@
 export const styles = {
-  container: {
-    flex: 1,
-    textAlign: 'right',
-    pb: '80px'
-  },
   titleWithDescription: {
     wrapper: {
-      mb: '32px',
+      my: '30px',
       textAlign: 'center'
     },
     title: {

@@ -1,4 +1,4 @@
-import React, { Ref, MouseEvent } from 'react'
+import { Ref, MouseEvent, forwardRef } from 'react'
 import { Link, useHref, useLinkClickHandler, LinkProps } from 'react-router-dom'
 import { scrollToHash } from '~/utils/hash-scroll'
 
@@ -23,6 +23,4 @@ const HashLink = (
   )
 }
 
-HashLink.displayName = 'HashLink'
-
-export default React.forwardRef(HashLink)
+export default forwardRef(HashLink)

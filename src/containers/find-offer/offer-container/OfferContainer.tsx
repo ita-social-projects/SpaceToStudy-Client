@@ -1,9 +1,8 @@
-import { FC } from 'react'
+import { FC, Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
 import Box from '@mui/material/Box'
-import Grid from '@mui/material/Grid'
 
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { CardsView, Offer, CardsViewEnum, ButtonVariantEnum } from '~/types'
@@ -21,16 +20,14 @@ interface OfferContainerProps {
 
 const OfferContainer: FC<OfferContainerProps> = ({ viewMode, offerCards }) => {
   const { t } = useTranslation()
-  const { isMobile, isDesktop } = useBreakpoints()
+  const { isMobile, isLaptopAndAbove } = useBreakpoints()
 
   const onBookmarkClick = (id: string) => {
     console.log(id)
   }
 
-  const columnNumber = viewMode === CardsViewEnum.Grid ? 12 : 1
-
   const renderSquareCard =
-    isMobile || (isDesktop && viewMode === CardsViewEnum.Grid)
+    isMobile || (isLaptopAndAbove && viewMode === CardsViewEnum.Grid)
 
   const offerItems = offerCards.map((el) => {
     const buttonActions = [
@@ -50,7 +47,7 @@ const OfferContainer: FC<OfferContainerProps> = ({ viewMode, offerCards }) => {
       }
     ]
     return (
-      <Grid item key={el._id} sm={4} sx={styles.gridItem}>
+      <Fragment key={el._id}>
         {renderSquareCard ? (
           <AppCard sx={styles.appCardSquare}>
             <OfferCardSquare
@@ -68,20 +65,16 @@ const OfferContainer: FC<OfferContainerProps> = ({ viewMode, offerCards }) => {
             />
           </AppCard>
         )}
-      </Grid>
+      </Fragment>
     )
   })
 
   return (
-    <Box data-testid='OfferContainer' sx={styles.offerContainer}>
-      <Grid
-        columns={{ xs: 1, md: columnNumber }}
-        container
-        justifyContent={'flex-start'}
-        spacing={3}
-      >
-        {offerItems}
-      </Grid>
+    <Box
+      data-testid='OfferContainer'
+      sx={styles.offerContainer(viewMode === CardsViewEnum.Grid)}
+    >
+      {offerItems}
     </Box>
   )
 }

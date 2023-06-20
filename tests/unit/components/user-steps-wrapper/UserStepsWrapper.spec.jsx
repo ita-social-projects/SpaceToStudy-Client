@@ -22,7 +22,11 @@ const mockState = {
 mockAxiosClient
   .onGet(`${URLs.users.get}/${userId}?role=${userRole}`)
   .reply(200, { data: userDataMock })
-const desktopData = { isDesktop: true, isMobile: false, isTablet: false }
+const desktopData = {
+  isLaptopAndAbove: true,
+  isMobile: false,
+  isTablet: false
+}
 
 describe('UserStepsWrapper test', () => {
   beforeEach(() => {

@@ -69,6 +69,9 @@ export const styles = {
       typography: { xs: 'body2', md: 'button' }
     }
   },
+  doneIcon: {
+    color: 'basic.orientalHerbs'
+  },
   profileTitleComp: {
     wrapper: {
       textAlign: 'center'

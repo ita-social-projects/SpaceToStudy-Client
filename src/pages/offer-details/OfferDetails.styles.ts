@@ -52,11 +52,7 @@ const faqAccordion: MultiAccordionWithTitleSx = {
 
 export const styles = {
   container: {
-    display: 'flex',
-    flexDirection: 'column',
-    flex: 1,
-    gap: '20px',
-    mb: '100px'
+    gap: '20px'
   },
   wrapper: {
     ...border,

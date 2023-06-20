@@ -35,7 +35,7 @@ interface EnrollOfferProps {
 }
 
 const EnrollOffer: FC<EnrollOfferProps> = ({ offer }) => {
-  const { isDesktop } = useBreakpoints()
+  const { isLaptopAndAbove } = useBreakpoints()
   const { closeModal } = useModalContext()
   const { setAlert } = useSnackBarContext()
   const { t } = useTranslation()
@@ -96,7 +96,7 @@ const EnrollOffer: FC<EnrollOfferProps> = ({ offer }) => {
 
   return (
     <Box sx={styles.root}>
-      {isDesktop && (
+      {isLaptopAndAbove && (
         <AppCard sx={styles.offerCard}>
           <OfferCardSquare offer={offer} />
         </AppCard>

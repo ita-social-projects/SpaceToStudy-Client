@@ -15,13 +15,13 @@ import { styles } from '~/containers/guest-home-page/styles/Welcome.styles.js'
 
 const Welcome = () => {
   const { t } = useTranslation()
-  const { isDesktop, isTablet, isMobile } = useBreakpoints()
+  const { isLaptopAndAbove, isTablet, isMobile } = useBreakpoints()
 
   const image = useMemo(() => {
-    if (isDesktop) return titleMd
+    if (isLaptopAndAbove) return titleMd
     if (isTablet) return titleSm
     if (isMobile) return titleXs
-  }, [isDesktop, isTablet, isMobile])
+  }, [isLaptopAndAbove, isTablet, isMobile])
 
   return (
     <Box

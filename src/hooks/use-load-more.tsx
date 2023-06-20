@@ -56,7 +56,7 @@ const useLoadMore = <Data, Params>({
   }, [fetchData, limit, previousLimit, resetData, skip, params])
 
   const isExpandable = useMemo(
-    () => data.length < response.count,
+    () => data.length < response.count && data.length > 0,
     [data, response]
   )
 

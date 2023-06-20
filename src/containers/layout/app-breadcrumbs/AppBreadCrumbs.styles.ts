@@ -7,8 +7,7 @@ const link = {
 
 export const styles = {
   root: {
-    pt: 4,
-    pb: 2
+    py: 4
   },
   separator: {
     width: '4px',

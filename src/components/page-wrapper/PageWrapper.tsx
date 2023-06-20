@@ -1,18 +1,15 @@
-import { FC, useEffect } from 'react'
+import { Ref, forwardRef, useEffect } from 'react'
 
-import Container from '@mui/material/Container'
-import { SxProps } from '@mui/material/styles'
+import Container, { ContainerProps } from '@mui/material/Container'
 
 import { spliceSx } from '~/utils/helper-functions'
 import { styles } from '~/components/page-wrapper/PageWrapper.styles'
 import { useModalContext } from '~/context/modal-context'
 
-interface PageWrapperProps {
-  children: React.ReactNode
-  sx?: SxProps
-}
-
-const PageWrapper: FC<PageWrapperProps> = ({ children, sx }) => {
+const PageWrapper = (
+  { children, sx, ...rest }: ContainerProps,
+  ref: Ref<HTMLDivElement>
+) => {
   const { closeModal } = useModalContext()
 
   useEffect(() => {
@@ -20,10 +17,15 @@ const PageWrapper: FC<PageWrapperProps> = ({ children, sx }) => {
   }, [closeModal])
 
   return (
-    <Container maxWidth='xl' sx={spliceSx(styles.container, sx)}>
+    <Container
+      maxWidth='xl'
+      ref={ref}
+      sx={spliceSx(styles.container, sx)}
+      {...rest}
+    >
       {children}
     </Container>
   )
 }
 
-export default PageWrapper
+export default forwardRef(PageWrapper)

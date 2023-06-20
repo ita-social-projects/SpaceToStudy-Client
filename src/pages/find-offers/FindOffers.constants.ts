@@ -15,3 +15,5 @@ export const defaultFilters = (role: UserRoleEnum): FindOffersFilters => ({
 })
 
 export const defaultResponse = { offers: [], count: 0 }
+
+export const itemsPerPage = 8

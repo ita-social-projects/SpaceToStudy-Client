@@ -14,16 +14,20 @@ import { GetOffersResponse, Offer, ButtonVariantEnum } from '~/types'
 import { OfferService } from '~/services/offer-service'
 import { defaultResponse } from '~/pages/find-offers/FindOffers.constants'
 import { authRoutes } from '~/router/constants/authRoutes'
-import { createUrlPath } from '~/utils/helper-functions'
+import { createUrlPath, getScreenBasedLimit } from '~/utils/helper-functions'
 import { styles } from '~/containers/offer-details/offer-carousel/OfferCarousel.styles'
+import { itemsLoadLimit } from '~/containers/offer-details/offer-carousel/OfferCarousel.constants'
 
 interface OfferCarouselProps {
   offer: Offer
 }
 
 const OfferCarousel: FC<OfferCarouselProps> = ({ offer }) => {
-  const { isDesktop, isTablet } = useBreakpoints()
+  const breakpoints = useBreakpoints()
+  const { isLaptopAndAbove } = breakpoints
   const { t } = useTranslation()
+
+  const slidesToShow = getScreenBasedLimit(breakpoints, itemsLoadLimit)
 
   const getOffers = useCallback(
     () =>
@@ -68,12 +72,12 @@ const OfferCarousel: FC<OfferCarouselProps> = ({ offer }) => {
   })
 
   const carouselSettings = {
-    slidesToShow: isDesktop ? 3 : isTablet ? 2 : 1,
+    slidesToShow: slidesToShow,
     defaultControlsConfig: {
-      pagingDotsStyle: styles.dotStyles(isDesktop)
+      pagingDotsStyle: styles.dotStyles(isLaptopAndAbove)
     },
-    leftButtonStyles: styles.button(isDesktop, 'left'),
-    rightButtonStyles: styles.button(isDesktop, 'right'),
+    leftButtonStyles: styles.button(isLaptopAndAbove, 'left'),
+    rightButtonStyles: styles.button(isLaptopAndAbove, 'right'),
     leftArrowStyles: styles.arrow,
     rightArrowStyles: styles.arrow
   }

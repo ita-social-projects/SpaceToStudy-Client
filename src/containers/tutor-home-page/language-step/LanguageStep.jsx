@@ -12,7 +12,7 @@ import useBreakpoints from '~/hooks/use-breakpoints'
 
 const LanguageStep = ({ stepLabel, btnsBox }) => {
   const { t } = useTranslation()
-  const { isDesktop, isMobile } = useBreakpoints()
+  const { isLaptopAndAbove, isMobile } = useBreakpoints()
   const { stepData, handleStepData } = useStepContext()
   const languageData = stepData[stepLabel]
 
@@ -22,7 +22,7 @@ const LanguageStep = ({ stepLabel, btnsBox }) => {
 
   return (
     <Box sx={styles.container}>
-      {isDesktop && (
+      {isLaptopAndAbove && (
         <Box sx={styles.imgContainer}>
           <Box component='img' src={img} sx={styles.img} />
         </Box>

@@ -12,7 +12,11 @@ const buttonActions = [
 ]
 
 describe('OfferDetails on desktop', () => {
-  const desktopData = { isDesktop: true, isMobile: false, isTablet: false }
+  const desktopData = {
+    isLaptopAndAbove: true,
+    isMobile: false,
+    isTablet: false
+  }
   beforeEach(() => {
     useBreakpoints.mockImplementation(() => desktopData)
     renderWithProviders(
@@ -30,7 +34,11 @@ describe('OfferDetails on desktop', () => {
 })
 
 describe('OfferDetails on desktop', () => {
-  const tabletData = { isDesktop: false, isMobile: false, isTablet: true }
+  const tabletData = {
+    isLaptopAndAbove: false,
+    isMobile: false,
+    isTablet: true
+  }
   beforeEach(() => {
     useBreakpoints.mockImplementation(() => tabletData)
     renderWithProviders(

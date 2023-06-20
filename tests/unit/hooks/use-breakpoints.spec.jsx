@@ -18,7 +18,7 @@ describe('useBreakpoints custom hook', () => {
 
     const { result } = renderHook(useBreakpoints)
 
-    expect(result.current.isDesktop).toBeTruthy()
+    expect(result.current.isLaptopAndAbove).toBeTruthy()
   })
 
   it('should return correct value for tablet', () => {

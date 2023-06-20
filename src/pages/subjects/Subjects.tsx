@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router-dom'
 
 import Box from '@mui/material/Box'
-import Container from '@mui/material/Container'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 
@@ -14,6 +13,7 @@ import { subjectService } from '~/services/subject-service'
 import { categoryService } from '~/services/category-service'
 import { useModalContext } from '~/context/modal-context'
 
+import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import SearchAutocomplete from '~/components/search-autocomplete/SearchAutocomplete'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import NotFoundResults from '~/components/not-found-results/NotFoundResults'
@@ -146,8 +146,9 @@ const Subjects = () => {
   const handleOpenModal = () => openModal({ component: <CreateSubjectModal /> })
 
   return (
-    <Container sx={styles.container}>
+    <PageWrapper>
       <OfferRequestBlock />
+
       <TitleWithDescription
         description={t('subjectsPage.subjects.description')}
         style={styles.titleWithDescription}
@@ -198,7 +199,7 @@ const Subjects = () => {
           onClick={loadMore}
         />
       )}
-    </Container>
+    </PageWrapper>
   )
 }
 

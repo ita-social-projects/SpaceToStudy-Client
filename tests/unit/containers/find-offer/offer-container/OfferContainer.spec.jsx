@@ -13,7 +13,11 @@ const cardsViewEnums = {
 }
 
 describe('OfferContainer test on modile', () => {
-  const mobileData = { isDesktop: false, isMobile: true, isTablet: false }
+  const mobileData = {
+    isLaptopAndAbove: false,
+    isMobile: true,
+    isTablet: false
+  }
 
   it('Test should render square card component on modile', () => {
     useBreakpoints.mockImplementation(() => mobileData)
@@ -30,7 +34,11 @@ describe('OfferContainer test on modile', () => {
 })
 
 describe('OfferContainer test on tablet', () => {
-  const mobileData = { isDesktop: false, isMobile: false, isTablet: true }
+  const mobileData = {
+    isLaptopAndAbove: false,
+    isMobile: false,
+    isTablet: true
+  }
 
   it('Test should render rectangular card on tablet', () => {
     useBreakpoints.mockImplementation(() => mobileData)
@@ -44,7 +52,11 @@ describe('OfferContainer test on tablet', () => {
 })
 
 describe('OfferContainer test on desktop', () => {
-  const mobileData = { isDesktop: true, isMobile: false, isTablet: false }
+  const mobileData = {
+    isLaptopAndAbove: true,
+    isMobile: false,
+    isTablet: false
+  }
 
   it('Test should render rectangular card on desktop with grid viewMode', () => {
     useBreakpoints.mockImplementation(() => mobileData)

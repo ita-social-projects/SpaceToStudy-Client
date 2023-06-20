@@ -36,7 +36,7 @@ const OfferFilterBlock: FC<OfferFilterBlockProps> = ({
   open
 }) => {
   const { t } = useTranslation()
-  const { isDesktop } = useBreakpoints()
+  const { isLaptopAndAbove } = useBreakpoints()
   const { updateFilter, resetFilters, updateQueryParams } = filterActions
   const showingTutorOffers = filters.authorRole === UserRoleEnum.Student
 
@@ -58,10 +58,10 @@ const OfferFilterBlock: FC<OfferFilterBlockProps> = ({
       updateFilter(value, key)
   const handleApplyFilters = () => {
     updateQueryParams()
-    !isDesktop && closeFilters()
+    !isLaptopAndAbove && closeFilters()
   }
 
-  const mobileFields = !isDesktop && (
+  const mobileFields = !isLaptopAndAbove && (
     <>
       <FiltersToggle chosenFiltersQty={activeFilterCount} />
       <Divider />

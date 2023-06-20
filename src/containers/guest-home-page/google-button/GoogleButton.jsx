@@ -13,7 +13,7 @@ import { styles } from '~/containers/guest-home-page/google-button/GoogleButton.
 
 const GoogleButton = ({ role, route, buttonWidth, type }) => {
   const dispatch = useDispatch()
-  const mediaQuery = useBreakpoints().isDesktop ? 'md' : 'xs'
+  const mediaQuery = useBreakpoints().isLaptopAndAbove ? 'md' : 'xs'
   const { closeModal } = useModalContext()
   const { setAlert } = useSnackBarContext()
   const ref = useHref(route)

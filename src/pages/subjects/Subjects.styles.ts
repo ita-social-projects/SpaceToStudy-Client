@@ -1,9 +1,4 @@
 export const styles = {
-  container: {
-    flex: 1,
-    textAlign: 'right',
-    pb: '80px'
-  },
   categoryInput: {
     width: '100%',
     maxWidth: { sm: '160px', md: '220px' },
@@ -34,7 +29,7 @@ export const styles = {
   },
   titleWithDescription: {
     wrapper: {
-      mb: '32px',
+      my: '30px',
       textAlign: 'center'
     },
     title: {

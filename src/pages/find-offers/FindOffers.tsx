@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 
 import { OfferService } from '~/services/offer-service'
 import useBreakpoints from '~/hooks/use-breakpoints'
@@ -13,9 +13,9 @@ import FilterBarMenu from '~/containers/find-offer/filter-bar-menu/FilterBarMenu
 import OfferSearchToolbar from '~/containers/find-offer/offer-search-toolbar/OfferSearchToolbar'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import DirectionLink from '~/components/direction-link/DirectionLink'
-import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import { authRoutes } from '~/router/constants/authRoutes'
 
+import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import AppDrawer from '~/components/app-drawer/AppDrawer'
 import Loader from '~/components/loader/Loader'
 import OfferContainer from '~/containers/find-offer/offer-container/OfferContainer'
@@ -40,7 +40,8 @@ import {
 } from '~/types'
 import {
   defaultFilters,
-  defaultResponse
+  defaultResponse,
+  itemsPerPage
 } from '~/pages/find-offers/FindOffers.constants'
 import { styles } from '~/pages/find-offers/FindOffers.styles'
 
@@ -48,11 +49,9 @@ const FindOffers = () => {
   const [cardsView, setCardsView] = useState<CardsView>(CardsViewEnum.Inline)
   const { userRole } = useAppSelector((state) => state.appMain)
   const { openDrawer, closeDrawer, isOpen } = useDrawer()
-  const { isMobile, isDesktop } = useBreakpoints()
+  const { isMobile, isLaptopAndAbove } = useBreakpoints()
 
   const { t } = useTranslation()
-
-  const itemsPerPage = cardsView === CardsViewEnum.Inline ? 4 : 6
 
   const oppositeRole = getOpositeRole(userRole)
 
@@ -133,8 +132,9 @@ const FindOffers = () => {
   }
 
   return (
-    <Container sx={styles.container}>
+    <PageWrapper>
       <OfferRequestBlock />
+
       <TitleWithDescription
         description={t('findOffers.titleWithDescription.description')}
         style={styles.titleWithDescription}
@@ -162,7 +162,7 @@ const FindOffers = () => {
       />
       <Box sx={styles.filterSection}>
         <AppDrawer
-          anchor={isDesktop ? PositionEnum.Left : PositionEnum.Right}
+          anchor={isLaptopAndAbove ? PositionEnum.Left : PositionEnum.Right}
           onClose={closeDrawer}
           open={isOpen}
         >
@@ -183,8 +183,11 @@ const FindOffers = () => {
         size={isMobile ? SizeEnum.Small : SizeEnum.Medium}
         sx={hidePaginationStyle}
       />
-      <PopularCategories title={t('common.popularCategories')} />
-    </Container>
+      <PopularCategories
+        sx={styles.popularCategories}
+        title={t('common.popularCategories')}
+      />
+    </PageWrapper>
   )
 }
 

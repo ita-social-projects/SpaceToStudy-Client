@@ -1,4 +1,4 @@
-import { SxProps } from '@mui/material'
+import { SxProps, Theme } from '@mui/material'
 import {
   Breakpoints,
   TableColumns,
@@ -70,11 +70,16 @@ export const getScreenBasedLimit = (
   breakpoints: Breakpoints,
   limits: ScreenBasedLimits
 ) => {
-  const { isDesktop, isTablet, isMobile } = breakpoints
+  const { isDesktop, isLaptopAndAbove, isLaptop, isTablet, isMobile } =
+    breakpoints
 
   switch (true) {
     case isDesktop:
-      return limits.desktop
+      return limits.desktop ?? limits.default
+    case isLaptopAndAbove:
+      return limits.laptopAndDesktop ?? limits.default
+    case isLaptop:
+      return limits.laptop ?? limits.default
     case isTablet:
       return limits.tablet
     case isMobile:
@@ -105,7 +110,10 @@ export const ajustColumns = <T extends TableColumns>(
   }
 }
 
-export const spliceSx = (defaultStyles?: SxProps, newStyles?: SxProps) =>
+export const spliceSx = (
+  defaultStyles?: SxProps<Theme>,
+  newStyles?: SxProps<Theme>
+) =>
   ({
     ...defaultStyles,
     ...newStyles

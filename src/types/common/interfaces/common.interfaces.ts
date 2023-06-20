@@ -73,6 +73,8 @@ export interface OutletContext {
 
 export interface Breakpoints {
   isDesktop: boolean
+  isLaptopAndAbove: boolean
+  isLaptop: boolean
   isTablet: boolean
   isMobile: boolean
 }
