@@ -21,7 +21,7 @@ interface SubjectLevelChipsProps {
 const SubjectLevelWithlabels: FC<SubjectLevelChipsProps> = ({
   proficiencyLevel,
   subject,
-  color = 'success.600',
+  color,
   sx
 }) => {
   const { t } = useTranslation()
