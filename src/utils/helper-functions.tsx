@@ -150,6 +150,15 @@ export const createUrlPath = (
   return `${URL}${paramsString}${queryParamsString}`
 }
 
+export const ellipsisTextStyle = (linesCount: number) => ({
+  display: '-webkit-box',
+  WebkitLineClamp: linesCount,
+  lineClamp: linesCount,
+  WebkitBoxOrient: 'vertical',
+  boxOrient: 'vertical',
+  overflow: 'hidden'
+})
+
 export const getDifferenceDates = (startDate: Date, endDate: Date) => {
   const difference: number = new Date(endDate) - new Date(startDate)
 

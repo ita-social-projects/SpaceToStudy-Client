@@ -2,9 +2,11 @@ import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
+import Box from '@mui/material/Box'
+
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { SortHook } from '~/hooks/table/use-sort'
-import Box from '@mui/material/Box'
+
 import EnhancedTable from '~/components/enhanced-table/EnhancedTable'
 import AppCard from '~/components/app-card/AppCard'
 import MyOffersCard from '~/containers/my-offers/my-offers-card/MyOffersCard'
@@ -15,8 +17,8 @@ import {
   columns,
   removeColumnRules
 } from '~/containers/my-offers/my-offers-container/MyOffersContainer.constants'
-import { styles } from '~/containers/my-cooperations/cooperations-container/CooperationContainer.styles'
 import { authRoutes } from '~/router/constants/authRoutes'
+import { styles } from '~/containers/my-cooperations/cooperations-container/CooperationContainer.styles'
 
 interface MyOffersContainerProps {
   items: Offer[]

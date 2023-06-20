@@ -1,11 +1,4 @@
-const ellipsisTextStyle = (linesCount: number) => ({
-  display: '-webkit-box',
-  WebkitLineClamp: linesCount,
-  lineClamp: linesCount,
-  WebkitBoxOrient: 'vertical',
-  boxOrient: 'vertical',
-  overflow: 'hidden'
-})
+import { ellipsisTextStyle } from '~/utils/helper-functions'
 
 export const styles = {
   container: {

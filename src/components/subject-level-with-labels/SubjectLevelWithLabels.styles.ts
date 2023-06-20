@@ -6,11 +6,12 @@ export const styles = {
   labels: {
     display: 'flex',
     flexDirection: 'column',
-    gap: '9px'
+    gap: '8px'
   },
   label: {
     fontWeight: '300',
-    color: 'primary.400'
+    color: 'primary.400',
+    lineHeight: '25px'
   },
   chips: {
     flexDirection: 'column'

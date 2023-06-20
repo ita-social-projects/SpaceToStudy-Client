@@ -4,9 +4,8 @@ import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import { SxProps } from '@mui/material'
 import Typography from '@mui/material/Typography'
-import SubjectLevelChips from '~/components/subject-level-chips/SubjectLevelChips'
 
-import palette from '~/styles/app-theme/app.pallete'
+import SubjectLevelChips from '~/components/subject-level-chips/SubjectLevelChips'
 import { spliceSx } from '~/utils/helper-functions'
 
 import { ProficiencyLevelEnum } from '~/types'
@@ -22,7 +21,7 @@ interface SubjectLevelChipsProps {
 const SubjectLevelWithlabels: FC<SubjectLevelChipsProps> = ({
   proficiencyLevel,
   subject,
-  color = palette.success[600],
+  color = 'success.600',
   sx
 }) => {
   const { t } = useTranslation()

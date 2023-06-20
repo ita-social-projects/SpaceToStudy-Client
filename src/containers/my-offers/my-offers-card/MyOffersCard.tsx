@@ -1,9 +1,9 @@
 import { FC } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-
-import { useTranslation } from 'react-i18next'
+import Divider from '@mui/material/Divider'
 
 import AppButton from '~/components/app-button/AppButton'
 import TitleWithDescripiton from '~/components/title-with-description/TitleWithDescription'
@@ -11,9 +11,7 @@ import StatusChip from '~/components/status-chip/StatusChip'
 import SubjectLevelWithLabels from '~/components/subject-level-with-labels/SubjectLevelWithLabels'
 
 import { ButtonActions, Offer, SizeEnum } from '~/types'
-
 import { styles } from '~/containers/my-offers/my-offers-card/MyOffersCard.styles'
-import Divider from '@mui/material/Divider'
 
 interface OfferCardSquareProps {
   buttonActions?: (ButtonActions | null)[]

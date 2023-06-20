@@ -18,19 +18,19 @@ import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import CooperationOfferToolbar from '~/containers/my-cooperations/cooperation-offer-toolbar/CooperationOfferToolbar'
 import CooperationContainer from '~/containers/my-cooperations/cooperations-container/CooperationContainer'
 import { cooperationService } from '~/services/cooperation-service'
-import { getScreenBasedLimit } from '~/utils/helper-functions'
+import { getScreenBasedLimit, studentOrTutor } from '~/utils/helper-functions'
 import { studentRoutes } from '~/router/constants/studentRoutes'
 import { tutorRoutes } from '~/router/constants/tutorRoutes'
 
 import {
   defaultResponse,
-  sortTranslationKeys,
   initialFilters,
   initialSort,
+  sortTranslationKeys,
   tabsInfo
 } from '~/pages/my-cooperations/MyCooperations.constants'
 import { itemsLoadLimit } from '~/constants'
-import { CardsViewEnum, TabType } from '~/types'
+import { CardsViewEnum, TabType, UserRoleEnum } from '~/types'
 import { styles } from '~/pages/my-cooperations/MyCooperations.styles'
 
 const MyCooperations = () => {
@@ -96,7 +96,7 @@ const MyCooperations = () => {
   const { userRole } = useAppSelector((state) => state.appMain)
 
   const buttonPath =
-    userRole === 'student'
+    studentOrTutor(userRole) === UserRoleEnum.Student
       ? studentRoutes.accountMenu.myOffers.path
       : tutorRoutes.accountMenu.myOffers.path
 
