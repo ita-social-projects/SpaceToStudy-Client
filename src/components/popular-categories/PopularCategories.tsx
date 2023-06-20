@@ -57,19 +57,17 @@ const PopularCategories: FC<PopularCategoriesProps> = ({
 
   const cards = useMemo(
     () =>
-      response.items.map((item) => {
-        return (
-          <CardWithLink
-            description={`${item.totalOffers[oppositeRole]} ${t(
-              'common.offers'
-            )}`}
-            img={serviceIcon}
-            key={item._id}
-            link={`${authRoutes.subjects.path}?categoryId=${item._id}`}
-            title={item.name}
-          />
-        )
-      }),
+      response.items.map((item) => (
+        <CardWithLink
+          description={`${item.totalOffers[oppositeRole]} ${t(
+            'common.offers'
+          )}`}
+          img={serviceIcon}
+          key={item._id}
+          link={`${authRoutes.subjects.path}?categoryId=${item._id}`}
+          title={item.name}
+        />
+      )),
     [response.items, oppositeRole, t]
   )
 
