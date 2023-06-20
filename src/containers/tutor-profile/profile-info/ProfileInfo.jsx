@@ -93,11 +93,15 @@ const ProfileInfo = ({ userData }) => {
   ))
 
   const doneItems = [
-    {
-      title: t('tutorProfilePage.profileInfo.nativeLanguage'),
-      description: userData.nativeLanguage
-    },
-    ...(userData.address.country === ''
+    ...(!userData.nativeLanguage
+      ? []
+      : [
+          {
+            title: t('tutorProfilePage.profileInfo.nativeLanguage'),
+            description: userData.nativeLanguage
+          }
+        ]),
+    ...(!userData.address || userData.address.location === ''
       ? []
       : [
           {
