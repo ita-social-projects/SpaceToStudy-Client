@@ -65,7 +65,6 @@ const OfferCardSquare: FC<OfferCardSquareProps> = ({
           lastName={author.lastName}
           photo={author.photo}
           role={authorRole}
-          showLanguage
           sx={styles.userInfo}
         />
         <Typography sx={styles.description}>{title}</Typography>
@@ -83,7 +82,6 @@ const OfferCardSquare: FC<OfferCardSquareProps> = ({
           color={category.appearance.color}
           proficiencyLevel={proficiencyLevel}
           subject={subject.name}
-          sx={styles.chipContainer}
         />
       </Box>
       <Box sx={styles.cardContent}>

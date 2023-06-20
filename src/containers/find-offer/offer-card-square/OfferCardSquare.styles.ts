@@ -40,16 +40,6 @@ export const styles = {
     top: 0,
     right: 0
   },
-  chipContainer: {
-    container: {
-      gap: '10px'
-    },
-    label: {
-      fontSize: '10px',
-      textTransform: 'uppercase',
-      color: 'primary.500'
-    }
-  },
   priceContainer: {
     display: 'flex',
     alignItems: 'center',
