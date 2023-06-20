@@ -40,31 +40,33 @@ const MyOffersContainer: FC<MyOffersContainerProps> = ({
     removeColumnRules
   )
 
+  const createButtonActions = (id: string) => [
+    {
+      label: t('myOffersPage.editButton'),
+      buttonProps: {
+        variant: ButtonVariantEnum.Tonal,
+        disabled: true
+      }
+    },
+    {
+      label: t('common.labels.viewDetails'),
+      buttonProps: {
+        component: Link,
+        to: createUrlPath(authRoutes.offerDetails.path, id)
+      }
+    }
+  ]
+
   const myOffersGrid = (
     <Box sx={styles.root}>
-      {items.map((item) => {
-        const buttonActions = [
-          {
-            label: t('myOffersPage.editButton'),
-            buttonProps: {
-              variant: ButtonVariantEnum.Tonal,
-              disabled: true
-            }
-          },
-          {
-            label: t('common.labels.viewDetails'),
-            buttonProps: {
-              component: Link,
-              to: createUrlPath(authRoutes.offerDetails.path, item._id)
-            }
-          }
-        ]
-        return (
-          <AppCard key={item._id}>
-            <MyOffersCard buttonActions={buttonActions} offer={item} />
-          </AppCard>
-        )
-      })}
+      {items.map((item) => (
+        <AppCard key={item._id}>
+          <MyOffersCard
+            buttonActions={createButtonActions(item._id)}
+            offer={item}
+          />
+        </AppCard>
+      ))}
     </Box>
   )
 

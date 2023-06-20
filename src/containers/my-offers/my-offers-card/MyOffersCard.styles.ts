@@ -8,7 +8,8 @@ export const styles = {
     display: 'flex',
     flexDirection: 'column',
     gap: '16px',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    alignItems: 'start'
   },
   title: {
     ...ellipsisTextStyle(2),
@@ -36,6 +37,7 @@ export const styles = {
   buttonContainer: {
     display: 'flex',
     flexDirection: 'column',
-    gap: '9px'
+    gap: '9px',
+    width: '100%'
   }
 }

@@ -39,9 +39,7 @@ const MyOffersCard: FC<OfferCardSquareProps> = ({ buttonActions, offer }) => {
 
   return (
     <Box sx={styles.container}>
-      <Box>
-        <StatusChip status={status} />
-      </Box>
+      <StatusChip status={status} />
       <Typography sx={styles.title}>{title}</Typography>
       <Divider />
       <SubjectLevelWithLabels
