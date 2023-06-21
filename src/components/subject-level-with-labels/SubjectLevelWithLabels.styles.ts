@@ -13,11 +13,8 @@ export const styles = {
   },
   label: {
     typography: TypographyVariantEnum.Overline,
-    fontSize: '10px',
-    fontWeight: '400',
     color: 'primary.500',
-    lineHeight: '26px',
-    textTransform: 'uppercase'
+    lineHeight: '26px'
   },
   chips: {
     flexDirection: 'column'
