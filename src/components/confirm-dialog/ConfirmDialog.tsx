@@ -14,6 +14,8 @@ import { styles } from '~/components/confirm-dialog/ConfirmDialog.styles'
 interface ConfirmDialogProps {
   message: string
   title: string
+  mainBtnTitle?: string
+  secondaryBtnTitle?: string
   open: boolean
   onConfirm: () => void
   onDismiss: () => void
@@ -22,6 +24,8 @@ interface ConfirmDialogProps {
 const ConfirmDialog: FC<ConfirmDialogProps> = ({
   message,
   title,
+  mainBtnTitle,
+  secondaryBtnTitle,
   open,
   onConfirm,
   onDismiss
@@ -45,11 +49,11 @@ const ConfirmDialog: FC<ConfirmDialogProps> = ({
         <Typography variant='subtitle1'>{t(message)}</Typography>
       </DialogContent>
       <DialogActions sx={styles.actions}>
-        <Button onClick={onDismiss} size='large' variant='contained'>
-          {t('common.discard')}
-        </Button>
         <Button onClick={onConfirm} size='large' variant='tonal'>
-          {t('common.cancel')}
+          {secondaryBtnTitle ? secondaryBtnTitle : t('common.yes')}
+        </Button>
+        <Button onClick={onDismiss} size='large' variant='contained'>
+          {mainBtnTitle ? mainBtnTitle : t('common.no')}
         </Button>
       </DialogActions>
     </Dialog>
