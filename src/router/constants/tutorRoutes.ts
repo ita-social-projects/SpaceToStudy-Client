@@ -12,6 +12,10 @@ export const tutorRoutes = {
       route: 'my-cooperations',
       path: '/tutor/my-cooperations'
     },
+    myOffers: {
+      route: 'my-offers',
+      path: '/tutor/my-offers'
+    },
     logout: { route: 'logout', path: '/logout' }
   },
   editProfile: {

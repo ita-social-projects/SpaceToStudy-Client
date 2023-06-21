@@ -6,7 +6,9 @@ import {
   RemoveColumnRules,
   ScreenBasedLimits,
   UserRole,
-  UserRoleEnum
+  UserRoleEnum,
+  Cooperation,
+  Offer
 } from '~/types'
 
 export const parseJwt = <T,>(token: string): T => {
@@ -89,14 +91,15 @@ export const getScreenBasedLimit = (
   }
 }
 
-export const ajustColumns = <T extends TableColumns>(
+export const ajustColumns = <T extends Cooperation | Offer>(
   breakpoints: Breakpoints,
-  columns: T[],
-  rules: RemoveColumnRules
+  columns: TableColumns<T>[],
+  rules: RemoveColumnRules<T>
 ) => {
   const { isDesktop, isTablet, isMobile } = breakpoints
-  const removeColumns = (rule: RemoveColumnRules[keyof RemoveColumnRules]) =>
-    columns.filter(({ label }) => !rule?.includes(label))
+  const removeColumns = (
+    rule: RemoveColumnRules<T>[keyof RemoveColumnRules<T>]
+  ) => columns.filter(({ label }) => !rule?.includes(label))
 
   switch (true) {
     case isDesktop:
@@ -146,6 +149,15 @@ export const createUrlPath = (
 
   return `${URL}${paramsString}${queryParamsString}`
 }
+
+export const ellipsisTextStyle = (linesCount: number) => ({
+  display: '-webkit-box',
+  WebkitLineClamp: linesCount,
+  lineClamp: linesCount,
+  WebkitBoxOrient: 'vertical',
+  boxOrient: 'vertical',
+  overflow: 'hidden'
+})
 
 export const getDifferenceDates = (startDate: Date, endDate: Date) => {
   const difference: number = new Date(endDate) - new Date(startDate)

@@ -45,6 +45,16 @@ export const studentCooperations = {
   path: studentRoutes.accountMenu.myCooperations.route
 }
 
+export const tutorOffers = {
+  name: t('breadCrumbs.myOffers'),
+  path: tutorRoutes.accountMenu.myOffers.route
+}
+
+export const studentOffers = {
+  name: t('breadCrumbs.myOffers'),
+  path: studentRoutes.accountMenu.myOffers.route
+}
+
 export const categories = {
   name: t('breadCrumbs.categories'),
   path: authRoutes.categories.route

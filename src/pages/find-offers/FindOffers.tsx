@@ -76,7 +76,7 @@ const FindOffers = () => {
     fetchOnMount: false
   })
 
-  const { offers, count: offersCount } = offersResponse
+  const { items, count: offersCount } = offersResponse
 
   const { page, setPage, pageCount, rowsPerPage, handleChangePage } =
     usePagination({
@@ -126,7 +126,7 @@ const FindOffers = () => {
 
   const hidePaginationStyle = {
     visibility:
-      offersLoading || !offers.length
+      offersLoading || !items.length
         ? VisibilityEnum.Hidden
         : VisibilityEnum.Visible
   }
@@ -170,10 +170,10 @@ const FindOffers = () => {
         </AppDrawer>
         {offersLoading ? (
           <Loader pageLoad />
-        ) : !offers.length && !offersLoading ? (
+        ) : !items.length && !offersLoading ? (
           <NotFoundResults description={t('findOffers.notFound.description')} />
         ) : (
-          <OfferContainer offerCards={offers} viewMode={cardsView} />
+          <OfferContainer offerCards={items} viewMode={cardsView} />
         )}
       </Box>
       <AppPagination

@@ -1,0 +1,18 @@
+{
+  "title": "My Offers",
+  "tabs": {
+    "all": "All",
+    "active": "Active",
+    "draft": "Draft",
+    "closed": "Closed"
+  },
+  "tableHeaders": {
+    "title": "Title",
+    "subject": "Subject",
+    "price": "Price",
+    "updated": "Last update",
+    "status": "Status"
+  },
+  "buttonLabel": "Create new offer",
+  "editButton": "Edit offer"
+}

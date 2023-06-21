@@ -1,39 +1,39 @@
 import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
-
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
+
 import usePagination from '~/hooks/table/use-pagination'
 import useAxios from '~/hooks/use-axios'
 import useSort from '~/hooks/table/use-sort'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import useFilter from '~/hooks/table/use-filter'
 import { useAppSelector } from '~/hooks/use-redux'
+import { useDrawer } from '~/hooks/use-drawer'
 import Tab from '~/components/tab/Tab'
 import Loader from '~/components/loader/Loader'
 import AppButton from '~/components/app-button/AppButton'
 import AppPagination from '~/components/app-pagination/AppPagination'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
+import AppDrawer from '~/components/app-drawer/AppDrawer'
+import CreateOffer from '~/containers/offer-page/create-offer/CreateOffer'
 import CooperationOfferToolbar from '~/containers/my-cooperations/cooperation-offer-toolbar/CooperationOfferToolbar'
-import CooperationContainer from '~/containers/my-cooperations/cooperations-container/CooperationContainer'
-import { cooperationService } from '~/services/cooperation-service'
-import { getScreenBasedLimit, studentOrTutor } from '~/utils/helper-functions'
-import { studentRoutes } from '~/router/constants/studentRoutes'
-import { tutorRoutes } from '~/router/constants/tutorRoutes'
+import MyOffersContainer from '~/containers/my-offers/my-offers-container/MyOffersContainer'
+import { OfferService } from '~/services/offer-service'
+import { getScreenBasedLimit } from '~/utils/helper-functions'
 
 import {
   defaultResponse,
+  sortTranslationKeys,
   initialFilters,
   initialSort,
-  sortTranslationKeys,
   tabsInfo
-} from '~/pages/my-cooperations/MyCooperations.constants'
+} from '~/pages/my-offers/MyOffers.constants'
 import { itemsLoadLimit } from '~/constants'
-import { CardsViewEnum, TabType, UserRoleEnum } from '~/types'
+import { CardsViewEnum, TabType } from '~/types'
 import { styles } from '~/pages/my-cooperations/MyCooperations.styles'
 
-const MyCooperations = () => {
+const MyOffers = () => {
   const [itemsView, setItemsView] = useState<CardsViewEnum>(
     CardsViewEnum.Inline
   )
@@ -46,30 +46,34 @@ const MyCooperations = () => {
     initialSort
   })
   const { page, handleChangePage } = usePagination()
+  const { openDrawer, closeDrawer, isOpen } = useDrawer()
+
   const { sort, resetSort } = sortOptions
   const { filters, clearFilters, setFilterByKey } = filterOptions
+
+  const handleOpenDrawer = () => openDrawer()
 
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
   const showTable = !breakpoints.isMobile && itemsView === CardsViewEnum.Inline
 
-  const getMyCooperations = useCallback(
+  const { userId } = useAppSelector((state) => state.appMain)
+
+  const getMyOffers = useCallback(
     () =>
-      cooperationService.getCooperations({
-        ...filters,
+      OfferService.getUsersOffers({
+        id: userId,
         sort,
+        ...filters,
         limit: itemsPerPage,
         skip: (page - 1) * itemsPerPage
       }),
-    [filters, page, itemsPerPage, sort]
+
+    [userId, filters, page, itemsPerPage, sort]
   )
 
-  const {
-    loading,
-    response,
-    fetchData: getCooperations
-  } = useAxios({
-    service: getMyCooperations,
-    defaultResponse
+  const { loading, response } = useAxios({
+    service: getMyOffers,
+    defaultResponse: defaultResponse
   })
 
   const handleTabClick = (tab: TabType<string>) => {
@@ -93,20 +97,16 @@ const MyCooperations = () => {
     value
   }))
 
-  const { userRole } = useAppSelector((state) => state.appMain)
-
-  const buttonPath =
-    studentOrTutor(userRole) === UserRoleEnum.Student
-      ? studentRoutes.accountMenu.myOffers.path
-      : tutorRoutes.accountMenu.myOffers.path
-
   return (
     <PageWrapper>
       <Box sx={styles.titleBlock}>
-        <Typography sx={styles.title}>{t('cooperationsPage.title')}</Typography>
-        <AppButton component={Link} to={buttonPath}>
-          {t('button.viewMyOffers')}
+        <Typography sx={styles.title}>{t('myOffersPage.title')}</Typography>
+        <AppButton onClick={handleOpenDrawer}>
+          {t('myOffersPage.buttonLabel')}
         </AppButton>
+        <AppDrawer onClose={closeDrawer} open={isOpen}>
+          <CreateOffer closeDrawer={closeDrawer} />
+        </AppDrawer>
       </Box>
       <Box sx={styles.tabs}>{tabs}</Box>
       <CooperationOfferToolbar
@@ -121,8 +121,7 @@ const MyCooperations = () => {
         <Loader pageLoad size={50} />
       ) : (
         <>
-          <CooperationContainer
-            getCooperations={getCooperations}
+          <MyOffersContainer
             items={response.items}
             showTable={showTable}
             sort={sortOptions}
@@ -139,4 +138,4 @@ const MyCooperations = () => {
   )
 }
 
-export default MyCooperations
+export default MyOffers

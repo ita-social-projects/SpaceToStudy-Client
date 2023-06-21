@@ -11,7 +11,7 @@ describe('OfferCarousel test', () => {
   it('should render OfferCarousel', async () => {
     const fakeData = {
       loading: false,
-      response: { count: 1, offers: [{ ...mockOffer, _id: 'id2' }] }
+      response: { count: 1, items: [{ ...mockOffer, _id: 'id2' }] }
     }
     useAxios.mockImplementation(() => fakeData)
     renderWithProviders(<OfferCarousel offer={mockOffer} />)
@@ -23,7 +23,7 @@ describe('OfferCarousel test', () => {
   it('should not render OfferCarousel', async () => {
     const fakeData = {
       loading: false,
-      response: { count: 0, offers: [] }
+      response: { count: 0, items: [] }
     }
     useAxios.mockImplementation(() => fakeData)
     renderWithProviders(<OfferCarousel offer={mockOffer} />)

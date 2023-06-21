@@ -36,7 +36,9 @@
     "sendMessage": "Send message",
     "viewDetails": "View details",
     "enrollOffer": "Enroll offer",
-    "sortBy": "Sort by:"
+    "sortBy": "Sort by:",
+    "subject": "Subject:",
+    "level": "Level:"
   },
   "errorMessages": {
     "emailValid": "Email should be of the following format: “local-part@domain.com”",

@@ -14,6 +14,6 @@ export const defaultFilters = (role: UserRoleEnum): FindOffersFilters => ({
   page: '1'
 })
 
-export const defaultResponse = { offers: [], count: 0 }
+export const defaultResponse = { items: [], count: 0 }
 
 export const itemsPerPage = 8

@@ -1,59 +1,43 @@
+import { TypographyVariantEnum } from '~/types'
 import { ellipsisTextStyle } from '~/utils/helper-functions'
 
 export const styles = {
   container: {
-    position: 'relative',
     width: '100%',
+    minHeigth: '400px',
     display: 'flex',
     flexDirection: 'column',
-    gap: '8px',
-    justifyContent: 'space-between'
+    gap: '16px',
+    justifyContent: 'space-between',
+    alignItems: 'start'
   },
-  userInfo: {
-    root: {
-      alignItems: 'center'
-    },
-    avatar: {
-      height: '80px',
-      width: '80px'
-    }
-  },
-  description: {
+  title: {
     ...ellipsisTextStyle(2),
-    typography: 'midTitle',
+    typography: TypographyVariantEnum.MidTitle,
     fontWeight: 600,
     color: 'primary.700'
-  },
-  iconButton: {
-    color: 'basic.black',
-    position: 'absolute',
-    top: 0,
-    right: 0
-  },
-  chipContainer: {
-    mb: '16px'
   },
   priceContainer: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    mt: 'auto',
-    mb: '16px'
+    mt: 'auto'
   },
   titleWithDescription: {
     wrapper: {
       textAlign: 'left'
     },
     title: {
-      typography: 'h6'
+      typography: TypographyVariantEnum.H6
     },
     description: {
-      typography: 'caption'
+      typography: TypographyVariantEnum.Caption
     }
   },
   buttonContainer: {
     display: 'flex',
     flexDirection: 'column',
-    gap: '16px'
+    gap: '9px',
+    width: '100%'
   }
 }

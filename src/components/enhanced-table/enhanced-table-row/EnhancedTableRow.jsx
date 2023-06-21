@@ -1,11 +1,12 @@
+import { useTranslation } from 'react-i18next'
+import useMenu from '~/hooks/use-menu'
+
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import Checkbox from '@mui/material/Checkbox'
 import IconButton from '@mui/material/IconButton'
 import MenuItem from '@mui/material/MenuItem'
 import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
-
-import useMenu from '~/hooks/use-menu'
 
 const EnhancedTableRow = ({
   columns,
@@ -16,6 +17,7 @@ const EnhancedTableRow = ({
   onRowClick,
   select = {}
 }) => {
+  const { t } = useTranslation()
   const { openMenu, renderMenu } = useMenu()
   const { isSelected, handleSelectClick } = select
 
@@ -24,10 +26,12 @@ const EnhancedTableRow = ({
     refetchData()
   }
 
+  const additionalProps = { t }
+
   const tableCells = columns.map(({ field, label, calculatedCellValue }) => {
     let propValue = ''
     if (calculatedCellValue) {
-      propValue = calculatedCellValue(item)
+      propValue = calculatedCellValue(item, additionalProps)
     } else {
       propValue = item[field]?.toString()
     }
