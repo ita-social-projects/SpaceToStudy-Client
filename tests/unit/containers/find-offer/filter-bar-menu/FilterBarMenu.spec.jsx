@@ -10,6 +10,7 @@ vi.mock('~/hooks/use-breakpoints')
 
 const mockChosenFiltersQty = 2
 const mockUpdateFilter = vi.fn()
+const mockResetPage = vi.fn()
 const toggleFilters = vi.fn()
 const mockHandleOffersView = vi.fn()
 const mockOnToggleTutorOffers = vi.fn()
@@ -23,6 +24,7 @@ describe('OfferFilterBlock', () => {
         filters={defaultFilters('createdAt')}
         handleOffersView={mockHandleOffersView}
         onToggleTutorOffers={mockOnToggleTutorOffers}
+        resetPage={mockResetPage}
         toggleFilters={toggleFilters}
         updateFilter={mockUpdateFilter}
       />

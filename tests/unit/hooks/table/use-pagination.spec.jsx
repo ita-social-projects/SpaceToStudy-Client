@@ -32,7 +32,7 @@ describe('Use pagination custom hook', () => {
       usePagination({ defaultPage: 15, itemsPerPage: 5, itemsCount: 10 })
     )
 
-    expect(result.current.page).toEqual(2)
+    expect(result.current.page).toEqual(15)
   })
 
   it('should clear page', () => {

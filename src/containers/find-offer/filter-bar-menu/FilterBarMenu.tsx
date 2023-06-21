@@ -26,6 +26,7 @@ interface FilterBarMenuProps {
   handleOffersView: (view: CardsView) => void
   offersView: CardsView
   onToggleTutorOffers: () => void
+  resetPage: () => void
   updateFilter: FindOffersUpdateFilter<FindOffersFilters>
   filters: FindOffersFilters
 }
@@ -37,6 +38,7 @@ const FilterBarMenu: FC<FilterBarMenuProps> = ({
   filters,
   handleOffersView,
   onToggleTutorOffers,
+  resetPage,
   offersView
 }) => {
   const { isLaptopAndAbove, isMobile } = useBreakpoints()
@@ -56,11 +58,13 @@ const FilterBarMenu: FC<FilterBarMenuProps> = ({
 
   const handleSortBy = (value: string) => {
     updateFilter(value, 'sort')
+    resetPage()
   }
   const sortOptions = sortTranslationKeys.map(({ title, value }) => ({
     title: t(title),
     value
   }))
+
   return (
     <Box sx={isMobile ? styles.mobileContainer : styles.container}>
       <FiltersToggle

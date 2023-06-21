@@ -23,6 +23,7 @@ interface OfferFilterBlockProps {
   filterActions: FindOffersFiltersActions<FindOffersFilters>
   onToggleTutorOffers: () => void
   closeFilters: () => void
+  resetPage: () => void
   open: boolean
   activeFilterCount?: number
 }
@@ -33,6 +34,7 @@ const OfferFilterBlock: FC<OfferFilterBlockProps> = ({
   onToggleTutorOffers,
   activeFilterCount,
   closeFilters,
+  resetPage,
   open
 }) => {
   const { t } = useTranslation()
@@ -56,9 +58,11 @@ const OfferFilterBlock: FC<OfferFilterBlockProps> = ({
     <K extends keyof FindOffersFilters>(key: K) =>
     (value: FindOffersFilters[K]) =>
       updateFilter(value, key)
+
   const handleApplyFilters = () => {
     updateQueryParams()
-    !isLaptopAndAbove && closeFilters()
+    resetPage()
+    closeFilters()
   }
 
   const mobileFields = !isLaptopAndAbove && (

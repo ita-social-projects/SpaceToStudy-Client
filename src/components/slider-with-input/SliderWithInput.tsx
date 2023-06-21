@@ -67,7 +67,6 @@ const SliderWithInput: FC<SliderWithInputProps> = ({
 
       <Box sx={styles.slider}>
         <Slider
-          aria-label='Always visible'
           defaultValue={defaultValue}
           marks={marks}
           max={max}

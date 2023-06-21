@@ -22,7 +22,7 @@ export interface FindOffersFilters {
   price?: RangeArray
   search: string
   proficiencyLevel: ProficiencyLevelEnum[]
-  page: string
+  page: string | number
 }
 
 export interface FindOffersFiltersActions<T> {

@@ -22,10 +22,12 @@ import AsyncAutocomplete from '~/components/async-autocomlete/AsyncAutocomplete'
 interface OfferSearchToolbarProps {
   filters: FindOffersFilters
   filterActions: FindOffersFiltersActions<FindOffersFilters>
+  resetPage: () => void
 }
 
 const OfferSearchToolbar = ({
   filters,
+  resetPage,
   filterActions
 }: OfferSearchToolbarProps) => {
   const { t } = useTranslation()
@@ -43,6 +45,7 @@ const OfferSearchToolbar = ({
   ) => {
     updateFilterInQuery(value?._id ?? '', 'categoryId')
     updateFilterInQuery('', 'subjectId')
+    resetPage()
   }
 
   const onSubjectChange = (
@@ -50,9 +53,13 @@ const OfferSearchToolbar = ({
     value: SubjectNameInterface | null
   ) => {
     updateFilterInQuery(value?._id ?? '', 'subjectId')
+    resetPage()
   }
 
-  const updateName = (value: string) => updateFilterInQuery(value, 'name')
+  const updateName = (value: string) => {
+    updateFilterInQuery(value, 'search')
+    resetPage()
+  }
 
   const AppAutoCompleteList = (
     <>

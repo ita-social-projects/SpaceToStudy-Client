@@ -18,6 +18,7 @@ import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { studentRoutes } from '~/router/constants/studentRoutes'
 import { tutorRoutes } from '~/router/constants/tutorRoutes'
+import { authRoutes } from '~/router/constants/authRoutes'
 import { student } from '~/constants'
 
 import { styles } from '~/containers/navigation-icons/NavigationIcons.styles'
@@ -72,11 +73,13 @@ const UserIcons = ({ setSidebarOpen }) => {
       </Tooltip>
 
       <Tooltip arrow title={t('iconsTooltip.messages')}>
-        <Box>
-          <IconButton disabled sx={styles.studentIcons}>
-            <MessageRoundedIcon color='disabled' />
-          </IconButton>
-        </Box>
+        <IconButton
+          component={Link}
+          sx={styles.studentIcons}
+          to={authRoutes.chat.path}
+        >
+          <MessageRoundedIcon color='primary' />
+        </IconButton>
       </Tooltip>
 
       <Tooltip arrow title={t('iconsTooltip.bookmarks')}>
