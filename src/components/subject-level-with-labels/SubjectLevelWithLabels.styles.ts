@@ -1,3 +1,5 @@
+import { TypographyVariantEnum } from '~/types'
+
 export const styles = {
   container: {
     display: 'flex',
@@ -6,9 +8,11 @@ export const styles = {
   labels: {
     display: 'flex',
     flexDirection: 'column',
-    gap: '8px'
+    justifyContent: 'space-around',
+    gap: '5px'
   },
   label: {
+    typography: TypographyVariantEnum.Overline,
     fontWeight: '300',
     color: 'primary.400',
     lineHeight: '25px'

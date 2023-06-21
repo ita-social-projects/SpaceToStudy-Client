@@ -1,3 +1,4 @@
+import { TFunction } from 'react-i18next'
 import { RequestParams } from '~/types/services/services.index'
 import { Cooperation, Offer } from '~/types'
 
@@ -27,6 +28,13 @@ export interface RemoveColumnRules<T extends Cooperation | Offer> {
 
 export interface TableColumns<T> {
   label: string
-  calculatedCellValue: (item: T) => string | React.ReactNode
+  calculatedCellValue: (
+    item: T,
+    additionalProps: additionalPropsInterface
+  ) => string | React.ReactNode
   field?: string
+}
+
+export interface additionalPropsInterface {
+  t: TFunction
 }

@@ -5,7 +5,13 @@ import StatusChip from '~/components/status-chip/StatusChip'
 import UserProfileInfo from '~/components/user-profile-info/UserProfileInfo'
 import SubjectLevelChips from '~/components/subject-level-chips/SubjectLevelChips'
 
-import { Cooperation, RemoveColumnRules, StatusEnum } from '~/types'
+import {
+  additionalPropsInterface,
+  Cooperation,
+  Offer,
+  RemoveColumnRules,
+  StatusEnum
+} from '~/types'
 import { styles } from '~/containers/my-cooperations/cooperations-container/CooperationContainer.styles'
 
 export const columns = [
@@ -44,7 +50,8 @@ export const columns = [
   {
     label: 'cooperationsPage.tableHeaders.price',
     field: 'price',
-    calculatedCellValue: (item: Cooperation) => `${item.price} UAH`
+    calculatedCellValue: (item: Offer, { t }: additionalPropsInterface) =>
+      `${item.price} ${t('common.uah')}`
   },
   {
     label: 'cooperationsPage.tableHeaders.updated',
