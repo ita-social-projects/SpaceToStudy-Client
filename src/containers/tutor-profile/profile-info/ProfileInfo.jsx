@@ -79,14 +79,15 @@ const ProfileInfo = ({ userData }) => {
       description: t('tutorProfilePage.profileInfo.withS2S')
     },
     {
-      title: accountRating
+      title: '',
+      description: accountRating
     }
   ]
 
   const accInfo = accountInfo.map((item) => (
     <TitleWithDescription
       description={item.description}
-      key={item.description}
+      key={item.title}
       style={styles.profileTitleComp}
       title={item.title}
     />
