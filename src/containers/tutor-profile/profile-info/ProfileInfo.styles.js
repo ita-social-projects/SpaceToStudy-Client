@@ -19,7 +19,8 @@ export const styles = {
     borderRadius: '15px'
   },
   infoWrapper: {
-    maxWidth: '552px'
+    maxWidth: { sm: '345px', lg: '834px' },
+    width: '100%'
   },
   iconBtn: {
     position: 'absolute',
@@ -91,16 +92,16 @@ export const styles = {
   },
   avatarContainer: {
     flex: 1,
-    maxWidth: '650px'
+    maxWidth: '525px'
   },
   avatarContainerMobile: { flex: 1 },
   linkToReviews: { color: 'primary.900' },
   appRating: {
     starMobile: {
-      height: '24px'
+      height: { sm: '18px', md: '24px' }
     },
     rating: {
-      typography: TypographyVariantEnum.H5
+      typography: { sm: TypographyVariantEnum.H6, md: TypographyVariantEnum.H5 }
     },
     reviews: {
       typography: TypographyVariantEnum.Overline

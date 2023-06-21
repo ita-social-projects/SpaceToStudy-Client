@@ -79,29 +79,31 @@ const ProfileInfo = ({ userData }) => {
       description: t('tutorProfilePage.profileInfo.withS2S')
     },
     {
-      title: accountRating
+      title: '',
+      description: accountRating
     }
   ]
 
   const accInfo = accountInfo.map((item) => (
     <TitleWithDescription
       description={item.description}
-      key={item.description}
+      key={item.title}
       style={styles.profileTitleComp}
       title={item.title}
     />
   ))
 
   const doneItems = [
-    {
+    userData.nativeLanguage && {
       title: t('tutorProfilePage.profileInfo.nativeLanguage'),
       description: userData.nativeLanguage
     },
-    {
-      title: t('tutorProfilePage.profileInfo.location'),
-      description: `${userData.address.city}, ${userData.address.country}`
-    }
-  ]
+    userData.address &&
+      userData.address.country.length > 0 && {
+        title: t('tutorProfilePage.profileInfo.location'),
+        description: `${userData.address.city}, ${userData.address.country}`
+      }
+  ].filter(Boolean)
 
   const buttonGroup = !isMyProfile && (
     <Box sx={styles.buttonGroup}>
