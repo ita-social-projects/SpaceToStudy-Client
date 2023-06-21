@@ -93,23 +93,16 @@ const ProfileInfo = ({ userData }) => {
   ))
 
   const doneItems = [
-    ...(!userData.nativeLanguage
-      ? []
-      : [
-          {
-            title: t('tutorProfilePage.profileInfo.nativeLanguage'),
-            description: userData.nativeLanguage
-          }
-        ]),
-    ...(!userData.address || userData.address.location === ''
-      ? []
-      : [
-          {
-            title: t('tutorProfilePage.profileInfo.location'),
-            description: `${userData.address.city}, ${userData.address.country}`
-          }
-        ])
-  ]
+    userData.nativeLanguage && {
+      title: t('tutorProfilePage.profileInfo.nativeLanguage'),
+      description: userData.nativeLanguage
+    },
+    userData.address &&
+      userData.address.country.length > 0 && {
+        title: t('tutorProfilePage.profileInfo.location'),
+        description: `${userData.address.city}, ${userData.address.country}`
+      }
+  ].filter(Boolean)
 
   const buttonGroup = !isMyProfile && (
     <Box sx={styles.buttonGroup}>
