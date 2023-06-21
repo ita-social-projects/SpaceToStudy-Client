@@ -2,7 +2,7 @@ import StatusChip from '~/components/status-chip/StatusChip'
 import SubjectLevelChips from '~/components/subject-level-chips/SubjectLevelChips'
 
 import { getFormatedDate } from '~/utils/helper-functions'
-import { additionalPropsInterface, Offer, RemoveColumnRules } from '~/types'
+import { AdditionalPropsInterface, Offer, RemoveColumnRules } from '~/types'
 
 export const columns = [
   {
@@ -22,7 +22,7 @@ export const columns = [
   {
     label: 'myOffersPage.tableHeaders.price',
     field: 'price',
-    calculatedCellValue: (item: Offer, { t }: additionalPropsInterface) =>
+    calculatedCellValue: (item: Offer, { t }: AdditionalPropsInterface) =>
       `${item.price} ${t('common.uah')}`
   },
   {

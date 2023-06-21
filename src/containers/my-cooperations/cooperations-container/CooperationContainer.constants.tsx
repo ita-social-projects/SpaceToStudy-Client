@@ -6,7 +6,7 @@ import UserProfileInfo from '~/components/user-profile-info/UserProfileInfo'
 import SubjectLevelChips from '~/components/subject-level-chips/SubjectLevelChips'
 
 import {
-  additionalPropsInterface,
+  AdditionalPropsInterface,
   Cooperation,
   Offer,
   RemoveColumnRules,
@@ -50,7 +50,7 @@ export const columns = [
   {
     label: 'cooperationsPage.tableHeaders.price',
     field: 'price',
-    calculatedCellValue: (item: Offer, { t }: additionalPropsInterface) =>
+    calculatedCellValue: (item: Offer, { t }: AdditionalPropsInterface) =>
       `${item.price} ${t('common.uah')}`
   },
   {

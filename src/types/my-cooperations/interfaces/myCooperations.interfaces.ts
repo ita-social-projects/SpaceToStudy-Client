@@ -30,11 +30,11 @@ export interface TableColumns<T> {
   label: string
   calculatedCellValue: (
     item: T,
-    additionalProps: additionalPropsInterface
+    additionalProps: AdditionalPropsInterface
   ) => string | React.ReactNode
   field?: string
 }
 
-export interface additionalPropsInterface {
+export interface AdditionalPropsInterface {
   t: TFunction
 }
