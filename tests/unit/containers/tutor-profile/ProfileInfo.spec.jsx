@@ -46,7 +46,7 @@ const userData = {
     'Some amount of text regarding the proficiency.Some amount of text rega',
   address: {
     city: 'Lviv',
-    location: 'Ukraine'
+    country: 'Ukraine'
   },
   averageRating: {
     student: 3,
