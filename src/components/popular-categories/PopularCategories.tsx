@@ -19,8 +19,8 @@ import useBreakpoints from '~/hooks/use-breakpoints'
 
 import {
   getScreenBasedLimit,
-  studentOrTutor,
-  spliceSx
+  spliceSx,
+  getOpositeRole
 } from '~/utils/helper-functions'
 import { styles } from '~/components/popular-categories/PopularCategories.styles'
 import { defaultResponses } from '~/constants'
@@ -53,24 +53,22 @@ const PopularCategories: FC<PopularCategoriesProps> = ({
     defaultResponse: defaultResponses.itemsWithCount
   })
 
-  const currentRole = studentOrTutor(userRole)
+  const oppositeRole = getOpositeRole(userRole)
 
   const cards = useMemo(
     () =>
-      response.items.map((item) => {
-        return (
-          <CardWithLink
-            description={`${item.totalOffers[currentRole]} ${t(
-              'common.offers'
-            )}`}
-            img={serviceIcon}
-            key={item._id}
-            link={`${authRoutes.subjects.path}?categoryId=${item._id}`}
-            title={item.name}
-          />
-        )
-      }),
-    [response.items, currentRole, t]
+      response.items.map((item) => (
+        <CardWithLink
+          description={`${item.totalOffers[oppositeRole]} ${t(
+            'common.offers'
+          )}`}
+          img={serviceIcon}
+          key={item._id}
+          link={`${authRoutes.subjects.path}?categoryId=${item._id}`}
+          title={item.name}
+        />
+      )),
+    [response.items, oppositeRole, t]
   )
 
   const onClickButton = () => {
