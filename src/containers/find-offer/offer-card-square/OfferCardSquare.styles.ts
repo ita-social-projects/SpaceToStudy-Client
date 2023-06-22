@@ -6,16 +6,26 @@ export const styles = {
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
-    gap: '8px',
+    gap: '24px',
     justifyContent: 'space-between'
+  },
+  cardContent: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '16px'
   },
   userInfo: {
     root: {
-      alignItems: 'center'
+      alignItems: 'center',
+      flexDirection: 'row',
+      gap: '20px'
     },
     avatar: {
-      height: '80px',
-      width: '80px'
+      height: '100px',
+      width: '100px'
+    },
+    info: {
+      gap: '10px'
     }
   },
   description: {
@@ -30,15 +40,11 @@ export const styles = {
     top: 0,
     right: 0
   },
-  chipContainer: {
-    mb: '16px'
-  },
   priceContainer: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    mt: 'auto',
-    mb: '16px'
+    mt: 'auto'
   },
   titleWithDescription: {
     wrapper: {

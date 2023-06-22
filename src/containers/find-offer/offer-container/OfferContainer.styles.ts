@@ -15,7 +15,7 @@ export const styles = {
   gridItem: { width: '100%' },
   appCard: { padding: { sm: '20px', md: '30px 20px' } },
   appCardSquare: {
-    minHeight: '480px',
+    minHeight: '460px',
     padding: '20px'
   }
 }

@@ -3,19 +3,17 @@ import { TypographyVariantEnum } from '~/types'
 export const styles = {
   container: {
     display: 'flex',
-    gap: '4px'
+    gap: '10px'
   },
   labels: {
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-around',
-    gap: '5px'
+    gap: '8px'
   },
   label: {
     typography: TypographyVariantEnum.Overline,
-    fontWeight: '300',
-    color: 'primary.400',
-    lineHeight: '25px'
+    color: 'primary.500',
+    lineHeight: '26px'
   },
   chips: {
     flexDirection: 'column'

@@ -6,6 +6,7 @@ import Box from '@mui/material/Box'
 import Avatar from '@mui/material/Avatar'
 import Typography from '@mui/material/Typography'
 import AppRating from '~/components/app-rating/AppRating'
+import LanguagesListWithIcon from '~/components/languages-list-with-icon/LanguagesListWithIcon'
 
 import {
   createUrlPath,
@@ -13,12 +14,18 @@ import {
   spliceSx
 } from '~/utils/helper-functions'
 
-import { UserProfileInfoSx, UserResponse, UserRole } from '~/types'
+import {
+  LanguagesEnum,
+  UserProfileInfoSx,
+  UserResponse,
+  UserRole
+} from '~/types'
 import { styles } from '~/components/user-profile-info/UserProfileInfo.styles'
 import { authRoutes } from '~/router/constants/authRoutes'
 
 interface UserProfileInfoProps
   extends Pick<UserResponse, 'photo' | 'firstName' | 'lastName' | '_id'> {
+  languages: LanguagesEnum | LanguagesEnum[]
   rating?: number
   reviewsCount?: number
   date?: string
@@ -31,6 +38,7 @@ const UserProfileInfo: FC<UserProfileInfoProps> = ({
   rating,
   firstName,
   lastName,
+  languages,
   date,
   reviewsCount,
   sx = {},
@@ -81,6 +89,7 @@ const UserProfileInfo: FC<UserProfileInfoProps> = ({
             {getFormatedDate(date)}
           </Typography>
         )}
+        {languages && <LanguagesListWithIcon languages={languages} />}
       </Box>
     </Box>
   )

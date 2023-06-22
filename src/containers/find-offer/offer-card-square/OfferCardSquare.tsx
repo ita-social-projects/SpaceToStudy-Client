@@ -5,16 +5,16 @@ import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
 import TurnedInNot from '@mui/icons-material/TurnedInNot'
 import Typography from '@mui/material/Typography'
+import Divider from '@mui/material/Divider'
 
 import AppRatingMobile from '~/components/app-rating-mobile/AppRatingMobile'
 import AppButton from '~/components/app-button/AppButton'
 import UserProfileInfo from '~/components/user-profile-info/UserProfileInfo'
-import LanguagesListWithIcon from '~/components/languages-list-with-icon/LanguagesListWithIcon'
 import TitleWithDescripiton from '~/components/title-with-description/TitleWithDescription'
-import SubjectLevelChips from '~/components/subject-level-chips/SubjectLevelChips'
 
-import { ButtonActions, Offer } from '~/types'
+import { ButtonActions, Offer, SizeEnum } from '~/types'
 import { styles } from '~/containers/find-offer/offer-card-square/OfferCardSquare.styles'
+import SubjectLevelWithLabels from '~/components/subject-level-with-labels/SubjectLevelWithLabels'
 
 interface OfferCardSquareProps {
   buttonActions?: (ButtonActions | null)[]
@@ -44,7 +44,12 @@ const OfferCardSquare: FC<OfferCardSquareProps> = ({
   const buttons = buttonActions?.map(
     (elem) =>
       elem && (
-        <AppButton fullWidth key={elem.label} {...elem.buttonProps}>
+        <AppButton
+          fullWidth
+          key={elem.label}
+          size={SizeEnum.Medium}
+          {...elem.buttonProps}
+        >
           {elem.label}
         </AppButton>
       )
@@ -52,45 +57,47 @@ const OfferCardSquare: FC<OfferCardSquareProps> = ({
 
   return (
     <Box sx={styles.container}>
-      <UserProfileInfo
-        _id={author._id}
-        firstName={author.firstName}
-        lastName={author.lastName}
-        photo={author.photo}
-        role={authorRole}
-        sx={styles.userInfo}
-      />
-      <Typography sx={styles.description}>{title}</Typography>
-      {onBookmarkClick && (
-        <IconButton
-          data-testid='bookmark-icon'
-          onClick={() => onBookmarkClick(_id)}
-          sx={styles.iconButton}
-        >
-          <TurnedInNot />
-        </IconButton>
-      )}
-      <LanguagesListWithIcon languages={languages} />
-      <SubjectLevelChips
-        color={category.appearance.color}
-        proficiencyLevel={proficiencyLevel}
-        subject={subject.name}
-        sx={styles.chipContainer}
-      />
-      <Box sx={styles.priceContainer}>
-        <TitleWithDescripiton
-          description={`/ ${t('common.hour')}`}
-          style={styles.titleWithDescription}
-          title={`${price} ${t('common.uah')}`}
+      <Box sx={styles.cardContent}>
+        <UserProfileInfo
+          _id={author._id}
+          firstName={author.firstName}
+          languages={languages}
+          lastName={author.lastName}
+          photo={author.photo}
+          role={authorRole}
+          sx={styles.userInfo}
         />
-        <Box>
+        <Typography sx={styles.description}>{title}</Typography>
+        <Divider />
+        {onBookmarkClick && (
+          <IconButton
+            data-testid='bookmark-icon'
+            onClick={() => onBookmarkClick(_id)}
+            sx={styles.iconButton}
+          >
+            <TurnedInNot />
+          </IconButton>
+        )}
+        <SubjectLevelWithLabels
+          color={category.appearance.color}
+          proficiencyLevel={proficiencyLevel}
+          subject={subject.name}
+        />
+      </Box>
+      <Box sx={styles.cardContent}>
+        <Box sx={styles.priceContainer}>
+          <TitleWithDescripiton
+            description={`/ ${t('common.hour')}`}
+            style={styles.titleWithDescription}
+            title={`${price} ${t('common.uah')}`}
+          />
           <AppRatingMobile
             reviewsCount={author.totalReviews[authorRole]}
             value={author.averageRating[authorRole]}
           />
         </Box>
+        <Box sx={styles.buttonContainer}>{buttons}</Box>
       </Box>
-      <Box sx={styles.buttonContainer}>{buttons}</Box>
     </Box>
   )
 }
