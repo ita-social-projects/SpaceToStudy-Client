@@ -15,12 +15,12 @@ import { useDebounce } from '~/hooks/use-debounce'
 import {
   ButtonVariantEnum,
   CreateOfferBlockProps,
-  CreateOfferData,
+  CreateOrUpdateOfferData,
   Faq
 } from '~/types'
-import { styles } from '~/containers/offer-page/create-offer/CreateOffer.styles'
+import { styles } from '~/containers/offer-page/OfferPage.styles'
 
-const FaqBlock = <T extends CreateOfferData>({
+const FaqBlock = <T extends CreateOrUpdateOfferData>({
   data,
   handleNonInputValueChange
 }: Pick<CreateOfferBlockProps<T>, 'data' | 'handleNonInputValueChange'>) => {
@@ -43,7 +43,7 @@ const FaqBlock = <T extends CreateOfferData>({
       const updatedFaq = [...data.FAQ, { question: '', answer: '' }]
       handleNonInputValueChange('FAQ', updatedFaq)
     } else {
-      setMaxFaqError(t('offerPage.createOffer.errorMessages.FAQ'))
+      setMaxFaqError(t('offerPage.errorMessages.FAQ'))
       resetError()
     }
   }
@@ -58,13 +58,13 @@ const FaqBlock = <T extends CreateOfferData>({
       <Box sx={styles.faqInputs}>
         <AppTextField
           fullWidth
-          label={t('offerPage.createOffer.labels.question')}
+          label={t('offerPage.labels.question')}
           onChange={handleInputChange('question', idx)}
           value={el.question}
         />
         <AppTextArea
           fullWidth
-          label={t('offerPage.createOffer.labels.answer')}
+          label={t('offerPage.labels.answer')}
           maxRows={3}
           onChange={handleInputChange('answer', idx)}
           value={el.answer}
@@ -79,13 +79,10 @@ const FaqBlock = <T extends CreateOfferData>({
   ))
 
   return (
-    <OrderedListItem
-      number={3}
-      title={t(`offerPage.createOffer.title.thirdStep`)}
-    >
+    <OrderedListItem number={3} title={t(`offerPage.title.thirdStep`)}>
       <Box sx={styles.specialization}>
         <Typography sx={[styles.description, styles.category]}>
-          {t(`offerPage.createOffer.description.thirdStep.${userRole}`)}
+          {t(`offerPage.description.thirdStep.${userRole}`)}
         </Typography>
         {questionsAnswers}
         <Typography sx={styles.faqError}>{maxFaqError}</Typography>

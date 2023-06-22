@@ -7,7 +7,7 @@ import {
   PriceRangeParams,
   PriceRangeResponse,
   GetOffersPrarams,
-  CreateOfferData,
+  CreateOrUpdateOfferData,
   GetMyOffersParams
 } from '~/types'
 
@@ -19,8 +19,14 @@ export const OfferService = {
       params
     })
   },
-  createOffer: async (data: CreateOfferData): Promise<AxiosResponse> =>
+  createOffer: async (data: CreateOrUpdateOfferData): Promise<AxiosResponse> =>
     await axiosClient.post(URLs.offers.create, data),
+
+  updateOffer: async (
+    id: string,
+    updateData: CreateOrUpdateOfferData
+  ): Promise<AxiosResponse> =>
+    await axiosClient.patch(createUrlPath(URLs.offers.update, id), updateData),
 
   getOffer: async (id: string): Promise<AxiosResponse<Offer>> =>
     await axiosClient.get(createUrlPath(URLs.offers.get, id)),

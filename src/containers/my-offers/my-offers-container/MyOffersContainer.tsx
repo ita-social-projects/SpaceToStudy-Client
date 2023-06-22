@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate } from 'react-router-dom'
 
@@ -6,7 +6,9 @@ import Box from '@mui/material/Box'
 
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { SortHook } from '~/hooks/table/use-sort'
-
+import { useDrawer } from '~/hooks/use-drawer'
+import EditOffer from '~/containers/offer-page/edit-offer/EditOffer'
+import AppDrawer from '~/components/app-drawer/AppDrawer'
 import EnhancedTable from '~/components/enhanced-table/EnhancedTable'
 import AppCard from '~/components/app-card/AppCard'
 import MyOffersCard from '~/containers/my-offers/my-offers-card/MyOffersCard'
@@ -34,6 +36,8 @@ const MyOffersContainer: FC<MyOffersContainerProps> = ({
   const navigate = useNavigate()
   const breakpoints = useBreakpoints()
   const { t } = useTranslation()
+  const { openDrawer, closeDrawer, isOpen } = useDrawer()
+  const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null)
 
   const columnsToShow = ajustColumns<Offer>(
     breakpoints,
@@ -41,22 +45,33 @@ const MyOffersContainer: FC<MyOffersContainerProps> = ({
     removeColumnRules
   )
 
-  const createButtonActions = (id: string) => [
+  const handleOpenDrawer = (offer: Offer) => {
+    setSelectedOffer(offer)
+    openDrawer()
+  }
+
+  const createButtonActions = (offer: Offer) => [
     {
       label: t('myOffersPage.editButton'),
       buttonProps: {
         variant: ButtonVariantEnum.Tonal,
-        disabled: true
+        onClick: () => handleOpenDrawer(offer)
       }
     },
     {
       label: t('common.labels.viewDetails'),
       buttonProps: {
         component: Link,
-        to: createUrlPath(authRoutes.offerDetails.path, id)
+        to: createUrlPath(authRoutes.offerDetails.path, offer._id)
       }
     }
   ]
+
+  const offerCards = items.map((item) => (
+    <AppCard key={item._id}>
+      <MyOffersCard buttonActions={createButtonActions(item)} offer={item} />
+    </AppCard>
+  ))
 
   const editOffer = () => null
 
@@ -71,14 +86,11 @@ const MyOffersContainer: FC<MyOffersContainerProps> = ({
 
   const myOffersGrid = (
     <Box sx={styles.root}>
-      {items.map((item) => (
-        <AppCard key={item._id}>
-          <MyOffersCard
-            buttonActions={createButtonActions(item._id)}
-            offer={item}
-          />
-        </AppCard>
-      ))}
+      {offerCards}
+
+      <AppDrawer onClose={closeDrawer} open={isOpen}>
+        <EditOffer closeDrawer={closeDrawer} offer={selectedOffer} />
+      </AppDrawer>
     </Box>
   )
 

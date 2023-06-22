@@ -130,7 +130,7 @@ const CreateSubjectModal = () => {
           onInputChange={handleCategoryChange}
           service={categoryService.getCategoriesNames}
           textFieldProps={{
-            label: t('offerPage.createOffer.labels.category'),
+            label: t('offerPage.labels.category'),
             error: Boolean(errors.category),
             helperText: t(errors.category) || ' '
           }}

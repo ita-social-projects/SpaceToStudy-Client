@@ -2,11 +2,12 @@ import { FC, useEffect } from 'react'
 import { AxiosResponse } from 'axios'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
-
 import LeakAddSharpIcon from '@mui/icons-material/LeakAddSharp'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 
+import { useSnackBarContext } from '~/context/snackbar-context'
+import { OfferService } from '~/services/offer-service'
 import { useAppSelector } from '~/hooks/use-redux'
 import useForm from '~/hooks/use-form'
 import useConfirm from '~/hooks/use-confirm'
@@ -15,15 +16,14 @@ import TeachingBlock from '~/containers/offer-page/teaching-block/TeachingBlock'
 import SpecializationBlock from '~/containers/offer-page/specialization-block/SpecializationBlock'
 import FaqBlock from '~/containers/offer-page/faq-block/FaqBlock'
 import AppButton from '~/components/app-button/AppButton'
-import { OfferService } from '~/services/offer-service'
-import { useSnackBarContext } from '~/context/snackbar-context'
 
+import { authRoutes } from '~/router/constants/authRoutes'
+import { createUrlPath, findFullObjects } from '~/utils/helper-functions'
 import { snackbarVariants } from '~/constants'
 import {
   getInitialValues,
   validations
 } from '~/containers/offer-page/OfferPage.constants'
-import { createUrlPath, findFullObjects } from '~/utils/helper-functions'
 import {
   ButtonTypeEnum,
   ButtonVariantEnum,
@@ -31,48 +31,48 @@ import {
   CreateOrUpdateOfferData,
   ErrorResponse,
   Offer,
-  SizeEnum,
-  StatusEnum
+  SizeEnum
 } from '~/types'
-import { authRoutes } from '~/router/constants/authRoutes'
 import { styles } from '~/containers/offer-page/OfferPage.styles'
 
-interface CreateOfferProps {
+interface EditOfferProps {
+  offer: Offer | null
   closeDrawer: () => void
 }
 
-const CreateOffer: FC<CreateOfferProps> = ({ closeDrawer }) => {
+const EditOffer: FC<EditOfferProps> = ({ offer, closeDrawer }) => {
   const { userRole } = useAppSelector((state) => state.appMain)
   const { setNeedConfirmation } = useConfirm()
   const { setAlert } = useSnackBarContext()
+  const { t } = useTranslation()
   const navigate = useNavigate()
 
-  const { t } = useTranslation()
-
-  const handleResponseError = (error: ErrorResponse) => {
+  const onResponseError = (error: ErrorResponse) => {
     setAlert({
       severity: snackbarVariants.error,
       message: error ? `errors.${error.code}` : ''
     })
   }
-  const handleResponse = (response: Offer | null) => {
+  const onResponse = () => {
     setAlert({
       severity: snackbarVariants.success,
-      message: 'offerPage.createOffer.successMessage'
+      message: 'offerPage.editOffer.successMessage'
     })
     closeDrawer()
-    navigate(createUrlPath(authRoutes.offerDetails.path, response?._id))
+    navigate(createUrlPath(authRoutes.offerDetails.path, offer?._id))
   }
 
-  const postOffer = (): Promise<AxiosResponse> =>
-    OfferService.createOffer({ ...data, FAQ: findFullObjects(data.FAQ) })
+  const updateOffer = (): Promise<AxiosResponse> => {
+    const updateData = { ...data, FAQ: findFullObjects(data.FAQ) }
+    return OfferService.updateOffer(offer?._id || '', updateData)
+  }
 
-  const { loading, fetchData } = useAxios<Offer | null>({
-    service: postOffer,
+  const { loading, fetchData } = useAxios<null>({
+    service: updateOffer,
     fetchOnMount: false,
     defaultResponse: null,
-    onResponse: handleResponse,
-    onResponseError: handleResponseError
+    onResponse,
+    onResponseError
   })
 
   const {
@@ -84,7 +84,7 @@ const CreateOffer: FC<CreateOfferProps> = ({ closeDrawer }) => {
     handleBlur,
     handleSubmit
   } = useForm<CreateOrUpdateOfferData>({
-    initialValues: getInitialValues(),
+    initialValues: getInitialValues(offer),
     validations,
     onSubmit: fetchData
   })
@@ -92,9 +92,6 @@ const CreateOffer: FC<CreateOfferProps> = ({ closeDrawer }) => {
   useEffect(() => {
     setNeedConfirmation(isDirty)
   }, [setNeedConfirmation, isDirty])
-
-  const changeStatus = () =>
-    handleNonInputValueChange('status', StatusEnum.Draft)
 
   return (
     <Box
@@ -104,7 +101,7 @@ const CreateOffer: FC<CreateOfferProps> = ({ closeDrawer }) => {
     >
       <Typography sx={styles.title}>
         <LeakAddSharpIcon sx={styles.icon} />
-        {t(`offerPage.createOffer.title.${userRole}`)}
+        {t(`offerPage.editOffer.title.${userRole}`)}
       </Typography>
       <Typography sx={styles.description}>
         {t(`offerPage.createOffer.description.${userRole}`)}
@@ -133,12 +130,11 @@ const CreateOffer: FC<CreateOfferProps> = ({ closeDrawer }) => {
           sx={styles.submit}
           type={ButtonTypeEnum.Submit}
         >
-          {t(`offerPage.createOffer.buttonTitles.${userRole}`)}
+          {t(`offerPage.editOffer.buttonTitles.${userRole}`)}
         </AppButton>
         <AppButton
-          onClick={changeStatus}
+          disabled
           size={SizeEnum.ExtraLarge}
-          type={ButtonTypeEnum.Submit}
           variant={ButtonVariantEnum.Tonal}
         >
           {t('button.addToDrafts')}
@@ -148,4 +144,4 @@ const CreateOffer: FC<CreateOfferProps> = ({ closeDrawer }) => {
   )
 }
 
-export default CreateOffer
+export default EditOffer

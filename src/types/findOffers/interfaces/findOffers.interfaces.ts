@@ -58,7 +58,7 @@ export interface GetOffersPrarams
   languages?: Offer['languages']
 }
 
-export interface CreateOfferData
+export interface CreateOrUpdateOfferData
   extends Pick<
     Offer,
     | 'proficiencyLevel'

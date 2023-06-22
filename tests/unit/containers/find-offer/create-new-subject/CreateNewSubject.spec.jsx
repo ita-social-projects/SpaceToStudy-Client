@@ -30,9 +30,7 @@ describe('CreateSubjectModal container', () => {
     expect(title).toBeInTheDocument()
   })
   it('should change autocomplete by chosing oprion', () => {
-    const categoryInput = screen.getByLabelText(
-      'offerPage.createOffer.labels.category'
-    )
+    const categoryInput = screen.getByLabelText('offerPage.labels.category')
 
     fireEvent.click(categoryInput)
     fireEvent.change(categoryInput, {
