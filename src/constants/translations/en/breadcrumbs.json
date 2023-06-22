@@ -1,13 +1,14 @@
 {
-    "home": "Main",
-    "findTutor": "Find tutor",
-    "privacyPolicy": "Privacy policy",
-    "myProfile": "My profile",
-    "editProfile": "Edit Profile",
-    "categories": "Categories",
-    "subjects": "Subjects",
-    "findOffers": "Find offers",
-    "offerDetails": "Offer details",
-    "myCooperations": "My cooperations",
-    "myOffers": "My offers"
+  "home": "Main",
+  "findTutor": "Find tutor",
+  "privacyPolicy": "Privacy policy",
+  "myProfile": "My profile",
+  "editProfile": "Edit Profile",
+  "categories": "Categories",
+  "subjects": "Subjects",
+  "findOffers": "Find offers",
+  "offerDetails": "Offer details",
+  "myCooperations": "My cooperations",
+  "chat": "Chat",
+  "myOffers": "My offers"
 }

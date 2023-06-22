@@ -10,7 +10,6 @@ export const styles = {
     flex: 1
   },
   clearIcon: {
-    py: 0,
     color: 'primary.700'
   }
 }

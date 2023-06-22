@@ -7,12 +7,14 @@ import {
   findOffers,
   categories,
   offerDetails,
-  userProfile
+  userProfile,
+  chat
 } from '~/router/constants/crumbs'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { UserRoleEnum } from '~/types'
 import { userProfileLoader } from '../constants/loaders'
 
+const Chat = lazy(() => import('~/pages/chat/Chat'))
 const Subjects = lazy(() => import('~/pages/subjects/Subjects'))
 const Categories = lazy(() => import('~/pages/categories/Categories'))
 const FindOffers = lazy(() => import('~/pages/find-offers/FindOffers'))
@@ -48,6 +50,11 @@ export const authRouter = (
       handle={{ crumb: userProfile }}
       loader={userProfileLoader}
       path={authRoutes.userProfile.route}
+    />
+    <Route
+      element={<Chat />}
+      handle={{ crumb: chat }}
+      path={authRoutes.chat.route}
     />
   </Route>
 )

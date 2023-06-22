@@ -1,5 +1,5 @@
 import { Suspense, useLayoutEffect, useRef } from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useNavigation } from 'react-router-dom'
 import Box from '@mui/material/Box'
 
 import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
@@ -14,13 +14,14 @@ import { styles } from '~/containers/app-content/AppContent.styles'
 const AppMain = () => {
   const mainWithFooter = useRef(null)
   const { loading } = useAppSelector((state) => state.appMain)
+  const { state } = useNavigation()
   const dispatch = useAppDispatch()
 
   useLayoutEffect(() => {
     void dispatch(checkAuth())
   }, [dispatch])
 
-  if (loading) {
+  if (loading || state === 'loading') {
     return <Loader pageLoad />
   }
 

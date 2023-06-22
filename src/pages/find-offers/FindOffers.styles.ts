@@ -1,3 +1,5 @@
+import { VisibilityEnum } from '~/types'
+
 export const styles = {
   filterSection: {
     display: 'flex'
@@ -24,5 +26,8 @@ export const styles = {
     p: {
       textAlign: 'start'
     }
-  }
+  },
+  pagination: (hide: boolean) => ({
+    visibility: hide ? VisibilityEnum.Hidden : VisibilityEnum.Visible
+  })
 }

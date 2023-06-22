@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, ChangeEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
@@ -33,7 +33,6 @@ import {
   CardsViewEnum,
   CardsView,
   SizeEnum,
-  VisibilityEnum,
   GetOffersPrarams,
   GetOffersResponse,
   PositionEnum
@@ -78,63 +77,42 @@ const FindOffers = () => {
 
   const { items, count: offersCount } = offersResponse
 
-  const { page, setPage, pageCount, rowsPerPage, handleChangePage } =
-    usePagination({
-      defaultPage: Number(filters.page),
-      itemsCount: offersCount,
-      itemsPerPage
-    })
-
-  useEffect(() => {
-    setPage(1)
-  }, [searchParams, setPage])
-
-  const skip = useMemo(() => {
-    if (!page) {
-      return 0
-    }
-    return (page - 1) * rowsPerPage
-  }, [page, rowsPerPage])
+  const { pageCount } = usePagination({
+    itemsCount: offersCount,
+    itemsPerPage
+  })
 
   useEffect(() => {
     void fetchData({
       ...filters,
       limit: itemsPerPage,
-      skip
+      skip: (Number(filters.page) - 1) * itemsPerPage
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fetchData, searchParams, itemsPerPage, skip])
+  }, [fetchData, searchParams, itemsPerPage])
 
   const toggleFiltersOpen = () => (isOpen ? closeDrawer() : openDrawer())
 
-  const handleShowingTutorOffers = () => {
-    const updatedRole = getOpositeRole(filters.authorRole)
-
-    filterQueryActions.updateFilterInQuery(updatedRole, 'authorRole')
+  const resetPage = () => {
+    filterQueryActions.updateFilterInQuery(
+      defaultFilters(oppositeRole).page,
+      'page'
+    )
   }
 
-  const filtersComponent = (
-    <OfferFilterBlock
-      activeFilterCount={activeFilterCount}
-      closeFilters={closeDrawer}
-      filterActions={filterQueryActions}
-      filters={filters}
-      onToggleTutorOffers={handleShowingTutorOffers}
-      open={isOpen}
-    />
-  )
+  const handlePageChange = (_: ChangeEvent<unknown>, page: number) => {
+    filterQueryActions.updateFilterInQuery(page, 'page')
+  }
 
-  const hidePaginationStyle = {
-    visibility:
-      offersLoading || !items.length
-        ? VisibilityEnum.Hidden
-        : VisibilityEnum.Visible
+  const handleShowingTutorOffers = () => {
+    const updatedRole = getOpositeRole(filters.authorRole)
+    filterQueryActions.updateFilterInQuery(updatedRole, 'authorRole')
+    resetPage()
   }
 
   return (
     <PageWrapper>
       <OfferRequestBlock />
-
       <TitleWithDescription
         description={t('findOffers.titleWithDescription.description')}
         style={styles.titleWithDescription}
@@ -150,6 +128,7 @@ const FindOffers = () => {
       <OfferSearchToolbar
         filterActions={filterQueryActions}
         filters={filters}
+        resetPage={resetPage}
       />
       <FilterBarMenu
         chosenFiltersQty={activeFilterCount}
@@ -157,6 +136,7 @@ const FindOffers = () => {
         handleOffersView={setCardsView}
         offersView={cardsView}
         onToggleTutorOffers={handleShowingTutorOffers}
+        resetPage={resetPage}
         toggleFilters={toggleFiltersOpen}
         updateFilter={filterQueryActions.updateFilterInQuery}
       />
@@ -166,7 +146,15 @@ const FindOffers = () => {
           onClose={closeDrawer}
           open={isOpen}
         >
-          {filtersComponent}
+          <OfferFilterBlock
+            activeFilterCount={activeFilterCount}
+            closeFilters={closeDrawer}
+            filterActions={filterQueryActions}
+            filters={filters}
+            onToggleTutorOffers={handleShowingTutorOffers}
+            open={isOpen}
+            resetPage={resetPage}
+          />
         </AppDrawer>
         {offersLoading ? (
           <Loader pageLoad />
@@ -177,11 +165,11 @@ const FindOffers = () => {
         )}
       </Box>
       <AppPagination
-        onChange={handleChangePage}
-        page={page}
+        onChange={handlePageChange}
+        page={Number(filters.page)}
         pageCount={pageCount}
         size={isMobile ? SizeEnum.Small : SizeEnum.Medium}
-        sx={hidePaginationStyle}
+        sx={styles.pagination(offersLoading || !offersCount)}
       />
       <PopularCategories
         sx={styles.popularCategories}

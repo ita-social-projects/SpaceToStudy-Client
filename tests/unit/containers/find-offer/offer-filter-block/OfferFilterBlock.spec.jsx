@@ -16,6 +16,7 @@ const filterActions = {
 const priceRangeMock = { min: 0, max: 100 }
 const onToggleTutorOffers = vi.fn()
 const closeFilters = vi.fn()
+const resetPage = vi.fn()
 const activeFilterCount = 2
 const open = true
 useBreakpoints.mockImplementation(() => ({ isMobile: true }))
@@ -35,6 +36,7 @@ describe('OfferFilterBlock', () => {
         filters={defaultFilters('student')}
         onToggleTutorOffers={onToggleTutorOffers}
         open={open}
+        resetPage={resetPage}
       />
     )
   })
