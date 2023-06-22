@@ -2,19 +2,19 @@ import { emptyField, numberField, textField } from '~/utils/validations/common'
 import { Offer } from '~/types'
 
 export const getInitialValues = (offer: Offer | null = null) => ({
-  category: offer?.category._id || '',
-  subject: offer?.subject._id || '',
-  proficiencyLevel: offer?.proficiencyLevel || [],
-  languages: offer?.languages || [],
-  title: offer?.title || '',
-  description: offer?.description || '',
-  price: offer?.price.toString() || '',
-  FAQ: offer?.FAQ || [{ question: '', answer: '' }]
+  category: offer?.category._id ?? '',
+  subject: offer?.subject._id ?? '',
+  proficiencyLevel: offer?.proficiencyLevel ?? [],
+  languages: offer?.languages ?? [],
+  title: offer?.title ?? '',
+  description: offer?.description ?? '',
+  price: offer?.price.toString() ?? '',
+  FAQ: offer?.FAQ ?? [{ question: '', answer: '' }]
 })
 
 export const validations = {
   languages: (value: string[] | string) =>
-    emptyField(value && value.toString(), 'offerPage.errorMessages.languages'),
+    emptyField(value?.toString(), 'offerPage.errorMessages.languages'),
   category: (value: string | null) =>
     emptyField(value, 'offerPage.errorMessages.category'),
   subject: (value: string | null) =>
@@ -33,8 +33,5 @@ export const validations = {
       textField(0, 100)(value)
     ),
   proficiencyLevel: (value: string[] | string) =>
-    emptyField(
-      value && value.toString(),
-      'offerPage.errorMessages.proficiencyLevel'
-    )
+    emptyField(value?.toString(), 'offerPage.errorMessages.proficiencyLevel')
 }

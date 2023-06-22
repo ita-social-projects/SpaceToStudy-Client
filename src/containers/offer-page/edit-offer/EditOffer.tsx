@@ -64,7 +64,7 @@ const EditOffer: FC<EditOfferProps> = ({ offer, closeDrawer }) => {
 
   const updateOffer = (): Promise<AxiosResponse> => {
     const updateData = { ...data, FAQ: findFullObjects(data.FAQ) }
-    return OfferService.updateOffer(offer?._id || '', updateData)
+    return OfferService.updateOffer(offer?._id ?? '', updateData)
   }
 
   const { loading, fetchData } = useAxios<null>({
