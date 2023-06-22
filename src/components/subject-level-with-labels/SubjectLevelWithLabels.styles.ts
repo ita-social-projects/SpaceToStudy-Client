@@ -8,8 +8,7 @@ export const styles = {
   labels: {
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-around',
-    gap: '5px'
+    gap: '8px'
   },
   label: {
     typography: TypographyVariantEnum.Overline,
