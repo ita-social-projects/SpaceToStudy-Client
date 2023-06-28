@@ -62,7 +62,7 @@ const MultiAccordionWithTitle: FC<MultiAccordionWithTitleProps> = ({
   )
 
   return (
-    <Box>
+    <Box sx={sx.root}>
       {accordionTitle}
       {accordionList}
     </Box>

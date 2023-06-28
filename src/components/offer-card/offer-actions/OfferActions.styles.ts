@@ -1,5 +1,6 @@
 export const styles = {
   containerTop: {
+    minWidth: '150px',
     position: 'relative',
     mb: '30px'
   },

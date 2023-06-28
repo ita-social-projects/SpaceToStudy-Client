@@ -25,6 +25,12 @@ export const OfferService = {
   getOffer: async (id: string): Promise<AxiosResponse<Offer>> =>
     await axiosClient.get(createUrlPath(URLs.offers.get, id)),
 
+  updateOffer: async (
+    id: string,
+    params?: GetOffersPrarams
+  ): Promise<AxiosResponse<Offer>> =>
+    await axiosClient.patch(createUrlPath(URLs.offers.get, id), params),
+
   getUsersOffers: async (params: GetMyOffersParams): Promise<AxiosResponse> => {
     const user = createUrlPath(URLs.users.get, params.id)
     return await axiosClient.get(`${user}${URLs.offers.get}`, { params })

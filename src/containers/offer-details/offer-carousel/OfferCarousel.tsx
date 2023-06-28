@@ -10,7 +10,12 @@ import useAxios from '~/hooks/use-axios'
 import AppCard from '~/components/app-card/AppCard'
 import OfferCardSquare from '~/containers/find-offer/offer-card-square/OfferCardSquare'
 import AppCarousel from '~/components/app-carousel/AppCarousel'
-import { GetOffersResponse, Offer, ButtonVariantEnum } from '~/types'
+import {
+  GetOffersResponse,
+  Offer,
+  ButtonVariantEnum,
+  StatusEnum
+} from '~/types'
 import { OfferService } from '~/services/offer-service'
 import { defaultResponse } from '~/pages/find-offers/FindOffers.constants'
 import { authRoutes } from '~/router/constants/authRoutes'
@@ -37,6 +42,7 @@ const OfferCarousel: FC<OfferCarouselProps> = ({ offer }) => {
         proficiencyLevel: offer.proficiencyLevel,
         languages: offer.languages,
         excludedOfferId: offer._id,
+        status: StatusEnum.Active,
         limit: 9
       }),
     [offer]

@@ -132,8 +132,9 @@ const CreateOffer: FC<CreateOfferProps> = ({ closeDrawer }) => {
           {t(`offerPage.createOffer.buttonTitles.${userRole}`)}
         </AppButton>
         <AppButton
-          disabled
+          onClick={() => handleNonInputValueChange('status', 'draft')}
           size={SizeEnum.ExtraLarge}
+          type={ButtonTypeEnum.Submit}
           variant={ButtonVariantEnum.Tonal}
         >
           {t('button.addToDrafts')}

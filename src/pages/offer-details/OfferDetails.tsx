@@ -23,7 +23,7 @@ import Loader from '~/components/loader/Loader'
 import { errorRoutes } from '~/router/constants/errorRoutes'
 import topBlockIcon from '~/assets/img/offer-details/top-block-icon.png'
 import { styles } from '~/pages/offer-details/OfferDetails.styles'
-import { Offer, ButtonVariantEnum, OutletContext } from '~/types'
+import { Offer, ButtonVariantEnum, OutletContext, StatusEnum } from '~/types'
 import ScrollVisibilityWrapper from '~/components/scroll-visibility-wrapper/ScrollVisibilityWrapper'
 import OfferBanner from '~/components/offer-banner/OfferBanner'
 import {
@@ -37,7 +37,7 @@ const OfferDetails = () => {
   const { id = '' } = useParams()
   const { openModal } = useModalContext()
   const navigate = useNavigate()
-  const { userRole } = useAppSelector((state) => state.appMain)
+  const { userId, userRole } = useAppSelector((state) => state.appMain)
 
   const offerDetailsPage = useRef(null)
   const { pageRef } = useOutletContext<OutletContext>()
@@ -48,8 +48,24 @@ const OfferDetails = () => {
     () => navigate(errorRoutes.notFound.path),
     [navigate]
   )
-  const { response, loading } = useAxios<Offer | null>({
+  const {
+    response: offerData,
+    loading: offerLoading,
+    fetchData: fetchDataOffer
+  } = useAxios<Offer | null>({
     service: getOffer,
+    defaultResponse: null,
+    onResponseError: responseError
+  })
+
+  const updateOffer = useCallback(
+    (status?: StatusEnum) => OfferService.updateOffer(id, { status }),
+    [id]
+  )
+
+  const { fetchData } = useAxios<Offer | null, StatusEnum>({
+    service: updateOffer,
+    fetchOnMount: false,
     defaultResponse: null,
     onResponseError: responseError
   })
@@ -59,10 +75,22 @@ const OfferDetails = () => {
   }
 
   const handleEnrollOfferClick = () =>
-    response && openModal({ component: <EnrollOffer offer={response} /> })
+    offerData && openModal({ component: <EnrollOffer offer={offerData} /> })
+
+  const handleToggleOfferStatus = () => {
+    const newStatus =
+      offerData?.status === StatusEnum.Draft
+        ? StatusEnum.Active
+        : StatusEnum.Draft
+
+    if (offerData) {
+      void fetchData(newStatus)
+      void fetchDataOffer()
+    }
+  }
 
   const buttonActions = [
-    response?.authorRole !== userRole
+    offerData?.authorRole !== userRole
       ? {
           label: t('common.labels.enrollOffer'),
           buttonProps: {
@@ -70,32 +98,43 @@ const OfferDetails = () => {
           }
         }
       : null,
-    {
-      label: t('common.labels.sendMessage'),
-      buttonProps: {
-        disabled: true,
-        variant: ButtonVariantEnum.Tonal
-      }
-    }
+    offerData?.author._id === userId
+      ? {
+          label:
+            offerData?.status === StatusEnum.Draft
+              ? t('common.labels.makeActive')
+              : t('common.labels.moveToDraft'),
+          buttonProps: {
+            onClick: handleToggleOfferStatus
+          }
+        }
+      : {
+          label: t('common.labels.sendMessage'),
+          buttonProps: {
+            disabled: true,
+            variant: ButtonVariantEnum.Tonal
+          }
+        }
   ]
 
-  if (loading) {
+  if (offerLoading) {
     return <Loader pageLoad />
   }
 
-  if (!response) {
+  if (!offerData) {
     return null
   }
 
-  const faqItems = response.FAQ.map((item) => ({
+  const faqItems = offerData.FAQ.map((item) => ({
     title: item.question,
     description: item.answer
   }))
+
   return (
     <PageWrapper ref={offerDetailsPage} sx={styles.container}>
       {!isMobile && (
         <ScrollVisibilityWrapper heightToShow={610} pageRef={pageRef}>
-          <OfferBanner buttonActions={buttonActions} offer={response} />
+          <OfferBanner buttonActions={buttonActions} offer={offerData} />
         </ScrollVisibilityWrapper>
       )}
       <TitleBlock
@@ -106,7 +145,7 @@ const OfferDetails = () => {
         <AppCard sx={styles.offerCardSquare}>
           <OfferCardSquare
             buttonActions={buttonActions}
-            offer={response}
+            offer={offerData}
             onBookmarkClick={onBookmarkClick}
           />
         </AppCard>
@@ -115,7 +154,7 @@ const OfferDetails = () => {
           <OfferCard
             buttonActions={buttonActions}
             isHideField
-            offer={response}
+            offer={offerData}
             onBookmarkClick={onBookmarkClick}
           />
         </AppCard>
@@ -123,13 +162,13 @@ const OfferDetails = () => {
       <AppCard sx={styles.wrapper}>
         <ShowMoreCollapse
           collapsedSize={isMobile ? 80 : 70}
-          description={response.description}
+          description={offerData.description}
           title={t('common.aboutOffer')}
         />
       </AppCard>
 
       <AppCard sx={styles.wrapper}>
-        <OfferGeneralInfo offer={response} />
+        <OfferGeneralInfo offer={offerData} />
       </AppCard>
       {faqItems.length > 0 && (
         <AppCard sx={styles.wrapper}>
@@ -150,7 +189,7 @@ const OfferDetails = () => {
         />
       </AppCard>
 
-      <OfferCarousel offer={response} />
+      <OfferCarousel offer={offerData} />
     </PageWrapper>
   )
 }

@@ -53,6 +53,7 @@ export interface FilterQueryHook<T> {
 export interface GetOffersPrarams
   extends Partial<FindOffersFilters>,
     Partial<Omit<RequestParams, 'sort'>> {
+  status?: Offer['status']
   excludedOfferId?: Offer['_id']
   languages?: Offer['languages']
 }
@@ -60,7 +61,12 @@ export interface GetOffersPrarams
 export interface CreateOfferData
   extends Pick<
     Offer,
-    'proficiencyLevel' | 'languages' | 'description' | 'title' | 'FAQ'
+    | 'proficiencyLevel'
+    | 'languages'
+    | 'description'
+    | 'title'
+    | 'status'
+    | 'FAQ'
   > {
   category: CategoryNameInterface['name']
   subject: SubjectNameInterface['name']

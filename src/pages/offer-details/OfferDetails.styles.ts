@@ -7,6 +7,7 @@ const border = {
 }
 
 const faqAccordion: MultiAccordionWithTitleSx = {
+  root: { width: '100%' },
   title: {
     color: 'primary.700',
     m: { xs: '16px 20px 10px', md: '35px 60px 30px 0' },
