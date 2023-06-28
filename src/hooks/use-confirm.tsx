@@ -5,8 +5,8 @@ interface ConfirmationDialogProps {
   message: string
   title: string
   check?: boolean
-  mainBtnTitle?: string
-  secondaryBtnTitle?: string
+  confirmBtn?: string
+  cancelBtn?: string
 }
 
 interface OpenDialogProps extends ConfirmationDialogProps {
@@ -23,8 +23,8 @@ interface UseConfirmResult {
     sendConfirm,
     message,
     title,
-    mainBtnTitle,
-    secondaryBtnTitle
+    confirmBtn,
+    cancelBtn
   }: OpenDialogProps) => void
 }
 
@@ -42,8 +42,8 @@ const useConfirm = (): UseConfirmResult => {
   const checkConfirmation = ({
     message,
     title,
-    mainBtnTitle,
-    secondaryBtnTitle,
+    confirmBtn,
+    cancelBtn,
     check
   }: ConfirmationDialogProps): boolean | Promise<boolean> => {
     if (needConfirmation || check) {
@@ -52,8 +52,8 @@ const useConfirm = (): UseConfirmResult => {
           sendConfirm: res,
           message,
           title,
-          mainBtnTitle,
-          secondaryBtnTitle
+          confirmBtn,
+          cancelBtn
         })
       })
     }

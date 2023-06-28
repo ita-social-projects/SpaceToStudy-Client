@@ -28,8 +28,8 @@ const AppDrawer: FC<AppDrawerProps> = ({
     const confirmed = checkConfirmation({
       message: 'questions.unsavedChanges',
       title: 'titles.confirmTitle',
-      mainBtnTitle: t('common.cancel'),
-      secondaryBtnTitle: t('common.discard')
+      confirmBtn: t('common.discard'),
+      cancelBtn: t('common.cancel')
     })
     if (await confirmed) {
       onClose()
