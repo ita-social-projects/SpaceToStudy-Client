@@ -8,7 +8,7 @@ import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import CloseIcon from '@mui/icons-material/Close'
 import AppButton from '~/components/app-button/AppButton'
-import { ButtonVariantEnum, TypographyVariantEnum } from '~/types'
+import { ButtonVariantEnum } from '~/types'
 
 import { styles } from '~/components/confirm-dialog/ConfirmDialog.styles'
 
@@ -40,16 +40,12 @@ const ConfirmDialog: FC<ConfirmDialogProps> = ({
       onClose={onDismiss}
       open={open}
     >
-      <Typography sx={styles.title} variant='h6'>
-        {t(title)}
-      </Typography>
+      <Typography sx={styles.title}>{t(title)}</Typography>
       <IconButton onClick={onDismiss} sx={styles.icon}>
         <CloseIcon />
       </IconButton>
       <DialogContent sx={styles.content}>
-        <Typography variant={TypographyVariantEnum.Body1}>
-          {t(message)}
-        </Typography>
+        <Typography>{t(message)}</Typography>
       </DialogContent>
       <DialogActions sx={styles.actions}>
         <AppButton onClick={onConfirm}>{t(confirmBtn)}</AppButton>

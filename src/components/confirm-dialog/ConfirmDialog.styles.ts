@@ -20,6 +20,9 @@ export const styles = {
     color: 'primary.600',
     p: '0 30px'
   },
+  typographyContent: {
+    typography: TypographyVariantEnum.Body1
+  },
   actions: {
     p: '24px 30px'
   }
