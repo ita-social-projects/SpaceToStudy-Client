@@ -41,15 +41,15 @@ const ConfirmDialog: FC<ConfirmDialogProps> = ({
       <IconButton onClick={onDismiss} sx={styles.icon}>
         <CloseIcon />
       </IconButton>
-      <DialogContent dividers sx={styles.content}>
+      <DialogContent sx={styles.content}>
         <Typography variant='subtitle1'>{t(message)}</Typography>
       </DialogContent>
       <DialogActions sx={styles.actions}>
-        <Button onClick={onConfirm} size='large' variant='tonal'>
-          {t('common.yes')}
-        </Button>
         <Button onClick={onDismiss} size='large' variant='contained'>
-          {t('common.no')}
+          {t('common.discard')}
+        </Button>
+        <Button onClick={onConfirm} size='large' variant='tonal'>
+          {t('common.cancel')}
         </Button>
       </DialogActions>
     </Dialog>

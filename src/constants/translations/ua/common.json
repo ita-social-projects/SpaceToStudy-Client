@@ -15,6 +15,8 @@
   "hour": "ГОДИНУ",
   "uahSlashHour": "ГРН/годину",
   "beginner": "Початковий",
+  "cancel": "Відмінити",
+  "discard": "Відмовитись",
   "labels": {
     "sendMessage": "Надіслати повідомлення",
     "viewDetails": "Переглянути деталі",
@@ -29,8 +31,8 @@
     "testPreparation": "Підготовка до тесту",
     "professional": "Професійний",
     "specialized": "Спеціалізований"
-    },
-    "languages": {
+  },
+  "languages": {
     "allLanguages": "Усі мови",
     "english": "Англійська",
     "ukrainian": "Українська",
@@ -39,5 +41,5 @@
     "french": "Французька",
     "spanish": "Іспанська",
     "arabic": "Арабська"
-    }
+  }
 }

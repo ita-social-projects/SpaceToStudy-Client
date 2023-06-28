@@ -21,6 +21,8 @@
   "popularCategories": "Popular Categories",
   "aboutOffer": "About Offer",
   "goToName": "Go to {{name}}",
+  "cancel": "Cancel",
+  "discard": "Discard",
   "labels": {
     "email": "Email",
     "firstName": "First name",
