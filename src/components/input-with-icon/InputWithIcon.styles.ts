@@ -3,9 +3,9 @@ export const styles = {
     display: 'flex',
     alignItems: 'center',
     px: { xs: '8px', sm: '14px' },
-    py: { xs: '7px', sm: 0 },
+    py: { xs: '4px', sm: 0 },
     gap: '12px',
-    minHeight: { xs: '40px', sm: 0 }
+    minHeight: { xs: '40px' }
   },
   input: {
     flex: 1
