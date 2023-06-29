@@ -36,10 +36,9 @@ const UserIcons: FC<UserIconsProps> = ({ setSidebarOpen }) => {
     (item) =>
       !item.disabled && (
         <NavigationIcon
-          badgeContent={
-            item.badgeContent &&
-            item.badgeContent({ notifications: notificationItems.length })
-          }
+          badgeContent={item.badgeContent?.({
+            notifications: notificationItems.length
+          })}
           buttonProps={item.buttonProps({
             openMenu,
             openNotifications,

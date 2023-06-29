@@ -9,6 +9,7 @@ import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined
 import { IconButtonProps } from '@mui/material/IconButton'
 
 import { authRoutes } from '~/router/constants/authRoutes'
+import { NotificationTypeEnums } from '~/types'
 import { styles } from '~/containers/navigation-icons/NavigationIcons.styles'
 
 type ButtonProps = (props: {
@@ -95,9 +96,34 @@ export const userIcons: NavigationIconButton[] = [
 ]
 
 export const mockNotifications = [
-  { _id: '1', type: 'NEW_COOPERATION', createdAt: '', updatedAt: '' },
-  { _id: '2', type: 'NEW_COMMENT', createdAt: '', updatedAt: '' },
-  { _id: '3', type: 'UPDATE_COOPERATION', createdAt: '', updatedAt: '' },
-  { _id: '4', type: 'ACCEPT_COOPERATION', createdAt: '', updatedAt: '' },
-  { _id: '5', type: 'CANCEL_COOPERATION', createdAt: '', updatedAt: '' }
+  {
+    _id: '1',
+    type: NotificationTypeEnums.AcceptCooperation,
+    createdAt: '',
+    updatedAt: ''
+  },
+  {
+    _id: '2',
+    type: NotificationTypeEnums.CancelCooperation,
+    createdAt: '',
+    updatedAt: ''
+  },
+  {
+    _id: '3',
+    type: NotificationTypeEnums.NewComment,
+    createdAt: '',
+    updatedAt: ''
+  },
+  {
+    _id: '4',
+    type: NotificationTypeEnums.NewCooperation,
+    createdAt: '',
+    updatedAt: ''
+  },
+  {
+    _id: '5',
+    type: NotificationTypeEnums.UpdateCooperation,
+    createdAt: '',
+    updatedAt: ''
+  }
 ]

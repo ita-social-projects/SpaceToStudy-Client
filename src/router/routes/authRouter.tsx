@@ -8,17 +8,15 @@ import {
   categories,
   offerDetails,
   userProfile,
-  chat
-} from '~/router/constants/crumbs'
-import { authRoutes } from '~/router/constants/authRoutes'
-import { UserRoleEnum } from '~/types'
-import { userProfileLoader } from '../constants/loaders'
-import {
+  chat,
   myCooperations,
   myOffers,
   editProfile,
   myProfile
 } from '~/router/constants/crumbs'
+import { authRoutes } from '~/router/constants/authRoutes'
+import { UserRoleEnum } from '~/types'
+import { userProfileLoader } from '../constants/loaders'
 
 const MyCooperations = lazy(
   () => import('~/pages/my-cooperations/MyCooperations')

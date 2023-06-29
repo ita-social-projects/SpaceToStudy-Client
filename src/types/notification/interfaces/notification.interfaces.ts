@@ -1,6 +1,6 @@
-import { CommonEntityFields } from '~/types'
+import { CommonEntityFields, NotificationTypeEnums } from '~/types'
 
 export interface Notification extends CommonEntityFields {
-  type: string
+  type: NotificationTypeEnums
   reference?: string
 }

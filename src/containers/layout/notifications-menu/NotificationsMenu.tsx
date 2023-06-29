@@ -9,9 +9,9 @@ import Link from '@mui/material/Link'
 
 import AppMenu from '~/components/app-menu/AppMenu'
 import AppButton from '~/components/app-button/AppButton'
-import { authRoutes } from '~/router/constants/authRoutes'
 import { ButtonVariantEnum, Notification, SizeEnum } from '~/types'
 import { styles } from '~/containers/layout/notifications-menu/NotificationsMenu.styles'
+import { liksByType } from '~/containers/layout/notifications-menu/NotificationsMenu.constants'
 
 interface NotificationsMenuuProps {
   anchorEl: Element | null
@@ -42,7 +42,7 @@ const NotificationsMenu: FC<NotificationsMenuuProps> = ({
           component={RouterLink}
           onClick={() => handleLinkClick(item)}
           sx={styles.link}
-          to={authRoutes.accountMenu.myCooperations.path}
+          to={liksByType[item.type]}
         >
           {t(`header.notifications.messages.${item.type}`)}
         </Link>

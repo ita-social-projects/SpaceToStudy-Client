@@ -11,5 +11,17 @@
   "loginButton": "Увійти",
   "my-profile": "Мій профіль",
   "my-cooperations": "Мої кооперації",
-  "logout": "Вийти"
+  "logout": "Вийти",
+  "notifications": {
+    "emptyNotifications": "Немає сповіщень",
+    "clearAll": "Очистити всі",
+    "messages": {
+      "NEW_COOPERATION": "У вас нова співпраця",
+      "NEW_COMMENT": "Ви отримали новий відгук",
+      "UPDATE_COOPERATION": "Вашу співпрацю оновлено",
+      "ACCEPT_COOPERATION": "Вашу співпрацю прийнято",
+      "CANCEL_COOPERATION": "Вашу співпрацю відхилено"
+    }
+  }
+  
 }
