@@ -1,8 +1,10 @@
 import { FC } from 'react'
 import Menu, { MenuProps } from '@mui/material/Menu'
-import { PositionEnum } from '~/types'
+
 import { spliceSx } from '~/utils/helper-functions'
-import { styles } from './AppMenu.styles'
+
+import { PositionEnum } from '~/types'
+import { styles } from '~/components/app-menu/AppMenu.styles'
 
 interface AppMenuProps extends MenuProps {
   maxHeight?: number
