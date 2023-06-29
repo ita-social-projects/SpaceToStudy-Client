@@ -1,11 +1,11 @@
-import { FC } from 'react'
+import React, { FC } from 'react'
 import Button from '@mui/material/Button'
 
 import { styles } from '~/components/tab/Tab.styles'
 
 interface TabProps {
   activeTab: boolean
-  onClick: () => void
+  onClick?: (event: React.SyntheticEvent) => void
   children: React.ReactNode
 }
 

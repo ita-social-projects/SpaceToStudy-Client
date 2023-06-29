@@ -83,3 +83,8 @@ export const chat = {
   name: t('breadCrumbs.chat'),
   path: authRoutes.chat.route
 }
+
+export const myCourses = {
+  name: t('breadCrumbs.myCourses'),
+  path: studentRoutes.accountMenu.myCourses.route
+}
