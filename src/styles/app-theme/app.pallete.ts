@@ -6,6 +6,8 @@ const palette = {
   basic: {
     black: '#000000',
     blue: '#0B8AF8',
+    darkBlue: '#4D5E80',
+    greyBlue: '#7D8FB3',
     white: '#FFFFFF',
     grey: '#ECEFF1',
     yellow: '#FFB000',
@@ -18,6 +20,7 @@ const palette = {
   },
   companyBlue: 'rgba(0, 167, 167, 0.2)',
   error: {
+    // #4D5E80
     50: '#FFEFF2',
     100: '#FFCFD4',
     200: '#F19B9A',
