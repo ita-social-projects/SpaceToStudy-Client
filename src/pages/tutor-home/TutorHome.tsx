@@ -11,7 +11,6 @@ import FindBlock from '~/components/find-block/FindBlock'
 
 import { styles } from '~/pages/tutor-home/TutorHome.styles'
 import { translationKey } from '~/components/find-block/find-student-constants'
-import ProgressBar from '~/components/progress-bar/ProgressBar'
 
 const TutorHome = () => {
   const { t } = useTranslation()
@@ -32,7 +31,6 @@ const TutorHome = () => {
   return (
     <PageWrapper data-testid='tutorHome'>
       <FindBlock translationKey={translationKey} />
-      <ProgressBar />
       <PopularCategories title={t('common.popularCategories')} />
     </PageWrapper>
   )
