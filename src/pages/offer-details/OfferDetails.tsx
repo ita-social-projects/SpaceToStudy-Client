@@ -23,13 +23,14 @@ import Loader from '~/components/loader/Loader'
 import { errorRoutes } from '~/router/constants/errorRoutes'
 import topBlockIcon from '~/assets/img/offer-details/top-block-icon.png'
 import { styles } from '~/pages/offer-details/OfferDetails.styles'
-import { Offer, ButtonVariantEnum, OutletContext, StatusEnum } from '~/types'
+import { Offer, OutletContext, StatusEnum } from '~/types'
 import ScrollVisibilityWrapper from '~/components/scroll-visibility-wrapper/ScrollVisibilityWrapper'
 import OfferBanner from '~/components/offer-banner/OfferBanner'
 import {
   responseMock,
   loadingMock
 } from '~/containers/tutor-profile/comments-with-rating-block/constants'
+import { activeButtonActions } from './OfferDetails.constants'
 
 const OfferDetails = () => {
   const { t } = useTranslation()
@@ -63,7 +64,10 @@ const OfferDetails = () => {
     [id]
   )
 
-  const { fetchData } = useAxios<Offer | null, StatusEnum>({
+  const { fetchData: fetchDataUpdateOffer } = useAxios<
+    Offer | null,
+    StatusEnum
+  >({
     service: updateOffer,
     fetchOnMount: false,
     defaultResponse: null,
@@ -84,38 +88,19 @@ const OfferDetails = () => {
         : StatusEnum.Draft
 
     if (offerData) {
-      void fetchData(newStatus)
+      void fetchDataUpdateOffer(newStatus)
       void fetchDataOffer()
     }
   }
 
-  const buttonActions = [
-    offerData?.authorRole !== userRole
-      ? {
-          label: t('common.labels.enrollOffer'),
-          buttonProps: {
-            onClick: handleEnrollOfferClick
-          }
-        }
-      : null,
-    offerData?.author._id === userId
-      ? {
-          label:
-            offerData?.status === StatusEnum.Draft
-              ? t('common.labels.makeActive')
-              : t('common.labels.moveToDraft'),
-          buttonProps: {
-            onClick: handleToggleOfferStatus
-          }
-        }
-      : {
-          label: t('common.labels.sendMessage'),
-          buttonProps: {
-            disabled: true,
-            variant: ButtonVariantEnum.Tonal
-          }
-        }
-  ]
+  const buttonActions = activeButtonActions({
+    opositeRole: offerData?.authorRole !== userRole,
+    myOffer: offerData?.author._id === userId,
+    status: offerData?.status,
+    handleEnrollOfferClick,
+    handleToggleOfferStatus,
+    t
+  })
 
   if (offerLoading) {
     return <Loader pageLoad />
