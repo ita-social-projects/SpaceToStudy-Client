@@ -11,14 +11,12 @@ import AppRatingMobile from '~/components/app-rating-mobile/AppRatingMobile'
 import ProfileContainerDesktop from '~/containers/tutor-profile/profile-info/ProfileContainerDesktop'
 import ProfileContainerMobile from '~/containers/tutor-profile/profile-info/ProfileContainerMobile'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
-import { useAppSelector } from '~/hooks/use-redux'
 import useBreakpoints from '~/hooks/use-breakpoints'
 
-import { tutorRoutes } from '~/router/constants/tutorRoutes'
-import { studentRoutes } from '~/router/constants/studentRoutes'
+import { authRoutes } from '~/router/constants/authRoutes'
 import { useSnackBarContext } from '~/context/snackbar-context'
 import { styles } from '~/containers/tutor-profile/profile-info/ProfileInfo.styles'
-import { snackbarVariants, myProfilePath, student } from '~/constants'
+import { snackbarVariants } from '~/constants'
 import { SizeEnum } from '~/types'
 import { getDifferenceDates } from '~/utils/helper-functions'
 
@@ -26,8 +24,7 @@ const ProfileInfo = ({ userData }) => {
   const { t } = useTranslation()
   const { isLaptopAndAbove, isMobile } = useBreakpoints()
   const { setAlert } = useSnackBarContext()
-  const { userRole } = useAppSelector((state) => state.appMain)
-  const isMyProfile = useMatch(myProfilePath)
+  const isMyProfile = useMatch(authRoutes.accountMenu.myProfile.path)
   const { number, format } = getDifferenceDates(userData.createdAt, new Date())
 
   const copyProfileLink = () => {
@@ -39,11 +36,6 @@ const ProfileInfo = ({ userData }) => {
     })
   }
 
-  const navigateToEditPtofile =
-    userRole === student
-      ? studentRoutes.editProfile.path
-      : tutorRoutes.editProfile.path
-
   const actionIcon = isMyProfile ? (
     <EditOutlinedIcon color='primary' fontSize='small' />
   ) : (
@@ -53,7 +45,7 @@ const ProfileInfo = ({ userData }) => {
   const actionIconBtn = (
     <IconButton
       data-testid='icon-btn'
-      href={isMyProfile && navigateToEditPtofile}
+      href={isMyProfile && authRoutes.editProfile.path}
       onClick={!isMyProfile ? copyProfileLink : undefined}
       size={isLaptopAndAbove ? SizeEnum.Large : SizeEnum.Small}
       sx={styles.iconBtn}

@@ -3,26 +3,11 @@ import { renderWithProviders } from '~tests/test-utils'
 import GuestIcons from '~/containers/navigation-icons/guest-icons/GuestIcons'
 import { vi } from 'vitest'
 
-const openLoginDialog = vi.fn()
 const setIsSidebarOpen = vi.fn()
 
 describe('test with guest role', () => {
   beforeEach(() => {
-    renderWithProviders(<GuestIcons openLoginDialog={ openLoginDialog } setSidebarOpen={ setIsSidebarOpen } />)
-  })
-
-  it('should render login icon', () => {
-    const loginIcon = screen.getByTestId('LoginIcon')
-    fireEvent.click(loginIcon)
-
-    expect(openLoginDialog).toBeCalled()
-  })
-
-  it('should render login button', () => {
-    const loginButton = screen.getByText('header.loginButton')
-    fireEvent.click(loginButton)
-
-    expect(openLoginDialog).toBeCalled()
+    renderWithProviders(<GuestIcons setSidebarOpen={setIsSidebarOpen} />)
   })
 
   it('should render click menu icon', () => {

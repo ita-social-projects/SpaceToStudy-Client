@@ -13,6 +13,9 @@ export const styles = {
   content: {
     overflowY: 'auto',
     flex: 1,
+    '&::-webkit-scrollbar-track': {
+      marginBottom: '-4px'
+    },
     ...layout
   }
 }

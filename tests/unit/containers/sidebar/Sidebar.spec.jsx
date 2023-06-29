@@ -3,14 +3,18 @@ import Sidebar from '~/containers/layout/sidebar/Sidebar'
 import { renderWithProviders } from '~tests/test-utils'
 import { vi } from 'vitest'
 
-
 describe('Sidebar test', () => {
   const setIsSidebarOpen = vi.fn()
   const navigationItems = [{ route: 'label-test', path: '/#route-test' }]
+  const accountItems = [{ route: 'test', path: '/#test' }]
 
   beforeEach(() => {
     renderWithProviders(
-      <Sidebar navigationItems={ navigationItems } onClose={ setIsSidebarOpen } />
+      <Sidebar
+        accountItems={accountItems}
+        navigationItems={navigationItems}
+        onClose={setIsSidebarOpen}
+      />
     )
   })
 
@@ -21,7 +25,7 @@ describe('Sidebar test', () => {
   })
 
   it('should render link and call setIsSidebarOpen with false after click link', async () => {
-    const linkElement = screen.getByRole('link')
+    const [linkElement] = screen.getAllByRole('link')
     expect(linkElement).toHaveAttribute('href', '/#route-test')
 
     fireEvent.click(linkElement)

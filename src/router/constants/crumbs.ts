@@ -1,7 +1,5 @@
 import { t } from 'i18next'
 import { guestRoutes } from '~/router/constants/guestRoutes'
-import { tutorRoutes } from '~/router/constants/tutorRoutes'
-import { studentRoutes } from '~/router/constants/studentRoutes'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { UserResponse } from '~/types'
 
@@ -15,44 +13,24 @@ export const privacyPolicy = {
   path: guestRoutes.privacyPolicy.route
 }
 
-export const tutorProfile = {
+export const myProfile = {
   name: t('breadCrumbs.myProfile'),
-  path: tutorRoutes.accountMenu.myProfile.route
+  path: authRoutes.accountMenu.myProfile.route
 }
 
-export const studentProfile = {
-  name: t('breadCrumbs.myProfile'),
-  path: studentRoutes.accountMenu.myProfile.route
-}
-
-export const tutorEditProfile = {
+export const editProfile = {
   name: t('breadCrumbs.editProfile'),
-  path: tutorRoutes.editProfile.route
+  path: authRoutes.editProfile.route
 }
 
-export const studentEditProfile = {
-  name: t('breadCrumbs.editProfile'),
-  path: studentRoutes.editProfile.route
-}
-
-export const tutorCooperations = {
+export const myCooperations = {
   name: t('breadCrumbs.myCooperations'),
-  path: tutorRoutes.accountMenu.myCooperations.route
+  path: authRoutes.accountMenu.myCooperations.route
 }
 
-export const studentCooperations = {
-  name: t('breadCrumbs.myCooperations'),
-  path: studentRoutes.accountMenu.myCooperations.route
-}
-
-export const tutorOffers = {
+export const myOffers = {
   name: t('breadCrumbs.myOffers'),
-  path: tutorRoutes.accountMenu.myOffers.route
-}
-
-export const studentOffers = {
-  name: t('breadCrumbs.myOffers'),
-  path: studentRoutes.accountMenu.myOffers.route
+  path: authRoutes.accountMenu.myOffers.route
 }
 
 export const categories = {

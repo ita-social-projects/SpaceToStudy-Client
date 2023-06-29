@@ -1,9 +1,11 @@
+import { TypographyVariantEnum } from '~/types'
+
 export const styles = {
   header: {
     display: 'flex',
     justifyContent: 'space-between',
-    padding: '0px',
-    margin: { xs: '0', xl: 'auto' },
+    p: 0,
+    margin: { xs: 0, xl: 'auto' },
     maxWidth: '1800px',
     width: { xl: '100%' }
   },
@@ -14,31 +16,20 @@ export const styles = {
     display: { xs: 'none', md: 'flex' },
     alignItems: 'center'
   },
-  navItemText: {
+  navItemText: (isActive: boolean) => ({
+    typography: TypographyVariantEnum.Subtitle2,
     color: 'primary.900',
-    textDecoration: 'none',
+    textDecoration: isActive ? 'underline' : 'none',
     '&:hover': {
       color: 'primary.500'
     },
     '&:focus': {
       textDecoration: 'underline'
     }
-  },
-  navItem: {
-    '&:last-child': {
-      pr: 0
-    },
-    pl: '0',
-    pr: { md: '8px', lg: '20px' },
-    width: 'auto',
-    '&::after': {
-      content: '"/"',
-      fontWeight: 500,
-      fontFamily: 'Rubik',
-      padding: { md: '0 0 0 8px', lg: '0 0 0 20px' }
-    },
-    '&:last-child::after': {
-      content: '""'
-    }
+  }),
+  divider: {
+    color: 'primary.900',
+    fontWeight: '500',
+    px: { md: '8px', lg: '12px' }
   }
 }

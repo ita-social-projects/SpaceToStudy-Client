@@ -15,17 +15,16 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 
 import AppProgressBar from '~/components/app-progress-bar-line/AppProgressBarLine.jsx'
 import ProfileItem from '~/components/profile-item/ProfileItem.jsx'
-import { styles } from '~/components/complete-profile/CompleteProfileBlock.styles.js'
-import { studentRoutes } from '~/router/constants/studentRoutes'
-import { guestRoutes } from '~/router/constants/guestRoutes'
 import useBreakpoints from '~/hooks/use-breakpoints'
+import { authRoutes } from '~/router/constants/authRoutes'
+import { guestRoutes } from '~/router/constants/guestRoutes'
+import { styles } from '~/components/complete-profile/CompleteProfileBlock.styles.js'
 
 const CompleteProfileBlock = ({ profileItems, data }) => {
   const { t } = useTranslation()
   const { isMobile } = useBreakpoints()
   const { userRole } = useSelector((state) => state.appMain)
   const homePage = useMatch(guestRoutes[userRole].path)
-  const linkToProfile = studentRoutes.accountMenu.myProfile.route
   const [isOpen, setIsOpen] = useState(false)
 
   const checkProfileData = useMemo(
@@ -54,7 +53,7 @@ const CompleteProfileBlock = ({ profileItems, data }) => {
   }
 
   const icon = homePage ? (
-    <Link to={linkToProfile}>
+    <Link to={authRoutes.accountMenu.myProfile.path}>
       <ArrowForwardIcon color='secondary' />
     </Link>
   ) : (
