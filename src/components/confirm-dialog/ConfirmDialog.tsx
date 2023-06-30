@@ -15,8 +15,8 @@ import { styles } from '~/components/confirm-dialog/ConfirmDialog.styles'
 interface ConfirmDialogProps {
   message: string
   title: string
-  confirmBtn?: string
-  cancelBtn?: string
+  confirmButton?: string
+  cancelButton?: string
   open: boolean
   onConfirm: () => void
   onDismiss: () => void
@@ -25,8 +25,8 @@ interface ConfirmDialogProps {
 const ConfirmDialog: FC<ConfirmDialogProps> = ({
   message,
   title,
-  confirmBtn = 'common.yes',
-  cancelBtn = 'common.no',
+  confirmButton,
+  cancelButton,
   open,
   onConfirm,
   onDismiss
@@ -48,9 +48,11 @@ const ConfirmDialog: FC<ConfirmDialogProps> = ({
         <Typography>{t(message)}</Typography>
       </DialogContent>
       <DialogActions sx={styles.actions}>
-        <AppButton onClick={onConfirm}>{t(confirmBtn)}</AppButton>
+        <AppButton onClick={onConfirm}>
+          {confirmButton ? confirmButton : t('common.yes')}
+        </AppButton>
         <AppButton onClick={onDismiss} variant={ButtonVariantEnum.Tonal}>
-          {t(cancelBtn)}
+          {cancelButton ? cancelButton : t('common.no')}
         </AppButton>
       </DialogActions>
     </Dialog>

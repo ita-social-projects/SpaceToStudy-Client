@@ -26,10 +26,10 @@ const AppDrawer: FC<AppDrawerProps> = ({
 
   const handleCloseDrawer = async () => {
     const confirmed = checkConfirmation({
-      message: 'questions.unsavedChanges',
-      title: 'titles.confirmTitle',
-      confirmBtn: t('common.discard'),
-      cancelBtn: t('common.cancel')
+      message: 'questions.discardChanges',
+      title: 'titles.discardOffer',
+      confirmButton: t('common.discard'),
+      cancelButton: t('common.cancel')
     })
     if (await confirmed) {
       onClose()
