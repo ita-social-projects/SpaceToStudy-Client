@@ -1,4 +1,4 @@
-import { Offer, UserResponse, UserRoleEnum } from '~/types'
+import { Offer, UserResponse, UserRole, UserRoleEnum } from '~/types'
 
 export interface ItemsWithCount<T> {
   count: number
@@ -10,11 +10,20 @@ export interface CommonEntityFields {
   updatedAt: string
 }
 export interface UserInterface {
+  _id: string
   firstName: string
   lastName: string
   photo?: string
   averageRating: number
   totalReviews: number
+}
+
+export interface MessageInterface {
+  _id: string
+  author: UserInterface
+  authorRole: UserRole
+  messageContent: string
+  timestamp: Date | string
 }
 
 export interface CategoryAppearance {

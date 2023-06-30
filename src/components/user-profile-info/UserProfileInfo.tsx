@@ -25,7 +25,7 @@ import { authRoutes } from '~/router/constants/authRoutes'
 
 interface UserProfileInfoProps
   extends Pick<UserResponse, 'photo' | 'firstName' | 'lastName' | '_id'> {
-  languages: LanguagesEnum | LanguagesEnum[]
+  languages?: LanguagesEnum | LanguagesEnum[]
   rating?: number
   reviewsCount?: number
   date?: string
