@@ -80,5 +80,7 @@ export enum StatusEnum {
 }
 export enum PositionEnum {
   Left = 'left',
-  Right = 'right'
+  Right = 'right',
+  Bottom = 'bottom',
+  Top = 'top'
 }

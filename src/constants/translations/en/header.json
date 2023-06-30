@@ -3,7 +3,7 @@
   "how-it-works": "How it works",
   "who-we-are": "Who we are",
   "findOffers": "Offers",
-  "subjects":"Subjects",
+  "subjects": "Subjects",
   "categories": "Categories",
   "homePage": "Home page",
   "faq": "FAQ",
@@ -12,5 +12,16 @@
   "my-profile": "My profile",
   "my-cooperations": "My cooperations",
   "my-offers": "My offers",
-  "logout": "Log out"
+  "logout": "Log out",
+  "notifications": {
+    "emptyNotifications": "No notification yet",
+    "clearAll": "Clear all",
+    "messages": {
+      "NEW_COOPERATION": "You have new cooperation",
+      "NEW_COMMENT": "You received new review",
+      "UPDATE_COOPERATION": "Your cooperation was updated",
+      "ACCEPT_COOPERATION": "Your cooperation was accepted",
+      "CANCEL_COOPERATION": "Your cooperation was declined"
+    }
+  }
 }

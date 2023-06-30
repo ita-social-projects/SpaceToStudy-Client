@@ -9,7 +9,6 @@ import useAxios from '~/hooks/use-axios'
 import useSort from '~/hooks/table/use-sort'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import useFilter from '~/hooks/table/use-filter'
-import { useAppSelector } from '~/hooks/use-redux'
 import Tab from '~/components/tab/Tab'
 import Loader from '~/components/loader/Loader'
 import AppButton from '~/components/app-button/AppButton'
@@ -18,10 +17,9 @@ import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import CooperationOfferToolbar from '~/containers/my-cooperations/cooperation-offer-toolbar/CooperationOfferToolbar'
 import CooperationContainer from '~/containers/my-cooperations/cooperations-container/CooperationContainer'
 import { cooperationService } from '~/services/cooperation-service'
-import { getScreenBasedLimit, studentOrTutor } from '~/utils/helper-functions'
-import { studentRoutes } from '~/router/constants/studentRoutes'
-import { tutorRoutes } from '~/router/constants/tutorRoutes'
+import { getScreenBasedLimit } from '~/utils/helper-functions'
 
+import { authRoutes } from '~/router/constants/authRoutes'
 import {
   defaultResponse,
   initialFilters,
@@ -30,7 +28,7 @@ import {
   tabsInfo
 } from '~/pages/my-cooperations/MyCooperations.constants'
 import { itemsLoadLimit } from '~/constants'
-import { CardsViewEnum, TabType, UserRoleEnum } from '~/types'
+import { CardsViewEnum, TabType } from '~/types'
 import { styles } from '~/pages/my-cooperations/MyCooperations.styles'
 
 const MyCooperations = () => {
@@ -93,18 +91,11 @@ const MyCooperations = () => {
     value
   }))
 
-  const { userRole } = useAppSelector((state) => state.appMain)
-
-  const buttonPath =
-    studentOrTutor(userRole) === UserRoleEnum.Student
-      ? studentRoutes.accountMenu.myOffers.path
-      : tutorRoutes.accountMenu.myOffers.path
-
   return (
     <PageWrapper>
       <Box sx={styles.titleBlock}>
         <Typography sx={styles.title}>{t('cooperationsPage.title')}</Typography>
-        <AppButton component={Link} to={buttonPath}>
+        <AppButton component={Link} to={authRoutes.accountMenu.myOffers.path}>
           {t('button.viewMyOffers')}
         </AppButton>
       </Box>

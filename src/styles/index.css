@@ -34,7 +34,6 @@ code {
 
 ::-webkit-scrollbar-track {
   box-shadow: inset 0 0 5px rgba(43, 49, 52, 0.3);
-  margin-block: -4px;
 }
 
 ::-webkit-scrollbar-thumb {

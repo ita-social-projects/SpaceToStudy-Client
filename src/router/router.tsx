@@ -9,7 +9,7 @@ import {
 import App from '~/App'
 import AppContent from '~/containers/app-content/AppContent'
 import { guestRoutes } from '~/router/constants/guestRoutes'
-import { studentRoutes } from '~/router/constants/studentRoutes'
+import { authRoutes } from '~/router/constants/authRoutes'
 import { errorRoutes } from '~/router/constants/errorRoutes'
 import { tutorRouter } from '~/router/routes/tutorRouter'
 import { errorRouter } from '~/router/routes/errorRouter'
@@ -37,10 +37,7 @@ export const routerConfig = (
       {tutorRouter}
       {studentRouter}
       <Route path={guestRoutes.error.route}>{errorRouter}</Route>
-      <Route
-        element={<Logout />}
-        path={studentRoutes.accountMenu.logout.route}
-      />
+      <Route element={<Logout />} path={authRoutes.accountMenu.logout.route} />
     </Route>
     <Route
       element={<PrivateRoute role={[UserRoleEnum.Admin]} />}

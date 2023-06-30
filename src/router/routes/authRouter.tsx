@@ -8,12 +8,21 @@ import {
   categories,
   offerDetails,
   userProfile,
-  chat
+  chat,
+  myCooperations,
+  myOffers,
+  editProfile,
+  myProfile
 } from '~/router/constants/crumbs'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { UserRoleEnum } from '~/types'
 import { userProfileLoader } from '../constants/loaders'
 
+const MyCooperations = lazy(
+  () => import('~/pages/my-cooperations/MyCooperations')
+)
+const EditProfile = lazy(() => import('~/pages/edit-profile/EditProfile'))
+const MyOffers = lazy(() => import('~/pages/my-offers/MyOffers'))
 const Chat = lazy(() => import('~/pages/chat/Chat'))
 const Subjects = lazy(() => import('~/pages/subjects/Subjects'))
 const Categories = lazy(() => import('~/pages/categories/Categories'))
@@ -55,6 +64,26 @@ export const authRouter = (
       element={<Chat />}
       handle={{ crumb: chat }}
       path={authRoutes.chat.route}
+    />
+    <Route
+      element={<TutorProfile />}
+      handle={{ crumb: myProfile }}
+      path={authRoutes.accountMenu.myProfile.route}
+    />
+    <Route
+      element={<MyCooperations />}
+      handle={{ crumb: myCooperations }}
+      path={authRoutes.accountMenu.myCooperations.route}
+    />
+    <Route
+      element={<EditProfile />}
+      handle={{ crumb: [myProfile, editProfile] }}
+      path={authRoutes.editProfile.route}
+    />
+    <Route
+      element={<MyOffers />}
+      handle={{ crumb: myOffers }}
+      path={authRoutes.accountMenu.myOffers.route}
     />
   </Route>
 )

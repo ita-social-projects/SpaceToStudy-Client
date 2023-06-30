@@ -23,7 +23,7 @@ const Sidebar: FC<SidebarProps> = ({
   navigationItems,
   accountItems
 }) => {
-  const { isMobile } = useBreakpoints()
+  const { isLaptopAndAbove } = useBreakpoints()
   const { t } = useTranslation()
 
   const renderListItems = (items: RouteItem[]) => (
@@ -43,7 +43,7 @@ const Sidebar: FC<SidebarProps> = ({
     </List>
   )
 
-  const accountItemsSection = isMobile && accountItems.length > 0 && (
+  const accountItemsSection = !isLaptopAndAbove && accountItems.length > 0 && (
     <>
       <Divider />
       {renderListItems(accountItems)}

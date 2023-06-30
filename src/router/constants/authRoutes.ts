@@ -7,5 +7,21 @@ export const authRoutes = {
     route: 'categories/subjects/find-offers',
     path: '/categories/subjects/find-offers'
   },
-  offerDetails: { route: 'offer-details/:id', path: '/offer-details' }
+  offerDetails: { route: 'offer-details/:id', path: '/offer-details' },
+  accountMenu: {
+    myProfile: { route: 'my-profile', path: '/my-profile' },
+    myCooperations: {
+      route: 'my-cooperations',
+      path: '/my-cooperations'
+    },
+    myOffers: {
+      route: 'my-offers',
+      path: '/my-offers'
+    },
+    logout: { route: 'logout', path: '/logout' }
+  },
+  editProfile: {
+    route: 'my-profile/edit',
+    path: '/my-profile/edit'
+  }
 }

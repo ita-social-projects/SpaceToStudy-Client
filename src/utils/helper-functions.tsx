@@ -160,7 +160,7 @@ export const ellipsisTextStyle = (linesCount: number) => ({
 })
 
 export const getDifferenceDates = (startDate: Date, endDate: Date) => {
-  const difference: number = new Date(endDate) - new Date(startDate)
+  const difference = new Date(endDate).getTime() - new Date(startDate).getTime()
 
   const conversionToDays: number = Math.abs(
     Math.round(difference / (1000 * 3600 * 24))
