@@ -20,7 +20,9 @@
     "viewDetails": "Переглянути деталі",
     "sortBy": "Сортувати за:",
     "subject": "Предмет:",
-    "level": "Рівень:"
+    "level": "Рівень:",
+    "makeActive": "Зробити активним",
+    "moveToDraft": "Перемістити до чернетки"
   },
   "levels": {
     "beginner": "Початковий",
@@ -29,8 +31,8 @@
     "testPreparation": "Підготовка до тесту",
     "professional": "Професійний",
     "specialized": "Спеціалізований"
-    },
-    "languages": {
+  },
+  "languages": {
     "allLanguages": "Усі мови",
     "english": "Англійська",
     "ukrainian": "Українська",
@@ -39,5 +41,5 @@
     "french": "Французька",
     "spanish": "Іспанська",
     "arabic": "Арабська"
-    }
+  }
 }

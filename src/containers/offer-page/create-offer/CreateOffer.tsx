@@ -31,7 +31,8 @@ import {
   CreateOfferData,
   ErrorResponse,
   Offer,
-  SizeEnum
+  SizeEnum,
+  StatusEnum
 } from '~/types'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { styles } from '~/containers/offer-page/create-offer/CreateOffer.styles'
@@ -92,6 +93,9 @@ const CreateOffer: FC<CreateOfferProps> = ({ closeDrawer }) => {
     setNeedConfirmation(isDirty)
   }, [setNeedConfirmation, isDirty])
 
+  const changeStatus = () =>
+    handleNonInputValueChange('status', StatusEnum.Draft)
+
   return (
     <Box
       component={ComponentEnum.Form}
@@ -132,8 +136,9 @@ const CreateOffer: FC<CreateOfferProps> = ({ closeDrawer }) => {
           {t(`offerPage.createOffer.buttonTitles.${userRole}`)}
         </AppButton>
         <AppButton
-          disabled
+          onClick={changeStatus}
           size={SizeEnum.ExtraLarge}
+          type={ButtonTypeEnum.Submit}
           variant={ButtonVariantEnum.Tonal}
         >
           {t('button.addToDrafts')}

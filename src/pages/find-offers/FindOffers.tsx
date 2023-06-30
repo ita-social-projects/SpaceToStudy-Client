@@ -35,7 +35,8 @@ import {
   SizeEnum,
   GetOffersPrarams,
   GetOffersResponse,
-  PositionEnum
+  PositionEnum,
+  StatusEnum
 } from '~/types'
 import {
   defaultFilters,
@@ -85,6 +86,7 @@ const FindOffers = () => {
   useEffect(() => {
     void fetchData({
       ...filters,
+      status: StatusEnum.Active,
       limit: itemsPerPage,
       skip: (Number(filters.page) - 1) * itemsPerPage
     })

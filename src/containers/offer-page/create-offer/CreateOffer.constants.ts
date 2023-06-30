@@ -1,3 +1,4 @@
+import { StatusEnum } from '~/types'
 import { emptyField, numberField, textField } from '~/utils/validations/common'
 
 export const initialValues = {
@@ -8,6 +9,7 @@ export const initialValues = {
   title: '',
   description: '',
   price: '',
+  status: StatusEnum.Active,
   FAQ: [{ question: '', answer: '' }]
 }
 

@@ -36,6 +36,8 @@
     "sendMessage": "Send message",
     "viewDetails": "View details",
     "enrollOffer": "Enroll offer",
+    "makeActive": "Make it active",
+    "moveToDraft": "Move to draft",
     "sortBy": "Sort by:",
     "subject": "Subject:",
     "level": "Level:"
