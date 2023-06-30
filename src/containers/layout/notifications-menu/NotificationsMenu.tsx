@@ -47,7 +47,7 @@ const NotificationsMenu: FC<NotificationsMenuuProps> = ({
           {t(`header.notifications.messages.${item.type}`)}
         </Link>
         <IconButton onClick={() => onDelete(item)}>
-          <CloseRoundedIcon color='primary' fontSize={SizeEnum.Small} />
+          <CloseRoundedIcon fontSize={SizeEnum.Small} sx={styles.closeIcon} />
         </IconButton>
       </Typography>
     )),

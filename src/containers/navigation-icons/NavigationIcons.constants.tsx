@@ -39,7 +39,7 @@ const languageIcon = {
 
 const menuIcon: NavigationIconButton = {
   tooltip: 'iconsTooltip.menu',
-  icon: <MenuIcon color='primary' />,
+  icon: <MenuIcon />,
   buttonProps: ({ setSidebarOpen }) => ({
     onClick: setSidebarOpen,
     sx: styles.showOnlyOnMobile
@@ -50,7 +50,7 @@ export const guestIcons: NavigationIconButton[] = [
   languageIcon,
   {
     tooltip: 'iconsTooltip.login',
-    icon: <LoginIcon color='primary' />,
+    icon: <LoginIcon />,
     buttonProps: ({ openLoginDialog }) => ({
       onClick: openLoginDialog,
       sx: styles.showOnlyOnMobile
@@ -63,7 +63,7 @@ export const userIcons: NavigationIconButton[] = [
   languageIcon,
   {
     tooltip: 'iconsTooltip.messages',
-    icon: <MessageRoundedIcon color='primary' />,
+    icon: <MessageRoundedIcon />,
     buttonProps: () => ({
       component: Link,
       sx: styles.studentIcons,
@@ -79,7 +79,7 @@ export const userIcons: NavigationIconButton[] = [
   {
     tooltip: 'iconsTooltip.notifications',
     badgeContent: ({ notifications }) => notifications,
-    icon: <NotificationsRoundedIcon color='primary' />,
+    icon: <NotificationsRoundedIcon />,
     buttonProps: ({ openNotifications }) => ({
       onClick: openNotifications,
       sx: styles.studentIcons
@@ -87,7 +87,7 @@ export const userIcons: NavigationIconButton[] = [
   },
   {
     tooltip: 'iconsTooltip.account',
-    icon: <AccountCircleOutlinedIcon color='primary' />,
+    icon: <AccountCircleOutlinedIcon />,
     buttonProps: ({ openMenu }) => ({
       onClick: openMenu,
       sx: styles.studentIcons

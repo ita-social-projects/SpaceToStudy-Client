@@ -25,5 +25,8 @@ export const styles = {
   empty: {
     ...item,
     py: 2
+  },
+  closeIcon: {
+    color: 'primary.900'
   }
 }

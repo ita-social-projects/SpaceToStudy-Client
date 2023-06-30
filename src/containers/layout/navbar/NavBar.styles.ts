@@ -18,6 +18,7 @@ export const styles = {
   },
   navItemText: (isActive: boolean) => ({
     typography: TypographyVariantEnum.Subtitle2,
+    whiteSpace: 'nowrap',
     color: 'primary.900',
     textDecoration: isActive ? 'underline' : 'none',
     '&:hover': {
@@ -30,6 +31,6 @@ export const styles = {
   divider: {
     color: 'primary.900',
     fontWeight: '500',
-    px: { md: '8px', lg: '12px' }
+    px: '4px'
   }
 }

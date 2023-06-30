@@ -9,10 +9,10 @@ export const styles = {
       p: { sm: '12px', md: '7px', lg: '12px' }
     }
   },
-  showOnlyOnMobile: { display: { md: 'none' } },
+  showOnlyOnMobile: { display: { md: 'none' }, color: 'primary.900' },
   loginButton: {
     ...hideOnMobile,
     ml: '12px'
   },
-  studentIcons: hideOnMobile
+  studentIcons: { ...hideOnMobile, color: 'primary.900' }
 }
