@@ -16,6 +16,10 @@ export const tutorRoutes = {
       route: 'my-offers',
       path: '/tutor/my-offers'
     },
+    myLessons: {
+      route: 'my-lessons',
+      path: '/tutor/my-lessons'
+    },
     logout: { route: 'logout', path: '/logout' }
   },
   editProfile: {

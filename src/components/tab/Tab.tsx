@@ -5,7 +5,7 @@ import { styles } from '~/components/tab/Tab.styles'
 
 interface TabProps {
   activeTab: boolean
-  onClick?: (event: React.SyntheticEvent) => void
+  onClick?: () => void
   children: React.ReactNode
 }
 

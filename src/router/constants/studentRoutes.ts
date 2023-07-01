@@ -16,10 +16,6 @@ export const studentRoutes = {
       route: 'my-offers',
       path: '/student/my-offers'
     },
-    myCourses: {
-      route: 'my-courses',
-      path: '/student/my-courses'
-    },
     logout: { route: 'logout', path: '/logout' }
   },
   editProfile: {

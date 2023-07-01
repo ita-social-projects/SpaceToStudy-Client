@@ -8,8 +8,7 @@ import {
   studentCooperations,
   studentOffers,
   studentEditProfile,
-  studentProfile,
-  myCourses
+  studentProfile
 } from '~/router/constants/crumbs'
 import { UserRoleEnum } from '~/types'
 
@@ -22,7 +21,6 @@ const MyCooperations = lazy(
 )
 const EditProfile = lazy(() => import('~/pages/edit-profile/EditProfile'))
 const MyOffers = lazy(() => import('~/pages/my-offers/MyOffers'))
-const MyCourses = lazy(() => import('~/pages/my-courses/MyCourses'))
 
 export const studentRouter = (
   <Route
@@ -49,11 +47,6 @@ export const studentRouter = (
       element={<MyOffers />}
       handle={{ crumb: studentOffers }}
       path={studentRoutes.accountMenu.myOffers.route}
-    />
-    <Route
-      element={<MyCourses />}
-      handle={{ crumb: myCourses }}
-      path={studentRoutes.accountMenu.myCourses.route}
     />
   </Route>
 )
