@@ -18,6 +18,10 @@ export const authRoutes = {
       route: 'my-offers',
       path: '/my-offers'
     },
+    myLessons: {
+      route: 'my-lessons',
+      path: '/my-lessons'
+    },
     logout: { route: 'logout', path: '/logout' }
   },
   editProfile: {

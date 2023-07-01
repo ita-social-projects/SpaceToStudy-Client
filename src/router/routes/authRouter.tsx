@@ -11,6 +11,7 @@ import {
   chat,
   myCooperations,
   myOffers,
+  myLessons,
   editProfile,
   myProfile
 } from '~/router/constants/crumbs'
@@ -23,6 +24,7 @@ const MyCooperations = lazy(
 )
 const EditProfile = lazy(() => import('~/pages/edit-profile/EditProfile'))
 const MyOffers = lazy(() => import('~/pages/my-offers/MyOffers'))
+const MyLessons = lazy(() => import('~/pages/my-lessons/MyLessons'))
 const Chat = lazy(() => import('~/pages/chat/Chat'))
 const Subjects = lazy(() => import('~/pages/subjects/Subjects'))
 const Categories = lazy(() => import('~/pages/categories/Categories'))
@@ -84,6 +86,11 @@ export const authRouter = (
       element={<MyOffers />}
       handle={{ crumb: myOffers }}
       path={authRoutes.accountMenu.myOffers.route}
+    />
+    <Route
+      element={<MyLessons />}
+      handle={{ crumb: myLessons }}
+      path={authRoutes.accountMenu.myLessons.route}
     />
   </Route>
 )
