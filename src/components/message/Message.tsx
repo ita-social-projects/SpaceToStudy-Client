@@ -1,10 +1,11 @@
 import { FC } from 'react'
-import { Box, Typography } from '@mui/material'
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
 
 import AppCard from '~/components/app-card/AppCard'
 import UserProfileInfo from '~/components/user-profile-info/UserProfileInfo'
 
-import { MessageInterface } from '~/types'
+import { MessageInterface } from '~/types/chat/message/message.interface'
 import { styles } from '~/components/message/Message.styles'
 
 interface MessageProps {
@@ -12,18 +13,18 @@ interface MessageProps {
 }
 
 const Message: FC<MessageProps> = ({ message }) => {
-  const { author, authorRole, messageContent, timestamp } = message
-  const { _id, firstName, lastName, photo } = author
+  const { author, messageContent } = message
+  const { _id, role, firstName, lastName, photo, createdAt } = author
 
   return (
     <Box sx={styles.root}>
       <UserProfileInfo
         _id={_id}
-        date={timestamp.toString()}
+        date={createdAt}
         firstName={firstName}
         lastName={lastName}
         photo={photo}
-        role={authorRole}
+        role={role}
         sx={styles.userInfoStyles}
       />
       <AppCard sx={styles.messageContent}>

@@ -30,7 +30,7 @@ interface UserProfileInfoProps
   reviewsCount?: number
   date?: string
   sx?: UserProfileInfoSx
-  role: UserRole
+  role: UserRole | UserRole[]
 }
 
 const UserProfileInfo: FC<UserProfileInfoProps> = ({

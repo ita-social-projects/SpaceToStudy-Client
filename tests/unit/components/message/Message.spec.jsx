@@ -2,8 +2,8 @@ import { render, screen } from '@testing-library/react'
 import { BrowserRouter as Router } from 'react-router-dom'
 
 import someAvatar from '~/assets/img/student-home/bag.png'
-import { getFormatedDate } from '~/utils/helper-functions'
 import { UserRoleEnum } from '~/types'
+import { getFormatedDate } from '~/utils/helper-functions'
 
 import Message from '~/components/message/Message'
 
@@ -12,15 +12,15 @@ describe('Message component', () => {
     _id: '1234',
     firstName: 'Kyle',
     lastName: 'Jason',
-    photo: someAvatar
+    role: UserRoleEnum.Student,
+    photo: someAvatar,
+    createdAt: new Date()
   }
 
   const mockMessage = {
     _id: 'newmess1',
     author: newAuthor,
-    authorRole: UserRoleEnum.Student,
-    messageContent: 'how about some bruh moment',
-    timestamp: new Date()
+    messageContent: 'how about some bruh moment'
   }
 
   it('should render the author name and message content', () => {
@@ -47,7 +47,7 @@ describe('Message component', () => {
     )
 
     const timestampElement = screen.getByText(
-      getFormatedDate(mockMessage.timestamp)
+      getFormatedDate(newAuthor.createdAt)
     )
 
     expect(timestampElement).toBeInTheDocument()
