@@ -1,4 +1,5 @@
 import { FC } from 'react'
+import { useTranslation } from 'react-i18next'
 import Drawer, { DrawerProps } from '@mui/material/Drawer'
 import IconButton from '@mui/material/IconButton'
 import CloseRounded from '@mui/icons-material/CloseRounded'
@@ -19,12 +20,16 @@ const AppDrawer: FC<AppDrawerProps> = ({
   closeIcon = true,
   ...props
 }) => {
+  const { t } = useTranslation()
+
   const { checkConfirmation } = useConfirm()
 
   const handleCloseDrawer = async () => {
     const confirmed = checkConfirmation({
-      message: 'questions.unsavedChanges',
-      title: 'titles.confirmTitle'
+      message: 'questions.discardChanges',
+      title: 'titles.discardOffer',
+      confirmButton: t('common.discard'),
+      cancelButton: t('common.cancel')
     })
     if (await confirmed) {
       onClose()

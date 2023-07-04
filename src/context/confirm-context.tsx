@@ -5,6 +5,8 @@ interface OpenDialogProps {
   sendConfirm: (value: boolean) => void
   message: string
   title: string
+  confirmButton?: string
+  cancelButton?: string
 }
 
 interface ConfirmationDialogContext {
@@ -27,13 +29,27 @@ export const ConfirmationDialogProvider: FC<
   const [dialogConfig, setDialogConfig] = useState<OpenDialogProps>({
     sendConfirm: (value: boolean) => value,
     message: '',
-    title: ''
+    title: '',
+    confirmButton: '',
+    cancelButton: ''
   })
   const [needConfirmation, setNeedConfirmation] = useState<boolean>(false)
 
-  const openDialog = ({ sendConfirm, message, title }: OpenDialogProps) => {
+  const openDialog = ({
+    sendConfirm,
+    message,
+    title,
+    confirmButton,
+    cancelButton
+  }: OpenDialogProps) => {
     setDialogOpen(true)
-    setDialogConfig({ sendConfirm, message, title })
+    setDialogConfig({
+      sendConfirm,
+      message,
+      title,
+      confirmButton,
+      cancelButton
+    })
   }
 
   const onConfirm = () => {
@@ -54,6 +70,8 @@ export const ConfirmationDialogProvider: FC<
   return (
     <ConfirmationDialogContext.Provider value={contextValue}>
       <ConfirmDialog
+        cancelButton={dialogConfig.cancelButton}
+        confirmButton={dialogConfig.confirmButton}
         message={dialogConfig.message}
         onConfirm={onConfirm}
         onDismiss={onDismiss}

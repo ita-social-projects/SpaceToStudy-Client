@@ -1,20 +1,29 @@
+import { TypographyVariantEnum } from '~/types'
+
 export const styles = {
   root: {
     minWidth: { xs: '280px', sm: '400px' }
   },
   icon: {
     position: 'absolute',
-    right: 16,
-    top: 16,
+    color: 'primary.600',
+    right: '32px',
+    top: '32px',
     p: 0
   },
   title: {
-    p: '13px 16px'
+    color: 'primary.700',
+    typography: TypographyVariantEnum.H5,
+    p: '26px 0px 20px 30px'
   },
   content: {
-    p: 2
+    color: 'primary.600',
+    p: '0 30px'
+  },
+  typographyContent: {
+    typography: TypographyVariantEnum.Body1
   },
   actions: {
-    p: '12px'
+    p: '24px 30px'
   }
 }
