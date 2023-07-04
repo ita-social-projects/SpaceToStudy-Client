@@ -31,35 +31,31 @@ export const activeButtonActions = ({
     })
   }
 
-  if (myOffer) {
-    if (status !== StatusEnum.Closed) {
-      const label =
-        status === StatusEnum.Draft
-          ? t('common.labels.makeActive')
-          : t('common.labels.moveToDraft')
+  if (myOffer && status !== StatusEnum.Closed) {
+    const label =
+      status === StatusEnum.Draft
+        ? t('common.labels.makeActive')
+        : t('common.labels.moveToDraft')
 
-      buttons.push({
-        label,
-        buttonProps: {
-          onClick: handleToggleOfferStatus
-        }
-      })
-    }
+    buttons.push({
+      label,
+      buttonProps: {
+        onClick: handleToggleOfferStatus
+      }
+    })
+
+    buttons.push({
+      label: t('common.labels.closeOffer'),
+      buttonProps: {
+        onClick: handleCloseOffer,
+        variant: ButtonVariantEnum.Tonal
+      }
+    })
   } else {
     buttons.push({
       label: t('common.labels.sendMessage'),
       buttonProps: {
         disabled: true,
-        variant: ButtonVariantEnum.Tonal
-      }
-    })
-  }
-
-  if (myOffer && status !== StatusEnum.Closed) {
-    buttons.push({
-      label: t('common.labels.closeOffer'),
-      buttonProps: {
-        onClick: handleCloseOffer,
         variant: ButtonVariantEnum.Tonal
       }
     })
