@@ -2,12 +2,12 @@ export const styles = {
   wrapper: {
     display: 'flex'
   },
-  groupedLessons: {
+  list: {
     display: 'flex',
     flexDirection: 'column',
     width: '20%'
   },
-  lessons: {
+  items: {
     width: '100%'
   }
 }

@@ -6,40 +6,30 @@ import PageWrapper from '~/components/page-wrapper/PageWrapper'
 
 import { styles } from '~/pages/my-lessons/MyLessons.styles'
 
-const groupedLessonsDataMock = [
+const listDataMock = [
   {
     id: 0,
-    title: 'All',
-    lessonIds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    title: 'All lessons',
+    itemIds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
   },
   {
     id: 1,
-    title: 'Lessons1',
-    lessonIds: [1, 2, 3, 7]
-  },
-  {
-    id: 2,
-    title: 'Lessons2',
-    lessonIds: [3, 4, 5]
-  },
-  {
-    id: 3,
-    title: 'Lessons3',
-    lessonIds: [5, 1, 9, 10]
+    title: 'Grouped lessons',
+    itemIds: [1, 2, 3, 7]
   }
 ]
 
-const lessonsDataMock = [
-  { id: 1, title: 'Lesson-1' },
-  { id: 2, title: 'Lesson-2' },
-  { id: 3, title: 'Lesson-3' },
-  { id: 4, title: 'Lesson-4' },
-  { id: 5, title: 'Lesson-5' },
-  { id: 6, title: 'Lesson-6' },
-  { id: 7, title: 'Lesson-7' },
-  { id: 8, title: 'Lesson-8' },
-  { id: 9, title: 'Lesson-9' },
-  { id: 10, title: 'Lesson-10' }
+const listOfItemsDataMock = [
+  { id: 1, title: 'Item-1' },
+  { id: 2, title: 'Item-2' },
+  { id: 3, title: 'Item-3' },
+  { id: 4, title: 'Item-4' },
+  { id: 5, title: 'Item-5' },
+  { id: 6, title: 'Item-6' },
+  { id: 7, title: 'Item-7' },
+  { id: 8, title: 'Item-8' },
+  { id: 9, title: 'Item-9' },
+  { id: 10, title: 'Item-10' }
 ]
 
 const MyLessons = () => {
@@ -49,28 +39,28 @@ const MyLessons = () => {
     setValue(newValue)
   }
 
-  const groupedLessons = groupedLessonsDataMock.map((groupedLesson) => (
+  const list = listDataMock.map((item) => (
     <Tab
-      activeTab={value === groupedLesson.id}
-      key={groupedLesson.id}
-      onClick={() => handleClick(groupedLesson.id)}
+      activeTab={value === item.id}
+      key={item.id}
+      onClick={() => handleClick(item.id)}
     >
-      {groupedLesson.title}
+      {item.title}
     </Tab>
   ))
 
-  const lessons =
+  const listOfItems =
     value === 0
-      ? lessonsDataMock.map((lesson) => (
-          <Tab activeTab={false} key={lesson.id}>
-            {lesson.title}
+      ? listOfItemsDataMock.map((item) => (
+          <Tab activeTab={false} key={item.id}>
+            {item.title}
           </Tab>
         ))
-      : groupedLessonsDataMock[value].lessonIds.map((lessonId) => {
-          const lesson = lessonsDataMock.find((item) => item.id === lessonId)
+      : listDataMock[value].itemIds.map((itemId) => {
+          const item = listOfItemsDataMock.find((item) => item.id === itemId)
           return (
-            <Tab activeTab={false} key={lesson?.id}>
-              {lesson?.title}
+            <Tab activeTab={false} key={item?.id}>
+              {item?.title}
             </Tab>
           )
         })
@@ -78,8 +68,8 @@ const MyLessons = () => {
   return (
     <PageWrapper>
       <Box sx={styles.wrapper}>
-        <Box sx={styles.groupedLessons}>{groupedLessons}</Box>
-        <Box sx={styles.lessons}>{lessons}</Box>
+        <Box sx={styles.list}>{list}</Box>
+        <Box sx={styles.items}>{listOfItems}</Box>
       </Box>
     </PageWrapper>
   )
