@@ -13,8 +13,8 @@ interface MessageProps {
 }
 
 const Message: FC<MessageProps> = ({ message }) => {
-  const { author, messageContent } = message
-  const { _id, role, firstName, lastName, photo, createdAt } = author
+  const { author, messageContent, authorRole } = message
+  const { _id, firstName, lastName, photo, createdAt } = author
 
   return (
     <Box sx={styles.root}>
@@ -24,7 +24,7 @@ const Message: FC<MessageProps> = ({ message }) => {
         firstName={firstName}
         lastName={lastName}
         photo={photo}
-        role={role}
+        role={authorRole}
         sx={styles.userInfoStyles}
       />
       <AppCard sx={styles.messageContent}>

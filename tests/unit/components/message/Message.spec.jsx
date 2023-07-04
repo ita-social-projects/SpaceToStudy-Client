@@ -12,7 +12,6 @@ describe('Message component', () => {
     _id: '1234',
     firstName: 'Kyle',
     lastName: 'Jason',
-    role: UserRoleEnum.Student,
     photo: someAvatar,
     createdAt: new Date()
   }
@@ -20,6 +19,7 @@ describe('Message component', () => {
   const mockMessage = {
     _id: 'newmess1',
     author: newAuthor,
+    authorRole: UserRoleEnum.Student,
     messageContent: 'how about some bruh moment'
   }
 
