@@ -1,19 +1,22 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import CloseIcon from '@mui/icons-material/Close'
+import AppButton from '~/components/app-button/AppButton'
+import { ButtonVariantEnum } from '~/types'
 
 import { styles } from '~/components/confirm-dialog/ConfirmDialog.styles'
 
 interface ConfirmDialogProps {
   message: string
   title: string
+  confirmButton?: string
+  cancelButton?: string
   open: boolean
   onConfirm: () => void
   onDismiss: () => void
@@ -22,6 +25,8 @@ interface ConfirmDialogProps {
 const ConfirmDialog: FC<ConfirmDialogProps> = ({
   message,
   title,
+  confirmButton,
+  cancelButton,
   open,
   onConfirm,
   onDismiss
@@ -35,22 +40,20 @@ const ConfirmDialog: FC<ConfirmDialogProps> = ({
       onClose={onDismiss}
       open={open}
     >
-      <Typography sx={styles.title} variant='h6'>
-        {t(title)}
-      </Typography>
+      <Typography sx={styles.title}>{t(title)}</Typography>
       <IconButton onClick={onDismiss} sx={styles.icon}>
         <CloseIcon />
       </IconButton>
-      <DialogContent dividers sx={styles.content}>
-        <Typography variant='subtitle1'>{t(message)}</Typography>
+      <DialogContent sx={styles.content}>
+        <Typography>{t(message)}</Typography>
       </DialogContent>
       <DialogActions sx={styles.actions}>
-        <Button onClick={onConfirm} size='large' variant='tonal'>
-          {t('common.yes')}
-        </Button>
-        <Button onClick={onDismiss} size='large' variant='contained'>
-          {t('common.no')}
-        </Button>
+        <AppButton onClick={onConfirm}>
+          {confirmButton ? confirmButton : t('common.yes')}
+        </AppButton>
+        <AppButton onClick={onDismiss} variant={ButtonVariantEnum.Tonal}>
+          {cancelButton ? cancelButton : t('common.no')}
+        </AppButton>
       </DialogActions>
     </Dialog>
   )
