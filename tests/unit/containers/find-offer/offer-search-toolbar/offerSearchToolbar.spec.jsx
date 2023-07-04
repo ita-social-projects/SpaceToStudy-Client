@@ -1,3 +1,4 @@
+import React from 'react'
 import { render, screen, fireEvent } from '@testing-library/react'
 import { vi } from 'vitest'
 import OfferSearchToolbar from '~/containers/find-offer/offer-search-toolbar/OfferSearchToolbar'
@@ -15,6 +16,8 @@ const resetPage = vi.fn()
 useBreakpoints.mockImplementation(() => ({ isLaptopAndAbove: true }))
 
 describe('OfferSearchToolbar', () => {
+  const testValue = 'Music'
+
   beforeEach(() => {
     render(
       <OfferSearchToolbar
@@ -26,7 +29,6 @@ describe('OfferSearchToolbar', () => {
   })
 
   it('should find right category value', () => {
-    const testValue = 'Music'
     const categories = screen.getByLabelText('breadCrumbs.categories')
 
     fireEvent.click(categories)
@@ -37,7 +39,6 @@ describe('OfferSearchToolbar', () => {
   })
 
   it('should find right subject value', () => {
-    const testValue = 'Web design'
     const subjects = screen.getByLabelText('breadCrumbs.subjects')
 
     fireEvent.click(subjects)
@@ -48,7 +49,6 @@ describe('OfferSearchToolbar', () => {
   })
 
   it('should test search input with button', () => {
-    const testValue = 'music'
     const search = screen.getByRole('textbox')
     const searchBtn = screen.getByRole('button')
 
