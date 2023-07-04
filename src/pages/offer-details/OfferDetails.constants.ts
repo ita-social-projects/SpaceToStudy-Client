@@ -6,7 +6,8 @@ interface ActiveButtonActionsProps {
   myOffer: boolean
   status?: StatusEnum
   handleEnrollOfferClick: () => void
-  handleToggleOfferStatus: () => void
+  handleToggleOfferStatus: () => Promise<void>
+  handleCloseOffer: () => Promise<void>
   t: TFunction<'translation', undefined>
 }
 
@@ -16,31 +17,53 @@ export const activeButtonActions = ({
   status,
   handleEnrollOfferClick,
   handleToggleOfferStatus,
+  handleCloseOffer,
   t
-}: ActiveButtonActionsProps) => [
-  opositeRole
-    ? {
-        label: t('common.labels.enrollOffer'),
-        buttonProps: {
-          onClick: handleEnrollOfferClick
-        }
+}: ActiveButtonActionsProps) => {
+  const buttons = []
+
+  if (opositeRole) {
+    buttons.push({
+      label: t('common.labels.enrollOffer'),
+      buttonProps: {
+        onClick: handleEnrollOfferClick
       }
-    : null,
-  myOffer
-    ? {
-        label:
-          status === StatusEnum.Draft
-            ? t('common.labels.makeActive')
-            : t('common.labels.moveToDraft'),
+    })
+  }
+
+  if (myOffer) {
+    if (status !== StatusEnum.Closed) {
+      const label =
+        status === StatusEnum.Draft
+          ? t('common.labels.makeActive')
+          : t('common.labels.moveToDraft')
+
+      buttons.push({
+        label,
         buttonProps: {
           onClick: handleToggleOfferStatus
         }
+      })
+    }
+  } else {
+    buttons.push({
+      label: t('common.labels.sendMessage'),
+      buttonProps: {
+        disabled: true,
+        variant: ButtonVariantEnum.Tonal
       }
-    : {
-        label: t('common.labels.sendMessage'),
-        buttonProps: {
-          disabled: true,
-          variant: ButtonVariantEnum.Tonal
-        }
+    })
+  }
+
+  if (myOffer && status !== StatusEnum.Closed) {
+    buttons.push({
+      label: t('common.labels.closeOffer'),
+      buttonProps: {
+        onClick: handleCloseOffer,
+        variant: ButtonVariantEnum.Tonal
       }
-]
+    })
+  }
+
+  return buttons
+}

@@ -6,6 +6,7 @@ import { OfferService } from '~/services/offer-service'
 import { useModalContext } from '~/context/modal-context'
 import { useAppSelector } from '~/hooks/use-redux'
 import useAxios from '~/hooks/use-axios'
+import useConfirm from '~/hooks/use-confirm'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import CommentsBlock from '~/containers/tutor-profile/comments-block/CommentBlock'
@@ -38,6 +39,7 @@ const OfferDetails = () => {
   const { id = '' } = useParams()
   const { openModal } = useModalContext()
   const navigate = useNavigate()
+  const { checkConfirmation } = useConfirm()
   const { userId, userRole } = useAppSelector((state) => state.appMain)
 
   const offerDetailsPage = useRef(null)
@@ -81,14 +83,26 @@ const OfferDetails = () => {
   const handleEnrollOfferClick = () =>
     offerData && openModal({ component: <EnrollOffer offer={offerData} /> })
 
-  const handleToggleOfferStatus = () => {
+  const handleToggleOfferStatus = async () => {
     const newStatus =
       offerData?.status === StatusEnum.Draft
         ? StatusEnum.Active
         : StatusEnum.Draft
 
     if (offerData) {
-      void fetchDataUpdateOffer(newStatus)
+      await fetchDataUpdateOffer(newStatus)
+      void fetchDataOffer()
+    }
+  }
+
+  const handleCloseOffer = async () => {
+    const confirmed = checkConfirmation({
+      message: 'offerDetailsPage.closeOffer',
+      title: 'titles.confirmTitle',
+      check: true
+    })
+    if (await confirmed) {
+      await fetchDataUpdateOffer(StatusEnum.Closed)
       void fetchDataOffer()
     }
   }
@@ -99,6 +113,7 @@ const OfferDetails = () => {
     status: offerData?.status,
     handleEnrollOfferClick,
     handleToggleOfferStatus,
+    handleCloseOffer,
     t
   })
 

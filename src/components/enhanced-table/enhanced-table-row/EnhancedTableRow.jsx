@@ -65,7 +65,7 @@ const EnhancedTableRow = ({
         </TableCell>
       )}
       {tableCells}
-      {isSelection && (
+      {rowActions && (
         <TableCell>
           <IconButton data-testid='menu-icon' onClick={openMenu}>
             <MoreVertIcon

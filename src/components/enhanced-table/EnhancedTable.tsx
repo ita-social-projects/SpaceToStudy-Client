@@ -70,6 +70,7 @@ const EnhancedTable = <I extends TableItem, F = undefined>({
           columns={columns}
           data={data}
           isSelection={isSelection}
+          rowActions={rowActions}
           rowsPerPage={rowsPerPage}
           select={select}
           sort={sort}
