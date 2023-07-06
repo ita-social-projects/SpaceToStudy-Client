@@ -8,11 +8,11 @@ import { styles } from '~/containers/layout/footer/Footer.styles'
 import { ComponentEnum } from '~/types'
 
 const Footer = () => {
-  const { userRole } = useAppSelector((state) => state.appMain)
+  const { userRole, pageLoad } = useAppSelector((state) => state.appMain)
 
   return (
     <Box component={ComponentEnum.Footer} sx={styles.footer}>
-      {userRole ? <UserFooter /> : <GuestFooter />}
+      {!pageLoad && (userRole ? <UserFooter /> : <GuestFooter />)}
     </Box>
   )
 }

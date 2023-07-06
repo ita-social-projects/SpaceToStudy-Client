@@ -14,7 +14,5 @@ export const styles = {
     borderBottom: '1px solid',
     borderColor: 'primary.100'
   },
-  contentContainer: { minHeight: '100vh' },
-  loader: { container: { height: '100%' } },
   pagination: { marginTop: 'auto' }
 }

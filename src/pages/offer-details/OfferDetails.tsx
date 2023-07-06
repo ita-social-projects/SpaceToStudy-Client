@@ -1,7 +1,9 @@
-import { useCallback, useRef } from 'react'
+import { useCallback, useRef, useLayoutEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams, useNavigate, useOutletContext } from 'react-router-dom'
 
+import { setPageLoad } from '~/redux/reducer'
+import { useAppDispatch } from '~/hooks/use-redux'
 import { OfferService } from '~/services/offer-service'
 import { useModalContext } from '~/context/modal-context'
 import { useAppSelector } from '~/hooks/use-redux'
@@ -37,6 +39,7 @@ const OfferDetails = () => {
   const { isMobile } = useBreakpoints()
   const { id = '' } = useParams()
   const { openModal } = useModalContext()
+  const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const { userId, userRole } = useAppSelector((state) => state.appMain)
 
@@ -101,6 +104,10 @@ const OfferDetails = () => {
     handleToggleOfferStatus,
     t
   })
+
+  useLayoutEffect(() => {
+    void dispatch(setPageLoad(offerLoading))
+  }, [dispatch, offerLoading])
 
   if (offerLoading) {
     return <Loader pageLoad />
