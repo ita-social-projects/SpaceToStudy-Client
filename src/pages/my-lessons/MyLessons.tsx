@@ -10,26 +10,21 @@ const listDataMock = [
   {
     id: 0,
     title: 'All lessons',
-    itemIds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    items: [
+      { id: 1, title: 'Item-1' },
+      { id: 2, title: 'Item-2' },
+      { id: 3, title: 'Item-3' }
+    ]
   },
   {
     id: 1,
     title: 'Grouped lessons',
-    itemIds: [1, 2, 3, 7]
+    items: [
+      { id: 1, title: 'Item-11' },
+      { id: 2, title: 'Item-22' },
+      { id: 3, title: 'Item-33' }
+    ]
   }
-]
-
-const listOfItemsDataMock = [
-  { id: 1, title: 'Item-1' },
-  { id: 2, title: 'Item-2' },
-  { id: 3, title: 'Item-3' },
-  { id: 4, title: 'Item-4' },
-  { id: 5, title: 'Item-5' },
-  { id: 6, title: 'Item-6' },
-  { id: 7, title: 'Item-7' },
-  { id: 8, title: 'Item-8' },
-  { id: 9, title: 'Item-9' },
-  { id: 10, title: 'Item-10' }
 ]
 
 const MyLessons = () => {
@@ -39,7 +34,7 @@ const MyLessons = () => {
     setValue(newValue)
   }
 
-  const list = listDataMock.map((item) => (
+  const tabs = listDataMock.map((item) => (
     <Tab
       activeTab={value === item.id}
       key={item.id}
@@ -49,29 +44,20 @@ const MyLessons = () => {
     </Tab>
   ))
 
-  const listOfItems =
-    value === 0
-      ? listOfItemsDataMock.map((item) => (
-          <Tab activeTab={false} key={item.id}>
-            {item.title}
-          </Tab>
-        ))
-      : listDataMock[value].itemIds.map((itemId) => {
-          const item = listOfItemsDataMock.find((item) => item.id === itemId)
-          return (
-            <Tab activeTab={false} key={item?.id}>
-              {item?.title}
-            </Tab>
-          )
-        })
+  const itemsToDisplay = listDataMock[value].items.map((item) => (
+    <Tab activeTab={false} key={item.id}>
+      {item.title}
+    </Tab>
+  ))
 
   return (
     <PageWrapper>
       <Box sx={styles.wrapper}>
-        <Box sx={styles.list}>{list}</Box>
-        <Box sx={styles.items}>{listOfItems}</Box>
+        <Box sx={styles.tabs}>{tabs}</Box>
+        <Box sx={styles.items}>{itemsToDisplay}</Box>
       </Box>
     </PageWrapper>
   )
 }
+
 export default MyLessons

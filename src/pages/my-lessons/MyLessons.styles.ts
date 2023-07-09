@@ -2,7 +2,7 @@ export const styles = {
   wrapper: {
     display: 'flex'
   },
-  list: {
+  tabs: {
     display: 'flex',
     flexDirection: 'column',
     width: '20%'
