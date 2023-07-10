@@ -26,7 +26,7 @@ const MyLessons = () => {
   ))
 
   const itemsToDisplay = listDataMock[value].items.map((item) => (
-    <Tab activeTab={false} key={item.id}>
+    <Tab activeTab={false} key={item.id} onClick={() => null}>
       {item.title}
     </Tab>
   ))
