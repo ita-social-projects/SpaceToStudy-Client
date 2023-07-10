@@ -23,13 +23,15 @@ describe('Message component', () => {
     messageContent: 'how about some bruh moment'
   }
 
-  it('should render the author name and message content', () => {
+  beforeEach(() => {
     render(
       <Router>
         <Message message={mockMessage} />
       </Router>
     )
+  })
 
+  it('should render the author name and message content', () => {
     const authorNameElement = screen.getByText(/Kyle Jason/i)
     const messageContentElement = screen.getByText(
       /how about some bruh moment/i
@@ -40,12 +42,6 @@ describe('Message component', () => {
   })
 
   it('should format the timestamp correctly', () => {
-    render(
-      <Router>
-        <Message message={mockMessage} />
-      </Router>
-    )
-
     const timestampElement = screen.getByText(
       getFormatedDate(newAuthor.createdAt)
     )

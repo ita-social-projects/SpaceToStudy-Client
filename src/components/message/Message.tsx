@@ -28,7 +28,9 @@ const Message: FC<MessageProps> = ({ message }) => {
         sx={styles.userInfoStyles}
       />
       <AppCard sx={styles.messageContent}>
-        <Typography sx={styles.typography}>{messageContent}</Typography>
+        <Typography sx={styles.userInfoStyles.name}>
+          {messageContent}
+        </Typography>
       </AppCard>
     </Box>
   )

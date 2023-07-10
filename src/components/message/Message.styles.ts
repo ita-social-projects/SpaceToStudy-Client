@@ -31,11 +31,6 @@ export const styles = {
     flexDirection: 'column',
     alignItems: 'flex-start'
   },
-  typography: {
-    typography: 'caption',
-    fontWeight: '500',
-    color: 'primary.700'
-  },
   messageContent: {
     p: '20px',
     ml: '48px',
