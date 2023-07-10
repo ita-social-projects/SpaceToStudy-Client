@@ -4,7 +4,7 @@ import Box from '@mui/material/Box'
 import Tab from '~/components/tab/Tab'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
 
-import { listDataMock } from './MyLessons.constants'
+import { listDataMock } from '~/pages/my-lessons/MyLessons.constants'
 
 import { styles } from '~/pages/my-lessons/MyLessons.styles'
 
