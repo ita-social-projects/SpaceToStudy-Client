@@ -13,6 +13,7 @@ export const initialState = {
   userRole: '',
   authLoading: false,
   loading: true,
+  pageLoad: false,
   error: '',
   isFirstLogin: true
 }
@@ -22,6 +23,7 @@ export const stateAfterLogin = {
   userRole: 'student',
   authLoading: false,
   loading: false,
+  pageLoad: false,
   error: '',
   isFirstLogin: true
 }
@@ -30,6 +32,7 @@ export const stateAfterSignup = {
   userId: '',
   userRole: '',
   loading: false,
+  pageLoad: false,
   authLoading: false,
   error: '',
   isFirstLogin: true

@@ -143,7 +143,6 @@ export const mainSlice = createSlice({
       state.isFirstLogin = false
     },
     setPageLoading(state, action: PayloadAction<boolean>) {
-      console.log(action)
       state.pageLoad = action.payload
     }
   },

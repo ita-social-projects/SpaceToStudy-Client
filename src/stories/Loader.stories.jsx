@@ -16,5 +16,5 @@ export const Default = (args) => <Loader {...args} />
 
 Default.args = {
   size: 70,
-  sx: { color: { opacity: 0.6 } }
+  sx: { opacity: 0.6, color: 'basic.black' }
 }

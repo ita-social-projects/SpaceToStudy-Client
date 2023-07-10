@@ -21,5 +21,5 @@ export const styles = {
     alignItems: 'center',
     columnGap: 1
   },
-  loader: { loader: { py: '170px' } }
+  loader: { py: '170px' }
 }
