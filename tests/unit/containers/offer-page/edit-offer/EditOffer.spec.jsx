@@ -47,7 +47,7 @@ describe('CreateOffer component', () => {
   it('should render correctly', async () => {
     const mainTitle = screen.getByText('offerPage.editOffer.title.tutor')
     const mainDescription = screen.getByText(
-      'offerPage.createOffer.description.tutor'
+      'offerPage.editOffer.description.tutor'
     )
 
     expect(mainTitle).toBeInTheDocument()

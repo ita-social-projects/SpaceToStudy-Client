@@ -113,6 +113,7 @@ export const useForm = <T extends object>({
   const handleSubmit = (event: React.FormEvent<HTMLDivElement>) => {
     event.preventDefault()
     let isValid = true
+    const submittedData = submitWithData ? data : undefined
     const newErrors = { ...errors }
 
     if (validations) {
@@ -126,9 +127,7 @@ export const useForm = <T extends object>({
       }
     }
 
-    isValid
-      ? void onSubmit(submitWithData ? data : undefined)
-      : setErrors(newErrors)
+    isValid ? void onSubmit(submittedData) : setErrors(newErrors)
   }
 
   return {

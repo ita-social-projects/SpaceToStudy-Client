@@ -13,10 +13,10 @@ interface EditOfferProps {
 
 const EditOffer: FC<EditOfferProps> = ({ offer, closeDrawer }) => {
   const updateOffer = useCallback(
-    (updateData?: Partial<CreateOrUpdateOfferData>) =>
+    (updateData: CreateOrUpdateOfferData) =>
       OfferService.updateOffer(offer?._id ?? '', {
         ...updateData,
-        FAQ: updateData?.FAQ && findFullObjects(updateData.FAQ)
+        FAQ: findFullObjects(updateData.FAQ)
       }),
     [offer?._id]
   )

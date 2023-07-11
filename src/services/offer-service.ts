@@ -24,7 +24,7 @@ export const OfferService = {
 
   updateOffer: async (
     id: string,
-    updateData?: Partial<CreateOrUpdateOfferData>
+    updateData: Partial<CreateOrUpdateOfferData>
   ): Promise<AxiosResponse> =>
     await axiosClient.patch(createUrlPath(URLs.offers.update, id), updateData),
 
