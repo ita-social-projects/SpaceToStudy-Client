@@ -1,7 +1,7 @@
 import { emptyField, numberField, textField } from '~/utils/validations/common'
-import { Offer } from '~/types'
+import { Offer, StatusEnum } from '~/types'
 
-export const getInitialValues = (offer: Offer | null = null) => ({
+export const getInitialValues = (offer?: Offer) => ({
   category: offer?.category._id ?? '',
   subject: offer?.subject._id ?? '',
   proficiencyLevel: offer?.proficiencyLevel ?? [],
@@ -9,6 +9,7 @@ export const getInitialValues = (offer: Offer | null = null) => ({
   title: offer?.title ?? '',
   description: offer?.description ?? '',
   price: offer?.price.toString() ?? '',
+  status: offer?.status ?? StatusEnum.Active,
   FAQ: offer?.FAQ ?? [{ question: '', answer: '' }]
 })
 

@@ -37,7 +37,9 @@ const MyOffersContainer: FC<MyOffersContainerProps> = ({
   const breakpoints = useBreakpoints()
   const { t } = useTranslation()
   const { openDrawer, closeDrawer, isOpen } = useDrawer()
-  const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null)
+  const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(
+    undefined
+  )
 
   const columnsToShow = ajustColumns<Offer>(
     breakpoints,
