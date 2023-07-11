@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography'
 import AppCard from '~/components/app-card/AppCard'
 import UserProfileInfo from '~/components/user-profile-info/UserProfileInfo'
 
-import { MessageInterface } from '~/types/chat/message/message.interface'
+import { MessageInterface } from '~/types'
 import { styles } from '~/components/message/Message.styles'
 
 interface MessageProps {

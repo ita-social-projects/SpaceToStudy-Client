@@ -1,10 +1,9 @@
-import { render, screen } from '@testing-library/react'
-import { BrowserRouter as Router } from 'react-router-dom'
-
-import someAvatar from '~/assets/img/student-home/bag.png'
+import { renderWithProviders } from '~tests/test-utils'
+import { screen } from '@testing-library/react'
 import { UserRoleEnum } from '~/types'
 import { getFormatedDate } from '~/utils/helper-functions'
 
+import someAvatar from '~/assets/img/student-home/bag.png'
 import Message from '~/components/message/Message'
 
 describe('Message component', () => {
@@ -24,11 +23,7 @@ describe('Message component', () => {
   }
 
   beforeEach(() => {
-    render(
-      <Router>
-        <Message message={mockMessage} />
-      </Router>
-    )
+    renderWithProviders(<Message message={mockMessage} />)
   })
 
   it('should render the author name and message content', () => {
