@@ -32,11 +32,9 @@ const MyLessons = () => {
   ))
 
   return (
-    <PageWrapper>
-      <Box sx={styles.wrapper}>
-        <Box sx={styles.tabs}>{tabs}</Box>
-        <Box sx={styles.items}>{itemsToDisplay}</Box>
-      </Box>
+    <PageWrapper sx={styles.wrapper}>
+      <Box sx={styles.tabs}>{tabs}</Box>
+      <Box sx={styles.items}>{itemsToDisplay}</Box>
     </PageWrapper>
   )
 }
