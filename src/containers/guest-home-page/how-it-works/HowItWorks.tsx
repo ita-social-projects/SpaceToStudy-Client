@@ -50,8 +50,8 @@ const HowItWorks = () => {
           array={isStudent ? tutorCardBoxArray : studentCardBoxArray}
           btnText={
             isStudent
-              ? t('guestHomePage.whatCanYouDo.learn.actionLabel')
-              : t('guestHomePage.whatCanYouDo.teach.actionLabel')
+              ? t('guestHomePage.whatCanYouDo.teach.actionLabel')
+              : t('guestHomePage.whatCanYouDo.learn.actionLabel')
           }
           isStudent={isStudent}
           role={isStudent ? UserRoleEnum.Tutor : UserRoleEnum.Student}
