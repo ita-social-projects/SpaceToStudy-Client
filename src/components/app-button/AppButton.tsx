@@ -19,9 +19,7 @@ const AppButton: FC<AppButtonProps> = ({
   size = SizeEnum.Large,
   ...props
 }) => {
-  const loader = (
-    <Loader size={20} sx={{ opacity: '0.6', color: 'basic.black' }} />
-  )
+  const loader = <Loader size={20} sx={{ opacity: '0.6' }} />
 
   return (
     <Button
