@@ -1,41 +1,64 @@
-import { chatShadow } from '~/styles/app-theme/custom-shadows'
-
 export const styles = {
   userInfoStyles: {
     root: {
       flexDirection: 'row',
-      gap: '10px'
+      gap: '9px'
     },
     avatar: {
-      width: '40px',
-      height: '40px',
-      borderRadius: '5px'
+      width: '48px',
+      height: '48px'
     },
     info: {
-      flexDirection: 'row',
       alignItems: 'baseline',
-      gap: '10px'
+      gap: '8px'
+    },
+    myInfo: {
+      flexDirection: 'row-reverse'
+    },
+    interlocutorInfo: {
+      flexDirection: 'row'
     },
     name: {
-      typography: 'caption',
-      fontWeight: '500',
-      color: 'primary.700'
+      typography: 'subtitle2',
+      color: 'primary.900'
     },
     date: {
-      typography: 'caption',
-      color: 'primary.500'
+      typography: 'caption'
     }
   },
   root: {
     display: 'flex',
     flexDirection: 'column',
+    mb: '32px'
+  },
+  myMessageRoot: {
+    alignItems: 'flex-end'
+  },
+  interlocutorMessageRoot: {
     alignItems: 'flex-start'
   },
+  messageBox: {
+    display: 'flex',
+    flexDirection: 'column',
+    maxWidth: '520px',
+    borderRadius: '12px',
+    px: '12px',
+    py: '8px'
+  },
+  myMessageBox: {
+    backgroundColor: 'primary.500',
+    color: 'primary.50',
+    borderTopRightRadius: '1px',
+    mt: '8px'
+  },
+  interlocutorMessageBox: {
+    backgroundColor: 'primary.100',
+    color: 'primary.900',
+    borderTopLeftRadius: '1px',
+    mt: '-20px',
+    ml: '57px'
+  },
   messageContent: {
-    p: '20px',
-    ml: '48px',
-    border: '2px solid',
-    borderColor: 'basic.grey',
-    boxShadow: chatShadow
+    typography: 'body1'
   }
 }

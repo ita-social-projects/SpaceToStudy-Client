@@ -34,7 +34,7 @@ const TutorProfile = () => {
   if (loading) {
     return <Loader pageLoad size={70} />
   }
-
+  console.log(userId)
   return (
     <PageWrapper>
       <ProfileInfo userData={response} />
