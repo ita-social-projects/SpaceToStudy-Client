@@ -1,9 +1,11 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useLayoutEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
-
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
+
+import { setPageLoad } from '~/redux/reducer'
+import { useAppDispatch } from '~/hooks/use-redux'
 import usePagination from '~/hooks/table/use-pagination'
 import useAxios from '~/hooks/use-axios'
 import useSort from '~/hooks/table/use-sort'
@@ -36,6 +38,7 @@ const MyCooperations = () => {
     CardsViewEnum.Inline
   )
   const { t } = useTranslation()
+  const dispatch = useAppDispatch()
   const breakpoints = useBreakpoints()
   const filterOptions = useFilter({
     initialFilters
@@ -90,6 +93,10 @@ const MyCooperations = () => {
     title: t(title),
     value
   }))
+
+  useLayoutEffect(() => {
+    void dispatch(setPageLoad(loading))
+  }, [dispatch, loading])
 
   return (
     <PageWrapper>

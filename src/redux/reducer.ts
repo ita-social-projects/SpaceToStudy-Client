@@ -30,6 +30,7 @@ interface UserState {
   error: string
   isFirstLogin: boolean
   loading: boolean
+  pageLoad: boolean
 }
 
 const initialState: UserState = {
@@ -37,6 +38,7 @@ const initialState: UserState = {
   userRole: '',
   authLoading: false,
   loading: true,
+  pageLoad: false,
   error: '',
   isFirstLogin: true
 }
@@ -111,6 +113,17 @@ export const checkAuth = createAsyncThunk(
   }
 )
 
+export const setPageLoad = createAsyncThunk(
+  'appMain/setPageLoad',
+  (loading: boolean, { rejectWithValue, dispatch }) => {
+    try {
+      dispatch(setPageLoading(loading))
+    } catch (e) {
+      return rejectWithValue(e)
+    }
+  }
+)
+
 export const mainSlice = createSlice({
   name: 'appMain',
   initialState,
@@ -128,6 +141,9 @@ export const mainSlice = createSlice({
     },
     markFirstLoginComplete(state) {
       state.isFirstLogin = false
+    },
+    setPageLoading(state, action: PayloadAction<boolean>) {
+      state.pageLoad = action.payload
     }
   },
   extraReducers: (builder) => {
@@ -159,6 +175,7 @@ export const mainSlice = createSlice({
 
 const { actions, reducer } = mainSlice
 
-export const { setUser, logout, markFirstLoginComplete } = actions
+export const { setUser, logout, markFirstLoginComplete, setPageLoading } =
+  actions
 
 export default reducer
