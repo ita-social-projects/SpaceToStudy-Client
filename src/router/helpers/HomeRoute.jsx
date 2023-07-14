@@ -1,12 +1,12 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useAppSelector } from '~/hooks/use-redux'
+import { useSelector } from '~/hooks/use-redux'
 import GuestHomePage from '~/pages/guest-home-page/GuestHome'
 import { guestRoutes } from '~/router/constants/guestRoutes'
 
 const HomeRoute = () => {
   const navigate = useNavigate()
-  const { userRole } = useAppSelector((state) => state.appMain)
+  const { userRole } = useSelector((state) => state.appMain)
 
   useEffect(() => {
     if (userRole) {

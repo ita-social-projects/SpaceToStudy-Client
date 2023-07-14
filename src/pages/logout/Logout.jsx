@@ -1,12 +1,12 @@
 import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { useAppDispatch } from '~/hooks/use-redux'
 
 import { logoutUser } from '~/redux/reducer'
 import { guestRoutes } from '~/router/constants/guestRoutes'
 
 const Logout = () => {
-  const dispatch = useAppDispatch()
+  const dispatch = useDispatch()
   const navigate = useNavigate()
 
   useEffect(() => {

@@ -6,11 +6,11 @@ import UserStepsWrapper from '~/components/user-steps-wrapper/UserStepsWrapper'
 import Faq from '~/containers/student-home-page/faq/Faq'
 import StudentHowItWorks from '~/containers/student-home-page/student-how-it-works/StudentHowItWorks'
 import { useModalContext } from '~/context/modal-context'
-import { useAppSelector } from '~/hooks/use-redux'
+import { useSelector } from '~/hooks/use-redux'
 
 const StudentHome = () => {
   const { openModal } = useModalContext()
-  const { isFirstLogin, userRole } = useAppSelector((state) => state.appMain)
+  const { isFirstLogin, userRole } = useSelector((state) => state.appMain)
 
   useEffect(() => {
     if (isFirstLogin) {

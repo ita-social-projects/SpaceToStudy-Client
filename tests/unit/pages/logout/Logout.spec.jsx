@@ -1,19 +1,19 @@
 import { render, waitFor } from '@testing-library/react'
 import { useNavigate } from 'react-router-dom'
-import { useAppDispatch } from '~/hooks/use-redux'
-import { guestRoutes } from '~/router/constants/guestRoutes'
+import { useDispatch } from '~/hooks/use-redux'
 import Logout from '~/pages/logout/Logout'
+import { guestRoutes } from '~/router/constants/guestRoutes'
 
 vi.mock('react-router-dom', () => ({
   useNavigate: vi.fn()
 }))
 
 vi.mock('~/hooks/use-redux', () => ({
-  useAppDispatch: vi.fn()
+  useDispatch: vi.fn()
 }))
 
 const dispatch = vi.fn()
-useAppDispatch.mockReturnValue(dispatch)
+useDispatch.mockReturnValue(dispatch)
 const navigate = vi.fn()
 useNavigate.mockReturnValue(navigate)
 

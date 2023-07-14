@@ -1,0 +1,53 @@
+import { t } from 'i18next'
+
+import TurnedIn from '@mui/icons-material/TurnedIn'
+import TurnedInNot from '@mui/icons-material/TurnedInNot'
+import Box from '@mui/material/Box'
+import IconButton from '@mui/material/IconButton'
+import Typography from '@mui/material/Typography'
+
+import AppButton from '~/components/app-button/AppButton'
+
+import { styles } from '~/components/offer-card/offer-actions/OfferActions.styles'
+
+const OfferActions = ({
+  id,
+  price,
+  isBookmarked,
+  onBookmarkClick,
+  buttonActions
+}) => {
+  const buttons = buttonActions.map(
+    (elem) =>
+      elem && (
+        <AppButton fullWidth key={elem.label} {...elem.buttonProps}>
+          {elem.label}
+        </AppButton>
+      )
+  )
+
+  return (
+    <Box>
+      <Box sx={styles.containerTop}>
+        <Box>
+          <Typography variant='h6'>
+            {price} {t('common.uah')}
+          </Typography>
+          <Typography variant='body2'>/{t('common.hour')}</Typography>
+        </Box>
+
+        <IconButton
+          data-testid='iconButton'
+          onClick={() => onBookmarkClick(id)}
+          sx={styles.bookmarkButton}
+        >
+          {isBookmarked ? <TurnedIn /> : <TurnedInNot />}
+        </IconButton>
+      </Box>
+
+      <Box sx={styles.buttons}>{buttons}</Box>
+    </Box>
+  )
+}
+
+export default OfferActions

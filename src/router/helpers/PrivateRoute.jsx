@@ -1,10 +1,10 @@
 import { Navigate, Outlet, useOutletContext } from 'react-router-dom'
-import { useAppSelector } from '~/hooks/use-redux'
+import { useSelector } from '~/hooks/use-redux'
 import { errorRoutes } from '~/router/constants/errorRoutes'
 
 const PrivateRoute = ({ role }) => {
   const context = useOutletContext()
-  const { userRole } = useAppSelector((state) => state.appMain)
+  const { userRole } = useSelector((state) => state.appMain)
 
   if (!userRole || !role.includes(userRole)) {
     return <Navigate replace to={errorRoutes.authPolicy.path} />
