@@ -4,7 +4,6 @@ import Box from '@mui/material/Box'
 import Accordions from '~/components/accordion/Accordions'
 
 import { styles } from '~/components/accordion-with-image/AccordionWithImage.styles'
-import { TypographyVariantEnum } from '~/types'
 
 const AccordionWithImage = ({ items }) => {
   const [activeItemId, setActiveItemId] = useState(0)
@@ -14,10 +13,10 @@ const AccordionWithImage = ({ items }) => {
       <Box component='img' src={items[activeItemId].image} sx={styles.image} />
       <Accordions
         activeIndex={activeItemId}
-        descriptionVariant={TypographyVariantEnum.Body2}
+        descriptionVariant={'body2'}
         items={items}
         onChange={(id) => setActiveItemId(id)}
-        titleVariant={TypographyVariantEnum.H6}
+        titleVariant={'h6'}
       />
     </Box>
   )

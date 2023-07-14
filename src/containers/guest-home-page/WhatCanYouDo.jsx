@@ -1,16 +1,16 @@
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
-import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import InfoCard from '~/components/info-card/InfoCard'
+import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import SignupDialog from '~/containers/guest-home-page/signup-dialog/SignupDialog'
 
-import { useModalContext } from '~/context/modal-context'
-import { guestRoutes } from '~/router/constants/guestRoutes'
 import learnImg from '~/assets/img/guest-home-page/learnImg.png'
 import teachImg from '~/assets/img/guest-home-page/teachImg.png'
+import { useModalContext } from '~/context/modal-context'
+import { guestRoutes } from '~/router/constants/guestRoutes'
 
-import { UserRoleEnum } from '~/types'
+import { student, tutor } from '~/constants'
 import { styles } from '~/containers/guest-home-page/styles/WhatCanYouDo.styles'
 
 const cardData = [
@@ -19,14 +19,14 @@ const cardData = [
     title: 'guestHomePage.whatCanYouDo.learn.title',
     description: 'guestHomePage.whatCanYouDo.learn.description',
     actionLabel: 'guestHomePage.whatCanYouDo.learn.actionLabel',
-    actionType: UserRoleEnum.Student
+    actionType: student
   },
   {
     img: teachImg,
     title: 'guestHomePage.whatCanYouDo.teach.title',
     description: 'guestHomePage.whatCanYouDo.teach.description',
     actionLabel: 'guestHomePage.whatCanYouDo.teach.actionLabel',
-    actionType: UserRoleEnum.Tutor
+    actionType: tutor
   }
 ]
 
@@ -34,7 +34,7 @@ const WhatCanYouDo = () => {
   const { t } = useTranslation()
   const { openModal } = useModalContext()
 
-  const openDialog = (type: UserRoleEnum) => {
+  const openDialog = (type) => {
     openModal({ component: <SignupDialog type={type} /> })
   }
 

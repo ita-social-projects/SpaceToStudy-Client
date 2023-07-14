@@ -1,5 +1,3 @@
-import { TypographyVariantEnum } from '~/types'
-
 export const styles = {
   header: {
     display: 'flex',
@@ -17,7 +15,7 @@ export const styles = {
     alignItems: 'center'
   },
   navItemText: (isActive) => ({
-    typography: TypographyVariantEnum.Subtitle2,
+    typography: 'subtitle2',
     whiteSpace: 'nowrap',
     color: 'primary.900',
     textDecoration: isActive ? 'underline' : 'none',

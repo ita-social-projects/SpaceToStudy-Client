@@ -1,5 +1,3 @@
-import { TypographyVariantEnum } from '~/types'
-
 export const styles = {
   list: {
     mt: '16px',
@@ -10,7 +8,7 @@ export const styles = {
     py: '10px',
     textDecoration: 'none',
     color: 'primary.900',
-    typography: TypographyVariantEnum.MidTitle
+    typography: 'midTitle'
   },
   listItem: {
     px: 0

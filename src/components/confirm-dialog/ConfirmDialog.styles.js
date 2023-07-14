@@ -1,5 +1,3 @@
-import { TypographyVariantEnum } from '~/types'
-
 export const styles = {
   root: {
     minWidth: { xs: '280px', sm: '400px' }
@@ -13,7 +11,7 @@ export const styles = {
   },
   title: {
     color: 'primary.700',
-    typography: TypographyVariantEnum.H5,
+    typography: 'h5',
     p: '26px 0px 20px 30px'
   },
   content: {
@@ -21,7 +19,7 @@ export const styles = {
     p: '0 30px'
   },
   typographyContent: {
-    typography: TypographyVariantEnum.Body1
+    typography: 'body1'
   },
   actions: {
     p: '24px 30px'

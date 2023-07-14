@@ -10,7 +10,6 @@ import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded'
 
 import { styles } from '~/containers/navigation-icons/NavigationIcons.styles'
 import { authRoutes } from '~/router/constants/authRoutes'
-import { NotificationTypeEnums } from '~/types'
 
 const languageIcon = {
   disabled: true,
@@ -44,6 +43,7 @@ export const guestIcons = [
 export const userIcons = [
   languageIcon,
   {
+    disabled: true,
     tooltip: 'iconsTooltip.messages',
     icon: <MessageRoundedIcon />,
     buttonProps: () => ({
@@ -59,13 +59,15 @@ export const userIcons = [
     buttonProps: () => ({ sx: styles.studentIcons })
   },
   {
+    disableRipple: true,
+    disableFocusRipple: true,
+    color: 'neutral',
     tooltip: 'iconsTooltip.notifications',
-    disabled: true,
     badgeContent: ({ notifications }) => notifications,
     icon: <NotificationsRoundedIcon />,
     buttonProps: ({ openNotifications }) => ({
       onClick: openNotifications,
-      sx: styles.studentIcons
+      sx: { ...styles.studentIcons, color: 'primary.200' }
     })
   },
   {
@@ -77,37 +79,4 @@ export const userIcons = [
     })
   },
   menuIcon
-]
-
-export const mockNotifications = [
-  {
-    _id: '1',
-    type: NotificationTypeEnums.AcceptCooperation,
-    createdAt: '',
-    updatedAt: ''
-  },
-  {
-    _id: '2',
-    type: NotificationTypeEnums.CancelCooperation,
-    createdAt: '',
-    updatedAt: ''
-  },
-  {
-    _id: '3',
-    type: NotificationTypeEnums.NewComment,
-    createdAt: '',
-    updatedAt: ''
-  },
-  {
-    _id: '4',
-    type: NotificationTypeEnums.NewCooperation,
-    createdAt: '',
-    updatedAt: ''
-  },
-  {
-    _id: '5',
-    type: NotificationTypeEnums.UpdateCooperation,
-    createdAt: '',
-    updatedAt: ''
-  }
 ]

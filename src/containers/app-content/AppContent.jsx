@@ -1,8 +1,8 @@
 import Box from '@mui/material/Box'
 
+import { styles } from '~/containers/app-content/AppContent.styles'
 import AppHeader from '~/containers/layout/app-header/AppHeader'
 import AppMain from '~/containers/layout/app-main/AppMain'
-import { styles } from '~/containers/app-content/AppContent.styles'
 
 const AppContent = () => {
   return (

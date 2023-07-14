@@ -1,10 +1,8 @@
-
 import AccordionWithImage from '~/components/accordion-with-image/AccordionWithImage'
 import CarouselWithImage from '~/components/carousel-with-image/CarouselWithImage'
 import useBreakpoints from '~/hooks/use-breakpoints'
 
-
-const FeatureBlock {
+const FeatureBlock = ({ items }) => {
   const { isMobile } = useBreakpoints()
 
   return isMobile ? (

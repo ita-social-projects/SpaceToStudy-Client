@@ -4,7 +4,6 @@ import Typography from '@mui/material/Typography'
 import AppTextField from '~/components/app-text-field/AppTextField'
 
 import { styles } from '~/components/app-text-area/AppTextArea.styles'
-import { TypographyVariantEnum } from '~/types'
 
 const AppTextArea = ({
   minRows = 4,
@@ -33,7 +32,7 @@ const AppTextArea = ({
         <Typography
           color={value?.length === maxLength ? 'error' : 'primary.300'}
           sx={styles.textLength}
-          variant={TypographyVariantEnum.Body2}
+          variant={'body2'}
         >
           {`${Number(value?.length)}/${maxLength}`}
         </Typography>

@@ -7,7 +7,6 @@ import DialogContent from '@mui/material/DialogContent'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import AppButton from '~/components/app-button/AppButton'
-import { ButtonVariantEnum } from '~/types'
 
 import { styles } from '~/components/confirm-dialog/ConfirmDialog.styles'
 
@@ -40,7 +39,7 @@ const ConfirmDialog = ({
         <AppButton onClick={onConfirm}>
           {confirmButton ? confirmButton : t('common.yes')}
         </AppButton>
-        <AppButton onClick={onDismiss} variant={ButtonVariantEnum.Tonal}>
+        <AppButton onClick={onDismiss} variant={'tonal'}>
           {cancelButton ? cancelButton : t('common.no')}
         </AppButton>
       </DialogActions>

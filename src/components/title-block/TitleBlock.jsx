@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next'
 
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import useBreakpoints from '~/hooks/use-breakpoints'
-import { useSelector } from '~/hooks/use-redux'
 
+import { useSelector } from 'react-redux'
 import { styles } from '~/components/title-block/TitleBlock.styles'
 
 const TitleBlock = ({ img, translationKey, children, style }) => {

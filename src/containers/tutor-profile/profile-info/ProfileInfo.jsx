@@ -1,23 +1,22 @@
-import { useMatch } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { useMatch } from 'react-router-dom'
 
+import CopyRoundedIcon from '@mui/icons-material/ContentCopyRounded'
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
-import CopyRoundedIcon from '@mui/icons-material/ContentCopyRounded'
 
 import AppRatingMobile from '~/components/app-rating-mobile/AppRatingMobile'
+import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import ProfileContainerDesktop from '~/containers/tutor-profile/profile-info/ProfileContainerDesktop'
 import ProfileContainerMobile from '~/containers/tutor-profile/profile-info/ProfileContainerMobile'
-import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import useBreakpoints from '~/hooks/use-breakpoints'
 
-import { authRoutes } from '~/router/constants/authRoutes'
-import { useSnackBarContext } from '~/context/snackbar-context'
-import { styles } from '~/containers/tutor-profile/profile-info/ProfileInfo.styles'
 import { snackbarVariants } from '~/constants'
-import { SizeEnum } from '~/types'
+import { styles } from '~/containers/tutor-profile/profile-info/ProfileInfo.styles'
+import { useSnackBarContext } from '~/context/snackbar-context'
+import { authRoutes } from '~/router/constants/authRoutes'
 import { getDifferenceDates } from '~/utils/helper-functions'
 
 const ProfileInfo = ({ userData }) => {
@@ -47,7 +46,7 @@ const ProfileInfo = ({ userData }) => {
       data-testid='icon-btn'
       href={isMyProfile && authRoutes.editProfile.path}
       onClick={!isMyProfile ? copyProfileLink : undefined}
-      size={isLaptopAndAbove ? SizeEnum.Large : SizeEnum.Small}
+      size={isLaptopAndAbove ? 'large' : 'small'}
       sx={styles.iconBtn}
     >
       {actionIcon}
@@ -102,8 +101,8 @@ const ProfileInfo = ({ userData }) => {
       <Button
         disabled
         fullWidth
-        size={isLaptopAndAbove ? SizeEnum.ExtraLarge : SizeEnum.Medium}
-        variant='containedLight'
+        size={isLaptopAndAbove ? 'extraLarge' : 'medium'}
+        variant={'containedLight'}
       >
         {t('tutorProfilePage.profileInfo.bookLesson')}
       </Button>
@@ -111,8 +110,8 @@ const ProfileInfo = ({ userData }) => {
       <Button
         disabled
         fullWidth
-        size={isLaptopAndAbove ? SizeEnum.ExtraLarge : SizeEnum.Medium}
-        variant='contained'
+        size={isLaptopAndAbove ? 'extraLarge' : 'medium'}
+        variant={'contained'}
       >
         {t('tutorProfilePage.profileInfo.sendMessage')}
       </Button>

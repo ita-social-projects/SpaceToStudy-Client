@@ -8,7 +8,6 @@ import Accordions from '~/components/accordion/Accordions'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import { accordionItems } from '~/containers/student-home-page/faq/accordionItems'
 import { studentRoutes } from '~/router/constants/studentRoutes'
-import { TypographyVariantEnum } from '~/types'
 
 import { styles } from '~/containers/student-home-page/faq/Faq.styles'
 
@@ -33,12 +32,12 @@ const Faq = () => {
 
       <Accordions
         activeIndex={activeItemId}
-        descriptionVariant={TypographyVariantEnum.Body2}
+        descriptionVariant={'body2'}
         icon={<ExpandMoreRoundedIcon />}
         items={accordionItems}
         onChange={changeAccordion}
         square
-        titleVariant={TypographyVariantEnum.H6}
+        titleVariant={'h6'}
       />
     </Box>
   )

@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 
+import { useSelector } from 'react-redux'
 import { useModalContext } from '~/context/modal-context'
-import { useSelector } from '~/hooks/use-redux'
 
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import UserStepsWrapper from '~/components/user-steps-wrapper/UserStepsWrapper'

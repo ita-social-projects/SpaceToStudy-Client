@@ -9,10 +9,8 @@ import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
 import { guestIcons } from '~/containers/navigation-icons/NavigationIcons.constants'
 import { styles } from '~/containers/navigation-icons/NavigationIcons.styles'
 import { useModalContext } from '~/context/modal-context'
-import { SizeEnum } from '~/types'
 
-
-const GuestIcons {
+const GuestIcons = ({ setSidebarOpen }) => {
   const { t } = useTranslation()
   const { openModal } = useModalContext()
 
@@ -37,7 +35,7 @@ const GuestIcons {
       {icons}
       <AppButton
         onClick={openLoginDialog}
-        size={SizeEnum.Medium}
+        size={'medium'}
         sx={styles.loginButton}
       >
         {t('header.loginButton')}

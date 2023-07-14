@@ -1,5 +1,5 @@
+import { useSelector } from 'react-redux'
 import { Navigate, Outlet, useOutletContext } from 'react-router-dom'
-import { useSelector } from '~/hooks/use-redux'
 import { errorRoutes } from '~/router/constants/errorRoutes'
 
 const PrivateRoute = ({ role }) => {

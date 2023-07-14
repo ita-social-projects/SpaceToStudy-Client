@@ -8,12 +8,7 @@ import { authRoutes } from '~/router/constants/authRoutes'
 
 import { styles } from '~/containers/layout/account-menu/AccountMenu.styles'
 
-interface AccountMenuProps {
-  anchorEl: Element | null
-  onClose: () => void
-}
-
-const AccountMenu {
+const AccountMenu = ({ anchorEl, onClose }) => {
   const { t } = useTranslation()
 
   const menuList = Object.values(authRoutes.accountMenu).map((item) => (

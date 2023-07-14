@@ -3,10 +3,10 @@ import Container from '@mui/material/Container'
 import { useEffect } from 'react'
 import UserStepsWrapper from '~/components/user-steps-wrapper/UserStepsWrapper'
 
+import { useSelector } from 'react-redux'
 import Faq from '~/containers/student-home-page/faq/Faq'
 import StudentHowItWorks from '~/containers/student-home-page/student-how-it-works/StudentHowItWorks'
 import { useModalContext } from '~/context/modal-context'
-import { useSelector } from '~/hooks/use-redux'
 
 const StudentHome = () => {
   const { openModal } = useModalContext()

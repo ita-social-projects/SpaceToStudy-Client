@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react'
 
+import { useSelector } from 'react-redux'
 import useAxios from '~/hooks/use-axios'
-import { useSelector } from '~/hooks/use-redux'
 
 import { snackbarVariants } from '~/constants'
 import { useModalContext } from '~/context/modal-context'

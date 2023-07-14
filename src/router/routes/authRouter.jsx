@@ -1,6 +1,7 @@
 import { lazy } from 'react'
 import { Route } from 'react-router-dom'
 
+import { student, tutor } from '~/constants'
 import { authRoutes } from '~/router/constants/authRoutes'
 import {
   categories,
@@ -14,7 +15,6 @@ import {
   userProfile
 } from '~/router/constants/crumbs'
 import PrivateRoute from '~/router/helpers/PrivateRoute'
-import { UserRoleEnum } from '~/types'
 import { userProfileLoader } from '../constants/loaders'
 
 const MyCooperations = lazy(() =>
@@ -29,9 +29,7 @@ const TutorProfile = lazy(() => import('~/pages/tutor-profile/TutorProfile'))
 const OfferDetails = lazy(() => import('~/pages/offer-details/OfferDetails'))
 
 export const authRouter = (
-  <Route
-    element={<PrivateRoute role={[UserRoleEnum.Student, UserRoleEnum.Tutor]} />}
-  >
+  <Route element={<PrivateRoute role={[student, tutor]} />}>
     <Route
       element={<Categories />}
       handle={{ crumb: categories }}

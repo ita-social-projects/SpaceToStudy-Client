@@ -14,12 +14,12 @@ import Sidebar from '~/containers/layout/sidebar/Sidebar'
 import Logo from '~/containers/logo/Logo'
 import NavigationIcons from '~/containers/navigation-icons/NavigationIcons'
 import { useDrawer } from '~/hooks/use-drawer'
-import { useSelector } from '~/hooks/use-redux'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { guestRoutes } from '~/router/constants/guestRoutes'
 import { studentRoutes } from '~/router/constants/studentRoutes'
 import { tutorRoutes } from '~/router/constants/tutorRoutes'
 
+import { useSelector } from 'react-redux'
 import { student, tutor } from '~/constants'
 import { styles } from '~/containers/layout/navbar/NavBar.styles'
 
@@ -75,7 +75,7 @@ const Navbar = () => {
     <Box sx={styles.header}>
       <Button
         component={HashLink}
-        size={'SizeEnum.Small'}
+        size={'small'}
         sx={styles.logoButton}
         to={homePath}
       >

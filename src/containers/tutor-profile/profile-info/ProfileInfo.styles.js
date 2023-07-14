@@ -1,5 +1,4 @@
 import palette from '~/styles/app-theme/app.pallete'
-import { TypographyVariantEnum } from '~/types'
 
 export const styles = {
   container: {
@@ -101,10 +100,10 @@ export const styles = {
       height: { sm: '18px', md: '24px' }
     },
     rating: {
-      typography: { sm: TypographyVariantEnum.H6, md: TypographyVariantEnum.H5 }
+      typography: { sm: 'h6', md: 'h5' }
     },
     reviews: {
-      typography: TypographyVariantEnum.Overline
+      typography: 'overline'
     }
   }
 }

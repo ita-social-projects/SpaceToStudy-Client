@@ -1,7 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import Transition, {
-  TransitionChildren
-} from 'react-transition-group/Transition'
+import Transition from 'react-transition-group/Transition'
 
 import Box from '@mui/material/Box'
 import dots from '~/assets/img/guest-home-page/dots.svg'
@@ -11,26 +9,8 @@ import SignupDialog from '~/containers/guest-home-page/signup-dialog/SignupDialo
 import { useModalContext } from '~/context/modal-context'
 
 import { styles } from '~/containers/guest-home-page/cards-with-button/CardsWithButton.styles'
-import {
-  AccordionWithImageItem,
-  PositionEnum,
-  SizeEnum,
-  UserRoleEnum
-} from '~/types'
 
-interface CardsWithButtonProps {
-  array: AccordionWithImageItem[]
-  role: UserRoleEnum
-  btnText: string
-  isStudent: boolean
-}
-
-const CardsWithButton = ({
-  array,
-  role,
-  btnText,
-  isStudent
-}) => {
+const CardsWithButton = ({ array, role, btnText, isStudent }) => {
   const { t } = useTranslation()
   const { openModal } = useModalContext()
 
@@ -38,9 +18,9 @@ const CardsWithButton = ({
     openModal({ component: <SignupDialog type={role} /> })
   }
 
-  const cards = (state: TransitionChildren) =>
+  const cards = (state) =>
     array.map((item, key) => {
-      const boxSide = key % 2 === 0 ? PositionEnum.Right : PositionEnum.Left
+      const boxSide = key % 2 === 0 ? 'right' : 'left'
 
       return (
         <Box
@@ -70,11 +50,7 @@ const CardsWithButton = ({
       <Transition in={isStudent} timeout={300}>
         {(state) => cards(state)}
       </Transition>
-      <AppButton
-        onClick={openDialog}
-        size={SizeEnum.ExtraLarge}
-        sx={styles.button}
-      >
+      <AppButton onClick={openDialog} size={'extraLarge'} sx={styles.button}>
         {btnText}
       </AppButton>
     </>

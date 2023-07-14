@@ -1,11 +1,10 @@
+import { Breadcrumbs, Container, Typography } from '@mui/material'
 import { Link, useMatches } from 'react-router-dom'
-import { Breadcrumbs, Typography, Container } from '@mui/material'
 
-import { Matches } from '~/types'
 import { styles } from '~/containers/layout/app-breadcrumbs/AppBreadCrumbs.styles'
 
 const AppBreadCrumbs = () => {
-  const matches = useMatches() as Matches[]
+  const matches = useMatches()
   const crumbs = matches
     .filter((match) => Boolean(match.handle?.crumb))
     .map((match) =>

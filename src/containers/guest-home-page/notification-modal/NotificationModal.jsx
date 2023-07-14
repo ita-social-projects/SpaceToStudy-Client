@@ -1,17 +1,8 @@
 import { Box } from '@mui/material'
-import { ReactElement } from 'react'
 
 import AppButton from '~/components/app-button/AppButton'
 import ImgTitleDescription from '~/components/img-title-description/ImgTitleDescription'
 import { styles } from '~/containers/guest-home-page/notification-modal/NotificationModal.styles'
-
-interface ConfirmEmailModal {
-  description: string | ReactElement
-  buttonTitle: string
-  title: string
-  img: string
-  onClose: () => void
-}
 
 const NotificationModal = ({
   description,

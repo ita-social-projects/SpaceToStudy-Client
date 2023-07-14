@@ -1,4 +1,4 @@
-import { useSelector } from '~/hooks/use-redux'
+import { useSelector } from 'react-redux'
 
 import GuestIcons from '~/containers/navigation-icons/guest-icons/GuestIcons'
 import UserIcons from '~/containers/navigation-icons/user-icons/UserIcons'
