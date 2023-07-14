@@ -3,6 +3,8 @@ import Container from '@mui/material/Container'
 import { useEffect } from 'react'
 import UserStepsWrapper from '~/components/user-steps-wrapper/UserStepsWrapper'
 
+import Faq from '~/containers/student-home-page/faq/Faq'
+import StudentHowItWorks from '~/containers/student-home-page/student-how-it-works/StudentHowItWorks'
 import { useModalContext } from '~/context/modal-context'
 import { useAppSelector } from '~/hooks/use-redux'
 
@@ -31,11 +33,8 @@ const StudentHome = () => {
       sx={{ backgroundColor: 'backgroundColor', flex: 1, overflowY: 'auto' }}
     >
       <Container data-testid='studentHome' sx={{ pt: 6 }}>
-        {/* <FindTutorBlock />
-        <PopularCategories />
-        <StudentHowItWorks /> */}
-        {/* <Faq /> */}
-        StudentHome page
+        <StudentHowItWorks />
+        <Faq />
       </Container>
     </Box>
   )

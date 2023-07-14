@@ -1,8 +1,8 @@
 import StatusChip from '~/components/status-chip/StatusChip'
 import SubjectLevelChips from '~/components/subject-level-chips/SubjectLevelChips'
 
-import { getFormatedDate } from '~/utils/helper-functions'
 import { AdditionalPropsInterface, Offer, RemoveColumnRules } from '~/types'
+import { getFormattedDate } from '~/utils/helper-functions'
 
 export const columns = [
   {
@@ -28,7 +28,7 @@ export const columns = [
   {
     label: 'myOffersPage.tableHeaders.updated',
     field: 'updatedAt',
-    calculatedCellValue: (item: Offer) => getFormatedDate(item.updatedAt)
+    calculatedCellValue: (item: Offer) => getFormattedDate(item.updatedAt)
   },
   {
     label: 'myOffersPage.tableHeaders.status',
