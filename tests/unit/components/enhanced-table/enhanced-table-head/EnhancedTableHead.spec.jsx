@@ -16,6 +16,7 @@ const columnsMock = [
   }
 ]
 const sort = { order: 'asc', orderBy: 'email' }
+const rowActions = [{ label: 'Delete', func: vi.fn() }]
 const selected = []
 const count = 10
 const createSelectAllHandler = vi.fn()
@@ -29,6 +30,7 @@ describe('EnhancedTableHead', () => {
           columns={columnsMock}
           data={{ count }}
           isSelection
+          rowActions={rowActions}
           rowsPerPage={5}
           select={{ selected, createSelectAllHandler }}
           sort={{ sort, onRequestSort }}

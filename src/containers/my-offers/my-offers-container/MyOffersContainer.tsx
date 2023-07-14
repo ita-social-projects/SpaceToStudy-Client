@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import Box from '@mui/material/Box'
 
@@ -31,6 +31,7 @@ const MyOffersContainer: FC<MyOffersContainerProps> = ({
   sort,
   showTable
 }) => {
+  const navigate = useNavigate()
   const breakpoints = useBreakpoints()
   const { t } = useTranslation()
 
@@ -57,6 +58,17 @@ const MyOffersContainer: FC<MyOffersContainerProps> = ({
     }
   ]
 
+  const editOffer = () => null
+
+  const viewDetails = (id: string) => {
+    navigate(createUrlPath(authRoutes.offerDetails.path, id))
+  }
+
+  const rowActions = [
+    { label: t('myOffersPage.editButton'), func: editOffer },
+    { label: t('common.labels.viewDetails'), func: viewDetails }
+  ]
+
   const myOffersGrid = (
     <Box sx={styles.root}>
       {items.map((item) => (
@@ -74,6 +86,7 @@ const MyOffersContainer: FC<MyOffersContainerProps> = ({
     <EnhancedTable
       columns={columnsToShow}
       data={{ items }}
+      rowActions={rowActions}
       size={SizeEnum.Small}
       sort={sort}
       sx={styles.table}

@@ -11,7 +11,6 @@
       "prefferedPrice": "Set your preferred price for the lesson. Keep in mind that choosing a lower or higher price may affect tutor availability.",
       "info": "Additional information"
     },
-
     "successMessage": "Request for cooperation sent successfully"
   },
   "topBlock": {
@@ -20,7 +19,6 @@
       "tutor": "Offer details"
     },
     "description": "Here, you can access all the essential details about the offer you've selected. This page includes details about the chosen offer. Take a moment to review this information and make an informed decision about your tutoring needs."
-
   },
   "generalInfo": {
     "title": "General information",
@@ -32,6 +30,6 @@
   "faqTitle": "Frequently asked questions",
   "offerBanner":{
     "saveOfferButton":"Save Offer"
-
-  }
+  },
+  "closeOffer": "Are you sure that you want to close this offer? You can't reopen this offer."
 }
