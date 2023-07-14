@@ -33,8 +33,8 @@ export const mockOffer = {
     _id: '6421ed8ed991d46a84721dfa',
     appearance: 'mocked-path-to-icon'
   },
-  status: 'pending',
-  FAQ: [],
+  status: 'active',
+  FAQ: [{ _id: '1', question: 'How much does it cost?', answer: '100$' }],
   createdAt: '2023-06-07T17:41:35.141Z',
   updatedAt: '2023-06-07T17:41:35.141Z'
 }

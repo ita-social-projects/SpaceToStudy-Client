@@ -13,6 +13,7 @@ const EnhancedTableHead = ({
   data,
   isSelection,
   rowsPerPage,
+  rowActions,
   select = {},
   sort
 }) => {
@@ -40,7 +41,7 @@ const EnhancedTableHead = ({
       <TableRow>
         {isSelection && checkboxCell}
         {headerCells}
-        {isSelection && <TableCell>{t('table.actions')}</TableCell>}
+        {rowActions && <TableCell>{t('table.actions')}</TableCell>}
       </TableRow>
     </TableHead>
   )
