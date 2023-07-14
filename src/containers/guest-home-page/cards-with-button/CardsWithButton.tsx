@@ -23,14 +23,14 @@ interface CardsWithButtonProps {
   array: AccordionWithImageItem[]
   role: UserRoleEnum
   btnText: string
-  isStudent: boolean
+  isTutor: boolean
 }
 
 const CardsWithButton: FC<CardsWithButtonProps> = ({
   array,
   role,
   btnText,
-  isStudent
+  isTutor
 }) => {
   const { t } = useTranslation()
   const { openModal } = useModalContext()
@@ -68,7 +68,7 @@ const CardsWithButton: FC<CardsWithButtonProps> = ({
 
   return (
     <>
-      <Transition in={isStudent} timeout={300}>
+      <Transition in={isTutor} timeout={300}>
         {(state) => cards(state)}
       </Transition>
       <AppButton
