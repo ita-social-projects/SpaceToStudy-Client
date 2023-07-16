@@ -39,12 +39,3 @@ describe('test with guest role', () => {
     expect(setIsSidebarOpen).toBeCalled()
   })
 })
-
-describe('test with student role', () => {
-  const preloadedState = { appMain: { userRole: 'student' } }
-  beforeEach(() => {
-    renderWithProviders(<NavigationIcons setSidebarOpen={setIsSidebarOpen} />, {
-      preloadedState
-    })
-  })
-})
