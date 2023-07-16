@@ -1,6 +1,6 @@
-import { renderWithProviders } from '~tests/test-utils'
-import GuestHomePage from '~/pages/guest-home-page/GuestHome'
 import { vi } from 'vitest'
+import GuestHomePage from '~/pages/guest-home-page/GuestHome'
+import { renderWithProviders } from '~tests/test-utils'
 
 const mockSetModal = vi.fn()
 const mockGet = vi.fn()
@@ -31,7 +31,7 @@ describe('GuestHomePage test', () => {
     renderWithProviders(<GuestHomePage />, { initialEntries: defaultRoute })
     expect(mockSetModal).not.toBeCalled()
   })
-  it('shoud open login modal when login query in url', () => {
+  it('should open login modal when login query in url', () => {
     const routeWithSeaechParam = '/?login'
     mockGet.mockReturnValue(true)
     renderWithProviders(<GuestHomePage />, {
