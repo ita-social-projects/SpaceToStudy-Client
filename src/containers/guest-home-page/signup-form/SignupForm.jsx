@@ -1,16 +1,16 @@
-import { useState, useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import HashLink from '~/components/hash-link/HashLink'
 import { useSelector } from 'react-redux'
+import HashLink from '~/components/hash-link/HashLink'
 
 import Box from '@mui/material/Box'
+import Checkbox from '@mui/material/Checkbox'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Typography from '@mui/material/Typography'
-import Checkbox from '@mui/material/Checkbox'
-import useInputVisibility from '~/hooks/use-input-visibility'
-import AppTextField from '~/components/app-text-field/AppTextField'
-import { guestRoutes } from '~/router/constants/guestRoutes'
 import AppButton from '~/components/app-button/AppButton'
+import AppTextField from '~/components/app-text-field/AppTextField'
+import useInputVisibility from '~/hooks/use-input-visibility'
+import { guestRoutes } from '~/router/constants/guestRoutes'
 
 import { styles } from '~/containers/guest-home-page/signup-form/SignupForm.styles'
 

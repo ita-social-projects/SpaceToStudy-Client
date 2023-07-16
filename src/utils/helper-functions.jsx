@@ -34,10 +34,10 @@ export const parseQueryParams = (searchParams, defaultFilters) => {
 }
 
 export const getEmptyValues = (initialValues, defaultValue) => {
-  return Object.keys(initialValues).reduce((acc, key) => ({
-    ...acc,
-    [key]: defaultValue
-  }))
+  return Object.keys(initialValues).reduce(
+    (acc, key) => ({ ...acc, [key]: defaultValue }),
+    {}
+  )
 }
 
 export const findFullObjects = (array) =>

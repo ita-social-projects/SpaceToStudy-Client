@@ -13,6 +13,9 @@ export const useForm = ({
   const [errors, setErrors] = useState(initialErrors)
   const [isTouched, setTouched] = useState(getEmptyValues(initialValues, false))
 
+  // eslint-disable-next-line no-debugger
+  debugger
+
   const validateValue = (key, value) => {
     if (validations && validations[key]) {
       return validations[key]?.(value, data)

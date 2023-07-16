@@ -1,30 +1,30 @@
-import { useEffect } from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
 
-import useForm from '~/hooks/use-form'
-import useConfirm from '~/hooks/use-confirm'
 import { useModalContext } from '~/context/modal-context'
 import { useSnackBarContext } from '~/context/snackbar-context'
+import useConfirm from '~/hooks/use-confirm'
+import useForm from '~/hooks/use-form'
 
-import {
-  firstName,
-  lastName,
-  confirmPassword,
-  email,
-  password
-} from '~/utils/validations/login'
 import { signup, snackbarVariants } from '~/constants'
 import GoogleLogin from '~/containers/guest-home-page/google-login/GoogleLogin'
-import SignupForm from '~/containers/guest-home-page/signup-form/SignupForm'
 import NotificationModal from '~/containers/guest-home-page/notification-modal/NotificationModal'
+import SignupForm from '~/containers/guest-home-page/signup-form/SignupForm'
 import { signupUser } from '~/redux/reducer'
+import {
+  confirmPassword,
+  email,
+  firstName,
+  lastName,
+  password
+} from '~/utils/validations/login'
 
+import info from '~/assets/img/guest-home-page/info.svg'
 import student from '~/assets/img/signup-dialog/student.svg'
 import tutor from '~/assets/img/signup-dialog/tutor.svg'
-import info from '~/assets/img/guest-home-page/info.svg'
 
 import { styles } from '~/containers/guest-home-page/signup-dialog/SignupDialog.styles'
 
