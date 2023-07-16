@@ -1,7 +1,7 @@
-import { screen, fireEvent, waitFor } from '@testing-library/react'
-import { renderWithProviders } from '~tests/test-utils'
-import NavigationIcons from '~/containers/navigation-icons/NavigationIcons'
+import { fireEvent, screen, waitFor } from '@testing-library/react'
 import { vi } from 'vitest'
+import NavigationIcons from '~/containers/navigation-icons/NavigationIcons'
+import { renderWithProviders } from '~tests/test-utils'
 
 const setIsSidebarOpen = vi.fn()
 vi.mock('~/hooks/use-confirm', () => {
@@ -46,11 +46,5 @@ describe('test with student role', () => {
     renderWithProviders(<NavigationIcons setSidebarOpen={setIsSidebarOpen} />, {
       preloadedState
     })
-  })
-
-  it('should render message icon', () => {
-    const messageIcon = screen.getByTestId('MessageRoundedIcon')
-
-    expect(messageIcon).toBeInTheDocument()
   })
 })

@@ -1,4 +1,4 @@
-import { screen, fireEvent } from '@testing-library/react'
+import { fireEvent, screen } from '@testing-library/react'
 import { vi } from 'vitest'
 
 import { SnackBarProvider } from '~/context/snackbar-context'
