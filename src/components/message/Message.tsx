@@ -1,13 +1,15 @@
 import { FC } from 'react'
-import { useAppSelector } from '~/hooks/use-redux'
+
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
-import AppCard from '~/components/app-card/AppCard'
-import UserProfileInfo from '~/components/user-profile-info/UserProfileInfo'
-
 import { MessageInterface } from '~/types'
 import { spliceSx } from '~/utils/helper-functions'
+
+import AppCard from '~/components/app-card/AppCard'
+import UserProfileInfo from '~/components/user-profile-info/UserProfileInfo'
+import { useAppSelector } from '~/hooks/use-redux'
+
 import { styles } from '~/components/message/Message.styles'
 
 interface MessageProps {

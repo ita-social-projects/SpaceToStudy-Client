@@ -1,3 +1,5 @@
+import { TypographyVariantEnum } from '~/types'
+
 export const styles = {
   userInfoStyles: {
     root: {
@@ -19,11 +21,11 @@ export const styles = {
       flexDirection: 'row'
     },
     name: {
-      typography: 'subtitle2',
+      typography: TypographyVariantEnum.Subtitle2,
       color: 'primary.900'
     },
     date: {
-      typography: 'caption'
+      typography: TypographyVariantEnum.Caption
     }
   },
   root: {
@@ -42,8 +44,7 @@ export const styles = {
     flexDirection: 'column',
     maxWidth: '520px',
     borderRadius: '12px',
-    px: '12px',
-    py: '8px'
+    p: '8px 12px'
   },
   myMessageBox: {
     backgroundColor: 'primary.500',
@@ -55,10 +56,10 @@ export const styles = {
     backgroundColor: 'primary.100',
     color: 'primary.900',
     borderTopLeftRadius: '1px',
-    mt: '-20px',
-    ml: '57px'
+    ml: '57px',
+    transform: 'translateY(-20px)'
   },
   messageContent: {
-    typography: 'body1'
+    typography: TypographyVariantEnum.Body1
   }
 }
