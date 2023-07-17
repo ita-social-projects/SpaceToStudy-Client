@@ -59,10 +59,6 @@ const UserProfileInfo: FC<UserProfileInfoProps> = ({
     e.stopPropagation()
   }
 
-  const infoStyles = renderAdditionalInfo
-    ? spliceSx(sx.info, sx.interlocutorInfo)
-    : spliceSx(sx.info, sx.myInfo)
-
   return (
     <Box sx={spliceSx(styles.root, sx.root)}>
       {renderAdditionalInfo && (
@@ -73,7 +69,12 @@ const UserProfileInfo: FC<UserProfileInfoProps> = ({
           />
         </Link>
       )}
-      <Box sx={spliceSx(styles.info, infoStyles)}>
+      <Box
+        sx={spliceSx(
+          styles.info,
+          renderAdditionalInfo ? sx.interlocutorInfo : sx.myInfo
+        )}
+      >
         <Link onClick={handleLinkClick} style={styles.link} to={userURL}>
           <Typography sx={spliceSx(styles.name, sx.name)}>
             {renderAdditionalInfo ? name : t('chat.message.you')}

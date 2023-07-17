@@ -22,17 +22,15 @@ const Message: FC<MessageProps> = ({ message }) => {
   const { author, messageContent, authorRole } = message
   const { _id, firstName, lastName, photo, createdAt } = author
 
-  const isMyMessage = myId == _id
-
-  const messageRootStyles = isMyMessage
-    ? styles.myMessageRoot
-    : styles.interlocutorMessageRoot
-  const messageBoxStyles = isMyMessage
-    ? styles.myMessageBox
-    : styles.interlocutorMessageBox
+  const isMyMessage = myId === _id
 
   return (
-    <Box sx={spliceSx(styles.root, messageRootStyles)}>
+    <Box
+      sx={spliceSx(
+        styles.root,
+        isMyMessage ? styles.myMessageRoot : styles.interlocutorMessageRoot
+      )}
+    >
       <UserProfileInfo
         _id={_id}
         date={createdAt}
@@ -43,7 +41,12 @@ const Message: FC<MessageProps> = ({ message }) => {
         role={authorRole}
         sx={styles.userInfoStyles}
       />
-      <AppCard sx={spliceSx(styles.messageBox, messageBoxStyles)}>
+      <AppCard
+        sx={spliceSx(
+          styles.messageBox,
+          isMyMessage ? styles.myMessageBox : styles.interlocutorMessageBox
+        )}
+      >
         <Typography sx={styles.messageContent}>{messageContent}</Typography>
       </AppCard>
     </Box>
