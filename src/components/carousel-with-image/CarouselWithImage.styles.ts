@@ -18,7 +18,7 @@ export const styles = {
     backgroundColor: 'primary.800',
     borderRadius: '6px',
     p: '16px',
-    m: '0 6px'
+    m: '0 1.5vw'
   },
   steper: {
     display: 'flex',
