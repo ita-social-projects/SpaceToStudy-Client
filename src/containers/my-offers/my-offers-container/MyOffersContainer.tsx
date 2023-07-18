@@ -37,9 +37,7 @@ const MyOffersContainer: FC<MyOffersContainerProps> = ({
   const breakpoints = useBreakpoints()
   const { t } = useTranslation()
   const { openDrawer, closeDrawer, isOpen } = useDrawer()
-  const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(
-    undefined
-  )
+  const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null)
 
   const columnsToShow = ajustColumns<Offer>(
     breakpoints,
@@ -47,35 +45,30 @@ const MyOffersContainer: FC<MyOffersContainerProps> = ({
     removeColumnRules
   )
 
-  const handleOpenDrawer = (offer: Offer) => {
+  const handleOpenDrawer = (id: string) => {
+    const offer = items.find(({ _id }) => _id === id) ?? null
     setSelectedOffer(offer)
     openDrawer()
   }
 
-  const createButtonActions = (offer: Offer) => [
+  const createButtonActions = (id: string) => [
     {
       label: t('myOffersPage.editButton'),
       buttonProps: {
         variant: ButtonVariantEnum.Tonal,
-        onClick: () => handleOpenDrawer(offer)
+        onClick: () => handleOpenDrawer(id)
       }
     },
     {
       label: t('common.labels.viewDetails'),
       buttonProps: {
         component: Link,
-        to: createUrlPath(authRoutes.offerDetails.path, offer._id)
+        to: createUrlPath(authRoutes.offerDetails.path, id)
       }
     }
   ]
 
-  const offerCards = items.map((item) => (
-    <AppCard key={item._id}>
-      <MyOffersCard buttonActions={createButtonActions(item)} offer={item} />
-    </AppCard>
-  ))
-
-  const editOffer = () => null
+  const editOffer = (id: string) => handleOpenDrawer(id)
 
   const viewDetails = (id: string) => {
     navigate(createUrlPath(authRoutes.offerDetails.path, id))
@@ -86,17 +79,18 @@ const MyOffersContainer: FC<MyOffersContainerProps> = ({
     { label: t('common.labels.viewDetails'), func: viewDetails }
   ]
 
-  const myOffersGrid = (
-    <Box sx={styles.root}>
-      {offerCards}
+  const offerCards = items.map((item) => (
+    <AppCard key={item._id}>
+      <MyOffersCard
+        buttonActions={createButtonActions(item._id)}
+        offer={item}
+      />
+    </AppCard>
+  ))
 
-      <AppDrawer onClose={closeDrawer} open={isOpen}>
-        <EditOffer closeDrawer={closeDrawer} offer={selectedOffer} />
-      </AppDrawer>
-    </Box>
-  )
+  const myOffersGrid = <Box sx={styles.root}>{offerCards}</Box>
 
-  const MyOffersTable = (
+  const myOffersTable = (
     <EnhancedTable
       columns={columnsToShow}
       data={{ items }}
@@ -107,7 +101,14 @@ const MyOffersContainer: FC<MyOffersContainerProps> = ({
     />
   )
 
-  return showTable ? MyOffersTable : myOffersGrid
+  return (
+    <>
+      {showTable ? myOffersTable : myOffersGrid}
+      <AppDrawer onClose={closeDrawer} open={isOpen}>
+        <EditOffer closeDrawer={closeDrawer} offer={selectedOffer} />
+      </AppDrawer>
+    </>
+  )
 }
 
 export default MyOffersContainer

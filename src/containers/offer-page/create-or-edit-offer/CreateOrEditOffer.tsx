@@ -37,13 +37,13 @@ import {
 import { styles } from '~/containers/offer-page/OfferPage.styles'
 
 interface CreateOrUpdateOfferProps {
-  existingOffer?: Offer
+  existingOffer: Offer | null
   closeDrawer: () => void
   service: ServiceFunction<Offer | null, CreateOrUpdateOfferData>
 }
 
 const CreateOrEditOffer: FC<CreateOrUpdateOfferProps> = ({
-  existingOffer,
+  existingOffer = null,
   closeDrawer,
   service
 }) => {

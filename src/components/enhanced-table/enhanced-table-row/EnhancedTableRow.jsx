@@ -18,12 +18,13 @@ const EnhancedTableRow = ({
   select = {}
 }) => {
   const { t } = useTranslation()
-  const { openMenu, renderMenu } = useMenu()
+  const { openMenu, renderMenu, closeMenu } = useMenu()
   const { isSelected, handleSelectClick } = select
 
   const onAction = async (actionFunc) => {
+    closeMenu()
     await actionFunc(item._id)
-    refetchData()
+    refetchData && refetchData()
   }
 
   const additionalProps = { t }

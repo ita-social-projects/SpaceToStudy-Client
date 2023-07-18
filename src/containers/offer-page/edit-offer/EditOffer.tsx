@@ -7,7 +7,7 @@ import { findFullObjects } from '~/utils/helper-functions'
 import { CreateOrUpdateOfferData, Offer } from '~/types'
 
 interface EditOfferProps {
-  offer: Offer | undefined
+  offer: Offer | null
   closeDrawer: () => void
 }
 
