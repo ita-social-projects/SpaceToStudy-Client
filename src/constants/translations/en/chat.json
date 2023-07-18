@@ -1,5 +1,9 @@
 {
-    "message": {
-        "you": "You"
-    }
+  "message": {
+    "you": "You"
+  },
+  "yourMessage": "You:",
+  "foundedMessages": "Found {{count}} messages",
+  "notFoundedMessages": "No messages found",
+  "noContactsOrMessages": "No contacts or messages found"
 }
