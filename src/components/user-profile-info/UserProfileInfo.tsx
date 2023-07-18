@@ -25,12 +25,13 @@ import { authRoutes } from '~/router/constants/authRoutes'
 
 interface UserProfileInfoProps
   extends Pick<UserResponse, 'photo' | 'firstName' | 'lastName' | '_id'> {
-  languages: LanguagesEnum | LanguagesEnum[]
+  languages?: LanguagesEnum | LanguagesEnum[]
   rating?: number
   reviewsCount?: number
   date?: string
   sx?: UserProfileInfoSx
   role: UserRole
+  renderAdditionalInfo?: boolean
 }
 
 const UserProfileInfo: FC<UserProfileInfoProps> = ({
@@ -43,7 +44,8 @@ const UserProfileInfo: FC<UserProfileInfoProps> = ({
   reviewsCount,
   sx = {},
   _id,
-  role
+  role,
+  renderAdditionalInfo = true
 }) => {
   const { t } = useTranslation()
 
@@ -59,15 +61,24 @@ const UserProfileInfo: FC<UserProfileInfoProps> = ({
 
   return (
     <Box sx={spliceSx(styles.root, sx.root)}>
-      <Link onClick={handleLinkClick} to={userURL}>
-        <Avatar
-          src={photo && `${import.meta.env.VITE_APP_IMG_USER_URL}${photo}`}
-          sx={spliceSx(styles.avatar, sx.avatar)}
-        />
-      </Link>
-      <Box sx={spliceSx(styles.info, sx.info)}>
+      {renderAdditionalInfo && (
+        <Link onClick={handleLinkClick} to={userURL}>
+          <Avatar
+            src={photo && `${import.meta.env.VITE_APP_IMG_USER_URL}${photo}`}
+            sx={spliceSx(styles.avatar, sx.avatar)}
+          />
+        </Link>
+      )}
+      <Box
+        sx={spliceSx(
+          styles.info,
+          renderAdditionalInfo ? sx.interlocutorInfo : sx.myInfo
+        )}
+      >
         <Link onClick={handleLinkClick} style={styles.link} to={userURL}>
-          <Typography sx={spliceSx(styles.name, sx.name)}>{name}</Typography>
+          <Typography sx={spliceSx(styles.name, sx.name)}>
+            {renderAdditionalInfo ? name : t('chat.message.you')}
+          </Typography>
         </Link>
         {!isNaN(Number(rating)) && (
           <AppRating

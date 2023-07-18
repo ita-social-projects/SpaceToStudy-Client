@@ -1,4 +1,5 @@
 import common from './common.json'
+import chat from './chat.json'
 import errorPage from './error-page.json'
 import button from './button.json'
 import header from './header.json'
@@ -35,6 +36,7 @@ import myOffersPage from './my-offers-page.json'
 const en = {
   translations: {
     common,
+    chat,
     errorPage,
     button,
     header,

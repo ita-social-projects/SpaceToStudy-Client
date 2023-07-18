@@ -8,4 +8,6 @@ export interface UserProfileInfoSx {
   reviews?: SxProps
   date?: SxProps
   info?: SxProps
+  interlocutorInfo?: SxProps
+  myInfo?: SxProps
 }
