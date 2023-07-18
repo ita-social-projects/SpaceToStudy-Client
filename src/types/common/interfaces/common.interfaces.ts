@@ -9,13 +9,6 @@ export interface CommonEntityFields {
   createdAt: string
   updatedAt: string
 }
-export interface UserInterface {
-  firstName: string
-  lastName: string
-  photo?: string
-  averageRating: number
-  totalReviews: number
-}
 
 export interface CategoryAppearance {
   icon: string
