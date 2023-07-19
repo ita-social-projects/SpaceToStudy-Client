@@ -2,10 +2,7 @@ import { CommonEntityFields } from '~/types/common/common.index'
 import { UserResponse } from '~/types/user/user.index'
 
 export interface Member {
-  _id: UserResponse['_id']
-  firstName: UserResponse['firstName']
-  lastName: UserResponse['lastName']
-  photo: UserResponse['photo']
+  user: Pick<UserResponse, '_id' | 'firstName' | 'lastName' | 'photo'>
   role: UserResponse['role']
 }
 

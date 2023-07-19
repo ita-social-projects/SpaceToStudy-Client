@@ -3,7 +3,5 @@
     "you": "You"
   },
   "yourMessage": "You:",
-  "foundedMessages": "Found {{count}} messages",
-  "notFoundedMessages": "No messages found",
-  "noContactsOrMessages": "No contacts or messages found"
+  "noContacts": "No contacts"
 }

@@ -16,13 +16,15 @@ interface ItemOfChatProps {
   lastMessage: LatestMessage
   isSelectedChat: string
   setIsSelectedChat: (id: string) => void
+  closeDrawer?: () => void
 }
 
 const ChatItem: FC<ItemOfChatProps> = ({
   user,
   lastMessage,
   isSelectedChat,
-  setIsSelectedChat
+  setIsSelectedChat,
+  closeDrawer
 }) => {
   const { t } = useTranslation()
   const { userId } = useAppSelector((state) => state.appMain)
@@ -33,7 +35,7 @@ const ChatItem: FC<ItemOfChatProps> = ({
   const fullName = `${firstName} ${lastName}`
 
   const handleSelectedChat = () => {
-    setIsSelectedChat(chat)
+    setIsSelectedChat(chat), closeDrawer && closeDrawer()
   }
 
   const formattedTime = getFormatedDate(

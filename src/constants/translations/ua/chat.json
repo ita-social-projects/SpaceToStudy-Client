@@ -3,7 +3,5 @@
     "you": "Ви"
   },
   "yourMessage": "Ти:",
-  "foundedMessages": "Знайдено {{count}} повідомлень",
-  "notFoundedMessages": "Повідомлень не знайдено",
-  "noContactsOrMessages": "Немає контактів чи повідомлень"
+  "noContacts": "Немає контактів"
 }

@@ -1,5 +1,6 @@
-import { FC, useCallback, useMemo, useEffect } from 'react'
+import { FC, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import SimpleBar from 'simplebar-react'
 
 import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
@@ -7,83 +8,51 @@ import Typography from '@mui/material/Typography'
 
 import ChatItem from '~/containers/chat/chat-item/ChatItem'
 import FilterInput from '~/components/filter-input/FilterInput'
-import CustomScrollBar from '~/components/custom-scroll-bar/CustomScrollBar'
+import { useAppSelector } from '~/hooks/use-redux'
 
-import { styles } from '~/containers/chat/list-of-users-with-search/ListOfUsersWithSearch.styles'
 import { ChatResponse, SizeEnum } from '~/types'
+import { styles } from '~/containers/chat/list-of-users-with-search/ListOfUsersWithSearch.styles'
+import { filterChats } from './ListOfUsersWithSearch.constants'
 
 interface ListOfUsersWithSearchProps {
   listOfChats: ChatResponse[]
-  listOfFoundedMessages: ChatResponse[]
   isSelectedChat: string
   setIsSelectedChat: (id: string) => void
-  search: string
-  setSearch: (chatOrMessage: string) => void
+  closeDrawer?: () => void
 }
 
 const ListOfUsersWithSearch: FC<ListOfUsersWithSearchProps> = ({
-  search,
-  setSearch,
   listOfChats,
-  listOfFoundedMessages,
   isSelectedChat,
-  setIsSelectedChat
+  setIsSelectedChat,
+  closeDrawer
 }) => {
+  const [search, setSearch] = useState<string>('')
+
+  const { userId } = useAppSelector((state) => state.appMain)
+
   const { t } = useTranslation()
 
-  const closeChat = useCallback(
-    (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        setIsSelectedChat('')
-      }
-    },
-    [setIsSelectedChat]
-  )
-
-  useEffect(() => {
-    document.addEventListener('keydown', closeChat)
-
-    return () => {
-      document.removeEventListener('keydown', closeChat)
-    }
-  }, [closeChat])
-
-  const chats = useMemo(
-    () =>
-      listOfChats
-        .filter((item) => {
-          const { firstName, lastName } = item.members[0]
-          const fullName = `${firstName} ${lastName}`
-
-          return fullName
-            .toLocaleLowerCase()
-            .includes(search.toLocaleLowerCase())
-        })
-        .map((item) => (
-          <ChatItem
-            isSelectedChat={isSelectedChat}
-            key={item._id}
-            lastMessage={item.latestMessage}
-            setIsSelectedChat={setIsSelectedChat}
-            user={item.members[0]}
-          />
-        )),
-    [isSelectedChat, listOfChats, search, setIsSelectedChat]
-  )
-
-  const foundedMessages = useMemo(
-    () =>
-      listOfFoundedMessages.map((item) => (
-        <ChatItem
-          isSelectedChat={isSelectedChat}
-          key={item._id}
-          lastMessage={item.latestMessage}
-          setIsSelectedChat={setIsSelectedChat}
-          user={item.members[0]}
-        />
-      )),
-    [isSelectedChat, listOfFoundedMessages, setIsSelectedChat]
-  )
+  const chats = useMemo(() => {
+    const filteredChats = filterChats(listOfChats, userId, search)
+    return filteredChats.map((item: ChatResponse) => (
+      <ChatItem
+        closeDrawer={closeDrawer}
+        isSelectedChat={isSelectedChat}
+        key={item._id}
+        lastMessage={item.latestMessage}
+        setIsSelectedChat={setIsSelectedChat}
+        user={item.members[0].user}
+      />
+    ))
+  }, [
+    closeDrawer,
+    isSelectedChat,
+    listOfChats,
+    search,
+    setIsSelectedChat,
+    userId
+  ])
 
   return (
     <Box sx={styles.root}>
@@ -99,38 +68,13 @@ const ListOfUsersWithSearch: FC<ListOfUsersWithSearchProps> = ({
 
       <Divider sx={styles.divider} />
 
-      <CustomScrollBar height='calc(100% - 120px)'>
-        {chats.length === 0 && listOfFoundedMessages.length === 0 && (
-          <Typography sx={styles.information}>
-            {t('chatPage.noContactsOrMessages')}
-          </Typography>
-        )}
-
-        {chats.length > 0 ? (
-          chats
-        ) : (
-          <Typography sx={styles.information}>
-            {t('chatPage.noContactsOrMessages')}
-          </Typography>
-        )}
-
-        {foundedMessages.length > 0 ? (
-          <>
-            <Typography sx={styles.information}>
-              {t('chatPage.foundedMessages', {
-                count: foundedMessages.length
-              })}
-            </Typography>
-            {foundedMessages}
-          </>
-        ) : (
-          <Typography sx={styles.information}>
-            {t('chatPage.notFoundedMessages', {
-              count: foundedMessages.length
-            })}
-          </Typography>
-        )}
-      </CustomScrollBar>
+      {chats.length > 0 ? (
+        <SimpleBar style={styles.scroll}>{chats}</SimpleBar>
+      ) : (
+        <Typography sx={styles.information}>
+          {t('chatPage.noContacts')}
+        </Typography>
+      )}
     </Box>
   )
 }
