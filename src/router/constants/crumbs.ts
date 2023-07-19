@@ -33,11 +33,6 @@ export const myOffers = {
   path: authRoutes.accountMenu.myOffers.route
 }
 
-export const myLessons = {
-  name: t('breadCrumbs.myLessons'),
-  path: authRoutes.accountMenu.myLessons.route
-}
-
 export const categories = {
   name: t('breadCrumbs.categories'),
   path: authRoutes.categories.route
@@ -56,6 +51,10 @@ export const findOffers = {
 export const offerDetails = {
   name: t('breadCrumbs.offerDetails'),
   path: authRoutes.offerDetails.route
+}
+export const myResources = {
+  name: t('breadCrumbs.myResources'),
+  path: authRoutes.myResources.route
 }
 
 export const userProfile = ({ data }: { data: UserResponse }) => ({

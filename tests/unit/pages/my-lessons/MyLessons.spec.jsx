@@ -1,11 +1,11 @@
 import { screen } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 
-import MyLessons from '~/pages/my-lessons/MyLessons'
+import MyResources from '~/pages/my-resources/MyResources'
 
 describe('MyLessons', () => {
   beforeEach(() => {
-    renderWithProviders(<MyLessons />)
+    renderWithProviders(<MyResources />)
   })
 
   it('renders the component with tabs', () => {
