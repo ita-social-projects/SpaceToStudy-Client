@@ -2,7 +2,13 @@ import { screen } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 
 import ListOfUsersWithSearch from '~/containers/chat/list-of-users-with-search/ListOfUsersWithSearch'
-import { usersMock } from './chatMock'
+import { usersMock } from '~tests/unit/containers/chat/list-of-users-with-search/MockChat.spec.constants'
+
+vi.mock('simplebar-react', () => {
+  return {
+    default: ({ children }) => <div>{children}</div>
+  }
+})
 
 const props = {
   listOfChats: usersMock,
