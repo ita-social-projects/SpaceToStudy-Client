@@ -6,13 +6,11 @@ import useAxios from '~/hooks/use-axios'
 import { snackbarVariants } from '~/constants'
 import { useModalContext } from '~/context/modal-context'
 import { useSnackBarContext } from '~/context/snackbar-context'
-import { useStepContext } from '~/context/step-context'
 import { userService } from '~/services/user-service'
 
 const useSteps = ({ steps }) => {
   const [activeStep, setActiveStep] = useState(0)
   const { closeModal } = useModalContext()
-  const { stepData } = useStepContext()
   const { setAlert } = useSnackBarContext()
   const { userId } = useSelector((state) => state.appMain)
 
@@ -36,18 +34,13 @@ const useSteps = ({ steps }) => {
     closeModal()
   }
 
-  const { loading, fetchData } = useAxios({
+  const { loading } = useAxios({
     service: updateUser,
     fetchOnMount: false,
     defaultResponse: null,
     onResponse: handleResponse,
     onResponseError: handleResponseError
   })
-
-  const stepErrors = Object.values(stepData).map(
-    (data) =>
-      data && data.errors && Object.values(data.errors).find((error) => error)
-  )
 
   const next = () => {
     setActiveStep((prev) => prev + 1)
@@ -60,25 +53,7 @@ const useSteps = ({ steps }) => {
   const isLastStep = activeStep === steps.length - 1
 
   const handleSubmit = () => {
-    const hasErrors = stepErrors.find((error) => error)
-
-    const { firstName, lastName, country, city, professionalSummary } =
-      stepData.generalInfo.data
-
-    const data = {
-      photo: stepData.photo[0] ? stepData.photo[0] : '',
-      firstName,
-      lastName,
-      address: {
-        country: country ?? '',
-        city: city ?? ''
-      },
-      professionalSummary: professionalSummary,
-      mainSubjects: stepData.subjects,
-      nativeLanguage: stepData.language ?? ''
-    }
-
-    !hasErrors && fetchData(data)
+    handleResponse()
   }
 
   const stepOperation = {
@@ -88,7 +63,7 @@ const useSteps = ({ steps }) => {
     setActiveStep
   }
 
-  return { activeStep, stepErrors, isLastStep, stepOperation, loading }
+  return { activeStep, isLastStep, stepOperation, loading }
 }
 
 export default useSteps

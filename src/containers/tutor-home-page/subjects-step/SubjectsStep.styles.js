@@ -8,25 +8,5 @@ export const styles = {
     height: { sm: '485px' },
     paddingBottom: { xs: '30px', sm: '0px' },
     ...fadeAnimation
-  },
-  imgContainer: {
-    display: 'flex',
-    flex: 1,
-    maxWidth: '432px',
-    aspectRatio: { xs: '4/3', sm: 'auto' },
-    pb: { xs: '16px', sm: '52px' }
-  },
-  img: {
-    width: '100%',
-    m: { sm: 0, xs: '0 auto' }
-  },
-  rigthBox: {
-    maxWidth: '432px',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    m: { md: 0, xs: '0 auto' },
-    pt: 0
-  },
-  contentBox: { mb: { xs: '30px', sm: '0' } }
+  }
 }

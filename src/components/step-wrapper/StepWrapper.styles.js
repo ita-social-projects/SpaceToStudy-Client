@@ -48,7 +48,8 @@ export const styles = {
   btnWrapper: {
     display: 'flex',
     justifyContent: 'space-between',
-    mt: '10px'
+    mt: '10px',
+    maxHeight: '40px'
   },
   btn: btnStyle,
   finishBtn: {
