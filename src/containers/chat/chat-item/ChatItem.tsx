@@ -71,9 +71,7 @@ const ChatItem: FC<ItemOfChatProps> = ({
         </Box>
         <Box sx={styles.messageBlock}>
           {userId === author._id && (
-            <Typography sx={styles.prefix}>
-              {t('chatPage.yourMessage')}
-            </Typography>
+            <Typography sx={styles.prefix}>{t('chat.yourMessage')}</Typography>
           )}
           <Typography sx={styles.message}>{text}</Typography>
 

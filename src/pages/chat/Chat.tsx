@@ -29,7 +29,6 @@ const Chat = () => {
   }
 
   const getChats = useCallback(() => chatService.getChats(), [])
-
   const { response: listOfChats, loading } = useAxios({
     service: getChats,
     defaultResponse: defaultResponses.array

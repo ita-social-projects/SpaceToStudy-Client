@@ -43,7 +43,7 @@ describe('ChatItem', () => {
     expect(screen.getByText('Albus Dumbledore')).toBeInTheDocument()
 
     expect(message).toBeInTheDocument()
-    expect(screen.getByText('chatPage.yourMessage')).toBeInTheDocument()
+    expect(screen.getByText('chat.yourMessage')).toBeInTheDocument()
 
     fireEvent.click(message)
 

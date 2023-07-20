@@ -15,6 +15,7 @@ export const filterChats = (
   const lowerCaseSearch = search.toLocaleLowerCase()
   return listOfChats.filter((item) => {
     if (!isCorrectUser(item, userId)) return false
+    if (!item.latestMessage) return false
 
     const { firstName, lastName } = item.members[0].user
     const fullName = `${firstName} ${lastName}`
