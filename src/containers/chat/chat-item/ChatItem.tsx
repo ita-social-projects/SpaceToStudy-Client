@@ -35,7 +35,8 @@ const ChatItem: FC<ItemOfChatProps> = ({
   const fullName = `${firstName} ${lastName}`
 
   const handleSelectedChat = () => {
-    setIsSelectedChat(chat), closeDrawer && closeDrawer()
+    setIsSelectedChat(chat)
+    closeDrawer && closeDrawer()
   }
 
   const formattedTime = getFormatedDate(

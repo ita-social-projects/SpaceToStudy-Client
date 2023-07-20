@@ -54,7 +54,7 @@ const Chat = () => {
           />
         </AppDrawer>
       )}
-      <Allotment defaultSizes={[25, 75]}>
+      <Allotment defaultSizes={isMobile ? [1] : [25, 75]}>
         {!isMobile && (
           <Allotment.Pane minSize={250} preferredSize={350}>
             <ListOfUsersWithSearch

@@ -5,16 +5,22 @@ export const styles = {
     mb: '20px',
     '& .sash-module_sash__K-9lB': {
       '&:before': {
-        backgroundColor: 'basic.white',
+        backgroundColor: 'transparent',
         '&:hover': {
-          backgroundColor: 'basic.white'
+          backgroundColor: 'transparent'
         }
       }
     },
     '& .sash-module_sash__K-9lB.sash-module_hover__80W6I': {
       '&:before': {
-        backgroundColor: 'basic.white'
+        backgroundColor: 'transparent'
       }
-    }
+    },
+    '& .allotment-module_splitView__L-yRc.allotment-module_separatorBorder__x-rDS > .allotment-module_splitViewContainer__rQnVa > .allotment-module_splitViewView__MGZ6O:not(:first-child)':
+      {
+        '&:before': {
+          backgroundColor: 'transparent'
+        }
+      }
   }
 }
