@@ -8,6 +8,7 @@ export const authRoutes = {
     path: '/categories/subjects/find-offers'
   },
   offerDetails: { route: 'offer-details/:id', path: '/offer-details' },
+  myResources: { route: 'my-resources', path: '/my-resources' },
   accountMenu: {
     myProfile: { route: 'my-profile', path: '/my-profile' },
     myCooperations: {
