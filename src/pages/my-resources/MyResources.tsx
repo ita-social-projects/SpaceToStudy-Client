@@ -13,7 +13,7 @@ const MyResources = () => {
   const { t } = useTranslation()
 
   const handleClick = (tab: string) => {
-    setActiveTab(tab === activeTab ? '' : tab)
+    setActiveTab(tab)
   }
 
   const tabs = Object.keys(tabsData).map((key) => (
@@ -33,7 +33,7 @@ const MyResources = () => {
 
   return (
     <PageWrapper>
-      <Box sx={styles.tabs}> {tabs} </Box>
+      <Box sx={styles.tabs}>{tabs}</Box>
       {t(tabContent)}
     </PageWrapper>
   )
