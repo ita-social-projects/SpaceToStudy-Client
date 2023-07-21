@@ -7,7 +7,6 @@ import MenuIcon from '@mui/icons-material/Menu'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import ListOfUsersWithSearch from '~/containers/chat/list-of-users-with-search/ListOfUsersWithSearch'
-
 import AppDrawer from '~/components/app-drawer/AppDrawer'
 import { useDrawer } from '~/hooks/use-drawer'
 import { chatService } from '~/services/chat-service'

@@ -50,14 +50,13 @@ const ChatItem: FC<ItemOfChatProps> = ({
     true
   )
 
+  const isActiveChat = isSelectedChat === chat ? styles.activeChat : undefined
+  const isCurrentUser = userId === author._id && (
+    <Typography sx={styles.prefix}>{t('chat.yourMessage')}</Typography>
+  )
+
   return (
-    <Box
-      onClick={handleSelectedChat}
-      sx={spliceSx(
-        styles.root,
-        isSelectedChat === chat ? styles.activeChat : undefined
-      )}
-    >
+    <Box onClick={handleSelectedChat} sx={spliceSx(styles.root, isActiveChat)}>
       <Box sx={styles.imageWrapper}>
         <Avatar
           src={photo && `${import.meta.env.VITE_APP_IMG_USER_URL}${photo}`}
@@ -71,9 +70,7 @@ const ChatItem: FC<ItemOfChatProps> = ({
           <Typography sx={styles.lastTimeMessage}>{formattedTime}</Typography>
         </Box>
         <Box sx={styles.messageBlock}>
-          {userId === author._id && (
-            <Typography sx={styles.prefix}>{t('chat.yourMessage')}</Typography>
-          )}
+          {isCurrentUser}
           <Typography sx={styles.message}>{text}</Typography>
 
           <Box>
