@@ -8,7 +8,8 @@ import {
   UserRole,
   UserRoleEnum,
   Cooperation,
-  Offer
+  Offer,
+  FormatedDate
 } from '~/types'
 
 export const parseJwt = <T,>(token: string): T => {
@@ -60,16 +61,16 @@ export const getEmptyValues = <T extends object, R>(
 export const findFullObjects = <T extends object>(array: T[]) =>
   array.filter((el) => Object.values(el).every((el) => el))
 
-export const getFormatedDate = (
-  date: Date | string,
+export const getFormatedDate = ({
+  date,
   locales = 'en-US',
-  options: Intl.DateTimeFormatOptions = {
+  options = {
     year: 'numeric',
     month: 'long',
     day: 'numeric'
   },
   isCurrentDayHours = false
-): string => {
+}: FormatedDate): string => {
   const currentDate = new Date()
   const formattedDate = new Date(date).toLocaleDateString(locales, options)
 

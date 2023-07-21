@@ -28,7 +28,8 @@ export const columns = [
   {
     label: 'myOffersPage.tableHeaders.updated',
     field: 'updatedAt',
-    calculatedCellValue: (item: Offer) => getFormatedDate(item.updatedAt)
+    calculatedCellValue: (item: Offer) =>
+      getFormatedDate({ date: item.updatedAt })
   },
   {
     label: 'myOffersPage.tableHeaders.status',

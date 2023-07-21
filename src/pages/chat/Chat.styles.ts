@@ -16,7 +16,7 @@ export const styles = {
         backgroundColor: 'transparent'
       }
     },
-    '& .allotment-module_splitView__L-yRc.allotment-module_separatorBorder__x-rDS > .allotment-module_splitViewContainer__rQnVa > .allotment-module_splitViewView__MGZ6O:not(:first-child)':
+    '& .allotment-module_splitView__L-yRc.allotment-module_separatorBorder__x-rDS > .allotment-module_splitViewContainer__rQnVa > .allotment-module_splitViewView__MGZ6O:not(:first-of-type)':
       {
         '&:before': {
           backgroundColor: 'transparent'

@@ -38,7 +38,7 @@ describe('Message component', () => {
 
   it('should format the timestamp correctly', () => {
     const timestampElement = screen.getByText(
-      getFormatedDate(newAuthor.createdAt)
+      getFormatedDate({ date: newAuthor.createdAt })
     )
 
     expect(timestampElement).toBeInTheDocument()

@@ -97,7 +97,7 @@ const UserProfileInfo: FC<UserProfileInfoProps> = ({
         )}
         {date && (
           <Typography sx={spliceSx(styles.date, sx.date)}>
-            {getFormatedDate(date)}
+            {getFormatedDate({ date })}
           </Typography>
         )}
         {languages && <LanguagesListWithIcon languages={languages} />}

@@ -39,16 +39,16 @@ const ChatItem: FC<ItemOfChatProps> = ({
     closeDrawer && closeDrawer()
   }
 
-  const formattedTime = getFormatedDate(
-    updatedAt,
-    'en-GB',
-    {
+  const formattedTime = getFormatedDate({
+    date: updatedAt,
+    locales: 'en-GB',
+    options: {
       day: '2-digit',
       month: '2-digit',
       year: 'numeric'
     },
-    true
-  )
+    isCurrentDayHours: true
+  })
 
   const isActiveChat = isSelectedChat === chat ? styles.activeChat : undefined
   const isCurrentUser = userId === author._id && (
