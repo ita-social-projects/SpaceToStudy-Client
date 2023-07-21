@@ -15,8 +15,6 @@ const palette = {
     yellowGreen: '#9BC541',
     fruitSalad: '#4CAF50',
     orientalHerbs: '#12A03A',
-    steelgrey: '#727E84',
-    pastelgrey: '#DEE0E1',
     lime: '#99CC00'
   },
   companyBlue: 'rgba(0, 167, 167, 0.2)',
