@@ -1,7 +1,8 @@
 import { ReactElement } from 'react'
 
-import BookOutlinedIcon from '@mui/icons-material/BookOutlined'
-import TextSnippetOutlinedIcon from '@mui/icons-material/TextSnippetOutlined'
+import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined'
+import NoteAltOutlinedIcon from '@mui/icons-material/NoteAltOutlined'
+import AttachFileIcon from '@mui/icons-material/AttachFile'
 
 interface TabsData {
   [key: string]: {
@@ -10,20 +11,16 @@ interface TabsData {
   }
 }
 export const tabsData: TabsData = {
-  courses: {
-    title: 'myResourcesPage.tabs.courses',
-    icon: <TextSnippetOutlinedIcon />
-  },
   lessons: {
     title: 'myResourcesPage.tabs.lessons',
-    icon: <TextSnippetOutlinedIcon />
+    icon: <ArticleOutlinedIcon />
   },
   tests: {
     title: 'myResourcesPage.tabs.tests',
-    icon: <BookOutlinedIcon />
+    icon: <NoteAltOutlinedIcon />
   },
   attachments: {
     title: 'myResourcesPage.tabs.attachments',
-    icon: <BookOutlinedIcon />
+    icon: <AttachFileIcon />
   }
 }

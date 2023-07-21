@@ -9,7 +9,7 @@ import { tabsData } from '~/pages/my-resources/MyResources.constants'
 import { styles } from '~/pages/my-resources/MyResources.styles'
 
 const MyResources = () => {
-  const [activeTab, setActiveTab] = useState<string>('')
+  const [activeTab, setActiveTab] = useState<string>('lessons')
   const { t } = useTranslation()
 
   const handleClick = (tab: string) => {

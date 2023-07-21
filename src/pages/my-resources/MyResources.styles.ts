@@ -8,6 +8,10 @@ export const styles = {
   titleBox: {
     display: 'flex',
     alignItems: 'center',
-    gap: '8px'
+    gap: '16px',
+    '& > svg': {
+      width: '16px',
+      height: '16px'
+    }
   }
 }
