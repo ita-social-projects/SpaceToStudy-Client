@@ -17,7 +17,8 @@ export const styles = {
     minHeight: '144px',
     backgroundColor: 'primary.800',
     borderRadius: '6px',
-    p: '16px'
+    p: '16px',
+    m: '0 1.5vw'
   },
   steper: {
     display: 'flex',
