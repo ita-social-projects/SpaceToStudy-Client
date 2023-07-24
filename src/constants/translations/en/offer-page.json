@@ -1,80 +1,95 @@
 {
   "createOffer": {
     "title": {
-      "main": {
-        "tutor": "Create a New Offer",
-        "student": "Create a New Request"
-      },
-      "firstStep": {
-        "tutor": "Pick Your Specialization",
-        "student": "Describe Your Needs"
-      },
-      "secondStep": {
-        "tutor": "Teaching parameters",
-        "student": "Preferred Parameters"
-      },
-      "thirdStep": "Frequently asked questions"
+      "tutor": "Create a New Offer",
+      "student": "Create a New Request"
     },
     "description": {
-      "thirdStep": {
-        "tutor": "Help students make informed decisions by providing answers to frequently asked questions about your tutoring services. Save their time and provide clarity by addressing common concerns and queries upfront.",
-        "student": "Help teachers make informed decisions by providing answers to frequently asked questions about your educational needs."
-      },
-      "category": {
-        "tutor": "Choose the category and subject that you are most qualified to tutor students in.",
-        "student": "Choose the category and subject that best describe your learning needs."
-      },
-      "level": {
-        "tutor": "Select the preparation levels you are comfortable teaching, from beginner to advanced or others.",
-        "student": "Select your current skill level to match you with a tutor who can meet you where you're at and help you progress towards your goals."
-      },
-      "main": {
-        "tutor": "Start building your tutoring business by creating your offer below. Select the options that best describe your expertise and help students find the perfect match for their needs.",
-        "student": "Find the perfect tutor for your needs by creating a request below. Select the options that best describe what you're looking for, and we'll match you with qualified tutors who can help you reach your academic goals."
-      },
-      "describe": {
-        "tutor": "Please describe any additional information about your tutoring services, your teaching style, the topics you cover, and any specific areas of expertise you have.",
-        "student": "Please describe any additional information about the tutoring you need, such as specific topics or areas you'd like to focus on, your preferred teaching style, or any particular goals you're hoping to achieve."
-      },
-      "languages": {
-        "tutor": "Indicate the languages you're able to tutor on.",
-        "student": "Indicate the languages you're able to be tutored on."
-      },
-      "price": {
-        "tutor": "Set the offer value per lesson.",
-        "student": "Set the preferred offer value per lesson."
-      },
-      "title": {
-        "tutor": "Add a title that briefly describes your offer.",
-        "student": "Add a title that briefly describes your request."
-      }
+      "tutor": "Start building your tutoring business by creating your offer below. Select the options that best describe your expertise and help students find the perfect match for their needs.",
+      "student": "Find the perfect tutor for your needs by creating a request below. Select the options that best describe what you're looking for, and we'll match you with qualified tutors who can help you reach your academic goals."
     },
     "successMessage": "Great news! Your submission has been successfully added.",
-    "errorMessages": {
-      "category": "Please select a category.",
-      "subject": "Please select a subject.",
-      "proficiencyLevel": "Please select at least one proficiency level.",
-      "languages": "Please select at least one language.",
-      "description": "Please provide a description.",
-      "price": "Please specify a price.",
-      "title": "Please provide a title.",
-      "faq": "Only 5 questions are allowed to add"
-    },
     "buttonTitles": {
       "tutor": "Create offer",
       "student": "Create request"
-    },
-    "labels": {
-      "category": "Category",
-      "subject": "Subject",
-      "describe": {
-        "tutor": "Describe your offer",
-        "student": "Describe your request"
-      },
-      "language": "Language",
-      "title": "Title",
-      "question": "Insert Question",
-      "answer": "Insert Answer"
     }
+  },
+  "editOffer": {
+    "title": {
+      "tutor": "Edit your offer",
+      "student": "Edit your request"
+    },
+    "description": {
+      "tutor": "Start building your tutoring business by creating your offer below. Select the options that best describe your expertise and help students find the perfect match for their needs.",
+      "student": "Find the perfect tutor for your needs by creating a request below. Select the options that best describe what you're looking for, and we'll match you with qualified tutors who can help you reach your academic goals."
+    },
+    "successMessage": "Great news! Your submission has been successfully updated.",
+    "buttonTitles": {
+      "tutor": "Update offer",
+      "student": "Update request"
+    }
+  },
+  "title": {
+    "firstStep": {
+      "tutor": "Pick Your Specialization",
+      "student": "Describe Your Needs"
+    },
+    "secondStep": {
+      "tutor": "Teaching parameters",
+      "student": "Preferred Parameters"
+    },
+    "thirdStep": "Frequently asked questions"
+  },
+  "description": {
+    "thirdStep": {
+      "tutor": "Help students make informed decisions by providing answers to frequently asked questions about your tutoring services. Save their time and provide clarity by addressing common concerns and queries upfront.",
+      "student": "Help teachers make informed decisions by providing answers to frequently asked questions about your educational needs."
+    },
+    "category": {
+      "tutor": "Choose the category and subject that you are most qualified to tutor students in.",
+      "student": "Choose the category and subject that best describe your learning needs."
+    },
+    "level": {
+      "tutor": "Select the preparation levels you are comfortable teaching, from beginner to advanced or others.",
+      "student": "Select your current skill level to match you with a tutor who can meet you where you're at and help you progress towards your goals."
+    },
+    "describe": {
+      "tutor": "Please describe any additional information about your tutoring services, your teaching style, the topics you cover, and any specific areas of expertise you have.",
+      "student": "Please describe any additional information about the tutoring you need, such as specific topics or areas you'd like to focus on, your preferred teaching style, or any particular goals you're hoping to achieve."
+    },
+    "languages": {
+      "tutor": "Indicate the languages you're able to tutor on.",
+      "student": "Indicate the languages you're able to be tutored on."
+    },
+    "price": {
+      "tutor": "Set the offer value per lesson.",
+      "student": "Set the preferred offer value per lesson."
+    },
+    "title": {
+      "tutor": "Add a title that briefly describes your offer.",
+      "student": "Add a title that briefly describes your request."
+    }
+  },
+  "labels": {
+    "category": "Category",
+    "subject": "Subject",
+    "describe": {
+      "tutor": "Describe your offer",
+      "student": "Describe your request"
+    },
+    "language": "Language",
+    "title": "Title",
+    "question": "Insert Question",
+    "answer": "Insert Answer"
+  },
+  "errorMessages": {
+    "category": "Please select a category.",
+    "subject": "Please select a subject.",
+    "proficiencyLevel": "Please select at least one proficiency level.",
+    "languages": "Please select at least one language.",
+    "description": "Please provide a description.",
+    "price": "Please specify a price.",
+    "title": "Please provide a title.",
+    "faq": "Only 5 questions are allowed to add"
   }
 }

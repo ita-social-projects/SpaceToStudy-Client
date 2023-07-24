@@ -11,10 +11,14 @@ import AppChipList from '~/components/app-chips-list/AppChipList'
 import AppTextArea from '~/components/app-text-area/AppTextArea'
 import OrderedListItem from '~/components/ordered-list-item/OrderedListItem'
 
-import { CreateOfferBlockProps, LanguagesEnum, CreateOfferData } from '~/types'
-import { styles } from '~/containers/offer-page/create-offer/CreateOffer.styles'
+import {
+  CreateOfferBlockProps,
+  LanguagesEnum,
+  CreateOrUpdateOfferData
+} from '~/types'
+import { styles } from '~/containers/offer-page/OfferPage.styles'
 
-const TeachingBlock = <T extends CreateOfferData>({
+const TeachingBlock = <T extends CreateOrUpdateOfferData>({
   data,
   errors,
   handleBlur,
@@ -50,17 +54,17 @@ const TeachingBlock = <T extends CreateOfferData>({
   return (
     <OrderedListItem
       number={2}
-      title={t(`offerPage.createOffer.title.secondStep.${userRole}`)}
+      title={t(`offerPage.title.secondStep.${userRole}`)}
     >
       <Box sx={styles.specialization}>
         <Box sx={styles.inputBlock}>
           <Typography sx={styles.description}>
-            {t(`offerPage.createOffer.description.title.${userRole}`)}
+            {t(`offerPage.description.title.${userRole}`)}
           </Typography>
           <AppTextArea
             errorMsg={t(errors.title)}
             fullWidth
-            label={t(`offerPage.createOffer.labels.title`)}
+            label={t(`offerPage.labels.title`)}
             maxLength={100}
             maxRows={1}
             onBlur={handleBlur('title')}
@@ -70,12 +74,12 @@ const TeachingBlock = <T extends CreateOfferData>({
         </Box>
         <Box sx={styles.inputBlock}>
           <Typography sx={styles.description}>
-            {t(`offerPage.createOffer.description.describe.${userRole}`)}
+            {t(`offerPage.description.describe.${userRole}`)}
           </Typography>
           <AppTextArea
             errorMsg={t(errors.description)}
             fullWidth
-            label={t(`offerPage.createOffer.labels.describe.${userRole}`)}
+            label={t(`offerPage.labels.describe.${userRole}`)}
             maxLength={1000}
             onBlur={handleBlur('description')}
             onChange={handleInputChange('description')}
@@ -84,7 +88,7 @@ const TeachingBlock = <T extends CreateOfferData>({
         </Box>
         <Box>
           <Typography sx={[styles.description, styles.category]}>
-            {t(`offerPage.createOffer.description.languages.${userRole}`)}
+            {t(`offerPage.description.languages.${userRole}`)}
           </Typography>
           <AppAutoComplete
             blurOnSelect
@@ -93,7 +97,7 @@ const TeachingBlock = <T extends CreateOfferData>({
             textFieldProps={{
               error: Boolean(errors.languages),
               helperText: t(errors.languages) || ' ',
-              label: t('offerPage.createOffer.labels.language')
+              label: t('offerPage.labels.language')
             }}
             value={null}
           />
@@ -106,7 +110,7 @@ const TeachingBlock = <T extends CreateOfferData>({
         </Box>
         <Box sx={styles.inputBlock}>
           <Typography sx={styles.description}>
-            {t(`offerPage.createOffer.description.price.${userRole}`)}
+            {t(`offerPage.description.price.${userRole}`)}
           </Typography>
           <AppTextField
             InputProps={{

@@ -13,12 +13,12 @@ import { subjectService } from '~/services/subject-service'
 import {
   CategoryNameInterface,
   CreateOfferBlockProps,
-  CreateOfferData,
+  CreateOrUpdateOfferData,
   ProficiencyLevelEnum
 } from '~/types'
-import { styles } from '~/containers/offer-page/create-offer/CreateOffer.styles'
+import { styles } from '~/containers/offer-page/OfferPage.styles'
 
-const SpecializationBlock = <T extends CreateOfferData>({
+const SpecializationBlock = <T extends CreateOrUpdateOfferData>({
   data,
   errors,
   handleBlur,
@@ -50,22 +50,21 @@ const SpecializationBlock = <T extends CreateOfferData>({
   return (
     <OrderedListItem
       number={1}
-      title={t(`offerPage.createOffer.title.firstStep.${userRole}`)}
+      title={t(`offerPage.title.firstStep.${userRole}`)}
     >
       <Box sx={styles.specialization}>
         <Box>
           <Typography sx={[styles.description, styles.category]}>
-            {t(`offerPage.createOffer.description.category.${userRole}`)}
+            {t(`offerPage.description.category.${userRole}`)}
           </Typography>
           <AsyncAutocomplete
-            fetchOnFocus
             labelField='name'
             onBlur={handleBlur('category')}
             onChange={handleAutocompleteChange('category')}
             service={categoryService.getCategoriesNames}
             sx={styles.inputs}
             textFieldProps={{
-              label: t('offerPage.createOffer.labels.category'),
+              label: t('offerPage.labels.category'),
               error: Boolean(errors.category),
               helperText: errors.category ? t(errors.category) : ' '
             }}
@@ -83,7 +82,7 @@ const SpecializationBlock = <T extends CreateOfferData>({
             textFieldProps={{
               error: Boolean(subjectError),
               helperText: subjectError ? t(errors.subject) : ' ',
-              label: t('offerPage.createOffer.labels.subject')
+              label: t('offerPage.labels.subject')
             }}
             value={data.subject}
             valueField='_id'
@@ -91,7 +90,7 @@ const SpecializationBlock = <T extends CreateOfferData>({
         </Box>
         <Box sx={styles.inputBlock}>
           <Typography sx={styles.description}>
-            {t(`offerPage.createOffer.description.level.${userRole}`)}
+            {t(`offerPage.description.level.${userRole}`)}
           </Typography>
           <CheckboxList
             error={t(errors.proficiencyLevel)}

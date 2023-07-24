@@ -8,7 +8,8 @@ interface UseFormProps<T> {
   validations?: Partial<{
     [K in keyof T]: (value: T[K] | string, data: T) => string | undefined
   }>
-  onSubmit: () => Promise<void>
+  onSubmit: (data?: T) => Promise<void>
+  submitWithData?: boolean
 }
 
 interface UseFormOutput<T> {
@@ -30,7 +31,8 @@ export const useForm = <T extends object>({
   initialValues,
   initialErrors = getEmptyValues(initialValues, ''),
   validations,
-  onSubmit
+  onSubmit,
+  submitWithData
 }: UseFormProps<T>): UseFormOutput<T> => {
   const [data, setData] = useState<T>(initialValues)
   const [isDirty, setDirty] = useState<boolean>(false)
@@ -111,6 +113,7 @@ export const useForm = <T extends object>({
   const handleSubmit = (event: React.FormEvent<HTMLDivElement>) => {
     event.preventDefault()
     let isValid = true
+    const submittedData = submitWithData ? data : undefined
     const newErrors = { ...errors }
 
     if (validations) {
@@ -124,7 +127,7 @@ export const useForm = <T extends object>({
       }
     }
 
-    isValid ? void onSubmit() : setErrors(newErrors)
+    isValid ? void onSubmit(submittedData) : setErrors(newErrors)
   }
 
   return {

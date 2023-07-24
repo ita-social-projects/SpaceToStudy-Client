@@ -24,6 +24,7 @@ export const URLs = {
   },
   offers: {
     create: '/offers',
+    update: '/offers',
     get: '/offers'
   },
   categories: {
