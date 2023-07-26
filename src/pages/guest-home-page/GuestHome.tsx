@@ -3,17 +3,18 @@ import { useSearchParams } from 'react-router-dom'
 
 import Box from '@mui/material/Box'
 
-import { useModalContext } from '~/context/modal-context'
-import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
-import Welcome from '~/containers/guest-home-page/Welcome'
+import { descriptionTimes } from '~/components/accordion-with-image/accordion-with-image.constants'
+import PageWrapper from '~/components/page-wrapper/PageWrapper'
+import EmailConfirmModal from '~/containers/email-confirm-modal/EmailConfirmModal'
 import FeatureBlock from '~/containers/guest-home-page/FeatureBlock'
+import Welcome from '~/containers/guest-home-page/Welcome'
 import WhatCanYouDo from '~/containers/guest-home-page/WhatCanYouDo'
 import HowItWorks from '~/containers/guest-home-page/how-it-works/HowItWorks'
-import WhoWeAre from '~/containers/guest-home-page/who-we-are/WhoWeAre'
-import EmailConfirmModal from '~/containers/email-confirm-modal/EmailConfirmModal'
+import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
 import ResetPassword from '~/containers/guest-home-page/reset-password/ResetPassword'
-import PageWrapper from '~/components/page-wrapper/PageWrapper'
-import { descriptionTimes } from '~/components/accordion-with-image/accordion-with-image.constants'
+import WhoWeAre from '~/containers/guest-home-page/who-we-are/WhoWeAre'
+import LessonsContainer from '~/containers/my-resources/lessons-container/LessonsContainer'
+import { useModalContext } from '~/context/modal-context'
 import { styles } from '~/pages/guest-home-page/GuestHome.styles'
 
 const GuestHomePage = () => {
@@ -47,6 +48,7 @@ const GuestHomePage = () => {
   return (
     <Box sx={styles.root}>
       <Welcome />
+      <LessonsContainer />
       <PageWrapper sx={styles.sectionsWrapper}>
         <FeatureBlock items={descriptionTimes} />
         <WhatCanYouDo />

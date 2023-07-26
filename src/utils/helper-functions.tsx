@@ -1,15 +1,15 @@
 import { SxProps, Theme } from '@mui/material'
 import {
   Breakpoints,
-  TableColumns,
+  Cooperation,
   FilterFromQuery,
+  FormatedDate,
+  Offer,
   RemoveColumnRules,
   ScreenBasedLimits,
+  TableColumn,
   UserRole,
-  UserRoleEnum,
-  Cooperation,
-  Offer,
-  FormatedDate
+  UserRoleEnum
 } from '~/types'
 
 export const parseJwt = <T,>(token: string): T => {
@@ -112,7 +112,7 @@ export const getScreenBasedLimit = (
 
 export const ajustColumns = <T extends Cooperation | Offer>(
   breakpoints: Breakpoints,
-  columns: TableColumns<T>[],
+  columns: TableColumn<T>[],
   rules: RemoveColumnRules<T>
 ) => {
   const { isDesktop, isTablet, isMobile } = breakpoints

@@ -1,8 +1,8 @@
 import StatusChip from '~/components/status-chip/StatusChip'
 import SubjectLevelChips from '~/components/subject-level-chips/SubjectLevelChips'
 
-import { getFormatedDate } from '~/utils/helper-functions'
 import { AdditionalPropsInterface, Offer, RemoveColumnRules } from '~/types'
+import { getFormatedDate } from '~/utils/helper-functions'
 
 export const columns = [
   {

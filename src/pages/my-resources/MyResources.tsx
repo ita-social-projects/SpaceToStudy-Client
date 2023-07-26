@@ -1,9 +1,9 @@
+import Box from '@mui/material/Box'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import Box from '@mui/material/Box'
 
-import Tab from '~/components/tab/Tab'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
+import Tab from '~/components/tab/Tab'
 
 import { tabsData } from '~/pages/my-resources/MyResources.constants'
 import { styles } from '~/pages/my-resources/MyResources.styles'
@@ -29,12 +29,12 @@ const MyResources = () => {
     </Tab>
   ))
 
-  const tabContent = activeTab && tabsData[activeTab].title
+  const tabContent = activeTab && tabsData[activeTab].content
 
   return (
     <PageWrapper>
       <Box sx={styles.tabs}>{tabs}</Box>
-      {t(tabContent)}
+      {tabContent}
     </PageWrapper>
   )
 }

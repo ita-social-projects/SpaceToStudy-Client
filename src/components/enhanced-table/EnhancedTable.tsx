@@ -33,6 +33,7 @@ interface EnhancedTableProps<I, F> extends TableProps {
   rowsPerPage?: number
   data: TableData<I>
   onRowClick?: (item: I) => void
+  emptyTableKey: string
 }
 
 const EnhancedTable = <I extends TableItem, F = undefined>({
@@ -45,6 +46,7 @@ const EnhancedTable = <I extends TableItem, F = undefined>({
   sort,
   rowsPerPage,
   data,
+  emptyTableKey,
   ...props
 }: EnhancedTableProps<I, F>) => {
   const { t } = useTranslation()
@@ -92,7 +94,7 @@ const EnhancedTable = <I extends TableItem, F = undefined>({
       {tableBody}
       <Box data-testid='no-matches-box' sx={styles.noMatches}>
         <ReportIcon color='secondary' />
-        {t('table.noExactMatches')}
+        {t(emptyTableKey)}
       </Box>
     </>
   )

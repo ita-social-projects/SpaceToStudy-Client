@@ -1,20 +1,20 @@
-import { FC } from 'react'
 import Box from '@mui/material/Box'
+import { FC } from 'react'
 
-import CooperationCard from '~/containers/my-cooperations/cooperation-card/CooperationCard'
 import EnhancedTable from '~/components/enhanced-table/EnhancedTable'
 import AcceptCooperationModal from '~/containers/my-cooperations/accept-cooperation-modal/AcceptCooperationModal'
-import useBreakpoints from '~/hooks/use-breakpoints'
-import { SortHook } from '~/hooks/table/use-sort'
-import { ajustColumns } from '~/utils/helper-functions'
+import CooperationCard from '~/containers/my-cooperations/cooperation-card/CooperationCard'
 import { useModalContext } from '~/context/modal-context'
+import { SortHook } from '~/hooks/table/use-sort'
+import useBreakpoints from '~/hooks/use-breakpoints'
+import { ajustColumns } from '~/utils/helper-functions'
 
-import { Cooperation, SizeEnum, StatusEnum } from '~/types'
 import {
   columns,
   removeColumnRules
 } from '~/containers/my-cooperations/cooperations-container/CooperationContainer.constants'
 import { styles } from '~/containers/my-cooperations/cooperations-container/CooperationContainer.styles'
+import { Cooperation, SizeEnum, StatusEnum } from '~/types'
 
 interface CooperationContainerProps {
   items: Cooperation[]
@@ -66,6 +66,7 @@ const CooperationContainer: FC<CooperationContainerProps> = ({
     <EnhancedTable
       columns={columnsToShow}
       data={{ items }}
+      emptyTableKey='table.noExactMatches'
       onRowClick={handleCardClick}
       size={SizeEnum.Small}
       sort={sort}

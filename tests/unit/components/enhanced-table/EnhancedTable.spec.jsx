@@ -15,7 +15,8 @@ const mockedCommonProps = {
   select: mockedSelect,
   columns: [],
   filter: {},
-  rowActions: []
+  rowActions: [],
+  emptyTableKey: 'table.noExactMatches'
 }
 
 describe('EnhancedTable component', () => {
