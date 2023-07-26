@@ -18,10 +18,10 @@ import { styles } from '~/containers/guest-home-page/how-it-works/HowItWorks.sty
 const HowItWorks = () => {
   const { t } = useTranslation()
 
-  const [isStudent, setIsStudent] = useState(false)
+  const [isTutor, setIsTutor] = useState(false)
 
   const onChange = () => {
-    setIsStudent(!isStudent)
+    setIsTutor(!isTutor)
   }
 
   const switchOptions = {
@@ -40,21 +40,21 @@ const HowItWorks = () => {
           {t('guestHomePage.howItWorks.title')}
         </Typography>
         <AppContentSwitcher
-          active={isStudent}
+          active={isTutor}
           onChange={onChange}
           styles={styles.switch}
           switchOptions={switchOptions}
           typographyVariant={TypographyVariantEnum.H6}
         />
         <CardsWithButton
-          array={isStudent ? tutorCardBoxArray : studentCardBoxArray}
+          array={isTutor ? tutorCardBoxArray : studentCardBoxArray}
           btnText={
-            isStudent
-              ? t('guestHomePage.whatCanYouDo.learn.actionLabel')
-              : t('guestHomePage.whatCanYouDo.teach.actionLabel')
+            isTutor
+              ? t('guestHomePage.whatCanYouDo.teach.actionLabel')
+              : t('guestHomePage.whatCanYouDo.learn.actionLabel')
           }
-          isStudent={isStudent}
-          role={isStudent ? UserRoleEnum.Tutor : UserRoleEnum.Student}
+          isTutor={isTutor}
+          role={isTutor ? UserRoleEnum.Tutor : UserRoleEnum.Student}
         />
       </Box>
     </Box>
