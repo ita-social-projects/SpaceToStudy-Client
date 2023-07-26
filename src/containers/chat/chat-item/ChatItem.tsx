@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, memo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
@@ -14,7 +14,7 @@ import { getFormatedDate, spliceSx } from '~/utils/helper-functions'
 interface ItemOfChatProps {
   user: Pick<UserResponse, '_id' | 'firstName' | 'lastName' | 'photo'>
   lastMessage: LatestMessage
-  isSelectedChat: string
+  isActiveChat: boolean
   setIsSelectedChat: (id: string) => void
   closeDrawer?: () => void
 }
@@ -22,7 +22,7 @@ interface ItemOfChatProps {
 const ChatItem: FC<ItemOfChatProps> = ({
   user,
   lastMessage,
-  isSelectedChat,
+  isActiveChat,
   setIsSelectedChat,
   closeDrawer
 }) => {
@@ -50,13 +50,13 @@ const ChatItem: FC<ItemOfChatProps> = ({
     isCurrentDayHours: true
   })
 
-  const isActiveChat = isSelectedChat === chat ? styles.activeChat : undefined
+  const activeChat = isActiveChat ? styles.activeChat : undefined
   const isCurrentUser = userId === author._id && (
     <Typography sx={styles.prefix}>{t('chat.yourMessage')}</Typography>
   )
 
   return (
-    <Box onClick={handleSelectedChat} sx={spliceSx(styles.root, isActiveChat)}>
+    <Box onClick={handleSelectedChat} sx={spliceSx(styles.root, activeChat)}>
       <Box sx={styles.imageWrapper}>
         <Avatar
           src={photo && `${import.meta.env.VITE_APP_IMG_USER_URL}${photo}`}
@@ -82,4 +82,4 @@ const ChatItem: FC<ItemOfChatProps> = ({
   )
 }
 
-export default ChatItem
+export default memo(ChatItem)

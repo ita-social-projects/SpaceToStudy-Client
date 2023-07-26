@@ -1,4 +1,4 @@
-import { FC, useMemo, useState } from 'react'
+import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import SimpleBar from 'simplebar-react'
 
@@ -33,26 +33,21 @@ const ListOfUsersWithSearch: FC<ListOfUsersWithSearchProps> = ({
 
   const { t } = useTranslation()
 
-  const chats = useMemo(() => {
-    const filteredChats = filterChats(listOfChats, userId, search)
-    return filteredChats.map((item: ChatResponse) => (
+  const filteredChats = filterChats(listOfChats, userId, search)
+
+  const chats = filteredChats.map((item: ChatResponse) => {
+    const isActiveChat = isSelectedChat === item._id
+    return (
       <ChatItem
         closeDrawer={closeDrawer}
-        isSelectedChat={isSelectedChat}
+        isActiveChat={isActiveChat}
         key={item._id}
         lastMessage={item.latestMessage}
         setIsSelectedChat={setIsSelectedChat}
         user={item.members[0].user}
       />
-    ))
-  }, [
-    closeDrawer,
-    isSelectedChat,
-    listOfChats,
-    search,
-    setIsSelectedChat,
-    userId
-  ])
+    )
+  })
 
   return (
     <Box sx={styles.root}>
