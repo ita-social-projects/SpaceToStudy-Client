@@ -9,7 +9,7 @@ import { useAppSelector } from '~/hooks/use-redux'
 
 import { styles } from '~/containers/chat/chat-item/ChatItem.styles'
 import { ComponentEnum, LatestMessage, UserResponse } from '~/types'
-import { getFormatedDate, spliceSx } from '~/utils/helper-functions'
+import { getFormatedDate } from '~/utils/helper-functions'
 
 interface ItemOfChatProps {
   user: Pick<UserResponse, '_id' | 'firstName' | 'lastName' | 'photo'>
@@ -50,13 +50,12 @@ const ChatItem: FC<ItemOfChatProps> = ({
     isCurrentDayHours: true
   })
 
-  const activeChat = isActiveChat ? styles.activeChat : undefined
   const isCurrentUser = userId === author._id && (
-    <Typography sx={styles.prefix}>{t('chat.yourMessage')}</Typography>
+    <Typography sx={styles.prefix}>{t('chatPage.message.you')}:</Typography>
   )
 
   return (
-    <Box onClick={handleSelectedChat} sx={spliceSx(styles.root, activeChat)}>
+    <Box onClick={handleSelectedChat} sx={styles.root(isActiveChat)}>
       <Box sx={styles.imageWrapper}>
         <Avatar
           src={photo && `${import.meta.env.VITE_APP_IMG_USER_URL}${photo}`}

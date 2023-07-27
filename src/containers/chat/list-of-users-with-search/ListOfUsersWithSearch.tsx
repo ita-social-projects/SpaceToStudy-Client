@@ -30,7 +30,6 @@ const ListOfUsersWithSearch: FC<ListOfUsersWithSearchProps> = ({
   const [search, setSearch] = useState<string>('')
 
   const { userId } = useAppSelector((state) => state.appMain)
-
   const { t } = useTranslation()
 
   const filteredChats = filterChats(listOfChats, userId, search)

@@ -7,16 +7,14 @@ const hideText = {
 }
 
 export const styles = {
-  root: {
+  root: (isActiveChat: boolean) => ({
     display: 'flex',
     alignItems: 'center',
     p: { xs: '12px 16px', sm: '16px 24px' },
     gap: '12px',
-    cursor: 'pointer'
-  },
-  activeChat: {
-    backgroundColor: 'primary.50'
-  },
+    cursor: 'pointer',
+    backgroundColor: isActiveChat ? 'primary.50' : 'basic.white'
+  }),
   imageWrapper: {
     position: 'relative',
     display: 'block'
