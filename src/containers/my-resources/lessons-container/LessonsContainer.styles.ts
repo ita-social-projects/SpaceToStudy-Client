@@ -1,9 +1,29 @@
+import { TypographyVariantEnum } from '~/types'
+
+const captionTitle = {
+  color: 'primary.400',
+  typography: TypographyVariantEnum.Caption
+}
+
 export const styles = {
   topContainer: {
     display: 'flex',
     justifyContent: 'space-between',
     mb: '24px'
   },
+  lessonTitleContainer: {
+    display: 'flex',
+    alignItems: 'center'
+  },
+  lessonIcon: {
+    mr: '32px'
+  },
+  lessonTitle: {
+    typography: TypographyVariantEnum.Subtitle2,
+    color: 'primary.900'
+  },
+  attachmentsTitle: captionTitle,
+  dateTitle: captionTitle,
   addLessonBtn: {
     py: '19px',
     px: '40px'

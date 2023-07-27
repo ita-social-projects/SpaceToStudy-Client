@@ -8,18 +8,17 @@ import { ChangeEvent, useState } from 'react'
 import AppButton from '~/components/app-button/AppButton'
 import EnhancedTable from '~/components/enhanced-table/EnhancedTable'
 import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
-import {
-  columns,
-  removeColumnRules
-} from '~/containers/my-resources/lessons-container/LessonsContainer.constants'
+import { removeColumnRules } from '~/containers/my-resources/lessons-container/LessonsContainer.constants'
 import { styles } from '~/containers/my-resources/lessons-container/LessonsContainer.styles'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { Lesson, SortEnum } from '~/types'
+import { columns } from './LessonsContainer.constants copy'
 
 const items: Lesson[] = [
   {
     _id: 'ewqdwqdqwd2312',
-    title: 'Learn english',
+    title:
+      'Advanced Quantum Mechanics: Theoretical Concepts Part 2 Advanced Quantum Mechanics: Theoretical Concepts Part 2Advanced Quantum Mech',
     attachments: ['ww'],
     updatedAt: new Date(Date.now() + 5000000).toString(),
     createdAt: new Date().toString()
@@ -55,13 +54,13 @@ const LessonsContainer = () => {
 
   const rowActions = [
     {
-      label: t('Edit lesson'),
+      label: t('Edit'),
       func: () => {
         //
       }
     },
     {
-      label: t('Delete lesson'),
+      label: t('Delete'),
       func: () => {
         //
       }
