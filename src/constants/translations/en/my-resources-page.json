@@ -3,5 +3,12 @@
     "lessons": "Lessons",
     "tests": "Tests",
     "attachments": "Attachments"
+  },
+  "lessons": {
+    "title": "Title",
+    "attachments": "Attachments",
+    "lastUpdates": "Last updates",
+    "actions": "Actions",
+    "emptyLessons":"You have no lessons yet"
   }
 }

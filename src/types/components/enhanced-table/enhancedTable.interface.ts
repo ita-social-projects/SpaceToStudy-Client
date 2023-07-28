@@ -42,5 +42,5 @@ export interface TableSort {
 export interface TableData<I> {
   items: I[]
   loading?: boolean
-  getData?: () => void
+  getData?: (params?: string) => void | Promise<void>
 }

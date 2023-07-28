@@ -3,5 +3,13 @@
     "lessons": "Уроки",
     "tests": "Тести",
     "attachments": "Вкладення"
+  },
+  "lessons": {
+    "title": "Заголовок",
+    "attachments": "Файли",
+    "attachmentsQty":"Файлів",
+    "lastUpdates": "Останнє оновлення",
+    "actions": "Дії",
+    "emptyLessons":"У вас ще немає уроків"
   }
 }

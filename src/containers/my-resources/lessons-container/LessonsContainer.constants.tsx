@@ -1,5 +1,6 @@
 import ListAltIcon from '@mui/icons-material/ListAlt'
 import { Box, Typography } from '@mui/material'
+import { defaultResponses } from '~/constants'
 
 import { styles } from '~/containers/my-resources/lessons-container/LessonsContainer.styles'
 import { Lesson, Offer, RemoveColumnRules } from '~/types'
@@ -40,4 +41,9 @@ export const removeColumnRules: RemoveColumnRules<Offer> = {
     'myOffersPage.tableHeaders.updated',
     'myOffersPage.tableHeaders.status'
   ]
+}
+
+export const defaultResponse = {
+  items: defaultResponses.array,
+  count: 0
 }

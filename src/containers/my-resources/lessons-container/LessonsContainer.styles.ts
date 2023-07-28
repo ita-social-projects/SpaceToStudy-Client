@@ -35,5 +35,6 @@ export const styles = {
     border: '1px solid',
     borderColor: 'primary.500',
     borderRadius: '6px'
-  }
+  },
+  newLessonIcon: { fontSize: '25px', marginLeft: '13px', fontWeight: '400' }
 }

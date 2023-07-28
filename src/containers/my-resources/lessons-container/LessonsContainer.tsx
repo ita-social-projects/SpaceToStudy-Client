@@ -1,49 +1,69 @@
 import { useTranslation } from 'react-i18next'
-import { ajustColumns } from '~/utils/helper-functions'
+import { ajustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
 
 import SearchIcon from '@mui/icons-material/Search'
 import { Box } from '@mui/material'
 
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useCallback, useState } from 'react'
 import AppButton from '~/components/app-button/AppButton'
+import AppDrawer from '~/components/app-drawer/AppDrawer'
+import AppPagination from '~/components/app-pagination/AppPagination'
 import EnhancedTable from '~/components/enhanced-table/EnhancedTable'
 import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
-import { removeColumnRules } from '~/containers/my-resources/lessons-container/LessonsContainer.constants'
+import Loader from '~/components/loader/Loader'
+import { itemsLoadLimit } from '~/constants'
+import {
+  columns,
+  defaultResponse,
+  removeColumnRules
+} from '~/containers/my-resources/lessons-container/LessonsContainer.constants'
 import { styles } from '~/containers/my-resources/lessons-container/LessonsContainer.styles'
+import usePagination from '~/hooks/table/use-pagination'
+import useAxios from '~/hooks/use-axios'
 import useBreakpoints from '~/hooks/use-breakpoints'
-import { Lesson, SortEnum } from '~/types'
-import { columns } from './LessonsContainer.constants copy'
-
-const items: Lesson[] = [
-  {
-    _id: 'ewqdwqdqwd2312',
-    title:
-      'Advanced Quantum Mechanics: Theoretical Concepts Part 2 Advanced Quantum Mechanics: Theoretical Concepts Part 2Advanced Quantum Mech',
-    attachments: ['ww'],
-    updatedAt: new Date(Date.now() + 5000000).toString(),
-    createdAt: new Date().toString()
-  },
-  {
-    _id: 'ewqdwqdqwd2312',
-    title: 'Joray weito',
-    attachments: ['ww', 'ww', '2', '33ds'],
-    updatedAt: new Date(Date.now() - 5000000).toString(),
-    createdAt: new Date().toString()
-  }
-]
+import { useDrawer } from '~/hooks/use-drawer'
+import { ResourceService } from '~/services/resource-service'
+import { ItemsWithCount, Lesson, SortEnum } from '~/types'
 
 const LessonsContainer = () => {
   const breakpoints = useBreakpoints()
   const { t } = useTranslation()
   const [search, setSearch] = useState('')
-  const [testItems, setTestItems] = useState(items)
+  const { page, handleChangePage } = usePagination()
+  const { openDrawer, closeDrawer, isOpen } = useDrawer()
+  const [_selectedLesson, setSelectedLesson] = useState<Lesson | null>(null)
 
+  const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
+
+  // change naming like in other similar pages
   const handleOnSearch = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value)
   }
 
+  // here too
   const handleOnSearchClean = () => {
     setSearch('')
+  }
+
+  const getMyLessons = useCallback(() => ResourceService.getUsersLessons(), [])
+
+  const { loading, response, fetchData } = useAxios<ItemsWithCount<Lesson>>({
+    service: getMyLessons,
+    defaultResponse
+  })
+
+  const refetchLessons = async () => {
+    await fetchData()
+  }
+
+  const deleteLesson = async (id: string) => {
+    await ResourceService.deleteLesson(id)
+  }
+
+  const editLesson = (id: string) => {
+    openDrawer()
+    const lesson = response.items.find(({ _id }) => _id === id) ?? null
+    setSelectedLesson(lesson)
   }
 
   const columnsToShow = ajustColumns<Lesson>(
@@ -54,39 +74,35 @@ const LessonsContainer = () => {
 
   const rowActions = [
     {
-      label: t('Edit'),
-      func: () => {
-        //
-      }
+      label: t('common.edit'),
+      func: editLesson
     },
     {
-      label: t('Delete'),
-      func: () => {
-        //
-      }
+      label: t('common.delete'),
+      func: deleteLesson
     }
   ]
 
   return (
     <Box>
+      {loading && <Loader pageLoad size={50} />}
       <Box sx={styles.topContainer}>
         <AppButton sx={styles.addLessonBtn}>
-          New lesson{' '}
-          <span style={{ fontSize: '20px', marginLeft: '5px' }}>+</span>
+          New lesson <span style={styles.newLessonIcon}>+</span>
         </AppButton>
         <InputWithIcon
           endAdornment={<SearchIcon sx={styles.searchIcon} />}
           onChange={handleOnSearch}
           onClear={handleOnSearchClean}
-          placeholder={t('cooperationsPage.search')}
+          placeholder={t('common.search')}
           sx={styles.input}
           value={search}
         />
       </Box>
       <EnhancedTable
         columns={columnsToShow}
-        data={{ items: testItems }}
-        emptyTableKey='You have no lessons yet'
+        data={{ items: response.items, getData: refetchLessons }}
+        emptyTableKey='myResourcesPage.lessons.emptyLessons'
         rowActions={rowActions}
         sort={{
           sort: {
@@ -94,10 +110,19 @@ const LessonsContainer = () => {
             orderBy: 'title'
           },
           onRequestSort: (columnField: string) => {
-            setTestItems((items) => items.sort())
+            //
           }
         }}
       />
+
+      <AppPagination
+        onChange={handleChangePage}
+        page={page}
+        pageCount={Math.ceil(response.count / itemsPerPage)}
+      />
+      <AppDrawer onClose={closeDrawer} open={isOpen}>
+        EditLesson EditLesson EditLesson EditLesson
+      </AppDrawer>
     </Box>
   )
 }

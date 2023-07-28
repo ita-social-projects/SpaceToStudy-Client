@@ -1,37 +1,37 @@
-import { useCallback, useState } from 'react'
-import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
+import { useCallback, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
-import usePagination from '~/hooks/table/use-pagination'
-import useAxios from '~/hooks/use-axios'
-import useSort from '~/hooks/table/use-sort'
-import useBreakpoints from '~/hooks/use-breakpoints'
-import useFilter from '~/hooks/table/use-filter'
-import { useAppSelector } from '~/hooks/use-redux'
-import { useDrawer } from '~/hooks/use-drawer'
-import Tab from '~/components/tab/Tab'
-import Loader from '~/components/loader/Loader'
 import AppButton from '~/components/app-button/AppButton'
-import AppPagination from '~/components/app-pagination/AppPagination'
-import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import AppDrawer from '~/components/app-drawer/AppDrawer'
-import CreateOffer from '~/containers/offer-page/create-offer/CreateOffer'
+import AppPagination from '~/components/app-pagination/AppPagination'
+import Loader from '~/components/loader/Loader'
+import PageWrapper from '~/components/page-wrapper/PageWrapper'
+import Tab from '~/components/tab/Tab'
 import CooperationOfferToolbar from '~/containers/my-cooperations/cooperation-offer-toolbar/CooperationOfferToolbar'
 import MyOffersContainer from '~/containers/my-offers/my-offers-container/MyOffersContainer'
+import CreateOffer from '~/containers/offer-page/create-offer/CreateOffer'
+import useFilter from '~/hooks/table/use-filter'
+import usePagination from '~/hooks/table/use-pagination'
+import useSort from '~/hooks/table/use-sort'
+import useAxios from '~/hooks/use-axios'
+import useBreakpoints from '~/hooks/use-breakpoints'
+import { useDrawer } from '~/hooks/use-drawer'
+import { useAppSelector } from '~/hooks/use-redux'
 import { OfferService } from '~/services/offer-service'
 import { getScreenBasedLimit } from '~/utils/helper-functions'
 
+import { itemsLoadLimit } from '~/constants'
+import { styles } from '~/pages/my-cooperations/MyCooperations.styles'
 import {
   defaultResponse,
-  sortTranslationKeys,
   initialFilters,
   initialSort,
+  sortTranslationKeys,
   tabsInfo
 } from '~/pages/my-offers/MyOffers.constants'
-import { itemsLoadLimit } from '~/constants'
 import { CardsViewEnum, TabType } from '~/types'
-import { styles } from '~/pages/my-cooperations/MyCooperations.styles'
 
 const MyOffers = () => {
   const [itemsView, setItemsView] = useState<CardsViewEnum>(
@@ -73,7 +73,7 @@ const MyOffers = () => {
 
   const { loading, response } = useAxios({
     service: getMyOffers,
-    defaultResponse: defaultResponse
+    defaultResponse
   })
 
   const handleTabClick = (tab: TabType<string>) => {
