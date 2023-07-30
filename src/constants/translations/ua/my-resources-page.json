@@ -5,6 +5,7 @@
     "attachments": "Вкладення"
   },
   "lessons": {
+    "newLessonBtn":"Новий урок",
     "title": "Заголовок",
     "attachments": "Файли",
     "attachmentQty": "Файл",

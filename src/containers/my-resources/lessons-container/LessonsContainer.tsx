@@ -134,7 +134,8 @@ const LessonsContainer = () => {
         onClick={newLesson}
         sx={styles.addLessonBtn}
       >
-        New lesson <span style={styles.newLessonIcon}>+</span>
+        {t('myResourcesPage.lessons.newLessonBtn')}{' '}
+        <span style={styles.newLessonIcon}>+</span>
       </AppButton>
       <InputWithIcon
         endAdornment={<SearchIcon sx={styles.searchIcon} />}

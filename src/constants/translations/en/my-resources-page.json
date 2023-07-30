@@ -5,6 +5,7 @@
     "attachments": "Attachments"
   },
   "lessons": {
+    "newLessonBtn":"New lesson",
     "title": "Title",
     "attachmentQty": "Attachment",
     "attachmentsQty": "Attachments",
