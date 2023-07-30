@@ -1,21 +1,25 @@
 import { lazy } from 'react'
 import { Route } from 'react-router-dom'
 
-import PrivateRoute from '~/router/helpers/PrivateRoute'
-import {
-  subjects,
-  findOffers,
-  categories,
-  offerDetails,
-  userProfile,
-  chat,
-  myCooperations,
-  myOffers,
-  myResources,
-  editProfile,
-  myProfile
-} from '~/router/constants/crumbs'
+import MyLesson from '~/pages/my-lesson/MyLesson'
+import CreateLesson from '~/pages/new-lesson/NewLesson'
 import { authRoutes } from '~/router/constants/authRoutes'
+import {
+  categories,
+  chat,
+  editProfile,
+  findOffers,
+  myCooperations,
+  myLesson,
+  myOffers,
+  myProfile,
+  myResources,
+  newLesson,
+  offerDetails,
+  subjects,
+  userProfile
+} from '~/router/constants/crumbs'
+import PrivateRoute from '~/router/helpers/PrivateRoute'
 import { UserRoleEnum } from '~/types'
 import { userProfileLoader } from '../constants/loaders'
 
@@ -90,7 +94,17 @@ export const authRouter = (
     <Route
       element={<MyResources />}
       handle={{ crumb: myResources }}
-      path={authRoutes.myResources.route}
+      path={authRoutes.myResources.root.route}
+    />
+    <Route
+      element={<CreateLesson />}
+      handle={{ crumb: [myResources, newLesson] }}
+      path={authRoutes.myResources.newLesson.route}
+    />
+    <Route
+      element={<MyLesson />}
+      handle={{ crumb: [myResources, myLesson] }}
+      path={authRoutes.myResources.myLesson.route}
     />
   </Route>
 )

@@ -61,7 +61,7 @@ export const getEmptyValues = <T extends object, R>(
 export const findFullObjects = <T extends object>(array: T[]) =>
   array.filter((el) => Object.values(el).every((el) => el))
 
-export const getFormatedDate = ({
+export const getFormattedDate = ({
   date,
   locales = 'en-US',
   options = {

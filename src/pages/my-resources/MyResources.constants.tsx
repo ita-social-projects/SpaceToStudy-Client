@@ -8,7 +8,7 @@ import LessonsContainer from '~/containers/my-resources/lessons-container/Lesson
 interface TabsData {
   [key: string]: {
     title: string
-    content: ReactElement
+    content: ReactElement | JSX.Element
     icon: ReactElement
   }
 }
@@ -20,12 +20,12 @@ export const tabsData: TabsData = {
   },
   tests: {
     title: 'myResourcesPage.tabs.tests',
-    content: <LessonsContainer />,
+    content: <h1>Quizzes tab</h1>,
     icon: <NoteAltOutlinedIcon />
   },
   attachments: {
     title: 'myResourcesPage.tabs.attachments',
-    content: <LessonsContainer />,
+    content: <h1>Attachments tab</h1>,
     icon: <AttachFileIcon />
   }
 }

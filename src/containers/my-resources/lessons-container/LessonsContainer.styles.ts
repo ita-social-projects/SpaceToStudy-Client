@@ -13,7 +13,8 @@ export const styles = {
   },
   lessonTitleContainer: {
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
+    cursor: 'pointer'
   },
   lessonIcon: {
     mr: '32px'

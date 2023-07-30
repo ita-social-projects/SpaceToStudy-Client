@@ -6,10 +6,10 @@ import { TableActionFunc } from './enhancedTable.types'
 export interface TableColumn<I> {
   field?: string
   label: string
-  calculatedCellValue?: (
+  calculatedCellValue: (
     item: I,
-    additionalProps?: AdditionalPropsInterface
-  ) => string | ReactElement
+    additionalProps: AdditionalPropsInterface
+  ) => string | ReactElement | JSX.Element
 }
 
 export interface TableRowAction {
@@ -42,5 +42,5 @@ export interface TableSort {
 export interface TableData<I> {
   items: I[]
   loading?: boolean
-  getData?: (params?: string) => void | Promise<void>
+  getData?: (params?: undefined) => void | Promise<void>
 }

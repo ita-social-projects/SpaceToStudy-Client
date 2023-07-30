@@ -2,26 +2,26 @@ import { FC, MouseEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
-import Box from '@mui/material/Box'
 import Avatar from '@mui/material/Avatar'
+import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import AppRating from '~/components/app-rating/AppRating'
 import LanguagesListWithIcon from '~/components/languages-list-with-icon/LanguagesListWithIcon'
 
 import {
   createUrlPath,
-  getFormatedDate,
+  getFormattedDate,
   spliceSx
 } from '~/utils/helper-functions'
 
+import { styles } from '~/components/user-profile-info/UserProfileInfo.styles'
+import { authRoutes } from '~/router/constants/authRoutes'
 import {
   LanguagesEnum,
   UserProfileInfoSx,
   UserResponse,
   UserRole
 } from '~/types'
-import { styles } from '~/components/user-profile-info/UserProfileInfo.styles'
-import { authRoutes } from '~/router/constants/authRoutes'
 
 interface UserProfileInfoProps
   extends Pick<UserResponse, 'photo' | 'firstName' | 'lastName' | '_id'> {
@@ -97,7 +97,7 @@ const UserProfileInfo: FC<UserProfileInfoProps> = ({
         )}
         {date && (
           <Typography sx={spliceSx(styles.date, sx.date)}>
-            {getFormatedDate({ date })}
+            {getFormattedDate({ date })}
           </Typography>
         )}
         {languages && <LanguagesListWithIcon languages={languages} />}

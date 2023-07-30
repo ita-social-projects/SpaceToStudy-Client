@@ -1,7 +1,7 @@
-import { renderWithProviders } from '~tests/test-utils'
 import { screen } from '@testing-library/react'
 import { UserRoleEnum } from '~/types'
-import { getFormatedDate } from '~/utils/helper-functions'
+import { getFormattedDate } from '~/utils/helper-functions'
+import { renderWithProviders } from '~tests/test-utils'
 
 import someAvatar from '~/assets/img/student-home/bag.png'
 import Message from '~/components/message/Message'
@@ -38,7 +38,7 @@ describe('Message component', () => {
 
   it('should format the timestamp correctly', () => {
     const timestampElement = screen.getByText(
-      getFormatedDate({ date: newAuthor.createdAt })
+      getFormattedDate({ date: newAuthor.createdAt })
     )
 
     expect(timestampElement).toBeInTheDocument()

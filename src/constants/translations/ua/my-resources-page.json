@@ -7,9 +7,12 @@
   "lessons": {
     "title": "Заголовок",
     "attachments": "Файли",
+    "attachmentQty": "Файл",
     "attachmentsQty":"Файлів",
     "lastUpdates": "Останнє оновлення",
     "actions": "Дії",
-    "emptyLessons":"У вас ще немає уроків"
+    "emptyLessons":"У вас ще немає уроків",
+    "confirmLessonDeletionTitle":"Ви підтверджуєте видалення уроку?",
+    "confirmLessonDeletionMessage":"Ця дія є постійною та призведе до видалення всього пов’язаного вмісту. Перш ніж продовжити, перегляньте своє рішення."
   }
 }

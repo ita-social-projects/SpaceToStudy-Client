@@ -1,12 +1,12 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import CloseIcon from '@mui/icons-material/Close'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
-import CloseIcon from '@mui/icons-material/Close'
 import AppButton from '~/components/app-button/AppButton'
 import { ButtonVariantEnum } from '~/types'
 

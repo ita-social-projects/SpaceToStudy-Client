@@ -1,10 +1,11 @@
 import Typography from '@mui/material/Typography'
 
-import { getFormatedDate } from '~/utils/helper-functions'
 import StatusChip from '~/components/status-chip/StatusChip'
-import UserProfileInfo from '~/components/user-profile-info/UserProfileInfo'
 import SubjectLevelChips from '~/components/subject-level-chips/SubjectLevelChips'
+import UserProfileInfo from '~/components/user-profile-info/UserProfileInfo'
+import { getFormattedDate } from '~/utils/helper-functions'
 
+import { styles } from '~/containers/my-cooperations/cooperations-container/CooperationContainer.styles'
 import {
   AdditionalPropsInterface,
   Cooperation,
@@ -12,7 +13,6 @@ import {
   RemoveColumnRules,
   StatusEnum
 } from '~/types'
-import { styles } from '~/containers/my-cooperations/cooperations-container/CooperationContainer.styles'
 
 export const columns = [
   {
@@ -57,7 +57,7 @@ export const columns = [
     label: 'cooperationsPage.tableHeaders.updated',
     field: 'updatedAt',
     calculatedCellValue: (item: Cooperation) =>
-      getFormatedDate({ date: item.updatedAt })
+      getFormattedDate({ date: item.updatedAt })
   },
   {
     label: 'cooperationsPage.tableHeaders.status',

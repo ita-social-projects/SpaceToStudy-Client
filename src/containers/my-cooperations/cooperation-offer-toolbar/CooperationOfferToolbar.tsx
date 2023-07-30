@@ -1,23 +1,23 @@
+import SearchIcon from '@mui/icons-material/Search'
+import Box from '@mui/material/Box'
 import { ChangeEvent, FC, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import Box from '@mui/material/Box'
-import SearchIcon from '@mui/icons-material/Search'
 
+import AppSelect from '~/components/app-select/AppSelect'
 import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
 import ViewSwitcher from '~/components/view-switcher/ViewSwitcher'
-import AppSelect from '~/components/app-select/AppSelect'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { useDebounce } from '~/hooks/use-debounce'
 
 import { styles } from '~/containers/my-cooperations/cooperation-offer-toolbar/CooperationOfferToolbar.styles'
 import { FilterHook } from '~/hooks/table/use-filter'
+import { SortHook } from '~/hooks/table/use-sort'
 import {
   CardsView,
   CardsViewEnum,
   MyCooperationsFilters,
   SelectFieldType
 } from '~/types'
-import { SortHook } from '~/hooks/table/use-sort'
 
 interface CooperationOfferToolbarProps {
   filterOptions: FilterHook<MyCooperationsFilters>
@@ -47,7 +47,7 @@ const CooperationOfferToolbar: FC<CooperationOfferToolbarProps> = ({
   }, [filters.status])
 
   const changeSearch = setFilterByKey('search')
-  const deboucedSearchChange = useDebounce(changeSearch)
+  const debouncedSearchChange = useDebounce(changeSearch)
 
   const handleViewChange = (value: CardsView) => {
     resetSort()
@@ -56,7 +56,7 @@ const CooperationOfferToolbar: FC<CooperationOfferToolbarProps> = ({
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value)
-    deboucedSearchChange(e.target.value)
+    debouncedSearchChange(e.target.value)
   }
 
   const handleInputReset = () => {
