@@ -129,7 +129,11 @@ const LessonsContainer = () => {
 
   const newLessonBtn = (
     <Box sx={styles.topContainer}>
-      <AppButton onClick={newLesson} sx={styles.addLessonBtn}>
+      <AppButton
+        data-testid='newLessonBtn'
+        onClick={newLesson}
+        sx={styles.addLessonBtn}
+      >
         New lesson <span style={styles.newLessonIcon}>+</span>
       </AppButton>
       <InputWithIcon

@@ -1,8 +1,8 @@
-import { render, fireEvent, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import { expect, vi } from 'vitest'
 
-import useAxios from '~/hooks/use-axios'
 import UserTable from '~/components/user-table/UserTable'
+import useAxios from '~/hooks/use-axios'
 import {
   columns,
   initialFilters,
@@ -23,6 +23,14 @@ const userDataMock = {
     tutor: 'active'
   }
 }
+
+vi.mock('react-router-dom', async () => {
+  const actual = await vi.importActual('react-router-dom')
+  return {
+    ...actual,
+    useNavigate: vi.fn()
+  }
+})
 
 const userDataArray = Array(10)
   .fill()
