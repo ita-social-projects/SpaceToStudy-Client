@@ -1,15 +1,11 @@
 import { vi } from 'vitest'
-
 import { screen, fireEvent } from '@testing-library/react'
 import { beforeEach, expect } from 'vitest'
-import MyOffersCard from '~/containers/my-offers/my-offers-card/MyOffersCard'
 import { renderWithProviders } from '~tests/test-utils'
+import MyOffersCard from '~/containers/my-offers/my-offers-card/MyOffersCard'
 import { mockOffer } from '~tests/unit/pages/offer-details/OfferDetails.spec.constants'
 
-const buttonActions = [
-  { label: 'Action 1', buttonProps: { onClick: vi.fn() } },
-  { label: 'Action 2', buttonProps: { onClick: vi.fn() } }
-]
+const buttonActions = [{ label: 'Action 1', buttonProps: { onClick: vi.fn() } }]
 
 describe('MyOffersCard test', () => {
   beforeEach(() => {
