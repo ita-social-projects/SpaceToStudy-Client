@@ -1,6 +1,6 @@
 import ListAltIcon from '@mui/icons-material/ListAlt'
-import { Box, Typography } from '@mui/material'
-import { defaultResponses } from '~/constants'
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
 
 import { styles } from '~/containers/my-resources/lessons-container/LessonsContainer.styles'
 import { authRoutes } from '~/router/constants/authRoutes'
@@ -21,19 +21,18 @@ export const columns: TableColumn<Lesson>[] = [
     calculatedCellValue: (
       item: Lesson,
       { navigate }: AdditionalPropsInterface
-    ) => (
-      <Box
-        onClick={() =>
-          navigate(
-            createUrlPath(authRoutes.myResources.myLesson.path, item._id)
-          )
-        }
-        sx={styles.lessonTitleContainer}
-      >
-        <ListAltIcon sx={styles.lessonIcon} />
-        <Typography sx={styles.lessonTitle}>{item.title}</Typography>
-      </Box>
-    )
+    ) => {
+      const navigateLesson = () => {
+        navigate(createUrlPath(authRoutes.myResources.myLesson.path, item._id))
+      }
+
+      return (
+        <Box onClick={navigateLesson} sx={styles.lessonTitleContainer}>
+          <ListAltIcon sx={styles.lessonIcon} />
+          <Typography sx={styles.lessonTitle}>{item.title}</Typography>
+        </Box>
+      )
+    }
   },
   {
     label: 'myResourcesPage.lessons.attachments',
@@ -42,7 +41,7 @@ export const columns: TableColumn<Lesson>[] = [
 
       return (
         <Typography sx={styles.attachmentsTitle}>
-          {attachmentsQty}{' '}
+          {attachmentsQty}
           {t(
             `myResourcesPage.lessons.attachment${
               attachmentsQty === 1 ? '' : 's'
@@ -68,11 +67,6 @@ export const removeColumnRules: RemoveColumnRules<Offer> = {
     'myOffersPage.tableHeaders.updated',
     'myOffersPage.tableHeaders.status'
   ]
-}
-
-export const defaultResponse = {
-  items: defaultResponses.array,
-  count: 0
 }
 
 export const initialSort = { order: SortEnum.Desc, orderBy: 'updatedAt' }

@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import useMenu from '~/hooks/use-menu'
+import { useNavigate } from 'react-router-dom'
 
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import Checkbox from '@mui/material/Checkbox'
@@ -7,7 +7,8 @@ import IconButton from '@mui/material/IconButton'
 import MenuItem from '@mui/material/MenuItem'
 import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
-import { useNavigate } from 'react-router-dom'
+
+import useMenu from '~/hooks/use-menu'
 
 const EnhancedTableRow = ({
   columns,

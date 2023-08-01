@@ -33,7 +33,7 @@ interface EnhancedTableProps<I, F> extends TableProps {
   rowsPerPage?: number
   data: TableData<I>
   onRowClick?: (item: I) => void
-  emptyTableKey: string
+  emptyTableKey?: string
 }
 
 const EnhancedTable = <I extends TableItem, F = undefined>({

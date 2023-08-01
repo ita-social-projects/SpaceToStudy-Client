@@ -1,10 +1,10 @@
 import { ChangeEvent, useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
 
 import SearchIcon from '@mui/icons-material/Search'
-import { Box } from '@mui/material'
+import Box from '@mui/material/Box'
 
-import { useNavigate } from 'react-router-dom'
 import AppButton from '~/components/app-button/AppButton'
 import AppDrawer from '~/components/app-drawer/AppDrawer'
 import AppPagination from '~/components/app-pagination/AppPagination'
@@ -13,31 +13,28 @@ import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
 import Loader from '~/components/loader/Loader'
 import {
   columns,
-  defaultResponse,
   initialSort,
   itemsLoadLimit,
   removeColumnRules
 } from '~/containers/my-resources/lessons-container/LessonsContainer.constants'
-
 import usePagination from '~/hooks/table/use-pagination'
 import useSort from '~/hooks/table/use-sort'
 import useAxios from '~/hooks/use-axios'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import useConfirm from '~/hooks/use-confirm'
+import { useDebounce } from '~/hooks/use-debounce'
 import { useDrawer } from '~/hooks/use-drawer'
 import { ResourceService } from '~/services/resource-service'
+
+import { defaultResponses } from '~/constants'
+import { styles } from '~/containers/my-resources/lessons-container/LessonsContainer.styles'
+import { authRoutes } from '~/router/constants/authRoutes'
+import { ItemsWithCount, Lesson } from '~/types'
 import {
   ajustColumns,
   createUrlPath,
   getScreenBasedLimit
 } from '~/utils/helper-functions'
-
-import { authRoutes } from '~/router/constants/authRoutes'
-
-import { styles } from '~/containers/my-resources/lessons-container/LessonsContainer.styles'
-
-import { useDebounce } from '~/hooks/use-debounce'
-import { ItemsWithCount, Lesson } from '~/types'
 
 const LessonsContainer = () => {
   const breakpoints = useBreakpoints()
@@ -79,7 +76,7 @@ const LessonsContainer = () => {
 
   const { loading, response, fetchData } = useAxios<ItemsWithCount<Lesson>>({
     service: getMyLessons,
-    defaultResponse
+    defaultResponse: defaultResponses.itemsWithCount
   })
 
   const onSearchClean = () => {
@@ -134,7 +131,7 @@ const LessonsContainer = () => {
         onClick={newLesson}
         sx={styles.addLessonBtn}
       >
-        {t('myResourcesPage.lessons.newLessonBtn')}{' '}
+        {t('myResourcesPage.lessons.newLessonBtn')}
         <span style={styles.newLessonIcon}>+</span>
       </AppButton>
       <InputWithIcon
