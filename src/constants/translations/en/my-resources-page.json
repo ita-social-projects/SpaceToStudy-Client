@@ -11,7 +11,6 @@
     "attachmentsQty": "Attachments",
     "attachments": "Attachments",
     "lastUpdates": "Last updates",
-    "actions": "Actions",
     "emptyLessons":"You have no lessons yet",
     "confirmLessonDeletionTitle":"Do you confirm lesson deletion?",
     "confirmLessonDeletionMessage":"This action is permanent and will remove all related content. Please review your decision before proceeding."
