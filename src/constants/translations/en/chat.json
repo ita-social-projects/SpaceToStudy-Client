@@ -6,6 +6,22 @@
     "online": "Online"
   },
   "noContacts": "No contacts",
+  "sidebar": {
+    "about": "About",
+    "viewButton": "View Profile",
+    "noSummary": "User has no professional summary",
+    "noMedia": "There are no any media here yet!",
+    "noFiles": "There are no any files here yet!",
+    "noLinks": "There are no any links here yet!",
+    "unknownName": "Unknown name",
+    "media": "Media",
+    "files": "Files",
+    "links": "Links",
+    "seeAll": "See all",
+    "modal": {
+      "all": "All"
+    }
+  },
   "chat": {
     "inputLabel": "Type a message...",
     "chipLabel": "Select a chat, to start messaging"
