@@ -56,7 +56,8 @@ export const columns = [
   {
     label: 'cooperationsPage.tableHeaders.updated',
     field: 'updatedAt',
-    calculatedCellValue: (item: Cooperation) => getFormatedDate(item.updatedAt)
+    calculatedCellValue: (item: Cooperation) =>
+      getFormatedDate({ date: item.updatedAt })
   },
   {
     label: 'cooperationsPage.tableHeaders.status',

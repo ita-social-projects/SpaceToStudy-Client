@@ -1,5 +1,6 @@
 {
-    "message": {
-        "you": "Ви"
-    }
+  "message": {
+    "you": "Ви"
+  },
+  "noContacts": "Немає контактів"
 }

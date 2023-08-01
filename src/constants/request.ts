@@ -40,5 +40,8 @@ export const URLs = {
     get: '/cooperations',
     create: '/cooperations',
     update: '/cooperations'
+  },
+  chats: {
+    get: '/chats'
   }
 }

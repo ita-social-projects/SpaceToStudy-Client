@@ -77,7 +77,7 @@ const UserProfileInfo: FC<UserProfileInfoProps> = ({
       >
         <Link onClick={handleLinkClick} style={styles.link} to={userURL}>
           <Typography sx={spliceSx(styles.name, sx.name)}>
-            {renderAdditionalInfo ? name : t('chat.message.you')}
+            {renderAdditionalInfo ? name : t('chatPage.message.you')}
           </Typography>
         </Link>
         {!isNaN(Number(rating)) && (
@@ -97,7 +97,7 @@ const UserProfileInfo: FC<UserProfileInfoProps> = ({
         )}
         {date && (
           <Typography sx={spliceSx(styles.date, sx.date)}>
-            {getFormatedDate(date)}
+            {getFormatedDate({ date })}
           </Typography>
         )}
         {languages && <LanguagesListWithIcon languages={languages} />}

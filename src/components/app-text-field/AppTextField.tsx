@@ -4,6 +4,7 @@ import TextField, { TextFieldProps } from '@mui/material/TextField'
 import Tooltip from '@mui/material/Tooltip'
 
 import { styles } from '~/components/app-text-field/AppTextField.styles'
+import { TypographyVariantEnum } from '~/types'
 
 interface AppTextFieldProps
   extends Omit<TextFieldProps, 'error' | 'helperText'> {
@@ -17,7 +18,9 @@ const AppTextField: FC<AppTextFieldProps> = ({
 }) => {
   const helperText = errorMsg ? (
     <Tooltip title={errorMsg}>
-      <Typography variant='caption'>{errorMsg}</Typography>
+      <Typography variant={TypographyVariantEnum.Caption}>
+        {errorMsg}
+      </Typography>
     </Tooltip>
   ) : (
     ' '

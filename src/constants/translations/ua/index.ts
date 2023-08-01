@@ -1,5 +1,4 @@
 import common from './common.json'
-import chat from './chat.json'
 import errorPage from './error-page.json'
 import button from './button.json'
 import header from './header.json'
@@ -20,11 +19,11 @@ import offerDetailsPage from './offer-details-page.json'
 import cooperationsPage from './cooperations-page.json'
 import myOffersPage from './my-offers-page.json'
 import myResourcesPage from './my-resources-page.json'
+import chatPage from './chat.json'
 
 const ua = {
   translations: {
     common,
-    chat,
     errorPage,
     button,
     header,
@@ -44,7 +43,8 @@ const ua = {
     offerDetailsPage,
     cooperationsPage,
     myOffersPage,
-    myResourcesPage
+    myResourcesPage,
+    chatPage
   }
 }
 

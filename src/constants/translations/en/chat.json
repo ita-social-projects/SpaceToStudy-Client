@@ -1,5 +1,6 @@
 {
-    "message": {
-        "you": "You"
-    }
+  "message": {
+    "you": "You"
+  },
+  "noContacts": "No contacts"
 }

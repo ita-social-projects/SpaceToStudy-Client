@@ -8,7 +8,8 @@ import {
   UserRole,
   UserRoleEnum,
   Cooperation,
-  Offer
+  Offer,
+  FormatedDate
 } from '~/types'
 
 export const parseJwt = <T,>(token: string): T => {
@@ -60,12 +61,30 @@ export const getEmptyValues = <T extends object, R>(
 export const findFullObjects = <T extends object>(array: T[]) =>
   array.filter((el) => Object.values(el).every((el) => el))
 
-export const getFormatedDate = (date: Date | string): string => {
-  return new Date(date).toLocaleDateString('en-US', {
+export const getFormatedDate = ({
+  date,
+  locales = 'en-US',
+  options = {
     year: 'numeric',
     month: 'long',
     day: 'numeric'
-  })
+  },
+  isCurrentDayHours = false
+}: FormatedDate): string => {
+  const currentDate = new Date()
+  const formattedDate = new Date(date).toLocaleDateString(locales, options)
+
+  if (
+    isCurrentDayHours &&
+    currentDate.toDateString() === new Date(date).toDateString()
+  ) {
+    return new Date(date).toLocaleTimeString([], {
+      hour: '2-digit',
+      minute: '2-digit'
+    })
+  }
+
+  return formattedDate
 }
 
 export const getScreenBasedLimit = (
