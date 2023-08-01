@@ -46,7 +46,7 @@ const EnhancedTable = <I extends TableItem, F = undefined>({
   sort,
   rowsPerPage,
   data,
-  emptyTableKey,
+  emptyTableKey = 'table.noExactMatches',
   ...props
 }: EnhancedTableProps<I, F>) => {
   const { t } = useTranslation()

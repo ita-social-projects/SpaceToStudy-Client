@@ -94,7 +94,6 @@ const MyOffersContainer: FC<MyOffersContainerProps> = ({
     <EnhancedTable
       columns={columnsToShow}
       data={{ items }}
-      emptyTableKey='table.noExactMatches'
       rowActions={rowActions}
       size={SizeEnum.Small}
       sort={sort}

@@ -66,7 +66,6 @@ const CooperationContainer: FC<CooperationContainerProps> = ({
     <EnhancedTable
       columns={columnsToShow}
       data={{ items }}
-      emptyTableKey='table.noExactMatches'
       onRowClick={handleCardClick}
       size={SizeEnum.Small}
       sort={sort}
