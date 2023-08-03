@@ -1,8 +1,8 @@
-import { ChangeEvent, useCallback, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import SearchIcon from '@mui/icons-material/Search'
 import Box from '@mui/material/Box'
+import { ChangeEvent, useCallback, useRef, useState } from 'react'
 
 import AppButton from '~/components/app-button/AppButton'
 import AppDrawer from '~/components/app-drawer/AppDrawer'
@@ -101,7 +101,7 @@ const LessonsContainer = () => {
 
   const deleteLesson = async (id: string, isConfirmed: boolean) => {
     if (isConfirmed) {
-      const res = await ResourceService.deleteLesson(id)
+      await ResourceService.deleteLesson(id)
       await fetchData()
     }
   }
