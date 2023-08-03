@@ -1,7 +1,8 @@
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
 import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
 
 import AppButton from '~/components/app-button/AppButton'
 import AppDrawer from '~/components/app-drawer/AppDrawer'

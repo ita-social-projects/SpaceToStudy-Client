@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useState } from 'react'
+import { ChangeEvent, useCallback, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 
@@ -29,12 +29,19 @@ import { ResourceService } from '~/services/resource-service'
 import { defaultResponses } from '~/constants'
 import { styles } from '~/containers/my-resources/lessons-container/LessonsContainer.styles'
 import { authRoutes } from '~/router/constants/authRoutes'
-import { ItemsWithCount, Lesson } from '~/types'
+import { ItemsWithCount, Lesson, Sort } from '~/types'
 import {
   ajustColumns,
   createUrlPath,
   getScreenBasedLimit
 } from '~/utils/helper-functions'
+
+interface LessonsParams {
+  title: string
+  skip: number
+  limit: number
+  sort: Sort
+}
 
 const LessonsContainer = () => {
   const breakpoints = useBreakpoints()
@@ -44,7 +51,6 @@ const LessonsContainer = () => {
   const { openDialog } = useConfirm()
   const { openDrawer, closeDrawer, isOpen } = useDrawer()
 
-  const [searchTitle, setSearchTitle] = useState('')
   const [searchInput, setSearchInput] = useState('')
   const sortOptions = useSort({
     initialSort
@@ -54,8 +60,29 @@ const LessonsContainer = () => {
   const { page, handleChangePage } = usePagination()
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
 
+  const searchTitle = useRef<string>()
+
+  const getMyLessons = useCallback(() => {
+    return ResourceService.getUsersLessons({
+      limit: itemsPerPage,
+      skip: (page - 1) * itemsPerPage,
+      sort,
+      title: searchTitle.current || ''
+    })
+  }, [page, itemsPerPage, sort, searchTitle.current])
+
+  const { loading, response, fetchData } = useAxios<
+    ItemsWithCount<Lesson>,
+    LessonsParams
+  >({
+    service: getMyLessons,
+    defaultResponse: defaultResponses.itemsWithCount,
+    fetchOnMount: true
+  })
+
   const debouncedOnSearchTitle = useDebounce((text: string) => {
-    setSearchTitle(text)
+    searchTitle.current = text
+    void fetchData()
   })
 
   const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -63,25 +90,10 @@ const LessonsContainer = () => {
     debouncedOnSearchTitle(e.target.value)
   }
 
-  const getMyLessons = useCallback(
-    () =>
-      ResourceService.getUsersLessons({
-        limit: itemsPerPage,
-        skip: (page - 1) * itemsPerPage,
-        sort,
-        title: searchTitle
-      }),
-    [page, itemsPerPage, sort, searchTitle]
-  )
-
-  const { loading, response, fetchData } = useAxios<ItemsWithCount<Lesson>>({
-    service: getMyLessons,
-    defaultResponse: defaultResponses.itemsWithCount
-  })
-
   const onSearchClean = () => {
     setSearchInput('')
-    debouncedOnSearchTitle('')
+    searchTitle.current = ''
+    void fetchData()
   }
 
   const newLesson = () => {
@@ -90,7 +102,7 @@ const LessonsContainer = () => {
 
   const deleteLesson = async (id: string, isConfirmed: boolean) => {
     if (isConfirmed) {
-      await ResourceService.deleteLesson(id)
+      const res = await ResourceService.deleteLesson(id)
       await fetchData()
     }
   }

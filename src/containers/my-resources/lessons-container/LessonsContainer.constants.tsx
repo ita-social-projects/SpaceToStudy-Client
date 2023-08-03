@@ -42,11 +42,11 @@ export const columns: TableColumn<Lesson>[] = [
       return (
         <Typography sx={styles.attachmentsTitle}>
           {attachmentsQty}
-          {t(
+          {` ${t(
             `myResourcesPage.lessons.attachment${
               attachmentsQty === 1 ? '' : 's'
             }Qty`
-          )}
+          )}`}
         </Typography>
       )
     }

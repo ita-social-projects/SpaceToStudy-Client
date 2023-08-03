@@ -7,12 +7,12 @@ import Box from '@mui/material/Box'
 import AppSelect from '~/components/app-select/AppSelect'
 import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
 import ViewSwitcher from '~/components/view-switcher/ViewSwitcher'
-import useBreakpoints from '~/hooks/use-breakpoints'
-import { useDebounce } from '~/hooks/use-debounce'
-
 import { styles } from '~/containers/my-cooperations/cooperation-offer-toolbar/CooperationOfferToolbar.styles'
 import { FilterHook } from '~/hooks/table/use-filter'
 import { SortHook } from '~/hooks/table/use-sort'
+import useBreakpoints from '~/hooks/use-breakpoints'
+import { useDebounce } from '~/hooks/use-debounce'
+
 import {
   CardsView,
   CardsViewEnum,

@@ -3,12 +3,13 @@ import { ReactElement } from 'react'
 import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined'
 import AttachFileIcon from '@mui/icons-material/AttachFile'
 import NoteAltOutlinedIcon from '@mui/icons-material/NoteAltOutlined'
+
 import LessonsContainer from '~/containers/my-resources/lessons-container/LessonsContainer'
 
 interface TabsData {
   [key: string]: {
     title: string
-    content: ReactElement | JSX.Element
+    content: ReactElement
     icon: ReactElement
   }
 }
