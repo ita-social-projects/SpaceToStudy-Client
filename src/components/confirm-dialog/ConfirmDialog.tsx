@@ -1,6 +1,5 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-
 import CloseIcon from '@mui/icons-material/Close'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
