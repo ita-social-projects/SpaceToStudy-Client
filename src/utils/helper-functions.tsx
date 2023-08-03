@@ -4,6 +4,7 @@ import {
   Cooperation,
   FilterFromQuery,
   FormatedDate,
+  Lesson,
   Offer,
   RemoveColumnRules,
   ScreenBasedLimits,
@@ -110,7 +111,7 @@ export const getScreenBasedLimit = (
   }
 }
 
-export const ajustColumns = <T extends Cooperation | Offer>(
+export const ajustColumns = <T extends Cooperation | Offer | Lesson>(
   breakpoints: Breakpoints,
   columns: TableColumn<T>[],
   rules: RemoveColumnRules<T>

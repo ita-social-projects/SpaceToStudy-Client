@@ -56,7 +56,7 @@ export const columns: TableColumn<Lesson>[] = [
     field: 'updatedAt',
     calculatedCellValue: (item: Lesson) => (
       <Typography sx={styles.dateTitle}>
-        {getFormattedDate(item.updatedAt)}
+        {getFormattedDate({ date: item.updatedAt })}
       </Typography>
     )
   }
