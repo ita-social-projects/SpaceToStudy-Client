@@ -20,7 +20,8 @@
     "seeAll": "See all",
     "modal": {
       "all": "All"
-    }
+    },
+    "megabytes": "MB"
   },
   "chat": {
     "inputLabel": "Type a message...",

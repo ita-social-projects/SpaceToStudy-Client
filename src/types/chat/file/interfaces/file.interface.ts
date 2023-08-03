@@ -1,7 +1,6 @@
-export interface File {
-  _id: string
-  name: string
+import { Link } from '~/types/chat/link/link.index'
+
+export interface File extends Link {
   size: number
   uploadedDate: Date
-  url: string
 }

@@ -1,6 +1,5 @@
-import React, { FC } from 'react'
+import React, { FC, isValidElement, cloneElement, Children } from 'react'
 import { useTranslation } from 'react-i18next'
-
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
@@ -8,43 +7,37 @@ import AppButton from '~/components/app-button/AppButton'
 import AllContentModal from '~/components/all-content-modal/AllContentModal'
 import FileComponent from '~/components/file-component/FileComponent'
 import LinkComponent from '~/components/link-component/LinkComponent'
+import SidebarImageGrid from '~/components/sidebar-image-grid/SidebarImageGrid'
 
+import { maxElemToShow } from '~/components/sidebar-content-box/SidebarContentBox.constants'
 import { useModalContext } from '~/context/modal-context'
 import { spliceSx } from '~/utils/helper-functions'
 import { SizeEnum, ButtonVariantEnum, Link, File } from '~/types'
-
 import { styles } from '~/components/sidebar-content-box/SidebarContentBox.styles'
 
 interface SidebarContentBoxProps {
-  Icon: React.ComponentType
+  icon: React.ComponentType
   name: string
   content?: Link[] | File[]
 }
 
-type SidebarImageGridModifications = {
+type ModifiedChildren = {
   compactMode: boolean
 }
 
 const SidebarContentBox: FC<SidebarContentBoxProps> = ({
-  Icon,
+  icon: Icon,
   name,
   content,
   children
 }) => {
-  const maxElemToShow = 3
-
   const { t } = useTranslation()
   const { openModal } = useModalContext()
 
   const seeAll = () => {
-    const childrenCopy = React.Children.map(children, (child) => {
-      if (
-        React.isValidElement(child) &&
-        (child.type as React.FunctionComponent).name === 'SidebarImageGrid'
-      ) {
-        return React.cloneElement(child, {
-          compactMode: false
-        } as SidebarImageGridModifications)
+    const updatedChildren = Children.map(children, (child) => {
+      if (isValidElement(child) && child.type === SidebarImageGrid) {
+        return cloneElement(child, { compactMode: false } as ModifiedChildren)
       }
       return child
     })
@@ -52,10 +45,10 @@ const SidebarContentBox: FC<SidebarContentBoxProps> = ({
     openModal({
       component: (
         <AllContentModal
-          Icon={Icon}
-          title={`${t(`chat.sidebar.modal.all`)} ${name}`}
+          icon={<Icon />}
+          title={`${t('chat.sidebar.modal.all')} ${name}`}
         >
-          {childrenCopy}
+          {updatedChildren}
         </AllContentModal>
       )
     })
@@ -64,16 +57,13 @@ const SidebarContentBox: FC<SidebarContentBoxProps> = ({
   const limitedContent =
     content && content.length > 0 ? (
       <Box sx={styles.verticalGrid}>
-        {content
-          .slice(content.length > 3 ? maxElemToShow : 0)
-          .reverse()
-          .map((component) => {
-            return name === t(`chat.sidebar.files`) ? (
-              <FileComponent file={component as File} key={component._id} />
-            ) : (
-              <LinkComponent key={component._id} link={component} />
-            )
-          })}
+        {content.slice(maxElemToShow * -1).map((component) => {
+          return name === t(`chat.sidebar.files`) ? (
+            <FileComponent file={component as File} key={component._id} />
+          ) : (
+            <LinkComponent key={component._id} link={component} />
+          )
+        })}
       </Box>
     ) : (
       children

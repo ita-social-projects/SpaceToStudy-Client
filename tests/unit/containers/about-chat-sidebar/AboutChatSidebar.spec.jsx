@@ -2,7 +2,7 @@ import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
 import { render, screen, fireEvent } from '@testing-library/react'
 
-import AboutChatSidebar from '~/components/about-chat-sidebar/AboutChatSidebar'
+import AboutChatSidebar from '~/containers/about-chat-sidebar/AboutChatSidebar'
 
 import someAvatar from '~/assets/img/tutor-profile-page/avatar.png'
 import someAvatar1 from '~/assets/img/tutor-profile-page/presentationVideoImg.png'

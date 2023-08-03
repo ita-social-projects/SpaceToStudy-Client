@@ -12,9 +12,11 @@ describe('AllContentModal', () => {
   })
 
   it('renders the Icon if provided', () => {
-    const TestIcon = () => <div data-testid='test-icon'>Icon</div>
     const { getByTestId } = render(
-      <AllContentModal Icon={TestIcon} title='Test' />
+      <AllContentModal
+        icon={<div data-testid='test-icon'>Icon</div>}
+        title='Test'
+      />
     )
     const iconElement = getByTestId('test-icon')
     expect(iconElement).toBeInTheDocument()

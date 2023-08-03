@@ -1,12 +1,10 @@
 import { FC, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
 import Avatar from '@mui/material/Avatar'
-
 import IconButton from '@mui/material/IconButton'
 import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined'
 import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined'
@@ -23,11 +21,11 @@ import { SizeEnum, ButtonVariantEnum, UserResponse, Link, File } from '~/types'
 import { createUrlPath, spliceSx } from '~/utils/helper-functions'
 import { authRoutes } from '~/router/constants/authRoutes'
 
-import { styles } from '~/components/about-chat-sidebar/AboutChatSidebar.styles'
+import { styles } from '~/containers/about-chat-sidebar/AboutChatSidebar.styles'
 
 interface AboutChatSidebarProps {
   user: UserResponse
-  media: Array<string>
+  media: string[]
   files: File[]
   links: Link[]
 }
@@ -51,91 +49,91 @@ const AboutChatSidebar: FC<AboutChatSidebarProps> = ({
     professionalSummary: userDescription
   } = user
 
-  const userProfileURL = createUrlPath(authRoutes.userProfile.path, _id, {
-    role
-  })
+  const mediaContent =
+    media.length !== 0 ? (
+      <SidebarImageGrid images={media} />
+    ) : (
+      <Typography sx={styles.notFound}>{t(`chat.sidebar.noMedia`)}</Typography>
+    )
+
+  const filesContent =
+    files.length !== 0 ? (
+      files.map((file) => <FileComponent file={file} key={file._id} />)
+    ) : (
+      <Typography sx={styles.notFound}>{t(`chat.sidebar.noFiles`)}</Typography>
+    )
+
+  const linksContent =
+    links.length !== 0 ? (
+      links.map((link) => <LinkComponent key={link._id} link={link} />)
+    ) : (
+      <Typography sx={styles.notFound}>{t(`chat.sidebar.noLinks`)}</Typography>
+    )
+
+  const navigateToUserProfile = () => {
+    navigate(
+      createUrlPath(authRoutes.userProfile.path, _id, {
+        role
+      })
+    )
+  }
 
   const closeSidebar = () => {
     setIsOpened(false)
   }
 
   return (
-    <Box
-      data-testid='sidebar'
-      style={isOpened ? undefined : { display: 'none' }}
-      sx={styles.wrapper}
-    >
+    <Box data-testid='sidebar' sx={styles.wrapper(isOpened)}>
       <Box sx={styles.header}>
-        <Typography sx={spliceSx(styles.header.text, styles.title)}>
+        <Typography sx={spliceSx(styles.headerText, styles.title)}>
           {t(`chat.sidebar.about`)}
         </Typography>
         <IconButton
           aria-label='close'
           onClick={closeSidebar}
-          sx={styles.header.iconButton}
+          sx={styles.headerIcon}
         >
           <Close />
         </IconButton>
       </Box>
       <Divider />
       <Box sx={styles.chatInfo}>
-        <Avatar src={photo} sx={styles.chatInfo.avatar} />
+        <Avatar src={photo} sx={styles.userAvatar} />
         <Typography sx={styles.title}>{`${firstName} ${lastName}`}</Typography>
         <AppButton
-          onClick={() => navigate(userProfileURL)}
+          onClick={navigateToUserProfile}
           size={SizeEnum.Medium}
           sx={styles.secondaryText}
           variant={ButtonVariantEnum.Tonal}
         >
           View Profile
         </AppButton>
-        <Typography sx={styles.chatInfo.description}>
-          {userDescription || t(`chat.sidebar.noSummary`)}
+        <Typography sx={styles.userDescription}>
+          {userDescription ?? t(`chat.sidebar.noSummary`)}
         </Typography>
       </Box>
       <Divider />
-      <SidebarContentBox Icon={ImageOutlinedIcon} name={'Media'}>
-        {media.length !== 0 ? (
-          <SidebarImageGrid images={media} />
-        ) : (
-          <Typography sx={styles.notFound}>
-            {t(`chat.sidebar.noMedia`)}
-          </Typography>
-        )}
+      <SidebarContentBox
+        icon={ImageOutlinedIcon}
+        name={t('chat.sidebar.media')}
+      >
+        {mediaContent}
       </SidebarContentBox>
       <Divider />
       <SidebarContentBox
-        Icon={InsertDriveFileOutlinedIcon}
         content={files}
-        name={'Files'}
+        icon={InsertDriveFileOutlinedIcon}
+        name={t('chat.sidebar.files')}
       >
-        <Box sx={styles.verticalGrid}>
-          {files.length !== 0 ? (
-            files
-              .slice()
-              .reverse()
-              .map((file) => <FileComponent file={file} key={file._id} />)
-          ) : (
-            <Typography sx={styles.notFound}>
-              {t(`chat.sidebar.noFiles`)}
-            </Typography>
-          )}
-        </Box>
+        <Box sx={styles.verticalGrid}>{filesContent}</Box>
       </SidebarContentBox>
       <Divider />
-      <SidebarContentBox Icon={LinkOutlinedIcon} content={links} name={'Links'}>
-        <Box sx={styles.verticalGrid}>
-          {links.length !== 0 ? (
-            links
-              .slice()
-              .reverse()
-              .map((link) => <LinkComponent key={link._id} link={link} />)
-          ) : (
-            <Typography sx={styles.notFound}>
-              {t(`chat.sidebar.noLinks`)}
-            </Typography>
-          )}
-        </Box>
+      <SidebarContentBox
+        content={links}
+        icon={LinkOutlinedIcon}
+        name={t('chat.sidebar.links')}
+      >
+        <Box sx={styles.verticalGrid}>{linksContent}</Box>
       </SidebarContentBox>
     </Box>
   )

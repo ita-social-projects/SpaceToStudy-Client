@@ -3,7 +3,7 @@ export const styles = {
     display: 'flex',
     gap: '13px',
     px: '16px',
-    justifyContent: 'center'
+    justifyContent: 'start'
   },
   imageWrapper: {
     m: '20px 10px'

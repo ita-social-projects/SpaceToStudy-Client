@@ -25,8 +25,8 @@ beforeEach(() => {
 
 test('renders file name and file details correctly', () => {
   expect(screen.getByText('testfile.txt')).toBeInTheDocument()
-  expect(screen.getByText('5 MB')).toBeInTheDocument()
-  expect(screen.getByText('31st July 2023')).toBeInTheDocument()
+  expect(screen.getByText('5 chat.sidebar.megabytes')).toBeInTheDocument()
+  expect(screen.getByText('July 31, 2023')).toBeInTheDocument()
 })
 
 test('clicking on the file opens the file URL in a new tab', () => {

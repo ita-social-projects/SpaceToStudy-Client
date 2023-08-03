@@ -16,18 +16,20 @@ export const styles = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'flex-start',
-    flex: '1 0 0',
+    flexGrow: '1',
     width: '75%'
+  },
+  sizeLimit: {
+    width: '92%',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textAlign: 'start'
   },
   link: {
     typography: TypographyVariantEnum.Caption,
     color: 'primary.500',
-    textDecoration: 'underline',
-    whiteSpace: 'nowrap',
-    overflow: 'hidden',
-    width: '90%',
-    textOverflow: 'ellipsis',
-    textAlign: 'start'
+    textDecoration: 'underline'
   },
   formatFrame: {
     display: 'flex',
@@ -37,13 +39,13 @@ export const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: '5px',
-    backgroundColor: 'primary.400',
-    '& svg': {
-      color: 'basic.white',
-      width: '32px',
-      height: '32px',
-      transform: 'rotateZ(140deg)'
-    }
+    backgroundColor: 'primary.400'
+  },
+  linkIcon: {
+    color: 'basic.white',
+    width: '32px',
+    height: '32px',
+    transform: 'rotateZ(140deg)'
   },
   secondaryText: {
     typography: TypographyVariantEnum.Subtitle2

@@ -17,19 +17,27 @@ export const styles = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'flex-start',
-    flex: '1 0 0'
+    flexGrow: '1',
+    width: '75%'
+  },
+  fileName: {
+    width: '92%',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textAlign: 'start'
   },
   fileDescription: {
     display: 'flex',
     '& p': {
       color: 'primary.500',
-      typography: TypographyVariantEnum.Caption,
-      '&:first-of-type': {
-        '&::after': {
-          content: '"●"',
-          px: '6px'
-        }
-      }
+      typography: TypographyVariantEnum.Caption
+    }
+  },
+  divider: {
+    '&::after': {
+      content: '"●"',
+      px: '6px'
     }
   },
   formatFrame: {
@@ -40,7 +48,7 @@ export const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: '5px',
-    backgroundColor: 'primary.800',
+    backgroundColor: 'basic.turquoise',
     '& p': {
       color: 'basic.white',
       typography: TypographyVariantEnum.Caption,

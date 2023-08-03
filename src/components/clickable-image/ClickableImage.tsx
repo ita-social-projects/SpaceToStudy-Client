@@ -1,31 +1,36 @@
 import { FC } from 'react'
-
-import { Box } from '@mui/material'
+import Box, { BoxProps } from '@mui/material/Box'
 
 import AppButton from '~/components/app-button/AppButton'
 
-import { ButtonVariantEnum } from '~/types'
-
+import { ComponentEnum, ButtonVariantEnum } from '~/types'
 import { styles } from '~/components/clickable-image/ClickableImage.styles'
 
-interface ClickableImageProps {
-  clickFunction?(image: string): void
+interface ClickableImageProps extends BoxProps {
+  onUserClick?: (image: string) => void
   image: string
 }
 
 const ClickableImage: FC<ClickableImageProps> = ({
-  clickFunction,
+  onUserClick,
   image,
-  children
+  children,
+  ...props
 }) => {
   return (
     <AppButton
       data-testid='sidebar-image'
-      onClick={() => clickFunction && clickFunction(image)}
+      onClick={() => onUserClick?.(image)}
       sx={styles.imageButton}
       variant={ButtonVariantEnum.Text}
     >
-      <Box alt={image} component='img' src={image} sx={styles.image} />
+      <Box
+        alt={image}
+        component={ComponentEnum.Img}
+        src={image}
+        sx={styles.image}
+        {...props}
+      />
       {children}
     </AppButton>
   )
