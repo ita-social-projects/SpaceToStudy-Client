@@ -1,7 +1,8 @@
-import { screen, render } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 
 import useAxios from '~/hooks/use-axios'
 import StudentTable from '~/pages/student-table/StudentTable'
+import { renderWithProviders } from '~tests/test-utils'
 
 vi.mock('~/hooks/use-axios')
 
@@ -31,7 +32,7 @@ describe('StudentTable component', () => {
   useAxios.mockImplementation(() => mockData)
 
   it('should render StudentTable component', () => {
-    render(<StudentTable />)
+    renderWithProviders(<StudentTable />)
 
     const tabTitle = screen.getByText('userTable.studentsTab')
 

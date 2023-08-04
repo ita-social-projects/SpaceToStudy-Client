@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react'
+import { fireEvent, screen } from '@testing-library/react'
 import { expect, vi } from 'vitest'
 
 import UserTable from '~/components/user-table/UserTable'
@@ -9,6 +9,7 @@ import {
   initialSort,
   tabsInfo
 } from '~/pages/tutor-table/constants'
+import { renderWithProviders } from '~tests/test-utils'
 
 vi.mock('~/hooks/use-axios')
 
@@ -49,7 +50,7 @@ describe('UserTable', () => {
   useAxios.mockImplementation(() => fakeData)
 
   beforeEach(() => {
-    render(
+    renderWithProviders(
       <UserTable
         columns={columns}
         initialFilters={initialFilters}

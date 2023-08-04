@@ -1,7 +1,8 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { fireEvent, screen, waitFor } from '@testing-library/react'
 import { vi } from 'vitest'
 
 import EnhancedTableRow from '~/components/enhanced-table/enhanced-table-row/EnhancedTableRow'
+import { renderWithProviders } from '~tests/test-utils'
 
 const handleSelectClick = vi.fn()
 const refetchData = vi.fn()
@@ -33,7 +34,7 @@ const rowActions = [{ label: 'Delete', func: vi.fn() }]
 
 describe('EnhancedTableRow component', () => {
   beforeEach(() => {
-    render(
+    renderWithProviders(
       <table>
         <tbody>
           <EnhancedTableRow
