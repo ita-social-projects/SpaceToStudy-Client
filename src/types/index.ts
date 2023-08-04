@@ -15,4 +15,3 @@ export * from '~/types/services/services.index'
 export * from '~/types/tutorProfile/tutorProfile.index'
 export * from '~/types/user/user.index'
 export * from '~/types/utils/utils.index'
-

@@ -1,8 +1,8 @@
+import SearchIcon from '@mui/icons-material/Search'
+import Box from '@mui/material/Box'
 import { ChangeEvent, useCallback, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
-import SearchIcon from '@mui/icons-material/Search'
-import Box from '@mui/material/Box'
 
 import AppButton from '~/components/app-button/AppButton'
 import AppDrawer from '~/components/app-drawer/AppDrawer'
@@ -25,24 +25,21 @@ import { useDebounce } from '~/hooks/use-debounce'
 import { useDrawer } from '~/hooks/use-drawer'
 import { ResourceService } from '~/services/resource-service'
 
-import { AxiosResponse } from 'axios'
 import { defaultResponses, snackbarVariants } from '~/constants'
 import { styles } from '~/containers/my-resources/lessons-container/LessonsContainer.styles'
 import { useSnackBarContext } from '~/context/snackbar-context'
 import { authRoutes } from '~/router/constants/authRoutes'
-import { ErrorResponse, ItemsWithCount, Lesson, Sort } from '~/types'
+import {
+  ErrorResponse,
+  GetLessonsParams,
+  ItemsWithCount,
+  Lesson
+} from '~/types'
 import {
   ajustColumns,
   createUrlPath,
   getScreenBasedLimit
 } from '~/utils/helper-functions'
-
-interface LessonsParams {
-  title: string
-  skip: number
-  limit: number
-  sort: Sort
-}
 
 const LessonsContainer = () => {
   const breakpoints = useBreakpoints()
@@ -71,20 +68,22 @@ const LessonsContainer = () => {
       sort,
       title: searchTitle.current || ''
     })
-  }, [page, itemsPerPage, sort, searchTitle.current])
+  }, [page, itemsPerPage, sort, searchTitle])
 
-  const deleteLesson = (id: string): Promise<AxiosResponse> =>
-    ResourceService.deleteLesson(id)
+  const deleteLesson = useCallback(
+    (id?: string) => ResourceService.deleteLesson(id || ''),
+    []
+  )
 
   const { loading, response, fetchData } = useAxios<
     ItemsWithCount<Lesson>,
-    LessonsParams
+    GetLessonsParams
   >({
     service: getMyLessons,
     defaultResponse: defaultResponses.itemsWithCount
   })
 
-  const onDeletionError = (error: ErrorResponse) => {
+  const onLessonDeletionError = (error: ErrorResponse) => {
     setAlert({
       severity: snackbarVariants.error,
       message: error ? `errors.${error.code}` : ''
@@ -94,7 +93,7 @@ const LessonsContainer = () => {
   const onResponseDeletion = () => {
     setAlert({
       severity: snackbarVariants.success,
-      message: 'cooperationsPage.acceptModal.successMessage'
+      message: 'myResourcesPage.lessons.successDeletion'
     })
   }
 
@@ -102,7 +101,7 @@ const LessonsContainer = () => {
     service: deleteLesson,
     fetchOnMount: false,
     defaultResponse: null,
-    onResponseError: onDeletionError,
+    onResponseError: onLessonDeletionError,
     onResponse: onResponseDeletion
   })
 
@@ -122,7 +121,7 @@ const LessonsContainer = () => {
     void fetchData()
   }
 
-  const newLesson = () => {
+  const handleNewLesson = () => {
     navigate(createUrlPath(authRoutes.myResources.newLesson.path))
   }
 
@@ -133,12 +132,11 @@ const LessonsContainer = () => {
     }
   }
 
-  const editLesson = () => {
+  const handleEditLesson = () => {
     openDrawer()
   }
 
   const openDeletionConfirmDialog = (id: string) => {
-    console.log('open deletion')
     openDialog({
       message: 'myResourcesPage.lessons.confirmLessonDeletionMessage',
       sendConfirm: (isConfirmed: boolean) =>
@@ -156,7 +154,7 @@ const LessonsContainer = () => {
   const rowActions = [
     {
       label: t('common.edit'),
-      func: editLesson
+      func: handleEditLesson
     },
     {
       label: t('common.delete'),
@@ -168,7 +166,7 @@ const LessonsContainer = () => {
     <Box sx={styles.topContainer}>
       <AppButton
         data-testid='newLessonBtn'
-        onClick={newLesson}
+        onClick={handleNewLesson}
         sx={styles.addLessonBtn}
       >
         {t('myResourcesPage.lessons.newLessonBtn')}

@@ -1,15 +1,15 @@
 import { FC, memo } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import Box from '@mui/material/Box'
 import Avatar from '@mui/material/Avatar'
+import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
 import { useAppSelector } from '~/hooks/use-redux'
 
 import { styles } from '~/containers/chat/chat-item/ChatItem.styles'
 import { ComponentEnum, LatestMessage, UserResponse } from '~/types'
-import { getFormatedDate } from '~/utils/helper-functions'
+import { getFormattedDate } from '~/utils/helper-functions'
 
 interface ItemOfChatProps {
   user: Pick<UserResponse, '_id' | 'firstName' | 'lastName' | 'photo'>
@@ -39,7 +39,7 @@ const ChatItem: FC<ItemOfChatProps> = ({
     closeDrawer && closeDrawer()
   }
 
-  const formattedTime = getFormatedDate({
+  const formattedTime = getFormattedDate({
     date: updatedAt,
     locales: 'en-GB',
     options: {
