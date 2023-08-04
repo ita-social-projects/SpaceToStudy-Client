@@ -12,7 +12,11 @@ const content = [
 
 test('renders SidebarContentBox with content', () => {
   const { getByText } = render(
-    <SidebarContentBox content={content} icon={ImageOutlinedIcon} name='Links'>
+    <SidebarContentBox
+      content={content}
+      icon={<ImageOutlinedIcon />}
+      name='Links'
+    >
       <div>Child Component</div>
     </SidebarContentBox>
   )
@@ -25,7 +29,7 @@ test('renders SidebarContentBox with content', () => {
 
 test('renders SidebarContentBox without content', () => {
   const { getByText } = render(
-    <SidebarContentBox icon={ImageOutlinedIcon} name='Links'>
+    <SidebarContentBox icon={<ImageOutlinedIcon />} name='Links'>
       <div>Child Component</div>
     </SidebarContentBox>
   )
