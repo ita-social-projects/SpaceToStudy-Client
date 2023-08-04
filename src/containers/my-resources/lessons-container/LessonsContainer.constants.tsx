@@ -38,15 +38,12 @@ export const columns: TableColumn<Lesson>[] = [
     label: 'myResourcesPage.lessons.attachments',
     calculatedCellValue: (item: Lesson, { t }: AdditionalPropsInterface) => {
       const attachmentsQty = item.attachments.length
+      const checkForQty = attachmentsQty === 1 ? '' : 's'
 
       return (
         <Typography sx={styles.attachmentsTitle}>
           {attachmentsQty}
-          {` ${t(
-            `myResourcesPage.lessons.attachment${
-              attachmentsQty === 1 ? '' : 's'
-            }Qty`
-          )}`}
+          {` ${t(`myResourcesPage.lessons.attachment${checkForQty}Qty`)}`}
         </Typography>
       )
     }
