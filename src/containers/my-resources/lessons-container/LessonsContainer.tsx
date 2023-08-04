@@ -16,6 +16,8 @@ import {
   itemsLoadLimit,
   removeColumnRules
 } from '~/containers/my-resources/lessons-container/LessonsContainer.constants'
+import { styles } from '~/containers/my-resources/lessons-container/LessonsContainer.styles'
+import { useSnackBarContext } from '~/context/snackbar-context'
 import usePagination from '~/hooks/table/use-pagination'
 import useSort from '~/hooks/table/use-sort'
 import useAxios from '~/hooks/use-axios'
@@ -23,12 +25,10 @@ import useBreakpoints from '~/hooks/use-breakpoints'
 import useConfirm from '~/hooks/use-confirm'
 import { useDebounce } from '~/hooks/use-debounce'
 import { useDrawer } from '~/hooks/use-drawer'
+import { authRoutes } from '~/router/constants/authRoutes'
 import { ResourceService } from '~/services/resource-service'
 
 import { defaultResponses, snackbarVariants } from '~/constants'
-import { styles } from '~/containers/my-resources/lessons-container/LessonsContainer.styles'
-import { useSnackBarContext } from '~/context/snackbar-context'
-import { authRoutes } from '~/router/constants/authRoutes'
 import {
   ErrorResponse,
   GetLessonsParams,

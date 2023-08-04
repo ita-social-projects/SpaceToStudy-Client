@@ -3,7 +3,6 @@ import Typography from '@mui/material/Typography'
 import StatusChip from '~/components/status-chip/StatusChip'
 import SubjectLevelChips from '~/components/subject-level-chips/SubjectLevelChips'
 import UserProfileInfo from '~/components/user-profile-info/UserProfileInfo'
-import { getFormattedDate } from '~/utils/helper-functions'
 
 import { styles } from '~/containers/my-cooperations/cooperations-container/CooperationContainer.styles'
 import {
@@ -13,6 +12,7 @@ import {
   RemoveColumnRules,
   StatusEnum
 } from '~/types'
+import { getFormattedDate } from '~/utils/helper-functions'
 
 export const columns = [
   {
