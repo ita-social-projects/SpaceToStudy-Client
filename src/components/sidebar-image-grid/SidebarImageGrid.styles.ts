@@ -14,7 +14,7 @@ export const styles = {
   },
   modalImageGrid: {
     display: 'grid',
-    gridTemplateColumns: { xs: '1fr 1fr 1fr 1fr', md: '1fr 1fr 1fr' },
+    gridTemplateColumns: { xs: 'repeat(4, 1fr)', md: 'repeat(3, 1fr)' },
     gap: { xs: '10px', md: '5px' }
   }
 }

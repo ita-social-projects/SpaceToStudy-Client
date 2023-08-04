@@ -3,9 +3,11 @@ import { TypographyVariantEnum } from '~/types'
 export const styles = {
   wrapper: (isOpened: boolean) => ({
     display: isOpened ? 'flex' : 'none',
+    backgroundColor: 'basic.white',
     flexDirection: 'column',
     gap: '24px',
     p: '24px 8px',
+    height: 'calc(100% - 48px)',
     maxWidth: '320px',
     overflowY: 'scroll'
   }),

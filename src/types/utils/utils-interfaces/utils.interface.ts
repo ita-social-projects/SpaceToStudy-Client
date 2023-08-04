@@ -3,4 +3,5 @@ export interface FormatedDate {
   locales?: string
   options?: Intl.DateTimeFormatOptions
   isCurrentDayHours?: boolean
+  includeOrdinal?: boolean
 }

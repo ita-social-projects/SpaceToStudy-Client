@@ -10,7 +10,7 @@ import { useModalContext } from '~/context/modal-context'
 import { styles } from '~/components/sidebar-image-grid/SidebarImageGrid.styles'
 
 interface SidebarImageGridProps {
-  images: Array<string>
+  images: string[]
   compactMode?: boolean
 }
 
@@ -22,19 +22,12 @@ const SidebarImageGrid: FC<SidebarImageGridProps> = ({
   const { openModal } = useModalContext()
   const mediaSize = useMemo(() => images.length, [images])
 
-  const getImageName = (image: string) => {
-    const pathParts = image.split('/')
-    const imageFileName = pathParts[pathParts.length - 1]
-
-    return imageFileName
-  }
-
   const showImage = (image: string) => {
     openModal({
       component: (
         <AllContentModal
           icon={<ImageOutlinedIcon />}
-          title={getImageName(image) ?? t(`chat.sidebar.unknownName`)}
+          title={image ?? t(`chat.sidebar.unknownName`)}
         >
           <Box sx={styles.imageWrapper}>
             <Box component='img' src={image} sx={styles.modalImage} />
@@ -45,7 +38,7 @@ const SidebarImageGrid: FC<SidebarImageGridProps> = ({
   }
 
   const compactGrid = images.slice(-3).map((image, index) => (
-    <ClickableImage image={image} key={index} onUserClick={showImage}>
+    <ClickableImage image={image} key={image} onUserClick={showImage}>
       {index === 2 && <Box>+{mediaSize - 2}</Box>}
     </ClickableImage>
   ))

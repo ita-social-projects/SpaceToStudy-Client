@@ -70,7 +70,7 @@ describe('AboutChatSidebar', () => {
     })
 
     expect(screen.getByText('John Doe')).toBeInTheDocument()
-    expect(screen.getByText('View Profile')).toBeInTheDocument()
+    expect(screen.getByText('chat.sidebar.viewButton')).toBeInTheDocument()
   })
 
   test('renders media when available', () => {
@@ -81,7 +81,8 @@ describe('AboutChatSidebar', () => {
       links: []
     })
 
-    expect(screen.getAllByTestId('sidebar-image')).toHaveLength(2)
+    expect(screen.getByAltText(someAvatar)).toBeInTheDocument()
+    expect(screen.getByAltText(someAvatar1)).toBeInTheDocument()
   })
 
   test('renders files when available', () => {

@@ -1,5 +1,13 @@
 import { TypographyVariantEnum } from '~/types'
 
+const sizeLimit = {
+  width: '92%',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
+  textAlign: 'start'
+}
+
 export const styles = {
   linkWrapper: {
     display: 'flex',
@@ -19,17 +27,11 @@ export const styles = {
     flexGrow: '1',
     width: '75%'
   },
-  sizeLimit: {
-    width: '92%',
-    textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap',
-    overflow: 'hidden',
-    textAlign: 'start'
-  },
   link: {
     typography: TypographyVariantEnum.Caption,
     color: 'primary.500',
-    textDecoration: 'underline'
+    textDecoration: 'underline',
+    ...sizeLimit
   },
   formatFrame: {
     display: 'flex',
@@ -48,6 +50,7 @@ export const styles = {
     transform: 'rotateZ(140deg)'
   },
   secondaryText: {
-    typography: TypographyVariantEnum.Subtitle2
+    typography: TypographyVariantEnum.Subtitle2,
+    ...sizeLimit
   }
 }

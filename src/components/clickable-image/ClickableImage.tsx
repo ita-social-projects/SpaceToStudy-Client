@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, ReactNode } from 'react'
 import Box, { BoxProps } from '@mui/material/Box'
 
 import AppButton from '~/components/app-button/AppButton'
@@ -9,6 +9,7 @@ import { styles } from '~/components/clickable-image/ClickableImage.styles'
 interface ClickableImageProps extends BoxProps {
   onUserClick?: (image: string) => void
   image: string
+  children?: ReactNode
 }
 
 const ClickableImage: FC<ClickableImageProps> = ({
@@ -19,7 +20,6 @@ const ClickableImage: FC<ClickableImageProps> = ({
 }) => {
   return (
     <AppButton
-      data-testid='sidebar-image'
       onClick={() => onUserClick?.(image)}
       sx={styles.imageButton}
       variant={ButtonVariantEnum.Text}

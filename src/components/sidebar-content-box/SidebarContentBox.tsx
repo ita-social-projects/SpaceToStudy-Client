@@ -1,4 +1,4 @@
-import React, { FC, isValidElement, cloneElement, Children } from 'react'
+import { FC, isValidElement, cloneElement, Children, ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
@@ -16,7 +16,7 @@ import { SizeEnum, ButtonVariantEnum, Link, File } from '~/types'
 import { styles } from '~/components/sidebar-content-box/SidebarContentBox.styles'
 
 interface SidebarContentBoxProps {
-  icon: React.ComponentType
+  icon: ReactElement
   name: string
   content?: Link[] | File[]
 }
@@ -26,7 +26,7 @@ type ModifiedChildren = {
 }
 
 const SidebarContentBox: FC<SidebarContentBoxProps> = ({
-  icon: Icon,
+  icon,
   name,
   content,
   children
@@ -45,7 +45,7 @@ const SidebarContentBox: FC<SidebarContentBoxProps> = ({
     openModal({
       component: (
         <AllContentModal
-          icon={<Icon />}
+          icon={icon}
           title={`${t('chat.sidebar.modal.all')} ${name}`}
         >
           {updatedChildren}
@@ -73,7 +73,7 @@ const SidebarContentBox: FC<SidebarContentBoxProps> = ({
     <Box sx={styles.media}>
       <Box sx={styles.headerWrapper}>
         <Box sx={styles.textWithIconWrapper}>
-          <Icon />
+          {icon}
           <Typography
             sx={spliceSx(styles.textWithIconWrapper.text, styles.text)}
           >

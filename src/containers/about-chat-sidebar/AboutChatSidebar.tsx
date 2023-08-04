@@ -106,7 +106,7 @@ const AboutChatSidebar: FC<AboutChatSidebarProps> = ({
           sx={styles.secondaryText}
           variant={ButtonVariantEnum.Tonal}
         >
-          View Profile
+          {t(`chat.sidebar.viewButton`)}
         </AppButton>
         <Typography sx={styles.userDescription}>
           {userDescription ?? t(`chat.sidebar.noSummary`)}
@@ -114,7 +114,7 @@ const AboutChatSidebar: FC<AboutChatSidebarProps> = ({
       </Box>
       <Divider />
       <SidebarContentBox
-        icon={ImageOutlinedIcon}
+        icon={<ImageOutlinedIcon />}
         name={t('chat.sidebar.media')}
       >
         {mediaContent}
@@ -122,7 +122,7 @@ const AboutChatSidebar: FC<AboutChatSidebarProps> = ({
       <Divider />
       <SidebarContentBox
         content={files}
-        icon={InsertDriveFileOutlinedIcon}
+        icon={<InsertDriveFileOutlinedIcon />}
         name={t('chat.sidebar.files')}
       >
         <Box sx={styles.verticalGrid}>{filesContent}</Box>
@@ -130,7 +130,7 @@ const AboutChatSidebar: FC<AboutChatSidebarProps> = ({
       <Divider />
       <SidebarContentBox
         content={links}
-        icon={LinkOutlinedIcon}
+        icon={<LinkOutlinedIcon />}
         name={t('chat.sidebar.links')}
       >
         <Box sx={styles.verticalGrid}>{linksContent}</Box>

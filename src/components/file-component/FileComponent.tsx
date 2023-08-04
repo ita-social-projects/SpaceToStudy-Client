@@ -14,11 +14,19 @@ interface FileComponentProps {
 }
 
 const openFile = (file: File) => {
-  window.open(file.url, '_blank', 'noopener noreferrer')?.focus()
+  window.open(file.url, '_blank', 'noopener noreferrer')
 }
 
 const formatDate = (date: Date) => {
-  return getFormatedDate(date)
+  return getFormatedDate({
+    date,
+    options: {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    },
+    includeOrdinal: true
+  })
 }
 
 const FileComponent: FC<FileComponentProps> = ({ file }) => {
@@ -29,9 +37,7 @@ const FileComponent: FC<FileComponentProps> = ({ file }) => {
   return (
     <Box sx={styles.fileWrapper}>
       <AppButton
-        onClick={() => {
-          openFile(file)
-        }}
+        onClick={() => openFile(file)}
         sx={styles.file}
         variant={ButtonVariantEnum.Text}
       >
