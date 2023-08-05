@@ -1,8 +1,8 @@
+import SearchIcon from '@mui/icons-material/Search'
+import Box from '@mui/material/Box'
 import { ChangeEvent, useCallback, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
-import SearchIcon from '@mui/icons-material/Search'
-import Box from '@mui/material/Box'
 
 import AppButton from '~/components/app-button/AppButton'
 import AppDrawer from '~/components/app-drawer/AppDrawer'
@@ -42,24 +42,19 @@ import {
 } from '~/utils/helper-functions'
 
 const LessonsContainer = () => {
-  const breakpoints = useBreakpoints()
   const { t } = useTranslation()
-  const navigate = useNavigate()
+  const [searchInput, setSearchInput] = useState<string>('')
+  const searchTitle = useRef<string>()
   const { setAlert } = useSnackBarContext()
-
   const { openDialog } = useConfirm()
   const { openDrawer, closeDrawer, isOpen } = useDrawer()
-
-  const [searchInput, setSearchInput] = useState('')
-  const sortOptions = useSort({
-    initialSort
-  })
-  const { sort, onRequestSort } = sortOptions
-
+  const navigate = useNavigate()
+  const breakpoints = useBreakpoints()
+  const sortOptions = useSort({ initialSort })
   const { page, handleChangePage } = usePagination()
-  const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
 
-  const searchTitle = useRef<string>()
+  const { sort, onRequestSort } = sortOptions
+  const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
 
   const getMyLessons = useCallback(() => {
     return ResourceService.getUsersLessons({
