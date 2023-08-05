@@ -56,14 +56,16 @@ const LessonsContainer = () => {
   const { sort, onRequestSort } = sortOptions
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
 
-  const getMyLessons = useCallback(() => {
-    return ResourceService.getUsersLessons({
-      limit: itemsPerPage,
-      skip: (page - 1) * itemsPerPage,
-      sort,
-      title: searchTitle.current || ''
-    })
-  }, [page, itemsPerPage, sort, searchTitle])
+  const getMyLessons = useCallback(
+    () =>
+      ResourceService.getUsersLessons({
+        limit: itemsPerPage,
+        skip: (page - 1) * itemsPerPage,
+        sort,
+        title: searchTitle.current || ''
+      }),
+    [page, itemsPerPage, sort, searchTitle]
+  )
 
   const deleteLesson = useCallback(
     (id?: string) => ResourceService.deleteLesson(id || ''),
