@@ -8,7 +8,9 @@ describe('LessonsContainer component ', () => {
   })
 
   it('should render new lesson button', () => {
-    const newLessonBtn = screen.getAllByTestId('newLessonBtn')
+    const newLessonBtn = screen.findByText(
+      'myResourcesPage.lessons.newLessonBtn'
+    )
 
     expect(newLessonBtn).not.toBeNull()
   })

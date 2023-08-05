@@ -161,11 +161,7 @@ const LessonsContainer = () => {
 
   const newLessonBtn = (
     <Box sx={styles.topContainer}>
-      <AppButton
-        data-testid='newLessonBtn'
-        onClick={handleNewLesson}
-        sx={styles.addLessonBtn}
-      >
+      <AppButton onClick={handleNewLesson} sx={styles.addLessonBtn}>
         {t('myResourcesPage.lessons.newLessonBtn')}
         <span style={styles.newLessonIcon}>+</span>
       </AppButton>
