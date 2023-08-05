@@ -44,7 +44,7 @@ import {
 const LessonsContainer = () => {
   const { t } = useTranslation()
   const [searchInput, setSearchInput] = useState<string>('')
-  const searchTitle = useRef<string>()
+  const searchTitle = useRef<string>('')
   const { setAlert } = useSnackBarContext()
   const { openDialog } = useConfirm()
   const { openDrawer, closeDrawer, isOpen } = useDrawer()
@@ -62,7 +62,7 @@ const LessonsContainer = () => {
         limit: itemsPerPage,
         skip: (page - 1) * itemsPerPage,
         sort,
-        title: searchTitle.current || ''
+        title: searchTitle.current
       }),
     [page, itemsPerPage, sort, searchTitle]
   )
