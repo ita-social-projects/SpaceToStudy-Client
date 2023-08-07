@@ -2,7 +2,7 @@ import { screen } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 import IconExtentionWithTitle from '~/components/icon-extention-with-title/IconExtentionWithTitle'
 
-describe('ImgTitleDescription test', () => {
+describe('IconExtentionWithTitle test', () => {
   beforeEach(() => {
     renderWithProviders(
       <IconExtentionWithTitle
