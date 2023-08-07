@@ -12,8 +12,8 @@ vi.mock('simplebar-react', () => {
 
 const props = {
   listOfChats: usersMock,
-  isSelectedChat: '',
-  setIsSelectedChat: vi.fn()
+  selectedChat: '',
+  setSelectedChat: vi.fn()
 }
 
 describe('ListOfUsersWithSearch component', () => {
@@ -29,7 +29,7 @@ describe('ListOfUsersWithSearch component', () => {
   it('renders "notFoundedChats"', () => {
     renderWithProviders(<ListOfUsersWithSearch {...props} listOfChats={[]} />)
 
-    const notFoundedChats = screen.getByText('chat.noContacts')
+    const notFoundedChats = screen.getByText('chatPage.noContacts')
     expect(notFoundedChats).toBeInTheDocument()
   })
 })

@@ -34,6 +34,7 @@ export enum TypographyVariantEnum {
   Body2 = 'body2',
   Body1 = 'body1',
   Subtitle2 = 'subtitle2',
+  Subtitle1 = 'subtitle1',
   MidTitle = 'midTitle',
   Overline = 'overline'
 }

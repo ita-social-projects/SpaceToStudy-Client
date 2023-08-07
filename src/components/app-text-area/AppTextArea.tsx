@@ -1,10 +1,12 @@
 import { FC } from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
+import { SxProps } from '@mui/material'
 import { TextFieldProps } from '@mui/material/TextField'
 
 import AppTextField from '~/components/app-text-field/AppTextField'
 
+import { spliceSx } from '~/utils/helper-functions'
 import { TypographyVariantEnum } from '~/types'
 import { styles } from '~/components/app-text-area/AppTextArea.styles'
 
@@ -13,6 +15,8 @@ interface AppTextAreaProps
   maxLength?: number
   errorMsg?: string
   value?: string
+  textFieldStyles?: SxProps
+  withHelperText?: boolean
 }
 
 const AppTextArea: FC<AppTextAreaProps> = ({
@@ -22,19 +26,20 @@ const AppTextArea: FC<AppTextAreaProps> = ({
   title,
   value,
   sx,
+  textFieldStyles,
   ...props
 }) => {
   const titleEl = title && <Typography sx={styles.title}>{title}</Typography>
 
   return (
-    <Box sx={{ position: 'relative', ...sx }}>
+    <Box sx={spliceSx(styles.container, sx)}>
       {titleEl}
       <AppTextField
         inputProps={{ maxLength }}
-        maxRows={minRows}
-        minRows={maxRows}
+        maxRows={maxRows}
+        minRows={minRows}
         multiline
-        sx={styles.textarea}
+        sx={spliceSx(styles.textarea, textFieldStyles)}
         value={value}
         {...props}
       />

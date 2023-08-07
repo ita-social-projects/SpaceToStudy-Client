@@ -2,5 +2,9 @@
   "message": {
     "you": "You"
   },
-  "noContacts": "No contacts"
+  "noContacts": "No contacts",
+  "chat": {
+    "inputLabel": "Type a message...",
+    "chipLabel": " Select a chat, to start messaging"
+  }
 }

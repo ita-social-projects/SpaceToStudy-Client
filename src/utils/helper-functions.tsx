@@ -73,13 +73,13 @@ export const getFormattedDate = ({
   isCurrentDayHours = false
 }: FormatedDate): string => {
   const currentDate = new Date()
-  const formattedDate = new Date(date).toLocaleDateString(locales, options)
+  const formattedDate = new Date(date).toLocaleString(locales, options)
 
   if (
     isCurrentDayHours &&
     currentDate.toDateString() === new Date(date).toDateString()
   ) {
-    return new Date(date).toLocaleTimeString([], {
+    return new Date(date).toLocaleString(locales, {
       hour: '2-digit',
       minute: '2-digit'
     })

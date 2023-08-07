@@ -1,16 +1,16 @@
-import { FC } from 'react'
-
+import { FC, MouseEvent } from 'react'
+import { Link } from 'react-router-dom'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-
-import { MessageInterface } from '~/types'
-import { spliceSx } from '~/utils/helper-functions'
+import Avatar from '@mui/material/Avatar'
 
 import AppCard from '~/components/app-card/AppCard'
-import UserProfileInfo from '~/components/user-profile-info/UserProfileInfo'
 import { useAppSelector } from '~/hooks/use-redux'
 
+import { createUrlPath, getFormatedDate } from '~/utils/helper-functions'
+import { authRoutes } from '~/router/constants/authRoutes'
 import { styles } from '~/components/message/Message.styles'
+import { MessageInterface } from '~/types'
 
 interface MessageProps {
   message: MessageInterface
@@ -19,35 +19,37 @@ interface MessageProps {
 const Message: FC<MessageProps> = ({ message }) => {
   const { userId: myId } = useAppSelector((state) => state.appMain)
 
-  const { author, messageContent, authorRole } = message
-  const { _id, firstName, lastName, photo, createdAt } = author
-
+  const { author, text, authorRole, createdAt } = message
+  const { _id, photo } = author
   const isMyMessage = myId === _id
+  const userURL = createUrlPath(authRoutes.userProfile.path, _id, {
+    authorRole
+  })
+
+  const handleLinkClick = (e: MouseEvent<HTMLAnchorElement>) => {
+    e.stopPropagation()
+  }
+
+  const date = getFormatedDate({
+    date: createdAt,
+    options: { hour: '2-digit', minute: '2-digit' }
+  })
+
+  const avatar = !isMyMessage && (
+    <Link onClick={handleLinkClick} to={userURL}>
+      <Avatar
+        src={photo && `${import.meta.env.VITE_APP_IMG_USER_URL}${photo}`}
+        sx={styles.avatar}
+      />
+    </Link>
+  )
 
   return (
-    <Box
-      sx={spliceSx(
-        styles.root,
-        isMyMessage ? styles.myMessageRoot : styles.interlocutorMessageRoot
-      )}
-    >
-      <UserProfileInfo
-        _id={_id}
-        date={createdAt}
-        firstName={firstName}
-        lastName={lastName}
-        photo={photo}
-        renderAdditionalInfo={!isMyMessage}
-        role={authorRole}
-        sx={styles.userInfoStyles}
-      />
-      <AppCard
-        sx={spliceSx(
-          styles.messageBox,
-          isMyMessage ? styles.myMessageBox : styles.interlocutorMessageBox
-        )}
-      >
-        <Typography sx={styles.messageContent}>{messageContent}</Typography>
+    <Box sx={styles.root(isMyMessage)}>
+      {avatar}
+      <AppCard sx={styles.messageCard(isMyMessage)}>
+        {text}
+        <Typography sx={styles.date(isMyMessage)}>{date}</Typography>
       </AppCard>
     </Box>
   )

@@ -1,6 +1,5 @@
 import { FC, memo } from 'react'
 import { useTranslation } from 'react-i18next'
-
 import Avatar from '@mui/material/Avatar'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
@@ -8,34 +7,32 @@ import Typography from '@mui/material/Typography'
 import { useAppSelector } from '~/hooks/use-redux'
 
 import { styles } from '~/containers/chat/chat-item/ChatItem.styles'
-import { ComponentEnum, LatestMessage, UserResponse } from '~/types'
+import { ChatResponse, ComponentEnum } from '~/types'
 import { getFormattedDate } from '~/utils/helper-functions'
 
 interface ItemOfChatProps {
-  user: Pick<UserResponse, '_id' | 'firstName' | 'lastName' | 'photo'>
-  lastMessage: LatestMessage
   isActiveChat: boolean
-  setIsSelectedChat: (id: string) => void
+  chat: ChatResponse
+  setSelectedChat: (chat: ChatResponse) => void
   closeDrawer?: () => void
 }
 
 const ChatItem: FC<ItemOfChatProps> = ({
-  user,
-  lastMessage,
   isActiveChat,
-  setIsSelectedChat,
+  chat,
+  setSelectedChat,
   closeDrawer
 }) => {
   const { t } = useTranslation()
   const { userId } = useAppSelector((state) => state.appMain)
 
-  const { firstName, lastName, photo } = user
-  const { text, chat, author, updatedAt } = lastMessage
+  const { firstName, lastName, photo } = chat.members[0].user
+  const { text, author, updatedAt } = chat.latestMessage
 
   const fullName = `${firstName} ${lastName}`
 
   const handleSelectedChat = () => {
-    setIsSelectedChat(chat)
+    setSelectedChat(chat)
     closeDrawer && closeDrawer()
   }
 
