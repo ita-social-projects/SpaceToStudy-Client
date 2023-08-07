@@ -15,7 +15,8 @@ const palette = {
     yellowGreen: '#9BC541',
     fruitSalad: '#4CAF50',
     orientalHerbs: '#12A03A',
-    lime: '#99CC00'
+    lime: '#99CC00',
+    turquoise: '#489DA0'
   },
   companyBlue: 'rgba(0, 167, 167, 0.2)',
   error: {

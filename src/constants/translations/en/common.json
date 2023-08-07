@@ -23,6 +23,7 @@
   "goToName": "Go to {{name}}",
   "cancel": "Cancel",
   "discard": "Discard",
+  "megabytes": "MB",
   "labels": {
     "email": "Email",
     "firstName": "First name",
