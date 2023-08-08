@@ -53,8 +53,6 @@ const TestsContainer = () => {
     onResponseError: onQuizzesError
   })
 
-  console.log(JSON.stringify(response))
-
   const rowActions = [
     {
       label: t('common.edit'),
