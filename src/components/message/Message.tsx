@@ -7,7 +7,7 @@ import Avatar from '@mui/material/Avatar'
 import AppCard from '~/components/app-card/AppCard'
 import { useAppSelector } from '~/hooks/use-redux'
 
-import { createUrlPath, getFormatedDate } from '~/utils/helper-functions'
+import { createUrlPath, getFormattedDate } from '~/utils/helper-functions'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { styles } from '~/components/message/Message.styles'
 import { MessageInterface } from '~/types'
@@ -30,7 +30,7 @@ const Message: FC<MessageProps> = ({ message }) => {
     e.stopPropagation()
   }
 
-  const date = getFormatedDate({
+  const date = getFormattedDate({
     date: createdAt,
     options: { hour: '2-digit', minute: '2-digit' }
   })
