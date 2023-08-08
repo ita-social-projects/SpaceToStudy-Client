@@ -19,9 +19,5 @@ export const styles = {
       width: '16px',
       height: '16px'
     }
-  },
-  icon: {
-    width: { xs: '18px', sm: '22px' },
-    color: 'primary.100'
   }
 }

@@ -11,7 +11,7 @@ import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import AppButton from '~/components/app-button/AppButton'
 
-import { lessonService } from '~/services/lesson-service'
+import { ResourceService } from '~/services/resource-service'
 import { useSnackBarContext } from '~/context/snackbar-context'
 import { AxiosResponse } from 'axios'
 
@@ -54,7 +54,7 @@ const NewLesson = () => {
   }
 
   const addLesson = (): Promise<AxiosResponse> => {
-    return lessonService.addLesson(data)
+    return ResourceService.addLesson(data)
   }
 
   const { fetchData } = useAxios({

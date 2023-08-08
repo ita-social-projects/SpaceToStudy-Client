@@ -2,7 +2,6 @@ import { lazy } from 'react'
 import { Route } from 'react-router-dom'
 
 import MyLesson from '~/pages/my-lesson/MyLesson'
-import NewLesson from '~/pages/new-lesson/NewLesson'
 import { authRoutes } from '~/router/constants/authRoutes'
 import {
   categories,
