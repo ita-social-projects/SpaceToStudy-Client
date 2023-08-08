@@ -7,26 +7,11 @@ import AppButton from '~/components/app-button/AppButton'
 
 import { ButtonVariantEnum, File } from '~/types'
 import { getFormatedDate, spliceSx } from '~/utils/helper-functions'
+import { openInNewTab } from '~/components/file-component/FileComponent.constants'
 import { styles } from '~/components/file-component/FileComponent.styles'
 
 interface FileComponentProps {
   file: File
-}
-
-const openFile = (file: File) => {
-  window.open(file.url, '_blank', 'noopener noreferrer')
-}
-
-const formatDate = (date: Date) => {
-  return getFormatedDate({
-    date,
-    options: {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric'
-    },
-    includeOrdinal: true
-  })
 }
 
 const FileComponent: FC<FileComponentProps> = ({ file }) => {
@@ -34,10 +19,19 @@ const FileComponent: FC<FileComponentProps> = ({ file }) => {
 
   const fileFormat = file.name.split('.')[1]
 
+  const formattedDate = getFormatedDate({
+    date: file.timestamp,
+    options: {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    }
+  })
+
   return (
     <Box sx={styles.fileWrapper}>
       <AppButton
-        onClick={() => openFile(file)}
+        onClick={() => openInNewTab(file)}
         sx={styles.file}
         variant={ButtonVariantEnum.Text}
       >
@@ -52,7 +46,7 @@ const FileComponent: FC<FileComponentProps> = ({ file }) => {
             <Typography sx={styles.divider}>
               {file.size} {t(`chat.sidebar.megabytes`)}
             </Typography>
-            <Typography>{formatDate(file.uploadedDate)}</Typography>
+            <Typography>{formattedDate}</Typography>
           </Box>
         </Box>
       </AppButton>

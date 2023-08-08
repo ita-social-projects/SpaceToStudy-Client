@@ -1,6 +1,7 @@
 import { FC, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import SimpleBar from 'simplebar-react'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
@@ -9,7 +10,7 @@ import IconButton from '@mui/material/IconButton'
 import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined'
 import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined'
 import LinkOutlinedIcon from '@mui/icons-material/LinkOutlined'
-import Close from '@mui/icons-material/Close'
+import { Close as CloseIcon } from '@mui/icons-material'
 
 import AppButton from '~/components/app-button/AppButton'
 import SidebarContentBox from '~/components/sidebar-content-box/SidebarContentBox'
@@ -17,7 +18,14 @@ import SidebarImageGrid from '~/components/sidebar-image-grid/SidebarImageGrid'
 import FileComponent from '~/components/file-component/FileComponent'
 import LinkComponent from '~/components/link-component/LinkComponent'
 
-import { SizeEnum, ButtonVariantEnum, UserResponse, Link, File } from '~/types'
+import {
+  SizeEnum,
+  ButtonVariantEnum,
+  UserResponse,
+  Link,
+  File,
+  Media
+} from '~/types'
 import { createUrlPath, spliceSx } from '~/utils/helper-functions'
 import { authRoutes } from '~/router/constants/authRoutes'
 
@@ -25,7 +33,7 @@ import { styles } from '~/containers/about-chat-sidebar/AboutChatSidebar.styles'
 
 interface AboutChatSidebarProps {
   user: UserResponse
-  media: string[]
+  media: Media[]
   files: File[]
   links: Link[]
 }
@@ -93,48 +101,54 @@ const AboutChatSidebar: FC<AboutChatSidebarProps> = ({
           onClick={closeSidebar}
           sx={styles.headerIcon}
         >
-          <Close />
+          <CloseIcon />
         </IconButton>
       </Box>
       <Divider />
-      <Box sx={styles.chatInfo}>
-        <Avatar src={photo} sx={styles.userAvatar} />
-        <Typography sx={styles.title}>{`${firstName} ${lastName}`}</Typography>
-        <AppButton
-          onClick={navigateToUserProfile}
-          size={SizeEnum.Medium}
-          sx={styles.secondaryText}
-          variant={ButtonVariantEnum.Tonal}
-        >
-          {t(`chat.sidebar.viewButton`)}
-        </AppButton>
-        <Typography sx={styles.userDescription}>
-          {userDescription ?? t(`chat.sidebar.noSummary`)}
-        </Typography>
-      </Box>
-      <Divider />
-      <SidebarContentBox
-        icon={<ImageOutlinedIcon />}
-        name={t('chat.sidebar.media')}
-      >
-        {mediaContent}
-      </SidebarContentBox>
-      <Divider />
-      <SidebarContentBox
-        content={files}
-        icon={<InsertDriveFileOutlinedIcon />}
-        name={t('chat.sidebar.files')}
-      >
-        <Box sx={styles.verticalGrid}>{filesContent}</Box>
-      </SidebarContentBox>
-      <Divider />
-      <SidebarContentBox
-        content={links}
-        icon={<LinkOutlinedIcon />}
-        name={t('chat.sidebar.links')}
-      >
-        <Box sx={styles.verticalGrid}>{linksContent}</Box>
-      </SidebarContentBox>
+      <SimpleBar style={styles.scrollBar}>
+        <Box sx={styles.contentWrapper}>
+          <Box sx={styles.chatInfo}>
+            <Avatar src={photo} sx={styles.userAvatar} />
+            <Typography
+              sx={styles.title}
+            >{`${firstName} ${lastName}`}</Typography>
+            <AppButton
+              onClick={navigateToUserProfile}
+              size={SizeEnum.Medium}
+              sx={styles.secondaryText}
+              variant={ButtonVariantEnum.Tonal}
+            >
+              {t(`chat.sidebar.viewButton`)}
+            </AppButton>
+            <Typography sx={styles.userDescription}>
+              {userDescription ?? t(`chat.sidebar.noSummary`)}
+            </Typography>
+          </Box>
+          <Divider />
+          <SidebarContentBox
+            icon={<ImageOutlinedIcon />}
+            name={t('chat.sidebar.media')}
+          >
+            {mediaContent}
+          </SidebarContentBox>
+          <Divider />
+          <SidebarContentBox
+            content={files}
+            icon={<InsertDriveFileOutlinedIcon />}
+            name={t('chat.sidebar.files')}
+          >
+            <Box sx={styles.verticalGrid}>{filesContent}</Box>
+          </SidebarContentBox>
+          <Divider />
+          <SidebarContentBox
+            content={links}
+            icon={<LinkOutlinedIcon />}
+            name={t('chat.sidebar.links')}
+          >
+            <Box sx={styles.verticalGrid}>{linksContent}</Box>
+          </SidebarContentBox>
+        </Box>
+      </SimpleBar>
     </Box>
   )
 }

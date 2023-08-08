@@ -6,21 +6,18 @@ import LinkOutlinedIcon from '@mui/icons-material/LinkOutlined'
 import AppButton from '~/components/app-button/AppButton'
 
 import { ButtonVariantEnum, Link } from '~/types'
+import { openInNewTab } from '~/components/file-component/FileComponent.constants'
 import { styles } from '~/components/link-component/LinkComponent.styles'
 
 interface LinkComponentProps {
   link: Link
 }
 
-const openLink = (link: Link) => {
-  window.open(link.url, '_blank', 'noopener noreferrer')
-}
-
 const LinkComponent: FC<LinkComponentProps> = ({ link }) => {
   return (
     <Box sx={styles.linkWrapper}>
       <AppButton
-        onClick={() => openLink(link)}
+        onClick={() => openInNewTab(link)}
         sx={styles.linkButton}
         variant={ButtonVariantEnum.Text}
       >

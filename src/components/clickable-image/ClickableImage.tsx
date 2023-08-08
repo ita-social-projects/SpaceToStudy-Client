@@ -3,31 +3,31 @@ import Box, { BoxProps } from '@mui/material/Box'
 
 import AppButton from '~/components/app-button/AppButton'
 
-import { ComponentEnum, ButtonVariantEnum } from '~/types'
+import { ComponentEnum, ButtonVariantEnum, Media } from '~/types'
 import { styles } from '~/components/clickable-image/ClickableImage.styles'
 
-interface ClickableImageProps extends BoxProps {
-  onUserClick?: (image: string) => void
-  image: string
+interface ClickableImageProps extends Omit<BoxProps, 'onClick'> {
+  onClick?: (image: Media) => void
+  image: Media
   children?: ReactNode
 }
 
 const ClickableImage: FC<ClickableImageProps> = ({
-  onUserClick,
+  onClick,
   image,
   children,
   ...props
 }) => {
   return (
     <AppButton
-      onClick={() => onUserClick?.(image)}
+      onClick={() => onClick?.(image)}
       sx={styles.imageButton}
       variant={ButtonVariantEnum.Text}
     >
       <Box
-        alt={image}
+        alt={image.name}
         component={ComponentEnum.Img}
-        src={image}
+        src={image.path}
         sx={styles.image}
         {...props}
       />

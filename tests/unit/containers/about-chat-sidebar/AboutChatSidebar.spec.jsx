@@ -5,7 +5,12 @@ import { render, screen, fireEvent } from '@testing-library/react'
 import AboutChatSidebar from '~/containers/about-chat-sidebar/AboutChatSidebar'
 
 import someAvatar from '~/assets/img/tutor-profile-page/avatar.png'
-import someAvatar1 from '~/assets/img/tutor-profile-page/presentationVideoImg.png'
+
+vi.mock('simplebar-react', () => {
+  return {
+    default: ({ children }) => <div>{children}</div>
+  }
+})
 
 const mockUser = {
   _id: 'user_id',
@@ -16,8 +21,20 @@ const mockUser = {
   professionalSummary: 'User description'
 }
 
-const mockMedia = Array(2).fill(someAvatar)
-mockMedia[1] = someAvatar1
+const mockMedia = [
+  {
+    _id: 'm1',
+    name: 'Cool pic',
+    path: someAvatar,
+    timestamp: new Date('2022-01-01T19:50:21.817Z')
+  },
+  {
+    _id: 'm2',
+    name: 'Awesome',
+    path: someAvatar,
+    timestamp: new Date('2022-01-01T19:50:21.817Z')
+  }
+]
 
 const mockFiles = [
   {
@@ -81,8 +98,8 @@ describe('AboutChatSidebar', () => {
       links: []
     })
 
-    expect(screen.getByAltText(someAvatar)).toBeInTheDocument()
-    expect(screen.getByAltText(someAvatar1)).toBeInTheDocument()
+    expect(screen.getByAltText('Cool pic')).toBeInTheDocument()
+    expect(screen.getByAltText('Awesome')).toBeInTheDocument()
   })
 
   test('renders files when available', () => {

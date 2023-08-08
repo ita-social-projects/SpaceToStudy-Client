@@ -35,7 +35,7 @@ describe('ClickableImage', () => {
 
   test('calls the clickFunction when the button is clicked', () => {
     const { getByRole, getByText } = render(
-      <ClickableImage image={image} onUserClick={customFunc}>
+      <ClickableImage image={image} onClick={customFunc}>
         {buttonText}
       </ClickableImage>
     )

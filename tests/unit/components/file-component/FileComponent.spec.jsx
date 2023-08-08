@@ -7,7 +7,7 @@ const sampleFile = {
   _id: '1',
   name: 'testfile.txt',
   size: '5',
-  uploadedDate: new Date('2023-07-31'),
+  timestamp: new Date('2023-07-31'),
   url: 'http://example.com/testfile.txt'
 }
 
@@ -26,7 +26,7 @@ beforeEach(() => {
 test('renders file name and file details correctly', () => {
   expect(screen.getByText('testfile.txt')).toBeInTheDocument()
   expect(screen.getByText('5 chat.sidebar.megabytes')).toBeInTheDocument()
-  expect(screen.getByText('31st July 2023')).toBeInTheDocument()
+  expect(screen.getByText('July 31, 2023')).toBeInTheDocument()
 })
 
 test('clicking on the file opens the file URL in a new tab', () => {

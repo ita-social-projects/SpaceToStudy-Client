@@ -1,3 +1,5 @@
+import { TypographyVariantEnum } from '~/types'
+
 export const styles = {
   imageGrid: {
     display: 'flex',
@@ -12,9 +14,19 @@ export const styles = {
     width: '100%',
     borderRadius: '5px'
   },
-  modalImageGrid: {
-    display: 'grid',
-    gridTemplateColumns: { xs: 'repeat(4, 1fr)', md: 'repeat(3, 1fr)' },
-    gap: { xs: '10px', md: '5px' }
+  expansiveGrid: {
+    display: 'flex',
+    gap: '8px',
+    flexWrap: 'wrap',
+    justifyContent: 'flex-start'
+  },
+  expansiveImage: {
+    width: '95px',
+    height: '95px'
+  },
+  dateText: {
+    typography: TypographyVariantEnum.Subtitle2,
+    color: 'primary.700',
+    p: '4px 16px'
   }
 }

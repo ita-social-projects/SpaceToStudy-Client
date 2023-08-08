@@ -1,16 +1,13 @@
-import { FC, isValidElement, cloneElement, Children, ReactElement } from 'react'
+import { FC, ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
 import AppButton from '~/components/app-button/AppButton'
-import AllContentModal from '~/components/all-content-modal/AllContentModal'
 import FileComponent from '~/components/file-component/FileComponent'
 import LinkComponent from '~/components/link-component/LinkComponent'
-import SidebarImageGrid from '~/components/sidebar-image-grid/SidebarImageGrid'
 
 import { maxElemToShow } from '~/components/sidebar-content-box/SidebarContentBox.constants'
-import { useModalContext } from '~/context/modal-context'
 import { spliceSx } from '~/utils/helper-functions'
 import { SizeEnum, ButtonVariantEnum, Link, File } from '~/types'
 import { styles } from '~/components/sidebar-content-box/SidebarContentBox.styles'
@@ -21,10 +18,6 @@ interface SidebarContentBoxProps {
   content?: Link[] | File[]
 }
 
-type ModifiedChildren = {
-  compactMode: boolean
-}
-
 const SidebarContentBox: FC<SidebarContentBoxProps> = ({
   icon,
   name,
@@ -32,27 +25,6 @@ const SidebarContentBox: FC<SidebarContentBoxProps> = ({
   children
 }) => {
   const { t } = useTranslation()
-  const { openModal } = useModalContext()
-
-  const seeAll = () => {
-    const updatedChildren = Children.map(children, (child) => {
-      if (isValidElement(child) && child.type === SidebarImageGrid) {
-        return cloneElement(child, { compactMode: false } as ModifiedChildren)
-      }
-      return child
-    })
-
-    openModal({
-      component: (
-        <AllContentModal
-          icon={icon}
-          title={`${t('chat.sidebar.modal.all')} ${name}`}
-        >
-          {updatedChildren}
-        </AllContentModal>
-      )
-    })
-  }
 
   const limitedContent =
     content && content.length > 0 ? (
@@ -81,7 +53,6 @@ const SidebarContentBox: FC<SidebarContentBoxProps> = ({
           </Typography>
         </Box>
         <AppButton
-          onClick={seeAll}
           size={SizeEnum.Small}
           sx={spliceSx(styles.button, styles.text)}
           variant={ButtonVariantEnum.Text}

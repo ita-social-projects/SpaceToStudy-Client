@@ -5,14 +5,25 @@ export const styles = {
     display: isOpened ? 'flex' : 'none',
     backgroundColor: 'basic.white',
     flexDirection: 'column',
-    gap: '24px',
     p: '24px 8px',
     height: 'calc(100% - 48px)',
     maxWidth: '320px',
-    overflowY: 'scroll'
+    '& .simplebar-track': {
+      right: '-5px'
+    }
   }),
+  contentWrapper: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '24px',
+    py: '24px'
+  },
+  scrollBar: {
+    height: 'calc(100% - 48px)'
+  },
   header: {
     px: '24px',
+    mb: '24px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between'
