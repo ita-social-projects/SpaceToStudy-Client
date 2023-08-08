@@ -20,6 +20,7 @@ import cooperationsPage from './cooperations-page.json'
 import myOffersPage from './my-offers-page.json'
 import myResourcesPage from './my-resources-page.json'
 import chat from './chat.json'
+import newLesson from './new-lesson.json'
 
 const ua = {
   translations: {
@@ -44,7 +45,8 @@ const ua = {
     cooperationsPage,
     myOffersPage,
     myResourcesPage,
-    chat
+    chat,
+    newLesson
   }
 }
 

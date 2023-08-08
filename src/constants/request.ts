@@ -46,6 +46,7 @@ export const URLs = {
   },
   resources: {
     lessons: {
+      add: '/lessons',
       get: '/lessons',
       delete: '/lessons',
       patch: '/lessons'
