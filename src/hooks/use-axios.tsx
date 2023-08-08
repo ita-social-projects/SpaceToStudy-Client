@@ -1,5 +1,6 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { AxiosError } from 'axios'
+
 import { ErrorResponse, ServiceFunction } from '~/types'
 
 export interface UseAxiosProps<

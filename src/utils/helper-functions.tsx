@@ -1,15 +1,16 @@
 import { SxProps, Theme } from '@mui/material'
 import {
   Breakpoints,
-  TableColumns,
+  Cooperation,
   FilterFromQuery,
+  FormatedDate,
+  Lesson,
+  Offer,
   RemoveColumnRules,
   ScreenBasedLimits,
+  TableColumn,
   UserRole,
-  UserRoleEnum,
-  Cooperation,
-  Offer,
-  FormatedDate
+  UserRoleEnum
 } from '~/types'
 
 export const parseJwt = <T,>(token: string): T => {
@@ -61,7 +62,7 @@ export const getEmptyValues = <T extends object, R>(
 export const findFullObjects = <T extends object>(array: T[]) =>
   array.filter((el) => Object.values(el).every((el) => el))
 
-export const getFormatedDate = ({
+export const getFormattedDate = ({
   date,
   locales = 'en-US',
   options = {
@@ -110,9 +111,9 @@ export const getScreenBasedLimit = (
   }
 }
 
-export const ajustColumns = <T extends Cooperation | Offer>(
+export const ajustColumns = <T extends Cooperation | Offer | Lesson>(
   breakpoints: Breakpoints,
-  columns: TableColumns<T>[],
+  columns: TableColumn<T>[],
   rules: RemoveColumnRules<T>
 ) => {
   const { isDesktop, isTablet, isMobile } = breakpoints

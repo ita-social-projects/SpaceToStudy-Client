@@ -1,7 +1,8 @@
-import { screen, render } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 
 import useAxios from '~/hooks/use-axios'
 import AdminTable from '~/pages/admin-table/AdminTable'
+import { renderWithProviders } from '~tests/test-utils'
 
 vi.mock('~/hooks/use-axios')
 
@@ -31,7 +32,7 @@ describe('AdminTable component', () => {
   useAxios.mockImplementation(() => mockData)
 
   it('should render AdminTable component', () => {
-    render(<AdminTable />)
+    renderWithProviders(<AdminTable />)
 
     const tabTitle = screen.getByText('userTable.adminsTab')
 

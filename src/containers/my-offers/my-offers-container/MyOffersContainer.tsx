@@ -4,23 +4,23 @@ import { Link, useNavigate } from 'react-router-dom'
 
 import Box from '@mui/material/Box'
 
-import useBreakpoints from '~/hooks/use-breakpoints'
-import { SortHook } from '~/hooks/table/use-sort'
-import { useDrawer } from '~/hooks/use-drawer'
-import EditOffer from '~/containers/offer-page/edit-offer/EditOffer'
+import AppCard from '~/components/app-card/AppCard'
 import AppDrawer from '~/components/app-drawer/AppDrawer'
 import EnhancedTable from '~/components/enhanced-table/EnhancedTable'
-import AppCard from '~/components/app-card/AppCard'
 import MyOffersCard from '~/containers/my-offers/my-offers-card/MyOffersCard'
+import EditOffer from '~/containers/offer-page/edit-offer/EditOffer'
+import { SortHook } from '~/hooks/table/use-sort'
+import useBreakpoints from '~/hooks/use-breakpoints'
+import { useDrawer } from '~/hooks/use-drawer'
 import { ajustColumns, createUrlPath } from '~/utils/helper-functions'
 
-import { ButtonVariantEnum, Offer, SizeEnum } from '~/types'
+import { styles } from '~/containers/my-cooperations/cooperations-container/CooperationContainer.styles'
 import {
   columns,
   removeColumnRules
 } from '~/containers/my-offers/my-offers-container/MyOffersContainer.constants'
 import { authRoutes } from '~/router/constants/authRoutes'
-import { styles } from '~/containers/my-cooperations/cooperations-container/CooperationContainer.styles'
+import { ButtonVariantEnum, Offer, SizeEnum } from '~/types'
 
 interface MyOffersContainerProps {
   items: Offer[]

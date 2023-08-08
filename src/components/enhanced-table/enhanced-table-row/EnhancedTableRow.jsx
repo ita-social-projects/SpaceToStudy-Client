@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import useMenu from '~/hooks/use-menu'
+import { useNavigate } from 'react-router-dom'
 
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import Checkbox from '@mui/material/Checkbox'
@@ -7,6 +7,8 @@ import IconButton from '@mui/material/IconButton'
 import MenuItem from '@mui/material/MenuItem'
 import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
+
+import useMenu from '~/hooks/use-menu'
 
 const EnhancedTableRow = ({
   columns,
@@ -18,6 +20,7 @@ const EnhancedTableRow = ({
   select = {}
 }) => {
   const { t } = useTranslation()
+  const navigate = useNavigate()
   const { openMenu, renderMenu, closeMenu } = useMenu()
   const { isSelected, handleSelectClick } = select
 
@@ -27,7 +30,7 @@ const EnhancedTableRow = ({
     refetchData && refetchData()
   }
 
-  const additionalProps = { t }
+  const additionalProps = { t, navigate }
 
   const tableCells = columns.map(({ field, label, calculatedCellValue }) => {
     let propValue = ''

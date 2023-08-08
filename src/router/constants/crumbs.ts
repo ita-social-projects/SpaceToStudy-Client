@@ -1,6 +1,6 @@
 import { t } from 'i18next'
-import { guestRoutes } from '~/router/constants/guestRoutes'
 import { authRoutes } from '~/router/constants/authRoutes'
+import { guestRoutes } from '~/router/constants/guestRoutes'
 import { UserResponse } from '~/types'
 
 export const home = {
@@ -55,7 +55,17 @@ export const offerDetails = {
 
 export const myResources = {
   name: t('breadCrumbs.myResources'),
-  path: authRoutes.myResources.route
+  path: authRoutes.myResources.root.route
+}
+
+export const newLesson = {
+  name: t('breadCrumbs.newLesson'),
+  path: authRoutes.myResources.newLesson.route
+}
+
+export const myLesson = {
+  name: t('breadCrumbs.myLesson'),
+  path: authRoutes.myResources.myLesson.route
 }
 
 export const userProfile = ({ data }: { data: UserResponse }) => ({

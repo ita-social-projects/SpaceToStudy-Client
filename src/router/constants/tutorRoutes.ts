@@ -5,6 +5,9 @@ export const tutorRoutes = {
     categories: { route: 'categories', path: authRoutes.categories.path },
     subjects: { route: 'subjects', path: authRoutes.subjects.path },
     findOffers: { route: 'findOffers', path: authRoutes.findOffers.path },
-    myResources: { route: 'my-resources', path: authRoutes.myResources.path }
+    myResources: {
+      route: 'my-resources',
+      path: authRoutes.myResources.root.path
+    }
   }
 }

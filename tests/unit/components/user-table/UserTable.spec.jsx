@@ -1,14 +1,15 @@
-import { render, fireEvent, screen } from '@testing-library/react'
+import { fireEvent, screen } from '@testing-library/react'
 import { expect, vi } from 'vitest'
 
-import useAxios from '~/hooks/use-axios'
 import UserTable from '~/components/user-table/UserTable'
+import useAxios from '~/hooks/use-axios'
 import {
   columns,
   initialFilters,
   initialSort,
   tabsInfo
 } from '~/pages/tutor-table/constants'
+import { renderWithProviders } from '~tests/test-utils'
 
 vi.mock('~/hooks/use-axios')
 
@@ -23,6 +24,14 @@ const userDataMock = {
     tutor: 'active'
   }
 }
+
+vi.mock('react-router-dom', async () => {
+  const actual = await vi.importActual('react-router-dom')
+  return {
+    ...actual,
+    useNavigate: vi.fn()
+  }
+})
 
 const userDataArray = Array(10)
   .fill()
@@ -41,7 +50,7 @@ describe('UserTable', () => {
   useAxios.mockImplementation(() => fakeData)
 
   beforeEach(() => {
-    render(
+    renderWithProviders(
       <UserTable
         columns={columns}
         initialFilters={initialFilters}

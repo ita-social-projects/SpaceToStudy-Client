@@ -1,12 +1,21 @@
+import { fireEvent, screen, waitFor } from '@testing-library/react'
 import { vi } from 'vitest'
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 
 import EnhancedTableRow from '~/components/enhanced-table/enhanced-table-row/EnhancedTableRow'
+import { renderWithProviders } from '~tests/test-utils'
 
 const handleSelectClick = vi.fn()
 const refetchData = vi.fn()
 const calculatedCellValue = vi.fn()
 const isSelected = vi.fn().mockReturnValue(false)
+
+vi.mock('react-router-dom', async () => {
+  const actual = await vi.importActual('react-router-dom')
+  return {
+    ...actual,
+    useNavigate: vi.fn()
+  }
+})
 
 const mockItem = {
   _id: '123456789',
@@ -25,7 +34,7 @@ const rowActions = [{ label: 'Delete', func: vi.fn() }]
 
 describe('EnhancedTableRow component', () => {
   beforeEach(() => {
-    render(
+    renderWithProviders(
       <table>
         <tbody>
           <EnhancedTableRow

@@ -1,6 +1,7 @@
 import { TFunction } from 'react-i18next'
+import { NavigateFunction } from 'react-router-dom'
+import { Cooperation, Lesson, Offer, TableColumn } from '~/types'
 import { RequestParams } from '~/types/services/services.index'
-import { Cooperation, Offer } from '~/types'
 
 export interface MyCooperationsFilters {
   status: string
@@ -20,21 +21,13 @@ export interface ScreenBasedLimits {
   default: number
 }
 
-export interface RemoveColumnRules<T extends Cooperation | Offer> {
-  desktop?: TableColumns<T>['label'][]
-  tablet?: TableColumns<T>['label'][]
-  mobile?: TableColumns<T>['label'][]
-}
-
-export interface TableColumns<T> {
-  label: string
-  calculatedCellValue: (
-    item: T,
-    additionalProps: AdditionalPropsInterface
-  ) => string | React.ReactNode
-  field?: string
+export interface RemoveColumnRules<T extends Cooperation | Offer | Lesson> {
+  desktop?: TableColumn<T>['label'][]
+  tablet?: TableColumn<T>['label'][]
+  mobile?: TableColumn<T>['label'][]
 }
 
 export interface AdditionalPropsInterface {
   t: TFunction
+  navigate: NavigateFunction
 }

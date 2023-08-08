@@ -5,6 +5,10 @@ import EnhancedTable from '~/components/enhanced-table/EnhancedTable.tsx'
 
 const mockedLoaderTestId = 'loader'
 
+vi.mock('react-router-dom', () => ({
+  useNavigate: vi.fn()
+}))
+
 const mockedSelect = {
   selected: [],
   createSelectAllHandler: vi.fn(),

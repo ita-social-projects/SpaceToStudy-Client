@@ -8,7 +8,17 @@ export const authRoutes = {
     path: '/categories/subjects/find-offers'
   },
   offerDetails: { route: 'offer-details/:id', path: '/offer-details' },
-  myResources: { route: 'my-resources', path: '/my-resources' },
+  myResources: {
+    root: { route: 'my-resources', path: '/my-resources' },
+    newLesson: {
+      route: 'my-resources/new-lesson',
+      path: '/my-resources/new-lesson'
+    },
+    myLesson: {
+      route: 'my-resources/my-lesson/:id',
+      path: '/my-resources/my-lesson'
+    }
+  },
   accountMenu: {
     myProfile: { route: 'my-profile', path: '/my-profile' },
     myCooperations: {
