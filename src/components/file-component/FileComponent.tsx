@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography'
 import AppButton from '~/components/app-button/AppButton'
 
 import { ButtonVariantEnum, File } from '~/types'
-import { getFormatedDate, spliceSx } from '~/utils/helper-functions'
+import { getFormattedDate, spliceSx } from '~/utils/helper-functions'
 import { openInNewTab } from '~/components/file-component/FileComponent.constants'
 import { styles } from '~/components/file-component/FileComponent.styles'
 
@@ -19,7 +19,7 @@ const FileComponent: FC<FileComponentProps> = ({ file }) => {
 
   const fileFormat = file.name.split('.')[1]
 
-  const formattedDate = getFormatedDate({
+  const formattedDate = getFormattedDate({
     date: file.timestamp,
     options: {
       day: 'numeric',
