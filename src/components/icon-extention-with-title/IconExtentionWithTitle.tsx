@@ -21,7 +21,9 @@ const IconExtentionWithTitle: FC<IconExtentionWithTitleProps> = ({
     <Box sx={styles.container}>
       <Box sx={styles.iconBox}>{fileExtension}</Box>
       <TitleWithDescription
-        description={description && `${description} ${t('common.megabytes')}`}
+        description={
+          description > 0 && `${description} ${t('common.megabytes')}`
+        }
         style={styles.titleWithDescription}
         title={title}
       />
