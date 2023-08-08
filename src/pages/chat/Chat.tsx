@@ -28,7 +28,7 @@ const Chat = () => {
   const { isMobile } = useBreakpoints()
   const { openDrawer, closeDrawer, isOpen } = useDrawer()
   const [selectedChat, setSelectedChat] = useState<ChatResponse | null>(null)
-  const [textAreaValue, setTextAreaValueValue] = useState('')
+  const [textAreaValue, setTextAreaValueValue] = useState<string>('')
   const scrollRef = useRef<HTMLDivElement | null>(null)
 
   const openChatsHandler = () => {
@@ -78,8 +78,6 @@ const Chat = () => {
   if (loading) {
     return <Loader size={100} />
   }
-
-  console.log(listOfChats)
 
   const selectChatChip = (
     <AppChip labelSx={styles.chipLabel} sx={styles.chip}>

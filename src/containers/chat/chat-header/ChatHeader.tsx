@@ -1,4 +1,5 @@
 import { FC } from 'react'
+import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import IconButton from '@mui/material/IconButton'
@@ -19,6 +20,7 @@ interface ChatHeaderProps {
 }
 
 const ChatHeader: FC<ChatHeaderProps> = ({ onClick, user }) => {
+  const { t } = useTranslation()
   const { isMobile } = useBreakpoints()
 
   const iconButtons = [
@@ -35,7 +37,7 @@ const ChatHeader: FC<ChatHeaderProps> = ({ onClick, user }) => {
   const status = (
     <>
       <Typography sx={styles.statusBadge} />
-      <Typography>{'Online'}</Typography>
+      <Typography>{t('chatPage.status.online')}</Typography>
     </>
   )
 

@@ -1,4 +1,4 @@
-export const usersMock = [
+export const chatsMock = [
   {
     _id: '64aec471990d5985c11b6e4c',
     members: [
@@ -75,5 +75,22 @@ export const usersMock = [
     },
     createdAt: '2023-07-12T15:19:13.343Z',
     updatedAt: '2023-07-12T16:42:58.472Z'
+  }
+]
+
+export const messagesMock = [
+  {
+    _id: '64a28e8c5d56f749c7d915d0',
+    author: {
+      _id: '644e6b1668cc37f543f2f37c',
+      photo: '1687425744398-ITA wallpapers-19.png'
+    },
+    authorRole: 'student',
+    text: 'Some text',
+    isRead: false,
+    isNotified: false,
+    chat: '64aec471990d5985c11b6e4c',
+    createdAt: '2023-20-01T13:25:36.292Z',
+    updatedAt: '2023-20-01T13:25:36.292Z'
   }
 ]
