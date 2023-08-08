@@ -21,7 +21,12 @@ import ChatTextArea from '~/containers/chat/chat-text-area/ChatTextArea'
 
 import { defaultResponses } from '~/constants'
 import { styles } from '~/pages/chat/Chat.styles'
-import { ChatResponse, MessageInterface, PositionEnum } from '~/types'
+import {
+  ChatResponse,
+  MessageInterface,
+  PositionEnum,
+  GetMessagesParams
+} from '~/types'
 
 const Chat = () => {
   const { t } = useTranslation()
@@ -42,7 +47,7 @@ const Chat = () => {
   const getChats = useCallback(() => chatService.getChats(), [])
 
   const getMessages = useCallback(
-    (chatId: string) => messageService.getMessages(chatId),
+    (params?: GetMessagesParams) => messageService.getMessages(params),
     []
   )
 
@@ -62,7 +67,7 @@ const Chat = () => {
   })
 
   useEffect(() => {
-    selectedChat && void fetchData(selectedChat._id)
+    selectedChat && void fetchData({ chatId: selectedChat._id })
   }, [selectedChat, fetchData])
 
   useEffect(() => {

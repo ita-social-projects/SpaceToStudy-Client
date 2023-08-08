@@ -1,4 +1,9 @@
-import { CommonEntityFields, UserResponse, UserRole } from '~/types'
+import {
+  CommonEntityFields,
+  RequestParams,
+  UserResponse,
+  UserRole
+} from '~/types'
 
 export interface MessageInterface extends CommonEntityFields {
   author: Pick<UserResponse, '_id' | 'photo'>
@@ -6,4 +11,9 @@ export interface MessageInterface extends CommonEntityFields {
   text: string
   chat: string
   isRead: boolean
+}
+
+export interface GetMessagesParams
+  extends Partial<Omit<RequestParams, 'sort'>> {
+  chatId: string
 }

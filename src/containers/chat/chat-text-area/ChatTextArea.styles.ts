@@ -12,7 +12,7 @@ export const styles = {
     flex: 1,
     backgroundColor: 'basic.white',
     borderRadius: '6px',
-    p: '16px 32px',
+    p: { xs: '16px 10px', sm: '16px 32px' },
     '& .MuiInputBase-root': { mt: 0 }
   },
   textArea: {
