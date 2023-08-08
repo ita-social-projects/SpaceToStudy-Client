@@ -57,5 +57,8 @@ export const URLs = {
   messages: {
     get: '/messages',
     post: '/messages'
+  },
+  quizzes: {
+    get: '/quizzes'
   }
 }

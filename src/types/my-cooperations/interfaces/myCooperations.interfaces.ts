@@ -1,6 +1,13 @@
 import { TFunction } from 'react-i18next'
 import { NavigateFunction } from 'react-router-dom'
-import { Attachment, Cooperation, Lesson, Offer, TableColumn } from '~/types'
+import {
+  Cooperation,
+  Lesson,
+  Offer,
+  TableColumn,
+  Attachment,
+  QuizInterface
+} from '~/types'
 import { RequestParams } from '~/types/services/services.index'
 
 export interface MyCooperationsFilters {
@@ -22,7 +29,7 @@ export interface ScreenBasedLimits {
 }
 
 export interface RemoveColumnRules<
-  T extends Cooperation | Offer | Lesson | Attachment
+  T extends Cooperation | Offer | Lesson | Attachment | QuizInterface
 > {
   desktop?: TableColumn<T>['label'][]
   tablet?: TableColumn<T>['label'][]
