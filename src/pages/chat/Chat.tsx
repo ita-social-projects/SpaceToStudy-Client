@@ -90,6 +90,18 @@ const Chat = () => {
     </AppChip>
   )
 
+  const scrollableContent = messagesLoad ? (
+    <Loader pageLoad size={50} sx={styles.loader} />
+  ) : (
+    <SimpleBar
+      scrollableNodeProps={{ ref: scrollRef }}
+      style={styles.scrollableContent}
+    >
+      <ChatDate date={new Date()} />
+      {messagesList}
+    </SimpleBar>
+  )
+
   return (
     <PageWrapper sx={styles.root}>
       {isMobile && (
@@ -126,17 +138,7 @@ const Chat = () => {
                   onClick={openChatsHandler}
                   user={selectedChat.members[0].user}
                 />
-                {messagesLoad ? (
-                  <Loader pageLoad size={50} sx={styles.loader} />
-                ) : (
-                  <SimpleBar
-                    scrollableNodeProps={{ ref: scrollRef }}
-                    style={styles.scrollableContent}
-                  >
-                    <ChatDate date={new Date()} />
-                    {messagesList}
-                  </SimpleBar>
-                )}
+                {scrollableContent}
                 <ChatTextArea
                   label={t('chatPage.chat.inputLabel')}
                   onChange={onTextAreaChange}
