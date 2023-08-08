@@ -2,7 +2,7 @@ import { screen } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 
 import ListOfUsersWithSearch from '~/containers/chat/list-of-users-with-search/ListOfUsersWithSearch'
-import { usersMock } from '~tests/unit/containers/chat/list-of-users-with-search/MockChat.spec.constants'
+import { chatsMock } from '~tests/unit/containers/chat/list-of-users-with-search/MockChat.spec.constants'
 
 vi.mock('simplebar-react', () => {
   return {
@@ -11,8 +11,8 @@ vi.mock('simplebar-react', () => {
 })
 
 const props = {
-  listOfChats: usersMock,
-  selectedChat: '',
+  listOfChats: chatsMock,
+  selectedChat: null,
   setSelectedChat: vi.fn()
 }
 
