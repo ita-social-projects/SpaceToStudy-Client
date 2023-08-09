@@ -9,11 +9,13 @@ import { TypographyVariantEnum } from '~/types'
 interface AppTextFieldProps
   extends Omit<TextFieldProps, 'error' | 'helperText'> {
   errorMsg?: string
+  withHelperText?: boolean
 }
 
 const AppTextField: FC<AppTextFieldProps> = ({
   errorMsg,
   multiline,
+  withHelperText = true,
   ...props
 }) => {
   const helperText = errorMsg ? (
@@ -30,7 +32,7 @@ const AppTextField: FC<AppTextFieldProps> = ({
     <TextField
       FormHelperTextProps={{ sx: styles.helperText(multiline) }}
       error={Boolean(errorMsg)}
-      helperText={helperText}
+      helperText={withHelperText && helperText}
       multiline={multiline}
       {...props}
     />

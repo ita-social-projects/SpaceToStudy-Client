@@ -2,5 +2,12 @@
   "message": {
     "you": "You"
   },
-  "noContacts": "No contacts"
+  "status": {
+    "online": "Online"
+  },
+  "noContacts": "No contacts",
+  "chat": {
+    "inputLabel": "Type a message...",
+    "chipLabel": "Select a chat, to start messaging"
+  }
 }

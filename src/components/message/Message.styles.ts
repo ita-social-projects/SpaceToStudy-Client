@@ -1,65 +1,34 @@
 import { TypographyVariantEnum } from '~/types'
 
 export const styles = {
-  userInfoStyles: {
-    root: {
-      flexDirection: 'row',
-      gap: '9px'
-    },
-    avatar: {
-      width: '48px',
-      height: '48px'
-    },
-    info: {
-      alignItems: 'baseline',
-      gap: '8px'
-    },
-    myInfo: {
-      flexDirection: 'row-reverse'
-    },
-    interlocutorInfo: {
-      flexDirection: 'row'
-    },
-    name: {
-      typography: TypographyVariantEnum.Subtitle2,
-      color: 'primary.900'
-    },
-    date: {
-      typography: TypographyVariantEnum.Caption
-    }
-  },
-  root: {
+  root: (isMyMessage: boolean) => ({
     display: 'flex',
-    flexDirection: 'column',
-    mb: '32px'
+    justifyContent: isMyMessage ? 'end' : 'normal',
+    alignItems: !isMyMessage ? 'center' : 'normal',
+    columnGap: '8px',
+    mt: '24px'
+  }),
+  avatar: {
+    width: '48px',
+    height: '48px',
+    '&:hover': { transform: 'scale(1.1)' }
   },
-  myMessageRoot: {
-    alignItems: 'flex-end'
-  },
-  interlocutorMessageRoot: {
-    alignItems: 'flex-start'
-  },
-  messageBox: {
-    display: 'flex',
-    flexDirection: 'column',
+  messageCard: (isMyMessage: boolean) => ({
+    boxSizing: 'border-box',
     maxWidth: '520px',
-    borderRadius: '12px',
-    p: '8px 12px'
-  },
-  myMessageBox: {
-    backgroundColor: 'primary.500',
-    color: 'primary.50',
-    borderTopRightRadius: '1px',
-    mt: '8px'
-  },
-  interlocutorMessageBox: {
-    backgroundColor: 'primary.100',
-    color: 'primary.900',
-    borderTopLeftRadius: '1px',
-    ml: '57px',
-    transform: 'translateY(-20px)'
-  },
-  messageContent: {
-    typography: TypographyVariantEnum.Body1
-  }
+    display: 'inline-block',
+    alignItems: 'end',
+    borderRadius: isMyMessage ? '12px 1px 12px 12px' : '1px 12px 12px 12px',
+    backgroundColor: `primary.${isMyMessage ? 500 : 100}`,
+    color: `primary.${isMyMessage ? 50 : 900}`,
+    typography: TypographyVariantEnum.Body1,
+    p: '8px 16px'
+  }),
+  date: (isMyMessage: boolean) => ({
+    typography: TypographyVariantEnum.Caption,
+    color: `primary.${isMyMessage ? 100 : 500}`,
+    float: 'right',
+    userSelect: 'none',
+    m: '4px 0 0 8px'
+  })
 }

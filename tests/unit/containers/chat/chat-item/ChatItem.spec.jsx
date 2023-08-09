@@ -9,18 +9,29 @@ const user = {
   role: 'student'
 }
 
-const lastMessage = {
-  text: 'Hello',
-  chat: 'chat',
-  author: {
-    _id: '644e6b1778cc37f543f2f37c',
-    firstName: 'Jane',
-    lastName: 'Doe'
-  },
-  updatedAt: new Date().toISOString()
+const chat = {
+  _id: '64c299aa147fefbb6e00fe6c',
+  members: [
+    {
+      user: {
+        _id: '644e6b1778cc37f543f2f37c',
+        firstName: 'test',
+        lastName: 'test',
+        photo: '1687425744398-ITA wallpapers-19.png'
+      }
+    }
+  ],
+  latestMessage: {
+    author: {
+      _id: '644e6b1778cc37f543f2f37c',
+      firstName: 'test',
+      lastName: 'test'
+    },
+    text: 'I have taken an introductory.',
+    updatedAt: '2023-07-27T16:44:59.804Z'
+  }
 }
-const isSelectedChat = 'chat'
-const setIsSelectedChat = vi.fn()
+const setSelectedChat = vi.fn()
 
 const mockState = {
   appMain: { userId: '644e6b1778cc37f543f2f37c' }
@@ -29,24 +40,20 @@ const mockState = {
 describe('ChatItem', () => {
   it('renders correctly', () => {
     renderWithProviders(
-      <ChatItem
-        isSelectedChat={isSelectedChat}
-        lastMessage={lastMessage}
-        setIsSelectedChat={setIsSelectedChat}
-        user={user}
-      />,
+      <ChatItem chat={chat} setSelectedChat={setSelectedChat} user={user} />,
       { preloadedState: mockState }
     )
 
-    const message = screen.getByText('Hello')
+    const message = screen.getByText('I have taken an introductory.')
+    const userName = screen.getByText('test test')
+    const myMessage = screen.getByText('chatPage.message.you:')
 
-    expect(screen.getByText('Albus Dumbledore')).toBeInTheDocument()
-
+    expect(userName).toBeInTheDocument()
     expect(message).toBeInTheDocument()
-    expect(screen.getByText('chatPage.message.you:')).toBeInTheDocument()
+    expect(myMessage).toBeInTheDocument()
 
     fireEvent.click(message)
 
-    expect(setIsSelectedChat).toHaveBeenCalledWith('chat')
+    expect(setSelectedChat).toHaveBeenCalledWith(chat)
   })
 })

@@ -1,46 +1,32 @@
 import { screen } from '@testing-library/react'
-import { UserRoleEnum } from '~/types'
-import { getFormattedDate } from '~/utils/helper-functions'
-import { renderWithProviders } from '~tests/test-utils'
 
-import someAvatar from '~/assets/img/student-home/bag.png'
 import Message from '~/components/message/Message'
 
+import { renderWithProviders } from '~tests/test-utils'
+import { getFormattedDate } from '~/utils/helper-functions'
+import { messagesMock } from '~tests/unit/containers/chat/list-of-users-with-search/MockChat.spec.constants'
+
+const messageMock = messagesMock[0]
+
 describe('Message component', () => {
-  const newAuthor = {
-    _id: '1234',
-    firstName: 'Kyle',
-    lastName: 'Jason',
-    photo: someAvatar,
-    createdAt: new Date()
-  }
-
-  const mockMessage = {
-    _id: 'newmess1',
-    author: newAuthor,
-    authorRole: UserRoleEnum.Student,
-    messageContent: 'how about some bruh moment'
-  }
-
   beforeEach(() => {
-    renderWithProviders(<Message message={mockMessage} />)
+    renderWithProviders(<Message message={messageMock} />)
   })
 
   it('should render the author name and message content', () => {
-    const authorNameElement = screen.getByText(/Kyle Jason/i)
-    const messageContentElement = screen.getByText(
-      /how about some bruh moment/i
-    )
+    const messageText = screen.getByText(messageMock.text)
 
-    expect(authorNameElement).toBeInTheDocument()
-    expect(messageContentElement).toBeInTheDocument()
+    expect(messageText).toBeInTheDocument()
   })
 
   it('should format the timestamp correctly', () => {
-    const timestampElement = screen.getByText(
-      getFormattedDate({ date: newAuthor.createdAt })
-    )
+    const formattedDate = getFormattedDate({
+      date: messageMock.createdAt,
+      options: { hour: '2-digit', minute: '2-digit' }
+    })
 
-    expect(timestampElement).toBeInTheDocument()
+    const messageDate = screen.getByText(formattedDate)
+
+    expect(messageDate).toBeInTheDocument()
   })
 })

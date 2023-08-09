@@ -50,5 +50,8 @@ export const URLs = {
       delete: '/lessons',
       patch: '/lessons'
     }
+  },
+  messages: {
+    get: '/messages'
   }
 }

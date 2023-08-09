@@ -1,41 +1,106 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect, useRef, ChangeEvent } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Allotment } from 'allotment'
+import SimpleBar from 'simplebar-react'
+import Box from '@mui/material/Box'
 
-import IconButton from '@mui/material/IconButton'
-import MenuIcon from '@mui/icons-material/Menu'
-
-import PageWrapper from '~/components/page-wrapper/PageWrapper'
-import useBreakpoints from '~/hooks/use-breakpoints'
-import ListOfUsersWithSearch from '~/containers/chat/list-of-users-with-search/ListOfUsersWithSearch'
-import AppDrawer from '~/components/app-drawer/AppDrawer'
-import { useDrawer } from '~/hooks/use-drawer'
 import { chatService } from '~/services/chat-service'
+import { messageService } from '~/services/message-service'
+import { useDrawer } from '~/hooks/use-drawer'
 import useAxios from '~/hooks/use-axios'
+import useBreakpoints from '~/hooks/use-breakpoints'
+import PageWrapper from '~/components/page-wrapper/PageWrapper'
+import AppDrawer from '~/components/app-drawer/AppDrawer'
+import AppChip from '~/components/app-chip/AppChip'
+import Message from '~/components/message/Message'
 import Loader from '~/components/loader/Loader'
+import ListOfUsersWithSearch from '~/containers/chat/list-of-users-with-search/ListOfUsersWithSearch'
+import ChatHeader from '~/containers/chat/chat-header/ChatHeader'
+import ChatDate from '~/containers/chat/chat-date/ChatDate'
+import ChatTextArea from '~/containers/chat/chat-text-area/ChatTextArea'
 
-import { PositionEnum } from '~/types'
-import { styles } from '~/pages/chat/Chat.styles'
 import { defaultResponses } from '~/constants'
+import { styles } from '~/pages/chat/Chat.styles'
+import {
+  ChatResponse,
+  MessageInterface,
+  PositionEnum,
+  GetMessagesParams
+} from '~/types'
 
 const Chat = () => {
-  const [isSelectedChat, setIsSelectedChat] = useState<string>('')
-  const breakpoints = useBreakpoints()
-  const { isMobile } = breakpoints
+  const { t } = useTranslation()
+  const { isMobile } = useBreakpoints()
   const { openDrawer, closeDrawer, isOpen } = useDrawer()
+  const [selectedChat, setSelectedChat] = useState<ChatResponse | null>(null)
+  const [textAreaValue, setTextAreaValueValue] = useState<string>('')
+  const scrollRef = useRef<HTMLDivElement | null>(null)
 
-  const openChatsHendler = () => {
+  const openChatsHandler = () => {
     openDrawer()
   }
 
+  const onTextAreaChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setTextAreaValueValue(e.target.value)
+  }
+
   const getChats = useCallback(() => chatService.getChats(), [])
+
+  const getMessages = useCallback(
+    (params?: GetMessagesParams) => messageService.getMessages(params),
+    []
+  )
+
   const { response: listOfChats, loading } = useAxios({
     service: getChats,
     defaultResponse: defaultResponses.array
   })
 
+  const {
+    response: messages,
+    loading: messagesLoad,
+    fetchData
+  } = useAxios({
+    service: getMessages,
+    defaultResponse: defaultResponses.array,
+    fetchOnMount: false
+  })
+
+  useEffect(() => {
+    selectedChat && void fetchData({ chatId: selectedChat._id })
+  }, [selectedChat, fetchData])
+
+  useEffect(() => {
+    if (selectedChat && !messagesLoad) {
+      scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight })
+    }
+  }, [selectedChat, messagesLoad])
+
+  const messagesList = messages.map((message: MessageInterface) => (
+    <Message key={message._id} message={message} />
+  ))
+
   if (loading) {
     return <Loader size={100} />
   }
+
+  const selectChatChip = (
+    <AppChip labelSx={styles.chipLabel} sx={styles.chip}>
+      {t('chatPage.chat.chipLabel')}
+    </AppChip>
+  )
+
+  const scrollableContent = messagesLoad ? (
+    <Loader pageLoad size={50} sx={styles.loader} />
+  ) : (
+    <SimpleBar
+      scrollableNodeProps={{ ref: scrollRef }}
+      style={styles.scrollableContent}
+    >
+      <ChatDate date={new Date()} />
+      {messagesList}
+    </SimpleBar>
+  )
 
   return (
     <PageWrapper sx={styles.root}>
@@ -47,9 +112,9 @@ const Chat = () => {
         >
           <ListOfUsersWithSearch
             closeDrawer={closeDrawer}
-            isSelectedChat={isSelectedChat}
             listOfChats={listOfChats}
-            setIsSelectedChat={setIsSelectedChat}
+            selectedChat={selectedChat}
+            setSelectedChat={setSelectedChat}
           />
         </AppDrawer>
       )}
@@ -57,21 +122,31 @@ const Chat = () => {
         {!isMobile && (
           <Allotment.Pane minSize={250} preferredSize={350}>
             <ListOfUsersWithSearch
-              isSelectedChat={isSelectedChat}
               listOfChats={listOfChats}
-              setIsSelectedChat={setIsSelectedChat}
+              selectedChat={selectedChat}
+              setSelectedChat={setSelectedChat}
             />
           </Allotment.Pane>
         )}
         <Allotment.Pane minSize={350}>
-          <>
-            {isMobile && (
-              <IconButton onClick={openChatsHendler}>
-                <MenuIcon />
-              </IconButton>
+          <Box sx={styles.chatContent(selectedChat)}>
+            {!selectedChat ? (
+              selectChatChip
+            ) : (
+              <>
+                <ChatHeader
+                  onClick={openChatsHandler}
+                  user={selectedChat.members[0].user}
+                />
+                {scrollableContent}
+                <ChatTextArea
+                  label={t('chatPage.chat.inputLabel')}
+                  onChange={onTextAreaChange}
+                  value={textAreaValue}
+                />
+              </>
             )}
-            <h1>It`s real chat</h1>
-          </>
+          </Box>
         </Allotment.Pane>
       </Allotment>
     </PageWrapper>

@@ -16,15 +16,15 @@ import { filterChats } from './ListOfUsersWithSearch.constants'
 
 interface ListOfUsersWithSearchProps {
   listOfChats: ChatResponse[]
-  isSelectedChat: string
-  setIsSelectedChat: (id: string) => void
+  selectedChat: ChatResponse | null
+  setSelectedChat: (chat: ChatResponse) => void
   closeDrawer?: () => void
 }
 
 const ListOfUsersWithSearch: FC<ListOfUsersWithSearchProps> = ({
   listOfChats,
-  isSelectedChat,
-  setIsSelectedChat,
+  selectedChat,
+  setSelectedChat,
   closeDrawer
 }) => {
   const [search, setSearch] = useState<string>('')
@@ -35,15 +35,14 @@ const ListOfUsersWithSearch: FC<ListOfUsersWithSearchProps> = ({
   const filteredChats = filterChats(listOfChats, userId, search)
 
   const chats = filteredChats.map((item: ChatResponse) => {
-    const isActiveChat = isSelectedChat === item._id
+    const isActiveChat = selectedChat?._id === item._id
     return (
       <ChatItem
+        chat={item}
         closeDrawer={closeDrawer}
         isActiveChat={isActiveChat}
         key={item._id}
-        lastMessage={item.latestMessage}
-        setIsSelectedChat={setIsSelectedChat}
-        user={item.members[0].user}
+        setSelectedChat={setSelectedChat}
       />
     )
   })
@@ -65,7 +64,9 @@ const ListOfUsersWithSearch: FC<ListOfUsersWithSearchProps> = ({
       {chats.length > 0 ? (
         <SimpleBar style={styles.scroll}>{chats}</SimpleBar>
       ) : (
-        <Typography sx={styles.information}>{t('chat.noContacts')}</Typography>
+        <Typography sx={styles.information}>
+          {t('chatPage.noContacts')}
+        </Typography>
       )}
     </Box>
   )

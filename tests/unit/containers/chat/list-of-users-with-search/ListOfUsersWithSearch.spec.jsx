@@ -2,7 +2,7 @@ import { screen } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 
 import ListOfUsersWithSearch from '~/containers/chat/list-of-users-with-search/ListOfUsersWithSearch'
-import { usersMock } from '~tests/unit/containers/chat/list-of-users-with-search/MockChat.spec.constants'
+import { chatsMock } from '~tests/unit/containers/chat/list-of-users-with-search/MockChat.spec.constants'
 
 vi.mock('simplebar-react', () => {
   return {
@@ -11,9 +11,9 @@ vi.mock('simplebar-react', () => {
 })
 
 const props = {
-  listOfChats: usersMock,
-  isSelectedChat: '',
-  setIsSelectedChat: vi.fn()
+  listOfChats: chatsMock,
+  selectedChat: null,
+  setSelectedChat: vi.fn()
 }
 
 describe('ListOfUsersWithSearch component', () => {
@@ -29,7 +29,7 @@ describe('ListOfUsersWithSearch component', () => {
   it('renders "notFoundedChats"', () => {
     renderWithProviders(<ListOfUsersWithSearch {...props} listOfChats={[]} />)
 
-    const notFoundedChats = screen.getByText('chat.noContacts')
+    const notFoundedChats = screen.getByText('chatPage.noContacts')
     expect(notFoundedChats).toBeInTheDocument()
   })
 })
