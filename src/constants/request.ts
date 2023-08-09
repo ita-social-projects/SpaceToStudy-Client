@@ -52,6 +52,7 @@ export const URLs = {
     }
   },
   messages: {
-    get: '/messages'
+    get: '/messages',
+    post: '/messages'
   }
 }
