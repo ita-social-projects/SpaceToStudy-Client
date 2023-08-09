@@ -10,8 +10,11 @@
   "offerDetails": "Offer details",
   "myCooperations": "My cooperations",
   "myResources": "Мy resources",
+  "newLesson": "New lesson",
   "chat": "Chat",
   "myOffers": "My offers",
-  "newLesson":"New lesson",
-  "myLesson":"My lesson"
+  "editLesson": "Edit lesson",
+  "lessonDetails": "Lesson details",
+  "newQuiz": "New quiz",
+  "newQuestion": "New question"
 }

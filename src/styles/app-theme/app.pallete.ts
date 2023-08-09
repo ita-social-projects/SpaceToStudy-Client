@@ -3,6 +3,7 @@ import { blueGrey } from '@mui/material/colors'
 const palette = {
   primary: blueGrey,
   backgroundColor: '#F7F7F7',
+  imageOverlay: 'rgba(38, 50, 56, 0.7)',
   basic: {
     black: '#000000',
     blue: '#0B8AF8',
@@ -16,7 +17,9 @@ const palette = {
     fruitSalad: '#4CAF50',
     orientalHerbs: '#12A03A',
     lime: '#99CC00',
-    turquoise: '#489DA0'
+    turquoise: '#489DA0',
+    turquoiseDark: '#3B8587',
+    turquoiseChat: '#A0F0F2'
   },
   companyBlue: 'rgba(0, 167, 167, 0.2)',
   error: {

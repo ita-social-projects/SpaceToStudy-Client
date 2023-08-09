@@ -1,8 +1,6 @@
 import { lazy } from 'react'
 import { Route } from 'react-router-dom'
 
-import MyLesson from '~/pages/my-lesson/MyLesson'
-import CreateLesson from '~/pages/new-lesson/NewLesson'
 import { authRoutes } from '~/router/constants/authRoutes'
 import {
   categories,
@@ -10,14 +8,17 @@ import {
   editProfile,
   findOffers,
   myCooperations,
-  myLesson,
+  editLesson,
+  lessonDetails,
   myOffers,
   myProfile,
   myResources,
   newLesson,
   offerDetails,
   subjects,
-  userProfile
+  userProfile,
+  newQuiz,
+  newQuestion
 } from '~/router/constants/crumbs'
 import PrivateRoute from '~/router/helpers/PrivateRoute'
 import { UserRoleEnum } from '~/types'
@@ -35,6 +36,14 @@ const FindOffers = lazy(() => import('~/pages/find-offers/FindOffers'))
 const OfferDetails = lazy(() => import('~/pages/offer-details/OfferDetails'))
 const TutorProfile = lazy(() => import('~/pages/tutor-profile/TutorProfile'))
 const MyResources = lazy(() => import('~/pages/my-resources/MyResources'))
+const CreateOrEditLesson = lazy(
+  () => import('~/pages/create-or-edit-lesson/CreateOrEditLesson')
+)
+const LessonDetails = lazy(() => import('~/pages/lesson-details/LessonDetails'))
+const NewQuiz = lazy(() => import('~/pages/new-quiz/NewQuiz'))
+const CreateOrEditQuestion = lazy(
+  () => import('~/pages/create-or-edit-question/CreateOrEditQuestion')
+)
 
 export const authRouter = (
   <Route
@@ -97,14 +106,29 @@ export const authRouter = (
       path={authRoutes.myResources.root.route}
     />
     <Route
-      element={<CreateLesson />}
+      element={<CreateOrEditLesson />}
       handle={{ crumb: [myResources, newLesson] }}
       path={authRoutes.myResources.newLesson.route}
     />
     <Route
-      element={<MyLesson />}
-      handle={{ crumb: [myResources, myLesson] }}
-      path={authRoutes.myResources.myLesson.route}
+      element={<CreateOrEditLesson />}
+      handle={{ crumb: [myResources, editLesson] }}
+      path={authRoutes.myResources.editLesson.route}
+    />
+    <Route
+      element={<LessonDetails />}
+      handle={{ crumb: [myResources, lessonDetails] }}
+      path={authRoutes.lessonDetails.route}
+    />
+    <Route
+      element={<NewQuiz />}
+      handle={{ crumb: [myResources, newQuiz] }}
+      path={authRoutes.myResources.newQuiz.route}
+    />
+    <Route
+      element={<CreateOrEditQuestion />}
+      handle={{ crumb: [myResources, newQuestion] }}
+      path={authRoutes.myResources.newQuestion.route}
     />
   </Route>
 )

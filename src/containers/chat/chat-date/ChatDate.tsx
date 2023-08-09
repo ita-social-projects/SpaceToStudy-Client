@@ -7,7 +7,7 @@ import { styles } from '~/containers/chat/chat-date/ChatDate.styles'
 import { getFormattedDate } from '~/utils/helper-functions'
 
 interface ChatDateProps {
-  date: Date | string
+  date: string
 }
 
 const ChatDate: FC<ChatDateProps> = ({ date }) => {

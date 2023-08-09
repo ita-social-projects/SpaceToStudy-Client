@@ -1,0 +1,11 @@
+{
+  "question": "Question",
+  "answer": "Answer",
+  "questionType": {
+    "multipleChoice": "Multiple Choice",
+    "openAnswer": "Open Answer",
+    "oneAnswer": "One Answer"
+  },
+  "addNewOne": "Add new one",
+  "writeYourAnswer": "Write your answer"
+}

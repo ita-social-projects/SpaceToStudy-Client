@@ -10,8 +10,11 @@
   "offerDetails": "Деталі оферу",
   "myCooperations": "Мої співпраці",
   "myResources": "Мої ресурси",
+  "newLesson": "Новий урок",
   "chat": "Чат",
-  "myOffers": "Мої офери",
-  "newLesson":"Новий урок",
-  "myLesson":"Мій урок"
+  "myOffers": "Мої пропозиції",
+  "editLesson": "Редагування уроку",
+  "lessonDetails": "Деталі уроку",
+  "newQuiz": "Новий тест",
+  "newQuestion": "Нове питання"
 }

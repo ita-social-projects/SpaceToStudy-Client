@@ -1,19 +1,54 @@
 {
   "tabs": {
     "lessons": "Lessons",
-    "tests": "Tests",
+    "quizzes": "Quizzes",
+    "questions": "Questions",
     "attachments": "Attachments"
   },
   "lessons": {
-    "newLessonBtn":"New lesson",
+    "addBtn": "New lesson",
     "title": "Title",
     "attachmentQty": "Attachment",
     "attachmentsQty": "Attachments",
     "attachments": "Attachments",
     "lastUpdates": "Last updates",
-    "emptyLessons":"You have no lessons yet",
-    "confirmLessonDeletionTitle":"Do you confirm lesson deletion?",
-    "confirmLessonDeletionMessage":"This action is permanent and will remove all related content. Please review your decision before proceeding.",
+    "emptyItems":"You have no lessons yet",
+    "confirmDeletionTitle":"Do you confirm lesson deletion?",
     "successDeletion":"Lesson was deleted successfully"
-  }
+  },
+  "attachments": {
+    "addBtn": "Add Attachment",
+    "addFromAttachments": "Add files from your Attachments",
+    "file": "File",
+    "size": "Size",
+    "lastUpdate": "Last update",
+    "emptyItems": "You have no attachments yet",
+    "confirmDeletionTitle":"Do you confirm attachment deletion?",
+    "successDeletion":"Attachment was deleted successfully",
+    "validationError": "File name cannot be longer than 55 symbol."
+  },
+  "quizzes": {
+    "addBtn": "New quiz",
+    "title": "Title",
+    "question": "Question",
+    "questions": "Questions",
+    "updated": "Last updates",
+    "emptyItems": "You have no quizzes yet",
+    "confirmDeletionTitle":"Do you confirm quiz deletion?",
+    "successDeletion":"Quiz was deleted successfully",
+    "defaultNewTitle":"Untitled",
+    "defaultNewDescription":"Description...",
+    "createNewQuestion":"Create new question",
+    "addQuestion":"Add question"
+  },
+  "questions": {
+    "addBtn": "New question",
+    "title": "Title",
+    "category": "Category",
+    "updated": "Last updates",
+    "emptyItems": "You have no questions yet",
+    "confirmDeletionTitle":"Do you confirm question deletion?",
+    "successDeletion":"Question was deleted successfully"
+  },
+  "confirmDeletionMessage":"This action is permanent and will remove all related content. Please review your decision before proceeding."
 }

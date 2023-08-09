@@ -76,3 +76,13 @@ export interface RouteItem {
   route: string
   path: string
 }
+
+export interface AddDocuments {
+  maxFileSize: number
+  maxAllFilesSize: number
+  filesTypes: string[]
+  fileSizeError: string
+  allFilesSizeError: string
+  typeError: string
+  maxQuantityFiles: number
+}

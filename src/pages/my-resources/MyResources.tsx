@@ -1,13 +1,12 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import Box from '@mui/material/Box'
-
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
-import Tab from '~/components/tab/Tab'
+import Typography from '@mui/material/Typography'
 
 import { tabsData } from '~/pages/my-resources/MyResources.constants'
 import { styles } from '~/pages/my-resources/MyResources.styles'
+import TabNavigation from '~/components/tab-navigation/TabNavigation'
 
 const MyResources = () => {
   const [activeTab, setActiveTab] = useState<string>('lessons')
@@ -17,24 +16,16 @@ const MyResources = () => {
     setActiveTab(tab)
   }
 
-  const tabs = Object.keys(tabsData).map((key) => (
-    <Tab
-      activeTab={activeTab === key}
-      key={key}
-      onClick={() => handleClick(key)}
-    >
-      <Box sx={styles.titleBox}>
-        {tabsData[key].icon}
-        {t(tabsData[key].title)}
-      </Box>
-    </Tab>
-  ))
-
   const tabContent = activeTab && tabsData[activeTab].content
 
   return (
     <PageWrapper>
-      <Box sx={styles.tabs}>{tabs}</Box>
+      <Typography sx={styles.title}>{t(tabsData[activeTab].title)}</Typography>
+      <TabNavigation
+        activeTab={activeTab}
+        handleClick={handleClick}
+        tabsData={tabsData}
+      />
       {tabContent}
     </PageWrapper>
   )

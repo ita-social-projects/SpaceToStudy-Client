@@ -40,7 +40,13 @@ export enum TypographyVariantEnum {
 }
 
 export enum TextFieldVariantEnum {
-  Standard = 'standard'
+  Standard = 'standard',
+  Outlined = 'outlined'
+}
+
+export enum DrawerVariantEnum {
+  Persistent = 'persistent',
+  Temporary = 'temporary'
 }
 
 export enum ButtonVariantEnum {
@@ -64,7 +70,8 @@ export enum ComponentEnum {
   Img = 'img',
   Span = 'span',
   Footer = 'footer',
-  Form = 'form'
+  Form = 'form',
+  Label = 'label'
 }
 
 export enum SortEnum {
@@ -84,4 +91,13 @@ export enum PositionEnum {
   Right = 'right',
   Bottom = 'bottom',
   Top = 'top'
+}
+
+export enum InputEnum {
+  File = 'file'
+}
+
+export enum OverlapEnum {
+  Circular = 'circular',
+  Rectangular = 'rectangular'
 }

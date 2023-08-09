@@ -30,9 +30,15 @@ const AddPhotoStep = ({ btnsBox, stepLabel }) => {
     const originalPhotoPath = URL.createObjectURL(photo)
     const photoSizes = { newWidth: 440, newHeight: 440 }
     const photoName = photo.name
+    const lastModified = photo.lastModified
     imageResize(originalPhotoPath, photoSizes).then((resizedPhoto) => {
       handleStepData(stepLabel, [
-        { src: resizedPhoto, name: photoName, type: 'image/png' }
+        {
+          src: resizedPhoto,
+          name: photoName,
+          type: 'image/png',
+          lastModified
+        }
       ])
     })
   }
@@ -74,6 +80,8 @@ const AddPhotoStep = ({ btnsBox, stepLabel }) => {
             emitter={addPhoto}
             initialError={photoError}
             initialState={photo}
+            isImages
+            sx={style.fileUploader}
             validationData={validationData}
           />
         </Box>

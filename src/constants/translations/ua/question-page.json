@@ -1,0 +1,11 @@
+{
+  "question": "Питання",
+  "answer": "Відповідь",
+  "questionType": {
+    "multipleChoice": "Множинний вибір",
+    "openAnswer": "Відкрита відповідь",
+    "oneAnswer": "Одна відповідь"
+  },
+  "addNewOne": "Добавити ще одне питання",
+  "writeYourAnswer": "Напишіть свою відповідь"
+}

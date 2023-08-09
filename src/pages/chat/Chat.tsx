@@ -1,4 +1,11 @@
-import { useState, useCallback, useEffect, useRef, ChangeEvent } from 'react'
+import {
+  useState,
+  useCallback,
+  useEffect,
+  useRef,
+  ChangeEvent,
+  MouseEvent
+} from 'react'
 import { useTranslation } from 'react-i18next'
 import { Allotment } from 'allotment'
 import SimpleBar from 'simplebar-react'
@@ -18,37 +25,67 @@ import ListOfUsersWithSearch from '~/containers/chat/list-of-users-with-search/L
 import ChatHeader from '~/containers/chat/chat-header/ChatHeader'
 import ChatDate from '~/containers/chat/chat-date/ChatDate'
 import ChatTextArea from '~/containers/chat/chat-text-area/ChatTextArea'
+import AboutChatSidebar from '~/containers/about-chat-sidebar/AboutChatSidebar'
 
+import { getGroupedByDate, getIsNewDay } from '~/utils/helper-functions'
 import { defaultResponses } from '~/constants'
 import { styles } from '~/pages/chat/Chat.styles'
+import { mockFiles, mockLinks, mockMedia } from '~/pages/chat/Chat.constants'
 import {
   ChatResponse,
+  DrawerVariantEnum,
   MessageInterface,
-  PositionEnum,
-  GetMessagesParams
+  PositionEnum
 } from '~/types'
 
 const Chat = () => {
   const { t } = useTranslation()
-  const { isMobile } = useBreakpoints()
+  const { isMobile, isDesktop } = useBreakpoints()
   const { openDrawer, closeDrawer, isOpen } = useDrawer()
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false)
   const [selectedChat, setSelectedChat] = useState<ChatResponse | null>(null)
-  const [textAreaValue, setTextAreaValueValue] = useState<string>('')
+  const [messages, setMessages] = useState<MessageInterface[]>([])
+  const [textAreaValue, setTextAreaValue] = useState<string>('')
+  const [filteredMessages, setFilteredMessages] = useState<string[]>([])
+  const [filteredIndex, setFilteredIndex] = useState<number>(0)
   const scrollRef = useRef<HTMLDivElement | null>(null)
 
-  const openChatsHandler = () => {
+  const groupedMessages = getGroupedByDate(messages, getIsNewDay)
+  const allotmentSizes = isSidebarOpen && isDesktop ? [25, 50, 25] : [25, 75]
+  const { Persistent, Temporary } = DrawerVariantEnum
+
+  const openChatsHandler = (e: MouseEvent<HTMLButtonElement>) => {
     openDrawer()
+    e.stopPropagation()
+  }
+
+  const onSidebarHandler = (event: boolean) => {
+    setIsSidebarOpen(event)
   }
 
   const onTextAreaChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setTextAreaValueValue(e.target.value)
+    setTextAreaValue(e.target.value)
   }
+
+  const onMessagesResponse = useCallback(
+    (response: MessageInterface[]) => setMessages(response),
+    [setMessages]
+  )
 
   const getChats = useCallback(() => chatService.getChats(), [])
 
+  const sendMessage = useCallback(
+    () =>
+      messageService.sendMessage({
+        chatId: selectedChat?._id ?? '',
+        text: textAreaValue
+      }),
+    [selectedChat?._id, textAreaValue]
+  )
+
   const getMessages = useCallback(
-    (params?: GetMessagesParams) => messageService.getMessages(params),
-    []
+    () => messageService.getMessages({ chatId: selectedChat?._id ?? '' }),
+    [selectedChat?._id]
   )
 
   const { response: listOfChats, loading } = useAxios({
@@ -56,51 +93,88 @@ const Chat = () => {
     defaultResponse: defaultResponses.array
   })
 
-  const {
-    response: messages,
-    loading: messagesLoad,
-    fetchData
-  } = useAxios({
+  const { fetchData } = useAxios({
     service: getMessages,
+    onResponse: onMessagesResponse,
     defaultResponse: defaultResponses.array,
     fetchOnMount: false
   })
 
+  const onMessageSend = async () => {
+    setTextAreaValue('')
+    await sendMessage()
+    await fetchData()
+  }
+
   useEffect(() => {
-    selectedChat && void fetchData({ chatId: selectedChat._id })
+    setMessages([])
+    selectedChat && void fetchData()
   }, [selectedChat, fetchData])
 
   useEffect(() => {
-    if (selectedChat && !messagesLoad) {
+    if (selectedChat && messages.length) {
       scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight })
     }
-  }, [selectedChat, messagesLoad])
-
-  const messagesList = messages.map((message: MessageInterface) => (
-    <Message key={message._id} message={message} />
-  ))
+  }, [selectedChat, messages.length])
 
   if (loading) {
     return <Loader size={100} />
   }
 
+  const messagesListWithDate = groupedMessages.map((group) => (
+    <Box key={group.date} sx={styles.messagesWithDate}>
+      <ChatDate date={group.date} />
+      {group.items.map((item, index) => (
+        <Message
+          filteredIndex={filteredIndex}
+          filteredMessages={filteredMessages}
+          key={item._id}
+          message={item}
+          prevMessage={index ? group.items[index - 1] : null}
+        />
+      ))}
+    </Box>
+  ))
+
+  const aboutChatSidebar = selectedChat && (
+    <AppDrawer
+      PaperProps={{ sx: styles.sidebarPaper }}
+      anchor={PositionEnum.Right}
+      onClose={() => onSidebarHandler(false)}
+      open={isSidebarOpen}
+      sx={styles.sidebar}
+      variant={isDesktop ? Persistent : Temporary}
+    >
+      <AboutChatSidebar
+        files={mockFiles}
+        links={mockLinks}
+        media={mockMedia}
+        member={selectedChat.members[0]}
+      />
+    </AppDrawer>
+  )
+
   const selectChatChip = (
-    <AppChip labelSx={styles.chipLabel} sx={styles.chip}>
+    <AppChip labelSx={styles.chipLabel(false)} sx={styles.chip}>
       {t('chatPage.chat.chipLabel')}
     </AppChip>
   )
 
-  const scrollableContent = messagesLoad ? (
-    <Loader pageLoad size={50} sx={styles.loader} />
+  const scrollableContent = messages.length ? (
+    messagesListWithDate
   ) : (
-    <SimpleBar
-      scrollableNodeProps={{ ref: scrollRef }}
-      style={styles.scrollableContent}
-    >
-      <ChatDate date={new Date()} />
-      {messagesList}
-    </SimpleBar>
+    <AppChip labelSx={styles.chipLabel(true)} sx={styles.chip}>
+      {t('chatPage.chat.loading')}
+    </AppChip>
   )
+
+  const handleFilteredMessage = (filteredMessages: string[]) => {
+    setFilteredMessages(filteredMessages.reverse())
+  }
+
+  const hadleIndexMessage = (filteredIndex: number) => {
+    setFilteredIndex(filteredIndex)
+  }
 
   return (
     <PageWrapper sx={styles.root}>
@@ -118,7 +192,7 @@ const Chat = () => {
           />
         </AppDrawer>
       )}
-      <Allotment defaultSizes={isMobile ? [1] : [25, 75]}>
+      <Allotment defaultSizes={isMobile ? [1] : allotmentSizes}>
         {!isMobile && (
           <Allotment.Pane minSize={250} preferredSize={350}>
             <ListOfUsersWithSearch
@@ -128,27 +202,43 @@ const Chat = () => {
             />
           </Allotment.Pane>
         )}
-        <Allotment.Pane minSize={350}>
-          <Box sx={styles.chatContent(selectedChat)}>
+        <Allotment.Pane minSize={isMobile ? 340 : 400}>
+          <Box sx={styles.chatContent(!!selectedChat, messages.length)}>
             {!selectedChat ? (
               selectChatChip
             ) : (
               <>
                 <ChatHeader
-                  onClick={openChatsHandler}
+                  messages={messages}
+                  onClick={() => onSidebarHandler(true)}
+                  onFilteredIndexChange={hadleIndexMessage}
+                  onFilteredMessagesChange={handleFilteredMessage}
+                  onMenuClick={openChatsHandler}
                   user={selectedChat.members[0].user}
                 />
-                {scrollableContent}
+                <SimpleBar
+                  scrollableNodeProps={{ ref: scrollRef }}
+                  style={styles.scrollableContent}
+                >
+                  {scrollableContent}
+                </SimpleBar>
                 <ChatTextArea
                   label={t('chatPage.chat.inputLabel')}
                   onChange={onTextAreaChange}
+                  onClick={() => void onMessageSend()}
                   value={textAreaValue}
                 />
               </>
             )}
           </Box>
         </Allotment.Pane>
+        {isDesktop && isSidebarOpen && (
+          <Allotment.Pane maxSize={320} minSize={320}>
+            {aboutChatSidebar}
+          </Allotment.Pane>
+        )}
       </Allotment>
+      {!isDesktop && isSidebarOpen && aboutChatSidebar}
     </PageWrapper>
   )
 }

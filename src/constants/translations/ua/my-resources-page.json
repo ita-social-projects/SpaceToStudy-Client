@@ -2,18 +2,53 @@
   "tabs": {
     "lessons": "Уроки",
     "tests": "Тести",
+    "questions": "Запитання",
     "attachments": "Вкладення"
   },
   "lessons": {
-    "newLessonBtn":"Новий урок",
+    "addBtn": "Новий урок",
     "title": "Заголовок",
     "attachments": "Файли",
     "attachmentQty": "Файл",
-    "attachmentsQty":"Файлів",
+    "attachmentsQty": "Файлів",
     "lastUpdates": "Останнє оновлення",
-    "emptyLessons":"У вас ще немає уроків",
-    "confirmLessonDeletionTitle":"Ви підтверджуєте видалення уроку?",
-    "confirmLessonDeletionMessage":"Ця дія є постійною та призведе до видалення всього пов’язаного вмісту. Перш ніж продовжити, перегляньте своє рішення.",
+    "emptyItems":"У вас ще немає уроків",
+    "confirmDeletionTitle":"Ви підтверджуєте видалення уроку?",
     "successDeletion":"Урок було успішно видалено"
-  }
+  },
+  "attachments": {
+    "addBtn": "Додайте файли з Вкладень",
+    "file": "Файл",
+    "size": "Розмір",
+    "lastUpdate": "Останнє оновлення",
+    "emptyItems": "У вас ще немає вкладень",
+    "confirmDeletionTitle":"Ви підтверджуєте видалення вкладення?",
+    "successDeletion":"Вкладення було успішно видалено",
+    "addAttachment": "Добавити файл",
+    "validationError": "Назва файлу не може бути довшою за 55 символів."
+  },
+  "quizzes": {
+    "addBtn": "Новий тест",
+    "quizTitle": "Заголовок",
+    "question": "Питання",
+    "questions": "Питання",
+    "updated": "Останнє оновлення",
+    "emptyItems": "У вас ще немає тестів",
+    "confirmDeletionTitle":"Ви підтверджуєте видалення тесту?",
+    "successDeletion":"Тест було успішно видалено",
+    "defaultNewTitle":"Без назви",
+    "defaultNewDescription":"Опис...",
+    "createNewQuestion":"Створити нове питання",
+    "addQuestion":"Додати питання"
+  },
+  "questions": {
+    "addBtn": "Нове запитання",
+    "title": "Заголовок",
+    "category": "Категорія",
+    "updated": "Останнє оновлення",
+    "emptyItems": "У вас ще немає запитань",
+    "confirmDeletionTitle":"Ви підтверджуєте видалення запитання?",
+    "successDeletion":"Запитання було успішно видалено"
+  },
+  "confirmDeletionMessage":"Ця дія є остаточною, та призведе до видалення всього пов’язаного вмісту. Перш ніж продовжити, перегляньте своє рішення."
 }

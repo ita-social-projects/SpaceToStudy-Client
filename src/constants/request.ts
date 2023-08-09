@@ -46,12 +46,29 @@ export const URLs = {
   },
   resources: {
     lessons: {
+      add: '/lessons',
       get: '/lessons',
       delete: '/lessons',
       patch: '/lessons'
+    },
+    attachments: {
+      get: '/attachments',
+      patch: '/attachments',
+      delete: '/attachments'
+    },
+    questions: {
+      get: '/questions'
     }
   },
   messages: {
-    get: '/messages'
+    get: '/messages',
+    post: '/messages'
+  },
+  quizzes: {
+    get: '/quizzes',
+    delete: '/quizzes'
+  },
+  attachments: {
+    post: '/attachments'
   }
 }
