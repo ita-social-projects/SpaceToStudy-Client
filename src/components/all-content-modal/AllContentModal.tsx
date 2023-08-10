@@ -6,7 +6,7 @@ import { styles } from '~/components/all-content-modal/AllContentModal.styles'
 interface AllContentModalProps {
   icon?: ReactElement
   title: string
-  children?: ReactNode
+  children: ReactNode
 }
 
 const AllContentModal: FC<AllContentModalProps> = ({

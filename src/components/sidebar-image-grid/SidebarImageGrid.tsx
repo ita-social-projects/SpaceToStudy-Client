@@ -7,6 +7,7 @@ import ClickableImage from '~/components/clickable-image/ClickableImage'
 import AllContentModal from '~/components/all-content-modal/AllContentModal'
 
 import { useModalContext } from '~/context/modal-context'
+import { maxElemToShow } from '~/components/sidebar-content-box/SidebarContentBox.constants'
 import { Media } from '~/types'
 import { styles } from '~/components/sidebar-image-grid/SidebarImageGrid.styles'
 
@@ -38,7 +39,7 @@ const SidebarImageGrid: FC<SidebarImageGridProps> = ({
     })
   }
 
-  const compactGrid = images.slice(-3).map((image, index) => (
+  const compactGrid = images.slice(maxElemToShow * -1).map((image, index) => (
     <ClickableImage image={image} key={image._id} onClick={showImage}>
       {index === 2 && <Box>+{mediaSize - 2}</Box>}
     </ClickableImage>
