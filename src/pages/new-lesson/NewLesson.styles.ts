@@ -5,8 +5,7 @@ export const styles = {
     display: 'flex',
     flexDirection: 'column',
     gap: '24px',
-    py: '40px',
-    px: { sm: '36px', md: '72px' }
+    p: { sm: '40px 36px', md: '40px 72px' }
   },
   input: {
     style: {

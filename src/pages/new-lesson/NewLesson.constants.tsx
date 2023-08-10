@@ -14,5 +14,3 @@ export const initialValues = {
 }
 
 export const myResourcesPath = '/my-resources'
-
-export const initialFileValue = '<p>Create your file here.</p>'

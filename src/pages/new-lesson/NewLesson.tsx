@@ -1,24 +1,22 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import useForm from '~/hooks/use-form'
-import useAxios from '~/hooks/use-axios'
 import { Link, useNavigate } from 'react-router-dom'
-
-import { Editor } from '@tinymce/tinymce-react'
+import { AxiosResponse } from 'axios'
 import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
-import PageWrapper from '~/components/page-wrapper/PageWrapper'
-import AppTextField from '~/components/app-text-field/AppTextField'
-import AppButton from '~/components/app-button/AppButton'
 
 import { ResourceService } from '~/services/resource-service'
 import { useSnackBarContext } from '~/context/snackbar-context'
-import { AxiosResponse } from 'axios'
+import useForm from '~/hooks/use-form'
+import useAxios from '~/hooks/use-axios'
+import PageWrapper from '~/components/page-wrapper/PageWrapper'
+import AppTextField from '~/components/app-text-field/AppTextField'
+import AppButton from '~/components/app-button/AppButton'
+import FileEditor from '~/components/file-editor/FileEditor'
 
 import {
   validations,
   initialValues,
-  initialFileValue,
   myResourcesPath
 } from '~/pages/new-lesson/NewLesson.constants'
 import { snackbarVariants } from '~/constants'
@@ -65,10 +63,6 @@ const NewLesson = () => {
     onResponseError: handleResponseError
   })
 
-  const handleSave = (content: string) => {
-    console.log('Saved content:', content)
-  }
-
   const { data, errors, handleInputChange, handleSubmit } =
     useForm<NewLessonData>({
       initialValues,
@@ -106,21 +100,7 @@ const NewLesson = () => {
           variant={TextFieldVariantEnum.Standard}
         />
         <Divider sx={styles.divider} />
-        <Editor
-          apiKey={import.meta.env.VITE_APP_TINY_MCE_API_KEY}
-          init={{
-            height: 400,
-            menubar: true,
-            plugins:
-              'mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss save',
-            toolbar:
-              'save undo redo | blocks fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-            content_style:
-              'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
-            save_onsavecallback: handleSave
-          }}
-          initialValue={initialFileValue}
-        />
+        <FileEditor />
         <Box sx={styles.buttons}>
           <AppButton size={SizeEnum.ExtraLarge} type={ButtonTypeEnum.Submit}>
             {t('common.save')}
