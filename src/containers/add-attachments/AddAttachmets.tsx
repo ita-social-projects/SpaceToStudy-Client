@@ -91,7 +91,7 @@ const AddAttachments: FC = () => {
 
       <Box sx={styles.buttonsArea}>
         <Box>
-          <AppButton disabled sx={styles.addBtn}>
+          <AppButton disabled sx={styles.addButton}>
             {t('common.add')}
           </AppButton>
           <AppButton onClick={closeModal} variant='outlined'>

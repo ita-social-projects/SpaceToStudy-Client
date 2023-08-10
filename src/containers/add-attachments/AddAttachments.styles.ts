@@ -1,3 +1,5 @@
+import { TypographyVariantEnum } from '~/types'
+
 export const styles = {
   root: {
     width: '65vw',
@@ -5,14 +7,13 @@ export const styles = {
   },
   title: {
     mb: '32px',
-    fontSize: '32px',
-    lineHeight: '48px'
+    typography: TypographyVariantEnum.H4
   },
   searchIcon: {
     color: 'primary.700'
   },
   input: {
-    maxWidth: '400px',
+    maxWidth: '480px',
     border: '1px solid',
     borderColor: 'primary.500',
     borderRadius: '6px'
@@ -42,7 +43,7 @@ export const styles = {
     display: 'flex',
     justifyContent: 'space-between'
   },
-  addBtn: {
+  addButton: {
     mr: '16px'
   }
 }
