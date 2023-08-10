@@ -1,3 +1,4 @@
+export * from '~/types/attachment/attachment.index'
 export * from '~/types/categories/categories.index'
 export * from '~/types/chat/chat.index'
 export * from '~/types/chat/message/message.index'

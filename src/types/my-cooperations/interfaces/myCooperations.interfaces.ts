@@ -1,6 +1,6 @@
 import { TFunction } from 'react-i18next'
 import { NavigateFunction } from 'react-router-dom'
-import { Cooperation, Lesson, Offer, TableColumn, Attachment } from '~/types'
+import { Attachment, Cooperation, Lesson, Offer, TableColumn } from '~/types'
 import { RequestParams } from '~/types/services/services.index'
 
 export interface MyCooperationsFilters {

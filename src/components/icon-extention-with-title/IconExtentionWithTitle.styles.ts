@@ -9,7 +9,7 @@ export const styles = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    width: '40px',
+    minWidth: '40px',
     height: '40px',
     backgroundColor: 'basic.turquoise',
     borderRadius: '5px',
