@@ -1,5 +1,4 @@
-import { RemoveColumnRules, SortEnum } from '~/types'
-import { Attachment } from '~/types'
+import { Attachment, RemoveColumnRules, SortEnum } from '~/types'
 
 import { getFormattedDate } from '~/utils/helper-functions'
 import { convertBytesToProperSize } from '~/utils/bytes-to-proper-size'
