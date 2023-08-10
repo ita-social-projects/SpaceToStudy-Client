@@ -10,7 +10,8 @@ import {
   ScreenBasedLimits,
   TableColumn,
   UserRole,
-  UserRoleEnum
+  UserRoleEnum,
+  Attachment
 } from '~/types'
 
 export const parseJwt = <T,>(token: string): T => {
@@ -136,7 +137,9 @@ export const getScreenBasedLimit = (
   }
 }
 
-export const ajustColumns = <T extends Cooperation | Offer | Lesson>(
+export const ajustColumns = <
+  T extends Cooperation | Offer | Lesson | Attachment
+>(
   breakpoints: Breakpoints,
   columns: TableColumn<T>[],
   rules: RemoveColumnRules<T>

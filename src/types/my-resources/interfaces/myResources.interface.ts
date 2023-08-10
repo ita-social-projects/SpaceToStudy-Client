@@ -8,3 +8,13 @@ export interface Lesson extends CommonEntityFields {
 export interface GetLessonsParams extends RequestParams {
   title: string
 }
+
+export interface Attachment extends CommonEntityFields {
+  fileName: string
+  title: string
+  size: number
+}
+
+export interface AttachmentsParams extends RequestParams {
+  title: string
+}
