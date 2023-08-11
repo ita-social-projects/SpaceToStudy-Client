@@ -1,7 +1,7 @@
 import { CommonEntityFields, UserResponse, RequestParams } from '~/types'
 
 export interface Attachment extends CommonEntityFields {
-  author: Pick<UserResponse, '_id'>
+  author: string
   fileName: string
   link: string
   description: string

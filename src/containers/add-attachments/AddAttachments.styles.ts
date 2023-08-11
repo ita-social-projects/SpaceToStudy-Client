@@ -3,7 +3,7 @@ import { TypographyVariantEnum } from '~/types'
 export const styles = {
   root: {
     width: '65vw',
-    padding: '20px'
+    p: '20px'
   },
   title: {
     mb: '32px',
