@@ -26,7 +26,7 @@ export const styles = {
         }
       }
   },
-  chatContent: (selectedChat: boolean, loading: boolean) => ({
+  chatContent: (selectedChat: boolean, messagesLength: number) => ({
     display: 'flex',
     height: '100%',
     alignItems: selectedChat ? 'normal' : 'center',
@@ -35,7 +35,7 @@ export const styles = {
     boxSizing: 'border-box',
     backgroundColor: 'primary.50',
     p: '8px 8px 16px',
-    '& .simplebar-content': { margin: loading ? 'auto 0 0' : 'auto' },
+    '& .simplebar-content': { margin: messagesLength ? 'auto 0 0' : 'auto' },
     '& .simplebar-content-wrapper': {
       display: 'flex',
       flexDirection: 'column',

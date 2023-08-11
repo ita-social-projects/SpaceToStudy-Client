@@ -28,7 +28,7 @@ const Chat = () => {
   const { isMobile } = useBreakpoints()
   const { openDrawer, closeDrawer, isOpen } = useDrawer()
   const [selectedChat, setSelectedChat] = useState<ChatResponse | null>(null)
-  const [messages, setMessages] = useState<MessageInterface[] | []>([])
+  const [messages, setMessages] = useState<MessageInterface[]>([])
   const [textAreaValue, setTextAreaValue] = useState<string>('')
   const scrollRef = useRef<HTMLDivElement | null>(null)
 
@@ -76,7 +76,7 @@ const Chat = () => {
   const onMessageSend = async () => {
     setTextAreaValue('')
     await sendMessage()
-    void fetchData()
+    await fetchData()
   }
 
   useEffect(() => {
@@ -90,7 +90,7 @@ const Chat = () => {
     }
   }, [selectedChat, messages.length])
 
-  const messagesList = messages.map((message: MessageInterface) => (
+  const messagesList = messages.map((message) => (
     <Message key={message._id} message={message} />
   ))
 
@@ -104,17 +104,16 @@ const Chat = () => {
     </AppChip>
   )
 
-  const scrollableContent =
-    messages.length > 0 ? (
-      <>
-        <ChatDate date={new Date()} />
-        {messagesList}
-      </>
-    ) : (
-      <AppChip labelSx={styles.chipLabel(true)} sx={styles.chip}>
-        {t('chatPage.chat.loading')}
-      </AppChip>
-    )
+  const scrollableContent = messages.length ? (
+    <>
+      <ChatDate date={new Date()} />
+      {messagesList}
+    </>
+  ) : (
+    <AppChip labelSx={styles.chipLabel(true)} sx={styles.chip}>
+      {t('chatPage.chat.loading')}
+    </AppChip>
+  )
 
   return (
     <PageWrapper sx={styles.root}>
@@ -143,7 +142,7 @@ const Chat = () => {
           </Allotment.Pane>
         )}
         <Allotment.Pane minSize={350}>
-          <Box sx={styles.chatContent(!!selectedChat, messages.length > 0)}>
+          <Box sx={styles.chatContent(!!selectedChat, messages.length)}>
             {!selectedChat ? (
               selectChatChip
             ) : (
