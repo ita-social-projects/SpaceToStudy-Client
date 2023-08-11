@@ -1,16 +1,18 @@
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
-import useAxios from '~/hooks/use-axios'
+import SearchIcon from '@mui/icons-material/Search'
+
 import { ResourceService } from '~/services/resource-service'
+import { useSnackBarContext } from '~/context/snackbar-context'
 import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
 import EnhancedTable from '~/components/enhanced-table/EnhancedTable'
-import SearchIcon from '@mui/icons-material/Search'
+import Loader from '~/components/loader/Loader'
 import AppButton from '~/components/app-button/AppButton'
+import useAxios from '~/hooks/use-axios'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import useSort from '~/hooks/table/use-sort'
-import { useSnackBarContext } from '~/context/snackbar-context'
-import Loader from '~/components/loader/Loader'
+
 import {
   columns,
   removeColumnRules,
@@ -19,8 +21,8 @@ import {
 } from './AttachmentsContainer.constants'
 import { ajustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
 import { defaultResponses, snackbarVariants } from '~/constants'
-import { styles } from '~/containers/my-resources/attachments-container/AttachmentsContainer.styles'
 import { ItemsWithCount, Attachment, ErrorResponse } from '~/types'
+import { styles } from '~/containers/my-resources/attachments-container/AttachmentsContainer.styles'
 
 const AttachmentsContainer = () => {
   const { t } = useTranslation()
@@ -74,8 +76,8 @@ const AttachmentsContainer = () => {
       </AppButton>
       <InputWithIcon
         endAdornment={<SearchIcon sx={styles.searchIcon} />}
-        onChange={() => console.log()}
-        onClear={() => console.log()}
+        onChange={() => null}
+        onClear={() => null}
         placeholder={t('common.search')}
         sx={styles.input}
         value={t('common.search')}

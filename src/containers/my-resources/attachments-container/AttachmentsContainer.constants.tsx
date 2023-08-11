@@ -1,6 +1,7 @@
-import { getFormattedDate } from '~/utils/helper-functions'
 import Typography from '@mui/material/Typography'
+
 import IconExtentionWithTitle from '~/components/icon-extention-with-title/IconExtentionWithTitle'
+import { getFormattedDate } from '~/utils/helper-functions'
 import {
   SortEnum,
   TableColumn,
