@@ -1,14 +1,15 @@
 import { useState } from 'react'
-import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
+import { useTranslation } from 'react-i18next'
 
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
+import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
+import IconsWithCounter from '../icons-with-counter/IconsWithCounter'
+
 import { Box } from '@mui/system'
-import { IconButton } from '@mui/material'
 
 import { styles } from '~/components/search-by-message/SearchByMessage.styles'
 
 const SearchByMessage = () => {
+  const { t } = useTranslation()
   const [search, setSearch] = useState('')
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,27 +20,15 @@ const SearchByMessage = () => {
     setSearch('')
   }
 
-  const placeholder = {
-    placeholder: 'Search...'
-  }
-
   return (
     <Box sx={styles.container}>
-      <Box sx={styles.iconBox}>
-        <IconButton>
-          <KeyboardArrowUpIcon />
-        </IconButton>
-        <p>0 of 0</p>
-        <IconButton>
-          <KeyboardArrowDownIcon />
-        </IconButton>
-      </Box>
+      <IconsWithCounter />
       <InputWithIcon
         onChange={onChange}
         onClear={onClear}
         sx={styles.input}
         value={search}
-        {...placeholder}
+        {...{ placeholder: t('common.search') + '...' }}
       />
     </Box>
   )
