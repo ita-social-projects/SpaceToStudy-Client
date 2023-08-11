@@ -15,7 +15,6 @@ export interface QuestionWithAnswers {
 }
 
 export interface QuizInterface extends CommonEntityFields {
-  _id: string
   title: string
   items: QuestionWithAnswers[]
   author: string

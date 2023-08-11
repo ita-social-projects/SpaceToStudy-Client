@@ -1,5 +1,18 @@
 import { TypographyVariantEnum } from '~/types'
 
+export const roundedBorderTable = {
+  '& td,th': {
+    '&:first-of-type': {
+      borderTopLeftRadius: '10px',
+      borderBottomLeftRadius: '10px'
+    },
+    '&:last-of-type': {
+      borderTopRightRadius: '10px',
+      borderBottomRightRadius: '10px'
+    }
+  }
+}
+
 export const styles = {
   root: {
     display: 'grid',
@@ -14,18 +27,7 @@ export const styles = {
     mb: '40px'
   },
   chips: { flexDirection: 'column' },
-  table: {
-    '& td,th': {
-      '&:first-of-type': {
-        borderTopLeftRadius: '10px',
-        borderBottomLeftRadius: '10px'
-      },
-      '&:last-of-type': {
-        borderTopRightRadius: '10px',
-        borderBottomRightRadius: '10px'
-      }
-    }
-  },
+  table: roundedBorderTable,
   profileInfo: {
     avatar: {
       height: '30px',

@@ -39,7 +39,7 @@ const TestsContainer = () => {
     [setAlert]
   )
 
-  const getOffers = useCallback(
+  const getQuizzes = useCallback(
     () =>
       quizService.getQuizzes({
         limit: itemsPerPage
@@ -48,7 +48,7 @@ const TestsContainer = () => {
   )
 
   const { response, loading } = useAxios<ItemsWithCount<QuizInterface>>({
-    service: getOffers,
+    service: getQuizzes,
     defaultResponse: defaultResponses.itemsWithCount,
     onResponseError: onQuizzesError
   })

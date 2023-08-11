@@ -1,4 +1,5 @@
 import { TypographyVariantEnum } from '~/types'
+import { roundedBorderTable } from '~/containers/my-cooperations/cooperations-container/CooperationContainer.styles'
 
 const captionTitle = {
   color: 'primary.400',
@@ -6,18 +7,7 @@ const captionTitle = {
 }
 
 export const styles = {
-  table: {
-    '& td,th': {
-      '&:first-of-type': {
-        borderTopLeftRadius: '10px',
-        borderBottomLeftRadius: '10px'
-      },
-      '&:last-of-type': {
-        borderTopRightRadius: '10px',
-        borderBottomRightRadius: '10px'
-      }
-    }
-  },
+  table: roundedBorderTable,
   quizTitleContainer: {
     display: 'flex',
     alignItems: 'center',
