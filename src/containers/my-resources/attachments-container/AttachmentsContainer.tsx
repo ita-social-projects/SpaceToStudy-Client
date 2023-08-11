@@ -1,7 +1,7 @@
+import { ChangeEvent, FC, useCallback, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import SearchIcon from '@mui/icons-material/Search'
 import Box from '@mui/material/Box'
-import { ChangeEvent, useCallback, useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
 
 import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
 import useAxios from '~/hooks/use-axios'
@@ -20,13 +20,14 @@ import { useSnackBarContext } from '~/context/snackbar-context'
 import { ajustColumns } from '~/utils/helper-functions'
 import AppButton from '~/components/app-button/AppButton'
 import EnhancedTable from '~/components/enhanced-table/EnhancedTable'
+import Loader from '~/components/loader/Loader'
 
-const AttachmentsContainer = () => {
+const AttachmentsContainer: FC = () => {
   const { t } = useTranslation()
   const { setAlert } = useSnackBarContext()
   const { page, handleChangePage } = usePagination()
 
-  const sortOptions = useSort({ initialSort: initialSort })
+  const sortOptions = useSort({ initialSort })
   const { sort } = sortOptions
 
   const [searchInput, setSearchInput] = useState<string>('')
