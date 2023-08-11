@@ -1,62 +1,49 @@
-import { useCallback } from 'react'
-import { useTranslation } from 'react-i18next'
-import Box from '@mui/material/Box'
 import SearchIcon from '@mui/icons-material/Search'
+import Box from '@mui/material/Box'
+import { ChangeEvent, useCallback, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
-import { ResourceService } from '~/services/resource-service'
-import { useSnackBarContext } from '~/context/snackbar-context'
 import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
-import EnhancedTable from '~/components/enhanced-table/EnhancedTable'
-import Loader from '~/components/loader/Loader'
-import AppButton from '~/components/app-button/AppButton'
 import useAxios from '~/hooks/use-axios'
+
 import useBreakpoints from '~/hooks/use-breakpoints'
 import useSort from '~/hooks/table/use-sort'
 import AppPagination from '~/components/app-pagination/AppPagination'
 import usePagination from '~/hooks/table/use-pagination'
+import { useDebounce } from '~/hooks/use-debounce'
+import { ResourceService } from '~/services/resource-service'
 
-import {
-  columns,
-  removeColumnRules,
-  initialSort,
-  itemsLoadLimit
-} from '~/containers/my-resources/attachments-container/AttachmentsContainer.constants'
-import { ajustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
-import { defaultResponses, snackbarVariants } from '~/constants'
-import { ItemsWithCount, Attachment, ErrorResponse } from '~/types'
+import { defaultResponses } from '~/constants'
 import { styles } from '~/containers/my-resources/attachments-container/AttachmentsContainer.styles'
+import { Attachment, GetLessonsParams, ItemsWithCount } from '~/types'
+import { useSnackBarContext } from '~/context/snackbar-context'
+import { ajustColumns } from '~/utils/helper-functions'
+import AppButton from '~/components/app-button/AppButton'
+import EnhancedTable from '~/components/enhanced-table/EnhancedTable'
 
 const AttachmentsContainer = () => {
   const { t } = useTranslation()
   const { setAlert } = useSnackBarContext()
   const { page, handleChangePage } = usePagination()
 
-  const sortOptions = useSort({ initialSort })
+  const sortOptions = useSort({ initialSort: initialSort })
   const { sort } = sortOptions
 
-  const breakpoints = useBreakpoints()
-  const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
+  const [searchInput, setSearchInput] = useState<string>('')
+  const searchFileName = useRef<string>('')
 
-  const onAttachmentError = useCallback(
-    (error: ErrorResponse) => {
-      setAlert({
-        severity: snackbarVariants.error,
-        message: error ? `errors.${error.code}` : ''
-      })
-    },
-    [setAlert]
-  )
   const getAttachments = useCallback(
     () =>
       ResourceService.getAttachments({
         limit: itemsPerPage,
         skip: (page - 1) * itemsPerPage,
-        sort
+        sort,
+        fileName: searchFileName.current
       }),
-    [itemsPerPage, page, sort]
+    [itemsPerPage, page, sort, searchFileName]
   )
 
-  const { response, loading } = useAxios<ItemsWithCount<Attachment>>({
+  const { response, loading, fetchData } = useAxios<ItemsWithCount<Attachment>>({
     service: getAttachments,
     defaultResponse: defaultResponses.itemsWithCount,
     onResponseError: onAttachmentError
@@ -105,6 +92,21 @@ const AttachmentsContainer = () => {
     </>
   )
 
+  const debouncedOnSearch = useDebounce((text: string) => {
+    searchFileName.current = text
+    void fetchData()
+  })
+
+  const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchInput(e.target.value)
+    debouncedOnSearch(e.target.value)
+  }
+
+  const onSearchClear = () => {
+    setSearchInput('')
+    searchFileName.current = ''
+    void fetchData()
+  }
   return (
     <Box>
       {addAttachmentBlock}
@@ -112,4 +114,5 @@ const AttachmentsContainer = () => {
     </Box>
   )
 }
+
 export default AttachmentsContainer
