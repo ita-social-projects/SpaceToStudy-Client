@@ -20,7 +20,7 @@ const FileComponent: FC<FileComponentProps> = ({ file }) => {
   const fileFormat = file.name.split('.')[1]
 
   const formattedDate = getFormattedDate({
-    date: file.timestamp,
+    date: file.createdAt,
     options: {
       day: 'numeric',
       month: 'long',

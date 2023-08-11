@@ -7,8 +7,9 @@ const sampleFile = {
   _id: '1',
   name: 'testfile.txt',
   size: '5',
-  timestamp: new Date('2023-07-31'),
-  url: 'http://example.com/testfile.txt'
+  url: 'http://example.com/testfile.txt',
+  createdAt: new Date('2023-07-31'),
+  updatedAt: new Date('2023-07-31')
 }
 
 const mockOpen = (url, target, features) => {
