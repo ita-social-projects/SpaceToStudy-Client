@@ -35,7 +35,7 @@ export const styles = {
         borderBottomRightRadius: '10px'
       },
       '&:nth-of-type(2)': {
-        width: { md: '40%', lg: '20%' }
+        width: '20%'
       }
     }
   },

@@ -22,7 +22,7 @@ describe('IconExtentionWithTitle test', () => {
   })
 
   it('Should render description', () => {
-    const description = screen.getByText('13 B')
+    const description = screen.getByText('13 common.bytes')
 
     expect(description).toBeInTheDocument()
   })

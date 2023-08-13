@@ -1,9 +1,13 @@
-import { ChangeEvent, FC, useState } from 'react'
+import { ChangeEvent, FC, useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import SearchIcon from '@mui/icons-material/Search'
+
+import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
+import AppButton from '~/components/app-button/AppButton'
+import EnhancedTable from '~/components/enhanced-table/EnhancedTable'
 
 import { useModalContext } from '~/context/modal-context'
 import { ajustColumns } from '~/utils/helper-functions'
@@ -12,19 +16,17 @@ import useSort from '~/hooks/table/use-sort'
 
 import { styles } from '~/containers/add-attachments/AddAttachments.styles'
 import {
-  mockItems,
   initialSort,
   columns,
   removeColumnRules
 } from '~/containers/add-attachments/AddAttachments.constants'
-
-import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
-import AppButton from '~/components/app-button/AppButton'
-import EnhancedTable from '~/components/enhanced-table/EnhancedTable'
 import { Attachment, ButtonVariantEnum } from '~/types'
+import { attachmentService } from '~/services/attachment-service'
+import useAxios from '~/hooks/use-axios'
+import { defaultResponses } from '~/constants'
 
 const AddAttachments: FC = () => {
-  const [inputValue, setInputValue] = useState('')
+  const [inputValue, setInputValue] = useState<string>('')
 
   const { t } = useTranslation()
   const { closeModal } = useModalContext()
@@ -33,12 +35,26 @@ const AddAttachments: FC = () => {
   const sortOptions = useSort({
     initialSort
   })
+  const { sort } = sortOptions
 
   const columnsToShow = ajustColumns<Attachment>(
     breakpoints,
     columns,
     removeColumnRules
   )
+
+  const getMyAttachments = useCallback(
+    () =>
+      attachmentService.getAttachments({
+        sort
+      }),
+    [sort]
+  )
+
+  const { loading, response } = useAxios({
+    service: getMyAttachments,
+    defaultResponse: defaultResponses.itemsWithCount
+  })
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value)
@@ -50,7 +66,7 @@ const AddAttachments: FC = () => {
   return (
     <Box sx={styles.root}>
       <Typography sx={styles.title}>
-        {t('attachment.addFromAttachments')}
+        {t('myResourcesPage.attachments.addFromAttachments')}
       </Typography>
       <InputWithIcon
         disabled
@@ -64,7 +80,8 @@ const AddAttachments: FC = () => {
       <Box sx={styles.tableWrapper}>
         <EnhancedTable
           columns={columnsToShow}
-          data={{ items: mockItems }}
+          data={{ loading, items: response.items }}
+          emptyTableKey='myResourcesPage.attachments.emptyAttachments'
           sort={sortOptions}
           sx={styles.table}
         />
@@ -80,7 +97,9 @@ const AddAttachments: FC = () => {
           </AppButton>
         </Box>
 
-        <AppButton disabled>{t('attachment.uploadNewFile')}</AppButton>
+        <AppButton disabled>
+          {t('myResourcesPage.attachments.uploadNewFile')}
+        </AppButton>
       </Box>
     </Box>
   )

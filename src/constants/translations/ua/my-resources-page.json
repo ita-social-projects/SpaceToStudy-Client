@@ -11,16 +11,17 @@
     "attachmentQty": "Файл",
     "attachmentsQty": "Файлів",
     "lastUpdates": "Останнє оновлення",
-    "emptyLessons": "У вас ще немає уроків",
-    "confirmLessonDeletionTitle": "Ви підтверджуєте видалення уроку?",
-    "confirmLessonDeletionMessage": "Ця дія є постійною та призведе до видалення всього пов’язаного вмісту. Перш ніж продовжити, перегляньте своє рішення.",
-    "successDeletion": "Урок було успішно видалено"
+    "emptyLessons":"У вас ще немає уроків",
+    "confirmLessonDeletionTitle":"Ви підтверджуєте видалення уроку?",
+    "confirmLessonDeletionMessage":"Ця дія є постійною та призведе до видалення всього пов’язаного вмісту. Перш ніж продовжити, перегляньте своє рішення.",
+    "successDeletion":"Урок було успішно видалено"
   },
   "attachments": {
-    "addAttachment": "Додати файл",
-    "title": "Назва файлу",
+    "addFromAttachments": "Додайте файли з Вкладень",
+    "uploadNewFile": "Завантажити новий файл",
+    "file": "Файл",
     "size": "Розмір",
-    "lastUpdates": "Останнє оновлення",
-    "emptyAttachments": "У вас ще немає файлів"
+    "updated": "Останнє оновлення",
+    "emptyAttachments": "У вас ще немає вкладень"
   }
 }

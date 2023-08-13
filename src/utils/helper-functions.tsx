@@ -2,6 +2,7 @@ import { SxProps, Theme } from '@mui/material'
 import {
   Attachment,
   Breakpoints,
+  ConvertedSize,
   Cooperation,
   FilterFromQuery,
   FormatedDate,
@@ -234,4 +235,23 @@ export const getDifferenceDates = (startDate: Date, endDate: Date) => {
     number: conversionToDays || 1,
     format: 'Day'
   }
+}
+
+export const convertBytesToProperFormat = (bytes: number): ConvertedSize => {
+  const convertedSize = {
+    size: bytes.toString(),
+    unit: 'bytes'
+  }
+
+  const kilobyte = 1024
+  const megabyte = kilobyte * 1024
+
+  if (bytes >= megabyte) {
+    convertedSize.size = (bytes / megabyte).toFixed(1)
+    convertedSize.unit = 'megabytes'
+  } else if (bytes >= kilobyte) {
+    convertedSize.size = (bytes / kilobyte).toFixed(1)
+    convertedSize.unit = 'kilobytes'
+  }
+  return convertedSize
 }
