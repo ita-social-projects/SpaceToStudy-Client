@@ -29,9 +29,9 @@ interface FileUploaderProps {
   initialError: string
   validationData: AddDocuments
   isImages?: boolean
-  sx?: {
-    root?: SxProps
-    button?: SxProps
+  sx: {
+        root?: SxProps
+        button?: SxProps
   }
   variant?: ButtonVariantEnum
   icon?: ReactElement
@@ -90,9 +90,7 @@ const FileUploader: FC<FileUploaderProps> = ({
       {isImages && (
         <>
           <Typography sx={styles.fileSize}>
-            {`${t('constant.fileSize', { size: '10' })} ${t(
-              'common.megabytes'
-            )}`}
+            {t('constant.fileSize', { size: '10 Mb' })}
           </Typography>
           {initialError && (
             <Typography sx={styles.error}>{t(initialError)}</Typography>
