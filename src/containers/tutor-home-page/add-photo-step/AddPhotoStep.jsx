@@ -74,6 +74,7 @@ const AddPhotoStep = ({ btnsBox, stepLabel }) => {
             emitter={addPhoto}
             initialError={photoError}
             initialState={photo}
+            isImages
             validationData={validationData}
           />
         </Box>

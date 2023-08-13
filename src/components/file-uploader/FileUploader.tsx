@@ -1,0 +1,103 @@
+import { FC } from 'react'
+import { useTranslation } from 'react-i18next'
+
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import Button from '@mui/material/Button'
+import IconButton from '@mui/material/IconButton'
+import ListItem from '@mui/material/ListItem'
+import List from '@mui/material/List'
+import CloudUploadIcon from '@mui/icons-material/CloudUpload'
+import CloseIcon from '@mui/icons-material/Close'
+
+import useUpload from '~/hooks/use-upload'
+
+import { styles } from '~/components/file-uploader/FileUploader.styles'
+import { AddDocuments, ComponentEnum, SizeEnum } from '~/types'
+import { spliceSx } from '~/utils/helper-functions'
+import { SxProps } from '@mui/material'
+
+interface FileUploaderProps {
+  buttonText: string
+  emitter: ({
+    files,
+    error
+  }: {
+    files: File[]
+    error: string
+  }) => void | Promise<void>
+  initialState: File[] | []
+  initialError: string
+  validationData: AddDocuments
+  isImages?: boolean
+  sx: {
+    root?: SxProps
+    button?: SxProps
+  }
+}
+
+const FileUploader: FC<FileUploaderProps> = ({
+  buttonText,
+  emitter,
+  initialState = [],
+  initialError = '',
+  validationData,
+  isImages = false,
+  sx = {}
+}) => {
+  const { t } = useTranslation()
+
+  const { addFiles, deleteFile } = useUpload({
+    files: initialState,
+    emitter: emitter,
+    validationData
+  })
+
+  const filesList = initialState.map((item: File) => (
+    <ListItem key={`${item.name}-${Date.now()}`} sx={styles.listItem}>
+      <Typography sx={styles.fileName}>{item.name}</Typography>
+      <IconButton
+        data-testid='delete-file'
+        onClick={() => deleteFile(item)}
+        size={SizeEnum.Small}
+      >
+        <CloseIcon sx={styles.close} />
+      </IconButton>
+    </ListItem>
+  ))
+
+  const uploadButton = (
+    <Button
+      component={ComponentEnum.Label}
+      sx={spliceSx(styles.uploadBtn, sx.button)}
+    >
+      {isImages && <CloudUploadIcon sx={styles.icon} />}
+      {buttonText}
+      <input hidden multiple onChange={addFiles} type='file' />
+    </Button>
+  )
+
+  return (
+    <>
+      <Box sx={spliceSx(styles.root, sx.root)}>
+        {initialState.length > 0 && isImages ? (
+          <List sx={{ width: '100%' }}>{filesList}</List>
+        ) : (
+          uploadButton
+        )}
+      </Box>
+      {isImages && (
+        <>
+          <Typography sx={styles.fileSize}>
+            {t('constant.fileSize', { size: '10 Mb' })}
+          </Typography>
+          {initialError && (
+            <Typography sx={styles.error}>{t(initialError)}</Typography>
+          )}
+        </>
+      )}
+    </>
+  )
+}
+
+export default FileUploader

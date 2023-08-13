@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate } from 'react-router-dom'
 import { AxiosResponse } from 'axios'
@@ -10,6 +10,7 @@ import IconButton from '@mui/material/IconButton'
 
 import AddAttachments from '~/containers/add-attachments/AddAttachments'
 import IconExtensionWithTitle from '~/components/icon-extension-with-title/IconExtensionWithTitle'
+import { attachmentService } from '~/services/attachment-service'
 import AppButton from '~/components/app-button/AppButton'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import FileEditor from '~/components/file-editor/FileEditor'
@@ -19,6 +20,7 @@ import useAxios from '~/hooks/use-axios'
 import useForm from '~/hooks/use-form'
 import { ResourceService } from '~/services/resource-service'
 import { useModalContext } from '~/context/modal-context'
+import AddDocuments from '~/containers/add-documents/AddDocuments'
 
 import { snackbarVariants } from '~/constants'
 import {
@@ -44,6 +46,12 @@ const NewLesson = () => {
   const { openModal } = useModalContext()
   const navigate = useNavigate()
   const [attachments, setAttachments] = useState<Attachment[]>([])
+  const formData = new FormData()
+
+  const createAttachments = useCallback(
+    (data?: FormData) => attachmentService.createAttachment(data),
+    []
+  )
 
   const handleResponseError = (error: ErrorResponse) => {
     setAlert({
@@ -99,6 +107,19 @@ const NewLesson = () => {
     onResponseError: handleResponseError
   })
 
+  const onCreateAttachmentsError = (error: ErrorResponse) => {
+    setAlert({
+      severity: snackbarVariants.error,
+      message: error ? `errors.${error.code}` : ''
+    })
+  }
+  const { fetchData: fetchDataAttachments } = useAxios({
+    service: createAttachments,
+    fetchOnMount: false,
+    defaultResponse: null,
+    onResponseError: onCreateAttachmentsError
+  })
+
   const { data, errors, handleInputChange, handleSubmit } =
     useForm<NewLessonData>({
       initialValues,
@@ -146,6 +167,11 @@ const NewLesson = () => {
           onChange={handleInputChange('description')}
           value={data.description}
           variant={TextFieldVariantEnum.Standard}
+        />
+        <AddDocuments
+          buttonText={t('common.uploadNewFile')}
+          fetchData={fetchDataAttachments}
+          formData={formData}
         />
         <Divider sx={styles.divider} />
         <AppButton
