@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { AxiosResponse } from 'axios'
@@ -11,8 +11,7 @@ import IconButton from '@mui/material/IconButton'
 import Loader from '~/components/loader/Loader'
 import AddAttachments from '~/containers/add-attachments/AddAttachments'
 import IconExtensionWithTitle from '~/components/icon-extension-with-title/IconExtensionWithTitle'
-
-import { useModalContext } from '~/context/modal-context'
+import { attachmentService } from '~/services/attachment-service'
 import AppButton from '~/components/app-button/AppButton'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import FileEditor from '~/components/file-editor/FileEditor'
@@ -21,6 +20,8 @@ import { useSnackBarContext } from '~/context/snackbar-context'
 import useAxios from '~/hooks/use-axios'
 import useForm from '~/hooks/use-form'
 import { ResourceService } from '~/services/resource-service'
+import { useModalContext } from '~/context/modal-context'
+import AddDocuments from '~/containers/add-documents/AddDocuments'
 
 import { snackbarVariants } from '~/constants'
 import {
@@ -49,8 +50,16 @@ const CreateOrEditLesson = () => {
 
   const { openModal } = useModalContext()
   const navigate = useNavigate()
+
   const [attachments, setAttachments] = useState<Attachment[]>([])
   const { id } = useParams()
+
+  const formData = new FormData()
+
+  const createAttachments = useCallback(
+    (data?: FormData) => attachmentService.createAttachments(data),
+    []
+  )
 
   const handleResponseError = (error: ErrorResponse) => {
     setAlert({
@@ -166,6 +175,20 @@ const CreateOrEditLesson = () => {
     return <Loader pageLoad />
   }
 
+  const onCreateAttachmentsError = (error: ErrorResponse) => {
+    setAlert({
+      severity: snackbarVariants.error,
+      message: error ? `errors.${error.code}` : ''
+    })
+  }
+  const { fetchData: fetchDataAttachments } = useAxios({
+    service: createAttachments,
+    fetchOnMount: false,
+    defaultResponse: null,
+    onResponseError: onCreateAttachmentsError
+  })
+
+
   const attachmentsList = attachments.map((attachment) => (
     <Box key={attachment.size} sx={styles.attachmentList.container}>
       <IconExtensionWithTitle
@@ -206,6 +229,11 @@ const CreateOrEditLesson = () => {
           onChange={handleInputChange('description')}
           value={data.description}
           variant={TextFieldVariantEnum.Standard}
+        />
+        <AddDocuments
+          buttonText={t('common.uploadNewFile')}
+          fetchData={fetchDataAttachments}
+          formData={formData}
         />
         <Divider sx={styles.divider} />
         <AppButton

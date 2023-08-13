@@ -2,11 +2,11 @@ import { FC, useEffect, useState } from 'react'
 import Box from '@mui/material/Box'
 
 import FileUploader from '~/components/file-uploader/FileUploader'
-import { validationData } from '~/containers/add-documents/AddDocuments.constants'
 import { useSnackBarContext } from '~/context/snackbar-context'
+import { validationData } from '~/containers/add-documents/AddDocuments.constants'
 
-import { snackbarVariants } from '~/constants'
 import { styles } from '~/containers/add-documents/AddDocuments.styles'
+import { snackbarVariants } from '~/constants'
 import { Emitter } from '~/types'
 
 interface AddDocumentsProps {
