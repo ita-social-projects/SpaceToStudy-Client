@@ -9,23 +9,17 @@ import ListItem from '@mui/material/ListItem'
 import List from '@mui/material/List'
 import CloudUploadIcon from '@mui/icons-material/CloudUpload'
 import CloseIcon from '@mui/icons-material/Close'
+import { SxProps } from '@mui/material'
 
 import useUpload from '~/hooks/use-upload'
 
 import { styles } from '~/components/file-uploader/FileUploader.styles'
 import { AddDocuments, ComponentEnum, SizeEnum } from '~/types'
 import { spliceSx } from '~/utils/helper-functions'
-import { SxProps } from '@mui/material'
 
 interface FileUploaderProps {
   buttonText: string
-  emitter: ({
-    files,
-    error
-  }: {
-    files: File[]
-    error: string
-  }) => void | Promise<void>
+  emitter: ({ files, error }: { files: File[]; error: string }) => void
   initialState: File[] | []
   initialError: string
   validationData: AddDocuments

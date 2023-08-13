@@ -25,7 +25,7 @@ const AddDocuments: FC<AddDocumentsProps> = ({
   const { setAlert } = useSnackBarContext()
 
   useEffect(() => {
-    if (documentsError !== '') {
+    if (documentsError) {
       setAlert({
         severity: snackbarVariants.error,
         message: documentsError
@@ -38,8 +38,8 @@ const AddDocuments: FC<AddDocumentsProps> = ({
     setDocuments(files)
     setDocumentsError(error)
 
-    for (let i = 0; i < files.length; i++) {
-      formData.append('files', files[i])
+    for (const file of files) {
+      formData.append('files', file)
     }
 
     void fetchData(formData)
