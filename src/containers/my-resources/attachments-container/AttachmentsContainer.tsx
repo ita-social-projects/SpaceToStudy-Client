@@ -71,8 +71,8 @@ const AttachmentsContainer = () => {
   const addAttachmentBlock = (
     <Box sx={styles.container}>
       <AppButton disabled sx={styles.addButton}>
-        Add Attachment
-        <span style={styles.newAttachmentIcon}>+</span>
+        {t('myResourcesPage.attachments.addAttachment')}
+        <span style={styles.newAttachmentIcon}>{t('common.plusSign')}</span>
       </AppButton>
       <InputWithIcon
         endAdornment={<SearchIcon sx={styles.searchIcon} />}
@@ -80,7 +80,6 @@ const AttachmentsContainer = () => {
         onClear={() => null}
         placeholder={t('common.search')}
         sx={styles.input}
-        value={t('common.search')}
       ></InputWithIcon>
     </Box>
   )

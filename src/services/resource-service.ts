@@ -7,7 +7,7 @@ import {
   ItemsWithCount,
   Lesson,
   Attachment,
-  AttachmentsParams
+  GetAttachmentsParams
 } from '~/types'
 import { createUrlPath } from '~/utils/helper-functions'
 
@@ -21,7 +21,7 @@ export const ResourceService = {
   editLesson: async (id: string): Promise<AxiosResponse> =>
     await axiosClient.patch(createUrlPath(URLs.resources.lessons.patch, id)),
   getAttachments: async (
-    params?: Partial<AttachmentsParams>
+    params?: Partial<GetAttachmentsParams>
   ): Promise<AxiosResponse<ItemsWithCount<Attachment>>> =>
     await axiosClient.get(URLs.resources.attachments.get, { params })
 }
