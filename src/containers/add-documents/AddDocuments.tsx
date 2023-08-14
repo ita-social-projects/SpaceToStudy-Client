@@ -42,7 +42,7 @@ const AddDocuments: FC<AddDocumentsProps> = ({
       formData.append('files', file)
     }
 
-    void fetchData(formData)
+    !error && void fetchData(formData)
   }
 
   return (
