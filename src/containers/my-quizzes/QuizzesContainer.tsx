@@ -15,7 +15,7 @@ import {
   removeColumnRules,
   itemsLoadLimit
 } from '~/containers/my-quizzes/QuizzesContainer.constants'
-import { ErrorResponse, ItemsWithCount, QuizInterface, SortEnum } from '~/types'
+import { ErrorResponse, ItemsWithCount, Quiz, SortEnum } from '~/types'
 import { defaultResponses, snackbarVariants } from '~/constants'
 import { ajustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
 import { styles } from '~/containers/my-quizzes/QuizzesContainer.styles'
@@ -47,7 +47,7 @@ const TestsContainer = () => {
     [itemsPerPage]
   )
 
-  const { response, loading } = useAxios<ItemsWithCount<QuizInterface>>({
+  const { response, loading } = useAxios<ItemsWithCount<Quiz>>({
     service: getQuizzes,
     defaultResponse: defaultResponses.itemsWithCount,
     onResponseError: onQuizzesError

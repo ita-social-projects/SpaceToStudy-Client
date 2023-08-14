@@ -4,17 +4,17 @@ import Typography from '@mui/material/Typography'
 
 import {
   AdditionalPropsInterface,
-  QuizInterface,
+  Quiz,
   RemoveColumnRules,
   TableColumn
 } from '~/types'
 import { getFormattedDate } from '~/utils/helper-functions'
 import { styles } from '~/containers/my-quizzes/QuizzesContainer.styles'
 
-export const columns: TableColumn<QuizInterface>[] = [
+export const columns: TableColumn<Quiz>[] = [
   {
     label: 'myResourcesPage.quizzes.quizTitle',
-    calculatedCellValue: (item: QuizInterface) => {
+    calculatedCellValue: (item: Quiz) => {
       return (
         <Box sx={styles.quizTitleContainer}>
           <NoteAltOutlinedIcon sx={styles.quizIcon} />
@@ -25,10 +25,7 @@ export const columns: TableColumn<QuizInterface>[] = [
   },
   {
     label: 'myResourcesPage.quizzes.questions',
-    calculatedCellValue: (
-      item: QuizInterface,
-      { t }: AdditionalPropsInterface
-    ) => {
+    calculatedCellValue: (item: Quiz, { t }: AdditionalPropsInterface) => {
       const amountQuestions = item.items.length
       const isOneQuestion = amountQuestions === 1 ? '' : 's'
       return (
@@ -41,7 +38,7 @@ export const columns: TableColumn<QuizInterface>[] = [
   },
   {
     label: 'myResourcesPage.quizzes.updated',
-    calculatedCellValue: (item: QuizInterface) => (
+    calculatedCellValue: (item: Quiz) => (
       <Typography sx={styles.date}>
         {getFormattedDate({ date: item.updatedAt })}
       </Typography>
@@ -49,7 +46,7 @@ export const columns: TableColumn<QuizInterface>[] = [
   }
 ]
 
-export const removeColumnRules: RemoveColumnRules<QuizInterface> = {
+export const removeColumnRules: RemoveColumnRules<Quiz> = {
   tablet: ['myOffersPage.tableHeaders.updated']
 }
 

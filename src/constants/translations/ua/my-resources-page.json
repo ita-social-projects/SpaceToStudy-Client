@@ -23,5 +23,12 @@
     "size": "Розмір",
     "lastUpdate": "Останнє оновлення",
     "emptyAttachments": "У вас ще немає вкладень"
+  },
+  "quizzes": {
+    "quizTitle": "Заголовок тесту",
+    "question": "Питання",
+    "questions": "Питання",
+    "updated": "Останнє оновлення",
+    "emptyQuizzes": "У вас ще немає тестів"
   }
 }

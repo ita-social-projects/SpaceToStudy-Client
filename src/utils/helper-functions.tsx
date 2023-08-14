@@ -8,7 +8,7 @@ import {
   FormatedDate,
   Lesson,
   Offer,
-  QuizInterface,
+  Quiz,
   RemoveColumnRules,
   ScreenBasedLimits,
   TableColumn,
@@ -141,7 +141,7 @@ export const getScreenBasedLimit = (
 }
 
 export const ajustColumns = <
-  T extends Cooperation | Offer | Lesson | Attachment | QuizInterface
+  T extends Cooperation | Offer | Lesson | Attachment | Quiz
 >(
   breakpoints: Breakpoints,
   columns: TableColumn<T>[],
