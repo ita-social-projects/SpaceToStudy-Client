@@ -8,22 +8,21 @@ import SearchIcon from '@mui/icons-material/Search'
 import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
 import AppButton from '~/components/app-button/AppButton'
 import EnhancedTable from '~/components/enhanced-table/EnhancedTable'
-
 import { useModalContext } from '~/context/modal-context'
-import { ajustColumns } from '~/utils/helper-functions'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import useSort from '~/hooks/table/use-sort'
+import useAxios from '~/hooks/use-axios'
+import { attachmentService } from '~/services/attachment-service'
 
-import { styles } from '~/containers/add-attachments/AddAttachments.styles'
+import { ajustColumns } from '~/utils/helper-functions'
 import {
   initialSort,
   columns,
   removeColumnRules
 } from '~/containers/add-attachments/AddAttachments.constants'
-import { Attachment, ButtonVariantEnum } from '~/types'
-import { attachmentService } from '~/services/attachment-service'
-import useAxios from '~/hooks/use-axios'
 import { defaultResponses } from '~/constants'
+import { styles } from '~/containers/add-attachments/AddAttachments.styles'
+import { Attachment, ButtonVariantEnum } from '~/types'
 
 const AddAttachments: FC = () => {
   const [inputValue, setInputValue] = useState<string>('')

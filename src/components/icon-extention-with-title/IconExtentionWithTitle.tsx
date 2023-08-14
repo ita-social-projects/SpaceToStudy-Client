@@ -1,7 +1,7 @@
 import { FC } from 'react'
-import Box from '@mui/material/Box'
-
 import { useTranslation } from 'react-i18next'
+
+import Box from '@mui/material/Box'
 
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import { styles } from '~/components/icon-extention-with-title/IconExtentionWithTitle.styles'
