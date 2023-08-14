@@ -1,4 +1,4 @@
-import { RequestParams, CommonEntityFields } from '~/types'
+import { RequestParams, CommonEntityFields, UserResponse } from '~/types'
 
 export interface QuizzesParams extends RequestParams {
   title: string
@@ -17,5 +17,5 @@ export interface QuestionWithAnswers {
 export interface Quiz extends CommonEntityFields {
   title: string
   items: QuestionWithAnswers[]
-  author: string
+  author: Pick<UserResponse, '_id'>
 }
