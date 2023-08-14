@@ -13,12 +13,12 @@ import { SxProps } from '@mui/material'
 import useUpload from '~/hooks/use-upload'
 
 import { styles } from '~/components/file-uploader/FileUploader.styles'
-import { AddDocuments, ComponentEnum, SizeEnum } from '~/types'
+import { AddDocuments, ComponentEnum, Emitter, SizeEnum } from '~/types'
 import { spliceSx } from '~/utils/helper-functions'
 
 interface FileUploaderProps {
   buttonText: string
-  emitter: ({ files, error }: { files: File[]; error: string }) => void
+  emitter: ({ files, error }: Emitter) => void
   initialState: File[]
   initialError: string
   validationData: AddDocuments

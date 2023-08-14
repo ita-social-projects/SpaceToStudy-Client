@@ -8,6 +8,7 @@ import { useSnackBarContext } from '~/context/snackbar-context'
 
 import { snackbarVariants } from '~/constants'
 import { styles } from '~/containers/add-documents/AddDocuments.styles'
+import { Emitter } from '~/types'
 
 interface AddDocumentsProps {
   fetchData: (formData: FormData) => Promise<void>
@@ -34,7 +35,7 @@ const AddDocuments: FC<AddDocumentsProps> = ({
     }
   }, [documentsError, setAlert])
 
-  const addDocuments = ({ files, error }: { files: File[]; error: string }) => {
+  const addDocuments = ({ files, error }: Emitter) => {
     setDocuments(files)
     setDocumentsError(error)
 
