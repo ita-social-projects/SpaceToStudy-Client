@@ -3,11 +3,11 @@ import { FC, useEffect, useState } from 'react'
 import Box from '@mui/material/Box'
 
 import FileUploader from '~/components/file-uploader/FileUploader'
-import { styles } from '~/containers/add-documents/AddDocuments.styles'
 import { validationData } from '~/containers/add-documents/AddDocuments.constants'
 import { useSnackBarContext } from '~/context/snackbar-context'
 
 import { snackbarVariants } from '~/constants'
+import { styles } from '~/containers/add-documents/AddDocuments.styles'
 
 interface AddDocumentsProps {
   fetchData: (formData: FormData) => Promise<void>
@@ -20,7 +20,7 @@ const AddDocuments: FC<AddDocumentsProps> = ({
   formData,
   buttonText
 }) => {
-  const [documents, setDocuments] = useState<File[] | []>([])
+  const [documents, setDocuments] = useState<File[]>([])
   const [documentsError, setDocumentsError] = useState<string>('')
   const { setAlert } = useSnackBarContext()
 

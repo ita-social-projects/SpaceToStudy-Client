@@ -20,6 +20,7 @@ export const styles = {
     mr: 1,
     color: 'primary.700'
   },
+  filesList: { width: '100%' },
   listItem: {
     display: 'flex',
     justifyContent: 'space-between',

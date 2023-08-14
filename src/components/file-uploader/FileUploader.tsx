@@ -1,6 +1,5 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
@@ -20,7 +19,7 @@ import { spliceSx } from '~/utils/helper-functions'
 interface FileUploaderProps {
   buttonText: string
   emitter: ({ files, error }: { files: File[]; error: string }) => void
-  initialState: File[] | []
+  initialState: File[]
   initialError: string
   validationData: AddDocuments
   isImages?: boolean
@@ -75,7 +74,7 @@ const FileUploader: FC<FileUploaderProps> = ({
     <>
       <Box sx={spliceSx(styles.root, sx.root)}>
         {initialState.length > 0 && isImages ? (
-          <List sx={{ width: '100%' }}>{filesList}</List>
+          <List sx={styles.filesList}>{filesList}</List>
         ) : (
           uploadButton
         )}
