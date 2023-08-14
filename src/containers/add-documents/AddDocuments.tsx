@@ -11,7 +11,6 @@ import { snackbarVariants } from '~/constants'
 import { ButtonVariantEnum, Emitter } from '~/types'
 import { spliceSx } from '~/utils/helper-functions'
 
-
 interface AddDocumentsProps {
   fetchData: (formData: FormData) => Promise<void>
   formData: FormData
