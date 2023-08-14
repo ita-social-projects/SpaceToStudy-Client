@@ -8,6 +8,7 @@ import { validationData } from '~/containers/add-documents/AddDocuments.constant
 import { styles } from '~/containers/add-documents/AddDocuments.styles'
 import { snackbarVariants } from '~/constants'
 import { Emitter } from '~/types'
+
 interface AddDocumentsProps {
   fetchData: (formData: FormData) => Promise<void>
   formData: FormData
