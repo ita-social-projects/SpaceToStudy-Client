@@ -69,10 +69,10 @@ const AddAttachments: FC = () => {
       </Typography>
       <InputWithIcon
         disabled
+        endAdornment={<SearchIcon sx={styles.searchIcon} />}
         onChange={handleInputChange}
         onClear={handleInputReset}
         placeholder={t('common.search')}
-        startIcon={<SearchIcon sx={styles.searchIcon} />}
         sx={styles.input}
         value={inputValue}
       />
