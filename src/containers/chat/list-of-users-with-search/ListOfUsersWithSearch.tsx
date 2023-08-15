@@ -64,9 +64,7 @@ const ListOfUsersWithSearch: FC<ListOfUsersWithSearchProps> = ({
       {chats.length > 0 ? (
         <SimpleBar style={styles.scroll}>{chats}</SimpleBar>
       ) : (
-        <Typography sx={styles.information}>
-          {t('chatPage.noContacts')}
-        </Typography>
+        <Typography sx={styles.information}>{t('chat.noContacts')}</Typography>
       )}
     </Box>
   )

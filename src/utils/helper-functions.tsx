@@ -6,6 +6,7 @@ import {
   FilterFromQuery,
   FormatedDate,
   Lesson,
+  MessageInterface,
   Offer,
   Quiz,
   RemoveColumnRules,
@@ -13,7 +14,7 @@ import {
   TableColumn,
   UserRole,
   UserRoleEnum,
-  Attachment
+  GroupedMessages
 } from '~/types'
 
 export const parseJwt = <T,>(token: string): T => {
@@ -65,22 +66,6 @@ export const getEmptyValues = <T extends object, R>(
 export const findFullObjects = <T extends object>(array: T[]) =>
   array.filter((el) => Object.values(el).every((el) => el))
 
-const addOrdinalSuffix = (day: number): string => {
-  if (day >= 11 && day <= 13) {
-    return `${day}th`
-  }
-  switch (day % 10) {
-    case 1:
-      return `${day}st`
-    case 2:
-      return `${day}nd`
-    case 3:
-      return `${day}rd`
-    default:
-      return `${day}th`
-  }
-}
-
 export const getFormattedDate = ({
   date,
   locales = 'en-US',
@@ -89,8 +74,7 @@ export const getFormattedDate = ({
     month: 'long',
     day: 'numeric'
   },
-  isCurrentDayHours = false,
-  includeOrdinal = false
+  isCurrentDayHours = false
 }: FormatedDate): string => {
   const currentDate = new Date()
   const formattedDate = new Date(date).toLocaleString(locales, options)
@@ -103,14 +87,6 @@ export const getFormattedDate = ({
       hour: '2-digit',
       minute: '2-digit'
     })
-  }
-
-  if (includeOrdinal) {
-    const day = new Date(date).getDate()
-    const month = new Date(date).toLocaleString(locales, { month: 'long' })
-    const year = new Date(date).getFullYear()
-    const formattedWithOrdinal = `${addOrdinalSuffix(day)} ${month} ${year}`
-    return formattedWithOrdinal
   }
 
   return formattedDate
@@ -255,3 +231,20 @@ export const convertBytesToProperFormat = (bytes: number): ConvertedSize => {
   }
   return convertedSize
 }
+
+export const getIsNewDay = (prev: string, curr: string) =>
+  new Date(prev).getUTCDate() !== new Date(curr).getUTCDate()
+
+export const getGroupedMessages = (messages: MessageInterface[]) =>
+  messages.reduce((result: GroupedMessages[], message) => {
+    const currDate = message.createdAt
+    const prevDate = result.length ? result[result.length - 1].date : ''
+
+    if (getIsNewDay(prevDate, currDate)) {
+      result.push({ date: currDate, messages: [message] })
+    } else {
+      result[result.length - 1].messages.push(message)
+    }
+
+    return result
+  }, [])

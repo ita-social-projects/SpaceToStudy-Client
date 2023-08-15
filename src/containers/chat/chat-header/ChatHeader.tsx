@@ -37,7 +37,7 @@ const ChatHeader: FC<ChatHeaderProps> = ({ onClick, user }) => {
   const status = (
     <>
       <Typography sx={styles.statusBadge} />
-      <Typography>{t('chatPage.status.online')}</Typography>
+      <Typography>{t('chat.status.online')}</Typography>
     </>
   )
 

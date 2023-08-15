@@ -39,7 +39,7 @@ export const styles = {
     '& .simplebar-content-wrapper': {
       display: 'flex',
       flexDirection: 'column',
-      padding: '9px 16px 24px'
+      padding: '9px 16px 0'
     }
   }),
   loader: { color: 'primary.700' },
@@ -51,6 +51,7 @@ export const styles = {
     color: 'primary.400',
     fontWeight: 500
   }),
+  messagesWithDate: { mb: '24px' },
   scrollableContent: {
     height: `calc(100% - 164px)`,
     overflow: 'auto',
