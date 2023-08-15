@@ -18,7 +18,7 @@ import {
   removeColumnRules,
   initialSort,
   itemsLoadLimit
-} from './AttachmentsContainer.constants'
+} from '~/containers/my-resources/attachments-container/AttachmentsContainer.constants'
 import { ajustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
 import { defaultResponses, snackbarVariants } from '~/constants'
 import { ItemsWithCount, Attachment, ErrorResponse } from '~/types'

@@ -1,6 +1,7 @@
 import Typography from '@mui/material/Typography'
 
 import IconExtentionWithTitle from '~/components/icon-extention-with-title/IconExtentionWithTitle'
+
 import { getFormattedDate } from '~/utils/helper-functions'
 import {
   SortEnum,
@@ -15,7 +16,7 @@ export const columns: TableColumn<Attachment>[] = [
     label: 'myResourcesPage.attachments.title',
     field: 'title',
     calculatedCellValue: (item: Attachment) => {
-      return <IconExtentionWithTitle description={15} title={item.fileName} />
+      return <IconExtentionWithTitle title={item.fileName} />
     }
   },
   {
