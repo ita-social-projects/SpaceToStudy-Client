@@ -25,6 +25,7 @@
   },
   "chat": {
     "inputLabel": "Type a message...",
-    "chipLabel": "Select a chat, to start messaging"
+    "chipLabel": "Select a chat, to start messaging",
+    "loading": "Loading..."
   }
 }

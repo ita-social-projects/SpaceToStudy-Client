@@ -1,7 +1,7 @@
 import 'allotment/dist/style.css'
 import 'simplebar-react/dist/simplebar.min.css'
 
-import { ChatResponse, TypographyVariantEnum } from '~/types'
+import { TypographyVariantEnum } from '~/types'
 
 export const styles = {
   root: {
@@ -26,7 +26,7 @@ export const styles = {
         }
       }
   },
-  chatContent: (selectedChat: ChatResponse | null) => ({
+  chatContent: (selectedChat: boolean, messagesLength: number) => ({
     display: 'flex',
     height: '100%',
     alignItems: selectedChat ? 'normal' : 'center',
@@ -35,22 +35,22 @@ export const styles = {
     boxSizing: 'border-box',
     backgroundColor: 'primary.50',
     p: '8px 8px 16px',
-    '& .simplebar-content': { marginTop: 'auto' },
+    '& .simplebar-content': { margin: messagesLength ? 'auto 0 0' : 'auto' },
     '& .simplebar-content-wrapper': {
       display: 'flex',
       flexDirection: 'column',
       padding: '9px 16px 24px'
     }
   }),
-  chip: {
-    backgroundColor: 'basic.white',
-    '& .MuiChip-label': { p: '12px 20px' }
-  },
-  chipLabel: {
-    typography: TypographyVariantEnum.MidTitle,
-    color: 'primary.400'
-  },
   loader: { color: 'primary.700' },
+  chip: { backgroundColor: 'basic.white' },
+  chipLabel: (small: boolean) => ({
+    typography: small
+      ? TypographyVariantEnum.Body1
+      : TypographyVariantEnum.MidTitle,
+    color: 'primary.400',
+    fontWeight: 500
+  }),
   scrollableContent: {
     height: `calc(100% - 164px)`,
     overflow: 'auto',
