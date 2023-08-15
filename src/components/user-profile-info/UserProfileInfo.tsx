@@ -77,7 +77,7 @@ const UserProfileInfo: FC<UserProfileInfoProps> = ({
       >
         <Link onClick={handleLinkClick} style={styles.link} to={userURL}>
           <Typography sx={spliceSx(styles.name, sx.name)}>
-            {renderAdditionalInfo ? name : t('chatPage.message.you')}
+            {renderAdditionalInfo ? name : t('chat.message.you')}
           </Typography>
         </Link>
         {!isNaN(Number(rating)) && (

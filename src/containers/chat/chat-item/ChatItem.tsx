@@ -48,7 +48,7 @@ const ChatItem: FC<ItemOfChatProps> = ({
   })
 
   const isCurrentUser = userId === author._id && (
-    <Typography sx={styles.prefix}>{t('chatPage.message.you')}:</Typography>
+    <Typography sx={styles.prefix}>{t('chat.message.you')}:</Typography>
   )
 
   return (
