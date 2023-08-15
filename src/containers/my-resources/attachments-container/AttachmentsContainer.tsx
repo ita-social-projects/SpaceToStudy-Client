@@ -23,7 +23,7 @@ import AppButton from '~/components/app-button/AppButton'
 import EnhancedTable from '~/components/enhanced-table/EnhancedTable'
 import Loader from '~/components/loader/Loader'
 
-const AttachmentsContainer: FC = () => {
+const AttachmentsContainer = () => {
   const { t } = useTranslation()
   const { setAlert } = useSnackBarContext()
   const { page, handleChangePage } = usePagination()
