@@ -5,6 +5,7 @@ import AttachFileIcon from '@mui/icons-material/AttachFile'
 import NoteAltOutlinedIcon from '@mui/icons-material/NoteAltOutlined'
 
 import LessonsContainer from '~/containers/my-resources/lessons-container/LessonsContainer'
+import AttachmentsContainer from '~/containers/my-resources/attachments-container/AttachmentsContainer'
 
 interface TabsData {
   [key: string]: {
@@ -26,7 +27,7 @@ export const tabsData: TabsData = {
   },
   attachments: {
     title: 'myResourcesPage.tabs.attachments',
-    content: <h1>Attachments tab</h1>,
+    content: <AttachmentsContainer />,
     icon: <AttachFileIcon />
   }
 }

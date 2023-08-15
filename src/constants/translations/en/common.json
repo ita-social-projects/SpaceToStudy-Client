@@ -9,7 +9,7 @@
   "next": "Next",
   "finish": "Finish",
   "search": "Search",
-  "edit":"Edit",
+  "edit": "Edit",
   "delete": "Delete",
   "showMore": "Show more",
   "showLess": "Show less",
@@ -25,6 +25,7 @@
   "cancel": "Cancel",
   "discard": "Discard",
   "megabytes": "MB",
+  "plusSign": "+",
   "labels": {
     "email": "Email",
     "firstName": "First name",

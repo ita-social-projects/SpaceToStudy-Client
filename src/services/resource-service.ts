@@ -1,7 +1,14 @@
 import { AxiosResponse } from 'axios'
-import { URLs } from '~/constants/request'
 import { axiosClient } from '~/plugins/axiosClient'
-import { GetLessonsParams, ItemsWithCount, Lesson } from '~/types'
+
+import { URLs } from '~/constants/request'
+import {
+  GetLessonsParams,
+  ItemsWithCount,
+  Lesson,
+  Attachment,
+  GetAttachmentsParams
+} from '~/types'
 import { createUrlPath } from '~/utils/helper-functions'
 
 export const ResourceService = {
@@ -12,5 +19,9 @@ export const ResourceService = {
   deleteLesson: async (id: string): Promise<AxiosResponse> =>
     await axiosClient.delete(createUrlPath(URLs.resources.lessons.delete, id)),
   editLesson: async (id: string): Promise<AxiosResponse> =>
-    await axiosClient.patch(createUrlPath(URLs.resources.lessons.patch, id))
+    await axiosClient.patch(createUrlPath(URLs.resources.lessons.patch, id)),
+  getAttachments: async (
+    params?: Partial<GetAttachmentsParams>
+  ): Promise<AxiosResponse<ItemsWithCount<Attachment>>> =>
+    await axiosClient.get(URLs.resources.attachments.get, { params })
 }
