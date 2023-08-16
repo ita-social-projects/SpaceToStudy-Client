@@ -9,6 +9,9 @@ export const styles = {
   fileUpload: {
     root: {
       border: 'none'
+    },
+    button: {
+      backgroundColor: 'primary.50'
     }
   }
 }

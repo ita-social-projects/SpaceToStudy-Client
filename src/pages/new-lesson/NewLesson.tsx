@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate } from 'react-router-dom'
 import { AxiosResponse } from 'axios'
@@ -7,10 +7,12 @@ import Divider from '@mui/material/Divider'
 import AddIcon from '@mui/icons-material/Add'
 import CloseIcon from '@mui/icons-material/Close'
 import IconButton from '@mui/material/IconButton'
+import Typography from '@mui/material/Typography'
 
 import AddAttachments from '~/containers/add-attachments/AddAttachments'
 import IconExtensionWithTitle from '~/components/icon-extension-with-title/IconExtensionWithTitle'
-import { attachmentService } from '~/services/attachment-service'
+
+import { useModalContext } from '~/context/modal-context'
 import AppButton from '~/components/app-button/AppButton'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import FileEditor from '~/components/file-editor/FileEditor'
@@ -19,8 +21,6 @@ import { useSnackBarContext } from '~/context/snackbar-context'
 import useAxios from '~/hooks/use-axios'
 import useForm from '~/hooks/use-form'
 import { ResourceService } from '~/services/resource-service'
-import { useModalContext } from '~/context/modal-context'
-import AddDocuments from '~/containers/add-documents/AddDocuments'
 
 import { snackbarVariants } from '~/constants'
 import {
@@ -46,12 +46,6 @@ const NewLesson = () => {
   const { openModal } = useModalContext()
   const navigate = useNavigate()
   const [attachments, setAttachments] = useState<Attachment[]>([])
-  const formData = new FormData()
-
-  const createAttachments = useCallback(
-    (data?: FormData) => attachmentService.createAttachment(data),
-    []
-  )
 
   const handleResponseError = (error: ErrorResponse) => {
     setAlert({
@@ -107,18 +101,7 @@ const NewLesson = () => {
     onResponseError: handleResponseError
   })
 
-  const onCreateAttachmentsError = (error: ErrorResponse) => {
-    setAlert({
-      severity: snackbarVariants.error,
-      message: error ? `errors.${error.code}` : ''
-    })
-  }
-  const { fetchData: fetchDataAttachments } = useAxios({
-    service: createAttachments,
-    fetchOnMount: false,
-    defaultResponse: null,
-    onResponseError: onCreateAttachmentsError
-  })
+  const handleOpenModal = () => openModal({ component: <AddAttachments /> })
 
   const { data, errors, handleInputChange, handleSubmit } =
     useForm<NewLessonData>({
@@ -168,11 +151,15 @@ const NewLesson = () => {
           value={data.description}
           variant={TextFieldVariantEnum.Standard}
         />
-        <AddDocuments
-          buttonText={t('common.uploadNewFile')}
-          fetchData={fetchDataAttachments}
-          formData={formData}
-        />
+        <AppButton onClick={handleOpenModal} sx={styles.button}>
+          {t('myResourcesPage.attachments.addAttachment')}
+          <Typography
+            component={ComponentEnum.Span}
+            style={styles.newAttachmentIcon}
+          >
+            {t('common.plusSign')}
+          </Typography>
+        </AppButton>
         <Divider sx={styles.divider} />
         <AppButton
           onClick={handleOpenAddAttachmentsModal}

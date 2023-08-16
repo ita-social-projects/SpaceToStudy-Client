@@ -55,5 +55,11 @@ export const styles = {
   addIcon: { width: { xs: '18px', sm: '22px' }, ml: '5px' },
   addAttachments: {
     width: 'fit-content'
+  },
+  button: { width: '250px' },
+  newAttachmentIcon: {
+    fontSize: '25px',
+    marginLeft: '13px',
+    fontWeight: '400'
   }
 }
