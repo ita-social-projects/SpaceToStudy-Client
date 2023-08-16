@@ -17,7 +17,8 @@ const EnhancedTableRow = ({
   refetchData,
   rowActions,
   onRowClick,
-  select = {}
+  select = {},
+  selectedRows
 }) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
@@ -57,7 +58,11 @@ const EnhancedTableRow = ({
       key={item._id}
       onClick={handleRowClick}
       selected={isSelection && isSelected(item._id)}
-      sx={{ cursor: onRowClick && 'pointer' }}
+      sx={{
+        cursor: onRowClick && 'pointer',
+        ...(onRowClick &&
+          selectedRows.includes(item._id) && { background: 'red' })
+      }}
     >
       {isSelection && (
         <TableCell padding='checkbox'>

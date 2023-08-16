@@ -1,35 +1,34 @@
-import React from 'react'
-import { useTranslation } from 'react-i18next'
-import { Link, useNavigate } from 'react-router-dom'
-import { AxiosResponse } from 'axios'
 import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
+import { AxiosResponse } from 'axios'
+import { useTranslation } from 'react-i18next'
+import { Link, useNavigate } from 'react-router-dom'
 
-import { ResourceService } from '~/services/resource-service'
-import { useSnackBarContext } from '~/context/snackbar-context'
-import useForm from '~/hooks/use-form'
-import useAxios from '~/hooks/use-axios'
-import PageWrapper from '~/components/page-wrapper/PageWrapper'
-import AppTextField from '~/components/app-text-field/AppTextField'
 import AppButton from '~/components/app-button/AppButton'
+import AppTextField from '~/components/app-text-field/AppTextField'
 import FileEditor from '~/components/file-editor/FileEditor'
+import PageWrapper from '~/components/page-wrapper/PageWrapper'
+import { useSnackBarContext } from '~/context/snackbar-context'
+import useAxios from '~/hooks/use-axios'
+import useForm from '~/hooks/use-form'
+import { ResourceService } from '~/services/resource-service'
 
-import {
-  validations,
-  initialValues,
-  myResourcesPath
-} from '~/pages/new-lesson/NewLesson.constants'
 import { snackbarVariants } from '~/constants'
+import {
+  initialValues,
+  myResourcesPath,
+  validations
+} from '~/pages/new-lesson/NewLesson.constants'
+import { styles } from '~/pages/new-lesson/NewLesson.styles'
 import {
   ButtonTypeEnum,
   ButtonVariantEnum,
   ComponentEnum,
   ErrorResponse,
-  SizeEnum,
   NewLessonData,
+  SizeEnum,
   TextFieldVariantEnum
 } from '~/types'
-import { styles } from '~/pages/new-lesson/NewLesson.styles'
 
 const NewLesson = () => {
   const { t } = useTranslation()

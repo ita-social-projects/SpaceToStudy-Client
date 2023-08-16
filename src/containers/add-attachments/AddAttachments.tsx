@@ -1,30 +1,31 @@
-import { ChangeEvent, FC, useCallback, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import SearchIcon from '@mui/icons-material/Search'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import SearchIcon from '@mui/icons-material/Search'
+import { ChangeEvent, FC, useCallback, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
-import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
 import AppButton from '~/components/app-button/AppButton'
 import EnhancedTable from '~/components/enhanced-table/EnhancedTable'
+import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
 import { useModalContext } from '~/context/modal-context'
-import useBreakpoints from '~/hooks/use-breakpoints'
 import useSort from '~/hooks/table/use-sort'
 import useAxios from '~/hooks/use-axios'
+import useBreakpoints from '~/hooks/use-breakpoints'
 import { attachmentService } from '~/services/attachment-service'
 
-import { ajustColumns } from '~/utils/helper-functions'
+import { defaultResponses } from '~/constants'
 import {
-  initialSort,
   columns,
+  initialSort,
   removeColumnRules
 } from '~/containers/add-attachments/AddAttachments.constants'
-import { defaultResponses } from '~/constants'
 import { styles } from '~/containers/add-attachments/AddAttachments.styles'
 import { Attachment, ButtonVariantEnum } from '~/types'
+import { ajustColumns } from '~/utils/helper-functions'
 
 const AddAttachments: FC = () => {
   const [inputValue, setInputValue] = useState<string>('')
+  const [chosenAttachments, setChosenAttachments] = useState<string[]>([])
 
   const { t } = useTranslation()
   const { closeModal } = useModalContext()
@@ -80,6 +81,16 @@ const AddAttachments: FC = () => {
           columns={columnsToShow}
           data={{ loading, items: response.items }}
           emptyTableKey='myResourcesPage.attachments.emptyAttachments'
+          onRowClick={(item) => {
+            if (chosenAttachments.includes(item._id)) {
+              setChosenAttachments(
+                chosenAttachments.filter((id) => id !== item._id)
+              )
+            } else {
+              setChosenAttachments((prev) => [...prev, item._id])
+            }
+          }}
+          selectedRows={chosenAttachments}
           sort={sortOptions}
           sx={styles.table}
         />
