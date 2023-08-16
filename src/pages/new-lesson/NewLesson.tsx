@@ -43,9 +43,12 @@ import {
 const NewLesson = () => {
   const { t } = useTranslation()
   const { setAlert } = useSnackBarContext()
+
   const { openModal } = useModalContext()
   const navigate = useNavigate()
   const [attachments, setAttachments] = useState<Attachment[]>([])
+
+  const handleOpenModal = () => openModal({ component: <AddAttachments /> })
 
   const handleResponseError = (error: ErrorResponse) => {
     setAlert({
@@ -101,8 +104,6 @@ const NewLesson = () => {
     onResponseError: handleResponseError
   })
 
-  const handleOpenModal = () => openModal({ component: <AddAttachments /> })
-
   const { data, errors, handleInputChange, handleSubmit } =
     useForm<NewLessonData>({
       initialValues,
@@ -151,6 +152,7 @@ const NewLesson = () => {
           value={data.description}
           variant={TextFieldVariantEnum.Standard}
         />
+        <Divider sx={styles.divider} />
         <AppButton onClick={handleOpenModal} sx={styles.button}>
           {t('myResourcesPage.attachments.addAttachment')}
           <Typography
