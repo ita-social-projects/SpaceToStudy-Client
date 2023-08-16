@@ -39,5 +39,8 @@ export const styles = {
     borderColor: 'primary.500',
     borderRadius: '6px'
   },
-  newLessonIcon: { fontSize: '25px', marginLeft: '13px', fontWeight: '400' }
+  icon: {
+    width: { xs: '18px', sm: '22px' },
+    color: 'primary.100'
+  }
 }

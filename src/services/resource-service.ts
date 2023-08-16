@@ -7,7 +7,8 @@ import {
   ItemsWithCount,
   Lesson,
   Attachment,
-  GetAttachmentsParams
+  GetAttachmentsParams,
+  NewLessonData
 } from '~/types'
 import { createUrlPath } from '~/utils/helper-functions'
 
@@ -18,6 +19,8 @@ export const ResourceService = {
     await axiosClient.get(URLs.resources.lessons.get, { params }),
   deleteLesson: async (id: string): Promise<AxiosResponse> =>
     await axiosClient.delete(createUrlPath(URLs.resources.lessons.delete, id)),
+  addLesson: async (data: NewLessonData): Promise<AxiosResponse> =>
+    await axiosClient.post(URLs.resources.lessons.add, data),
   editLesson: async (id: string): Promise<AxiosResponse> =>
     await axiosClient.patch(createUrlPath(URLs.resources.lessons.patch, id)),
   getAttachments: async (
