@@ -1,8 +1,9 @@
 import SearchIcon from '@mui/icons-material/Search'
+import AddIcon from '@mui/icons-material/Add'
 import Box from '@mui/material/Box'
 import { ChangeEvent, useCallback, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import AppButton from '~/components/app-button/AppButton'
 import AppDrawer from '~/components/app-drawer/AppDrawer'
@@ -35,11 +36,7 @@ import {
   ItemsWithCount,
   Lesson
 } from '~/types'
-import {
-  ajustColumns,
-  createUrlPath,
-  getScreenBasedLimit
-} from '~/utils/helper-functions'
+import { ajustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
 
 const LessonsContainer = () => {
   const { t } = useTranslation()
@@ -48,7 +45,6 @@ const LessonsContainer = () => {
   const { setAlert } = useSnackBarContext()
   const { openDialog } = useConfirm()
   const { openDrawer, closeDrawer, isOpen } = useDrawer()
-  const navigate = useNavigate()
   const breakpoints = useBreakpoints()
   const sortOptions = useSort({ initialSort })
   const { page, handleChangePage } = usePagination()
@@ -118,10 +114,6 @@ const LessonsContainer = () => {
     void fetchData()
   }
 
-  const handleNewLesson = () => {
-    navigate(createUrlPath(authRoutes.myResources.newLesson.path))
-  }
-
   const handleDeleteLesson = async (id: string, isConfirmed: boolean) => {
     if (isConfirmed) {
       await fetchDeleteLesson(id)
@@ -161,9 +153,9 @@ const LessonsContainer = () => {
 
   const newLessonBtn = (
     <Box sx={styles.topContainer}>
-      <AppButton onClick={handleNewLesson} sx={styles.addLessonBtn}>
-        {t('myResourcesPage.lessons.newLessonBtn')}
-        <span style={styles.newLessonIcon}>+</span>
+      <AppButton component={Link} to={authRoutes.myResources.newLesson.path}>
+        {t('button.newLesson')}
+        <AddIcon sx={styles.icon} />
       </AppButton>
       <InputWithIcon
         endAdornment={<SearchIcon sx={styles.searchIcon} />}
