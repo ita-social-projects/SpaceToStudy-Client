@@ -1,27 +1,23 @@
-import { styles } from '~/components/icons-with-counter/IconsWithCounter.style'
-import { useState, useEffect } from 'react'
-
-import { Box } from '@mui/system'
+import Box from '@mui/material/Box'
 import { IconButton } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 
+import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+
+import { styles } from '~/components/icons-with-counter/IconsWithCounter.style'
 const IconsWithCounter = () => {
-  const [possibleValue, setPossibleValue] = useState(0)
-  const [maxValue, setMaxValue] = useState(0)
+  const [possibleValue, setPossibleValue] = useState<number>(0)
+  const [maxValue, setMaxValue] = useState<number>(12)
+  const { t } = useTranslation()
 
-  useEffect(() => {
-    setMaxValue(Math.floor(Math.random() * 20))
-  }, [])
-
-  const onClickUp = () => {
-    possibleValue < maxValue
-      ? setPossibleValue((prev) => prev + 1)
-      : setPossibleValue(1)
+  const handleIncrement = () => {
+    setPossibleValue((prev) => (prev % maxValue) + 1)
   }
 
-  const onClickDown = () => {
+  const handleDecrement = () => {
     possibleValue > 1
       ? setPossibleValue((prev) => prev - 1)
       : setPossibleValue(maxValue)
@@ -29,13 +25,13 @@ const IconsWithCounter = () => {
 
   return (
     <Box sx={styles.iconBox}>
-      <IconButton onClick={onClickUp}>
+      <IconButton onClick={handleIncrement}>
         <KeyboardArrowUpIcon />
       </IconButton>
       <Typography sx={styles.typography}>
-        {possibleValue} of {maxValue}
+        {possibleValue} {t('common.of')} {maxValue}
       </Typography>
-      <IconButton onClick={onClickDown}>
+      <IconButton onClick={handleDecrement}>
         <KeyboardArrowDownIcon />
       </IconButton>
     </Box>

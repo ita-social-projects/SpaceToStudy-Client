@@ -6,7 +6,7 @@ export const styles = {
   },
   typography: {
     minWidth: 'max-content',
-    margin: '10px 0',
+    my: '10px',
     width: '40px',
     height: '24px',
     padding: '3px'
