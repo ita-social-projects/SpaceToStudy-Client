@@ -13,8 +13,8 @@ import { styles } from '~/containers/my-resources/attachments-container/Attachme
 
 export const columns: TableColumn<Attachment>[] = [
   {
-    label: 'myResourcesPage.attachments.title',
-    field: 'title',
+    label: 'myResourcesPage.attachments.file',
+    field: 'fileName',
     calculatedCellValue: (item: Attachment) => {
       return <IconExtentionWithTitle title={item.fileName} />
     }
@@ -34,7 +34,7 @@ export const columns: TableColumn<Attachment>[] = [
     }
   },
   {
-    label: 'myResourcesPage.attachments.lastUpdates',
+    label: 'myResourcesPage.attachments.lastUpdate',
     field: 'updatedAt',
     calculatedCellValue: (item: Attachment) => (
       <Typography sx={styles.dateTitle}>

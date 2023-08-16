@@ -36,7 +36,7 @@ export const columns = [
     }
   },
   {
-    label: 'myResourcesPage.attachments.updated',
+    label: 'myResourcesPage.attachments.lastUpdate',
     field: 'updatedAt',
     calculatedCellValue: (item: Attachment) =>
       getFormattedDate({ date: item.updatedAt })
@@ -44,5 +44,5 @@ export const columns = [
 ]
 
 export const removeColumnRules: RemoveColumnRules<Attachment> = {
-  tablet: ['myResourcesPage.attachments.updated']
+  tablet: ['myResourcesPage.attachments.lastUpdate']
 }

@@ -21,7 +21,7 @@
     "uploadNewFile": "Upload new file",
     "file": "File",
     "size": "Size",
-    "updated": "Last update",
+    "lastUpdate": "Last update",
     "emptyAttachments": "You have no attachments yet"
   }
 }
