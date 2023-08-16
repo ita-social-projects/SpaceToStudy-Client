@@ -31,7 +31,7 @@ export const columns: TableColumn<Quiz>[] = [
       return (
         <Typography sx={styles.amountQuestions}>
           {amountQuestions}
-          {` ${t(`myResourcesPage.quizzes.question${isOneQuestion}`)}`}
+          {` ${t(`myResourcesPage.quizzes.question`)}${isOneQuestion}`}
         </Typography>
       )
     }

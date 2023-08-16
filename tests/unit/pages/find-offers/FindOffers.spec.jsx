@@ -5,7 +5,7 @@ import { URLs } from '~/constants/request'
 import { renderWithProviders } from '~tests/test-utils'
 import { createUrlPath } from '~/utils/helper-functions'
 import { OfferService } from '~/services/offer-service'
-import { offersMock } from '~tests/unit/pages/find-offers/findOffers.constants'
+import { offersMock } from '~tests/unit/pages/find-offers/FindOffers.constants'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { useFilterQuery } from '~/hooks/use-filter-query'
 
