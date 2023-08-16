@@ -32,6 +32,7 @@ import {
 } from '~/types'
 import { ajustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
 import { styles } from '~/containers/my-resources/attachments-container/AttachmentsContainer.styles'
+import { ItemsWithCount, Attachment, ErrorResponse } from '~/types'
 
 const AttachmentsContainer = () => {
   const { t } = useTranslation()
