@@ -1,4 +1,5 @@
 import { fireEvent, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 
 import useBreakpoints from '~/hooks/use-breakpoints'
 import Chat from '~/pages/chat/Chat'
@@ -31,10 +32,14 @@ vi.mock('react', async () => {
   }
 })
 
+const newMessageMock = { ...messagesMock[0], text: 'new message' }
 const chat = createUrlPath(URLs.chats.get, chatsMock[1]._id)
 
 mockAxiosClient.onGet(`${URLs.chats.get}`).reply(200, chatsMock)
 mockAxiosClient.onGet(`${chat}${URLs.messages.get}`).reply(200, messagesMock)
+mockAxiosClient
+  .onPost(`${chat}${URLs.messages.post}`)
+  .reply(200, newMessageMock)
 
 describe('Chat for desktop', () => {
   const desktopData = {
@@ -61,6 +66,24 @@ describe('Chat for desktop', () => {
     const message = screen.getByText(chatsMock[1].latestMessage.text)
 
     expect(message).toBeInTheDocument()
+  })
+
+  it('should send new message and clear input', async () => {
+    const chatItem = screen.getByText('Scott Short')
+
+    fireEvent.click(chatItem)
+
+    const messageInput = screen.getByLabelText('chatPage.chat.inputLabel')
+
+    userEvent.type(messageInput, 'new message')
+
+    expect(messageInput.value).toBe('new message')
+
+    const sendBtn = screen.getByTestId('send-btn')
+
+    fireEvent.click(sendBtn)
+
+    expect(messageInput.value).toBe('')
   })
 })
 

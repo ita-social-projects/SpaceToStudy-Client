@@ -3,6 +3,7 @@ import { blueGrey } from '@mui/material/colors'
 const palette = {
   primary: blueGrey,
   backgroundColor: '#F7F7F7',
+  imageOverlay: 'rgba(38, 50, 56, 0.7)',
   basic: {
     black: '#000000',
     blue: '#0B8AF8',

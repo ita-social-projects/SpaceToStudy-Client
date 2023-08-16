@@ -21,19 +21,15 @@ import ChatTextArea from '~/containers/chat/chat-text-area/ChatTextArea'
 
 import { defaultResponses } from '~/constants'
 import { styles } from '~/pages/chat/Chat.styles'
-import {
-  ChatResponse,
-  MessageInterface,
-  PositionEnum,
-  GetMessagesParams
-} from '~/types'
+import { ChatResponse, MessageInterface, PositionEnum } from '~/types'
 
 const Chat = () => {
   const { t } = useTranslation()
   const { isMobile } = useBreakpoints()
   const { openDrawer, closeDrawer, isOpen } = useDrawer()
   const [selectedChat, setSelectedChat] = useState<ChatResponse | null>(null)
-  const [textAreaValue, setTextAreaValueValue] = useState<string>('')
+  const [messages, setMessages] = useState<MessageInterface[]>([])
+  const [textAreaValue, setTextAreaValue] = useState<string>('')
   const scrollRef = useRef<HTMLDivElement | null>(null)
 
   const openChatsHandler = () => {
@@ -41,14 +37,28 @@ const Chat = () => {
   }
 
   const onTextAreaChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setTextAreaValueValue(e.target.value)
+    setTextAreaValue(e.target.value)
   }
+
+  const onMessagesResponse = useCallback(
+    (response: MessageInterface[]) => setMessages(response),
+    [setMessages]
+  )
 
   const getChats = useCallback(() => chatService.getChats(), [])
 
+  const sendMessage = useCallback(
+    () =>
+      messageService.sendMessage({
+        chatId: selectedChat?._id ?? '',
+        text: textAreaValue
+      }),
+    [selectedChat?._id, textAreaValue]
+  )
+
   const getMessages = useCallback(
-    (params?: GetMessagesParams) => messageService.getMessages(params),
-    []
+    () => messageService.getMessages({ chatId: selectedChat?._id ?? '' }),
+    [selectedChat?._id]
   )
 
   const { response: listOfChats, loading } = useAxios({
@@ -56,27 +66,31 @@ const Chat = () => {
     defaultResponse: defaultResponses.array
   })
 
-  const {
-    response: messages,
-    loading: messagesLoad,
-    fetchData
-  } = useAxios({
+  const { fetchData } = useAxios({
     service: getMessages,
+    onResponse: onMessagesResponse,
     defaultResponse: defaultResponses.array,
     fetchOnMount: false
   })
 
+  const onMessageSend = async () => {
+    setTextAreaValue('')
+    await sendMessage()
+    await fetchData()
+  }
+
   useEffect(() => {
-    selectedChat && void fetchData({ chatId: selectedChat._id })
+    setMessages([])
+    selectedChat && void fetchData()
   }, [selectedChat, fetchData])
 
   useEffect(() => {
-    if (selectedChat && !messagesLoad) {
+    if (selectedChat && messages.length > 0) {
       scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight })
     }
-  }, [selectedChat, messagesLoad])
+  }, [selectedChat, messages.length])
 
-  const messagesList = messages.map((message: MessageInterface) => (
+  const messagesList = messages.map((message) => (
     <Message key={message._id} message={message} />
   ))
 
@@ -85,21 +99,20 @@ const Chat = () => {
   }
 
   const selectChatChip = (
-    <AppChip labelSx={styles.chipLabel} sx={styles.chip}>
+    <AppChip labelSx={styles.chipLabel(false)} sx={styles.chip}>
       {t('chatPage.chat.chipLabel')}
     </AppChip>
   )
 
-  const scrollableContent = messagesLoad ? (
-    <Loader pageLoad size={50} sx={styles.loader} />
-  ) : (
-    <SimpleBar
-      scrollableNodeProps={{ ref: scrollRef }}
-      style={styles.scrollableContent}
-    >
+  const scrollableContent = messages.length ? (
+    <>
       <ChatDate date={new Date()} />
       {messagesList}
-    </SimpleBar>
+    </>
+  ) : (
+    <AppChip labelSx={styles.chipLabel(true)} sx={styles.chip}>
+      {t('chatPage.chat.loading')}
+    </AppChip>
   )
 
   return (
@@ -129,7 +142,7 @@ const Chat = () => {
           </Allotment.Pane>
         )}
         <Allotment.Pane minSize={350}>
-          <Box sx={styles.chatContent(selectedChat)}>
+          <Box sx={styles.chatContent(!!selectedChat, messages.length)}>
             {!selectedChat ? (
               selectChatChip
             ) : (
@@ -138,10 +151,16 @@ const Chat = () => {
                   onClick={openChatsHandler}
                   user={selectedChat.members[0].user}
                 />
-                {scrollableContent}
+                <SimpleBar
+                  scrollableNodeProps={{ ref: scrollRef }}
+                  style={styles.scrollableContent}
+                >
+                  {scrollableContent}
+                </SimpleBar>
                 <ChatTextArea
                   label={t('chatPage.chat.inputLabel')}
                   onChange={onTextAreaChange}
+                  onClick={() => void onMessageSend()}
                   value={textAreaValue}
                 />
               </>

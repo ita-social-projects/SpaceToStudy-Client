@@ -184,6 +184,7 @@ const LessonsContainer = () => {
         emptyTableKey='myResourcesPage.lessons.emptyLessons'
         rowActions={rowActions}
         sort={{ sort, onRequestSort }}
+        sx={styles.table}
       />
       <AppPagination
         onChange={handleChangePage}

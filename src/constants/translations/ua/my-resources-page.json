@@ -5,15 +5,30 @@
     "attachments": "Вкладення"
   },
   "lessons": {
-    "newLessonBtn":"Новий урок",
+    "newLessonBtn": "Новий урок",
     "title": "Заголовок",
     "attachments": "Файли",
     "attachmentQty": "Файл",
-    "attachmentsQty":"Файлів",
+    "attachmentsQty": "Файлів",
     "lastUpdates": "Останнє оновлення",
     "emptyLessons":"У вас ще немає уроків",
     "confirmLessonDeletionTitle":"Ви підтверджуєте видалення уроку?",
     "confirmLessonDeletionMessage":"Ця дія є постійною та призведе до видалення всього пов’язаного вмісту. Перш ніж продовжити, перегляньте своє рішення.",
     "successDeletion":"Урок було успішно видалено"
+  },
+  "attachments": {
+    "addFromAttachments": "Додайте файли з Вкладень",
+    "uploadNewFile": "Завантажити новий файл",
+    "file": "Файл",
+    "size": "Розмір",
+    "lastUpdate": "Останнє оновлення",
+    "emptyAttachments": "У вас ще немає вкладень"
+  },
+  "quizzes": {
+    "quizTitle": "Заголовок тесту",
+    "question": "Питання",
+    "questions": "Питання",
+    "updated": "Останнє оновлення",
+    "emptyQuizzes": "У вас ще немає тестів"
   }
 }

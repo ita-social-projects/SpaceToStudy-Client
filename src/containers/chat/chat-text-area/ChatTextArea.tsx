@@ -12,11 +12,13 @@ import { TextFieldVariantEnum } from '~/types'
 interface ChatTextAreaProps extends Omit<TextFieldProps, 'onChange'> {
   value: string
   onChange: (e: ChangeEvent<HTMLInputElement>) => void
+  onClick: () => void
 }
 
 const ChatTextArea: FC<ChatTextAreaProps> = ({
   value,
   onChange,
+  onClick,
   maxRows = 6,
   minRows = 1,
   ...props
@@ -40,7 +42,7 @@ const ChatTextArea: FC<ChatTextAreaProps> = ({
         withHelperText={false}
         {...props}
       />
-      <IconButton>
+      <IconButton data-testid='send-btn' onClick={onClick}>
         <SendIcon sx={styles.icon} />
       </IconButton>
     </Box>

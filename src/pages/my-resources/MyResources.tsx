@@ -5,6 +5,7 @@ import Box from '@mui/material/Box'
 
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import Tab from '~/components/tab/Tab'
+import Typography from '@mui/material/Typography'
 
 import { tabsData } from '~/pages/my-resources/MyResources.constants'
 import { styles } from '~/pages/my-resources/MyResources.styles'
@@ -34,6 +35,7 @@ const MyResources = () => {
 
   return (
     <PageWrapper>
+      <Typography sx={styles.title}>{t(tabsData[activeTab].title)}</Typography>
       <Box sx={styles.tabs}>{tabs}</Box>
       {tabContent}
     </PageWrapper>

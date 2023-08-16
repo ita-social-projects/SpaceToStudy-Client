@@ -1,16 +1,19 @@
 import { SxProps, Theme } from '@mui/material'
 import {
   Breakpoints,
+  ConvertedSize,
   Cooperation,
   FilterFromQuery,
   FormatedDate,
   Lesson,
   Offer,
+  Quiz,
   RemoveColumnRules,
   ScreenBasedLimits,
   TableColumn,
   UserRole,
-  UserRoleEnum
+  UserRoleEnum,
+  Attachment
 } from '~/types'
 
 export const parseJwt = <T,>(token: string): T => {
@@ -62,6 +65,22 @@ export const getEmptyValues = <T extends object, R>(
 export const findFullObjects = <T extends object>(array: T[]) =>
   array.filter((el) => Object.values(el).every((el) => el))
 
+const addOrdinalSuffix = (day: number): string => {
+  if (day >= 11 && day <= 13) {
+    return `${day}th`
+  }
+  switch (day % 10) {
+    case 1:
+      return `${day}st`
+    case 2:
+      return `${day}nd`
+    case 3:
+      return `${day}rd`
+    default:
+      return `${day}th`
+  }
+}
+
 export const getFormattedDate = ({
   date,
   locales = 'en-US',
@@ -70,7 +89,8 @@ export const getFormattedDate = ({
     month: 'long',
     day: 'numeric'
   },
-  isCurrentDayHours = false
+  isCurrentDayHours = false,
+  includeOrdinal = false
 }: FormatedDate): string => {
   const currentDate = new Date()
   const formattedDate = new Date(date).toLocaleString(locales, options)
@@ -83,6 +103,14 @@ export const getFormattedDate = ({
       hour: '2-digit',
       minute: '2-digit'
     })
+  }
+
+  if (includeOrdinal) {
+    const day = new Date(date).getDate()
+    const month = new Date(date).toLocaleString(locales, { month: 'long' })
+    const year = new Date(date).getFullYear()
+    const formattedWithOrdinal = `${addOrdinalSuffix(day)} ${month} ${year}`
+    return formattedWithOrdinal
   }
 
   return formattedDate
@@ -111,7 +139,9 @@ export const getScreenBasedLimit = (
   }
 }
 
-export const ajustColumns = <T extends Cooperation | Offer | Lesson>(
+export const ajustColumns = <
+  T extends Cooperation | Offer | Lesson | Attachment | Quiz
+>(
   breakpoints: Breakpoints,
   columns: TableColumn<T>[],
   rules: RemoveColumnRules<T>
@@ -205,4 +235,23 @@ export const getDifferenceDates = (startDate: Date, endDate: Date) => {
     number: conversionToDays || 1,
     format: 'Day'
   }
+}
+
+export const convertBytesToProperFormat = (bytes: number): ConvertedSize => {
+  const convertedSize = {
+    size: bytes.toString(),
+    unit: 'bytes'
+  }
+
+  const kilobyte = 1024
+  const megabyte = kilobyte * 1024
+
+  if (bytes >= megabyte) {
+    convertedSize.size = (bytes / megabyte).toFixed(1)
+    convertedSize.unit = 'megabytes'
+  } else if (bytes >= kilobyte) {
+    convertedSize.size = (bytes / kilobyte).toFixed(1)
+    convertedSize.unit = 'kilobytes'
+  }
+  return convertedSize
 }

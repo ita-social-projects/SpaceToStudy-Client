@@ -49,9 +49,16 @@ export const URLs = {
       get: '/lessons',
       delete: '/lessons',
       patch: '/lessons'
+    },
+    attachments: {
+      get: '/attachments'
     }
   },
   messages: {
-    get: '/messages'
+    get: '/messages',
+    post: '/messages'
+  },
+  quizzes: {
+    get: '/quizzes'
   }
 }

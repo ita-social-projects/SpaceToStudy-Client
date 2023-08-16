@@ -17,3 +17,8 @@ export interface GetMessagesParams
   extends Partial<Omit<RequestParams, 'sort'>> {
   chatId: string
 }
+
+export interface SendMessageParams {
+  chatId: string
+  text: string
+}
