@@ -3,25 +3,30 @@ import { useTranslation } from 'react-i18next'
 import SearchIcon from '@mui/icons-material/Search'
 import Box from '@mui/material/Box'
 
+import AppButton from '~/components/app-button/AppButton'
+import EnhancedTable from '~/components/enhanced-table/EnhancedTable'
 import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
-import useAxios from '~/hooks/use-axios'
 
 import useBreakpoints from '~/hooks/use-breakpoints'
-import useSort from '~/hooks/table/use-sort'
 import AppPagination from '~/components/app-pagination/AppPagination'
 import usePagination from '~/hooks/table/use-pagination'
 import { useDebounce } from '~/hooks/use-debounce'
+import Loader from '~/components/loader/Loader'
+import useSort from '~/hooks/table/use-sort'
 import useAxios from '~/hooks/use-axios'
 import { ResourceService } from '~/services/resource-service'
 
-import { defaultResponses } from '~/constants'
+import { defaultResponses, snackbarVariants } from '~/constants'
+import {
+  columns,
+  initialSort,
+  itemsLoadLimit,
+  removeColumnRules
+} from '~/containers/my-resources/attachments-container/AttachmentsContainer.constants'
 import { styles } from '~/containers/my-resources/attachments-container/AttachmentsContainer.styles'
-import { Attachment, GetLessonsParams, ItemsWithCount } from '~/types'
 import { useSnackBarContext } from '~/context/snackbar-context'
-import { ajustColumns } from '~/utils/helper-functions'
-import AppButton from '~/components/app-button/AppButton'
-import EnhancedTable from '~/components/enhanced-table/EnhancedTable'
-import Loader from '~/components/loader/Loader'
+import { Attachment, ErrorResponse, ItemsWithCount } from '~/types'
+import { ajustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
 
 const AttachmentsContainer = () => {
   const { t } = useTranslation()
@@ -45,6 +50,16 @@ const AttachmentsContainer = () => {
     [itemsPerPage, page, sort, searchFileName]
   )
 
+  const onAttachmentError = useCallback(
+    (error: ErrorResponse) => {
+      setAlert({
+        severity: snackbarVariants.error,
+        message: error ? `errors.${error.code}` : ''
+      })
+    },
+    [setAlert]
+  )
+
   const { response, loading, fetchData } = useAxios<ItemsWithCount<Attachment>>({
     service: getAttachments,
     defaultResponse: defaultResponses.itemsWithCount,
@@ -61,6 +76,23 @@ const AttachmentsContainer = () => {
       func: () => console.log(t('common.delete'))
     }
   ]
+
+  const debouncedOnSearch = useDebounce((text: string) => {
+    searchFileName.current = text
+    void fetchData()
+  })
+
+  const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchInput(e.target.value)
+    debouncedOnSearch(e.target.value)
+  }
+
+  const onSearchClear = () => {
+    setSearchInput('')
+    searchFileName.current = ''
+    void fetchData()
+  }
+
   const addAttachmentBlock = (
     <Box sx={styles.container}>
       <AppButton disabled sx={styles.addButton}>
@@ -69,13 +101,15 @@ const AttachmentsContainer = () => {
       </AppButton>
       <InputWithIcon
         endAdornment={<SearchIcon sx={styles.searchIcon} />}
-        onChange={() => null}
-        onClear={() => null}
+        onChange={onSearchChange}
+        onClear={onSearchClear}
         placeholder={t('common.search')}
         sx={styles.input}
-      ></InputWithIcon>
+        value={searchInput}
+      />
     </Box>
   )
+
   const tableAttachments = (
     <>
       <EnhancedTable
@@ -94,21 +128,6 @@ const AttachmentsContainer = () => {
     </>
   )
 
-  const debouncedOnSearch = useDebounce((text: string) => {
-    searchFileName.current = text
-    void fetchData()
-  })
-
-  const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchInput(e.target.value)
-    debouncedOnSearch(e.target.value)
-  }
-
-  const onSearchClear = () => {
-    setSearchInput('')
-    searchFileName.current = ''
-    void fetchData()
-  }
   return (
     <Box>
       {addAttachmentBlock}
