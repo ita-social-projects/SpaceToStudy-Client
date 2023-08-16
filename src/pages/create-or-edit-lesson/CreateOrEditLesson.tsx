@@ -7,11 +7,13 @@ import Divider from '@mui/material/Divider'
 import AddIcon from '@mui/icons-material/Add'
 import CloseIcon from '@mui/icons-material/Close'
 import IconButton from '@mui/material/IconButton'
+import Typography from '@mui/material/Typography'
 
 import Loader from '~/components/loader/Loader'
 import AddAttachments from '~/containers/add-attachments/AddAttachments'
 import IconExtensionWithTitle from '~/components/icon-extension-with-title/IconExtensionWithTitle'
 import { attachmentService } from '~/services/attachment-service'
+import { useModalContext } from '~/context/modal-context'
 import AppButton from '~/components/app-button/AppButton'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import FileEditor from '~/components/file-editor/FileEditor'
@@ -20,7 +22,7 @@ import { useSnackBarContext } from '~/context/snackbar-context'
 import useAxios from '~/hooks/use-axios'
 import useForm from '~/hooks/use-form'
 import { ResourceService } from '~/services/resource-service'
-import { useModalContext } from '~/context/modal-context'
+
 import AddDocuments from '~/containers/add-documents/AddDocuments'
 
 import { snackbarVariants } from '~/constants'
@@ -50,7 +52,6 @@ const CreateOrEditLesson = () => {
 
   const { openModal } = useModalContext()
   const navigate = useNavigate()
-
   const [attachments, setAttachments] = useState<Attachment[]>([])
   const [content, setContent] = useState<string>('')
   const { id } = useParams()
@@ -190,6 +191,7 @@ const CreateOrEditLesson = () => {
     defaultResponse: null,
     onResponseError: onCreateAttachmentsError
   })
+  const handleOpenModal = () => openModal({ component: <AddAttachments /> })
 
 
   const attachmentsList = attachments.map((attachment) => (
@@ -233,11 +235,15 @@ const CreateOrEditLesson = () => {
           value={data.description}
           variant={TextFieldVariantEnum.Standard}
         />
-        <AddDocuments
-          buttonText={t('common.uploadNewFile')}
-          fetchData={fetchDataAttachments}
-          formData={formData}
-        />
+        <AppButton onClick={handleOpenModal} sx={styles.button}>
+          {t('myResourcesPage.attachments.addAttachment')}
+          <Typography
+            component={ComponentEnum.Span}
+            style={styles.newAttachmentIcon}
+          >
+            {t('common.plusSign')}
+          </Typography>
+        </AppButton>
         <Divider sx={styles.divider} />
         <AppButton
           onClick={handleOpenAddAttachmentsModal}
