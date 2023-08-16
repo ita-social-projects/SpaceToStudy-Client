@@ -1,6 +1,5 @@
 import { SxProps, Theme } from '@mui/material'
 import {
-  Attachment,
   Breakpoints,
   ConvertedSize,
   Cooperation,
