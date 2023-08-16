@@ -18,6 +18,9 @@
   "beginner": "Початковий",
   "cancel": "Відмінити",
   "discard": "Відмовитись",
+  "add": "Додати",
+  "bytes": "Б",
+  "kilobytes": "КБ",
   "megabytes": "МБ",
   "labels": {
     "sendMessage": "Надіслати повідомлення",

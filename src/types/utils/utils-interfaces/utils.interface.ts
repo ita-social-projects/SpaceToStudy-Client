@@ -5,3 +5,8 @@ export interface FormatedDate {
   isCurrentDayHours?: boolean
   includeOrdinal?: boolean
 }
+
+export interface ConvertedSize {
+  size: string
+  unit: string
+}

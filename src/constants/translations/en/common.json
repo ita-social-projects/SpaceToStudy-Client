@@ -24,6 +24,9 @@
   "goToName": "Go to {{name}}",
   "cancel": "Cancel",
   "discard": "Discard",
+  "add": "Add",
+  "bytes": "B",
+  "kilobytes": "KB",
   "megabytes": "MB",
   "plusSign": "+",
   "labels": {

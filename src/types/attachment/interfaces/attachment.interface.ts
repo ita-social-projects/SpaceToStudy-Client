@@ -1,4 +1,4 @@
-import { CommonEntityFields, UserResponse, RequestParams } from '~/types'
+import { CommonEntityFields, UserResponse } from '~/types'
 
 export interface Attachment extends CommonEntityFields {
   author: Pick<UserResponse, '_id'>
@@ -6,8 +6,4 @@ export interface Attachment extends CommonEntityFields {
   link: string
   description: string
   size: number
-}
-
-export interface GetAttachmentsParams extends RequestParams {
-  title: string
 }
