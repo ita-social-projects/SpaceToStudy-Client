@@ -1,4 +1,5 @@
 import { TypographyVariantEnum } from '~/types'
+import { roundedBorderTable } from '~/containers/my-cooperations/cooperations-container/CooperationContainer.styles'
 
 const captionTitle = {
   color: 'primary.400',
@@ -30,6 +31,7 @@ export const styles = {
     marginLeft: '13px',
     fontWeight: '400'
   },
+  table: roundedBorderTable,
   sizeTitle: captionTitle,
   dateTitle: captionTitle
 }
