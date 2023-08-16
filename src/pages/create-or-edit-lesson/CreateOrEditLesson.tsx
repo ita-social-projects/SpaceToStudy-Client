@@ -1,4 +1,8 @@
+<<<<<<< HEAD:src/pages/create-or-edit-lesson/CreateOrEditLesson.tsx
 import { useState, useEffect, useCallback } from 'react'
+=======
+import { useState, useCallback  } from 'react'
+>>>>>>> 4bf6336 (Small fix):src/pages/new-lesson/NewLesson.tsx
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { AxiosResponse } from 'axios'
@@ -49,6 +53,10 @@ import {
 const CreateOrEditLesson = () => {
   const { t } = useTranslation()
   const { setAlert } = useSnackBarContext()
+<<<<<<< HEAD:src/pages/create-or-edit-lesson/CreateOrEditLesson.tsx
+=======
+  const navigate = useNavigate()
+>>>>>>> 4bf6336 (Small fix):src/pages/new-lesson/NewLesson.tsx
 
   const { openModal } = useModalContext()
   const navigate = useNavigate()
@@ -61,6 +69,8 @@ const CreateOrEditLesson = () => {
     (data?: FormData) => attachmentService.createAttachments(data),
     []
   )
+
+  const handleOpenModal = () => openModal({ component: <AddAttachments /> })
 
   const handleResponseError = (error: ErrorResponse) => {
     setAlert({
@@ -130,6 +140,7 @@ const CreateOrEditLesson = () => {
     onResponseError: handleResponseError
   })
 
+<<<<<<< HEAD:src/pages/create-or-edit-lesson/CreateOrEditLesson.tsx
   const {
     data,
     errors,
@@ -190,6 +201,15 @@ const CreateOrEditLesson = () => {
   })
   const handleOpenModal = () => openModal({ component: <AddAttachments /> })
 
+=======
+  const { data, errors, handleInputChange, handleSubmit } =
+    useForm<NewLessonData>({
+      initialValues,
+      validations,
+      onSubmit: fetchData,
+      submitWithData: true
+    })
+>>>>>>> 4bf6336 (Small fix):src/pages/new-lesson/NewLesson.tsx
 
   const attachmentsList = attachments.map((attachment) => (
     <Box key={attachment.size} sx={styles.attachmentList.container}>
@@ -232,6 +252,7 @@ const CreateOrEditLesson = () => {
           value={data.description}
           variant={TextFieldVariantEnum.Standard}
         />
+        <Divider sx={styles.divider} />
         <AppButton onClick={handleOpenModal} sx={styles.button}>
           {t('myResourcesPage.attachments.addAttachment')}
           <Typography
