@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
 import Avatar from '@mui/material/Avatar'
+import Badge from '@mui/material/Badge'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import AppRating from '~/components/app-rating/AppRating'
@@ -17,7 +18,10 @@ import {
 import { styles } from '~/components/user-profile-info/UserProfileInfo.styles'
 import { authRoutes } from '~/router/constants/authRoutes'
 import {
+  ComponentEnum,
   LanguagesEnum,
+  OverlapEnum,
+  PositionEnum,
   UserProfileInfoSx,
   UserResponse,
   UserRole
@@ -30,6 +34,7 @@ interface UserProfileInfoProps
   reviewsCount?: number
   date?: string
   sx?: UserProfileInfoSx
+  isOnline?: boolean
   role: UserRole
   renderAdditionalInfo?: boolean
 }
@@ -45,7 +50,8 @@ const UserProfileInfo: FC<UserProfileInfoProps> = ({
   sx = {},
   _id,
   role,
-  renderAdditionalInfo = true
+  renderAdditionalInfo = true,
+  isOnline = false
 }) => {
   const { t } = useTranslation()
 
@@ -63,10 +69,30 @@ const UserProfileInfo: FC<UserProfileInfoProps> = ({
     <Box sx={spliceSx(styles.root, sx.root)}>
       {renderAdditionalInfo && (
         <Link onClick={handleLinkClick} to={userURL}>
-          <Avatar
-            src={photo && `${import.meta.env.VITE_APP_IMG_USER_URL}${photo}`}
-            sx={spliceSx(styles.avatar, sx.avatar)}
-          />
+          {isOnline ? (
+            <Badge
+              anchorOrigin={{
+                vertical: PositionEnum.Bottom,
+                horizontal: PositionEnum.Right
+              }}
+              badgeContent={
+                <Typography component={ComponentEnum.Span} sx={styles.active} />
+              }
+              overlap={OverlapEnum.Circular}
+            >
+              <Avatar
+                src={
+                  photo && `${import.meta.env.VITE_APP_IMG_USER_URL}${photo}`
+                }
+                sx={spliceSx(styles.avatar, sx.avatar)}
+              />
+            </Badge>
+          ) : (
+            <Avatar
+              src={photo && `${import.meta.env.VITE_APP_IMG_USER_URL}${photo}`}
+              sx={spliceSx(styles.avatar, sx.avatar)}
+            />
+          )}
         </Link>
       )}
       <Box

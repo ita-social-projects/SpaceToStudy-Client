@@ -8,7 +8,8 @@ import {
   Faq,
   UserRoleEnum,
   CategoryInterface,
-  StatusEnum
+  StatusEnum,
+  ChatResponse
 } from '~/types'
 
 export interface Offer extends CommonEntityFields {
@@ -31,6 +32,7 @@ export interface Offer extends CommonEntityFields {
   >
   subject: SubjectNameInterface
   category: CategoryInterface
+  chatId: Pick<ChatResponse, '_id'>
   FAQ: Faq[]
   status: StatusEnum
 }

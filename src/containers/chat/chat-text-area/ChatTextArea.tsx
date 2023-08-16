@@ -7,12 +7,14 @@ import SendIcon from '@mui/icons-material/Send'
 import AppTextArea from '~/components/app-text-area/AppTextArea'
 
 import { styles } from '~/containers/chat/chat-text-area/ChatTextArea.styles'
-import { TextFieldVariantEnum } from '~/types'
+import { TextAreaSx, TextFieldVariantEnum } from '~/types'
+import { spliceSx } from '~/utils/helper-functions'
 
-interface ChatTextAreaProps extends Omit<TextFieldProps, 'onChange'> {
+interface ChatTextAreaProps extends Omit<TextFieldProps, 'onChange' | 'sx'> {
   value: string
   onChange: (e: ChangeEvent<HTMLInputElement>) => void
   onClick: () => void
+  sx?: TextAreaSx
 }
 
 const ChatTextArea: FC<ChatTextAreaProps> = ({
@@ -21,10 +23,11 @@ const ChatTextArea: FC<ChatTextAreaProps> = ({
   onClick,
   maxRows = 6,
   minRows = 1,
+  sx = {},
   ...props
 }) => {
   return (
-    <Box sx={styles.container}>
+    <Box sx={spliceSx(styles.container, sx.container)}>
       <AppTextArea
         InputLabelProps={{
           style: styles.textAreaLabel(value),
@@ -35,7 +38,7 @@ const ChatTextArea: FC<ChatTextAreaProps> = ({
         maxRows={maxRows}
         minRows={minRows}
         onChange={onChange}
-        sx={styles.textAreaWrapper}
+        sx={spliceSx(styles.textAreaWrapper, sx.textAreaWrapper)}
         textFieldStyles={styles.textArea}
         value={value}
         variant={TextFieldVariantEnum.Standard}
@@ -43,7 +46,7 @@ const ChatTextArea: FC<ChatTextAreaProps> = ({
         {...props}
       />
       <IconButton data-testid='send-btn' onClick={onClick}>
-        <SendIcon sx={styles.icon} />
+        <SendIcon sx={spliceSx(styles.icon, sx.icon)} />
       </IconButton>
     </Box>
   )

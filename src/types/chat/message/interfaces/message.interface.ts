@@ -1,4 +1,6 @@
+import { SxProps } from '@mui/material'
 import {
+  ChatResponse,
   CommonEntityFields,
   RequestParams,
   UserResponse,
@@ -15,7 +17,13 @@ export interface MessageInterface extends CommonEntityFields {
 
 export interface GetMessagesParams
   extends Partial<Omit<RequestParams, 'sort'>> {
-  chatId: string
+  chatId: Pick<ChatResponse, '_id'>
+}
+
+export interface TextAreaSx {
+  textAreaWrapper?: SxProps
+  container?: SxProps
+  icon?: SxProps
 }
 
 export interface SendMessageParams {

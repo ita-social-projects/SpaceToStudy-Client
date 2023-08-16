@@ -10,11 +10,14 @@ import ScrollToTopButton from '~/components/scroll-to-top-button/ScrollToTopButt
 import Loader from '~/components/loader/Loader'
 import { checkAuth } from '~/redux/reducer'
 import { styles } from '~/containers/app-content/AppContent.styles'
+import ChatDialogWindow from '~/containers/offer-page/chat-dialog-window/ChatDialogWindow'
+import { useChatContext } from '~/context/chat-context'
 
 const AppMain = () => {
   const mainWithFooter = useRef(null)
   const { loading } = useAppSelector((state) => state.appMain)
   const { state } = useNavigation()
+  const { chatInfo } = useChatContext()
   const dispatch = useAppDispatch()
 
   useLayoutEffect(() => {
@@ -31,6 +34,7 @@ const AppMain = () => {
         <AppBreadCrumbs />
         <ScrollToTop element={mainWithFooter} />
         <Outlet context={{ pageRef: mainWithFooter }} />
+        {chatInfo && <ChatDialogWindow chatInfo={chatInfo} />}
         <ScrollToTopButton element={mainWithFooter} />
         <Footer />
       </Suspense>

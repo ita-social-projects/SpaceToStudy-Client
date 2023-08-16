@@ -12,6 +12,7 @@ import AppCard from '~/components/app-card/AppCard'
 import { createUrlPath } from '~/utils/helper-functions'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { styles } from '~/containers/find-offer/offer-container/OfferContainer.styles'
+import { useChatContext } from '~/context/chat-context'
 
 interface OfferContainerProps {
   viewMode: CardsView
@@ -21,6 +22,7 @@ interface OfferContainerProps {
 const OfferContainer: FC<OfferContainerProps> = ({ viewMode, offerCards }) => {
   const { t } = useTranslation()
   const { isMobile, isLaptopAndAbove } = useBreakpoints()
+  const { setChatInfo } = useChatContext()
 
   const onBookmarkClick = (id: string) => {
     console.log(id)
@@ -42,7 +44,12 @@ const OfferContainer: FC<OfferContainerProps> = ({ viewMode, offerCards }) => {
         label: t('common.labels.sendMessage'),
         buttonProps: {
           variant: ButtonVariantEnum.Tonal,
-          disabled: true
+          onClick: () =>
+            setChatInfo({
+              author: el.author,
+              authorRole: el.authorRole,
+              chatId: el.chatId
+            })
         }
       }
     ]

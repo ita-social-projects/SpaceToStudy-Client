@@ -90,3 +90,8 @@ export enum PositionEnum {
 export enum InputEnum {
   File = 'file'
 }
+
+export enum OverlapEnum {
+  Circular = 'circular',
+  Rectangular = 'rectangular'
+}
