@@ -28,10 +28,11 @@ export const columns: TableColumn<Quiz>[] = [
     calculatedCellValue: (item: Quiz, { t }: AdditionalPropsInterface) => {
       const amountQuestions = item.items.length
       const isOneQuestion = amountQuestions === 1 ? '' : 's'
+      const questionText = t(`myResourcesPage.quizzes.question`)
       return (
         <Typography sx={styles.amountQuestions}>
           {amountQuestions}
-          {` ${t(`myResourcesPage.quizzes.question`)}${isOneQuestion}`}
+          {` ${questionText}${isOneQuestion}`}
         </Typography>
       )
     }
