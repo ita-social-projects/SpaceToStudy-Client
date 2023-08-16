@@ -1,14 +1,15 @@
-import { useCallback } from 'react'
+import { useCallback, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 
-import EnhancedTable from '~/components/enhanced-table/EnhancedTable'
-import useAxios from '~/hooks/use-axios'
 import useConfirm from '~/hooks/use-confirm'
 import { quizService } from '~/services/quiz-service'
-import Loader from '~/components/loader/Loader'
 import { useSnackBarContext } from '~/context/snackbar-context'
+import EnhancedTable from '~/components/enhanced-table/EnhancedTable'
+import Loader from '~/components/loader/Loader'
+import AddResourceWithInput from '~/containers/my-resources/add-resource-with-input/AddResourceWithInput'
 import useBreakpoints from '~/hooks/use-breakpoints'
+import useAxios from '~/hooks/use-axios'
 
 import {
   columns,
@@ -24,10 +25,9 @@ const TestsContainer = () => {
   const { t } = useTranslation()
   const { setAlert } = useSnackBarContext()
   const { openDialog } = useConfirm()
-
+  const searchTitle = useRef<string>('')
   const breakpoints = useBreakpoints()
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
-
   const columnsToShow = ajustColumns(breakpoints, columns, removeColumnRules)
 
   const onGetQuizzesError = useCallback(
@@ -57,9 +57,10 @@ const TestsContainer = () => {
   const getQuizzes = useCallback(
     () =>
       quizService.getQuizzes({
-        limit: itemsPerPage
+        limit: itemsPerPage,
+        title: searchTitle.current
       }),
-    [itemsPerPage]
+    [itemsPerPage, searchTitle]
   )
 
   const deleteQuiz = useCallback(
@@ -108,23 +109,29 @@ const TestsContainer = () => {
     }
   ]
 
+  const table = (
+    <EnhancedTable
+      columns={columnsToShow}
+      data={{ items: response.items }}
+      emptyTableKey='myResourcesPage.quizzes.emptyQuizzes'
+      rowActions={rowActions}
+      sort={{
+        sort: { order: SortEnum.Desc, orderBy: 'updatedAt' },
+        onRequestSort: () => null
+      }}
+      sx={styles.table}
+    />
+  )
+
   return (
     <Box>
-      {loading ? (
-        <Loader pageLoad size={50} />
-      ) : (
-        <EnhancedTable
-          columns={columnsToShow}
-          data={{ items: response.items }}
-          emptyTableKey='myResourcesPage.quizzes.emptyQuizzes'
-          rowActions={rowActions}
-          sort={{
-            sort: { order: SortEnum.Desc, orderBy: 'updatedAt' },
-            onRequestSort: () => null
-          }}
-          sx={styles.table}
-        />
-      )}
+      <AddResourceWithInput
+        btnText='myResourcesPage.quizzes.newQuizBtn'
+        fetchData={fetchData}
+        onClick={() => null}
+        searchRef={searchTitle}
+      />
+      {loading ? <Loader pageLoad size={50} /> : table}
     </Box>
   )
 }
