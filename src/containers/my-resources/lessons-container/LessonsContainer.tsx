@@ -135,7 +135,7 @@ const LessonsContainer = () => {
 
   const openDeletionConfirmDialog = (id: string) => {
     openDialog({
-      message: 'myResourcesPage.lessons.confirmLessonDeletionMessage',
+      message: 'myResourcesPage.confirmDeletionMessage',
       sendConfirm: (isConfirmed: boolean) =>
         void handleDeleteLesson(id, isConfirmed),
       title: 'myResourcesPage.lessons.confirmLessonDeletionTitle'
