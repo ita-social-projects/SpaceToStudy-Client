@@ -26,7 +26,7 @@ import { messageService } from '~/services/message-service'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { useChatContext } from '~/context/chat-context'
 
-import { GetMessagesParams, MessageInterface, Offer } from '~/types'
+import { MessageInterface, Offer } from '~/types'
 import { defaultResponses } from '~/constants'
 import { styles } from '~/containers/offer-page/chat-dialog-window/ChatDialogWindow.styles'
 import { createUrlPath } from '~/utils/helper-functions'
@@ -37,25 +37,25 @@ interface ChatDialogWindow {
 }
 
 const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
-  const [textAreaValue, setTextAreaValueValue] = useState<string>('')
+  const [textAreaValue, setTextAreaValue] = useState<string>('')
   const { t } = useTranslation()
   const scrollRef = useRef<HTMLDivElement | null>(null)
   const { setChatInfo } = useChatContext()
   const navigate = useNavigate()
 
   const onTextAreaChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setTextAreaValueValue(e.target.value)
+    setTextAreaValue(e.target.value)
   }
 
   const getMessages = useCallback(
-    (params?: GetMessagesParams) => messageService.getMessages(params),
-    []
+    () => messageService.getMessages({ chatId: chatInfo.chatId }),
+    [chatInfo.chatId]
   )
 
   const {
     response: messages,
     loading: messagesLoad,
-    fetchData: downloadMessages
+    fetchData
   } = useAxios({
     service: getMessages,
     defaultResponse: defaultResponses.array,
@@ -63,8 +63,8 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
   })
 
   useEffect(() => {
-    chatInfo?.chatId && void downloadMessages({ chatId: chatInfo?.chatId })
-  }, [chatInfo?.chatId, downloadMessages])
+    chatInfo?.chatId && void fetchData({ chatId: chatInfo?.chatId })
+  }, [chatInfo?.chatId, fetchData])
 
   useEffect(() => {
     if (chatInfo?.chatId && !messagesLoad) {
