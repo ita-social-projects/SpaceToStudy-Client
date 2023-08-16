@@ -93,6 +93,7 @@ const AttachmentsContainer = () => {
         sort,
         onRequestSort
       }}
+      sx={styles.table}
     />
   )
 

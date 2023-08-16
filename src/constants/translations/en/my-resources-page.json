@@ -1,7 +1,7 @@
 {
   "tabs": {
     "lessons": "Lessons",
-    "tests": "Tests",
+    "quizzes": "Quizzes",
     "attachments": "Attachments"
   },
   "lessons": {
@@ -17,11 +17,19 @@
     "successDeletion":"Lesson was deleted successfully"
   },
   "attachments": {
+    "addAttachment": "Add Attachment",
     "addFromAttachments": "Add files from your Attachments",
     "uploadNewFile": "Upload new file",
     "file": "File",
     "size": "Size",
     "lastUpdate": "Last update",
     "emptyAttachments": "You have no attachments yet"
+  },
+  "quizzes": {
+    "quizTitle": "Quiz title",
+    "question": "Question",
+    "questions": "Questions",
+    "updated": "Last update",
+    "emptyQuizzes": "You have no quizzes yet"
   }
 }

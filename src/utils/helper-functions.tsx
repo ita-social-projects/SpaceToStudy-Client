@@ -1,6 +1,5 @@
 import { SxProps, Theme } from '@mui/material'
 import {
-  Attachment,
   Breakpoints,
   ConvertedSize,
   Cooperation,
@@ -8,6 +7,7 @@ import {
   FormatedDate,
   Lesson,
   Offer,
+  Quiz,
   RemoveColumnRules,
   ScreenBasedLimits,
   TableColumn,
@@ -140,7 +140,7 @@ export const getScreenBasedLimit = (
 }
 
 export const ajustColumns = <
-  T extends Cooperation | Offer | Lesson | Attachment
+  T extends Cooperation | Offer | Lesson | Attachment | Quiz
 >(
   breakpoints: Breakpoints,
   columns: TableColumn<T>[],
