@@ -26,7 +26,8 @@ export const styles = {
     '& .MuiChip-label': {
       p: '7px 14px',
       display: 'block',
-      whiteSpace: 'normal'
+      whiteSpace: 'normal',
+      cursor: 'pointer'
     }
   },
   paperProps: {
