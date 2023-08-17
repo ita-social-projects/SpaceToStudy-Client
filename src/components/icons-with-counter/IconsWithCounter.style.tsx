@@ -2,7 +2,7 @@ export const styles = {
   iconBox: {
     width: 'max-content',
     display: 'flex',
-    alignItems: 'centre'
+    alignItems: 'center'
   },
   typography: {
     minWidth: 'max-content',
