@@ -64,10 +64,7 @@ const EnhancedTableRow = ({
       key={item._id}
       onClick={handleRowClick}
       selected={isSelection && isSelected(item._id)}
-      sx={{
-        cursor: onRowClick && 'pointer',
-        ...(isRowSelected && styles.selectedRow)
-      }}
+      sx={styles.row(isRowSelected, !!onRowClick)}
     >
       {isSelection && (
         <TableCell padding='checkbox'>
