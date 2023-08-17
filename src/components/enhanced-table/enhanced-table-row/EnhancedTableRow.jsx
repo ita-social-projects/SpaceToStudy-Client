@@ -7,8 +7,9 @@ import IconButton from '@mui/material/IconButton'
 import MenuItem from '@mui/material/MenuItem'
 import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
-
 import useMenu from '~/hooks/use-menu'
+
+import { styles } from '~/components/enhanced-table/enhanced-table-row/EnhancedTableRow.styles'
 
 const EnhancedTableRow = ({
   columns,
@@ -61,7 +62,9 @@ const EnhancedTableRow = ({
       sx={{
         cursor: onRowClick && 'pointer',
         ...(onRowClick &&
-          selectedRows.includes(item._id) && { background: 'red' })
+          selectedRows.length &&
+          selectedRows.find((row) => row._id === item._id) &&
+          styles.selectedRow)
       }}
     >
       {isSelection && (

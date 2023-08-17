@@ -23,9 +23,19 @@ import { styles } from '~/containers/add-attachments/AddAttachments.styles'
 import { Attachment, ButtonVariantEnum } from '~/types'
 import { ajustColumns } from '~/utils/helper-functions'
 
-const AddAttachments: FC = () => {
+interface AddAttachmentsProps {
+  attachments: Attachment[]
+  onAddAttachments: (attachments: Attachment[]) => void
+}
+
+const AddAttachments: FC<AddAttachmentsProps> = ({
+  attachments,
+  onAddAttachments
+}) => {
   const [inputValue, setInputValue] = useState<string>('')
-  const [chosenAttachments, setChosenAttachments] = useState<string[]>([])
+  const [selectedAttachments, setSelectedAttachments] = useState<Attachment[]>(
+    attachments.length ? attachments : []
+  )
 
   const { t } = useTranslation()
   const { closeModal } = useModalContext()
@@ -58,8 +68,29 @@ const AddAttachments: FC = () => {
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value)
   }
+
   const handleInputReset = () => {
     setInputValue('')
+  }
+
+  const handleRowClick = (item: Attachment) => {
+    if (selectedAttachments.find((attachment) => attachment._id === item._id)) {
+      setSelectedAttachments((prevSelectedAttachments) =>
+        prevSelectedAttachments.filter(
+          (attachment) => attachment._id !== item._id
+        )
+      )
+    } else {
+      setSelectedAttachments((prevSelectedAttachments) => [
+        ...prevSelectedAttachments,
+        item
+      ])
+    }
+  }
+
+  const handleAddAttachments = () => {
+    onAddAttachments(selectedAttachments)
+    closeModal()
   }
 
   return (
@@ -81,16 +112,8 @@ const AddAttachments: FC = () => {
           columns={columnsToShow}
           data={{ loading, items: response.items }}
           emptyTableKey='myResourcesPage.attachments.emptyAttachments'
-          onRowClick={(item) => {
-            if (chosenAttachments.includes(item._id)) {
-              setChosenAttachments(
-                chosenAttachments.filter((id) => id !== item._id)
-              )
-            } else {
-              setChosenAttachments((prev) => [...prev, item._id])
-            }
-          }}
-          selectedRows={chosenAttachments}
+          onRowClick={handleRowClick}
+          selectedRows={selectedAttachments}
           sort={sortOptions}
           sx={styles.table}
         />
@@ -98,7 +121,11 @@ const AddAttachments: FC = () => {
 
       <Box sx={styles.buttonsArea}>
         <Box>
-          <AppButton disabled sx={styles.addButton}>
+          <AppButton
+            disabled={!selectedAttachments.length}
+            onClick={handleAddAttachments}
+            sx={styles.addButton}
+          >
             {t('common.add')}
           </AppButton>
           <AppButton onClick={closeModal} variant={ButtonVariantEnum.Outlined}>

@@ -34,7 +34,7 @@ interface EnhancedTableProps<I, F> extends TableProps {
   data: TableData<I>
   onRowClick?: (item: I) => void
   emptyTableKey?: string
-  selectedRows?: string[]
+  selectedRows?: I[]
 }
 
 const EnhancedTable = <I extends TableItem, F = undefined>({
