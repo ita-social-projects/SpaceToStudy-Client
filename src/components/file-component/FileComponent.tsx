@@ -44,7 +44,7 @@ const FileComponent: FC<FileComponentProps> = ({ file }) => {
           </Typography>
           <Box sx={styles.fileDescription}>
             <Typography sx={styles.divider}>
-              {file.size} {t(`chat.sidebar.megabytes`)}
+              {file.size} {t(`chatPage.sidebar.megabytes`)}
             </Typography>
             <Typography>{formattedDate}</Typography>
           </Box>
