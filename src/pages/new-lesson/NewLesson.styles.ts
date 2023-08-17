@@ -19,6 +19,8 @@ export const styles = {
   divider: {
     color: 'primary.300'
   },
+  addAttachmentBtn: { width: 'fit-content' },
+  addAttachmentIcon: { ml: '5px', width: { xs: '18px', sm: '22px' } },
   titleInput: {
     disableUnderline: true,
     style: {

@@ -2,9 +2,11 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate } from 'react-router-dom'
 import { AxiosResponse } from 'axios'
+import AddIcon from '@mui/icons-material/Add'
 import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
 
+import { useModalContext } from '~/context/modal-context'
 import { ResourceService } from '~/services/resource-service'
 import { useSnackBarContext } from '~/context/snackbar-context'
 import useForm from '~/hooks/use-form'
@@ -30,9 +32,11 @@ import {
   TextFieldVariantEnum
 } from '~/types'
 import { styles } from '~/pages/new-lesson/NewLesson.styles'
+import AddAttachments from '~/containers/add-attachments/AddAttachments'
 
 const NewLesson = () => {
   const { t } = useTranslation()
+  const { openModal } = useModalContext()
   const { setAlert } = useSnackBarContext()
   const navigate = useNavigate()
 
@@ -53,6 +57,10 @@ const NewLesson = () => {
 
   const addLesson = (): Promise<AxiosResponse> => {
     return ResourceService.addLesson(data)
+  }
+
+  const openAddAttachmentsDialog = () => {
+    openModal({ component: <AddAttachments /> })
   }
 
   const { fetchData } = useAxios({
@@ -100,6 +108,13 @@ const NewLesson = () => {
           variant={TextFieldVariantEnum.Standard}
         />
         <Divider sx={styles.divider} />
+        <AppButton
+          onClick={openAddAttachmentsDialog}
+          sx={styles.addAttachmentBtn}
+        >
+          {t('myResourcesPage.lessons.attachmentsQty')}
+          <AddIcon sx={styles.addAttachmentIcon} />
+        </AppButton>
         <FileEditor />
         <Box sx={styles.buttons}>
           <AppButton size={SizeEnum.ExtraLarge} type={ButtonTypeEnum.Submit}>

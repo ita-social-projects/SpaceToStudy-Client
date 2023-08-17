@@ -30,9 +30,7 @@ const AddAttachments: FC = () => {
   const { closeModal } = useModalContext()
 
   const breakpoints = useBreakpoints()
-  const sortOptions = useSort({
-    initialSort
-  })
+  const sortOptions = useSort({ initialSort })
   const { sort } = sortOptions
 
   const columnsToShow = ajustColumns<Attachment>(
