@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from 'react'
+import { useState, ChangeEvent, FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 
@@ -7,7 +7,11 @@ import IconsWithCounter from '~/components/icons-with-counter/IconsWithCounter'
 
 import { styles } from '~/components/search-by-message/SearchByMessage.styles'
 
-const SearchByMessage = () => {
+interface SearchByMessageProps {
+  maxValue: number
+}
+
+const SearchByMessage: FC<SearchByMessageProps> = ({ maxValue }) => {
   const { t } = useTranslation()
   const [search, setSearch] = useState<string>('')
 
@@ -21,7 +25,7 @@ const SearchByMessage = () => {
 
   return (
     <Box sx={styles.container}>
-      <IconsWithCounter />
+      <IconsWithCounter maxValue={maxValue} />
       <InputWithIcon
         onChange={onChange}
         onClear={onClear}

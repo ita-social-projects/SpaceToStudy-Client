@@ -1,5 +1,3 @@
-import palette from '~/styles/app-theme/app.pallete'
-
 export const styles = {
   container: {
     width: '100%',
@@ -7,7 +5,7 @@ export const styles = {
     display: 'flex',
     justifyContent: 'space-between',
     py: '8px',
-    backgroundColor: `${palette.basic.white}`,
+    backgroundColor: 'basic.white',
     borderRadius: ' 0 0 6px 6px'
   },
   input: {

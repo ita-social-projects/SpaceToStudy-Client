@@ -4,13 +4,17 @@ import Typography from '@mui/material/Typography'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 
-import { useState } from 'react'
+import { useState, FC } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { styles } from '~/components/icons-with-counter/IconsWithCounter.style'
-const IconsWithCounter = () => {
+
+interface IconsWithCounterProps {
+  maxValue: number
+}
+
+const IconsWithCounter: FC<IconsWithCounterProps> = ({ maxValue }) => {
   const [possibleValue, setPossibleValue] = useState<number>(0)
-  const [maxValue, setMaxValue] = useState<number>(12)
   const { t } = useTranslation()
 
   const handleIncrement = () => {
@@ -18,9 +22,7 @@ const IconsWithCounter = () => {
   }
 
   const handleDecrement = () => {
-    possibleValue > 1
-      ? setPossibleValue((prev) => prev - 1)
-      : setPossibleValue(maxValue)
+    setPossibleValue((prev) => (prev - 1 + maxValue) % maxValue)
   }
 
   return (
