@@ -53,6 +53,11 @@ const EnhancedTableRow = ({
 
   const handleRowClick = () => (onRowClick ? onRowClick(item) : null)
 
+  const isRowSelected =
+    onRowClick &&
+    selectedRows.length &&
+    selectedRows.find((row) => row._id === item._id)
+
   return (
     <TableRow
       hover
@@ -61,10 +66,7 @@ const EnhancedTableRow = ({
       selected={isSelection && isSelected(item._id)}
       sx={{
         cursor: onRowClick && 'pointer',
-        ...(onRowClick &&
-          selectedRows.length &&
-          selectedRows.find((row) => row._id === item._id) &&
-          styles.selectedRow)
+        ...(isRowSelected && styles.selectedRow)
       }}
     >
       {isSelection && (

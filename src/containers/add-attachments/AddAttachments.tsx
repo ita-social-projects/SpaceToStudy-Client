@@ -1,8 +1,8 @@
+import { ChangeEvent, FC, useCallback, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import SearchIcon from '@mui/icons-material/Search'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import { ChangeEvent, FC, useCallback, useState } from 'react'
-import { useTranslation } from 'react-i18next'
 
 import AppButton from '~/components/app-button/AppButton'
 import EnhancedTable from '~/components/enhanced-table/EnhancedTable'
