@@ -11,7 +11,6 @@ import Divider from '@mui/material/Divider'
 import AddIcon from '@mui/icons-material/Add'
 import CloseIcon from '@mui/icons-material/Close'
 import IconButton from '@mui/material/IconButton'
-import Typography from '@mui/material/Typography'
 
 import Loader from '~/components/loader/Loader'
 import AddAttachments from '~/containers/add-attachments/AddAttachments'
@@ -253,14 +252,9 @@ const CreateOrEditLesson = () => {
           variant={TextFieldVariantEnum.Standard}
         />
         <Divider sx={styles.divider} />
-        <AppButton onClick={handleOpenModal} sx={styles.button}>
+        <AppButton onClick={handleOpenModal} sx={styles.addAttachmentBtn}>
           {t('myResourcesPage.attachments.addAttachment')}
-          <Typography
-            component={ComponentEnum.Span}
-            style={styles.newAttachmentIcon}
-          >
-            {t('common.plusSign')}
-          </Typography>
+          <AddIcon sx={styles.addAttachmentIcon} />
         </AppButton>
         <Divider sx={styles.divider} />
         <AppButton

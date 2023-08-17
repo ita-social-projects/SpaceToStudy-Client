@@ -43,7 +43,6 @@ export const styles = {
     gap: { xs: '24px', sm: '30px' },
     justifyContent: 'space-between'
   },
-
   attachmentList: {
     container: {
       background: palette.basic.grey,
@@ -62,5 +61,7 @@ export const styles = {
     fontSize: '25px',
     marginLeft: '13px',
     fontWeight: '400'
-  }
+  },
+  addAttachmentBtn: { width: 'fit-content' },
+  addAttachmentIcon: { ml: '5px', width: { xs: '18px', sm: '22px' } }
 }
