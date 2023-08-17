@@ -43,7 +43,6 @@ export const styles = {
     gap: { xs: '24px', sm: '30px' },
     justifyContent: 'space-between'
   },
-
   attachmentList: {
     container: {
       background: palette.basic.grey,
