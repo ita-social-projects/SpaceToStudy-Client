@@ -30,7 +30,7 @@ const SidebarContentBox: FC<SidebarContentBoxProps> = ({
     content && content.length > 0 ? (
       <Box sx={styles.verticalGrid}>
         {content.slice(maxElemToShow * -1).map((component) => {
-          return name === t(`chat.sidebar.files`) ? (
+          return name === t(`chatPage.sidebar.files`) ? (
             <FileComponent file={component as File} key={component._id} />
           ) : (
             <LinkComponent key={component._id} link={component} />
@@ -57,7 +57,7 @@ const SidebarContentBox: FC<SidebarContentBoxProps> = ({
           sx={spliceSx(styles.button, styles.text)}
           variant={ButtonVariantEnum.Text}
         >
-          {t(`chat.sidebar.seeAll`)}
+          {t(`chatPage.sidebar.seeAll`)}
         </AppButton>
       </Box>
       {limitedContent}

@@ -61,21 +61,27 @@ const AboutChatSidebar: FC<AboutChatSidebarProps> = ({
     media.length !== 0 ? (
       <SidebarImageGrid images={media} />
     ) : (
-      <Typography sx={styles.notFound}>{t(`chat.sidebar.noMedia`)}</Typography>
+      <Typography sx={styles.notFound}>
+        {t(`chatPage.sidebar.noMedia`)}
+      </Typography>
     )
 
   const filesContent =
     files.length !== 0 ? (
       files.map((file) => <FileComponent file={file} key={file._id} />)
     ) : (
-      <Typography sx={styles.notFound}>{t(`chat.sidebar.noFiles`)}</Typography>
+      <Typography sx={styles.notFound}>
+        {t(`chatPage.sidebar.noFiles`)}
+      </Typography>
     )
 
   const linksContent =
     links.length !== 0 ? (
       links.map((link) => <LinkComponent key={link._id} link={link} />)
     ) : (
-      <Typography sx={styles.notFound}>{t(`chat.sidebar.noLinks`)}</Typography>
+      <Typography sx={styles.notFound}>
+        {t(`chatPage.sidebar.noLinks`)}
+      </Typography>
     )
 
   const navigateToUserProfile = () => {
@@ -94,7 +100,7 @@ const AboutChatSidebar: FC<AboutChatSidebarProps> = ({
     <Box data-testid='sidebar' sx={styles.wrapper(isOpened)}>
       <Box sx={styles.header}>
         <Typography sx={spliceSx(styles.headerText, styles.title)}>
-          {t(`chat.sidebar.about`)}
+          {t(`chatPage.sidebar.about`)}
         </Typography>
         <IconButton
           aria-label='close'
@@ -118,16 +124,16 @@ const AboutChatSidebar: FC<AboutChatSidebarProps> = ({
               sx={styles.secondaryText}
               variant={ButtonVariantEnum.Tonal}
             >
-              {t(`chat.sidebar.viewButton`)}
+              {t(`chatPage.sidebar.viewButton`)}
             </AppButton>
             <Typography sx={styles.userDescription}>
-              {userDescription ?? t(`chat.sidebar.noSummary`)}
+              {userDescription ?? t(`chatPage.sidebar.noSummary`)}
             </Typography>
           </Box>
           <Divider />
           <SidebarContentBox
             icon={<ImageOutlinedIcon />}
-            name={t('chat.sidebar.media')}
+            name={t('chatPage.sidebar.media')}
           >
             {mediaContent}
           </SidebarContentBox>
@@ -135,7 +141,7 @@ const AboutChatSidebar: FC<AboutChatSidebarProps> = ({
           <SidebarContentBox
             content={files}
             icon={<InsertDriveFileOutlinedIcon />}
-            name={t('chat.sidebar.files')}
+            name={t('chatPage.sidebar.files')}
           >
             <Box sx={styles.verticalGrid}>{filesContent}</Box>
           </SidebarContentBox>
@@ -143,7 +149,7 @@ const AboutChatSidebar: FC<AboutChatSidebarProps> = ({
           <SidebarContentBox
             content={links}
             icon={<LinkOutlinedIcon />}
-            name={t('chat.sidebar.links')}
+            name={t('chatPage.sidebar.links')}
           >
             <Box sx={styles.verticalGrid}>{linksContent}</Box>
           </SidebarContentBox>

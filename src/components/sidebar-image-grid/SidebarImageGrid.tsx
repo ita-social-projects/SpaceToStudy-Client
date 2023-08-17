@@ -29,7 +29,7 @@ const SidebarImageGrid: FC<SidebarImageGridProps> = ({
       component: (
         <AllContentModal
           icon={<ImageOutlinedIcon />}
-          title={image.name ?? t(`chat.sidebar.unknownName`)}
+          title={image.name ?? t(`chatPage.sidebar.unknownName`)}
         >
           <Box sx={styles.imageWrapper}>
             <Box component='img' src={image.path} sx={styles.modalImage} />

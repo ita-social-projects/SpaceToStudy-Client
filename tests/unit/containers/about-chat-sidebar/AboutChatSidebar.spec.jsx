@@ -87,7 +87,7 @@ describe('AboutChatSidebar', () => {
     })
 
     expect(screen.getByText('John Doe')).toBeInTheDocument()
-    expect(screen.getByText('chat.sidebar.viewButton')).toBeInTheDocument()
+    expect(screen.getByText('chatPage.sidebar.viewButton')).toBeInTheDocument()
   })
 
   test('renders media when available', () => {
@@ -148,8 +148,8 @@ describe('AboutChatSidebar', () => {
       links: []
     })
 
-    expect(screen.getByText('chat.sidebar.noMedia')).toBeInTheDocument()
-    expect(screen.getByText('chat.sidebar.noFiles')).toBeInTheDocument()
-    expect(screen.getByText('chat.sidebar.noLinks')).toBeInTheDocument()
+    expect(screen.getByText('chatPage.sidebar.noMedia')).toBeInTheDocument()
+    expect(screen.getByText('chatPage.sidebar.noFiles')).toBeInTheDocument()
+    expect(screen.getByText('chatPage.sidebar.noLinks')).toBeInTheDocument()
   })
 })
