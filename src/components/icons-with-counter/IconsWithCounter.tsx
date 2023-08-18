@@ -1,11 +1,11 @@
+import { useState, FC } from 'react'
+import { useTranslation } from 'react-i18next'
+
 import Box from '@mui/material/Box'
 import { IconButton } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
-
-import { useState, FC } from 'react'
-import { useTranslation } from 'react-i18next'
 
 import { styles } from '~/components/icons-with-counter/IconsWithCounter.style'
 
