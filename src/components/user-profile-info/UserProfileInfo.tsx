@@ -34,7 +34,7 @@ interface UserProfileInfoProps
   reviewsCount?: number
   date?: string
   sx?: UserProfileInfoSx
-  isOnline?: boolean
+  onlineBadge?: boolean
   role: UserRole
   renderAdditionalInfo?: boolean
 }
@@ -51,7 +51,7 @@ const UserProfileInfo: FC<UserProfileInfoProps> = ({
   _id,
   role,
   renderAdditionalInfo = true,
-  isOnline = false
+  onlineBadge = false
 }) => {
   const { t } = useTranslation()
 
@@ -65,11 +65,18 @@ const UserProfileInfo: FC<UserProfileInfoProps> = ({
     e.stopPropagation()
   }
 
+  const avatar = (
+    <Avatar
+      src={photo && `${import.meta.env.VITE_APP_IMG_USER_URL}${photo}`}
+      sx={spliceSx(styles.avatar, sx.avatar)}
+    />
+  )
+
   return (
     <Box sx={spliceSx(styles.root, sx.root)}>
       {renderAdditionalInfo && (
         <Link onClick={handleLinkClick} to={userURL}>
-          {isOnline ? (
+          {onlineBadge ? (
             <Badge
               anchorOrigin={{
                 vertical: PositionEnum.Bottom,
@@ -80,18 +87,10 @@ const UserProfileInfo: FC<UserProfileInfoProps> = ({
               }
               overlap={OverlapEnum.Circular}
             >
-              <Avatar
-                src={
-                  photo && `${import.meta.env.VITE_APP_IMG_USER_URL}${photo}`
-                }
-                sx={spliceSx(styles.avatar, sx.avatar)}
-              />
+              {avatar}
             </Badge>
           ) : (
-            <Avatar
-              src={photo && `${import.meta.env.VITE_APP_IMG_USER_URL}${photo}`}
-              sx={spliceSx(styles.avatar, sx.avatar)}
-            />
+            avatar
           )}
         </Link>
       )}

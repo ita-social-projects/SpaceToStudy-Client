@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Avatar from '@mui/material/Avatar'
+import { SxProps } from '@mui/material'
 
 import AppCard from '~/components/app-card/AppCard'
 import { useAppSelector } from '~/hooks/use-redux'
@@ -15,7 +16,6 @@ import {
 import { authRoutes } from '~/router/constants/authRoutes'
 import { styles } from '~/components/message/Message.styles'
 import { MessageInterface } from '~/types'
-import { SxProps } from '@mui/material'
 
 interface MessageProps {
   message: MessageInterface

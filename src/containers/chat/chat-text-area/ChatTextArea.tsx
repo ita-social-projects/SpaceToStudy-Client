@@ -3,18 +3,23 @@ import { TextFieldProps } from '@mui/material/TextField'
 import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
 import SendIcon from '@mui/icons-material/Send'
+import { SxProps } from '@mui/material'
 
 import AppTextArea from '~/components/app-text-area/AppTextArea'
 
 import { styles } from '~/containers/chat/chat-text-area/ChatTextArea.styles'
-import { TextAreaSx, TextFieldVariantEnum } from '~/types'
+import { TextFieldVariantEnum } from '~/types'
 import { spliceSx } from '~/utils/helper-functions'
 
 interface ChatTextAreaProps extends Omit<TextFieldProps, 'onChange' | 'sx'> {
   value: string
   onChange: (e: ChangeEvent<HTMLInputElement>) => void
   onClick: () => void
-  sx?: TextAreaSx
+  sx?: {
+    textAreaWrapper?: SxProps
+    container?: SxProps
+    icon?: SxProps
+  }
 }
 
 const ChatTextArea: FC<ChatTextAreaProps> = ({

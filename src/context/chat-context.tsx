@@ -1,24 +1,19 @@
-import { createContext, useContext, useState, useMemo } from 'react'
-import { Offer } from '~/types'
+import { createContext, useContext, useState, useMemo, ReactNode } from 'react'
+import { ChatInfo } from '~/types'
 
 interface ChatProviderProps {
-  children: React.ReactNode
+  children: ReactNode
 }
 
 interface ChatProvideContext {
-  chatInfo: Pick<Offer, 'author' | 'authorRole' | 'chatId'> | null
-  setChatInfo: (
-    chatInfo: Pick<Offer, 'author' | 'authorRole' | 'chatId'> | null
-  ) => void
+  chatInfo: ChatInfo | null
+  setChatInfo: (chatInfo: ChatInfo | null) => void
 }
 
 const ChatContext = createContext<ChatProvideContext>({} as ChatProvideContext)
 
 const ChatProvider = ({ children }: ChatProviderProps) => {
-  const [chatInfo, setChatInfo] = useState<Pick<
-    Offer,
-    'author' | 'authorRole' | 'chatId'
-  > | null>(null)
+  const [chatInfo, setChatInfo] = useState<ChatInfo | null>(null)
 
   const contextValue = useMemo(
     () => ({ chatInfo, setChatInfo }),

@@ -4,15 +4,16 @@ import { Link } from 'react-router-dom'
 
 import Box from '@mui/material/Box'
 
+import { useChatContext } from '~/context/chat-context'
 import useBreakpoints from '~/hooks/use-breakpoints'
-import { CardsView, Offer, CardsViewEnum, ButtonVariantEnum } from '~/types'
 import OfferCardSquare from '~/containers/find-offer/offer-card-square/OfferCardSquare'
 import OfferCard from '~/components/offer-card/OfferCard'
 import AppCard from '~/components/app-card/AppCard'
-import { createUrlPath } from '~/utils/helper-functions'
 import { authRoutes } from '~/router/constants/authRoutes'
+
+import { createUrlPath } from '~/utils/helper-functions'
+import { CardsView, Offer, CardsViewEnum, ButtonVariantEnum } from '~/types'
 import { styles } from '~/containers/find-offer/offer-container/OfferContainer.styles'
-import { useChatContext } from '~/context/chat-context'
 
 interface OfferContainerProps {
   viewMode: CardsView

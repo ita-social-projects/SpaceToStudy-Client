@@ -7,7 +7,6 @@ import {
   FC
 } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router-dom'
 import SimpleBar from 'simplebar-react'
 
 import Box from '@mui/material/Box'
@@ -23,17 +22,15 @@ import useAxios from '~/hooks/use-axios'
 import UserProfileInfo from '~/components/user-profile-info/UserProfileInfo'
 import Loader from '~/components/loader/Loader'
 import { messageService } from '~/services/message-service'
-import { authRoutes } from '~/router/constants/authRoutes'
 import { useChatContext } from '~/context/chat-context'
 
-import { MessageInterface, Offer } from '~/types'
+import { ChatInfo, MessageInterface } from '~/types'
 import { defaultResponses } from '~/constants'
 import { styles } from '~/containers/offer-page/chat-dialog-window/ChatDialogWindow.styles'
-import { createUrlPath } from '~/utils/helper-functions'
 import { questions } from '~/containers/offer-page/chat-dialog-window/ChatDialogWindow.constants'
 
 interface ChatDialogWindow {
-  chatInfo: Pick<Offer, 'author' | 'authorRole' | 'chatId'>
+  chatInfo: ChatInfo
 }
 
 const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
@@ -41,7 +38,6 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
   const { t } = useTranslation()
   const scrollRef = useRef<HTMLDivElement | null>(null)
   const { setChatInfo } = useChatContext()
-  const navigate = useNavigate()
 
   const onTextAreaChange = (e: ChangeEvent<HTMLInputElement>) => {
     setTextAreaValue(e.target.value)
@@ -63,11 +59,11 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
   })
 
   useEffect(() => {
-    chatInfo?.chatId && void fetchData({ chatId: chatInfo?.chatId })
-  }, [chatInfo?.chatId, fetchData])
+    chatInfo.chatId && void fetchData({ chatId: chatInfo.chatId })
+  }, [chatInfo.chatId, fetchData])
 
   useEffect(() => {
-    if (chatInfo?.chatId && !messagesLoad) {
+    if (chatInfo.chatId && !messagesLoad) {
       scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight })
     }
   }, [chatInfo.chatId, messagesLoad])
@@ -88,6 +84,14 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
     </SimpleBar>
   )
 
+  const questionsList = questions.map((el) => (
+    <Typography key={el.question} sx={styles.question}>
+      {t(el.question)}
+    </Typography>
+  ))
+
+  const closeChatWindow = () => setChatInfo(null)
+
   return (
     <Box sx={styles.root}>
       <Box sx={styles.chatContent}>
@@ -95,26 +99,19 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
           <UserProfileInfo
             _id={chatInfo.author._id}
             firstName={chatInfo.author.firstName}
-            isOnline
             lastName={chatInfo.author.lastName}
+            onlineBadge
             photo={chatInfo.author.photo}
             role={chatInfo.authorRole}
             sx={styles.userProfileInfo}
           />
           <Box>
             {chatInfo.chatId && (
-              <IconButton
-                onClick={() =>
-                  navigate(
-                    createUrlPath(authRoutes.chat.route, chatInfo.author._id)
-                  )
-                }
-                sx={styles.icons}
-              >
+              <IconButton onClick={() => undefined} sx={styles.icons}>
                 <MessageIcon />
               </IconButton>
             )}
-            <IconButton onClick={() => setChatInfo(null)} sx={styles.icons}>
+            <IconButton onClick={closeChatWindow} sx={styles.icons}>
               <CloseIcon />
             </IconButton>
           </Box>
@@ -126,11 +123,7 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
             <Typography sx={styles.subtitle}>
               {t('chatPage.youCanAsk')}
             </Typography>
-            {questions.map((el) => (
-              <Typography key={el.question} sx={styles.question}>
-                {t(el.question)}
-              </Typography>
-            ))}
+            {questionsList}
           </Box>
         )}
         <ChatTextArea
