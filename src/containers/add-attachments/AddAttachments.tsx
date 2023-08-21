@@ -29,13 +29,12 @@ interface AddAttachmentsProps {
 }
 
 const AddAttachments: FC<AddAttachmentsProps> = ({
-  attachments,
+  attachments = [],
   onAddAttachments
 }) => {
   const [inputValue, setInputValue] = useState<string>('')
-  const [selectedAttachments, setSelectedAttachments] = useState<Attachment[]>(
-    attachments.length ? attachments : []
-  )
+  const [selectedAttachments, setSelectedAttachments] =
+    useState<Attachment[]>(attachments)
 
   const { t } = useTranslation()
   const { closeModal } = useModalContext()
