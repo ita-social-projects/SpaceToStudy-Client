@@ -4,7 +4,6 @@ export const styles = {
     justifyContent: 'space-between',
     mb: '24px'
   },
-  addBtn: { py: '19px', px: '40px' },
   addIcon: { width: { xs: '18px', sm: '22px' }, ml: '5px' },
   searchIcon: { color: 'primary.700' },
   input: {
