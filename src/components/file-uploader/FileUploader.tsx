@@ -73,7 +73,7 @@ const FileUploader: FC<FileUploaderProps> = ({
   return (
     <>
       <Box sx={spliceSx(styles.root, sx.root)}>
-        {initialState.length > 0 && isImages ? (
+        {initialState.length && isImages ? (
           <List sx={styles.filesList}>{filesList}</List>
         ) : (
           uploadButton
