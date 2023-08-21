@@ -73,7 +73,7 @@ describe('Chat for desktop', () => {
 
     fireEvent.click(chatItem)
 
-    const messageInput = screen.getByLabelText('chat.chat.inputLabel')
+    const messageInput = screen.getByLabelText('chatPage.chat.inputLabel')
 
     userEvent.type(messageInput, 'new message')
 
@@ -99,7 +99,7 @@ describe('Chat for mobile', () => {
     renderWithProviders(<Chat />)
   })
   it('should render just right pane in a chat', async () => {
-    const chip = screen.getByText('chat.chat.chipLabel')
+    const chip = screen.getByText('chatPage.chat.chipLabel')
 
     expect(chip).toBeInTheDocument()
   })

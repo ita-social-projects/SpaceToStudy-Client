@@ -29,7 +29,7 @@ describe('ListOfUsersWithSearch component', () => {
   it('renders "notFoundedChats"', () => {
     renderWithProviders(<ListOfUsersWithSearch {...props} listOfChats={[]} />)
 
-    const notFoundedChats = screen.getByText('chat.noContacts')
+    const notFoundedChats = screen.getByText('chatPage.noContacts')
     expect(notFoundedChats).toBeInTheDocument()
   })
 })

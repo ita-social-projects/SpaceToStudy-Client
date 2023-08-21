@@ -111,7 +111,7 @@ const Chat = () => {
 
   const selectChatChip = (
     <AppChip labelSx={styles.chipLabel(false)} sx={styles.chip}>
-      {t('chat.chat.chipLabel')}
+      {t('chatPage.chat.chipLabel')}
     </AppChip>
   )
 
@@ -119,7 +119,7 @@ const Chat = () => {
     messagesListWithDate
   ) : (
     <AppChip labelSx={styles.chipLabel(true)} sx={styles.chip}>
-      {t('chat.chat.loading')}
+      {t('chatPage.chat.loading')}
     </AppChip>
   )
 
@@ -166,7 +166,7 @@ const Chat = () => {
                   {scrollableContent}
                 </SimpleBar>
                 <ChatTextArea
-                  label={t('chat.chat.inputLabel')}
+                  label={t('chatPage.chat.inputLabel')}
                   onChange={onTextAreaChange}
                   onClick={() => void onMessageSend()}
                   value={textAreaValue}
