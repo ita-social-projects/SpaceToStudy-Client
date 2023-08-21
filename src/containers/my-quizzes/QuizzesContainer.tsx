@@ -4,6 +4,7 @@ import Box from '@mui/material/Box'
 
 import EnhancedTable from '~/components/enhanced-table/EnhancedTable'
 import useAxios from '~/hooks/use-axios'
+import useConfirm from '~/hooks/use-confirm'
 import { quizService } from '~/services/quiz-service'
 import Loader from '~/components/loader/Loader'
 import { useSnackBarContext } from '~/context/snackbar-context'
@@ -22,13 +23,14 @@ import { styles } from '~/containers/my-quizzes/QuizzesContainer.styles'
 const TestsContainer = () => {
   const { t } = useTranslation()
   const { setAlert } = useSnackBarContext()
+  const { openDialog } = useConfirm()
 
   const breakpoints = useBreakpoints()
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
 
   const columnsToShow = ajustColumns(breakpoints, columns, removeColumnRules)
 
-  const onQuizzesError = useCallback(
+  const onGetQuizzesError = useCallback(
     (error: ErrorResponse) => {
       setAlert({
         severity: snackbarVariants.error,
@@ -38,6 +40,20 @@ const TestsContainer = () => {
     [setAlert]
   )
 
+  const onDeleteQuizError = (error: ErrorResponse) => {
+    setAlert({
+      severity: snackbarVariants.error,
+      message: error ? `errors.${error.code}` : ''
+    })
+  }
+
+  const onDeleteQuizResponse = () => {
+    setAlert({
+      severity: snackbarVariants.success,
+      message: 'myResourcesPage.quizzes.successDeletion'
+    })
+  }
+
   const getQuizzes = useCallback(
     () =>
       quizService.getQuizzes({
@@ -46,11 +62,40 @@ const TestsContainer = () => {
     [itemsPerPage]
   )
 
-  const { response, loading } = useAxios<ItemsWithCount<Quiz>>({
+  const deleteQuiz = useCallback(
+    (id?: string) => quizService.deleteQuiz(id ?? ''),
+    []
+  )
+
+  const { response, loading, fetchData } = useAxios<ItemsWithCount<Quiz>>({
     service: getQuizzes,
     defaultResponse: defaultResponses.itemsWithCount,
-    onResponseError: onQuizzesError
+    onResponseError: onGetQuizzesError
   })
+
+  const { error, fetchData: fetchDeleteLesson } = useAxios({
+    service: deleteQuiz,
+    fetchOnMount: false,
+    defaultResponse: null,
+    onResponseError: onDeleteQuizError,
+    onResponse: onDeleteQuizResponse
+  })
+
+  const handleDeleteQuiz = async (id: string, isConfirmed: boolean) => {
+    if (isConfirmed) {
+      await fetchDeleteLesson(id)
+      if (!error) await fetchData()
+    }
+  }
+
+  const openDeletionConfirmDialog = (id: string) => {
+    openDialog({
+      message: 'myResourcesPage.confirmDeletionMessage',
+      sendConfirm: (isConfirmed: boolean) =>
+        void handleDeleteQuiz(id, isConfirmed),
+      title: 'myResourcesPage.quizzes.confirmQuizDeletionTitle'
+    })
+  }
 
   const rowActions = [
     {
@@ -59,7 +104,7 @@ const TestsContainer = () => {
     },
     {
       label: t('common.delete'),
-      func: () => undefined
+      func: openDeletionConfirmDialog
     }
   ]
 
