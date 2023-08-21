@@ -10,7 +10,7 @@ describe('AddAttachments', () => {
     .reply(200, defaultResponses.itemsWithCount)
 
   it('should render the component', () => {
-    renderWithProviders(<AddAttachments attachments={[]} />)
+    renderWithProviders(<AddAttachments />)
 
     const addAttachments = screen.getByText(
       'myResourcesPage.attachments.addFromAttachments'
