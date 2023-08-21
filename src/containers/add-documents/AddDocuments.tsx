@@ -1,5 +1,4 @@
 import { FC, useEffect, useState } from 'react'
-
 import Box from '@mui/material/Box'
 
 import FileUploader from '~/components/file-uploader/FileUploader'
