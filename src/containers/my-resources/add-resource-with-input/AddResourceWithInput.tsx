@@ -1,6 +1,8 @@
 import { useState, ChangeEvent, FC, MutableRefObject } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
 import SearchIcon from '@mui/icons-material/Search'
+import AddIcon from '@mui/icons-material/Add'
 import Box from '@mui/material/Box'
 
 import { useDebounce } from '~/hooks/use-debounce'
@@ -12,14 +14,14 @@ import { styles } from '~/containers/my-resources/add-resource-with-input/AddRes
 interface AddResourceWithInputProps {
   btnText: string
   fetchData: () => Promise<void>
-  onClick: () => void
+  link: string
   searchRef: MutableRefObject<string>
 }
 
 const AddResourceWithInput: FC<AddResourceWithInputProps> = ({
   btnText,
   fetchData,
-  onClick,
+  link,
   searchRef
 }) => {
   const { t } = useTranslation()
@@ -43,9 +45,9 @@ const AddResourceWithInput: FC<AddResourceWithInputProps> = ({
 
   return (
     <Box sx={styles.container}>
-      <AppButton onClick={onClick} sx={styles.addBtn}>
+      <AppButton component={Link} to={link}>
         {t(btnText)}
-        <span style={styles.addIcon}>+</span>
+        <AddIcon sx={styles.addIcon} />
       </AppButton>
 
       <InputWithIcon

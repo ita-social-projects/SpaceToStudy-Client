@@ -1,7 +1,6 @@
 import Box from '@mui/material/Box'
 import { useCallback, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
 
 import AppDrawer from '~/components/app-drawer/AppDrawer'
 import AppPagination from '~/components/app-pagination/AppPagination'
@@ -93,10 +92,6 @@ const LessonsContainer = () => {
     onResponse: onResponseDeletion
   })
 
-  const handleNewLesson = () => {
-    navigate(createUrlPath(authRoutes.myResources.newLesson.path))
-  }
-
   const handleDeleteLesson = async (id: string, isConfirmed: boolean) => {
     if (isConfirmed) {
       await fetchDeleteLesson(id)
@@ -157,7 +152,7 @@ const LessonsContainer = () => {
       <AddResourceWithInput
         btnText='myResourcesPage.lessons.newLessonBtn'
         fetchData={fetchData}
-        onClick={handleNewLesson}
+        link={authRoutes.myResources.newLesson.path}
         searchRef={searchTitle}
       />
       {loading ? <Loader pageLoad size={50} /> : tableWithPagination}

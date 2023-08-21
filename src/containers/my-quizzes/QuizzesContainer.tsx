@@ -128,7 +128,7 @@ const TestsContainer = () => {
       <AddResourceWithInput
         btnText='myResourcesPage.quizzes.newQuizBtn'
         fetchData={fetchData}
-        onClick={() => null}
+        link={'#'}
         searchRef={searchTitle}
       />
       {loading ? <Loader pageLoad size={50} /> : table}
