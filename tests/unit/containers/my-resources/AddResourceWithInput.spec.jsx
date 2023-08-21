@@ -1,23 +1,26 @@
-import { fireEvent, render, screen } from '@testing-library/react'
+import { fireEvent, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { expect } from 'vitest'
 
 import AddResourceWithInput from '~/containers/my-resources/add-resource-with-input/AddResourceWithInput'
+import { renderWithProviders } from '~tests/test-utils'
 
 const fetchDataMock = vi.fn()
-const onClickMock = vi.fn()
 const text = 'test search'
+const route = '/my-resources'
 
 const props = {
   btnText: 'myResourcesPage.quizzes.newQuizBtn',
   fetchData: fetchDataMock,
-  onClick: onClickMock,
+  link: '#',
   searchRef: { current: text }
 }
 
 describe('AddResourceWithInput test', () => {
   beforeEach(() => {
-    render(<AddResourceWithInput {...props} />)
+    renderWithProviders(<AddResourceWithInput {...props} />, {
+      initialEntries: route
+    })
   })
 
   it('should render search with button', async () => {
@@ -41,12 +44,5 @@ describe('AddResourceWithInput test', () => {
 
     expect(searchInput.value).toBe('')
     expect(fetchDataMock).toHaveBeenCalled()
-  })
-  it('should click on add button', async () => {
-    const addBtn = screen.getByText('myResourcesPage.quizzes.newQuizBtn')
-
-    fireEvent.click(addBtn)
-
-    expect(onClickMock).toHaveBeenCalled()
   })
 })
