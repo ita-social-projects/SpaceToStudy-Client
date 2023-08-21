@@ -29,7 +29,7 @@ const QuizzesContainer = () => {
   const { openDialog } = useConfirm()
 
   const sortOptions = useSort({ initialSort })
-  const { sort, onRequestSort } = sortOptions
+  const { sort } = sortOptions
   const searchTitle = useRef<string>('')
   const breakpoints = useBreakpoints()
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
@@ -121,7 +121,7 @@ const QuizzesContainer = () => {
       data={{ items: response.items }}
       emptyTableKey='myResourcesPage.quizzes.emptyQuizzes'
       rowActions={rowActions}
-      sort={{ sort, onRequestSort }}
+      sort={sortOptions}
       sx={styles.table}
     />
   )
