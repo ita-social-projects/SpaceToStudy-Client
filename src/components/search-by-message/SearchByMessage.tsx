@@ -11,7 +11,7 @@ interface SearchByMessageProps {
   maxValue: number
 }
 
-const SearchByMessage: FC<SearchByMessageProps> = ({ maxValue }) => {
+const SearchByMessage: FC<SearchByMessageProps> = ({ maxValue = 10 }) => {
   const { t } = useTranslation()
   const [search, setSearch] = useState<string>('')
 

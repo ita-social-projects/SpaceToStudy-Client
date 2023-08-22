@@ -22,18 +22,20 @@ const IconsWithCounter: FC<IconsWithCounterProps> = ({ maxValue }) => {
   }
 
   const handleDecrement = () => {
-    setPossibleValue((prev) => (prev - 1 + maxValue) % maxValue)
+    possibleValue > 1
+      ? setPossibleValue((prev) => prev - 1)
+      : setPossibleValue(maxValue)
   }
 
   return (
     <Box sx={styles.iconBox}>
-      <IconButton onClick={handleIncrement}>
+      <IconButton data-testid='IconUp' onClick={handleIncrement}>
         <KeyboardArrowUpIcon />
       </IconButton>
       <Typography sx={styles.typography}>
         {possibleValue} {t('common.of')} {maxValue}
       </Typography>
-      <IconButton onClick={handleDecrement}>
+      <IconButton data-testid='IconDown' onClick={handleDecrement}>
         <KeyboardArrowDownIcon />
       </IconButton>
     </Box>
