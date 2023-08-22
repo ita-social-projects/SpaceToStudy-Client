@@ -8,16 +8,7 @@ describe('SearchByMessage', () => {
     render(<SearchByMessage maxValue={10} />)
   })
 
-  it('test 1', () => {
-    const input = screen.getByPlaceholderText('common.search...')
-
-    fireEvent.click(input)
-    fireEvent.change(input, { target: { value: testValue } })
-
-    expect(input.value).toBe(testValue)
-  })
-
-  it('test 2', () => {
+  it('should change and clear input value', () => {
     const input = screen.getByPlaceholderText('common.search...')
 
     fireEvent.click(input)
