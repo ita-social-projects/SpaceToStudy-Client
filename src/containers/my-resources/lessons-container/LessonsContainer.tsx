@@ -1,15 +1,11 @@
-import SearchIcon from '@mui/icons-material/Search'
-import AddIcon from '@mui/icons-material/Add'
 import Box from '@mui/material/Box'
-import { ChangeEvent, useCallback, useRef, useState } from 'react'
+import { useCallback, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
 
-import AppButton from '~/components/app-button/AppButton'
 import AppDrawer from '~/components/app-drawer/AppDrawer'
 import AppPagination from '~/components/app-pagination/AppPagination'
 import EnhancedTable from '~/components/enhanced-table/EnhancedTable'
-import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
+import AddResourceWithInput from '~/containers/my-resources/add-resource-with-input/AddResourceWithInput'
 import Loader from '~/components/loader/Loader'
 import {
   columns,
@@ -24,7 +20,6 @@ import useSort from '~/hooks/table/use-sort'
 import useAxios from '~/hooks/use-axios'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import useConfirm from '~/hooks/use-confirm'
-import { useDebounce } from '~/hooks/use-debounce'
 import { useDrawer } from '~/hooks/use-drawer'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { ResourceService } from '~/services/resource-service'
@@ -40,7 +35,6 @@ import { ajustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
 
 const LessonsContainer = () => {
   const { t } = useTranslation()
-  const [searchInput, setSearchInput] = useState<string>('')
   const searchTitle = useRef<string>('')
   const { setAlert } = useSnackBarContext()
   const { openDialog } = useConfirm()
@@ -98,22 +92,6 @@ const LessonsContainer = () => {
     onResponse: onResponseDeletion
   })
 
-  const debouncedOnSearchTitle = useDebounce((text: string) => {
-    searchTitle.current = text
-    void fetchData()
-  })
-
-  const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchInput(e.target.value)
-    debouncedOnSearchTitle(e.target.value)
-  }
-
-  const onSearchClean = () => {
-    setSearchInput('')
-    searchTitle.current = ''
-    void fetchData()
-  }
-
   const handleDeleteLesson = async (id: string, isConfirmed: boolean) => {
     if (isConfirmed) {
       await fetchDeleteLesson(id)
@@ -151,23 +129,6 @@ const LessonsContainer = () => {
     }
   ]
 
-  const newLessonBtn = (
-    <Box sx={styles.topContainer}>
-      <AppButton component={Link} to={authRoutes.myResources.newLesson.path}>
-        {t('button.newLesson')}
-        <AddIcon sx={styles.icon} />
-      </AppButton>
-      <InputWithIcon
-        endAdornment={<SearchIcon sx={styles.searchIcon} />}
-        onChange={onSearchChange}
-        onClear={onSearchClean}
-        placeholder={t('common.search')}
-        sx={styles.input}
-        value={searchInput}
-      />
-    </Box>
-  )
-
   const tableWithPagination = (
     <>
       <EnhancedTable
@@ -188,7 +149,12 @@ const LessonsContainer = () => {
 
   return (
     <Box>
-      {newLessonBtn}
+      <AddResourceWithInput
+        btnText='myResourcesPage.lessons.newLessonBtn'
+        fetchData={fetchData}
+        link={authRoutes.myResources.newLesson.path}
+        searchRef={searchTitle}
+      />
       {loading ? <Loader pageLoad size={50} /> : tableWithPagination}
       <AppDrawer onClose={closeDrawer} open={isOpen}>
         Mocked empty edit lesson text
