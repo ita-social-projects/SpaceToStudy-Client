@@ -119,7 +119,7 @@ const AddAttachments: FC<AddAttachmentsProps> = ({
   )
 
   const createAttachments = useCallback(
-    (data?: FormData) => attachmentService.createAttachment(data),
+    (data?: FormData) => attachmentService.createAttachments(data),
     []
   )
 
@@ -129,7 +129,7 @@ const AddAttachments: FC<AddAttachmentsProps> = ({
       message: error ? `errors.${error.code}` : ''
     })
   }
-  const { fetchData: fetchDataCreateAttachments } = useAxios({
+  const { fetchData: fetchCreateAttachment } = useAxios({
     service: createAttachments,
     fetchOnMount: false,
     defaultResponse: null,
@@ -137,7 +137,7 @@ const AddAttachments: FC<AddAttachmentsProps> = ({
   })
 
   const uploadFile = async (data: FormData) => {
-    await fetchDataCreateAttachments(data)
+    await fetchCreateAttachment(data)
     await fetchDataAttachments()
   }
 

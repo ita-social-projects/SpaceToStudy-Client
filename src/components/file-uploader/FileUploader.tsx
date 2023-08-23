@@ -13,7 +13,13 @@ import { SxProps } from '@mui/material'
 import useUpload from '~/hooks/use-upload'
 
 import { styles } from '~/components/file-uploader/FileUploader.styles'
-import { AddDocuments, ComponentEnum, Emitter, SizeEnum } from '~/types'
+import {
+  AddDocuments,
+  ComponentEnum,
+  Emitter,
+  InputEnum,
+  SizeEnum
+} from '~/types'
 import { spliceSx } from '~/utils/helper-functions'
 
 interface FileUploaderProps {
@@ -66,7 +72,7 @@ const FileUploader: FC<FileUploaderProps> = ({
     >
       {isImages && <CloudUploadIcon sx={styles.icon} />}
       {buttonText}
-      <input hidden multiple onChange={addFiles} type='file' />
+      <input hidden multiple onChange={addFiles} type={InputEnum.File} />
     </Button>
   )
 
@@ -82,7 +88,9 @@ const FileUploader: FC<FileUploaderProps> = ({
       {isImages && (
         <>
           <Typography sx={styles.fileSize}>
-            {t('constant.fileSize', { size: '10 Mb' })}
+            {`${t('constant.fileSize', { size: '10' })} ${t(
+              'common.megabytes'
+            )}`}
           </Typography>
           {initialError && (
             <Typography sx={styles.error}>{t(initialError)}</Typography>

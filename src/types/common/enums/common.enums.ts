@@ -86,3 +86,7 @@ export enum PositionEnum {
   Bottom = 'bottom',
   Top = 'top'
 }
+
+export enum InputEnum {
+  File = 'file'
+}
