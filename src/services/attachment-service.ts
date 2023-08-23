@@ -8,7 +8,7 @@ export const attachmentService = {
     params: GetAttachmentsParams
   ): Promise<AxiosResponse> =>
     await axiosClient.get(URLs.resources.attachments.get, { params }),
-    
+
   createAttachments: (data?: FormData): Promise<AxiosResponse> => {
     return axiosClient.post(URLs.attachments.post, data, {
       headers: { 'Content-Type': 'multipart/form-data' }
