@@ -32,6 +32,13 @@ const OfferContainer: FC<OfferContainerProps> = ({ viewMode, offerCards }) => {
   const renderSquareCard =
     isMobile || (isLaptopAndAbove && viewMode === CardsViewEnum.Grid)
 
+  const onClickOpenChat = (el: Offer) =>
+    setChatInfo({
+      author: el.author,
+      authorRole: el.authorRole,
+      chatId: el.chatId
+    })
+
   const offerItems = offerCards.map((el) => {
     const buttonActions = [
       {
@@ -45,12 +52,7 @@ const OfferContainer: FC<OfferContainerProps> = ({ viewMode, offerCards }) => {
         label: t('common.labels.sendMessage'),
         buttonProps: {
           variant: ButtonVariantEnum.Tonal,
-          onClick: () =>
-            setChatInfo({
-              author: el.author,
-              authorRole: el.authorRole,
-              chatId: el.chatId
-            })
+          onClick: () => onClickOpenChat(el)
         }
       }
     ]
