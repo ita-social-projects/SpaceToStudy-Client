@@ -115,7 +115,7 @@ const QuizzesContainer = () => {
     }
   ]
 
-  const tableAttachments = (
+  const quizzesTable = (
     <EnhancedTable
       columns={columnsToShow}
       data={{ items: response.items }}
@@ -126,7 +126,7 @@ const QuizzesContainer = () => {
     />
   )
 
-  return <Box>{loading ? <Loader pageLoad size={50} /> : tableAttachments}</Box>
+  return <Box>{loading ? <Loader pageLoad size={50} /> : quizzesTable}</Box>
 }
 
 export default QuizzesContainer
