@@ -27,5 +27,9 @@ export const ResourceService = {
   getAttachments: async (
     params?: Partial<GetAttachmentsParams>
   ): Promise<AxiosResponse<ItemsWithCount<Attachment>>> =>
-    await axiosClient.get(URLs.resources.attachments.get, { params })
+    await axiosClient.get(URLs.resources.attachments.get, { params }),
+  deleteAttachment: async (id: string): Promise<AxiosResponse> =>
+    await axiosClient.delete(
+      createUrlPath(URLs.resources.attachments.delete, id)
+    )
 }
