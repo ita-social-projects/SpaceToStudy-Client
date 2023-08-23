@@ -12,6 +12,8 @@ import AppButton from '~/components/app-button/AppButton'
 import useAxios from '~/hooks/use-axios'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import useSort from '~/hooks/table/use-sort'
+import AppPagination from '~/components/app-pagination/AppPagination'
+import usePagination from '~/hooks/table/use-pagination'
 
 import {
   columns,
@@ -27,6 +29,7 @@ import { styles } from '~/containers/my-resources/attachments-container/Attachme
 const AttachmentsContainer = () => {
   const { t } = useTranslation()
   const { setAlert } = useSnackBarContext()
+  const { page, handleChangePage } = usePagination()
 
   const sortOptions = useSort({ initialSort })
   const { sort, onRequestSort } = sortOptions
@@ -45,8 +48,13 @@ const AttachmentsContainer = () => {
   )
 
   const getAttachments = useCallback(
-    () => ResourceService.getAttachments({ limit: itemsPerPage }),
-    [itemsPerPage]
+    () =>
+      ResourceService.getAttachments({
+        limit: itemsPerPage,
+        skip: (page - 1) * itemsPerPage,
+        sort
+      }),
+    [itemsPerPage, page, sort]
   )
 
   const { response, loading } = useAxios<ItemsWithCount<Attachment>>({
@@ -84,17 +92,24 @@ const AttachmentsContainer = () => {
     </Box>
   )
   const tableAttachments = (
-    <EnhancedTable
-      columns={columnsToShow}
-      data={{ items: response.items }}
-      emptyTableKey='myResourcesPage.emptyAttachments'
-      rowActions={rowActions}
-      sort={{
-        sort,
-        onRequestSort
-      }}
-      sx={styles.table}
-    />
+    <>
+      <EnhancedTable
+        columns={columnsToShow}
+        data={{ items: response.items }}
+        emptyTableKey='myResourcesPage.emptyAttachments'
+        rowActions={rowActions}
+        sort={{
+          sort,
+          onRequestSort
+        }}
+        sx={styles.table}
+      />
+      <AppPagination
+        onChange={handleChangePage}
+        page={page}
+        pageCount={Math.ceil(response.count / itemsPerPage)}
+      />
+    </>
   )
 
   return (
