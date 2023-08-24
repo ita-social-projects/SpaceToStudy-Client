@@ -30,7 +30,7 @@ import {
   ComponentEnum,
   ErrorResponse,
   NewLessonData,
-SizeEnum,
+  SizeEnum,
   TextFieldVariantEnum,
   File,
   Attachment
@@ -63,16 +63,26 @@ const NewLesson = () => {
   }
 
   const handleAddAttachments = (attachments: Attachment[]) => {
-    console.log(attachments);
-    
+    setAttachments(attachments)
   }
 
   const handleOpenAddAttachmentsModal = () => {
-    openModal({ component: <AddAttachments attachments={attachments} onAddAttachments={handleAddAttachments}/> })
+    openModal({
+      component: (
+        <AddAttachments
+          attachments={attachments}
+          onAddAttachments={handleAddAttachments}
+        />
+      )
+    })
   }
 
-  const handleIconClick = (item: { fileName: string }) => {
-    console.log(item)
+  const handleRemoveAttachment = (attachment: Attachment) => {
+    setAttachments((prevAttachments) =>
+      prevAttachments.filter(
+        (prevAttachment) => prevAttachment._id !== attachment._id
+      )
+    )
   }
 
   const addLesson = (): Promise<AxiosResponse> => {
@@ -95,13 +105,13 @@ const NewLesson = () => {
       submitWithData: true
     })
 
-  const attachmentsList = mockedAttachmentsList.map((attachment) => (
+  const attachmentsList = attachments.map((attachment) => (
     <Box key={attachment.size} sx={styles.attachmentList.container}>
       <IconExtensionWithTitle
         size={attachment.size}
         title={attachment.fileName}
       />
-      <IconButton onClick={() => handleIconClick(attachment)}>
+      <IconButton onClick={() => handleRemoveAttachment(attachment)}>
         <CloseIcon />
       </IconButton>
     </Box>
