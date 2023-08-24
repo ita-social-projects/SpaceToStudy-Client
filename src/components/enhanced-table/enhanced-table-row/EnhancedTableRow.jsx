@@ -7,8 +7,9 @@ import IconButton from '@mui/material/IconButton'
 import MenuItem from '@mui/material/MenuItem'
 import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
-
 import useMenu from '~/hooks/use-menu'
+
+import { styles } from '~/components/enhanced-table/enhanced-table-row/EnhancedTableRow.styles'
 
 const EnhancedTableRow = ({
   columns,
@@ -17,7 +18,8 @@ const EnhancedTableRow = ({
   refetchData,
   rowActions,
   onRowClick,
-  select = {}
+  select = {},
+  selectedRows
 }) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
@@ -51,13 +53,18 @@ const EnhancedTableRow = ({
 
   const handleRowClick = () => (onRowClick ? onRowClick(item) : null)
 
+  const isRowSelected =
+    onRowClick &&
+    selectedRows.length &&
+    selectedRows.find((row) => row._id === item._id)
+
   return (
     <TableRow
       hover
       key={item._id}
       onClick={handleRowClick}
       selected={isSelection && isSelected(item._id)}
-      sx={{ cursor: onRowClick && 'pointer' }}
+      sx={styles.row(isRowSelected, !!onRowClick)}
     >
       {isSelection && (
         <TableCell padding='checkbox'>
