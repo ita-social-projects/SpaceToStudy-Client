@@ -1,5 +1,5 @@
-import React from 'react'
 import { Editor } from '@tinymce/tinymce-react'
+
 import { initialFileValue } from '~/components/file-editor/FileEditor.constants'
 
 const FileEditor = () => {
@@ -15,9 +15,9 @@ const FileEditor = () => {
         height: 400,
         menubar: true,
         plugins:
-          'mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss save',
+          'anchor accordion autolink autosave charmap codesample emoticons directionality help fullscreen preview pagebreak insertdatetime image link lists advlist media searchreplace table visualblocks wordcount code',
         toolbar:
-          'save undo redo | blocks fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+          'undo redo | blocks fontsize | bold italic underline strikethrough | ltr rtl | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent accordion | removeformat',
         content_style:
           'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
         save_onsavecallback: handleSave
