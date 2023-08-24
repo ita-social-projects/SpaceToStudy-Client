@@ -14,17 +14,25 @@ import { MessageInterface } from '~/types'
 
 interface MessageProps {
   message: MessageInterface
+  prevMessage: MessageInterface | null
 }
 
-const Message: FC<MessageProps> = ({ message }) => {
+const Message: FC<MessageProps> = ({ message, prevMessage }) => {
   const { userId: myId } = useAppSelector((state) => state.appMain)
 
   const { author, text, authorRole, createdAt } = message
   const { _id, photo } = author
+  const { path } = authRoutes.userProfile
   const isMyMessage = myId === _id
-  const userURL = createUrlPath(authRoutes.userProfile.path, _id, {
-    authorRole
-  })
+  const isSameAuthor = prevMessage?.author._id === _id
+  const pathToProfile = createUrlPath(path, _id, { authorRole })
+
+  const timeDifference = prevMessage
+    ? new Date(createdAt).getTime() - new Date(prevMessage.createdAt).getTime()
+    : Infinity
+
+  const isAvatarVisible =
+    !isSameAuthor || (isSameAuthor && timeDifference > 600000)
 
   const handleLinkClick = (e: MouseEvent<HTMLAnchorElement>) => {
     e.stopPropagation()
@@ -35,8 +43,8 @@ const Message: FC<MessageProps> = ({ message }) => {
     options: { hour: '2-digit', minute: '2-digit' }
   })
 
-  const avatar = !isMyMessage && (
-    <Link onClick={handleLinkClick} to={userURL}>
+  const avatar = !isMyMessage && isAvatarVisible && (
+    <Link onClick={handleLinkClick} to={pathToProfile}>
       <Avatar
         src={photo && `${import.meta.env.VITE_APP_IMG_USER_URL}${photo}`}
         sx={styles.avatar}
@@ -45,7 +53,7 @@ const Message: FC<MessageProps> = ({ message }) => {
   )
 
   return (
-    <Box sx={styles.root(isMyMessage)}>
+    <Box sx={styles.root(isMyMessage, isAvatarVisible)}>
       {avatar}
       <AppCard sx={styles.messageCard(isMyMessage)}>
         {text}

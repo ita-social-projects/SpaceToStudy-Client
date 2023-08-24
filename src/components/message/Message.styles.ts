@@ -1,16 +1,16 @@
 import { TypographyVariantEnum } from '~/types'
 
 export const styles = {
-  root: (isMyMessage: boolean) => ({
+  root: (isMyMessage: boolean, isVisible: boolean) => ({
     display: 'flex',
     justifyContent: isMyMessage ? 'end' : 'normal',
     alignItems: !isMyMessage ? 'center' : 'normal',
     columnGap: '8px',
-    mt: '24px'
+    m: isVisible ? '24px 0 0' : '8px 0 0 52px'
   }),
   avatar: {
-    width: '48px',
-    height: '48px',
+    width: '44px',
+    height: '44px',
     '&:hover': { transform: 'scale(1.1)' }
   },
   messageCard: (isMyMessage: boolean) => ({
