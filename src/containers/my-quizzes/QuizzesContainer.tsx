@@ -6,10 +6,13 @@ import useConfirm from '~/hooks/use-confirm'
 import { quizService } from '~/services/quiz-service'
 import { useSnackBarContext } from '~/context/snackbar-context'
 import EnhancedTable from '~/components/enhanced-table/EnhancedTable'
+import AddResourceWithInput from '~/containers/my-resources/add-resource-with-input/AddResourceWithInput'
 import Loader from '~/components/loader/Loader'
 import useSort from '~/hooks/table/use-sort'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import useAxios from '~/hooks/use-axios'
+import AppPagination from '~/components/app-pagination/AppPagination'
+import usePagination from '~/hooks/table/use-pagination'
 
 import { defaultResponses, snackbarVariants } from '~/constants'
 import {
@@ -32,6 +35,7 @@ const QuizzesContainer = () => {
   const { sort } = sortOptions
   const searchTitle = useRef<string>('')
   const breakpoints = useBreakpoints()
+  const { page, handleChangePage } = usePagination()
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
   const columnsToShow = ajustColumns(breakpoints, columns, removeColumnRules)
 
@@ -63,10 +67,11 @@ const QuizzesContainer = () => {
     () =>
       quizService.getQuizzes({
         limit: itemsPerPage,
+        skip: (page - 1) * itemsPerPage,
         sort,
         title: searchTitle.current
       }),
-    [itemsPerPage, sort, searchTitle]
+    [itemsPerPage, sort, searchTitle, page]
   )
 
   const deleteQuiz = useCallback(
@@ -115,18 +120,37 @@ const QuizzesContainer = () => {
     }
   ]
 
-  const quizzesTable = (
-    <EnhancedTable
-      columns={columnsToShow}
-      data={{ items: response.items }}
-      emptyTableKey='myResourcesPage.quizzes.emptyQuizzes'
-      rowActions={rowActions}
-      sort={sortOptions}
-      sx={styles.table}
-    />
+
+  const tableWithPagination = (
+    <>
+      <EnhancedTable
+        columns={columnsToShow}
+        data={{ items: response.items }}
+        emptyTableKey='myResourcesPage.quizzes.emptyQuizzes'
+        rowActions={rowActions}
+        sort={sortOptions}
+        sx={styles.table}
+      />
+      <AppPagination
+        onChange={handleChangePage}
+        page={page}
+        pageCount={Math.ceil(response.count / itemsPerPage)}
+      />
+    </>
   )
 
-  return <Box>{loading ? <Loader pageLoad size={50} /> : quizzesTable}</Box>
+  return (
+    <Box>
+      <AddResourceWithInput
+        btnText='myResourcesPage.quizzes.newQuizBtn'
+        fetchData={fetchData}
+        link={'#'}
+        searchRef={searchTitle}
+      />
+      {loading ? <Loader pageLoad size={50} /> : tableWithPagination}
+    </Box>
+  )
+
 }
 
 export default QuizzesContainer
