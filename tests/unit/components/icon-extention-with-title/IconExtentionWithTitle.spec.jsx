@@ -1,11 +1,11 @@
 import { screen } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
-import IconExtentionWithTitle from '~/components/icon-extention-with-title/IconExtentionWithTitle'
+import IconExtensionWithTitle from '~/components/icon-extension-with-title/IconExtensionWithTitle'
 
-describe('IconExtentionWithTitle test', () => {
+describe('IconExtensionWithTitle test', () => {
   beforeEach(() => {
     renderWithProviders(
-      <IconExtentionWithTitle description='13' title='NameOfAttachment.doc' />
+      <IconExtensionWithTitle description='13' title='NameOfAttachment.doc' />
     )
   })
 

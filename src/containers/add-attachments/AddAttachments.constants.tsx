@@ -1,6 +1,6 @@
 import Typography from '@mui/material/Typography'
 
-import IconExtentionWithTitle from '~/components/icon-extention-with-title/IconExtentionWithTitle'
+import IconExtensionWithTitle from '~/components/icon-extension-with-title/IconExtensionWithTitle'
 
 import {
   getFormattedDate,
@@ -21,7 +21,7 @@ export const columns = [
     label: 'myResourcesPage.attachments.file',
     field: 'fileName',
     calculatedCellValue: (item: Attachment) => (
-      <IconExtentionWithTitle title={item.fileName} />
+      <IconExtensionWithTitle title={item.fileName} />
     )
   },
   {

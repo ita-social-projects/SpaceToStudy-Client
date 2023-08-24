@@ -3,6 +3,9 @@ import { Link, useNavigate } from 'react-router-dom'
 import { AxiosResponse } from 'axios'
 import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
+import AddIcon from '@mui/icons-material/Add'
+import CloseIcon from '@mui/icons-material/Close'
+import IconButton from '@mui/material/IconButton'
 
 import AppButton from '~/components/app-button/AppButton'
 import AppTextField from '~/components/app-text-field/AppTextField'
@@ -17,7 +20,8 @@ import { snackbarVariants } from '~/constants'
 import {
   initialValues,
   myResourcesPath,
-  validations
+  validations,
+  mockedAttachmentsList
 } from '~/pages/new-lesson/NewLesson.constants'
 import { styles } from '~/pages/new-lesson/NewLesson.styles'
 import {
@@ -26,14 +30,22 @@ import {
   ComponentEnum,
   ErrorResponse,
   NewLessonData,
-  SizeEnum,
-  TextFieldVariantEnum
+SizeEnum,
+  TextFieldVariantEnum,
+  File,
+  Attachment
 } from '~/types'
+import { useModalContext } from '~/context/modal-context'
+import AddAttachments from '~/containers/add-attachments/AddAttachments'
+import IconExtensionWithTitle from '~/components/icon-extension-with-title/IconExtensionWithTitle'
+import { useState } from 'react'
 
 const NewLesson = () => {
   const { t } = useTranslation()
   const { setAlert } = useSnackBarContext()
+  const { openModal } = useModalContext()
   const navigate = useNavigate()
+  const [attachments, setAttachments] = useState<Attachment[]>([])
 
   const handleResponseError = (error: ErrorResponse) => {
     setAlert({
@@ -48,6 +60,19 @@ const NewLesson = () => {
       message: 'newLesson.successMessage'
     })
     navigate('/my-resources')
+  }
+
+  const handleAddAttachments = (attachments: Attachment[]) => {
+    console.log(attachments);
+    
+  }
+
+  const handleOpenAddAttachmentsModal = () => {
+    openModal({ component: <AddAttachments attachments={attachments} onAddAttachments={handleAddAttachments}/> })
+  }
+
+  const handleIconClick = (item: { fileName: string }) => {
+    console.log(item)
   }
 
   const addLesson = (): Promise<AxiosResponse> => {
@@ -69,6 +94,18 @@ const NewLesson = () => {
       onSubmit: fetchData,
       submitWithData: true
     })
+
+  const attachmentsList = mockedAttachmentsList.map((attachment) => (
+    <Box key={attachment.size} sx={styles.attachmentList.container}>
+      <IconExtensionWithTitle
+        size={attachment.size}
+        title={attachment.fileName}
+      />
+      <IconButton onClick={() => handleIconClick(attachment)}>
+        <CloseIcon />
+      </IconButton>
+    </Box>
+  ))
   return (
     <PageWrapper>
       <Box
@@ -99,7 +136,14 @@ const NewLesson = () => {
           variant={TextFieldVariantEnum.Standard}
         />
         <Divider sx={styles.divider} />
+        <Box>
+          <AppButton onClick={handleOpenAddAttachmentsModal}>
+            {/* add translations */}
+            {t('Attachments')} <AddIcon sx={styles.addIcon} />
+          </AppButton>
+        </Box>
         <FileEditor />
+        {attachmentsList}
         <Box sx={styles.buttons}>
           <AppButton size={SizeEnum.ExtraLarge} type={ButtonTypeEnum.Submit}>
             {t('common.save')}
