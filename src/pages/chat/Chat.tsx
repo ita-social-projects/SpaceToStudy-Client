@@ -19,6 +19,7 @@ import ChatHeader from '~/containers/chat/chat-header/ChatHeader'
 import ChatDate from '~/containers/chat/chat-date/ChatDate'
 import ChatTextArea from '~/containers/chat/chat-text-area/ChatTextArea'
 
+import { getGroupedMessages } from '~/utils/helper-functions'
 import { defaultResponses } from '~/constants'
 import { styles } from '~/pages/chat/Chat.styles'
 import { ChatResponse, MessageInterface, PositionEnum } from '~/types'
@@ -31,6 +32,7 @@ const Chat = () => {
   const [messages, setMessages] = useState<MessageInterface[]>([])
   const [textAreaValue, setTextAreaValue] = useState<string>('')
   const scrollRef = useRef<HTMLDivElement | null>(null)
+  const groupedMessages = getGroupedMessages(messages)
 
   const openChatsHandler = () => {
     openDrawer()
@@ -85,18 +87,27 @@ const Chat = () => {
   }, [selectedChat, fetchData])
 
   useEffect(() => {
-    if (selectedChat && messages.length > 0) {
+    if (selectedChat && messages.length) {
       scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight })
     }
   }, [selectedChat, messages.length])
 
-  const messagesList = messages.map((message) => (
-    <Message key={message._id} message={message} />
-  ))
-
   if (loading) {
     return <Loader size={100} />
   }
+
+  const messagesListWithDate = groupedMessages.map((group) => (
+    <Box key={group.date} sx={styles.messagesWithDate}>
+      <ChatDate date={group.date} />
+      {group.messages.map((message, index) => (
+        <Message
+          key={message._id}
+          message={message}
+          prevMessage={index ? group.messages[index - 1] : null}
+        />
+      ))}
+    </Box>
+  ))
 
   const selectChatChip = (
     <AppChip labelSx={styles.chipLabel(false)} sx={styles.chip}>
@@ -105,10 +116,7 @@ const Chat = () => {
   )
 
   const scrollableContent = messages.length ? (
-    <>
-      <ChatDate date={new Date()} />
-      {messagesList}
-    </>
+    messagesListWithDate
   ) : (
     <AppChip labelSx={styles.chipLabel(true)} sx={styles.chip}>
       {t('chatPage.chat.loading')}

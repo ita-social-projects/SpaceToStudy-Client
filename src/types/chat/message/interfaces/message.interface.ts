@@ -22,3 +22,8 @@ export interface SendMessageParams {
   chatId: string
   text: string
 }
+
+export interface GroupedMessages {
+  date: string
+  messages: MessageInterface[]
+}
