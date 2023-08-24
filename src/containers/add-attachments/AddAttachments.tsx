@@ -1,30 +1,40 @@
 import { ChangeEvent, FC, useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import SearchIcon from '@mui/icons-material/Search'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import SearchIcon from '@mui/icons-material/Search'
 
-import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
 import AppButton from '~/components/app-button/AppButton'
 import EnhancedTable from '~/components/enhanced-table/EnhancedTable'
+import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
 import { useModalContext } from '~/context/modal-context'
-import useBreakpoints from '~/hooks/use-breakpoints'
 import useSort from '~/hooks/table/use-sort'
 import useAxios from '~/hooks/use-axios'
+import useBreakpoints from '~/hooks/use-breakpoints'
 import { attachmentService } from '~/services/attachment-service'
 
-import { ajustColumns } from '~/utils/helper-functions'
+import { defaultResponses } from '~/constants'
 import {
-  initialSort,
   columns,
+  initialSort,
   removeColumnRules
 } from '~/containers/add-attachments/AddAttachments.constants'
-import { defaultResponses } from '~/constants'
 import { styles } from '~/containers/add-attachments/AddAttachments.styles'
 import { Attachment, ButtonVariantEnum } from '~/types'
+import { ajustColumns } from '~/utils/helper-functions'
 
-const AddAttachments: FC = () => {
+interface AddAttachmentsProps {
+  attachments: Attachment[]
+  onAddAttachments: (attachments: Attachment[]) => void
+}
+
+const AddAttachments: FC<AddAttachmentsProps> = ({
+  attachments = [],
+  onAddAttachments
+}) => {
   const [inputValue, setInputValue] = useState<string>('')
+  const [selectedAttachments, setSelectedAttachments] =
+    useState<Attachment[]>(attachments)
 
   const { t } = useTranslation()
   const { closeModal } = useModalContext()
@@ -57,8 +67,29 @@ const AddAttachments: FC = () => {
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value)
   }
+
   const handleInputReset = () => {
     setInputValue('')
+  }
+
+  const handleRowClick = (item: Attachment) => {
+    if (selectedAttachments.find((attachment) => attachment._id === item._id)) {
+      setSelectedAttachments((prevSelectedAttachments) =>
+        prevSelectedAttachments.filter(
+          (attachment) => attachment._id !== item._id
+        )
+      )
+    } else {
+      setSelectedAttachments((prevSelectedAttachments) => [
+        ...prevSelectedAttachments,
+        item
+      ])
+    }
+  }
+
+  const handleAddAttachments = () => {
+    onAddAttachments(selectedAttachments)
+    closeModal()
   }
 
   return (
@@ -80,6 +111,8 @@ const AddAttachments: FC = () => {
           columns={columnsToShow}
           data={{ loading, items: response.items }}
           emptyTableKey='myResourcesPage.attachments.emptyAttachments'
+          onRowClick={handleRowClick}
+          selectedRows={selectedAttachments}
           sort={sortOptions}
           sx={styles.table}
         />
@@ -87,7 +120,11 @@ const AddAttachments: FC = () => {
 
       <Box sx={styles.buttonsArea}>
         <Box>
-          <AppButton disabled sx={styles.addButton}>
+          <AppButton
+            disabled={!selectedAttachments.length}
+            onClick={handleAddAttachments}
+            sx={styles.addButton}
+          >
             {t('common.add')}
           </AppButton>
           <AppButton onClick={closeModal} variant={ButtonVariantEnum.Outlined}>

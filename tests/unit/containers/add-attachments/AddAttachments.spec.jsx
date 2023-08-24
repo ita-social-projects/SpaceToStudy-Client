@@ -1,8 +1,8 @@
 import { screen } from '@testing-library/react'
+import { defaultResponses } from '~/constants'
+import { URLs } from '~/constants/request'
 import AddAttachments from '~/containers/add-attachments/AddAttachments'
 import { mockAxiosClient, renderWithProviders } from '~tests/test-utils'
-import { URLs } from '~/constants/request'
-import { defaultResponses } from '~/constants'
 
 describe('AddAttachments', () => {
   mockAxiosClient
