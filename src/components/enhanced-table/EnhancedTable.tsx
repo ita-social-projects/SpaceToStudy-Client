@@ -34,6 +34,7 @@ interface EnhancedTableProps<I, F> extends TableProps {
   data: TableData<I>
   onRowClick?: (item: I) => void
   emptyTableKey?: string
+  selectedRows?: I[]
 }
 
 const EnhancedTable = <I extends TableItem, F = undefined>({
@@ -47,6 +48,7 @@ const EnhancedTable = <I extends TableItem, F = undefined>({
   rowsPerPage,
   data,
   emptyTableKey = 'table.noExactMatches',
+  selectedRows = [],
   ...props
 }: EnhancedTableProps<I, F>) => {
   const { t } = useTranslation()
@@ -62,6 +64,7 @@ const EnhancedTable = <I extends TableItem, F = undefined>({
       refetchData={getData}
       rowActions={rowActions}
       select={select}
+      selectedRows={selectedRows}
     />
   ))
 

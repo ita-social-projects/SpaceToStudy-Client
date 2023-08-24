@@ -6,6 +6,7 @@ import {
   FilterFromQuery,
   FormatedDate,
   Lesson,
+  MessageInterface,
   Offer,
   Quiz,
   RemoveColumnRules,
@@ -13,7 +14,8 @@ import {
   TableColumn,
   UserRole,
   UserRoleEnum,
-  Attachment
+  Attachment,
+  GroupedMessages
 } from '~/types'
 
 export const parseJwt = <T,>(token: string): T => {
@@ -255,3 +257,20 @@ export const convertBytesToProperFormat = (bytes: number): ConvertedSize => {
   }
   return convertedSize
 }
+
+export const getIsNewDay = (prev: string, curr: string) =>
+  new Date(prev).getUTCDate() !== new Date(curr).getUTCDate()
+
+export const getGroupedMessages = (messages: MessageInterface[]) =>
+  messages.reduce((result: GroupedMessages[], message) => {
+    const currDate = message.createdAt
+    const prevDate = result.length ? result[result.length - 1].date : ''
+
+    if (getIsNewDay(prevDate, currDate)) {
+      result.push({ date: currDate, messages: [message] })
+    } else {
+      result[result.length - 1].messages.push(message)
+    }
+
+    return result
+  }, [])

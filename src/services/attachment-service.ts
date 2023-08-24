@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios'
-import { GetAttachmentsParams } from '~/types'
-import { axiosClient } from '~/plugins/axiosClient'
 import { URLs } from '~/constants/request'
+import { axiosClient } from '~/plugins/axiosClient'
+import { GetAttachmentsParams } from '~/types'
 
 export const attachmentService = {
   getAttachments: async (
