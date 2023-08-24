@@ -10,6 +10,8 @@ import Loader from '~/components/loader/Loader'
 import AddResourceWithInput from '~/containers/my-resources/add-resource-with-input/AddResourceWithInput'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import useAxios from '~/hooks/use-axios'
+import AppPagination from '~/components/app-pagination/AppPagination'
+import usePagination from '~/hooks/table/use-pagination'
 
 import {
   columns,
@@ -27,6 +29,7 @@ const TestsContainer = () => {
   const { openDialog } = useConfirm()
   const searchTitle = useRef<string>('')
   const breakpoints = useBreakpoints()
+  const { page, handleChangePage } = usePagination()
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
   const columnsToShow = ajustColumns(breakpoints, columns, removeColumnRules)
 
@@ -109,18 +112,25 @@ const TestsContainer = () => {
     }
   ]
 
-  const table = (
-    <EnhancedTable
-      columns={columnsToShow}
-      data={{ items: response.items }}
-      emptyTableKey='myResourcesPage.quizzes.emptyQuizzes'
-      rowActions={rowActions}
-      sort={{
-        sort: { order: SortEnum.Desc, orderBy: 'updatedAt' },
-        onRequestSort: () => null
-      }}
-      sx={styles.table}
-    />
+  const tableWithPagination = (
+    <>
+      <EnhancedTable
+        columns={columnsToShow}
+        data={{ items: response.items }}
+        emptyTableKey='myResourcesPage.quizzes.emptyQuizzes'
+        rowActions={rowActions}
+        sort={{
+          sort: { order: SortEnum.Desc, orderBy: 'updatedAt' },
+          onRequestSort: () => null
+        }}
+        sx={styles.table}
+      />
+      <AppPagination
+        onChange={handleChangePage}
+        page={page}
+        pageCount={Math.ceil(response.count / itemsPerPage)}
+      />
+    </>
   )
 
   return (
@@ -131,7 +141,7 @@ const TestsContainer = () => {
         link={'#'}
         searchRef={searchTitle}
       />
-      {loading ? <Loader pageLoad size={50} /> : table}
+      {loading ? <Loader pageLoad size={50} /> : tableWithPagination}
     </Box>
   )
 }
