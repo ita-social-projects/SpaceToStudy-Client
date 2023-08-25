@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useCallback, useState } from 'react'
+import { ChangeEvent, FC, useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import SearchIcon from '@mui/icons-material/Search'
 import Box from '@mui/material/Box'
@@ -20,8 +20,8 @@ import {
   removeColumnRules
 } from '~/containers/add-attachments/AddAttachments.constants'
 import { styles } from '~/containers/add-attachments/AddAttachments.styles'
-import { Attachment, ButtonVariantEnum } from '~/types'
 import { ajustColumns } from '~/utils/helper-functions'
+import { Attachment, ButtonVariantEnum, ItemsWithCount } from '~/types'
 
 interface AddAttachmentsProps {
   attachments: Attachment[]
@@ -59,7 +59,7 @@ const AddAttachments: FC<AddAttachmentsProps> = ({
     [sort]
   )
 
-  const { loading, response } = useAxios({
+  const { loading, response } = useAxios<ItemsWithCount<Attachment>>({
     service: getMyAttachments,
     defaultResponse: defaultResponses.itemsWithCount
   })
@@ -91,6 +91,20 @@ const AddAttachments: FC<AddAttachmentsProps> = ({
     onAddAttachments(selectedAttachments)
     closeModal()
   }
+  const filteredAttachments = useMemo(
+    () =>
+      response.items.filter((item) => {
+        const lowerCaseFileName = item.fileName.toLowerCase()
+        const lowerCaseInputValue = inputValue.toLocaleLowerCase()
+        const fileNameWithoutExtension = lowerCaseFileName
+          .split('.')
+          .slice(0, -1)
+          .join('.')
+
+        return fileNameWithoutExtension.includes(lowerCaseInputValue)
+      }),
+    [response.items, inputValue]
+  )
 
   return (
     <Box sx={styles.root}>
@@ -98,7 +112,6 @@ const AddAttachments: FC<AddAttachmentsProps> = ({
         {t('myResourcesPage.attachments.addFromAttachments')}
       </Typography>
       <InputWithIcon
-        disabled
         endAdornment={<SearchIcon sx={styles.searchIcon} />}
         onChange={handleInputChange}
         onClear={handleInputReset}
@@ -109,7 +122,7 @@ const AddAttachments: FC<AddAttachmentsProps> = ({
       <Box sx={styles.tableWrapper}>
         <EnhancedTable
           columns={columnsToShow}
-          data={{ loading, items: response.items }}
+          data={{ loading, items: filteredAttachments }}
           emptyTableKey='myResourcesPage.attachments.emptyAttachments'
           onRowClick={handleRowClick}
           selectedRows={selectedAttachments}
