@@ -29,7 +29,7 @@ interface FileUploaderProps {
   initialError: string
   validationData: AddDocuments
   isImages?: boolean
-  sx: {
+  sx?: {
     root?: SxProps
     button?: SxProps
   }
