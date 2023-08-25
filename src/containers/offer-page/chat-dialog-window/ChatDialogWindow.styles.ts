@@ -76,6 +76,7 @@ export const styles = {
     typography: TypographyVariantEnum.Caption,
     color: 'primary.500'
   },
+  messagesWithDate: { mb: '24px' },
   textArea: {
     container: {
       alignItems: 'center',

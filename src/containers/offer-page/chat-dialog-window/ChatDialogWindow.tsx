@@ -8,7 +8,6 @@ import {
 } from 'react'
 import { useTranslation } from 'react-i18next'
 import SimpleBar from 'simplebar-react'
-
 import Box from '@mui/material/Box'
 import MessageIcon from '@mui/icons-material/Message'
 import CloseIcon from '@mui/icons-material/Close'
@@ -23,6 +22,7 @@ import UserProfileInfo from '~/components/user-profile-info/UserProfileInfo'
 import Loader from '~/components/loader/Loader'
 import { messageService } from '~/services/message-service'
 import { useChatContext } from '~/context/chat-context'
+import { getGroupedMessages } from '~/utils/helper-functions'
 
 import { ChatInfo, MessageInterface } from '~/types'
 import { defaultResponses } from '~/constants'
@@ -52,7 +52,7 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
     response: messages,
     loading: messagesLoad,
     fetchData
-  } = useAxios({
+  } = useAxios<MessageInterface[]>({
     service: getMessages,
     defaultResponse: defaultResponses.array,
     fetchOnMount: false
@@ -68,20 +68,25 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
     }
   }, [chatInfo.chatId, messagesLoad])
 
-  const messagesList = messages.map((message: MessageInterface) => (
-    <Message key={message._id} message={message} sx={styles.message} />
+  const groupedMessages = getGroupedMessages(messages)
+
+  const messagesListWithDate = groupedMessages.map((group) => (
+    <Box key={group.date} sx={styles.messagesWithDate}>
+      <ChatDate date={group.date} />
+      {group.messages.map((message, index) => (
+        <Message
+          key={message._id}
+          message={message}
+          prevMessage={index ? group.messages[index - 1] : null}
+        />
+      ))}
+    </Box>
   ))
 
   const scrollableContent = messagesLoad ? (
     <Loader pageLoad size={50} sx={styles.loader} />
   ) : (
-    <SimpleBar
-      scrollableNodeProps={{ ref: scrollRef }}
-      style={styles.scrollableContent}
-    >
-      <ChatDate date={new Date()} />
-      {messagesList}
-    </SimpleBar>
+    messagesListWithDate
   )
 
   const questionsList = questions.map((el) => (
@@ -117,7 +122,12 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
           </Box>
         </Box>
         {chatInfo.chatId ? (
-          scrollableContent
+          <SimpleBar
+            scrollableNodeProps={{ ref: scrollRef }}
+            style={styles.scrollableContent}
+          >
+            {scrollableContent}
+          </SimpleBar>
         ) : (
           <Box sx={styles.firstQuestions}>
             <Typography sx={styles.subtitle}>
