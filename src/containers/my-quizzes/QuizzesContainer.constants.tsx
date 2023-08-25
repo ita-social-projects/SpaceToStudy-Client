@@ -15,6 +15,7 @@ import { styles } from '~/containers/my-quizzes/QuizzesContainer.styles'
 export const columns: TableColumn<Quiz>[] = [
   {
     label: 'myResourcesPage.quizzes.title',
+    field: 'title',
     calculatedCellValue: (item: Quiz) => {
       return (
         <Box sx={styles.quizTitleContainer}>
