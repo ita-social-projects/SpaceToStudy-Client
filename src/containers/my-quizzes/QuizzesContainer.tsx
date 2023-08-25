@@ -7,24 +7,28 @@ import { quizService } from '~/services/quiz-service'
 import { useSnackBarContext } from '~/context/snackbar-context'
 import EnhancedTable from '~/components/enhanced-table/EnhancedTable'
 import Loader from '~/components/loader/Loader'
-import AddResourceWithInput from '~/containers/my-resources/add-resource-with-input/AddResourceWithInput'
+import useSort from '~/hooks/table/use-sort'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import useAxios from '~/hooks/use-axios'
 
 import {
   columns,
-  removeColumnRules,
-  itemsLoadLimit
+  initialSort,
+  itemsLoadLimit,
+  removeColumnRules
 } from '~/containers/my-quizzes/QuizzesContainer.constants'
-import { ErrorResponse, ItemsWithCount, Quiz, SortEnum } from '~/types'
+import { ErrorResponse, ItemsWithCount, Quiz } from '~/types'
 import { defaultResponses, snackbarVariants } from '~/constants'
 import { ajustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
 import { styles } from '~/containers/my-quizzes/QuizzesContainer.styles'
 
-const TestsContainer = () => {
+const QuizzesContainer = () => {
   const { t } = useTranslation()
   const { setAlert } = useSnackBarContext()
   const { openDialog } = useConfirm()
+
+  const sortOptions = useSort({ initialSort })
+  const { sort } = sortOptions
   const searchTitle = useRef<string>('')
   const breakpoints = useBreakpoints()
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
@@ -58,9 +62,10 @@ const TestsContainer = () => {
     () =>
       quizService.getQuizzes({
         limit: itemsPerPage,
+        sort,
         title: searchTitle.current
       }),
-    [itemsPerPage, searchTitle]
+    [itemsPerPage, sort, searchTitle]
   )
 
   const deleteQuiz = useCallback(
@@ -109,31 +114,18 @@ const TestsContainer = () => {
     }
   ]
 
-  const table = (
+  const quizzesTable = (
     <EnhancedTable
       columns={columnsToShow}
       data={{ items: response.items }}
       emptyTableKey='myResourcesPage.quizzes.emptyQuizzes'
       rowActions={rowActions}
-      sort={{
-        sort: { order: SortEnum.Desc, orderBy: 'updatedAt' },
-        onRequestSort: () => null
-      }}
+      sort={sortOptions}
       sx={styles.table}
     />
   )
 
-  return (
-    <Box>
-      <AddResourceWithInput
-        btnText='myResourcesPage.quizzes.newQuizBtn'
-        fetchData={fetchData}
-        link={'#'}
-        searchRef={searchTitle}
-      />
-      {loading ? <Loader pageLoad size={50} /> : table}
-    </Box>
-  )
+  return <Box>{loading ? <Loader pageLoad size={50} /> : quizzesTable}</Box>
 }
 
-export default TestsContainer
+export default QuizzesContainer
