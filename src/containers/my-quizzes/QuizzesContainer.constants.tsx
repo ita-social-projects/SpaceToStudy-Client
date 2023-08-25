@@ -6,6 +6,7 @@ import {
   AdditionalPropsInterface,
   Quiz,
   RemoveColumnRules,
+  SortEnum,
   TableColumn
 } from '~/types'
 import { getFormattedDate } from '~/utils/helper-functions'
@@ -14,6 +15,7 @@ import { styles } from '~/containers/my-quizzes/QuizzesContainer.styles'
 export const columns: TableColumn<Quiz>[] = [
   {
     label: 'myResourcesPage.quizzes.title',
+    field: 'title',
     calculatedCellValue: (item: Quiz) => {
       return (
         <Box sx={styles.quizTitleContainer}>
@@ -25,6 +27,7 @@ export const columns: TableColumn<Quiz>[] = [
   },
   {
     label: 'myResourcesPage.quizzes.questions',
+    field: 'questions',
     calculatedCellValue: (item: Quiz, { t }: AdditionalPropsInterface) => {
       const amountQuestions = item.items.length
       const isOneQuestion = amountQuestions === 1 ? '' : 's'
@@ -39,6 +42,7 @@ export const columns: TableColumn<Quiz>[] = [
   },
   {
     label: 'myResourcesPage.quizzes.updated',
+    field: 'updatedAt',
     calculatedCellValue: (item: Quiz) => (
       <Typography sx={styles.date}>
         {getFormattedDate({ date: item.updatedAt })}
@@ -50,6 +54,8 @@ export const columns: TableColumn<Quiz>[] = [
 export const removeColumnRules: RemoveColumnRules<Quiz> = {
   tablet: ['myOffersPage.tableHeaders.updated']
 }
+
+export const initialSort = { order: SortEnum.Desc, orderBy: 'updatedAt' }
 
 export const itemsLoadLimit = {
   default: 10,
