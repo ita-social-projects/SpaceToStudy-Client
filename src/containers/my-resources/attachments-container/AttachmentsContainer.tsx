@@ -1,4 +1,4 @@
-import { useCallback, useRef } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 
@@ -23,7 +23,13 @@ import {
   removeColumnRules
 } from '~/containers/my-resources/attachments-container/AttachmentsContainer.constants'
 import { ajustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
-import { ItemsWithCount, Attachment, ErrorResponse } from '~/types'
+import { defaultResponses, snackbarVariants } from '~/constants'
+import {
+  ItemsWithCount,
+  Attachment,
+  ErrorResponse,
+  UpdateAttachmentParams
+} from '~/types'
 import { styles } from '~/containers/my-resources/attachments-container/AttachmentsContainer.styles'
 
 const AttachmentsContainer = () => {
@@ -31,11 +37,11 @@ const AttachmentsContainer = () => {
   const { setAlert } = useSnackBarContext()
   const { openDialog } = useConfirm()
   const { page, handleChangePage } = usePagination()
-
-  const sortOptions = useSort({ initialSort })
-  const { sort } = sortOptions
-
   const breakpoints = useBreakpoints()
+  const sortOptions = useSort({ initialSort })
+  const [selectedItemId, setSelectedItemId] = useState<string>('')
+
+  const { sort } = sortOptions
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
 
   const searchFileName = useRef<string>('')
@@ -80,15 +86,39 @@ const AttachmentsContainer = () => {
     []
   )
 
+  const updateAttachment = useCallback(
+    (params?: UpdateAttachmentParams) =>
+      ResourceService.updateAttachment(params),
+    []
+  )
+
   const {
     response,
     loading,
+    fetchData,
     fetchData: fetchGetAttachments
   } = useAxios<ItemsWithCount<Attachment>>({
     service: getAttachments,
     defaultResponse: defaultResponses.itemsWithCount,
     onResponseError: onAttachmentError
   })
+
+  const onAttachmentUpdate = useCallback(() => void fetchData(), [fetchData])
+
+  const { fetchData: updateData } = useAxios({
+    service: updateAttachment,
+    defaultResponse: null,
+    onResponseError: onAttachmentError,
+    onResponse: onAttachmentUpdate,
+    fetchOnMount: false
+  })
+
+  const onSave = async (fileName: string) => {
+    if (fileName) await updateData({ id: selectedItemId, fileName })
+    setSelectedItemId('')
+  }
+  const onEdit = (id: string) => setSelectedItemId(id)
+  const onCancel = () => setSelectedItemId('')
 
   const { error, fetchData: fetchDeleteAttachment } = useAxios({
     service: deleteAttachment,
@@ -114,11 +144,16 @@ const AttachmentsContainer = () => {
     })
   }
 
-  const columnsToShow = ajustColumns(breakpoints, columns, removeColumnRules)
+  const columnsToShow = ajustColumns(
+    breakpoints,
+    columns(selectedItemId, onCancel, onSave),
+    removeColumnRules
+  )
+
   const rowActions = [
     {
-      label: t('common.edit'),
-      func: () => console.log(t('common.edit'))
+      label: t('common.rename'),
+      func: onEdit
     },
     {
       label: t('common.delete'),
