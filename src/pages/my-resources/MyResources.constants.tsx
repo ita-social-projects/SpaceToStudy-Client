@@ -6,7 +6,7 @@ import NoteAltOutlinedIcon from '@mui/icons-material/NoteAltOutlined'
 
 import LessonsContainer from '~/containers/my-resources/lessons-container/LessonsContainer'
 import AttachmentsContainer from '~/containers/my-resources/attachments-container/AttachmentsContainer'
-import TestsContainer from '~/containers/my-quizzes/QuizzesContainer'
+import QuizzesContainer from '~/containers/my-quizzes/QuizzesContainer'
 
 interface TabsData {
   [key: string]: {
@@ -23,7 +23,7 @@ export const tabsData: TabsData = {
   },
   quizzes: {
     title: 'myResourcesPage.tabs.quizzes',
-    content: <TestsContainer />,
+    content: <QuizzesContainer />,
     icon: <NoteAltOutlinedIcon />
   },
   attachments: {
