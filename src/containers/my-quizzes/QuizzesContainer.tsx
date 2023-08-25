@@ -18,6 +18,7 @@ import {
   itemsLoadLimit,
   removeColumnRules
 } from '~/containers/my-quizzes/QuizzesContainer.constants'
+<<<<<<< HEAD
 import {
   ItemsWithCount,
   GetResourcesParams,
@@ -25,6 +26,10 @@ import {
   ErrorResponse,
   ResourcesTabsEnum
 } from '~/types'
+=======
+import { styles } from '~/containers/my-quizzes/QuizzesContainer.styles'
+import { ErrorResponse, ItemsWithCount, Quiz } from '~/types'
+>>>>>>> a06ec10 (Added sorting to quizzes tab (#1043))
 import { ajustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
 
 const QuizzesContainer = () => {
