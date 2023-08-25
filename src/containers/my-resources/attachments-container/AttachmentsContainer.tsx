@@ -55,6 +55,7 @@ const AttachmentsContainer = () => {
       }),
     [itemsPerPage, page, sort]
   )
+
   const { response, loading } = useAxios<ItemsWithCount<Attachment>>({
     service: getAttachments,
     defaultResponse: defaultResponses.itemsWithCount,
@@ -71,7 +72,6 @@ const AttachmentsContainer = () => {
       func: () => console.log(t('common.delete'))
     }
   ]
-
   const addAttachmentBlock = (
     <Box sx={styles.container}>
       <AppButton disabled sx={styles.addButton}>
