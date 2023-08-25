@@ -32,7 +32,7 @@ const AttachmentsContainer = () => {
   const { page, handleChangePage } = usePagination()
 
   const sortOptions = useSort({ initialSort })
-  const { sort, onRequestSort } = sortOptions
+  const { sort } = sortOptions
 
   const breakpoints = useBreakpoints()
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
@@ -46,7 +46,6 @@ const AttachmentsContainer = () => {
     },
     [setAlert]
   )
-
   const getAttachments = useCallback(
     () =>
       ResourceService.getAttachments({
@@ -56,15 +55,12 @@ const AttachmentsContainer = () => {
       }),
     [itemsPerPage, page, sort]
   )
-
   const { response, loading } = useAxios<ItemsWithCount<Attachment>>({
     service: getAttachments,
     defaultResponse: defaultResponses.itemsWithCount,
     onResponseError: onAttachmentError
   })
-
   const columnsToShow = ajustColumns(breakpoints, columns, removeColumnRules)
-
   const rowActions = [
     {
       label: t('common.edit'),
@@ -98,10 +94,7 @@ const AttachmentsContainer = () => {
         data={{ items: response.items }}
         emptyTableKey='myResourcesPage.emptyAttachments'
         rowActions={rowActions}
-        sort={{
-          sort,
-          onRequestSort
-        }}
+        sort={sortOptions}
         sx={styles.table}
       />
       <AppPagination
