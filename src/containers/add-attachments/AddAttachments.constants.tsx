@@ -26,7 +26,7 @@ export const columns = [
   },
   {
     label: 'myResourcesPage.attachments.size',
-    title: 'size',
+    field: 'size',
     calculatedCellValue: (
       item: Attachment,
       { t }: AdditionalPropsInterface
