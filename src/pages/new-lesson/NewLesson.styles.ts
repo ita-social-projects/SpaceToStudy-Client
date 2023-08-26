@@ -6,8 +6,7 @@ export const styles = {
     display: 'flex',
     flexDirection: 'column',
     gap: '24px',
-    p: { sm: '40px 36px', md: '40px 72px' },
-    background: 'primary.600'
+    p: { sm: '40px 36px', md: '40px 72px' }
   },
   input: {
     style: {
