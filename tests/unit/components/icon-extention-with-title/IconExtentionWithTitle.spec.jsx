@@ -5,7 +5,7 @@ import IconExtensionWithTitle from '~/components/icon-extension-with-title/IconE
 describe('IconExtensionWithTitle test', () => {
   beforeEach(() => {
     renderWithProviders(
-      <IconExtensionWithTitle description='13' title='NameOfAttachment.doc' />
+      <IconExtensionWithTitle size={21855} title='NameOfAttachment.doc' />
     )
   })
 
@@ -22,7 +22,7 @@ describe('IconExtensionWithTitle test', () => {
   })
 
   it('Should render description', () => {
-    const description = screen.getByText('13 common.bytes')
+    const description = screen.getByText('21.3 common.kilobytes')
 
     expect(description).toBeInTheDocument()
   })
