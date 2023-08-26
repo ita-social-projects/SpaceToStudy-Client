@@ -19,6 +19,8 @@ import {
   itemsLoadLimit,
   removeColumnRules
 } from '~/containers/my-resources/attachments-container/AttachmentsContainer.constants'
+import { ajustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
+import { styles } from '~/containers/my-resources/attachments-container/AttachmentsContainer.styles'
 import {
   ItemsWithCount,
   GetResourcesParams,
@@ -27,9 +29,6 @@ import {
   UpdateAttachmentParams,
   ResourcesTabsEnum
 } from '~/types'
-import { ajustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
-import { styles } from '~/containers/my-resources/attachments-container/AttachmentsContainer.styles'
-import { ItemsWithCount, Attachment, ErrorResponse } from '~/types'
 
 const AttachmentsContainer = () => {
   const { setAlert } = useSnackBarContext()
@@ -109,6 +108,34 @@ const AttachmentsContainer = () => {
     breakpoints,
     columns(selectedItemId, onCancel, onSave),
     removeColumnRules
+  )
+
+  const openDeletionConfirmDialog = (id: string) => {
+    openDialog({
+      message: 'myResourcesPage.confirmDeletionMessage',
+      sendConfirm: (isConfirmed: boolean) =>
+        void handleDeleteAttachment(id, isConfirmed),
+      title: 'myResourcesPage.attachments.confirmAttachmentDeletionTitle'
+    })
+  }
+
+  const rowActions = [
+    {
+      label: t('common.edit'),
+      func: () => console.log(t('common.edit'))
+    },
+    {
+      label: t('common.delete'),
+      func: openDeletionConfirmDialog
+    }
+  ]
+  const addAttachmentBlock = (
+    <AddResourceWithInput
+      btnText='myResourcesPage.attachments.addAttachment'
+      fetchData={fetchGetAttachments}
+      link={authRoutes.myResources.root.path}
+      searchRef={searchFileName}
+    />
   )
 
   const props = {
