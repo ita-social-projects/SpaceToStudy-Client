@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate } from 'react-router-dom'
 import { AxiosResponse } from 'axios'
@@ -7,6 +8,8 @@ import AddIcon from '@mui/icons-material/Add'
 import CloseIcon from '@mui/icons-material/Close'
 import IconButton from '@mui/material/IconButton'
 
+import AddAttachments from '~/containers/add-attachments/AddAttachments'
+import IconExtensionWithTitle from '~/components/icon-extension-with-title/IconExtensionWithTitle'
 import AppButton from '~/components/app-button/AppButton'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import FileEditor from '~/components/file-editor/FileEditor'
@@ -15,13 +18,13 @@ import { useSnackBarContext } from '~/context/snackbar-context'
 import useAxios from '~/hooks/use-axios'
 import useForm from '~/hooks/use-form'
 import { ResourceService } from '~/services/resource-service'
+import { useModalContext } from '~/context/modal-context'
 
 import { snackbarVariants } from '~/constants'
 import {
   initialValues,
   myResourcesPath,
-  validations,
-  mockedAttachmentsList
+  validations
 } from '~/pages/new-lesson/NewLesson.constants'
 import { styles } from '~/pages/new-lesson/NewLesson.styles'
 import {
@@ -32,13 +35,8 @@ import {
   NewLessonData,
   SizeEnum,
   TextFieldVariantEnum,
-  File,
   Attachment
 } from '~/types'
-import { useModalContext } from '~/context/modal-context'
-import AddAttachments from '~/containers/add-attachments/AddAttachments'
-import IconExtensionWithTitle from '~/components/icon-extension-with-title/IconExtensionWithTitle'
-import { useState } from 'react'
 
 const NewLesson = () => {
   const { t } = useTranslation()
@@ -86,7 +84,11 @@ const NewLesson = () => {
   }
 
   const addLesson = (): Promise<AxiosResponse> => {
-    return ResourceService.addLesson(data)
+    const lesson = {
+      ...data,
+      attachments: attachments.map((attachment) => attachment._id)
+    }
+    return ResourceService.addLesson(lesson)
   }
 
   const { fetchData } = useAxios({
@@ -148,8 +150,7 @@ const NewLesson = () => {
         <Divider sx={styles.divider} />
         <Box>
           <AppButton onClick={handleOpenAddAttachmentsModal}>
-            {/* add translations */}
-            {t('Attachments')} <AddIcon sx={styles.addIcon} />
+            {t('newLesson.labels.attachments')} <AddIcon sx={styles.addIcon} />
           </AppButton>
         </Box>
         <FileEditor />

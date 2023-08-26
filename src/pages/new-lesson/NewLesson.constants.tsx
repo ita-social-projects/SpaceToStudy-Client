@@ -14,14 +14,3 @@ export const initialValues = {
 }
 
 export const myResourcesPath = '/my-resources'
-
-export const mockedAttachmentsList = [
-  {
-    fileName: 'Berserk.png',
-    size: 563232
-  },
-  {
-    fileName: 'Brothers-elric.png',
-    size: 21323232
-  }
-]
