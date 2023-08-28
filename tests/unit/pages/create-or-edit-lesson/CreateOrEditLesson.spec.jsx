@@ -1,11 +1,11 @@
 import { screen } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 
-import NewLesson from '~/pages/new-lesson/NewLesson'
+import CreateOrEditLesson from '~/pages/create-or-edit-lesson/CreateOrEditLesson'
 
 describe('NewLesson', () => {
   beforeEach(() => {
-    renderWithProviders(<NewLesson />)
+    renderWithProviders(<CreateOrEditLesson />)
   })
 
   it('should render page with title and description fields', () => {
