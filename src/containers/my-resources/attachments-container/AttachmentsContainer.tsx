@@ -58,14 +58,17 @@ const AttachmentsContainer = () => {
   )
 
   const onAttachmentError = useCallback(
-    (error: ErrorResponse) => {
+    (error: ErrorResponse, message?: string) => {
       setAlert({
         severity: snackbarVariants.error,
-        message: error ? `errors.${error.code}` : ''
+        message: error ? message ?? `errors.${error.code}` : ''
       })
     },
     [setAlert]
   )
+
+  const onAttachmentUpdateError = (error: ErrorResponse) =>
+    onAttachmentError(error, 'myResourcesPage.attachments.validationError')
 
   const onDeleteAttachmentError = (error: ErrorResponse) => {
     setAlert({
@@ -108,7 +111,7 @@ const AttachmentsContainer = () => {
   const { fetchData: updateData } = useAxios({
     service: updateAttachment,
     defaultResponse: null,
-    onResponseError: onAttachmentError,
+    onResponseError: onAttachmentUpdateError,
     onResponse: onAttachmentUpdate,
     fetchOnMount: false
   })
