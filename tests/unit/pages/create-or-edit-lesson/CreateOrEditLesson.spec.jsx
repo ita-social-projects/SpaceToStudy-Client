@@ -3,7 +3,7 @@ import { renderWithProviders } from '~tests/test-utils'
 
 import CreateOrEditLesson from '~/pages/create-or-edit-lesson/CreateOrEditLesson'
 
-describe('NewLesson', () => {
+describe('CreateOrEditLesson', () => {
   beforeEach(() => {
     renderWithProviders(<CreateOrEditLesson />)
   })

@@ -152,7 +152,9 @@ const CreateOrEditLesson = () => {
   })
 
   useEffect(() => {
-    void fetchDataLesson(id)
+    if (id) {
+      void fetchDataLesson(id)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
