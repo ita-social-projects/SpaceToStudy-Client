@@ -1,14 +1,15 @@
 import { AxiosResponse } from 'axios'
+
 import { axiosClient } from '~/plugins/axiosClient'
 
 import { URLs } from '~/constants/request'
 import {
-  GetLessonsParams,
-  ItemsWithCount,
-  Lesson,
   Attachment,
   GetAttachmentsParams,
-  NewLessonData
+  GetLessonsParams,
+  ItemsWithCount,
+  NewLessonData,
+  Lesson
 } from '~/types'
 import { createUrlPath } from '~/utils/helper-functions'
 

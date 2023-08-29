@@ -6,4 +6,6 @@ export interface MyAttachmentsFilters {
 
 export interface GetAttachmentsParams
   extends Partial<RequestParams>,
-    Partial<MyAttachmentsFilters> {}
+    Partial<MyAttachmentsFilters> {
+  fileName: string
+}

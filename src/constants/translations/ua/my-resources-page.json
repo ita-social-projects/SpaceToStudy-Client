@@ -22,7 +22,8 @@
     "file": "Файл",
     "size": "Розмір",
     "lastUpdate": "Останнє оновлення",
-    "emptyAttachments": "У вас ще немає вкладень"
+    "emptyAttachments": "У вас ще немає вкладень",
+    "addAttachment": "Добавити файл"
   },
   "quizzes": {
     "newQuizBtn": "Новий тест",

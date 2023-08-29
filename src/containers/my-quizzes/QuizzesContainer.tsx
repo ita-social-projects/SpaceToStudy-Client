@@ -11,16 +11,17 @@ import useSort from '~/hooks/table/use-sort'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import useAxios from '~/hooks/use-axios'
 
+import { defaultResponses, snackbarVariants } from '~/constants'
 import {
   columns,
   initialSort,
   itemsLoadLimit,
   removeColumnRules
 } from '~/containers/my-quizzes/QuizzesContainer.constants'
-import { ErrorResponse, ItemsWithCount, Quiz } from '~/types'
-import { defaultResponses, snackbarVariants } from '~/constants'
-import { ajustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
+
 import { styles } from '~/containers/my-quizzes/QuizzesContainer.styles'
+import { ErrorResponse, ItemsWithCount, Quiz } from '~/types'
+import { ajustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
 
 const QuizzesContainer = () => {
   const { t } = useTranslation()
