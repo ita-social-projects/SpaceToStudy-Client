@@ -1,20 +1,18 @@
-import { ChangeEvent, useCallback, useRef, useState } from 'react'
+import { useCallback, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import SearchIcon from '@mui/icons-material/Search'
 import Box from '@mui/material/Box'
 
-import AppButton from '~/components/app-button/AppButton'
+import AddResourceWithInput from '~/containers/my-resources/add-resource-with-input/AddResourceWithInput'
 import EnhancedTable from '~/components/enhanced-table/EnhancedTable'
-import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
-
-import useBreakpoints from '~/hooks/use-breakpoints'
 import AppPagination from '~/components/app-pagination/AppPagination'
+import useBreakpoints from '~/hooks/use-breakpoints'
 import usePagination from '~/hooks/table/use-pagination'
-import { useDebounce } from '~/hooks/use-debounce'
 import Loader from '~/components/loader/Loader'
 import useSort from '~/hooks/table/use-sort'
 import useAxios from '~/hooks/use-axios'
+import { useSnackBarContext } from '~/context/snackbar-context'
 import { ResourceService } from '~/services/resource-service'
+import { authRoutes } from '~/router/constants/authRoutes'
 
 import { defaultResponses, snackbarVariants } from '~/constants'
 import {
@@ -23,10 +21,9 @@ import {
   itemsLoadLimit,
   removeColumnRules
 } from '~/containers/my-resources/attachments-container/AttachmentsContainer.constants'
-import { styles } from '~/containers/my-resources/attachments-container/AttachmentsContainer.styles'
-import { useSnackBarContext } from '~/context/snackbar-context'
-import { Attachment, ErrorResponse, ItemsWithCount } from '~/types'
 import { ajustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
+import { styles } from '~/containers/my-resources/attachments-container/AttachmentsContainer.styles'
+import { Attachment, ErrorResponse, ItemsWithCount } from '~/types'
 
 const AttachmentsContainer = () => {
   const { t } = useTranslation()
@@ -36,7 +33,9 @@ const AttachmentsContainer = () => {
   const sortOptions = useSort({ initialSort })
   const { sort } = sortOptions
 
-  const [searchInput, setSearchInput] = useState<string>('')
+  const breakpoints = useBreakpoints()
+  const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
+
   const searchFileName = useRef<string>('')
 
   const getAttachments = useCallback(
@@ -60,11 +59,13 @@ const AttachmentsContainer = () => {
     [setAlert]
   )
 
-  const { response, loading, fetchData } = useAxios<ItemsWithCount<Attachment>>({
-    service: getAttachments,
-    defaultResponse: defaultResponses.itemsWithCount,
-    onResponseError: onAttachmentError
-  })
+  const { response, loading, fetchData } = useAxios<ItemsWithCount<Attachment>>(
+    {
+      service: getAttachments,
+      defaultResponse: defaultResponses.itemsWithCount,
+      onResponseError: onAttachmentError
+    }
+  )
   const columnsToShow = ajustColumns(breakpoints, columns, removeColumnRules)
   const rowActions = [
     {
@@ -77,37 +78,13 @@ const AttachmentsContainer = () => {
     }
   ]
 
-  const debouncedOnSearch = useDebounce((text: string) => {
-    searchFileName.current = text
-    void fetchData()
-  })
-
-  const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchInput(e.target.value)
-    debouncedOnSearch(e.target.value)
-  }
-
-  const onSearchClear = () => {
-    setSearchInput('')
-    searchFileName.current = ''
-    void fetchData()
-  }
-
   const addAttachmentBlock = (
-    <Box sx={styles.container}>
-      <AppButton disabled sx={styles.addButton}>
-        {t('myResourcesPage.attachments.addAttachment')}
-        <span style={styles.newAttachmentIcon}>{t('common.plusSign')}</span>
-      </AppButton>
-      <InputWithIcon
-        endAdornment={<SearchIcon sx={styles.searchIcon} />}
-        onChange={onSearchChange}
-        onClear={onSearchClear}
-        placeholder={t('common.search')}
-        sx={styles.input}
-        value={searchInput}
-      />
-    </Box>
+    <AddResourceWithInput
+      btnText='myResourcesPage.attachments.addAttachment'
+      fetchData={fetchData}
+      link={authRoutes.myResources.root.path}
+      searchRef={searchFileName}
+    />
   )
 
   const tableAttachments = (
@@ -115,7 +92,7 @@ const AttachmentsContainer = () => {
       <EnhancedTable
         columns={columnsToShow}
         data={{ items: response.items }}
-        emptyTableKey='myResourcesPage.emptyAttachments'
+        emptyTableKey='myResourcesPage.attachments.emptyAttachments'
         rowActions={rowActions}
         sort={sortOptions}
         sx={styles.table}
