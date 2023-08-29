@@ -120,7 +120,6 @@ const QuizzesContainer = () => {
     }
   ]
 
-
   const tableWithPagination = (
     <>
       <EnhancedTable
@@ -150,7 +149,6 @@ const QuizzesContainer = () => {
       {loading ? <Loader pageLoad size={50} /> : tableWithPagination}
     </Box>
   )
-
 }
 
 export default QuizzesContainer
