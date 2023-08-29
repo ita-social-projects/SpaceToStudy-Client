@@ -4,32 +4,32 @@ import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
-import { styles } from '~/components/icon-extention-with-title/IconExtentionWithTitle.styles'
+import { styles } from '~/components/icon-extension-with-title/IconExtensionWithTitle.styles'
 
 import { convertBytesToProperFormat } from '~/utils/helper-functions'
 
-interface IconExtentionWithTitleProps {
+interface IconExtensionWithTitleProps {
   title: string
-  description?: number
+  size?: number
 }
 
-const IconExtentionWithTitle: FC<IconExtentionWithTitleProps> = ({
+const IconExtensionWithTitle: FC<IconExtensionWithTitleProps> = ({
   title,
-  description
+  size
 }) => {
   const { t } = useTranslation()
 
   const fileExtension = title.slice(title.lastIndexOf('.') + 1)
-  const convertDescription = (descriptionNumber: number) => {
-    const { size, unit } = convertBytesToProperFormat(descriptionNumber)
-    return size + ' ' + t(`common.${unit}`)
+  const convertSize = (incomingSize: number) => {
+    const { size: properSize, unit } = convertBytesToProperFormat(incomingSize)
+    return properSize + ' ' + t(`common.${unit}`)
   }
 
   return (
     <Box sx={styles.container}>
       <Box sx={styles.iconBox}>{fileExtension}</Box>
       <TitleWithDescription
-        description={description && convertDescription(description)}
+        description={size && convertSize(size)}
         style={styles.titleWithDescription}
         title={title}
       />
@@ -37,4 +37,4 @@ const IconExtentionWithTitle: FC<IconExtentionWithTitleProps> = ({
   )
 }
 
-export default IconExtentionWithTitle
+export default IconExtensionWithTitle
