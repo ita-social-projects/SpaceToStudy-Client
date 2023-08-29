@@ -1,8 +1,12 @@
 <<<<<<< HEAD:src/pages/create-or-edit-lesson/CreateOrEditLesson.tsx
+<<<<<<< HEAD:src/pages/create-or-edit-lesson/CreateOrEditLesson.tsx
 import { useState, useEffect, useCallback } from 'react'
 =======
 import { useState, useCallback  } from 'react'
 >>>>>>> 4bf6336 (Small fix):src/pages/new-lesson/NewLesson.tsx
+=======
+import { useState, useCallback } from 'react'
+>>>>>>> 8e16e12 (fix):src/pages/new-lesson/NewLesson.tsx
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { AxiosResponse } from 'axios'
@@ -53,9 +57,12 @@ const CreateOrEditLesson = () => {
   const { t } = useTranslation()
   const { setAlert } = useSnackBarContext()
 <<<<<<< HEAD:src/pages/create-or-edit-lesson/CreateOrEditLesson.tsx
+<<<<<<< HEAD:src/pages/create-or-edit-lesson/CreateOrEditLesson.tsx
 =======
   const navigate = useNavigate()
 >>>>>>> 4bf6336 (Small fix):src/pages/new-lesson/NewLesson.tsx
+=======
+>>>>>>> 8e16e12 (fix):src/pages/new-lesson/NewLesson.tsx
 
   const { openModal } = useModalContext()
   const navigate = useNavigate()
@@ -64,12 +71,24 @@ const CreateOrEditLesson = () => {
 
   const formData = new FormData()
 
+<<<<<<< HEAD:src/pages/create-or-edit-lesson/CreateOrEditLesson.tsx
   const createAttachments = useCallback(
     (data?: FormData) => attachmentService.createAttachments(data),
     []
   )
 
   const handleOpenModal = () => openModal({ component: <AddAttachments /> })
+=======
+  const handleOpenModal = () =>
+    openModal({
+      component: (
+        <AddAttachments
+          attachments={attachments}
+          onAddAttachments={setAttachments}
+        />
+      )
+    })
+>>>>>>> 8e16e12 (fix):src/pages/new-lesson/NewLesson.tsx
 
   const handleResponseError = (error: ErrorResponse) => {
     setAlert({
@@ -251,11 +270,6 @@ const CreateOrEditLesson = () => {
           value={data.description}
           variant={TextFieldVariantEnum.Standard}
         />
-        <Divider sx={styles.divider} />
-        <AppButton onClick={handleOpenModal} sx={styles.addAttachmentBtn}>
-          {t('myResourcesPage.attachments.addAttachment')}
-          <AddIcon sx={styles.addAttachmentIcon} />
-        </AppButton>
         <Divider sx={styles.divider} />
         <AppButton
           onClick={handleOpenAddAttachmentsModal}
