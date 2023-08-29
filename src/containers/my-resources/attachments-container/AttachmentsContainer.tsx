@@ -81,13 +81,15 @@ const AttachmentsContainer = () => {
     []
   )
 
-  const { response, loading, fetchData } = useAxios<ItemsWithCount<Attachment>>(
-    {
-      service: getAttachments,
-      defaultResponse: defaultResponses.itemsWithCount,
-      onResponseError: onAttachmentError
-    }
-  )
+  const {
+    response,
+    loading,
+    fetchData: fetchGetAttachments
+  } = useAxios<ItemsWithCount<Attachment>>({
+    service: getAttachments,
+    defaultResponse: defaultResponses.itemsWithCount,
+    onResponseError: onAttachmentError
+  })
 
   const { error, fetchData: fetchDeleteAttachment } = useAxios({
     service: deleteAttachment,
@@ -101,7 +103,7 @@ const AttachmentsContainer = () => {
   const handleDeleteAttachment = async (id: string, isConfirmed: boolean) => {
     if (isConfirmed) {
       await fetchDeleteAttachment(id)
-      if (!error) await fetchData()
+      if (!error) await fetchGetAttachments()
     }
   }
 
