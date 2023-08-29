@@ -1,11 +1,11 @@
 import { screen } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
-import IconExtentionWithTitle from '~/components/icon-extention-with-title/IconExtentionWithTitle'
+import IconExtensionWithTitle from '~/components/icon-extension-with-title/IconExtensionWithTitle'
 
-describe('IconExtentionWithTitle test', () => {
+describe('IconExtensionWithTitle test', () => {
   beforeEach(() => {
     renderWithProviders(
-      <IconExtentionWithTitle description='13' title='NameOfAttachment.doc' />
+      <IconExtensionWithTitle size={21855} title='NameOfAttachment.doc' />
     )
   })
 
@@ -22,7 +22,7 @@ describe('IconExtentionWithTitle test', () => {
   })
 
   it('Should render description', () => {
-    const description = screen.getByText('13 common.bytes')
+    const description = screen.getByText('21.3 common.kilobytes')
 
     expect(description).toBeInTheDocument()
   })
