@@ -1,9 +1,15 @@
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate } from 'react-router-dom'
 import { AxiosResponse } from 'axios'
 import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
+import AddIcon from '@mui/icons-material/Add'
+import CloseIcon from '@mui/icons-material/Close'
+import IconButton from '@mui/material/IconButton'
 
+import AddAttachments from '~/containers/add-attachments/AddAttachments'
+import IconExtensionWithTitle from '~/components/icon-extension-with-title/IconExtensionWithTitle'
 import AppButton from '~/components/app-button/AppButton'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import FileEditor from '~/components/file-editor/FileEditor'
@@ -12,6 +18,7 @@ import { useSnackBarContext } from '~/context/snackbar-context'
 import useAxios from '~/hooks/use-axios'
 import useForm from '~/hooks/use-form'
 import { ResourceService } from '~/services/resource-service'
+import { useModalContext } from '~/context/modal-context'
 
 import { snackbarVariants } from '~/constants'
 import {
@@ -27,13 +34,16 @@ import {
   ErrorResponse,
   NewLessonData,
   SizeEnum,
-  TextFieldVariantEnum
+  TextFieldVariantEnum,
+  Attachment
 } from '~/types'
 
 const NewLesson = () => {
   const { t } = useTranslation()
   const { setAlert } = useSnackBarContext()
+  const { openModal } = useModalContext()
   const navigate = useNavigate()
+  const [attachments, setAttachments] = useState<Attachment[]>([])
 
   const handleResponseError = (error: ErrorResponse) => {
     setAlert({
@@ -50,8 +60,35 @@ const NewLesson = () => {
     navigate('/my-resources')
   }
 
+  const handleAddAttachments = (attachments: Attachment[]) => {
+    setAttachments(attachments)
+  }
+
+  const handleOpenAddAttachmentsModal = () => {
+    openModal({
+      component: (
+        <AddAttachments
+          attachments={attachments}
+          onAddAttachments={handleAddAttachments}
+        />
+      )
+    })
+  }
+
+  const handleRemoveAttachment = (attachment: Attachment) => {
+    setAttachments((prevAttachments) =>
+      prevAttachments.filter(
+        (prevAttachment) => prevAttachment._id !== attachment._id
+      )
+    )
+  }
+
   const addLesson = (): Promise<AxiosResponse> => {
-    return ResourceService.addLesson(data)
+    const lesson = {
+      ...data,
+      attachments: attachments.map((attachment) => attachment._id)
+    }
+    return ResourceService.addLesson(lesson)
   }
 
   const { fetchData } = useAxios({
@@ -69,6 +106,18 @@ const NewLesson = () => {
       onSubmit: fetchData,
       submitWithData: true
     })
+
+  const attachmentsList = attachments.map((attachment) => (
+    <Box key={attachment.size} sx={styles.attachmentList.container}>
+      <IconExtensionWithTitle
+        size={attachment.size}
+        title={attachment.fileName}
+      />
+      <IconButton onClick={() => handleRemoveAttachment(attachment)}>
+        <CloseIcon />
+      </IconButton>
+    </Box>
+  ))
   return (
     <PageWrapper>
       <Box
@@ -99,7 +148,14 @@ const NewLesson = () => {
           variant={TextFieldVariantEnum.Standard}
         />
         <Divider sx={styles.divider} />
+        <AppButton
+          onClick={handleOpenAddAttachmentsModal}
+          sx={styles.addAttachments}
+        >
+          {t('newLesson.labels.attachments')} <AddIcon sx={styles.addIcon} />
+        </AppButton>
         <FileEditor />
+        {attachmentsList}
         <Box sx={styles.buttons}>
           <AppButton size={SizeEnum.ExtraLarge} type={ButtonTypeEnum.Submit}>
             {t('common.save')}
