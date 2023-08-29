@@ -20,7 +20,7 @@ import {
 } from '~/containers/my-quizzes/QuizzesContainer.constants'
 
 import { styles } from '~/containers/my-quizzes/QuizzesContainer.styles'
-import { ErrorResponse, ItemsWithCount, Quiz, SortEnum } from '~/types'
+import { ErrorResponse, ItemsWithCount, Quiz } from '~/types'
 import { ajustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
 
 const QuizzesContainer = () => {
