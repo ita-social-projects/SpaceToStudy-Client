@@ -1,4 +1,10 @@
-import { useState, ChangeEvent, FC, MutableRefObject } from 'react'
+import {
+  useState,
+  ChangeEvent,
+  FC,
+  MutableRefObject,
+  ReactElement
+} from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import SearchIcon from '@mui/icons-material/Search'
@@ -12,17 +18,19 @@ import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
 import { styles } from '~/containers/my-resources/add-resource-with-input/AddResourceWithInput.styles'
 
 interface AddResourceWithInputProps {
-  btnText: string
+  btnText?: string
   fetchData: () => Promise<void>
-  link: string
+  link?: string
   searchRef: MutableRefObject<string>
+  button?: ReactElement
 }
 
 const AddResourceWithInput: FC<AddResourceWithInputProps> = ({
   btnText,
   fetchData,
   link,
-  searchRef
+  searchRef,
+  button
 }) => {
   const { t } = useTranslation()
   const [searchInput, setSearchInput] = useState<string>('')
@@ -45,10 +53,14 @@ const AddResourceWithInput: FC<AddResourceWithInputProps> = ({
 
   return (
     <Box sx={styles.container}>
-      <AppButton component={Link} to={link}>
-        {t(btnText)}
-        <AddIcon sx={styles.addIcon} />
-      </AppButton>
+      {!button ? (
+        <AppButton component={Link} to={link}>
+          {!button && t(btnText)}
+          <AddIcon sx={styles.addIcon} />
+        </AppButton>
+      ) : (
+        button
+      )}
 
       <InputWithIcon
         endAdornment={<SearchIcon sx={styles.searchIcon} />}

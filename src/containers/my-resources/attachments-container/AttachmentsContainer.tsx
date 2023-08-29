@@ -1,7 +1,22 @@
 import { useCallback, useRef, useState } from 'react'
 import Box from '@mui/material/Box'
+import AddIcon from '@mui/icons-material/Add'
 
+<<<<<<< HEAD
+=======
+import AddResourceWithInput from '~/containers/my-resources/add-resource-with-input/AddResourceWithInput'
+import EnhancedTable from '~/components/enhanced-table/EnhancedTable'
+<<<<<<< HEAD
+import useConfirm from '~/hooks/use-confirm'
+import AppPagination from '~/components/app-pagination/AppPagination'
+import useBreakpoints from '~/hooks/use-breakpoints'
+import usePagination from '~/hooks/table/use-pagination'
+import Loader from '~/components/loader/Loader'
+import useSort from '~/hooks/table/use-sort'
+import useAxios from '~/hooks/use-axios'
 import { useSnackBarContext } from '~/context/snackbar-context'
+import Loader from '~/components/loader/Loader'
+import AppPagination from '~/components/app-pagination/AppPagination'
 import { ResourceService } from '~/services/resource-service'
 import AddResourceWithInput from '~/containers/my-resources/add-resource-with-input/AddResourceWithInput'
 import MyResourcesTable from '~/containers/my-resources/my-resources-table/MyResourcesTable'
@@ -10,9 +25,9 @@ import useSort from '~/hooks/table/use-sort'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import useAxios from '~/hooks/use-axios'
 import usePagination from '~/hooks/table/use-pagination'
+import AddDocuments from '~/containers/add-documents/AddDocuments'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { attachmentService } from '~/services/attachment-service'
-import AddDocuments from '~/containers/add-documents/AddDocuments'
 
 import { defaultResponses, snackbarVariants } from '~/constants'
 import {
@@ -22,15 +37,17 @@ import {
   removeColumnRules
 } from '~/containers/my-resources/attachments-container/AttachmentsContainer.constants'
 import { ajustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
-import { styles } from '~/containers/my-resources/attachments-container/AttachmentsContainer.styles'
+
 import {
   ItemsWithCount,
-  GetResourcesParams,
   Attachment,
   ErrorResponse,
+  ButtonVariantEnum,
   UpdateAttachmentParams,
-  ResourcesTabsEnum
+  ResourcesTabsEnum,
+  GetResourcesParams
 } from '~/types'
+import { styles } from '~/containers/my-resources/attachments-container/AttachmentsContainer.styles'
 
 const AttachmentsContainer = () => {
   const { setAlert } = useSnackBarContext()
@@ -77,6 +94,14 @@ const AttachmentsContainer = () => {
     (params?: UpdateAttachmentParams) =>
       ResourceService.updateAttachment(params),
     []
+
+  const { response, loading, fetchData: fetchAttachments } = useAxios<ItemsWithCount<Attachment>>(
+    {
+      service: getAttachments,
+      defaultResponse: defaultResponses.itemsWithCount,
+      onResponseError: onAttachmentError
+    }
+
   )
 
   const { response, loading, fetchData: fetchAttachments } = useAxios<
@@ -164,11 +189,19 @@ const AttachmentsContainer = () => {
 
   const addAttachmentBlock = (
     <AddResourceWithInput
-      btnText='myResourcesPage.attachments.addAttachment'
       fetchData={fetchAttachments}
-      link={authRoutes.myResources.root.path}
       searchRef={searchFileName}
-    />
+      button={
+        <AddDocuments
+          buttonText={t('myResourcesPage.attachments.addAttachment')}
+          fetchData={uploadFile}
+          formData={formData}
+          icon={<AddIcon sx={styles.addAttachmentIcon} />}
+          sx={styles.addAttachmentBtn}
+          variant={ButtonVariantEnum.Contained}
+        />
+      }
+      />
   )
 
   const props = {

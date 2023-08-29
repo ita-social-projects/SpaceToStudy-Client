@@ -1,5 +1,6 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, ReactElement, useEffect, useState } from 'react'
 import Box from '@mui/material/Box'
+import { SxProps } from '@mui/material'
 
 import FileUploader from '~/components/file-uploader/FileUploader'
 import { useSnackBarContext } from '~/context/snackbar-context'
@@ -7,18 +8,28 @@ import { useSnackBarContext } from '~/context/snackbar-context'
 import { validationData } from '~/containers/add-documents/AddDocuments.constants'
 import { styles } from '~/containers/add-documents/AddDocuments.styles'
 import { snackbarVariants } from '~/constants'
-import { Emitter } from '~/types'
+import { ButtonVariantEnum, Emitter } from '~/types'
+import { spliceSx } from '~/utils/helper-functions'
 
 interface AddDocumentsProps {
   fetchData: (formData: FormData) => Promise<void>
   formData: FormData
   buttonText: string
+  variant?: ButtonVariantEnum
+  sx?: {
+    root?: SxProps
+    button?: SxProps
+  }
+  icon?: ReactElement
 }
 
 const AddDocuments: FC<AddDocumentsProps> = ({
   fetchData,
   formData,
-  buttonText
+  buttonText,
+  variant,
+  sx = {},
+  icon
 }) => {
   const [documents, setDocuments] = useState<File[]>([])
   const [documentsError, setDocumentsError] = useState<string>('')
@@ -44,16 +55,22 @@ const AddDocuments: FC<AddDocumentsProps> = ({
 
     !error && void fetchData(formData)
   }
+  spliceSx
 
   return (
     <Box sx={styles.root}>
       <FileUploader
         buttonText={buttonText}
         emitter={addDocuments}
+        icon={icon}
         initialError={documentsError}
         initialState={documents}
-        sx={styles.fileUpload}
+        sx={{
+          root: spliceSx(styles.fileUpload.root, sx?.root),
+          button: spliceSx(styles.fileUpload.button, sx?.button)
+        }}
         validationData={validationData}
+        variant={variant}
       />
     </Box>
   )
