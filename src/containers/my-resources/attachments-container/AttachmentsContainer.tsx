@@ -99,7 +99,6 @@ const AttachmentsContainer = () => {
     onResponse: onDeleteAttachmentResponse
   })
 
-
   const handleDeleteAttachment = async (id: string, isConfirmed: boolean) => {
     if (isConfirmed) {
       await fetchDeleteAttachment(id)
