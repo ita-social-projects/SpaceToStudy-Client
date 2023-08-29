@@ -74,7 +74,6 @@ const AttachmentsContainer = () => {
       message: 'myResourcesPage.attachments.successDeletion'
     })
   }
-  
 
   const deleteAttachment = useCallback(
     (id?: string) => ResourceService.deleteAttachment(id ?? ''),
@@ -130,7 +129,7 @@ const AttachmentsContainer = () => {
   const addAttachmentBlock = (
     <AddResourceWithInput
       btnText='myResourcesPage.attachments.addAttachment'
-      fetchData={fetchData}
+      fetchData={fetchGetAttachments}
       link={authRoutes.myResources.root.path}
       searchRef={searchFileName}
     />
