@@ -1,3 +1,4 @@
+import palette from '~/styles/app-theme/app.pallete'
 import { TypographyVariantEnum } from '~/types'
 
 export const styles = {
@@ -41,5 +42,18 @@ export const styles = {
     display: 'flex',
     gap: { xs: '24px', sm: '30px' },
     justifyContent: 'space-between'
+  },
+  attachmentList: {
+    container: {
+      background: palette.basic.grey,
+      borderRadius: '5px',
+      p: '16px 24px',
+      display: 'flex',
+      justifyContent: 'space-between'
+    }
+  },
+  addIcon: { width: { xs: '18px', sm: '22px' }, ml: '5px' },
+  addAttachments: {
+    width: 'fit-content'
   }
 }
