@@ -1,30 +1,29 @@
-import { useCallback } from 'react'
+import { useCallback, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
-import SearchIcon from '@mui/icons-material/Search'
 
-import { ResourceService } from '~/services/resource-service'
-import { useSnackBarContext } from '~/context/snackbar-context'
-import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
+import AddResourceWithInput from '~/containers/my-resources/add-resource-with-input/AddResourceWithInput'
 import EnhancedTable from '~/components/enhanced-table/EnhancedTable'
-import Loader from '~/components/loader/Loader'
-import AppButton from '~/components/app-button/AppButton'
-import useAxios from '~/hooks/use-axios'
-import useBreakpoints from '~/hooks/use-breakpoints'
-import useSort from '~/hooks/table/use-sort'
 import AppPagination from '~/components/app-pagination/AppPagination'
+import useBreakpoints from '~/hooks/use-breakpoints'
 import usePagination from '~/hooks/table/use-pagination'
+import Loader from '~/components/loader/Loader'
+import useSort from '~/hooks/table/use-sort'
+import useAxios from '~/hooks/use-axios'
+import { useSnackBarContext } from '~/context/snackbar-context'
+import { ResourceService } from '~/services/resource-service'
+import { authRoutes } from '~/router/constants/authRoutes'
 
+import { defaultResponses, snackbarVariants } from '~/constants'
 import {
   columns,
-  removeColumnRules,
   initialSort,
-  itemsLoadLimit
+  itemsLoadLimit,
+  removeColumnRules
 } from '~/containers/my-resources/attachments-container/AttachmentsContainer.constants'
 import { ajustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
-import { defaultResponses, snackbarVariants } from '~/constants'
-import { ItemsWithCount, Attachment, ErrorResponse } from '~/types'
 import { styles } from '~/containers/my-resources/attachments-container/AttachmentsContainer.styles'
+import { Attachment, ErrorResponse, ItemsWithCount } from '~/types'
 
 const AttachmentsContainer = () => {
   const { t } = useTranslation()
@@ -37,6 +36,19 @@ const AttachmentsContainer = () => {
   const breakpoints = useBreakpoints()
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
 
+  const searchFileName = useRef<string>('')
+
+  const getAttachments = useCallback(
+    () =>
+      ResourceService.getAttachments({
+        limit: itemsPerPage,
+        skip: (page - 1) * itemsPerPage,
+        sort,
+        fileName: searchFileName.current
+      }),
+    [itemsPerPage, page, sort, searchFileName]
+  )
+
   const onAttachmentError = useCallback(
     (error: ErrorResponse) => {
       setAlert({
@@ -46,21 +58,14 @@ const AttachmentsContainer = () => {
     },
     [setAlert]
   )
-  const getAttachments = useCallback(
-    () =>
-      ResourceService.getAttachments({
-        limit: itemsPerPage,
-        skip: (page - 1) * itemsPerPage,
-        sort
-      }),
-    [itemsPerPage, page, sort]
-  )
 
-  const { response, loading } = useAxios<ItemsWithCount<Attachment>>({
-    service: getAttachments,
-    defaultResponse: defaultResponses.itemsWithCount,
-    onResponseError: onAttachmentError
-  })
+  const { response, loading, fetchData } = useAxios<ItemsWithCount<Attachment>>(
+    {
+      service: getAttachments,
+      defaultResponse: defaultResponses.itemsWithCount,
+      onResponseError: onAttachmentError
+    }
+  )
   const columnsToShow = ajustColumns(breakpoints, columns, removeColumnRules)
   const rowActions = [
     {
@@ -72,27 +77,22 @@ const AttachmentsContainer = () => {
       func: () => console.log(t('common.delete'))
     }
   ]
+
   const addAttachmentBlock = (
-    <Box sx={styles.container}>
-      <AppButton disabled sx={styles.addButton}>
-        {t('myResourcesPage.attachments.addAttachment')}
-        <span style={styles.newAttachmentIcon}>{t('common.plusSign')}</span>
-      </AppButton>
-      <InputWithIcon
-        endAdornment={<SearchIcon sx={styles.searchIcon} />}
-        onChange={() => null}
-        onClear={() => null}
-        placeholder={t('common.search')}
-        sx={styles.input}
-      ></InputWithIcon>
-    </Box>
+    <AddResourceWithInput
+      btnText='myResourcesPage.attachments.addAttachment'
+      fetchData={fetchData}
+      link={authRoutes.myResources.root.path}
+      searchRef={searchFileName}
+    />
   )
+
   const tableAttachments = (
     <>
       <EnhancedTable
         columns={columnsToShow}
         data={{ items: response.items }}
-        emptyTableKey='myResourcesPage.emptyAttachments'
+        emptyTableKey='myResourcesPage.attachments.emptyAttachments'
         rowActions={rowActions}
         sort={sortOptions}
         sx={styles.table}
@@ -112,4 +112,5 @@ const AttachmentsContainer = () => {
     </Box>
   )
 }
+
 export default AttachmentsContainer
