@@ -10,9 +10,11 @@ import useSort from '~/hooks/table/use-sort'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import useAxios from '~/hooks/use-axios'
 import usePagination from '~/hooks/table/use-pagination'
+import { authRoutes } from '~/router/constants/authRoutes'
+import { attachmentService } from '~/services/attachment-service'
+import AddDocuments from '~/containers/add-documents/AddDocuments'
 
 import { defaultResponses, snackbarVariants } from '~/constants'
-
 import {
   columns,
   initialSort,
@@ -65,11 +67,11 @@ const AttachmentsContainer = () => {
       }),
     [itemsPerPage, page, sort, searchFileName]
   )
+  const formData = new FormData()
 
   const deleteAttachment = useCallback(
     (id?: string) => ResourceService.deleteAttachment(id ?? ''),
-    []
-  )
+    [])
 
   const updateAttachment = useCallback(
     (params?: UpdateAttachmentParams) =>
@@ -77,7 +79,7 @@ const AttachmentsContainer = () => {
     []
   )
 
-  const { response, loading, fetchData } = useAxios<
+  const { response, loading, fetchData: fetchAttachments } = useAxios<
     ItemsWithCount<Attachment>,
     GetResourcesParams
   >({
@@ -86,7 +88,7 @@ const AttachmentsContainer = () => {
     onResponseError
   })
 
-  const onAttachmentUpdate = useCallback(() => void fetchData(), [fetchData])
+  const onAttachmentUpdate = useCallback(() => void fetchAttachments(), [fetchAttachments])
 
   const { fetchData: updateData } = useAxios({
     service: updateAttachment,
@@ -100,6 +102,13 @@ const AttachmentsContainer = () => {
     const id = selectedItemId
     setSelectedItemId('')
     if (fileName) await updateData({ id, fileName })
+  }
+
+  const handleDeleteAttachment = async (id: string, isConfirmed: boolean) => {
+    if (isConfirmed) {
+      await fetchDeleteAttachment(id)
+      if (!error) await fetchAttachments()
+    }
   }
   const onEdit = (id: string) => setSelectedItemId(id)
   const onCancel = () => setSelectedItemId('')
@@ -129,10 +138,34 @@ const AttachmentsContainer = () => {
       func: openDeletionConfirmDialog
     }
   ]
+
+  const createAttachments = useCallback(
+    (data?: FormData) => attachmentService.createAttachments(data),
+    []
+  )
+
+  const onCreateAttachmentsError = (error: ErrorResponse) => {
+    setAlert({
+      severity: snackbarVariants.error,
+      message: error ? `errors.${error.code}` : ''
+    })
+  }
+  const { fetchData: fetchCreateAttachment } = useAxios({
+    service: createAttachments,
+    fetchOnMount: false,
+    defaultResponse: null,
+    onResponseError: onCreateAttachmentsError
+  })
+
+  const uploadFile = async (data: FormData) => {
+    await fetchCreateAttachment(data)
+    await fetchAttachments()
+  }
+
   const addAttachmentBlock = (
     <AddResourceWithInput
       btnText='myResourcesPage.attachments.addAttachment'
-      fetchData={fetchGetAttachments}
+      fetchData={fetchAttachments}
       link={authRoutes.myResources.root.path}
       searchRef={searchFileName}
     />
@@ -140,7 +173,7 @@ const AttachmentsContainer = () => {
 
   const props = {
     columns: columnsToShow,
-    data: { response, getData: fetchData },
+    data: { response, getData: fetchAttachments },
     services: { deleteService: deleteAttachment },
     itemsPerPage,
     actions: { onEdit },
@@ -153,7 +186,7 @@ const AttachmentsContainer = () => {
     <Box>
       <AddResourceWithInput
         btnText={'myResourcesPage.attachments.addBtn'}
-        fetchData={fetchData}
+        fetchData={fetchAttachments}
         link={'#'}
         searchRef={searchFileName}
       />
