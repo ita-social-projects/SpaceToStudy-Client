@@ -148,11 +148,12 @@ const NewLesson = () => {
           variant={TextFieldVariantEnum.Standard}
         />
         <Divider sx={styles.divider} />
-        <Box>
-          <AppButton onClick={handleOpenAddAttachmentsModal}>
-            {t('newLesson.labels.attachments')} <AddIcon sx={styles.addIcon} />
-          </AppButton>
-        </Box>
+        <AppButton
+          onClick={handleOpenAddAttachmentsModal}
+          sx={styles.addAttachments}
+        >
+          {t('newLesson.labels.attachments')} <AddIcon sx={styles.addIcon} />
+        </AppButton>
         <FileEditor />
         {attachmentsList}
         <Box sx={styles.buttons}>

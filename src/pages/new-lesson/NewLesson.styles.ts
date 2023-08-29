@@ -52,5 +52,8 @@ export const styles = {
       justifyContent: 'space-between'
     }
   },
-  addIcon: { width: { xs: '18px', sm: '22px' }, ml: '5px' }
+  addIcon: { width: { xs: '18px', sm: '22px' }, ml: '5px' },
+  addAttachments: {
+    width: 'fit-content'
+  }
 }
