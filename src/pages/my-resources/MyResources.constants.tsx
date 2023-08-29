@@ -4,9 +4,9 @@ import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined'
 import AttachFileIcon from '@mui/icons-material/AttachFile'
 import NoteAltOutlinedIcon from '@mui/icons-material/NoteAltOutlined'
 
-import LessonsContainer from '~/containers/my-resources/lessons-container/LessonsContainer'
 import AttachmentsContainer from '~/containers/my-resources/attachments-container/AttachmentsContainer'
 import QuizzesContainer from '~/containers/my-quizzes/QuizzesContainer'
+import LessonsContainer from '~/containers/my-resources/lessons-container/LessonsContainer'
 
 interface TabsData {
   [key: string]: {
