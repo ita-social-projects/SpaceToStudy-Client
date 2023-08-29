@@ -53,7 +53,7 @@ const FileUploader: FC<FileUploaderProps> = ({
   })
 
   const filesList = initialState.map((item: File) => (
-    <ListItem key={`${item.name}-${Date.now()}`} sx={styles.listItem}>
+    <ListItem key={`${item.name}-${item.lastModified}`} sx={styles.listItem}>
       <Typography sx={styles.fileName}>{item.name}</Typography>
       <IconButton
         data-testid='delete-file'
