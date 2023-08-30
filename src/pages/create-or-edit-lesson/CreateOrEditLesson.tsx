@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { AxiosResponse } from 'axios'
@@ -40,7 +40,6 @@ import {
   TextFieldVariantEnum,
   Attachment
 } from '~/types'
-import { useEffect } from 'react'
 
 const CreateOrEditLesson = () => {
   const { t } = useTranslation()
