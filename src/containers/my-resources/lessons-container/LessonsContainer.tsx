@@ -103,7 +103,7 @@ const LessonsContainer = () => {
   }
 
   const handleEditLesson = (id: string) => {
-    navigate(createUrlPath(authRoutes.myResources.myLesson.path, id))
+    navigate(createUrlPath(authRoutes.myResources.editLesson.path, id))
   }
 
   const openDeletionConfirmDialog = (id: string) => {

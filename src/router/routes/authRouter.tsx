@@ -8,7 +8,7 @@ import {
   editProfile,
   findOffers,
   myCooperations,
-  myLesson,
+  editLesson,
   myOffers,
   myProfile,
   myResources,
@@ -104,8 +104,8 @@ export const authRouter = (
     />
     <Route
       element={<CreateOrEditLesson />}
-      handle={{ crumb: [myResources, myLesson] }}
-      path={authRoutes.myResources.myLesson.route}
+      handle={{ crumb: [myResources, editLesson] }}
+      path={authRoutes.myResources.editLesson.route}
     />
   </Route>
 )
