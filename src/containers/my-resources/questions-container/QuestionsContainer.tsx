@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box'
 
-const QuizzesContainer = () => {
+const QuestionsContainer = () => {
   return (
     <Box>
       <h3>Questions</h3>
@@ -8,4 +8,4 @@ const QuizzesContainer = () => {
   )
 }
 
-export default QuizzesContainer
+export default QuestionsContainer
