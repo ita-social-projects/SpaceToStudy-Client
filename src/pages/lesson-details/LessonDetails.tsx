@@ -2,14 +2,16 @@ import { useCallback, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { AxiosResponse } from 'axios'
 import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 
+import Loader from '~/components/loader/Loader'
+import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import useAxios from '~/hooks/use-axios'
 import { ResourceService } from '~/services/resource-service'
 import {
   attachmentsMock,
+  contentMock,
   defaultResponse
 } from '~/pages/lesson-details/LessonDetails.constants'
 import Accordions from '~/components/accordion/Accordions'
@@ -18,7 +20,6 @@ import IconExtensionWithTitle from '~/components/icon-extension-with-title/IconE
 import { errorRoutes } from '~/router/constants/errorRoutes'
 import { styles } from '~/pages/lesson-details/LessonsDetails.styles'
 import { Lesson, TypographyVariantEnum } from '~/types'
-import Loader from '~/components/loader/Loader'
 
 const LessonDetails = () => {
   const [activeItems, setActiveItems] = useState<number[]>([])
@@ -57,10 +58,6 @@ const LessonDetails = () => {
     return <Loader pageLoad />
   }
 
-  if (!response) {
-    return null
-  }
-
   const attachmentsList = attachmentsMock.map((attachment) => (
     <Box key={attachment.size} sx={styles.attachment}>
       <IconExtensionWithTitle
@@ -73,8 +70,7 @@ const LessonDetails = () => {
   const items = [
     {
       title: 'lesson.content',
-      content:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quis lobortis nisl cursus bibendum sit nulla accumsan sodales ornare. At urna viverra non suspendisse neque, lorem. Pretium condimentum pellentesque gravida id etiam sit sed arcu euismod. Rhoncus proin orci duis scelerisque molestie cursus tincidunt aliquam.'
+      content: contentMock
     },
     {
       title: 'lesson.attachments',
@@ -84,8 +80,11 @@ const LessonDetails = () => {
 
   return (
     <PageWrapper>
-      <Typography sx={styles.title}>{response.title}</Typography>
-      <Typography sx={styles.description}>{response.description}</Typography>
+      <TitleWithDescription
+        description={response.description}
+        style={styles.titleWithDescription}
+        title={response.title}
+      />
       <Accordions
         activeIndex={activeItems}
         descriptionVariant={TypographyVariantEnum.Body2}

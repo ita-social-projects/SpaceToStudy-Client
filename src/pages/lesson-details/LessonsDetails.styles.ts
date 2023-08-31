@@ -2,8 +2,11 @@ import palette from '~/styles/app-theme/app.pallete'
 import { TypographyVariantEnum } from '~/types'
 
 export const styles = {
-  title: { typography: TypographyVariantEnum.H4, mb: '16px' },
-  description: { typography: TypographyVariantEnum.Body2, mb: '24px' },
+  titleWithDescription: {
+    wrapper: { mb: '24px' },
+    title: { typography: TypographyVariantEnum.H4, mb: '16px' },
+    description: { typography: TypographyVariantEnum.Body2 }
+  },
   attachmentList: {
     display: 'flex',
     flexDirection: 'column',

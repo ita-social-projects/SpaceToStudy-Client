@@ -37,3 +37,6 @@ export const attachmentsMock = [
     updatedAt: '2023-08-16T12:03:56.773Z'
   }
 ]
+
+export const contentMock =
+  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quis lobortis nisl cursus bibendum sit nulla accumsan sodales ornare. At urna viverra non suspendisse neque, lorem. Pretium condimentum pellentesque gravida id etiam sit sed arcu euismod. Rhoncus proin orci duis scelerisque molestie cursus tincidunt aliquam.'
