@@ -195,7 +195,7 @@ const CreateOrEditLesson = () => {
           errorMsg={t(errors.title)}
           fullWidth
           inputProps={styles.input}
-          label={data.title ? '' : t('newLesson.labels.title')}
+          label={data.title ? '' : t('lesson.labels.title')}
           onChange={handleInputChange('title')}
           value={data.title}
           variant={TextFieldVariantEnum.Standard}
@@ -206,7 +206,7 @@ const CreateOrEditLesson = () => {
           errorMsg={t(errors.description)}
           fullWidth
           inputProps={styles.input}
-          label={data.description ? '' : t('newLesson.labels.description')}
+          label={data.description ? '' : t('lesson.labels.description')}
           onChange={handleInputChange('description')}
           value={data.description}
           variant={TextFieldVariantEnum.Standard}
@@ -216,7 +216,7 @@ const CreateOrEditLesson = () => {
           onClick={handleOpenAddAttachmentsModal}
           sx={styles.addAttachments}
         >
-          {t('newLesson.labels.attachments')} <AddIcon sx={styles.addIcon} />
+          {t('lesson.labels.attachments')} <AddIcon sx={styles.addIcon} />
         </AppButton>
         <FileEditor />
         {attachmentsList}
