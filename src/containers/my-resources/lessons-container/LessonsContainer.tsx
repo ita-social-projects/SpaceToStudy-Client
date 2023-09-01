@@ -1,8 +1,8 @@
 import Box from '@mui/material/Box'
 import { useCallback, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
 
-import AppDrawer from '~/components/app-drawer/AppDrawer'
 import AppPagination from '~/components/app-pagination/AppPagination'
 import EnhancedTable from '~/components/enhanced-table/EnhancedTable'
 import AddResourceWithInput from '~/containers/my-resources/add-resource-with-input/AddResourceWithInput'
@@ -20,7 +20,6 @@ import useSort from '~/hooks/table/use-sort'
 import useAxios from '~/hooks/use-axios'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import useConfirm from '~/hooks/use-confirm'
-import { useDrawer } from '~/hooks/use-drawer'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { ResourceService } from '~/services/resource-service'
 
@@ -31,17 +30,21 @@ import {
   ItemsWithCount,
   Lesson
 } from '~/types'
-import { ajustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
+import {
+  ajustColumns,
+  createUrlPath,
+  getScreenBasedLimit
+} from '~/utils/helper-functions'
 
 const LessonsContainer = () => {
   const { t } = useTranslation()
   const searchTitle = useRef<string>('')
   const { setAlert } = useSnackBarContext()
   const { openDialog } = useConfirm()
-  const { openDrawer, closeDrawer, isOpen } = useDrawer()
   const breakpoints = useBreakpoints()
   const sortOptions = useSort({ initialSort })
   const { page, handleChangePage } = usePagination()
+  const navigate = useNavigate()
 
   const { sort, onRequestSort } = sortOptions
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
@@ -99,8 +102,8 @@ const LessonsContainer = () => {
     }
   }
 
-  const handleEditLesson = () => {
-    openDrawer()
+  const handleEditLesson = (id: string) => {
+    navigate(createUrlPath(authRoutes.myResources.editLesson.path, id))
   }
 
   const openDeletionConfirmDialog = (id: string) => {
@@ -156,9 +159,6 @@ const LessonsContainer = () => {
         searchRef={searchTitle}
       />
       {loading ? <Loader pageLoad size={50} /> : tableWithPagination}
-      <AppDrawer onClose={closeDrawer} open={isOpen}>
-        Mocked empty edit lesson text
-      </AppDrawer>
     </Box>
   )
 }
