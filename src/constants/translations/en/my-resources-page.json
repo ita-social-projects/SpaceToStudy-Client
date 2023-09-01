@@ -21,7 +21,9 @@
     "file": "File",
     "size": "Size",
     "lastUpdate": "Last update",
-    "emptyAttachments": "You have no attachments yet"
+    "emptyAttachments": "You have no attachments yet",
+    "confirmAttachmentDeletionTitle":"Do you confirm attachment deletion?",
+    "successDeletion":"Attachment was deleted successfully"
   },
   "quizzes": {
     "newQuizBtn": "New quiz",
