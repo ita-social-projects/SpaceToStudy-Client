@@ -9,5 +9,7 @@
   "errorMessages": {
     "title": "Please provide a title.",
     "description": "Please provide a description."
-  }
+  },
+  "content": "Content",
+  "attachments": "Attachments"
 }
