@@ -24,6 +24,10 @@
   "bytes": "Б",
   "kilobytes": "КБ",
   "megabytes": "МБ",
+  "uploadNewFile": "Завантажити новий файл",
+  "typeError": "Неправильний тип файлу. Дозволяються лише файли .pdf/.jpg/.jpeg",
+  "allFilesSizeError": "Помилка розміру всіх файлів",
+  "fileSizeError": "Size for one file cannot be more than 10 MB.",
   "labels": {
     "sendMessage": "Надіслати повідомлення",
     "viewDetails": "Переглянути деталі",

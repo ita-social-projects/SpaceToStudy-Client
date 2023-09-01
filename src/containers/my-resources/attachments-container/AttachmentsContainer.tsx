@@ -22,8 +22,8 @@ import {
   removeColumnRules
 } from '~/containers/my-resources/attachments-container/AttachmentsContainer.constants'
 import { ajustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
+import { ItemsWithCount, Attachment, ErrorResponse } from '~/types'
 import { styles } from '~/containers/my-resources/attachments-container/AttachmentsContainer.styles'
-import { Attachment, ErrorResponse, ItemsWithCount } from '~/types'
 
 const AttachmentsContainer = () => {
   const { t } = useTranslation()

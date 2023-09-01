@@ -64,7 +64,8 @@ export enum ComponentEnum {
   Img = 'img',
   Span = 'span',
   Footer = 'footer',
-  Form = 'form'
+  Form = 'form',
+  Label = 'label'
 }
 
 export enum SortEnum {
@@ -84,4 +85,8 @@ export enum PositionEnum {
   Right = 'right',
   Bottom = 'bottom',
   Top = 'top'
+}
+
+export enum InputEnum {
+  File = 'file'
 }

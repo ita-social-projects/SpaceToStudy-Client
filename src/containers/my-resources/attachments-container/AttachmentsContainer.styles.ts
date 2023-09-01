@@ -22,15 +22,8 @@ export const styles = {
   searchIcon: {
     color: 'primary.700'
   },
-  addButton: {
-    py: '19px',
-    px: '40px'
-  },
-  newAttachmentIcon: {
-    fontSize: '25px',
-    marginLeft: '13px',
-    fontWeight: '400'
-  },
+  addAttachmentBtn: { width: 'fit-content' },
+  addAttachmentIcon: { ml: '5px', width: { xs: '18px', sm: '22px' } },
   table: roundedBorderTable,
   sizeTitle: captionTitle,
   dateTitle: captionTitle

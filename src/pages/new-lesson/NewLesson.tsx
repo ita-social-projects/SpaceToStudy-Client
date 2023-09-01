@@ -10,6 +10,8 @@ import IconButton from '@mui/material/IconButton'
 
 import AddAttachments from '~/containers/add-attachments/AddAttachments'
 import IconExtensionWithTitle from '~/components/icon-extension-with-title/IconExtensionWithTitle'
+
+import { useModalContext } from '~/context/modal-context'
 import AppButton from '~/components/app-button/AppButton'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import FileEditor from '~/components/file-editor/FileEditor'
@@ -18,7 +20,6 @@ import { useSnackBarContext } from '~/context/snackbar-context'
 import useAxios from '~/hooks/use-axios'
 import useForm from '~/hooks/use-form'
 import { ResourceService } from '~/services/resource-service'
-import { useModalContext } from '~/context/modal-context'
 
 import { snackbarVariants } from '~/constants'
 import {
@@ -41,6 +42,7 @@ import {
 const NewLesson = () => {
   const { t } = useTranslation()
   const { setAlert } = useSnackBarContext()
+
   const { openModal } = useModalContext()
   const navigate = useNavigate()
   const [attachments, setAttachments] = useState<Attachment[]>([])
