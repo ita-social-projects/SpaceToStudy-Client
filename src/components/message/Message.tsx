@@ -3,11 +3,16 @@ import { Link } from 'react-router-dom'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Avatar from '@mui/material/Avatar'
+import { SxProps } from '@mui/material'
 
 import AppCard from '~/components/app-card/AppCard'
 import { useAppSelector } from '~/hooks/use-redux'
 
-import { createUrlPath, getFormattedDate } from '~/utils/helper-functions'
+import {
+  createUrlPath,
+  getFormattedDate,
+  spliceSx
+} from '~/utils/helper-functions'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { styles } from '~/components/message/Message.styles'
 import { MessageInterface } from '~/types'
@@ -15,9 +20,12 @@ import { MessageInterface } from '~/types'
 interface MessageProps {
   message: MessageInterface
   prevMessage: MessageInterface | null
+  sx?: {
+    avatar?: SxProps
+  }
 }
 
-const Message: FC<MessageProps> = ({ message, prevMessage }) => {
+const Message: FC<MessageProps> = ({ message, prevMessage, sx = {} }) => {
   const { userId: myId } = useAppSelector((state) => state.appMain)
 
   const { author, text, authorRole, createdAt } = message
@@ -47,7 +55,7 @@ const Message: FC<MessageProps> = ({ message, prevMessage }) => {
     <Link onClick={handleLinkClick} to={pathToProfile}>
       <Avatar
         src={photo && `${import.meta.env.VITE_APP_IMG_USER_URL}${photo}`}
-        sx={styles.avatar}
+        sx={spliceSx(styles.avatar, sx.avatar)}
       />
     </Link>
   )

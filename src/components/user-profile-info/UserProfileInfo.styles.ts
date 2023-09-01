@@ -19,6 +19,14 @@ export const styles = {
       transform: 'scale(1.1)'
     }
   },
+  active: {
+    width: '12px',
+    height: '12px',
+    backgroundColor: 'basic.lime',
+    border: '3px solid',
+    borderColor: 'basic.white',
+    borderRadius: '50%'
+  },
   name: {
     color: 'primary.500',
     typography: TypographyVariantEnum.Button,
