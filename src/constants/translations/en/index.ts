@@ -33,7 +33,7 @@ import cooperationsPage from './cooperations-page.json'
 import myOffersPage from './my-offers-page.json'
 import myResourcesPage from './my-resources-page.json'
 import chatPage from './chat.json'
-import newLesson from './new-lesson.json'
+import lesson from './lesson.json'
 
 const en = {
   translations: {
@@ -72,7 +72,7 @@ const en = {
     myOffersPage,
     myResourcesPage,
     chatPage,
-    newLesson
+    lesson
   }
 }
 

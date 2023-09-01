@@ -9,14 +9,14 @@ import {
   findOffers,
   myCooperations,
   editLesson,
+  lessonDetails,
   myOffers,
   myProfile,
   myResources,
   newLesson,
   offerDetails,
   subjects,
-  userProfile,
-  lessonDetails
+  userProfile
 } from '~/router/constants/crumbs'
 import PrivateRoute from '~/router/helpers/PrivateRoute'
 import { UserRoleEnum } from '~/types'
