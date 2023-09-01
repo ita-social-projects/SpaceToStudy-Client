@@ -23,9 +23,7 @@ export const columns: TableColumn<Lesson>[] = [
       { navigate }: AdditionalPropsInterface
     ) => {
       const navigateLesson = () => {
-        navigate(
-          createUrlPath(authRoutes.myResources.editLesson.path, item._id)
-        )
+        navigate(createUrlPath(authRoutes.lessonDetails.path, item._id))
       }
 
       return (
