@@ -4,6 +4,7 @@ import SearchIcon from '@mui/icons-material/Search'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
+import AddDocuments from '~/containers/add-documents/AddDocuments'
 import AppButton from '~/components/app-button/AppButton'
 import EnhancedTable from '~/components/enhanced-table/EnhancedTable'
 import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
@@ -11,18 +12,23 @@ import { useModalContext } from '~/context/modal-context'
 import useSort from '~/hooks/table/use-sort'
 import useAxios from '~/hooks/use-axios'
 import useBreakpoints from '~/hooks/use-breakpoints'
+import { useSnackBarContext } from '~/context/snackbar-context'
 import { attachmentService } from '~/services/attachment-service'
 
-import { defaultResponses } from '~/constants'
 import {
   columns,
   initialSort,
   removeColumnRules
 } from '~/containers/add-attachments/AddAttachments.constants'
-import { styles } from '~/containers/add-attachments/AddAttachments.styles'
 import { ajustColumns } from '~/utils/helper-functions'
-import { Attachment, ButtonVariantEnum, ItemsWithCount } from '~/types'
-
+import { defaultResponses, snackbarVariants } from '~/constants'
+import { styles } from '~/containers/add-attachments/AddAttachments.styles'
+import {
+  Attachment,
+  ButtonVariantEnum,
+  ErrorResponse,
+  ItemsWithCount
+} from '~/types'
 interface AddAttachmentsProps {
   attachments: Attachment[]
   onAddAttachments: (attachments: Attachment[]) => void
@@ -38,6 +44,8 @@ const AddAttachments: FC<AddAttachmentsProps> = ({
 
   const { t } = useTranslation()
   const { closeModal } = useModalContext()
+  const { setAlert } = useSnackBarContext()
+  const formData = new FormData()
 
   const breakpoints = useBreakpoints()
   const sortOptions = useSort({
@@ -59,7 +67,11 @@ const AddAttachments: FC<AddAttachmentsProps> = ({
     [sort]
   )
 
-  const { loading, response } = useAxios<ItemsWithCount<Attachment>>({
+  const {
+    loading,
+    response,
+    fetchData: fetchDataAttachments
+  } = useAxios<ItemsWithCount<Attachment>>({
     service: getMyAttachments,
     defaultResponse: defaultResponses.itemsWithCount
   })
@@ -106,6 +118,29 @@ const AddAttachments: FC<AddAttachmentsProps> = ({
     [response.items, inputValue]
   )
 
+  const createAttachments = useCallback(
+    (data?: FormData) => attachmentService.createAttachments(data),
+    []
+  )
+
+  const onCreateAttachmentsError = (error: ErrorResponse) => {
+    setAlert({
+      severity: snackbarVariants.error,
+      message: error ? `errors.${error.code}` : ''
+    })
+  }
+  const { fetchData: fetchCreateAttachment } = useAxios({
+    service: createAttachments,
+    fetchOnMount: false,
+    defaultResponse: null,
+    onResponseError: onCreateAttachmentsError
+  })
+
+  const uploadFile = async (data: FormData) => {
+    await fetchCreateAttachment(data)
+    await fetchDataAttachments()
+  }
+
   return (
     <Box sx={styles.root}>
       <Typography sx={styles.title}>
@@ -140,14 +175,16 @@ const AddAttachments: FC<AddAttachmentsProps> = ({
           >
             {t('common.add')}
           </AppButton>
-          <AppButton onClick={closeModal} variant={ButtonVariantEnum.Outlined}>
+          <AppButton onClick={closeModal} variant={ButtonVariantEnum.Tonal}>
             {t('common.cancel')}
           </AppButton>
         </Box>
 
-        <AppButton disabled>
-          {t('myResourcesPage.attachments.uploadNewFile')}
-        </AppButton>
+        <AddDocuments
+          buttonText={t('common.uploadNewFile')}
+          fetchData={uploadFile}
+          formData={formData}
+        />
       </Box>
     </Box>
   )
