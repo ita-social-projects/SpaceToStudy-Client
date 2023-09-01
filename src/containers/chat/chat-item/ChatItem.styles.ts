@@ -29,9 +29,6 @@ export const styles = {
     backgroundColor: 'basic.lime',
     border: '3px solid',
     borderColor: 'basic.white',
-    position: 'absolute',
-    bottom: 0,
-    right: 0,
     borderRadius: '50%'
   },
   mainInformation: {
