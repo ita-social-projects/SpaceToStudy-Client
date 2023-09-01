@@ -27,5 +27,11 @@
     "inputLabel": "Type a message...",
     "chipLabel": "Select a chat, to start messaging",
     "loading": "Loading..."
+  },
+  "youCanAsk": "You can ask:",
+  "firstQuestion": {
+    "teachMethod": "What’s your teaching method?",
+    "trialLesson": "Do you have a trial lesson?",
+    "tutoringSession": "How long is each tutoring session?"
   }
 }

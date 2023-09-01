@@ -3,11 +3,12 @@ import { useTranslation } from 'react-i18next'
 import Avatar from '@mui/material/Avatar'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
+import Badge from '@mui/material/Badge'
 
 import { useAppSelector } from '~/hooks/use-redux'
 
 import { styles } from '~/containers/chat/chat-item/ChatItem.styles'
-import { ChatResponse, ComponentEnum } from '~/types'
+import { ChatResponse, ComponentEnum, OverlapEnum, PositionEnum } from '~/types'
 import { getFormattedDate } from '~/utils/helper-functions'
 
 interface ItemOfChatProps {
@@ -54,11 +55,21 @@ const ChatItem: FC<ItemOfChatProps> = ({
   return (
     <Box onClick={handleSelectedChat} sx={styles.root(isActiveChat)}>
       <Box sx={styles.imageWrapper}>
-        <Avatar
-          src={photo && `${import.meta.env.VITE_APP_IMG_USER_URL}${photo}`}
-          sx={styles.img}
-        />
-        <Typography component={ComponentEnum.Span} sx={styles.active} />
+        <Badge
+          anchorOrigin={{
+            vertical: PositionEnum.Bottom,
+            horizontal: PositionEnum.Right
+          }}
+          badgeContent={
+            <Typography component={ComponentEnum.Span} sx={styles.active} />
+          }
+          overlap={OverlapEnum.Circular}
+        >
+          <Avatar
+            src={photo && `${import.meta.env.VITE_APP_IMG_USER_URL}${photo}`}
+            sx={styles.img}
+          />
+        </Badge>
       </Box>
       <Box sx={styles.mainInformation}>
         <Box sx={styles.nameWithTime}>
