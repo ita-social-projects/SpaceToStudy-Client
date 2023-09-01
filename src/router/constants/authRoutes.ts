@@ -14,9 +14,9 @@ export const authRoutes = {
       route: 'my-resources/new-lesson',
       path: '/my-resources/new-lesson'
     },
-    myLesson: {
-      route: 'my-resources/my-lesson/:id',
-      path: '/my-resources/my-lesson'
+    editLesson: {
+      route: 'my-resources/edit-lesson/:id',
+      path: '/my-resources/edit-lesson'
     }
   },
   accountMenu: {
