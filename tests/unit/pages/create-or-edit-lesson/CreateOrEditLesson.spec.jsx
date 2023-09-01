@@ -9,10 +9,8 @@ describe('CreateOrEditLesson', () => {
   })
 
   it('should render page with title and description fields', () => {
-    const titleInput = screen.getByLabelText('newLesson.labels.title')
-    const descriptionInput = screen.getByLabelText(
-      'newLesson.labels.description'
-    )
+    const titleInput = screen.getByLabelText('lesson.labels.title')
+    const descriptionInput = screen.getByLabelText('lesson.labels.description')
 
     expect(titleInput).toBeInTheDocument()
     expect(descriptionInput).toBeInTheDocument()

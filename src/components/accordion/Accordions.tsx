@@ -71,13 +71,16 @@ const Accordions: FC<AccordionsProps> = ({
           </Typography>
         </AccordionSummary>
         <AccordionDetails sx={accordionStyle.details}>
-          <Typography
-            data-testid={`accordion-description-${index}`}
-            sx={accordionStyle.description}
-            variant={descriptionVariant}
-          >
-            {t(item.description)}
-          </Typography>
+          {item.description && (
+            <Typography
+              data-testid={`accordion-description-${index}`}
+              sx={accordionStyle.description}
+              variant={descriptionVariant}
+            >
+              {t(item.description)}
+            </Typography>
+          )}
+          {item.content}
         </AccordionDetails>
       </Accordion>
     )
