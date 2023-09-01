@@ -13,4 +13,14 @@ export const initialValues = {
   attachments: []
 }
 
+export const defaultResponse = {
+  attachments: [],
+  author: '',
+  createdAt: '',
+  description: '',
+  title: '',
+  updatedAt: '',
+  _id: ''
+}
+
 export const myResourcesPath = '/my-resources'
