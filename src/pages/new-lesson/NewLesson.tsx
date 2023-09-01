@@ -7,7 +7,6 @@ import Divider from '@mui/material/Divider'
 import AddIcon from '@mui/icons-material/Add'
 import CloseIcon from '@mui/icons-material/Close'
 import IconButton from '@mui/material/IconButton'
-import Typography from '@mui/material/Typography'
 
 import AddAttachments from '~/containers/add-attachments/AddAttachments'
 import IconExtensionWithTitle from '~/components/icon-extension-with-title/IconExtensionWithTitle'
@@ -47,8 +46,6 @@ const NewLesson = () => {
   const { openModal } = useModalContext()
   const navigate = useNavigate()
   const [attachments, setAttachments] = useState<Attachment[]>([])
-
-  const handleOpenModal = () => openModal({ component: <AddAttachments /> })
 
   const handleResponseError = (error: ErrorResponse) => {
     setAlert({
@@ -152,16 +149,6 @@ const NewLesson = () => {
           value={data.description}
           variant={TextFieldVariantEnum.Standard}
         />
-        <Divider sx={styles.divider} />
-        <AppButton onClick={handleOpenModal} sx={styles.button}>
-          {t('myResourcesPage.attachments.addAttachment')}
-          <Typography
-            component={ComponentEnum.Span}
-            style={styles.newAttachmentIcon}
-          >
-            {t('common.plusSign')}
-          </Typography>
-        </AppButton>
         <Divider sx={styles.divider} />
         <AppButton
           onClick={handleOpenAddAttachmentsModal}
