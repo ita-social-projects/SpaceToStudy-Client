@@ -1,15 +1,11 @@
 import { TypographyVariantEnum } from '~/types'
 
 export const styles = {
-  media: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '16px'
-  },
   headerWrapper: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
+    mb: '16px',
     pl: '16px'
   },
   textWithIconWrapper: {
@@ -24,11 +20,9 @@ export const styles = {
       height: '20px'
     }
   },
-  verticalGrid: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    gap: '8px'
+  noContent: {
+    typography: TypographyVariantEnum.Subtitle2,
+    textAlign: 'center'
   },
   button: {
     color: 'primary.600'

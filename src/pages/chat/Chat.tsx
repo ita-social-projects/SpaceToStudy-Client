@@ -1,4 +1,11 @@
-import { useState, useCallback, useEffect, useRef, ChangeEvent } from 'react'
+import {
+  useState,
+  useCallback,
+  useEffect,
+  useRef,
+  ChangeEvent,
+  MouseEvent
+} from 'react'
 import { useTranslation } from 'react-i18next'
 import { Allotment } from 'allotment'
 import SimpleBar from 'simplebar-react'
@@ -18,24 +25,34 @@ import ListOfUsersWithSearch from '~/containers/chat/list-of-users-with-search/L
 import ChatHeader from '~/containers/chat/chat-header/ChatHeader'
 import ChatDate from '~/containers/chat/chat-date/ChatDate'
 import ChatTextArea from '~/containers/chat/chat-text-area/ChatTextArea'
+import AboutChatSidebar from '~/containers/about-chat-sidebar/AboutChatSidebar'
 
-import { getGroupedMessages } from '~/utils/helper-functions'
+import { getGroupedByDate, getIsNewDay } from '~/utils/helper-functions'
 import { defaultResponses } from '~/constants'
 import { styles } from '~/pages/chat/Chat.styles'
+import { mockFiles, mockLinks, mockMedia } from '~/pages/chat/Chat.constants'
 import { ChatResponse, MessageInterface, PositionEnum } from '~/types'
 
 const Chat = () => {
   const { t } = useTranslation()
   const { isMobile } = useBreakpoints()
   const { openDrawer, closeDrawer, isOpen } = useDrawer()
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false)
   const [selectedChat, setSelectedChat] = useState<ChatResponse | null>(null)
   const [messages, setMessages] = useState<MessageInterface[]>([])
   const [textAreaValue, setTextAreaValue] = useState<string>('')
   const scrollRef = useRef<HTMLDivElement | null>(null)
-  const groupedMessages = getGroupedMessages(messages)
 
-  const openChatsHandler = () => {
+  const groupedMessages = getGroupedByDate(messages, getIsNewDay)
+  const allotmentElements = isSidebarOpen ? [25, 50, 25] : [25, 75]
+
+  const openChatsHandler = (e: MouseEvent<HTMLButtonElement>) => {
     openDrawer()
+    e.stopPropagation()
+  }
+
+  const onSidebarHandler = (event: boolean) => {
+    setIsSidebarOpen(event)
   }
 
   const onTextAreaChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -99,11 +116,11 @@ const Chat = () => {
   const messagesListWithDate = groupedMessages.map((group) => (
     <Box key={group.date} sx={styles.messagesWithDate}>
       <ChatDate date={group.date} />
-      {group.messages.map((message, index) => (
+      {group.items.map((item, index) => (
         <Message
-          key={message._id}
-          message={message}
-          prevMessage={index ? group.messages[index - 1] : null}
+          key={item._id}
+          message={item}
+          prevMessage={index ? group.items[index - 1] : null}
         />
       ))}
     </Box>
@@ -139,7 +156,7 @@ const Chat = () => {
           />
         </AppDrawer>
       )}
-      <Allotment defaultSizes={isMobile ? [1] : [25, 75]}>
+      <Allotment defaultSizes={isMobile ? [1] : allotmentElements}>
         {!isMobile && (
           <Allotment.Pane minSize={250} preferredSize={350}>
             <ListOfUsersWithSearch
@@ -149,14 +166,15 @@ const Chat = () => {
             />
           </Allotment.Pane>
         )}
-        <Allotment.Pane minSize={350}>
+        <Allotment.Pane minSize={isMobile ? 340 : 400}>
           <Box sx={styles.chatContent(!!selectedChat, messages.length)}>
             {!selectedChat ? (
               selectChatChip
             ) : (
               <>
                 <ChatHeader
-                  onClick={openChatsHandler}
+                  onClick={() => onSidebarHandler(true)}
+                  onMenuClick={openChatsHandler}
                   user={selectedChat.members[0].user}
                 />
                 <SimpleBar
@@ -175,6 +193,25 @@ const Chat = () => {
             )}
           </Box>
         </Allotment.Pane>
+        {selectedChat && isSidebarOpen && (
+          <Allotment.Pane maxSize={320} minSize={320}>
+            <AppDrawer
+              PaperProps={{ sx: styles.sidebarPaper }}
+              anchor={PositionEnum.Right}
+              onClose={() => onSidebarHandler(false)}
+              open={isSidebarOpen}
+              sx={styles.sidebar}
+              variant='persistent'
+            >
+              <AboutChatSidebar
+                files={mockFiles}
+                links={mockLinks}
+                media={mockMedia}
+                member={selectedChat.members[0]}
+              />
+            </AppDrawer>
+          </Allotment.Pane>
+        )}
       </Allotment>
     </PageWrapper>
   )

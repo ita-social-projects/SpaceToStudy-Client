@@ -10,3 +10,8 @@ export interface ConvertedSize {
   size: string
   unit: string
 }
+
+export interface GroupedByDateItems<T> {
+  date: string
+  items: T[]
+}
