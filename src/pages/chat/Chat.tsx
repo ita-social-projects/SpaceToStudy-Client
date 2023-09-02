@@ -49,7 +49,7 @@ const Chat = () => {
   const scrollRef = useRef<HTMLDivElement | null>(null)
 
   const groupedMessages = getGroupedByDate(messages, getIsNewDay)
-  const allotmentSizes = isSidebarOpen ? [25, 50, 25] : [25, 75]
+  const allotmentSizes = isSidebarOpen && isDesktop ? [25, 50, 25] : [25, 75]
   const { Persistent, Temporary } = DrawerVariantEnum
 
   const openChatsHandler = (e: MouseEvent<HTMLButtonElement>) => {
