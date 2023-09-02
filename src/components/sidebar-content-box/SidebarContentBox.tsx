@@ -37,6 +37,7 @@ const SidebarContentBox: FC<SidebarContentBoxProps> = ({
 
   const { Media, Files } = SidebarContentEnum
   const isMoreContent = content.length > maxElemToShow && name !== Media
+  const capitalizedName = name.charAt(0).toUpperCase() + name.slice(1)
 
   const mediaContent = name === Media && (
     <SidebarImageGrid
@@ -55,7 +56,7 @@ const SidebarContentBox: FC<SidebarContentBoxProps> = ({
 
   const noContent = !content.length && (
     <Typography sx={styles.noContent}>
-      {t(`chatPage.sidebar.no${name}`)}
+      {t(`chatPage.sidebar.no${capitalizedName}`)}
     </Typography>
   )
 

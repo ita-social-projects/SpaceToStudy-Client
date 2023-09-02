@@ -44,11 +44,11 @@ const AboutChatSidebar: FC<AboutChatSidebarProps> = ({
 }) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const [titleText, setTitleText] = useState<string>('about')
+  const { About, Media, Files, Links } = SidebarContentEnum
+  const [titleText, setTitleText] = useState<string>(About)
 
   const { user, role } = member
   const { _id, firstName, lastName, photo, professionalSummary } = user
-  const { Media, Files, Links } = SidebarContentEnum
   const { path: pathToProfile } = authRoutes.userProfile
 
   const navigateToUserProfile = () => {
@@ -67,13 +67,11 @@ const AboutChatSidebar: FC<AboutChatSidebarProps> = ({
         return <SidebarGroupedContent<Media> items={media} type={titleText} />
       case Links:
         return <SidebarGroupedContent<Link> items={links} type={titleText} />
-      default:
-        return null
     }
   }
 
-  const goBackBtn = titleText !== 'about' && (
-    <IconButton onClick={() => setTitleText('about')} sx={styles.goBackBtn}>
+  const goBackBtn = titleText !== About && (
+    <IconButton onClick={() => setTitleText(About)} sx={styles.goBackBtn}>
       <ArrowBackIcon sx={styles.goBackIcon} />
     </IconButton>
   )

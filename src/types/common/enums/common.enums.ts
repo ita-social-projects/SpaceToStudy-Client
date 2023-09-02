@@ -43,6 +43,11 @@ export enum TextFieldVariantEnum {
   Standard = 'standard'
 }
 
+export enum DrawerVariantEnum {
+  Persistent = 'persistent',
+  Temporary = 'temporary'
+}
+
 export enum ButtonVariantEnum {
   Contained = 'contained',
   ContainedLight = 'containedLight',

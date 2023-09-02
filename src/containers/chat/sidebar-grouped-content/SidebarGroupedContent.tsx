@@ -1,5 +1,3 @@
-import { ReactNode } from 'react'
-
 import AllContentModal from '~/components/all-content-modal/AllContentModal'
 import SidebarImageGrid from '~/components/sidebar-image-grid/SidebarImageGrid'
 import FileComponent from '~/components/file-component/FileComponent'
@@ -23,24 +21,16 @@ const SidebarGroupedContent = <T extends File | Link | Media>({
   type
 }: SidebarGroupedContentProps<T>) => {
   const groupedItems = getGroupedByDate<T>(items, getIsNewMonth)
-  const { Media, Files, Links } = SidebarContentEnum
 
   const getDate = (date: string) =>
-    getFormattedDate({
-      date: date,
-      options: { year: 'numeric', month: 'long' }
-    })
+    getFormattedDate({ date, options: { year: 'numeric', month: 'long' } })
 
-  const getContentByType = (item: T): ReactNode => {
-    switch (type) {
-      case Files:
-        return <FileComponent file={item as File} key={item._id} />
-      case Links:
-        return <LinkComponent key={item._id} link={item as Link} />
-      default:
-        return null
-    }
-  }
+  const getContentByType = (item: T) =>
+    type === SidebarContentEnum.Files ? (
+      <FileComponent file={item as File} key={item._id} />
+    ) : (
+      <LinkComponent key={item._id} link={item as Link} />
+    )
 
   return (
     <>
@@ -50,7 +40,7 @@ const SidebarGroupedContent = <T extends File | Link | Media>({
           sx={styles.groupedContent}
           title={getDate(group.date)}
         >
-          {type === Media ? (
+          {type === SidebarContentEnum.Media ? (
             <SidebarImageGrid
               compactMode={false}
               images={group.items as Media[]}

@@ -61,6 +61,10 @@ export const styles = {
   sidebarPaper: { p: 0 },
   sidebar: {
     '& .MuiDrawer-root': { position: 'absolute' },
-    '& .MuiPaper-root': { position: 'absolute', width: '100%' }
+    '& .MuiPaper-root': {
+      position: 'absolute',
+      maxWidth: '320px',
+      width: '100%'
+    }
   }
 }

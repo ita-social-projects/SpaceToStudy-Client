@@ -31,11 +31,16 @@ import { getGroupedByDate, getIsNewDay } from '~/utils/helper-functions'
 import { defaultResponses } from '~/constants'
 import { styles } from '~/pages/chat/Chat.styles'
 import { mockFiles, mockLinks, mockMedia } from '~/pages/chat/Chat.constants'
-import { ChatResponse, MessageInterface, PositionEnum } from '~/types'
+import {
+  ChatResponse,
+  DrawerVariantEnum,
+  MessageInterface,
+  PositionEnum
+} from '~/types'
 
 const Chat = () => {
   const { t } = useTranslation()
-  const { isMobile } = useBreakpoints()
+  const { isMobile, isDesktop } = useBreakpoints()
   const { openDrawer, closeDrawer, isOpen } = useDrawer()
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false)
   const [selectedChat, setSelectedChat] = useState<ChatResponse | null>(null)
@@ -44,7 +49,8 @@ const Chat = () => {
   const scrollRef = useRef<HTMLDivElement | null>(null)
 
   const groupedMessages = getGroupedByDate(messages, getIsNewDay)
-  const allotmentElements = isSidebarOpen ? [25, 50, 25] : [25, 75]
+  const allotmentSizes = isSidebarOpen ? [25, 50, 25] : [25, 75]
+  const { Persistent, Temporary } = DrawerVariantEnum
 
   const openChatsHandler = (e: MouseEvent<HTMLButtonElement>) => {
     openDrawer()
@@ -126,6 +132,24 @@ const Chat = () => {
     </Box>
   ))
 
+  const aboutChatSidebar = selectedChat && (
+    <AppDrawer
+      PaperProps={{ sx: styles.sidebarPaper }}
+      anchor={PositionEnum.Right}
+      onClose={() => onSidebarHandler(false)}
+      open={isSidebarOpen}
+      sx={styles.sidebar}
+      variant={isDesktop ? Persistent : Temporary}
+    >
+      <AboutChatSidebar
+        files={mockFiles}
+        links={mockLinks}
+        media={mockMedia}
+        member={selectedChat.members[0]}
+      />
+    </AppDrawer>
+  )
+
   const selectChatChip = (
     <AppChip labelSx={styles.chipLabel(false)} sx={styles.chip}>
       {t('chatPage.chat.chipLabel')}
@@ -156,7 +180,7 @@ const Chat = () => {
           />
         </AppDrawer>
       )}
-      <Allotment defaultSizes={isMobile ? [1] : allotmentElements}>
+      <Allotment defaultSizes={isMobile ? [1] : allotmentSizes}>
         {!isMobile && (
           <Allotment.Pane minSize={250} preferredSize={350}>
             <ListOfUsersWithSearch
@@ -193,26 +217,13 @@ const Chat = () => {
             )}
           </Box>
         </Allotment.Pane>
-        {selectedChat && isSidebarOpen && (
+        {isDesktop && isSidebarOpen && (
           <Allotment.Pane maxSize={320} minSize={320}>
-            <AppDrawer
-              PaperProps={{ sx: styles.sidebarPaper }}
-              anchor={PositionEnum.Right}
-              onClose={() => onSidebarHandler(false)}
-              open={isSidebarOpen}
-              sx={styles.sidebar}
-              variant='persistent'
-            >
-              <AboutChatSidebar
-                files={mockFiles}
-                links={mockLinks}
-                media={mockMedia}
-                member={selectedChat.members[0]}
-              />
-            </AppDrawer>
+            {aboutChatSidebar}
           </Allotment.Pane>
         )}
       </Allotment>
+      {!isDesktop && isSidebarOpen && aboutChatSidebar}
     </PageWrapper>
   )
 }

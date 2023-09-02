@@ -9,7 +9,7 @@ import AllContentModal from '~/components/all-content-modal/AllContentModal'
 
 import { useModalContext } from '~/context/modal-context'
 import { maxElemToShow } from '~/components/sidebar-content-box/SidebarContentBox.constants'
-import { Media } from '~/types'
+import { SizeEnum, Media } from '~/types'
 import { styles } from '~/components/sidebar-image-grid/SidebarImageGrid.styles'
 
 interface SidebarImageGridProps {
@@ -51,7 +51,7 @@ const SidebarImageGrid: FC<SidebarImageGridProps> = ({
       >
         {hasMoreElem && (
           <Box>
-            <AddIcon fontSize='small' />
+            <AddIcon fontSize={SizeEnum.Small} />
             {mediaSize - maxElemToShow}
           </Box>
         )}
