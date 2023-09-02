@@ -15,7 +15,6 @@ import { useSnackBarContext } from '~/context/snackbar-context'
 import { ResourceService } from '~/services/resource-service'
 import { authRoutes } from '~/router/constants/authRoutes'
 
-import { defaultResponses, snackbarVariants } from '~/constants'
 import {
   columns,
   initialSort,
@@ -39,23 +38,11 @@ const AttachmentsContainer = () => {
   const { page, handleChangePage } = usePagination()
   const breakpoints = useBreakpoints()
   const sortOptions = useSort({ initialSort })
+  const searchFileName = useRef<string>('')
   const [selectedItemId, setSelectedItemId] = useState<string>('')
 
   const { sort } = sortOptions
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
-
-  const searchFileName = useRef<string>('')
-
-  const getAttachments = useCallback(
-    () =>
-      ResourceService.getAttachments({
-        limit: itemsPerPage,
-        skip: (page - 1) * itemsPerPage,
-        sort,
-        fileName: searchFileName.current
-      }),
-    [itemsPerPage, page, sort, searchFileName]
-  )
 
   const onAttachmentError = useCallback(
     (error: ErrorResponse, message?: string) => {
@@ -84,6 +71,17 @@ const AttachmentsContainer = () => {
     })
   }
 
+  const getAttachments = useCallback(
+    () =>
+      ResourceService.getAttachments({
+        limit: itemsPerPage,
+        skip: (page - 1) * itemsPerPage,
+        sort,
+        fileName: searchFileName.current
+      }),
+    [itemsPerPage, page, sort, searchFileName]
+  )
+
   const deleteAttachment = useCallback(
     (id?: string) => ResourceService.deleteAttachment(id ?? ''),
     []
@@ -98,7 +96,6 @@ const AttachmentsContainer = () => {
   const {
     response,
     loading,
-    fetchData,
     fetchData: fetchGetAttachments
   } = useAxios<ItemsWithCount<Attachment>>({
     service: getAttachments,
@@ -106,7 +103,10 @@ const AttachmentsContainer = () => {
     onResponseError: onAttachmentError
   })
 
-  const onAttachmentUpdate = useCallback(() => void fetchData(), [fetchData])
+  const onAttachmentUpdate = useCallback(
+    () => void fetchGetAttachments(),
+    [fetchGetAttachments]
+  )
 
   const { fetchData: updateData } = useAxios({
     service: updateAttachment,
@@ -116,13 +116,6 @@ const AttachmentsContainer = () => {
     fetchOnMount: false
   })
 
-  const onSave = async (fileName: string) => {
-    if (fileName) await updateData({ id: selectedItemId, fileName })
-    setSelectedItemId('')
-  }
-  const onEdit = (id: string) => setSelectedItemId(id)
-  const onCancel = () => setSelectedItemId('')
-
   const { error, fetchData: fetchDeleteAttachment } = useAxios({
     service: deleteAttachment,
     fetchOnMount: false,
@@ -130,6 +123,13 @@ const AttachmentsContainer = () => {
     onResponseError: onDeleteAttachmentError,
     onResponse: onDeleteAttachmentResponse
   })
+
+  const onSave = async (fileName: string) => {
+    if (fileName) await updateData({ id: selectedItemId, fileName })
+    setSelectedItemId('')
+  }
+  const onEdit = (id: string) => setSelectedItemId(id)
+  const onCancel = () => setSelectedItemId('')
 
   const handleDeleteAttachment = async (id: string, isConfirmed: boolean) => {
     if (isConfirmed) {
