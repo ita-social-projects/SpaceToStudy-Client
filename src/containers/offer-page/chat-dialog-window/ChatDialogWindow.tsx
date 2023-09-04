@@ -1,4 +1,12 @@
-import { useCallback, useEffect, useState, useRef, FC } from 'react'
+import {
+  useCallback,
+  useEffect,
+  ChangeEvent,
+  useState,
+  useRef,
+  FC
+} from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import SimpleBar from 'simplebar-react'
 import Box from '@mui/material/Box'
@@ -19,6 +27,7 @@ import { getGroupedByDate, getIsNewDay } from '~/utils/helper-functions'
 
 import { ChatInfo, MessageInterface } from '~/types'
 import { defaultResponses } from '~/constants'
+import { authRoutes } from '~/router/constants/authRoutes'
 import { styles } from '~/containers/offer-page/chat-dialog-window/ChatDialogWindow.styles'
 import { questions } from '~/containers/offer-page/chat-dialog-window/ChatDialogWindow.constants'
 
@@ -29,8 +38,9 @@ interface ChatDialogWindow {
 const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
   const [textAreaValue, setTextAreaValue] = useState<string>('')
   const { t } = useTranslation()
+  const navigate = useNavigate()
   const scrollRef = useRef<HTMLDivElement | null>(null)
-  const { setChatInfo } = useChatContext()
+  const { setChatInfo, setCurrentChatId } = useChatContext()
 
   const getMessages = useCallback(
     () => messageService.getMessages({ chatId: chatInfo.chatId }),
@@ -86,6 +96,12 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
 
   const closeChatWindow = () => setChatInfo(null)
 
+  const handleRedirectToChat = () => {
+    setCurrentChatId(chatInfo.chatId)
+    closeChatWindow()
+    navigate(authRoutes.chat.path)
+  }
+
   return (
     <Box sx={styles.root}>
       <Box sx={styles.chatContent}>
@@ -101,7 +117,7 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
           />
           <Box>
             {chatInfo.chatId && (
-              <IconButton onClick={() => undefined} sx={styles.icons}>
+              <IconButton onClick={handleRedirectToChat} sx={styles.icons}>
                 <MessageIcon />
               </IconButton>
             )}

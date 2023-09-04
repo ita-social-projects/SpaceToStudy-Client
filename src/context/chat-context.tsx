@@ -7,17 +7,20 @@ interface ChatProviderProps {
 
 interface ChatProvideContext {
   chatInfo: ChatInfo | null
+  currentChatId: string | null
   setChatInfo: (chatInfo: ChatInfo | null) => void
+  setCurrentChatId: (currentChatId: string | null) => void
 }
 
 const ChatContext = createContext<ChatProvideContext>({} as ChatProvideContext)
 
 const ChatProvider = ({ children }: ChatProviderProps) => {
   const [chatInfo, setChatInfo] = useState<ChatInfo | null>(null)
+  const [currentChatId, setCurrentChatId] = useState<string | null>(null)
 
   const contextValue = useMemo(
-    () => ({ chatInfo, setChatInfo }),
-    [chatInfo, setChatInfo]
+    () => ({ chatInfo, setChatInfo, currentChatId, setCurrentChatId }),
+    [chatInfo, setChatInfo, currentChatId, setCurrentChatId]
   )
 
   return (

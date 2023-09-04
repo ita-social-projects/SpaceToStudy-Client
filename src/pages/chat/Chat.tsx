@@ -9,6 +9,7 @@ import { messageService } from '~/services/message-service'
 import { useDrawer } from '~/hooks/use-drawer'
 import useAxios from '~/hooks/use-axios'
 import useBreakpoints from '~/hooks/use-breakpoints'
+import { useChatContext } from '~/context/chat-context'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import AppDrawer from '~/components/app-drawer/AppDrawer'
 import AppChip from '~/components/app-chip/AppChip'
@@ -34,6 +35,7 @@ import {
 const Chat = () => {
   const { t } = useTranslation()
   const { isMobile, isDesktop } = useBreakpoints()
+  const { currentChatId } = useChatContext()
   const { openDrawer, closeDrawer, isOpen } = useDrawer()
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false)
   const [selectedChat, setSelectedChat] = useState<ChatResponse | null>(null)
@@ -105,6 +107,14 @@ const Chat = () => {
       scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight })
     }
   }, [selectedChat, messages.length])
+
+  useEffect(() => {
+    if (currentChatId) {
+      listOfChats.forEach((chat: ChatResponse) => {
+        if (chat._id === currentChatId) setSelectedChat(chat)
+      })
+    }
+  }, [currentChatId, listOfChats])
 
   if (loading) {
     return <Loader size={100} />

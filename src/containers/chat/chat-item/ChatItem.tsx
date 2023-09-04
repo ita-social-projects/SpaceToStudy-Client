@@ -10,6 +10,7 @@ import { useAppSelector } from '~/hooks/use-redux'
 import { styles } from '~/containers/chat/chat-item/ChatItem.styles'
 import { ChatResponse, ComponentEnum, OverlapEnum, PositionEnum } from '~/types'
 import { getFormattedDate } from '~/utils/helper-functions'
+import { useChatContext } from '~/context/chat-context'
 
 interface ItemOfChatProps {
   isActiveChat: boolean
@@ -25,6 +26,7 @@ const ChatItem: FC<ItemOfChatProps> = ({
   closeDrawer
 }) => {
   const { t } = useTranslation()
+  const { setCurrentChatId } = useChatContext()
   const { userId } = useAppSelector((state) => state.appMain)
 
   const { firstName, lastName, photo } = chat.members[0].user
@@ -34,6 +36,7 @@ const ChatItem: FC<ItemOfChatProps> = ({
 
   const handleSelectedChat = () => {
     setSelectedChat(chat)
+    setCurrentChatId(null)
     closeDrawer && closeDrawer()
   }
 
