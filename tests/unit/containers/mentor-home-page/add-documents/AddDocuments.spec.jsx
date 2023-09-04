@@ -1,72 +1,51 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'
-import AddDocuments from '~/containers/tutor-home-page/add-documents/AddDocuments'
 import { vi } from 'vitest'
+import { screen, fireEvent } from '@testing-library/react'
+import AddDocuments from '~/containers/add-documents/AddDocuments'
+import { SnackBarProvider } from '~/context/snackbar-context'
+import { renderWithProviders } from '~tests/test-utils'
 
-const addDocuments = vi.fn()
-const documents = []
-const documentsError = undefined
-const btnsBox = (
-  <div>
-    <button>back</button>
-    <button>next</button>
-  </div>
-)
-const setStepErrors = vi.fn()
+const fetchData = vi.fn()
+const formData = new FormData()
 
 describe('AddDocuments test', () => {
   beforeEach(() => {
-    render(
-      <AddDocuments
-        addDocuments={ addDocuments }
-        btnsBox={ btnsBox }
-        documents={ documents }
-        documentsError={ documentsError }
-        setStepErrors={ setStepErrors }
-      />
+    renderWithProviders(
+      <SnackBarProvider>
+        <AddDocuments
+          buttonText={'common.uploadNewFile'}
+          fetchData={fetchData}
+          formData={formData}
+        />
+      </SnackBarProvider>
     )
   })
 
-  it('should render imgage', () => {
-    const image = screen.getByAltText('becomeTutor.documents.imageAlt')
+  it('should render button', () => {
+    const button = screen.getByLabelText('common.uploadNewFile')
 
-    expect(image).toBeInTheDocument()
-  })
-
-  it('should render description', () => {
-    const text = screen.getByText('becomeTutor.documents.description')
-
-    expect(text).toBeInTheDocument()
-  })
-
-  it('should render back and next buttons', () => {
-    const buttonBack = screen.getByText('back')
-    const buttonNext = screen.getByText('next')
-
-    expect(buttonBack).toBeInTheDocument()
-    expect(buttonNext).toBeInTheDocument()
+    expect(button).toBeInTheDocument()
   })
 
   it('should render error text after add wrong file type', async () => {
-    const fakeFile = new File(['certificate'], 'test-file.js', { type: 'text/javascript' })
+    const fakeFile = new File(['certificate'], 'test-file.js', {
+      type: 'text/javascript'
+    })
 
-    const input = screen.getByLabelText('becomeTutor.documents.button')
-    fireEvent.change(input, { target: { files: [fakeFile] } })
-    const error = { error: 'becomeTutor.documents.typeError', files: [] }
+    const button = screen.getByLabelText('common.uploadNewFile')
+    fireEvent.change(button, { target: { files: [fakeFile] } })
 
-    await waitFor(() => expect(addDocuments).toHaveBeenCalledWith(error))
+    expect(screen.getByText('common.typeError')).toBeInTheDocument()
   })
 
   it('should render error after add wrong file size', async () => {
-    const fakeFile = new File(['certificate'], 'test-file.png', { type: 'image/png' })
+    const fakeFile = new File(['certificate'], 'test-file.png', {
+      type: 'image/png'
+    })
     Object.defineProperty(fakeFile, 'size', { value: 15_000_000 })
 
-    const input = screen.getByLabelText('becomeTutor.documents.button')
-    fireEvent.change(input, { target: { files: [fakeFile] } })
-    const error = {
-      error: 'becomeTutor.documents.fileSizeError',
-      files: []
-    }
+    const button = screen.getByLabelText('common.uploadNewFile')
+    fireEvent.change(button, { target: { files: [fakeFile] } })
 
-    await waitFor(() => expect(addDocuments).toHaveBeenCalledWith(error))
+    expect(screen.getByText('common.fileSizeError')).toBeInTheDocument()
   })
 })

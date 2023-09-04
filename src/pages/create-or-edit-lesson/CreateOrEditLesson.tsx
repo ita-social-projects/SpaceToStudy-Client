@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { AxiosResponse } from 'axios'
 import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
@@ -8,8 +8,11 @@ import AddIcon from '@mui/icons-material/Add'
 import CloseIcon from '@mui/icons-material/Close'
 import IconButton from '@mui/material/IconButton'
 
+import Loader from '~/components/loader/Loader'
 import AddAttachments from '~/containers/add-attachments/AddAttachments'
 import IconExtensionWithTitle from '~/components/icon-extension-with-title/IconExtensionWithTitle'
+
+import { useModalContext } from '~/context/modal-context'
 import AppButton from '~/components/app-button/AppButton'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import FileEditor from '~/components/file-editor/FileEditor'
@@ -18,32 +21,36 @@ import { useSnackBarContext } from '~/context/snackbar-context'
 import useAxios from '~/hooks/use-axios'
 import useForm from '~/hooks/use-form'
 import { ResourceService } from '~/services/resource-service'
-import { useModalContext } from '~/context/modal-context'
 
 import { snackbarVariants } from '~/constants'
 import {
   initialValues,
+  defaultResponse,
   myResourcesPath,
   validations
-} from '~/pages/new-lesson/NewLesson.constants'
-import { styles } from '~/pages/new-lesson/NewLesson.styles'
+} from '~/pages/create-or-edit-lesson/CreateOrEditLesson.constants'
+import { styles } from '~/pages/create-or-edit-lesson/CreateOrEditLesson.styles'
+import { authRoutes } from '~/router/constants/authRoutes'
 import {
   ButtonTypeEnum,
   ButtonVariantEnum,
   ComponentEnum,
   ErrorResponse,
-  NewLessonData,
+  Lesson,
+  LessonData,
   SizeEnum,
   TextFieldVariantEnum,
   Attachment
 } from '~/types'
 
-const NewLesson = () => {
+const CreateOrEditLesson = () => {
   const { t } = useTranslation()
   const { setAlert } = useSnackBarContext()
+
   const { openModal } = useModalContext()
   const navigate = useNavigate()
   const [attachments, setAttachments] = useState<Attachment[]>([])
+  const { id } = useParams()
 
   const handleResponseError = (error: ErrorResponse) => {
     setAlert({
@@ -55,9 +62,11 @@ const NewLesson = () => {
   const handleResponse = () => {
     setAlert({
       severity: snackbarVariants.success,
-      message: 'newLesson.successMessage'
+      message: id
+        ? 'newLesson.successEditedLesson'
+        : 'newLesson.successAddedLesson'
     })
-    navigate('/my-resources')
+    navigate(authRoutes.myResources.root.route)
   }
 
   const handleAddAttachments = (attachments: Attachment[]) => {
@@ -91,21 +100,71 @@ const NewLesson = () => {
     return ResourceService.addLesson(lesson)
   }
 
-  const { fetchData } = useAxios({
+  const { fetchData: fetchAddLesson } = useAxios<Lesson, LessonData>({
     service: addLesson,
+    fetchOnMount: false,
+    defaultResponse,
+    onResponse: handleResponse,
+    onResponseError: handleResponseError
+  })
+
+  const editLesson = (): Promise<AxiosResponse> => {
+    return ResourceService.editLesson(data, id)
+  }
+
+  const { fetchData: fetchEditedLesson } = useAxios<null, LessonData>({
+    service: editLesson,
     fetchOnMount: false,
     defaultResponse: null,
     onResponse: handleResponse,
     onResponseError: handleResponseError
   })
 
-  const { data, errors, handleInputChange, handleSubmit } =
-    useForm<NewLessonData>({
-      initialValues,
-      validations,
-      onSubmit: fetchData,
-      submitWithData: true
-    })
+  const {
+    data,
+    errors,
+    handleInputChange,
+    handleNonInputValueChange,
+    handleSubmit
+  } = useForm<LessonData>({
+    initialValues,
+    validations,
+    onSubmit: id ? fetchEditedLesson : fetchAddLesson,
+    submitWithData: true
+  })
+
+  const getLesson = (id?: string): Promise<AxiosResponse> => {
+    return ResourceService.getLesson(id)
+  }
+
+  const handleResponseLesson = (lesson: LessonData) => {
+    for (const key in data) {
+      const validKey = key as keyof LessonData
+      handleNonInputValueChange(validKey, lesson[validKey])
+    }
+  }
+
+  const { loading: getLessonLoading, fetchData: fetchDataLesson } = useAxios<
+    Lesson,
+    string
+  >({
+    service: getLesson,
+    fetchOnMount: false,
+    defaultResponse,
+    onResponse: handleResponseLesson,
+    onResponseError: handleResponseError
+  })
+
+  useEffect(() => {
+    if (id) {
+      void fetchDataLesson(id)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  if (getLessonLoading) {
+    return <Loader pageLoad />
+  }
 
   const attachmentsList = attachments.map((attachment) => (
     <Box key={attachment.size} sx={styles.attachmentList.container}>
@@ -118,6 +177,7 @@ const NewLesson = () => {
       </IconButton>
     </Box>
   ))
+
   return (
     <PageWrapper>
       <Box
@@ -131,7 +191,7 @@ const NewLesson = () => {
           errorMsg={t(errors.title)}
           fullWidth
           inputProps={styles.input}
-          label={data.title ? '' : t('newLesson.labels.title')}
+          label={data.title ? '' : t('lesson.labels.title')}
           onChange={handleInputChange('title')}
           value={data.title}
           variant={TextFieldVariantEnum.Standard}
@@ -142,7 +202,7 @@ const NewLesson = () => {
           errorMsg={t(errors.description)}
           fullWidth
           inputProps={styles.input}
-          label={data.description ? '' : t('newLesson.labels.description')}
+          label={data.description ? '' : t('lesson.labels.description')}
           onChange={handleInputChange('description')}
           value={data.description}
           variant={TextFieldVariantEnum.Standard}
@@ -152,7 +212,7 @@ const NewLesson = () => {
           onClick={handleOpenAddAttachmentsModal}
           sx={styles.addAttachments}
         >
-          {t('newLesson.labels.attachments')} <AddIcon sx={styles.addIcon} />
+          {t('lesson.labels.attachments')} <AddIcon sx={styles.addIcon} />
         </AppButton>
         <FileEditor />
         {attachmentsList}
@@ -174,4 +234,4 @@ const NewLesson = () => {
   )
 }
 
-export default NewLesson
+export default CreateOrEditLesson

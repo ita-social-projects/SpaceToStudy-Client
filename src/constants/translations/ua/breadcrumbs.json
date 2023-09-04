@@ -13,5 +13,6 @@
   "newLesson": "Новий урок",
   "chat": "Чат",
   "myOffers": "Мої пропозиції",
-  "myLesson":"Мій урок"
+  "editLesson": "Редагування уроку",
+  "lessonDetails": "Деталі уроку"
 }

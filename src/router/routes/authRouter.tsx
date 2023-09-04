@@ -1,7 +1,6 @@
 import { lazy } from 'react'
 import { Route } from 'react-router-dom'
 
-import MyLesson from '~/pages/my-lesson/MyLesson'
 import { authRoutes } from '~/router/constants/authRoutes'
 import {
   categories,
@@ -9,7 +8,8 @@ import {
   editProfile,
   findOffers,
   myCooperations,
-  myLesson,
+  editLesson,
+  lessonDetails,
   myOffers,
   myProfile,
   myResources,
@@ -34,7 +34,10 @@ const FindOffers = lazy(() => import('~/pages/find-offers/FindOffers'))
 const OfferDetails = lazy(() => import('~/pages/offer-details/OfferDetails'))
 const TutorProfile = lazy(() => import('~/pages/tutor-profile/TutorProfile'))
 const MyResources = lazy(() => import('~/pages/my-resources/MyResources'))
-const NewLesson = lazy(() => import('~/pages/new-lesson/NewLesson'))
+const CreateOrEditLesson = lazy(
+  () => import('~/pages/create-or-edit-lesson/CreateOrEditLesson')
+)
+const LessonDetails = lazy(() => import('~/pages/lesson-details/LessonDetails'))
 
 export const authRouter = (
   <Route
@@ -97,14 +100,19 @@ export const authRouter = (
       path={authRoutes.myResources.root.route}
     />
     <Route
-      element={<NewLesson />}
+      element={<CreateOrEditLesson />}
       handle={{ crumb: [myResources, newLesson] }}
       path={authRoutes.myResources.newLesson.route}
     />
     <Route
-      element={<MyLesson />}
-      handle={{ crumb: [myResources, myLesson] }}
-      path={authRoutes.myResources.myLesson.route}
+      element={<CreateOrEditLesson />}
+      handle={{ crumb: [myResources, editLesson] }}
+      path={authRoutes.myResources.editLesson.route}
+    />
+    <Route
+      element={<LessonDetails />}
+      handle={{ crumb: [myResources, lessonDetails] }}
+      path={authRoutes.lessonDetails.route}
     />
   </Route>
 )

@@ -4,9 +4,12 @@
     "description": "Опис...",
     "attachments": "Вкладення"
   },
-  "successMessage": "Урок успішно створено",
+  "successAddedLesson": "Урок успішно створено",
+  "successEditedLesson": "Урок успішно змінено",
   "errorMessages": {
     "title": "Будь ласка, вкажіть заголовок.",
     "description": "Будь ласка, надайте опис."
-  }
+  },
+  "content": "Зміст",
+  "attachments": "Вкладення"
 }

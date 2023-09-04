@@ -52,7 +52,8 @@ export const URLs = {
       patch: '/lessons'
     },
     attachments: {
-      get: '/attachments'
+      get: '/attachments',
+      delete: '/attachments'
     }
   },
   messages: {
@@ -62,5 +63,8 @@ export const URLs = {
   quizzes: {
     get: '/quizzes',
     delete: '/quizzes'
+  },
+  attachments: {
+    post: '/attachments'
   }
 }

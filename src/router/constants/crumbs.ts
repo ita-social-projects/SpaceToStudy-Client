@@ -63,9 +63,14 @@ export const newLesson = {
   path: authRoutes.myResources.newLesson.route
 }
 
-export const myLesson = {
-  name: t('breadCrumbs.myLesson'),
-  path: authRoutes.myResources.myLesson.route
+export const editLesson = {
+  name: t('breadCrumbs.editLesson'),
+  path: authRoutes.myResources.editLesson.route
+}
+
+export const lessonDetails = {
+  name: t('breadCrumbs.lessonDetails'),
+  path: authRoutes.lessonDetails.route
 }
 
 export const userProfile = ({ data }: { data: UserResponse }) => ({

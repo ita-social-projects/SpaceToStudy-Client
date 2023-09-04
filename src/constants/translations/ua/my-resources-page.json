@@ -18,11 +18,12 @@
   },
   "attachments": {
     "addFromAttachments": "Додайте файли з Вкладень",
-    "uploadNewFile": "Завантажити новий файл",
     "file": "Файл",
     "size": "Розмір",
     "lastUpdate": "Останнє оновлення",
     "emptyAttachments": "У вас ще немає вкладень",
+    "confirmAttachmentDeletionTitle":"Ви підтверджуєте видалення вкладення?",
+    "successDeletion":"Вкладення було успішно видалено",
     "addAttachment": "Добавити файл"
   },
   "quizzes": {
@@ -32,5 +33,6 @@
     "questions": "Питання",
     "updated": "Останнє оновлення",
     "emptyQuizzes": "У вас ще немає тестів"
-  }
+  },
+  "confirmDeletionMessage":"Ця дія є остаточною, та призведе до видалення всього пов’язаного вмісту. Перш ніж продовжити, перегляньте своє рішення."
 }
