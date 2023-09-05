@@ -1,12 +1,4 @@
-<<<<<<< HEAD:src/pages/create-or-edit-lesson/CreateOrEditLesson.tsx
-<<<<<<< HEAD:src/pages/create-or-edit-lesson/CreateOrEditLesson.tsx
-import { useState, useEffect, useCallback } from 'react'
-=======
-import { useState, useCallback  } from 'react'
->>>>>>> 4bf6336 (Small fix):src/pages/new-lesson/NewLesson.tsx
-=======
-import { useState, useCallback } from 'react'
->>>>>>> 8e16e12 (fix):src/pages/new-lesson/NewLesson.tsx
+import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { AxiosResponse } from 'axios'
@@ -19,7 +11,7 @@ import IconButton from '@mui/material/IconButton'
 import Loader from '~/components/loader/Loader'
 import AddAttachments from '~/containers/add-attachments/AddAttachments'
 import IconExtensionWithTitle from '~/components/icon-extension-with-title/IconExtensionWithTitle'
-import { attachmentService } from '~/services/attachment-service'
+
 import { useModalContext } from '~/context/modal-context'
 import AppButton from '~/components/app-button/AppButton'
 import AppTextField from '~/components/app-text-field/AppTextField'
@@ -29,8 +21,6 @@ import { useSnackBarContext } from '~/context/snackbar-context'
 import useAxios from '~/hooks/use-axios'
 import useForm from '~/hooks/use-form'
 import { ResourceService } from '~/services/resource-service'
-
-import AddDocuments from '~/containers/add-documents/AddDocuments'
 
 import { snackbarVariants } from '~/constants'
 import {
@@ -56,39 +46,11 @@ import {
 const CreateOrEditLesson = () => {
   const { t } = useTranslation()
   const { setAlert } = useSnackBarContext()
-<<<<<<< HEAD:src/pages/create-or-edit-lesson/CreateOrEditLesson.tsx
-<<<<<<< HEAD:src/pages/create-or-edit-lesson/CreateOrEditLesson.tsx
-=======
-  const navigate = useNavigate()
->>>>>>> 4bf6336 (Small fix):src/pages/new-lesson/NewLesson.tsx
-=======
->>>>>>> 8e16e12 (fix):src/pages/new-lesson/NewLesson.tsx
 
   const { openModal } = useModalContext()
   const navigate = useNavigate()
   const [attachments, setAttachments] = useState<Attachment[]>([])
   const { id } = useParams()
-
-  const formData = new FormData()
-
-<<<<<<< HEAD:src/pages/create-or-edit-lesson/CreateOrEditLesson.tsx
-  const createAttachments = useCallback(
-    (data?: FormData) => attachmentService.createAttachments(data),
-    []
-  )
-
-  const handleOpenModal = () => openModal({ component: <AddAttachments /> })
-=======
-  const handleOpenModal = () =>
-    openModal({
-      component: (
-        <AddAttachments
-          attachments={attachments}
-          onAddAttachments={setAttachments}
-        />
-      )
-    })
->>>>>>> 8e16e12 (fix):src/pages/new-lesson/NewLesson.tsx
 
   const handleResponseError = (error: ErrorResponse) => {
     setAlert({
@@ -158,7 +120,6 @@ const CreateOrEditLesson = () => {
     onResponseError: handleResponseError
   })
 
-<<<<<<< HEAD:src/pages/create-or-edit-lesson/CreateOrEditLesson.tsx
   const {
     data,
     errors,
@@ -204,30 +165,6 @@ const CreateOrEditLesson = () => {
   if (getLessonLoading) {
     return <Loader pageLoad />
   }
-
-  const onCreateAttachmentsError = (error: ErrorResponse) => {
-    setAlert({
-      severity: snackbarVariants.error,
-      message: error ? `errors.${error.code}` : ''
-    })
-  }
-  const { fetchData: fetchDataAttachments } = useAxios({
-    service: createAttachments,
-    fetchOnMount: false,
-    defaultResponse: null,
-    onResponseError: onCreateAttachmentsError
-  })
-  const handleOpenModal = () => openModal({ component: <AddAttachments /> })
-
-=======
-  const { data, errors, handleInputChange, handleSubmit } =
-    useForm<NewLessonData>({
-      initialValues,
-      validations,
-      onSubmit: fetchData,
-      submitWithData: true
-    })
->>>>>>> 4bf6336 (Small fix):src/pages/new-lesson/NewLesson.tsx
 
   const attachmentsList = attachments.map((attachment) => (
     <Box key={attachment.size} sx={styles.attachmentList.container}>
