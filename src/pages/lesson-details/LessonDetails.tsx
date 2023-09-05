@@ -20,6 +20,7 @@ import IconExtensionWithTitle from '~/components/icon-extension-with-title/IconE
 import { errorRoutes } from '~/router/constants/errorRoutes'
 import { styles } from '~/pages/lesson-details/LessonsDetails.styles'
 import { Lesson, TypographyVariantEnum } from '~/types'
+import { axiosClient } from '~/plugins/axiosClient'
 
 const LessonDetails = () => {
   const [activeItems, setActiveItems] = useState<number[]>([])
@@ -70,7 +71,7 @@ const LessonDetails = () => {
   const items = [
     {
       title: 'lesson.content',
-      content: contentMock
+      content: <div dangerouslySetInnerHTML={{ __html: response.content }} />
     },
     {
       title: 'lesson.attachments',

@@ -50,6 +50,7 @@ const CreateOrEditLesson = () => {
   const { openModal } = useModalContext()
   const navigate = useNavigate()
   const [attachments, setAttachments] = useState<Attachment[]>([])
+  const [content, setContent] = useState<string>('')
   const { id } = useParams()
 
   const handleResponseError = (error: ErrorResponse) => {
@@ -92,9 +93,14 @@ const CreateOrEditLesson = () => {
     )
   }
 
+  const handleEdit = (content: string) => {
+    setContent(content)
+  }
+
   const addLesson = (): Promise<AxiosResponse> => {
     const lesson = {
       ...data,
+      content,
       attachments: attachments.map((attachment) => attachment._id)
     }
     return ResourceService.addLesson(lesson)
@@ -156,10 +162,7 @@ const CreateOrEditLesson = () => {
   })
 
   useEffect(() => {
-    if (id) {
-      void fetchDataLesson(id)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (id) void fetchDataLesson(id)
   }, [])
 
   if (getLessonLoading) {
@@ -214,7 +217,7 @@ const CreateOrEditLesson = () => {
         >
           {t('lesson.labels.attachments')} <AddIcon sx={styles.addIcon} />
         </AppButton>
-        <FileEditor />
+        <FileEditor onEdit={handleEdit} value={content} />
         {attachmentsList}
         <Box sx={styles.buttons}>
           <AppButton size={SizeEnum.ExtraLarge} type={ButtonTypeEnum.Submit}>

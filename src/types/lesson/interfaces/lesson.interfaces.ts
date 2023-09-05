@@ -3,3 +3,7 @@ export interface LessonData {
   description: string
   attachments: string[]
 }
+
+export interface NewLesson extends LessonData {
+  content: string
+}
