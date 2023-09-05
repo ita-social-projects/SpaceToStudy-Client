@@ -6,18 +6,22 @@ import AddIcon from '@mui/icons-material/Add'
 =======
 import AddResourceWithInput from '~/containers/my-resources/add-resource-with-input/AddResourceWithInput'
 import EnhancedTable from '~/components/enhanced-table/EnhancedTable'
-<<<<<<< HEAD
 import useConfirm from '~/hooks/use-confirm'
+<<<<<<< HEAD
 import AppPagination from '~/components/app-pagination/AppPagination'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import usePagination from '~/hooks/table/use-pagination'
 import Loader from '~/components/loader/Loader'
 import useSort from '~/hooks/table/use-sort'
 import useAxios from '~/hooks/use-axios'
+=======
+import AddDocuments from '~/containers/add-documents/AddDocuments'
+>>>>>>> 3ee0e4b (fix)
 import { useSnackBarContext } from '~/context/snackbar-context'
 import Loader from '~/components/loader/Loader'
 import AppPagination from '~/components/app-pagination/AppPagination'
 import { ResourceService } from '~/services/resource-service'
+<<<<<<< HEAD
 import AddResourceWithInput from '~/containers/my-resources/add-resource-with-input/AddResourceWithInput'
 import MyResourcesTable from '~/containers/my-resources/my-resources-table/MyResourcesTable'
 import Loader from '~/components/loader/Loader'
@@ -27,6 +31,8 @@ import useAxios from '~/hooks/use-axios'
 import usePagination from '~/hooks/table/use-pagination'
 import AddDocuments from '~/containers/add-documents/AddDocuments'
 import { authRoutes } from '~/router/constants/authRoutes'
+=======
+>>>>>>> 3ee0e4b (fix)
 import { attachmentService } from '~/services/attachment-service'
 
 import { defaultResponses, snackbarVariants } from '~/constants'
@@ -88,6 +94,7 @@ const AttachmentsContainer = () => {
 
   const deleteAttachment = useCallback(
     (id?: string) => ResourceService.deleteAttachment(id ?? ''),
+<<<<<<< HEAD
     [])
 
   const updateAttachment = useCallback(
@@ -111,6 +118,27 @@ const AttachmentsContainer = () => {
     service: getAttachments,
     defaultResponse: defaultResponses.itemsWithCount,
     onResponseError
+=======
+    []
+  )
+
+  const {
+    response,
+    loading,
+    fetchData: fetchAttachments
+  } = useAxios<ItemsWithCount<Attachment>>({
+    service: getAttachments,
+    defaultResponse: defaultResponses.itemsWithCount,
+    onResponseError: onAttachmentError
+  })
+
+  const { error, fetchData: fetchDeleteAttachment } = useAxios({
+    service: deleteAttachment,
+    fetchOnMount: false,
+    defaultResponse: null,
+    onResponseError: onDeleteAttachmentError,
+    onResponse: onDeleteAttachmentResponse
+>>>>>>> 3ee0e4b (fix)
   })
 
   const onAttachmentUpdate = useCallback(() => void fetchAttachments(), [fetchAttachments])
@@ -189,8 +217,6 @@ const AttachmentsContainer = () => {
 
   const addAttachmentBlock = (
     <AddResourceWithInput
-      fetchData={fetchAttachments}
-      searchRef={searchFileName}
       button={
         <AddDocuments
           buttonText={t('myResourcesPage.attachments.addAttachment')}
@@ -201,7 +227,9 @@ const AttachmentsContainer = () => {
           variant={ButtonVariantEnum.Contained}
         />
       }
-      />
+      fetchData={fetchAttachments}
+      searchRef={searchFileName}
+    />
   )
 
   const props = {
