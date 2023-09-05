@@ -5,12 +5,12 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Badge from '@mui/material/Badge'
 
+import { useChatContext } from '~/context/chat-context'
 import { useAppSelector } from '~/hooks/use-redux'
 
 import { styles } from '~/containers/chat/chat-item/ChatItem.styles'
 import { ChatResponse, ComponentEnum, OverlapEnum, PositionEnum } from '~/types'
 import { getFormattedDate } from '~/utils/helper-functions'
-import { useChatContext } from '~/context/chat-context'
 
 interface ItemOfChatProps {
   isActiveChat: boolean

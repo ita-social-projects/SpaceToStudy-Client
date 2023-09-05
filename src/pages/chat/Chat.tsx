@@ -111,7 +111,7 @@ const Chat = () => {
   useEffect(() => {
     if (currentChatId) {
       listOfChats.forEach((chat: ChatResponse) => {
-        if (chat._id === currentChatId) setSelectedChat(chat)
+        if (chat._id === currentChatId) return setSelectedChat(chat)
       })
     }
   }, [currentChatId, listOfChats])

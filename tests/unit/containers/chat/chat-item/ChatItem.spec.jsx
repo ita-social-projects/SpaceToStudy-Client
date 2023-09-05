@@ -2,6 +2,14 @@ import { screen, fireEvent } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 import ChatItem from '~/containers/chat/chat-item/ChatItem'
 
+const mockChatContext = {
+  setCurrentChatId: vi.fn()
+}
+
+vi.mock('~/context/chat-context', () => ({
+  useChatContext: () => mockChatContext
+}))
+
 const user = {
   _id: '644e6b1668cc37f543f2f37c',
   firstName: 'Albus',
@@ -55,5 +63,6 @@ describe('ChatItem', () => {
     fireEvent.click(message)
 
     expect(setSelectedChat).toHaveBeenCalledWith(chat)
+    expect(mockChatContext.setCurrentChatId).toHaveBeenCalledWith(null)
   })
 })
