@@ -55,7 +55,6 @@ const AddDocuments: FC<AddDocumentsProps> = ({
 
     !error && void fetchData(formData)
   }
-  spliceSx
 
   return (
     <Box sx={styles.root}>

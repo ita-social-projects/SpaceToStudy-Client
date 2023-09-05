@@ -55,7 +55,7 @@ const AddResourceWithInput: FC<AddResourceWithInputProps> = ({
     <Box sx={styles.container}>
       {!button ? (
         <AppButton component={Link} to={link}>
-          {!button && t(btnText)}
+          {!button && btnText && t(btnText)}
           <AddIcon sx={styles.addIcon} />
         </AppButton>
       ) : (
