@@ -1,17 +1,14 @@
 import { useCallback, useRef } from 'react'
-import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 
-import useConfirm from '~/hooks/use-confirm'
-import { quizService } from '~/services/quiz-service'
 import { useSnackBarContext } from '~/context/snackbar-context'
-import EnhancedTable from '~/components/enhanced-table/EnhancedTable'
+import { quizService } from '~/services/quiz-service'
 import AddResourceWithInput from '~/containers/my-resources/add-resource-with-input/AddResourceWithInput'
+import MyResourcesTable from '~/containers/my-resources/my-resources-table/MyResourcesTable'
 import Loader from '~/components/loader/Loader'
 import useSort from '~/hooks/table/use-sort'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import useAxios from '~/hooks/use-axios'
-import AppPagination from '~/components/app-pagination/AppPagination'
 import usePagination from '~/hooks/table/use-pagination'
 
 import { defaultResponses, snackbarVariants } from '~/constants'
@@ -21,25 +18,30 @@ import {
   itemsLoadLimit,
   removeColumnRules
 } from '~/containers/my-quizzes/QuizzesContainer.constants'
-
-import { styles } from '~/containers/my-quizzes/QuizzesContainer.styles'
-import { ErrorResponse, ItemsWithCount, Quiz } from '~/types'
+import {
+  ItemsWithCount,
+  GetResourcesParams,
+  Quiz,
+  ErrorResponse
+} from '~/types'
 import { ajustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
 
 const QuizzesContainer = () => {
-  const { t } = useTranslation()
   const { setAlert } = useSnackBarContext()
-  const { openDialog } = useConfirm()
-
+  const { page } = usePagination()
   const sortOptions = useSort({ initialSort })
-  const { sort } = sortOptions
   const searchTitle = useRef<string>('')
   const breakpoints = useBreakpoints()
-  const { page, handleChangePage } = usePagination()
-  const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
-  const columnsToShow = ajustColumns(breakpoints, columns, removeColumnRules)
 
-  const onGetQuizzesError = useCallback(
+  const { sort } = sortOptions
+  const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
+  const columnsToShow = ajustColumns<Quiz>(
+    breakpoints,
+    columns,
+    removeColumnRules
+  )
+
+  const onResponseError = useCallback(
     (error: ErrorResponse) => {
       setAlert({
         severity: snackbarVariants.error,
@@ -48,20 +50,6 @@ const QuizzesContainer = () => {
     },
     [setAlert]
   )
-
-  const onDeleteQuizError = (error: ErrorResponse) => {
-    setAlert({
-      severity: snackbarVariants.error,
-      message: error ? `errors.${error.code}` : ''
-    })
-  }
-
-  const onDeleteQuizResponse = () => {
-    setAlert({
-      severity: snackbarVariants.success,
-      message: 'myResourcesPage.quizzes.successDeletion'
-    })
-  }
 
   const getQuizzes = useCallback(
     () =>
@@ -79,74 +67,36 @@ const QuizzesContainer = () => {
     []
   )
 
-  const { response, loading, fetchData } = useAxios<ItemsWithCount<Quiz>>({
+  const { response, loading, fetchData } = useAxios<
+    ItemsWithCount<Quiz>,
+    GetResourcesParams
+  >({
     service: getQuizzes,
     defaultResponse: defaultResponses.itemsWithCount,
-    onResponseError: onGetQuizzesError
+    onResponseError
   })
-
-  const { error, fetchData: fetchDeleteLesson } = useAxios({
-    service: deleteQuiz,
-    fetchOnMount: false,
-    defaultResponse: null,
-    onResponseError: onDeleteQuizError,
-    onResponse: onDeleteQuizResponse
-  })
-
-  const handleDeleteQuiz = async (id: string, isConfirmed: boolean) => {
-    if (isConfirmed) {
-      await fetchDeleteLesson(id)
-      if (!error) await fetchData()
-    }
-  }
-
-  const openDeletionConfirmDialog = (id: string) => {
-    openDialog({
-      message: 'myResourcesPage.confirmDeletionMessage',
-      sendConfirm: (isConfirmed: boolean) =>
-        void handleDeleteQuiz(id, isConfirmed),
-      title: 'myResourcesPage.quizzes.confirmQuizDeletionTitle'
-    })
-  }
-
-  const rowActions = [
-    {
-      label: t('common.edit'),
-      func: () => undefined
-    },
-    {
-      label: t('common.delete'),
-      func: openDeletionConfirmDialog
-    }
-  ]
-
-  const tableWithPagination = (
-    <>
-      <EnhancedTable
-        columns={columnsToShow}
-        data={{ items: response.items }}
-        emptyTableKey='myResourcesPage.quizzes.emptyQuizzes'
-        rowActions={rowActions}
-        sort={sortOptions}
-        sx={styles.table}
-      />
-      <AppPagination
-        onChange={handleChangePage}
-        page={page}
-        pageCount={Math.ceil(response.count / itemsPerPage)}
-      />
-    </>
-  )
 
   return (
     <Box>
       <AddResourceWithInput
-        btnText='myResourcesPage.quizzes.newQuizBtn'
+        btnText={'myResourcesPage.quizzes.addBtn'}
         fetchData={fetchData}
         link={'#'}
         searchRef={searchTitle}
       />
-      {loading ? <Loader pageLoad size={50} /> : tableWithPagination}
+      {loading ? (
+        <Loader pageLoad size={50} />
+      ) : (
+        <MyResourcesTable<Quiz>
+          columns={columnsToShow}
+          data={{ response, getData: fetchData }}
+          deleteService={deleteQuiz}
+          itemsPerPage={itemsPerPage}
+          onEdit={() => null}
+          resource='quizzes'
+          sort={sortOptions}
+        />
+      )}
     </Box>
   )
 }
