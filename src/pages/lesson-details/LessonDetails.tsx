@@ -1,8 +1,10 @@
 import { useCallback, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { AxiosResponse } from 'axios'
 import Box from '@mui/material/Box'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import EditIcon from '@mui/icons-material/Edit'
 
 import Loader from '~/components/loader/Loader'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
@@ -16,16 +18,20 @@ import {
 } from '~/pages/lesson-details/LessonDetails.constants'
 import Accordions from '~/components/accordion/Accordions'
 import IconExtensionWithTitle from '~/components/icon-extension-with-title/IconExtensionWithTitle'
+import AppButton from '~/components//app-button/AppButton'
 
 import { errorRoutes } from '~/router/constants/errorRoutes'
+import { authRoutes } from '~/router/constants/authRoutes'
 import { styles } from '~/pages/lesson-details/LessonsDetails.styles'
 import { Lesson, TypographyVariantEnum } from '~/types'
+import { createUrlPath } from '~/utils/helper-functions'
 
 const LessonDetails = () => {
   const [activeItems, setActiveItems] = useState<number[]>([])
 
   const { id } = useParams()
   const navigate = useNavigate()
+  const { t } = useTranslation()
 
   const onChange = (activeItem: number) => {
     setActiveItems((prevActiveItems) => {
@@ -58,6 +64,10 @@ const LessonDetails = () => {
     return <Loader pageLoad />
   }
 
+  const handleEditLesson = () => {
+    navigate(createUrlPath(authRoutes.myResources.editLesson.path, id))
+  }
+
   const attachmentsList = attachmentsMock.map((attachment) => (
     <Box key={attachment.size} sx={styles.attachment}>
       <IconExtensionWithTitle
@@ -80,6 +90,11 @@ const LessonDetails = () => {
 
   return (
     <PageWrapper>
+      <Box sx={styles.btnContainer}>
+        <AppButton onClick={handleEditLesson} sx={styles.button}>
+          {t('common.edit')} <EditIcon sx={styles.editIcon} />
+        </AppButton>
+      </Box>
       <TitleWithDescription
         description={response.description}
         style={styles.titleWithDescription}

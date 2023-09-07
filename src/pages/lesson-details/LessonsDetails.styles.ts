@@ -19,6 +19,22 @@ export const styles = {
     display: 'flex',
     justifyContent: 'space-between'
   },
+  button: {
+    background: palette.basic.grey,
+    '&:hover': {
+      backgroundColor: 'primary.100'
+    },
+    color: palette.basic.black,
+    maxWidth: '97px'
+  },
+  editIcon: {
+    width: { xs: '14px', sm: '16px' },
+    ml: '5px'
+  },
+  btnContainer: {
+    display: 'flex',
+    justifyContent: 'flex-end'
+  },
   accordion: {
     withIcon: {
       accordion: {
