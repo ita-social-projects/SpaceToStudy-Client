@@ -31,7 +31,7 @@ const Message: FC<MessageProps> = ({
   message,
   prevMessage,
   sx = {},
-  filteredMessages,
+  filteredMessages = [],
   filteredIndex
 }) => {
   const { userId: myId } = useAppSelector((state) => state.appMain)
