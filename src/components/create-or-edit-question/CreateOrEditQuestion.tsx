@@ -41,7 +41,7 @@ const CreateOrEditQuestion = () => {
   const setValue = (value: string) => {
     const questionOption = sortQuestions.find((item) => item.value === value)
 
-    setQuestionType(questionOption || sortQuestions[0])
+    setQuestionType(questionOption ?? sortQuestions[0])
   }
 
   const handleQuestion = (event: ChangeEvent<HTMLInputElement>) => {
