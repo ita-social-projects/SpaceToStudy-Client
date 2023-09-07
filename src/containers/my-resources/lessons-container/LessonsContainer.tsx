@@ -24,7 +24,8 @@ import {
   ItemsWithCount,
   GetResourcesParams,
   Lesson,
-  ErrorResponse
+  ErrorResponse,
+  ResourcesTabsEnum
 } from '~/types'
 import {
   ajustColumns,
@@ -87,6 +88,16 @@ const LessonsContainer = () => {
     onResponseError
   })
 
+  const props = {
+    columns: columnsToShow,
+    data: { response, getData: fetchData },
+    deleteService: deleteLesson,
+    itemsPerPage,
+    onEdit,
+    resource: ResourcesTabsEnum.Lessons,
+    sort: sortOptions
+  }
+
   return (
     <Box>
       <AddResourceWithInput
@@ -98,15 +109,7 @@ const LessonsContainer = () => {
       {loading ? (
         <Loader pageLoad size={50} />
       ) : (
-        <MyResourcesTable<Lesson>
-          columns={columnsToShow}
-          data={{ response, getData: fetchData }}
-          deleteService={deleteLesson}
-          itemsPerPage={itemsPerPage}
-          onEdit={onEdit}
-          resource='lessons'
-          sort={sortOptions}
-        />
+        <MyResourcesTable<Lesson> {...props} />
       )}
     </Box>
   )

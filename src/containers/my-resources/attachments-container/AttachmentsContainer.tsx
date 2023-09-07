@@ -22,7 +22,8 @@ import {
   GetResourcesParams,
   Attachment,
   ErrorResponse,
-  UpdateAttachmentParams
+  UpdateAttachmentParams,
+  ResourcesTabsEnum
 } from '~/types'
 import { ajustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
 import { defaultResponses, snackbarVariants } from '~/constants'
@@ -102,6 +103,16 @@ const AttachmentsContainer = () => {
     removeColumnRules
   )
 
+  const props = {
+    columns: columnsToShow,
+    data: { response, getData: fetchData },
+    deleteService: deleteAttachment,
+    itemsPerPage,
+    onEdit,
+    resource: ResourcesTabsEnum.Attachments,
+    sort: sortOptions
+  }
+
   return (
     <Box>
       <AddResourceWithInput
@@ -113,15 +124,7 @@ const AttachmentsContainer = () => {
       {loading ? (
         <Loader pageLoad size={50} />
       ) : (
-        <MyResourcesTable<Attachment>
-          columns={columnsToShow}
-          data={{ response, getData: fetchData }}
-          deleteService={deleteAttachment}
-          itemsPerPage={itemsPerPage}
-          onEdit={onEdit}
-          resource='attachments'
-          sort={sortOptions}
-        />
+        <MyResourcesTable<Attachment> {...props} />
       )}
     </Box>
   )

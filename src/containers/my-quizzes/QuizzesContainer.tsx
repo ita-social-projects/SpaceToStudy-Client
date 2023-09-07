@@ -22,7 +22,8 @@ import {
   ItemsWithCount,
   GetResourcesParams,
   Quiz,
-  ErrorResponse
+  ErrorResponse,
+  ResourcesTabsEnum
 } from '~/types'
 import { ajustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
 
@@ -76,6 +77,16 @@ const QuizzesContainer = () => {
     onResponseError
   })
 
+  const props = {
+    columns: columnsToShow,
+    data: { response, getData: fetchData },
+    deleteService: deleteQuiz,
+    itemsPerPage,
+    onEdit: () => null,
+    resource: ResourcesTabsEnum.Quizzes,
+    sort: sortOptions
+  }
+
   return (
     <Box>
       <AddResourceWithInput
@@ -87,15 +98,7 @@ const QuizzesContainer = () => {
       {loading ? (
         <Loader pageLoad size={50} />
       ) : (
-        <MyResourcesTable<Quiz>
-          columns={columnsToShow}
-          data={{ response, getData: fetchData }}
-          deleteService={deleteQuiz}
-          itemsPerPage={itemsPerPage}
-          onEdit={() => null}
-          resource='quizzes'
-          sort={sortOptions}
-        />
+        <MyResourcesTable<Quiz> {...props} />
       )}
     </Box>
   )
