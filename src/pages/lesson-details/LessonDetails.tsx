@@ -11,7 +11,6 @@ import useAxios from '~/hooks/use-axios'
 import { ResourceService } from '~/services/resource-service'
 import {
   attachmentsMock,
-  contentMock,
   defaultResponse
 } from '~/pages/lesson-details/LessonDetails.constants'
 import Accordions from '~/components/accordion/Accordions'
@@ -20,7 +19,6 @@ import IconExtensionWithTitle from '~/components/icon-extension-with-title/IconE
 import { errorRoutes } from '~/router/constants/errorRoutes'
 import { styles } from '~/pages/lesson-details/LessonsDetails.styles'
 import { Lesson, TypographyVariantEnum } from '~/types'
-import { axiosClient } from '~/plugins/axiosClient'
 
 const LessonDetails = () => {
   const [activeItems, setActiveItems] = useState<number[]>([])

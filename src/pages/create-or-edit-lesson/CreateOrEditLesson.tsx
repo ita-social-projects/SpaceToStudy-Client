@@ -163,7 +163,7 @@ const CreateOrEditLesson = () => {
 
   useEffect(() => {
     if (id) void fetchDataLesson(id)
-  }, [])
+  }, [id, fetchDataLesson])
 
   if (getLessonLoading) {
     return <Loader pageLoad />
