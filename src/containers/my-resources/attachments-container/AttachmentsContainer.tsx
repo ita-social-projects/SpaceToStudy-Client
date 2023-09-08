@@ -1,4 +1,4 @@
-import { useCallback, useRef } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 
@@ -15,7 +15,6 @@ import { useSnackBarContext } from '~/context/snackbar-context'
 import { ResourceService } from '~/services/resource-service'
 import { authRoutes } from '~/router/constants/authRoutes'
 
-import { defaultResponses, snackbarVariants } from '~/constants'
 import {
   columns,
   initialSort,
@@ -23,7 +22,13 @@ import {
   removeColumnRules
 } from '~/containers/my-resources/attachments-container/AttachmentsContainer.constants'
 import { ajustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
-import { ItemsWithCount, Attachment, ErrorResponse } from '~/types'
+import { defaultResponses, snackbarVariants } from '~/constants'
+import {
+  ItemsWithCount,
+  Attachment,
+  ErrorResponse,
+  UpdateAttachmentParams
+} from '~/types'
 import { styles } from '~/containers/my-resources/attachments-container/AttachmentsContainer.styles'
 
 const AttachmentsContainer = () => {
@@ -31,35 +36,26 @@ const AttachmentsContainer = () => {
   const { setAlert } = useSnackBarContext()
   const { openDialog } = useConfirm()
   const { page, handleChangePage } = usePagination()
-
-  const sortOptions = useSort({ initialSort })
-  const { sort } = sortOptions
-
   const breakpoints = useBreakpoints()
+  const sortOptions = useSort({ initialSort })
+  const searchFileName = useRef<string>('')
+  const [selectedItemId, setSelectedItemId] = useState<string>('')
+
+  const { sort } = sortOptions
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
 
-  const searchFileName = useRef<string>('')
-
-  const getAttachments = useCallback(
-    () =>
-      ResourceService.getAttachments({
-        limit: itemsPerPage,
-        skip: (page - 1) * itemsPerPage,
-        sort,
-        fileName: searchFileName.current
-      }),
-    [itemsPerPage, page, sort, searchFileName]
-  )
-
   const onAttachmentError = useCallback(
-    (error: ErrorResponse) => {
+    (error: ErrorResponse, message?: string) => {
       setAlert({
         severity: snackbarVariants.error,
-        message: error ? `errors.${error.code}` : ''
+        message: error ? message ?? `errors.${error.code}` : ''
       })
     },
     [setAlert]
   )
+
+  const onAttachmentUpdateError = (error: ErrorResponse) =>
+    onAttachmentError(error, 'myResourcesPage.attachments.validationError')
 
   const onDeleteAttachmentError = (error: ErrorResponse) => {
     setAlert({
@@ -75,8 +71,25 @@ const AttachmentsContainer = () => {
     })
   }
 
+  const getAttachments = useCallback(
+    () =>
+      ResourceService.getAttachments({
+        limit: itemsPerPage,
+        skip: (page - 1) * itemsPerPage,
+        sort,
+        fileName: searchFileName.current
+      }),
+    [itemsPerPage, page, sort, searchFileName]
+  )
+
   const deleteAttachment = useCallback(
     (id?: string) => ResourceService.deleteAttachment(id ?? ''),
+    []
+  )
+
+  const updateAttachment = useCallback(
+    (params?: UpdateAttachmentParams) =>
+      ResourceService.updateAttachment(params),
     []
   )
 
@@ -90,6 +103,19 @@ const AttachmentsContainer = () => {
     onResponseError: onAttachmentError
   })
 
+  const onAttachmentUpdate = useCallback(
+    () => void fetchGetAttachments(),
+    [fetchGetAttachments]
+  )
+
+  const { fetchData: updateData } = useAxios({
+    service: updateAttachment,
+    defaultResponse: null,
+    onResponseError: onAttachmentUpdateError,
+    onResponse: onAttachmentUpdate,
+    fetchOnMount: false
+  })
+
   const { error, fetchData: fetchDeleteAttachment } = useAxios({
     service: deleteAttachment,
     fetchOnMount: false,
@@ -97,6 +123,13 @@ const AttachmentsContainer = () => {
     onResponseError: onDeleteAttachmentError,
     onResponse: onDeleteAttachmentResponse
   })
+
+  const onSave = async (fileName: string) => {
+    if (fileName) await updateData({ id: selectedItemId, fileName })
+    setSelectedItemId('')
+  }
+  const onEdit = (id: string) => setSelectedItemId(id)
+  const onCancel = () => setSelectedItemId('')
 
   const handleDeleteAttachment = async (id: string, isConfirmed: boolean) => {
     if (isConfirmed) {
@@ -114,11 +147,16 @@ const AttachmentsContainer = () => {
     })
   }
 
-  const columnsToShow = ajustColumns(breakpoints, columns, removeColumnRules)
+  const columnsToShow = ajustColumns(
+    breakpoints,
+    columns(selectedItemId, onCancel, onSave),
+    removeColumnRules
+  )
+
   const rowActions = [
     {
-      label: t('common.edit'),
-      func: () => console.log(t('common.edit'))
+      label: t('common.rename'),
+      func: onEdit
     },
     {
       label: t('common.delete'),
