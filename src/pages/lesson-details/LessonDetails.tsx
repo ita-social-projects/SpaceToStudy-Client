@@ -18,7 +18,7 @@ import {
 } from '~/pages/lesson-details/LessonDetails.constants'
 import Accordions from '~/components/accordion/Accordions'
 import IconExtensionWithTitle from '~/components/icon-extension-with-title/IconExtensionWithTitle'
-import AppButton from '~/components//app-button/AppButton'
+import AppButton from '~/components/app-button/AppButton'
 
 import { errorRoutes } from '~/router/constants/errorRoutes'
 import { authRoutes } from '~/router/constants/authRoutes'
@@ -90,11 +90,9 @@ const LessonDetails = () => {
 
   return (
     <PageWrapper>
-      <Box sx={styles.btnContainer}>
-        <AppButton onClick={handleEditLesson} sx={styles.button}>
-          {t('common.edit')} <EditIcon sx={styles.editIcon} />
-        </AppButton>
-      </Box>
+      <AppButton onClick={handleEditLesson} sx={styles.button}>
+        {t('common.edit')} <EditIcon sx={styles.editIcon} />
+      </AppButton>
       <TitleWithDescription
         description={response.description}
         style={styles.titleWithDescription}
