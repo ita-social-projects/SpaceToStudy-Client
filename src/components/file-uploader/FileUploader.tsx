@@ -21,7 +21,6 @@ import {
   InputEnum,
   SizeEnum
 } from '~/types'
-import { spliceSx } from '~/utils/helper-functions'
 
 interface FileUploaderProps {
   buttonText: string
@@ -71,11 +70,7 @@ const FileUploader: FC<FileUploaderProps> = ({
   ))
 
   const uploadButton = (
-    <Button
-      component={ComponentEnum.Label}
-      sx={spliceSx(!variant ? styles.uploadBtn : {}, sx.button)}
-      variant={variant}
-    >
+    <Button component={ComponentEnum.Label} sx={sx.button} variant={variant}>
       {isImages && <CloudUploadIcon sx={styles.icon} />}
       {buttonText}
       {icon}
@@ -85,7 +80,7 @@ const FileUploader: FC<FileUploaderProps> = ({
 
   return (
     <>
-      <Box sx={spliceSx(!variant ? styles.root : {}, sx.root)}>
+      <Box sx={sx.root}>
         {initialState.length && isImages ? (
           <List sx={styles.filesList}>{filesList}</List>
         ) : (
