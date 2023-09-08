@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, MouseEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
@@ -16,21 +16,26 @@ import { UserResponse } from '~/types'
 
 interface ChatHeaderProps {
   onClick: () => void
+  onMenuClick: (e: MouseEvent<HTMLButtonElement>) => void
   user: Pick<UserResponse, '_id' | 'firstName' | 'lastName' | 'photo'>
 }
 
-const ChatHeader: FC<ChatHeaderProps> = ({ onClick, user }) => {
+const ChatHeader: FC<ChatHeaderProps> = ({ onClick, onMenuClick, user }) => {
   const { t } = useTranslation()
   const { isMobile } = useBreakpoints()
 
+  const handleOnClick = (e: MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation()
+  }
+
   const iconButtons = [
-    { _id: 1, icon: <SearchIcon />, handleOnClick: () => null },
-    { _id: 2, icon: <MoreVertIcon />, handleOnClick: () => null }
+    { _id: 1, icon: <SearchIcon />, handleOnClick },
+    { _id: 2, icon: <MoreVertIcon />, handleOnClick }
   ]
 
-  const icons = iconButtons.map((item) => (
-    <IconButton key={item._id} onClick={item.handleOnClick} sx={styles.icon}>
-      {item.icon}
+  const icons = iconButtons.map(({ _id, icon, handleOnClick }) => (
+    <IconButton key={_id} onClick={handleOnClick} sx={styles.icon}>
+      {icon}
     </IconButton>
   ))
 
@@ -42,9 +47,9 @@ const ChatHeader: FC<ChatHeaderProps> = ({ onClick, user }) => {
   )
 
   return (
-    <AppCard onClick={() => null} sx={styles.container}>
+    <AppCard onClick={onClick} sx={styles.container}>
       {isMobile && (
-        <IconButton onClick={onClick} sx={styles.menuIconBtn}>
+        <IconButton onClick={onMenuClick} sx={styles.menuIconBtn}>
           <MenuIcon />
         </IconButton>
       )}

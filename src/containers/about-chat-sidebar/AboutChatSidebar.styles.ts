@@ -1,17 +1,16 @@
 import { TypographyVariantEnum } from '~/types'
 
 export const styles = {
-  wrapper: (isOpened: boolean) => ({
-    display: isOpened ? 'flex' : 'none',
+  wrapper: {
+    display: 'flex',
     backgroundColor: 'basic.white',
     flexDirection: 'column',
     p: '24px 8px',
     height: 'calc(100% - 48px)',
-    maxWidth: '320px',
     '& .simplebar-track': {
       right: '-5px'
     }
-  }),
+  },
   contentWrapper: {
     display: 'flex',
     flexDirection: 'column',
@@ -24,10 +23,12 @@ export const styles = {
   header: {
     px: '24px',
     mb: '24px',
+    columnGap: '20px',
     display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between'
+    alignItems: 'center'
   },
+  goBackBtn: { p: '3px' },
+  goBackIcon: { color: 'primary.800' },
   headerText: {
     color: 'primary.700'
   },
@@ -51,18 +52,8 @@ export const styles = {
     color: 'primary.800',
     typography: TypographyVariantEnum.Body2
   },
-  verticalGrid: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    gap: '8px'
-  },
   title: {
     typography: TypographyVariantEnum.H5
-  },
-  notFound: {
-    typography: TypographyVariantEnum.Subtitle2,
-    textAlign: 'center'
   },
   secondaryText: {
     typography: TypographyVariantEnum.Subtitle2

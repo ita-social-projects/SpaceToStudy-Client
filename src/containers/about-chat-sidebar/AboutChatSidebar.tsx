@@ -7,153 +7,134 @@ import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
 import Avatar from '@mui/material/Avatar'
 import IconButton from '@mui/material/IconButton'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined'
 import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined'
 import LinkOutlinedIcon from '@mui/icons-material/LinkOutlined'
-import { Close as CloseIcon } from '@mui/icons-material'
 
 import AppButton from '~/components/app-button/AppButton'
 import SidebarContentBox from '~/components/sidebar-content-box/SidebarContentBox'
-import SidebarImageGrid from '~/components/sidebar-image-grid/SidebarImageGrid'
-import FileComponent from '~/components/file-component/FileComponent'
-import LinkComponent from '~/components/link-component/LinkComponent'
+import SidebarGroupedContent from '~/containers/chat/sidebar-grouped-content/SidebarGroupedContent'
 
 import {
   SizeEnum,
   ButtonVariantEnum,
-  UserResponse,
+  Member,
   Link,
   File,
-  Media
+  Media,
+  SidebarContentEnum
 } from '~/types'
 import { createUrlPath, spliceSx } from '~/utils/helper-functions'
 import { authRoutes } from '~/router/constants/authRoutes'
-
 import { styles } from '~/containers/about-chat-sidebar/AboutChatSidebar.styles'
 
 interface AboutChatSidebarProps {
-  user: UserResponse
+  member: Member
   media: Media[]
   files: File[]
   links: Link[]
 }
 
 const AboutChatSidebar: FC<AboutChatSidebarProps> = ({
-  user,
+  member,
   media,
   files,
   links
 }) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const [isOpened, setIsOpened] = useState(true)
+  const { About, Media, Files, Links } = SidebarContentEnum
+  const [titleText, setTitleText] = useState<string>(About)
 
-  const {
-    _id,
-    firstName,
-    lastName,
-    photo,
-    role,
-    professionalSummary: userDescription
-  } = user
-
-  const mediaContent =
-    media.length !== 0 ? (
-      <SidebarImageGrid images={media} />
-    ) : (
-      <Typography sx={styles.notFound}>
-        {t(`chatPage.sidebar.noMedia`)}
-      </Typography>
-    )
-
-  const filesContent =
-    files.length !== 0 ? (
-      files.map((file) => <FileComponent file={file} key={file._id} />)
-    ) : (
-      <Typography sx={styles.notFound}>
-        {t(`chatPage.sidebar.noFiles`)}
-      </Typography>
-    )
-
-  const linksContent =
-    links.length !== 0 ? (
-      links.map((link) => <LinkComponent key={link._id} link={link} />)
-    ) : (
-      <Typography sx={styles.notFound}>
-        {t(`chatPage.sidebar.noLinks`)}
-      </Typography>
-    )
+  const { user, role } = member
+  const { _id, firstName, lastName, photo, professionalSummary } = user
+  const { path: pathToProfile } = authRoutes.userProfile
 
   const navigateToUserProfile = () => {
-    navigate(
-      createUrlPath(authRoutes.userProfile.path, _id, {
-        role
-      })
-    )
+    navigate(createUrlPath(pathToProfile, _id, { role }))
   }
 
-  const closeSidebar = () => {
-    setIsOpened(false)
+  const onSeeAllClick = (text: string) => {
+    setTitleText(text)
   }
+
+  const getContentByTitle = () => {
+    switch (titleText) {
+      case Files:
+        return <SidebarGroupedContent<File> items={files} type={titleText} />
+      case Media:
+        return <SidebarGroupedContent<Media> items={media} type={titleText} />
+      case Links:
+        return <SidebarGroupedContent<Link> items={links} type={titleText} />
+    }
+  }
+
+  const goBackBtn = titleText !== About && (
+    <IconButton onClick={() => setTitleText(About)} sx={styles.goBackBtn}>
+      <ArrowBackIcon sx={styles.goBackIcon} />
+    </IconButton>
+  )
 
   return (
-    <Box data-testid='sidebar' sx={styles.wrapper(isOpened)}>
+    <Box data-testid='sidebar' sx={styles.wrapper}>
       <Box sx={styles.header}>
+        {goBackBtn}
         <Typography sx={spliceSx(styles.headerText, styles.title)}>
-          {t(`chatPage.sidebar.about`)}
+          {t(`chatPage.sidebar.${titleText}`)}
         </Typography>
-        <IconButton
-          aria-label='close'
-          onClick={closeSidebar}
-          sx={styles.headerIcon}
-        >
-          <CloseIcon />
-        </IconButton>
       </Box>
       <Divider />
       <SimpleBar style={styles.scrollBar}>
-        <Box sx={styles.contentWrapper}>
-          <Box sx={styles.chatInfo}>
-            <Avatar src={photo} sx={styles.userAvatar} />
-            <Typography
-              sx={styles.title}
-            >{`${firstName} ${lastName}`}</Typography>
-            <AppButton
-              onClick={navigateToUserProfile}
-              size={SizeEnum.Medium}
-              sx={styles.secondaryText}
-              variant={ButtonVariantEnum.Tonal}
-            >
-              {t(`chatPage.sidebar.viewButton`)}
-            </AppButton>
-            <Typography sx={styles.userDescription}>
-              {userDescription ?? t(`chatPage.sidebar.noSummary`)}
-            </Typography>
+        {titleText === 'about' ? (
+          <Box sx={styles.contentWrapper}>
+            <Box sx={styles.chatInfo}>
+              <Avatar
+                src={
+                  photo && `${import.meta.env.VITE_APP_IMG_USER_URL}${photo}`
+                }
+                sx={styles.userAvatar}
+              />
+              <Typography
+                sx={styles.title}
+              >{`${firstName} ${lastName}`}</Typography>
+              <AppButton
+                onClick={navigateToUserProfile}
+                size={SizeEnum.Medium}
+                sx={styles.secondaryText}
+                variant={ButtonVariantEnum.Tonal}
+              >
+                {t(`chatPage.sidebar.viewButton`)}
+              </AppButton>
+              <Typography sx={styles.userDescription}>
+                {professionalSummary || t(`chatPage.sidebar.noSummary`)}
+              </Typography>
+            </Box>
+            <Divider />
+            <SidebarContentBox
+              content={media}
+              icon={<ImageOutlinedIcon />}
+              name={Media}
+              onClick={onSeeAllClick}
+            />
+            <Divider />
+            <SidebarContentBox
+              content={files}
+              icon={<InsertDriveFileOutlinedIcon />}
+              name={Files}
+              onClick={onSeeAllClick}
+            />
+            <Divider />
+            <SidebarContentBox
+              content={links}
+              icon={<LinkOutlinedIcon />}
+              name={Links}
+              onClick={onSeeAllClick}
+            />
           </Box>
-          <Divider />
-          <SidebarContentBox
-            icon={<ImageOutlinedIcon />}
-            name={t('chatPage.sidebar.media')}
-          >
-            {mediaContent}
-          </SidebarContentBox>
-          <Divider />
-          <SidebarContentBox
-            content={files}
-            icon={<InsertDriveFileOutlinedIcon />}
-            name={t('chatPage.sidebar.files')}
-          >
-            <Box sx={styles.verticalGrid}>{filesContent}</Box>
-          </SidebarContentBox>
-          <Divider />
-          <SidebarContentBox
-            content={links}
-            icon={<LinkOutlinedIcon />}
-            name={t('chatPage.sidebar.links')}
-          >
-            <Box sx={styles.verticalGrid}>{linksContent}</Box>
-          </SidebarContentBox>
-        </Box>
+        ) : (
+          getContentByTitle()
+        )}
       </SimpleBar>
     </Box>
   )
