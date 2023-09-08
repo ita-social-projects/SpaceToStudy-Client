@@ -9,7 +9,6 @@ import { messageService } from '~/services/message-service'
 import { useDrawer } from '~/hooks/use-drawer'
 import useAxios from '~/hooks/use-axios'
 import useBreakpoints from '~/hooks/use-breakpoints'
-import { useChatContext } from '~/context/chat-context'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import AppDrawer from '~/components/app-drawer/AppDrawer'
 import AppChip from '~/components/app-chip/AppChip'
@@ -34,8 +33,7 @@ import {
 
 const Chat = () => {
   const { t } = useTranslation()
-  const { isMobile, isDesktop } = useBreakpoints()
-  const { currentChatId } = useChatContext()
+  const { isMobile } = useBreakpoints()
   const { openDrawer, closeDrawer, isOpen } = useDrawer()
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false)
   const [selectedChat, setSelectedChat] = useState<ChatResponse | null>(null)
@@ -84,7 +82,7 @@ const Chat = () => {
     defaultResponse: defaultResponses.array
   })
 
-  const { fetchData } = useAxios({
+  const { fetchData, loading: isMessagesLoading } = useAxios({
     service: getMessages,
     onResponse: onMessagesResponse,
     defaultResponse: defaultResponses.array,
@@ -109,12 +107,19 @@ const Chat = () => {
   }, [selectedChat, messages.length])
 
   useEffect(() => {
+    const currentChatId = localStorage.getItem('currentChatId')
+
     if (currentChatId) {
-      listOfChats.forEach((chat: ChatResponse) => {
-        if (chat._id === currentChatId) return setSelectedChat(chat)
-      })
+      const foundChat = listOfChats.find(
+        (chat: ChatResponse) => chat._id === currentChatId
+      )
+
+      if (foundChat) {
+        setSelectedChat(foundChat)
+        localStorage.removeItem('currentChatId')
+      }
     }
-  }, [currentChatId, listOfChats])
+  }, [listOfChats])
 
   if (loading) {
     return <Loader size={100} />
@@ -163,7 +168,9 @@ const Chat = () => {
     messagesListWithDate
   ) : (
     <AppChip labelSx={styles.chipLabel(true)} sx={styles.chip}>
-      {t('chatPage.chat.loading')}
+      {isMessagesLoading
+        ? t('chatPage.chat.loading')
+        : t('chatPage.message.noMessages')}
     </AppChip>
   )
 
@@ -213,7 +220,7 @@ const Chat = () => {
                   onFilteredIndexChange={hadleIndexMessage}
                   onFilteredMessagesChange={handleFilteredMessage}
                   onMenuClick={openChatsHandler}
-                  user={selectedChat.members[0].user}
+                  user={selectedChat.members[1].user}
                 />
                 <SimpleBar
                   scrollableNodeProps={{ ref: scrollRef }}

@@ -5,7 +5,6 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Badge from '@mui/material/Badge'
 
-import { useChatContext } from '~/context/chat-context'
 import { useAppSelector } from '~/hooks/use-redux'
 
 import { styles } from '~/containers/chat/chat-item/ChatItem.styles'
@@ -26,32 +25,36 @@ const ChatItem: FC<ItemOfChatProps> = ({
   closeDrawer
 }) => {
   const { t } = useTranslation()
-  const { setCurrentChatId } = useChatContext()
   const { userId } = useAppSelector((state) => state.appMain)
 
-  const { firstName, lastName, photo } = chat.members[0].user
-  const { text, author, updatedAt } = chat.latestMessage
+  const { firstName, lastName, photo } = chat.members[1].user
+  const { text, author, updatedAt } = chat.latestMessage || {
+    text: t('chatPage.message.noMessages'),
+    author: '',
+    updatedAt: ''
+  }
 
   const fullName = `${firstName} ${lastName}`
 
   const handleSelectedChat = () => {
     setSelectedChat(chat)
-    setCurrentChatId(null)
     closeDrawer && closeDrawer()
   }
 
-  const formattedTime = getFormattedDate({
-    date: updatedAt,
-    locales: 'en-GB',
-    options: {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric'
-    },
-    isCurrentDayHours: true
-  })
+  const formattedTime =
+    updatedAt &&
+    getFormattedDate({
+      date: updatedAt,
+      locales: 'en-GB',
+      options: {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+      },
+      isCurrentDayHours: true
+    })
 
-  const isCurrentUser = userId === author._id && (
+  const isCurrentUser = author && userId === author._id && (
     <Typography sx={styles.prefix}>{t('chatPage.message.you')}:</Typography>
   )
 

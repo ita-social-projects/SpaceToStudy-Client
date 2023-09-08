@@ -6,7 +6,6 @@ import {
   useRef,
   FC
 } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import SimpleBar from 'simplebar-react'
 import Box from '@mui/material/Box'
@@ -23,6 +22,7 @@ import Message from '~/components/message/Message'
 import UserProfileInfo from '~/components/user-profile-info/UserProfileInfo'
 import Loader from '~/components/loader/Loader'
 import { messageService } from '~/services/message-service'
+import { chatService } from '~/services/chat-service'
 import { getGroupedByDate, getIsNewDay } from '~/utils/helper-functions'
 
 import { ChatInfo, MessageInterface } from '~/types'
@@ -37,14 +37,23 @@ interface ChatDialogWindow {
 
 const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
   const [textAreaValue, setTextAreaValue] = useState<string>('')
+  const [creatingChat, setCreatingChat] = useState<boolean>(false)
   const { t } = useTranslation()
-  const navigate = useNavigate()
   const scrollRef = useRef<HTMLDivElement | null>(null)
-  const { setChatInfo, setCurrentChatId } = useChatContext()
+  const { setChatInfo } = useChatContext()
 
   const getMessages = useCallback(
     () => messageService.getMessages({ chatId: chatInfo.chatId }),
     [chatInfo.chatId]
+  )
+
+  const createChat = useCallback(
+    () =>
+      chatService.createChat({
+        member: chatInfo.author._id,
+        memberRole: chatInfo.authorRole
+      }),
+    [chatInfo.author._id, chatInfo.authorRole]
   )
 
   const {
@@ -88,18 +97,38 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
     messagesListWithDate
   )
 
-  const questionsList = questions.map((el) => (
-    <Typography key={el.question} sx={styles.question}>
-      {t(el.question)}
-    </Typography>
-  ))
+  const questionsList = creatingChat ? (
+    <Box sx={styles.chatCreateBox}>
+      <Loader size={20} />
+      <Typography sx={styles.question}>{t('chatPage.creating')}</Typography>
+    </Box>
+  ) : (
+    questions.map((el) => (
+      <Typography key={el.question} sx={styles.question}>
+        {t(el.question)}
+      </Typography>
+    ))
+  )
 
   const closeChatWindow = () => setChatInfo(null)
 
-  const handleRedirectToChat = () => {
-    setCurrentChatId(chatInfo.chatId)
-    closeChatWindow()
-    navigate(authRoutes.chat.path)
+  const openChatInNewTab = (chatId: unknown) => {
+    localStorage.setItem('currentChatId', chatId as string)
+    window.open(authRoutes.chat.path, '_blank', 'noopener noreferrer')
+  }
+
+  const handleCreateNewChat = async () => {
+    setCreatingChat(true)
+    const newChat = await createChat()
+    openChatInNewTab(newChat.data._id)
+    setCreatingChat(false)
+  }
+
+  const handleRedirectToChat = async () => {
+    const chatId: unknown = chatInfo.chatId
+    if (!chatId) {
+      await handleCreateNewChat()
+    } else openChatInNewTab(chatId)
   }
 
   return (
@@ -116,11 +145,12 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
             sx={styles.userProfileInfo}
           />
           <Box>
-            {chatInfo.chatId && (
-              <IconButton onClick={handleRedirectToChat} sx={styles.icons}>
-                <MessageIcon />
-              </IconButton>
-            )}
+            <IconButton
+              onClick={() => void handleRedirectToChat()}
+              sx={styles.icons}
+            >
+              <MessageIcon />
+            </IconButton>
             <IconButton onClick={closeChatWindow} sx={styles.icons}>
               <CloseIcon />
             </IconButton>
@@ -136,7 +166,7 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
         ) : (
           <Box sx={styles.firstQuestions}>
             <Typography sx={styles.subtitle}>
-              {t('chatPage.youCanAsk')}
+              {!creatingChat && t('chatPage.youCanAsk')}
             </Typography>
             {questionsList}
           </Box>
