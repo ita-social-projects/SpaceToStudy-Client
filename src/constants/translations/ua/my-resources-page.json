@@ -25,7 +25,8 @@
     "emptyAttachments": "У вас ще немає вкладень",
     "confirmAttachmentDeletionTitle":"Ви підтверджуєте видалення вкладення?",
     "successDeletion":"Вкладення було успішно видалено",
-    "addAttachment": "Добавити файл"
+    "addAttachment": "Добавити файл",
+    "validationError": "Назва файлу не може бути довшою за 55 символів."
   },
   "quizzes": {
     "newQuizBtn": "Новий тест",

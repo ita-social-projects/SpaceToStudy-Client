@@ -24,7 +24,12 @@ export const styles = {
   },
   addAttachmentBtn: { width: 'fit-content' },
   addAttachmentIcon: { ml: '5px', width: { xs: '18px', sm: '22px' } },
-  table: roundedBorderTable,
+  table: {
+    ...roundedBorderTable,
+    '& td,th': {
+      '&:first-of-type': { maxWidth: '50%', width: '100%' }
+    }
+  },
   sizeTitle: captionTitle,
   dateTitle: captionTitle
 }

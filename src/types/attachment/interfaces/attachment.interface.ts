@@ -7,3 +7,8 @@ export interface Attachment extends CommonEntityFields {
   description: string
   size: number
 }
+
+export interface UpdateAttachmentParams {
+  fileName: Attachment['fileName']
+  id: Attachment['author']['_id']
+}
