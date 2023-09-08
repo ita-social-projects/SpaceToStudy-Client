@@ -31,8 +31,9 @@ const CreateOrEditQuestion = () => {
   const isMultipleChoice = questionType.value === sortQuestions[0].value
   const isOpenAnswer = questionType.value === sortQuestions[1].value
   const isSingleChoice = questionType.value === sortQuestions[2].value
+  const isEmptyAnswer = answers[answers.length - 1]?.text === ''
 
-  const setValue = (value: string) => {
+  const setTypeValue = (value: string) => {
     const questionOption = sortQuestions.find((item) => item.value === value)
 
     setQuestionType(questionOption ?? sortQuestions[0])
@@ -48,14 +49,11 @@ const CreateOrEditQuestion = () => {
     icon
   }))
 
-  const handleOptionChange = (
-    event: ChangeEvent<HTMLInputElement>,
-    index: number
-  ) => {
+  const handleOptionChange = (index: number, checked: boolean) => {
     const updatedAnswers = [...answers]
 
     if (isMultipleChoice) {
-      updatedAnswers[index].isCorrect = event.target.checked
+      updatedAnswers[index].isCorrect = checked
     } else if (isSingleChoice) {
       updatedAnswers.forEach((answer, i) => {
         answer.isCorrect = i === index
@@ -82,14 +80,16 @@ const CreateOrEditQuestion = () => {
 
   const addNewOneAnswer = (event: MouseEvent<HTMLInputElement>) => {
     event.preventDefault()
-    setAnswers((prev) => [
-      ...prev,
-      {
-        id: answers.length,
-        text: '',
-        isCorrect: false
-      }
-    ])
+    if (!isEmptyAnswer) {
+      setAnswers((prev) => [
+        ...prev,
+        {
+          id: answers.length,
+          text: '',
+          isCorrect: false
+        }
+      ])
+    }
   }
 
   const deleteRadioButton = (id: number) => {
@@ -101,7 +101,7 @@ const CreateOrEditQuestion = () => {
     setAnswers((prevAnswers) =>
       prevAnswers.map((answer) => ({ ...answer, isCorrect: false }))
     )
-    setValue(value)
+    setTypeValue(value)
   }
 
   const handleAnswer = (event: ChangeEvent<HTMLInputElement>) =>
@@ -120,14 +120,12 @@ const CreateOrEditQuestion = () => {
             value={item.text}
           />
         }
-        onChange={(e) =>
-          handleOptionChange(e as ChangeEvent<HTMLInputElement>, item.id)
-        }
+        onChange={(_, checked) => handleOptionChange(item.id, checked)}
         sx={styles.inputItem}
         value={item.id}
       />
       <IconButton onClick={() => deleteRadioButton(item.id)}>
-        <CloseIcon data-testid='deleteAnswer' fontSize={SizeEnum.Small} />
+        <CloseIcon fontSize={SizeEnum.Small} />
       </IconButton>
     </Box>
   ))
@@ -165,14 +163,18 @@ const CreateOrEditQuestion = () => {
       {isSingleChoice && <RadioGroup sx={styles.group}>{options}</RadioGroup>}
 
       {!isOpenAnswer && (
-        <Box onClick={addNewOneAnswer} sx={styles.addRadio}>
+        <Box onClick={addNewOneAnswer} sx={styles.addRadio(isEmptyAnswer)}>
           <FormControlLabel
             checked={false}
             control={isMultipleChoice ? <Checkbox /> : <Radio />}
+            disabled={isEmptyAnswer}
             label={t('questionPage.addNewOne')}
             value={0}
           />
-          <AddIcon fontSize={SizeEnum.Small} />
+          <AddIcon
+            fontSize={SizeEnum.Small}
+            sx={styles.addIcon(isEmptyAnswer)}
+          />
         </Box>
       )}
 

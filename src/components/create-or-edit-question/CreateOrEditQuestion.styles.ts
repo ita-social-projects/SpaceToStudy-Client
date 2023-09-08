@@ -46,18 +46,21 @@ export const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: '4px',
-    backgroundColor: '#ECEFF1'
+    backgroundColor: 'basic.grey'
   },
   selectContainer: {
     '.MuiOutlinedInput-notchedOutline': { border: 0 }
   },
-  addRadio: {
+  addRadio: (isEmptyAnswer: boolean) => ({
     display: 'flex',
     alignItems: 'center',
     color: 'primary.600',
-    cursor: 'pointer',
+    cursor: isEmptyAnswer ? 'auto' : 'pointer',
     '& label': {
       mr: '8px'
     }
-  }
+  }),
+  addIcon: (isEmptyAnswer: boolean) => ({
+    color: isEmptyAnswer ? 'primary.300' : 'primary.700'
+  })
 }

@@ -115,6 +115,12 @@ describe('CreateOrEditQuestion component', () => {
 
     const addNewOne = screen.getByText('questionPage.addNewOne')
     fireEvent.click(addNewOne)
+
+    const answer = screen.getByPlaceholderText('questionPage.writeYourAnswer')
+
+    fireEvent.change(answer, {
+      target: { value: 'New answer' }
+    })
     fireEvent.click(addNewOne)
 
     const firstAnswerRadio = screen.getAllByRole('radio')[0]
@@ -130,9 +136,15 @@ describe('CreateOrEditQuestion component', () => {
   it('should delete a radio button', () => {
     const addNewOne = screen.getByText('questionPage.addNewOne')
     fireEvent.click(addNewOne)
-    fireEvent.click(addNewOne)
 
-    const deleteButtons = screen.getAllByTestId('deleteAnswer')
+    const answer = screen.getByPlaceholderText('questionPage.writeYourAnswer')
+
+    fireEvent.change(answer, {
+      target: { value: 'New answer' }
+    })
+
+    fireEvent.click(addNewOne)
+    const deleteButtons = screen.getAllByTestId('CloseIcon')
 
     fireEvent.click(deleteButtons[0])
 
