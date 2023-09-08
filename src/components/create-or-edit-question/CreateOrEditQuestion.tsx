@@ -18,13 +18,7 @@ import AppSelect from '~/components/app-select/AppSelect'
 
 import { styles } from '~/components/create-or-edit-question/CreateOrEditQuestion.styles'
 import { sortQuestions } from '~/components/create-or-edit-question/CreateOrEdit.constants'
-import { SizeEnum, TextFieldVariantEnum } from '~/types'
-
-interface Answer {
-  id: number
-  text: string
-  isCorrect: boolean
-}
+import { Answer, SizeEnum, TextFieldVariantEnum } from '~/types'
 
 const CreateOrEditQuestion = () => {
   const [questionType, setQuestionType] = useState(sortQuestions[0])
@@ -126,7 +120,9 @@ const CreateOrEditQuestion = () => {
             value={item.text}
           />
         }
-        onChange={(e) => handleOptionChange(e, item.id)}
+        onChange={(e) =>
+          handleOptionChange(e as ChangeEvent<HTMLInputElement>, item.id)
+        }
         sx={styles.inputItem}
         value={item.id}
       />
