@@ -81,7 +81,7 @@ const LessonsContainer = () => {
 
   const { response, loading, fetchData } = useAxios<
     ItemsWithCount<Lesson>,
-    Partial<GetResourcesParams>
+    GetResourcesParams
   >({
     service: getMyLessons,
     defaultResponse: defaultResponses.itemsWithCount,
