@@ -22,7 +22,7 @@ import UserProfileInfo from '~/components/user-profile-info/UserProfileInfo'
 import Loader from '~/components/loader/Loader'
 import { messageService } from '~/services/message-service'
 import { useChatContext } from '~/context/chat-context'
-import { getGroupedMessages } from '~/utils/helper-functions'
+import { getGroupedByDate, getIsNewDay } from '~/utils/helper-functions'
 
 import { ChatInfo, MessageInterface } from '~/types'
 import { defaultResponses } from '~/constants'
@@ -68,16 +68,16 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
     }
   }, [chatInfo.chatId, messagesLoad])
 
-  const groupedMessages = getGroupedMessages(messages)
+  const groupedMessages = getGroupedByDate(messages, getIsNewDay)
 
   const messagesListWithDate = groupedMessages.map((group) => (
     <Box key={group.date} sx={styles.messagesWithDate}>
       <ChatDate date={group.date} />
-      {group.messages.map((message, index) => (
+      {group.items.map((item, index) => (
         <Message
-          key={message._id}
-          message={message}
-          prevMessage={index ? group.messages[index - 1] : null}
+          key={item._id}
+          message={item}
+          prevMessage={index ? group.items[index - 1] : null}
         />
       ))}
     </Box>
@@ -140,6 +140,7 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
           label={t('chatPage.chat.inputLabel')}
           maxRows={3}
           onChange={onTextAreaChange}
+          onClick={() => null}
           sx={styles.textArea}
           value={textAreaValue}
         />
