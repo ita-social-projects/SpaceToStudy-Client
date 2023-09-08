@@ -33,7 +33,7 @@ import {
 
 const Chat = () => {
   const { t } = useTranslation()
-  const { isMobile } = useBreakpoints()
+  const { isMobile, isDesktop } = useBreakpoints()
   const { openDrawer, closeDrawer, isOpen } = useDrawer()
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false)
   const [selectedChat, setSelectedChat] = useState<ChatResponse | null>(null)
@@ -153,7 +153,7 @@ const Chat = () => {
         files={mockFiles}
         links={mockLinks}
         media={mockMedia}
-        member={selectedChat.members[0]}
+        member={selectedChat.members[1]}
       />
     </AppDrawer>
   )
