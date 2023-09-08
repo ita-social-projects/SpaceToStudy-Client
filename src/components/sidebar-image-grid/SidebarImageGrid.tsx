@@ -1,6 +1,7 @@
 import { FC, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
+import AddIcon from '@mui/icons-material/Add'
 import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined'
 
 import ClickableImage from '~/components/clickable-image/ClickableImage'
@@ -8,16 +9,18 @@ import AllContentModal from '~/components/all-content-modal/AllContentModal'
 
 import { useModalContext } from '~/context/modal-context'
 import { maxElemToShow } from '~/components/sidebar-content-box/SidebarContentBox.constants'
-import { Media } from '~/types'
+import { SizeEnum, Media } from '~/types'
 import { styles } from '~/components/sidebar-image-grid/SidebarImageGrid.styles'
 
 interface SidebarImageGridProps {
   images: Media[]
+  onClick?: () => void
   compactMode?: boolean
 }
 
 const SidebarImageGrid: FC<SidebarImageGridProps> = ({
   images,
+  onClick,
   compactMode = true
 }) => {
   const { t } = useTranslation()
@@ -31,28 +34,37 @@ const SidebarImageGrid: FC<SidebarImageGridProps> = ({
           icon={<ImageOutlinedIcon />}
           title={image.name ?? t(`chatPage.sidebar.unknownName`)}
         >
-          <Box sx={styles.imageWrapper}>
-            <Box component='img' src={image.path} sx={styles.modalImage} />
-          </Box>
+          <Box component='img' src={image.path} sx={styles.modalImage} />
         </AllContentModal>
       )
     })
   }
 
-  const compactGrid = images.slice(maxElemToShow * -1).map((image, index) => (
-    <ClickableImage image={image} key={image._id} onClick={showImage}>
-      {index === 2 && <Box>+{mediaSize - 2}</Box>}
-    </ClickableImage>
-  ))
+  const compactGrid = images.slice(0, maxElemToShow).map((image, index) => {
+    const hasMoreElem = index === maxElemToShow - 1 && mediaSize > maxElemToShow
+
+    return (
+      <ClickableImage
+        image={image}
+        key={image._id}
+        onClick={hasMoreElem ? onClick : showImage}
+      >
+        {hasMoreElem && (
+          <Box>
+            <AddIcon fontSize={SizeEnum.Small} />
+            {mediaSize - maxElemToShow}
+          </Box>
+        )}
+      </ClickableImage>
+    )
+  })
 
   const expansiveGrid = images.map((image) => (
     <ClickableImage image={image} key={image._id} onClick={showImage} />
   ))
 
   return (
-    <Box sx={compactMode ? styles.imageGrid : styles.expansiveGrid}>
-      {compactMode ? compactGrid : expansiveGrid}
-    </Box>
+    <Box sx={styles.imageGrid}>{compactMode ? compactGrid : expansiveGrid}</Box>
   )
 }
 
