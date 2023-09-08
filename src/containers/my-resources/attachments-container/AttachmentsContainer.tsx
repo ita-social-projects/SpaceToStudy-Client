@@ -11,6 +11,7 @@ import useBreakpoints from '~/hooks/use-breakpoints'
 import useAxios from '~/hooks/use-axios'
 import usePagination from '~/hooks/table/use-pagination'
 
+import { defaultResponses, snackbarVariants } from '~/constants'
 import {
   columns,
   initialSort,
@@ -26,7 +27,7 @@ import {
   ResourcesTabsEnum
 } from '~/types'
 import { ajustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
-import { defaultResponses, snackbarVariants } from '~/constants'
+import { styles } from '~/containers/my-resources/attachments-container/AttachmentsContainer.styles'
 
 const AttachmentsContainer = () => {
   const { setAlert } = useSnackBarContext()
@@ -40,14 +41,18 @@ const AttachmentsContainer = () => {
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
 
   const onResponseError = useCallback(
-    (error: ErrorResponse, message?: string) => {
+    (error: ErrorResponse, showMessage?: boolean) => {
+      const errorMsg = showMessage ? error.message : error.code
+
       setAlert({
         severity: snackbarVariants.error,
-        message: error ? message ?? `errors.${error.message}` : ''
+        message: error ? `errors.${errorMsg}` : ''
       })
     },
     [setAlert]
   )
+
+  const onUpdateError = (error: ErrorResponse) => onResponseError(error, true)
 
   const getAttachments = useCallback(
     () =>
@@ -85,14 +90,15 @@ const AttachmentsContainer = () => {
   const { fetchData: updateData } = useAxios({
     service: updateAttachment,
     defaultResponse: null,
-    onResponseError: onResponseError,
+    onResponseError: onUpdateError,
     onResponse: onAttachmentUpdate,
     fetchOnMount: false
   })
 
   const onSave = async (fileName: string) => {
-    if (fileName) await updateData({ id: selectedItemId, fileName })
+    const id = selectedItemId
     setSelectedItemId('')
+    if (fileName) await updateData({ id, fileName })
   }
   const onEdit = (id: string) => setSelectedItemId(id)
   const onCancel = () => setSelectedItemId('')
@@ -110,7 +116,8 @@ const AttachmentsContainer = () => {
     itemsPerPage,
     actions: { onEdit },
     resource: ResourcesTabsEnum.Attachments,
-    sort: sortOptions
+    sort: sortOptions,
+    sx: styles.table
   }
 
   return (

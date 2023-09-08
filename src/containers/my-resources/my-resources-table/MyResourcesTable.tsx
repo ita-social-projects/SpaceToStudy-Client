@@ -2,40 +2,34 @@ import { useTranslation } from 'react-i18next'
 import { AxiosResponse } from 'axios'
 
 import { useSnackBarContext } from '~/context/snackbar-context'
-import { SortHook } from '~/hooks/table/use-sort'
 import useAxios from '~/hooks/use-axios'
 import useConfirm from '~/hooks/use-confirm'
 import usePagination from '~/hooks/table/use-pagination'
 import AppPagination from '~/components/app-pagination/AppPagination'
-import EnhancedTable from '~/components/enhanced-table/EnhancedTable'
+import EnhancedTable, {
+  EnhancedTableProps
+} from '~/components/enhanced-table/EnhancedTable'
 
 import { snackbarVariants } from '~/constants'
-import {
-  ErrorResponse,
-  TableColumn,
-  TableItem,
-  ResourcesTableData
-} from '~/types'
+import { ErrorResponse, TableItem, ResourcesTableData } from '~/types'
 import { roundedBorderTable } from '~/containers/my-cooperations/cooperations-container/CooperationContainer.styles'
 
-interface MyResourcesTableInterface<T> {
+interface MyResourcesTableInterface<T>
+  extends Omit<EnhancedTableProps<T, undefined>, 'data'> {
   resource: string
-  columns: TableColumn<T>[]
   itemsPerPage: number
   data: ResourcesTableData<T>
-  sort: SortHook
   actions: { onEdit: (id: string) => void }
   services: { deleteService: (id?: string) => Promise<AxiosResponse> }
 }
 
 const MyResourcesTable = <T extends TableItem>({
   resource,
-  columns,
   itemsPerPage,
   data,
-  sort,
   actions,
-  services
+  services,
+  ...props
 }: MyResourcesTableInterface<T>) => {
   const { t } = useTranslation()
   const { setAlert } = useSnackBarContext()
@@ -93,12 +87,11 @@ const MyResourcesTable = <T extends TableItem>({
   return (
     <>
       <EnhancedTable<T>
-        columns={columns}
         data={{ items: data.response.items }}
         emptyTableKey={`myResourcesPage.${resource}.emptyItems`}
         rowActions={rowActions}
-        sort={sort}
         sx={roundedBorderTable}
+        {...props}
       />
       <AppPagination
         onChange={handleChangePage}
