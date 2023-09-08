@@ -91,9 +91,9 @@ const LessonsContainer = () => {
   const props = {
     columns: columnsToShow,
     data: { response, getData: fetchData },
-    deleteService: deleteLesson,
+    services: { deleteService: deleteLesson },
     itemsPerPage,
-    onEdit,
+    actions: { onEdit },
     resource: ResourcesTabsEnum.Lessons,
     sort: sortOptions
   }

@@ -106,9 +106,9 @@ const AttachmentsContainer = () => {
   const props = {
     columns: columnsToShow,
     data: { response, getData: fetchData },
-    deleteService: deleteAttachment,
+    services: { deleteService: deleteAttachment },
     itemsPerPage,
-    onEdit,
+    actions: { onEdit },
     resource: ResourcesTabsEnum.Attachments,
     sort: sortOptions
   }

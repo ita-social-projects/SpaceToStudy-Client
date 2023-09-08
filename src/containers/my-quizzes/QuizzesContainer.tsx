@@ -80,9 +80,9 @@ const QuizzesContainer = () => {
   const props = {
     columns: columnsToShow,
     data: { response, getData: fetchData },
-    deleteService: deleteQuiz,
+    services: { deleteService: deleteQuiz },
     itemsPerPage,
-    onEdit: () => null,
+    actions: { onEdit: () => null },
     resource: ResourcesTabsEnum.Quizzes,
     sort: sortOptions
   }

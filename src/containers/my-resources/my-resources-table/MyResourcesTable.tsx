@@ -24,8 +24,8 @@ interface MyResourcesTableInterface<T> {
   itemsPerPage: number
   data: ResourcesTableData<T>
   sort: SortHook
-  onEdit: (id: string) => void
-  deleteService: (id?: string) => Promise<AxiosResponse>
+  actions: { onEdit: (id: string) => void }
+  services: { deleteService: (id?: string) => Promise<AxiosResponse> }
 }
 
 const MyResourcesTable = <T extends TableItem>({
@@ -34,8 +34,8 @@ const MyResourcesTable = <T extends TableItem>({
   itemsPerPage,
   data,
   sort,
-  onEdit,
-  deleteService
+  actions,
+  services
 }: MyResourcesTableInterface<T>) => {
   const { t } = useTranslation()
   const { setAlert } = useSnackBarContext()
@@ -57,7 +57,7 @@ const MyResourcesTable = <T extends TableItem>({
   }
 
   const { error, fetchData: deleteItem } = useAxios({
-    service: deleteService,
+    service: services.deleteService,
     fetchOnMount: false,
     defaultResponse: null,
     onResponseError: onDeleteError,
@@ -82,7 +82,7 @@ const MyResourcesTable = <T extends TableItem>({
   const rowActions = [
     {
       label: t('common.edit'),
-      func: onEdit
+      func: actions.onEdit
     },
     {
       label: t('common.delete'),
