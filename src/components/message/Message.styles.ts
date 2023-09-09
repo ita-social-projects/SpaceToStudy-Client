@@ -13,6 +13,16 @@ export const styles = {
     height: '44px',
     '&:hover': { transform: 'scale(1.1)' }
   },
+
+  findMessageCard: {
+    backgroundColor: 'primary.700',
+    borderRadius: '10px',
+    padding: '2px 4px',
+    display: 'inline',
+    color: 'white',
+    typography: TypographyVariantEnum.Body1,
+    p: '8px 16px'
+  },
   messageCard: (isMyMessage: boolean) => ({
     boxSizing: 'border-box',
     maxWidth: '520px',

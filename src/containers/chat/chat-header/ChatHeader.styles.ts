@@ -26,5 +26,9 @@ export const styles = {
     columnGap: '5px',
     right: '24px'
   },
-  icon: { color: 'primary.700' }
+  icon: { color: 'primary.700' },
+  searchContainer: {
+    p: 0,
+    mt: '10px'
+  }
 }

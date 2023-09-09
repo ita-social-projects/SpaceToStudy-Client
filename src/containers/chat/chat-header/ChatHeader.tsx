@@ -1,4 +1,4 @@
-import { FC, MouseEvent } from 'react'
+import { FC, MouseEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
@@ -10,6 +10,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import AppCard from '~/components/app-card/AppCard'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
+import SearchByMessage from '~/components/search-by-message/SearchByMessage'
 
 import { styles } from '~/containers/chat/chat-header/ChatHeader.styles'
 import { UserResponse } from '~/types'
@@ -18,14 +19,26 @@ interface ChatHeaderProps {
   onClick: () => void
   onMenuClick: (e: MouseEvent<HTMLButtonElement>) => void
   user: Pick<UserResponse, '_id' | 'firstName' | 'lastName' | 'photo'>
+  messages: { text: string }[]
+  onFilteredMessagesChange: (filteredMessages: string[]) => void
+  onFilteredIndexChange: (filteredIndex: number) => void
 }
 
-const ChatHeader: FC<ChatHeaderProps> = ({ onClick, onMenuClick, user }) => {
+const ChatHeader: FC<ChatHeaderProps> = ({
+  onClick,
+  user,
+  onMenuClick,
+  messages,
+  onFilteredMessagesChange,
+  onFilteredIndexChange
+}) => {
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
   const { t } = useTranslation()
   const { isMobile } = useBreakpoints()
 
   const handleOnClick = (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation()
+    setIsSearchOpen(!isSearchOpen)
   }
 
   const iconButtons = [
@@ -47,19 +60,30 @@ const ChatHeader: FC<ChatHeaderProps> = ({ onClick, onMenuClick, user }) => {
   )
 
   return (
-    <AppCard onClick={onClick} sx={styles.container}>
-      {isMobile && (
-        <IconButton onClick={onMenuClick} sx={styles.menuIconBtn}>
-          <MenuIcon />
-        </IconButton>
+    <>
+      <AppCard onClick={onClick} sx={styles.container}>
+        {isMobile && (
+          <IconButton onClick={onMenuClick} sx={styles.menuIconBtn}>
+            <MenuIcon />
+          </IconButton>
+        )}
+        <TitleWithDescription
+          description={status}
+          style={styles.titleWithDescription}
+          title={`${user.firstName} ${user.lastName}`}
+        />
+        <Box sx={styles.actions}>{icons}</Box>
+      </AppCard>
+      {isSearchOpen && (
+        <Box sx={styles.searchContainer}>
+          <SearchByMessage
+            messages={messages}
+            onFilteredIndexChange={onFilteredIndexChange}
+            onFilteredMessagesChange={onFilteredMessagesChange}
+          />
+        </Box>
       )}
-      <TitleWithDescription
-        description={status}
-        style={styles.titleWithDescription}
-        title={`${user.firstName} ${user.lastName}`}
-      />
-      <Box sx={styles.actions}>{icons}</Box>
-    </AppCard>
+    </>
   )
 }
 

@@ -10,7 +10,13 @@ const messageMock = messagesMock[0]
 
 describe('Message component', () => {
   beforeEach(() => {
-    renderWithProviders(<Message message={messageMock} />)
+    renderWithProviders(
+      <Message
+        filteredIndex={1}
+        filteredMessages={['Some text']}
+        message={messageMock}
+      />
+    )
   })
 
   it('should render the author name and message content', () => {
