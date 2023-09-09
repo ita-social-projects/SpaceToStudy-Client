@@ -55,7 +55,7 @@ const SearchByMessage: FC<SearchByMessageProps> = ({
     onFilteredMessagesChange([])
   }
   return (
-    <Box sx={styles.container}>
+    <Box onClick={(e) => e.stopPropagation()} sx={styles.container}>
       <IconsWithCounter
         maxValue={findMessage.length}
         onFilteredIndexChange={onFilteredIndexChange}

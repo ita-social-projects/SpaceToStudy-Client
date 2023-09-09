@@ -38,21 +38,26 @@ const ChatHeader: FC<ChatHeaderProps> = ({
 
   const handleOnClick = (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation()
+  }
+  const handleSearch = (e: MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation()
     setIsSearchOpen(!isSearchOpen)
   }
 
   const iconButtons = [
-    { _id: 1, icon: <SearchIcon />, handleOnClick },
+    { _id: 1, icon: <SearchIcon />, handleOnClick: handleSearch },
     { _id: 2, icon: <MoreVertIcon />, handleOnClick }
   ]
-  const closeSearch = () => {
-    setIsSearchOpen(false)
-  }
+
   const icons = iconButtons.map(({ _id, icon, handleOnClick }) => (
     <IconButton key={_id} onClick={handleOnClick} sx={styles.icon}>
       {icon}
     </IconButton>
   ))
+
+  const closeSearch = () => {
+    setIsSearchOpen(false)
+  }
 
   const status = (
     <>
