@@ -1,9 +1,14 @@
 import Box from '@mui/material/Box'
+import AddResourceWithInput from '../add-resource-with-input/AddResourceWithInput'
+import { useCallback } from 'react'
+import { questionService } from '~/services/question-service'
 
 const QuestionsContainer = () => {
+  const getQuestions = useCallback(() => questionService)
+
   return (
     <Box>
-      <h3>Questions</h3>
+      <AddResourceWithInput />
     </Box>
   )
 }
