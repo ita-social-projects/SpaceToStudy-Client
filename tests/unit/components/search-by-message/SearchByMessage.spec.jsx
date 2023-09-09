@@ -6,6 +6,7 @@ import SearchByMessage from '~/components/search-by-message/SearchByMessage'
 describe('SearchByMessage', () => {
   const onFilteredMessagesChange = vi.fn()
   const onFilteredIndexChange = vi.fn()
+  const isCloseSearch = vi.fn()
   const mockMessage = [
     {
       _id: '64ee0a2f6ae3b95ececb05b5',
@@ -38,6 +39,7 @@ describe('SearchByMessage', () => {
   beforeEach(() => {
     render(
       <SearchByMessage
+        isCloseSearch={isCloseSearch}
         messages={mockMessage}
         onFilteredIndexChange={onFilteredIndexChange}
         onFilteredMessagesChange={onFilteredMessagesChange}

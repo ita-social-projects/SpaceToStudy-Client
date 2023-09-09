@@ -51,6 +51,7 @@ const SearchByMessage: FC<SearchByMessageProps> = ({
   }, [search, messages])
 
   const onClose = () => {
+    setSearch('')
     isCloseSearch()
     onFilteredMessagesChange([])
   }
