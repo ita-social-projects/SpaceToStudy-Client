@@ -16,11 +16,11 @@ import RadioGroup from '@mui/material/RadioGroup'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import AppSelect from '~/components/app-select/AppSelect'
 
-import { styles } from '~/components/create-or-edit-question/CreateOrEditQuestion.styles'
-import { sortQuestions } from '~/components/create-or-edit-question/CreateOrEdit.constants'
+import { styles } from '~/components/question-editor/QuestionEditor.styles'
+import { sortQuestions } from '~/components/question-editor/QuestionEditor.constants'
 import { Answer, SizeEnum, TextFieldVariantEnum } from '~/types'
 
-const CreateOrEditQuestion = () => {
+const QuestionEditor = () => {
   const [questionType, setQuestionType] = useState(sortQuestions[0])
   const [question, setQuestion] = useState<string>('')
   const [answers, setAnswers] = useState<Answer[]>([])
@@ -191,4 +191,4 @@ const CreateOrEditQuestion = () => {
   )
 }
 
-export default CreateOrEditQuestion
+export default QuestionEditor

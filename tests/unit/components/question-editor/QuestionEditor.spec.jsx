@@ -1,11 +1,11 @@
-import CreateOrEditQuestion from '~/components/create-or-edit-question/CreateOrEditQuestion'
+import QuestionEditor from '~/components/question-editor/QuestionEditor'
 import { screen, fireEvent } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 import { beforeEach, describe } from 'vitest'
 
-describe('CreateOrEditQuestion component', () => {
+describe('QuestionEditor component', () => {
   beforeEach(() => {
-    renderWithProviders(<CreateOrEditQuestion />)
+    renderWithProviders(<QuestionEditor />)
   })
 
   it('should renders question input field', () => {
