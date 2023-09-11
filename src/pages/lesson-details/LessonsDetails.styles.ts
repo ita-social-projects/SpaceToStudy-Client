@@ -22,7 +22,10 @@ export const styles = {
     marginLeft: 'auto',
     backgroundColor: 'basic.grey',
     color: 'basic.black',
-    maxWidth: '97px',
+    minWidth: '97px',
+    display: 'flex',
+    alighnItems: 'center',
+    columnGap: '16px',
     '&:hover': {
       backgroundColor: 'primary.100'
     }
