@@ -1,42 +1,38 @@
 import { useCallback, useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 
-import AddResourceWithInput from '~/containers/my-resources/add-resource-with-input/AddResourceWithInput'
-import EnhancedTable from '~/components/enhanced-table/EnhancedTable'
-import useConfirm from '~/hooks/use-confirm'
-import AppPagination from '~/components/app-pagination/AppPagination'
-import useBreakpoints from '~/hooks/use-breakpoints'
-import usePagination from '~/hooks/table/use-pagination'
-import Loader from '~/components/loader/Loader'
-import useSort from '~/hooks/table/use-sort'
-import useAxios from '~/hooks/use-axios'
 import { useSnackBarContext } from '~/context/snackbar-context'
 import { ResourceService } from '~/services/resource-service'
-import { authRoutes } from '~/router/constants/authRoutes'
+import AddResourceWithInput from '~/containers/my-resources/add-resource-with-input/AddResourceWithInput'
+import MyResourcesTable from '~/containers/my-resources/my-resources-table/MyResourcesTable'
+import Loader from '~/components/loader/Loader'
+import useSort from '~/hooks/table/use-sort'
+import useBreakpoints from '~/hooks/use-breakpoints'
+import useAxios from '~/hooks/use-axios'
+import usePagination from '~/hooks/table/use-pagination'
 
+import { defaultResponses, snackbarVariants } from '~/constants'
 import {
   columns,
   initialSort,
   itemsLoadLimit,
   removeColumnRules
 } from '~/containers/my-resources/attachments-container/AttachmentsContainer.constants'
-import { ajustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
-import { defaultResponses, snackbarVariants } from '~/constants'
 import {
   ItemsWithCount,
+  GetResourcesParams,
   Attachment,
   ErrorResponse,
-  UpdateAttachmentParams
+  UpdateAttachmentParams,
+  ResourcesTabsEnum
 } from '~/types'
+import { ajustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
 import { styles } from '~/containers/my-resources/attachments-container/AttachmentsContainer.styles'
 
 const AttachmentsContainer = () => {
-  const { t } = useTranslation()
   const { setAlert } = useSnackBarContext()
-  const { openDialog } = useConfirm()
-  const { page, handleChangePage } = usePagination()
   const breakpoints = useBreakpoints()
+  const { page } = usePagination()
   const sortOptions = useSort({ initialSort })
   const searchFileName = useRef<string>('')
   const [selectedItemId, setSelectedItemId] = useState<string>('')
@@ -44,32 +40,19 @@ const AttachmentsContainer = () => {
   const { sort } = sortOptions
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
 
-  const onAttachmentError = useCallback(
-    (error: ErrorResponse, message?: string) => {
+  const onResponseError = useCallback(
+    (error: ErrorResponse, showMessage?: boolean) => {
+      const errorMsg = showMessage ? error.message : error.code
+
       setAlert({
         severity: snackbarVariants.error,
-        message: error ? message ?? `errors.${error.code}` : ''
+        message: error ? `errors.${errorMsg}` : ''
       })
     },
     [setAlert]
   )
 
-  const onAttachmentUpdateError = (error: ErrorResponse) =>
-    onAttachmentError(error, 'myResourcesPage.attachments.validationError')
-
-  const onDeleteAttachmentError = (error: ErrorResponse) => {
-    setAlert({
-      severity: snackbarVariants.error,
-      message: error ? `errors.${error.code}` : ''
-    })
-  }
-
-  const onDeleteAttachmentResponse = () => {
-    setAlert({
-      severity: snackbarVariants.success,
-      message: 'myResourcesPage.attachments.successDeletion'
-    })
-  }
+  const onUpdateError = (error: ErrorResponse) => onResponseError(error, true)
 
   const getAttachments = useCallback(
     () =>
@@ -93,59 +76,32 @@ const AttachmentsContainer = () => {
     []
   )
 
-  const {
-    response,
-    loading,
-    fetchData: fetchGetAttachments
-  } = useAxios<ItemsWithCount<Attachment>>({
+  const { response, loading, fetchData } = useAxios<
+    ItemsWithCount<Attachment>,
+    GetResourcesParams
+  >({
     service: getAttachments,
     defaultResponse: defaultResponses.itemsWithCount,
-    onResponseError: onAttachmentError
+    onResponseError
   })
 
-  const onAttachmentUpdate = useCallback(
-    () => void fetchGetAttachments(),
-    [fetchGetAttachments]
-  )
+  const onAttachmentUpdate = useCallback(() => void fetchData(), [fetchData])
 
   const { fetchData: updateData } = useAxios({
     service: updateAttachment,
     defaultResponse: null,
-    onResponseError: onAttachmentUpdateError,
+    onResponseError: onUpdateError,
     onResponse: onAttachmentUpdate,
     fetchOnMount: false
   })
 
-  const { error, fetchData: fetchDeleteAttachment } = useAxios({
-    service: deleteAttachment,
-    fetchOnMount: false,
-    defaultResponse: null,
-    onResponseError: onDeleteAttachmentError,
-    onResponse: onDeleteAttachmentResponse
-  })
-
   const onSave = async (fileName: string) => {
-    if (fileName) await updateData({ id: selectedItemId, fileName })
+    const id = selectedItemId
     setSelectedItemId('')
+    if (fileName) await updateData({ id, fileName })
   }
   const onEdit = (id: string) => setSelectedItemId(id)
   const onCancel = () => setSelectedItemId('')
-
-  const handleDeleteAttachment = async (id: string, isConfirmed: boolean) => {
-    if (isConfirmed) {
-      await fetchDeleteAttachment(id)
-      if (!error) await fetchGetAttachments()
-    }
-  }
-
-  const openDeletionConfirmDialog = (id: string) => {
-    openDialog({
-      message: 'myResourcesPage.confirmDeletionMessage',
-      sendConfirm: (isConfirmed: boolean) =>
-        void handleDeleteAttachment(id, isConfirmed),
-      title: 'myResourcesPage.attachments.confirmAttachmentDeletionTitle'
-    })
-  }
 
   const columnsToShow = ajustColumns(
     breakpoints,
@@ -153,48 +109,30 @@ const AttachmentsContainer = () => {
     removeColumnRules
   )
 
-  const rowActions = [
-    {
-      label: t('common.rename'),
-      func: onEdit
-    },
-    {
-      label: t('common.delete'),
-      func: openDeletionConfirmDialog
-    }
-  ]
-
-  const addAttachmentBlock = (
-    <AddResourceWithInput
-      btnText='myResourcesPage.attachments.addAttachment'
-      fetchData={fetchGetAttachments}
-      link={authRoutes.myResources.root.path}
-      searchRef={searchFileName}
-    />
-  )
-
-  const tableAttachments = (
-    <>
-      <EnhancedTable
-        columns={columnsToShow}
-        data={{ items: response.items }}
-        emptyTableKey='myResourcesPage.attachments.emptyAttachments'
-        rowActions={rowActions}
-        sort={sortOptions}
-        sx={styles.table}
-      />
-      <AppPagination
-        onChange={handleChangePage}
-        page={page}
-        pageCount={Math.ceil(response.count / itemsPerPage)}
-      />
-    </>
-  )
+  const props = {
+    columns: columnsToShow,
+    data: { response, getData: fetchData },
+    services: { deleteService: deleteAttachment },
+    itemsPerPage,
+    actions: { onEdit },
+    resource: ResourcesTabsEnum.Attachments,
+    sort: sortOptions,
+    sx: styles.table
+  }
 
   return (
     <Box>
-      {addAttachmentBlock}
-      {loading ? <Loader pageLoad size={50} /> : tableAttachments}
+      <AddResourceWithInput
+        btnText={'myResourcesPage.attachments.addBtn'}
+        fetchData={fetchData}
+        link={'#'}
+        searchRef={searchFileName}
+      />
+      {loading ? (
+        <Loader pageLoad size={50} />
+      ) : (
+        <MyResourcesTable<Attachment> {...props} />
+      )}
     </Box>
   )
 }

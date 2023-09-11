@@ -5,8 +5,7 @@ import { axiosClient } from '~/plugins/axiosClient'
 import { URLs } from '~/constants/request'
 import {
   Attachment,
-  GetAttachmentsParams,
-  GetLessonsParams,
+  GetResourcesParams,
   ItemsWithCount,
   LessonData,
   Lesson,
@@ -16,7 +15,7 @@ import { createUrlPath } from '~/utils/helper-functions'
 
 export const ResourceService = {
   getUsersLessons: async (
-    params?: GetLessonsParams
+    params?: GetResourcesParams
   ): Promise<AxiosResponse<ItemsWithCount<Lesson>>> =>
     await axiosClient.get(URLs.resources.lessons.get, { params }),
   getLesson: async (id?: string): Promise<AxiosResponse<Lesson>> =>
@@ -31,7 +30,7 @@ export const ResourceService = {
       data
     ),
   getAttachments: async (
-    params?: Partial<GetAttachmentsParams>
+    params?: GetResourcesParams
   ): Promise<AxiosResponse<ItemsWithCount<Attachment>>> =>
     await axiosClient.get(URLs.resources.attachments.get, { params }),
   updateAttachment: async (params?: UpdateAttachmentParams) =>
@@ -42,5 +41,10 @@ export const ResourceService = {
   deleteAttachment: async (id: string): Promise<AxiosResponse> =>
     await axiosClient.delete(
       createUrlPath(URLs.resources.attachments.delete, id)
-    )
+    ),
+  createAttachments: (data?: FormData): Promise<AxiosResponse> => {
+    return axiosClient.post(URLs.attachments.post, data, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    })
+  }
 }

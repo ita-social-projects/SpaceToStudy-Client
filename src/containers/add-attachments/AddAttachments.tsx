@@ -13,7 +13,7 @@ import useSort from '~/hooks/table/use-sort'
 import useAxios from '~/hooks/use-axios'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { useSnackBarContext } from '~/context/snackbar-context'
-import { attachmentService } from '~/services/attachment-service'
+import { ResourceService } from '~/services/resource-service'
 
 import {
   columns,
@@ -61,7 +61,7 @@ const AddAttachments: FC<AddAttachmentsProps> = ({
 
   const getMyAttachments = useCallback(
     () =>
-      attachmentService.getAttachments({
+      ResourceService.getAttachments({
         sort
       }),
     [sort]
@@ -119,7 +119,7 @@ const AddAttachments: FC<AddAttachmentsProps> = ({
   )
 
   const createAttachments = useCallback(
-    (data?: FormData) => attachmentService.createAttachments(data),
+    (data?: FormData) => ResourceService.createAttachments(data),
     []
   )
 
