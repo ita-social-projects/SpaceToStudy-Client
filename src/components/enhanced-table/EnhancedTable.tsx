@@ -23,7 +23,7 @@ import {
   TableSort
 } from '~/types'
 
-interface EnhancedTableProps<I, F> extends TableProps {
+export interface EnhancedTableProps<I, F> extends TableProps {
   columns: TableColumn<I>[]
   isSelection?: boolean
   rowActions?: TableRowAction[]
