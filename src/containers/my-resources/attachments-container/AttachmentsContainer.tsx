@@ -1,27 +1,10 @@
 import { useCallback, useRef, useState } from 'react'
 import Box from '@mui/material/Box'
 import AddIcon from '@mui/icons-material/Add'
+import { useTranslation } from 'react-i18next'
 
-<<<<<<< HEAD
-=======
-import AddResourceWithInput from '~/containers/my-resources/add-resource-with-input/AddResourceWithInput'
-import EnhancedTable from '~/components/enhanced-table/EnhancedTable'
-import useConfirm from '~/hooks/use-confirm'
-<<<<<<< HEAD
-import AppPagination from '~/components/app-pagination/AppPagination'
-import useBreakpoints from '~/hooks/use-breakpoints'
-import usePagination from '~/hooks/table/use-pagination'
-import Loader from '~/components/loader/Loader'
-import useSort from '~/hooks/table/use-sort'
-import useAxios from '~/hooks/use-axios'
-=======
-import AddDocuments from '~/containers/add-documents/AddDocuments'
->>>>>>> 3ee0e4b (fix)
 import { useSnackBarContext } from '~/context/snackbar-context'
-import Loader from '~/components/loader/Loader'
-import AppPagination from '~/components/app-pagination/AppPagination'
 import { ResourceService } from '~/services/resource-service'
-<<<<<<< HEAD
 import AddResourceWithInput from '~/containers/my-resources/add-resource-with-input/AddResourceWithInput'
 import MyResourcesTable from '~/containers/my-resources/my-resources-table/MyResourcesTable'
 import Loader from '~/components/loader/Loader'
@@ -30,9 +13,6 @@ import useBreakpoints from '~/hooks/use-breakpoints'
 import useAxios from '~/hooks/use-axios'
 import usePagination from '~/hooks/table/use-pagination'
 import AddDocuments from '~/containers/add-documents/AddDocuments'
-import { authRoutes } from '~/router/constants/authRoutes'
-=======
->>>>>>> 3ee0e4b (fix)
 import { attachmentService } from '~/services/attachment-service'
 
 import { defaultResponses, snackbarVariants } from '~/constants'
@@ -42,26 +22,27 @@ import {
   itemsLoadLimit,
   removeColumnRules
 } from '~/containers/my-resources/attachments-container/AttachmentsContainer.constants'
-import { ajustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
-
 import {
   ItemsWithCount,
+  GetResourcesParams,
   Attachment,
   ErrorResponse,
-  ButtonVariantEnum,
   UpdateAttachmentParams,
   ResourcesTabsEnum,
-  GetResourcesParams
+  ButtonVariantEnum
 } from '~/types'
+import { ajustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
 import { styles } from '~/containers/my-resources/attachments-container/AttachmentsContainer.styles'
 
 const AttachmentsContainer = () => {
+  const { t } = useTranslation()
   const { setAlert } = useSnackBarContext()
   const breakpoints = useBreakpoints()
   const { page } = usePagination()
   const sortOptions = useSort({ initialSort })
   const searchFileName = useRef<string>('')
   const [selectedItemId, setSelectedItemId] = useState<string>('')
+  const formData = new FormData()
 
   const { sort } = sortOptions
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
@@ -90,35 +71,15 @@ const AttachmentsContainer = () => {
       }),
     [itemsPerPage, page, sort, searchFileName]
   )
-  const formData = new FormData()
 
   const deleteAttachment = useCallback(
     (id?: string) => ResourceService.deleteAttachment(id ?? ''),
-<<<<<<< HEAD
-    [])
+    []
+  )
 
   const updateAttachment = useCallback(
     (params?: UpdateAttachmentParams) =>
       ResourceService.updateAttachment(params),
-    []
-
-  const { response, loading, fetchData: fetchAttachments } = useAxios<ItemsWithCount<Attachment>>(
-    {
-      service: getAttachments,
-      defaultResponse: defaultResponses.itemsWithCount,
-      onResponseError: onAttachmentError
-    }
-
-  )
-
-  const { response, loading, fetchData: fetchAttachments } = useAxios<
-    ItemsWithCount<Attachment>,
-    GetResourcesParams
-  >({
-    service: getAttachments,
-    defaultResponse: defaultResponses.itemsWithCount,
-    onResponseError
-=======
     []
   )
 
@@ -126,22 +87,16 @@ const AttachmentsContainer = () => {
     response,
     loading,
     fetchData: fetchAttachments
-  } = useAxios<ItemsWithCount<Attachment>>({
+  } = useAxios<ItemsWithCount<Attachment>, GetResourcesParams>({
     service: getAttachments,
     defaultResponse: defaultResponses.itemsWithCount,
-    onResponseError: onAttachmentError
+    onResponseError
   })
 
-  const { error, fetchData: fetchDeleteAttachment } = useAxios({
-    service: deleteAttachment,
-    fetchOnMount: false,
-    defaultResponse: null,
-    onResponseError: onDeleteAttachmentError,
-    onResponse: onDeleteAttachmentResponse
->>>>>>> 3ee0e4b (fix)
-  })
-
-  const onAttachmentUpdate = useCallback(() => void fetchAttachments(), [fetchAttachments])
+  const onAttachmentUpdate = useCallback(
+    () => void fetchAttachments(),
+    [fetchAttachments]
+  )
 
   const { fetchData: updateData } = useAxios({
     service: updateAttachment,
@@ -150,47 +105,6 @@ const AttachmentsContainer = () => {
     onResponse: onAttachmentUpdate,
     fetchOnMount: false
   })
-
-  const onSave = async (fileName: string) => {
-    const id = selectedItemId
-    setSelectedItemId('')
-    if (fileName) await updateData({ id, fileName })
-  }
-
-  const handleDeleteAttachment = async (id: string, isConfirmed: boolean) => {
-    if (isConfirmed) {
-      await fetchDeleteAttachment(id)
-      if (!error) await fetchAttachments()
-    }
-  }
-  const onEdit = (id: string) => setSelectedItemId(id)
-  const onCancel = () => setSelectedItemId('')
-
-  const columnsToShow = ajustColumns(
-    breakpoints,
-    columns(selectedItemId, onCancel, onSave),
-    removeColumnRules
-  )
-
-  const openDeletionConfirmDialog = (id: string) => {
-    openDialog({
-      message: 'myResourcesPage.confirmDeletionMessage',
-      sendConfirm: (isConfirmed: boolean) =>
-        void handleDeleteAttachment(id, isConfirmed),
-      title: 'myResourcesPage.attachments.confirmAttachmentDeletionTitle'
-    })
-  }
-
-  const rowActions = [
-    {
-      label: t('common.edit'),
-      func: () => console.log(t('common.edit'))
-    },
-    {
-      label: t('common.delete'),
-      func: openDeletionConfirmDialog
-    }
-  ]
 
   const createAttachments = useCallback(
     (data?: FormData) => attachmentService.createAttachments(data),
@@ -215,21 +129,18 @@ const AttachmentsContainer = () => {
     await fetchAttachments()
   }
 
-  const addAttachmentBlock = (
-    <AddResourceWithInput
-      button={
-        <AddDocuments
-          buttonText={t('myResourcesPage.attachments.addAttachment')}
-          fetchData={uploadFile}
-          formData={formData}
-          icon={<AddIcon sx={styles.addAttachmentIcon} />}
-          sx={styles.addAttachmentBtn}
-          variant={ButtonVariantEnum.Contained}
-        />
-      }
-      fetchData={fetchAttachments}
-      searchRef={searchFileName}
-    />
+  const onSave = async (fileName: string) => {
+    const id = selectedItemId
+    setSelectedItemId('')
+    if (fileName) await updateData({ id, fileName })
+  }
+  const onEdit = (id: string) => setSelectedItemId(id)
+  const onCancel = () => setSelectedItemId('')
+
+  const columnsToShow = ajustColumns(
+    breakpoints,
+    columns(selectedItemId, onCancel, onSave),
+    removeColumnRules
   )
 
   const props = {
@@ -243,14 +154,32 @@ const AttachmentsContainer = () => {
     sx: styles.table
   }
 
+  const addAttachmentBlock = (
+    <AddResourceWithInput
+      button={
+        <AddDocuments
+          buttonText={t('myResourcesPage.attachments.addBtn')}
+          fetchData={uploadFile}
+          formData={formData}
+          icon={<AddIcon sx={styles.addAttachmentIcon} />}
+          sx={styles.addAttachmentBtn}
+          variant={ButtonVariantEnum.Contained}
+        />
+      }
+      fetchData={fetchAttachments}
+      searchRef={searchFileName}
+    />
+  )
+
   return (
     <Box>
-      <AddResourceWithInput
+      {addAttachmentBlock}
+      {/* <AddResourceWithInput
         btnText={'myResourcesPage.attachments.addBtn'}
         fetchData={fetchAttachments}
         link={'#'}
         searchRef={searchFileName}
-      />
+      /> */}
       {loading ? (
         <Loader pageLoad size={50} />
       ) : (
