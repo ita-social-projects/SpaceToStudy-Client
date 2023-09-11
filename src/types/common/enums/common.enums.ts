@@ -40,7 +40,13 @@ export enum TypographyVariantEnum {
 }
 
 export enum TextFieldVariantEnum {
-  Standard = 'standard'
+  Standard = 'standard',
+  Outlined = 'outlined'
+}
+
+export enum DrawerVariantEnum {
+  Persistent = 'persistent',
+  Temporary = 'temporary'
 }
 
 export enum ButtonVariantEnum {

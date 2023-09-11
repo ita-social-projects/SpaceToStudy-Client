@@ -5,17 +5,17 @@ import { axiosClient } from '~/plugins/axiosClient'
 import { URLs } from '~/constants/request'
 import {
   Attachment,
-  GetAttachmentsParams,
-  GetLessonsParams,
+  GetResourcesParams,
   ItemsWithCount,
   LessonData,
-  Lesson
+  Lesson,
+  UpdateAttachmentParams
 } from '~/types'
 import { createUrlPath } from '~/utils/helper-functions'
 
 export const ResourceService = {
   getUsersLessons: async (
-    params?: GetLessonsParams
+    params?: GetResourcesParams
   ): Promise<AxiosResponse<ItemsWithCount<Lesson>>> =>
     await axiosClient.get(URLs.resources.lessons.get, { params }),
   getLesson: async (id?: string): Promise<AxiosResponse<Lesson>> =>
@@ -30,11 +30,21 @@ export const ResourceService = {
       data
     ),
   getAttachments: async (
-    params?: Partial<GetAttachmentsParams>
+    params?: GetResourcesParams
   ): Promise<AxiosResponse<ItemsWithCount<Attachment>>> =>
     await axiosClient.get(URLs.resources.attachments.get, { params }),
+  updateAttachment: async (params?: UpdateAttachmentParams) =>
+    await axiosClient.patch(
+      createUrlPath(URLs.resources.attachments.patch, params?.id),
+      params
+    ),
   deleteAttachment: async (id: string): Promise<AxiosResponse> =>
     await axiosClient.delete(
       createUrlPath(URLs.resources.attachments.delete, id)
-    )
+    ),
+  createAttachments: (data?: FormData): Promise<AxiosResponse> => {
+    return axiosClient.post(URLs.attachments.post, data, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    })
+  }
 }

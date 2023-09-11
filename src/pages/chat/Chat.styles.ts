@@ -5,6 +5,7 @@ import { TypographyVariantEnum } from '~/types'
 
 export const styles = {
   root: {
+    position: 'relative',
     mb: '20px',
     '& .sash-module_sash__K-9lB': {
       '&:before': {
@@ -56,5 +57,14 @@ export const styles = {
     height: `calc(100% - 164px)`,
     overflow: 'auto',
     marginBottom: '3px'
+  },
+  sidebarPaper: { p: 0 },
+  sidebar: {
+    '& .MuiDrawer-root': { position: 'absolute' },
+    '& .MuiPaper-root': {
+      position: 'absolute',
+      maxWidth: '320px',
+      width: '100%'
+    }
   }
 }

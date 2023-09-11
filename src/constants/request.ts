@@ -53,6 +53,7 @@ export const URLs = {
     },
     attachments: {
       get: '/attachments',
+      patch: '/attachments',
       delete: '/attachments'
     }
   },
