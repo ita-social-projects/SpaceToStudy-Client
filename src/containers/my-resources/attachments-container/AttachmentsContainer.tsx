@@ -38,7 +38,7 @@ const AttachmentsContainer = () => {
   const { t } = useTranslation()
   const { setAlert } = useSnackBarContext()
   const breakpoints = useBreakpoints()
-  const { page } = usePagination()
+  const { page, handleChangePage } = usePagination()
   const sortOptions = useSort({ initialSort })
   const searchFileName = useRef<string>('')
   const [selectedItemId, setSelectedItemId] = useState<string>('')
@@ -151,6 +151,7 @@ const AttachmentsContainer = () => {
     actions: { onEdit },
     resource: ResourcesTabsEnum.Attachments,
     sort: sortOptions,
+    pagination: { page, onChange: handleChangePage },
     sx: styles.table
   }
 

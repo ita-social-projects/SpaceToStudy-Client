@@ -30,7 +30,7 @@ import { ajustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
 
 const QuizzesContainer = () => {
   const { setAlert } = useSnackBarContext()
-  const { page } = usePagination()
+  const { page, handleChangePage } = usePagination()
   const sortOptions = useSort({ initialSort })
   const searchTitle = useRef<string>('')
   const breakpoints = useBreakpoints()
@@ -85,7 +85,8 @@ const QuizzesContainer = () => {
     itemsPerPage,
     actions: { onEdit: () => null },
     resource: ResourcesTabsEnum.Quizzes,
-    sort: sortOptions
+    sort: sortOptions,
+    pagination: { page, onChange: handleChangePage }
   }
 
   return (
