@@ -6,35 +6,35 @@
     "attachments": "Attachments"
   },
   "lessons": {
-    "newLessonBtn": "New lesson",
+    "addBtn": "New lesson",
     "title": "Title",
     "attachmentQty": "Attachment",
     "attachmentsQty": "Attachments",
     "attachments": "Attachments",
     "lastUpdates": "Last updates",
-    "emptyLessons":"You have no lessons yet",
-    "confirmLessonDeletionTitle":"Do you confirm lesson deletion?",
+    "emptyItems":"You have no lessons yet",
+    "confirmDeletionTitle":"Do you confirm lesson deletion?",
     "successDeletion":"Lesson was deleted successfully"
   },
   "attachments": {
-    "addAttachment": "Add Attachment",
+    "addBtn": "Add Attachment",
     "addFromAttachments": "Add files from your Attachments",
     "file": "File",
     "size": "Size",
     "lastUpdate": "Last update",
-    "emptyAttachments": "You have no attachments yet",
-    "confirmAttachmentDeletionTitle":"Do you confirm attachment deletion?",
+    "emptyItems": "You have no attachments yet",
+    "confirmDeletionTitle":"Do you confirm attachment deletion?",
     "successDeletion":"Attachment was deleted successfully",
     "validationError": "File name cannot be longer than 55 symbol."
   },
   "quizzes": {
-    "newQuizBtn": "New quiz",
+    "addBtn": "New quiz",
     "title": "Title",
     "question": "Question",
     "questions": "Questions",
     "updated": "Last updates",
-    "emptyQuizzes": "You have no quizzes yet",
-    "confirmQuizDeletionTitle":"Do you confirm quiz deletion?",
+    "emptyItems": "You have no quizzes yet",
+    "confirmDeletionTitle":"Do you confirm quiz deletion?",
     "successDeletion":"Quiz was deleted successfully"
   },
   "confirmDeletionMessage":"This action is permanent and will remove all related content. Please review your decision before proceeding."

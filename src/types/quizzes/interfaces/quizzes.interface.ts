@@ -1,13 +1,4 @@
-import {
-  RequestParams,
-  CommonEntityFields,
-  UserResponse,
-  Answer
-} from '~/types'
-
-export interface QuizzesParams extends RequestParams {
-  title: string
-}
+import { CommonEntityFields, UserResponse, Answer } from '~/types'
 
 export interface QuestionWithAnswers {
   question: string
