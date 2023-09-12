@@ -36,7 +36,7 @@ import {
 const LessonsContainer = () => {
   const { setAlert } = useSnackBarContext()
   const navigate = useNavigate()
-  const { page } = usePagination()
+  const { page, handleChangePage } = usePagination()
   const sortOptions = useSort({ initialSort })
   const searchTitle = useRef<string>('')
   const breakpoints = useBreakpoints()
@@ -95,7 +95,8 @@ const LessonsContainer = () => {
     itemsPerPage,
     actions: { onEdit },
     resource: ResourcesTabsEnum.Lessons,
-    sort: sortOptions
+    sort: sortOptions,
+    pagination: { page, onChange: handleChangePage }
   }
 
   return (
