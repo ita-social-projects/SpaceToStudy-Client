@@ -13,7 +13,6 @@ import useBreakpoints from '~/hooks/use-breakpoints'
 import useAxios from '~/hooks/use-axios'
 import usePagination from '~/hooks/table/use-pagination'
 import AddDocuments from '~/containers/add-documents/AddDocuments'
-import { attachmentService } from '~/services/attachment-service'
 
 import { defaultResponses, snackbarVariants } from '~/constants'
 import {
@@ -107,7 +106,7 @@ const AttachmentsContainer = () => {
   })
 
   const createAttachments = useCallback(
-    (data?: FormData) => attachmentService.createAttachments(data),
+    (data?: FormData) => ResourceService.createAttachments(data),
     []
   )
 
