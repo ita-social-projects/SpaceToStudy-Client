@@ -2,12 +2,12 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 
+import IconTitleDescription from '~/components/icon-title-description/IconTitleDescription'
 import AppChip from '~/components/app-chip/AppChip'
 
 import { Question, RemoveColumnRules, SortEnum, TableColumn } from '~/types'
 import { getFormattedDate } from '~/utils/helper-functions'
 import { styles } from '~/containers/my-resources/questions-container/QuestionsContainer.styles'
-import IconTitleDescription from '~/components/icon-title-description/IconTitleDescription'
 
 export const columns: TableColumn<Question>[] = [
   {
@@ -16,6 +16,7 @@ export const columns: TableColumn<Question>[] = [
     calculatedCellValue: (item: Question) => {
       return (
         <IconTitleDescription
+          description={'Which word is the antonym of "benevolent"?'}
           icon={
             <Box sx={styles.iconWrapper}>
               <CheckCircleOutlineIcon />

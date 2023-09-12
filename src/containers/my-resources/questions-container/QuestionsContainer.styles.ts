@@ -8,9 +8,14 @@ export const styles = {
       svg: { width: '16px', height: '16px', color: 'primary.600' }
     },
     titleWithDescription: {
+      wrapper: { display: 'flex', flexDirection: 'column', rowGap: '3px' },
       title: {
         typography: TypographyVariantEnum.Subtitle2,
         color: 'primary.900'
+      },
+      description: {
+        typography: TypographyVariantEnum.Caption,
+        color: 'primary.400'
       }
     }
   },
