@@ -8,6 +8,7 @@ export interface Lesson extends CommonEntityFields {
   attachments: string[]
 }
 
-export interface GetLessonsParams extends RequestParams {
-  title: string
+export interface GetResourcesParams extends Partial<RequestParams> {
+  title?: string
+  fileName?: string
 }

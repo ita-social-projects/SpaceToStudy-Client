@@ -6,7 +6,6 @@ import {
   FilterFromQuery,
   FormatedDate,
   Lesson,
-  MessageInterface,
   Offer,
   Quiz,
   RemoveColumnRules,
@@ -15,7 +14,7 @@ import {
   UserRole,
   UserRoleEnum,
   Attachment,
-  GroupedMessages
+  GroupedByDateItems
 } from '~/types'
 
 export const parseJwt = <T,>(token: string): T => {
@@ -258,18 +257,24 @@ export const convertBytesToProperFormat = (bytes: number): ConvertedSize => {
   return convertedSize
 }
 
+export const getIsNewMonth = (prev: string, curr: string) =>
+  new Date(prev).getUTCMonth() !== new Date(curr).getUTCMonth()
+
 export const getIsNewDay = (prev: string, curr: string) =>
   new Date(prev).getUTCDate() !== new Date(curr).getUTCDate()
 
-export const getGroupedMessages = (messages: MessageInterface[]) =>
-  messages.reduce((result: GroupedMessages[], message) => {
-    const currDate = message.createdAt
+export const getGroupedByDate = <T extends { createdAt: string }>(
+  items: T[],
+  func: (prev: string, curr: string) => boolean
+) =>
+  items.reduce((result: GroupedByDateItems<T>[], item) => {
+    const currDate = item.createdAt
     const prevDate = result.length ? result[result.length - 1].date : ''
 
-    if (getIsNewDay(prevDate, currDate)) {
-      result.push({ date: currDate, messages: [message] })
+    if (func(prevDate, currDate)) {
+      result.push({ date: currDate, items: [item] })
     } else {
-      result[result.length - 1].messages.push(message)
+      result[result.length - 1].items.push(item)
     }
 
     return result

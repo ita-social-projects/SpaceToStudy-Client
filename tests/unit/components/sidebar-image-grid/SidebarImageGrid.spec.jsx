@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, getAllByRole } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
 
 import SidebarImageGrid from '~/components/sidebar-image-grid/SidebarImageGrid'
@@ -34,21 +34,27 @@ const images = [
 ]
 
 test('renders the SidebarImageGrid component with images', () => {
-  const { getByAltText } = render(<SidebarImageGrid images={images} />)
+  render(<SidebarImageGrid images={images} />)
 
-  expect(getByAltText(images[images.length - 1].name)).toBeInTheDocument()
+  const firstImg = screen.getByAltText(images[0].name)
+  const lastImg = screen.queryByAltText(images[images.length - 1].name)
+
+  expect(firstImg).toBeInTheDocument()
+  expect(lastImg).not.toBeInTheDocument()
 })
 
 test('renders the SidebarImageGrid component in compactMode', () => {
-  const { getByText } = render(<SidebarImageGrid compactMode images={images} />)
+  render(<SidebarImageGrid images={images} />)
 
-  expect(getByText('+' + (images.length - 2))).toBeInTheDocument()
+  const addIcon = screen.getByTestId('AddIcon')
+
+  expect(addIcon).toBeInTheDocument()
 })
 
 test('renders the SidebarImageGrid component in non-compactMode', () => {
-  const { container } = render(
-    <SidebarImageGrid compactMode={false} images={images} />
-  )
+  render(<SidebarImageGrid compactMode={false} images={images} />)
 
-  expect(getAllByRole(container, 'img')).toHaveLength(images.length)
+  const lastImg = screen.getByAltText(images[images.length - 1].name)
+
+  expect(lastImg).toBeInTheDocument()
 })

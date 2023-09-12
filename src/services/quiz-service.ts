@@ -3,11 +3,11 @@ import { AxiosResponse } from 'axios'
 
 import { createUrlPath } from '~/utils/helper-functions'
 import { URLs } from '~/constants/request'
-import { ItemsWithCount, QuizzesParams, Quiz } from '~/types'
+import { ItemsWithCount, GetResourcesParams, Quiz } from '~/types'
 
 export const quizService = {
   getQuizzes: (
-    params?: Partial<QuizzesParams>
+    params?: GetResourcesParams
   ): Promise<AxiosResponse<ItemsWithCount<Quiz>>> => {
     return axiosClient.get(URLs.quizzes.get, { params })
   },
