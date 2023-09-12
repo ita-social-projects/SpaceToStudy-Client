@@ -3,6 +3,7 @@ export const defaultResponse = {
   author: '',
   createdAt: '',
   description: '',
+  content: '',
   title: '',
   updatedAt: '',
   _id: ''
