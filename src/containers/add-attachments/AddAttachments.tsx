@@ -129,6 +129,7 @@ const AddAttachments: FC<AddAttachmentsProps> = ({
       message: error ? `errors.${error.code}` : ''
     })
   }
+
   const { fetchData: fetchCreateAttachment } = useAxios({
     service: createAttachments,
     fetchOnMount: false,

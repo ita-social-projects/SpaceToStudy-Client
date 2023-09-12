@@ -81,6 +81,7 @@ const AddPhotoStep = ({ btnsBox, stepLabel }) => {
             initialError={photoError}
             initialState={photo}
             isImages
+            sx={style.fileUploader}
             validationData={validationData}
           />
         </Box>

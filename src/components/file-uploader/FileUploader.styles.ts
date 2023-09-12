@@ -1,16 +1,6 @@
 import { TypographyVariantEnum } from '~/types'
 
 export const styles = {
-  root: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-around',
-    border: '1px solid',
-    borderColor: 'primary.200',
-    borderRadius: '5px',
-    maxWidth: '270px',
-    overflow: 'auto'
-  },
   rootDrag: {
     borderColor: 'primary.900',
     backgroundColor: 'basic.grey'
@@ -35,9 +25,6 @@ export const styles = {
   close: {
     color: 'primary.700',
     fontSize: '20px'
-  },
-  uploadBtn: {
-    textAlign: 'center'
   },
   fileSize: {
     mt: '10px',
