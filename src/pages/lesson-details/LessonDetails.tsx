@@ -11,7 +11,6 @@ import useAxios from '~/hooks/use-axios'
 import { ResourceService } from '~/services/resource-service'
 import {
   attachmentsMock,
-  contentMock,
   defaultResponse
 } from '~/pages/lesson-details/LessonDetails.constants'
 import Accordions from '~/components/accordion/Accordions'
@@ -70,7 +69,7 @@ const LessonDetails = () => {
   const items = [
     {
       title: 'lesson.content',
-      content: contentMock
+      content: <div dangerouslySetInnerHTML={{ __html: response.content }} />
     },
     {
       title: 'lesson.attachments',
