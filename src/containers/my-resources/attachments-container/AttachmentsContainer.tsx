@@ -174,12 +174,6 @@ const AttachmentsContainer = () => {
   return (
     <Box>
       {addAttachmentBlock}
-      {/* <AddResourceWithInput
-        btnText={'myResourcesPage.attachments.addBtn'}
-        fetchData={fetchAttachments}
-        link={'#'}
-        searchRef={searchFileName}
-      /> */}
       {loading ? (
         <Loader pageLoad size={50} />
       ) : (
