@@ -14,7 +14,8 @@ import {
   UserRole,
   UserRoleEnum,
   Attachment,
-  GroupedByDateItems
+  GroupedByDateItems,
+  Question
 } from '~/types'
 
 export const parseJwt = <T,>(token: string): T => {
@@ -141,7 +142,7 @@ export const getScreenBasedLimit = (
 }
 
 export const ajustColumns = <
-  T extends Cooperation | Offer | Lesson | Attachment | Quiz
+  T extends Cooperation | Offer | Lesson | Attachment | Quiz | Question
 >(
   breakpoints: Breakpoints,
   columns: TableColumn<T>[],

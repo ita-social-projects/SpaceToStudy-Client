@@ -37,5 +37,14 @@
     "confirmDeletionTitle":"Do you confirm quiz deletion?",
     "successDeletion":"Quiz was deleted successfully"
   },
+  "questions": {
+    "addBtn": "New question",
+    "title": "Title",
+    "category": "Category",
+    "updated": "Last updates",
+    "emptyItems": "You have no questions yet",
+    "confirmDeletionTitle":"Do you confirm question deletion?",
+    "successDeletion":"Question was deleted successfully"
+  },
   "confirmDeletionMessage":"This action is permanent and will remove all related content. Please review your decision before proceeding."
 }

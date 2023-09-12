@@ -10,7 +10,8 @@ import {
   LessonData,
   Lesson,
   NewLesson,
-  UpdateAttachmentParams
+  UpdateAttachmentParams,
+  Question
 } from '~/types'
 import { createUrlPath } from '~/utils/helper-functions'
 
@@ -47,5 +48,10 @@ export const ResourceService = {
     return axiosClient.post(URLs.attachments.post, data, {
       headers: { 'Content-Type': 'multipart/form-data' }
     })
+  },
+  getQuestions: (
+    params?: GetResourcesParams
+  ): Promise<AxiosResponse<ItemsWithCount<Question>>> => {
+    return axiosClient.get(URLs.resources.questions.get, { params })
   }
 }
