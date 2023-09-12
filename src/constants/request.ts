@@ -55,6 +55,9 @@ export const URLs = {
       get: '/attachments',
       patch: '/attachments',
       delete: '/attachments'
+    },
+    questions: {
+      get: '/questions'
     }
   },
   messages: {

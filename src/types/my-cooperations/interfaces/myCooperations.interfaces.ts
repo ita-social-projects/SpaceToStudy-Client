@@ -6,7 +6,8 @@ import {
   Offer,
   TableColumn,
   Attachment,
-  Quiz
+  Quiz,
+  Question
 } from '~/types'
 import { RequestParams } from '~/types/services/services.index'
 
@@ -29,7 +30,7 @@ export interface ScreenBasedLimits {
 }
 
 export interface RemoveColumnRules<
-  T extends Cooperation | Offer | Lesson | Attachment | Quiz
+  T extends Cooperation | Offer | Lesson | Attachment | Quiz | Question
 > {
   desktop?: TableColumn<T>['label'][]
   tablet?: TableColumn<T>['label'][]
