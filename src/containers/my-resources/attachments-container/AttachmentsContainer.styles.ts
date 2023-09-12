@@ -21,7 +21,14 @@ export const styles = {
   searchIcon: {
     color: 'primary.700'
   },
-  addAttachmentBtn: { width: 'fit-content' },
+  addAttachmentBtn: {
+    button: {
+      backgroundColor: 'primary.900',
+      typography: TypographyVariantEnum.Body1,
+      fontWeight: '500',
+      py: '12.5px'
+    }
+  },
   addAttachmentIcon: { ml: '5px', width: { xs: '18px', sm: '22px' } },
   table: {
     '& td,th': {
