@@ -35,7 +35,11 @@
     "updated": "Останнє оновлення",
     "emptyItems": "У вас ще немає тестів",
     "confirmDeletionTitle":"Ви підтверджуєте видалення тесту?",
-    "successDeletion":"Тест було успішно видалено"
+    "successDeletion":"Тест було успішно видалено",
+    "defaultNewTitle":"Без назви",
+    "defaultNewDescription":"Опис...",
+    "createNewQuestion":"Створити нове питання",
+    "addQuestion":"Додати питання"
   },
   "questions": {
     "addBtn": "Нове запитання",
