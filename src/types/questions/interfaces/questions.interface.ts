@@ -39,3 +39,11 @@ export interface QuestionCategory {
   name: string
   _id: string
 }
+
+export interface QuestionForm {
+  type: string
+  title: string
+  text: string
+  answers: Answer[]
+  openAnswer: string
+}

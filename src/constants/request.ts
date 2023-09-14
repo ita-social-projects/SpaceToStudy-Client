@@ -74,6 +74,9 @@ export const URLs = {
     get: '/quizzes',
     delete: '/quizzes'
   },
+  question: {
+    post: '/questions'
+  },
   attachments: {
     post: '/attachments'
   }
