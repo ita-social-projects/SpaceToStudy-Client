@@ -9,6 +9,7 @@ import Loader from '~/components/loader/Loader'
 import useSort from '~/hooks/table/use-sort'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import useAxios from '~/hooks/use-axios'
+import { authRoutes } from '~/router/constants/authRoutes'
 
 import { defaultResponses, snackbarVariants } from '~/constants'
 import {
@@ -85,7 +86,7 @@ const QuestionsContainer = () => {
       <AddResourceWithInput
         btnText={'myResourcesPage.questions.addBtn'}
         fetchData={fetchData}
-        link={'#'}
+        link={authRoutes.myResources.newQuestion.path}
         searchRef={searchTitle}
       />
       {loading ? (
