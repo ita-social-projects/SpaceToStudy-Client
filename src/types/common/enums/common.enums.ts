@@ -101,3 +101,7 @@ export enum OverlapEnum {
   Circular = 'circular',
   Rectangular = 'rectangular'
 }
+
+export enum ColorEnum {
+  Primary = 'primary'
+}
