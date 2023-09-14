@@ -22,6 +22,7 @@ import AppChip from '~/components/app-chip/AppChip'
 import { ColorEnum, Answer, TableActionFunc, QuestionCategory } from '~/types'
 import { styles } from '~/components/question/Question.styles'
 
+
 interface QuestionProps {
   title: string
   answers: Answer[]
@@ -37,6 +38,7 @@ const Question: FC<QuestionProps> = ({
   category,
   id
 }) => {
+
   const { t } = useTranslation()
   const { openMenu, renderMenu, closeMenu } = useMenu()
 
@@ -81,7 +83,6 @@ const Question: FC<QuestionProps> = ({
         control={<Checkbox />}
         label={answer.text}
       />
-
       {answer.isCorrect && (
         <CheckIcon sx={{ color: appPallete.basic.orientalHerbs }} />
       )}
