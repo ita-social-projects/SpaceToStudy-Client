@@ -10,6 +10,7 @@ import useSort from '~/hooks/table/use-sort'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import useAxios from '~/hooks/use-axios'
 import usePagination from '~/hooks/table/use-pagination'
+import { authRoutes } from '~/router/constants/authRoutes'
 
 import { defaultResponses, snackbarVariants } from '~/constants'
 import {
@@ -94,7 +95,7 @@ const QuizzesContainer = () => {
       <AddResourceWithInput
         btnText={'myResourcesPage.quizzes.addBtn'}
         fetchData={fetchData}
-        link={'#'}
+        link={authRoutes.myResources.newQuiz.path}
         searchRef={searchTitle}
       />
       {loading ? (
