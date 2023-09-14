@@ -1,4 +1,5 @@
 import { useCallback } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import QuestionEditor from '~/components/question-editor/QuestionEditor'
@@ -10,6 +11,7 @@ import { defaultResponses, snackbarVariants } from '~/constants'
 import { ErrorResponse, QuestionForm } from '~/types'
 
 const CreateOrEditQuestion = () => {
+  const navigate = useNavigate()
   const { setAlert } = useSnackBarContext()
 
   const createQuestion = useCallback(
@@ -22,6 +24,7 @@ const CreateOrEditQuestion = () => {
       severity: snackbarVariants.success,
       message: 'categoriesPage.newSubject.successMessage'
     })
+    navigate(-1)
   }
 
   const handleResponseError = (error: ErrorResponse) => {

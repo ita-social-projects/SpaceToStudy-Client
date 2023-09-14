@@ -1,5 +1,6 @@
 import { ChangeEvent, MouseEvent, FC } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
 import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
 import IconButton from '@mui/material/IconButton'
@@ -39,6 +40,7 @@ interface QuestionEditorProps {
 
 const QuestionEditor: FC<QuestionEditorProps> = ({ fetchData, loading }) => {
   const { t } = useTranslation()
+  const navigate = useNavigate()
 
   const { data, handleInputChange, handleNonInputValueChange, handleSubmit } =
     useForm<QuestionForm>({
@@ -161,7 +163,7 @@ const QuestionEditor: FC<QuestionEditorProps> = ({ fetchData, loading }) => {
 
   const buttons = (
     <Box sx={styles.buttons}>
-      <AppButton variant={ButtonVariantEnum.Tonal}>
+      <AppButton onClick={() => navigate(-1)} variant={ButtonVariantEnum.Tonal}>
         {t('common.cancel')}
       </AppButton>
       <AppButton
