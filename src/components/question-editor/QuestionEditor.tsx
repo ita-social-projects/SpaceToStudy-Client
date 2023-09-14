@@ -22,7 +22,6 @@ import useForm from '~/hooks/use-form'
 import AppButton from '~/components/app-button/AppButton'
 import { sortQuestions } from '~/components/question-editor/QuestionEditor.constants'
 
-import { TypographyVariantEnum } from '~/types'
 import { styles } from '~/components/question-editor/QuestionEditor.styles'
 import {
   ButtonTypeEnum,
@@ -30,7 +29,8 @@ import {
   ComponentEnum,
   QuestionForm,
   SizeEnum,
-  TextFieldVariantEnum
+  TextFieldVariantEnum,
+  TypographyVariantEnum
 } from '~/types'
 
 interface QuestionEditorProps {
