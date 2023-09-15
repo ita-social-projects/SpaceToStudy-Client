@@ -70,10 +70,15 @@ const QuestionsContainer = () => {
     onResponseError
   })
 
+  const deleteQuestion = useCallback(
+    (id?: string) => ResourceService.deleteQuestion(id ?? ''),
+    []
+  )
+
   const props = {
     columns: columnsToShow,
     data: { response, getData: fetchData },
-    services: { deleteService: () => null },
+    services: { deleteService: deleteQuestion },
     itemsPerPage,
     actions: { onEdit: () => null },
     resource: ResourcesTabsEnum.Questions,
