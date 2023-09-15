@@ -157,9 +157,7 @@ const QuestionEditor: FC<QuestionEditorProps> = ({ fetchData, loading }) => {
   ))
 
   const disabledButton =
-    type === 'openAnswer'
-      ? !!text && !!openAnswer
-      : !!text && !!answers[0]?.text
+    type === 'openAnswer' ? text && openAnswer : text && answers[0]?.text
 
   const buttons = (
     <Box sx={styles.buttons}>
