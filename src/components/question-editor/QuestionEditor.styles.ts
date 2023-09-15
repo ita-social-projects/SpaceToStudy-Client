@@ -1,5 +1,5 @@
 import { commonShadow } from '~/styles/app-theme/custom-shadows'
-import { TypographyVariantEnum } from '~/types'
+import { TypographyVariantEnum, VisibilityEnum } from '~/types'
 
 export const styles = {
   root: {},
@@ -20,10 +20,14 @@ export const styles = {
       marginTop: 0
     }
   },
-  titleLabel: {
+  titleLabel: (value: string) => ({
     shrink: false,
-    sx: { typography: TypographyVariantEnum.H5, top: -14 }
-  },
+    sx: {
+      visibility: value ? VisibilityEnum.Hidden : VisibilityEnum.Visible,
+      typography: TypographyVariantEnum.H5,
+      top: -14
+    }
+  }),
   labelCategory: {
     color: 'primary.600',
     maxWidth: '464px',

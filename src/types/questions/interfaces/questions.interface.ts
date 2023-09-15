@@ -28,13 +28,6 @@ export interface CreatedQuestion extends CommonEntityFields {
   type: string
 }
 
-export interface QuestionToCreate {
-  title: string
-  answers: Answer[]
-  category: Category
-  type: string
-}
-
 export interface QuestionCategory {
   name: string
   _id: string
@@ -45,5 +38,6 @@ export interface QuestionForm {
   title: string
   text: string
   answers: Answer[]
+  category: Category
   openAnswer: string
 }

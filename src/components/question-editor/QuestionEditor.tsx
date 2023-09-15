@@ -20,7 +20,11 @@ import AppTextField from '~/components/app-text-field/AppTextField'
 import AppSelect from '~/components/app-select/AppSelect'
 import useForm from '~/hooks/use-form'
 import AppButton from '~/components/app-button/AppButton'
-import { sortQuestions } from '~/components/question-editor/QuestionEditor.constants'
+import {
+  questionType,
+  sortQuestions
+} from '~/components/question-editor/QuestionEditor.constants'
+import { authRoutes } from '~/router/constants/authRoutes'
 
 import { styles } from '~/components/question-editor/QuestionEditor.styles'
 import {
@@ -58,9 +62,8 @@ const QuestionEditor: FC<QuestionEditorProps> = ({ fetchData, loading }) => {
 
   const { type, title, text, answers, openAnswer } = data
 
-  const isMultipleChoice = type === sortQuestions[0].value
-  const isOpenAnswer = type === sortQuestions[1].value
-  const isSingleChoice = type === sortQuestions[2].value
+  const { isMultipleChoice, isOpenAnswer, isSingleChoice } = questionType(type)
+
   const isEmptyAnswer = answers[answers.length - 1]?.text === ''
   const option = sortQuestions.find((item) => item.value === data.type)
 
@@ -156,16 +159,20 @@ const QuestionEditor: FC<QuestionEditorProps> = ({ fetchData, loading }) => {
     </Box>
   ))
 
-  const disabledButton =
-    type === 'openAnswer' ? text && openAnswer : text && answers[0]?.text
+  const disabledButton = isOpenAnswer
+    ? Boolean(text && openAnswer)
+    : Boolean(text && answers[0]?.text)
 
   const buttons = (
     <Box sx={styles.buttons}>
-      <AppButton onClick={() => navigate(-1)} variant={ButtonVariantEnum.Tonal}>
+      <AppButton
+        onClick={() => navigate(authRoutes.myResources.root.path)}
+        variant={ButtonVariantEnum.Tonal}
+      >
         {t('common.cancel')}
       </AppButton>
       <AppButton
-        disabled={!disabledButton}
+        disabled={disabledButton}
         loading={loading}
         type={ButtonTypeEnum.Submit}
       >
@@ -183,11 +190,11 @@ const QuestionEditor: FC<QuestionEditorProps> = ({ fetchData, loading }) => {
       sx={styles.root}
     >
       <AppTextField
-        InputLabelProps={styles.titleLabel}
+        InputLabelProps={styles.titleLabel(title)}
         InputProps={styles.titleInput}
         fullWidth
         inputProps={styles.input}
-        label={title ? '' : t('questionPage.untitled')}
+        label={t('questionPage.untitled')}
         onChange={handleInputChange('title')}
         value={title}
         variant={TextFieldVariantEnum.Standard}
@@ -207,7 +214,7 @@ const QuestionEditor: FC<QuestionEditorProps> = ({ fetchData, loading }) => {
       <Divider sx={styles.mainDivider} />
       <Box sx={styles.editorBlock}>
         <Box sx={styles.options}>
-          <Box sx={styles.iconWrapper}>{option!.icon}</Box>
+          {option && <Box sx={styles.iconWrapper}>{option.icon}</Box>}
           <AppSelect
             fields={sortOptions}
             setValue={handleTypeChange}
