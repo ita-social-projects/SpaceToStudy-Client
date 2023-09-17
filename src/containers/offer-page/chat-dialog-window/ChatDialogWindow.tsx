@@ -125,10 +125,10 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
   }
 
   const handleRedirectToChat = async () => {
-    const chatId: unknown = chatInfo.chatId
-    if (!chatId) {
+    if (!chatInfo.chatId) {
       await handleCreateNewChat()
-    } else openChatInNewTab(chatId)
+    } else openChatInNewTab(chatInfo.chatId)
+    closeChatWindow()
   }
 
   return (

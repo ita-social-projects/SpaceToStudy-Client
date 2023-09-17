@@ -1,4 +1,12 @@
-import { useState, useCallback, useEffect, useRef, MouseEvent } from 'react'
+import {
+  useState,
+  useCallback,
+  useEffect,
+  useRef,
+  useMemo,
+  ChangeEvent,
+  MouseEvent
+} from 'react'
 import { useTranslation } from 'react-i18next'
 import { Allotment } from 'allotment'
 import SimpleBar from 'simplebar-react'
@@ -9,6 +17,7 @@ import { messageService } from '~/services/message-service'
 import { useDrawer } from '~/hooks/use-drawer'
 import useAxios from '~/hooks/use-axios'
 import useBreakpoints from '~/hooks/use-breakpoints'
+import { useAppSelector } from '~/hooks/use-redux'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import AppDrawer from '~/components/app-drawer/AppDrawer'
 import AppChip from '~/components/app-chip/AppChip'
@@ -27,6 +36,7 @@ import { mockFiles, mockLinks, mockMedia } from '~/pages/chat/Chat.constants'
 import {
   ChatResponse,
   DrawerVariantEnum,
+  Member,
   MessageInterface,
   PositionEnum
 } from '~/types'
@@ -42,6 +52,11 @@ const Chat = () => {
   const [filteredMessages, setFilteredMessages] = useState<string[]>([])
   const [filteredIndex, setFilteredIndex] = useState<number>(0)
   const scrollRef = useRef<HTMLDivElement | null>(null)
+  const { userId: myId } = useAppSelector((state) => state.appMain)
+  const userToSpeak = useMemo<Member | undefined>(
+    () => selectedChat?.members.find((member) => member.user._id !== myId),
+    [selectedChat, myId]
+  )
 
   const groupedMessages = getGroupedByDate(messages, getIsNewDay)
   const allotmentSizes = isSidebarOpen && isDesktop ? [25, 50, 25] : [25, 75]
@@ -153,7 +168,7 @@ const Chat = () => {
         files={mockFiles}
         links={mockLinks}
         media={mockMedia}
-        member={selectedChat.members[1]}
+        member={userToSpeak}
       />
     </AppDrawer>
   )
@@ -220,7 +235,7 @@ const Chat = () => {
                   onFilteredIndexChange={hadleIndexMessage}
                   onFilteredMessagesChange={handleFilteredMessage}
                   onMenuClick={openChatsHandler}
-                  user={selectedChat.members[1].user}
+                  user={userToSpeak?.user}
                 />
                 <SimpleBar
                   scrollableNodeProps={{ ref: scrollRef }}

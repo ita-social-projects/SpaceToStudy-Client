@@ -1,4 +1,4 @@
-import { FC, memo } from 'react'
+import { FC, memo, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import Avatar from '@mui/material/Avatar'
 import Box from '@mui/material/Box'
@@ -8,7 +8,13 @@ import Badge from '@mui/material/Badge'
 import { useAppSelector } from '~/hooks/use-redux'
 
 import { styles } from '~/containers/chat/chat-item/ChatItem.styles'
-import { ChatResponse, ComponentEnum, OverlapEnum, PositionEnum } from '~/types'
+import {
+  ChatResponse,
+  ComponentEnum,
+  Member,
+  OverlapEnum,
+  PositionEnum
+} from '~/types'
 import { getFormattedDate } from '~/utils/helper-functions'
 
 interface ItemOfChatProps {
@@ -26,15 +32,21 @@ const ChatItem: FC<ItemOfChatProps> = ({
 }) => {
   const { t } = useTranslation()
   const { userId } = useAppSelector((state) => state.appMain)
+  const userToSpeak = useMemo<Member | undefined>(
+    () => chat?.members.find((member) => member.user._id !== userId),
+    [chat, userId]
+  )
 
-  const { firstName, lastName, photo } = chat.members[1].user
+  const firstName = userToSpeak?.user?.firstName
+  const lastName = userToSpeak?.user?.lastName
+  const photo = userToSpeak?.user?.photo
   const { text, author, updatedAt } = chat.latestMessage || {
     text: t('chatPage.message.noMessages'),
     author: '',
     updatedAt: ''
   }
 
-  const fullName = `${firstName} ${lastName}`
+  const fullName = `${firstName ?? ''} ${lastName ?? ''}`
 
   const handleSelectedChat = () => {
     setSelectedChat(chat)
