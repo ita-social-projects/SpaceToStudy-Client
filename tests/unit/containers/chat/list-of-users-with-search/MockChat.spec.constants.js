@@ -42,18 +42,18 @@ export const chatsMock = [
     members: [
       {
         user: {
-          _id: '6477007a6fa4d05e1a800ce5',
-          firstName: 'Yura',
-          lastName: 'Didenko',
+          _id: '644e6b1668cc37f543f2f37c',
+          firstName: 'Scott',
+          lastName: 'Short',
           photo: '1687365545877-1366_2000.jpeg'
         },
         role: 'student'
       },
       {
         user: {
-          _id: '644e6b1668cc37f543f2f37c',
-          firstName: 'Scott',
-          lastName: 'Short',
+          _id: '6477007a6fa4d05e1a800ce5',
+          firstName: 'Yura',
+          lastName: 'Didenko',
           photo: '1687365545877-1366_2000.jpeg'
         },
         role: 'student'

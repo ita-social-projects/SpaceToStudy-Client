@@ -53,7 +53,7 @@ describe('ChatItem', () => {
     )
 
     const message = screen.getByText('I have taken an introductory.')
-    const userName = screen.getByText('test test')
+    const userName = screen.getByText('test1 test1')
     const myMessage = screen.getByText('chatPage.message.you:')
 
     expect(userName).toBeInTheDocument()
