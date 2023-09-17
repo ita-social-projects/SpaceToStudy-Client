@@ -1,4 +1,4 @@
-import { TypographyVariantEnum } from '~/types'
+import { TypographyVariantEnum, VisibilityEnum } from '~/types'
 
 export const styles = {
   container: {
@@ -6,44 +6,51 @@ export const styles = {
   },
   root: {
     display: 'flex',
-    flexDirection: 'column',
     gap: '24px',
+    flexDirection: 'column',
     p: '0'
   },
   input: {
     style: {
-      padding: 0
+      padding: 0,
+      margin: 0
     }
-  },
-  descriptionLabel: {
-    shrink: false,
-    sx: { typography: TypographyVariantEnum.Body1, top: -21 }
-  },
-  divider: {
-    color: 'primary.300'
   },
   titleInput: {
     disableUnderline: true,
     style: {
       fontSize: '35px',
-      fontWeight: 500,
       maxHeight: '35px',
+      fontWeight: 500,
       marginTop: 0
     }
   },
   descriptionInput: {
-    disableUnderline: true,
-    style: { fontSize: '16px', maxHeight: '16px', marginTop: 0 }
+    style: { fontSize: '16px', maxHeight: '16px', marginTop: 0 },
+    disableUnderline: true
   },
-  titleLabel: {
+  titleLabel: (title: string) => ({
+    style: {
+      visibility: title ? VisibilityEnum.Hidden : VisibilityEnum.Visible
+    },
     shrink: false,
     sx: { typography: TypographyVariantEnum.H4, top: -23 }
+  }),
+  descriptionLabel: (description: string) => ({
+    style: {
+      visibility: description ? VisibilityEnum.Hidden : VisibilityEnum.Visible
+    },
+    sx: { typography: TypographyVariantEnum.Body1, top: -20 },
+    shrink: false
+  }),
+  divider: {
+    color: 'primary.300'
   },
   buttons: {
-    alignSelf: { xs: 'center', sm: 'end' },
     display: 'flex',
     gap: { xs: '24px', sm: '30px' },
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    alignSelf: { xs: 'center', sm: 'end' }
   },
   functionalButtons: {
     display: 'flex',

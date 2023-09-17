@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { ChangeEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import Box from '@mui/material/Box'
@@ -26,13 +26,13 @@ const EditQuizContainer = () => {
   const [description, setDescription] = useState<string>('')
 
   const handleTitleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setTitle(e.currentTarget.value)
   }
 
   const handleDescriptionChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setDescription(e.currentTarget.value)
   }
@@ -41,24 +41,20 @@ const EditQuizContainer = () => {
     <PageWrapper sx={styles.container}>
       <Box component={ComponentEnum.Form} sx={styles.root}>
         <AppTextField
-          InputLabelProps={styles.titleLabel}
+          InputLabelProps={styles.titleLabel(title)}
           InputProps={styles.titleInput}
           fullWidth
           inputProps={styles.input}
-          label={title ? '' : t('myResourcesPage.quizzes.defaultNewTitle')}
+          label={t('myResourcesPage.quizzes.defaultNewTitle')}
           onChange={(e) => handleTitleChange(e)}
           variant={TextFieldVariantEnum.Standard}
         />
         <AppTextField
-          InputLabelProps={styles.descriptionLabel}
+          InputLabelProps={styles.descriptionLabel(description)}
           InputProps={styles.descriptionInput}
           fullWidth
           inputProps={styles.input}
-          label={
-            description
-              ? ''
-              : t('myResourcesPage.quizzes.defaultNewDescription')
-          }
+          label={t('myResourcesPage.quizzes.defaultNewDescription')}
           onChange={(e) => handleDescriptionChange(e)}
           variant={TextFieldVariantEnum.Standard}
         />
@@ -69,14 +65,14 @@ const EditQuizContainer = () => {
             variant={ButtonVariantEnum.Tonal}
           >
             {t('myResourcesPage.quizzes.createNewQuestion')}
-            <EditIcon fontSize='small' />
+            <EditIcon fontSize={SizeEnum.Small} />
           </AppButton>
           <AppButton
             size={SizeEnum.ExtraLarge}
             variant={ButtonVariantEnum.Tonal}
           >
             {t('myResourcesPage.quizzes.addQuestion')}
-            <AddIcon fontSize='small' />
+            <AddIcon fontSize={SizeEnum.Small} />
           </AppButton>
         </Box>
         <Box sx={styles.buttons}>
