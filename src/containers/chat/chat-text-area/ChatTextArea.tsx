@@ -88,7 +88,7 @@ const ChatTextArea: FC<ChatTextAreaProps> = ({
     <Box sx={spliceSx(styles.container, sx.container)}>
       <Box sx={styles.testAreaWithPicker}>
         {isEmojiPickerOpen && (
-          <Box sx={styles.emojiPicker}>
+          <Box data-testid='emoji-picker' sx={styles.emojiPicker}>
             <Picker
               data={data}
               emojiSize={20}
