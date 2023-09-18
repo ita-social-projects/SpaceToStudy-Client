@@ -1,5 +1,7 @@
 import { useCallback, useRef, useState } from 'react'
 import Box from '@mui/material/Box'
+import AddIcon from '@mui/icons-material/Add'
+import { useTranslation } from 'react-i18next'
 
 import { useSnackBarContext } from '~/context/snackbar-context'
 import { ResourceService } from '~/services/resource-service'
@@ -10,6 +12,7 @@ import useSort from '~/hooks/table/use-sort'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import useAxios from '~/hooks/use-axios'
 import usePagination from '~/hooks/table/use-pagination'
+import AddDocuments from '~/containers/add-documents/AddDocuments'
 
 import { defaultResponses, snackbarVariants } from '~/constants'
 import {
@@ -24,18 +27,21 @@ import {
   Attachment,
   ErrorResponse,
   UpdateAttachmentParams,
-  ResourcesTabsEnum
+  ResourcesTabsEnum,
+  ButtonVariantEnum
 } from '~/types'
 import { ajustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
 import { styles } from '~/containers/my-resources/attachments-container/AttachmentsContainer.styles'
 
 const AttachmentsContainer = () => {
+  const { t } = useTranslation()
   const { setAlert } = useSnackBarContext()
   const breakpoints = useBreakpoints()
-  const { page } = usePagination()
+  const { page, handleChangePage } = usePagination()
   const sortOptions = useSort({ initialSort })
   const searchFileName = useRef<string>('')
   const [selectedItemId, setSelectedItemId] = useState<string>('')
+  const formData = new FormData()
 
   const { sort } = sortOptions
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
@@ -76,16 +82,20 @@ const AttachmentsContainer = () => {
     []
   )
 
-  const { response, loading, fetchData } = useAxios<
-    ItemsWithCount<Attachment>,
-    GetResourcesParams
-  >({
+  const {
+    response,
+    loading,
+    fetchData: fetchAttachments
+  } = useAxios<ItemsWithCount<Attachment>, GetResourcesParams>({
     service: getAttachments,
     defaultResponse: defaultResponses.itemsWithCount,
     onResponseError
   })
 
-  const onAttachmentUpdate = useCallback(() => void fetchData(), [fetchData])
+  const onAttachmentUpdate = useCallback(
+    () => void fetchAttachments(),
+    [fetchAttachments]
+  )
 
   const { fetchData: updateData } = useAxios({
     service: updateAttachment,
@@ -94,6 +104,29 @@ const AttachmentsContainer = () => {
     onResponse: onAttachmentUpdate,
     fetchOnMount: false
   })
+
+  const createAttachments = useCallback(
+    (data?: FormData) => ResourceService.createAttachments(data),
+    []
+  )
+
+  const onCreateAttachmentsError = (error: ErrorResponse) => {
+    setAlert({
+      severity: snackbarVariants.error,
+      message: error ? `errors.${error.code}` : ''
+    })
+  }
+  const { fetchData: fetchCreateAttachment } = useAxios({
+    service: createAttachments,
+    fetchOnMount: false,
+    defaultResponse: null,
+    onResponseError: onCreateAttachmentsError
+  })
+
+  const uploadFile = async (data: FormData) => {
+    await fetchCreateAttachment(data)
+    await fetchAttachments()
+  }
 
   const onSave = async (fileName: string) => {
     const id = selectedItemId
@@ -111,23 +144,36 @@ const AttachmentsContainer = () => {
 
   const props = {
     columns: columnsToShow,
-    data: { response, getData: fetchData },
+    data: { response, getData: fetchAttachments },
     services: { deleteService: deleteAttachment },
     itemsPerPage,
     actions: { onEdit },
     resource: ResourcesTabsEnum.Attachments,
     sort: sortOptions,
+    pagination: { page, onChange: handleChangePage },
     sx: styles.table
   }
 
+  const addAttachmentBlock = (
+    <AddResourceWithInput
+      button={
+        <AddDocuments
+          buttonText={t('myResourcesPage.attachments.addBtn')}
+          fetchData={uploadFile}
+          formData={formData}
+          icon={<AddIcon sx={styles.addAttachmentIcon} />}
+          sx={styles.addAttachmentBtn}
+          variant={ButtonVariantEnum.Contained}
+        />
+      }
+      fetchData={fetchAttachments}
+      searchRef={searchFileName}
+    />
+  )
+
   return (
     <Box>
-      <AddResourceWithInput
-        btnText={'myResourcesPage.attachments.addBtn'}
-        fetchData={fetchData}
-        link={'#'}
-        searchRef={searchFileName}
-      />
+      {addAttachmentBlock}
       {loading ? (
         <Loader pageLoad size={50} />
       ) : (

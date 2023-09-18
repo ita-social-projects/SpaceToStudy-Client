@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
@@ -15,12 +15,12 @@ import useUpload from '~/hooks/use-upload'
 import { styles } from '~/components/file-uploader/FileUploader.styles'
 import {
   AddDocuments,
+  ButtonVariantEnum,
   ComponentEnum,
   Emitter,
   InputEnum,
   SizeEnum
 } from '~/types'
-import { spliceSx } from '~/utils/helper-functions'
 
 interface FileUploaderProps {
   buttonText: string
@@ -33,6 +33,8 @@ interface FileUploaderProps {
     root?: SxProps
     button?: SxProps
   }
+  variant?: ButtonVariantEnum
+  icon?: ReactElement
 }
 
 const FileUploader: FC<FileUploaderProps> = ({
@@ -42,7 +44,9 @@ const FileUploader: FC<FileUploaderProps> = ({
   initialError = '',
   validationData,
   isImages = false,
-  sx = {}
+  sx = {},
+  variant,
+  icon
 }) => {
   const { t } = useTranslation()
 
@@ -66,19 +70,17 @@ const FileUploader: FC<FileUploaderProps> = ({
   ))
 
   const uploadButton = (
-    <Button
-      component={ComponentEnum.Label}
-      sx={spliceSx(styles.uploadBtn, sx.button)}
-    >
+    <Button component={ComponentEnum.Label} sx={sx.button} variant={variant}>
       {isImages && <CloudUploadIcon sx={styles.icon} />}
       {buttonText}
+      {icon}
       <input hidden multiple onChange={addFiles} type={InputEnum.File} />
     </Button>
   )
 
   return (
     <>
-      <Box sx={spliceSx(styles.root, sx.root)}>
+      <Box sx={sx.root}>
         {initialState.length && isImages ? (
           <List sx={styles.filesList}>{filesList}</List>
         ) : (

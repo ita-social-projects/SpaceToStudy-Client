@@ -14,5 +14,7 @@
   "chat": "Chat",
   "myOffers": "My offers",
   "editLesson": "Edit lesson",
-  "lessonDetails": "Lesson details"
+  "lessonDetails": "Lesson details",
+  "newQuiz": "New quiz",
+  "newQuestion": "New question"
 }

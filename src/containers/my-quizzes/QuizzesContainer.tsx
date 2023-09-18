@@ -10,6 +10,7 @@ import useSort from '~/hooks/table/use-sort'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import useAxios from '~/hooks/use-axios'
 import usePagination from '~/hooks/table/use-pagination'
+import { authRoutes } from '~/router/constants/authRoutes'
 
 import { defaultResponses, snackbarVariants } from '~/constants'
 import {
@@ -18,6 +19,7 @@ import {
   itemsLoadLimit,
   removeColumnRules
 } from '~/containers/my-quizzes/QuizzesContainer.constants'
+
 import {
   ItemsWithCount,
   GetResourcesParams,
@@ -29,7 +31,7 @@ import { ajustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
 
 const QuizzesContainer = () => {
   const { setAlert } = useSnackBarContext()
-  const { page } = usePagination()
+  const { page, handleChangePage } = usePagination()
   const sortOptions = useSort({ initialSort })
   const searchTitle = useRef<string>('')
   const breakpoints = useBreakpoints()
@@ -84,7 +86,8 @@ const QuizzesContainer = () => {
     itemsPerPage,
     actions: { onEdit: () => null },
     resource: ResourcesTabsEnum.Quizzes,
-    sort: sortOptions
+    sort: sortOptions,
+    pagination: { page, onChange: handleChangePage }
   }
 
   return (
@@ -92,7 +95,7 @@ const QuizzesContainer = () => {
       <AddResourceWithInput
         btnText={'myResourcesPage.quizzes.addBtn'}
         fetchData={fetchData}
-        link={'#'}
+        link={authRoutes.myResources.newQuiz.path}
         searchRef={searchTitle}
       />
       {loading ? (

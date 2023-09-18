@@ -1,4 +1,3 @@
-import palette from '~/styles/app-theme/app.pallete'
 import { TypographyVariantEnum } from '~/types'
 
 export const styles = {
@@ -13,11 +12,27 @@ export const styles = {
     gap: '10px'
   },
   attachment: {
-    background: palette.basic.grey,
+    background: 'basic.grey',
     borderRadius: '5px',
     p: '16px 24px',
     display: 'flex',
     justifyContent: 'space-between'
+  },
+  button: {
+    marginLeft: 'auto',
+    backgroundColor: 'basic.grey',
+    color: 'basic.black',
+    minWidth: '97px',
+    display: 'flex',
+    alighnItems: 'center',
+    columnGap: '16px',
+    '&:hover': {
+      backgroundColor: 'primary.100'
+    }
+  },
+  editIcon: {
+    width: { xs: '14px', sm: '16px' },
+    ml: '5px'
   },
   accordion: {
     withIcon: {

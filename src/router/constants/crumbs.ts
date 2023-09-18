@@ -73,6 +73,11 @@ export const lessonDetails = {
   path: authRoutes.lessonDetails.route
 }
 
+export const newQuiz = {
+  name: t('breadCrumbs.newQuiz'),
+  path: authRoutes.myResources.newQuiz.route
+}
+
 export const userProfile = ({ data }: { data: UserResponse }) => ({
   name: `${data.firstName} ${data.lastName}`
 })
@@ -80,4 +85,9 @@ export const userProfile = ({ data }: { data: UserResponse }) => ({
 export const chat = {
   name: t('breadCrumbs.chat'),
   path: authRoutes.chat.route
+}
+
+export const newQuestion = {
+  name: t('breadCrumbs.newQuestion'),
+  path: authRoutes.myResources.newQuestion.route
 }

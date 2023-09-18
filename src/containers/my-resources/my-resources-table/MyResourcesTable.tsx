@@ -1,10 +1,10 @@
 import { useTranslation } from 'react-i18next'
 import { AxiosResponse } from 'axios'
+import { PaginationProps } from '@mui/material'
 
 import { useSnackBarContext } from '~/context/snackbar-context'
 import useAxios from '~/hooks/use-axios'
 import useConfirm from '~/hooks/use-confirm'
-import usePagination from '~/hooks/table/use-pagination'
 import AppPagination from '~/components/app-pagination/AppPagination'
 import EnhancedTable, {
   EnhancedTableProps
@@ -21,6 +21,7 @@ interface MyResourcesTableInterface<T>
   data: ResourcesTableData<T>
   actions: { onEdit: (id: string) => void }
   services: { deleteService: (id?: string) => Promise<AxiosResponse> }
+  pagination: PaginationProps
 }
 
 const MyResourcesTable = <T extends TableItem>({
@@ -29,12 +30,16 @@ const MyResourcesTable = <T extends TableItem>({
   data,
   actions,
   services,
+  pagination,
   ...props
 }: MyResourcesTableInterface<T>) => {
   const { t } = useTranslation()
   const { setAlert } = useSnackBarContext()
-  const { page, handleChangePage } = usePagination()
   const { openDialog } = useConfirm()
+
+  const { page, onChange } = pagination
+  const { response, getData } = data
+  const { onEdit } = actions
 
   const onDeleteError = (error: ErrorResponse) => {
     setAlert({
@@ -61,7 +66,7 @@ const MyResourcesTable = <T extends TableItem>({
   const handleDelete = async (id: string, isConfirmed: boolean) => {
     if (isConfirmed) {
       await deleteItem(id)
-      if (!error) await data.getData()
+      if (!error) await getData()
     }
   }
 
@@ -76,7 +81,7 @@ const MyResourcesTable = <T extends TableItem>({
   const rowActions = [
     {
       label: t('common.edit'),
-      func: actions.onEdit
+      func: onEdit
     },
     {
       label: t('common.delete'),
@@ -87,16 +92,16 @@ const MyResourcesTable = <T extends TableItem>({
   return (
     <>
       <EnhancedTable<T>
-        data={{ items: data.response.items }}
+        data={{ items: response.items }}
         emptyTableKey={`myResourcesPage.${resource}.emptyItems`}
         rowActions={rowActions}
         sx={roundedBorderTable}
         {...props}
       />
       <AppPagination
-        onChange={handleChangePage}
+        onChange={onChange}
         page={page}
-        pageCount={Math.ceil(data.response.count / itemsPerPage)}
+        pageCount={Math.ceil(response.count / itemsPerPage)}
       />
     </>
   )

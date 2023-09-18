@@ -49,5 +49,20 @@ export const style = {
   },
   description: {
     mb: '20px'
+  },
+  fileUploader: {
+    button: {
+      textAlign: 'center'
+    },
+    root: {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-around',
+      border: '1px solid',
+      borderColor: 'primary.200',
+      borderRadius: '5px',
+      maxWidth: '270px',
+      overflow: 'auto'
+    }
   }
 }
