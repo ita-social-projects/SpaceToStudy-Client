@@ -6,7 +6,7 @@ import { TypographyVariantEnum } from '~/types'
 export const styles = {
   root: {
     position: 'relative',
-    mb: '20px',
+    mb: 0,
     '& .sash-module_sash__K-9lB': {
       '&:before': {
         backgroundColor: 'transparent',

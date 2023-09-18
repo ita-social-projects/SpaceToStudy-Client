@@ -1,11 +1,4 @@
-import {
-  useState,
-  useCallback,
-  useEffect,
-  useRef,
-  ChangeEvent,
-  MouseEvent
-} from 'react'
+import { useState, useCallback, useEffect, useRef, MouseEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Allotment } from 'allotment'
 import SimpleBar from 'simplebar-react'
@@ -59,10 +52,6 @@ const Chat = () => {
 
   const onSidebarHandler = (event: boolean) => {
     setIsSidebarOpen(event)
-  }
-
-  const onTextAreaChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setTextAreaValue(e.target.value)
   }
 
   const onMessagesResponse = useCallback(
@@ -165,7 +154,7 @@ const Chat = () => {
   )
 
   return (
-    <PageWrapper sx={styles.root}>
+    <PageWrapper disableGutters maxWidth={false} sx={styles.root}>
       {isMobile && (
         <AppDrawer
           anchor={PositionEnum.Left}
@@ -209,8 +198,8 @@ const Chat = () => {
                 </SimpleBar>
                 <ChatTextArea
                   label={t('chatPage.chat.inputLabel')}
-                  onChange={onTextAreaChange}
                   onClick={() => void onMessageSend()}
+                  setValue={setTextAreaValue}
                   value={textAreaValue}
                 />
               </>

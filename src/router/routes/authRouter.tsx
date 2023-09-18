@@ -4,7 +4,6 @@ import { Route } from 'react-router-dom'
 import { authRoutes } from '~/router/constants/authRoutes'
 import {
   categories,
-  chat,
   editProfile,
   findOffers,
   myCooperations,
@@ -75,11 +74,7 @@ export const authRouter = (
       loader={userProfileLoader}
       path={authRoutes.userProfile.route}
     />
-    <Route
-      element={<Chat />}
-      handle={{ crumb: chat }}
-      path={authRoutes.chat.route}
-    />
+    <Route element={<Chat />} path={authRoutes.chat.route} />
     <Route
       element={<TutorProfile />}
       handle={{ crumb: myProfile }}

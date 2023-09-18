@@ -1,11 +1,4 @@
-import {
-  useCallback,
-  useEffect,
-  ChangeEvent,
-  useState,
-  useRef,
-  FC
-} from 'react'
+import { useCallback, useEffect, useState, useRef, FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import SimpleBar from 'simplebar-react'
 import Box from '@mui/material/Box'
@@ -38,10 +31,6 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
   const { t } = useTranslation()
   const scrollRef = useRef<HTMLDivElement | null>(null)
   const { setChatInfo } = useChatContext()
-
-  const onTextAreaChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setTextAreaValue(e.target.value)
-  }
 
   const getMessages = useCallback(
     () => messageService.getMessages({ chatId: chatInfo.chatId }),
@@ -137,10 +126,11 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
           </Box>
         )}
         <ChatTextArea
+          emojiPickerProps={{ perLine: 6 }}
           label={t('chatPage.chat.inputLabel')}
           maxRows={3}
-          onChange={onTextAreaChange}
           onClick={() => null}
+          setValue={setTextAreaValue}
           sx={styles.textArea}
           value={textAreaValue}
         />
