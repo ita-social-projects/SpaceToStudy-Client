@@ -82,9 +82,9 @@ const Question: FC<QuestionProps> = ({
         label={answer.text}
       />
 
-      {answer.isCorrect ? (
+      {answer.isCorrect && (
         <CheckIcon sx={{ color: appPallete.basic.orientalHerbs }} />
-      ) : null}
+      )}
     </Box>
   ))
 
