@@ -91,5 +91,6 @@ export const styles = {
   deleteIcon: {
     ...actionIcon,
     color: 'error.700'
-  }
+  },
+  checkIcon: { color: 'basic.orientalHerbs' }
 }
