@@ -46,6 +46,8 @@ const Chat = () => {
   const [selectedChat, setSelectedChat] = useState<ChatResponse | null>(null)
   const [messages, setMessages] = useState<MessageInterface[]>([])
   const [textAreaValue, setTextAreaValue] = useState<string>('')
+  const [filteredMessages, setFilteredMessages] = useState<string[]>([])
+  const [filteredIndex, setFilteredIndex] = useState<number>(0)
   const scrollRef = useRef<HTMLDivElement | null>(null)
 
   const groupedMessages = getGroupedByDate(messages, getIsNewDay)
@@ -124,6 +126,8 @@ const Chat = () => {
       <ChatDate date={group.date} />
       {group.items.map((item, index) => (
         <Message
+          filteredIndex={filteredIndex}
+          filteredMessages={filteredMessages}
           key={item._id}
           message={item}
           prevMessage={index ? group.items[index - 1] : null}
@@ -164,6 +168,14 @@ const Chat = () => {
     </AppChip>
   )
 
+  const handleFilteredMessage = (filteredMessages: string[]) => {
+    setFilteredMessages(filteredMessages.reverse())
+  }
+
+  const hadleIndexMessage = (filteredIndex: number) => {
+    setFilteredIndex(filteredIndex)
+  }
+
   return (
     <PageWrapper sx={styles.root}>
       {isMobile && (
@@ -197,7 +209,10 @@ const Chat = () => {
             ) : (
               <>
                 <ChatHeader
+                  messages={messages}
                   onClick={() => onSidebarHandler(true)}
+                  onFilteredIndexChange={hadleIndexMessage}
+                  onFilteredMessagesChange={handleFilteredMessage}
                   onMenuClick={openChatsHandler}
                   user={selectedChat.members[0].user}
                 />
