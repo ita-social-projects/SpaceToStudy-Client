@@ -1,4 +1,5 @@
 import { TypographyVariantEnum } from '~/types'
+import { mainShadow } from '~/styles/app-theme/custom-shadows'
 
 export const styles = {
   container: { position: 'relative', alignItems: 'center', p: '14px 24px' },
@@ -28,7 +29,12 @@ export const styles = {
   },
   icon: { color: 'primary.700' },
   searchContainer: {
-    p: 0,
-    mt: '10px'
+    width: '100%',
+    position: 'absolute',
+    zIndex: '1',
+    top: '75px',
+    left: '0px',
+    pt: '10px',
+    boxShadow: mainShadow
   }
 }

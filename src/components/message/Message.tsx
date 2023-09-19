@@ -23,7 +23,7 @@ interface MessageProps {
   sx?: {
     avatar?: SxProps
   }
-  filteredMessages: string[]
+  filteredMessages?: string[]
   filteredIndex: number
 }
 
@@ -92,7 +92,9 @@ const Message: FC<MessageProps> = ({
         }
       >
         {text}
-        <Typography sx={styles.date(isMyMessage)}>{date}</Typography>
+        <Typography sx={styles.date(isMyMessage, isTextFiltered)}>
+          {date}
+        </Typography>
       </AppCard>
     </Box>
   )

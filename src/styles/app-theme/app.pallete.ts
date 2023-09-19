@@ -18,7 +18,8 @@ const palette = {
     orientalHerbs: '#12A03A',
     lime: '#99CC00',
     turquoise: '#489DA0',
-    turquoiseDark: '#3B8587'
+    turquoiseDark: '#3B8587',
+    turquoiseChat: '#A0F0F2'
   },
   companyBlue: 'rgba(0, 167, 167, 0.2)',
   error: {

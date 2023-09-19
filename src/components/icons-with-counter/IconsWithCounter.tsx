@@ -19,24 +19,21 @@ const IconsWithCounter: FC<IconsWithCounterProps> = ({
   onFilteredIndexChange
 }) => {
   const [possibleValue, setPossibleValue] = useState<number>(0)
-  const [realIndex, setRealIndex] = useState<number>(0)
 
   const { t } = useTranslation()
 
   useEffect(() => {
     if (!maxValue) {
       setPossibleValue(0)
-      setRealIndex(0)
     }
 
-    onFilteredIndexChange(realIndex)
-  }, [realIndex, onFilteredIndexChange, maxValue])
+    onFilteredIndexChange(possibleValue)
+  }, [onFilteredIndexChange, maxValue, possibleValue])
 
   const handleIncrement = () => {
     if (maxValue !== 0) {
       setPossibleValue((prev) => {
         const newValue = (prev + 1) % maxValue
-        setRealIndex(newValue)
         return newValue
       })
     }
@@ -46,7 +43,6 @@ const IconsWithCounter: FC<IconsWithCounterProps> = ({
     if (maxValue !== 0) {
       setPossibleValue((prev) => {
         const newValue = prev > 0 ? prev - 1 : maxValue - 1
-        setRealIndex(newValue)
         return newValue
       })
     }

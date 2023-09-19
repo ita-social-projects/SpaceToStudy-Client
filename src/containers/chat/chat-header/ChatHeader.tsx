@@ -32,7 +32,7 @@ const ChatHeader: FC<ChatHeaderProps> = ({
   onFilteredMessagesChange,
   onFilteredIndexChange
 }) => {
-  const [isSearchOpen, setIsSearchOpen] = useState(false)
+  const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false)
   const { t } = useTranslation()
   const { isMobile } = useBreakpoints()
 
@@ -45,7 +45,9 @@ const ChatHeader: FC<ChatHeaderProps> = ({
     { _id: 1, icon: <SearchIcon />, handleOnClick },
     { _id: 2, icon: <MoreVertIcon />, handleOnClick }
   ]
-
+  const closeSearch = () => {
+    setIsSearchOpen(false)
+  }
   const icons = iconButtons.map(({ _id, icon, handleOnClick }) => (
     <IconButton key={_id} onClick={handleOnClick} sx={styles.icon}>
       {icon}
@@ -60,30 +62,29 @@ const ChatHeader: FC<ChatHeaderProps> = ({
   )
 
   return (
-    <>
-      <AppCard onClick={onClick} sx={styles.container}>
-        {isMobile && (
-          <IconButton onClick={onMenuClick} sx={styles.menuIconBtn}>
-            <MenuIcon />
-          </IconButton>
-        )}
-        <TitleWithDescription
-          description={status}
-          style={styles.titleWithDescription}
-          title={`${user.firstName} ${user.lastName}`}
-        />
-        <Box sx={styles.actions}>{icons}</Box>
-      </AppCard>
+    <AppCard onClick={onClick} sx={styles.container}>
+      {isMobile && (
+        <IconButton onClick={onMenuClick} sx={styles.menuIconBtn}>
+          <MenuIcon />
+        </IconButton>
+      )}
+      <TitleWithDescription
+        description={status}
+        style={styles.titleWithDescription}
+        title={`${user.firstName} ${user.lastName}`}
+      />
+      <Box sx={styles.actions}>{icons}</Box>
       {isSearchOpen && (
         <Box sx={styles.searchContainer}>
           <SearchByMessage
+            isCloseSearch={closeSearch}
             messages={messages}
             onFilteredIndexChange={onFilteredIndexChange}
             onFilteredMessagesChange={onFilteredMessagesChange}
           />
         </Box>
       )}
-    </>
+    </AppCard>
   )
 }
 

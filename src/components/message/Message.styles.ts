@@ -15,11 +15,10 @@ export const styles = {
   },
 
   findMessageCard: {
-    backgroundColor: 'primary.700',
+    backgroundColor: 'basic.turquoiseChat',
     borderRadius: '10px',
-    padding: '2px 4px',
     display: 'inline',
-    color: 'white',
+    color: 'primary.900',
     typography: TypographyVariantEnum.Body1,
     p: '8px 16px'
   },
@@ -34,9 +33,11 @@ export const styles = {
     typography: TypographyVariantEnum.Body1,
     p: '8px 16px'
   }),
-  date: (isMyMessage: boolean) => ({
+  date: (isMyMessage: boolean, isTextFiltered: boolean) => ({
     typography: TypographyVariantEnum.Caption,
-    color: `primary.${isMyMessage ? 100 : 500}`,
+    color: isTextFiltered
+      ? 'primary.500'
+      : `primary.${isMyMessage ? 100 : 500}`,
     float: 'right',
     userSelect: 'none',
     m: '4px 0 0 8px'

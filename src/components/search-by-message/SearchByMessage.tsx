@@ -12,12 +12,14 @@ interface SearchByMessageProps {
   messages: { text: string }[]
   onFilteredMessagesChange: (filteredMessages: string[]) => void
   onFilteredIndexChange: (filteredIndex: number) => void
+  isCloseSearch: () => void
 }
 
 const SearchByMessage: FC<SearchByMessageProps> = ({
   messages,
   onFilteredMessagesChange,
-  onFilteredIndexChange
+  onFilteredIndexChange,
+  isCloseSearch
 }) => {
   const { t } = useTranslation()
   const [search, setSearch] = useState<string>('')
@@ -27,7 +29,7 @@ const SearchByMessage: FC<SearchByMessageProps> = ({
     (filteredMessages: string[]) => {
       onFilteredMessagesChange(filteredMessages)
     },
-    1500
+    500
   )
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value)
@@ -44,12 +46,13 @@ const SearchByMessage: FC<SearchByMessageProps> = ({
     } else {
       onFilteredMessagesChange([])
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search, messages])
 
-  const onClear = () => {
-    setSearch('')
-    setFindMessage([])
+  const onClose = () => {
+    isCloseSearch()
+    onFilteredMessagesChange([])
   }
   return (
     <Box sx={styles.container}>
@@ -59,7 +62,7 @@ const SearchByMessage: FC<SearchByMessageProps> = ({
       />
       <InputWithIcon
         onChange={onChange}
-        onClear={onClear}
+        onClear={onClose}
         placeholder={`${t('common.search')}...`}
         sx={styles.input}
         value={search}
