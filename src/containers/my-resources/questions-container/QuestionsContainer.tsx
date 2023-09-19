@@ -10,6 +10,7 @@ import useSort from '~/hooks/table/use-sort'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import useAxios from '~/hooks/use-axios'
 import { authRoutes } from '~/router/constants/authRoutes'
+import usePagination from '~/hooks/table/use-pagination'
 
 import { defaultResponses, snackbarVariants } from '~/constants'
 import {
@@ -32,6 +33,7 @@ const QuestionsContainer = () => {
   const sortOptions = useSort({ initialSort })
   const searchTitle = useRef<string>('')
   const breakpoints = useBreakpoints()
+  const { page, handleChangePage } = usePagination()
 
   const { sort } = sortOptions
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
@@ -56,9 +58,10 @@ const QuestionsContainer = () => {
       ResourceService.getQuestions({
         limit: itemsPerPage,
         sort,
-        title: searchTitle.current
+        title: searchTitle.current,
+        skip: (page - 1) * itemsPerPage
       }),
-    [itemsPerPage, sort]
+    [itemsPerPage, sort, page]
   )
 
   const { response, loading, fetchData } = useAxios<
@@ -78,7 +81,7 @@ const QuestionsContainer = () => {
     actions: { onEdit: () => null },
     resource: ResourcesTabsEnum.Questions,
     sort: sortOptions,
-    pagination: { page: 1, onChange: () => null }
+    pagination: { page, onChange: handleChangePage }
   }
 
   return (
