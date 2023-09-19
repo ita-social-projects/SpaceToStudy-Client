@@ -35,7 +35,11 @@
     "updated": "Last updates",
     "emptyItems": "You have no quizzes yet",
     "confirmDeletionTitle":"Do you confirm quiz deletion?",
-    "successDeletion":"Quiz was deleted successfully"
+    "successDeletion":"Quiz was deleted successfully",
+    "defaultNewTitle":"Untitled",
+    "defaultNewDescription":"Description...",
+    "createNewQuestion":"Create new question",
+    "addQuestion":"Add question"
   },
   "questions": {
     "addBtn": "New question",
