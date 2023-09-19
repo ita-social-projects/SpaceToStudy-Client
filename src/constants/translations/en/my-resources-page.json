@@ -3,7 +3,8 @@
     "lessons": "Lessons",
     "quizzes": "Quizzes",
     "questions": "Questions",
-    "attachments": "Attachments"
+    "attachments": "Attachments",
+    "categories": "Categories"
   },
   "lessons": {
     "addBtn": "New lesson",

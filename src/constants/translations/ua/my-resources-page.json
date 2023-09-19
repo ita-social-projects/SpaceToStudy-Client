@@ -3,7 +3,8 @@
     "lessons": "Уроки",
     "tests": "Тести",
     "questions": "Запитання",
-    "attachments": "Вкладення"
+    "attachments": "Вкладення",
+    "categories": "Категорії"
   },
   "lessons": {
     "addBtn": "Новий урок",
