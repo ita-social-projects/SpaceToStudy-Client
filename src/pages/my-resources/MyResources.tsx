@@ -26,6 +26,7 @@ const MyResources = () => {
         handleClick={handleClick}
         tabsData={tabsData}
       />
+      <h3>Content</h3>
       {tabContent}
     </PageWrapper>
   )
