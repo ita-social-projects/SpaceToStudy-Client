@@ -1,4 +1,4 @@
-import { useState, FC } from 'react'
+import { useState, FC, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
@@ -11,20 +11,41 @@ import { styles } from '~/components/icons-with-counter/IconsWithCounter.style'
 
 interface IconsWithCounterProps {
   maxValue: number
+  onFilteredIndexChange: (index: number) => void
 }
 
-const IconsWithCounter: FC<IconsWithCounterProps> = ({ maxValue }) => {
+const IconsWithCounter: FC<IconsWithCounterProps> = ({
+  maxValue,
+  onFilteredIndexChange
+}) => {
   const [possibleValue, setPossibleValue] = useState<number>(0)
+
   const { t } = useTranslation()
 
+  useEffect(() => {
+    if (!maxValue) {
+      setPossibleValue(0)
+    }
+
+    onFilteredIndexChange(possibleValue)
+  }, [onFilteredIndexChange, maxValue, possibleValue])
+
   const handleIncrement = () => {
-    setPossibleValue((prev) => (prev % maxValue) + 1)
+    if (maxValue !== 0) {
+      setPossibleValue((prev) => {
+        const newValue = (prev + 1) % maxValue
+        return newValue
+      })
+    }
   }
 
   const handleDecrement = () => {
-    possibleValue > 1
-      ? setPossibleValue((prev) => prev - 1)
-      : setPossibleValue(maxValue)
+    if (maxValue !== 0) {
+      setPossibleValue((prev) => {
+        const newValue = prev > 0 ? prev - 1 : maxValue - 1
+        return newValue
+      })
+    }
   }
 
   return (
@@ -33,7 +54,9 @@ const IconsWithCounter: FC<IconsWithCounterProps> = ({ maxValue }) => {
         <KeyboardArrowUpIcon />
       </IconButton>
       <Typography sx={styles.typography}>
-        {possibleValue} {t('common.of')} {maxValue}
+        {maxValue
+          ? `${possibleValue + 1} ${t('common.of')} ${maxValue}`
+          : `${possibleValue}  ${t('common.of')} ${maxValue}`}
       </Typography>
       <IconButton data-testid='IconDown' onClick={handleDecrement}>
         <KeyboardArrowDownIcon />
