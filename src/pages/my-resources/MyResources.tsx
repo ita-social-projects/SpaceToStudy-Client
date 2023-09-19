@@ -35,6 +35,7 @@ const MyResources = () => {
   return (
     <PageWrapper>
       <Box sx={styles.tabs}>{tabs}</Box>
+      <h4>Content</h4>
       {tabContent}
     </PageWrapper>
   )
