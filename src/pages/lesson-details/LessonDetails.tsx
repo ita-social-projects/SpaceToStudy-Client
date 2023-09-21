@@ -11,10 +11,7 @@ import TitleWithDescription from '~/components/title-with-description/TitleWithD
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import useAxios from '~/hooks/use-axios'
 import { ResourceService } from '~/services/resource-service'
-import {
-  attachmentsMock,
-  defaultResponse
-} from '~/pages/lesson-details/LessonDetails.constants'
+import { defaultResponse } from '~/pages/lesson-details/LessonDetails.constants'
 import Accordions from '~/components/accordion/Accordions'
 import IconExtensionWithTitle from '~/components/icon-extension-with-title/IconExtensionWithTitle'
 import AppButton from '~/components/app-button/AppButton'
@@ -67,7 +64,7 @@ const LessonDetails = () => {
     navigate(createUrlPath(authRoutes.myResources.editLesson.path, id))
   }
 
-  const attachmentsList = attachmentsMock.map((attachment) => (
+  const attachmentsList = response.attachments.map((attachment) => (
     <Box key={attachment.size} sx={styles.attachment}>
       <IconExtensionWithTitle
         size={attachment.size}
