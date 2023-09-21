@@ -4,11 +4,13 @@ import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined'
 import AttachFileIcon from '@mui/icons-material/AttachFile'
 import NoteAltOutlinedIcon from '@mui/icons-material/NoteAltOutlined'
 import QuizOutlinedIcon from '@mui/icons-material/QuizOutlined'
+import CategoryIcon from '@mui/icons-material/Category'
 
 import AttachmentsContainer from '~/containers/my-resources/attachments-container/AttachmentsContainer'
 import QuizzesContainer from '~/containers/my-quizzes/QuizzesContainer'
 import LessonsContainer from '~/containers/my-resources/lessons-container/LessonsContainer'
 import QuestionsContainer from '~/containers/my-resources/questions-container/QuestionsContainer'
+import CategoriesContainer from '~/containers/my-resources/categories-container/CategoriesContainer'
 
 interface TabsData {
   [key: string]: {
@@ -37,5 +39,10 @@ export const tabsData: TabsData = {
     title: 'myResourcesPage.tabs.attachments',
     content: <AttachmentsContainer />,
     icon: <AttachFileIcon />
+  },
+  categories: {
+    title: 'myResourcesPage.tabs.categories',
+    content: <CategoriesContainer />,
+    icon: <CategoryIcon />
   }
 }
