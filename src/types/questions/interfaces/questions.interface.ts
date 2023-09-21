@@ -8,8 +8,10 @@ export interface Answer {
 export interface Question extends CommonEntityFields {
   title: string
   text: string
-  items: Omit<Answer, 'id'>[]
+  answers: Omit<Answer, 'id'>[]
   author: Pick<UserResponse, '_id'>
+  type: string //!add enum
+  category: { _id: string; name: string } //! pick from interface
 }
 export interface QuestionCategory {
   name: string

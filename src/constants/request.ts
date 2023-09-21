@@ -59,6 +59,9 @@ export const URLs = {
     questions: {
       get: '/questions',
       delete: '/questions'
+    },
+    resourcesCategories: {
+      getNames: '/resources-categories/names'
     }
   },
   messages: {

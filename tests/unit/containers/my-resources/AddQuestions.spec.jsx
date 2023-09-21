@@ -1,9 +1,9 @@
-import { screen } from '@testing-library/react'
+import { fireEvent, screen } from '@testing-library/react'
 
-import QuestionsContainer from '~/containers/my-resources/questions-container/QuestionsContainer'
+import AddQuestions from '~/containers/my-resources/add-questions/AddQuestions'
 
-import { URLs } from '~/constants/request'
 import { mockAxiosClient, renderWithProviders } from '~tests/test-utils'
+import { URLs } from '~/constants/request'
 
 const questionMock = {
   _id: '64fb2c33eba89699411d22bb',
@@ -31,28 +31,35 @@ const questionResponseMock = {
   items: responseItemsMock
 }
 
-describe('QuestionsContainer test', () => {
+describe('AddQuestions', () => {
   beforeEach(() => {
     mockAxiosClient
       .onGet(URLs.resources.questions.get)
       .reply(200, questionResponseMock)
-    renderWithProviders(<QuestionsContainer />)
+    renderWithProviders(<AddQuestions />)
   })
 
   afterEach(() => {
     vi.clearAllMocks()
   })
 
-  it('should render "New question" button', () => {
-    const addBtn = screen.getByText('myResourcesPage.questions.addBtn')
+  it('should render title', () => {
+    const title = screen.getByText('myResourcesPage.questions.add')
 
-    expect(addBtn).toBeInTheDocument()
-  })
-  it('should render table with questions', () => {
-    const columnLabel = screen.getByText('myResourcesPage.questions.title')
-    const questionTitle = screen.getByText(responseItemsMock[5].title)
+    expect(title).toBeInTheDocument()
+  }),
+    it('should filter questions', async () => {
+      const placeholder = screen.getByPlaceholderText('common.search')
 
-    expect(columnLabel).toBeInTheDocument()
-    expect(questionTitle).toBeInTheDocument()
-  })
+      expect(placeholder).toBeInTheDocument()
+
+      fireEvent.click(placeholder)
+      fireEvent.change(placeholder, {
+        target: { value: responseItemsMock[1].title }
+      })
+
+      const filteredQuestionsCount = screen.getAllByRole('row').length - 2
+
+      expect(filteredQuestionsCount).toBe(1)
+    })
 })

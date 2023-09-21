@@ -19,7 +19,7 @@
   },
   "attachments": {
     "addBtn": "Add Attachment",
-    "addFromAttachments": "Add files from your Attachments",
+    "add": "Add files from your Attachments",
     "file": "File",
     "size": "Size",
     "lastUpdate": "Last update",
@@ -44,6 +44,7 @@
   },
   "questions": {
     "addBtn": "New question",
+    "add": "Add Questions",
     "title": "Title",
     "category": "Category",
     "updated": "Last updates",

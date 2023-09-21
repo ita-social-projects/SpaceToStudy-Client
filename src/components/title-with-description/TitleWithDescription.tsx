@@ -1,6 +1,10 @@
 import { ReactElement, ReactNode } from 'react'
-import { Box, Typography, SxProps } from '@mui/material'
+import { SxProps } from '@mui/material'
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+
 import { styles } from '~/components/title-with-description/TitleWithDescription.styles'
+import { ComponentEnum } from '~/types'
 
 interface TitleWithDescriptionProps {
   title: string | ReactElement
@@ -20,7 +24,7 @@ const TitleWithDescription = ({
   return (
     <Box sx={style.wrapper}>
       <Typography sx={style.title}>{title}</Typography>
-      <Typography component={'span'} sx={style.description}>
+      <Typography component={ComponentEnum.Span} sx={style.description}>
         {description}
       </Typography>
     </Box>

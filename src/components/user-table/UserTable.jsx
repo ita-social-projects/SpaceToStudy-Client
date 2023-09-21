@@ -30,7 +30,7 @@ const UserTable = ({
     status: 'all',
     role
   })
-  const select = useSelect()
+  const select = useSelect({})
   const sort = useSort({ initialSort })
   const filter = useFilter({ initialFilters })
   const pagination = usePagination({ itemsCount })

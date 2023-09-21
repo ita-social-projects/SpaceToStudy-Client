@@ -104,7 +104,7 @@ const LessonsContainer = () => {
       <AddResourceWithInput
         btnText={'myResourcesPage.lessons.addBtn'}
         fetchData={fetchData}
-        link={'#'}
+        link={authRoutes.myResources.newLesson.path}
         searchRef={searchTitle}
       />
       {loading ? (
