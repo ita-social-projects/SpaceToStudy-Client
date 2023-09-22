@@ -57,7 +57,8 @@ export const URLs = {
       delete: '/attachments'
     },
     questions: {
-      get: '/questions'
+      get: '/questions',
+      delete: '/questions'
     }
   },
   messages: {
