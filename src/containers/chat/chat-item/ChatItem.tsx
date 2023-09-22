@@ -37,9 +37,9 @@ const ChatItem: FC<ItemOfChatProps> = ({
     [chat, userId]
   )
 
-  const firstName = userToSpeak?.user?.firstName
-  const lastName = userToSpeak?.user?.lastName
-  const photo = userToSpeak?.user?.photo
+  const firstName = userToSpeak?.user.firstName
+  const lastName = userToSpeak?.user.lastName
+  const photo = userToSpeak?.user.photo
   const { text, author, updatedAt } = chat.latestMessage || {
     text: t('chatPage.message.noMessages'),
     author: '',
@@ -66,7 +66,7 @@ const ChatItem: FC<ItemOfChatProps> = ({
       isCurrentDayHours: true
     })
 
-  const isCurrentUser = author && userId === author._id && (
+  const isCurrentUser = userId === author._id && (
     <Typography sx={styles.prefix}>{t('chatPage.message.you')}:</Typography>
   )
 

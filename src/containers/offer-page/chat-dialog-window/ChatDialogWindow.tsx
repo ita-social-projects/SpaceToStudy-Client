@@ -17,6 +17,7 @@ import Typography from '@mui/material/Typography'
 import ChatDate from '~/containers/chat/chat-date/ChatDate'
 import ChatTextArea from '~/containers/chat/chat-text-area/ChatTextArea'
 import { useChatContext } from '~/context/chat-context'
+import { useSnackBarContext } from '~/context/snackbar-context'
 import useAxios from '~/hooks/use-axios'
 import Message from '~/components/message/Message'
 import UserProfileInfo from '~/components/user-profile-info/UserProfileInfo'
@@ -25,8 +26,13 @@ import { messageService } from '~/services/message-service'
 import { chatService } from '~/services/chat-service'
 import { getGroupedByDate, getIsNewDay } from '~/utils/helper-functions'
 
-import { ChatInfo, MessageInterface } from '~/types'
-import { defaultResponses } from '~/constants'
+import {
+  ChatInfo,
+  ChatResponse,
+  ErrorResponse,
+  MessageInterface
+} from '~/types'
+import { defaultResponses, snackbarVariants } from '~/constants'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { styles } from '~/containers/offer-page/chat-dialog-window/ChatDialogWindow.styles'
 import { questions } from '~/containers/offer-page/chat-dialog-window/ChatDialogWindow.constants'
@@ -37,7 +43,7 @@ interface ChatDialogWindow {
 
 const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
   const [textAreaValue, setTextAreaValue] = useState<string>('')
-  const [creatingChat, setCreatingChat] = useState<boolean>(false)
+  const { setAlert } = useSnackBarContext()
   const { t } = useTranslation()
   const scrollRef = useRef<HTMLDivElement | null>(null)
   const { setChatInfo } = useChatContext()
@@ -66,6 +72,17 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
     fetchOnMount: false
   })
 
+  const {
+    loading: chatIsCreating,
+    fetchData: createNewChat,
+    response: createdChat
+  } = useAxios({
+    service: createChat,
+    fetchOnMount: false,
+    defaultResponse: defaultResponses.object,
+    onResponseError: handleErrorResponse
+  })
+
   useEffect(() => {
     chatInfo.chatId && void fetchData({ chatId: chatInfo.chatId })
   }, [chatInfo.chatId, fetchData])
@@ -75,6 +92,33 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
       scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight })
     }
   }, [chatInfo.chatId, messagesLoad])
+
+  useEffect(() => {
+    if (createdChat._id) openChatInNewTab(createdChat._id as string)
+  }, [createdChat])
+
+  const closeChatWindow = () => setChatInfo(null)
+
+  const openChatInNewTab = (chatId: Pick<ChatResponse, '_id'> | string) => {
+    localStorage.setItem('currentChatId', chatId as string)
+    window.open(authRoutes.chat.path, '_blank', 'noopener noreferrer')
+  }
+
+  function handleErrorResponse(errorResponse: ErrorResponse) {
+    setAlert({
+      severity: snackbarVariants.error,
+      message: errorResponse ? `${errorResponse.message}` : ''
+    })
+  }
+
+  const handleCreateNewChat = async () => await createNewChat()
+
+  const handleRedirectToChat = async () => {
+    if (!chatInfo.chatId) {
+      await handleCreateNewChat()
+    } else openChatInNewTab(chatInfo.chatId)
+    closeChatWindow()
+  }
 
   const groupedMessages = getGroupedByDate(messages, getIsNewDay)
 
@@ -97,7 +141,7 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
     messagesListWithDate
   )
 
-  const questionsList = creatingChat ? (
+  const questionsList = chatIsCreating ? (
     <Box sx={styles.chatCreateBox}>
       <Loader size={20} />
       <Typography sx={styles.question}>{t('chatPage.creating')}</Typography>
@@ -109,27 +153,6 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
       </Typography>
     ))
   )
-
-  const closeChatWindow = () => setChatInfo(null)
-
-  const openChatInNewTab = (chatId: unknown) => {
-    localStorage.setItem('currentChatId', chatId as string)
-    window.open(authRoutes.chat.path, '_blank', 'noopener noreferrer')
-  }
-
-  const handleCreateNewChat = async () => {
-    setCreatingChat(true)
-    const newChat = await createChat()
-    openChatInNewTab(newChat.data._id)
-    setCreatingChat(false)
-  }
-
-  const handleRedirectToChat = async () => {
-    if (!chatInfo.chatId) {
-      await handleCreateNewChat()
-    } else openChatInNewTab(chatInfo.chatId)
-    closeChatWindow()
-  }
 
   return (
     <Box sx={styles.root}>
@@ -166,7 +189,7 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
         ) : (
           <Box sx={styles.firstQuestions}>
             <Typography sx={styles.subtitle}>
-              {!creatingChat && t('chatPage.youCanAsk')}
+              {!chatIsCreating && t('chatPage.youCanAsk')}
             </Typography>
             {questionsList}
           </Box>
