@@ -1,16 +1,15 @@
+import palette from '~/styles/app-theme/app.pallete'
 import { TypographyVariantEnum, VisibilityEnum } from '~/types'
+
+const input = { width: '100%', borderColor: 'primary.200', borderRadius: '6px' }
 
 export const styles = {
   root: { width: '65vw', p: '20px' },
   title: { mb: '32px', typography: TypographyVariantEnum.H4 },
   searchIcon: { color: 'primary.700' },
-  input: {
-    maxWidth: '250px',
-    width: '100%',
-    border: '1px solid',
-    borderColor: 'primary.500',
-    borderRadius: '6px'
-  },
+  titleInput: { maxWidth: '350px', border: '1px solid', ...input },
+  categoryInput: { maxWidth: '200px', ...input },
+  categoryInputLabel: { color: palette.primary[400] },
   tableWrapper: (hasItems: boolean) => ({
     root: { my: '16px', height: '50vh' },
     tableContainer: {

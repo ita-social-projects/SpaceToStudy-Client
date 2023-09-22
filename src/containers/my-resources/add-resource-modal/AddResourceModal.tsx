@@ -69,7 +69,7 @@ const AddResourceModal = <T extends TableItem>({
           onChange={handleInputChange}
           onClear={handleInputReset}
           placeholder={t('common.search')}
-          sx={styles.input}
+          sx={styles.titleInput}
           value={inputValue}
         />
         {isCategoryFilter && (
@@ -78,9 +78,10 @@ const AddResourceModal = <T extends TableItem>({
             freeSolo
             onChange={handleCategoryChange}
             service={ResourceService.getResourcesCategoriesNames}
-            sx={styles.input}
+            sx={styles.categoryInput}
             textFieldProps={{
-              label: t('myResourcesPage.questions.category')
+              label: t('myResourcesPage.questions.category'),
+              InputLabelProps: { style: styles.categoryInputLabel }
             }}
             value={categoryValue}
           />
