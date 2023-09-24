@@ -11,7 +11,12 @@ import EnhancedTable, {
 } from '~/components/enhanced-table/EnhancedTable'
 
 import { snackbarVariants } from '~/constants'
-import { ErrorResponse, TableItem, ResourcesTableData } from '~/types'
+import {
+  ErrorResponse,
+  TableItem,
+  ResourcesTableData,
+  TableRowAction
+} from '~/types'
 import { roundedBorderTable } from '~/containers/my-cooperations/cooperations-container/CooperationContainer.styles'
 
 interface MyResourcesTableInterface<T>
@@ -19,7 +24,10 @@ interface MyResourcesTableInterface<T>
   resource: string
   itemsPerPage: number
   data: ResourcesTableData<T>
-  actions: { onEdit: (id: string) => void }
+  actions: {
+    onEdit: (id: string) => void
+    onDuplicate?: (id: string) => void
+  }
   services: { deleteService: (id?: string) => Promise<AxiosResponse> }
   pagination: PaginationProps
 }
@@ -39,7 +47,7 @@ const MyResourcesTable = <T extends TableItem>({
 
   const { page, onChange } = pagination
   const { response, getData } = data
-  const { onEdit } = actions
+  const { onEdit, onDuplicate } = actions
 
   const onDeleteError = (error: ErrorResponse) => {
     setAlert({
@@ -78,7 +86,7 @@ const MyResourcesTable = <T extends TableItem>({
     })
   }
 
-  const rowActions = [
+  const rowActions: TableRowAction[] = [
     {
       label: t('common.edit'),
       func: onEdit
@@ -86,8 +94,12 @@ const MyResourcesTable = <T extends TableItem>({
     {
       label: t('common.delete'),
       func: onDelete
+    },
+    onDuplicate && {
+      label: t('common.duplicate'),
+      func: onDuplicate
     }
-  ]
+  ].filter(Boolean) as TableRowAction[]
 
   return (
     <>

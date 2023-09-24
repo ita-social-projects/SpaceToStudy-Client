@@ -58,7 +58,8 @@ export const URLs = {
     },
     questions: {
       get: '/questions',
-      delete: '/questions'
+      delete: '/questions',
+      post: '/questions'
     },
     resourcesCategories: {
       get: '/resources-categories',
