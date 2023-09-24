@@ -47,32 +47,31 @@ const QuestionsList: FC<QuestionsListProps> = ({ items, setItems }) => {
     setItems(reorderedItems)
   }
 
+  const questionsList = items.map((item, i) => (
+    <Draggable
+      draggableId={item.question._id}
+      index={i}
+      key={item.question._id}
+    >
+      {(provided: DraggableProvided, snapshot: DraggableStateSnapshot) => (
+        <Box
+          ref={provided.innerRef}
+          sx={styles.question(snapshot.isDragging)}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+        >
+          <Question {...item} />
+        </Box>
+      )}
+    </Draggable>
+  ))
+
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId='draggable'>
         {(provided: DroppableProvided) => (
           <Box {...provided.droppableProps} ref={provided.innerRef}>
-            {items.map((item, i) => (
-              <Draggable
-                draggableId={item.question._id}
-                index={i}
-                key={item.question._id}
-              >
-                {(
-                  provided: DraggableProvided,
-                  snapshot: DraggableStateSnapshot
-                ) => (
-                  <Box
-                    ref={provided.innerRef}
-                    sx={styles.question(snapshot.isDragging)}
-                    {...provided.draggableProps}
-                    {...provided.dragHandleProps}
-                  >
-                    <Question {...item} />
-                  </Box>
-                )}
-              </Draggable>
-            ))}
+            {questionsList}
           </Box>
         )}
       </Droppable>
