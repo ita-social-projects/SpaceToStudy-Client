@@ -1,4 +1,4 @@
-import { ChangeEvent, SyntheticEvent, useState } from 'react'
+import { ChangeEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import SearchIcon from '@mui/icons-material/Search'
 import Box from '@mui/material/Box'
@@ -8,22 +8,24 @@ import { ResourceService } from '~/services/resource-service'
 import { useModalContext } from '~/context/modal-context'
 import AppButton from '~/components/app-button/AppButton'
 import AddDocuments from '~/containers/add-documents/AddDocuments'
-import AsyncAutocomplete from '~/components/async-autocomlete/AsyncAutocomplete'
 import EnhancedTable, {
   EnhancedTableProps
 } from '~/components/enhanced-table/EnhancedTable'
 import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
+import FilterSelector from '~/containers/my-resources/add-resource-modal/FilterSelector'
 
 import { styles } from '~/containers/my-resources/add-resource-modal/AddResourceModal.styles'
 import { ButtonVariantEnum, TableItem } from '~/types'
 
 interface AddResourceModalProps<T>
   extends Omit<EnhancedTableProps<T, undefined>, 'data'> {
-  data: { loading: boolean; getItems: (title: string, category: string) => T[] }
+  data: {
+    loading: boolean
+    getItems: (title: string, selectedItems: string[]) => T[]
+  }
   selectedRows: T[]
   onAddItems: () => void
   uploadItem?: (data: FormData) => Promise<void>
-  isCategoryFilter?: boolean
   resource: string
 }
 
@@ -32,25 +34,20 @@ const AddResourceModal = <T extends TableItem>({
   selectedRows,
   onAddItems,
   uploadItem,
-  isCategoryFilter,
   resource,
   ...props
 }: AddResourceModalProps<T>) => {
   const { t } = useTranslation()
   const { closeModal } = useModalContext()
   const [inputValue, setInputValue] = useState<string>('')
-  const [categoryValue, setCategoryValue] = useState<string>('')
+  const [selectedItems, setSelectedItems] = useState<string[]>([])
 
   const formData = new FormData()
   const { loading, getItems } = data
-  const items = getItems(inputValue, categoryValue)
+  const items = getItems(inputValue, selectedItems)
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value)
-  }
-
-  const handleCategoryChange = (_: SyntheticEvent, value: string | null) => {
-    setCategoryValue(value ?? '')
   }
 
   const handleInputReset = () => {
@@ -63,7 +60,7 @@ const AddResourceModal = <T extends TableItem>({
         {t(`myResourcesPage.${resource}.add`)}
       </Typography>
 
-      <Box sx={{ display: 'flex', gap: '16px' }}>
+      <Box sx={styles.inputWithFilter}>
         <InputWithIcon
           endAdornment={<SearchIcon sx={styles.searchIcon} />}
           onChange={handleInputChange}
@@ -72,20 +69,12 @@ const AddResourceModal = <T extends TableItem>({
           sx={styles.titleInput}
           value={inputValue}
         />
-        {isCategoryFilter && (
-          <AsyncAutocomplete
-            fetchOnFocus
-            freeSolo
-            onChange={handleCategoryChange}
-            service={ResourceService.getResourcesCategoriesNames}
-            sx={styles.categoryInput}
-            textFieldProps={{
-              label: t('myResourcesPage.questions.category'),
-              InputLabelProps: { style: styles.categoryInputLabel }
-            }}
-            value={categoryValue}
-          />
-        )}
+        <FilterSelector
+          selectedItems={selectedItems}
+          service={ResourceService.getResourcesCategoriesNames}
+          setSelectedItems={setSelectedItems}
+          title={t('myResourcesPage.questions.category')}
+        />
       </Box>
 
       <EnhancedTable

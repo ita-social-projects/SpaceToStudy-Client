@@ -81,12 +81,14 @@ const AddQuestions: FC<AddQuestionsProps> = ({
   }
 
   const getItems = useCallback(
-    (title: string, category: string) => {
+    (title: string, selectedCategories: string[]) => {
       return response.items.filter((item) => {
         const titleMatch = item.title
           .toLocaleLowerCase()
           .includes(title.toLocaleLowerCase())
-        const categoryMatch = !category || item.category.name === category
+        const categoryMatch =
+          selectedCategories.length === 0 ||
+          selectedCategories.includes(item.category.name)
 
         return titleMatch && categoryMatch
       })
@@ -100,7 +102,6 @@ const AddQuestions: FC<AddQuestionsProps> = ({
     select,
     selectedRows,
     isSelection: true,
-    isCategoryFilter: true,
     onAddItems,
     data: { loading, getItems },
     onRowClick,
