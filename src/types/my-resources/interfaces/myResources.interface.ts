@@ -8,6 +8,11 @@ export interface Lesson extends CommonEntityFields {
   attachments: Attachment[]
 }
 
+export interface Categories extends CommonEntityFields {
+  name: string
+  author: string
+}
+
 export interface GetResourcesParams extends Partial<RequestParams> {
   title?: string
   fileName?: string

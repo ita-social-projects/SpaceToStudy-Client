@@ -61,8 +61,9 @@ export const URLs = {
       delete: '/questions'
     },
     resourcesCategories: {
+      get: '/resources-categories',
       getNames: '/resources-categories/names'
-    }
+    },
   },
   messages: {
     get: '/messages',
