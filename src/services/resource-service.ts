@@ -53,5 +53,7 @@ export const ResourceService = {
     params?: GetResourcesParams
   ): Promise<AxiosResponse<ItemsWithCount<Question>>> => {
     return axiosClient.get(URLs.resources.questions.get, { params })
-  }
+  },
+  deleteQuestion: async (id: string): Promise<AxiosResponse> =>
+    await axiosClient.delete(createUrlPath(URLs.resources.questions.delete, id))
 }
