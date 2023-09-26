@@ -1,4 +1,9 @@
-import { CommonEntityFields, UserResponse } from '~/types'
+import {
+  CategoryInterface,
+  CommonEntityFields,
+  QuestionTypesEnum,
+  UserResponse
+} from '~/types'
 export interface Answer {
   id: string
   text: string
@@ -10,8 +15,8 @@ export interface Question extends CommonEntityFields {
   text: string
   answers: Omit<Answer, 'id'>[]
   author: Pick<UserResponse, '_id'>
-  type: string //!add enum
-  category: { _id: string; name: string } //! pick from interface
+  type: QuestionTypesEnum
+  category: Pick<CategoryInterface, '_id' | 'name'>
 }
 export interface QuestionCategory {
   name: string
