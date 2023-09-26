@@ -9,9 +9,9 @@ export const columns: TableColumn<Categories>[] = [
   {
     label: 'myResourcesPage.categories.title',
     field: 'title',
-    calculatedCellValue: (item: Categories) => {
-      return <Typography sx={styles.title}>{item.name}</Typography>
-    }
+    calculatedCellValue: (item: Categories) => (
+      <Typography sx={styles.title}>{item.name}</Typography>
+    )
   },
   {
     label: 'myResourcesPage.categories.updated',
@@ -23,7 +23,7 @@ export const columns: TableColumn<Categories>[] = [
 ]
 
 export const removeColumnRules: RemoveColumnRules<Categories> = {
-  tablet: ['myOffersPage.tableHeaders.updated']
+  tablet: ['myResourcesPage.categories.updated']
 }
 
 export const initialSort = { order: SortEnum.Desc, orderBy: 'updatedAt' }
