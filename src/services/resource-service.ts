@@ -11,7 +11,8 @@ import {
   Lesson,
   NewLesson,
   UpdateAttachmentParams,
-  Question
+  Question,
+  Categories
 } from '~/types'
 import { createUrlPath } from '~/utils/helper-functions'
 
@@ -58,6 +59,11 @@ export const ResourceService = {
     await axiosClient.delete(
       createUrlPath(URLs.resources.questions.delete, id)
     ),
+  getResourcesCategories: (
+    params?: GetResourcesParams
+  ): Promise<AxiosResponse<ItemsWithCount<Categories>>> => {
+    return axiosClient.get(URLs.resources.resourcesCategories.get, { params })
+  },
   getResourcesCategoriesNames: (): Promise<AxiosResponse<string[]>> =>
     axiosClient.get(URLs.resources.resourcesCategories.getNames)
 }
