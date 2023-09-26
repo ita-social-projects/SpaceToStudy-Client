@@ -7,10 +7,16 @@ export interface Answer {
 
 export interface Question extends CommonEntityFields {
   title: string
+  text: string
   items: Omit<Answer, 'id'>[]
   author: Pick<UserResponse, '_id'>
 }
 export interface QuestionCategory {
   name: string
   _id: string
+}
+
+export interface QuestionWithCategory {
+  question: Question
+  category: QuestionCategory
 }
