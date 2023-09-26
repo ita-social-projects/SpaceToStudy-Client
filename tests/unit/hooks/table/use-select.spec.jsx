@@ -13,7 +13,7 @@ describe('Use select custom hook', () => {
   let result
 
   beforeEach(() => {
-    const { result: renderedHookResult } = renderHook(() => useSelect())
+    const { result: renderedHookResult } = renderHook(() => useSelect({}))
     result = renderedHookResult
   })
 

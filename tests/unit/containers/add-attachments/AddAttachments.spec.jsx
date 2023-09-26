@@ -40,9 +40,7 @@ describe('AddAttachments', () => {
   })
 
   it('should render the component', () => {
-    const addAttachments = screen.getByText(
-      'myResourcesPage.attachments.addFromAttachments'
-    )
+    const addAttachments = screen.getByText('myResourcesPage.attachments.add')
 
     expect(addAttachments).toBeInTheDocument()
   }),

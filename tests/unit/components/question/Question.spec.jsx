@@ -4,7 +4,7 @@ import Question from '~/components/question/Question'
 const mockedQuestion = {
   question: {
     title: 'About Philosophy',
-    items: [
+    answers: [
       {
         id: '1',
         text: 'Buddha Shakyamuni',

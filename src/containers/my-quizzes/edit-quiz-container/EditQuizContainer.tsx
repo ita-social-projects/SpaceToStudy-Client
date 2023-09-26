@@ -6,6 +6,8 @@ import Divider from '@mui/material/Divider'
 import EditIcon from '@mui/icons-material/Edit'
 import AddIcon from '@mui/icons-material/Add'
 
+import { useModalContext } from '~/context/modal-context'
+import AddQuestions from '~/containers/my-resources/add-questions/AddQuestions'
 import AppButton from '~/components/app-button/AppButton'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
@@ -16,14 +18,17 @@ import {
   ButtonTypeEnum,
   ButtonVariantEnum,
   ComponentEnum,
+  Question,
   SizeEnum,
   TextFieldVariantEnum
 } from '~/types'
 
 const EditQuizContainer = () => {
   const { t } = useTranslation()
+  const { openModal } = useModalContext()
   const [title, setTitle] = useState<string>('')
   const [description, setDescription] = useState<string>('')
+  const [questions, setQuestions] = useState<Question[]>([])
 
   const handleTitleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -35,6 +40,18 @@ const EditQuizContainer = () => {
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setDescription(e.currentTarget.value)
+  }
+
+  const onAddQuestions = (attachments: Question[]) => {
+    setQuestions(attachments)
+  }
+
+  const onOpenAddQuestionsModal = () => {
+    openModal({
+      component: (
+        <AddQuestions onAddQuestions={onAddQuestions} questions={questions} />
+      )
+    })
   }
 
   return (
@@ -68,6 +85,7 @@ const EditQuizContainer = () => {
             <EditIcon fontSize={SizeEnum.Small} />
           </AppButton>
           <AppButton
+            onClick={onOpenAddQuestionsModal}
             size={SizeEnum.ExtraLarge}
             variant={ButtonVariantEnum.Tonal}
           >

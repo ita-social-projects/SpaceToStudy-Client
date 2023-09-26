@@ -30,6 +30,7 @@
   "typeError": "Неправильний тип файлу. Дозволяються лише файли .pdf/.jpg/.jpeg",
   "allFilesSizeError": "Помилка розміру всіх файлів",
   "fileSizeError": "Size for one file cannot be more than 10 MB.",
+  "noItems": "Елементів не знайдено",
   "labels": {
     "sendMessage": "Надіслати повідомлення",
     "viewDetails": "Переглянути деталі",

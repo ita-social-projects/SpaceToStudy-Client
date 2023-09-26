@@ -1,19 +1,12 @@
-import { ChangeEvent, FC, useCallback, useMemo, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import SearchIcon from '@mui/icons-material/Search'
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
+import { FC, useCallback, useState } from 'react'
 
-import AddDocuments from '~/containers/add-documents/AddDocuments'
-import AppButton from '~/components/app-button/AppButton'
-import EnhancedTable from '~/components/enhanced-table/EnhancedTable'
-import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
 import { useModalContext } from '~/context/modal-context'
+import { useSnackBarContext } from '~/context/snackbar-context'
+import { ResourceService } from '~/services/resource-service'
 import useSort from '~/hooks/table/use-sort'
 import useAxios from '~/hooks/use-axios'
 import useBreakpoints from '~/hooks/use-breakpoints'
-import { useSnackBarContext } from '~/context/snackbar-context'
-import { ResourceService } from '~/services/resource-service'
+import AddResourceModal from '~/containers/my-resources/add-resource-modal/AddResourceModal'
 
 import {
   columns,
@@ -22,13 +15,7 @@ import {
 } from '~/containers/add-attachments/AddAttachments.constants'
 import { ajustColumns } from '~/utils/helper-functions'
 import { defaultResponses, snackbarVariants } from '~/constants'
-import { styles } from '~/containers/add-attachments/AddAttachments.styles'
-import {
-  Attachment,
-  ButtonVariantEnum,
-  ErrorResponse,
-  ItemsWithCount
-} from '~/types'
+import { Attachment, ErrorResponse, ItemsWithCount } from '~/types'
 interface AddAttachmentsProps {
   attachments: Attachment[]
   onAddAttachments: (attachments: Attachment[]) => void
@@ -38,14 +25,10 @@ const AddAttachments: FC<AddAttachmentsProps> = ({
   attachments = [],
   onAddAttachments
 }) => {
-  const [inputValue, setInputValue] = useState<string>('')
-  const [selectedAttachments, setSelectedAttachments] =
-    useState<Attachment[]>(attachments)
+  const [selectedRows, setSelectedRows] = useState<Attachment[]>(attachments)
 
-  const { t } = useTranslation()
   const { closeModal } = useModalContext()
   const { setAlert } = useSnackBarContext()
-  const formData = new FormData()
 
   const breakpoints = useBreakpoints()
   const sortOptions = useSort({
@@ -76,35 +59,25 @@ const AddAttachments: FC<AddAttachmentsProps> = ({
     defaultResponse: defaultResponses.itemsWithCount
   })
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value)
-  }
-
-  const handleInputReset = () => {
-    setInputValue('')
-  }
-
-  const handleRowClick = (item: Attachment) => {
-    if (selectedAttachments.find((attachment) => attachment._id === item._id)) {
-      setSelectedAttachments((prevSelectedAttachments) =>
-        prevSelectedAttachments.filter(
-          (attachment) => attachment._id !== item._id
-        )
+  const onRowClick = (item: Attachment) => {
+    if (selectedRows.find((attachment) => attachment._id === item._id)) {
+      setSelectedRows((prevSelectedRows) =>
+        prevSelectedRows.filter((attachment) => attachment._id !== item._id)
       )
     } else {
-      setSelectedAttachments((prevSelectedAttachments) => [
+      setSelectedRows((prevSelectedAttachments) => [
         ...prevSelectedAttachments,
         item
       ])
     }
   }
 
-  const handleAddAttachments = () => {
-    onAddAttachments(selectedAttachments)
+  const onAddItems = () => {
+    onAddAttachments(selectedRows)
     closeModal()
   }
-  const filteredAttachments = useMemo(
-    () =>
+  const getItems = useCallback(
+    (inputValue: string) =>
       response.items.filter((item) => {
         const lowerCaseFileName = item.fileName.toLowerCase()
         const lowerCaseInputValue = inputValue.toLocaleLowerCase()
@@ -115,7 +88,7 @@ const AddAttachments: FC<AddAttachmentsProps> = ({
 
         return fileNameWithoutExtension.includes(lowerCaseInputValue)
       }),
-    [response.items, inputValue]
+    [response.items]
   )
 
   const createAttachments = useCallback(
@@ -137,58 +110,23 @@ const AddAttachments: FC<AddAttachmentsProps> = ({
     onResponseError: onCreateAttachmentsError
   })
 
-  const uploadFile = async (data: FormData) => {
+  const uploadItem = async (data: FormData) => {
     await fetchCreateAttachment(data)
     await fetchDataAttachments()
   }
 
-  return (
-    <Box sx={styles.root}>
-      <Typography sx={styles.title}>
-        {t('myResourcesPage.attachments.addFromAttachments')}
-      </Typography>
-      <InputWithIcon
-        endAdornment={<SearchIcon sx={styles.searchIcon} />}
-        onChange={handleInputChange}
-        onClear={handleInputReset}
-        placeholder={t('common.search')}
-        sx={styles.input}
-        value={inputValue}
-      />
-      <Box sx={styles.tableWrapper}>
-        <EnhancedTable
-          columns={columnsToShow}
-          data={{ loading, items: filteredAttachments }}
-          emptyTableKey='myResourcesPage.attachments.emptyAttachments'
-          onRowClick={handleRowClick}
-          selectedRows={selectedAttachments}
-          sort={sortOptions}
-          sx={styles.table}
-        />
-      </Box>
+  const props = {
+    columns: columnsToShow,
+    sort: sortOptions,
+    selectedRows,
+    onAddItems,
+    data: { loading, getItems },
+    onRowClick,
+    uploadItem,
+    resource: 'attachments'
+  }
 
-      <Box sx={styles.buttonsArea}>
-        <Box>
-          <AppButton
-            disabled={!selectedAttachments.length}
-            onClick={handleAddAttachments}
-            sx={styles.addButton}
-          >
-            {t('common.add')}
-          </AppButton>
-          <AppButton onClick={closeModal} variant={ButtonVariantEnum.Tonal}>
-            {t('common.cancel')}
-          </AppButton>
-        </Box>
-
-        <AddDocuments
-          buttonText={t('common.uploadNewFile')}
-          fetchData={uploadFile}
-          formData={formData}
-        />
-      </Box>
-    </Box>
-  )
+  return <AddResourceModal<Attachment> {...props} />
 }
 
 export default AddAttachments

@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react'
 
-const useSelect = () => {
-  const [selected, setSelected] = useState([])
+const useSelect = ({ initialSelect = [] }) => {
+  const [selected, setSelected] = useState(initialSelect)
 
   const clearSelected = useCallback(() => setSelected([]), [setSelected])
 

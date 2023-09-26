@@ -1,13 +1,18 @@
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
 import Typography from '@mui/material/Typography'
-import Box from '@mui/material/Box'
 
-import IconTitleDescription from '~/components/icon-title-description/IconTitleDescription'
 import AppChip from '~/components/app-chip/AppChip'
+import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 
-import { Question, RemoveColumnRules, SortEnum, TableColumn } from '~/types'
 import { getFormattedDate } from '~/utils/helper-functions'
-import { styles } from '~/containers/my-resources/questions-container/QuestionsContainer.styles'
+import {
+  ComponentEnum,
+  Question,
+  RemoveColumnRules,
+  SortEnum,
+  TableColumn
+} from '~/types'
+import { styles } from '~/containers/my-resources/add-questions/AddQuestions.styles'
 
 export const columns: TableColumn<Question>[] = [
   {
@@ -15,15 +20,18 @@ export const columns: TableColumn<Question>[] = [
     field: 'title',
     calculatedCellValue: (item: Question) => {
       return (
-        <IconTitleDescription
+        <TitleWithDescription
           description={'Which word is the antonym of "benevolent"?'}
-          icon={
-            <Box sx={styles.iconWrapper}>
-              <CheckCircleOutlineIcon />
-            </Box>
+          style={styles.titleWithDescription}
+          title={
+            <Typography
+              component={ComponentEnum.Span}
+              sx={styles.questionTitle}
+            >
+              <CheckCircleOutlineIcon sx={styles.questionIcon} />
+              {item.title}
+            </Typography>
           }
-          sx={styles.iconTitleDescription}
-          title={item.title}
         />
       )
     }
@@ -52,9 +60,3 @@ export const removeColumnRules: RemoveColumnRules<Question> = {
 }
 
 export const initialSort = { order: SortEnum.Desc, orderBy: 'updatedAt' }
-
-export const itemsLoadLimit = {
-  default: 10,
-  tablet: 8,
-  mobile: 6
-}

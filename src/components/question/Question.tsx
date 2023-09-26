@@ -60,13 +60,14 @@ const Question: FC<QuestionProps> = ({ question, category, sx = {} }) => {
       }
     }
   ]
+
   const menuItems = rowActions.map(({ label, func }) => (
     <MenuItem key={label} onClick={() => void onAction(func)}>
       {label}
     </MenuItem>
   ))
 
-  const answersList = question.items.map((answer, i) => (
+  const answersList = question.answers.map((answer, i) => (
     <Box key={answer.text} sx={styles.answer}>
       <FormControlLabel
         checked={i == 1}

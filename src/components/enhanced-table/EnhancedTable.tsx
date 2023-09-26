@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next'
 
+import { SxProps } from '@mui/material'
 import ReportIcon from '@mui/icons-material/Report'
 import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
@@ -12,6 +13,7 @@ import EnhancedTableRow from '~/components/enhanced-table/enhanced-table-row/Enh
 import FilterRow from '~/components/enhanced-table/filter-row/FilterRow'
 import Loader from '~/components/loader/Loader'
 
+import { spliceSx } from '~/utils/helper-functions'
 import { styles } from '~/components/enhanced-table/EnhancedTable.styles'
 import {
   TableColumn,
@@ -23,7 +25,7 @@ import {
   TableSort
 } from '~/types'
 
-export interface EnhancedTableProps<I, F> extends TableProps {
+export interface EnhancedTableProps<I, F> extends Omit<TableProps, 'style'> {
   columns: TableColumn<I>[]
   isSelection?: boolean
   rowActions?: TableRowAction[]
@@ -35,6 +37,10 @@ export interface EnhancedTableProps<I, F> extends TableProps {
   onRowClick?: (item: I) => void
   emptyTableKey?: string
   selectedRows?: I[]
+  style?: {
+    root?: SxProps
+    tableContainer?: SxProps
+  }
 }
 
 const EnhancedTable = <I extends TableItem, F = undefined>({
@@ -49,6 +55,7 @@ const EnhancedTable = <I extends TableItem, F = undefined>({
   data,
   emptyTableKey = 'table.noExactMatches',
   selectedRows = [],
+  style = {},
   ...props
 }: EnhancedTableProps<I, F>) => {
   const { t } = useTranslation()
@@ -69,7 +76,10 @@ const EnhancedTable = <I extends TableItem, F = undefined>({
   ))
 
   const tableBody = (
-    <TableContainer data-testid='enhance-table-container'>
+    <TableContainer
+      data-testid='enhance-table-container'
+      sx={style.tableContainer}
+    >
       <Table {...props}>
         <EnhancedTableHead
           columns={columns}
@@ -108,7 +118,7 @@ const EnhancedTable = <I extends TableItem, F = undefined>({
     tableBody
 
   return (
-    <Box sx={styles.root}>
+    <Box sx={spliceSx(styles.root, style.root)}>
       <Paper sx={styles.paper}>{tableContent}</Paper>
     </Box>
   )

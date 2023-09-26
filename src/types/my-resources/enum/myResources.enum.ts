@@ -4,3 +4,9 @@ export enum ResourcesTabsEnum {
   Questions = 'questions',
   Attachments = 'attachments'
 }
+
+export enum QuestionTypesEnum {
+  MultipleChoice = 'multipleChoice',
+  OpenAnswer = 'openAnswer',
+  OneAnswer = 'oneAnswer'
+}
