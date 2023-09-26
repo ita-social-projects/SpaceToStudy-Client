@@ -59,7 +59,7 @@ const CategoriesContainer = () => {
 
   const getCategories = useCallback(
     () =>
-      ResourceService.getCategories({
+      ResourceService.getResourcesCategories({
         limit: itemsPerPage,
         skip: (page - 1) * itemsPerPage,
         sort,
