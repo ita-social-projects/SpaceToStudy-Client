@@ -17,7 +17,7 @@ import Loader from '~/components/loader/Loader'
 import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
 
 import { defaultResponses } from '~/constants'
-import { styles } from './FilterSelector.styles'
+import { styles } from '~/components/filter-selector/FilterSelector.styles'
 import { ServiceFunction } from '~/types'
 
 interface FilterSelectorProps<T> extends Omit<MenuProps, 'open'> {

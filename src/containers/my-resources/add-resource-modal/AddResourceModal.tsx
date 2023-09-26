@@ -12,7 +12,7 @@ import EnhancedTable, {
   EnhancedTableProps
 } from '~/components/enhanced-table/EnhancedTable'
 import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
-import FilterSelector from '~/containers/my-resources/add-resource-modal/FilterSelector'
+import FilterSelector from '~/components/filter-selector/FilterSelector'
 
 import { styles } from '~/containers/my-resources/add-resource-modal/AddResourceModal.styles'
 import { ButtonVariantEnum, TableItem } from '~/types'
