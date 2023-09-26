@@ -63,6 +63,14 @@ export const styles = {
     border: `1px solid ${palette.primary[200]}`,
     mt: '8px'
   },
+  noMatches: {
+    typography: TypographyVariantEnum.Subtitle1,
+    p: '15px 25px',
+    display: 'flex',
+    alignItems: 'center',
+    columnGap: 1
+  },
   scrollableContent: { maxHeight: '216px' },
-  loader: { color: 'primary.700' }
+  loader: { color: 'primary.700' },
+  noItemsIcon: { color: 'primary.400' }
 }

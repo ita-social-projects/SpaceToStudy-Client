@@ -10,6 +10,7 @@ import Checkbox from '@mui/material/Checkbox'
 import Typography from '@mui/material/Typography'
 import IconButton from '@mui/material/IconButton'
 import ClearIcon from '@mui/icons-material/Clear'
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 
 import useAxios from '~/hooks/use-axios'
@@ -88,6 +89,15 @@ const FilterSelector = <T extends string>({
     </MenuItem>
   ))
 
+  const scrollableContent = filteredItems.length ? (
+    menuItems
+  ) : (
+    <Box sx={styles.noMatches}>
+      <ErrorOutlineIcon sx={styles.noItemsIcon} />
+      {t('common.noItems')}
+    </Box>
+  )
+
   const itemsLoad = !response.length && loading
   const chosenFiltersText = selectedItems.length
     ? selectedItems.join(', ')
@@ -139,7 +149,7 @@ const FilterSelector = <T extends string>({
           {itemsLoad ? (
             <Loader pageLoad size={20} sx={styles.loader} />
           ) : (
-            menuItems
+            scrollableContent
           )}
         </SimpleBar>
       </Menu>
