@@ -55,5 +55,9 @@ export const ResourceService = {
     return axiosClient.get(URLs.resources.questions.get, { params })
   },
   deleteQuestion: async (id: string): Promise<AxiosResponse> =>
-    await axiosClient.delete(createUrlPath(URLs.resources.questions.delete, id))
+    await axiosClient.delete(
+      createUrlPath(URLs.resources.questions.delete, id)
+    ),
+  getResourcesCategoriesNames: (): Promise<AxiosResponse<string[]>> =>
+    axiosClient.get(URLs.resources.resourcesCategories.getNames)
 }

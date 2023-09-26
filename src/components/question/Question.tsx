@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { MenuItem } from '@mui/material'
+import { MenuItem, SxProps } from '@mui/material'
 import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
 import Typography from '@mui/material/Typography'
@@ -19,30 +19,22 @@ import useMenu from '~/hooks/use-menu'
 import IconTitleDescription from '~/components/icon-title-description/IconTitleDescription'
 import AppChip from '~/components/app-chip/AppChip'
 
-import { ColorEnum, Answer, TableActionFunc, QuestionCategory } from '~/types'
+import { ColorEnum, TableActionFunc } from '~/types'
 import { styles } from '~/components/question/Question.styles'
+import { spliceSx } from '~/utils/helper-functions'
+import { QuestionWithCategory } from '~/types/questions/questions.index'
 
-interface QuestionProps {
-  title: string
-  answers: Answer[]
-  text: string
-  category: QuestionCategory
-  id: string
+interface QuestionProps extends QuestionWithCategory {
+  sx?: SxProps
 }
 
-const Question: FC<QuestionProps> = ({
-  title,
-  answers,
-  text,
-  category,
-  id
-}) => {
+const Question: FC<QuestionProps> = ({ question, category, sx = {} }) => {
   const { t } = useTranslation()
   const { openMenu, renderMenu, closeMenu } = useMenu()
 
   const onAction = async (actionFunc: TableActionFunc) => {
     closeMenu()
-    await actionFunc(id)
+    await actionFunc(question._id)
   }
   const rowActions = [
     {
@@ -68,20 +60,20 @@ const Question: FC<QuestionProps> = ({
       }
     }
   ]
+
   const menuItems = rowActions.map(({ label, func }) => (
     <MenuItem key={label} onClick={() => void onAction(func)}>
       {label}
     </MenuItem>
   ))
 
-  const answersList = answers.map((answer, i) => (
+  const answersList = question.answers.map((answer, i) => (
     <Box key={answer.text} sx={styles.answer}>
       <FormControlLabel
         checked={i == 1}
         control={<Checkbox />}
         label={answer.text}
       />
-
       {answer.isCorrect && (
         <CheckIcon sx={{ color: appPallete.basic.orientalHerbs }} />
       )}
@@ -89,7 +81,7 @@ const Question: FC<QuestionProps> = ({
   ))
 
   return (
-    <Box sx={styles.root}>
+    <Box sx={spliceSx(styles.root, sx)}>
       <Box sx={styles.dragIconWrapper}>
         <DragIndicatorIcon sx={styles.dragIcon} />
       </Box>
@@ -101,7 +93,7 @@ const Question: FC<QuestionProps> = ({
             </Box>
           }
           sx={styles.iconTitleDescription}
-          title={title}
+          title={question.title}
         />
         <IconButton onClick={openMenu}>
           <MoreVertIcon color={ColorEnum.Primary} sx={styles.moreIcon} />
@@ -114,7 +106,7 @@ const Question: FC<QuestionProps> = ({
 
       <Divider />
       <Box sx={styles.questionBody}>
-        <Typography sx={styles.questionText}>{text}</Typography>
+        <Typography sx={styles.questionText}>{question.text}</Typography>
         <Box sx={styles.answers}>{answersList}</Box>
       </Box>
     </Box>

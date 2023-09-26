@@ -13,7 +13,6 @@ const actionIcon = {
 
 export const styles = {
   root: {
-    width: '60%',
     background: 'basic.white',
     borderRadius: '6px',
     p: '24px'

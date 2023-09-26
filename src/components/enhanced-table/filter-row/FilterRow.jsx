@@ -18,7 +18,7 @@ const FilterRow = ({ columns, filter = {}, isSelection }) => {
       />
     ))
 
-  const emptyCell = isSelection && <TableCell />
+  const emptyCell = isSelection && filters && <TableCell />
 
   return (
     <TableRow>

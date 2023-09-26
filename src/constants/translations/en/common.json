@@ -35,6 +35,7 @@
   "typeError": "Wrong file type. Only .pdf/.jpg/.jpeg files are allowed.",
   "allFilesSizeError": "All files size error",
   "fileSizeError": "Розмір одного файлу не може перевищувати 10 Мб.",
+  "noItems": "No items found",
   "labels": {
     "email": "Email",
     "firstName": "First name",
