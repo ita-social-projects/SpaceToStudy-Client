@@ -63,7 +63,7 @@ export const URLs = {
     resourcesCategories: {
       get: '/resources-categories',
       getNames: '/resources-categories/names'
-    },
+    }
   },
   messages: {
     get: '/messages',
