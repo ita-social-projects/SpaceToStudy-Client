@@ -5,21 +5,20 @@ import { renderWithProviders } from '~tests/test-utils'
 
 const mockedItems = [
   {
-    question: {
-      title: 'React',
-      text: 'Does React have Virtual DOM?',
-      items: [
-        {
-          text: 'Yes',
-          isCorrect: true
-        },
-        {
-          text: 'No',
-          isCorrect: false
-        }
-      ],
-      author: 'some-author-id'
-    },
+    title: 'React',
+    text: 'Does React have Virtual DOM?',
+    _id: 'some_id',
+    answers: [
+      {
+        text: 'Yes',
+        isCorrect: true
+      },
+      {
+        text: 'No',
+        isCorrect: false
+      }
+    ],
+    author: 'some-author-id',
     category: {
       _id: 'some-category-id',
       name: 'Philosophy'
@@ -37,7 +36,7 @@ describe('QuestionsList test', () => {
   })
 
   it('should render question', () => {
-    const text = screen.getByText(mockedItems[0].question.text)
+    const text = screen.getByText(mockedItems[0].text)
 
     expect(text).toBeInTheDocument()
   })

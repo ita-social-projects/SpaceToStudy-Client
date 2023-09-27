@@ -18,12 +18,3 @@ export interface Question extends CommonEntityFields {
   type: QuestionTypesEnum
   category: Pick<CategoryInterface, '_id' | 'name'>
 }
-export interface QuestionCategory {
-  name: string
-  _id: string
-}
-
-export interface QuestionWithCategory {
-  question: Question
-  category: QuestionCategory
-}
