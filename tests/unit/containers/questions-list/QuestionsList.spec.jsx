@@ -8,7 +8,8 @@ const mockedItems = [
     question: {
       title: 'React',
       text: 'Does React have Virtual DOM?',
-      items: [
+      _id: 'some_id',
+      answers: [
         {
           text: 'Yes',
           isCorrect: true
