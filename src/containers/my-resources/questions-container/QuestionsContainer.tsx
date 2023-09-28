@@ -88,6 +88,7 @@ const QuestionsContainer = () => {
       return ResourceService.createQuestion({
         title: item?.title,
         answers: item?.answers,
+        category: item?.category,
         type: item?.type
       })
     },
@@ -136,7 +137,7 @@ const QuestionsContainer = () => {
     sort: sortOptions,
     pagination: { page, onChange: handleChangePage }
   }
-
+  console.log(response)
   return (
     <Box>
       <AddResourceWithInput

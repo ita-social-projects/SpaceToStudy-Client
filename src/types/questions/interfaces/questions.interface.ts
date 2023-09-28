@@ -1,4 +1,4 @@
-import {
+import { Category,
   CategoryInterface,
   CommonEntityFields,
   QuestionTypesEnum,
@@ -22,7 +22,7 @@ export interface Question extends CommonEntityFields {
 export interface CreatedQuestion extends CommonEntityFields {
   answers: Answer[]
   author: string
-  category: string
+  category: Category
   title: string
   type: string
 }
@@ -30,9 +30,9 @@ export interface CreatedQuestion extends CommonEntityFields {
 export interface QuestionToCreate {
   title: string
   answers: Answer[]
+  category: Category
   type: string
 }
-
 
 export interface QuestionCategory {
   name: string
