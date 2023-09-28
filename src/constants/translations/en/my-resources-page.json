@@ -50,7 +50,8 @@
     "updated": "Last updates",
     "emptyItems": "You have no questions yet",
     "confirmDeletionTitle":"Do you confirm question deletion?",
-    "successDeletion":"Question was deleted successfully"
+    "successDeletion":"Question was deleted successfully",
+    "successDuplication":"Question was successfully duplicated"
   },
   "categories": {
     "addBtn": "New category",
