@@ -7,6 +7,7 @@ import EditIcon from '@mui/icons-material/Edit'
 import AddIcon from '@mui/icons-material/Add'
 
 import { useModalContext } from '~/context/modal-context'
+import QuestionsList from '~/containers/questions-list/QuestionsList'
 import AddQuestions from '~/containers/my-resources/add-questions/AddQuestions'
 import AppButton from '~/components/app-button/AppButton'
 import AppTextField from '~/components/app-text-field/AppTextField'
@@ -76,6 +77,9 @@ const EditQuizContainer = () => {
           variant={TextFieldVariantEnum.Standard}
         />
         <Divider sx={styles.divider} />
+
+        <QuestionsList items={questions} setItems={setQuestions} />
+
         <Box sx={styles.functionalButtons}>
           <AppButton
             size={SizeEnum.ExtraLarge}

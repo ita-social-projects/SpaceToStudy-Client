@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, Dispatch, SetStateAction } from 'react'
 import {
   DragDropContext,
   Droppable,
@@ -13,19 +13,19 @@ import Box from '@mui/material/Box'
 import Question from '~/components/question/Question'
 
 import { styles } from '~/containers/questions-list/QuestionsList.styles'
-import { QuestionWithCategory } from '~/types'
+import { Question as QuestionInterface } from '~/types'
 
 interface QuestionsListProps {
-  items: QuestionWithCategory[]
-  setItems: (items: QuestionWithCategory[]) => void
+  items: QuestionInterface[]
+  setItems: Dispatch<SetStateAction<QuestionInterface[]>>
 }
 
 const QuestionsList: FC<QuestionsListProps> = ({ items, setItems }) => {
   const reorder = (
-    list: QuestionWithCategory[],
+    list: QuestionInterface[],
     startIndex: number,
     endIndex: number
-  ): QuestionWithCategory[] => {
+  ): QuestionInterface[] => {
     const result = Array.from(list)
     const [removed] = result.splice(startIndex, 1)
     result.splice(endIndex, 0, removed)
@@ -48,11 +48,7 @@ const QuestionsList: FC<QuestionsListProps> = ({ items, setItems }) => {
   }
 
   const questionsList = items.map((item, i) => (
-    <Draggable
-      draggableId={item.question._id}
-      index={i}
-      key={item.question._id}
-    >
+    <Draggable draggableId={item._id} index={i} key={item._id}>
       {(provided: DraggableProvided, snapshot: DraggableStateSnapshot) => (
         <Box
           ref={provided.innerRef}
@@ -60,7 +56,7 @@ const QuestionsList: FC<QuestionsListProps> = ({ items, setItems }) => {
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          <Question {...item} />
+          <Question question={item} setQuestions={setItems} />
         </Box>
       )}
     </Draggable>

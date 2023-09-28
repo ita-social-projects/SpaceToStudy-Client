@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { Dispatch, FC, SetStateAction } from 'react'
 import { useTranslation } from 'react-i18next'
 import { MenuItem, SxProps } from '@mui/material'
 import Box from '@mui/material/Box'
@@ -7,7 +7,6 @@ import Typography from '@mui/material/Typography'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Checkbox from '@mui/material/Checkbox'
 import CheckIcon from '@mui/icons-material/Check'
-import appPallete from '~/styles/app-theme/app.pallete'
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator'
 import IconButton from '@mui/material/IconButton'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
@@ -19,16 +18,21 @@ import useMenu from '~/hooks/use-menu'
 import IconTitleDescription from '~/components/icon-title-description/IconTitleDescription'
 import AppChip from '~/components/app-chip/AppChip'
 
-import { ColorEnum, TableActionFunc } from '~/types'
+import {
+  ColorEnum,
+  Question as QuestionInterface,
+  TableActionFunc
+} from '~/types'
 import { styles } from '~/components/question/Question.styles'
 import { spliceSx } from '~/utils/helper-functions'
-import { QuestionWithCategory } from '~/types/questions/questions.index'
 
-interface QuestionProps extends QuestionWithCategory {
+interface QuestionProps {
+  question: QuestionInterface
+  setQuestions: Dispatch<SetStateAction<QuestionInterface[]>>
   sx?: SxProps
 }
 
-const Question: FC<QuestionProps> = ({ question, category, sx = {} }) => {
+const Question: FC<QuestionProps> = ({ question, setQuestions, sx = {} }) => {
   const { t } = useTranslation()
   const { openMenu, renderMenu, closeMenu } = useMenu()
 
@@ -36,8 +40,16 @@ const Question: FC<QuestionProps> = ({ question, category, sx = {} }) => {
     closeMenu()
     await actionFunc(question._id)
   }
+
+  const onDeleteQuestion = () => {
+    setQuestions((prev) => {
+      return prev.filter((item) => item._id !== question._id)
+    })
+  }
+
   const rowActions = [
     {
+      id: 1,
       label: (
         <Box sx={styles.editIconWrapper}>
           <EditIcon sx={styles.editIcon} />
@@ -49,20 +61,19 @@ const Question: FC<QuestionProps> = ({ question, category, sx = {} }) => {
       }
     },
     {
+      id: 2,
       label: (
         <Box sx={styles.deleteIconWrapper}>
           <DeleteOutlineIcon color='primary' sx={styles.deleteIcon} />
           {` ${t('common.delete')}`}
         </Box>
       ),
-      func: (id: string) => {
-        console.log('Delete', id)
-      }
+      func: onDeleteQuestion
     }
   ]
 
-  const menuItems = rowActions.map(({ label, func }) => (
-    <MenuItem key={label} onClick={() => void onAction(func)}>
+  const menuItems = rowActions.map(({ label, func, id }) => (
+    <MenuItem key={id} onClick={() => void onAction(func)}>
       {label}
     </MenuItem>
   ))
@@ -74,9 +85,7 @@ const Question: FC<QuestionProps> = ({ question, category, sx = {} }) => {
         control={<Checkbox />}
         label={answer.text}
       />
-      {answer.isCorrect && (
-        <CheckIcon sx={{ color: appPallete.basic.orientalHerbs }} />
-      )}
+      {answer.isCorrect && <CheckIcon sx={styles.checkIcon} />}
     </Box>
   ))
 
@@ -101,7 +110,7 @@ const Question: FC<QuestionProps> = ({ question, category, sx = {} }) => {
         {renderMenu(menuItems)}
       </Box>
       <AppChip labelSx={styles.categoryChipLabel} sx={styles.categoryChip}>
-        {category.name}
+        {question.category.name}
       </AppChip>
 
       <Divider />
