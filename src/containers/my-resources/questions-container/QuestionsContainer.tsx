@@ -137,7 +137,7 @@ const QuestionsContainer = () => {
     sort: sortOptions,
     pagination: { page, onChange: handleChangePage }
   }
-  console.log(response)
+
   return (
     <Box>
       <AddResourceWithInput

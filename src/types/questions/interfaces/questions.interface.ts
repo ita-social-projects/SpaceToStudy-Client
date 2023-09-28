@@ -1,4 +1,5 @@
-import { Category,
+import {
+  Category,
   CategoryInterface,
   CommonEntityFields,
   QuestionTypesEnum,
