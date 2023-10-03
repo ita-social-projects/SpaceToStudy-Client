@@ -1,6 +1,6 @@
 {
   "welcomeBlock": {
-    "description": "An educational platform that offers professional courses in It is a long established fact that a reader will be distracted by the readable content of",
+    "description": "An educational platform that offers professional courses, empowering students with essential skills for career success.",
     "getStarted": "Get started for free"
   },
   "accordion": {
@@ -26,12 +26,12 @@
     "description": "Whether you’re looking for a tutor or looking to become one – you’ve come to the right place.",
     "learn": {
       "title": "Learn from experts",
-      "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.established fact that a reader will be ",
+      "description": "Learning from experts is a shortcut to mastery. Their knowledge and experience can guide you, unlocking your potential. Don't put off until tomorrow. Embrace it! 🌟",
       "actionLabel": "Become a student"
     },
     "teach": {
       "title": "Share your experience",
-      "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.established fact that a reader will be ",
+      "description": "Sharing your experience as an expert will be incredibly rewarding, helping students unlock their pоtential and achieve their goals. Don't waste your time 📚",
       "actionLabel": "Become a tutor"
     }
   },
@@ -42,37 +42,37 @@
     "student": {
       "signUp": {
         "title": "Sign Up",
-        "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
+        "description": "Registering on the Space2Study platform is very simple, just enter your email or use your Google account."
       },
       "selectATutor": {
         "title": "Select a Tutor",
-        "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
+        "description": "Finding a tutor is very easy, select a subject from the list, and then pick the tutor, or enter his name and find directly."
       },
       "sendRequest": {
         "title": "Send Request",
-        "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
+        "description": "Write a request to the tutor in two clicks, where you indicate/confirm the price and the desired level of training."
       },
       "startLearning": {
         "title": "Start Learning",
-        "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
+        "description": "After confirming the request, all training opportunities for the chosen course will open for you."
       }
     },
     "tutor": {
       "signUp": {
         "title": "Sign Up",
-        "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
+        "description": "Registering on the Space2Study platform is very simple, just enter your email or use your Google account."
       },
       "createATutorAccount": {
         "title": "Create a Tutor Account",
-        "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
+        "description": "Creating a tutor account is easy, you just need to select a subject, upload teaching materials and create an offer."
       },
       "getNewStudents": {
         "title": "Get New Students",
-        "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
+        "description": "Create fruitful cooperation with your students, confirming their requests, and start teaching."
       },
       "receiveFeedbacks": {
         "title": "Receive Feedbacks",
-        "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
+        "description": "Receive positive feedback for your work to become popular and get even more satisfied students."
       }
     }
   },
