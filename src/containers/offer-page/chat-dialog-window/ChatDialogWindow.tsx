@@ -1,11 +1,4 @@
-import {
-  useCallback,
-  useEffect,
-  ChangeEvent,
-  useState,
-  useRef,
-  FC
-} from 'react'
+import { useCallback, useEffect, useState, useRef, FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import SimpleBar from 'simplebar-react'
 import Box from '@mui/material/Box'
