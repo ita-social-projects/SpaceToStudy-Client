@@ -4,7 +4,6 @@ import {
   useEffect,
   useRef,
   useMemo,
-  ChangeEvent,
   MouseEvent
 } from 'react'
 import { useTranslation } from 'react-i18next'
