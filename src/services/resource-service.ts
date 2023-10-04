@@ -12,8 +12,8 @@ import {
   NewLesson,
   UpdateAttachmentParams,
   Question,
-  QuestionToCreate,
-  Categories
+  Categories,
+  QuestionForm
 } from '~/types'
 import { createUrlPath } from '~/utils/helper-functions'
 
@@ -56,13 +56,13 @@ export const ResourceService = {
   ): Promise<AxiosResponse<ItemsWithCount<Question>>> => {
     return axiosClient.get(URLs.resources.questions.get, { params })
   },
+  createQuestion: async (data?: QuestionForm): Promise<AxiosResponse> => {
+    return await axiosClient.post(URLs.resources.questions.post, data)
+  },
   deleteQuestion: async (id: string): Promise<AxiosResponse> =>
     await axiosClient.delete(
       createUrlPath(URLs.resources.questions.delete, id)
     ),
-  createQuestion: async (item: QuestionToCreate): Promise<AxiosResponse> => {
-    return axiosClient.post(URLs.resources.questions.post, item)
-  },
   getResourcesCategories: (
     params?: GetResourcesParams
   ): Promise<AxiosResponse<ItemsWithCount<Categories>>> => {
