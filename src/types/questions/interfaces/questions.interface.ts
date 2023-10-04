@@ -1,12 +1,11 @@
 import {
   Category,
-  CategoryInterface,
   CommonEntityFields,
   QuestionTypesEnum,
   UserResponse
 } from '~/types'
 export interface Answer {
-  id: string
+  id: number
   text: string
   isCorrect: boolean
 }
@@ -17,7 +16,7 @@ export interface Question extends CommonEntityFields {
   answers: Omit<Answer, 'id'>[]
   author: Pick<UserResponse, '_id'>
   type: QuestionTypesEnum
-  category: Pick<CategoryInterface, '_id' | 'name'>
+  category: Category
 }
 
 export interface CreatedQuestion extends CommonEntityFields {
@@ -28,14 +27,17 @@ export interface CreatedQuestion extends CommonEntityFields {
   type: string
 }
 
-export interface QuestionToCreate {
-  title: string
-  answers: Answer[]
-  category: Category
-  type: string
-}
-
 export interface QuestionCategory {
   name: string
   _id: string
+}
+
+export interface QuestionForm
+  extends Omit<
+    CreatedQuestion,
+    'author' | 'category' | keyof CommonEntityFields
+  > {
+  text?: string
+  openAnswer?: string
+  category: Category | null
 }

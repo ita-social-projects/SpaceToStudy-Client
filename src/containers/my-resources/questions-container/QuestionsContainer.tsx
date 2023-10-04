@@ -80,7 +80,7 @@ const QuestionsContainer = () => {
   )
 
   const duplicateQuestion = useCallback(
-    (id: string) => {
+    (id?: string) => {
       const item = response.items.find(
         (element) => element._id === id
       ) as unknown as CreatedQuestion

@@ -32,6 +32,7 @@
   "allFilesSizeError": "Помилка розміру всіх файлів",
   "fileSizeError": "Size for one file cannot be more than 10 MB.",
   "noItems": "Елементів не знайдено",
+  "view": "Переглянути",
   "labels": {
     "sendMessage": "Надіслати повідомлення",
     "viewDetails": "Переглянути деталі",
