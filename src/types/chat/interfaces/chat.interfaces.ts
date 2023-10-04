@@ -1,5 +1,6 @@
 import { CommonEntityFields } from '~/types/common/common.index'
 import { UserResponse } from '~/types/user/user.index'
+import { UserRoleEnum } from '~/types'
 
 export interface Member {
   user: Pick<
@@ -19,4 +20,9 @@ export interface LatestMessage extends CommonEntityFields {
 export interface ChatResponse extends CommonEntityFields {
   members: Member[]
   latestMessage: LatestMessage
+}
+
+export interface BasicChat {
+  member: string
+  memberRole: UserRoleEnum.Tutor | UserRoleEnum.Student | string
 }

@@ -1,6 +1,7 @@
 {
   "message": {
-    "you": "You"
+    "you": "You",
+    "noMessages": "No messages yet"
   },
   "status": {
     "online": "Online"
@@ -33,5 +34,6 @@
     "teachMethod": "What’s your teaching method?",
     "trialLesson": "Do you have a trial lesson?",
     "tutoringSession": "How long is each tutoring session?"
-  }
+  },
+  "creating": "Creating new chat for you, please wait..."
 }

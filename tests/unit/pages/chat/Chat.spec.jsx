@@ -22,6 +22,14 @@ global.window.getComputedStyle = vi.fn().mockImplementation(() => ({
   getPropertyValue: vi.fn()
 }))
 
+const mockChatContext = {
+  setCurrentChatId: vi.fn()
+}
+
+vi.mock('~/context/chat-context', () => ({
+  useChatContext: () => mockChatContext
+}))
+
 const mockRef = { current: { scrollTo: vi.fn(), scrollHeight: 100 } }
 
 vi.mock('react', async () => {
