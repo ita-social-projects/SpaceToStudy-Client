@@ -159,9 +159,9 @@ const QuestionEditor: FC<QuestionEditorProps> = ({ fetchData, loading }) => {
     </Box>
   ))
 
-  const disabledButton = isOpenAnswer
-    ? Boolean(text && openAnswer)
-    : Boolean(text && answers[0]?.text)
+  const isButtonsVisible = isOpenAnswer
+    ? Boolean(title && text && openAnswer)
+    : Boolean(title && text && answers[0]?.text)
 
   const buttons = (
     <Box sx={styles.buttons}>
@@ -172,7 +172,7 @@ const QuestionEditor: FC<QuestionEditorProps> = ({ fetchData, loading }) => {
         {t('common.cancel')}
       </AppButton>
       <AppButton
-        disabled={disabledButton}
+        disabled={!isButtonsVisible}
         loading={loading}
         type={ButtonTypeEnum.Submit}
       >

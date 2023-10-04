@@ -1,5 +1,13 @@
+import palette from '~/styles/app-theme/app.pallete'
 import { commonShadow } from '~/styles/app-theme/custom-shadows'
-import { TypographyVariantEnum, VisibilityEnum } from '~/types'
+import { VisibilityEnum } from '~/types'
+
+const inputFontSize = {
+  fontSize: '35px',
+  fontWeight: 500,
+  maxHeight: '35px',
+  marginTop: 0
+}
 
 export const styles = {
   root: {},
@@ -13,19 +21,15 @@ export const styles = {
   },
   titleInput: {
     disableUnderline: true,
-    style: {
-      fontSize: '35px',
-      fontWeight: 500,
-      maxHeight: '35px',
-      marginTop: 0
-    }
+    style: { ...inputFontSize }
   },
   titleLabel: (value: string) => ({
     shrink: false,
-    sx: {
+    style: {
       visibility: value ? VisibilityEnum.Hidden : VisibilityEnum.Visible,
-      typography: TypographyVariantEnum.H5,
-      top: -14
+      color: palette.primary[300],
+      top: -23,
+      ...inputFontSize
     }
   }),
   labelCategory: {
