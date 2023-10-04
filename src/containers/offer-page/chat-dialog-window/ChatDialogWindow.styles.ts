@@ -22,6 +22,10 @@ export const styles = {
     boxShadow: commonHoverShadow,
     boxSizing: 'border-box'
   },
+  chatCreateBox: {
+    display: 'flex',
+    gap: '10px'
+  },
   header: {
     display: 'flex',
     alignItems: 'center',

@@ -1,4 +1,4 @@
-import { FC, memo } from 'react'
+import { FC, memo, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import Avatar from '@mui/material/Avatar'
 import Box from '@mui/material/Box'
@@ -8,7 +8,13 @@ import Badge from '@mui/material/Badge'
 import { useAppSelector } from '~/hooks/use-redux'
 
 import { styles } from '~/containers/chat/chat-item/ChatItem.styles'
-import { ChatResponse, ComponentEnum, OverlapEnum, PositionEnum } from '~/types'
+import {
+  ChatResponse,
+  ComponentEnum,
+  Member,
+  OverlapEnum,
+  PositionEnum
+} from '~/types'
 import { getFormattedDate } from '~/utils/helper-functions'
 
 interface ItemOfChatProps {
@@ -26,27 +32,39 @@ const ChatItem: FC<ItemOfChatProps> = ({
 }) => {
   const { t } = useTranslation()
   const { userId } = useAppSelector((state) => state.appMain)
+  const userToSpeak = useMemo<Member | undefined>(
+    () => chat?.members.find((member) => member.user._id !== userId),
+    [chat, userId]
+  )
 
-  const { firstName, lastName, photo } = chat.members[0].user
-  const { text, author, updatedAt } = chat.latestMessage
+  const firstName = userToSpeak?.user.firstName
+  const lastName = userToSpeak?.user.lastName
+  const photo = userToSpeak?.user.photo
+  const { text, author, updatedAt } = chat.latestMessage || {
+    text: t('chatPage.message.noMessages'),
+    author: '',
+    updatedAt: ''
+  }
 
-  const fullName = `${firstName} ${lastName}`
+  const fullName = `${firstName ?? ''} ${lastName ?? ''}`
 
   const handleSelectedChat = () => {
     setSelectedChat(chat)
     closeDrawer && closeDrawer()
   }
 
-  const formattedTime = getFormattedDate({
-    date: updatedAt,
-    locales: 'en-GB',
-    options: {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric'
-    },
-    isCurrentDayHours: true
-  })
+  const formattedTime =
+    updatedAt &&
+    getFormattedDate({
+      date: updatedAt,
+      locales: 'en-GB',
+      options: {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+      },
+      isCurrentDayHours: true
+    })
 
   const isCurrentUser = userId === author._id && (
     <Typography sx={styles.prefix}>{t('chatPage.message.you')}:</Typography>
