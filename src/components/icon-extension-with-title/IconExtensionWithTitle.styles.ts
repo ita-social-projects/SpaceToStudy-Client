@@ -18,23 +18,6 @@ export const styles = {
     fontSize: '12px',
     typography: TypographyVariantEnum.Caption
   },
-  inputWithIcons: {
-    display: 'flex',
-    columnGap: '10px',
-    flex: 1
-  },
-  input: {
-    flex: 1,
-    typography: TypographyVariantEnum.Subtitle2
-  },
-  actionIcon: (color: string) => ({
-    width: '16px',
-    height: '16px',
-    p: '4px',
-    borderRadius: '6px',
-    color: `${color}.700`,
-    backgroundColor: `${color}.100`
-  }),
   titleWithDescription: {
     title: {
       typography: TypographyVariantEnum.Subtitle2

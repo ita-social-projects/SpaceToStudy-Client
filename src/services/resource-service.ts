@@ -13,7 +13,8 @@ import {
   UpdateAttachmentParams,
   Question,
   Categories,
-  QuestionForm
+  QuestionForm,
+  CategoryNameInterface
 } from '~/types'
 import { createUrlPath } from '~/utils/helper-functions'
 
@@ -68,6 +69,7 @@ export const ResourceService = {
   ): Promise<AxiosResponse<ItemsWithCount<Categories>>> => {
     return axiosClient.get(URLs.resources.resourcesCategories.get, { params })
   },
-  getResourcesCategoriesNames: (): Promise<AxiosResponse<string[]>> =>
-    axiosClient.get(URLs.resources.resourcesCategories.getNames)
+  getResourcesCategoriesNames: (): Promise<
+    AxiosResponse<CategoryNameInterface[]>
+  > => axiosClient.get(URLs.resources.resourcesCategories.getNames)
 }
