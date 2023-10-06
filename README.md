@@ -285,6 +285,14 @@ Only the release should merge into the main branch!!!
 [![@Radomyr-kh](https://user-images.githubusercontent.com/34419998/222748801-1112f260-9c96-4234-9e5e-550cddeb80d5.png)](https://github.com/Radomyr-kh)
 [![@ArturBekhDEV](https://avatars.githubusercontent.com/u/102412173?v=4)](https://github.com/ArturBekhDEV)
 [![@FryDay969](https://avatars.githubusercontent.com/u/39992977?v=4)](https://github.com/FryDay969)
+[![@TSlashDreamy](https://avatars.githubusercontent.com/u/45912519?v=4)](https://github.com/TSlashDreamy)
+[![@Mav-Ivan](https://avatars.githubusercontent.com/u/110425368?v=4)](https://github.com/Mav-Ivan)
+[![@mynotdoing](https://avatars.githubusercontent.com/u/75339353?v=4)](https://github.com/mynotdoing)
+[![@dmtrth25](https://avatars.githubusercontent.com/u/56305508?v=4)](https://github.com/dmtrth25)
+[![@abalanovsky](https://avatars.githubusercontent.com/u/108689551?v=4)](https://github.com/abalanovsky)
+[![@OlyaKorchan](https://avatars.githubusercontent.com/u/17857767?v=4)](https://github.com/OlyaKorchan)
+[![@MariaAfonina](https://avatars.githubusercontent.com/u/104988390?v=4)](https://github.com/MariaAfonina)
+[![@]()]()
 
 ### DevOps team
 
@@ -296,7 +304,8 @@ Only the release should merge into the main branch!!!
 
 [![@philosofii](https://avatars.githubusercontent.com/u/111736765?v=4)](https://github.com/philosofii)
 [![@KhrystynaPavlikovska](https://avatars.githubusercontent.com/u/34419998?s=400&u=15346304d164fb346cc2671a7d33052d2a6324e2&v=4)](https://github.com/KhrystynaPavlikovska)
-
+[![@LazyMarichka](https://avatars.githubusercontent.com/u/135900325?v=4)](https://github.com/LazyMarichka)
+[![@Nastia197](https://avatars.githubusercontent.com/u/76164279?v=4)](https://github.com/Nastia197)
 ---
 
 ## FAQ
