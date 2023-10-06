@@ -64,17 +64,12 @@ const EditAttachmentModal: FC<EditAttachmentModalProps> = ({
     }
   })
 
-  console.log(attachment)
-
   const onCategoryChange = (
     _: SyntheticEvent,
     value: CategoryNameInterface | null
   ) => {
     handleNonInputValueChange('category', value?._id ?? null)
   }
-
-  console.log(data)
-  console.log('errors::', errors)
 
   return (
     <Box
