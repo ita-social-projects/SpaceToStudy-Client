@@ -4,13 +4,28 @@ import { vi } from 'vitest'
 import { SnackBarProvider } from '~/context/snackbar-context'
 import { renderWithProviders } from '~tests/test-utils'
 
+import useBreakpoints from '~/hooks/use-breakpoints'
 import ProfileInfo from '~/containers/tutor-profile/profile-info/ProfileInfo'
+
+vi.mock('~/hooks/use-breakpoints')
 
 Object.assign(window.navigator, {
   clipboard: {
     writeText: vi.fn().mockImplementation(() => Promise.resolve())
   }
 })
+
+const mobileData = {
+  isLaptopAndAbove: false,
+  isMobile: true,
+  isTablet: false
+}
+
+const laptopData = {
+  isLaptopAndAbove: true,
+  isMobile: false,
+  isTablet: false
+}
 
 const userData = {
   _id: '64822a1433ebe4890079bb60',
@@ -44,6 +59,7 @@ const userData = {
   photo: '../src/John_Shepard_29.jpeg',
   professionalSummary:
     'Some amount of text regarding the proficiency.Some amount of text rega',
+  nativeLanguage: 'English',
   address: {
     city: 'Lviv',
     country: 'Ukraine'
@@ -60,23 +76,46 @@ const userData = {
   updatedAt: '2023-07-12T19:33:43.616+00:00'
 }
 
-describe('ProfileInfo test in my profile', () => {
-  beforeEach(() => {
-    vi.mock('react-router-dom', async () => {
-      const actual = await vi.importActual('react-router-dom')
-      return {
-        ...actual,
-        useLocation: () => ({
-          pathname: '/tutors/German/testUser'
-        })
-      }
-    })
-    renderWithProviders(
-      <SnackBarProvider>
-        <ProfileInfo userData={userData} />
-      </SnackBarProvider>
-    )
+function renderWithBreakpoints(data) {
+  useBreakpoints.mockImplementation(() => data)
+  vi.mock('react-router-dom', async () => {
+    const actual = await vi.importActual('react-router-dom')
+    return {
+      ...actual,
+      useLocation: () => ({
+        pathname: '/tutors/German/testUser'
+      })
+    }
   })
+  renderWithProviders(
+    <SnackBarProvider>
+      <ProfileInfo userData={userData} />
+    </SnackBarProvider>
+  )
+}
+
+describe('ProfileInfo test in my profile on laptop', () => {
+  beforeEach(() => renderWithBreakpoints(laptopData))
+
+  it('should copy link to profile', () => {
+    const iconBtn = screen.getByTestId('icon-btn')
+
+    fireEvent.click(iconBtn)
+
+    expect(window.navigator.clipboard.writeText).toHaveBeenCalled()
+  })
+
+  it('should render send message button', () => {
+    const sendMessageBtn = screen.getByText(
+      /tutorProfilePage.profileInfo.sendMessage/i
+    )
+
+    expect(sendMessageBtn).toBeInTheDocument()
+  })
+})
+
+describe('ProfileInfo test in my profile on mobile', () => {
+  beforeEach(() => renderWithBreakpoints(mobileData))
 
   it('should copy link to profile', () => {
     const iconBtn = screen.getByTestId('icon-btn')
