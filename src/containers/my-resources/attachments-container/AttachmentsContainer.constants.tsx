@@ -11,21 +11,12 @@ import {
 } from '~/types'
 import { styles } from '~/containers/my-resources/attachments-container/AttachmentsContainer.styles'
 
-export const columns = (
-  selectedItemId: string,
-  onCancel: () => void,
-  onSave: (fileName: string) => Promise<void>
-): TableColumn<Attachment>[] => [
+export const columns: TableColumn<Attachment>[] = [
   {
     label: 'myResourcesPage.attachments.file',
     field: 'fileName',
     calculatedCellValue: (item: Attachment) => (
-      <IconExtensionWithTitle
-        isEditable={selectedItemId === item._id}
-        onCancel={onCancel}
-        onSave={onSave}
-        title={item.fileName}
-      />
+      <IconExtensionWithTitle title={item.fileName} />
     )
   },
   {

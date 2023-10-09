@@ -1,10 +1,12 @@
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useRef } from 'react'
 import Box from '@mui/material/Box'
 import AddIcon from '@mui/icons-material/Add'
 import { useTranslation } from 'react-i18next'
 
 import { useSnackBarContext } from '~/context/snackbar-context'
+import { useModalContext } from '~/context/modal-context'
 import { ResourceService } from '~/services/resource-service'
+import EditAttachmentModal from '~/containers/my-resources/edit-attachment-modal/EditAttachmentModal'
 import AddResourceWithInput from '~/containers/my-resources/add-resource-with-input/AddResourceWithInput'
 import MyResourcesTable from '~/containers/my-resources/my-resources-table/MyResourcesTable'
 import Loader from '~/components/loader/Loader'
@@ -36,29 +38,25 @@ import { styles } from '~/containers/my-resources/attachments-container/Attachme
 const AttachmentsContainer = () => {
   const { t } = useTranslation()
   const { setAlert } = useSnackBarContext()
+  const { openModal, closeModal } = useModalContext()
   const breakpoints = useBreakpoints()
   const { page, handleChangePage } = usePagination()
   const sortOptions = useSort({ initialSort })
   const searchFileName = useRef<string>('')
-  const [selectedItemId, setSelectedItemId] = useState<string>('')
   const formData = new FormData()
 
   const { sort } = sortOptions
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
 
   const onResponseError = useCallback(
-    (error: ErrorResponse, showMessage?: boolean) => {
-      const errorMsg = showMessage ? error.message : error.code
-
+    (error: ErrorResponse) => {
       setAlert({
         severity: snackbarVariants.error,
-        message: error ? `errors.${errorMsg}` : ''
+        message: error ? `errors.${error.code}` : ''
       })
     },
     [setAlert]
   )
-
-  const onUpdateError = (error: ErrorResponse) => onResponseError(error, true)
 
   const getAttachments = useCallback(
     () =>
@@ -100,7 +98,7 @@ const AttachmentsContainer = () => {
   const { fetchData: updateData } = useAxios({
     service: updateAttachment,
     defaultResponse: null,
-    onResponseError: onUpdateError,
+    onResponseError,
     onResponse: onAttachmentUpdate,
     fetchOnMount: false
   })
@@ -128,19 +126,21 @@ const AttachmentsContainer = () => {
     await fetchAttachments()
   }
 
-  const onSave = async (fileName: string) => {
-    const id = selectedItemId
-    setSelectedItemId('')
-    if (fileName) await updateData({ id, fileName })
-  }
-  const onEdit = (id: string) => setSelectedItemId(id)
-  const onCancel = () => setSelectedItemId('')
+  const onEdit = (id: string) => {
+    const attachment = response.items.find((item) => item._id === id)
 
-  const columnsToShow = ajustColumns(
-    breakpoints,
-    columns(selectedItemId, onCancel, onSave),
-    removeColumnRules
-  )
+    openModal({
+      component: (
+        <EditAttachmentModal
+          attachment={attachment as Attachment}
+          closeModal={closeModal}
+          updateAttachment={updateData}
+        />
+      )
+    })
+  }
+
+  const columnsToShow = ajustColumns(breakpoints, columns, removeColumnRules)
 
   const props = {
     columns: columnsToShow,
