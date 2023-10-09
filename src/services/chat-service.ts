@@ -7,7 +7,9 @@ export const chatService = {
   getChats: (): Promise<AxiosResponse<ChatResponse[]>> => {
     return axiosClient.get(URLs.chats.get)
   },
-  createChat: (chatData: BasicChat): Promise<AxiosResponse<ChatResponse[]>> => {
+  createChat: (
+    chatData: BasicChat
+  ): Promise<AxiosResponse<ChatResponse | undefined>> => {
     return axiosClient.post(URLs.chats.create, chatData)
   }
 }

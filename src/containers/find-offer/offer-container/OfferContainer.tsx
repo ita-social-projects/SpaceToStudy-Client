@@ -18,9 +18,14 @@ import { styles } from '~/containers/find-offer/offer-container/OfferContainer.s
 interface OfferContainerProps {
   viewMode: CardsView
   offerCards: Offer[]
+  updateOffersInfo: () => void
 }
 
-const OfferContainer: FC<OfferContainerProps> = ({ viewMode, offerCards }) => {
+const OfferContainer: FC<OfferContainerProps> = ({
+  viewMode,
+  offerCards,
+  updateOffersInfo
+}) => {
   const { t } = useTranslation()
   const { isMobile, isLaptopAndAbove } = useBreakpoints()
   const { setChatInfo } = useChatContext()
@@ -36,7 +41,8 @@ const OfferContainer: FC<OfferContainerProps> = ({ viewMode, offerCards }) => {
     setChatInfo({
       author: el.author,
       authorRole: el.authorRole,
-      chatId: el.chatId
+      chatId: el.chatId,
+      updateInfo: updateOffersInfo
     })
 
   const offerItems = offerCards.map((el) => {
