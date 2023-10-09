@@ -1,5 +1,6 @@
 import { ReactElement, ReactNode } from 'react'
 import { SxProps } from '@mui/material'
+import Tooltip from '@mui/material/Tooltip'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
@@ -24,9 +25,11 @@ const TitleWithDescription = ({
   return (
     <Box sx={style.wrapper}>
       <Typography sx={style.title}>{title}</Typography>
-      <Typography component={ComponentEnum.Span} sx={style.description}>
-        {description}
-      </Typography>
+      <Tooltip placement='bottom' title={description}>
+        <Typography component={ComponentEnum.Span} sx={style.description}>
+          {description}
+        </Typography>
+      </Tooltip>
     </Box>
   )
 }
