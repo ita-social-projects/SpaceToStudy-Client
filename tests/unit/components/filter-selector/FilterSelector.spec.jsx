@@ -1,5 +1,4 @@
-import { render, screen } from '@testing-library/react'
-import user from '@testing-library/user-event'
+import { render, screen, fireEvent } from '@testing-library/react'
 import FilterSelector from '~/components/filter-selector/FilterSelector'
 
 vi.mock('simplebar-react', () => {
@@ -17,30 +16,40 @@ vi.mock('react-i18next', () => ({
       const translations = {
         'common.noItems': 'No items found'
       }
-      return translations[key] || key // Return the custom translation or the key itself
+      return translations[key] || key
     }
   })
 }))
-describe('FilterSelector', () => {
+
+beforeEach(() => {
   const selectedItems = []
+
+  render(<FilterSelector selectedItems={selectedItems} />)
+})
+
+describe('FilterSelector', () => {
   test('FilterSelector component renders correctly', () => {
-    render(<FilterSelector selectedItems={selectedItems} />)
-    const el = screen.getByRole('button')
-    expect(el).toBeInTheDocument()
+    const buttonEl = screen.getByRole('button')
+
+    expect(buttonEl).toBeInTheDocument()
   })
 
-  test('renders no items after clicking', async () => {
-    render(<FilterSelector selectedItems={[]} />)
+  test('renders no items message after clicking if there are no selected items', () => {
     const buttonEl = screen.getByRole('button')
-    await user.click(buttonEl)
-    const noItemsText = screen.getByRole('presentation')
-    expect(noItemsText).toHaveTextContent('No items found')
+
+    fireEvent.click(buttonEl)
+
+    const el = screen.getByText('No items found')
+
+    expect(el).toBeInTheDocument()
   })
-  test('icon should be in the component', async () => {
-    render(<FilterSelector selectedItems={[]} />)
+  test('input field should be in the component after clicking on a button', () => {
     const buttonEl = screen.getByRole('button')
-    await user.click(buttonEl)
+
+    fireEvent.click(buttonEl)
+
     const inputEl = screen.getByRole('textbox')
+
     expect(inputEl).toBeInTheDocument()
   })
 })
