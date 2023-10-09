@@ -20,6 +20,9 @@
   "attachments": {
     "addBtn": "Add Attachment",
     "add": "Add files from your Attachments",
+    "edit": "Edit Attachment",
+    "description": "Description",
+    "fileName": "File name",
     "file": "File",
     "size": "Size",
     "lastUpdate": "Last update",

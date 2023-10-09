@@ -1,3 +1,4 @@
+import { roundedBorderTable } from '~/containers/my-cooperations/cooperations-container/CooperationContainer.styles'
 import { TypographyVariantEnum } from '~/types'
 
 const captionTitle = {
@@ -30,11 +31,7 @@ export const styles = {
     }
   },
   addAttachmentIcon: { ml: '5px', width: { xs: '18px', sm: '22px' } },
-  table: {
-    '& td,th': {
-      '&:first-of-type': { maxWidth: '50%', width: '100%' }
-    }
-  },
+  table: roundedBorderTable,
   sizeTitle: captionTitle,
   dateTitle: captionTitle
 }

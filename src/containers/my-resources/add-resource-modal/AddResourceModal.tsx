@@ -15,7 +15,7 @@ import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
 import FilterSelector from '~/components/filter-selector/FilterSelector'
 
 import { styles } from '~/containers/my-resources/add-resource-modal/AddResourceModal.styles'
-import { ButtonVariantEnum, TableItem } from '~/types'
+import { ButtonVariantEnum, CategoryNameInterface, TableItem } from '~/types'
 
 interface AddResourceModalProps<T>
   extends Omit<EnhancedTableProps<T, undefined>, 'data'> {
@@ -69,11 +69,12 @@ const AddResourceModal = <T extends TableItem>({
           sx={styles.titleInput}
           value={inputValue}
         />
-        <FilterSelector
+        <FilterSelector<CategoryNameInterface>
           selectedItems={selectedItems}
           service={ResourceService.getResourcesCategoriesNames}
           setSelectedItems={setSelectedItems}
           title={t('myResourcesPage.questions.category')}
+          valueField='name'
         />
       </Box>
 
