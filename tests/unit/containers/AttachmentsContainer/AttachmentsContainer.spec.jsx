@@ -40,7 +40,7 @@ describe('AttachmentContainer renders correct data', () => {
   })
 
   it('should render table', () => {
-    const title = screen.getByText('myResourcesPage.attachments.file')
+    const title = screen.getByText('myResourcesPage.attachments.attachmentName')
     expect(title).toBeInTheDocument()
   })
   it('should correctly shows filename of attachment', () => {
