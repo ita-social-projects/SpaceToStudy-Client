@@ -1,18 +1,18 @@
 export const accordionItems = [
   {
     title: 'studentHomePage.faq.findTutor',
-    description: 'studentHomePage.faq.findTutorDesription'
+    description: 'studentHomePage.faq.findTutorDescription'
   },
   {
-    title: 'studentHomePage.faq.bookLeson',
-    description: 'studentHomePage.faq.findTutorDesription'
+    title: 'studentHomePage.faq.bookLesson',
+    description: 'studentHomePage.faq.bookLessonDescription'
   },
   {
     title: 'studentHomePage.faq.rules',
-    description: 'studentHomePage.faq.findTutorDesription'
+    description: 'studentHomePage.faq.rulesDescription'
   },
   {
-    title: 'studentHomePage.faq.howPayLesons',
-    description: 'studentHomePage.faq.findTutorDesription'
+    title: 'studentHomePage.faq.howPayLessons',
+    description: 'studentHomePage.faq.howPayLessonsDescription'
   }
 ]
