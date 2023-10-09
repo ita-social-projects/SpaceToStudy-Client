@@ -83,15 +83,19 @@ const FindOffers = () => {
     itemsPerPage
   })
 
-  useEffect(() => {
+  const updateInfo = useCallback(() => {
     void fetchData({
       ...filters,
       status: StatusEnum.Active,
       limit: itemsPerPage,
       skip: (Number(filters.page) - 1) * itemsPerPage
     })
+  }, [fetchData, filters])
+
+  useEffect(() => {
+    updateInfo()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fetchData, searchParams, itemsPerPage])
+  }, [fetchData, searchParams, itemsPerPage, updateInfo])
 
   const toggleFiltersOpen = () => (isOpen ? closeDrawer() : openDrawer())
 
@@ -163,7 +167,11 @@ const FindOffers = () => {
         ) : !items.length && !offersLoading ? (
           <NotFoundResults description={t('findOffers.notFound.description')} />
         ) : (
-          <OfferContainer offerCards={items} viewMode={cardsView} />
+          <OfferContainer
+            offerCards={items}
+            updateOffersInfo={updateInfo}
+            viewMode={cardsView}
+          />
         )}
       </Box>
       <AppPagination

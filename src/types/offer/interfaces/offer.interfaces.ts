@@ -32,7 +32,7 @@ export interface Offer extends CommonEntityFields {
   >
   subject: SubjectNameInterface
   category: CategoryInterface
-  chatId: Pick<ChatResponse, '_id'>
+  chatId: Pick<ChatResponse, '_id'> | string
   FAQ: Faq[]
   status: StatusEnum
 }
