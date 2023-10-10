@@ -17,3 +17,8 @@ export interface GetResourcesParams extends Partial<RequestParams> {
   title?: string
   fileName?: string
 }
+
+export interface UpdateResourceCategory {
+  name: Categories['name']
+  id: Categories['_id']
+}

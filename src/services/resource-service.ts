@@ -14,7 +14,8 @@ import {
   Question,
   Categories,
   QuestionForm,
-  CategoryNameInterface
+  CategoryNameInterface,
+  UpdateResourceCategory
 } from '~/types'
 import { createUrlPath } from '~/utils/helper-functions'
 
@@ -71,5 +72,12 @@ export const ResourceService = {
   },
   getResourcesCategoriesNames: (): Promise<
     AxiosResponse<CategoryNameInterface[]>
-  > => axiosClient.get(URLs.resources.resourcesCategories.getNames)
+  > => axiosClient.get(URLs.resources.resourcesCategories.getNames),
+  updateResourceCategory: (
+    params?: UpdateResourceCategory
+  ): Promise<AxiosResponse> =>
+    axiosClient.patch(
+      createUrlPath(URLs.resources.resourcesCategories.patch, params?.id),
+      params
+    )
 }

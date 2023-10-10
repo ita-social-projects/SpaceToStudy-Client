@@ -1,17 +1,29 @@
 import Typography from '@mui/material/Typography'
 
-import { Categories, TableColumn, SortEnum, RemoveColumnRules } from '~/types'
-import { getFormattedDate } from '~/utils/helper-functions'
+import RenameInput from '~/containers/my-resources/rename-input/RenameInput'
 
+import { getFormattedDate } from '~/utils/helper-functions'
+import { Categories, TableColumn, SortEnum, RemoveColumnRules } from '~/types'
 import { styles } from '~/containers/my-resources/categories-container/CategoriesContainer.style'
 
-export const columns: TableColumn<Categories>[] = [
+export const columns = (
+  selectedItemId: string,
+  onSave: (name: string) => Promise<void>,
+  onCancel: () => void
+): TableColumn<Categories>[] => [
   {
     label: 'myResourcesPage.categories.title',
     field: 'title',
-    calculatedCellValue: (item: Categories) => (
-      <Typography sx={styles.title}>{item.name}</Typography>
-    )
+    calculatedCellValue: (item: Categories) =>
+      selectedItemId === item._id ? (
+        <RenameInput
+          initValue={item.name}
+          onCancel={onCancel}
+          onSave={onSave}
+        />
+      ) : (
+        <Typography sx={styles.title}>{item.name}</Typography>
+      )
   },
   {
     label: 'myResourcesPage.categories.updated',
