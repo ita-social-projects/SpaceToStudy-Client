@@ -3,8 +3,8 @@ import { fireEvent, waitFor, screen } from '@testing-library/react'
 import { URLs } from '~/constants/request'
 import OfferDetails from '~/pages/offer-details/OfferDetails'
 import useBreakpoints from '~/hooks/use-breakpoints'
-import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 import { mockOffer } from '~tests/unit/pages/offer-details/OfferDetails.spec.constants'
+import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 
 vi.mock('~/hooks/use-breakpoints')
 vi.mock('react-router-dom', async () => {
