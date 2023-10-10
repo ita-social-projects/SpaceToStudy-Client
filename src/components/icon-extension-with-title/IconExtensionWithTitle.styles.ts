@@ -33,7 +33,7 @@ export const styles = {
       '&:hover': {
         textDecoration: 'underline',
         color: 'primary.700',
-        cursor: 'default'
+        cursor: 'pointer'
       }
     }
   }

@@ -1,4 +1,4 @@
-import { ReactElement, ReactNode } from 'react'
+import { ReactElement, ReactNode, useState } from 'react'
 import { SxProps } from '@mui/material'
 import Tooltip from '@mui/material/Tooltip'
 import Box from '@mui/material/Box'
@@ -22,11 +22,19 @@ const TitleWithDescription = ({
   description,
   style = styles
 }: TitleWithDescriptionProps) => {
+  const [tooltipVisible, setTooltipVisible] = useState<boolean>(false)
+
+  const handleTooltip = () => setTooltipVisible((prevState) => !prevState)
+
   return (
     <Box sx={style.wrapper}>
       <Typography sx={style.title}>{title}</Typography>
-      <Tooltip placement='bottom' title={description}>
-        <Typography component={ComponentEnum.Span} sx={style.description}>
+      <Tooltip open={tooltipVisible} placement='bottom' title={description}>
+        <Typography
+          component={ComponentEnum.Span}
+          onClick={handleTooltip}
+          sx={style.description}
+        >
           {description}
         </Typography>
       </Tooltip>
