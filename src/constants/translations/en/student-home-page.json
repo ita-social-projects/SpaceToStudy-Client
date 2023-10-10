@@ -37,9 +37,12 @@
     "title": "Frequently Asked Questions",
     "subtitle": "Everything you need to know about learning journey in Space2Study as a student",
     "findTutor": "How to find a tutor",
-    "findTutorDesription": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.",
-    "bookLeson": "How to book a lesson",
+    "findTutorDescription": "Finding the best tutor can greatly enhance your learning experience. Start by identifying your specific needs, whether it’s a particular category or subject. Find all offers using these criteria or search for tutor’s name or course title to see a list of offers. Consider the tutor’s qualifications, reviews, teaching style, and availability.",
+    "bookLesson": "How to book a lesson",
+    "bookLessonDescription": "Respond to the tutor’s offer by creating a cooperation, where you confirm the required level of training and price, or set your own. It’s crucial to have a clear communication channel and discuss expectations, including pricing and scheduling.",
     "rules": "Rules for students",
-    "howPayLesons": "How you can pay for lessons"
+    "rulesDescription": "Students have the right to choose the offer they like and agree to its terms. Students also have the right to create their own requests for a course, to which the tutor will respond. Students cannot use learning materials for commercial purposes or distribution and should avoid posting obscene messages, photos, or comments.", 
+    "howPayLessons": "How you can pay for lessons",
+    "howPayLessonsDescription": "Payment methods for tuition are negotiated between the tutor and the student during the cooperation setup. Space2Study platform’s primary role is to facilitate the search for the desired courses and does not impose any commissions on approved collaborations."
   }
 }

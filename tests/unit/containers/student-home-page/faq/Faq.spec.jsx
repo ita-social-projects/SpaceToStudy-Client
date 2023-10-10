@@ -33,7 +33,7 @@ describe('Faq component test', () => {
 
   it('should open first item, close first item and open second after click on second title', () => {
     const title1 = screen.getByText('studentHomePage.faq.findTutor')
-    const title2 = screen.getByText('studentHomePage.faq.bookLeson')
+    const title2 = screen.getByText('studentHomePage.faq.bookLesson')
     fireEvent.click(title1)
     const openFirstItem = screen.getByTestId('0-true')
     const closeSecondItem = screen.getByTestId('1-false')
