@@ -28,13 +28,13 @@ beforeEach(() => {
 })
 
 describe('FilterSelector', () => {
-  test('FilterSelector component renders correctly', () => {
+  it('FilterSelector component renders correctly', () => {
     const buttonEl = screen.getByRole('button')
 
     expect(buttonEl).toBeInTheDocument()
   })
 
-  test('renders no items message after clicking if there are no selected items', () => {
+  it('renders no items message after clicking if there are no selected items', () => {
     const buttonEl = screen.getByRole('button')
 
     fireEvent.click(buttonEl)
@@ -43,7 +43,7 @@ describe('FilterSelector', () => {
 
     expect(el).toBeInTheDocument()
   })
-  test('input field should be in the component after clicking on a button', () => {
+  it('input field should be in the component after clicking on a button', () => {
     const buttonEl = screen.getByRole('button')
 
     fireEvent.click(buttonEl)
