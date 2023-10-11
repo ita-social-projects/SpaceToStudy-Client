@@ -31,7 +31,10 @@ const TutorHome = () => {
   return (
     <PageWrapper data-testid='tutorHome'>
       <FindBlock translationKey={translationKey} />
-      <PopularCategories title={t('common.popularCategories')} />
+      <PopularCategories
+        description={t('tutorHomePage.popularCategories.description')}
+        title={t('common.popularCategories')}
+      />
     </PageWrapper>
   )
 }
