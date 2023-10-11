@@ -17,8 +17,8 @@ import { useDebounce } from '~/hooks/use-debounce'
 import AppButton from '~/components/app-button/AppButton'
 import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
 import FilterSelector from '~/components/filter-selector/FilterSelector'
-import { ServiceFunction } from '~/types'
 
+import { ServiceFunction } from '~/types'
 import { styles } from '~/containers/my-resources/add-resource-with-input/AddResourceWithInput.styles'
 
 interface AddResourceWithInputProps {
@@ -62,7 +62,7 @@ const AddResourceWithInput: FC<AddResourceWithInputProps> = ({
   }
 
   const filterProps = {
-    title: 'Category',
+    title: t('myResourcesPage.questions.category'),
     service: categoryService,
     selectedItems: selectedItems,
     setSelectedItems: setItems
@@ -79,7 +79,7 @@ const AddResourceWithInput: FC<AddResourceWithInputProps> = ({
         button
       )}
       <Box sx={styles.filterWithInput}>
-        {categoryService ? <FilterSelector {...filterProps} /> : ''}
+        {categoryService && <FilterSelector {...filterProps} />}
         <InputWithIcon
           endAdornment={<SearchIcon sx={styles.searchIcon} />}
           onChange={onChange}
