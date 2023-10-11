@@ -1,6 +1,6 @@
-import Box from '@mui/material/Box'
-import { useCallback, useRef } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import Box from '@mui/material/Box'
 
 import Loader from '~/components/loader/Loader'
 import AddResourceWithInput from '~/containers/my-resources/add-resource-with-input/AddResourceWithInput'
@@ -24,7 +24,8 @@ import {
   ItemsWithCount,
   GetResourcesParams,
   ErrorResponse,
-  ResourcesTabsEnum
+  ResourcesTabsEnum,
+  UpdateResourceCategory
 } from '~/types'
 import { ajustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
 
@@ -37,15 +38,10 @@ const CategoriesContainer = () => {
   const breakpoints = useBreakpoints()
   const { page, handleChangePage } = usePagination()
   const { setAlert } = useSnackBarContext()
+  const [selectedItemId, setSelectedItemId] = useState<string>('')
 
   const { sort } = sortOptions
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
-
-  const columnsToShow = ajustColumns<Categories>(
-    breakpoints,
-    columns,
-    removeColumnRules
-  )
 
   const onResponseError = useCallback(
     (error: ErrorResponse) => {
@@ -68,6 +64,12 @@ const CategoriesContainer = () => {
     [page, itemsPerPage, sort, searchTitle]
   )
 
+  const updateCategory = useCallback(
+    (params?: UpdateResourceCategory) =>
+      ResourceService.updateResourceCategory(params),
+    []
+  )
+
   const { response, loading, fetchData } = useAxios<
     ItemsWithCount<Categories>,
     GetResourcesParams
@@ -77,14 +79,34 @@ const CategoriesContainer = () => {
     onResponseError
   })
 
-  const onEdit = {}
-  const deleteCategory = {}
+  const onCategoryUpdate = useCallback(() => void fetchData(), [fetchData])
+
+  const { fetchData: updateData } = useAxios({
+    service: updateCategory,
+    defaultResponse: null,
+    onResponseError,
+    onResponse: onCategoryUpdate,
+    fetchOnMount: false
+  })
+
+  const onSave = async (name: string) => {
+    if (name) await updateData({ id: selectedItemId, name })
+    setSelectedItemId('')
+  }
+  const onEdit = (id: string) => setSelectedItemId(id)
+  const onCancel = () => setSelectedItemId('')
+
+  const columnsToShow = ajustColumns<Categories>(
+    breakpoints,
+    columns(selectedItemId, onSave, onCancel),
+    removeColumnRules
+  )
 
   const props = {
     actions: { onEdit },
     columns: columnsToShow,
     data: { response, getData: fetchData },
-    services: { deleteService: deleteCategory },
+    services: { deleteService: () => null },
     pagination: { page, onChange: handleChangePage },
     sort: sortOptions,
     itemsPerPage,

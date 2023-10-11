@@ -9,16 +9,24 @@ import Typography from '@mui/material/Typography'
 
 import ChatDate from '~/containers/chat/chat-date/ChatDate'
 import ChatTextArea from '~/containers/chat/chat-text-area/ChatTextArea'
-import Message from '~/components/message/Message'
+import { useChatContext } from '~/context/chat-context'
+import { useSnackBarContext } from '~/context/snackbar-context'
 import useAxios from '~/hooks/use-axios'
+import Message from '~/components/message/Message'
 import UserProfileInfo from '~/components/user-profile-info/UserProfileInfo'
 import Loader from '~/components/loader/Loader'
 import { messageService } from '~/services/message-service'
-import { useChatContext } from '~/context/chat-context'
+import { chatService } from '~/services/chat-service'
 import { getGroupedByDate, getIsNewDay } from '~/utils/helper-functions'
 
-import { ChatInfo, MessageInterface } from '~/types'
-import { defaultResponses } from '~/constants'
+import {
+  ChatInfo,
+  ChatResponse,
+  ErrorResponse,
+  MessageInterface
+} from '~/types'
+import { defaultResponses, snackbarVariants } from '~/constants'
+import { authRoutes } from '~/router/constants/authRoutes'
 import { styles } from '~/containers/offer-page/chat-dialog-window/ChatDialogWindow.styles'
 import { questions } from '~/containers/offer-page/chat-dialog-window/ChatDialogWindow.constants'
 
@@ -28,13 +36,44 @@ interface ChatDialogWindow {
 
 const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
   const [textAreaValue, setTextAreaValue] = useState<string>('')
+  const [isInitSended, setIsInitSended] = useState<boolean>(false)
+  const [isRedirected, setIsRedirected] = useState<boolean>(false)
+  const { setAlert } = useSnackBarContext()
   const { t } = useTranslation()
   const scrollRef = useRef<HTMLDivElement | null>(null)
   const { setChatInfo } = useChatContext()
 
+  const handleErrorResponse = useCallback(
+    (errorResponse: ErrorResponse) => {
+      setAlert({
+        severity: snackbarVariants.error,
+        message: errorResponse ? `${errorResponse.message}` : ''
+      })
+    },
+    [setAlert]
+  )
+
   const getMessages = useCallback(
-    () => messageService.getMessages({ chatId: chatInfo.chatId }),
+    () => messageService.getMessages({ chatId: chatInfo.chatId as string }),
     [chatInfo.chatId]
+  )
+
+  const sendMessage = useCallback(
+    () =>
+      messageService.sendMessage({
+        chatId: chatInfo.chatId.toString(),
+        text: textAreaValue
+      }),
+    [chatInfo.chatId, textAreaValue]
+  )
+
+  const createChat = useCallback(
+    () =>
+      chatService.createChat({
+        member: chatInfo.author._id,
+        memberRole: chatInfo.authorRole
+      }),
+    [chatInfo.author._id, chatInfo.authorRole]
   )
 
   const {
@@ -47,8 +86,59 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
     fetchOnMount: false
   })
 
+  const {
+    loading: chatIsCreating,
+    fetchData: createNewChat,
+    response: createdChat
+  } = useAxios<ChatResponse | undefined>({
+    service: createChat,
+    fetchOnMount: false,
+    defaultResponse: undefined,
+    onResponseError: handleErrorResponse
+  })
+
+  const { loading: isMessageSending, fetchData: handleSendMessage } = useAxios<
+    MessageInterface[]
+  >({
+    service: sendMessage,
+    defaultResponse: defaultResponses.array,
+    fetchOnMount: false,
+    onResponseError: handleErrorResponse
+  })
+
+  const closeChatWindow = () => setChatInfo(null)
+
+  const openChatInNewTab = (chatId: Pick<ChatResponse, '_id'> | string) => {
+    localStorage.setItem('currentChatId', chatId as string)
+    window.open(authRoutes.chat.path, '_blank', 'noopener noreferrer')
+  }
+
+  const handleRedirectToChat = async () => {
+    if (!chatInfo.chatId) {
+      setIsRedirected(true)
+      await createNewChat()
+    } else openChatInNewTab(chatInfo.chatId)
+    closeChatWindow()
+  }
+
+  const sendQuestion = async (question: string) => {
+    setTextAreaValue(question)
+    await onMessageSend()
+  }
+
+  const onMessageSend = useCallback(async () => {
+    if (!chatInfo.chatId) {
+      await createNewChat()
+    } else {
+      setTextAreaValue('')
+      setIsInitSended(true)
+      await handleSendMessage()
+      await fetchData()
+    }
+  }, [chatInfo.chatId, createNewChat, fetchData, handleSendMessage])
+
   useEffect(() => {
-    chatInfo.chatId && void fetchData({ chatId: chatInfo.chatId })
+    chatInfo.chatId && void fetchData()
   }, [chatInfo.chatId, fetchData])
 
   useEffect(() => {
@@ -57,6 +147,31 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
     }
   }, [chatInfo.chatId, messagesLoad])
 
+  useEffect(() => {
+    if (createdChat?._id && createdChat?._id !== chatInfo.chatId) {
+      chatInfo.updateInfo()
+      setChatInfo({
+        ...chatInfo,
+        chatId: createdChat?._id
+      })
+      isRedirected && openChatInNewTab(createdChat?._id)
+    }
+  }, [createdChat, isRedirected, chatInfo, setChatInfo])
+
+  useEffect(() => {
+    !chatIsCreating &&
+      createdChat?._id &&
+      !isInitSended &&
+      !isRedirected &&
+      void onMessageSend()
+  }, [
+    chatIsCreating,
+    createdChat?._id,
+    isInitSended,
+    isRedirected,
+    onMessageSend
+  ])
+
   const groupedMessages = getGroupedByDate(messages, getIsNewDay)
 
   const messagesListWithDate = groupedMessages.map((group) => (
@@ -64,6 +179,7 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
       <ChatDate date={group.date} />
       {group.items.map((item, index) => (
         <Message
+          filteredIndex={0}
           key={item._id}
           message={item}
           prevMessage={index ? group.items[index - 1] : null}
@@ -72,19 +188,33 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
     </Box>
   ))
 
-  const scrollableContent = messagesLoad ? (
-    <Loader pageLoad size={50} sx={styles.loader} />
-  ) : (
-    messagesListWithDate
-  )
+  const statusLoader = (textToShow: string) => {
+    return (
+      <Box sx={styles.chatCreateBox}>
+        <Loader size={20} />
+        <Typography sx={styles.question}>{textToShow}</Typography>
+      </Box>
+    )
+  }
 
-  const questionsList = questions.map((el) => (
-    <Typography key={el.question} sx={styles.question}>
-      {t(el.question)}
-    </Typography>
-  ))
+  const scrollableContent =
+    messagesLoad && !isInitSended ? (
+      <Loader pageLoad size={50} sx={styles.loader} />
+    ) : (
+      messagesListWithDate
+    )
 
-  const closeChatWindow = () => setChatInfo(null)
+  const questionsList = chatIsCreating
+    ? statusLoader(t('chatPage.creating'))
+    : questions.map((el) => (
+        <Typography
+          key={el.question}
+          onClick={() => void sendQuestion(t(el.question))}
+          sx={styles.question}
+        >
+          {t(el.question)}
+        </Typography>
+      ))
 
   return (
     <Box sx={styles.root}>
@@ -100,11 +230,12 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
             sx={styles.userProfileInfo}
           />
           <Box>
-            {chatInfo.chatId && (
-              <IconButton onClick={() => undefined} sx={styles.icons}>
-                <MessageIcon />
-              </IconButton>
-            )}
+            <IconButton
+              onClick={() => void handleRedirectToChat()}
+              sx={styles.icons}
+            >
+              <MessageIcon />
+            </IconButton>
             <IconButton onClick={closeChatWindow} sx={styles.icons}>
               <CloseIcon />
             </IconButton>
@@ -120,16 +251,20 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
         ) : (
           <Box sx={styles.firstQuestions}>
             <Typography sx={styles.subtitle}>
-              {t('chatPage.youCanAsk')}
+              {!chatIsCreating && t('chatPage.youCanAsk')}
             </Typography>
             {questionsList}
           </Box>
         )}
         <ChatTextArea
           emojiPickerProps={{ perLine: 6 }}
-          label={t('chatPage.chat.inputLabel')}
+          label={
+            isMessageSending
+              ? statusLoader(t('chatPage.chat.sendingMessage'))
+              : t('chatPage.chat.inputLabel')
+          }
           maxRows={3}
-          onClick={() => null}
+          onClick={() => void onMessageSend()}
           setValue={setTextAreaValue}
           sx={styles.textArea}
           value={textAreaValue}

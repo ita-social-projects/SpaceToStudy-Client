@@ -24,7 +24,8 @@ import {
   GetResourcesParams,
   ErrorResponse,
   ResourcesTabsEnum,
-  Question
+  Question,
+  CreatedQuestion
 } from '~/types'
 import { ajustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
 
@@ -78,12 +79,60 @@ const QuestionsContainer = () => {
     []
   )
 
+  const duplicateQuestion = useCallback(
+    (id?: string) => {
+      const item = response.items.find(
+        (element) => element._id === id
+      ) as unknown as CreatedQuestion
+
+      return ResourceService.createQuestion({
+        title: item?.title,
+        answers: item?.answers,
+        category: item?.category,
+        type: item?.type
+      })
+    },
+    [response.items]
+  )
+
+  const onDuplicateError = (error: ErrorResponse) => {
+    setAlert({
+      severity: snackbarVariants.error,
+      message: error ? `errors.${error.code}` : ''
+    })
+  }
+
+  const onDuplicateResponse = () => {
+    setAlert({
+      severity: snackbarVariants.success,
+      message: `myResourcesPage.questions.successDuplication`
+    })
+  }
+
+  const { error: duplicationError, fetchData: duplicateItem } = useAxios({
+    service: duplicateQuestion,
+    fetchOnMount: false,
+    defaultResponse: null,
+    onResponseError: onDuplicateError,
+    onResponse: onDuplicateResponse
+  })
+
+  const handleDuplicate = async (itemId: string) => {
+    await duplicateItem(itemId)
+    if (!duplicationError) await fetchData()
+  }
+
   const props = {
     columns: columnsToShow,
     data: { response, getData: fetchData },
-    services: { deleteService: deleteQuestion },
+    services: {
+      deleteService: deleteQuestion
+    },
     itemsPerPage,
-    actions: { onEdit: () => null },
+    actions: {
+      onEdit: () => null,
+      onDuplicate: (itemId: string) => handleDuplicate(itemId)
+    },
     resource: ResourcesTabsEnum.Questions,
     sort: sortOptions,
     pagination: { page, onChange: handleChangePage }

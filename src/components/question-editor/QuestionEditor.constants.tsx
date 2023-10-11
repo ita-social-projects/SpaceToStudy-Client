@@ -21,3 +21,10 @@ export const sortQuestions = [
     value: 'oneAnswer'
   }
 ]
+
+export const questionType = (type: string) => {
+  const isMultipleChoice = type === sortQuestions[0].value
+  const isOpenAnswer = type === sortQuestions[1].value
+  const isSingleChoice = type === sortQuestions[2].value
+  return { isMultipleChoice, isOpenAnswer, isSingleChoice }
+}

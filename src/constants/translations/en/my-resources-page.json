@@ -20,6 +20,9 @@
   "attachments": {
     "addBtn": "Add Attachment",
     "add": "Add files from your Attachments",
+    "edit": "Edit Attachment",
+    "description": "Description",
+    "fileName": "File name",
     "file": "File",
     "size": "Size",
     "lastUpdate": "Last update",
@@ -50,7 +53,8 @@
     "updated": "Last updates",
     "emptyItems": "You have no questions yet",
     "confirmDeletionTitle":"Do you confirm question deletion?",
-    "successDeletion":"Question was deleted successfully"
+    "successDeletion":"Question was deleted successfully",
+    "successDuplication":"Question was successfully duplicated"
   },
   "categories": {
     "addBtn": "New category",

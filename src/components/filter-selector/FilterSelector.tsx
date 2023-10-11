@@ -27,14 +27,16 @@ interface FilterSelectorProps<T> extends Omit<MenuProps, 'open'> {
   selectedItems: string[]
   setSelectedItems: Dispatch<SetStateAction<string[]>>
   position?: PopoverOrigin['horizontal']
+  valueField?: keyof T
 }
 
-const FilterSelector = <T extends string>({
+const FilterSelector = <T,>({
   title,
   service,
   selectedItems,
   setSelectedItems,
   position = 'left',
+  valueField,
   ...props
 }: FilterSelectorProps<T>) => {
   const { t } = useTranslation()
@@ -77,17 +79,27 @@ const FilterSelector = <T extends string>({
   const filteredItems = useMemo(
     () =>
       response.filter((item) =>
-        item.toLowerCase().includes(inputValue.toLowerCase())
+        String(valueField ? item[valueField] : item)
+          .toLowerCase()
+          .includes(inputValue.toLowerCase())
       ),
-    [response, inputValue]
+    [response, inputValue, valueField]
   )
 
-  const menuItems = filteredItems.map((item) => (
-    <MenuItem key={item} onClick={() => onMenuItemClick(item)} sx={styles.text}>
-      <Checkbox checked={selectedItems.includes(item)} />
-      {item}
-    </MenuItem>
-  ))
+  const menuItems = filteredItems.map((item) => {
+    const field = String(valueField ? item[valueField] : item)
+
+    return (
+      <MenuItem
+        key={field}
+        onClick={() => onMenuItemClick(field)}
+        sx={styles.text}
+      >
+        <Checkbox checked={selectedItems.includes(field)} />
+        {field}
+      </MenuItem>
+    )
+  })
 
   const scrollableContent = filteredItems.length ? (
     menuItems

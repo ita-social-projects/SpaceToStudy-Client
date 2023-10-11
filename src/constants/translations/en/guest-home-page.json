@@ -1,24 +1,24 @@
 {
   "welcomeBlock": {
-    "description": "An educational platform that offers professional courses in It is a long established fact that a reader will be distracted by the readable content of",
+    "description": "An educational platform that offers professional courses, empowering students with essential skills for career success.",
     "getStarted": "Get started for free"
   },
   "accordion": {
     "flexibleLocation": {
       "title": "Flexible Location",
-      "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
+      "description": "Space2Study platform has no boundaries and can be used anywhere in the world, all you need is aspiration."
     },
     "individualTime": {
       "title": "Individual Time",
-      "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
+      "description": "Space2Study platform provides the opportunity to study lessons at any time convenient for you, pause and continue again."
     },
     "freeChoiceOfTeachers": {
       "title": "Free Choice of Tutors",
-      "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
+      "description": "Space2Study platform has a wide range of criteria and will help you find the best tutor for education."
     },
     "digitalCommunication": {
       "title": "Digital Communication",
-      "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
+      "description": "Space2Study platform offers extensive opportunities for meaningful communication not only with tutors but also with students."
     }
   },
   "whatCanYouDo": {
@@ -26,12 +26,12 @@
     "description": "Whether you’re looking for a tutor or looking to become one – you’ve come to the right place.",
     "learn": {
       "title": "Learn from experts",
-      "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.established fact that a reader will be ",
+      "description": "Learning from experts is a shortcut to mastery. Their knowledge and experience can guide you, unlocking your potential. Don't put off until tomorrow. Embrace it! 🌟",
       "actionLabel": "Become a student"
     },
     "teach": {
       "title": "Share your experience",
-      "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.established fact that a reader will be ",
+      "description": "Sharing your experience as an expert will be incredibly rewarding, helping students unlock their pоtential and achieve their goals. Don't waste your time 📚",
       "actionLabel": "Become a tutor"
     }
   },
@@ -42,42 +42,42 @@
     "student": {
       "signUp": {
         "title": "Sign Up",
-        "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
+        "description": "Registering on the Space2Study platform is very simple, just enter your email or use your Google account."
       },
       "selectATutor": {
         "title": "Select a Tutor",
-        "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
+        "description": "Finding a tutor is very easy, select a subject from the list, and then pick the tutor, or enter his name and find directly."
       },
       "sendRequest": {
         "title": "Send Request",
-        "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
+        "description": "Write a request to the tutor in two clicks, where you indicate/confirm the price and the desired level of training."
       },
       "startLearning": {
         "title": "Start Learning",
-        "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
+        "description": "After confirming the request, all training opportunities for the chosen course will open for you."
       }
     },
     "tutor": {
       "signUp": {
         "title": "Sign Up",
-        "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
+        "description": "Registering on the Space2Study platform is very simple, just enter your email or use your Google account."
       },
       "createATutorAccount": {
         "title": "Create a Tutor Account",
-        "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
+        "description": "Creating a tutor account is easy, you just need to select a subject, upload teaching materials and create an offer."
       },
       "getNewStudents": {
         "title": "Get New Students",
-        "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
+        "description": "Create fruitful cooperation with your students, confirming their requests, and start teaching."
       },
       "receiveFeedbacks": {
         "title": "Receive Feedbacks",
-        "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
+        "description": "Receive positive feedback for your work to become popular and get even more satisfied students."
       }
     }
   },
   "whoWeAre": {
     "title": "Who we are",
-    "description": "Space to Study - an educational platform that offersIt a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed."
+    "description": "SpaceToStudy platform is a place where experts share their knowledge and students can learn from the best. Here you can find the proper training course, find a tutor, or find a student. SpaceToStude doesn’t receive any commission for classes between a tutor and a student, that’s why education with us becomes even closer and more financially available."
   }
 }

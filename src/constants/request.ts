@@ -42,7 +42,8 @@ export const URLs = {
     update: '/cooperations'
   },
   chats: {
-    get: '/chats'
+    get: '/chats',
+    create: '/chats'
   },
   resources: {
     lessons: {
@@ -58,11 +59,13 @@ export const URLs = {
     },
     questions: {
       get: '/questions',
-      delete: '/questions'
+      delete: '/questions',
+      post: '/questions'
     },
     resourcesCategories: {
       get: '/resources-categories',
-      getNames: '/resources-categories/names'
+      getNames: '/resources-categories/names',
+      patch: '/resources-categories'
     }
   },
   messages: {

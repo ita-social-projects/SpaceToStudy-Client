@@ -12,7 +12,10 @@ import {
   NewLesson,
   UpdateAttachmentParams,
   Question,
-  Categories
+  Categories,
+  QuestionForm,
+  CategoryNameInterface,
+  UpdateResourceCategory
 } from '~/types'
 import { createUrlPath } from '~/utils/helper-functions'
 
@@ -55,6 +58,9 @@ export const ResourceService = {
   ): Promise<AxiosResponse<ItemsWithCount<Question>>> => {
     return axiosClient.get(URLs.resources.questions.get, { params })
   },
+  createQuestion: async (data?: QuestionForm): Promise<AxiosResponse> => {
+    return await axiosClient.post(URLs.resources.questions.post, data)
+  },
   deleteQuestion: async (id: string): Promise<AxiosResponse> =>
     await axiosClient.delete(
       createUrlPath(URLs.resources.questions.delete, id)
@@ -64,6 +70,14 @@ export const ResourceService = {
   ): Promise<AxiosResponse<ItemsWithCount<Categories>>> => {
     return axiosClient.get(URLs.resources.resourcesCategories.get, { params })
   },
-  getResourcesCategoriesNames: (): Promise<AxiosResponse<string[]>> =>
-    axiosClient.get(URLs.resources.resourcesCategories.getNames)
+  getResourcesCategoriesNames: (): Promise<
+    AxiosResponse<CategoryNameInterface[]>
+  > => axiosClient.get(URLs.resources.resourcesCategories.getNames),
+  updateResourceCategory: (
+    params?: UpdateResourceCategory
+  ): Promise<AxiosResponse> =>
+    axiosClient.patch(
+      createUrlPath(URLs.resources.resourcesCategories.patch, params?.id),
+      params
+    )
 }

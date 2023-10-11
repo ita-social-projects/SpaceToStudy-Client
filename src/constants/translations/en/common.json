@@ -13,6 +13,7 @@
   "edit": "Edit",
   "delete": "Delete",
   "rename": "Rename",
+  "duplicate": "Duplicate",
   "showMore": "Show more",
   "showLess": "Show less",
   "confirmButton": "OK",
@@ -36,6 +37,7 @@
   "allFilesSizeError": "All files size error",
   "fileSizeError": "Розмір одного файлу не може перевищувати 10 Мб.",
   "noItems": "No items found",
+  "view": "View",
   "labels": {
     "email": "Email",
     "firstName": "First name",
