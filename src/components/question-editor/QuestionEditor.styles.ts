@@ -7,6 +7,14 @@ const divider = {
 }
 
 export const styles = {
+  addButton: {
+    justifyContent: 'flex-start',
+    pl: '10px',
+    gap: '5px'
+  },
+  divider: {
+    my: '5px'
+  },
   group: { width: '100%' },
   input: {
     style: { padding: 0 }

@@ -60,10 +60,13 @@
     "category": "Category",
     "noCategory": "No category",
     "addBtn": "New category",
+    "name": "Category name",
     "title": "Title",
     "updated": "Last updates",
     "emptyItems": "You have no categories yet",
+    "successCreation": "«{{category}}» category was created successfully",
     "confirmDeletionTitle": "Do you confirm category deletion?"
+
   },
   "confirmDeletionMessage":"This action is permanent and will remove all related content. Please review your decision before proceeding."
 }
