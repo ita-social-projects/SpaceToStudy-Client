@@ -3,7 +3,9 @@ import {
   ChangeEvent,
   FC,
   MutableRefObject,
-  ReactElement
+  ReactElement,
+  Dispatch,
+  SetStateAction
 } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
@@ -14,6 +16,8 @@ import Box from '@mui/material/Box'
 import { useDebounce } from '~/hooks/use-debounce'
 import AppButton from '~/components/app-button/AppButton'
 import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
+import FilterSelector from '~/components/filter-selector/FilterSelector'
+import { ServiceFunction } from '~/types'
 
 import { styles } from '~/containers/my-resources/add-resource-with-input/AddResourceWithInput.styles'
 
@@ -23,6 +27,9 @@ interface AddResourceWithInputProps {
   link?: string
   searchRef: MutableRefObject<string>
   button?: ReactElement
+  categoryService?: ServiceFunction<string[], undefined>
+  selectedItems?: string[]
+  setItems?: Dispatch<SetStateAction<string[]>>
 }
 
 const AddResourceWithInput: FC<AddResourceWithInputProps> = ({
@@ -30,7 +37,10 @@ const AddResourceWithInput: FC<AddResourceWithInputProps> = ({
   fetchData,
   link,
   searchRef,
-  button
+  button,
+  categoryService,
+  selectedItems,
+  setItems
 }) => {
   const { t } = useTranslation()
   const [searchInput, setSearchInput] = useState<string>('')
@@ -51,6 +61,13 @@ const AddResourceWithInput: FC<AddResourceWithInputProps> = ({
     void fetchData()
   }
 
+  const filterProps = {
+    title: 'Category',
+    service: categoryService,
+    selectedItems: selectedItems,
+    setSelectedItems: setItems
+  }
+
   return (
     <Box sx={styles.container}>
       {!button ? (
@@ -61,15 +78,17 @@ const AddResourceWithInput: FC<AddResourceWithInputProps> = ({
       ) : (
         button
       )}
-
-      <InputWithIcon
-        endAdornment={<SearchIcon sx={styles.searchIcon} />}
-        onChange={onChange}
-        onClear={onClear}
-        placeholder={t('common.search')}
-        sx={styles.input}
-        value={searchInput}
-      />
+      <Box sx={styles.filterWithInput}>
+        {categoryService ? <FilterSelector {...filterProps} /> : ''}
+        <InputWithIcon
+          endAdornment={<SearchIcon sx={styles.searchIcon} />}
+          onChange={onChange}
+          onClear={onClear}
+          placeholder={t('common.search')}
+          sx={styles.input}
+          value={searchInput}
+        />
+      </Box>
     </Box>
   )
 }

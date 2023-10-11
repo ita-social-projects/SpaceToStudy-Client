@@ -12,5 +12,9 @@ export const styles = {
     border: '1px solid',
     borderColor: 'primary.500',
     borderRadius: '6px'
+  },
+  filterWithInput: {
+    display: 'flex',
+    columnGap: '25px'
   }
 }

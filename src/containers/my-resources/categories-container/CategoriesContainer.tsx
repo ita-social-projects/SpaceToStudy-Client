@@ -59,7 +59,7 @@ const CategoriesContainer = () => {
         limit: itemsPerPage,
         skip: (page - 1) * itemsPerPage,
         sort,
-        title: searchTitle.current
+        name: searchTitle.current
       }),
     [page, itemsPerPage, sort, searchTitle]
   )

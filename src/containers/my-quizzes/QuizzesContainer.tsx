@@ -1,4 +1,4 @@
-import { useCallback, useRef } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import Box from '@mui/material/Box'
 
 import { useSnackBarContext } from '~/context/snackbar-context'
@@ -11,6 +11,7 @@ import useBreakpoints from '~/hooks/use-breakpoints'
 import useAxios from '~/hooks/use-axios'
 import usePagination from '~/hooks/table/use-pagination'
 import { authRoutes } from '~/router/constants/authRoutes'
+import { ResourceService } from '~/services/resource-service'
 
 import { defaultResponses, snackbarVariants } from '~/constants'
 import {
@@ -35,6 +36,7 @@ const QuizzesContainer = () => {
   const sortOptions = useSort({ initialSort })
   const searchTitle = useRef<string>('')
   const breakpoints = useBreakpoints()
+  const [selectedItems, setSelectedItems] = useState<string[]>([])
 
   const { sort } = sortOptions
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
@@ -94,9 +96,12 @@ const QuizzesContainer = () => {
     <Box>
       <AddResourceWithInput
         btnText={'myResourcesPage.quizzes.addBtn'}
+        categoryService={ResourceService.getResourcesCategoriesNames}
         fetchData={fetchData}
         link={authRoutes.myResources.newQuiz.path}
         searchRef={searchTitle}
+        selectedItems={selectedItems}
+        setItems={setSelectedItems}
       />
       {loading ? (
         <Loader pageLoad size={50} />
