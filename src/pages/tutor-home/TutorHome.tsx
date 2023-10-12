@@ -33,7 +33,7 @@ const TutorHome = () => {
       <FindBlock translationKey={translationKey} />
       <PopularCategories
         description={t('tutorHomePage.popularCategories.description')}
-        title={t('common.popularCategories')}
+        title={t('tutorHomePage.popularCategories.title')}
       />
     </PageWrapper>
   )
