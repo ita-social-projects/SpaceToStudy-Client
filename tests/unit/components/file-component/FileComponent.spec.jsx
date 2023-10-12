@@ -24,13 +24,13 @@ beforeEach(() => {
   render(<FileComponent file={sampleFile} />)
 })
 
-test('renders file name and file details correctly', () => {
+it('renders file name and file details correctly', () => {
   expect(screen.getByText('testfile.txt')).toBeInTheDocument()
   expect(screen.getByText('5 chatPage.sidebar.megabytes')).toBeInTheDocument()
   expect(screen.getByText('July 31, 2023')).toBeInTheDocument()
 })
 
-test('clicking on the file opens the file URL in a new tab', () => {
+it('clicking on the file opens the file URL in a new tab', () => {
   fireEvent.click(screen.getByText('testfile.txt'))
 
   expect(mockOpen.url).toBe('http://example.com/testfile.txt')
