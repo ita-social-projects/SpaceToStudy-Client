@@ -128,7 +128,7 @@ export const useForm = <T extends object>({
       }
     }
 
-    isValid ? void onSubmit?.(submittedData) : setErrors(newErrors)
+    isValid ? onSubmit && void onSubmit(submittedData) : setErrors(newErrors)
   }
 
   const resetData = (keys: (keyof T)[] = []) => {
