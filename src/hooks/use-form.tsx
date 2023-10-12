@@ -8,7 +8,7 @@ interface UseFormProps<T> {
   validations?: Partial<{
     [K in keyof T]: (value: T[K] | string, data: T) => string | undefined
   }>
-  onSubmit: (data?: T) => Promise<void>
+  onSubmit?: (data?: T) => Promise<void>
   submitWithData?: boolean
 }
 
@@ -25,6 +25,7 @@ interface UseFormOutput<T> {
   ) => (event: React.FocusEvent<HTMLInputElement>) => void
   handleErrors: (key: keyof T, error: string) => void
   handleSubmit: (event: React.FormEvent<HTMLDivElement>) => void
+  resetData: (keys?: (keyof T)[]) => void
 }
 
 export const useForm = <T extends object>({
@@ -127,7 +128,21 @@ export const useForm = <T extends object>({
       }
     }
 
-    isValid ? void onSubmit(submittedData) : setErrors(newErrors)
+    isValid ? void onSubmit?.(submittedData) : setErrors(newErrors)
+  }
+
+  const resetData = (keys: (keyof T)[] = []) => {
+    setData((prev) => {
+      if (keys.length === 0) return initialValues
+
+      const newData = { ...prev }
+
+      keys.forEach((key) => {
+        newData[key] = initialValues[key]
+      })
+
+      return newData
+    })
   }
 
   return {
@@ -138,7 +153,8 @@ export const useForm = <T extends object>({
     handleNonInputValueChange,
     handleBlur,
     handleErrors,
-    handleSubmit
+    handleSubmit,
+    resetData
   }
 }
 

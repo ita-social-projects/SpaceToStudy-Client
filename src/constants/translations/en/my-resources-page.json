@@ -57,6 +57,7 @@
     "successDuplication":"Question was successfully duplicated"
   },
   "categories": {
+    "noCategory": "No category",
     "addBtn": "New category",
     "title": "Title",
     "updated": "Last updates",
