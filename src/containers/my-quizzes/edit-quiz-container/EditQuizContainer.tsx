@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react'
+import { useState, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import Box from '@mui/material/Box'
@@ -7,44 +7,96 @@ import EditIcon from '@mui/icons-material/Edit'
 import AddIcon from '@mui/icons-material/Add'
 
 import { useModalContext } from '~/context/modal-context'
+import { useSnackBarContext } from '~/context/snackbar-context'
+import { ResourceService } from '~/services/resource-service'
+import useAxios from '~/hooks/use-axios'
+import useForm from '~/hooks/use-form'
+import CreateOrEditQuestionModal from '~/containers/my-resources/create-or-edit-question-modal/CreateOrEditQuestionModal'
+import QuestionEditor from '~/components/question-editor/QuestionEditor'
 import QuestionsList from '~/containers/questions-list/QuestionsList'
 import AddQuestions from '~/containers/my-resources/add-questions/AddQuestions'
 import AppButton from '~/components/app-button/AppButton'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
 
+import { snackbarVariants } from '~/constants'
 import { myResourcesPath } from '~/pages/create-or-edit-lesson/CreateOrEditLesson.constants'
+import { initialValues } from '~/containers/my-quizzes/edit-quiz-container/EditQuizContainer.constants'
 import { styles } from '~/containers/my-quizzes/edit-quiz-container/EditQuizContainer.styles'
 import {
   ButtonTypeEnum,
   ButtonVariantEnum,
   ComponentEnum,
   Question,
+  CreateQuestionData,
+  CreateOrEditQuizForm,
   SizeEnum,
-  TextFieldVariantEnum
+  TextFieldVariantEnum,
+  QuestionModalForm,
+  ErrorResponse
 } from '~/types'
 
 const EditQuizContainer = () => {
   const { t } = useTranslation()
-  const { openModal } = useModalContext()
-  const [title, setTitle] = useState<string>('')
-  const [description, setDescription] = useState<string>('')
+  const { setAlert } = useSnackBarContext()
+  const { openModal, closeModal } = useModalContext()
   const [questions, setQuestions] = useState<Question[]>([])
+  const [isNewQuestion, setIsNewQuestion] = useState<boolean>(false)
 
-  const handleTitleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setTitle(e.currentTarget.value)
+  const createNewQuestion = useCallback(
+    (data?: CreateQuestionData) => ResourceService.createQuestion(data),
+    []
+  )
+
+  const onCreateResponse = useCallback((response: Question | null) => {
+    response && setQuestions((prev) => [...prev, response])
+  }, [])
+
+  const onResponseError = (error: ErrorResponse) => {
+    setAlert({
+      severity: snackbarVariants.error,
+      message: error ? `errors.${error.message}` : ''
+    })
   }
 
-  const handleDescriptionChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setDescription(e.currentTarget.value)
-  }
+  const { loading: creationLoad, fetchData: createQuestion } = useAxios({
+    service: createNewQuestion,
+    defaultResponse: null,
+    fetchOnMount: false,
+    onResponse: onCreateResponse,
+    onResponseError
+  })
 
-  const onAddQuestions = (attachments: Question[]) => {
-    setQuestions(attachments)
+  const {
+    data,
+    handleInputChange,
+    handleNonInputValueChange,
+    handleSubmit,
+    resetData
+  } = useForm<CreateOrEditQuizForm>({
+    initialValues,
+    onSubmit: () => console.log(data)
+  })
+
+  const {
+    title,
+    description,
+    questionTitle,
+    questionCategory,
+    text,
+    answers,
+    type
+  } = data
+
+  const onOpenCreateQuestionModal = () => {
+    openModal({
+      component: (
+        <CreateOrEditQuestionModal
+          actions={{ onCancel: closeModal, onSave: onOpenQuestionCreation }}
+          initialData={data}
+        />
+      )
+    })
   }
 
   const onOpenAddQuestionsModal = () => {
@@ -55,16 +107,47 @@ const EditQuizContainer = () => {
     })
   }
 
+  const onCloseQuestionCreation = () => setIsNewQuestion(false)
+
+  const onOpenQuestionCreation = ({ title, category }: QuestionModalForm) => {
+    handleNonInputValueChange('questionTitle', title)
+    handleNonInputValueChange('questionCategory', category)
+    setIsNewQuestion(true)
+    closeModal()
+  }
+
+  const onCreateQuestion = async () => {
+    await createQuestion({
+      title: questionTitle,
+      text,
+      answers,
+      type,
+      category: questionCategory
+    })
+
+    onCloseQuestionCreation()
+    resetData(['questionTitle', 'questionCategory', 'text', 'answers'])
+  }
+
+  const onAddQuestions = (attachments: Question[]) => {
+    setQuestions(attachments)
+  }
+
   return (
     <PageWrapper sx={styles.container}>
-      <Box component={ComponentEnum.Form} sx={styles.root}>
+      <Box
+        component={ComponentEnum.Form}
+        onSubmit={handleSubmit}
+        sx={styles.root}
+      >
         <AppTextField
           InputLabelProps={styles.titleLabel(title)}
           InputProps={styles.titleInput}
           fullWidth
           inputProps={styles.input}
           label={t('myResourcesPage.quizzes.defaultNewTitle')}
-          onChange={(e) => handleTitleChange(e)}
+          onChange={handleInputChange('title')}
+          value={title}
           variant={TextFieldVariantEnum.Standard}
         />
         <AppTextField
@@ -73,15 +156,27 @@ const EditQuizContainer = () => {
           fullWidth
           inputProps={styles.input}
           label={t('myResourcesPage.quizzes.defaultNewDescription')}
-          onChange={(e) => handleDescriptionChange(e)}
+          onChange={handleInputChange('description')}
+          value={description}
           variant={TextFieldVariantEnum.Standard}
         />
         <Divider sx={styles.divider} />
 
         <QuestionsList items={questions} setItems={setQuestions} />
+        {isNewQuestion && (
+          <QuestionEditor
+            data={data}
+            handleInputChange={handleInputChange}
+            handleNonInputValueChange={handleNonInputValueChange}
+            loading={creationLoad}
+            onCancel={onCloseQuestionCreation}
+            onSave={onCreateQuestion}
+          />
+        )}
 
         <Box sx={styles.functionalButtons}>
           <AppButton
+            onClick={onOpenCreateQuestionModal}
             size={SizeEnum.ExtraLarge}
             variant={ButtonVariantEnum.Tonal}
           >

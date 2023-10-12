@@ -78,10 +78,10 @@ const Question: FC<QuestionProps> = ({ question, setQuestions, sx = {} }) => {
     </MenuItem>
   ))
 
-  const answersList = question.answers.map((answer, i) => (
+  const answersList = question.answers.map((answer) => (
     <Box key={answer.text} sx={styles.answer}>
       <FormControlLabel
-        checked={i == 1}
+        checked={answer.isCorrect}
         control={<Checkbox />}
         label={answer.text}
       />
@@ -109,11 +109,14 @@ const Question: FC<QuestionProps> = ({ question, setQuestions, sx = {} }) => {
         </IconButton>
         {renderMenu(menuItems)}
       </Box>
-      <AppChip labelSx={styles.categoryChipLabel} sx={styles.categoryChip}>
-        {question.category.name}
-      </AppChip>
 
-      <Divider />
+      {question.category && (
+        <AppChip labelSx={styles.categoryChipLabel} sx={styles.categoryChip}>
+          {question.category.name}
+        </AppChip>
+      )}
+
+      <Divider sx={styles.divider} />
       <Box sx={styles.questionBody}>
         <Typography sx={styles.questionText}>{question.text}</Typography>
         <Box sx={styles.answers}>{answersList}</Box>

@@ -1,57 +1,26 @@
-import palette from '~/styles/app-theme/app.pallete'
 import { commonShadow } from '~/styles/app-theme/custom-shadows'
-import { VisibilityEnum } from '~/types'
 
-const inputFontSize = {
-  fontSize: '35px',
-  fontWeight: 500,
-  maxHeight: '35px',
-  marginTop: 0
+const divider = {
+  alignSelf: 'stretch',
+  mt: '24px',
+  borderColor: 'primary.200'
 }
 
 export const styles = {
-  root: {},
-  group: {
-    width: '100%'
-  },
+  group: { width: '100%' },
   input: {
-    style: {
-      padding: 0
-    }
-  },
-  titleInput: {
-    disableUnderline: true,
-    style: { ...inputFontSize }
-  },
-  titleLabel: (value: string) => ({
-    shrink: false,
-    style: {
-      visibility: value ? VisibilityEnum.Hidden : VisibilityEnum.Visible,
-      color: palette.primary[300],
-      top: -23,
-      ...inputFontSize
-    }
-  }),
-  labelCategory: {
-    color: 'primary.600',
-    maxWidth: '464px',
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '4px'
+    style: { padding: 0 }
   },
   options: {
     display: 'flex',
     alignItems: 'center',
     gap: '16px'
   },
-  mainDivider: {
-    m: '32px 0 24px'
-  },
   editorDivider: {
-    alignSelf: 'stretch',
+    ...divider,
     m: '8px 0 24px'
   },
+  buttonsDivider: { ...divider },
   inputItem: {
     color: 'basic.black',
     width: '100%',
@@ -66,7 +35,8 @@ export const styles = {
     flexDirection: 'column',
     alignItems: 'flex-start',
     borderRadius: '6px',
-    boxShadow: commonShadow
+    boxShadow: commonShadow,
+    backgroundColor: 'basic.white'
   },
   answer: {
     width: '100%',
@@ -98,6 +68,7 @@ export const styles = {
     color: isEmptyAnswer ? 'primary.300' : 'primary.700'
   }),
   buttons: {
+    width: '100%',
     display: 'flex',
     justifyContent: 'flex-end',
     gap: '32px',

@@ -2,23 +2,23 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
 import NotesIcon from '@mui/icons-material/Notes'
 import RuleIcon from '@mui/icons-material/Rule'
 
-import { SizeEnum } from '~/types'
+import { SizeEnum, QuestionTypesEnum } from '~/types'
 
 export const sortQuestions = [
   {
     icon: <CheckCircleOutlineIcon fontSize={SizeEnum.Small} />,
     title: 'questionPage.questionType.multipleChoice',
-    value: 'multipleChoice'
+    value: QuestionTypesEnum.MultipleChoice
   },
   {
     icon: <NotesIcon fontSize={SizeEnum.Small} />,
     title: 'questionPage.questionType.openAnswer',
-    value: 'openAnswer'
+    value: QuestionTypesEnum.OpenAnswer
   },
   {
     icon: <RuleIcon fontSize={SizeEnum.Small} />,
     title: 'questionPage.questionType.oneAnswer',
-    value: 'oneAnswer'
+    value: QuestionTypesEnum.OneAnswer
   }
 ]
 

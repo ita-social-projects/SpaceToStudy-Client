@@ -88,7 +88,7 @@ const AddQuestions: FC<AddQuestionsProps> = ({
           .includes(title.toLocaleLowerCase())
         const categoryMatch =
           selectedCategories.length === 0 ||
-          selectedCategories.includes(item.category.name)
+          selectedCategories.includes(String(item.category?.name))
 
         return titleMatch && categoryMatch
       })

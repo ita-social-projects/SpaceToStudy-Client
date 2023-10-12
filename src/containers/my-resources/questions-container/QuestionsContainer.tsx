@@ -24,8 +24,7 @@ import {
   GetResourcesParams,
   ErrorResponse,
   ResourcesTabsEnum,
-  Question,
-  CreatedQuestion
+  Question
 } from '~/types'
 import { ajustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
 
@@ -83,13 +82,14 @@ const QuestionsContainer = () => {
     (id?: string) => {
       const item = response.items.find(
         (element) => element._id === id
-      ) as unknown as CreatedQuestion
+      ) as Question
 
       return ResourceService.createQuestion({
-        title: item?.title,
-        answers: item?.answers,
-        category: item?.category,
-        type: item?.type
+        title: item.title,
+        text: item.text,
+        answers: item.answers,
+        category: item.category?._id ?? null,
+        type: item.type
       })
     },
     [response.items]
