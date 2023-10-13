@@ -62,8 +62,8 @@
     "addBtn": "New category",
     "title": "Title",
     "updated": "Last updates",
-    "emptyItems": "You have no categories yet"
-
+    "emptyItems": "You have no categories yet",
+    "confirmDeletionTitle": "Do you confirm category deletion?"
   },
   "confirmDeletionMessage":"This action is permanent and will remove all related content. Please review your decision before proceeding."
 }
