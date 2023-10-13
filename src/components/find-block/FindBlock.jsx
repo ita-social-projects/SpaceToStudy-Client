@@ -18,7 +18,8 @@ const FindBlock = ({ translationKey }) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const { isMobile } = useBreakpoints()
-  const findOffers = `${authRoutes.findOffers.path}?search=${inputValue}`
+  const encodedInputValue = encodeURIComponent(inputValue)
+  const findOffers = `${authRoutes.findOffers.path}?search=${encodedInputValue}`
 
   const onChange = (e) => {
     setInputValue(e.target.value)
