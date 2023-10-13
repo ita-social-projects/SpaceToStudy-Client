@@ -42,7 +42,7 @@ const SearchFilterInput = ({
 
   const getSearchOfferParams = () => {
     const searchParams = new URLSearchParams(document.location.search)
-    return searchParams.get('search') || ''
+    return searchParams.get('search') ?? ''
   }
 
   useEffect(() => {
