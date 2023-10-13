@@ -1,4 +1,4 @@
-import { KeyboardEvent, useState } from 'react'
+import { KeyboardEvent, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { InputBaseProps } from '@mui/material/InputBase'
@@ -39,6 +39,15 @@ const SearchFilterInput = ({
   const onEnterPress = (event: KeyboardEvent<HTMLInputElement>) => {
     event.key === 'Enter' && onSearch()
   }
+
+  const getSearchOfferParams = () => {
+    const searchParams = new URLSearchParams(document.location.search)
+    return searchParams.get('search') || ''
+  }
+
+  useEffect(() => {
+    setSearch(getSearchOfferParams())
+  }, [])
 
   return (
     <Box sx={styles.container}>
