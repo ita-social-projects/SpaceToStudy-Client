@@ -172,7 +172,7 @@ const QuestionEditor: FC<QuestionEditorProps> = ({
           <Divider sx={styles.divider} />
         </Box>
       )}
-      <Box component='li' {...props}>
+      <Box component={ComponentEnum.Li} {...(props as [])}>
         {option}
       </Box>
     </Box>

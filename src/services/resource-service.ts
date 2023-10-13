@@ -16,8 +16,7 @@ import {
   CreateQuestionData,
   CategoryNameInterface,
   UpdateResourceCategory,
-  CreateCategoriesParams,
-  CreatedCategory
+  CreateCategoriesParams
 } from '~/types'
 import { createUrlPath } from '~/utils/helper-functions'
 
@@ -84,6 +83,6 @@ export const ResourceService = {
     ),
   createResourceCategory: async (
     params?: CreateCategoriesParams
-  ): Promise<AxiosResponse<CreatedCategory>> =>
+  ): Promise<AxiosResponse<Categories>> =>
     await axiosClient.post(URLs.resources.resourcesCategories.post, params)
 }

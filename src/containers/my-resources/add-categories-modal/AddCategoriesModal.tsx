@@ -37,9 +37,7 @@ const AddCategoriesModal: FC<AddCategoriesModalProps> = ({
       validations,
       onSubmit: async () => {
         setLoading(true)
-        await createCategories({
-          name: data.name
-        })
+        await createCategories(data)
         setLoading(false)
         closeModal()
       }
@@ -64,6 +62,7 @@ const AddCategoriesModal: FC<AddCategoriesModalProps> = ({
           onChange={handleInputChange('name')}
           required
           sx={styles.textField}
+          value={data.name}
         />
       </Box>
 

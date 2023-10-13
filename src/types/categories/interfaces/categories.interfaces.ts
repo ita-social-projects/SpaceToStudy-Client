@@ -1,4 +1,4 @@
-import { CommonEntityFields } from '~/types/common/common.index'
+import { Categories } from '~/types/my-resources/myResources.index'
 import { RequestParams } from '~/types/services/types/services.types'
 
 export interface CategoriesParams extends RequestParams {
@@ -6,10 +6,5 @@ export interface CategoriesParams extends RequestParams {
 }
 
 export interface CreateCategoriesParams {
-  name: string
-}
-
-export interface CreatedCategory extends CommonEntityFields {
-  name: string
-  author: string
+  name: Categories['name']
 }

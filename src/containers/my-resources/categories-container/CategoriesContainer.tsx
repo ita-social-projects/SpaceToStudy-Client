@@ -30,8 +30,7 @@ import {
   ErrorResponse,
   ResourcesTabsEnum,
   UpdateResourceCategory,
-  CreateCategoriesParams,
-  CreatedCategory
+  CreateCategoriesParams
 } from '~/types'
 import { ajustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
 
@@ -61,7 +60,7 @@ const CategoriesContainer = () => {
   )
 
   const onResponse = useCallback(
-    (response: CreatedCategory | null) => {
+    (response: Categories | null) => {
       const categoryName = response ? response.name : ''
 
       setAlert({
@@ -108,7 +107,7 @@ const CategoriesContainer = () => {
 
   const onCategoryUpdate = useCallback(() => void fetchData(), [fetchData])
   const onCategoryCreate = useCallback(
-    (response: CreatedCategory | null) => {
+    (response: Categories | null) => {
       onResponse(response)
       void fetchData()
     },
@@ -136,9 +135,7 @@ const CategoriesContainer = () => {
       component: (
         <AddCategoriesModal
           closeModal={closeModal}
-          createCategories={(categoryName?: CreateCategoriesParams) =>
-            handleCreateCategory(categoryName)
-          }
+          createCategories={handleCreateCategory}
         />
       )
     })
