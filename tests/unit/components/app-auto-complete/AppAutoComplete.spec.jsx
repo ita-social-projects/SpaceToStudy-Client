@@ -25,7 +25,7 @@ describe('AppAutoComplete test', () => {
     )
   })
 
-  test('Should render Autocomplete and choose option', () => {
+  it('Should render Autocomplete and choose option', () => {
     const autocomplete = screen.getByLabelText(/common.labels.country/i)
 
     fireEvent.mouseDown(autocomplete)

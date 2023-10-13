@@ -65,7 +65,7 @@ const setup = (props) => {
 }
 
 describe('AboutChatSidebar component test', () => {
-  test('should  render user information', () => {
+  it('should  render user information', () => {
     setup({
       member: mockMember,
       media: [],
@@ -80,7 +80,7 @@ describe('AboutChatSidebar component test', () => {
     expect(viewButton).toBeInTheDocument()
   })
 
-  test('should render media', () => {
+  it('should render media', () => {
     setup({
       member: mockMember,
       media: mockMedia,
@@ -91,7 +91,7 @@ describe('AboutChatSidebar component test', () => {
     expect(screen.getByAltText('Cool pic')).toBeInTheDocument()
   })
 
-  test('should render files', () => {
+  it('should render files', () => {
     setup({
       member: mockMember,
       media: [],
@@ -102,7 +102,7 @@ describe('AboutChatSidebar component test', () => {
     expect(screen.getByText('Cool book.pdf')).toBeInTheDocument()
   })
 
-  test('should render links', () => {
+  it('should render links', () => {
     setup({
       member: mockMember,
       media: [],
@@ -113,7 +113,7 @@ describe('AboutChatSidebar component test', () => {
     expect(screen.getByText('Space2Study WebApp')).toBeInTheDocument()
   })
 
-  test('should show "There are no media here yet!"', () => {
+  it('should show "There are no media here yet!"', () => {
     setup({
       member: mockMember,
       media: [],
