@@ -1,4 +1,4 @@
-import { ChangeEvent, MouseEvent, FC, HTMLAttributes } from 'react'
+import { ChangeEvent, MouseEvent, FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
@@ -151,32 +151,6 @@ const QuestionEditor: FC<QuestionEditorProps> = ({
   ))
 
   const isButtonVisible = text && (isOpenAnswer ? openAnswer : answers[0]?.text)
-  const optionsList = (
-    props: HTMLAttributes<HTMLLIElement>,
-    option: string,
-    index: number
-  ) => (
-    <Box>
-      {index === 0 && (
-        <Box>
-          <AppButton
-            disableRipple
-            fullWidth
-            size={SizeEnum.Medium}
-            sx={styles.addButton}
-            variant={ButtonVariantEnum.Text}
-          >
-            <AddIcon />
-            {t('myResourcesPage.categories.addBtn')}
-          </AppButton>
-          <Divider sx={styles.divider} />
-        </Box>
-      )}
-      <Box component={ComponentEnum.Li} {...(props as [])}>
-        {option}
-      </Box>
-    </Box>
-  )
 
   return (
     <Box sx={styles.editorBlock}>

@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+import { HTMLAttributes, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import Autocomplete from '@mui/material/Autocomplete'
@@ -6,6 +6,7 @@ import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
+import AddIcon from '@mui/icons-material/Add'
 
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import QuestionEditor from '~/components/question-editor/QuestionEditor'
@@ -24,6 +25,7 @@ import {
   ComponentEnum,
   ErrorResponse,
   QuestionForm,
+  SizeEnum,
   TextFieldVariantEnum,
   TypographyVariantEnum
 } from '~/types'
@@ -106,6 +108,33 @@ const CreateOrEditQuestion = () => {
     </Box>
   )
 
+  const optionsList = (
+    props: HTMLAttributes<HTMLLIElement>,
+    option: string,
+    index: number
+  ) => (
+    <Box>
+      {index === 0 && (
+        <Box>
+          <AppButton
+            disableRipple
+            fullWidth
+            size={SizeEnum.Medium}
+            sx={styles.addButton}
+            variant={ButtonVariantEnum.Text}
+          >
+            <AddIcon />
+            {t('myResourcesPage.categories.addBtn')}
+          </AppButton>
+          <Divider sx={styles.divider} />
+        </Box>
+      )}
+      <Box component={ComponentEnum.Li} {...(props as [])}>
+        {option}
+      </Box>
+    </Box>
+  )
+
   return (
     <PageWrapper>
       <Box component={ComponentEnum.Form} onSubmit={handleSubmit}>
@@ -128,6 +157,9 @@ const CreateOrEditQuestion = () => {
             disablePortal
             options={['English', 'Music']}
             renderInput={(params) => <TextField {...params} label='Category' />}
+            renderOption={(props, option, state) =>
+              optionsList(props, option, state.index)
+            }
           />
         </Box>
         <Divider sx={styles.mainDivider} />
