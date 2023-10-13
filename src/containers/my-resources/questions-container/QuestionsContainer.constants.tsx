@@ -29,7 +29,7 @@ export const columns: TableColumn<Question>[] = [
     }
   },
   {
-    label: 'myResourcesPage.questions.category',
+    label: 'myResourcesPage.categories.category',
     calculatedCellValue: (item: Question) => (
       <AppChip labelSx={styles.categoryChipLabel} sx={styles.categoryChip}>
         {item.category.name}

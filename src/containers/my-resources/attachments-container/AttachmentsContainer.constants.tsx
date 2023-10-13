@@ -1,6 +1,7 @@
 import Typography from '@mui/material/Typography'
 
 import IconExtensionWithTitle from '~/components/icon-extension-with-title/IconExtensionWithTitle'
+import AppChip from '~/components/app-chip/AppChip'
 
 import { getFormattedDate } from '~/utils/helper-functions'
 import {
@@ -13,23 +14,30 @@ import { styles } from '~/containers/my-resources/attachments-container/Attachme
 
 export const columns: TableColumn<Attachment>[] = [
   {
-    label: 'myResourcesPage.attachments.file',
+    label: 'myResourcesPage.attachments.attachmentName',
     field: 'fileName',
     calculatedCellValue: (item: Attachment) => (
-      <IconExtensionWithTitle title={item.fileName} />
+      <IconExtensionWithTitle
+        description={item.description}
+        title={item.fileName}
+      />
     )
   },
   {
-    label: 'myResourcesPage.attachments.size',
-    field: 'size',
+    label: 'myResourcesPage.categories.category',
+    field: 'category',
     calculatedCellValue: (
       item: Attachment,
       { t }: AdditionalPropsInterface
     ) => {
-      return (
-        <Typography sx={styles.sizeTitle}>{`${item.size} ${t(
-          'common.megabytes'
-        )}`}</Typography>
+      return item.category ? (
+        <AppChip labelSx={styles.categoryChipLabel} sx={styles.categoryChip}>
+          {item.category.name}
+        </AppChip>
+      ) : (
+        <Typography sx={styles.dateTitle}>
+          {t('myResourcesPage.categories.noCategory')}
+        </Typography>
       )
     }
   },

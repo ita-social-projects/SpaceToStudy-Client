@@ -73,7 +73,7 @@ const AddResourceModal = <T extends TableItem>({
           selectedItems={selectedItems}
           service={ResourceService.getResourcesCategoriesNames}
           setSelectedItems={setSelectedItems}
-          title={t('myResourcesPage.questions.category')}
+          title={t('myResourcesPage.categories.category')}
           valueField='name'
         />
       </Box>
