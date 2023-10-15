@@ -3,6 +3,7 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
 import { styles } from '~/containers/my-resources/lessons-container/LessonsContainer.styles'
+import AppChip from '~/components/app-chip/AppChip'
 import { authRoutes } from '~/router/constants/authRoutes'
 import {
   AdditionalPropsInterface,
@@ -49,10 +50,24 @@ export const columns: TableColumn<Lesson>[] = [
     }
   },
   {
+    label: 'myResourcesPage.categories.category',
+    field: 'category',
+    calculatedCellValue: (item: Lesson, { t }: AdditionalPropsInterface) =>
+      item.category ? (
+        <AppChip labelSx={styles.categoryChipLabel} sx={styles.categoryChip}>
+          {item.category.name}
+        </AppChip>
+      ) : (
+        <Typography sx={styles.date}>
+          {t('myResourcesPage.categories.noCategory')}
+        </Typography>
+      )
+  },
+  {
     label: 'myResourcesPage.lessons.lastUpdates',
     field: 'updatedAt',
     calculatedCellValue: (item: Lesson) => (
-      <Typography sx={styles.dateTitle}>
+      <Typography sx={styles.date}>
         {getFormattedDate({ date: item.updatedAt })}
       </Typography>
     )

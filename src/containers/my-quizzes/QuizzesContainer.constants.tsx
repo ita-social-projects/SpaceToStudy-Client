@@ -9,6 +9,7 @@ import {
   SortEnum,
   TableColumn
 } from '~/types'
+import AppChip from '~/components/app-chip/AppChip'
 import { getFormattedDate } from '~/utils/helper-functions'
 import { styles } from '~/containers/my-quizzes/QuizzesContainer.styles'
 
@@ -39,6 +40,20 @@ export const columns: TableColumn<Quiz>[] = [
         </Typography>
       )
     }
+  },
+  {
+    label: 'myResourcesPage.categories.category',
+    field: 'category',
+    calculatedCellValue: (item: Quiz, { t }: AdditionalPropsInterface) =>
+      item.category ? (
+        <AppChip labelSx={styles.categoryChipLabel} sx={styles.categoryChip}>
+          {item.category.name}
+        </AppChip>
+      ) : (
+        <Typography sx={styles.date}>
+          {t('myResourcesPage.categories.noCategory')}
+        </Typography>
+      )
   },
   {
     label: 'myResourcesPage.quizzes.updated',
