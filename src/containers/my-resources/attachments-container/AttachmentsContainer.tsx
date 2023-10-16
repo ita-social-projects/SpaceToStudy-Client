@@ -2,7 +2,6 @@ import { useCallback, useRef } from 'react'
 import Box from '@mui/material/Box'
 import AddIcon from '@mui/icons-material/Add'
 import { useTranslation } from 'react-i18next'
-
 import { useSnackBarContext } from '~/context/snackbar-context'
 import { useModalContext } from '~/context/modal-context'
 import { ResourceService } from '~/services/resource-service'
@@ -162,6 +161,7 @@ const AttachmentsContainer = () => {
           fetchData={uploadFile}
           formData={formData}
           icon={<AddIcon sx={styles.addAttachmentIcon} />}
+          keepPreviousFiles={false}
           sx={styles.addAttachmentBtn}
           variant={ButtonVariantEnum.Contained}
         />
