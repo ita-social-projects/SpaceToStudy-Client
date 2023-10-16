@@ -4,7 +4,8 @@ import {
   useState,
   useRef,
   Dispatch,
-  SetStateAction
+  SetStateAction,
+  MouseEvent
 } from 'react'
 import Picker from '@emoji-mart/react'
 import data from '@emoji-mart/data'
@@ -70,12 +71,16 @@ const ChatTextArea: FC<ChatTextAreaProps> = ({
     }
   }
 
-  const onOpenPicker = () => setIsEmojiPickerOpen(true)
+  const onTogglePicker = (e: MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation()
+    setIsEmojiPickerOpen((prevState) => !prevState)
+  }
+
   const onClosePicker = () => setIsEmojiPickerOpen(false)
 
   const endAdornment = (
     <>
-      <IconButton onMouseEnter={onOpenPicker}>
+      <IconButton onClick={onTogglePicker}>
         <MoodIcon />
       </IconButton>
       <IconButton disabled>
