@@ -47,8 +47,8 @@ export const authRoutes = {
   myCourses: {
     root: { route: 'my-courses', path: '/my-courses' },
     newCourse: {
-        route: 'courses/new-course',
-        path: '/courses/new-course'
-      }
+      route: 'courses/new-course',
+      path: '/courses/new-course'
+    }
   }
 }
