@@ -1,5 +1,5 @@
 {
-  "home": "Main",
+  "home": "Home page",
   "findTutor": "Find tutor",
   "privacyPolicy": "Privacy policy",
   "myProfile": "My profile",
@@ -9,6 +9,7 @@
   "findOffers": "Find offers",
   "offerDetails": "Offer details",
   "myCooperations": "My cooperations",
+  "myCourses": "My courses",
   "myResources": "Мy resources",
   "newLesson": "New lesson",
   "myOffers": "My offers",

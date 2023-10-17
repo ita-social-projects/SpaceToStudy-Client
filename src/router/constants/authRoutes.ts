@@ -43,5 +43,8 @@ export const authRoutes = {
   editProfile: {
     route: 'my-profile/edit',
     path: '/my-profile/edit'
+  },
+  myCourses: {
+    root: { route: 'my-courses', path: '/my-courses' }
   }
 }

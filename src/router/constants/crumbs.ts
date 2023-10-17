@@ -58,6 +58,11 @@ export const myResources = {
   path: authRoutes.myResources.root.route
 }
 
+export const myCourses = {
+  name: t('breadCrumbs.myCourses'),
+  path: authRoutes.myCourses.root.route
+}
+
 export const newLesson = {
   name: t('breadCrumbs.newLesson'),
   path: authRoutes.myResources.newLesson.route
