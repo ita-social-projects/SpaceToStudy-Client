@@ -167,7 +167,6 @@ const AttachmentsContainer = () => {
           variant={ButtonVariantEnum.Contained}
         />
       }
-      categoryService={ResourceService.getResourcesCategoriesNames}
       fetchData={fetchAttachments}
       searchRef={searchFileName}
       selectedItems={selectedItems}

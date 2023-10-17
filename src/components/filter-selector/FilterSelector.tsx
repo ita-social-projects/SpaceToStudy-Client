@@ -71,14 +71,21 @@ const FilterSelector = <T,>({
     selectedItems.length && setSelectedItems([])
   }
 
-  const { loading, response } = useAxios<T[]>({
-    service,
+  // const getCategories = useCallback(() =>
+  //   ResourceService.getResourcesCategoriesNames()
+  // ,[])
+
+  const { loading, response } = useAxios<
+    T[]
+    // ServiceFunction<T[], undefined>
+  >({
+    service: service,
     defaultResponse: defaultResponses.array
   })
 
   const filteredItems = useMemo(
     () =>
-      response.filter((item) =>
+      response.filter((item: T) =>
         String(valueField ? item[valueField] : item)
           .toLowerCase()
           .includes(inputValue.toLowerCase())
@@ -86,7 +93,7 @@ const FilterSelector = <T,>({
     [response, inputValue, valueField]
   )
 
-  const menuItems = filteredItems.map((item) => {
+  const menuItems: JSX.Element[] = filteredItems.map((item: T) => {
     const field = String(valueField ? item[valueField] : item)
 
     return (

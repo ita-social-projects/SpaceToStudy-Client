@@ -18,8 +18,9 @@ import AppButton from '~/components/app-button/AppButton'
 import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
 import FilterSelector from '~/components/filter-selector/FilterSelector'
 
-import { ServiceFunction } from '~/types'
 import { styles } from '~/containers/my-resources/add-resource-with-input/AddResourceWithInput.styles'
+import { CategoryNameInterface } from '~/types'
+import { ResourceService } from '~/services/resource-service'
 
 interface AddResourceWithInputProps {
   btnText?: string
@@ -27,9 +28,9 @@ interface AddResourceWithInputProps {
   link?: string
   searchRef: MutableRefObject<string>
   button?: ReactElement
-  categoryService?: ServiceFunction<string[], undefined>
   selectedItems?: string[]
   setItems?: Dispatch<SetStateAction<string[]>>
+  hideCategoriesFilter?: boolean
 }
 
 const AddResourceWithInput: FC<AddResourceWithInputProps> = ({
@@ -38,9 +39,9 @@ const AddResourceWithInput: FC<AddResourceWithInputProps> = ({
   link,
   searchRef,
   button,
-  categoryService,
   selectedItems,
-  setItems
+  setItems,
+  hideCategoriesFilter
 }) => {
   const { t } = useTranslation()
   const [searchInput, setSearchInput] = useState<string>('')
@@ -63,9 +64,10 @@ const AddResourceWithInput: FC<AddResourceWithInputProps> = ({
 
   const filterProps = {
     title: t('myResourcesPage.questions.category'),
-    service: categoryService,
+    service: ResourceService.getResourcesCategoriesNames,
     selectedItems: selectedItems,
-    setSelectedItems: setItems
+    setSelectedItems: setItems,
+    valueField: 'name'
   }
 
   return (
@@ -79,7 +81,9 @@ const AddResourceWithInput: FC<AddResourceWithInputProps> = ({
         button
       )}
       <Box sx={styles.filterWithInput}>
-        {categoryService && <FilterSelector {...filterProps} />}
+        {!hideCategoriesFilter && (
+          <FilterSelector<CategoryNameInterface> {...filterProps} />
+        )}
         <InputWithIcon
           endAdornment={<SearchIcon sx={styles.searchIcon} />}
           onChange={onChange}

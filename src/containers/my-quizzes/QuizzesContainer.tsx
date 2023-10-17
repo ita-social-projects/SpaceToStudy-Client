@@ -11,7 +11,6 @@ import useBreakpoints from '~/hooks/use-breakpoints'
 import useAxios from '~/hooks/use-axios'
 import usePagination from '~/hooks/table/use-pagination'
 import { authRoutes } from '~/router/constants/authRoutes'
-import { ResourceService } from '~/services/resource-service'
 
 import { defaultResponses, snackbarVariants } from '~/constants'
 import {
@@ -96,7 +95,6 @@ const QuizzesContainer = () => {
     <Box>
       <AddResourceWithInput
         btnText={'myResourcesPage.quizzes.addBtn'}
-        categoryService={ResourceService.getResourcesCategoriesNames}
         fetchData={fetchData}
         link={authRoutes.myResources.newQuiz.path}
         searchRef={searchTitle}

@@ -104,7 +104,6 @@ const LessonsContainer = () => {
     <Box>
       <AddResourceWithInput
         btnText={'myResourcesPage.lessons.addBtn'}
-        categoryService={ResourceService.getResourcesCategoriesNames}
         fetchData={fetchData}
         link={authRoutes.myResources.newLesson.path}
         searchRef={searchTitle}

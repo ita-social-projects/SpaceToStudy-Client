@@ -144,7 +144,6 @@ const QuestionsContainer = () => {
     <Box>
       <AddResourceWithInput
         btnText={'myResourcesPage.questions.addBtn'}
-        categoryService={ResourceService.getResourcesCategoriesNames}
         fetchData={fetchData}
         link={authRoutes.myResources.newQuestion.path}
         searchRef={searchTitle}
