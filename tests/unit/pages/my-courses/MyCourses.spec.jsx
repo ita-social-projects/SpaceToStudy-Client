@@ -9,7 +9,7 @@ describe('tests for MyCourses page', () => {
   })
 
   it('should render page title', () => {
-    const myCoursesTitle = screen.getByText('myCoursePage.title')
+    const myCoursesTitle = screen.getByText('myCoursesPage.title')
     expect(myCoursesTitle).toBeInTheDocument()
   })
 })
