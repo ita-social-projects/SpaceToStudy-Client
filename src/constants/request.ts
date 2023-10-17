@@ -65,7 +65,8 @@ export const URLs = {
     resourcesCategories: {
       get: '/resources-categories',
       getNames: '/resources-categories/names',
-      patch: '/resources-categories'
+      patch: '/resources-categories',
+      post: '/resources-categories'
     }
   },
   messages: {
