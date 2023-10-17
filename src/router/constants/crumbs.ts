@@ -64,7 +64,7 @@ export const myCourses = {
 }
 
 export const newCourse = {
-  name: t('breadCrumbs.newCourse'),
+  name: t('breadCrumbs.myCourses'),
   path: authRoutes.myCourses.newCourse.route
 }
 
