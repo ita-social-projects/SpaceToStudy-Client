@@ -71,14 +71,7 @@ const FilterSelector = <T,>({
     selectedItems.length && setSelectedItems([])
   }
 
-  // const getCategories = useCallback(() =>
-  //   ResourceService.getResourcesCategoriesNames()
-  // ,[])
-
-  const { loading, response } = useAxios<
-    T[]
-    // ServiceFunction<T[], undefined>
-  >({
+  const { loading, response } = useAxios<T[]>({
     service: service,
     defaultResponse: defaultResponses.array
   })

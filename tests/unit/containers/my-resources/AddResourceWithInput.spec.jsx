@@ -13,7 +13,8 @@ const props = {
   btnText: 'myResourcesPage.quizzes.newQuizBtn',
   fetchData: fetchDataMock,
   link: '#',
-  searchRef: { current: text }
+  searchRef: { current: text },
+  selectedItems: []
 }
 
 describe('AddResourceWithInput test', () => {
