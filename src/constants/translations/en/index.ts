@@ -32,6 +32,7 @@ import offerDetailsPage from './offer-details-page.json'
 import cooperationsPage from './cooperations-page.json'
 import myOffersPage from './my-offers-page.json'
 import myResourcesPage from './my-resources-page.json'
+import myCoursesPage from './my-courses-page.json'
 import chatPage from './chat.json'
 import lesson from './lesson.json'
 import questionPage from './question-page.json'
@@ -72,6 +73,7 @@ const en = {
     cooperationsPage,
     myOffersPage,
     myResourcesPage,
+    myCoursesPage,
     chatPage,
     lesson,
     questionPage
