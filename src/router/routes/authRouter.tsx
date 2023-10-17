@@ -12,6 +12,7 @@ import {
   myOffers,
   myProfile,
   myResources,
+  myCourses,
   newLesson,
   offerDetails,
   subjects,
@@ -35,6 +36,7 @@ const FindOffers = lazy(() => import('~/pages/find-offers/FindOffers'))
 const OfferDetails = lazy(() => import('~/pages/offer-details/OfferDetails'))
 const TutorProfile = lazy(() => import('~/pages/tutor-profile/TutorProfile'))
 const MyResources = lazy(() => import('~/pages/my-resources/MyResources'))
+const MyCourses = lazy(() => import('~/pages/my-courses/MyCourses'))
 const CreateOrEditLesson = lazy(
   () => import('~/pages/create-or-edit-lesson/CreateOrEditLesson')
 )
@@ -99,6 +101,11 @@ export const authRouter = (
       element={<MyResources />}
       handle={{ crumb: myResources }}
       path={authRoutes.myResources.root.route}
+    />
+    <Route
+      element={<MyCourses />}
+      handle={{ crumb: myCourses }}
+      path={authRoutes.myCourses.root.route}
     />
     <Route
       element={<CreateOrEditLesson />}

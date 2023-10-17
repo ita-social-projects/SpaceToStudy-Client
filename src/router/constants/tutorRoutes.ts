@@ -8,6 +8,10 @@ export const tutorRoutes = {
     myResources: {
       route: 'my-resources',
       path: authRoutes.myResources.root.path
+    },
+    myCourses: {
+      route: 'my-courses',
+      path: authRoutes.myCourses.root.path
     }
   }
 }
