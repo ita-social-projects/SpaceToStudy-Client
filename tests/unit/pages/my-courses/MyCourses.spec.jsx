@@ -1,3 +1,4 @@
+import { screen } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 
 import MyCourses from '~/pages/my-courses/MyCourses'
