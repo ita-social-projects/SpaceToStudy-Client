@@ -78,7 +78,7 @@ const FilterSelector = <T,>({
 
   const filteredItems = useMemo(
     () =>
-      response.filter((item: T) =>
+      response.filter((item) =>
         String(valueField ? item[valueField] : item)
           .toLowerCase()
           .includes(inputValue.toLowerCase())
@@ -86,7 +86,7 @@ const FilterSelector = <T,>({
     [response, inputValue, valueField]
   )
 
-  const menuItems: JSX.Element[] = filteredItems.map((item) => {
+  const menuItems = filteredItems.map((item) => {
     const field = String(valueField ? item[valueField] : item)
 
     return (
