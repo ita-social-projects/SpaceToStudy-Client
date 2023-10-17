@@ -33,7 +33,7 @@ const images = [
   }
 ]
 
-test('renders the SidebarImageGrid component with images', () => {
+it('renders the SidebarImageGrid component with images', () => {
   render(<SidebarImageGrid images={images} />)
 
   const firstImg = screen.getByAltText(images[0].name)
@@ -43,7 +43,7 @@ test('renders the SidebarImageGrid component with images', () => {
   expect(lastImg).not.toBeInTheDocument()
 })
 
-test('renders the SidebarImageGrid component in compactMode', () => {
+it('renders the SidebarImageGrid component in compactMode', () => {
   render(<SidebarImageGrid images={images} />)
 
   const addIcon = screen.getByTestId('AddIcon')
@@ -51,7 +51,7 @@ test('renders the SidebarImageGrid component in compactMode', () => {
   expect(addIcon).toBeInTheDocument()
 })
 
-test('renders the SidebarImageGrid component in non-compactMode', () => {
+it('renders the SidebarImageGrid component in non-compactMode', () => {
   render(<SidebarImageGrid compactMode={false} images={images} />)
 
   const lastImg = screen.getByAltText(images[images.length - 1].name)

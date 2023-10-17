@@ -6,7 +6,7 @@ const description = 'constant.tryAgainText'
 const buttonText = 'constant.buttonRequest'
 
 describe('NotFoundResults', () => {
-  test('renders NotFoundResults component', () => {
+  it('renders NotFoundResults component', () => {
     render(
       <NotFoundResults buttonText={buttonText} description={description} />
     )

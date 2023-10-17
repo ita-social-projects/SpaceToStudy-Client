@@ -1,3 +1,4 @@
+import palette from '~/styles/app-theme/app.pallete'
 import { roundedBorderTable } from '~/containers/my-cooperations/cooperations-container/CooperationContainer.styles'
 import { TypographyVariantEnum } from '~/types'
 
@@ -29,6 +30,17 @@ export const styles = {
       fontWeight: '500',
       py: '12.5px'
     }
+  },
+  categoryChip: {
+    backgroundColor: 'inherit',
+    borderRadius: '50px',
+    '& .MuiChip-label': { p: '0px 8px' },
+    border: `2px solid ${palette.basic.turquoiseDark}`
+  },
+  categoryChipLabel: {
+    fontWeight: 500,
+    typography: TypographyVariantEnum.Caption,
+    color: 'basic.turquoiseDark'
   },
   addAttachmentIcon: { ml: '5px', width: { xs: '18px', sm: '22px' } },
   table: roundedBorderTable,

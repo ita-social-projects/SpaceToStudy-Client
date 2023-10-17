@@ -12,7 +12,7 @@ const content = [
 ]
 const { Links } = SidebarContentEnum
 
-test('should render SidebarContentBox with links', () => {
+it('should render SidebarContentBox with links', () => {
   render(
     <SidebarContentBox
       content={content}
@@ -26,7 +26,7 @@ test('should render SidebarContentBox with links', () => {
   expect(link).toBeInTheDocument()
 })
 
-test('should render SidebarContentBox without content', () => {
+it('should render SidebarContentBox without content', () => {
   render(
     <SidebarContentBox content={[]} icon={<ImageOutlinedIcon />} name={Links} />
   )

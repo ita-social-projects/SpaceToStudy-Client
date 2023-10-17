@@ -9,11 +9,13 @@ import { styles } from '~/components/icon-extension-with-title/IconExtensionWith
 
 interface IconExtensionWithTitleProps {
   title: string
+  description?: string
   size?: number
 }
 
 const IconExtensionWithTitle: FC<IconExtensionWithTitleProps> = ({
   title,
+  description,
   size
 }) => {
   const { t } = useTranslation()
@@ -29,7 +31,7 @@ const IconExtensionWithTitle: FC<IconExtensionWithTitleProps> = ({
     <Box sx={styles.container}>
       <Box sx={styles.iconBox}>{fileExtension}</Box>
       <TitleWithDescription
-        description={size && convertSize(size)}
+        description={size ? convertSize(size) : description}
         style={styles.titleWithDescription}
         title={title}
       />

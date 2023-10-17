@@ -22,7 +22,7 @@ beforeEach(() => {
 })
 
 describe('LinkComponent', () => {
-  test('renders link name and URL', () => {
+  it('renders link name and URL', () => {
     const linkName = screen.getByText(linkData.name)
     const linkUrl = screen.getByText(linkData.url)
 
@@ -30,7 +30,7 @@ describe('LinkComponent', () => {
     expect(linkUrl).toBeInTheDocument()
   })
 
-  test('opens link URL in a new tab when the button is clicked', () => {
+  it('opens link URL in a new tab when the button is clicked', () => {
     fireEvent.click(screen.getByText('Example Link'))
 
     expect(mockOpen.url).toBe('https://www.example.com')

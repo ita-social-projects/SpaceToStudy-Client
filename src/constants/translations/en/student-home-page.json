@@ -4,13 +4,13 @@
       "student": "A Global Network of Tutors",
       "tutor": "A Global Network of Students"
     },
-    "description": "A Space2Study platform is a place where you can learn from the best. Type what would you like to learn and find the best tutor for that.",
+    "description": "A Space2Study platform is a place where you can learn from the best. Type who or what would you like to learn from and find the best tutor.",
     "label": "Who or what do you want to learn from?",
     "button": "Find tutor"
   },
   "popularCategories": {
     "title": "Popular Categories",
-    "description": "Explore tutoring categories you're passionate about.",
+    "description": "Explore learning categories you're passionate about.",
     "viewMore": "View more"
   },
   "howItWorks": {
@@ -26,11 +26,11 @@
     },
     "startLearning": {
       "title": "Start Learning",
-      "description": "Describe what you would like to study and send a request to the tutor."
+      "description": "Explore all training opportunities available for the chosen course and communicate with the tutor."
     },
     "writeFeedback": {
       "title": "Write Feedback",
-      "description": "Describe what you would like to study and send a request to the tutor."
+      "description": "Write a review and share your impressions to help others with their choice."
     }
   },
   "faq": {

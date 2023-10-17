@@ -24,7 +24,17 @@ export const styles = {
     },
     description: {
       typography: TypographyVariantEnum.Caption,
-      color: 'primary.500'
+      color: 'primary.500',
+      display: 'block',
+      maxWidth: '490px',
+      whiteSpace: 'nowrap',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      '&:hover': {
+        textDecoration: 'underline',
+        color: 'primary.700',
+        cursor: 'pointer'
+      }
     }
   }
 }

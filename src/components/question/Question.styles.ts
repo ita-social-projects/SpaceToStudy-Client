@@ -42,7 +42,10 @@ export const styles = {
   iconWrapper: {
     backgroundColor: 'basic.grey',
     borderRadius: '4px',
-    p: '8px'
+    padding: '8px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   categoryChip: {
     backgroundColor: 'inherit',
@@ -55,6 +58,10 @@ export const styles = {
     typography: TypographyVariantEnum.Caption,
     fontWeight: 500,
     color: 'basic.turquoiseDark'
+  },
+  divider: {
+    mt: '8px',
+    borderColor: 'primary.200'
   },
   questionBody: {
     my: '24px'

@@ -19,7 +19,7 @@ describe('ClickableImage', () => {
     return image
   }
 
-  test('renders the image and button', () => {
+  it('renders the image and button', () => {
     const { getByRole, getByText } = render(
       <ClickableImage image={image}>{buttonText}</ClickableImage>
     )
@@ -33,7 +33,7 @@ describe('ClickableImage', () => {
     expect(buttonElement).toHaveClass(`MuiButton-${ButtonVariantEnum.Text}`)
   })
 
-  test('calls the clickFunction when the button is clicked', () => {
+  it('calls the clickFunction when the button is clicked', () => {
     const { getByRole, getByText } = render(
       <ClickableImage image={image} onClick={customFunc}>
         {buttonText}

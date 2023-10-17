@@ -5,7 +5,13 @@ import Box from '@mui/material/Box'
 import IconTitleDescription from '~/components/icon-title-description/IconTitleDescription'
 import AppChip from '~/components/app-chip/AppChip'
 
-import { Question, RemoveColumnRules, SortEnum, TableColumn } from '~/types'
+import {
+  Question,
+  RemoveColumnRules,
+  SortEnum,
+  TableColumn,
+  AdditionalPropsInterface
+} from '~/types'
 import { getFormattedDate } from '~/utils/helper-functions'
 import { styles } from '~/containers/my-resources/questions-container/QuestionsContainer.styles'
 
@@ -29,12 +35,17 @@ export const columns: TableColumn<Question>[] = [
     }
   },
   {
-    label: 'myResourcesPage.questions.category',
-    calculatedCellValue: (item: Question) => (
-      <AppChip labelSx={styles.categoryChipLabel} sx={styles.categoryChip}>
-        {item.category.name}
-      </AppChip>
-    )
+    label: 'myResourcesPage.categories.category',
+    calculatedCellValue: (item: Question, { t }: AdditionalPropsInterface) =>
+      item.category ? (
+        <AppChip labelSx={styles.categoryChipLabel} sx={styles.categoryChip}>
+          {item.category.name}
+        </AppChip>
+      ) : (
+        <Typography sx={styles.date}>
+          {t('myResourcesPage.categories.noCategory')}
+        </Typography>
+      )
   },
   {
     label: 'myResourcesPage.questions.updated',

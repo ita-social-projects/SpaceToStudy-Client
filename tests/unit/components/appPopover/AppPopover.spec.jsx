@@ -14,14 +14,10 @@ const children = <div>childrenElement</div>
 
 describe('AppPopover test', () => {
   beforeEach(() => {
-    renderWithProviders(
-      <AppPopover { ...props }>
-        { children }
-      </AppPopover>
-    )
+    renderWithProviders(<AppPopover {...props}>{children}</AppPopover>)
   })
 
-  test('Should open popover', async () => {
+  it('Should open popover', async () => {
     const openBtn = screen.getByText('Show more!')
 
     fireEvent.click(openBtn)

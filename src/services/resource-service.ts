@@ -13,7 +13,7 @@ import {
   UpdateAttachmentParams,
   Question,
   Categories,
-  QuestionForm,
+  CreateQuestionData,
   CategoryNameInterface,
   UpdateResourceCategory
 } from '~/types'
@@ -58,7 +58,7 @@ export const ResourceService = {
   ): Promise<AxiosResponse<ItemsWithCount<Question>>> => {
     return axiosClient.get(URLs.resources.questions.get, { params })
   },
-  createQuestion: async (data?: QuestionForm): Promise<AxiosResponse> => {
+  createQuestion: async (data?: CreateQuestionData): Promise<AxiosResponse> => {
     return await axiosClient.post(URLs.resources.questions.post, data)
   },
   deleteQuestion: async (id: string): Promise<AxiosResponse> =>

@@ -1,6 +1,5 @@
 import { ChangeEvent, MouseEvent, FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router-dom'
 import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
 import IconButton from '@mui/material/IconButton'
@@ -12,56 +11,49 @@ import FormGroup from '@mui/material/FormGroup'
 import InputBase from '@mui/material/InputBase'
 import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
-import Autocomplete from '@mui/material/Autocomplete'
-import TextField from '@mui/material/TextField'
-import Typography from '@mui/material/Typography'
 
 import AppTextField from '~/components/app-text-field/AppTextField'
-import AppSelect from '~/components/app-select/AppSelect'
-import useForm from '~/hooks/use-form'
 import AppButton from '~/components/app-button/AppButton'
+import AppSelect from '~/components/app-select/AppSelect'
 import {
   questionType,
   sortQuestions
 } from '~/components/question-editor/QuestionEditor.constants'
-import { authRoutes } from '~/router/constants/authRoutes'
 
 import { styles } from '~/components/question-editor/QuestionEditor.styles'
 import {
-  ButtonTypeEnum,
-  ButtonVariantEnum,
-  ComponentEnum,
   QuestionForm,
   SizeEnum,
   TextFieldVariantEnum,
-  TypographyVariantEnum
+  QuestionFormAnswer,
+  ButtonVariantEnum
 } from '~/types'
 
 interface QuestionEditorProps {
-  loading: boolean
-  fetchData: (data?: QuestionForm) => Promise<void>
+  data: QuestionForm
+  handleInputChange: (
+    key: keyof QuestionForm
+  ) => (event: ChangeEvent<HTMLInputElement>) => void
+  handleNonInputValueChange: (
+    key: keyof QuestionForm,
+    value: string | QuestionFormAnswer[]
+  ) => void
+  onCancel?: () => void
+  onSave?: () => Promise<void>
+  loading?: boolean
 }
 
-const QuestionEditor: FC<QuestionEditorProps> = ({ fetchData, loading }) => {
+const QuestionEditor: FC<QuestionEditorProps> = ({
+  data,
+  handleInputChange,
+  handleNonInputValueChange,
+  onCancel,
+  onSave,
+  loading
+}) => {
   const { t } = useTranslation()
-  const navigate = useNavigate()
 
-  const { data, handleInputChange, handleNonInputValueChange, handleSubmit } =
-    useForm<QuestionForm>({
-      initialValues: {
-        type: sortQuestions[0].value,
-        title: '',
-        text: '',
-        answers: [],
-        openAnswer: ''
-      },
-      onSubmit: async () => {
-        await fetchData(data)
-      }
-    })
-
-  const { type, title, text, answers, openAnswer } = data
-
+  const { type, text, answers, openAnswer } = data
   const { isMultipleChoice, isOpenAnswer, isSingleChoice } = questionType(type)
 
   const isEmptyAnswer = answers[answers.length - 1]?.text === ''
@@ -132,7 +124,6 @@ const QuestionEditor: FC<QuestionEditorProps> = ({ fetchData, loading }) => {
       isCorrect: false
     }))
     handleNonInputValueChange('answers', newAnswers)
-
     setTypeValue(value)
   }
 
@@ -159,112 +150,83 @@ const QuestionEditor: FC<QuestionEditorProps> = ({ fetchData, loading }) => {
     </Box>
   ))
 
-  const isButtonsVisible = isOpenAnswer
-    ? Boolean(title && text && openAnswer)
-    : Boolean(title && text && answers[0]?.text)
-
-  const buttons = (
-    <Box sx={styles.buttons}>
-      <AppButton
-        onClick={() => navigate(authRoutes.myResources.root.path)}
-        variant={ButtonVariantEnum.Tonal}
-      >
-        {t('common.cancel')}
-      </AppButton>
-      <AppButton
-        disabled={!isButtonsVisible}
-        loading={loading}
-        type={ButtonTypeEnum.Submit}
-      >
-        {t('common.save')}
-      </AppButton>
-    </Box>
-  )
-
-  const optionsMock = ['English', 'Music']
+  const isButtonVisible = text && (isOpenAnswer ? openAnswer : answers[0]?.text)
 
   return (
-    <Box
-      component={ComponentEnum.Form}
-      onSubmit={handleSubmit}
-      sx={styles.root}
-    >
+    <Box sx={styles.editorBlock}>
+      <Box sx={styles.options}>
+        {option && <Box sx={styles.iconWrapper}>{option.icon}</Box>}
+        <AppSelect
+          fields={sortOptions}
+          setValue={handleTypeChange}
+          sx={styles.selectContainer}
+          value={type}
+        />
+      </Box>
+
+      <Divider sx={styles.editorDivider} />
+
       <AppTextField
-        InputLabelProps={styles.titleLabel(title)}
-        InputProps={styles.titleInput}
         fullWidth
-        inputProps={styles.input}
-        label={t('questionPage.untitled')}
-        onChange={handleInputChange('title')}
-        value={title}
-        variant={TextFieldVariantEnum.Standard}
+        label={t('questionPage.question')}
+        onChange={handleInputChange('text')}
+        value={text}
+        variant={TextFieldVariantEnum.Outlined}
       />
 
-      <Box sx={styles.labelCategory}>
-        <Typography variant={TypographyVariantEnum.Body2}>
-          {t('questionPage.chooseCategory')}
-        </Typography>
-        <Autocomplete
-          disablePortal
-          options={optionsMock}
-          renderInput={(params) => <TextField {...params} label='Category' />}
-        />
-      </Box>
+      {isMultipleChoice && <FormGroup sx={styles.group}>{options}</FormGroup>}
 
-      <Divider sx={styles.mainDivider} />
-      <Box sx={styles.editorBlock}>
-        <Box sx={styles.options}>
-          {option && <Box sx={styles.iconWrapper}>{option.icon}</Box>}
-          <AppSelect
-            fields={sortOptions}
-            setValue={handleTypeChange}
-            sx={styles.selectContainer}
-            value={type}
+      {isSingleChoice && <RadioGroup sx={styles.group}>{options}</RadioGroup>}
+
+      {!isOpenAnswer && (
+        <Box onClick={addNewOneAnswer} sx={styles.addRadio(isEmptyAnswer)}>
+          <FormControlLabel
+            checked={false}
+            control={isMultipleChoice ? <Checkbox /> : <Radio />}
+            disabled={isEmptyAnswer}
+            label={t('questionPage.addNewOne')}
+            value={0}
+          />
+          <AddIcon
+            fontSize={SizeEnum.Small}
+            sx={styles.addIcon(isEmptyAnswer)}
           />
         </Box>
+      )}
 
-        <Divider sx={styles.editorDivider} />
-
+      {isOpenAnswer && (
         <AppTextField
           fullWidth
-          label={t('questionPage.question')}
-          onChange={handleInputChange('text')}
-          value={text}
+          label={t('questionPage.answer')}
+          onChange={handleInputChange('openAnswer')}
+          value={openAnswer}
           variant={TextFieldVariantEnum.Outlined}
         />
+      )}
 
-        {isMultipleChoice && <FormGroup sx={styles.group}>{options}</FormGroup>}
-
-        {isSingleChoice && <RadioGroup sx={styles.group}>{options}</RadioGroup>}
-
-        {!isOpenAnswer && (
-          <Box onClick={addNewOneAnswer} sx={styles.addRadio(isEmptyAnswer)}>
-            <FormControlLabel
-              checked={false}
-              control={isMultipleChoice ? <Checkbox /> : <Radio />}
-              disabled={isEmptyAnswer}
-              label={t('questionPage.addNewOne')}
-              value={0}
-            />
-            <AddIcon
-              fontSize={SizeEnum.Small}
-              sx={styles.addIcon(isEmptyAnswer)}
-            />
+      {onCancel && onSave && (
+        <>
+          <Divider sx={styles.buttonsDivider} />
+          <Box sx={styles.buttons}>
+            <AppButton
+              onClick={onCancel}
+              size={SizeEnum.Medium}
+              variant={ButtonVariantEnum.Tonal}
+            >
+              {t('common.cancel')}
+            </AppButton>
+            <AppButton
+              disabled={!isButtonVisible}
+              loading={loading}
+              onClick={() => void onSave()}
+              size={SizeEnum.Medium}
+              sx={{ minWidth: '103px' }}
+            >
+              {t('common.save')}
+            </AppButton>
           </Box>
-        )}
-
-        {isOpenAnswer && (
-          <AppTextField
-            fullWidth
-            label={t('questionPage.answer')}
-            onChange={handleInputChange('openAnswer')}
-            value={openAnswer}
-            variant={TextFieldVariantEnum.Outlined}
-          />
-        )}
-      </Box>
-
-      {buttons}
+        </>
+      )}
     </Box>
   )
 }

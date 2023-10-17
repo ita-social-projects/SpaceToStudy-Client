@@ -29,7 +29,8 @@
     "emptyItems": "You have no attachments yet",
     "confirmDeletionTitle":"Do you confirm attachment deletion?",
     "successDeletion":"Attachment was deleted successfully",
-    "validationError": "File name cannot be longer than 55 symbol."
+    "validationError": "File name cannot be longer than 55 symbol.",
+    "attachmentName": "Attachment name"
   },
   "quizzes": {
     "addBtn": "New quiz",
@@ -49,7 +50,6 @@
     "addBtn": "New question",
     "add": "Add Questions",
     "title": "Title",
-    "category": "Category",
     "updated": "Last updates",
     "emptyItems": "You have no questions yet",
     "confirmDeletionTitle":"Do you confirm question deletion?",
@@ -57,11 +57,13 @@
     "successDuplication":"Question was successfully duplicated"
   },
   "categories": {
+    "category": "Category",
+    "noCategory": "No category",
     "addBtn": "New category",
     "title": "Title",
     "updated": "Last updates",
-    "emptyItems": "You have no categories yet"
-
+    "emptyItems": "You have no categories yet",
+    "confirmDeletionTitle": "Do you confirm category deletion?"
   },
   "confirmDeletionMessage":"This action is permanent and will remove all related content. Please review your decision before proceeding."
 }
