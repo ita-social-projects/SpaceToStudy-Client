@@ -1,4 +1,4 @@
-import { useCallback, useRef } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Box from '@mui/material/Box'
 
@@ -40,6 +40,7 @@ const LessonsContainer = () => {
   const sortOptions = useSort({ initialSort })
   const searchTitle = useRef<string>('')
   const breakpoints = useBreakpoints()
+  const [selectedItems, setSelectedItems] = useState<string[]>([])
 
   const { sort } = sortOptions
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
@@ -106,6 +107,8 @@ const LessonsContainer = () => {
         fetchData={fetchData}
         link={authRoutes.myResources.newLesson.path}
         searchRef={searchTitle}
+        selectedItems={selectedItems}
+        setItems={setSelectedItems}
       />
       {loading ? (
         <Loader pageLoad size={50} />
