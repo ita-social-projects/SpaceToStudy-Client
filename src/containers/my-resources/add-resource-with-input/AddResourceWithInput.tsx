@@ -63,7 +63,7 @@ const AddResourceWithInput: FC<AddResourceWithInputProps> = ({
   }
 
   const filterProps = {
-    title: t('myResourcesPage.questions.category'),
+    title: t('myResourcesPage.categories.category'),
     service: ResourceService.getResourcesCategoriesNames,
     selectedItems: selectedItems,
     setSelectedItems: setItems,

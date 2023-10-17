@@ -72,7 +72,7 @@ const FilterSelector = <T,>({
   }
 
   const { loading, response } = useAxios<T[]>({
-    service: service,
+    service,
     defaultResponse: defaultResponses.array
   })
 
@@ -86,7 +86,7 @@ const FilterSelector = <T,>({
     [response, inputValue, valueField]
   )
 
-  const menuItems: JSX.Element[] = filteredItems.map((item: T) => {
+  const menuItems: JSX.Element[] = filteredItems.map((item) => {
     const field = String(valueField ? item[valueField] : item)
 
     return (

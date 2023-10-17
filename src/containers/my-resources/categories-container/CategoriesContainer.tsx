@@ -39,7 +39,6 @@ const CategoriesContainer = () => {
   const { page, handleChangePage } = usePagination()
   const { setAlert } = useSnackBarContext()
   const [selectedItemId, setSelectedItemId] = useState<string>('')
-  const hideCategories = true
 
   const { sort } = sortOptions
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
@@ -120,7 +119,7 @@ const CategoriesContainer = () => {
       <AddResourceWithInput
         btnText={t('myResourcesPage.categories.addBtn')}
         fetchData={fetchData}
-        hideCategoriesFilter={hideCategories}
+        hideCategoriesFilter
         searchRef={searchTitle}
       />
       {loading ? (
