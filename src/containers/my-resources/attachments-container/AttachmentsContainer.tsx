@@ -161,7 +161,7 @@ const AttachmentsContainer = () => {
           fetchData={uploadFile}
           formData={formData}
           icon={<AddIcon sx={styles.addAttachmentIcon} />}
-          keepPreviousFiles={false}
+          removePreviousFiles
           sx={styles.addAttachmentBtn}
           variant={ButtonVariantEnum.Contained}
         />
