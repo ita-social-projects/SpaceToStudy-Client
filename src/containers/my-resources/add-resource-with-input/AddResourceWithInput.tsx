@@ -3,7 +3,9 @@ import {
   ChangeEvent,
   FC,
   MutableRefObject,
-  ReactElement
+  ReactElement,
+  Dispatch,
+  SetStateAction
 } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
@@ -14,8 +16,11 @@ import Box from '@mui/material/Box'
 import { useDebounce } from '~/hooks/use-debounce'
 import AppButton from '~/components/app-button/AppButton'
 import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
+import FilterSelector from '~/components/filter-selector/FilterSelector'
 
 import { styles } from '~/containers/my-resources/add-resource-with-input/AddResourceWithInput.styles'
+import { CategoryNameInterface } from '~/types'
+import { ResourceService } from '~/services/resource-service'
 
 interface AddResourceWithInputProps {
   btnText?: string
@@ -23,6 +28,9 @@ interface AddResourceWithInputProps {
   link?: string
   searchRef: MutableRefObject<string>
   button?: ReactElement
+  selectedItems?: string[]
+  setItems?: Dispatch<SetStateAction<string[]>>
+  hideCategoriesFilter?: boolean
 }
 
 const AddResourceWithInput: FC<AddResourceWithInputProps> = ({
@@ -30,7 +38,10 @@ const AddResourceWithInput: FC<AddResourceWithInputProps> = ({
   fetchData,
   link,
   searchRef,
-  button
+  button,
+  selectedItems,
+  setItems,
+  hideCategoriesFilter
 }) => {
   const { t } = useTranslation()
   const [searchInput, setSearchInput] = useState<string>('')
@@ -51,6 +62,14 @@ const AddResourceWithInput: FC<AddResourceWithInputProps> = ({
     void fetchData()
   }
 
+  const filterProps = {
+    title: t('myResourcesPage.categories.category'),
+    service: ResourceService.getResourcesCategoriesNames,
+    selectedItems: selectedItems,
+    setSelectedItems: setItems,
+    valueField: 'name'
+  }
+
   return (
     <Box sx={styles.container}>
       {!button ? (
@@ -61,15 +80,19 @@ const AddResourceWithInput: FC<AddResourceWithInputProps> = ({
       ) : (
         button
       )}
-
-      <InputWithIcon
-        endAdornment={<SearchIcon sx={styles.searchIcon} />}
-        onChange={onChange}
-        onClear={onClear}
-        placeholder={t('common.search')}
-        sx={styles.input}
-        value={searchInput}
-      />
+      <Box sx={styles.filterWithInput}>
+        {!hideCategoriesFilter && (
+          <FilterSelector<CategoryNameInterface> {...filterProps} />
+        )}
+        <InputWithIcon
+          endAdornment={<SearchIcon sx={styles.searchIcon} />}
+          onChange={onChange}
+          onClear={onClear}
+          placeholder={t('common.search')}
+          sx={styles.input}
+          value={searchInput}
+        />
+      </Box>
     </Box>
   )
 }

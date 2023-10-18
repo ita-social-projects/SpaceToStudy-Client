@@ -1,4 +1,4 @@
-import { useCallback, useRef } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import Box from '@mui/material/Box'
 import AddIcon from '@mui/icons-material/Add'
 import { useTranslation } from 'react-i18next'
@@ -43,6 +43,7 @@ const AttachmentsContainer = () => {
   const { page, handleChangePage } = usePagination()
   const sortOptions = useSort({ initialSort })
   const searchFileName = useRef<string>('')
+  const [selectedItems, setSelectedItems] = useState<string[]>([])
   const formData = new FormData()
 
   const { sort } = sortOptions
@@ -168,6 +169,8 @@ const AttachmentsContainer = () => {
       }
       fetchData={fetchAttachments}
       searchRef={searchFileName}
+      selectedItems={selectedItems}
+      setItems={setSelectedItems}
     />
   )
 

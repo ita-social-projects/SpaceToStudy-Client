@@ -1,8 +1,11 @@
 import { useCallback, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
+import AddIcon from '@mui/icons-material/Add'
 
 import Loader from '~/components/loader/Loader'
+import AppButton from '~/components/app-button/AppButton'
+import AddCategoriesModal from '~/containers/my-resources/add-categories-modal/AddCategoriesModal'
 import AddResourceWithInput from '~/containers/my-resources/add-resource-with-input/AddResourceWithInput'
 import { ResourceService } from '~/services/resource-service'
 import MyResourcesTable from '~/containers/my-resources/my-resources-table/MyResourcesTable'
@@ -11,6 +14,7 @@ import useSort from '~/hooks/table/use-sort'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import usePagination from '~/hooks/table/use-pagination'
 import { useSnackBarContext } from '~/context/snackbar-context'
+import { useModalContext } from '~/context/modal-context'
 
 import { defaultResponses, snackbarVariants } from '~/constants'
 import {
@@ -25,7 +29,8 @@ import {
   GetResourcesParams,
   ErrorResponse,
   ResourcesTabsEnum,
-  UpdateResourceCategory
+  UpdateResourceCategory,
+  CreateCategoriesParams
 } from '~/types'
 import { ajustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
 
@@ -37,6 +42,7 @@ const CategoriesContainer = () => {
   const sortOptions = useSort({ initialSort })
   const breakpoints = useBreakpoints()
   const { page, handleChangePage } = usePagination()
+  const { openModal, closeModal } = useModalContext()
   const { setAlert } = useSnackBarContext()
   const [selectedItemId, setSelectedItemId] = useState<string>('')
 
@@ -53,15 +59,35 @@ const CategoriesContainer = () => {
     [setAlert]
   )
 
+  const onResponse = useCallback(
+    (response: Categories | null) => {
+      const categoryName = response ? response.name : ''
+
+      setAlert({
+        severity: snackbarVariants.success,
+        message: t('myResourcesPage.categories.successCreation', {
+          category: categoryName
+        })
+      })
+    },
+    [setAlert, t]
+  )
+
   const getCategories = useCallback(
     () =>
       ResourceService.getResourcesCategories({
         limit: itemsPerPage,
         skip: (page - 1) * itemsPerPage,
         sort,
-        title: searchTitle.current
+        name: searchTitle.current
       }),
     [page, itemsPerPage, sort, searchTitle]
+  )
+
+  const createCategory = useCallback(
+    (params?: CreateCategoriesParams) =>
+      ResourceService.createResourceCategory(params),
+    []
   )
 
   const updateCategory = useCallback(
@@ -80,6 +106,21 @@ const CategoriesContainer = () => {
   })
 
   const onCategoryUpdate = useCallback(() => void fetchData(), [fetchData])
+  const onCategoryCreate = useCallback(
+    (response: Categories | null) => {
+      onResponse(response)
+      void fetchData()
+    },
+    [fetchData, onResponse]
+  )
+
+  const { fetchData: handleCreateCategory } = useAxios({
+    service: createCategory,
+    defaultResponse: null,
+    fetchOnMount: false,
+    onResponseError,
+    onResponse: onCategoryCreate
+  })
 
   const { fetchData: updateData } = useAxios({
     service: updateCategory,
@@ -89,6 +130,16 @@ const CategoriesContainer = () => {
     fetchOnMount: false
   })
 
+  const onAdd = () => {
+    openModal({
+      component: (
+        <AddCategoriesModal
+          closeModal={closeModal}
+          createCategories={handleCreateCategory}
+        />
+      )
+    })
+  }
   const onSave = async (name: string) => {
     if (name) await updateData({ id: selectedItemId, name })
     setSelectedItemId('')
@@ -118,7 +169,14 @@ const CategoriesContainer = () => {
     <Box>
       <AddResourceWithInput
         btnText={t('myResourcesPage.categories.addBtn')}
+        button={
+          <AppButton onClick={onAdd}>
+            {t('myResourcesPage.categories.addBtn')}
+            <AddIcon sx={styles.addIcon} />
+          </AppButton>
+        }
         fetchData={fetchData}
+        hideCategoriesFilter
         searchRef={searchTitle}
       />
       {loading ? (

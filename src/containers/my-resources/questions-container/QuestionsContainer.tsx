@@ -1,4 +1,4 @@
-import { useCallback, useRef } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import Box from '@mui/material/Box'
 
 import { useSnackBarContext } from '~/context/snackbar-context'
@@ -34,6 +34,7 @@ const QuestionsContainer = () => {
   const searchTitle = useRef<string>('')
   const breakpoints = useBreakpoints()
   const { page, handleChangePage } = usePagination()
+  const [selectedItems, setSelectedItems] = useState<string[]>([])
 
   const { sort } = sortOptions
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
@@ -59,9 +60,10 @@ const QuestionsContainer = () => {
         limit: itemsPerPage,
         sort,
         title: searchTitle.current,
-        skip: (page - 1) * itemsPerPage
+        skip: (page - 1) * itemsPerPage,
+        categories: selectedItems
       }),
-    [itemsPerPage, sort, page]
+    [itemsPerPage, sort, page, selectedItems]
   )
 
   const { response, loading, fetchData } = useAxios<
@@ -145,6 +147,8 @@ const QuestionsContainer = () => {
         fetchData={fetchData}
         link={authRoutes.myResources.newQuestion.path}
         searchRef={searchTitle}
+        selectedItems={selectedItems}
+        setItems={setSelectedItems}
       />
       {loading ? (
         <Loader pageLoad size={50} />
