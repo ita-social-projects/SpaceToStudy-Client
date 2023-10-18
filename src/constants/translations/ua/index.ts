@@ -6,6 +6,7 @@ import questions from './questions.json'
 import categoriesPage from './categories-page.json'
 import titles from './titles.json'
 import login from './login.json'
+import signUp from './signup.json'
 import modals from './email-modals.json'
 import breadCrumbs from './breadcrumbs.json'
 import completeProfile from './complete-profile.json'
@@ -33,6 +34,7 @@ const ua = {
     questions,
     titles,
     login,
+    signUp,
     modals,
     breadCrumbs,
     completeProfile,
