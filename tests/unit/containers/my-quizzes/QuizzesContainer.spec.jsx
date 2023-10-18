@@ -17,6 +17,7 @@ const quizzesMock = {
           ]
         }
       ],
+      category: { id: '64fb2c33eba89699411d22bb', name: 'New Category' },
       author: '6477007a6fa4d05e1a800ce5',
       createdAt: '2023-08-02T13:24:36.451Z',
       updatedAt: '2023-08-02T13:24:36.451Z'
