@@ -27,6 +27,20 @@ const attachmentMockData = {
   items: responseItemsMock
 }
 
+const responseItemsMockCategory = Array(20)
+  .fill()
+  .map((_, index) => ({
+    ...attachmentDataMock,
+    category: { id: '64fb2c33eba89699411d22bb', name: 'New Category' },
+    _id: `${index}`,
+    fileName: index + attachmentDataMock.fileName
+  }))
+
+const attachmentMockDataCategory = {
+  count: 20,
+  items: responseItemsMockCategory
+}
+
 describe('AttachmentContainer renders correct data', () => {
   beforeEach(() => {
     mockAxiosClient
@@ -55,5 +69,24 @@ describe('AttachmentContainer renders correct data', () => {
     fireEvent.click(secondButton)
 
     expect(secondButton).toHaveAttribute('aria-current', 'true')
+  })
+})
+
+describe('QuestionsContainer test', () => {
+  beforeEach(() => {
+    mockAxiosClient
+      .onGet(URLs.resources.attachments.get)
+      .reply(200, attachmentMockDataCategory)
+    renderWithProviders(<AttachmentsContainer />)
+  })
+
+  afterEach(() => {
+    vi.clearAllMocks()
+  })
+
+  it('should render correct category', () => {
+    const category = screen.getByText('myResourcesPage.categories.category')
+
+    expect(category).toBeInTheDocument()
   })
 })

@@ -1,6 +1,11 @@
 import palette from '~/styles/app-theme/app.pallete'
 import { TypographyVariantEnum } from '~/types'
 
+const captionTitle = {
+  color: 'primary.400',
+  typography: TypographyVariantEnum.Caption
+}
+
 export const styles = {
   iconTitleDescription: {
     container: { display: 'flex', columnGap: '16px', alignItems: 'center' },
@@ -13,10 +18,7 @@ export const styles = {
         typography: TypographyVariantEnum.Subtitle2,
         color: 'primary.900'
       },
-      description: {
-        typography: TypographyVariantEnum.Caption,
-        color: 'primary.400'
-      }
+      description: captionTitle
     }
   },
   iconWrapper: {
@@ -37,8 +39,5 @@ export const styles = {
     fontWeight: 500,
     color: 'basic.turquoiseDark'
   },
-  date: {
-    color: 'primary.400',
-    typography: TypographyVariantEnum.Caption
-  }
+  date: captionTitle
 }

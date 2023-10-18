@@ -36,6 +36,7 @@ export const columns: TableColumn<Question>[] = [
   },
   {
     label: 'myResourcesPage.categories.category',
+    field: 'category',
     calculatedCellValue: (item: Question, { t }: AdditionalPropsInterface) =>
       item.category ? (
         <AppChip labelSx={styles.categoryChipLabel} sx={styles.categoryChip}>
