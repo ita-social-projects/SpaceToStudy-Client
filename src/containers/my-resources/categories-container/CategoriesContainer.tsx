@@ -97,7 +97,7 @@ const CategoriesContainer = () => {
   )
 
   const deleteCategory = useCallback(
-    (id?: string) => ResourceService.deleteResourceCategory(id || ''),
+    (id?: string) => ResourceService.deleteResourceCategory(id ?? ''),
     []
   )
 
