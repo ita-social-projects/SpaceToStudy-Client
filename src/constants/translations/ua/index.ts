@@ -1,4 +1,5 @@
 import common from './common.json'
+import constant from './constant.json'
 import errorPage from './error-page.json'
 import button from './button.json'
 import header from './header.json'
@@ -27,6 +28,7 @@ import questionPage from './question-page.json'
 const ua = {
   translations: {
     common,
+    constant,
     errorPage,
     button,
     header,
