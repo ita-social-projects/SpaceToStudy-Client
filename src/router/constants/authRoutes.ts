@@ -45,6 +45,10 @@ export const authRoutes = {
     path: '/my-profile/edit'
   },
   myCourses: {
-    root: { route: 'my-courses', path: '/my-courses' }
+    root: { route: 'my-courses', path: '/my-courses' },
+    newCourse: {
+      route: 'my-courses/new-course',
+      path: '/my-courses/new-course'
+    }
   }
 }
