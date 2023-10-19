@@ -1,0 +1,10 @@
+{
+  "navBar": {
+    "roles": "Ролі",
+    "categories": "Категорії",
+    "complains": "Скарги",
+    "admins": "Адміністратори",
+    "tutors": "Викладачі",
+    "students": "Студенти"
+  }
+}
