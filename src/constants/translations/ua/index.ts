@@ -1,5 +1,6 @@
 import common from './common.json'
 import errorPage from './error-page.json'
+import errors from './errors.json'
 import button from './button.json'
 import header from './header.json'
 import questions from './questions.json'
@@ -32,6 +33,7 @@ const ua = {
   translations: {
     common,
     errorPage,
+    errors,
     button,
     header,
     questions,
