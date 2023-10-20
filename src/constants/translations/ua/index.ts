@@ -23,6 +23,7 @@ import myCoursesPage from './my-courses-page.json'
 import chatPage from './chat.json'
 import lesson from './lesson.json'
 import questionPage from './question-page.json'
+import cookiePolicyPage from './cookie-policy-page.json'
 import guestHomePage from './guest-home-page.json'
 import table from './table.json'
 
@@ -53,6 +54,7 @@ const ua = {
     chatPage,
     lesson,
     questionPage,
+    cookiePolicyPage,
     guestHomePage,
     table
   }
