@@ -54,7 +54,7 @@ const ua = {
     chatPage,
     lesson,
     questionPage,
-    cookiePolicyPage
+    cookiePolicyPage,
     guestHomePage,
     table
   }
