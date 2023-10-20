@@ -59,10 +59,10 @@ describe('ChatTextArea component test', () => {
     expect(emojiIcon).toBeInTheDocument()
   })
 
-  it('should open emoji picker', async () => {
+  it('should toggle emoji picker', async () => {
     const emojiIcon = screen.getByTestId('MoodIcon')
 
-    fireEvent.mouseEnter(emojiIcon)
+    fireEvent.click(emojiIcon)
 
     const picker = screen.getByTestId('emoji-picker')
 

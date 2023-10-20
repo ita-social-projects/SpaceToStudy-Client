@@ -1,0 +1,14 @@
+{
+  "USER_NOT_REGISTERED": "Користувач не зареєстрований",
+  "INCORRECT_CREDENTIALS": "Введений вами пароль некоректний",
+  "ROLE_NOT_SUPPORTED": "Роль користувача не підтримується",
+  "ALREADY_REGISTERED": "Акаунт з таким email вже зареєстровано",
+  "EMAIL_ALREADY_CONFIRMED": "Користувача з таким email вже підтверджено",
+  "EMAIL_NOT_CONFIRMED": "Будь ласка, підтвердіть свій email",
+  "USER_NOT_FOUND": "Користувача не знайдено",
+  "BAD_REFRESH_TOKEN": "Сесію було завершено, будь ласка, авторизуйтеся повторно",
+  "UNAUTHORIZED": "Користувач не авторизований",
+  "EMAIL_NOT_FOUND": "Користувача з таким email не знайдено",
+  "BAD_RESET_TOKEN": "Час вийшов, спробуйте знову",
+  "DOCUMENT_NOT_FOUND": "Не знайдено"
+}
