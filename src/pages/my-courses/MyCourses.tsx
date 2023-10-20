@@ -13,7 +13,7 @@ const MyCourses = () => {
   return (
     <PageWrapper>
       <Typography sx={styles.title}>{t('myCoursesPage.title')}</Typography>
-      <Box sx={styles.tabs} />
+      <Box sx={styles.divider} />
       <AddCourseWithInput />
     </PageWrapper>
   )

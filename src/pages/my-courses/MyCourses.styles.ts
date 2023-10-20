@@ -5,7 +5,7 @@ export const styles = {
     typography: TypographyVariantEnum.H4,
     mb: '40px'
   },
-  tabs: {
+  divider: {
     display: 'flex',
     borderBottom: '1px solid',
     borderColor: 'primary.100',
