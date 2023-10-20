@@ -33,7 +33,7 @@ import {
   CardsViewEnum,
   CardsView,
   SizeEnum,
-  GetOffersPrarams,
+  GetOffersParams,
   GetOffersResponse,
   PositionEnum,
   StatusEnum
@@ -62,7 +62,7 @@ const FindOffers = () => {
     })
 
   const getOffers = useCallback(
-    (params?: GetOffersPrarams) => OfferService.getOffers(params),
+    (params?: GetOffersParams) => OfferService.getOffers(params),
     []
   )
 
@@ -70,7 +70,7 @@ const FindOffers = () => {
     response: offersResponse,
     loading: offersLoading,
     fetchData
-  } = useAxios<GetOffersResponse, GetOffersPrarams>({
+  } = useAxios<GetOffersResponse, GetOffersParams>({
     service: getOffers,
     defaultResponse,
     fetchOnMount: false

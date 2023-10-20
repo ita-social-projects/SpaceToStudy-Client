@@ -6,13 +6,13 @@ import {
   Offer,
   PriceRangeParams,
   PriceRangeResponse,
-  GetOffersPrarams,
+  GetOffersParams,
   CreateOrUpdateOfferData,
   GetMyOffersParams
 } from '~/types'
 
 export const OfferService = {
-  getOffers: async (params?: GetOffersPrarams): Promise<AxiosResponse> => {
+  getOffers: async (params?: GetOffersParams): Promise<AxiosResponse> => {
     const category = createUrlPath(URLs.categories.get, params?.categoryId)
     const subject = createUrlPath(URLs.subjects.get, params?.subjectId)
     return await axiosClient.get(`${category}${subject}${URLs.offers.get}`, {

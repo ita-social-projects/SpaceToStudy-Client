@@ -1,4 +1,9 @@
 {
-    "title": "Мої курси",
-    "buttonLabel": "Новий курс"
+  "title": "Мої курси",
+  "buttonLabel": "Новий курс",
+  "sortTitles": {
+    "newest": "Найновіші",
+    "level": "Рівень",
+    "subject": "Предмет"
+  }
 }
