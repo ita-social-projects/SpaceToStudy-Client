@@ -20,18 +20,22 @@ const TabNavigation: React.FC<TabNavigationProps> = ({
 }) => {
   const { t } = useTranslation()
 
-  const tabs = Object.keys(tabsData).map((key) => (
-    <Tab
-      activeTab={activeTab === key}
-      key={key}
-      onClick={() => handleClick(key)}
-    >
-      <Box sx={styles.titleBox}>
-        {tabsData[key].icon}
-        {t(tabsData[key].title)}
-      </Box>
-    </Tab>
-  ))
+  const tabs = Object.keys(tabsData).map((key) => {
+    const { tabProps } = tabsData[key]
+    return (
+      <Tab
+        activeTab={activeTab === key}
+        key={key}
+        onClick={() => handleClick(key)}
+        {...tabProps}
+      >
+        <Box sx={styles.titleBox}>
+          {tabsData[key].icon}
+          {t(tabsData[key].title)}
+        </Box>
+      </Tab>
+    )
+  })
 
   return <Box sx={styles.tabs}>{tabs}</Box>
 }

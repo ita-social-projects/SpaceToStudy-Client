@@ -18,6 +18,10 @@ const NewQuiz = () => {
   const props = { questions, setQuestions }
   const tabContent = activeTab && tabsData[activeTab].content(props)
 
+  tabsData['quizzes'].tabProps = {
+    ...(questions.length === 0 && { disabled: true })
+  }
+
   return (
     <PageWrapper sx={styles.container}>
       <TabNavigation

@@ -18,7 +18,7 @@ const SelectableQuestionQuizView: FC<SelectableQuestionQuizViewProps> = ({
   const questionsNumberList = questions.map((item, index) => {
     return (
       <Box
-        key={item?._id}
+        key={item._id}
         onClick={() => setSelectedIndex(index)}
         sx={styles.root(index === selectedIndex)}
       >
@@ -30,15 +30,11 @@ const SelectableQuestionQuizView: FC<SelectableQuestionQuizViewProps> = ({
 
   return (
     <Box>
-      {!!questions.length && (
-        <>
-          <Box sx={styles.selectableList}>{questionsNumberList}</Box>
-          <SelectableQuestion
-            question={questions[selectedIndex]}
-            selectedIndex={selectedIndex}
-          />
-        </>
-      )}
+      <Box sx={styles.selectableList}>{questionsNumberList}</Box>
+      <SelectableQuestion
+        question={questions[selectedIndex]}
+        selectedIndex={selectedIndex}
+      />
     </Box>
   )
 }

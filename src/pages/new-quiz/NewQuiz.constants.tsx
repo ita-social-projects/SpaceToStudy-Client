@@ -1,4 +1,5 @@
 import { Dispatch, ReactElement, SetStateAction } from 'react'
+import { ButtonProps } from '@mui/material/Button'
 import EditIcon from '@mui/icons-material/Edit'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import SettingsIcon from '@mui/icons-material/Settings'
@@ -19,6 +20,7 @@ export interface QuizTabsData {
     title: string
     content: (props: QuizContentProps) => ReactElement
     icon: ReactElement
+    tabProps?: Omit<ButtonProps, 'onClick'>
   }
 }
 export const tabsData: QuizTabsData = {
