@@ -24,6 +24,8 @@ import chatPage from './chat.json'
 import lesson from './lesson.json'
 import questionPage from './question-page.json'
 import cookiePolicyPage from './cookie-policy-page.json'
+import guestHomePage from './guest-home-page.json'
+import table from './table.json'
 
 const ua = {
   translations: {
@@ -53,6 +55,8 @@ const ua = {
     lesson,
     questionPage,
     cookiePolicyPage
+    guestHomePage,
+    table
   }
 }
 

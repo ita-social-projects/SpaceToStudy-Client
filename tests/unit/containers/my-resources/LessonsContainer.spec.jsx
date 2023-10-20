@@ -28,6 +28,20 @@ const lessonResponseMock = {
   items: responseItemsMock
 }
 
+const responseItemsMockCategory = Array(10)
+  .fill()
+  .map((_, index) => ({
+    ...lessonMock,
+    category: { id: '64fb2c33eba89699411d22bb', name: 'New Category' },
+    _id: `${index}`,
+    title: index + lessonMock.title
+  }))
+
+const lessonResponseMockCategory = {
+  count: 10,
+  items: responseItemsMockCategory
+}
+
 describe('LessonContainer test', () => {
   beforeEach(() => {
     mockAxiosClient
@@ -51,5 +65,24 @@ describe('LessonContainer test', () => {
 
     expect(columnLabel).toBeInTheDocument()
     expect(lessonTitle).toBeInTheDocument()
+  })
+})
+
+describe('Lessons category test', () => {
+  beforeEach(() => {
+    mockAxiosClient
+      .onGet(URLs.resources.lessons.get)
+      .reply(200, lessonResponseMockCategory)
+    renderWithProviders(<LessonsContainer />)
+  })
+
+  afterEach(() => {
+    vi.clearAllMocks()
+  })
+
+  it('should render correct category', () => {
+    const category = screen.getByText('myResourcesPage.categories.category')
+
+    expect(category).toBeInTheDocument()
   })
 })
