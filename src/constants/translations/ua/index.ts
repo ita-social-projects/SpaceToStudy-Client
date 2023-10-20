@@ -25,6 +25,7 @@ import myCoursesPage from './my-courses-page.json'
 import chatPage from './chat.json'
 import lesson from './lesson.json'
 import questionPage from './question-page.json'
+import step from './step.json'
 import userTable from './user-table.json'
 import admin from './admin.json'
 import cookiePolicyPage from './cookie-policy-page.json'
@@ -60,6 +61,7 @@ const ua = {
     chatPage,
     lesson,
     questionPage,
+    step,
     userTable,
     admin,
     cookiePolicyPage,
