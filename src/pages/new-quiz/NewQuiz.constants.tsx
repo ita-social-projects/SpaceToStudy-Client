@@ -1,4 +1,4 @@
-import { ReactElement } from 'react'
+import { Dispatch, ReactElement, SetStateAction } from 'react'
 import EditIcon from '@mui/icons-material/Edit'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import SettingsIcon from '@mui/icons-material/Settings'
@@ -7,27 +7,34 @@ import EditQuizContainer from '~/containers/my-quizzes/edit-quiz-container/EditQ
 import ViewQuizContainer from '~/containers/my-quizzes/view-quiz-container/ViewQuizContainer'
 import QuizSettingsContainer from '~/containers/my-quizzes/quiz-settings-container/QuizSettingsContainer'
 
-interface TabsData {
+import { Question } from '~/types'
+
+export interface QuizContentProps {
+  questions: Question[]
+  setQuestions: Dispatch<SetStateAction<Question[]>>
+}
+
+export interface QuizTabsData {
   [key: string]: {
     title: string
-    content: ReactElement
+    content: (props: QuizContentProps) => ReactElement
     icon: ReactElement
   }
 }
-export const tabsData: TabsData = {
+export const tabsData: QuizTabsData = {
   edit: {
     title: 'Edit',
-    content: <EditQuizContainer />,
+    content: (props) => <EditQuizContainer {...props} />,
     icon: <EditIcon />
   },
   quizzes: {
     title: 'View',
-    content: <ViewQuizContainer />,
+    content: (props) => <ViewQuizContainer {...props} />,
     icon: <VisibilityIcon />
   },
   settings: {
     title: 'Settings',
-    content: <QuizSettingsContainer />,
+    content: (props) => <QuizSettingsContainer {...props} />,
     icon: <SettingsIcon />
   }
 }

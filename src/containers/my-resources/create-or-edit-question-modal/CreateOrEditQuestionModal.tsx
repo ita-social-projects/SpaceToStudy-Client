@@ -77,7 +77,7 @@ const CreateOrEditQuestionModal: FC<CreateOrEditQuestionModalProps> = ({
         />
 
         <Typography sx={styles.inputTitle()}>
-          {t('myResourcesPage.questions.category')}:
+          {t('myResourcesPage.categories.category')}:
         </Typography>
         <AsyncAutocomplete<CategoryNameInterface>
           blurOnSelect

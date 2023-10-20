@@ -1,22 +1,15 @@
-import React, { ReactElement } from 'react'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Tab from '~/components/tab/Tab'
 import Box from '@mui/material/Box'
 
 import { styles } from '~/components/tab-navigation/TabNavigation.style'
-
-interface TabsData {
-  [key: string]: {
-    title: string
-    content: ReactElement
-    icon: ReactElement
-  }
-}
+import { QuizTabsData } from '~/pages/new-quiz/NewQuiz.constants'
 
 interface TabNavigationProps {
   activeTab: string
-  tabsData: TabsData
+  tabsData: QuizTabsData
   handleClick: (tab: string) => void
 }
 
