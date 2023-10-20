@@ -21,6 +21,7 @@ interface AddDocumentsProps {
     button?: SxProps
   }
   icon?: ReactElement
+  removePreviousFiles?: boolean
 }
 
 const AddDocuments: FC<AddDocumentsProps> = ({
@@ -29,7 +30,8 @@ const AddDocuments: FC<AddDocumentsProps> = ({
   buttonText,
   variant,
   sx = {},
-  icon
+  icon,
+  removePreviousFiles = false
 }) => {
   const [documents, setDocuments] = useState<File[]>([])
   const [documentsError, setDocumentsError] = useState<string>('')
@@ -54,6 +56,7 @@ const AddDocuments: FC<AddDocumentsProps> = ({
     }
 
     !error && void fetchData(formData)
+    removePreviousFiles && setDocuments([])
   }
 
   return (
