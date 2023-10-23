@@ -3,7 +3,6 @@
   "buttonLabel": "Новий курс",
   "sortTitles": {
     "newest": "Найновіші",
-    "level": "Рівень",
-    "subject": "Предмет"
+    "oldest": "Найдавніші"
   }
 }

@@ -3,7 +3,6 @@
   "buttonLabel": "New course",
   "sortTitles": {
     "newest": "Newest",
-    "level": "Level",
-    "subject": "Subject"
+    "oldest": "Oldest"
   }
 }
