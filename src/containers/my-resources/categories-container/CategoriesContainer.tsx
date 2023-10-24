@@ -26,7 +26,7 @@ import {
 import {
   Categories,
   ItemsWithCount,
-  GetResourcesParams,
+  GetResourcesCategoriesParams,
   ErrorResponse,
   ResourcesTabsEnum,
   UpdateResourceCategory,
@@ -96,9 +96,14 @@ const CategoriesContainer = () => {
     []
   )
 
+  const deleteCategory = useCallback(
+    (id?: string) => ResourceService.deleteResourceCategory(id ?? ''),
+    []
+  )
+
   const { response, loading, fetchData } = useAxios<
     ItemsWithCount<Categories>,
-    GetResourcesParams
+    GetResourcesCategoriesParams
   >({
     service: getCategories,
     defaultResponse: defaultResponses.itemsWithCount,
@@ -157,7 +162,7 @@ const CategoriesContainer = () => {
     actions: { onEdit },
     columns: columnsToShow,
     data: { response, getData: fetchData },
-    services: { deleteService: () => null },
+    services: { deleteService: deleteCategory },
     pagination: { page, onChange: handleChangePage },
     sort: sortOptions,
     itemsPerPage,

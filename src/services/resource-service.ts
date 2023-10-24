@@ -6,6 +6,7 @@ import { URLs } from '~/constants/request'
 import {
   Attachment,
   GetResourcesParams,
+  GetResourcesCategoriesParams,
   ItemsWithCount,
   LessonData,
   Lesson,
@@ -67,7 +68,7 @@ export const ResourceService = {
       createUrlPath(URLs.resources.questions.delete, id)
     ),
   getResourcesCategories: (
-    params?: GetResourcesParams
+    params?: GetResourcesCategoriesParams
   ): Promise<AxiosResponse<ItemsWithCount<Categories>>> => {
     return axiosClient.get(URLs.resources.resourcesCategories.get, { params })
   },
@@ -84,5 +85,10 @@ export const ResourceService = {
   createResourceCategory: async (
     params?: CreateCategoriesParams
   ): Promise<AxiosResponse<Categories>> =>
-    await axiosClient.post(URLs.resources.resourcesCategories.post, params)
+    await axiosClient.post(URLs.resources.resourcesCategories.post, params),
+
+  deleteResourceCategory: async (id: string): Promise<AxiosResponse> =>
+    await axiosClient.delete(
+      createUrlPath(URLs.resources.resourcesCategories.delete, id)
+    )
 }
