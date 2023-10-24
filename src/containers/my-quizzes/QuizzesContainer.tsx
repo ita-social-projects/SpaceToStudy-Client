@@ -61,9 +61,10 @@ const QuizzesContainer = () => {
         limit: itemsPerPage,
         skip: (page - 1) * itemsPerPage,
         sort,
-        title: searchTitle.current
+        title: searchTitle.current,
+        categories: selectedItems
       }),
-    [itemsPerPage, sort, searchTitle, page]
+    [itemsPerPage, sort, searchTitle, page, selectedItems]
   )
 
   const deleteQuiz = useCallback(

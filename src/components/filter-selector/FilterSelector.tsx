@@ -19,11 +19,8 @@ import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
 
 import { defaultResponses } from '~/constants'
 import { styles } from '~/components/filter-selector/FilterSelector.styles'
-import { ServiceFunction } from '~/types'
+import { CategoryNameInterface, ServiceFunction } from '~/types'
 
-interface HasId {
-  _id: string
-}
 interface FilterSelectorProps<T> extends Omit<MenuProps, 'open'> {
   title: string
   service: ServiceFunction<T[]>
@@ -33,7 +30,7 @@ interface FilterSelectorProps<T> extends Omit<MenuProps, 'open'> {
   valueField?: keyof T
 }
 
-const FilterSelector = <T extends HasId>({
+const FilterSelector = <T extends Pick<CategoryNameInterface, '_id'>>({
   title,
   service,
   selectedItems,

@@ -67,7 +67,8 @@ const AddResourceWithInput: FC<AddResourceWithInputProps> = ({
     service: ResourceService.getResourcesCategoriesNames,
     selectedItems: selectedItems,
     setSelectedItems: setItems,
-    valueField: 'name'
+    valueField: 'name',
+    position: 'right'
   }
 
   return (

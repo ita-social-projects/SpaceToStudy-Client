@@ -64,9 +64,10 @@ const AttachmentsContainer = () => {
         limit: itemsPerPage,
         skip: (page - 1) * itemsPerPage,
         sort,
-        fileName: searchFileName.current
+        fileName: searchFileName.current,
+        categories: selectedItems
       }),
-    [itemsPerPage, page, sort, searchFileName]
+    [itemsPerPage, page, sort, searchFileName, selectedItems]
   )
 
   const deleteAttachment = useCallback(
