@@ -1,5 +1,5 @@
-import { screen } from '@testing-library/react'
-import { vi } from 'vitest'
+import { fireEvent, screen } from '@testing-library/react'
+import { expect, vi } from 'vitest'
 import { mockAxiosClient, renderWithProviders } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
 import CategoriesContainer from '~/containers/my-resources/categories-container/CategoriesContainer'
@@ -52,5 +52,26 @@ describe('CategoriesContainer test', () => {
 
     expect(categoryItemTitle).toBeInTheDocument()
     expect(tableLastUpdatesText).toBeInTheDocument()
+  })
+
+  it('should open new category modal after button click', () => {
+    const addCategoryBtn = screen.getByText(
+      'myResourcesPage.categories.addBtn',
+      { selector: 'button' }
+    )
+
+    fireEvent.click(addCategoryBtn)
+
+    const addCategoryPopover = screen.getByTestId('popupContent')
+    expect(addCategoryPopover).toBeInTheDocument()
+  })
+
+  it('should display category menu', () => {
+    const categoryMenuBtn = screen.getAllByTestId('menu-icon')[0]
+
+    fireEvent.click(categoryMenuBtn)
+
+    const categoryMenu = screen.getByRole('menu')
+    expect(categoryMenu).toBeInTheDocument()
   })
 })
