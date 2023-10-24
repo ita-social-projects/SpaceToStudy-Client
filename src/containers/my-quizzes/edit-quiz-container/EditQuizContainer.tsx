@@ -35,12 +35,12 @@ import {
   QuestionModalForm,
   ErrorResponse
 } from '~/types'
+import { QuizContentProps } from '~/pages/new-quiz/NewQuiz.constants'
 
-const EditQuizContainer = () => {
+const EditQuizContainer = ({ questions, setQuestions }: QuizContentProps) => {
   const { t } = useTranslation()
   const { setAlert } = useSnackBarContext()
   const { openModal, closeModal } = useModalContext()
-  const [questions, setQuestions] = useState<Question[]>([])
   const [isNewQuestion, setIsNewQuestion] = useState<boolean>(false)
 
   const createNewQuestion = useCallback(
@@ -48,9 +48,12 @@ const EditQuizContainer = () => {
     []
   )
 
-  const onCreateResponse = useCallback((response: Question | null) => {
-    response && setQuestions((prev) => [...prev, response])
-  }, [])
+  const onCreateResponse = useCallback(
+    (response: Question | null) => {
+      response && setQuestions((prev) => [...prev, response])
+    },
+    [setQuestions]
+  )
 
   const onResponseError = (error: ErrorResponse) => {
     setAlert({
