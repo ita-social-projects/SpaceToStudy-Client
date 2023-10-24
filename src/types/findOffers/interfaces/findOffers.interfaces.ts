@@ -50,7 +50,7 @@ export interface FilterQueryHook<T> {
   filterQueryActions: FindOffersFiltersActions<T>
 }
 
-export interface GetOffersPrarams
+export interface GetOffersParams
   extends Partial<FindOffersFilters>,
     Partial<Omit<RequestParams, 'sort'>> {
   status?: Offer['status']

@@ -1,4 +1,8 @@
 {
-    "title": "My courses",
-    "buttonLabel": "New course"
+  "title": "My courses",
+  "buttonLabel": "New course",
+  "sortTitles": {
+    "newest": "Newest",
+    "oldest": "Oldest"
+  }
 }
