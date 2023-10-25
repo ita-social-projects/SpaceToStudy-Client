@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Box, Typography } from '@mui/material'
-import { styles } from '~/containers/add-course-banner/AddCourseBanner.styles'
+import { getStyles } from '~/containers/add-course-banner/AddCourseBanner.styles'
 import { validationData } from '~/containers/add-course-banner/AddCourseBanner.constants'
 import addImageIcon from '~/assets/img/tutor-my-courses/add-image-icon.svg'
 import bannerBackground from '~/assets/img/tutor-my-courses/banner-pattern.png'
@@ -20,7 +20,7 @@ const AddCourseBanner: React.FC<AddCourseBannerProps> = ({ formData }) => {
   const { setAlert } = useSnackBarContext()
   const { t } = useTranslation()
 
-  function handleBackgroundUpload({ files, error }: Emitter) {
+  const handleBackgroundUpload = ({ files, error }: Emitter) => {
     const file = files[0]
     if (file) {
       const blob = new Blob([file], { type: file.type })
@@ -36,12 +36,7 @@ const AddCourseBanner: React.FC<AddCourseBannerProps> = ({ formData }) => {
   }
 
   const bannerUrl = banner ? URL.createObjectURL(banner) : bannerBackground
-  const backgroundStyles = {
-    backgroundImage: `linear-gradient(0deg, rgba(38, 50, 56, 0.15) 0%, rgba(38, 50, 56, 0.15) 100%), url(${bannerUrl})`,
-    '&:hover': {
-      backgroundImage: `linear-gradient(0deg, rgba(38, 50, 56, 0.40) 0%, rgba(38, 50, 56, 0.40) 100%), url(${bannerUrl})`
-    }
-  }
+  const styles = getStyles(bannerUrl)
 
   const { addFiles } = useUpload({
     files: [],
@@ -54,9 +49,9 @@ const AddCourseBanner: React.FC<AddCourseBannerProps> = ({ formData }) => {
       <Box
         className='container'
         onClick={() => inputRef.current?.click()}
-        sx={{ ...styles.container, ...backgroundStyles }}
+        sx={styles.container}
       >
-        <Box sx={{ ...styles.titleWithIcon }}>
+        <Box sx={styles.titleWithIcon}>
           <Box alt='Add image icon' component='img' src={addImageIcon} />
           <Typography sx={styles.description}>
             {t('myCoursesPage.newCourse.bannerTitle')}
