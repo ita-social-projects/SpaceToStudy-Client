@@ -1,4 +1,4 @@
-import { FC, Dispatch, SetStateAction } from 'react'
+import { FC, Dispatch, SetStateAction, useState } from 'react'
 import {
   DragDropContext,
   Droppable,
@@ -11,6 +11,7 @@ import {
 import Box from '@mui/material/Box'
 
 import Question from '~/components/question/Question'
+import CreateOrEditQuizQuestion from '~/containers/my-quizzes/create-or-edit-quiz-question/CreateOrEditQuizQuestion'
 
 import { styles } from '~/containers/questions-list/QuestionsList.styles'
 import { Question as QuestionInterface } from '~/types'
@@ -21,6 +22,8 @@ interface QuestionsListProps {
 }
 
 const QuestionsList: FC<QuestionsListProps> = ({ items, setItems }) => {
+  const [editableItemId, setEditableItemId] = useState<string>('')
+
   const reorder = (
     list: QuestionInterface[],
     startIndex: number,
@@ -47,6 +50,8 @@ const QuestionsList: FC<QuestionsListProps> = ({ items, setItems }) => {
     setItems(reorderedItems)
   }
 
+  const onEditCancel = () => setEditableItemId('')
+
   const questionsList = items.map((item, i) => (
     <Draggable draggableId={item._id} index={i} key={item._id}>
       {(provided: DraggableProvided, snapshot: DraggableStateSnapshot) => (
@@ -56,7 +61,19 @@ const QuestionsList: FC<QuestionsListProps> = ({ items, setItems }) => {
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          <Question question={item} setQuestions={setItems} />
+          {editableItemId === item._id ? (
+            <CreateOrEditQuizQuestion
+              onCancel={onEditCancel}
+              question={item}
+              setQuestions={setItems}
+            />
+          ) : (
+            <Question
+              question={item}
+              setEditableItemId={setEditableItemId}
+              setQuestions={setItems}
+            />
+          )}
         </Box>
       )}
     </Draggable>

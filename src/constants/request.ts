@@ -60,7 +60,8 @@ export const URLs = {
     questions: {
       get: '/questions',
       delete: '/questions',
-      post: '/questions'
+      post: '/questions',
+      patch: '/questions'
     },
     resourcesCategories: {
       get: '/resources-categories',

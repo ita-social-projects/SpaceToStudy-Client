@@ -14,8 +14,8 @@ const categoriesNamesMock = [
 ]
 
 const initialDataMock = {
-  questionTitle: 'Question Title',
-  questionCategory: null
+  title: 'Question Title',
+  category: null
 }
 
 describe('EditAttachmentModal component', () => {
