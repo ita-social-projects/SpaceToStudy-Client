@@ -20,7 +20,9 @@ export const defaultResponse = {
   description: '',
   title: '',
   updatedAt: '',
-  _id: ''
+  _id: '',
+  content: '',
+  category: null
 }
 
 export const myResourcesPath = '/my-resources'
