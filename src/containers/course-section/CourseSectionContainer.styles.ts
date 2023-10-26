@@ -11,7 +11,6 @@ export const styles = {
     backgroundColor: 'basic.white',
     borderRadius: '6px',
     p: '24px',
-    marginTop: '40px',
     marginBottom: '40px'
   },
   header: {

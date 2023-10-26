@@ -98,23 +98,23 @@ const CourseSectionContainer = () => {
           <MoreVertIcon color={ColorEnum.Primary} sx={styles.headerIcon} />
         </IconButton>
       </Box>
+      <AppTextField
+        InputLabelProps={styles.descriptionLabel}
+        InputProps={styles.descriptionInput}
+        errorMsg={t(errors.description)}
+        fullWidth
+        inputProps={styles.input}
+        label={
+          data.description
+            ? ''
+            : t('course.courseSection.defaultNewDescription')
+        }
+        onChange={handleInputChange('description')}
+        value={data.description}
+        variant={TextFieldVariantEnum.Standard}
+      />
       {isVisible && (
         <Box>
-          <AppTextField
-            InputLabelProps={styles.descriptionLabel}
-            InputProps={styles.descriptionInput}
-            errorMsg={t(errors.description)}
-            fullWidth
-            inputProps={styles.input}
-            label={
-              data.description
-                ? ''
-                : t('course.courseSection.defaultNewDescription')
-            }
-            onChange={handleInputChange('description')}
-            value={data.description}
-            variant={TextFieldVariantEnum.Standard}
-          />
           <AppButton
             endIcon={<KeyboardArrowDownIcon fontSize={SizeEnum.Small} />}
             onClick={openMenu}
