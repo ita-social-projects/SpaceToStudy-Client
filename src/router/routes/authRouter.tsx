@@ -111,7 +111,7 @@ export const authRouter = (
     />
     <Route
       element={<CreateCourse />}
-      handle={{ crumb: newCourse }}
+      handle={{ crumb: [myCourses, newCourse] }}
       path={authRoutes.myCourses.newCourse.route}
     />
     <Route
