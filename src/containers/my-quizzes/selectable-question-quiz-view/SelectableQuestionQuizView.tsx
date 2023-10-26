@@ -62,7 +62,6 @@ const SelectableQuestionQuizView: FC<SelectableQuestionQuizViewProps> = ({
             <AppButton
               onClick={onBack}
               size={SizeEnum.ExtraLarge}
-              sx={{ display: 'flex', flexDirection: 'space-between' }}
               variant={ButtonVariantEnum.Tonal}
             >
               <ArrowBackIcon fontSize={SizeEnum.Medium} sx={{ mr: '5px' }} />
