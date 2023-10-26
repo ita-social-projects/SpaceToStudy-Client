@@ -65,8 +65,8 @@
     "updated": "Last updates",
     "emptyItems": "You have no categories yet",
     "successCreation": "«{{category}}» category was created successfully",
+    "successDeletion": "Category was deleted successfully",
     "confirmDeletionTitle": "Do you confirm category deletion?"
-
   },
   "confirmDeletionMessage":"This action is permanent and will remove all related content. Please review your decision before proceeding."
 }
