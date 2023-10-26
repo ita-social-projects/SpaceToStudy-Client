@@ -2,7 +2,8 @@ const link = {
   color: 'primary.900',
   textDecoration: 'none',
   typography: 'caption',
-  whiteSpace: 'nowrap'
+  whiteSpace: 'nowrap',
+  pt: '2px'
 }
 
 export const styles = {
