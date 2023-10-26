@@ -186,8 +186,8 @@ const Subjects = () => {
       {breakpoints.isMobile && autoCompleteCategories}
       {!subjects.length && !subjectsLoading ? (
         <NotFoundResults
-          buttonText={t('constant.buttonRequest', { name: 'subjects' })}
-          description={t('constant.tryAgainText', { name: 'subjects' })}
+          buttonText={t('errorMessages.buttonRequest', { name: 'subjects' })}
+          description={t('errorMessages.tryAgainText', { name: 'subjects' })}
           onClick={handleOpenModal}
         />
       ) : (

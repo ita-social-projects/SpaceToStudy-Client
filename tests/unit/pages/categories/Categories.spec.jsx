@@ -95,7 +95,7 @@ describe('Categories page with empty data', () => {
   })
 
   it('should render not found results when no categories are found', () => {
-    const newNotFound = screen.getByText('constant.resultsNotFound')
+    const newNotFound = screen.getByText('errorMessages.resultsNotFound')
     expect(newNotFound).toBeInTheDocument()
   })
 })
