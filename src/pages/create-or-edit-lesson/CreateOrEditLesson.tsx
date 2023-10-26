@@ -64,10 +64,10 @@ const CreateOrEditLesson = () => {
     setAlert({
       severity: snackbarVariants.success,
       message: id
-        ? 'newLesson.successEditedLesson'
-        : 'newLesson.successAddedLesson'
+        ? t('lesson.successEditedLesson')
+        : t('lesson.successAddedLesson')
     })
-    navigate(authRoutes.myResources.root.route)
+    navigate(authRoutes.myResources.root.path)
   }
 
   const handleAddAttachments = (attachments: Attachment[]) => {
@@ -162,8 +162,11 @@ const CreateOrEditLesson = () => {
   })
 
   useEffect(() => {
-    if (id) void fetchDataLesson(id)
-  }, [id, fetchDataLesson])
+    if (id) {
+      void fetchDataLesson(id)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id])
 
   if (getLessonLoading) {
     return <Loader pageLoad />
