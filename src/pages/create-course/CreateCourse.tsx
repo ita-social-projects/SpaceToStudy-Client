@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { useState } from 'react'
 import Box from '@mui/material/Box'
 import AddIcon from '@mui/icons-material/Add'
 
@@ -15,13 +16,23 @@ import { styles } from '~/pages/create-course/CreateCourse.styles'
 const CreateCourse = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
+
+  const [sections, setSections] = useState([<CourseSectionContainer key={0} />])
+
+  const onAddSectionClick = () => {
+    setSections([...sections, <CourseSectionContainer key={sections.length} />])
+  }
   const formData = new FormData()
 
   return (
     <PageWrapper>
-      <CourseSectionContainer />
+      {sections}
       <Box sx={styles.functionalButton}>
-        <AppButton size={SizeEnum.Medium} variant={ButtonVariantEnum.Tonal}>
+        <AppButton
+          onClick={onAddSectionClick}
+          size={SizeEnum.Medium}
+          variant={ButtonVariantEnum.Tonal}
+        >
           <AddIcon fontSize={SizeEnum.Small} />
           {t('course.addSectionBtn')}
         </AppButton>
