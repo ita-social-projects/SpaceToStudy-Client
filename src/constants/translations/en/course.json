@@ -1,0 +1,8 @@
+{
+    "addSectionBtn": "Add Section",
+    "courseSection": {
+        "defaultNewTitle": "Untitled",
+        "defaultNewDescription": "Description...",
+        "adddResourceBtn": "Add Resource"
+    }
+}

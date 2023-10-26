@@ -1,13 +1,14 @@
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
+import AddIcon from '@mui/icons-material/Add'
 
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import AppButton from '~/components/app-button/AppButton'
 import AddCourseBanner from '~/containers/add-course-banner/AddCourseBanner'
 import { authRoutes } from '~/router/constants/authRoutes'
 
-import { ButtonTypeEnum, ButtonVariantEnum } from '~/types'
+import { ButtonTypeEnum, ButtonVariantEnum, SizeEnum } from '~/types'
 import { styles } from '~/pages/create-course/CreateCourse.styles'
 
 const CreateCourse = () => {
@@ -17,6 +18,12 @@ const CreateCourse = () => {
 
   return (
     <PageWrapper>
+      <Box sx={styles.functionalButton}>
+        <AppButton size={SizeEnum.Medium} variant={ButtonVariantEnum.Tonal}>
+          <AddIcon fontSize={SizeEnum.Small} />
+          {t('course.addSectionBtn')}
+        </AppButton>
+      </Box>
       <AddCourseBanner formData={formData} />
       <Box sx={styles.buttons}>
         <AppButton

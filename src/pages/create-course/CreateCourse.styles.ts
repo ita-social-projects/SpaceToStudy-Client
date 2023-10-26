@@ -4,5 +4,11 @@ export const styles = {
     justifyContent: 'flex-end',
     gap: '24px',
     mt: '32px'
+  },
+  functionalButton: {
+    display: 'flex',
+    '& button': {
+      width: '100%'
+    }
   }
 }

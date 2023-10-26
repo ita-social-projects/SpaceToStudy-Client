@@ -1,0 +1,8 @@
+{
+    "addSectionBtn": "Новий курс",
+    "courseSection": {
+        "defaultNewTitle": "Заголовок",
+        "defaultNewDescription": "Опис ...",
+        "adddResourceBtn": "Додати матеріал"
+    }
+}
