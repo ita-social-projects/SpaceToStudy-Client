@@ -1,11 +1,20 @@
-import { useCallback, useState } from 'react'
-import FormControl from '@mui/material/FormControl'
+import { useCallback, useState, SyntheticEvent, CSSProperties } from 'react'
 import { useTranslation } from 'react-i18next'
-import useBreakpoints from '~/hooks/use-breakpoints'
+import FormControl from '@mui/material/FormControl'
 import FormHelperText from '@mui/material/FormHelperText'
-
 import Box from '@mui/material/Box'
+import OutlinedInput from '@mui/material/OutlinedInput'
+import InputLabel from '@mui/material/InputLabel'
+import MenuItem from '@mui/material/MenuItem'
+import ListItemText from '@mui/material/ListItemText'
+import Select, { SelectChangeEvent } from '@mui/material/Select'
+import Checkbox from '@mui/material/Checkbox'
+
+import { subjectService } from '~/services/subject-service'
+import { categoryService } from '~/services/category-service'
+import useBreakpoints from '~/hooks/use-breakpoints'
 import AppToolbar from '~/components/app-toolbar/AppToolbar'
+import AsyncAutocomplete from '~/components/async-autocomlete/AsyncAutocomplete'
 
 import {
   CategoryNameInterface,
@@ -14,31 +23,7 @@ import {
   SubjectNameInterface,
   ProficiencyLevelEnum
 } from '~/types'
-
 import { styles } from '~/containers/my-courses/course-search-tool-bar/CourseSearchToolbar.style'
-import { categoryService } from '~/services/category-service'
-import { subjectService } from '~/services/subject-service'
-import AsyncAutocomplete from '~/components/async-autocomlete/AsyncAutocomplete'
-
-///
-
-import OutlinedInput from '@mui/material/OutlinedInput'
-import InputLabel from '@mui/material/InputLabel'
-import MenuItem from '@mui/material/MenuItem'
-import ListItemText from '@mui/material/ListItemText'
-import Select, { SelectChangeEvent } from '@mui/material/Select'
-import Checkbox from '@mui/material/Checkbox'
-
-const ITEM_HEIGHT = 48
-const ITEM_PADDING_TOP = 8
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250
-    }
-  }
-}
 
 interface OfferSearchToolbarProps {
   filters: FindOffersFilters
@@ -62,7 +47,7 @@ const CourseSearchToolbar = ({
     [filters.categoryId]
   )
   const onCategoryChange = (
-    _: React.SyntheticEvent,
+    _: SyntheticEvent,
     value: CategoryNameInterface | null
   ) => {
     updateFilterInQuery(value?._id ?? '', 'categoryId')
@@ -71,21 +56,20 @@ const CourseSearchToolbar = ({
   }
 
   const onSubjectChange = (
-    _: React.SyntheticEvent,
+    _: SyntheticEvent,
     value: SubjectNameInterface | null
   ) => {
     updateFilterInQuery(value?._id ?? '', 'subjectId')
     resetPage()
   }
 
-  const [selectedlevel, setLevel] = useState<ProficiencyLevelEnum[]>([])
+  const [selectedLevel, setSelectedLevel] = useState<ProficiencyLevelEnum[]>([])
 
   const onLevelChange = (event: SelectChangeEvent<ProficiencyLevelEnum[]>) => {
     const {
       target: { value }
     } = event
-    // setLevel(value)
-    setLevel(value as ProficiencyLevelEnum[])
+    setSelectedLevel(value as ProficiencyLevelEnum[])
     updateFilterInQuery(value as ProficiencyLevelEnum[], 'proficiencyLevel')
     resetPage()
   }
@@ -105,6 +89,7 @@ const CourseSearchToolbar = ({
         valueField='_id'
       />
       <AsyncAutocomplete
+        disabled={!filters.categoryId}
         labelField='name'
         onChange={onSubjectChange}
         service={getSubjectsNames}
@@ -119,7 +104,7 @@ const CourseSearchToolbar = ({
       <FormControl>
         <InputLabel id='demo-multiple-checkbox-label'>Levels</InputLabel>
         <Select
-          MenuProps={MenuProps}
+          MenuProps={styles.menuProps}
           id='demo-multiple-checkbox'
           input={<OutlinedInput label='Level' />}
           labelId='demo-multiple-checkbox-label'
@@ -128,17 +113,17 @@ const CourseSearchToolbar = ({
           renderValue={(selected) => {
             return selected.join(', ')
           }}
-          style={styles.drowlevel as React.CSSProperties}
+          style={styles.drowlevel as CSSProperties}
           value={filters.proficiencyLevel}
         >
           {levelLists.map((item) => (
             <MenuItem key={item} value={item}>
-              <Checkbox checked={selectedlevel.indexOf(item) > -1} />
+              <Checkbox checked={selectedLevel.indexOf(item) > -1} />
               <ListItemText primary={item} />
             </MenuItem>
           ))}
         </Select>
-        <FormHelperText sx={styles.drowstyle as React.CSSProperties}>
+        <FormHelperText sx={styles.drowstyle as CSSProperties}>
           {t('myCoursesPage.filterLabel.levels')}
         </FormHelperText>
       </FormControl>
@@ -148,7 +133,7 @@ const CourseSearchToolbar = ({
   return (
     <Box sx={styles.container}>
       {!isMobile && (
-        <AppToolbar sx={styles.otherToolbar as React.CSSProperties}>
+        <AppToolbar sx={styles.otherToolbar as CSSProperties}>
           {AppAutoCompleteList}
         </AppToolbar>
       )}

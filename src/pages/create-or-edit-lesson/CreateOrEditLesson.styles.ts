@@ -64,10 +64,8 @@ export const styles = {
   },
   addAttachmentBtn: { width: 'fit-content' },
   addAttachmentIcon: { ml: '5px', width: { xs: '18px', sm: '22px' } },
-  justSomeBox: {
-    width: '80%',
-    position: 'relative',
-    left: '4.7%',
+  TitleDescBox: {
+    width: '100%',
     marginBottom: '30px'
   }
 }

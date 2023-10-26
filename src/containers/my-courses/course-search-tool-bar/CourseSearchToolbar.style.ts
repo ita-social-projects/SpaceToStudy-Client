@@ -39,8 +39,16 @@ export const styles = {
   otherToolbar: {
     borderRadius: '10px',
     display: 'flex',
-    justifyContent: 'space-around',
-    backgroundColor: '#F7F7F7;',
+    justifyContent: 'space-between',
+    backgroundColor: 'backgroundColor;',
     boxShadow: 'none'
+  },
+  menuProps: {
+    PaperProps: {
+      style: {
+        maxHeight: '224px',
+        width: '250px'
+      }
+    }
   }
 }
