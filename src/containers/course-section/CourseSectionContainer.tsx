@@ -32,7 +32,7 @@ const CourseSectionContainer = () => {
   const { t } = useTranslation()
 
   const [menuAnchorEl, setMenuAnchorEl] = useState<HTMLElement | null>(null)
-  const [visible, setVisible] = useState<boolean>(true)
+  const [isVisible, setIsVisible] = useState<boolean>(true)
 
   const { data, errors, handleInputChange } = useForm<CourseSection>({
     initialValues,
@@ -40,7 +40,7 @@ const CourseSectionContainer = () => {
   })
 
   const onShowHide = () => {
-    setVisible((visible) => !visible)
+    setIsVisible((isVisible) => !isVisible)
   }
 
   const openMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -71,7 +71,7 @@ const CourseSectionContainer = () => {
       </Box>
       <Box sx={styles.header}>
         <IconButton onClick={onShowHide} style={styles.headerIconWrapper}>
-          {visible ? (
+          {isVisible ? (
             <KeyboardArrowUpIcon
               color={ColorEnum.Primary}
               sx={styles.headerIcon}
@@ -98,7 +98,7 @@ const CourseSectionContainer = () => {
           <MoreVertIcon color={ColorEnum.Primary} sx={styles.headerIcon} />
         </IconButton>
       </Box>
-      {visible && (
+      {isVisible && (
         <Box>
           <AppTextField
             InputLabelProps={styles.descriptionLabel}

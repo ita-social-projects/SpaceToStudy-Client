@@ -6,8 +6,7 @@ export interface AddResourcesMenuItem {
 }
 
 export const validations = {
-  title: (value: string | null) =>
-    emptyField(value, 'course.errorMessages.title'),
+  title: (value: string) => emptyField(value, 'course.errorMessages.title'),
   description: (value: string) =>
     emptyField(value, 'course.errorMessages.description')
 }
