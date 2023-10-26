@@ -5,6 +5,7 @@ import AddIcon from '@mui/icons-material/Add'
 
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import AppButton from '~/components/app-button/AppButton'
+import CourseSectionContainer from '~/containers/course-section/CourseSectionContainer'
 import AddCourseBanner from '~/containers/add-course-banner/AddCourseBanner'
 import { authRoutes } from '~/router/constants/authRoutes'
 
@@ -18,6 +19,7 @@ const CreateCourse = () => {
 
   return (
     <PageWrapper>
+      <CourseSectionContainer />
       <Box sx={styles.functionalButton}>
         <AppButton size={SizeEnum.Medium} variant={ButtonVariantEnum.Tonal}>
           <AddIcon fontSize={SizeEnum.Small} />

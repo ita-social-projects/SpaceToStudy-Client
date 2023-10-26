@@ -3,6 +3,6 @@
     "courseSection": {
         "defaultNewTitle": "Untitled",
         "defaultNewDescription": "Description...",
-        "adddResourceBtn": "Add Resource"
+        "addResourceBtn": "Add Resource"
     }
 }
