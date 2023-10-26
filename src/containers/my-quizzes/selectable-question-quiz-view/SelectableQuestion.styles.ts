@@ -33,5 +33,11 @@ export const styles = {
     gap: '24px',
     justifyContent: { xs: 'center', sm: 'flex-end' },
     mt: '32px'
+  },
+  backIcon: {
+    mr: '5px'
+  },
+  nextIcon: {
+    ml: '5px'
   }
 }
