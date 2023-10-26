@@ -27,5 +27,17 @@ export const styles = {
     gap: '16px',
     gridTemplateColumns: 'repeat(auto-fit, minmax(79px, 1fr))',
     my: '32px'
+  },
+  buttons: {
+    display: 'flex',
+    gap: '24px',
+    justifyContent: { xs: 'center', sm: 'flex-end' },
+    mt: '32px'
+  },
+  backIcon: {
+    mr: '5px'
+  },
+  nextIcon: {
+    ml: '5px'
   }
 }
