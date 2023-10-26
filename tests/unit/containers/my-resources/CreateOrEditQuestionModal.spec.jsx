@@ -33,7 +33,7 @@ describe('EditAttachmentModal component', () => {
   })
 
   it('should render title', () => {
-    const title = screen.getByText('myResourcesPage.quizzes.createNewQuestion')
+    const title = screen.getByText('myResourcesPage.quizzes.editQuestion')
 
     expect(title).toBeInTheDocument()
   })
