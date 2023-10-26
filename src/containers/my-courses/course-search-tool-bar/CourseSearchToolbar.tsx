@@ -151,7 +151,7 @@ const CourseSearchToolbar = ({
     <Box sx={styles.container}>
       {!isMobile && (
         <AppToolbar sx={styles.otherToolbar as CSSProperties}>
-          <Box sx={styles.TitleDescBox}>
+          <Box sx={styles.titleDescBox}>
             <AppTextField
               InputLabelProps={styles.titleLabel}
               InputProps={styles.titleInput}

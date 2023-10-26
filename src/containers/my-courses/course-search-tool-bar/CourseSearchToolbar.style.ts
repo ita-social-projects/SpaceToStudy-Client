@@ -77,7 +77,7 @@ export const styles = {
     shrink: false,
     sx: { typography: TypographyVariantEnum.H4, top: -23 }
   },
-  TitleDescBox: {
+  titleDescBox: {
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
