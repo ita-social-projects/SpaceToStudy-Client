@@ -2,7 +2,9 @@ const link = {
   color: 'primary.900',
   textDecoration: 'none',
   typography: 'caption',
-  whiteSpace: 'nowrap'
+  whiteSpace: 'nowrap',
+  display: 'block',
+  align: 'center'
 }
 
 export const styles = {
