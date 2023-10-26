@@ -37,13 +37,9 @@ const SelectableQuestionQuizView: FC<SelectableQuestionQuizViewProps> = ({
     )
   })
 
-  const onNext = () => {
-    !isLastQuestion && setSelectedIndex(selectedIndex + 1)
-  }
+  const onNext = () => !isLastQuestion && setSelectedIndex(selectedIndex + 1)
 
-  const onBack = () => {
-    !isFirstQuestion && setSelectedIndex(selectedIndex - 1)
-  }
+  const onBack = () => !isFirstQuestion && setSelectedIndex(selectedIndex - 1)
 
   return (
     <Box>
