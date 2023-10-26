@@ -30,7 +30,7 @@ const EditQuizContainer = ({ questions, setQuestions }: QuizContentProps) => {
   const { openModal } = useModalContext()
   const [title, setTitle] = useState<string>('')
   const [description, setDescription] = useState<string>('')
-  const [isCreationOpened, setIsCreationOpen] = useState<boolean>(false)
+  const [isCreationOpen, setIsCreationOpen] = useState<boolean>(false)
 
   const onOpenAddQuestionsModal = () => {
     openModal({
@@ -81,7 +81,7 @@ const EditQuizContainer = ({ questions, setQuestions }: QuizContentProps) => {
         <Divider sx={styles.divider} />
 
         <QuestionsList items={questions} setItems={setQuestions} />
-        {isCreationOpened && (
+        {isCreationOpen && (
           <CreateOrEditQuizQuestion
             onCancel={onCloseCreateQuestion}
             setQuestions={setQuestions}

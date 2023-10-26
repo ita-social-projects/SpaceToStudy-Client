@@ -5,6 +5,8 @@ import { beforeEach, describe } from 'vitest'
 
 const data = {
   type: 'openAnswer',
+  title: 'question 1',
+  category: null,
   text: '',
   openAnswer: '',
   answers: []
@@ -77,7 +79,6 @@ describe('QuestionEditor component', () => {
     })
 
     expect(handleInputChange).toHaveBeenCalled()
-    screen.debug()
   })
 
   it('should click on edit title and category', () => {
