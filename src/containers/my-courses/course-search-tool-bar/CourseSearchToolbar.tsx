@@ -1,4 +1,10 @@
-import { useCallback, useState, SyntheticEvent, CSSProperties } from 'react'
+import {
+  useCallback,
+  useState,
+  SyntheticEvent,
+  CSSProperties,
+  ChangeEvent
+} from 'react'
 import { useTranslation } from 'react-i18next'
 import FormControl from '@mui/material/FormControl'
 import FormHelperText from '@mui/material/FormHelperText'
@@ -10,6 +16,7 @@ import ListItemText from '@mui/material/ListItemText'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import Checkbox from '@mui/material/Checkbox'
 
+import AppTextField from '~/components/app-text-field/AppTextField'
 import { subjectService } from '~/services/subject-service'
 import { categoryService } from '~/services/category-service'
 import useBreakpoints from '~/hooks/use-breakpoints'
@@ -21,7 +28,8 @@ import {
   FindOffersFilters,
   FindOffersFiltersActions,
   SubjectNameInterface,
-  ProficiencyLevelEnum
+  ProficiencyLevelEnum,
+  TextFieldVariantEnum
 } from '~/types'
 import { styles } from '~/containers/my-courses/course-search-tool-bar/CourseSearchToolbar.style'
 
@@ -129,12 +137,43 @@ const CourseSearchToolbar = ({
       </FormControl>
     </>
   )
+  const [titleName, setTitleName] = useState<string>('')
+  const [decriptionName, setDecriptionName] = useState<string>('')
+
+  const onChangeTitle = (e: ChangeEvent<HTMLInputElement>) => {
+    setTitleName(e.target.value)
+  }
+  const onChangeDescription = (e: ChangeEvent<HTMLInputElement>) => {
+    setDecriptionName(e.target.value)
+  }
 
   return (
     <Box sx={styles.container}>
       {!isMobile && (
         <AppToolbar sx={styles.otherToolbar as CSSProperties}>
-          {AppAutoCompleteList}
+          <Box sx={styles.TitleDescBox}>
+            <AppTextField
+              InputLabelProps={styles.titleLabel}
+              InputProps={styles.titleInput}
+              fullWidth
+              inputProps={styles.input}
+              label={titleName ? ' ' : t('lesson.labels.title')}
+              onChange={onChangeTitle}
+              value={titleName}
+              variant={TextFieldVariantEnum.Standard}
+            />
+            <AppTextField
+              InputLabelProps={styles.descriptionLabel}
+              InputProps={styles.descriptionInput}
+              fullWidth
+              inputProps={styles.input}
+              label={decriptionName ? ' ' : t('lesson.labels.description')}
+              onChange={onChangeDescription}
+              value={decriptionName}
+              variant={TextFieldVariantEnum.Standard}
+            />
+          </Box>
+          <Box sx={styles.searchBoxes}>{AppAutoCompleteList}</Box>
         </AppToolbar>
       )}
       {isMobile && AppAutoCompleteList}
