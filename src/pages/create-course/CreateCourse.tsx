@@ -6,11 +6,15 @@ import AddIcon from '@mui/icons-material/Add'
 
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import AppButton from '~/components/app-button/AppButton'
+
 import CourseSectionsList from '~/containers/course-sections-list/CourseSectionsList'
 
 import { sectionInitialData } from '~/pages/create-course/CreateCourse.constants'
 import AddCourseBanner from '~/containers/add-course-banner/AddCourseBanner'
+
 import { authRoutes } from '~/router/constants/authRoutes'
+import { useFilterQuery } from '~/hooks/use-filter-query'
+import { useAppSelector } from '~/hooks/use-redux'
 
 import {
   ButtonTypeEnum,
@@ -18,6 +22,11 @@ import {
   SizeEnum,
   CourseSection
 } from '~/types'
+
+import { countActiveOfferFilters } from '~/utils/count-active-filters'
+import { getOpositeRole } from '~/utils/helper-functions'
+import { defaultFilters } from '~/pages/find-offers/FindOffers.constants'
+import CourseSearchToolbar from '~/containers/my-courses/course-search-tool-bar/CourseSearchToolbar'
 import { styles } from '~/pages/create-course/CreateCourse.styles'
 
 const CreateCourse = () => {
@@ -42,6 +51,21 @@ const CreateCourse = () => {
 
   const formData = new FormData()
 
+  const { userRole } = useAppSelector((state) => state.appMain)
+
+  const oppositeRole = getOpositeRole(userRole)
+
+  const { filters, filterQueryActions } = useFilterQuery({
+    defaultFilters: defaultFilters(oppositeRole),
+    countActiveFilters: countActiveOfferFilters
+  })
+
+  const resetPage = () => {
+    filterQueryActions.updateFilterInQuery(
+      defaultFilters(oppositeRole).page,
+      'page'
+    )
+  }
   return (
     <PageWrapper>
       <AddCourseBanner formData={formData} />
@@ -58,6 +82,13 @@ const CreateCourse = () => {
           <AddIcon fontSize={SizeEnum.Small} />
           {t('course.addSectionBtn')}
         </AppButton>
+      </Box>
+      <Box>
+        <CourseSearchToolbar
+          filterActions={filterQueryActions}
+          filters={filters}
+          resetPage={resetPage}
+        />
       </Box>
       <Box sx={styles.buttons}>
         <AppButton

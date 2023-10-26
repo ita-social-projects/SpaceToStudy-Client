@@ -63,5 +63,11 @@ export const styles = {
     fontWeight: '400'
   },
   addAttachmentBtn: { width: 'fit-content' },
-  addAttachmentIcon: { ml: '5px', width: { xs: '18px', sm: '22px' } }
+  addAttachmentIcon: { ml: '5px', width: { xs: '18px', sm: '22px' } },
+  justSomeBox: {
+    width: '80%',
+    position: 'relative',
+    left: '4.7%',
+    marginBottom: '30px'
+  }
 }
