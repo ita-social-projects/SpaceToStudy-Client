@@ -3,7 +3,8 @@ const link = {
   textDecoration: 'none',
   typography: 'caption',
   whiteSpace: 'nowrap',
-  pt: '2px'
+  display: 'block',
+  align: 'center'
 }
 
 export const styles = {
