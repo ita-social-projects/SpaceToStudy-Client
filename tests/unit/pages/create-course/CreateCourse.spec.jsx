@@ -30,4 +30,10 @@ describe('CreateCourse', () => {
 
     expect(mockedNavigate).toHaveBeenCalled()
   })
+
+  it('should render add section button', () => {
+    const addSectionButton = screen.getByText('course.addSectionBtn')
+
+    expect(addSectionButton).toBeInTheDocument()
+  })
 })

@@ -4,5 +4,9 @@
         "defaultNewTitle": "Untitled",
         "defaultNewDescription": "Description...",
         "addResourceBtn": "Add Resource"
+    },
+    "errorMessages": {
+        "title": "Please provide a title",
+        "description": "Please provide a description"
     }
 }

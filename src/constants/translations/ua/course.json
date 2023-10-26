@@ -4,5 +4,9 @@
         "defaultNewTitle": "Заголовок",
         "defaultNewDescription": "Опис ...",
         "adddResourceBtn": "Додати матеріал"
+    },
+    "errorMessages": {
+        "title": "Будь ласка, вкажіть заголовок.",
+        "description": "Будь ласка, надайте опис."
     }
 }

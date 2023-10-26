@@ -12,21 +12,32 @@ import AppTextField from '~/components/app-text-field/AppTextField'
 import AppButton from '~/components/app-button/AppButton'
 import AddResourcesMenu from './add-resources-menu/AddResourcesMenu'
 
+import useForm from '~/hooks/use-form'
 import { styles } from '~/containers/course-section/CourseSectionContainer.styles'
 import {
   TextFieldVariantEnum,
   SizeEnum,
   ColorEnum,
-  ButtonVariantEnum
+  ButtonVariantEnum,
+  CourseSection
 } from '~/types'
 
-import { AddResourcesMenuItem } from '~/containers/course-section/CourseSectionContainer.constants'
+import {
+  AddResourcesMenuItem,
+  initialValues,
+  validations
+} from '~/containers/course-section/CourseSectionContainer.constants'
 
 const CourseSectionContainer = () => {
   const { t } = useTranslation()
 
   const [menuAnchorEl, setMenuAnchorEl] = useState<HTMLElement | null>(null)
   const [visible, setVisible] = useState<boolean>(true)
+
+  const { data, errors, handleInputChange } = useForm<CourseSection>({
+    initialValues,
+    validations
+  })
 
   const onShowHide = () => {
     setVisible((visible) => !visible)
@@ -75,12 +86,12 @@ const CourseSectionContainer = () => {
         <AppTextField
           InputLabelProps={styles.titleLabel}
           InputProps={styles.titleInput}
-          //   errorMsg={t(errors.title)}
+          errorMsg={t(errors.title)}
           fullWidth
           inputProps={styles.input}
-          //   label={data.title ? '' : t('course.defaultTitle')}
-          //   onChange={handleInputChange('title')}
-          //   value={data.title}
+          label={data.title ? '' : t('course.courseSection.defaultNewTitle')}
+          onChange={handleInputChange('title')}
+          value={data.title}
           variant={TextFieldVariantEnum.Standard}
         />
         <IconButton>
@@ -92,12 +103,16 @@ const CourseSectionContainer = () => {
           <AppTextField
             InputLabelProps={styles.descriptionLabel}
             InputProps={styles.descriptionInput}
-            // errorMsg={t(errors.description)}
+            errorMsg={t(errors.description)}
             fullWidth
             inputProps={styles.input}
-            // label={data.description ? '' : t('course.defaultDescription')}
-            // onChange={handleInputChange('description')}
-            // value={data.description}
+            label={
+              data.description
+                ? ''
+                : t('course.courseSection.defaultNewDescription')
+            }
+            onChange={handleInputChange('description')}
+            value={data.description}
             variant={TextFieldVariantEnum.Standard}
           />
           <AppButton
