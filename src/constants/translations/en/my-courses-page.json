@@ -4,5 +4,9 @@
   "sortTitles": {
     "newest": "Newest",
     "oldest": "Oldest"
+  },
+  "newCourse": {
+    "bannerTitle": "Add Banner Image",
+    "addIconAlt": "Add image icon"
   }
 }

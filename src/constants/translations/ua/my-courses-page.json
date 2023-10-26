@@ -4,5 +4,9 @@
   "sortTitles": {
     "newest": "Найновіші",
     "oldest": "Найдавніші"
+  },
+  "newCourse": {
+    "bannerTitle": "Додайте зображення банеру",
+    "addIcon": "Додати забраження"
   }
 }
