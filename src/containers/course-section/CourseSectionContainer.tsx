@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, MouseEvent, FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator'
@@ -12,7 +12,6 @@ import AppTextField from '~/components/app-text-field/AppTextField'
 import AppButton from '~/components/app-button/AppButton'
 import AddResourcesMenu from './add-resources-menu/AddResourcesMenu'
 
-import useForm from '~/hooks/use-form'
 import { styles } from '~/containers/course-section/CourseSectionContainer.styles'
 import {
   TextFieldVariantEnum,
@@ -22,28 +21,23 @@ import {
   CourseSection
 } from '~/types'
 
-import {
-  AddResourcesMenuItem,
-  initialValues,
-  validations
-} from '~/containers/course-section/CourseSectionContainer.constants'
+import { AddResourcesMenuItem } from '~/containers/course-section/CourseSectionContainer.constants'
 
-const CourseSectionContainer = () => {
+interface SectionProps {
+  sectionData: CourseSection
+}
+
+const CourseSectionContainer: FC<SectionProps> = ({ sectionData }) => {
   const { t } = useTranslation()
 
   const [menuAnchorEl, setMenuAnchorEl] = useState<HTMLElement | null>(null)
   const [isVisible, setIsVisible] = useState<boolean>(true)
 
-  const { data, errors, handleInputChange } = useForm<CourseSection>({
-    initialValues,
-    validations
-  })
-
   const onShowHide = () => {
     setIsVisible((isVisible) => !isVisible)
   }
 
-  const openMenu = (event: React.MouseEvent<HTMLElement>) => {
+  const openMenu = (event: MouseEvent<HTMLElement>) => {
     setMenuAnchorEl(event.currentTarget)
   }
 
@@ -51,15 +45,15 @@ const CourseSectionContainer = () => {
 
   const menuListValues: Array<AddResourcesMenuItem> = [
     {
-      name: 'Lesson',
+      name: t('course.courseSection.resourcesMenu.lessonMenuItem'),
       handleClick: closeMenu
     },
     {
-      name: 'Quiz',
+      name: t('course.courseSection.resourcesMenu.quizMenuItem'),
       handleClick: closeMenu
     },
     {
-      name: 'Attachment',
+      name: t('course.courseSection.resourcesMenu.attachmentMenuItem'),
       handleClick: closeMenu
     }
   ]
@@ -70,7 +64,7 @@ const CourseSectionContainer = () => {
         <DragIndicatorIcon sx={styles.dragIcon} />
       </Box>
       <Box sx={styles.header}>
-        <IconButton onClick={onShowHide} style={styles.headerIconWrapper}>
+        <IconButton onClick={onShowHide} sx={styles.headerIconWrapper}>
           {isVisible ? (
             <KeyboardArrowUpIcon
               color={ColorEnum.Primary}
@@ -86,12 +80,13 @@ const CourseSectionContainer = () => {
         <AppTextField
           InputLabelProps={styles.titleLabel}
           InputProps={styles.titleInput}
-          errorMsg={t(errors.title)}
           fullWidth
           inputProps={styles.input}
-          label={data.title ? '' : t('course.courseSection.defaultNewTitle')}
-          onChange={handleInputChange('title')}
-          value={data.title}
+          label={
+            sectionData.title ? '' : t('course.courseSection.defaultNewTitle')
+          }
+          // onChange={handleInputChange('title')}
+          value={sectionData.title}
           variant={TextFieldVariantEnum.Standard}
         />
         <IconButton>
@@ -103,16 +98,15 @@ const CourseSectionContainer = () => {
           <AppTextField
             InputLabelProps={styles.descriptionLabel}
             InputProps={styles.descriptionInput}
-            errorMsg={t(errors.description)}
             fullWidth
             inputProps={styles.input}
             label={
-              data.description
+              sectionData.description
                 ? ''
                 : t('course.courseSection.defaultNewDescription')
             }
-            onChange={handleInputChange('description')}
-            value={data.description}
+            // onChange={handleInputChange('description')}
+            value={sectionData.description}
             variant={TextFieldVariantEnum.Standard}
           />
           <AppButton

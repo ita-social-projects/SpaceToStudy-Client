@@ -3,7 +3,12 @@
     "courseSection": {
         "defaultNewTitle": "Розділ 1",
         "defaultNewDescription": "Опис ...",
-        "adddResourceBtn": "Додати матеріал"
+        "adddResourceBtn": "Додати матеріал",
+        "resourcesMenu": {
+            "lessonMenuItem": "Урок",
+            "quizMenuItem": "Тест",
+            "attachmentMenuItem": "Вкладення"
+        }
     },
     "errorMessages": {
         "title": "Будь ласка, вкажіть заголовок.",

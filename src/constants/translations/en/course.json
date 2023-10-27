@@ -3,7 +3,12 @@
     "courseSection": {
         "defaultNewTitle": "Section 1",
         "defaultNewDescription": "Description...",
-        "addResourceBtn": "Add Resource"
+        "addResourceBtn": "Add Resource",
+        "resourcesMenu": {
+            "lessonMenuItem": "Lesson",
+            "quizMenuItem": "Quiz",
+            "attachmentMenuItem": "Attachment"
+        }
     },
     "errorMessages": {
         "title": "Please provide a title",
