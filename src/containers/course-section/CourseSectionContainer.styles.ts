@@ -1,11 +1,5 @@
 import { TypographyVariantEnum } from '~/types'
 
-const titleAndDescription = {
-  fontSize: '16px',
-  maxHeight: '16px',
-  marginTop: 0
-}
-
 export const styles = {
   root: {
     backgroundColor: 'basic.white',
@@ -34,7 +28,7 @@ export const styles = {
   titleInput: {
     disableUnderline: true,
     style: {
-      ...titleAndDescription,
+      marginTop: 0,
       fontSize: '20px',
       maxHeight: '20px',
       fontWeight: 500
@@ -47,7 +41,9 @@ export const styles = {
     fontSize: '24px'
   },
   descriptionInput: {
-    style: titleAndDescription,
+    style: {
+      marginTop: 0
+    },
     disableUnderline: true
   },
   titleLabel: {
@@ -57,5 +53,11 @@ export const styles = {
   descriptionLabel: {
     sx: { typography: TypographyVariantEnum.Body1, top: -20 },
     shrink: false
+  },
+  menuItem: {
+    minWidth: '300px',
+    pl: '30px',
+    py: '15px',
+    typography: TypographyVariantEnum.MidTitle
   }
 }

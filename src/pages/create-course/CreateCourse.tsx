@@ -47,6 +47,7 @@ const CreateCourse = () => {
 
   return (
     <PageWrapper>
+      <AddCourseBanner formData={formData} />
       {sectionsList}
       <Box sx={styles.functionalButton}>
         <AppButton
@@ -58,7 +59,6 @@ const CreateCourse = () => {
           {t('course.addSectionBtn')}
         </AppButton>
       </Box>
-      <AddCourseBanner formData={formData} />
       <Box sx={styles.buttons}>
         <AppButton
           onClick={() => navigate(authRoutes.myCourses.root.path)}

@@ -1,5 +1,6 @@
-import { useState, MouseEvent, FC } from 'react'
+import { useState, ChangeEvent, FC } from 'react'
 import { useTranslation } from 'react-i18next'
+import { MenuItem } from '@mui/material'
 import Box from '@mui/material/Box'
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
@@ -10,7 +11,8 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 
 import AppTextField from '~/components/app-text-field/AppTextField'
 import AppButton from '~/components/app-button/AppButton'
-import AddResourcesMenu from './add-resources-menu/AddResourcesMenu'
+
+import useMenu from '~/hooks/use-menu'
 
 import { styles } from '~/containers/course-section/CourseSectionContainer.styles'
 import {
@@ -21,42 +23,71 @@ import {
   CourseSection
 } from '~/types'
 
-import { AddResourcesMenuItem } from '~/containers/course-section/CourseSectionContainer.constants'
-
 interface SectionProps {
   sectionData: CourseSection
 }
 
+type openModalFunc = () => void
+
 const CourseSectionContainer: FC<SectionProps> = ({ sectionData }) => {
   const { t } = useTranslation()
+  const { openMenu, renderMenu, closeMenu } = useMenu()
 
-  const [menuAnchorEl, setMenuAnchorEl] = useState<HTMLElement | null>(null)
   const [isVisible, setIsVisible] = useState<boolean>(true)
+  const [titleInput, setTitleInput] = useState<string>(sectionData.title)
+  const [descriptionInput, setDescriptionInput] = useState(
+    sectionData.description
+  )
 
   const onShowHide = () => {
     setIsVisible((isVisible) => !isVisible)
   }
 
-  const openMenu = (event: MouseEvent<HTMLElement>) => {
-    setMenuAnchorEl(event.currentTarget)
+  const onTitleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setTitleInput(event.target.value)
   }
 
-  const closeMenu = () => setMenuAnchorEl(null)
+  const onDescriptionInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setDescriptionInput(event.target.value)
+  }
 
-  const menuListValues: Array<AddResourcesMenuItem> = [
+  const onAction = (actionFunc: openModalFunc) => {
+    actionFunc()
+  }
+
+  const addResourceActions = [
     {
-      name: t('course.courseSection.resourcesMenu.lessonMenuItem'),
-      handleClick: closeMenu
+      id: 1,
+      label: (
+        <Box>
+          {` ${t('course.courseSection.resourcesMenu.lessonMenuItem')}`}
+        </Box>
+      ),
+      func: closeMenu
     },
     {
-      name: t('course.courseSection.resourcesMenu.quizMenuItem'),
-      handleClick: closeMenu
+      id: 2,
+      label: (
+        <Box>{` ${t('course.courseSection.resourcesMenu.quizMenuItem')}`}</Box>
+      ),
+      func: closeMenu
     },
     {
-      name: t('course.courseSection.resourcesMenu.attachmentMenuItem'),
-      handleClick: closeMenu
+      id: 3,
+      label: (
+        <Box>
+          {` ${t('course.courseSection.resourcesMenu.attachmentMenuItem')}`}
+        </Box>
+      ),
+      func: closeMenu
     }
   ]
+
+  const menuItems = addResourceActions.map(({ label, func, id }) => (
+    <MenuItem key={id} onClick={() => void onAction(func)} sx={styles.menuItem}>
+      {label}
+    </MenuItem>
+  ))
 
   return (
     <Box sx={styles.root}>
@@ -82,11 +113,9 @@ const CourseSectionContainer: FC<SectionProps> = ({ sectionData }) => {
           InputProps={styles.titleInput}
           fullWidth
           inputProps={styles.input}
-          label={
-            sectionData.title ? '' : t('course.courseSection.defaultNewTitle')
-          }
-          // onChange={handleInputChange('title')}
-          value={sectionData.title}
+          label={titleInput ? '' : t('course.courseSection.defaultNewTitle')}
+          onChange={onTitleInputChange}
+          value={titleInput}
           variant={TextFieldVariantEnum.Standard}
         />
         <IconButton>
@@ -101,12 +130,12 @@ const CourseSectionContainer: FC<SectionProps> = ({ sectionData }) => {
             fullWidth
             inputProps={styles.input}
             label={
-              sectionData.description
+              descriptionInput
                 ? ''
                 : t('course.courseSection.defaultNewDescription')
             }
-            // onChange={handleInputChange('description')}
-            value={sectionData.description}
+            onChange={onDescriptionInputChange}
+            value={descriptionInput}
             variant={TextFieldVariantEnum.Standard}
           />
           <AppButton
@@ -118,11 +147,7 @@ const CourseSectionContainer: FC<SectionProps> = ({ sectionData }) => {
           >
             {t('course.courseSection.addResourceBtn')}
           </AppButton>
-          <AddResourcesMenu
-            anchorEl={menuAnchorEl}
-            menuListValues={menuListValues}
-            onClose={closeMenu}
-          />
+          {renderMenu(menuItems)}
         </Box>
       )}
     </Box>
