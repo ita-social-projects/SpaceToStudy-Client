@@ -38,9 +38,7 @@ interface OfferSearchToolbarProps {
   filterActions: FindOffersFiltersActions<FindOffersFilters>
   resetPage: () => void
 }
-
 const levelLists = Object.values(ProficiencyLevelEnum)
-
 const CourseSearchToolbar = ({
   filters,
   resetPage,
@@ -49,7 +47,6 @@ const CourseSearchToolbar = ({
   const { t } = useTranslation()
   const { isMobile } = useBreakpoints()
   const { updateFilterInQuery } = filterActions
-
   const getSubjectsNames = useCallback(
     () => subjectService.getSubjectsNames(filters.categoryId),
     [filters.categoryId]
@@ -62,7 +59,6 @@ const CourseSearchToolbar = ({
     updateFilterInQuery('', 'subjectId')
     resetPage()
   }
-
   const onSubjectChange = (
     _: SyntheticEvent,
     value: SubjectNameInterface | null
@@ -70,9 +66,7 @@ const CourseSearchToolbar = ({
     updateFilterInQuery(value?._id ?? '', 'subjectId')
     resetPage()
   }
-
   const [selectedLevel, setSelectedLevel] = useState<ProficiencyLevelEnum[]>([])
-
   const onLevelChange = (event: SelectChangeEvent<ProficiencyLevelEnum[]>) => {
     const {
       target: { value }
@@ -81,7 +75,15 @@ const CourseSearchToolbar = ({
     updateFilterInQuery(value as ProficiencyLevelEnum[], 'proficiencyLevel')
     resetPage()
   }
-
+  const renderSelectedLevels = (selected: string[]) => {
+    return selected.join(', ')
+  }
+  const menuItems = levelLists.map((item) => (
+    <MenuItem key={item} value={item}>
+      <Checkbox checked={selectedLevel.indexOf(item) > -1} />
+      <ListItemText primary={item} />
+    </MenuItem>
+  ))
   const AppAutoCompleteList = (
     <>
       <AsyncAutocomplete
@@ -110,7 +112,7 @@ const CourseSearchToolbar = ({
         valueField='_id'
       />
       <FormControl>
-        <InputLabel id='demo-multiple-checkbox-label'>Levels</InputLabel>
+        <InputLabel>Levels</InputLabel>
         <Select
           MenuProps={styles.menuProps}
           id='demo-multiple-checkbox'
@@ -118,18 +120,11 @@ const CourseSearchToolbar = ({
           labelId='demo-multiple-checkbox-label'
           multiple
           onChange={onLevelChange}
-          renderValue={(selected) => {
-            return selected.join(', ')
-          }}
+          renderValue={renderSelectedLevels}
           style={styles.drowlevel as CSSProperties}
           value={filters.proficiencyLevel}
         >
-          {levelLists.map((item) => (
-            <MenuItem key={item} value={item}>
-              <Checkbox checked={selectedLevel.indexOf(item) > -1} />
-              <ListItemText primary={item} />
-            </MenuItem>
-          ))}
+          {menuItems}
         </Select>
         <FormHelperText sx={styles.drowstyle as CSSProperties}>
           {t('myCoursesPage.filterLabel.levels')}

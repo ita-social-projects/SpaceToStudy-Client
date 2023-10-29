@@ -10,7 +10,6 @@ import { sectionInitialData } from '~/pages/create-course/CreateCourse.constants
 import AddCourseBanner from '~/containers/add-course-banner/AddCourseBanner'
 import CourseSearchToolbar from '~/containers/my-courses/course-search-tool-bar/CourseSearchToolbar'
 import { useFilterQuery } from '~/hooks/use-filter-query'
-import { useAppSelector } from '~/hooks/use-redux'
 import AppButton from '~/components/app-button/AppButton'
 
 import {
@@ -20,10 +19,10 @@ import {
   CourseSection
 } from '~/types'
 
-import { getOpositeRole } from '~/utils/helper-functions'
 import { countActiveOfferFilters } from '~/utils/count-active-filters'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { defaultFilters } from '~/pages/find-offers/FindOffers.constants'
+import { UserRoleEnum } from '~/types'
 import { styles } from '~/pages/create-course/CreateCourse.styles'
 
 const CreateCourse = () => {
@@ -47,19 +46,13 @@ const CreateCourse = () => {
   }
 
   const formData = new FormData()
-
-  const { userRole } = useAppSelector((state) => state.appMain)
-
-  const oppositeRole = getOpositeRole(userRole)
-
   const { filters, filterQueryActions } = useFilterQuery({
-    defaultFilters: defaultFilters(oppositeRole),
+    defaultFilters: defaultFilters(UserRoleEnum.Tutor),
     countActiveFilters: countActiveOfferFilters
   })
-
   const resetPage = () => {
     filterQueryActions.updateFilterInQuery(
-      defaultFilters(oppositeRole).page,
+      defaultFilters(UserRoleEnum.Tutor).page,
       'page'
     )
   }
