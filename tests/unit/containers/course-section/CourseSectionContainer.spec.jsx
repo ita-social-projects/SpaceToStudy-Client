@@ -3,12 +3,21 @@ import { screen, fireEvent } from '@testing-library/react'
 
 import CourseSectionContainer from '~/containers/course-section/CourseSectionContainer'
 
+const mockedSectionData = {
+  section_id: 1,
+  title: '',
+  description: '',
+  resources: []
+}
+
 describe('CourseSectionContainer tests', () => {
   beforeEach(() => {
-    renderWithProviders(<CourseSectionContainer />)
+    renderWithProviders(
+      <CourseSectionContainer sectionData={mockedSectionData} />
+    )
   })
 
-  it('should render inouts for title and description', () => {
+  it('should render inputs for title and description', () => {
     const titleInput = screen.getByText('course.courseSection.defaultNewTitle')
     const labelInput = screen.getByText(
       'course.courseSection.defaultNewDescription'
