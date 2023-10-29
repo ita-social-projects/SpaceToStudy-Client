@@ -4,8 +4,7 @@ export const styles = {
   root: {
     backgroundColor: 'basic.white',
     borderRadius: '6px',
-    p: '24px',
-    marginBottom: '40px'
+    p: '24px'
   },
   header: {
     display: 'flex',

@@ -6,7 +6,7 @@ import AddIcon from '@mui/icons-material/Add'
 
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import AppButton from '~/components/app-button/AppButton'
-import CourseSectionContainer from '~/containers/course-section/CourseSectionContainer'
+import CourseSectionsList from '~/containers/course-sections-list/CourseSectionsList'
 
 import { sectionInitialData } from '~/pages/create-course/CreateCourse.constants'
 import AddCourseBanner from '~/containers/add-course-banner/AddCourseBanner'
@@ -40,15 +40,15 @@ const CreateCourse = () => {
     createNewSection()
   }
 
-  const sectionsList = sectionsItems.map((item) => (
-    <CourseSectionContainer key={item.section_id} sectionData={item} />
-  ))
   const formData = new FormData()
 
   return (
     <PageWrapper>
       <AddCourseBanner formData={formData} />
-      {sectionsList}
+      <CourseSectionsList
+        items={sectionsItems}
+        setSectionsItems={setSectionsItems}
+      />
       <Box sx={styles.functionalButton}>
         <AppButton
           onClick={onAddSectionClick}

@@ -84,7 +84,7 @@ const CourseSectionContainer: FC<SectionProps> = ({ sectionData }) => {
   ]
 
   const menuItems = addResourceActions.map(({ label, func, id }) => (
-    <MenuItem key={id} onClick={() => void onAction(func)} sx={styles.menuItem}>
+    <MenuItem key={id} onClick={() => onAction(func)} sx={styles.menuItem}>
       {label}
     </MenuItem>
   ))
