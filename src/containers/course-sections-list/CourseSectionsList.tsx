@@ -64,7 +64,10 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          <CourseSectionContainer sectionData={item} />
+          <CourseSectionContainer
+            sectionData={item}
+            setSectionsItems={setSectionsItems}
+          />
         </Box>
       )}
     </Draggable>

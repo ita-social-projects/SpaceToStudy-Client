@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, FC } from 'react'
+import { useState, ChangeEvent, FC, Dispatch, SetStateAction } from 'react'
 import { useTranslation } from 'react-i18next'
 import { MenuItem } from '@mui/material'
 import Box from '@mui/material/Box'
@@ -25,6 +25,7 @@ import {
 
 interface SectionProps {
   sectionData: CourseSection
+  setSectionsItems: Dispatch<SetStateAction<CourseSection[]>>
 }
 
 type openModalFunc = () => void
