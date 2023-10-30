@@ -8,6 +8,9 @@
             "lessonMenuItem": "Lesson",
             "quizMenuItem": "Quiz",
             "attachmentMenuItem": "Attachment"
+        },
+        "sectionMenu": {
+            "deleteSection": "Delete"
         }
     },
     "errorMessages": {
