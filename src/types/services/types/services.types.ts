@@ -5,6 +5,7 @@ export interface RequestParams {
   limit: number
   skip: number
   sort: Sort
+  categories: string[]
 }
 
 export interface ErrorResponse {

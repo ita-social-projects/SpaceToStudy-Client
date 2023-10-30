@@ -66,9 +66,10 @@ const LessonsContainer = () => {
         limit: itemsPerPage,
         skip: (page - 1) * itemsPerPage,
         sort,
-        title: searchTitle.current
+        title: searchTitle.current,
+        categories: selectedItems
       }),
-    [page, itemsPerPage, sort, searchTitle]
+    [page, itemsPerPage, sort, searchTitle, selectedItems]
   )
 
   const deleteLesson = useCallback(

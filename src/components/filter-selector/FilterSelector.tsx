@@ -19,7 +19,7 @@ import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
 
 import { defaultResponses } from '~/constants'
 import { styles } from '~/components/filter-selector/FilterSelector.styles'
-import { ServiceFunction } from '~/types'
+import { CategoryNameInterface, ServiceFunction } from '~/types'
 
 interface FilterSelectorProps<T> extends Omit<MenuProps, 'open'> {
   title: string
@@ -30,7 +30,7 @@ interface FilterSelectorProps<T> extends Omit<MenuProps, 'open'> {
   valueField?: keyof T
 }
 
-const FilterSelector = <T,>({
+const FilterSelector = <T extends Pick<CategoryNameInterface, '_id'>>({
   title,
   service,
   selectedItems,
@@ -42,6 +42,7 @@ const FilterSelector = <T,>({
   const { t } = useTranslation()
   const [menuAnchor, setMenuAnchor] = useState<null | HTMLElement>(null)
   const [inputValue, setInputValue] = useState<string>('')
+  const [selectedNames, setSelectedNames] = useState<string[]>([])
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value)
@@ -59,16 +60,18 @@ const FilterSelector = <T,>({
     setMenuAnchor(null)
   }
 
-  const onMenuItemClick = (item: string) => {
-    if (selectedItems.includes(item)) {
-      setSelectedItems(selectedItems.filter((selected) => selected !== item))
+  const onMenuItemClick = (item: string, id: string) => {
+    if (selectedNames.includes(item)) {
+      setSelectedNames(selectedNames.filter((selected) => selected !== item))
+      setSelectedItems(selectedItems.filter((selected) => selected !== id))
     } else {
-      setSelectedItems([...selectedItems, item])
+      setSelectedNames([...selectedNames, item])
+      setSelectedItems([...selectedItems, id])
     }
   }
 
   const onClearAll = () => {
-    selectedItems.length && setSelectedItems([])
+    selectedNames.length && setSelectedNames([])
   }
 
   const { loading, response } = useAxios<T[]>({
@@ -88,14 +91,15 @@ const FilterSelector = <T,>({
 
   const menuItems = filteredItems.map((item) => {
     const field = String(valueField ? item[valueField] : item)
+    const id = item._id
 
     return (
       <MenuItem
         key={field}
-        onClick={() => onMenuItemClick(field)}
+        onClick={() => onMenuItemClick(field, id)}
         sx={styles.text}
       >
-        <Checkbox checked={selectedItems.includes(field)} />
+        <Checkbox checked={selectedNames.includes(field)} />
         {field}
       </MenuItem>
     )
@@ -111,8 +115,8 @@ const FilterSelector = <T,>({
   )
 
   const itemsLoad = !response.length && loading
-  const chosenFiltersText = selectedItems.length
-    ? selectedItems.join(', ')
+  const chosenFiltersText = selectedNames.length
+    ? selectedNames.join(', ')
     : t('cooperationsPage.tabs.all')
 
   return (
@@ -149,7 +153,7 @@ const FilterSelector = <T,>({
 
         <Typography
           onClick={onClearAll}
-          sx={styles.clearAll(!!selectedItems.length)}
+          sx={styles.clearAll(!!selectedNames.length)}
         >
           <ClearIcon sx={styles.clearIcon} />
           {t('header.notifications.clearAll')}
