@@ -121,12 +121,12 @@ const CourseSearchToolbar = ({
           multiple
           onChange={onLevelChange}
           renderValue={renderSelectedLevels}
-          style={styles.drowlevel as CSSProperties}
+          sx={styles.drowlevel}
           value={filters.proficiencyLevel}
         >
           {menuItems}
         </Select>
-        <FormHelperText sx={styles.drowstyle as CSSProperties}>
+        <FormHelperText sx={styles.drowstyle}>
           {t('myCoursesPage.filterLabel.levels')}
         </FormHelperText>
       </FormControl>

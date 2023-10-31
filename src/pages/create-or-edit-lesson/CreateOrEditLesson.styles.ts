@@ -63,9 +63,5 @@ export const styles = {
     fontWeight: '400'
   },
   addAttachmentBtn: { width: 'fit-content' },
-  addAttachmentIcon: { ml: '5px', width: { xs: '18px', sm: '22px' } },
-  TitleDescBox: {
-    width: '100%',
-    marginBottom: '30px'
-  }
+  addAttachmentIcon: { ml: '5px', width: { xs: '18px', sm: '22px' } }
 }
