@@ -154,9 +154,9 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
       ) as unknown as ChatResponse
 
       if (thisChat) {
-        const isChatDeleted = thisChat.deletedFor.length > 1
+        const isChatDeleted = thisChat.deletedFor.length > 0
         setIsChatDeleted(isChatDeleted)
-      } else if (messages) {
+      } else if (messages && chatInfo.chatId) {
         setIsChatDeleted(true)
       }
     }

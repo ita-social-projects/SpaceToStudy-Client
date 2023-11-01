@@ -64,7 +64,7 @@ const Chat = () => {
   )
 
   const markedAsDeleted = useMemo<boolean | null>(
-    () => selectedChat && selectedChat.deletedFor.length > 0,
+    () => selectedChat && selectedChat?.deletedFor?.length > 0,
     [selectedChat]
   )
 
