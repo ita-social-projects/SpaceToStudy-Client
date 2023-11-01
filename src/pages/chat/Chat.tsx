@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next'
 import { Allotment } from 'allotment'
 import SimpleBar from 'simplebar-react'
 import Box from '@mui/material/Box'
+import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded'
 
 import { chatService } from '~/services/chat-service'
 import { messageService } from '~/services/message-service'
@@ -31,7 +32,12 @@ import AboutChatSidebar from '~/containers/about-chat-sidebar/AboutChatSidebar'
 import { getGroupedByDate, getIsNewDay } from '~/utils/helper-functions'
 import { defaultResponses } from '~/constants'
 import { styles } from '~/pages/chat/Chat.styles'
-import { mockFiles, mockLinks, mockMedia } from '~/pages/chat/Chat.constants'
+import {
+  backdropIgnore,
+  mockFiles,
+  mockLinks,
+  mockMedia
+} from '~/pages/chat/Chat.constants'
 import {
   ChatResponse,
   DrawerVariantEnum,
@@ -57,6 +63,14 @@ const Chat = () => {
     [selectedChat, myId]
   )
 
+  const markedAsDeleted = useMemo<boolean | null>(
+    () =>
+      selectedChat &&
+      selectedChat.deletedFor &&
+      selectedChat.deletedFor.length > 0,
+    [selectedChat]
+  )
+
   const groupedMessages = getGroupedByDate(messages, getIsNewDay)
   const allotmentSizes = isSidebarOpen && isDesktop ? [25, 50, 25] : [25, 75]
   const { Persistent, Temporary } = DrawerVariantEnum
@@ -66,8 +80,15 @@ const Chat = () => {
     e.stopPropagation()
   }
 
-  const onSidebarHandler = (event: boolean) => {
-    setIsSidebarOpen(event)
+  const onSidebarHandler = (
+    state: boolean,
+    event?: MouseEvent<HTMLButtonElement>
+  ) => {
+    !event && setIsSidebarOpen(state)
+
+    if (event?.target instanceof HTMLElement) {
+      event.target.classList[0] !== backdropIgnore && setIsSidebarOpen(state)
+    }
   }
 
   const onMessagesResponse = useCallback(
@@ -91,7 +112,11 @@ const Chat = () => {
     [selectedChat?._id]
   )
 
-  const { response: listOfChats, loading } = useAxios({
+  const {
+    fetchData: updateChats,
+    response: listOfChats,
+    loading
+  } = useAxios({
     service: getChats,
     defaultResponse: defaultResponses.array
   })
@@ -102,6 +127,11 @@ const Chat = () => {
     defaultResponse: defaultResponses.array,
     fetchOnMount: false
   })
+
+  const handleUpdateChats = async () => {
+    await updateChats()
+    setSelectedChat(null)
+  }
 
   const onMessageSend = async () => {
     setTextAreaValue('')
@@ -163,12 +193,14 @@ const Chat = () => {
       sx={styles.sidebar}
       variant={isDesktop ? Persistent : Temporary}
     >
-      <AboutChatSidebar
-        files={mockFiles}
-        links={mockLinks}
-        media={mockMedia}
-        member={userToSpeak}
-      />
+      {userToSpeak && (
+        <AboutChatSidebar
+          files={mockFiles}
+          links={mockLinks}
+          media={mockMedia}
+          member={userToSpeak}
+        />
+      )}
     </AppDrawer>
   )
 
@@ -188,6 +220,25 @@ const Chat = () => {
     </AppChip>
   )
 
+  const renderChatTextArea = () => {
+    const userName = userToSpeak
+      ? `${userToSpeak.user.firstName} ${userToSpeak.user.lastName}`
+      : t('chatPage.interlocutor')
+
+    return markedAsDeleted ? (
+      <AppChip labelSx={styles.warningLabel} sx={styles.warningChip}>
+        <WarningAmberRoundedIcon />
+        {t('chatPage.deletedChip', { userName: userName })}
+      </AppChip>
+    ) : (
+      <ChatTextArea
+        label={t('chatPage.chat.inputLabel')}
+        onClick={() => void onMessageSend()}
+        setValue={setTextAreaValue}
+        value={textAreaValue}
+      />
+    )
+  }
   const handleFilteredMessage = (filteredMessages: string[]) => {
     setFilteredMessages(filteredMessages.reverse())
   }
@@ -228,26 +279,27 @@ const Chat = () => {
               selectChatChip
             ) : (
               <>
-                <ChatHeader
-                  messages={messages}
-                  onClick={() => onSidebarHandler(true)}
-                  onFilteredIndexChange={hadleIndexMessage}
-                  onFilteredMessagesChange={handleFilteredMessage}
-                  onMenuClick={openChatsHandler}
-                  user={userToSpeak?.user}
-                />
+                {userToSpeak && (
+                  <ChatHeader
+                    currentChat={selectedChat}
+                    messages={messages}
+                    onClick={(event?: MouseEvent<HTMLButtonElement>) =>
+                      onSidebarHandler(true, event)
+                    }
+                    onFilteredIndexChange={hadleIndexMessage}
+                    onFilteredMessagesChange={handleFilteredMessage}
+                    onMenuClick={openChatsHandler}
+                    updateChats={handleUpdateChats}
+                    user={userToSpeak?.user}
+                  />
+                )}
                 <SimpleBar
                   scrollableNodeProps={{ ref: scrollRef }}
                   style={styles.scrollableContent}
                 >
                   {scrollableContent}
                 </SimpleBar>
-                <ChatTextArea
-                  label={t('chatPage.chat.inputLabel')}
-                  onClick={() => void onMessageSend()}
-                  setValue={setTextAreaValue}
-                  value={textAreaValue}
-                />
+                {renderChatTextArea()}
               </>
             )}
           </Box>

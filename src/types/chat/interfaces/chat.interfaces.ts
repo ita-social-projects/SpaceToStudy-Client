@@ -19,6 +19,7 @@ export interface LatestMessage extends CommonEntityFields {
 
 export interface ChatResponse extends CommonEntityFields {
   members: Member[]
+  deletedFor: Member[]
   latestMessage: LatestMessage
 }
 

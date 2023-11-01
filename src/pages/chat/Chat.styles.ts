@@ -45,6 +45,20 @@ export const styles = {
   }),
   loader: { color: 'primary.700' },
   chip: { backgroundColor: 'basic.white' },
+  warningChip: {
+    backgroundColor: 'basic.white',
+    m: 'auto',
+    p: '5px',
+    '& svg': {
+      color: 'warning.800'
+    }
+  },
+  warningLabel: {
+    display: 'flex',
+    gap: '10px',
+    color: 'primary.600',
+    typography: TypographyVariantEnum.Body1
+  },
   chipLabel: (small: boolean) => ({
     typography: small
       ? TypographyVariantEnum.Body1

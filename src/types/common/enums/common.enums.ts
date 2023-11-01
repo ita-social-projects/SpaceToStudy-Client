@@ -72,7 +72,8 @@ export enum ComponentEnum {
   Footer = 'footer',
   Form = 'form',
   Label = 'label',
-  Li = 'li'
+  Li = 'li',
+  Button = 'button'
 }
 
 export enum SortEnum {

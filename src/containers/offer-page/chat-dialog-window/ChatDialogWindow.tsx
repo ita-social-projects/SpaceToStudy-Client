@@ -6,12 +6,14 @@ import MessageIcon from '@mui/icons-material/Message'
 import CloseIcon from '@mui/icons-material/Close'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
+import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded'
 
 import ChatDate from '~/containers/chat/chat-date/ChatDate'
 import ChatTextArea from '~/containers/chat/chat-text-area/ChatTextArea'
 import { useChatContext } from '~/context/chat-context'
 import { useSnackBarContext } from '~/context/snackbar-context'
 import useAxios from '~/hooks/use-axios'
+import AppChip from '~/components/app-chip/AppChip'
 import Message from '~/components/message/Message'
 import UserProfileInfo from '~/components/user-profile-info/UserProfileInfo'
 import Loader from '~/components/loader/Loader'
@@ -36,6 +38,7 @@ interface ChatDialogWindow {
 
 const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
   const [textAreaValue, setTextAreaValue] = useState<string>('')
+  const [isChatDeleted, setIsChatDeleted] = useState<boolean>(false)
   const [isInitSended, setIsInitSended] = useState<boolean>(false)
   const [isRedirected, setIsRedirected] = useState<boolean>(false)
   const { setAlert } = useSnackBarContext()
@@ -52,6 +55,8 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
     },
     [setAlert]
   )
+
+  const getChats = useCallback(() => chatService.getChats(), [])
 
   const getMessages = useCallback(
     () => messageService.getMessages({ chatId: chatInfo.chatId as string }),
@@ -75,6 +80,11 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
       }),
     [chatInfo.author._id, chatInfo.authorRole]
   )
+
+  const { response: listOfChats, loading: isChatsLoading } = useAxios({
+    service: getChats,
+    defaultResponse: defaultResponses.array
+  })
 
   const {
     response: messages,
@@ -138,8 +148,23 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
   }, [chatInfo.chatId, createNewChat, fetchData, handleSendMessage])
 
   useEffect(() => {
-    chatInfo.chatId && void fetchData()
-  }, [chatInfo.chatId, fetchData])
+    if (!isChatsLoading && !messagesLoad) {
+      const thisChat: ChatResponse | undefined = listOfChats.find(
+        (chat: ChatResponse) => chat._id === chatInfo.chatId
+      ) as unknown as ChatResponse
+
+      if (thisChat) {
+        const isChatDeleted = thisChat.deletedFor.length > 1
+        setIsChatDeleted(isChatDeleted)
+      } else if (messages) {
+        setIsChatDeleted(true)
+      }
+    }
+  }, [chatInfo.chatId, isChatsLoading, listOfChats, messages, messagesLoad])
+
+  useEffect(() => {
+    chatInfo.chatId && !isChatDeleted && void fetchData()
+  }, [chatInfo.chatId, fetchData, isChatDeleted])
 
   useEffect(() => {
     if (chatInfo.chatId && !messagesLoad) {
@@ -197,6 +222,27 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
     )
   }
 
+  const chatTextArea = isChatDeleted ? (
+    <AppChip labelSx={styles.warningLabel} sx={styles.warningChip}>
+      <WarningAmberRoundedIcon />
+      {t('chatPage.deleted')}
+    </AppChip>
+  ) : (
+    <ChatTextArea
+      emojiPickerProps={{ perLine: 6 }}
+      label={
+        isMessageSending
+          ? statusLoader(t('chatPage.chat.sendingMessage'))
+          : t('chatPage.chat.inputLabel')
+      }
+      maxRows={3}
+      onClick={() => void onMessageSend()}
+      setValue={setTextAreaValue}
+      sx={styles.textArea}
+      value={textAreaValue}
+    />
+  )
+
   const scrollableContent =
     messagesLoad && !isInitSended ? (
       <Loader pageLoad size={50} sx={styles.loader} />
@@ -231,6 +277,7 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
           />
           <Box>
             <IconButton
+              disabled={isChatDeleted}
               onClick={() => void handleRedirectToChat()}
               sx={styles.icons}
             >
@@ -256,19 +303,7 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
             {questionsList}
           </Box>
         )}
-        <ChatTextArea
-          emojiPickerProps={{ perLine: 6 }}
-          label={
-            isMessageSending
-              ? statusLoader(t('chatPage.chat.sendingMessage'))
-              : t('chatPage.chat.inputLabel')
-          }
-          maxRows={3}
-          onClick={() => void onMessageSend()}
-          setValue={setTextAreaValue}
-          sx={styles.textArea}
-          value={textAreaValue}
-        />
+        {chatTextArea}
       </Box>
     </Box>
   )
