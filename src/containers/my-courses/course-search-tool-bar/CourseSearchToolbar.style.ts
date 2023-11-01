@@ -1,4 +1,10 @@
 import { TypographyVariantEnum } from '~/types'
+const commonStyle = {
+  fontSize: '14px',
+  position: 'absolute',
+  top: '-33px',
+  left: '-14px'
+}
 
 export const styles = {
   container: {
@@ -19,10 +25,7 @@ export const styles = {
     },
     position: 'relative',
     '& .MuiFormHelperText-root': {
-      fontSize: '14px',
-      position: 'absolute',
-      top: '-33px',
-      left: '-14px'
+      ...commonStyle
     }
   },
   drowlevel: {
@@ -30,17 +33,14 @@ export const styles = {
     position: 'relative'
   },
   drowstyle: {
-    fontSize: '14px',
-    position: 'absolute',
-    top: '-33px',
-    left: '-14px'
+    ...commonStyle
   },
   otherToolbar: {
     borderRadius: '10px',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    backgroundColor: 'backgroundColor;',
+    backgroundColor: 'backgroundColor',
     boxShadow: 'none'
   },
   menuProps: {
@@ -88,7 +88,6 @@ export const styles = {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: '30px',
-    marginBottom: '30px'
+    my: '30px'
   }
 }

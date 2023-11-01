@@ -1,10 +1,4 @@
-import {
-  useCallback,
-  useState,
-  SyntheticEvent,
-  CSSProperties,
-  ChangeEvent
-} from 'react'
+import { useCallback, useState, SyntheticEvent, ChangeEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import FormControl from '@mui/material/FormControl'
 import FormHelperText from '@mui/material/FormHelperText'
@@ -47,10 +41,19 @@ const CourseSearchToolbar = ({
   const { t } = useTranslation()
   const { isMobile } = useBreakpoints()
   const { updateFilterInQuery } = filterActions
+  const [selectedLevel, setSelectedLevel] = useState<ProficiencyLevelEnum[]>([])
+  const [titleName, setTitleName] = useState<string>('')
+  const [decriptionName, setDecriptionName] = useState<string>('')
   const getSubjectsNames = useCallback(
     () => subjectService.getSubjectsNames(filters.categoryId),
     [filters.categoryId]
   )
+  const onChangeTitle = (e: ChangeEvent<HTMLInputElement>) => {
+    setTitleName(e.target.value)
+  }
+  const onChangeDescription = (e: ChangeEvent<HTMLInputElement>) => {
+    setDecriptionName(e.target.value)
+  }
   const onCategoryChange = (
     _: SyntheticEvent,
     value: CategoryNameInterface | null
@@ -66,7 +69,6 @@ const CourseSearchToolbar = ({
     updateFilterInQuery(value?._id ?? '', 'subjectId')
     resetPage()
   }
-  const [selectedLevel, setSelectedLevel] = useState<ProficiencyLevelEnum[]>([])
   const onLevelChange = (event: SelectChangeEvent<ProficiencyLevelEnum[]>) => {
     const {
       target: { value }
@@ -112,7 +114,7 @@ const CourseSearchToolbar = ({
         valueField='_id'
       />
       <FormControl>
-        <InputLabel>Levels</InputLabel>
+        <InputLabel>{t('filters.filtersLevelsLable')}</InputLabel>
         <Select
           MenuProps={styles.menuProps}
           id='demo-multiple-checkbox'
@@ -132,20 +134,11 @@ const CourseSearchToolbar = ({
       </FormControl>
     </>
   )
-  const [titleName, setTitleName] = useState<string>('')
-  const [decriptionName, setDecriptionName] = useState<string>('')
-
-  const onChangeTitle = (e: ChangeEvent<HTMLInputElement>) => {
-    setTitleName(e.target.value)
-  }
-  const onChangeDescription = (e: ChangeEvent<HTMLInputElement>) => {
-    setDecriptionName(e.target.value)
-  }
 
   return (
     <Box sx={styles.container}>
       {!isMobile && (
-        <AppToolbar sx={styles.otherToolbar as CSSProperties}>
+        <AppToolbar sx={styles.otherToolbar}>
           <Box sx={styles.titleDescBox}>
             <AppTextField
               InputLabelProps={styles.titleLabel}
