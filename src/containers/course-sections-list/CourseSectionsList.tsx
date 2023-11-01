@@ -52,11 +52,7 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
   }
 
   const sectionsList = items.map((item, i) => (
-    <Draggable
-      draggableId={item.section_id.toString()}
-      index={i}
-      key={item.section_id}
-    >
+    <Draggable draggableId={item.id.toString()} index={i} key={item.id}>
       {(provided: DraggableProvided, snapshot: DraggableStateSnapshot) => (
         <Box
           ref={provided.innerRef}

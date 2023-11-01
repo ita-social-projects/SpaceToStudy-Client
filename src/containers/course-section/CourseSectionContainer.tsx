@@ -63,7 +63,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
 
   const onDeleteSection = () => {
     setSectionsItems((prev) => {
-      return prev.filter((item) => item.section_id !== sectionData.section_id)
+      return prev.filter((item) => item.id !== sectionData.id)
     })
   }
 

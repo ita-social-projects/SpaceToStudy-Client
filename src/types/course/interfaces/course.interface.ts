@@ -8,7 +8,7 @@ export interface Course extends CommonEntityFields {
 }
 
 export interface CourseSection {
-  section_id: number
+  id: number
   title: string
   description: string
   resources: (Lesson | Quiz | Attachment)[]

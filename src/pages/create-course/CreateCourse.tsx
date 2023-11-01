@@ -28,7 +28,7 @@ const CreateCourse = () => {
 
   const createNewSection = () => {
     const newSectionData = { ...sectionInitialData }
-    newSectionData.section_id = sectionsItems.length
+    newSectionData.id = sectionsItems.length
     setSectionsItems([...sectionsItems, newSectionData])
   }
 
