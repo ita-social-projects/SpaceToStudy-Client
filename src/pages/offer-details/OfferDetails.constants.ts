@@ -1,4 +1,4 @@
-import { TFunction } from 'react-i18next'
+import { t } from 'i18next'
 import { ButtonVariantEnum, StatusEnum } from '~/types'
 
 interface ActiveButtonActionsProps {
@@ -10,7 +10,6 @@ interface ActiveButtonActionsProps {
   handleEnrollOfferClick: () => void
   handleToggleOfferStatus: () => Promise<void>
   handleCloseOffer: () => Promise<void>
-  t: TFunction<'translation', undefined>
 }
 
 export const activeButtonActions = ({
@@ -21,11 +20,11 @@ export const activeButtonActions = ({
   status,
   handleEnrollOfferClick,
   handleToggleOfferStatus,
-  handleCloseOffer,
-  t
+  handleCloseOffer
 }: ActiveButtonActionsProps) => {
   const buttons = []
 
+  if (oppositeRole) {
   if (oppositeRole) {
     buttons.push({
       label: t('common.labels.enrollOffer'),

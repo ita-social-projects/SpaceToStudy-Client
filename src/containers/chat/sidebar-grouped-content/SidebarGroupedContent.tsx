@@ -13,7 +13,7 @@ import { File, Link, Media, SidebarContentEnum } from '~/types'
 
 interface SidebarGroupedContentProps<T> {
   items: T[]
-  type: string
+  type: SidebarContentEnum
 }
 
 const SidebarGroupedContent = <T extends File | Link | Media>({

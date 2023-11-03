@@ -66,7 +66,7 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
   const sendMessage = useCallback(
     () =>
       messageService.sendMessage({
-        chatId: chatInfo.chatId.toString(),
+        chatId: String(chatInfo.chatId),
         text: textAreaValue
       }),
     [chatInfo.chatId, textAreaValue]

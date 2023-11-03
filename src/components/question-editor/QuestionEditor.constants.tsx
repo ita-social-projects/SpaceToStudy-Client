@@ -22,7 +22,7 @@ export const sortQuestions = [
   }
 ]
 
-export const questionType = (type: string) => {
+export const questionType = (type: QuestionTypesEnum) => {
   const isMultipleChoice = type === sortQuestions[0].value
   const isOpenAnswer = type === sortQuestions[1].value
   const isSingleChoice = type === sortQuestions[2].value
