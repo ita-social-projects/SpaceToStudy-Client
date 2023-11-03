@@ -15,5 +15,11 @@ export const messageService = {
   sendMessage: (params: SendMessageParams): Promise<AxiosResponse> => {
     const chat = createUrlPath(URLs.chats.get, params.chatId)
     return axiosClient.post(`${chat}${URLs.messages.post}`, params)
+  },
+  deleteMessagesFromChat: async (
+    chatId: string
+  ): Promise<AxiosResponse<void>> => {
+    const chat = createUrlPath(URLs.chats.delete, chatId)
+    return axiosClient.delete(`${chat}${URLs.messages.delete}`)
   }
 }

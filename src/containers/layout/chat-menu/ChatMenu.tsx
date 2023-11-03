@@ -10,6 +10,7 @@ import useConfirm from '~/hooks/use-confirm'
 import useAxios from '~/hooks/use-axios'
 import { useSnackBarContext } from '~/context/snackbar-context'
 import { chatService } from '~/services/chat-service'
+import { messageService } from '~/services/message-service'
 
 import { styles } from '~/containers/layout/chat-menu/ChatMenu.styles'
 import { ChatResponse, ComponentEnum, ErrorResponse } from '~/types'
@@ -60,6 +61,12 @@ const ChatMenu: FC<ChatMenuProps> = ({
     []
   )
 
+  const deleteMessagesService = useCallback(
+    (id?: string): Promise<AxiosResponse> =>
+      messageService.deleteMessagesFromChat(id ?? ''),
+    []
+  )
+
   const { fetchData: markAsDeleted } = useAxios({
     service: markAsDeletedService,
     defaultResponse: defaultResponses.object,
@@ -76,14 +83,24 @@ const ChatMenu: FC<ChatMenuProps> = ({
     fetchOnMount: false
   })
 
+  const { fetchData: deleteMessages } = useAxios({
+    service: deleteMessagesService,
+    defaultResponse: null,
+    onResponse,
+    onResponseError,
+    fetchOnMount: false
+  })
+
   const handleDeletion = async (
     id: string,
     isConfirmed: boolean,
     deletingFully: boolean
   ) => {
     if (isConfirmed) {
-      if (deletingFully) await deleteChat(id)
-      else await markAsDeleted(id)
+      if (deletingFully) {
+        await deleteMessages(id)
+        await deleteChat(id)
+      } else await markAsDeleted(id)
 
       await updateChats()
     }
