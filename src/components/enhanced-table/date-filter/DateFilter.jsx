@@ -1,16 +1,15 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { format } from 'date-fns'
-
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker'
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import IconButton from '@mui/material/IconButton'
 import ClearIcon from '@mui/icons-material/Clear'
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker'
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
-import { initialState, datePickersOptions } from './constants'
 
+import { initialState, datePickersOptions } from './constants'
 import { styles } from './DateFilter.styles'
 
 const DateFilter = ({ filter, setFilter, clearFilter }) => {
@@ -27,10 +26,6 @@ const DateFilter = ({ filter, setFilter, clearFilter }) => {
   const handleOpen = (direction) => {
     setOpen((prev) => ({ ...prev, [direction]: true }))
   }
-
-  useEffect(() => {
-    return () => setOpen(null)
-  }, [])
 
   const endAdornment = (
     <IconButton

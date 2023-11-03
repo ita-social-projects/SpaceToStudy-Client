@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import Drawer, { DrawerProps } from '@mui/material/Drawer'
 import IconButton from '@mui/material/IconButton'
@@ -9,6 +9,7 @@ import useConfirm from '~/hooks/use-confirm'
 import { styles } from '~/components/app-drawer/AppDrawer.styles'
 
 interface AppDrawerProps extends DrawerProps {
+  children: ReactNode
   closeIcon?: boolean
   onClose: () => void
 }

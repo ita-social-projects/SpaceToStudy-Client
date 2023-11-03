@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useCallback, useLayoutEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
@@ -93,11 +93,11 @@ const UserTable = ({
     clearSelected
   ])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     void getData()
   }, [getData])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     clearPage()
   }, [filters, rowsPerPage, clearPage, externalFilter])
 
