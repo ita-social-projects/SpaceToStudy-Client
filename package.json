@@ -21,7 +21,7 @@
     "emoji-mart": "^5.5.2",
     "i18next": "^23.6.0",
     "nuka-carousel": "^6.0.3",
-    "react": "^18.2.0",
+    "react": "^17.0.2",
     "react-beautiful-dnd": "^13.1.1",
     "react-dom": "^18.2.0",
     "react-i18next": "^13.3.1",
