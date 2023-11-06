@@ -36,7 +36,8 @@ describe('SearchAutocomplete', () => {
     expect(searchInput.value).toBe('France')
   })
 
-  it('updates search input on typing', () => {
+  it('updates search input on typing', async () => {
+    const user = userEvent.setup()
     const setSearch = vi.fn()
     render(
       <SearchAutocomplete
@@ -48,7 +49,7 @@ describe('SearchAutocomplete', () => {
     )
 
     const searchInput = screen.getByLabelText('Search')
-    userEvent.type(searchInput, 'Finland')
+    await user.type(searchInput, 'Finland')
     expect(searchInput.value).toBe('Finland')
   })
 

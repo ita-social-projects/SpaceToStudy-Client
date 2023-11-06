@@ -77,13 +77,15 @@ describe('Chat for desktop', () => {
   })
 
   it('should send new message and clear input', async () => {
+    const user = userEvent.setup()
+
     const chatItem = screen.getByText('Scott Short')
 
     fireEvent.click(chatItem)
 
     const messageInput = screen.getByLabelText('chatPage.chat.inputLabel')
 
-    userEvent.type(messageInput, 'new message')
+    await user.type(messageInput, 'new message')
 
     expect(messageInput.value).toBe('new message')
 

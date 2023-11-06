@@ -33,9 +33,11 @@ describe('AddResourceWithInput test', () => {
   })
 
   it('should change and clear search input', async () => {
+    const user = userEvent.setup()
+
     const searchInput = screen.getByPlaceholderText('common.search')
 
-    userEvent.type(searchInput, text)
+    await user.type(searchInput, text)
 
     expect(searchInput.value).toBe(text)
 

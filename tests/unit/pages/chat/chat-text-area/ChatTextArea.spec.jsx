@@ -70,9 +70,11 @@ describe('ChatTextArea component test', () => {
   })
 
   it('should send new message and clear input', async () => {
+    const user = userEvent.setup()
+
     const input = screen.getByLabelText('Enter some text')
 
-    userEvent.type(input, 'new message')
+    await user.type(input, 'new message')
 
     expect(input.value).toBe('new message')
 
