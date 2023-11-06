@@ -16,13 +16,18 @@ import { styles } from '~/containers/app-content/AppContent.styles'
 
 const AppMain = () => {
   const mainWithFooter = useRef(null)
+  const authCheckRef = useRef(false)
   const { loading } = useAppSelector((state) => state.appMain)
   const { state } = useNavigation()
   const { chatInfo } = useChatContext()
   const dispatch = useAppDispatch()
 
   useLayoutEffect(() => {
-    void dispatch(checkAuth())
+    !authCheckRef.current && void dispatch(checkAuth())
+
+    return () => {
+      authCheckRef.current = true
+    }
   }, [dispatch])
 
   if (loading || state === 'loading') {
