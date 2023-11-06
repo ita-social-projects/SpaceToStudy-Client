@@ -150,7 +150,7 @@ const ChatMenu: FC<ChatMenuProps> = ({
       component={ComponentEnum.Button}
       key={item._id}
       onClick={item.handleOnClick}
-      sx={styles.menuItem(item.isDangerous ?? false)}
+      sx={styles.menuItem(!!item.isDangerous)}
     >
       {item.icon}
       {item.name}
