@@ -215,6 +215,48 @@ const CourseSectionContainer: FC<SectionProps> = ({
     })
   }
 
+  const handleAddLessons = (lessons: Lesson[]) => {
+    setLessons(lessons)
+  }
+
+  const handleOpenAddLessonsModal = () => {
+    closeMenu()
+    openModal({
+      component: (
+        <AddLessons lessons={lessons} onAddLessons={handleAddLessons} />
+      )
+    })
+  }
+
+  const handleAddQuizzes = (quizzes: Quiz[]) => {
+    setQuizzes(quizzes)
+  }
+
+  const handleOpenAddQuizzesModal = () => {
+    closeMenu()
+    openModal({
+      component: (
+        <AddQuizzes onAddQuizzes={handleAddQuizzes} quizzes={quizzes} />
+      )
+    })
+  }
+
+  const handleAddAttachments = (attachments: Attachment[]) => {
+    setAttachments(attachments)
+  }
+
+  const handleOpenAddAttachmentsModal = () => {
+    closeMenu()
+    openModal({
+      component: (
+        <AddAttachments
+          attachments={attachments}
+          onAddAttachments={handleAddAttachments}
+        />
+      )
+    })
+  }
+
   const sectionActions = [
     {
       id: 1,

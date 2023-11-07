@@ -16,7 +16,8 @@
     "lastUpdates": "Last updates",
     "emptyItems": "You have no lessons yet",
     "confirmDeletionTitle": "Do you confirm lesson deletion?",
-    "successDeletion": "Lesson was deleted successfully"
+    "successDeletion": "Lesson was deleted successfully",
+    "category": "Category"
   },
   "attachments": {
     "addBtn": "Add Attachment",
@@ -31,7 +32,8 @@
     "confirmDeletionTitle": "Do you confirm attachment deletion?",
     "successDeletion": "Attachment was deleted successfully",
     "validationError": "File name cannot be longer than 55 symbol.",
-    "attachmentName": "Attachment name"
+    "attachmentName": "Attachment name",
+    "category": "Category"
   },
   "quizzes": {
     "addBtn": "New quiz",
