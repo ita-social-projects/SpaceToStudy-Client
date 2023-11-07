@@ -90,7 +90,7 @@ const FileUploader: FC<FileUploaderProps> = ({
       {isImages && (
         <>
           <Typography sx={styles.fileSize}>
-            {`${t('constant.fileSize', { size: '10' })} ${t(
+            {`${t('errorMessages.fileSize', { size: '10' })} ${t(
               'common.megabytes'
             )}`}
           </Typography>

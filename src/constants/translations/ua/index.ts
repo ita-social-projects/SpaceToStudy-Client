@@ -1,4 +1,5 @@
 import common from './common.json'
+import errorMessages from './error-messages.json'
 import errorPage from './error-page.json'
 import errors from './errors.json'
 import button from './button.json'
@@ -36,6 +37,7 @@ import table from './table.json'
 const ua = {
   translations: {
     common,
+    errorMessages,
     errorPage,
     errors,
     button,

@@ -29,7 +29,7 @@ const NotFoundResults: FC<NotFoundResultsProps> = ({
         description={description}
         img={howItWorksStudentSecond}
         style={styles.imgTitleDescription}
-        title={t('constant.resultsNotFound')}
+        title={t('errorMessages.resultsNotFound')}
       />
       {buttonText && (
         <AppButton

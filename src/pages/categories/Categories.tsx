@@ -129,8 +129,8 @@ const Categories = () => {
 
       {!categories.length && !categoriesLoading ? (
         <NotFoundResults
-          buttonText={t('constant.buttonRequest', { name: 'categories' })}
-          description={t('constant.tryAgainText', { name: 'categories' })}
+          buttonText={t('errorMessages.buttonRequest', { name: 'categories' })}
+          description={t('errorMessages.tryAgainText', { name: 'categories' })}
           onClick={handleOpenModal}
         />
       ) : (

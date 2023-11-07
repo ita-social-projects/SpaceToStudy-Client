@@ -23,7 +23,7 @@ import completeProfile from './complete-profile.json'
 import tutorProfilePage from './tutor-profile-page.json'
 import tutorHomePage from './tutor-home-page.json'
 import userTable from './user-table.json'
-import constant from './constant.json'
+import errorMessages from './error-messages.json'
 import findOffers from './find-offer-page.json'
 import filters from './filters.json'
 import subjectsPage from './subjects-page.json'
@@ -64,7 +64,7 @@ const en = {
     tutorProfilePage,
     tutorHomePage,
     userTable,
-    constant,
+    errorMessages,
     findOffers,
     filters,
     subjectsPage,
