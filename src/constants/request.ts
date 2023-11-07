@@ -43,7 +43,9 @@ export const URLs = {
   },
   chats: {
     get: '/chats',
-    create: '/chats'
+    create: '/chats',
+    delete: '/chats',
+    patch: '/chats'
   },
   resources: {
     lessons: {
@@ -73,7 +75,8 @@ export const URLs = {
   },
   messages: {
     get: '/messages',
-    post: '/messages'
+    post: '/messages',
+    delete: '/messages'
   },
   quizzes: {
     get: '/quizzes',

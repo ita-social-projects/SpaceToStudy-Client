@@ -96,3 +96,5 @@ export const mockLinks = [
     url: 'https://s2s-back-stage.azurewebsites.net/api-docs/'
   }
 ]
+
+export const backdropIgnore = 'MuiBackdrop-root'

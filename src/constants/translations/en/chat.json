@@ -28,7 +28,8 @@
     "inputLabel": "Type a message...",
     "chipLabel": "Select a chat, to start messaging",
     "loading": "Loading...",
-    "sendingMessage": "Sending..."
+    "sendingMessage": "Sending...",
+    "interlocutor": "Your interlocutor"
   },
   "youCanAsk": "You can ask:",
   "firstQuestion": {
@@ -36,5 +37,14 @@
     "trialLesson": "Do you have a trial lesson?",
     "tutoringSession": "How long is each tutoring session?"
   },
-  "creating": "Creating new chat for you, please wait..."
+  "creating": "Creating new chat for you, please wait...",
+  "deleteSuccess": "Your chat was deleted successfully!",
+  "fullDeleteTitle": "Confirm chat deletion",
+  "markingAsDeletedTitle": "Mark chat as deleted?",
+  "fullDeleteWarning": "This operation is irreversible and your chat will be deleted completely and permanently!",
+  "markingAsDeletedWarning": "This operation will delete chat only for you. Your interlocutor will still have access to this chat. Are you sure?",
+  "deleted": "Chat was deleted",
+  "deletedChip": "{{userName}} deleted this chat, and now it is read-only",
+  "deleteChat": "Delete chat",
+  "clearHistory": "Clear history"
 }

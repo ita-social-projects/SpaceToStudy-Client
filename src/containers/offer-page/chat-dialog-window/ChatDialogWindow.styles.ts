@@ -99,5 +99,19 @@ export const styles = {
   icons: {
     color: 'primary.800'
   },
-  loader: { color: 'primary.700' }
+  loader: { color: 'primary.700' },
+  warningChip: {
+    backgroundColor: 'basic.white',
+    mx: '20px',
+    p: '5px',
+    '& svg': {
+      color: 'warning.800'
+    }
+  },
+  warningLabel: {
+    display: 'flex',
+    gap: '10px',
+    color: 'primary.600',
+    typography: TypographyVariantEnum.Body1
+  }
 }

@@ -1,4 +1,4 @@
-import { FC, MouseEvent, useState } from 'react'
+import { FC, MouseEvent, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
@@ -11,13 +11,16 @@ import useBreakpoints from '~/hooks/use-breakpoints'
 import AppCard from '~/components/app-card/AppCard'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import SearchByMessage from '~/components/search-by-message/SearchByMessage'
+import ChatMenu from '~/containers/layout/chat-menu/ChatMenu'
 
 import { styles } from '~/containers/chat/chat-header/ChatHeader.styles'
-import { UserResponse } from '~/types'
+import { ChatResponse, UserResponse } from '~/types'
 
 interface ChatHeaderProps {
-  onClick: () => void
+  onClick: (e?: MouseEvent<HTMLButtonElement>) => void
   onMenuClick: (e: MouseEvent<HTMLButtonElement>) => void
+  updateChats: () => Promise<void>
+  currentChat: ChatResponse
   user: Pick<UserResponse, '_id' | 'firstName' | 'lastName' | 'photo'>
   messages: { text: string }[]
   onFilteredMessagesChange: (filteredMessages: string[]) => void
@@ -27,26 +30,35 @@ interface ChatHeaderProps {
 const ChatHeader: FC<ChatHeaderProps> = ({
   onClick,
   user,
+  updateChats,
   onMenuClick,
+  currentChat,
   messages,
   onFilteredMessagesChange,
   onFilteredIndexChange
 }) => {
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false)
+  const [menuAnchorEl, setMenuAnchorEl] = useState<HTMLElement | null>(null)
+  const anchorRef = useRef<HTMLDivElement | null>(null)
   const { t } = useTranslation()
   const { isMobile } = useBreakpoints()
 
-  const handleOnClick = (e: MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation()
-  }
+  const openMenu = () => setMenuAnchorEl(anchorRef.current)
+  const closeMenu = () => setMenuAnchorEl(null)
+
   const handleSearch = (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation()
     setIsSearchOpen(!isSearchOpen)
   }
 
+  const handleMenu = (e: MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation()
+    openMenu()
+  }
+
   const iconButtons = [
     { _id: 1, icon: <SearchIcon />, handleOnClick: handleSearch },
-    { _id: 2, icon: <MoreVertIcon />, handleOnClick }
+    { _id: 2, icon: <MoreVertIcon />, handleOnClick: handleMenu }
   ]
 
   const icons = iconButtons.map(({ _id, icon, handleOnClick }) => (
@@ -68,6 +80,12 @@ const ChatHeader: FC<ChatHeaderProps> = ({
 
   return (
     <AppCard onClick={onClick} sx={styles.container}>
+      <ChatMenu
+        anchorEl={menuAnchorEl}
+        currentChat={currentChat}
+        onClose={closeMenu}
+        updateChats={updateChats}
+      />
       {isMobile && (
         <IconButton onClick={onMenuClick} sx={styles.menuIconBtn}>
           <MenuIcon />
@@ -78,7 +96,9 @@ const ChatHeader: FC<ChatHeaderProps> = ({
         style={styles.titleWithDescription}
         title={`${user.firstName} ${user.lastName}`}
       />
-      <Box sx={styles.actions}>{icons}</Box>
+      <Box ref={anchorRef} sx={styles.actions}>
+        {icons}
+      </Box>
       {isSearchOpen && (
         <Box sx={styles.searchContainer}>
           <SearchByMessage
