@@ -33,7 +33,7 @@ describe('CreateOrEditLesson', () => {
 
     fireEvent.click(addedAttachment)
 
-    const title = screen.getByText('common.uploadNewFile')
+    const title = screen.getByText('myResourcesPage.attachments.add')
 
     expect(title).toBeInTheDocument()
   })
