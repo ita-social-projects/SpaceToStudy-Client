@@ -49,7 +49,7 @@ describe('OfferSearchToolbar', () => {
 
   it('should test search input with button', () => {
     const search = screen.getByRole('textbox')
-    const searchBtn = screen.getByRole('button')
+    const searchBtn = screen.getByText('common.search')
 
     fireEvent.click(search)
     fireEvent.change(search, { target: { value: testValue } })
