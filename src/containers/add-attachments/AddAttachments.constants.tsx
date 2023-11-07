@@ -1,3 +1,5 @@
+import Typography from '@mui/material/Typography'
+
 import AppChip from '~/components/app-chip/AppChip'
 import IconExtensionWithTitle from '~/components/icon-extension-with-title/IconExtensionWithTitle'
 
@@ -25,16 +27,16 @@ export const columns = [
   {
     label: 'myResourcesPage.attachments.category',
     field: 'category',
-    calculatedCellValue: (
-      item: Attachment,
-      { t }: AdditionalPropsInterface
-    ) => (
-      <AppChip labelSx={styles.categoryChipLabel} sx={styles.categoryChip}>
-        {item.category
-          ? item.category.name
-          : t('myResourcesPage.categories.noCategory')}
-      </AppChip>
-    )
+    calculatedCellValue: (item: Attachment, { t }: AdditionalPropsInterface) =>
+      item.category ? (
+        <AppChip labelSx={styles.categoryChipLabel} sx={styles.categoryChip}>
+          {item.category.name}
+        </AppChip>
+      ) : (
+        <Typography sx={styles.date}>
+          {t('myResourcesPage.categories.noCategory')}
+        </Typography>
+      )
   },
   {
     label: 'myResourcesPage.attachments.lastUpdate',
