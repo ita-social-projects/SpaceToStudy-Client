@@ -8,6 +8,7 @@
   },
   "lessons": {
     "addBtn": "New lesson",
+    "add": "Add Lessons",
     "title": "Title",
     "attachmentQty": "Attachment",
     "attachmentsQty": "Attachments",
@@ -15,11 +16,12 @@
     "lastUpdates": "Last updates",
     "emptyItems": "You have no lessons yet",
     "confirmDeletionTitle": "Do you confirm lesson deletion?",
-    "successDeletion": "Lesson was deleted successfully"
+    "successDeletion": "Lesson was deleted successfully",
+    "category": "Category"
   },
   "attachments": {
     "addBtn": "Add Attachment",
-    "add": "Add files from your Attachments",
+    "add": "Add Attachments",
     "edit": "Edit Attachment",
     "description": "Description",
     "fileName": "File name",
@@ -30,10 +32,12 @@
     "confirmDeletionTitle": "Do you confirm attachment deletion?",
     "successDeletion": "Attachment was deleted successfully",
     "validationError": "File name cannot be longer than 55 symbol.",
-    "attachmentName": "Attachment name"
+    "attachmentName": "Attachment name",
+    "category": "Category"
   },
   "quizzes": {
     "addBtn": "New quiz",
+    "add": "Add Quizzes",
     "title": "Title",
     "question": "Question",
     "questions": "Questions",
@@ -45,7 +49,8 @@
     "defaultNewDescription": "Description...",
     "createNewQuestion": "Create new question",
     "editQuestion": "Edit question",
-    "addQuestion": "Add question"
+    "addQuestion": "Add question",
+    "category": "Category"
   },
   "questions": {
     "addBtn": "New question",

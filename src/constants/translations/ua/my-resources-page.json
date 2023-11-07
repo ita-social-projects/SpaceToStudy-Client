@@ -8,6 +8,7 @@
   },
   "lessons": {
     "addBtn": "Новий урок",
+    "add": "Додайте уроки",
     "title": "Заголовок",
     "attachments": "Файли",
     "attachmentQty": "Файл",
@@ -15,11 +16,12 @@
     "lastUpdates": "Останнє оновлення",
     "emptyItems":"У вас ще немає уроків",
     "confirmDeletionTitle":"Ви підтверджуєте видалення уроку?",
-    "successDeletion":"Урок було успішно видалено"
+    "successDeletion":"Урок було успішно видалено",
+    "category": "Категорія"
   },
   "attachments": {
     "addBtn": "Додайте файли з Вкладень",
-    "add": "Додайте файли зі своїх вкладень",
+    "add": "Додайте файли",
     "edit": "Редагувати Файл",
     "description": "Опис",
     "fileName": "Ім'я файлу",
@@ -31,10 +33,12 @@
     "successDeletion":"Вкладення було успішно видалено",
     "addAttachment": "Добавити файл",
     "validationError": "Назва файлу не може бути довшою за 55 символів.",
-    "attachmentName": "Назва вкладення"
+    "attachmentName": "Назва вкладення",
+    "category": "Категорія"
   },
   "quizzes": {
     "addBtn": "Новий тест",
+    "add": "Додайте тести",
     "quizTitle": "Заголовок",
     "question": "Питання",
     "questions": "Питання",
@@ -46,7 +50,8 @@
     "defaultNewDescription":"Опис...",
     "createNewQuestion":"Створити нове питання",
     "editQuestion": "Редагувати питання",
-    "addQuestion":"Додати питання"
+    "addQuestion":"Додати питання",
+    "category": "Категорія"
   },
   "questions": {
     "addBtn": "Нове запитання",

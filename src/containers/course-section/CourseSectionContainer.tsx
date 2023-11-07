@@ -1,4 +1,11 @@
-import { useState, ChangeEvent, FC, Dispatch, SetStateAction } from 'react'
+import {
+  useState,
+  ChangeEvent,
+  FC,
+  Dispatch,
+  SetStateAction,
+  useEffect
+} from 'react'
 import { useTranslation } from 'react-i18next'
 import { MenuItem } from '@mui/material'
 import Box from '@mui/material/Box'
@@ -12,7 +19,13 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import AppButton from '~/components/app-button/AppButton'
 
+import AddLessons from '~/containers/add-lessons/AddLessons'
+import AddQuizzes from '~/containers/add-quizzes/AddQuizzes'
+import AddAttachments from '~/containers/add-attachments/AddAttachments'
+import ResourcesList from '~/containers/course-section/resources-list/ResourcesList'
+
 import useMenu from '~/hooks/use-menu'
+import { useModalContext } from '~/context/modal-context'
 
 import { styles } from '~/containers/course-section/CourseSectionContainer.styles'
 import { menuTypes } from '~/containers/course-section/CourseSectionContainer.constants'
@@ -21,7 +34,10 @@ import {
   SizeEnum,
   ColorEnum,
   ButtonVariantEnum,
-  CourseSection
+  CourseSection,
+  Lesson,
+  Quiz,
+  Attachment
 } from '~/types'
 
 interface SectionProps {
@@ -37,6 +53,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
 }) => {
   const { t } = useTranslation()
   const { openMenu, renderMenu, closeMenu } = useMenu()
+  const { openModal } = useModalContext()
 
   const [activeMenu, setActiveMenu] = useState<string>('')
   const [isVisible, setIsVisible] = useState<boolean>(true)
@@ -44,6 +61,14 @@ const CourseSectionContainer: FC<SectionProps> = ({
   const [descriptionInput, setDescriptionInput] = useState(
     sectionData.description
   )
+  const [lessons, setLessons] = useState<Lesson[]>([])
+  const [quizzes, setQuizzes] = useState<Quiz[]>([])
+  const [attachments, setAttachments] = useState<Attachment[]>([])
+  const [resources, setResources] = useState<(Lesson | Quiz | Attachment)[]>([])
+
+  useEffect(() => {
+    setResources(() => [...new Set([...lessons, ...quizzes, ...attachments])])
+  }, [attachments, lessons, quizzes])
 
   const onShowHide = () => {
     setIsVisible((isVisible) => !isVisible)
@@ -67,6 +92,48 @@ const CourseSectionContainer: FC<SectionProps> = ({
     })
   }
 
+  const handleAddLessons = (lessons: Lesson[]) => {
+    setLessons(lessons)
+  }
+
+  const handleOpenAddLessonsModal = () => {
+    closeMenu()
+    openModal({
+      component: (
+        <AddLessons lessons={lessons} onAddLessons={handleAddLessons} />
+      )
+    })
+  }
+
+  const handleAddQuizzes = (quizzes: Quiz[]) => {
+    setQuizzes(quizzes)
+  }
+
+  const handleOpenAddQuizzesModal = () => {
+    closeMenu()
+    openModal({
+      component: (
+        <AddQuizzes onAddQuizzes={handleAddQuizzes} quizzes={quizzes} />
+      )
+    })
+  }
+
+  const handleAddAttachments = (attachments: Attachment[]) => {
+    setAttachments(attachments)
+  }
+
+  const handleOpenAddAttachmentsModal = () => {
+    closeMenu()
+    openModal({
+      component: (
+        <AddAttachments
+          attachments={attachments}
+          onAddAttachments={handleAddAttachments}
+        />
+      )
+    })
+  }
+
   const sectionActions = [
     {
       id: 1,
@@ -87,19 +154,19 @@ const CourseSectionContainer: FC<SectionProps> = ({
       label: (
         <Box>{t('course.courseSection.resourcesMenu.lessonMenuItem')}</Box>
       ),
-      func: closeMenu
+      func: handleOpenAddLessonsModal
     },
     {
       id: 2,
       label: <Box>{t('course.courseSection.resourcesMenu.quizMenuItem')}</Box>,
-      func: closeMenu
+      func: handleOpenAddQuizzesModal
     },
     {
       id: 3,
       label: (
         <Box>{t('course.courseSection.resourcesMenu.attachmentMenuItem')}</Box>
       ),
-      func: closeMenu
+      func: handleOpenAddAttachmentsModal
     }
   ]
 
@@ -164,6 +231,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
             value={descriptionInput}
             variant={TextFieldVariantEnum.Standard}
           />
+          <ResourcesList items={resources} setResources={setResources} />
           <AppButton
             endIcon={<KeyboardArrowDownIcon fontSize={SizeEnum.Small} />}
             onClick={(event) => {

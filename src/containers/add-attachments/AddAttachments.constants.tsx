@@ -1,12 +1,9 @@
-import Typography from '@mui/material/Typography'
-
+import AppChip from '~/components/app-chip/AppChip'
 import IconExtensionWithTitle from '~/components/icon-extension-with-title/IconExtensionWithTitle'
 
-import {
-  getFormattedDate,
-  convertBytesToProperFormat
-} from '~/utils/helper-functions'
+import { getFormattedDate } from '~/utils/helper-functions'
 
+import { styles } from '~/containers/add-attachments/AddAttachments.styles'
 import {
   AdditionalPropsInterface,
   Attachment,
@@ -24,16 +21,20 @@ export const columns = [
       <IconExtensionWithTitle title={item.fileName} />
     )
   },
+
   {
-    label: 'myResourcesPage.attachments.size',
-    field: 'size',
+    label: 'myResourcesPage.attachments.category',
+    field: 'category',
     calculatedCellValue: (
       item: Attachment,
       { t }: AdditionalPropsInterface
-    ) => {
-      const { size, unit } = convertBytesToProperFormat(item.size)
-      return <Typography>{size + ' ' + t(`common.${unit}`)}</Typography>
-    }
+    ) => (
+      <AppChip labelSx={styles.categoryChipLabel} sx={styles.categoryChip}>
+        {item.category
+          ? item.category.name
+          : t('myResourcesPage.categories.noCategory')}
+      </AppChip>
+    )
   },
   {
     label: 'myResourcesPage.attachments.lastUpdate',

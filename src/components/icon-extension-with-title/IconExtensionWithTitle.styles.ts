@@ -18,6 +18,14 @@ export const styles = {
     fontSize: '12px',
     typography: TypographyVariantEnum.Caption
   },
+  svgBox: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    minWidth: '40px',
+    height: '40px',
+    marginRight: '20px'
+  },
   titleWithDescription: {
     title: {
       typography: TypographyVariantEnum.Subtitle2

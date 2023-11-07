@@ -1,6 +1,6 @@
 import { FC, useCallback, useState } from 'react'
 
-import { ResourceService } from '~/services/resource-service'
+import { quizService } from '~/services/quiz-service'
 import { useSnackBarContext } from '~/context/snackbar-context'
 import { useModalContext } from '~/context/modal-context'
 import useSelect from '~/hooks/table/use-select'
@@ -13,41 +13,38 @@ import {
   columns,
   initialSort,
   removeColumnRules
-} from '~/containers/add-attachments/AddAttachments.constants'
+} from '~/containers/add-quizzes/AddQuizzes.constants'
 import { ajustColumns } from '~/utils/helper-functions'
 import { defaultResponses, snackbarVariants } from '~/constants'
-import { Attachment, ErrorResponse, ItemsWithCount } from '~/types'
+import { Quiz, ErrorResponse, ItemsWithCount } from '~/types'
 
-interface AddAttachmentsProps {
-  attachments: Attachment[]
-  onAddAttachments: (attachments: Attachment[]) => void
+interface AddQuizzesProps {
+  quizzes: Quiz[]
+  onAddQuizzes: (quiz: Quiz[]) => void
 }
 
-const AddAttachments: FC<AddAttachmentsProps> = ({
-  attachments = [],
-  onAddAttachments
-}) => {
-  const [selectedRows, setSelectedRows] = useState<Attachment[]>(attachments)
+const AddQuizzes: FC<AddQuizzesProps> = ({ quizzes = [], onAddQuizzes }) => {
+  const [selectedRows, setSelectedRows] = useState<Quiz[]>(quizzes)
 
   const { closeModal } = useModalContext()
   const { setAlert } = useSnackBarContext()
   const breakpoints = useBreakpoints()
-  const initialSelect = attachments.map((attachment) => attachment._id)
+  const initialSelect = quizzes.map((quiz) => quiz._id)
   const select = useSelect({ initialSelect })
   const sortOptions = useSort({ initialSort })
 
   const { sort } = sortOptions
   const { handleSelectClick } = select
 
-  const columnsToShow = ajustColumns<Attachment>(
+  const columnsToShow = ajustColumns<Quiz>(
     breakpoints,
     columns,
     removeColumnRules
   )
 
-  const getMyAttachments = useCallback(
+  const getMyQuizes = useCallback(
     () =>
-      ResourceService.getAttachments({
+      quizService.getQuizzes({
         sort
       }),
     [sort]
@@ -63,16 +60,16 @@ const AddAttachments: FC<AddAttachmentsProps> = ({
     [setAlert]
   )
 
-  const { loading, response } = useAxios<ItemsWithCount<Attachment>>({
-    service: getMyAttachments,
+  const { loading, response } = useAxios<ItemsWithCount<Quiz>>({
+    service: getMyQuizes,
     defaultResponse: defaultResponses.itemsWithCount,
     onResponseError
   })
 
-  const onRowClick = (item: Attachment) => {
-    if (selectedRows.find((attachment) => attachment._id === item._id)) {
+  const onRowClick = (item: Quiz) => {
+    if (selectedRows.find((quiz) => quiz._id === item._id)) {
       setSelectedRows((selectedRows) =>
-        selectedRows.filter((attachment) => attachment._id !== item._id)
+        selectedRows.filter((quiz) => quiz._id !== item._id)
       )
     } else {
       setSelectedRows((selectedRows) => [...selectedRows, item])
@@ -81,22 +78,23 @@ const AddAttachments: FC<AddAttachmentsProps> = ({
   }
 
   const onAddItems = () => {
-    onAddAttachments(selectedRows)
+    onAddQuizzes(selectedRows)
     closeModal()
   }
 
   const getItems = useCallback(
-    (inputValue: string) =>
-      response.items.filter((item) => {
-        const lowerCaseFileName = item.fileName.toLowerCase()
-        const lowerCaseInputValue = inputValue.toLocaleLowerCase()
-        const fileNameWithoutExtension = lowerCaseFileName
-          .split('.')
-          .slice(0, -1)
-          .join('.')
+    (title: string, selectedCategories: string[]) => {
+      return response.items.filter((item) => {
+        const titleMatch = item.title
+          .toLocaleLowerCase()
+          .includes(title.toLocaleLowerCase())
+        const categoryMatch =
+          selectedCategories.length === 0 ||
+          selectedCategories.includes(String(item.category?.name))
 
-        return fileNameWithoutExtension.includes(lowerCaseInputValue)
-      }),
+        return titleMatch && categoryMatch
+      })
+    },
     [response.items]
   )
 
@@ -109,10 +107,10 @@ const AddAttachments: FC<AddAttachmentsProps> = ({
     onAddItems,
     data: { loading, getItems },
     onRowClick,
-    resource: 'attachments'
+    resource: 'quizzes'
   }
 
-  return <AddResourceModal<Attachment> {...props} />
+  return <AddResourceModal<Quiz> {...props} />
 }
 
-export default AddAttachments
+export default AddQuizzes

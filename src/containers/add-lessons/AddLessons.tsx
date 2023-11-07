@@ -13,41 +13,38 @@ import {
   columns,
   initialSort,
   removeColumnRules
-} from '~/containers/add-attachments/AddAttachments.constants'
+} from '~/containers/add-lessons/AddLessons.constants'
 import { ajustColumns } from '~/utils/helper-functions'
 import { defaultResponses, snackbarVariants } from '~/constants'
-import { Attachment, ErrorResponse, ItemsWithCount } from '~/types'
+import { Lesson, ErrorResponse, ItemsWithCount } from '~/types'
 
-interface AddAttachmentsProps {
-  attachments: Attachment[]
-  onAddAttachments: (attachments: Attachment[]) => void
+interface AddLessonsProps {
+  lessons: Lesson[]
+  onAddLessons: (lessons: Lesson[]) => void
 }
 
-const AddAttachments: FC<AddAttachmentsProps> = ({
-  attachments = [],
-  onAddAttachments
-}) => {
-  const [selectedRows, setSelectedRows] = useState<Attachment[]>(attachments)
+const AddLessons: FC<AddLessonsProps> = ({ lessons = [], onAddLessons }) => {
+  const [selectedRows, setSelectedRows] = useState<Lesson[]>(lessons)
 
   const { closeModal } = useModalContext()
   const { setAlert } = useSnackBarContext()
   const breakpoints = useBreakpoints()
-  const initialSelect = attachments.map((attachment) => attachment._id)
+  const initialSelect = lessons.map((lesson) => lesson._id)
   const select = useSelect({ initialSelect })
   const sortOptions = useSort({ initialSort })
 
   const { sort } = sortOptions
   const { handleSelectClick } = select
 
-  const columnsToShow = ajustColumns<Attachment>(
+  const columnsToShow = ajustColumns<Lesson>(
     breakpoints,
     columns,
     removeColumnRules
   )
 
-  const getMyAttachments = useCallback(
+  const getMyLessons = useCallback(
     () =>
-      ResourceService.getAttachments({
+      ResourceService.getUsersLessons({
         sort
       }),
     [sort]
@@ -63,13 +60,13 @@ const AddAttachments: FC<AddAttachmentsProps> = ({
     [setAlert]
   )
 
-  const { loading, response } = useAxios<ItemsWithCount<Attachment>>({
-    service: getMyAttachments,
+  const { loading, response } = useAxios<ItemsWithCount<Lesson>>({
+    service: getMyLessons,
     defaultResponse: defaultResponses.itemsWithCount,
     onResponseError
   })
 
-  const onRowClick = (item: Attachment) => {
+  const onRowClick = (item: Lesson) => {
     if (selectedRows.find((attachment) => attachment._id === item._id)) {
       setSelectedRows((selectedRows) =>
         selectedRows.filter((attachment) => attachment._id !== item._id)
@@ -81,22 +78,23 @@ const AddAttachments: FC<AddAttachmentsProps> = ({
   }
 
   const onAddItems = () => {
-    onAddAttachments(selectedRows)
+    onAddLessons(selectedRows)
     closeModal()
   }
 
   const getItems = useCallback(
-    (inputValue: string) =>
-      response.items.filter((item) => {
-        const lowerCaseFileName = item.fileName.toLowerCase()
-        const lowerCaseInputValue = inputValue.toLocaleLowerCase()
-        const fileNameWithoutExtension = lowerCaseFileName
-          .split('.')
-          .slice(0, -1)
-          .join('.')
+    (title: string, selectedCategories: string[]) => {
+      return response.items.filter((item) => {
+        const titleMatch = item.title
+          .toLocaleLowerCase()
+          .includes(title.toLocaleLowerCase())
+        const categoryMatch =
+          selectedCategories.length === 0 ||
+          selectedCategories.includes(String(item.category?.name))
 
-        return fileNameWithoutExtension.includes(lowerCaseInputValue)
-      }),
+        return titleMatch && categoryMatch
+      })
+    },
     [response.items]
   )
 
@@ -109,10 +107,10 @@ const AddAttachments: FC<AddAttachmentsProps> = ({
     onAddItems,
     data: { loading, getItems },
     onRowClick,
-    resource: 'attachments'
+    resource: 'lessons'
   }
 
-  return <AddResourceModal<Attachment> {...props} />
+  return <AddResourceModal<Lesson> {...props} />
 }
 
-export default AddAttachments
+export default AddLessons
