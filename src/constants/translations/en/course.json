@@ -1,0 +1,20 @@
+{
+    "addSectionBtn": "Add Section",
+    "courseSection": {
+        "defaultNewTitle": "Section 1",
+        "defaultNewDescription": "Description...",
+        "addResourceBtn": "Add Resource",
+        "resourcesMenu": {
+            "lessonMenuItem": "Lesson",
+            "quizMenuItem": "Quiz",
+            "attachmentMenuItem": "Attachment"
+        },
+        "sectionMenu": {
+            "deleteSection": "Delete"
+        }
+    },
+    "errorMessages": {
+        "title": "Please provide a title",
+        "description": "Please provide a description"
+    }
+}

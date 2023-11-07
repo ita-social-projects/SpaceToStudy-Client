@@ -1,0 +1,20 @@
+{
+    "addSectionBtn": "Новий курс",
+    "courseSection": {
+        "defaultNewTitle": "Розділ 1",
+        "defaultNewDescription": "Опис ...",
+        "addResourceBtn": "Додати матеріал",
+        "resourcesMenu": {
+            "lessonMenuItem": "Урок",
+            "quizMenuItem": "Тест",
+            "attachmentMenuItem": "Вкладення"
+        },
+        "sectionMenu": {
+            "deleteSection": "Видалити"
+        }
+    },
+    "errorMessages": {
+        "title": "Будь ласка, вкажіть заголовок.",
+        "description": "Будь ласка, надайте опис."
+    }
+}

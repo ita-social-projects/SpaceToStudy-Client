@@ -33,6 +33,7 @@ import admin from './admin.json'
 import cookiePolicyPage from './cookie-policy-page.json'
 import guestHomePage from './guest-home-page.json'
 import table from './table.json'
+import course from './course.json'
 
 const ua = {
   translations: {
@@ -70,7 +71,8 @@ const ua = {
     admin,
     cookiePolicyPage,
     guestHomePage,
-    table
+    table,
+    course
   }
 }
 
