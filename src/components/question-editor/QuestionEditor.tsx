@@ -8,10 +8,14 @@ import AddIcon from '@mui/icons-material/Add'
 import Checkbox from '@mui/material/Checkbox'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import FormGroup from '@mui/material/FormGroup'
+import MenuItem from '@mui/material/MenuItem'
 import InputBase from '@mui/material/InputBase'
 import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
+import EditIcon from '@mui/icons-material/Edit'
+import MoreVertIcon from '@mui/icons-material/MoreVert'
 
+import useMenu from '~/hooks/use-menu'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import AppButton from '~/components/app-button/AppButton'
 import AppSelect from '~/components/app-select/AppSelect'
@@ -39,6 +43,7 @@ interface QuestionEditorProps {
     value: string | QuestionFormAnswer[]
   ) => void
   onCancel?: () => void
+  onEdit?: () => void
   onSave?: () => Promise<void>
   loading?: boolean
 }
@@ -48,16 +53,23 @@ const QuestionEditor: FC<QuestionEditorProps> = ({
   handleInputChange,
   handleNonInputValueChange,
   onCancel,
+  onEdit,
   onSave,
   loading
 }) => {
   const { t } = useTranslation()
+  const { openMenu, renderMenu, closeMenu } = useMenu()
 
   const { type, text, answers, openAnswer } = data
   const { isMultipleChoice, isOpenAnswer, isSingleChoice } = questionType(type)
 
   const isEmptyAnswer = answers[answers.length - 1]?.text === ''
   const option = sortQuestions.find((item) => item.value === data.type)
+
+  const answersWithId = answers.map((item, index) => ({
+    ...item,
+    id: index
+  }))
 
   const setTypeValue = (value: string) => {
     handleNonInputValueChange('type', value ?? sortQuestions[0].value)
@@ -114,7 +126,7 @@ const QuestionEditor: FC<QuestionEditorProps> = ({
   }
 
   const deleteRadioButton = (id: number) => {
-    const updatedAnswers = answers.filter((item) => item.id !== id)
+    const updatedAnswers = answersWithId.filter((item) => item.id !== id)
     handleNonInputValueChange('answers', updatedAnswers)
   }
 
@@ -127,7 +139,12 @@ const QuestionEditor: FC<QuestionEditorProps> = ({
     setTypeValue(value)
   }
 
-  const options = answers.map((item) => (
+  const onAction = () => {
+    closeMenu()
+    onEdit?.()
+  }
+
+  const options = answersWithId.map((item) => (
     <Box key={item.id} sx={styles.answer}>
       <FormControlLabel
         checked={item.isCorrect}
@@ -150,18 +167,36 @@ const QuestionEditor: FC<QuestionEditorProps> = ({
     </Box>
   ))
 
+  const showMoreMenu = renderMenu(
+    <MenuItem onClick={onAction}>
+      <Box sx={styles.editIconWrapper}>
+        <EditIcon sx={styles.editIcon} />
+        {t('myResourcesPage.questions.titleWithCategory')}
+      </Box>
+    </MenuItem>
+  )
+
   const isButtonVisible = text && (isOpenAnswer ? openAnswer : answers[0]?.text)
 
   return (
     <Box sx={styles.editorBlock}>
-      <Box sx={styles.options}>
-        {option && <Box sx={styles.iconWrapper}>{option.icon}</Box>}
-        <AppSelect
-          fields={sortOptions}
-          setValue={handleTypeChange}
-          sx={styles.selectContainer}
-          value={type}
-        />
+      <Box sx={styles.header}>
+        <Box sx={styles.options}>
+          {option && <Box sx={styles.iconWrapper}>{option.icon}</Box>}
+          <AppSelect
+            fields={sortOptions}
+            setValue={handleTypeChange}
+            sx={styles.selectContainer}
+            value={type}
+          />
+        </Box>
+
+        {data.title && (
+          <IconButton onClick={openMenu}>
+            <MoreVertIcon color='primary' sx={styles.moreIcon} />
+          </IconButton>
+        )}
+        {showMoreMenu}
       </Box>
 
       <Divider sx={styles.editorDivider} />
@@ -220,7 +255,7 @@ const QuestionEditor: FC<QuestionEditorProps> = ({
               loading={loading}
               onClick={() => void onSave()}
               size={SizeEnum.Medium}
-              sx={{ minWidth: '103px' }}
+              sx={styles.saveButton}
             >
               {t('common.save')}
             </AppButton>

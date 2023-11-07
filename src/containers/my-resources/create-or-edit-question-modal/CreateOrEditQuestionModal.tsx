@@ -15,11 +15,11 @@ import {
   ButtonVariantEnum,
   CategoryNameInterface,
   QuestionModalForm,
-  CreateOrEditQuizForm
+  QuestionForm
 } from '~/types'
 
 interface CreateOrEditQuestionModalProps {
-  initialData: CreateOrEditQuizForm
+  initialData: QuestionForm
   actions: {
     onCancel: () => void
     onSave: (data: QuestionModalForm) => void
@@ -41,8 +41,8 @@ const CreateOrEditQuestionModal: FC<CreateOrEditQuestionModalProps> = ({
     handleBlur
   } = useForm<QuestionModalForm>({
     initialValues: {
-      title: initialData.questionTitle,
-      category: initialData.questionCategory
+      title: initialData.title,
+      category: initialData.category
     },
     validations: {
       title: (value: string) =>
@@ -57,11 +57,13 @@ const CreateOrEditQuestionModal: FC<CreateOrEditQuestionModalProps> = ({
     handleNonInputValueChange('category', value?._id ?? null)
   }
 
+  const title = initialData.title
+    ? 'myResourcesPage.quizzes.editQuestion'
+    : 'myResourcesPage.quizzes.createNewQuestion'
+
   return (
     <Box sx={styles.root}>
-      <Typography sx={styles.title}>
-        {t('myResourcesPage.quizzes.createNewQuestion')}
-      </Typography>
+      <Typography sx={styles.title}>{t(title)}</Typography>
 
       <Box sx={styles.form}>
         <Typography sx={styles.inputTitle(!!errors.title)}>

@@ -11,10 +11,28 @@ export const styles = {
   input: {
     style: { padding: 0 }
   },
+  header: {
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
   options: {
     display: 'flex',
     alignItems: 'center',
     gap: '16px'
+  },
+  moreIcon: {
+    fontSize: '20px',
+    color: 'primary'
+  },
+  editIconWrapper: {
+    display: 'flex',
+    alignItems: 'center'
+  },
+  editIcon: {
+    fontSize: '18px',
+    mr: '10px'
   },
   editorDivider: {
     ...divider,
@@ -73,5 +91,6 @@ export const styles = {
     justifyContent: 'flex-end',
     gap: '32px',
     mt: '32px'
-  }
+  },
+  saveButton: { minWidth: '103px' }
 }

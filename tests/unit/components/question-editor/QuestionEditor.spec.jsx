@@ -5,18 +5,22 @@ import { beforeEach, describe } from 'vitest'
 
 const data = {
   type: 'openAnswer',
+  title: 'question 1',
+  category: null,
   text: '',
   openAnswer: '',
   answers: []
 }
 const handleInputChange = vi.fn()
 const handleNonInputValueChange = vi.fn()
+const onEditMock = vi.fn()
 
 const props = {
   data,
   handleInputChange,
   handleNonInputValueChange,
   onCancel: vi.fn(),
+  onEdit: onEditMock,
   onSave: vi.fn()
 }
 
@@ -75,5 +79,17 @@ describe('QuestionEditor component', () => {
     })
 
     expect(handleInputChange).toHaveBeenCalled()
+  })
+
+  it('should click on edit title and category', () => {
+    const moreIcon = screen.getByTestId('MoreVertIcon')
+
+    fireEvent.click(moreIcon)
+
+    const updateIcon = screen.getByTestId('EditIcon')
+
+    fireEvent.click(updateIcon)
+
+    expect(onEditMock).toHaveBeenCalled()
   })
 })

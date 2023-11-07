@@ -29,10 +29,16 @@ import { spliceSx } from '~/utils/helper-functions'
 interface QuestionProps {
   question: QuestionInterface
   setQuestions: Dispatch<SetStateAction<QuestionInterface[]>>
+  setEditableItemId: Dispatch<SetStateAction<string>>
   sx?: SxProps
 }
 
-const Question: FC<QuestionProps> = ({ question, setQuestions, sx = {} }) => {
+const Question: FC<QuestionProps> = ({
+  question,
+  setQuestions,
+  setEditableItemId,
+  sx = {}
+}) => {
   const { t } = useTranslation()
   const { openMenu, renderMenu, closeMenu } = useMenu()
 
@@ -56,9 +62,7 @@ const Question: FC<QuestionProps> = ({ question, setQuestions, sx = {} }) => {
           {` ${t('common.edit')}`}
         </Box>
       ),
-      func: (id: string) => {
-        console.log('Edit', id)
-      }
+      func: () => setEditableItemId(question._id)
     },
     {
       id: 2,

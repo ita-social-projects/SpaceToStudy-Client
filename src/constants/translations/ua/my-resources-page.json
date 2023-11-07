@@ -45,12 +45,14 @@
     "defaultNewTitle":"Без назви",
     "defaultNewDescription":"Опис...",
     "createNewQuestion":"Створити нове питання",
+    "editQuestion": "Редагувати питання",
     "addQuestion":"Додати питання"
   },
   "questions": {
     "addBtn": "Нове запитання",
     "add": "Додати Питання",
     "title": "Заголовок",
+    "titleWithCategory": "Заголовок & Категорія",
     "updated": "Останнє оновлення",
     "emptyItems": "У вас ще немає запитань",
     "confirmDeletionTitle":"Ви підтверджуєте видалення запитання?",

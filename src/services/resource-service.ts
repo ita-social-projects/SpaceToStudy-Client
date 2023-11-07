@@ -17,7 +17,8 @@ import {
   CreateQuestionData,
   CategoryNameInterface,
   UpdateResourceCategory,
-  CreateCategoriesParams
+  CreateCategoriesParams,
+  UpdateQuestionParams
 } from '~/types'
 import { createUrlPath } from '~/utils/helper-functions'
 
@@ -63,6 +64,11 @@ export const ResourceService = {
   createQuestion: async (data?: CreateQuestionData): Promise<AxiosResponse> => {
     return await axiosClient.post(URLs.resources.questions.post, data)
   },
+  updateQuestion: async (params?: UpdateQuestionParams) =>
+    await axiosClient.patch(
+      createUrlPath(URLs.resources.questions.patch, params?.id),
+      params
+    ),
   deleteQuestion: async (id: string): Promise<AxiosResponse> =>
     await axiosClient.delete(
       createUrlPath(URLs.resources.questions.delete, id)

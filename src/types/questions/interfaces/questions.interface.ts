@@ -1,7 +1,6 @@
 import {
   Category,
   CommonEntityFields,
-  CreateOrEditQuizForm,
   QuestionTypesEnum,
   UserResponse
 } from '~/types'
@@ -23,6 +22,15 @@ export interface CreateQuestionData extends Omit<QuestionForm, 'answers'> {
   answers: Answer[]
 }
 
+export interface UpdateQuestionParams {
+  title: Question['title']
+  id: Question['_id']
+  text: Question['text']
+  category: string | null
+  type: Question['type']
+  answers: Question['answers']
+}
+
 export interface QuestionFormAnswer extends Answer {
   id: number
 }
@@ -35,6 +43,6 @@ export interface QuestionForm
 }
 
 export interface QuestionModalForm {
-  title: CreateOrEditQuizForm['questionTitle']
-  category: CreateOrEditQuizForm['questionCategory']
+  title: Question['title']
+  category: UpdateQuestionParams['category']
 }

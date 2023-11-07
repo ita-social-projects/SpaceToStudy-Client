@@ -13,9 +13,9 @@
     "attachmentsQty": "Attachments",
     "attachments": "Attachments",
     "lastUpdates": "Last updates",
-    "emptyItems":"You have no lessons yet",
-    "confirmDeletionTitle":"Do you confirm lesson deletion?",
-    "successDeletion":"Lesson was deleted successfully"
+    "emptyItems": "You have no lessons yet",
+    "confirmDeletionTitle": "Do you confirm lesson deletion?",
+    "successDeletion": "Lesson was deleted successfully"
   },
   "attachments": {
     "addBtn": "Add Attachment",
@@ -27,8 +27,8 @@
     "size": "Size",
     "lastUpdate": "Last update",
     "emptyItems": "You have no attachments yet",
-    "confirmDeletionTitle":"Do you confirm attachment deletion?",
-    "successDeletion":"Attachment was deleted successfully",
+    "confirmDeletionTitle": "Do you confirm attachment deletion?",
+    "successDeletion": "Attachment was deleted successfully",
     "validationError": "File name cannot be longer than 55 symbol.",
     "attachmentName": "Attachment name"
   },
@@ -39,22 +39,24 @@
     "questions": "Questions",
     "updated": "Last updates",
     "emptyItems": "You have no quizzes yet",
-    "confirmDeletionTitle":"Do you confirm quiz deletion?",
-    "successDeletion":"Quiz was deleted successfully",
-    "defaultNewTitle":"Untitled",
-    "defaultNewDescription":"Description...",
-    "createNewQuestion":"Create new question",
-    "addQuestion":"Add question"
+    "confirmDeletionTitle": "Do you confirm quiz deletion?",
+    "successDeletion": "Quiz was deleted successfully",
+    "defaultNewTitle": "Untitled",
+    "defaultNewDescription": "Description...",
+    "createNewQuestion": "Create new question",
+    "editQuestion": "Edit question",
+    "addQuestion": "Add question"
   },
   "questions": {
     "addBtn": "New question",
     "add": "Add Questions",
     "title": "Title",
+    "titleWithCategory": "Title & Category",
     "updated": "Last updates",
     "emptyItems": "You have no questions yet",
-    "confirmDeletionTitle":"Do you confirm question deletion?",
-    "successDeletion":"Question was deleted successfully",
-    "successDuplication":"Question was successfully duplicated"
+    "confirmDeletionTitle": "Do you confirm question deletion?",
+    "successDeletion": "Question was deleted successfully",
+    "successDuplication": "Question was successfully duplicated"
   },
   "categories": {
     "category": "Category",
@@ -68,5 +70,5 @@
     "successDeletion": "Category was deleted successfully",
     "confirmDeletionTitle": "Do you confirm category deletion?"
   },
-  "confirmDeletionMessage":"This action is permanent and will remove all related content. Please review your decision before proceeding."
+  "confirmDeletionMessage": "This action is permanent and will remove all related content. Please review your decision before proceeding."
 }

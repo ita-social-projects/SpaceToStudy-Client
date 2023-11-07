@@ -14,8 +14,8 @@ const categoriesNamesMock = [
 ]
 
 const initialDataMock = {
-  questionTitle: 'Question Title',
-  questionCategory: null
+  title: 'Question Title',
+  category: null
 }
 
 describe('EditAttachmentModal component', () => {
@@ -33,7 +33,7 @@ describe('EditAttachmentModal component', () => {
   })
 
   it('should render title', () => {
-    const title = screen.getByText('myResourcesPage.quizzes.createNewQuestion')
+    const title = screen.getByText('myResourcesPage.quizzes.editQuestion')
 
     expect(title).toBeInTheDocument()
   })

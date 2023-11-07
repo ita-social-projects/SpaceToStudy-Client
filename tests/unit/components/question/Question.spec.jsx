@@ -24,11 +24,16 @@ const mockedQuestion = {
 }
 
 const setQuestionsMock = vi.fn()
+const setEditableItemIdMock = vi.fn()
 
 describe('Question', () => {
   beforeEach(() => {
     render(
-      <Question question={mockedQuestion} setQuestions={setQuestionsMock} />
+      <Question
+        question={mockedQuestion}
+        setEditableItemId={setEditableItemIdMock}
+        setQuestions={setQuestionsMock}
+      />
     )
   })
 
@@ -42,6 +47,18 @@ describe('Question', () => {
     const category = screen.getByText(mockedQuestion.category.name)
 
     expect(category).toBeInTheDocument()
+  })
+
+  it('should update chosen category', () => {
+    const moreIcon = screen.getByTestId('MoreVertIcon')
+
+    fireEvent.click(moreIcon)
+
+    const updateIcon = screen.getByTestId('EditIcon')
+
+    fireEvent.click(updateIcon)
+
+    expect(setEditableItemIdMock).toHaveBeenCalled()
   })
 
   it('should delete chosen category', () => {
