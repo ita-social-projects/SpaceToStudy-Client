@@ -9,10 +9,11 @@ import {
   DroppableProvided
 } from 'react-beautiful-dnd'
 import Box from '@mui/material/Box'
+import DragIndicatorIcon from '@mui/icons-material/DragIndicator'
 
 import ResourceItem from '~/containers/course-section/resource-item/ResourceItem'
 
-import { styles } from '~/containers/course-sections-list/CourseSectionsList.styles'
+import { styles } from '~/containers/course-section/resources-list/ResourcesList.styles'
 
 import { Lesson, Quiz, Attachment } from '~/types'
 
@@ -55,8 +56,14 @@ const ResourcesList: FC<ResourcesListProps> = ({ items, setResources }) => {
           ref={provided.innerRef}
           sx={styles.section(snapshot.isDragging)}
           {...provided.draggableProps}
-          {...provided.dragHandleProps}
         >
+          <Box
+            className='dragIcon'
+            sx={styles.dragIcon}
+            {...provided.dragHandleProps}
+          >
+            <DragIndicatorIcon />
+          </Box>
           <ResourceItem resource={item} setResources={setResources} />
         </Box>
       )}

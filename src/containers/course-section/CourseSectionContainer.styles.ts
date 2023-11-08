@@ -1,5 +1,12 @@
 import { TypographyVariantEnum } from '~/types'
 
+const menuItem = {
+  padding: '8px',
+  display: 'flex',
+  alignItems: 'center',
+  typography: TypographyVariantEnum.Button
+}
+
 export const styles = {
   root: {
     backgroundColor: 'basic.white',
@@ -54,9 +61,15 @@ export const styles = {
     shrink: false
   },
   menuItem: {
-    minWidth: '300px',
-    pl: '30px',
-    py: '15px',
-    typography: TypographyVariantEnum.MidTitle
+    ...menuItem,
+    minWidth: '165px'
+  },
+  deleteIconWrapper: {
+    ...menuItem,
+    color: 'error.700'
+  },
+  menuIcon: {
+    fontSize: '18px',
+    mr: '10px'
   }
 }

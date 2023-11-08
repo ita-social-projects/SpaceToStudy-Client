@@ -9,6 +9,7 @@ import {
   DroppableProvided
 } from 'react-beautiful-dnd'
 import Box from '@mui/material/Box'
+import DragIndicatorIcon from '@mui/icons-material/DragIndicator'
 
 import CourseSectionContainer from '~/containers/course-section/CourseSectionContainer'
 
@@ -58,8 +59,10 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
           ref={provided.innerRef}
           sx={styles.section(snapshot.isDragging)}
           {...provided.draggableProps}
-          {...provided.dragHandleProps}
         >
+          <Box sx={styles.dragIconWrapper} {...provided.dragHandleProps}>
+            <DragIndicatorIcon sx={styles.dragIcon} />
+          </Box>
           <CourseSectionContainer
             sectionData={item}
             setSectionsItems={setSectionsItems}

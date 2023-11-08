@@ -9,12 +9,15 @@ import {
 import { useTranslation } from 'react-i18next'
 import { MenuItem } from '@mui/material'
 import Box from '@mui/material/Box'
-import DragIndicatorIcon from '@mui/icons-material/DragIndicator'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import IconButton from '@mui/material/IconButton'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import AddIcon from '@mui/icons-material/Add'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
+import ListAltIcon from '@mui/icons-material/ListAlt'
+import NoteAltOutlinedIcon from '@mui/icons-material/NoteAltOutlined'
+import AttachFileIcon from '@mui/icons-material/AttachFile'
 
 import AppTextField from '~/components/app-text-field/AppTextField'
 import AppButton from '~/components/app-button/AppButton'
@@ -64,7 +67,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
   const [lessons, setLessons] = useState<Lesson[]>([])
   const [quizzes, setQuizzes] = useState<Quiz[]>([])
   const [attachments, setAttachments] = useState<Attachment[]>([])
-  const [resources, setResources] = useState<(Lesson | Quiz | Attachment)[]>([])
+  const [resources, setResources] = useState<(Lesson | Attachment | Quiz)[]>([])
 
   useEffect(() => {
     setResources(() => [...new Set([...lessons, ...quizzes, ...attachments])])
@@ -88,6 +91,12 @@ const CourseSectionContainer: FC<SectionProps> = ({
 
   const onDeleteSection = () => {
     setSectionsItems((prev) => {
+      if (prev.length === 1) {
+        setTitleInput('')
+        setDescriptionInput('')
+        setResources([])
+        closeMenu()
+      }
       return prev.filter((item) => item.id !== sectionData.id)
     })
   }
@@ -137,7 +146,12 @@ const CourseSectionContainer: FC<SectionProps> = ({
   const sectionActions = [
     {
       id: 1,
-      label: <Box>{t('course.courseSection.sectionMenu.deleteSection')}</Box>,
+      label: (
+        <Box sx={styles.deleteIconWrapper}>
+          <DeleteOutlineIcon sx={styles.menuIcon} />
+          {t('course.courseSection.sectionMenu.deleteSection')}
+        </Box>
+      ),
       func: onDeleteSection
     }
   ]
@@ -152,35 +166,43 @@ const CourseSectionContainer: FC<SectionProps> = ({
     {
       id: 1,
       label: (
-        <Box>{t('course.courseSection.resourcesMenu.lessonMenuItem')}</Box>
+        <Box sx={styles.menuItem}>
+          <ListAltIcon color='primary' sx={styles.menuIcon} />
+          {t('course.courseSection.resourcesMenu.lessonMenuItem')}
+        </Box>
       ),
       func: handleOpenAddLessonsModal
     },
     {
       id: 2,
-      label: <Box>{t('course.courseSection.resourcesMenu.quizMenuItem')}</Box>,
+      label: (
+        <Box sx={styles.menuItem}>
+          <NoteAltOutlinedIcon color='primary' sx={styles.menuIcon} />
+          {t('course.courseSection.resourcesMenu.quizMenuItem')}
+        </Box>
+      ),
       func: handleOpenAddQuizzesModal
     },
     {
       id: 3,
       label: (
-        <Box>{t('course.courseSection.resourcesMenu.attachmentMenuItem')}</Box>
+        <Box sx={styles.menuItem}>
+          <AttachFileIcon color='primary' sx={styles.menuIcon} />
+          {t('course.courseSection.resourcesMenu.attachmentMenuItem')}
+        </Box>
       ),
       func: handleOpenAddAttachmentsModal
     }
   ]
 
   const resourcesMenuItems = addResourceActions.map(({ label, func, id }) => (
-    <MenuItem key={id} onClick={() => onAction(func)} sx={styles.menuItem}>
+    <MenuItem key={id} onClick={() => onAction(func)}>
       {label}
     </MenuItem>
   ))
 
   return (
     <Box sx={styles.root}>
-      <Box sx={styles.dragIconWrapper}>
-        <DragIndicatorIcon sx={styles.dragIcon} />
-      </Box>
       <Box sx={styles.header}>
         <IconButton onClick={onShowHide} sx={styles.headerIconWrapper}>
           {isVisible ? (
