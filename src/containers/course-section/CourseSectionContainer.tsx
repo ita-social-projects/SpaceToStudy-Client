@@ -15,23 +15,25 @@ import MoreVertIcon from '@mui/icons-material/MoreVert'
 import AddIcon from '@mui/icons-material/Add'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
-import ListAltIcon from '@mui/icons-material/ListAlt'
-import NoteAltOutlinedIcon from '@mui/icons-material/NoteAltOutlined'
-import AttachFileIcon from '@mui/icons-material/AttachFile'
+import SvgIcon from '@mui/material/SvgIcon'
 
 import AppTextField from '~/components/app-text-field/AppTextField'
 import AppButton from '~/components/app-button/AppButton'
-import AddLessons from '~/containers/add-lessons/AddLessons'
-import AddQuizzes from '~/containers/add-quizzes/AddQuizzes'
-import AddAttachments from '~/containers/add-attachments/AddAttachments'
 import ResourcesList from '~/containers/course-section/resources-list/ResourcesList'
+import AddResources from '../add-resources/AddResources'
+
+import { ResourceService } from '~/services/resource-service'
+import { quizService } from '~/services/quiz-service'
 
 import useMenu from '~/hooks/use-menu'
 import { useModalContext } from '~/context/modal-context'
 
 import { styles } from '~/containers/course-section/CourseSectionContainer.styles'
 
-import { menuTypes } from '~/containers/course-section/CourseSectionContainer.constants'
+import {
+  menuTypes,
+  resourcesData
+} from '~/containers/course-section/CourseSectionContainer.constants'
 import {
   TextFieldVariantEnum,
   SizeEnum,
@@ -142,7 +144,12 @@ const CourseSectionContainer: FC<SectionProps> = ({
   const handleOpenAddLessonsModal = () => {
     openModal({
       component: (
-        <AddLessons lessons={lessons} onAddLessons={handleAddLessons} />
+        <AddResources<Lesson>
+          onAddResources={handleAddLessons}
+          requestService={ResourceService.getUsersLessons}
+          resourceType={resourcesData.lesson.resource}
+          resources={lessons}
+        />
       )
     })
   }
@@ -159,7 +166,12 @@ const CourseSectionContainer: FC<SectionProps> = ({
   const handleOpenAddQuizzesModal = () => {
     openModal({
       component: (
-        <AddQuizzes onAddQuizzes={handleAddQuizzes} quizzes={quizzes} />
+        <AddResources<Quiz>
+          onAddResources={handleAddQuizzes}
+          requestService={quizService.getQuizzes}
+          resourceType={resourcesData.quiz.resource}
+          resources={quizzes}
+        />
       )
     })
   }
@@ -176,9 +188,11 @@ const CourseSectionContainer: FC<SectionProps> = ({
   const handleOpenAddAttachmentsModal = () => {
     openModal({
       component: (
-        <AddAttachments
-          attachments={attachments}
-          onAddAttachments={handleAddAttachments}
+        <AddResources<Attachment>
+          onAddResources={handleAddAttachments}
+          requestService={ResourceService.getAttachments}
+          resourceType={resourcesData.attachment.resource}
+          resources={attachments}
         />
       )
     })
@@ -208,7 +222,11 @@ const CourseSectionContainer: FC<SectionProps> = ({
       id: 1,
       label: (
         <Box sx={styles.menuItem}>
-          <ListAltIcon color='primary' sx={styles.menuIcon} />
+          <SvgIcon
+            color='primary'
+            component={resourcesData.lesson.icon}
+            sx={styles.menuIcon}
+          />
           {t('course.courseSection.resourcesMenu.lessonMenuItem')}
         </Box>
       ),
@@ -218,7 +236,11 @@ const CourseSectionContainer: FC<SectionProps> = ({
       id: 2,
       label: (
         <Box sx={styles.menuItem}>
-          <NoteAltOutlinedIcon color='primary' sx={styles.menuIcon} />
+          <SvgIcon
+            color='primary'
+            component={resourcesData.quiz.icon}
+            sx={styles.menuIcon}
+          />
           {t('course.courseSection.resourcesMenu.quizMenuItem')}
         </Box>
       ),
@@ -228,7 +250,11 @@ const CourseSectionContainer: FC<SectionProps> = ({
       id: 3,
       label: (
         <Box sx={styles.menuItem}>
-          <AttachFileIcon color='primary' sx={styles.menuIcon} />
+          <SvgIcon
+            color='primary'
+            component={resourcesData.attachment.icon}
+            sx={styles.menuIcon}
+          />
           {t('course.courseSection.resourcesMenu.attachmentMenuItem')}
         </Box>
       ),

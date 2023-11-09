@@ -2,10 +2,10 @@ import { FC, Dispatch, SetStateAction } from 'react'
 import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
 import CloseIcon from '@mui/icons-material/Close'
-import ListAltIcon from '@mui/icons-material/ListAlt'
-import NoteAltOutlinedIcon from '@mui/icons-material/NoteAltOutlined'
 
 import IconExtensionWithTitle from '~/components/icon-extension-with-title/IconExtensionWithTitle'
+
+import { resourcesData } from '~/containers/course-section/CourseSectionContainer.constants'
 
 import { styles } from '~/containers/course-section/resource-item/ResourceItem.styles'
 
@@ -22,9 +22,9 @@ const ResourceItem: FC<ResourceItemProps> = ({ resource, setItemToDelete }) => {
 
   const setResourceIcon = () => {
     if (resource.resourceType === ResourcesTypes.Lessons) {
-      return ListAltIcon
+      return resourcesData.lesson.icon
     } else if (resource.resourceType === ResourcesTypes.Quizzes) {
-      return NoteAltOutlinedIcon
+      return resourcesData.quiz.icon
     } else {
       return
     }

@@ -1,12 +1,12 @@
-import { FC, useCallback, useState } from 'react'
+import { useCallback, useState } from 'react'
 
-import { ResourceService } from '~/services/resource-service'
 import { useSnackBarContext } from '~/context/snackbar-context'
 import { useModalContext } from '~/context/modal-context'
 import useSelect from '~/hooks/table/use-select'
 import useSort from '~/hooks/table/use-sort'
 import useAxios from '~/hooks/use-axios'
 import useBreakpoints from '~/hooks/use-breakpoints'
+import { AxiosResponse } from 'axios'
 
 import AddResourceModal from '~/containers/my-resources/add-resource-modal/AddResourceModal'
 
@@ -14,42 +14,50 @@ import {
   columns,
   initialSort,
   removeColumnRules
-} from '~/containers/add-lessons/AddLessons.constants'
+} from '~/containers/add-resources/AddResources.constants'
 import { defaultResponses, snackbarVariants } from '~/constants'
 
 import { ajustColumns } from '~/utils/helper-functions'
-import { Lesson, ErrorResponse, ItemsWithCount } from '~/types'
+import {
+  ErrorResponse,
+  GetResourcesParams,
+  ItemsWithCount,
+  CourseResources
+} from '~/types'
 
-interface AddLessonsProps {
-  lessons: Lesson[]
-  onAddLessons: (lessons: Lesson[]) => void
+type GetServiceFunction<GetResourcesParams, T> = (
+  params?: GetResourcesParams
+) => Promise<AxiosResponse<ItemsWithCount<T>>>
+
+interface AddResourcesProps<T> {
+  resources: T[]
+  onAddResources: (resource: T[]) => void
+  resourceType: string
+  requestService: GetServiceFunction<GetResourcesParams, T>
 }
 
-const AddLessons: FC<AddLessonsProps> = ({ lessons = [], onAddLessons }) => {
-  const [selectedRows, setSelectedRows] = useState<Lesson[]>(lessons)
-
+const AddResources = <T extends CourseResources>({
+  resources = [],
+  onAddResources,
+  resourceType,
+  requestService
+}: AddResourcesProps<T>) => {
+  const [selectedRows, setSelectedRows] = useState<T[]>(resources)
   const { closeModal } = useModalContext()
   const { setAlert } = useSnackBarContext()
   const breakpoints = useBreakpoints()
-  const initialSelect = lessons.map((lesson) => lesson._id)
+  const initialSelect = resources.map((resource) => resource._id)
   const select = useSelect({ initialSelect })
   const sortOptions = useSort({ initialSort })
 
   const { sort } = sortOptions
   const { handleSelectClick } = select
 
-  const columnsToShow = ajustColumns<Lesson>(
-    breakpoints,
-    columns,
-    removeColumnRules
-  )
+  const columnsToShow = ajustColumns<T>(breakpoints, columns, removeColumnRules)
 
   const getMyLessons = useCallback(
-    () =>
-      ResourceService.getUsersLessons({
-        sort
-      }),
-    [sort]
+    () => requestService({ sort }),
+    [sort, requestService]
   )
 
   const onResponseError = useCallback(
@@ -62,16 +70,16 @@ const AddLessons: FC<AddLessonsProps> = ({ lessons = [], onAddLessons }) => {
     [setAlert]
   )
 
-  const { loading, response } = useAxios<ItemsWithCount<Lesson>>({
+  const { loading, response } = useAxios<ItemsWithCount<T>>({
     service: getMyLessons,
     defaultResponse: defaultResponses.itemsWithCount,
     onResponseError
   })
 
-  const onRowClick = (item: Lesson) => {
-    if (selectedRows.find((lesson) => lesson._id === item._id)) {
+  const onRowClick = (item: T) => {
+    if (selectedRows.find((resource) => resource._id === item._id)) {
       setSelectedRows((selectedRows) =>
-        selectedRows.filter((lesson) => lesson._id !== item._id)
+        selectedRows.filter((resource) => resource._id !== item._id)
       )
     } else {
       setSelectedRows((selectedRows) => [...selectedRows, item])
@@ -80,16 +88,26 @@ const AddLessons: FC<AddLessonsProps> = ({ lessons = [], onAddLessons }) => {
   }
 
   const onAddItems = () => {
-    onAddLessons(selectedRows)
+    onAddResources(selectedRows)
     closeModal()
   }
 
   const getItems = useCallback(
-    (title: string, selectedCategories: string[]) => {
+    (inputValue: string, selectedCategories: string[]) => {
       return response.items.filter((item) => {
-        const titleMatch = item.title
-          .toLocaleLowerCase()
-          .includes(title.toLocaleLowerCase())
+        let titleMatch
+        if ('title' in item) {
+          titleMatch = item.title
+            .toLocaleLowerCase()
+            .includes(inputValue.toLocaleLowerCase())
+        } else {
+          titleMatch = item.fileName
+            .toLocaleLowerCase()
+            .split('.')
+            .slice(0, -1)
+            .join('.')
+            .includes(inputValue.toLocaleLowerCase())
+        }
         const categoryMatch =
           selectedCategories.length === 0 ||
           selectedCategories.includes(String(item.category?.name))
@@ -109,10 +127,10 @@ const AddLessons: FC<AddLessonsProps> = ({ lessons = [], onAddLessons }) => {
     onAddItems,
     data: { loading, getItems },
     onRowClick,
-    resource: 'lessons'
+    resource: resourceType
   }
 
-  return <AddResourceModal<Lesson> {...props} />
+  return <AddResourceModal<T> {...props} />
 }
 
-export default AddLessons
+export default AddResources
