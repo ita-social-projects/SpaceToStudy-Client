@@ -20,9 +20,14 @@ import { Lesson, Quiz, Attachment } from '~/types'
 interface ResourcesListProps {
   items: (Lesson | Quiz | Attachment)[]
   setResources: Dispatch<SetStateAction<(Lesson | Quiz | Attachment)[]>>
+  setItemToDelete: Dispatch<SetStateAction<Lesson | Quiz | Attachment | null>>
 }
 
-const ResourcesList: FC<ResourcesListProps> = ({ items, setResources }) => {
+const ResourcesList: FC<ResourcesListProps> = ({
+  items,
+  setResources,
+  setItemToDelete
+}) => {
   const reorder = (
     list: (Lesson | Quiz | Attachment)[],
     startIndex: number,
@@ -64,7 +69,7 @@ const ResourcesList: FC<ResourcesListProps> = ({ items, setResources }) => {
           >
             <DragIndicatorIcon />
           </Box>
-          <ResourceItem resource={item} setResources={setResources} />
+          <ResourceItem resource={item} setItemToDelete={setItemToDelete} />
         </Box>
       )}
     </Draggable>

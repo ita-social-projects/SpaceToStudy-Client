@@ -21,7 +21,6 @@ import AttachFileIcon from '@mui/icons-material/AttachFile'
 
 import AppTextField from '~/components/app-text-field/AppTextField'
 import AppButton from '~/components/app-button/AppButton'
-
 import AddLessons from '~/containers/add-lessons/AddLessons'
 import AddQuizzes from '~/containers/add-quizzes/AddQuizzes'
 import AddAttachments from '~/containers/add-attachments/AddAttachments'
@@ -40,7 +39,8 @@ import {
   CourseSection,
   Lesson,
   Quiz,
-  Attachment
+  Attachment,
+  ResourcesTabsEnum as ResourcesTypes
 } from '~/types'
 
 interface SectionProps {
@@ -68,10 +68,46 @@ const CourseSectionContainer: FC<SectionProps> = ({
   const [quizzes, setQuizzes] = useState<Quiz[]>([])
   const [attachments, setAttachments] = useState<Attachment[]>([])
   const [resources, setResources] = useState<(Lesson | Attachment | Quiz)[]>([])
+  const [itemToDelete, setItemToDelete] = useState<
+    Lesson | Attachment | Quiz | null
+  >(null)
 
   useEffect(() => {
-    setResources(() => [...new Set([...lessons, ...quizzes, ...attachments])])
-  }, [attachments, lessons, quizzes])
+    setResources((prevResources) => {
+      const allResourcesItems = [...lessons, ...quizzes, ...attachments]
+      const updatedResourcesItems = prevResources.filter((item1) =>
+        allResourcesItems.some((item2) => item2._id === item1._id)
+      )
+      for (const item2 of allResourcesItems) {
+        if (!updatedResourcesItems.some((item1) => item1._id === item2._id)) {
+          updatedResourcesItems.push(item2)
+        }
+      }
+      return updatedResourcesItems
+    })
+  }, [lessons, quizzes, attachments])
+
+  useEffect(() => {
+    if (itemToDelete && itemToDelete.resourceType === ResourcesTypes.Lessons) {
+      setLessons((prevLessons) =>
+        prevLessons.filter((item) => item._id !== itemToDelete._id)
+      )
+    } else if (
+      itemToDelete &&
+      itemToDelete.resourceType === ResourcesTypes.Quizzes
+    ) {
+      setQuizzes((prevQuizzes) =>
+        prevQuizzes.filter((item) => item._id !== itemToDelete._id)
+      )
+    } else if (
+      itemToDelete &&
+      itemToDelete.resourceType === ResourcesTypes.Attachments
+    ) {
+      setAttachments((prevAttachments) =>
+        prevAttachments.filter((item) => item._id !== itemToDelete._id)
+      )
+    }
+  }, [itemToDelete])
 
   const onShowHide = () => {
     setIsVisible((isVisible) => !isVisible)
@@ -102,7 +138,12 @@ const CourseSectionContainer: FC<SectionProps> = ({
   }
 
   const handleAddLessons = (lessons: Lesson[]) => {
-    setLessons(lessons)
+    setLessons(
+      lessons.map((lesson) => {
+        lesson.resourceType = ResourcesTypes.Lessons
+        return lesson
+      })
+    )
   }
 
   const handleOpenAddLessonsModal = () => {
@@ -115,7 +156,12 @@ const CourseSectionContainer: FC<SectionProps> = ({
   }
 
   const handleAddQuizzes = (quizzes: Quiz[]) => {
-    setQuizzes(quizzes)
+    setQuizzes(
+      quizzes.map((quiz) => {
+        quiz.resourceType = ResourcesTypes.Quizzes
+        return quiz
+      })
+    )
   }
 
   const handleOpenAddQuizzesModal = () => {
@@ -128,7 +174,12 @@ const CourseSectionContainer: FC<SectionProps> = ({
   }
 
   const handleAddAttachments = (attachments: Attachment[]) => {
-    setAttachments(attachments)
+    setAttachments(
+      attachments.map((attachment) => {
+        attachment.resourceType = ResourcesTypes.Attachments
+        return attachment
+      })
+    )
   }
 
   const handleOpenAddAttachmentsModal = () => {
@@ -253,7 +304,11 @@ const CourseSectionContainer: FC<SectionProps> = ({
             value={descriptionInput}
             variant={TextFieldVariantEnum.Standard}
           />
-          <ResourcesList items={resources} setResources={setResources} />
+          <ResourcesList
+            items={resources}
+            setItemToDelete={setItemToDelete}
+            setResources={setResources}
+          />
           <AppButton
             endIcon={<KeyboardArrowDownIcon fontSize={SizeEnum.Small} />}
             onClick={(event) => {

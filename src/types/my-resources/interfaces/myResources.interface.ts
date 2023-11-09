@@ -2,7 +2,8 @@ import {
   Attachment,
   Category,
   CommonEntityFields,
-  RequestParams
+  RequestParams,
+  ResourcesTabsEnum as ResourcesTypes
 } from '~/types'
 
 export interface Lesson extends CommonEntityFields {
@@ -12,6 +13,7 @@ export interface Lesson extends CommonEntityFields {
   description: string
   attachments: Attachment[]
   category: Category | null
+  resourceType?: ResourcesTypes
 }
 
 export interface Categories extends CommonEntityFields {

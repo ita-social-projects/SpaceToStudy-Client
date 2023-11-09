@@ -2,37 +2,26 @@ import { FC, Dispatch, SetStateAction } from 'react'
 import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
 import CloseIcon from '@mui/icons-material/Close'
+import ListAltIcon from '@mui/icons-material/ListAlt'
+import NoteAltOutlinedIcon from '@mui/icons-material/NoteAltOutlined'
 
 import IconExtensionWithTitle from '~/components/icon-extension-with-title/IconExtensionWithTitle'
 
-import { resourcesTypes } from '~/containers/course-section/CourseSectionContainer.constants'
 import { styles } from '~/containers/course-section/resource-item/ResourceItem.styles'
-import { Lesson, Quiz, Attachment } from '~/types'
+import {
+  Lesson,
+  Quiz,
+  Attachment,
+  ResourcesTabsEnum as ResourcesTypes
+} from '~/types'
 
 interface ResourceItemProps {
   resource: Lesson | Quiz | Attachment
-  setResources: Dispatch<SetStateAction<(Lesson | Quiz | Attachment)[]>>
+  setItemToDelete: Dispatch<SetStateAction<Lesson | Quiz | Attachment | null>>
 }
-const ResourceItem: FC<ResourceItemProps> = ({ resource, setResources }) => {
-  const checkElementType = (resource: Lesson | Quiz | Attachment) => {
-    let elementType
-
-    if ('size' in resource) {
-      elementType = 'attachment'
-    } else if ('items' in resource) {
-      elementType = 'quiz'
-    } else {
-      elementType = 'lesson'
-    }
-    return elementType
-  }
-
-  const elementType = checkElementType(resource)
-
+const ResourceItem: FC<ResourceItemProps> = ({ resource, setItemToDelete }) => {
   const onDeleteResource = () => {
-    setResources((prev) => {
-      return prev.filter((item) => item._id !== resource._id)
-    })
+    setItemToDelete(resource)
   }
 
   return (
@@ -40,10 +29,10 @@ const ResourceItem: FC<ResourceItemProps> = ({ resource, setResources }) => {
       <IconExtensionWithTitle
         description={'description' in resource ? resource.description : ''}
         icon={
-          elementType === 'lesson'
-            ? resourcesTypes.lesson.icon
-            : elementType === 'quiz'
-            ? resourcesTypes.quiz.icon
+          resource.resourceType === ResourcesTypes.Lessons
+            ? ListAltIcon
+            : resource.resourceType === ResourcesTypes.Quizzes
+            ? NoteAltOutlinedIcon
             : undefined
         }
         title={'title' in resource ? resource.title : resource.fileName}
