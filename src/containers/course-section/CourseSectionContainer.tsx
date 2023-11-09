@@ -216,7 +216,12 @@ const CourseSectionContainer: FC<SectionProps> = ({
   }
 
   const handleAddLessons = (lessons: Lesson[]) => {
-    setLessons(lessons)
+    setLessons(
+      lessons.map((lesson) => {
+        lesson.resourceType = ResourcesTypes.Lessons
+        return lesson
+      })
+    )
   }
 
   const handleOpenAddLessonsModal = () => {
@@ -229,7 +234,12 @@ const CourseSectionContainer: FC<SectionProps> = ({
   }
 
   const handleAddQuizzes = (quizzes: Quiz[]) => {
-    setQuizzes(quizzes)
+    setQuizzes(
+      quizzes.map((quiz) => {
+        quiz.resourceType = ResourcesTypes.Quizzes
+        return quiz
+      })
+    )
   }
 
   const handleOpenAddQuizzesModal = () => {
@@ -242,7 +252,12 @@ const CourseSectionContainer: FC<SectionProps> = ({
   }
 
   const handleAddAttachments = (attachments: Attachment[]) => {
-    setAttachments(attachments)
+    setAttachments(
+      attachments.map((attachment) => {
+        attachment.resourceType = ResourcesTypes.Attachments
+        return attachment
+      })
+    )
   }
 
   const handleOpenAddAttachmentsModal = () => {

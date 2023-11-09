@@ -3,8 +3,8 @@ import {
   UserResponse,
   Answer,
   Category,
-  ResourcesTabsEnum as ResourcesTypes,
-  Question
+  Question,
+  ResourcesTabsEnum as ResourcesTypes
 } from '~/types'
 
 export interface QuestionWithAnswers {
