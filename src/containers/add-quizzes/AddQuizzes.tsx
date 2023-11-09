@@ -14,8 +14,9 @@ import {
   initialSort,
   removeColumnRules
 } from '~/containers/add-quizzes/AddQuizzes.constants'
-import { ajustColumns } from '~/utils/helper-functions'
 import { defaultResponses, snackbarVariants } from '~/constants'
+
+import { ajustColumns } from '~/utils/helper-functions'
 import { Quiz, ErrorResponse, ItemsWithCount } from '~/types'
 
 interface AddQuizzesProps {

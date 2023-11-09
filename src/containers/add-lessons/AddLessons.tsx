@@ -7,6 +7,7 @@ import useSelect from '~/hooks/table/use-select'
 import useSort from '~/hooks/table/use-sort'
 import useAxios from '~/hooks/use-axios'
 import useBreakpoints from '~/hooks/use-breakpoints'
+
 import AddResourceModal from '~/containers/my-resources/add-resource-modal/AddResourceModal'
 
 import {
@@ -14,8 +15,9 @@ import {
   initialSort,
   removeColumnRules
 } from '~/containers/add-lessons/AddLessons.constants'
-import { ajustColumns } from '~/utils/helper-functions'
 import { defaultResponses, snackbarVariants } from '~/constants'
+
+import { ajustColumns } from '~/utils/helper-functions'
 import { Lesson, ErrorResponse, ItemsWithCount } from '~/types'
 
 interface AddLessonsProps {

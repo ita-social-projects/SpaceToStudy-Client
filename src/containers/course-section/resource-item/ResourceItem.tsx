@@ -8,6 +8,7 @@ import NoteAltOutlinedIcon from '@mui/icons-material/NoteAltOutlined'
 import IconExtensionWithTitle from '~/components/icon-extension-with-title/IconExtensionWithTitle'
 
 import { styles } from '~/containers/course-section/resource-item/ResourceItem.styles'
+
 import {
   Lesson,
   Quiz,
@@ -25,7 +26,7 @@ const ResourceItem: FC<ResourceItemProps> = ({ resource, setItemToDelete }) => {
   }
 
   return (
-    <Box sx={styles.resourcesList.container}>
+    <Box sx={styles.container}>
       <IconExtensionWithTitle
         description={'description' in resource ? resource.description : ''}
         icon={

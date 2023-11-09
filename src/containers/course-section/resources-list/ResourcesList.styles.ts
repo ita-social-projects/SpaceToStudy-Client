@@ -21,6 +21,7 @@ export const styles = {
     left: '-10px',
     position: 'absolute',
     top: '24px',
-    visibility: 'hidden'
+    visibility: 'hidden',
+    color: 'primary.400'
   }
 }

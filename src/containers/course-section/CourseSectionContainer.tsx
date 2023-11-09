@@ -30,6 +30,7 @@ import useMenu from '~/hooks/use-menu'
 import { useModalContext } from '~/context/modal-context'
 
 import { styles } from '~/containers/course-section/CourseSectionContainer.styles'
+
 import { menuTypes } from '~/containers/course-section/CourseSectionContainer.constants'
 import {
   TextFieldVariantEnum,
@@ -88,21 +89,15 @@ const CourseSectionContainer: FC<SectionProps> = ({
   }, [lessons, quizzes, attachments])
 
   useEffect(() => {
-    if (itemToDelete && itemToDelete.resourceType === ResourcesTypes.Lessons) {
+    if (itemToDelete?.resourceType === ResourcesTypes.Lessons) {
       setLessons((prevLessons) =>
         prevLessons.filter((item) => item._id !== itemToDelete._id)
       )
-    } else if (
-      itemToDelete &&
-      itemToDelete.resourceType === ResourcesTypes.Quizzes
-    ) {
+    } else if (itemToDelete?.resourceType === ResourcesTypes.Quizzes) {
       setQuizzes((prevQuizzes) =>
         prevQuizzes.filter((item) => item._id !== itemToDelete._id)
       )
-    } else if (
-      itemToDelete &&
-      itemToDelete.resourceType === ResourcesTypes.Attachments
-    ) {
+    } else if (itemToDelete?.resourceType === ResourcesTypes.Attachments) {
       setAttachments((prevAttachments) =>
         prevAttachments.filter((item) => item._id !== itemToDelete._id)
       )
@@ -118,14 +113,6 @@ const CourseSectionContainer: FC<SectionProps> = ({
     actionFunc()
   }
 
-  const onTitleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setTitleInput(event.target.value)
-  }
-
-  const onDescriptionInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setDescriptionInput(event.target.value)
-  }
-
   const onDeleteSection = () => {
     setSectionsItems((prev) => {
       if (prev.length === 1) {
@@ -136,6 +123,14 @@ const CourseSectionContainer: FC<SectionProps> = ({
       }
       return prev.filter((item) => item.id !== sectionData.id)
     })
+  }
+
+  const onTitleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setTitleInput(event.target.value)
+  }
+
+  const onDescriptionInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setDescriptionInput(event.target.value)
   }
 
   const handleAddLessons = (lessons: Lesson[]) => {
