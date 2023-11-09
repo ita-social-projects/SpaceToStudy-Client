@@ -114,6 +114,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
   }
 
   const onAction = (actionFunc: openModalFunc) => {
+    closeMenu()
     actionFunc()
   }
 
@@ -139,15 +140,14 @@ const CourseSectionContainer: FC<SectionProps> = ({
 
   const handleAddLessons = (lessons: Lesson[]) => {
     setLessons(
-      lessons.map((lesson) => {
-        lesson.resourceType = ResourcesTypes.Lessons
-        return lesson
-      })
+      lessons.map((lesson) => ({
+        ...lesson,
+        resourceType: ResourcesTypes.Lessons
+      }))
     )
   }
 
   const handleOpenAddLessonsModal = () => {
-    closeMenu()
     openModal({
       component: (
         <AddLessons lessons={lessons} onAddLessons={handleAddLessons} />
@@ -157,15 +157,14 @@ const CourseSectionContainer: FC<SectionProps> = ({
 
   const handleAddQuizzes = (quizzes: Quiz[]) => {
     setQuizzes(
-      quizzes.map((quiz) => {
-        quiz.resourceType = ResourcesTypes.Quizzes
-        return quiz
-      })
+      quizzes.map((quiz) => ({
+        ...quiz,
+        resourceType: ResourcesTypes.Quizzes
+      }))
     )
   }
 
   const handleOpenAddQuizzesModal = () => {
-    closeMenu()
     openModal({
       component: (
         <AddQuizzes onAddQuizzes={handleAddQuizzes} quizzes={quizzes} />
@@ -175,15 +174,14 @@ const CourseSectionContainer: FC<SectionProps> = ({
 
   const handleAddAttachments = (attachments: Attachment[]) => {
     setAttachments(
-      attachments.map((attachment) => {
-        attachment.resourceType = ResourcesTypes.Attachments
-        return attachment
-      })
+      attachments.map((attachment) => ({
+        ...attachment,
+        resourceType: ResourcesTypes.Attachments
+      }))
     )
   }
 
   const handleOpenAddAttachmentsModal = () => {
-    closeMenu()
     openModal({
       component: (
         <AddAttachments
