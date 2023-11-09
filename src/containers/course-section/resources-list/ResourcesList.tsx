@@ -15,12 +15,12 @@ import ResourceItem from '~/containers/course-section/resource-item/ResourceItem
 
 import { styles } from '~/containers/course-section/resources-list/ResourcesList.styles'
 
-import { Lesson, Quiz, Attachment } from '~/types'
+import { CourseResources } from '~/types'
 
 interface ResourcesListProps {
-  items: (Lesson | Quiz | Attachment)[]
-  setResources: Dispatch<SetStateAction<(Lesson | Quiz | Attachment)[]>>
-  setItemToDelete: Dispatch<SetStateAction<Lesson | Quiz | Attachment | null>>
+  items: CourseResources[]
+  setResources: Dispatch<SetStateAction<CourseResources[]>>
+  setItemToDelete: Dispatch<SetStateAction<CourseResources | null>>
 }
 
 const ResourcesList: FC<ResourcesListProps> = ({
@@ -29,10 +29,10 @@ const ResourcesList: FC<ResourcesListProps> = ({
   setItemToDelete
 }) => {
   const reorder = (
-    list: (Lesson | Quiz | Attachment)[],
+    list: CourseResources[],
     startIndex: number,
     endIndex: number
-  ): (Lesson | Quiz | Attachment)[] => {
+  ): CourseResources[] => {
     const result = Array.from(list)
     const [removed] = result.splice(startIndex, 1)
     result.splice(endIndex, 0, removed)

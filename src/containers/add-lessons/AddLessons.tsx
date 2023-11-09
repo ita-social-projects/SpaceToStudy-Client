@@ -69,9 +69,9 @@ const AddLessons: FC<AddLessonsProps> = ({ lessons = [], onAddLessons }) => {
   })
 
   const onRowClick = (item: Lesson) => {
-    if (selectedRows.find((attachment) => attachment._id === item._id)) {
+    if (selectedRows.find((lesson) => lesson._id === item._id)) {
       setSelectedRows((selectedRows) =>
-        selectedRows.filter((attachment) => attachment._id !== item._id)
+        selectedRows.filter((lesson) => lesson._id !== item._id)
       )
     } else {
       setSelectedRows((selectedRows) => [...selectedRows, item])

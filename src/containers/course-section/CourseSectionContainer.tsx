@@ -41,7 +41,8 @@ import {
   Lesson,
   Quiz,
   Attachment,
-  ResourcesTabsEnum as ResourcesTypes
+  ResourcesTabsEnum as ResourcesTypes,
+  CourseResources
 } from '~/types'
 
 interface SectionProps {
@@ -68,10 +69,8 @@ const CourseSectionContainer: FC<SectionProps> = ({
   const [lessons, setLessons] = useState<Lesson[]>([])
   const [quizzes, setQuizzes] = useState<Quiz[]>([])
   const [attachments, setAttachments] = useState<Attachment[]>([])
-  const [resources, setResources] = useState<(Lesson | Attachment | Quiz)[]>([])
-  const [itemToDelete, setItemToDelete] = useState<
-    Lesson | Attachment | Quiz | null
-  >(null)
+  const [resources, setResources] = useState<CourseResources[]>([])
+  const [itemToDelete, setItemToDelete] = useState<CourseResources | null>(null)
 
   useEffect(() => {
     setResources((prevResources) => {
@@ -114,15 +113,13 @@ const CourseSectionContainer: FC<SectionProps> = ({
   }
 
   const onDeleteSection = () => {
-    setSectionsItems((prev) => {
-      if (prev.length === 1) {
-        setTitleInput('')
-        setDescriptionInput('')
-        setResources([])
-        closeMenu()
-      }
-      return prev.filter((item) => item.id !== sectionData.id)
-    })
+    setTitleInput('')
+    setDescriptionInput('')
+    setResources([])
+    closeMenu()
+    setSectionsItems((prev) =>
+      prev.filter((item) => item.id !== sectionData.id)
+    )
   }
 
   const onTitleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
