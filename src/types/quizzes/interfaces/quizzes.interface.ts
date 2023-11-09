@@ -11,3 +11,9 @@ export interface Quiz extends CommonEntityFields {
   author: Pick<UserResponse, '_id'>
   category: Category | null
 }
+
+export interface NewQuiz {
+  title: string
+  description: string
+  items: string[]
+}

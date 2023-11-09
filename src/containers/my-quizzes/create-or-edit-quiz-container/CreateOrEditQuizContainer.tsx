@@ -1,12 +1,17 @@
-import { useState, ChangeEvent } from 'react'
+import { ChangeEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { AxiosResponse } from 'axios'
 import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
 import EditIcon from '@mui/icons-material/Edit'
 import AddIcon from '@mui/icons-material/Add'
 
+import useAxios from '~/hooks/use-axios'
+import useForm from '~/hooks/use-form'
 import { useModalContext } from '~/context/modal-context'
+import { useSnackBarContext } from '~/context/snackbar-context'
+import { ResourceService } from '~/services/resource-service'
 import QuestionsList from '~/containers/questions-list/QuestionsList'
 import AddQuestions from '~/containers/my-resources/add-questions/AddQuestions'
 import CreateOrEditQuizQuestion from '~/containers/my-quizzes/create-or-edit-quiz-question/CreateOrEditQuizQuestion'
@@ -14,23 +19,76 @@ import AppButton from '~/components/app-button/AppButton'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
 
+import { snackbarVariants } from '~/constants'
+import { authRoutes } from '~/router/constants/authRoutes'
 import { myResourcesPath } from '~/pages/create-or-edit-lesson/CreateOrEditLesson.constants'
-import { styles } from '~/containers/my-quizzes/edit-quiz-container/EditQuizContainer.styles'
+import { QuizContentProps } from '~/pages/new-quiz/NewQuiz.constants'
+import { styles } from '~/containers/my-quizzes/create-or-edit-quiz-container/CreateOrEditQuizContainer.styles'
 import {
   ButtonTypeEnum,
   ButtonVariantEnum,
+  ErrorResponse,
+  NewQuiz,
   Question,
+  Quiz,
   SizeEnum,
   TextFieldVariantEnum
 } from '~/types'
-import { QuizContentProps } from '~/pages/new-quiz/NewQuiz.constants'
+import {
+  defaultResponse,
+  initialValues
+} from '~/containers/my-quizzes/create-or-edit-quiz-container/CreateOrEditQuizContainer.constants'
 
-const EditQuizContainer = ({ questions, setQuestions }: QuizContentProps) => {
+const CreateOrEditQuizContainer = ({
+  title,
+  setTitle,
+  description,
+  setDescription,
+  questions,
+  setQuestions
+}: QuizContentProps) => {
   const { t } = useTranslation()
+  const { setAlert } = useSnackBarContext()
   const { openModal } = useModalContext()
-  const [title, setTitle] = useState<string>('')
-  const [description, setDescription] = useState<string>('')
+  const navigate = useNavigate()
   const [isCreationOpen, setIsCreationOpen] = useState<boolean>(false)
+
+  const handleResponse = () => {
+    setAlert({
+      severity: snackbarVariants.success,
+      message: 'myResourcesPage.quizzes.successAddedOuiz'
+    })
+    navigate(authRoutes.myResources.root.path)
+  }
+
+  const onResponseError = (error: ErrorResponse) => {
+    setAlert({
+      severity: snackbarVariants.error,
+      message: error ? `errors.${error.message}` : ''
+    })
+  }
+
+  const addQuiz = (): Promise<AxiosResponse> => {
+    const quiz = {
+      ...data,
+      title,
+      description,
+      items: questions.map((question) => question._id)
+    }
+    return ResourceService.addQuiz(quiz)
+  }
+
+  const { fetchData: addNewQuiz } = useAxios<Quiz, NewQuiz>({
+    service: addQuiz,
+    fetchOnMount: false,
+    defaultResponse,
+    onResponse: handleResponse,
+    onResponseError: onResponseError
+  })
+
+  const { data } = useForm<NewQuiz>({
+    initialValues
+  })
 
   const onOpenAddQuestionsModal = () => {
     openModal({
@@ -54,6 +112,8 @@ const EditQuizContainer = ({ questions, setQuestions }: QuizContentProps) => {
 
   const onOpenCreateQuestion = () => setIsCreationOpen(true)
   const onCloseCreateQuestion = () => setIsCreationOpen(false)
+
+  const onSaveQuiz = () => void addNewQuiz(data)
 
   return (
     <PageWrapper sx={styles.container}>
@@ -79,8 +139,9 @@ const EditQuizContainer = ({ questions, setQuestions }: QuizContentProps) => {
           variant={TextFieldVariantEnum.Standard}
         />
         <Divider sx={styles.divider} />
-
-        <QuestionsList items={questions} setItems={setQuestions} />
+        {questions && (
+          <QuestionsList items={questions} setItems={setQuestions} />
+        )}
         {isCreationOpen && (
           <CreateOrEditQuizQuestion
             onCancel={onCloseCreateQuestion}
@@ -115,7 +176,11 @@ const EditQuizContainer = ({ questions, setQuestions }: QuizContentProps) => {
           >
             {t('common.cancel')}
           </AppButton>
-          <AppButton size={SizeEnum.ExtraLarge} type={ButtonTypeEnum.Submit}>
+          <AppButton
+            onClick={onSaveQuiz}
+            size={SizeEnum.ExtraLarge}
+            type={ButtonTypeEnum.Submit}
+          >
             {t('common.save')}
           </AppButton>
         </Box>
@@ -124,4 +189,4 @@ const EditQuizContainer = ({ questions, setQuestions }: QuizContentProps) => {
   )
 }
 
-export default EditQuizContainer
+export default CreateOrEditQuizContainer

@@ -2,7 +2,7 @@ import { useCallback, useRef, useState } from 'react'
 import Box from '@mui/material/Box'
 
 import { useSnackBarContext } from '~/context/snackbar-context'
-import { quizService } from '~/services/quiz-service'
+import { ResourceService } from '~/services/resource-service'
 import AddResourceWithInput from '~/containers/my-resources/add-resource-with-input/AddResourceWithInput'
 import MyResourcesTable from '~/containers/my-resources/my-resources-table/MyResourcesTable'
 import Loader from '~/components/loader/Loader'
@@ -57,7 +57,7 @@ const QuizzesContainer = () => {
 
   const getQuizzes = useCallback(
     () =>
-      quizService.getQuizzes({
+      ResourceService.getQuizzes({
         limit: itemsPerPage,
         skip: (page - 1) * itemsPerPage,
         sort,
@@ -68,7 +68,7 @@ const QuizzesContainer = () => {
   )
 
   const deleteQuiz = useCallback(
-    (id?: string) => quizService.deleteQuiz(id ?? ''),
+    (id?: string) => ResourceService.deleteQuiz(id ?? ''),
     []
   )
 
