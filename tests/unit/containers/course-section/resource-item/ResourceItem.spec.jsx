@@ -41,4 +41,14 @@ describe('new course section RescourceItem tests', () => {
 
     expect(mockedFunc).toHaveBeenCalledWith(mockedLessonData)
   })
+
+  it('should display quiz icon', () => {
+    mockedLessonData.resourceType = ResourcesTypes.Quizzes
+    renderWithProviders(
+      <ResourceItem resource={mockedLessonData} setItemToDelete={mockedFunc} />
+    )
+    const quizIcon = screen.getByTestId('NoteAltOutlinedIcon')
+
+    expect(quizIcon).toBeInTheDocument()
+  })
 })

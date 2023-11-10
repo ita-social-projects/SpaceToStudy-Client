@@ -6,7 +6,7 @@ import CourseSectionContainer from '~/containers/course-section/CourseSectionCon
 const mockedSectionData = {
   id: 1,
   title: 'Title',
-  description: '',
+  description: 'Description',
   resources: []
 }
 
@@ -24,9 +24,7 @@ describe('CourseSectionContainer tests', () => {
 
   it('should render inputs for title and description', () => {
     const titleInput = screen.getByDisplayValue(mockedSectionData.title)
-    const labelInput = screen.getByText(
-      'course.courseSection.defaultNewDescription'
-    )
+    const labelInput = screen.getByDisplayValue(mockedSectionData.description)
 
     expect(titleInput).toBeInTheDocument()
     expect(labelInput).toBeInTheDocument()
@@ -69,9 +67,13 @@ describe('CourseSectionContainer tests', () => {
     const deleteButton = screen.getByTestId('DeleteOutlineIcon').parentElement
     fireEvent.click(deleteButton)
     const titleInput = screen.getByText('course.courseSection.defaultNewTitle')
+    const descriptionInput = screen.getByText(
+      'course.courseSection.defaultNewDescription'
+    )
 
     expect(mockedSetSectionItems).toHaveBeenCalledTimes(1)
     expect(titleInput).toBeInTheDocument()
+    expect(descriptionInput).toBeInTheDocument()
   })
 
   it('should show add lessons modal', () => {
