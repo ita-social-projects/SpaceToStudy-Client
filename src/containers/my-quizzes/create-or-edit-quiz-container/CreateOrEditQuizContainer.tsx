@@ -1,14 +1,12 @@
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate } from 'react-router-dom'
-import { AxiosResponse } from 'axios'
 import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
 import EditIcon from '@mui/icons-material/Edit'
 import AddIcon from '@mui/icons-material/Add'
 
 import useAxios from '~/hooks/use-axios'
-import useForm from '~/hooks/use-form'
 import { useModalContext } from '~/context/modal-context'
 import { useSnackBarContext } from '~/context/snackbar-context'
 import { ResourceService } from '~/services/resource-service'
@@ -34,10 +32,7 @@ import {
   SizeEnum,
   TextFieldVariantEnum
 } from '~/types'
-import {
-  defaultResponse,
-  initialValues
-} from '~/containers/my-quizzes/create-or-edit-quiz-container/CreateOrEditQuizContainer.constants'
+import { defaultResponse } from '~/containers/my-quizzes/create-or-edit-quiz-container/CreateOrEditQuizContainer.constants'
 
 const CreateOrEditQuizContainer = ({
   title,
@@ -68,26 +63,17 @@ const CreateOrEditQuizContainer = ({
     })
   }
 
-  const addQuiz = (): Promise<AxiosResponse> => {
-    const quiz = {
-      ...data,
-      title,
-      description,
-      items: questions.map((question) => question._id)
-    }
-    return ResourceService.addQuiz(quiz)
-  }
+  const createAddQuizService = useCallback(
+    (data?: NewQuiz) => ResourceService.addQuiz(data),
+    []
+  )
 
   const { fetchData: addNewQuiz } = useAxios<Quiz, NewQuiz>({
-    service: addQuiz,
+    service: createAddQuizService,
     fetchOnMount: false,
     defaultResponse,
     onResponse: handleResponse,
     onResponseError: onResponseError
-  })
-
-  const { data } = useForm<NewQuiz>({
-    initialValues
   })
 
   const onOpenAddQuestionsModal = () => {
@@ -113,7 +99,8 @@ const CreateOrEditQuizContainer = ({
   const onOpenCreateQuestion = () => setIsCreationOpen(true)
   const onCloseCreateQuestion = () => setIsCreationOpen(false)
 
-  const onSaveQuiz = () => void addNewQuiz(data)
+  const onSaveQuiz = () =>
+    void addNewQuiz({ title, description, items: questions })
 
   return (
     <PageWrapper sx={styles.container}>

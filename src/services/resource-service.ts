@@ -45,7 +45,7 @@ export const ResourceService = {
   ): Promise<AxiosResponse<ItemsWithCount<Quiz>>> => {
     return axiosClient.get(URLs.quizzes.get, { params })
   },
-  addQuiz: async (data: NewQuiz): Promise<AxiosResponse> =>
+  addQuiz: async (data?: NewQuiz): Promise<AxiosResponse> =>
     await axiosClient.post(URLs.quizzes.add, data),
   deleteQuiz: async (id: string): Promise<AxiosResponse> =>
     await axiosClient.delete(createUrlPath(URLs.quizzes.delete, id)),
