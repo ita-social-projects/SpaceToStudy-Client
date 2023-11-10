@@ -110,6 +110,7 @@ const LessonsContainer = () => {
         searchRef={searchTitle}
         selectedItems={selectedItems}
         setItems={setSelectedItems}
+        showNoneProperty
       />
       {loading ? (
         <Loader pageLoad size={50} />

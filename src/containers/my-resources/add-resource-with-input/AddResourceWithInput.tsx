@@ -30,7 +30,7 @@ interface AddResourceWithInputProps {
   button?: ReactElement
   selectedItems?: string[]
   setItems?: Dispatch<SetStateAction<string[]>>
-  hideCategoriesFilter?: boolean
+  showNoneProperty?: boolean
 }
 
 const AddResourceWithInput: FC<AddResourceWithInputProps> = ({
@@ -41,7 +41,7 @@ const AddResourceWithInput: FC<AddResourceWithInputProps> = ({
   button,
   selectedItems,
   setItems,
-  hideCategoriesFilter
+  showNoneProperty
 }) => {
   const { t } = useTranslation()
   const [searchInput, setSearchInput] = useState<string>('')
@@ -62,15 +62,6 @@ const AddResourceWithInput: FC<AddResourceWithInputProps> = ({
     void fetchData()
   }
 
-  const filterProps = {
-    title: t('myResourcesPage.categories.category'),
-    service: ResourceService.getResourcesCategoriesNames,
-    selectedItems: selectedItems,
-    setSelectedItems: setItems,
-    valueField: 'name',
-    position: 'right'
-  }
-
   return (
     <Box sx={styles.container}>
       {!button ? (
@@ -82,8 +73,16 @@ const AddResourceWithInput: FC<AddResourceWithInputProps> = ({
         button
       )}
       <Box sx={styles.filterWithInput}>
-        {!hideCategoriesFilter && (
-          <FilterSelector<CategoryNameInterface> {...filterProps} />
+        {selectedItems && setItems && (
+          <FilterSelector<CategoryNameInterface>
+            position={'right'}
+            selectedItems={selectedItems ?? []}
+            service={ResourceService.getResourcesCategoriesNames}
+            setSelectedItems={setItems}
+            showNoneProperty
+            title={t('myResourcesPage.categories.category')}
+            valueField={'name'}
+          />
         )}
         <InputWithIcon
           endAdornment={<SearchIcon sx={styles.searchIcon} />}

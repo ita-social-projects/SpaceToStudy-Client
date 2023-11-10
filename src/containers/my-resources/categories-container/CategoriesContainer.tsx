@@ -181,7 +181,6 @@ const CategoriesContainer = () => {
           </AppButton>
         }
         fetchData={fetchData}
-        hideCategoriesFilter
         searchRef={searchTitle}
       />
       {loading ? (
