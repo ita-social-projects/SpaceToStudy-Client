@@ -3,8 +3,9 @@ import { Box } from '@mui/material'
 import Typography from '@mui/material/Typography'
 
 import useForm from '~/hooks/use-form'
-import { styles } from '~/containers/my-quizzes/quiz-settings-container/QuizSettingsContainer.styles'
+import { spliceSx } from '~/utils/helper-functions'
 import SettingItem from '~/components/setting-item/SettingItem'
+import { styles } from '~/containers/my-quizzes/quiz-settings-container/QuizSettingsContainer.styles'
 
 const QuizSettingsContainer = () => {
   const { t } = useTranslation()
@@ -20,7 +21,7 @@ const QuizSettingsContainer = () => {
   return (
     <Box>
       <Box>
-        <Typography sx={{ ...styles.title, ...styles.topTitle }}>
+        <Typography sx={spliceSx(styles.title, styles.topTitle)}>
           {t('myResourcesPage.quizzes.settingsPointsAndAnswers')}
         </Typography>
 

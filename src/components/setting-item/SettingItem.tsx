@@ -10,7 +10,7 @@ interface SettingItemProps {
   title: string
   subtitle: string
   checked: boolean
-  dataTestId: string
+  dataTestId?: string
   onChange: (
     event: React.ChangeEvent<HTMLInputElement>,
     checked: boolean

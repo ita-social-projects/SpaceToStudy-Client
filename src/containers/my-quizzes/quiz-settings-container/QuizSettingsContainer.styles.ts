@@ -1,7 +1,7 @@
 import { TypographyVariantEnum } from '~/types'
 export const styles = {
   topTitle: {
-    mt: 1
+    mt: '8px'
   },
   title: {
     typography: TypographyVariantEnum.H6,
