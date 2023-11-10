@@ -8,13 +8,13 @@ import CreateOrEditQuizContainer from '~/containers/my-quizzes/create-or-edit-qu
 import ViewQuizContainer from '~/containers/my-quizzes/view-quiz-container/ViewQuizContainer'
 import QuizSettingsContainer from '~/containers/my-quizzes/quiz-settings-container/QuizSettingsContainer'
 
-import { NewQuiz, Question } from '~/types'
+import { CreateQuizParams, Question } from '~/types'
 
 export interface QuizContentProps {
   title: string
-  setTitle: Dispatch<SetStateAction<NewQuiz['title']>>
+  setTitle: Dispatch<SetStateAction<CreateQuizParams['title']>>
   description: string
-  setDescription: Dispatch<SetStateAction<NewQuiz['description']>>
+  setDescription: Dispatch<SetStateAction<CreateQuizParams['description']>>
   questions: Question[]
   setQuestions: Dispatch<SetStateAction<Question[]>>
 }

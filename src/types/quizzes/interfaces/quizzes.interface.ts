@@ -18,7 +18,7 @@ export interface Quiz extends CommonEntityFields {
   category: Category | null
 }
 
-export interface NewQuiz {
+export interface CreateQuizParams {
   title: string
   description: string
   items: Question[]

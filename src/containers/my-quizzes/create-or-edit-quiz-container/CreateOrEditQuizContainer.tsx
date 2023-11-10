@@ -26,7 +26,7 @@ import {
   ButtonTypeEnum,
   ButtonVariantEnum,
   ErrorResponse,
-  NewQuiz,
+  CreateQuizParams,
   Question,
   Quiz,
   SizeEnum,
@@ -64,11 +64,11 @@ const CreateOrEditQuizContainer = ({
   }
 
   const createAddQuizService = useCallback(
-    (data?: NewQuiz) => ResourceService.addQuiz(data),
+    (data?: CreateQuizParams) => ResourceService.addQuiz(data),
     []
   )
 
-  const { fetchData: addNewQuiz } = useAxios<Quiz, NewQuiz>({
+  const { fetchData: addNewQuiz } = useAxios<Quiz, CreateQuizParams>({
     service: createAddQuizService,
     fetchOnMount: false,
     defaultResponse,
