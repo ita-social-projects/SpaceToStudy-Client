@@ -14,20 +14,36 @@ const mockedLessonData = [
     attachments: [],
     category: null,
     resourceType: ResourcesTypes.Lessons
+  },
+  {
+    _id: '2',
+    title: 'Lesson2',
+    author: 'new author',
+    content: 'Content',
+    description: 'Description',
+    attachments: [],
+    category: null,
+    resourceType: ResourcesTypes.Lessons
   }
 ]
 
-const mockedFunc = vi.fn()
+const mockedSetResources = vi.fn()
 
 describe('new course section RescourceItem tests', () => {
   beforeEach(() => {
     renderWithProviders(
-      <ResourcesList items={mockedLessonData} setResources={mockedFunc} />
+      <ResourcesList
+        items={mockedLessonData}
+        setResources={mockedSetResources}
+      />
     )
   })
 
   it('should render resources list with gragBtn', () => {
-    const resourceDragBtn = screen.getByTestId('DragIndicatorIcon')
-    expect(resourceDragBtn).toBeInTheDocument()
+    const resourceTitle1 = screen.getByText(mockedLessonData[0].title)
+    const resourceTitle2 = screen.getByText(mockedLessonData[1].title)
+
+    expect(resourceTitle1).toBeInTheDocument()
+    expect(resourceTitle2).toBeInTheDocument()
   })
 })

@@ -55,7 +55,7 @@ const AddResources = <T extends CourseResources>({
 
   const columnsToShow = ajustColumns<T>(breakpoints, columns, removeColumnRules)
 
-  const getMyLessons = useCallback(
+  const getMyResources = useCallback(
     () => requestService({ sort }),
     [sort, requestService]
   )
@@ -71,7 +71,7 @@ const AddResources = <T extends CourseResources>({
   )
 
   const { loading, response } = useAxios<ItemsWithCount<T>>({
-    service: getMyLessons,
+    service: getMyResources,
     defaultResponse: defaultResponses.itemsWithCount,
     onResponseError
   })

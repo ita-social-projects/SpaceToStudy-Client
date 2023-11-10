@@ -132,11 +132,15 @@ const CourseSectionContainer: FC<SectionProps> = ({
     setDescriptionInput(event.target.value)
   }
 
-  const handleAddLessons = (lessons: Lesson[]) => {
-    setLessons(
-      lessons.map((lesson) => ({
-        ...lesson,
-        resourceType: ResourcesTypes.Lessons
+  const handleAddResources = <T extends CourseResources>(
+    resources: T[],
+    setResourcesFunc: Dispatch<SetStateAction<T[]>>,
+    type: ResourcesTypes
+  ) => {
+    setResourcesFunc(
+      resources.map((resource) => ({
+        ...resource,
+        resourceType: type
       }))
     )
   }
@@ -145,7 +149,9 @@ const CourseSectionContainer: FC<SectionProps> = ({
     openModal({
       component: (
         <AddResources<Lesson>
-          onAddResources={handleAddLessons}
+          onAddResources={(resources) =>
+            handleAddResources(resources, setLessons, ResourcesTypes.Lessons)
+          }
           requestService={ResourceService.getUsersLessons}
           resourceType={resourcesData.lesson.resource}
           resources={lessons}
@@ -154,20 +160,13 @@ const CourseSectionContainer: FC<SectionProps> = ({
     })
   }
 
-  const handleAddQuizzes = (quizzes: Quiz[]) => {
-    setQuizzes(
-      quizzes.map((quiz) => ({
-        ...quiz,
-        resourceType: ResourcesTypes.Quizzes
-      }))
-    )
-  }
-
   const handleOpenAddQuizzesModal = () => {
     openModal({
       component: (
         <AddResources<Quiz>
-          onAddResources={handleAddQuizzes}
+          onAddResources={(resources) =>
+            handleAddResources(resources, setQuizzes, ResourcesTypes.Quizzes)
+          }
           requestService={quizService.getQuizzes}
           resourceType={resourcesData.quiz.resource}
           resources={quizzes}
@@ -176,20 +175,17 @@ const CourseSectionContainer: FC<SectionProps> = ({
     })
   }
 
-  const handleAddAttachments = (attachments: Attachment[]) => {
-    setAttachments(
-      attachments.map((attachment) => ({
-        ...attachment,
-        resourceType: ResourcesTypes.Attachments
-      }))
-    )
-  }
-
   const handleOpenAddAttachmentsModal = () => {
     openModal({
       component: (
         <AddResources<Attachment>
-          onAddResources={handleAddAttachments}
+          onAddResources={(resources) =>
+            handleAddResources(
+              resources,
+              setAttachments,
+              ResourcesTypes.Attachments
+            )
+          }
           requestService={ResourceService.getAttachments}
           resourceType={resourcesData.attachment.resource}
           resources={attachments}
