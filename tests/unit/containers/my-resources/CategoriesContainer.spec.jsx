@@ -1,8 +1,9 @@
-import { fireEvent, screen } from '@testing-library/react'
+import { fireEvent, screen, waitFor } from '@testing-library/react'
 import { expect, vi } from 'vitest'
+
+import CategoriesContainer from '~/containers/my-resources/categories-container/CategoriesContainer'
 import { mockAxiosClient, renderWithProviders } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
-import CategoriesContainer from '~/containers/my-resources/categories-container/CategoriesContainer'
 
 const categoriesMock = {
   _id: 's0Me1D',
@@ -27,18 +28,23 @@ const responseCategoriesMock = {
 
 describe('CategoriesContainer test', () => {
   beforeEach(async () => {
-    mockAxiosClient
-      .onGet(URLs.resources.resourcesCategories.get)
-      .reply(200, responseCategoriesMock)
-    renderWithProviders(<CategoriesContainer />)
+    await waitFor(() => {
+      mockAxiosClient
+        .onGet(URLs.resources.resourcesCategories.get)
+        .reply(200, responseCategoriesMock)
+
+      renderWithProviders(<CategoriesContainer />)
+    })
   })
 
   afterEach(() => {
     vi.clearAllMocks()
+    mockAxiosClient.reset()
   })
 
   it('should render "New category" button', () => {
     const newCategoryBtn = screen.getByText('myResourcesPage.categories.addBtn')
+
     expect(newCategoryBtn).toBeInTheDocument()
   })
 
@@ -63,6 +69,7 @@ describe('CategoriesContainer test', () => {
     fireEvent.click(addCategoryBtn)
 
     const addCategoryPopover = screen.getByTestId('popupContent')
+
     expect(addCategoryPopover).toBeInTheDocument()
   })
 
@@ -72,6 +79,7 @@ describe('CategoriesContainer test', () => {
     fireEvent.click(categoryMenuBtn)
 
     const categoryMenu = screen.getByRole('menu')
+
     expect(categoryMenu).toBeInTheDocument()
   })
 })

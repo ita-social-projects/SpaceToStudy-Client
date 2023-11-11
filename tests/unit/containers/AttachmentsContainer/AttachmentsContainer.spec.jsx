@@ -1,4 +1,4 @@
-import { fireEvent, screen } from '@testing-library/react'
+import { fireEvent, screen, waitFor } from '@testing-library/react'
 import AttachmentsContainer from '~/containers/my-resources/attachments-container/AttachmentsContainer'
 import { mockAxiosClient, renderWithProviders } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
@@ -42,46 +42,58 @@ const attachmentMockDataCategory = {
 }
 
 describe('AttachmentContainer renders correct data', () => {
-  beforeEach(() => {
-    mockAxiosClient
-      .onGet(URLs.resources.attachments.get)
-      .reply(200, attachmentMockData)
-    renderWithProviders(<AttachmentsContainer />)
+  beforeEach(async () => {
+    await waitFor(() => {
+      mockAxiosClient
+        .onGet(URLs.resources.attachments.get)
+        .reply(200, attachmentMockData)
+      renderWithProviders(<AttachmentsContainer />)
+    })
   })
 
   afterEach(() => {
     vi.clearAllMocks()
+    mockAxiosClient.reset()
   })
 
   it('should render table', () => {
     const title = screen.getByText('myResourcesPage.attachments.attachmentName')
+
     expect(title).toBeInTheDocument()
   })
+
   it('should correctly shows filename of attachment', () => {
     const fileName = screen.getByText('1spanish.pdf')
+
     expect(fileName).toBeInTheDocument()
   })
-  it('should show pagination', () => {
+
+  it('should show pagination', async () => {
     const secondButton = screen.getByLabelText('Go to page 2')
 
     expect(secondButton).not.toHaveAttribute('aria-current')
 
-    fireEvent.click(secondButton)
+    await waitFor(() => {
+      fireEvent.click(secondButton)
+    })
 
     expect(secondButton).toHaveAttribute('aria-current', 'true')
   })
 })
 
 describe('QuestionsContainer test', () => {
-  beforeEach(() => {
-    mockAxiosClient
-      .onGet(URLs.resources.attachments.get)
-      .reply(200, attachmentMockDataCategory)
-    renderWithProviders(<AttachmentsContainer />)
+  beforeEach(async () => {
+    await waitFor(() => {
+      mockAxiosClient
+        .onGet(URLs.resources.attachments.get)
+        .reply(200, attachmentMockDataCategory)
+      renderWithProviders(<AttachmentsContainer />)
+    })
   })
 
   afterEach(() => {
     vi.clearAllMocks()
+    mockAxiosClient.reset()
   })
 
   it('should render correct category', () => {
