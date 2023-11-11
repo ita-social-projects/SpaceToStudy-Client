@@ -3,18 +3,32 @@ import { useTranslation } from 'react-i18next'
 import {
   Box,
   Typography,
+  FormGroup,
   Checkbox,
   Radio,
-  FormGroup,
+  FormControlLabel,
   RadioGroup,
-  FormControlLabel
+  SxProps
 } from '@mui/material'
 import { questionType } from '~/components/question-editor/QuestionEditor.constants'
+import AppCard from '~/components/app-card/AppCard'
 
-import { QuizQuestionProps } from '~/types'
-import { styles } from '~/containers/my-quizzes/scroll-question/ScrollQuestions.styles'
+import { Question } from '~/types'
+import { styles } from './QuizQuestion.styles'
 
-const QuizQuestion: FC<QuizQuestionProps> = ({ question, index }) => {
+interface QuizQuestionProps {
+  question: Question
+  index: number
+  useAppCard?: boolean
+  sx: { root: SxProps }
+}
+
+const QuizQuestion: FC<QuizQuestionProps> = ({
+  question,
+  index,
+  useAppCard = false,
+  sx
+}) => {
   const { t } = useTranslation()
   const { isMultipleChoice, isSingleChoice } = questionType(question.type)
 
@@ -27,18 +41,22 @@ const QuizQuestion: FC<QuizQuestionProps> = ({ question, index }) => {
     />
   ))
 
+  const ContainerComponent = useAppCard ? AppCard : Box
+
   return (
-    <Box sx={styles.root}>
+    <ContainerComponent sx={sx.root}>
       <Typography sx={styles.type}>
         {t(`questionPage.questionType.${question.type}`)}
       </Typography>
+
       <Box sx={styles.titleContainer}>
         <Typography sx={styles.title}>{index + 1}.</Typography>
         <Typography sx={styles.title}>{question.text}</Typography>
       </Box>
+
       {isMultipleChoice && <FormGroup>{answersList}</FormGroup>}
       {isSingleChoice && <RadioGroup>{answersList}</RadioGroup>}
-    </Box>
+    </ContainerComponent>
   )
 }
 

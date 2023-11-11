@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 
-import SelectableQuestion from '~/containers/my-quizzes/selectable-question/SelectableQuestion'
+import QuizQuestion from '~/containers/my-quizzes/quiz-question/QuizQuestion'
 
 const questionMock = {
   text: 'What is your name',
@@ -9,10 +9,15 @@ const questionMock = {
   type: 'multipleChoice'
 }
 
-describe('SelectableQuestion component test', () => {
+const root = {
+  display: 'block',
+  p: '20px 30px'
+}
+
+describe('QuizQuestion component test', () => {
   beforeEach(() => {
     renderWithProviders(
-      <SelectableQuestion question={questionMock} selectedIndex={0} />
+      <QuizQuestion index={0} question={questionMock} sx={root} />
     )
   })
 
