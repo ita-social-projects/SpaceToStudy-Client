@@ -47,12 +47,10 @@ describe('EditQuizContainer', () => {
     const autocomplete = screen.getByLabelText(
       'myResourcesPage.quizzes.categoryDropdown'
     )
-
     fireEvent.click(autocomplete)
     fireEvent.change(autocomplete, { target: { value: 'Category 2' } })
     fireEvent.keyDown(autocomplete, { key: 'ArrowDown' })
     fireEvent.keyDown(autocomplete, { key: 'Enter' })
-
     expect(autocomplete.value).toBe('Category 2')
   })
 
@@ -60,12 +58,10 @@ describe('EditQuizContainer', () => {
     const autocomplete = screen.getByLabelText(
       'myResourcesPage.quizzes.categoryDropdown'
     )
-
     fireEvent.click(autocomplete)
     fireEvent.change(autocomplete, { target: { value: '' } })
     fireEvent.keyDown(autocomplete, { key: 'ArrowDown' })
     fireEvent.keyDown(autocomplete, { key: 'Enter' })
-
     expect(autocomplete.value).toBe('')
   })
   it('should change title and description', () => {
@@ -75,10 +71,8 @@ describe('EditQuizContainer', () => {
     const descriptionInput = screen.getByLabelText(
       'myResourcesPage.quizzes.defaultNewDescription'
     )
-
     fireEvent.change(titleInput, { target: { value: 'New Title' } })
     fireEvent.change(descriptionInput, { target: { value: 'New Description' } })
-
     expect(titleInput.value).toBe('New Title')
     expect(descriptionInput.value).toBe('New Description')
   })
