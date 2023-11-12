@@ -16,7 +16,6 @@ vi.mock('~/hooks/use-categories-names', () => ({
 }))
 
 const route = '/categories/subjects?categoryId=123'
-
 const mockState = {
   appMain: { userRole: 'tutor' }
 }
