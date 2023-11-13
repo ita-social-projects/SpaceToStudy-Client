@@ -14,6 +14,7 @@ vi.mock('~/hooks/use-categories-names', () => ({
     ]
   })
 }))
+const initialCategory = 'initialCategory'
 
 const route = '/categories/subjects?categoryId=123'
 const mockState = {
@@ -23,7 +24,11 @@ const mockState = {
 describe('EditQuizContainer', () => {
   beforeEach(() => {
     renderWithProviders(
-      <EditQuizContainer questions={[]} setQuestions={() => {}} />,
+      <EditQuizContainer
+        initialCategory={initialCategory}
+        questions={[]}
+        setQuestions={() => {}}
+      />,
       {
         initialEntries: route,
         preloadedState: mockState
@@ -63,6 +68,7 @@ describe('EditQuizContainer', () => {
     fireEvent.keyDown(autocomplete, { key: 'Enter' })
     expect(autocomplete.value).toBe('')
   })
+
   it('should change title and description', () => {
     const titleInput = screen.getByLabelText(
       'myResourcesPage.quizzes.defaultNewTitle'
@@ -74,5 +80,17 @@ describe('EditQuizContainer', () => {
     fireEvent.change(descriptionInput, { target: { value: 'New Description' } })
     expect(titleInput.value).toBe('New Title')
     expect(descriptionInput.value).toBe('New Description')
+  })
+
+  it('should update the category, when new category is choosen', () => {
+    const categoryInput = screen.getByLabelText(
+      'myResourcesPage.quizzes.categoryDropdown'
+    )
+
+    fireEvent.change(categoryInput, {
+      target: { value: 'Category 2' }
+    })
+
+    expect(categoryInput.value).toBe('')
   })
 })
