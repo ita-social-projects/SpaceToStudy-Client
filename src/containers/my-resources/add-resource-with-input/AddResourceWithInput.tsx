@@ -30,7 +30,6 @@ interface AddResourceWithInputProps {
   button?: ReactElement
   selectedItems?: string[]
   setItems?: Dispatch<SetStateAction<string[]>>
-  showNoneProperty?: boolean
 }
 
 const AddResourceWithInput: FC<AddResourceWithInputProps> = ({
@@ -40,8 +39,7 @@ const AddResourceWithInput: FC<AddResourceWithInputProps> = ({
   searchRef,
   button,
   selectedItems,
-  setItems,
-  showNoneProperty
+  setItems
 }) => {
   const { t } = useTranslation()
   const [searchInput, setSearchInput] = useState<string>('')

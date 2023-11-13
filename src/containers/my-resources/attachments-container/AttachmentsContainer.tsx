@@ -172,7 +172,7 @@ const AttachmentsContainer = () => {
       searchRef={searchFileName}
       selectedItems={selectedItems}
       setItems={setSelectedItems}
-      showNoneProperty
+      // showNoneProperty
     />
   )
 
