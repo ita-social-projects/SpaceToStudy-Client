@@ -28,6 +28,7 @@ interface FilterSelectorProps<T> extends Omit<MenuProps, 'open'> {
   setSelectedItems: Dispatch<SetStateAction<string[]>>
   position?: PopoverOrigin['horizontal']
   valueField?: keyof T
+  showNoneProperty?: boolean
 }
 
 const FilterSelector = <T extends Pick<CategoryNameInterface, '_id'>>({
@@ -37,6 +38,7 @@ const FilterSelector = <T extends Pick<CategoryNameInterface, '_id'>>({
   setSelectedItems,
   position = 'left',
   valueField,
+  showNoneProperty = false,
   ...props
 }: FilterSelectorProps<T>) => {
   const { t } = useTranslation()
@@ -79,15 +81,19 @@ const FilterSelector = <T extends Pick<CategoryNameInterface, '_id'>>({
     defaultResponse: defaultResponses.array
   })
 
-  const filteredItems = useMemo(
-    () =>
-      response.filter((item) =>
-        String(valueField ? item[valueField] : item)
-          .toLowerCase()
-          .includes(inputValue.toLowerCase())
-      ),
-    [response, inputValue, valueField]
-  )
+  const filteredItems = useMemo(() => {
+    const noneItem = {
+      _id: 'null',
+      name: 'None'
+    }
+
+    const filtred = response.filter((item) =>
+      String(valueField ? item[valueField] : item)
+        .toLowerCase()
+        .includes(inputValue.toLowerCase())
+    )
+    return showNoneProperty ? [noneItem, ...filtred] : filtred
+  }, [response, inputValue, valueField, showNoneProperty])
 
   const menuItems = filteredItems.map((item) => {
     const field = String(valueField ? item[valueField] : item)
