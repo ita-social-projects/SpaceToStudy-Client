@@ -18,7 +18,9 @@ import {
   CategoryNameInterface,
   UpdateResourceCategory,
   CreateCategoriesParams,
-  UpdateQuestionParams
+  UpdateQuestionParams,
+  CreateQuizParams,
+  Quiz
 } from '~/types'
 import { createUrlPath } from '~/utils/helper-functions'
 
@@ -38,6 +40,15 @@ export const ResourceService = {
       createUrlPath(URLs.resources.lessons.patch, id),
       data
     ),
+  getQuizzes: (
+    params?: GetResourcesParams
+  ): Promise<AxiosResponse<ItemsWithCount<Quiz>>> => {
+    return axiosClient.get(URLs.quizzes.get, { params })
+  },
+  addQuiz: async (data?: CreateQuizParams): Promise<AxiosResponse> =>
+    await axiosClient.post(URLs.quizzes.add, data),
+  deleteQuiz: async (id: string): Promise<AxiosResponse> =>
+    await axiosClient.delete(createUrlPath(URLs.quizzes.delete, id)),
   getAttachments: async (
     params?: GetResourcesParams
   ): Promise<AxiosResponse<ItemsWithCount<Attachment>>> =>

@@ -80,6 +80,7 @@ export const URLs = {
   },
   quizzes: {
     get: '/quizzes',
+    add: '/quizzes',
     delete: '/quizzes'
   },
   attachments: {

@@ -4,13 +4,17 @@ import EditIcon from '@mui/icons-material/Edit'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import SettingsIcon from '@mui/icons-material/Settings'
 
-import EditQuizContainer from '~/containers/my-quizzes/edit-quiz-container/EditQuizContainer'
+import CreateOrEditQuizContainer from '~/containers/my-quizzes/create-or-edit-quiz-container/CreateOrEditQuizContainer'
 import ViewQuizContainer from '~/containers/my-quizzes/view-quiz-container/ViewQuizContainer'
 import QuizSettingsContainer from '~/containers/my-quizzes/quiz-settings-container/QuizSettingsContainer'
 
-import { Question } from '~/types'
+import { CreateQuizParams, Question } from '~/types'
 
 export interface QuizContentProps {
+  title: string
+  setTitle: Dispatch<SetStateAction<CreateQuizParams['title']>>
+  description: string
+  setDescription: Dispatch<SetStateAction<CreateQuizParams['description']>>
   questions: Question[]
   setQuestions: Dispatch<SetStateAction<Question[]>>
 }
@@ -26,7 +30,7 @@ export interface QuizTabsData {
 export const tabsData: QuizTabsData = {
   edit: {
     title: 'Edit',
-    content: (props) => <EditQuizContainer {...props} />,
+    content: (props) => <CreateOrEditQuizContainer {...props} />,
     icon: <EditIcon />
   },
   quizzes: {

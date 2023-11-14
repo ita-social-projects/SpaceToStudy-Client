@@ -10,12 +10,21 @@ import { Question } from '~/types'
 const NewQuiz = () => {
   const [activeTab, setActiveTab] = useState<string>('edit')
   const [questions, setQuestions] = useState<Question[]>([])
+  const [title, setTitle] = useState<string>('')
+  const [description, setDescription] = useState<string>('')
 
   const handleClick = (tab: string) => {
     setActiveTab(tab)
   }
 
-  const props = { questions, setQuestions }
+  const props = {
+    title,
+    setTitle,
+    description,
+    setDescription,
+    questions,
+    setQuestions
+  }
   const tabContent = activeTab && tabsData[activeTab].content(props)
 
   tabsData['quizzes'].tabProps = {

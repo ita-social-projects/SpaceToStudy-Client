@@ -45,7 +45,8 @@
     "defaultNewDescription": "Description...",
     "createNewQuestion": "Create new question",
     "editQuestion": "Edit question",
-    "addQuestion": "Add question"
+    "addQuestion": "Add question",
+    "successAddedOuiz": "Ouiz was successtully created"
   },
   "questions": {
     "addBtn": "New question",
