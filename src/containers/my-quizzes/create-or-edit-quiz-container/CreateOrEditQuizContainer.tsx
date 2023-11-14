@@ -24,6 +24,7 @@ import Loader from '~/components/loader/Loader'
 import { snackbarVariants } from '~/constants'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { myResourcesPath } from '~/pages/create-or-edit-lesson/CreateOrEditLesson.constants'
+
 import { QuizContentProps } from '~/pages/new-quiz/NewQuiz.constants'
 import {
   columns,
