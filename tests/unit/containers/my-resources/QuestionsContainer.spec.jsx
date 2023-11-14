@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react'
+import { screen, waitFor } from '@testing-library/react'
 
 import QuestionsContainer from '~/containers/my-resources/questions-container/QuestionsContainer'
 
@@ -45,15 +45,19 @@ const questionResponseMockCategory = {
 }
 
 describe('QuestionsContainer test', () => {
-  beforeEach(() => {
-    mockAxiosClient
-      .onGet(URLs.resources.questions.get)
-      .reply(200, questionResponseMock)
-    renderWithProviders(<QuestionsContainer />)
+  beforeEach(async () => {
+    await waitFor(() => {
+      mockAxiosClient
+        .onGet(URLs.resources.questions.get)
+        .reply(200, questionResponseMock)
+
+      renderWithProviders(<QuestionsContainer />)
+    })
   })
 
   afterEach(() => {
     vi.clearAllMocks()
+    mockAxiosClient.reset()
   })
 
   it('should render "New question" button', () => {
@@ -61,6 +65,7 @@ describe('QuestionsContainer test', () => {
 
     expect(addBtn).toBeInTheDocument()
   })
+
   it('should render table with questions', () => {
     const columnLabel = screen.getByText('myResourcesPage.questions.title')
     const questionTitle = screen.getByText(responseItemsMock[5].title)
@@ -70,16 +75,20 @@ describe('QuestionsContainer test', () => {
   })
 })
 
-describe('QuestionsContainer test', () => {
-  beforeEach(() => {
-    mockAxiosClient
-      .onGet(URLs.resources.questions.get)
-      .reply(200, questionResponseMockCategory)
-    renderWithProviders(<QuestionsContainer />)
+describe('QuestionCategory test', () => {
+  beforeEach(async () => {
+    await waitFor(() => {
+      mockAxiosClient
+        .onGet(URLs.resources.questions.get)
+        .reply(200, questionResponseMockCategory)
+
+      renderWithProviders(<QuestionsContainer />)
+    })
   })
 
   afterEach(() => {
     vi.clearAllMocks()
+    mockAxiosClient.reset()
   })
 
   it('should render correct category', () => {
