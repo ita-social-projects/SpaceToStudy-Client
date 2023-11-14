@@ -82,20 +82,17 @@ const FilterSelector = <T extends Pick<CategoryNameInterface, '_id'>>({
   })
 
   const filteredItems = useMemo(() => {
+    const noneItem = {
+      _id: 'null',
+      name: 'None'
+    }
+
     const filtred = response.filter((item) =>
       String(valueField ? item[valueField] : item)
         .toLowerCase()
         .includes(inputValue.toLowerCase())
     )
-    return showNoneProperty
-      ? [
-          {
-            _id: 'null',
-            name: 'None'
-          },
-          ...filtred
-        ]
-      : filtred
+    return showNoneProperty ? [noneItem, ...filtred] : filtred
   }, [response, inputValue, valueField, showNoneProperty])
 
   const menuItems = filteredItems.map((item) => {
