@@ -14,9 +14,9 @@
     "attachmentQty": "Файл",
     "attachmentsQty": "Файлів",
     "lastUpdates": "Останнє оновлення",
-    "emptyItems":"У вас ще немає уроків",
-    "confirmDeletionTitle":"Ви підтверджуєте видалення уроку?",
-    "successDeletion":"Урок було успішно видалено"
+    "emptyItems": "У вас ще немає уроків",
+    "confirmDeletionTitle": "Ви підтверджуєте видалення уроку?",
+    "successDeletion": "Урок було успішно видалено"
   },
   "attachments": {
     "addBtn": "Додайте файли з Вкладень",
@@ -28,8 +28,8 @@
     "size": "Розмір",
     "lastUpdate": "Останнє оновлення",
     "emptyItems": "У вас ще немає вкладень",
-    "confirmDeletionTitle":"Ви підтверджуєте видалення вкладення?",
-    "successDeletion":"Вкладення було успішно видалено",
+    "confirmDeletionTitle": "Ви підтверджуєте видалення вкладення?",
+    "successDeletion": "Вкладення було успішно видалено",
     "addAttachment": "Добавити файл",
     "validationError": "Назва файлу не може бути довшою за 55 символів.",
     "attachmentName": "Назва вкладення"
@@ -42,13 +42,14 @@
     "questions": "Питання",
     "updated": "Останнє оновлення",
     "emptyItems": "У вас ще немає тестів",
-    "confirmDeletionTitle":"Ви підтверджуєте видалення тесту?",
-    "successDeletion":"Тест було успішно видалено",
-    "defaultNewTitle":"Без назви",
-    "defaultNewDescription":"Опис...",
-    "createNewQuestion":"Створити нове питання",
+    "confirmDeletionTitle": "Ви підтверджуєте видалення тесту?",
+    "successDeletion": "Тест було успішно видалено",
+    "defaultNewTitle": "Без назви",
+    "defaultNewDescription": "Опис...",
+    "createNewQuestion": "Створити нове питання",
     "editQuestion": "Редагувати питання",
-    "addQuestion":"Додати питання"
+    "addQuestion": "Додати питання",
+    "successAddedOuiz": "Тест успішно створено"
   },
   "questions": {
     "addBtn": "Нове запитання",
@@ -57,9 +58,9 @@
     "titleWithCategory": "Заголовок & Категорія",
     "updated": "Останнє оновлення",
     "emptyItems": "У вас ще немає запитань",
-    "confirmDeletionTitle":"Ви підтверджуєте видалення запитання?",
-    "successDeletion":"Запитання було успішно видалено",
-    "successDuplication":"Запитання було успішно продубльовано"
+    "confirmDeletionTitle": "Ви підтверджуєте видалення запитання?",
+    "successDeletion": "Запитання було успішно видалено",
+    "successDuplication": "Запитання було успішно продубльовано"
   },
   "categories": {
     "category": "Категорія",
@@ -73,5 +74,5 @@
     "successDeletion": "Категорію було успішно видалено",
     "confirmDeletionTitle": "Ви підтверджуєте видалення категорії?"
   },
-  "confirmDeletionMessage":"Ця дія є остаточною, та призведе до видалення всього пов’язаного вмісту. Перш ніж продовжити, перегляньте своє рішення."
+  "confirmDeletionMessage": "Ця дія є остаточною, та призведе до видалення всього пов’язаного вмісту. Перш ніж продовжити, перегляньте своє рішення."
 }

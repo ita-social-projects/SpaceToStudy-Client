@@ -3,7 +3,8 @@ import {
   UserResponse,
   Answer,
   Category,
-  ResourcesTabsEnum as ResourcesTypes
+  ResourcesTabsEnum as ResourcesTypes,
+  Question
 } from '~/types'
 
 export interface QuestionWithAnswers {
@@ -18,4 +19,10 @@ export interface Quiz extends CommonEntityFields {
   author: Pick<UserResponse, '_id'>
   category: Category | null
   resourceType?: ResourcesTypes
+}
+
+export interface CreateQuizParams {
+  title: string
+  description: string
+  items: Question[]
 }
