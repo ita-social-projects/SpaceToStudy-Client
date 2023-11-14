@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react'
+import { screen, waitFor } from '@testing-library/react'
 import ChatDialogWindow from '~/containers/offer-page/chat-dialog-window/ChatDialogWindow'
 import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 import { createUrlPath } from '~/utils/helper-functions'
@@ -37,11 +37,13 @@ const chatInfoEmptyIdMock = {
 const chat = createUrlPath(URLs.chats.get, chatInfoMock.chatId)
 
 describe('ChatDialogWindow Component with ChatId', () => {
-  beforeEach(() => {
-    mockAxiosClient
-      .onGet(`${chat}${URLs.messages.get}`)
-      .reply(200, messagesMock)
-    renderWithProviders(<ChatDialogWindow chatInfo={chatInfoMock} />)
+  beforeEach(async () => {
+    await waitFor(() => {
+      mockAxiosClient
+        .onGet(`${chat}${URLs.messages.get}`)
+        .reply(200, messagesMock)
+      renderWithProviders(<ChatDialogWindow chatInfo={chatInfoMock} />)
+    })
   })
 
   it('should render user profile info', () => {
