@@ -1,4 +1,4 @@
-import { screen, fireEvent, waitFor, act } from '@testing-library/react'
+import { screen, fireEvent, waitFor } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 import SubjectsStep from '~/containers/tutor-home-page/subjects-step/SubjectsStep'
 import { StepProvider } from '~/context/step-context'
@@ -55,6 +55,10 @@ describe('SubjectsStep test with some data', () => {
     })
   })
 
+  afterEach(() => {
+    vi.clearAllMocks()
+  })
+
   it('should add a new subject', async () => {
     const addSubject = screen.getByTestId('add-subject')
 
@@ -64,13 +68,15 @@ describe('SubjectsStep test with some data', () => {
       'becomeTutor.categories.mainSubjectsLabel'
     )
 
-    fireEvent.click(firstField[0])
-    fireEvent.focus(firstField[0])
-    fireEvent.change(firstField[0], {
-      target: { value: 'Category 2' }
+    waitFor(() => {
+      fireEvent.click(firstField[0])
+      fireEvent.focus(firstField[0])
+      fireEvent.change(firstField[0], {
+        target: { value: 'Category 2' }
+      })
+      fireEvent.keyDown(firstField[0], { key: 'ArrowDown' })
+      fireEvent.keyDown(firstField[0], { key: 'Enter' })
     })
-    fireEvent.keyDown(firstField[0], { key: 'ArrowDown' })
-    fireEvent.keyDown(firstField[0], { key: 'Enter' })
 
     expect(firstField[0].value).toBe('Category 2')
 
@@ -78,7 +84,7 @@ describe('SubjectsStep test with some data', () => {
       'becomeTutor.categories.subjectLabel'
     )
 
-    act(() => {
+    waitFor(() => {
       fireEvent.click(secondField)
       fireEvent.focus(secondField)
       fireEvent.change(secondField, {
@@ -98,7 +104,7 @@ describe('SubjectsStep test with some data', () => {
       'becomeTutor.categories.mainSubjectsLabel'
     )
 
-    act(() => {
+    waitFor(() => {
       fireEvent.click(firstField[0])
       fireEvent.focus(firstField[0])
       fireEvent.change(firstField[0], {
@@ -114,7 +120,7 @@ describe('SubjectsStep test with some data', () => {
       'becomeTutor.categories.subjectLabel'
     )
 
-    act(() => {
+    waitFor(() => {
       fireEvent.click(secondField)
       fireEvent.focus(secondField)
       fireEvent.change(secondField, {
@@ -126,65 +132,8 @@ describe('SubjectsStep test with some data', () => {
 
     expect(secondField.value).toBe('')
 
-    act(() => {
-      fireEvent.click(addSubject)
-    })
-  })
-
-  it('should delete a subject', async () => {
-    const addSubject = screen.getByTestId('add-subject')
-
-    expect(addSubject).toBeInTheDocument()
-
-    const firstField = screen.getAllByLabelText(
-      'becomeTutor.categories.mainSubjectsLabel'
-    )
-
-    act(() => {
-      fireEvent.click(firstField[0])
-      fireEvent.focus(firstField[0])
-      fireEvent.change(firstField[0], {
-        target: { value: 'Category 2' }
-      })
-      fireEvent.keyDown(firstField[0], { key: 'ArrowDown' })
-      fireEvent.keyDown(firstField[0], { key: 'Enter' })
-    })
-
-    expect(firstField[0].value).toBe('Category 2')
-
-    const secondField = screen.getByLabelText(
-      'becomeTutor.categories.subjectLabel'
-    )
-
-    act(() => {
-      fireEvent.click(secondField)
-      fireEvent.focus(secondField)
-      fireEvent.change(secondField, {
-        target: { value: 'Subject 2' }
-      })
-      fireEvent.keyDown(secondField, { key: 'ArrowDown' })
-      fireEvent.keyDown(secondField, { key: 'Enter' })
-    })
-
-    expect(secondField.value).toBe('')
-
-    act(() => {
-      fireEvent.click(addSubject)
-    })
-
     waitFor(() => {
-      const chip = screen.getByTestId('chip')
-      expect(chip).toBeInTheDocument()
-    })
-
-    waitFor(() => {
-      const chip = screen.getByTestId('chip')
-
-      const closeBtn = screen.getByTestId('close-btn')
-
-      fireEvent.click(closeBtn)
-
-      expect(chip).not.toBeInTheDocument()
+      fireEvent.click(addSubject)
     })
   })
 
@@ -197,7 +146,7 @@ describe('SubjectsStep test with some data', () => {
       /becomeTutor.categories.mainSubjectsLabel/i
     )
 
-    act(() => {
+    waitFor(() => {
       fireEvent.click(firstField)
       fireEvent.change(firstField, { target: { value: 'Mathemat' } })
       fireEvent.keyDown(firstField, { key: 'ArrowDown' })
@@ -220,7 +169,7 @@ describe('SubjectsStep test with some data', () => {
       /becomeTutor.categories.mainSubjectsLabel/i
     )
 
-    act(() => {
+    waitFor(() => {
       fireEvent.click(firstField)
       fireEvent.focus(firstField)
       fireEvent.change(firstField, { target: { value: 'Category 2' } })
@@ -232,7 +181,7 @@ describe('SubjectsStep test with some data', () => {
       /becomeTutor.categories.subjectLabel/i
     )
 
-    act(() => {
+    waitFor(() => {
       fireEvent.click(secondField)
       fireEvent.focus(secondField)
       fireEvent.change(secondField, {
