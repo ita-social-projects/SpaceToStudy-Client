@@ -57,12 +57,9 @@ describe('ResetPassword test', () => {
 
     fireEvent.change(passwordInput, { target: { value: '12345qwertY' } })
     fireEvent.change(confirmPasswordInput, { target: { value: '12345qwertY' } })
+    fireEvent.click(button)
 
-    await waitFor(() => {
-      fireEvent.click(button)
-    })
-
-    const snackbar = screen.getByText('errors.BAD_RESET_TOKEN')
+    const snackbar = await screen.findByText('errors.BAD_RESET_TOKEN')
 
     expect(snackbar).toBeInTheDocument()
   })
