@@ -1,4 +1,3 @@
-import { t } from 'i18next'
 import { ButtonVariantEnum, StatusEnum } from '~/types'
 
 interface ActiveButtonActionsProps {
@@ -27,7 +26,7 @@ export const activeButtonActions = ({
   if (oppositeRole) {
   if (oppositeRole) {
     buttons.push({
-      label: t('common.labels.enrollOffer'),
+      label: 'common.labels.enrollOffer',
       buttonProps: {
         loading,
         disabled: isEnrolled,
@@ -39,8 +38,8 @@ export const activeButtonActions = ({
   if (myOffer && status !== StatusEnum.Closed) {
     const label =
       status === StatusEnum.Draft
-        ? t('common.labels.makeActive')
-        : t('common.labels.moveToDraft')
+        ? 'common.labels.makeActive'
+        : 'common.labels.moveToDraft'
 
     buttons.push({
       label,
@@ -50,7 +49,7 @@ export const activeButtonActions = ({
     })
 
     buttons.push({
-      label: t('common.labels.closeOffer'),
+      label: 'common.labels.closeOffer',
       buttonProps: {
         onClick: handleCloseOffer,
         variant: ButtonVariantEnum.Tonal
@@ -58,7 +57,7 @@ export const activeButtonActions = ({
     })
   } else {
     buttons.push({
-      label: t('common.labels.sendMessage'),
+      label: 'common.labels.sendMessage',
       buttonProps: {
         disabled: true,
         variant: ButtonVariantEnum.Tonal

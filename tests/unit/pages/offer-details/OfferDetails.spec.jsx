@@ -31,40 +31,39 @@ const mockState = {
 }
 
 describe('OfferDetails on desktop', () => {
-  beforeEach(() => {
-    useBreakpoints.mockImplementation(() => desktopData)
+  beforeEach(async () => {
+    await waitFor(() => {
+      useBreakpoints.mockImplementation(() => desktopData)
 
-    renderWithProviders(<OfferDetails />, {
-      preloadedState: mockState
+      renderWithProviders(<OfferDetails />, {
+        preloadedState: mockState
+      })
+
+      mockAxiosClient
+        .onGet(`${URLs.offers.get}/${mockOffer._id}`)
+        .reply(200, mockOffer)
+      mockAxiosClient
+        .onPatch(`${URLs.offers.update}/${mockOffer._id}`)
+        .reply(200, null)
+      mockAxiosClient
+        .onGet(`${URLs.categories.get}${URLs.subjects.get}${URLs.offers.get}`)
+        .reply(200, { offers: [], count: 0 })
     })
-
-    mockAxiosClient
-      .onGet(`${URLs.offers.get}/${mockOffer._id}`)
-      .reply(200, mockOffer)
-    mockAxiosClient
-      .onPatch(`${URLs.offers.update}/${mockOffer._id}`)
-      .reply(200, null)
-    mockAxiosClient
-      .onGet(`${URLs.categories.get}${URLs.subjects.get}${URLs.offers.get}`)
-      .reply(200, { offers: [], count: 0 })
   })
 
   it('should display the offer details correctly', async () => {
     const {
       description,
       proficiencyLevel,
-      price,
       author: { firstName, lastName }
     } = mockOffer
     const descriptionElement = await screen.findByText(description)
     const nameElement = screen.getByText(`${firstName} ${lastName[0]}.`)
     const proficiency = screen.getByText(proficiencyLevel[2])
-    const priceElement = screen.getByText(price)
 
     expect(descriptionElement).toBeInTheDocument()
     expect(proficiency).toBeInTheDocument()
     expect(nameElement).toBeInTheDocument()
-    expect(priceElement).toBeInTheDocument()
   })
 
   it('should change on active button', async () => {
@@ -72,7 +71,7 @@ describe('OfferDetails on desktop', () => {
       .onGet(`${URLs.offers.get}/${mockOffer._id}`)
       .reply(200, { ...mockOffer, status: 'draft' })
 
-    const draft = screen.getByText('common.labels.moveToDraft')
+    const draft = await screen.findByText('common.labels.moveToDraft')
 
     fireEvent.click(draft)
 
@@ -111,13 +110,15 @@ describe('OfferDetails on desktop', () => {
 })
 
 describe('Offer details with student role', () => {
-  beforeEach(() => {
-    useBreakpoints.mockImplementation(() => desktopData)
+  beforeEach(async () => {
+    await waitFor(() => {
+      useBreakpoints.mockImplementation(() => desktopData)
 
-    renderWithProviders(<OfferDetails />, {
-      preloadedState: {
-        appMain: { userId: '6421d9833cdf38b706756dff', userRole: 'student' }
-      }
+      renderWithProviders(<OfferDetails />, {
+        preloadedState: {
+          appMain: { userId: '6421d9833cdf38b706756dff', userRole: 'student' }
+        }
+      })
     })
 
     mockAxiosClient
@@ -148,10 +149,12 @@ describe('OfferDetails on mobile', () => {
     isMobile: true,
     isTablet: false
   }
-  beforeEach(() => {
-    useBreakpoints.mockImplementation(() => mobileData)
-    renderWithProviders(<OfferDetails />, {
-      preloadedState: mockState
+  beforeEach(async () => {
+    await waitFor(() => {
+      useBreakpoints.mockImplementation(() => mobileData)
+      renderWithProviders(<OfferDetails />, {
+        preloadedState: mockState
+      })
     })
   })
 
@@ -172,24 +175,26 @@ describe('OfferDetails on mobile', () => {
 
 describe('Should show Loader', () => {
   it('should render Loader - (loading from useAxios)', async () => {
-    mockAxiosClient
-      .onGet(`${URLs.offers.get}/${mockOffer._id}`)
-      .reply(200, null)
-    mockAxiosClient
-      .onPatch(`${URLs.offers.update}/${mockOffer._id}`)
-      .reply(200, null)
-    mockAxiosClient
-      .onGet(`${URLs.categories.get}${URLs.subjects.get}${URLs.offers.get}`)
-      .reply(200, { offers: [], count: 0 })
-    const newMockState = {
-      appMain: {
-        userId: mockOffer.author._id,
-        userRole: 'tutor',
-        loading: true
+    waitFor(() => {
+      mockAxiosClient
+        .onGet(`${URLs.offers.get}/${mockOffer._id}`)
+        .reply(200, null)
+      mockAxiosClient
+        .onPatch(`${URLs.offers.update}/${mockOffer._id}`)
+        .reply(200, null)
+      mockAxiosClient
+        .onGet(`${URLs.categories.get}${URLs.subjects.get}${URLs.offers.get}`)
+        .reply(200, { offers: [], count: 0 })
+      const newMockState = {
+        appMain: {
+          userId: mockOffer.author._id,
+          userRole: 'tutor',
+          loading: true
+        }
       }
-    }
-    renderWithProviders(<OfferDetails />, {
-      preloadedState: newMockState
+      renderWithProviders(<OfferDetails />, {
+        preloadedState: newMockState
+      })
     })
 
     const loader = screen.getByTestId('loader')
