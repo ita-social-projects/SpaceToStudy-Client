@@ -21,7 +21,7 @@ export const setupInterceptors = (store: Store): void => {
       const originalRequest = error.config
       if (error.code === 'UNAUTHORIZED' && error.config) {
         try {
-          return axiosClient.request(originalRequest)
+          return await axiosClient.request(originalRequest)
         } catch (e) {
           void store.dispatch(logoutUser())
         }
