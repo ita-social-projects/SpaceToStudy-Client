@@ -32,8 +32,7 @@
     "successDeletion": "Вкладення було успішно видалено",
     "addAttachment": "Добавити файл",
     "validationError": "Назва файлу не може бути довшою за 55 символів.",
-    "attachmentName": "Назва вкладення",
-    "category": "Категорія"
+    "attachmentName": "Назва вкладення"
   },
   "quizzes": {
     "addBtn": "Новий тест",

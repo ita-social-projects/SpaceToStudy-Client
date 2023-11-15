@@ -1,7 +1,6 @@
 import { ReactElement, FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
-import { SvgIcon } from '@mui/material'
 
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 
