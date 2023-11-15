@@ -287,6 +287,7 @@ const Chat = () => {
                     onFilteredMessagesChange={handleFilteredMessage}
                     onMenuClick={openChatsHandler}
                     updateChats={handleUpdateChats}
+                    updateMessages={fetchData}
                     user={userToSpeak?.user}
                   />
                 )}

@@ -19,32 +19,41 @@ import { defaultResponses, snackbarVariants } from '~/constants'
 interface ChatMenuProps {
   anchorEl: Element | null
   currentChat: ChatResponse
+  messagesLength: number
   onClose: () => void
   updateChats: () => Promise<void>
+  updateMessages: () => Promise<void>
 }
 
 const ChatMenu: FC<ChatMenuProps> = ({
   anchorEl,
   currentChat,
+  messagesLength,
   onClose,
-  updateChats
+  updateChats,
+  updateMessages
 }) => {
   const { t } = useTranslation()
   const { openDialog } = useConfirm()
   const { setAlert } = useSnackBarContext()
 
-  const onResponse = useCallback(() => {
-    setAlert({
-      severity: snackbarVariants.success,
-      message: 'chatPage.deleteSuccess'
-    })
-  }, [setAlert])
+  const onResponse = useCallback(
+    (isDeleting = true) => {
+      setAlert({
+        severity: snackbarVariants.success,
+        message: isDeleting
+          ? 'chatPage.chatMenu.deleteSuccess'
+          : 'chatPage.chatMenu.historyClearSuccess'
+      })
+    },
+    [setAlert]
+  )
 
   const onResponseError = useCallback(
     (error: ErrorResponse) => {
       setAlert({
         severity: snackbarVariants.error,
-        message: error ? `errors.${error.code}` : ''
+        message: error ? `errors.${error.code}` : 'errors.UNKNOWN_ERROR'
       })
     },
     [setAlert]
@@ -64,6 +73,12 @@ const ChatMenu: FC<ChatMenuProps> = ({
   const deleteMessagesService = useCallback(
     (id?: string): Promise<AxiosResponse> =>
       messageService.deleteMessagesFromChat(id ?? ''),
+    []
+  )
+
+  const clearHistoryService = useCallback(
+    (id?: string): Promise<AxiosResponse> =>
+      messageService.clearChatHistory(id ?? ''),
     []
   )
 
@@ -91,6 +106,14 @@ const ChatMenu: FC<ChatMenuProps> = ({
     fetchOnMount: false
   })
 
+  const { fetchData: clearHistory } = useAxios({
+    service: clearHistoryService,
+    defaultResponse: defaultResponses.object,
+    onResponse: () => onResponse(false),
+    onResponseError,
+    fetchOnMount: false
+  })
+
   const handleDeletion = async (
     id: string,
     isConfirmed: boolean,
@@ -106,9 +129,23 @@ const ChatMenu: FC<ChatMenuProps> = ({
     }
   }
 
-  const onClearHistory = (e: MouseEvent<HTMLButtonElement>) => {
+  const handleClearChat = async (id: string, isConfirmed: boolean) => {
+    if (isConfirmed) {
+      await clearHistory(id)
+      await updateMessages()
+    }
+  }
+
+  const onClearHistory = (e: MouseEvent<HTMLButtonElement>, id: string) => {
     e.stopPropagation()
     onClose()
+
+    openDialog({
+      message: 'chatPage.chatMenu.clearHistoryWarning',
+      sendConfirm: (isConfirmed: boolean) =>
+        void handleClearChat(id, isConfirmed),
+      title: 'chatPage.chatMenu.clearHistoryTitle'
+    })
   }
 
   const onDelete = (e: MouseEvent<HTMLButtonElement>, id: string) => {
@@ -118,13 +155,13 @@ const ChatMenu: FC<ChatMenuProps> = ({
 
     openDialog({
       message: deletingFully
-        ? 'chatPage.fullDeleteWarning'
-        : 'chatPage.markingAsDeletedWarning',
+        ? 'chatPage.chatMenu.fullDeleteWarning'
+        : 'chatPage.chatMenu.markingAsDeletedWarning',
       sendConfirm: (isConfirmed: boolean) =>
         void handleDeletion(id, isConfirmed, deletingFully),
       title: deletingFully
-        ? 'chatPage.fullDeleteTitle'
-        : 'chatPage.markingAsDeletedTitle'
+        ? 'chatPage.chatMenu.fullDeleteTitle'
+        : 'chatPage.chatMenu.markingAsDeletedTitle'
     })
   }
 
@@ -132,13 +169,16 @@ const ChatMenu: FC<ChatMenuProps> = ({
     {
       _id: 1,
       icon: <UpdateDisabledIcon />,
-      name: t('chatPage.clearHistory'),
-      handleOnClick: (e: MouseEvent<HTMLButtonElement>) => onClearHistory(e)
+      isAvailable: !!messagesLength,
+      name: t('chatPage.chatMenu.clearHistory'),
+      handleOnClick: (e: MouseEvent<HTMLButtonElement>) =>
+        onClearHistory(e, currentChat._id)
     },
     {
       _id: 2,
       icon: <DeleteOutlineIcon />,
-      name: t('chatPage.deleteChat'),
+      isAvailable: !!currentChat,
+      name: t('chatPage.chatMenu.deleteChat'),
       handleOnClick: (e: MouseEvent<HTMLButtonElement>) =>
         onDelete(e, currentChat._id),
       isDangerous: true
@@ -148,6 +188,7 @@ const ChatMenu: FC<ChatMenuProps> = ({
   const menuItems = menuButtons.map((item) => (
     <MenuItem
       component={ComponentEnum.Button}
+      disabled={!item.isAvailable}
       key={item._id}
       onClick={item.handleOnClick}
       sx={styles.menuItem(!!item.isDangerous)}

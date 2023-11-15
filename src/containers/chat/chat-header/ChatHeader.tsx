@@ -20,6 +20,7 @@ interface ChatHeaderProps {
   onClick: (e?: MouseEvent<HTMLButtonElement>) => void
   onMenuClick: (e: MouseEvent<HTMLButtonElement>) => void
   updateChats: () => Promise<void>
+  updateMessages: () => Promise<void>
   currentChat: ChatResponse
   user: Pick<UserResponse, '_id' | 'firstName' | 'lastName' | 'photo'>
   messages: { text: string }[]
@@ -31,6 +32,7 @@ const ChatHeader: FC<ChatHeaderProps> = ({
   onClick,
   user,
   updateChats,
+  updateMessages,
   onMenuClick,
   currentChat,
   messages,
@@ -83,8 +85,10 @@ const ChatHeader: FC<ChatHeaderProps> = ({
       <ChatMenu
         anchorEl={menuAnchorEl}
         currentChat={currentChat}
+        messagesLength={messages.length}
         onClose={closeMenu}
         updateChats={updateChats}
+        updateMessages={updateMessages}
       />
       {isMobile && (
         <IconButton onClick={onMenuClick} sx={styles.menuIconBtn}>
