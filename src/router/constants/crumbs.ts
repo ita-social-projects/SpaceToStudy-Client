@@ -88,6 +88,11 @@ export const newQuiz = {
   path: authRoutes.myResources.newQuiz.route
 }
 
+export const editQuiz = {
+  name: t('breadCrumbs.editQuiz'),
+  path: authRoutes.myResources.editQuiz.route
+}
+
 export const userProfile = ({ data }: { data: UserResponse }) => ({
   name: `${data.firstName} ${data.lastName}`
 })

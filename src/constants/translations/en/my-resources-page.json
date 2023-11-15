@@ -45,6 +45,7 @@
     "successDeletion":"Quiz was deleted successfully",
     "editQuestion": "Edit question",
     "successAddedOuiz": "Quiz was successfully created",
+    "successEditedOuiz": "Ouiz was successtully edited",
     "defaultNewTitle":"Untitled",
     "defaultNewDescription":"Description...",
     "createNewQuestion":"Create new question",
