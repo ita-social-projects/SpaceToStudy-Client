@@ -10,5 +10,5 @@ export const styles = {
     }
   },
   buttons: { display: 'flex', justifyContent: 'flex-end', gap: '10px' },
-  saveBtn: { minWidth: '87px' }
+  saveBtn: { minWidth: '103px' }
 }
