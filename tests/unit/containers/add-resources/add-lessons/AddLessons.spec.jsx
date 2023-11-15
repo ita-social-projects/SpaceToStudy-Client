@@ -1,8 +1,10 @@
 import { fireEvent, screen } from '@testing-library/react'
-
 import AddResources from '~/containers/add-resources/AddResources'
-
 import { URLs } from '~/constants/request'
+import {
+  columns,
+  removeColumnRules
+} from '~/containers/add-resources/AddLessons.constants'
 import { mockAxiosClient, renderWithProviders } from '~tests/test-utils'
 
 const lessonDataMock = {
@@ -46,7 +48,9 @@ describe('Tests for AddResources container', () => {
 
     renderWithProviders(
       <AddResources
+        columns={columns}
         onAddResources={mockOnAddResources}
+        removeColumnRules={removeColumnRules}
         requestService={mockRequestService}
         resourceType={'lessons'}
         resources={responseItemsMock}

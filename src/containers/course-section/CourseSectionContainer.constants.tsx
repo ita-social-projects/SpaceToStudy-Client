@@ -2,22 +2,24 @@ import ListAltIcon from '@mui/icons-material/ListAlt'
 import NoteAltOutlinedIcon from '@mui/icons-material/NoteAltOutlined'
 import AttachFileIcon from '@mui/icons-material/AttachFile'
 
+import { ResourcesTabsEnum as ResourcesTypes } from '~/types'
+
 export const menuTypes = {
   resourcesMenu: 'resources',
   sectionMenu: 'section'
 }
 
 export const resourcesData = {
-  lesson: {
-    resource: 'lessons',
-    icon: ListAltIcon
+  lessons: {
+    resource: ResourcesTypes.Lessons,
+    icon: <ListAltIcon />
   },
-  quiz: {
-    resource: 'quizzes',
-    icon: NoteAltOutlinedIcon
+  quizzes: {
+    resource: ResourcesTypes.Quizzes,
+    icon: <NoteAltOutlinedIcon />
   },
-  attachment: {
-    resource: 'attachments',
-    icon: AttachFileIcon
+  attachments: {
+    resource: ResourcesTypes.Attachments,
+    icon: <AttachFileIcon />
   }
 }

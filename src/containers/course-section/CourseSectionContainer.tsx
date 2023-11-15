@@ -15,7 +15,6 @@ import MoreVertIcon from '@mui/icons-material/MoreVert'
 import AddIcon from '@mui/icons-material/Add'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
-import SvgIcon from '@mui/material/SvgIcon'
 
 import AppTextField from '~/components/app-text-field/AppTextField'
 import AppButton from '~/components/app-button/AppButton'
@@ -29,11 +28,22 @@ import useMenu from '~/hooks/use-menu'
 import { useModalContext } from '~/context/modal-context'
 
 import { styles } from '~/containers/course-section/CourseSectionContainer.styles'
-
 import {
   menuTypes,
   resourcesData
 } from '~/containers/course-section/CourseSectionContainer.constants'
+import {
+  columns as attachmentColumns,
+  removeColumnRules as removeAttachmentColumnRules
+} from '~/containers/add-resources/AddAttachments.constants'
+import {
+  columns as lessonColumns,
+  removeColumnRules as removeLessontColumnRules
+} from '~/containers/add-resources/AddLessons.constants'
+import {
+  columns as quizColumns,
+  removeColumnRules as removeQuizColumnRules
+} from '~/containers/add-resources/AddQuizzes.constants'
 import {
   TextFieldVariantEnum,
   SizeEnum,
@@ -72,38 +82,43 @@ const CourseSectionContainer: FC<SectionProps> = ({
   const [quizzes, setQuizzes] = useState<Quiz[]>([])
   const [attachments, setAttachments] = useState<Attachment[]>([])
   const [resources, setResources] = useState<CourseResources[]>([])
-  const [itemToDelete, setItemToDelete] = useState<CourseResources | null>(null)
 
   useEffect(() => {
     setResources((prevResources) => {
       const allResourcesItems = [...lessons, ...quizzes, ...attachments]
-      const updatedResourcesItems = prevResources.filter((item1) =>
-        allResourcesItems.some((item2) => item2._id === item1._id)
+      const updatedResourcesItems = prevResources.filter((prevResource) =>
+        allResourcesItems.some(
+          (currentResource) => currentResource._id === prevResource._id
+        )
       )
-      for (const item2 of allResourcesItems) {
-        if (!updatedResourcesItems.some((item1) => item1._id === item2._id)) {
-          updatedResourcesItems.push(item2)
+      for (const currentResource of allResourcesItems) {
+        if (
+          !updatedResourcesItems.some(
+            (prevResource) => prevResource._id === currentResource._id
+          )
+        ) {
+          updatedResourcesItems.push(currentResource)
         }
       }
       return updatedResourcesItems
     })
   }, [lessons, quizzes, attachments])
 
-  useEffect(() => {
-    if (itemToDelete?.resourceType === ResourcesTypes.Lessons) {
+  const deleteResource = (resource: CourseResources) => {
+    if (resource.resourceType === ResourcesTypes.Lessons) {
       setLessons((prevLessons) =>
-        prevLessons.filter((item) => item._id !== itemToDelete._id)
+        prevLessons.filter((item) => item._id !== resource._id)
       )
-    } else if (itemToDelete?.resourceType === ResourcesTypes.Quizzes) {
+    } else if (resource.resourceType === ResourcesTypes.Quizzes) {
       setQuizzes((prevQuizzes) =>
-        prevQuizzes.filter((item) => item._id !== itemToDelete._id)
+        prevQuizzes.filter((item) => item._id !== resource._id)
       )
-    } else if (itemToDelete?.resourceType === ResourcesTypes.Attachments) {
+    } else if (resource.resourceType === ResourcesTypes.Attachments) {
       setAttachments((prevAttachments) =>
-        prevAttachments.filter((item) => item._id !== itemToDelete._id)
+        prevAttachments.filter((item) => item._id !== resource._id)
       )
     }
-  }, [itemToDelete])
+  }
 
   const onShowHide = () => {
     setIsVisible((isVisible) => !isVisible)
@@ -134,10 +149,10 @@ const CourseSectionContainer: FC<SectionProps> = ({
 
   const handleAddResources = <T extends CourseResources>(
     resources: T[],
-    setResourcesFunc: Dispatch<SetStateAction<T[]>>,
+    addResources: Dispatch<SetStateAction<T[]>>,
     type: ResourcesTypes
   ) => {
-    setResourcesFunc(
+    addResources(
       resources.map((resource) => ({
         ...resource,
         resourceType: type
@@ -149,11 +164,13 @@ const CourseSectionContainer: FC<SectionProps> = ({
     openModal({
       component: (
         <AddResources<Lesson>
+          columns={lessonColumns}
           onAddResources={(resources) =>
             handleAddResources(resources, setLessons, ResourcesTypes.Lessons)
           }
+          removeColumnRules={removeLessontColumnRules}
           requestService={ResourceService.getUsersLessons}
-          resourceType={resourcesData.lesson.resource}
+          resourceType={resourcesData.lessons.resource}
           resources={lessons}
         />
       )
@@ -164,11 +181,13 @@ const CourseSectionContainer: FC<SectionProps> = ({
     openModal({
       component: (
         <AddResources<Quiz>
+          columns={quizColumns}
           onAddResources={(resources) =>
             handleAddResources(resources, setQuizzes, ResourcesTypes.Quizzes)
           }
+          removeColumnRules={removeQuizColumnRules}
           requestService={quizService.getQuizzes}
-          resourceType={resourcesData.quiz.resource}
+          resourceType={resourcesData.quizzes.resource}
           resources={quizzes}
         />
       )
@@ -179,6 +198,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
     openModal({
       component: (
         <AddResources<Attachment>
+          columns={attachmentColumns}
           onAddResources={(resources) =>
             handleAddResources(
               resources,
@@ -186,8 +206,9 @@ const CourseSectionContainer: FC<SectionProps> = ({
               ResourcesTypes.Attachments
             )
           }
+          removeColumnRules={removeAttachmentColumnRules}
           requestService={ResourceService.getAttachments}
-          resourceType={resourcesData.attachment.resource}
+          resourceType={resourcesData.attachments.resource}
           resources={attachments}
         />
       )
@@ -218,11 +239,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
       id: 1,
       label: (
         <Box sx={styles.menuItem}>
-          <SvgIcon
-            color='primary'
-            component={resourcesData.lesson.icon}
-            sx={styles.menuIcon}
-          />
+          <Box sx={styles.menuIcon}>{resourcesData.lessons.icon}</Box>
           {t('course.courseSection.resourcesMenu.lessonMenuItem')}
         </Box>
       ),
@@ -232,11 +249,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
       id: 2,
       label: (
         <Box sx={styles.menuItem}>
-          <SvgIcon
-            color='primary'
-            component={resourcesData.quiz.icon}
-            sx={styles.menuIcon}
-          />
+          <Box sx={styles.menuIcon}>{resourcesData.quizzes.icon}</Box>
           {t('course.courseSection.resourcesMenu.quizMenuItem')}
         </Box>
       ),
@@ -246,11 +259,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
       id: 3,
       label: (
         <Box sx={styles.menuItem}>
-          <SvgIcon
-            color='primary'
-            component={resourcesData.attachment.icon}
-            sx={styles.menuIcon}
-          />
+          <Box sx={styles.menuIcon}>{resourcesData.attachments.icon}</Box>
           {t('course.courseSection.resourcesMenu.attachmentMenuItem')}
         </Box>
       ),
@@ -317,8 +326,8 @@ const CourseSectionContainer: FC<SectionProps> = ({
             variant={TextFieldVariantEnum.Standard}
           />
           <ResourcesList
+            deleteResource={deleteResource}
             items={resources}
-            setItemToDelete={setItemToDelete}
             setResources={setResources}
           />
           <AppButton

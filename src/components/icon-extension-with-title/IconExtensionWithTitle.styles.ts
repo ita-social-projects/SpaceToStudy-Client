@@ -4,9 +4,9 @@ const iconContainer = {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  minWidth: '32px',
+  width: '32px',
   height: '32px',
-  marginRight: '20px'
+  mr: '20px'
 }
 
 export const styles = {

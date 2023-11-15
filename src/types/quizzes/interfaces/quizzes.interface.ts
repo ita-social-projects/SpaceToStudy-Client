@@ -13,6 +13,7 @@ export interface QuestionWithAnswers {
 
 export interface Quiz extends CommonEntityFields {
   title: string
+  description: string
   items: QuestionWithAnswers[]
   author: Pick<UserResponse, '_id'>
   category: Category | null

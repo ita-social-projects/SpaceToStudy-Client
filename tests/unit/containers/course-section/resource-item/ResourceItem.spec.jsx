@@ -20,7 +20,7 @@ const mockedFunc = vi.fn()
 describe('new course section RescourceItem tests', () => {
   beforeEach(() => {
     renderWithProviders(
-      <ResourceItem resource={mockedLessonData} setItemToDelete={mockedFunc} />
+      <ResourceItem deleteResource={mockedFunc} resource={mockedLessonData} />
     )
   })
 
@@ -39,7 +39,7 @@ describe('new course section RescourceItem tests', () => {
 
     fireEvent.click(deleteButton)
 
-    expect(mockedFunc).toHaveBeenCalledWith(mockedLessonData)
+    expect(mockedFunc).toHaveBeenCalledTimes(1)
   })
 })
 

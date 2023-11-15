@@ -1,7 +1,6 @@
-import { ElementType, FC } from 'react'
+import { ReactElement, FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
-import { SvgIcon } from '@mui/material'
 
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 
@@ -12,7 +11,7 @@ interface IconExtensionWithTitleProps {
   title: string
   description?: string
   size?: number
-  icon?: ElementType
+  icon?: ReactElement
 }
 
 const IconExtensionWithTitle: FC<IconExtensionWithTitleProps> = ({
@@ -33,9 +32,7 @@ const IconExtensionWithTitle: FC<IconExtensionWithTitleProps> = ({
   return (
     <Box sx={styles.container}>
       {icon ? (
-        <Box sx={styles.svgBox}>
-          <SvgIcon component={icon} />
-        </Box>
+        <Box sx={styles.svgBox}>{icon}</Box>
       ) : (
         <Box sx={styles.iconBox}>{fileExtension}</Box>
       )}

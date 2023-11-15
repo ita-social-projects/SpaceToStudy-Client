@@ -11,17 +11,19 @@ export const styles = {
     borderRadius: '6px',
     ...(isDragging && {
       boxShadow: `0px 3px 16px 2px ${palette.primary[300]}`,
-      border: `2px solid ${palette.primary[300]}`
-    }),
-    '&:hover .dragIcon': {
-      visibility: 'visible'
-    }
+      border: `2px solid ${palette.primary[300]}`,
+      '& .dragIcon': {
+        color: 'primary.400'
+      }
+    })
   }),
   dragIcon: {
-    left: '-10px',
+    left: '24px',
     position: 'absolute',
     top: '24px',
-    visibility: 'hidden',
-    color: 'primary.400'
+    color: 'primary.700',
+    '&:hover': {
+      color: 'primary.400'
+    }
   }
 }

@@ -1,7 +1,7 @@
 import { TypographyVariantEnum } from '~/types'
 
 const menuItem = {
-  padding: '8px',
+  p: '8px',
   display: 'flex',
   alignItems: 'center',
   typography: TypographyVariantEnum.Button

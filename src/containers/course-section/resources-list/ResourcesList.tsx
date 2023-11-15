@@ -20,13 +20,13 @@ import { CourseResources } from '~/types'
 interface ResourcesListProps {
   items: CourseResources[]
   setResources: Dispatch<SetStateAction<CourseResources[]>>
-  setItemToDelete: Dispatch<SetStateAction<CourseResources | null>>
+  deleteResource: (resource: CourseResources) => void
 }
 
 const ResourcesList: FC<ResourcesListProps> = ({
   items,
   setResources,
-  setItemToDelete
+  deleteResource
 }) => {
   const reorder = (
     list: CourseResources[],
@@ -69,7 +69,7 @@ const ResourcesList: FC<ResourcesListProps> = ({
           >
             <DragIndicatorIcon />
           </Box>
-          <ResourceItem resource={item} setItemToDelete={setItemToDelete} />
+          <ResourceItem deleteResource={deleteResource} resource={item} />
         </Box>
       )}
     </Draggable>

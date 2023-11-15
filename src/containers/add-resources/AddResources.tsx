@@ -10,11 +10,7 @@ import { AxiosResponse } from 'axios'
 
 import AddResourceModal from '~/containers/my-resources/add-resource-modal/AddResourceModal'
 
-import {
-  columns,
-  initialSort,
-  removeColumnRules
-} from '~/containers/add-resources/AddResources.constants'
+import { initialSort } from '~/containers/add-resources/AddResources.constants'
 import { defaultResponses, snackbarVariants } from '~/constants'
 
 import { ajustColumns } from '~/utils/helper-functions'
@@ -22,25 +18,32 @@ import {
   ErrorResponse,
   GetResourcesParams,
   ItemsWithCount,
-  CourseResources
+  CourseResources,
+  TableColumn,
+  RemoveColumnRules,
+  Question
 } from '~/types'
 
 type GetServiceFunction<GetResourcesParams, T> = (
   params?: GetResourcesParams
 ) => Promise<AxiosResponse<ItemsWithCount<T>>>
 
-interface AddResourcesProps<T> {
+interface AddResourcesProps<T extends CourseResources | Question> {
   resources: T[]
   onAddResources: (resource: T[]) => void
   resourceType: string
   requestService: GetServiceFunction<GetResourcesParams, T>
+  columns: TableColumn<T>[]
+  removeColumnRules: RemoveColumnRules<T>
 }
 
-const AddResources = <T extends CourseResources>({
+const AddResources = <T extends CourseResources | Question>({
   resources = [],
   onAddResources,
   resourceType,
-  requestService
+  requestService,
+  columns,
+  removeColumnRules
 }: AddResourcesProps<T>) => {
   const [selectedRows, setSelectedRows] = useState<T[]>(resources)
   const { closeModal } = useModalContext()

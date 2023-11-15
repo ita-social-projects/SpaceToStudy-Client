@@ -16,8 +16,7 @@
     "lastUpdates": "Останнє оновлення",
     "emptyItems":"У вас ще немає уроків",
     "confirmDeletionTitle":"Ви підтверджуєте видалення уроку?",
-    "successDeletion":"Урок було успішно видалено",
-    "category": "Категорія"
+    "successDeletion":"Урок було успішно видалено"
   },
   "attachments": {
     "addBtn": "Додайте файли з Вкладень",
@@ -33,8 +32,7 @@
     "successDeletion":"Вкладення було успішно видалено",
     "addAttachment": "Добавити файл",
     "validationError": "Назва файлу не може бути довшою за 55 символів.",
-    "attachmentName": "Назва вкладення",
-    "category": "Категорія"
+    "attachmentName": "Назва вкладення"
   },
   "quizzes": {
     "addBtn": "Новий тест",
@@ -50,8 +48,7 @@
     "defaultNewDescription":"Опис...",
     "createNewQuestion":"Створити нове питання",
     "editQuestion": "Редагувати питання",
-    "addQuestion":"Додати питання",
-    "category": "Категорія"
+    "addQuestion":"Додати питання"
   },
   "questions": {
     "addBtn": "Нове запитання",

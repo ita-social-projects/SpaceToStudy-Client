@@ -8,12 +8,13 @@ import AddIcon from '@mui/icons-material/Add'
 
 import { useModalContext } from '~/context/modal-context'
 import QuestionsList from '~/containers/questions-list/QuestionsList'
-import AddQuestions from '~/containers/my-resources/add-questions/AddQuestions'
+import AddResources from '~/containers/add-resources/AddResources'
 import CreateOrEditQuizQuestion from '~/containers/my-quizzes/create-or-edit-quiz-question/CreateOrEditQuizQuestion'
 import AppButton from '~/components/app-button/AppButton'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
 
+import { ResourceService } from '~/services/resource-service'
 import { myResourcesPath } from '~/pages/create-or-edit-lesson/CreateOrEditLesson.constants'
 import { styles } from '~/containers/my-quizzes/edit-quiz-container/EditQuizContainer.styles'
 import {
@@ -21,9 +22,14 @@ import {
   ButtonVariantEnum,
   Question,
   SizeEnum,
-  TextFieldVariantEnum
+  TextFieldVariantEnum,
+  ResourcesTabsEnum
 } from '~/types'
 import { QuizContentProps } from '~/pages/new-quiz/NewQuiz.constants'
+import {
+  columns,
+  removeColumnRules
+} from '~/containers/add-resources/AddQuestions.constants'
 
 const EditQuizContainer = ({ questions, setQuestions }: QuizContentProps) => {
   const { t } = useTranslation()
@@ -35,13 +41,20 @@ const EditQuizContainer = ({ questions, setQuestions }: QuizContentProps) => {
   const onOpenAddQuestionsModal = () => {
     openModal({
       component: (
-        <AddQuestions onAddQuestions={onAddQuestions} questions={questions} />
+        <AddResources<Question>
+          columns={columns}
+          onAddResources={onAddQuestions}
+          removeColumnRules={removeColumnRules}
+          requestService={ResourceService.getQuestions}
+          resourceType={ResourcesTabsEnum.Questions}
+          resources={questions}
+        />
       )
     })
   }
 
-  const onAddQuestions = (attachments: Question[]) => {
-    setQuestions(attachments)
+  const onAddQuestions = (questions: Question[]) => {
+    setQuestions(questions)
   }
 
   const onTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
