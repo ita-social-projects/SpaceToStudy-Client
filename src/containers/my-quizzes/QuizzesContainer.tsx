@@ -1,4 +1,5 @@
 import { useCallback, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Box from '@mui/material/Box'
 
 import { useSnackBarContext } from '~/context/snackbar-context'
@@ -27,10 +28,15 @@ import {
   ErrorResponse,
   ResourcesTabsEnum
 } from '~/types'
-import { ajustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
+import {
+  ajustColumns,
+  createUrlPath,
+  getScreenBasedLimit
+} from '~/utils/helper-functions'
 
 const QuizzesContainer = () => {
   const { setAlert } = useSnackBarContext()
+  const navigate = useNavigate()
   const { page, handleChangePage } = usePagination()
   const sortOptions = useSort({ initialSort })
   const searchTitle = useRef<string>('')
@@ -72,6 +78,10 @@ const QuizzesContainer = () => {
     []
   )
 
+  const onEdit = (id: string) => {
+    navigate(createUrlPath(authRoutes.myResources.editQuiz.path, id))
+  }
+
   const { response, loading, fetchData } = useAxios<
     ItemsWithCount<Quiz>,
     GetResourcesParams
@@ -86,7 +96,7 @@ const QuizzesContainer = () => {
     data: { response, getData: fetchData },
     services: { deleteService: deleteQuiz },
     itemsPerPage,
-    actions: { onEdit: () => null },
+    actions: { onEdit },
     resource: ResourcesTabsEnum.Quizzes,
     sort: sortOptions,
     pagination: { page, onChange: handleChangePage }

@@ -26,3 +26,10 @@ export interface CreateQuizParams {
   description: string
   items: Question[]
 }
+
+export interface UpdateQuizParams {
+  title: Quiz['title']
+  id: Quiz['_id']
+  items?: Quiz['items']
+  description: Quiz['description']
+}

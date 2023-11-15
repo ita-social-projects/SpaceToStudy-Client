@@ -49,7 +49,8 @@
     "createNewQuestion": "Створити нове питання",
     "editQuestion": "Редагувати питання",
     "addQuestion": "Додати питання",
-    "successAddedOuiz": "Тест успішно створено"
+    "successAddedOuiz": "Тест успішно створено",
+    "successEditedOuiz": "Тест успішно змінено"
   },
   "questions": {
     "addBtn": "Нове запитання",

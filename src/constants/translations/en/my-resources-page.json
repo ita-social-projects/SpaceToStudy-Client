@@ -48,7 +48,8 @@
     "createNewQuestion": "Create new question",
     "editQuestion": "Edit question",
     "addQuestion": "Add question",
-    "successAddedOuiz": "Ouiz was successtully created"
+    "successAddedOuiz": "Ouiz was successtully created",
+    "successEditedOuiz": "Ouiz was successtully edited"
   },
   "questions": {
     "addBtn": "New question",
