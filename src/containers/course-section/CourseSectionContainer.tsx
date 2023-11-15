@@ -22,7 +22,6 @@ import ResourcesList from '~/containers/course-section/resources-list/ResourcesL
 import AddResources from '../add-resources/AddResources'
 
 import { ResourceService } from '~/services/resource-service'
-import { quizService } from '~/services/quiz-service'
 
 import useMenu from '~/hooks/use-menu'
 import { useModalContext } from '~/context/modal-context'
@@ -186,7 +185,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
             handleAddResources(resources, setQuizzes, ResourcesTypes.Quizzes)
           }
           removeColumnRules={removeQuizColumnRules}
-          requestService={quizService.getQuizzes}
+          requestService={ResourceService.getQuizzes}
           resourceType={resourcesData.quizzes.resource}
           resources={quizzes}
         />
@@ -210,63 +209,6 @@ const CourseSectionContainer: FC<SectionProps> = ({
           requestService={ResourceService.getAttachments}
           resourceType={resourcesData.attachments.resource}
           resources={attachments}
-        />
-      )
-    })
-  }
-
-  const handleAddLessons = (lessons: Lesson[]) => {
-    setLessons(
-      lessons.map((lesson) => {
-        lesson.resourceType = ResourcesTypes.Lessons
-        return lesson
-      })
-    )
-  }
-
-  const handleOpenAddLessonsModal = () => {
-    closeMenu()
-    openModal({
-      component: (
-        <AddLessons lessons={lessons} onAddLessons={handleAddLessons} />
-      )
-    })
-  }
-
-  const handleAddQuizzes = (quizzes: Quiz[]) => {
-    setQuizzes(
-      quizzes.map((quiz) => {
-        quiz.resourceType = ResourcesTypes.Quizzes
-        return quiz
-      })
-    )
-  }
-
-  const handleOpenAddQuizzesModal = () => {
-    closeMenu()
-    openModal({
-      component: (
-        <AddQuizzes onAddQuizzes={handleAddQuizzes} quizzes={quizzes} />
-      )
-    })
-  }
-
-  const handleAddAttachments = (attachments: Attachment[]) => {
-    setAttachments(
-      attachments.map((attachment) => {
-        attachment.resourceType = ResourcesTypes.Attachments
-        return attachment
-      })
-    )
-  }
-
-  const handleOpenAddAttachmentsModal = () => {
-    closeMenu()
-    openModal({
-      component: (
-        <AddAttachments
-          attachments={attachments}
-          onAddAttachments={handleAddAttachments}
         />
       )
     })

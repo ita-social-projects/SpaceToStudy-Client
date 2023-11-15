@@ -2,8 +2,6 @@ import { FC, ReactElement } from 'react'
 import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
 import CloseIcon from '@mui/icons-material/Close'
-import ListAltIcon from '@mui/icons-material/ListAlt'
-import NoteAltOutlinedIcon from '@mui/icons-material/NoteAltOutlined'
 
 import IconExtensionWithTitle from '~/components/icon-extension-with-title/IconExtensionWithTitle'
 
@@ -26,7 +24,6 @@ const ResourceItem: FC<ResourceItemProps> = ({ resource, deleteResource }) => {
     } else if (resource.resourceType === ResourcesTypes.Quizzes) {
       return resourcesData.quizzes.icon
     }
-    return
   }
 
   return (

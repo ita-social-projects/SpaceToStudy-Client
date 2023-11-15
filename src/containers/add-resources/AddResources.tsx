@@ -12,7 +12,6 @@ import AddResourceModal from '~/containers/my-resources/add-resource-modal/AddRe
 
 import { initialSort } from '~/containers/add-resources/AddResources.constants'
 import { defaultResponses, snackbarVariants } from '~/constants'
-
 import { ajustColumns } from '~/utils/helper-functions'
 import {
   ErrorResponse,
