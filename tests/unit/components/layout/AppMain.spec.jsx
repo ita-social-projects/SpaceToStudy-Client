@@ -36,7 +36,7 @@ describe('AppMain layout component test', () => {
     expect(loader).toBeInTheDocument()
   })
 
-  it('should dispatch checkAuth if accessToken exists in localStorage', async () => {
+  it('should dispatch checkAuth action', async () => {
     renderWithProviders(<AppMain />, {
       preloadedState: {
         appMain: {
