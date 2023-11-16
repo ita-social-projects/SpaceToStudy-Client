@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks'
+import { renderHook } from '@testing-library/react'
 import useInputVisibility from '~/hooks/use-input-visibility'
 
 describe('Use input visibility custom hook', () => {

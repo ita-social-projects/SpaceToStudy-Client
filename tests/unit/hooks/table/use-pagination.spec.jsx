@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react-hooks'
+import { act, renderHook } from '@testing-library/react'
 
 import usePagination from '~/hooks/table/use-pagination'
 import { getFakeTestEvent } from '~tests/test-utils'

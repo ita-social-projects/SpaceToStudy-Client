@@ -1,5 +1,5 @@
 import { vi } from 'vitest'
-import { renderHook } from '@testing-library/react-hooks'
+import { renderHook, waitFor } from '@testing-library/react'
 import useSubjects from '~/hooks/use-subjects-names'
 import { subjectService } from '~/services/subject-service'
 
@@ -22,16 +22,14 @@ describe('useSubjectsNames', () => {
       data: mockSubjectsNames
     })
 
-    const { result, waitForNextUpdate } = renderHook(() =>
-      useSubjects({ category: 'category' })
-    )
+    const { result } = renderHook(() => useSubjects({ category: 'category' }))
 
     expect(subjectService.getSubjectsNames).toHaveBeenCalledWith('category')
 
-    await waitForNextUpdate()
-
-    expect(result.current.loading).toBe(false)
-    expect(result.current.response).toEqual(mockSubjectsNames)
+    waitFor(() => {
+      expect(result.current.loading).toBe(false)
+      expect(result.current.response).toEqual(mockSubjectsNames)
+    })
   })
 
   it('handles API errors', async () => {
@@ -41,15 +39,13 @@ describe('useSubjectsNames', () => {
       }
     })
 
-    const { result, waitForNextUpdate } = renderHook(() =>
-      useSubjects({ category: 'category' })
-    )
+    const { result } = renderHook(() => useSubjects({ category: 'category' }))
 
     expect(subjectService.getSubjectsNames).toHaveBeenCalledWith('category')
 
-    await waitForNextUpdate()
-
-    expect(result.current.loading).toBe(false)
-    expect(result.current.error).toEqual(mockError)
+    waitFor(() => {
+      expect(result.current.loading).toBe(false)
+      expect(result.current.error).toEqual(mockError)
+    })
   })
 })

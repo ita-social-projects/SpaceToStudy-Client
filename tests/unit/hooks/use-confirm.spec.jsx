@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react-hooks'
+import { act, renderHook } from '@testing-library/react'
 import useConfirm from '~/hooks/use-confirm'
 import { UNSAFE_NavigationContext as NavigationContext } from 'react-router-dom'
 import { ConfirmationDialogProvider } from '~/context/confirm-context'
@@ -13,7 +13,9 @@ describe('Use confirm custom hook', () => {
   beforeEach(() => {
     const wrapper = ({ children }) => (
       <ConfirmationDialogProvider>
-        <NavigationContext.Provider value={{ navigator }}>{children}</NavigationContext.Provider>
+        <NavigationContext.Provider value={{ navigator }}>
+          {children}
+        </NavigationContext.Provider>
       </ConfirmationDialogProvider>
     )
     res = renderHook(() => useConfirm(), { wrapper })

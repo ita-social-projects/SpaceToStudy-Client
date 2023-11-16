@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react-hooks'
+import { act, renderHook } from '@testing-library/react'
 
 import useSelect from '~/hooks/table/use-select'
 import { getFakeTestEvent } from '~tests/test-utils'

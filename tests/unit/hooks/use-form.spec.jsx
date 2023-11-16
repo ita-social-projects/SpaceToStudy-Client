@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react-hooks'
+import { act, renderHook } from '@testing-library/react'
 import useForm from '~/hooks/use-form'
 import { getFakeTestEvent } from '~tests/test-utils'
 import { vi } from 'vitest'

@@ -1,5 +1,5 @@
 import { vi } from 'vitest'
-import { renderHook } from '@testing-library/react-hooks'
+import { renderHook, waitFor } from '@testing-library/react'
 import useCategoriesNames from '~/hooks/use-categories-names'
 import { categoryService } from '~/services/category-service'
 
@@ -22,17 +22,17 @@ describe('useCategoriesNames', () => {
       data: mockCategoriesNames
     })
 
-    const { result, waitForNextUpdate } = renderHook(() => useCategoriesNames())
+    const { result } = renderHook(() => useCategoriesNames())
 
     expect(result.current.loading).toBe(true)
     expect(result.current.response).toEqual([])
 
-    await waitForNextUpdate()
+    waitFor(() => {
+      expect(categoryService.getCategoriesNames).toHaveBeenCalled()
 
-    expect(categoryService.getCategoriesNames).toHaveBeenCalled()
-
-    expect(result.current.loading).toBe(false)
-    expect(result.current.response).toEqual(mockCategoriesNames)
+      expect(result.current.loading).toBe(false)
+      expect(result.current.response).toEqual(mockCategoriesNames)
+    })
   })
 
   it('handles API errors', async () => {
@@ -40,16 +40,16 @@ describe('useCategoriesNames', () => {
       response: { data: mockError }
     })
 
-    const { result, waitForNextUpdate } = renderHook(() => useCategoriesNames())
+    const { result } = renderHook(() => useCategoriesNames())
 
     expect(result.current.loading).toBe(true)
     expect(result.current.response).toEqual([])
 
-    await waitForNextUpdate()
+    waitFor(() => {
+      expect(categoryService.getCategoriesNames).toHaveBeenCalled()
 
-    expect(categoryService.getCategoriesNames).toHaveBeenCalled()
-
-    expect(result.current.loading).toBe(false)
-    expect(result.current.error).toBe(mockError)
+      expect(result.current.loading).toBe(false)
+      expect(result.current.error).toBe(mockError)
+    })
   })
 })

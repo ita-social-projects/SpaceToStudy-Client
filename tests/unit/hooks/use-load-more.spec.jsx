@@ -1,4 +1,4 @@
-import { renderHook, act } from '@testing-library/react-hooks'
+import { renderHook, act, waitFor } from '@testing-library/react'
 import { mockAxiosClient } from '~tests/test-utils'
 import useLoadMore from '~/hooks/use-load-more'
 
@@ -27,31 +27,27 @@ describe('useLoadMore custom hook', () => {
   mockAxiosClient.onAny().reply(200, mockResponse)
 
   it('should return array with length equal to 1', async () => {
-    const { result, waitForNextUpdate } = renderHook(() =>
-      useLoadMore({ ...props })
-    )
+    const { result } = renderHook(() => useLoadMore({ ...props }))
 
     expect(result.current.loading).toBe(true)
 
-    await waitForNextUpdate()
-
-    expect(result.current.loading).toBe(false)
-    expect(result.current.data).toEqual(
-      mockResponseData.slice(0, mockParams.limit)
-    )
+    waitFor(() => {
+      expect(result.current.loading).toBe(false)
+      expect(result.current.data).toEqual(
+        mockResponseData.slice(0, mockParams.limit)
+      )
+    })
   })
 
   it('should call showMore and return array with length equal to 2', async () => {
-    const { result, waitForNextUpdate } = renderHook(() =>
-      useLoadMore({ ...props })
-    )
+    const { result } = renderHook(() => useLoadMore({ ...props }))
 
-    await waitForNextUpdate()
-
-    expect(result.current.data).toEqual(
-      mockResponseData.slice(0, mockParams.limit)
-    )
-    expect(result.current.loading).toBe(false)
+    waitFor(() => {
+      expect(result.current.data).toEqual(
+        mockResponseData.slice(0, mockParams.limit)
+      )
+      expect(result.current.loading).toBe(false)
+    })
 
     act(() => {
       result.current.loadMore()
@@ -59,22 +55,20 @@ describe('useLoadMore custom hook', () => {
 
     expect(result.current.loading).toBe(true)
 
-    await waitForNextUpdate()
-
-    expect(result.current.data).toEqual(mockResponseData)
+    waitFor(() => {
+      expect(result.current.data).toEqual(mockResponseData)
+    })
   })
 
   it('should call resetData and return empty data', async () => {
-    const { result, waitForNextUpdate } = renderHook(() =>
-      useLoadMore({ ...props })
-    )
+    const { result } = renderHook(() => useLoadMore({ ...props }))
 
-    await waitForNextUpdate()
-
-    expect(result.current.data).toEqual(
-      mockResponseData.slice(0, mockParams.limit)
-    )
-    expect(result.current.loading).toBe(false)
+    waitFor(() => {
+      expect(result.current.data).toEqual(
+        mockResponseData.slice(0, mockParams.limit)
+      )
+      expect(result.current.loading).toBe(false)
+    })
 
     act(() => {
       result.current.resetData()
