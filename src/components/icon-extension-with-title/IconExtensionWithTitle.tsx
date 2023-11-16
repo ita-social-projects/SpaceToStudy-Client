@@ -34,6 +34,7 @@ const IconExtensionWithTitle: FC<IconExtensionWithTitleProps> = ({
         description={size ? convertSize(size) : description}
         style={styles.titleWithDescription}
         title={title}
+        useTooltip
       />
     </Box>
   )

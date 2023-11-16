@@ -5,7 +5,6 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
 import { styles } from '~/components/title-with-description/TitleWithDescription.styles'
-import { ComponentEnum } from '~/types'
 
 interface TitleWithDescriptionProps {
   title: string | ReactElement
@@ -15,31 +14,37 @@ interface TitleWithDescriptionProps {
     title?: SxProps
     description?: SxProps
   }
+  useTooltip?: boolean
 }
 
 const TitleWithDescription = ({
   title,
   description,
-  style = styles
+  style = styles,
+  useTooltip = false
 }: TitleWithDescriptionProps) => {
   const [tooltipVisible, setTooltipVisible] = useState<boolean>(false)
 
   const handleTooltip = () => setTooltipVisible((prevState) => !prevState)
-
-  return (
-    <Box sx={style.wrapper}>
-      <Typography sx={style.title}>{title}</Typography>
-      <Tooltip open={tooltipVisible} placement='bottom' title={description}>
-        <Typography
-          component={ComponentEnum.Span}
-          onClick={handleTooltip}
-          sx={style.description}
-        >
-          {description}
-        </Typography>
-      </Tooltip>
-    </Box>
-  )
+  if (useTooltip) {
+    return (
+      <Box sx={style.wrapper}>
+        <Typography sx={style.title}>{title}</Typography>
+        <Tooltip open={tooltipVisible} placement='bottom' title={description}>
+          <Typography onClick={handleTooltip} sx={style.description}>
+            {description}
+          </Typography>
+        </Tooltip>
+      </Box>
+    )
+  } else {
+    return (
+      <Box sx={style.wrapper}>
+        <Typography sx={style.title}>{title}</Typography>
+        <Typography sx={style.description}>{description}</Typography>
+      </Box>
+    )
+  }
 }
 
 export default TitleWithDescription
