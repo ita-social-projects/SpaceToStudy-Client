@@ -26,25 +26,23 @@ const TitleWithDescription = ({
   const [tooltipVisible, setTooltipVisible] = useState<boolean>(false)
 
   const handleTooltip = () => setTooltipVisible((prevState) => !prevState)
-  if (useTooltip) {
-    return (
-      <Box sx={style.wrapper}>
-        <Typography sx={style.title}>{title}</Typography>
+
+  return (
+    <Box sx={style.wrapper}>
+      <Typography sx={style.title}>{title}</Typography>
+      {useTooltip ? (
         <Tooltip open={tooltipVisible} placement='bottom' title={description}>
           <Typography onClick={handleTooltip} sx={style.description}>
             {description}
           </Typography>
         </Tooltip>
-      </Box>
-    )
-  } else {
-    return (
-      <Box sx={style.wrapper}>
-        <Typography sx={style.title}>{title}</Typography>
-        <Typography sx={style.description}>{description}</Typography>
-      </Box>
-    )
-  }
+      ) : (
+        <Typography onClick={handleTooltip} sx={style.description}>
+          {description}
+        </Typography>
+      )}
+    </Box>
+  )
 }
 
 export default TitleWithDescription
