@@ -32,4 +32,13 @@ describe('CreateOrEditQuizContainer', () => {
     expect(titleInput.value).toBe('quiz title')
     expect(descriptionInput.value).toBe('quiz description')
   })
+
+  it('should click on save button', () => {
+    const saveBtn = screen.getByText('common.save')
+
+    fireEvent.click(saveBtn)
+
+    expect(setTitle).toHaveBeenCalled()
+    expect(setDescription).toHaveBeenCalled()
+  })
 })
