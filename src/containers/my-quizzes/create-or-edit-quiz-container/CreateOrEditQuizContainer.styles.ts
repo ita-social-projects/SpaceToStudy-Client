@@ -12,6 +12,13 @@ const getLabelStyles = (value: string) => ({
   color: palette.primary[300]
 })
 
+const commonStyle = {
+  fontSize: '14px',
+  position: 'absolute',
+  top: '-33px',
+  left: '-14px'
+}
+
 export const styles = {
   container: {
     p: { sm: '0' }
@@ -61,6 +68,20 @@ export const styles = {
     '& button': {
       gap: '12px',
       width: '100%'
+    }
+  },
+  categoryInput: {
+    m: '30px 30px 10px 0',
+    maxWidth: { md: '570px' },
+    '& .MuiOutlinedInput-root': {
+      padding: '5px 9px'
+    },
+    label: {
+      lineHeight: '20px'
+    },
+    position: 'relative',
+    '& .MuiFormHelperText-root': {
+      ...commonStyle
     }
   }
 }

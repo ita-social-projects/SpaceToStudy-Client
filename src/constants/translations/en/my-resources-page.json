@@ -60,7 +60,9 @@
     "correctAnswersDesc": "Respondents can see correct answers after grades are released",
     "settingsQuiz": "Settings: Quiz",
     "questionsShuffle": "Questions shuffle",
-    "questionsShuffleDesc": "Questions will be shuffled with every attempt"
+    "questionsShuffleDesc": "Questions will be shuffled with every attempt",
+    "categoryDropdown": "Category...",
+    "categoryDropdownHelper": "Choose the category:"
   },
   "questions": {
     "addBtn": "New question",

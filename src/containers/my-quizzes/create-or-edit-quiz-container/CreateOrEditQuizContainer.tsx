@@ -16,6 +16,8 @@ import AddResources from '~/containers/add-resources/AddResources'
 import CreateOrEditQuizQuestion from '~/containers/my-quizzes/create-or-edit-quiz-question/CreateOrEditQuizQuestion'
 import AppButton from '~/components/app-button/AppButton'
 import AppTextField from '~/components/app-text-field/AppTextField'
+import { categoryService } from '~/services/category-service'
+import AsyncAutocomplete from '~/components/async-autocomlete/AsyncAutocomplete'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import Loader from '~/components/loader/Loader'
 
@@ -38,7 +40,8 @@ import {
   SizeEnum,
   TextFieldVariantEnum,
   ResourcesTabsEnum,
-  UpdateQuizParams
+  UpdateQuizParams,
+  Category
 } from '~/types'
 import { styles } from '~/containers/my-quizzes/create-or-edit-quiz-container/CreateOrEditQuizContainer.styles'
 
@@ -58,6 +61,13 @@ const CreateOrEditQuizContainer = ({
   const navigate = useNavigate()
   const { id } = useParams()
   const [isCreationOpen, setIsCreationOpen] = useState<boolean>(false)
+
+  const onCategoryChange = (
+    _: React.SyntheticEvent,
+    value: Category | null
+  ) => {
+    setCategory(value?._id ?? '')
+  }
 
   const handleResponse = () => {
     setAlert({
@@ -198,6 +208,18 @@ const CreateOrEditQuizContainer = ({
           onChange={onDescriptionChange}
           value={description}
           variant={TextFieldVariantEnum.Standard}
+        />
+        <AsyncAutocomplete
+          labelField='name'
+          onChange={onCategoryChange}
+          service={categoryService.getCategoriesNames}
+          sx={styles.categoryInput}
+          textFieldProps={{
+            label: t('myResourcesPage.quizzes.categoryDropdown'),
+            helperText: t('myResourcesPage.quizzes.categoryDropdownHelper')
+          }}
+          value={category}
+          valueField='_id'
         />
         <Divider sx={styles.divider} />
         {questions && (

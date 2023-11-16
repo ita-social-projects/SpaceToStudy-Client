@@ -61,7 +61,9 @@
     "correctAnswersDesc": "Респонденти можуть бачити правильні відповіді після оприлюднення оцінок",
     "settingsQuiz": "Налаштування: Тест",
     "questionsShuffle": "Питання перемішуються",
-    "questionsShuffleDesc": "Запитання будуть перемішуватися при кожній спробі"
+    "questionsShuffleDesc": "Запитання будуть перемішуватися при кожній спробі",
+    "categoryDropdown": "Категорія...",
+    "categoryDropdownHelper": "Оберіть категорію:"
   },
   "questions": {
     "addBtn": "Нове запитання",
