@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { AxiosResponse } from 'axios'
@@ -49,8 +49,6 @@ const CreateOrEditLesson = () => {
 
   const { openModal } = useModalContext()
   const navigate = useNavigate()
-  const [attachments, setAttachments] = useState<Attachment[]>([])
-  const [content, setContent] = useState<string>('')
   const { id } = useParams()
 
   const handleResponseError = (error: ErrorResponse) => {
@@ -71,39 +69,35 @@ const CreateOrEditLesson = () => {
   }
 
   const handleAddAttachments = (attachments: Attachment[]) => {
-    setAttachments(attachments)
+    handleNonInputValueChange('attachments', attachments)
   }
 
   const handleOpenAddAttachmentsModal = () => {
     openModal({
       component: (
         <AddAttachments
-          attachments={attachments}
+          attachments={data.attachments}
           onAddAttachments={handleAddAttachments}
         />
       )
     })
   }
 
-  const handleRemoveAttachment = (attachment: Attachment) => {
-    setAttachments((prevAttachments) =>
-      prevAttachments.filter(
-        (prevAttachment) => prevAttachment._id !== attachment._id
+  const handleRemoveAttachment = (attachmentToDelete: Attachment) => {
+    handleNonInputValueChange(
+      'attachments',
+      data.attachments.filter(
+        (attachment) => attachment._id !== attachmentToDelete._id
       )
     )
   }
 
   const handleEdit = (content: string) => {
-    setContent(content)
+    handleNonInputValueChange('content', content)
   }
 
   const addLesson = (): Promise<AxiosResponse> => {
-    const lesson = {
-      ...data,
-      content,
-      attachments: attachments.map((attachment) => attachment._id)
-    }
-    return ResourceService.addLesson(lesson)
+    return ResourceService.addLesson(data)
   }
 
   const { fetchData: fetchAddLesson } = useAxios<Lesson, LessonData>({
@@ -172,7 +166,7 @@ const CreateOrEditLesson = () => {
     return <Loader pageLoad />
   }
 
-  const attachmentsList = attachments.map((attachment) => (
+  const attachmentsList = data.attachments.map((attachment) => (
     <Box key={attachment.size} sx={styles.attachmentList.container}>
       <IconExtensionWithTitle
         size={attachment.size}
@@ -220,7 +214,7 @@ const CreateOrEditLesson = () => {
         >
           {t('lesson.labels.attachments')} <AddIcon sx={styles.addIcon} />
         </AppButton>
-        <FileEditor onEdit={handleEdit} value={content} />
+        <FileEditor onEdit={handleEdit} value={data.content} />
         {attachmentsList}
         <Box sx={styles.buttons}>
           <AppButton size={SizeEnum.ExtraLarge} type={ButtonTypeEnum.Submit}>
