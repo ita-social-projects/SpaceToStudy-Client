@@ -210,6 +210,7 @@ const CreateOrEditQuizContainer = ({
           variant={TextFieldVariantEnum.Standard}
         />
         <AsyncAutocomplete
+          fetchOnFocus
           labelField='name'
           onChange={onCategoryChange}
           service={categoryService.getCategoriesNames}
