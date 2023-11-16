@@ -1,3 +1,4 @@
+import { TypographyVariantEnum } from '~/types'
 import { ellipsisTextStyle } from '~/utils/helper-functions'
 
 export const styles = {
@@ -12,16 +13,19 @@ export const styles = {
     p: '24px 24px 16px 24px'
   },
   title: {
+    typography: TypographyVariantEnum.H5,
     ...ellipsisTextStyle(2),
     fontWeight: '600',
     lineHeight: '24px',
     letterSpacing: '0.15px'
   },
   description: {
+    typography: TypographyVariantEnum.Body1,
     ...ellipsisTextStyle(2),
     m: '8px 0px'
   },
   secondaryText: {
+    typography: TypographyVariantEnum.Body2,
     color: 'basic.turquoiseDark',
     m: '8px 0px'
   },

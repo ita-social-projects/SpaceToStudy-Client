@@ -7,7 +7,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert'
 import Divider from '@mui/material/Divider'
 
 import { styles } from '~/components/course-card/CourseCard.styles'
-import SubjectLevelChips from '../subject-level-chips/SubjectLevelChips'
+import SubjectLevelChips from '~/components/subject-level-chips/SubjectLevelChips'
 import { getFormattedDate } from '~/utils/helper-functions'
 import { Course } from '~/types'
 
@@ -17,7 +17,6 @@ interface CourseCardProps {
 
 const CourseCard: FC<CourseCardProps> = ({ course }) => {
   const {
-    _id,
     title,
     description,
     category,
@@ -32,28 +31,22 @@ const CourseCard: FC<CourseCardProps> = ({ course }) => {
   return (
     <Box sx={styles.card}>
       <Box>
-        <Typography sx={styles.title} variant='h5'>
-          {title}
-        </Typography>
-        <Typography sx={styles.description} variant='body1'>
-          {description}
-        </Typography>
+        <Typography sx={styles.title}>{title}</Typography>
+        <Typography sx={styles.description}>{description}</Typography>
         <SubjectLevelChips
           color={category.appearance.color}
           proficiencyLevel={proficiencyLevel}
           subject={subject.name}
           sx={styles.chipContainer}
         />
-        <Typography sx={styles.secondaryText} variant='body2'>
+        <Typography sx={styles.secondaryText}>
           {`${sections.length} ${sections.length > 1 ? 'sections' : 'section'}`}
         </Typography>
       </Box>
       <Box>
         <Divider sx={styles.line} />
         <Box sx={styles.dateContainer}>
-          <Typography sx={styles.secondaryText} variant='body2'>
-            {date}
-          </Typography>
+          <Typography sx={styles.secondaryText}>{date}</Typography>
           <IconButton>
             <MoreVertIcon />
           </IconButton>
