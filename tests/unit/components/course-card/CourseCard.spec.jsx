@@ -38,7 +38,7 @@ describe('CourseCard', () => {
   })
 
   it('Should render sum of sections', () => {
-    const sections = screen.getByText('3 sections')
+    const sections = screen.getByText('3 course.sections')
 
     expect(sections).toBeInTheDocument()
   })
