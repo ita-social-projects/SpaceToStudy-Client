@@ -1,5 +1,7 @@
 {
     "addSectionBtn": "Новий курс",
+    "section": "Розділ",
+    "sections": "Розділи",
     "courseSection": {
         "defaultNewTitle": "Розділ 1",
         "defaultNewDescription": "Опис ...",

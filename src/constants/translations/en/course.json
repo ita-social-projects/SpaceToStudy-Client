@@ -1,5 +1,7 @@
 {
     "addSectionBtn": "Add Section",
+    "section": "section",
+    "sections": "sections",
     "courseSection": {
         "defaultNewTitle": "Section 1",
         "defaultNewDescription": "Description...",
