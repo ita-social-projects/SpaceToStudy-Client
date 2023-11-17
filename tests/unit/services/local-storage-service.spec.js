@@ -1,4 +1,8 @@
-import { getFromLocalStorage, setToLocalStorage, removeFromLocalStorage } from '~/services/local-storage-service'
+import {
+  getFromLocalStorage,
+  setToLocalStorage,
+  removeFromLocalStorage
+} from '~/services/local-storage-service'
 import { vi } from 'vitest'
 
 describe('Local storage service test', () => {
@@ -17,12 +21,13 @@ describe('Local storage service test', () => {
   })
 
   it('should set item if local storage is empty', () => {
-    setToLocalStorage('accessToken', 'token')
+    setToLocalStorage('testItem', 'test')
+
     expect(window.localStorage.setItem).toBeCalled()
   })
 
   it('should not remove item from local storage', () => {
-    removeFromLocalStorage('accessToken')
+    removeFromLocalStorage('testItem')
 
     expect(window.localStorage.setItem).not.toBeUndefined()
   })
@@ -34,23 +39,26 @@ describe('Local storage service test', () => {
       value: {
         getItem: () =>
           JSON.stringify({
-            accessToken: 'token'
+            testItem: 'test'
           }),
         setItem: vi.fn()
       }
     })
 
-    const token = getFromLocalStorage('accessToken')
-    expect(token).toBe('token')
+    const item = getFromLocalStorage('testItem')
+
+    expect(item).toBe('test')
   })
 
   it('should set item to local storage', () => {
-    setToLocalStorage('accessToken', 'token')
+    setToLocalStorage('testItem', 'test')
+
     expect(window.localStorage.setItem).toBeCalled()
   })
 
   it('should remove item from local storage', () => {
-    removeFromLocalStorage('accessToken')
+    removeFromLocalStorage('testItem')
+
     expect(window.localStorage.setItem).toBeCalled()
   })
 })

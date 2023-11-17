@@ -2,8 +2,6 @@ import { AlertColor } from '@mui/material/Alert'
 
 export const s2s = 's2s'
 
-export const accessToken = 'accessToken'
-
 export const student = 'student'
 export const tutor = 'tutor'
 export const admin = 'admin'
