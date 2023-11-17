@@ -14,14 +14,14 @@ interface TitleWithDescriptionProps {
     title?: SxProps
     description?: SxProps
   }
-  useTooltip?: boolean
+  isDescriptionTooltip?: boolean
 }
 
 const TitleWithDescription = ({
   title,
   description,
   style = styles,
-  useTooltip = false
+  isDescriptionTooltip = false
 }: TitleWithDescriptionProps) => {
   const [tooltipVisible, setTooltipVisible] = useState<boolean>(false)
 
@@ -30,7 +30,7 @@ const TitleWithDescription = ({
   return (
     <Box sx={style.wrapper}>
       <Typography sx={style.title}>{title}</Typography>
-      {useTooltip ? (
+      {isDescriptionTooltip ? (
         <Tooltip open={tooltipVisible} placement='bottom' title={description}>
           <Typography onClick={handleTooltip} sx={style.description}>
             {description}
