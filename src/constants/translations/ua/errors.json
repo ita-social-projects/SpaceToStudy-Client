@@ -10,5 +10,6 @@
   "UNAUTHORIZED": "Користувач не авторизований",
   "EMAIL_NOT_FOUND": "Користувача з таким email не знайдено",
   "BAD_RESET_TOKEN": "Час вийшов, спробуйте знову",
-  "DOCUMENT_NOT_FOUND": "Не знайдено"
+  "DOCUMENT_NOT_FOUND": "Не знайдено",
+  "UNKNOWN_ERROR": "Щось пішло не так"
 }

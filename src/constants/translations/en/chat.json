@@ -31,6 +31,18 @@
     "sendingMessage": "Sending...",
     "interlocutor": "Your interlocutor"
   },
+  "chatMenu": {
+    "deleteChat": "Delete chat",
+    "markingAsDeletedTitle": "Mark chat as deleted?",
+    "markingAsDeletedWarning": "This operation will delete chat only for you. Your interlocutor will still have access to this chat. Are you sure?",
+    "fullDeleteTitle": "Confirm chat deletion",
+    "fullDeleteWarning": "This operation is irreversible and your chat will be deleted completely and permanently!",
+    "deleteSuccess": "Your chat was deleted successfully!",
+    "clearHistory": "Clear history",
+    "clearHistoryTitle": "Do you want to clear your chat history?",
+    "clearHistoryWarning": "Your interlocutor will still have access to all old messages. Are you sure?",
+    "historyClearSuccess": "Chat history cleared successfully!"
+  },
   "youCanAsk": "You can ask:",
   "firstQuestion": {
     "teachMethod": "What’s your teaching method?",
@@ -38,13 +50,6 @@
     "tutoringSession": "How long is each tutoring session?"
   },
   "creating": "Creating new chat for you, please wait...",
-  "deleteSuccess": "Your chat was deleted successfully!",
-  "fullDeleteTitle": "Confirm chat deletion",
-  "markingAsDeletedTitle": "Mark chat as deleted?",
-  "fullDeleteWarning": "This operation is irreversible and your chat will be deleted completely and permanently!",
-  "markingAsDeletedWarning": "This operation will delete chat only for you. Your interlocutor will still have access to this chat. Are you sure?",
   "deleted": "Chat was deleted",
-  "deletedChip": "{{userName}} deleted this chat, and now it is read-only",
-  "deleteChat": "Delete chat",
-  "clearHistory": "Clear history"
+  "deletedChip": "{{userName}} deleted this chat, and now it is read-only"
 }

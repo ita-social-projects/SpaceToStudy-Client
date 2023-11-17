@@ -21,5 +21,9 @@ export const messageService = {
   ): Promise<AxiosResponse<void>> => {
     const chat = createUrlPath(URLs.chats.delete, chatId)
     return axiosClient.delete(`${chat}${URLs.messages.delete}`)
+  },
+  clearChatHistory: async (chatId: string): Promise<AxiosResponse> => {
+    const chat = createUrlPath(URLs.chats.patch, chatId)
+    return axiosClient.patch(`${chat}${URLs.messages.patch}`)
   }
 }
