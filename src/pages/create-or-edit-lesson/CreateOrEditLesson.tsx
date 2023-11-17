@@ -9,7 +9,7 @@ import CloseIcon from '@mui/icons-material/Close'
 import IconButton from '@mui/material/IconButton'
 
 import Loader from '~/components/loader/Loader'
-import AddAttachments from '~/containers/add-attachments/AddAttachments'
+import AddResources from '~/containers/add-resources/AddResources'
 import IconExtensionWithTitle from '~/components/icon-extension-with-title/IconExtensionWithTitle'
 
 import { useModalContext } from '~/context/modal-context'
@@ -29,6 +29,10 @@ import {
   myResourcesPath,
   validations
 } from '~/pages/create-or-edit-lesson/CreateOrEditLesson.constants'
+import {
+  columns,
+  removeColumnRules
+} from '~/containers/add-resources/AddAttachments.constants'
 import { styles } from '~/pages/create-or-edit-lesson/CreateOrEditLesson.styles'
 import { authRoutes } from '~/router/constants/authRoutes'
 import {
@@ -40,7 +44,8 @@ import {
   LessonData,
   SizeEnum,
   TextFieldVariantEnum,
-  Attachment
+  Attachment,
+  ResourcesTabsEnum
 } from '~/types'
 
 const CreateOrEditLesson = () => {
@@ -75,9 +80,13 @@ const CreateOrEditLesson = () => {
   const handleOpenAddAttachmentsModal = () => {
     openModal({
       component: (
-        <AddAttachments
-          attachments={data.attachments}
-          onAddAttachments={handleAddAttachments}
+        <AddResources<Attachment>
+          columns={columns}
+          onAddResources={handleAddAttachments}
+          removeColumnRules={removeColumnRules}
+          requestService={ResourceService.getAttachments}
+          resourceType={ResourcesTabsEnum.Attachments}
+          resources={data.attachments}
         />
       )
     })

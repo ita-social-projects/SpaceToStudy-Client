@@ -8,6 +8,7 @@
   },
   "lessons": {
     "addBtn": "New lesson",
+    "add": "Add Lessons",
     "title": "Title",
     "attachmentQty": "Attachment",
     "attachmentsQty": "Attachments",
@@ -19,7 +20,7 @@
   },
   "attachments": {
     "addBtn": "Add Attachment",
-    "add": "Add files from your Attachments",
+    "add": "Add Attachments",
     "edit": "Edit Attachment",
     "description": "Description",
     "fileName": "File name",
@@ -34,6 +35,7 @@
   },
   "quizzes": {
     "addBtn": "New quiz",
+    "add": "Add Quizzes",
     "title": "Title",
     "question": "Question",
     "questions": "Questions",

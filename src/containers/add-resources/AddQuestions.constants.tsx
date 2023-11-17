@@ -5,24 +5,23 @@ import AppChip from '~/components/app-chip/AppChip'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 
 import { getFormattedDate } from '~/utils/helper-functions'
+import { styles } from '~/containers/add-resources/AddResources.styles'
 import {
-  ComponentEnum,
   Question,
   RemoveColumnRules,
-  SortEnum,
   TableColumn,
-  AdditionalPropsInterface
+  AdditionalPropsInterface,
+  ComponentEnum
 } from '~/types'
-import { styles } from '~/containers/my-resources/add-questions/AddQuestions.styles'
 
 export const columns: TableColumn<Question>[] = [
   {
     label: 'myResourcesPage.questions.title',
     field: 'title',
-    calculatedCellValue: (item: Question) => {
+    calculatedCellValue: (question: Question) => {
       return (
         <TitleWithDescription
-          description={'Which word is the antonym of "benevolent"?'}
+          description={question.text}
           style={styles.titleWithDescription}
           title={
             <Typography
@@ -30,7 +29,7 @@ export const columns: TableColumn<Question>[] = [
               sx={styles.questionTitle}
             >
               <CheckCircleOutlineIcon sx={styles.questionIcon} />
-              {item.title}
+              {question.title}
             </Typography>
           }
         />
@@ -39,10 +38,13 @@ export const columns: TableColumn<Question>[] = [
   },
   {
     label: 'myResourcesPage.categories.category',
-    calculatedCellValue: (item: Question, { t }: AdditionalPropsInterface) =>
-      item.category ? (
+    calculatedCellValue: (
+      question: Question,
+      { t }: AdditionalPropsInterface
+    ) =>
+      question.category ? (
         <AppChip labelSx={styles.categoryChipLabel} sx={styles.categoryChip}>
-          {item.category.name}
+          {question.category.name}
         </AppChip>
       ) : (
         <Typography sx={styles.date}>
@@ -53,9 +55,9 @@ export const columns: TableColumn<Question>[] = [
   {
     label: 'myResourcesPage.questions.updated',
     field: 'updatedAt',
-    calculatedCellValue: (item: Question) => (
+    calculatedCellValue: (question: Question) => (
       <Typography sx={styles.date}>
-        {getFormattedDate({ date: item.updatedAt })}
+        {getFormattedDate({ date: question.updatedAt })}
       </Typography>
     )
   }
@@ -64,5 +66,3 @@ export const columns: TableColumn<Question>[] = [
 export const removeColumnRules: RemoveColumnRules<Question> = {
   tablet: ['myResourcesPage.questions.updated']
 }
-
-export const initialSort = { order: SortEnum.Desc, orderBy: 'updatedAt' }

@@ -1,22 +1,29 @@
 import { TypographyVariantEnum } from '~/types'
 
+const iconContainer = {
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  width: '32px',
+  height: '32px',
+  mr: '20px'
+}
+
 export const styles = {
   container: {
     display: 'flex',
     alignItems: 'center'
   },
   iconBox: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    minWidth: '40px',
-    height: '40px',
+    ...iconContainer,
     backgroundColor: 'basic.turquoise',
     borderRadius: '5px',
-    marginRight: '20px',
     color: 'basic.white',
     fontSize: '12px',
     typography: TypographyVariantEnum.Caption
+  },
+  svgBox: {
+    ...iconContainer
   },
   titleWithDescription: {
     title: {

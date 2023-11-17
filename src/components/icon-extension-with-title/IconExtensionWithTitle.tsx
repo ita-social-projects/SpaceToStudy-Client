@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { ReactElement, FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 
@@ -11,12 +11,14 @@ interface IconExtensionWithTitleProps {
   title: string
   description?: string
   size?: number
+  icon?: ReactElement
 }
 
 const IconExtensionWithTitle: FC<IconExtensionWithTitleProps> = ({
   title,
   description,
-  size
+  size,
+  icon
 }) => {
   const { t } = useTranslation()
 
@@ -29,7 +31,11 @@ const IconExtensionWithTitle: FC<IconExtensionWithTitleProps> = ({
 
   return (
     <Box sx={styles.container}>
-      <Box sx={styles.iconBox}>{fileExtension}</Box>
+      {icon ? (
+        <Box sx={styles.svgBox}>{icon}</Box>
+      ) : (
+        <Box sx={styles.iconBox}>{fileExtension}</Box>
+      )}
       <TitleWithDescription
         description={size ? convertSize(size) : description}
         isDescriptionTooltip

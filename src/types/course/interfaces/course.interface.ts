@@ -8,6 +8,8 @@ import {
   ProficiencyLevelEnum
 } from '~/types'
 
+export type CourseResources = Lesson | Quiz | Attachment
+
 export interface Course extends CommonEntityFields {
   title: string
   description: string
@@ -21,5 +23,5 @@ export interface CourseSection {
   id: number
   title: string
   description: string
-  resources: (Lesson | Quiz | Attachment)[]
+  resources: CourseResources[]
 }

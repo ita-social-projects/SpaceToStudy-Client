@@ -11,7 +11,7 @@ import { useModalContext } from '~/context/modal-context'
 import { useSnackBarContext } from '~/context/snackbar-context'
 import { ResourceService } from '~/services/resource-service'
 import QuestionsList from '~/containers/questions-list/QuestionsList'
-import AddQuestions from '~/containers/my-resources/add-questions/AddQuestions'
+import AddResources from '~/containers/add-resources/AddResources'
 import CreateOrEditQuizQuestion from '~/containers/my-quizzes/create-or-edit-quiz-question/CreateOrEditQuizQuestion'
 import AppButton from '~/components/app-button/AppButton'
 import AppTextField from '~/components/app-text-field/AppTextField'
@@ -21,6 +21,10 @@ import { snackbarVariants } from '~/constants'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { myResourcesPath } from '~/pages/create-or-edit-lesson/CreateOrEditLesson.constants'
 import { QuizContentProps } from '~/pages/new-quiz/NewQuiz.constants'
+import {
+  columns,
+  removeColumnRules
+} from '~/containers/add-resources/AddQuestions.constants'
 import { styles } from '~/containers/my-quizzes/create-or-edit-quiz-container/CreateOrEditQuizContainer.styles'
 import {
   ButtonTypeEnum,
@@ -30,7 +34,8 @@ import {
   Question,
   Quiz,
   SizeEnum,
-  TextFieldVariantEnum
+  TextFieldVariantEnum,
+  ResourcesTabsEnum
 } from '~/types'
 import { defaultResponse } from '~/containers/my-quizzes/create-or-edit-quiz-container/CreateOrEditQuizContainer.constants'
 
@@ -79,7 +84,14 @@ const CreateOrEditQuizContainer = ({
   const onOpenAddQuestionsModal = () => {
     openModal({
       component: (
-        <AddQuestions onAddQuestions={onAddQuestions} questions={questions} />
+        <AddResources<Question>
+          columns={columns}
+          onAddResources={onAddQuestions}
+          removeColumnRules={removeColumnRules}
+          requestService={ResourceService.getQuestions}
+          resourceType={ResourcesTabsEnum.Questions}
+          resources={questions}
+        />
       )
     })
   }

@@ -1,7 +1,8 @@
 import {
   CategoryNameInterface,
   CommonEntityFields,
-  UserResponse
+  UserResponse,
+  ResourcesTabsEnum as ResourcesTypes
 } from '~/types'
 
 export interface Attachment extends CommonEntityFields {
@@ -11,6 +12,7 @@ export interface Attachment extends CommonEntityFields {
   link: string
   description?: string
   size: number
+  resourceType?: ResourcesTypes
 }
 
 export interface UpdateAttachmentParams {

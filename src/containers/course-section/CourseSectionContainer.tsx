@@ -1,27 +1,59 @@
-import { useState, ChangeEvent, FC, Dispatch, SetStateAction } from 'react'
+import {
+  useState,
+  ChangeEvent,
+  FC,
+  Dispatch,
+  SetStateAction,
+  useEffect
+} from 'react'
 import { useTranslation } from 'react-i18next'
 import { MenuItem } from '@mui/material'
 import Box from '@mui/material/Box'
-import DragIndicatorIcon from '@mui/icons-material/DragIndicator'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import IconButton from '@mui/material/IconButton'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import AddIcon from '@mui/icons-material/Add'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 
 import AppTextField from '~/components/app-text-field/AppTextField'
 import AppButton from '~/components/app-button/AppButton'
+import ResourcesList from '~/containers/course-section/resources-list/ResourcesList'
+import AddResources from '../add-resources/AddResources'
+
+import { ResourceService } from '~/services/resource-service'
 
 import useMenu from '~/hooks/use-menu'
+import { useModalContext } from '~/context/modal-context'
 
 import { styles } from '~/containers/course-section/CourseSectionContainer.styles'
-import { menuTypes } from '~/containers/course-section/CourseSectionContainer.constants'
+import {
+  menuTypes,
+  resourcesData
+} from '~/containers/course-section/CourseSectionContainer.constants'
+import {
+  columns as attachmentColumns,
+  removeColumnRules as removeAttachmentColumnRules
+} from '~/containers/add-resources/AddAttachments.constants'
+import {
+  columns as lessonColumns,
+  removeColumnRules as removeLessontColumnRules
+} from '~/containers/add-resources/AddLessons.constants'
+import {
+  columns as quizColumns,
+  removeColumnRules as removeQuizColumnRules
+} from '~/containers/add-resources/AddQuizzes.constants'
 import {
   TextFieldVariantEnum,
   SizeEnum,
   ColorEnum,
   ButtonVariantEnum,
-  CourseSection
+  CourseSection,
+  Lesson,
+  Quiz,
+  Attachment,
+  ResourcesTabsEnum as ResourcesTypes,
+  CourseResources
 } from '~/types'
 
 interface SectionProps {
@@ -37,6 +69,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
 }) => {
   const { t } = useTranslation()
   const { openMenu, renderMenu, closeMenu } = useMenu()
+  const { openModal } = useModalContext()
 
   const [activeMenu, setActiveMenu] = useState<string>('')
   const [isVisible, setIsVisible] = useState<boolean>(true)
@@ -44,13 +77,65 @@ const CourseSectionContainer: FC<SectionProps> = ({
   const [descriptionInput, setDescriptionInput] = useState(
     sectionData.description
   )
+  const [lessons, setLessons] = useState<Lesson[]>([])
+  const [quizzes, setQuizzes] = useState<Quiz[]>([])
+  const [attachments, setAttachments] = useState<Attachment[]>([])
+  const [resources, setResources] = useState<CourseResources[]>([])
+
+  useEffect(() => {
+    setResources((prevResources) => {
+      const allResourcesItems = [...lessons, ...quizzes, ...attachments]
+      const updatedResourcesItems = prevResources.filter((prevResource) =>
+        allResourcesItems.some(
+          (currentResource) => currentResource._id === prevResource._id
+        )
+      )
+      for (const currentResource of allResourcesItems) {
+        if (
+          !updatedResourcesItems.some(
+            (prevResource) => prevResource._id === currentResource._id
+          )
+        ) {
+          updatedResourcesItems.push(currentResource)
+        }
+      }
+      return updatedResourcesItems
+    })
+  }, [lessons, quizzes, attachments])
+
+  const deleteResource = (resource: CourseResources) => {
+    if (resource.resourceType === ResourcesTypes.Lessons) {
+      setLessons((prevLessons) =>
+        prevLessons.filter((item) => item._id !== resource._id)
+      )
+    } else if (resource.resourceType === ResourcesTypes.Quizzes) {
+      setQuizzes((prevQuizzes) =>
+        prevQuizzes.filter((item) => item._id !== resource._id)
+      )
+    } else if (resource.resourceType === ResourcesTypes.Attachments) {
+      setAttachments((prevAttachments) =>
+        prevAttachments.filter((item) => item._id !== resource._id)
+      )
+    }
+  }
 
   const onShowHide = () => {
     setIsVisible((isVisible) => !isVisible)
   }
 
   const onAction = (actionFunc: openModalFunc) => {
+    closeMenu()
     actionFunc()
+  }
+
+  const onDeleteSection = () => {
+    setTitleInput('')
+    setDescriptionInput('')
+    setResources([])
+    closeMenu()
+    setSectionsItems((prev) =>
+      prev.filter((item) => item.id !== sectionData.id)
+    )
   }
 
   const onTitleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -61,16 +146,83 @@ const CourseSectionContainer: FC<SectionProps> = ({
     setDescriptionInput(event.target.value)
   }
 
-  const onDeleteSection = () => {
-    setSectionsItems((prev) => {
-      return prev.filter((item) => item.id !== sectionData.id)
+  const handleAddResources = <T extends CourseResources>(
+    resources: T[],
+    addResources: Dispatch<SetStateAction<T[]>>,
+    type: ResourcesTypes
+  ) => {
+    addResources(
+      resources.map((resource) => ({
+        ...resource,
+        resourceType: type
+      }))
+    )
+  }
+
+  const handleOpenAddLessonsModal = () => {
+    openModal({
+      component: (
+        <AddResources<Lesson>
+          columns={lessonColumns}
+          onAddResources={(resources) =>
+            handleAddResources(resources, setLessons, ResourcesTypes.Lessons)
+          }
+          removeColumnRules={removeLessontColumnRules}
+          requestService={ResourceService.getUsersLessons}
+          resourceType={resourcesData.lessons.resource}
+          resources={lessons}
+        />
+      )
+    })
+  }
+
+  const handleOpenAddQuizzesModal = () => {
+    openModal({
+      component: (
+        <AddResources<Quiz>
+          columns={quizColumns}
+          onAddResources={(resources) =>
+            handleAddResources(resources, setQuizzes, ResourcesTypes.Quizzes)
+          }
+          removeColumnRules={removeQuizColumnRules}
+          requestService={ResourceService.getQuizzes}
+          resourceType={resourcesData.quizzes.resource}
+          resources={quizzes}
+        />
+      )
+    })
+  }
+
+  const handleOpenAddAttachmentsModal = () => {
+    openModal({
+      component: (
+        <AddResources<Attachment>
+          columns={attachmentColumns}
+          onAddResources={(resources) =>
+            handleAddResources(
+              resources,
+              setAttachments,
+              ResourcesTypes.Attachments
+            )
+          }
+          removeColumnRules={removeAttachmentColumnRules}
+          requestService={ResourceService.getAttachments}
+          resourceType={resourcesData.attachments.resource}
+          resources={attachments}
+        />
+      )
     })
   }
 
   const sectionActions = [
     {
       id: 1,
-      label: <Box>{t('course.courseSection.sectionMenu.deleteSection')}</Box>,
+      label: (
+        <Box sx={styles.deleteIconWrapper}>
+          <DeleteOutlineIcon sx={styles.menuIcon} />
+          {t('course.courseSection.sectionMenu.deleteSection')}
+        </Box>
+      ),
       func: onDeleteSection
     }
   ]
@@ -85,35 +237,43 @@ const CourseSectionContainer: FC<SectionProps> = ({
     {
       id: 1,
       label: (
-        <Box>{t('course.courseSection.resourcesMenu.lessonMenuItem')}</Box>
+        <Box sx={styles.menuItem}>
+          <Box sx={styles.menuIcon}>{resourcesData.lessons.icon}</Box>
+          {t('course.courseSection.resourcesMenu.lessonMenuItem')}
+        </Box>
       ),
-      func: closeMenu
+      func: handleOpenAddLessonsModal
     },
     {
       id: 2,
-      label: <Box>{t('course.courseSection.resourcesMenu.quizMenuItem')}</Box>,
-      func: closeMenu
+      label: (
+        <Box sx={styles.menuItem}>
+          <Box sx={styles.menuIcon}>{resourcesData.quizzes.icon}</Box>
+          {t('course.courseSection.resourcesMenu.quizMenuItem')}
+        </Box>
+      ),
+      func: handleOpenAddQuizzesModal
     },
     {
       id: 3,
       label: (
-        <Box>{t('course.courseSection.resourcesMenu.attachmentMenuItem')}</Box>
+        <Box sx={styles.menuItem}>
+          <Box sx={styles.menuIcon}>{resourcesData.attachments.icon}</Box>
+          {t('course.courseSection.resourcesMenu.attachmentMenuItem')}
+        </Box>
       ),
-      func: closeMenu
+      func: handleOpenAddAttachmentsModal
     }
   ]
 
   const resourcesMenuItems = addResourceActions.map(({ label, func, id }) => (
-    <MenuItem key={id} onClick={() => onAction(func)} sx={styles.menuItem}>
+    <MenuItem key={id} onClick={() => onAction(func)}>
       {label}
     </MenuItem>
   ))
 
   return (
     <Box sx={styles.root}>
-      <Box sx={styles.dragIconWrapper}>
-        <DragIndicatorIcon sx={styles.dragIcon} />
-      </Box>
       <Box sx={styles.header}>
         <IconButton onClick={onShowHide} sx={styles.headerIconWrapper}>
           {isVisible ? (
@@ -163,6 +323,11 @@ const CourseSectionContainer: FC<SectionProps> = ({
             onChange={onDescriptionInputChange}
             value={descriptionInput}
             variant={TextFieldVariantEnum.Standard}
+          />
+          <ResourcesList
+            deleteResource={deleteResource}
+            items={resources}
+            setResources={setResources}
           />
           <AppButton
             endIcon={<KeyboardArrowDownIcon fontSize={SizeEnum.Small} />}

@@ -11,26 +11,28 @@ import {
 import Box from '@mui/material/Box'
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator'
 
-import CourseSectionContainer from '~/containers/course-section/CourseSectionContainer'
+import ResourceItem from '~/containers/course-section/resource-item/ResourceItem'
 
-import { styles } from '~/containers/course-sections-list/CourseSectionsList.styles'
+import { styles } from '~/containers/course-section/resources-list/ResourcesList.styles'
 
-import { CourseSection } from '~/types'
+import { CourseResources } from '~/types'
 
-interface CourseSectionsListProps {
-  items: CourseSection[]
-  setSectionsItems: Dispatch<SetStateAction<CourseSection[]>>
+interface ResourcesListProps {
+  items: CourseResources[]
+  setResources: Dispatch<SetStateAction<CourseResources[]>>
+  deleteResource: (resource: CourseResources) => void
 }
 
-const CourseSectionsList: FC<CourseSectionsListProps> = ({
+const ResourcesList: FC<ResourcesListProps> = ({
   items,
-  setSectionsItems
+  setResources,
+  deleteResource
 }) => {
   const reorder = (
-    list: CourseSection[],
+    list: CourseResources[],
     startIndex: number,
     endIndex: number
-  ): CourseSection[] => {
+  ): CourseResources[] => {
     const result = Array.from(list)
     const [removed] = result.splice(startIndex, 1)
     result.splice(endIndex, 0, removed)
@@ -49,24 +51,25 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
       result.destination.index
     )
 
-    setSectionsItems(reorderedItems)
+    setResources(reorderedItems)
   }
 
-  const sectionsList = items.map((item, i) => (
-    <Draggable draggableId={item.id.toString()} index={i} key={item.id}>
+  const resourcesList = items.map((item, i) => (
+    <Draggable draggableId={item._id.toString()} index={i} key={item._id}>
       {(provided: DraggableProvided, snapshot: DraggableStateSnapshot) => (
         <Box
           ref={provided.innerRef}
           sx={styles.section(snapshot.isDragging)}
           {...provided.draggableProps}
         >
-          <Box sx={styles.dragIconWrapper} {...provided.dragHandleProps}>
-            <DragIndicatorIcon sx={styles.dragIcon} />
+          <Box
+            className='dragIcon'
+            sx={styles.dragIcon}
+            {...provided.dragHandleProps}
+          >
+            <DragIndicatorIcon />
           </Box>
-          <CourseSectionContainer
-            sectionData={item}
-            setSectionsItems={setSectionsItems}
-          />
+          <ResourceItem deleteResource={deleteResource} resource={item} />
         </Box>
       )}
     </Draggable>
@@ -78,7 +81,7 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
         <Droppable droppableId='draggable'>
           {(provided: DroppableProvided) => (
             <Box {...provided.droppableProps} ref={provided.innerRef}>
-              {sectionsList}
+              {resourcesList}
               {provided.placeholder}
             </Box>
           )}
@@ -88,4 +91,4 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
   )
 }
 
-export default CourseSectionsList
+export default ResourcesList
