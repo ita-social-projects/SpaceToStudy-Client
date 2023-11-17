@@ -167,8 +167,7 @@ const CategoriesContainer = () => {
     sort: sortOptions,
     itemsPerPage,
     resource: ResourcesTabsEnum.Categories,
-    sx: styles.table,
-    rename: true
+    sx: styles.table
   }
 
   return (
