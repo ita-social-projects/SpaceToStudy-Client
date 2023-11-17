@@ -10,7 +10,7 @@ export const styles = {
     minHeight: '245px',
     backgroundColor: 'basic.white',
     borderRadius: '6px',
-    p: '24px 24px 16px 24px'
+    p: '24px 24px 16px'
   },
   title: {
     typography: TypographyVariantEnum.H5,
