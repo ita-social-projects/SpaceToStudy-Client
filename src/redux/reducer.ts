@@ -7,12 +7,6 @@ import {
   isRejected
 } from '@reduxjs/toolkit'
 import { AuthService } from '~/services/auth-service'
-import {
-  getFromLocalStorage,
-  removeFromLocalStorage,
-  setToLocalStorage
-} from '~/services/local-storage-service'
-import { accessToken } from '~/constants'
 import { AxiosError } from 'axios'
 import {
   AccessToken,
@@ -48,7 +42,6 @@ export const loginUser = createAsyncThunk(
   async (userData: LoginParams, { rejectWithValue, dispatch }) => {
     try {
       const { data } = await AuthService.login(userData)
-      setToLocalStorage(accessToken, data.accessToken)
       dispatch(setUser(data.accessToken))
     } catch (e) {
       const error = e as AxiosError<ErrorResponse>
@@ -62,7 +55,6 @@ export const googleAuth = createAsyncThunk(
   async (userData: GoogleAuthParams, { rejectWithValue, dispatch }) => {
     try {
       const { data } = await AuthService.googleAuth(userData)
-      setToLocalStorage(accessToken, data.accessToken)
       dispatch(setUser(data.accessToken))
     } catch (e) {
       const error = e as AxiosError<ErrorResponse>
@@ -88,7 +80,6 @@ export const logoutUser = createAsyncThunk(
   async (_, { rejectWithValue, dispatch }) => {
     try {
       await AuthService.logout()
-      removeFromLocalStorage(accessToken)
       dispatch(logout())
     } catch (e) {
       const error = e as AxiosError<ErrorResponse>
@@ -101,9 +92,8 @@ export const checkAuth = createAsyncThunk(
   'appMain/checkAuth',
   async (_, { rejectWithValue, dispatch }) => {
     try {
-      if (getFromLocalStorage(accessToken)) {
-        const { data } = await AuthService.refresh()
-        setToLocalStorage(accessToken, data.accessToken)
+      const { data } = await AuthService.refresh()
+      if (data) {
         dispatch(setUser(data.accessToken))
       }
     } catch (e) {

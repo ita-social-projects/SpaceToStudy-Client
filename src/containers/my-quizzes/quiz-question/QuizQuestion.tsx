@@ -1,30 +1,35 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import FormGroup from '@mui/material/FormGroup'
-import RadioGroup from '@mui/material/RadioGroup'
-import Checkbox from '@mui/material/Checkbox'
-import Radio from '@mui/material/Radio'
-
+import {
+  Box,
+  Typography,
+  FormGroup,
+  Checkbox,
+  Radio,
+  FormControlLabel,
+  RadioGroup,
+  SxProps
+} from '@mui/material'
+import { questionType } from '~/components/question-editor/QuestionEditor.constants'
 import AppCard from '~/components/app-card/AppCard'
 
 import { Question } from '~/types'
-import { questionType } from '~/components/question-editor/QuestionEditor.constants'
-import { styles } from '~/containers/my-quizzes/selectable-question/SelectableQuestion.styles'
+import { styles } from './QuizQuestion.styles'
 
-interface SelectableQuestionProps {
+interface QuizQuestionProps {
   question: Question
-  selectedIndex: number
+  index: number
+  useAppCard?: boolean
+  sx: { root: SxProps }
 }
 
-const SelectableQuestion: FC<SelectableQuestionProps> = ({
+const QuizQuestion: FC<QuizQuestionProps> = ({
   question,
-  selectedIndex
+  index,
+  useAppCard = false,
+  sx
 }) => {
   const { t } = useTranslation()
-
   const { isMultipleChoice, isSingleChoice } = questionType(question.type)
 
   const answersList = question.answers.map((answer) => (
@@ -36,21 +41,23 @@ const SelectableQuestion: FC<SelectableQuestionProps> = ({
     />
   ))
 
+  const ContainerComponent = useAppCard ? AppCard : Box
+
   return (
-    <AppCard sx={styles.root}>
+    <ContainerComponent sx={sx.root}>
       <Typography sx={styles.type}>
         {t(`questionPage.questionType.${question.type}`)}
       </Typography>
 
       <Box sx={styles.titleContainer}>
-        <Typography sx={styles.title}>{selectedIndex + 1}.</Typography>
+        <Typography sx={styles.title}>{index + 1}.</Typography>
         <Typography sx={styles.title}>{question.text}</Typography>
       </Box>
 
       {isMultipleChoice && <FormGroup>{answersList}</FormGroup>}
       {isSingleChoice && <RadioGroup>{answersList}</RadioGroup>}
-    </AppCard>
+    </ContainerComponent>
   )
 }
 
-export default SelectableQuestion
+export default QuizQuestion

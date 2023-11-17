@@ -11,7 +11,7 @@ import {
 } from '~/types'
 
 export interface LocalStorage {
-  accessToken?: string
+  'emoji-mart.last'?: string
 }
 
 export interface GetUsersParams extends RequestParams {

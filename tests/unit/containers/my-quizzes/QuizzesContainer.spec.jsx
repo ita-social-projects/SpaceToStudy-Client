@@ -61,7 +61,7 @@ describe('QuizzesContainer component with data', () => {
 describe('QuizzesContainer component with an error', () => {
   beforeEach(() => {
     mockAxiosClient.onGet(URLs.quizzes.get).reply(404, {
-      code: 'error',
+      code: 'UNAUTHORIZED',
       message: 'The requested URL was not found.'
     })
     renderWithProviders(<QuizzesContainer />)
@@ -72,8 +72,6 @@ describe('QuizzesContainer component with an error', () => {
   })
 
   it('should return error message', () => {
-    expect(
-      screen.getByText('errors.The requested URL was not found.')
-    ).toBeInTheDocument()
+    expect(screen.getByText('errors.UNAUTHORIZED')).toBeInTheDocument()
   })
 })

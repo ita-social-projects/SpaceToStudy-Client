@@ -11,6 +11,12 @@ export const styles = {
     borderRadius: '2px',
     cursor: 'pointer'
   }),
+  quizQuestion: {
+    root: {
+      display: 'block',
+      p: '20px 30px'
+    }
+  },
   statusLine: {
     height: '4px',
     backgroundColor: 'primary.200',

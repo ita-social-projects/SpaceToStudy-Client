@@ -10,5 +10,6 @@
   "UNAUTHORIZED": "User is not authorized",
   "EMAIL_NOT_FOUND": "There is no user registered with that email",
   "BAD_RESET_TOKEN": "Your time is up please try again",
-  "DOCUMENT_NOT_FOUND": "Not found"
+  "DOCUMENT_NOT_FOUND": "Not found",
+  "UNKNOWN_ERROR": "Something went wrong"
 }

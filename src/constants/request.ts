@@ -76,7 +76,8 @@ export const URLs = {
   messages: {
     get: '/messages',
     post: '/messages',
-    delete: '/messages'
+    delete: '/messages',
+    patch: '/messages'
   },
   quizzes: {
     get: '/quizzes',

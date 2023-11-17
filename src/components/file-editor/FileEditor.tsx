@@ -1,8 +1,6 @@
 import { FC } from 'react'
 import { Editor } from '@tinymce/tinymce-react'
 
-import { initialFileValue } from '~/components/file-editor/FileEditor.constants'
-
 interface FileEditorProps {
   onEdit: (content: string) => void
   value: string
@@ -23,7 +21,6 @@ const FileEditor: FC<FileEditorProps> = ({ onEdit, value }) => {
         content_style:
           'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
       }}
-      initialValue={initialFileValue}
       onEditorChange={onEdit}
       value={value}
     />

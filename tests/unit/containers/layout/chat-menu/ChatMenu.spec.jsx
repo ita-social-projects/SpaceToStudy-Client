@@ -1,9 +1,10 @@
-import { fireEvent, screen } from '@testing-library/react'
+import { fireEvent, screen, cleanup, waitFor } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 import { expect, vi } from 'vitest'
 import ChatMenu from '~/containers/layout/chat-menu/ChatMenu'
 
 const mockOpenDialog = vi.fn()
+const mockSetAlert = vi.fn()
 vi.mock('~/hooks/use-confirm', () => {
   return {
     default: () => ({
@@ -27,7 +28,7 @@ vi.mock('~/context/snackbar-context', async () => {
   const actual = await vi.importActual('~/context/snackbar-context')
   return {
     useSnackBarContext: vi.fn(() => ({
-      setAlert: vi.fn()
+      setAlert: mockSetAlert
     })),
     ...actual
   }
@@ -50,55 +51,100 @@ describe('ChatMenu Component', () => {
     _id: '1',
     deletedFor: []
   }
+  const messages = {
+    len: 0
+  }
   const onClose = vi.fn()
   const updateChats = vi.fn()
+  const updateMessages = vi.fn()
 
-  beforeEach(() => {
+  const renderComponent = () =>
     renderWithProviders(
       <ChatMenu
         anchorEl={anchorEl}
         currentChat={currentChat}
+        messagesLength={messages.len}
         onClose={onClose}
         updateChats={updateChats}
+        updateMessages={updateMessages}
       />
     )
+
+  beforeEach(() => {
+    renderComponent()
   })
 
   it('renders without errors', () => {
-    expect(screen.getByText('chatPage.clearHistory')).toBeInTheDocument()
-    expect(screen.getByText('chatPage.deleteChat')).toBeInTheDocument()
+    expect(
+      screen.getByText('chatPage.chatMenu.clearHistory')
+    ).toBeInTheDocument()
+    expect(screen.getByText('chatPage.chatMenu.deleteChat')).toBeInTheDocument()
   })
 
-  it('handles Clear History button click', () => {
-    const clearHistoryButton = screen.getByText('chatPage.clearHistory')
+  it('should disable Clear History button if there are no messages', () => {
+    const clearHistoryButton = screen.getByText(
+      'chatPage.chatMenu.clearHistory'
+    )
 
     fireEvent.click(clearHistoryButton)
 
-    expect(onClose).toHaveBeenCalled()
+    expect(clearHistoryButton).toHaveAttribute('disabled')
+    expect(onClose).not.toHaveBeenCalled()
+    expect(updateMessages).not.toHaveBeenCalled()
   })
 
-  it('handles Delete button click (mark as deleted)', () => {
-    const deleteButton = screen.getByText('chatPage.deleteChat')
-    const modalTitle = 'chatPage.markingAsDeletedTitle'
-    const modalDescription = 'chatPage.markingAsDeletedWarning'
+  it('handles Clear History button click', async () => {
+    messages.len = 5
+    cleanup()
+    renderComponent()
 
-    fireEvent.click(deleteButton)
+    const clearHistoryButton = screen.getByText(
+      'chatPage.chatMenu.clearHistory'
+    )
+
+    fireEvent.click(clearHistoryButton)
+    const confirmFunction = mockOpenDialog.mock.calls[0][0].sendConfirm
+    await confirmFunction(true)
 
     expect(onClose).toHaveBeenCalled()
-    expect(modalTitle).toBe(mockOpenDialog.mock.calls[0][0].title)
-    expect(modalDescription).toBe(mockOpenDialog.mock.calls[0][0].message)
+    expect(mockOpenDialog).toHaveBeenCalledWith({
+      message: 'chatPage.chatMenu.clearHistoryWarning',
+      sendConfirm: expect.any(Function),
+      title: 'chatPage.chatMenu.clearHistoryTitle'
+    })
+    waitFor(() => expect(updateMessages).toHaveBeenCalled())
+  })
+
+  it('handles Delete button click (mark as deleted)', async () => {
+    const deleteButton = screen.getByText('chatPage.chatMenu.deleteChat')
+
+    fireEvent.click(deleteButton)
+    const confirmFunction = mockOpenDialog.mock.calls[1][0].sendConfirm
+    await confirmFunction(true)
+
+    expect(onClose).toHaveBeenCalled()
+    expect(mockOpenDialog).toHaveBeenCalledWith({
+      message: 'chatPage.chatMenu.markingAsDeletedWarning',
+      sendConfirm: expect.any(Function),
+      title: 'chatPage.chatMenu.markingAsDeletedTitle'
+    })
+    waitFor(() => expect(updateChats).toHaveBeenCalled())
   })
 
   it('handles Delete button click (fully deleting)', async () => {
-    const deleteButton = screen.getByText('chatPage.deleteChat')
-    const modalTitle = 'chatPage.fullDeleteTitle'
-    const modalDescription = 'chatPage.fullDeleteWarning'
+    const deleteButton = screen.getByText('chatPage.chatMenu.deleteChat')
     currentChat.deletedFor = ['user1']
 
     fireEvent.click(deleteButton)
+    const confirmFunction = mockOpenDialog.mock.calls[2][0].sendConfirm
+    await confirmFunction(true)
 
     expect(onClose).toHaveBeenCalled()
-    expect(modalTitle).toBe(mockOpenDialog.mock.calls[1][0].title)
-    expect(modalDescription).toBe(mockOpenDialog.mock.calls[1][0].message)
+    expect(mockOpenDialog).toHaveBeenCalledWith({
+      message: 'chatPage.chatMenu.fullDeleteWarning',
+      sendConfirm: expect.any(Function),
+      title: 'chatPage.chatMenu.fullDeleteTitle'
+    })
+    waitFor(() => expect(updateChats).toHaveBeenCalled())
   })
 })

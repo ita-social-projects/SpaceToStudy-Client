@@ -15,7 +15,8 @@ import {
   ErrorResponse,
   TableItem,
   ResourcesTableData,
-  TableRowAction
+  TableRowAction,
+  ResourcesTabsEnum
 } from '~/types'
 import { roundedBorderTable } from '~/containers/my-cooperations/cooperations-container/CooperationContainer.styles'
 
@@ -88,7 +89,10 @@ const MyResourcesTable = <T extends TableItem>({
 
   const rowActions: TableRowAction[] = [
     {
-      label: t('common.edit'),
+      label:
+        resource === ResourcesTabsEnum.Categories
+          ? t('common.rename')
+          : t('common.edit'),
       func: onEdit
     },
     {

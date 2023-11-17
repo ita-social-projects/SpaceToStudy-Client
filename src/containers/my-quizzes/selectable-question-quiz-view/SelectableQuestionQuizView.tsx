@@ -5,7 +5,7 @@ import ArrowForward from '@mui/icons-material/ArrowForward'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import AppButton from '~/components/app-button/AppButton'
-import SelectableQuestion from '~/containers/my-quizzes/selectable-question/SelectableQuestion'
+import QuizQuestion from '~/containers/my-quizzes/quiz-question/QuizQuestion'
 
 import { Question, ButtonVariantEnum, SizeEnum } from '~/types'
 import { styles } from '~/containers/my-quizzes/selectable-question-quiz-view/SelectableQuestion.styles'
@@ -44,9 +44,11 @@ const SelectableQuestionQuizView: FC<SelectableQuestionQuizViewProps> = ({
   return (
     <Box>
       <Box sx={styles.selectableList}>{questionsNumberList}</Box>
-      <SelectableQuestion
+      <QuizQuestion
+        index={selectedIndex}
         question={questions[selectedIndex]}
-        selectedIndex={selectedIndex}
+        sx={styles.quizQuestion}
+        useAppCard
       />
       {!isSingleQuestion && (
         <Box sx={styles.buttons}>

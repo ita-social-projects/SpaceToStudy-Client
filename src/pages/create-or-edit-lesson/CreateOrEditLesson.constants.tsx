@@ -10,6 +10,7 @@ export const validations = {
 export const initialValues = {
   title: '',
   description: '',
+  content: '',
   attachments: []
 }
 

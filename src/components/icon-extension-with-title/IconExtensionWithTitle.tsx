@@ -38,6 +38,7 @@ const IconExtensionWithTitle: FC<IconExtensionWithTitleProps> = ({
       )}
       <TitleWithDescription
         description={size ? convertSize(size) : description}
+        isDescriptionTooltip
         style={styles.titleWithDescription}
         title={title}
       />

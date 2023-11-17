@@ -49,7 +49,7 @@ const QuizzesContainer = () => {
     (error: ErrorResponse) => {
       setAlert({
         severity: snackbarVariants.error,
-        message: error ? `errors.${error.message}` : ''
+        message: error ? `errors.${error.code}` : ''
       })
     },
     [setAlert]

@@ -13,8 +13,13 @@ const useMenu = () => {
     setAnchorEl(null)
   }
 
-  const renderMenu = (menuItems) => (
-    <Menu anchorEl={anchorEl} onClose={closeMenu} open={Boolean(anchorEl)}>
+  const renderMenu = (menuItems, menuProps) => (
+    <Menu
+      anchorEl={anchorEl}
+      onClose={closeMenu}
+      open={Boolean(anchorEl)}
+      {...menuProps}
+    >
       {menuItems}
     </Menu>
   )
