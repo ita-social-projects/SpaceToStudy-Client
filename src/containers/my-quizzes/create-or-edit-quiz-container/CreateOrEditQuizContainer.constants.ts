@@ -4,7 +4,7 @@ export const defaultResponse = {
   description: '',
   items: [],
   author: { _id: '' },
-  category: '',
+  category: null,
   createdAt: '',
   updatedAt: ''
 }

@@ -67,7 +67,7 @@ const CreateOrEditQuizContainer = ({
     _: React.SyntheticEvent,
     value: Category | null
   ) => {
-    setCategory(value?._id ?? '')
+    setCategory(value?._id ?? null)
   }
 
   const handleResponse = () => {
