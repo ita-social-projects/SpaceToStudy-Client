@@ -1,5 +1,13 @@
 import { TypographyVariantEnum } from '~/types'
 
+const navItem = {
+  typography: TypographyVariantEnum.Subtitle2,
+  whiteSpace: 'nowrap',
+  color: 'primary.900',
+  cursor: 'pointer',
+  '&:hover': { color: 'primary.500' }
+}
+
 export const styles = {
   header: {
     display: 'flex',
@@ -16,17 +24,22 @@ export const styles = {
     display: { xs: 'none', md: 'flex' },
     alignItems: 'center'
   },
-  navItemText: (isActive: boolean) => ({
-    typography: TypographyVariantEnum.Subtitle2,
-    whiteSpace: 'nowrap',
-    color: 'primary.900',
+  listItem: { py: '5px' },
+  navItemText: (isActive = false) => ({
+    ...navItem,
     textDecoration: isActive ? 'underline' : 'none',
-    '&:hover': {
-      color: 'primary.500'
-    },
-    '&:focus': {
-      textDecoration: 'underline'
-    }
+    '&:focus': { textDecoration: 'underline' }
+  }),
+  findOfferMenuItem: {
+    ...navItem,
+    p: '8px 14px'
+  },
+  arrowIcon: (open: boolean) => ({
+    width: '18px',
+    height: '18px',
+    ml: '2px',
+    color: 'primary.900',
+    transform: `rotate(${open ? 180 : 0}deg)`
   }),
   divider: {
     color: 'primary.900',
