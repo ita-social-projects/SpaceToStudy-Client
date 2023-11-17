@@ -6,7 +6,6 @@ import useSelect from '~/hooks/table/use-select'
 import useSort from '~/hooks/table/use-sort'
 import useAxios from '~/hooks/use-axios'
 import useBreakpoints from '~/hooks/use-breakpoints'
-import { AxiosResponse } from 'axios'
 
 import AddResourceModal from '~/containers/my-resources/add-resource-modal/AddResourceModal'
 
@@ -20,18 +19,15 @@ import {
   CourseResources,
   TableColumn,
   RemoveColumnRules,
-  Question
+  Question,
+  ServiceFunction
 } from '~/types'
-
-type GetServiceFunction<GetResourcesParams, T> = (
-  params?: GetResourcesParams
-) => Promise<AxiosResponse<ItemsWithCount<T>>>
 
 interface AddResourcesProps<T extends CourseResources | Question> {
   resources: T[]
   onAddResources: (resource: T[]) => void
   resourceType: string
-  requestService: GetServiceFunction<GetResourcesParams, T>
+  requestService: ServiceFunction<ItemsWithCount<T>, GetResourcesParams>
   columns: TableColumn<T>[]
   removeColumnRules: RemoveColumnRules<T>
 }
