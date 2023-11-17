@@ -86,7 +86,7 @@ const CreateOrEditLesson = () => {
           removeColumnRules={removeColumnRules}
           requestService={ResourceService.getAttachments}
           resourceType={ResourcesTabsEnum.Attachments}
-          resources={attachments}
+          resources={data.attachments}
         />
       )
     })
