@@ -31,7 +31,6 @@ interface MyResourcesTableInterface<T>
   }
   services: { deleteService: (id?: string) => Promise<AxiosResponse> }
   pagination: PaginationProps
-  rename?: boolean
 }
 
 const MyResourcesTable = <T extends TableItem>({
@@ -41,7 +40,6 @@ const MyResourcesTable = <T extends TableItem>({
   actions,
   services,
   pagination,
-  rename = false,
   ...props
 }: MyResourcesTableInterface<T>) => {
   const { t } = useTranslation()
