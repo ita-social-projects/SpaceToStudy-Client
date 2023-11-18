@@ -1,35 +1,26 @@
 import {
   CommonEntityFields,
   UserResponse,
-  Answer,
   Category,
   Question,
   ResourcesTabsEnum as ResourcesTypes
 } from '~/types'
 
-export interface QuestionWithAnswers {
-  question: string
-  answers: Answer[]
-}
-
 export interface Quiz extends CommonEntityFields {
   title: string
   description: string
-  items: QuestionWithAnswers[]
+  items: Question[]
   author: Pick<UserResponse, '_id'>
   category: Category | null
   resourceType?: ResourcesTypes
 }
 
-export interface CreateQuizParams {
-  title: string
-  description: string
-  items: Question[]
-}
+export type CreateQuizParams = Omit<
+  Quiz,
+  'author' | '_id' | 'createdAt' | 'updatedAt'
+>
 
-export interface UpdateQuizParams {
-  title: Quiz['title']
-  id: Quiz['_id']
-  items?: Quiz['items']
-  description: Quiz['description']
+export interface UpdateQuizParams
+  extends Omit<Quiz, 'author' | '_id' | 'createdAt' | 'updatedAt'> {
+  id: string
 }

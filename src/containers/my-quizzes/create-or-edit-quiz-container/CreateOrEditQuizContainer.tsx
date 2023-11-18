@@ -17,6 +17,7 @@ import CreateOrEditQuizQuestion from '~/containers/my-quizzes/create-or-edit-qui
 import AppButton from '~/components/app-button/AppButton'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
+import Loader from '~/components/loader/Loader'
 
 import { snackbarVariants } from '~/constants'
 import { authRoutes } from '~/router/constants/authRoutes'
@@ -37,7 +38,8 @@ import {
   SizeEnum,
   TextFieldVariantEnum,
   ResourcesTabsEnum,
-  UpdateQuizParams
+  UpdateQuizParams,
+  Category
 } from '~/types'
 import { styles } from '~/containers/my-quizzes/create-or-edit-quiz-container/CreateOrEditQuizContainer.styles'
 
@@ -55,6 +57,7 @@ const CreateOrEditQuizContainer = ({
   const navigate = useNavigate()
   const { id } = useParams()
   const [isCreationOpen, setIsCreationOpen] = useState<boolean>(false)
+  const [category, setCategory] = useState<Category | null>(null)
 
   const handleResponse = () => {
     setAlert({
@@ -107,9 +110,13 @@ const CreateOrEditQuizContainer = ({
     setTitle(quiz.title)
     setDescription(quiz.description)
     setQuestions(quiz.items)
+    setCategory(quiz.category)
   }
 
-  const { fetchData: fetchQuizData } = useAxios<Quiz, string>({
+  const { loading: getQuizLoading, fetchData: fetchQuizData } = useAxios<
+    Quiz,
+    string
+  >({
     service: getQuiz,
     fetchOnMount: false,
     defaultResponse,
@@ -123,6 +130,10 @@ const CreateOrEditQuizContainer = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id])
+
+  if (getQuizLoading) {
+    return <Loader pageLoad />
+  }
 
   const onOpenAddQuestionsModal = () => {
     openModal({
@@ -156,8 +167,14 @@ const CreateOrEditQuizContainer = ({
 
   const onSaveQuiz = () =>
     id
-      ? void fetchEditedQuiz({ id, title, description, items: questions })
-      : void addNewQuiz({ title, description, items: questions })
+      ? void fetchEditedQuiz({
+          id,
+          title,
+          description,
+          items: questions,
+          category
+        })
+      : void addNewQuiz({ title, description, items: questions, category })
 
   return (
     <PageWrapper sx={styles.container}>
