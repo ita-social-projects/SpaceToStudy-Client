@@ -12,13 +12,6 @@ const getLabelStyles = (value: string) => ({
   color: palette.primary[300]
 })
 
-const commonStyle = {
-  fontSize: '14px',
-  position: 'absolute',
-  top: '-33px',
-  left: '-14px'
-}
-
 export const styles = {
   container: {
     p: { sm: '0' }
@@ -81,7 +74,10 @@ export const styles = {
     },
     position: 'relative',
     '& .MuiFormHelperText-root': {
-      ...commonStyle
+      fontSize: '14px',
+      position: 'absolute',
+      top: '-33px',
+      left: '-14px'
     }
   }
 }

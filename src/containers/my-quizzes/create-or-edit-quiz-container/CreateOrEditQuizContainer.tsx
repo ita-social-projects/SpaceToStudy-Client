@@ -217,8 +217,8 @@ const CreateOrEditQuizContainer = ({
           service={categoryService.getCategoriesNames}
           sx={styles.categoryInput}
           textFieldProps={{
-            label: t('myResourcesPage.quizzes.categoryDropdown'),
-            helperText: t('myResourcesPage.quizzes.categoryDropdownHelper')
+            label: t('common.categoryDropdown'),
+            helperText: t('common.categoryDropdownHelper')
           }}
           value={category}
           valueField='_id'

@@ -37,6 +37,8 @@
   "fileSizeError": "Size for one file cannot be more than 10 MB.",
   "noItems": "Елементів не знайдено",
   "view": "Переглянути",
+  "categoryDropdown": "Категорія...",
+  "categoryDropdownHelper": "Оберіть категорію:",
   "labels": {
     "sendMessage": "Надіслати повідомлення",
     "viewDetails": "Переглянути деталі",

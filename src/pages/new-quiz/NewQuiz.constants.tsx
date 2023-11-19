@@ -8,7 +8,7 @@ import CreateOrEditQuizContainer from '~/containers/my-quizzes/create-or-edit-qu
 import ViewQuizContainer from '~/containers/my-quizzes/view-quiz-container/ViewQuizContainer'
 import QuizSettingsContainer from '~/containers/my-quizzes/quiz-settings-container/QuizSettingsContainer'
 
-import { CreateQuizParams, Question } from '~/types'
+import { Category, CreateQuizParams, Question } from '~/types'
 
 export interface QuizContentProps {
   title: string
@@ -17,7 +17,7 @@ export interface QuizContentProps {
   setDescription: Dispatch<SetStateAction<CreateQuizParams['description']>>
   questions: Question[]
   setQuestions: Dispatch<SetStateAction<Question[]>>
-  category: string | null
+  category: Category | null
   setCategory: Dispatch<SetStateAction<string | null>>
 }
 
