@@ -43,6 +43,19 @@ export const styles = {
     gap: { xs: '24px', sm: '30px' },
     justifyContent: 'space-between'
   },
+  addButton: {
+    justifyContent: 'flex-start',
+    pl: '10px',
+    gap: '5px'
+  },
+  labelCategory: {
+    color: 'primary.600',
+    maxWidth: '464px',
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '4px'
+  },
   attachmentList: {
     container: {
       background: palette.basic.grey,

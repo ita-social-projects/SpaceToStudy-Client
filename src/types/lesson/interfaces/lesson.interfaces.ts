@@ -5,4 +5,5 @@ export interface LessonData {
   description: string
   content: string
   attachments: Attachment[]
+  category: string | null
 }

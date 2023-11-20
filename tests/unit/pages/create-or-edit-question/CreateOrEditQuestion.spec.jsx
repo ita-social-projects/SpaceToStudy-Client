@@ -1,4 +1,3 @@
-import { describe } from 'vitest'
 import { screen, fireEvent, waitFor } from '@testing-library/react'
 
 import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
