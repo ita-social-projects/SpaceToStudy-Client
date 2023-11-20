@@ -48,9 +48,19 @@
     "defaultNewDescription": "Опис...",
     "createNewQuestion": "Створити нове питання",
     "editQuestion": "Редагувати питання",
-    "addQuestion": "Додати питання",
+    "successEditedOuiz": "Тест успішно змінено",
     "successAddedOuiz": "Тест успішно створено",
-    "successEditedOuiz": "Тест успішно змінено"
+    "addQuestion":"Додати питання",
+    "settingsPointsAndAnswers": "Налаштування: Бали та відповіді",
+    "pointValues": "Значення балів",
+    "pointValuesDesc": "Респонденти можуть бачити загальну кількість балів і бали, отримані за кожне запитання",
+    "scoredUnscoredResponses": "Оцінені / не оцінені відповіді",
+    "scoredUnscoredResponsesDesc": "Респонденти можуть бачити, на які запитання було надано правильні чи неправильні відповіді",
+    "correctAnswers": "Правильні відповіді",
+    "correctAnswersDesc": "Респонденти можуть бачити правильні відповіді після оприлюднення оцінок",
+    "settingsQuiz": "Налаштування: Тест",
+    "questionsShuffle": "Питання перемішуються",
+    "questionsShuffleDesc": "Запитання будуть перемішуватися при кожній спробі"
   },
   "questions": {
     "addBtn": "Нове запитання",
