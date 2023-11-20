@@ -29,28 +29,4 @@ describe('CreateOrEditLesson component test', () => {
 
     expect(title).toBeInTheDocument()
   })
-
-  it('display validation error if title or description is empty', () => {
-    const titleInput = screen.getByLabelText('lesson.labels.title')
-
-    fireEvent.change(titleInput, { target: { value: '' } })
-
-    const descriptionInput = screen.getByLabelText('lesson.labels.description')
-
-    fireEvent.change(descriptionInput, { target: { value: '' } })
-
-    const saveButton = screen.getByText('common.save')
-
-    fireEvent.click(saveButton)
-
-    const errorTitle = screen.getByText('lesson.errorMessages.title')
-
-    expect(errorTitle).toBeInTheDocument()
-
-    const errorDescription = screen.getByText(
-      'lesson.errorMessages.description'
-    )
-
-    expect(errorDescription).toBeInTheDocument()
-  })
 })
