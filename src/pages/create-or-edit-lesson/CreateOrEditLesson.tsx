@@ -1,10 +1,4 @@
-import {
-  HTMLAttributes,
-  SyntheticEvent,
-  useCallback,
-  useEffect,
-  useState
-} from 'react'
+import { SyntheticEvent, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { AxiosResponse } from 'axios'
@@ -13,19 +7,16 @@ import Divider from '@mui/material/Divider'
 import AddIcon from '@mui/icons-material/Add'
 import CloseIcon from '@mui/icons-material/Close'
 import IconButton from '@mui/material/IconButton'
-import Typography from '@mui/material/Typography'
 
 import Loader from '~/components/loader/Loader'
 import AddResources from '~/containers/add-resources/AddResources'
 import IconExtensionWithTitle from '~/components/icon-extension-with-title/IconExtensionWithTitle'
-
 import { useModalContext } from '~/context/modal-context'
 import AppButton from '~/components/app-button/AppButton'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import FileEditor from '~/components/file-editor/FileEditor'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
-import AddCategoriesModal from '~/containers/my-resources/add-categories-modal/AddCategoriesModal'
-import AsyncAutocomplete from '~/components/async-autocomlete/AsyncAutocomplete'
+import CategoryDropdown from '~/containers/category-dropdown/CategoryDropdown'
 import { useSnackBarContext } from '~/context/snackbar-context'
 import useAxios from '~/hooks/use-axios'
 import useForm from '~/hooks/use-form'
@@ -55,20 +46,16 @@ import {
   TextFieldVariantEnum,
   Attachment,
   ResourcesTabsEnum,
-  CreateCategoriesParams,
-  CategoryNameInterface,
-  Categories,
-  TypographyVariantEnum
+  CategoryNameInterface
 } from '~/types'
 
 const CreateOrEditLesson = () => {
   const { t } = useTranslation()
   const { setAlert } = useSnackBarContext()
 
-  const { openModal, closeModal } = useModalContext()
+  const { openModal } = useModalContext()
   const navigate = useNavigate()
   const { id } = useParams()
-  const [isFetched, setIsFetched] = useState<boolean>(false)
 
   const handleResponseError = (error: ErrorResponse) => {
     setAlert({
@@ -143,52 +130,6 @@ const CreateOrEditLesson = () => {
     onResponseError: handleResponseError
   })
 
-  const createCategory = useCallback(
-    (params?: CreateCategoriesParams) =>
-      ResourceService.createResourceCategory(params),
-    []
-  )
-
-  const onResponseCategory = useCallback(
-    (response: Categories | null) => {
-      const categoryName = response ? response.name : ''
-
-      setAlert({
-        severity: snackbarVariants.success,
-        message: t('myResourcesPage.categories.successCreation', {
-          category: categoryName
-        })
-      })
-
-      setIsFetched(false)
-    },
-    [setAlert, t]
-  )
-
-  const { fetchData: handleCreateCategory } = useAxios({
-    service: createCategory,
-    defaultResponse: null,
-    fetchOnMount: false,
-    onResponse: onResponseCategory,
-    onResponseError: handleResponseError
-  })
-
-  const onCreateCategory = () => {
-    openModal({
-      component: (
-        <AddCategoriesModal
-          closeModal={closeModal}
-          createCategories={handleCreateCategory}
-        />
-      )
-    })
-  }
-
-  const getCategories = useCallback(() => {
-    setIsFetched(true)
-    return ResourceService.getResourcesCategoriesNames()
-  }, [])
-
   const onCategoryChange = (
     _: SyntheticEvent,
     value: CategoryNameInterface | null
@@ -254,34 +195,6 @@ const CreateOrEditLesson = () => {
     </Box>
   ))
 
-  const categoryOptionsList = (
-    props: HTMLAttributes<HTMLLIElement>,
-    option: string,
-    index: number
-  ) => (
-    <Box key={index}>
-      {index === 0 && (
-        <Box>
-          <AppButton
-            disableRipple
-            fullWidth
-            onClick={onCreateCategory}
-            size={SizeEnum.Medium}
-            sx={styles.addButton}
-            variant={ButtonVariantEnum.Text}
-          >
-            <AddIcon />
-            {t('myResourcesPage.categories.addBtn')}
-          </AppButton>
-          <Divider sx={styles.divider} />
-        </Box>
-      )}
-      <Box component={ComponentEnum.Li} {...(props as [])}>
-        {option}
-      </Box>
-    </Box>
-  )
-
   return (
     <PageWrapper>
       <Box
@@ -311,26 +224,10 @@ const CreateOrEditLesson = () => {
           value={data.description}
           variant={TextFieldVariantEnum.Standard}
         />
-        <Box sx={styles.labelCategory}>
-          <Typography variant={TypographyVariantEnum.Body2}>
-            {t('questionPage.chooseCategory')}
-          </Typography>
-          <AsyncAutocomplete<CategoryNameInterface>
-            fetchCondition={!isFetched}
-            fetchOnFocus
-            labelField='name'
-            onChange={onCategoryChange}
-            renderOption={(props, option, state) =>
-              categoryOptionsList(props, option.name, state.index)
-            }
-            service={getCategories}
-            textFieldProps={{
-              label: t('myResourcesPage.categories.categoryDropdown')
-            }}
-            value={data.category}
-            valueField='_id'
-          />
-        </Box>
+        <CategoryDropdown
+          category={data.category}
+          onCategoryChange={onCategoryChange}
+        />
         <Divider sx={styles.divider} />
         <AppButton
           onClick={handleOpenAddAttachmentsModal}
