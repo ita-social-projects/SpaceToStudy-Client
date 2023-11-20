@@ -6,6 +6,7 @@ const palette = {
   imageOverlay: 'rgba(38, 50, 56, 0.7)',
   basic: {
     black: '#000000',
+    gray: '#B0BEC5',
     blue: '#0B8AF8',
     white: '#FFFFFF',
     grey: '#ECEFF1',
@@ -19,7 +20,8 @@ const palette = {
     lime: '#99CC00',
     turquoise: '#489DA0',
     turquoiseDark: '#3B8587',
-    turquoiseChat: '#A0F0F2'
+    turquoiseChat: '#A0F0F2',
+    blueGray: '#607D8B'
   },
   companyBlue: 'rgba(0, 167, 167, 0.2)',
   error: {
