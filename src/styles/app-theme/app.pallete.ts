@@ -6,6 +6,7 @@ const palette = {
   imageOverlay: 'rgba(38, 50, 56, 0.7)',
   basic: {
     black: '#000000',
+    gray: '#B0BEC5',
     blue: '#0B8AF8',
     white: '#FFFFFF',
     grey: '#ECEFF1',

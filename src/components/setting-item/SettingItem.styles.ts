@@ -11,6 +11,7 @@ export const styles = {
   settingContainer: {
     mt: '24px',
     display: 'flex',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    alignItems: 'center'
   }
 }
