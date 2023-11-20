@@ -44,6 +44,7 @@
     "confirmDeletionTitle":"Do you confirm quiz deletion?",
     "successDeletion":"Quiz was deleted successfully",
     "editQuestion": "Edit question",
+    "successEditedOuiz": "Ouiz was successtully edited",
     "successAddedOuiz": "Quiz was successfully created",
     "successEditedOuiz": "Ouiz was successtully edited",
     "defaultNewTitle":"Untitled",
