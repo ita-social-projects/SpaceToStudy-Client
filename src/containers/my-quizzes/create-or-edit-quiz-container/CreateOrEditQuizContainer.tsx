@@ -38,8 +38,7 @@ import {
   SizeEnum,
   TextFieldVariantEnum,
   ResourcesTabsEnum,
-  UpdateQuizParams,
-  Category
+  UpdateQuizParams
 } from '~/types'
 import { styles } from '~/containers/my-quizzes/create-or-edit-quiz-container/CreateOrEditQuizContainer.styles'
 
@@ -49,7 +48,9 @@ const CreateOrEditQuizContainer = ({
   description,
   setDescription,
   questions,
-  setQuestions
+  setQuestions,
+  category,
+  setCategory
 }: QuizContentProps) => {
   const { t } = useTranslation()
   const { setAlert } = useSnackBarContext()
@@ -57,7 +58,6 @@ const CreateOrEditQuizContainer = ({
   const navigate = useNavigate()
   const { id } = useParams()
   const [isCreationOpen, setIsCreationOpen] = useState<boolean>(false)
-  const [category, setCategory] = useState<Category | null>(null)
 
   const handleResponse = () => {
     setAlert({
