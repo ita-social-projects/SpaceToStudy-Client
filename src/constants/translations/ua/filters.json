@@ -8,5 +8,6 @@
             "creationTime": "Часом створення"
     	}
     },
-	"filtersListTitle": "Фільтри"
+	"filtersListTitle": "Фільтри",
+	"filtersLevelsLable": "Рівні"
 }

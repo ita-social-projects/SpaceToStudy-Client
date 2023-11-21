@@ -8,5 +8,10 @@
   "newCourse": {
     "bannerTitle": "Add Banner Image",
     "addIconAlt": "Add image icon"
+  },
+  "filterLabel": {
+    "categories": "Choose the category of the course",
+    "subjects": "Choose the subject of the course",
+    "levels": "Choose suitable levels for the course"
   }
 }

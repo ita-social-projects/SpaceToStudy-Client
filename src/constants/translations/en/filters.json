@@ -8,5 +8,6 @@
             "creationTime": "Creation time"
         }
     },
-    "filtersListTitle": "Filters"
+    "filtersListTitle": "Filters",
+    "filtersLevelsLable": "Levels"
 }
