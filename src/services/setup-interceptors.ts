@@ -23,7 +23,7 @@ export const setupInterceptors = (): void => {
         try {
           return await axiosClient.request(originalRequest)
         } catch (e) {
-          void authService.endpoints.logout.initiate()
+          return authService.endpoints.logout.initiate()
         }
       }
       return Promise.reject(error)

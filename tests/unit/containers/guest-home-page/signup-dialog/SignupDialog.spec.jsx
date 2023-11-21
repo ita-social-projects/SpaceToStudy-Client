@@ -1,4 +1,4 @@
-import { vi } from 'vitest'
+import { expect, vi } from 'vitest'
 import { screen, fireEvent, waitFor } from '@testing-library/react'
 import SignupDialog from '~/containers/guest-home-page/signup-dialog/SignupDialog'
 import { renderWithProviders } from '~tests/test-utils'
@@ -86,22 +86,32 @@ describe('Signup dialog test', () => {
 
     fireEvent.change(inputFirstName, { target: { value: 'test' } })
 
+    expect(inputFirstName.value).toBe('test')
+
     const inputLastName = screen.getByLabelText(/common.labels.lastName/i)
 
     fireEvent.change(inputLastName, { target: { value: 'test' } })
+
+    expect(inputFirstName.value).toBe('test')
 
     const inputEmail = screen.getByLabelText(/common.labels.email/i)
 
     fireEvent.change(inputEmail, { target: { value: 'test@gmail.com' } })
 
+    expect(inputEmail.value).toBe('test@gmail.com')
+
     const inputPassword = screen.getByLabelText(/common.labels.password/i)
 
     fireEvent.change(inputPassword, { target: { value: '12345678a/A' } })
+
+    expect(inputPassword.value).toBe('12345678a/A')
 
     const inputConfirmPassword = screen.getByLabelText(
       /common.labels.confirmPassword/i
     )
     fireEvent.change(inputConfirmPassword, { target: { value: '12345678a/A' } })
+
+    expect(inputConfirmPassword.value).toBe('12345678a/A')
 
     const checkbox = screen.getByRole('checkbox')
 
