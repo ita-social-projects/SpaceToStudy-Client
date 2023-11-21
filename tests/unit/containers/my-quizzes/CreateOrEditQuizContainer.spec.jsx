@@ -39,16 +39,12 @@ describe('CreateOrEditQuizContainer', () => {
     )
   })
   it('should render correctly autocomplete', () => {
-    const autocomplete = screen.getByLabelText(
-      'myResourcesPage.quizzes.categoryDropdown'
-    )
+    const autocomplete = screen.getByLabelText('common.categoryDropdown')
     expect(autocomplete).toBeInTheDocument()
   })
 
   it('should change autocomplete', () => {
-    const autocomplete = screen.getByLabelText(
-      'myResourcesPage.quizzes.categoryDropdown'
-    )
+    const autocomplete = screen.getByLabelText('common.categoryDropdown')
     fireEvent.click(autocomplete)
     fireEvent.change(autocomplete, { target: { value: 'Category 2' } })
     fireEvent.keyDown(autocomplete, { key: 'ArrowDown' })
@@ -57,9 +53,7 @@ describe('CreateOrEditQuizContainer', () => {
   })
 
   it('should clear autocomplete', () => {
-    const autocomplete = screen.getByLabelText(
-      'myResourcesPage.quizzes.categoryDropdown'
-    )
+    const autocomplete = screen.getByLabelText('common.categoryDropdown')
     fireEvent.click(autocomplete)
     fireEvent.change(autocomplete, { target: { value: '' } })
     fireEvent.keyDown(autocomplete, { key: 'ArrowDown' })
