@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { AxiosResponse } from 'axios'
 import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
 import EditIcon from '@mui/icons-material/Edit'
 import AddIcon from '@mui/icons-material/Add'
@@ -40,6 +41,7 @@ import {
   TextFieldVariantEnum,
   ResourcesTabsEnum,
   UpdateQuizParams,
+  TypographyVariantEnum,
   Category
 } from '~/types'
 import { styles } from '~/containers/my-quizzes/create-or-edit-quiz-container/CreateOrEditQuizContainer.styles'
@@ -208,19 +210,22 @@ const CreateOrEditQuizContainer = ({
           value={description}
           variant={TextFieldVariantEnum.Standard}
         />
-        <AsyncAutocomplete
-          fetchOnFocus
-          labelField='name'
-          onChange={onCategoryChange}
-          service={ResourceService.getResourcesCategoriesNames}
-          sx={styles.categoryInput}
-          textFieldProps={{
-            label: t('common.categoryDropdown'),
-            helperText: t('common.categoryDropdownHelper')
-          }}
-          value={category}
-          valueField='_id'
-        />
+        <Box sx={styles.labelCategory}>
+          <Typography variant={TypographyVariantEnum.Body2}>
+            {t('questionPage.chooseCategory')}
+          </Typography>
+          <AsyncAutocomplete
+            fetchOnFocus
+            labelField='name'
+            onChange={onCategoryChange}
+            service={ResourceService.getResourcesCategoriesNames}
+            textFieldProps={{
+              label: t('common.categoryDropdown')
+            }}
+            value={category}
+            valueField='_id'
+          />
+        </Box>
         <Divider sx={styles.divider} />
         {questions && (
           <QuestionsList items={questions} setItems={setQuestions} />

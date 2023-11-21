@@ -63,21 +63,12 @@ export const styles = {
       width: '100%'
     }
   },
-  categoryInput: {
-    m: '30px 30px 10px 0',
-    maxWidth: { md: '570px' },
-    '& .MuiOutlinedInput-root': {
-      padding: '5px 9px'
-    },
-    label: {
-      lineHeight: '20px'
-    },
-    position: 'relative',
-    '& .MuiFormHelperText-root': {
-      fontSize: '14px',
-      position: 'absolute',
-      top: '-33px',
-      left: '-14px'
-    }
+  labelCategory: {
+    color: 'primary.600',
+    maxWidth: '464px',
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '4px'
   }
 }
