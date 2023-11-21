@@ -1,30 +1,22 @@
 import { AxiosResponse } from 'axios'
+
+import { appApi } from '~/redux/apiSlice'
 import { axiosClient } from '~/plugins/axiosClient'
+
 import { createUrlPath } from '~/utils/helper-functions'
 import { URLs } from '~/constants/request'
 import {
+  ApiMethodEnum,
   GoogleAuthParams,
   LoginParams,
   LoginResponse,
   SignupParams,
-  SignupRespornse
+  SignupResponse
 } from '~/types'
 
+const { POST } = ApiMethodEnum
+
 export const AuthService = {
-  login: (userData: LoginParams): Promise<AxiosResponse<LoginResponse>> => {
-    return axiosClient.post(URLs.auth.login, userData)
-  },
-  googleAuth: (
-    userData: GoogleAuthParams
-  ): Promise<AxiosResponse<LoginResponse>> => {
-    return axiosClient.post(URLs.auth.googleAuth, userData)
-  },
-  signup: (userData: SignupParams): Promise<AxiosResponse<SignupRespornse>> => {
-    return axiosClient.post(URLs.auth.signup, userData)
-  },
-  logout: (): Promise<AxiosResponse> => {
-    return axiosClient.post(URLs.auth.logout)
-  },
   refresh: (): Promise<AxiosResponse<LoginResponse>> => {
     return axiosClient.get(URLs.auth.refresh)
   },
@@ -43,3 +35,27 @@ export const AuthService = {
     return axiosClient.patch(confirmUrl, newPassword)
   }
 }
+
+export const authService = appApi.injectEndpoints({
+  endpoints: (build) => ({
+    signUp: build.mutation<SignupResponse, SignupParams>({
+      query: (body) => ({ url: URLs.auth.signup, method: POST, body })
+    }),
+    login: build.mutation<LoginParams, GoogleAuthParams>({
+      query: (body) => ({ url: URLs.auth.login, method: POST, body })
+    }),
+    googleAuth: build.mutation<LoginResponse, GoogleAuthParams>({
+      query: (body) => ({ url: URLs.auth.googleAuth, method: POST, body })
+    }),
+    logout: build.mutation<void, void>({
+      query: () => ({ url: URLs.auth.logout, method: POST })
+    })
+  })
+})
+
+export const {
+  useSignUpMutation,
+  useLoginMutation,
+  useGoogleAuthMutation,
+  useLogoutMutation
+} = authService

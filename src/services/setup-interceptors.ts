@@ -1,10 +1,10 @@
 import { AxiosError, AxiosRequestConfig } from 'axios'
-import { axiosClient } from '~/plugins/axiosClient'
-import { logoutUser } from '~/redux/reducer'
-import i18n from '~/plugins/i18n'
-import { Store } from '~/redux/store'
 
-export const setupInterceptors = (store: Store): void => {
+import { axiosClient } from '~/plugins/axiosClient'
+import i18n from '~/plugins/i18n'
+import { authService } from '~/services/auth-service'
+
+export const setupInterceptors = (): void => {
   axiosClient.interceptors.request.use((config: AxiosRequestConfig) => {
     config.headers = {
       ...config.headers,
@@ -23,7 +23,7 @@ export const setupInterceptors = (store: Store): void => {
         try {
           return await axiosClient.request(originalRequest)
         } catch (e) {
-          void store.dispatch(logoutUser())
+          void authService.endpoints.logout.initiate()
         }
       }
       return Promise.reject(error)

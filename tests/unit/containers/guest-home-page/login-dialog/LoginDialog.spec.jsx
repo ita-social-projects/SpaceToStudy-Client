@@ -2,9 +2,12 @@ import { screen, fireEvent, waitFor } from '@testing-library/react'
 import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
 import { renderWithProviders } from '~tests/test-utils'
 import { vi } from 'vitest'
+import { accessToken } from '~tests/unit/redux/redux.variables'
 
 const mockDispatch = vi.fn()
 const mockSelector = vi.fn()
+const unwrap = vi.fn().mockResolvedValue({ accessToken })
+const loginUser = vi.fn().mockReturnValue({ unwrap })
 
 const mockState = {
   appMain: { authLoading: false }
@@ -31,6 +34,14 @@ vi.mock('~/containers/guest-home-page/google-button/GoogleButton', () => ({
     return <button>Google</button>
   }
 }))
+
+vi.mock('~/services/auth-service', async () => {
+  const actual = await vi.importActual('~/services/auth-service')
+  return {
+    ...actual,
+    useLoginMutation: () => [loginUser]
+  }
+})
 
 describe('Login dialog test', () => {
   beforeEach(() => {
@@ -82,6 +93,9 @@ describe('Login dialog test', () => {
     const button = screen.getByText('common.labels.login')
     fireEvent.click(button)
 
-    await waitFor(() => expect(mockDispatch).toHaveBeenCalledTimes(1))
+    await waitFor(() => {
+      expect(mockDispatch).toHaveBeenCalledTimes(1)
+      expect(loginUser).toHaveBeenCalledTimes(1)
+    })
   })
 })

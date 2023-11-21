@@ -6,16 +6,9 @@ import {
   isFulfilled,
   isRejected
 } from '@reduxjs/toolkit'
-import { AuthService } from '~/services/auth-service'
+import { AuthService, authService } from '~/services/auth-service'
 import { AxiosError } from 'axios'
-import {
-  AccessToken,
-  ErrorResponse,
-  GoogleAuthParams,
-  LoginParams,
-  SignupParams,
-  UserRole
-} from '~/types'
+import { AccessToken, ErrorResponse, UserRole } from '~/types'
 
 interface UserState {
   userId: string
@@ -37,56 +30,7 @@ const initialState: UserState = {
   isFirstLogin: true
 }
 
-export const loginUser = createAsyncThunk(
-  'appMain/loginUser',
-  async (userData: LoginParams, { rejectWithValue, dispatch }) => {
-    try {
-      const { data } = await AuthService.login(userData)
-      dispatch(setUser(data.accessToken))
-    } catch (e) {
-      const error = e as AxiosError<ErrorResponse>
-      return rejectWithValue(error.response?.data.code)
-    }
-  }
-)
-
-export const googleAuth = createAsyncThunk(
-  'appMain/googleAuth',
-  async (userData: GoogleAuthParams, { rejectWithValue, dispatch }) => {
-    try {
-      const { data } = await AuthService.googleAuth(userData)
-      dispatch(setUser(data.accessToken))
-    } catch (e) {
-      const error = e as AxiosError<ErrorResponse>
-      return rejectWithValue(error.response?.data.code)
-    }
-  }
-)
-
-export const signupUser = createAsyncThunk(
-  'appMain/signupUser',
-  async (userData: SignupParams, { rejectWithValue }) => {
-    try {
-      await AuthService.signup(userData)
-    } catch (e) {
-      const error = e as AxiosError<ErrorResponse>
-      return rejectWithValue(error.response?.data.code)
-    }
-  }
-)
-
-export const logoutUser = createAsyncThunk(
-  'appMain/logoutUser',
-  async (_, { rejectWithValue, dispatch }) => {
-    try {
-      await AuthService.logout()
-      dispatch(logout())
-    } catch (e) {
-      const error = e as AxiosError<ErrorResponse>
-      return rejectWithValue(error.response?.data.code)
-    }
-  }
-)
+const { logout: logoutEndpoint } = authService.endpoints
 
 export const checkAuth = createAsyncThunk(
   'appMain/checkAuth',
@@ -138,7 +82,7 @@ export const mainSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addMatcher(isPending, (state, action) => {
-      if (isAnyOf(checkAuth.pending, logoutUser.pending)(action)) {
+      if (isAnyOf(checkAuth.pending, logoutEndpoint.matchPending)(action)) {
         state.loading = true
       } else {
         state.authLoading = true
@@ -146,7 +90,7 @@ export const mainSlice = createSlice({
       state.error = ''
     })
     builder.addMatcher(isFulfilled, (state, action) => {
-      if (isAnyOf(checkAuth.fulfilled, logoutUser.fulfilled)(action)) {
+      if (isAnyOf(checkAuth.fulfilled, logoutEndpoint.matchFulfilled)(action)) {
         state.loading = false
       } else {
         state.authLoading = false

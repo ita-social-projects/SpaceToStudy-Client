@@ -2,10 +2,10 @@ import { useEffect } from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { useTranslation } from 'react-i18next'
-import { useDispatch } from 'react-redux'
 
 import useForm from '~/hooks/use-form'
 import useConfirm from '~/hooks/use-confirm'
+import { useSignUpMutation } from '~/services/auth-service'
 import { useModalContext } from '~/context/modal-context'
 import { useSnackBarContext } from '~/context/snackbar-context'
 
@@ -20,7 +20,6 @@ import { signup, snackbarVariants } from '~/constants'
 import GoogleLogin from '~/containers/guest-home-page/google-login/GoogleLogin'
 import SignupForm from '~/containers/guest-home-page/signup-form/SignupForm'
 import NotificationModal from '~/containers/guest-home-page/notification-modal/NotificationModal'
-import { signupUser } from '~/redux/reducer'
 
 import student from '~/assets/img/signup-dialog/student.svg'
 import tutor from '~/assets/img/signup-dialog/tutor.svg'
@@ -33,7 +32,7 @@ const SignupDialog = ({ type }) => {
   const { setNeedConfirmation } = useConfirm()
   const { openModal, closeModal } = useModalContext()
   const { setAlert } = useSnackBarContext()
-  const dispatch = useDispatch()
+  const [signUp] = useSignUpMutation()
 
   const signupImg = { student, tutor }
 
@@ -41,7 +40,7 @@ const SignupDialog = ({ type }) => {
     useForm({
       onSubmit: async () => {
         try {
-          await dispatch(signupUser({ ...data, role: type })).unwrap()
+          await signUp({ ...data, role: type }).unwrap()
           openModal(
             {
               component: (
@@ -59,7 +58,7 @@ const SignupDialog = ({ type }) => {
         } catch (e) {
           setAlert({
             severity: snackbarVariants.error,
-            message: `errors.${e}`
+            message: `errors.${e.data.code}`
           })
         }
       },

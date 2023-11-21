@@ -1,10 +1,11 @@
 import { screen, fireEvent, waitFor } from '@testing-library/react'
-import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
+import { renderWithProviders } from '~tests/test-utils'
 import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
-import { URLs } from '~/constants/request'
 import { vi } from 'vitest'
 
 const preloadedState = { appMain: { loading: false, userRole: '', error: '' } }
+const unwrap = vi.fn().mockRejectedValue({ data: { code: 'error' } })
+const loginUser = vi.fn().mockReturnValue({ unwrap })
 
 vi.mock('~/containers/guest-home-page/google-button/GoogleButton', () => ({
   __esModule: true,
@@ -13,19 +14,30 @@ vi.mock('~/containers/guest-home-page/google-button/GoogleButton', () => ({
   }
 }))
 
+vi.mock('~/services/auth-service', async () => {
+  const actual = await vi.importActual('~/services/auth-service')
+  return {
+    ...actual,
+    useLoginMutation: () => [loginUser]
+  }
+})
+
 describe('snackbar context', () => {
   beforeEach(async () => {
     renderWithProviders(<LoginDialog />, { preloadedState })
 
-    mockAxiosClient.onPost(URLs.auth.login).reply(404, { code: 'error' })
     const inputEmail = screen.getByLabelText(/common.labels.email/i)
+
     fireEvent.change(inputEmail, { target: { value: 'test@gmail.com' } })
 
     const inputPassword = screen.getByLabelText(/common.labels.password/i)
+
     fireEvent.change(inputPassword, { target: { value: '12345678a/A' } })
 
     const button = screen.getByText('common.labels.login')
+
     fireEvent.click(button)
+
     const snackbar = await screen.findByText('errors.error')
 
     await waitFor(() => expect(snackbar).toBeInTheDocument())
