@@ -16,7 +16,6 @@ import AddResources from '~/containers/add-resources/AddResources'
 import CreateOrEditQuizQuestion from '~/containers/my-quizzes/create-or-edit-quiz-question/CreateOrEditQuizQuestion'
 import AppButton from '~/components/app-button/AppButton'
 import AppTextField from '~/components/app-text-field/AppTextField'
-import { categoryService } from '~/services/category-service'
 import AsyncAutocomplete from '~/components/async-autocomlete/AsyncAutocomplete'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import Loader from '~/components/loader/Loader'
@@ -24,7 +23,6 @@ import Loader from '~/components/loader/Loader'
 import { snackbarVariants } from '~/constants'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { myResourcesPath } from '~/pages/create-or-edit-lesson/CreateOrEditLesson.constants'
-
 import { QuizContentProps } from '~/pages/new-quiz/NewQuiz.constants'
 import {
   columns,
@@ -214,7 +212,7 @@ const CreateOrEditQuizContainer = ({
           fetchOnFocus
           labelField='name'
           onChange={onCategoryChange}
-          service={categoryService.getCategoriesNames}
+          service={ResourceService.getResourcesCategoriesNames}
           sx={styles.categoryInput}
           textFieldProps={{
             label: t('common.categoryDropdown'),
