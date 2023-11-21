@@ -42,6 +42,7 @@ const CategoryDropdown = ({
   const { setAlert } = useSnackBarContext()
   const { openModal, closeModal } = useModalContext()
   const [isFetched, setIsFetched] = useState<boolean>(false)
+  const [isFetchedOnFocus, setIsFetchedOnFocus] = useState<boolean>(false)
 
   const handleResponseError = (error: ErrorResponse) => {
     setAlert({
@@ -52,6 +53,7 @@ const CategoryDropdown = ({
 
   const getCategories = useCallback(() => {
     setIsFetched(true)
+    setIsFetchedOnFocus(true)
     return ResourceService.getResourcesCategoriesNames()
   }, [setIsFetched])
 
@@ -130,7 +132,7 @@ const CategoryDropdown = ({
       </Typography>
       <AsyncAutocomplete<CategoryNameInterface>
         fetchCondition={!isFetched}
-        fetchOnFocus
+        fetchOnFocus={isFetchedOnFocus}
         labelField='name'
         onChange={onCategoryChange}
         renderOption={(props, option, state) =>
