@@ -39,12 +39,12 @@ describe('CreateOrEditQuizContainer', () => {
     )
   })
   it('should render correctly autocomplete', () => {
-    const autocomplete = screen.getByLabelText('common.categoryDropdown')
+    const autocomplete = screen.getByRole('combobox')
     expect(autocomplete).toBeInTheDocument()
   })
 
   it('should change autocomplete', () => {
-    const autocomplete = screen.getByLabelText('common.categoryDropdown')
+    const autocomplete = screen.getByRole('combobox')
     fireEvent.click(autocomplete)
     fireEvent.change(autocomplete, { target: { value: 'Category 2' } })
     fireEvent.keyDown(autocomplete, { key: 'ArrowDown' })
@@ -53,7 +53,7 @@ describe('CreateOrEditQuizContainer', () => {
   })
 
   it('should clear autocomplete', () => {
-    const autocomplete = screen.getByLabelText('common.categoryDropdown')
+    const autocomplete = screen.getByRole('combobox')
     fireEvent.click(autocomplete)
     fireEvent.change(autocomplete, { target: { value: '' } })
     fireEvent.keyDown(autocomplete, { key: 'ArrowDown' })
