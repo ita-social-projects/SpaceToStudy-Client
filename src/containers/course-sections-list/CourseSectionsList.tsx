@@ -13,6 +13,7 @@ import DragIndicatorIcon from '@mui/icons-material/DragIndicator'
 
 import CourseSectionContainer from '~/containers/course-section/CourseSectionContainer'
 
+import useDroppable from '~/hooks/use-droppable'
 import { styles } from '~/containers/course-sections-list/CourseSectionsList.styles'
 import { CourseSection, CourseResources } from '~/types'
 
@@ -37,6 +38,7 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
   handleSectionInputChange,
   handleSectionNonInputChange
 }) => {
+  const { enabled } = useDroppable()
   const reorder = (
     list: CourseSection[],
     startIndex: number,
@@ -89,14 +91,16 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
   return (
     <Box sx={styles.root}>
       <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId='draggable'>
-          {(provided: DroppableProvided) => (
-            <Box {...provided.droppableProps} ref={provided.innerRef}>
-              {sectionsList}
-              {provided.placeholder}
-            </Box>
-          )}
-        </Droppable>
+        {enabled && (
+          <Droppable droppableId='draggable'>
+            {(provided: DroppableProvided) => (
+              <Box {...provided.droppableProps} ref={provided.innerRef}>
+                {sectionsList}
+                {provided.placeholder}
+              </Box>
+            )}
+          </Droppable>
+        )}
       </DragDropContext>
     </Box>
   )
