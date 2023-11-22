@@ -52,10 +52,6 @@ describe('LessonContainer test', () => {
     })
   })
 
-  afterEach(() => {
-    vi.clearAllMocks()
-  })
-
   it('should render "New lesson" button', () => {
     const addBtn = screen.getByText('myResourcesPage.lessons.addBtn')
 
