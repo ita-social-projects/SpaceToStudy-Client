@@ -70,7 +70,7 @@ describe('Chat for desktop', () => {
   })
 
   it('should choose chat and render messages', async () => {
-    const chatItem = screen.getByText('Scott Short').offsetParent
+    const chatItem = screen.getByText('Scott Short')
 
     waitFor(() => {
       fireEvent.click(chatItem)
@@ -84,7 +84,7 @@ describe('Chat for desktop', () => {
   it('should send new message and clear input', async () => {
     const user = userEvent.setup()
 
-    const chatItem = screen.getByText('Scott Short').parentNode
+    const chatItem = screen.getByText('Scott Short')
 
     waitFor(() => {
       fireEvent.click(chatItem)
