@@ -12,6 +12,7 @@ const NewQuiz = () => {
   const [questions, setQuestions] = useState<Question[]>([])
   const [title, setTitle] = useState<string>('')
   const [description, setDescription] = useState<string>('')
+  const [category, setCategory] = useState<string | null>(null)
 
   const handleClick = (tab: string) => {
     setActiveTab(tab)
@@ -23,7 +24,9 @@ const NewQuiz = () => {
     description,
     setDescription,
     questions,
-    setQuestions
+    setQuestions,
+    category,
+    setCategory
   }
   const tabContent = activeTab && tabsData[activeTab].content(props)
 

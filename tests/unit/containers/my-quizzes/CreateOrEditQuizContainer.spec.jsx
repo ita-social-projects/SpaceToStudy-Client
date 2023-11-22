@@ -32,4 +32,37 @@ describe('CreateOrEditQuizContainer', () => {
     expect(titleInput.value).toBe('quiz title')
     expect(descriptionInput.value).toBe('quiz description')
   })
+
+  it('should click on save button', () => {
+    const saveBtn = screen.getByText('common.save')
+
+    fireEvent.click(saveBtn)
+
+    expect(setTitle).toHaveBeenCalled()
+    expect(setDescription).toHaveBeenCalled()
+  })
+
+  it('should render create new question form', () => {
+    const btnAddQuestion = screen.getByText(
+      'myResourcesPage.quizzes.createNewQuestion'
+    )
+
+    fireEvent.click(btnAddQuestion)
+
+    const formTitle = screen.getByText(/title:/i)
+
+    expect(formTitle).toBeInTheDocument()
+  })
+
+  it('should render add questions form', () => {
+    const btnAddNewQuestion = screen.getByText(
+      'myResourcesPage.quizzes.addQuestion'
+    )
+
+    fireEvent.click(btnAddNewQuestion)
+
+    const formTitle = screen.getByText('myResourcesPage.questions.add')
+
+    expect(formTitle).toBeInTheDocument()
+  })
 })

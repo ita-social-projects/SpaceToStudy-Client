@@ -17,6 +17,8 @@ export interface QuizContentProps {
   setDescription: Dispatch<SetStateAction<CreateQuizParams['description']>>
   questions: Question[]
   setQuestions: Dispatch<SetStateAction<Question[]>>
+  category: string | null
+  setCategory: Dispatch<SetStateAction<string | null>>
 }
 
 export interface QuizTabsData {

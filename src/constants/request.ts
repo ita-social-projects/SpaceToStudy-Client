@@ -82,6 +82,7 @@ export const URLs = {
   quizzes: {
     get: '/quizzes',
     add: '/quizzes',
+    patch: '/quizzes',
     delete: '/quizzes'
   },
   attachments: {

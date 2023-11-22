@@ -1,6 +1,7 @@
-import { ChangeEvent, useCallback, useState } from 'react'
+import { ChangeEvent, useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
+import { AxiosResponse } from 'axios'
 import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
 import EditIcon from '@mui/icons-material/Edit'
@@ -16,6 +17,7 @@ import CreateOrEditQuizQuestion from '~/containers/my-quizzes/create-or-edit-qui
 import AppButton from '~/components/app-button/AppButton'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
+import Loader from '~/components/loader/Loader'
 
 import { snackbarVariants } from '~/constants'
 import { authRoutes } from '~/router/constants/authRoutes'
@@ -25,7 +27,7 @@ import {
   columns,
   removeColumnRules
 } from '~/containers/add-resources/AddQuestions.constants'
-import { styles } from '~/containers/my-quizzes/create-or-edit-quiz-container/CreateOrEditQuizContainer.styles'
+import { defaultResponse } from '~/containers/my-quizzes/create-or-edit-quiz-container/CreateOrEditQuizContainer.constants'
 import {
   ButtonTypeEnum,
   ButtonVariantEnum,
@@ -35,9 +37,10 @@ import {
   Quiz,
   SizeEnum,
   TextFieldVariantEnum,
-  ResourcesTabsEnum
+  ResourcesTabsEnum,
+  UpdateQuizParams
 } from '~/types'
-import { defaultResponse } from '~/containers/my-quizzes/create-or-edit-quiz-container/CreateOrEditQuizContainer.constants'
+import { styles } from '~/containers/my-quizzes/create-or-edit-quiz-container/CreateOrEditQuizContainer.styles'
 
 const CreateOrEditQuizContainer = ({
   title,
@@ -45,18 +48,23 @@ const CreateOrEditQuizContainer = ({
   description,
   setDescription,
   questions,
-  setQuestions
+  setQuestions,
+  category,
+  setCategory
 }: QuizContentProps) => {
   const { t } = useTranslation()
   const { setAlert } = useSnackBarContext()
   const { openModal } = useModalContext()
   const navigate = useNavigate()
+  const { id } = useParams()
   const [isCreationOpen, setIsCreationOpen] = useState<boolean>(false)
 
   const handleResponse = () => {
     setAlert({
       severity: snackbarVariants.success,
-      message: 'myResourcesPage.quizzes.successAddedOuiz'
+      message: id
+        ? t('myResourcesPage.quizzes.successEditedOuiz')
+        : t('myResourcesPage.quizzes.successAddedOuiz')
     })
     navigate(authRoutes.myResources.root.path)
   }
@@ -68,18 +76,64 @@ const CreateOrEditQuizContainer = ({
     })
   }
 
-  const createAddQuizService = useCallback(
+  const createQuizService = useCallback(
     (data?: CreateQuizParams) => ResourceService.addQuiz(data),
     []
   )
 
   const { fetchData: addNewQuiz } = useAxios<Quiz, CreateQuizParams>({
-    service: createAddQuizService,
+    service: createQuizService,
     fetchOnMount: false,
     defaultResponse,
     onResponse: handleResponse,
-    onResponseError: onResponseError
+    onResponseError
   })
+
+  const editQuizService = useCallback(
+    (params?: UpdateQuizParams) => ResourceService.editQuiz(params),
+    []
+  )
+
+  const { fetchData: fetchEditedQuiz } = useAxios<null, UpdateQuizParams>({
+    service: editQuizService,
+    fetchOnMount: false,
+    defaultResponse: null,
+    onResponse: handleResponse,
+    onResponseError
+  })
+
+  const getQuiz = (id?: string): Promise<AxiosResponse> => {
+    return ResourceService.getQuiz(id)
+  }
+
+  const handleGetQuizResponse = (quiz: Quiz) => {
+    setTitle(quiz.title)
+    setDescription(quiz.description)
+    setQuestions(quiz.items)
+    setCategory(quiz.category)
+  }
+
+  const { loading: getQuizLoading, fetchData: fetchQuizData } = useAxios<
+    Quiz,
+    string
+  >({
+    service: getQuiz,
+    fetchOnMount: false,
+    defaultResponse,
+    onResponse: handleGetQuizResponse,
+    onResponseError
+  })
+
+  useEffect(() => {
+    if (id) {
+      void fetchQuizData(id)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id])
+
+  if (getQuizLoading) {
+    return <Loader pageLoad />
+  }
 
   const onOpenAddQuestionsModal = () => {
     openModal({
@@ -112,7 +166,15 @@ const CreateOrEditQuizContainer = ({
   const onCloseCreateQuestion = () => setIsCreationOpen(false)
 
   const onSaveQuiz = () =>
-    void addNewQuiz({ title, description, items: questions })
+    id
+      ? void fetchEditedQuiz({
+          id,
+          title,
+          description,
+          items: questions,
+          category
+        })
+      : void addNewQuiz({ title, description, items: questions, category })
 
   return (
     <PageWrapper sx={styles.container}>
