@@ -61,8 +61,8 @@ describe('LessonContainer test', () => {
 
     expect(addBtn).toBeInTheDocument()
   })
-  it('should render table with lessons', () => {
-    const columnLabel = screen.getByText('myResourcesPage.lessons.title')
+  it('should render table with lessons', async () => {
+    const columnLabel = await screen.findByText('myResourcesPage.lessons.title')
     const lessonTitle = screen.getByText(responseItemsMock[5].title)
 
     expect(columnLabel).toBeInTheDocument()
