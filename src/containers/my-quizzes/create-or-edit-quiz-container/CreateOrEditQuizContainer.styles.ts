@@ -62,5 +62,13 @@ export const styles = {
       gap: '12px',
       width: '100%'
     }
+  },
+  labelCategory: {
+    color: 'primary.600',
+    maxWidth: '464px',
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '4px'
   }
 }

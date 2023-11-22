@@ -7,13 +7,14 @@ import Divider from '@mui/material/Divider'
 import EditIcon from '@mui/icons-material/Edit'
 import AddIcon from '@mui/icons-material/Add'
 
-import useAxios from '~/hooks/use-axios'
+import AddResources from '~/containers/add-resources/AddResources'
+import CreateOrEditQuizQuestion from '~/containers/my-quizzes/create-or-edit-quiz-question/CreateOrEditQuizQuestion'
+import CategoryDropdown from '~/containers/category-dropdown/CategoryDropdown'
+import QuestionsList from '~/containers/questions-list/QuestionsList'
 import { useModalContext } from '~/context/modal-context'
 import { useSnackBarContext } from '~/context/snackbar-context'
 import { ResourceService } from '~/services/resource-service'
-import QuestionsList from '~/containers/questions-list/QuestionsList'
-import AddResources from '~/containers/add-resources/AddResources'
-import CreateOrEditQuizQuestion from '~/containers/my-quizzes/create-or-edit-quiz-question/CreateOrEditQuizQuestion'
+import useAxios from '~/hooks/use-axios'
 import AppButton from '~/components/app-button/AppButton'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
@@ -38,7 +39,8 @@ import {
   SizeEnum,
   TextFieldVariantEnum,
   ResourcesTabsEnum,
-  UpdateQuizParams
+  UpdateQuizParams,
+  CategoryNameInterface
 } from '~/types'
 import { styles } from '~/containers/my-quizzes/create-or-edit-quiz-container/CreateOrEditQuizContainer.styles'
 
@@ -58,6 +60,13 @@ const CreateOrEditQuizContainer = ({
   const navigate = useNavigate()
   const { id } = useParams()
   const [isCreationOpen, setIsCreationOpen] = useState<boolean>(false)
+
+  const onCategoryChange = (
+    _: React.SyntheticEvent,
+    value: CategoryNameInterface | null
+  ) => {
+    setCategory(value?._id ?? null)
+  }
 
   const handleResponse = () => {
     setAlert({
@@ -198,6 +207,10 @@ const CreateOrEditQuizContainer = ({
           onChange={onDescriptionChange}
           value={description}
           variant={TextFieldVariantEnum.Standard}
+        />
+        <CategoryDropdown
+          category={category}
+          onCategoryChange={onCategoryChange}
         />
         <Divider sx={styles.divider} />
         {questions && (

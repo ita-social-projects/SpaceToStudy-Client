@@ -5,7 +5,7 @@ import { TextFieldProps } from '@mui/material/TextField'
 import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
 import useAxios, { UseAxiosProps } from '~/hooks/use-axios'
 import { defaultResponses } from '~/constants'
-import { ServiceFunction } from '~/types'
+import { ServiceFunction, Category } from '~/types'
 
 interface AsyncAutocompleteProps<T, F extends boolean | undefined>
   extends Omit<
@@ -15,7 +15,7 @@ interface AsyncAutocompleteProps<T, F extends boolean | undefined>
   service: ServiceFunction<T[]>
   valueField?: keyof T
   labelField?: keyof T
-  value: T[keyof T] | null
+  value: T[keyof T] | null | Category
   fetchCondition?: boolean
   textFieldProps?: TextFieldProps
   fetchOnFocus?: boolean
