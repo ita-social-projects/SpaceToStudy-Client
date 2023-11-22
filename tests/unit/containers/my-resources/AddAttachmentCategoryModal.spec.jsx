@@ -1,6 +1,6 @@
 import { screen, fireEvent } from '@testing-library/react'
 import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
-import { beforeEach, describe } from 'vitest'
+import { afterEach, beforeEach, describe, expect } from 'vitest'
 
 import AddAttachmentCategoryModal from '~/containers/my-resources/add-attachment-category-modal/AddAttachmentCategoryModal'
 import { URLs } from '~/constants/request'
@@ -38,6 +38,10 @@ describe('AddAttachmentCategoryModal component', () => {
         updateAttachmentCategory={updateAttachmentCategory}
       />
     )
+  })
+
+  afterEach(() => {
+    vi.clearAllMocks()
   })
 
   it('should render title', () => {
