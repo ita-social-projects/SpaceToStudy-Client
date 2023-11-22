@@ -1,4 +1,4 @@
-import { fireEvent, screen } from '@testing-library/react'
+import { fireEvent, screen, waitFor } from '@testing-library/react'
 import AddResources from '~/containers/add-resources/AddResources'
 import { URLs } from '~/constants/request'
 import {
@@ -41,21 +41,23 @@ const mockRequestService = vi.fn(() =>
 const mockOnAddResources = () => {}
 
 describe('Tests for AddResources container', () => {
-  beforeEach(() => {
-    mockAxiosClient
-      .onGet(URLs.resources.lessons.get)
-      .reply(200, resourcesMockData)
+  beforeEach(async () => {
+    await waitFor(() => {
+      mockAxiosClient
+        .onGet(URLs.resources.lessons.get)
+        .reply(200, resourcesMockData)
 
-    renderWithProviders(
-      <AddResources
-        columns={columns}
-        onAddResources={mockOnAddResources}
-        removeColumnRules={removeColumnRules}
-        requestService={mockRequestService}
-        resourceType={'lessons'}
-        resources={responseItemsMock}
-      />
-    )
+      renderWithProviders(
+        <AddResources
+          columns={columns}
+          onAddResources={mockOnAddResources}
+          removeColumnRules={removeColumnRules}
+          requestService={mockRequestService}
+          resourceType={'lessons'}
+          resources={responseItemsMock}
+        />
+      )
+    })
   })
 
   afterEach(() => {

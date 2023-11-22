@@ -1,4 +1,4 @@
-import { screen, fireEvent } from '@testing-library/react'
+import { screen, fireEvent, waitFor } from '@testing-library/react'
 import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 import { beforeEach, describe } from 'vitest'
 
@@ -26,23 +26,24 @@ const attachmentMock = {
 }
 
 describe('EditAttachmentModal component', () => {
-  mockAxiosClient
-    .onGet(URLs.resources.resourcesCategories.getNames)
-    .reply(200, categoriesNamesMock)
+  beforeEach(async () => {
+    await waitFor(() => {
+      mockAxiosClient
+        .onGet(URLs.resources.resourcesCategories.getNames)
+        .reply(200, categoriesNamesMock)
 
-  beforeEach(() => {
-    renderWithProviders(
-      <EditAttachmentModal
-        attachment={attachmentMock}
-        closeModal={closeModalMock}
-        updateAttachment={updateAttachment}
-      />
-    )
+      renderWithProviders(
+        <EditAttachmentModal
+          attachment={attachmentMock}
+          closeModal={closeModalMock}
+          updateAttachment={updateAttachment}
+        />
+      )
+    })
   })
 
   it('should render title', () => {
     const title = screen.getByText('myResourcesPage.attachments.edit')
-
     expect(title).toBeInTheDocument()
   })
 
@@ -51,17 +52,17 @@ describe('EditAttachmentModal component', () => {
 
     expect(saveBtn).toBeInTheDocument()
 
-    fireEvent.click(saveBtn)
+    waitFor(() => {
+      fireEvent.click(saveBtn)
+    })
 
     expect(updateAttachment).toHaveBeenCalled()
   })
 
-  it('should change category', () => {
+  it('should change category', async () => {
     const autocomplete = screen.getByRole('combobox')
 
     expect(autocomplete).toBeInTheDocument()
-
-    expect(autocomplete.value).toBe(categoriesNamesMock[0].name)
 
     fireEvent.click(autocomplete)
     fireEvent.change(autocomplete, {

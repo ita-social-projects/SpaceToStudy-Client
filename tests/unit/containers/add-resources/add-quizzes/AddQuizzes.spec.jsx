@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react'
+import { screen, waitFor } from '@testing-library/react'
 import AddResources from '~/containers/add-resources/AddResources'
 import { mockAxiosClient, renderWithProviders } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
@@ -39,19 +39,21 @@ const mockRequestService = vi.fn(() =>
 
 const mockOnAddResources = () => {}
 
-describe('AddQuestions', () => {
-  beforeEach(() => {
-    mockAxiosClient.onGet(URLs.quizzes.get).reply(200, quizResponseMock)
-    renderWithProviders(
-      <AddResources
-        columns={columns}
-        onAddResources={mockOnAddResources}
-        removeColumnRules={removeColumnRules}
-        requestService={mockRequestService}
-        resourceType={'quizzes'}
-        resources={responseItemsMock}
-      />
-    )
+describe('AddQuizzes', () => {
+  beforeEach(async () => {
+    await waitFor(() => {
+      mockAxiosClient.onGet(URLs.quizzes.get).reply(200, quizResponseMock)
+      renderWithProviders(
+        <AddResources
+          columns={columns}
+          onAddResources={mockOnAddResources}
+          removeColumnRules={removeColumnRules}
+          requestService={mockRequestService}
+          resourceType={'quizzes'}
+          resources={responseItemsMock}
+        />
+      )
+    })
   })
 
   afterEach(() => {
@@ -59,7 +61,7 @@ describe('AddQuestions', () => {
   })
 
   it('should render title and question', () => {
-    const displayedQuizzes = screen.getAllByText(quizMock.category.name).length
-    expect(displayedQuizzes).toBe(10)
+    const displayedQuizzes = screen.getAllByText(quizMock.category.name)
+    expect(displayedQuizzes.length).toBe(10)
   })
 })

@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react'
+import { screen, waitFor } from '@testing-library/react'
 
 import LessonsContainer from '~/containers/my-resources/lessons-container/LessonsContainer'
 
@@ -43,11 +43,13 @@ const lessonResponseMockCategory = {
 }
 
 describe('LessonContainer test', () => {
-  beforeEach(() => {
-    mockAxiosClient
-      .onGet(URLs.resources.lessons.get)
-      .reply(200, lessonResponseMock)
-    renderWithProviders(<LessonsContainer />)
+  beforeEach(async () => {
+    await waitFor(() => {
+      mockAxiosClient
+        .onGet(URLs.resources.lessons.get)
+        .reply(200, lessonResponseMock)
+      renderWithProviders(<LessonsContainer />)
+    })
   })
 
   afterEach(() => {
@@ -69,11 +71,13 @@ describe('LessonContainer test', () => {
 })
 
 describe('Lessons category test', () => {
-  beforeEach(() => {
-    mockAxiosClient
-      .onGet(URLs.resources.lessons.get)
-      .reply(200, lessonResponseMockCategory)
-    renderWithProviders(<LessonsContainer />)
+  beforeEach(async () => {
+    await waitFor(() => {
+      mockAxiosClient
+        .onGet(URLs.resources.lessons.get)
+        .reply(200, lessonResponseMockCategory)
+      renderWithProviders(<LessonsContainer />)
+    })
   })
 
   afterEach(() => {

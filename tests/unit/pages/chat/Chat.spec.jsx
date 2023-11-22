@@ -1,4 +1,4 @@
-import { fireEvent, screen } from '@testing-library/react'
+import { fireEvent, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 import useBreakpoints from '~/hooks/use-breakpoints'
@@ -55,11 +55,14 @@ describe('Chat for desktop', () => {
     isMobile: false,
     isTablet: false
   }
-  beforeEach(() => {
+  beforeEach(async () => {
     useBreakpoints.mockImplementation(() => desktopData)
 
-    renderWithProviders(<Chat />)
+    await waitFor(() => {
+      renderWithProviders(<Chat />)
+    })
   })
+
   it('should render user in a chat', async () => {
     const title = screen.getByText('Scott Short')
 
@@ -67,9 +70,11 @@ describe('Chat for desktop', () => {
   })
 
   it('should choose chat and render messages', async () => {
-    const chatItem = screen.getByText('Scott Short')
+    const chatItem = screen.getByText('Scott Short').offsetParent
 
-    fireEvent.click(chatItem)
+    waitFor(() => {
+      fireEvent.click(chatItem)
+    })
 
     const message = screen.getByText(chatsMock[1].latestMessage.text)
 
@@ -79,11 +84,15 @@ describe('Chat for desktop', () => {
   it('should send new message and clear input', async () => {
     const user = userEvent.setup()
 
-    const chatItem = screen.getByText('Scott Short')
+    const chatItem = screen.getByText('Scott Short').parentNode
 
-    fireEvent.click(chatItem)
+    waitFor(() => {
+      fireEvent.click(chatItem)
+    })
 
-    const messageInput = screen.getByLabelText('chatPage.chat.inputLabel')
+    const messageInput = await screen.findByLabelText(
+      'chatPage.chat.inputLabel'
+    )
 
     await user.type(messageInput, 'new message')
 
