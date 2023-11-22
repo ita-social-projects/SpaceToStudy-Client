@@ -1,37 +1,29 @@
-import { HTMLAttributes, SyntheticEvent, useCallback, useState } from 'react'
+import { SyntheticEvent, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
-import AddIcon from '@mui/icons-material/Add'
 
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import QuestionEditor from '~/components/question-editor/QuestionEditor'
 import AppButton from '~/components/app-button/AppButton'
 import AppTextField from '~/components/app-text-field/AppTextField'
-import AddCategoriesModal from '~/containers/my-resources/add-categories-modal/AddCategoriesModal'
-import AsyncAutocomplete from '~/components/async-autocomlete/AsyncAutocomplete'
+import CategoryDropdown from '~/containers/category-dropdown/CategoryDropdown'
+
 import useForm from '~/hooks/use-form'
 import useAxios from '~/hooks/use-axios'
 import { ResourceService } from '~/services/resource-service'
-import { useModalContext } from '~/context/modal-context'
 import { useSnackBarContext } from '~/context/snackbar-context'
-
 import { authRoutes } from '~/router/constants/authRoutes'
 import { defaultResponses, snackbarVariants } from '~/constants'
 import {
   ButtonTypeEnum,
   ButtonVariantEnum,
-  Categories,
   CategoryNameInterface,
   ComponentEnum,
   ErrorResponse,
-  CreateCategoriesParams,
   QuestionForm,
-  SizeEnum,
-  TextFieldVariantEnum,
-  TypographyVariantEnum
+  TextFieldVariantEnum
 } from '~/types'
 import {
   questionType,
@@ -43,24 +35,11 @@ const CreateOrEditQuestion = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const { setAlert } = useSnackBarContext()
-  const { openModal, closeModal } = useModalContext()
-  const [isFetched, setIsFetched] = useState<boolean>(false)
 
   const createQuestion = useCallback(
     (data?: QuestionForm) => ResourceService.createQuestion(data),
     []
   )
-
-  const createCategory = useCallback(
-    (params?: CreateCategoriesParams) =>
-      ResourceService.createResourceCategory(params),
-    []
-  )
-
-  const getCategories = useCallback(() => {
-    setIsFetched(true)
-    return ResourceService.getResourcesCategoriesNames()
-  }, [])
 
   const onCategoryChange = (
     _: SyntheticEvent,
@@ -77,22 +56,6 @@ const CreateOrEditQuestion = () => {
     navigate(authRoutes.myResources.root.path)
   }
 
-  const onResponseCategory = useCallback(
-    (response: Categories | null) => {
-      const categoryName = response ? response.name : ''
-
-      setAlert({
-        severity: snackbarVariants.success,
-        message: t('myResourcesPage.categories.successCreation', {
-          category: categoryName
-        })
-      })
-
-      setIsFetched(false)
-    },
-    [setAlert, t]
-  )
-
   const onResponseError = (error: ErrorResponse) => {
     setAlert({
       severity: snackbarVariants.error,
@@ -105,14 +68,6 @@ const CreateOrEditQuestion = () => {
     defaultResponse: defaultResponses.object,
     fetchOnMount: false,
     onResponse,
-    onResponseError
-  })
-
-  const { fetchData: handleCreateCategory } = useAxios({
-    service: createCategory,
-    defaultResponse: null,
-    fetchOnMount: false,
-    onResponse: onResponseCategory,
     onResponseError
   })
 
@@ -133,17 +88,6 @@ const CreateOrEditQuestion = () => {
 
   const { type, title, text, answers, openAnswer, category } = data
   const { isOpenAnswer } = questionType(type)
-
-  const onCreateCategory = () => {
-    openModal({
-      component: (
-        <AddCategoriesModal
-          closeModal={closeModal}
-          createCategories={handleCreateCategory}
-        />
-      )
-    })
-  }
 
   const isButtonsVisible = isOpenAnswer
     ? Boolean(title && text && openAnswer)
@@ -167,34 +111,6 @@ const CreateOrEditQuestion = () => {
     </Box>
   )
 
-  const optionsList = (
-    props: HTMLAttributes<HTMLLIElement>,
-    option: string,
-    index: number
-  ) => (
-    <Box key={index}>
-      {index === 0 && (
-        <Box>
-          <AppButton
-            disableRipple
-            fullWidth
-            onClick={onCreateCategory}
-            size={SizeEnum.Medium}
-            sx={styles.addButton}
-            variant={ButtonVariantEnum.Text}
-          >
-            <AddIcon />
-            {t('myResourcesPage.categories.addBtn')}
-          </AppButton>
-          <Divider sx={styles.divider} />
-        </Box>
-      )}
-      <Box component={ComponentEnum.Li} {...(props as [])}>
-        {option}
-      </Box>
-    </Box>
-  )
-
   return (
     <PageWrapper>
       <Box component={ComponentEnum.Form} onSubmit={handleSubmit}>
@@ -208,24 +124,10 @@ const CreateOrEditQuestion = () => {
           value={title}
           variant={TextFieldVariantEnum.Standard}
         />
-
-        <Box sx={styles.labelCategory}>
-          <Typography variant={TypographyVariantEnum.Body2}>
-            {t('questionPage.chooseCategory')}
-          </Typography>
-          <AsyncAutocomplete<CategoryNameInterface>
-            fetchCondition={!isFetched}
-            fetchOnFocus
-            labelField='name'
-            onChange={onCategoryChange}
-            renderOption={(props, option, state) =>
-              optionsList(props, option.name, state.index)
-            }
-            service={getCategories}
-            value={category}
-            valueField='_id'
-          />
-        </Box>
+        <CategoryDropdown
+          category={category}
+          onCategoryChange={onCategoryChange}
+        />
         <Divider sx={styles.mainDivider} />
         <QuestionEditor
           data={data}

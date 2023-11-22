@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { SyntheticEvent, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { AxiosResponse } from 'axios'
@@ -11,12 +11,12 @@ import IconButton from '@mui/material/IconButton'
 import Loader from '~/components/loader/Loader'
 import AddResources from '~/containers/add-resources/AddResources'
 import IconExtensionWithTitle from '~/components/icon-extension-with-title/IconExtensionWithTitle'
-
 import { useModalContext } from '~/context/modal-context'
 import AppButton from '~/components/app-button/AppButton'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import FileEditor from '~/components/file-editor/FileEditor'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
+import CategoryDropdown from '~/containers/category-dropdown/CategoryDropdown'
 import { useSnackBarContext } from '~/context/snackbar-context'
 import useAxios from '~/hooks/use-axios'
 import useForm from '~/hooks/use-form'
@@ -45,7 +45,8 @@ import {
   SizeEnum,
   TextFieldVariantEnum,
   Attachment,
-  ResourcesTabsEnum
+  ResourcesTabsEnum,
+  CategoryNameInterface
 } from '~/types'
 
 const CreateOrEditLesson = () => {
@@ -129,6 +130,13 @@ const CreateOrEditLesson = () => {
     onResponseError: handleResponseError
   })
 
+  const onCategoryChange = (
+    _: SyntheticEvent,
+    value: CategoryNameInterface | null
+  ) => {
+    handleNonInputValueChange('category', value?._id ?? null)
+  }
+
   const {
     data,
     errors,
@@ -154,7 +162,7 @@ const CreateOrEditLesson = () => {
   }
 
   const { loading: getLessonLoading, fetchData: fetchDataLesson } = useAxios<
-    Lesson,
+    LessonData,
     string
   >({
     service: getLesson,
@@ -215,6 +223,10 @@ const CreateOrEditLesson = () => {
           onChange={handleInputChange('description')}
           value={data.description}
           variant={TextFieldVariantEnum.Standard}
+        />
+        <CategoryDropdown
+          category={data.category}
+          onCategoryChange={onCategoryChange}
         />
         <Divider sx={styles.divider} />
         <AppButton

@@ -11,7 +11,8 @@ export const initialValues = {
   title: '',
   description: '',
   content: '',
-  attachments: []
+  attachments: [],
+  category: null
 }
 
 export const defaultResponse = {
