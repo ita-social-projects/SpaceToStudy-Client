@@ -40,8 +40,6 @@
   "fileSizeError": "Розмір одного файлу не може перевищувати 10 Мб.",
   "noItems": "No items found",
   "view": "View",
-  "categoryDropdown": "Category...",
-  "categoryDropdownHelper": "Choose the category:",
   "labels": {
     "email": "Email",
     "firstName": "First name",
