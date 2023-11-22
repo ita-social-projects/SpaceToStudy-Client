@@ -95,7 +95,7 @@ const EditAttachmentModal: FC<EditAttachmentModalProps> = ({
         />
 
         <Typography sx={styles.inputTitle()}>
-          {t('myResourcesPage.categories.category')}:
+          {t('myResourcesPage.attachments.attachmentCategory')}:
         </Typography>
         <AsyncAutocomplete<CategoryNameInterface>
           blurOnSelect

@@ -42,6 +42,18 @@ export const styles = {
     typography: TypographyVariantEnum.Caption,
     color: 'basic.turquoiseDark'
   },
+  addCategoryBtn: {
+    color: 'primary.400',
+    typography: TypographyVariantEnum.Subtitle2,
+    fontWeight: 500,
+    display: 'flex',
+    alignItems: 'center',
+    visibility: 'hidden',
+    '&:hover': {
+      cursor: 'pointer',
+      color: 'primary.700'
+    }
+  },
   addAttachmentIcon: { ml: '5px', width: { xs: '18px', sm: '22px' } },
   table: roundedBorderTable,
   sizeTitle: captionTitle,
