@@ -15,7 +15,6 @@ import {
   Attachment,
   CategoryNameInterface,
   UpdateAttachmentParams,
-  EditAttachmentForm,
   ButtonTypeEnum,
   ButtonVariantEnum,
   ComponentEnum
@@ -39,15 +38,11 @@ const AddAttachmentCategoryModal: FC<AddAttachmentCategoryModalProps> = ({
   const [loading, setLoading] = useState<boolean>(false)
 
   const { data, errors, handleNonInputValueChange, handleBlur, handleSubmit } =
-    useForm<EditAttachmentForm>({
+    useForm<UpdateAttachmentParams>({
       initialValues: getInitialValues(attachment),
       onSubmit: async () => {
         setLoading(true)
-        await updateAttachmentCategory({
-          id: attachment._id,
-          fileName: data.fileName,
-          category: data.category
-        })
+        await updateAttachmentCategory(data)
         setLoading(false)
         closeModal()
       }

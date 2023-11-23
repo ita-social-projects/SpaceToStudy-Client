@@ -7,6 +7,7 @@ export const getInitialValues = (attachment: Attachment) => {
   )
 
   return {
+    id: attachment._id,
     fileName: initialFileName ?? '',
     category: null,
     description: attachment.description ?? ''
