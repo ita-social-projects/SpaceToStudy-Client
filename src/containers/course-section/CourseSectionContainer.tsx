@@ -19,10 +19,8 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import AppButton from '~/components/app-button/AppButton'
 import ResourcesList from '~/containers/course-section/resources-list/ResourcesList'
-import AddResources from '../add-resources/AddResources'
-
+import AddResources from '~/containers/add-resources/AddResources'
 import { ResourceService } from '~/services/resource-service'
-
 import useMenu from '~/hooks/use-menu'
 import { useModalContext } from '~/context/modal-context'
 
@@ -58,13 +56,15 @@ import {
 
 interface SectionProps {
   sectionData: CourseSection
-  setSectionsItems: Dispatch<SetStateAction<CourseSection[]>>
+  sections: CourseSection[]
+  setSectionsItems: (value: CourseSection[]) => void
 }
 
 type openModalFunc = () => void
 
 const CourseSectionContainer: FC<SectionProps> = ({
   sectionData,
+  sections,
   setSectionsItems
 }) => {
   const { t } = useTranslation()
@@ -133,9 +133,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
     setDescriptionInput('')
     setResources([])
     closeMenu()
-    setSectionsItems((prev) =>
-      prev.filter((item) => item.id !== sectionData.id)
-    )
+    setSectionsItems(sections.filter((item) => item.id !== sectionData.id))
   }
 
   const onTitleInputChange = (event: ChangeEvent<HTMLInputElement>) => {

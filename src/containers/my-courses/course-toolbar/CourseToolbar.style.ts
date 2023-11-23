@@ -28,11 +28,11 @@ export const styles = {
       ...commonStyle
     }
   },
-  drowlevel: {
+  levelSelect: {
     width: '370px',
     position: 'relative'
   },
-  drowstyle: {
+  levelHelperText: {
     ...commonStyle
   },
   otherToolbar: {

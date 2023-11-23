@@ -1,4 +1,4 @@
-import { FC, Dispatch, SetStateAction } from 'react'
+import { FC } from 'react'
 import {
   DragDropContext,
   Droppable,
@@ -14,12 +14,11 @@ import DragIndicatorIcon from '@mui/icons-material/DragIndicator'
 import CourseSectionContainer from '~/containers/course-section/CourseSectionContainer'
 
 import { styles } from '~/containers/course-sections-list/CourseSectionsList.styles'
-
 import { CourseSection } from '~/types'
 
 interface CourseSectionsListProps {
   items: CourseSection[]
-  setSectionsItems: Dispatch<SetStateAction<CourseSection[]>>
+  setSectionsItems: (value: CourseSection[]) => void
 }
 
 const CourseSectionsList: FC<CourseSectionsListProps> = ({
@@ -65,6 +64,7 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
           </Box>
           <CourseSectionContainer
             sectionData={item}
+            sections={items}
             setSectionsItems={setSectionsItems}
           />
         </Box>
