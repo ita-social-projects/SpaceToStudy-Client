@@ -6,7 +6,6 @@ import AddIcon from '@mui/icons-material/Add'
 import useForm from '~/hooks/use-form'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import CourseSectionsList from '~/containers/course-sections-list/CourseSectionsList'
-import { sectionInitialData } from '~/pages/create-course/CreateCourse.constants'
 import AddCourseBanner from '~/containers/add-course-banner/AddCourseBanner'
 import CourseToolbar from '~/containers/my-courses/course-toolbar/CourseToolbar'
 import AppButton from '~/components/app-button/AppButton'
@@ -20,7 +19,10 @@ import {
   CourseSection
 } from '~/types'
 import { authRoutes } from '~/router/constants/authRoutes'
-import { initialValues } from '~/pages/create-course/CreateCourse.constants'
+import {
+  sectionInitialData,
+  initialValues
+} from '~/pages/create-course/CreateCourse.constants'
 import { styles } from '~/pages/create-course/CreateCourse.styles'
 
 const CreateCourse = () => {
