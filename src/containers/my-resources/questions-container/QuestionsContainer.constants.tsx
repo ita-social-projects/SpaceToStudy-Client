@@ -1,4 +1,6 @@
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
+import NotesIcon from '@mui/icons-material/Notes'
+import RuleIcon from '@mui/icons-material/Rule'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 
@@ -9,23 +11,42 @@ import {
   Question,
   RemoveColumnRules,
   SortEnum,
+  QuestionTypesEnum,
   TableColumn,
   AdditionalPropsInterface
 } from '~/types'
 import { getFormattedDate } from '~/utils/helper-functions'
 import { styles } from '~/containers/my-resources/questions-container/QuestionsContainer.styles'
 
+export const questionsIcons = [
+  {
+    icon: <CheckCircleOutlineIcon />,
+    value: QuestionTypesEnum.MultipleChoice
+  },
+  {
+    icon: <NotesIcon />,
+    value: QuestionTypesEnum.OpenAnswer
+  },
+  {
+    icon: <RuleIcon />,
+    value: QuestionTypesEnum.OneAnswer
+  }
+]
+
 export const columns: TableColumn<Question>[] = [
   {
     label: 'myResourcesPage.questions.title',
     field: 'title',
     calculatedCellValue: (item: Question) => {
+      const questionIcon = questionsIcons.find(
+        (icon) => icon.value === item.type
+      )
       return (
         <IconTitleDescription
-          description={'Which word is the antonym of "benevolent"?'}
+          description={item.text}
           icon={
             <Box sx={styles.iconWrapper}>
-              <CheckCircleOutlineIcon />
+              {questionIcon ? questionIcon.icon : <CheckCircleOutlineIcon />}
             </Box>
           }
           sx={styles.iconTitleDescription}

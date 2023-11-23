@@ -72,8 +72,8 @@ const CreateOrEditQuizContainer = ({
     setAlert({
       severity: snackbarVariants.success,
       message: id
-        ? t('myResourcesPage.quizzes.successEditedOuiz')
-        : t('myResourcesPage.quizzes.successAddedOuiz')
+        ? t('myResourcesPage.quizzes.successEditedQuiz')
+        : t('myResourcesPage.quizzes.successAddedQuiz')
     })
     navigate(authRoutes.myResources.root.path)
   }

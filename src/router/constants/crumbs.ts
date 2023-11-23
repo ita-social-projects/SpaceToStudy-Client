@@ -101,3 +101,8 @@ export const newQuestion = {
   name: t('breadCrumbs.newQuestion'),
   path: authRoutes.myResources.newQuestion.route
 }
+
+export const editQuestion = {
+  name: t('breadCrumbs.editQuestion'),
+  path: authRoutes.myResources.editQuestion.route
+}

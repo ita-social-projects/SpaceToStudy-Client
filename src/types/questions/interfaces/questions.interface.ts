@@ -1,5 +1,6 @@
 import {
   Category,
+  CategoryNameInterface,
   CommonEntityFields,
   QuestionTypesEnum,
   UserResponse
@@ -26,7 +27,7 @@ export interface UpdateQuestionParams {
   title: Question['title']
   id: Question['_id']
   text: Question['text']
-  category: string | null
+  category: CategoryNameInterface | string | null
   type: Question['type']
   answers: Question['answers']
 }
@@ -38,8 +39,13 @@ export interface QuestionFormAnswer extends Answer {
 export interface QuestionForm
   extends Omit<Question, 'author' | 'category' | keyof CommonEntityFields> {
   openAnswer?: string
-  category: string | null
+  category: string | CategoryNameInterface | null
   answers: QuestionFormAnswer[]
+}
+
+export interface CreateOrEditQuestionForm
+  extends Omit<QuestionForm, 'category'> {
+  category: CategoryNameInterface | null
 }
 
 export interface QuestionModalForm {

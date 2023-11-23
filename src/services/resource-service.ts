@@ -81,6 +81,8 @@ export const ResourceService = {
   ): Promise<AxiosResponse<ItemsWithCount<Question>>> => {
     return axiosClient.get(URLs.resources.questions.get, { params })
   },
+  getQuestion: async (id?: string): Promise<AxiosResponse<Question>> =>
+    await axiosClient.get(createUrlPath(URLs.resources.questions.get, id)),
   createQuestion: async (data?: CreateQuestionData): Promise<AxiosResponse> => {
     return await axiosClient.post(URLs.resources.questions.post, data)
   },
