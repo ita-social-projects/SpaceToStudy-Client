@@ -1,6 +1,7 @@
 import { AxiosResponse } from 'axios'
 
 import { appApi } from '~/redux/apiSlice'
+import { logout, setUser } from '~/redux/reducer'
 import { axiosClient } from '~/plugins/axiosClient'
 
 import { createUrlPath } from '~/utils/helper-functions'
@@ -41,14 +42,34 @@ export const authService = appApi.injectEndpoints({
     signUp: build.mutation<SignupResponse, SignupParams>({
       query: (body) => ({ url: URLs.auth.signup, method: POST, body })
     }),
-    login: build.mutation<LoginParams, GoogleAuthParams>({
-      query: (body) => ({ url: URLs.auth.login, method: POST, body })
+    login: build.mutation<LoginResponse, LoginParams>({
+      query: (body) => ({ url: URLs.auth.login, method: POST, body }),
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled
+          dispatch(setUser(data.accessToken))
+        } catch {
+          dispatch(logout())
+        }
+      }
     }),
     googleAuth: build.mutation<LoginResponse, GoogleAuthParams>({
-      query: (body) => ({ url: URLs.auth.googleAuth, method: POST, body })
+      query: (body) => ({ url: URLs.auth.googleAuth, method: POST, body }),
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled
+          dispatch(setUser(data.accessToken))
+        } catch {
+          dispatch(logout())
+        }
+      }
     }),
     logout: build.mutation<void, void>({
-      query: () => ({ url: URLs.auth.logout, method: POST })
+      query: () => ({ url: URLs.auth.logout, method: POST }),
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        await queryFulfilled
+        dispatch(logout())
+      }
     })
   })
 })

@@ -1,12 +1,10 @@
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { useTranslation } from 'react-i18next'
-import { useDispatch } from 'react-redux'
 
 import GoogleLogin from '~/containers/guest-home-page/google-login/GoogleLogin'
 import LoginForm from '~/containers/guest-home-page/login-form/LoginForm'
 import useForm from '~/hooks/use-form'
-import { setUser } from '~/redux/reducer'
 import { useLoginMutation } from '~/services/auth-service'
 import { useModalContext } from '~/context/modal-context'
 import { useSnackBarContext } from '~/context/snackbar-context'
@@ -20,15 +18,13 @@ const LoginDialog = () => {
   const { t } = useTranslation()
   const { closeModal } = useModalContext()
   const { setAlert } = useSnackBarContext()
-  const dispatch = useDispatch()
   const [loginUser] = useLoginMutation()
 
   const { handleSubmit, handleInputChange, handleBlur, data, errors } = useForm(
     {
       onSubmit: async () => {
         try {
-          const response = await loginUser(data).unwrap()
-          dispatch(setUser(response.accessToken))
+          await loginUser(data).unwrap()
           closeModal()
         } catch (e) {
           setAlert({

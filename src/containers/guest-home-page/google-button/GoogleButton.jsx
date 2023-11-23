@@ -1,8 +1,6 @@
 import { useCallback, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
 import { useHref } from 'react-router-dom'
 
-import { setUser } from '~/redux/reducer'
 import { useGoogleAuthMutation } from '~/services/auth-service'
 import { useModalContext } from '~/context/modal-context'
 import { useSnackBarContext } from '~/context/snackbar-context'
@@ -14,7 +12,6 @@ import { styles } from '~/containers/guest-home-page/google-button/GoogleButton.
 
 const GoogleButton = ({ role, route, buttonWidth, type }) => {
   const ref = useHref(route)
-  const dispatch = useDispatch()
   const mediaQuery = useBreakpoints().isLaptopAndAbove ? 'md' : 'xs'
   const { closeModal } = useModalContext()
   const { setAlert } = useSnackBarContext()
@@ -23,8 +20,7 @@ const GoogleButton = ({ role, route, buttonWidth, type }) => {
   const handleCredentialResponse = useCallback(
     async (token) => {
       try {
-        const response = await googleAuth({ token, role }).unwrap()
-        dispatch(setUser(response.accessToken))
+        await googleAuth({ token, role }).unwrap()
         closeModal()
       } catch (e) {
         setAlert({
@@ -37,7 +33,7 @@ const GoogleButton = ({ role, route, buttonWidth, type }) => {
         }
       }
     },
-    [googleAuth, dispatch, role, closeModal, setAlert, ref]
+    [googleAuth, role, closeModal, setAlert, ref]
   )
 
   useEffect(() => {
