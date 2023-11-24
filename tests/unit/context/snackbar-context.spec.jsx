@@ -3,7 +3,9 @@ import { renderWithProviders } from '~tests/test-utils'
 import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
 import { vi } from 'vitest'
 
-const preloadedState = { appMain: { loading: false, userRole: '', error: '' } }
+const preloadedState = {
+  appMain: { loading: false, authLoading: false, userRole: '', error: '' }
+}
 const unwrap = vi.fn().mockRejectedValue({ data: { code: 'error' } })
 const loginUser = vi.fn().mockReturnValue({ unwrap })
 
@@ -15,9 +17,11 @@ vi.mock('~/containers/guest-home-page/google-button/GoogleButton', () => ({
 }))
 
 vi.mock('~/services/auth-service', async () => {
-  const actual = await vi.importActual('~/services/auth-service')
   return {
-    ...actual,
+    __esModule: true,
+    authService: {
+      endpoint: { matchFulfilled: vi.fn(), matchPending: vi.fn() }
+    },
     useLoginMutation: () => [loginUser]
   }
 })

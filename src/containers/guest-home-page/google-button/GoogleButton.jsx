@@ -27,7 +27,7 @@ const GoogleButton = ({ role, route, buttonWidth, type }) => {
           severity: snackbarVariants.error,
           message: `errors.${e.data.code}`
         })
-        if (e === 'USER_NOT_FOUND') {
+        if (e.data.code === 'USER_NOT_FOUND') {
           closeModal()
           scrollToHash(ref)
         }

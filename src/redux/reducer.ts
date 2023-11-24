@@ -30,8 +30,6 @@ const initialState: UserState = {
   isFirstLogin: true
 }
 
-const { logout: logoutEndpoint } = authService.endpoints
-
 export const checkAuth = createAsyncThunk(
   'appMain/checkAuth',
   async (_, { rejectWithValue, dispatch }) => {
@@ -82,7 +80,12 @@ export const mainSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addMatcher(isPending, (state, action) => {
-      if (isAnyOf(checkAuth.pending, logoutEndpoint.matchPending)(action)) {
+      if (
+        isAnyOf(
+          checkAuth.pending,
+          authService.endpoints.logout.matchPending
+        )(action)
+      ) {
         state.loading = true
       } else {
         state.authLoading = true
@@ -90,7 +93,12 @@ export const mainSlice = createSlice({
       state.error = ''
     })
     builder.addMatcher(isFulfilled, (state, action) => {
-      if (isAnyOf(checkAuth.fulfilled, logoutEndpoint.matchFulfilled)(action)) {
+      if (
+        isAnyOf(
+          checkAuth.fulfilled,
+          authService.endpoints.logout.matchFulfilled
+        )(action)
+      ) {
         state.loading = false
       } else {
         state.authLoading = false

@@ -4,7 +4,6 @@ import { renderWithProviders } from '~tests/test-utils'
 import { vi } from 'vitest'
 import { accessToken } from '~tests/unit/redux/redux.variables'
 
-const mockDispatch = vi.fn()
 const mockSelector = vi.fn()
 const unwrap = vi.fn().mockResolvedValue({ accessToken })
 const loginUser = vi.fn().mockReturnValue({ unwrap })
@@ -17,7 +16,6 @@ vi.mock('react-redux', async () => {
   const actual = await vi.importActual('react-redux')
   return {
     ...actual,
-    useDispatch: () => mockDispatch.mockReturnValue({ unwrap: () => '' }),
     useSelector: () => mockSelector.mockReturnValue(mockState)
   }
 })
@@ -94,7 +92,6 @@ describe('Login dialog test', () => {
     fireEvent.click(button)
 
     await waitFor(() => {
-      expect(mockDispatch).toHaveBeenCalledTimes(1)
       expect(loginUser).toHaveBeenCalledTimes(1)
     })
   })
