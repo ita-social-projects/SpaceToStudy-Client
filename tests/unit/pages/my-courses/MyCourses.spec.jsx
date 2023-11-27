@@ -17,8 +17,8 @@ describe('tests for MyCourses page', () => {
     renderWithProviders(<MyCourses />)
   })
 
-  it('should render page title', () => {
-    const myCoursesTitle = screen.getByText('myCoursesPage.title')
+  it('should render page title', async () => {
+    const myCoursesTitle = await screen.findByText('myCoursesPage.title')
 
     expect(myCoursesTitle).toBeInTheDocument()
   })
