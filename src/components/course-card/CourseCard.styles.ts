@@ -6,11 +6,12 @@ export const styles = {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    maxWidth: '312px',
+    maxWidth: '395px',
     minHeight: '245px',
     backgroundColor: 'basic.white',
     borderRadius: '6px',
-    p: '24px 24px 16px'
+    p: '24px 24px 16px',
+    mt: '32px'
   },
   title: {
     typography: TypographyVariantEnum.H5,
