@@ -26,20 +26,20 @@ const mockedQuestion = [
   }
 ]
 
-const mockDescription = 'Description'
+const mockedDescription = 'Description'
 
 describe('Tests scroll view quiz page', () => {
   beforeEach(() => {
     renderWithProviders(
       <ScrollQuestionsQuizView
-        description={mockDescription}
+        description={mockedDescription}
         questions={mockedQuestion}
       />
     )
   })
 
   it('should render description', () => {
-    const description = screen.getByText(mockDescription)
+    const description = screen.getByText(mockedDescription)
 
     expect(description).toBeInTheDocument()
   })
