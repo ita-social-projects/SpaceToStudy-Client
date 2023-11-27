@@ -47,14 +47,16 @@ const MyCourses = () => {
 
   const { items: coursesItems, count: coursesCount } = coursesResponse
 
+  if (coursesLoading) {
+    return <Loader pageLoad />
+  }
+
   return (
     <PageWrapper>
       <Typography sx={styles.title}>{t('myCoursesPage.title')}</Typography>
       <Box sx={styles.divider}></Box>
       <AddCourseWithInput />
-      {coursesLoading ? (
-        <Loader pageLoad />
-      ) : !coursesItems.length && !coursesLoading ? (
+      {!coursesItems.length && !coursesLoading ? (
         <NotFoundResults
           description={t('myCoursesPage.notFound.description')}
         />
