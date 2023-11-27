@@ -7,14 +7,19 @@ import ScrollQuestionsQuizView from '~/containers/my-quizzes/scroll-question-qui
 import { styles } from '~/containers/my-quizzes/view-quiz-container/ViewQuizContainer.styles'
 import { QuizContentProps } from '~/pages/new-quiz/NewQuiz.constants'
 
-const ViewQuizContainer = ({ questions }: QuizContentProps) => {
+const ViewQuizContainer = ({
+  questions,
+  title,
+  description
+}: QuizContentProps) => {
   return (
     <Box>
-      <Typography sx={styles.title}>
-        Lorem ipsum dolor sit amet consectetur
-      </Typography>
+      <Typography sx={styles.title}>{title}</Typography>
       {/* <SelectableQuestionQuizView questions={questions} /> */}
-      <ScrollQuestionsQuizView questions={questions} />
+      <ScrollQuestionsQuizView
+        description={description}
+        questions={questions}
+      />
     </Box>
   )
 }

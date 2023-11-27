@@ -7,9 +7,13 @@ import { styles } from '~/containers/my-quizzes/scroll-question-quiz-view/Scroll
 
 export interface QuizViewProps {
   questions: Question[]
+  description: string
 }
 
-const ScrollQuestionsQuizView: FC<QuizViewProps> = ({ questions }) => {
+const ScrollQuestionsQuizView: FC<QuizViewProps> = ({
+  questions,
+  description
+}) => {
   const questionList = questions.map((question, index) => (
     <QuizQuestion
       index={index}
@@ -21,11 +25,7 @@ const ScrollQuestionsQuizView: FC<QuizViewProps> = ({ questions }) => {
 
   return (
     <Box>
-      <Typography sx={styles.description}>
-        Lorem ipsum dolor sit amet consectetur. Elementum at diam vulputate
-        suspendisse nulla tortor tempor odio tortor. Eu eleifend quam eget et
-        nulla.
-      </Typography>
+      <Typography sx={styles.description}>{description}</Typography>
       <Box>{questionList}</Box>
     </Box>
   )
