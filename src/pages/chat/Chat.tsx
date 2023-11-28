@@ -250,7 +250,7 @@ const Chat = () => {
         <AppDrawer
           anchor={PositionEnum.Left}
           onClose={closeDrawer}
-          open={isOpen}
+          open={selectedChat ? isOpen : true}
         >
           <ListOfUsersWithSearch
             closeDrawer={closeDrawer}
