@@ -1,15 +1,11 @@
 import {
   CommonEntityFields,
-  Lesson,
-  Quiz,
-  Attachment,
   CategoryInterface,
   SubjectNameInterface,
   ProficiencyLevelEnum,
   UserResponse
 } from '~/types'
 
-export type CourseResources = Lesson | Quiz | Attachment
 export interface Course extends CommonEntityFields {
   title: string
   description: string
@@ -38,10 +34,3 @@ export interface CourseSection {
   quizzes: string[]
   attachments: string[]
 }
-
-export interface GetCoursesResponse {
-  items: Course[]
-  count: number
-}
-
-export type MyCorsesListProps = Omit<GetCoursesResponse, 'count'>
