@@ -1,4 +1,5 @@
 import Typography from '@mui/material/Typography'
+import AddIcon from '@mui/icons-material/Add'
 
 import IconExtensionWithTitle from '~/components/icon-extension-with-title/IconExtensionWithTitle'
 import AppChip from '~/components/app-chip/AppChip'
@@ -12,7 +13,9 @@ import {
 } from '~/types'
 import { styles } from '~/containers/my-resources/attachments-container/AttachmentsContainer.styles'
 
-export const columns: TableColumn<Attachment>[] = [
+export const columns = (
+  onAddCategory: (id: string) => void
+): TableColumn<Attachment>[] => [
   {
     label: 'myResourcesPage.attachments.attachmentName',
     field: 'fileName',
@@ -35,8 +38,13 @@ export const columns: TableColumn<Attachment>[] = [
           {item.category.name}
         </AppChip>
       ) : (
-        <Typography sx={styles.dateTitle}>
-          {t('myResourcesPage.categories.noCategory')}
+        <Typography
+          className='addCategory'
+          onClick={() => onAddCategory(item._id)}
+          sx={styles.addCategoryBtn}
+        >
+          {t('myResourcesPage.categories.category')}
+          <AddIcon />
         </Typography>
       )
     }

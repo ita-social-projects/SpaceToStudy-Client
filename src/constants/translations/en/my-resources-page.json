@@ -22,7 +22,7 @@
     "addBtn": "Add Attachment",
     "add": "Add Attachments",
     "edit": "Edit Attachment",
-    "description": "Description",
+    "description": "Attachment description",
     "fileName": "File name",
     "file": "File",
     "size": "Size",
@@ -31,7 +31,8 @@
     "confirmDeletionTitle": "Do you confirm attachment deletion?",
     "successDeletion": "Attachment was deleted successfully",
     "validationError": "File name cannot be longer than 55 symbol.",
-    "attachmentName": "Attachment name"
+    "attachmentName": "Attachment name",
+    "attachmentCategory": "Attachment category"
   },
   "quizzes": {
     "addBtn": "New quiz",
@@ -83,7 +84,8 @@
     "successCreation": "«{{category}}» category was created successfully",
     "successDeletion": "Category was deleted successfully",
     "confirmDeletionTitle": "Do you confirm category deletion?",
-    "categoryDropdown": "Category..."
+    "categoryDropdown": "Category...",
+    "selectCategory": "Select category"
   },
   "confirmDeletionMessage": "This action is permanent and will remove all related content. Please review your decision before proceeding."
 }

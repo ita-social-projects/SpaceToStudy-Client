@@ -16,7 +16,7 @@ export interface Attachment extends CommonEntityFields {
 }
 
 export interface UpdateAttachmentParams {
-  fileName: Attachment['fileName']
+  fileName?: Attachment['fileName']
   id: Attachment['author']['_id']
   description?: Attachment['description']
   category: EditAttachmentForm['category']

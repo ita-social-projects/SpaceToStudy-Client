@@ -7,6 +7,7 @@ import { useModalContext } from '~/context/modal-context'
 import { ResourceService } from '~/services/resource-service'
 import EditAttachmentModal from '~/containers/my-resources/edit-attachment-modal/EditAttachmentModal'
 import AddResourceWithInput from '~/containers/my-resources/add-resource-with-input/AddResourceWithInput'
+import AddAttachmentCategoryModal from '~/containers/my-resources/add-attachment-category-modal/AddAttachmentCategoryModal'
 import MyResourcesTable from '~/containers/my-resources/my-resources-table/MyResourcesTable'
 import Loader from '~/components/loader/Loader'
 import useSort from '~/hooks/table/use-sort'
@@ -141,7 +142,25 @@ const AttachmentsContainer = () => {
     })
   }
 
-  const columnsToShow = ajustColumns(breakpoints, columns, removeColumnRules)
+  const onAddCategory = (id: string) => {
+    const attachment = response.items.find((item) => item._id === id)
+
+    openModal({
+      component: (
+        <AddAttachmentCategoryModal
+          attachment={attachment as Attachment}
+          closeModal={closeModal}
+          updateAttachmentCategory={updateData}
+        />
+      )
+    })
+  }
+
+  const columnsToShow = ajustColumns(
+    breakpoints,
+    columns(onAddCategory),
+    removeColumnRules
+  )
 
   const props = {
     columns: columnsToShow,
