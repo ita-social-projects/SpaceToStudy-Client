@@ -13,5 +13,8 @@
     "categories": "Choose the category of the course",
     "subjects": "Choose the subject of the course",
     "levels": "Choose suitable levels for the course"
+  },
+  "notFound": {
+    "description": "We couldn't find the courses you were looking for."
   }
 }

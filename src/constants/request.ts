@@ -27,6 +27,9 @@ export const URLs = {
     update: '/offers',
     get: '/offers'
   },
+  courses: {
+    get: '/courses'
+  },
   categories: {
     get: '/categories',
     getNames: '/categories/names',

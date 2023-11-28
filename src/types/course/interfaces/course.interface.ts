@@ -1,18 +1,15 @@
 import {
   CommonEntityFields,
-  Lesson,
-  Quiz,
-  Attachment,
   CategoryInterface,
   SubjectNameInterface,
-  ProficiencyLevelEnum
+  ProficiencyLevelEnum,
+  UserResponse
 } from '~/types'
-
-export type CourseResources = Lesson | Quiz | Attachment
 
 export interface Course extends CommonEntityFields {
   title: string
   description: string
+  author: Pick<UserResponse, '_id'>
   sections?: CourseSection[]
   category: CategoryInterface
   subject: SubjectNameInterface
@@ -33,5 +30,7 @@ export interface CourseSection {
   id: number
   title: string
   description: string
-  resources: CourseResources[]
+  lessons: string[]
+  quizzes: string[]
+  attachments: string[]
 }
