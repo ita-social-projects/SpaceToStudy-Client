@@ -7,7 +7,10 @@ import Loader from '~/components/loader/Loader'
 import AppButton from '~/components/app-button/AppButton'
 import AddCategoriesModal from '~/containers/my-resources/add-categories-modal/AddCategoriesModal'
 import AddResourceWithInput from '~/containers/my-resources/add-resource-with-input/AddResourceWithInput'
-import { ResourceService } from '~/services/resource-service'
+import {
+  ResourceService,
+  useUpdateResourceCategoryMutation
+} from '~/services/resource-service'
 import MyResourcesTable from '~/containers/my-resources/my-resources-table/MyResourcesTable'
 import useAxios from '~/hooks/use-axios'
 import useSort from '~/hooks/table/use-sort'
@@ -29,7 +32,6 @@ import {
   GetResourcesCategoriesParams,
   ErrorResponse,
   ResourcesTabsEnum,
-  UpdateResourceCategory,
   CreateCategoriesParams
 } from '~/types'
 import { ajustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
@@ -45,6 +47,7 @@ const CategoriesContainer = () => {
   const { openModal, closeModal } = useModalContext()
   const { setAlert } = useSnackBarContext()
   const [selectedItemId, setSelectedItemId] = useState<string>('')
+  const [updateResourceCategory] = useUpdateResourceCategoryMutation()
 
   const { sort } = sortOptions
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
@@ -90,12 +93,6 @@ const CategoriesContainer = () => {
     []
   )
 
-  const updateCategory = useCallback(
-    (params?: UpdateResourceCategory) =>
-      ResourceService.updateResourceCategory(params),
-    []
-  )
-
   const deleteCategory = useCallback(
     (id?: string) => ResourceService.deleteResourceCategory(id ?? ''),
     []
@@ -127,14 +124,6 @@ const CategoriesContainer = () => {
     onResponse: onCategoryCreate
   })
 
-  const { fetchData: updateData } = useAxios({
-    service: updateCategory,
-    defaultResponse: null,
-    onResponseError,
-    onResponse: onCategoryUpdate,
-    fetchOnMount: false
-  })
-
   const onAdd = () => {
     openModal({
       component: (
@@ -146,7 +135,8 @@ const CategoriesContainer = () => {
     })
   }
   const onSave = async (name: string) => {
-    if (name) await updateData({ id: selectedItemId, name })
+    if (name) await updateResourceCategory({ id: selectedItemId, name })
+    onCategoryUpdate()
     setSelectedItemId('')
   }
   const onEdit = (id: string) => setSelectedItemId(id)

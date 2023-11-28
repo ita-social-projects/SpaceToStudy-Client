@@ -107,3 +107,8 @@ export enum OverlapEnum {
 export enum ColorEnum {
   Primary = 'primary'
 }
+
+export enum ApiMethodEnum {
+  POST = 'POST',
+  PATCH = 'PATCH'
+}

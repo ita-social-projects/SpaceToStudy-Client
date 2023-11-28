@@ -78,7 +78,7 @@ export interface SignupParams {
   role: UserRole
 }
 
-export interface SignupRespornse {
+export interface SignupResponse {
   userId: string
   userEmail: string
 }

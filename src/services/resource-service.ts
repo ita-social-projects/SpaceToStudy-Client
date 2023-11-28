@@ -1,6 +1,7 @@
 import { AxiosResponse } from 'axios'
 
 import { axiosClient } from '~/plugins/axiosClient'
+import { appApi } from '~/redux/apiSlice'
 
 import { URLs } from '~/constants/request'
 import {
@@ -20,7 +21,8 @@ import {
   UpdateQuestionParams,
   CreateQuizParams,
   Quiz,
-  UpdateQuizParams
+  UpdateQuizParams,
+  ApiMethodEnum
 } from '~/types'
 import { createUrlPath } from '~/utils/helper-functions'
 
@@ -99,13 +101,6 @@ export const ResourceService = {
   getResourcesCategoriesNames: (): Promise<
     AxiosResponse<CategoryNameInterface[]>
   > => axiosClient.get(URLs.resources.resourcesCategories.getNames),
-  updateResourceCategory: (
-    params?: UpdateResourceCategory
-  ): Promise<AxiosResponse> =>
-    axiosClient.patch(
-      createUrlPath(URLs.resources.resourcesCategories.patch, params?.id),
-      params
-    ),
   createResourceCategory: async (
     params?: CreateCategoriesParams
   ): Promise<AxiosResponse<Categories>> =>
@@ -116,3 +111,17 @@ export const ResourceService = {
       createUrlPath(URLs.resources.resourcesCategories.delete, id)
     )
 }
+
+export const resourceService = appApi.injectEndpoints({
+  endpoints: (build) => ({
+    updateResourceCategory: build.mutation<void, UpdateResourceCategory>({
+      query: (params) => ({
+        url: createUrlPath(URLs.resources.resourcesCategories.patch, params.id),
+        method: ApiMethodEnum.PATCH,
+        body: { ...params }
+      })
+    })
+  })
+})
+
+export const { useUpdateResourceCategoryMutation } = resourceService
