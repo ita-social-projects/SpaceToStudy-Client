@@ -194,11 +194,9 @@ const QuestionEditor: FC<QuestionEditorProps> = ({
         </Box>
         {isQuizQuestion && (
           <>
-            {data.title && (
-              <IconButton onClick={openMenu}>
-                <MoreVertIcon color='primary' sx={styles.moreIcon} />
-              </IconButton>
-            )}
+            <IconButton onClick={openMenu}>
+              <MoreVertIcon color='primary' sx={styles.moreIcon} />
+            </IconButton>
             {showMoreMenu}
           </>
         )}

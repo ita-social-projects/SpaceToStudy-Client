@@ -33,6 +33,7 @@ import {
 } from '~/components/question-editor/QuestionEditor.constants'
 import { styles } from '~/pages/create-or-edit-question/CreateOrEditQuestion.styles'
 import { AxiosResponse } from 'axios'
+import Loader from '~/components/loader/Loader'
 
 const CreateOrEditQuestion = () => {
   const { t } = useTranslation()
@@ -50,7 +51,6 @@ const CreateOrEditQuestion = () => {
     value: CategoryNameInterface | null
   ) => {
     handleNonInputValueChange('category', value?._id ?? null)
-    console.log(value?._id)
   }
 
   const onResponse = () => {
@@ -70,7 +70,7 @@ const CreateOrEditQuestion = () => {
     })
   }
 
-  const { loading, fetchData: handleCreateQuestion } = useAxios({
+  const { fetchData: handleCreateQuestion } = useAxios({
     service: createQuestion,
     defaultResponse: defaultResponses.object,
     fetchOnMount: false,
@@ -105,7 +105,7 @@ const CreateOrEditQuestion = () => {
     }
   }
 
-  const { fetchData: handleGetQuestion } = useAxios({
+  const { loading: getLoading, fetchData: handleGetQuestion } = useAxios({
     service: getQuestion,
     fetchOnMount: false,
     defaultResponse: {
@@ -132,7 +132,7 @@ const CreateOrEditQuestion = () => {
       },
       onSubmit: async () => {
         id
-          ? await handleEditQuestion({ ...data, id: id })
+          ? await handleEditQuestion({ ...data, id })
           : await handleCreateQuestion(data)
       }
     })
@@ -152,11 +152,7 @@ const CreateOrEditQuestion = () => {
       >
         {t('common.cancel')}
       </AppButton>
-      <AppButton
-        disabled={!isButtonsVisible}
-        loading={loading}
-        type={ButtonTypeEnum.Submit}
-      >
+      <AppButton disabled={!isButtonsVisible} type={ButtonTypeEnum.Submit}>
         {t('common.save')}
       </AppButton>
     </Box>
@@ -168,6 +164,10 @@ const CreateOrEditQuestion = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id])
+
+  if (getLoading) {
+    return <Loader pageLoad />
+  }
 
   return (
     <PageWrapper>
@@ -183,7 +183,7 @@ const CreateOrEditQuestion = () => {
           variant={TextFieldVariantEnum.Standard}
         />
         <CategoryDropdown
-          category={category ? category._id : null}
+          category={category?._id ?? null}
           onCategoryChange={onCategoryChange}
         />
         <Divider sx={styles.mainDivider} />
