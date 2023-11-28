@@ -19,6 +19,16 @@ export interface Course extends CommonEntityFields {
   proficiencyLevel: ProficiencyLevelEnum[]
 }
 
+export interface CourseForm
+  extends Omit<
+    Course,
+    'category' | 'subject' | 'sections' | keyof CommonEntityFields
+  > {
+  category: string | null
+  subject: string | null
+  sections: CourseSection[]
+}
+
 export interface CourseSection {
   id: number
   title: string

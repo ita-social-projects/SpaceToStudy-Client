@@ -10,6 +10,15 @@ const mockedSectionData = {
   resources: []
 }
 
+const mockedSections = Array(2)
+  .fill()
+  .map((_, index) => ({
+    ...mockedSectionData,
+    _id: `${index}`,
+    title: `${mockedSectionData.title}${index}`,
+    description: `${mockedSectionData.description}${index}`
+  }))
+
 const mockedSetSectionItems = vi.fn()
 
 describe('CourseSectionContainer tests', () => {
@@ -17,6 +26,7 @@ describe('CourseSectionContainer tests', () => {
     renderWithProviders(
       <CourseSectionContainer
         sectionData={mockedSectionData}
+        sections={mockedSections}
         setSectionsItems={mockedSetSectionItems}
       />
     )
