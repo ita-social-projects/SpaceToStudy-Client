@@ -4,12 +4,10 @@ import FormatListBulletedOutlinedIcon from '@mui/icons-material/FormatListBullet
 
 import { types } from '~/constants'
 
-const typesArray: string[] = types
-
 export const CheckIcons = (type: string) => {
   return (
-    (type === typesArray[0] && <CheckCircleOutlineIcon />) ||
-    (type === typesArray[1] && <DriveFileRenameOutlineOutlinedIcon />) ||
-    (type === typesArray[2] && <FormatListBulletedOutlinedIcon />)
+    (type === types.oneAnswer && <CheckCircleOutlineIcon />) ||
+    (type === types.openAnswer && <DriveFileRenameOutlineOutlinedIcon />) ||
+    (type === types.multipleChoice && <FormatListBulletedOutlinedIcon />)
   )
 }
