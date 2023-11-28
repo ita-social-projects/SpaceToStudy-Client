@@ -39,7 +39,7 @@ const CourseCard: FC<CourseCardProps> = ({ course }) => {
         <SubjectLevelChips
           color={category.appearance.color}
           proficiencyLevel={proficiencyLevel}
-          subject={subject.name}
+          subject={subject?.name}
           sx={styles.chipContainer}
         />
         <Typography sx={styles.secondaryText}>

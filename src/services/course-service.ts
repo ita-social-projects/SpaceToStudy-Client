@@ -8,11 +8,8 @@ interface GetCoursesParams {
 }
 
 export const CourseService = {
-  getCourses: async (params?: GetCoursesParams): Promise<AxiosResponse> => {
-    const response = await axiosClient.get(URLs.courses.get, {
+  getCourses: async (params?: GetCoursesParams): Promise<AxiosResponse> =>
+    await axiosClient.get(URLs.courses.get, {
       params
     })
-
-    return response
-  }
 }

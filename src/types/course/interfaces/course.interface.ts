@@ -44,4 +44,4 @@ export interface GetCoursesResponse {
   count: number
 }
 
-export type CoursesContainerProps = Omit<GetCoursesResponse, 'count'>
+export type MyCorsesListProps = Omit<GetCoursesResponse, 'count'>

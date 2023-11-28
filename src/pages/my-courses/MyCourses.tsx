@@ -7,7 +7,7 @@ import AppPagination from '~/components/app-pagination/AppPagination'
 import Loader from '~/components/loader/Loader'
 import NotFoundResults from '~/components/not-found-results/NotFoundResults'
 import AddCourseWithInput from '~/containers/my-courses/add-course-with-input/AddCourseWithInput'
-import MyCoursesContainer from '~/containers/my-courses/my-courses-container/MyCoursesContainer'
+import MyCorsesCardsList from '~/containers/my-courses/my-courses-container/MyCorsesCardsList'
 
 import useAxios from '~/hooks/use-axios'
 import usePagination from '~/hooks/table/use-pagination'
@@ -15,7 +15,7 @@ import useBreakpoints from '~/hooks/use-breakpoints'
 
 import { getScreenBasedLimit } from '~/utils/helper-functions'
 import { CourseService } from '~/services/course-service'
-import { GetCoursesResponse } from '~/types'
+import { Course, ItemsWithCount } from '~/types'
 import {
   defaultResponse,
   courseItemsLoadLimit
@@ -39,11 +39,12 @@ const MyCourses = () => {
     [itemsPerPage, page]
   )
 
-  const { response: coursesResponse, loading: coursesLoading } =
-    useAxios<GetCoursesResponse>({
-      service: getCourses,
-      defaultResponse
-    })
+  const { response: coursesResponse, loading: coursesLoading } = useAxios<
+    ItemsWithCount<Course>
+  >({
+    service: getCourses,
+    defaultResponse
+  })
 
   const { items: coursesItems, count: coursesCount } = coursesResponse
 
@@ -61,14 +62,16 @@ const MyCourses = () => {
           description={t('myCoursesPage.notFound.description')}
         />
       ) : (
-        <MyCoursesContainer items={coursesItems} />
+        <>
+          <MyCorsesCardsList items={coursesItems} />
+          <AppPagination
+            onChange={handleChangePage}
+            page={page}
+            pageCount={Math.ceil(coursesCount / itemsPerPage)}
+            sx={styles.pagination}
+          />
+        </>
       )}
-      <AppPagination
-        onChange={handleChangePage}
-        page={page}
-        pageCount={Math.ceil(coursesCount / itemsPerPage)}
-        sx={styles.pagination}
-      />
     </PageWrapper>
   )
 }

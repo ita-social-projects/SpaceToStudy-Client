@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
-import MyCoursesContainer from '~/containers/my-courses/my-courses-container/MyCoursesContainer'
+import MyCorsesCardsList from '~/containers/my-courses/my-courses-container/MyCorsesCardsList'
 import { mockCourse } from '~tests/unit/pages/my-courses/MyCourses.spec.constans'
 
 const responseItemsMock = Array(10)
@@ -11,12 +11,12 @@ const responseItemsMock = Array(10)
     title: index + mockCourse.title
   }))
 
-describe('MyCoursesContainer test', async () => {
+describe('MyCorsesCardsList test', async () => {
   beforeEach(() => {
-    renderWithProviders(<MyCoursesContainer items={responseItemsMock} />)
+    renderWithProviders(<MyCorsesCardsList items={responseItemsMock} />)
   })
 
-  it('renders MyCoursesContainer with course cards', () => {
+  it('renders MyCorsesCardsList with course cards', () => {
     const courseTitle = screen.getByText(`1${mockCourse.title}`)
 
     expect(courseTitle).toBeInTheDocument()
