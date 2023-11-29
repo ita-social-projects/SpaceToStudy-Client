@@ -5,6 +5,7 @@ export const styles = {
     alignItems: 'center'
   },
   typography: {
+    cursor: 'default',
     minWidth: 'max-content',
     my: '10px',
     width: '40px',
