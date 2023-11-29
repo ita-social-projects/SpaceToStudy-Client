@@ -19,16 +19,14 @@ export const columns: TableColumn<Question>[] = [
   {
     label: 'myResourcesPage.questions.title',
     field: 'title',
-    calculatedCellValue: (item: Question) => {
-      return (
-        <IconTitleDescription
-          description={item.text}
-          icon={<Box sx={styles.iconWrapper}>{CheckIcons(item.type)}</Box>}
-          sx={styles.iconTitleDescription}
-          title={item.title}
-        />
-      )
-    }
+    calculatedCellValue: (item: Question) => (
+      <IconTitleDescription
+        description={item.text}
+        icon={<Box sx={styles.iconWrapper}>{CheckIcons(item.type)}</Box>}
+        sx={styles.iconTitleDescription}
+        title={item.title}
+      />
+    )
   },
   {
     label: 'myResourcesPage.categories.category',
