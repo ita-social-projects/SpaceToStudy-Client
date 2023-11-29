@@ -37,3 +37,9 @@ export interface CourseSection {
   quizzes: Quiz[]
   attachments: Attachment[]
 }
+
+export interface CourseFilters {
+  category: string
+  subject: string
+  proficiencyLevel: ProficiencyLevelEnum[]
+}

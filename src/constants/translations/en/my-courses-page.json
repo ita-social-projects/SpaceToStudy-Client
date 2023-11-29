@@ -21,6 +21,17 @@
   "modalMessages": {
     "confirmDeletionMessage": "This action is permanent and will remove all related content. Please review your decision before proceeding.",
     "confirmDeletionTitle": "Do you confirm course deletion?",
-    "successDeletion": "Course was deleted successfully"
+    "successDeletion": "Course was deleted successfully",
+    "description": "We couldn't find the courses you were looking for."
+  },
+  "coursesFilter": {
+      "coursesFilterLabel": "Courses Filters",
+      "chooseThe": "Choose the ",
+      "choose": "Choose ",
+      "category": "category",
+      "subject": "subject",
+      "levels": "levels",
+      "clearFilters": "Clear filters",
+      "applyFilters": "Apply filters"
   }
 }
