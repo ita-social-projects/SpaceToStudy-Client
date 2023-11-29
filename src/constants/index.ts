@@ -9,12 +9,6 @@ export const admin = 'admin'
 export const login = 'login'
 export const signup = 'signup'
 
-export const types = {
-  oneAnswer: 'oneAnswer',
-  openAnswer: 'openAnswer',
-  multipleChoice: 'multipleChoice'
-}
-
 export const snackbarVariants: { [key: string]: AlertColor } = {
   error: 'error',
   info: 'info',
