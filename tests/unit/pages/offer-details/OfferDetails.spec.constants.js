@@ -11,6 +11,7 @@ export const mockOffer = {
   title: 'test',
   description: 'testtesttesttesttesttesttesttest',
   languages: ['Ukrainian'],
+  enrolledUsers: ['646cc4a87279bbecd5b52961'],
   authorRole: 'tutor',
   author: {
     _id: '646cc4a87279bbecd5b52965',

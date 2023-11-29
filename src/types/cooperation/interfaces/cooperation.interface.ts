@@ -9,7 +9,7 @@ import {
 } from '~/types'
 
 export interface Cooperation extends CommonEntityFields {
-  offer: Pick<Offer, 'subject' | 'title' | 'category' | 'price'>
+  offer: Pick<Offer, 'subject' | 'title' | 'category' | 'price' | '_id'>
   user: Pick<UserResponse, 'firstName' | 'lastName' | 'photo' | '_id'> & {
     role: UserRoleEnum
   }

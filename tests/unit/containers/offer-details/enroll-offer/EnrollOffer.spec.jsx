@@ -12,7 +12,7 @@ describe('EnrollOffer', () => {
         createCooperation: () => mockFetchData()
       }
     }))
-    renderWithProviders(<EnrollOffer offer={mockOffer} />)
+    renderWithProviders(<EnrollOffer enrollOffer={vi.fn()} offer={mockOffer} />)
   })
 
   it('should display EnrollOffer form', () => {

@@ -1,7 +1,6 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AxiosResponse } from 'axios'
-
 import Box from '@mui/material/Box'
 
 import useAxios from '~/hooks/use-axios'
@@ -32,9 +31,10 @@ import {
 
 interface EnrollOfferProps {
   offer: Offer
+  enrollOffer: () => Promise<void>
 }
 
-const EnrollOffer: FC<EnrollOfferProps> = ({ offer }) => {
+const EnrollOffer: FC<EnrollOfferProps> = ({ offer, enrollOffer }) => {
   const { isLaptopAndAbove } = useBreakpoints()
   const { closeModal } = useModalContext()
   const { setAlert } = useSnackBarContext()
@@ -54,6 +54,7 @@ const EnrollOffer: FC<EnrollOfferProps> = ({ offer }) => {
       message: 'offerDetailsPage.enrollOffer.successMessage'
     })
     closeModal()
+    void enrollOffer()
   }
 
   const postOffer = (): Promise<AxiosResponse> => {
