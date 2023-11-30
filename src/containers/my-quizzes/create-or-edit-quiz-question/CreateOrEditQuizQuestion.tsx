@@ -101,7 +101,6 @@ const CreateOrEditQuizQuestion: FC<CreateOrEditQuizQuestionProps> = ({
 
   const onCloseCreation = () => {
     closeModal()
-    onCancel()
   }
 
   const onOpenCreation = ({ title, category }: QuestionModalForm) => {
@@ -120,14 +119,18 @@ const CreateOrEditQuizQuestion: FC<CreateOrEditQuizQuestionProps> = ({
   }
 
   const onOpenCreateQuestionModal = () => {
-    openModal({
-      component: (
-        <CreateOrEditQuestionModal
-          actions={{ onCancel: onCloseCreation, onSave: onOpenCreation }}
-          initialData={data}
-        />
-      )
-    })
+    openModal(
+      {
+        component: (
+          <CreateOrEditQuestionModal
+            actions={{ onCancel: onCloseCreation, onSave: onOpenCreation }}
+            initialData={data}
+          />
+        )
+      },
+      undefined,
+      onCancel
+    )
   }
 
   useEffect(() => {

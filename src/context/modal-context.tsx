@@ -31,12 +31,14 @@ const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
   const [modal, setModal] = useState<React.ReactElement | null>(null)
   const [paperProps, setPaperProps] = useState<PaperProps>({})
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null)
+  const [closeFunc, setCloseFunc] = useState<() => void>(() => console.log())
 
   const closeModal = useCallback(() => {
     setModal(null)
     setPaperProps({})
     setTimer(null)
-  }, [setModal, setPaperProps, setTimer])
+    void closeFunc
+  }, [setModal, setPaperProps, setTimer, closeFunc])
 
   const closeModalAfterDelay = useCallback(
     (delay?: number) => {
@@ -47,8 +49,14 @@ const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
   )
 
   const openModal = useCallback(
-    ({ component, paperProps }: Component, delayToClose?: number) => {
+    (
+      { component, paperProps }: Component,
+      delayToClose?: number,
+      closeFunction?: void
+    ) => {
       setModal(component)
+
+      closeFunction && setCloseFunc(closeFunction)
       paperProps && setPaperProps(paperProps)
       delayToClose && closeModalAfterDelay(delayToClose)
     },
