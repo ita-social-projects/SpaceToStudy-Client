@@ -23,17 +23,18 @@ import {
   ComponentEnum,
   CreateOrEditQuestionForm,
   ErrorResponse,
-  QuestionTypesEnum,
+  GetQuestion,
   TextFieldVariantEnum,
   UpdateQuestionParams
 } from '~/types'
-import {
-  questionType,
-  sortQuestions
-} from '~/components/question-editor/QuestionEditor.constants'
+import { questionType } from '~/components/question-editor/QuestionEditor.constants'
 import { styles } from '~/pages/create-or-edit-question/CreateOrEditQuestion.styles'
 import { AxiosResponse } from 'axios'
 import Loader from '~/components/loader/Loader'
+import {
+  initialValues,
+  defaultResponse
+} from './CreateOrEditQuestion.constants'
 
 const CreateOrEditQuestion = () => {
   const { t } = useTranslation()
@@ -70,72 +71,57 @@ const CreateOrEditQuestion = () => {
     })
   }
 
-  const { fetchData: handleCreateQuestion } = useAxios({
-    service: createQuestion,
-    defaultResponse: defaultResponses.object,
-    fetchOnMount: false,
-    onResponse,
-    onResponseError
-  })
+  const { loading: createQuestionLoading, fetchData: handleCreateQuestion } =
+    useAxios({
+      service: createQuestion,
+      defaultResponse: defaultResponses.object,
+      fetchOnMount: false,
+      onResponse,
+      onResponseError
+    })
 
   const editQuestion = useCallback(
     (params?: UpdateQuestionParams) => ResourceService.updateQuestion(params),
     []
   )
 
-  const { fetchData: handleEditQuestion } = useAxios<
-    null,
-    UpdateQuestionParams
-  >({
-    service: editQuestion,
-    fetchOnMount: false,
-    defaultResponse: null,
-    onResponse,
-    onResponseError
-  })
+  const { loading: editQuestionLoading, fetchData: handleEditQuestion } =
+    useAxios<null, UpdateQuestionParams>({
+      service: editQuestion,
+      fetchOnMount: false,
+      defaultResponse: null,
+      onResponse,
+      onResponseError
+    })
 
-  const getQuestion = (id?: string): Promise<AxiosResponse> => {
+  const getQuestion = (id?: string): Promise<AxiosResponse<GetQuestion>> => {
     return ResourceService.getQuestion(id)
   }
 
-  const onResponseQuestion = (question: CreateOrEditQuestionForm) => {
-    for (const key in data) {
-      const validKey = key as keyof CreateOrEditQuestionForm
-      handleNonInputValueChange(validKey, question[validKey])
-    }
-  }
-
-  const { loading: getLoading, fetchData: handleGetQuestion } = useAxios({
+  const {
+    loading: getQuestionLoading,
+    fetchData: handleGetQuestion,
+    response: question
+  } = useAxios<GetQuestion, string>({
     service: getQuestion,
     fetchOnMount: false,
-    defaultResponse: {
-      category: null,
-      answers: [],
-      openAnswer: ' ',
-      title: ' ',
-      text: ' ',
-      type: QuestionTypesEnum.MultipleChoice
-    },
-    onResponse: onResponseQuestion,
-    onResponseError
+    defaultResponse
   })
 
-  const { data, handleInputChange, handleNonInputValueChange, handleSubmit } =
-    useForm<CreateOrEditQuestionForm>({
-      initialValues: {
-        type: sortQuestions[0].value,
-        title: '',
-        text: '',
-        answers: [],
-        openAnswer: '',
-        category: null
-      },
-      onSubmit: async () => {
-        id
-          ? await handleEditQuestion({ ...data, id })
-          : await handleCreateQuestion(data)
-      }
-    })
+  const {
+    data,
+    handleDataChange,
+    handleInputChange,
+    handleNonInputValueChange,
+    handleSubmit
+  } = useForm<CreateOrEditQuestionForm>({
+    initialValues: initialValues,
+    onSubmit: async () => {
+      id
+        ? await handleEditQuestion({ ...data, id })
+        : await handleCreateQuestion(data)
+    }
+  })
 
   const { type, title, text, answers, openAnswer, category } = data
   const { isOpenAnswer } = questionType(type)
@@ -152,7 +138,11 @@ const CreateOrEditQuestion = () => {
       >
         {t('common.cancel')}
       </AppButton>
-      <AppButton disabled={!isButtonsVisible} type={ButtonTypeEnum.Submit}>
+      <AppButton
+        disabled={!isButtonsVisible}
+        loading={createQuestionLoading || editQuestionLoading}
+        type={ButtonTypeEnum.Submit}
+      >
         {t('common.save')}
       </AppButton>
     </Box>
@@ -165,7 +155,14 @@ const CreateOrEditQuestion = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id])
 
-  if (getLoading) {
+  useEffect(() => {
+    if (question) {
+      handleDataChange<GetQuestion>(question)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [question])
+
+  if (getQuestionLoading) {
     return <Loader pageLoad />
   }
 
@@ -183,7 +180,7 @@ const CreateOrEditQuestion = () => {
           variant={TextFieldVariantEnum.Standard}
         />
         <CategoryDropdown
-          category={category?._id ?? null}
+          category={category ?? null}
           onCategoryChange={onCategoryChange}
         />
         <Divider sx={styles.mainDivider} />
