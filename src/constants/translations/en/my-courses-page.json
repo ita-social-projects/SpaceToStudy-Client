@@ -16,5 +16,10 @@
   },
   "notFound": {
     "description": "We couldn't find the courses you were looking for."
+  },
+  "modalMessages": {
+    "confirmDeletionMessage": "This action is permanent and will remove all related content. Please review your decision before proceeding.",
+    "confirmDeletionTitle": "Do you confirm course deletion?",
+    "successDeletion": "Course was deleted successfully"
   }
 }

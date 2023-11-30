@@ -19,9 +19,10 @@ import { useTranslation } from 'react-i18next'
 
 interface CourseCardProps {
   course: Course
+  deleteCourse: (id: string) => void
 }
 
-const CourseCard: FC<CourseCardProps> = ({ course }) => {
+const CourseCard: FC<CourseCardProps> = ({ course, deleteCourse }) => {
   const { t } = useTranslation()
   const { openMenu, renderMenu, closeMenu } = useMenu()
 
@@ -71,7 +72,7 @@ const CourseCard: FC<CourseCardProps> = ({ course }) => {
           {` ${t('common.delete')}`}
         </Box>
       ),
-      func: () => closeMenu()
+      func: () => deleteCourse(course._id)
     }
   ]
 
