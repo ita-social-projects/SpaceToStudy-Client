@@ -1,6 +1,22 @@
 import { TypographyVariantEnum } from '~/types'
 import { ellipsisTextStyle } from '~/utils/helper-functions'
 
+const actionIconWrapper = {
+  display: 'flex',
+  alignItems: 'center',
+  m: '6px 16px 6px 0',
+  typography: TypographyVariantEnum.Subtitle2,
+  fontWeight: '500',
+  fontSize: '14px',
+  lineHeight: '20px',
+  color: 'primary.700'
+}
+
+const actionIcon = {
+  fontSize: '16px',
+  mr: '10px'
+}
+
 export const styles = {
   card: {
     display: 'flex',
@@ -40,5 +56,12 @@ export const styles = {
   },
   chipContainer: {
     position: 'relative'
+  },
+  iconWrapper: actionIconWrapper,
+  deleteIconWrapper: { ...actionIconWrapper, color: 'error.700' },
+  icon: actionIcon,
+  deleteIcon: {
+    ...actionIcon,
+    color: 'error.700'
   }
 }
