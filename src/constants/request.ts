@@ -28,7 +28,8 @@ export const URLs = {
     get: '/offers'
   },
   courses: {
-    get: '/courses'
+    get: '/courses',
+    create: '/courses'
   },
   categories: {
     get: '/categories',

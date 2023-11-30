@@ -105,7 +105,6 @@ export const ResourceService = {
     params?: CreateCategoriesParams
   ): Promise<AxiosResponse<Categories>> =>
     await axiosClient.post(URLs.resources.resourcesCategories.post, params),
-
   deleteResourceCategory: async (id: string): Promise<AxiosResponse> =>
     await axiosClient.delete(
       createUrlPath(URLs.resources.resourcesCategories.delete, id)
