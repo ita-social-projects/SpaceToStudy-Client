@@ -6,7 +6,6 @@ import AddIcon from '@mui/icons-material/Add'
 import useForm from '~/hooks/use-form'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import CourseSectionsList from '~/containers/course-sections-list/CourseSectionsList'
-import AddCourseBanner from '~/containers/add-course-banner/AddCourseBanner'
 import CourseToolbar from '~/containers/my-courses/course-toolbar/CourseToolbar'
 import AppButton from '~/components/app-button/AppButton'
 
@@ -28,7 +27,6 @@ import { styles } from '~/pages/create-course/CreateCourse.styles'
 const CreateCourse = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const formData = new FormData()
 
   const { data, handleInputChange, handleNonInputValueChange, handleSubmit } =
     useForm<CourseForm>({
@@ -53,7 +51,6 @@ const CreateCourse = () => {
   return (
     <PageWrapper>
       <Box component={ComponentEnum.Form} onSubmit={handleSubmit}>
-        <AddCourseBanner formData={formData} />
         <CourseToolbar
           data={data}
           handleInputChange={handleInputChange}
