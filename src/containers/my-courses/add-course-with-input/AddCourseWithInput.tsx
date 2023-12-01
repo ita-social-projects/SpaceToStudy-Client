@@ -38,7 +38,6 @@ const AddCourseWithInput = () => {
   }
   const onClear = () => setInputValue('')
   const handleToggle = () => (isOpen ? closeDrawer() : openDrawer())
-  const handleClose = () => closeDrawer()
 
   return (
     <Box sx={styles.container}>
@@ -63,7 +62,7 @@ const AddCourseWithInput = () => {
         handleFilterChange={handleNonInputValueChange}
         handleReset={resetData}
         isOpen={isOpen}
-        onClose={handleClose}
+        onClose={closeDrawer}
       />
     </Box>
   )
