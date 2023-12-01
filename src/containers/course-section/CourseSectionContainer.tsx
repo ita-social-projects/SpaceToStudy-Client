@@ -154,9 +154,9 @@ const CourseSectionContainer: FC<SectionProps> = ({
       ...sectionValue,
       title: titleInput,
       description: descriptionInput,
-      lessons: lessons,
-      quizzes: quizzes,
-      attachments: attachments
+      lessons,
+      quizzes,
+      attachments
     }
 
     const newSectionsArray = [
