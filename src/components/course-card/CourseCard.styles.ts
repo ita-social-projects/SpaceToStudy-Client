@@ -1,5 +1,9 @@
 import { TypographyVariantEnum } from '~/types'
 import { ellipsisTextStyle } from '~/utils/helper-functions'
+import {
+  commonShadow,
+  commonHoverShadow
+} from '~/styles/app-theme/custom-shadows'
 
 const actionIconWrapper = {
   display: 'flex',
@@ -19,12 +23,16 @@ export const styles = {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    maxWidth: '395px',
+    width: '390px',
     minHeight: '245px',
     backgroundColor: 'basic.white',
     borderRadius: '6px',
     p: '24px 24px 16px',
-    mt: '32px'
+    boxShadow: commonShadow,
+    transition: 'box-shadow 0.3s ease-in-out',
+    '&:hover': {
+      boxShadow: commonHoverShadow
+    }
   },
   title: {
     typography: TypographyVariantEnum.H5,

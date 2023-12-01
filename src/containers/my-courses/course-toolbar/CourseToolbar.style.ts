@@ -1,4 +1,5 @@
 import { TypographyVariantEnum } from '~/types'
+
 const commonStyle = {
   fontSize: '14px',
   position: 'absolute',
@@ -14,8 +15,7 @@ export const styles = {
     justifyContent: 'space-between'
   },
   autocomplete: {
-    width: '100%',
-    maxWidth: { md: '370px' },
+    width: { md: '370px' },
     mr: '30px',
     '& .MuiOutlinedInput-root': {
       padding: '5px 9px'
@@ -26,11 +26,16 @@ export const styles = {
     position: 'relative',
     '& .MuiFormHelperText-root': {
       ...commonStyle
+    },
+    '@media (max-width: 1220px)': {
+      width: '100%'
     }
   },
   levelSelect: {
-    width: '370px',
-    position: 'relative'
+    width: { md: '370px' },
+    '@media (max-width: 1220px)': {
+      width: '100%'
+    }
   },
   levelHelperText: {
     ...commonStyle
@@ -88,6 +93,11 @@ export const styles = {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    my: '30px'
+    my: '30px',
+    '@media (max-width: 1220px)': {
+      flexDirection: 'column',
+      justifyContent: 'center',
+      gap: '50px'
+    }
   }
 }
