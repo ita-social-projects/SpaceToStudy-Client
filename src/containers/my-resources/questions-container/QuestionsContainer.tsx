@@ -1,4 +1,5 @@
 import { useCallback, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Box from '@mui/material/Box'
 
 import { useSnackBarContext } from '~/context/snackbar-context'
@@ -31,7 +32,6 @@ import {
   createUrlPath,
   getScreenBasedLimit
 } from '~/utils/helper-functions'
-import { useNavigate } from 'react-router-dom'
 
 const QuestionsContainer = () => {
   const { setAlert } = useSnackBarContext()
