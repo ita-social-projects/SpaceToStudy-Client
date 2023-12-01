@@ -14,7 +14,8 @@ export const styles = {
   },
   title: {
     color: 'primary.700',
-    lineHeight: '24px'
+    lineHeight: '24px',
+    typography: 'TypographyVariantEnum.H6'
   },
   boldText: {
     display: 'inline-block',
@@ -22,11 +23,11 @@ export const styles = {
   },
   categorySelect: {
     mt: '32px',
-    color: '#546E7A'
+    color: 'basic.bismark'
   },
   subjectSelect: {
     mt: '16px',
-    color: '#546E7A'
+    color: 'basic.bismark'
   },
   titleMargin: {
     mb: '10px;'
@@ -38,15 +39,16 @@ export const styles = {
     mb: '20px'
   },
   clearButtonMb: {
-    marginBottom: '16px'
+    mb: '16px'
   },
   labelContainer: {
     display: 'flex'
   },
   disabledTitle: {
-    color: '#B0BEC5'
+    color: 'basic.gray'
   },
-  inlineBlock: {
-    display: 'inline-block'
-  }
+  inlineBlock: (isBold: boolean) => ({
+    display: 'inline-block',
+    fontWeight: isBold ? 500 : 400
+  })
 }

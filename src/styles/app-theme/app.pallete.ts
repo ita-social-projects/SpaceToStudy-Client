@@ -21,7 +21,8 @@ const palette = {
     turquoise: '#489DA0',
     turquoiseDark: '#3B8587',
     turquoiseChat: '#A0F0F2',
-    blueGray: '#607D8B'
+    blueGray: '#607D8B',
+    bismark: '#546E7A'
   },
   companyBlue: 'rgba(0, 167, 167, 0.2)',
   error: {

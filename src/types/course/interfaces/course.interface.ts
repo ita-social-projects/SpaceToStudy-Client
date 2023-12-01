@@ -38,8 +38,7 @@ export interface CourseSection {
   attachments: Attachment[]
 }
 
-export interface CourseFilters {
+export interface CourseFilters extends Pick<Course, 'proficiencyLevel'> {
   category: string
   subject: string
-  proficiencyLevel: ProficiencyLevelEnum[]
 }

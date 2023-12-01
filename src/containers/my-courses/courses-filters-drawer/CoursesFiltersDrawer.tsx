@@ -1,10 +1,9 @@
-import React, { FC } from 'react'
-
+import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import FilterListIcon from '@mui/icons-material/FilterList'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
-import { Box } from '@mui/material'
+import Box from '@mui/material/Box'
 
 import AppDrawer from '~/components/app-drawer/AppDrawer'
 import AppSelect from '~/components/app-select/AppSelect'
@@ -15,8 +14,9 @@ import { styles } from '~/containers/my-courses/courses-filters-drawer/CoursesFi
 import {
   ButtonVariantEnum,
   CourseFilters,
+  PositionEnum,
   ProficiencyLevelEnum,
-  TypographyVariantEnum
+  SizeEnum
 } from '~/types'
 
 interface CoursesFiltersDrawerProps {
@@ -26,7 +26,8 @@ interface CoursesFiltersDrawerProps {
     value: string | ProficiencyLevelEnum[]
   ) => void
   onClose: () => void
-  open: boolean
+  isOpen: boolean
+  handleReset: () => void
 }
 const fields = [
   { value: 'music', title: 'Music' },
@@ -38,26 +39,22 @@ const CoursesFiltersDrawer: FC<CoursesFiltersDrawerProps> = ({
   filters,
   handleFilterChange,
   onClose,
-  open
+  isOpen,
+  handleReset
 }) => {
   const levelOptions = Object.values(ProficiencyLevelEnum)
   const { t } = useTranslation()
-  const clearFilters = () => {
-    handleFilterChange('category', '')
-    handleFilterChange('subject', '')
-    handleFilterChange('proficiencyLevel', [])
-  }
 
   return (
     <AppDrawer
       PaperProps={{ sx: styles.paper }}
-      anchor='left'
+      anchor={PositionEnum.Left}
       onClose={onClose}
-      open={open}
+      open={isOpen}
     >
       <Box sx={styles.titleWithIcon}>
         <FilterListIcon sx={styles.icon} />
-        <Typography sx={styles.title} variant={TypographyVariantEnum.H6}>
+        <Typography sx={styles.title}>
           {t('myCoursesPage.coursesFilter.coursesFilterLabel')}
         </Typography>
       </Box>
@@ -72,9 +69,9 @@ const CoursesFiltersDrawer: FC<CoursesFiltersDrawerProps> = ({
         <AppSelect
           fields={fields}
           fullWidth
-          label='Category'
+          label={t('myCoursesPage.coursesFilter.categoryLabel')}
           setValue={(value) => handleFilterChange('category', value)}
-          size='small'
+          size={SizeEnum.Small}
           value={filters.category}
         />
       </Box>
@@ -88,9 +85,7 @@ const CoursesFiltersDrawer: FC<CoursesFiltersDrawerProps> = ({
           }
         >
           {t('myCoursesPage.coursesFilter.chooseThe')}
-          <Typography
-            sx={!filters.category ? styles.inlineBlock : styles.boldText}
-          >
+          <Typography sx={styles.inlineBlock(!!filters.category)}>
             {t('myCoursesPage.coursesFilter.subject')}:
           </Typography>
         </Typography>
@@ -98,9 +93,9 @@ const CoursesFiltersDrawer: FC<CoursesFiltersDrawerProps> = ({
           disabled={!filters.category}
           fields={fields}
           fullWidth
-          label='Subject'
+          label={t('myCoursesPage.coursesFilter.subjectLabel')}
           setValue={(value) => handleFilterChange('subject', value)}
-          size='small'
+          size={SizeEnum.Small}
           value={filters.subject}
         />
       </Box>
@@ -120,14 +115,14 @@ const CoursesFiltersDrawer: FC<CoursesFiltersDrawerProps> = ({
       </Box>
 
       <Button
-        onClick={clearFilters}
-        size='extraLarge'
+        onClick={() => handleReset()}
+        size={SizeEnum.ExtraLarge}
         sx={styles.clearButtonMb}
         variant={ButtonVariantEnum.Tonal}
       >
         {t('myCoursesPage.coursesFilter.clearFilters')}
       </Button>
-      <Button size='extraLarge' variant={ButtonVariantEnum.Contained}>
+      <Button size={SizeEnum.ExtraLarge} variant={ButtonVariantEnum.Contained}>
         {t('myCoursesPage.coursesFilter.applyFilters')}
       </Button>
     </AppDrawer>

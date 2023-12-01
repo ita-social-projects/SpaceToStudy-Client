@@ -13,14 +13,19 @@ import CoursesFilterBar from '~/containers/find-course/courses-filter-bar/Course
 import { styles } from '~/containers/my-courses/add-course-with-input/AddCourseWithInput.styles'
 import CoursesFiltersDrawer from '~/containers/my-courses/courses-filters-drawer/CoursesFiltersDrawer'
 import useForm from '~/hooks/use-form'
+import { useDrawer } from '~/hooks/use-drawer'
 import { CourseFilters } from '~/types'
 
 const AddCourseWithInput = () => {
   const [inputValue, setInputValue] = useState<string>('')
-  const [isFiltersOpen, setIsFiltersOpen] = useState(false)
+  const { openDrawer, closeDrawer, isOpen } = useDrawer()
   const { t } = useTranslation()
 
-  const { data: filters, handleNonInputValueChange } = useForm<CourseFilters>({
+  const {
+    data: filters,
+    handleNonInputValueChange,
+    resetData
+  } = useForm<CourseFilters>({
     initialValues: {
       category: '',
       subject: '',
@@ -32,8 +37,8 @@ const AddCourseWithInput = () => {
     setInputValue(e.target.value)
   }
   const onClear = () => setInputValue('')
-  const handleToggle = () => setIsFiltersOpen(!isFiltersOpen)
-  const handleClose = () => setIsFiltersOpen(false)
+  const handleToggle = () => (isOpen ? closeDrawer() : openDrawer())
+  const handleClose = () => closeDrawer()
 
   return (
     <Box sx={styles.container}>
@@ -56,8 +61,9 @@ const AddCourseWithInput = () => {
       <CoursesFiltersDrawer
         filters={filters}
         handleFilterChange={handleNonInputValueChange}
+        handleReset={resetData}
+        isOpen={isOpen}
         onClose={handleClose}
-        open={isFiltersOpen}
       />
     </Box>
   )

@@ -32,6 +32,8 @@
       "subject": "subject",
       "levels": "levels",
       "clearFilters": "Clear filters",
-      "applyFilters": "Apply filters"
+      "applyFilters": "Apply filters",
+      "categoryLabel": "Category",
+      "subjectLabel": "Subject"
   }
 }
