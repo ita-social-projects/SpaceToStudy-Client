@@ -1,4 +1,5 @@
 import { useCallback, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Box from '@mui/material/Box'
 
 import { useSnackBarContext } from '~/context/snackbar-context'
@@ -26,13 +27,18 @@ import {
   ResourcesTabsEnum,
   Question
 } from '~/types'
-import { ajustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
+import {
+  ajustColumns,
+  createUrlPath,
+  getScreenBasedLimit
+} from '~/utils/helper-functions'
 
 const QuestionsContainer = () => {
   const { setAlert } = useSnackBarContext()
   const sortOptions = useSort({ initialSort })
   const searchTitle = useRef<string>('')
   const breakpoints = useBreakpoints()
+  const navigate = useNavigate()
   const { page, handleChangePage } = usePagination()
   const [selectedItems, setSelectedItems] = useState<string[]>([])
 
@@ -79,6 +85,10 @@ const QuestionsContainer = () => {
     (id?: string) => ResourceService.deleteQuestion(id ?? ''),
     []
   )
+
+  const editQuestion = (id: string) => {
+    navigate(createUrlPath(authRoutes.myResources.editQuestion.path, id))
+  }
 
   const duplicateQuestion = useCallback(
     (id?: string) => {
@@ -132,7 +142,7 @@ const QuestionsContainer = () => {
     },
     itemsPerPage,
     actions: {
-      onEdit: () => null,
+      onEdit: editQuestion,
       onDuplicate: (itemId: string) => handleDuplicate(itemId)
     },
     resource: ResourcesTabsEnum.Questions,

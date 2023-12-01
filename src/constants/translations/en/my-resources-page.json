@@ -45,8 +45,8 @@
     "confirmDeletionTitle":"Do you confirm quiz deletion?",
     "successDeletion":"Quiz was deleted successfully",
     "editQuestion": "Edit question",
-    "successEditedOuiz": "Ouiz was successtully edited",
-    "successAddedOuiz": "Quiz was successfully created",
+    "successEditedQuiz": "Quiz was successtully edited",
+    "successAddedQuiz": "Quiz was successfully created",
     "defaultNewTitle":"Untitled",
     "defaultNewDescription":"Description...",
     "createNewQuestion":"Create new question",
@@ -71,7 +71,9 @@
     "emptyItems": "You have no questions yet",
     "confirmDeletionTitle": "Do you confirm question deletion?",
     "successDeletion": "Question was deleted successfully",
-    "successDuplication": "Question was successfully duplicated"
+    "successDuplication": "Question was successfully duplicated",
+    "successEditedQuestion":"Question was successfully edited",
+    "successAddedQuestion":"Question was successfully added"
   },
   "categories": {
     "category": "Category",

@@ -46,6 +46,7 @@ interface QuestionEditorProps {
   onEdit?: () => void
   onSave?: () => Promise<void>
   loading?: boolean
+  isQuizQuestion?: boolean
 }
 
 const QuestionEditor: FC<QuestionEditorProps> = ({
@@ -55,7 +56,8 @@ const QuestionEditor: FC<QuestionEditorProps> = ({
   onCancel,
   onEdit,
   onSave,
-  loading
+  loading,
+  isQuizQuestion
 }) => {
   const { t } = useTranslation()
   const { openMenu, renderMenu, closeMenu } = useMenu()
@@ -190,13 +192,14 @@ const QuestionEditor: FC<QuestionEditorProps> = ({
             value={type}
           />
         </Box>
-
-        {data.title && (
-          <IconButton onClick={openMenu}>
-            <MoreVertIcon color='primary' sx={styles.moreIcon} />
-          </IconButton>
+        {isQuizQuestion && (
+          <>
+            <IconButton onClick={openMenu}>
+              <MoreVertIcon color='primary' sx={styles.moreIcon} />
+            </IconButton>
+            {showMoreMenu}
+          </>
         )}
-        {showMoreMenu}
       </Box>
 
       <Divider sx={styles.editorDivider} />

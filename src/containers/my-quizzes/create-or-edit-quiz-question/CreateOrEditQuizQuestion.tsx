@@ -141,6 +141,7 @@ const CreateOrEditQuizQuestion: FC<CreateOrEditQuizQuestionProps> = ({
         data={data}
         handleInputChange={handleInputChange}
         handleNonInputValueChange={handleNonInputValueChange}
+        isQuizQuestion
         loading={createLoading || updateLoading}
         onCancel={onCancel}
         onEdit={onOpenCreateQuestionModal}
