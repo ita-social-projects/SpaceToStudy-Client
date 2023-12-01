@@ -44,11 +44,7 @@ export const columns: TableColumn<Question>[] = [
       return (
         <IconTitleDescription
           description={item.text}
-          icon={
-            <Box sx={styles.iconWrapper}>
-              {questionIcon?.icon ?? <CheckCircleOutlineIcon />}
-            </Box>
-          }
+          icon={<Box sx={styles.iconWrapper}>{questionIcon?.icon}</Box>}
           sx={styles.iconTitleDescription}
           title={item.title}
         />
