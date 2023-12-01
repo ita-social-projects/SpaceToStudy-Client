@@ -6,9 +6,6 @@ const actionIconWrapper = {
   alignItems: 'center',
   m: '6px 16px 6px 0',
   typography: TypographyVariantEnum.Subtitle2,
-  fontWeight: '500',
-  fontSize: '14px',
-  lineHeight: '20px',
   color: 'primary.700'
 }
 
