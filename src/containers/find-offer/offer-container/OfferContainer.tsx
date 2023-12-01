@@ -1,10 +1,10 @@
 import { FC, Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
-
 import Box from '@mui/material/Box'
 
 import { useChatContext } from '~/context/chat-context'
+import { useAppSelector } from '~/hooks/use-redux'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import OfferCardSquare from '~/containers/find-offer/offer-card-square/OfferCardSquare'
 import OfferCard from '~/components/offer-card/OfferCard'
@@ -29,6 +29,7 @@ const OfferContainer: FC<OfferContainerProps> = ({
   const { t } = useTranslation()
   const { isMobile, isLaptopAndAbove } = useBreakpoints()
   const { setChatInfo } = useChatContext()
+  const { userId } = useAppSelector((state) => state.appMain)
 
   const onBookmarkClick = (id: string) => {
     console.log(id)
@@ -57,11 +58,13 @@ const OfferContainer: FC<OfferContainerProps> = ({
       {
         label: t('common.labels.sendMessage'),
         buttonProps: {
+          disabled: el.author._id === userId,
           variant: ButtonVariantEnum.Tonal,
           onClick: () => onClickOpenChat(el)
         }
       }
     ]
+
     return (
       <Fragment key={el._id}>
         {renderSquareCard ? (
