@@ -106,9 +106,10 @@ const AddResources = <T extends CourseResources | Question>({
             .join('.')
             .includes(inputValue.toLocaleLowerCase())
         }
+
         const categoryMatch =
           selectedCategories.length === 0 ||
-          selectedCategories.includes(String(item.category?.name))
+          selectedCategories.includes(String(item.category?._id || null))
 
         return titleMatch && categoryMatch
       })
