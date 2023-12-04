@@ -22,5 +22,18 @@
     "confirmDeletionMessage": "Ця дія є остаточною, та призведе до видалення всього пов’язаного вмісту. Перш ніж продовжити, перегляньте своє рішення.",
     "confirmDeletionTitle": "Ви підтверджуєте видалення курсу?",
     "successDeletion": "Курс було успішно видалено"
-  }
+  },
+  "coursesFilter": {
+      "coursesFilterLabel": "Фільтри Курсів",
+      "chooseThe": "Обрати ",
+      "choose": "Обрати",
+      "category": "категорію",
+      "subject": "тему",
+      "levels": "рівні",
+      "clearFilters": "Очистити фільтри",
+      "applyFilters": "Застосувати фільтри",
+      "categoryLabel": "Категорія",
+      "subjectLabel": "Тема"
+    }
 }
+

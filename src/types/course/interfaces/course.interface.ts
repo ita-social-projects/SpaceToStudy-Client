@@ -37,3 +37,8 @@ export interface CourseSection {
   quizzes: Quiz[]
   attachments: Attachment[]
 }
+
+export interface CourseFilters extends Pick<Course, 'proficiencyLevel'> {
+  category: string
+  subject: string
+}

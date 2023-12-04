@@ -11,16 +11,33 @@ import AppButton from '~/components/app-button/AppButton'
 import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
 import CoursesFilterBar from '~/containers/find-course/courses-filter-bar/CoursesFilterBar'
 import { styles } from '~/containers/my-courses/add-course-with-input/AddCourseWithInput.styles'
+import CoursesFiltersDrawer from '~/containers/my-courses/courses-filters-drawer/CoursesFiltersDrawer'
+import useForm from '~/hooks/use-form'
+import { useDrawer } from '~/hooks/use-drawer'
+import { CourseFilters } from '~/types'
 
 const AddCourseWithInput = () => {
   const [inputValue, setInputValue] = useState<string>('')
+  const { openDrawer, closeDrawer, isOpen } = useDrawer()
   const { t } = useTranslation()
+
+  const {
+    data: filters,
+    handleNonInputValueChange,
+    resetData
+  } = useForm<CourseFilters>({
+    initialValues: {
+      category: '',
+      subject: '',
+      proficiencyLevel: []
+    }
+  })
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value)
   }
-
   const onClear = () => setInputValue('')
+  const handleToggle = () => (isOpen ? closeDrawer() : openDrawer())
 
   return (
     <Box sx={styles.container}>
@@ -29,7 +46,7 @@ const AddCourseWithInput = () => {
         <AddIcon sx={styles.addIcon} />
       </AppButton>
       <Box sx={styles.container}>
-        <FiltersToggle />
+        <FiltersToggle handleToggle={handleToggle} />
         <CoursesFilterBar />
         <InputWithIcon
           endAdornment={<SearchIcon sx={styles.searchIcon} />}
@@ -40,6 +57,13 @@ const AddCourseWithInput = () => {
           value={inputValue}
         />
       </Box>
+      <CoursesFiltersDrawer
+        filters={filters}
+        handleFilterChange={handleNonInputValueChange}
+        handleReset={resetData}
+        isOpen={isOpen}
+        onClose={closeDrawer}
+      />
     </Box>
   )
 }
