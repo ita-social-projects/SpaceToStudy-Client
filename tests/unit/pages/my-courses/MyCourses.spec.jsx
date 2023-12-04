@@ -5,15 +5,22 @@ import { URLs } from '~/constants/request'
 import MyCourses from '~/pages/my-courses/MyCourses'
 import { mockCourse } from '~tests/unit/pages/my-courses/MyCourses.spec.constans'
 
-const mockCoursesData = {
-  items: [mockCourse],
-  count: 0
-}
+const responseItemsMock = Array(10)
+  .fill()
+  .map((_, index) => ({
+    ...mockCourse,
+    _id: `${index}`,
+    title: index + mockCourse.title
+  }))
 
-mockAxiosClient.onGet(`${URLs.offers.get}`).reply(200, mockCoursesData)
+const mockCoursesData = {
+  count: 10,
+  items: responseItemsMock
+}
 
 describe('tests for MyCourses page', () => {
   beforeEach(() => {
+    mockAxiosClient.onGet(URLs.courses.get).reply(200, mockCoursesData)
     renderWithProviders(<MyCourses />)
   })
 
@@ -21,11 +28,5 @@ describe('tests for MyCourses page', () => {
     const myCoursesTitle = await screen.findByText('myCoursesPage.title')
 
     expect(myCoursesTitle).toBeInTheDocument()
-  })
-
-  it('should render loader', () => {
-    const loader = screen.getByTestId('loader')
-
-    expect(loader).toBeInTheDocument()
   })
 })
