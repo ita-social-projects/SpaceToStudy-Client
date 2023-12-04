@@ -62,8 +62,8 @@ describe('AttachmentContainer renders correct data', () => {
     expect(title).toBeInTheDocument()
   })
 
-  it('should correctly shows filename of attachment', () => {
-    const fileName = screen.getByText('1spanish.pdf')
+  it('should correctly shows filename of attachment', async () => {
+    const fileName = await screen.findByText('1spanish.pdf')
 
     expect(fileName).toBeInTheDocument()
   })
