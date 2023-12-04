@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AxiosResponse } from 'axios'
 
@@ -18,6 +18,7 @@ import { useSnackBarContext } from '~/context/snackbar-context'
 import { useModalContext } from '~/context/modal-context'
 import { minMaxPrice } from '~/utils/range-filter'
 import { cooperationService } from '~/services/cooperation-service'
+import { OfferService } from '~/services/offer-service'
 
 import {
   ButtonTypeEnum,
@@ -57,6 +58,12 @@ const AcceptCooperationModal: FC<AcceptCooperationModalProps> = ({
       ...params
     })
 
+  const updateOffer = useCallback(
+    () =>
+      OfferService.updateOffer(cooperation.offer._id, { enrolledUsers: [] }),
+    [cooperation.offer._id]
+  )
+
   const onResponse = () => {
     setAlert({
       severity: snackbarVariants.success,
@@ -81,6 +88,13 @@ const AcceptCooperationModal: FC<AcceptCooperationModalProps> = ({
     onResponseError
   })
 
+  const { loading: updateLoading, fetchData: fetchUpdateOffer } = useAxios({
+    service: updateOffer,
+    fetchOnMount: false,
+    defaultResponse: null,
+    onResponseError
+  })
+
   const handleAcceptCooperation = async () => {
     const confirmed = await checkConfirmation({
       message: t('cooperationsPage.acceptModal.confirm.accept', {
@@ -98,7 +112,10 @@ const AcceptCooperationModal: FC<AcceptCooperationModalProps> = ({
       title: 'titles.confirmTitle',
       check: true
     })
-    if (confirmed) return fetchData({ status: StatusEnum.Closed })
+    if (confirmed) {
+      await fetchUpdateOffer()
+      return fetchData({ status: StatusEnum.Closed })
+    }
   }
 
   const handleResendCooperation = async (): Promise<void> => {
@@ -123,34 +140,35 @@ const AcceptCooperationModal: FC<AcceptCooperationModalProps> = ({
 
   const onCooperationAccept = () => void handleAcceptCooperation()
 
-  const buttons = loading ? (
-    <Loader size={50} />
-  ) : (
-    <>
-      {needAction && (
-        <AppButton
-          disabled={!isDirty}
-          type={ButtonTypeEnum.Submit}
-          variant={ButtonVariantEnum.ContainedLight}
-        >
-          {t('cooperationsPage.acceptModal.resend')}
-        </AppButton>
-      )}
-      <Box sx={styles.buttonRow}>
+  const buttons =
+    loading || updateLoading ? (
+      <Loader size={50} />
+    ) : (
+      <>
         {needAction && (
-          <AppButton onClick={onCooperationAccept}>
-            {t('cooperationsPage.acceptModal.accept')}
+          <AppButton
+            disabled={!isDirty}
+            type={ButtonTypeEnum.Submit}
+            variant={ButtonVariantEnum.ContainedLight}
+          >
+            {t('cooperationsPage.acceptModal.resend')}
           </AppButton>
         )}
-        <AppButton
-          onClick={() => void handleDeclineCooperation()}
-          variant={ButtonVariantEnum.Tonal}
-        >
-          {t('cooperationsPage.acceptModal.decline')}
-        </AppButton>
-      </Box>
-    </>
-  )
+        <Box sx={styles.buttonRow}>
+          {needAction && (
+            <AppButton onClick={onCooperationAccept}>
+              {t('cooperationsPage.acceptModal.accept')}
+            </AppButton>
+          )}
+          <AppButton
+            onClick={() => void handleDeclineCooperation()}
+            variant={ButtonVariantEnum.Tonal}
+          >
+            {t('cooperationsPage.acceptModal.decline')}
+          </AppButton>
+        </Box>
+      </>
+    )
 
   return (
     <Box sx={styles.root}>

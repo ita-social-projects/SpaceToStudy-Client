@@ -25,7 +25,12 @@ import Loader from '~/components/loader/Loader'
 import { errorRoutes } from '~/router/constants/errorRoutes'
 import topBlockIcon from '~/assets/img/offer-details/top-block-icon.png'
 import { styles } from '~/pages/offer-details/OfferDetails.styles'
-import { Offer, OutletContext, StatusEnum } from '~/types'
+import {
+  CreateOrUpdateOfferData,
+  Offer,
+  OutletContext,
+  StatusEnum
+} from '~/types'
 import ScrollVisibilityWrapper from '~/components/scroll-visibility-wrapper/ScrollVisibilityWrapper'
 import OfferBanner from '~/components/offer-banner/OfferBanner'
 import {
@@ -64,13 +69,14 @@ const OfferDetails = () => {
   })
 
   const updateOffer = useCallback(
-    (status?: StatusEnum) => OfferService.updateOffer(id, { status }),
+    (updateData?: Partial<CreateOrUpdateOfferData>) =>
+      OfferService.updateOffer(id, updateData),
     [id]
   )
 
-  const { fetchData: fetchDataUpdateOffer } = useAxios<
-    Offer | null,
-    StatusEnum
+  const { loading: updateLoading, fetchData: fetchDataUpdateOffer } = useAxios<
+    null,
+    Partial<CreateOrUpdateOfferData>
   >({
     service: updateOffer,
     fetchOnMount: false,
@@ -83,16 +89,21 @@ const OfferDetails = () => {
   }
 
   const handleEnrollOfferClick = () =>
-    offerData && openModal({ component: <EnrollOffer offer={offerData} /> })
+    offerData &&
+    openModal({
+      component: (
+        <EnrollOffer enrollOffer={handleEnrollOffer} offer={offerData} />
+      )
+    })
 
   const handleToggleOfferStatus = async () => {
-    const newStatus =
+    const status =
       offerData?.status === StatusEnum.Draft
         ? StatusEnum.Active
         : StatusEnum.Draft
 
     if (offerData) {
-      await fetchDataUpdateOffer(newStatus)
+      await fetchDataUpdateOffer({ status })
       void fetchDataOffer()
     }
   }
@@ -104,13 +115,24 @@ const OfferDetails = () => {
       check: true
     })
     if (await confirmed) {
-      await fetchDataUpdateOffer(StatusEnum.Closed)
+      await fetchDataUpdateOffer({ status: StatusEnum.Closed })
+      void fetchDataOffer()
+    }
+  }
+
+  const handleEnrollOffer = async () => {
+    if (offerData) {
+      await fetchDataUpdateOffer({
+        enrolledUsers: [...offerData.enrolledUsers, userId]
+      })
       void fetchDataOffer()
     }
   }
 
   const buttonActions = activeButtonActions({
-    opositeRole: offerData?.authorRole !== userRole,
+    isEnrolled: Boolean(offerData?.enrolledUsers.includes(userId)),
+    loading: updateLoading,
+    oppositeRole: offerData?.authorRole !== userRole,
     myOffer: offerData?.author._id === userId,
     status: offerData?.status,
     handleEnrollOfferClick,

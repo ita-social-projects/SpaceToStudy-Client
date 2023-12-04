@@ -22,6 +22,10 @@ describe('AcceptCooperationModal component ', () => {
       .onPatch(`${URLs.cooperations.update}/${mockedCoop._id}`)
       .reply(200, { data: null })
 
+    mockAxiosClient
+      .onPatch(`${URLs.offers.update}/${mockedCoop._id}`)
+      .reply(200, { updateData: null })
+
     renderWithProviders(
       <AcceptCooperationModal
         cooperation={mockedCoop}

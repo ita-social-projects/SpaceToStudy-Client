@@ -63,6 +63,7 @@ export interface CreateOrUpdateOfferData
     Offer,
     | 'proficiencyLevel'
     | 'languages'
+    | 'enrolledUsers'
     | 'description'
     | 'title'
     | 'status'

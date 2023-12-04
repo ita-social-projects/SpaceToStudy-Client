@@ -2,7 +2,9 @@ import { TFunction } from 'react-i18next'
 import { ButtonVariantEnum, StatusEnum } from '~/types'
 
 interface ActiveButtonActionsProps {
-  opositeRole: boolean
+  isEnrolled: boolean
+  loading: boolean
+  oppositeRole: boolean
   myOffer: boolean
   status?: StatusEnum
   handleEnrollOfferClick: () => void
@@ -12,7 +14,9 @@ interface ActiveButtonActionsProps {
 }
 
 export const activeButtonActions = ({
-  opositeRole,
+  isEnrolled,
+  loading,
+  oppositeRole,
   myOffer,
   status,
   handleEnrollOfferClick,
@@ -22,10 +26,12 @@ export const activeButtonActions = ({
 }: ActiveButtonActionsProps) => {
   const buttons = []
 
-  if (opositeRole) {
+  if (oppositeRole) {
     buttons.push({
       label: t('common.labels.enrollOffer'),
       buttonProps: {
+        loading,
+        disabled: isEnrolled,
         onClick: handleEnrollOfferClick
       }
     })
