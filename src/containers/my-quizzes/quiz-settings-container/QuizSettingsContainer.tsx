@@ -43,8 +43,8 @@ const QuizSettingsContainer = () => {
         </Typography>
 
         <SettingItem
-          subtitle={t('myResourcesPage.quizzes.questionsShuffleDesc')}
-          title={t('myResourcesPage.quizzes.questionsShuffle')}
+          subtitle={t('myResourcesPage.quizzes.quizViewDesc')}
+          title={t('myResourcesPage.quizzes.quizView')}
         >
           <AppSelect
             fields={quizViewFields}
