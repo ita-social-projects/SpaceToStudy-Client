@@ -22,7 +22,8 @@ import {
   CreateQuizParams,
   Quiz,
   UpdateQuizParams,
-  ApiMethodEnum
+  ApiMethodEnum,
+  GetQuestion
 } from '~/types'
 import { createUrlPath } from '~/utils/helper-functions'
 
@@ -81,6 +82,8 @@ export const ResourceService = {
   ): Promise<AxiosResponse<ItemsWithCount<Question>>> => {
     return axiosClient.get(URLs.resources.questions.get, { params })
   },
+  getQuestion: async (id?: string): Promise<AxiosResponse<GetQuestion>> =>
+    await axiosClient.get(createUrlPath(URLs.resources.questions.get, id)),
   createQuestion: async (data?: CreateQuestionData): Promise<AxiosResponse> => {
     return await axiosClient.post(URLs.resources.questions.post, data)
   },
@@ -105,7 +108,6 @@ export const ResourceService = {
     params?: CreateCategoriesParams
   ): Promise<AxiosResponse<Categories>> =>
     await axiosClient.post(URLs.resources.resourcesCategories.post, params),
-
   deleteResourceCategory: async (id: string): Promise<AxiosResponse> =>
     await axiosClient.delete(
       createUrlPath(URLs.resources.resourcesCategories.delete, id)

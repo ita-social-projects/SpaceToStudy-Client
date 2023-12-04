@@ -29,7 +29,8 @@ export const URLs = {
   },
   courses: {
     get: '/courses',
-    delete: '/courses'
+    delete: '/courses',
+    create: '/courses'
   },
   categories: {
     get: '/categories',

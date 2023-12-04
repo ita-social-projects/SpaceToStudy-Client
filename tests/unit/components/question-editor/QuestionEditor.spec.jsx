@@ -21,7 +21,8 @@ const props = {
   handleNonInputValueChange,
   onCancel: vi.fn(),
   onEdit: onEditMock,
-  onSave: vi.fn()
+  onSave: vi.fn(),
+  isQuizQuestion: true
 }
 
 describe('QuestionEditor component', () => {

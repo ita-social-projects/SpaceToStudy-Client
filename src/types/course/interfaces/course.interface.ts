@@ -3,7 +3,10 @@ import {
   CategoryInterface,
   SubjectNameInterface,
   ProficiencyLevelEnum,
-  UserResponse
+  UserResponse,
+  Quiz,
+  Attachment,
+  Lesson
 } from '~/types'
 
 export interface Course extends CommonEntityFields {
@@ -11,8 +14,8 @@ export interface Course extends CommonEntityFields {
   description: string
   author: Pick<UserResponse, '_id'>
   sections?: CourseSection[]
-  category: CategoryInterface
-  subject: SubjectNameInterface
+  category: CategoryInterface | null
+  subject: SubjectNameInterface | null
   proficiencyLevel: ProficiencyLevelEnum[]
 }
 
@@ -30,7 +33,7 @@ export interface CourseSection {
   id: number
   title: string
   description: string
-  lessons: string[]
-  quizzes: string[]
-  attachments: string[]
+  lessons: Lesson[]
+  quizzes: Quiz[]
+  attachments: Attachment[]
 }

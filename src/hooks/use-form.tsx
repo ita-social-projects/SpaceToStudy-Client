@@ -26,6 +26,7 @@ interface UseFormOutput<T> {
   handleErrors: (key: keyof T, error: string) => void
   handleSubmit: (event: React.FormEvent<HTMLDivElement>) => void
   resetData: (keys?: (keyof T)[]) => void
+  handleDataChange: <K extends object>(newData: K) => void
 }
 
 export const useForm = <T extends object>({
@@ -145,10 +146,25 @@ export const useForm = <T extends object>({
     })
   }
 
+  const handleDataChange = <K extends object>(newData: K) => {
+    const filteredNewData = Object.keys(newData).reduce((acc, key) => {
+      if (Object.prototype.hasOwnProperty.call(initialValues, key)) {
+        return { ...acc, [key]: newData[key as keyof K] }
+      }
+      return acc
+    }, {} as Partial<T>)
+
+    setData((prev) => ({
+      ...prev,
+      ...filteredNewData
+    }))
+  }
+
   return {
     data,
     isDirty,
     errors,
+    handleDataChange,
     handleInputChange,
     handleNonInputValueChange,
     handleBlur,

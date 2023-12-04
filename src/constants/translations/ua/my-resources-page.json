@@ -49,8 +49,8 @@
     "defaultNewDescription": "Опис...",
     "createNewQuestion": "Створити нове питання",
     "editQuestion": "Редагувати питання",
-    "successEditedOuiz": "Тест успішно змінено",
-    "successAddedOuiz": "Тест успішно створено",
+    "successEditedQuiz": "Тест успішно змінено",
+    "successAddedQuiz": "Тест успішно створено",
     "addQuestion":"Додати питання",
     "settingsPointsAndAnswers": "Налаштування: Бали та відповіді",
     "pointValues": "Значення балів",
@@ -72,7 +72,9 @@
     "emptyItems": "У вас ще немає запитань",
     "confirmDeletionTitle": "Ви підтверджуєте видалення запитання?",
     "successDeletion": "Запитання було успішно видалено",
-    "successDuplication": "Запитання було успішно продубльовано"
+    "successDuplication": "Запитання було успішно продубльовано",
+    "successEditedQuestion":"Запитання було успішно відредаговано",
+    "successAddedQuestion":"Запитання було успішно створено"
   },
   "categories": {
     "category": "Категорія",

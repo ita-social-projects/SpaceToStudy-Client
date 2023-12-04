@@ -7,7 +7,8 @@
   },
   "newCourse": {
     "bannerTitle": "Додайте зображення банеру",
-    "addIcon": "Додати забраження"
+    "addIcon": "Додати забраження",
+    "successAddedCourse": "Курс успішно створено"
   },
   "filterLabel": {
     "categories": "Оберіть категорію курсу",

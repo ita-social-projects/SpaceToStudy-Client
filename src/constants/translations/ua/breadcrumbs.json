@@ -18,5 +18,6 @@
   "lessonDetails": "Деталі уроку",
   "newQuiz": "Новий тест",
   "editQuiz": "Редагування тесту",
-  "newQuestion": "Нове питання"
+  "newQuestion": "Нове питання",
+  "editQuestion": "Редагувати питання"
 }

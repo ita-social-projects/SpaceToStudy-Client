@@ -31,6 +31,14 @@ describe('CreateCourse', () => {
     expect(mockedNavigate).toHaveBeenCalled()
   })
 
+  it('redirect by clicking save button', () => {
+    const saveButton = screen.getByText('common.save')
+
+    fireEvent.click(saveButton)
+
+    expect(mockedNavigate).toHaveBeenCalled()
+  })
+
   it('should render add section button', () => {
     const addSectionButton = screen.getByText('course.addSectionBtn')
 

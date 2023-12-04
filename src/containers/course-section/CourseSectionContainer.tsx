@@ -144,6 +144,30 @@ const CourseSectionContainer: FC<SectionProps> = ({
     setDescriptionInput(event.target.value)
   }
 
+  useEffect(() => {
+    const sectionIndex = sections.findIndex(
+      (section) => section.id === sectionData.id
+    )
+    let sectionValue = sections[sectionIndex]
+
+    sectionValue = {
+      ...sectionValue,
+      title: titleInput,
+      description: descriptionInput,
+      lessons,
+      quizzes,
+      attachments
+    }
+
+    const newSectionsArray = [
+      ...sections.slice(0, sectionIndex),
+      sectionValue,
+      ...sections.slice(sectionIndex + 1, sections.length)
+    ]
+    setSectionsItems(newSectionsArray)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [titleInput, descriptionInput, lessons, quizzes, attachments])
+
   const handleAddResources = <T extends CourseResources>(
     resources: T[],
     addResources: Dispatch<SetStateAction<T[]>>,
