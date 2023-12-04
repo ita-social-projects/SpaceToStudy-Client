@@ -78,7 +78,7 @@ const CreateCourse = () => {
 
   const createNewSection = () => {
     const newSectionData = { ...sectionInitialData }
-    newSectionData.id = Date.now() - data.sections.length
+    newSectionData.id = Date.now()
     setSectionsItems([...data.sections, newSectionData])
   }
 
