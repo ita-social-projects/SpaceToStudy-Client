@@ -48,11 +48,11 @@ describe('CategoriesContainer test', () => {
     expect(newCategoryBtn).toBeInTheDocument()
   })
 
-  it('should render table with category items', () => {
-    const categoryItemTitle = screen.getByText(
+  it('should render table with category items', async () => {
+    const categoryItemTitle = await screen.findByText(
       responseCategoriesMock.items[0].name
     )
-    const tableLastUpdatesText = screen.getByText(
+    const tableLastUpdatesText = await screen.findByText(
       'myResourcesPage.categories.updated'
     )
 
@@ -60,8 +60,8 @@ describe('CategoriesContainer test', () => {
     expect(tableLastUpdatesText).toBeInTheDocument()
   })
 
-  it('should open new category modal after button click', () => {
-    const addCategoryBtn = screen.getByText(
+  it('should open new category modal after button click', async () => {
+    const addCategoryBtn = await screen.findByText(
       'myResourcesPage.categories.addBtn',
       { selector: 'button' }
     )

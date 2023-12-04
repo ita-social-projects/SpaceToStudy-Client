@@ -48,8 +48,8 @@ describe('QuizzesContainer component with data', () => {
     mockAxiosClient.reset()
   })
 
-  it('should render table', () => {
-    const title = screen.getByText(responseQuizzesMock.items[0].title)
+  it('should render table', async () => {
+    const title = await screen.findByText(responseQuizzesMock.items[0].title)
 
     expect(title).toBeInTheDocument()
   })

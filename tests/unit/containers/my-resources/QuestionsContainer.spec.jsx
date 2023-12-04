@@ -66,9 +66,11 @@ describe('QuestionsContainer test', () => {
     expect(addBtn).toBeInTheDocument()
   })
 
-  it('should render table with questions', () => {
-    const columnLabel = screen.getByText('myResourcesPage.questions.title')
-    const questionTitle = screen.getByText(responseItemsMock[5].title)
+  it('should render table with questions', async () => {
+    const columnLabel = await screen.findByText(
+      'myResourcesPage.questions.title'
+    )
+    const questionTitle = await screen.findByText(responseItemsMock[5].title)
 
     expect(columnLabel).toBeInTheDocument()
     expect(questionTitle).toBeInTheDocument()
@@ -91,8 +93,10 @@ describe('QuestionCategory test', () => {
     mockAxiosClient.reset()
   })
 
-  it('should render correct category', () => {
-    const category = screen.getByText('myResourcesPage.categories.category')
+  it('should render correct category', async () => {
+    const category = await screen.findByText(
+      'myResourcesPage.categories.category'
+    )
 
     expect(category).toBeInTheDocument()
   })

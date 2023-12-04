@@ -96,8 +96,10 @@ describe('QuestionsContainer test', () => {
     mockAxiosClient.reset()
   })
 
-  it('should render correct category', () => {
-    const category = screen.getByText('myResourcesPage.categories.category')
+  it('should render correct category', async () => {
+    const category = await screen.findByText(
+      'myResourcesPage.categories.category'
+    )
 
     expect(category).toBeInTheDocument()
   })

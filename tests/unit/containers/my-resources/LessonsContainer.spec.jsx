@@ -52,6 +52,11 @@ describe('LessonContainer test', () => {
     })
   })
 
+  afterEach(() => {
+    vi.clearAllMocks()
+    mockAxiosClient.reset()
+  })
+
   it('should render "New lesson" button', () => {
     const addBtn = screen.getByText('myResourcesPage.lessons.addBtn')
 
@@ -59,7 +64,7 @@ describe('LessonContainer test', () => {
   })
   it('should render table with lessons', async () => {
     const columnLabel = await screen.findByText('myResourcesPage.lessons.title')
-    const lessonTitle = screen.getByText(responseItemsMock[5].title)
+    const lessonTitle = await screen.findByText(responseItemsMock[5].title)
 
     expect(columnLabel).toBeInTheDocument()
     expect(lessonTitle).toBeInTheDocument()
@@ -78,10 +83,13 @@ describe('Lessons category test', () => {
 
   afterEach(() => {
     vi.clearAllMocks()
+    mockAxiosClient.reset()
   })
 
-  it('should render correct category', () => {
-    const category = screen.getByText('myResourcesPage.categories.category')
+  it('should render correct category', async () => {
+    const category = await screen.findByText(
+      'myResourcesPage.categories.category'
+    )
 
     expect(category).toBeInTheDocument()
   })
