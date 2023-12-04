@@ -4,12 +4,17 @@ import { Box } from '@mui/material'
 import CourseCard from '~/components/course-card/CourseCard'
 import { styles } from '~/containers/my-courses/my-courses-container/MyCorsesCardsList.styles'
 
-import { MyCorsesListProps } from '~/types'
+import { Course } from '~/types'
 
-const MyCorsesCardsList: FC<MyCorsesListProps> = ({ items }) => {
+interface CourseListProps {
+  items: Course[]
+  deleteItem: (id: string) => void
+}
+
+const MyCorsesCardsList: FC<CourseListProps> = ({ items, deleteItem }) => {
   const courseItems = items.map((course) => (
     <Box key={course._id}>
-      <CourseCard course={course} />
+      <CourseCard course={course} deleteCourse={deleteItem} />
     </Box>
   ))
 
