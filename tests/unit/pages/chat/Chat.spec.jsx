@@ -64,13 +64,13 @@ describe('Chat for desktop', () => {
   })
 
   it('should render user in a chat', async () => {
-    const title = screen.getByText('Scott Short')
+    const title = await screen.findByText('Scott Short')
 
     expect(title).toBeInTheDocument()
   })
 
   it('should choose chat and render messages', async () => {
-    const chatItem = screen.getByText('Scott Short')
+    const chatItem = await screen.findByText('Scott Short')
 
     waitFor(() => {
       fireEvent.click(chatItem)
