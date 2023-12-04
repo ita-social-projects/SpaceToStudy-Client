@@ -38,8 +38,8 @@ describe('PopularCategories', () => {
     expect(title).toBeInTheDocument()
   })
 
-  it('render card correctly', () => {
-    const card = screen.getByText('Math')
+  it('render card correctly', async () => {
+    const card = await screen.findByText('Math')
 
     expect(card).toBeInTheDocument()
   })
