@@ -13,7 +13,7 @@ import { styles } from '~/components/subject-level-chips/SubjectLevelChips.style
 interface SubjectLevelChipsProps {
   sx?: SxProps
   proficiencyLevel: ProficiencyLevelEnum | ProficiencyLevelEnum[]
-  subject: string
+  subject?: string
   color?: string
 }
 

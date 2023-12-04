@@ -22,18 +22,18 @@
     "confirmDeletionMessage": "This action is permanent and will remove all related content. Please review your decision before proceeding.",
     "confirmDeletionTitle": "Do you confirm course deletion?",
     "successDeletion": "Course was deleted successfully",
-    "description": "We couldn't find the courses you were looking for."
+    "successDuplication": "Course was successfully duplicated"
   },
   "coursesFilter": {
-      "coursesFilterLabel": "Courses Filters",
-      "chooseThe": "Choose the ",
-      "choose": "Choose ",
-      "category": "category",
-      "subject": "subject",
-      "levels": "levels",
-      "clearFilters": "Clear filters",
-      "applyFilters": "Apply filters",
-      "categoryLabel": "Category",
-      "subjectLabel": "Subject"
+    "coursesFilterLabel": "Courses Filters",
+    "chooseThe": "Choose the ",
+    "choose": "Choose ",
+    "category": "category",
+    "subject": "subject",
+    "levels": "levels",
+    "clearFilters": "Clear filters",
+    "applyFilters": "Apply filters",
+    "categoryLabel": "Category",
+    "subjectLabel": "Subject"
   }
 }

@@ -13,7 +13,7 @@ export interface Course extends CommonEntityFields {
   title: string
   description: string
   author: Pick<UserResponse, '_id'>
-  sections?: CourseSection[]
+  sections: CourseSection[]
   category: CategoryInterface | null
   subject: SubjectNameInterface | null
   proficiencyLevel: ProficiencyLevelEnum[]
