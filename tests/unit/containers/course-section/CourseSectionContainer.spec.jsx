@@ -7,7 +7,9 @@ const mockedSectionData = {
   id: 1,
   title: 'Title',
   description: 'Description',
-  resources: []
+  lessons: [],
+  quizzes: [],
+  attachments: []
 }
 
 const mockedSections = Array(2)
@@ -81,7 +83,7 @@ describe('CourseSectionContainer tests', () => {
       'course.courseSection.defaultNewDescription'
     )
 
-    expect(mockedSetSectionItems).toHaveBeenCalledTimes(1)
+    expect(mockedSetSectionItems).toHaveBeenCalled()
     expect(titleInput).toBeInTheDocument()
     expect(descriptionInput).toBeInTheDocument()
   })

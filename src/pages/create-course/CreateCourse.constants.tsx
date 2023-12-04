@@ -2,14 +2,30 @@ export const sectionInitialData = {
   id: 0,
   title: '',
   description: '',
-  resources: []
+  lessons: [],
+  quizzes: [],
+  attachments: []
 }
 
 export const initialValues = {
   title: '',
   description: '',
+  author: { _id: '' },
   category: null,
   subject: null,
   proficiencyLevel: [],
   sections: []
+}
+
+export const defaultResponse = {
+  _id: '',
+  title: '',
+  description: '',
+  author: { _id: '' },
+  category: null,
+  subject: null,
+  sections: [],
+  proficiencyLevel: [],
+  createdAt: '',
+  updatedAt: ''
 }
