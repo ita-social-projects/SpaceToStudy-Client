@@ -10,7 +10,6 @@ import { CourseService } from '~/services/course-service'
 import { useSnackBarContext } from '~/context/snackbar-context'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import CourseSectionsList from '~/containers/course-sections-list/CourseSectionsList'
-import AddCourseBanner from '~/containers/add-course-banner/AddCourseBanner'
 import CourseToolbar from '~/containers/my-courses/course-toolbar/CourseToolbar'
 import AppButton from '~/components/app-button/AppButton'
 
@@ -37,7 +36,6 @@ const CreateCourse = () => {
   const { t } = useTranslation()
   const { setAlert } = useSnackBarContext()
   const navigate = useNavigate()
-  const formData = new FormData()
 
   const onResponseError = (error: ErrorResponse) => {
     setAlert({
@@ -91,7 +89,6 @@ const CreateCourse = () => {
   return (
     <PageWrapper>
       <Box component={ComponentEnum.Form} onSubmit={handleSubmit}>
-        <AddCourseBanner formData={formData} />
         <CourseToolbar
           data={data}
           handleInputChange={handleInputChange}
