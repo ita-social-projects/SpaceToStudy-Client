@@ -42,6 +42,11 @@ describe('EditAttachmentModal component', () => {
     })
   })
 
+  afterEach(() => {
+    vi.clearAllMocks()
+    mockAxiosClient.reset()
+  })
+
   it('should render title', () => {
     const title = screen.getByText('myResourcesPage.attachments.edit')
     expect(title).toBeInTheDocument()
@@ -60,16 +65,18 @@ describe('EditAttachmentModal component', () => {
   })
 
   it('should change category', async () => {
-    const autocomplete = screen.getByRole('combobox')
+    const autocomplete = await screen.findByRole('combobox')
 
     expect(autocomplete).toBeInTheDocument()
 
-    fireEvent.click(autocomplete)
-    fireEvent.change(autocomplete, {
-      target: { value: categoriesNamesMock[1].name }
+    waitFor(() => {
+      fireEvent.click(autocomplete)
+      fireEvent.change(autocomplete, {
+        target: { value: categoriesNamesMock[1].name }
+      })
+      fireEvent.keyDown(autocomplete, { key: 'ArrowDown' })
+      fireEvent.keyDown(autocomplete, { key: 'Enter' })
     })
-    fireEvent.keyDown(autocomplete, { key: 'ArrowDown' })
-    fireEvent.keyDown(autocomplete, { key: 'Enter' })
 
     expect(autocomplete.value).toBe(categoriesNamesMock[1].name)
   })

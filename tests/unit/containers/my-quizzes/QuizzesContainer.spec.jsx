@@ -66,7 +66,6 @@ describe('QuizzesContainer component with an error', () => {
       renderWithProviders(<QuizzesContainer />)
     })
   })
-
   afterEach(() => {
     vi.clearAllMocks()
     mockAxiosClient.reset()
@@ -75,8 +74,6 @@ describe('QuizzesContainer component with an error', () => {
   it('should return error message', async () => {
     const notFound = await screen.findByText('errors.UNAUTHORIZED')
 
-    await waitFor(() => {
-      expect(notFound).toBeInTheDocument()
-    })
+    expect(notFound).toBeInTheDocument()
   })
 })

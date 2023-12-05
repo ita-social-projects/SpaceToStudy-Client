@@ -56,8 +56,10 @@ describe('AttachmentContainer renders correct data', () => {
     mockAxiosClient.reset()
   })
 
-  it('should render table', () => {
-    const title = screen.getByText('myResourcesPage.attachments.attachmentName')
+  it('should render table', async () => {
+    const title = await screen.findByText(
+      'myResourcesPage.attachments.attachmentName'
+    )
 
     expect(title).toBeInTheDocument()
   })
@@ -69,11 +71,11 @@ describe('AttachmentContainer renders correct data', () => {
   })
 
   it('should show pagination', async () => {
-    const secondButton = screen.getByLabelText('Go to page 2')
+    const secondButton = await screen.findByLabelText('Go to page 2')
 
     expect(secondButton).not.toHaveAttribute('aria-current')
 
-    await waitFor(() => {
+    waitFor(() => {
       fireEvent.click(secondButton)
     })
 

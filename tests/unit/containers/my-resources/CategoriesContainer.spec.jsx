@@ -66,7 +66,9 @@ describe('CategoriesContainer test', () => {
       { selector: 'button' }
     )
 
-    fireEvent.click(addCategoryBtn)
+    waitFor(() => {
+      fireEvent.click(addCategoryBtn)
+    })
 
     const addCategoryPopover = screen.getByTestId('popupContent')
 
@@ -76,7 +78,9 @@ describe('CategoriesContainer test', () => {
   it('should display category menu', () => {
     const categoryMenuBtn = screen.getAllByTestId('menu-icon')[0]
 
-    fireEvent.click(categoryMenuBtn)
+    waitFor(() => {
+      fireEvent.click(categoryMenuBtn)
+    })
 
     const categoryMenu = screen.getByRole('menu')
 

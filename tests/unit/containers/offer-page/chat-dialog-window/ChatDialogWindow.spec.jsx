@@ -52,14 +52,16 @@ describe('ChatDialogWindow Component with ChatId', () => {
   })
 
   it('should render messages', async () => {
-    const message = screen.getByText(messagesMock[0].text)
+    const message = await screen.findByText(messagesMock[0].text)
     expect(message).toBeInTheDocument()
   })
 })
 
 describe('ChatDialogWindow Component without ChatId', () => {
-  beforeEach(() => {
-    renderWithProviders(<ChatDialogWindow chatInfo={chatInfoEmptyIdMock} />)
+  beforeEach(async () => {
+    await waitFor(() => {
+      renderWithProviders(<ChatDialogWindow chatInfo={chatInfoEmptyIdMock} />)
+    })
   })
 
   it('should render default message when there is no chatId', () => {

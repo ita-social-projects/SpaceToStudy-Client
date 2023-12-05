@@ -100,7 +100,9 @@ describe('Chat for desktop', () => {
 
     const sendBtn = screen.getByTestId('send-btn')
 
-    fireEvent.click(sendBtn)
+    waitFor(() => {
+      fireEvent.click(sendBtn)
+    })
 
     expect(messageInput.value).toBe('')
   })
@@ -118,7 +120,7 @@ describe('Chat for mobile', () => {
     renderWithProviders(<Chat />)
   })
   it('should render just right pane in a chat', async () => {
-    const chip = screen.getByText('chatPage.chat.chipLabel')
+    const chip = await screen.findByText('chatPage.chat.chipLabel')
 
     expect(chip).toBeInTheDocument()
   })
