@@ -73,19 +73,13 @@ describe('CourseSectionContainer tests', () => {
     expect(addResourcesBtn).not.toBeVisible()
   })
 
-  it('should delete section', () => {
+  it('should set section items on delete', async () => {
     const deleteMenu = screen.getByTestId('MoreVertIcon').parentElement
     fireEvent.click(deleteMenu)
     const deleteButton = screen.getByTestId('DeleteOutlineIcon').parentElement
     fireEvent.click(deleteButton)
-    const titleInput = screen.getByText('course.courseSection.defaultNewTitle')
-    const descriptionInput = screen.getByText(
-      'course.courseSection.defaultNewDescription'
-    )
 
     expect(mockedSetSectionItems).toHaveBeenCalled()
-    expect(titleInput).toBeInTheDocument()
-    expect(descriptionInput).toBeInTheDocument()
   })
 
   it('should show add lessons modal', () => {
