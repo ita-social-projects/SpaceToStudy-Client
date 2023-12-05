@@ -17,7 +17,7 @@ import useConfirm from '~/hooks/use-confirm'
 import { getScreenBasedLimit } from '~/utils/helper-functions'
 import { CourseService } from '~/services/course-service'
 import { useSnackBarContext } from '~/context/snackbar-context'
-import { Course, ItemsWithCount, ErrorResponse } from '~/types'
+import { Course, ItemsWithCount, ErrorResponse, CourseForm } from '~/types'
 import {
   defaultResponse,
   courseItemsLoadLimit
@@ -99,17 +99,9 @@ const MyCourses = () => {
     (id?: string) => {
       const item = coursesResponse.items.find(
         (element) => element._id === id
-      ) as Course
+      ) as CourseForm
 
-      return CourseService.addCourse({
-        title: item.title,
-        description: item.description,
-        subject: item.subject?._id ?? null,
-        author: item.author,
-        sections: item.sections,
-        proficiencyLevel: item.proficiencyLevel,
-        category: item.category?._id ?? null
-      })
+      return CourseService.addCourse(item)
     },
     [coursesResponse.items]
   )
