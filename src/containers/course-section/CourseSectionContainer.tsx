@@ -76,6 +76,10 @@ const CourseSectionContainer: FC<SectionProps> = ({
   const { openMenu, renderMenu, closeMenu } = useMenu()
   const { openModal } = useModalContext()
 
+  const [titleInput, setTitleInput] = useState<string>(sectionData.title)
+  const [descriptionInput, setDescriptionInput] = useState<string>(
+    sectionData.description
+  )
   const [activeMenu, setActiveMenu] = useState<string>('')
   const [isVisible, setIsVisible] = useState<boolean>(true)
   const [resources, setResources] = useState<CourseResources[]>([])
@@ -293,17 +297,16 @@ const CourseSectionContainer: FC<SectionProps> = ({
           InputProps={styles.titleInput}
           fullWidth
           inputProps={styles.input}
-          label={
-            sectionData.title ? '' : t('course.courseSection.defaultNewTitle')
-          }
-          onChange={(event) =>
+          label={titleInput ? '' : t('course.courseSection.defaultNewTitle')}
+          onBlur={(event) =>
             handleSectionInputChange(
               sectionData.id,
               'title',
               event.target.value
             )
           }
-          value={sectionData.title}
+          onChange={(event) => setTitleInput(event.target.value)}
+          value={titleInput}
           variant={TextFieldVariantEnum.Standard}
         />
         <IconButton
@@ -324,18 +327,19 @@ const CourseSectionContainer: FC<SectionProps> = ({
             fullWidth
             inputProps={styles.input}
             label={
-              sectionData.description
+              descriptionInput
                 ? ''
                 : t('course.courseSection.defaultNewDescription')
             }
-            onChange={(event) =>
+            onBlur={(event) =>
               handleSectionInputChange(
                 sectionData.id,
                 'description',
                 event.target.value
               )
             }
-            value={sectionData.description}
+            onChange={(event) => setDescriptionInput(event.target.value)}
+            value={descriptionInput}
             variant={TextFieldVariantEnum.Standard}
           />
           <ResourcesList
