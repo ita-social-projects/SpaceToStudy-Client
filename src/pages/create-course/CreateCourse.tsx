@@ -86,7 +86,6 @@ const CreateCourse = () => {
     if (sectionToEdit) {
       Object.defineProperty(sectionToEdit, field, { value })
     }
-    setSectionsItems(data.sections)
   }
 
   const handleSectionNonInputChange = (
