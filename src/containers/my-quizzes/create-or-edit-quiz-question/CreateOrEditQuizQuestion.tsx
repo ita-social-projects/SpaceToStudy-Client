@@ -9,7 +9,6 @@ import {
 import Box from '@mui/material/Box'
 
 import { useSnackBarContext } from '~/context/snackbar-context'
-import { useModalContext } from '~/context/modal-context'
 import { ResourceService } from '~/services/resource-service'
 import useForm from '~/hooks/use-form'
 import useAxios from '~/hooks/use-axios'
@@ -26,20 +25,26 @@ import {
   UpdateQuestionParams
 } from '~/types'
 import { initialValues } from '~/containers/my-quizzes/create-or-edit-quiz-question/CreateOrEditQuizQuestion.constants'
+interface openModalProps {
+  component: JSX.Element
+}
 
 interface CreateOrEditQuizQuestionProps {
   question?: Question
   setQuestions: Dispatch<SetStateAction<Question[]>>
   onCancel: () => void
+  openModal: (component: openModalProps) => void
+  closeModal: () => void
 }
 
 const CreateOrEditQuizQuestion: FC<CreateOrEditQuizQuestionProps> = ({
   question,
   setQuestions,
-  onCancel
+  onCancel,
+  openModal,
+  closeModal
 }) => {
   const { setAlert } = useSnackBarContext()
-  const { openModal, closeModal } = useModalContext()
   const [isNewQuestion, setIsNewQuestion] = useState<boolean>(!!question)
 
   const createQuestionService = useCallback(
@@ -119,18 +124,14 @@ const CreateOrEditQuizQuestion: FC<CreateOrEditQuizQuestionProps> = ({
   }
 
   const onOpenCreateQuestionModal = () => {
-    openModal(
-      {
-        component: (
-          <CreateOrEditQuestionModal
-            actions={{ onCancel: onCloseCreation, onSave: onOpenCreation }}
-            initialData={data}
-          />
-        )
-      },
-      undefined,
-      onCancel
-    )
+    openModal({
+      component: (
+        <CreateOrEditQuestionModal
+          actions={{ onCancel: onCloseCreation, onSave: onOpenCreation }}
+          initialData={data}
+        />
+      )
+    })
   }
 
   useEffect(() => {

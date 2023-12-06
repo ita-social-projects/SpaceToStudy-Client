@@ -17,12 +17,22 @@ import useDroppable from '~/hooks/use-droppable'
 import { styles } from '~/containers/questions-list/QuestionsList.styles'
 import { Question as QuestionInterface } from '~/types'
 
+interface openModalProps {
+  component: JSX.Element
+}
 interface QuestionsListProps {
   items: QuestionInterface[]
   setItems: Dispatch<SetStateAction<QuestionInterface[]>>
+  closeModal: () => void
+  openModal: (component: openModalProps) => void
 }
 
-const QuestionsList: FC<QuestionsListProps> = ({ items, setItems }) => {
+const QuestionsList: FC<QuestionsListProps> = ({
+  items,
+  setItems,
+  openModal,
+  closeModal
+}) => {
   const [editableItemId, setEditableItemId] = useState<string>('')
   const { enabled } = useDroppable()
 
@@ -65,7 +75,9 @@ const QuestionsList: FC<QuestionsListProps> = ({ items, setItems }) => {
         >
           {editableItemId === item._id ? (
             <CreateOrEditQuizQuestion
+              closeModal={closeModal}
               onCancel={onEditCancel}
+              openModal={openModal}
               question={item}
               setQuestions={setItems}
             />

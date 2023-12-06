@@ -17,6 +17,7 @@ interface Component {
 interface ModalProvideContext {
   openModal: (component: Component, delayToClose?: number) => void
   closeModal: () => void
+  isOpen?: boolean
 }
 
 interface ModalProviderProps {
@@ -31,14 +32,14 @@ const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
   const [modal, setModal] = useState<React.ReactElement | null>(null)
   const [paperProps, setPaperProps] = useState<PaperProps>({})
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null)
-  const [closeFunc, setCloseFunc] = useState<() => void>(() => console.log())
+  const [isOpen, setIsOpen] = useState<boolean>(true)
 
   const closeModal = useCallback(() => {
     setModal(null)
     setPaperProps({})
     setTimer(null)
-    void closeFunc
-  }, [setModal, setPaperProps, setTimer, closeFunc])
+    setIsOpen(true)
+  }, [setModal, setPaperProps, setTimer])
 
   const closeModalAfterDelay = useCallback(
     (delay?: number) => {
@@ -49,14 +50,10 @@ const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
   )
 
   const openModal = useCallback(
-    (
-      { component, paperProps }: Component,
-      delayToClose?: number,
-      closeFunction?: void
-    ) => {
+    ({ component, paperProps }: Component, delayToClose?: number) => {
+      setIsOpen(false)
       setModal(component)
 
-      closeFunction && setCloseFunc(closeFunction)
       paperProps && setPaperProps(paperProps)
       delayToClose && closeModalAfterDelay(delayToClose)
     },
@@ -64,8 +61,8 @@ const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
   )
 
   const contextValue = useMemo(
-    () => ({ openModal, closeModal }),
-    [closeModal, openModal]
+    () => ({ openModal, closeModal, isOpen }),
+    [closeModal, openModal, isOpen]
   )
 
   return (

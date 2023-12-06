@@ -56,7 +56,7 @@ const CreateOrEditQuizContainer = ({
 }: QuizContentProps) => {
   const { t } = useTranslation()
   const { setAlert } = useSnackBarContext()
-  const { openModal } = useModalContext()
+  const { openModal, closeModal, isOpen } = useModalContext()
   const navigate = useNavigate()
   const { id } = useParams()
   const [isCreationOpen, setIsCreationOpen] = useState<boolean>(false)
@@ -140,6 +140,10 @@ const CreateOrEditQuizContainer = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id])
 
+  useEffect(() => {
+    isOpen && setIsCreationOpen(false)
+  }, [isOpen])
+
   if (getQuizLoading) {
     return <Loader pageLoad />
   }
@@ -214,15 +218,21 @@ const CreateOrEditQuizContainer = ({
         />
         <Divider sx={styles.divider} />
         {questions && (
-          <QuestionsList items={questions} setItems={setQuestions} />
+          <QuestionsList
+            closeModal={closeModal}
+            items={questions}
+            openModal={openModal}
+            setItems={setQuestions}
+          />
         )}
         {isCreationOpen && (
           <CreateOrEditQuizQuestion
+            closeModal={closeModal}
             onCancel={onCloseCreateQuestion}
+            openModal={openModal}
             setQuestions={setQuestions}
           />
         )}
-
         <Box sx={styles.functionalButtons}>
           <AppButton
             onClick={onOpenCreateQuestion}
