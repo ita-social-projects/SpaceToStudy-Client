@@ -20,19 +20,24 @@ export const styles = {
   divider: {
     color: 'primary.300'
   },
-  titleInput: {
+  titleInput: (isDirty: boolean) => ({
     disableUnderline: true,
     style: {
       fontSize: '35px',
       fontWeight: 500,
-      maxHeight: '35px',
-      marginTop: 0
+      marginTop: 0,
+      maxHeight: isDirty ? 'unset' : '35px'
     }
-  },
-  descriptionInput: {
+  }),
+  descriptionInput: (isDirty: boolean) => ({
     disableUnderline: true,
-    style: { fontSize: '16px', maxHeight: '16px', marginTop: 0 }
-  },
+    style: {
+      fontSize: '16px',
+      padding: '0',
+      marginTop: 0,
+      maxHeight: isDirty ? 'unset' : '16px'
+    }
+  }),
   titleLabel: {
     shrink: false,
     sx: { typography: TypographyVariantEnum.H4, top: -23 }
