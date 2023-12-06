@@ -50,13 +50,16 @@ describe('AddCategoriesModal component', () => {
     const createBtn = screen.getByText('common.create')
     const nameInput = screen.getByRole('textbox')
 
-    fireEvent.change(nameInput, { target: { value: 'New Category' } })
+    waitFor(() => {
+      fireEvent.change(nameInput, { target: { value: 'New Category' } })
+    })
 
     expect(createBtn).toBeInTheDocument()
 
     fireEvent.click(createBtn)
 
     expect(createCategory).toHaveBeenCalled()
+
     fireEvent.change(nameInput, { target: { value: '' } })
   })
 

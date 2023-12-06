@@ -1,6 +1,6 @@
 import { vi } from 'vitest'
 import Subjects from '~/pages/subjects/Subjects'
-import { fireEvent, screen } from '@testing-library/react'
+import { fireEvent, screen, waitFor } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 
 vi.mock('~/hooks/use-categories-names', () => ({
@@ -30,15 +30,19 @@ const mockState = {
 }
 
 describe('Subjects', () => {
-  beforeEach(() => {
-    renderWithProviders(<Subjects />, {
-      initialEntries: route,
-      preloadedState: mockState
+  beforeEach(async () => {
+    await waitFor(() => {
+      renderWithProviders(<Subjects />, {
+        initialEntries: route,
+        preloadedState: mockState
+      })
     })
   })
+
   afterEach(() => {
     vi.clearAllMocks()
   })
+
   it('should render correctly', () => {
     expect(
       screen.getByText('subjectsPage.subjects.description')

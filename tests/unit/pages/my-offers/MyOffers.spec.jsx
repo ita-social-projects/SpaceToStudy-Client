@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react'
+import { screen, waitFor } from '@testing-library/react'
 import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
 
@@ -15,10 +15,10 @@ mockAxiosClient
   .reply(200, mockData)
 
 describe('MyOffers', () => {
-  beforeEach(() => {
-    renderWithProviders(<MyOffers />)
+  beforeEach(async () => {
+    await waitFor(() => renderWithProviders(<MyOffers />))
   })
-  it('should render title on page', async () => {
+  it('should render title on page', () => {
     const title = screen.getByText('myOffersPage.title')
 
     expect(title).toBeInTheDocument()

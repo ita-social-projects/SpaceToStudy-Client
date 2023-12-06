@@ -1,4 +1,4 @@
-import { fireEvent, screen } from '@testing-library/react'
+import { fireEvent, screen, waitFor } from '@testing-library/react'
 import HowItWorks from '~/containers/guest-home-page/how-it-works/HowItWorks'
 import { renderWithProviders } from '~tests/test-utils'
 import { vi } from 'vitest'
@@ -18,9 +18,11 @@ describe('HowItWorks container', () => {
 
   it('should change info by clicking on switch', () => {
     const checkbox = screen.getByRole('checkbox')
-    checkbox.click()
+
+    waitFor(() => checkbox.click())
 
     fireEvent.change(checkbox, { target: { checked: 'false' } })
+
     const btnText = screen.getByText(
       'guestHomePage.whatCanYouDo.teach.actionLabel'
     )

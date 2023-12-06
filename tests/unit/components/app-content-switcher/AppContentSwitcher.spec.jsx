@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react'
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { vi } from 'vitest'
 
 import AppContentSwitcher from '~/components/app-content-switcher/AppContentSwitcher'
@@ -25,9 +25,9 @@ describe('test AppContentSwitcher component', () => {
     render(
       <AppContentSwitcher
         isStudent
-        onChange={ onChangeMock }
-        switchOptions={ testSwitchOptions }
-        typographyVariant="h6"
+        onChange={onChangeMock}
+        switchOptions={testSwitchOptions}
+        typographyVariant='h6'
       />
     )
 
@@ -40,13 +40,13 @@ describe('test AppContentSwitcher component', () => {
     const { getByRole } = render(
       <AppContentSwitcher
         isStudent
-        onChange={ onChangeMock }
-        switchOptions={ testSwitchOptions }
-        typographyVariant="h6"
+        onChange={onChangeMock}
+        switchOptions={testSwitchOptions}
+        typographyVariant='h6'
       />
     )
 
-    getByRole('checkbox').click()
+    waitFor(() => getByRole('checkbox').click())
 
     expect(onChangeMock).toHaveBeenCalled()
   })
@@ -55,19 +55,26 @@ describe('test AppContentSwitcher component', () => {
     render(
       <AppContentSwitcher
         isStudent
-        onChange={ onChangeMock }
-        switchOptions={ testSwitchOptions }
-        typographyVariant="h6"
+        onChange={onChangeMock}
+        switchOptions={testSwitchOptions}
+        typographyVariant='h6'
       />
     )
 
-    fireEvent.mouseOver(screen.getByText('Left Text'))
+    waitFor(() => {
+      fireEvent.mouseOver(screen.getByText('Left Text'))
+    })
+
     const lTooltip = await screen.findByText('Left Tooltip')
+
     expect(lTooltip).toBeInTheDocument()
 
-    fireEvent.mouseOver(screen.getByText('Right Text'))
+    waitFor(() => {
+      fireEvent.mouseOver(screen.getByText('Right Text'))
+    })
+
     const rTooltip = await screen.findByText('Right Tooltip')
+
     expect(rTooltip).toBeInTheDocument()
   })
-
 })

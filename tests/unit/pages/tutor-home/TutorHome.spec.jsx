@@ -33,6 +33,7 @@ describe('TutorHome component', () => {
     renderWithProviders(<TutorHome />, { preloadedState: secondLoginState })
 
     const titleToFind = screen.queryByText(/becomeTutor.generalInfo.title/i)
-    expect(titleToFind).not.toBeInTheDocument()
+
+    waitFor(() => expect(titleToFind).not.toBeInTheDocument())
   })
 })

@@ -1,5 +1,5 @@
 import { renderWithProviders } from '~tests/test-utils'
-import { screen, fireEvent } from '@testing-library/react'
+import { screen, fireEvent, waitFor } from '@testing-library/react'
 
 import CreateCourse from '~/pages/create-course/CreateCourse'
 
@@ -11,8 +11,8 @@ vi.mock('react-router-dom', async () => ({
 }))
 
 describe('CreateCourse', () => {
-  beforeEach(() => {
-    renderWithProviders(<CreateCourse />)
+  beforeEach(async () => {
+    await waitFor(() => renderWithProviders(<CreateCourse />))
   })
 
   it('should render cancel and save buttons', () => {

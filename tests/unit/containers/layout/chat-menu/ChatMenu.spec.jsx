@@ -102,7 +102,10 @@ describe('ChatMenu Component', () => {
       'chatPage.chatMenu.clearHistory'
     )
 
-    fireEvent.click(clearHistoryButton)
+    waitFor(() => {
+      fireEvent.click(clearHistoryButton)
+    })
+
     const confirmFunction = mockOpenDialog.mock.calls[0][0].sendConfirm
     await confirmFunction(true)
 

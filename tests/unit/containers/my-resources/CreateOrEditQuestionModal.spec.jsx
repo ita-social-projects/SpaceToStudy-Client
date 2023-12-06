@@ -1,4 +1,4 @@
-import { screen, fireEvent } from '@testing-library/react'
+import { screen, fireEvent, waitFor } from '@testing-library/react'
 import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 import { beforeEach, describe, it } from 'vitest'
 
@@ -23,13 +23,15 @@ describe('EditAttachmentModal component', () => {
     .onGet(URLs.resources.resourcesCategories.getNames)
     .reply(200, categoriesNamesMock)
 
-  beforeEach(() => {
-    renderWithProviders(
-      <CreateOrEditQuestionModal
-        actions={{ onCancel, onSave }}
-        initialData={initialDataMock}
-      />
-    )
+  beforeEach(async () => {
+    await waitFor(() => {
+      renderWithProviders(
+        <CreateOrEditQuestionModal
+          actions={{ onCancel, onSave }}
+          initialData={initialDataMock}
+        />
+      )
+    })
   })
 
   it('should render title', () => {

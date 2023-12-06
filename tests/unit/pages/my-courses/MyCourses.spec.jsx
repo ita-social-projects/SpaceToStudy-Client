@@ -19,10 +19,10 @@ const mockCoursesData = {
 }
 
 describe('tests for MyCourses page', () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     mockAxiosClient.onGet(URLs.courses.get).reply(200, mockCoursesData)
     mockAxiosClient.onPost(URLs.courses.create).reply(200, null)
-    renderWithProviders(<MyCourses />)
+    await waitFor(() => renderWithProviders(<MyCourses />))
   })
 
   it('should render page title', async () => {
