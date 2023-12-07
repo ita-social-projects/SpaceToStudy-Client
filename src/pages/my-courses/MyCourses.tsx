@@ -17,7 +17,7 @@ import useConfirm from '~/hooks/use-confirm'
 import { getScreenBasedLimit } from '~/utils/helper-functions'
 import { CourseService } from '~/services/course-service'
 import { useSnackBarContext } from '~/context/snackbar-context'
-import { Course, ItemsWithCount, ErrorResponse } from '~/types'
+import { Course, ItemsWithCount, ErrorResponse, CourseForm } from '~/types'
 import {
   defaultResponse,
   courseItemsLoadLimit
@@ -58,7 +58,7 @@ const MyCourses = () => {
     defaultResponse
   })
 
-  const onDeleteError = (error: ErrorResponse) => {
+  const onResponseError = (error: ErrorResponse) => {
     setAlert({
       severity: snackbarVariants.error,
       message: error ? `errors.${error.code}` : ''
@@ -76,7 +76,7 @@ const MyCourses = () => {
     service: deleteCourse,
     fetchOnMount: false,
     defaultResponse: null,
-    onResponseError: onDeleteError,
+    onResponseError,
     onResponse: onDeleteResponse
   })
 
@@ -93,6 +93,37 @@ const MyCourses = () => {
       sendConfirm: (isConfirmed: boolean) => void handleDelete(id, isConfirmed),
       title: `myCoursesPage.modalMessages.confirmDeletionTitle`
     })
+  }
+
+  const duplicateCourse = useCallback(
+    (id?: string) => {
+      const item = coursesResponse.items.find(
+        (element) => element._id === id
+      ) as CourseForm
+
+      return CourseService.addCourse(item)
+    },
+    [coursesResponse.items]
+  )
+
+  const onDuplicateResponse = () => {
+    setAlert({
+      severity: snackbarVariants.success,
+      message: `myCoursesPage.modalMessages.successDuplication`
+    })
+  }
+
+  const { error: duplicationError, fetchData: duplicateItem } = useAxios({
+    service: duplicateCourse,
+    fetchOnMount: false,
+    defaultResponse: null,
+    onResponseError,
+    onResponse: onDuplicateResponse
+  })
+
+  const handleDuplicate = async (itemId: string) => {
+    await duplicateItem(itemId)
+    if (!duplicationError) await fetchData()
   }
 
   const { items: coursesItems, count: coursesCount } = coursesResponse
@@ -112,7 +143,11 @@ const MyCourses = () => {
         />
       ) : (
         <>
-          <MyCorsesCardsList deleteItem={onDelete} items={coursesItems} />
+          <MyCorsesCardsList
+            deleteItem={onDelete}
+            duplicateItem={(itemId: string) => void handleDuplicate(itemId)}
+            items={coursesItems}
+          />
           <AppPagination
             onChange={handleChangePage}
             page={page}

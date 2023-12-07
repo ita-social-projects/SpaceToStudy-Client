@@ -20,9 +20,14 @@ import { useTranslation } from 'react-i18next'
 interface CourseCardProps {
   course: Course
   deleteCourse: (id: string) => void
+  duplicateCourse: (id: string) => void
 }
 
-const CourseCard: FC<CourseCardProps> = ({ course, deleteCourse }) => {
+const CourseCard: FC<CourseCardProps> = ({
+  course,
+  deleteCourse,
+  duplicateCourse
+}) => {
   const { t } = useTranslation()
   const { openMenu, renderMenu, closeMenu } = useMenu()
 
@@ -62,7 +67,7 @@ const CourseCard: FC<CourseCardProps> = ({ course, deleteCourse }) => {
           {` ${t('common.duplicate')}`}
         </Box>
       ),
-      func: () => closeMenu()
+      func: () => duplicateCourse(course._id)
     },
     {
       id: 3,
@@ -88,9 +93,9 @@ const CourseCard: FC<CourseCardProps> = ({ course, deleteCourse }) => {
         <Typography sx={styles.title}>{title}</Typography>
         <Typography sx={styles.description}>{description}</Typography>
         <SubjectLevelChips
-          color={category.appearance.color}
+          color={category?.appearance.color}
           proficiencyLevel={proficiencyLevel}
-          subject={subject.name}
+          subject={subject?.name}
           sx={styles.chipContainer}
         />
         <Typography sx={styles.secondaryText}>

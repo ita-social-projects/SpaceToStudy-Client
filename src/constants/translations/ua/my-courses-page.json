@@ -21,7 +21,8 @@
   "modalMessages": {
     "confirmDeletionMessage": "Ця дія є остаточною, та призведе до видалення всього пов’язаного вмісту. Перш ніж продовжити, перегляньте своє рішення.",
     "confirmDeletionTitle": "Ви підтверджуєте видалення курсу?",
-    "successDeletion": "Курс було успішно видалено"
+    "successDeletion": "Курс було успішно видалено",
+    "successDuplication": "Курс було успішно продубльовано"
   },
   "coursesFilter": {
       "coursesFilterLabel": "Фільтри Курсів",

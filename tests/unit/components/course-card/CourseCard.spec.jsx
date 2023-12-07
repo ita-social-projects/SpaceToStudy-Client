@@ -1,7 +1,8 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import CourseCard from '~/components/course-card/CourseCard'
 
-const mockedFunc = vi.fn()
+const deleteCourseMock = vi.fn()
+const duplicateCourseMock = vi.fn()
 
 describe('CourseCard', () => {
   const mockCourse = {
@@ -26,7 +27,13 @@ describe('CourseCard', () => {
   }
 
   beforeEach(() => {
-    render(<CourseCard course={mockCourse} deleteCourse={mockedFunc} />)
+    render(
+      <CourseCard
+        course={mockCourse}
+        deleteCourse={deleteCourseMock}
+        duplicateCourse={duplicateCourseMock}
+      />
+    )
   })
 
   it('Should render title and description of component ', () => {
@@ -53,11 +60,19 @@ describe('CourseCard', () => {
     expect(menu).toBeInTheDocument()
   })
 
+  it('Should call duplicate method', () => {
+    const menuBtn = screen.getByRole('button')
+    fireEvent.click(menuBtn)
+    const duplicateCourse = screen.getByText('common.duplicate')
+    fireEvent.click(duplicateCourse)
+    expect(duplicateCourseMock).toHaveBeenCalled()
+  })
+
   it('Should call delete method', () => {
     const menuBtn = screen.getByRole('button')
     fireEvent.click(menuBtn)
     const deleteCourse = screen.getByText('common.delete')
     fireEvent.click(deleteCourse)
-    expect(mockedFunc).toHaveBeenCalled()
+    expect(deleteCourseMock).toHaveBeenCalled()
   })
 })
