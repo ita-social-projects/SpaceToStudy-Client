@@ -73,7 +73,7 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
   ))
 
   return (
-    <Box sx={styles.root}>
+    <Box>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId='draggable'>
           {(provided: DroppableProvided) => (

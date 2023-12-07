@@ -19,5 +19,8 @@
   "newQuiz": "Новий тест",
   "editQuiz": "Редагування тесту",
   "newQuestion": "Нове питання",
-  "editQuestion": "Редагувати питання"
+  "editQuestion": "Редагувати питання",
+  "category": "Категорія",
+  "subject": "Предмет",
+  "level": "Рівень"
 }

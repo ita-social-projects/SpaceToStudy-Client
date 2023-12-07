@@ -15,7 +15,7 @@ export const styles = {
     justifyContent: 'space-between'
   },
   autocomplete: {
-    width: { md: '370px' },
+    width: { md: '370px', xs: '100%' },
     mr: '30px',
     '& .MuiOutlinedInput-root': {
       padding: '5px 9px'
@@ -26,16 +26,10 @@ export const styles = {
     position: 'relative',
     '& .MuiFormHelperText-root': {
       ...commonStyle
-    },
-    '@media (max-width: 1220px)': {
-      width: '100%'
     }
   },
   levelSelect: {
-    width: { md: '370px' },
-    '@media (max-width: 1220px)': {
-      width: '100%'
-    }
+    width: { md: '370px', xs: '100%' }
   },
   levelHelperText: {
     ...commonStyle
@@ -46,7 +40,8 @@ export const styles = {
     flexDirection: 'column',
     justifyContent: 'space-between',
     backgroundColor: 'backgroundColor',
-    boxShadow: 'none'
+    boxShadow: 'none',
+    mb: 0
   },
   menuProps: {
     PaperProps: {
@@ -86,18 +81,26 @@ export const styles = {
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
-    marginBottom: '30px'
+    mb: '30px'
   },
   searchBoxes: {
     width: '100%',
     display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    my: '30px',
-    '@media (max-width: 1220px)': {
-      flexDirection: 'column',
-      justifyContent: 'center',
-      gap: '50px'
-    }
+    flexDirection: { md: 'row', xs: 'column' },
+    justifyContent: { md: 'space-between', xs: 'center' },
+    gap: { md: '30px', sm: '20px', xs: '15px' }
+  },
+  categories: {
+    mt: '10px',
+    color: 'basic.bismark'
+  },
+  weightBox: {
+    fontWeight: 500
+  },
+  divider: {
+    display: 'flex',
+    borderBottom: '1px solid',
+    borderColor: 'primary.100',
+    my: '32px'
   }
 }
