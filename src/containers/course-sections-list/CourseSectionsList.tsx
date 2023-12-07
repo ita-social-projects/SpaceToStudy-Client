@@ -14,16 +14,28 @@ import DragIndicatorIcon from '@mui/icons-material/DragIndicator'
 import CourseSectionContainer from '~/containers/course-section/CourseSectionContainer'
 
 import { styles } from '~/containers/course-sections-list/CourseSectionsList.styles'
-import { CourseSection } from '~/types'
+import { CourseSection, CourseResources } from '~/types'
 
 interface CourseSectionsListProps {
   items: CourseSection[]
   setSectionsItems: (value: CourseSection[]) => void
+  handleSectionInputChange: (
+    id: number,
+    field: keyof CourseSection,
+    value: string
+  ) => void
+  handleSectionNonInputChange: (
+    id: number,
+    field: keyof CourseSection,
+    value: CourseResources[]
+  ) => void
 }
 
 const CourseSectionsList: FC<CourseSectionsListProps> = ({
   items,
-  setSectionsItems
+  setSectionsItems,
+  handleSectionInputChange,
+  handleSectionNonInputChange
 }) => {
   const reorder = (
     list: CourseSection[],
@@ -63,6 +75,8 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
             <DragIndicatorIcon sx={styles.dragIcon} />
           </Box>
           <CourseSectionContainer
+            handleSectionInputChange={handleSectionInputChange}
+            handleSectionNonInputChange={handleSectionNonInputChange}
             sectionData={item}
             sections={items}
             setSectionsItems={setSectionsItems}

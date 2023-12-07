@@ -1,11 +1,4 @@
-import {
-  useState,
-  ChangeEvent,
-  FC,
-  Dispatch,
-  SetStateAction,
-  useEffect
-} from 'react'
+import { useState, FC, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { MenuItem } from '@mui/material'
 import Box from '@mui/material/Box'
@@ -58,6 +51,16 @@ interface SectionProps {
   sectionData: CourseSection
   sections: CourseSection[]
   setSectionsItems: (value: CourseSection[]) => void
+  handleSectionInputChange: (
+    id: number,
+    field: keyof CourseSection,
+    value: string
+  ) => void
+  handleSectionNonInputChange: (
+    id: number,
+    field: keyof CourseSection,
+    value: CourseResources[]
+  ) => void
 }
 
 type openModalFunc = () => void
@@ -65,26 +68,29 @@ type openModalFunc = () => void
 const CourseSectionContainer: FC<SectionProps> = ({
   sectionData,
   sections,
-  setSectionsItems
+  setSectionsItems,
+  handleSectionInputChange,
+  handleSectionNonInputChange
 }) => {
   const { t } = useTranslation()
   const { openMenu, renderMenu, closeMenu } = useMenu()
   const { openModal } = useModalContext()
 
-  const [activeMenu, setActiveMenu] = useState<string>('')
-  const [isVisible, setIsVisible] = useState<boolean>(true)
   const [titleInput, setTitleInput] = useState<string>(sectionData.title)
-  const [descriptionInput, setDescriptionInput] = useState(
+  const [descriptionInput, setDescriptionInput] = useState<string>(
     sectionData.description
   )
-  const [lessons, setLessons] = useState<Lesson[]>([])
-  const [quizzes, setQuizzes] = useState<Quiz[]>([])
-  const [attachments, setAttachments] = useState<Attachment[]>([])
+  const [activeMenu, setActiveMenu] = useState<string>('')
+  const [isVisible, setIsVisible] = useState<boolean>(true)
   const [resources, setResources] = useState<CourseResources[]>([])
 
   useEffect(() => {
     setResources((prevResources) => {
-      const allResourcesItems = [...lessons, ...quizzes, ...attachments]
+      const allResourcesItems = [
+        ...sectionData.lessons,
+        ...sectionData.quizzes,
+        ...sectionData.attachments
+      ]
       const updatedResourcesItems = prevResources.filter((prevResource) =>
         allResourcesItems.some(
           (currentResource) => currentResource._id === prevResource._id
@@ -101,20 +107,35 @@ const CourseSectionContainer: FC<SectionProps> = ({
       }
       return updatedResourcesItems
     })
-  }, [lessons, quizzes, attachments])
+  }, [sectionData.lessons, sectionData.quizzes, sectionData.attachments])
 
   const deleteResource = (resource: CourseResources) => {
     if (resource.resourceType === ResourcesTypes.Lessons) {
-      setLessons((prevLessons) =>
-        prevLessons.filter((item) => item._id !== resource._id)
+      const newLessons = sectionData.lessons.filter(
+        (item) => item._id !== resource._id
+      )
+      handleSectionNonInputChange(
+        sectionData.id,
+        resource.resourceType,
+        newLessons
       )
     } else if (resource.resourceType === ResourcesTypes.Quizzes) {
-      setQuizzes((prevQuizzes) =>
-        prevQuizzes.filter((item) => item._id !== resource._id)
+      const newQuizzes = sectionData.quizzes.filter(
+        (item) => item._id !== resource._id
+      )
+      handleSectionNonInputChange(
+        sectionData.id,
+        resource.resourceType,
+        newQuizzes
       )
     } else if (resource.resourceType === ResourcesTypes.Attachments) {
-      setAttachments((prevAttachments) =>
-        prevAttachments.filter((item) => item._id !== resource._id)
+      const newAttachments = sectionData.attachments.filter(
+        (item) => item._id !== resource._id
+      )
+      handleSectionNonInputChange(
+        sectionData.id,
+        resource.resourceType,
+        newAttachments
       )
     }
   }
@@ -129,51 +150,16 @@ const CourseSectionContainer: FC<SectionProps> = ({
   }
 
   const onDeleteSection = () => {
-    setTitleInput('')
-    setDescriptionInput('')
-    setResources([])
-    closeMenu()
     setSectionsItems(sections.filter((item) => item.id !== sectionData.id))
   }
 
-  const onTitleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setTitleInput(event.target.value)
-  }
-
-  const onDescriptionInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setDescriptionInput(event.target.value)
-  }
-
-  useEffect(() => {
-    const sectionIndex = sections.findIndex(
-      (section) => section.id === sectionData.id
-    )
-    let sectionValue = sections[sectionIndex]
-
-    sectionValue = {
-      ...sectionValue,
-      title: titleInput,
-      description: descriptionInput,
-      lessons,
-      quizzes,
-      attachments
-    }
-
-    const newSectionsArray = [
-      ...sections.slice(0, sectionIndex),
-      sectionValue,
-      ...sections.slice(sectionIndex + 1, sections.length)
-    ]
-    setSectionsItems(newSectionsArray)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [titleInput, descriptionInput, lessons, quizzes, attachments])
-
   const handleAddResources = <T extends CourseResources>(
     resources: T[],
-    addResources: Dispatch<SetStateAction<T[]>>,
     type: ResourcesTypes
   ) => {
-    addResources(
+    handleSectionNonInputChange(
+      sectionData.id,
+      type as keyof CourseSection,
       resources.map((resource) => ({
         ...resource,
         resourceType: type
@@ -187,12 +173,12 @@ const CourseSectionContainer: FC<SectionProps> = ({
         <AddResources<Lesson>
           columns={lessonColumns}
           onAddResources={(resources) =>
-            handleAddResources(resources, setLessons, ResourcesTypes.Lessons)
+            handleAddResources(resources, ResourcesTypes.Lessons)
           }
           removeColumnRules={removeLessontColumnRules}
           requestService={ResourceService.getUsersLessons}
           resourceType={resourcesData.lessons.resource}
-          resources={lessons}
+          resources={sectionData.lessons}
         />
       )
     })
@@ -203,13 +189,13 @@ const CourseSectionContainer: FC<SectionProps> = ({
       component: (
         <AddResources<Quiz>
           columns={quizColumns}
-          onAddResources={(resources) =>
-            handleAddResources(resources, setQuizzes, ResourcesTypes.Quizzes)
-          }
+          onAddResources={(resources) => {
+            handleAddResources(resources, ResourcesTypes.Quizzes)
+          }}
           removeColumnRules={removeQuizColumnRules}
           requestService={ResourceService.getQuizzes}
           resourceType={resourcesData.quizzes.resource}
-          resources={quizzes}
+          resources={sectionData.quizzes}
         />
       )
     })
@@ -221,16 +207,12 @@ const CourseSectionContainer: FC<SectionProps> = ({
         <AddResources<Attachment>
           columns={attachmentColumns}
           onAddResources={(resources) =>
-            handleAddResources(
-              resources,
-              setAttachments,
-              ResourcesTypes.Attachments
-            )
+            handleAddResources(resources, ResourcesTypes.Attachments)
           }
           removeColumnRules={removeAttachmentColumnRules}
           requestService={ResourceService.getAttachments}
           resourceType={resourcesData.attachments.resource}
-          resources={attachments}
+          resources={sectionData.attachments}
         />
       )
     })
@@ -316,7 +298,14 @@ const CourseSectionContainer: FC<SectionProps> = ({
           fullWidth
           inputProps={styles.input}
           label={titleInput ? '' : t('course.courseSection.defaultNewTitle')}
-          onChange={onTitleInputChange}
+          onBlur={(event) =>
+            handleSectionInputChange(
+              sectionData.id,
+              'title',
+              event.target.value
+            )
+          }
+          onChange={(event) => setTitleInput(event.target.value)}
           value={titleInput}
           variant={TextFieldVariantEnum.Standard}
         />
@@ -342,7 +331,14 @@ const CourseSectionContainer: FC<SectionProps> = ({
                 ? ''
                 : t('course.courseSection.defaultNewDescription')
             }
-            onChange={onDescriptionInputChange}
+            onBlur={(event) =>
+              handleSectionInputChange(
+                sectionData.id,
+                'description',
+                event.target.value
+              )
+            }
+            onChange={(event) => setDescriptionInput(event.target.value)}
             value={descriptionInput}
             variant={TextFieldVariantEnum.Standard}
           />

@@ -7,10 +7,49 @@ const mockedSectionData = {
   id: 1,
   title: 'Title',
   description: 'Description',
-  lessons: [],
-  quizzes: [],
-  attachments: []
+  lessons: [
+    {
+      _id: '1',
+      title: 'Lesson1',
+      author: 'some author',
+      content: 'Content',
+      description: 'Description',
+      attachments: [],
+      category: null,
+      resourceType: 'lessons'
+    }
+  ],
+  quizzes: [
+    {
+      _id: '64fb2c33eba89699411d22bb',
+      title: 'Quiz',
+      description: '',
+      items: [],
+      author: '648afee884936e09a37deaaa',
+      category: { id: '64fb2c33eba89699411d22bb', name: 'Music' },
+      createdAt: '2023-09-08T14:14:11.373Z',
+      updatedAt: '2023-09-08T14:14:11.373Z',
+      resourceType: 'quizzes'
+    }
+  ],
+  attachments: [
+    {
+      _id: '64cd12f1fad091e0ee719830',
+      author: '6494128829631adbaf5cf615',
+      fileName: 'spanish.pdf',
+      link: 'link',
+      category: { id: '64fb2c33eba89699411d22bb', name: 'History' },
+      description: 'Mock description for attachments',
+      size: 100,
+      createdAt: '2023-07-25T13:12:12.998Z',
+      updatedAt: '2023-07-25T13:12:12.998Z',
+      resourceType: 'attachments'
+    }
+  ]
 }
+
+const mockedHandleSectionInputChange = vi.fn()
+const mockedHandleSectionNonInputChange = vi.fn()
 
 const mockedSections = Array(2)
   .fill()
@@ -27,6 +66,8 @@ describe('CourseSectionContainer tests', () => {
   beforeEach(() => {
     renderWithProviders(
       <CourseSectionContainer
+        handleSectionInputChange={mockedHandleSectionInputChange}
+        handleSectionNonInputChange={mockedHandleSectionNonInputChange}
         sectionData={mockedSectionData}
         sections={mockedSections}
         setSectionsItems={mockedSetSectionItems}
@@ -73,19 +114,13 @@ describe('CourseSectionContainer tests', () => {
     expect(addResourcesBtn).not.toBeVisible()
   })
 
-  it('should delete section', () => {
+  it('should set section items on delete', async () => {
     const deleteMenu = screen.getByTestId('MoreVertIcon').parentElement
     fireEvent.click(deleteMenu)
     const deleteButton = screen.getByTestId('DeleteOutlineIcon').parentElement
     fireEvent.click(deleteButton)
-    const titleInput = screen.getByText('course.courseSection.defaultNewTitle')
-    const descriptionInput = screen.getByText(
-      'course.courseSection.defaultNewDescription'
-    )
 
     expect(mockedSetSectionItems).toHaveBeenCalled()
-    expect(titleInput).toBeInTheDocument()
-    expect(descriptionInput).toBeInTheDocument()
   })
 
   it('should show add lessons modal', () => {
@@ -130,5 +165,29 @@ describe('CourseSectionContainer tests', () => {
     )
 
     expect(addAttachmentModal).toBeInTheDocument()
+  })
+
+  it('should delete lesson', () => {
+    const lessonDelete = screen.getAllByTestId('CloseIcon')[0].parentElement
+
+    fireEvent.click(lessonDelete)
+
+    expect(mockedHandleSectionNonInputChange).toHaveBeenCalled()
+  })
+
+  it('it should delete quiz', () => {
+    const quizDelete = screen.getAllByTestId('CloseIcon')[1].parentElement
+
+    fireEvent.click(quizDelete)
+
+    expect(mockedHandleSectionNonInputChange).toHaveBeenCalled()
+  })
+
+  it('it should delete attachment', () => {
+    const attachmentDelete = screen.getAllByTestId('CloseIcon')[2].parentElement
+
+    fireEvent.click(attachmentDelete)
+
+    expect(mockedHandleSectionNonInputChange).toHaveBeenCalled()
   })
 })
