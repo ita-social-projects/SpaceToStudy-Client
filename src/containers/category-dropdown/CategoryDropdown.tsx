@@ -1,7 +1,6 @@
 import { HTMLAttributes, SyntheticEvent, useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
 import AddIcon from '@mui/icons-material/Add'
 
@@ -21,8 +20,7 @@ import {
   ComponentEnum,
   CreateCategoriesParams,
   ErrorResponse,
-  SizeEnum,
-  TypographyVariantEnum
+  SizeEnum
 } from '~/types'
 import { styles } from '~/containers/category-dropdown/CategoryDropdown.styles'
 
@@ -111,7 +109,7 @@ const CategoryDropdown = ({
             fullWidth
             onClick={onCreateCategory}
             size={SizeEnum.Medium}
-            sx={styles.addButton}
+            sx={styles.addButtonOptions}
             variant={ButtonVariantEnum.Text}
           >
             <AddIcon />
@@ -127,13 +125,23 @@ const CategoryDropdown = ({
   )
   return (
     <Box sx={styles.labelCategory}>
-      <Typography variant={TypographyVariantEnum.Body2}>
-        {t('questionPage.chooseCategory')}
-      </Typography>
       <AsyncAutocomplete<CategoryNameInterface>
         fetchCondition={!isFetched}
         fetchOnFocus={isFetchedOnFocus}
         labelField='name'
+        noOptionsText={
+          <AppButton
+            disableRipple
+            fullWidth
+            onClick={onCreateCategory}
+            size={SizeEnum.Medium}
+            sx={styles.addButtonNoOptions}
+            variant={ButtonVariantEnum.Text}
+          >
+            <AddIcon />
+            {t('myResourcesPage.categories.addBtn')}
+          </AppButton>
+        }
         onChange={onCategoryChange}
         renderOption={(props, option, state) =>
           optionsList(props, option.name, state.index)
