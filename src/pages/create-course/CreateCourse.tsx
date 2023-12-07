@@ -83,9 +83,7 @@ const CreateCourse = () => {
     value: string
   ) => {
     const sectionToEdit = data.sections.find((section) => section.id === id)
-    if (sectionToEdit) {
-      Object.defineProperty(sectionToEdit, field, { value })
-    }
+    sectionToEdit && Object.defineProperty(sectionToEdit, field, { value })
   }
 
   const handleSectionNonInputChange = (
@@ -94,9 +92,7 @@ const CreateCourse = () => {
     value: CourseResources[]
   ) => {
     const sectionToEdit = data.sections.find((section) => section.id === id)
-    if (sectionToEdit) {
-      Object.defineProperty(sectionToEdit, field, { value })
-    }
+    sectionToEdit && Object.defineProperty(sectionToEdit, field, { value })
     setSectionsItems(data.sections)
   }
 
