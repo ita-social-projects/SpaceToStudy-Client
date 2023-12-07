@@ -16,8 +16,6 @@ import AddResources from '~/containers/add-resources/AddResources'
 import { ResourceService } from '~/services/resource-service'
 import useMenu from '~/hooks/use-menu'
 import { useModalContext } from '~/context/modal-context'
-
-import { styles } from '~/containers/course-section/CourseSectionContainer.styles'
 import {
   menuTypes,
   resourcesData
@@ -46,6 +44,7 @@ import {
   ResourcesTabsEnum as ResourcesTypes,
   CourseResources
 } from '~/types'
+import { styles } from '~/containers/course-section/CourseSectionContainer.styles'
 
 interface SectionProps {
   sectionData: CourseSection

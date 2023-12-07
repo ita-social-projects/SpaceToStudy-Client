@@ -8,7 +8,8 @@
   "newCourse": {
     "bannerTitle": "Add Banner Image",
     "addIconAlt": "Add image icon",
-    "successAddedCourse": "Course was successfully created"
+    "successAddedCourse": "Course was successfully created",
+    "successEditedCourse": "Course was successfully edited"
   },
   "filterLabel": {
     "categories": "Choose the category of the course",

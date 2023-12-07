@@ -30,7 +30,8 @@ export const URLs = {
   courses: {
     get: '/courses',
     delete: '/courses',
-    create: '/courses'
+    create: '/courses',
+    patch: '/courses'
   },
   categories: {
     get: '/categories',
