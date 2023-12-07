@@ -19,10 +19,10 @@ const mockCoursesData = {
 }
 
 describe('tests for MyCourses page', () => {
-  beforeEach(async () => {
+  beforeEach(() => {
     mockAxiosClient.onGet(URLs.courses.get).reply(200, mockCoursesData)
     mockAxiosClient.onPost(URLs.courses.create).reply(200, null)
-    await waitFor(() => renderWithProviders(<MyCourses />))
+    renderWithProviders(<MyCourses />)
   })
 
   it('should render page title', async () => {
@@ -46,6 +46,6 @@ describe('tests for MyCourses page', () => {
       '0Advanced Lineal Math: Theoretical Concepts'
     )
 
-    expect(title).toBeInTheDocument()
+    waitFor(() => expect(title).toBeInTheDocument())
   })
 })

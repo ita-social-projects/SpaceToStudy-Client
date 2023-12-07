@@ -58,10 +58,12 @@ describe('AddQuizzes', () => {
 
   afterEach(() => {
     vi.clearAllMocks()
+    mockAxiosClient.reset()
   })
 
-  it('should render title and question', () => {
-    const displayedQuizzes = screen.getAllByText(quizMock.category.name)
+  it('should render title and question', async () => {
+    const displayedQuizzes = await screen.findAllByText(quizMock.category.name)
+
     expect(displayedQuizzes.length).toBe(10)
   })
 })

@@ -34,6 +34,8 @@ describe('CreateSubjectModal container', () => {
   it('should change autocomplete by choosing option', () => {
     const categoryInput = screen.getByLabelText('offerPage.labels.category')
 
+    expect(categoryInput).toBeInTheDocument()
+
     waitFor(() => {
       fireEvent.click(categoryInput)
       fireEvent.change(categoryInput, {
