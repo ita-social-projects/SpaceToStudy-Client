@@ -32,9 +32,11 @@ describe('tests for MyCourses page', () => {
   })
 
   it('should click duplicate button', async () => {
-    const menu = screen.getAllByTestId('MoreVertIcon')[0].parentElement
+    waitFor(() => {
+      const menu = screen.getAllByTestId('MoreVertIcon')[0].parentElement
 
-    fireEvent.click(menu)
+      fireEvent.click(menu)
+    })
 
     const duplicateBtn = await screen.findByText('common.duplicate')
 

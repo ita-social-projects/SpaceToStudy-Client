@@ -185,25 +185,32 @@ describe('CourseSectionContainer tests', () => {
   })
 
   it('should delete lesson', () => {
-    const lessonDelete = screen.getAllByTestId('CloseIcon')[0].parentElement
+    waitFor(() => {
+      const lessonDelete = screen.getAllByTestId('CloseIcon')[0].parentElement
 
-    fireEvent.click(lessonDelete)
+      fireEvent.click(lessonDelete)
+    })
 
     expect(mockedHandleSectionNonInputChange).toHaveBeenCalled()
   })
 
   it('it should delete quiz', () => {
-    const quizDelete = screen.getAllByTestId('CloseIcon')[1].parentElement
+    waitFor(() => {
+      const quizDelete = screen.getAllByTestId('CloseIcon')[1].parentElement
 
-    fireEvent.click(quizDelete)
+      fireEvent.click(quizDelete)
+    })
 
     expect(mockedHandleSectionNonInputChange).toHaveBeenCalled()
   })
 
   it('it should delete attachment', () => {
-    const attachmentDelete = screen.getAllByTestId('CloseIcon')[2].parentElement
+    waitFor(() => {
+      const attachmentDelete =
+        screen.findAllByTestId('CloseIcon')[2].parentElement
 
-    fireEvent.click(attachmentDelete)
+      fireEvent.click(attachmentDelete)
+    })
 
     expect(mockedHandleSectionNonInputChange).toHaveBeenCalled()
   })

@@ -46,14 +46,16 @@ describe('CreateCourse', () => {
   })
 
   it('should change input section data', () => {
-    const sectionTitleInput = screen.getByLabelText(
-      'course.courseSection.defaultNewTitle'
-    )
+    waitFor(() => {
+      const sectionTitleInput = screen.getByLabelText(
+        'course.courseSection.defaultNewTitle'
+      )
 
-    fireEvent.blur(sectionTitleInput, {
-      target: { value: 'New Section Title' }
+      fireEvent.blur(sectionTitleInput, {
+        target: { value: 'New Section Title' }
+      })
+
+      expect(sectionTitleInput.value).toBe('New Section Title')
     })
-
-    expect(sectionTitleInput.value).toBe('New Section Title')
   })
 })
