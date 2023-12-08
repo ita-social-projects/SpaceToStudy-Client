@@ -24,7 +24,6 @@ export const activeButtonActions = ({
   const buttons = []
 
   if (oppositeRole) {
-  if (oppositeRole) {
     buttons.push({
       label: 'common.labels.enrollOffer',
       buttonProps: {
