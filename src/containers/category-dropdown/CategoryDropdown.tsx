@@ -9,18 +9,16 @@ import { useModalContext } from '~/context/modal-context'
 import { useSnackBarContext } from '~/context/snackbar-context'
 import { ResourceService } from '~/services/resource-service'
 import AsyncAutocomplete from '~/components/async-autocomlete/AsyncAutocomplete'
-import AppButton from '~/components/app-button/AppButton'
 import AddCategoriesModal from '~/containers/my-resources/add-categories-modal/AddCategoriesModal'
+import DropdownButton from '~/components/dropdown-add-btn/DropdownButton'
 
 import { snackbarVariants } from '~/constants'
 import {
-  ButtonVariantEnum,
   Categories,
   CategoryNameInterface,
   ComponentEnum,
   CreateCategoriesParams,
-  ErrorResponse,
-  SizeEnum
+  ErrorResponse
 } from '~/types'
 import { styles } from '~/containers/category-dropdown/CategoryDropdown.styles'
 
@@ -104,17 +102,11 @@ const CategoryDropdown = ({
     <Box key={index}>
       {index === 0 && (
         <Box>
-          <AppButton
-            disableRipple
-            fullWidth
-            onClick={onCreateCategory}
-            size={SizeEnum.Medium}
-            sx={styles.addButtonOptions}
-            variant={ButtonVariantEnum.Text}
-          >
-            <AddIcon />
-            {t('myResourcesPage.categories.addBtn')}
-          </AppButton>
+          <DropdownButton
+            handleOnClick={onCreateCategory}
+            icon={<AddIcon />}
+            value={t('myResourcesPage.categories.addBtn')}
+          />
           <Divider sx={styles.divider} />
         </Box>
       )}
@@ -130,17 +122,12 @@ const CategoryDropdown = ({
         fetchOnFocus={isFetchedOnFocus}
         labelField='name'
         noOptionsText={
-          <AppButton
-            disableRipple
-            fullWidth
-            onClick={onCreateCategory}
-            size={SizeEnum.Medium}
+          <DropdownButton
+            handleOnClick={onCreateCategory}
+            icon={<AddIcon />}
             sx={styles.addButtonNoOptions}
-            variant={ButtonVariantEnum.Text}
-          >
-            <AddIcon />
-            {t('myResourcesPage.categories.addBtn')}
-          </AppButton>
+            value={t('myResourcesPage.categories.addBtn')}
+          />
         }
         onChange={onCategoryChange}
         renderOption={(props, option, state) =>

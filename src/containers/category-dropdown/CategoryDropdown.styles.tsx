@@ -1,13 +1,5 @@
-const addButton = {
-  justifyContent: 'flex-start',
-  pl: '10px',
-  gap: '5px'
-}
-
 export const styles = {
-  addButtonOptions: { ...addButton },
   addButtonNoOptions: {
-    ...addButton,
     pl: '0'
   },
   labelCategory: {
