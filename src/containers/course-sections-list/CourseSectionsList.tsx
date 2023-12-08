@@ -20,12 +20,12 @@ interface CourseSectionsListProps {
   items: CourseSection[]
   setSectionsItems: (value: CourseSection[]) => void
   handleSectionInputChange: (
-    id: number,
+    id: string,
     field: keyof CourseSection,
     value: string
   ) => void
   handleSectionNonInputChange: (
-    id: number,
+    id: string,
     field: keyof CourseSection,
     value: CourseResources[]
   ) => void
@@ -64,7 +64,7 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
   }
 
   const sectionsList = items.map((item, i) => (
-    <Draggable draggableId={item.id.toString()} index={i} key={item.id}>
+    <Draggable draggableId={item.id} index={i} key={item.id}>
       {(provided: DraggableProvided, snapshot: DraggableStateSnapshot) => (
         <Box
           ref={provided.innerRef}

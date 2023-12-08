@@ -51,12 +51,12 @@ interface SectionProps {
   sections: CourseSection[]
   setSectionsItems: (value: CourseSection[]) => void
   handleSectionInputChange: (
-    id: number,
+    id: string,
     field: keyof CourseSection,
     value: string
   ) => void
   handleSectionNonInputChange: (
-    id: number,
+    id: string,
     field: keyof CourseSection,
     value: CourseResources[]
   ) => void
@@ -159,10 +159,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
     handleSectionNonInputChange(
       sectionData.id,
       type as keyof CourseSection,
-      resources.map((resource) => ({
-        ...resource,
-        resourceType: type
-      }))
+      resources
     )
   }
 

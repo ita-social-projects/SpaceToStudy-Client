@@ -95,7 +95,7 @@ const CreateCourse = () => {
   }
 
   const handleSectionInputChange = (
-    id: number,
+    id: string,
     field: keyof CourseSection,
     value: string
   ) => {
@@ -104,7 +104,7 @@ const CreateCourse = () => {
   }
 
   const handleSectionNonInputChange = (
-    id: number,
+    id: string,
     field: keyof CourseSection,
     value: CourseResources[]
   ) => {
@@ -128,9 +128,9 @@ const CreateCourse = () => {
   }
 
   const handleCourseResponse = (course: CourseForm) => {
-    course.sections.map((item) => {
+    course.sections.forEach((item) => {
       if (item._id) {
-        return (item.id = item._id)
+        item.id = item._id
       }
     })
     for (const key in data) {

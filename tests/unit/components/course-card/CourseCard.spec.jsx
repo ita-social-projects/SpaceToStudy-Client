@@ -4,6 +4,12 @@ import CourseCard from '~/components/course-card/CourseCard'
 const deleteCourseMock = vi.fn()
 const duplicateCourseMock = vi.fn()
 
+const mockedUseNavigate = vi.fn()
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual('react-router-dom')),
+  useNavigate: () => mockedUseNavigate
+}))
+
 describe('CourseCard', () => {
   const mockCourse = {
     proficiencyLevel: ['Beginner'],
@@ -74,5 +80,13 @@ describe('CourseCard', () => {
     const deleteCourse = screen.getByText('common.delete')
     fireEvent.click(deleteCourse)
     expect(deleteCourseMock).toHaveBeenCalled()
+  })
+
+  it('Should call edit method', () => {
+    const menuBtn = screen.getByRole('button')
+    fireEvent.click(menuBtn)
+    const editCourse = screen.getByText('common.edit')
+    fireEvent.click(editCourse)
+    expect(mockedUseNavigate).toHaveBeenCalled()
   })
 })
