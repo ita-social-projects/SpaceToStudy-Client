@@ -148,15 +148,15 @@ const CourseToolbar = ({
           />
           <Typography sx={styles.categories}>
             <Typography>
-              Determine the{' '}
-              <Box component='span' sx={styles.weightBox}>
-                category, subject
-              </Box>{' '}
-              and{' '}
-              <Box component='span' sx={styles.weightBox}>
-                level{' '}
-              </Box>
-              for the course template:
+              {t('myCoursesPage.filterLabel.determine')}
+              <Typography component='span' sx={styles.weightBox}>
+                {t('myCoursesPage.filterLabel.filterItems')}
+              </Typography>
+              {t('myCoursesPage.filterLabel.and')}
+              <Typography component='span' sx={styles.weightBox}>
+                {t('myCoursesPage.filterLabel.level')}
+              </Typography>
+              {t('myCoursesPage.filterLabel.courseTemplate')}
             </Typography>
           </Typography>
         </Box>
