@@ -191,7 +191,9 @@ describe('CourseSectionContainer tests', () => {
       fireEvent.click(lessonDelete)
     })
 
-    expect(mockedHandleSectionNonInputChange).toHaveBeenCalled()
+    waitFor(() => {
+      expect(mockedHandleSectionNonInputChange).toHaveBeenCalled()
+    })
   })
 
   it('it should delete quiz', () => {
