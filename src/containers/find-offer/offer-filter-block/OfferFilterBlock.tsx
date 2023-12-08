@@ -12,6 +12,7 @@ import useBreakpoints from '~/hooks/use-breakpoints'
 import {
   FindOffersFilters,
   FindOffersFiltersActions,
+  PriceRange,
   UserRoleEnum
 } from '~/types'
 
@@ -26,6 +27,7 @@ interface OfferFilterBlockProps {
   resetPage: () => void
   open: boolean
   activeFilterCount?: number
+  price: PriceRange
 }
 
 const OfferFilterBlock: FC<OfferFilterBlockProps> = ({
@@ -35,7 +37,8 @@ const OfferFilterBlock: FC<OfferFilterBlockProps> = ({
   activeFilterCount,
   closeFilters,
   resetPage,
-  open
+  open,
+  price
 }) => {
   const { t } = useTranslation()
   const { isLaptopAndAbove } = useBreakpoints()
@@ -92,6 +95,7 @@ const OfferFilterBlock: FC<OfferFilterBlockProps> = ({
       {mobileFields}
       <OfferFilterList
         filters={filters}
+        price={price}
         updateFilter={updateFilter}
         updateFilterByKey={updateFilterByKey}
       />

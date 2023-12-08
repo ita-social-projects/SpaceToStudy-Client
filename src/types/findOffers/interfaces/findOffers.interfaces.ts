@@ -73,3 +73,8 @@ export interface CreateOrUpdateOfferData
   subject: SubjectNameInterface['name']
   price: string
 }
+
+export interface PriceRange {
+  maxPrice: number
+  minPrice: number
+}
