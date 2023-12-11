@@ -4,7 +4,8 @@ import { VisibilityEnum } from '~/types'
 export const styles = {
   container: {
     display: 'flex',
-    alignItems: 'end',
+    alignItems: 'center',
+    justifyContent: 'center',
     columnGap: '16px',
     px: '16px'
   },
