@@ -69,6 +69,7 @@ const TeachingBlock = <T extends CreateOrUpdateOfferData>({
             maxRows={1}
             onBlur={handleBlur('title')}
             onChange={handleInputChange('title')}
+            required
             value={data.title}
           />
         </Box>
@@ -83,6 +84,7 @@ const TeachingBlock = <T extends CreateOrUpdateOfferData>({
             maxLength={1000}
             onBlur={handleBlur('description')}
             onChange={handleInputChange('description')}
+            required
             value={data.description}
           />
         </Box>
@@ -126,6 +128,7 @@ const TeachingBlock = <T extends CreateOrUpdateOfferData>({
             }}
             onBlur={handleBlur('price')}
             onChange={handlePriceChange}
+            required
             value={data.price}
           />
         </Box>

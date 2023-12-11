@@ -50,20 +50,20 @@
       "student": "Choose the category and subject that best describe your learning needs."
     },
     "level": {
-      "tutor": "Select the preparation levels you are comfortable teaching, from beginner to advanced or others.",
-      "student": "Select your current skill level to match you with a tutor who can meet you where you're at and help you progress towards your goals."
+      "tutor": "Select the preparation levels you are comfortable teaching, from beginner to advanced or others. *",
+      "student": "Select your current skill level to match you with a tutor who can meet you where you're at and help you progress towards your goals. *"
     },
     "describe": {
       "tutor": "Please describe any additional information about your tutoring services, your teaching style, the topics you cover, and any specific areas of expertise you have.",
       "student": "Please describe any additional information about the tutoring you need, such as specific topics or areas you'd like to focus on, your preferred teaching style, or any particular goals you're hoping to achieve."
     },
     "languages": {
-      "tutor": "Indicate the languages you're able to tutor on.",
-      "student": "Indicate the languages you're able to be tutored on."
+      "tutor": "Indicate the languages you're able to tutor on. *",
+      "student": "Indicate the languages you're able to be tutored on. *"
     },
     "price": {
-      "tutor": "Set the offer value per lesson.",
-      "student": "Set the preferred offer value per lesson."
+      "tutor": "Set the offer value per lesson. *",
+      "student": "Set the preferred offer value per lesson. *"
     },
     "title": {
       "tutor": "Add a title that briefly describes your offer.",

@@ -21,6 +21,8 @@ export const offerMock = {
   FAQ: []
 }
 
+const requiredSymbol = ' *'
+
 const mockCategoriesNames = [
   { _id: '6422dbc0823be47b41eeb8d9', name: 'Category 1' },
   { _id: '6422dbc0823be47b41eeb8d8', name: 'Category 2' }
@@ -98,7 +100,9 @@ describe('CreateOffer component', () => {
   })
 
   it('should change category', () => {
-    const categoryInput = screen.getByLabelText('offerPage.labels.category')
+    const categoryInput = screen.getByLabelText(
+      `offerPage.labels.category${requiredSymbol}`
+    )
 
     waitFor(() => {
       fireEvent.click(categoryInput)

@@ -8,6 +8,8 @@ import { categoryService } from '~/services/category-service'
 
 vi.mock('~/services/category-service')
 
+const requiredSymbol = ' *'
+
 const mockSubjectsNames = [
   { _id: '1', name: 'Category 1' },
   { _id: '2', name: 'Category 2' }
@@ -75,7 +77,9 @@ describe('CreateOffer component', () => {
     expect(priceInput.value).toBe('')
   })
   it('should change category', () => {
-    const categoryInput = screen.getByLabelText('offerPage.labels.category')
+    const categoryInput = screen.getByLabelText(
+      `offerPage.labels.category${requiredSymbol}`
+    )
 
     waitFor(() => {
       fireEvent.click(categoryInput)
