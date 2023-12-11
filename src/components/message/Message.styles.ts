@@ -13,16 +13,7 @@ export const styles = {
     height: '44px',
     '&:hover': { transform: 'scale(1.1)' }
   },
-
-  findMessageCard: {
-    backgroundColor: 'basic.turquoiseChat',
-    borderRadius: '10px',
-    display: 'inline',
-    color: 'primary.900',
-    typography: TypographyVariantEnum.Body1,
-    p: '8px 16px'
-  },
-  messageCard: (isMyMessage: boolean) => ({
+  message: (isMyMessage: boolean) => ({
     boxSizing: 'border-box',
     maxWidth: '520px',
     display: 'inline-block',
@@ -33,11 +24,14 @@ export const styles = {
     typography: TypographyVariantEnum.Body1,
     p: '8px 16px'
   }),
-  date: (isMyMessage: boolean, isTextFiltered: boolean) => ({
+  findMessageCard: (isMyMessage: boolean, isFiltered: boolean) => ({
+    backgroundColor: isFiltered
+      ? `basic.${isMyMessage ? 'turquoiseDark' : 'turquoiseChat'}`
+      : `primary.${isMyMessage ? 500 : 100}`
+  }),
+  date: (isMyMessage: boolean) => ({
     typography: TypographyVariantEnum.Caption,
-    color: isTextFiltered
-      ? 'primary.500'
-      : `primary.${isMyMessage ? 100 : 500}`,
+    color: `primary.${isMyMessage ? 100 : 500}`,
     float: 'right',
     userSelect: 'none',
     m: '4px 0 0 8px'

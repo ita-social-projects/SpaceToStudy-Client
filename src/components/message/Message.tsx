@@ -85,16 +85,13 @@ const Message: FC<MessageProps> = ({
     <Box ref={messageRef} sx={styles.root(isMyMessage, isAvatarVisible)}>
       {avatar}
       <AppCard
-        sx={
-          isTextFiltered
-            ? styles.findMessageCard
-            : styles.messageCard(isMyMessage)
-        }
+        sx={spliceSx(
+          styles.message(isMyMessage),
+          styles.findMessageCard(isMyMessage, isTextFiltered)
+        )}
       >
         {text}
-        <Typography sx={styles.date(isMyMessage, isTextFiltered)}>
-          {date}
-        </Typography>
+        <Typography sx={styles.date(isMyMessage)}>{date}</Typography>
       </AppCard>
     </Box>
   )
