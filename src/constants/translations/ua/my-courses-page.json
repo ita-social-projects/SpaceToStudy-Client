@@ -11,9 +11,11 @@
     "successAddedCourse": "Курс успішно створено"
   },
   "filterLabel": {
-    "categories": "Оберіть категорію курсу",
-    "subjects": "Оберіть предмет курсу",
-    "levels": "Оберіть відповідний рівень курсу"
+    "determine": "Визначте ",
+    "filterItems": "категорію, предмет ",
+    "and": "та ",
+    "level": "рівень ",
+    "courseTemplate": "для шаблону курсу:"
   },
   "notFound":{
     "description": "Нам не вдалося знайти курси, які ви шукали."

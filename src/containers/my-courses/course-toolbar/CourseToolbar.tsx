@@ -1,8 +1,8 @@
 import { useCallback, SyntheticEvent, ChangeEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import FormControl from '@mui/material/FormControl'
-import FormHelperText from '@mui/material/FormHelperText'
 import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
 import OutlinedInput from '@mui/material/OutlinedInput'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
@@ -86,8 +86,7 @@ const CourseToolbar = ({
         service={categoryService.getCategoriesNames}
         sx={styles.autocomplete}
         textFieldProps={{
-          label: t('breadCrumbs.categories'),
-          helperText: t('myCoursesPage.filterLabel.categories')
+          label: t('breadCrumbs.category')
         }}
         value={category}
         valueField='_id'
@@ -99,14 +98,13 @@ const CourseToolbar = ({
         service={getSubjectsNames}
         sx={styles.autocomplete}
         textFieldProps={{
-          label: t('breadCrumbs.subjects'),
-          helperText: t('myCoursesPage.filterLabel.subjects')
+          label: t('breadCrumbs.subject')
         }}
         value={subject}
         valueField='_id'
       />
       <FormControl>
-        <InputLabel>{t('filters.filtersLevelsLable')}</InputLabel>
+        <InputLabel>{t('breadCrumbs.level')}</InputLabel>
         <Select
           MenuProps={styles.menuProps}
           id='demo-multiple-checkbox'
@@ -120,9 +118,6 @@ const CourseToolbar = ({
         >
           {menuItems}
         </Select>
-        <FormHelperText sx={styles.levelHelperText}>
-          {t('myCoursesPage.filterLabel.levels')}
-        </FormHelperText>
       </FormControl>
     </>
   )
@@ -151,9 +146,23 @@ const CourseToolbar = ({
             value={data.description}
             variant={TextFieldVariantEnum.Standard}
           />
+          <Typography sx={styles.categories}>
+            <Typography>
+              {t('myCoursesPage.filterLabel.determine')}
+              <Typography component='span' sx={styles.weightBox}>
+                {t('myCoursesPage.filterLabel.filterItems')}
+              </Typography>
+              {t('myCoursesPage.filterLabel.and')}
+              <Typography component='span' sx={styles.weightBox}>
+                {t('myCoursesPage.filterLabel.level')}
+              </Typography>
+              {t('myCoursesPage.filterLabel.courseTemplate')}
+            </Typography>
+          </Typography>
         </Box>
         <Box sx={styles.searchBoxes}>{AppAutoCompleteList}</Box>
       </AppToolbar>
+      <Box sx={styles.divider}></Box>
     </Box>
   )
 }

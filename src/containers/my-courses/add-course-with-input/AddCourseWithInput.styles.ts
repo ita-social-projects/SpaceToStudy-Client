@@ -1,7 +1,14 @@
 export const styles = {
   container: {
     display: 'flex',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    mb: '32px'
+  },
+  boxContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center'
   },
   addIcon: { width: { xs: '18px', sm: '22px' }, ml: '5px' },
   searchIcon: { color: 'primary.700' },

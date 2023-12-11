@@ -19,5 +19,8 @@
   "newQuiz": "New quiz",
   "editQuiz": "Edit quiz",
   "newQuestion": "New question",
-  "editQuestion": "Edit question"
+  "editQuestion": "Edit question",
+  "category": "Category",
+  "subject": "Subject",
+  "level": "Level"
 }

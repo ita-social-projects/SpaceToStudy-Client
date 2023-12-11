@@ -1,9 +1,6 @@
 import palette from '~/styles/app-theme/app.pallete'
 
 export const styles = {
-  root: {
-    marginTop: '32px'
-  },
   section: (isDragging: boolean) => ({
     mb: '32px',
     backgroundColor: 'basic.white',

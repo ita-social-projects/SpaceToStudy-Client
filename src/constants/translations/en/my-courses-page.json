@@ -11,9 +11,11 @@
     "successAddedCourse": "Course was successfully created"
   },
   "filterLabel": {
-    "categories": "Choose the category of the course",
-    "subjects": "Choose the subject of the course",
-    "levels": "Choose suitable levels for the course"
+    "determine": "Determine the ",
+    "filterItems": "category, subject ",
+    "and": "and ",
+    "level": "level ",
+    "courseTemplate": "for the course template:"
   },
   "notFound": {
     "description": "We couldn't find the courses you were looking for."
