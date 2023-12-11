@@ -110,6 +110,8 @@ const CreateOrEditOffer: FC<CreateOrUpdateOfferProps> = ({
   const changeStatus = () =>
     handleNonInputValueChange('status', StatusEnum.Draft)
 
+  const isClosed = existingOffer?.status !== StatusEnum.Closed
+
   return (
     <Box
       component={ComponentEnum.Form}
@@ -149,14 +151,16 @@ const CreateOrEditOffer: FC<CreateOrUpdateOfferProps> = ({
         >
           {t(`offerPage.${offerAction}.buttonTitles.${userRole}`)}
         </AppButton>
-        <AppButton
-          onClick={changeStatus}
-          size={SizeEnum.ExtraLarge}
-          type={ButtonTypeEnum.Submit}
-          variant={ButtonVariantEnum.Tonal}
-        >
-          {t('button.addToDrafts')}
-        </AppButton>
+        {isClosed && (
+          <AppButton
+            onClick={changeStatus}
+            size={SizeEnum.ExtraLarge}
+            type={ButtonTypeEnum.Submit}
+            variant={ButtonVariantEnum.Tonal}
+          >
+            {t('button.addToDrafts')}
+          </AppButton>
+        )}
       </Box>
     </Box>
   )
