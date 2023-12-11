@@ -15,11 +15,16 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 
 import useAxios from '~/hooks/use-axios'
 import Loader from '~/components/loader/Loader'
+import AppButton from '~/components/app-button/AppButton'
 import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
 
 import { defaultResponses } from '~/constants'
 import { styles } from '~/components/filter-selector/FilterSelector.styles'
-import { CategoryNameInterface, ServiceFunction } from '~/types'
+import {
+  ButtonVariantEnum,
+  CategoryNameInterface,
+  ServiceFunction
+} from '~/types'
 
 interface FilterSelectorProps<T> extends Omit<MenuProps, 'open'> {
   title: string
@@ -73,7 +78,8 @@ const FilterSelector = <T extends Pick<CategoryNameInterface, '_id'>>({
   }
 
   const onClearAll = () => {
-    selectedNames.length && setSelectedNames([])
+    setSelectedNames([])
+    setSelectedItems([])
   }
 
   const { loading, response } = useAxios<T[]>({
@@ -87,12 +93,12 @@ const FilterSelector = <T extends Pick<CategoryNameInterface, '_id'>>({
       name: 'None'
     }
 
-    const filtred = response.filter((item) =>
+    const filtered = response.filter((item) =>
       String(valueField ? item[valueField] : item)
         .toLowerCase()
         .includes(inputValue.toLowerCase())
     )
-    return showNoneProperty ? [noneItem, ...filtred] : filtred
+    return showNoneProperty ? [noneItem, ...filtered] : filtered
   }, [response, inputValue, valueField, showNoneProperty])
 
   const menuItems = filteredItems.map((item) => {
@@ -157,13 +163,16 @@ const FilterSelector = <T extends Pick<CategoryNameInterface, '_id'>>({
           />
         </Box>
 
-        <Typography
+        <AppButton
+          disableRipple
+          disabled={!selectedItems.length}
           onClick={onClearAll}
-          sx={styles.clearAll(!!selectedNames.length)}
+          sx={styles.clearAll}
+          variant={ButtonVariantEnum.Text}
         >
           <ClearIcon sx={styles.clearIcon} />
           {t('header.notifications.clearAll')}
-        </Typography>
+        </AppButton>
 
         <Divider sx={styles.divider} />
 
