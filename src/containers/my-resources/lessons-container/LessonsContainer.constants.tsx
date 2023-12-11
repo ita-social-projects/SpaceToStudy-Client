@@ -76,8 +76,12 @@ export const columns: TableColumn<Lesson>[] = [
 
 export const removeColumnRules: RemoveColumnRules<Offer> = {
   tablet: [
-    'myOffersPage.tableHeaders.updated',
-    'myOffersPage.tableHeaders.status'
+    'myResourcesPage.lessons.lastUpdates',
+    'myResourcesPage.lessons.attachments'
+  ],
+  mobile: [
+    'myResourcesPage.lessons.lastUpdates',
+    'myResourcesPage.lessons.attachments'
   ]
 }
 

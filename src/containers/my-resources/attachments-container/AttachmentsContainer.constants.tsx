@@ -69,5 +69,6 @@ export const itemsLoadLimit = {
 }
 
 export const removeColumnRules = {
-  tablet: ['myOffersPage.tableHeaders.updated']
+  tablet: ['myResourcesPage.attachments.lastUpdate'],
+  mobile: ['myResourcesPage.attachments.lastUpdate']
 }
