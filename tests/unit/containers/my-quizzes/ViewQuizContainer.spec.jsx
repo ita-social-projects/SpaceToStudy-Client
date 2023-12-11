@@ -17,7 +17,7 @@ const mockedQuestion = [
   {
     answers: [
       { text: 'question2', isCorrect: true },
-      { text: 'question2', isCorrect: false }
+      { text: 'question3', isCorrect: false }
     ],
     author: '6512d69a6d1ad343f7d1e2a9',
     category: { _id: '653fcc962a136b561a3ca015', name: 'Sport' },
