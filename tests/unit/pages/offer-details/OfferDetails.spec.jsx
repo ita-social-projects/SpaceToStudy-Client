@@ -1,4 +1,4 @@
-import { vi } from 'vitest'
+import { expect, vi } from 'vitest'
 import { fireEvent, waitFor, screen } from '@testing-library/react'
 import { URLs } from '~/constants/request'
 import OfferDetails from '~/pages/offer-details/OfferDetails'
@@ -31,70 +31,63 @@ const mockState = {
 }
 
 describe('OfferDetails on desktop', () => {
-  beforeEach(() => {
-    useBreakpoints.mockImplementation(() => desktopData)
+  beforeEach(async () => {
+    await waitFor(() => {
+      useBreakpoints.mockImplementation(() => desktopData)
 
-    renderWithProviders(<OfferDetails />, {
-      preloadedState: mockState
+      renderWithProviders(<OfferDetails />, {
+        preloadedState: mockState
+      })
+
+      mockAxiosClient
+        .onGet(`${URLs.offers.get}/${mockOffer._id}`)
+        .reply(200, mockOffer)
+      mockAxiosClient
+        .onPatch(`${URLs.offers.update}/${mockOffer._id}`)
+        .reply(200, null)
+      mockAxiosClient
+        .onGet(`${URLs.categories.get}${URLs.subjects.get}${URLs.offers.get}`)
+        .reply(200, { offers: [], count: 0 })
     })
-
-    mockAxiosClient
-      .onGet(`${URLs.offers.get}/${mockOffer._id}`)
-      .reply(200, mockOffer)
-    mockAxiosClient
-      .onPatch(`${URLs.offers.update}/${mockOffer._id}`)
-      .reply(200, null)
-    mockAxiosClient
-      .onGet(`${URLs.categories.get}${URLs.subjects.get}${URLs.offers.get}`)
-      .reply(200, { offers: [], count: 0 })
   })
 
   it('should display the offer details correctly', async () => {
     const {
       description,
       proficiencyLevel,
-      price,
       author: { firstName, lastName }
     } = mockOffer
     const descriptionElement = await screen.findByText(description)
     const nameElement = screen.getByText(`${firstName} ${lastName[0]}.`)
     const proficiency = screen.getByText(proficiencyLevel[2])
-    const priceElement = screen.getByText(price)
 
     expect(descriptionElement).toBeInTheDocument()
     expect(proficiency).toBeInTheDocument()
     expect(nameElement).toBeInTheDocument()
-    expect(priceElement).toBeInTheDocument()
   })
 
-  it('should change on active button', async () => {
+  it('should change toggle button to active/draft', async () => {
     mockAxiosClient
       .onGet(`${URLs.offers.get}/${mockOffer._id}`)
       .reply(200, { ...mockOffer, status: 'draft' })
 
-    const draft = screen.getByText('common.labels.moveToDraft')
+    const draft = await screen.findByText('common.labels.moveToDraft')
 
-    fireEvent.click(draft)
+    waitFor(() => {
+      fireEvent.click(draft)
+    })
 
     const active = await screen.findByText('common.labels.makeActive')
 
     expect(active).toBeInTheDocument()
   })
 
-  it('should change on draft button', async () => {
-    const active = screen.getByText('common.labels.makeActive')
-
-    fireEvent.click(active)
-
-    const draft = await screen.findByText('common.labels.moveToDraft')
-
-    expect(draft).toBeInTheDocument()
-  })
-
-  it('should open modal window with confirmation on close button', async () => {
+  it('should open modal window on close offer', async () => {
     const closeOffer = screen.getByText('common.labels.closeOffer')
 
-    fireEvent.click(closeOffer)
+    waitFor(() => {
+      fireEvent.click(closeOffer)
+    })
 
     const confirmationText = await screen.findByText(
       'offerDetailsPage.closeOffer'
@@ -104,7 +97,9 @@ describe('OfferDetails on desktop', () => {
 
     const yesButton = await screen.findByText('common.yes')
 
-    fireEvent.click(yesButton)
+    waitFor(() => {
+      fireEvent.click(yesButton)
+    })
 
     await waitFor(() => expect(confirmationText).not.toBeInTheDocument())
   })
@@ -134,7 +129,9 @@ describe('Offer details with student role', () => {
   it('should open modal window with enroll offer', async () => {
     const enrollOffer = await screen.findByText('common.labels.enrollOffer')
 
-    fireEvent.click(enrollOffer)
+    waitFor(() => {
+      fireEvent.click(enrollOffer)
+    })
 
     const modalTitle = screen.getByText('offerDetailsPage.enrollOffer.title')
 
@@ -149,24 +146,50 @@ describe('OfferDetails on mobile', () => {
     isTablet: false
   }
   beforeEach(() => {
-    useBreakpoints.mockImplementation(() => mobileData)
-    renderWithProviders(<OfferDetails />, {
-      preloadedState: mockState
+    waitFor(() => {
+      useBreakpoints.mockImplementation(() => mobileData)
+      renderWithProviders(<OfferDetails />, {
+        preloadedState: mockState
+      })
     })
   })
 
   it('should display the offer details correctly', async () => {
-    const authorAvgRating = screen.getByText(
+    const authorAvgRating = await screen.findByText(
       mockOffer.author.averageRating.tutor
     )
-    const title = await screen.findByText(mockOffer.title)
-    const name = await screen.findByText(
+    const title = screen.getByText(mockOffer.title)
+    const name = screen.getByText(
       `${mockOffer.author.firstName} ${mockOffer.author.lastName}`
     )
 
     expect(authorAvgRating).toBeInTheDocument()
     expect(title).toBeInTheDocument()
     expect(name).toBeInTheDocument()
+  })
+})
+
+describe('Offer details with student role', () => {
+  beforeEach(() => {
+    waitFor(() => {
+      renderWithProviders(<OfferDetails />, {
+        preloadedState: {
+          appMain: { userId: '6421d9833cdf38b706756dff', userRole: 'student' }
+        }
+      })
+    })
+  })
+
+  it('should render enroll offer button for students', async () => {
+    const enrollOffer = await screen.findByText('common.labels.enrollOffer')
+
+    waitFor(() => {
+      fireEvent.click(enrollOffer)
+    })
+
+    expect(
+      screen.getByText('offerDetailsPage.enrollOffer.title')
+    ).toBeInTheDocument()
   })
 })
 

@@ -29,11 +29,13 @@ const desktopData = {
 }
 
 describe('UserStepsWrapper test', () => {
-  beforeEach(() => {
-    useBreakpoints.mockImplementation(() => desktopData)
-    window.URL.createObjectURL = vi.fn(() => 'image/png')
-    renderWithProviders(<UserStepsWrapper userRole='tutor' />, {
-      preloadedState: mockState
+  beforeEach(async () => {
+    await waitFor(() => {
+      useBreakpoints.mockImplementation(() => desktopData)
+      window.URL.createObjectURL = vi.fn(() => 'image/png')
+      renderWithProviders(<UserStepsWrapper userRole='tutor' />, {
+        preloadedState: mockState
+      })
     })
   })
 

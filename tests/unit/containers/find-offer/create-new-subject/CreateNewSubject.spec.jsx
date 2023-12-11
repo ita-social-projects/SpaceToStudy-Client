@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react'
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 
 import { ConfirmationDialogProvider } from '~/context/confirm-context'
 import CreateSubjectModal from '~/containers/find-offer/create-new-subject/CreateNewSubject'
@@ -16,12 +16,14 @@ categoryService.getCategoriesNames.mockResolvedValue({
 })
 
 describe('CreateSubjectModal container', () => {
-  beforeEach(() => {
-    render(
-      <ConfirmationDialogProvider>
-        <CreateSubjectModal />
-      </ConfirmationDialogProvider>
-    )
+  beforeEach(async () => {
+    await waitFor(() => {
+      render(
+        <ConfirmationDialogProvider>
+          <CreateSubjectModal />
+        </ConfirmationDialogProvider>
+      )
+    })
   })
 
   it('should render component', () => {
@@ -29,22 +31,28 @@ describe('CreateSubjectModal container', () => {
 
     expect(title).toBeInTheDocument()
   })
-  it('should change autocomplete by chosing oprion', () => {
+  it('should change autocomplete by choosing option', () => {
     const categoryInput = screen.getByLabelText('offerPage.labels.category')
 
-    fireEvent.click(categoryInput)
-    fireEvent.change(categoryInput, {
-      target: { value: 'Category 1' }
+    expect(categoryInput).toBeInTheDocument()
+
+    waitFor(() => {
+      fireEvent.click(categoryInput)
+      fireEvent.change(categoryInput, {
+        target: { value: 'Category 1' }
+      })
+      fireEvent.keyDown(categoryInput, { key: 'Escape' })
     })
-    fireEvent.keyDown(categoryInput, { key: 'Escape' })
 
     expect(categoryInput.value).toBe('Category 1')
 
-    fireEvent.click(categoryInput)
-    fireEvent.change(categoryInput, {
-      target: { value: '' }
+    waitFor(() => {
+      fireEvent.click(categoryInput)
+      fireEvent.change(categoryInput, {
+        target: { value: '' }
+      })
+      fireEvent.keyDown(categoryInput, { key: 'Enter' })
     })
-    fireEvent.keyDown(categoryInput, { key: 'Enter' })
 
     expect(categoryInput.value).toBe('')
   })

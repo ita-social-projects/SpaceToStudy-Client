@@ -7,8 +7,8 @@ const titleAndDescription = {
   marginTop: 0
 }
 
-const getLabelStyles = (value: string) => ({
-  visibility: value ? VisibilityEnum.Hidden : VisibilityEnum.Visible,
+const getLabelStyles = (isValue: boolean) => ({
+  visibility: isValue ? VisibilityEnum.Hidden : VisibilityEnum.Visible,
   color: palette.primary[300]
 })
 
@@ -38,13 +38,13 @@ export const styles = {
     style: titleAndDescription,
     disableUnderline: true
   },
-  titleLabel: (title: string) => ({
-    style: getLabelStyles(title),
+  titleLabel: (isTitle: boolean) => ({
+    style: getLabelStyles(isTitle),
     shrink: false,
     sx: { typography: TypographyVariantEnum.H4, top: -23 }
   }),
-  descriptionLabel: (description: string) => ({
-    style: getLabelStyles(description),
+  descriptionLabel: (isDescription: boolean) => ({
+    style: getLabelStyles(isDescription),
     sx: { typography: TypographyVariantEnum.Body1, top: -20 },
     shrink: false
   }),

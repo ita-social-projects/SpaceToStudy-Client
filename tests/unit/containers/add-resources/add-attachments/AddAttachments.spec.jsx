@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react'
+import { screen, waitFor } from '@testing-library/react'
 import AddResources from '~/containers/add-resources/AddResources'
 import { mockAxiosClient, renderWithProviders } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
@@ -40,31 +40,32 @@ const mockRequestService = vi.fn(() =>
 const mockOnAddResources = () => {}
 
 describe('Tests for AddResources container', () => {
-  beforeEach(() => {
-    mockAxiosClient
-      .onGet(URLs.resources.attachments.get)
-      .reply(200, attachmentMockData)
-
-    renderWithProviders(
-      <AddResources
-        columns={columns}
-        onAddResources={mockOnAddResources}
-        removeColumnRules={removeColumnRules}
-        requestService={mockRequestService}
-        resourceType={'attachments'}
-        resources={responseItemsMock}
-      />
-    )
+  beforeEach(async () => {
+    await waitFor(() => {
+      mockAxiosClient
+        .onGet(URLs.resources.attachments.get)
+        .reply(200, attachmentMockData)
+      renderWithProviders(
+        <AddResources
+          columns={columns}
+          onAddResources={mockOnAddResources}
+          removeColumnRules={removeColumnRules}
+          requestService={mockRequestService}
+          resourceType={'attachments'}
+          resources={responseItemsMock}
+        />
+      )
+    })
   })
 
   afterEach(() => {
     vi.clearAllMocks()
   })
 
-  it('should display list of all attachments with category', async () => {
+  it('should display list of all attachments with category', () => {
     const displayedAttachments = screen.getAllByText(
       attachmentDataMock.category.name
-    ).length
-    expect(displayedAttachments).toBe(10)
+    )
+    expect(displayedAttachments.length).toBe(10)
   })
 })

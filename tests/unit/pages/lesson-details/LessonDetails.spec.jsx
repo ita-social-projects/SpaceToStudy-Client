@@ -1,4 +1,4 @@
-import { fireEvent, screen } from '@testing-library/react'
+import { fireEvent, screen, waitFor } from '@testing-library/react'
 import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
 import LessonDetails from '~/pages/lesson-details/LessonDetails'
@@ -48,11 +48,13 @@ const lessonMock = {
 }
 
 describe('LessonDetails', () => {
-  beforeEach(() => {
-    renderWithProviders(<LessonDetails />, { preloadedState: mockState })
-    mockAxiosClient
-      .onGet(`${URLs.resources.lessons.get}/${lessonId}`)
-      .reply(200, lessonMock)
+  beforeEach(async () => {
+    await waitFor(() => {
+      renderWithProviders(<LessonDetails />, { preloadedState: mockState })
+      mockAxiosClient
+        .onGet(`${URLs.resources.lessons.get}/${lessonId}`)
+        .reply(200, lessonMock)
+    })
   })
 
   it('should render page with title and description fields', async () => {

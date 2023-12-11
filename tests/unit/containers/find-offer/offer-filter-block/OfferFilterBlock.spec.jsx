@@ -1,6 +1,8 @@
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { beforeEach } from 'vitest'
+
 import OfferFilterBlock from '~/containers/find-offer/offer-filter-block/OfferFilterBlock'
+
 import { mockAxiosClient } from '~tests/test-utils'
 import { defaultFilters } from '~/pages/find-offers/FindOffers.constants'
 import useBreakpoints from '~/hooks/use-breakpoints'
@@ -27,27 +29,29 @@ mockAxiosClient
   .reply(200, priceRangeMock)
 
 describe('OfferFilterBlock', () => {
-  beforeEach(() => {
-    render(
-      <OfferFilterBlock
-        activeFilterCount={activeFilterCount}
-        closeFilters={closeFilters}
-        filterActions={filterActions}
-        filters={defaultFilters('student')}
-        onToggleTutorOffers={onToggleTutorOffers}
-        open={open}
-        resetPage={resetPage}
-      />
-    )
+  beforeEach(async () => {
+    await waitFor(() => {
+      render(
+        <OfferFilterBlock
+          activeFilterCount={activeFilterCount}
+          closeFilters={closeFilters}
+          filterActions={filterActions}
+          filters={defaultFilters('student')}
+          onToggleTutorOffers={onToggleTutorOffers}
+          open={open}
+          resetPage={resetPage}
+        />
+      )
+    })
   })
   it('renders the component with the correct filters', () => {
     expect(screen.getByText(activeFilterCount)).toBeInTheDocument()
-    expect(screen.getByRole('combobox')).toHaveValue(
+    expect(screen.getAllByRole('combobox')[1]).toHaveValue(
       'common.languages.allLanguages'
     )
   })
   it('should change a language', () => {
-    const languageInput = screen.getByRole('combobox')
+    const languageInput = screen.getAllByRole('combobox')[1]
 
     fireEvent.click(languageInput)
     fireEvent.change(languageInput, {

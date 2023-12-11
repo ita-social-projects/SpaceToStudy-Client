@@ -1,5 +1,5 @@
 import { vi } from 'vitest'
-import { render, fireEvent, screen } from '@testing-library/react'
+import { render, fireEvent, screen, waitFor } from '@testing-library/react'
 import SearchAutocomplete from '~/components/search-autocomplete/SearchAutocomplete'
 import userEvent from '@testing-library/user-event'
 
@@ -36,7 +36,8 @@ describe('SearchAutocomplete', () => {
     expect(searchInput.value).toBe('France')
   })
 
-  it('updates search input on typing', () => {
+  it('updates search input on typing', async () => {
+    const user = userEvent.setup()
     const setSearch = vi.fn()
     render(
       <SearchAutocomplete
@@ -48,7 +49,9 @@ describe('SearchAutocomplete', () => {
     )
 
     const searchInput = screen.getByLabelText('Search')
-    userEvent.type(searchInput, 'Finland')
+
+    await waitFor(() => user.type(searchInput, 'Finland'))
+
     expect(searchInput.value).toBe('Finland')
   })
 

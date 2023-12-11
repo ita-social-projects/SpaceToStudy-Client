@@ -1,11 +1,11 @@
-import { fireEvent, screen } from '@testing-library/react'
+import { fireEvent, screen, waitFor } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 
 import CreateOrEditLesson from '~/pages/create-or-edit-lesson/CreateOrEditLesson'
 
 describe('CreateOrEditLesson component test', () => {
-  beforeEach(() => {
-    renderWithProviders(<CreateOrEditLesson />)
+  beforeEach(async () => {
+    await waitFor(() => renderWithProviders(<CreateOrEditLesson />))
   })
 
   it('should render page with title and description fields', () => {
@@ -23,7 +23,7 @@ describe('CreateOrEditLesson component test', () => {
 
     expect(addedAttachment).toBeInTheDocument()
 
-    fireEvent.click(addedAttachment)
+    waitFor(() => fireEvent.click(addedAttachment))
 
     const title = screen.getByText('myResourcesPage.attachments.add')
 

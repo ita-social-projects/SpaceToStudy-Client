@@ -34,7 +34,7 @@ const OfferBanner: FC<OfferBannerProps> = ({ offer, buttonActions }) => {
           sx={styles.button}
           {...elem.buttonProps}
         >
-          {elem.label}
+          {t(elem.label)}
         </AppButton>
       )
   )

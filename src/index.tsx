@@ -1,5 +1,5 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client'
 import { RouterProvider } from 'react-router-dom'
 import { Provider } from 'react-redux'
 
@@ -9,13 +9,14 @@ import { router } from '~/router/router'
 import '~/styles/index.css'
 import '~/plugins/i18n'
 
-ReactDOM.render(
+const root = createRoot(document.getElementById('root') as HTMLElement)
+
+root.render(
   <React.StrictMode>
     <Provider store={store}>
       <RouterProvider router={router} />
     </Provider>
-  </React.StrictMode>,
-  document.getElementById('root')
+  </React.StrictMode>
 )
 
 setupInterceptors(store)

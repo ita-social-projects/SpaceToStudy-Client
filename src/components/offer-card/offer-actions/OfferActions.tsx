@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { t } from 'i18next'
+import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
@@ -27,11 +27,13 @@ const OfferActions: FC<OfferActionsProps> = ({
   onBookmarkClick,
   buttonActions
 }) => {
+  const { t } = useTranslation()
+
   const buttons = buttonActions.map(
     (elem) =>
       elem && (
         <AppButton fullWidth key={elem.label} {...elem.buttonProps}>
-          {elem.label}
+          {t(elem.label)}
         </AppButton>
       )
   )

@@ -45,7 +45,7 @@ const AboutChatSidebar: FC<AboutChatSidebarProps> = ({
   const { t } = useTranslation()
   const navigate = useNavigate()
   const { About, Media, Files, Links } = SidebarContentEnum
-  const [titleText, setTitleText] = useState<string>(About)
+  const [titleText, setTitleText] = useState<SidebarContentEnum>(About)
 
   const { user, role } = member
   const { _id, firstName, lastName, photo, professionalSummary } = user
@@ -55,7 +55,7 @@ const AboutChatSidebar: FC<AboutChatSidebarProps> = ({
     navigate(createUrlPath(pathToProfile, _id, { role }))
   }
 
-  const onSeeAllClick = (text: string) => {
+  const onSeeAllClick = (text: SidebarContentEnum) => {
     setTitleText(text)
   }
 
@@ -86,7 +86,7 @@ const AboutChatSidebar: FC<AboutChatSidebarProps> = ({
       </Box>
       <Divider />
       <SimpleBar style={styles.scrollBar}>
-        {titleText === 'about' ? (
+        {titleText === About ? (
           <Box sx={styles.contentWrapper}>
             <Box sx={styles.chatInfo}>
               <Avatar

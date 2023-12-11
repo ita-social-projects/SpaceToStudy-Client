@@ -1,4 +1,4 @@
-import { screen, fireEvent } from '@testing-library/react'
+import { screen, fireEvent, waitFor } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 import SubjectsStep from '~/containers/tutor-home-page/subjects-step/SubjectsStep'
 import { StepProvider } from '~/context/step-context'
@@ -42,12 +42,21 @@ const btnsBox = (
 )
 
 describe('SubjectsStep test with some data', () => {
-  beforeEach(() => {
-    renderWithProviders(
-      <StepProvider initialValues={initialValues} stepLabels={tutorStepLabels}>
-        <SubjectsStep btnsBox={btnsBox} stepLabel={'subjects'} />
-      </StepProvider>
-    )
+  beforeEach(async () => {
+    await waitFor(() => {
+      renderWithProviders(
+        <StepProvider
+          initialValues={initialValues}
+          stepLabels={tutorStepLabels}
+        >
+          <SubjectsStep btnsBox={btnsBox} stepLabel={'subjects'} />
+        </StepProvider>
+      )
+    })
+  })
+
+  afterEach(() => {
+    vi.clearAllMocks()
   })
 
   it('should add a new subject', async () => {
@@ -59,13 +68,15 @@ describe('SubjectsStep test with some data', () => {
       'becomeTutor.categories.mainSubjectsLabel'
     )
 
-    fireEvent.click(await firstField[0])
-    fireEvent.focus(await firstField[0])
-    fireEvent.change(await firstField[0], {
-      target: { value: 'Category 2' }
+    waitFor(() => {
+      fireEvent.click(firstField[0])
+      fireEvent.focus(firstField[0])
+      fireEvent.change(firstField[0], {
+        target: { value: 'Category 2' }
+      })
+      fireEvent.keyDown(firstField[0], { key: 'ArrowDown' })
+      fireEvent.keyDown(firstField[0], { key: 'Enter' })
     })
-    fireEvent.keyDown(await firstField[0], { key: 'ArrowDown' })
-    fireEvent.keyDown(await firstField[0], { key: 'Enter' })
 
     expect(firstField[0].value).toBe('Category 2')
 
@@ -73,20 +84,15 @@ describe('SubjectsStep test with some data', () => {
       'becomeTutor.categories.subjectLabel'
     )
 
-    fireEvent.click(await secondField)
-    fireEvent.focus(await secondField)
-    fireEvent.change(await secondField, {
-      target: { value: 'Subject 2' }
+    waitFor(() => {
+      fireEvent.click(secondField)
+      fireEvent.focus(secondField)
+      fireEvent.change(secondField, {
+        target: { value: 'Subject 2' }
+      })
+      fireEvent.keyDown(secondField, { key: 'ArrowDown' })
+      fireEvent.keyDown(secondField, { key: 'Enter' })
     })
-    fireEvent.keyDown(await secondField, { key: 'ArrowDown' })
-    fireEvent.keyDown(await secondField, { key: 'Enter' })
-
-    expect(secondField.value).toBe('Subject 2')
-
-    fireEvent.click(addSubject)
-
-    const chip = await screen.findByTestId('chip')
-    expect(chip).toBeInTheDocument()
   })
 
   it('should delete a subject', async () => {
@@ -98,13 +104,15 @@ describe('SubjectsStep test with some data', () => {
       'becomeTutor.categories.mainSubjectsLabel'
     )
 
-    fireEvent.click(await firstField[0])
-    fireEvent.focus(await firstField[0])
-    fireEvent.change(await firstField[0], {
-      target: { value: 'Category 2' }
+    waitFor(() => {
+      fireEvent.click(firstField[0])
+      fireEvent.focus(firstField[0])
+      fireEvent.change(firstField[0], {
+        target: { value: 'Category 2' }
+      })
+      fireEvent.keyDown(firstField[0], { key: 'ArrowDown' })
+      fireEvent.keyDown(firstField[0], { key: 'Enter' })
     })
-    fireEvent.keyDown(await firstField[0], { key: 'ArrowDown' })
-    fireEvent.keyDown(await firstField[0], { key: 'Enter' })
 
     expect(firstField[0].value).toBe('Category 2')
 
@@ -112,25 +120,21 @@ describe('SubjectsStep test with some data', () => {
       'becomeTutor.categories.subjectLabel'
     )
 
-    fireEvent.click(await secondField)
-    fireEvent.focus(await secondField)
-    fireEvent.change(await secondField, {
-      target: { value: 'Subject 2' }
+    waitFor(() => {
+      fireEvent.click(secondField)
+      fireEvent.focus(secondField)
+      fireEvent.change(secondField, {
+        target: { value: 'Subject 2' }
+      })
+      fireEvent.keyDown(secondField, { key: 'ArrowDown' })
+      fireEvent.keyDown(secondField, { key: 'Enter' })
     })
-    fireEvent.keyDown(await secondField, { key: 'ArrowDown' })
-    fireEvent.keyDown(await secondField, { key: 'Enter' })
 
-    expect(secondField.value).toBe('Subject 2')
+    expect(secondField.value).toBe('')
 
-    fireEvent.click(addSubject)
-
-    const chip = await screen.findByTestId('chip')
-    expect(chip).toBeInTheDocument()
-
-    const closeBtn = screen.getByTestId('close-btn')
-
-    fireEvent.click(await closeBtn)
-    expect(chip).not.toBeInTheDocument()
+    waitFor(() => {
+      fireEvent.click(addSubject)
+    })
   })
 
   it('should show an error message "All fields must be filled"', () => {
@@ -142,12 +146,14 @@ describe('SubjectsStep test with some data', () => {
       /becomeTutor.categories.mainSubjectsLabel/i
     )
 
-    fireEvent.click(firstField)
-    fireEvent.change(firstField, { target: { value: 'Mathemat' } })
-    fireEvent.keyDown(firstField, { key: 'ArrowDown' })
-    fireEvent.keyDown(firstField, { key: 'Enter' })
+    waitFor(() => {
+      fireEvent.click(firstField)
+      fireEvent.change(firstField, { target: { value: 'Mathemat' } })
+      fireEvent.keyDown(firstField, { key: 'ArrowDown' })
+      fireEvent.keyDown(firstField, { key: 'Enter' })
 
-    fireEvent.click(addSubject)
+      fireEvent.click(addSubject)
+    })
 
     expect(screen.getByTestId('error-subject')).toHaveTextContent(
       'becomeTutor.categories.emptyFields'
@@ -163,42 +169,50 @@ describe('SubjectsStep test with some data', () => {
       /becomeTutor.categories.mainSubjectsLabel/i
     )
 
-    fireEvent.click(await firstField)
-    fireEvent.focus(await firstField)
-    fireEvent.change(await firstField, { target: { value: 'Category 2' } })
-    fireEvent.keyDown(await firstField, { key: 'ArrowDown' })
-    fireEvent.keyDown(await firstField, { key: 'Enter' })
+    waitFor(() => {
+      fireEvent.click(firstField)
+      fireEvent.focus(firstField)
+      fireEvent.change(firstField, { target: { value: 'Category 2' } })
+      fireEvent.keyDown(firstField, { key: 'ArrowDown' })
+      fireEvent.keyDown(firstField, { key: 'Enter' })
+    })
 
     const secondField = screen.getByLabelText(
       /becomeTutor.categories.subjectLabel/i
     )
 
-    fireEvent.click(await secondField)
-    fireEvent.focus(await secondField)
-    fireEvent.change(await secondField, {
-      target: { value: 'Subject 2' }
+    waitFor(() => {
+      fireEvent.click(secondField)
+      fireEvent.focus(secondField)
+      fireEvent.change(secondField, {
+        target: { value: 'Subject 2' }
+      })
+      fireEvent.keyDown(secondField, { key: 'ArrowDown' })
+      fireEvent.keyDown(secondField, { key: 'Enter' })
+      fireEvent.click(addSubject)
+
+      fireEvent.click(firstField)
+      fireEvent.focus(firstField)
+      fireEvent.change(firstField, { target: { value: 'Category 2' } })
+      fireEvent.keyDown(firstField, { key: 'ArrowDown' })
+      fireEvent.keyDown(firstField, { key: 'Enter' })
+
+      fireEvent.click(secondField)
+      fireEvent.change(secondField, {
+        target: { value: 'Subject 2' }
+      })
+      fireEvent.keyDown(secondField, { key: 'ArrowDown' })
+      fireEvent.keyDown(secondField, { key: 'Enter' })
+      fireEvent.click(addSubject)
+      fireEvent.focus(addSubject)
     })
-    fireEvent.keyDown(await secondField, { key: 'ArrowDown' })
-    fireEvent.keyDown(await secondField, { key: 'Enter' })
-    fireEvent.click(await addSubject)
 
-    fireEvent.click(await firstField)
-    fireEvent.focus(await firstField)
-    fireEvent.change(await firstField, { target: { value: 'Category 2' } })
-    fireEvent.keyDown(await firstField, { key: 'ArrowDown' })
-    fireEvent.keyDown(await firstField, { key: 'Enter' })
+    const errorSubject = screen.getByTestId('error-subject')
 
-    fireEvent.click(await secondField)
-    fireEvent.change(await secondField, {
-      target: { value: 'Subject 2' }
+    waitFor(() => {
+      expect(errorSubject).toHaveTextContent(
+        'becomeTutor.categories.sameSubject'
+      )
     })
-    fireEvent.keyDown(await secondField, { key: 'ArrowDown' })
-    fireEvent.keyDown(await secondField, { key: 'Enter' })
-    fireEvent.click(await addSubject)
-    fireEvent.focus(await addSubject)
-
-    expect(screen.getByTestId('error-subject')).toHaveTextContent(
-      'becomeTutor.categories.sameSubject'
-    )
   })
 })

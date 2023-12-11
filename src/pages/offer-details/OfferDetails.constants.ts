@@ -1,4 +1,3 @@
-import { TFunction } from 'react-i18next'
 import { ButtonVariantEnum, StatusEnum } from '~/types'
 
 interface ActiveButtonActionsProps {
@@ -10,7 +9,6 @@ interface ActiveButtonActionsProps {
   handleEnrollOfferClick: () => void
   handleToggleOfferStatus: () => Promise<void>
   handleCloseOffer: () => Promise<void>
-  t: TFunction<'translation', undefined>
 }
 
 export const activeButtonActions = ({
@@ -21,14 +19,13 @@ export const activeButtonActions = ({
   status,
   handleEnrollOfferClick,
   handleToggleOfferStatus,
-  handleCloseOffer,
-  t
+  handleCloseOffer
 }: ActiveButtonActionsProps) => {
   const buttons = []
 
   if (oppositeRole) {
     buttons.push({
-      label: t('common.labels.enrollOffer'),
+      label: 'common.labels.enrollOffer',
       buttonProps: {
         loading,
         disabled: isEnrolled,
@@ -40,8 +37,8 @@ export const activeButtonActions = ({
   if (myOffer && status !== StatusEnum.Closed) {
     const label =
       status === StatusEnum.Draft
-        ? t('common.labels.makeActive')
-        : t('common.labels.moveToDraft')
+        ? 'common.labels.makeActive'
+        : 'common.labels.moveToDraft'
 
     buttons.push({
       label,
@@ -51,7 +48,7 @@ export const activeButtonActions = ({
     })
 
     buttons.push({
-      label: t('common.labels.closeOffer'),
+      label: 'common.labels.closeOffer',
       buttonProps: {
         onClick: handleCloseOffer,
         variant: ButtonVariantEnum.Tonal
@@ -59,7 +56,7 @@ export const activeButtonActions = ({
     })
   } else {
     buttons.push({
-      label: t('common.labels.sendMessage'),
+      label: 'common.labels.sendMessage',
       buttonProps: {
         disabled: true,
         variant: ButtonVariantEnum.Tonal

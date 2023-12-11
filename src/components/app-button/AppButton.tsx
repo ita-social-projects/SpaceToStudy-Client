@@ -1,10 +1,11 @@
-import { FC, ElementType } from 'react'
+import { FC, ElementType, ReactNode } from 'react'
 import Button, { ButtonProps } from '@mui/material/Button'
 
 import Loader from '~/components/loader/Loader'
 import { ButtonVariantEnum, SizeEnum } from '~/types'
 
 interface AppButtonProps extends ButtonProps {
+  children: ReactNode
   loading?: boolean
   disabled?: boolean
   component?: ElementType

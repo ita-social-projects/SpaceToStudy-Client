@@ -22,7 +22,7 @@ import { roundedBorderTable } from '~/containers/my-cooperations/cooperations-co
 
 interface MyResourcesTableInterface<T>
   extends Omit<EnhancedTableProps<T, undefined>, 'data'> {
-  resource: string
+  resource: ResourcesTabsEnum
   itemsPerPage: number
   data: ResourcesTableData<T>
   actions: {

@@ -189,7 +189,7 @@ const CreateOrEditQuizContainer = ({
     <PageWrapper sx={styles.container}>
       <Box sx={styles.root}>
         <AppTextField
-          InputLabelProps={styles.titleLabel(title)}
+          InputLabelProps={styles.titleLabel(!!title)}
           InputProps={styles.titleInput}
           fullWidth
           inputProps={styles.input}
@@ -199,7 +199,7 @@ const CreateOrEditQuizContainer = ({
           variant={TextFieldVariantEnum.Standard}
         />
         <AppTextField
-          InputLabelProps={styles.descriptionLabel(description)}
+          InputLabelProps={styles.descriptionLabel(!!description)}
           InputProps={styles.descriptionInput}
           fullWidth
           inputProps={styles.input}

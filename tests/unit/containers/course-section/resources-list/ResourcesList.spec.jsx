@@ -39,8 +39,8 @@ describe('new course section RescourceItem tests', () => {
     )
   })
 
-  it('should render resources list with gragBtn', () => {
-    const resourceTitle1 = screen.getByText(mockedLessonData[0].title)
+  it('should render resources list with gragBtn', async () => {
+    const resourceTitle1 = await screen.findByText(mockedLessonData[0].title)
     const resourceTitle2 = screen.getByText(mockedLessonData[1].title)
 
     expect(resourceTitle1).toBeInTheDocument()

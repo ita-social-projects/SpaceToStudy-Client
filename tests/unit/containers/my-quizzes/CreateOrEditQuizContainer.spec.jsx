@@ -1,4 +1,4 @@
-import { fireEvent, screen } from '@testing-library/react'
+import { fireEvent, screen, waitFor } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 
 import CreateOrEditQuizContainer from '~/containers/my-quizzes/create-or-edit-quiz-container/CreateOrEditQuizContainer'
@@ -7,13 +7,15 @@ const setTitle = vi.fn()
 const setDescription = vi.fn()
 
 describe('CreateOrEditQuizContainer', () => {
-  beforeEach(() => {
-    renderWithProviders(
-      <CreateOrEditQuizContainer
-        setDescription={setDescription}
-        setTitle={setTitle}
-      />
-    )
+  beforeEach(async () => {
+    await waitFor(() => {
+      renderWithProviders(
+        <CreateOrEditQuizContainer
+          setDescription={setDescription}
+          setTitle={setTitle}
+        />
+      )
+    })
   })
 
   it('should change title and description inputs', () => {
@@ -47,7 +49,7 @@ describe('CreateOrEditQuizContainer', () => {
       'myResourcesPage.quizzes.createNewQuestion'
     )
 
-    fireEvent.click(btnAddQuestion)
+    waitFor(() => fireEvent.click(btnAddQuestion))
 
     const formTitle = screen.getByText(/title:/i)
 
@@ -59,7 +61,7 @@ describe('CreateOrEditQuizContainer', () => {
       'myResourcesPage.quizzes.addQuestion'
     )
 
-    fireEvent.click(btnAddNewQuestion)
+    waitFor(() => fireEvent.click(btnAddNewQuestion))
 
     const formTitle = screen.getByText('myResourcesPage.questions.add')
 

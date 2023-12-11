@@ -1,4 +1,4 @@
-import { fireEvent, screen } from '@testing-library/react'
+import { fireEvent, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 import useBreakpoints from '~/hooks/use-breakpoints'
@@ -45,10 +45,12 @@ const props = {
 
 describe('ChatTextArea component test', () => {
   const breakpointsData = { isMobile: false }
-  beforeEach(() => {
-    useBreakpoints.mockImplementation(() => breakpointsData)
+  beforeEach(async () => {
+    await waitFor(() => {
+      useBreakpoints.mockImplementation(() => breakpointsData)
 
-    renderWithProviders(<ChatTextArea {...props} />)
+      renderWithProviders(<ChatTextArea {...props} />)
+    })
   })
 
   it('should render input with emoji icon', async () => {
@@ -70,9 +72,11 @@ describe('ChatTextArea component test', () => {
   })
 
   it('should send new message and clear input', async () => {
+    const user = userEvent.setup()
+
     const input = screen.getByLabelText('Enter some text')
 
-    userEvent.type(input, 'new message')
+    await waitFor(() => user.type(input, 'new message'))
 
     expect(input.value).toBe('new message')
 

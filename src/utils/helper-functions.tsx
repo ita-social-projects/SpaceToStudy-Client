@@ -180,7 +180,7 @@ export const spliceSx = (
   ({
     ...defaultStyles,
     ...newStyles
-  } as SxProps)
+  }) as SxProps
 
 export const studentOrTutor = (userRole: '' | UserRole) =>
   userRole === UserRoleEnum.Tutor ? UserRoleEnum.Tutor : UserRoleEnum.Student

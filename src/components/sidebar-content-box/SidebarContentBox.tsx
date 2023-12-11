@@ -22,9 +22,9 @@ import { styles } from '~/components/sidebar-content-box/SidebarContentBox.style
 
 interface SidebarContentBoxProps {
   icon: ReactElement
-  name: string
+  name: SidebarContentEnum
   content: Link[] | File[] | Media[]
-  onClick: (text: string) => void
+  onClick: (text: SidebarContentEnum) => void
 }
 
 const SidebarContentBox: FC<SidebarContentBoxProps> = ({

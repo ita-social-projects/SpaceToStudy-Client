@@ -13,8 +13,8 @@ import DragIndicatorIcon from '@mui/icons-material/DragIndicator'
 
 import ResourceItem from '~/containers/course-section/resource-item/ResourceItem'
 
+import useDroppable from '~/hooks/use-droppable'
 import { styles } from '~/containers/course-section/resources-list/ResourcesList.styles'
-
 import { CourseResources } from '~/types'
 
 interface ResourcesListProps {
@@ -28,6 +28,8 @@ const ResourcesList: FC<ResourcesListProps> = ({
   setResources,
   deleteResource
 }) => {
+  const { enabled } = useDroppable()
+
   const reorder = (
     list: CourseResources[],
     startIndex: number,
@@ -78,14 +80,16 @@ const ResourcesList: FC<ResourcesListProps> = ({
   return (
     <Box sx={styles.root}>
       <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId='draggable'>
-          {(provided: DroppableProvided) => (
-            <Box {...provided.droppableProps} ref={provided.innerRef}>
-              {resourcesList}
-              {provided.placeholder}
-            </Box>
-          )}
-        </Droppable>
+        {enabled && (
+          <Droppable droppableId='draggable'>
+            {(provided: DroppableProvided) => (
+              <Box {...provided.droppableProps} ref={provided.innerRef}>
+                {resourcesList}
+                {provided.placeholder}
+              </Box>
+            )}
+          </Droppable>
+        )}
       </DragDropContext>
     </Box>
   )

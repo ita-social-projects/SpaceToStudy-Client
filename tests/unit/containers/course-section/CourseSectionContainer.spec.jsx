@@ -1,5 +1,5 @@
 import { renderWithProviders } from '~tests/test-utils'
-import { screen, fireEvent } from '@testing-library/react'
+import { screen, fireEvent, waitFor } from '@testing-library/react'
 
 import CourseSectionContainer from '~/containers/course-section/CourseSectionContainer'
 
@@ -63,16 +63,18 @@ const mockedSections = Array(2)
 const mockedSetSectionItems = vi.fn()
 
 describe('CourseSectionContainer tests', () => {
-  beforeEach(() => {
-    renderWithProviders(
-      <CourseSectionContainer
-        handleSectionInputChange={mockedHandleSectionInputChange}
-        handleSectionNonInputChange={mockedHandleSectionNonInputChange}
-        sectionData={mockedSectionData}
-        sections={mockedSections}
-        setSectionsItems={mockedSetSectionItems}
-      />
-    )
+  beforeEach(async () => {
+    await waitFor(() => {
+      renderWithProviders(
+        <CourseSectionContainer
+          handleSectionInputChange={mockedHandleSectionInputChange}
+          handleSectionNonInputChange={mockedHandleSectionNonInputChange}
+          sectionData={mockedSectionData}
+          sections={mockedSections}
+          setSectionsItems={mockedSetSectionItems}
+        />
+      )
+    })
   })
 
   it('should render inputs for title and description', () => {
@@ -97,9 +99,12 @@ describe('CourseSectionContainer tests', () => {
     const addResourcesBtn = screen.getByText(
       'course.courseSection.addResourceBtn'
     )
-    fireEvent.click(addResourcesBtn)
+
+    waitFor(() => fireEvent.click(addResourcesBtn))
+
     const menuListItem = screen.getAllByRole('menuitem')[0]
-    fireEvent.click(menuListItem)
+
+    waitFor(() => fireEvent.click(menuListItem))
 
     expect(menuListItem).not.toBeVisible()
   })
@@ -127,11 +132,15 @@ describe('CourseSectionContainer tests', () => {
     const addResourcesBtn = screen.getByText(
       'course.courseSection.addResourceBtn'
     )
-    fireEvent.click(addResourcesBtn)
+
+    waitFor(() => fireEvent.click(addResourcesBtn))
+
     const addLessonBtn = screen.getByText(
       'course.courseSection.resourcesMenu.lessonMenuItem'
     ).parentElement
-    fireEvent.click(addLessonBtn)
+
+    waitFor(() => fireEvent.click(addLessonBtn))
+
     const addLessonModal = screen.getByText('myResourcesPage.lessons.add')
 
     expect(addLessonModal).toBeInTheDocument()
@@ -141,11 +150,15 @@ describe('CourseSectionContainer tests', () => {
     const addResourcesBtn = screen.getByText(
       'course.courseSection.addResourceBtn'
     )
-    fireEvent.click(addResourcesBtn)
+
+    waitFor(() => fireEvent.click(addResourcesBtn))
+
     const addQuizBtn = screen.getByText(
       'course.courseSection.resourcesMenu.quizMenuItem'
     ).parentElement
-    fireEvent.click(addQuizBtn)
+
+    waitFor(() => fireEvent.click(addQuizBtn))
+
     const addQuizModal = screen.getByText('myResourcesPage.quizzes.add')
 
     expect(addQuizModal).toBeInTheDocument()
@@ -155,11 +168,15 @@ describe('CourseSectionContainer tests', () => {
     const addResourcesBtn = screen.getByText(
       'course.courseSection.addResourceBtn'
     )
-    fireEvent.click(addResourcesBtn)
+
+    waitFor(() => fireEvent.click(addResourcesBtn))
+
     const addAttachmentBtn = screen.getByText(
       'course.courseSection.resourcesMenu.attachmentMenuItem'
     ).parentElement
-    fireEvent.click(addAttachmentBtn)
+
+    waitFor(() => fireEvent.click(addAttachmentBtn))
+
     const addAttachmentModal = screen.getByText(
       'myResourcesPage.attachments.add'
     )
@@ -168,25 +185,34 @@ describe('CourseSectionContainer tests', () => {
   })
 
   it('should delete lesson', () => {
-    const lessonDelete = screen.getAllByTestId('CloseIcon')[0].parentElement
+    waitFor(() => {
+      const lessonDelete = screen.getAllByTestId('CloseIcon')[0].parentElement
 
-    fireEvent.click(lessonDelete)
+      fireEvent.click(lessonDelete)
+    })
 
-    expect(mockedHandleSectionNonInputChange).toHaveBeenCalled()
+    waitFor(() => {
+      expect(mockedHandleSectionNonInputChange).toHaveBeenCalled()
+    })
   })
 
   it('it should delete quiz', () => {
-    const quizDelete = screen.getAllByTestId('CloseIcon')[1].parentElement
+    waitFor(() => {
+      const quizDelete = screen.getAllByTestId('CloseIcon')[1].parentElement
 
-    fireEvent.click(quizDelete)
+      fireEvent.click(quizDelete)
+    })
 
     expect(mockedHandleSectionNonInputChange).toHaveBeenCalled()
   })
 
   it('it should delete attachment', () => {
-    const attachmentDelete = screen.getAllByTestId('CloseIcon')[2].parentElement
+    waitFor(() => {
+      const attachmentDelete =
+        screen.findAllByTestId('CloseIcon')[2].parentElement
 
-    fireEvent.click(attachmentDelete)
+      fireEvent.click(attachmentDelete)
+    })
 
     expect(mockedHandleSectionNonInputChange).toHaveBeenCalled()
   })

@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect, useCallback } from 'react'
+import { useState, useMemo, useLayoutEffect, useCallback } from 'react'
 
 import useAxios from '~/hooks/use-axios'
 
@@ -20,16 +20,16 @@ const useLoadMore = <Data, Params>({
   const [data, setData] = useState<Data[]>([])
   const [previousLimit, setPreviousLimit] = useState<number>(limit)
 
+  let isFetched = false
+
   const loadMore = useCallback(
     () => setSkip((prevState) => prevState + limit),
     [limit]
   )
 
-  const handleResponse = useCallback(
-    (data: ItemsWithCount<Data>) =>
-      setData((prevState) => [...prevState, ...data.items]),
-    []
-  )
+  const handleResponse = useCallback((responseData: ItemsWithCount<Data>) => {
+    setData((prevState) => [...prevState, ...responseData.items])
+  }, [])
 
   const resetData = useCallback(() => {
     setSkip(0)
@@ -46,12 +46,17 @@ const useLoadMore = <Data, Params>({
     onResponse: handleResponse
   })
 
-  useEffect(() => {
-    if (previousLimit === limit) {
+  useLayoutEffect(() => {
+    if (previousLimit === limit && !isFetched) {
       void fetchData({ ...params, limit, skip } as Params)
     } else {
       resetData()
       setPreviousLimit(limit)
+    }
+
+    return () => {
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      isFetched = true
     }
   }, [fetchData, limit, previousLimit, resetData, skip, params])
 

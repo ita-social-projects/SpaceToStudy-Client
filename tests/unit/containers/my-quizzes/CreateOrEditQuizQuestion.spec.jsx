@@ -1,4 +1,4 @@
-import { fireEvent, screen } from '@testing-library/react'
+import { fireEvent, screen, waitFor } from '@testing-library/react'
 
 import CreateOrEditQuizQuestion from '~/containers/my-quizzes/create-or-edit-quiz-question/CreateOrEditQuizQuestion'
 import { renderWithProviders } from '~tests/test-utils'
@@ -7,13 +7,15 @@ const setQuestions = vi.fn()
 const onCancel = vi.fn()
 
 describe('CreateOrEditQuizQuestion component without question', () => {
-  beforeEach(() => {
-    renderWithProviders(
-      <CreateOrEditQuizQuestion
-        onCancel={onCancel}
-        setQuestions={setQuestions}
-      />
-    )
+  beforeEach(async () => {
+    await waitFor(() => {
+      renderWithProviders(
+        <CreateOrEditQuizQuestion
+          onCancel={onCancel}
+          setQuestions={setQuestions}
+        />
+      )
+    })
   })
 
   it('should render modal', () => {

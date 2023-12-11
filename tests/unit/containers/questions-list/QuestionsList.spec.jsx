@@ -35,14 +35,14 @@ describe('QuestionsList test', () => {
     )
   })
 
-  it('should render question', () => {
-    const text = screen.getByText(mockedItems[0].text)
+  it('should render question', async () => {
+    const text = await screen.findByText(mockedItems[0].text)
 
     expect(text).toBeInTheDocument()
   })
 
-  it('should render question category', () => {
-    const name = screen.getByText(mockedItems[0].category.name)
+  it('should render question category', async () => {
+    const name = await screen.findByText(mockedItems[0].category.name)
 
     expect(name).toBeInTheDocument()
   })

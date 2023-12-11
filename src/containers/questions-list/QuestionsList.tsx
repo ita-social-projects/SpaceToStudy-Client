@@ -12,6 +12,7 @@ import Box from '@mui/material/Box'
 
 import Question from '~/components/question/Question'
 import CreateOrEditQuizQuestion from '~/containers/my-quizzes/create-or-edit-quiz-question/CreateOrEditQuizQuestion'
+import useDroppable from '~/hooks/use-droppable'
 
 import { styles } from '~/containers/questions-list/QuestionsList.styles'
 import { Question as QuestionInterface } from '~/types'
@@ -23,6 +24,7 @@ interface QuestionsListProps {
 
 const QuestionsList: FC<QuestionsListProps> = ({ items, setItems }) => {
   const [editableItemId, setEditableItemId] = useState<string>('')
+  const { enabled } = useDroppable()
 
   const reorder = (
     list: QuestionInterface[],
@@ -81,13 +83,16 @@ const QuestionsList: FC<QuestionsListProps> = ({ items, setItems }) => {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable droppableId='draggable'>
-        {(provided: DroppableProvided) => (
-          <Box {...provided.droppableProps} ref={provided.innerRef}>
-            {questionsList}
-          </Box>
-        )}
-      </Droppable>
+      {enabled && (
+        <Droppable droppableId='draggable'>
+          {(provided: DroppableProvided) => (
+            <Box {...provided.droppableProps} ref={provided.innerRef}>
+              {questionsList}
+              {provided.placeholder}
+            </Box>
+          )}
+        </Droppable>
+      )}
     </DragDropContext>
   )
 }

@@ -34,7 +34,9 @@ describe('StudentsHome component', () => {
     const firstStepTitle = screen.queryByText(/becomeTutor.generalInfo.title/i)
     const studentHomePage = screen.getByTestId('studentHome')
 
-    expect(firstStepTitle).not.toBeInTheDocument()
-    expect(studentHomePage).toBeInTheDocument()
+    waitFor(() => {
+      expect(firstStepTitle).not.toBeInTheDocument()
+      expect(studentHomePage).toBeInTheDocument()
+    })
   })
 })

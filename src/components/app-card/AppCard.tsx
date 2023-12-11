@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import Box, { BoxProps } from '@mui/material/Box'
 
@@ -6,6 +6,7 @@ import { spliceSx } from '~/utils/helper-functions'
 import { styles } from '~/components/app-card/AppCard.styles'
 
 interface AppCardProps extends BoxProps {
+  children: ReactNode
   link?: string
   onClick?: () => void
 }

@@ -14,8 +14,10 @@ describe('CategoryDropdown test', () => {
     .onGet(URLs.resources.resourcesCategories.getNames)
     .reply(200, categoriesNamesMock)
 
-  beforeEach(() => {
-    renderWithProviders(<CategoryDropdown />)
+  beforeEach(async () => {
+    await waitFor(() => {
+      renderWithProviders(<CategoryDropdown />)
+    })
   })
 
   it('should choose the category from options list', async () => {

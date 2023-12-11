@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react'
+import { screen, waitFor } from '@testing-library/react'
 
 import LessonsContainer from '~/containers/my-resources/lessons-container/LessonsContainer'
 
@@ -43,15 +43,18 @@ const lessonResponseMockCategory = {
 }
 
 describe('LessonContainer test', () => {
-  beforeEach(() => {
-    mockAxiosClient
-      .onGet(URLs.resources.lessons.get)
-      .reply(200, lessonResponseMock)
-    renderWithProviders(<LessonsContainer />)
+  beforeEach(async () => {
+    await waitFor(() => {
+      mockAxiosClient
+        .onGet(URLs.resources.lessons.get)
+        .reply(200, lessonResponseMock)
+      renderWithProviders(<LessonsContainer />)
+    })
   })
 
   afterEach(() => {
     vi.clearAllMocks()
+    mockAxiosClient.reset()
   })
 
   it('should render "New lesson" button', () => {
@@ -59,9 +62,9 @@ describe('LessonContainer test', () => {
 
     expect(addBtn).toBeInTheDocument()
   })
-  it('should render table with lessons', () => {
-    const columnLabel = screen.getByText('myResourcesPage.lessons.title')
-    const lessonTitle = screen.getByText(responseItemsMock[5].title)
+  it('should render table with lessons', async () => {
+    const columnLabel = await screen.findByText('myResourcesPage.lessons.title')
+    const lessonTitle = await screen.findByText(responseItemsMock[5].title)
 
     expect(columnLabel).toBeInTheDocument()
     expect(lessonTitle).toBeInTheDocument()
@@ -69,19 +72,24 @@ describe('LessonContainer test', () => {
 })
 
 describe('Lessons category test', () => {
-  beforeEach(() => {
-    mockAxiosClient
-      .onGet(URLs.resources.lessons.get)
-      .reply(200, lessonResponseMockCategory)
-    renderWithProviders(<LessonsContainer />)
+  beforeEach(async () => {
+    await waitFor(() => {
+      mockAxiosClient
+        .onGet(URLs.resources.lessons.get)
+        .reply(200, lessonResponseMockCategory)
+      renderWithProviders(<LessonsContainer />)
+    })
   })
 
   afterEach(() => {
     vi.clearAllMocks()
+    mockAxiosClient.reset()
   })
 
-  it('should render correct category', () => {
-    const category = screen.getByText('myResourcesPage.categories.category')
+  it('should render correct category', async () => {
+    const category = await screen.findByText(
+      'myResourcesPage.categories.category'
+    )
 
     expect(category).toBeInTheDocument()
   })

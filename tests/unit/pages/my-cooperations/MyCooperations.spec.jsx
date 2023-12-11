@@ -1,4 +1,4 @@
-import { fireEvent, screen } from '@testing-library/react'
+import { fireEvent, screen, waitFor } from '@testing-library/react'
 import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
 
@@ -28,8 +28,8 @@ mockAxiosClient.onGet(URLs.cooperations.get).reply(200, {
 })
 
 describe('MyCooperations', () => {
-  beforeEach(() => {
-    renderWithProviders(<MyCooperations />)
+  beforeEach(async () => {
+    await waitFor(() => renderWithProviders(<MyCooperations />))
   })
   it('should render title on page', async () => {
     const title = screen.getByText('cooperationsPage.title')
@@ -39,7 +39,7 @@ describe('MyCooperations', () => {
   it('should change tab', () => {
     const activeTab = screen.getByText('cooperationsPage.tabs.active')
 
-    fireEvent.click(activeTab)
+    waitFor(() => fireEvent.click(activeTab))
 
     const coopCard = screen.queryAllByText('Beginner')
 

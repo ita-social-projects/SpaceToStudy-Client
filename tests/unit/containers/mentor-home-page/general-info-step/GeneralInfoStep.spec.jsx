@@ -1,5 +1,5 @@
 import { vi } from 'vitest'
-import { screen, fireEvent } from '@testing-library/react'
+import { screen, fireEvent, waitFor, act } from '@testing-library/react'
 
 import GeneralInfoStep from '~/containers/tutor-home-page/general-info-step/GeneralInfoStep'
 import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
@@ -31,33 +31,41 @@ const btnsBox = (
   </div>
 )
 
-mockAxiosClient
-  .onGet(`${URLs.users.get}/${userId}?role=${userRole}`)
-  .reply(200, userDataMock)
-mockAxiosClient.onGet(URLs.location.getCountries).reply(200, countriesDataMock)
-mockAxiosClient
-  .onGet(`${URLs.location.getCities}/${country}`)
-  .reply(200, citiesDataMock)
-
 describe('GeneralInfoStep test', () => {
-  beforeEach(() => {
-    renderWithProviders(
-      <StepProvider initialValues={initialValues} stepLabels={tutorStepLabels}>
-        <GeneralInfoStep
-          btnsBox={btnsBox}
-          isUserFetched={false}
-          setIsUserFetched={setIsUserFetched}
-          stepLabel={'generalInfo'}
-        />
-      </StepProvider>,
-      { preloadedState: mockState }
-    )
+  beforeEach(async () => {
+    await waitFor(() => {
+      mockAxiosClient
+        .onGet(`${URLs.users.get}/${userId}?role=${userRole}`)
+        .reply(200, userDataMock)
+      mockAxiosClient
+        .onGet(URLs.location.getCountries)
+        .reply(200, countriesDataMock)
+      mockAxiosClient
+        .onGet(`${URLs.location.getCities}/${country}`)
+        .reply(200, citiesDataMock)
+      renderWithProviders(
+        <StepProvider
+          initialValues={initialValues}
+          stepLabels={tutorStepLabels}
+        >
+          <GeneralInfoStep
+            btnsBox={btnsBox}
+            isUserFetched={false}
+            setIsUserFetched={setIsUserFetched}
+            stepLabel={'generalInfo'}
+          />
+        </StepProvider>,
+        { preloadedState: mockState }
+      )
+    })
   })
 
   it('should change firstName input', () => {
     const firstNameInput = screen.getByLabelText(/common.labels.firstName/i)
 
-    fireEvent.change(firstNameInput, { target: { value: 'testName' } })
+    act(() => {
+      fireEvent.change(firstNameInput, { target: { value: 'testName' } })
+    })
 
     expect(firstNameInput.value).toBe('testName')
   })
@@ -67,13 +75,17 @@ describe('GeneralInfoStep test', () => {
       /common.labels.country/i
     )
 
-    fireEvent.click(countriesAutoComplete)
-    fireEvent.change(countriesAutoComplete, {
-      target: { value: 'Belgium' }
+    act(() => {
+      fireEvent.click(countriesAutoComplete)
+      fireEvent.change(countriesAutoComplete, {
+        target: { value: 'Belgium' }
+      })
+      fireEvent.keyDown(countriesAutoComplete, { key: 'ArrowDown' })
+      fireEvent.keyDown(countriesAutoComplete, { key: 'Enter' })
     })
-    fireEvent.keyDown(countriesAutoComplete, { key: 'ArrowDown' })
-    fireEvent.keyDown(countriesAutoComplete, { key: 'Enter' })
 
-    expect(countriesAutoComplete.value).toBe('Belgium')
+    waitFor(() => {
+      expect(countriesAutoComplete.value).toBe('Belgium')
+    })
   })
 })

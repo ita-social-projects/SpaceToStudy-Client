@@ -137,8 +137,7 @@ const OfferDetails = () => {
     status: offerData?.status,
     handleEnrollOfferClick,
     handleToggleOfferStatus,
-    handleCloseOffer,
-    t
+    handleCloseOffer
   })
 
   useLayoutEffect(() => {

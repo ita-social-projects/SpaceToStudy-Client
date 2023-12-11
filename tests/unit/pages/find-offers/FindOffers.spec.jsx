@@ -1,13 +1,15 @@
-import { fireEvent, screen } from '@testing-library/react'
+import { fireEvent, screen, waitFor, act } from '@testing-library/react'
+
 import FindOffers from '~/pages/find-offers/FindOffers'
-import { mockAxiosClient } from '~tests/test-utils'
-import { URLs } from '~/constants/request'
-import { renderWithProviders } from '~tests/test-utils'
+
+import { mockAxiosClient, renderWithProviders } from '~tests/test-utils'
 import { createUrlPath } from '~/utils/helper-functions'
 import { OfferService } from '~/services/offer-service'
-import { offersMock } from '~tests/unit/pages/find-offers/FindOffers.constants'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { useFilterQuery } from '~/hooks/use-filter-query'
+
+import { offersMock } from '~tests/unit/pages/find-offers/FindOffers.constants'
+import { URLs } from '~/constants/request'
 
 vi.mock('~/hooks/use-breakpoints')
 vi.mock('~/hooks/use-filter-query')
@@ -46,11 +48,13 @@ describe('FindOffers component', () => {
     isMobile: false,
     isTablet: false
   }
-  beforeEach(() => {
-    useFilterQuery.mockReturnValue(filterQueryMock)
-    useBreakpoints.mockImplementation(() => desktopData)
-    renderWithProviders(<FindOffers />, {
-      preloadedState
+  beforeEach(async () => {
+    await waitFor(() => {
+      useFilterQuery.mockReturnValue(filterQueryMock)
+      useBreakpoints.mockImplementation(() => desktopData)
+      renderWithProviders(<FindOffers />, {
+        preloadedState
+      })
     })
   })
 
@@ -104,8 +108,10 @@ describe('FindOffers component', () => {
 
     expect(result.status).toEqual(200)
 
-    const filter = screen.getByText('filters.filtersListTitle')
-    fireEvent.click(filter)
+    await act(() => {
+      const filter = screen.getByText('filters.filtersListTitle')
+      fireEvent.click(filter)
+    })
 
     const price = screen.getByText('findOffers.filterTitles.price')
     const applyButton = screen.getByText('button.applyFilters')
@@ -139,11 +145,13 @@ describe('FindOffers component', () => {
     isMobile: true,
     isTablet: false
   }
-  beforeEach(() => {
-    useFilterQuery.mockReturnValue(filterQueryMock)
-    useBreakpoints.mockImplementation(() => mobileData)
-    renderWithProviders(<FindOffers />, {
-      preloadedState
+  beforeEach(async () => {
+    await waitFor(() => {
+      useFilterQuery.mockReturnValue(filterQueryMock)
+      useBreakpoints.mockImplementation(() => mobileData)
+      renderWithProviders(<FindOffers />, {
+        preloadedState
+      })
     })
   })
 
