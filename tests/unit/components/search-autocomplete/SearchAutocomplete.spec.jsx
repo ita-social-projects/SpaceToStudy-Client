@@ -1,18 +1,8 @@
 import { describe, vi } from 'vitest'
-import {
-  render,
-  fireEvent,
-  screen,
-  waitFor as _waitFor
-} from '@testing-library/react'
+import { render, fireEvent, screen } from '@testing-library/react'
 import SearchAutocomplete from '~/components/search-autocomplete/SearchAutocomplete'
 import userEvent from '@testing-library/user-event'
-import merge from 'lodash/merge'
-
-const waitForTimeout = (callback, options) => {
-  const mergedOptions = merge({ timeout: 5000 }, options)
-  return _waitFor(callback, mergedOptions)
-}
+import { waitForTimeout } from '~tests/test-utils'
 
 const options = ['Finland', 'France', 'Italy', 'Germany']
 const setSearch = vi.fn()

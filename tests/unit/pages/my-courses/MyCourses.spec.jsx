@@ -31,9 +31,29 @@ describe('tests for MyCourses page', () => {
     expect(myCoursesTitle).toBeInTheDocument()
   })
 
-  it('should click duplicate button', async () => {
+  it('should click delete button', async () => {
     waitFor(() => {
       const menu = screen.getAllByTestId('MoreVertIcon')[0].parentElement
+
+      fireEvent.click(menu)
+    })
+
+    const deleteBtn = await screen.findByText('common.delete')
+
+    waitFor(() => {
+      fireEvent.click(deleteBtn)
+    })
+
+    const title = screen.getByText(
+      'myCoursesPage.modalMessages.confirmDeletionMessage'
+    )
+
+    expect(title).toBeInTheDocument()
+  })
+
+  it('should click duplicate button', async () => {
+    waitFor(() => {
+      const menu = screen.getAllByTestId('MoreVertIcon')[1].parentElement
 
       fireEvent.click(menu)
     })
@@ -45,9 +65,9 @@ describe('tests for MyCourses page', () => {
     })
 
     const title = screen.getByText(
-      '0Advanced Lineal Math: Theoretical Concepts'
+      '1Advanced Lineal Math: Theoretical Concepts'
     )
 
-    waitFor(() => expect(title).toBeInTheDocument())
+    expect(title).toBeInTheDocument()
   })
 })
