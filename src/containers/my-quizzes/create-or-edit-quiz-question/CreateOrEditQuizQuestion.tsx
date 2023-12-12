@@ -8,6 +8,7 @@ import {
 } from 'react'
 import Box from '@mui/material/Box'
 
+import { useModalContext } from '~/context/modal-context'
 import { useSnackBarContext } from '~/context/snackbar-context'
 import { ResourceService } from '~/services/resource-service'
 import useForm from '~/hooks/use-form'
@@ -25,27 +26,21 @@ import {
   UpdateQuestionParams
 } from '~/types'
 import { initialValues } from '~/containers/my-quizzes/create-or-edit-quiz-question/CreateOrEditQuizQuestion.constants'
-interface openModalProps {
-  component: JSX.Element
-}
 
 interface CreateOrEditQuizQuestionProps {
   question?: Question
   setQuestions: Dispatch<SetStateAction<Question[]>>
   onCancel: () => void
-  openModal: (component: openModalProps) => void
-  closeModal: () => void
 }
 
 const CreateOrEditQuizQuestion: FC<CreateOrEditQuizQuestionProps> = ({
   question,
   setQuestions,
-  onCancel,
-  openModal,
-  closeModal
+  onCancel
 }) => {
   const { setAlert } = useSnackBarContext()
   const [isNewQuestion, setIsNewQuestion] = useState<boolean>(!!question)
+  const { openModal, closeModal } = useModalContext()
 
   const createQuestionService = useCallback(
     (data?: QuestionForm) => ResourceService.createQuestion(data),
@@ -106,6 +101,7 @@ const CreateOrEditQuizQuestion: FC<CreateOrEditQuizQuestionProps> = ({
 
   const onCloseCreation = () => {
     closeModal()
+    onCancel()
   }
 
   const onOpenCreation = ({ title, category }: QuestionModalForm) => {
@@ -113,6 +109,7 @@ const CreateOrEditQuizQuestion: FC<CreateOrEditQuizQuestionProps> = ({
     handleNonInputValueChange('category', category)
     setIsNewQuestion(true)
     closeModal()
+    onCancel()
   }
 
   const onCreateQuestion = async () => {

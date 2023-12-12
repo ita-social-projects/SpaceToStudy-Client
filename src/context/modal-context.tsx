@@ -32,13 +32,13 @@ const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
   const [modal, setModal] = useState<React.ReactElement | null>(null)
   const [paperProps, setPaperProps] = useState<PaperProps>({})
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null)
-  const [isOpen, setIsOpen] = useState<boolean>(true)
+  // const [isOpen, setIsOpen] = useState<boolean>(true)
 
   const closeModal = useCallback(() => {
     setModal(null)
     setPaperProps({})
     setTimer(null)
-    setIsOpen(true)
+    // setIsOpen(true)
   }, [setModal, setPaperProps, setTimer])
 
   const closeModalAfterDelay = useCallback(
@@ -51,7 +51,7 @@ const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
 
   const openModal = useCallback(
     ({ component, paperProps }: Component, delayToClose?: number) => {
-      setIsOpen(false)
+      // setIsOpen(false)
       setModal(component)
 
       paperProps && setPaperProps(paperProps)
@@ -61,8 +61,8 @@ const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
   )
 
   const contextValue = useMemo(
-    () => ({ openModal, closeModal, isOpen }),
-    [closeModal, openModal, isOpen]
+    () => ({ openModal, closeModal }),
+    [closeModal, openModal]
   )
 
   return (
