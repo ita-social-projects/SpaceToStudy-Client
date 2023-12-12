@@ -17,5 +17,8 @@ export const styles = {
       left: '0',
       borderLeft: `1px solid ${palette.primary[100]}`
     }
+  },
+  tab: {
+    minWidth: '150px'
   }
 }
