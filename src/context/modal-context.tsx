@@ -17,7 +17,6 @@ interface Component {
 interface ModalProvideContext {
   openModal: (component: Component, delayToClose?: number) => void
   closeModal: () => void
-  isOpen?: boolean
 }
 
 interface ModalProviderProps {
@@ -32,13 +31,11 @@ const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
   const [modal, setModal] = useState<React.ReactElement | null>(null)
   const [paperProps, setPaperProps] = useState<PaperProps>({})
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null)
-  // const [isOpen, setIsOpen] = useState<boolean>(true)
 
   const closeModal = useCallback(() => {
     setModal(null)
     setPaperProps({})
     setTimer(null)
-    // setIsOpen(true)
   }, [setModal, setPaperProps, setTimer])
 
   const closeModalAfterDelay = useCallback(
@@ -51,7 +48,6 @@ const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
 
   const openModal = useCallback(
     ({ component, paperProps }: Component, delayToClose?: number) => {
-      // setIsOpen(false)
       setModal(component)
 
       paperProps && setPaperProps(paperProps)
