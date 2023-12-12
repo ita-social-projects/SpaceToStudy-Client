@@ -49,6 +49,7 @@ const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
   const openModal = useCallback(
     ({ component, paperProps }: Component, delayToClose?: number) => {
       setModal(component)
+
       paperProps && setPaperProps(paperProps)
       delayToClose && closeModalAfterDelay(delayToClose)
     },

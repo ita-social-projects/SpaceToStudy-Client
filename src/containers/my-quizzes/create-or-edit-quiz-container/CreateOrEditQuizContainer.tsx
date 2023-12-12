@@ -140,6 +140,10 @@ const CreateOrEditQuizContainer = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id])
 
+  useEffect(() => {
+    isCreationOpen && setIsCreationOpen(false)
+  }, [isCreationOpen])
+
   if (getQuizLoading) {
     return <Loader pageLoad />
   }
@@ -222,7 +226,6 @@ const CreateOrEditQuizContainer = ({
             setQuestions={setQuestions}
           />
         )}
-
         <Box sx={styles.functionalButtons}>
           <AppButton
             onClick={onOpenCreateQuestion}

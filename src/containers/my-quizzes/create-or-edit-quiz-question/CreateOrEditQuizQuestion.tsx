@@ -8,8 +8,8 @@ import {
 } from 'react'
 import Box from '@mui/material/Box'
 
-import { useSnackBarContext } from '~/context/snackbar-context'
 import { useModalContext } from '~/context/modal-context'
+import { useSnackBarContext } from '~/context/snackbar-context'
 import { ResourceService } from '~/services/resource-service'
 import useForm from '~/hooks/use-form'
 import useAxios from '~/hooks/use-axios'
@@ -39,8 +39,8 @@ const CreateOrEditQuizQuestion: FC<CreateOrEditQuizQuestionProps> = ({
   onCancel
 }) => {
   const { setAlert } = useSnackBarContext()
-  const { openModal, closeModal } = useModalContext()
   const [isNewQuestion, setIsNewQuestion] = useState<boolean>(!!question)
+  const { openModal, closeModal } = useModalContext()
 
   const createQuestionService = useCallback(
     (data?: QuestionForm) => ResourceService.createQuestion(data),
@@ -109,6 +109,7 @@ const CreateOrEditQuizQuestion: FC<CreateOrEditQuizQuestionProps> = ({
     handleNonInputValueChange('category', category)
     setIsNewQuestion(true)
     closeModal()
+    onCancel()
   }
 
   const onCreateQuestion = async () => {
