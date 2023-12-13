@@ -10,16 +10,24 @@ import {
   TableColumn
 } from '~/types'
 import AppChip from '~/components/app-chip/AppChip'
-import { getFormattedDate } from '~/utils/helper-functions'
+import { createUrlPath, getFormattedDate } from '~/utils/helper-functions'
 import { styles } from '~/containers/my-quizzes/QuizzesContainer.styles'
+import { authRoutes } from '~/router/constants/authRoutes'
 
 export const columns: TableColumn<Quiz>[] = [
   {
     label: 'myResourcesPage.quizzes.title',
     field: 'title',
-    calculatedCellValue: (item: Quiz) => {
+    calculatedCellValue: (
+      item: Quiz,
+      { navigate }: AdditionalPropsInterface
+    ) => {
+      const handleClick = () => {
+        navigate(createUrlPath(authRoutes.myResources.editQuiz.path, item._id))
+      }
+
       return (
-        <Box sx={styles.quizTitleContainer}>
+        <Box onClick={handleClick} sx={styles.quizTitleContainer}>
           <NoteAltOutlinedIcon sx={styles.quizIcon} />
           <Typography sx={styles.quizTitle}>{item.title}</Typography>
         </Box>
