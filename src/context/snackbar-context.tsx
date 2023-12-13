@@ -63,7 +63,7 @@ export const SnackBarProvider = ({ children }: SnackBarProviderProps) => {
           variant='filled'
         >
           {t(message)
-            .split('\n')
+            .split(', ')
             .map((line) => (
               <div key={line}>{line}</div>
             ))}
