@@ -4,6 +4,7 @@ import { SxProps } from '@mui/material'
 import AppButton from '~/components/app-button/AppButton'
 
 import { ButtonVariantEnum, SizeEnum } from '~/types'
+import { spliceSx } from '~/utils/helper-functions'
 import { styles } from '~/components/dropdown-add-btn/DropdownButton.styles'
 
 interface DropdownButtonProps {
@@ -25,7 +26,7 @@ const DropdownButton: FC<DropdownButtonProps> = ({
       fullWidth
       onClick={handleOnClick}
       size={SizeEnum.Medium}
-      sx={{ ...styles.optionsButton, ...sx }}
+      sx={spliceSx(styles.optionsButton, sx)}
       variant={ButtonVariantEnum.Text}
     >
       {icon}
