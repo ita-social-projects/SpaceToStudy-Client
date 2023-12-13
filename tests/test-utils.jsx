@@ -3,7 +3,7 @@ import { Provider } from 'react-redux'
 import { configureStore } from '@reduxjs/toolkit'
 import reducer from '~/redux/reducer'
 import { ThemeProvider } from '@mui/material/styles'
-import { render } from '@testing-library/react'
+import { render, waitFor } from '@testing-library/react'
 import { theme } from '~/styles/app-theme/custom-mui.styles'
 import { ModalProvider } from '~/context/modal-context'
 import { ConfirmationDialogProvider } from '~/context/confirm-context'
@@ -44,3 +44,8 @@ export const getFakeTestEvent = (key, value) => ({
 })
 
 export const mockAxiosClient = new MockAdapter(axiosClient)
+
+export const waitForTimeout = (callback, options) => {
+  const mergedOptions = { timeout: 5000, ...options }
+  return waitFor(callback, mergedOptions)
+}
