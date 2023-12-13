@@ -62,7 +62,11 @@ export const SnackBarProvider = ({ children }: SnackBarProviderProps) => {
           sx={{ color: 'basic.white' }}
           variant='filled'
         >
-          {t(message)}
+          {t(message)
+            .split('\n')
+            .map((line) => (
+              <div key={line}>{line}</div>
+            ))}
         </Alert>
       </Snackbar>
     </SnackBarContext.Provider>

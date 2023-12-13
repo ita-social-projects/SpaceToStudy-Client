@@ -60,7 +60,7 @@ const CreateOrEditLesson = () => {
   const handleResponseError = (error: ErrorResponse) => {
     setAlert({
       severity: snackbarVariants.error,
-      message: error ? `errors.${error.code}` : ''
+      message: error ? `errors.${error.message}` : ''
     })
   }
 
