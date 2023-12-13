@@ -1,4 +1,5 @@
 import {
+  RequestParams,
   CommonEntityFields,
   CategoryInterface,
   SubjectNameInterface,
@@ -42,4 +43,8 @@ export interface CourseSection {
 export interface CourseFilters extends Pick<Course, 'proficiencyLevel'> {
   category: string
   subject: string
+}
+
+export interface GetCoursesParams extends Partial<RequestParams> {
+  title?: string
 }
