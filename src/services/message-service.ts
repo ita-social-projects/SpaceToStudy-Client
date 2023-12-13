@@ -2,8 +2,9 @@ import { AxiosResponse } from 'axios'
 import { axiosClient } from '~/plugins/axiosClient'
 
 import { URLs } from '~/constants/request'
-import { MessageInterface, GetMessagesParams, SendMessageParams } from '~/types'
 import { createUrlPath } from '~/utils/helper-functions'
+
+import { MessageInterface, GetMessagesParams, SendMessageParams } from '~/types'
 
 export const messageService = {
   getMessages: (
