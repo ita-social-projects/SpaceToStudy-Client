@@ -1,5 +1,5 @@
 export const sectionInitialData = {
-  id: 0,
+  id: '',
   title: '',
   description: '',
   lessons: [],

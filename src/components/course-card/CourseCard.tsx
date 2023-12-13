@@ -1,4 +1,6 @@
 import { FC } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import MenuItem from '@mui/material/MenuItem'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
@@ -13,9 +15,9 @@ import SubjectLevelChips from '~/components/subject-level-chips/SubjectLevelChip
 
 import { styles } from '~/components/course-card/CourseCard.styles'
 import useMenu from '~/hooks/use-menu'
-import { getFormattedDate } from '~/utils/helper-functions'
+import { createUrlPath, getFormattedDate } from '~/utils/helper-functions'
 import { Course, TableActionFunc } from '~/types'
-import { useTranslation } from 'react-i18next'
+import { authRoutes } from '~/router/constants/authRoutes'
 
 interface CourseCardProps {
   course: Course
@@ -29,6 +31,7 @@ const CourseCard: FC<CourseCardProps> = ({
   duplicateCourse
 }) => {
   const { t } = useTranslation()
+  const navigate = useNavigate()
   const { openMenu, renderMenu, closeMenu } = useMenu()
 
   const {
@@ -57,7 +60,10 @@ const CourseCard: FC<CourseCardProps> = ({
           {` ${t('common.edit')}`}
         </Box>
       ),
-      func: () => closeMenu()
+      func: () =>
+        navigate(
+          createUrlPath(authRoutes.myCourses.editCourse.path, course._id)
+        )
     },
     {
       id: 2,

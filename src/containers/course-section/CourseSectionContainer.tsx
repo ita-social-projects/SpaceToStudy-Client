@@ -16,8 +16,6 @@ import AddResources from '~/containers/add-resources/AddResources'
 import { ResourceService } from '~/services/resource-service'
 import useMenu from '~/hooks/use-menu'
 import { useModalContext } from '~/context/modal-context'
-
-import { styles } from '~/containers/course-section/CourseSectionContainer.styles'
 import {
   menuTypes,
   resourcesData
@@ -46,18 +44,19 @@ import {
   ResourcesTabsEnum as ResourcesTypes,
   CourseResources
 } from '~/types'
+import { styles } from '~/containers/course-section/CourseSectionContainer.styles'
 
 interface SectionProps {
   sectionData: CourseSection
   sections: CourseSection[]
   setSectionsItems: (value: CourseSection[]) => void
   handleSectionInputChange: (
-    id: number,
+    id: string,
     field: keyof CourseSection,
     value: string
   ) => void
   handleSectionNonInputChange: (
-    id: number,
+    id: string,
     field: keyof CourseSection,
     value: CourseResources[]
   ) => void
@@ -160,10 +159,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
     handleSectionNonInputChange(
       sectionData.id,
       type as keyof CourseSection,
-      resources.map((resource) => ({
-        ...resource,
-        resourceType: type
-      }))
+      resources
     )
   }
 

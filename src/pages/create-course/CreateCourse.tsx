@@ -1,6 +1,7 @@
-import { useCallback } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useCallback, useEffect } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { AxiosResponse } from 'axios'
 import Box from '@mui/material/Box'
 import AddIcon from '@mui/icons-material/Add'
 
@@ -12,6 +13,7 @@ import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import CourseSectionsList from '~/containers/course-sections-list/CourseSectionsList'
 import CourseToolbar from '~/containers/my-courses/course-toolbar/CourseToolbar'
 import AppButton from '~/components/app-button/AppButton'
+import Loader from '~/components/loader/Loader'
 
 import {
   ButtonTypeEnum,
@@ -35,6 +37,7 @@ import { styles } from '~/pages/create-course/CreateCourse.styles'
 
 const CreateCourse = () => {
   const { t } = useTranslation()
+  const { id } = useParams()
   const { setAlert } = useSnackBarContext()
   const navigate = useNavigate()
 
@@ -48,7 +51,9 @@ const CreateCourse = () => {
   const onResponse = () => {
     setAlert({
       severity: snackbarVariants.success,
-      message: t('myCoursesPage.newCourse.successAddedCourse')
+      message: id
+        ? t('myCoursesPage.newCourse.successEditedCourse')
+        : t('myCoursesPage.newCourse.successAddedCourse')
     })
     navigate(authRoutes.myCourses.root.path)
   }
@@ -66,10 +71,22 @@ const CreateCourse = () => {
     onResponseError
   })
 
+  const editCourse = (): Promise<AxiosResponse> => {
+    return CourseService.editCourse(data, id)
+  }
+
+  const { fetchData: fetchEditCourse } = useAxios<null, CourseForm>({
+    service: editCourse,
+    fetchOnMount: false,
+    defaultResponse: null,
+    onResponse,
+    onResponseError
+  })
+
   const { data, handleInputChange, handleNonInputValueChange, handleSubmit } =
     useForm<CourseForm>({
       initialValues,
-      onSubmit: fetchAddCourse,
+      onSubmit: id ? fetchEditCourse : fetchAddCourse,
       submitWithData: true
     })
 
@@ -78,7 +95,7 @@ const CreateCourse = () => {
   }
 
   const handleSectionInputChange = (
-    id: number,
+    id: string,
     field: keyof CourseSection,
     value: string
   ) => {
@@ -87,7 +104,7 @@ const CreateCourse = () => {
   }
 
   const handleSectionNonInputChange = (
-    id: number,
+    id: string,
     field: keyof CourseSection,
     value: CourseResources[]
   ) => {
@@ -98,12 +115,50 @@ const CreateCourse = () => {
 
   const createNewSection = () => {
     const newSectionData = { ...sectionInitialData }
-    newSectionData.id = Date.now()
+    newSectionData.id = Date.now().toString()
     setSectionsItems([...data.sections, newSectionData])
   }
 
   if (data.sections.length === 0) {
     createNewSection()
+  }
+
+  const getCourse = (id?: string): Promise<AxiosResponse> => {
+    return CourseService.getCourse(id)
+  }
+
+  const handleCourseResponse = (course: CourseForm) => {
+    course.sections.forEach((item) => {
+      if (item._id) {
+        item.id = item._id
+      }
+    })
+    for (const key in data) {
+      const validKey = key as keyof CourseForm
+      handleNonInputValueChange(validKey, course[validKey])
+    }
+  }
+
+  const { loading: getCourseLoading, fetchData: fetchCourseData } = useAxios<
+    CourseForm,
+    string
+  >({
+    service: getCourse,
+    fetchOnMount: false,
+    defaultResponse,
+    onResponse: handleCourseResponse,
+    onResponseError
+  })
+
+  useEffect(() => {
+    if (id) {
+      void fetchCourseData(id)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id])
+
+  if (getCourseLoading) {
+    return <Loader pageLoad />
   }
 
   return (

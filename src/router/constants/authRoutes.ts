@@ -57,6 +57,10 @@ export const authRoutes = {
     newCourse: {
       route: 'my-courses/new-course',
       path: '/my-courses/new-course'
+    },
+    editCourse: {
+      route: 'my-courses/new-course/:id',
+      path: '/my-courses/new-course'
     }
   }
 }
