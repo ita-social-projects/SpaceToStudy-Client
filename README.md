@@ -30,7 +30,9 @@ SpaceToStudy project is a platform where experts in various fields share their k
 - [Teams](#teams) 
   - [Development team](#development-team) 
   - [DevOps team](#devops-team) 
-  - [Designer team](#designer-team) 
+  - [Designer team](#designer-team)
+  - [QC team](#qc-team)
+  - [BA team](#ba-team)
 - [FAQ](#faq)
 - [Support](#support)
 - [License](#license)
@@ -292,13 +294,14 @@ Only the release should merge into the main branch!!!
 [![@abalanovsky](https://avatars.githubusercontent.com/u/108689551?v=4)](https://github.com/abalanovsky)
 [![@OlyaKorchan](https://avatars.githubusercontent.com/u/17857767?v=4)](https://github.com/OlyaKorchan)
 [![@MariaAfonina](https://avatars.githubusercontent.com/u/104988390?v=4)](https://github.com/MariaAfonina)
-[![@]()]()
+[![@Marichka0406](https://avatars.githubusercontent.com/u/121502737?v=4)](https://github.com/Marichka0406) 
 
 ### DevOps team
 
 [![@redbearddog](https://avatars.githubusercontent.com/u/54843443?v=4)](https://github.com/redbearddog)
 [![@abohatyrov](https://avatars.githubusercontent.com/u/52012169?v=4)](https://github.com/abohatyrov)
 [![@panasyg](https://avatars.githubusercontent.com/u/91308486?v=4)](https://github.com/panasyg)
+[![@bdeputat](https://avatars.githubusercontent.com/u/36072762?v=4)](https://github.com/bdeputat)
 
 ### Designer team
 
@@ -306,6 +309,22 @@ Only the release should merge into the main branch!!!
 [![@KhrystynaPavlikovska](https://avatars.githubusercontent.com/u/34419998?s=400&u=15346304d164fb346cc2671a7d33052d2a6324e2&v=4)](https://github.com/KhrystynaPavlikovska)
 [![@LazyMarichka](https://avatars.githubusercontent.com/u/135900325?v=4)](https://github.com/LazyMarichka)
 [![@Nastia197](https://avatars.githubusercontent.com/u/76164279?v=4)](https://github.com/Nastia197)
+
+### BA team
+[![@OksanaLS](https://avatars.githubusercontent.com/u/86111111?v=4)](https://github.com/OksanaLS)
+[![@dekorol](https://avatars.githubusercontent.com/u/32768738?v=4)](https://github.com/dekorol)
+[![@IvannaSW](https://avatars.githubusercontent.com/u/24367409?v=4)](https://github.com/IvannaSW)
+
+### QC team
+[![@AntonOkun](https://avatars.githubusercontent.com/u/129941062?v=4)](https://github.com/AntonOkun)
+[![@liakhovych1](https://avatars.githubusercontent.com/u/129896611?v=4)](https://github.com/liakhovych1)
+[![@qavs](https://avatars.githubusercontent.com/u/153033071?v=4)](https://github.com/qavs)
+[![@yevheniyapanchuk](https://avatars.githubusercontent.com/u/130080280?v=4)](https://github.com/yevheniyapanchuk)
+[![@Valent1n0o](https://avatars.githubusercontent.com/u/118978192?v=4)](https://github.com/Valent1n0o)
+[![@karina-kuu20](https://avatars.githubusercontent.com/u/130448671?v=4)](https://github.com/karina-kuu20)
+[![@IrynaCHR](https://avatars.githubusercontent.com/u/130362288?v=4)](https://github.com/IrynaCHR)
+[![@MartaMakar](https://avatars.githubusercontent.com/u/130384976?v=4)](https://github.com/MartaMakar)
+
 ---
 
 ## FAQ
