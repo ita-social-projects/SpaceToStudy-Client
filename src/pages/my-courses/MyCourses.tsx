@@ -130,6 +130,24 @@ const MyCourses = () => {
 
   const { items: coursesItems, count: coursesCount } = coursesResponse
 
+  const content = coursesLoading ? (
+    <Loader pageLoad />
+  ) : (
+    <>
+      <MyCorsesCardsList
+        deleteItem={onDelete}
+        duplicateItem={(itemId: string) => void handleDuplicate(itemId)}
+        items={coursesItems}
+      />
+      <AppPagination
+        onChange={handleChangePage}
+        page={page}
+        pageCount={Math.ceil(coursesCount / itemsPerPage)}
+        sx={styles.pagination}
+      />
+    </>
+  )
+
   return (
     <PageWrapper>
       <Typography sx={styles.title}>{t('myCoursesPage.title')}</Typography>
@@ -139,22 +157,8 @@ const MyCourses = () => {
         <NotFoundResults
           description={t('myCoursesPage.notFound.description')}
         />
-      ) : coursesLoading ? (
-        <Loader pageLoad />
       ) : (
-        <>
-          <MyCorsesCardsList
-            deleteItem={onDelete}
-            duplicateItem={(itemId: string) => void handleDuplicate(itemId)}
-            items={coursesItems}
-          />
-          <AppPagination
-            onChange={handleChangePage}
-            page={page}
-            pageCount={Math.ceil(coursesCount / itemsPerPage)}
-            sx={styles.pagination}
-          />
-        </>
+        content
       )}
     </PageWrapper>
   )

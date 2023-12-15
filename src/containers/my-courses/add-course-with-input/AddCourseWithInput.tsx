@@ -10,7 +10,6 @@ import FiltersToggle from '~/components/filters-toggle/FiltersToggle'
 import AppButton from '~/components/app-button/AppButton'
 import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
 import CoursesFilterBar from '~/containers/find-course/courses-filter-bar/CoursesFilterBar'
-import { styles } from '~/containers/my-courses/add-course-with-input/AddCourseWithInput.styles'
 import CoursesFiltersDrawer from '~/containers/my-courses/courses-filters-drawer/CoursesFiltersDrawer'
 
 import useForm from '~/hooks/use-form'
@@ -18,6 +17,8 @@ import { useDrawer } from '~/hooks/use-drawer'
 import { useDebounce } from '~/hooks/use-debounce'
 
 import { CourseFilters } from '~/types'
+
+import { styles } from '~/containers/my-courses/add-course-with-input/AddCourseWithInput.styles'
 
 interface AddCoursesWithInputProps {
   fetchData: () => Promise<void>
@@ -50,9 +51,8 @@ const AddCourseWithInput: FC<AddCoursesWithInputProps> = ({
   })
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value
-    setInputValue(value)
-    debounceOnChange(value)
+    setInputValue(e.target.value)
+    debounceOnChange(e.target.value)
   }
 
   const onClear = () => {

@@ -17,7 +17,6 @@ export const styles = {
     maxWidth: '285px',
     border: '1px solid',
     borderColor: 'primary.200',
-    borderRadius: '6px',
-    py: { xs: '4px', sm: '4px' }
+    borderRadius: '6px'
   }
 }
