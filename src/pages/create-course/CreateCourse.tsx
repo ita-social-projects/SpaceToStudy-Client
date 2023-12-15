@@ -43,7 +43,6 @@ const CreateCourse = () => {
   const navigate = useNavigate()
 
   const onResponseError = (error: ErrorResponse) => {
-    console.log(error)
     setAlert({
       severity: snackbarVariants.error,
       message: error
