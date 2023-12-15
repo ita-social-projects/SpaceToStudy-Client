@@ -6,6 +6,7 @@ import {
   Dispatch,
   SetStateAction
 } from 'react'
+import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 
 import { useModalContext } from '~/context/modal-context'
@@ -16,6 +17,7 @@ import useAxios from '~/hooks/use-axios'
 import QuestionEditor from '~/components/question-editor/QuestionEditor'
 import CreateOrEditQuestionModal from '~/containers/my-resources/create-or-edit-question-modal/CreateOrEditQuestionModal'
 
+import { getErrorMessage } from '~/utils/error-with-message'
 import { snackbarVariants } from '~/constants'
 import {
   ComponentEnum,
@@ -38,6 +40,7 @@ const CreateOrEditQuizQuestion: FC<CreateOrEditQuizQuestionProps> = ({
   setQuestions,
   onCancel
 }) => {
+  const { t } = useTranslation()
   const { setAlert } = useSnackBarContext()
   const [isNewQuestion, setIsNewQuestion] = useState<boolean>(!!question)
   const { openModal, closeModal } = useModalContext()
@@ -76,7 +79,11 @@ const CreateOrEditQuizQuestion: FC<CreateOrEditQuizQuestionProps> = ({
   const onResponseError = (error: ErrorResponse) => {
     setAlert({
       severity: snackbarVariants.error,
-      message: error ? `errors.${error.message}` : ''
+      message: error
+        ? t(`errors.${error.code}`, {
+            message: getErrorMessage(error.message)
+          })
+        : ''
     })
   }
 

@@ -15,6 +15,7 @@ import CourseToolbar from '~/containers/my-courses/course-toolbar/CourseToolbar'
 import AppButton from '~/components/app-button/AppButton'
 import Loader from '~/components/loader/Loader'
 
+import { getErrorMessage } from '~/utils/error-with-message'
 import {
   ButtonTypeEnum,
   ButtonVariantEnum,
@@ -44,7 +45,11 @@ const CreateCourse = () => {
   const onResponseError = (error: ErrorResponse) => {
     setAlert({
       severity: snackbarVariants.error,
-      message: error ? `errors.${error.message}` : ''
+      message: error
+        ? t(`errors.${error.code}`, {
+            message: getErrorMessage(error.message)
+          })
+        : ''
     })
   }
 

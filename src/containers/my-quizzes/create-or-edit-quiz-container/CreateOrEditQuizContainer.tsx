@@ -42,6 +42,7 @@ import {
   UpdateQuizParams,
   CategoryNameInterface
 } from '~/types'
+import { getErrorMessage } from '~/utils/error-with-message'
 import { styles } from '~/containers/my-quizzes/create-or-edit-quiz-container/CreateOrEditQuizContainer.styles'
 
 const CreateOrEditQuizContainer = ({
@@ -81,7 +82,11 @@ const CreateOrEditQuizContainer = ({
   const onResponseError = (error: ErrorResponse) => {
     setAlert({
       severity: snackbarVariants.error,
-      message: error ? `errors.${error.message}` : ''
+      message: error
+        ? t(`errors.${error.code}`, {
+            message: getErrorMessage(error.message)
+          })
+        : ''
     })
   }
 
