@@ -1,7 +1,6 @@
 import { HTMLAttributes, SyntheticEvent, useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
 import AddIcon from '@mui/icons-material/Add'
 
@@ -10,19 +9,16 @@ import { useModalContext } from '~/context/modal-context'
 import { useSnackBarContext } from '~/context/snackbar-context'
 import { ResourceService } from '~/services/resource-service'
 import AsyncAutocomplete from '~/components/async-autocomlete/AsyncAutocomplete'
-import AppButton from '~/components/app-button/AppButton'
 import AddCategoriesModal from '~/containers/my-resources/add-categories-modal/AddCategoriesModal'
+import DropdownButton from '~/components/dropdown-add-btn/DropdownButton'
 
 import { snackbarVariants } from '~/constants'
 import {
-  ButtonVariantEnum,
   Categories,
   CategoryNameInterface,
   ComponentEnum,
   CreateCategoriesParams,
-  ErrorResponse,
-  SizeEnum,
-  TypographyVariantEnum
+  ErrorResponse
 } from '~/types'
 import { styles } from '~/containers/category-dropdown/CategoryDropdown.styles'
 
@@ -106,17 +102,11 @@ const CategoryDropdown = ({
     <Box key={index}>
       {index === 0 && (
         <Box>
-          <AppButton
-            disableRipple
-            fullWidth
-            onClick={onCreateCategory}
-            size={SizeEnum.Medium}
-            sx={styles.addButton}
-            variant={ButtonVariantEnum.Text}
-          >
-            <AddIcon />
-            {t('myResourcesPage.categories.addBtn')}
-          </AppButton>
+          <DropdownButton
+            handleOnClick={onCreateCategory}
+            icon={<AddIcon />}
+            value={t('myResourcesPage.categories.addBtn')}
+          />
           <Divider sx={styles.divider} />
         </Box>
       )}
@@ -127,13 +117,18 @@ const CategoryDropdown = ({
   )
   return (
     <Box sx={styles.labelCategory}>
-      <Typography variant={TypographyVariantEnum.Body2}>
-        {t('questionPage.chooseCategory')}
-      </Typography>
       <AsyncAutocomplete<CategoryNameInterface>
         fetchCondition={!isFetched}
         fetchOnFocus={isFetchedOnFocus}
         labelField='name'
+        noOptionsText={
+          <DropdownButton
+            handleOnClick={onCreateCategory}
+            icon={<AddIcon />}
+            sx={styles.addButtonNoOptions}
+            value={t('myResourcesPage.categories.addBtn')}
+          />
+        }
         onChange={onCategoryChange}
         renderOption={(props, option, state) =>
           optionsList(props, option.name, state.index)
