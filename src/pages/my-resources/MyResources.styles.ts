@@ -1,3 +1,4 @@
+import palette from '~/styles/app-theme/app.pallete'
 import { TypographyVariantEnum } from '~/types'
 
 export const styles = {
@@ -5,23 +6,16 @@ export const styles = {
     typography: TypographyVariantEnum.H4,
     mb: '40px'
   },
-  tabs: {
-    display: 'flex',
-    borderBottom: '1px solid',
-    borderColor: 'primary.100',
-    mb: '24px',
+  divider: {
     '& > button:last-child': {
-      borderLeft: '1px solid',
-      borderColor: 'primary.100'
-    }
-  },
-  titleBox: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '16px',
-    '& > svg': {
-      width: '16px',
-      height: '16px'
+      position: 'relative'
+    },
+    '& > button:last-child:before': {
+      content: '" "',
+      position: 'absolute',
+      height: '32px',
+      left: '0',
+      borderLeft: `1px solid ${palette.primary[100]}`
     }
   }
 }

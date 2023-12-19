@@ -3,7 +3,7 @@ export const styles = {
     display: 'flex',
     borderBottom: '1px solid',
     borderColor: 'primary.100',
-    mb: '32px'
+    mb: '24px'
   },
   titleBox: {
     display: 'flex',

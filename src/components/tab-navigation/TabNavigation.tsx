@@ -1,22 +1,26 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
+import Box from '@mui/material/Box'
+import { SxProps } from '@mui/system'
 
 import Tab from '~/components/tab/Tab'
-import Box from '@mui/material/Box'
-
-import { styles } from '~/components/tab-navigation/TabNavigation.style'
 import { QuizTabsData } from '~/pages/new-quiz/NewQuiz.constants'
+import { MyResoursesTabsData } from '~/pages/my-resources/MyResources.constants'
+import { spliceSx } from '~/utils/helper-functions'
+import { styles } from '~/components/tab-navigation/TabNavigation.styles'
 
 interface TabNavigationProps {
   activeTab: string
-  tabsData: QuizTabsData
+  tabsData: QuizTabsData | MyResoursesTabsData
   handleClick: (tab: string) => void
+  sx?: SxProps
 }
 
 const TabNavigation: React.FC<TabNavigationProps> = ({
   activeTab,
   tabsData,
-  handleClick
+  handleClick,
+  sx
 }) => {
   const { t } = useTranslation()
 
@@ -37,7 +41,7 @@ const TabNavigation: React.FC<TabNavigationProps> = ({
     )
   })
 
-  return <Box sx={styles.tabs}>{tabs}</Box>
+  return <Box sx={spliceSx(sx, styles.tabs)}>{tabs}</Box>
 }
 
 export default TabNavigation
