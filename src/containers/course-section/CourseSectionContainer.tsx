@@ -60,6 +60,10 @@ interface SectionProps {
     field: keyof CourseSection,
     value: CourseResources[]
   ) => void
+  handleSectionResourcesOrder: (
+    id: string,
+    resources: CourseResources[]
+  ) => void
 }
 
 type openModalFunc = () => void
@@ -69,7 +73,8 @@ const CourseSectionContainer: FC<SectionProps> = ({
   sections,
   setSectionsItems,
   handleSectionInputChange,
-  handleSectionNonInputChange
+  handleSectionNonInputChange,
+  handleSectionResourcesOrder
 }) => {
   const { t } = useTranslation()
   const { openMenu, renderMenu, closeMenu } = useMenu()
@@ -90,23 +95,41 @@ const CourseSectionContainer: FC<SectionProps> = ({
         ...sectionData.quizzes,
         ...sectionData.attachments
       ]
-      const updatedResourcesItems = prevResources.filter((prevResource) =>
-        allResourcesItems.some(
-          (currentResource) => currentResource._id === prevResource._id
+
+      const displayOrder = sectionData.order
+
+      const updatedResourcesItems = prevResources
+        .filter((prevResource) =>
+          allResourcesItems.some(
+            (currentResource) => currentResource._id === prevResource._id
+          )
         )
-      )
+        .map((prevResource) => ({
+          ...prevResource,
+          order: displayOrder.indexOf(prevResource._id)
+        }))
+        .sort((a, b) => a.order - b.order)
+
       for (const currentResource of allResourcesItems) {
         if (
           !updatedResourcesItems.some(
             (prevResource) => prevResource._id === currentResource._id
           )
         ) {
-          updatedResourcesItems.push(currentResource)
+          updatedResourcesItems.push({
+            ...currentResource,
+            order: displayOrder.indexOf(currentResource._id)
+          })
         }
       }
       return updatedResourcesItems
     })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sectionData.lessons, sectionData.quizzes, sectionData.attachments])
+
+  useEffect(() => {
+    handleSectionResourcesOrder(sectionData.id, resources)
+  }, [resources, sectionData.id, handleSectionResourcesOrder])
 
   const deleteResource = (resource: CourseResources) => {
     if (resource.resourceType === ResourcesTypes.Lessons) {
@@ -153,13 +176,13 @@ const CourseSectionContainer: FC<SectionProps> = ({
   }
 
   const handleAddResources = <T extends CourseResources>(
-    resources: T[],
+    newResources: T[],
     type: ResourcesTypes
   ) => {
     handleSectionNonInputChange(
       sectionData.id,
       type as keyof CourseSection,
-      resources
+      newResources
     )
   }
 

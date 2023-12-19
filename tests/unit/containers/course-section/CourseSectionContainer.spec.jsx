@@ -45,11 +45,13 @@ const mockedSectionData = {
       updatedAt: '2023-07-25T13:12:12.998Z',
       resourceType: 'attachments'
     }
-  ]
+  ],
+  order: ['1', '64fb2c33eba89699411d22bb', '64cd12f1fad091e0ee719830']
 }
 
 const mockedHandleSectionInputChange = vi.fn()
 const mockedHandleSectionNonInputChange = vi.fn()
+const mockedHandleSectionResourcesOrder = vi.fn()
 
 const mockedSections = Array(2)
   .fill()
@@ -69,6 +71,7 @@ describe('CourseSectionContainer tests', () => {
         <CourseSectionContainer
           handleSectionInputChange={mockedHandleSectionInputChange}
           handleSectionNonInputChange={mockedHandleSectionNonInputChange}
+          handleSectionResourcesOrder={mockedHandleSectionResourcesOrder}
           sectionData={mockedSectionData}
           sections={mockedSections}
           setSectionsItems={mockedSetSectionItems}
