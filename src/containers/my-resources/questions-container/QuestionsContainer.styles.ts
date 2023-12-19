@@ -39,5 +39,8 @@ export const styles = {
     fontWeight: 500,
     color: 'basic.turquoiseDark'
   },
-  date: captionTitle
+  date: captionTitle,
+  questionContainer: {
+    cursor: 'pointer'
+  }
 }

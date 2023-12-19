@@ -11,22 +11,35 @@ import {
   TableColumn,
   AdditionalPropsInterface
 } from '~/types'
-import { getFormattedDate } from '~/utils/helper-functions'
+import { createUrlPath, getFormattedDate } from '~/utils/helper-functions'
 import { CheckIcons } from '~/utils/check-icons'
 import { styles } from '~/containers/my-resources/questions-container/QuestionsContainer.styles'
+import { authRoutes } from '~/router/constants/authRoutes'
 
 export const columns: TableColumn<Question>[] = [
   {
     label: 'myResourcesPage.questions.title',
     field: 'title',
-    calculatedCellValue: (item: Question) => (
-      <IconTitleDescription
-        description={item.text}
-        icon={<Box sx={styles.iconWrapper}>{CheckIcons(item.type)}</Box>}
-        sx={styles.iconTitleDescription}
-        title={item.title}
-      />
-    )
+    calculatedCellValue: (
+      item: Question,
+      { navigate }: AdditionalPropsInterface
+    ) => {
+      const handleClick = () => {
+        navigate(
+          createUrlPath(authRoutes.myResources.editQuestion.path, item._id)
+        )
+      }
+      return (
+        <Box onClick={handleClick} sx={styles.questionContainer}>
+          <IconTitleDescription
+            description={item.text}
+            icon={<Box sx={styles.iconWrapper}>{CheckIcons(item.type)}</Box>}
+            sx={styles.iconTitleDescription}
+            title={item.title}
+          />
+        </Box>
+      )
+    }
   },
   {
     label: 'myResourcesPage.categories.category',
