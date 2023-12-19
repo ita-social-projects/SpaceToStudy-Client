@@ -1,6 +1,7 @@
 import { SyntheticEvent, useCallback, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { AxiosResponse } from 'axios'
 import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
 
@@ -9,13 +10,20 @@ import QuestionEditor from '~/components/question-editor/QuestionEditor'
 import AppButton from '~/components/app-button/AppButton'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import CategoryDropdown from '~/containers/category-dropdown/CategoryDropdown'
+import Loader from '~/components/loader/Loader'
 
 import useForm from '~/hooks/use-form'
 import useAxios from '~/hooks/use-axios'
 import { ResourceService } from '~/services/resource-service'
 import { useSnackBarContext } from '~/context/snackbar-context'
 import { authRoutes } from '~/router/constants/authRoutes'
+import { getErrorMessage } from '~/utils/error-with-message'
 import { defaultResponses, snackbarVariants } from '~/constants'
+import {
+  initialValues,
+  defaultResponse
+} from './CreateOrEditQuestion.constants'
+import { questionType } from '~/components/question-editor/QuestionEditor.constants'
 import {
   ButtonTypeEnum,
   ButtonVariantEnum,
@@ -27,14 +35,7 @@ import {
   TextFieldVariantEnum,
   UpdateQuestionParams
 } from '~/types'
-import { questionType } from '~/components/question-editor/QuestionEditor.constants'
 import { styles } from '~/pages/create-or-edit-question/CreateOrEditQuestion.styles'
-import { AxiosResponse } from 'axios'
-import Loader from '~/components/loader/Loader'
-import {
-  initialValues,
-  defaultResponse
-} from './CreateOrEditQuestion.constants'
 
 const CreateOrEditQuestion = () => {
   const { t } = useTranslation()
@@ -67,7 +68,11 @@ const CreateOrEditQuestion = () => {
   const onResponseError = (error: ErrorResponse) => {
     setAlert({
       severity: snackbarVariants.error,
-      message: error ? `errors.${error.message}` : ''
+      message: error
+        ? t(`errors.${error.code}`, {
+            message: getErrorMessage(error.message)
+          })
+        : ''
     })
   }
 

@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next'
 
 import Snackbar from '@mui/material/Snackbar'
 import Alert, { AlertColor } from '@mui/material/Alert'
+import Box from '@mui/material/Box'
 
 import { snackbarVariants } from '~/constants'
 
@@ -62,7 +63,11 @@ export const SnackBarProvider = ({ children }: SnackBarProviderProps) => {
           sx={{ color: 'basic.white' }}
           variant='filled'
         >
-          {t(message)}
+          {t(message)
+            .split(', ')
+            .map((line) => (
+              <Box key={line}>{line}</Box>
+            ))}
         </Alert>
       </Snackbar>
     </SnackBarContext.Provider>

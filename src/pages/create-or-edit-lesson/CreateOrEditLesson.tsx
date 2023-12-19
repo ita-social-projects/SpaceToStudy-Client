@@ -22,6 +22,7 @@ import useAxios from '~/hooks/use-axios'
 import useForm from '~/hooks/use-form'
 import { ResourceService } from '~/services/resource-service'
 
+import { getErrorMessage } from '~/utils/error-with-message'
 import { snackbarVariants } from '~/constants'
 import {
   initialValues,
@@ -60,7 +61,11 @@ const CreateOrEditLesson = () => {
   const handleResponseError = (error: ErrorResponse) => {
     setAlert({
       severity: snackbarVariants.error,
-      message: error ? `errors.${error.code}` : ''
+      message: error
+        ? t(`errors.${error.code}`, {
+            message: getErrorMessage(error.message)
+          })
+        : ''
     })
   }
 
