@@ -1,4 +1,4 @@
-import { useCallback, useEffect, ChangeEvent, useState } from 'react'
+import { useCallback, useEffect, ChangeEvent, useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
@@ -83,6 +83,14 @@ const FindOffers = () => {
     itemsPerPage
   })
 
+  const price = useMemo(() => {
+    const filterItems = items.map((item) => item.price)
+    const minPrice = Math.min(...filterItems)
+    const maxPrice = Math.max(...filterItems)
+
+    return { minPrice, maxPrice }
+  }, [items])
+
   const updateInfo = useCallback(() => {
     void fetchData({
       ...filters,
@@ -159,6 +167,7 @@ const FindOffers = () => {
             filters={filters}
             onToggleTutorOffers={handleShowingTutorOffers}
             open={isOpen}
+            price={price}
             resetPage={resetPage}
           />
         </AppDrawer>

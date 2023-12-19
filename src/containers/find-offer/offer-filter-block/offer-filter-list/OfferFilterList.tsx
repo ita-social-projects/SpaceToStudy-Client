@@ -1,4 +1,4 @@
-import { FC, MouseEvent, SyntheticEvent, useCallback, useEffect } from 'react'
+import { FC, MouseEvent, SyntheticEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Typography, Checkbox, FormControlLabel, Box } from '@mui/material'
 
@@ -10,7 +10,6 @@ import RadioButtonInputs from '~/components/radio-button-inputs/RadioButtonInput
 
 import {
   languageValues,
-  defaultResponse,
   radioButtonsTranslationKeys
 } from '~/containers/find-offer/offer-filter-block/offer-filter-list/OfferFilterList.constants'
 import { styles } from '~/containers/find-offer/offer-filter-block/offer-filter-list/OfferFilterList.styles'
@@ -19,22 +18,23 @@ import {
   FindOffersUpdateFilter,
   LanguageFilter,
   LanguagesEnum,
+  PriceRange,
   ProficiencyLevelEnum,
   UpdateOfferFilterByKey
 } from '~/types'
-import useAxios from '~/hooks/use-axios'
-import { OfferService } from '~/services/offer-service'
 
 interface OfferFilterListProps {
   filters: FindOffersFilters
   updateFilterByKey: UpdateOfferFilterByKey
   updateFilter: FindOffersUpdateFilter<FindOffersFilters>
+  price: PriceRange
 }
 
 const OfferFilterList: FC<OfferFilterListProps> = ({
   updateFilter,
   updateFilterByKey,
-  filters
+  filters,
+  price
 }) => {
   const { t } = useTranslation()
   const levelOptions = Object.values(ProficiencyLevelEnum)
@@ -43,21 +43,6 @@ const OfferFilterList: FC<OfferFilterListProps> = ({
     title: t(title),
     value
   }))
-
-  const getPricaRange = useCallback(
-    () => OfferService.getPriceRange({ authorRole: filters.authorRole }),
-    [filters.authorRole]
-  )
-
-  const { response, fetchData } = useAxios({
-    service: getPricaRange,
-    fetchOnMount: false,
-    defaultResponse
-  })
-
-  useEffect(() => {
-    void fetchData()
-  }, [fetchData])
 
   const handleLanguagesChange = (
     _: MouseEvent<HTMLLIElement>,
@@ -108,8 +93,8 @@ const OfferFilterList: FC<OfferFilterListProps> = ({
       {languagesFilter}
       {filterTitle(t('findOffers.filterTitles.price'))}
       <AppRange
-        max={response.maxPrice}
-        min={response.minPrice}
+        max={price.maxPrice}
+        min={price.minPrice}
         onChange={updateFilterByKey('price')}
         value={filters.price}
       />
