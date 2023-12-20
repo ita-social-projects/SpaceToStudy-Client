@@ -4,6 +4,8 @@ import { screen, fireEvent, waitFor } from '@testing-library/react'
 import CreateCourse from '~/pages/create-course/CreateCourse'
 
 const mockedNavigate = vi.fn()
+const mockHandleBlur = vi.fn()
+const mockOnLevelChange = vi.fn()
 
 const categoriesNamesMock = [
   { _id: '660c27618a9fbf234b8bb4cf', name: 'Music' },
@@ -17,7 +19,14 @@ vi.mock('react-router-dom', async () => ({
 
 describe('CreateCourse', () => {
   beforeEach(async () => {
-    await waitFor(() => renderWithProviders(<CreateCourse />))
+    await waitFor(() =>
+      renderWithProviders(
+        <CreateCourse
+          handleBlur={mockHandleBlur}
+          onLevelChange={mockOnLevelChange}
+        />
+      )
+    )
   })
 
   it('should render cancel and save buttons', () => {
@@ -88,5 +97,20 @@ describe('CreateCourse', () => {
     fireEvent.keyDown(autocomplete, { key: 'Enter' })
 
     expect(autocomplete.value).toBe(categoriesNamesMock[1].name)
+  })
+
+  it('renders proficiencyLevel error', () => {
+    waitFor(async () => {
+      const proficiencyLevelInput = await screen.findByLabelText(/level/i)
+      fireEvent.blur(proficiencyLevelInput)
+
+      const errorText = await screen.findByText(
+        'myCoursesPage.errorMessages.proficiencyLevel'
+      )
+      expect(errorText).toBeInTheDocument()
+
+      fireEvent.change(proficiencyLevelInput, { target: { value: 'Advanced' } })
+      expect(mockOnLevelChange).toHaveBeenCalledWith('Advanced')
+    })
   })
 })
