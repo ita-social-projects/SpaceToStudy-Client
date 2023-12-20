@@ -2,17 +2,16 @@ import { useCallback, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Box from '@mui/material/Box'
 
-import { useSnackBarContext } from '~/context/snackbar-context'
 import { ResourceService } from '~/services/resource-service'
 import AddResourceWithInput from '~/containers/my-resources/add-resource-with-input/AddResourceWithInput'
 import MyResourcesTable from '~/containers/my-resources/my-resources-table/MyResourcesTable'
 import Loader from '~/components/loader/Loader'
 import useSort from '~/hooks/table/use-sort'
 import useBreakpoints from '~/hooks/use-breakpoints'
-import useAxios from '~/hooks/use-axios'
 import usePagination from '~/hooks/table/use-pagination'
+import { useGetLessonsQuery } from '~/redux/sliceResources/resources'
 
-import { defaultResponses, snackbarVariants } from '~/constants'
+import { defaultResponses } from '~/constants'
 import { authRoutes } from '~/router/constants/authRoutes'
 import {
   columns,
@@ -20,13 +19,7 @@ import {
   itemsLoadLimit,
   removeColumnRules
 } from '~/containers/my-resources/lessons-container/LessonsContainer.constants'
-import {
-  ItemsWithCount,
-  GetResourcesParams,
-  Lesson,
-  ErrorResponse,
-  ResourcesTabsEnum
-} from '~/types'
+import { Lesson, ResourcesTabsEnum } from '~/types'
 import {
   ajustColumns,
   createUrlPath,
@@ -34,7 +27,6 @@ import {
 } from '~/utils/helper-functions'
 
 const LessonsContainer = () => {
-  const { setAlert } = useSnackBarContext()
   const navigate = useNavigate()
   const { page, handleChangePage } = usePagination()
   const sortOptions = useSort({ initialSort })
@@ -49,28 +41,24 @@ const LessonsContainer = () => {
     columns,
     removeColumnRules
   )
+  const queryArgs = {
+    limit: itemsPerPage,
+    skip: (page - 1) * itemsPerPage,
+    sort,
+    title: searchTitle.current,
+    categories: selectedItems
+  }
 
-  const onResponseError = useCallback(
-    (error: ErrorResponse) => {
-      setAlert({
-        severity: snackbarVariants.error,
-        message: error ? `errors.${error.code}` : ''
-      })
-    },
-    [setAlert]
-  )
+  const {
+    data: response,
+    isLoading,
+    isSuccess,
+    refetch
+  } = useGetLessonsQuery(queryArgs)
 
-  const getMyLessons = useCallback(
-    () =>
-      ResourceService.getUsersLessons({
-        limit: itemsPerPage,
-        skip: (page - 1) * itemsPerPage,
-        sort,
-        title: searchTitle.current,
-        categories: selectedItems
-      }),
-    [page, itemsPerPage, sort, searchTitle, selectedItems]
-  )
+  const handleRefetch = () => {
+    void refetch()
+  }
 
   const deleteLesson = useCallback(
     (id?: string) => ResourceService.deleteLesson(id || ''),
@@ -81,18 +69,14 @@ const LessonsContainer = () => {
     navigate(createUrlPath(authRoutes.myResources.editLesson.path, id))
   }
 
-  const { response, loading, fetchData } = useAxios<
-    ItemsWithCount<Lesson>,
-    GetResourcesParams
-  >({
-    service: getMyLessons,
-    defaultResponse: defaultResponses.itemsWithCount,
-    onResponseError
-  })
-
   const props = {
     columns: columnsToShow,
-    data: { response, getData: fetchData },
+    data: {
+      response: isSuccess ? response : defaultResponses.itemsWithCount,
+      getData: () => {
+        void refetch()
+      }
+    },
     services: { deleteService: deleteLesson },
     itemsPerPage,
     actions: { onEdit },
@@ -105,13 +89,13 @@ const LessonsContainer = () => {
     <Box>
       <AddResourceWithInput
         btnText={'myResourcesPage.lessons.addBtn'}
-        fetchData={fetchData}
+        fetchData={handleRefetch}
         link={authRoutes.myResources.newLesson.path}
         searchRef={searchTitle}
         selectedItems={selectedItems}
         setItems={setSelectedItems}
       />
-      {loading ? (
+      {isLoading ? (
         <Loader pageLoad size={50} />
       ) : (
         <MyResourcesTable<Lesson> {...props} />

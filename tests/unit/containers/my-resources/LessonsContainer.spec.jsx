@@ -1,9 +1,8 @@
 import { screen, waitFor } from '@testing-library/react'
-
 import LessonsContainer from '~/containers/my-resources/lessons-container/LessonsContainer'
-
 import { mockAxiosClient, renderWithProviders } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
+import { expect, vi } from 'vitest'
 
 const lessonMock = {
   _id: '64e49ce305b3353b2ae6309e',
@@ -28,6 +27,19 @@ const lessonResponseMock = {
   items: responseItemsMock
 }
 
+vi.mock('~/redux/sliceResources/resources', async () => {
+  const actual = await vi.importActual('~/redux/sliceResources/resources')
+  return {
+    ...actual,
+    useGetLessonsQuery: () => ({
+      data: lessonResponseMock,
+      isLoading: false,
+      isSuccess: true,
+      refetch: vi.fn()
+    })
+  }
+})
+
 const responseItemsMockCategory = Array(10)
   .fill()
   .map((_, index) => ({
@@ -45,9 +57,6 @@ const lessonResponseMockCategory = {
 describe('LessonContainer test', () => {
   beforeEach(async () => {
     await waitFor(() => {
-      mockAxiosClient
-        .onGet(URLs.resources.lessons.get)
-        .reply(200, lessonResponseMock)
       renderWithProviders(<LessonsContainer />)
     })
   })
