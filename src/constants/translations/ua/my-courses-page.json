@@ -28,16 +28,21 @@
     "successDuplication": "Курс було успішно продубльовано"
   },
   "coursesFilter": {
-      "coursesFilterLabel": "Фільтри Курсів",
-      "chooseThe": "Обрати ",
-      "choose": "Обрати",
-      "category": "категорію",
-      "subject": "тему",
-      "levels": "рівні",
-      "clearFilters": "Очистити фільтри",
-      "applyFilters": "Застосувати фільтри",
-      "categoryLabel": "Категорія",
-      "subjectLabel": "Тема"
-    }
+    "coursesFilterLabel": "Фільтри Курсів",
+    "chooseThe": "Обрати ",
+    "choose": "Обрати",
+    "category": "категорію",
+    "subject": "тему",
+    "levels": "рівні",
+    "clearFilters": "Очистити фільтри",
+    "applyFilters": "Застосувати фільтри",
+    "categoryLabel": "Категорія",
+    "subjectLabel": "Тема"
+  },
+  "errorMessages": {
+    "category": "Будь ласка, оберіть категорію.",
+    "subject": "Будь ласка, оберіть тему.",
+    "proficiencyLevel": "Будь ласка, оберіть принаймні один рівень володіння мовою."
+  }
 }
 

@@ -23,10 +23,7 @@ export const styles = {
     label: {
       lineHeight: '20px'
     },
-    position: 'relative',
-    '& .MuiFormHelperText-root': {
-      ...commonStyle
-    }
+    position: 'relative'
   },
   levelSelect: {
     width: { md: '370px', xs: '100%' }
@@ -81,8 +78,12 @@ export const styles = {
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
-    mb: '30px'
+    mb: '30px',
+    gap: '24px'
   },
+  inputColor: (error: string) => ({
+    color: error ? 'red' : 'basic.bismark'
+  }),
   searchBoxes: {
     width: '100%',
     display: 'flex',
@@ -91,7 +92,6 @@ export const styles = {
     gap: { md: '30px', sm: '20px', xs: '15px' }
   },
   categories: {
-    mt: '10px',
     color: 'basic.bismark'
   },
   weightBox: {

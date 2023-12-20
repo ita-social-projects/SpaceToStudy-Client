@@ -15,6 +15,8 @@ import CourseToolbar from '~/containers/my-courses/course-toolbar/CourseToolbar'
 import AppButton from '~/components/app-button/AppButton'
 import Loader from '~/components/loader/Loader'
 
+import { validations } from '~/pages/create-course/CreateCourse.constants'
+
 import { getErrorMessage } from '~/utils/error-with-message'
 import {
   ButtonTypeEnum,
@@ -88,12 +90,19 @@ const CreateCourse = () => {
     onResponseError
   })
 
-  const { data, handleInputChange, handleNonInputValueChange, handleSubmit } =
-    useForm<CourseForm>({
-      initialValues,
-      onSubmit: id ? fetchEditCourse : fetchAddCourse,
-      submitWithData: true
-    })
+  const {
+    data,
+    handleInputChange,
+    handleNonInputValueChange,
+    handleBlur,
+    handleSubmit,
+    errors
+  } = useForm<CourseForm>({
+    initialValues,
+    validations,
+    onSubmit: id ? fetchEditCourse : fetchAddCourse,
+    submitWithData: true
+  })
 
   const setSectionsItems = (value: CourseSection[]) => {
     handleNonInputValueChange('sections', value)
@@ -171,6 +180,8 @@ const CreateCourse = () => {
       <Box component={ComponentEnum.Form} onSubmit={handleSubmit}>
         <CourseToolbar
           data={data}
+          errors={errors}
+          handleBlur={handleBlur}
           handleInputChange={handleInputChange}
           handleNonInputValueChange={handleNonInputValueChange}
         />
