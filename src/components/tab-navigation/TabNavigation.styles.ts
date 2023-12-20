@@ -3,7 +3,9 @@ export const styles = {
     display: 'flex',
     borderBottom: '1px solid',
     borderColor: 'primary.100',
-    mb: '24px'
+    mb: '24px',
+    overflowX: 'auto',
+    '&::-webkit-scrollbar': { display: 'none' }
   },
   titleBox: {
     display: 'flex',

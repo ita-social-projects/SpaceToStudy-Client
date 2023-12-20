@@ -14,7 +14,7 @@ interface TabNavigationProps {
   activeTab: string
   tabsData: QuizTabsData | MyResoursesTabsData
   handleClick: (tab: string) => void
-  sx?: SxProps
+  sx?: { root?: SxProps; tab?: SxProps }
 }
 
 const TabNavigation: React.FC<TabNavigationProps> = ({
@@ -32,7 +32,7 @@ const TabNavigation: React.FC<TabNavigationProps> = ({
         activeTab={activeTab === key}
         key={key}
         onClick={() => handleClick(key)}
-        sx={sx}
+        sx={sx?.tab}
         {...tabProps}
       >
         <Box sx={styles.titleBox}>
@@ -43,7 +43,7 @@ const TabNavigation: React.FC<TabNavigationProps> = ({
     )
   })
 
-  return <Box sx={spliceSx(sx, styles.tabs)}>{tabs}</Box>
+  return <Box sx={spliceSx(sx?.root, styles.tabs)}>{tabs}</Box>
 }
 
 export default TabNavigation
