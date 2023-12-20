@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+import { useCallback, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Typography, Box } from '@mui/material'
 
@@ -32,6 +32,7 @@ const MyCourses = () => {
   const { page, handleChangePage } = usePagination()
   const { openDialog } = useConfirm()
   const { setAlert } = useSnackBarContext()
+  const searchTitle = useRef<string>('')
 
   const itemsPerPage = getScreenBasedLimit(breakpoints, courseItemsLoadLimit)
 
@@ -39,7 +40,8 @@ const MyCourses = () => {
     () =>
       CourseService.getCourses({
         limit: itemsPerPage,
-        skip: (page - 1) * itemsPerPage
+        skip: (page - 1) * itemsPerPage,
+        title: searchTitle.current
       }),
     [itemsPerPage, page]
   )
@@ -128,33 +130,35 @@ const MyCourses = () => {
 
   const { items: coursesItems, count: coursesCount } = coursesResponse
 
-  if (coursesLoading) {
-    return <Loader pageLoad />
-  }
+  const content = coursesLoading ? (
+    <Loader pageLoad />
+  ) : (
+    <>
+      <MyCorsesCardsList
+        deleteItem={onDelete}
+        duplicateItem={(itemId: string) => void handleDuplicate(itemId)}
+        items={coursesItems}
+      />
+      <AppPagination
+        onChange={handleChangePage}
+        page={page}
+        pageCount={Math.ceil(coursesCount / itemsPerPage)}
+        sx={styles.pagination}
+      />
+    </>
+  )
 
   return (
     <PageWrapper>
       <Typography sx={styles.title}>{t('myCoursesPage.title')}</Typography>
       <Box sx={styles.divider}></Box>
-      <AddCourseWithInput />
+      <AddCourseWithInput fetchData={fetchData} searchRef={searchTitle} />
       {!coursesItems.length && !coursesLoading ? (
         <NotFoundResults
           description={t('myCoursesPage.notFound.description')}
         />
       ) : (
-        <>
-          <MyCorsesCardsList
-            deleteItem={onDelete}
-            duplicateItem={(itemId: string) => void handleDuplicate(itemId)}
-            items={coursesItems}
-          />
-          <AppPagination
-            onChange={handleChangePage}
-            page={page}
-            pageCount={Math.ceil(coursesCount / itemsPerPage)}
-            sx={styles.pagination}
-          />
-        </>
+        content
       )}
     </PageWrapper>
   )
