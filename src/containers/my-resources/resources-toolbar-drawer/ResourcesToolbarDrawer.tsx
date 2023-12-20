@@ -111,7 +111,6 @@ const ResourcesToolBarDrawer: FC<ResourcesToolBarDrawerProps> = ({
             setValue={onSortChange}
             sx={styles.select}
             value={data.sortBy}
-            // value={`${sort.orderBy} ${sort.order}`}
           />
           <Box sx={styles.buttons}>
             <AppButton
