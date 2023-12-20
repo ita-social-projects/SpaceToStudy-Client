@@ -75,7 +75,14 @@ export const columns: TableColumn<Quiz>[] = [
 ]
 
 export const removeColumnRules: RemoveColumnRules<Quiz> = {
-  tablet: ['myOffersPage.tableHeaders.updated']
+  tablet: [
+    'myResourcesPage.quizzes.updated',
+    'myResourcesPage.quizzes.questions'
+  ],
+  mobile: [
+    'myResourcesPage.quizzes.updated',
+    'myResourcesPage.quizzes.questions'
+  ]
 }
 
 export const initialSort = { order: SortEnum.Desc, orderBy: 'updatedAt' }

@@ -29,13 +29,15 @@ export const columns = (
     label: 'myResourcesPage.categories.updated',
     field: 'updatedAt',
     calculatedCellValue: (item: Categories) => (
-      <Typography>{getFormattedDate({ date: item.updatedAt })}</Typography>
+      <Typography sx={styles.date}>
+        {getFormattedDate({ date: item.updatedAt })}
+      </Typography>
     )
   }
 ]
 
 export const removeColumnRules: RemoveColumnRules<Categories> = {
-  tablet: ['myResourcesPage.categories.updated']
+  mobile: ['myResourcesPage.categories.updated']
 }
 
 export const initialSort = { order: SortEnum.Desc, orderBy: 'updatedAt' }
