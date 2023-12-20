@@ -6,16 +6,19 @@ export const styles = {
     typography: TypographyVariantEnum.H4,
     mb: '40px'
   },
-  divider: {
-    '& > button:last-child': {
-      position: 'relative'
+  tabs: {
+    root: {
+      '& > button:last-child': {
+        position: 'relative'
+      },
+      '& > button:last-child:before': {
+        content: '" "',
+        position: 'absolute',
+        height: '32px',
+        left: '0',
+        borderLeft: `1px solid ${palette.primary[100]}`
+      }
     },
-    '& > button:last-child:before': {
-      content: '" "',
-      position: 'absolute',
-      height: '32px',
-      left: '0',
-      borderLeft: `1px solid ${palette.primary[100]}`
-    }
+    tab: { minWidth: '150px' }
   }
 }

@@ -1,19 +1,20 @@
-import { FC } from 'react'
+import { FC, ReactNode } from 'react'
 import Button, { ButtonProps } from '@mui/material/Button'
 
+import { spliceSx } from '~/utils/helper-functions'
 import { styles } from '~/components/tab/Tab.styles'
 
 interface TabProps extends ButtonProps {
   activeTab: boolean
   onClick: () => void
-  children: React.ReactNode
+  children: ReactNode
 }
 
-const Tab: FC<TabProps> = ({ activeTab, onClick, children, ...props }) => {
+const Tab: FC<TabProps> = ({ activeTab, onClick, children, sx, ...props }) => {
   return (
     <Button
       onClick={onClick}
-      sx={[styles.defaultTab, activeTab && styles.activeTab]}
+      sx={spliceSx(styles.tab(activeTab), sx)}
       {...props}
     >
       {children}

@@ -24,7 +24,7 @@ const MyResources = () => {
       <TabNavigation
         activeTab={activeTab}
         handleClick={handleClick}
-        sx={styles.divider}
+        sx={styles.tabs}
         tabsData={tabsData}
       />
       {tabContent}
