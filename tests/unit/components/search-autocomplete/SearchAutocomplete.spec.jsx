@@ -1,13 +1,13 @@
-import { describe, vi } from 'vitest'
+import { vi } from 'vitest'
 import { render, fireEvent, screen, act } from '@testing-library/react'
 import SearchAutocomplete from '~/components/search-autocomplete/SearchAutocomplete'
 import userEvent from '@testing-library/user-event'
 
-const options = ['Finland', 'France', 'Italy', 'Germany']
-const setSearch = vi.fn()
-
 describe('SearchAutocomplete', () => {
-  beforeEach(() => {
+  const options = ['Finland', 'France', 'Georgia', 'Germany']
+  const setSearch = vi.fn()
+
+  it('renders autocomplete with search input', () => {
     render(
       <SearchAutocomplete
         options={options}
@@ -16,15 +16,26 @@ describe('SearchAutocomplete', () => {
         textFieldProps={{ label: 'Search' }}
       />
     )
-  })
 
-  it('renders autocomplete with search input', () => {
     const searchInput = screen.getByLabelText('Search')
     expect(searchInput).toBeInTheDocument()
   })
 
+  it('renders autocomplete with search input value', () => {
+    render(
+      <SearchAutocomplete
+        options={options}
+        search='France'
+        setSearch={setSearch}
+        textFieldProps={{ label: 'Search' }}
+      />
+    )
+
+    const searchInput = screen.getByLabelText('Search')
+    expect(searchInput.value).toBe('France')
+  })
+
   it('updates search input on typing', async () => {
-    const setSearch = vi.fn()
     render(
       <SearchAutocomplete
         options={options}
@@ -44,6 +55,15 @@ describe('SearchAutocomplete', () => {
   })
 
   it('filters options on typing', () => {
+    render(
+      <SearchAutocomplete
+        options={options}
+        search=''
+        setSearch={setSearch}
+        textFieldProps={{ label: 'Search' }}
+      />
+    )
+
     const searchInput = screen.getByLabelText('Search')
     userEvent.type(searchInput, 'F')
     const filteredOptions = screen.queryByText('Germany')
@@ -51,16 +71,23 @@ describe('SearchAutocomplete', () => {
   })
 
   it('selects an option on click', () => {
+    render(
+      <SearchAutocomplete
+        options={options}
+        search=''
+        setSearch={setSearch}
+        textFieldProps={{ label: 'Search' }}
+      />
+    )
+
     const searchInput = screen.getByLabelText('Search')
     fireEvent.mouseDown(searchInput)
     const option = screen.getByText('France')
     fireEvent.click(option)
     expect(searchInput.value).toBe('France')
   })
-})
 
-describe('SearchAutocomplete test', () => {
-  beforeEach(() => {
+  it('clears search input on clear icon click', () => {
     render(
       <SearchAutocomplete
         options={options}
@@ -69,9 +96,7 @@ describe('SearchAutocomplete test', () => {
         textFieldProps={{ label: 'Search' }}
       />
     )
-  })
 
-  it('clears search input on clear icon click', () => {
     const searchInput = screen.getByLabelText('Search')
     const clearIcon = screen.getByTestId('ClearIcon')
     fireEvent.click(clearIcon)
@@ -79,6 +104,15 @@ describe('SearchAutocomplete test', () => {
   })
 
   it('triggers search on search button click', () => {
+    render(
+      <SearchAutocomplete
+        options={options}
+        search='France'
+        setSearch={setSearch}
+        textFieldProps={{ label: 'Search' }}
+      />
+    )
+
     const searchBtn = screen.getByRole('button', { name: 'common.search' })
     fireEvent.click(searchBtn)
     expect(setSearch).toHaveBeenCalledWith('France')
