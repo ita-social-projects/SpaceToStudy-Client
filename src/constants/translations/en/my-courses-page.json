@@ -36,8 +36,6 @@
     "category": "category",
     "subject": "subject",
     "levels": "levels",
-    "clearFilters": "Clear filters",
-    "applyFilters": "Apply filters",
     "categoryLabel": "Category",
     "subjectLabel": "Subject",
     "search": "Search by title"

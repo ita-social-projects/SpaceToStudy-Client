@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event'
 import { expect } from 'vitest'
 
 import AddResourceWithInput from '~/containers/my-resources/add-resource-with-input/AddResourceWithInput'
-import { renderWithProviders } from '~tests/test-utils'
+import { renderWithProviders, waitForTimeout } from '~tests/test-utils'
 
 const fetchDataMock = vi.fn()
 const text = 'test search'
@@ -14,7 +14,12 @@ const props = {
   fetchData: fetchDataMock,
   link: '#',
   searchRef: { current: text },
-  selectedItems: []
+  selectedItems: [],
+  sortOptions: {
+    onRequestSort: vi.fn(),
+    resetSort: vi.fn(),
+    sort: { order: 'desc', orderBy: 'updatedAt' }
+  }
 }
 
 describe('AddResourceWithInput test', () => {
@@ -39,7 +44,7 @@ describe('AddResourceWithInput test', () => {
 
     const searchInput = screen.getByPlaceholderText('common.search')
 
-    await waitFor(() => user.type(searchInput, text))
+    await waitForTimeout(() => user.type(searchInput, text))
 
     expect(searchInput.value).toBe(text)
 

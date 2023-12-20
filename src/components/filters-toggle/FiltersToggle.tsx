@@ -1,20 +1,26 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-
+import { SxProps } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import FilterListIcon from '@mui/icons-material/FilterList'
 
+import { spliceSx } from '~/utils/helper-functions'
 import { styles } from '~/components/filters-toggle/FiltersToggle.styles'
 
 interface FiltersToggleProps {
   chosenFiltersQty?: number
   handleToggle?: () => void
+  sx?: {
+    icon?: SxProps
+    title?: SxProps
+  }
 }
 
 const FiltersToggle: FC<FiltersToggleProps> = ({
   chosenFiltersQty = 0,
-  handleToggle
+  handleToggle,
+  sx
 }) => {
   const { t } = useTranslation()
 
@@ -24,8 +30,8 @@ const FiltersToggle: FC<FiltersToggleProps> = ({
         data-testid='toggle-button'
         sx={styles.cursorContainer(Boolean(handleToggle))}
       >
-        <FilterListIcon sx={styles.icon} />
-        <Typography sx={styles.title} variant='h6'>
+        <FilterListIcon sx={spliceSx(styles.icon, sx?.icon)} />
+        <Typography sx={spliceSx(styles.title, sx?.title)}>
           {t('filters.filtersListTitle')}
         </Typography>
       </Box>

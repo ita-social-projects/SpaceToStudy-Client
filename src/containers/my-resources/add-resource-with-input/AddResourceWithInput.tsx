@@ -13,14 +13,17 @@ import SearchIcon from '@mui/icons-material/Search'
 import AddIcon from '@mui/icons-material/Add'
 import Box from '@mui/material/Box'
 
+import { ResourceService } from '~/services/resource-service'
 import { useDebounce } from '~/hooks/use-debounce'
+import { SortHook } from '~/hooks/table/use-sort'
+import useBreakpoints from '~/hooks/use-breakpoints'
 import AppButton from '~/components/app-button/AppButton'
 import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
 import FilterSelector from '~/components/filter-selector/FilterSelector'
+import ResourcesToolBarDrawer from '~/containers/my-resources/resources-toolbar-drawer/ResourcesToolbarDrawer'
 
 import { styles } from '~/containers/my-resources/add-resource-with-input/AddResourceWithInput.styles'
-import { CategoryNameInterface } from '~/types'
-import { ResourceService } from '~/services/resource-service'
+import { CategoryNameInterface, SizeEnum } from '~/types'
 
 interface AddResourceWithInputProps {
   btnText?: string
@@ -30,6 +33,7 @@ interface AddResourceWithInputProps {
   button?: ReactElement
   selectedItems?: string[]
   setItems?: Dispatch<SetStateAction<string[]>>
+  sortOptions: SortHook
 }
 
 const AddResourceWithInput: FC<AddResourceWithInputProps> = ({
@@ -39,13 +43,22 @@ const AddResourceWithInput: FC<AddResourceWithInputProps> = ({
   searchRef,
   button,
   selectedItems,
-  setItems
+  setItems,
+  sortOptions
 }) => {
   const { t } = useTranslation()
+  const { isMobile, isTablet } = useBreakpoints()
   const [searchInput, setSearchInput] = useState<string>('')
 
-  const debounceOnChange = useDebounce((text: string) => {
+  const isMobileOrTablet = isMobile || isTablet
+  const { Medium, Large } = SizeEnum
+
+  const onSearchChange = (text: string) => {
     searchRef.current = text
+  }
+
+  const debounceOnChange = useDebounce((text: string) => {
+    onSearchChange(text)
     void fetchData()
   })
 
@@ -60,37 +73,55 @@ const AddResourceWithInput: FC<AddResourceWithInputProps> = ({
     void fetchData()
   }
 
+  const filterWithInput = (
+    <>
+      {selectedItems && setItems && (
+        <FilterSelector<CategoryNameInterface>
+          position={'right'}
+          selectedItems={selectedItems}
+          service={ResourceService.getResourcesCategoriesNames}
+          setSelectedItems={setItems}
+          showNoneProperty
+          title={t('myResourcesPage.categories.category')}
+          valueField={'name'}
+        />
+      )}
+      <InputWithIcon
+        endAdornment={<SearchIcon sx={styles.searchIcon} />}
+        onChange={onChange}
+        onClear={onClear}
+        placeholder={t('common.search')}
+        sx={styles.input}
+        value={searchInput}
+      />
+    </>
+  )
+
   return (
     <Box sx={styles.container}>
       {!button ? (
-        <AppButton component={Link} to={link}>
-          {!button && btnText && t(btnText)}
+        <AppButton
+          component={Link}
+          size={isMobileOrTablet ? Medium : Large}
+          to={link}
+        >
+          {btnText && t(btnText)}
           <AddIcon sx={styles.addIcon} />
         </AppButton>
       ) : (
         button
       )}
-      <Box sx={styles.filterWithInput}>
-        {selectedItems && setItems && (
-          <FilterSelector<CategoryNameInterface>
-            position={'right'}
-            selectedItems={selectedItems ?? []}
-            service={ResourceService.getResourcesCategoriesNames}
-            setSelectedItems={setItems}
-            showNoneProperty
-            title={t('myResourcesPage.categories.category')}
-            valueField={'name'}
-          />
-        )}
-        <InputWithIcon
-          endAdornment={<SearchIcon sx={styles.searchIcon} />}
-          onChange={onChange}
-          onClear={onClear}
-          placeholder={t('common.search')}
-          sx={styles.input}
-          value={searchInput}
+
+      {isMobileOrTablet && setItems ? (
+        <ResourcesToolBarDrawer
+          isMobile={isMobile}
+          setCategories={setItems}
+          setSearch={onSearchChange}
+          sortOptions={sortOptions}
         />
-      </Box>
+      ) : (
+        <Box sx={styles.filterWithInput}>{filterWithInput}</Box>
+      )}
     </Box>
   )
 }

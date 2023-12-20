@@ -34,3 +34,8 @@ export interface UpdateResourceCategory {
 export interface GetResourcesCategoriesParams extends Partial<RequestParams> {
   name?: string
 }
+
+export interface ResourceToolbarForm extends Pick<RequestParams, 'categories'> {
+  name: string
+  sortBy: string
+}

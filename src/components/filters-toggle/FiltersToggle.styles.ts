@@ -1,3 +1,5 @@
+import { TypographyVariantEnum } from '~/types'
+
 const container = {
   display: 'flex',
   alignItems: 'center'
@@ -12,7 +14,8 @@ export const styles = {
   title: {
     color: 'primary.700',
     mr: '7px',
-    userSelect: 'none'
+    userSelect: 'none',
+    typography: TypographyVariantEnum.H6
   },
   icon: {
     color: 'primary.700',
