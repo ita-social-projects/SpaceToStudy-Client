@@ -2,6 +2,7 @@ import { renderWithProviders } from '~tests/test-utils'
 import { screen, fireEvent, waitFor } from '@testing-library/react'
 
 import CreateCourse from '~/pages/create-course/CreateCourse'
+import { expect } from 'vitest'
 
 const mockedNavigate = vi.fn()
 const mockHandleBlur = vi.fn()
@@ -99,9 +100,24 @@ describe('CreateCourse', () => {
     expect(autocomplete.value).toBe(categoriesNamesMock[1].name)
   })
 
+  it('should display error for category', () => {
+    const autocomplete = screen.getAllByRole('combobox')[0]
+
+    fireEvent.click(autocomplete)
+    fireEvent.blur(autocomplete)
+
+    const errorMessage = screen.getByText(
+      'myCoursesPage.errorMessages.category'
+    )
+
+    expect(errorMessage).toBeInTheDocument()
+  })
+
   it('renders proficiencyLevel error', () => {
     waitFor(async () => {
       const proficiencyLevelInput = await screen.findByLabelText(/level/i)
+
+      fireEvent.click(proficiencyLevelInput)
       fireEvent.blur(proficiencyLevelInput)
 
       const errorText = await screen.findByText(
