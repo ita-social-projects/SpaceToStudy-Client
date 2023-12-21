@@ -49,16 +49,29 @@ const LessonsContainer = () => {
     categories: selectedItems
   }
 
+  // const {
+  //   data: response,
+  //   isLoading,
+  //   isSuccess,
+  //   refetch
+  // } = useGetLessonsQuery(queryArgs)
   const {
-    data: response,
+    data: response = defaultResponses.itemsWithCount,
     isLoading,
     isSuccess,
     refetch
-  } = useGetLessonsQuery(queryArgs)
+  } = useGetLessonsQuery(queryArgs, {
+    selectFromResult: ({ data, isLoading, isSuccess }) => ({
+      data: data ?? defaultResponses.itemsWithCount,
+      isLoading,
+      isSuccess
+    })
+  })
 
   const handleRefetch = () => {
     void refetch()
   }
+  console.log(response)
 
   const deleteLesson = useCallback(
     (id?: string) => ResourceService.deleteLesson(id || ''),
@@ -73,9 +86,7 @@ const LessonsContainer = () => {
     columns: columnsToShow,
     data: {
       response: isSuccess ? response : defaultResponses.itemsWithCount,
-      getData: () => {
-        void refetch()
-      }
+      getData: refetch
     },
     services: { deleteService: deleteLesson },
     itemsPerPage,

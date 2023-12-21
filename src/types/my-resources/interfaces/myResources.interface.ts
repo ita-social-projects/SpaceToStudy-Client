@@ -34,3 +34,20 @@ export interface UpdateResourceCategory {
 export interface GetResourcesCategoriesParams extends Partial<RequestParams> {
   name?: string
 }
+
+export interface EditLessonArgs {
+  id?: string
+  title: string
+  description: string
+  content: string
+  attachments: Attachment[]
+  category: string | null
+}
+
+export interface LessonsQueryArgs {
+  limit: number
+  skip: number
+  sort: object
+  title: string
+  categories: string[]
+}
