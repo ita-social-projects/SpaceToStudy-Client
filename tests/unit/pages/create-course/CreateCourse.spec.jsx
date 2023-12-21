@@ -113,6 +113,54 @@ describe('CreateCourse', () => {
     expect(errorMessage).toBeInTheDocument()
   })
 
+  it('should display error for category', () => {
+    const autocomplete = screen.getAllByRole('combobox')[0]
+
+    fireEvent.click(autocomplete)
+    fireEvent.blur(autocomplete)
+
+    const errorMessage = screen.getByText(
+      'myCoursesPage.errorMessages.category'
+    )
+
+    expect(errorMessage).toBeInTheDocument()
+  })
+
+  it('should display error for subject', async () => {
+    const autocomplete = screen.getAllByRole('combobox')[0]
+
+    expect(autocomplete).toBeInTheDocument()
+    expect(autocomplete.value).toBe('')
+
+    fireEvent.click(autocomplete)
+    fireEvent.focus(autocomplete)
+
+    fireEvent.change(autocomplete, {
+      target: { value: categoriesNamesMock[1].name }
+    })
+
+    fireEvent.keyDown(autocomplete, { key: 'ArrowDown' })
+    fireEvent.keyDown(autocomplete, { key: 'Enter' })
+
+    await waitFor(() => {
+      expect(autocomplete.value).toBe(categoriesNamesMock[1].name)
+    })
+
+    fireEvent.keyDown(autocomplete, { key: 'ArrowDown' })
+    fireEvent.keyDown(autocomplete, { key: 'Enter' })
+
+    expect(autocomplete.value).toBe(categoriesNamesMock[1].name)
+
+    const subjectAutocomplete = screen.getAllByRole('combobox')[1]
+
+    fireEvent.click(subjectAutocomplete)
+    fireEvent.blur(subjectAutocomplete)
+
+    const errorMessage = screen.getByText('myCoursesPage.errorMessages.subject')
+
+    expect(errorMessage).toBeInTheDocument()
+  })
+
   it('renders proficiencyLevel error', () => {
     waitFor(async () => {
       const proficiencyLevelInput = await screen.findByLabelText(/level/i)
