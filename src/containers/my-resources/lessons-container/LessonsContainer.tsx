@@ -49,29 +49,16 @@ const LessonsContainer = () => {
     categories: selectedItems
   }
 
-  // const {
-  //   data: response,
-  //   isLoading,
-  //   isSuccess,
-  //   refetch
-  // } = useGetLessonsQuery(queryArgs)
   const {
-    data: response = defaultResponses.itemsWithCount,
+    data: response,
     isLoading,
     isSuccess,
     refetch
-  } = useGetLessonsQuery(queryArgs, {
-    selectFromResult: ({ data, isLoading, isSuccess }) => ({
-      data: data ?? defaultResponses.itemsWithCount,
-      isLoading,
-      isSuccess
-    })
-  })
+  } = useGetLessonsQuery(queryArgs)
 
   const handleRefetch = () => {
     void refetch()
   }
-  console.log(response)
 
   const deleteLesson = useCallback(
     (id?: string) => ResourceService.deleteLesson(id || ''),
