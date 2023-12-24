@@ -106,9 +106,7 @@ describe('CreateCourse', () => {
     fireEvent.click(autocomplete)
     fireEvent.blur(autocomplete)
 
-    const errorMessage = screen.getByText(
-      'myCoursesPage.errorMessages.category'
-    )
+    const errorMessage = screen.getByText('common.errorMessages.category')
 
     expect(errorMessage).toBeInTheDocument()
   })
@@ -119,9 +117,7 @@ describe('CreateCourse', () => {
     fireEvent.click(autocomplete)
     fireEvent.blur(autocomplete)
 
-    const errorMessage = screen.getByText(
-      'myCoursesPage.errorMessages.category'
-    )
+    const errorMessage = screen.getByText('common.errorMessages.category')
 
     expect(errorMessage).toBeInTheDocument()
   })
@@ -156,7 +152,7 @@ describe('CreateCourse', () => {
     fireEvent.click(subjectAutocomplete)
     fireEvent.blur(subjectAutocomplete)
 
-    const errorMessage = screen.getByText('myCoursesPage.errorMessages.subject')
+    const errorMessage = screen.getByText('common.errorMessages.subject')
 
     expect(errorMessage).toBeInTheDocument()
   })
@@ -169,7 +165,7 @@ describe('CreateCourse', () => {
       fireEvent.blur(proficiencyLevelInput)
 
       const errorText = await screen.findByText(
-        'myCoursesPage.errorMessages.proficiencyLevel'
+        'common.errorMessages.proficiencyLevel'
       )
       expect(errorText).toBeInTheDocument()
 

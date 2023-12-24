@@ -12,18 +12,21 @@ import Checkbox from '@mui/material/Checkbox'
 import FormHelperText from '@mui/material/FormHelperText'
 
 import AppTextField from '~/components/app-text-field/AppTextField'
-import { subjectService } from '~/services/subject-service'
-import { categoryService } from '~/services/category-service'
 import AppToolbar from '~/components/app-toolbar/AppToolbar'
 import AsyncAutocomplete from '~/components/async-autocomlete/AsyncAutocomplete'
+
+import { subjectService } from '~/services/subject-service'
+import { categoryService } from '~/services/category-service'
 
 import {
   CategoryNameInterface,
   SubjectNameInterface,
   CourseForm,
   ProficiencyLevelEnum,
-  TextFieldVariantEnum
+  TextFieldVariantEnum,
+  ComponentEnum
 } from '~/types'
+
 import { styles } from '~/containers/my-courses/course-toolbar/CourseToolbar.style'
 
 interface CourseToolbarProps {
@@ -88,7 +91,7 @@ const CourseToolbar = ({
 
   const proficiencyLevelError = errors.proficiencyLevel && (
     <FormHelperText error>
-      {t('myCoursesPage.errorMessages.proficiencyLevel')}
+      {t('common.errorMessages.proficiencyLevel')}
     </FormHelperText>
   )
 
@@ -179,11 +182,11 @@ const CourseToolbar = ({
           />
           <Typography sx={styles.categories}>
             {t('myCoursesPage.filterLabel.determine')}
-            <Typography component='span' sx={styles.weightBox}>
+            <Typography component={ComponentEnum.Span} sx={styles.weightBox}>
               {t('myCoursesPage.filterLabel.filterItems')}
             </Typography>
             {t('myCoursesPage.filterLabel.and')}
-            <Typography component='span' sx={styles.weightBox}>
+            <Typography component={ComponentEnum.Span} sx={styles.weightBox}>
               {t('myCoursesPage.filterLabel.level')}
             </Typography>
             {t('myCoursesPage.filterLabel.courseTemplate')}

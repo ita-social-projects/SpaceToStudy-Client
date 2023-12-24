@@ -83,13 +83,8 @@
     "answer": "Insert Answer"
   },
   "errorMessages": {
-    "category": "Please select a category.",
-    "subject": "Please select a subject.",
-    "proficiencyLevel": "Please select at least one proficiency level.",
     "languages": "Please select at least one language.",
-    "description": "Please provide a description.",
     "price": "Please specify a price.",
-    "title": "Please provide a title.",
     "faq": "Only 5 questions are allowed to add"
   }
 }

@@ -15,8 +15,6 @@ import CourseToolbar from '~/containers/my-courses/course-toolbar/CourseToolbar'
 import AppButton from '~/components/app-button/AppButton'
 import Loader from '~/components/loader/Loader'
 
-import { validations } from '~/pages/create-course/CreateCourse.constants'
-
 import { getErrorMessage } from '~/utils/error-with-message'
 import {
   ButtonTypeEnum,
@@ -34,7 +32,8 @@ import { snackbarVariants } from '~/constants'
 import {
   sectionInitialData,
   initialValues,
-  defaultResponse
+  defaultResponse,
+  validations
 } from '~/pages/create-course/CreateCourse.constants'
 import { styles } from '~/pages/create-course/CreateCourse.styles'
 
