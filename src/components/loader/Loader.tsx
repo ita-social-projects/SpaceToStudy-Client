@@ -9,12 +9,21 @@ import { styles } from '~/components/loader/Loader.styles'
 interface LoaderProps {
   size?: number
   sx?: SxProps
+  containerSx?: SxProps
   pageLoad?: boolean
 }
 
-const Loader: FC<LoaderProps> = ({ size = 70, sx, pageLoad = false }) => {
+const Loader: FC<LoaderProps> = ({
+  size = 70,
+  sx,
+  containerSx,
+  pageLoad = false
+}) => {
   return (
-    <Box data-testid='loader' sx={styles.container(pageLoad)}>
+    <Box
+      data-testid='loader'
+      sx={spliceSx(styles.container(pageLoad), containerSx)}
+    >
       <CircularProgress size={size} sx={spliceSx(styles.loader, sx)} />
     </Box>
   )

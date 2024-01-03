@@ -4,6 +4,7 @@ export const styles = {
     display: { xl: 'flex' },
     flexDirection: 'column',
     justifyContent: 'center',
+    width: { xs: '100%', sm: 'auto' },
     height: { xl: '100%' }
   },
   contentWraper: { overflowY: { lg: 'auto' } },

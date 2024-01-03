@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { SxProps } from '@mui/material'
 import MenuItem from '@mui/material/MenuItem'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
@@ -15,20 +16,28 @@ import SubjectLevelChips from '~/components/subject-level-chips/SubjectLevelChip
 
 import { styles } from '~/components/course-card/CourseCard.styles'
 import useMenu from '~/hooks/use-menu'
-import { createUrlPath, getFormattedDate } from '~/utils/helper-functions'
+import {
+  createUrlPath,
+  getFormattedDate,
+  spliceSx
+} from '~/utils/helper-functions'
 import { Course, TableActionFunc } from '~/types'
 import { authRoutes } from '~/router/constants/authRoutes'
 
 interface CourseCardProps {
   course: Course
-  deleteCourse: (id: string) => void
-  duplicateCourse: (id: string) => void
+  deleteCourse?: (id: string) => void
+  duplicateCourse?: (id: string) => void
+  withMenu?: boolean
+  sx?: { [key: string]: SxProps | undefined }
 }
 
 const CourseCard: FC<CourseCardProps> = ({
   course,
   deleteCourse,
-  duplicateCourse
+  duplicateCourse,
+  withMenu = true,
+  sx
 }) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
@@ -41,10 +50,10 @@ const CourseCard: FC<CourseCardProps> = ({
     subject,
     proficiencyLevel,
     sections = [{}],
-    createdAt
+    updatedAt
   } = course
 
-  const date = getFormattedDate({ date: createdAt })
+  const date = getFormattedDate({ date: updatedAt })
 
   const onAction = async (actionFunc: TableActionFunc) => {
     closeMenu()
@@ -73,7 +82,7 @@ const CourseCard: FC<CourseCardProps> = ({
           {` ${t('common.duplicate')}`}
         </Box>
       ),
-      func: () => duplicateCourse(course._id)
+      func: () => duplicateCourse?.(course._id)
     },
     {
       id: 3,
@@ -83,7 +92,7 @@ const CourseCard: FC<CourseCardProps> = ({
           {` ${t('common.delete')}`}
         </Box>
       ),
-      func: () => deleteCourse(course._id)
+      func: () => deleteCourse?.(course._id)
     }
   ]
 
@@ -93,18 +102,29 @@ const CourseCard: FC<CourseCardProps> = ({
     </MenuItem>
   ))
 
+  const optionsMenu = (
+    <>
+      <IconButton onClick={openMenu}>
+        <MoreVertIcon />
+      </IconButton>
+      {renderMenu(menuItems)}
+    </>
+  )
+
   return (
-    <Box sx={styles.card}>
+    <Box sx={spliceSx(styles.card, sx?.card)}>
       <Box>
-        <Typography sx={styles.title}>{title}</Typography>
-        <Typography sx={styles.description}>{description}</Typography>
+        <Typography sx={spliceSx(styles.title, sx?.title)}>{title}</Typography>
+        <Typography sx={spliceSx(styles.description, sx?.description)}>
+          {description}
+        </Typography>
         <SubjectLevelChips
           color={category?.appearance.color}
           proficiencyLevel={proficiencyLevel}
           subject={subject?.name}
-          sx={styles.chipContainer}
+          sx={spliceSx(styles.chipContainer, sx?.chipContainer)}
         />
-        <Typography sx={styles.secondaryText}>
+        <Typography sx={spliceSx(styles.secondaryText, sx?.secondaryText)}>
           {`${sections.length} ${
             sections.length > 1 ? t('course.sections') : t('course.section')
           }`}
@@ -113,11 +133,10 @@ const CourseCard: FC<CourseCardProps> = ({
       <Box>
         <Divider sx={styles.line} />
         <Box sx={styles.dateContainer}>
-          <Typography sx={styles.secondaryText}>{date}</Typography>
-          <IconButton onClick={openMenu}>
-            <MoreVertIcon />
-          </IconButton>
-          {renderMenu(menuItems)}
+          <Typography sx={spliceSx(styles.secondaryText, sx?.secondaryText)}>
+            {date}
+          </Typography>
+          {withMenu && optionsMenu}
         </Box>
       </Box>
     </Box>
