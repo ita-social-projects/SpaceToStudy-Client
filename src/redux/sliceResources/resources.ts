@@ -1,14 +1,14 @@
 import { createUrlPath } from '~/utils/helper-functions'
 import { URLs } from '~/constants/request'
 import { appApi } from '~/redux/apiSlice'
-import { ApiMethodEnum } from '~/types'
 
 import {
   ItemsWithCount,
   Lesson,
   LessonData,
   EditLessonArgs,
-  LessonsQueryArgs
+  LessonsQueryArgs,
+  ApiMethodEnum
 } from '~/types'
 
 const { POST, PATCH, DELETE } = ApiMethodEnum
@@ -20,7 +20,7 @@ export const apiWithTag = appApi.enhanceEndpoints({
 export const resourcesApi = apiWithTag.injectEndpoints({
   endpoints: (builder) => ({
     getLessons: builder.query<ItemsWithCount<Lesson>, LessonsQueryArgs>({
-      query: (params) => ({
+      query: (params: LessonsQueryArgs) => ({
         url: createUrlPath(URLs.resources.lessons.get),
         params
       }),
