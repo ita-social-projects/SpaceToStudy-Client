@@ -7,6 +7,7 @@ import {
   editProfile,
   findOffers,
   myCooperations,
+  cooperationDetails,
   editLesson,
   lessonDetails,
   myOffers,
@@ -30,6 +31,12 @@ import { userProfileLoader } from '../constants/loaders'
 
 const MyCooperations = lazy(
   () => import('~/pages/my-cooperations/MyCooperations')
+)
+const CooperationDetails = lazy(
+  () =>
+    import(
+      '~/containers/my-cooperations/cooperation-details/CooperationDetails'
+    )
 )
 const EditProfile = lazy(() => import('~/pages/edit-profile/EditProfile'))
 const MyOffers = lazy(() => import('~/pages/my-offers/MyOffers'))
@@ -91,6 +98,11 @@ export const authRouter = (
       element={<MyCooperations />}
       handle={{ crumb: myCooperations }}
       path={authRoutes.accountMenu.myCooperations.route}
+    />
+    <Route
+      element={<CooperationDetails />}
+      handle={{ crumb: [myCooperations, cooperationDetails] }}
+      path={authRoutes.cooperationDetails.route}
     />
     <Route
       element={<EditProfile />}

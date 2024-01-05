@@ -8,6 +8,10 @@ export const authRoutes = {
     path: '/categories/subjects/find-offers'
   },
   offerDetails: { route: 'offer-details/:id', path: '/offer-details' },
+  cooperationDetails: {
+    route: 'my-cooperations/:id',
+    path: '/my-cooperations'
+  },
   myResources: {
     root: { route: 'my-resources', path: '/my-resources' },
     newLesson: {
