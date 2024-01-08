@@ -1,3 +1,5 @@
+import { TypographyVariantEnum } from '~/types'
+
 export const styles = {
   selectField: {
     height: '46px',
@@ -12,7 +14,7 @@ export const styles = {
     }
   },
   selectTitle: {
-    typography: 'body1',
+    typography: TypographyVariantEnum.Body1,
     color: 'primary.500',
     mr: '8px',
     minWidth: '65px'

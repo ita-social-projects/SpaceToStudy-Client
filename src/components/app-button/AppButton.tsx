@@ -1,4 +1,5 @@
 import { FC, ElementType, ReactNode } from 'react'
+import { SxProps } from '@mui/material'
 import Button, { ButtonProps } from '@mui/material/Button'
 
 import Loader from '~/components/loader/Loader'
@@ -10,6 +11,7 @@ interface AppButtonProps extends ButtonProps {
   disabled?: boolean
   component?: ElementType
   to?: string
+  sx?: SxProps
 }
 
 const AppButton: FC<AppButtonProps> = ({
@@ -18,6 +20,7 @@ const AppButton: FC<AppButtonProps> = ({
   disabled,
   variant = ButtonVariantEnum.Contained,
   size = SizeEnum.Large,
+  sx,
   ...props
 }) => {
   const loader = <Loader size={20} sx={{ opacity: '0.6' }} />
@@ -26,6 +29,7 @@ const AppButton: FC<AppButtonProps> = ({
     <Button
       disabled={loading || disabled}
       size={size}
+      sx={sx}
       variant={variant}
       {...props}
     >

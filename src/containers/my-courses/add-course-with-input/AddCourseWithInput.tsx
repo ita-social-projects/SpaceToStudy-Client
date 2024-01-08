@@ -66,6 +66,30 @@ const AddCourseWithInput: FC<AddCoursesWithInputProps> = ({
 
   const handleToggle = () => (isOpen ? closeDrawer() : openDrawer())
 
+  const desktopView = !isTablet && !isMobile && (
+    <Box sx={styles.filtersBox(isTablet)}>
+      <FiltersToggle handleToggle={handleToggle} />
+      <CoursesFilterBar />
+      <InputWithIcon
+        endAdornment={<SearchIcon sx={styles.searchIcon} />}
+        onChange={onChange}
+        onClear={onClear}
+        placeholder={t('common.search')}
+        sx={styles.input}
+        value={inputValue}
+      />
+    </Box>
+  )
+
+  const tabletView = isTablet && (
+    <Box sx={styles.filtersBox(isTablet)}>
+      <FiltersToggle handleToggle={handleToggle} />
+      <CoursesFilterBar />
+    </Box>
+  )
+
+  const mobileView = isMobile && <FiltersToggle handleToggle={handleToggle} />
+
   return (
     <Box sx={styles.container}>
       <AppButton
@@ -77,29 +101,9 @@ const AddCourseWithInput: FC<AddCoursesWithInputProps> = ({
         <AddIcon sx={styles.addIcon} />
       </AppButton>
 
-      {!isTablet && !isMobile && (
-        <Box sx={styles.filtersBox(isTablet)}>
-          <FiltersToggle handleToggle={handleToggle} />
-          <CoursesFilterBar />
-          <InputWithIcon
-            endAdornment={<SearchIcon sx={styles.searchIcon} />}
-            onChange={onChange}
-            onClear={onClear}
-            placeholder={t('common.search')}
-            sx={styles.input}
-            value={inputValue}
-          />
-        </Box>
-      )}
-
-      {isTablet && (
-        <Box sx={styles.filtersBox(isTablet)}>
-          <FiltersToggle handleToggle={handleToggle} />
-          <CoursesFilterBar />
-        </Box>
-      )}
-
-      {isMobile && <FiltersToggle handleToggle={handleToggle} />}
+      {desktopView}
+      {tabletView}
+      {mobileView}
 
       <CoursesFiltersDrawer
         deviceFields={isMobile && <CoursesFilterBar sx={styles.sortInput} />}

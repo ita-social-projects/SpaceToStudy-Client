@@ -29,7 +29,7 @@ interface CoursesFiltersDrawerProps {
   onClose: () => void
   isOpen: boolean
   handleReset: () => void
-  deviceFields: ReactNode | null
+  deviceFields?: ReactNode
 }
 const fields = [
   { value: 'music', title: 'Music' },

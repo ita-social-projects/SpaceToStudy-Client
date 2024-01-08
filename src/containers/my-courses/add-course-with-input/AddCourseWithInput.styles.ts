@@ -5,10 +5,10 @@ const box = {
 }
 
 export const styles = {
-  filtersBox: (isWidth: boolean) => ({
+  filtersBox: (isTablet: boolean) => ({
     ...box,
     width: '100%',
-    maxWidth: isWidth ? '300px' : '642px'
+    maxWidth: isTablet ? '300px' : '642px'
   }),
   container: {
     ...box,
