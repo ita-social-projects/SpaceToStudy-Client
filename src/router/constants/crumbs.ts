@@ -28,6 +28,11 @@ export const myCooperations = {
   path: authRoutes.accountMenu.myCooperations.route
 }
 
+export const cooperationDetails = {
+  name: t('breadCrumbs.cooperationDetails'),
+  path: authRoutes.cooperationDetails.route
+}
+
 export const myOffers = {
   name: t('breadCrumbs.myOffers'),
   path: authRoutes.accountMenu.myOffers.route

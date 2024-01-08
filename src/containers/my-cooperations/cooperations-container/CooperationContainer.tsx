@@ -15,6 +15,7 @@ import {
 } from '~/containers/my-cooperations/cooperations-container/CooperationContainer.constants'
 import { styles } from '~/containers/my-cooperations/cooperations-container/CooperationContainer.styles'
 import { Cooperation, SizeEnum, StatusEnum } from '~/types'
+import { useNavigate } from 'react-router-dom'
 
 interface CooperationContainerProps {
   items: Cooperation[]
@@ -31,6 +32,7 @@ const CooperationContainer: FC<CooperationContainerProps> = ({
 }) => {
   const breakpoints = useBreakpoints()
   const { openModal } = useModalContext()
+  const navigate = useNavigate()
 
   const columnsToShow = ajustColumns<Cooperation>(
     breakpoints,
@@ -39,15 +41,16 @@ const CooperationContainer: FC<CooperationContainerProps> = ({
   )
 
   const handleCardClick = (item: Cooperation) => {
-    item.status === StatusEnum.Pending &&
-      openModal({
-        component: (
-          <AcceptCooperationModal
-            cooperation={item}
-            getCooperations={getCooperations}
-          />
-        )
-      })
+    item.status === StatusEnum.Pending
+      ? openModal({
+          component: (
+            <AcceptCooperationModal
+              cooperation={item}
+              getCooperations={getCooperations}
+            />
+          )
+        })
+      : item.status === StatusEnum.Active && navigate(`./${item._id}`)
   }
 
   const cooperationGrid = (
