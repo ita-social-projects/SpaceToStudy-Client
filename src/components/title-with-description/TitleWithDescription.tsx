@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography'
 import { styles } from '~/components/title-with-description/TitleWithDescription.styles'
 
 interface TitleWithDescriptionProps {
-  title: string | ReactElement
+  title?: string | ReactElement
   description?: string | ReactNode
   style?: {
     wrapper?: SxProps

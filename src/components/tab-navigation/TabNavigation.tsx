@@ -7,12 +7,14 @@ import Tab from '~/components/tab/Tab'
 
 import { QuizTabsData } from '~/pages/new-quiz/NewQuiz.constants'
 import { MyResoursesTabsData } from '~/pages/my-resources/MyResources.constants'
+import { MyCooperationsTabsData } from '~/containers/my-cooperations/cooperation-details/CooperationDetails.constans'
+
 import { spliceSx } from '~/utils/helper-functions'
 import { styles } from '~/components/tab-navigation/TabNavigation.styles'
 
 interface TabNavigationProps {
   activeTab: string
-  tabsData: QuizTabsData | MyResoursesTabsData
+  tabsData: QuizTabsData | MyResoursesTabsData | MyCooperationsTabsData
   handleClick: (tab: string) => void
   sx?: { root?: SxProps; tab?: SxProps }
 }
@@ -37,7 +39,7 @@ const TabNavigation: React.FC<TabNavigationProps> = ({
       >
         <Box sx={styles.titleBox}>
           {tabsData[key].icon}
-          {t(tabsData[key].title)}
+          {t(tabsData[key].title!)}
         </Box>
       </Tab>
     )
