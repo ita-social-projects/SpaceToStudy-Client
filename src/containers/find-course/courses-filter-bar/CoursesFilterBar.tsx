@@ -5,12 +5,13 @@ import AppSelect from '~/components/app-select/AppSelect'
 import { sortTranslationKeys } from '~/containers/find-course/courses-filter-block/CoursesFilterBlock.constants'
 import { styles } from '~/containers/find-course/courses-filter-bar/CoursesFilterBar.styles'
 
-const CoursesFilterBar = () => {
-  const { t } = useTranslation()
+interface CoursesFilterBarProps {
+  value: string
+  onValueChange: (value: string) => void
+}
 
-  const handleSortBy = (value: string) => {
-    console.log(value)
-  }
+const CoursesFilterBar = ({ value, onValueChange }: CoursesFilterBarProps) => {
+  const { t } = useTranslation()
 
   const sortOptions = sortTranslationKeys.map(({ title, value }) => ({
     title: t(title),
@@ -22,8 +23,8 @@ const CoursesFilterBar = () => {
       <AppSelect
         fields={sortOptions}
         selectTitle={t('filters.sortBy.sortByTitle')}
-        setValue={handleSortBy}
-        value={sortOptions[0].value}
+        setValue={onValueChange}
+        value={value}
       />
     </Box>
   )

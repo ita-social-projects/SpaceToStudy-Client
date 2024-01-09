@@ -3,6 +3,7 @@ export const styles = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
+    gap: '24px',
     mb: '32px'
   },
   boxContainer: {

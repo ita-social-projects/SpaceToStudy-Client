@@ -1,6 +1,7 @@
 {
   "title": "My courses",
   "buttonLabel": "New course",
+  "course": "course",
   "sortTitles": {
     "newest": "Newest",
     "oldest": "Oldest"
@@ -19,7 +20,8 @@
     "courseTemplate": "for the course template:"
   },
   "notFound": {
-    "description": "We couldn't find the courses you were looking for."
+    "description": "We couldn't find the courses you were looking for.",
+    "largeDescription": "We couldn't find the courses you were looking for. Please, try again or create a new one."
   },
   "modalMessages": {
     "confirmDeletionMessage": "This action is permanent and will remove all related content. Please review your decision before proceeding.",

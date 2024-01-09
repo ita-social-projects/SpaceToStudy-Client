@@ -37,6 +37,7 @@ import chatPage from './chat.json'
 import lesson from './lesson.json'
 import questionPage from './question-page.json'
 import course from './course.json'
+import cooperationDetailsPage from './cooperation-details.json'
 
 const en = {
   translations: {
@@ -78,7 +79,8 @@ const en = {
     chatPage,
     lesson,
     questionPage,
-    course
+    course,
+    cooperationDetailsPage
   }
 }
 
