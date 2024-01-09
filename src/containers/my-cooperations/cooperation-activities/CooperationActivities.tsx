@@ -12,26 +12,22 @@ import Crop75Icon from '@mui/icons-material/Crop75'
 import useMenu from '~/hooks/use-menu'
 import ImgTitleDescription from '~/components/img-title-description/ImgTitleDescription'
 import AppButton from '~/components/app-button/AppButton'
-import { menuTypes } from '~/containers/my-cooperations/cooperation-activities/CooperationActivities.constants'
 
-import { SizeEnum, ButtonVariantEnum } from '~/types'
+import { SizeEnum, ButtonVariantEnum, ComponentEnum } from '~/types'
 import defaultImg from '~/assets/img/cooperation-details/default.svg'
 
 import { styles } from '~/containers/my-cooperations/cooperation-activities/CooperationActivities.styles'
 
 const CooperationActivities = () => {
-  const [activeMenu, setActiveMenu] = useState<string>('')
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false)
 
   const { t } = useTranslation()
   const { openMenu, renderMenu, closeMenu } = useMenu()
 
-  const handleMenuClick =
-    (menuType: string) => (event: MouseEvent<HTMLButtonElement>) => {
-      setActiveMenu(menuType)
-      openMenu(event)
-      setIsMenuOpen((prevState) => !prevState)
-    }
+  const handleMenuClick = () => (event: MouseEvent<HTMLButtonElement>) => {
+    openMenu(event)
+    setIsMenuOpen((prevState) => !prevState)
+  }
 
   const menuIcon = isMenuOpen ? (
     <KeyboardArrowUpIcon />
@@ -65,19 +61,19 @@ const CooperationActivities = () => {
   const componentDescription = (
     <Typography>
       {t('cooperationsPage.description.existingCourse')}
-      <Typography component='span' sx={styles.weightBox}>
+      <Typography component={ComponentEnum.Span} sx={styles.weightBox}>
         {t('cooperationsPage.description.courseTemplate')}
       </Typography>
       {t('cooperationsPage.description.resourceLibrary')}
-      <Typography component='span' sx={styles.weightBox}>
+      <Typography component={ComponentEnum.Span} sx={styles.weightBox}>
         {t('cooperationsPage.description.module')}
       </Typography>
       {t('cooperationsPage.description.fillThis')}
-      <Typography component='span' sx={styles.weightBox}>
+      <Typography component={ComponentEnum.Span} sx={styles.weightBox}>
         {t('cooperationsPage.description.lessons')}
       </Typography>
       {t('cooperationsPage.description.or')}
-      <Typography component='span' sx={styles.weightBox}>
+      <Typography component={ComponentEnum.Span} sx={styles.weightBox}>
         {t('cooperationsPage.description.quizzes')}
       </Typography>
       {t('cooperationsPage.description.resourcesLibrary')}
@@ -86,8 +82,7 @@ const CooperationActivities = () => {
 
   const startIcon = <AddIcon fontSize={SizeEnum.Small} />
 
-  const menuCondition =
-    activeMenu === menuTypes.courseTemplate && renderMenu(menu)
+  const menuCondition = renderMenu(menu)
 
   return (
     <Box sx={styles.logoBlock}>
@@ -98,7 +93,7 @@ const CooperationActivities = () => {
       />
       <AppButton
         endIcon={menuIcon}
-        onClick={handleMenuClick(menuTypes.courseTemplate)}
+        onClick={handleMenuClick()}
         size={SizeEnum.Large}
         startIcon={startIcon}
         sx={styles.button}
