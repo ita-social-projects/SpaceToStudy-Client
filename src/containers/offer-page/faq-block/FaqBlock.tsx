@@ -54,7 +54,7 @@ const FaqBlock = <T extends CreateOrUpdateOfferData>({
   }
 
   const questionsAnswers = data.FAQ.map((el, idx, array) => (
-    <Box key={el.question} sx={styles.faqInputsBlock}>
+    <Box key={idx} sx={styles.faqInputsBlock}>
       <Box sx={styles.faqInputs}>
         <AppTextField
           fullWidth
