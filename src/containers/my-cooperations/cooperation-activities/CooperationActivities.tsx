@@ -58,24 +58,22 @@ const CooperationActivities = () => {
     </MenuItem>
   ))
 
+  const createDescriptionSpan = (text: string) => (
+    <Typography component={ComponentEnum.Span} sx={styles.weightBox}>
+      {t(`cooperationsPage.description.${text}`)}
+    </Typography>
+  )
+
   const componentDescription = (
     <Typography>
       {t('cooperationsPage.description.existingCourse')}
-      <Typography component={ComponentEnum.Span} sx={styles.weightBox}>
-        {t('cooperationsPage.description.courseTemplate')}
-      </Typography>
+      {createDescriptionSpan('courseTemplate')}
       {t('cooperationsPage.description.resourceLibrary')}
-      <Typography component={ComponentEnum.Span} sx={styles.weightBox}>
-        {t('cooperationsPage.description.module')}
-      </Typography>
+      {createDescriptionSpan('module')}
       {t('cooperationsPage.description.fillThis')}
-      <Typography component={ComponentEnum.Span} sx={styles.weightBox}>
-        {t('cooperationsPage.description.lessons')}
-      </Typography>
+      {createDescriptionSpan('lessons')}
       {t('cooperationsPage.description.or')}
-      <Typography component={ComponentEnum.Span} sx={styles.weightBox}>
-        {t('cooperationsPage.description.quizzes')}
-      </Typography>
+      {createDescriptionSpan('quizzes')}
       {t('cooperationsPage.description.resourcesLibrary')}
     </Typography>
   )
