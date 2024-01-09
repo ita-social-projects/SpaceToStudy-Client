@@ -62,7 +62,11 @@
     "questionsShuffle": "Questions shuffle",
     "questionsShuffleDesc": "Questions will be shuffled with every attempt",
     "quizView": "Quiz view",
-    "quizViewDesc": "Change between scroll or stepper quiz views and select the more suitable one."
+    "quizViewDesc": "Change between scroll or stepper quiz views and select the more suitable one.",
+    "types": {
+      "scroll": "Scroll",
+      "stepper": "Stepper"
+    }
   },
   "questions": {
     "addBtn": "New question",

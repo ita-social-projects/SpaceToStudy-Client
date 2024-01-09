@@ -11,3 +11,14 @@ export enum QuestionTypesEnum {
   OpenAnswer = 'openAnswer',
   OneAnswer = 'oneAnswer'
 }
+
+export enum QuizViewEnum {
+  Stepper = 'Stepper',
+  Scroll = 'Scroll'
+}
+
+export enum QuizTabsEnum {
+  Edit = 'edit',
+  Quizzes = 'quizzes',
+  Settings = 'settings'
+}
