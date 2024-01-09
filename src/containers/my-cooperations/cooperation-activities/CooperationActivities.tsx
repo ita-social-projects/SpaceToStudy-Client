@@ -9,24 +9,32 @@ import ViewComfyOutlinedIcon from '@mui/icons-material/ViewComfyOutlined'
 import AddIcon from '@mui/icons-material/Add'
 import Crop75Icon from '@mui/icons-material/Crop75'
 
+import { useModalContext } from '~/context/modal-context'
 import useMenu from '~/hooks/use-menu'
 import ImgTitleDescription from '~/components/img-title-description/ImgTitleDescription'
+import AddCourseTemplateModal from '~/containers/cooperation-details/add-course-modal-modal/AddCourseTemplateModal'
 import AppButton from '~/components/app-button/AppButton'
 
 import { SizeEnum, ButtonVariantEnum, ComponentEnum } from '~/types'
 import defaultImg from '~/assets/img/cooperation-details/default.svg'
-
 import { styles } from '~/containers/my-cooperations/cooperation-activities/CooperationActivities.styles'
 
 const CooperationActivities = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false)
-
   const { t } = useTranslation()
+  const { openModal, closeModal } = useModalContext()
   const { openMenu, renderMenu, closeMenu } = useMenu()
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false)
 
   const handleMenuClick = () => (event: MouseEvent<HTMLButtonElement>) => {
     openMenu(event)
     setIsMenuOpen((prevState) => !prevState)
+  }
+
+  const openAddCourseTemplateModal = () => {
+    onCloseMenu()
+    openModal({
+      component: <AddCourseTemplateModal closeModal={closeModal} />
+    })
   }
 
   const menuIcon = isMenuOpen ? (
@@ -43,17 +51,19 @@ const CooperationActivities = () => {
     {
       id: 1,
       label: <>{t('cooperationsPage.menyTypes.courseTemplate')}</>,
-      icon: <ViewComfyOutlinedIcon />
+      icon: <ViewComfyOutlinedIcon />,
+      onClick: openAddCourseTemplateModal
     },
     {
       id: 2,
       label: <>{t('cooperationsPage.menyTypes.scratch')}</>,
-      icon: <Crop75Icon />
+      icon: <Crop75Icon />,
+      onClick: onCloseMenu
     }
   ]
 
-  const menu = menuItems.map(({ id, label, icon }) => (
-    <MenuItem key={id} onClick={onCloseMenu} sx={styles.menuItem}>
+  const menu = menuItems.map(({ id, label, icon, onClick }) => (
+    <MenuItem key={id} onClick={onClick} sx={styles.menuItem}>
       {icon} {label}
     </MenuItem>
   ))
