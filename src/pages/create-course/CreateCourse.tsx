@@ -179,6 +179,7 @@ const CreateCourse = () => {
           handleSectionNonInputChange={handleSectionNonInputChange}
           items={data.sections}
           setSectionsItems={setSectionsItems}
+          titleText='defaultNewTitle'
         />
         <Box sx={styles.functionalButton}>
           <AppButton

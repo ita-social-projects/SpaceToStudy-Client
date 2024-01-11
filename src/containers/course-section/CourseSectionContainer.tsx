@@ -60,6 +60,7 @@ interface SectionProps {
     field: keyof CourseSection,
     value: CourseResources[]
   ) => void
+  titleText: string
 }
 
 type openModalFunc = () => void
@@ -69,7 +70,8 @@ const CourseSectionContainer: FC<SectionProps> = ({
   sections,
   setSectionsItems,
   handleSectionInputChange,
-  handleSectionNonInputChange
+  handleSectionNonInputChange,
+  titleText
 }) => {
   const { t } = useTranslation()
   const { openMenu, renderMenu, closeMenu } = useMenu()
@@ -293,7 +295,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
           InputProps={styles.titleInput}
           fullWidth
           inputProps={styles.input}
-          label={titleInput ? '' : t('course.courseSection.defaultNewTitle')}
+          label={titleInput ? '' : t(`course.courseSection.${titleText}`)}
           onBlur={(event) =>
             handleSectionInputChange(
               sectionData.id,

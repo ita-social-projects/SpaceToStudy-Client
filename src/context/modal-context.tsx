@@ -4,23 +4,28 @@ import {
   useCallback,
   useContext,
   useMemo,
-  useState
+  useState,
+  Dispatch,
+  ReactElement,
+  SetStateAction
 } from 'react'
 import PopupDialog from '~/components/popup-dialog/PopupDialog'
 import { PaperProps } from '@mui/material/Paper'
 
 interface Component {
-  component: React.ReactElement
+  component: ReactElement
   paperProps?: PaperProps
 }
 
 interface ModalProvideContext {
   openModal: (component: Component, delayToClose?: number) => void
   closeModal: () => void
+  isScratch: boolean
+  setIsScratch: Dispatch<SetStateAction<boolean>>
 }
 
 interface ModalProviderProps {
-  children: React.ReactElement
+  children: ReactElement
 }
 
 const ModalContext = createContext<ModalProvideContext>(
@@ -28,9 +33,10 @@ const ModalContext = createContext<ModalProvideContext>(
 )
 
 const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
-  const [modal, setModal] = useState<React.ReactElement | null>(null)
+  const [modal, setModal] = useState<ReactElement | null>(null)
   const [paperProps, setPaperProps] = useState<PaperProps>({})
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null)
+  const [isScratch, setIsScratch] = useState<boolean>(false)
 
   const closeModal = useCallback(() => {
     setModal(null)
@@ -57,8 +63,8 @@ const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
   )
 
   const contextValue = useMemo(
-    () => ({ openModal, closeModal }),
-    [closeModal, openModal]
+    () => ({ openModal, closeModal, isScratch, setIsScratch }),
+    [closeModal, openModal, isScratch, setIsScratch]
   )
 
   return (

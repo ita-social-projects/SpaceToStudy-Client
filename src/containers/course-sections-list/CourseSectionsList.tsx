@@ -30,13 +30,15 @@ interface CourseSectionsListProps {
     field: keyof CourseSection,
     value: CourseResources[]
   ) => void
+  titleText: string
 }
 
 const CourseSectionsList: FC<CourseSectionsListProps> = ({
   items,
   setSectionsItems,
   handleSectionInputChange,
-  handleSectionNonInputChange
+  handleSectionNonInputChange,
+  titleText
 }) => {
   const { enabled } = useDroppable()
   const reorder = (
@@ -82,6 +84,7 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
             sectionData={item}
             sections={items}
             setSectionsItems={setSectionsItems}
+            titleText={titleText}
           />
         </Box>
       )}

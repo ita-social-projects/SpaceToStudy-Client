@@ -4,6 +4,7 @@
     "sections": "Розділи",
     "courseSection": {
         "defaultNewTitle": "Розділ 1",
+        "moduleTitle": "Модуль 1",
         "defaultNewDescription": "Опис ...",
         "addResourceBtn": "Додати матеріал",
         "resourcesMenu": {
