@@ -4,6 +4,7 @@ import { TypographyVariantEnum } from '~/types'
 export const styles = {
   root: {
     width: { lg: '1130px', md: '786px', xs: '100%' },
+    height: '600px',
     p: { sm: '40px', xs: '20px' },
     boxSizing: 'border-box',
     backgroundColor: 'backgroundColor'
@@ -21,12 +22,19 @@ export const styles = {
     columnGap: '16px',
     mt: '32px'
   },
+  toolbarContainer: {
+    display: 'flex',
+    justufyContent: 'space-between'
+  },
   searchIcon: { color: 'primary.700' },
   searchInput: {
     width: '100%',
     maxWidth: { md: '350px', xs: '220px' },
     border: `1px solid ${palette.primary[400]}`,
     borderRadius: '6px'
+  },
+  filtersBtn: {
+    cursor: 'pointer'
   },
   cardsWrapper: {
     display: 'grid',
@@ -37,12 +45,12 @@ export const styles = {
     gap: '16px',
     mb: 0
   },
-  cardsScroll: {
-    height: '300px',
+  cardsScroll: (isFiltersOpened: boolean) => ({
+    height: isFiltersOpened ? '228px' : '300px',
     margin: '16px 0',
     overflow: 'auto',
     padding: '10px 20px 10px 10px'
-  },
+  }),
   card: {
     card: { width: '100%', boxSizing: 'border-box', cursor: 'pointer' },
     title: { typography: TypographyVariantEnum.MidTitle },

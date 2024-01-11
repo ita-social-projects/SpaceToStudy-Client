@@ -71,4 +71,14 @@ describe('AddCourseTemplateModal test', () => {
 
     expect(closeModalMock).toHaveBeenCalled()
   })
+
+  it('should render filters button and show additional filters on click', () => {
+    const filtersBtn = screen.getByTestId('toggle-button')
+
+    fireEvent.click(filtersBtn)
+
+    const clearBtn = screen.getByText('common.clear')
+
+    expect(clearBtn).toBeInTheDocument()
+  })
 })
