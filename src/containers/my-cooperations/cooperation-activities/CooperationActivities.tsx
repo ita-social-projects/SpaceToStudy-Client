@@ -21,7 +21,7 @@ import { styles } from '~/containers/my-cooperations/cooperation-activities/Coop
 
 const CooperationActivities = () => {
   const { t } = useTranslation()
-  const { openModal, closeModal } = useModalContext()
+  const { openModal, closeModal, setIsScratch } = useModalContext()
   const { openMenu, renderMenu, closeMenu } = useMenu()
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false)
 
@@ -31,7 +31,7 @@ const CooperationActivities = () => {
   }
 
   const openAddCourseTemplateModal = () => {
-    onCloseMenu()
+    closeMenu()
     openModal({
       component: <AddCourseTemplateModal closeModal={closeModal} />
     })
@@ -43,8 +43,9 @@ const CooperationActivities = () => {
     <KeyboardArrowDownIcon />
   )
 
-  const onCloseMenu = () => {
+  const handleFromScratch = () => {
     closeMenu()
+    setIsScratch(true)
   }
 
   const menuItems = [
@@ -58,7 +59,7 @@ const CooperationActivities = () => {
       id: 2,
       label: <>{t('cooperationsPage.menyTypes.scratch')}</>,
       icon: <Crop75Icon />,
-      onClick: onCloseMenu
+      onClick: handleFromScratch
     }
   ]
 

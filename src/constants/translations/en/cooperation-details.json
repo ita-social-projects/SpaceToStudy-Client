@@ -2,5 +2,11 @@
   "addCourseModal": {
     "title": "Select course template",
     "description": "Choose the course template from your library for cooperation."
+  },
+  "publish": "Publish: Open all",
+  "allResources": "All resource(s) become available immediately for preview and completion for Student after saving.",
+  "select": {
+    "openAll": "Open All",
+    "openManually": "Open manually"
   }
 }
