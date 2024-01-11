@@ -5,7 +5,7 @@ import {
   sectionInitialData,
   initialValues
 } from '~/pages/create-course/CreateCourse.constants'
-import { CourseForm, CourseSection, CourseResources } from '~/types'
+import { CourseForm, CooperationSection, CourseResources } from '~/types'
 
 const CooperationActivitiesList = () => {
   const { data, handleNonInputValueChange } = useForm<CourseForm>({
@@ -13,46 +13,46 @@ const CooperationActivitiesList = () => {
     submitWithData: true
   })
 
-  const setSectionsItems = (value: CourseSection[]) => {
+  const setSectionsData = (value: CooperationSection[]) => {
     handleNonInputValueChange('sections', value)
   }
 
-  const handleSectionInputChange = (
+  const handleSectionChange = (
     id: string,
-    field: keyof CourseSection,
+    field: keyof CooperationSection,
     value: string
   ) => {
-    const sectionToEdit = data.sections.find((section) => section.id === id)
+    const sectionToEdit = data.sections.find((item) => item.id === id)
     sectionToEdit && Object.defineProperty(sectionToEdit, field, { value })
   }
 
-  const handleSectionNonInputChange = (
+  const handleNonInputChange = (
     id: string,
-    field: keyof CourseSection,
+    field: keyof CooperationSection,
     value: CourseResources[]
   ) => {
     const sectionToEdit = data.sections.find((section) => section.id === id)
     sectionToEdit && Object.defineProperty(sectionToEdit, field, { value })
-    setSectionsItems(data.sections)
+    setSectionsData(data.sections)
   }
 
-  const createNewSection = () => {
+  const addNewSection = () => {
     const newSectionData = { ...sectionInitialData }
     newSectionData.id = Date.now().toString()
-    setSectionsItems([...data.sections, newSectionData])
+    setSectionsData([...data.sections, newSectionData])
   }
 
   if (data.sections.length === 0) {
-    createNewSection()
+    addNewSection()
   }
 
   return (
     <Box>
       <CourseSectionsList
-        handleSectionInputChange={handleSectionInputChange}
-        handleSectionNonInputChange={handleSectionNonInputChange}
+        handleSectionInputChange={handleSectionChange}
+        handleSectionNonInputChange={handleNonInputChange}
         items={data.sections}
-        setSectionsItems={setSectionsItems}
+        setSectionsItems={setSectionsData}
         titleText='moduleTitle'
       />
     </Box>
