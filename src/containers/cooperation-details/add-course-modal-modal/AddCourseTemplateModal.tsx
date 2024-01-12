@@ -103,30 +103,18 @@ const AddCourseTemplateModal: FC<AddCourseTemplateModalProps> = ({
     setShowFilters((prevShowFilters) => !prevShowFilters)
   }
 
-  const filterBySearch = (item: Course): boolean =>
-    'title' in item &&
-    item.title.toLowerCase().includes(searchValue.toLowerCase())
-
-  const filterByCategory = (item: Course): boolean =>
-    !filters.category || item.category?._id === filters.category
-
-  const filterBySubject = (item: Course): boolean =>
-    !filters.subject || item.subject?._id === filters.subject
-
-  const filterByProficiencyLevel = (item: Course): boolean =>
-    !filters.proficiencyLevel.length ||
-    filters.proficiencyLevel.some(
-      (level) => item.proficiencyLevel?.includes(level)
-    )
-
   const getItems = () => {
     return response.items
       .filter(
         (item) =>
-          filterBySearch(item) &&
-          filterByCategory(item) &&
-          filterBySubject(item) &&
-          filterByProficiencyLevel(item)
+          'title' in item &&
+          item.title.toLowerCase().includes(searchValue.toLowerCase()) &&
+          (!filters.category || item.category?._id === filters.category) &&
+          (!filters.subject || item.subject?._id === filters.subject) &&
+          (!filters.proficiencyLevel.length ||
+            filters.proficiencyLevel.some(
+              (level) => item.proficiencyLevel?.includes(level)
+            ))
       )
       .sort((a, b) => {
         const valueA = new Date(a.updatedAt).getTime()
