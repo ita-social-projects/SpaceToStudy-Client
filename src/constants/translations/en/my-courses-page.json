@@ -39,6 +39,7 @@
     "clearFilters": "Clear filters",
     "applyFilters": "Apply filters",
     "categoryLabel": "Category",
-    "subjectLabel": "Subject"
+    "subjectLabel": "Subject",
+    "search": "Search by title"
   }
 }

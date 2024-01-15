@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import FilterListIcon from '@mui/icons-material/FilterList'
 import Typography from '@mui/material/Typography'
@@ -8,6 +8,7 @@ import Box from '@mui/material/Box'
 import AppDrawer from '~/components/app-drawer/AppDrawer'
 import AppSelect from '~/components/app-select/AppSelect'
 import CheckboxList from '~/components/checkbox-list/CheckboxList'
+import FilterInput from '~/components/filter-input/FilterInput'
 
 import { spliceSx } from '~/utils/helper-functions'
 import { styles } from '~/containers/my-courses/courses-filters-drawer/CoursesFiltersDrawer.styles'
@@ -28,6 +29,7 @@ interface CoursesFiltersDrawerProps {
   onClose: () => void
   isOpen: boolean
   handleReset: () => void
+  deviceFields?: ReactNode
 }
 const fields = [
   { value: 'music', title: 'Music' },
@@ -40,24 +42,21 @@ const CoursesFiltersDrawer: FC<CoursesFiltersDrawerProps> = ({
   handleFilterChange,
   onClose,
   isOpen,
-  handleReset
+  handleReset,
+  deviceFields
 }) => {
   const levelOptions = Object.values(ProficiencyLevelEnum)
   const { t } = useTranslation()
-
   return (
-    <AppDrawer
-      PaperProps={{ sx: styles.paper }}
-      anchor={PositionEnum.Left}
-      onClose={onClose}
-      open={isOpen}
-    >
+    <AppDrawer anchor={PositionEnum.Left} onClose={onClose} open={isOpen}>
       <Box sx={styles.titleWithIcon}>
         <FilterListIcon sx={styles.icon} />
         <Typography sx={styles.title}>
           {t('myCoursesPage.coursesFilter.coursesFilterLabel')}
         </Typography>
       </Box>
+
+      <Box sx={styles.addedFiled}>{deviceFields}</Box>
 
       <Box sx={styles.categorySelect}>
         <Typography sx={styles.titleMargin}>
@@ -113,6 +112,15 @@ const CoursesFiltersDrawer: FC<CoursesFiltersDrawerProps> = ({
           value={filters.proficiencyLevel}
         />
       </Box>
+
+      <Typography sx={styles.titleMargin}>
+        {t('myCoursesPage.coursesFilter.search')}:
+      </Typography>
+      <FilterInput
+        onChange={(value) => handleFilterChange('title', value)}
+        placeholder={t('common.search')}
+        value={filters.title}
+      />
 
       <Button
         onClick={() => handleReset()}

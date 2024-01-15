@@ -43,6 +43,7 @@ export interface CourseSection {
 export interface CourseFilters extends Pick<Course, 'proficiencyLevel'> {
   category: string
   subject: string
+  title: string
 }
 
 export interface GetCoursesParams extends Partial<RequestParams> {
