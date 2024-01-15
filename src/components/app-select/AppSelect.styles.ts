@@ -1,17 +1,21 @@
 export const styles = {
   selectField: {
+    height: '46px',
     minWidth: '115px'
   },
   selectContainer: {
     display: 'flex',
     alignItems: 'center',
-    flex: 1
+    flex: 1,
+    '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+      borderColor: 'primary.200'
+    }
   },
   selectTitle: {
-    typography: 'body2',
+    typography: 'body1',
     color: 'primary.500',
     mr: '8px',
-    minWidth: '55px'
+    minWidth: '65px'
   },
   formControl: {
     '& label': {

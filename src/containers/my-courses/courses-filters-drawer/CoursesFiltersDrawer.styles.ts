@@ -1,12 +1,9 @@
 export const styles = {
-  paper: {
-    width: '420px',
-    padding: '32px'
-  },
   titleWithIcon: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
+    mb: '32px'
   },
   icon: {
     color: 'primary.700',
@@ -22,7 +19,6 @@ export const styles = {
     fontWeight: 500
   },
   categorySelect: {
-    mt: '32px',
     color: 'basic.bismark'
   },
   subjectSelect: {
@@ -46,6 +42,11 @@ export const styles = {
   },
   disabledTitle: {
     color: 'basic.gray'
+  },
+  addedFiled: {
+    '& p': {
+      mb: '10px'
+    }
   },
   inlineBlock: (isBold: boolean) => ({
     display: 'inline-block',

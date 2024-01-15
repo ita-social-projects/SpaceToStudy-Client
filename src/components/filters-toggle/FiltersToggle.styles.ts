@@ -4,7 +4,7 @@ const container = {
 }
 
 export const styles = {
-  container: { ...container, p: '12px' },
+  container: { ...container },
   cursorContainer: (clickable: boolean) => ({
     ...container,
     cursor: clickable ? 'pointer' : 'standart'
