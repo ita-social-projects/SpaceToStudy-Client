@@ -17,22 +17,18 @@ export const validations = {
   languages: (value: string[] | string) =>
     emptyField(value?.toString(), 'offerPage.errorMessages.languages'),
   category: (value: string | null) =>
-    emptyField(value, 'offerPage.errorMessages.category'),
+    emptyField(value, 'common.errorMessages.category'),
   subject: (value: string | null) =>
-    emptyField(value, 'offerPage.errorMessages.subject'),
+    emptyField(value, 'common.errorMessages.subject'),
   price: (value: string) => numberField(value, 'offerPage.errorMessages.price'),
   description: (value: string) =>
     emptyField(
       value,
-      'offerPage.errorMessages.description',
+      'common.errorMessages.description',
       textField(20, 1000)(value)
     ),
   title: (value: string) =>
-    emptyField(
-      value,
-      'offerPage.errorMessages.title',
-      textField(0, 100)(value)
-    ),
+    emptyField(value, 'common.errorMessages.title', textField(0, 100)(value)),
   proficiencyLevel: (value: string[] | string) =>
-    emptyField(value?.toString(), 'offerPage.errorMessages.proficiencyLevel')
+    emptyField(value?.toString(), 'common.errorMessages.proficiencyLevel')
 }

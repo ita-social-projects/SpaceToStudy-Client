@@ -32,7 +32,8 @@ import { snackbarVariants } from '~/constants'
 import {
   sectionInitialData,
   initialValues,
-  defaultResponse
+  defaultResponse,
+  validations
 } from '~/pages/create-course/CreateCourse.constants'
 import { styles } from '~/pages/create-course/CreateCourse.styles'
 
@@ -88,12 +89,19 @@ const CreateCourse = () => {
     onResponseError
   })
 
-  const { data, handleInputChange, handleNonInputValueChange, handleSubmit } =
-    useForm<CourseForm>({
-      initialValues,
-      onSubmit: id ? fetchEditCourse : fetchAddCourse,
-      submitWithData: true
-    })
+  const {
+    data,
+    handleInputChange,
+    handleNonInputValueChange,
+    handleBlur,
+    handleSubmit,
+    errors
+  } = useForm<CourseForm>({
+    initialValues,
+    validations,
+    onSubmit: id ? fetchEditCourse : fetchAddCourse,
+    submitWithData: true
+  })
 
   const setSectionsItems = (value: CourseSection[]) => {
     handleNonInputValueChange('sections', value)
@@ -171,6 +179,8 @@ const CreateCourse = () => {
       <Box component={ComponentEnum.Form} onSubmit={handleSubmit}>
         <CourseToolbar
           data={data}
+          errors={errors}
+          handleBlur={handleBlur}
           handleInputChange={handleInputChange}
           handleNonInputValueChange={handleNonInputValueChange}
         />

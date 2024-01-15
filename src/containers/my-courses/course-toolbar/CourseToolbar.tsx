@@ -1,4 +1,4 @@
-import { useCallback, SyntheticEvent, ChangeEvent } from 'react'
+import { useCallback, SyntheticEvent, ChangeEvent, FocusEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import FormControl from '@mui/material/FormControl'
 import Box from '@mui/material/Box'
@@ -9,24 +9,32 @@ import MenuItem from '@mui/material/MenuItem'
 import ListItemText from '@mui/material/ListItemText'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import Checkbox from '@mui/material/Checkbox'
+import FormHelperText from '@mui/material/FormHelperText'
 
 import AppTextField from '~/components/app-text-field/AppTextField'
-import { subjectService } from '~/services/subject-service'
-import { categoryService } from '~/services/category-service'
 import AppToolbar from '~/components/app-toolbar/AppToolbar'
 import AsyncAutocomplete from '~/components/async-autocomlete/AsyncAutocomplete'
+
+import { subjectService } from '~/services/subject-service'
+import { categoryService } from '~/services/category-service'
 
 import {
   CategoryNameInterface,
   SubjectNameInterface,
   CourseForm,
   ProficiencyLevelEnum,
-  TextFieldVariantEnum
+  TextFieldVariantEnum,
+  ComponentEnum
 } from '~/types'
+
 import { styles } from '~/containers/my-courses/course-toolbar/CourseToolbar.style'
 
 interface CourseToolbarProps {
   data: CourseForm
+  errors: { [key in keyof CourseForm]: string }
+  handleBlur: (
+    key: keyof CourseForm
+  ) => (event: FocusEvent<HTMLInputElement>) => void
   handleInputChange: (
     key: keyof CourseForm
   ) => (event: ChangeEvent<HTMLInputElement>) => void
@@ -39,6 +47,8 @@ interface CourseToolbarProps {
 const CourseToolbar = ({
   data,
   handleInputChange,
+  errors,
+  handleBlur,
   handleNonInputValueChange
 }: CourseToolbarProps) => {
   const { t } = useTranslation()
@@ -78,15 +88,26 @@ const CourseToolbar = ({
       <ListItemText primary={item} />
     </MenuItem>
   ))
+
+  const proficiencyLevelError = errors.proficiencyLevel && (
+    <FormHelperText error>
+      {t('common.errorMessages.proficiencyLevel')}
+    </FormHelperText>
+  )
+
   const AppAutoCompleteList = (
     <>
       <AsyncAutocomplete
         labelField='name'
+        onBlur={handleBlur('category')}
         onChange={onCategoryChange}
         service={categoryService.getCategoriesNames}
         sx={styles.autocomplete}
         textFieldProps={{
-          label: t('breadCrumbs.category')
+          label: t('breadCrumbs.category'),
+          error: Boolean(errors.category),
+          helperText: errors.category ? t(errors.category) : ' ',
+          required: true
         }}
         value={category}
         valueField='_id'
@@ -94,23 +115,31 @@ const CourseToolbar = ({
       <AsyncAutocomplete
         disabled={Boolean(!category)}
         labelField='name'
+        onBlur={handleBlur('subject')}
         onChange={onSubjectChange}
         service={getSubjectsNames}
         sx={styles.autocomplete}
         textFieldProps={{
-          label: t('breadCrumbs.subject')
+          label: t('breadCrumbs.subject'),
+          error: Boolean(errors.subject),
+          helperText: errors.subject ? t(errors.subject) : ' ',
+          required: true
         }}
         value={subject}
         valueField='_id'
       />
       <FormControl>
-        <InputLabel>{t('breadCrumbs.level')}</InputLabel>
+        <InputLabel required sx={styles.inputColor(errors.proficiencyLevel)}>
+          {t('breadCrumbs.level')}
+        </InputLabel>
         <Select
           MenuProps={styles.menuProps}
+          error={Boolean(errors.proficiencyLevel)}
           id='demo-multiple-checkbox'
           input={<OutlinedInput label='Level' />}
           labelId='demo-multiple-checkbox-label'
           multiple
+          onBlur={handleBlur('proficiencyLevel')}
           onChange={onLevelChange}
           renderValue={renderSelectedLevels}
           sx={styles.levelSelect}
@@ -118,6 +147,7 @@ const CourseToolbar = ({
         >
           {menuItems}
         </Select>
+        {proficiencyLevelError}
       </FormControl>
     </>
   )
@@ -129,9 +159,11 @@ const CourseToolbar = ({
           <AppTextField
             InputLabelProps={styles.titleLabel}
             InputProps={styles.titleInput}
+            errorMsg={t(errors.title)}
             fullWidth
             inputProps={styles.input}
             label={data.title ? ' ' : t('lesson.labels.title')}
+            multiline
             onChange={handleInputChange('title')}
             value={data.title}
             variant={TextFieldVariantEnum.Standard}
@@ -139,25 +171,25 @@ const CourseToolbar = ({
           <AppTextField
             InputLabelProps={styles.descriptionLabel}
             InputProps={styles.descriptionInput}
+            errorMsg={t(errors.description)}
             fullWidth
             inputProps={styles.input}
             label={data.description ? ' ' : t('lesson.labels.description')}
+            multiline
             onChange={handleInputChange('description')}
             value={data.description}
             variant={TextFieldVariantEnum.Standard}
           />
           <Typography sx={styles.categories}>
-            <Typography>
-              {t('myCoursesPage.filterLabel.determine')}
-              <Typography component='span' sx={styles.weightBox}>
-                {t('myCoursesPage.filterLabel.filterItems')}
-              </Typography>
-              {t('myCoursesPage.filterLabel.and')}
-              <Typography component='span' sx={styles.weightBox}>
-                {t('myCoursesPage.filterLabel.level')}
-              </Typography>
-              {t('myCoursesPage.filterLabel.courseTemplate')}
+            {t('myCoursesPage.filterLabel.determine')}
+            <Typography component={ComponentEnum.Span} sx={styles.weightBox}>
+              {t('myCoursesPage.filterLabel.filterItems')}
             </Typography>
+            {t('myCoursesPage.filterLabel.and')}
+            <Typography component={ComponentEnum.Span} sx={styles.weightBox}>
+              {t('myCoursesPage.filterLabel.level')}
+            </Typography>
+            {t('myCoursesPage.filterLabel.courseTemplate')}
           </Typography>
         </Box>
         <Box sx={styles.searchBoxes}>{AppAutoCompleteList}</Box>
