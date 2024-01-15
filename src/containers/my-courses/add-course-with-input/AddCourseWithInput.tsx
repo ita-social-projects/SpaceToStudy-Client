@@ -16,11 +16,10 @@ import { authRoutes } from '~/router/constants/authRoutes'
 import useForm from '~/hooks/use-form'
 import { useDrawer } from '~/hooks/use-drawer'
 import useBreakpoints from '~/hooks/use-breakpoints'
-
-import { styles } from '~/containers/my-courses/add-course-with-input/AddCourseWithInput.styles'
 import { useDebounce } from '~/hooks/use-debounce'
 
 import { CourseFilters } from '~/types'
+import { styles } from '~/containers/my-courses/add-course-with-input/AddCourseWithInput.styles'
 
 interface AddCoursesWithInputProps {
   fetchData: () => Promise<void>
@@ -32,9 +31,9 @@ const AddCourseWithInput: FC<AddCoursesWithInputProps> = ({
   fetchData
 }) => {
   const { t } = useTranslation()
-  const { isTablet, isMobile } = useBreakpoints()
   const [inputValue, setInputValue] = useState<string>('')
   const { openDrawer, closeDrawer, isOpen } = useDrawer()
+  const { isTablet, isMobile } = useBreakpoints()
 
   const {
     data: filters,
