@@ -119,11 +119,11 @@ const FilterSelector = <T extends Pick<CategoryNameInterface, '_id'>>({
   })
 
   useEffect(() => {
-    const initialNames = filteredItems
+    const filteredNames = filteredItems
       .filter((item) => selectedItems.includes(item._id))
       .map((item) => String(valueField ? item[valueField] : item))
 
-    setSelectedNames(initialNames)
+    setSelectedNames(filteredNames)
   }, [filteredItems, selectedItems, valueField])
 
   const scrollableContent = filteredItems.length ? (

@@ -3,6 +3,7 @@ import { fireEvent, screen, waitFor } from '@testing-library/react'
 import { ResourceService } from '~/services/resource-service'
 import ResourcesToolBarDrawer from '~/containers/my-resources/resources-toolbar-drawer/ResourcesToolbarDrawer'
 import { renderWithProviders } from '~tests/test-utils'
+import { SortEnum } from '~/types'
 
 const setCategories = vi.fn()
 const setSearch = vi.fn()
@@ -19,7 +20,7 @@ const props = {
   sortOptions: {
     onRequestSort: vi.fn(),
     resetSort: vi.fn(),
-    sort: { order: 'desc', orderBy: 'updatedAt' }
+    sort: { order: SortEnum.Desc, orderBy: 'updatedAt' }
   },
   isMobile: false
 }

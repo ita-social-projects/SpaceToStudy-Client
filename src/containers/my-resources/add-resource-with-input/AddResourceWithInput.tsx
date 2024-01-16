@@ -23,7 +23,7 @@ import FilterSelector from '~/components/filter-selector/FilterSelector'
 import ResourcesToolBarDrawer from '~/containers/my-resources/resources-toolbar-drawer/ResourcesToolbarDrawer'
 
 import { styles } from '~/containers/my-resources/add-resource-with-input/AddResourceWithInput.styles'
-import { CategoryNameInterface, SizeEnum } from '~/types'
+import { CategoryNameInterface, PositionEnum, SizeEnum } from '~/types'
 
 interface AddResourceWithInputProps {
   btnText?: string
@@ -77,7 +77,7 @@ const AddResourceWithInput: FC<AddResourceWithInputProps> = ({
     <>
       {selectedItems && setItems && (
         <FilterSelector<CategoryNameInterface>
-          position={'right'}
+          position={PositionEnum.Right}
           selectedItems={selectedItems}
           service={ResourceService.getResourcesCategoriesNames}
           setSelectedItems={setItems}

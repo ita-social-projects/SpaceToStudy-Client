@@ -4,6 +4,7 @@ import { expect } from 'vitest'
 
 import AddResourceWithInput from '~/containers/my-resources/add-resource-with-input/AddResourceWithInput'
 import { renderWithProviders, waitForTimeout } from '~tests/test-utils'
+import { SortEnum } from '~/types'
 
 const fetchDataMock = vi.fn()
 const text = 'test search'
@@ -18,7 +19,7 @@ const props = {
   sortOptions: {
     onRequestSort: vi.fn(),
     resetSort: vi.fn(),
-    sort: { order: 'desc', orderBy: 'updatedAt' }
+    sort: { order: SortEnum.Desc, orderBy: 'updatedAt' }
   }
 }
 
