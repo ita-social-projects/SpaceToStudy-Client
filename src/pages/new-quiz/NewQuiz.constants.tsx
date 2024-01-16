@@ -8,7 +8,13 @@ import CreateOrEditQuizContainer from '~/containers/my-quizzes/create-or-edit-qu
 import ViewQuizContainer from '~/containers/my-quizzes/view-quiz-container/ViewQuizContainer'
 import QuizSettingsContainer from '~/containers/my-quizzes/quiz-settings-container/QuizSettingsContainer'
 
-import { CreateQuizParams, Question } from '~/types'
+import {
+  CreateQuizParams,
+  Question,
+  QuizSettings,
+  QuizViewEnum,
+  QuizTabsEnum
+} from '~/types'
 
 export interface QuizContentProps {
   title: string
@@ -19,6 +25,9 @@ export interface QuizContentProps {
   setQuestions: Dispatch<SetStateAction<Question[]>>
   category: string | null
   setCategory: Dispatch<SetStateAction<string | null>>
+  settings: QuizSettings
+  setSettings: Dispatch<SetStateAction<QuizSettings>>
+  setActiveTab: Dispatch<SetStateAction<QuizTabsEnum>>
 }
 
 export interface QuizTabsData {
@@ -29,6 +38,7 @@ export interface QuizTabsData {
     tabProps?: Omit<ButtonProps, 'onClick'>
   }
 }
+
 export const tabsData: QuizTabsData = {
   edit: {
     title: 'Edit',
@@ -45,4 +55,12 @@ export const tabsData: QuizTabsData = {
     content: (props) => <QuizSettingsContainer {...props} />,
     icon: <SettingsIcon />
   }
+}
+
+export const initialSettings = {
+  view: QuizViewEnum.Scroll,
+  pointValues: false,
+  scoredResponses: false,
+  correctAnswers: false,
+  shuffle: false
 }

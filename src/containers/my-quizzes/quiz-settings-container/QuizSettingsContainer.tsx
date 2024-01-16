@@ -1,42 +1,125 @@
+import { useCallback } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Box } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import Switch from '@mui/material/Switch'
 
-import { ButtonTypeEnum } from '~/types'
+import { ResourceService } from '~/services/resource-service'
+import { useSnackBarContext } from '~/context/snackbar-context'
+import useAxios from '~/hooks/use-axios'
 import useForm from '~/hooks/use-form'
-import { spliceSx } from '~/utils/helper-functions'
-
 import SettingItem from '~/components/setting-item/SettingItem'
 import AppSelect from '~/components/app-select/AppSelect'
 import AppButton from '~/components/app-button/AppButton'
 
+import { spliceSx } from '~/utils/helper-functions'
+import { getErrorMessage } from '~/utils/error-with-message'
+import { authRoutes } from '~/router/constants/authRoutes'
+import { QuizContentProps } from '~/pages/new-quiz/NewQuiz.constants'
+import { snackbarVariants } from '~/constants'
+import { defaultResponse } from '~/containers/my-quizzes/create-or-edit-quiz-container/CreateOrEditQuizContainer.constants'
+import { getQuizViewFields } from '~/containers/my-quizzes/quiz-settings-container/QuizSettingsContainer.constants'
 import { styles } from '~/containers/my-quizzes/quiz-settings-container/QuizSettingsContainer.styles'
+import {
+  ButtonTypeEnum,
+  QuizViewEnum,
+  UpdateQuizParams,
+  ErrorResponse,
+  CreateQuizParams,
+  Quiz,
+  QuizTabsEnum,
+  ComponentEnum,
+  QuizSettings
+} from '~/types'
 
-const quizViewFields = [
-  {
-    value: 'scroll',
-    title: 'Scroll'
-  },
-  {
-    value: 'stepper',
-    title: 'Stepper'
-  }
-]
-const QuizSettingsContainer = () => {
+const QuizSettingsContainer = ({
+  title,
+  description,
+  questions,
+  category,
+  settings,
+  setActiveTab
+}: QuizContentProps) => {
   const { t } = useTranslation()
-  const { data, handleInputChange, handleNonInputValueChange } = useForm({
-    initialValues: {
-      pointValues: false,
-      scoredUnscoredResponses: false,
-      correctAnswers: false,
-      shuffleQuestions: false,
-      quizView: 'scroll'
-    }
+  const { id } = useParams()
+  const navigate = useNavigate()
+  const { setAlert } = useSnackBarContext()
+
+  const editQuiz = useCallback(
+    (params?: UpdateQuizParams) => ResourceService.editQuiz(params),
+    []
+  )
+
+  const createQuizService = useCallback(
+    (data?: CreateQuizParams) => ResourceService.addQuiz(data),
+    []
+  )
+
+  const onResponse = () => {
+    setAlert({
+      severity: snackbarVariants.success,
+      message: id
+        ? t('myResourcesPage.quizzes.successEditedQuiz')
+        : t('myResourcesPage.quizzes.successAddedQuiz')
+    })
+
+    id
+      ? setActiveTab(QuizTabsEnum.Edit)
+      : navigate(authRoutes.myResources.root.path)
+  }
+
+  const onResponseError = (error: ErrorResponse) => {
+    setAlert({
+      severity: snackbarVariants.error,
+      message: error
+        ? t(`errors.${error.code}`, {
+            message: getErrorMessage(error.message)
+          })
+        : ''
+    })
+  }
+
+  const { fetchData: updateQuiz } = useAxios<null, UpdateQuizParams>({
+    service: editQuiz,
+    fetchOnMount: false,
+    defaultResponse: null,
+    onResponse,
+    onResponseError
   })
 
+  const { fetchData: createQuiz } = useAxios<Quiz, CreateQuizParams>({
+    service: createQuizService,
+    fetchOnMount: false,
+    defaultResponse,
+    onResponse,
+    onResponseError
+  })
+
+  const { data, handleInputChange, handleNonInputValueChange, handleSubmit } =
+    useForm<QuizSettings>({
+      initialValues: { ...settings },
+      onSubmit: async () => {
+        id
+          ? await updateQuiz({ settings: data, id })
+          : await createQuiz({
+              title,
+              description,
+              items: questions,
+              category,
+              settings: data
+            })
+      }
+    })
+
+  const onViewTypeChange = (value: QuizViewEnum) => {
+    handleNonInputValueChange('view', value)
+  }
+
+  const isDisabled = (!id && !title) || !questions.length
+
   return (
-    <Box>
+    <Box component={ComponentEnum.Form} onSubmit={handleSubmit}>
       <Box>
         <Typography sx={spliceSx(styles.title, styles.topTitle)}>
           {t('myResourcesPage.quizzes.settingsQuiz')}
@@ -47,10 +130,10 @@ const QuizSettingsContainer = () => {
           title={t('myResourcesPage.quizzes.quizView')}
         >
           <AppSelect
-            fields={quizViewFields}
-            setValue={(value) => handleNonInputValueChange('quizView', value)}
+            fields={getQuizViewFields(t)}
+            setValue={onViewTypeChange}
             sx={styles.select}
-            value={data.quizView}
+            value={data.view}
           />
         </SettingItem>
 
@@ -59,9 +142,9 @@ const QuizSettingsContainer = () => {
           title={t('myResourcesPage.quizzes.questionsShuffle')}
         >
           <Switch
-            checked={data.shuffleQuestions}
+            checked={data.shuffle}
             data-testid='shuffle-switch'
-            onChange={handleInputChange('shuffleQuestions')}
+            onChange={handleInputChange('shuffle')}
             sx={styles.switch}
           />
         </SettingItem>
@@ -89,9 +172,9 @@ const QuizSettingsContainer = () => {
           title={t('myResourcesPage.quizzes.scoredUnscoredResponses')}
         >
           <Switch
-            checked={data.scoredUnscoredResponses}
+            checked={data.scoredResponses}
             data-testid='responses-switch'
-            onChange={handleInputChange('scoredUnscoredResponses')}
+            onChange={handleInputChange('scoredResponses')}
             sx={styles.switch}
           />
         </SettingItem>
@@ -109,7 +192,7 @@ const QuizSettingsContainer = () => {
         </SettingItem>
       </Box>
       <Box sx={styles.buttonContainer}>
-        <AppButton disabled type={ButtonTypeEnum.Submit}>
+        <AppButton disabled={isDisabled} type={ButtonTypeEnum.Submit}>
           {t('common.apply')}
         </AppButton>
       </Box>

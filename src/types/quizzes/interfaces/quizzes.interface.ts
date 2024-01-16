@@ -2,8 +2,17 @@ import {
   CommonEntityFields,
   UserResponse,
   Question,
-  ResourcesTabsEnum as ResourcesTypes
+  ResourcesTabsEnum as ResourcesTypes,
+  QuizViewEnum
 } from '~/types'
+
+export interface QuizSettings {
+  view: QuizViewEnum
+  pointValues: boolean
+  scoredResponses: boolean
+  correctAnswers: boolean
+  shuffle: boolean
+}
 
 export interface Quiz extends CommonEntityFields {
   title: string
@@ -12,14 +21,17 @@ export interface Quiz extends CommonEntityFields {
   author: Pick<UserResponse, '_id'>
   category: string | null
   resourceType?: ResourcesTypes
+  settings: QuizSettings
 }
 
 export type CreateQuizParams = Omit<
   Quiz,
-  'author' | '_id' | 'createdAt' | 'updatedAt'
->
+  'author' | '_id' | 'createdAt' | 'updatedAt' | 'settings'
+> & {
+  settings?: QuizSettings
+}
 
 export interface UpdateQuizParams
-  extends Omit<Quiz, 'author' | '_id' | 'createdAt' | 'updatedAt'> {
+  extends Partial<Omit<Quiz, 'author' | '_id' | 'createdAt' | 'updatedAt'>> {
   id: string
 }

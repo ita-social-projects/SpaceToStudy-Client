@@ -1,8 +1,12 @@
 import { screen } from '@testing-library/react'
-import { renderWithProviders } from '~tests/test-utils'
+
 import ViewQuizContainer from '~/containers/my-quizzes/view-quiz-container/ViewQuizContainer'
 
+import { renderWithProviders } from '~tests/test-utils'
+import { initialSettings } from '~/pages/new-quiz/NewQuiz.constants'
+
 const mockedTitle = 'Title'
+const mockedDescription = 'Description'
 
 const mockedQuestion = [
   {
@@ -31,7 +35,12 @@ const mockedQuestion = [
 describe('ViewQuizContainer test', () => {
   beforeEach(() => {
     renderWithProviders(
-      <ViewQuizContainer questions={mockedQuestion} title={mockedTitle} />
+      <ViewQuizContainer
+        description={mockedDescription}
+        questions={mockedQuestion}
+        settings={initialSettings}
+        title={mockedTitle}
+      />
     )
   })
 
