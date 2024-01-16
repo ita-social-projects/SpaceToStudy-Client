@@ -1,4 +1,11 @@
-import { FC, ChangeEvent, useState, MutableRefObject } from 'react'
+import {
+  FC,
+  ChangeEvent,
+  useState,
+  MutableRefObject,
+  Dispatch,
+  SetStateAction
+} from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import AddIcon from '@mui/icons-material/Add'
@@ -24,11 +31,15 @@ import { styles } from '~/containers/my-courses/add-course-with-input/AddCourseW
 interface AddCoursesWithInputProps {
   fetchData: () => Promise<void>
   searchRef: MutableRefObject<string>
+  setSort: Dispatch<SetStateAction<string>>
+  sort: string
 }
 
 const AddCourseWithInput: FC<AddCoursesWithInputProps> = ({
   searchRef,
-  fetchData
+  fetchData,
+  setSort,
+  sort
 }) => {
   const { t } = useTranslation()
   const [inputValue, setInputValue] = useState<string>('')
@@ -69,7 +80,7 @@ const AddCourseWithInput: FC<AddCoursesWithInputProps> = ({
   const desktopView = !isTablet && !isMobile && (
     <Box sx={styles.filtersBox(isTablet)}>
       <FiltersToggle handleToggle={handleToggle} />
-      <CoursesFilterBar />
+      <CoursesFilterBar onValueChange={setSort} value={sort} />
       <InputWithIcon
         endAdornment={<SearchIcon sx={styles.searchIcon} />}
         onChange={onChange}
@@ -84,7 +95,7 @@ const AddCourseWithInput: FC<AddCoursesWithInputProps> = ({
   const tabletView = isTablet && (
     <Box sx={styles.filtersBox(isTablet)}>
       <FiltersToggle handleToggle={handleToggle} />
-      <CoursesFilterBar />
+      <CoursesFilterBar onValueChange={setSort} value={sort} />
     </Box>
   )
 
@@ -106,7 +117,15 @@ const AddCourseWithInput: FC<AddCoursesWithInputProps> = ({
       {mobileView}
 
       <CoursesFiltersDrawer
-        deviceFields={isMobile && <CoursesFilterBar sx={styles.sortInput} />}
+        deviceFields={
+          isMobile && (
+            <CoursesFilterBar
+              onValueChange={setSort}
+              sx={styles.sortInput}
+              value={sort}
+            />
+          )
+        }
         filters={filters}
         handleFilterChange={handleNonInputValueChange}
         handleReset={resetData}

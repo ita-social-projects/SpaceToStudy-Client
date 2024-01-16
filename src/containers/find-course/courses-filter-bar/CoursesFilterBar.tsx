@@ -18,15 +18,10 @@ const CoursesFilterBar = ({
 }: CoursesFilterBarProps) => {
   const { t } = useTranslation()
 
-  const sortOptions = sortTranslationKeys.map(({ title, value }) => ({
-    title: t(title),
-    value
-  }))
-
   return (
     <Box sx={styles.container}>
       <AppSelect
-        fields={sortOptions}
+        fields={sortTranslationKeys}
         selectTitle={t('filters.sortBy.sortByTitle')}
         setValue={onValueChange}
         sx={sx}

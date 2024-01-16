@@ -1,8 +1,8 @@
 import { SortEnum } from '~/types'
 
 export const sortTranslationKeys = [
-  { title: 'myCoursesPage.sortTitles.newest', value: 'updatedAt desc' },
-  { title: 'myCoursesPage.sortTitles.oldest', value: 'updatedAt asc' }
+  { title: 'myCoursesPage.sortTitles.newest', value: 'asc' },
+  { title: 'myCoursesPage.sortTitles.oldest', value: 'desc' }
 ]
 
 export const initialSort = { order: SortEnum.Desc, orderBy: 'updatedAt' }
