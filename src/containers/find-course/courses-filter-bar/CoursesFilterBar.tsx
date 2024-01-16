@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { Box, SxProps } from '@mui/material'
 
 import AppSelect from '~/components/app-select/AppSelect'
-import { sortTranslationKeys } from '~/containers/find-course/courses-filter-block/CoursesFilterBlock.constants'
+import { sortTranslationKeys } from '~/containers/find-course/courses-filter-bar/CorseFilterBar.constants'
 import { styles } from '~/containers/find-course/courses-filter-bar/CoursesFilterBar.styles'
 
 interface CoursesFilterBarProps {
