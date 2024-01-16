@@ -4,7 +4,7 @@ import { renderWithProviders } from '~tests/test-utils'
 import CoursesFilterBar from '~/containers/find-course/courses-filter-bar/CoursesFilterBar'
 
 const onChangeValueMock = vi.fn()
-const selectValueMock = { default: 'updatedAt desc', updated: 'updatedAt asc' }
+const selectValueMock = { default: 'updatedAt desc', updated: 'asc' }
 
 describe('tests for Courses filter ber menu', () => {
   beforeEach(() => {
