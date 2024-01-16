@@ -12,19 +12,19 @@ import { MyCooperationsTabsData } from '~/containers/my-cooperations/cooperation
 import { spliceSx } from '~/utils/helper-functions'
 import { styles } from '~/components/tab-navigation/TabNavigation.styles'
 
-interface TabNavigationProps {
-  activeTab: string
+interface TabNavigationProps<T> {
+  activeTab: T
   tabsData: QuizTabsData | MyResoursesTabsData | MyCooperationsTabsData
-  handleClick: (tab: string) => void
+  handleClick: (tab: T) => void
   sx?: { root?: SxProps; tab?: SxProps }
 }
 
-const TabNavigation: React.FC<TabNavigationProps> = ({
+const TabNavigation = <T extends string>({
   activeTab,
   tabsData,
   handleClick,
   sx
-}) => {
+}: TabNavigationProps<T>) => {
   const { t } = useTranslation()
 
   const tabs = Object.keys(tabsData).map((key) => {
@@ -33,7 +33,7 @@ const TabNavigation: React.FC<TabNavigationProps> = ({
       <Tab
         activeTab={activeTab === key}
         key={key}
-        onClick={() => handleClick(key)}
+        onClick={() => handleClick(key as T)}
         sx={sx?.tab}
         {...tabProps}
       >

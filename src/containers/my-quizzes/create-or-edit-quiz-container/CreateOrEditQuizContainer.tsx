@@ -53,7 +53,8 @@ const CreateOrEditQuizContainer = ({
   questions,
   setQuestions,
   category,
-  setCategory
+  setCategory,
+  setSettings
 }: QuizContentProps) => {
   const { t } = useTranslation()
   const { setAlert } = useSnackBarContext()
@@ -125,6 +126,7 @@ const CreateOrEditQuizContainer = ({
     setDescription(quiz.description)
     setQuestions(quiz.items)
     setCategory(quiz.category)
+    setSettings(quiz.settings)
   }
 
   const { loading: getQuizLoading, fetchData: fetchQuizData } = useAxios<
