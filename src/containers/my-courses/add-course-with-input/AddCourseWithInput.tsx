@@ -13,12 +13,14 @@ import CoursesFiltersDrawer from '~/containers/my-courses/courses-filters-drawer
 
 import { authRoutes } from '~/router/constants/authRoutes'
 
+import useSort from '~/hooks/table/use-sort'
 import useForm from '~/hooks/use-form'
 import { useDrawer } from '~/hooks/use-drawer'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { useDebounce } from '~/hooks/use-debounce'
 
 import { CourseFilters } from '~/types'
+import { initialSort } from '~/containers/find-course/courses-filter-block/CoursesFilterBlock.constants'
 import { styles } from '~/containers/my-courses/add-course-with-input/AddCourseWithInput.styles'
 
 interface AddCoursesWithInputProps {
@@ -31,6 +33,7 @@ const AddCourseWithInput: FC<AddCoursesWithInputProps> = ({
   fetchData
 }) => {
   const { t } = useTranslation()
+  const { sort, onRequestSort } = useSort({ initialSort })
   const [inputValue, setInputValue] = useState<string>('')
   const { openDrawer, closeDrawer, isOpen } = useDrawer()
   const { isTablet, isMobile } = useBreakpoints()
@@ -69,7 +72,10 @@ const AddCourseWithInput: FC<AddCoursesWithInputProps> = ({
   const desktopView = !isTablet && !isMobile && (
     <Box sx={styles.filtersBox(isTablet)}>
       <FiltersToggle handleToggle={handleToggle} />
-      <CoursesFilterBar />
+      <CoursesFilterBar
+        onValueChange={onRequestSort}
+        value={`${sort.orderBy} ${sort.order}`}
+      />
       <InputWithIcon
         endAdornment={<SearchIcon sx={styles.searchIcon} />}
         onChange={onChange}
@@ -84,7 +90,10 @@ const AddCourseWithInput: FC<AddCoursesWithInputProps> = ({
   const tabletView = isTablet && (
     <Box sx={styles.filtersBox(isTablet)}>
       <FiltersToggle handleToggle={handleToggle} />
-      <CoursesFilterBar />
+      <CoursesFilterBar
+        onValueChange={onRequestSort}
+        value={`${sort.orderBy} ${sort.order}`}
+      />
     </Box>
   )
 
@@ -106,7 +115,15 @@ const AddCourseWithInput: FC<AddCoursesWithInputProps> = ({
       {mobileView}
 
       <CoursesFiltersDrawer
-        deviceFields={isMobile && <CoursesFilterBar sx={styles.sortInput} />}
+        deviceFields={
+          isMobile && (
+            <CoursesFilterBar
+              onValueChange={onRequestSort}
+              sx={styles.sortInput}
+              value={`${sort.orderBy} ${sort.order}`}
+            />
+          )
+        }
         filters={filters}
         handleFilterChange={handleNonInputValueChange}
         handleReset={resetData}
