@@ -27,10 +27,9 @@ const cooperationMock = {
   proficiencyLevel: 'Beginner',
   status: 'active',
   needAction: 'tutor',
+  title: 'Cooperation title',
   offer: {
     _id: 'asdf1234',
-    price: 100,
-    title: 'Cooperation title',
     category: {
       _id: '12345',
       name: 'Music'
@@ -66,7 +65,7 @@ describe('CooperationDetails', () => {
   })
 
   it('should show cooperation status and title', () => {
-    const title = screen.getByText(cooperationMock.offer.title)
+    const title = screen.getByText(cooperationMock.title)
     const statusChip = screen.getByText(cooperationMock.status)
 
     expect(title).toBeInTheDocument()

@@ -62,6 +62,7 @@ export const defaultResponse: Cooperation = {
     lastName: '',
     role: UserRoleEnum.Tutor
   },
+  title: '',
   price: 0,
   proficiencyLevel: ProficiencyLevelEnum.Beginner,
   status: StatusEnum.Active,

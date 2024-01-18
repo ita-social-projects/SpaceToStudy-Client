@@ -79,7 +79,8 @@ const EnrollOffer: FC<EnrollOfferProps> = ({ offer, enrollOffer }) => {
       initialValues: {
         proficiencyLevel: offer.proficiencyLevel[0],
         price: offer.price,
-        info: ''
+        info: '',
+        title: offer.title
       },
       onSubmit: fetchData
     })

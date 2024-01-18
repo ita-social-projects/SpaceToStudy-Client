@@ -91,7 +91,7 @@ const CooperationDetails = () => {
         <StatusChip status={response.status} />
         <TitleWithDescription
           style={styles.cooperationTitle}
-          title={response.offer.title}
+          title={response.title}
         />
       </Box>
       <Box sx={styles.tabsWrapper}>
