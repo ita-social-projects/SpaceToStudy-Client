@@ -51,13 +51,13 @@ const CooperationActivities = () => {
   const menuItems = [
     {
       id: 1,
-      label: <>{t('cooperationsPage.menyTypes.courseTemplate')}</>,
+      label: <>{t('cooperationsPage.manyTypes.courseTemplate')}</>,
       icon: <ViewComfyOutlinedIcon />,
       onClick: openAddCourseTemplateModal
     },
     {
       id: 2,
-      label: <>{t('cooperationsPage.menyTypes.scratch')}</>,
+      label: <>{t('cooperationsPage.manyTypes.scratch')}</>,
       icon: <Crop75Icon />,
       onClick: handleFromScratch
     }

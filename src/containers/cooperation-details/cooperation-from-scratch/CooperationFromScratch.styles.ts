@@ -12,7 +12,7 @@ export const styles = {
     p: { sm: '20px', xs: '10px' },
     background: palette.basic.grey,
     borderRadius: { sm: '14px', xs: '10px' },
-    mb: '20px'
+    mb: '15px'
   },
   lockBlock: {
     display: 'flex',

@@ -51,9 +51,10 @@
   "button": {
     "create": "Створення активності"
   },
-  "menyTypes": {
+  "manyTypes": {
     "courseTemplate": "Шаблон курсу",
-    "scratch": "З нуля"
+    "scratch": "З нуля",
+    "module": "Модуль"
   },
   "notes": {
     "noteText": "Текст нотатки...",
