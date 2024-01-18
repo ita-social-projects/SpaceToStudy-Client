@@ -1,3 +1,4 @@
+import palette from '~/styles/app-theme/app.pallete'
 import { TypographyVariantEnum } from '~/types'
 
 const commonStyle = {
@@ -27,11 +28,10 @@ export const styles = {
   },
   autocompleteDropdownDivider: {
     m: '8px 0 10px 0',
-    border: '1px solid',
-    borderColor: 'primary.100'
+    border: `1px solid ${palette.primary[100]}`
   },
   autocompleteDropdownTitle: {
-    typography: 'caption',
+    typography: TypographyVariantEnum.Caption,
     color: 'primary.300',
     px: '16px'
   },
