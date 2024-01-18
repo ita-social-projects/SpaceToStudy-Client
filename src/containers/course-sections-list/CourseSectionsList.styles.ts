@@ -30,10 +30,10 @@ export const styles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    margin: '0 7px'
+    m: '0 7px'
   },
   activityButtonIcon: {
-    marginLeft: '8px',
+    ml: '8px',
     width: '16px',
     height: '16px'
   },
@@ -65,9 +65,9 @@ export const styles = {
   },
   menuRoot: {
     '& .MuiPaper-root': {
-      marginTop: '12px',
+      mt: '12px',
       '& .MuiMenuItem-root': {
-        padding: '12px 16px',
+        p: '12px 16px',
         typography: TypographyVariantEnum.Body2,
         color: 'basic.darkGray',
         fontWeight: 500
@@ -75,7 +75,7 @@ export const styles = {
     }
   },
   menuIcon: {
-    marginRight: '8px',
+    mr: '8px',
     width: '16px',
     height: '16px'
   }
