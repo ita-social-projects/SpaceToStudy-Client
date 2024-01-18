@@ -92,7 +92,8 @@ export enum PositionEnum {
   Left = 'left',
   Right = 'right',
   Bottom = 'bottom',
-  Top = 'top'
+  Top = 'top',
+  Vertical = 'vertical'
 }
 
 export enum InputEnum {
