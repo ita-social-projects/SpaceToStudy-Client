@@ -1,4 +1,10 @@
-import { useCallback, SyntheticEvent, ChangeEvent, FocusEvent } from 'react'
+import {
+  useCallback,
+  useMemo,
+  SyntheticEvent,
+  ChangeEvent,
+  FocusEvent
+} from 'react'
 import { useTranslation } from 'react-i18next'
 import FormControl from '@mui/material/FormControl'
 import Box from '@mui/material/Box'
@@ -11,12 +17,11 @@ import Select, { SelectChangeEvent } from '@mui/material/Select'
 import Checkbox from '@mui/material/Checkbox'
 import FormHelperText from '@mui/material/FormHelperText'
 
-import AppTextField from '~/components/app-text-field/AppTextField'
-import AppToolbar from '~/components/app-toolbar/AppToolbar'
-import AsyncAutocomplete from '~/components/async-autocomlete/AsyncAutocomplete'
-
 import { subjectService } from '~/services/subject-service'
 import { categoryService } from '~/services/category-service'
+import AppTextField from '~/components/app-text-field/AppTextField'
+import AppToolbar from '~/components/app-toolbar/AppToolbar'
+import DividedDropdownAutocomplete from '~/components/divider-dropdown-autocomplete/DividerDropdownAutocomplete'
 
 import {
   CategoryNameInterface,
@@ -24,13 +29,17 @@ import {
   CourseForm,
   ProficiencyLevelEnum,
   TextFieldVariantEnum,
-  ComponentEnum
+  CourseAutocompleteOptionsEnum,
+  ComponentEnum,
+  UserResponse,
+  courseExtendedAutocompleteOptions
 } from '~/types'
-
+import { customOptions } from '~/utils/course-custom-options'
 import { styles } from '~/containers/my-courses/course-toolbar/CourseToolbar.style'
 
 interface CourseToolbarProps {
   data: CourseForm
+  user: UserResponse | null
   errors: { [key in keyof CourseForm]: string }
   handleBlur: (
     key: keyof CourseForm
@@ -46,6 +55,7 @@ interface CourseToolbarProps {
 
 const CourseToolbar = ({
   data,
+  user,
   handleInputChange,
   errors,
   handleBlur,
@@ -54,6 +64,7 @@ const CourseToolbar = ({
   const { t } = useTranslation()
 
   const { category, subject, proficiencyLevel } = data
+  const { Subjects } = CourseAutocompleteOptionsEnum
   const levelLists = Object.values(ProficiencyLevelEnum)
 
   const getSubjectsNames = useCallback(
@@ -95,9 +106,37 @@ const CourseToolbar = ({
     </FormHelperText>
   )
 
+  const userCategories = useMemo(
+    () => user?.mainSubjects.tutor.map((item) => item.category.name) ?? [],
+    [user?.mainSubjects.tutor]
+  )
+
+  const userSubjects = useMemo(
+    () => user?.mainSubjects.tutor.map((item) => item.name) ?? [],
+    [user?.mainSubjects.tutor]
+  )
+
+  const transformCategories = useCallback(
+    (response: CategoryNameInterface[]): courseExtendedAutocompleteOptions[] =>
+      customOptions(response, userCategories),
+    [userCategories]
+  )
+
+  const transformSubjects = useCallback(
+    (response: SubjectNameInterface[]): courseExtendedAutocompleteOptions[] =>
+      customOptions(response, userSubjects, Subjects),
+    [Subjects, userSubjects]
+  )
+
   const AppAutoCompleteList = (
     <>
-      <AsyncAutocomplete
+      <DividedDropdownAutocomplete<
+        CategoryNameInterface,
+        courseExtendedAutocompleteOptions
+      >
+        axiosProps={{ transform: transformCategories }}
+        fetchOnFocus
+        groupBy={(option) => option.title}
         labelField='name'
         onBlur={handleBlur('category')}
         onChange={onCategoryChange}
@@ -112,8 +151,15 @@ const CourseToolbar = ({
         value={category}
         valueField='_id'
       />
-      <AsyncAutocomplete
+
+      <DividedDropdownAutocomplete<
+        SubjectNameInterface,
+        courseExtendedAutocompleteOptions
+      >
+        axiosProps={{ transform: transformSubjects }}
         disabled={Boolean(!category)}
+        fetchOnFocus
+        groupBy={(option) => option.title}
         labelField='name'
         onBlur={handleBlur('subject')}
         onChange={onSubjectChange}

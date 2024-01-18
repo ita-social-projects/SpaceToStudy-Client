@@ -7,22 +7,34 @@ import useAxios, { UseAxiosProps } from '~/hooks/use-axios'
 import { defaultResponses } from '~/constants'
 import { ServiceFunction, Category } from '~/types'
 
-interface AsyncAutocompleteProps<T, F extends boolean | undefined>
-  extends Omit<
-    AutocompleteProps<T, undefined, undefined, F>,
+export interface AsyncAutocompleteProps<
+  Response,
+  Params,
+  TransformedResponse,
+  F extends boolean | undefined
+> extends Omit<
+    AutocompleteProps<TransformedResponse, undefined, undefined, F>,
     'value' | 'options' | 'renderInput'
   > {
-  service: ServiceFunction<T[]>
-  valueField?: keyof T
-  labelField?: keyof T
-  value: T[keyof T] | null | Category
+  service: ServiceFunction<Response[], Params>
+  valueField?: keyof TransformedResponse
+  labelField?: keyof TransformedResponse
+  value: TransformedResponse[keyof TransformedResponse] | null | Category
   fetchCondition?: boolean
   textFieldProps?: TextFieldProps
   fetchOnFocus?: boolean
-  axiosProps?: Pick<UseAxiosProps<T[]>, 'onResponse' | 'onResponseError'>
+  axiosProps?: Pick<
+    UseAxiosProps<Response[], Params, TransformedResponse[]>,
+    'onResponse' | 'onResponseError' | 'transform'
+  >
 }
 
-const AsyncAutocomplete = <T, F extends boolean | undefined = undefined>({
+const AsyncAutocomplete = <
+  Response,
+  Params = undefined,
+  TransformedResponse = Response,
+  F extends boolean | undefined = undefined
+>({
   fetchOnFocus,
   fetchCondition,
   textFieldProps,
@@ -32,8 +44,12 @@ const AsyncAutocomplete = <T, F extends boolean | undefined = undefined>({
   service,
   axiosProps,
   ...props
-}: AsyncAutocompleteProps<T, F>) => {
-  const { loading, response, fetchData } = useAxios<T[]>({
+}: AsyncAutocompleteProps<Response, Params, TransformedResponse, F>) => {
+  const { loading, response, fetchData } = useAxios<
+    Response[],
+    Params,
+    TransformedResponse[]
+  >({
     service,
     fetchOnMount: false,
     defaultResponse: defaultResponses.array,
@@ -54,11 +70,15 @@ const AsyncAutocomplete = <T, F extends boolean | undefined = undefined>({
   )
 
   const getOptionLabel = useMemo(
-    () => (option: T) => (labelField ? option[labelField] : option) || '',
+    () => (option: TransformedResponse) =>
+      (labelField ? option[labelField] : option) || '',
     [labelField]
   )
 
-  const isOptionEqualToValue = (option: T, value: T) => {
+  const isOptionEqualToValue = (
+    option: TransformedResponse,
+    value: TransformedResponse
+  ) => {
     if (valueField) {
       return option?.[valueField] === value?.[valueField]
     }

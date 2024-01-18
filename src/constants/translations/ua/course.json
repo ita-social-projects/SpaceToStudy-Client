@@ -1,4 +1,8 @@
 {
+    "yourCategories": "Ваші категорії навчання:",
+    "otherCategories": "Інші категорії:",
+    "yourSubjects": "Ваші предмети навчання:",
+    "otherSubjects": "Інші предмети:",
     "addSectionBtn": "Новий курс",
     "section": "Розділ",
     "sections": "Розділи",

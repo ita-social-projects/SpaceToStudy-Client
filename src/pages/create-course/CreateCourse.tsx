@@ -5,8 +5,10 @@ import { AxiosResponse } from 'axios'
 import Box from '@mui/material/Box'
 import AddIcon from '@mui/icons-material/Add'
 
+import { useAppSelector } from '~/hooks/use-redux'
 import useForm from '~/hooks/use-form'
 import useAxios from '~/hooks/use-axios'
+import { userService } from '~/services/user-service'
 import { CourseService } from '~/services/course-service'
 import { useSnackBarContext } from '~/context/snackbar-context'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
@@ -25,7 +27,9 @@ import {
   CourseSection,
   Course,
   ErrorResponse,
-  CourseResources
+  CourseResources,
+  UserResponse,
+  UserRole
 } from '~/types'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { snackbarVariants } from '~/constants'
@@ -38,10 +42,11 @@ import {
 import { styles } from '~/pages/create-course/CreateCourse.styles'
 
 const CreateCourse = () => {
+  const navigate = useNavigate()
   const { t } = useTranslation()
   const { id } = useParams()
   const { setAlert } = useSnackBarContext()
-  const navigate = useNavigate()
+  const { userId, userRole } = useAppSelector((state) => state.appMain)
 
   const onResponseError = (error: ErrorResponse) => {
     setAlert({
@@ -63,6 +68,17 @@ const CreateCourse = () => {
     })
     navigate(authRoutes.myCourses.root.path)
   }
+
+  const getUserData = useCallback(
+    () => userService.getUserById(userId, userRole as UserRole),
+    [userId, userRole]
+  )
+
+  const { loading: userLoading, response: user } =
+    useAxios<UserResponse | null>({
+      service: getUserData,
+      defaultResponse: null
+    })
 
   const addCourse = useCallback(
     (data?: CourseForm) => CourseService.addCourse(data),
@@ -170,7 +186,7 @@ const CreateCourse = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id])
 
-  if (getCourseLoading) {
+  if (getCourseLoading || userLoading) {
     return <Loader pageLoad />
   }
 
@@ -183,6 +199,7 @@ const CreateCourse = () => {
           handleBlur={handleBlur}
           handleInputChange={handleInputChange}
           handleNonInputValueChange={handleNonInputValueChange}
+          user={user}
         />
         <CourseSectionsList
           handleSectionInputChange={handleSectionInputChange}

@@ -6,8 +6,10 @@ import SimpleBar from 'simplebar-react'
 import SearchIcon from '@mui/icons-material/Search'
 import Box from '@mui/material/Box'
 
+import { useAppSelector } from '~/hooks/use-redux'
 import { useFilterQuery } from '~/hooks/use-filter-query'
 import { CourseService } from '~/services/course-service'
+import { userService } from '~/services/user-service'
 import useAxios from '~/hooks/use-axios'
 import useSort from '~/hooks/table/use-sort'
 import Loader from '~/components/loader/Loader'
@@ -32,7 +34,9 @@ import {
   SortEnum,
   CategoryNameInterface,
   SubjectNameInterface,
-  ProficiencyLevelEnum
+  ProficiencyLevelEnum,
+  UserRole,
+  UserResponse
 } from '~/types'
 
 interface AddCourseTemplateModalProps {
@@ -47,12 +51,21 @@ const AddCourseTemplateModal: FC<AddCourseTemplateModalProps> = ({
   const { sort, onRequestSort } = useSort({ initialSort })
   const [searchValue, setSearchValue] = useState<string>('')
   const [showFilters, setShowFilters] = useState(false)
-
+  const { userId, userRole } = useAppSelector((state) => state.appMain)
   const { filters, filterQueryActions } = useFilterQuery({
     defaultFilters: coursesDefaultFilters
   })
 
-  const { updateFilterInQuery, resetFilters } = filterQueryActions
+  const getUserData = useCallback(
+    () => userService.getUserById(userId, userRole as UserRole),
+    [userId, userRole]
+  )
+
+  const { loading: userLoading, response: user } =
+    useAxios<UserResponse | null>({
+      service: getUserData,
+      defaultResponse: null
+    })
 
   const getCourses = useCallback(() => CourseService.getCourses(), [])
 
@@ -60,6 +73,8 @@ const AddCourseTemplateModal: FC<AddCourseTemplateModalProps> = ({
     service: getCourses,
     defaultResponse: defaultResponses.itemsWithCount
   })
+
+  const { updateFilterInQuery, resetFilters } = filterQueryActions
 
   const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value)
@@ -175,11 +190,13 @@ const AddCourseTemplateModal: FC<AddCourseTemplateModalProps> = ({
           onLevelChange={onLevelChange}
           onSubjectChange={onSubjectChange}
           resetFilters={resetFilters}
+          user={user}
+          userLoading={userLoading}
         />
       )}
 
       <SimpleBar style={styles.cardsScroll(showFilters)}>
-        {loading ? (
+        {loading || userLoading ? (
           <Loader containerSx={styles.loaderWrapper} pageLoad size={50} />
         ) : (
           scrollableContent

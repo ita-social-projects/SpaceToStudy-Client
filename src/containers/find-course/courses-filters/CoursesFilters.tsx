@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import FormControl from '@mui/material/FormControl'
@@ -10,22 +10,28 @@ import Checkbox from '@mui/material/Checkbox'
 import ListItemText from '@mui/material/ListItemText'
 import CloseIcon from '@mui/icons-material/Close'
 
-import AsyncAutocomplete from '~/components/async-autocomlete/AsyncAutocomplete'
-import AppButton from '~/components/app-button/AppButton'
-
 import { subjectService } from '~/services/subject-service'
 import { categoryService } from '~/services/category-service'
+import AppButton from '~/components/app-button/AppButton'
+import DividedDropdownAutocomplete from '~/components/divider-dropdown-autocomplete/DividerDropdownAutocomplete'
+
+import { customOptions } from '~/utils/course-custom-options'
 import { styles } from '~/containers/find-course/courses-filters/CourseFilters.styles'
 import {
   ProficiencyLevelEnum,
   CategoryNameInterface,
   SubjectNameInterface,
   CourseFilters,
-  ButtonVariantEnum
+  ButtonVariantEnum,
+  courseExtendedAutocompleteOptions,
+  UserResponse,
+  CourseAutocompleteOptionsEnum
 } from '~/types'
 
 interface CoursesFiltersProps {
   filters: CourseFilters
+  user: UserResponse | null
+  userLoading?: boolean
   onCategoryChange: (
     _: React.SyntheticEvent,
     value: CategoryNameInterface | null
@@ -40,6 +46,8 @@ interface CoursesFiltersProps {
 
 const CoursesFilters = ({
   filters,
+  user,
+  userLoading = false,
   onCategoryChange,
   onSubjectChange,
   onLevelChange,
@@ -47,11 +55,34 @@ const CoursesFilters = ({
 }: CoursesFiltersProps) => {
   const { t } = useTranslation()
 
+  const { Subjects } = CourseAutocompleteOptionsEnum
   const levelLists = Object.values(ProficiencyLevelEnum)
 
   const getSubjectsNames = useCallback(
     () => subjectService.getSubjectsNames(filters.category),
     [filters.category]
+  )
+
+  const userCategories = useMemo(
+    () => user?.mainSubjects.tutor.map((item) => item.category.name) ?? [],
+    [user?.mainSubjects.tutor]
+  )
+
+  const userSubjects = useMemo(
+    () => user?.mainSubjects.tutor.map((item) => item.name) ?? [],
+    [user?.mainSubjects.tutor]
+  )
+
+  const transformCategories = useCallback(
+    (response: CategoryNameInterface[]): courseExtendedAutocompleteOptions[] =>
+      customOptions(response, userCategories),
+    [userCategories]
+  )
+
+  const transformSubjects = useCallback(
+    (response: SubjectNameInterface[]): courseExtendedAutocompleteOptions[] =>
+      customOptions(response, userSubjects, Subjects),
+    [Subjects, userSubjects]
   )
 
   const renderSelectedLevels = (selected: string[]) => {
@@ -67,7 +98,14 @@ const CoursesFilters = ({
 
   return (
     <Box sx={styles.toolbar}>
-      <AsyncAutocomplete
+      <DividedDropdownAutocomplete<
+        CategoryNameInterface,
+        courseExtendedAutocompleteOptions
+      >
+        axiosProps={{ transform: transformCategories }}
+        disabled={userLoading}
+        fetchOnFocus
+        groupBy={(option) => option.title}
         labelField='name'
         onChange={onCategoryChange}
         service={categoryService.getCategoriesNames}
@@ -78,8 +116,14 @@ const CoursesFilters = ({
         value={filters.category}
         valueField='_id'
       />
-      <AsyncAutocomplete
+      <DividedDropdownAutocomplete<
+        SubjectNameInterface,
+        courseExtendedAutocompleteOptions
+      >
+        axiosProps={{ transform: transformSubjects }}
         disabled={!filters.category}
+        fetchOnFocus
+        groupBy={(option) => option.title}
         labelField='name'
         onChange={onSubjectChange}
         service={getSubjectsNames}
