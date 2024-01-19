@@ -40,7 +40,10 @@ const FaqBlock = <T extends CreateOrUpdateOfferData>({
 
   const addMoreQuestion = () => {
     if (data.FAQ.length < 5) {
-      const updatedFaq = [...data.FAQ, { question: '', answer: '' }]
+      const updatedFaq = [
+        ...data.FAQ,
+        { question: '', answer: '', _id: `${Date.now()}` }
+      ]
       handleNonInputValueChange('FAQ', updatedFaq)
     } else {
       setMaxFaqError(t('offerPage.errorMessages.FAQ'))
@@ -54,7 +57,7 @@ const FaqBlock = <T extends CreateOrUpdateOfferData>({
   }
 
   const questionsAnswers = data.FAQ.map((el, idx, array) => (
-    <Box key={idx} sx={styles.faqInputsBlock}>
+    <Box key={el._id} sx={styles.faqInputsBlock}>
       <Box sx={styles.faqInputs}>
         <AppTextField
           fullWidth
