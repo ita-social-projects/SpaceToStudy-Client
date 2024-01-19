@@ -23,7 +23,7 @@ import {
   SubjectNameInterface,
   CourseFilters,
   ButtonVariantEnum,
-  courseExtendedAutocompleteOptions,
+  CourseExtendedAutocompleteOptions,
   UserResponse,
   CourseAutocompleteOptionsEnum
 } from '~/types'
@@ -74,13 +74,13 @@ const CoursesFilters = ({
   )
 
   const transformCategories = useCallback(
-    (response: CategoryNameInterface[]): courseExtendedAutocompleteOptions[] =>
+    (response: CategoryNameInterface[]): CourseExtendedAutocompleteOptions[] =>
       customOptions(response, userCategories),
     [userCategories]
   )
 
   const transformSubjects = useCallback(
-    (response: SubjectNameInterface[]): courseExtendedAutocompleteOptions[] =>
+    (response: SubjectNameInterface[]): CourseExtendedAutocompleteOptions[] =>
       customOptions(response, userSubjects, Subjects),
     [Subjects, userSubjects]
   )
@@ -100,7 +100,7 @@ const CoursesFilters = ({
     <Box sx={styles.toolbar}>
       <DividedDropdownAutocomplete<
         CategoryNameInterface,
-        courseExtendedAutocompleteOptions
+        CourseExtendedAutocompleteOptions
       >
         axiosProps={{ transform: transformCategories }}
         disabled={userLoading}
@@ -118,7 +118,7 @@ const CoursesFilters = ({
       />
       <DividedDropdownAutocomplete<
         SubjectNameInterface,
-        courseExtendedAutocompleteOptions
+        CourseExtendedAutocompleteOptions
       >
         axiosProps={{ transform: transformSubjects }}
         disabled={!filters.category}

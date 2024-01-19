@@ -51,7 +51,7 @@ export interface GetCoursesParams extends Partial<RequestParams> {
   fileName?: string
 }
 
-export interface courseExtendedAutocompleteOptions {
+export interface CourseExtendedAutocompleteOptions {
   name: string
   _id: string
   title: string

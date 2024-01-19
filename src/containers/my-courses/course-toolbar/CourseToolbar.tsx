@@ -32,7 +32,7 @@ import {
   CourseAutocompleteOptionsEnum,
   ComponentEnum,
   UserResponse,
-  courseExtendedAutocompleteOptions
+  CourseExtendedAutocompleteOptions
 } from '~/types'
 import { customOptions } from '~/utils/course-custom-options'
 import { styles } from '~/containers/my-courses/course-toolbar/CourseToolbar.style'
@@ -117,13 +117,13 @@ const CourseToolbar = ({
   )
 
   const transformCategories = useCallback(
-    (response: CategoryNameInterface[]): courseExtendedAutocompleteOptions[] =>
+    (response: CategoryNameInterface[]): CourseExtendedAutocompleteOptions[] =>
       customOptions(response, userCategories),
     [userCategories]
   )
 
   const transformSubjects = useCallback(
-    (response: SubjectNameInterface[]): courseExtendedAutocompleteOptions[] =>
+    (response: SubjectNameInterface[]): CourseExtendedAutocompleteOptions[] =>
       customOptions(response, userSubjects, Subjects),
     [Subjects, userSubjects]
   )
@@ -132,7 +132,7 @@ const CourseToolbar = ({
     <>
       <DividedDropdownAutocomplete<
         CategoryNameInterface,
-        courseExtendedAutocompleteOptions
+        CourseExtendedAutocompleteOptions
       >
         axiosProps={{ transform: transformCategories }}
         fetchOnFocus
@@ -154,7 +154,7 @@ const CourseToolbar = ({
 
       <DividedDropdownAutocomplete<
         SubjectNameInterface,
-        courseExtendedAutocompleteOptions
+        CourseExtendedAutocompleteOptions
       >
         axiosProps={{ transform: transformSubjects }}
         disabled={Boolean(!category)}
