@@ -135,7 +135,6 @@ const CourseToolbar = ({
         CourseExtendedAutocompleteOptions
       >
         axiosProps={{ transform: transformCategories }}
-        fetchOnFocus
         groupBy={(option) => option.title}
         labelField='name'
         onBlur={handleBlur('category')}
@@ -158,7 +157,6 @@ const CourseToolbar = ({
       >
         axiosProps={{ transform: transformSubjects }}
         disabled={Boolean(!category)}
-        fetchOnFocus
         groupBy={(option) => option.title}
         labelField='name'
         onBlur={handleBlur('subject')}

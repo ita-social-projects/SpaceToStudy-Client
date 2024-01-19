@@ -104,7 +104,6 @@ const CoursesFilters = ({
       >
         axiosProps={{ transform: transformCategories }}
         disabled={userLoading}
-        fetchOnFocus
         groupBy={(option) => option.title}
         labelField='name'
         onChange={onCategoryChange}
@@ -122,7 +121,6 @@ const CoursesFilters = ({
       >
         axiosProps={{ transform: transformSubjects }}
         disabled={!filters.category}
-        fetchOnFocus
         groupBy={(option) => option.title}
         labelField='name'
         onChange={onSubjectChange}
