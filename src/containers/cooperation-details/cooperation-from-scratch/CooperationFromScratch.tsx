@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
+import { Link } from 'react-router-dom'
 
 import AppSelect from '~/components/app-select/AppSelect'
 import CooperationActivitiesList from '~/containers/my-cooperations/cooperation-activities-list/CooperationActivitiesList'
@@ -14,7 +15,7 @@ import { ComponentEnum, ResourcesAvailabilityEnum } from '~/types'
 import openIcon from '~/assets/img/cooperation-details/resource-availability/open-icon.svg'
 import closeIcon from '~/assets/img/cooperation-details/resource-availability/closed-icon.svg'
 import { ButtonVariantEnum, SizeEnum } from '~/types'
-import { Link } from 'react-router-dom'
+import { authRoutes } from '~/router/constants/authRoutes'
 
 const CooperationFromScratch = () => {
   const { t } = useTranslation()
@@ -69,7 +70,7 @@ const CooperationFromScratch = () => {
         <AppButton
           component={Link}
           size={SizeEnum.ExtraLarge}
-          to={myCooperations}
+          to={authRoutes.cooperationDetails.path}
           variant={ButtonVariantEnum.Tonal}
         >
           {t('common.cancel')}

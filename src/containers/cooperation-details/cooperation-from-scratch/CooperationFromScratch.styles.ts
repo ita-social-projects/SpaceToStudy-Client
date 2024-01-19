@@ -36,6 +36,6 @@ export const styles = {
     gap: { xs: '24px', sm: '30px' },
     justifyContent: 'end',
     alignSelf: { xs: 'center', sm: 'end' },
-    marginTop: { xs: '5px', sm: '20px' }
+    mt: { xs: '5px', sm: '20px' }
   }
 }
