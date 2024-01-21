@@ -1,4 +1,3 @@
-import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
@@ -8,22 +7,16 @@ import { PositionEnum } from '~/types'
 
 import { styles } from '~/containers/my-cooperations/cooperation-notes/CooperationNotes.styles'
 
-interface CooperationNotesProps {
-  isNotesOpen: boolean
-}
-
-const CooperationNotes: FC<CooperationNotesProps> = ({ isNotesOpen }) => {
+const CooperationNotes = () => {
   const { t } = useTranslation()
   return (
-    <>
+    <Box sx={styles.notesWrapper}>
       <Divider orientation={PositionEnum.Vertical} sx={styles.divider} />
-      <Box sx={styles.notesWrapper(isNotesOpen)}>
-        <Box sx={styles.notesIcon}>
-          <Typography>{t('cooperationsPage.details.notes')}</Typography>
-          <AddIcon />
-        </Box>
+      <Box sx={styles.notesIcon}>
+        <Typography>{t('cooperationsPage.details.notes')}</Typography>
+        <AddIcon />
       </Box>
-    </>
+    </Box>
   )
 }
 

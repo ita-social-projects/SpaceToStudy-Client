@@ -5,19 +5,21 @@ export const styles = {
     mx: '16px',
     border: `1px solid ${palette.primary[200]}`
   },
-  notesWrapper: (isNotes: boolean) => ({
-    width: isNotes ? { md: '400px', sm: '380px' } : '0px'
-  }),
+  notesWrapper: {
+    display: 'flex',
+    justifyContent: 'space-between'
+  },
   notesIcon: {
     display: 'flex',
     justifyContent: 'space-between',
+    width: '400px',
     '& > p': {
       color: palette.basic.bismark,
       fontWeight: 500
     },
     '& > svg': {
-      width: { md: '22px', sm: '18px' },
-      height: { md: '22px', sm: '18px' },
+      width: '25px',
+      height: '25px',
       cursor: 'pointer'
     }
   }

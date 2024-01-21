@@ -1,7 +1,23 @@
 import palette from '~/styles/app-theme/app.pallete'
-import { breakpointsTheme } from '~/styles/app-theme/custom-mui.styles'
 
 export const styles = {
+  notesSidebar: {
+    '& .MuiDrawer-root': {
+      position: 'absolute'
+    },
+    '& .MuiPaper-root': {
+      p: '25px',
+      maxWidth: '400px',
+      width: '100%'
+    },
+    '& .MuiDivider-root': {
+      display: 'none'
+    },
+    '& .MuiBox-root': {
+      mt: '25px',
+      width: '100%'
+    }
+  },
   tabsWrapper: {
     display: 'flex',
     justifyContent: 'space-between'
@@ -15,17 +31,8 @@ export const styles = {
     cursor: 'pointer',
     mb: '10px',
     color: isNotesOpen ? palette.basic.lightBlue : palette.basic.blueGray,
-    transform: isNotesOpen ? 'translateX(-200px)' : 'translateX(0)',
-    transition: 'transform 0.3s ease-in-out, color 0.3s ease-in-out',
-    [breakpointsTheme.breakpoints.between('md', 'lg')]: {
-      transform: isNotesOpen && 'translateX(-150px)'
-    },
-    [breakpointsTheme.breakpoints.between('sm', 'md')]: {
-      transform: isNotesOpen && 'translateX(-100px)'
-    },
-    [breakpointsTheme.breakpoints.between('xs', 'sm')]: {
-      transform: isNotesOpen && 'translateX(0)'
-    }
+    transform: isNotesOpen ? 'translateX(-300px)' : 'translateX(0)',
+    transition: 'transform 0.3s ease-in-out, color 0.3s ease-in-out'
   }),
   notes: (isNotesOpen: boolean) => ({
     p: '10px 8px',
