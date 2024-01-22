@@ -24,7 +24,6 @@ const CooperationDetails = () => {
   const { isDesktop } = useBreakpoints()
   const [activeTab, setActiveTab] = useState<string>('activities')
   const [isNotesOpen, setIsNotesOpen] = useState<boolean>(false)
-  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false)
 
   const handleClick = (tab: string) => {
     setActiveTab(tab)
@@ -32,12 +31,10 @@ const CooperationDetails = () => {
 
   const handleNotesClick = () => {
     setIsNotesOpen((prevState) => !prevState)
-    setIsDrawerOpen(true)
   }
 
   const handleCloseDrawer = () => {
     setIsNotesOpen(false)
-    setIsDrawerOpen(false)
   }
 
   const cooperationContent = activeTab && tabsData[activeTab]?.content
@@ -76,7 +73,7 @@ const CooperationDetails = () => {
           <AppDrawer
             anchor={PositionEnum.Right}
             onClose={handleCloseDrawer}
-            open={isDrawerOpen}
+            open={isNotesOpen}
             sx={styles.notesSidebar}
           >
             <CooperationNotes />
