@@ -1,15 +1,10 @@
 import { TypographyVariantEnum } from '~/types'
 
 export const styles = {
-  divider: {
-    display: 'flex',
-    borderBottom: '1px solid',
-    borderColor: 'primary.100',
-    mb: '32px'
-  },
   title: {
     typography: TypographyVariantEnum.H6,
-    color: 'primary.500'
+    color: 'primary.500',
+    mt: '32px'
   },
   closeBtn: {
     color: 'error.700',

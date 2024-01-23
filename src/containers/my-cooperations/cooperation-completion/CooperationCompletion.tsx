@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
+import Divider from '@mui/material/Divider'
 
 import SettingItem from '~/components/setting-item/SettingItem'
 import AppButton from '~/components/app-button/AppButton'
@@ -25,7 +26,7 @@ const CooperationCompletion = () => {
 
   return (
     <Box>
-      <Box sx={styles.divider}></Box>
+      <Divider />
       <Typography sx={styles.title}>
         {t('cooperationsPage.cooperationDetails.completionTitle')}
       </Typography>
