@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react'
+import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import FormControl from '@mui/material/FormControl'
@@ -12,10 +12,10 @@ import CloseIcon from '@mui/icons-material/Close'
 
 import { subjectService } from '~/services/subject-service'
 import { categoryService } from '~/services/category-service'
+import useUserCategoriesAndSubjects from '~/hooks/use-user-categories-and-subjects'
 import AppButton from '~/components/app-button/AppButton'
 import DividedDropdownAutocomplete from '~/components/divider-dropdown-autocomplete/DividerDropdownAutocomplete'
 
-import { customOptions } from '~/utils/course-custom-options'
 import { styles } from '~/containers/find-course/courses-filters/CourseFilters.styles'
 import {
   ProficiencyLevelEnum,
@@ -24,8 +24,7 @@ import {
   CourseFilters,
   ButtonVariantEnum,
   CourseExtendedAutocompleteOptions,
-  UserResponse,
-  CourseAutocompleteOptionsEnum
+  UserResponse
 } from '~/types'
 
 interface CoursesFiltersProps {
@@ -54,35 +53,14 @@ const CoursesFilters = ({
   resetFilters
 }: CoursesFiltersProps) => {
   const { t } = useTranslation()
+  const { transformCategories, transformSubjects } =
+    useUserCategoriesAndSubjects({ user })
 
-  const { Subjects } = CourseAutocompleteOptionsEnum
   const levelLists = Object.values(ProficiencyLevelEnum)
 
   const getSubjectsNames = useCallback(
     () => subjectService.getSubjectsNames(filters.category),
     [filters.category]
-  )
-
-  const userCategories = useMemo(
-    () => user?.mainSubjects.tutor.map((item) => item.category.name) ?? [],
-    [user?.mainSubjects.tutor]
-  )
-
-  const userSubjects = useMemo(
-    () => user?.mainSubjects.tutor.map((item) => item.name) ?? [],
-    [user?.mainSubjects.tutor]
-  )
-
-  const transformCategories = useCallback(
-    (response: CategoryNameInterface[]): CourseExtendedAutocompleteOptions[] =>
-      customOptions(response, userCategories),
-    [userCategories]
-  )
-
-  const transformSubjects = useCallback(
-    (response: SubjectNameInterface[]): CourseExtendedAutocompleteOptions[] =>
-      customOptions(response, userSubjects, Subjects),
-    [Subjects, userSubjects]
   )
 
   const renderSelectedLevels = (selected: string[]) => {
