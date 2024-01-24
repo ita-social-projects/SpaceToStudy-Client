@@ -19,11 +19,6 @@ export const styles = {
     alignItems: 'center',
     mb: '4px'
   },
-  icon: {
-    color: palette.success[400],
-    width: '20px',
-    height: '20px'
-  },
   lockTitle: {
     ml: '8px',
     color: palette.basic.lightBlue,

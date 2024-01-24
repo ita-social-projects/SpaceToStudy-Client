@@ -17,6 +17,7 @@ import CooperationNotes from '~/containers/my-cooperations/cooperation-notes/Coo
 import { PositionEnum } from '~/types'
 
 import { styles } from '~/containers/my-cooperations/cooperation-details/CooperationDetails.styles'
+import { ResourcesAvailabilityProvider } from '~/context/resources-availability-context'
 
 const CooperationDetails = () => {
   const { t } = useTranslation()
@@ -68,7 +69,11 @@ const CooperationDetails = () => {
         </Box>
       </Box>
       <Box sx={styles.notesBlock}>
-        <Box sx={styles.pageContent}>{pageContent}</Box>
+        <Box sx={styles.pageContent}>
+          <ResourcesAvailabilityProvider>
+            {pageContent}
+          </ResourcesAvailabilityProvider>
+        </Box>
         {!isDesktop && isNotesOpen && (
           <AppDrawer
             anchor={PositionEnum.Right}

@@ -1,11 +1,12 @@
-import { SortEnum } from '~/types'
+import { ResourcesAvailability } from '~/types'
 
 export const cooperationTranslationKeys = [
-  { title: 'cooperationDetailsPage.select.openAll', value: 'updatedAt desc' },
+  {
+    title: 'cooperationDetailsPage.select.openAll',
+    value: ResourcesAvailability.openAll
+  },
   {
     title: 'cooperationDetailsPage.select.openManually',
-    value: 'updatedAt asc'
+    value: ResourcesAvailability.openManually
   }
 ]
-
-export const initialSort = { order: SortEnum.Desc, orderBy: 'updatedAt' }

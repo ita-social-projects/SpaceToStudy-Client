@@ -3,10 +3,16 @@
     "title": "Select course template",
     "description": "Choose the course template from your library for cooperation."
   },
-  "publish": "Publish: Open all",
+  "publish": "Publish: ",
   "allResources": "All resource(s) become available immediately for preview and completion for Student after saving.",
+  "manuallyResources": "Student access to the resource(s) can be changed at any time during the learning process.",
   "select": {
-    "openAll": "Open All",
+    "openAll": "Open all",
     "openManually": "Open manually"
+  },
+  "resourceSelection": {
+    "open": "Open",
+    "openFrom": "Open from",
+    "closed": "Closed"
   }
 }

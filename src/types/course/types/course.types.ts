@@ -1,6 +1,8 @@
-import { Lesson, Quiz, Attachment, ItemsWithCount } from '~/types'
-import { Course } from '~/types/course/interfaces/course.interface'
+import { Lesson, Quiz, Attachment, ResourceAvailabilityStatus } from '~/types'
 
-export type CourseResources = Lesson | Quiz | Attachment
+type Resources = Lesson | Quiz | Attachment
 
-export type MyCorsesListProps = Omit<ItemsWithCount<Course>, 'count'>
+export type CourseResources = Resources & {
+  resourceAvailability?: ResourceAvailabilityStatus
+  openFromDate?: string | null
+}

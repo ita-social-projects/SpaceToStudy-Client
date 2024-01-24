@@ -15,12 +15,18 @@ const mockedLessonData = {
   resourceType: ResourcesTypes.Lessons
 }
 
+const mockedSetResourceAvailability = vi.fn()
+
 const mockedFunc = vi.fn()
 
 describe('new course section RescourceItem tests', () => {
   beforeEach(() => {
     renderWithProviders(
-      <ResourceItem deleteResource={mockedFunc} resource={mockedLessonData} />
+      <ResourceItem
+        deleteResource={mockedFunc}
+        resource={mockedLessonData}
+        setResourceAvailability={mockedSetResourceAvailability}
+      />
     )
   })
 
@@ -48,7 +54,11 @@ describe('should render quiz component', () => {
     mockedLessonData.resourceType = ResourcesTypes.Quizzes
 
     renderWithProviders(
-      <ResourceItem resource={mockedLessonData} setItemToDelete={mockedFunc} />
+      <ResourceItem
+        resource={mockedLessonData}
+        setItemToDelete={mockedFunc}
+        setResourceAvailability={mockedSetResourceAvailability}
+      />
     )
 
     const quizIcon = screen.getByTestId('NoteAltOutlinedIcon')

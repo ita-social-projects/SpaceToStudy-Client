@@ -30,6 +30,14 @@ export const slidesLeft = keyframes`
     opacity: 1;
   }
 `
+export const SlidesLeftLong = keyframes`
+  from {
+    transform: translateX(50%);
+  }
+  to {
+    transform: translateX(0px);
+  }
+`
 
 export const fadeAnimation = {
   animation: `${fade} 0.5s ease-in`
@@ -41,4 +49,8 @@ export const slidesRightAnimation = {
 
 export const slidesLeftAnimation = {
   animation: `${slidesLeft} .3s ease-in-out`
+}
+
+export const SlideLeftLongAnimation = {
+  animation: `${SlidesLeftLong} .5s ease-in-out`
 }

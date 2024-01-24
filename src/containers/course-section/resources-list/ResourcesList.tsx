@@ -15,7 +15,7 @@ import ResourceItem from '~/containers/course-section/resource-item/ResourceItem
 
 import useDroppable from '~/hooks/use-droppable'
 import { styles } from '~/containers/course-section/resources-list/ResourcesList.styles'
-import { CourseResources } from '~/types'
+import { CourseResources, ResourceAvailabilityStatus } from '~/types'
 
 interface ResourcesListProps {
   items: CourseResources[]
@@ -56,6 +56,21 @@ const ResourcesList: FC<ResourcesListProps> = ({
     setResources(reorderedItems)
   }
 
+  const setResourceAvailability = (
+    id: string,
+    availability: ResourceAvailabilityStatus,
+    openFromDate?: string | null
+  ) => {
+    const resources = [...items]
+    const resource = resources.find((item) => item._id === id)
+
+    if (resource) {
+      resource.resourceAvailability = availability
+      openFromDate !== undefined && (resource.openFromDate = openFromDate)
+    }
+    setResources(resources)
+  }
+
   const resourcesList = items.map((item, i) => (
     <Draggable draggableId={item._id.toString()} index={i} key={item._id}>
       {(provided: DraggableProvided, snapshot: DraggableStateSnapshot) => (
@@ -71,7 +86,11 @@ const ResourcesList: FC<ResourcesListProps> = ({
           >
             <DragIndicatorIcon />
           </Box>
-          <ResourceItem deleteResource={deleteResource} resource={item} />
+          <ResourceItem
+            deleteResource={deleteResource}
+            resource={item}
+            setResourceAvailability={setResourceAvailability}
+          />
         </Box>
       )}
     </Draggable>
