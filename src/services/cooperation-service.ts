@@ -5,7 +5,8 @@ import { URLs } from '~/constants/request'
 import {
   CreateCooperationsParams,
   GetCooperationsParams,
-  UpdateCooperationsParams
+  UpdateCooperationsParams,
+  CreateNoteParams
 } from '~/types'
 import { createUrlPath } from '~/utils/helper-functions'
 
@@ -25,4 +26,9 @@ export const cooperationService = {
       createUrlPath(URLs.cooperations.update, data._id),
       data
     )
+}
+
+export const CooperationNotesService = {
+  createNote: async (data?: CreateNoteParams): Promise<AxiosResponse> =>
+    await axiosClient.post(URLs.notes.create, data)
 }

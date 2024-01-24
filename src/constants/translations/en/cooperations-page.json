@@ -54,5 +54,10 @@
   "menyTypes": {
     "courseTemplate": "Course template",
     "scratch": "From scratch"
+  },
+  "notes": {
+    "noteText": "Note text...",
+    "privateSetting": "Make it private",
+    "noteMsg": "Note has been created"
   }
 }
