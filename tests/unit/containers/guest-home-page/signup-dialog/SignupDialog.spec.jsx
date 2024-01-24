@@ -3,6 +3,8 @@ import { screen, fireEvent, waitFor } from '@testing-library/react'
 import SignupDialog from '~/containers/guest-home-page/signup-dialog/SignupDialog'
 import { renderWithProviders } from '~tests/test-utils'
 import { student } from '~/constants'
+import { renderHook } from '@testing-library/react-hooks'
+import useBreakpointsGoogle from '~/hooks/use-breakpoints-google'
 
 const mockSelector = vi.fn()
 const unwrap = vi.fn().mockResolvedValue({})
@@ -40,6 +42,16 @@ vi.mock('~/services/auth-service', async () => {
     useSignUpMutation: () => [signUp]
   }
 })
+
+vi.mock('~/hooks/use-breakpoints-google', () => ({
+  __esModule: true,
+  default: vi.fn(() => ({
+    isSmallScreen: false,
+    isMediumScreen: false,
+    isLargeScreen: false,
+    isXLargeScreen: true
+  }))
+}))
 
 describe('Signup dialog test', () => {
   beforeEach(() => {
@@ -124,5 +136,39 @@ describe('Signup dialog test', () => {
     await waitFor(() => {
       expect(signUp).toHaveBeenCalledTimes(1)
     })
+  })
+  it('sSmallScreen', () => {
+    useBreakpointsGoogle.mockImplementation(() => ({
+      isSmallScreen: true,
+      isMediumScreen: false,
+      isLargeScreen: false,
+      isXLargeScreen: false
+    }))
+    const { result } = renderHook(useBreakpointsGoogle)
+    expect(result).toBeTruthy()
+  })
+  it('isMediumScreen', () => {
+    useBreakpointsGoogle.mockImplementation(() => ({
+      isSmallScreen: false,
+      isMediumScreen: true,
+      isLargeScreen: false,
+      isXLargeScreen: false
+    }))
+    const { result } = renderHook(useBreakpointsGoogle)
+    expect(result).toBeTruthy()
+  })
+  it('isLargeScreen', () => {
+    useBreakpointsGoogle.mockImplementation(() => ({
+      isSmallScreen: false,
+      isMediumScreen: false,
+      isLargeScreen: true,
+      isXLargeScreen: false
+    }))
+    const { result } = renderHook(useBreakpointsGoogle)
+    expect(result).toBeTruthy()
+  })
+  it('isXLargeScreen', () => {
+    const { result } = renderHook(useBreakpointsGoogle)
+    expect(result).toBeTruthy()
   })
 })

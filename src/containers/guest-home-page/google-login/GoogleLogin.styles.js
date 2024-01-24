@@ -24,5 +24,10 @@ export const styles = {
   haveAccount: {
     display: 'flex',
     color: 'primary.700'
+  },
+  googleForm: {
+    display: 'flex',
+    flexDirection: 'column',
+    minWidth: { sm: '330px' }
   }
 }

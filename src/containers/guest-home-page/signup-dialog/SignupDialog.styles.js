@@ -5,7 +5,7 @@ export const styles = {
     maxWidth: { sm: 'sm', md: 'md', lg: 'lg' },
     mt: { xs: '56px', sm: 0 },
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around;',
     alignItems: 'center',
     gap: { lg: '63px', md: '40px' },
     maxHeight: { xs: 'calc(100vh - 56px)', sm: 'calc(100vh - 64px)' }

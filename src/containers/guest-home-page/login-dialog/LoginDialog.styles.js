@@ -5,7 +5,7 @@ const style = {
     maxWidth: { sm: 'sm', md: 'md', lg: 'lg' },
     mt: { xs: '56px', sm: 0 },
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around;',
     alignItems: 'center',
     gap: { lg: '122px', md: '40px' },
     maxHeight: { xs: 'calc(100vh - 56px)', sm: 'calc(100vh - 64px)' }
@@ -38,7 +38,6 @@ const style = {
   },
   form: {
     overflow: 'auto',
-    maxWidth: { xs: '315px', md: '343px' },
     pt: '16px',
     pr: { xs: '8px', sm: '96px', md: '80px', lg: '96px' },
     pb: { xs: '24px', sm: '64px' },

@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { useTranslation } from 'react-i18next'
@@ -26,6 +26,7 @@ import tutor from '~/assets/img/signup-dialog/tutor.svg'
 import info from '~/assets/img/guest-home-page/info.svg'
 
 import { styles } from '~/containers/guest-home-page/signup-dialog/SignupDialog.styles'
+import useBreakpointsGoogle from '~/hooks/use-breakpoints-google'
 
 const SignupDialog = ({ type }) => {
   const { t } = useTranslation()
@@ -84,7 +85,24 @@ const SignupDialog = ({ type }) => {
   useEffect(() => {
     setNeedConfirmation(isDirty)
   }, [isDirty, setNeedConfirmation])
+  const breakpoints = useBreakpointsGoogle()
 
+  const { isSmallScreen, isMediumScreen, isLargeScreen, isXLargeScreen } =
+    useMemo(() => breakpoints, [breakpoints])
+
+  const buttonWidths = {
+    small: 330,
+    medium: 333,
+    large: 340,
+    xLarge: 394
+  }
+
+  const getButtonWidth = () => {
+    if (isSmallScreen) return buttonWidths.small
+    if (isMediumScreen) return buttonWidths.medium
+    if (isLargeScreen) return buttonWidths.large
+    if (isXLargeScreen) return buttonWidths.xLarge
+  }
   return (
     <Box sx={styles.root}>
       <Box sx={styles.imgContainer}>
@@ -110,7 +128,7 @@ const SignupDialog = ({ type }) => {
             handleSubmit={handleSubmit}
           />
           <GoogleLogin
-            buttonWidth={styles.form.maxWidth}
+            buttonWidth={getButtonWidth()}
             role={type}
             type={signup}
           />
