@@ -4,6 +4,7 @@ import {
   ReactNode,
   SetStateAction,
   useContext,
+  useMemo,
   useState
 } from 'react'
 import { ResourcesAvailability } from '~/types'
@@ -30,14 +31,17 @@ const ResourcesAvailabilityProvider = ({
     ResourcesAvailability.openAll
   )
 
+  const contextValue = useMemo(
+    () => ({
+      resourceAvailability,
+      setResourceAvailability,
+      isCooperation: true
+    }),
+    [resourceAvailability, setResourceAvailability]
+  )
+
   return (
-    <ResourcesAvailabilityContext.Provider
-      value={{
-        resourceAvailability,
-        setResourceAvailability,
-        isCooperation: true
-      }}
-    >
+    <ResourcesAvailabilityContext.Provider value={contextValue}>
       {children}
     </ResourcesAvailabilityContext.Provider>
   )

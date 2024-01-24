@@ -62,7 +62,7 @@ const ResourceItem: FC<ResourceItemProps> = ({
   }
 
   const resourceAvailabilityStatus =
-    resource.resourceAvailability || ResourceAvailabilityStatus.open
+    resource.resourceAvailability ?? ResourceAvailabilityStatus.open
   const displayDatePicker =
     resourceAvailabilityStatus === ResourceAvailabilityStatus.openFrom
 
@@ -108,14 +108,14 @@ const ResourceItem: FC<ResourceItemProps> = ({
               label='Opening date'
               onChange={setDate}
               renderInput={(params) => <TextField {...params} />}
-              value={resource.openFromDate || null}
+              value={resource.openFromDate ?? null}
             />
           </Box>
         </LocalizationProvider>
       )}
       <AppSelect
         fields={selectionFields}
-        setValue={(value) => setStatus(value as ResourceAvailabilityStatus)}
+        setValue={(value) => setStatus(value)}
         sx={styles.availabilitySelect}
         value={resourceAvailabilityStatus}
       />
