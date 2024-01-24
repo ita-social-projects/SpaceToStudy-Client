@@ -64,7 +64,8 @@ const CooperationNotes = () => {
   })
 
   const onNoteCreate = useCallback(() => {
-    onResponse(), setOpen(false)
+    onResponse()
+    setOpen(false)
     void fetchData()
   }, [onResponse, fetchData])
 

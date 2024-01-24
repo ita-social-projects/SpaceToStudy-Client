@@ -58,6 +58,6 @@
   "notes": {
     "noteText": "Note text...",
     "privateSetting": "Make it private",
-    "noteMsg": "Note has been created"
+    "noteMsg": "Note was successfully created"
   }
 }
