@@ -54,5 +54,10 @@
   "menyTypes": {
     "courseTemplate": "Шаблон курсу",
     "scratch": "З нуля"
+  },
+  "notes": {
+    "noteText": "Текст нотатки...",
+    "privateSetting": "Зробити приватною",
+    "noteMsg": "Нотатку було успішно створено"
   }
 }

@@ -47,6 +47,12 @@ export const URLs = {
     create: '/cooperations',
     update: '/cooperations'
   },
+  notes: {
+    get: '/notes',
+    create: '/notes',
+    update: '/notes',
+    delete: '/notes'
+  },
   chats: {
     get: '/chats',
     create: '/chats',

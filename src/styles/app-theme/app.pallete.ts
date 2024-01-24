@@ -21,6 +21,7 @@ const palette = {
     turquoise: '#489DA0',
     turquoiseDark: '#3B8587',
     turquoiseChat: '#A0F0F2',
+    turquoiseLight: '#F5FFFF',
     blueGray: '#607D8B',
     bismark: '#546E7A',
     darkGray: '#455A64',
