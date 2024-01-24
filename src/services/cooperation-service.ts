@@ -30,13 +30,19 @@ export const cooperationService = {
 
 export const CooperationNotesService = {
   getNotes: async (cooperationId?: string): Promise<AxiosResponse> =>
-    await axiosClient.get(createUrlPath(URLs.notes.get, cooperationId)),
+    await axiosClient.get(
+      createUrlPath(
+        `${URLs.cooperations.get}/${cooperationId}${URLs.notes.get}`
+      )
+    ),
   createNote: async (
     data?: CreateNoteParams,
     cooperationId?: string
   ): Promise<AxiosResponse> =>
     await axiosClient.post(
-      createUrlPath(URLs.notes.create, cooperationId),
+      createUrlPath(
+        `${URLs.cooperations.get}/${cooperationId}${URLs.notes.create}`
+      ),
       data
     )
 }
