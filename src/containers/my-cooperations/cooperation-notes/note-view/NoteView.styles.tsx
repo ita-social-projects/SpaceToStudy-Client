@@ -1,4 +1,5 @@
 import palette from '~/styles/app-theme/app.pallete'
+import { commonHoverShadow } from '~/styles/app-theme/custom-shadows'
 import { TypographyVariantEnum } from '~/types'
 
 export const styles = {
@@ -10,16 +11,15 @@ export const styles = {
     p: '20px',
     mt: '24px',
     borderRadius: '2px 2px 6px 6px',
-    borderTop: `4px solid ${
-      isPrivate ? palette.basic.blueGray : palette.basic.turquoise
-    }`,
+    borderTop: '4px solid',
+    borderColor: isPrivate ? 'basic.blueGray' : 'basic.turquoise',
     background: currentUser
       ? isPrivate
         ? palette.basic.grey
         : palette.basic.white
       : palette.basic.turquoiseLight,
     '&:hover': {
-      boxShadow: '0px 3px 16px 2px rgba(144, 164, 174, 0.56)'
+      boxShadow: commonHoverShadow
     }
   }),
   descriptionInput: {

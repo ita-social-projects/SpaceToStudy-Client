@@ -7,7 +7,7 @@ export const styles = {
   },
   notesWrapper: {
     display: 'flex',
-    justifyContent: 'justify-content'
+    justifyContent: 'space-between'
   },
   notesIcon: {
     display: 'flex',
