@@ -1,4 +1,3 @@
-import { useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
@@ -24,31 +23,27 @@ import {
 
 interface CreateOrEditNoteProps {
   addNewNote: (data: CreateNoteParams) => Promise<void>
+  onCloseNote: () => void
 }
 
-const CreateOrEditNote = ({ addNewNote }: CreateOrEditNoteProps) => {
+const CreateOrEditNote = ({
+  addNewNote,
+  onCloseNote
+}: CreateOrEditNoteProps) => {
   const { t } = useTranslation()
-  const { id } = useParams()
 
   const userNameMocked = 'User Name'
 
-  const {
-    data,
-    handleInputChange,
-    handleNonInputValueChange,
-    handleSubmit,
-    resetData
-  } = useForm<CreateNoteParams>({
-    initialValues: {
-      text: '',
-      isPrivate: false,
-      cooperation: id || ''
-    },
-    onSubmit: async () => {
-      await addNewNote(data)
-      resetData()
-    }
-  })
+  const { data, handleInputChange, handleNonInputValueChange, handleSubmit } =
+    useForm<CreateNoteParams>({
+      initialValues: {
+        text: '',
+        isPrivate: false
+      },
+      onSubmit: async () => {
+        await addNewNote(data)
+      }
+    })
 
   return (
     <Box
@@ -66,7 +61,7 @@ const CreateOrEditNote = ({ addNewNote }: CreateOrEditNoteProps) => {
         InputLabelProps={styles.descriptionLabel}
         InputProps={styles.descriptionInput}
         fullWidth
-        inputProps={styles.input}
+        inputProps={{ ...styles.descriptionInput, maxLength: 100 }}
         label={data.text ? '' : t('cooperationsPage.notes.noteText')}
         multiline
         onChange={handleInputChange('text')}
@@ -92,6 +87,7 @@ const CreateOrEditNote = ({ addNewNote }: CreateOrEditNoteProps) => {
         />
         <Box sx={styles.btnContainer}>
           <AppButton
+            onClick={onCloseNote}
             size={SizeEnum.Small}
             sx={styles.noteBtn}
             variant={ButtonVariantEnum.Tonal}

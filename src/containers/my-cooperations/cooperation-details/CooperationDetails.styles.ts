@@ -5,17 +5,11 @@ export const styles = {
     '& .MuiDrawer-root': {
       position: 'absolute'
     },
-    '& .MuiPaper-root': {
-      p: '25px',
-      maxWidth: '400px',
-      width: '100%'
-    },
     '& .MuiDivider-root': {
       display: 'none'
     },
-    '& .MuiBox-root': {
-      mt: '25px',
-      width: '100%'
+    '& .css-1qi76ds-MuiPaper-root-MuiDrawer-paper': {
+      pt: '62px'
     }
   },
   tabsWrapper: {

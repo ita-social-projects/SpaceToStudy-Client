@@ -29,6 +29,14 @@ export const cooperationService = {
 }
 
 export const CooperationNotesService = {
-  createNote: async (data?: CreateNoteParams): Promise<AxiosResponse> =>
-    await axiosClient.post(URLs.notes.create, data)
+  getNotes: async (cooperationId?: string): Promise<AxiosResponse> =>
+    await axiosClient.get(createUrlPath(URLs.notes.get, cooperationId)),
+  createNote: async (
+    data?: CreateNoteParams,
+    cooperationId?: string
+  ): Promise<AxiosResponse> =>
+    await axiosClient.post(
+      createUrlPath(URLs.notes.create, cooperationId),
+      data
+    )
 }
