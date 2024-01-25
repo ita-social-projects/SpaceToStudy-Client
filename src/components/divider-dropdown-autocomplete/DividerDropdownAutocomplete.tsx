@@ -38,19 +38,18 @@ const DividedDropdownAutocomplete = <
 }: DividedDropdownAutocompleteProps<Response, TransformedResponse, Params>) => {
   const { t } = useTranslation()
 
-  const optionsList = (params: AutocompleteRenderGroupParams) => {
-    const { group, key, children, ...props } = params
-
-    return (
-      <Box key={key} {...props}>
-        {Number(key) > 0 && <Divider sx={styles.autocompleteDropdownDivider} />}
-        <Typography sx={styles.autocompleteDropdownTitle}>
-          {t(group)}
-        </Typography>
-        {children}
-      </Box>
-    )
-  }
+  const optionsList = ({
+    group,
+    key,
+    children,
+    ...props
+  }: AutocompleteRenderGroupParams) => (
+    <Box key={key} {...props}>
+      {Number(key) > 0 && <Divider sx={styles.autocompleteDropdownDivider} />}
+      <Typography sx={styles.autocompleteDropdownTitle}>{t(group)}</Typography>
+      {children}
+    </Box>
+  )
 
   return (
     <AsyncAutocomplete<Response, Params, TransformedResponse>
