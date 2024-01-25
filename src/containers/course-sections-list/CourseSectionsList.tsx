@@ -49,7 +49,7 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
   handleSectionNonInputChange,
   titleText,
   isCooperation = false,
-  addNewSection = () => {}
+  addNewSection
 }) => {
   const { enabled } = useDroppable()
   const { openMenu, renderMenu, closeMenu, anchorEl } = useMenu()
@@ -89,15 +89,14 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
     setSectionsItems(reorderedItems)
   }
 
+  const handleMenuItemClick = () => {
+    closeMenu()
+    addNewSection?.(currentSectionIndex)
+  }
+
   const addActivityMenuList = addActivityMenuItems.map(
     ({ id, label, icon }) => (
-      <MenuItem
-        key={id}
-        onClick={() => {
-          closeMenu()
-          addNewSection(currentSectionIndex)
-        }}
-      >
+      <MenuItem key={id} onClick={handleMenuItemClick}>
         {icon}
         {t(label)}
       </MenuItem>

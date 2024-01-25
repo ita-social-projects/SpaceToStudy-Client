@@ -2,6 +2,11 @@ import palette from '~/styles/app-theme/app.pallete'
 import { fadeAnimation } from '~/styles/app-theme/custom-animations'
 import { TypographyVariantEnum } from '~/types'
 
+const iconSize = {
+  width: '16px',
+  height: '16px'
+}
+
 export const styles = {
   section: (isDragging: boolean) => ({
     mb: '20px',
@@ -34,8 +39,7 @@ export const styles = {
   },
   activityButtonIcon: {
     ml: '8px',
-    width: '16px',
-    height: '16px'
+    ...iconSize
   },
   activityButtonContainerDefault: {
     height: '24px',
@@ -76,7 +80,6 @@ export const styles = {
   },
   menuIcon: {
     mr: '8px',
-    width: '16px',
-    height: '16px'
+    ...iconSize
   }
 }

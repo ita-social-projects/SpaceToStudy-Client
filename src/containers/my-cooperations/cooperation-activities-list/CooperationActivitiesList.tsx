@@ -39,17 +39,15 @@ const CooperationActivitiesList = () => {
   const addNewSection = (index = null) => {
     const newSectionData = { ...sectionInitialData }
     newSectionData.id = Date.now().toString()
-    let newSections = [...data.sections]
 
-    if (index !== null) {
-      newSections = [
-        ...newSections.slice(0, index),
-        newSectionData,
-        ...newSections.slice(index)
-      ]
-    } else {
-      newSections.push(newSectionData)
-    }
+    const newSections =
+      index !== null
+        ? [
+            ...data.sections.slice(0, index),
+            newSectionData,
+            ...data.sections.slice(index)
+          ]
+        : [...data.sections, newSectionData]
 
     setSectionsData(newSections)
   }
