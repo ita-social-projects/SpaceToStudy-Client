@@ -13,7 +13,7 @@ export const styles = {
       color: 'primary.500'
     }
   },
-  dpopdown: {
+  dropdown: {
     maxWidth: '216px'
   }
 }

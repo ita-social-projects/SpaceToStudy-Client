@@ -51,7 +51,7 @@ const CooperationCompletion = () => {
         <AppSelect
           fields={cooperationAccessValues(t)}
           setValue={setMaterialsAccess}
-          sx={styles.dpopdown}
+          sx={styles.dropdown}
           value={materialsAccess}
         />
       </SettingItem>
