@@ -15,7 +15,7 @@ import ResourceItem from '~/containers/course-section/resource-item/ResourceItem
 
 import useDroppable from '~/hooks/use-droppable'
 import { styles } from '~/containers/course-section/resources-list/ResourcesList.styles'
-import { CourseResources, ResourceAvailabilityStatus } from '~/types'
+import { CourseResources, ResourceAvailabilityStatusEnum } from '~/types'
 
 interface ResourcesListProps {
   items: CourseResources[]
@@ -58,7 +58,7 @@ const ResourcesList: FC<ResourcesListProps> = ({
 
   const setResourceAvailability = (
     id: string,
-    availability: ResourceAvailabilityStatus,
+    availability: ResourceAvailabilityStatusEnum,
     openFromDate?: string | null
   ) => {
     const resources = [...items]

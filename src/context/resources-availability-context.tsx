@@ -7,28 +7,28 @@ import {
   useMemo,
   useState
 } from 'react'
-import { ResourcesAvailability } from '~/types'
+import { ResourcesAvailabilityEnum } from '~/types'
 
 interface ResourcesAvailabilityProviderProps {
   children: ReactNode
 }
 
 interface ResourcesAvailabilityContextOutput {
-  resourceAvailability: ResourcesAvailability
-  setResourceAvailability: Dispatch<SetStateAction<ResourcesAvailability>>
+  resourceAvailability: ResourcesAvailabilityEnum
+  setResourceAvailability: Dispatch<SetStateAction<ResourcesAvailabilityEnum>>
   isCooperation: boolean
 }
 
 const ResourcesAvailabilityContext =
   createContext<ResourcesAvailabilityContextOutput>({
-    resourceAvailability: ResourcesAvailability.openAll
+    resourceAvailability: ResourcesAvailabilityEnum.openAll
   } as ResourcesAvailabilityContextOutput)
 
 const ResourcesAvailabilityProvider = ({
   children
 }: ResourcesAvailabilityProviderProps) => {
   const [resourceAvailability, setResourceAvailability] = useState(
-    ResourcesAvailability.openAll
+    ResourcesAvailabilityEnum.openAll
   )
 
   const contextValue = useMemo(

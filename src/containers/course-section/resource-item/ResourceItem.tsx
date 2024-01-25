@@ -6,6 +6,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import TextField from '@mui/material/TextField'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
+import { useTranslation } from 'react-i18next'
 
 import AppSelect from '~/components/app-select/AppSelect'
 import IconExtensionWithTitle from '~/components/icon-extension-with-title/IconExtensionWithTitle'
@@ -15,9 +16,10 @@ import openFrom from '~/assets/img/cooperation-details/resource-availability/ope
 import closedIcon from '~/assets/img/cooperation-details/resource-availability/closed-icon.svg'
 
 import {
+  ComponentEnum,
   CourseResources,
-  ResourceAvailabilityStatus,
-  ResourcesAvailability,
+  ResourceAvailabilityStatusEnum,
+  ResourcesAvailabilityEnum,
   ResourcesTabsEnum as ResourcesTypes
 } from '~/types'
 
@@ -30,7 +32,7 @@ interface ResourceItemProps {
   deleteResource: (resource: CourseResources) => void
   setResourceAvailability: (
     id: string,
-    availability: ResourceAvailabilityStatus,
+    availability: ResourceAvailabilityStatusEnum,
     openFromDate: string | null
   ) => void
 }
@@ -50,6 +52,7 @@ const ResourceItem: FC<ResourceItemProps> = ({
     deleteResource(resource)
   }
 
+  const { t } = useTranslation()
   const { resourceAvailability, isCooperation } =
     useResourceAvailabilityContext()
 
@@ -61,24 +64,24 @@ const ResourceItem: FC<ResourceItemProps> = ({
     }
   }
 
-  const resourceAvailabilityStatus =
-    resource.resourceAvailability ?? ResourceAvailabilityStatus.open
-  const displayDatePicker =
-    resourceAvailabilityStatus === ResourceAvailabilityStatus.openFrom
+  const { open, openFrom, closed } = ResourceAvailabilityStatusEnum
+
+  const resourceAvailabilityStatus = resource.resourceAvailability ?? open
+  const displayDatePicker = resourceAvailabilityStatus === openFrom
 
   const setDate = (value: string | null) => {
     setResourceAvailability(resource._id, resourceAvailabilityStatus, value)
   }
 
-  const setStatus = (status: ResourceAvailabilityStatus) => {
+  const setStatus = (status: ResourceAvailabilityStatusEnum) => {
     setResourceAvailability(resource._id, status, null)
   }
 
   useEffect(() => {
-    if (resourceAvailability === ResourcesAvailability.openManually) {
-      setStatus(ResourceAvailabilityStatus.closed)
+    if (resourceAvailability === ResourcesAvailabilityEnum.openManually) {
+      setStatus(closed)
     } else {
-      setStatus(ResourceAvailabilityStatus.open)
+      setStatus(open)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resourceAvailability])
@@ -88,7 +91,7 @@ const ResourceItem: FC<ResourceItemProps> = ({
       {!displayDatePicker && (
         <Box
           alt='resource icon'
-          component='img'
+          component={ComponentEnum.Img}
           src={availabilityIcons[resourceAvailabilityStatus]}
           sx={styles.availabilityIcon}
         />
@@ -98,14 +101,14 @@ const ResourceItem: FC<ResourceItemProps> = ({
           <Box sx={styles.datePicker}>
             <Box
               alt='resource icon'
-              component='img'
+              component={ComponentEnum.Img}
               src={availabilityIcons[resourceAvailabilityStatus]}
               sx={styles.availabilityIcon}
             />
             <DatePicker
               disablePast
               inputFormat={'MMM d, yyyy'}
-              label='Opening date'
+              label={t('cooperationDetailsPage.datePickerLabel')}
               onChange={setDate}
               renderInput={(params) => <TextField {...params} />}
               value={resource.openFromDate ?? null}

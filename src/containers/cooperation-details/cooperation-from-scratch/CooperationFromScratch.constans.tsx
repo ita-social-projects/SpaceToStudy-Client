@@ -1,12 +1,12 @@
-import { ResourcesAvailability } from '~/types'
+import { ResourcesAvailabilityEnum } from '~/types'
 
 export const cooperationTranslationKeys = [
   {
     title: 'cooperationDetailsPage.select.openAll',
-    value: ResourcesAvailability.openAll
+    value: ResourcesAvailabilityEnum.openAll
   },
   {
     title: 'cooperationDetailsPage.select.openManually',
-    value: ResourcesAvailability.openManually
+    value: ResourcesAvailabilityEnum.openManually
   }
 ]

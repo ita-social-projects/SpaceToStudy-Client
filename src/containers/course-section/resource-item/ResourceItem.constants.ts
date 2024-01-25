@@ -1,16 +1,17 @@
-import { ResourceAvailabilityStatus } from '~/types'
+import { ResourceAvailabilityStatusEnum } from '~/types'
+import i18n from 'i18next'
 
 export const selectionFields = [
   {
-    value: ResourceAvailabilityStatus.open,
-    title: 'Open'
+    value: ResourceAvailabilityStatusEnum.open,
+    title: i18n.t('cooperationDetailsPage.resourceSelection.open')
   },
   {
-    value: ResourceAvailabilityStatus.openFrom,
-    title: 'Open from'
+    value: ResourceAvailabilityStatusEnum.openFrom,
+    title: i18n.t('cooperationDetailsPage.resourceSelection.openFrom')
   },
   {
-    value: ResourceAvailabilityStatus.closed,
-    title: 'Closed'
+    value: ResourceAvailabilityStatusEnum.closed,
+    title: i18n.t('cooperationDetailsPage.resourceSelection.closed')
   }
 ]

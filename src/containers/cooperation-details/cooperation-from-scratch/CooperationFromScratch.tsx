@@ -8,7 +8,7 @@ import { useResourceAvailabilityContext } from '~/context/resources-availability
 
 import { cooperationTranslationKeys } from '~/containers/cooperation-details/cooperation-from-scratch/CooperationFromScratch.constans'
 import { styles } from '~/containers/cooperation-details/cooperation-from-scratch/CooperationFromScratch.styles'
-import { ResourcesAvailability } from '~/types'
+import { ComponentEnum, ResourcesAvailabilityEnum } from '~/types'
 import openIcon from '~/assets/img/cooperation-details/resource-availability/open-icon.svg'
 import closeIcon from '~/assets/img/cooperation-details/resource-availability/closed-icon.svg'
 
@@ -25,27 +25,28 @@ const CooperationFromScratch = () => {
     })
   )
 
+  const imgSrc =
+    resourceAvailability === ResourcesAvailabilityEnum.openAll
+      ? openIcon
+      : closeIcon
+
   return (
     <Box data-testid='coop-from-scratch' sx={styles.root}>
       <Box sx={styles.publishBlock}>
         <Box>
           <Box sx={styles.lockBlock}>
             <Box
-              alt='rescource icon'
-              component='img'
-              src={
-                resourceAvailability === ResourcesAvailability.openAll
-                  ? openIcon
-                  : closeIcon
-              }
+              alt='resource icon'
+              component={ComponentEnum.Img}
+              src={imgSrc}
             />
             <Typography sx={styles.lockTitle}>
               {t('cooperationDetailsPage.publish')}
               {t(
                 `cooperationDetailsPage.select.${
-                  resourceAvailability === ResourcesAvailability.openAll
-                    ? 'openAll'
-                    : 'openManually'
+                  resourceAvailability === ResourcesAvailabilityEnum.openAll
+                    ? ResourcesAvailabilityEnum.openAll
+                    : ResourcesAvailabilityEnum.openManually
                 }`
               )}
             </Typography>
@@ -53,9 +54,9 @@ const CooperationFromScratch = () => {
           <Typography sx={styles.lockSubtitle}>
             {t(
               `cooperationDetailsPage.${
-                resourceAvailability === ResourcesAvailability.openAll
-                  ? 'allResources'
-                  : 'manuallyResources'
+                resourceAvailability === ResourcesAvailabilityEnum.openAll
+                  ? ResourcesAvailabilityEnum.openAll
+                  : ResourcesAvailabilityEnum.openManually
               }`
             )}
           </Typography>
