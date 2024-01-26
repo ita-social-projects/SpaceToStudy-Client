@@ -10,22 +10,27 @@ import Checkbox from '@mui/material/Checkbox'
 import ListItemText from '@mui/material/ListItemText'
 import CloseIcon from '@mui/icons-material/Close'
 
-import AsyncAutocomplete from '~/components/async-autocomlete/AsyncAutocomplete'
-import AppButton from '~/components/app-button/AppButton'
-
 import { subjectService } from '~/services/subject-service'
 import { categoryService } from '~/services/category-service'
+import useUserCategoriesAndSubjects from '~/hooks/use-user-categories-and-subjects'
+import AppButton from '~/components/app-button/AppButton'
+import DividedDropdownAutocomplete from '~/components/divider-dropdown-autocomplete/DividerDropdownAutocomplete'
+
 import { styles } from '~/containers/find-course/courses-filters/CourseFilters.styles'
 import {
   ProficiencyLevelEnum,
   CategoryNameInterface,
   SubjectNameInterface,
   CourseFilters,
-  ButtonVariantEnum
+  ButtonVariantEnum,
+  CourseExtendedAutocompleteOptions,
+  UserResponse
 } from '~/types'
 
 interface CoursesFiltersProps {
   filters: CourseFilters
+  user: UserResponse | null
+  userLoading?: boolean
   onCategoryChange: (
     _: React.SyntheticEvent,
     value: CategoryNameInterface | null
@@ -40,12 +45,16 @@ interface CoursesFiltersProps {
 
 const CoursesFilters = ({
   filters,
+  user,
+  userLoading = false,
   onCategoryChange,
   onSubjectChange,
   onLevelChange,
   resetFilters
 }: CoursesFiltersProps) => {
   const { t } = useTranslation()
+  const { transformCategories, transformSubjects } =
+    useUserCategoriesAndSubjects({ user })
 
   const levelLists = Object.values(ProficiencyLevelEnum)
 
@@ -67,7 +76,13 @@ const CoursesFilters = ({
 
   return (
     <Box sx={styles.toolbar}>
-      <AsyncAutocomplete
+      <DividedDropdownAutocomplete<
+        CategoryNameInterface,
+        CourseExtendedAutocompleteOptions
+      >
+        axiosProps={{ transform: transformCategories }}
+        disabled={userLoading}
+        groupBy={(option) => option.title}
         labelField='name'
         onChange={onCategoryChange}
         service={categoryService.getCategoriesNames}
@@ -78,8 +93,13 @@ const CoursesFilters = ({
         value={filters.category}
         valueField='_id'
       />
-      <AsyncAutocomplete
+      <DividedDropdownAutocomplete<
+        SubjectNameInterface,
+        CourseExtendedAutocompleteOptions
+      >
+        axiosProps={{ transform: transformSubjects }}
         disabled={!filters.category}
+        groupBy={(option) => option.title}
         labelField='name'
         onChange={onSubjectChange}
         service={getSubjectsNames}

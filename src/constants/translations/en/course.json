@@ -1,4 +1,8 @@
 {
+    "yourCategories": "Your teaching categories:",
+    "otherCategories": "Other categories:",
+    "yourSubjects": "Your teaching subjects:",
+    "otherSubjects": "Other subjects:",
     "addSectionBtn": "Add Section",
     "section": "section",
     "sections": "sections",

@@ -29,7 +29,7 @@ export interface UserResponse {
   firstName: string
   lastName: string
   email: string
-  mainSubjects: SubjectInterface[]
+  mainSubjects: { student: SubjectInterface[]; tutor: SubjectInterface[] }
   totalReviews: DataByRole<number>
   averageRating: DataByRole<number>
   nativeLanguage: string

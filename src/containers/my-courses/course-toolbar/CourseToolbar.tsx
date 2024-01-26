@@ -11,12 +11,12 @@ import Select, { SelectChangeEvent } from '@mui/material/Select'
 import Checkbox from '@mui/material/Checkbox'
 import FormHelperText from '@mui/material/FormHelperText'
 
-import AppTextField from '~/components/app-text-field/AppTextField'
-import AppToolbar from '~/components/app-toolbar/AppToolbar'
-import AsyncAutocomplete from '~/components/async-autocomlete/AsyncAutocomplete'
-
 import { subjectService } from '~/services/subject-service'
 import { categoryService } from '~/services/category-service'
+import useUserCategoriesAndSubjects from '~/hooks/use-user-categories-and-subjects'
+import AppTextField from '~/components/app-text-field/AppTextField'
+import AppToolbar from '~/components/app-toolbar/AppToolbar'
+import DividedDropdownAutocomplete from '~/components/divider-dropdown-autocomplete/DividerDropdownAutocomplete'
 
 import {
   CategoryNameInterface,
@@ -24,13 +24,15 @@ import {
   CourseForm,
   ProficiencyLevelEnum,
   TextFieldVariantEnum,
-  ComponentEnum
+  ComponentEnum,
+  UserResponse,
+  CourseExtendedAutocompleteOptions
 } from '~/types'
-
 import { styles } from '~/containers/my-courses/course-toolbar/CourseToolbar.style'
 
 interface CourseToolbarProps {
   data: CourseForm
+  user: UserResponse | null
   errors: { [key in keyof CourseForm]: string }
   handleBlur: (
     key: keyof CourseForm
@@ -46,12 +48,15 @@ interface CourseToolbarProps {
 
 const CourseToolbar = ({
   data,
+  user,
   handleInputChange,
   errors,
   handleBlur,
   handleNonInputValueChange
 }: CourseToolbarProps) => {
   const { t } = useTranslation()
+  const { transformCategories, transformSubjects } =
+    useUserCategoriesAndSubjects({ user })
 
   const { category, subject, proficiencyLevel } = data
   const levelLists = Object.values(ProficiencyLevelEnum)
@@ -97,7 +102,12 @@ const CourseToolbar = ({
 
   const AppAutoCompleteList = (
     <>
-      <AsyncAutocomplete
+      <DividedDropdownAutocomplete<
+        CategoryNameInterface,
+        CourseExtendedAutocompleteOptions
+      >
+        axiosProps={{ transform: transformCategories }}
+        groupBy={(option) => option.title}
         labelField='name'
         onBlur={handleBlur('category')}
         onChange={onCategoryChange}
@@ -112,8 +122,14 @@ const CourseToolbar = ({
         value={category}
         valueField='_id'
       />
-      <AsyncAutocomplete
+
+      <DividedDropdownAutocomplete<
+        SubjectNameInterface,
+        CourseExtendedAutocompleteOptions
+      >
+        axiosProps={{ transform: transformSubjects }}
         disabled={Boolean(!category)}
+        groupBy={(option) => option.title}
         labelField='name'
         onBlur={handleBlur('subject')}
         onChange={onSubjectChange}

@@ -50,3 +50,9 @@ export interface GetCoursesParams extends Partial<RequestParams> {
   title?: string
   fileName?: string
 }
+
+export interface CourseExtendedAutocompleteOptions {
+  name: string
+  _id: string
+  title: string
+}
