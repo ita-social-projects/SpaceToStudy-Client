@@ -56,6 +56,18 @@
     "scratch": "З нуля",
     "module": "Модуль"
   },
+  "cooperationDetails": {
+    "completionTitle": "Завершення кооперації",
+    "closeCooperationTitle": "Завершити кооперацію",
+    "closeCooperationDescription": "Розпочніть процес завершення поточної співпраці, якщо ваше навчання зі студентом закінчилося.",
+    "closeCooperationBtn": "Завершити кооперацію",
+    "accessTitle": "Доступ до навчальних матеріалів",
+    "accessDescription": "Визначте терміни доступу до навчальних матеріалів після завершення співпраці зі студентом.", 
+    "noAccess": "Не має доступу",
+    "monthAccess": "місяці доступу",
+    "yearAccess": "рік доступу",
+    "permanentAccess": "Постійний доступ"
+  },
   "notes": {
     "noteText": "Текст нотатки...",
     "privateSetting": "Зробити приватною",

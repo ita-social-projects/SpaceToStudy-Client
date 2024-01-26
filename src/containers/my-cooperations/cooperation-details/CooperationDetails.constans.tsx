@@ -3,6 +3,7 @@ import { ButtonProps } from '@mui/material/Button'
 import TodayIcon from '@mui/icons-material/Today'
 
 import Activities from '~/containers/my-cooperations/cooperation-activities/CooperationActivities'
+import CooperationCompletion from '~/containers/my-cooperations/cooperation-completion/CooperationCompletion'
 import {
   Cooperation,
   ProficiencyLevelEnum,
@@ -28,7 +29,8 @@ export const tabsData: MyCooperationsTabsData = {
     content: <Activities />
   },
   details: {
-    title: 'cooperationsPage.tabs.details'
+    title: 'cooperationsPage.tabs.details',
+    content: <CooperationCompletion />
   }
 }
 
