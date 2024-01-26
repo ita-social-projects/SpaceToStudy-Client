@@ -24,7 +24,9 @@ export const styles = {
   },
   toolbarContainer: {
     display: 'flex',
-    justufyContent: 'space-between'
+    justufyContent: 'space-between',
+    alignItems: 'center',
+    gap: '16px'
   },
   searchIcon: { color: 'primary.700' },
   searchInput: {

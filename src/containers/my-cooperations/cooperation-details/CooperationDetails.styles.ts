@@ -1,6 +1,15 @@
 import palette from '~/styles/app-theme/app.pallete'
+import { TypographyVariantEnum } from '~/types'
 
 export const styles = {
+  cooperationTitle: {
+    title: {
+      typography: TypographyVariantEnum.H5,
+      mb: '24px',
+      mt: '16px',
+      width: { sm: '100%', md: '70%' }
+    }
+  },
   notesSidebar: {
     '& .MuiDrawer-root': {
       position: 'absolute'
