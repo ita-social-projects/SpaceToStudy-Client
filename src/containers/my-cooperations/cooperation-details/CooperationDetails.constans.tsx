@@ -3,6 +3,7 @@ import { ButtonProps } from '@mui/material/Button'
 import TodayIcon from '@mui/icons-material/Today'
 
 import EmptyActivities from '~/containers/my-cooperations/empty-cooperation-activities/EmptyCooperationActivities'
+import MyCooperationsDetails from '../my-cooperations-details/MyCooperationsDetails'
 import CooperationCompletion from '~/containers/my-cooperations/cooperation-completion/CooperationCompletion'
 import {
   Cooperation,
@@ -31,9 +32,10 @@ export const tabsData: MyCooperationsTabsData = {
   },
   [CooperationTabsEnum.Details]: {
     title: 'cooperationsPage.tabs.details',
-    content: <CooperationCompletion />
+    content: <MyCooperationsDetails />
   }
 }
+
 
 export const defaultResponse: Cooperation = {
   offer: {

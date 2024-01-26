@@ -15,5 +15,7 @@
     "open": "Open",
     "openFrom": "Open from",
     "closed": "Closed"
-  }
+  },
+  "details": "Cooperation details",
+  "profile": "Profile"
 }

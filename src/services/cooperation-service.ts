@@ -4,6 +4,7 @@ import { AxiosResponse } from 'axios'
 import { URLs } from '~/constants/request'
 import {
   CreateCooperationsParams,
+  GetCooperationByIdParams,
   GetCooperationsParams,
   UpdateCooperationsParams,
   Cooperation,
@@ -16,6 +17,10 @@ export const cooperationService = {
     params: GetCooperationsParams
   ): Promise<AxiosResponse> =>
     await axiosClient.get(URLs.cooperations.get, { params }),
+  getCooperationById: async (
+    params: GetCooperationByIdParams
+  ): Promise<AxiosResponse> =>
+    await axiosClient.get(createUrlPath(URLs.cooperations.get, params)),
   createCooperation: async (
     data: CreateCooperationsParams
   ): Promise<AxiosResponse> =>
