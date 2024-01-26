@@ -46,11 +46,10 @@ const MyCooperationsDetails = () => {
   const onHandleClick = () => {
     navigate(
       createUrlPath(authRoutes.userProfile.path, offer.author._id, {
-        role: 'tutor'
+        role: UserRoleEnum.Tutor
       })
     )
   }
-  console.log(offer.author)
 
   const onClickOpenChat = () =>
     setChatInfo({
