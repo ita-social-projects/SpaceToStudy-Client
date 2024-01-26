@@ -30,5 +30,12 @@ export const styles = {
   resourcesSelect: {
     width: { sm: '200px', xs: '120px' },
     cursor: 'pointer'
+  },
+  buttons: {
+    display: 'flex',
+    gap: { xs: '24px', sm: '30px' },
+    justifyContent: 'end',
+    alignSelf: { xs: 'center', sm: 'end' },
+    mt: { xs: '5px', sm: '20px' }
   }
 }
