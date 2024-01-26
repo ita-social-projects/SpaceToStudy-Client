@@ -7,6 +7,7 @@ import CloseRounded from '@mui/icons-material/CloseRounded'
 import useConfirm from '~/hooks/use-confirm'
 
 import { styles } from '~/components/app-drawer/AppDrawer.styles'
+import { PositionEnum } from '~/types'
 
 interface AppDrawerProps extends DrawerProps {
   children: ReactNode
@@ -17,7 +18,7 @@ interface AppDrawerProps extends DrawerProps {
 const AppDrawer: FC<AppDrawerProps> = ({
   children,
   onClose,
-  anchor = 'right',
+  anchor = PositionEnum.Right,
   closeIcon = true,
   ...props
 }) => {

@@ -26,9 +26,12 @@ export const styles = {
   addAttachmentBtn: {
     button: {
       backgroundColor: 'primary.900',
-      typography: TypographyVariantEnum.Body1,
-      fontWeight: '500',
-      py: '12.5px'
+      typography: {
+        xs: TypographyVariantEnum.Subtitle2,
+        md: TypographyVariantEnum.Body1
+      },
+      fontWeight: { md: 500 },
+      py: '12px'
     }
   },
   categoryChip: {

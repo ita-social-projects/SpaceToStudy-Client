@@ -191,6 +191,7 @@ const AttachmentsContainer = () => {
       searchRef={searchFileName}
       selectedItems={selectedItems}
       setItems={setSelectedItems}
+      sortOptions={sortOptions}
     />
   )
 

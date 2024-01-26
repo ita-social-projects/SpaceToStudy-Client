@@ -1,6 +1,7 @@
-import { useState, ChangeEvent, useMemo, Dispatch, SetStateAction } from 'react'
+import { useState, ChangeEvent, useMemo, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import SimpleBar from 'simplebar-react'
+import { SxProps } from '@mui/material'
 import Box from '@mui/material/Box'
 import Menu, { MenuProps } from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
@@ -19,6 +20,7 @@ import AppButton from '~/components/app-button/AppButton'
 import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
 
 import { defaultResponses } from '~/constants'
+import { spliceSx } from '~/utils/helper-functions'
 import { styles } from '~/components/filter-selector/FilterSelector.styles'
 import {
   ButtonVariantEnum,
@@ -30,10 +32,11 @@ interface FilterSelectorProps<T> extends Omit<MenuProps, 'open'> {
   title: string
   service: ServiceFunction<T[]>
   selectedItems: string[]
-  setSelectedItems: Dispatch<SetStateAction<string[]>>
+  setSelectedItems: (value: string[]) => void
   position?: PopoverOrigin['horizontal']
   valueField?: keyof T
   showNoneProperty?: boolean
+  customSx?: { root?: SxProps }
 }
 
 const FilterSelector = <T extends Pick<CategoryNameInterface, '_id'>>({
@@ -44,6 +47,7 @@ const FilterSelector = <T extends Pick<CategoryNameInterface, '_id'>>({
   position = 'left',
   valueField,
   showNoneProperty = false,
+  customSx,
   ...props
 }: FilterSelectorProps<T>) => {
   const { t } = useTranslation()
@@ -69,16 +73,13 @@ const FilterSelector = <T extends Pick<CategoryNameInterface, '_id'>>({
 
   const onMenuItemClick = (item: string, id: string) => {
     if (selectedNames.includes(item)) {
-      setSelectedNames(selectedNames.filter((selected) => selected !== item))
       setSelectedItems(selectedItems.filter((selected) => selected !== id))
     } else {
-      setSelectedNames([...selectedNames, item])
       setSelectedItems([...selectedItems, id])
     }
   }
 
   const onClearAll = () => {
-    setSelectedNames([])
     setSelectedItems([])
   }
 
@@ -90,7 +91,7 @@ const FilterSelector = <T extends Pick<CategoryNameInterface, '_id'>>({
   const filteredItems = useMemo(() => {
     const noneItem = {
       _id: 'null',
-      name: 'None'
+      [valueField as string]: 'None'
     }
 
     const filtered = response.filter((item) =>
@@ -117,6 +118,14 @@ const FilterSelector = <T extends Pick<CategoryNameInterface, '_id'>>({
     )
   })
 
+  useEffect(() => {
+    const filteredNames = filteredItems
+      .filter((item) => selectedItems.includes(item._id))
+      .map((item) => String(valueField ? item[valueField] : item))
+
+    setSelectedNames(filteredNames)
+  }, [filteredItems, selectedItems, valueField])
+
   const scrollableContent = filteredItems.length ? (
     menuItems
   ) : (
@@ -132,7 +141,7 @@ const FilterSelector = <T extends Pick<CategoryNameInterface, '_id'>>({
     : t('cooperationsPage.tabs.all')
 
   return (
-    <Box id='menu-filter' sx={styles.root}>
+    <Box id='menu-filter' sx={spliceSx(styles.root, customSx?.root)}>
       <Typography sx={styles.text}>{title}:</Typography>
       <Typography sx={styles.chosenFilters}>{chosenFiltersText}</Typography>
       <IconButton
@@ -144,11 +153,11 @@ const FilterSelector = <T extends Pick<CategoryNameInterface, '_id'>>({
       </IconButton>
 
       <Menu
-        PaperProps={styles.menuPaperProps}
         anchorEl={menuAnchor}
         anchorOrigin={{ vertical: 'bottom', horizontal: position }}
         onClose={handleMenuClose}
         open={!!menuAnchor}
+        slotProps={{ paper: styles.menuPaperProps }}
         sx={styles.menu(itemsLoad)}
         transformOrigin={{ vertical: 'top', horizontal: position }}
         {...props}

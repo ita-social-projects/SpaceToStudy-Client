@@ -128,10 +128,10 @@ const CoursesFiltersDrawer: FC<CoursesFiltersDrawerProps> = ({
         sx={styles.clearButtonMb}
         variant={ButtonVariantEnum.Tonal}
       >
-        {t('myCoursesPage.coursesFilter.clearFilters')}
+        {t('button.clearFilters')}
       </Button>
       <Button size={SizeEnum.ExtraLarge} variant={ButtonVariantEnum.Contained}>
-        {t('myCoursesPage.coursesFilter.applyFilters')}
+        {t('button.applyFilters')}
       </Button>
     </AppDrawer>
   )

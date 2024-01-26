@@ -159,6 +159,7 @@ const QuestionsContainer = () => {
         searchRef={searchTitle}
         selectedItems={selectedItems}
         setItems={setSelectedItems}
+        sortOptions={sortOptions}
       />
       {loading ? (
         <Loader pageLoad size={50} />
