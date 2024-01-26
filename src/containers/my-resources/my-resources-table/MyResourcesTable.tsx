@@ -75,7 +75,7 @@ const MyResourcesTable = <T extends TableItem>({
   const handleDelete = async (id: string, isConfirmed: boolean) => {
     if (isConfirmed) {
       await deleteItem(id)
-      if (!error) await getData()
+      if (!error) getData()
     }
   }
 

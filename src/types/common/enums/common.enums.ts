@@ -111,5 +111,6 @@ export enum ColorEnum {
 
 export enum ApiMethodEnum {
   POST = 'POST',
-  PATCH = 'PATCH'
+  PATCH = 'PATCH',
+  DELETE = 'DELETE'
 }

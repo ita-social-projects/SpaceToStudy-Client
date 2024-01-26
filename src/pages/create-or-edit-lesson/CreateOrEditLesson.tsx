@@ -1,4 +1,4 @@
-import { SyntheticEvent, useEffect } from 'react'
+import { SyntheticEvent, useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { AxiosResponse } from 'axios'
@@ -21,6 +21,10 @@ import { useSnackBarContext } from '~/context/snackbar-context'
 import useAxios from '~/hooks/use-axios'
 import useForm from '~/hooks/use-form'
 import { ResourceService } from '~/services/resource-service'
+import {
+  useAddLessonMutation,
+  useEditLessonMutation
+} from '~/redux/sliceResources/resources'
 
 import { getErrorMessage } from '~/utils/error-with-message'
 import { snackbarVariants } from '~/constants'
@@ -41,7 +45,6 @@ import {
   ButtonVariantEnum,
   ComponentEnum,
   ErrorResponse,
-  Lesson,
   LessonData,
   SizeEnum,
   TextFieldVariantEnum,
@@ -53,10 +56,11 @@ import {
 const CreateOrEditLesson = () => {
   const { t } = useTranslation()
   const { setAlert } = useSnackBarContext()
-
   const { openModal } = useModalContext()
   const navigate = useNavigate()
   const { id } = useParams()
+  const [addLesson] = useAddLessonMutation()
+  const [editLesson] = useEditLessonMutation()
 
   const handleResponseError = (error: ErrorResponse) => {
     setAlert({
@@ -69,7 +73,7 @@ const CreateOrEditLesson = () => {
     })
   }
 
-  const handleResponse = () => {
+  const handleResponse = useCallback(() => {
     setAlert({
       severity: snackbarVariants.success,
       message: id
@@ -77,7 +81,7 @@ const CreateOrEditLesson = () => {
         : t('lesson.successAddedLesson')
     })
     navigate(authRoutes.myResources.root.path)
-  }
+  }, [id, navigate, setAlert, t])
 
   const handleAddAttachments = (attachments: Attachment[]) => {
     handleNonInputValueChange('attachments', attachments)
@@ -111,36 +115,27 @@ const CreateOrEditLesson = () => {
     handleNonInputValueChange('content', content)
   }
 
-  const addLesson = (): Promise<AxiosResponse> => {
-    return ResourceService.addLesson(data)
-  }
-
-  const { fetchData: fetchAddLesson } = useAxios<Lesson, LessonData>({
-    service: addLesson,
-    fetchOnMount: false,
-    defaultResponse,
-    onResponse: handleResponse,
-    onResponseError: handleResponseError
-  })
-
-  const editLesson = (): Promise<AxiosResponse> => {
-    return ResourceService.editLesson(data, id)
-  }
-
-  const { fetchData: fetchEditedLesson } = useAxios<null, LessonData>({
-    service: editLesson,
-    fetchOnMount: false,
-    defaultResponse: null,
-    onResponse: handleResponse,
-    onResponseError: handleResponseError
-  })
-
   const onCategoryChange = (
     _: SyntheticEvent,
     value: CategoryNameInterface | null
   ) => {
     handleNonInputValueChange('category', value?._id ?? null)
   }
+  const onEditLesson = useCallback(
+    async (data: LessonData | undefined) => {
+      data && (await editLesson({ ...data, id }))
+      handleResponse()
+    },
+    [editLesson, handleResponse, id]
+  )
+
+  const onAddLesson = useCallback(
+    async (data: LessonData | undefined) => {
+      data && (await addLesson(data))
+      handleResponse()
+    },
+    [addLesson, handleResponse]
+  )
 
   const {
     data,
@@ -151,7 +146,7 @@ const CreateOrEditLesson = () => {
   } = useForm<LessonData>({
     initialValues,
     validations,
-    onSubmit: id ? fetchEditedLesson : fetchAddLesson,
+    onSubmit: id ? onEditLesson : onAddLesson,
     submitWithData: true
   })
 

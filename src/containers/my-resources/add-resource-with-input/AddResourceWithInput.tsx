@@ -24,7 +24,7 @@ import { ResourceService } from '~/services/resource-service'
 
 interface AddResourceWithInputProps {
   btnText?: string
-  fetchData: () => Promise<void>
+  fetchData: () => Promise<void> | void
   link?: string
   searchRef: MutableRefObject<string>
   button?: ReactElement
