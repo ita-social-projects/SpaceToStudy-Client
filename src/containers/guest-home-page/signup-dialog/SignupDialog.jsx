@@ -34,6 +34,7 @@ const SignupDialog = ({ type }) => {
   const { openModal, closeModal } = useModalContext()
   const { setAlert } = useSnackBarContext()
   const [signUp] = useSignUpMutation()
+  const { isDesktop, isLaptopAndAbove, isTablet, isMobile } = useBreakpoints()
 
   const signupImg = { student, tutor }
 
@@ -85,7 +86,6 @@ const SignupDialog = ({ type }) => {
   useEffect(() => {
     setNeedConfirmation(isDirty)
   }, [isDirty, setNeedConfirmation])
-  const { isDesktop, isLaptopAndAbove, isTablet, isMobile } = useBreakpoints()
 
   const getButtonWidth = () => {
     if (isDesktop) return 390
