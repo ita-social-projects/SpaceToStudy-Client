@@ -66,7 +66,7 @@ const ResourcesList: FC<ResourcesListProps> = ({
 
     if (resource) {
       resource.resourceAvailability = availability
-      openFromDate !== undefined && (resource.openFromDate = openFromDate)
+      resource.openFromDate = openFromDate
     }
     setResources(resources)
   }
