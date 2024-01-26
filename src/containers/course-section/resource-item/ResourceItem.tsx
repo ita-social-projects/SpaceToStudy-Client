@@ -64,10 +64,10 @@ const ResourceItem: FC<ResourceItemProps> = ({
     }
   }
 
-  const { open, openFrom, closed } = ResourceAvailabilityStatusEnum
+  const { Open, OpenFrom, Closed } = ResourceAvailabilityStatusEnum
 
-  const resourceAvailabilityStatus = resource.resourceAvailability ?? open
-  const displayDatePicker = resourceAvailabilityStatus === openFrom
+  const resourceAvailabilityStatus = resource.resourceAvailability ?? Open
+  const displayDatePicker = resourceAvailabilityStatus === OpenFrom
 
   const setDate = (value: string | null) => {
     setResourceAvailability(resource._id, resourceAvailabilityStatus, value)
@@ -78,10 +78,10 @@ const ResourceItem: FC<ResourceItemProps> = ({
   }
 
   useEffect(() => {
-    if (resourceAvailability === ResourcesAvailabilityEnum.openManually) {
-      setStatus(closed)
+    if (resourceAvailability === ResourcesAvailabilityEnum.OpenManually) {
+      setStatus(Closed)
     } else {
-      setStatus(open)
+      setStatus(Open)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resourceAvailability])

@@ -3,15 +3,15 @@ import i18n from 'i18next'
 
 export const selectionFields = [
   {
-    value: ResourceAvailabilityStatusEnum.open,
+    value: ResourceAvailabilityStatusEnum.Open,
     title: i18n.t('cooperationDetailsPage.resourceSelection.open')
   },
   {
-    value: ResourceAvailabilityStatusEnum.openFrom,
+    value: ResourceAvailabilityStatusEnum.OpenFrom,
     title: i18n.t('cooperationDetailsPage.resourceSelection.openFrom')
   },
   {
-    value: ResourceAvailabilityStatusEnum.closed,
+    value: ResourceAvailabilityStatusEnum.Closed,
     title: i18n.t('cooperationDetailsPage.resourceSelection.closed')
   }
 ]

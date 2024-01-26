@@ -1,10 +1,10 @@
 export enum ResourcesAvailabilityEnum {
-  openAll = 'openAll',
-  openManually = 'openManually'
+  OpenAll = 'openAll',
+  OpenManually = 'openManually'
 }
 
 export enum ResourceAvailabilityStatusEnum {
-  open = 'open',
-  closed = 'closed',
-  openFrom = 'openFrom'
+  Open = 'open',
+  Closed = 'closed',
+  OpenFrom = 'openFrom'
 }

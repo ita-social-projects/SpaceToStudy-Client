@@ -21,14 +21,14 @@ interface ResourcesAvailabilityContextOutput {
 
 const ResourcesAvailabilityContext =
   createContext<ResourcesAvailabilityContextOutput>({
-    resourceAvailability: ResourcesAvailabilityEnum.openAll
+    resourceAvailability: ResourcesAvailabilityEnum.OpenAll
   } as ResourcesAvailabilityContextOutput)
 
 const ResourcesAvailabilityProvider = ({
   children
 }: ResourcesAvailabilityProviderProps) => {
   const [resourceAvailability, setResourceAvailability] = useState(
-    ResourcesAvailabilityEnum.openAll
+    ResourcesAvailabilityEnum.OpenAll
   )
 
   const contextValue = useMemo(

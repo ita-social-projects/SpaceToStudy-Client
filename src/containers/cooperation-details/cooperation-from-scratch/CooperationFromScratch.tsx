@@ -6,7 +6,7 @@ import AppSelect from '~/components/app-select/AppSelect'
 import CooperationActivitiesList from '~/containers/my-cooperations/cooperation-activities-list/CooperationActivitiesList'
 import { useResourceAvailabilityContext } from '~/context/resources-availability-context'
 
-import { cooperationTranslationKeys } from '~/containers/cooperation-details/cooperation-from-scratch/CooperationFromScratch.constans'
+import { cooperationTranslationKeys } from '~/containers/cooperation-details/cooperation-from-scratch/CooperationFromScratch.constants'
 import { styles } from '~/containers/cooperation-details/cooperation-from-scratch/CooperationFromScratch.styles'
 import { ComponentEnum, ResourcesAvailabilityEnum } from '~/types'
 import openIcon from '~/assets/img/cooperation-details/resource-availability/open-icon.svg'
@@ -26,7 +26,7 @@ const CooperationFromScratch = () => {
   )
 
   const imgSrc =
-    resourceAvailability === ResourcesAvailabilityEnum.openAll
+    resourceAvailability === ResourcesAvailabilityEnum.OpenAll
       ? openIcon
       : closeIcon
 
@@ -42,23 +42,11 @@ const CooperationFromScratch = () => {
             />
             <Typography sx={styles.lockTitle}>
               {t('cooperationDetailsPage.publish')}
-              {t(
-                `cooperationDetailsPage.select.${
-                  resourceAvailability === ResourcesAvailabilityEnum.openAll
-                    ? ResourcesAvailabilityEnum.openAll
-                    : ResourcesAvailabilityEnum.openManually
-                }`
-              )}
+              {t(`cooperationDetailsPage.select.${resourceAvailability}`)}
             </Typography>
           </Box>
           <Typography sx={styles.lockSubtitle}>
-            {t(
-              `cooperationDetailsPage.${
-                resourceAvailability === ResourcesAvailabilityEnum.openAll
-                  ? ResourcesAvailabilityEnum.openAll
-                  : ResourcesAvailabilityEnum.openManually
-              }`
-            )}
+            {t(`cooperationDetailsPage.${resourceAvailability}`)}
           </Typography>
         </Box>
         <Box>
