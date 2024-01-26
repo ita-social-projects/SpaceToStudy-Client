@@ -4,7 +4,7 @@ import SignupDialog from '~/containers/guest-home-page/signup-dialog/SignupDialo
 import { renderWithProviders } from '~tests/test-utils'
 import { student } from '~/constants'
 import { renderHook } from '@testing-library/react-hooks'
-import useBreakpointsGoogle from '~/hooks/use-breakpoints-google'
+import useBreakpoints from '~/hooks/use-breakpoints'
 
 const mockSelector = vi.fn()
 const unwrap = vi.fn().mockResolvedValue({})
@@ -43,13 +43,13 @@ vi.mock('~/services/auth-service', async () => {
   }
 })
 
-vi.mock('~/hooks/use-breakpoints-google', () => ({
+vi.mock('~/hooks/use-breakpoints', () => ({
   __esModule: true,
   default: vi.fn(() => ({
-    isSmallScreen: false,
-    isMediumScreen: false,
-    isLargeScreen: false,
-    isXLargeScreen: true
+    isDesktop: false,
+    isLaptopAndAbove: false,
+    isTablet: false,
+    isMobile: true
   }))
 }))
 
@@ -137,38 +137,41 @@ describe('Signup dialog test', () => {
       expect(signUp).toHaveBeenCalledTimes(1)
     })
   })
-  it('sSmallScreen', () => {
-    useBreakpointsGoogle.mockImplementation(() => ({
-      isSmallScreen: true,
-      isMediumScreen: false,
-      isLargeScreen: false,
-      isXLargeScreen: false
+  it('isDesktop', () => {
+    useBreakpoints.mockImplementation(() => ({
+      isDesktop: true,
+      isLaptopAndAbove: false,
+      isTablet: false,
+      isMobile: false
     }))
-    const { result } = renderHook(useBreakpointsGoogle)
+    const { result } = renderHook(useBreakpoints)
     expect(result).toBeTruthy()
   })
-  it('isMediumScreen', () => {
-    useBreakpointsGoogle.mockImplementation(() => ({
-      isSmallScreen: false,
-      isMediumScreen: true,
-      isLargeScreen: false,
-      isXLargeScreen: false
+
+  it('isLaptopAndAbove', () => {
+    useBreakpoints.mockImplementation(() => ({
+      isDesktop: false,
+      isLaptopAndAbove: true,
+      isTablet: false,
+      isMobile: false
     }))
-    const { result } = renderHook(useBreakpointsGoogle)
+    const { result } = renderHook(useBreakpoints)
     expect(result).toBeTruthy()
   })
-  it('isLargeScreen', () => {
-    useBreakpointsGoogle.mockImplementation(() => ({
-      isSmallScreen: false,
-      isMediumScreen: false,
-      isLargeScreen: true,
-      isXLargeScreen: false
+
+  it('isTablet', () => {
+    useBreakpoints.mockImplementation(() => ({
+      isDesktop: false,
+      isLaptopAndAbove: false,
+      isTablet: true,
+      isMobile: false
     }))
-    const { result } = renderHook(useBreakpointsGoogle)
+    const { result } = renderHook(useBreakpoints)
     expect(result).toBeTruthy()
   })
-  it('isXLargeScreen', () => {
-    const { result } = renderHook(useBreakpointsGoogle)
+
+  it('isMobile', () => {
+    const { result } = renderHook(useBreakpoints)
     expect(result).toBeTruthy()
   })
 })

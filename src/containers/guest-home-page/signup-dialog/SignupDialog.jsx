@@ -1,10 +1,11 @@
-import { useEffect, useMemo } from 'react'
+import { useEffect } from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { useTranslation } from 'react-i18next'
 
 import useForm from '~/hooks/use-form'
 import useConfirm from '~/hooks/use-confirm'
+import useBreakpoints from '~/hooks/use-breakpoints'
 import { useSignUpMutation } from '~/services/auth-service'
 import { useModalContext } from '~/context/modal-context'
 import { useSnackBarContext } from '~/context/snackbar-context'
@@ -26,7 +27,6 @@ import tutor from '~/assets/img/signup-dialog/tutor.svg'
 import info from '~/assets/img/guest-home-page/info.svg'
 
 import { styles } from '~/containers/guest-home-page/signup-dialog/SignupDialog.styles'
-import useBreakpointsGoogle from '~/hooks/use-breakpoints-google'
 
 const SignupDialog = ({ type }) => {
   const { t } = useTranslation()
@@ -85,23 +85,13 @@ const SignupDialog = ({ type }) => {
   useEffect(() => {
     setNeedConfirmation(isDirty)
   }, [isDirty, setNeedConfirmation])
-  const breakpoints = useBreakpointsGoogle()
-
-  const { isSmallScreen, isMediumScreen, isLargeScreen, isXLargeScreen } =
-    useMemo(() => breakpoints, [breakpoints])
-
-  const buttonWidths = {
-    small: 330,
-    medium: 333,
-    large: 340,
-    xLarge: 394
-  }
+  const { isDesktop, isLaptopAndAbove, isTablet, isMobile } = useBreakpoints()
 
   const getButtonWidth = () => {
-    if (isSmallScreen) return buttonWidths.small
-    if (isMediumScreen) return buttonWidths.medium
-    if (isLargeScreen) return buttonWidths.large
-    if (isXLargeScreen) return buttonWidths.xLarge
+    if (isDesktop) return 390
+    if (isLaptopAndAbove) return 340
+    if (isTablet) return 333
+    if (isMobile) return 330
   }
   return (
     <Box sx={styles.root}>
