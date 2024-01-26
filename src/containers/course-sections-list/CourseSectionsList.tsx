@@ -37,6 +37,10 @@ interface CourseSectionsListProps {
     field: keyof CourseSection,
     value: CourseResources[]
   ) => void
+  handleSectionResourcesOrder: (
+    id: string,
+    resources: CourseResources[]
+  ) => void
   titleText: string
   isCooperation?: boolean
   addNewSection?: (index?: number) => void
@@ -47,6 +51,7 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
   setSectionsItems,
   handleSectionInputChange,
   handleSectionNonInputChange,
+  handleSectionResourcesOrder,
   titleText,
   isCooperation = false,
   addNewSection
@@ -150,6 +155,7 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
             <CourseSectionContainer
               handleSectionInputChange={handleSectionInputChange}
               handleSectionNonInputChange={handleSectionNonInputChange}
+              handleSectionResourcesOrder={handleSectionResourcesOrder}
               sectionData={item}
               sections={items}
               setSectionsItems={setSectionsItems}

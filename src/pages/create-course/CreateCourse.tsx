@@ -123,6 +123,17 @@ const CreateCourse = () => {
     handleNonInputValueChange('sections', value)
   }
 
+  const handleSectionResourcesOrder = (
+    id: string,
+    resources: CourseResources[]
+  ) => {
+    const sectionToEdit = data.sections.find((section) => section.id === id)
+    if (sectionToEdit) {
+      const orderedResources = resources.map((resource) => resource._id)
+      sectionToEdit.order = orderedResources
+    }
+  }
+
   const handleSectionInputChange = (
     id: string,
     field: keyof CourseSection,
@@ -204,6 +215,7 @@ const CreateCourse = () => {
         <CourseSectionsList
           handleSectionInputChange={handleSectionInputChange}
           handleSectionNonInputChange={handleSectionNonInputChange}
+          handleSectionResourcesOrder={handleSectionResourcesOrder}
           items={data.sections}
           setSectionsItems={setSectionsItems}
           titleText='defaultNewTitle'

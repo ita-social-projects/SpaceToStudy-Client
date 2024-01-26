@@ -38,6 +38,7 @@ export interface CourseSection {
   lessons: Lesson[]
   quizzes: Quiz[]
   attachments: Attachment[]
+  order: string[]
 }
 
 export interface CourseFilters extends Pick<Course, 'proficiencyLevel'> {
