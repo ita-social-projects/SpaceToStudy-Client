@@ -36,10 +36,20 @@ const CooperationActivitiesList = () => {
     setSectionsData(data.sections)
   }
 
-  const addNewSection = () => {
+  const addNewSection = (index = null) => {
     const newSectionData = { ...sectionInitialData }
     newSectionData.id = Date.now().toString()
-    setSectionsData([...data.sections, newSectionData])
+
+    const newSections =
+      index !== null
+        ? [
+            ...data.sections.slice(0, index),
+            newSectionData,
+            ...data.sections.slice(index)
+          ]
+        : [...data.sections, newSectionData]
+
+    setSectionsData(newSections)
   }
 
   if (data.sections.length === 0) {
@@ -49,8 +59,10 @@ const CooperationActivitiesList = () => {
   return (
     <Box>
       <CourseSectionsList
+        addNewSection={addNewSection}
         handleSectionInputChange={handleSectionChange}
         handleSectionNonInputChange={handleNonInputChange}
+        isCooperation
         items={data.sections}
         setSectionsItems={setSectionsData}
         titleText='moduleTitle'

@@ -51,9 +51,10 @@
   "button": {
     "create": "Create Activity"
   },
-  "menyTypes": {
+  "manyTypes": {
     "courseTemplate": "Course template",
-    "scratch": "From scratch"
+    "scratch": "From scratch",
+    "module": "Module"
   },
   "notes": {
     "noteText": "Note text...",
