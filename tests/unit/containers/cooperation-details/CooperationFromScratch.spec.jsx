@@ -7,10 +7,8 @@ describe('Cooperation from scratch', () => {
   it('should render cooperation from scratch page', () => {
     renderWithProviders(<CooperationFromScratch />)
 
-    const resourcesDescription = screen.getByText(
-      'cooperationDetailsPage.allResources'
-    )
+    const scratchContainer = screen.getByTestId('coop-from-scratch')
 
-    expect(resourcesDescription).toBeInTheDocument()
+    expect(scratchContainer).toBeInTheDocument()
   })
 })
