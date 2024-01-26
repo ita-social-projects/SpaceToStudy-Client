@@ -128,8 +128,8 @@ const CreateCourse = () => {
     resources: CourseResources[]
   ) => {
     const sectionToEdit = data.sections.find((section) => section.id === id)
-    const orderedResources = resources.map((resource) => resource._id)
     if (sectionToEdit) {
+      const orderedResources = resources.map((resource) => resource._id)
       sectionToEdit.order = orderedResources
     }
   }
