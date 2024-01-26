@@ -56,6 +56,18 @@
     "scratch": "From scratch",
     "module": "Module"
   },
+  "cooperationDetails": {
+    "completionTitle": "Cooperation completion",
+    "closeCooperationTitle": "Close the cooperation",
+    "closeCooperationDescription": "Start a closing process of current cooperation if your learning journey with the student is finished.",
+    "closeCooperationBtn": "Close cooperation",
+    "accessTitle": "Study materials access",
+    "accessDescription": "As a tutor, determine deadlines for student access to study materials after cooperation has finished.", 
+    "noAccess": "No access",
+    "monthAccess": "month access",
+    "yearAccess": "year access",
+    "permanentAccess": "Permanent access"
+  },
   "notes": {
     "noteText": "Note text...",
     "privateSetting": "Make it private",
