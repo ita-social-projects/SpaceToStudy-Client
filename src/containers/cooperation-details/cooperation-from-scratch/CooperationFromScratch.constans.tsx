@@ -9,7 +9,3 @@ export const cooperationTranslationKeys = [
 ]
 
 export const initialSort = { order: SortEnum.Desc, orderBy: 'updatedAt' }
-<<<<<<< HEAD
-
-=======
->>>>>>> b13768ca (fix comments)
