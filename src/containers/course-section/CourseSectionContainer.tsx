@@ -1,4 +1,4 @@
-import { useState, FC, useEffect } from 'react'
+import { useState, FC, useEffect, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { MenuItem } from '@mui/material'
 import Box from '@mui/material/Box'
@@ -61,6 +61,10 @@ interface SectionProps {
     value: CourseResources[]
   ) => void
   titleText: string
+  handleSectionResourcesOrder?: (
+    id: string,
+    resources: CourseResources[]
+  ) => void
 }
 
 type openModalFunc = () => void
@@ -71,6 +75,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
   setSectionsItems,
   handleSectionInputChange,
   handleSectionNonInputChange,
+  handleSectionResourcesOrder,
   titleText
 }) => {
   const { t } = useTranslation()
@@ -85,30 +90,82 @@ const CourseSectionContainer: FC<SectionProps> = ({
   const [isVisible, setIsVisible] = useState<boolean>(true)
   const [resources, setResources] = useState<CourseResources[]>([])
 
+  const getAllResourcesItems = useCallback((): CourseResources[] => {
+    return [
+      ...sectionData.lessons,
+      ...sectionData.quizzes,
+      ...sectionData.attachments
+    ]
+  }, [sectionData.lessons, sectionData.quizzes, sectionData.attachments])
+
+  const updateResources = useCallback(
+    (
+      prevResources: CourseResources[],
+      allResourcesItems: CourseResources[],
+      displayOrder: string[]
+    ) => {
+      return prevResources
+        .filter((prevResource) =>
+          allResourcesItems.some(
+            (currentResource) => currentResource._id === prevResource._id
+          )
+        )
+        .map((prevResource) => ({
+          ...prevResource,
+          order: displayOrder.indexOf(prevResource._id)
+        }))
+        .sort((a, b) => a.order - b.order)
+    },
+    []
+  )
+
+  const addNewResources = useCallback(
+    (
+      updatedResourcesItems: CourseResources[],
+      allResourcesItems: CourseResources[],
+      displayOrder: string[]
+    ): CourseResources[] => {
+      return [
+        ...updatedResourcesItems,
+        ...allResourcesItems
+          .filter(
+            (currentResource) =>
+              !updatedResourcesItems.some(
+                (prevResource) => prevResource._id === currentResource._id
+              )
+          )
+          .map((newResource) => ({
+            ...newResource,
+            order: displayOrder.indexOf(newResource._id)
+          }))
+      ]
+    },
+    []
+  )
+
   useEffect(() => {
     setResources((prevResources) => {
-      const allResourcesItems = [
-        ...sectionData.lessons,
-        ...sectionData.quizzes,
-        ...sectionData.attachments
-      ]
-      const updatedResourcesItems = prevResources.filter((prevResource) =>
-        allResourcesItems.some(
-          (currentResource) => currentResource._id === prevResource._id
-        )
+      const allResourcesItems = getAllResourcesItems()
+      const displayOrder = sectionData.order
+      const updatedResourcesItems = updateResources(
+        prevResources,
+        allResourcesItems,
+        displayOrder
       )
-      for (const currentResource of allResourcesItems) {
-        if (
-          !updatedResourcesItems.some(
-            (prevResource) => prevResource._id === currentResource._id
-          )
-        ) {
-          updatedResourcesItems.push(currentResource)
-        }
-      }
-      return updatedResourcesItems
+
+      return addNewResources(
+        updatedResourcesItems,
+        allResourcesItems,
+        displayOrder
+      )
     })
-  }, [sectionData.lessons, sectionData.quizzes, sectionData.attachments])
+  }, [getAllResourcesItems, updateResources, addNewResources, sectionData])
+
+  useEffect(() => {
+    if (handleSectionResourcesOrder) {
+      handleSectionResourcesOrder(sectionData.id, resources)
+    }
+  }, [resources, sectionData.id, handleSectionResourcesOrder])
 
   const deleteResource = (resource: CourseResources) => {
     if (resource.resourceType === ResourcesTypes.Lessons) {
@@ -155,13 +212,13 @@ const CourseSectionContainer: FC<SectionProps> = ({
   }
 
   const handleAddResources = <T extends CourseResources>(
-    resources: T[],
+    newResources: T[],
     type: ResourcesTypes
   ) => {
     handleSectionNonInputChange(
       sectionData.id,
       type as keyof CourseSection,
-      resources
+      newResources
     )
   }
 

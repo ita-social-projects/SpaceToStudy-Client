@@ -6,7 +6,8 @@ export const sectionInitialData = {
   description: '',
   lessons: [],
   quizzes: [],
-  attachments: []
+  attachments: [],
+  order: []
 }
 
 export const initialValues = {
