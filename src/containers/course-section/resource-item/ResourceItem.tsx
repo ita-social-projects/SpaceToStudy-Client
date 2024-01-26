@@ -83,7 +83,6 @@ const ResourceItem: FC<ResourceItemProps> = ({
     } else {
       setStatus(Open)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resourceAvailability])
 
   const availabilitySelection = (
