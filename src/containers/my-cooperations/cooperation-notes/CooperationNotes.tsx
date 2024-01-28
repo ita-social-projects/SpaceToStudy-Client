@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography'
 import AddIcon from '@mui/icons-material/Add'
 
 import useAxios from '~/hooks/use-axios'
+import useConfirm from '~/hooks/use-confirm'
 import { useSnackBarContext } from '~/context/snackbar-context'
 import { CooperationNotesService } from '~/services/cooperation-service'
 import CreateOrEditNote from '~/containers/my-cooperations/cooperation-notes/create-or-edit-note/CreateOrEditNote'
@@ -26,6 +27,7 @@ const CooperationNotes = () => {
   const { t } = useTranslation()
   const { id } = useParams()
   const { setAlert } = useSnackBarContext()
+  const { openDialog } = useConfirm()
 
   const [open, setOpen] = useState(false)
 
@@ -46,10 +48,23 @@ const CooperationNotes = () => {
     })
   }, [setAlert, t])
 
+  const onDeleteResponse = useCallback(() => {
+    setAlert({
+      severity: snackbarVariants.success,
+      message: t('cooperationsPage.modalMessages.successDeletion')
+    })
+  }, [setAlert, t])
+
   const getNotes = useCallback(() => CooperationNotesService.getNotes(id), [id])
 
   const createNoteService = useCallback(
     (data?: CreateNoteParams) => CooperationNotesService.createNote(data, id),
+    [id]
+  )
+
+  const deleteNote = useCallback(
+    (noteId?: string) =>
+      CooperationNotesService.deleteNote(id ?? '', noteId ?? ''),
     [id]
   )
 
@@ -77,6 +92,57 @@ const CooperationNotes = () => {
     onResponse: onNoteCreate
   })
 
+  const { error, fetchData: deleteItem } = useAxios({
+    service: deleteNote,
+    fetchOnMount: false,
+    defaultResponse: null,
+    onResponseError,
+    onResponse: onDeleteResponse
+  })
+
+  const handleDelete = async (id: string, isConfirmed: boolean) => {
+    if (isConfirmed) {
+      await deleteItem(id)
+      if (!error) await fetchData()
+    }
+  }
+
+  const onDeleteNote = (id: string) => {
+    openDialog({
+      message: 'cooperationsPage.modalMessages.confirmDeletionMessage',
+      sendConfirm: (isConfirmed: boolean) => void handleDelete(id, isConfirmed),
+      title: `cooperationsPage.modalMessages.confirmDeletionTitle`
+    })
+  }
+
+  const duplicateNote = useCallback(
+    (id?: string) => {
+      const note = notes.find((item) => item._id === id)
+      return createNoteService(note)
+    },
+    [notes, createNoteService]
+  )
+
+  const onDuplicateResponse = () => {
+    setAlert({
+      severity: snackbarVariants.success,
+      message: `cooperationsPage.modalMessages.successDuplication`
+    })
+  }
+
+  const { error: duplicationError, fetchData: duplicateItem } = useAxios({
+    service: duplicateNote,
+    fetchOnMount: false,
+    defaultResponse: null,
+    onResponseError,
+    onResponse: onDuplicateResponse
+  })
+
+  const handleDuplicate = async (itemId: string) => {
+    await duplicateItem(itemId)
+    if (!duplicationError) await fetchData()
+  }
+
   const onCloseNote = () => {
     setOpen(false)
   }
@@ -86,7 +152,12 @@ const CooperationNotes = () => {
   }
 
   const NotesList = notes.map((item: NoteResponse) => (
-    <NoteView key={item._id} note={item} />
+    <NoteView
+      deleteItem={onDeleteNote}
+      duplicateItem={(itemId: string) => void handleDuplicate(itemId)}
+      key={item._id}
+      note={item}
+    />
   ))
 
   return (
