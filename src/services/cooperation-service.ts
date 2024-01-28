@@ -49,5 +49,14 @@ export const CooperationNotesService = {
         `${URLs.cooperations.get}/${cooperationId}${URLs.notes.create}`
       ),
       data
+    ),
+  deleteNote: async (
+    cooperationId: string,
+    noteId: string
+  ): Promise<AxiosResponse> =>
+    await axiosClient.delete(
+      createUrlPath(
+        `${URLs.cooperations.delete}/${cooperationId}${URLs.notes.delete}/${noteId}`
+      )
     )
 }

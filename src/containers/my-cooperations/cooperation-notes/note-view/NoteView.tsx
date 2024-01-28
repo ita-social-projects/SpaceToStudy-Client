@@ -1,30 +1,95 @@
+import { FC } from 'react'
+import { useTranslation } from 'react-i18next'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
+import MenuItem from '@mui/material/MenuItem'
 import Avatar from '@mui/material/Avatar'
 import IconButton from '@mui/material/IconButton'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import LockIcon from '@mui/icons-material/Lock'
+import EditIcon from '@mui/icons-material/Edit'
+import ContentCopyIcon from '@mui/icons-material/ContentCopy'
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 
 import { useAppSelector } from '~/hooks/use-redux'
+import useMenu from '~/hooks/use-menu'
 import { getFormattedDate } from '~/utils/helper-functions'
 import AppTextField from '~/components/app-text-field/AppTextField'
-
-import { styles } from '~/containers/my-cooperations/cooperation-notes/note-view/NoteView.styles'
 import {
   TypographyVariantEnum,
   NoteResponse,
   TextFieldVariantEnum,
-  SizeEnum
+  SizeEnum,
+  TableActionFunc
 } from '~/types'
+
+import { styles } from '~/containers/my-cooperations/cooperation-notes/note-view/NoteView.styles'
 
 interface NoteViewProps {
   note: NoteResponse
+  deleteItem?: (id: string) => void
+  duplicateItem?: (id: string) => void
 }
 
-const NoteView = ({ note }: NoteViewProps) => {
+const NoteView: FC<NoteViewProps> = ({ note, deleteItem, duplicateItem }) => {
+  const { t } = useTranslation()
+  const { openMenu, renderMenu, closeMenu } = useMenu()
   const { userId } = useAppSelector((state) => state.appMain)
+
   const isCurrentUser = userId === note.author._id
   const date = getFormattedDate({ date: note.updatedAt })
+
+  const onAction = async (actionFunc: TableActionFunc) => {
+    closeMenu()
+    await actionFunc(note._id)
+  }
+
+  const rowActions = [
+    {
+      id: 1,
+      label: (
+        <Box sx={styles.iconWrapper}>
+          <EditIcon sx={styles.icon} />
+          {` ${t('common.edit')}`}
+        </Box>
+      ),
+      func: () => console.log('Edit')
+    },
+    {
+      id: 2,
+      label: (
+        <Box sx={styles.iconWrapper}>
+          <ContentCopyIcon sx={styles.icon} />
+          {` ${t('common.duplicate')}`}
+        </Box>
+      ),
+      func: () => duplicateItem?.(note._id)
+    },
+    {
+      id: 3,
+      label: (
+        <Box sx={styles.deleteIconWrapper}>
+          <DeleteOutlineIcon sx={styles.deleteIcon} />
+          {`${t('common.delete')}`}
+        </Box>
+      ),
+      func: () => deleteItem?.(note._id)
+    }
+  ]
+
+  const menuItems = rowActions.map(({ label, func, id }) => (
+    <MenuItem key={id} onClick={() => void onAction(func)}>
+      {label}
+    </MenuItem>
+  ))
+
+  const menuItems2 = rowActions
+    .filter((action) => action.id !== 2)
+    .map(({ label, func, id }) => (
+      <MenuItem key={id} onClick={() => void onAction(func)}>
+        {label}
+      </MenuItem>
+    ))
 
   return (
     <Box sx={styles.container(isCurrentUser, note.isPrivate)}>
@@ -50,12 +115,21 @@ const NoteView = ({ note }: NoteViewProps) => {
         </Box>
         <Box sx={styles.header}>
           {note.isPrivate && (
-            <LockIcon fontSize={SizeEnum.Small} sx={styles.lockIcon} />
+            <>
+              <LockIcon fontSize={SizeEnum.Small} sx={styles.lockIcon} />
+              <IconButton onClick={openMenu}>
+                <MoreVertIcon fontSize={SizeEnum.Small} />
+              </IconButton>
+              {renderMenu(menuItems2)}
+            </>
           )}
-          {isCurrentUser && (
-            <IconButton>
-              <MoreVertIcon fontSize={SizeEnum.Small} />
-            </IconButton>
+          {isCurrentUser && !note.isPrivate && (
+            <>
+              <IconButton onClick={openMenu}>
+                <MoreVertIcon fontSize={SizeEnum.Small} />
+              </IconButton>
+              {renderMenu(menuItems)}
+            </>
           )}
         </Box>
       </Box>

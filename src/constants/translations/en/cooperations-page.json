@@ -31,7 +31,7 @@
       "accept": "Are you sure you want to accept cooperation for {{price}} UAH",
       "decline": "Are you sure you want to decline this cooperation"
     },
-    "successMessage":"Cooperation updated successfully"
+    "successMessage": "Cooperation updated successfully"
   },
   "search": "Search user name or title",
   "details": {
@@ -72,5 +72,11 @@
     "noteText": "Note text...",
     "privateSetting": "Make it private",
     "noteMsg": "Note was successfully created"
+  },
+  "modalMessages": {
+    "successDeletion": "Note was deleted successfully",
+    "successDuplication": "Note was successfully duplicated",
+    "confirmDeletionMessage": "This action is permanent and will remove all related content. Please review your decision before proceeding.",
+    "confirmDeletionTitle": "Do you confirm note deletion?"
   }
 }

@@ -45,7 +45,8 @@ export const URLs = {
   cooperations: {
     get: '/cooperations',
     create: '/cooperations',
-    update: '/cooperations'
+    update: '/cooperations',
+    delete: '/cooperations'
   },
   notes: {
     get: '/notes',
