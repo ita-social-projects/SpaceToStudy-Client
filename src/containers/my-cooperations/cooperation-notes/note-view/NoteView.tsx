@@ -83,7 +83,7 @@ const NoteView: FC<NoteViewProps> = ({ note, deleteItem, duplicateItem }) => {
     </MenuItem>
   ))
 
-  const menuItems2 = rowActions
+  const editMenuItems = rowActions
     .filter((action) => action.id !== 2)
     .map(({ label, func, id }) => (
       <MenuItem key={id} onClick={() => void onAction(func)}>
@@ -120,7 +120,7 @@ const NoteView: FC<NoteViewProps> = ({ note, deleteItem, duplicateItem }) => {
               <IconButton onClick={openMenu}>
                 <MoreVertIcon fontSize={SizeEnum.Small} />
               </IconButton>
-              {renderMenu(menuItems2)}
+              {renderMenu(editMenuItems)}
             </>
           )}
           {isCurrentUser && !note.isPrivate && (
