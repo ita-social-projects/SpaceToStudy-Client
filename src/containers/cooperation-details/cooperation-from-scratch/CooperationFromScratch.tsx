@@ -8,7 +8,7 @@ import CooperationActivitiesList from '~/containers/my-cooperations/cooperation-
 import { useResourceAvailabilityContext } from '~/context/resources-availability-context'
 import AppButton from '~/components/app-button/AppButton'
 
-import { cooperationTranslationKeys } from '~/containers/cooperation-details/cooperation-from-scratch/CooperationFromScratch.constans'
+import { cooperationTranslationKeys } from '~/containers/cooperation-details/cooperation-from-scratch/CooperationFromScratch.constants'
 
 import { styles } from '~/containers/cooperation-details/cooperation-from-scratch/CooperationFromScratch.styles'
 import { ComponentEnum, ResourcesAvailabilityEnum } from '~/types'
