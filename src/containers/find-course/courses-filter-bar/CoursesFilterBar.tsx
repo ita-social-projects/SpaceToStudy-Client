@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { Box, SxProps } from '@mui/material'
 
 import AppSelect from '~/components/app-select/AppSelect'
-import { sortTranslationKeys } from '~/containers/find-course/courses-filter-block/CoursesFilterBlock.constants'
+import { sortTranslationKeys } from '~/containers/find-course/courses-filter-bar/CorseFilterBar.constants'
 import { styles } from '~/containers/find-course/courses-filter-bar/CoursesFilterBar.styles'
 
 interface CoursesFilterBarProps {
@@ -18,15 +18,10 @@ const CoursesFilterBar = ({
 }: CoursesFilterBarProps) => {
   const { t } = useTranslation()
 
-  const sortOptions = sortTranslationKeys.map(({ title, value }) => ({
-    title: t(title),
-    value
-  }))
-
   return (
     <Box sx={styles.container}>
       <AppSelect
-        fields={sortOptions}
+        fields={sortTranslationKeys}
         selectTitle={t('filters.sortBy.sortByTitle')}
         setValue={onValueChange}
         sx={sx}

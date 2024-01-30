@@ -25,7 +25,7 @@ import CoursesFilters from '~/containers/find-course/courses-filters/CoursesFilt
 import { coursesDefaultFilters } from '~/containers/cooperation-details/add-course-modal-modal/AddCourseTemplateModal.constants'
 import { defaultResponses } from '~/constants'
 import { authRoutes } from '~/router/constants/authRoutes'
-import { initialSort } from '~/containers/find-course/courses-filter-block/CoursesFilterBlock.constants'
+import { initialSort } from '~/containers/find-course/courses-filter-bar/CorseFilterBar.constants'
 import { styles } from '~/containers/cooperation-details/add-course-modal-modal/AddCourseTemplateModal.styles'
 import {
   ButtonVariantEnum,

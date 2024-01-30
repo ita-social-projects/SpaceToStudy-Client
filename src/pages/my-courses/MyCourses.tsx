@@ -1,4 +1,4 @@
-import { useCallback, useRef } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Typography, Box } from '@mui/material'
 
@@ -33,7 +33,7 @@ const MyCourses = () => {
   const { openDialog } = useConfirm()
   const { setAlert } = useSnackBarContext()
   const searchTitle = useRef<string>('')
-
+  const [sort, setSort] = useState<string>('asc')
   const itemsPerPage = getScreenBasedLimit(breakpoints, courseItemsLoadLimit)
 
   const getCourses = useCallback(
@@ -41,9 +41,10 @@ const MyCourses = () => {
       CourseService.getCourses({
         limit: itemsPerPage,
         skip: (page - 1) * itemsPerPage,
-        title: searchTitle.current
+        title: searchTitle.current,
+        sort
       }),
-    [itemsPerPage, page]
+    [itemsPerPage, page, sort]
   )
 
   const deleteCourse = useCallback(
@@ -152,7 +153,12 @@ const MyCourses = () => {
     <PageWrapper>
       <Typography sx={styles.title}>{t('myCoursesPage.title')}</Typography>
       <Box sx={styles.divider}></Box>
-      <AddCourseWithInput fetchData={fetchData} searchRef={searchTitle} />
+      <AddCourseWithInput
+        fetchData={fetchData}
+        searchRef={searchTitle}
+        setSort={setSort}
+        sort={sort}
+      />
       {!coursesItems.length && !coursesLoading ? (
         <NotFoundResults
           description={t('myCoursesPage.notFound.description')}
