@@ -50,6 +50,6 @@ export interface AdditionalPropsInterface {
   navigate: NavigateFunction
 }
 
-export interface GetCooperationByIdParams {
+export interface GetCooperationParams {
   id: string
 }

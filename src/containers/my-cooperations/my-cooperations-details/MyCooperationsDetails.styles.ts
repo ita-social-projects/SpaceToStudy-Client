@@ -6,8 +6,7 @@ export const style = {
   header: {
     typography: TypographyVariantEnum.H6,
     color: palette.basic.blueGray,
-    ml: '20px',
-    mb: '30px'
+    m: '0 0 30px 20px'
   },
   titles: {
     color: palette.basic.blueGray
@@ -25,9 +24,7 @@ export const style = {
   profileContainer: {
     display: 'flex',
     alignItems: 'center',
-    padding: '10px',
-    pt: '0px',
-    pl: '0px',
+    p: '0 0 10px',
     mb: '5px',
     '& > *': {
       mr: '30px'
@@ -67,5 +64,8 @@ export const style = {
   },
   aboutCooperation: {
     width: '900px'
-  }
+  },
+  iconColor: (color: string) => ({
+    color: color
+  })
 }

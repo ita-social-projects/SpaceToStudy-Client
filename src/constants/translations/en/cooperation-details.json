@@ -17,5 +17,11 @@
     "closed": "Closed"
   },
   "details": "Cooperation details",
-  "profile": "Profile"
+  "profile": "Profile:",
+  "title": "Cooperations title:",
+  "tutor": "Tutor:",
+  "tutoringSubject": "Tutoring subject & level:",
+  "aboutCooperation":"About cooperation:",
+  "tutoringLanguages":"Tutoring languages:",
+  "pricing":"Pricing:"
 }

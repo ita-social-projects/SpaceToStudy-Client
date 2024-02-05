@@ -16,9 +16,14 @@ import SubjectLevelChips from '~/components/subject-level-chips/SubjectLevelChip
 import AppButton from '~/components/app-button/AppButton'
 import ShowMoreCollapse from '~/components/show-more-collapse/ShowMoreCollapse'
 import Loader from '~/components/loader/Loader'
-import { defaultOffer } from '~/containers/my-cooperations/my-cooperations-details/MyCooperationsDetails.constants'
 
-import { ButtonVariantEnum, SizeEnum, UserRoleEnum } from '~/types'
+import {
+  ButtonVariantEnum,
+  MyCooperationDetails,
+  Offer,
+  SizeEnum,
+  UserRoleEnum
+} from '~/types'
 import { style } from '~/containers/my-cooperations/my-cooperations-details/MyCooperationsDetails.styles'
 import { createUrlPath } from '~/utils/helper-functions'
 import { authRoutes } from '~/router/constants/authRoutes'
@@ -36,12 +41,17 @@ const MyCooperationsDetails = () => {
     [id]
   )
 
-  const { response, loading } = useAxios({
-    service: getDetails,
-    defaultResponse: defaultOffer
-  })
+  const { response: detailsResponse, loading: detailsLoading } =
+    useAxios<MyCooperationDetails<Offer> | null>({
+      service: getDetails,
+      defaultResponse: null
+    })
 
-  const { offer, price } = response
+  if (detailsLoading || !detailsResponse) {
+    return <Loader pageLoad />
+  }
+
+  const { offer } = detailsResponse
 
   const onHandleClick = () => {
     navigate(
@@ -64,18 +74,20 @@ const MyCooperationsDetails = () => {
       <Typography>{item}</Typography>
     </Box>
   ))
-  return loading ? (
-    <Loader size={50} />
-  ) : (
+
+  return (
     <Box>
       <Typography sx={style.header}>
         {t('cooperationDetailsPage.details')}
       </Typography>
-
       <Box sx={style.container}>
-        <Typography sx={style.titles}>Cooperations title:</Typography>
+        <Typography sx={style.titles}>
+          {t('cooperationDetailsPage.title')}
+        </Typography>
         <Typography sx={style.title}>{offer.title}</Typography>
-        <Typography sx={style.titles}>Tutor:</Typography>
+        <Typography sx={style.titles}>
+          {t('cooperationDetailsPage.tutor')}
+        </Typography>
         <Box>
           <Box sx={style.profileContainer}>
             <Avatar
@@ -112,9 +124,13 @@ const MyCooperationsDetails = () => {
             </AppButton>
           </Box>
         </Box>
-        <Typography sx={style.titles}>Tutoring subject & level:</Typography>
+        <Typography sx={style.titles}>
+          {t('cooperationDetailsPage.tutoringSubject')}
+        </Typography>
         <Box sx={style.subjectContainer}>
-          <DesignServicesIcon sx={{ color: offer.category.appearance.color }} />
+          <DesignServicesIcon
+            sx={style.iconColor(offer.category.appearance.color)}
+          />
           <Typography>{offer.category.name}</Typography>
           <SubjectLevelChips
             color={offer.category.appearance.color}
@@ -122,19 +138,24 @@ const MyCooperationsDetails = () => {
             subject={offer.subject.name}
           />
         </Box>
-        <Typography sx={style.titles}>About cooperation:</Typography>
+        <Typography sx={style.titles}>
+          {t('cooperationDetailsPage.aboutCooperation')}
+        </Typography>
         <ShowMoreCollapse
           collapsedSize={30}
           collapsedTextLength={100}
           description={offer.description}
           sx={style.aboutCooperation}
-          title={''}
           withoutTitle
         />
-        <Typography sx={style.titles}>Tutoring languages:</Typography>
+        <Typography sx={style.titles}>
+          {t('cooperationDetailsPage.tutoringLanguages')}
+        </Typography>
         <Box sx={style.languageContainer}>{languages}</Box>
-        <Typography sx={style.titles}>Pricing:</Typography>
-        <Typography>{`${price} UAH/hour`}</Typography>
+        <Typography sx={style.titles}>
+          {t('cooperationDetailsPage.pricing')}
+        </Typography>
+        <Typography>{`${offer.price} UAH/hour`}</Typography>
       </Box>
       <CooperationCompletion />
     </Box>

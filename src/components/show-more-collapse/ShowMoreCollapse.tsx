@@ -7,7 +7,7 @@ import Collapse, { CollapseProps } from '@mui/material/Collapse'
 import { styles } from '~/components/show-more-collapse/ShowMoreCollapse.styles'
 
 interface ShowMoreCollapseProps extends CollapseProps {
-  title: string
+  title?: string
   description: string
   collapsedSize?: number
   collapsedTextLength?: number
