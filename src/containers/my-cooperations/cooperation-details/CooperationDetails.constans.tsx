@@ -36,7 +36,6 @@ export const tabsData: MyCooperationsTabsData = {
   }
 }
 
-
 export const defaultResponse: Cooperation = {
   offer: {
     title: '',

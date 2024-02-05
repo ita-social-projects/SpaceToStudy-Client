@@ -21,6 +21,7 @@ import {
   ButtonVariantEnum,
   MyCooperationDetails,
   Offer,
+  ServiceFunction,
   SizeEnum,
   UserRoleEnum
 } from '~/types'
@@ -36,10 +37,10 @@ const MyCooperationsDetails = () => {
   const navigate = useNavigate()
   const { setChatInfo } = useChatContext()
 
-  const getDetails = useCallback(
-    () => cooperationService.getCooperationById(id),
-    [id]
-  )
+  const getDetails: ServiceFunction<
+    MyCooperationDetails<Offer> | null,
+    undefined
+  > = useCallback(() => cooperationService.getCooperationById(id), [id])
 
   const { response: detailsResponse, loading: detailsLoading } =
     useAxios<MyCooperationDetails<Offer> | null>({
