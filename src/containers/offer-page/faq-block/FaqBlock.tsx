@@ -46,7 +46,7 @@ const FaqBlock = <T extends CreateOrUpdateOfferData>({
       ]
       handleNonInputValueChange('FAQ', updatedFaq)
     } else {
-      setMaxFaqError(t('offerPage.errorMessages.FAQ'))
+      setMaxFaqError(t('offerPage.errorMessages.faq'))
       resetError()
     }
   }
