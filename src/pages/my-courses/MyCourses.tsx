@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Typography, Box } from '@mui/material'
 
@@ -13,11 +13,13 @@ import useAxios from '~/hooks/use-axios'
 import usePagination from '~/hooks/table/use-pagination'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import useConfirm from '~/hooks/use-confirm'
+import useSort from '~/hooks/table/use-sort'
 
 import { getScreenBasedLimit } from '~/utils/helper-functions'
 import { CourseService } from '~/services/course-service'
 import { useSnackBarContext } from '~/context/snackbar-context'
 import { Course, ItemsWithCount, ErrorResponse, CourseForm } from '~/types'
+import { initialSort } from '~/containers/find-course/courses-filter-bar/CorseFilterBar.constants'
 import {
   defaultResponse,
   courseItemsLoadLimit
@@ -33,7 +35,7 @@ const MyCourses = () => {
   const { openDialog } = useConfirm()
   const { setAlert } = useSnackBarContext()
   const searchTitle = useRef<string>('')
-  const [sort, setSort] = useState<string>('asc')
+  const { sort, onRequestSort } = useSort({ initialSort })
   const itemsPerPage = getScreenBasedLimit(breakpoints, courseItemsLoadLimit)
 
   const getCourses = useCallback(
@@ -156,8 +158,8 @@ const MyCourses = () => {
       <AddCourseWithInput
         fetchData={fetchData}
         searchRef={searchTitle}
-        setSort={setSort}
-        sort={sort}
+        setSort={onRequestSort}
+        sort={`${sort.orderBy} ${sort.order}`}
       />
       {!coursesItems.length && !coursesLoading ? (
         <NotFoundResults

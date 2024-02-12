@@ -14,7 +14,7 @@ import FiltersToggle from '~/components/filters-toggle/FiltersToggle'
 import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
 import FilterSelector from '~/components/filter-selector/FilterSelector'
 
-import { sortTranslationKeys } from '~/containers/find-course/courses-filter-block/CoursesFilterBlock.constants'
+import { sortTranslationKeys } from '~/containers/find-course/courses-filter-bar/CorseFilterBar.constants'
 import { styles } from '~/containers/my-resources/resources-toolbar-drawer/ResourceToolbarDrawer.styles'
 import {
   ButtonVariantEnum,
@@ -72,11 +72,6 @@ const ResourcesToolBarDrawer: FC<ResourcesToolBarDrawerProps> = ({
     closeDrawer()
   }
 
-  const sortFields = sortTranslationKeys.map(({ title, value }) => ({
-    title: t(title),
-    value
-  }))
-
   return (
     <>
       <FiltersToggle handleToggle={onToggle} sx={styles.filterToggle} />
@@ -106,7 +101,7 @@ const ResourcesToolBarDrawer: FC<ResourcesToolBarDrawerProps> = ({
             value={data.name}
           />
           <AppSelect
-            fields={sortFields}
+            fields={sortTranslationKeys}
             selectTitle={t('filters.sortBy.sortByTitle')}
             setValue={onSortChange}
             sx={styles.select}

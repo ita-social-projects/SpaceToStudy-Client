@@ -81,7 +81,7 @@ describe('ResourcesToolBarDrawer test', () => {
     expect(select.value).toBe(selectValue.default)
 
     fireEvent.click(select)
-    fireEvent.change(select, {
+    fireEvent.select(select, {
       target: { value: selectValue.updated }
     })
 
