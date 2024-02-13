@@ -127,6 +127,7 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
     if (!chatInfo.chatId) {
       setIsRedirected(true)
       await createNewChat()
+      chatInfo.updateInfo()
     } else openChatInNewTab(chatInfo.chatId)
     closeChatWindow()
   }
