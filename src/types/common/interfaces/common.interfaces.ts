@@ -57,7 +57,7 @@ export interface ReviewInterface {
 }
 
 export interface Faq {
-  _id?: string
+  id?: string
   question: string
   answer: string
 }
