@@ -56,6 +56,14 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
     [setAlert]
   )
 
+  const onResponse = useCallback(
+    (response: ChatResponse | undefined) => {
+      setChatInfo({ ...chatInfo, chatId: response?._id ?? '' })
+      chatInfo.updateInfo()
+    },
+    [chatInfo, setChatInfo]
+  )
+
   const getChats = useCallback(() => chatService.getChats(), [])
 
   const getMessages = useCallback(
@@ -104,6 +112,7 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
     service: createChat,
     fetchOnMount: false,
     defaultResponse: undefined,
+    onResponse,
     onResponseError: handleErrorResponse
   })
 
@@ -118,7 +127,9 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
 
   const closeChatWindow = () => setChatInfo(null)
 
-  const openChatInNewTab = (chatId: Pick<ChatResponse, '_id'> | string) => {
+  const openChatInNewTab = (
+    chatId: Pick<ChatResponse, '_id'> | string = ''
+  ) => {
     localStorage.setItem('currentChatId', chatId as string)
     window.open(authRoutes.chat.path, '_blank', 'noopener noreferrer')
   }
@@ -166,8 +177,6 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
       if (thisChat) {
         const isChatDeleted = thisChat.deletedFor.length > 0
         setIsChatDeleted(isChatDeleted)
-      } else if (messages && chatInfo.chatId) {
-        setIsChatDeleted(true)
       }
     }
   }, [chatInfo.chatId, isChatsLoading, listOfChats, messages, messagesLoad])
@@ -181,17 +190,6 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
       scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight })
     }
   }, [chatInfo.chatId, messagesLoad])
-
-  useEffect(() => {
-    if (createdChat?._id && createdChat?._id !== chatInfo.chatId) {
-      chatInfo.updateInfo()
-      setChatInfo({
-        ...chatInfo,
-        chatId: createdChat?._id
-      })
-      isRedirected && openChatInNewTab(createdChat?._id)
-    }
-  }, [createdChat, isRedirected, chatInfo, setChatInfo])
 
   useEffect(() => {
     !chatIsCreating &&
