@@ -32,7 +32,7 @@
 	"placeholder":"Попередній перегляд фотографій",
 	"description":"Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.",
 	"typeError": "Неправильний тип файлу. Дозволяються лише файли .png/.jpg/.jpeg.",
-	"fileSizeError": "Розмір одного файлу не може перевищувати 10 Мб."
+	"fileSizeError": "Розмір одного файлу не може перевищувати 5 Мб."
   },
   "successMessage": "Успішно! Ваші дані додано."
 }

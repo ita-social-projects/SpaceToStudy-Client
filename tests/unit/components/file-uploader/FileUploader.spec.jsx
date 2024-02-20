@@ -7,8 +7,8 @@ const emitter = vi.fn()
 const initialState = []
 const initialError = undefined
 const validationData = {
-  maxFileSize: 10_000_000,
-  maxAllFilesSize: 50_000_000,
+  maxFileSize: 5_000_000,
+  maxAllFilesSize: 20_000_000,
   filesTypes: ['application/pdf', 'image/jpeg', 'image/png'],
   fileSizeError: 'becomeTutor.documents.fileSizeError',
   allFilesSizeError: 'becomeTutor.documents.allFilesSizeError',

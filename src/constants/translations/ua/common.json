@@ -35,7 +35,7 @@
   "uploadNewFile": "Завантажити новий файл",
   "typeError": "Неправильний тип файлу. Дозволяються лише файли .pdf/.jpg/.jpeg",
   "allFilesSizeError": "Помилка розміру всіх файлів",
-  "fileSizeError": "Size for one file cannot be more than 10 MB.",
+  "fileSizeError": "Розмір одного файлу не може перевищувати 5 Мб.",
   "noItems": "Елементів не знайдено",
   "view": "Переглянути",
   "labels": {
