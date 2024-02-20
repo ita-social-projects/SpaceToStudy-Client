@@ -1,11 +1,4 @@
-import {
-  FC,
-  ChangeEvent,
-  useState,
-  MutableRefObject,
-  Dispatch,
-  SetStateAction
-} from 'react'
+import { FC, ChangeEvent, useState, MutableRefObject } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import AddIcon from '@mui/icons-material/Add'
@@ -31,7 +24,7 @@ import { styles } from '~/containers/my-courses/add-course-with-input/AddCourseW
 interface AddCoursesWithInputProps {
   fetchData: () => Promise<void>
   searchRef: MutableRefObject<string>
-  setSort: Dispatch<SetStateAction<string>>
+  setSort: (property: string) => void
   sort: string
 }
 

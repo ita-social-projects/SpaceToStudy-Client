@@ -72,11 +72,6 @@ const ResourcesToolBarDrawer: FC<ResourcesToolBarDrawerProps> = ({
     closeDrawer()
   }
 
-  const sortFields = sortTranslationKeys.map(({ title, value }) => ({
-    title: t(title),
-    value
-  }))
-
   return (
     <>
       <FiltersToggle handleToggle={onToggle} sx={styles.filterToggle} />
@@ -106,7 +101,7 @@ const ResourcesToolBarDrawer: FC<ResourcesToolBarDrawerProps> = ({
             value={data.name}
           />
           <AppSelect
-            fields={sortFields}
+            fields={sortTranslationKeys}
             selectTitle={t('filters.sortBy.sortByTitle')}
             setValue={onSortChange}
             sx={styles.select}
