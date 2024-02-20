@@ -32,7 +32,7 @@ export interface UserResponse {
   mainSubjects: { student: SubjectInterface[]; tutor: SubjectInterface[] }
   totalReviews: DataByRole<number>
   averageRating: DataByRole<number>
-  nativeLanguage: string
+  nativeLanguage: string | null
   address: Address
   professionalSummary?: string
   photo?: string
