@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next'
 
 import useForm from '~/hooks/use-form'
 import useConfirm from '~/hooks/use-confirm'
-import useBreakpoints from '~/hooks/use-breakpoints'
 import { useSignUpMutation } from '~/services/auth-service'
 import { useModalContext } from '~/context/modal-context'
 import { useSnackBarContext } from '~/context/snackbar-context'
@@ -34,7 +33,6 @@ const SignupDialog = ({ type }) => {
   const { openModal, closeModal } = useModalContext()
   const { setAlert } = useSnackBarContext()
   const [signUp] = useSignUpMutation()
-  const { isDesktop, isLaptopAndAbove, isTablet, isMobile } = useBreakpoints()
 
   const signupImg = { student, tutor }
 
@@ -87,12 +85,6 @@ const SignupDialog = ({ type }) => {
     setNeedConfirmation(isDirty)
   }, [isDirty, setNeedConfirmation])
 
-  const getButtonWidth = () => {
-    if (isDesktop) return 390
-    if (isLaptopAndAbove) return 340
-    if (isTablet) return 333
-    if (isMobile) return 330
-  }
   return (
     <Box sx={styles.root}>
       <Box sx={styles.imgContainer}>
@@ -118,7 +110,7 @@ const SignupDialog = ({ type }) => {
             handleSubmit={handleSubmit}
           />
           <GoogleLogin
-            buttonWidth={getButtonWidth()}
+            buttonWidth={styles.form.maxWidth}
             role={type}
             type={signup}
           />
