@@ -20,7 +20,7 @@ const GoogleLogin = ({ type, buttonWidth, role }) => {
   }
 
   return (
-    <Box>
+    <Box sx={styles.googleForm}>
       <Box sx={styles.linesBox}>
         <Typography sx={styles.continue} variant='body2'>
           {t(`${type}.continue`)}

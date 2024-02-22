@@ -5,14 +5,12 @@ import { useGoogleAuthMutation } from '~/services/auth-service'
 import { useModalContext } from '~/context/modal-context'
 import { useSnackBarContext } from '~/context/snackbar-context'
 import { scrollToHash } from '~/utils/hash-scroll'
-import useBreakpoints from '~/hooks/use-breakpoints'
 
 import { snackbarVariants } from '~/constants'
 import { styles } from '~/containers/guest-home-page/google-button/GoogleButton.styles'
 
 const GoogleButton = ({ role, route, buttonWidth, type }) => {
   const ref = useHref(route)
-  const mediaQuery = useBreakpoints().isLaptopAndAbove ? 'md' : 'xs'
   const { closeModal } = useModalContext()
   const { setAlert } = useSnackBarContext()
   const [googleAuth] = useGoogleAuthMutation()
@@ -46,11 +44,11 @@ const GoogleButton = ({ role, route, buttonWidth, type }) => {
 
     googleId.renderButton(document.getElementById('googleButton'), {
       size: 'large',
-      width: buttonWidth[mediaQuery],
+      width: buttonWidth,
       locale: 'en',
       text: `${type}_with`
     })
-  }, [handleCredentialResponse, buttonWidth, type, mediaQuery])
+  }, [handleCredentialResponse, buttonWidth, type])
 
   return <div id='googleButton' style={styles.google} />
 }
