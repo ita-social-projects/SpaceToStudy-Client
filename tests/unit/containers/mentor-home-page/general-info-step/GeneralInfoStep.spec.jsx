@@ -18,7 +18,7 @@ const userRole = 'tutor'
 const userDataMock = { _id: userId, firstName: 'test', lastName: 'test' }
 const countriesDataMock = [
   { name: 'Ukraine', iso2: 'UA' },
-  { name: 'Belgium', iso2: 'BE}' }
+  { name: 'Belgium', iso2: 'BE' }
 ]
 const citiesDataMock = ['Antwerp', 'Brussels']
 const countryCode = 'BE'
