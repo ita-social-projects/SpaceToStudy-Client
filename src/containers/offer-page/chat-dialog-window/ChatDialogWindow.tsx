@@ -133,9 +133,11 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
           chatId: createdChat._id
         })
         openChatInNewTab(createdChat._id)
+        closeChatWindow()
       }
     } else {
       openChatInNewTab(chatInfo.chatId)
+      closeChatWindow()
     }
   }
 
