@@ -1,6 +1,6 @@
 export const styles = {
   linesBox: {
-    margin: '23px 0',
+    margin: '22px 0',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -24,5 +24,10 @@ export const styles = {
   haveAccount: {
     display: 'flex',
     color: 'primary.700'
+  },
+  googleForm: {
+    display: 'flex',
+    flexDirection: 'column',
+    minWidth: { sm: '330px' }
   }
 }

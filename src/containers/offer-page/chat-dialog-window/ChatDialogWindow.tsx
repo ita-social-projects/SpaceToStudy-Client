@@ -127,8 +127,18 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
     if (!chatInfo.chatId) {
       setIsRedirected(true)
       await createNewChat()
-    } else openChatInNewTab(chatInfo.chatId)
-    closeChatWindow()
+      if (createdChat?._id) {
+        setChatInfo({
+          ...chatInfo,
+          chatId: createdChat._id
+        })
+        openChatInNewTab(createdChat._id)
+        closeChatWindow()
+      }
+    } else {
+      openChatInNewTab(chatInfo.chatId)
+      closeChatWindow()
+    }
   }
 
   const sendQuestion = async (question: string) => {
