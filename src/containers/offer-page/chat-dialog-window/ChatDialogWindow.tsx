@@ -125,11 +125,9 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
     onResponseError: handleErrorResponse
   })
 
-  const closeChatWindow = () => setChatInfo(null)
+  const closeChatWindow = useCallback(() => setChatInfo(null), [setChatInfo])
 
-  const openChatInNewTab = (
-    chatId: Pick<ChatResponse, '_id'> | string = ''
-  ) => {
+  const openChatInNewTab = (chatId: Pick<ChatResponse, '_id'> | string) => {
     localStorage.setItem('currentChatId', chatId as string)
     window.open(authRoutes.chat.path, '_blank', 'noopener noreferrer')
   }
@@ -138,14 +136,6 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
     if (!chatInfo.chatId) {
       setIsRedirected(true)
       await createNewChat()
-      if (createdChat?._id) {
-        setChatInfo({
-          ...chatInfo,
-          chatId: createdChat._id
-        })
-        openChatInNewTab(createdChat._id)
-        closeChatWindow()
-      }
     } else {
       openChatInNewTab(chatInfo.chatId)
       closeChatWindow()
@@ -190,6 +180,13 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
       scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight })
     }
   }, [chatInfo.chatId, messagesLoad])
+
+  useEffect(() => {
+    if (isRedirected && chatInfo.chatId) {
+      openChatInNewTab(chatInfo.chatId)
+      closeChatWindow()
+    }
+  }, [isRedirected, chatInfo, closeChatWindow])
 
   useEffect(() => {
     !chatIsCreating &&
