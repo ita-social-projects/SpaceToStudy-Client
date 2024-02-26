@@ -59,7 +59,6 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
   const onResponse = useCallback(
     (response: ChatResponse | undefined) => {
       setChatInfo({ ...chatInfo, chatId: response?._id ?? '' })
-      chatInfo.updateInfo()
     },
     [chatInfo, setChatInfo]
   )
@@ -185,6 +184,7 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
     if (isRedirected && chatInfo.chatId) {
       openChatInNewTab(chatInfo.chatId)
       closeChatWindow()
+      chatInfo.updateInfo()
     }
   }, [isRedirected, chatInfo, closeChatWindow])
 
