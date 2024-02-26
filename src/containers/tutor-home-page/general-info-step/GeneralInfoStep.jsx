@@ -56,7 +56,15 @@ const GeneralInfoStep = ({
       handleNonInputValueChange('city', null)
       handleNonInputValueChange('country', value)
     }
-    if (value) await fetchCities(value)
+    if (value) {
+      const selectedCountry = countries.find(
+        (country) => country.name === value
+      )
+      if (selectedCountry) {
+        const countryCode = selectedCountry.iso2
+        await fetchCities(countryCode)
+      }
+    }
   }
 
   const onChangeCity = (_, value) => {
@@ -105,6 +113,8 @@ const GeneralInfoStep = ({
     fetchOnMount: false,
     defaultResponse: defaultResponses.array
   })
+
+  const countriesNames = countries.map((country) => country.name)
 
   const {
     loading: loadingCities,
@@ -179,7 +189,7 @@ const GeneralInfoStep = ({
               loading={loadingCountries}
               onChange={onChangeCountry}
               onFocus={onFocusCountry}
-              options={countries}
+              options={countriesNames}
               sx={{ mb: '30px' }}
               textFieldProps={{
                 label: t('common.labels.country')

@@ -16,9 +16,12 @@ const setIsUserFetched = vi.fn()
 const userId = '63f5d0ebb'
 const userRole = 'tutor'
 const userDataMock = { _id: userId, firstName: 'test', lastName: 'test' }
-const countriesDataMock = ['Ukraine', 'Belgium']
+const countriesDataMock = [
+  { name: 'Ukraine', iso2: 'UA' },
+  { name: 'Belgium', iso2: 'BE' }
+]
 const citiesDataMock = ['Antwerp', 'Brussels']
-const country = 'Belgium'
+const countryCode = 'BE'
 
 const mockState = {
   appMain: { userId, loading: false }
@@ -41,7 +44,7 @@ describe('GeneralInfoStep test', () => {
         .onGet(URLs.location.getCountries)
         .reply(200, countriesDataMock)
       mockAxiosClient
-        .onGet(`${URLs.location.getCities}/${country}`)
+        .onGet(`${URLs.location.getCities}/${countryCode}`)
         .reply(200, citiesDataMock)
       renderWithProviders(
         <StepProvider
