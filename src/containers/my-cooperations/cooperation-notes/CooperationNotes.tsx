@@ -179,8 +179,6 @@ const CooperationNotes = () => {
   const onCloseNote = () => setOpen(false)
   const onAddNoteOpen = () => setOpen(true)
 
-  console.log(editableItemId)
-
   const NotesList = notes.map((item: NoteResponse) =>
     editableItemId === item._id ? (
       <CreateOrEditNote
