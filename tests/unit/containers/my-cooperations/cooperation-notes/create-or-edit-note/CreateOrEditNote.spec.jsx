@@ -6,7 +6,9 @@ const addNewNoteMock = vi.fn()
 
 describe('CreateOrEditNote component', () => {
   beforeEach(() => {
-    renderWithProviders(<CreateOrEditNote addNewNote={addNewNoteMock} />)
+    renderWithProviders(
+      <CreateOrEditNote onSubmit={addNewNoteMock} onSubmitLoading={false} />
+    )
   })
 
   it('should render component', () => {
@@ -16,15 +18,24 @@ describe('CreateOrEditNote component', () => {
     expect(noteSettings).toBeInTheDocument()
   })
 
-  it('should crete new note', () => {
+  it('should create a new note', () => {
+    const input = screen.getByRole('textbox')
+
+    fireEvent.change(input, { target: { value: 'New note text' } })
+
+    expect(input.value).toBe('New note text')
+
     const createBtn = screen.getByText('common.save')
     fireEvent.click(createBtn)
+
     expect(addNewNoteMock).toHaveBeenCalled()
   })
 
   it('should change private note setting value on click', () => {
     const checkbox = screen.queryByRole('checkbox')
+
     fireEvent.click(checkbox)
+
     expect(checkbox.checked).toEqual(true)
   })
 })
