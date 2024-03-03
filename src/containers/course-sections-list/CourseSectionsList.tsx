@@ -13,16 +13,19 @@ import DragIndicatorIcon from '@mui/icons-material/DragIndicator'
 import Divider from '@mui/material/Divider'
 import MenuItem from '@mui/material/MenuItem'
 import Typography from '@mui/material/Typography'
+import Crop75Icon from '@mui/icons-material/Crop75'
+import ViewComfyOutlinedIcon from '@mui/icons-material/ViewComfyOutlined'
 import { Add } from '@mui/icons-material'
 import { useTranslation } from 'react-i18next'
 
 import CourseSectionContainer from '~/containers/course-section/CourseSectionContainer'
+import AddCourseTemplateModal from '../cooperation-details/add-course-modal-modal/AddCourseTemplateModal'
 
 import useDroppable from '~/hooks/use-droppable'
 import useMenu from '~/hooks/use-menu'
 import { styles } from '~/containers/course-sections-list/CourseSectionsList.styles'
-import { addActivityMenuItems } from '~/containers/course-sections-list/CourseSectionsList.constants'
 import { CourseSection, CourseResources } from '~/types'
+import { useModalContext } from '~/context/modal-context'
 
 interface CourseSectionsListProps {
   items: CourseSection[]
@@ -58,6 +61,7 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
 }) => {
   const { enabled } = useDroppable()
   const { openMenu, renderMenu, closeMenu, anchorEl } = useMenu()
+  const { openModal, closeModal } = useModalContext()
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0)
   const { t } = useTranslation()
 
@@ -99,9 +103,31 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
     addNewSection?.(currentSectionIndex)
   }
 
+  const openAddCourseTemplateModal = () => {
+    closeMenu()
+    openModal({
+      component: <AddCourseTemplateModal closeModal={closeModal} />
+    })
+  }
+
+  const addActivityMenuItems = [
+    {
+      id: 1,
+      label: 'cooperationsPage.manyTypes.module',
+      icon: <Crop75Icon sx={styles.menuIcon} />,
+      onClick: handleMenuItemClick
+    },
+    {
+      id: 2,
+      label: 'cooperationsPage.manyTypes.courseTemplate',
+      icon: <ViewComfyOutlinedIcon sx={styles.menuIcon} />,
+      onClick: openAddCourseTemplateModal
+    }
+  ]
+
   const addActivityMenuList = addActivityMenuItems.map(
-    ({ id, label, icon }) => (
-      <MenuItem key={id} onClick={handleMenuItemClick}>
+    ({ id, label, icon, onClick }) => (
+      <MenuItem key={id} onClick={onClick}>
         {icon}
         {t(label)}
       </MenuItem>
