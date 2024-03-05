@@ -4,15 +4,22 @@ import { useTranslation } from 'react-i18next'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import Typography from '@mui/material/Typography'
 
-import { tabsData } from '~/pages/my-resources/MyResources.constants'
+import {
+  MyResourcesTabsData,
+  tabsData
+} from '~/pages/my-resources/MyResources.constants'
 import { styles } from '~/pages/my-resources/MyResources.styles'
 import TabNavigation from '~/components/tab-navigation/TabNavigation'
 
+import { ResourcesTabsEnum } from '~/types'
+
 const MyResources = () => {
-  const [activeTab, setActiveTab] = useState<string>('lessons')
+  const [activeTab, setActiveTab] = useState<ResourcesTabsEnum>(
+    ResourcesTabsEnum.Lessons
+  )
   const { t } = useTranslation()
 
-  const handleClick = (tab: string) => {
+  const handleClick = (tab: ResourcesTabsEnum) => {
     setActiveTab(tab)
   }
 
@@ -21,7 +28,7 @@ const MyResources = () => {
   return (
     <PageWrapper>
       <Typography sx={styles.title}>{t(tabsData[activeTab].title)}</Typography>
-      <TabNavigation
+      <TabNavigation<ResourcesTabsEnum, MyResourcesTabsData>
         activeTab={activeTab}
         handleClick={handleClick}
         sx={styles.tabs}

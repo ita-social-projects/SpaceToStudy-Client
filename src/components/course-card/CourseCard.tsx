@@ -28,6 +28,7 @@ interface CourseCardProps {
   course: Course
   deleteCourse?: (id: string) => void
   duplicateCourse?: (id: string) => void
+  isSelected?: boolean
   withMenu?: boolean
   sx?: { [key: string]: SxProps | undefined }
 }
@@ -36,6 +37,7 @@ const CourseCard: FC<CourseCardProps> = ({
   course,
   deleteCourse,
   duplicateCourse,
+  isSelected = false,
   withMenu = true,
   sx
 }) => {
@@ -112,7 +114,7 @@ const CourseCard: FC<CourseCardProps> = ({
   )
 
   return (
-    <Box sx={spliceSx(styles.card, sx?.card)}>
+    <Box sx={spliceSx(styles.card(isSelected), sx?.card)}>
       <Box>
         <Typography sx={spliceSx(styles.title, sx?.title)}>{title}</Typography>
         <Typography sx={spliceSx(styles.description, sx?.description)}>

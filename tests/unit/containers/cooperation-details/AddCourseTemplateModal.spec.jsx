@@ -81,4 +81,16 @@ describe('AddCourseTemplateModal test', () => {
 
     expect(clearBtn).toBeInTheDocument()
   })
+
+  it('should select course and click on add button', () => {
+    const course = screen.getByText(1 + mockCourse.title)
+
+    fireEvent.click(course)
+
+    const addBtn = screen.getByText('common.add')
+
+    fireEvent.click(addBtn)
+
+    expect(closeModalMock).toHaveBeenCalled()
+  })
 })

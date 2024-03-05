@@ -17,9 +17,9 @@ import { Add } from '@mui/icons-material'
 import { useTranslation } from 'react-i18next'
 
 import CourseSectionContainer from '~/containers/course-section/CourseSectionContainer'
-
 import useDroppable from '~/hooks/use-droppable'
 import useMenu from '~/hooks/use-menu'
+
 import { styles } from '~/containers/course-sections-list/CourseSectionsList.styles'
 import { addActivityMenuItems } from '~/containers/course-sections-list/CourseSectionsList.constants'
 import { CourseSection, CourseResources } from '~/types'
@@ -37,7 +37,7 @@ interface CourseSectionsListProps {
     field: keyof CourseSection,
     value: CourseResources[]
   ) => void
-  handleSectionResourcesOrder: (
+  handleSectionResourcesOrder?: (
     id: string,
     resources: CourseResources[]
   ) => void

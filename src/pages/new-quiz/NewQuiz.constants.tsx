@@ -30,8 +30,8 @@ export interface QuizContentProps {
   setActiveTab: Dispatch<SetStateAction<QuizTabsEnum>>
 }
 
-export interface QuizTabsData {
-  [key: string]: {
+export type QuizTabsData = {
+  [key in QuizTabsEnum]: {
     title: string
     content: (props: QuizContentProps) => ReactElement
     icon: ReactElement
@@ -40,17 +40,17 @@ export interface QuizTabsData {
 }
 
 export const tabsData: QuizTabsData = {
-  edit: {
+  [QuizTabsEnum.Edit]: {
     title: 'Edit',
     content: (props) => <CreateOrEditQuizContainer {...props} />,
     icon: <EditIcon />
   },
-  quizzes: {
+  [QuizTabsEnum.Quizzes]: {
     title: 'View',
     content: (props) => <ViewQuizContainer {...props} />,
     icon: <VisibilityIcon />
   },
-  settings: {
+  [QuizTabsEnum.Settings]: {
     title: 'Settings',
     content: (props) => <QuizSettingsContainer {...props} />,
     icon: <SettingsIcon />

@@ -54,7 +54,14 @@ export const styles = {
     padding: '10px 20px 10px 10px'
   }),
   card: {
-    card: { width: '100%', boxSizing: 'border-box', cursor: 'pointer' },
+    card: {
+      maxWidth: '390px',
+      maxHeight: '245px',
+      width: '100%',
+      height: '100%',
+      boxSizing: 'border-box',
+      cursor: 'pointer'
+    },
     title: { typography: TypographyVariantEnum.MidTitle },
     description: { typography: TypographyVariantEnum.Caption },
     secondaryText: { typography: TypographyVariantEnum.Caption },

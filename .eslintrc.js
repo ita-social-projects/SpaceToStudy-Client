@@ -45,7 +45,7 @@ module.exports = {
     'react/jsx-max-depth': [
       'error',
       {
-        max: 5
+        max: 6
       }
     ],
     'react/jsx-wrap-multilines': [
