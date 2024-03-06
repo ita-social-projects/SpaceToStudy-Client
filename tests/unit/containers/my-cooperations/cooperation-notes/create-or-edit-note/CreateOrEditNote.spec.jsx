@@ -4,6 +4,8 @@ import { renderWithProviders } from '~tests/test-utils'
 
 const addNewNoteMock = vi.fn()
 
+const noteMock = { text: 'noteText', isPrivate: true }
+
 describe('CreateOrEditNote component', () => {
   beforeEach(() => {
     renderWithProviders(
@@ -37,5 +39,21 @@ describe('CreateOrEditNote component', () => {
     fireEvent.click(checkbox)
 
     expect(checkbox.checked).toEqual(true)
+  })
+})
+
+describe('CreateOrEditNote component with initial note', () => {
+  it('should set note as initial data to form', () => {
+    renderWithProviders(
+      <CreateOrEditNote
+        note={noteMock}
+        onSubmit={addNewNoteMock}
+        onSubmitLoading={false}
+      />
+    )
+
+    const noteText = screen.getByText(noteMock.text)
+
+    expect(noteText).toBeInTheDocument()
   })
 })
