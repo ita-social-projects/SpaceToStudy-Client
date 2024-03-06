@@ -42,17 +42,26 @@ const MyCooperationsDetails = () => {
     undefined
   > = useCallback(() => cooperationService.getCooperationById(id), [id])
 
-  const { response: detailsResponse, loading: detailsLoading } =
-    useAxios<MyCooperationDetails<Offer> | null>({
-      service: getDetails,
-      defaultResponse: null
-    })
+  const {
+    response: detailsResponse,
+    loading: detailsLoading,
+    fetchData
+  } = useAxios<MyCooperationDetails<Offer> | null>({
+    service: getDetails,
+    defaultResponse: null
+  })
+
+  const updateInfo = useCallback(() => {
+    void fetchData
+  }, [fetchData])
 
   if (detailsLoading || !detailsResponse) {
     return <Loader pageLoad />
   }
 
-  const { offer } = detailsResponse
+  const { offer, price } = detailsResponse
+
+  console.log(offer.author)
 
   const onHandleClick = () => {
     navigate(
@@ -66,7 +75,8 @@ const MyCooperationsDetails = () => {
     setChatInfo({
       author: offer.author,
       authorRole: UserRoleEnum.Tutor,
-      chatId: offer.chatId
+      chatId: offer.chatId,
+      updateInfo: updateInfo
     })
 
   const languages = offer.languages.map((item: string) => (
@@ -156,7 +166,7 @@ const MyCooperationsDetails = () => {
         <Typography sx={style.titles}>
           {t('cooperationDetailsPage.pricing')}
         </Typography>
-        <Typography>{`${offer.price} UAH/hour`}</Typography>
+        <Typography>{`${price} UAH/hour`}</Typography>
       </Box>
       <CooperationCompletion />
     </Box>

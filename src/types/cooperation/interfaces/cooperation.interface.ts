@@ -39,6 +39,7 @@ export interface MyCooperationDetails<TOffer extends Offer> {
     | 'languages'
     | 'chatId'
   >
+  price: number
   title: string
   description: string
   receiverRole: UserRoleEnum

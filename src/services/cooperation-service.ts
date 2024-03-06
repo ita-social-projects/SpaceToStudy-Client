@@ -4,11 +4,11 @@ import { AxiosResponse } from 'axios'
 import { URLs } from '~/constants/request'
 import {
   CreateCooperationsParams,
-  GetCooperationParams,
   GetCooperationsParams,
   UpdateCooperationsParams,
-  Cooperation,
-  CreateOrUpdateNoteParams
+  CreateOrUpdateNoteParams,
+  Offer,
+  MyCooperationDetails
 } from '~/types'
 import { createUrlPath } from '~/utils/helper-functions'
 
@@ -17,10 +17,6 @@ export const cooperationService = {
     params: GetCooperationsParams
   ): Promise<AxiosResponse> =>
     await axiosClient.get(URLs.cooperations.get, { params }),
-  getCooperationById: async (
-    params: GetCooperationParams
-  ): Promise<AxiosResponse> =>
-    await axiosClient.get(createUrlPath(URLs.cooperations.get, params)),
   createCooperation: async (
     data: CreateCooperationsParams
   ): Promise<AxiosResponse> =>
@@ -34,7 +30,7 @@ export const cooperationService = {
     ),
   getCooperationById: async (
     id?: string
-  ): Promise<AxiosResponse<Cooperation>> =>
+  ): Promise<AxiosResponse<MyCooperationDetails<Offer>>> =>
     await axiosClient.get(createUrlPath(URLs.cooperations.get, id))
 }
 
