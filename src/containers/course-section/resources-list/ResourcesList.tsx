@@ -1,4 +1,4 @@
-import { FC, Dispatch, SetStateAction } from 'react'
+import { FC, Dispatch, SetStateAction, useCallback } from 'react'
 import {
   DragDropContext,
   Droppable,
@@ -56,20 +56,24 @@ const ResourcesList: FC<ResourcesListProps> = ({
     setResources(reorderedItems)
   }
 
-  const setResourceAvailability = (
-    id: string,
-    availability: ResourceAvailabilityStatusEnum,
-    openFromDate?: string | null
-  ) => {
-    const resources = [...items]
-    const resource = resources.find((item) => item._id === id)
-
-    if (resource) {
-      resource.resourceAvailability = availability
-      resource.openFromDate = openFromDate
-    }
-    setResources(resources)
-  }
+  const setResourceAvailability = useCallback(
+    (
+      id: string,
+      availability: ResourceAvailabilityStatusEnum,
+      openFromDate?: string | null
+    ) => {
+      setResources((prevResources) => {
+        const resources = [...prevResources]
+        const resource = resources.find((item) => item._id === id)
+        if (resource) {
+          resource.resourceAvailability = availability
+          resource.openFromDate = openFromDate
+        }
+        return resources
+      })
+    },
+    [setResources]
+  )
 
   const resourcesList = items.map((item, i) => (
     <Draggable draggableId={item._id.toString()} index={i} key={item._id}>
