@@ -1,4 +1,4 @@
-import { screen, fireEvent } from '@testing-library/react'
+import { screen, fireEvent, act, waitFor } from '@testing-library/react'
 import CooperationNotes from '~/containers/my-cooperations/cooperation-notes/CooperationNotes'
 import { renderWithProviders } from '~tests/test-utils'
 import { CooperationNotesService } from '~/services/cooperation-service'
@@ -39,8 +39,8 @@ vi.mock('~/services/cooperation-service', () => ({
 }))
 
 describe('CooperationNotes', () => {
-  beforeEach(() => {
-    renderWithProviders(<CooperationNotes />)
+  beforeEach(async () => {
+    await waitFor(() => renderWithProviders(<CooperationNotes />))
   })
 
   it('should render CooperationNotes components', () => {
@@ -52,7 +52,7 @@ describe('CooperationNotes', () => {
   it('should open create note form', () => {
     const addNoteBtn = screen.getByTestId('AddIcon')
 
-    fireEvent.click(addNoteBtn)
+    act(() => fireEvent.click(addNoteBtn))
 
     const noteFormSettings = screen.getByText(
       'cooperationsPage.notes.privateSetting'
@@ -68,11 +68,11 @@ describe('CooperationNotes', () => {
   it('should close create note form', () => {
     const addNoteBtn = screen.getByTestId('AddIcon')
 
-    fireEvent.click(addNoteBtn)
+    act(() => fireEvent.click(addNoteBtn))
 
     const cancelButton = screen.getByText('common.cancel')
 
-    fireEvent.click(cancelButton)
+    act(() => fireEvent.click(cancelButton))
 
     const noteFormSettings = screen.queryByText(
       'cooperationsPage.notes.privateSetting'

@@ -7,7 +7,7 @@ import {
   GetCooperationsParams,
   UpdateCooperationsParams,
   Cooperation,
-  CreateNoteParams
+  CreateOrUpdateNoteParams
 } from '~/types'
 import { createUrlPath } from '~/utils/helper-functions'
 
@@ -41,12 +41,23 @@ export const CooperationNotesService = {
       )
     ),
   createNote: async (
-    data?: CreateNoteParams,
+    data?: CreateOrUpdateNoteParams,
     cooperationId?: string
   ): Promise<AxiosResponse> =>
     await axiosClient.post(
       createUrlPath(
         `${URLs.cooperations.get}/${cooperationId}${URLs.notes.create}`
+      ),
+      data
+    ),
+  updateNote: async (
+    cooperationId: string = '',
+    noteId: string = '',
+    data?: CreateOrUpdateNoteParams
+  ): Promise<AxiosResponse> =>
+    await axiosClient.patch(
+      createUrlPath(
+        `${URLs.cooperations.update}/${cooperationId}${URLs.notes.update}/${noteId}`
       ),
       data
     ),

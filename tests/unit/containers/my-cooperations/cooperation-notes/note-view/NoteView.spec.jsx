@@ -28,6 +28,7 @@ const privateNote = {
 
 const deleteItem = vi.fn()
 const duplicateItem = vi.fn()
+const updateItem = vi.fn()
 
 describe('NoteView component', () => {
   beforeEach(() => {
@@ -36,6 +37,7 @@ describe('NoteView component', () => {
         deleteItem={deleteItem}
         duplicateItem={duplicateItem}
         note={mockedNote}
+        updateItem={updateItem}
       />,
       { preloadedState: userState }
     )
@@ -59,6 +61,20 @@ describe('NoteView component', () => {
     fireEvent.click(deleteIcon)
 
     expect(deleteItem).toHaveBeenCalled()
+  })
+
+  it('should called update note', async () => {
+    const moreIcon = screen.getByTestId('MoreVertIcon')
+
+    await act(async () => {
+      fireEvent.click(moreIcon)
+    })
+
+    const editIcon = screen.getByTestId('EditIcon')
+
+    fireEvent.click(editIcon)
+
+    expect(updateItem).toHaveBeenCalled()
   })
 
   it('should called duplicate note', () => {

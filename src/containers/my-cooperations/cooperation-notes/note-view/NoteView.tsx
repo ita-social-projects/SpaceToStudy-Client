@@ -27,11 +27,17 @@ import { styles } from '~/containers/my-cooperations/cooperation-notes/note-view
 
 interface NoteViewProps {
   note: NoteResponse
-  deleteItem?: (id: string) => void
-  duplicateItem?: (id: string) => void
+  updateItem: (id: string) => void
+  deleteItem: (id: string) => void
+  duplicateItem: (id: string) => void
 }
 
-const NoteView: FC<NoteViewProps> = ({ note, deleteItem, duplicateItem }) => {
+const NoteView: FC<NoteViewProps> = ({
+  note,
+  updateItem,
+  deleteItem,
+  duplicateItem
+}) => {
   const { t } = useTranslation()
   const { openMenu, renderMenu, closeMenu } = useMenu()
   const { userId } = useAppSelector((state) => state.appMain)
@@ -53,7 +59,7 @@ const NoteView: FC<NoteViewProps> = ({ note, deleteItem, duplicateItem }) => {
           {` ${t('common.edit')}`}
         </Box>
       ),
-      func: () => console.log('Edit')
+      func: () => updateItem(note._id)
     },
     {
       id: 2,
@@ -63,7 +69,7 @@ const NoteView: FC<NoteViewProps> = ({ note, deleteItem, duplicateItem }) => {
           {` ${t('common.duplicate')}`}
         </Box>
       ),
-      func: () => duplicateItem?.(note._id)
+      func: () => duplicateItem(note._id)
     },
     {
       id: 3,
@@ -73,7 +79,7 @@ const NoteView: FC<NoteViewProps> = ({ note, deleteItem, duplicateItem }) => {
           {`${t('common.delete')}`}
         </Box>
       ),
-      func: () => deleteItem?.(note._id)
+      func: () => deleteItem(note._id)
     }
   ]
 

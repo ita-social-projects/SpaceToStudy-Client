@@ -56,6 +56,13 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
     [setAlert]
   )
 
+  const onResponse = useCallback(
+    (response: ChatResponse | undefined) => {
+      setChatInfo({ ...chatInfo, chatId: response?._id ?? '' })
+    },
+    [chatInfo, setChatInfo]
+  )
+
   const getChats = useCallback(() => chatService.getChats(), [])
 
   const getMessages = useCallback(
@@ -104,6 +111,7 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
     service: createChat,
     fetchOnMount: false,
     defaultResponse: undefined,
+    onResponse,
     onResponseError: handleErrorResponse
   })
 
@@ -116,7 +124,7 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
     onResponseError: handleErrorResponse
   })
 
-  const closeChatWindow = () => setChatInfo(null)
+  const closeChatWindow = useCallback(() => setChatInfo(null), [setChatInfo])
 
   const openChatInNewTab = (chatId: Pick<ChatResponse, '_id'> | string) => {
     localStorage.setItem('currentChatId', chatId as string)
@@ -127,14 +135,6 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
     if (!chatInfo.chatId) {
       setIsRedirected(true)
       await createNewChat()
-      if (createdChat?._id) {
-        setChatInfo({
-          ...chatInfo,
-          chatId: createdChat._id
-        })
-        openChatInNewTab(createdChat._id)
-        closeChatWindow()
-      }
     } else {
       openChatInNewTab(chatInfo.chatId)
       closeChatWindow()
@@ -166,8 +166,6 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
       if (thisChat) {
         const isChatDeleted = thisChat.deletedFor.length > 0
         setIsChatDeleted(isChatDeleted)
-      } else if (messages && chatInfo.chatId) {
-        setIsChatDeleted(true)
       }
     }
   }, [chatInfo.chatId, isChatsLoading, listOfChats, messages, messagesLoad])
@@ -183,15 +181,12 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
   }, [chatInfo.chatId, messagesLoad])
 
   useEffect(() => {
-    if (createdChat?._id && createdChat?._id !== chatInfo.chatId) {
+    if (isRedirected && chatInfo.chatId) {
+      openChatInNewTab(chatInfo.chatId)
+      closeChatWindow()
       chatInfo.updateInfo()
-      setChatInfo({
-        ...chatInfo,
-        chatId: createdChat?._id
-      })
-      isRedirected && openChatInNewTab(createdChat?._id)
     }
-  }, [createdChat, isRedirected, chatInfo, setChatInfo])
+  }, [isRedirected, chatInfo, closeChatWindow])
 
   useEffect(() => {
     !chatIsCreating &&

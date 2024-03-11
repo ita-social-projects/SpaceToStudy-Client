@@ -1,6 +1,6 @@
 import { CommonEntityFields, Cooperation, UserResponse } from '~/types'
 
-export interface CreateNoteParams {
+export interface CreateOrUpdateNoteParams {
   isPrivate: boolean
   text: string
 }
