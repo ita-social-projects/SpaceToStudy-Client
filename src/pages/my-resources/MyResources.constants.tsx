@@ -13,36 +13,38 @@ import LessonsContainer from '~/containers/my-resources/lessons-container/Lesson
 import QuestionsContainer from '~/containers/my-resources/questions-container/QuestionsContainer'
 import CategoriesContainer from '~/containers/my-resources/categories-container/CategoriesContainer'
 
-export interface MyResoursesTabsData {
-  [key: string]: {
+import { ResourcesTabsEnum } from '~/types'
+
+export type MyResourcesTabsData = {
+  [key in ResourcesTabsEnum]: {
     title: string
     content: ReactElement
     icon: ReactElement
     tabProps?: Omit<ButtonProps, 'onClick'>
   }
 }
-export const tabsData: MyResoursesTabsData = {
-  lessons: {
+export const tabsData: MyResourcesTabsData = {
+  [ResourcesTabsEnum.Lessons]: {
     title: 'myResourcesPage.tabs.lessons',
     content: <LessonsContainer />,
     icon: <ArticleOutlinedIcon />
   },
-  quizzes: {
+  [ResourcesTabsEnum.Quizzes]: {
     title: 'myResourcesPage.tabs.quizzes',
     content: <QuizzesContainer />,
     icon: <NoteAltOutlinedIcon />
   },
-  questions: {
+  [ResourcesTabsEnum.Questions]: {
     title: 'myResourcesPage.tabs.questions',
     content: <QuestionsContainer />,
     icon: <QuizOutlinedIcon />
   },
-  attachments: {
+  [ResourcesTabsEnum.Attachments]: {
     title: 'myResourcesPage.tabs.attachments',
     content: <AttachmentsContainer />,
     icon: <AttachFileIcon />
   },
-  categories: {
+  [ResourcesTabsEnum.Categories]: {
     title: 'myResourcesPage.tabs.categories',
     content: <CategoriesContainer />,
     icon: <CategoryIcon />

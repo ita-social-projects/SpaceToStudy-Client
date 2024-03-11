@@ -3,7 +3,11 @@ import { useState } from 'react'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import TabNavigation from '~/components/tab-navigation/TabNavigation'
 
-import { tabsData, initialSettings } from '~/pages/new-quiz/NewQuiz.constants'
+import {
+  tabsData,
+  initialSettings,
+  QuizTabsData
+} from '~/pages/new-quiz/NewQuiz.constants'
 import { styles } from '~/pages/new-quiz/NewQuiz.styles'
 import { Question, QuizSettings, QuizTabsEnum } from '~/types'
 
@@ -34,13 +38,13 @@ const NewQuiz = () => {
   }
   const tabContent = activeTab && tabsData[activeTab].content(props)
 
-  tabsData['quizzes'].tabProps = {
+  tabsData[QuizTabsEnum.Quizzes].tabProps = {
     ...(questions.length === 0 && { disabled: true })
   }
 
   return (
     <PageWrapper sx={styles.container}>
-      <TabNavigation<QuizTabsEnum>
+      <TabNavigation<QuizTabsEnum, QuizTabsData>
         activeTab={activeTab}
         handleClick={handleClick}
         tabsData={tabsData}

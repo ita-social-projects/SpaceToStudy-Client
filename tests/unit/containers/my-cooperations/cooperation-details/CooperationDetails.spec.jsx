@@ -50,12 +50,13 @@ const cooperationMock = {
 }
 
 describe('CooperationDetails', () => {
+  mockAxiosClient
+    .onGet(`${URLs.cooperations.get}/${cooperationID}`)
+    .reply(200, cooperationMock)
+
   beforeEach(async () => {
     await waitFor(() => {
       renderWithProviders(<CooperationDetails />, { preloadedState: mockState })
-      mockAxiosClient
-        .onGet(`${URLs.cooperations.get}/${cooperationID}`)
-        .reply(200, cooperationMock)
     })
   })
 

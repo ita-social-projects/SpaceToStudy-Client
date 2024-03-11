@@ -1,45 +1,48 @@
-import React from 'react'
+import { ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
-import { SxProps } from '@mui/material'
+import { ButtonProps, SxProps } from '@mui/material'
 import Box from '@mui/material/Box'
 
 import Tab from '~/components/tab/Tab'
 
-import { QuizTabsData } from '~/pages/new-quiz/NewQuiz.constants'
-import { MyResoursesTabsData } from '~/pages/my-resources/MyResources.constants'
-import { MyCooperationsTabsData } from '~/containers/my-cooperations/cooperation-details/CooperationDetails.constans'
-
 import { spliceSx } from '~/utils/helper-functions'
 import { styles } from '~/components/tab-navigation/TabNavigation.styles'
 
-interface TabNavigationProps<T> {
+interface TabNavigationProps<T, U> {
   activeTab: T
-  tabsData: QuizTabsData | MyResoursesTabsData | MyCooperationsTabsData
+  tabsData: U
   handleClick: (tab: T) => void
   sx?: { root?: SxProps; tab?: SxProps }
 }
 
-const TabNavigation = <T extends string>({
+interface BaseTabsData {
+  tabProps?: Omit<ButtonProps, 'onClick'>
+  title?: string
+  icon?: ReactElement
+}
+
+const TabNavigation = <T extends string, U extends Record<T, BaseTabsData>>({
   activeTab,
   tabsData,
   handleClick,
   sx
-}: TabNavigationProps<T>) => {
+}: TabNavigationProps<T, U>) => {
   const { t } = useTranslation()
 
-  const tabs = Object.keys(tabsData).map((key) => {
-    const { tabProps } = tabsData[key]
+  const tabs = Object.keys(tabsData).map((key: string) => {
+    const tabKey = key as T
+    const { tabProps } = tabsData[tabKey]
     return (
       <Tab
-        activeTab={activeTab === key}
-        key={key}
-        onClick={() => handleClick(key as T)}
+        activeTab={activeTab === tabKey}
+        key={tabKey}
+        onClick={() => handleClick(tabKey)}
         sx={sx?.tab}
         {...tabProps}
       >
         <Box sx={styles.titleBox}>
-          {tabsData[key].icon}
-          {t(tabsData[key].title!)}
+          {tabsData[tabKey].icon}
+          {t(tabsData[tabKey].title!)}
         </Box>
       </Tab>
     )

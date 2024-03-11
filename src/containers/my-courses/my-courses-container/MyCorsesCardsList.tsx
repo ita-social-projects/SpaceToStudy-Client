@@ -10,6 +10,8 @@ import { Course } from '~/types'
 
 interface CourseListProps {
   items: Course[]
+  selectedCourse?: Course | null
+  onCourseSelect?: (course: Course) => void
   deleteItem?: (id: string) => void
   duplicateItem?: (id: string) => void
   withMenu?: boolean
@@ -19,17 +21,20 @@ interface CourseListProps {
 
 const MyCorsesCardsList: FC<CourseListProps> = ({
   items,
+  selectedCourse,
+  onCourseSelect,
   deleteItem,
   duplicateItem,
   wrapperStyles,
   ...props
 }) => {
   const courseItems = items.map((course) => (
-    <Box key={course._id}>
+    <Box key={course._id} onClick={() => onCourseSelect?.(course)}>
       <CourseCard
         course={course}
         deleteCourse={deleteItem}
         duplicateCourse={duplicateItem}
+        isSelected={selectedCourse?._id === course._id}
         {...props}
       />
     </Box>

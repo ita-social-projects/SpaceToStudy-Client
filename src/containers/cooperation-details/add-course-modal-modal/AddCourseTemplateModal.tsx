@@ -6,6 +6,7 @@ import SimpleBar from 'simplebar-react'
 import SearchIcon from '@mui/icons-material/Search'
 import Box from '@mui/material/Box'
 
+import { useCooperationContext } from '~/context/cooperation-context'
 import { useAppSelector } from '~/hooks/use-redux'
 import { useFilterQuery } from '~/hooks/use-filter-query'
 import { CourseService } from '~/services/course-service'
@@ -51,10 +52,17 @@ const AddCourseTemplateModal: FC<AddCourseTemplateModalProps> = ({
   const { sort, onRequestSort } = useSort({ initialSort })
   const [searchValue, setSearchValue] = useState<string>('')
   const [showFilters, setShowFilters] = useState(false)
+  const { setIsActivityCreated, setSelectedCourse } = useCooperationContext()
+  const [selectedItem, setSelectedItem] = useState<Course | null>(null)
   const { userId, userRole } = useAppSelector((state) => state.appMain)
   const { filters, filterQueryActions } = useFilterQuery({
     defaultFilters: coursesDefaultFilters
   })
+
+  const onCourseSelect = (course: Course) => {
+    setSelectedItem(course)
+    setSelectedCourse(course)
+  }
 
   const getUserData = useCallback(
     () => userService.getUserById(userId, userRole as UserRole),
@@ -109,9 +117,14 @@ const AddCourseTemplateModal: FC<AddCourseTemplateModalProps> = ({
     navigate(authRoutes.myCourses.newCourse.path)
   }
 
-  const onModalCancel = () => {
+  const onCancel = () => {
     closeModal()
     resetFilters()
+  }
+
+  const onAdd = () => {
+    closeModal()
+    setIsActivityCreated(true)
   }
 
   const toggleFilters = () => {
@@ -142,6 +155,8 @@ const AddCourseTemplateModal: FC<AddCourseTemplateModalProps> = ({
   const scrollableContent = getItems().length ? (
     <MyCorsesCardsList
       items={getItems()}
+      onCourseSelect={onCourseSelect}
+      selectedCourse={selectedItem}
       sx={styles.card}
       withMenu={false}
       wrapperStyles={styles.cardsWrapper}
@@ -204,10 +219,12 @@ const AddCourseTemplateModal: FC<AddCourseTemplateModalProps> = ({
       </SimpleBar>
 
       <Box sx={styles.buttonsArea}>
-        <AppButton onClick={onModalCancel} variant={ButtonVariantEnum.Tonal}>
+        <AppButton onClick={onCancel} variant={ButtonVariantEnum.Tonal}>
           {t('common.cancel')}
         </AppButton>
-        <AppButton>{t('common.add')}</AppButton>
+        <AppButton disabled={!selectedItem} onClick={onAdd}>
+          {t('common.add')}
+        </AppButton>
       </Box>
     </Box>
   )

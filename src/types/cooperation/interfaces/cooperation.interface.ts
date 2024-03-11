@@ -5,10 +5,7 @@ import {
   EnrollOfferForm,
   Offer,
   UserResponse,
-  UserRoleEnum,
-  Quiz,
-  Attachment,
-  Lesson
+  UserRoleEnum
 } from '~/types'
 
 export interface Cooperation extends CommonEntityFields {
@@ -27,14 +24,4 @@ export interface CreateCooperationsParams extends EnrollOfferForm {
   offer: string
   receiver: string
   receiverRole: UserRoleEnum
-}
-
-export interface CooperationSection {
-  _id?: string
-  id: string
-  title: string
-  description: string
-  lessons: Lesson[]
-  quizzes: Quiz[]
-  attachments: Attachment[]
 }

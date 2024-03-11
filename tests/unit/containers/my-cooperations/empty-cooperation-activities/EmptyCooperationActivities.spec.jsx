@@ -1,10 +1,10 @@
 import { screen } from '@testing-library/react'
-import CooperationActivities from '~/containers/my-cooperations/cooperation-activities/CooperationActivities'
+import EmptyCooperationActivities from '~/containers/my-cooperations/empty-cooperation-activities/EmptyCooperationActivities'
 import { renderWithProviders } from '~tests/test-utils'
 
 describe('Cooperation activities', () => {
   it('should render button create', () => {
-    renderWithProviders(<CooperationActivities />)
+    renderWithProviders(<EmptyCooperationActivities />)
 
     const button = screen.getByText('cooperationsPage.button.create')
 
