@@ -162,10 +162,15 @@ const CourseSectionContainer: FC<SectionProps> = ({
   }, [getAllResourcesItems, updateResources, addNewResources, sectionData])
 
   useEffect(() => {
-    if (handleSectionResourcesOrder) {
+    if (handleSectionResourcesOrder && sectionData.order) {
       handleSectionResourcesOrder(sectionData.id, resources)
     }
-  }, [resources, sectionData.id, handleSectionResourcesOrder])
+  }, [
+    resources,
+    sectionData.id,
+    handleSectionResourcesOrder,
+    sectionData.order
+  ])
 
   const deleteResource = (resource: CourseResources) => {
     if (resource.resourceType === ResourcesTypes.Lessons) {
