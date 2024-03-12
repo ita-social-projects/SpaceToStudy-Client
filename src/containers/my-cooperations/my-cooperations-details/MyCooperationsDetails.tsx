@@ -103,7 +103,7 @@ const MyCooperationsDetails = () => {
           <Box sx={style.profileContainer}>
             <Avatar
               src={
-                offer.author.photo &&
+                offer.author?.photo &&
                 `${import.meta.env.VITE_APP_IMG_USER_URL}${offer.author.photo}`
               }
             />

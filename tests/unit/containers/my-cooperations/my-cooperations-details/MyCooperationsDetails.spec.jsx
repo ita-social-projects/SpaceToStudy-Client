@@ -11,7 +11,7 @@ const mockedOffer = {
     author: {
       firstName: 'Michael',
       lastName: 'Scarn',
-      photo: 'img',
+      photo: '1701182621626.jpg',
       professionalSummary: 'Agent'
     },
     subject: {
