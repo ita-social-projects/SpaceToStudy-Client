@@ -29,15 +29,25 @@ const cooperationMock = {
   needAction: 'tutor',
   title: 'Cooperation title',
   offer: {
-    _id: 'asdf1234',
-    category: {
-      _id: '12345',
-      name: 'Music'
+    title: 'Title',
+    description: 'Description',
+    languages: ['Ukrainian', 'English'],
+    author: {
+      firstName: 'Michael',
+      lastName: 'Scarn',
+      photo: '1701182621626.jpg',
+      professionalSummary: 'Agent'
     },
     subject: {
-      _id: 'as123',
-      name: 'Piano'
-    }
+      name: 'Algebra'
+    },
+    category: {
+      name: 'Mathematics',
+      appearance: {
+        color: '#1234'
+      }
+    },
+    proficiencyLevel: ['INTERMEDIATE']
   },
   user: {
     _id: '123456',

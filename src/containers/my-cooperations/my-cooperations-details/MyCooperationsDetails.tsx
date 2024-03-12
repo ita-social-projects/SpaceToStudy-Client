@@ -77,14 +77,14 @@ const MyCooperationsDetails = () => {
       updateInfo: updateInfo
     })
 
-  const languages = offer.languages
-    ? offer.languages.map((item: string) => (
-        <Box key={item} sx={style.languageItem}>
-          <DoneIcon color='success' />
-          <Typography>{item}</Typography>
-        </Box>
-      ))
-    : null
+  const languages =
+    offer.languages &&
+    offer.languages.map((item: string) => (
+      <Box key={item} sx={style.languageItem}>
+        <DoneIcon color='success' />
+        <Typography>{item}</Typography>
+      </Box>
+    ))
 
   return (
     <Box>
@@ -103,7 +103,7 @@ const MyCooperationsDetails = () => {
           <Box sx={style.profileContainer}>
             <Avatar
               src={
-                offer.author?.photo &&
+                offer.author.photo &&
                 `${import.meta.env.VITE_APP_IMG_USER_URL}${offer.author.photo}`
               }
             />
