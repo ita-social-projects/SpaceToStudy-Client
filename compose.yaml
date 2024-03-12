@@ -22,6 +22,7 @@ services:
       args:
         NGINX_VERSION: 1.19.6
         PROXY_API_URL: ${PROXY_API_URL:-http://localhost:8080}
+        password: ${password}
     # Expose ports 80 and 2222 from the container
     ports:
       - '80:80'
