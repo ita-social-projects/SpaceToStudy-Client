@@ -15,5 +15,13 @@
     "open": "Open",
     "openFrom": "Open from",
     "closed": "Closed"
-  }
+  },
+  "details": "Cooperation details",
+  "profile": "Profile",
+  "title": "Cooperations title:",
+  "tutor": "Tutor:",
+  "tutoringSubject": "Tutoring subject & level:",
+  "aboutCooperation":"About cooperation:",
+  "tutoringLanguages":"Tutoring languages:",
+  "pricing":"Pricing:"
 }

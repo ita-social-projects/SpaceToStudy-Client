@@ -1,25 +1,4 @@
-# Git configs
-.git
-.gitignore
-README.md
-LICENSE
-CONTRIBUTING*
-
-# Node JS
 **/node_modules
 **/dist
-.env*
-.storybook
-
-# Docker configs
-docker
-docker-compose.yaml
-
-# Other
-.vscode
-.husky
-sonar-project.properties
-azure-pipelines.yaml
-
-# Excludes
-!./docker/files/*
+.git
+.gitignore

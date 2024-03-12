@@ -5,7 +5,9 @@ import {
   EnrollOfferForm,
   Offer,
   UserResponse,
-  UserRoleEnum
+  UserRoleEnum,
+  SubjectInterface,
+  CategoryInterface
 } from '~/types'
 
 export interface Cooperation extends CommonEntityFields {
@@ -18,6 +20,32 @@ export interface Cooperation extends CommonEntityFields {
   proficiencyLevel: ProficiencyLevelEnum
   status: StatusEnum
   needAction: UserRoleEnum
+}
+
+export interface MyCooperationDetails<TOffer extends Offer> {
+  offer: Pick<
+    TOffer,
+    | 'subject'
+    | 'title'
+    | 'category'
+    | 'price'
+    | '_id'
+    | 'author'
+    | 'proficiencyLevel'
+    | 'description'
+    | 'languages'
+    | 'chatId'
+  >
+  price: number
+  title: string
+  description: string
+  receiverRole: UserRoleEnum
+  languages: string[]
+  chatId: string
+  author: UserResponse
+  subject: Pick<SubjectInterface, 'name'>
+  category: CategoryInterface
+  proficiencyLevel: ProficiencyLevelEnum
 }
 
 export interface CreateCooperationsParams extends EnrollOfferForm {
