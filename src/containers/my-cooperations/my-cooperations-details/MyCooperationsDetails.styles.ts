@@ -6,7 +6,7 @@ export const style = {
   header: {
     typography: TypographyVariantEnum.H6,
     color: palette.basic.blueGray,
-    m: '0 0 30px 20px'
+    mr: '30px'
   },
   titles: {
     color: palette.basic.blueGray
@@ -19,7 +19,8 @@ export const style = {
     display: 'grid',
     gridTemplateColumns: 'repeat(2, max-content)',
     gap: '40px',
-    padding: '20px'
+    padding: '10px 0 ',
+    mt: '20px'
   },
   profileContainer: {
     display: 'flex',

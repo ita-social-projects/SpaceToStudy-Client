@@ -61,8 +61,6 @@ const MyCooperationsDetails = () => {
 
   const { offer, price } = detailsResponse
 
-  console.log(offer.author)
-
   const onHandleClick = () => {
     navigate(
       createUrlPath(authRoutes.userProfile.path, offer.author._id, {

@@ -6,9 +6,6 @@ import {
   Offer,
   UserResponse,
   UserRoleEnum,
-  Quiz,
-  Attachment,
-  Lesson,
   SubjectInterface,
   CategoryInterface
 } from '~/types'
