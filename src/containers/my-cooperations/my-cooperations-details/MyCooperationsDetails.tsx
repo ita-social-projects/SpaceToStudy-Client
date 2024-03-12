@@ -79,12 +79,14 @@ const MyCooperationsDetails = () => {
       updateInfo: updateInfo
     })
 
-  const languages = offer.languages.map((item: string) => (
-    <Box key={item} sx={style.languageItem}>
-      <DoneIcon color='success' />
-      <Typography>{item}</Typography>
-    </Box>
-  ))
+  const languages = offer.languages
+    ? offer.languages.map((item: string) => (
+        <Box key={item} sx={style.languageItem}>
+          <DoneIcon color='success' />
+          <Typography>{item}</Typography>
+        </Box>
+      ))
+    : null
 
   return (
     <Box>
