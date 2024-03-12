@@ -44,7 +44,6 @@ export const URLs = {
   },
   cooperations: {
     get: '/cooperations',
-    getById: '/cooperations/id',
     create: '/cooperations',
     update: '/cooperations',
     delete: '/cooperations'

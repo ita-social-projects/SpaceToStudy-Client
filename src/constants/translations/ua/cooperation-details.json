@@ -15,13 +15,5 @@
     "open": "Відкрито",
     "openFrom": "Відкрито з",
     "closed": "Закрито"
-  },
-  "details": "Деталі кооперації",
-  "profile": "Профіль",
-  "title": "Назва кооперації:",
-  "tutor": "Викладач:",
-  "tutoringSubject": "Предмет і рівень:",
-  "aboutCooperation":"Про співпрацю:",
-  "tutoringLanguages":"Мови:",
-  "pricing":"Ціна:"
+  }
 }

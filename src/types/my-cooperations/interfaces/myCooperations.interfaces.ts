@@ -49,7 +49,3 @@ export interface AdditionalPropsInterface {
   t: TFunction
   navigate: NavigateFunction
 }
-
-export interface GetCooperationParams {
-  id: string
-}

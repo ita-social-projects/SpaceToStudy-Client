@@ -29,22 +29,24 @@ stages:
           inputs:
             targetType: 'inline'
             script: 'mv $(envStage.secureFilePath) .env'
-        - task: Docker@0
+        - task: DockerCompose@0
           inputs:
             containerregistrytype: 'Azure Container Registry'
             azureSubscription: 'S2s-Service'
             azureContainerRegistry: '{"loginServer":"s2sstage.azurecr.io", "id" : "/subscriptions/734fc759-c3a2-4e22-a478-301dc5b10496/resourceGroups/Space2Study/providers/Microsoft.ContainerRegistry/registries/S2sStage"}'
-            action: 'Build an image'
-            dockerFile: '**/Dockerfile'
-            buildArguments: 'password=$(password)'
+            dockerComposeFile: '**/compose.yaml'
+            dockerComposeFileArgs: |
+              PROXY_API_URL=$(PROXY_API_URL)
+            action: 'Build services'
             imageName: 'front-stage:$(Build.BuildId)'
-       
-        - task: Docker@0
+
+        - task: DockerCompose@0
           inputs:
             containerregistrytype: 'Azure Container Registry'
             azureSubscription: 'S2s-Service'
             azureContainerRegistry: '{"loginServer":"s2sstage.azurecr.io", "id" : "/subscriptions/734fc759-c3a2-4e22-a478-301dc5b10496/resourceGroups/Space2Study/providers/Microsoft.ContainerRegistry/registries/S2sStage"}'
-            action: 'Push an image'
+            dockerComposeFile: '**/compose.yaml'
+            action: 'Push services'
             imageName: 'front-stage:$(Build.BuildId)'
             
 
