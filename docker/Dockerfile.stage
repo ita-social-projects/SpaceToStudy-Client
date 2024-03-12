@@ -1,0 +1,47 @@
+# syntax=docker/dockerfile:1
+######################################################
+#            DOCKERFILE FOR S2S DEPLOYMENT           #
+######################################################
+
+# Define the version of NGINX to be used in the image
+ARG NGINX_VERSION=1.19.6
+
+# Start from the nginx base image with the specified version and Alpine Linux
+FROM nginx:${NGINX_VERSION}-alpine AS stage
+
+# Create a volume for the cgroup filesystem
+VOLUME /sys/fs/cgroup
+
+# Install necessary packages and create files and directories
+RUN apk update && apk add --no-cache \
+    sudo \
+    openrc \
+    openssh \
+    bash \
+    && mkdir -p /run/openrc/ \
+    && touch /run/openrc/softlevel
+
+# Copy files to the image
+COPY ./docker/files/default.conf.template /etc/nginx/templates/default.conf.template
+COPY ./docker/files/sshd_config /etc/ssh/
+COPY ./docker/files/ssh_setup.sh /tmp/
+
+# Set the root password
+ARG password
+RUN echo "root:${password}" | chpasswd
+
+# Make the ssh_setup.sh script executable
+RUN chmod +x /tmp/ssh_setup.sh
+
+# Configure SSH and nginx services
+RUN /tmp/ssh_setup.sh \
+    && rc-update add sshd \
+    && rc-update add nginx \
+    && rc-status \
+    && rc-service sshd restart
+
+# Expose ports 80 and 2222
+EXPOSE 80 2222
+
+# Start the sshd service and run nginx with the 'daemon off' option
+CMD ["sh", "-c", "/usr/sbin/sshd && nginx -g 'daemon off;'"]
