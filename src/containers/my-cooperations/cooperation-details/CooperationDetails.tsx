@@ -8,36 +8,37 @@ import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrow
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight'
 
 import useAxios from '~/hooks/use-axios'
-import { cooperationService } from '~/services/cooperation-service'
-import { useModalContext } from '~/context/modal-context'
 import useBreakpoints from '~/hooks/use-breakpoints'
-
+import { cooperationService } from '~/services/cooperation-service'
+import { ResourcesAvailabilityProvider } from '~/context/resources-availability-context'
+import { useCooperationContext } from '~/context/cooperation-context'
 import AppDrawer from '~/components/app-drawer/AppDrawer'
 import TabNavigation from '~/components/tab-navigation/TabNavigation'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
-import CooperationFromScratch from '~/containers/cooperation-details/cooperation-from-scratch/CooperationFromScratch'
+import CooperationActivities from '~/containers/cooperation-details/cooperation-activities/CooperationActivities'
 import Loader from '~/components/loader/Loader'
 import StatusChip from '~/components/status-chip/StatusChip'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import CooperationNotes from '~/containers/my-cooperations/cooperation-notes/CooperationNotes'
-import { PositionEnum } from '~/types'
 
 import { errorRoutes } from '~/router/constants/errorRoutes'
 import {
   tabsData,
-  defaultResponse
+  defaultResponse,
+  MyCooperationsTabsData
 } from '~/containers/my-cooperations/cooperation-details/CooperationDetails.constans'
 import { styles } from '~/containers/my-cooperations/cooperation-details/CooperationDetails.styles'
-import { Cooperation } from '~/types'
-import { ResourcesAvailabilityProvider } from '~/context/resources-availability-context'
+import { CooperationTabsEnum, PositionEnum, Cooperation } from '~/types'
 
 const CooperationDetails = () => {
   const { t } = useTranslation()
   const { id } = useParams()
-  const { isScratch } = useModalContext()
+  const { isActivityCreated } = useCooperationContext()
   const navigate = useNavigate()
   const { isDesktop } = useBreakpoints()
-  const [activeTab, setActiveTab] = useState<string>('activities')
+  const [activeTab, setActiveTab] = useState<CooperationTabsEnum>(
+    CooperationTabsEnum.Activities
+  )
   const [isNotesOpen, setIsNotesOpen] = useState<boolean>(false)
 
   const responseError = useCallback(
@@ -59,7 +60,7 @@ const CooperationDetails = () => {
     return <Loader pageLoad />
   }
 
-  const handleClick = (tab: string) => {
+  const handleClick = (tab: CooperationTabsEnum) => {
     setActiveTab(tab)
   }
 
@@ -73,8 +74,8 @@ const CooperationDetails = () => {
 
   const cooperationContent = activeTab && tabsData[activeTab]?.content
 
-  const pageContent = isScratch ? (
-    <CooperationFromScratch />
+  const pageContent = isActivityCreated ? (
+    <CooperationActivities />
   ) : (
     cooperationContent
   )
@@ -95,7 +96,7 @@ const CooperationDetails = () => {
         />
       </Box>
       <Box sx={styles.tabsWrapper}>
-        <TabNavigation
+        <TabNavigation<CooperationTabsEnum, MyCooperationsTabsData>
           activeTab={activeTab}
           handleClick={handleClick}
           sx={styles.tabs}

@@ -2,17 +2,19 @@ import { ReactElement } from 'react'
 import { ButtonProps } from '@mui/material/Button'
 import TodayIcon from '@mui/icons-material/Today'
 
-import Activities from '~/containers/my-cooperations/cooperation-activities/CooperationActivities'
-import CooperationCompletion from '~/containers/my-cooperations/cooperation-completion/CooperationCompletion'
+import EmptyActivities from '~/containers/my-cooperations/empty-cooperation-activities/EmptyCooperationActivities'
+import MyCooperationsDetails from '../my-cooperations-details/MyCooperationsDetails'
+
 import {
   Cooperation,
+  CooperationTabsEnum,
   ProficiencyLevelEnum,
   StatusEnum,
   UserRoleEnum
 } from '~/types'
 
-export interface MyCooperationsTabsData {
-  [key: string]: {
+export type MyCooperationsTabsData = {
+  [key in CooperationTabsEnum]: {
     title?: string
     content?: ReactElement
     icon?: ReactElement
@@ -21,16 +23,16 @@ export interface MyCooperationsTabsData {
 }
 
 export const tabsData: MyCooperationsTabsData = {
-  calendar: {
+  [CooperationTabsEnum.Calendar]: {
     icon: <TodayIcon />
   },
-  activities: {
+  [CooperationTabsEnum.Activities]: {
     title: 'cooperationsPage.tabs.activities',
-    content: <Activities />
+    content: <EmptyActivities />
   },
-  details: {
+  [CooperationTabsEnum.Details]: {
     title: 'cooperationsPage.tabs.details',
-    content: <CooperationCompletion />
+    content: <MyCooperationsDetails />
   }
 }
 

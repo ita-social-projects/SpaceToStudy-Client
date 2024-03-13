@@ -1,4 +1,4 @@
-import { FC, ReactElement, useEffect } from 'react'
+import { FC, ReactElement, useCallback, useEffect } from 'react'
 import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
 import CloseIcon from '@mui/icons-material/Close'
@@ -73,9 +73,12 @@ const ResourceItem: FC<ResourceItemProps> = ({
     setResourceAvailability(resource._id, resourceAvailabilityStatus, value)
   }
 
-  const setStatus = (status: ResourceAvailabilityStatusEnum) => {
-    setResourceAvailability(resource._id, status, null)
-  }
+  const setStatus = useCallback(
+    (status: ResourceAvailabilityStatusEnum) => {
+      setResourceAvailability(resource._id, status, null)
+    },
+    [resource._id, setResourceAvailability]
+  )
 
   useEffect(() => {
     if (resourceAvailability === ResourcesAvailabilityEnum.OpenManually) {
@@ -83,7 +86,7 @@ const ResourceItem: FC<ResourceItemProps> = ({
     } else {
       setStatus(Open)
     }
-  }, [resourceAvailability])
+  }, [resourceAvailability, setStatus, Closed, Open])
 
   const availabilitySelection = (
     <Box sx={styles.availabilitySelectionContainer}>

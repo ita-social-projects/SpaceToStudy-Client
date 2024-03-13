@@ -67,10 +67,14 @@ export const useForm = <T extends object>({
         event.target.type === 'checkbox'
           ? event.target.checked
           : event.target.value
-      setData((prev) => ({
-        ...prev,
-        [key]: value
-      }))
+      setData((prev) => {
+        const newData = {
+          ...prev,
+          [key]: value
+        }
+        setDirty(!isEqual(newData, initialValues))
+        return newData
+      })
       checkForError(key, event.target.value)
     }
 

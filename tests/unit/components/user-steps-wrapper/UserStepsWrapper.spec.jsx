@@ -75,7 +75,7 @@ describe('UserStepsWrapper test', () => {
     const fakeFile = new File(['certificate'], 'test-file.png', {
       type: 'image/png'
     })
-    Object.defineProperty(fakeFile, 'size', { value: 9_000_000 })
+    Object.defineProperty(fakeFile, 'size', { value: 4_000_000 })
 
     const photo = screen.getByText(/step.stepLabels.photo/i)
     fireEvent.click(photo)

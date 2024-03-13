@@ -17,7 +17,7 @@ import Loader from '~/components/loader/Loader'
 import { snackbarVariants, defaultResponses } from '~/constants'
 import { styles } from '~/containers/my-cooperations/cooperation-notes/CooperationNotes.styles'
 import {
-  CreateNoteParams,
+  CreateOrUpdateNoteParams,
   PositionEnum,
   ErrorResponse,
   NoteResponse
@@ -28,8 +28,8 @@ const CooperationNotes = () => {
   const { id } = useParams()
   const { setAlert } = useSnackBarContext()
   const { openDialog } = useConfirm()
-
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState<boolean>(false)
+  const [editableItemId, setEditableItemId] = useState<string>('')
 
   const onResponseError = useCallback(
     (error: ErrorResponse) => {
@@ -55,16 +55,30 @@ const CooperationNotes = () => {
     })
   }, [setAlert, t])
 
+  const onUpdateResponse = useCallback(() => {
+    setAlert({
+      severity: snackbarVariants.success,
+      message: t('cooperationsPage.modalMessages.successUpdating')
+    })
+  }, [setAlert, t])
+
   const getNotes = useCallback(() => CooperationNotesService.getNotes(id), [id])
 
   const createNoteService = useCallback(
-    (data?: CreateNoteParams) => CooperationNotesService.createNote(data, id),
+    (data?: CreateOrUpdateNoteParams) =>
+      CooperationNotesService.createNote(data, id),
     [id]
   )
 
   const deleteNote = useCallback(
     (noteId?: string) =>
       CooperationNotesService.deleteNote(id ?? '', noteId ?? ''),
+    [id]
+  )
+
+  const updateNoteService = useCallback(
+    (params?: { noteId: string; data: CreateOrUpdateNoteParams }) =>
+      CooperationNotesService.updateNote(id, params?.noteId, params?.data),
     [id]
   )
 
@@ -84,7 +98,7 @@ const CooperationNotes = () => {
     void fetchData()
   }, [onResponse, fetchData])
 
-  const { fetchData: addNewNote } = useAxios({
+  const { loading: createLoading, fetchData: addNewNote } = useAxios({
     service: createNoteService,
     defaultResponse: null,
     fetchOnMount: false,
@@ -98,6 +112,18 @@ const CooperationNotes = () => {
     defaultResponse: null,
     onResponseError,
     onResponse: onDeleteResponse
+  })
+
+  const {
+    error: updateError,
+    loading: updateLoading,
+    fetchData: updateNote
+  } = useAxios({
+    service: updateNoteService,
+    fetchOnMount: false,
+    defaultResponse: null,
+    onResponseError,
+    onResponse: onUpdateResponse
   })
 
   const handleDelete = async (id: string, isConfirmed: boolean) => {
@@ -143,22 +169,35 @@ const CooperationNotes = () => {
     if (!duplicationError) await fetchData()
   }
 
-  const onCloseNote = () => {
-    setOpen(false)
+  const handleUpdate = async (data: CreateOrUpdateNoteParams) => {
+    await updateNote({ noteId: editableItemId, data })
+    onCloseEdit()
+    if (!updateError) await fetchData()
   }
 
-  const onAddNoteOpen = () => {
-    setOpen(true)
-  }
+  const onCloseEdit = () => setEditableItemId('')
+  const onCloseNote = () => setOpen(false)
+  const onAddNoteOpen = () => setOpen(true)
 
-  const NotesList = notes.map((item: NoteResponse) => (
-    <NoteView
-      deleteItem={onDeleteNote}
-      duplicateItem={(itemId: string) => void handleDuplicate(itemId)}
-      key={item._id}
-      note={item}
-    />
-  ))
+  const NotesList = notes.map((item: NoteResponse) =>
+    editableItemId === item._id ? (
+      <CreateOrEditNote
+        key={item._id}
+        note={item}
+        onCloseNote={onCloseEdit}
+        onSubmit={handleUpdate}
+        onSubmitLoading={updateLoading}
+      />
+    ) : (
+      <NoteView
+        deleteItem={onDeleteNote}
+        duplicateItem={(itemId: string) => void handleDuplicate(itemId)}
+        key={item._id}
+        note={item}
+        updateItem={setEditableItemId}
+      />
+    )
+  )
 
   return (
     <Box sx={styles.notesWrapper}>
@@ -169,7 +208,11 @@ const CooperationNotes = () => {
           <AddIcon onClick={onAddNoteOpen} />
         </Box>
         {open && (
-          <CreateOrEditNote addNewNote={addNewNote} onCloseNote={onCloseNote} />
+          <CreateOrEditNote
+            onCloseNote={onCloseNote}
+            onSubmit={addNewNote}
+            onSubmitLoading={createLoading}
+          />
         )}
         {loading ? <Loader pageLoad /> : NotesList}
       </Box>

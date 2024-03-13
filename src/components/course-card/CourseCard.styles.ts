@@ -1,5 +1,6 @@
 import { TypographyVariantEnum } from '~/types'
 import { ellipsisTextStyle } from '~/utils/helper-functions'
+import palette from '~/styles/app-theme/app.pallete'
 import {
   commonShadow,
   commonHoverShadow
@@ -19,21 +20,26 @@ const actionIcon = {
 }
 
 export const styles = {
-  card: {
+  card: (isSelected: boolean) => ({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
     width: '390px',
     minHeight: '245px',
     backgroundColor: 'basic.white',
+    border: `2px solid ${palette.basic.white}`,
     borderRadius: '6px',
     p: '24px 24px 16px',
     boxShadow: commonShadow,
     transition: 'box-shadow 0.3s ease-in-out',
     '&:hover': {
       boxShadow: commonHoverShadow
-    }
-  },
+    },
+    ...(isSelected && {
+      backgroundColor: 'basic.grey',
+      border: `2px solid ${palette.basic.gray}`
+    })
+  }),
   title: {
     typography: TypographyVariantEnum.H5,
     ...ellipsisTextStyle(2),

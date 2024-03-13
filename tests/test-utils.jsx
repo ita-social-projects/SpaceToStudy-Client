@@ -8,6 +8,7 @@ import { theme } from '~/styles/app-theme/custom-mui.styles'
 import { ModalProvider } from '~/context/modal-context'
 import { ConfirmationDialogProvider } from '~/context/confirm-context'
 import { SnackBarProvider } from '~/context/snackbar-context'
+import { CooperationProvider } from '~/context/cooperation-context'
 
 import { vi } from 'vitest'
 import MockAdapter from 'axios-mock-adapter'
@@ -28,7 +29,9 @@ export const renderWithProviders = (
         <ThemeProvider theme={theme}>
           <SnackBarProvider>
             <ConfirmationDialogProvider>
-              <ModalProvider>{children}</ModalProvider>
+              <CooperationProvider>
+                <ModalProvider>{children}</ModalProvider>
+              </CooperationProvider>
             </ConfirmationDialogProvider>
           </SnackBarProvider>
         </ThemeProvider>

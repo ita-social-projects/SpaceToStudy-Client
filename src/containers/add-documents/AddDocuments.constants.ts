@@ -1,8 +1,8 @@
 import { AddDocuments } from '~/types'
 
 export const validationData: AddDocuments = {
-  maxFileSize: 10_000_000,
-  maxAllFilesSize: 50_000_000,
+  maxFileSize: 5_000_000,
+  maxAllFilesSize: 20_000_000,
   filesTypes: ['application/pdf', 'image/jpeg', 'image/png'],
   fileSizeError: 'common.fileSizeError',
   allFilesSizeError: 'common.allFilesSizeError',

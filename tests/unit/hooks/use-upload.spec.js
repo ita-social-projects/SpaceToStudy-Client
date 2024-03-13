@@ -4,8 +4,8 @@ import { vi } from 'vitest'
 
 const files = []
 const validationData = {
-  maxFileSize: 10_000_000,
-  maxAllFilesSize: 50_000_000,
+  maxFileSize: 5_000_000,
+  maxAllFilesSize: 20_000_000,
   filesTypes: ['application/pdf'],
   fileSizeError: 'becomeTutor.documents.fileSizeError',
   allFilesSizeError: 'becomeTutor.documents.allFilesSizeError',

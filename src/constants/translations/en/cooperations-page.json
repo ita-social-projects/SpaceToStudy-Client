@@ -76,6 +76,7 @@
   "modalMessages": {
     "successDeletion": "Note was deleted successfully",
     "successDuplication": "Note was successfully duplicated",
+    "successUpdating": "Note was successfully updated",
     "confirmDeletionMessage": "This action is permanent and will remove all related content. Please review your decision before proceeding.",
     "confirmDeletionTitle": "Do you confirm note deletion?"
   }

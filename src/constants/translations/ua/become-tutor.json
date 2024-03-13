@@ -6,7 +6,7 @@
     "photo": "Фото"
   },
   "generalInfo": {
-    "title": "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.",
+    "title": "Будь ласка, заповніть реєстраційну форму для кращого збігу.",
     "textFieldLabel": "Коротко опишіть свій професійний статус",
     "helperText": "Поля зі знаком * є обов'язковими"
   },
@@ -15,11 +15,11 @@
     "textFieldLabel": "Текст тут"
   },
   "language": {
-    "title": "Velit officia consequat duis enim velit mollit. Other categories you can add in your account settings later.",
+    "title": "Будь ласка, виберіть мову, якою ви б хотіли навчатися та співпрацювати.",
     "autocompleteLabel": "Твоя рідна мова"
   },
   "categories": {
-    "title": "Velit officia consequat duis enim velit mollit. Other categories you can add in your account settings later.",
+    "title": "Будь ласка, виберіть основні предмети на основі категорії. Ви можете додати інші пізніше.",
     "mainSubjectsLabel": "Основна категорія предмету",
     "subjectLabel": "Предмет",
     "btnText": "Додайте ще один предмет",
@@ -30,9 +30,9 @@
 	"imageAlt": "Ваша фотографія",
 	"button": "Завантажте свою фотографію профілю",
 	"placeholder":"Попередній перегляд фотографій",
-	"description":"Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.",
+	"description":"Будь ласка, завантажте фотографію, яка представляє вас і допоможе іншим упізнати вас.",
 	"typeError": "Неправильний тип файлу. Дозволяються лише файли .png/.jpg/.jpeg.",
-	"fileSizeError": "Розмір одного файлу не може перевищувати 10 Мб."
+	"fileSizeError": "Розмір одного файлу не може перевищувати 5 Мб."
   },
   "successMessage": "Успішно! Ваші дані додано."
 }

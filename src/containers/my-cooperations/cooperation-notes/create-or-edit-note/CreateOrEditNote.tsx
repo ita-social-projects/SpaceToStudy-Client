@@ -16,34 +16,44 @@ import {
   ButtonVariantEnum,
   SizeEnum,
   TypographyVariantEnum,
-  CreateNoteParams,
+  CreateOrUpdateNoteParams,
+  NoteResponse,
   ComponentEnum,
   ButtonTypeEnum
 } from '~/types'
 
 interface CreateOrEditNoteProps {
-  addNewNote: (data: CreateNoteParams) => Promise<void>
+  note?: NoteResponse
+  onSubmitLoading: boolean
+  onSubmit: (data: CreateOrUpdateNoteParams) => Promise<void>
   onCloseNote: () => void
 }
 
 const CreateOrEditNote = ({
-  addNewNote,
+  note,
+  onSubmitLoading,
+  onSubmit,
   onCloseNote
 }: CreateOrEditNoteProps) => {
   const { t } = useTranslation()
 
   const userNameMocked = 'User Name'
 
-  const { data, handleInputChange, handleNonInputValueChange, handleSubmit } =
-    useForm<CreateNoteParams>({
-      initialValues: {
-        text: '',
-        isPrivate: false
-      },
-      onSubmit: async () => {
-        await addNewNote(data)
-      }
-    })
+  const {
+    data,
+    isDirty,
+    handleInputChange,
+    handleNonInputValueChange,
+    handleSubmit
+  } = useForm<CreateOrUpdateNoteParams>({
+    initialValues: {
+      text: note?.text ?? '',
+      isPrivate: note?.isPrivate ?? false
+    },
+    onSubmit: async () => {
+      await onSubmit(data)
+    }
+  })
 
   return (
     <Box
@@ -61,7 +71,7 @@ const CreateOrEditNote = ({
         InputLabelProps={styles.descriptionLabel}
         InputProps={styles.descriptionInput}
         fullWidth
-        inputProps={{ ...styles.descriptionInput, maxLength: 100 }}
+        inputProps={{ maxLength: 100 }}
         label={data.text ? '' : t('cooperationsPage.notes.noteText')}
         multiline
         onChange={handleInputChange('text')}
@@ -95,6 +105,8 @@ const CreateOrEditNote = ({
             {t('common.cancel')}
           </AppButton>
           <AppButton
+            disabled={!isDirty || !data.text}
+            loading={onSubmitLoading}
             size={SizeEnum.Small}
             sx={styles.noteBtn}
             type={ButtonTypeEnum.Submit}

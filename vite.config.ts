@@ -19,7 +19,14 @@ export default defineConfig({
   server: {
     port: 3000,
     open: true,
-    host: true
+    host: true,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '')
+      }
+    }
   },
   esbuild: {
     loader: 'tsx'

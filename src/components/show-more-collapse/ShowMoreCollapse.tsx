@@ -7,10 +7,11 @@ import Collapse, { CollapseProps } from '@mui/material/Collapse'
 import { styles } from '~/components/show-more-collapse/ShowMoreCollapse.styles'
 
 interface ShowMoreCollapseProps extends CollapseProps {
-  title: string
+  title?: string
   description: string
   collapsedSize?: number
   collapsedTextLength?: number
+  withoutTitle?: boolean
 }
 
 const ShowMoreCollapse: FC<ShowMoreCollapseProps> = ({
@@ -18,6 +19,7 @@ const ShowMoreCollapse: FC<ShowMoreCollapseProps> = ({
   description,
   collapsedSize = 70,
   collapsedTextLength = 390,
+  withoutTitle = false,
   ...props
 }) => {
   const { t } = useTranslation()
@@ -39,7 +41,7 @@ const ShowMoreCollapse: FC<ShowMoreCollapseProps> = ({
 
   return (
     <Box>
-      <Typography sx={styles.title}>{title}</Typography>
+      {withoutTitle ? '' : <Typography sx={styles.title}>{title}</Typography>}
 
       <Collapse collapsedSize={collapsedSize} in={expanded} {...props}>
         {collapsedDescription}
