@@ -93,6 +93,8 @@ export enum PositionEnum {
   Right = 'right',
   Bottom = 'bottom',
   Top = 'top',
+  Start = 'start',
+  End = 'end',
   Vertical = 'vertical'
 }
 
