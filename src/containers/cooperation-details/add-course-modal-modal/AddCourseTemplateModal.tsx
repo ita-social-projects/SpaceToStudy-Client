@@ -52,7 +52,8 @@ const AddCourseTemplateModal: FC<AddCourseTemplateModalProps> = ({
   const { sort, onRequestSort } = useSort({ initialSort })
   const [searchValue, setSearchValue] = useState<string>('')
   const [showFilters, setShowFilters] = useState(false)
-  const { setIsActivityCreated, setSelectedCourse } = useCooperationContext()
+  const { setIsActivityCreated, setSelectedCourse, setIsAddedClicked } =
+    useCooperationContext()
   const [selectedItem, setSelectedItem] = useState<Course | null>(null)
   const { userId, userRole } = useAppSelector((state) => state.appMain)
   const { filters, filterQueryActions } = useFilterQuery({
@@ -123,8 +124,9 @@ const AddCourseTemplateModal: FC<AddCourseTemplateModalProps> = ({
   }
 
   const onAdd = () => {
-    closeModal()
+    setIsAddedClicked(true)
     setIsActivityCreated(true)
+    closeModal()
   }
 
   const toggleFilters = () => {

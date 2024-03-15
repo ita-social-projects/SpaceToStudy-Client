@@ -1,4 +1,4 @@
-import { FC, MouseEvent, useState } from 'react'
+import { FC, MouseEvent } from 'react'
 import {
   DragDropContext,
   Droppable,
@@ -26,6 +26,7 @@ import useMenu from '~/hooks/use-menu'
 import { styles } from '~/containers/course-sections-list/CourseSectionsList.styles'
 import { CourseSection, CourseResources } from '~/types'
 import { useModalContext } from '~/context/modal-context'
+import { useCooperationContext } from '~/context/cooperation-context'
 
 interface CourseSectionsListProps {
   items: CourseSection[]
@@ -62,7 +63,8 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
   const { enabled } = useDroppable()
   const { openMenu, renderMenu, closeMenu, anchorEl } = useMenu()
   const { openModal, closeModal } = useModalContext()
-  const [currentSectionIndex, setCurrentSectionIndex] = useState(0)
+  const { setIsAddedClicked, currentSectionIndex, setCurrentSectionIndex } =
+    useCooperationContext()
   const { t } = useTranslation()
 
   const handleActivitiesMenuClick = (event: MouseEvent<HTMLButtonElement>) => {
@@ -105,6 +107,7 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
 
   const openAddCourseTemplateModal = () => {
     closeMenu()
+    setIsAddedClicked(false)
     openModal({
       component: <AddCourseTemplateModal closeModal={closeModal} />
     })

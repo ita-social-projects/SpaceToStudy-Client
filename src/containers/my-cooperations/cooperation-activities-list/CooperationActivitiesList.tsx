@@ -3,13 +3,14 @@ import Box from '@mui/material/Box'
 import useForm from '~/hooks/use-form'
 import CourseSectionsList from '~/containers/course-sections-list/CourseSectionsList'
 
+import { useEffect } from 'react'
 import { sectionInitialData } from '~/pages/create-course/CreateCourse.constants'
 import { CourseSection, CourseResources } from '~/types'
 import { useCooperationContext } from '~/context/cooperation-context'
 
 const CooperationActivitiesList = () => {
-  const { selectedCourse } = useCooperationContext()
-
+  const { selectedCourse, isAddedClicked, currentSectionIndex } =
+    useCooperationContext()
   const { data, handleNonInputValueChange } = useForm<{
     sections: CourseSection[]
   }>({
@@ -43,7 +44,6 @@ const CooperationActivitiesList = () => {
   const addNewSection = (index: number | undefined = undefined) => {
     const newSectionData = { ...sectionInitialData }
     newSectionData.id = Date.now().toString()
-
     const newSections =
       index !== null
         ? [
@@ -56,18 +56,42 @@ const CooperationActivitiesList = () => {
     setSectionsData(newSections)
   }
 
-  if (!data.sections.length && !selectedCourse) {
-    addNewSection()
-  }
+  useEffect(() => {
+    if (!data.sections.length && !isAddedClicked) {
+      addNewSection()
+    }
 
-  if (selectedCourse && !data.sections.length) {
-    const allSections = selectedCourse.sections.map((section, index) => ({
-      ...section,
-      id: Date.now().toString() + index
-    }))
+    if (selectedCourse && !data.sections.length && isAddedClicked) {
+      const allSections = selectedCourse.sections.map((section, index) => ({
+        ...section,
+        id: Date.now().toString() + index
+      }))
+      setSectionsData(allSections)
+    }
 
-    setSectionsData(allSections)
-  }
+    if (selectedCourse && data.sections.length && isAddedClicked) {
+      const addNewSectionsCourse = (index: number | undefined = undefined) => {
+        const newSectionData = selectedCourse.sections.map(
+          (section, index) => ({
+            ...section,
+            id: Date.now().toString() + index
+          })
+        )
+        let newSections = []
+        if (index !== undefined) {
+          newSections = [
+            ...data.sections.slice(0, index),
+            ...newSectionData,
+            ...data.sections.slice(index)
+          ]
+        } else {
+          newSections = [...data.sections, ...newSectionData]
+        }
+        setSectionsData(newSections)
+      }
+      addNewSectionsCourse(currentSectionIndex)
+    }
+  }, [isAddedClicked])
 
   return (
     <Box>
