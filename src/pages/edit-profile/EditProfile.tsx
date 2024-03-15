@@ -12,7 +12,7 @@ import { ButtonVariantEnum, SizeEnum } from '~/types'
 import { tabsData } from '~/pages/edit-profile/EditProfile.constants'
 import { TutorProfileTabsEnum } from '~/types'
 
-import { styles } from './EditProfile.styles'
+import { styles } from '~/pages/edit-profile/EditProfile.styles'
 
 const EditProfile = () => {
   const { t } = useTranslation()
