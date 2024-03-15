@@ -49,8 +49,6 @@ const ProfileGeneralTab: FC<ProfileGeneralTabProps> = ({ user }) => {
     handleNonInputValueChange('nativeLanguage', value)
   }
 
-  console.log(data)
-
   return (
     <Box sx={styles.root}>
       <TitleWithDescription

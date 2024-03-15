@@ -50,27 +50,26 @@ const LocationSelectionInputs = <
     defaultResponse: defaultResponses.array
   })
 
-  console.log(data)
-
   useEffect(() => {
-    data.country && !countries.length && void fetchCountries()
-  }, [data.country, countries.length, fetchCountries])
-
-  const onFocusCountry =
-    !data.country && !countries.length ? fetchCountries : undefined
+    if (countries.length && data.city && !cities.length) {
+      const country = countries.find((country) => country.name === data.country)
+      country && void fetchCities(country.iso2)
+    }
+  }, [data.country, data.city, countries, cities.length, fetchCities])
 
   const onChangeCountry = async (_: SyntheticEvent, value: string | null) => {
     if (data.country !== value) {
       onDataChange('city', null)
       onDataChange('country', value)
     }
+
     if (value) {
       const selectedCountry = countries.find(
         (country) => country.name === value
       )
+
       if (selectedCountry) {
-        const countryCode = selectedCountry.iso2
-        await fetchCities(countryCode)
+        await fetchCities(selectedCountry.iso2)
       }
     }
   }
@@ -78,6 +77,8 @@ const LocationSelectionInputs = <
   const onChangeCity = (_: SyntheticEvent, value: string | null) => {
     onDataChange('city', value)
   }
+
+  const onFocusCountry = !countries.length ? fetchCountries : undefined
 
   const filterOptions = (
     options: string[],
@@ -108,6 +109,7 @@ const LocationSelectionInputs = <
         fullWidth
         loading={loadingCities}
         onChange={onChangeCity}
+        onFocus={onFocusCountry}
         options={cities}
         sx={{ mb: '25px' }}
         textFieldProps={{

@@ -14,6 +14,7 @@ export const styles = {
   root: {
     display: 'flex',
     flexDirection: 'column',
+    boxSizing: 'border-box',
     rowGap: '10px',
     maxWidth: '768px',
     width: '100%',
