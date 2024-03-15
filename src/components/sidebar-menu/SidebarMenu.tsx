@@ -7,6 +7,7 @@ import {
   SxProps,
   Theme
 } from '@mui/material'
+import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { TutorProfileProps } from '~/pages/edit-profile/EditProfile.constants'
@@ -18,7 +19,7 @@ interface SidebarMenu {
   styles?: SxProps<Theme>
 }
 
-const SidebarMenu = ({ handleClick, tabsData, styles }: SidebarMenu) => {
+const SidebarMenu: FC<SidebarMenu> = ({ handleClick, tabsData, styles }) => {
   const { t } = useTranslation()
 
   const list = Object.keys(tabsData).map((key) => {
