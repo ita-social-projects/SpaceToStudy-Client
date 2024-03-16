@@ -23,11 +23,11 @@ stages:
           condition: eq(variables['Build.SourceBranch'], 'refs/heads/develop')
           inputs:
             secureFile: 'env-front-stage'
-        - task: Bash@3
-          name: setEnvStage
-          inputs:
-            targetType: 'inline'
-            script: 'mv env-front-stage .env'
+        # - task: Bash@3
+        #   name: setEnvStage
+        #   inputs:
+        #     targetType: 'inline'
+        #     script: 'mv $(envStage.secureFilePath) .env'
         - task: DockerCompose@0
           inputs:
             containerregistrytype: 'Azure Container Registry'
@@ -49,20 +49,20 @@ stages:
             imageName: 'front-stage:$(Build.BuildId)'
             
 
-  - stage: Deploy
-    displayName: Deploy image to app service
-    jobs:
-     - job: Deploy
-       pool:
-         vmImage: $(agentOS)
-       steps:
-         - task: AzureRmWebAppDeployment@4
-           inputs:
-             ConnectionType: 'AzureRM'
-             azureSubscription: 'S2s-Service'
-             appType: 'webAppContainer'
-             WebAppName: 's2s-front-stage'
-             DockerNamespace: 's2sstage.azurecr.io'
-             DockerRepository: 'front-stage'
-             DockerImageTag: '$(Build.BuildId)'
+  # - stage: Deploy
+  #   displayName: Deploy image to app service
+  #   jobs:
+  #    - job: Deploy
+  #      pool:
+  #        vmImage: $(agentOS)
+  #      steps:
+  #        - task: AzureRmWebAppDeployment@4
+  #          inputs:
+  #            ConnectionType: 'AzureRM'
+  #            azureSubscription: 'S2s-Service'
+  #            appType: 'webAppContainer'
+  #            WebAppName: 's2s-front-stage'
+  #            DockerNamespace: 's2sstage.azurecr.io'
+  #            DockerRepository: 'front-stage'
+  #            DockerImageTag: '$(Build.BuildId)'
              
