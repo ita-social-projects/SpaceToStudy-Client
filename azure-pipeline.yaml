@@ -37,8 +37,9 @@ stages:
             dockerComposeFileArgs: |
               PROXY_API_URL=$(PROXY_API_URL)
               password=$(password)
+            projectName: 'front-stage'
             action: 'Build services'
-            additionalImageTags: 'front-stage:$(Build.BuildId)'
+            additionalImageTags: '$(Build.BuildId)'
        
         - task: DockerCompose@0
           inputs:
@@ -49,8 +50,9 @@ stages:
             dockerComposeFileArgs: |
               PROXY_API_URL=$(PROXY_API_URL)
               password=$(password)
+            projectName: 'front-stage'
             action: 'Push services'
-            additionalImageTags: 'front-stage:$(Build.BuildId)'
+            additionalImageTags: '$(Build.BuildId)'
             
 
   # - stage: Deploy
