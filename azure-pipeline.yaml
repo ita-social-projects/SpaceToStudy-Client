@@ -32,10 +32,11 @@ stages:
           inputs:
             containerregistrytype: 'Azure Container Registry'
             azureSubscription: 'S2s-Service'
-            azureContainerRegistry: 'S2sStage'
+            azureContainerRegistry: 's2sstage'
             dockerComposeFile: '**/compose.yaml'
             dockerComposeFileArgs: |
               PROXY_API_URL=$(PROXY_API_URL)
+              password=$(password)
             action: 'Build services'
             imageName: 'front-stage:$(Build.BuildId)'
        
@@ -43,7 +44,7 @@ stages:
           inputs:
             containerregistrytype: 'Azure Container Registry'
             azureSubscription: 'S2s-Service'
-            azureContainerRegistry: 'S2sStage'
+            azureContainerRegistry: 's2sstage'
             dockerComposeFile: '**/compose.yaml'
             action: 'Push services'
             imageName: 'front-stage:$(Build.BuildId)'
