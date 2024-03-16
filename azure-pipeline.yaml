@@ -4,8 +4,7 @@ trigger:
     include:
     - develop
     - main
-
-pr: none
+    - feature/1659/deployment-proxy
 
 variables:
   agentOS: ubuntu-latest
@@ -33,7 +32,7 @@ stages:
           inputs:
             containerregistrytype: 'Azure Container Registry'
             azureSubscription: 'S2s-Service'
-            azureContainerRegistry: 's2sstage.azurecr.io/subscriptions/734fc759-c3a2-4e22-a478-301dc5b10496/resourceGroups/Space2Study/providers/Microsoft.ContainerRegistry/registries/S2sStage'
+            azureContainerRegistry: 'S2sStage'
             dockerComposeFile: '**/compose.yaml'
             dockerComposeFileArgs: |
               PROXY_API_URL=$(PROXY_API_URL)
@@ -44,7 +43,7 @@ stages:
           inputs:
             containerregistrytype: 'Azure Container Registry'
             azureSubscription: 'S2s-Service'
-            azureContainerRegistry: 's2sstage.azurecr.io/subscriptions/734fc759-c3a2-4e22-a478-301dc5b10496/resourceGroups/Space2Study/providers/Microsoft.ContainerRegistry/registries/S2sStage'
+            azureContainerRegistry: 'S2sStage'
             dockerComposeFile: '**/compose.yaml'
             action: 'Push services'
             imageName: 'front-stage:$(Build.BuildId)'
