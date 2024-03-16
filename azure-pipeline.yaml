@@ -46,6 +46,9 @@ stages:
             azureSubscription: 'S2s-Service'
             azureContainerRegistry: 's2sstage'
             dockerComposeFile: '**/compose.yaml'
+            dockerComposeFileArgs: |
+              PROXY_API_URL=$(PROXY_API_URL)
+              password=$(password)
             action: 'Push services'
             imageName: 'front-stage:$(Build.BuildId)'
             
