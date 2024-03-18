@@ -62,17 +62,19 @@ stages:
        pool:
          vmImage: $(agentOS)
        steps:
-          - task: DockerCompose@0
-            inputs:
-              containerregistrytype: 'Azure Container Registry'
-              azureSubscription: 'S2s-Service'
-              azureContainerRegistry: '{"loginServer":"s2sstage.azurecr.io", "id" : "/subscriptions/734fc759-c3a2-4e22-a478-301dc5b10496/resourceGroups/Space2Study/providers/Microsoft.ContainerRegistry/registries/S2sStage"}'
-              dockerComposeFile: '**/compose.yaml'
-              dockerComposeFileArgs: |
-                PROXY_API_URL=$(PROXY_API_URL)
-                password=$(password)
-              projectName: 'front-stage'
-              action: 'Run a Docker Compose command'
-              detached: true
-              qualifyImageNames: true
-              additionalImageTags: '$(Build.BuildId)'
+         - task: AzureRmWebAppDeployment@4
+           inputs:
+             ConnectionType: 'AzureRM'
+             azureSubscription: 'S2s-Service'
+             appType: 'webAppContainer'
+             WebAppName: 's2s-front-stage'
+             containers:
+              - imageName: $(loginServer)/builder:$(buildId)
+              - imageName: $(loginServer)/nginx:$(buildId)
+                ports:
+                  - externalPort: 80
+                mountVolumes:
+                  - mountPath: /usr/share/nginx/html/
+                    azureFileShare: dist
+                    storageName: space2studyb582 
+             

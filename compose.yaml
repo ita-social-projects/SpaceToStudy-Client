@@ -33,6 +33,7 @@ services:
     # Mount the build volume to /usr/share/nginx/html in the container
     volumes:
       - build:/usr/share/nginx/html
+      - app-data:/usr/share/nginx/html/
     # Specify dependencies between services
     depends_on:
       - builder
@@ -40,3 +41,5 @@ services:
 # Define build volume
 volumes:
   build:
+  app-data:
+  
