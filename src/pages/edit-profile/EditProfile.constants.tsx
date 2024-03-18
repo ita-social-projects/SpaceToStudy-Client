@@ -2,7 +2,7 @@ import { ReactElement } from 'react'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import NotificationsIcon from '@mui/icons-material/Notifications'
 import GppGoodIcon from '@mui/icons-material/GppGood'
-import { Box } from '@mui/system'
+import Box from '@mui/material/Box'
 
 import { TutorProfileTabsEnum } from '~/types'
 
