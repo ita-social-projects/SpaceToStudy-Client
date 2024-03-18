@@ -19,7 +19,7 @@ import { Add } from '@mui/icons-material'
 import { useTranslation } from 'react-i18next'
 
 import CourseSectionContainer from '~/containers/course-section/CourseSectionContainer'
-import AddCourseTemplateModal from '../cooperation-details/add-course-modal-modal/AddCourseTemplateModal'
+import AddCourseTemplateModal from '~/containers/cooperation-details/add-course-modal-modal/AddCourseTemplateModal'
 import useDroppable from '~/hooks/use-droppable'
 import useMenu from '~/hooks/use-menu'
 
