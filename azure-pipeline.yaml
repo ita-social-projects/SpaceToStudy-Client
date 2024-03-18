@@ -69,12 +69,12 @@ stages:
              appType: 'webAppContainer'
              WebAppName: 's2s-front-stage'
              containers:
-              - imageName: $(loginServer)/builder:$(buildId)
-              - imageName: $(loginServer)/nginx:$(buildId)
+              - imageName: 's2sstage.azurecr.io/frontstage_builder:$(Build.BuildId)'
+              - imageName: 's2sstage.azurecr.io/frontstage_:$(Build.BuildId)'
                 ports:
                   - externalPort: 80
                 mountVolumes:
-                  - mountPath: /usr/share/nginx/html/
-                    azureFileShare: dist
-                    storageName: space2studyb582 
+                  - mountPath: '/usr/share/nginx/html/'
+                    azureFileShare: 'dist'
+                    storageName: 'space2studyb582' 
              
