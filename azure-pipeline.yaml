@@ -70,7 +70,7 @@ stages:
              WebAppName: 's2s-front-stage'
              containers:
               - imageName: 's2sstage.azurecr.io/frontstage_builder:$(Build.BuildId)'
-              - imageName: 's2sstage.azurecr.io/frontstage_:$(Build.BuildId)'
+              - imageName: 's2sstage.azurecr.io/frontstage_nginx:$(Build.BuildId)'
                 ports:
                   - externalPort: 80
                 mountVolumes:
