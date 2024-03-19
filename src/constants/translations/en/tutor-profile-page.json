@@ -23,15 +23,10 @@
   "aboutTutor": {
     "title": "About the tutor",
     "education": "Education",
-    "educationDescription": "Knowledge of foreign languages: Ukrainian, Polish - native,\nEnglish, French, German - colloquial.",
     "workExperience": "Work experience",
-    "workExperienceDescription": "Comparative linguistics, typological linguistics, translation studies, lexical semantics, derivatology, lexicology, verb taxonomy of English and Ukrainian languages, linguocultural studies in the framework of the research work of the Department of German Philology and Translation.: 0117U003245). 70 scientific works have been published in these scientific fields.",
     "scientificActivities": "Scientific activities",
-    "scientificDescription": "Throughout my academic career, I have been deeply involved in a broad array of scientific activities, underpinned by a fervent dedication to advancing the fields of linguistics and translation studies. My work is anchored in the exploration of several key linguistic disciplines, including but not limited to comparative linguistics processes involved in translation.",
     "awards": "Awards",
-    "awardsDescription": "Recognized for my contributions to the fields of linguistics and translation, I have been honored with several prestigious awards. These accolades acknowledge my innovative research in comparative linguistics, lexicology, and intercultural studies, highlighting my commitment to bridging language barriers and enhancing our understanding of linguistic structures across cultures. My work has been celebrated for its impact on both academic scholarship and practical translation methodologies.",
-    "socialMedia": "Social media",
-    "socialMediaDescription": "Stay connected and follow my latest research updates and academic engagements on social media. For real-time insights into my scientific endeavors and linguistic explorations, follow me on social media."
+    "socialMedia": "Social media"
   },
   "reviews":{
     "title":"What students say",

@@ -1,22 +1,27 @@
 export const accordionItems = [
   {
     title: 'tutorProfilePage.aboutTutor.education',
-    description: 'tutorProfilePage.aboutTutor.educationDescription'
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Egestas fringilla phasellus faucibus scelerisque eleifend. In ornare quam viverra orci. Erat imperdiet sed euismod nisi porta lorem. Ullamcorper malesuada proin libero nunc consequat. Eu turpis egestas pretium aenean. Venenatis cras sed felis eget velit aliquet.'
   },
   {
     title: 'tutorProfilePage.aboutTutor.workExperience',
-    description: 'tutorProfilePage.aboutTutor.workExperienceDescription'
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Egestas fringilla phasellus faucibus scelerisque eleifend. In ornare quam viverra orci. Erat imperdiet sed euismod nisi porta lorem. Ullamcorper malesuada proin libero nunc consequat. Eu turpis egestas pretium aenean. Venenatis cras sed felis eget velit aliquet.'
   },
   {
     title: 'tutorProfilePage.aboutTutor.scientificActivities',
-    description: 'tutorProfilePage.aboutTutor.scientificDescription'
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Egestas fringilla phasellus faucibus scelerisque eleifend. In ornare quam viverra orci. Erat imperdiet sed euismod nisi porta lorem. Ullamcorper malesuada proin libero nunc consequat. Eu turpis egestas pretium aenean. Venenatis cras sed felis eget velit aliquet.'
   },
   {
     title: 'tutorProfilePage.aboutTutor.awards',
-    description: 'tutorProfilePage.aboutTutor.awardsDescription'
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Egestas fringilla phasellus faucibus scelerisque eleifend. In ornare quam viverra orci. Erat imperdiet sed euismod nisi porta lorem. Ullamcorper malesuada proin libero nunc consequat. Eu turpis egestas pretium aenean. Venenatis cras sed felis eget velit aliquet.'
   },
   {
     title: 'tutorProfilePage.aboutTutor.socialMedia',
-    description: 'tutorProfilePage.aboutTutor.socialMediaDescription'
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Egestas fringilla phasellus faucibus scelerisque eleifend. In ornare quam viverra orci. Erat imperdiet sed euismod nisi porta lorem. Ullamcorper malesuada proin libero nunc consequat. Eu turpis egestas pretium aenean. Venenatis cras sed felis eget velit aliquet.'
   }
 ]
