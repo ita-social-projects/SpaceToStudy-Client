@@ -91,6 +91,7 @@ const CooperationActivitiesList = () => {
       }
       addNewSectionsCourse(currentSectionIndex)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAddedClicked])
 
   return (
