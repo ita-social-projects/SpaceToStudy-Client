@@ -33,8 +33,8 @@ services:
     stdin_open: true
     tty: true
     # Mount the build volume to /usr/share/nginx/html in the container
-    volumes:
-      - build:/usr/share/nginx/html
+    # volumes:
+    #   - build:/usr/share/nginx/html
     # Specify dependencies between services
     # depends_on:
     #   - builder
