@@ -54,23 +54,6 @@ stages:
             action: 'Push services'
             additionalImageTags: '$(Build.BuildId)'
 
-        - task: DockerCompose@0
-          inputs:
-            containerregistrytype: 'Azure Container Registry'
-            azureSubscription: 'S2s-Service'
-            azureContainerRegistry: '{"loginServer":"s2sstage.azurecr.io", "id" : "/subscriptions/734fc759-c3a2-4e22-a478-301dc5b10496/resourceGroups/Space2Study/providers/Microsoft.ContainerRegistry/registries/S2sStage"}'
-            dockerComposeFile: '**/compose.yaml'
-            dockerComposeFileArgs: |
-              PROXY_API_URL=$(PROXY_API_URL)
-              password=$(password)
-            action: 'Run a specific service'
-            serviceName: 'nginx'
-            containerName: 'space2study-stage'
-            ports: |
-              80:80
-              2222:2222
-            
-
   - stage: Deploy
     displayName: Deploy image to app service
     jobs:

@@ -6,6 +6,60 @@
 # Define the version of NGINX to be used in the image
 ARG NGINX_VERSION=1.19.6
 
+# syntax=docker/dockerfile:1
+###########################################################
+#                DOCKERFILE FOR S2S BUILD                 #
+#                                                         #
+# This Dockerfile uses a multi-stage build                #
+# - First stage installs the dependencies                 #
+# - Second stage builds the app                           #
+# - Third stage copies the built app to a new image       #
+#                                                         #
+###########################################################
+
+# ARGs for Node.js and Alpine versions
+ARG NODE_VERSION=18.14.2
+ARG ALPINE_VERSION=3.14
+
+# FIRST STAGE: Install Dependencies
+FROM node:${NODE_VERSION}-alpine AS deps
+
+# Set working directory
+WORKDIR /usr/src/app
+
+# Install git
+RUN apk add --no-cache git
+
+# Install Node.js dependencies
+RUN --mount=type=bind,source=./package.json,target=package.json,ro \
+    --mount=type=bind,source=./package-lock.json,target=package-lock.json,rw \
+    --mount=type=cache,target=/root/.npm \
+    npm install --legacy-peer-deps
+
+
+# SECOND STAGE: Build the app
+FROM deps AS build
+
+# Set working directory
+WORKDIR /usr/src/app
+
+# Copy the application code
+COPY . .
+
+# Build the app
+RUN npm run build
+
+
+# THIRD STAGE: Copy the built app to a new image
+FROM alpine:${ALPINE_VERSION} AS final
+
+# Set working directory
+WORKDIR /usr/src
+
+# Copy the built app from the previous stage
+COPY --from=build /usr/src/app/dist /usr/src
+
+
 # Start from the nginx base image with the specified version and Alpine Linux
 FROM nginx:${NGINX_VERSION}-alpine AS stage
 
@@ -25,6 +79,7 @@ RUN apk update && apk add --no-cache \
 COPY ./docker/files/default.conf.template /etc/nginx/templates/default.conf.template
 COPY ./docker/files/sshd_config /etc/ssh/
 COPY ./docker/files/ssh_setup.sh /tmp/
+COPY --from=final /usr/src /usr/share/nginx/html
 
 # Set the root password
 ARG password
