@@ -1,0 +1,10 @@
+{
+  "main": {
+    "accountSettings": "Account Settings",
+    "littleDescription": "Manage your account settings and preferences",
+    "backBtn": "Back to your personal profile",
+    "profile": "Profile",
+    "notifications": "Notifications",
+    "passwordSecurity": "Password & Security"
+  }
+}
