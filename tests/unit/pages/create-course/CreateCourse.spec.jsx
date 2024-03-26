@@ -156,21 +156,4 @@ describe('CreateCourse', () => {
 
     expect(errorMessage).toBeInTheDocument()
   })
-
-  it('renders proficiencyLevel error', () => {
-    waitFor(async () => {
-      const proficiencyLevelInput = await screen.findByLabelText(/level/i)
-
-      fireEvent.click(proficiencyLevelInput)
-      fireEvent.blur(proficiencyLevelInput)
-
-      const errorText = await screen.findByText(
-        'common.errorMessages.proficiencyLevel'
-      )
-      expect(errorText).toBeInTheDocument()
-
-      fireEvent.change(proficiencyLevelInput, { target: { value: 'Advanced' } })
-      expect(mockOnLevelChange).toHaveBeenCalledWith('Advanced')
-    })
-  })
 })

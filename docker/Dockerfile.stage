@@ -6,17 +6,6 @@
 # Define the version of NGINX to be used in the image
 ARG NGINX_VERSION=1.19.6
 
-# syntax=docker/dockerfile:1
-###########################################################
-#                DOCKERFILE FOR S2S BUILD                 #
-#                                                         #
-# This Dockerfile uses a multi-stage build                #
-# - First stage installs the dependencies                 #
-# - Second stage builds the app                           #
-# - Third stage copies the built app to a new image       #
-#                                                         #
-###########################################################
-
 # ARGs for Node.js and Alpine versions
 ARG NODE_VERSION=18.14.2
 ARG ALPINE_VERSION=3.14

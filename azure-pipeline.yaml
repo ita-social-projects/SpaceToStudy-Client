@@ -4,7 +4,7 @@ trigger:
     include:
     - develop
     - main
-    - feature/1659/deployment-proxy
+    - devops
 
 variables:
   agentOS: ubuntu-latest
