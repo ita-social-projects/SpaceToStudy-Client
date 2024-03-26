@@ -28,31 +28,29 @@ stages:
           inputs:
             targetType: 'inline'
             script: 'mv $(envStage.secureFilePath) .env'
-        - task: DockerCompose@0
+
+        - task: Docker@0
           inputs:
             containerregistrytype: 'Azure Container Registry'
             azureSubscription: 'S2s-Service'
             azureContainerRegistry: '{"loginServer":"s2sstage.azurecr.io", "id" : "/subscriptions/734fc759-c3a2-4e22-a478-301dc5b10496/resourceGroups/Space2Study/providers/Microsoft.ContainerRegistry/registries/S2sStage"}'
-            dockerComposeFile: '**/compose.yml'
-            dockerComposeFileArgs: |
-              PROXY_API_URL=$(PROXY_API_URL)
-              password=$(password)
-            projectName: 'front-stage'
-            action: 'Build services'
-            additionalImageTags: '$(Build.BuildId)'
+            action: 'Build an image'
+            dockerFile: '**/docker/Dockerfile.stage'
+            buildArguments: |
+              'NGINX_VERSION=1.19.6'
+              'NODE_VERSION=18.14.2'
+              'ALPINE_VERSION=3.14'
+              'PROXY_API_URL=$(PROXY_API_URL)'
+              'password=$(password)'
+            imageName: 'front-stage:$(Build.BuildId)'
        
-        - task: DockerCompose@0
+        - task: Docker@0
           inputs:
             containerregistrytype: 'Azure Container Registry'
             azureSubscription: 'S2s-Service'
             azureContainerRegistry: '{"loginServer":"s2sstage.azurecr.io", "id" : "/subscriptions/734fc759-c3a2-4e22-a478-301dc5b10496/resourceGroups/Space2Study/providers/Microsoft.ContainerRegistry/registries/S2sStage"}'
-            dockerComposeFile: '**/compose.yml'
-            dockerComposeFileArgs: |
-              PROXY_API_URL=$(PROXY_API_URL)
-              password=$(password)
-            projectName: 'front-stage'
-            action: 'Push services'
-            additionalImageTags: '$(Build.BuildId)'
+            action: 'Push an image'
+            imageName: 'front-stage:$(Build.BuildId)'
 
   - stage: Deploy
     displayName: Deploy image to app service
@@ -68,6 +66,6 @@ stages:
               appType: 'webAppContainer'
               WebAppName: 's2s-front-stage'
               DockerNamespace: 's2sstage.azurecr.io'
-              DockerRepository: 'frontstage_nginx'
+              DockerRepository: 'front-stage'
               DockerImageTag: '$(Build.BuildId)'
              
