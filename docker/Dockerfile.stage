@@ -31,8 +31,8 @@ WORKDIR /usr/src/app
 RUN apk add --no-cache git
 
 # Install Node.js dependencies
-RUN --mount=type=bind,source=./package.json,target=package.json,ro \
-    --mount=type=bind,source=./package-lock.json,target=package-lock.json,rw \
+RUN --mount=type=bind,source=../package.json,target=package.json,ro \
+    --mount=type=bind,source=../package-lock.json,target=package-lock.json,rw \
     --mount=type=cache,target=/root/.npm \
     npm install --legacy-peer-deps
 
@@ -44,7 +44,7 @@ FROM deps AS build
 WORKDIR /usr/src/app
 
 # Copy the application code
-COPY . .
+COPY .. .
 
 # Build the app
 RUN npm run build
@@ -76,9 +76,9 @@ RUN apk update && apk add --no-cache \
     && touch /run/openrc/softlevel
 
 # Copy files to the image
-COPY ./docker/files/default.conf.template /etc/nginx/templates/default.conf.template
-COPY ./docker/files/sshd_config /etc/ssh/
-COPY ./docker/files/ssh_setup.sh /tmp/
+COPY ../docker/files/default.conf.template /etc/nginx/templates/default.conf.template
+COPY ../docker/files/sshd_config /etc/ssh/
+COPY ../docker/files/ssh_setup.sh /tmp/
 COPY --from=final /usr/src /usr/share/nginx/html
 
 # Set the root password
