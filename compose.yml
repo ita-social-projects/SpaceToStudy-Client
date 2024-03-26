@@ -36,8 +36,8 @@ services:
     volumes:
       - build:/usr/share/nginx/html
     # Specify dependencies between services
-    depends_on:
-      - builder
+    # depends_on:
+    #   - builder
 
 # # Define build volume
 # volumes:
