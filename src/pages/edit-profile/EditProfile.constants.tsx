@@ -5,6 +5,7 @@ import GppGoodIcon from '@mui/icons-material/GppGood'
 import Box from '@mui/material/Box'
 
 import { TutorProfileTabsEnum } from '~/types'
+import { NotificationContainer } from '~/containers/edit-tutor-profile/NotificationContainer'
 
 export type TutorProfileProps = {
   [key in TutorProfileTabsEnum]: {
@@ -27,11 +28,7 @@ export const tabsData: TutorProfileProps = {
   [TutorProfileTabsEnum.Notifications]: {
     icon: <NotificationsIcon />,
     title: 'editTutor.main.notifications',
-    content: (
-      <Box>
-        <h4>Notifications</h4>
-      </Box>
-    )
+    content: <NotificationContainer />
   },
   [TutorProfileTabsEnum.PasswordAndSecurity]: {
     icon: <GppGoodIcon />,

@@ -23,6 +23,11 @@ export const styles = {
     width: '20%'
   },
   mainContainer: {
-    display: 'flex'
+    display: 'flex',
+    justifyContent: 'space-between'
+  },
+  mainContent: {
+    width: '65%',
+    mr: '10%'
   }
 }
