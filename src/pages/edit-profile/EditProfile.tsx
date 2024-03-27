@@ -79,7 +79,7 @@ const EditProfile = () => {
           styles={styles.sidebarMenu}
           tabsData={tabsData}
         />
-        <Box>{cooperationContent}</Box>
+        <Box sx={styles.mainContent}>{cooperationContent}</Box>
       </Box>
       <ProfileGeneralTab user={response} />
     </PageWrapper>
