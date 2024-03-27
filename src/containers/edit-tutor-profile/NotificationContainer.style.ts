@@ -6,12 +6,14 @@ export const styles = {
     padding: '20px',
     borderRadius: '5px'
   },
-  title: {
-    typography: TypographyVariantEnum.H5
-  },
-  subtitle: {
-    typography: TypographyVariantEnum.Subtitle2,
-    color: 'basic.gray'
+  titleWithDescription: {
+    title: {
+      typography: TypographyVariantEnum.H5
+    },
+    description: {
+      typography: TypographyVariantEnum.Subtitle2,
+      color: 'basic.gray'
+    }
   },
   optionsContainer: {
     padding: '30px',
