@@ -8,6 +8,7 @@ import Divider from '@mui/material/Divider'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import AppButton from '~/components/app-button/AppButton'
 import SidebarMenu from '~/components/sidebar-menu/SidebarMenu'
+import SecurityBlock from '~/containers/tutor-profile/security-block/SecurityBlock'
 import { ButtonVariantEnum, SizeEnum } from '~/types'
 import { tabsData } from '~/pages/edit-profile/EditProfile.constants'
 import { TutorProfileTabsEnum } from '~/types'
@@ -53,6 +54,7 @@ const EditProfile = () => {
         />
         <Box>{cooperationContent}</Box>
       </Box>
+      <SecurityBlock />
     </PageWrapper>
   )
 }
