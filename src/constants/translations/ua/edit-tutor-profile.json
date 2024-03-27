@@ -6,5 +6,18 @@
         "profile": "Профіль",
         "notifications":"Сповіщення",
         "passwordSecurity": "Пароль і Безпека"
+    },
+    "passwordSecurityTab": {
+        "title": "Пароль і Безпека",
+        "description": "Зміна паролю та налаштуваннь безпеки",
+        "changePassword": "Змінити пароль",
+        "currentPassword": "Поточний пароль",
+        "newPassword": "Новий пароль",
+        "retypePassword": "Повторіть пароль",
+        "savePassword": "Зберегти новий пароль",
+        "deactivateAccount": "Деактивувати аккаунт",
+        "deactivateBtn": "Деактивувати",
+        "deactivateTitle": "Деактивувати ваш аккаунт?",
+        "deactivateDescription": "Якщо ви деактивуєте свій обліковий запис, він буде прихований на цьому сайті. Ви можете будь-коли активувати свій обліковий запис."
     }
 }
