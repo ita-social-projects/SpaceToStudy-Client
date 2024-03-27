@@ -7,12 +7,12 @@ import { t } from 'i18next'
 
 import AppTextField from '~/components/app-text-field/AppTextField'
 import ConfirmDialog from '~/components/confirm-dialog/ConfirmDialog'
+import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import useForm from '~/hooks/use-form'
 
 import { styles } from './SecurityBlock.styles'
 import { confirmPassword, password } from '~/utils/validations/login'
 import { ButtonVariantEnum, SizeEnum } from '~/types'
-import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 
 const SecurityBlock = () => {
   const [isConfirmOpen, setIsConfirmOpen] = useState(false)
