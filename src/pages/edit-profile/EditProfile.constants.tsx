@@ -5,6 +5,7 @@ import GppGoodIcon from '@mui/icons-material/GppGood'
 import Box from '@mui/material/Box'
 
 import { TutorProfileTabsEnum } from '~/types'
+import SecurityBlock from '~/containers/tutor-profile/security-block/SecurityBlock'
 
 export type TutorProfileProps = {
   [key in TutorProfileTabsEnum]: {
@@ -36,10 +37,6 @@ export const tabsData: TutorProfileProps = {
   [TutorProfileTabsEnum.PasswordAndSecurity]: {
     icon: <GppGoodIcon />,
     title: 'editTutor.main.passwordSecurity',
-    content: (
-      <Box>
-        <h4>Password & Security</h4>
-      </Box>
-    )
+    content: <SecurityBlock />
   }
 }
