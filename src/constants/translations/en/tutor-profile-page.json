@@ -20,6 +20,14 @@
   "videoPresentation": {
     "title": "Video Presentation"
   },
+  "aboutTutor": {
+    "title": "About the tutor",
+    "education": "Education",
+    "workExperience": "Work experience",
+    "scientificActivities": "Scientific activities",
+    "awards": "Awards",
+    "socialMedia": "Social media"
+  },
   "reviews":{
     "title":"What students say",
     "buttonTitle":"More reviews",

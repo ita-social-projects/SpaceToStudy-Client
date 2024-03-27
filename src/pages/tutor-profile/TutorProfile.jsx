@@ -13,6 +13,7 @@ import useAxios from '~/hooks/use-axios'
 import { profileItems } from '~/components/profile-item/complete-profile.constants'
 import { defaultResponses } from '~/constants'
 import { responseMock } from '~/pages/tutor-profile/constants'
+import AboutTutorBlock from '~/containers/tutor-profile/about-tutor-block/AboutTutorBlock'
 
 const TutorProfile = () => {
   const { user } = responseMock
@@ -39,6 +40,7 @@ const TutorProfile = () => {
     <PageWrapper>
       <ProfileInfo userData={response} />
       <CompleteProfileBlock data={response} profileItems={profileItems} />
+      <AboutTutorBlock />
       <VideoPresentation />
       <CommentsWithRatingBlock
         averageRating={response.averageRating.tutor}
