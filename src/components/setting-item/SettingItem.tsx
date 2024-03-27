@@ -1,5 +1,5 @@
 import { ReactNode, FC } from 'react'
-import Box from '@mui/system/Box'
+import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { SxProps } from '@mui/material'
 
