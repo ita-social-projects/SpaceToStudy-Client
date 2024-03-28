@@ -9,7 +9,7 @@ export interface UseAxiosProps<
   TransformedResponse = Response
 > {
   service: ServiceFunction<Response, Params>
-  defaultResponse: TransformedResponse
+  defaultResponse?: TransformedResponse
   fetchOnMount?: boolean
   transform?: (params: Response) => TransformedResponse
   onResponse?: (responseData: TransformedResponse) => void
@@ -29,7 +29,7 @@ const useAxios = <
   TransformedResponse = Response
 >({
   service,
-  defaultResponse,
+  defaultResponse = {} as TransformedResponse,
   fetchOnMount = true,
   transform,
   onResponse,

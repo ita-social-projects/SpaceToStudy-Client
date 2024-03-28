@@ -24,3 +24,8 @@ export type Sort = {
   order: SortEnum
   orderBy: string
 }
+
+export type Country = {
+  name: string
+  iso2: string
+}
