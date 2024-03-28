@@ -1,0 +1,19 @@
+{
+  "profile": {
+    "title": "Profile",
+    "description": "Here you can edit public information about yourself.",
+    "generalTab": {
+      "uploadTitle": "Upload new photo",
+      "uploadDesc": "Maximum file size - 5 Mb",
+      "informationTitle": "Personal information",
+      "informationDesc": "Your name may appear around Space2Study when mentioned.",
+      "locationTitle": "Location",
+      "locationDesc": "Let members know where you are based.",
+      "professionalHeadline": "Professional headline",
+      "professionalStatus": "Describe in short your professional summary. Maximum 200 characters.",
+      "languagesTitle": "Language",
+      "languagesDesc": "Select the language in which you would like to study and cooperate.",
+      "videoPresentationDesc": "Add the link to your presentational video. Your video needs to be public."
+    }
+  }
+}
