@@ -16,8 +16,7 @@ export const styles = {
     }
   },
   optionsContainer: {
-    padding: '30px',
-    pr: '50px'
+    padding: '30px 50px 30px'
   },
   options: {
     border: '1px solid ',
