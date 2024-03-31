@@ -38,7 +38,7 @@
     "notes": "Notes"
   },
   "description": {
-    "existingCourse": "'If you would like to reuse existing course for this cooperation and modify/extent it, please add ",
+    "existingCourse": "If you would like to reuse existing course for this cooperation and modify/extent it, please add ",
     "courseTemplate": "Course template ",
     "resourceLibrary": "from the resource library. If you would like to proceed from scratch then add new ",
     "module": "Module ",
@@ -46,7 +46,7 @@
     "lessons": "lessons ",
     "or": "or ",
     "quizzes": "quizzes ",
-    "resourcesLibrary": "from resource library'."
+    "resourcesLibrary": "from resource library."
   },
   "button": {
     "create": "Create Activity"
