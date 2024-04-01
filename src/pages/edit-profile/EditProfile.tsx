@@ -10,7 +10,6 @@ import { useCallback } from 'react'
 import { useAppSelector } from '~/hooks/use-redux'
 import { userService } from '~/services/user-service'
 import useAxios from '~/hooks/use-axios'
-import ProfileGeneralTab from '~/containers/edit-profile/profile-general-tab/ProfileGeneralTab'
 import Loader from '~/components/loader/Loader'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import AppButton from '~/components/app-button/AppButton'
@@ -31,8 +30,6 @@ const EditProfile = () => {
 
   const [activeTab, setActiveTab] = useState(TutorProfileTabsEnum.Profile)
 
-  const cooperationContent = activeTab && tabsData[activeTab]?.content
-
   const handleClick = (tab: TutorProfileTabsEnum) => {
     setActiveTab(tab)
   }
@@ -52,6 +49,9 @@ const EditProfile = () => {
   if (loading) {
     return <Loader pageLoad size={70} />
   }
+
+  const cooperationContent =
+    activeTab && tabsData[activeTab]?.content?.(response)
 
   return (
     <PageWrapper>
@@ -81,7 +81,6 @@ const EditProfile = () => {
         />
         <Box sx={styles.mainContent}>{cooperationContent}</Box>
       </Box>
-      <ProfileGeneralTab user={response} />
     </PageWrapper>
   )
 }
