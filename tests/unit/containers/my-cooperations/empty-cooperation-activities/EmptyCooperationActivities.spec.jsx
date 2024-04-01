@@ -2,18 +2,22 @@ import { screen, fireEvent, act, waitFor } from '@testing-library/react'
 import EmptyCooperationActivities from '~/containers/my-cooperations/empty-cooperation-activities/EmptyCooperationActivities'
 import { renderWithProviders } from '~tests/test-utils'
 
-describe('Cooperation activities', () => {
-  it('should render button create', () => {
-    renderWithProviders(<EmptyCooperationActivities />)
+global.window.getComputedStyle = vi.fn().mockImplementation(() => ({
+  getPropertyValue: vi.fn()
+}))
 
+describe('Cooperation activities', () => {
+  beforeEach(() => {
+    renderWithProviders(<EmptyCooperationActivities />)
+  })
+
+  it('should render button create', () => {
     const button = screen.getByText('cooperationsPage.button.create')
 
     expect(button).toBeInTheDocument()
   })
 
   it('should open menu course template after click on button and close menu after click on menu item', async () => {
-    renderWithProviders(<EmptyCooperationActivities />)
-
     const button = screen.getByText('cooperationsPage.button.create')
     act(() => {
       fireEvent.click(button)
@@ -33,8 +37,6 @@ describe('Cooperation activities', () => {
   })
 
   it('should open menu from scratch after click on button and close menu after click on menu item', async () => {
-    renderWithProviders(<EmptyCooperationActivities />)
-
     const button = screen.getByText('cooperationsPage.button.create')
     act(() => {
       fireEvent.click(button)
