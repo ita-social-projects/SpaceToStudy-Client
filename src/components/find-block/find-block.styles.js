@@ -3,17 +3,25 @@ export const styles = {
     mt: { xs: '64px', md: '84px' },
 
     img: {
-      xs: { display: 'none' },
+      xs: { display: 'none', width: '168px', height: '168px' },
       md: { display: 'block' }
     }
   },
 
+  button: {
+    whiteSpace: 'nowrap',
+    height: '48px'
+  },
+
   input: {
+    py: { xs: 0 },
     display: 'flex',
     flexGrow: '1',
+    gap: '8px',
     mr: { sm: 3, xs: 0 },
     mb: { sm: 0, xs: 2 },
     backgroundColor: 'basic.white',
-    gap: '8px'
+    borderRadius: '4px',
+    maxHeight: '48px'
   }
 }

@@ -1,34 +1,42 @@
+import { TypographyVariantEnum } from '~/types'
+
 export const styles = {
   container: {
     justifyContent: 'space-between',
     backgroundColor: 'companyBlue',
     borderRadius: 2,
-    px: { md: 7, sm: 3, xs: 3 },
-    py: { md: 6, sm: 4, xs: 4 }
+    px: { md: 7, xs: 3 },
+    py: { sm: 9, xs: 4 },
+    pr: { lg: 15 }
   },
   info: {
-    flexBasis: { lg: '55%' }
+    minWidth: '60%'
   },
   form: {
     display: 'flex',
-    justifyContent: 'space-between',
     flexWrap: { sm: 'nowrap', xs: 'wrap' }
   },
   titleWithDescription: {
     wrapper: {
       textAlign: 'left',
-      mb: '32px'
+      mb: '8px'
     },
     title: {
-      typography: { md: 'h4', xs: 'h5' },
+      typography: {
+        xs: TypographyVariantEnum.H5,
+        sm: TypographyVariantEnum.H4
+      },
       color: 'primary.900',
       mb: 1
     },
     description: {
-      typography: { sm: 'body1', xs: 'body2' },
+      typography: {
+        sm: TypographyVariantEnum.Body1,
+        xs: TypographyVariantEnum.Body2
+      },
       color: 'primary.900',
-      mb: 6,
-      flexBasis: { lg: '55%' }
+      mb: 3,
+      whiteSpace: { md: 'pre-line' }
     }
   }
 }
