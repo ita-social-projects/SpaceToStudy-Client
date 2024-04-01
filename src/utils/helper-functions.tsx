@@ -288,7 +288,3 @@ export const getGroupedByDate = <T extends { createdAt: string }>(
 
     return result
   }, [])
-
-export const getRandomNumber = () => {
-  return Math.floor(Math.random() * (1000 - 1 + 1)) + 1
-}
