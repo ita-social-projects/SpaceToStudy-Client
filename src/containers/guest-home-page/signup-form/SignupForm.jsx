@@ -19,8 +19,7 @@ const SignupForm = ({
   handleChange,
   handleBlur,
   data,
-  errors,
-  closeModal
+  errors
 }) => {
   const { t } = useTranslation()
   const { privacyPolicy, termOfUse } = guestRoutes
@@ -49,8 +48,9 @@ const SignupForm = ({
       <Typography variant='subtitle2'>{t('signup.iAgree')}</Typography>
       <Typography
         component={HashLink}
-        onClick={closeModal}
+        rel='noopener noreferrer'
         sx={styles.underlineText}
+        target='_blank'
         to={termOfUse.path}
         variant='subtitle2'
       >
@@ -61,8 +61,9 @@ const SignupForm = ({
       </Typography>
       <Typography
         component={HashLink}
-        onClick={closeModal}
+        rel='noopener noreferrer'
         sx={styles.underlineText}
+        target='_blank'
         to={privacyPolicy.path}
         variant='subtitle2'
       >
