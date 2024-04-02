@@ -12,16 +12,11 @@ import useForm from '~/hooks/use-form'
 
 import { styles } from '~/containers/tutor-profile/security-block/SecurityBlock.styles'
 import { confirmPassword, password } from '~/utils/validations/login'
-import { ButtonVariantEnum, SizeEnum } from '~/types'
+import { ButtonVariantEnum, InputEnum, SizeEnum } from '~/types'
+import { FormValues } from '~/types/editTutorProfile/interfaces/securityBlockForm.interfaces'
 
 const SecurityBlock = () => {
-  const [isConfirmOpen, setIsConfirmOpen] = useState(false)
-
-  interface FormValues {
-    currentPassword: string
-    password: string
-    confirmPassword: string
-  }
+  const [isConfirmOpen, setIsConfirmOpen] = useState<boolean>(false)
 
   const { data, handleInputChange, errors, handleBlur, resetData } =
     useForm<FormValues>({
@@ -66,7 +61,7 @@ const SecurityBlock = () => {
           label={t('editTutor.passwordSecurityTab.retypePassword')}
           onBlur={handleBlur('confirmPassword')}
           onChange={handleInputChange('confirmPassword')}
-          type={'password'}
+          type={InputEnum.Password}
           value={data.confirmPassword}
         />
         <Box sx={styles.passwordButtonsContainer}>

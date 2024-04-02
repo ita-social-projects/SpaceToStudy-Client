@@ -28,7 +28,7 @@ const ConfirmDialog: FC<ConfirmDialogProps> = ({
   title,
   confirmButton,
   cancelButton,
-  revertButtons,
+  revertButtons = false,
   open,
   onConfirm,
   onDismiss
