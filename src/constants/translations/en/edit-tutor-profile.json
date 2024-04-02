@@ -7,6 +7,18 @@
     "notifications": "Notifications",
     "passwordSecurity": "Password & Security"
   },
+  "notificationTab": {
+    "notifications": "Notifications",
+    "mainHint": "Choose what emails you'd like to be sent",
+    "offerStatus": "Change of offer status",
+    "offerSubtitle": "You will be notified when an offer changes status",
+    "chat": "Chat message",
+    "chatSubtitle": "You will be notified when you have any new messages in chat",
+    "similarOffers": "Subscription to offers",
+    "similarOffersSubtitle": "You will be notified when someone creates a new similar offer",
+    "email": "Email notification",
+    "emailSubtitle": "Turn on email notification to get updates through email"
+  },
   "passwordSecurityTab": {
   "title": "Password & Security",
   "description": "Change password and security settings",
