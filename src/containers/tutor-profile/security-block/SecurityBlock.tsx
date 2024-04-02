@@ -10,7 +10,7 @@ import ConfirmDialog from '~/components/confirm-dialog/ConfirmDialog'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import useForm from '~/hooks/use-form'
 
-import { styles } from './SecurityBlock.styles'
+import { styles } from '~/containers/tutor-profile/security-block/SecurityBlock.styles'
 import { confirmPassword, password } from '~/utils/validations/login'
 import { ButtonVariantEnum, SizeEnum } from '~/types'
 

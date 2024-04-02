@@ -28,8 +28,7 @@ export const styles = {
     mb: '15px'
   },
   passwordButtonsContainer: {
-    mt: '10px',
-    mb: '20px'
+    m: '10px 0 20px'
   },
   discardButton: {
     ml: '10px'

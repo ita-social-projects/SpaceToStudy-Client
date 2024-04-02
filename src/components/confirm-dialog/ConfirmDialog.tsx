@@ -49,26 +49,13 @@ const ConfirmDialog: FC<ConfirmDialogProps> = ({
       <DialogContent sx={styles.content}>
         <Typography>{t(message)}</Typography>
       </DialogContent>
-      <DialogActions sx={styles.actions}>
-        {revertButtons ? (
-          <>
-            <AppButton onClick={onDismiss} variant={ButtonVariantEnum.Tonal}>
-              {cancelButton ? cancelButton : t('common.no')}
-            </AppButton>
-            <AppButton onClick={onConfirm}>
-              {confirmButton ? confirmButton : t('common.yes')}
-            </AppButton>
-          </>
-        ) : (
-          <>
-            <AppButton onClick={onConfirm}>
-              {confirmButton ? confirmButton : t('common.yes')}
-            </AppButton>
-            <AppButton onClick={onDismiss} variant={ButtonVariantEnum.Tonal}>
-              {cancelButton ? cancelButton : t('common.no')}
-            </AppButton>
-          </>
-        )}
+      <DialogActions sx={styles.actions(revertButtons)}>
+        <AppButton onClick={onDismiss} variant={ButtonVariantEnum.Tonal}>
+          {cancelButton || t('common.no')}
+        </AppButton>
+        <AppButton onClick={onConfirm}>
+          {confirmButton || t('common.yes')}
+        </AppButton>
       </DialogActions>
     </Dialog>
   )
