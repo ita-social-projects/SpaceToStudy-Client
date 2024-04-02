@@ -20,7 +20,7 @@ export const styles = {
     padding: '10px'
   },
   sidebarMenu: {
-    width: '20%'
+    width: '30%'
   },
   mainContainer: {
     display: 'flex',

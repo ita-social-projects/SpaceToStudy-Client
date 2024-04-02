@@ -8,7 +8,7 @@ import TitleWithDescription from '~/components/title-with-description/TitleWithD
 import { titleWithSubtitle } from '~/containers/edit-profile/notification-tab/NotificationContainer.constans'
 import { styles } from '~/containers/edit-profile/notification-tab/NotificationContainer.style'
 
-export const NotificationContainer = () => {
+const NotificationContainer = () => {
   const { t } = useTranslation()
 
   return (
@@ -34,3 +34,5 @@ export const NotificationContainer = () => {
     </Box>
   )
 }
+
+export default NotificationContainer

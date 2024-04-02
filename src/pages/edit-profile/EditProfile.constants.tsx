@@ -5,7 +5,7 @@ import GppGoodIcon from '@mui/icons-material/GppGood'
 import Box from '@mui/material/Box'
 
 import { TutorProfileTabsEnum, UserResponse } from '~/types'
-import { NotificationContainer } from '~/containers/edit-tutor-profile/NotificationContainer'
+import NotificationContainer from '~/containers/edit-profile/notification-tab/NotificationContainer'
 import SecurityBlock from '~/containers/tutor-profile/security-block/SecurityBlock'
 import ProfileGeneralTab from '~/containers/edit-profile/profile-general-tab/ProfileGeneralTab'
 
