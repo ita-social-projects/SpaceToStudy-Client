@@ -43,7 +43,7 @@ const SecurityBlock = () => {
           fullWidth
           label={t('editTutor.passwordSecurityTab.currentPassword')}
           onChange={handleInputChange('currentPassword')}
-          type={'password'}
+          type={InputEnum.Password}
           value={data.currentPassword}
         />
         <AppTextField
@@ -52,7 +52,7 @@ const SecurityBlock = () => {
           label={t('editTutor.passwordSecurityTab.newPassword')}
           onBlur={handleBlur('password')}
           onChange={handleInputChange('password')}
-          type={'password'}
+          type={InputEnum.Password}
           value={data.password}
         />
         <AppTextField
