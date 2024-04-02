@@ -5,8 +5,8 @@ import Switch from '@mui/material/Switch'
 
 import SettingItem from '~/components/setting-item/SettingItem'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
-import { titleWithSubtitle } from '~/containers/edit-tutor-profile/NotificationContainer.constans'
-import { styles } from '~/containers/edit-tutor-profile/NotificationContainer.style'
+import { titleWithSubtitle } from '~/containers/edit-profile/notification-tab/NotificationContainer.constans'
+import { styles } from '~/containers/edit-profile/notification-tab/NotificationContainer.style'
 
 export const NotificationContainer = () => {
   const { t } = useTranslation()

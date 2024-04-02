@@ -1,6 +1,6 @@
 import palette from '~/styles/app-theme/app.pallete'
-import { commonShadow } from '~/styles/app-theme/custom-shadows'
 import { TypographyVariantEnum, VisibilityEnum } from '~/types'
+import { rootContainer } from '~/containers/edit-profile/common.style'
 
 const { Subtitle1, Body2, Caption, H6 } = TypographyVariantEnum
 
@@ -12,18 +12,7 @@ const titleWithDescription = {
 
 export const styles = {
   root: {
-    display: 'flex',
-    flexDirection: 'column',
-    boxSizing: 'border-box',
-    rowGap: '10px',
-    maxWidth: '768px',
-    width: '100%',
-    m: '0 auto',
-    p: '20px 40px',
-    backgroundColor: 'basic.white',
-    color: 'basic.black',
-    borderRadius: '4px',
-    boxShadow: commonShadow
+    ...rootContainer
   },
   headerTitleWithDesc: { ...titleWithDescription, title: { typography: H6 } },
   avatar: {
