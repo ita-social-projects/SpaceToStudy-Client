@@ -6,6 +6,7 @@ import { setPageLoad } from '~/redux/reducer'
 import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 import { OfferService } from '~/services/offer-service'
 import { useModalContext } from '~/context/modal-context'
+import { useChatContext } from '~/context/chat-context'
 import useAxios from '~/hooks/use-axios'
 import useConfirm from '~/hooks/use-confirm'
 import useBreakpoints from '~/hooks/use-breakpoints'
@@ -44,6 +45,7 @@ const OfferDetails = () => {
   const { isMobile } = useBreakpoints()
   const { id = '' } = useParams()
   const { openModal } = useModalContext()
+  const { setChatInfo } = useChatContext()
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const { checkConfirmation } = useConfirm()
@@ -129,6 +131,19 @@ const OfferDetails = () => {
     }
   }
 
+  const emptyFunction = () => void {}
+
+  const handleOnClickSendMessage = () => {
+    if (offerData) {
+      setChatInfo({
+        author: offerData.author,
+        authorRole: offerData.authorRole,
+        chatId: offerData.chatId,
+        updateInfo: emptyFunction
+      })
+    }
+  }
+
   const buttonActions = activeButtonActions({
     isEnrolled: Boolean(offerData?.enrolledUsers.includes(userId)),
     loading: updateLoading,
@@ -137,7 +152,8 @@ const OfferDetails = () => {
     status: offerData?.status,
     handleEnrollOfferClick,
     handleToggleOfferStatus,
-    handleCloseOffer
+    handleCloseOffer,
+    handleOnClickSendMessage
   })
 
   useLayoutEffect(() => {
