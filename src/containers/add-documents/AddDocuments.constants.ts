@@ -7,5 +7,7 @@ export const validationData: AddDocuments = {
   fileSizeError: 'common.fileSizeError',
   allFilesSizeError: 'common.allFilesSizeError',
   typeError: 'common.typeError',
-  maxQuantityFiles: 7
+  maxQuantityFiles: 7,
+  maxFileNameLength: 55,
+  maxFileNameError: 'common.fileNameError'
 }

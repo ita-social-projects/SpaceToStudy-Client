@@ -40,6 +40,7 @@
   "typeError": "Wrong file type. Only .pdf/.jpg/.jpeg files are allowed.",
   "allFilesSizeError": "All files size error",
   "fileSizeError": "Size for one file cannot be more than 5 MB.",
+  "fileNameError":"File name cannot be longer than 55 symbol",
   "noItems": "No items found",
   "view": "View",
   "labels": {

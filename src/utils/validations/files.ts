@@ -1,4 +1,9 @@
-export const filesValidation = (files, validationData) => {
+import { AddDocuments } from '~/types'
+
+export const filesValidation = (
+  files: File[],
+  validationData: AddDocuments
+) => {
   let error
   if (files.some((file) => file.size > validationData.maxFileSize)) {
     error = validationData.fileSizeError
@@ -16,6 +21,11 @@ export const filesValidation = (files, validationData) => {
     )
   ) {
     error = validationData.typeError
+  }
+  if (
+    files.some((file) => file.name.length > validationData.maxFileNameLength)
+  ) {
+    error = validationData.maxFileNameError
   }
 
   return error
