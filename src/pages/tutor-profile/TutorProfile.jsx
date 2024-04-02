@@ -1,5 +1,6 @@
 import { useCallback } from 'react'
 import { useAppSelector } from '~/hooks/use-redux'
+import { useParams, useSearchParams } from 'react-router-dom'
 
 import ProfileInfo from '~/containers/tutor-profile/profile-info/ProfileInfo'
 import CompleteProfileBlock from '~/components/complete-profile/CompleteProfileBlock'
@@ -16,14 +17,17 @@ import { responseMock } from '~/pages/tutor-profile/constants'
 import AboutTutorBlock from '~/containers/tutor-profile/about-tutor-block/AboutTutorBlock'
 
 const TutorProfile = () => {
+  const { id } = useParams()
+  const [searchParams] = useSearchParams()
+  const paramsRole = searchParams.get('role')
   const { user } = responseMock
   const { reviews } = user.reviewStats || {}
 
   const { userId, userRole } = useAppSelector((state) => state.appMain)
 
   const getUserData = useCallback(
-    () => userService.getUserById(userId, userRole),
-    [userId, userRole]
+    () => userService.getUserById(id || userId, paramsRole || userRole),
+    [userId, userRole, id, paramsRole]
   )
 
   const { loading, response } = useAxios({
@@ -43,9 +47,9 @@ const TutorProfile = () => {
       <AboutTutorBlock />
       <VideoPresentation />
       <CommentsWithRatingBlock
-        averageRating={response.averageRating.tutor}
+        averageRating={response?.averageRating?.tutor}
         reviewsCount={reviews}
-        totalReviews={response.totalReviews.tutor}
+        totalReviews={response?.totalReviews?.tutor}
       />
     </PageWrapper>
   )
