@@ -9,7 +9,6 @@ import { PopoverOrigin } from '@mui/material/Popover'
 import Divider from '@mui/material/Divider'
 import Checkbox from '@mui/material/Checkbox'
 import Typography from '@mui/material/Typography'
-import IconButton from '@mui/material/IconButton'
 import ClearIcon from '@mui/icons-material/Clear'
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
@@ -141,17 +140,17 @@ const FilterSelector = <T extends Pick<CategoryNameInterface, '_id'>>({
     : t('cooperationsPage.tabs.all')
 
   return (
-    <Box id='menu-filter' sx={spliceSx(styles.root, customSx?.root)}>
-      <Typography sx={styles.text}>{title}:</Typography>
-      <Typography sx={styles.chosenFilters}>{chosenFiltersText}</Typography>
-      <IconButton
-        disableRipple
+    <>
+      <AppButton
+        id='menu-filter'
         onClick={handleMenuOpen}
-        sx={styles.openMenuBtn}
+        sx={spliceSx(styles.root, customSx?.root)}
+        variant={ButtonVariantEnum.Tonal}
       >
+        <Typography sx={styles.text}>{title}:</Typography>
+        <Typography sx={styles.chosenFilters}>{chosenFiltersText}</Typography>
         <KeyboardArrowDownIcon sx={styles.arrowIcon(!!menuAnchor)} />
-      </IconButton>
-
+      </AppButton>
       <Menu
         anchorEl={menuAnchor}
         anchorOrigin={{ vertical: 'bottom', horizontal: position }}
@@ -193,7 +192,7 @@ const FilterSelector = <T extends Pick<CategoryNameInterface, '_id'>>({
           )}
         </SimpleBar>
       </Menu>
-    </Box>
+    </>
   )
 }
 

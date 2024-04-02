@@ -11,7 +11,6 @@ export const styles = {
     px: '12px',
     borderRadius: '100px'
   },
-  openMenuBtn: { p: 0, ml: '5px' },
   text: { typography: TypographyVariantEnum.Subtitle1 },
   chosenFilters: {
     typography: TypographyVariantEnum.Subtitle1,
@@ -24,7 +23,9 @@ export const styles = {
   arrowIcon: (open: boolean) => ({
     color: 'primary.900',
     transform: `rotate(${open ? 180 : 0}deg)`,
-    transition: 'transform 0.3s ease'
+    transition: 'transform 0.3s ease',
+    p: 0,
+    ml: '5px'
   }),
   menu: (loading: boolean) => ({
     '& .simplebar-content': {
