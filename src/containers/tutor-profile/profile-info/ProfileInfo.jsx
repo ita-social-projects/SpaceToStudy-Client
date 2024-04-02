@@ -7,11 +7,11 @@ import IconButton from '@mui/material/IconButton'
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
 import CopyRoundedIcon from '@mui/icons-material/ContentCopyRounded'
 
+import useBreakpoints from '~/hooks/use-breakpoints'
 import AppRatingMobile from '~/components/app-rating-mobile/AppRatingMobile'
 import ProfileContainerDesktop from '~/containers/tutor-profile/profile-info/ProfileContainerDesktop'
 import ProfileContainerMobile from '~/containers/tutor-profile/profile-info/ProfileContainerMobile'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
-import useBreakpoints from '~/hooks/use-breakpoints'
 
 import { authRoutes } from '~/router/constants/authRoutes'
 import { useSnackBarContext } from '~/context/snackbar-context'
