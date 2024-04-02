@@ -29,10 +29,5 @@ export const styles = {
   fileSize: {
     mt: '10px',
     typography: TypographyVariantEnum.Body2
-  },
-  error: {
-    color: 'error',
-    ml: 1,
-    typography: TypographyVariantEnum.Caption
   }
 }
