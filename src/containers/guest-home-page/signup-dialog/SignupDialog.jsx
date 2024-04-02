@@ -102,7 +102,6 @@ const SignupDialog = ({ type }) => {
         </Typography>
         <Box sx={styles.form}>
           <SignupForm
-            closeModal={closeModal}
             data={data}
             errors={errors}
             handleBlur={handleBlur}
