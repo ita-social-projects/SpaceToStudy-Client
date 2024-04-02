@@ -2,7 +2,6 @@ import { ReactElement } from 'react'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import NotificationsIcon from '@mui/icons-material/Notifications'
 import GppGoodIcon from '@mui/icons-material/GppGood'
-import Box from '@mui/material/Box'
 
 import { TutorProfileTabsEnum, UserResponse } from '~/types'
 import NotificationContainer from '~/containers/edit-profile/notification-tab/NotificationContainer'
@@ -31,6 +30,6 @@ export const tabsData: TutorProfileProps = {
   [TutorProfileTabsEnum.PasswordAndSecurity]: {
     icon: <GppGoodIcon />,
     title: 'editTutor.main.passwordSecurity',
-    content: <SecurityBlock />
+    content: (response) => <SecurityBlock {...response} />
   }
 }
