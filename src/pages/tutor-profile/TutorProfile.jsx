@@ -38,7 +38,7 @@ const TutorProfile = () => {
 
   return (
     <PageWrapper>
-      <ProfileInfo userData={response} />
+      <ProfileInfo myRole={userRole} userData={response} />
       <CompleteProfileBlock data={response} profileItems={profileItems} />
       <AboutTutorBlock />
       <VideoPresentation />
