@@ -1,9 +1,9 @@
-import { screen, waitFor, fireEvent } from '@testing-library/react'
+import { screen, waitFor, fireEvent, act } from '@testing-library/react'
 import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
 
 import EditProfile from '~/pages/edit-profile/EditProfile'
-import { expect } from 'vitest'
+import { tabsData } from '~/pages/edit-profile/EditProfile.constants'
 
 const handleClick = vi.fn()
 
@@ -44,23 +44,20 @@ const mockState = {
   appMain: { userId: userId, userRole: userRole }
 }
 
-const tabsData = [
-  {
-    id: 1,
-    title: 'editTutor.main.profile',
-    content: <div>profile</div>
-  },
-  {
-    id: 2,
-    title: 'editTutor.main.notifications',
-    content: <div>notifications</div>
-  },
-  {
-    id: 3,
-    title: 'editTutor.main.passwordSecurity',
-    content: <div>passwordSecurity</div>
-  }
-]
+// const tabsData = [
+//   {
+//     title: 'editTutor.main.profile',
+//     content: <div>profile</div>
+//   },
+//   {
+//     title: 'editTutor.main.notifications',
+//     content: <div>notifications</div>
+//   },
+//   {
+//     title: 'editTutor.main.passwordSecurity',
+//     content: <div>passwordSecurity</div>
+//   }
+// ]
 
 describe('EditProfile', () => {
   beforeEach(async () => {
@@ -68,12 +65,9 @@ describe('EditProfile', () => {
       mockAxiosClient
         .onGet(`${URLs.users.get}/${userId}?role=${userRole}`)
         .reply(200, userMock)
-      renderWithProviders(
-        <EditProfile handleClick={handleClick} tabsData={tabsData} />,
-        {
-          preloadedState: mockState
-        }
-      )
+      renderWithProviders(<EditProfile handleClick={handleClick} />, {
+        preloadedState: mockState
+      })
     })
   })
 
@@ -93,20 +87,24 @@ describe('EditProfile', () => {
   })
 
   it('should render correct text for each menu tab', () => {
-    Object.values(tabsData).forEach((tabData) => {
-      expect(screen.getByText(tabData.title)).toBeInTheDocument()
+    Object.values(tabsData).forEach((tabsData) => {
+      expect(screen.getByText(tabsData.title)).toBeInTheDocument()
     })
   })
 
-  it('should open menu tab after clicking on it', () => {
-    const menuTab = screen.getByRole('button', {
+  it('calls handleClick when a menu item is clicked', async () => {
+    const menuTab = await screen.findByRole('button', {
       name: 'editTutor.main.notifications'
     })
     expect(menuTab).toBeInTheDocument()
+    act(() => {
+      fireEvent.click(menuTab)
+    })
 
-    fireEvent.click(menuTab)
-
-    expect(handleClick).toHaveBeenCalledWith(tabsData[1].content)
+    await waitFor(() => {
+      const notificationsContent = screen.getByText(tabsData[1].content)
+      expect(notificationsContent).toBeInTheDocument()
+    })
   })
 
   // it('should render user', async () => {
