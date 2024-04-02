@@ -74,11 +74,12 @@ const CooperationDetails = () => {
 
   const cooperationContent = activeTab && tabsData[activeTab]?.content
 
-  const pageContent = isActivityCreated ? (
-    <CooperationActivities />
-  ) : (
-    cooperationContent
-  )
+  const pageContent =
+    isActivityCreated && activeTab === CooperationTabsEnum.Activities ? (
+      <CooperationActivities />
+    ) : (
+      cooperationContent
+    )
 
   const iconConditionals = isNotesOpen ? (
     <KeyboardDoubleArrowRightIcon />
