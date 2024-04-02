@@ -27,40 +27,31 @@ const tabsData = {
 const handleClick = vi.fn()
 
 describe('SidebarMenu', () => {
-  it('renders without crashing', () => {
+  let menuItems, icons
+
+  beforeEach(() => {
     render(<SidebarMenu handleClick={handleClick} tabsData={tabsData} />)
+    menuItems = screen.getAllByRole('listitem')
+    icons = screen.getAllByTestId(iconId)
   })
 
-  it('renders correct number of menu items', () => {
-    render(<SidebarMenu handleClick={handleClick} tabsData={tabsData} />)
-
-    const menuItems = screen.getAllByRole('listitem')
-
+  it('renders the correct number of menu items', () => {
     expect(menuItems).toHaveLength(Object.keys(tabsData).length)
   })
 
-  it('renders correct text for each menu item', () => {
-    render(<SidebarMenu handleClick={handleClick} tabsData={tabsData} />)
-
+  it('renders the correct text for each menu item', () => {
     Object.values(tabsData).forEach((tabData) => {
       expect(screen.getByText(tabData.title)).toBeInTheDocument()
     })
   })
 
   it('calls handleClick when a menu item is clicked', () => {
-    render(<SidebarMenu handleClick={handleClick} tabsData={tabsData} />)
-
-    const menuItems = screen.getAllByRole('listitem')
-
     fireEvent.click(menuItems[0])
 
     expect(handleClick).toHaveBeenCalled()
   })
 
-  it('renders correct icons for each menu item', () => {
-    render(<SidebarMenu handleClick={handleClick} tabsData={tabsData} />)
-    const icons = screen.getAllByTestId(iconId)
-
-    expect(icons).toHaveLength(3)
+  it('renders the correct number of icons', () => {
+    expect(icons).toHaveLength(Object.keys(tabsData).length)
   })
 })
