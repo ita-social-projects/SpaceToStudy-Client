@@ -3,7 +3,6 @@ import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
 
 import EditProfile from '~/pages/edit-profile/EditProfile'
-import { tabsData } from '~/pages/edit-profile/EditProfile.constants'
 
 const userId = '63f5d0ebb'
 const userRole = 'tutor'
@@ -68,9 +67,16 @@ describe('EditProfile', () => {
     expect(menuTabs).toHaveLength(3)
   })
 
-  it('should render correct title for each menu tab', () => {
-    Object.values(tabsData).forEach((tabData) => {
-      expect(screen.queryByText(tabData.title)).toBeInTheDocument()
+  it('should render Profile Container after click on Profile menu button', async () => {
+    const profileMenuTab = await screen.findByRole('button', {
+      name: 'editTutor.main.profile'
+    })
+    act(() => {
+      fireEvent.click(profileMenuTab)
+    })
+    await waitFor(() => {
+      const profileContent = screen.getByText('UserProfileMock')
+      expect(profileContent).toBeInTheDocument()
     })
   })
 
