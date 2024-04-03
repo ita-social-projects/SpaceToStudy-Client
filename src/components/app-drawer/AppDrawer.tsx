@@ -9,9 +9,16 @@ import useConfirm from '~/hooks/use-confirm'
 import { styles } from '~/components/app-drawer/AppDrawer.styles'
 import { PositionEnum } from '~/types'
 
-interface AppDrawerProps extends DrawerProps {
+type AnchorPositionsFromEnum =
+  | PositionEnum.Top
+  | PositionEnum.Bottom
+  | PositionEnum.Left
+  | PositionEnum.Right
+
+interface AppDrawerProps extends Omit<DrawerProps, 'anchor'> {
   children: ReactNode
   closeIcon?: boolean
+  anchor?: DrawerProps['anchor'] | AnchorPositionsFromEnum
   onClose: () => void
 }
 
