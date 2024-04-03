@@ -23,6 +23,9 @@ import {
 } from '~/types'
 import useForm from '~/hooks/use-form'
 import { cooperationService } from '~/services/cooperation-service'
+import { snackbarVariants } from '~/constants'
+import { useSnackBarContext } from '~/context/snackbar-context'
+
 interface CooperationActivitiesProps {
   cooperationId: string | undefined
 }
@@ -31,6 +34,7 @@ const CooperationActivities = ({
   cooperationId
 }: CooperationActivitiesProps) => {
   const { t } = useTranslation()
+  const { setAlert } = useSnackBarContext()
   const { resourceAvailability, setResourceAvailability } =
     useResourceAvailabilityContext()
 
@@ -40,6 +44,10 @@ const CooperationActivities = ({
     await cooperationService.updateCooperation({
       _id: cooperationId,
       ...data
+    })
+    setAlert({
+      severity: snackbarVariants.success,
+      message: 'cooperationsPage.acceptModal.successMessage'
     })
   }
 
