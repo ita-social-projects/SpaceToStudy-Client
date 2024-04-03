@@ -7,5 +7,8 @@ describe('EditProfile', () => {
     renderWithProviders(<EditProfile />)
   })
 
-  it('should render EditProfile with content', () => {})
+  it('should render EditProfile with content', () => {
+    const editProfileText = screen.getByText('EditProfile Page Placeholder')
+    expect(editProfileText).toBeInTheDocument()
+  })
 })
