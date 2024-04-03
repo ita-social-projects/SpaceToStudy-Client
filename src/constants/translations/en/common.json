@@ -40,7 +40,8 @@
   "typeError": "Wrong file type. Only .pdf/.jpg/.jpeg files are allowed.",
   "allFilesSizeError": "Size of all files cannot be more than 20 MB",
   "fileSizeError": "Size for one file cannot be more than 5 MB.",
-  "fileNameError":"File name cannot be longer than 55 characters",
+  "fileNameError": "File name cannot be longer than 55 characters",
+  "quantityError": "Maximum allowed to add 7 photos at once",
   "noItems": "No items found",
   "view": "View",
   "labels": {

@@ -5,5 +5,6 @@ export const validationData = {
   filesTypes: ['image/jpeg', 'image/png'],
   fileSizeError: 'becomeTutor.photo.fileSizeError',
   typeError: 'becomeTutor.photo.typeError',
-  maxQuantityFiles: 1
+  maxQuantityFiles: 1,
+  quantityError: 'becomeTutor.photo.quantityError'
 }

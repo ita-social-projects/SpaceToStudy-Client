@@ -8,6 +8,10 @@ export const filesValidation = (
     return validationData.maxFileNameError
   }
 
+  if (isFilesAmountValid(files, validationData.maxQuantityFiles)) {
+    return validationData.quantityError
+  }
+
   if (isFileValid(files, validationData.filesTypes)) {
     return validationData.typeError
   }
@@ -29,9 +33,8 @@ export const isFileValid = (
   files: File[],
   acceptedTypes: string[]
 ): boolean => {
-  return (
-    files.length > 0 &&
-    !files.every((file) => acceptedTypes.some((type) => file.type === type))
+  return !files.every((file) =>
+    acceptedTypes.some((type) => file.type === type)
   )
 }
 
@@ -45,4 +48,11 @@ export const isSizeValid = (
   }
 
   return files.some((file) => file.size > maxSize)
+}
+
+export const isFilesAmountValid = (
+  files: File[],
+  maxAmount: number
+): boolean => {
+  return files.length > maxAmount
 }
