@@ -34,7 +34,7 @@ export interface FindOffersFiltersActions<T> {
 
 export interface CreateOfferBlockProps<T> {
   data: T
-  errors: { [K in keyof T]: string }
+  errors: Record<keyof T, string>
   handleNonInputValueChange: <K extends keyof T>(key: K, value: T[K]) => void
   handleBlur: (
     key: keyof T

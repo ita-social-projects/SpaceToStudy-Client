@@ -26,24 +26,25 @@ import {
   TextFieldVariantEnum,
   ComponentEnum,
   UserResponse,
-  CourseExtendedAutocompleteOptions
+  CourseExtendedAutocompleteOptions,
+  FormNonInputValueChange,
+  UseFormEventHandler
 } from '~/types'
 import { styles } from '~/containers/my-courses/course-toolbar/CourseToolbar.style'
 
 interface CourseToolbarProps {
   data: CourseForm
   user: UserResponse | null
-  errors: { [key in keyof CourseForm]: string }
-  handleBlur: (
-    key: keyof CourseForm
-  ) => (event: FocusEvent<HTMLInputElement>) => void
-  handleInputChange: (
-    key: keyof CourseForm
-  ) => (event: ChangeEvent<HTMLInputElement>) => void
-  handleNonInputValueChange: (
-    key: keyof CourseForm,
-    value: string | ProficiencyLevelEnum[] | null
-  ) => void
+  errors: Record<keyof CourseForm, string>
+  handleBlur: UseFormEventHandler<CourseForm, FocusEvent<HTMLInputElement>>
+  handleInputChange: UseFormEventHandler<
+    CourseForm,
+    ChangeEvent<HTMLInputElement>
+  >
+  handleNonInputValueChange: FormNonInputValueChange<
+    string | ProficiencyLevelEnum[] | null,
+    CourseForm
+  >
 }
 
 const CourseToolbar = ({
