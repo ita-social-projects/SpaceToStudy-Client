@@ -5,59 +5,41 @@ import { URLs } from '~/constants/request'
 import EditProfile from '~/pages/edit-profile/EditProfile'
 import { tabsData } from '~/pages/edit-profile/EditProfile.constants'
 
-const handleClick = vi.fn()
-
 const userId = '63f5d0ebb'
 const userRole = 'tutor'
 
-const userMock = {
-  firstName: 'John',
-  lastName: 'Doe',
-  address: {
-    country: 'United States',
-    city: 'New York'
-  },
-  professionalSummary: 'Experienced professional',
-  nativeLanguage: 'English'
+const mockState = {
+  appMain: { userId: userId, userRole: userRole }
 }
+
+const userMock = 'UserProfileMock'
 
 vi.mock(
   '~/containers/edit-profile/profile-general-tab/ProfileGeneralTab',
   () => ({
     __esModule: true,
     default: function () {
-      return (
-        <div>
-          <div>{userMock.firstName}</div>
-          <div>{userMock.lastName}</div>
-          <div>{userMock.address.country}</div>
-          <div>{userMock.address.city}</div>
-          <div>{userMock.professionalSummary}</div>
-          <div>{userMock.nativeLanguage}</div>
-        </div>
-      )
+      return <div>{userMock}</div>
     }
   })
 )
 
-const mockState = {
-  appMain: { userId: userId, userRole: userRole }
-}
+vi.mock(
+  '~/containers/edit-profile/notification-tab/NotificationConTainer',
+  () => ({
+    __esModule: true,
+    default: function () {
+      return <div>NotificationContainerMock</div>
+    }
+  })
+)
 
-// const tabsData = [
-//   {
-//     title: 'editTutor.main.profile',
-//     content: <div>profile</div>
-//   },
-//   {
-//     title: 'editTutor.main.notifications',
-//     content: <div>notifications</div>
-//   },
-//   {
-//     title: 'editTutor.main.passwordSecurity',
-//     content: <div>passwordSecurity</div>
-//   }
-// ]
+vi.mock('~/containers/tutor-profile/security-block/SecurityBlock', () => ({
+  __esModule: true,
+  default: function () {
+    return <div>Password&SecurityMock</div>
+  }
+}))
 
 describe('EditProfile', () => {
   beforeEach(async () => {
@@ -65,13 +47,13 @@ describe('EditProfile', () => {
       mockAxiosClient
         .onGet(`${URLs.users.get}/${userId}?role=${userRole}`)
         .reply(200, userMock)
-      renderWithProviders(<EditProfile handleClick={handleClick} />, {
+      renderWithProviders(<EditProfile />, {
         preloadedState: mockState
       })
     })
   })
 
-  it('should render Edit Profile component with header, description and menu-tabs', async () => {
+  it('should render component with header, description and menu-tabs', async () => {
     const editProfileHeader = await screen.findByText(
       'editTutor.main.accountSettings'
     )
@@ -86,29 +68,35 @@ describe('EditProfile', () => {
     expect(menuTabs).toHaveLength(3)
   })
 
-  it('should render correct text for each menu tab', () => {
-    Object.values(tabsData).forEach((tabsData) => {
-      expect(screen.getByText(tabsData.title)).toBeInTheDocument()
+  it('should render correct title for each menu tab', () => {
+    Object.values(tabsData).forEach((tabData) => {
+      expect(screen.queryByText(tabData.title)).toBeInTheDocument()
     })
   })
 
-  it('calls handleClick when a menu item is clicked', async () => {
-    const menuTab = await screen.findByRole('button', {
+  it('should render Notification Container after click on Notification menu button', async () => {
+    const notificationMenuTab = await screen.findByRole('button', {
       name: 'editTutor.main.notifications'
     })
-    expect(menuTab).toBeInTheDocument()
     act(() => {
-      fireEvent.click(menuTab)
+      fireEvent.click(notificationMenuTab)
     })
-
     await waitFor(() => {
-      const notificationsContent = screen.getByText(tabsData[1].content)
+      const notificationsContent = screen.getByText('NotificationContainerMock')
       expect(notificationsContent).toBeInTheDocument()
     })
   })
 
-  // it('should render user', async () => {
-  //   const userName = await screen.findByText('John')
-  //   expect(userName).toBeInTheDocument()
-  // })
+  it('should render Security block after click on Password & Security menu button', async () => {
+    const securityMenuTab = await screen.findByRole('button', {
+      name: 'editTutor.main.passwordSecurity'
+    })
+    act(() => {
+      fireEvent.click(securityMenuTab)
+    })
+    await waitFor(() => {
+      const securityContent = screen.getByText('Password&SecurityMock')
+      expect(securityContent).toBeInTheDocument()
+    })
+  })
 })
