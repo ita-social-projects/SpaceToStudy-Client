@@ -9,7 +9,7 @@ interface ActiveButtonActionsProps {
   handleEnrollOfferClick: () => void
   handleToggleOfferStatus: () => Promise<void>
   handleCloseOffer: () => Promise<void>
-  handleOnClickSendMessage: () => void
+  handleSendMessage: () => void
 }
 
 export const activeButtonActions = ({
@@ -21,7 +21,7 @@ export const activeButtonActions = ({
   handleEnrollOfferClick,
   handleToggleOfferStatus,
   handleCloseOffer,
-  handleOnClickSendMessage
+  handleSendMessage
 }: ActiveButtonActionsProps) => {
   const buttons = []
 
@@ -62,7 +62,7 @@ export const activeButtonActions = ({
       buttonProps: {
         disabled: myOffer,
         variant: ButtonVariantEnum.Tonal,
-        onClick: () => handleOnClickSendMessage()
+        onClick: () => handleSendMessage()
       }
     })
   }

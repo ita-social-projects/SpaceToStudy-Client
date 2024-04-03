@@ -131,7 +131,7 @@ const OfferDetails = () => {
     }
   }
 
-  const handleOnClickSendMessage = () => {
+  const handleSendMessage = () => {
     if (offerData) {
       setChatInfo({
         author: offerData.author,
@@ -151,7 +151,7 @@ const OfferDetails = () => {
     handleEnrollOfferClick,
     handleToggleOfferStatus,
     handleCloseOffer,
-    handleOnClickSendMessage
+    handleSendMessage
   })
 
   useLayoutEffect(() => {
