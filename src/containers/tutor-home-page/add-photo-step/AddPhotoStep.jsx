@@ -13,7 +13,7 @@ import { validationData } from './constants'
 
 const AddPhotoStep = ({ btnsBox, stepLabel }) => {
   const { isLaptopAndAbove, isTablet, isMobile } = useBreakpoints()
-  const [photoError, setPhotoError] = useState(null)
+  const [photoError, setPhotoError] = useState('')
   const { t } = useTranslation()
   const { stepData, handleStepData } = useStepContext()
   const photo = stepData[stepLabel]

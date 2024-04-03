@@ -40,7 +40,7 @@ Default.args = {
   buttonText: 'Upload your files',
   emitter: () => console.log('emitter called'),
   initialState: [],
-  initialError: null,
+  initialError: '',
   validationData: {
     maxFileSize: 5_000_000,
     maxAllFilesSize: 20_000_000,

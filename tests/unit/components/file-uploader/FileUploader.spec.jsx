@@ -5,7 +5,7 @@ import { vi } from 'vitest'
 const buttonText = 'test'
 const emitter = vi.fn()
 const initialState = []
-const initialError = undefined
+const initialError = ''
 const validationData = {
   maxFileSize: 5_000_000,
   maxAllFilesSize: 20_000_000,
@@ -62,7 +62,7 @@ describe('FileUploader test with file', () => {
   it('should delete file after uploading', () => {
     const remove = screen.getByTestId('delete-file')
     fireEvent.click(remove)
-    const newState = { error: undefined, files: [] }
+    const newState = { error: '', files: [] }
 
     expect(emitter).toHaveBeenCalledWith(newState)
   })

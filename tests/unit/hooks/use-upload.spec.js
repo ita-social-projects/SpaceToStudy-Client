@@ -88,6 +88,6 @@ describe('useUpload custom hook test without errors', () => {
 
     act(() => result.current.deleteFile(fakeFile))
 
-    expect(emitter).toHaveBeenCalledWith({ error: undefined, files: [] })
+    expect(emitter).toHaveBeenCalledWith({ error: '', files: [] })
   })
 })

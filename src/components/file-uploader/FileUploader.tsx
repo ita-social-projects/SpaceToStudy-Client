@@ -17,16 +17,16 @@ import {
   AddDocuments,
   ButtonVariantEnum,
   ComponentEnum,
-  Emitter,
+  UploadFileEmitter,
   InputEnum,
   SizeEnum
 } from '~/types'
 
 interface FileUploaderProps {
   buttonText: string
-  emitter: ({ files, error }: Emitter) => void
-  initialState: File[]
-  initialError: string
+  emitter: UploadFileEmitter
+  initialState?: File[]
+  initialError?: string
   validationData: AddDocuments
   isImages?: boolean
   sx?: {

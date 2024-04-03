@@ -8,7 +8,7 @@ import { useSnackBarContext } from '~/context/snackbar-context'
 import { validationData } from '~/containers/add-documents/AddDocuments.constants'
 import { styles } from '~/containers/add-documents/AddDocuments.styles'
 import { snackbarVariants } from '~/constants'
-import { ButtonVariantEnum, Emitter } from '~/types'
+import { ButtonVariantEnum, UploadFileEmitter } from '~/types'
 import { spliceSx } from '~/utils/helper-functions'
 
 interface AddDocumentsProps {
@@ -34,7 +34,7 @@ const AddDocuments: FC<AddDocumentsProps> = ({
   removePreviousFiles = false
 }) => {
   const [documents, setDocuments] = useState<File[]>([])
-  const [documentsError, setDocumentsError] = useState<string>('')
+  const [documentsError, setDocumentsError] = useState('')
   const { setAlert } = useSnackBarContext()
 
   useEffect(() => {
@@ -47,7 +47,7 @@ const AddDocuments: FC<AddDocumentsProps> = ({
     }
   }, [documentsError, setAlert])
 
-  const addDocuments = ({ files, error }: Emitter) => {
+  const addDocuments: UploadFileEmitter = ({ files, error }) => {
     setDocuments(files)
     setDocumentsError(error)
 
