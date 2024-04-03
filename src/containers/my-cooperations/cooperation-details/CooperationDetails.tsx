@@ -76,7 +76,7 @@ const CooperationDetails = () => {
 
   const pageContent =
     isActivityCreated && activeTab === CooperationTabsEnum.Activities ? (
-      <CooperationActivities />
+      <CooperationActivities cooperationId={id} />
     ) : (
       cooperationContent
     )

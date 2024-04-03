@@ -8,7 +8,8 @@ import {
   UpdateCooperationsParams,
   CreateOrUpdateNoteParams,
   Offer,
-  MyCooperationDetails
+  MyCooperationDetails,
+  UpdateCooperationsSections
 } from '~/types'
 import { createUrlPath } from '~/utils/helper-functions'
 
@@ -22,7 +23,7 @@ export const cooperationService = {
   ): Promise<AxiosResponse> =>
     await axiosClient.post(URLs.cooperations.create, data),
   updateCooperation: async (
-    data: UpdateCooperationsParams
+    data: UpdateCooperationsParams | UpdateCooperationsSections
   ): Promise<AxiosResponse> =>
     await axiosClient.patch(
       createUrlPath(URLs.cooperations.update, data._id),

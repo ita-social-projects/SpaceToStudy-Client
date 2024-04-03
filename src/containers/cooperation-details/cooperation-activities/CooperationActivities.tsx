@@ -13,12 +13,43 @@ import { authRoutes } from '~/router/constants/authRoutes'
 import openIcon from '~/assets/img/cooperation-details/resource-availability/open-icon.svg'
 import closeIcon from '~/assets/img/cooperation-details/resource-availability/closed-icon.svg'
 import { styles } from '~/containers/cooperation-details/cooperation-activities/CooperationActivities.styles'
-import { ResourcesAvailabilityEnum, ButtonVariantEnum, SizeEnum } from '~/types'
+import {
+  ResourcesAvailabilityEnum,
+  ButtonVariantEnum,
+  SizeEnum,
+  CourseSection,
+  ButtonTypeEnum,
+  ComponentEnum
+} from '~/types'
+import useForm from '~/hooks/use-form'
+import { cooperationService } from '~/services/cooperation-service'
+interface CooperationActivitiesProps {
+  cooperationId: string | undefined
+}
 
-const CooperationActivities = () => {
+const CooperationActivities = ({
+  cooperationId
+}: CooperationActivitiesProps) => {
   const { t } = useTranslation()
   const { resourceAvailability, setResourceAvailability } =
     useResourceAvailabilityContext()
+
+  const updateCooperationSection = async (data?: {
+    sections: CourseSection[]
+  }) => {
+    await cooperationService.updateCooperation({
+      _id: cooperationId,
+      ...data
+    })
+  }
+
+  const { data, handleNonInputValueChange, handleSubmit } = useForm<{
+    sections: CourseSection[]
+  }>({
+    initialValues: { sections: [] },
+    onSubmit: updateCooperationSection,
+    submitWithData: true
+  })
 
   const cooperationOption = cooperationTranslationKeys.map(
     ({ title, value }) => ({
@@ -33,7 +64,7 @@ const CooperationActivities = () => {
       : closeIcon
 
   return (
-    <Box>
+    <Box component={ComponentEnum.Form} onSubmit={handleSubmit}>
       <Box data-testid='coop-from-scratch' sx={styles.root}>
         <Box sx={styles.publishBlock}>
           <Box>
@@ -57,7 +88,10 @@ const CooperationActivities = () => {
             />
           </Box>
         </Box>
-        <CooperationActivitiesList />
+        <CooperationActivitiesList
+          data={data}
+          handleNonInputValueChange={handleNonInputValueChange}
+        />
       </Box>
       <Box sx={styles.buttons}>
         <AppButton
@@ -68,7 +102,9 @@ const CooperationActivities = () => {
         >
           {t('common.cancel')}
         </AppButton>
-        <AppButton size={SizeEnum.ExtraLarge}>{t('common.save')}</AppButton>
+        <AppButton size={SizeEnum.ExtraLarge} type={ButtonTypeEnum.Submit}>
+          {t('common.save')}
+        </AppButton>
       </Box>
     </Box>
   )
