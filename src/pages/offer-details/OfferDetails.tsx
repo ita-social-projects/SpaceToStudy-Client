@@ -131,15 +131,13 @@ const OfferDetails = () => {
     }
   }
 
-  const emptyFunction = () => void {}
-
   const handleOnClickSendMessage = () => {
     if (offerData) {
       setChatInfo({
         author: offerData.author,
         authorRole: offerData.authorRole,
         chatId: offerData.chatId,
-        updateInfo: emptyFunction
+        updateInfo: () => void fetchDataOffer()
       })
     }
   }
