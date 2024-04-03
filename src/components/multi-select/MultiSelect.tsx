@@ -20,7 +20,7 @@ import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
 
 import { defaultResponses } from '~/constants'
 import { spliceSx } from '~/utils/helper-functions'
-import { styles } from '~/components/filter-selector/FilterSelector.styles'
+import { styles } from '~/components/multi-select/MultiSelect.styles'
 import {
   ButtonVariantEnum,
   CategoryNameInterface,
@@ -38,7 +38,7 @@ interface FilterSelectorProps<T> extends Omit<MenuProps, 'open'> {
   customSx?: { root?: SxProps }
 }
 
-const FilterSelector = <T extends Pick<CategoryNameInterface, '_id'>>({
+const MultiSelect = <T extends Pick<CategoryNameInterface, '_id'>>({
   title,
   service,
   selectedItems,
@@ -196,4 +196,4 @@ const FilterSelector = <T extends Pick<CategoryNameInterface, '_id'>>({
   )
 }
 
-export default FilterSelector
+export default MultiSelect

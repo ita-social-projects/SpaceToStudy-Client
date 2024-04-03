@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react'
-import FilterSelector from '~/components/filter-selector/FilterSelector'
+import MultiSelect from '~/components/multi-select/MultiSelect'
 
 vi.mock('simplebar-react', () => {
   return {
@@ -24,11 +24,11 @@ vi.mock('react-i18next', () => ({
 beforeEach(() => {
   const selectedItems = []
 
-  render(<FilterSelector selectedItems={selectedItems} />)
+  render(<MultiSelect selectedItems={selectedItems} />)
 })
 
-describe('FilterSelector', () => {
-  it('FilterSelector component renders correctly', () => {
+describe('MultiSelect', () => {
+  it('MultiSelect component renders correctly', () => {
     const buttonEl = screen.getByRole('button')
 
     expect(buttonEl).toBeInTheDocument()
