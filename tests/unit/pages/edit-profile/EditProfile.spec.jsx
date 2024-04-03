@@ -1,4 +1,3 @@
-import { screen } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 
 import EditProfile from '~/pages/edit-profile/EditProfile'

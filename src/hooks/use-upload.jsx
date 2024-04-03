@@ -26,10 +26,7 @@ const useUpload = ({ files, validationData, emitter }) => {
 
   const addFiles = (e) => {
     e.preventDefault()
-    const newFiles = [...files, ...e.target.files].slice(
-      0,
-      validationData.maxQuantityFiles
-    )
+    const newFiles = [...files, ...e.target.files]
     const error = filesValidation(newFiles, validationData)
     const filesForEmitter = error ? files : newFiles
     emitter({ files: filesForEmitter, error })
