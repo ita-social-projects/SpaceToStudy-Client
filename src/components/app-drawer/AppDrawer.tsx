@@ -11,14 +11,11 @@ import { PositionEnum } from '~/types'
 
 type PositionFromEnum = Exclude<PositionEnum, 'start' | 'vertical' | 'end'>
 
-interface CustomDrawerProps extends Omit<DrawerProps, 'anchor'> {
-  anchor?: DrawerProps['anchor'] | PositionFromEnum
-}
-
-interface AppDrawerProps extends CustomDrawerProps {
+interface AppDrawerProps extends Omit<DrawerProps, 'anchor'> {
   children: ReactNode
   closeIcon?: boolean
   onClose: () => void
+  anchor?: DrawerProps['anchor'] | PositionFromEnum
 }
 
 const AppDrawer: FC<AppDrawerProps> = ({
