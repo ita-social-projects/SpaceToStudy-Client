@@ -1,1 +1,6 @@
-export type Emitter = { files: File[]; error: string }
+type UploadFileEmitterArgs = {
+  files: File[]
+  error: string
+}
+
+export type UploadFileEmitter = (args: UploadFileEmitterArgs) => void
