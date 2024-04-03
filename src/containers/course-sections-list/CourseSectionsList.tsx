@@ -24,23 +24,18 @@ import useDroppable from '~/hooks/use-droppable'
 import useMenu from '~/hooks/use-menu'
 
 import { styles } from '~/containers/course-sections-list/CourseSectionsList.styles'
-import { CourseSection, CourseResources } from '~/types'
+import { CourseSection, CourseResources, FormInputValueChange } from '~/types'
 import { useModalContext } from '~/context/modal-context'
 import { useCooperationContext } from '~/context/cooperation-context'
 
 interface CourseSectionsListProps {
   items: CourseSection[]
   setSectionsItems: (value: CourseSection[]) => void
-  handleSectionInputChange: (
-    id: string,
-    field: keyof CourseSection,
-    value: string
-  ) => void
-  handleSectionNonInputChange: (
-    id: string,
-    field: keyof CourseSection,
-    value: CourseResources[]
-  ) => void
+  handleSectionInputChange: FormInputValueChange<string, CourseSection>
+  handleSectionNonInputChange: FormInputValueChange<
+    CourseResources[],
+    CourseSection
+  >
   handleSectionResourcesOrder?: (
     id: string,
     resources: CourseResources[]

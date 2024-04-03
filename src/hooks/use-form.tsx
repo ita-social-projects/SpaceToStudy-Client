@@ -1,13 +1,17 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
+import {
+  FormNonInputValueChange,
+  UseFormErrors,
+  UseFormEventHandler,
+  UseFormValidations
+} from '~/types'
 import { getEmptyValues } from '~/utils/helper-functions'
 import { isEqual } from '~/utils/isEqual'
 
 interface UseFormProps<T> {
   initialValues: T
-  initialErrors?: { [K in keyof T]: string }
-  validations?: Partial<{
-    [K in keyof T]: (value: T[K] | string, data: T) => string | undefined
-  }>
+  initialErrors?: UseFormErrors<T>
+  validations?: Partial<UseFormValidations<T>>
   onSubmit?: (data?: T) => Promise<void>
   submitWithData?: boolean
 }
@@ -15,14 +19,10 @@ interface UseFormProps<T> {
 interface UseFormOutput<T> {
   data: T
   isDirty: boolean
-  errors: { [K in keyof T]: string }
-  handleInputChange: (
-    key: keyof T
-  ) => (event: React.ChangeEvent<HTMLInputElement>) => void
-  handleNonInputValueChange: (key: keyof T, value: T[keyof T]) => void
-  handleBlur: (
-    key: keyof T
-  ) => (event: React.FocusEvent<HTMLInputElement>) => void
+  errors: UseFormErrors<T>
+  handleInputChange: UseFormEventHandler<T, React.ChangeEvent<HTMLInputElement>>
+  handleNonInputValueChange: FormNonInputValueChange<T[keyof T], T>
+  handleBlur: UseFormEventHandler<T, React.FocusEvent<HTMLInputElement>>
   handleErrors: (key: keyof T, error: string) => void
   handleSubmit: (event: React.FormEvent<HTMLDivElement>) => void
   resetData: (keys?: (keyof T)[]) => void
@@ -38,9 +38,8 @@ export const useForm = <T extends object>({
 }: UseFormProps<T>): UseFormOutput<T> => {
   const [data, setData] = useState<T>(initialValues)
   const [isDirty, setDirty] = useState<boolean>(false)
-  const [errors, setErrors] =
-    useState<{ [K in keyof T]: string }>(initialErrors)
-  const [isTouched, setTouched] = useState<{ [K in keyof T]: boolean }>(
+  const [errors, setErrors] = useState<UseFormErrors<T>>(initialErrors)
+  const [isTouched, setTouched] = useState<Record<keyof T, boolean>>(
     getEmptyValues(initialValues, false)
   )
 
