@@ -54,7 +54,7 @@ const EditProfile = () => {
     activeTab && tabsData[activeTab]?.content?.(response)
 
   return (
-    <PageWrapper>
+    <PageWrapper sx={styles.sectionsWrapper}>
       <Box sx={styles.headerContainer}>
         <Box>
           <Typography sx={styles.title}>
