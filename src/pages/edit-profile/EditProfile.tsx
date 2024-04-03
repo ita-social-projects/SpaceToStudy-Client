@@ -65,7 +65,7 @@ const EditProfile = () => {
           </Typography>
         </Box>
         <AppButton
-          size={SizeEnum.Small}
+          size={SizeEnum.Large}
           sx={styles.backBtn}
           variant={ButtonVariantEnum.Tonal}
         >
