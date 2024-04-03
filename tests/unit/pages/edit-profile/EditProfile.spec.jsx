@@ -1,4 +1,4 @@
-import { screen, waitFor, fireEvent, act } from '@testing-library/react'
+import { screen, waitFor, fireEvent } from '@testing-library/react'
 import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
 
@@ -71,9 +71,7 @@ describe('EditProfile', () => {
     const profileMenuTab = await screen.findByRole('button', {
       name: 'editTutor.main.profile'
     })
-    act(() => {
-      fireEvent.click(profileMenuTab)
-    })
+    fireEvent.click(profileMenuTab)
     await waitFor(() => {
       const profileContent = screen.getByText('UserProfileMock')
       expect(profileContent).toBeInTheDocument()
@@ -84,9 +82,7 @@ describe('EditProfile', () => {
     const notificationMenuTab = await screen.findByRole('button', {
       name: 'editTutor.main.notifications'
     })
-    act(() => {
-      fireEvent.click(notificationMenuTab)
-    })
+    fireEvent.click(notificationMenuTab)
     await waitFor(() => {
       const notificationsContent = screen.getByText('NotificationContainerMock')
       expect(notificationsContent).toBeInTheDocument()
@@ -97,9 +93,7 @@ describe('EditProfile', () => {
     const securityMenuTab = await screen.findByRole('button', {
       name: 'editTutor.main.passwordSecurity'
     })
-    act(() => {
-      fireEvent.click(securityMenuTab)
-    })
+    fireEvent.click(securityMenuTab)
     await waitFor(() => {
       const securityContent = screen.getByText('Password&SecurityMock')
       expect(securityContent).toBeInTheDocument()
