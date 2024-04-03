@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, useMemo, useEffect } from 'react'
+import { useState, ChangeEvent, useMemo, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import SimpleBar from 'simplebar-react'
 import { SxProps } from '@mui/material'
@@ -53,6 +53,7 @@ const MultiSelect = <T extends Pick<CategoryNameInterface, '_id'>>({
   const [menuAnchor, setMenuAnchor] = useState<null | HTMLElement>(null)
   const [inputValue, setInputValue] = useState<string>('')
   const [selectedNames, setSelectedNames] = useState<string[]>([])
+  const AppButtonRef = useRef<HTMLButtonElement | null>(null)
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value)
@@ -63,7 +64,7 @@ const MultiSelect = <T extends Pick<CategoryNameInterface, '_id'>>({
   }
 
   const handleMenuOpen = () => {
-    setMenuAnchor(document.getElementById('menu-filter'))
+    setMenuAnchor(AppButtonRef.current)
   }
 
   const handleMenuClose = () => {
@@ -102,7 +103,7 @@ const MultiSelect = <T extends Pick<CategoryNameInterface, '_id'>>({
   }, [response, inputValue, valueField, showNoneProperty])
 
   const menuItems = filteredItems.map((item) => {
-    const field = String(valueField ? item[valueField] : item)
+    const field = String(valueField ? (item as T)[valueField] : item)
     const id = item._id
 
     return (
@@ -120,7 +121,7 @@ const MultiSelect = <T extends Pick<CategoryNameInterface, '_id'>>({
   useEffect(() => {
     const filteredNames = filteredItems
       .filter((item) => selectedItems.includes(item._id))
-      .map((item) => String(valueField ? item[valueField] : item))
+      .map((item) => String(valueField ? (item as T)[valueField] : item))
 
     setSelectedNames(filteredNames)
   }, [filteredItems, selectedItems, valueField])
@@ -142,20 +143,20 @@ const MultiSelect = <T extends Pick<CategoryNameInterface, '_id'>>({
   return (
     <>
       <AppButton
-        id='menu-filter'
         onClick={handleMenuOpen}
+        ref={AppButtonRef}
         sx={spliceSx(styles.root, customSx?.root)}
         variant={ButtonVariantEnum.Tonal}
       >
         <Typography sx={styles.text}>{title}:</Typography>
         <Typography sx={styles.chosenFilters}>{chosenFiltersText}</Typography>
-        <KeyboardArrowDownIcon sx={styles.arrowIcon(!!menuAnchor)} />
+        <KeyboardArrowDownIcon sx={styles.arrowIcon(Boolean(menuAnchor))} />
       </AppButton>
       <Menu
         anchorEl={menuAnchor}
         anchorOrigin={{ vertical: 'bottom', horizontal: position }}
         onClose={handleMenuClose}
-        open={!!menuAnchor}
+        open={Boolean(menuAnchor)}
         slotProps={{ paper: styles.menuPaperProps }}
         sx={styles.menu(itemsLoad)}
         transformOrigin={{ vertical: 'top', horizontal: position }}
