@@ -3,8 +3,8 @@ import { TypographyVariantEnum } from '~/types'
 
 export const styles = {
   sectionsWrapper: {
-    pr: { md: '156px', lg: '156px' },
-    pl: { md: '156px', lg: '156px' }
+    pr: { lg: '156px' },
+    pl: { lg: '156px' }
   },
   headerContainer: {
     display: 'flex',
@@ -26,7 +26,7 @@ export const styles = {
   },
   sidebarMenu: {
     width: '30%',
-    pr: { md: '96px', lg: '96px' }
+    pr: { lg: '96px' }
   },
   mainContainer: {
     display: 'flex',
