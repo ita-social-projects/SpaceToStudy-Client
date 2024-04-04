@@ -13,81 +13,37 @@ const mockedValidation = {
   maxFileNameError: 'common.fileNameError'
 }
 
+const mockedFile = {
+  lastModified: 1676387080931,
+  lastModifiedDate: new Date(),
+  name: '12345.jpg',
+  size: 5_000_000,
+  type: 'image/jpeg',
+  webkitRelativePath: ''
+}
+
 const tooLongNameFile = [
   {
-    lastModified: 1676387080931,
-    lastModifiedDate: new Date(),
-    name: 'wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww.jpg',
-    size: 26715,
-    type: 'image/jpeg',
-    webkitRelativePath: ''
+    ...mockedFile,
+    name: 'wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww.jpg'
   }
 ]
 
 const tooBigFile = [
   {
-    lastModified: 1676387080931,
-    lastModifiedDate: new Date(),
-    name: 'wwwwwwwwwwwwwwwww.jpg',
-    size: 5_000_002,
-    type: 'image/jpeg',
-    webkitRelativePath: ''
+    ...mockedFile,
+    size: 5_000_002
   }
 ]
 
 const wrongTypeFile = [
   {
-    lastModified: 1676387080931,
-    lastModifiedDate: new Date(),
-    name: 'wwwwwwwwwwwwwwwww.jpg',
-    size: 5_000_000,
-    type: 'image/bmp',
-    webkitRelativePath: ''
+    ...mockedFile,
+    type: 'image/bmp'
   }
 ]
 
-const overallSizeTooBig = [
-  {
-    lastModified: 1676387080931,
-    lastModifiedDate: new Date(),
-    name: 'wwwwwwwwwwwwwwwww.jpg',
-    size: 5_000_000,
-    type: 'image/jpeg',
-    webkitRelativePath: ''
-  },
-  {
-    lastModified: 1676387080931,
-    lastModifiedDate: new Date(),
-    name: 'wwwwwwwwwwwwwwwww.jpg',
-    size: 5_000_000,
-    type: 'image/jpeg',
-    webkitRelativePath: ''
-  },
-  {
-    lastModified: 1676387080931,
-    lastModifiedDate: new Date(),
-    name: 'wwwwwwwwwwwwwwwww.jpg',
-    size: 5_000_000,
-    type: 'image/jpeg',
-    webkitRelativePath: ''
-  },
-  {
-    lastModified: 1676387080931,
-    lastModifiedDate: new Date(),
-    name: 'wwwwwwwwwwwwwwwww.jpg',
-    size: 5_000_000,
-    type: 'image/jpeg',
-    webkitRelativePath: ''
-  },
-  {
-    lastModified: 1676387080931,
-    lastModifiedDate: new Date(),
-    name: 'wwwwwwwwwwwwwwwww.jpg',
-    size: 5_000_000,
-    type: 'image/jpeg',
-    webkitRelativePath: ''
-  }
-]
+const overallSizeTooBig = Array(6).fill(mockedFile)
 
 describe('filesValidation', () => {
   it('Should return error that file name too long', () => {
