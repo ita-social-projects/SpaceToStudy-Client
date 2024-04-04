@@ -146,7 +146,7 @@ const OfferDetails = () => {
     isEnrolled: Boolean(offerData?.enrolledUsers.includes(userId)),
     loading: updateLoading,
     oppositeRole: offerData?.authorRole !== userRole,
-    myOffer: offerData?.author._id === userId,
+    isMyOffer: offerData?.author._id === userId,
     status: offerData?.status,
     handleEnrollOfferClick,
     handleToggleOfferStatus,
