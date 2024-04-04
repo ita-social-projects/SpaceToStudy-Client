@@ -32,7 +32,8 @@ export const styles = {
     ...ellipsisTextStyle(2),
     typography: 'midTitle',
     fontWeight: 600,
-    color: 'primary.700'
+    color: 'primary.700',
+    wordBreak: 'break-word'
   },
   iconButton: {
     color: 'basic.black',
