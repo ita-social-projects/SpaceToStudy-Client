@@ -24,11 +24,11 @@ vi.mock(
 )
 
 vi.mock(
-  '~/containers/edit-profile/notification-tab/NotificationConTainer',
+  '~/containers/edit-profile/notification-tab/NotificationContainer',
   () => ({
     __esModule: true,
     default: function () {
-      return <div>NotificationContainerMock</div>
+      return <div>NotificationMock</div>
     }
   })
 )
@@ -84,7 +84,7 @@ describe('EditProfile', () => {
     })
     fireEvent.click(notificationMenuTab)
     await waitFor(() => {
-      const notificationsContent = screen.getByText('NotificationContainerMock')
+      const notificationsContent = screen.getByText('NotificationMock')
       expect(notificationsContent).toBeInTheDocument()
     })
   })
