@@ -3,7 +3,6 @@ import ListItemButton from '@mui/material/ListItemButton'
 import ListItemText from '@mui/material/ListItemText'
 import List from '@mui/material/List'
 import ListItemIcon from '@mui/material/ListItemIcon'
-// import { SxProps, Theme } from '@mui/material/styles'
 
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
