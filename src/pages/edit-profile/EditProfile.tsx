@@ -54,7 +54,7 @@ const EditProfile = () => {
     activeTab && tabsData[activeTab]?.content?.(response)
 
   return (
-    <PageWrapper>
+    <PageWrapper sx={styles.sectionsWrapper}>
       <Box sx={styles.headerContainer}>
         <Box>
           <Typography sx={styles.title}>
@@ -65,7 +65,7 @@ const EditProfile = () => {
           </Typography>
         </Box>
         <AppButton
-          size={SizeEnum.Small}
+          size={SizeEnum.Large}
           sx={styles.backBtn}
           variant={ButtonVariantEnum.Tonal}
         >
@@ -74,11 +74,7 @@ const EditProfile = () => {
       </Box>
       <Divider sx={styles.line} />
       <Box sx={styles.mainContainer}>
-        <SidebarMenu
-          handleClick={handleClick}
-          styles={styles.sidebarMenu}
-          tabsData={tabsData}
-        />
+        <SidebarMenu handleClick={handleClick} tabsData={tabsData} />
         <Box sx={styles.mainContent}>{cooperationContent}</Box>
       </Box>
     </PageWrapper>
