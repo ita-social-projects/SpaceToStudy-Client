@@ -4,53 +4,58 @@ export const filesValidation = (
   files: File[],
   validationData: AddDocuments
 ): string | undefined => {
-  if (!isFileNameValid(files, validationData.maxFileNameLength)) {
+  if (isFileNameInvalid(files, validationData.maxFileNameLength)) {
     return validationData.maxFileNameError
   }
 
-  if (!isFilesAmountValid(files, validationData.maxQuantityFiles)) {
+  if (isFilesAmountInvalid(files, validationData.maxQuantityFiles)) {
     return validationData.quantityError
   }
 
-  if (!isFileValid(files, validationData.filesTypes)) {
+  if (isFileInvalid(files, validationData.filesTypes)) {
     return validationData.typeError
   }
 
-  if (!isSizeValid(files, validationData.maxFileSize)) {
+  if (isSizeInvalid(files, validationData.maxFileSize)) {
     return validationData.fileSizeError
   }
 
-  if (!isSizeValid(files, validationData.maxAllFilesSize, true)) {
+  if (isSizeInvalid(files, validationData.maxAllFilesSize, true)) {
     return validationData.allFilesSizeError
   }
 }
 
-export const isFileNameValid = (files: File[], maxLength: number): boolean => {
-  return files.every((file) => file.name.length < maxLength)
+export const isFileNameInvalid = (
+  files: File[],
+  maxLength: number
+): boolean => {
+  return files.some((file) => file.name.length > maxLength)
 }
 
-export const isFileValid = (
+export const isFileInvalid = (
   files: File[],
   acceptedTypes: string[]
 ): boolean => {
-  return files.every((file) => acceptedTypes.some((type) => file.type === type))
+  return !files.every((file) =>
+    acceptedTypes.some((type) => file.type === type)
+  )
 }
 
-export const isSizeValid = (
+export const isSizeInvalid = (
   files: File[],
   maxSize: number,
   countAll: boolean = false
 ): boolean => {
   if (countAll) {
-    return files.reduce((acc, file) => acc + file.size, 0) <= maxSize
+    return files.reduce((acc, file) => acc + file.size, 0) > maxSize
   }
 
-  return files.every((file) => file.size <= maxSize)
+  return files.some((file) => file.size > maxSize)
 }
 
-export const isFilesAmountValid = (
+export const isFilesAmountInvalid = (
   files: File[],
   maxAmount: number
 ): boolean => {
-  return files.length <= maxAmount
+  return files.length > maxAmount
 }
