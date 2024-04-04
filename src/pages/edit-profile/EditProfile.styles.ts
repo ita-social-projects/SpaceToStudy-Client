@@ -7,7 +7,7 @@ export const styles = {
     alignItems: 'center'
   },
   title: {
-    typography: TypographyVariantEnum.H5
+    typography: TypographyVariantEnum.H4
   },
   description: {
     typography: TypographyVariantEnum.Subtitle1,
