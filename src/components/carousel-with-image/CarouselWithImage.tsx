@@ -31,7 +31,9 @@ const CarouselWithImage: FC<CarouselWithImageProps> = ({ items }) => {
       />
       <Box sx={styles.text}>
         <Typography sx={styles.title}>{t(item.title)}</Typography>
-        <Typography sx={styles.description}>{t(item.description)}</Typography>
+        <Typography sx={styles.description}>
+          {t(item.description ?? '')}
+        </Typography>
       </Box>
     </Box>
   ))
