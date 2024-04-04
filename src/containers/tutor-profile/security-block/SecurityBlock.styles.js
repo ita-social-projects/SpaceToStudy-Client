@@ -5,7 +5,6 @@ export const styles = {
   container: {
     display: 'flex',
     flexDirection: 'column',
-    maxWidth: '630px',
     width: '100%',
     boxSizing: 'border-box',
     p: '20px 40px',
