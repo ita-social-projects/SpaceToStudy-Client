@@ -74,11 +74,7 @@ const EditProfile = () => {
       </Box>
       <Divider sx={styles.line} />
       <Box sx={styles.mainContainer}>
-        <SidebarMenu
-          handleClick={handleClick}
-          styles={styles.sidebarMenu}
-          tabsData={tabsData}
-        />
+        <SidebarMenu handleClick={handleClick} tabsData={tabsData} />
         <Box sx={styles.mainContent}>{cooperationContent}</Box>
       </Box>
     </PageWrapper>
