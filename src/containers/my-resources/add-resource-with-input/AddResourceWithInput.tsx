@@ -19,7 +19,7 @@ import { SortHook } from '~/hooks/table/use-sort'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import AppButton from '~/components/app-button/AppButton'
 import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
-import MultiSelect from '~/components/multi-select/MultiSelect'
+import AppButtonMenu from '~/components/app-button-menu/AppButtonMenu'
 import ResourcesToolBarDrawer from '~/containers/my-resources/resources-toolbar-drawer/ResourcesToolbarDrawer'
 
 import { styles } from '~/containers/my-resources/add-resource-with-input/AddResourceWithInput.styles'
@@ -76,7 +76,7 @@ const AddResourceWithInput: FC<AddResourceWithInputProps> = ({
   const filterWithInput = (
     <>
       {selectedItems && setItems && (
-        <MultiSelect<CategoryNameInterface>
+        <AppButtonMenu<CategoryNameInterface>
           position={PositionEnum.Right}
           selectedItems={selectedItems}
           service={ResourceService.getResourcesCategoriesNames}

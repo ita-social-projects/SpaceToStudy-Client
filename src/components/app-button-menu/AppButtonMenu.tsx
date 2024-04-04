@@ -1,9 +1,9 @@
-import { useState, ChangeEvent, useMemo, useEffect, useRef } from 'react'
+import { useState, ChangeEvent, useMemo, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import SimpleBar from 'simplebar-react'
 import { SxProps } from '@mui/material'
 import Box from '@mui/material/Box'
-import Menu, { MenuProps } from '@mui/material/Menu'
+import { MenuProps } from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import { PopoverOrigin } from '@mui/material/Popover'
 import Divider from '@mui/material/Divider'
@@ -14,20 +14,21 @@ import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 
 import useAxios from '~/hooks/use-axios'
+import useMenu from '~/hooks/use-menu'
 import Loader from '~/components/loader/Loader'
 import AppButton from '~/components/app-button/AppButton'
 import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
 
 import { defaultResponses } from '~/constants'
 import { spliceSx } from '~/utils/helper-functions'
-import { styles } from '~/components/multi-select/MultiSelect.styles'
+import { styles } from '~/components/app-button-menu/AppButtonMenu.styles'
 import {
   ButtonVariantEnum,
   CategoryNameInterface,
   ServiceFunction
 } from '~/types'
 
-interface FilterSelectorProps<T> extends Omit<MenuProps, 'open'> {
+interface AppButtonMenuProps<T> extends Omit<MenuProps, 'open'> {
   title: string
   service: ServiceFunction<T[]>
   selectedItems: string[]
@@ -38,7 +39,7 @@ interface FilterSelectorProps<T> extends Omit<MenuProps, 'open'> {
   customSx?: { root?: SxProps }
 }
 
-const MultiSelect = <T extends Pick<CategoryNameInterface, '_id'>>({
+const AppButtonMenu = <T extends Pick<CategoryNameInterface, '_id'>>({
   title,
   service,
   selectedItems,
@@ -48,12 +49,11 @@ const MultiSelect = <T extends Pick<CategoryNameInterface, '_id'>>({
   showNoneProperty = false,
   customSx,
   ...props
-}: FilterSelectorProps<T>) => {
+}: AppButtonMenuProps<T>) => {
   const { t } = useTranslation()
-  const [menuAnchor, setMenuAnchor] = useState<null | HTMLElement>(null)
   const [inputValue, setInputValue] = useState<string>('')
   const [selectedNames, setSelectedNames] = useState<string[]>([])
-  const AppButtonRef = useRef<HTMLButtonElement | null>(null)
+  const { anchorEl, openMenu, renderMenu } = useMenu()
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value)
@@ -61,14 +61,6 @@ const MultiSelect = <T extends Pick<CategoryNameInterface, '_id'>>({
 
   const handleInputReset = () => {
     setInputValue('')
-  }
-
-  const handleMenuOpen = () => {
-    setMenuAnchor(AppButtonRef.current)
-  }
-
-  const handleMenuClose = () => {
-    setMenuAnchor(null)
   }
 
   const onMenuItemClick = (item: string, id: string) => {
@@ -140,61 +132,62 @@ const MultiSelect = <T extends Pick<CategoryNameInterface, '_id'>>({
     ? selectedNames.join(', ')
     : t('cooperationsPage.tabs.all')
 
+  const menu = renderMenu(
+    <>
+      <Box sx={styles.inputWrapper}>
+        <InputWithIcon
+          onChange={handleInputChange}
+          onClear={handleInputReset}
+          placeholder={t('common.search')}
+          sx={styles.input}
+          value={inputValue}
+        />
+      </Box>
+
+      <AppButton
+        disableRipple
+        disabled={!selectedItems.length}
+        onClick={onClearAll}
+        sx={styles.clearAll}
+        variant={ButtonVariantEnum.Text}
+      >
+        <ClearIcon sx={styles.clearIcon} />
+        {t('header.notifications.clearAll')}
+      </AppButton>
+
+      <Divider sx={styles.divider} />
+
+      <SimpleBar style={styles.scrollableContent}>
+        {itemsLoad ? (
+          <Loader pageLoad size={20} sx={styles.loader} />
+        ) : (
+          scrollableContent
+        )}
+      </SimpleBar>
+    </>,
+    {
+      anchorOrigin: { vertical: 'bottom', horizontal: position },
+      slotProps: { paper: styles.menuPaperProps },
+      sx: styles.menu(itemsLoad),
+      transformOrigin: { vertical: 'top', horizontal: position },
+      ...props
+    }
+  )
+
   return (
     <>
       <AppButton
-        onClick={handleMenuOpen}
-        ref={AppButtonRef}
+        onClick={openMenu}
         sx={spliceSx(styles.root, customSx?.root)}
         variant={ButtonVariantEnum.Tonal}
       >
         <Typography sx={styles.text}>{title}:</Typography>
         <Typography sx={styles.chosenFilters}>{chosenFiltersText}</Typography>
-        <KeyboardArrowDownIcon sx={styles.arrowIcon(Boolean(menuAnchor))} />
+        <KeyboardArrowDownIcon sx={styles.arrowIcon(Boolean(anchorEl))} />
       </AppButton>
-      <Menu
-        anchorEl={menuAnchor}
-        anchorOrigin={{ vertical: 'bottom', horizontal: position }}
-        onClose={handleMenuClose}
-        open={Boolean(menuAnchor)}
-        slotProps={{ paper: styles.menuPaperProps }}
-        sx={styles.menu(itemsLoad)}
-        transformOrigin={{ vertical: 'top', horizontal: position }}
-        {...props}
-      >
-        <Box sx={styles.inputWrapper}>
-          <InputWithIcon
-            onChange={handleInputChange}
-            onClear={handleInputReset}
-            placeholder={t('common.search')}
-            sx={styles.input}
-            value={inputValue}
-          />
-        </Box>
-
-        <AppButton
-          disableRipple
-          disabled={!selectedItems.length}
-          onClick={onClearAll}
-          sx={styles.clearAll}
-          variant={ButtonVariantEnum.Text}
-        >
-          <ClearIcon sx={styles.clearIcon} />
-          {t('header.notifications.clearAll')}
-        </AppButton>
-
-        <Divider sx={styles.divider} />
-
-        <SimpleBar style={styles.scrollableContent}>
-          {itemsLoad ? (
-            <Loader pageLoad size={20} sx={styles.loader} />
-          ) : (
-            scrollableContent
-          )}
-        </SimpleBar>
-      </Menu>
+      {menu}
     </>
   )
 }
 
-export default MultiSelect
+export default AppButtonMenu

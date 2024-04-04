@@ -12,7 +12,7 @@ import AppSelect from '~/components/app-select/AppSelect'
 import AppButton from '~/components/app-button/AppButton'
 import FiltersToggle from '~/components/filters-toggle/FiltersToggle'
 import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
-import MultiSelect from '~/components/multi-select/MultiSelect'
+import AppButtonMenu from '~/components/app-button-menu/AppButtonMenu'
 
 import { sortTranslationKeys } from '~/containers/find-course/courses-filter-bar/CorseFilterBar.constants'
 import { styles } from '~/containers/my-resources/resources-toolbar-drawer/ResourceToolbarDrawer.styles'
@@ -82,7 +82,7 @@ const ResourcesToolBarDrawer: FC<ResourcesToolBarDrawerProps> = ({
       >
         <Box sx={styles.drawerContent}>
           <FiltersToggle handleToggle={onToggle} />
-          <MultiSelect<CategoryNameInterface>
+          <AppButtonMenu<CategoryNameInterface>
             customSx={styles.filter}
             selectedItems={data.categories}
             service={ResourceService.getResourcesCategoriesNames}
