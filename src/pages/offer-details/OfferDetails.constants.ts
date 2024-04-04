@@ -4,22 +4,24 @@ interface ActiveButtonActionsProps {
   isEnrolled: boolean
   loading: boolean
   oppositeRole: boolean
-  myOffer: boolean
+  isMyOffer: boolean
   status?: StatusEnum
   handleEnrollOfferClick: () => void
   handleToggleOfferStatus: () => Promise<void>
   handleCloseOffer: () => Promise<void>
+  handleSendMessage: () => void
 }
 
 export const activeButtonActions = ({
   isEnrolled,
   loading,
   oppositeRole,
-  myOffer,
+  isMyOffer,
   status,
   handleEnrollOfferClick,
   handleToggleOfferStatus,
-  handleCloseOffer
+  handleCloseOffer,
+  handleSendMessage
 }: ActiveButtonActionsProps) => {
   const buttons = []
 
@@ -34,7 +36,7 @@ export const activeButtonActions = ({
     })
   }
 
-  if (myOffer && status !== StatusEnum.Closed) {
+  if (isMyOffer && status !== StatusEnum.Closed) {
     const label =
       status === StatusEnum.Draft
         ? 'common.labels.makeActive'
@@ -58,8 +60,9 @@ export const activeButtonActions = ({
     buttons.push({
       label: 'common.labels.sendMessage',
       buttonProps: {
-        disabled: true,
-        variant: ButtonVariantEnum.Tonal
+        disabled: isMyOffer,
+        variant: ButtonVariantEnum.Tonal,
+        onClick: handleSendMessage
       }
     })
   }
