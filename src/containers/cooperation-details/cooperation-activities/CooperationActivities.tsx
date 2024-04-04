@@ -7,12 +7,12 @@ import AppSelect from '~/components/app-select/AppSelect'
 import CooperationActivitiesList from '~/containers/my-cooperations/cooperation-activities-list/CooperationActivitiesList'
 import { useResourceAvailabilityContext } from '~/context/resources-availability-context'
 import AppButton from '~/components/app-button/AppButton'
-
 import { cooperationTranslationKeys } from '~/containers/cooperation-details/cooperation-activities/CooperationActivities.constants'
+import { cooperationService } from '~/services/cooperation-service'
+
 import { authRoutes } from '~/router/constants/authRoutes'
 import openIcon from '~/assets/img/cooperation-details/resource-availability/open-icon.svg'
 import closeIcon from '~/assets/img/cooperation-details/resource-availability/closed-icon.svg'
-import { styles } from '~/containers/cooperation-details/cooperation-activities/CooperationActivities.styles'
 import {
   ResourcesAvailabilityEnum,
   ButtonVariantEnum,
@@ -22,12 +22,12 @@ import {
   ComponentEnum
 } from '~/types'
 import useForm from '~/hooks/use-form'
-import { cooperationService } from '~/services/cooperation-service'
 import { snackbarVariants } from '~/constants'
 import { useSnackBarContext } from '~/context/snackbar-context'
+import { styles } from '~/containers/cooperation-details/cooperation-activities/CooperationActivities.styles'
 
 interface CooperationActivitiesProps {
-  cooperationId: string | undefined
+  cooperationId?: string
 }
 
 const CooperationActivities = ({
