@@ -1,9 +1,6 @@
 import { TypographyVariantEnum } from '~/types'
 
 export const styles = {
-  sectionsWrapper: {
-    px: { lg: '156px' }
-  },
   headerContainer: {
     display: 'flex',
     justifyContent: 'space-between',
