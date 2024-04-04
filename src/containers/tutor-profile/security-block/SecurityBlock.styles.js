@@ -7,6 +7,8 @@ export const styles = {
     flexDirection: 'column',
     width: '100%',
     boxSizing: 'border-box',
+    maxWidth: '768px',
+    m: '0 auto',
     p: '20px 40px',
     backgroundColor: 'basic.white',
     borderRadius: '4px',

@@ -3,14 +3,13 @@ import palette from '~/styles/app-theme/app.pallete'
 export const styles = {
   sidebarButton: {
     width: '30%',
-    pr: { lg: '96px' },
     pt: '0px',
     '& .MuiListItem-root': {
       pl: '0px',
-      '&:first-child': {
+      '&:first-of-type': {
         pt: '0px'
       },
-      '&:not(:first-child)': {
+      '&:not(:first-of-type)': {
         pt: '18px'
       }
     },
