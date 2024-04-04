@@ -1,3 +1,5 @@
+import { validationPatterns } from '~/utils/validations/validations.constants'
+
 interface Validations {
   nameField: (value: string) => string
   numberField: (value: string) => string
@@ -10,13 +12,13 @@ const validations: Validations = {
     if (value.length > 30) {
       return 'common.errorMessages.nameLength'
     }
-    if (!RegExp(/^(?! )[a-zа-яєії ]+(?<! )$/i).test(value)) {
+    if (!validationPatterns.name.test(value)) {
       return 'common.errorMessages.nameAlphabeticOnly'
     }
     return ''
   },
   numberField: (value) => {
-    if (!RegExp(/^-?(?:\d+|\d*\.\d+)(?:[eE][+-]?\d+)?$/).test(value)) {
+    if (!validationPatterns.number.test(value)) {
       return 'common.errorMessages.numbersOnly'
     }
     if (Number(value) < 0) {
@@ -25,8 +27,11 @@ const validations: Validations = {
     return ''
   },
   password: (value) => {
-    if (!RegExp(/^(?=.*\d)(?=.*[a-zа-яєії])\S+$/i).test(value)) {
-      return 'common.errorMessages.passwordValid'
+    if (!validationPatterns.passwordAlphabeticAndNumeric.test(value)) {
+      return 'common.errorMessages.passwordAlphabeticAndNumeric'
+    }
+    if (!validationPatterns.passwordValid.test(value)) {
+      return 'common.errorMessages.passwordValidSymbols'
     }
     if (value.length < 8 || value.length > 25) {
       return 'common.errorMessages.passwordLength'
@@ -34,11 +39,7 @@ const validations: Validations = {
     return ''
   },
   email: (value) => {
-    if (
-      !RegExp(
-        /^([a-z\d]+([._-][a-z\d]+)*)@([a-z\d]+([.-][a-z\d]+)*\.[a-z]{2,})$/i
-      ).test(value)
-    ) {
+    if (!validationPatterns.email.test(value)) {
       return 'common.errorMessages.emailValid'
     }
     return ''
