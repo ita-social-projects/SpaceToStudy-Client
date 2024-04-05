@@ -1,6 +1,7 @@
+import { UserGeneralInfo } from '~/types'
 import { nameField, textField } from '~/utils/validations/common'
 
-export const initialValues = {
+export const initialValues: UserGeneralInfo = {
   firstName: '',
   lastName: '',
   country: null,

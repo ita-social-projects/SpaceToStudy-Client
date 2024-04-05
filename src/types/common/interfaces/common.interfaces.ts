@@ -4,6 +4,7 @@ import {
   FormInputValueChange,
   Offer,
   UserResponse,
+  UserGeneralInfo,
   UserRoleEnum
 } from '~/types'
 
@@ -109,4 +110,14 @@ export interface CourseSectionHandlers {
     resources: CourseResources[]
   ) => void
   titleText: string
+}
+
+export interface StepData {
+  generalInfo: {
+    data: UserGeneralInfo
+    errors: Record<string, string>
+  }
+  photo: string[]
+  subjects: SubjectInterface[]
+  language: UserResponse['nativeLanguage']
 }

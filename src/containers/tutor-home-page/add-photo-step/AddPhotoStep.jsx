@@ -11,17 +11,15 @@ import { useStepContext } from '~/context/step-context'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { validationData } from './constants'
 
-const AddPhotoStep = ({ btnsBox, stepLabel }) => {
+const AddPhotoStep = ({ btnsBox }) => {
   const { isLaptopAndAbove, isTablet, isMobile } = useBreakpoints()
   const [photoError, setPhotoError] = useState(null)
   const { t } = useTranslation()
-  const { stepData, handleStepData } = useStepContext()
-  const photo = stepData[stepLabel]
+  const { stepData, handlePhoto } = useStepContext()
+  const photo = stepData.photo
 
   const addPhoto = ({ files, error }) => {
-    files.length && !files[0].src
-      ? resizeImage(files[0])
-      : handleStepData(stepLabel, files)
+    files.length && !files[0].src ? resizeImage(files[0]) : handlePhoto(files)
 
     setPhotoError(error)
   }
@@ -32,7 +30,7 @@ const AddPhotoStep = ({ btnsBox, stepLabel }) => {
     const photoName = photo.name
     const lastModified = photo.lastModified
     imageResize(originalPhotoPath, photoSizes).then((resizedPhoto) => {
-      handleStepData(stepLabel, [
+      handlePhoto([
         {
           src: resizedPhoto,
           name: photoName,

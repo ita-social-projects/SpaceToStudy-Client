@@ -10,14 +10,14 @@ import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
 import { languages } from '~/containers/tutor-home-page/language-step/constants'
 import useBreakpoints from '~/hooks/use-breakpoints'
 
-const LanguageStep = ({ stepLabel, btnsBox }) => {
+const LanguageStep = ({ btnsBox }) => {
   const { t } = useTranslation()
   const { isLaptopAndAbove, isMobile } = useBreakpoints()
-  const { stepData, handleStepData } = useStepContext()
-  const languageData = stepData[stepLabel]
+  const { stepData, handleLanguage } = useStepContext()
+  const languageData = stepData.language
 
   const onChangeLanguage = (_, value) => {
-    handleStepData(stepLabel, value)
+    handleLanguage(value)
   }
 
   return (

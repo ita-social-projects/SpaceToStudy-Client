@@ -22,17 +22,12 @@ import { validations } from '~/components/user-steps-wrapper/constants'
 import { styles } from '~/containers/tutor-home-page/general-info-step/GeneralInfoStep.styles'
 import { defaultResponses } from '~/constants'
 
-const GeneralInfoStep = ({
-  btnsBox,
-  stepLabel,
-  isUserFetched,
-  setIsUserFetched
-}) => {
+const GeneralInfoStep = ({ btnsBox, isUserFetched, setIsUserFetched }) => {
   const { t } = useTranslation()
   const { isLaptopAndAbove, isMobile } = useBreakpoints()
-  const { stepData, handleStepData } = useStepContext()
+  const { stepData, handleGeneralInfo } = useStepContext()
   const { userId, userRole } = useSelector((state) => state.appMain)
-  const generalInfo = stepData[stepLabel]
+  const generalInfo = stepData.generalInfo
 
   const {
     handleInputChange,
@@ -128,8 +123,8 @@ const GeneralInfoStep = ({
   })
 
   useEffect(() => {
-    handleStepData(stepLabel, data, errors)
-  }, [data, errors, stepLabel, handleStepData])
+    handleGeneralInfo({ data, errors })
+  }, [data, errors, handleGeneralInfo])
 
   const onFocusCountry =
     !data.country && !countries.length ? fetchCountries : undefined
