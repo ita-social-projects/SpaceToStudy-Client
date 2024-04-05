@@ -25,11 +25,11 @@ stages:
           condition: eq(variables['Build.SourceBranch'], 'refs/heads/develop')
           inputs:
             secureFile: 'env-front-stage'
-        - task: Bash@3
-          name: setEnvStage
-          inputs:
-            targetType: 'inline'
-            script: 'mv $(envStage.secureFilePath) .env'
+        # - task: Bash@3
+        #   name: setEnvStage
+        #   inputs:
+        #     targetType: 'inline'
+        #     script: 'mv $(envStage.secureFilePath) .env'
         - task: DockerCompose@0
           inputs:
             containerregistrytype: 'Azure Container Registry'
