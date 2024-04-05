@@ -5,9 +5,7 @@ trigger:
     - develop
     - main
     - devops
-
-pr: none
-
+    
 variables:
   agentOS: ubuntu-latest
 
@@ -22,7 +20,7 @@ stages:
         steps:
         - task: DownloadSecureFile@1
           name: envStage
-          condition: eq(variables['Build.SourceBranch'], 'refs/heads/develop')
+          condition: or(eq(variables['Build.SourceBranch'], 'refs/heads/develop'), eq(variables['Build.SourceBranch'], 'refs/heads/feature/1659/deployment-proxy'))
           inputs:
             secureFile: 'env-front-stage'
         # - task: Bash@3
@@ -34,22 +32,27 @@ stages:
           inputs:
             containerregistrytype: 'Azure Container Registry'
             azureSubscription: 'S2s-Service'
-            azureContainerRegistry: 'S2sStage'
-            dockerComposeFile: '**/compose.yaml'
+            azureContainerRegistry: '{"loginServer":"s2sstage.azurecr.io", "id" : "/subscriptions/734fc759-c3a2-4e22-a478-301dc5b10496/resourceGroups/Space2Study/providers/Microsoft.ContainerRegistry/registries/S2sStage"}'
+            dockerComposeFile: '**/compose.yml'
             dockerComposeFileArgs: |
               PROXY_API_URL=$(PROXY_API_URL)
+              password=$(password)
+            projectName: 'front-stage'
             action: 'Build services'
-            imageName: 'front-stage:$(Build.BuildId)'
+            additionalImageTags: '$(Build.BuildId)'
        
         - task: DockerCompose@0
           inputs:
             containerregistrytype: 'Azure Container Registry'
             azureSubscription: 'S2s-Service'
-            azureContainerRegistry: 'S2sStage'
-            dockerComposeFile: '**/compose.yaml'
+            azureContainerRegistry: '{"loginServer":"s2sstage.azurecr.io", "id" : "/subscriptions/734fc759-c3a2-4e22-a478-301dc5b10496/resourceGroups/Space2Study/providers/Microsoft.ContainerRegistry/registries/S2sStage"}'
+            dockerComposeFile: '**/compose.yml'
+            dockerComposeFileArgs: |
+              PROXY_API_URL=$(PROXY_API_URL)
+              password=$(password)
+            projectName: 'front-stage'
             action: 'Push services'
-            imageName: 'front-stage:$(Build.BuildId)'
-            
+            additionalImageTags: '$(Build.BuildId)'
 
   - stage: Deploy
     displayName: Deploy image to app service
@@ -58,13 +61,13 @@ stages:
        pool:
          vmImage: $(agentOS)
        steps:
-         - task: AzureRmWebAppDeployment@4
-           inputs:
-             ConnectionType: 'AzureRM'
-             azureSubscription: 'S2s-Service'
-             appType: 'webAppContainer'
-             WebAppName: 's2s-front-stage'
-             DockerNamespace: 's2sstage.azurecr.io'
-             DockerRepository: 'front-stage'
-             DockerImageTag: '$(Build.BuildId)'
+          - task: AzureRmWebAppDeployment@4
+            inputs:
+              ConnectionType: 'AzureRM'
+              azureSubscription: 'S2s-Service'
+              appType: 'webAppContainer'
+              WebAppName: 's2s-front-stage'
+              DockerNamespace: 's2sstage.azurecr.io'
+              DockerRepository: 'frontstage_nginx'
+              DockerImageTag: '$(Build.BuildId)'
              
