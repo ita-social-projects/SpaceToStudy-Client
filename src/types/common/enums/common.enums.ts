@@ -116,3 +116,10 @@ export enum ApiMethodEnum {
   POST = 'POST',
   PATCH = 'PATCH'
 }
+
+export enum StepsEnum {
+  SetGeneralInfo,
+  SetPhoto,
+  SetSubjects,
+  SetLanguage
+}

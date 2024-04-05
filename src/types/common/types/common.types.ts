@@ -1,4 +1,4 @@
-import { SortEnum } from '../common.index'
+import { SortEnum, StepData, StepsEnum } from '../common.index'
 
 export type Address = {
   country: string
@@ -55,3 +55,21 @@ export type UseFormValidations<T> = {
 }
 
 export type UseFormErrors<T> = Record<keyof T, string>
+
+export type StepContextAction =
+  | {
+      type: StepsEnum.SetGeneralInfo
+      payload: StepData['generalInfo']
+    }
+  | {
+      type: StepsEnum.SetPhoto
+      payload: StepData['photo']
+    }
+  | {
+      type: StepsEnum.SetSubjects
+      payload: StepData['subjects']
+    }
+  | {
+      type: StepsEnum.SetLanguage
+      payload: StepData['language']
+    }

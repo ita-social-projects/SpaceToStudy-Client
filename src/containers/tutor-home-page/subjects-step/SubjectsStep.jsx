@@ -14,11 +14,11 @@ import AppChipList from '~/components/app-chips-list/AppChipList'
 import { categoryService } from '~/services/category-service'
 import { subjectService } from '~/services/subject-service'
 
-const SubjectsStep = ({ stepLabel, btnsBox }) => {
+const SubjectsStep = ({ btnsBox }) => {
   const { t } = useTranslation()
   const { isLaptopAndAbove, isMobile } = useBreakpoints()
-  const { stepData, handleStepData } = useStepContext()
-  const subjectData = stepData[stepLabel]
+  const { stepData, handleSubjects } = useStepContext()
+  const subjectData = stepData.subjects
 
   const [subjects, setSubjects] = useState({
     category: null,
@@ -74,7 +74,7 @@ const SubjectsStep = ({ stepLabel, btnsBox }) => {
       setSubjectError('')
     }
 
-    handleStepData(stepLabel, [...subjectData, subjects.subject])
+    handleSubjects([...subjectData, subjects.subject])
 
     !subjectError &&
       setSubjects({
@@ -85,7 +85,7 @@ const SubjectsStep = ({ stepLabel, btnsBox }) => {
 
   const handleChipDelete = (item) => {
     const newItems = subjectData.filter(({ name }) => name !== item)
-    handleStepData(stepLabel, newItems)
+    handleSubjects(newItems)
   }
   const listOfItems = subjectData.map((item) => item.name)
 

@@ -8,8 +8,13 @@ import { useStepContext } from '~/context/step-context'
 import { useSnackBarContext } from '~/context/snackbar-context'
 import { userService } from '~/services/user-service'
 import { snackbarVariants } from '~/constants'
+import { ErrorResponse, StepData, UpdateUserParams } from '~/types'
 
-const useSteps = ({ steps }) => {
+interface UseSteps {
+  steps: string[]
+}
+
+const useSteps = ({ steps }: UseSteps) => {
   const [activeStep, setActiveStep] = useState(0)
   const { closeModal } = useModalContext()
   const { stepData } = useStepContext()
@@ -17,11 +22,11 @@ const useSteps = ({ steps }) => {
   const { userId } = useAppSelector((state) => state.appMain)
 
   const updateUser = useCallback(
-    (data) => userService.updateUser(userId, data),
+    (params?: UpdateUserParams) => userService.updateUser(userId, params!),
     [userId]
   )
 
-  const handleResponseError = (error) => {
+  const handleResponseError = (error?: ErrorResponse) => {
     setAlert({
       severity: snackbarVariants.error,
       message: error ? `errors.${error.code}` : ''
@@ -44,10 +49,19 @@ const useSteps = ({ steps }) => {
     onResponseError: handleResponseError
   })
 
-  const stepErrors = Object.values(stepData).map(
-    (data) =>
-      data && data.errors && Object.values(data.errors).find((error) => error)
-  )
+  const stepDataValues = Object.values(stepData) as Array<
+    StepData[keyof StepData]
+  >
+
+  const stepErrors = stepDataValues.map((data) => {
+    if (data && typeof data === 'object' && 'errors' in data) {
+      const errors = data.errors
+      const firstError = Object.values(errors).find((error) => Boolean(error))
+      return firstError ?? ''
+    }
+
+    return ''
+  })
 
   const next = () => {
     setActiveStep((prev) => prev + 1)
@@ -59,13 +73,13 @@ const useSteps = ({ steps }) => {
 
   const isLastStep = activeStep === steps.length - 1
 
-  const handleSubmit = () => {
-    const hasErrors = stepErrors.find((error) => error)
+  const handleSubmit = async () => {
+    const hasErrors = stepErrors.some((stepError) => Boolean(stepError))
 
     const { firstName, lastName, country, city, professionalSummary } =
       stepData.generalInfo.data
 
-    const data = {
+    const data: UpdateUserParams = {
       photo: stepData.photo[0] ? stepData.photo[0] : '',
       firstName,
       lastName,
@@ -78,7 +92,9 @@ const useSteps = ({ steps }) => {
       nativeLanguage: stepData.language ?? null
     }
 
-    !hasErrors && fetchData(data)
+    if (!hasErrors) {
+      await fetchData(data)
+    }
   }
 
   const stepOperation = {

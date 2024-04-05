@@ -42,6 +42,12 @@ export interface UserResponse {
   FAQ: DataByRole<Faq[]>
 }
 
+export interface UserGeneralInfo
+  extends Pick<UserResponse, 'firstName' | 'lastName' | 'professionalSummary'> {
+  country: UserResponse['address']['country'] | null
+  city: UserResponse['address']['city'] | null
+}
+
 export interface UpdateUserParams
   extends Pick<
     UserResponse,
