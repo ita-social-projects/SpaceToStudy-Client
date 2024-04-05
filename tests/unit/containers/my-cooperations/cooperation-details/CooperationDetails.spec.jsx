@@ -1,4 +1,4 @@
-import { screen, waitFor, fireEvent } from '@testing-library/react'
+import { screen, waitFor, fireEvent, act } from '@testing-library/react'
 import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
 
@@ -59,6 +59,15 @@ const cooperationMock = {
   updatedAt: '2024-01-12T11:28:34.397Z'
 }
 
+vi.mock(
+  '~/containers/cooperation-details/cooperation-activities/CooperationActivities',
+  () => ({
+    default: function () {
+      return <div>CooperationActivities</div>
+    }
+  })
+)
+
 describe('CooperationDetails', () => {
   mockAxiosClient
     .onGet(`${URLs.cooperations.get}/${cooperationID}`)
@@ -70,41 +79,49 @@ describe('CooperationDetails', () => {
     })
   })
 
-  it('should render details page', () => {
-    const notesButton = screen.getByText('cooperationsPage.details.notes')
+  it('should render details page', async () => {
+    const notesButton = await screen.findByText(
+      'cooperationsPage.details.notes'
+    )
     expect(notesButton).toBeInTheDocument()
   })
 
-  it('should show cooperation status and title', () => {
-    const title = screen.getByText(cooperationMock.title)
-    const statusChip = screen.getByText(cooperationMock.status)
+  it('should show cooperation status and title', async () => {
+    const title = await screen.findByText(cooperationMock.title)
+    const statusChip = await screen.findByText(cooperationMock.status)
 
     expect(title).toBeInTheDocument()
     expect(statusChip).toBeInTheDocument()
   })
 
-  it('should render the component with tabs', () => {
-    const tab1 = screen.getByText('cooperationsPage.tabs.activities')
+  it('should render the component with tabs', async () => {
+    const tab1 = await screen.findByText('cooperationsPage.tabs.activities')
 
     expect(tab1).toBeInTheDocument()
 
-    const tab2 = screen.getByText('cooperationsPage.tabs.details')
+    const tab2 = await screen.findByText('cooperationsPage.tabs.details')
 
-    fireEvent.click(tab2)
-
+    await act(async () => {
+      fireEvent.click(tab2)
+    })
     expect(tab2).toBeInTheDocument()
   })
 
-  it('should toggle notes block', () => {
-    const notes = screen.getByText('cooperationsPage.details.notes')
+  it('should toggle notes block', async () => {
+    const notes = await screen.findByRole('button', {
+      name: 'cooperationsPage.details.notes'
+    })
 
-    fireEvent.click(notes)
+    await act(async () => {
+      fireEvent.click(notes)
+    })
 
     const notesIcon = screen.getAllByTestId('AddIcon')[1]
-
     expect(notesIcon).toBeInTheDocument()
 
-    fireEvent.click(notes)
+    await act(async () => {
+      fireEvent.click(notes)
+    })
 
     expect(notesIcon).not.toBeInTheDocument()
   })
