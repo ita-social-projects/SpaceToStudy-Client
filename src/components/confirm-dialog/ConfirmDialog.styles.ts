@@ -23,7 +23,12 @@ export const styles = {
   typographyContent: {
     typography: TypographyVariantEnum.Body1
   },
-  actions: {
-    p: '24px 30px'
-  }
+  actions: (revertButtons: boolean) => ({
+    p: '24px 30px',
+    flexDirection: revertButtons ? 'row-reverse' : 'row',
+    justifyContent: revertButtons ? 'flex-start' : 'flex-end',
+    '& > :last-child': {
+      m: revertButtons ? '0 8px 0 0' : '0 0 0 8px'
+    }
+  })
 }

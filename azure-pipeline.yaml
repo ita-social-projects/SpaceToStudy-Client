@@ -5,7 +5,7 @@ trigger:
     - develop
     - main
     - devops
-
+    
 variables:
   agentOS: ubuntu-latest
 
@@ -23,11 +23,11 @@ stages:
           condition: or(eq(variables['Build.SourceBranch'], 'refs/heads/develop'), eq(variables['Build.SourceBranch'], 'refs/heads/feature/1659/deployment-proxy'))
           inputs:
             secureFile: 'env-front-stage'
-        - task: Bash@3
-          name: setEnvStage
-          inputs:
-            targetType: 'inline'
-            script: 'mv $(envStage.secureFilePath) .env'
+        # - task: Bash@3
+        #   name: setEnvStage
+        #   inputs:
+        #     targetType: 'inline'
+        #     script: 'mv $(envStage.secureFilePath) .env'
         - task: DockerCompose@0
           inputs:
             containerregistrytype: 'Azure Container Registry'

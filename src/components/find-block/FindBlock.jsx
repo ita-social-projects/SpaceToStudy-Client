@@ -51,7 +51,12 @@ const FindBlock = ({ translationKey }) => {
         sx={styles.input}
         value={inputValue}
       />
-      <AppButton component={Link} fullWidth={isMobile} to={findOffers}>
+      <AppButton
+        component={Link}
+        fullWidth={isMobile}
+        sx={styles.button}
+        to={findOffers}
+      >
         {t(`${translationKey}.button`)}
       </AppButton>
     </TitleBlock>

@@ -45,26 +45,19 @@ import {
   CourseResources
 } from '~/types'
 import { styles } from '~/containers/course-section/CourseSectionContainer.styles'
+import CourseSectionsList from '../course-sections-list/CourseSectionsList'
 
-interface SectionProps {
+interface SectionProps
+  extends Pick<
+    Parameters<typeof CourseSectionsList>[0],
+    | 'handleSectionInputChange'
+    | 'handleSectionNonInputChange'
+    | 'handleSectionResourcesOrder'
+    | 'titleText'
+    | 'setSectionsItems'
+  > {
   sectionData: CourseSection
   sections: CourseSection[]
-  setSectionsItems: (value: CourseSection[]) => void
-  handleSectionInputChange: (
-    id: string,
-    field: keyof CourseSection,
-    value: string
-  ) => void
-  handleSectionNonInputChange: (
-    id: string,
-    field: keyof CourseSection,
-    value: CourseResources[]
-  ) => void
-  titleText: string
-  handleSectionResourcesOrder?: (
-    id: string,
-    resources: CourseResources[]
-  ) => void
 }
 
 type openModalFunc = () => void

@@ -11,7 +11,7 @@ import { spliceSx } from '~/utils/helper-functions'
 
 import { styles } from '~/components/app-rating-mobile/AppRatingMobile.styles'
 
-interface AppRatingMobileProps extends RatingProps {
+interface AppRatingMobileProps extends Omit<RatingProps, 'sx'> {
   reviewsCount: number
   link?: string
   sx?: {

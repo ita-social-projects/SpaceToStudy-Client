@@ -3,7 +3,13 @@ import SignupForm from '~/containers/guest-home-page/signup-form/SignupForm'
 import { renderWithProviders } from '~tests/test-utils'
 import { vi } from 'vitest'
 
-const errors = { firstName: '', lastName: '', email: '', password: '', confirmPassword: '' }
+const errors = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  password: '',
+  confirmPassword: ''
+}
 const data = {
   firstName: 'John',
   lastName: 'Doe',
@@ -14,7 +20,6 @@ const data = {
 const handleChange = vi.fn()
 const handleBlur = vi.fn()
 const handleSubmit = vi.fn()
-const closeModal = vi.fn()
 
 vi.mock('react-router-dom', async () => {
   const actual = await vi.importActual('react-router-dom')
@@ -29,12 +34,11 @@ describe('Signup form test', () => {
   beforeEach(() => {
     renderWithProviders(
       <SignupForm
-        closeModal={ closeModal }
-        data={ data }
-        errors={ errors }
-        handleBlur={ handleBlur }
-        handleChange={ handleChange }
-        handleSubmit={ handleSubmit }
+        data={data}
+        errors={errors}
+        handleBlur={handleBlur}
+        handleChange={handleChange}
+        handleSubmit={handleSubmit}
       />,
       { preloadedState }
     )
@@ -125,11 +129,11 @@ describe('Signup form test with loading', () => {
   it('should render loader', () => {
     renderWithProviders(
       <SignupForm
-        data={ data }
-        errors={ errors }
-        handleBlur={ handleBlur }
-        handleChange={ handleChange }
-        handleSubmit={ handleSubmit }
+        data={data}
+        errors={errors}
+        handleBlur={handleBlur}
+        handleChange={handleChange}
+        handleSubmit={handleSubmit}
       />,
       { preloadedState }
     )

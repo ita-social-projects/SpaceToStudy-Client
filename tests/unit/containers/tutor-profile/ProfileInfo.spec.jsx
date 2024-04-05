@@ -1,4 +1,4 @@
-import { screen, fireEvent } from '@testing-library/react'
+import { screen, fireEvent, waitFor } from '@testing-library/react'
 import { vi } from 'vitest'
 
 import { SnackBarProvider } from '~/context/snackbar-context'
@@ -8,6 +8,14 @@ import useBreakpoints from '~/hooks/use-breakpoints'
 import ProfileInfo from '~/containers/tutor-profile/profile-info/ProfileInfo'
 
 vi.mock('~/hooks/use-breakpoints')
+
+const mockNavigate = vi.fn()
+
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual('react-router-dom')),
+  useMatch: () => false,
+  useNavigate: () => mockNavigate
+}))
 
 Object.assign(window.navigator, {
   clipboard: {
@@ -89,7 +97,7 @@ function renderWithBreakpoints(data) {
   })
   renderWithProviders(
     <SnackBarProvider>
-      <ProfileInfo userData={userData} />
+      <ProfileInfo myRole={'student'} userData={userData} />
     </SnackBarProvider>
   )
 }
@@ -111,6 +119,16 @@ describe('ProfileInfo test in my profile on laptop', () => {
     )
 
     expect(sendMessageBtn).toBeInTheDocument()
+  })
+
+  it('should click on `tutor offers` button', () => {
+    const tutorOffersBtn = screen.getByText(
+      /tutorProfilePage.profileInfo.tutorOffers/i
+    )
+
+    fireEvent.click(tutorOffersBtn)
+
+    waitFor(() => expect(mockNavigate).toHaveBeenCalled())
   })
 })
 

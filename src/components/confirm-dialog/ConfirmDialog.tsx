@@ -17,6 +17,7 @@ interface ConfirmDialogProps {
   title: string
   confirmButton?: string
   cancelButton?: string
+  revertButtons?: boolean
   open: boolean
   onConfirm: () => void
   onDismiss: () => void
@@ -27,6 +28,7 @@ const ConfirmDialog: FC<ConfirmDialogProps> = ({
   title,
   confirmButton,
   cancelButton,
+  revertButtons = false,
   open,
   onConfirm,
   onDismiss
@@ -47,12 +49,12 @@ const ConfirmDialog: FC<ConfirmDialogProps> = ({
       <DialogContent sx={styles.content}>
         <Typography>{t(message)}</Typography>
       </DialogContent>
-      <DialogActions sx={styles.actions}>
-        <AppButton onClick={onConfirm}>
-          {confirmButton ? confirmButton : t('common.yes')}
-        </AppButton>
+      <DialogActions sx={styles.actions(revertButtons)}>
         <AppButton onClick={onDismiss} variant={ButtonVariantEnum.Tonal}>
-          {cancelButton ? cancelButton : t('common.no')}
+          {cancelButton || t('common.no')}
+        </AppButton>
+        <AppButton onClick={onConfirm}>
+          {confirmButton || t('common.yes')}
         </AppButton>
       </DialogActions>
     </Dialog>

@@ -35,6 +35,8 @@ import guestHomePage from './guest-home-page.json'
 import table from './table.json'
 import course from './course.json'
 import cooperationDetailsPage from './cooperation-details.json'
+import editTutor from './edit-tutor-profile.json'
+import editProfilePage from './edit-profile.json'
 
 const ua = {
   translations: {
@@ -74,7 +76,9 @@ const ua = {
     guestHomePage,
     table,
     course,
-    cooperationDetailsPage
+    cooperationDetailsPage,
+    editProfilePage,
+    editTutor
   }
 }
 

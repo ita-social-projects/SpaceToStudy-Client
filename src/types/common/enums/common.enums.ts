@@ -93,11 +93,14 @@ export enum PositionEnum {
   Right = 'right',
   Bottom = 'bottom',
   Top = 'top',
+  Start = 'start',
+  End = 'end',
   Vertical = 'vertical'
 }
 
 export enum InputEnum {
-  File = 'file'
+  File = 'file',
+  Password = 'password'
 }
 
 export enum OverlapEnum {

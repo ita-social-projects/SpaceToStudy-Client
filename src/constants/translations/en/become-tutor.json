@@ -6,7 +6,7 @@
   },
   "experience": {
     "title": "Describe your professional experience. Maximum 70 characters.",
-    "textFieldLabel": "Text here"
+    "textFieldLabel": "Text here..."
   },
   "languages": {
     "title": "Please select the language in which you would like to study and cooperate.",
@@ -16,7 +16,7 @@
     "title": "Please choose the main subjects based on the category. You can add others later.",
     "mainSubjectsLabel": "Main Study Category",
     "subjectLabel": "Subject",
-    "btnText": "Add one more subject",
+    "btnText": "Add subject",
     "emptyFields": "All fields must be filled",
     "sameSubject": "You have the same subject"
   },
@@ -26,7 +26,8 @@
     "placeholder": "Photo Preview",
     "description": "Please upload a photo that represents you and helps others recognize you.",
     "typeError": "Wrong file type. Only .png/.jpg/.jpeg files are allowed.",
-    "fileSizeError": "Size for one file cannot be more than 5 MB."
+    "fileSizeError": "Size for one file cannot be more than 5 MB.",
+    "quantityError": "Maximum allowed to add 1 photo"
   },
   "successMessage": "Success! Your data were added."
 }

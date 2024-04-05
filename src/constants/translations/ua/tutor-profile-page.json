@@ -2,7 +2,8 @@
   "profileInfo": {
     "copyProfileLink": "Посилання на профіль скопійовано",
     "showMore": "Показати більше...",
-    "bookLesson": "Записатися на урок",
+    "tutorOffers": "Пропозиції викладача",
+    "studentRequests": "Пропозиції студента",
     "sendMessage": "Надіслати повідомлення",
     "withS2S":"з space2study",
     "reviews": "відгуків",
@@ -20,14 +21,22 @@
   "videoPresentation": {
     "title": "Відео Презентація"
   },
-    "reviews": {
-      "title": "Що говорять студенти",
-      "buttonTitle": "Більше відгуків",
-      "starsCount_one": "{{count}} зірка",
-      "starsCount_5": "{{count}} зірок",
-      "starsCount_other": "{{count}} зірки",
-      "reviewsCount_one": "{{count}} відгук",
-      "reviewsCount_2-4": "{{count}} відгуки",
-      "reviewsCount_other": "{{count}} відгуків"
-    }
+  "aboutTutor": {
+    "title": "Про репетитора",
+    "education": "Освіта",
+    "workExperience": "Досвід роботи",
+    "scientificActivities": "Наукова діяльність",
+    "awards": "Нагороди",
+    "socialMedia": "Соціальні медіа"
+   },
+  "reviews": {
+    "title": "Що говорять студенти",
+    "buttonTitle": "Більше відгуків",
+    "starsCount_one": "{{count}} зірка",
+    "starsCount_5": "{{count}} зірок",
+    "starsCount_other": "{{count}} зірки",
+    "reviewsCount_one": "{{count}} відгук",
+    "reviewsCount_2-4": "{{count}} відгуки",
+    "reviewsCount_other": "{{count}} відгуків"
+  }
 }

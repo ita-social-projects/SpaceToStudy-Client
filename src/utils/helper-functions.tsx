@@ -58,10 +58,10 @@ export const parseQueryParams = <T extends object>(
 export const getEmptyValues = <T extends object, R>(
   initialValues: T,
   defaultValue: R
-): { [K in keyof T]: R } => {
+) => {
   return Object.keys(initialValues).reduce(
     (acc, key) => ({ ...acc, [key]: defaultValue }),
-    {} as { [K in keyof T]: R }
+    {} as Record<keyof T, R>
   )
 }
 

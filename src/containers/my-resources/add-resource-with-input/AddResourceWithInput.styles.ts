@@ -15,6 +15,8 @@ export const styles = {
   },
   filterWithInput: {
     display: 'flex',
-    columnGap: '25px'
+    columnGap: '25px',
+    maxWidth: '457px',
+    width: '100%'
   }
 }

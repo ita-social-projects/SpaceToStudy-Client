@@ -85,4 +85,7 @@ export interface AddDocuments {
   allFilesSizeError: string
   typeError: string
   maxQuantityFiles: number
+  quantityError: string
+  maxFileNameLength: number
+  maxFileNameError: string
 }

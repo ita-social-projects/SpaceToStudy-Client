@@ -8,7 +8,7 @@ import ListItem from '@mui/material/ListItem'
 import List from '@mui/material/List'
 import CloudUploadIcon from '@mui/icons-material/CloudUpload'
 import CloseIcon from '@mui/icons-material/Close'
-import { SxProps } from '@mui/material'
+import { FormHelperText, SxProps } from '@mui/material'
 
 import useUpload from '~/hooks/use-upload'
 
@@ -32,6 +32,7 @@ interface FileUploaderProps {
   sx?: {
     root?: SxProps
     button?: SxProps
+    error?: SxProps
   }
   variant?: ButtonVariantEnum
   icon?: ReactElement
@@ -95,7 +96,9 @@ const FileUploader: FC<FileUploaderProps> = ({
             )}`}
           </Typography>
           {initialError && (
-            <Typography sx={styles.error}>{t(initialError)}</Typography>
+            <FormHelperText error sx={sx.error}>
+              {t(initialError)}
+            </FormHelperText>
           )}
         </>
       )}

@@ -10,10 +10,13 @@ const validationData = {
   maxFileSize: 5_000_000,
   maxAllFilesSize: 20_000_000,
   filesTypes: ['application/pdf', 'image/jpeg', 'image/png'],
-  fileSizeError: 'becomeTutor.documents.fileSizeError',
-  allFilesSizeError: 'becomeTutor.documents.allFilesSizeError',
-  typeError: 'becomeTutor.documents.typeError',
-  maxQuantityFiles: 7
+  fileSizeError: 'common.fileSizeError',
+  allFilesSizeError: 'common.allFilesSizeError',
+  typeError: 'common.typeError',
+  maxQuantityFiles: 7,
+  quantityError: 'common.quantityError',
+  maxFileNameLength: 55,
+  maxFileNameError: 'common.fileNameError'
 }
 const fakeFile = new File(['certificate'], 'test-file.png', {
   type: 'application/pdf'
