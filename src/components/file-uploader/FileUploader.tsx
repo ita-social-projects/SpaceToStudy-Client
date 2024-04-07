@@ -70,12 +70,20 @@ const FileUploader: FC<FileUploaderProps> = ({
     </ListItem>
   ))
 
+  const acceptableFileTypes = validationData.filesTypes.join(', ')
+
   const uploadButton = (
     <Button component={ComponentEnum.Label} sx={sx.button} variant={variant}>
       {isImages && <CloudUploadIcon sx={styles.icon} />}
       {buttonText}
       {icon}
-      <input hidden multiple onChange={addFiles} type={InputEnum.File} />
+      <input
+        accept={acceptableFileTypes}
+        hidden
+        multiple
+        onChange={addFiles}
+        type={InputEnum.File}
+      />
     </Button>
   )
 

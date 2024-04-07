@@ -11,6 +11,7 @@ import AppTextArea from '~/components/app-text-area/AppTextArea'
 import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import LocationSelectionInputs from '~/components/location-selection-inputs/LocationSelectionInputs'
+import FileUploader from '~/components/file-uploader/FileUploader'
 
 import { languages } from '~/containers/tutor-home-page/language-step/constants'
 import { validations } from '~/components/user-steps-wrapper/constants'
@@ -25,7 +26,6 @@ import {
   UserRoleEnum
 } from '~/types'
 
-import FileUploader from '~/components/file-uploader/FileUploader'
 import { validationData } from '~/containers/tutor-home-page/add-photo-step/constants'
 import { useSnackBarContext } from '~/context/snackbar-context'
 import { snackbarVariants } from '~/constants'
