@@ -1,4 +1,4 @@
-import { FC, SyntheticEvent } from 'react'
+import { FC, SyntheticEvent, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Avatar from '@mui/material/Avatar'
@@ -14,22 +14,38 @@ import LocationSelectionInputs from '~/components/location-selection-inputs/Loca
 
 import { languages } from '~/containers/tutor-home-page/language-step/constants'
 import { validations } from '~/components/user-steps-wrapper/constants'
-import { getInitialValues } from '~/containers/edit-profile/profile-general-tab/ProfileGeneralTab.constants'
-import { styles } from '~/containers/edit-profile/profile-general-tab/ProfileGeneralTab.styles'
 import {
   ButtonVariantEnum,
   EditProfileForm,
   PositionEnum,
+  ProfileTabProps,
   SizeEnum,
-  UserResponse
+  UpdateUserParams,
+  UploadFileEmitterArgs,
+  UserRoleEnum
 } from '~/types'
 
-interface ProfileGeneralTabProps {
-  user: UserResponse
-}
+import FileUploader from '~/components/file-uploader/FileUploader'
+import { validationData } from '~/containers/tutor-home-page/add-photo-step/constants'
+import { useSnackBarContext } from '~/context/snackbar-context'
+import { snackbarVariants } from '~/constants'
+import { imageResize } from '~/utils/image-resize'
+import { useProfileContext } from '~/context/profile-context'
+import { styles } from './ProfileGeneralTab.styles'
 
-const ProfileGeneralTab: FC<ProfileGeneralTabProps> = ({ user }) => {
+const ProfileGeneralTab: FC<ProfileTabProps> = ({ user }) => {
   const { t } = useTranslation()
+  const { setAlert } = useSnackBarContext()
+  const { profileData, handleProfileData } = useProfileContext()
+  const profileGeneralData = profileData.generalData.data
+  const photo = profileGeneralData.photo
+
+  const initialValues = {
+    ...profileGeneralData,
+    country: profileGeneralData.address.country,
+    city: profileGeneralData.address.city,
+    professionalSummary: profileGeneralData.professionalSummary ?? ''
+  }
 
   const {
     handleInputChange,
@@ -38,9 +54,32 @@ const ProfileGeneralTab: FC<ProfileGeneralTabProps> = ({ user }) => {
     data,
     errors
   } = useForm<EditProfileForm>({
-    initialValues: getInitialValues(user),
+    initialValues,
     validations
   })
+
+  const updatedData: UpdateUserParams = useMemo(
+    () => ({
+      firstName: data.firstName,
+      lastName: data.lastName,
+      address: {
+        country: data.country ?? '',
+        city: data.city ?? ''
+      },
+      professionalSummary: data.professionalSummary,
+      mainSubjects:
+        user.role[0] !== UserRoleEnum.Admin
+          ? user.mainSubjects[user.role[0]]
+          : [],
+      nativeLanguage: data.nativeLanguage ?? null,
+      videoLink: data.videoLink
+    }),
+    [data, user.mainSubjects, user.role]
+  )
+
+  useEffect(() => {
+    handleProfileData(updatedData, errors)
+  }, [updatedData, errors, handleProfileData])
 
   const onLanguageChange = (
     _: SyntheticEvent,
@@ -49,18 +88,45 @@ const ProfileGeneralTab: FC<ProfileGeneralTabProps> = ({ user }) => {
     handleNonInputValueChange('nativeLanguage', value)
   }
 
-  return (
-    <Box sx={styles.root}>
-      <TitleWithDescription
-        description={t('editProfilePage.profile.description')}
-        style={styles.headerTitleWithDesc}
-        title={t('editProfilePage.profile.title')}
-      />
+  const resizeImage = (photo: File) => {
+    const originalPhotoPath = URL.createObjectURL(photo)
+    const photoSizes = { newWidth: 440, newHeight: 440 }
 
+    imageResize(originalPhotoPath, photoSizes)
+      .then((resizedPhoto) => {
+        handleProfileData({
+          ...updatedData,
+          photo: { src: resizedPhoto, name: photo.name }
+        })
+      })
+      .catch(console.error)
+  }
+
+  const addPhoto = ({ files, error }: UploadFileEmitterArgs) => {
+    if (error) {
+      setAlert({
+        severity: snackbarVariants.error,
+        message: error
+      })
+      return
+    }
+
+    resizeImage(files[0])
+  }
+
+  const handleRemovePhoto = () => {
+    handleProfileData({
+      ...updatedData,
+      photo: null
+    })
+  }
+
+  return (
+    <Box sx={styles.profileGeneralTabContainer}>
       <Box sx={styles.avatar.root}>
         <Avatar
           src={
-            user.photo &&
+            photo?.src &&
             `${import.meta.env.VITE_APP_IMG_USER_URL}${user.photo}`
           }
           sx={styles.avatar.img}
@@ -72,13 +138,17 @@ const ProfileGeneralTab: FC<ProfileGeneralTabProps> = ({ user }) => {
             title={t('editProfilePage.profile.generalTab.uploadTitle')}
           />
           <Box sx={styles.avatar.buttons}>
-            <AppButton
-              size={SizeEnum.Medium}
+            <FileUploader
+              buttonText={t('editProfilePage.profile.generalTab.uploadTitle')}
+              emitter={addPhoto}
+              validationData={validationData}
               variant={ButtonVariantEnum.ContainedLight}
+            />
+            <AppButton
+              onClick={handleRemovePhoto}
+              size={SizeEnum.Medium}
+              variant={ButtonVariantEnum.Tonal}
             >
-              {t('editProfilePage.profile.generalTab.uploadTitle')}
-            </AppButton>
-            <AppButton size={SizeEnum.Medium} variant={ButtonVariantEnum.Tonal}>
               {t('common.remove')}
             </AppButton>
           </Box>
@@ -181,9 +251,12 @@ const ProfileGeneralTab: FC<ProfileGeneralTabProps> = ({ user }) => {
               >
                 https://
               </InputAdornment>
-            )
+            ),
+            sx: styles.videoLinkInput
           }}
           fullWidth
+          onChange={handleInputChange('videoLink')}
+          value={data.videoLink.replace('https://', '')}
         />
       </Box>
     </Box>

@@ -1,6 +1,5 @@
 import palette from '~/styles/app-theme/app.pallete'
 import { TypographyVariantEnum, VisibilityEnum } from '~/types'
-import { rootContainer } from '~/containers/edit-profile/common.style'
 
 const { Subtitle1, Body2, Caption, H6 } = TypographyVariantEnum
 
@@ -11,8 +10,10 @@ const titleWithDescription = {
 }
 
 export const styles = {
-  root: {
-    ...rootContainer
+  profileGeneralTabContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    rowGap: '10px'
   },
   headerTitleWithDesc: { ...titleWithDescription, title: { typography: H6 } },
   avatar: {
@@ -38,5 +39,6 @@ export const styles = {
     ...(text && { visibility: VisibilityEnum.Hidden })
   }),
   languageInput: { maxWidth: '300px', width: '100%', mb: '20px' },
-  linkAdornment: { '& > p': { color: 'primary.500' } }
+  linkAdornment: { '& > p': { color: 'primary.500' } },
+  videoLinkInput: { '& .MuiInputBase-input': { pl: 0 } }
 }

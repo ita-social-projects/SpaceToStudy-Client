@@ -14,3 +14,7 @@ export const rootContainer = {
   borderRadius: '4px',
   boxShadow: commonShadow
 }
+
+export const updateProfileBtn = {
+  alignSelf: 'flex-end'
+}

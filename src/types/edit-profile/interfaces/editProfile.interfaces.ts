@@ -6,4 +6,9 @@ export interface EditProfileForm
   city: string | null
   professionalSummary: string
   nativeLanguage: string | null
+  videoLink: string
+}
+
+export interface ProfileTabProps {
+  user: UserResponse
 }

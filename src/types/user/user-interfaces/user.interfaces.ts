@@ -7,7 +7,8 @@ import {
   SubjectInterface,
   SubjectNameInterface,
   Faq,
-  DataByRole
+  DataByRole,
+  UpdatedPhoto
 } from '~/types'
 
 export interface LocalStorage {
@@ -40,6 +41,7 @@ export interface UserResponse {
   createdAt: string
   updatedAt: string
   FAQ: DataByRole<Faq[]>
+  videoLink: DataByRole<string>
 }
 
 export interface UserGeneralInfo
@@ -51,7 +53,6 @@ export interface UserGeneralInfo
 export interface UpdateUserParams
   extends Pick<
     UserResponse,
-    | 'photo'
     | 'firstName'
     | 'lastName'
     | 'address'
@@ -59,6 +60,8 @@ export interface UpdateUserParams
     | 'nativeLanguage'
   > {
   mainSubjects: SubjectNameInterface[]
+  videoLink: string
+  photo?: UpdatedPhoto | null
 }
 
 export interface LoginParams {

@@ -73,3 +73,8 @@ export type StepContextAction =
       type: StepsEnum.SetLanguage
       payload: StepData['language']
     }
+
+export type UpdatedPhoto = {
+  src: string
+  name: string
+}
