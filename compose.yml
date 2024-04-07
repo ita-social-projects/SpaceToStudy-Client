@@ -1,18 +1,5 @@
 version: "3.8"
 services:
-  # builder:
-  #   container_name: builder
-  #   # Build frontend service using Dockerfile.build
-  #   build:
-  #     context: .
-  #     dockerfile: ./docker/Dockerfile.build
-  #     args:
-  #       NODE_VERSION: 18.14.2
-  #       ALPINE_VERSION: 3.14
-  #   # Mount built app to /usr/src in the container
-  #   volumes:
-  #     - build:/usr/src/
-
   nginx:
     container_name: nginx-proxy
     # Build the nginx service using Dockerfile.stage
@@ -32,14 +19,4 @@ services:
     # Enable tty and stdin for the container
     stdin_open: true
     tty: true
-    # Mount the build volume to /usr/share/nginx/html in the container
-    # volumes:
-    #   - build:/usr/share/nginx/html
-    # Specify dependencies between services
-    # depends_on:
-    #   - builder
-
-# # Define build volume
-# volumes:
-#   build:
   
