@@ -42,20 +42,12 @@ import {
   Quiz,
   Attachment,
   ResourcesTabsEnum as ResourcesTypes,
-  CourseResources
+  CourseResources,
+  CourseSectionHandlers
 } from '~/types'
 import { styles } from '~/containers/course-section/CourseSectionContainer.styles'
-import CourseSectionsList from '../course-sections-list/CourseSectionsList'
 
-interface SectionProps
-  extends Pick<
-    Parameters<typeof CourseSectionsList>[0],
-    | 'handleSectionInputChange'
-    | 'handleSectionNonInputChange'
-    | 'handleSectionResourcesOrder'
-    | 'titleText'
-    | 'setSectionsItems'
-  > {
+interface SectionProps extends CourseSectionHandlers {
   sectionData: CourseSection
   sections: CourseSection[]
 }

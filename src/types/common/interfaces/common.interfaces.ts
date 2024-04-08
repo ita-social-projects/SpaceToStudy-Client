@@ -1,4 +1,11 @@
-import { Offer, UserResponse, UserRoleEnum } from '~/types'
+import {
+  CourseResources,
+  CourseSection,
+  FormInputValueChange,
+  Offer,
+  UserResponse,
+  UserRoleEnum
+} from '~/types'
 
 export interface ItemsWithCount<T> {
   count: number
@@ -88,4 +95,18 @@ export interface AddDocuments {
   quantityError: string
   maxFileNameLength: number
   maxFileNameError: string
+}
+
+export interface CourseSectionHandlers {
+  setSectionsItems: (value: CourseSection[]) => void
+  handleSectionInputChange: FormInputValueChange<string, CourseSection>
+  handleSectionNonInputChange: FormInputValueChange<
+    CourseResources[],
+    CourseSection
+  >
+  handleSectionResourcesOrder?: (
+    id: string,
+    resources: CourseResources[]
+  ) => void
+  titleText: string
 }
