@@ -1,0 +1,22 @@
+version: "3.8"
+services:
+  nginx:
+    container_name: nginx-proxy
+    # Build the nginx service using Dockerfile.stage
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.stage
+      args:
+        NGINX_VERSION: 1.19.6
+        NODE_VERSION: 18.14.2
+        ALPINE_VERSION: 3.14
+        PROXY_API_URL: ${PROXY_API_URL:-http://localhost:8080}
+        password: ${password}
+    # Expose ports 80 and 2222 from the container
+    ports:
+      - '80:80'
+      - '2222:2222'
+    # Enable tty and stdin for the container
+    stdin_open: true
+    tty: true
+  

@@ -8,7 +8,6 @@ CONTRIBUTING*
 # Node JS
 **/node_modules
 **/dist
-.env*
 .storybook
 
 # Docker configs
