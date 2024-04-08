@@ -45,9 +45,9 @@ export type UseFormEventHandler<Fields, Event> = (
   key: keyof Fields
 ) => (event: Event) => void
 
-type FormValidationHandler<TData, TValue> = (
-  value: TValue | string,
-  data: TData
+type FormValidationHandler<Data, Value> = (
+  value: Value | string,
+  data: Data
 ) => string | undefined
 
 export type UseFormValidations<T> = {
