@@ -59,15 +59,6 @@ const cooperationMock = {
   updatedAt: '2024-01-12T11:28:34.397Z'
 }
 
-// vi.mock(
-//   '~/containers/cooperation-details/cooperation-activities/CooperationActivities',
-//   () => ({
-//     default: function () {
-//       return <div>CooperationActivities</div>
-//     }
-//   })
-// )
-
 describe('CooperationDetails', () => {
   mockAxiosClient
     .onGet(`${URLs.cooperations.get}/${cooperationID}`)
