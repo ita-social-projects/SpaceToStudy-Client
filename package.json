@@ -29,6 +29,7 @@
     "react-router-dom": "^6.18.0",
     "react-swipeable-views": "^0.14.0",
     "react-transition-group": "^4.4.5",
+    "sass": "^1.74.1",
     "simplebar-react": "^3.2.4",
     "vite-plugin-svgr": "^4.1.0",
     "web-vitals": "^3.5.0"
@@ -94,7 +95,8 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook -o build-story",
     "prepare": "husky install",
-    "pre-commit": "lint-staged"
+    "pre-commit": "lint-staged",
+    "compile-scss": "node src/scss/src/scripts/compile-scss.js --logger"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
