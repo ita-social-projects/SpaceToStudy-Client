@@ -13,6 +13,9 @@ import loginImg from '~/assets/img/login-dialog/login.svg'
 import { login, snackbarVariants } from '~/constants'
 
 import styles from '~/containers/guest-home-page/login-dialog/LoginDialog.styles'
+import { useNavigate, useLocation } from 'react-router-dom'
+import { errorRoutes } from '~/router/constants/errorRoutes'
+import { guestRoutes } from '~/router/constants/guestRoutes'
 
 const LoginDialog = () => {
   const { t } = useTranslation()
@@ -20,12 +23,18 @@ const LoginDialog = () => {
   const { setAlert } = useSnackBarContext()
   const [loginUser] = useLoginMutation()
 
+  const { pathname, state } = useLocation()
+  const navigate = useNavigate()
+
   const { handleSubmit, handleInputChange, handleBlur, data, errors } = useForm(
     {
       onSubmit: async () => {
         try {
           await loginUser(data).unwrap()
           closeModal()
+          if (pathname === errorRoutes.authPolicy.path) {
+            navigate(state?.prevPage || guestRoutes.home.path)
+          }
         } catch (e) {
           setAlert({
             severity: snackbarVariants.error,

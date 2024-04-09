@@ -22,14 +22,19 @@ const inappropriateState = {
   appMain: { usrRole: 'tutor' }
 }
 
+const properNavigateProps = {
+  replace: true,
+  to: '/error/401',
+  state: {
+    prevPage: '/'
+  }
+}
+
 describe('PrivateRoute component', () => {
   it('should navigate to error page (no user)', () => {
     renderWithProviders(<PrivateRoute role='student' />)
 
-    expect(Navigate).toHaveBeenCalledWith(
-      { replace: true, to: '/error/401' },
-      {}
-    )
+    expect(Navigate).toHaveBeenCalledWith(properNavigateProps, {})
   })
 
   it('should navigate to error page (inappropriate role)', () => {
@@ -37,10 +42,7 @@ describe('PrivateRoute component', () => {
       preloadedState: inappropriateState
     })
 
-    expect(Navigate).toHaveBeenCalledWith(
-      { replace: true, to: '/error/401' },
-      {}
-    )
+    expect(Navigate).toHaveBeenCalledWith(properNavigateProps, {})
   })
 
   it('should render outlet', () => {
