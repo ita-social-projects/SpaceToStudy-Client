@@ -20,7 +20,10 @@
  * Breakpoints................Global responsive breakpoints definition
  *
  * SPACING
- * Spacing................
+ * Spacing................paddings, margins, etc.
+ *
+ * SHADOWS ------ Basic shadows values which are used in project
+ *
  */
 
 /*=============================================
@@ -41,29 +44,12 @@ $blue-gray-700: #455a64;
 $blue-gray-800: #37474f;
 $blue-gray-900: #263238;
 
-// TODO: rename this to match design 
-
-$white: #ffffff;
-$yellow: #ffb000;
-$yellow-brown: #F5D636;
-$yellow-green: #9BC541;
-$burnt-orange:#F56F36;
-$oriental-herbs: #12A03A;
-$lime: #99CC00;
-$blue-something: #0B8AF8;
 $s2s-blue: #00a7a733;
 
 /* Additional colors */
 
-$on-primary-color: #000000de;
-$on-primary-background: #ffffff;
-$on-primary-emphasis: #ffffffbd;
-$on-primary-disabled: #ffffff61;
-
-$on-surface-color: #ffffff;
-$on-surface-background: #000000de;
-$on-surface-emphasis: #00000099;
-$on-surface-disabled: #00000061;
+$white: #ffffff;
+$light-gray: #f7f7f7;
 
 $turquoise: #f5ffff;
 $turquoise-100: #d7fcfd;
@@ -86,6 +72,16 @@ $blue-600: #278acb;
 $blue-700: #1b78b6;
 $blue-800: #12669e;
 $blue-900: #0d5585;
+$blue-accent: #0b8af8;
+
+$yellow-accent: #ffb000;
+$yellow-brown: #f5d636;
+$yellow-green: #9bc541;
+
+$burnt-orange: #f56f36;
+
+$lime: #99cc00;
+$green-accent: #12a03a;
 
 /* Utility colors */
 
