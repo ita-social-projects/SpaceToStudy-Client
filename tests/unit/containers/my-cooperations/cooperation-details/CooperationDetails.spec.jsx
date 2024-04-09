@@ -59,6 +59,16 @@ const cooperationMock = {
   updatedAt: '2024-01-12T11:28:34.397Z'
 }
 
+vi.mock(
+  '~/containers/my-cooperations/cooperation-notes/CooperationNotes',
+  () => ({
+    __esModule: true,
+    default: function () {
+      return <div>Cooperation Notes</div>
+    }
+  })
+)
+
 describe('CooperationDetails', () => {
   mockAxiosClient
     .onGet(`${URLs.cooperations.get}/${cooperationID}`)
@@ -107,13 +117,16 @@ describe('CooperationDetails', () => {
       fireEvent.click(notes)
     })
 
-    const notesIcon = screen.getAllByTestId('AddIcon')[1]
-    expect(notesIcon).toBeInTheDocument()
+    let cooperationNotes = await screen.findByText(/cooperation notes/i)
+    expect(cooperationNotes).toBeInTheDocument()
 
     await act(async () => {
       fireEvent.click(notes)
     })
 
-    expect(notesIcon).not.toBeInTheDocument()
+    await waitFor(() => {
+      cooperationNotes = screen.queryByText(/cooperation notes/i)
+      expect(cooperationNotes).not.toBeInTheDocument()
+    })
   })
 })
