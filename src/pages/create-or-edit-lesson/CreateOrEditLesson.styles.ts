@@ -14,6 +14,11 @@ const titleAndDescription = {
   marginTop: 0
 }
 
+const visibility = (value: string) => ({
+  visibility: value ? VisibilityEnum.Hidden : VisibilityEnum.Visible,
+  color: palette.primary[300]
+})
+
 export const styles = {
   root: {
     display: 'flex',
@@ -35,10 +40,9 @@ export const styles = {
   titleLabel: (value: string) => ({
     shrink: false,
     style: {
-      visibility: value ? VisibilityEnum.Hidden : VisibilityEnum.Visible,
-      color: palette.primary[300],
       top: -23,
-      ...inputFontSize
+      ...inputFontSize,
+      ...visibility(value)
     }
   }),
 
@@ -50,10 +54,9 @@ export const styles = {
   descriptionLabel: (value: string) => ({
     shrink: false,
     style: {
-      visibility: value ? VisibilityEnum.Hidden : VisibilityEnum.Visible,
-      color: palette.primary[300],
       top: -20,
-      ...titleAndDescription
+      ...titleAndDescription,
+      ...visibility(value)
     }
   }),
 
