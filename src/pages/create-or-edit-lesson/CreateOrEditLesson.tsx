@@ -213,7 +213,7 @@ const CreateOrEditLesson = () => {
           errorMsg={t(errors.title)}
           fullWidth
           inputProps={styles.input}
-          label={data.title ? '' : t('lesson.labels.title')}
+          label={t('lesson.labels.title')}
           multiline
           onChange={handleInputChange('title')}
           value={data.title}
@@ -225,7 +225,7 @@ const CreateOrEditLesson = () => {
           errorMsg={t(errors.description)}
           fullWidth
           inputProps={styles.input}
-          label={data.description ? '' : t('lesson.labels.description')}
+          label={t('lesson.labels.description')}
           multiline
           onChange={handleInputChange('description')}
           value={data.description}
