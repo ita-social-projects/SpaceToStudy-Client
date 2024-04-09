@@ -1,5 +1,9 @@
 import { UserGeneralInfo } from '~/types'
-import { nameField, textField } from '~/utils/validations/common'
+import {
+  nameField,
+  textField,
+  youtubeVideoLink
+} from '~/utils/validations/common'
 
 export const initialValues: UserGeneralInfo = {
   firstName: '',
@@ -12,7 +16,8 @@ export const initialValues: UserGeneralInfo = {
 export const validations = {
   firstName: nameField,
   lastName: nameField,
-  professionalSummary: textField(0, 200)
+  professionalSummary: textField(0, 200),
+  videoLink: youtubeVideoLink
 }
 
 export const tutorStepLabels = ['generalInfo', 'subjects', 'language', 'photo']

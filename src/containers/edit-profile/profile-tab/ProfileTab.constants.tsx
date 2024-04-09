@@ -10,7 +10,9 @@ export const getInitialValues = (user: UserResponse) => ({
   professionalSummary: user.professionalSummary ?? '',
   nativeLanguage: user.nativeLanguage ?? null,
   videoLink:
-    user.role[0] !== UserRoleEnum.Admin ? user.videoLink[user.role[0]] : '',
+    user.role[0] !== UserRoleEnum.Admin
+      ? user.videoLink[user.role[0]] || ''
+      : '',
   mainSubjects:
     user.role[0] !== UserRoleEnum.Admin ? user.mainSubjects[user.role[0]] : [],
 

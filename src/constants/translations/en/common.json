@@ -81,9 +81,10 @@
     "positiveNumbersOnly": "Please enter a positive number",
     "title": "Please provide a title",
     "description": "Please provide a description",
-    "category": "Please select a category.",
-    "subject": "Please select a subject.",
-    "proficiencyLevel": "Please select at least one proficiency level."
+    "category": "Please select a category",
+    "subject": "Please select a subject",
+    "proficiencyLevel": "Please select at least one proficiency level",
+    "youtubeLink": "Please provide a YouTube link"
   },
   "levels": {
     "beginner": "Beginner",

@@ -254,9 +254,12 @@ const ProfileGeneralTab: FC<ProfileTabProps> = ({ user }) => {
             ),
             sx: styles.videoLinkInput
           }}
+          errorMsg={t(errors.videoLink)}
           fullWidth
+          onBlur={handleBlur('videoLink')}
           onChange={handleInputChange('videoLink')}
-          value={data.videoLink.replace('https://', '')}
+          placeholder='youtube.com/my-video'
+          value={data.videoLink?.replace('https://', '')}
         />
       </Box>
     </Box>

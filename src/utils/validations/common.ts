@@ -76,6 +76,16 @@ export const textField =
     }
   }
 
+export const youtubeVideoLink = (value: string): string => {
+  const youtubeRegex =
+    /^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|shorts\/|watch\?.+&v=))((\w|-){11})(?:\S+)?$/
+
+  if (value && !youtubeRegex.test(value)) {
+    return 'common.errorMessages.youtubeLink'
+  }
+  return ''
+}
+
 export const helperTextHandler = (
   value: string,
   marker: keyof Validations,
