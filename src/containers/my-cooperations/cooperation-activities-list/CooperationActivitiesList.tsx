@@ -1,6 +1,5 @@
 import Box from '@mui/material/Box'
 
-import useForm from '~/hooks/use-form'
 import CourseSectionsList from '~/containers/course-sections-list/CourseSectionsList'
 
 import { useEffect } from 'react'
@@ -8,15 +7,17 @@ import { sectionInitialData } from '~/pages/create-course/CreateCourse.constants
 import { CourseSection, CourseResources } from '~/types'
 import { useCooperationContext } from '~/context/cooperation-context'
 
-const CooperationActivitiesList = () => {
+interface CooperationActivitiesListProps {
+  data: { sections: CourseSection[] }
+  handleNonInputValueChange: (key: 'sections', value: CourseSection[]) => void
+}
+
+const CooperationActivitiesList = ({
+  data,
+  handleNonInputValueChange
+}: CooperationActivitiesListProps) => {
   const { selectedCourse, isAddedClicked, currentSectionIndex } =
     useCooperationContext()
-  const { data, handleNonInputValueChange } = useForm<{
-    sections: CourseSection[]
-  }>({
-    initialValues: { sections: [] },
-    submitWithData: true
-  })
 
   const setSectionsData = (value: CourseSection[]) => {
     handleNonInputValueChange('sections', value)

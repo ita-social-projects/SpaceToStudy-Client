@@ -7,7 +7,8 @@ import {
   UserResponse,
   UserRoleEnum,
   SubjectInterface,
-  CategoryInterface
+  CategoryInterface,
+  CourseSection
 } from '~/types'
 
 export interface Cooperation extends CommonEntityFields {
@@ -20,6 +21,7 @@ export interface Cooperation extends CommonEntityFields {
   proficiencyLevel: ProficiencyLevelEnum
   status: StatusEnum
   needAction: UserRoleEnum
+  sections: Pick<CourseSection, 'title' | 'description'>
 }
 
 export interface MyCooperationDetails<TOffer extends Offer> {
