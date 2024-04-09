@@ -7,7 +7,7 @@ import { defaultFilters } from '~/pages/find-offers/FindOffers.constants'
 
 vi.mock('~/hooks/use-breakpoints')
 const filterActions = {
-  updateFilterInQuery: vi.fn()
+  updateFiltersInQuery: vi.fn()
 }
 const filters = defaultFilters('student')
 const resetPage = vi.fn()

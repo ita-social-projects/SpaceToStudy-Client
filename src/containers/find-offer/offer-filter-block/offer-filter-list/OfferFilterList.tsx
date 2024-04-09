@@ -15,23 +15,23 @@ import {
 import { styles } from '~/containers/find-offer/offer-filter-block/offer-filter-list/OfferFilterList.styles'
 import {
   FindOffersFilters,
-  FindOffersUpdateFilter,
   LanguageFilter,
   LanguagesEnum,
   PriceRange,
   ProficiencyLevelEnum,
+  UpdateFiltersInQuery,
   UpdateOfferFilterByKey
 } from '~/types'
 
 interface OfferFilterListProps {
   filters: FindOffersFilters
   updateFilterByKey: UpdateOfferFilterByKey
-  updateFilter: FindOffersUpdateFilter<FindOffersFilters>
+  updateFiltersInQuery: UpdateFiltersInQuery<FindOffersFilters>
   price: PriceRange
 }
 
 const OfferFilterList: FC<OfferFilterListProps> = ({
-  updateFilter,
+  updateFiltersInQuery,
   updateFilterByKey,
   filters,
   price
@@ -47,10 +47,10 @@ const OfferFilterList: FC<OfferFilterListProps> = ({
   const handleLanguagesChange = (
     _: MouseEvent<HTMLLIElement>,
     value: LanguagesEnum | null
-  ) => updateFilter(value ?? '', 'language')
+  ) => updateFiltersInQuery({ language: value })
 
   const handleChecked = (_: SyntheticEvent<Element, Event>, checked: boolean) =>
-    updateFilter(checked.toString(), 'native')
+    updateFiltersInQuery({ native: checked.toString() })
 
   const languagesFilter = (
     <Box>

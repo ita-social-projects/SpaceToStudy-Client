@@ -83,7 +83,7 @@ const AddCourseTemplateModal: FC<AddCourseTemplateModalProps> = ({
     defaultResponse: defaultResponses.itemsWithCount
   })
 
-  const { updateFilterInQuery, resetFilters } = filterQueryActions
+  const { updateFiltersInQuery, resetFilters } = filterQueryActions
 
   const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value)
@@ -97,20 +97,19 @@ const AddCourseTemplateModal: FC<AddCourseTemplateModalProps> = ({
     _: SyntheticEvent,
     value: CategoryNameInterface | null
   ) => {
-    updateFilterInQuery(value?._id ?? '', 'category')
-    updateFilterInQuery('', 'subject')
+    updateFiltersInQuery({ category: value?._id ?? '', subject: '' })
   }
 
   const onSubjectChange = (
     _: SyntheticEvent,
     value: SubjectNameInterface | null
   ) => {
-    updateFilterInQuery(value?._id ?? '', 'subject')
+    updateFiltersInQuery({ subject: value?._id ?? '' })
   }
 
   const onLevelChange = (e: SelectChangeEvent<ProficiencyLevelEnum[]>) => {
     const selectedProficiencyLevels = e.target.value as ProficiencyLevelEnum[]
-    updateFilterInQuery(selectedProficiencyLevels, 'proficiencyLevel')
+    updateFiltersInQuery({ proficiencyLevel: selectedProficiencyLevels })
   }
 
   const onCreateCourse = () => {

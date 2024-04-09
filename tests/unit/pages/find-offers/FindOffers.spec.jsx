@@ -38,7 +38,7 @@ const filterQueryMock = {
     updateFilter: vi.fn(),
     resetFilters: vi.fn(),
     updateQueryParams: vi.fn(),
-    updateFilterInQuery: vi.fn()
+    updateFiltersInQuery: vi.fn()
   }
 }
 
@@ -95,7 +95,7 @@ describe('FindOffers component', () => {
     fireEvent.click(toggle)
 
     expect(
-      filterQueryMock.filterQueryActions.updateFilterInQuery
+      filterQueryMock.filterQueryActions.updateFiltersInQuery
     ).toHaveBeenCalled()
   })
 
@@ -134,7 +134,7 @@ describe('FindOffers component', () => {
     fireEvent.click(secondPage)
 
     expect(
-      filterQueryMock.filterQueryActions.updateFilterInQuery
+      filterQueryMock.filterQueryActions.updateFiltersInQuery
     ).toHaveBeenCalledTimes(1)
   })
 })
