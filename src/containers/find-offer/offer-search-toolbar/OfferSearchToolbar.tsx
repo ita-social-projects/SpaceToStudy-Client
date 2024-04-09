@@ -22,17 +22,17 @@ import AsyncAutocomplete from '~/components/async-autocomlete/AsyncAutocomplete'
 interface OfferSearchToolbarProps {
   filters: FindOffersFilters
   filterActions: FindOffersFiltersActions<FindOffersFilters>
-  resetPage: () => void
+  additionalParams: Record<string, unknown>
 }
 
 const OfferSearchToolbar = ({
   filters,
-  resetPage,
+  additionalParams,
   filterActions
 }: OfferSearchToolbarProps) => {
   const { t } = useTranslation()
   const { isLaptopAndAbove, isMobile } = useBreakpoints()
-  const { updateFilterInQuery } = filterActions
+  const { updateFiltersInQuery } = filterActions
 
   const getSubjectsNames = useCallback(
     () => subjectService.getSubjectsNames(filters.categoryId),
@@ -43,22 +43,22 @@ const OfferSearchToolbar = ({
     _: React.SyntheticEvent,
     value: CategoryNameInterface | null
   ) => {
-    updateFilterInQuery(value?._id ?? '', 'categoryId')
-    updateFilterInQuery('', 'subjectId')
-    resetPage()
+    updateFiltersInQuery({
+      ...additionalParams,
+      subjectId: '',
+      categoryId: value?._id ?? ''
+    })
   }
 
   const onSubjectChange = (
     _: React.SyntheticEvent,
     value: SubjectNameInterface | null
   ) => {
-    updateFilterInQuery(value?._id ?? '', 'subjectId')
-    resetPage()
+    updateFiltersInQuery({ ...additionalParams, subjectId: value?._id ?? '' })
   }
 
   const updateName = (value: string) => {
-    updateFilterInQuery(value, 'search')
-    resetPage()
+    updateFiltersInQuery({ ...additionalParams, search: value })
   }
 
   const AppAutoCompleteList = (

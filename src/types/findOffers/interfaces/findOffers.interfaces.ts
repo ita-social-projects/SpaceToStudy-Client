@@ -1,13 +1,13 @@
 import {
   CategoryInterface,
   CategoryNameInterface,
-  FindOffersUpdateFilter,
   LanguageFilter,
   Offer,
   ProficiencyLevelEnum,
   RangeArray,
   RequestParams,
   SubjectNameInterface,
+  UpdateFiltersInQuery,
   UserRole
 } from '~/types'
 
@@ -26,8 +26,7 @@ export interface FindOffersFilters {
 }
 
 export interface FindOffersFiltersActions<T> {
-  updateFilter: FindOffersUpdateFilter<T>
-  updateFilterInQuery: FindOffersUpdateFilter<T>
+  updateFiltersInQuery: UpdateFiltersInQuery<T>
   resetFilters: () => void
   updateQueryParams: () => void
 }

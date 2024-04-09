@@ -24,7 +24,7 @@ interface OfferFilterBlockProps {
   filterActions: FindOffersFiltersActions<FindOffersFilters>
   onToggleTutorOffers: () => void
   closeFilters: () => void
-  resetPage: () => void
+  additionalParams: Record<string, unknown>
   open: boolean
   activeFilterCount?: number
   price: PriceRange
@@ -36,13 +36,14 @@ const OfferFilterBlock: FC<OfferFilterBlockProps> = ({
   onToggleTutorOffers,
   activeFilterCount,
   closeFilters,
-  resetPage,
+  additionalParams,
   open,
   price
 }) => {
   const { t } = useTranslation()
   const { isLaptopAndAbove } = useBreakpoints()
-  const { updateFilter, resetFilters, updateQueryParams } = filterActions
+  const { updateFiltersInQuery, resetFilters, updateQueryParams } =
+    filterActions
   const showingTutorOffers = filters.authorRole === UserRoleEnum.Student
 
   const switchOptions = {
@@ -59,12 +60,13 @@ const OfferFilterBlock: FC<OfferFilterBlockProps> = ({
 
   const updateFilterByKey =
     <K extends keyof FindOffersFilters>(key: K) =>
-    (value: FindOffersFilters[K]) =>
-      updateFilter(value, key)
+    (value: FindOffersFilters[K]) => {
+      updateFiltersInQuery({ [key]: value })
+    }
 
   const handleApplyFilters = () => {
     updateQueryParams()
-    resetPage()
+    updateFiltersInQuery(additionalParams)
     closeFilters()
   }
 
@@ -96,8 +98,8 @@ const OfferFilterBlock: FC<OfferFilterBlockProps> = ({
       <OfferFilterList
         filters={filters}
         price={price}
-        updateFilter={updateFilter}
         updateFilterByKey={updateFilterByKey}
+        updateFiltersInQuery={updateFiltersInQuery}
       />
       <AppButton onClick={handleApplyFilters} sx={styles.applyButton}>
         {t('button.applyFilters')}

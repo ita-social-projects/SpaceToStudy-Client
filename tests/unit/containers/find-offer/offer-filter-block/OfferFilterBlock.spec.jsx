@@ -8,7 +8,7 @@ import useBreakpoints from '~/hooks/use-breakpoints'
 vi.mock('~/hooks/use-breakpoints')
 
 const filterActions = {
-  updateFilter: vi.fn(),
+  updateFiltersInQuery: vi.fn(),
   resetFilters: vi.fn(),
   updateQueryParams: vi.fn()
 }
@@ -16,7 +16,7 @@ const filterActions = {
 const price = { minPrice: 200, maxPrice: 400 }
 const onToggleTutorOffers = vi.fn()
 const closeFilters = vi.fn()
-const resetPage = vi.fn()
+const additionalParams = {}
 const activeFilterCount = 2
 const open = true
 useBreakpoints.mockImplementation(() => ({ isMobile: true }))
@@ -27,13 +27,13 @@ describe('OfferFilterBlock', () => {
       render(
         <OfferFilterBlock
           activeFilterCount={activeFilterCount}
+          additionalParams={additionalParams}
           closeFilters={closeFilters}
           filterActions={filterActions}
           filters={defaultFilters('student')}
           onToggleTutorOffers={onToggleTutorOffers}
           open={open}
           price={price}
-        resetPage={resetPage}
         />
       )
     })

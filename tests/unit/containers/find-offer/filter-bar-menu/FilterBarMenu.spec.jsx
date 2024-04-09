@@ -9,7 +9,7 @@ import useBreakpoints from '~/hooks/use-breakpoints'
 vi.mock('~/hooks/use-breakpoints')
 
 const mockChosenFiltersQty = 2
-const mockUpdateFilter = vi.fn()
+const mockUpdateFilters = vi.fn()
 const mockResetPage = vi.fn()
 const toggleFilters = vi.fn()
 const mockHandleOffersView = vi.fn()
@@ -26,7 +26,7 @@ describe('OfferFilterBlock', () => {
         onToggleTutorOffers={mockOnToggleTutorOffers}
         resetPage={mockResetPage}
         toggleFilters={toggleFilters}
-        updateFilter={mockUpdateFilter}
+        updateFilters={mockUpdateFilters}
       />
     )
   })
@@ -48,7 +48,7 @@ describe('OfferFilterBlock', () => {
       target: { value: 'rating' }
     })
 
-    expect(mockUpdateFilter).toHaveBeenCalled()
+    expect(mockUpdateFilters).toHaveBeenCalled()
   })
   it('it checks that app switcher exists on desktop size', () => {
     expect(screen.getByTestId('switch')).toBeInTheDocument()
@@ -65,7 +65,7 @@ describe('OfferBarMenu tests on tablet size', () => {
         handleOffersView={mockHandleOffersView}
         onToggleTutorOffers={mockOnToggleTutorOffers}
         toggleFilters={toggleFilters}
-        updateFilter={mockUpdateFilter}
+        updateFilter={mockUpdateFilters}
       />
     )
   })
@@ -85,7 +85,7 @@ describe('OfferBarMenu tests on mobile size', () => {
         handleOffersView={mockHandleOffersView}
         onToggleTutorOffers={mockOnToggleTutorOffers}
         toggleFilters={toggleFilters}
-        updateFilter={mockUpdateFilter}
+        updateFilter={mockUpdateFilters}
       />
     )
   })

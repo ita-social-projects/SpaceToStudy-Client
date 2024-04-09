@@ -100,28 +100,27 @@ const FindOffers = () => {
     })
   }, [fetchData, filters])
 
+  const searchString = searchParams.toString()
+
   useEffect(() => {
     updateInfo()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fetchData, searchParams, itemsPerPage, updateInfo])
+  }, [fetchData, searchString])
 
   const toggleFiltersOpen = () => (isOpen ? closeDrawer() : openDrawer())
 
-  const resetPage = () => {
-    filterQueryActions.updateFilterInQuery(
-      defaultFilters(oppositeRole).page,
-      'page'
-    )
-  }
+  const defaultParams = { page: defaultFilters(oppositeRole).page }
 
   const handlePageChange = (_: ChangeEvent<unknown>, page: number) => {
-    filterQueryActions.updateFilterInQuery(page, 'page')
+    filterQueryActions.updateFiltersInQuery({ page })
   }
 
   const handleShowingTutorOffers = () => {
     const updatedRole = getOpositeRole(filters.authorRole)
-    filterQueryActions.updateFilterInQuery(updatedRole, 'authorRole')
-    resetPage()
+    filterQueryActions.updateFiltersInQuery({
+      ...defaultParams,
+      authorRole: updatedRole
+    })
   }
 
   return (
@@ -140,19 +139,19 @@ const FindOffers = () => {
         />
       </Box>
       <OfferSearchToolbar
+        additionalParams={defaultParams}
         filterActions={filterQueryActions}
         filters={filters}
-        resetPage={resetPage}
       />
       <FilterBarMenu
+        additionalParams={defaultParams}
         chosenFiltersQty={activeFilterCount}
         filters={filters}
         handleOffersView={setCardsView}
         offersView={cardsView}
         onToggleTutorOffers={handleShowingTutorOffers}
-        resetPage={resetPage}
         toggleFilters={toggleFiltersOpen}
-        updateFilter={filterQueryActions.updateFilterInQuery}
+        updateFilters={filterQueryActions.updateFiltersInQuery}
       />
       <Box sx={styles.filterSection}>
         <AppDrawer
@@ -162,13 +161,13 @@ const FindOffers = () => {
         >
           <OfferFilterBlock
             activeFilterCount={activeFilterCount}
+            additionalParams={defaultParams}
             closeFilters={closeDrawer}
             filterActions={filterQueryActions}
             filters={filters}
             onToggleTutorOffers={handleShowingTutorOffers}
             open={isOpen}
             price={price}
-            resetPage={resetPage}
           />
         </AppDrawer>
         {offersLoading ? (

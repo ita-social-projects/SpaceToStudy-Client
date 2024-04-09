@@ -36,7 +36,7 @@ const SearchFilterInput = ({
     updateFilter('')
   }
 
-  const onEnterPress = (event: KeyboardEvent<HTMLInputElement>) => {
+  const onKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     event.key === 'Enter' && onSearch()
   }
 
@@ -45,16 +45,18 @@ const SearchFilterInput = ({
     return searchParams.get('search') ?? ''
   }
 
+  const searchParam = getSearchOfferParams()
+
   useEffect(() => {
-    setSearch(getSearchOfferParams())
-  }, [])
+    setSearch(searchParam)
+  }, [searchParam])
 
   return (
     <Box sx={styles.container}>
       <InputWithIcon
         onChange={onChange}
         onClear={onClear}
-        onKeyPress={onEnterPress}
+        onKeyDown={onKeyDown}
         startIcon={<SearchIcon sx={styles.searchIcon} />}
         sx={styles.input}
         value={search}

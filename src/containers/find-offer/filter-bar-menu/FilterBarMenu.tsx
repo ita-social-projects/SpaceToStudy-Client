@@ -15,7 +15,7 @@ import { styles } from '~/containers/find-offer/filter-bar-menu/FilterBarMenu.st
 import {
   CardsView,
   FindOffersFilters,
-  FindOffersUpdateFilter,
+  UpdateFiltersInQuery,
   UserRoleEnum
 } from '~/types'
 import { sortTranslationKeys } from '~/containers/find-offer/offer-filter-block/OfferFilterBlock.constants'
@@ -26,19 +26,19 @@ interface FilterBarMenuProps {
   handleOffersView: (view: CardsView) => void
   offersView: CardsView
   onToggleTutorOffers: () => void
-  resetPage: () => void
-  updateFilter: FindOffersUpdateFilter<FindOffersFilters>
+  additionalParams: Record<string, unknown>
+  updateFilters: UpdateFiltersInQuery<FindOffersFilters>
   filters: FindOffersFilters
 }
 
 const FilterBarMenu: FC<FilterBarMenuProps> = ({
   chosenFiltersQty,
   toggleFilters,
-  updateFilter,
+  updateFilters,
   filters,
   handleOffersView,
   onToggleTutorOffers,
-  resetPage,
+  additionalParams,
   offersView
 }) => {
   const { isLaptopAndAbove, isMobile } = useBreakpoints()
@@ -57,8 +57,7 @@ const FilterBarMenu: FC<FilterBarMenuProps> = ({
   }
 
   const handleSortBy = (value: string) => {
-    updateFilter(value, 'sort')
-    resetPage()
+    updateFilters({ ...additionalParams, sort: value })
   }
   const sortOptions = sortTranslationKeys.map(({ title, value }) => ({
     title: t(title),
