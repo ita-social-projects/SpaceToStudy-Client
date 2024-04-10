@@ -1,4 +1,3 @@
-import { beforeEach, expect, vi } from 'vitest'
 import { fireEvent, screen } from '@testing-library/react'
 
 import FaqBlock from '~/containers/offer-page/faq-block/FaqBlock'
