@@ -2,7 +2,7 @@ import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
 import MyCooperationsDetails from '~/containers/my-cooperations/my-cooperations-details/MyCooperationsDetails.tsx'
 
-import { waitFor, screen, act, fireEvent } from '@testing-library/react'
+import { waitFor, screen, fireEvent } from '@testing-library/react'
 
 const mockedOffer = {
   offer: {
@@ -72,12 +72,12 @@ describe('MyCooperationsDetails component', () => {
 
     expect(sendMessageButton).toBeInTheDocument()
 
-    await act(async () => {
-      fireEvent.click(sendMessageButton)
-    })
-    const chatWindow = await screen.findByTestId('MessageIcon')
+    fireEvent.click(sendMessageButton)
 
-    expect(chatWindow).toBeInTheDocument()
+    const chatWindow = await screen.findByTestId('MessageIcon')
+    await waitFor(() => {
+      expect(chatWindow).toBeInTheDocument()
+    })
   })
 
   it('should open profile after clicking on profile-button', async () => {
@@ -87,9 +87,10 @@ describe('MyCooperationsDetails component', () => {
 
     expect(profileButton).toBeInTheDocument()
 
-    await act(async () => {
-      fireEvent.click(profileButton)
+    fireEvent.click(profileButton)
+
+    await waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalled()
     })
-    expect(mockNavigate).toHaveBeenCalled()
   })
 })
