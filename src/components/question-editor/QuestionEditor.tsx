@@ -74,7 +74,7 @@ const QuestionEditor: FC<QuestionEditorProps> = ({
   }))
 
   const setTypeValue = (value: string) => {
-    handleNonInputValueChange('type', value ?? sortQuestions[0].value)
+    handleNonInputValueChange('type', value)
   }
 
   const sortOptions = sortQuestions.map(({ icon, title, value }) => ({
@@ -217,7 +217,11 @@ const QuestionEditor: FC<QuestionEditorProps> = ({
       {isSingleChoice && <RadioGroup sx={styles.group}>{options}</RadioGroup>}
 
       {!isOpenAnswer && (
-        <Box onClick={addNewOneAnswer} sx={styles.addRadio(isEmptyAnswer)}>
+        <Box
+          data-testid='addNewAnswerBtn'
+          onClick={addNewOneAnswer}
+          sx={styles.addRadio(isEmptyAnswer)}
+        >
           <FormControlLabel
             checked={false}
             control={isMultipleChoice ? <Checkbox /> : <Radio />}
