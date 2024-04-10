@@ -196,6 +196,8 @@ const CreateOrEditQuizContainer = ({
         })
       : void addNewQuiz({ title, description, items: questions, category })
 
+  console.log(isCreationOpen)
+
   return (
     <PageWrapper sx={styles.container}>
       <Box sx={styles.root}>

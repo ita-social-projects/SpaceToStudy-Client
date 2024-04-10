@@ -106,9 +106,11 @@ const CreateOrEditQuizQuestion: FC<CreateOrEditQuizQuestionProps> = ({
   const { data, handleInputChange, handleNonInputValueChange, handleSubmit } =
     useForm<QuestionForm>({ initialValues: initialValues(question) })
 
+  console.log(data)
+
   const onCloseCreation = () => {
-    closeModal()
     onCancel()
+    closeModal()
   }
 
   const onOpenCreation = ({ title, category }: QuestionModalForm) => {
@@ -116,7 +118,10 @@ const CreateOrEditQuizQuestion: FC<CreateOrEditQuizQuestionProps> = ({
     handleNonInputValueChange('category', category)
     setIsNewQuestion(true)
     closeModal()
+
     onCancel()
+
+    console.log('on creation')
   }
 
   const onCreateQuestion = async () => {
