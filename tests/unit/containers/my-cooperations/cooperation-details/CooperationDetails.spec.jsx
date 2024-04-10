@@ -1,4 +1,4 @@
-import { screen, waitFor, fireEvent, act } from '@testing-library/react'
+import { screen, waitFor, fireEvent } from '@testing-library/react'
 import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
 
@@ -62,7 +62,6 @@ const cooperationMock = {
 vi.mock(
   '~/containers/my-cooperations/cooperation-notes/CooperationNotes',
   () => ({
-    __esModule: true,
     default: function () {
       return <div>Cooperation Notes</div>
     }
@@ -102,10 +101,11 @@ describe('CooperationDetails', () => {
 
     const tab2 = await screen.findByText('cooperationsPage.tabs.details')
 
-    await act(async () => {
-      fireEvent.click(tab2)
+    fireEvent.click(tab2)
+
+    await waitFor(() => {
+      expect(tab2).toBeInTheDocument()
     })
-    expect(tab2).toBeInTheDocument()
   })
 
   it('should toggle notes block', async () => {
@@ -113,16 +113,14 @@ describe('CooperationDetails', () => {
       name: 'cooperationsPage.details.notes'
     })
 
-    await act(async () => {
-      fireEvent.click(notes)
-    })
+    fireEvent.click(notes)
 
     let cooperationNotes = await screen.findByText(/cooperation notes/i)
-    expect(cooperationNotes).toBeInTheDocument()
-
-    await act(async () => {
-      fireEvent.click(notes)
+    await waitFor(() => {
+      expect(cooperationNotes).toBeInTheDocument()
     })
+
+    fireEvent.click(notes)
 
     await waitFor(() => {
       cooperationNotes = screen.queryByText(/cooperation notes/i)
