@@ -51,9 +51,7 @@ describe('FaqBlock component', () => {
       mockedFaqData
     ])
 
-    for (let i = 0; i < 4; i++) {
-      data.FAQ.push(mockedFaqData)
-    }
+    data.FAQ.push(...Array(4).fill(mockedFaqData))
     fireEvent.click(addButton)
 
     const errorMessage = screen.getByText('offerPage.errorMessages.faq')
