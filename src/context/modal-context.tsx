@@ -13,11 +13,13 @@ import { PaperProps } from '@mui/material/Paper'
 interface Component {
   component: ReactElement
   paperProps?: PaperProps
+  customCloseModal?: () => void
 }
 
 interface ModalProvideContext {
   openModal: (component: Component, delayToClose?: number) => void
   closeModal: () => void
+  customCloseModal?: () => void
 }
 
 interface ModalProviderProps {
@@ -32,6 +34,7 @@ const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
   const [modal, setModal] = useState<ReactElement | null>(null)
   const [paperProps, setPaperProps] = useState<PaperProps>({})
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null)
+  const [customCloseModal, setCustomCloseModal] = useState<() => void>()
 
   const closeModal = useCallback(() => {
     setModal(null)
@@ -48,11 +51,15 @@ const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
   )
 
   const openModal = useCallback(
-    ({ component, paperProps }: Component, delayToClose?: number) => {
+    (
+      { component, paperProps, customCloseModal }: Component,
+      delayToClose?: number
+    ) => {
       setModal(component)
 
       paperProps && setPaperProps(paperProps)
       delayToClose && closeModalAfterDelay(delayToClose)
+      customCloseModal && setCustomCloseModal(() => customCloseModal)
     },
     [setModal, setPaperProps, closeModalAfterDelay]
   )
@@ -67,7 +74,14 @@ const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
       {children}
       {modal && (
         <PopupDialog
-          closeModal={closeModal}
+          closeModal={
+            customCloseModal
+              ? () => {
+                  customCloseModal()
+                  closeModal()
+                }
+              : closeModal
+          }
           closeModalAfterDelay={closeModalAfterDelay}
           content={modal}
           paperProps={paperProps}

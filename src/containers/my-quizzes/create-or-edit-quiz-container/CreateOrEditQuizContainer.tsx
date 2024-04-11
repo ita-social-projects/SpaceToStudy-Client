@@ -147,10 +147,6 @@ const CreateOrEditQuizContainer = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id])
 
-  useEffect(() => {
-    isCreationOpen && setIsCreationOpen(false)
-  }, [isCreationOpen])
-
   if (getQuizLoading) {
     return <Loader pageLoad />
   }
@@ -195,8 +191,6 @@ const CreateOrEditQuizContainer = ({
           category
         })
       : void addNewQuiz({ title, description, items: questions, category })
-
-  console.log(isCreationOpen)
 
   return (
     <PageWrapper sx={styles.container}>
