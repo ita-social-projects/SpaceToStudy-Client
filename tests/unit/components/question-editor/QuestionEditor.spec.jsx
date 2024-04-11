@@ -1,7 +1,6 @@
 import QuestionEditor from '~/components/question-editor/QuestionEditor'
 import { screen, fireEvent } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
-import { afterEach, beforeEach, describe, expect } from 'vitest'
 
 const handleInputChange = vi.fn()
 const handleNonInputValueChange = vi.fn()
