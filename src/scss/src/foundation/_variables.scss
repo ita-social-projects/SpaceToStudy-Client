@@ -7,7 +7,7 @@
  * 
  * COLORS
  * Basic colors................There are the main colors, which are used the most in project 
- * Additional colors................White, black and gray scale, secondary colors
+ * Additional colors................on surface colors, on primary colors, secondary colors
  * Utility colors................Other colors represent states: warning, success, error, etc.
  *
  * TYPOGRAPHY
@@ -20,7 +20,10 @@
  * Breakpoints................Global responsive breakpoints definition
  *
  * SPACING
- * Spacing................
+ * Spacing................paddings, margins, etc.
+ *
+ * SHADOWS ------ Basic shadows values which are used in project
+ *
  */
 
 /*=============================================
@@ -29,12 +32,91 @@
 
 /* Basic colors */
 
+$blue-gray: #fcfcfc;
+$blue-gray-50: #eceff1;
+$blue-gray-100: #cfd8dc;
+$blue-gray-200: #b0bec5;
+$blue-gray-300: #90a4ae;
+$blue-gray-400: #78909c;
+$blue-gray-500: #607d8b;
+$blue-gray-600: #546e7a;
+$blue-gray-700: #455a64;
+$blue-gray-800: #37474f;
+$blue-gray-900: #263238;
+
+$s2s-blue: #00a7a733;
+
 /* Additional colors */
+
+$white: #ffffff;
+$light-gray: #f7f7f7;
+
+$turquoise: #f5ffff;
+$turquoise-100: #d7fcfd;
+$turquoise-200: #baf7f9;
+$turquoise-300: #a0f0f2;
+$turquoise-400: #89e6e9;
+$turquoise-500: #76d9dd;
+$turquoise-600: #65c9cd;
+$turquoise-700: #56b5b8;
+$turquoise-800: #489da0;
+$turquoise-900: #3b8587;
+
+$blue: #f5fbff;
+$blue-100: #c5e7fd;
+$blue-200: #98d2f9;
+$blue-300: #70bef2;
+$blue-400: #50ace9;
+$blue-500: #389bdc;
+$blue-600: #278acb;
+$blue-700: #1b78b6;
+$blue-800: #12669e;
+$blue-900: #0d5585;
+$blue-accent: #0b8af8;
+
+$yellow-accent: #ffb000;
+$yellow-brown: #f5d636;
+$yellow-green: #9bc541;
+
+$burnt-orange: #f56f36;
+
+$lime: #99cc00;
+$green-accent: #12a03a;
 
 /* Utility colors */
 
+$success-50: #ebf3eb;
+$success-100: #cce7cd;
+$success-200: #a7d5a8;
+$success-300: #82c684;
+$success-400: #68ba6a;
+$success-500: #4caf50;
+$success-600: #44a148;
+$success-700: #388d3c;
+$success-800: #2c7c32;
+$success-900: #1e5f23;
 
-/*=====  End of Colors  ======*/
+$warning-50: #fff8e1;
+$warning-100: #ffecb3;
+$warning-200: #ffe082;
+$warning-300: #ffd54f;
+$warning-400: #ffca28;
+$warning-500: #ffc107;
+$warning-600: #ffb300;
+$warning-700: #ffa000;
+$warning-800: #ff8f00;
+$warning-900: #ff6f00;
+
+$error-50: #ffeff2;
+$error-100: #ffcfd4;
+$error-200: #f19b9a;
+$error-300: #e77574;
+$error-400: #f25750;
+$error-500: #f54636;
+$error-600: #e63c35;
+$error-700: #d32f2f;
+$error-800: #c72a28;
+$error-900: #b91f1b;
 
 /*=============================================
 =                TYPOGRAPHY                   =
@@ -55,6 +137,5 @@
 =============================================*/
 
 /* Breakpoints */
-
 
 /*=====  End of BREAKPOINTS  ======*/
