@@ -33,6 +33,7 @@ export const styles = {
     }
   },
   resourceActions: {
-    display: 'flex'
+    display: 'flex',
+    gap: '1rem'
   }
 }

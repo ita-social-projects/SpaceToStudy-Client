@@ -21,12 +21,14 @@ interface ResourcesListProps {
   items: CourseResources[]
   setResources: Dispatch<SetStateAction<CourseResources[]>>
   deleteResource: (resource: CourseResources) => void
+  editResource: (resource: CourseResources) => void
 }
 
 const ResourcesList: FC<ResourcesListProps> = ({
   items,
   setResources,
-  deleteResource
+  deleteResource,
+  editResource
 }) => {
   const { enabled } = useDroppable()
 
@@ -92,6 +94,7 @@ const ResourcesList: FC<ResourcesListProps> = ({
           </Box>
           <ResourceItem
             deleteResource={deleteResource}
+            editResource={editResource}
             resource={item}
             setResourceAvailability={setResourceAvailability}
           />

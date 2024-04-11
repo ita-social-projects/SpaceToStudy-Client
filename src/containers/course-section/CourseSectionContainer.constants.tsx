@@ -23,3 +23,8 @@ export const resourcesData = {
     icon: <AttachFileIcon />
   }
 }
+
+export const resourceNavigationMap: Partial<Record<ResourcesTypes, string>> = {
+  [ResourcesTypes.Lessons]: 'editLesson',
+  [ResourcesTypes.Quizzes]: 'editQuiz'
+}

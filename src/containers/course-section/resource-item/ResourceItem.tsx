@@ -6,6 +6,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import TextField from '@mui/material/TextField'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
 import { useTranslation } from 'react-i18next'
 
 import AppSelect from '~/components/app-select/AppSelect'
@@ -16,7 +17,6 @@ import openFrom from '~/assets/img/cooperation-details/resource-availability/ope
 import closedIcon from '~/assets/img/cooperation-details/resource-availability/closed-icon.svg'
 
 import {
-  ComponentEnum,
   CourseResources,
   ResourceAvailabilityStatusEnum,
   ResourcesAvailabilityEnum,
@@ -35,6 +35,7 @@ interface ResourceItemProps {
     availability: ResourceAvailabilityStatusEnum,
     openFromDate: string | null
   ) => void
+  editResource: (resource: CourseResources) => void
 }
 
 const availabilityIcons = {
@@ -46,13 +47,19 @@ const availabilityIcons = {
 const ResourceItem: FC<ResourceItemProps> = ({
   resource,
   deleteResource,
-  setResourceAvailability
+  setResourceAvailability,
+  editResource
 }) => {
   const onDeleteResource = () => {
     deleteResource(resource)
   }
 
+  const onEditResource = () => {
+    editResource(resource)
+  }
+
   const { t } = useTranslation()
+
   const { resourceAvailability, isCooperation } =
     useResourceAvailabilityContext()
 
@@ -91,22 +98,22 @@ const ResourceItem: FC<ResourceItemProps> = ({
   const availabilitySelection = (
     <Box sx={styles.availabilitySelectionContainer}>
       {!displayDatePicker && (
-        <Box
-          alt='resource icon'
-          component={ComponentEnum.Img}
-          src={availabilityIcons[resourceAvailabilityStatus]}
-          sx={styles.availabilityIcon}
-        />
+        <Box sx={styles.availabilityIcon}>
+          <img
+            alt='resource icon'
+            src={availabilityIcons[resourceAvailabilityStatus]}
+          />
+        </Box>
       )}
       {displayDatePicker && (
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <Box sx={styles.datePicker}>
-            <Box
-              alt='resource icon'
-              component={ComponentEnum.Img}
-              src={availabilityIcons[resourceAvailabilityStatus]}
-              sx={styles.availabilityIcon}
-            />
+            <Box sx={styles.availabilityIcon}>
+              <img
+                alt='resource icon'
+                src={availabilityIcons[resourceAvailabilityStatus]}
+              />
+            </Box>
             <DatePicker
               disablePast
               inputFormat={'MMM d, yyyy'}
@@ -136,6 +143,9 @@ const ResourceItem: FC<ResourceItemProps> = ({
       />
       <Box sx={styles.resourceActions}>
         {isCooperation && availabilitySelection}
+        <IconButton onClick={onEditResource}>
+          <EditOutlinedIcon color='primary' fontSize='small' />
+        </IconButton>
         <IconButton onClick={onDeleteResource}>
           <CloseIcon />
         </IconButton>

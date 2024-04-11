@@ -18,6 +18,7 @@ import useMenu from '~/hooks/use-menu'
 import { useModalContext } from '~/context/modal-context'
 import {
   menuTypes,
+  resourceNavigationMap,
   resourcesData
 } from '~/containers/course-section/CourseSectionContainer.constants'
 import {
@@ -43,9 +44,19 @@ import {
   Attachment,
   ResourcesTabsEnum as ResourcesTypes,
   CourseResources,
-  CourseSectionHandlers
+  CourseSectionHandlers,
+  UpdateAttachmentParams
 } from '~/types'
 import { styles } from '~/containers/course-section/CourseSectionContainer.styles'
+import EditAttachmentModal from '~/containers/my-resources/edit-attachment-modal/EditAttachmentModal'
+import { createUrlPath } from '~/utils/helper-functions'
+import { authRoutes } from '~/router/constants/authRoutes'
+import {
+  ResourceActionTypes,
+  ResourcesProvider,
+  useResourcesContext
+} from '~/context/resources-context'
+import useAxios from '~/hooks/use-axios'
 
 interface SectionProps extends CourseSectionHandlers {
   sectionData: CourseSection
@@ -64,8 +75,11 @@ const CourseSectionContainer: FC<SectionProps> = ({
   titleText
 }) => {
   const { t } = useTranslation()
+
   const { openMenu, renderMenu, closeMenu } = useMenu()
-  const { openModal } = useModalContext()
+  const { openModal, closeModal } = useModalContext()
+  const { state: resourcesState, dispatch } = useResourcesContext()
+  console.log(resourcesState)
 
   const [titleInput, setTitleInput] = useState<string>(sectionData.title)
   const [descriptionInput, setDescriptionInput] = useState<string>(
@@ -158,6 +172,12 @@ const CourseSectionContainer: FC<SectionProps> = ({
   ])
 
   const deleteResource = (resource: CourseResources) => {
+    dispatch({
+      type: ResourceActionTypes.DELETE,
+      itemId: resource._id,
+      resourceType: resource?.resourceType
+    })
+
     if (resource.resourceType === ResourcesTypes.Lessons) {
       const newLessons = sectionData.lessons.filter(
         (item) => item._id !== resource._id
@@ -188,6 +208,47 @@ const CourseSectionContainer: FC<SectionProps> = ({
     }
   }
 
+  const handleEditAttachment = (params?: UpdateAttachmentParams) =>
+    ResourceService.updateAttachment(params)
+
+  const { fetchData: updateData } = useAxios({
+    service: handleEditAttachment,
+    defaultResponse: null,
+    fetchOnMount: false
+  })
+
+  const editResource = (resource: CourseResources) => {
+    const resourceType = resource.resourceType
+
+    if (!resourceType) return
+
+    if (resourceType === ResourcesTypes.Attachments) {
+      openModal({
+        component: (
+          <EditAttachmentModal
+            attachment={resource as Attachment}
+            closeModal={closeModal}
+            updateAttachment={updateData}
+          />
+        )
+      })
+    } else {
+      const navigationFiled = resourceNavigationMap[
+        resourceType
+      ] as keyof typeof authRoutes.myResources
+
+      window
+        .open(
+          createUrlPath(
+            authRoutes.myResources[navigationFiled].path,
+            resource._id
+          ),
+          '_blank'
+        )
+        ?.focus()
+    }
+  }
+
   const onShowHide = () => {
     setIsVisible((isVisible) => !isVisible)
   }
@@ -205,6 +266,12 @@ const CourseSectionContainer: FC<SectionProps> = ({
     newResources: T[],
     type: ResourcesTypes
   ) => {
+    dispatch({
+      type: ResourceActionTypes.ADD,
+      payload: newResources,
+      resourceType: type
+    })
+
     handleSectionNonInputChange(
       sectionData.id,
       type as keyof CourseSection,
@@ -389,6 +456,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
           />
           <ResourcesList
             deleteResource={deleteResource}
+            editResource={editResource}
             items={resources}
             setResources={setResources}
           />
@@ -412,4 +480,10 @@ const CourseSectionContainer: FC<SectionProps> = ({
   )
 }
 
-export default CourseSectionContainer
+const CourseSectionWithContext = (props: SectionProps) => (
+  <ResourcesProvider>
+    <CourseSectionContainer {...props} />
+  </ResourcesProvider>
+)
+
+export default CourseSectionWithContext

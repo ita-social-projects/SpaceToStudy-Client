@@ -49,12 +49,18 @@ import {
   ResourcesTabsEnum,
   CategoryNameInterface
 } from '~/types'
+import {
+  ResourceActionTypes,
+  ResourcesProvider,
+  useResourcesContext
+} from '~/context/resources-context'
 
 const CreateOrEditLesson = () => {
   const { t } = useTranslation()
   const { setAlert } = useSnackBarContext()
 
   const { openModal } = useModalContext()
+  const { dispatch } = useResourcesContext()
   const navigate = useNavigate()
   const { id } = useParams()
 
@@ -129,6 +135,8 @@ const CreateOrEditLesson = () => {
   })
 
   const editLesson = (): Promise<AxiosResponse> => {
+    dispatch({ type: ResourceActionTypes.EDIT, itemId: id, payload: data })
+
     return ResourceService.editLesson(data, id)
   }
 
@@ -267,4 +275,10 @@ const CreateOrEditLesson = () => {
   )
 }
 
-export default CreateOrEditLesson
+const CreateOrEditWithContext = () => (
+  <ResourcesProvider>
+    <CreateOrEditLesson />
+  </ResourcesProvider>
+)
+
+export default CreateOrEditWithContext
