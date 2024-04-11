@@ -124,11 +124,133 @@ $error-900: #b91f1b;
 
 /* Font families */
 
+$rubik: 'Rubik, -apple-system, Arial, sans-serif';
+
 /* Font weights */
 
-/* Sizes */
+$fw-regular: 400;
+$fw-medium: 500;
+$fw-semibold: 600;
+$fw-bold: 800;
 
-/* Heading sizes */
+$fw: (
+  regular: $fw-regular,
+  medium: $fw-medium,
+  semibold: $fw-semibold,
+  bold: $fw-bold
+);
+
+/* Font sizes (headings) */
+
+$fs-h1: 4.5rem; // 72px
+$fs-h2: 3.813rem; // 61px
+$fs-h3: 3.063rem; // 49px
+$fs-h4: 2.188rem; // 35px
+$fs-h5: 1.5rem; // 24px
+$fs-h6: 1.25rem; // 20px
+
+$fs-h: (
+  h1: $fs-h1,
+  h2: $fs-h2,
+  h3: $fs-h3,
+  h4: $fs-h4,
+  h5: $fs-h5,
+  h6: $fs-h6
+);
+
+/* Font sizes (texts) */
+
+$fs-xxs: 0.625rem; // 10px
+$fs-xs: 0.75rem; // 12px
+$fs-sm: 0.875rem; // 14px
+$fs-base: 1rem; // 16px
+$fs-lg: 1.125rem; // 18px
+
+$fs: (
+  xxs: $fs-xxs,
+  xs: $fs-xs,
+  sm: $fs-sm,
+  base: $fs-base,
+  lg: $fs-lg
+);
+
+/* Line heights (headings) */
+
+$lh-h1: 5.313rem; // 85px
+$lh-h2: 5.75rem; // 92px
+$lh-h3: 4.625rem; // 74px
+$lh-h4: 3.313rem; // 53px
+$lh-h5: 2.25rem; // 36px
+$lh-h6: 1.75rem; // 28px
+
+$lh-h: (
+  h1: $lh-h1,
+  h2: $lh-h2,
+  h3: $lh-h3,
+  h4: $lh-h4,
+  h5: $lh-h5,
+  h6: $lh-h6
+);
+
+/* Line heights (texts) */
+
+$lh-xs: 0.938rem; // 15px
+$lh-sm: 1.25rem; // 20px
+$lh-base: 1.5rem; // 24px
+
+$lh: (
+  xs: $lh-xs,
+  sm: $lh-sm,
+  base: $lh-base
+);
+
+/* Letter spacings (headings) */
+
+$ls-h1: -0.094rem; // -1.5px
+$ls-h2: -0.031rem; // -0.5px
+$ls-h3: normal;
+$ls-h4: normal;
+$ls-h5: normal;
+$ls-h6: 0.009rem; // 0.15px
+
+$ls-h: (
+  h1: $ls-h1,
+  h2: $ls-h2,
+  h3: $ls-h3,
+  h4: $ls-h4,
+  h5: $ls-h5,
+  h6: $ls-h6
+);
+
+/* Letter spacings (texts) */
+
+$ls-none: normal; // normal
+$ls-xxxs: 0.0025rem; // 0.04px
+$ls-xxs: 0.006rem; // 0.1px
+$ls-xs: 0.009rem; // 0.15px
+$ls-sm: 0.025rem; // 0.4px
+$ls-base: 0.031rem; // 0.5px
+$ls-lg: 0.094rem; // 1.5px
+
+$ls: (
+  none: $ls-none,
+  xxxs: $ls-xxxs,
+  xxs: $ls-xxs,
+  xs: $ls-xs,
+  sm: $ls-sm,
+  base: $ls-base,
+  lg: $ls-lg
+);
+
+/* Text transforms */
+
+$tt-none: none;
+$tt-uppercase: uppercase;
+
+$tt: (
+  none: $tt-none,
+  uppercase: $tt-uppercase
+);
 
 /*=====  End of TYPOGRAPHY  ======*/
 
