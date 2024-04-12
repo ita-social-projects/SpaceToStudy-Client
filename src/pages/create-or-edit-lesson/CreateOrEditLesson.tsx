@@ -208,8 +208,8 @@ const CreateOrEditLesson = () => {
         sx={styles.root}
       >
         <AppTextField
-          InputLabelProps={styles.titleLabel}
-          InputProps={styles.titleInput(!!data.title.length)}
+          InputLabelProps={styles.titleLabel(data.title)}
+          InputProps={styles.titleInput}
           errorMsg={t(errors.title)}
           fullWidth
           inputProps={styles.input}
@@ -220,8 +220,8 @@ const CreateOrEditLesson = () => {
           variant={TextFieldVariantEnum.Standard}
         />
         <AppTextField
-          InputLabelProps={styles.descriptionLabel}
-          InputProps={styles.descriptionInput(!!data.description.length)}
+          InputLabelProps={styles.descriptionLabel(data.description)}
+          InputProps={styles.descriptionInput}
           errorMsg={t(errors.description)}
           fullWidth
           inputProps={styles.input}
@@ -231,6 +231,7 @@ const CreateOrEditLesson = () => {
           value={data.description}
           variant={TextFieldVariantEnum.Standard}
         />
+
         <CategoryDropdown
           category={data.category}
           onCategoryChange={onCategoryChange}
