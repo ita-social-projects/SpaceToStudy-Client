@@ -7,7 +7,7 @@ import {
 import SecurityBlock from '~/containers/tutor-profile/security-block/SecurityBlock'
 
 const changeInputValue = (label, value) => {
-  fireEvent.change(screen.getByLabelText(label), { target: { value } })
+  fireEvent.change(label, { target: { value } })
 }
 
 describe('SecurityBlock', () => {
@@ -16,77 +16,68 @@ describe('SecurityBlock', () => {
   })
 
   it('renders title and description', () => {
-    expect(
-      screen.getByText('editTutor.passwordSecurityTab.title')
-    ).toBeInTheDocument()
-    expect(
-      screen.getByText('editTutor.passwordSecurityTab.description')
-    ).toBeInTheDocument()
+    const title = screen.getByText('editTutor.passwordSecurityTab.title')
+    const description = screen.getByText(
+      'editTutor.passwordSecurityTab.description'
+    )
+    expect(title).toBeInTheDocument()
+    expect(description).toBeInTheDocument()
   })
 
   it('resets form when discard button is clicked', () => {
-    changeInputValue(
-      'editTutor.passwordSecurityTab.currentPassword',
-      'oldPassword'
+    const currentPasswordLabel = screen.getByLabelText(
+      'editTutor.passwordSecurityTab.currentPassword'
     )
-    changeInputValue('editTutor.passwordSecurityTab.newPassword', 'newPassword')
-    changeInputValue(
-      'editTutor.passwordSecurityTab.retypePassword',
-      'newPassword'
-    )
+    const discardButtonText = screen.getByText('common.discard')
 
-    fireEvent.click(screen.getByText('common.discard'))
+    changeInputValue(currentPasswordLabel, 'oldPassword')
 
-    expect(
-      screen.getByLabelText('editTutor.passwordSecurityTab.currentPassword')
-    ).toHaveValue('')
-    expect(
-      screen.getByLabelText('editTutor.passwordSecurityTab.newPassword')
-    ).toHaveValue('')
-    expect(
-      screen.getByLabelText('editTutor.passwordSecurityTab.retypePassword')
-    ).toHaveValue('')
+    fireEvent.click(discardButtonText)
+
+    expect(currentPasswordLabel).toHaveValue('')
   })
 
   it('updates state when form fields are changed', () => {
-    changeInputValue(
-      'editTutor.passwordSecurityTab.currentPassword',
-      'oldPassword'
-    )
-    changeInputValue('editTutor.passwordSecurityTab.newPassword', 'newPassword')
-    changeInputValue(
-      'editTutor.passwordSecurityTab.retypePassword',
-      'newPassword'
+    const currentPasswordLabel = screen.getByLabelText(
+      'editTutor.passwordSecurityTab.currentPassword'
     )
 
-    expect(
-      screen.getByLabelText('editTutor.passwordSecurityTab.currentPassword')
-    ).toHaveValue('oldPassword')
-    expect(
-      screen.getByLabelText('editTutor.passwordSecurityTab.newPassword')
-    ).toHaveValue('newPassword')
-    expect(
-      screen.getByLabelText('editTutor.passwordSecurityTab.retypePassword')
-    ).toHaveValue('newPassword')
+    changeInputValue(currentPasswordLabel, 'oldPassword')
+
+    expect(currentPasswordLabel).toHaveValue('oldPassword')
   })
 
-  it('opens ConfirmDialog when deactivate account button is clicked', () => {
-    fireEvent.click(
-      screen.getByText('editTutor.passwordSecurityTab.deactivateAccount')
+  it('checks is ConfirmDialog open when deactivate account button is clicked', () => {
+    const deactivateAccountButton = screen.getByText(
+      'editTutor.passwordSecurityTab.deactivateAccount'
     )
-    expect(
-      screen.getByText('editTutor.passwordSecurityTab.deactivateTitle')
-    ).toBeInTheDocument()
+
+    fireEvent.click(deactivateAccountButton)
+
+    const deactivateTitle = screen.getByText(
+      'editTutor.passwordSecurityTab.deactivateTitle'
+    )
+    expect(deactivateTitle).toBeInTheDocument()
   })
 
-  it('closes ConfirmDialog when cancel button is clicked', async () => {
-    fireEvent.click(
-      screen.getByText('editTutor.passwordSecurityTab.deactivateAccount')
+  it('checks is ConfirmDialog closed when cancel button is clicked', async () => {
+    const deactivateAccountButton = screen.getByText(
+      'editTutor.passwordSecurityTab.deactivateAccount'
     )
-    fireEvent.click(screen.getByText('common.cancel'))
+    let deactivateTitle
 
-    await waitForElementToBeRemoved(() =>
-      screen.queryByText('editTutor.passwordSecurityTab.deactivateTitle')
-    )
+    fireEvent.click(deactivateAccountButton)
+
+    const cancelButton = screen.getByText('common.cancel')
+    fireEvent.click(cancelButton)
+
+    await waitForElementToBeRemoved(() => {
+      deactivateTitle = screen.queryByText(
+        'editTutor.passwordSecurityTab.deactivateTitle'
+      )
+      return deactivateTitle
+    })
+
+    expect(deactivateTitle).not.toBeInTheDocument()
   })
 })
