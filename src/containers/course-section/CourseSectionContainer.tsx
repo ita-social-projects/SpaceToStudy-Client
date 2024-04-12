@@ -27,7 +27,7 @@ import {
 } from '~/containers/add-resources/AddAttachments.constants'
 import {
   columns as lessonColumns,
-  removeColumnRules as removeLessontColumnRules
+  removeColumnRules as removeLessonColumnRules
 } from '~/containers/add-resources/AddLessons.constants'
 import {
   columns as quizColumns,
@@ -51,11 +51,7 @@ import { styles } from '~/containers/course-section/CourseSectionContainer.style
 import EditAttachmentModal from '~/containers/my-resources/edit-attachment-modal/EditAttachmentModal'
 import { createUrlPath } from '~/utils/helper-functions'
 import { authRoutes } from '~/router/constants/authRoutes'
-import {
-  ResourceActionTypes,
-  ResourcesProvider,
-  useResourcesContext
-} from '~/context/resources-context'
+
 import useAxios from '~/hooks/use-axios'
 
 interface SectionProps extends CourseSectionHandlers {
@@ -78,8 +74,6 @@ const CourseSectionContainer: FC<SectionProps> = ({
 
   const { openMenu, renderMenu, closeMenu } = useMenu()
   const { openModal, closeModal } = useModalContext()
-  const { state: resourcesState, dispatch } = useResourcesContext()
-  console.log(resourcesState)
 
   const [titleInput, setTitleInput] = useState<string>(sectionData.title)
   const [descriptionInput, setDescriptionInput] = useState<string>(
@@ -172,12 +166,6 @@ const CourseSectionContainer: FC<SectionProps> = ({
   ])
 
   const deleteResource = (resource: CourseResources) => {
-    dispatch({
-      type: ResourceActionTypes.DELETE,
-      itemId: resource._id,
-      resourceType: resource?.resourceType
-    })
-
     if (resource.resourceType === ResourcesTypes.Lessons) {
       const newLessons = sectionData.lessons.filter(
         (item) => item._id !== resource._id
@@ -213,8 +201,17 @@ const CourseSectionContainer: FC<SectionProps> = ({
 
   const { fetchData: updateData } = useAxios({
     service: handleEditAttachment,
-    defaultResponse: null,
-    fetchOnMount: false
+    fetchOnMount: false,
+    onResponse: ({ attachment }: { attachment: Attachment }) => {
+      setResources((prev) =>
+        prev.map((resource) => {
+          if (resource._id === attachment._id) {
+            return { ...resource, ...attachment }
+          }
+          return resource
+        })
+      )
+    }
   })
 
   const editResource = (resource: CourseResources) => {
@@ -266,12 +263,6 @@ const CourseSectionContainer: FC<SectionProps> = ({
     newResources: T[],
     type: ResourcesTypes
   ) => {
-    dispatch({
-      type: ResourceActionTypes.ADD,
-      payload: newResources,
-      resourceType: type
-    })
-
     handleSectionNonInputChange(
       sectionData.id,
       type as keyof CourseSection,
@@ -287,7 +278,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
           onAddResources={(resources) =>
             handleAddResources(resources, ResourcesTypes.Lessons)
           }
-          removeColumnRules={removeLessontColumnRules}
+          removeColumnRules={removeLessonColumnRules}
           requestService={ResourceService.getUsersLessons}
           resourceType={resourcesData.lessons.resource}
           resources={sectionData.lessons}
@@ -480,10 +471,4 @@ const CourseSectionContainer: FC<SectionProps> = ({
   )
 }
 
-const CourseSectionWithContext = (props: SectionProps) => (
-  <ResourcesProvider>
-    <CourseSectionContainer {...props} />
-  </ResourcesProvider>
-)
-
-export default CourseSectionWithContext
+export default CourseSectionContainer

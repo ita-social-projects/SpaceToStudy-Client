@@ -4,7 +4,10 @@ import Box from '@mui/material/Box'
 
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 
-import { convertBytesToProperFormat } from '~/utils/helper-functions'
+import {
+  convertBytesToProperFormat,
+  getAttachmentExtension
+} from '~/utils/helper-functions'
 import { styles } from '~/components/icon-extension-with-title/IconExtensionWithTitle.styles'
 
 interface IconExtensionWithTitleProps {
@@ -22,7 +25,7 @@ const IconExtensionWithTitle: FC<IconExtensionWithTitleProps> = ({
 }) => {
   const { t } = useTranslation()
 
-  const [fileExtension] = title.split('.').reverse()
+  const fileExtension = getAttachmentExtension(title)
 
   const convertSize = (incomingSize: number) => {
     const { size: properSize, unit } = convertBytesToProperFormat(incomingSize)

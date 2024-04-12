@@ -288,3 +288,6 @@ export const getGroupedByDate = <T extends { createdAt: string }>(
 
     return result
   }, [])
+
+export const getAttachmentExtension = (fileName: string): string =>
+  fileName.split('.').reverse()[0]
