@@ -143,10 +143,10 @@ const ResourceItem: FC<ResourceItemProps> = ({
       />
       <Box sx={styles.resourceActions}>
         {isCooperation && availabilitySelection}
-        <IconButton onClick={onEditResource}>
+        <IconButton aria-label='edit' onClick={onEditResource}>
           <EditOutlinedIcon color='primary' fontSize='small' />
         </IconButton>
-        <IconButton onClick={onDeleteResource}>
+        <IconButton aria-label='delete' onClick={onDeleteResource}>
           <CloseIcon />
         </IconButton>
       </Box>
