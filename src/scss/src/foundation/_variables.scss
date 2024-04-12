@@ -258,6 +258,42 @@ $tt: (
 =                BREAKPOINTS                  =
 =============================================*/
 
-/* Breakpoints */
+$mobile: 25.875rem; // 414px
+$tablet: 55rem; // 880px
+$desktop: 90rem; // 1440px
+
+$breakpoints: (
+  mobile: $mobile,
+  tablet: $tablet,
+  desktop: $desktop
+);
+
+/*=============================================
+=                  SPACING                   =
+=============================================*/
+
+$spacing-none: 0;
+$spacing-xxxs: 0.25rem; // 4px
+$spacing-xxs: 0.5rem; // 8px
+$spacing-xs: 0.75rem; // 12px
+$spacing-sm: 1rem; // 16px
+$spacing-md: 1.5rem; // 24px
+$spacing-lg: 2rem; // 32px
+$spacing-xl: 3rem; // 48px
+$spacing-2xl: 4.5rem; // 72px
+$spacing-3xl: 6rem; // 96px
+
+$spacing: (
+  none: $spacing-none,
+  xxxs: $spacing-xxxs,
+  xxs: $spacing-xxs,
+  xs: $spacing-xs,
+  sm: $spacing-sm,
+  md: $spacing-md,
+  lg: $spacing-lg,
+  xl: $spacing-xl,
+  2xl: $spacing-2xl,
+  3xl: $spacing-3xl
+);
 
 /*=====  End of BREAKPOINTS  ======*/
