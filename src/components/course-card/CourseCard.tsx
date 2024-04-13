@@ -24,13 +24,20 @@ import {
 import { Course, TableActionFunc } from '~/types'
 import { authRoutes } from '~/router/constants/authRoutes'
 
+type CourseCardElement =
+  | 'card'
+  | 'title'
+  | 'description'
+  | 'chipContainer'
+  | 'secondaryText'
+
 interface CourseCardProps {
   course: Course
   deleteCourse?: (id: string) => void
   duplicateCourse?: (id: string) => void
   isSelected?: boolean
   withMenu?: boolean
-  sx?: { [key: string]: SxProps | undefined }
+  sx?: Partial<Record<CourseCardElement, SxProps>>
 }
 
 const CourseCard: FC<CourseCardProps> = ({
