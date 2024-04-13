@@ -35,7 +35,7 @@ const CooperationNotes = () => {
     (error: ErrorResponse) => {
       setAlert({
         severity: snackbarVariants.error,
-        message: error ? `errors.${error.message}` : ''
+        message: `errors.${error.message}`
       })
     },
     [setAlert]

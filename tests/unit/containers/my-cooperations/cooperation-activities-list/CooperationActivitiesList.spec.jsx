@@ -6,17 +6,13 @@ import { sectionInitialData } from '~/pages/create-course/CreateCourse.constants
 const originalDateNow = Date.now
 Date.now = () => 1487076708000
 
-const { useCooperationContextMock } = vi.hoisted(() => {
-  return {
-    useCooperationContextMock: vi.fn()
-  }
-})
+const useCooperationContextMock = vi.fn()
 
 vi.mock('~/context/cooperation-context', async () => {
   const actual = await vi.importActual('~/context/cooperation-context')
   return {
     ...actual,
-    useCooperationContext: useCooperationContextMock
+    useCooperationContext: () => useCooperationContextMock()
   }
 })
 
@@ -193,6 +189,10 @@ describe('CooperationActivitiesList without section data', () => {
     vi.clearAllMocks()
   })
 
+  afterAll(() => {
+    Date.now = originalDateNow
+  })
+
   it('should set only selected course sections in the data when no section was added', async () => {
     renderWithMockData(mockedSectionsData, 0)
 
@@ -221,6 +221,6 @@ describe('CooperationActivitiesList without section data', () => {
       ])
     })
 
-    Date.now = originalDateNow
+    console.log('newSectionData: ', newSectionData)
   })
 })
