@@ -220,7 +220,5 @@ describe('CooperationActivitiesList without section data', () => {
         newSectionData
       ])
     })
-
-    console.log('newSectionData: ', newSectionData)
   })
 })
