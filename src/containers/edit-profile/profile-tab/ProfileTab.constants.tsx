@@ -14,10 +14,5 @@ export const getInitialValues = (user: UserResponse) => ({
       ? user.videoLink[user.role[0]] || ''
       : '',
   mainSubjects:
-    user.role[0] !== UserRoleEnum.Admin ? user.mainSubjects[user.role[0]] : [],
-
-  photo: {
-    src: user.photo || '',
-    name: ''
-  }
+    user.role[0] !== UserRoleEnum.Admin ? user.mainSubjects[user.role[0]] : []
 })

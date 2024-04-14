@@ -13,8 +13,6 @@ import TitleWithDescription from '~/components/title-with-description/TitleWithD
 import LocationSelectionInputs from '~/components/location-selection-inputs/LocationSelectionInputs'
 import FileUploader from '~/components/file-uploader/FileUploader'
 
-import { languages } from '~/containers/tutor-home-page/language-step/constants'
-import { validations } from '~/components/user-steps-wrapper/constants'
 import {
   ButtonVariantEnum,
   EditProfileForm,
@@ -26,11 +24,13 @@ import {
   UserRoleEnum
 } from '~/types'
 
+import { languages } from '~/containers/tutor-home-page/language-step/constants'
+import { validations } from '~/components/user-steps-wrapper/constants'
 import { validationData } from '~/containers/tutor-home-page/add-photo-step/constants'
 import { useSnackBarContext } from '~/context/snackbar-context'
+import { useProfileContext } from '~/context/profile-context'
 import { snackbarVariants } from '~/constants'
 import { imageResize } from '~/utils/image-resize'
-import { useProfileContext } from '~/context/profile-context'
 import { styles } from './ProfileGeneralTab.styles'
 
 const ProfileGeneralTab: FC<ProfileTabProps> = ({ user }) => {
@@ -126,7 +126,7 @@ const ProfileGeneralTab: FC<ProfileTabProps> = ({ user }) => {
       <Box sx={styles.avatar.root}>
         <Avatar
           src={
-            photo?.src &&
+            (photo?.src || user.photo) &&
             `${import.meta.env.VITE_APP_IMG_USER_URL}${user.photo}`
           }
           sx={styles.avatar.img}

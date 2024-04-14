@@ -84,7 +84,7 @@
     "category": "Please select a category",
     "subject": "Please select a subject",
     "proficiencyLevel": "Please select at least one proficiency level",
-    "youtubeLink": "Please provide a YouTube link"
+    "youtubeLink": "Please provide a valid YouTube link"
   },
   "levels": {
     "beginner": "Beginner",
