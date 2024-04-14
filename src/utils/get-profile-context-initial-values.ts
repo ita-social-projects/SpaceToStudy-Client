@@ -1,6 +1,6 @@
 import { UserResponse, UserRoleEnum } from '~/types'
 
-export const getInitialValues = (user: UserResponse) => ({
+export const getProfileContextInitialValues = (user: UserResponse) => ({
   firstName: user.firstName,
   lastName: user.lastName,
   address: {

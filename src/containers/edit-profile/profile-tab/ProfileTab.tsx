@@ -2,10 +2,10 @@ import { FC } from 'react'
 import { ProfileProvider } from '~/context/profile-context'
 import { ProfileTabProps } from '~/types'
 import ProfileTabInnerContainer from '~/containers/edit-profile/profile-tab/profile-tab-inner-container/ProfileTabInnerContainer'
-import { getInitialValues } from '~/containers/edit-profile/profile-tab/ProfileTab.constants'
+import { getProfileContextInitialValues } from '~/utils/get-profile-context-initial-values'
 
 const ProfileTab: FC<ProfileTabProps> = ({ user }) => {
-  const initialGeneralData = getInitialValues(user)
+  const initialGeneralData = getProfileContextInitialValues(user)
 
   return (
     <ProfileProvider initialValues={initialGeneralData}>

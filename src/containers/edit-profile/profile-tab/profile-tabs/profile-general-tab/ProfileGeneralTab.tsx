@@ -44,7 +44,8 @@ const ProfileGeneralTab: FC<ProfileTabProps> = ({ user }) => {
     ...profileGeneralData,
     country: profileGeneralData.address.country,
     city: profileGeneralData.address.city,
-    professionalSummary: profileGeneralData.professionalSummary ?? ''
+    professionalSummary: profileGeneralData.professionalSummary ?? '',
+    videoLink: profileGeneralData.videoLink ?? ''
   }
 
   const {

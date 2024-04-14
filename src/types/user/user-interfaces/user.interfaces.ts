@@ -60,7 +60,7 @@ export interface UpdateUserParams
     | 'nativeLanguage'
   > {
   mainSubjects: SubjectNameInterface[]
-  videoLink: string
+  videoLink?: string
   photo?: UpdatedPhoto | null
 }
 
