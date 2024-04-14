@@ -27,7 +27,6 @@ import { snackbarVariants } from '~/constants'
 import {
   initialValues,
   defaultResponse,
-  myResourcesPath,
   validations
 } from '~/pages/create-or-edit-lesson/CreateOrEditLesson.constants'
 import {
@@ -76,7 +75,7 @@ const CreateOrEditLesson = () => {
         ? t('lesson.successEditedLesson')
         : t('lesson.successAddedLesson')
     })
-    navigate(authRoutes.myResources.root.path)
+    navigate(`${authRoutes.myResources.root.path}/?tab=lessons`)
   }
 
   const handleAddAttachments = (attachments: Attachment[]) => {
@@ -252,7 +251,7 @@ const CreateOrEditLesson = () => {
           <AppButton
             component={Link}
             size={SizeEnum.ExtraLarge}
-            to={myResourcesPath}
+            to={`${authRoutes.myResources.root.path}/?tab=lessons`}
             variant={ButtonVariantEnum.Tonal}
           >
             {t('common.cancel')}

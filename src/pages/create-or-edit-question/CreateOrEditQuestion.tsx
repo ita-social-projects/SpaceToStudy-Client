@@ -62,7 +62,7 @@ const CreateOrEditQuestion = () => {
         ? t('myResourcesPage.questions.successEditedQuestion')
         : t('myResourcesPage.questions.successAddedQuestion')
     })
-    navigate(authRoutes.myResources.root.path)
+    navigate(`${authRoutes.myResources.root.path}/?tab=questions`)
   }
 
   const onResponseError = (error: ErrorResponse) => {
@@ -138,7 +138,9 @@ const CreateOrEditQuestion = () => {
   const buttons = (
     <Box sx={styles.buttons}>
       <AppButton
-        onClick={() => navigate(authRoutes.myResources.root.path)}
+        onClick={() =>
+          navigate(`${authRoutes.myResources.root.path}/?tab=questions`)
+        }
         variant={ButtonVariantEnum.Tonal}
       >
         {t('common.cancel')}

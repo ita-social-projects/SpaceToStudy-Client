@@ -22,7 +22,6 @@ import Loader from '~/components/loader/Loader'
 
 import { snackbarVariants } from '~/constants'
 import { authRoutes } from '~/router/constants/authRoutes'
-import { myResourcesPath } from '~/pages/create-or-edit-lesson/CreateOrEditLesson.constants'
 import { QuizContentProps } from '~/pages/new-quiz/NewQuiz.constants'
 import {
   columns,
@@ -77,7 +76,7 @@ const CreateOrEditQuizContainer = ({
         ? t('myResourcesPage.quizzes.successEditedQuiz')
         : t('myResourcesPage.quizzes.successAddedQuiz')
     })
-    navigate(authRoutes.myResources.root.path)
+    navigate(`${authRoutes.myResources.root.path}/?tab=quizzes`)
   }
 
   const onResponseError = (error: ErrorResponse) => {
@@ -255,7 +254,7 @@ const CreateOrEditQuizContainer = ({
           <AppButton
             component={Link}
             size={SizeEnum.ExtraLarge}
-            to={myResourcesPath}
+            to={`${authRoutes.myResources.root.path}/?tab=quizzes`}
             variant={ButtonVariantEnum.Tonal}
           >
             {t('common.cancel')}
