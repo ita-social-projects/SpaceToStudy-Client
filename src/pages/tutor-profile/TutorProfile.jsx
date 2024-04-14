@@ -16,6 +16,8 @@ import { defaultResponses } from '~/constants'
 import { responseMock } from '~/pages/tutor-profile/constants'
 import AboutTutorBlock from '~/containers/tutor-profile/about-tutor-block/AboutTutorBlock'
 
+import { UserRoleEnum } from '~/types'
+
 const TutorProfile = () => {
   const { id } = useParams()
   const [searchParams] = useSearchParams()
@@ -25,9 +27,12 @@ const TutorProfile = () => {
 
   const { userId, userRole } = useAppSelector((state) => state.appMain)
 
+  const preferredRole = paramsRole || userRole
+  const preferredId = id || userId
+
   const getUserData = useCallback(
-    () => userService.getUserById(id || userId, paramsRole || userRole),
-    [userId, userRole, id, paramsRole]
+    () => userService.getUserById(preferredId, preferredRole),
+    [preferredId, preferredRole]
   )
 
   const { loading, response } = useAxios({
@@ -40,12 +45,16 @@ const TutorProfile = () => {
     return <Loader pageLoad size={70} />
   }
 
+  const isTutor = preferredRole === UserRoleEnum.Tutor
+  const shouldShowPresentation =
+    isTutor || (!isTutor && response.videoLink?.student)
+
   return (
     <PageWrapper>
       <ProfileInfo myRole={userRole} userData={response} />
       <CompleteProfileBlock data={response} profileItems={profileItems} />
       <AboutTutorBlock />
-      <VideoPresentation />
+      {shouldShowPresentation && <VideoPresentation />}
       <CommentsWithRatingBlock
         averageRating={response?.averageRating?.tutor}
         reviewsCount={reviews}

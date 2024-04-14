@@ -6,9 +6,21 @@ import TutorProfile from '~/pages/tutor-profile/TutorProfile.jsx'
 import { renderWithProviders } from '~tests/test-utils'
 
 const route = '/tutor/my-profile'
-const appMain = {
+
+const tutorAppMain = {
   userRole: 'tutor',
   _id: '648850c4fdc2d1a130c24aea'
+}
+
+const studentAppMain = {
+  userRole: 'student',
+  _id: '648850c4fdc2d1a130c24aea'
+}
+
+const videoMockData = {
+  videoLink: {
+    student: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
+  }
 }
 
 const mockData = {
@@ -47,41 +59,68 @@ const mockData = {
   }
 }
 
-const getFakeData = (load) => {
+const getFakeData = (load, extraData = {}) => {
   return {
     loading: load,
-    response: mockData
+    response: { ...mockData, ...extraData }
   }
+}
+
+const renderWithMockData = ({
+  load = false,
+  appMain = tutorAppMain,
+  extraData = {}
+} = {}) => {
+  const fakeData = getFakeData(load, extraData)
+
+  useAxios.mockImplementation(() => fakeData)
+  renderWithProviders(<TutorProfile />, {
+    preloadedState: { appMain },
+    initialEntries: route
+  })
 }
 
 vi.mock('~/hooks/use-axios')
 
 describe('TutorProfile', () => {
   it('should render loader', () => {
-    const fakeData = getFakeData(true)
-
-    useAxios.mockImplementation(() => fakeData)
-    renderWithProviders(<TutorProfile />, {
-      initialEntries: route,
-      preloadedState: { appMain }
-    })
+    renderWithMockData({ load: true })
 
     const loader = screen.getByTestId('loader')
-
     expect(loader).toBeInTheDocument()
   })
 
   it('should find rendering name', () => {
-    const fakeData = getFakeData(false)
-
-    useAxios.mockImplementation(() => fakeData)
-    renderWithProviders(<TutorProfile />, {
-      initialEntries: route,
-      preloadedState: { appMain }
-    })
+    renderWithMockData()
 
     const name = screen.getByText(`${mockData.firstName} ${mockData.lastName}`)
-
     expect(name).toBeInTheDocument()
+  })
+
+  it('Should render video presentation block for tutor', () => {
+    renderWithMockData()
+
+    const videoBlockTitle = screen.getByText(
+      'tutorProfilePage.videoPresentation.title'
+    )
+    expect(videoBlockTitle).toBeInTheDocument()
+  })
+
+  it('Should not render video presentation block when student has no video link', () => {
+    renderWithMockData({ appMain: studentAppMain })
+
+    const videoBlockTitle = screen.queryByText(
+      'tutorProfilePage.videoPresentation.title'
+    )
+    expect(videoBlockTitle).not.toBeInTheDocument()
+  })
+
+  it('Should render video presentation block when student has a video link', () => {
+    renderWithMockData({ appMain: studentAppMain, extraData: videoMockData })
+
+    const videoBlockTitle = screen.getByText(
+      'tutorProfilePage.videoPresentation.title'
+    )
+    expect(videoBlockTitle).toBeInTheDocument()
   })
 })
