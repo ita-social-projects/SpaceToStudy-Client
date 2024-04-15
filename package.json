@@ -20,6 +20,7 @@
     "date-fns": "^2.30.0",
     "emoji-mart": "^5.5.2",
     "i18next": "^23.6.0",
+    "normalize-scss": "^8.0.0",
     "nuka-carousel": "^6.0.3",
     "react": "^18.2.0",
     "react-beautiful-dnd": "^13.1.1",

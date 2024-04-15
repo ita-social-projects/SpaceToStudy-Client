@@ -37,7 +37,7 @@ function compile(scssFilePath, cssFilePath) {
   const result = sass.compile(scssFilePath, {
     sourceMap: true,
     style: isCompactCompilationStyle ? 'compressed' : 'expanded',
-    loadPaths: [INPUT_FOLDER_PATH]
+    loadPaths: [INPUT_FOLDER_PATH, 'node_modules/normalize-scss/sass']
   })
 
   fs.writeFileSync(cssFilePath, result.css)
