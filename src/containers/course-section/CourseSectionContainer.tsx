@@ -202,7 +202,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
   const { fetchData: updateData } = useAxios({
     service: handleEditAttachment,
     fetchOnMount: false,
-    onResponse: ({ attachment }: { attachment: Attachment }) => {
+    onResponse: (attachment: Attachment) => {
       setResources((prev) =>
         prev.map((resource) => {
           if (resource._id === attachment._id) {
