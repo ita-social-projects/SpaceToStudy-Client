@@ -26,6 +26,7 @@ export const styles = {
     justifyContent: 'space-between',
     minHeight: '285px',
     minWidth: '360px',
+    height: '100%',
     boxSizing: 'border-box',
     backgroundColor: 'basic.white',
     border: `2px solid ${palette.basic.white}`,
@@ -33,6 +34,7 @@ export const styles = {
     p: '24px 24px 16px',
     boxShadow: commonShadow,
     transition: 'box-shadow 0.3s ease-in-out',
+    wordBreak: 'break-word',
     '&:hover': {
       boxShadow: commonHoverShadow
     },
