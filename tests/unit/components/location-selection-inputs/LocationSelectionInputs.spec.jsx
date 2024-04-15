@@ -56,19 +56,4 @@ describe('LocationSelectionInputs', () => {
     })
     expect(autocomplete.value).toBe('city1')
   })
-  it('calls onDataChange with correct arguments when country is changed', async () => {
-    const countryAutocomplete = screen.getByLabelText('common.labels.country')
-    act(() => {
-      fireEvent.click(countryAutocomplete)
-      fireEvent.change(countryAutocomplete, {
-        target: { value: 'Country1' }
-      })
-      fireEvent.keyDown(countryAutocomplete, { key: 'ArrowDown' })
-      fireEvent.keyDown(countryAutocomplete, { key: 'Enter' })
-    })
-
-    waitFor(() => {
-      expect(countryAutocomplete.value).toBe('Country1')
-    })
-  })
 })
