@@ -169,10 +169,10 @@
  *
  */
 
-@mixin clearFix {
+@mixin clearFix($content: "") {
     &:before,
     &:after {
-        content: "";
+        content: $content;
         display: table;
     }
     &:after {
