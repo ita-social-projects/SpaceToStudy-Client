@@ -1,8 +1,7 @@
+@use "sass:list";
 /*=============================================
 =                 #MIXINS                     =
 =============================================*/
-
-
 
 /**
  *
@@ -11,6 +10,172 @@
  *
  */
 
+/*=============================================
+ =                @media rules                =
+ =============================================*/
 
+@mixin tablet {
+    @media (min-width: map-get($breakpoints, "tablet")) {
+        @content;
+    }
+}
 
+@mixin desktop {
+    @media (min-width: map-get($breakpoints, "desktop")) {
+        @content;
+    }
+}
 
+@mixin mobile {
+    @media (min-width: map-get($breakpoints, "mobile")) {
+        @content;
+    }
+}
+
+/*=============================================
+=                 Spacings                    =
+=============================================*/
+
+/**
+ * use it set up margin or padding 
+ * 
+ * @include spacing(margin, 'lg', 'xxs') - will set up margin vertical for 32px and horizontal for 8px 
+ */
+
+@mixin spacing($property, $values...) {
+    $valid-properties: margin, padding;
+
+    @if not list.index($valid-properties, $property) {
+        @error "#{$property} is not a valid property. Expected one of #{$valid-properties}.";
+    }
+
+    $propertyValues: ();
+
+    @each $value in $values {
+        $spacingValue: map-get($spacing, $value);
+        $propertyValues: append($propertyValues, $spacingValue);
+    }
+
+    #{$property}: $propertyValues;
+}
+
+/*=============================================
+=              Containers sizings            =
+=============================================*/
+
+/**
+ * defines width and height in one go
+ * 
+ * @include box(1rem, 2rem) => width: 1rem;  height: 2rem
+ */
+
+@mixin box($width, $height: $width) {
+    width: $width;
+    height: $height;
+}
+
+/**
+ *
+ * Defines box-sizing with support for older browsers
+ *
+ */
+
+@mixin box-sizing($type) {
+    -webkit-box-sizing: $type;
+    -moz-box-sizing: $type;
+    box-sizing: $type;
+}
+
+/*=============================================
+=               FLEX/GRID Toolkit            =
+=============================================*/
+
+/**
+ * Setup for flexbox container
+ *
+ * example usage: 
+ * @include flexbox(column, space-between)
+ * @include flexbox($justify: center)
+ *
+ */
+
+@mixin flexbox($direction: row, $justify: center, $align: center, $wrap: nowrap, $gap: normal) {
+    display: flex;
+    flex-direction: $direction;
+    justify-content: $justify;
+    align-items: $align;
+    flex-wrap: $wrap;
+    gap: $gap;
+}
+
+/**
+ * Setup for grid container
+ *    
+ * @include grid-container(1fr 1fr, 30px, start, center);
+ *
+ */
+
+@mixin grid($columns: auto, $rows: auto, $gap: 20px, $justify: center, $align: center) {
+    display: grid;
+    grid-template-columns: $columns;
+    grid-template-rows: $rows;
+    gap: $gap;
+    justify-items: $justify;
+    align-items: $align;
+}
+
+/*=============================================
+=            Text manipulations            =
+=============================================*/
+
+/**
+ * This mixin is used to truncate text that overflows its container.
+ * 
+ * To truncate text with ellipsis: @include text-truncate;
+ * 
+ * To truncate text with a custom string: @include text-truncate('...');
+ * 
+ * To clip the text without any ellipsis: @include text-truncate('clip');
+ * 
+ */
+
+@mixin text-truncate($overflow: ellipsis) {
+    overflow: hidden;
+    text-overflow: $overflow; // values are: clip, ellipsis, or a string
+    white-space: nowrap;
+}
+
+/*=============================================
+=                Useful resets               =
+=============================================*/
+
+/**
+ * mixin is used to reset the margin, padding, and list-style of the <ul> element.
+ *
+ * example usage: @include listReset;
+ *
+ */
+
+@mixin listReset {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/**
+ * mixin is applied to create a clearfix, ensuring that it contains floated elements properly.
+ *
+ * example usage: @include clearFix;
+ *
+ */
+
+@mixin clearFix {
+    &:before,
+    &:after {
+        content: "";
+        display: table;
+    }
+    &:after {
+        clear: both;
+    }
+}
