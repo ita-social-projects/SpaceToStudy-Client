@@ -3,7 +3,6 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import AppButton from '@mui/material/Button'
 import Divider from '@mui/material/Divider'
-import { t } from 'i18next'
 
 import AppTextField from '~/components/app-text-field/AppTextField'
 import ConfirmDialog from '~/components/confirm-dialog/ConfirmDialog'
@@ -14,8 +13,10 @@ import { styles } from '~/containers/tutor-profile/security-block/SecurityBlock.
 import { confirmPassword, password } from '~/utils/validations/login'
 import { ButtonVariantEnum, InputEnum, SizeEnum } from '~/types'
 import { FormValues } from '~/types/editTutorProfile/interfaces/securityBlockForm.interfaces'
+import { useTranslation } from 'react-i18next'
 
 const SecurityBlock = () => {
+  const { t } = useTranslation()
   const [isConfirmOpen, setIsConfirmOpen] = useState<boolean>(false)
 
   const { data, handleInputChange, errors, handleBlur, resetData } =
