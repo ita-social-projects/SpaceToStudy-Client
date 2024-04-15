@@ -74,18 +74,6 @@
     height: $height;
 }
 
-/**
- *
- * Defines box-sizing with support for older browsers
- *
- */
-
-@mixin box-sizing($type) {
-    -webkit-box-sizing: $type;
-    -moz-box-sizing: $type;
-    box-sizing: $type;
-}
-
 /*=============================================
 =               FLEX/GRID Toolkit            =
 =============================================*/
