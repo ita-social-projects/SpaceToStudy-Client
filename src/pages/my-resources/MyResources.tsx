@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router-dom'
 
@@ -16,19 +15,13 @@ import { ResourcesTabsEnum } from '~/types'
 
 const MyResources = () => {
   const [searchParams, setSearchParams] = useSearchParams()
-  const initialTab = searchParams.get('tab') as ResourcesTabsEnum
-  const [activeTab, setActiveTab] = useState<ResourcesTabsEnum>(
-    initialTab || ResourcesTabsEnum.Lessons
-  )
+  const activeTab =
+    (searchParams.get('tab') as ResourcesTabsEnum) || ResourcesTabsEnum.Lessons
 
   const { t } = useTranslation()
 
-  useEffect(() => {
-    setSearchParams({ tab: activeTab })
-  }, [activeTab, setSearchParams])
-
   const handleClick = (tab: ResourcesTabsEnum) => {
-    setActiveTab(tab)
+    setSearchParams({ tab })
   }
 
   const tabContent = activeTab && tabsData[activeTab].content

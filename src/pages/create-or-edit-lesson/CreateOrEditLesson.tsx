@@ -1,6 +1,6 @@
 import { SyntheticEvent, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { AxiosResponse } from 'axios'
 import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
@@ -23,6 +23,7 @@ import useForm from '~/hooks/use-form'
 import { ResourceService } from '~/services/resource-service'
 
 import { getErrorMessage } from '~/utils/error-with-message'
+import { createUrlPath } from '~/utils/helper-functions'
 import { snackbarVariants } from '~/constants'
 import {
   initialValues,
@@ -67,6 +68,11 @@ const CreateOrEditLesson = () => {
         : ''
     })
   }
+  const navigateToLessonTab = () => {
+    navigate(
+      createUrlPath(authRoutes.myResources.root.path, '', { tab: 'lessons' })
+    )
+  }
 
   const handleResponse = () => {
     setAlert({
@@ -75,7 +81,7 @@ const CreateOrEditLesson = () => {
         ? t('lesson.successEditedLesson')
         : t('lesson.successAddedLesson')
     })
-    navigate(`${authRoutes.myResources.root.path}/?tab=lessons`)
+    navigateToLessonTab()
   }
 
   const handleAddAttachments = (attachments: Attachment[]) => {
@@ -245,16 +251,15 @@ const CreateOrEditLesson = () => {
         <FileEditor onEdit={handleEdit} value={data.content} />
         {attachmentsList}
         <Box sx={styles.buttons}>
-          <AppButton size={SizeEnum.ExtraLarge} type={ButtonTypeEnum.Submit}>
-            {t('common.save')}
-          </AppButton>
           <AppButton
-            component={Link}
+            onClick={navigateToLessonTab}
             size={SizeEnum.ExtraLarge}
-            to={`${authRoutes.myResources.root.path}/?tab=lessons`}
             variant={ButtonVariantEnum.Tonal}
           >
             {t('common.cancel')}
+          </AppButton>
+          <AppButton size={SizeEnum.ExtraLarge} type={ButtonTypeEnum.Submit}>
+            {t('common.save')}
           </AppButton>
         </Box>
       </Box>
