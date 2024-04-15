@@ -14,6 +14,16 @@
  =                @media rules                =
  =============================================*/
 
+ 
+ /**
+  *
+  * Set of mixins for different screen resolutions
+  *
+  * example usage: @include tablet { color: $pink }
+  */
+ 
+ 
+
 @mixin tablet {
     @media (min-width: map-get($breakpoints, "tablet")) {
         @content;
@@ -144,7 +154,7 @@
  *
  */
 
-@mixin listReset {
+@mixin list-reset {
     margin: 0;
     padding: 0;
     list-style: none;
@@ -157,7 +167,7 @@
  *
  */
 
-@mixin clearFix($content: "") {
+@mixin clear-fix($content: "") {
     &:before,
     &:after {
         content: $content;
