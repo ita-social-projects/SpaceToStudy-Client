@@ -122,16 +122,16 @@ const ProfileGeneralTab: FC<ProfileTabProps> = ({ user }) => {
     })
   }
 
+  const photoToDisplay =
+    photo === null
+      ? ''
+      : photo?.src ||
+        (user.photo && `${import.meta.env.VITE_APP_IMG_USER_URL}${user.photo}`)
+
   return (
     <Box sx={styles.profileGeneralTabContainer}>
       <Box sx={styles.avatar.root}>
-        <Avatar
-          src={
-            (photo?.src || user.photo) &&
-            `${import.meta.env.VITE_APP_IMG_USER_URL}${user.photo}`
-          }
-          sx={styles.avatar.img}
-        />
+        <Avatar src={photoToDisplay} sx={styles.avatar.img} />
         <Box sx={styles.avatar.textWithButtons}>
           <TitleWithDescription
             description={t('editProfilePage.profile.generalTab.uploadDesc')}
