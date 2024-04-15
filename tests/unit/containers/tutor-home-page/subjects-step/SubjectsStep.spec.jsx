@@ -86,24 +86,24 @@ describe('SubjectsStep test with some data', () => {
     const addSubject = screen.getByTestId('add-subject')
     expect(addSubject).toBeInTheDocument()
 
-    const firstField = screen.getByLabelText(
+    const categoryField = screen.getByLabelText(
       'becomeTutor.categories.mainSubjectsLabel'
     )
-    expect(firstField.value).toBe('')
+    expect(categoryField.value).toBe('')
 
-    await chooseCategoryOrSubject(firstField, 'Category 2')
-    expect(firstField.value).toBe('Category 2')
+    await chooseCategoryOrSubject(categoryField, 'Category 2')
+    expect(categoryField.value).toBe('Category 2')
 
-    const secondField = screen.getByLabelText(
+    const subjectField = screen.getByLabelText(
       'becomeTutor.categories.subjectLabel'
     )
-    await chooseCategoryOrSubject(secondField, 'Subject 1')
-    expect(secondField.value).toBe('Subject 1')
+    await chooseCategoryOrSubject(subjectField, 'Subject 1')
+    expect(subjectField.value).toBe('Subject 1')
 
-    await chooseCategoryOrSubject(firstField, 'Category 1')
-    expect(secondField.value).toBe('')
+    await chooseCategoryOrSubject(categoryField, 'Category 1')
+    expect(subjectField.value).toBe('')
 
-    await chooseCategoryOrSubject(secondField, 'Subject 1')
+    await chooseCategoryOrSubject(subjectField, 'Subject 1')
 
     fireEvent.click(addSubject)
 
@@ -117,10 +117,10 @@ describe('SubjectsStep test with some data', () => {
 
   it('should show an error message "All fields must be filled"', async () => {
     const addSubject = screen.getByTestId('add-subject')
-    const firstField = screen.getByLabelText(
+    const categoryField = screen.getByLabelText(
       'becomeTutor.categories.mainSubjectsLabel'
     )
-    await chooseCategoryOrSubject(firstField, 'Category 3')
+    await chooseCategoryOrSubject(categoryField, 'Category 3')
 
     fireEvent.click(addSubject)
 
@@ -130,23 +130,23 @@ describe('SubjectsStep test with some data', () => {
 
   it('should show an error message "You have the same subject"', async () => {
     const addSubject = screen.getByTestId('add-subject')
-    const firstField = screen.getByLabelText(
+    const categoryField = screen.getByLabelText(
       'becomeTutor.categories.mainSubjectsLabel'
     )
-    const secondField = screen.getByLabelText(
+    const subjectField = screen.getByLabelText(
       'becomeTutor.categories.subjectLabel'
     )
 
     for (let i = 0; i < 2; i++) {
-      await chooseCategoryOrSubject(firstField, 'Category 2')
-      await chooseCategoryOrSubject(secondField, 'Subject 2')
+      await chooseCategoryOrSubject(categoryField, 'Category 2')
+      await chooseCategoryOrSubject(subjectField, 'Subject 2')
       fireEvent.click(addSubject)
     }
 
     let errorMessage = screen.getByText('becomeTutor.categories.sameSubject')
     expect(errorMessage).toBeInTheDocument()
 
-    await chooseCategoryOrSubject(secondField, 'Subject 1')
+    await chooseCategoryOrSubject(subjectField, 'Subject 1')
     fireEvent.click(addSubject)
 
     errorMessage = screen.queryByText('becomeTutor.categories.sameSubject')
