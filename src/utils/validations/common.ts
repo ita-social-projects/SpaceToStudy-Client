@@ -78,7 +78,7 @@ export const textField =
 
 export const youtubeVideoLink = (value: string): string => {
   const youtubeRegex =
-    /^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|shorts\/|watch\?.+&v=))((\w|-){11})(?:\S+)?$/
+    /^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be|youtube\.com)/
 
   if (value && !youtubeRegex.test(value)) {
     return 'common.errorMessages.youtubeLink'

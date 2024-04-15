@@ -260,7 +260,7 @@ const ProfileGeneralTab: FC<ProfileTabProps> = ({ user }) => {
           onBlur={handleBlur('videoLink')}
           onChange={handleInputChange('videoLink')}
           placeholder='youtube.com/my-video'
-          value={data.videoLink?.replace('https://', '')}
+          value={data.videoLink.replace('https://', '')}
         />
       </Box>
     </Box>
