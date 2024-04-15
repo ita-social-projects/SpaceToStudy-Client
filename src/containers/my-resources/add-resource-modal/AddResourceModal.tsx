@@ -12,7 +12,7 @@ import EnhancedTable, {
   EnhancedTableProps
 } from '~/components/enhanced-table/EnhancedTable'
 import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
-import FilterSelector from '~/components/filter-selector/FilterSelector'
+import AppButtonMenu from '~/components/app-button-menu/AppButtonMenu'
 
 import { styles } from '~/containers/my-resources/add-resource-modal/AddResourceModal.styles'
 import { ButtonVariantEnum, CategoryNameInterface, TableItem } from '~/types'
@@ -69,7 +69,7 @@ const AddResourceModal = <T extends TableItem>({
           sx={styles.titleInput}
           value={inputValue}
         />
-        <FilterSelector<CategoryNameInterface>
+        <AppButtonMenu<CategoryNameInterface>
           selectedItems={selectedItems}
           service={ResourceService.getResourcesCategoriesNames}
           setSelectedItems={setSelectedItems}

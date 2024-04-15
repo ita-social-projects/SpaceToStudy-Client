@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react'
-import FilterSelector from '~/components/filter-selector/FilterSelector'
+import AppButtonMenu from '~/components/app-button-menu/AppButtonMenu'
 
 vi.mock('simplebar-react', () => {
   return {
@@ -24,11 +24,11 @@ vi.mock('react-i18next', () => ({
 beforeEach(() => {
   const selectedItems = []
 
-  render(<FilterSelector selectedItems={selectedItems} />)
+  render(<AppButtonMenu selectedItems={selectedItems} />)
 })
 
-describe('FilterSelector', () => {
-  it('FilterSelector component renders correctly', () => {
+describe('AppButtonMenu', () => {
+  it('AppButtonMenu component renders correctly', () => {
     const buttonEl = screen.getByRole('button')
 
     expect(buttonEl).toBeInTheDocument()

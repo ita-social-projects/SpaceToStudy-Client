@@ -1,4 +1,4 @@
-import { FC, ElementType, ReactNode } from 'react'
+import { ElementType, FC, ReactNode } from 'react'
 import Button, { ButtonProps } from '@mui/material/Button'
 
 import Loader from '~/components/loader/Loader'
