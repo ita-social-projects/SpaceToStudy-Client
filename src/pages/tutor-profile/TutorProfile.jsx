@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+import { useCallback, useState } from 'react'
 import { useAppSelector } from '~/hooks/use-redux'
 import { useParams, useSearchParams } from 'react-router-dom'
 
@@ -15,10 +15,14 @@ import { profileItems } from '~/components/profile-item/complete-profile.constan
 import { defaultResponses } from '~/constants'
 import { responseMock } from '~/pages/tutor-profile/constants'
 import AboutTutorBlock from '~/containers/tutor-profile/about-tutor-block/AboutTutorBlock'
+import videoImg from '~/assets/img/tutor-profile-page/presentationVideoImg.png'
+
 
 const TutorProfile = () => {
   const { id } = useParams()
   const [searchParams] = useSearchParams()
+  const [haveVideo, setHaveVideo] = useState(false)
+  const [video, setvideo] = useState(videoImg)
   const paramsRole = searchParams.get('role')
   const { user } = responseMock
   const { reviews } = user.reviewStats || {}
@@ -27,7 +31,7 @@ const TutorProfile = () => {
 
   const getUserData = useCallback(
     () => userService.getUserById(id || userId, paramsRole || userRole),
-    [userId, userRole, id, paramsRole]
+    [userId, userRole, id, paramsRole ]
   )
 
   const { loading, response } = useAxios({
@@ -39,13 +43,13 @@ const TutorProfile = () => {
   if (loading) {
     return <Loader pageLoad size={70} />
   }
-
+  
   return (
     <PageWrapper>
       <ProfileInfo myRole={userRole} userData={response} />
       <CompleteProfileBlock data={response} profileItems={profileItems} />
       <AboutTutorBlock />
-      <VideoPresentation />
+      <VideoPresentation haveVideo = {haveVideo} video= {video}/>
       <CommentsWithRatingBlock
         averageRating={response?.averageRating?.tutor}
         reviewsCount={reviews}
