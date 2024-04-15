@@ -302,15 +302,15 @@ $spacing: (
 =                  SHADOWS                   =
 =============================================*/
 
-$main-shadow:
+$shadow-main:
   0px 5px 6px -3px rgba(144, 164, 174, 0.2),
   0px 9px 12px 1px rgba(144, 164, 174, 0.14),
   0px 3px 16px 2px rgba(144, 164, 174, 0.12);
 
-$common-shadow: 0px 3px 16px 2px rgba(144, 164, 174, 0.12);
+$shadow-common: 0px 3px 16px 2px rgba(144, 164, 174, 0.12);
 
-$common-hover-shadow: 0px 3px 16px 2px rgba(144, 164, 174, 0.56);
+$shadow-common-hover: 0px 3px 16px 2px rgba(144, 164, 174, 0.56);
 
-$small-hover-shadow: 0 3px 1px rgba(144, 164, 174, 0.56);
+$shadow-small-hover: 0 3px 1px rgba(144, 164, 174, 0.56);
 
 /*=====  End of SHADOWS  ======*/
