@@ -42,7 +42,10 @@ const ProfileProvider = ({ children, initialValues }: ProfileProviderProps) => {
 
   const handleProfileData = useCallback(
     (data: UpdateUserParams, errors?: UseFormErrors<EditProfileForm>) => {
-      setGeneralData({ data, errors })
+      setGeneralData((prev) => ({
+        data: { ...prev.data, ...data },
+        errors
+      }))
     },
     []
   )
