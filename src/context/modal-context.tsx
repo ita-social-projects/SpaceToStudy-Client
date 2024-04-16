@@ -69,19 +69,17 @@ const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
     [closeModal, openModal]
   )
 
+  const handleCloseModal = () => {
+    customCloseModal ? customCloseModal() : null
+    closeModal()
+  }
+
   return (
     <ModalContext.Provider value={contextValue}>
       {children}
       {modal && (
         <PopupDialog
-          closeModal={
-            customCloseModal
-              ? () => {
-                  customCloseModal()
-                  closeModal()
-                }
-              : closeModal
-          }
+          closeModal={handleCloseModal}
           closeModalAfterDelay={closeModalAfterDelay}
           content={modal}
           paperProps={paperProps}
