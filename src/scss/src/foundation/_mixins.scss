@@ -1,4 +1,3 @@
-@use "sass:list";
 /*=============================================
 =                 #MIXINS                     =
 =============================================*/
@@ -130,8 +129,11 @@
  */
 
 @mixin text-truncate($line-clamp: 1) {
+    @if $line-clamp != round($line-clamp) {
+        @error "#{$line-clamp} is not a valid property. Expected an plain integer.";
+    }
     display: -webkit-box;
-    -webkit-line-clamp: $line-clamp; // values are: integer or none;
+    -webkit-line-clamp: $line-clamp; // value is: integer;
     -webkit-box-orient: vertical;
 }
 
@@ -153,26 +155,29 @@
  * 
  */
 
-@mixin font-setup-rubik($size: false, $color: false, $weight: false, $height: false, $letter-space: false) {
+@mixin font-setup-rubik($font-size: false, $color: false, $font-weight: false, $line-height: false, $letter-spacing: false) {
     font-family: $rubik;
-    @if $size {
-        $extractedSize: map-get($fs, $size);
+    @if $font-size {
+        $allSizes: map-merge($fs, $fs-h);
+        $extractedSize: map-get($allSizes, $font-size);
         font-size: $extractedSize;
     }
     @if $color {
         color: $color;
     }
-    @if $weight {
-        $extractedWeight: map-get($fw, $weight);
+    @if $font-weight {
+        $extractedWeight: map-get($fw, $font-weight);
         font-weight: $extractedWeight;
     }
-    @if $height {
-        $extractedHeight: map-get($lh, $height);
+    @if $line-height {
+        $allHeights: map-merge($lh, $lh-h);
+        $extractedHeight: map-get($allHeights, $line-height);
         line-height: $extractedHeight;
     }
-    @if $letter-space {
-        $extractedSpace: map-get($ls, $letter-space);
-        letter-spacing: $extractedSpace;
+    @if $letter-spacing {
+        $allSpacings: map-merge($ls, $ls-h);
+        $extractedSpacing: map-get($allSpacings, $letter-spacing);
+        letter-spacing: $extractedSpacing;
     }
 }
 

@@ -174,8 +174,6 @@ $fs: (
   lg: $fs-lg
 );
 
-$fs: map-merge($fs, $fs-h);
-
 /* Line heights (headings) */
 
 $lh-h1: 5.313rem; // 85px
@@ -206,7 +204,6 @@ $lh: (
   base: $lh-base
 );
 
-$lh: map-merge($lh, $lh-h);
 /* Letter spacings (headings) */
 
 $ls-h1: -0.094rem; // -1.5px
@@ -244,8 +241,6 @@ $ls: (
   base: $ls-base,
   lg: $ls-lg
 );
-
-$ls: map-merge($ls, $ls-h);
 
 /* Text transforms */
 
