@@ -70,8 +70,7 @@ const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
   )
 
   const handleCloseModal = () => {
-    customCloseModal ? customCloseModal() : null
-    closeModal()
+    customCloseModal ? customCloseModal() : closeModal()
   }
 
   return (
