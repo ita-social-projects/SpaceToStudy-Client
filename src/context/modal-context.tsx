@@ -37,9 +37,6 @@ const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null)
   const customCloseModalRef = useRef<(() => void) | undefined>()
 
-  console.log(customCloseModalRef.current)
-  console.log('ModalProvider')
-
   const closeModal = useCallback(() => {
     setModal(null)
     setPaperProps({})
