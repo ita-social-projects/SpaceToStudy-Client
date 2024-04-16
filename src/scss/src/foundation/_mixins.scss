@@ -50,7 +50,7 @@
  * 
  * Example usage:
  * margin: spacing(2) => margin: 0.5rem // 8px
- * padding-right: spacing() => padding-right: 0.25rem // 4px
+ * padding-right: spacing(1) => padding-right: 0.25rem // 4px
  */
 
 @function spacing($value: 1) {
@@ -141,7 +141,7 @@
  * This mixin is used to set up all font configuration in one go
  * 
  * Example usage:
- * @include font-setup-rubik('h1',$white,'regular','base','2xs') => 
+ * @include font-setup-rubik(h1, $white, regular, base, 2xs) => 
  *      { 
  *          font-family: "Rubik, -apple-system, Arial, sans-serif"; 
  *          color: #ffffff;
