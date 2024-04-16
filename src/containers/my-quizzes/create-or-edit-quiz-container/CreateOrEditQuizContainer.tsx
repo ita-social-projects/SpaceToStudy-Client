@@ -1,6 +1,6 @@
 import { ChangeEvent, useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { AxiosResponse } from 'axios'
 import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
@@ -22,7 +22,6 @@ import Loader from '~/components/loader/Loader'
 
 import { snackbarVariants } from '~/constants'
 import { authRoutes } from '~/router/constants/authRoutes'
-import { myResourcesPath } from '~/pages/create-or-edit-lesson/CreateOrEditLesson.constants'
 import { QuizContentProps } from '~/pages/new-quiz/NewQuiz.constants'
 import {
   columns,
@@ -43,6 +42,7 @@ import {
   CategoryNameInterface
 } from '~/types'
 import { getErrorMessage } from '~/utils/error-with-message'
+import { createUrlPath } from '~/utils/helper-functions'
 import { styles } from '~/containers/my-quizzes/create-or-edit-quiz-container/CreateOrEditQuizContainer.styles'
 
 const CreateOrEditQuizContainer = ({
@@ -70,6 +70,12 @@ const CreateOrEditQuizContainer = ({
     setCategory(value?._id ?? null)
   }
 
+  const navigateToQuizzesTab = () => {
+    navigate(
+      createUrlPath(authRoutes.myResources.root.path, '', { tab: 'quizzes' })
+    )
+  }
+
   const handleResponse = () => {
     setAlert({
       severity: snackbarVariants.success,
@@ -77,7 +83,7 @@ const CreateOrEditQuizContainer = ({
         ? t('myResourcesPage.quizzes.successEditedQuiz')
         : t('myResourcesPage.quizzes.successAddedQuiz')
     })
-    navigate(authRoutes.myResources.root.path)
+    navigateToQuizzesTab()
   }
 
   const onResponseError = (error: ErrorResponse) => {
@@ -253,9 +259,8 @@ const CreateOrEditQuizContainer = ({
         </Box>
         <Box sx={styles.buttons}>
           <AppButton
-            component={Link}
+            onClick={navigateToQuizzesTab}
             size={SizeEnum.ExtraLarge}
-            to={myResourcesPath}
             variant={ButtonVariantEnum.Tonal}
           >
             {t('common.cancel')}

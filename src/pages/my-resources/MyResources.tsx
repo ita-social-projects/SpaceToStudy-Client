@@ -1,5 +1,5 @@
-import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useSearchParams } from 'react-router-dom'
 
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import Typography from '@mui/material/Typography'
@@ -14,13 +14,14 @@ import TabNavigation from '~/components/tab-navigation/TabNavigation'
 import { ResourcesTabsEnum } from '~/types'
 
 const MyResources = () => {
-  const [activeTab, setActiveTab] = useState<ResourcesTabsEnum>(
-    ResourcesTabsEnum.Lessons
-  )
+  const [searchParams, setSearchParams] = useSearchParams()
+  const activeTab =
+    (searchParams.get('tab') as ResourcesTabsEnum) || ResourcesTabsEnum.Lessons
+
   const { t } = useTranslation()
 
   const handleClick = (tab: ResourcesTabsEnum) => {
-    setActiveTab(tab)
+    setSearchParams({ tab })
   }
 
   const tabContent = activeTab && tabsData[activeTab].content

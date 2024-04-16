@@ -18,6 +18,7 @@ import { ResourceService } from '~/services/resource-service'
 import { useSnackBarContext } from '~/context/snackbar-context'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { getErrorMessage } from '~/utils/error-with-message'
+import { createUrlPath } from '~/utils/helper-functions'
 import { defaultResponses, snackbarVariants } from '~/constants'
 import {
   initialValues,
@@ -54,7 +55,11 @@ const CreateOrEditQuestion = () => {
   ) => {
     handleNonInputValueChange('category', value?._id ?? null)
   }
-
+  const navigateToQuestionsTab = () => {
+    navigate(
+      createUrlPath(authRoutes.myResources.root.path, '', { tab: 'questions' })
+    )
+  }
   const onResponse = () => {
     setAlert({
       severity: snackbarVariants.success,
@@ -62,7 +67,7 @@ const CreateOrEditQuestion = () => {
         ? t('myResourcesPage.questions.successEditedQuestion')
         : t('myResourcesPage.questions.successAddedQuestion')
     })
-    navigate(authRoutes.myResources.root.path)
+    navigateToQuestionsTab()
   }
 
   const onResponseError = (error: ErrorResponse) => {
@@ -138,7 +143,7 @@ const CreateOrEditQuestion = () => {
   const buttons = (
     <Box sx={styles.buttons}>
       <AppButton
-        onClick={() => navigate(authRoutes.myResources.root.path)}
+        onClick={navigateToQuestionsTab}
         variant={ButtonVariantEnum.Tonal}
       >
         {t('common.cancel')}
