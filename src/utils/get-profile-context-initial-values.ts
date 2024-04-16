@@ -11,7 +11,7 @@ export const getProfileContextInitialValues = (user: UserResponse) => ({
   nativeLanguage: user.nativeLanguage ?? null,
   videoLink:
     user.role[0] !== UserRoleEnum.Admin
-      ? user.videoLink[user.role[0]] || ''
+      ? user.videoLink?.[user.role[0]] || ''
       : '',
   mainSubjects:
     user.role[0] !== UserRoleEnum.Admin ? user.mainSubjects[user.role[0]] : []
