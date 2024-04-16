@@ -2,6 +2,8 @@
   "profile": {
     "title": "Profile",
     "description": "Here you can edit public information about yourself.",
+    "updateProfileBtn": "Update profile",
+    "successMessage": "Success! Your data has been updated.",
     "generalTab": {
       "uploadTitle": "Upload new photo",
       "uploadDesc": "Maximum file size - 5 Mb",
@@ -13,7 +15,7 @@
       "professionalStatus": "Describe in short your professional summary. Maximum 200 characters.",
       "languagesTitle": "Language",
       "languagesDesc": "Select the language in which you would like to study and cooperate.",
-      "videoPresentationDesc": "Add the link to your presentational video. Your video needs to be public."
+      "videoPresentationDesc": "Add the link to your presentational video. Your video needs to be public and uploaded to YouTube."
     }
   }
 }

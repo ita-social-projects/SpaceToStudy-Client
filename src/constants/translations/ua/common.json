@@ -51,6 +51,9 @@
     "moveToDraft": "Перемістити до чернетки",
     "closeOffer": "Закрити пропозицію"
   },
+  "errorMessages": {
+    "youtubeLink": "Будь ласка, надайте посилання на YouTube відео"
+  },
   "levels": {
     "beginner": "Початковий",
     "intermediate": "Середній",

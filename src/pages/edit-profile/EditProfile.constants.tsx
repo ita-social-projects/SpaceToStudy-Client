@@ -6,7 +6,7 @@ import GppGoodIcon from '@mui/icons-material/GppGood'
 import { TutorProfileTabsEnum, UserResponse } from '~/types'
 import NotificationContainer from '~/containers/edit-profile/notification-tab/NotificationContainer'
 import SecurityBlock from '~/containers/tutor-profile/security-block/SecurityBlock'
-import ProfileGeneralTab from '~/containers/edit-profile/profile-general-tab/ProfileGeneralTab'
+import ProfileTab from '~/containers/edit-profile/profile-tab/ProfileTab'
 
 export type TutorProfileProps = {
   [key in TutorProfileTabsEnum]: {
@@ -20,7 +20,7 @@ export const tabsData: TutorProfileProps = {
   [TutorProfileTabsEnum.Profile]: {
     icon: <AccountCircleIcon />,
     title: 'editTutor.main.profile',
-    content: (response) => <ProfileGeneralTab user={response} />
+    content: (response) => <ProfileTab user={response} />
   },
   [TutorProfileTabsEnum.Notifications]: {
     icon: <NotificationsIcon />,

@@ -11,17 +11,18 @@ const mockState = {
   appMain: { userId: userId, userRole: userRole }
 }
 
-const userMock = 'UserProfileMock'
+const userMock = {
+  role: userRole,
+  videoLink: { [userRole]: '' },
+  mainSubjects: { [userRole]: [] }
+}
 
-vi.mock(
-  '~/containers/edit-profile/profile-general-tab/ProfileGeneralTab',
-  () => ({
-    __esModule: true,
-    default: function () {
-      return <div>{userMock}</div>
-    }
-  })
-)
+vi.mock('~/containers/edit-profile/profile-tab/ProfileTab', () => ({
+  __esModule: true,
+  default: function () {
+    return <div>ProfileTab</div>
+  }
+}))
 
 vi.mock(
   '~/containers/edit-profile/notification-tab/NotificationContainer',
@@ -73,7 +74,7 @@ describe('EditProfile', () => {
     })
     fireEvent.click(profileMenuTab)
     await waitFor(() => {
-      const profileContent = screen.getByText('UserProfileMock')
+      const profileContent = screen.getByText('ProfileTab')
       expect(profileContent).toBeInTheDocument()
     })
   })

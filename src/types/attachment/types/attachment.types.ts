@@ -1,4 +1,4 @@
-type UploadFileEmitterArgs = {
+export type UploadFileEmitterArgs = {
   files: File[]
   error: string
 }
