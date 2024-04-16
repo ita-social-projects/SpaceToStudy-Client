@@ -4,6 +4,7 @@ import {
   useCallback,
   useContext,
   useMemo,
+  useRef,
   useState,
   ReactElement
 } from 'react'
@@ -34,7 +35,11 @@ const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
   const [modal, setModal] = useState<ReactElement | null>(null)
   const [paperProps, setPaperProps] = useState<PaperProps>({})
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null)
-  const [customCloseModal, setCustomCloseModal] = useState<() => void>()
+  // const [customCloseModal, setCustomCloseModal] = useState<() => void>()
+  const customCloseModalRef = useRef<(() => void) | undefined>()
+
+  console.log(customCloseModalRef.current)
+  console.log('ModalProvider')
 
   const closeModal = useCallback(() => {
     setModal(null)
@@ -59,7 +64,8 @@ const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
 
       paperProps && setPaperProps(paperProps)
       delayToClose && closeModalAfterDelay(delayToClose)
-      customCloseModal && setCustomCloseModal(() => customCloseModal)
+      // customCloseModal && setCustomCloseModal(() => customCloseModal)
+      customCloseModalRef.current = customCloseModal
     },
     [setModal, setPaperProps, closeModalAfterDelay]
   )
@@ -70,9 +76,8 @@ const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
   )
 
   const handleCloseModal = () => {
-    if (customCloseModal) {
-      customCloseModal()
-      closeModal()
+    if (customCloseModalRef.current) {
+      customCloseModalRef.current()
     }
     closeModal()
   }
