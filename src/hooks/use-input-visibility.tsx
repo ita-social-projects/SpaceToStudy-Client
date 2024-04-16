@@ -5,7 +5,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import IconButton from '@mui/material/IconButton'
 import InputAdornment from '@mui/material/InputAdornment'
 
-const useInputVisibility = (inputError) => {
+const useInputVisibility = (inputError: string) => {
   const [showInputText, setShowInputText] = useState(false)
 
   const iconColor = inputError ? 'error' : 'secondary'
