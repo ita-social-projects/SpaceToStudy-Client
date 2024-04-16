@@ -35,7 +35,6 @@ const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
   const [modal, setModal] = useState<ReactElement | null>(null)
   const [paperProps, setPaperProps] = useState<PaperProps>({})
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null)
-  // const [customCloseModal, setCustomCloseModal] = useState<() => void>()
   const customCloseModalRef = useRef<(() => void) | undefined>()
 
   console.log(customCloseModalRef.current)
@@ -64,7 +63,6 @@ const ModalProvider: FC<ModalProviderProps> = ({ children }) => {
 
       paperProps && setPaperProps(paperProps)
       delayToClose && closeModalAfterDelay(delayToClose)
-      // customCloseModal && setCustomCloseModal(() => customCloseModal)
       customCloseModalRef.current = customCloseModal
     },
     [setModal, setPaperProps, closeModalAfterDelay]
