@@ -155,29 +155,39 @@
  * 
  */
 
-@mixin font-setup-rubik($font-size: false, $color: false, $font-weight: false, $line-height: false, $letter-spacing: false) {
+@mixin font-setup-rubik(
+    $font-size: false,
+    $color: false,
+    $font-weight: false,
+    $line-height: false,
+    $letter-spacing: false
+) {
     font-family: $rubik;
     @if $font-size {
-        $allSizes: map-merge($fs, $fs-h);
-        $extractedSize: map-get($allSizes, $font-size);
-        font-size: $extractedSize;
+        $all-font-sizes: map-merge($fs, $fs-h);
+        $extracted-font-size: map-get($all-font-sizes, $font-size);
+
+        font-size: $extracted-font-size;
     }
     @if $color {
         color: $color;
     }
     @if $font-weight {
-        $extractedWeight: map-get($fw, $font-weight);
-        font-weight: $extractedWeight;
+        $extracted-font-weight: map-get($fw, $font-weight);
+
+        font-weight: $extracted-font-weight;
     }
     @if $line-height {
-        $allHeights: map-merge($lh, $lh-h);
-        $extractedHeight: map-get($allHeights, $line-height);
-        line-height: $extractedHeight;
+        $all-line-heights: map-merge($lh, $lh-h);
+        $extracted-line-height: map-get($all-line-heights, $line-height);
+
+        line-height: $extracted-line-height;
     }
     @if $letter-spacing {
-        $allSpacings: map-merge($ls, $ls-h);
-        $extractedSpacing: map-get($allSpacings, $letter-spacing);
-        letter-spacing: $extractedSpacing;
+        $all-letter-spacings: map-merge($ls, $ls-h);
+        $extracted-letter-spacing: map-get($all-letter-spacings, $letter-spacing);
+
+        letter-spacing: $extracted-letter-spacing;
     }
 }
 
