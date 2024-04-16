@@ -160,19 +160,21 @@ $fs-h: (
 
 /* Font sizes (texts) */
 
-$fs-xxs: 0.625rem; // 10px
+$fs-2xs: 0.625rem; // 10px
 $fs-xs: 0.75rem; // 12px
 $fs-sm: 0.875rem; // 14px
 $fs-base: 1rem; // 16px
 $fs-lg: 1.125rem; // 18px
 
 $fs: (
-  xxs: $fs-xxs,
+  2xs: $fs-2xs,
   xs: $fs-xs,
   sm: $fs-sm,
   base: $fs-base,
   lg: $fs-lg
 );
+
+$fs: map-merge($fs, $fs-h);
 
 /* Line heights (headings) */
 
@@ -204,6 +206,7 @@ $lh: (
   base: $lh-base
 );
 
+$lh: map-merge($lh, $lh-h);
 /* Letter spacings (headings) */
 
 $ls-h1: -0.094rem; // -1.5px
@@ -225,8 +228,8 @@ $ls-h: (
 /* Letter spacings (texts) */
 
 $ls-none: normal; // normal
-$ls-xxxs: 0.0025rem; // 0.04px
-$ls-xxs: 0.006rem; // 0.1px
+$ls-3xs: 0.0025rem; // 0.04px
+$ls-2xs: 0.006rem; // 0.1px
 $ls-xs: 0.009rem; // 0.15px
 $ls-sm: 0.025rem; // 0.4px
 $ls-base: 0.031rem; // 0.5px
@@ -234,13 +237,15 @@ $ls-lg: 0.094rem; // 1.5px
 
 $ls: (
   none: $ls-none,
-  xxxs: $ls-xxxs,
-  xxs: $ls-xxs,
+  3xs: $ls-3xs,
+  2xs: $ls-2xs,
   xs: $ls-xs,
   sm: $ls-sm,
   base: $ls-base,
   lg: $ls-lg
 );
+
+$ls: map-merge($ls, $ls-h);
 
 /* Text transforms */
 
@@ -273,8 +278,8 @@ $breakpoints: (
 =============================================*/
 
 $spacing-none: 0;
-$spacing-xxxs: 0.25rem; // 4px
-$spacing-xxs: 0.5rem; // 8px
+$spacing-3xs: 0.25rem; // 4px
+$spacing-2xs: 0.5rem; // 8px
 $spacing-xs: 0.75rem; // 12px
 $spacing-sm: 1rem; // 16px
 $spacing-md: 1.5rem; // 24px
@@ -285,8 +290,8 @@ $spacing-3xl: 6rem; // 96px
 
 $spacing: (
   none: $spacing-none,
-  xxxs: $spacing-xxxs,
-  xxs: $spacing-xxs,
+  3xs: $spacing-3xs,
+  2xs: $spacing-2xs,
   xs: $spacing-xs,
   sm: $spacing-sm,
   md: $spacing-md,
@@ -295,6 +300,8 @@ $spacing: (
   2xl: $spacing-2xl,
   3xl: $spacing-3xl
 );
+
+$spacing-scale-factor: 0.25rem; // 4px
 
 /*=====  End of BREAKPOINTS  ======*/
 

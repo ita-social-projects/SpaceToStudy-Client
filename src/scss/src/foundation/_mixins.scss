@@ -14,15 +14,12 @@
  =                @media rules                =
  =============================================*/
 
- 
- /**
+/**
   *
   * Set of mixins for different screen resolutions
   *
   * example usage: @include tablet { color: $pink }
   */
- 
- 
 
 @mixin tablet {
     @media (min-width: map-get($breakpoints, "tablet")) {
@@ -47,26 +44,21 @@
 =============================================*/
 
 /**
- * use it set up margin or padding 
+ * Function which returns values for spacing according to our design system. For your understanding,
+ * you can multiply value to 4 to get value in px
+ *
+ * $value is expected to be a plain integer without unit name => 1; 2; 4;
  * 
- * @include spacing(margin, 'lg', 'xxs') - will set up margin vertical for 32px and horizontal for 8px 
+ * Example usage:
+ * margin: spacing(2) => margin: 0.5rem // 8px
+ * padding-right: spacing() => padding-right: 0.25rem // 4px
  */
 
-@mixin spacing($property, $values...) {
-    $valid-properties: margin, padding;
-
-    @if not list.index($valid-properties, $property) {
-        @error "#{$property} is not a valid property. Expected one of #{$valid-properties}.";
+@function spacing($value: 1) {
+    @if $value != round($value) {
+        @error "#{$value} is not a valid property. Expected an plain integer.";
     }
-
-    $propertyValues: ();
-
-    @each $value in $values {
-        $spacingValue: map-get($spacing, $value);
-        $propertyValues: append($propertyValues, $spacingValue);
-    }
-
-    #{$property}: $propertyValues;
+    @return $spacing-scale-factor * $value;
 }
 
 /*=============================================
@@ -77,6 +69,7 @@
  * defines width and height in one go
  * 
  * @include box(1rem, 2rem) => width: 1rem;  height: 2rem
+ * @include box(1rem) => width: 1rem; height 1rem;
  */
 
 @mixin box($width, $height: $width) {
@@ -92,8 +85,8 @@
  * Setup for flexbox container
  *
  * example usage: 
- * @include flexbox(column, space-between)
- * @include flexbox($justify: center)
+ * @include flexbox(column, space-between) - if you want to change values in their order in function
+ * @include flexbox($justify: center) - if you want to change specific values, in random order
  *
  */
 
@@ -109,11 +102,12 @@
 /**
  * Setup for grid container
  *    
- * @include grid-container(1fr 1fr, 30px, start, center);
+ * @include grid(1fr 1fr, 30px, start, center); - if you want to change values in their order in function
+ * @include grid($justify: center) - if you want to change specific values, in random order
  *
  */
 
-@mixin grid($columns: auto, $rows: auto, $gap: 20px, $justify: center, $align: center) {
+@mixin grid($columns: auto, $rows: auto, $gap: map-get($spacing, "none"), $justify: center, $align: center) {
     display: grid;
     grid-template-columns: $columns;
     grid-template-rows: $rows;
@@ -129,18 +123,57 @@
 /**
  * This mixin is used to truncate text that overflows its container.
  * 
- * To truncate text with ellipsis: @include text-truncate;
- * 
- * To truncate text with a custom string: @include text-truncate('...');
- * 
- * To clip the text without any ellipsis: @include text-truncate('clip');
+ * To truncate text on the 1 row: @include text-truncate; => 'Some text...'
+ * To truncate text on the 2 row: @include text-truncate(2); => 'Some text with meaning
+ *                                                               and its continue....'
  * 
  */
 
-@mixin text-truncate($overflow: ellipsis) {
-    overflow: hidden;
-    text-overflow: $overflow; // values are: clip, ellipsis, or a string
-    white-space: nowrap;
+@mixin text-truncate($line-clamp: 1) {
+    display: -webkit-box;
+    -webkit-line-clamp: $line-clamp; // values are: integer or none;
+    -webkit-box-orient: vertical;
+}
+
+/**
+ * This mixin is used to set up all font configuration in one go
+ * 
+ * Example usage:
+ * @include font-setup-rubik('h1',$white,'regular','base','2xs') => 
+ *      { 
+ *          font-family: "Rubik, -apple-system, Arial, sans-serif"; 
+ *          color: #ffffff;
+ *          font-size: 4.5rem; // 72px
+ *          font-weight: 400;
+ *          line-height: 1.5rem; // 24px
+ *          letter-spacing: 0.006rem; // 0.1px
+ *      }
+ *
+ * @include font-setup-rubik($color: $success-50) => font-family: "Rubik, -apple-system, Arial, sans-serif"; color: #ebf3eb;
+ * 
+ */
+
+@mixin font-setup-rubik($size: false, $color: false, $weight: false, $height: false, $letter-space: false) {
+    font-family: $rubik;
+    @if $size {
+        $extractedSize: map-get($fs, $size);
+        font-size: $extractedSize;
+    }
+    @if $color {
+        color: $color;
+    }
+    @if $weight {
+        $extractedWeight: map-get($fw, $weight);
+        font-weight: $extractedWeight;
+    }
+    @if $height {
+        $extractedHeight: map-get($lh, $height);
+        line-height: $extractedHeight;
+    }
+    @if $letter-space {
+        $extractedSpace: map-get($ls, $letter-space);
+        letter-spacing: $extractedSpace;
+    }
 }
 
 /*=============================================
@@ -167,7 +200,7 @@
  *
  */
 
-@mixin clear-fix($content: "") {
+@mixin clearfix($content: "") {
     &:before,
     &:after {
         content: $content;

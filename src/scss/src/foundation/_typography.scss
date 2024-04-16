@@ -43,7 +43,7 @@ $body-1-font-size: var(--s2s-body1-font-size, $fs-base) !default;
 $body-2-font-size: var(--s2s-body2-font-size, $fs-sm) !default;
 $caption1-font-size: var(--s2s-caption1-font-size, $fs-xs) !default;
 $caption2-font-size: var(--s2s-caption2-font-size, $fs-xs) !default;
-$overline-font-size: var(--s2s-overline-font-size, $fs-xxs) !default;
+$overline-font-size: var(--s2s-overline-font-size, $fs-2xs) !default;
 $button1-font-size: var(--s2s-button1-font-size, $fs-base) !default;
 $button2-font-size: var(--s2s-button2-font-size, $fs-sm) !default;
 
@@ -121,10 +121,10 @@ $mid-title-letter-spacing: var(
 $subtitle1-letter-spacing: var(--s2s-subtitle1-letter-spacing, $ls-xs) !default;
 $subtitle2-letter-spacing: var(
   --s2s-subtitle2-letter-spacing,
-  $ls-xxs
+  $ls-2xs
 ) !default;
 $body-1-letter-spacing: var(--s2s-body1-letter-spacing, $ls-base) !default;
-$body-2-letter-spacing: var(--s2s-body2-letter-spacing, $ls-xxxs) !default;
+$body-2-letter-spacing: var(--s2s-body2-letter-spacing, $ls-3xs) !default;
 $caption1-letter-spacing: var(--s2s-caption1-letter-spacing, $ls-sm) !default;
 $caption2-letter-spacing: var(--s2s-caption2-letter-spacing, $ls-sm) !default;
 $overline-letter-spacing: var(--s2s-overline-letter-spacing, $ls-lg) !default;
