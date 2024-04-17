@@ -12,7 +12,7 @@ import { userService } from '~/services/user-service'
 import useAxios from '~/hooks/use-axios'
 
 import { profileItems } from '~/components/profile-item/complete-profile.constants'
-import { defaultResponses, tutor } from '~/constants'
+import { defaultResponses } from '~/constants'
 import { responseMock } from '~/pages/tutor-profile/constants'
 import AboutTutorBlock from '~/containers/tutor-profile/about-tutor-block/AboutTutorBlock'
 
@@ -42,13 +42,8 @@ const TutorProfile = () => {
   })
 
   useEffect(() => {
-    if (
-      !loading &&
-      response &&
-      response.videoLink &&
-      response.videoLink.tutor !== null &&
-      response.videoLink.tutor !== ''
-    ) {
+    const tutorVideo = response?.videoLink?.tutor
+    if (!loading && tutorVideo !== null && tutorVideo !== '') {
       setVideoPreview(false)
     }
   }, [loading, response])
@@ -60,24 +55,18 @@ const TutorProfile = () => {
   const isTutor = preferredRole === UserRoleEnum.Tutor
   const shouldShowPresentation =
     isTutor || (!isTutor && response.videoLink?.student)
-  const videoBlock =
-    userRole === tutor ? (
-      <VideoPresentation
-        video={response.videoLink.tutor}
-        videoPreview={videoPreview}
-      />
-    ) : (
-      <VideoPresentation
-        video={response.videoLink.student}
-        videoPreview={videoPreview}
-      />
-    )
+
   return (
     <PageWrapper>
       <ProfileInfo myRole={userRole} userData={response} />
       <CompleteProfileBlock data={response} profileItems={profileItems} />
       <AboutTutorBlock />
-      {shouldShowPresentation && videoBlock}
+      {shouldShowPresentation && (
+        <VideoPresentation
+          video={response?.videoLink?.[userRole]}
+          videoPreview={videoPreview}
+        />
+      )}
       <CommentsWithRatingBlock
         averageRating={response?.averageRating?.tutor}
         reviewsCount={reviews}
