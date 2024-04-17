@@ -25,7 +25,6 @@ import {
 import AsyncAutocomplete from '~/components/async-autocomlete/AsyncAutocomplete'
 import { ResourceService } from '~/services/resource-service'
 import { InputAdornment } from '@mui/material'
-import { getAttachmentExtension } from '~/utils/helper-functions'
 
 interface EditAttachmentModalProps {
   closeModal: () => void
@@ -65,8 +64,6 @@ const EditAttachmentModal: FC<EditAttachmentModalProps> = ({
     }
   })
 
-  const fileExtension = getAttachmentExtension(attachment.fileName)
-
   const onCategoryChange = (
     _: SyntheticEvent,
     value: CategoryNameInterface | null
@@ -91,7 +88,9 @@ const EditAttachmentModal: FC<EditAttachmentModalProps> = ({
         <AppTextField
           InputProps={{
             endAdornment: (
-              <InputAdornment position='end'>{fileExtension}</InputAdornment>
+              <InputAdornment position='end'>
+                {data.fileExtension}
+              </InputAdornment>
             )
           }}
           errorMsg={t(errors.fileName)}

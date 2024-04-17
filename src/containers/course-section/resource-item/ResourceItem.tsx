@@ -6,7 +6,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import TextField from '@mui/material/TextField'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
+import EditIcon from '@mui/icons-material/Edit'
 import { useTranslation } from 'react-i18next'
 
 import AppSelect from '~/components/app-select/AppSelect'
@@ -144,10 +144,10 @@ const ResourceItem: FC<ResourceItemProps> = ({
       <Box sx={styles.resourceActions}>
         {isCooperation && availabilitySelection}
         <IconButton aria-label='edit' onClick={onEditResource}>
-          <EditOutlinedIcon color='primary' fontSize='small' />
+          <EditIcon fontSize='small' sx={styles.editBtn} />
         </IconButton>
         <IconButton aria-label='delete' onClick={onDeleteResource}>
-          <CloseIcon />
+          <CloseIcon fontSize='small' />
         </IconButton>
       </Box>
     </Box>
