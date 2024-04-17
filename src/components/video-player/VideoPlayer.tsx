@@ -4,22 +4,21 @@ import ReactPlayer from 'react-player/youtube'
 import { styles } from '~/components/video-player/VideoPlayer.styles'
 
 interface VideoPlayerProps {
-  video:string 
+  video: string
 }
 
-const VideoPlayer: FC<VideoPlayerProps> = ({ video }) =>  {
+const VideoPlayer: FC<VideoPlayerProps> = ({ video }) => {
   return (
     <Box sx={styles.playerWrapper}>
-    <ReactPlayer
-    style={styles.player}
-    url= {video}
-    width= '100%'
-    height= '100%'
-    controls
+      <ReactPlayer
+        controls
+        height='100%'
+        style={styles.player}
+        url={video}
+        width='100%'
       />
     </Box>
   )
 }
 
 export default VideoPlayer
-

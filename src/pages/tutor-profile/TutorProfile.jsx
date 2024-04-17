@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useState, useEffect } from 'react'
 import { useAppSelector } from '~/hooks/use-redux'
 import { useParams, useSearchParams } from 'react-router-dom'
 
@@ -15,26 +15,24 @@ import { profileItems } from '~/components/profile-item/complete-profile.constan
 import { defaultResponses } from '~/constants'
 import { responseMock } from '~/pages/tutor-profile/constants'
 import AboutTutorBlock from '~/containers/tutor-profile/about-tutor-block/AboutTutorBlock'
-import videoImg from '~/assets/img/tutor-profile-page/presentationVideoImg.png'
 
+import { UserRoleEnum } from '~/types'
 
 const TutorProfile = () => {
   const { id } = useParams()
   const [searchParams] = useSearchParams()
-  const [haveVideo, setHaveVideo] = useState(false)
-  const [video, setvideo] = useState(videoImg)
+  const [videoPreview, setVideoPreview] = useState(true)
+  const { userId, userRole } = useAppSelector((state) => state.appMain)
   const paramsRole = searchParams.get('role')
   const { user } = responseMock
   const { reviews } = user.reviewStats || {}
-
-  const { userId, userRole } = useAppSelector((state) => state.appMain)
 
   const preferredRole = paramsRole || userRole
   const preferredId = id || userId
 
   const getUserData = useCallback(
-    () => userService.getUserById(id || userId, paramsRole || userRole),
-    [userId, userRole, id, paramsRole ]
+    () => userService.getUserById(preferredId, preferredRole),
+    [preferredId, preferredRole]
   )
 
   const { loading, response } = useAxios({
@@ -43,16 +41,36 @@ const TutorProfile = () => {
     defaultResponse: defaultResponses.array
   })
 
+  useEffect(() => {
+    if (
+      !loading &&
+      response &&
+      response.videoLink.tutor !== null &&
+      response.videoLink.tutor !== ''
+    ) {
+      setVideoPreview(false)
+    }
+  }, [loading, response])
+
   if (loading) {
     return <Loader pageLoad size={70} />
   }
-  
+
+  const isTutor = preferredRole === UserRoleEnum.Tutor
+  const shouldShowPresentation =
+    isTutor || (!isTutor && response.videoLink?.student)
+
   return (
     <PageWrapper>
       <ProfileInfo myRole={userRole} userData={response} />
       <CompleteProfileBlock data={response} profileItems={profileItems} />
       <AboutTutorBlock />
-      <VideoPresentation haveVideo = {haveVideo} video= {video}/>
+      {shouldShowPresentation && (
+        <VideoPresentation
+          video={response.videoLink.tutor}
+          videoPreview={videoPreview}
+        />
+      )}
       <CommentsWithRatingBlock
         averageRating={response?.averageRating?.tutor}
         reviewsCount={reviews}
