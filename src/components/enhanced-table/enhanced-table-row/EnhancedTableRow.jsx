@@ -71,7 +71,7 @@ const EnhancedTableRow = ({
           <Checkbox
             checked={isSelected(item._id)}
             color='primary'
-            onChange={(e) => handleSelectClick(e, item._id)}
+            onChange={() => handleSelectClick(item._id)}
           />
         </TableCell>
       )}

@@ -39,7 +39,7 @@ describe('Use select custom hook', () => {
     let isSelected
 
     act(() => {
-      result.current.handleSelectClick(null, 1)
+      result.current.handleSelectClick(1)
     })
 
     expect(result.current.selected).toEqual([1])
@@ -51,7 +51,7 @@ describe('Use select custom hook', () => {
     expect(isSelected).toBeTruthy()
 
     act(() => {
-      result.current.handleSelectClick(null, 1)
+      result.current.handleSelectClick(1)
     })
 
     expect(result.current.selected).toEqual([])

@@ -1,4 +1,4 @@
-import { useCallback, useState, MouseEvent, ChangeEvent } from 'react'
+import { useCallback, useState, ChangeEvent } from 'react'
 
 interface Item {
   _id: string
@@ -11,10 +11,7 @@ interface SelectHook {
   createSelectAllHandler: (
     items: Item[]
   ) => (e: ChangeEvent<HTMLInputElement>) => void
-  handleSelectClick: (
-    e: React.MouseEvent<HTMLButtonElement>,
-    id: string
-  ) => void
+  handleSelectClick: (id: string) => void
 }
 
 const useSelect = ({
@@ -41,7 +38,7 @@ const useSelect = ({
     (items: Item[]) => (e: ChangeEvent<HTMLInputElement>) =>
       handleSelectAllClick(e, items)
 
-  const handleSelectClick = (_e: MouseEvent<HTMLButtonElement>, id: string) => {
+  const handleSelectClick = (id: string) => {
     const selectedIndex = selected.indexOf(id)
     let newSelected: string[] = []
 

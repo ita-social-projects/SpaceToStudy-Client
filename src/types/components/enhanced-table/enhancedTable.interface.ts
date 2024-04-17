@@ -25,7 +25,7 @@ export interface TableItem {
 export interface TableSelect<I> {
   selected: string[]
   createSelectAllHandler: (items: I[]) => void
-  handleSelectClick: (e: ChangeEvent<HTMLInputElement>, item: string) => void
+  handleSelectClick: (item: string, e?: ChangeEvent<HTMLInputElement>) => void
   isSelected: (id: string) => boolean
 }
 

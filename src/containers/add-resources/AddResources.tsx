@@ -82,7 +82,7 @@ const AddResources = <T extends CourseResources | Question>({
     } else {
       setSelectedRows((selectedRows) => [...selectedRows, item])
     }
-    handleSelectClick(undefined, item._id)
+    handleSelectClick(item._id)
   }
 
   const onAddItems = () => {
@@ -109,7 +109,11 @@ const AddResources = <T extends CourseResources | Question>({
 
         const categoryMatch =
           selectedCategories.length === 0 ||
-          selectedCategories.includes(String(item.category?._id || null))
+          selectedCategories.includes(
+            String(
+              (typeof item.category !== 'string' && item.category?._id) || null
+            )
+          )
 
         return titleMatch && categoryMatch
       })
