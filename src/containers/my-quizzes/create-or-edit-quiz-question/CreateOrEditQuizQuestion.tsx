@@ -116,7 +116,6 @@ const CreateOrEditQuizQuestion: FC<CreateOrEditQuizQuestionProps> = ({
     handleNonInputValueChange('category', category)
     setIsNewQuestion(true)
     closeModal()
-    onCancel()
   }
 
   const onCreateQuestion = async () => {
@@ -134,7 +133,8 @@ const CreateOrEditQuizQuestion: FC<CreateOrEditQuizQuestionProps> = ({
           actions={{ onCancel: onCloseCreation, onSave: onOpenCreation }}
           initialData={data}
         />
-      )
+      ),
+      customCloseModal: onCancel
     })
   }
 
