@@ -8,7 +8,8 @@ export const styles = {
     width: '100%',
     borderRadius: '6px',
     p: { xs: 0, sm: 0 },
-    border: `1px solid ${palette.primary[400]}`
+    border: `1px solid ${palette.primary[400]}`,
+    '& div': { pl: '10px' }
   },
   clearAll: {
     display: 'flex',
