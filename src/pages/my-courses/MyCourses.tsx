@@ -1,4 +1,4 @@
-import { useCallback, useRef } from 'react'
+import { useCallback, useEffect, ChangeEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Typography, Box } from '@mui/material'
 
@@ -14,13 +14,22 @@ import usePagination from '~/hooks/table/use-pagination'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import useConfirm from '~/hooks/use-confirm'
 import useSort from '~/hooks/table/use-sort'
+import { useFilterQuery } from '~/hooks/use-filter-query'
 
 import { getScreenBasedLimit } from '~/utils/helper-functions'
+import { countActiveCourseFilters } from '~/utils/count-active-filters'
 import { CourseService } from '~/services/course-service'
 import { useSnackBarContext } from '~/context/snackbar-context'
-import { Course, ItemsWithCount, ErrorResponse, CourseForm } from '~/types'
+import {
+  Course,
+  ItemsWithCount,
+  ErrorResponse,
+  CourseForm,
+  GetCoursesParams
+} from '~/types'
 import { initialSort } from '~/containers/find-course/courses-filter-bar/CorseFilterBar.constants'
 import {
+  defaultFilters,
   defaultResponse,
   courseItemsLoadLimit
 } from '~/pages/my-courses/MyCourses.constants'
@@ -31,22 +40,20 @@ import { styles } from '~/pages/my-courses/MyCourses.styles'
 const MyCourses = () => {
   const { t } = useTranslation()
   const breakpoints = useBreakpoints()
-  const { page, handleChangePage } = usePagination()
   const { openDialog } = useConfirm()
   const { setAlert } = useSnackBarContext()
-  const searchTitle = useRef<string>('')
   const { sort, onRequestSort } = useSort({ initialSort })
   const itemsPerPage = getScreenBasedLimit(breakpoints, courseItemsLoadLimit)
 
+  const { filters, activeFilterCount, searchParams, filterQueryActions } =
+    useFilterQuery({
+      defaultFilters: defaultFilters,
+      countActiveFilters: countActiveCourseFilters
+    })
+
   const getCourses = useCallback(
-    () =>
-      CourseService.getCourses({
-        limit: itemsPerPage,
-        skip: (page - 1) * itemsPerPage,
-        title: searchTitle.current,
-        sort
-      }),
-    [itemsPerPage, page, sort]
+    (params?: GetCoursesParams) => CourseService.getCourses(params),
+    []
   )
 
   const deleteCourse = useCallback(
@@ -58,9 +65,10 @@ const MyCourses = () => {
     response: coursesResponse,
     loading: coursesLoading,
     fetchData
-  } = useAxios<ItemsWithCount<Course>>({
+  } = useAxios<ItemsWithCount<Course>, GetCoursesParams>({
     service: getCourses,
-    defaultResponse
+    defaultResponse,
+    fetchOnMount: false
   })
 
   const onResponseError = (error: ErrorResponse) => {
@@ -131,7 +139,34 @@ const MyCourses = () => {
     if (!duplicationError) await fetchData()
   }
 
+  const updateInfo = useCallback(() => {
+    void fetchData({
+      ...filters,
+      limit: itemsPerPage,
+      skip: (Number(filters.page) - 1) * itemsPerPage,
+      sort
+    })
+  }, [fetchData, filters, itemsPerPage, sort])
+
+  const searchString = searchParams.toString()
+
+  useEffect(() => {
+    updateInfo()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fetchData, searchString, sort])
+
+  const defaultParams = { page: defaultFilters.page }
+
   const { items: coursesItems, count: coursesCount } = coursesResponse
+
+  const { pageCount } = usePagination({
+    itemsCount: coursesCount,
+    itemsPerPage
+  })
+
+  const handlePageChange = (_: ChangeEvent<unknown>, page: number) => {
+    filterQueryActions.updateFiltersInQuery({ page })
+  }
 
   const content = coursesLoading ? (
     <Loader pageLoad />
@@ -143,9 +178,9 @@ const MyCourses = () => {
         items={coursesItems}
       />
       <AppPagination
-        onChange={handleChangePage}
-        page={page}
-        pageCount={Math.ceil(coursesCount / itemsPerPage)}
+        onChange={handlePageChange}
+        page={Number(filters.page)}
+        pageCount={pageCount}
         sx={styles.pagination}
       />
     </>
@@ -156,8 +191,11 @@ const MyCourses = () => {
       <Typography sx={styles.title}>{t('myCoursesPage.title')}</Typography>
       <Box sx={styles.divider}></Box>
       <AddCourseWithInput
+        additionalParams={defaultParams}
+        chosenFiltersQty={activeFilterCount}
         fetchData={fetchData}
-        searchRef={searchTitle}
+        filterActions={filterQueryActions}
+        filters={filters}
         setSort={onRequestSort}
         sort={`${sort.orderBy} ${sort.order}`}
       />
