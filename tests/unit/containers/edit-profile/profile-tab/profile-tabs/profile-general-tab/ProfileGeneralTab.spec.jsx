@@ -126,7 +126,6 @@ describe('ProfileGeneralTab without a user photo', () => {
   })
 
   it('should display a default avatar icon if no photo is provided', () => {
-    initialContextValuesMock.photo = null
     const avatarIcon = screen.getByTestId('PersonIcon')
     expect(avatarIcon).toBeInTheDocument()
   })
