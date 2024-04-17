@@ -37,6 +37,7 @@ const useUpload = ({ files, validationData, emitter }: UseUpload) => {
     const error = filesValidation(newFiles, validationData) ?? ''
     const filesForEmitter = error ? files : newFiles
     emitter({ files: filesForEmitter, error })
+    event.target.value = ''
   }
 
   const deleteFile = (file: File) => {
