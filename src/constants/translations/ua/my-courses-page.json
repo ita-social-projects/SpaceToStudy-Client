@@ -8,7 +8,7 @@
   },
   "newCourse": {
     "bannerTitle": "Додайте зображення банеру",
-    "addIcon": "Додати забраження",
+    "addIconAlt": "Додати іконку зображення",
     "successAddedCourse": "Курс успішно створено",
     "successEditedCourse": "Запитання успішно відредаговано"
   },
@@ -36,8 +36,6 @@
     "category": "категорію",
     "subject": "тему",
     "levels": "рівні",
-    "clearFilters": "Очистити фільтри",
-    "applyFilters": "Застосувати фільтри",
     "categoryLabel": "Категорія",
     "subjectLabel": "Тема",
     "search": "Пошук за назвою"

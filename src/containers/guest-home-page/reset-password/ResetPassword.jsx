@@ -32,7 +32,7 @@ const ResetPassword = ({ resetToken, openModal }) => {
         <ImgTitleDescription
           img={imgSuccess}
           style={styles}
-          title={t('login.sucsessReset')}
+          title={t('login.successReset')}
         />
         <Button
           color='primary'

@@ -1,12 +1,12 @@
 {
   "toMain": "На Головну",
-  "goToLogin": "Перейти до Входу",
+  "goToLogin": "Перейти до Логіну",
   "applyFilters": "Застосувати фільтри",
   "clearFilters": "Очистити фільтри",
-  "addToDrafts": "Додати в збережені",
+  "addToDrafts": "Додати в чернетки",
   "createCooperation": "Відправити запит на співпрацю",
   "sendRequest": "Надіслати запит",
-  "addQuestion": "Додати ще один предмет",
+  "addQuestion": "Додати ще одне питання",
   "viewMyOffers": "До моїх пропозицій",
   "newLesson": "Новий урок"
 }

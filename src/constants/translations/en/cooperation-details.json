@@ -4,7 +4,7 @@
     "description": "Choose the course template from your library for cooperation."
   },
   "publish": "Publish: ",
-  "openAll": "All resource(s) become available immediately for preview and completion for Student after saving.",
+  "openAll": "All resources become available immediately for preview and completion for Student after saving.",
   "openManually": "Student access to the resource(s) can be changed at any time during the learning process.",
   "datePickerLabel": "Opening date",
   "select": {
