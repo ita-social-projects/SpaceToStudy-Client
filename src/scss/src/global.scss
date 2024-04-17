@@ -1,12 +1,8 @@
-
 /*=============================================
 
 =               TABLE OF CONTENT              =
 
 =============================================*/
-
-
-
 
 /**
  *
@@ -15,29 +11,27 @@
  *
  */
 
-
- 
- /*=============================================
+/*=============================================
  =            FOUNDATION            =
  =============================================*/
- 
- @import './foundation/all';
- 
- /*=====  End of FOUNDATION  ======*/
 
+@import './foundation/all';
 
- 
- /*=============================================
+/*=====  End of FOUNDATION  ======*/
+
+/*=============================================
  =            BASE            =
  =============================================*/
- 
- // TODO:
 
- // CSS reset
- // CSS root
- 
- /*=====  End of BASE  ======*/
- 
- 
- 
- 
+@import './base/reset';
+@import './base/root';
+
+body {
+  font-family: $body-font-family;
+  font-size: $body-font-size;
+  font-weight: $body-font-weight;
+  line-height: $body-line-height;
+  letter-spacing: $body-letter-spacing;
+}
+
+/*=====  End of BASE  ======*/
