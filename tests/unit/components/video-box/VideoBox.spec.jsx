@@ -1,19 +1,27 @@
 import { screen, render } from '@testing-library/react'
-
 import VideoBox from '~/components/video-box/VideoBox'
 
-const props = {
-  video: 'video.mp4'
-}
-
 describe('VideoBox component', () => {
-  beforeEach(() => {
-    render(<VideoBox { ...props } />)
+  const props = {
+    video: 'video.mp4',
+    videoPreview: true
+  }
+
+  it('should render video preview when videoPreview is true', () => {
+    render(<VideoBox {...props} />)
+
+    const videoPreview = screen.getByAltText('Video')
+    const videoPlayer = screen.queryByTestId('video-player')
+
+    expect(videoPreview).toBeInTheDocument()
+    expect(videoPlayer).not.toBeInTheDocument()
   })
 
-  it('should contain video', () => {
-    const video = screen.getByAltText('Video')
+  it('should render VideoPlayer when videoPreview is false', () => {
+    render(<VideoBox video='video.mp4' videoPreview={false} />)
 
-    expect(video).toBeInTheDocument()
+    const videoPlayer = screen.getByTestId('video-player')
+
+    expect(videoPlayer).toBeInTheDocument()
   })
 })

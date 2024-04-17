@@ -12,6 +12,7 @@ const VideoPlayer: FC<VideoPlayerProps> = ({ video }) => {
     <Box sx={styles.playerWrapper}>
       <ReactPlayer
         controls
+        data-testid='video-player'
         height='100%'
         style={styles.player}
         url={video}

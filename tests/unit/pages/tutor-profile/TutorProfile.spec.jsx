@@ -56,6 +56,9 @@ const mockData = {
   averageRating: {
     student: 0,
     tutor: 0
+  },
+  videoLink: {
+    tutor: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
   }
 }
 
