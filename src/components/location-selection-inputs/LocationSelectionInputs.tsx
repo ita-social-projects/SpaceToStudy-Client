@@ -93,7 +93,7 @@ const LocationSelectionInputs = <
       <AppAutoComplete
         fullWidth
         loading={loadingCountries}
-        onChange={onChangeCountry}
+        onChange={void onChangeCountry}
         onFocus={onFocusCountry}
         options={countriesNames}
         sx={{ mb: '25px' }}
