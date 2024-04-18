@@ -98,12 +98,12 @@ describe('commonValidation', () => {
   })
 
   it('Should return error that field must not be empty', () => {
-    const result = emptyField(mockedValues.emptyField)
+    const result = emptyField({ value: mockedValues.emptyField })
     expect(result).toBe(errorMessages.emptyField)
   })
 
   it('Should return error that value must have non-space values', () => {
-    const result = emptyField(mockedValues.spaceField)
+    const result = emptyField({ value: mockedValues.spaceField })
     expect(result).toBe(errorMessages.hasOnlySpaces)
   })
 })

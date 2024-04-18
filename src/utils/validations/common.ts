@@ -46,11 +46,17 @@ const validations: Validations = {
   }
 }
 
-export const emptyField = (
-  value: string | null,
-  emptyMessage = 'common.errorMessages.emptyField',
+interface EmptyFieldParams {
+  value: string | null
+  emptyMessage?: string
   helperText?: string
-) => {
+}
+
+export const emptyField = ({
+  emptyMessage = 'common.errorMessages.emptyField',
+  value,
+  helperText
+}: EmptyFieldParams) => {
   if (!value) {
     return emptyMessage
   }
@@ -94,5 +100,9 @@ export const helperTextHandler = (
   marker: keyof Validations,
   emptyMessage?: string
 ) => {
-  return emptyField(value, emptyMessage, validations[marker](value))
+  return emptyField({
+    value,
+    emptyMessage,
+    helperText: validations[marker](value)
+  })
 }

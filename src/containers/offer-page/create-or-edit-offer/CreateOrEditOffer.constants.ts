@@ -15,20 +15,30 @@ export const getInitialValues = (offer: Offer | null) => ({
 
 export const validations = {
   languages: (value: string[] | string) =>
-    emptyField(value?.toString(), 'offerPage.errorMessages.languages'),
+    emptyField({
+      value: value?.toString(),
+      emptyMessage: 'offerPage.errorMessages.languages'
+    }),
   category: (value: string | null) =>
-    emptyField(value, 'common.errorMessages.category'),
+    emptyField({ value, emptyMessage: 'common.errorMessages.category' }),
   subject: (value: string | null) =>
-    emptyField(value, 'common.errorMessages.subject'),
+    emptyField({ value, emptyMessage: 'common.errorMessages.subject' }),
   price: (value: string) => numberField(value, 'offerPage.errorMessages.price'),
   description: (value: string) =>
-    emptyField(
+    emptyField({
       value,
-      'common.errorMessages.description',
-      textField(20, 1000)(value)
-    ),
+      emptyMessage: 'common.errorMessages.description',
+      helperText: textField(20, 1000)(value)
+    }),
   title: (value: string) =>
-    emptyField(value, 'common.errorMessages.title', textField(0, 100)(value)),
+    emptyField({
+      value,
+      emptyMessage: 'common.errorMessages.title',
+      helperText: textField(0, 100)(value)
+    }),
   proficiencyLevel: (value: string[] | string) =>
-    emptyField(value?.toString(), 'common.errorMessages.proficiencyLevel')
+    emptyField({
+      value: value?.toString(),
+      emptyMessage: 'common.errorMessages.proficiencyLevel'
+    })
 }

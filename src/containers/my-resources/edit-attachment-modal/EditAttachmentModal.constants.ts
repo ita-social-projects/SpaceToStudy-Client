@@ -16,13 +16,11 @@ export const getInitialValues = (
 }
 
 export const validations = {
-  fileName: (value: string, data: EditAttachmentForm) => {
-    const fileWithExtension = `${value}.${data.fileExtension}`
-    return emptyField(
-      fileWithExtension,
-      'common.errorMessages.emptyField',
-      textField(5, 55)(fileWithExtension)
-    )
-  },
+  fileName: (value: string) =>
+    emptyField({
+      value,
+      emptyMessage: 'common.errorMessages.emptyField',
+      helperText: textField(5, 55)(value)
+    }),
   description: textField(0, 150)
 }

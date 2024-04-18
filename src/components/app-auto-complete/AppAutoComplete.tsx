@@ -1,4 +1,4 @@
-import { Fragment } from 'react'
+import { Fragment, SyntheticEvent } from 'react'
 
 import TextField, { TextFieldProps } from '@mui/material/TextField'
 import Autocomplete, {
@@ -20,6 +20,8 @@ const defaultFilterOptions = <T,>(
 type CustomProps<T> = {
   textFieldProps?: TextFieldProps
   hideClearIcon?: boolean
+  onChange?: (_: SyntheticEvent, value: string | null) => void | Promise<void>
+  onFocus?: (_: SyntheticEvent, value: string | null) => void | Promise<void>
 } & Omit<T, 'renderInput'>
 
 const AppAutoComplete = <
