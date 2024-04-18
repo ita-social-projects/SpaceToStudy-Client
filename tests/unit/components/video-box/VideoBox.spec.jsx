@@ -3,7 +3,7 @@ import VideoBox from '~/components/video-box/VideoBox'
 
 describe('VideoBox component', () => {
   it('should render video preview when videoPreview is true', () => {
-    render(<VideoBox video='video.mp4' videoPreview={false} />)
+    render(<VideoBox video='video.mp4' videoPreview />)
 
     const videoPreview = screen.getByAltText('Video')
     const videoPlayer = screen.queryByTestId('video-player')
