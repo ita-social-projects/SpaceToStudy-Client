@@ -7,7 +7,7 @@ const mockedFilterActions = {
 }
 
 const mockedFilters = {
-  title: ''
+  title: 'value'
 }
 
 describe('AddCourseWithInput test', () => {
@@ -26,13 +26,28 @@ describe('AddCourseWithInput test', () => {
     expect(addBtn).toBeInTheDocument()
   })
 
-  it('should change input value', async () => {
+  it('should change and clear input value', () => {
     const input = screen.getByRole('textbox')
 
-    expect(input.value).toBe('')
+    expect(input.value).toBe('value')
 
     fireEvent.change(input, { target: { value: 'new value' } })
 
     expect(mockedFilterActions.updateFiltersInQuery).toHaveBeenCalled()
+
+    const clearButton = screen.getByTestId('ClearRoundedIcon')
+
+    fireEvent.click(clearButton)
+
+    expect(mockedFilterActions.updateFiltersInQuery).toHaveBeenCalled()
+  })
+
+  it('should render filters', () => {
+    const filters = screen.getByText('filters.filtersListTitle')
+
+    expect(filters).toBeInTheDocument()
+    fireEvent.click(filters)
+    const filtersModal = screen.getByRole('presentation')
+    expect(filtersModal).toBeInTheDocument()
   })
 })

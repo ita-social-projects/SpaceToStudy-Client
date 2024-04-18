@@ -193,7 +193,6 @@ const MyCourses = () => {
       <AddCourseWithInput
         additionalParams={defaultParams}
         chosenFiltersQty={activeFilterCount}
-        fetchData={fetchData}
         filterActions={filterQueryActions}
         filters={filters}
         setSort={onRequestSort}

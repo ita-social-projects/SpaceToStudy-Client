@@ -22,7 +22,6 @@ import { styles } from '~/containers/my-courses/add-course-with-input/AddCourseW
 interface AddCoursesWithInputProps {
   additionalParams: Record<string, unknown>
   chosenFiltersQty?: number
-  fetchData: () => Promise<void>
   filterActions: CourseFiltersActions<CourseFilters>
   filters: CourseFilters
   setSort: (property: string) => void
@@ -34,7 +33,6 @@ const AddCourseWithInput: FC<AddCoursesWithInputProps> = ({
   chosenFiltersQty,
   filterActions,
   filters,
-  fetchData,
   setSort,
   sort
 }) => {
@@ -54,7 +52,6 @@ const AddCourseWithInput: FC<AddCoursesWithInputProps> = ({
       ...additionalParams,
       title: ''
     })
-    void fetchData()
   }
 
   const handleToggle = () => (isOpen ? closeDrawer() : openDrawer())
