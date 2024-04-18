@@ -75,7 +75,7 @@ const CategoryDropdown = ({
   )
 
   const onResponseCategory = useCallback(
-    (response: Categories | null) => {
+    async (response: Categories | null) => {
       const categoryName = response ? response.name : ''
 
       setAlert({
@@ -85,7 +85,7 @@ const CategoryDropdown = ({
         })
       })
 
-      void fetchAllCategoriesNames()
+      await fetchAllCategoriesNames()
     },
     [setAlert, fetchAllCategoriesNames, t]
   )

@@ -117,16 +117,14 @@ const CategoriesContainer = () => {
       fetchOnMount: true
     })
 
-  const onCategoryUpdate = useCallback(() => {
-    void fetchData()
-    void fetchAllCategoriesNames()
+  const onCategoryUpdate = useCallback(async () => {
+    await Promise.all([fetchData(), fetchAllCategoriesNames()])
   }, [fetchData, fetchAllCategoriesNames])
 
   const onCategoryCreate = useCallback(
-    (response: Categories | null) => {
+    async (response: Categories | null) => {
       onResponse(response)
-      void fetchData()
-      void fetchAllCategoriesNames()
+      await Promise.all([fetchData(), fetchAllCategoriesNames()])
     },
     [fetchData, fetchAllCategoriesNames, onResponse]
   )
@@ -153,8 +151,10 @@ const CategoriesContainer = () => {
     })
   }
   const onSave = async (name: string) => {
-    if (name) await updateResourceCategory({ id: selectedItemId, name })
-    void onCategoryUpdate()
+    if (name) {
+      await updateResourceCategory({ id: selectedItemId, name })
+      await onCategoryUpdate()
+    }
     setSelectedItemId('')
   }
   const onEdit = (id: string) => setSelectedItemId(id)
