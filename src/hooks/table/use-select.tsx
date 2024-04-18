@@ -4,7 +4,11 @@ interface Item {
   _id: string
 }
 
-interface SelectHook {
+interface UseSelectInput {
+  initialSelect?: string[]
+}
+
+interface UseSelectOutput {
   selected: string[]
   isSelected: (id: string) => boolean
   clearSelected: () => void
@@ -14,11 +18,7 @@ interface SelectHook {
   handleSelectClick: (id: string) => void
 }
 
-const useSelect = ({
-  initialSelect = []
-}: {
-  initialSelect?: string[]
-}): SelectHook => {
+const useSelect = ({ initialSelect = [] }: UseSelectInput): UseSelectOutput => {
   const [selected, setSelected] = useState<string[]>(initialSelect)
 
   const clearSelected = useCallback(() => setSelected([]), [setSelected])
