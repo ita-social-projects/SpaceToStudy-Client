@@ -89,7 +89,7 @@ const ResetPassword = ({ resetToken, openModal }) => {
   return (
     <Box sx={styles.container}>
       <TitleWithDescription
-        description={t('login.resetPasswordDesc')}
+        description={t('login.prevPassMatch')}
         style={styles.titleWithDescription}
         title={t('login.newPassword')}
       />
