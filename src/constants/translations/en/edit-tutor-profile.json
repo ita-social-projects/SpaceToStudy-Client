@@ -20,16 +20,16 @@
     "emailSubtitle": "Turn on email notification to get updates through email"
   },
   "passwordSecurityTab": {
-  "title": "Password & Security",
-  "description": "Change password and security settings",
-  "changePassword": "Change password",
-  "currentPassword": "Current password",
-  "newPassword": "New password",
-  "retypePassword": "Re-type new password",
-  "savePassword": "Save new password",
-  "deactivateAccount": "Deactivate account",
-  "deactivateBtn": "Deactivate",
-  "deactivateTitle": "Deactivate your account?",
-  "deactivateDescription": "If you deactivate your account it will be hidden on this site. You can activate your account anytime."
-}
+    "title": "Password & Security",
+    "description": "Change password and security settings",
+    "changePassword": "Change password",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "retypePassword": "Re-type new password",
+    "savePassword": "Save new password",
+    "deactivateAccount": "Deactivate account",
+    "deactivateBtn": "Deactivate",
+    "deactivateTitle": "Deactivate your account?",
+    "deactivateDescription": "If you deactivate your account it will be hidden on this site. You can activate your account anytime."
+  }
 }

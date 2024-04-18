@@ -3,13 +3,13 @@
     "otherCategories": "Інші категорії:",
     "yourSubjects": "Ваші предмети навчання:",
     "otherSubjects": "Інші предмети:",
-    "addSectionBtn": "Новий курс",
+    "addSectionBtn": "Новий розділ",
     "section": "Розділ",
     "sections": "Розділи",
     "courseSection": {
         "defaultNewTitle": "Розділ 1",
         "moduleTitle": "Модуль 1",
-        "defaultNewDescription": "Опис ...",
+        "defaultNewDescription": "Опис...",
         "addResourceBtn": "Додати матеріал",
         "resourcesMenu": {
             "lessonMenuItem": "Урок",
@@ -21,7 +21,7 @@
         }
     },
     "errorMessages": {
-        "title": "Будь ласка, вкажіть заголовок.",
-        "description": "Будь ласка, надайте опис."
+        "title": "Будь ласка, вкажіть заголовок",
+        "description": "Будь ласка, надайте опис"
     }
 }

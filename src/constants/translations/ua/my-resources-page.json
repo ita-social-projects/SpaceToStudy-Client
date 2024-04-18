@@ -1,7 +1,7 @@
 {
   "tabs": {
     "lessons": "Уроки",
-    "tests": "Тести",
+    "quizzes": "Тести",
     "questions": "Запитання",
     "attachments": "Вкладення",
     "categories": "Категорії"
@@ -10,9 +10,9 @@
     "addBtn": "Новий урок",
     "add": "Додайте уроки",
     "title": "Заголовок",
-    "attachments": "Файли",
     "attachmentQty": "Файл",
     "attachmentsQty": "Файлів",
+    "attachments": "Файли",
     "lastUpdates": "Останнє оновлення",
     "emptyItems": "У вас ще немає уроків",
     "confirmDeletionTitle": "Ви підтверджуєте видалення уроку?",
@@ -30,7 +30,6 @@
     "emptyItems": "У вас ще немає вкладень",
     "confirmDeletionTitle": "Ви підтверджуєте видалення вкладення?",
     "successDeletion": "Вкладення було успішно видалено",
-    "addAttachment": "Добавити файл",
     "validationError": "Назва файлу не може бути довшою за 55 символів.",
     "attachmentName": "Назва вкладення",
     "attachmentCategory": "Категорія файлу"
@@ -38,19 +37,19 @@
   "quizzes": {
     "addBtn": "Новий тест",
     "add": "Додайте тести",
-    "quizTitle": "Заголовок",
+    "title": "Заголовок",
     "question": "Питання",
     "questions": "Питання",
     "updated": "Останнє оновлення",
     "emptyItems": "У вас ще немає тестів",
     "confirmDeletionTitle": "Ви підтверджуєте видалення тесту?",
     "successDeletion": "Тест було успішно видалено",
-    "defaultNewTitle": "Без назви",
-    "defaultNewDescription": "Опис...",
-    "createNewQuestion": "Створити нове питання",
     "editQuestion": "Редагувати питання",
     "successEditedQuiz": "Тест успішно змінено",
     "successAddedQuiz": "Тест успішно створено",
+    "defaultNewTitle": "Без назви",
+    "defaultNewDescription": "Опис...",
+    "createNewQuestion": "Створити нове питання",
     "addQuestion":"Додати питання",
     "settingsPointsAndAnswers": "Налаштування: Бали та відповіді",
     "pointValues": "Значення балів",
@@ -93,6 +92,7 @@
     "successCreation": "Категорію «{{category}}» успішно створено",
     "successDeletion": "Категорію було успішно видалено",
     "confirmDeletionTitle": "Ви підтверджуєте видалення категорії?",
+    "categoryDropdown": "Категорія...",
     "selectCategory": "Виберіть категорію"
   },
   "confirmDeletionMessage": "Ця дія є остаточною, та призведе до видалення всього пов’язаного вмісту. Перш ніж продовжити, перегляньте своє рішення."

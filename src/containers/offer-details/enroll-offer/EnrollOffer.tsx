@@ -127,7 +127,7 @@ const EnrollOffer: FC<EnrollOfferProps> = ({ offer, enrollOffer }) => {
           max={maxPrice}
           min={minPrice}
           onChange={handleFieldChange('price')}
-          title={t('offerDetailsPage.enrollOffer.labels.prefferedPrice')}
+          title={t('offerDetailsPage.enrollOffer.labels.preferredPrice')}
         />
         <AppTextArea
           fullWidth

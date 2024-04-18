@@ -8,7 +8,7 @@ import questions from './questions.json'
 import categoriesPage from './categories-page.json'
 import titles from './titles.json'
 import login from './login.json'
-import signUp from './signup.json'
+import signup from './signup.json'
 import modals from './email-modals.json'
 import breadCrumbs from './breadcrumbs.json'
 import completeProfile from './complete-profile.json'
@@ -37,6 +37,9 @@ import course from './course.json'
 import cooperationDetailsPage from './cooperation-details.json'
 import editTutor from './edit-tutor-profile.json'
 import editProfilePage from './edit-profile.json'
+import studentHomePage from './student-home-page.json'
+import becomeTutor from './become-tutor.json'
+import tutorProfilePage from './tutor-profile-page.json'
 
 const ua = {
   translations: {
@@ -49,7 +52,7 @@ const ua = {
     questions,
     titles,
     login,
-    signUp,
+    signup,
     modals,
     breadCrumbs,
     completeProfile,
@@ -78,7 +81,10 @@ const ua = {
     course,
     cooperationDetailsPage,
     editProfilePage,
-    editTutor
+    editTutor,
+    studentHomePage,
+    becomeTutor,
+    tutorProfilePage
   }
 }
 

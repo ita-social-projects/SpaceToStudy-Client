@@ -31,7 +31,7 @@ const GuestFooter = () => {
           to={termOfUse.path}
           variant={TypographyVariantEnum.Caption}
         >
-          {t('footer.termOfUse')}
+          {t('footer.termsOfUse')}
         </Typography>
       </Box>
     </Container>

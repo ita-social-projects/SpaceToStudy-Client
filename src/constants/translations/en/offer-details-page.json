@@ -8,7 +8,7 @@
     },
     "labels": {
       "level": "Your required level",
-      "prefferedPrice": "Set your preferred price for the lesson. Keep in mind that choosing a lower or higher price may affect tutor availability.",
+      "preferredPrice": "Set your preferred price for the lesson. Keep in mind that choosing a lower or higher price may affect tutor availability.",
       "info": "Additional information"
     },
     "successMessage": "Request for cooperation sent successfully"

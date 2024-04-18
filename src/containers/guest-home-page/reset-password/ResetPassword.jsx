@@ -32,7 +32,7 @@ const ResetPassword = ({ resetToken, openModal }) => {
         <ImgTitleDescription
           img={imgSuccess}
           style={styles}
-          title={t('login.sucsessReset')}
+          title={t('login.successReset')}
         />
         <Button
           color='primary'
@@ -89,7 +89,7 @@ const ResetPassword = ({ resetToken, openModal }) => {
   return (
     <Box sx={styles.container}>
       <TitleWithDescription
-        description={t('login.resetPasswordDesc')}
+        description={t('login.prevPassMatch')}
         style={styles.titleWithDescription}
         title={t('login.newPassword')}
       />

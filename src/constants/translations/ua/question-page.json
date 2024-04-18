@@ -8,5 +8,6 @@
   },
   "addNewOne": "Добавити ще одне питання",
   "writeYourAnswer": "Напишіть свою відповідь",
-  "chooseCategory": "Виберіть категорію:"
+  "chooseCategory": "Виберіть категорію:",
+  "untitled": "Без заголовку"
 }
