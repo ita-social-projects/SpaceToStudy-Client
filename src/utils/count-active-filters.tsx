@@ -10,17 +10,13 @@ const countActiveFilters = (
   const filtersFromQuery = parseQueryParams(searchParams, defaultFilters) ?? {}
 
   return Object.entries(filtersFromQuery).reduce((count, [key, value]) => {
-    if (ignoredFields.includes(key)) {
-      return count
-    }
     if (
-      'price' in defaultFilters &&
-      key === 'price' &&
-      isDefaultPrice(value, defaultFilters.price)
+      ignoredFields.includes(key) ||
+      ('price' in defaultFilters &&
+        key === 'price' &&
+        isDefaultPrice(value, defaultFilters.price)) ||
+      isEmptyArray(value)
     ) {
-      return count
-    }
-    if (isEmptyArray(value)) {
       return count
     }
     return (
