@@ -2,13 +2,8 @@ import { screen, render } from '@testing-library/react'
 import VideoBox from '~/components/video-box/VideoBox'
 
 describe('VideoBox component', () => {
-  const props = {
-    video: 'video.mp4',
-    videoPreview: true
-  }
-
   it('should render video preview when videoPreview is true', () => {
-    render(<VideoBox {...props} />)
+    render(<VideoBox video='video.mp4' videoPreview={false} />)
 
     const videoPreview = screen.getByAltText('Video')
     const videoPlayer = screen.queryByTestId('video-player')

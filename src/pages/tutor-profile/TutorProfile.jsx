@@ -1,4 +1,4 @@
-import { useCallback, useState, useEffect } from 'react'
+import { useCallback } from 'react'
 import { useAppSelector } from '~/hooks/use-redux'
 import { useParams, useSearchParams } from 'react-router-dom'
 
@@ -22,7 +22,6 @@ import { UserRoleEnum } from '~/types'
 const TutorProfile = () => {
   const { id } = useParams()
   const [searchParams] = useSearchParams()
-  const [videoPreview, setVideoPreview] = useState(true)
   const { userId, userRole } = useAppSelector((state) => state.appMain)
   const paramsRole = searchParams.get('role')
   const { user } = responseMock
@@ -42,13 +41,6 @@ const TutorProfile = () => {
     defaultResponse: defaultResponses.array
   })
 
-  useEffect(() => {
-    const tutorVideo = response?.videoLink?.tutor
-    if (!loading && tutorVideo !== null && tutorVideo !== '') {
-      setVideoPreview(false)
-    }
-  }, [loading, response])
-
   if (loading) {
     return <Loader pageLoad size={70} />
   }
@@ -56,19 +48,20 @@ const TutorProfile = () => {
   const isTutor = preferredRole === UserRoleEnum.Tutor
   const shouldShowPresentation =
     isTutor || (!isTutor && response.videoLink?.student)
+  const showPresentation = (
+    <VideoPresentation
+      video={response?.videoLink?.[preferredRole]}
+      videoMock={videoImgProfile}
+      videoPreview={loading || !response?.videoLink?.[preferredRole]}
+    />
+  )
 
   return (
     <PageWrapper>
       <ProfileInfo myRole={userRole} userData={response} />
       <CompleteProfileBlock data={response} profileItems={profileItems} />
       <AboutTutorBlock />
-      {shouldShowPresentation && (
-        <VideoPresentation
-          video={response?.videoLink?.[userRole]}
-          videoMock={videoImgProfile}
-          videoPreview={videoPreview}
-        />
-      )}
+      {shouldShowPresentation && showPresentation}
       <CommentsWithRatingBlock
         averageRating={response?.averageRating?.tutor}
         reviewsCount={reviews}
