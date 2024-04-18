@@ -1,7 +1,7 @@
 export const styles = {
   playerWrapper: {
     position: 'relative',
-    paddingTop: '56.25%'
+    aspectRatio: '16/9'
   },
   player: {
     position: 'absolute',
