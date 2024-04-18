@@ -18,7 +18,7 @@ describe('Footer component test', () => {
     expect(link).toBeInTheDocument()
   })
   it('should have link to Term of Use', () => {
-    const link = screen.getByText('footer.termOfUse')
+    const link = screen.getByText('footer.termsOfUse')
 
     expect(link).toBeInTheDocument()
   })
