@@ -48,7 +48,7 @@ const TutorProfile = () => {
   const isTutor = preferredRole === UserRoleEnum.Tutor
   const shouldShowPresentation =
     isTutor || (!isTutor && response.videoLink?.student)
-  const showPresentation = (
+  const VideoPresentationComponent = (
     <VideoPresentation
       video={response?.videoLink?.[preferredRole]}
       videoMock={videoImgProfile}
@@ -61,7 +61,7 @@ const TutorProfile = () => {
       <ProfileInfo myRole={userRole} userData={response} />
       <CompleteProfileBlock data={response} profileItems={profileItems} />
       <AboutTutorBlock />
-      {shouldShowPresentation && showPresentation}
+      {shouldShowPresentation && VideoPresentationComponent}
       <CommentsWithRatingBlock
         averageRating={response?.averageRating?.tutor}
         reviewsCount={reviews}
