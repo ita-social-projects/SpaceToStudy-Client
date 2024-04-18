@@ -12,9 +12,18 @@ interface RenameInputProps {
   initValue: string
   onCancel: () => void
   onSave: (name: string) => Promise<void>
+  validation?: (value: string) => boolean
 }
 
-const RenameInput: FC<RenameInputProps> = ({ initValue, onCancel, onSave }) => {
+const defaultValidation = (value: string) =>
+  value.length > 50 || value.length < 1
+
+const RenameInput: FC<RenameInputProps> = ({
+  initValue,
+  onCancel,
+  onSave,
+  validation = defaultValidation
+}) => {
   const inputRef = useRef<HTMLInputElement | null>(null)
   const [inputValue, setInputValue] = useState<string>(initValue)
 
@@ -34,7 +43,7 @@ const RenameInput: FC<RenameInputProps> = ({ initValue, onCancel, onSave }) => {
     setInputValue(initValue)
   }, [initValue])
 
-  const disabled = inputValue.length > 50 || inputValue.length < 1
+  const disabled = validation(inputValue)
 
   return (
     <Box sx={styles.inputWithIcons}>

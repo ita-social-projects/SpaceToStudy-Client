@@ -22,11 +22,13 @@ import {
 interface AddCategoriesModalProps {
   closeModal: () => void
   createCategories: (params?: CreateCategoriesParams) => Promise<void>
+  existingCategoriesNames: string[]
 }
 
 const AddCategoriesModal: FC<AddCategoriesModalProps> = ({
   closeModal,
-  createCategories
+  createCategories,
+  existingCategoriesNames
 }) => {
   const { t } = useTranslation()
   const [loading, setLoading] = useState<boolean>(false)
@@ -34,10 +36,10 @@ const AddCategoriesModal: FC<AddCategoriesModalProps> = ({
   const { data, errors, handleInputChange, handleBlur, handleSubmit } =
     useForm<CreateCategoriesParams>({
       initialValues: initialValues,
-      validations,
+      validations: validations(existingCategoriesNames),
       onSubmit: async () => {
         setLoading(true)
-        await createCategories(data)
+        await createCategories({ name: data.name.trim() })
         setLoading(false)
         closeModal()
       }

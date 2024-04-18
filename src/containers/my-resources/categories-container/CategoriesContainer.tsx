@@ -24,7 +24,8 @@ import {
   initialSort,
   itemsLoadLimit,
   columns,
-  removeColumnRules
+  removeColumnRules,
+  validation
 } from '~/containers/my-resources/categories-container/CategoriesContainer.constansts'
 import {
   Categories,
@@ -32,7 +33,8 @@ import {
   GetResourcesCategoriesParams,
   ErrorResponse,
   ResourcesTabsEnum,
-  CreateCategoriesParams
+  CreateCategoriesParams,
+  CategoryNameInterface
 } from '~/types'
 import { ajustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
 
@@ -107,13 +109,26 @@ const CategoriesContainer = () => {
     onResponseError
   })
 
-  const onCategoryUpdate = useCallback(() => void fetchData(), [fetchData])
+  const { response: allCategoriesNames, fetchData: fetchAllCategoriesNames } =
+    useAxios<CategoryNameInterface[]>({
+      service: ResourceService.getResourcesCategoriesNames,
+      defaultResponse: [],
+      onResponseError,
+      fetchOnMount: true
+    })
+
+  const onCategoryUpdate = useCallback(() => {
+    void fetchData()
+    void fetchAllCategoriesNames()
+  }, [fetchData, fetchAllCategoriesNames])
+
   const onCategoryCreate = useCallback(
     (response: Categories | null) => {
       onResponse(response)
       void fetchData()
+      void fetchAllCategoriesNames()
     },
-    [fetchData, onResponse]
+    [fetchData, fetchAllCategoriesNames, onResponse]
   )
 
   const { fetchData: handleCreateCategory } = useAxios({
@@ -124,19 +139,22 @@ const CategoriesContainer = () => {
     onResponse: onCategoryCreate
   })
 
+  const existingCategoriesNames = allCategoriesNames?.map((item) => item.name)
+
   const onAdd = () => {
     openModal({
       component: (
         <AddCategoriesModal
           closeModal={closeModal}
           createCategories={handleCreateCategory}
+          existingCategoriesNames={existingCategoriesNames}
         />
       )
     })
   }
   const onSave = async (name: string) => {
     if (name) await updateResourceCategory({ id: selectedItemId, name })
-    onCategoryUpdate()
+    void onCategoryUpdate()
     setSelectedItemId('')
   }
   const onEdit = (id: string) => setSelectedItemId(id)
@@ -144,14 +162,19 @@ const CategoriesContainer = () => {
 
   const columnsToShow = ajustColumns<Categories>(
     breakpoints,
-    columns(selectedItemId, onSave, onCancel),
+    columns(
+      selectedItemId,
+      onSave,
+      onCancel,
+      validation(existingCategoriesNames)
+    ),
     removeColumnRules
   )
 
   const props = {
     actions: { onEdit },
     columns: columnsToShow,
-    data: { response, getData: fetchData },
+    data: { response, getData: onCategoryUpdate },
     services: { deleteService: deleteCategory },
     pagination: { page, onChange: handleChangePage },
     sort: sortOptions,

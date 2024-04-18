@@ -42,15 +42,15 @@
     "questions": "Questions",
     "updated": "Last updates",
     "emptyItems": "You have no quizzes yet",
-    "confirmDeletionTitle":"Do you confirm quiz deletion?",
-    "successDeletion":"Quiz was deleted successfully",
+    "confirmDeletionTitle": "Do you confirm quiz deletion?",
+    "successDeletion": "Quiz was deleted successfully",
     "editQuestion": "Edit question",
     "successEditedQuiz": "Quiz was successtully edited",
     "successAddedQuiz": "Quiz was successfully created",
-    "defaultNewTitle":"Untitled",
-    "defaultNewDescription":"Description...",
-    "createNewQuestion":"Create new question",
-    "addQuestion":"Add question",
+    "defaultNewTitle": "Untitled",
+    "defaultNewDescription": "Description...",
+    "createNewQuestion": "Create new question",
+    "addQuestion": "Add question",
     "settingsPointsAndAnswers": "Settings: Points and answers",
     "pointValues": "Point values",
     "pointValuesDesc": "Respondents can see total points and points received for each question",
@@ -78,8 +78,8 @@
     "confirmDeletionTitle": "Do you confirm question deletion?",
     "successDeletion": "Question was deleted successfully",
     "successDuplication": "Question was successfully duplicated",
-    "successEditedQuestion":"Question was successfully edited",
-    "successAddedQuestion":"Question was successfully added"
+    "successEditedQuestion": "Question was successfully edited",
+    "successAddedQuestion": "Question was successfully added"
   },
   "categories": {
     "category": "Category",
@@ -93,7 +93,8 @@
     "successDeletion": "Category was deleted successfully",
     "confirmDeletionTitle": "Do you confirm category deletion?",
     "categoryDropdown": "Category...",
-    "selectCategory": "Select category"
+    "selectCategory": "Select category",
+    "categoryAlreadyExistsError": "Category with the same name already exists"
   },
   "confirmDeletionMessage": "This action is permanent and will remove all related content. Please review your decision before proceeding."
 }

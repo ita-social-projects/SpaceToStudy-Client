@@ -50,7 +50,7 @@
     "defaultNewTitle": "Без назви",
     "defaultNewDescription": "Опис...",
     "createNewQuestion": "Створити нове питання",
-    "addQuestion":"Додати питання",
+    "addQuestion": "Додати питання",
     "settingsPointsAndAnswers": "Налаштування: Бали та відповіді",
     "pointValues": "Значення балів",
     "pointValuesDesc": "Респонденти можуть бачити загальну кількість балів і бали, отримані за кожне запитання",
@@ -78,8 +78,8 @@
     "confirmDeletionTitle": "Ви підтверджуєте видалення запитання?",
     "successDeletion": "Запитання було успішно видалено",
     "successDuplication": "Запитання було успішно продубльовано",
-    "successEditedQuestion":"Запитання було успішно відредаговано",
-    "successAddedQuestion":"Запитання було успішно створено"
+    "successEditedQuestion": "Запитання було успішно відредаговано",
+    "successAddedQuestion": "Запитання було успішно створено"
   },
   "categories": {
     "category": "Категорія",
@@ -93,7 +93,8 @@
     "successDeletion": "Категорію було успішно видалено",
     "confirmDeletionTitle": "Ви підтверджуєте видалення категорії?",
     "categoryDropdown": "Категорія...",
-    "selectCategory": "Виберіть категорію"
+    "selectCategory": "Виберіть категорію",
+    "categoryAlreadyExistsError": "Категорія з такою назвою вже існує"
   },
   "confirmDeletionMessage": "Ця дія є остаточною, та призведе до видалення всього пов’язаного вмісту. Перш ніж продовжити, перегляньте своє рішення."
 }

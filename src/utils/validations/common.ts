@@ -54,6 +54,9 @@ export const emptyField = (
   if (!value) {
     return emptyMessage
   }
+  if (!value.trim()) {
+    return 'common.errorMessages.hasOnlySpaces'
+  }
   return helperText
 }
 

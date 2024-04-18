@@ -1,4 +1,4 @@
-import { HTMLAttributes, SyntheticEvent, useCallback, useState } from 'react'
+import { HTMLAttributes, SyntheticEvent, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
@@ -8,7 +8,6 @@ import useAxios from '~/hooks/use-axios'
 import { useModalContext } from '~/context/modal-context'
 import { useSnackBarContext } from '~/context/snackbar-context'
 import { ResourceService } from '~/services/resource-service'
-import AsyncAutocomplete from '~/components/async-autocomlete/AsyncAutocomplete'
 import AddCategoriesModal from '~/containers/my-resources/add-categories-modal/AddCategoriesModal'
 import DropdownButton from '~/components/dropdown-add-btn/DropdownButton'
 
@@ -21,6 +20,11 @@ import {
   ErrorResponse
 } from '~/types'
 import { styles } from '~/containers/category-dropdown/CategoryDropdown.styles'
+import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
+import {
+  getOptionLabel,
+  isOptionEqualToValue
+} from '~/containers/category-dropdown/CategoryDropdown.constants'
 
 interface CategoryDropdownInterface {
   category: string | null
@@ -37,8 +41,6 @@ const CategoryDropdown = ({
   const { t } = useTranslation()
   const { setAlert } = useSnackBarContext()
   const { openModal, closeModal } = useModalContext()
-  const [isFetched, setIsFetched] = useState<boolean>(false)
-  const [isFetchedOnFocus, setIsFetchedOnFocus] = useState<boolean>(false)
 
   const handleResponseError = (error: ErrorResponse) => {
     setAlert({
@@ -47,11 +49,12 @@ const CategoryDropdown = ({
     })
   }
 
-  const getCategories = useCallback(() => {
-    setIsFetched(true)
-    setIsFetchedOnFocus(true)
-    return ResourceService.getResourcesCategoriesNames()
-  }, [setIsFetched])
+  const { response: allCategoriesNames, fetchData: fetchAllCategoriesNames } =
+    useAxios<CategoryNameInterface[]>({
+      service: ResourceService.getResourcesCategoriesNames,
+      defaultResponse: [],
+      fetchOnMount: true
+    })
 
   const onCreateCategory = () => {
     openModal({
@@ -59,6 +62,7 @@ const CategoryDropdown = ({
         <AddCategoriesModal
           closeModal={closeModal}
           createCategories={handleCreateCategory}
+          existingCategoriesNames={allCategoriesNames.map((item) => item.name)}
         />
       )
     })
@@ -81,9 +85,9 @@ const CategoryDropdown = ({
         })
       })
 
-      setIsFetched(false)
+      void fetchAllCategoriesNames()
     },
-    [setAlert, t]
+    [setAlert, fetchAllCategoriesNames, t]
   )
 
   const { fetchData: handleCreateCategory } = useAxios({
@@ -115,12 +119,17 @@ const CategoryDropdown = ({
       </Box>
     </Box>
   )
+
+  const valueOption = useMemo(
+    () => allCategoriesNames.find((option) => option._id === category) || null,
+    [allCategoriesNames, category]
+  )
+
   return (
     <Box sx={styles.labelCategory}>
-      <AsyncAutocomplete<CategoryNameInterface>
-        fetchCondition={!isFetched}
-        fetchOnFocus={isFetchedOnFocus}
-        labelField='name'
+      <AppAutoComplete<CategoryNameInterface>
+        getOptionLabel={getOptionLabel}
+        isOptionEqualToValue={isOptionEqualToValue}
         noOptionsText={
           <DropdownButton
             handleOnClick={onCreateCategory}
@@ -130,15 +139,14 @@ const CategoryDropdown = ({
           />
         }
         onChange={onCategoryChange}
+        options={allCategoriesNames}
         renderOption={(props, option, state) =>
           optionsList(props, option.name, state.index)
         }
-        service={getCategories}
         textFieldProps={{
           label: t('myResourcesPage.categories.categoryDropdown')
         }}
-        value={category}
-        valueField='_id'
+        value={valueOption}
       />
     </Box>
   )

@@ -18,7 +18,8 @@ const mockedValues = {
   invalidEmail: 'example2example.com',
   shortText: 't',
   longText: 'wwwwwwwwwwwwwwwwwwwwwwwwwwwwwww',
-  emptyField: ''
+  emptyField: '',
+  spaceField: '    '
 }
 
 const errorMessages = {
@@ -33,7 +34,8 @@ const errorMessages = {
   emailValid: 'common.errorMessages.emailValid',
   shortText: 'common.errorMessages.shortText',
   longText: 'common.errorMessages.longText',
-  emptyField: 'common.errorMessages.emptyField'
+  emptyField: 'common.errorMessages.emptyField',
+  hasOnlySpaces: 'common.errorMessages.hasOnlySpaces'
 }
 
 export const emailField = (value) => {
@@ -98,5 +100,10 @@ describe('commonValidation', () => {
   it('Should return error that field must not be empty', () => {
     const result = emptyField(mockedValues.emptyField)
     expect(result).toBe(errorMessages.emptyField)
+  })
+
+  it('Should return error that value must have non-space values', () => {
+    const result = emptyField(mockedValues.spaceField)
+    expect(result).toBe(errorMessages.hasOnlySpaces)
   })
 })
