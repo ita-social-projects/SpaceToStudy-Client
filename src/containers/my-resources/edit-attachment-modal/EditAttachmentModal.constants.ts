@@ -1,13 +1,14 @@
 import { Attachment, EditAttachmentForm } from '~/types'
 import { emptyField, textField } from '~/utils/validations/common'
+import { getAttachmentInfo } from '../../../utils/helper-functions'
 
 export const getInitialValues = (
   attachment: Attachment
 ): EditAttachmentForm => {
-  const [initialFileName, fileExtension] = attachment.fileName.split('.')
+  const { fileExtension, fileName } = getAttachmentInfo(attachment.fileName)
 
   return {
-    fileName: initialFileName ?? '',
+    fileName: fileName ?? '',
     category: attachment.category?._id ?? null,
     description: attachment.description ?? '',
     fileExtension: fileExtension ?? ''
