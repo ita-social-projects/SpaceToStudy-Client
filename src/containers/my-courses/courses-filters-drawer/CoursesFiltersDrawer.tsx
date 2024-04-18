@@ -26,7 +26,7 @@ import {
 } from '~/types'
 
 interface CoursesFiltersDrawerProps {
-  additionalParams: Record<string, unknown>
+  additionalParams: Record<string, number | string | undefined>
   filterActions: CourseFiltersActions<CourseFilters>
   filters: CourseFilters
   onClose: () => void

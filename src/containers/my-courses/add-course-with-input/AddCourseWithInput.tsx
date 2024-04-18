@@ -20,7 +20,7 @@ import { CourseFilters, CourseFiltersActions } from '~/types'
 import { styles } from '~/containers/my-courses/add-course-with-input/AddCourseWithInput.styles'
 
 interface AddCoursesWithInputProps {
-  additionalParams: Record<string, unknown>
+  additionalParams: Record<string, number | string | undefined>
   chosenFiltersQty?: number
   filterActions: CourseFiltersActions<CourseFilters>
   filters: CourseFilters
