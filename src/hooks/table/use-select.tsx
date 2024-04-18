@@ -29,8 +29,8 @@ const useSelect = ({ initialSelect = [] }: UseSelectInput): UseSelectOutput => {
   ) => {
     if (e.target.checked) {
       const newSelected = items.map((item) => item._id)
-
-      return setSelected(newSelected)
+      setSelected(newSelected)
+      return
     }
     clearSelected()
   }
