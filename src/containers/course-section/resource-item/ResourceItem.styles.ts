@@ -1,3 +1,4 @@
+import palette from '~/styles/app-theme/app.pallete'
 import { SlideLeftLongAnimation } from '~/styles/app-theme/custom-animations'
 
 export const styles = {
@@ -33,6 +34,11 @@ export const styles = {
     }
   },
   resourceActions: {
-    display: 'flex'
+    display: 'flex',
+    gap: '1rem',
+    alignItems: 'center'
+  },
+  editBtn: {
+    color: palette.basic.blueGray
   }
 }

@@ -24,6 +24,7 @@ import {
 } from '~/types'
 import AsyncAutocomplete from '~/components/async-autocomlete/AsyncAutocomplete'
 import { ResourceService } from '~/services/resource-service'
+import { InputAdornment } from '@mui/material'
 
 interface EditAttachmentModalProps {
   closeModal: () => void
@@ -40,7 +41,6 @@ const EditAttachmentModal: FC<EditAttachmentModalProps> = ({
 }) => {
   const { t } = useTranslation()
   const [loading, setLoading] = useState<boolean>(false)
-
   const {
     data,
     errors,
@@ -86,6 +86,13 @@ const EditAttachmentModal: FC<EditAttachmentModalProps> = ({
           {t('myResourcesPage.attachments.fileName')}:
         </Typography>
         <AppTextField
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position='end'>
+                {data.fileExtension}
+              </InputAdornment>
+            )
+          }}
           errorMsg={t(errors.fileName)}
           fullWidth
           onBlur={handleBlur('fileName')}

@@ -17,13 +17,15 @@ const mockedLessonData = {
 
 const mockedSetResourceAvailability = vi.fn()
 
-const mockedFunc = vi.fn()
+const mockedDeleteFunc = vi.fn()
+const mockedEditFunc = vi.fn()
 
-describe('new course section RescourceItem tests', () => {
+describe('new course section ResourceItem tests', () => {
   beforeEach(() => {
     renderWithProviders(
       <ResourceItem
-        deleteResource={mockedFunc}
+        deleteResource={mockedDeleteFunc}
+        editResource={mockedEditFunc}
         resource={mockedLessonData}
         setResourceAvailability={mockedSetResourceAvailability}
       />
@@ -41,11 +43,19 @@ describe('new course section RescourceItem tests', () => {
   })
 
   it('should call delete resource function', () => {
-    const deleteButton = screen.getByRole('button')
+    const deleteButton = screen.getByLabelText('delete')
 
     fireEvent.click(deleteButton)
 
-    expect(mockedFunc).toHaveBeenCalledTimes(1)
+    expect(mockedDeleteFunc).toHaveBeenCalledTimes(1)
+  })
+
+  it('should call edit resource function', () => {
+    const editButton = screen.getByLabelText('edit')
+
+    fireEvent.click(editButton)
+
+    expect(mockedEditFunc).toHaveBeenCalledTimes(1)
   })
 })
 
@@ -56,7 +66,7 @@ describe('should render quiz component', () => {
     renderWithProviders(
       <ResourceItem
         resource={mockedLessonData}
-        setItemToDelete={mockedFunc}
+        setItemToDelete={mockedDeleteFunc}
         setResourceAvailability={mockedSetResourceAvailability}
       />
     )

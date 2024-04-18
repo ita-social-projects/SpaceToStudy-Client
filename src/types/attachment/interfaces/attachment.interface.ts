@@ -26,4 +26,5 @@ export interface EditAttachmentForm {
   fileName: string
   category: string | null
   description: string
+  fileExtension: string
 }

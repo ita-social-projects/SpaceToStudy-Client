@@ -288,3 +288,13 @@ export const getGroupedByDate = <T extends { createdAt: string }>(
 
     return result
   }, [])
+
+export const parseFileName = (
+  fileName: string
+): { fileName: string; fileExtension: string } => {
+  const fileArr = fileName.split('.')
+  return {
+    fileName: fileArr.slice(0, -1).join('.'),
+    fileExtension: fileArr[fileArr.length - 1]
+  }
+}

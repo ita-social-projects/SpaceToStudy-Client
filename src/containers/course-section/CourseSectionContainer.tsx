@@ -18,6 +18,7 @@ import useMenu from '~/hooks/use-menu'
 import { useModalContext } from '~/context/modal-context'
 import {
   menuTypes,
+  resourceNavigationMap,
   resourcesData
 } from '~/containers/course-section/CourseSectionContainer.constants'
 import {
@@ -26,7 +27,7 @@ import {
 } from '~/containers/add-resources/AddAttachments.constants'
 import {
   columns as lessonColumns,
-  removeColumnRules as removeLessontColumnRules
+  removeColumnRules as removeLessonColumnRules
 } from '~/containers/add-resources/AddLessons.constants'
 import {
   columns as quizColumns,
@@ -43,9 +44,15 @@ import {
   Attachment,
   ResourcesTabsEnum as ResourcesTypes,
   CourseResources,
-  CourseSectionHandlers
+  CourseSectionHandlers,
+  UpdateAttachmentParams
 } from '~/types'
 import { styles } from '~/containers/course-section/CourseSectionContainer.styles'
+import EditAttachmentModal from '~/containers/my-resources/edit-attachment-modal/EditAttachmentModal'
+import { createUrlPath } from '~/utils/helper-functions'
+import { authRoutes } from '~/router/constants/authRoutes'
+
+import useAxios from '~/hooks/use-axios'
 
 interface SectionProps extends CourseSectionHandlers {
   sectionData: CourseSection
@@ -64,8 +71,9 @@ const CourseSectionContainer: FC<SectionProps> = ({
   titleText
 }) => {
   const { t } = useTranslation()
+
   const { openMenu, renderMenu, closeMenu } = useMenu()
-  const { openModal } = useModalContext()
+  const { openModal, closeModal } = useModalContext()
 
   const [titleInput, setTitleInput] = useState<string>(sectionData.title)
   const [descriptionInput, setDescriptionInput] = useState<string>(
@@ -188,6 +196,56 @@ const CourseSectionContainer: FC<SectionProps> = ({
     }
   }
 
+  const handleEditAttachment = (params?: UpdateAttachmentParams) =>
+    ResourceService.updateAttachment(params)
+
+  const { fetchData: updateData } = useAxios({
+    service: handleEditAttachment,
+    fetchOnMount: false,
+    onResponse: (attachment: Attachment) => {
+      setResources((prev) =>
+        prev.map((resource) => {
+          if (resource._id === attachment._id) {
+            return { ...resource, ...attachment }
+          }
+          return resource
+        })
+      )
+    }
+  })
+
+  const editResource = (resource: CourseResources) => {
+    const resourceType = resource.resourceType
+
+    if (!resourceType) return
+
+    if (resourceType === ResourcesTypes.Attachments) {
+      openModal({
+        component: (
+          <EditAttachmentModal
+            attachment={resource as Attachment}
+            closeModal={closeModal}
+            updateAttachment={updateData}
+          />
+        )
+      })
+    } else {
+      const navigationFiled = resourceNavigationMap[
+        resourceType
+      ] as keyof typeof authRoutes.myResources
+
+      window
+        .open(
+          createUrlPath(
+            authRoutes.myResources[navigationFiled].path,
+            resource._id
+          ),
+          '_blank'
+        )
+        ?.focus()
+    }
+  }
+
   const onShowHide = () => {
     setIsVisible((isVisible) => !isVisible)
   }
@@ -220,7 +278,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
           onAddResources={(resources) =>
             handleAddResources(resources, ResourcesTypes.Lessons)
           }
-          removeColumnRules={removeLessontColumnRules}
+          removeColumnRules={removeLessonColumnRules}
           requestService={ResourceService.getUsersLessons}
           resourceType={resourcesData.lessons.resource}
           resources={sectionData.lessons}
@@ -389,6 +447,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
           />
           <ResourcesList
             deleteResource={deleteResource}
+            editResource={editResource}
             items={resources}
             setResources={setResources}
           />
