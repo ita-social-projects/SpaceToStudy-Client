@@ -29,6 +29,7 @@ const useSelect = ({
   ) => {
     if (e.target.checked) {
       const newSelected = items.map((item) => item._id)
+
       return setSelected(newSelected)
     }
     clearSelected()
@@ -39,14 +40,9 @@ const useSelect = ({
       handleSelectAllClick(e, items)
 
   const handleSelectClick = (id: string) => {
-    const selectedIndex = selected.indexOf(id)
-    let newSelected: string[] = []
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, id)
-    } else {
-      newSelected = selected.filter((selectedId) => selectedId !== id)
-    }
+    const newSelected = selected.includes(id)
+      ? selected.filter((selectedId) => selectedId !== id)
+      : [...selected, id]
 
     setSelected(newSelected)
   }
