@@ -10,6 +10,7 @@ import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import Loader from '~/components/loader/Loader'
 import { userService } from '~/services/user-service'
 import useAxios from '~/hooks/use-axios'
+import videoImgProfile from '~/assets/img/tutor-profile-page/presentationVideoImg.png'
 
 import { profileItems } from '~/components/profile-item/complete-profile.constants'
 import { defaultResponses } from '~/constants'
@@ -64,6 +65,7 @@ const TutorProfile = () => {
       {shouldShowPresentation && (
         <VideoPresentation
           video={response?.videoLink?.[userRole]}
+          videoMock={videoImgProfile}
           videoPreview={videoPreview}
         />
       )}

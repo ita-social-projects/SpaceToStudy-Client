@@ -5,12 +5,13 @@ import Box from '@mui/material/Box'
 import { guestRoutes } from '~/router/constants/guestRoutes'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import VideoBox from '~/components/video-box/VideoBox'
-import videoImg from '~/assets/img/guest-home-page/videoImg.png'
+import videoImgLandingPage from '~/assets/img/guest-home-page/videoImg.png'
 
 import { styles } from '~/containers/guest-home-page/who-we-are/WhoWeAre.styles.js'
 
 const WhoWeAre = () => {
   const { t } = useTranslation()
+  const landingPageVideo = true
 
   return (
     <Box
@@ -23,7 +24,10 @@ const WhoWeAre = () => {
         style={styles.titleWithDescription}
         title={t('guestHomePage.whoWeAre.title')}
       />
-      <VideoBox video={videoImg} />
+      <VideoBox
+        videoMock={videoImgLandingPage}
+        videoPreview={landingPageVideo}
+      />
     </Box>
   )
 }
