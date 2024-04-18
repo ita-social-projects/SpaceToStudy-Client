@@ -289,7 +289,7 @@ export const getGroupedByDate = <T extends { createdAt: string }>(
     return result
   }, [])
 
-export const getAttachmentInfo = (
+export const parseFileName = (
   fileName: string
 ): { fileName: string; fileExtension: string } => {
   const fileArr = fileName.split('.')

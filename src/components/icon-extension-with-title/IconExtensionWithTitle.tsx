@@ -6,7 +6,7 @@ import TitleWithDescription from '~/components/title-with-description/TitleWithD
 
 import {
   convertBytesToProperFormat,
-  getAttachmentInfo
+  parseFileName
 } from '~/utils/helper-functions'
 import { styles } from '~/components/icon-extension-with-title/IconExtensionWithTitle.styles'
 
@@ -25,7 +25,7 @@ const IconExtensionWithTitle: FC<IconExtensionWithTitleProps> = ({
 }) => {
   const { t } = useTranslation()
 
-  const { fileExtension } = getAttachmentInfo(title)
+  const { fileExtension } = parseFileName(title)
 
   const convertSize = (incomingSize: number) => {
     const { size: properSize, unit } = convertBytesToProperFormat(incomingSize)
