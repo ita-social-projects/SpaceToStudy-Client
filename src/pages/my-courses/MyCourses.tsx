@@ -29,10 +29,10 @@ import {
 } from '~/types'
 import { initialSort } from '~/containers/find-course/courses-filter-bar/CorseFilterBar.constants'
 import {
-  defaultFilters,
   defaultResponse,
   courseItemsLoadLimit
 } from '~/pages/my-courses/MyCourses.constants'
+import { coursesDefaultFilters } from '~/containers/cooperation-details/add-course-modal-modal/AddCourseTemplateModal.constants'
 import { snackbarVariants } from '~/constants'
 
 import { styles } from '~/pages/my-courses/MyCourses.styles'
@@ -47,7 +47,7 @@ const MyCourses = () => {
 
   const { filters, activeFilterCount, searchParams, filterQueryActions } =
     useFilterQuery({
-      defaultFilters: defaultFilters,
+      defaultFilters: coursesDefaultFilters,
       countActiveFilters: countActiveCourseFilters
     })
 
@@ -155,7 +155,7 @@ const MyCourses = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetchData, searchString, sort])
 
-  const defaultParams = { page: defaultFilters.page }
+  const defaultParams = { page: coursesDefaultFilters.page }
 
   const { items: coursesItems, count: coursesCount } = coursesResponse
 

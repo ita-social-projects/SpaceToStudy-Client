@@ -3,6 +3,7 @@ import {
   CourseSection,
   FormInputValueChange,
   Offer,
+  UpdateFiltersInQuery,
   UserResponse,
   UserGeneralInfo,
   UserRoleEnum
@@ -120,4 +121,10 @@ export interface StepData {
   photo: string[]
   subjects: SubjectInterface[]
   language: UserResponse['nativeLanguage']
+}
+
+export interface FiltersActions<T> {
+  updateFiltersInQuery: UpdateFiltersInQuery<T>
+  resetFilters: () => void
+  updateQueryParams: () => void
 }

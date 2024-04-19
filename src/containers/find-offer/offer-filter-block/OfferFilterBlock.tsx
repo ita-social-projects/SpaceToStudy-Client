@@ -11,7 +11,7 @@ import FiltersToggle from '~/components/filters-toggle/FiltersToggle'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import {
   FindOffersFilters,
-  FindOffersFiltersActions,
+  FiltersActions,
   PriceRange,
   UserRoleEnum
 } from '~/types'
@@ -21,7 +21,7 @@ import { styles } from '~/containers/find-offer/offer-filter-block/OfferFilterBl
 
 interface OfferFilterBlockProps {
   filters: FindOffersFilters
-  filterActions: FindOffersFiltersActions<FindOffersFilters>
+  filterActions: FiltersActions<FindOffersFilters>
   onToggleTutorOffers: () => void
   closeFilters: () => void
   additionalParams: Record<string, unknown>

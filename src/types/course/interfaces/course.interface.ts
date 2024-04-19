@@ -4,7 +4,6 @@ import {
   CategoryInterface,
   SubjectNameInterface,
   ProficiencyLevelEnum,
-  UpdateFiltersInQuery,
   UserResponse,
   Quiz,
   Attachment,
@@ -47,12 +46,6 @@ export interface CourseFilters extends Pick<Course, 'proficiencyLevel'> {
   subject: string
   title: string
   page?: string | number
-}
-
-export interface CourseFiltersActions<T> {
-  updateFiltersInQuery: UpdateFiltersInQuery<T>
-  resetFilters: () => void
-  updateQueryParams: () => void
 }
 
 export interface GetCoursesParams extends Partial<RequestParams> {

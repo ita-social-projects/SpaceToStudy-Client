@@ -1,4 +1,4 @@
-import { FC, ReactNode, useCallback } from 'react'
+import { FC, ReactNode, useCallback, SyntheticEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import FilterListIcon from '@mui/icons-material/FilterList'
 import Typography from '@mui/material/Typography'
@@ -17,8 +17,9 @@ import { styles } from '~/containers/my-courses/courses-filters-drawer/CoursesFi
 import {
   ButtonVariantEnum,
   CategoryNameInterface,
+  ComponentEnum,
   CourseFilters,
-  CourseFiltersActions,
+  FiltersActions,
   PositionEnum,
   ProficiencyLevelEnum,
   SizeEnum,
@@ -27,7 +28,7 @@ import {
 
 interface CoursesFiltersDrawerProps {
   additionalParams: Record<string, number | string | undefined>
-  filterActions: CourseFiltersActions<CourseFilters>
+  filterActions: FiltersActions<CourseFilters>
   filters: CourseFilters
   onClose: () => void
   isOpen: boolean
@@ -52,7 +53,7 @@ const CoursesFiltersDrawer: FC<CoursesFiltersDrawerProps> = ({
   )
 
   const onCategoryChange = (
-    _: React.SyntheticEvent,
+    _: SyntheticEvent,
     value: CategoryNameInterface | null
   ) => {
     updateFiltersInQuery({
@@ -63,7 +64,7 @@ const CoursesFiltersDrawer: FC<CoursesFiltersDrawerProps> = ({
   }
 
   const onSubjectChange = (
-    _: React.SyntheticEvent,
+    _: SyntheticEvent,
     value: SubjectNameInterface | null
   ) => {
     updateFiltersInQuery({ ...additionalParams, subject: value?._id ?? '' })
@@ -93,7 +94,7 @@ const CoursesFiltersDrawer: FC<CoursesFiltersDrawerProps> = ({
       <Box sx={styles.categorySelect}>
         <Typography sx={styles.titleMargin}>
           {t('myCoursesPage.coursesFilter.chooseThe')}
-          <Typography component={'span'} sx={styles.boldText}>
+          <Typography component={ComponentEnum.Span} sx={styles.boldText}>
             {t('myCoursesPage.coursesFilter.category')}:
           </Typography>
         </Typography>
@@ -119,7 +120,7 @@ const CoursesFiltersDrawer: FC<CoursesFiltersDrawerProps> = ({
         >
           {t('myCoursesPage.coursesFilter.chooseThe')}
           <Typography
-            component={'span'}
+            component={ComponentEnum.Span}
             sx={styles.inlineBlock(!!filters.category)}
           >
             {t('myCoursesPage.coursesFilter.subject')}:
@@ -141,7 +142,7 @@ const CoursesFiltersDrawer: FC<CoursesFiltersDrawerProps> = ({
       <Box sx={styles.checkboxContainer}>
         <Typography sx={styles.checkboxTitleMargin}>
           {t('myCoursesPage.coursesFilter.choose')}
-          <Typography component={'span'} sx={styles.boldText}>
+          <Typography component={ComponentEnum.Span} sx={styles.boldText}>
             {t('myCoursesPage.coursesFilter.levels')}:
           </Typography>
         </Typography>

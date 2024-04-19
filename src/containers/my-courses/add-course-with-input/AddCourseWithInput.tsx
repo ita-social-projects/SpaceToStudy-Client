@@ -16,13 +16,13 @@ import { authRoutes } from '~/router/constants/authRoutes'
 import { useDrawer } from '~/hooks/use-drawer'
 import useBreakpoints from '~/hooks/use-breakpoints'
 
-import { CourseFilters, CourseFiltersActions } from '~/types'
+import { CourseFilters, FiltersActions } from '~/types'
 import { styles } from '~/containers/my-courses/add-course-with-input/AddCourseWithInput.styles'
 
 interface AddCoursesWithInputProps {
   additionalParams: Record<string, number | string | undefined>
   chosenFiltersQty?: number
-  filterActions: CourseFiltersActions<CourseFilters>
+  filterActions: FiltersActions<CourseFilters>
   filters: CourseFilters
   setSort: (property: string) => void
   sort: string

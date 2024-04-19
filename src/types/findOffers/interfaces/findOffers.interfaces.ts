@@ -1,13 +1,13 @@
 import {
   CategoryInterface,
   CategoryNameInterface,
+  FiltersActions,
   LanguageFilter,
   Offer,
   ProficiencyLevelEnum,
   RangeArray,
   RequestParams,
   SubjectNameInterface,
-  UpdateFiltersInQuery,
   UserRole
 } from '~/types'
 
@@ -25,12 +25,6 @@ export interface FindOffersFilters {
   page: string | number
 }
 
-export interface FindOffersFiltersActions<T> {
-  updateFiltersInQuery: UpdateFiltersInQuery<T>
-  resetFilters: () => void
-  updateQueryParams: () => void
-}
-
 export interface CreateOfferBlockProps<T> {
   data: T
   errors: Record<keyof T, string>
@@ -46,7 +40,7 @@ export interface CreateOfferBlockProps<T> {
 export interface FilterQueryHook<T> {
   filters: FindOffersFilters
   countActiveFilters: number
-  filterQueryActions: FindOffersFiltersActions<T>
+  filterQueryActions: FiltersActions<T>
 }
 
 export interface GetOffersParams
