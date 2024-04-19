@@ -2,9 +2,9 @@ import { emptyField } from '~/utils/validations/common'
 
 export const validations = {
   title: (value: string | null) =>
-    emptyField(value, 'common.errorMessages.title'),
+    emptyField({ value, emptyMessage: 'common.errorMessages.title' }),
   description: (value: string) =>
-    emptyField(value, 'common.errorMessages.description')
+    emptyField({ value, emptyMessage: 'common.errorMessages.description' })
 }
 
 export const initialValues = {

@@ -72,6 +72,7 @@
     "passwordAlphabeticAndNumeric": "Password must contain at least one alphabetic and one numeric character",
     "passwordValidSymbols": "Password must contain only alphabetic, numeric and special characters",
     "emptyField": "This field cannot be empty",
+    "hasOnlySpaces": "This field must contain at least one non-space character",
     "nameLength": "This field cannot be longer than 30 characters",
     "nameAlphabeticOnly": "This field can contain alphabetic characters only",
     "passwordsDontMatch": "Passwords do not match",

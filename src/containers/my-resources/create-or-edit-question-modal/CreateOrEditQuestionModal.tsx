@@ -46,7 +46,7 @@ const CreateOrEditQuestionModal: FC<CreateOrEditQuestionModalProps> = ({
     },
     validations: {
       title: (value: string) =>
-        emptyField(value, undefined, textField(1, 100)(value))
+        emptyField({ value, helperText: textField(1, 100)(value) })
     }
   })
 

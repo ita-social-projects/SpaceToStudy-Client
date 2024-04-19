@@ -35,17 +35,24 @@ export const defaultResponse = {
 
 export const validations = {
   title: (value: string) =>
-    emptyField(value, 'common.errorMessages.title', textField(0, 100)(value)),
-  description: (value: string) =>
-    emptyField(
+    emptyField({
       value,
-      'common.errorMessages.description',
-      textField(20, 1000)(value)
-    ),
+      emptyMessage: 'common.errorMessages.title',
+      helperText: textField(0, 100)(value)
+    }),
+  description: (value: string) =>
+    emptyField({
+      value,
+      emptyMessage: 'common.errorMessages.description',
+      helperText: textField(20, 1000)(value)
+    }),
   category: (value: string | null) =>
-    emptyField(value, 'common.errorMessages.category'),
+    emptyField({ value, emptyMessage: 'common.errorMessages.category' }),
   subject: (value: string | null) =>
-    emptyField(value, 'common.errorMessages.subject'),
+    emptyField({ value, emptyMessage: 'common.errorMessages.subject' }),
   proficiencyLevel: (value: string[] | string) =>
-    emptyField(value?.toString(), 'common.errorMessages.proficiencyLevel')
+    emptyField({
+      value: value?.toString(),
+      emptyMessage: 'common.errorMessages.proficiencyLevel'
+    })
 }

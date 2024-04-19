@@ -26,6 +26,7 @@ describe('AddCategoriesModal component', () => {
       <AddCategoriesModal
         closeModal={closeModalMock}
         createCategories={createCategory}
+        existingCategoriesNames={[]}
       />
     )
   })
