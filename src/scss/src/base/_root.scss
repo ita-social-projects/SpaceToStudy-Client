@@ -111,7 +111,7 @@
   --s2s-body2-font-size: #{$fs-sm};
   --s2s-caption1-font-size: #{$fs-xs};
   --s2s-caption2-font-size: #{$fs-xs};
-  --s2s-overline-font-size: #{$fs-xxs};
+  --s2s-overline-font-size: #{$fs-2xs};
   --s2s-button1-font-size: #{$fs-base};
   --s2s-button2-font-size: #{$fs-sm};
 
@@ -166,9 +166,9 @@
   /* Text letter spacings */
   --s2s-mid-title-letter-spacing: #{$ls-none};
   --s2s-subtitle1-letter-spacing: #{$ls-xs};
-  --s2s-subtitle2-letter-spacing: #{$ls-xxs};
+  --s2s-subtitle2-letter-spacing: #{$ls-2xs};
   --s2s-body1-letter-spacing: #{$ls-base};
-  --s2s-body2-letter-spacing: #{$ls-xxxs};
+  --s2s-body2-letter-spacing: #{$ls-3xs};
   --s2s-caption1-letter-spacing: #{$ls-sm};
   --s2s-caption2-letter-spacing: #{$ls-sm};
   --s2s-overline-letter-spacing: #{$ls-lg};
