@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { FindOffersFiltersActions, UpdateFiltersInQuery } from '~/types'
+import { FiltersActions, UpdateFiltersInQuery } from '~/types'
 import { parseQueryParams } from '~/utils/helper-functions'
 
 interface UseFilterQueryOptions<T> {
@@ -13,7 +13,7 @@ interface UseFilterQueryOptions<T> {
 
 interface FilterQueryHook<T> {
   filters: T
-  filterQueryActions: FindOffersFiltersActions<T>
+  filterQueryActions: FiltersActions<T>
   searchParams: URLSearchParams
   activeFilterCount?: number
 }

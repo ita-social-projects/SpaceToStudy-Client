@@ -10,7 +10,7 @@ import AppToolbar from '~/components/app-toolbar/AppToolbar'
 import {
   CategoryNameInterface,
   FindOffersFilters,
-  FindOffersFiltersActions,
+  FiltersActions,
   SubjectNameInterface
 } from '~/types'
 
@@ -21,7 +21,7 @@ import AsyncAutocomplete from '~/components/async-autocomlete/AsyncAutocomplete'
 
 interface OfferSearchToolbarProps {
   filters: FindOffersFilters
-  filterActions: FindOffersFiltersActions<FindOffersFilters>
+  filterActions: FiltersActions<FindOffersFilters>
   additionalParams: Record<string, unknown>
 }
 

@@ -45,6 +45,7 @@ export interface CourseFilters extends Pick<Course, 'proficiencyLevel'> {
   category: string
   subject: string
   title: string
+  page?: string | number
 }
 
 export interface GetCoursesParams extends Partial<RequestParams> {

@@ -1,4 +1,4 @@
-import { FC, ChangeEvent, useState, MutableRefObject } from 'react'
+import { FC, ChangeEvent } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import AddIcon from '@mui/icons-material/Add'
@@ -13,66 +13,55 @@ import CoursesFiltersDrawer from '~/containers/my-courses/courses-filters-drawer
 
 import { authRoutes } from '~/router/constants/authRoutes'
 
-import useForm from '~/hooks/use-form'
 import { useDrawer } from '~/hooks/use-drawer'
 import useBreakpoints from '~/hooks/use-breakpoints'
-import { useDebounce } from '~/hooks/use-debounce'
 
-import { CourseFilters } from '~/types'
+import { CourseFilters, FiltersActions } from '~/types'
 import { styles } from '~/containers/my-courses/add-course-with-input/AddCourseWithInput.styles'
 
 interface AddCoursesWithInputProps {
-  fetchData: () => Promise<void>
-  searchRef: MutableRefObject<string>
+  additionalParams: Record<string, number | string | undefined>
+  chosenFiltersQty?: number
+  filterActions: FiltersActions<CourseFilters>
+  filters: CourseFilters
   setSort: (property: string) => void
   sort: string
 }
 
 const AddCourseWithInput: FC<AddCoursesWithInputProps> = ({
-  searchRef,
-  fetchData,
+  additionalParams,
+  chosenFiltersQty,
+  filterActions,
+  filters,
   setSort,
   sort
 }) => {
   const { t } = useTranslation()
-  const [inputValue, setInputValue] = useState<string>('')
   const { openDrawer, closeDrawer, isOpen } = useDrawer()
   const { isTablet, isMobile } = useBreakpoints()
 
-  const {
-    data: filters,
-    handleNonInputValueChange,
-    resetData
-  } = useForm<CourseFilters>({
-    initialValues: {
-      title: '',
-      category: '',
-      subject: '',
-      proficiencyLevel: []
-    }
-  })
-
-  const debounceOnChange = useDebounce((text: string) => {
-    searchRef.current = text
-    void fetchData()
-  })
-
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value)
-    debounceOnChange(e.target.value)
+    filterActions.updateFiltersInQuery({
+      ...additionalParams,
+      title: e.target.value
+    })
   }
 
   const onClear = () => {
-    setInputValue('')
-    searchRef.current = ''
-    void fetchData()
+    filterActions.updateFiltersInQuery({
+      ...additionalParams,
+      title: ''
+    })
   }
 
   const handleToggle = () => (isOpen ? closeDrawer() : openDrawer())
 
   const desktopView = !isTablet && !isMobile && (
     <Box sx={styles.filtersBox(isTablet)}>
-      <FiltersToggle handleToggle={handleToggle} />
+      <FiltersToggle
+        chosenFiltersQty={chosenFiltersQty}
+        handleToggle={handleToggle}
+      />
       <CoursesFilterBar onValueChange={setSort} value={sort} />
       <InputWithIcon
         endAdornment={<SearchIcon sx={styles.searchIcon} />}
@@ -80,14 +69,17 @@ const AddCourseWithInput: FC<AddCoursesWithInputProps> = ({
         onClear={onClear}
         placeholder={t('common.search')}
         sx={styles.input}
-        value={inputValue}
+        value={filters.title}
       />
     </Box>
   )
 
   const tabletView = isTablet && (
     <Box sx={styles.filtersBox(isTablet)}>
-      <FiltersToggle handleToggle={handleToggle} />
+      <FiltersToggle
+        chosenFiltersQty={chosenFiltersQty}
+        handleToggle={handleToggle}
+      />
       <CoursesFilterBar onValueChange={setSort} value={sort} />
     </Box>
   )
@@ -110,6 +102,7 @@ const AddCourseWithInput: FC<AddCoursesWithInputProps> = ({
       {mobileView}
 
       <CoursesFiltersDrawer
+        additionalParams={additionalParams}
         deviceFields={
           isMobile && (
             <CoursesFilterBar
@@ -119,9 +112,8 @@ const AddCourseWithInput: FC<AddCoursesWithInputProps> = ({
             />
           )
         }
+        filterActions={filterActions}
         filters={filters}
-        handleFilterChange={handleNonInputValueChange}
-        handleReset={resetData}
         isOpen={isOpen}
         onClose={closeDrawer}
       />

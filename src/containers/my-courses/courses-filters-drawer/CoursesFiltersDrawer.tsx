@@ -1,4 +1,4 @@
-import { FC, ReactNode } from 'react'
+import { FC, ReactNode, useCallback, SyntheticEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import FilterListIcon from '@mui/icons-material/FilterList'
 import Typography from '@mui/material/Typography'
@@ -6,47 +6,80 @@ import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 
 import AppDrawer from '~/components/app-drawer/AppDrawer'
-import AppSelect from '~/components/app-select/AppSelect'
 import CheckboxList from '~/components/checkbox-list/CheckboxList'
 import FilterInput from '~/components/filter-input/FilterInput'
+import AsyncAutocomplete from '~/components/async-autocomlete/AsyncAutocomplete'
 
 import { spliceSx } from '~/utils/helper-functions'
+import { categoryService } from '~/services/category-service'
+import { subjectService } from '~/services/subject-service'
 import { styles } from '~/containers/my-courses/courses-filters-drawer/CoursesFiltersDrawer.styles'
 import {
   ButtonVariantEnum,
+  CategoryNameInterface,
+  ComponentEnum,
   CourseFilters,
+  FiltersActions,
   PositionEnum,
   ProficiencyLevelEnum,
-  SizeEnum
+  SizeEnum,
+  SubjectNameInterface
 } from '~/types'
 
 interface CoursesFiltersDrawerProps {
+  additionalParams: Record<string, number | string | undefined>
+  filterActions: FiltersActions<CourseFilters>
   filters: CourseFilters
-  handleFilterChange: (
-    key: keyof CourseFilters,
-    value: string | ProficiencyLevelEnum[]
-  ) => void
   onClose: () => void
   isOpen: boolean
-  handleReset: () => void
   deviceFields?: ReactNode
 }
-const fields = [
-  { value: 'music', title: 'Music' },
-  { value: 'lang', title: 'Languages' },
-  { value: 'development', title: 'Development' }
-]
 
 const CoursesFiltersDrawer: FC<CoursesFiltersDrawerProps> = ({
+  additionalParams,
+  filterActions,
   filters,
-  handleFilterChange,
   onClose,
   isOpen,
-  handleReset,
   deviceFields
 }) => {
   const levelOptions = Object.values(ProficiencyLevelEnum)
   const { t } = useTranslation()
+  const { updateFiltersInQuery, resetFilters } = filterActions
+
+  const getSubjectsNames = useCallback(
+    () => subjectService.getSubjectsNames(filters.category),
+    [filters.category]
+  )
+
+  const onCategoryChange = (
+    _: SyntheticEvent,
+    value: CategoryNameInterface | null
+  ) => {
+    updateFiltersInQuery({
+      ...additionalParams,
+      subject: '',
+      category: value?._id ?? ''
+    })
+  }
+
+  const onSubjectChange = (
+    _: SyntheticEvent,
+    value: SubjectNameInterface | null
+  ) => {
+    updateFiltersInQuery({ ...additionalParams, subject: value?._id ?? '' })
+  }
+
+  const updateFilterByKey =
+    <K extends keyof CourseFilters>(key: K) =>
+    (value: CourseFilters[K]) => {
+      updateFiltersInQuery({ ...additionalParams, [key]: value })
+    }
+
+  const handleApplyFilters = () => {
+    updateFiltersInQuery(additionalParams)
+    onClose()
+  }
   return (
     <AppDrawer anchor={PositionEnum.Left} onClose={onClose} open={isOpen}>
       <Box sx={styles.titleWithIcon}>
@@ -61,17 +94,19 @@ const CoursesFiltersDrawer: FC<CoursesFiltersDrawerProps> = ({
       <Box sx={styles.categorySelect}>
         <Typography sx={styles.titleMargin}>
           {t('myCoursesPage.coursesFilter.chooseThe')}
-          <Typography sx={styles.boldText}>
+          <Typography component={ComponentEnum.Span} sx={styles.boldText}>
             {t('myCoursesPage.coursesFilter.category')}:
           </Typography>
         </Typography>
-        <AppSelect
-          fields={fields}
-          fullWidth
-          label={t('myCoursesPage.coursesFilter.categoryLabel')}
-          setValue={(value) => handleFilterChange('category', value)}
-          size={SizeEnum.Small}
+        <AsyncAutocomplete
+          labelField='name'
+          onChange={onCategoryChange}
+          service={categoryService.getCategoriesNames}
+          textFieldProps={{
+            label: t('myCoursesPage.coursesFilter.categoryLabel')
+          }}
           value={filters.category}
+          valueField='_id'
         />
       </Box>
 
@@ -84,31 +119,36 @@ const CoursesFiltersDrawer: FC<CoursesFiltersDrawerProps> = ({
           }
         >
           {t('myCoursesPage.coursesFilter.chooseThe')}
-          <Typography sx={styles.inlineBlock(!!filters.category)}>
+          <Typography
+            component={ComponentEnum.Span}
+            sx={styles.inlineBlock(!!filters.category)}
+          >
             {t('myCoursesPage.coursesFilter.subject')}:
           </Typography>
         </Typography>
-        <AppSelect
+        <AsyncAutocomplete
           disabled={!filters.category}
-          fields={fields}
-          fullWidth
-          label={t('myCoursesPage.coursesFilter.subjectLabel')}
-          setValue={(value) => handleFilterChange('subject', value)}
-          size={SizeEnum.Small}
+          labelField='name'
+          onChange={onSubjectChange}
+          service={getSubjectsNames}
+          textFieldProps={{
+            label: t('myCoursesPage.coursesFilter.subjectLabel')
+          }}
           value={filters.subject}
+          valueField='_id'
         />
       </Box>
 
       <Box sx={styles.checkboxContainer}>
         <Typography sx={styles.checkboxTitleMargin}>
           {t('myCoursesPage.coursesFilter.choose')}
-          <Typography sx={styles.boldText}>
+          <Typography component={ComponentEnum.Span} sx={styles.boldText}>
             {t('myCoursesPage.coursesFilter.levels')}:
           </Typography>
         </Typography>
         <CheckboxList
           items={levelOptions}
-          onChange={(value) => handleFilterChange('proficiencyLevel', value)}
+          onChange={updateFilterByKey('proficiencyLevel')}
           value={filters.proficiencyLevel}
         />
       </Box>
@@ -117,20 +157,24 @@ const CoursesFiltersDrawer: FC<CoursesFiltersDrawerProps> = ({
         {t('myCoursesPage.coursesFilter.search')}:
       </Typography>
       <FilterInput
-        onChange={(value) => handleFilterChange('title', value)}
+        onChange={updateFilterByKey('title')}
         placeholder={t('common.search')}
         value={filters.title}
       />
 
       <Button
-        onClick={() => handleReset()}
+        onClick={resetFilters}
         size={SizeEnum.ExtraLarge}
         sx={styles.clearButtonMb}
         variant={ButtonVariantEnum.Tonal}
       >
         {t('button.clearFilters')}
       </Button>
-      <Button size={SizeEnum.ExtraLarge} variant={ButtonVariantEnum.Contained}>
+      <Button
+        onClick={handleApplyFilters}
+        size={SizeEnum.ExtraLarge}
+        variant={ButtonVariantEnum.Contained}
+      >
         {t('button.applyFilters')}
       </Button>
     </AppDrawer>

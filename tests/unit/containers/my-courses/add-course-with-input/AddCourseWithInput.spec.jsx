@@ -2,9 +2,22 @@ import { fireEvent, screen } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 import AddCourseWithInput from '~/containers/my-courses/add-course-with-input/AddCourseWithInput'
 
+const mockedFilterActions = {
+  updateFiltersInQuery: vi.fn()
+}
+
+const mockedFilters = {
+  title: 'value'
+}
+
 describe('AddCourseWithInput test', () => {
   beforeEach(() => {
-    renderWithProviders(<AddCourseWithInput />)
+    renderWithProviders(
+      <AddCourseWithInput
+        filterActions={mockedFilterActions}
+        filters={mockedFilters}
+      />
+    )
   })
 
   it('should render "New course" button', () => {
@@ -13,13 +26,28 @@ describe('AddCourseWithInput test', () => {
     expect(addBtn).toBeInTheDocument()
   })
 
-  it('should change input value', async () => {
+  it('should change and clear input value', () => {
     const input = screen.getByRole('textbox')
 
-    expect(input.value).toBe('')
+    expect(input.value).toBe('value')
 
     fireEvent.change(input, { target: { value: 'new value' } })
 
-    expect(input.value).toBe('new value')
+    expect(mockedFilterActions.updateFiltersInQuery).toHaveBeenCalled()
+
+    const clearButton = screen.getByTestId('ClearRoundedIcon')
+
+    fireEvent.click(clearButton)
+
+    expect(mockedFilterActions.updateFiltersInQuery).toHaveBeenCalled()
+  })
+
+  it('should render filters', () => {
+    const filters = screen.getByText('filters.filtersListTitle')
+
+    expect(filters).toBeInTheDocument()
+    fireEvent.click(filters)
+    const filtersModal = screen.getByRole('presentation')
+    expect(filtersModal).toBeInTheDocument()
   })
 })
