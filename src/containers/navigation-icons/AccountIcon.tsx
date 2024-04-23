@@ -1,4 +1,4 @@
-import { useCallback, useMemo, FC } from 'react'
+import { useCallback, FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useAppSelector } from '~/hooks/use-redux'
 import { AxiosResponse } from 'axios'
@@ -28,18 +28,15 @@ const AccountIcon: FC<AccountIconProps> = ({ openMenu }) => {
     [userId, userRole]
   )
 
-  const { response } = useAxios<UserResponse>({
+  const { loading, response } = useAxios<UserResponse>({
     service: getUserData,
     fetchOnMount: true,
     defaultResponse: defaultResponses.object as UserResponse
   })
 
-  const userNameForAvatar = useMemo(() => {
-    if (response.firstName && response.lastName) {
-      return response.firstName.charAt(0) + '' + response.lastName.charAt(0)
-    }
-    return ''
-  }, [response.firstName, response.lastName])
+  const userNameForAvatar = loading
+    ? ''
+    : response.firstName.charAt(0) + '' + response.lastName.charAt(0)
 
   return (
     <Tooltip title={t('iconsTooltip.account')}>
