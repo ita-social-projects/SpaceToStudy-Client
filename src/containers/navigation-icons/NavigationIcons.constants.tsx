@@ -6,7 +6,7 @@ import LoginIcon from '@mui/icons-material/Login'
 import MessageRoundedIcon from '@mui/icons-material/MessageRounded'
 import BookmarkIcon from '@mui/icons-material/Bookmark'
 import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded'
-import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined'
+
 import { IconButtonProps } from '@mui/material/IconButton'
 
 import { authRoutes } from '~/router/constants/authRoutes'
@@ -85,14 +85,6 @@ export const userIcons: NavigationIconButton[] = [
     icon: <NotificationsRoundedIcon />,
     buttonProps: ({ openNotifications }) => ({
       onClick: openNotifications,
-      sx: styles.studentIcons
-    })
-  },
-  {
-    tooltip: 'iconsTooltip.account',
-    icon: <AccountCircleOutlinedIcon />,
-    buttonProps: ({ openAccountMenu }) => ({
-      onClick: openAccountMenu,
       sx: styles.studentIcons
     })
   },
