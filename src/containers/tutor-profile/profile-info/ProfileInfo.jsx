@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
-import IconButton from '@mui/material/IconButton'
+import AppIconButton from '~/components/app-icon-button/AppIconButton'
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
 import CopyRoundedIcon from '@mui/icons-material/ContentCopyRounded'
 
@@ -55,15 +55,15 @@ const ProfileInfo = ({ userData, myRole }) => {
   )
 
   const actionIconBtn = (
-    <IconButton
+    <AppIconButton
       data-testid='icon-btn'
-      href={isMyProfile && authRoutes.editProfile.path}
       onClick={!isMyProfile ? copyProfileLink : undefined}
       size={isLaptopAndAbove ? SizeEnum.Large : SizeEnum.Small}
       sx={styles.iconBtn}
+      to={isMyProfile && authRoutes.editProfile.path}
     >
       {actionIcon}
-    </IconButton>
+    </AppIconButton>
   )
 
   const accountRating = (
