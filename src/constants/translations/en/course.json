@@ -7,8 +7,8 @@
     "section": "section",
     "sections": "sections",
     "courseSection": {
-        "defaultNewTitle": "Section 1",
-        "moduleTitle": "Module 1",
+        "defaultNewTitle": "Section",
+        "moduleTitle": "Module",
         "defaultNewDescription": "Description...",
         "addResourceBtn": "Add Resource",
         "resourcesMenu": {
