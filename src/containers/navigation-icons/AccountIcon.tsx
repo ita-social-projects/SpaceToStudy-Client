@@ -20,7 +20,6 @@ interface AccountIconProps {
 
 const AccountIcon: FC<AccountIconProps> = ({ openMenu }) => {
   const { t } = useTranslation()
-
   const { userId, userRole } = useAppSelector((state) => state.appMain)
 
   const getUserData: () => Promise<AxiosResponse<UserResponse>> = useCallback(
@@ -34,6 +33,10 @@ const AccountIcon: FC<AccountIconProps> = ({ openMenu }) => {
     defaultResponse: defaultResponses.object as UserResponse
   })
 
+  const photoUrl =
+    response.photo &&
+    `${import.meta.env.VITE_APP_IMG_USER_URL}${response.photo}`
+
   const userNameForAvatar = loading
     ? ''
     : response.firstName.charAt(0) + '' + response.lastName.charAt(0)
@@ -43,11 +46,8 @@ const AccountIcon: FC<AccountIconProps> = ({ openMenu }) => {
       <Avatar
         alt='User'
         onClick={openMenu}
-        src={
-          response.photo &&
-          `${import.meta.env.VITE_APP_IMG_USER_URL}${response.photo}`
-        }
-        sx={styles.studentIcons}
+        src={photoUrl}
+        sx={styles.accountIcon}
       >
         {userNameForAvatar}
       </Avatar>

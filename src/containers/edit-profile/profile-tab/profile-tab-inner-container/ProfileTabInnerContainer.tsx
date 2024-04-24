@@ -20,6 +20,11 @@ const ProfileTabInnerContainer: FC<ProfileTabProps> = ({ user }) => {
     profileData.generalData.errors &&
     Object.values(profileData.generalData.errors).some((error) => error)
 
+  const handleUpdateProfile = () => {
+    handleSubmit(profileData.generalData.data)
+    window.location.reload()
+  }
+
   return (
     <Box sx={styles.profileInnerContainer}>
       <Box sx={styles.root}>
@@ -34,7 +39,7 @@ const ProfileTabInnerContainer: FC<ProfileTabProps> = ({ user }) => {
       <AppButton
         disabled={hasError}
         loading={loading}
-        onClick={() => handleSubmit(profileData.generalData.data)}
+        onClick={handleUpdateProfile}
         size={SizeEnum.ExtraLarge}
         sx={styles.updateProfileBtn}
         variant={ButtonVariantEnum.Contained}
