@@ -39,7 +39,7 @@ const AccountIcon: FC<AccountIconProps> = ({ openMenu }) => {
 
   const userNameForAvatar = loading
     ? ''
-    : response.firstName.charAt(0) + '' + response.lastName.charAt(0)
+    : `${response.firstName.slice(0, 1)}${response.lastName.slice(0, 1)}`
 
   return (
     <Tooltip title={t('iconsTooltip.account')}>
