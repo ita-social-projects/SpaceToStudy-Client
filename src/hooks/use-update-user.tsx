@@ -59,7 +59,7 @@ const useUpdateUser = (userId: string) => {
 
     if (photo !== undefined) updatedData.photo = photo
 
-    if (updatedData.photo) {
+    if (updatedData.photo || updatedData.photo === null) {
       handleResponse()
       setTimeout(() => {
         window.location.reload()
