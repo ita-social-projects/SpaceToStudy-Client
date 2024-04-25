@@ -44,8 +44,6 @@ $body-2-font-size: var(--s2s-body2-font-size, $fs-sm) !default;
 $caption1-font-size: var(--s2s-caption1-font-size, $fs-xs) !default;
 $caption2-font-size: var(--s2s-caption2-font-size, $fs-xs) !default;
 $overline-font-size: var(--s2s-overline-font-size, $fs-2xs) !default;
-$button1-font-size: var(--s2s-button1-font-size, $fs-base) !default;
-$button2-font-size: var(--s2s-button2-font-size, $fs-sm) !default;
 
 // /*=============================================
 // =         font weights (headings)             =
@@ -70,8 +68,6 @@ $body-2-font-weight: var(--s2s-body2-font-weight, $fw-regular) !default;
 $caption1-font-weight: var(--s2s-caption1-font-weight, $fw-regular) !default;
 $caption2-font-weight: var(--s2s-caption2-font-weight, $fw-medium) !default;
 $overline-font-weight: var(--s2s-overline-font-weight, $fw-regular) !default;
-$button1-font-weight: var(--s2s-button1-font-weight, $fw-medium) !default;
-$button2-font-weight: var(--s2s-button2-font-weight, $fw-medium) !default;
 
 // /*=============================================
 // =          Line heights (headings)            =
@@ -96,8 +92,6 @@ $body-2-line-height: var(--s2s-body2-line-height, $lh-sm) !default;
 $caption1-line-height: var(--s2s-caption1-line-height, $lh-sm) !default;
 $caption2-line-height: var(--s2s-caption2-line-height, $lh-sm) !default;
 $overline-line-height: var(--s2s-overline-line-height, $lh-xs) !default;
-$button1-line-height: var(--s2s-button1-line-height, $lh-base) !default;
-$button2-line-height: var(--s2s-button2-line-height, $lh-sm) !default;
 
 // /*=============================================
 // =       Letters spacings (headings)           =
@@ -128,8 +122,6 @@ $body-2-letter-spacing: var(--s2s-body2-letter-spacing, $ls-3xs) !default;
 $caption1-letter-spacing: var(--s2s-caption1-letter-spacing, $ls-sm) !default;
 $caption2-letter-spacing: var(--s2s-caption2-letter-spacing, $ls-sm) !default;
 $overline-letter-spacing: var(--s2s-overline-letter-spacing, $ls-lg) !default;
-$button1-letter-spacing: var(--s2s-button1-letter-spacing, $ls-base) !default;
-$button2-letter-spacing: var(--s2s-button2-letter-spacing, $ls-base) !default;
 
 // /*=============================================
 // =         Text transforms (headings)          =
@@ -166,5 +158,3 @@ $overline-text-transform: var(
   --s2s-overline-text-transform,
   $tt-uppercase
 ) !default;
-$button1-text-transform: var(--s2s-button1-text-transform, $tt-none) !default;
-$button2-text-transform: var(--s2s-button2-text-transform, $tt-none) !default;

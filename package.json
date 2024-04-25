@@ -88,10 +88,10 @@
     "vitest-sonar-reporter": "^0.4.1"
   },
   "scripts": {
-    "start": "vite",
-    "build": "vite build",
-    "test": "cross-env CI=true vitest --coverage",
-    "serve": "vite preview --port 3000",
+    "start": "npm run compile-scss && vite",
+    "build": "npm run compile-scss && vite build",
+    "test": "cross-env CI=true npm run compile-scss && vitest --coverage",
+    "serve": "npm run compile-scss && vite preview --port 3000",
     "lint": "eslint src/**/*.{js,jsx,ts,tsx}",
     "lint-fix": "eslint src/**/*.{js,jsx,ts,tsx} --fix",
     "storybook": "start-storybook -p 6006",

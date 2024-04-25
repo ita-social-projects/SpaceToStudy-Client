@@ -112,8 +112,6 @@
   --s2s-caption1-font-size: #{$fs-xs};
   --s2s-caption2-font-size: #{$fs-xs};
   --s2s-overline-font-size: #{$fs-2xs};
-  --s2s-button1-font-size: #{$fs-base};
-  --s2s-button2-font-size: #{$fs-sm};
 
   /* Headings font weights */
   --s2s-h1-font-weight: #{$fw-bold};
@@ -132,8 +130,6 @@
   --s2s-caption1-font-weight: #{$fw-regular};
   --s2s-caption2-font-weight: #{$fw-medium};
   --s2s-overline-font-weight: #{$fw-regular};
-  --s2s-button1-font-weight: #{$fw-medium};
-  --s2s-button2-font-weight: #{$fw-medium};
 
   /* Headings line heights */
   --s2s-h1-line-height: #{$lh-h1};
@@ -152,8 +148,6 @@
   --s2s-caption1-line-height: #{$lh-sm};
   --s2s-caption2-line-height: #{$lh-sm};
   --s2s-overline-line-height: #{$lh-xs};
-  --s2s-button1-line-height: #{$lh-base};
-  --s2s-button2-line-height: #{$lh-sm};
 
   /* Headings letter spacings */
   --s2s-h1-letter-spacing: #{$ls-h1};
@@ -172,8 +166,6 @@
   --s2s-caption1-letter-spacing: #{$ls-sm};
   --s2s-caption2-letter-spacing: #{$ls-sm};
   --s2s-overline-letter-spacing: #{$ls-lg};
-  --s2s-button1-letter-spacing: #{$ls-base};
-  --s2s-button2-letter-spacing: #{$ls-base};
 
   /* Headings text transforms */
   --s2s-h1-text-transform: #{$tt-none};
@@ -192,6 +184,4 @@
   --s2s-caption1-text-transform: #{$tt-none};
   --s2s-caption2-text-transform: #{$tt-none};
   --s2s-overline-text-transform: #{$tt-uppercase};
-  --s2s-button1-text-transform: #{$tt-none};
-  --s2s-button2-text-transform: #{$tt-none};
 }

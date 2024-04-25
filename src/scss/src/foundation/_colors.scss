@@ -26,23 +26,6 @@ $footer-light-bg: var(--s2s-footer-light-bg, $blue-gray) !default;
 $footer-light-color: var(--s2s-footer-light-color, $blue-gray-900) !default;
 
 /*=============================================
-=                    Buttons                  =
-=============================================*/
-
-$btn-primary-bg: var(--s2s-btn-primary-bg, $blue-gray-900) !default;
-$btn-primary-color: var(--s2s-btn-primary-color, $white) !default;
-$btn-primary-hover: var(--s2s-btn-primary-hover, $blue-gray-800) !default;
-$btn-primary-focus: var(--s2s-btn-primary-focus, $blue-gray-600) !default;
-$btn-primary-disabled-bg: var(--s2s-btn-primary-disabled-bg, $blue-gray-50) !default;
-$btn-primary-disabled-color: var(--s2s-btn-primary-disabled-color, $blue-gray-300) !default;
-
-$btn-tonal-bg: var(--s2s-btn-tonal-bg, $blue-gray-50) !default;
-$btn-tonal-color: var(--s2s-btn-tonal-color, $blue-gray-900) !default;
-$btn-tonal-focus: var(--s2s-btn-tonal-focus, $blue-gray-100) !default;
-$btn-tonal-disabled-bg: var(--s2s-btn-tonal-disabled-bg, $blue-gray-50) !default;
-$btn-tonal-disabled-color: var(--s2s-btn-tonal-disabled-color, $blue-gray-300) !default;
-
-/*=============================================
 =                   Form                     =
 =============================================*/
 

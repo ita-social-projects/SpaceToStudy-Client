@@ -2,13 +2,11 @@ import { MemoryRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { configureStore } from '@reduxjs/toolkit'
 import reducer from '~/redux/reducer'
-import { ThemeProvider } from '@mui/material/styles'
+import { StyledEngineProvider, ThemeProvider } from '@mui/material/styles'
 import { render, waitFor } from '@testing-library/react'
 import { theme } from '~/styles/app-theme/custom-mui.styles'
-import { ModalProvider } from '~/context/modal-context'
-import { ConfirmationDialogProvider } from '~/context/confirm-context'
-import { SnackBarProvider } from '~/context/snackbar-context'
 import { CooperationProvider } from '~/context/cooperation-context'
+import PopupsProvider from '~/PopupsProvider'
 
 import { vi } from 'vitest'
 import MockAdapter from 'axios-mock-adapter'
@@ -26,15 +24,13 @@ export const renderWithProviders = (
   const Wrapper = ({ children }) => (
     <Provider store={store}>
       <MemoryRouter initialEntries={[initialEntries]}>
-        <ThemeProvider theme={theme}>
-          <SnackBarProvider>
-            <ConfirmationDialogProvider>
-              <CooperationProvider>
-                <ModalProvider>{children}</ModalProvider>
-              </CooperationProvider>
-            </ConfirmationDialogProvider>
-          </SnackBarProvider>
-        </ThemeProvider>
+        <StyledEngineProvider injectFirst>
+          <ThemeProvider theme={theme}>
+            <PopupsProvider>
+              <CooperationProvider>{children}</CooperationProvider>
+            </PopupsProvider>
+          </ThemeProvider>
+        </StyledEngineProvider>
       </MemoryRouter>
     </Provider>
   )

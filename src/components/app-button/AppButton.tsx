@@ -4,6 +4,8 @@ import Button, { ButtonProps } from '@mui/material/Button'
 import Loader from '~/components/loader/Loader'
 import { ButtonVariantEnum, SizeEnum } from '~/types'
 
+import '~/scss/lib/Button.css'
+
 interface AppButtonProps extends ButtonProps {
   children: ReactNode
   loading?: boolean
@@ -24,9 +26,8 @@ const AppButton: FC<AppButtonProps> = ({
 
   return (
     <Button
+      className={`s2s-button s2s-button__${variant} s2s-button__${size}`}
       disabled={loading || disabled}
-      size={size}
-      variant={variant}
       {...props}
     >
       {loading ? loader : children}

@@ -52,7 +52,6 @@ export enum DrawerVariantEnum {
 export enum ButtonVariantEnum {
   Contained = 'contained',
   ContainedLight = 'containedLight',
-  Outlined = 'outlined',
   Text = 'text',
   Tonal = 'tonal'
 }
