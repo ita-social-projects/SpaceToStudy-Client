@@ -5,6 +5,7 @@ import Avatar from '@mui/material/Avatar'
 import InputAdornment from '@mui/material/InputAdornment'
 
 import useForm from '~/hooks/use-form'
+import useConfirm from '~/hooks/use-confirm'
 import AppButton from '~/components/app-button/AppButton'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import AppTextArea from '~/components/app-text-area/AppTextArea'
@@ -38,6 +39,7 @@ const ProfileGeneralTab: FC<ProfileTabProps> = ({ user }) => {
   const { t } = useTranslation()
   const { setAlert } = useSnackBarContext()
   const { profileData, handleProfileData } = useProfileContext()
+  const { setNeedConfirmation } = useConfirm()
   const profileGeneralData = profileData.generalData.data
   const photo = profileGeneralData.photo
 
@@ -50,6 +52,7 @@ const ProfileGeneralTab: FC<ProfileTabProps> = ({ user }) => {
   }
 
   const {
+    isDirty,
     handleInputChange,
     handleBlur,
     handleNonInputValueChange,
@@ -59,6 +62,10 @@ const ProfileGeneralTab: FC<ProfileTabProps> = ({ user }) => {
     initialValues,
     validations
   })
+
+  useEffect(() => {
+    setNeedConfirmation(isDirty)
+  }, [setNeedConfirmation, isDirty])
 
   const updatedData: UpdateUserParams = useMemo(
     () => ({

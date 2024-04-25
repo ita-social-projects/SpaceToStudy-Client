@@ -18,6 +18,8 @@ interface UseConfirmResult {
     message,
     title
   }: ConfirmationDialogProps) => boolean | Promise<boolean>
+  isConfirmed: boolean
+  setIsConfirmed: (value: boolean) => void | Promise<void>
   setNeedConfirmation: (value: boolean) => void
   openDialog: ({
     sendConfirm,
@@ -29,9 +31,13 @@ interface UseConfirmResult {
 }
 
 const useConfirm = (): UseConfirmResult => {
-  const { openDialog, needConfirmation, setNeedConfirmation } = useContext(
-    ConfirmationDialogContext
-  )
+  const {
+    openDialog,
+    needConfirmation,
+    setNeedConfirmation,
+    isConfirmed,
+    setIsConfirmed
+  } = useContext(ConfirmationDialogContext)
 
   useEffect(() => {
     return () => {
@@ -61,7 +67,13 @@ const useConfirm = (): UseConfirmResult => {
     return true
   }
 
-  return { checkConfirmation, setNeedConfirmation, openDialog }
+  return {
+    checkConfirmation,
+    isConfirmed,
+    setIsConfirmed,
+    setNeedConfirmation,
+    openDialog
+  }
 }
 
 export default useConfirm

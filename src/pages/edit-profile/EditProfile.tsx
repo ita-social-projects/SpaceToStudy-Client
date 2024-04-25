@@ -1,12 +1,14 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
 
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
 
-import { useCallback } from 'react'
+import useConfirm from '~/hooks/use-confirm'
 
+import { authRoutes } from '~/router/constants/authRoutes'
 import { useAppSelector } from '~/hooks/use-redux'
 import { userService } from '~/services/user-service'
 import useAxios from '~/hooks/use-axios'
@@ -30,6 +32,8 @@ const EditProfile = () => {
 
   const [activeTab, setActiveTab] = useState(TutorProfileTabsEnum.Profile)
 
+  const navigate = useNavigate()
+
   const handleClick = (tab: TutorProfileTabsEnum) => {
     setActiveTab(tab)
   }
@@ -40,6 +44,7 @@ const EditProfile = () => {
     () => userService.getUserById(userId, userRole as UserRole),
     [userId, userRole]
   )
+  const { checkConfirmation } = useConfirm()
 
   const { loading, response } = useAxios<UserResponse>({
     service: getUserData,
@@ -48,6 +53,18 @@ const EditProfile = () => {
 
   if (loading) {
     return <Loader pageLoad size={70} />
+  }
+
+  const handleBack = async () => {
+    const confirmed = checkConfirmation({
+      message: 'questions.goBackToProfile',
+      title: 'titles.saveChanges',
+      confirmButton: t('common.saveChanges'),
+      cancelButton: t('common.discard')
+    })
+    if (await confirmed) {
+      navigate(authRoutes.accountMenu.myProfile.path)
+    }
   }
 
   const cooperationContent =
@@ -65,6 +82,7 @@ const EditProfile = () => {
           </Typography>
         </Box>
         <AppButton
+          onClick={() => void handleBack()}
           size={SizeEnum.Large}
           sx={styles.backBtn}
           variant={ButtonVariantEnum.Tonal}

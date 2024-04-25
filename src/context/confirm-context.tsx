@@ -13,6 +13,8 @@ interface ConfirmationDialogContext {
   openDialog: ({ sendConfirm, message, title }: OpenDialogProps) => void
   needConfirmation: boolean
   setNeedConfirmation: (value: boolean) => void
+  isConfirmed: boolean
+  setIsConfirmed: (value: boolean) => void | Promise<void>
 }
 
 interface ConfirmationDialogProviderProps {
@@ -34,6 +36,7 @@ export const ConfirmationDialogProvider: FC<
     cancelButton: ''
   })
   const [needConfirmation, setNeedConfirmation] = useState<boolean>(false)
+  const [isConfirmed, setIsConfirmed] = useState<boolean>(false)
 
   const openDialog = ({
     sendConfirm,
@@ -53,6 +56,7 @@ export const ConfirmationDialogProvider: FC<
   }
 
   const onConfirm = () => {
+    setIsConfirmed(true)
     dialogConfig.sendConfirm(true)
     setDialogOpen(false)
   }
@@ -63,8 +67,14 @@ export const ConfirmationDialogProvider: FC<
   }
 
   const contextValue = useMemo(
-    () => ({ openDialog, needConfirmation, setNeedConfirmation }),
-    [needConfirmation]
+    () => ({
+      openDialog,
+      needConfirmation,
+      setNeedConfirmation,
+      isConfirmed,
+      setIsConfirmed
+    }),
+    [needConfirmation, isConfirmed]
   )
 
   return (
