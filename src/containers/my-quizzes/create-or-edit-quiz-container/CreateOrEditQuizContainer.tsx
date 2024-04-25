@@ -184,7 +184,17 @@ const CreateOrEditQuizContainer = ({
     setDescription(e.target.value)
   }
 
-  const onOpenCreateQuestion = () => setIsCreationOpen(true)
+  // const onOpenCreateQuestion = () => setIsCreationOpen(true)
+  const onOpenCreateQuestion = () => {
+    if (isCreationOpen) {
+      setAlert({
+        severity: snackbarVariants.info,
+        message: t('myResourcesPage.quizzes.savePreviousQuestion')
+      })
+      return
+    }
+    setIsCreationOpen(true)
+  }
   const onCloseCreateQuestion = () => setIsCreationOpen(false)
 
   const onSaveQuiz = () =>
