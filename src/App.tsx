@@ -1,29 +1,23 @@
 import { Outlet } from 'react-router-dom'
-import { ThemeProvider } from '@mui/material/styles'
-
-import { ModalProvider } from '~/context/modal-context'
-import { ConfirmationDialogProvider } from '~/context/confirm-context'
-import { SnackBarProvider } from '~/context/snackbar-context'
+import { StyledEngineProvider, ThemeProvider } from '@mui/material/styles'
 import { ChatProvider } from '~/context/chat-context'
 import { CooperationProvider } from '~/context/cooperation-context'
-
 import { theme } from './styles/app-theme/custom-mui.styles'
+import PopupsProvider from './PopupsProvider'
 
 const App = () => {
   return (
-    <ThemeProvider theme={theme}>
-      <SnackBarProvider>
-        <ConfirmationDialogProvider>
+    <StyledEngineProvider injectFirst>
+      <ThemeProvider theme={theme}>
+        <PopupsProvider>
           <CooperationProvider>
-            <ModalProvider>
-              <ChatProvider>
-                <Outlet />
-              </ChatProvider>
-            </ModalProvider>
+            <ChatProvider>
+              <Outlet />
+            </ChatProvider>
           </CooperationProvider>
-        </ConfirmationDialogProvider>
-      </SnackBarProvider>
-    </ThemeProvider>
+        </PopupsProvider>
+      </ThemeProvider>
+    </StyledEngineProvider>
   )
 }
 export default App
