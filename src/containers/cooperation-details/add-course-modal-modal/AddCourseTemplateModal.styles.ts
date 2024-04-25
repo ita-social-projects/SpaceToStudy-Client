@@ -39,11 +39,6 @@ export const styles = {
     cursor: 'pointer'
   },
   cardsWrapper: {
-    display: 'grid',
-    gridTemplateColumns: {
-      md: 'repeat(2, minmax(330px, 1fr))',
-      lg: 'repeat(3, minmax(330px, 1fr))'
-    },
     gap: '16px',
     mb: 0
   },
@@ -55,11 +50,7 @@ export const styles = {
   }),
   card: {
     card: {
-      maxWidth: '390px',
-      maxHeight: '245px',
-      width: '100%',
-      height: '100%',
-      boxSizing: 'border-box',
+      minHeight: '245px',
       cursor: 'pointer'
     },
     title: { typography: TypographyVariantEnum.MidTitle },
