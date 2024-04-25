@@ -39,7 +39,10 @@ export const authRoutes = {
       path: '/my-resources/edit-question'
     }
   },
-  lessonDetails: { route: 'lesson-details/:id', path: '/lesson-details' },
+  lessonDetails: { route: 'lesson-details/:lessonId', path: '/lesson-details' },
+  cooperationLessonDetails: {
+    route: 'my-cooperations/:id/lesson-details/:lessonId'
+  },
   accountMenu: {
     myProfile: { route: 'my-profile', path: '/my-profile' },
     myCooperations: {

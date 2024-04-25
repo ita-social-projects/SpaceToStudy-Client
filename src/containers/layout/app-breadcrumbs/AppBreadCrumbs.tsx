@@ -18,6 +18,10 @@ const AppBreadCrumbs = () => {
   const breadCrumbs = crumbs.map((crumb, idx) => {
     const isLast = idx === crumbs.length - 1
     const component = isLast ? Typography : Link
+    const paramName = crumb.path?.split(':')[1]
+    const path = paramName
+      ? crumb.path?.replace(`:${paramName}`, matches[0].params[paramName] || '')
+      : crumb.path
 
     return (
       <Typography
@@ -25,7 +29,7 @@ const AppBreadCrumbs = () => {
         data-testid='breadCrumb'
         key={crumb.name}
         sx={isLast ? styles.link : styles.previous}
-        to={crumb.path}
+        to={path}
       >
         {crumb.name}
       </Typography>
