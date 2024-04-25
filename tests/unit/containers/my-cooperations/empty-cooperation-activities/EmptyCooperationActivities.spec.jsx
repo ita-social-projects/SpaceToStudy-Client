@@ -1,4 +1,5 @@
 import { screen, fireEvent, act, waitFor } from '@testing-library/react'
+import { beforeEach, expect } from 'vitest'
 import EmptyCooperationActivities from '~/containers/my-cooperations/empty-cooperation-activities/EmptyCooperationActivities'
 import { renderWithProviders } from '~tests/test-utils'
 
@@ -6,9 +7,13 @@ global.window.getComputedStyle = vi.fn().mockImplementation(() => ({
   getPropertyValue: vi.fn()
 }))
 
-describe('Cooperation activities', () => {
+const mockedState = (role) => ({ appMain: { userRole: role } })
+
+describe('Cooperation activities for tutor', () => {
   beforeEach(() => {
-    renderWithProviders(<EmptyCooperationActivities />)
+    renderWithProviders(<EmptyCooperationActivities />, {
+      preloadedState: mockedState('tutor')
+    })
   })
 
   it('should render button create', () => {
@@ -54,5 +59,23 @@ describe('Cooperation activities', () => {
     await waitFor(() => {
       expect(menuScratch).not.toBeInTheDocument()
     })
+  })
+})
+
+describe('Cooperation empty activities for student', () => {
+  beforeEach(() => {
+    renderWithProviders(<EmptyCooperationActivities />, {
+      preloadedState: mockedState('student')
+    })
+  })
+
+  it('Should render component with content', () => {
+    const studentDescriptionText = screen.getByText(
+      'cooperationsPage.description.studentEmptyCooperation'
+    )
+    expect(studentDescriptionText).toBeInTheDocument()
+
+    const notesText = screen.getByText('cooperationsPage.details.notes')
+    expect(notesText).toBeInTheDocument()
   })
 })

@@ -46,7 +46,8 @@
     "lessons": "lessons ",
     "or": "or ",
     "quizzes": "quizzes ",
-    "resourcesLibrary": "from resource library."
+    "resourcesLibrary": "from resource library.",
+    "studentEmptyCooperation": "Nothing in here. Please wait until tutor add some resources for this course. You can leave a message for the tutor in the "
   },
   "button": {
     "create": "Create Activity"
