@@ -47,7 +47,7 @@ const AccountIcon: FC<AccountIconProps> = ({ openMenu }) => {
 
   let userNameInitials = ''
   if (!loading && firstName && lastName) {
-    userNameInitials = `${firstName[0] || ''}${lastName[0] || ''}`
+    userNameInitials = `${firstName[0]}${lastName[0]}`
   }
 
   return (

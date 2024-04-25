@@ -61,9 +61,7 @@ const useUpdateUser = (userId: string) => {
 
     if (updatedData.photo || updatedData.photo === null) {
       handleResponse()
-      setTimeout(() => {
-        window.location.reload()
-      }, 2000)
+      window.location.reload()
     }
 
     fetchData(updatedData).catch(console.error)
