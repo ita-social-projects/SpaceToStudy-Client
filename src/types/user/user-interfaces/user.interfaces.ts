@@ -13,6 +13,7 @@ import {
 
 export interface LocalStorage {
   'emoji-mart.last'?: string
+  language?: string
 }
 
 export interface GetUsersParams extends RequestParams {
