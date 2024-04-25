@@ -59,6 +59,13 @@ const useUpdateUser = (userId: string) => {
 
     if (photo !== undefined) updatedData.photo = photo
 
+    if (updatedData.photo) {
+      handleResponse()
+      setTimeout(() => {
+        window.location.reload()
+      }, 2000)
+    }
+
     fetchData(updatedData).catch(console.error)
   }
 

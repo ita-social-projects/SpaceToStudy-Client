@@ -1,5 +1,4 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react'
-import { expect } from 'vitest'
 import AccountIcon from '~/containers/navigation-icons/AccountIcon'
 import { renderWithProviders } from '~tests/test-utils'
 

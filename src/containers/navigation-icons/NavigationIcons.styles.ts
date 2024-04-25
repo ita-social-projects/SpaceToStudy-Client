@@ -1,4 +1,5 @@
 const hideOnMobile = { display: { xs: 'none', md: 'inherit' } }
+import { TypographyVariantEnum } from '~/types'
 
 export const styles = {
   iconBox: {
@@ -21,6 +22,7 @@ export const styles = {
   accountIcon: {
     ...hideOnMobile,
     color: 'primary.900',
-    ml: { sm: '12px', md: '7px', lg: '12px' }
+    ml: { sm: '12px', md: '7px', lg: '12px' },
+    typography: TypographyVariantEnum.Button
   }
 }

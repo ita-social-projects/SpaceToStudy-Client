@@ -27,31 +27,38 @@ const AccountIcon: FC<AccountIconProps> = ({ openMenu }) => {
     [userId, userRole]
   )
 
-  const { loading, response } = useAxios<UserResponse>({
+  const {
+    loading,
+    response: { photo, firstName, lastName }
+  } = useAxios<UserResponse>({
     service: getUserData,
     fetchOnMount: true,
     defaultResponse: defaultResponses.object as UserResponse
   })
 
-  const photoUrl =
-    response.photo &&
-    `${import.meta.env.VITE_APP_IMG_USER_URL}${response.photo}`
+  if (loading) {
+    return <Avatar sx={styles.accountIcon} />
+  }
 
-  const userNameForAvatar = loading
-    ? ''
-    : `${response.firstName?.slice(0, 1) || ''}${
-        response.lastName?.slice(0, 1) || ''
-      }`
+  let userPhoto = ''
+  if (!loading && photo) {
+    userPhoto = `${import.meta.env.VITE_APP_IMG_USER_URL}${photo}`
+  }
+
+  let userNameInitials = ''
+  if (!loading && firstName && lastName) {
+    userNameInitials = `${firstName[0] || ''}${lastName[0] || ''}`
+  }
 
   return (
     <Tooltip title={t('iconsTooltip.account')}>
       <Avatar
         alt='User'
         onClick={openMenu}
-        src={photoUrl}
+        src={userPhoto}
         sx={styles.accountIcon}
       >
-        {userNameForAvatar}
+        {userNameInitials}
       </Avatar>
     </Tooltip>
   )
