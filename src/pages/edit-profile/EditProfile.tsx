@@ -58,9 +58,9 @@ const EditProfile = () => {
   const handleBack = async () => {
     const confirmed = checkConfirmation({
       message: 'questions.goBackToProfile',
-      title: 'titles.saveChanges',
-      confirmButton: t('common.saveChanges'),
-      cancelButton: t('common.discard')
+      title: 'titles.discardChanges',
+      confirmButton: t('common.discard'),
+      cancelButton: t('common.cancel')
     })
     if (await confirmed) {
       navigate(authRoutes.accountMenu.myProfile.path)

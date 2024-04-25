@@ -1,9 +1,8 @@
-import { FC, useEffect } from 'react'
+import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Box } from '@mui/material'
 
 import { useProfileContext } from '~/context/profile-context'
-import useConfirm from '~/hooks/use-confirm'
 import useUpdateUser from '~/hooks/use-update-user'
 import { ButtonVariantEnum, ProfileTabProps, SizeEnum } from '~/types'
 
@@ -16,13 +15,6 @@ const ProfileTabInnerContainer: FC<ProfileTabProps> = ({ user }) => {
   const { t } = useTranslation()
   const { profileData } = useProfileContext()
   const { handleSubmit, loading } = useUpdateUser(user._id)
-  const { isConfirmed } = useConfirm()
-
-  useEffect(() => {
-    if (isConfirmed) {
-      handleSubmit(profileData.generalData.data)
-    }
-  }, [isConfirmed, handleSubmit, profileData.generalData.data])
 
   const hasError =
     profileData.generalData.errors &&
