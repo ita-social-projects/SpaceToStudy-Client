@@ -1,9 +1,19 @@
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
 import resources from '~/constants/translations'
-import { getFromLocalStorage } from '~/services/local-storage-service'
+import {
+  getFromLocalStorage,
+  setToLocalStorage
+} from '~/services/local-storage-service'
 
-const initialLanguage = getFromLocalStorage('language') || 'en'
+let initialLanguage = getFromLocalStorage('language')
+
+if (!initialLanguage) {
+  const browserLanguage = navigator.language.split('-')[0]
+  initialLanguage = browserLanguage === 'uk' ? 'ua' : 'en'
+
+  setToLocalStorage('language', initialLanguage)
+}
 
 void i18n.use(initReactI18next).init({
   resources,

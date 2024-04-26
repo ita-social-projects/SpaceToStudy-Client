@@ -1,11 +1,14 @@
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
+
 import MenuItem from '@mui/material/MenuItem'
 import Menu, { MenuProps } from '@mui/material/Menu'
-import { styles } from '~/containers/layout/language-menu/LanguageMenu.styles'
+
 import { languageMenuConstants } from '~/containers/layout/language-menu/LanguageMenu.constants'
 import { setToLocalStorage } from '~/services/local-storage-service'
 import { useSnackBarContext } from '~/context/snackbar-context'
+
+import { styles } from '~/containers/layout/language-menu/LanguageMenu.styles'
 
 interface LanguageMenuProps {
   anchorEl: MenuProps['anchorEl']
@@ -32,11 +35,13 @@ const LanguageMenu: FC<LanguageMenuProps> = ({ anchorEl, onClose }) => {
   }
 
   const menuItems = languageMenuConstants.map(({ language, languageCode }) => {
+    const sx = i18n.language === languageCode ? styles.active : undefined
+
     return (
       <MenuItem
         key={languageCode}
         onClick={() => handleLanguageChange(languageCode)}
-        sx={i18n.language === languageCode ? styles.active : {}}
+        sx={sx}
       >
         {language}
       </MenuItem>
