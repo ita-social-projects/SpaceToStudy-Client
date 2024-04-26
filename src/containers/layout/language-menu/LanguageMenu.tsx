@@ -35,13 +35,14 @@ const LanguageMenu: FC<LanguageMenuProps> = ({ anchorEl, onClose }) => {
   }
 
   const menuItems = languageMenuConstants.map(({ language, languageCode }) => {
-    const sx = i18n.language === languageCode ? styles.active : undefined
+    const menuItemStyles =
+      i18n.language === languageCode ? styles.active : undefined
 
     return (
       <MenuItem
         key={languageCode}
         onClick={() => handleLanguageChange(languageCode)}
-        sx={sx}
+        sx={menuItemStyles}
       >
         {language}
       </MenuItem>
