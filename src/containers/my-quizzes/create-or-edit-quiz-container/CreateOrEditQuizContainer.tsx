@@ -6,6 +6,7 @@ import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
 import EditIcon from '@mui/icons-material/Edit'
 import AddIcon from '@mui/icons-material/Add'
+import { Tooltip } from '@mui/material'
 
 import AddResources from '~/containers/add-resources/AddResources'
 import CreateOrEditQuizQuestion from '~/containers/my-quizzes/create-or-edit-quiz-question/CreateOrEditQuizQuestion'
@@ -184,17 +185,7 @@ const CreateOrEditQuizContainer = ({
     setDescription(e.target.value)
   }
 
-  // const onOpenCreateQuestion = () => setIsCreationOpen(true)
-  const onOpenCreateQuestion = () => {
-    if (isCreationOpen) {
-      setAlert({
-        severity: snackbarVariants.info,
-        message: t('myResourcesPage.quizzes.savePreviousQuestion')
-      })
-      return
-    }
-    setIsCreationOpen(true)
-  }
+  const onOpenCreateQuestion = () => setIsCreationOpen(true)
   const onCloseCreateQuestion = () => setIsCreationOpen(false)
 
   const onSaveQuiz = () =>
@@ -207,6 +198,18 @@ const CreateOrEditQuizContainer = ({
           category
         })
       : void addNewQuiz({ title, description, items: questions, category })
+
+  const createNewQuestionButtonInactive = (
+    <Tooltip
+      placement='top'
+      title={t('myResourcesPage.quizzes.savePreviousQuestion')}
+    >
+      <AppButton size={SizeEnum.ExtraLarge} variant={ButtonVariantEnum.Tonal}>
+        {t('myResourcesPage.quizzes.createNewQuestion')}
+        <EditIcon fontSize={SizeEnum.Small} />
+      </AppButton>
+    </Tooltip>
+  )
 
   return (
     <PageWrapper sx={styles.container}>
@@ -246,14 +249,19 @@ const CreateOrEditQuizContainer = ({
           />
         )}
         <Box sx={styles.functionalButtons}>
-          <AppButton
-            onClick={onOpenCreateQuestion}
-            size={SizeEnum.ExtraLarge}
-            variant={ButtonVariantEnum.Tonal}
-          >
-            {t('myResourcesPage.quizzes.createNewQuestion')}
-            <EditIcon fontSize={SizeEnum.Small} />
-          </AppButton>
+          {isCreationOpen ? (
+            createNewQuestionButtonInactive
+          ) : (
+            <AppButton
+              onClick={onOpenCreateQuestion}
+              size={SizeEnum.ExtraLarge}
+              variant={ButtonVariantEnum.Tonal}
+            >
+              {t('myResourcesPage.quizzes.createNewQuestion')}
+              <EditIcon fontSize={SizeEnum.Small} />
+            </AppButton>
+          )}
+
           <AppButton
             onClick={onOpenAddQuestionsModal}
             size={SizeEnum.ExtraLarge}

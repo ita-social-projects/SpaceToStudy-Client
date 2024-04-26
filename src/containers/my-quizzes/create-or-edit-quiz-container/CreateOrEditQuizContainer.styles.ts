@@ -63,6 +63,7 @@ export const styles = {
       width: '100%'
     }
   },
+
   labelCategory: {
     color: 'primary.600',
     maxWidth: '464px',
