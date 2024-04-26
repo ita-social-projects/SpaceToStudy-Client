@@ -51,7 +51,7 @@ const AccountIcon: FC<AccountIconProps> = ({ openMenu }) => {
   }
 
   return (
-    <Tooltip title={t('iconsTooltip.account')}>
+    <Tooltip arrow title={t('iconsTooltip.account')}>
       <Avatar
         alt='User'
         onClick={openMenu}
