@@ -199,8 +199,9 @@ const CreateOrEditQuizContainer = ({
         })
       : void addNewQuiz({ title, description, items: questions, category })
 
-  const createNewQuestionButtonInactive = (
+  const CreateQuestionButton = isCreationOpen ? (
     <Tooltip
+      arrow
       placement='top'
       title={t('myResourcesPage.quizzes.savePreviousQuestion')}
     >
@@ -209,6 +210,15 @@ const CreateOrEditQuizContainer = ({
         <EditIcon fontSize={SizeEnum.Small} />
       </AppButton>
     </Tooltip>
+  ) : (
+    <AppButton
+      onClick={onOpenCreateQuestion}
+      size={SizeEnum.ExtraLarge}
+      variant={ButtonVariantEnum.Tonal}
+    >
+      {t('myResourcesPage.quizzes.createNewQuestion')}
+      <EditIcon fontSize={SizeEnum.Small} />
+    </AppButton>
   )
 
   return (
@@ -249,19 +259,7 @@ const CreateOrEditQuizContainer = ({
           />
         )}
         <Box sx={styles.functionalButtons}>
-          {isCreationOpen ? (
-            createNewQuestionButtonInactive
-          ) : (
-            <AppButton
-              onClick={onOpenCreateQuestion}
-              size={SizeEnum.ExtraLarge}
-              variant={ButtonVariantEnum.Tonal}
-            >
-              {t('myResourcesPage.quizzes.createNewQuestion')}
-              <EditIcon fontSize={SizeEnum.Small} />
-            </AppButton>
-          )}
-
+          {CreateQuestionButton}
           <AppButton
             onClick={onOpenAddQuestionsModal}
             size={SizeEnum.ExtraLarge}
