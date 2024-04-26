@@ -18,6 +18,7 @@ const useUpdateUser = (userId: string) => {
       severity: snackbarVariants.success,
       message: 'editProfilePage.profile.successMessage'
     })
+    window.location.reload()
   }
 
   const handleResponseError = (error: ErrorResponse) => {
@@ -58,11 +59,6 @@ const useUpdateUser = (userId: string) => {
     }
 
     if (photo !== undefined) updatedData.photo = photo
-
-    if (updatedData.photo || updatedData.photo === null) {
-      handleResponse()
-      window.location.reload()
-    }
 
     fetchData(updatedData).catch(console.error)
   }
