@@ -1,5 +1,4 @@
 import { screen, fireEvent, act, waitFor } from '@testing-library/react'
-import { beforeEach, expect } from 'vitest'
 import EmptyCooperationActivities from '~/containers/my-cooperations/empty-cooperation-activities/EmptyCooperationActivities'
 import { renderWithProviders } from '~tests/test-utils'
 
@@ -71,11 +70,18 @@ describe('Cooperation empty activities for student', () => {
 
   it('Should render component with content', () => {
     const studentDescriptionText = screen.getByText(
-      'cooperationsPage.description.studentEmptyCooperation'
+      'cooperationsPage.description.seems'
     )
     expect(studentDescriptionText).toBeInTheDocument()
 
-    const notesText = screen.getByText('cooperationsPage.details.notes')
-    expect(notesText).toBeInTheDocument()
+    const noActivities = screen.getByText(
+      'cooperationsPage.description.noActivities'
+    )
+    expect(noActivities).toBeInTheDocument()
+
+    const engageTutor = screen.getByText(
+      'cooperationsPage.description.engageTutor'
+    )
+    expect(engageTutor).toBeInTheDocument()
   })
 })

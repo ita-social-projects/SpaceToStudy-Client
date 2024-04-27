@@ -8,6 +8,7 @@ import defaultImg from '~/assets/img/cooperation-details/default.svg'
 import { styles } from '~/containers/my-cooperations/empty-cooperation-activities/EmptyCooperationActivities.styles'
 import { useAppSelector } from '~/hooks/use-redux'
 import EmptyCooperationTutorControls from '~/containers/my-cooperations/empty-cooperation-activities/EmptyCooperationTutorControls'
+import { componentDescription } from '~/containers/my-cooperations/empty-cooperation-activities/EmptyCooperation.constants'
 import { ReactElement } from 'react'
 
 const EmptyCooperationActivities = () => {
@@ -28,37 +29,27 @@ const EmptyCooperationActivities = () => {
     </Typography>
   )
 
-  const componentDescription: Partial<
-    Record<UserRoleEnum, string | ReactElement>
-  > = {
-    [UserRoleEnum.Tutor]: (
-      <>
-        {t('cooperationsPage.description.existingCourse')}
-        {createDescriptionSpan({ text: 'courseTemplate' })}
-        {t('cooperationsPage.description.resourceLibrary')}
-        {createDescriptionSpan({ text: 'module' })}
-        {t('cooperationsPage.description.fillThis')}
-        {createDescriptionSpan({ text: 'lessons' })}
-        {t('cooperationsPage.description.or')}
-        {createDescriptionSpan({ text: 'quizzes' })}
-        {t('cooperationsPage.description.resourcesLibrary')}
-      </>
-    ),
-    [UserRoleEnum.Student]: (
-      <>
-        {t('cooperationsPage.description.studentEmptyCooperation')}{' '}
-        {createDescriptionSpan({
-          text: 'notes',
-          from: 'details',
-          context: 'where'
-        })}
-      </>
-    )
+  const textDescription = () => {
+    let description: string | ReactElement = ''
+
+    if (userRole) {
+      description = (
+        <>
+          {componentDescription[userRole]?.map(({ text, isSpan }) =>
+            isSpan
+              ? createDescriptionSpan({ text })
+              : t(`cooperationsPage.description.${text}`)
+          )}
+        </>
+      )
+    }
+    return description
   }
+
   return (
     <Box sx={styles.logoBlock}>
       <ImgTitleDescription
-        description={userRole && componentDescription[userRole]}
+        description={textDescription()}
         img={defaultImg}
         style={styles}
       />

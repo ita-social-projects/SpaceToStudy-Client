@@ -35,7 +35,7 @@ const EmptyCooperationTutorControls: FC = () => {
     })
   }
 
-  const menuIcon = isMenuOpen ? (
+  const MenuIcon = isMenuOpen ? (
     <KeyboardArrowUpIcon />
   ) : (
     <KeyboardArrowDownIcon />
@@ -49,13 +49,13 @@ const EmptyCooperationTutorControls: FC = () => {
   const menuItems = [
     {
       id: 1,
-      label: <>{t('cooperationsPage.manyTypes.courseTemplate')}</>,
+      label: 'courseTemplate',
       icon: <ViewComfyOutlinedIcon />,
       onClick: openAddCourseTemplateModal
     },
     {
       id: 2,
-      label: <>{t('cooperationsPage.manyTypes.scratch')}</>,
+      label: 'scratch',
       icon: <Crop75Icon />,
       onClick: handleFromScratch
     }
@@ -63,26 +63,26 @@ const EmptyCooperationTutorControls: FC = () => {
 
   const menu = menuItems.map(({ id, label, icon, onClick }) => (
     <MenuItem key={id} onClick={onClick} sx={styles.menuItem}>
-      {icon} {label}
+      {icon} {t(`cooperationsPage.manyTypes.${label}`)}
     </MenuItem>
   ))
 
-  const startIcon = <AddIcon fontSize={SizeEnum.Small} />
+  const StartIcon = <AddIcon fontSize={SizeEnum.Small} />
 
-  const menuCondition = renderMenu(menu)
+  const MenuDropdown = renderMenu(menu)
   return (
     <>
       <AppButton
-        endIcon={menuIcon}
+        endIcon={MenuIcon}
         onClick={handleMenuClick()}
         size={SizeEnum.Large}
-        startIcon={startIcon}
+        startIcon={StartIcon}
         sx={styles.button}
         variant={ButtonVariantEnum.Contained}
       >
         {t('cooperationsPage.button.create')}
       </AppButton>
-      {menuCondition}
+      {MenuDropdown}
     </>
   )
 }

@@ -10,9 +10,7 @@ interface ImgTitleDescriptionProps {
   img?: string
   title?: string
   description?: string | ReactElement
-  style?: {
-    [key: string]: SxProps
-  }
+  style?: Record<string, SxProps>
 }
 
 const ImgTitleDescription: FC<ImgTitleDescriptionProps> = ({
