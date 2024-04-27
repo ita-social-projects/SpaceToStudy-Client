@@ -7,5 +7,6 @@
   "successAddedLesson": "Урок успішно створено",
   "successEditedLesson": "Урок успішно змінено",
   "content": "Зміст",
-  "attachments": "Вкладення"
+  "attachments": "Вкладення",
+  "fileEditorPlaceholder": "Створіть свій файл тут..."
 }

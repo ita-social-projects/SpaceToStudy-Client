@@ -86,9 +86,11 @@ describe('LessonDetails', () => {
     })
   })
 
-  it('should ...', async () => {
+  it('should handle lesson editing', async () => {
     const editButton = screen.getByText('common.edit')
 
     fireEvent.click(editButton)
+
+    expect(mockNavigate).toHaveBeenCalled()
   })
 })
