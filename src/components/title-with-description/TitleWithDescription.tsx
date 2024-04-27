@@ -29,7 +29,7 @@ const TitleWithDescription = ({
 
   return (
     <Box sx={style.wrapper}>
-      <Typography sx={style.title}>{title}</Typography>
+      {title && <Typography sx={style.title}>{title}</Typography>}
       {isDescriptionTooltip ? (
         <Tooltip open={tooltipVisible} placement='bottom' title={description}>
           <Typography onClick={handleTooltip} sx={style.description}>

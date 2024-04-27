@@ -70,7 +70,7 @@ describe('Cooperation empty activities for student', () => {
 
   it('Should render component with content', () => {
     const studentDescriptionText = screen.getByText(
-      'cooperationsPage.description.seems'
+      /cooperationsPage\.description\.seems/i
     )
     expect(studentDescriptionText).toBeInTheDocument()
 
@@ -80,7 +80,7 @@ describe('Cooperation empty activities for student', () => {
     expect(noActivities).toBeInTheDocument()
 
     const engageTutor = screen.getByText(
-      'cooperationsPage.description.engageTutor'
+      /cooperationsPage\.description\.engageTutor/i
     )
     expect(engageTutor).toBeInTheDocument()
   })
