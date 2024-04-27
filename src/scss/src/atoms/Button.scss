@@ -1,9 +1,11 @@
-@import '../foundation/mixins';
-@import '../foundation/colors';
-@import '../foundation/typography';
+@import '../foundation/all';
 
 .s2s-button {
-  @extend %button-base;
+  font-size: var(--s2s-button-font-size, $fs-base);
+  font-weight: var(--s2s-button-font-weight, $fw-medium);
+  line-height: var(--s2s-button-line-height, $lh-base);
+  letter-spacing: var(--s2s-button-letter-spacing, $ls-base);
+  text-transform: var(--s2s-button-text-transform, $tt-none);
 
   &__small {
     @extend %size-small;
@@ -36,14 +38,6 @@
   &__text {
     @extend %variant-text;
   }
-}
-
-%button-base {
-  font-size: var(--s2s-button-font-size, $fs-base);
-  font-weight: var(--s2s-button-font-weight, $fw-medium);
-  line-height: var(--s2s-button-line-height, $lh-base);
-  letter-spacing: var(--s2s-button-letter-spacing, $ls-base);
-  text-transform: var(--s2s-button-text-transform, $tt-none);
 }
 
 %size-small {
