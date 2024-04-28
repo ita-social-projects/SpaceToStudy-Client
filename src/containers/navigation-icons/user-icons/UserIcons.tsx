@@ -24,7 +24,7 @@ const UserIcons: FC<UserIconsProps> = ({ setSidebarOpen }) => {
   const [notificationItems, setNotificationItems] =
     useState<Notification[]>(mockNotifications)
   const {
-    anchorEl: accountenuAnchorEl,
+    anchorEl: accountMenuAnchorEl,
     openMenu: openAccountMenu,
     closeMenu: closeAccountMenu
   } = useMenu()
@@ -81,7 +81,7 @@ const UserIcons: FC<UserIconsProps> = ({ setSidebarOpen }) => {
         anchorEl={languageMenuAnchorEl}
         onClose={closeLanguageMenu}
       />
-      <AccountMenu anchorEl={accountenuAnchorEl} onClose={closeAccountMenu} />
+      <AccountMenu anchorEl={accountMenuAnchorEl} onClose={closeAccountMenu} />
       <NotificationsMenu
         anchorEl={notificationsAnchor}
         items={notificationItems}
