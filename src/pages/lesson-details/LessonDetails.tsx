@@ -5,6 +5,7 @@ import { AxiosResponse } from 'axios'
 import Box from '@mui/material/Box'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import EditIcon from '@mui/icons-material/Edit'
+import DOMPurify from 'dompurify'
 
 import Loader from '~/components/loader/Loader'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
@@ -75,12 +76,14 @@ const LessonDetails = () => {
     </Box>
   ))
 
+  const sanitizedHtmlContent = DOMPurify.sanitize(response.content)
+
   const items = [
     {
       title: 'lesson.content',
       content: (
         <Box
-          dangerouslySetInnerHTML={{ __html: response.content }}
+          dangerouslySetInnerHTML={{ __html: sanitizedHtmlContent }}
           sx={styles.content}
         />
       )
