@@ -199,26 +199,45 @@ const CreateOrEditQuizContainer = ({
         })
       : void addNewQuiz({ title, description, items: questions, category })
 
-  const CreateQuestionButton = isCreationOpen ? (
+  // const CreateQuestionButton = isCreationOpen ? (
+  //   <Tooltip
+  //     arrow
+  //     placement='top'
+  //     title={t('myResourcesPage.quizzes.savePreviousQuestion')}
+  //   >
+  //     <AppButton size={SizeEnum.ExtraLarge} variant={ButtonVariantEnum.Tonal}>
+  //       {t('myResourcesPage.quizzes.createNewQuestion')}
+  //       <EditIcon fontSize={SizeEnum.Small} />
+  //     </AppButton>
+  //   </Tooltip>
+  // ) : (
+  //   <AppButton
+  //     onClick={onOpenCreateQuestion}
+  //     size={SizeEnum.ExtraLarge}
+  //     variant={ButtonVariantEnum.Tonal}
+  //   >
+  //     {t('myResourcesPage.quizzes.createNewQuestion')}
+  //     <EditIcon fontSize={SizeEnum.Small} />
+  //   </AppButton>
+  // )
+
+  const CreateQuestionButton = (
     <Tooltip
       arrow
       placement='top'
-      title={t('myResourcesPage.quizzes.savePreviousQuestion')}
+      title={
+        isCreationOpen ? t('myResourcesPage.quizzes.savePreviousQuestion') : ''
+      }
     >
-      <AppButton size={SizeEnum.ExtraLarge} variant={ButtonVariantEnum.Tonal}>
+      <AppButton
+        onClick={onOpenCreateQuestion}
+        size={SizeEnum.ExtraLarge}
+        variant={ButtonVariantEnum.Tonal}
+      >
         {t('myResourcesPage.quizzes.createNewQuestion')}
         <EditIcon fontSize={SizeEnum.Small} />
       </AppButton>
     </Tooltip>
-  ) : (
-    <AppButton
-      onClick={onOpenCreateQuestion}
-      size={SizeEnum.ExtraLarge}
-      variant={ButtonVariantEnum.Tonal}
-    >
-      {t('myResourcesPage.quizzes.createNewQuestion')}
-      <EditIcon fontSize={SizeEnum.Small} />
-    </AppButton>
   )
 
   return (
