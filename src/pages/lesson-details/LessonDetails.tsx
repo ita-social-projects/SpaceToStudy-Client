@@ -5,6 +5,7 @@ import { AxiosResponse } from 'axios'
 import Box from '@mui/material/Box'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import EditIcon from '@mui/icons-material/Edit'
+import DOMPurify from 'dompurify'
 
 import Loader from '~/components/loader/Loader'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
@@ -21,13 +22,15 @@ import { authRoutes } from '~/router/constants/authRoutes'
 import { styles } from '~/pages/lesson-details/LessonsDetails.styles'
 import { Lesson, TypographyVariantEnum } from '~/types'
 import { createUrlPath } from '~/utils/helper-functions'
+import { useAppSelector } from '~/hooks/use-redux'
 
 const LessonDetails = () => {
-  const [activeItems, setActiveItems] = useState<number[]>([])
+  const [activeItems, setActiveItems] = useState<number[]>([0])
 
-  const { id } = useParams()
+  const { lessonId } = useParams()
   const navigate = useNavigate()
   const { t } = useTranslation()
+  const { userId } = useAppSelector((state) => state.appMain)
 
   const onChange = (activeItem: number) => {
     setActiveItems((prevActiveItems) => {
@@ -47,8 +50,8 @@ const LessonDetails = () => {
   )
 
   const getLesson = useCallback((): Promise<AxiosResponse> => {
-    return ResourceService.getLesson(id)
-  }, [id])
+    return ResourceService.getLesson(lessonId)
+  }, [lessonId])
 
   const { loading, response } = useAxios<Lesson, string>({
     service: getLesson,
@@ -61,7 +64,7 @@ const LessonDetails = () => {
   }
 
   const handleEditLesson = () => {
-    navigate(createUrlPath(authRoutes.myResources.editLesson.path, id))
+    navigate(createUrlPath(authRoutes.myResources.editLesson.path, lessonId))
   }
 
   const attachmentsList = response.attachments.map((attachment) => (
@@ -73,10 +76,17 @@ const LessonDetails = () => {
     </Box>
   ))
 
+  const sanitizedHtmlContent = DOMPurify.sanitize(response.content)
+
   const items = [
     {
       title: 'lesson.content',
-      content: <div dangerouslySetInnerHTML={{ __html: response.content }} />
+      content: (
+        <Box
+          dangerouslySetInnerHTML={{ __html: sanitizedHtmlContent }}
+          sx={styles.content}
+        />
+      )
     },
     {
       title: 'lesson.attachments',
@@ -84,26 +94,32 @@ const LessonDetails = () => {
     }
   ]
 
+  const isEditable = userId === response.author
+
   return (
     <PageWrapper>
-      <AppButton onClick={handleEditLesson} sx={styles.button}>
-        {t('common.edit')} <EditIcon sx={styles.editIcon} />
-      </AppButton>
-      <TitleWithDescription
-        description={response.description}
-        style={styles.titleWithDescription}
-        title={response.title}
-      />
-      <Accordions
-        activeIndex={activeItems}
-        descriptionVariant={TypographyVariantEnum.Body2}
-        icon={<ExpandMoreIcon />}
-        items={items}
-        multiple
-        onChange={onChange}
-        sx={styles.accordion}
-        titleVariant={TypographyVariantEnum.Subtitle2}
-      />
+      {isEditable && (
+        <AppButton onClick={handleEditLesson} sx={styles.button}>
+          {t('common.edit')} <EditIcon sx={styles.editIcon} />
+        </AppButton>
+      )}
+      <Box sx={styles.lessonWrapper}>
+        <TitleWithDescription
+          description={response.description}
+          style={styles.titleWithDescription}
+          title={response.title}
+        />
+        <Accordions
+          activeIndex={activeItems}
+          descriptionVariant={TypographyVariantEnum.Body2}
+          icon={<ExpandMoreIcon />}
+          items={items}
+          multiple
+          onChange={onChange}
+          sx={styles.accordion}
+          titleVariant={TypographyVariantEnum.Subtitle2}
+        />
+      </Box>
     </PageWrapper>
   )
 }

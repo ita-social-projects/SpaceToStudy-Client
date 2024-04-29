@@ -7,5 +7,6 @@
   "successAddedLesson": "Lesson was successfully created",
   "successEditedLesson": "Lesson was successfully edited",
   "content": "Content",
-  "attachments": "Attachments"
+  "attachments": "Attachments",
+  "fileEditorPlaceholder": "Create your file here..."
 }

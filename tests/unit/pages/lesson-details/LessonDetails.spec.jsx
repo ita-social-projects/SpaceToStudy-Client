@@ -1,21 +1,25 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react'
-import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
-import { URLs } from '~/constants/request'
+import { renderWithProviders } from '~tests/test-utils'
+import { ResourceService } from '~/services/resource-service'
 import LessonDetails from '~/pages/lesson-details/LessonDetails'
 
 const lessonId = '64ef41f7806a06c65338c433'
+const mockNavigate = vi.fn()
+
+vi.mock('~/services/resource-service')
 
 vi.mock('react-router-dom', async () => {
   const actual = await vi.importActual('react-router-dom')
   return {
     ...actual,
+    useNavigate: () => mockNavigate,
     useParams: () => ({
-      id: lessonId
+      lessonId
     })
   }
 })
-const userId = '63f5d0ebb'
 
+const userId = '6477007a6fa4d05e1a800ce5'
 const mockState = {
   appMain: { userId: userId, userRole: 'tutor' }
 }
@@ -47,13 +51,14 @@ const lessonMock = {
   ]
 }
 
+ResourceService.getLesson.mockResolvedValue({
+  data: lessonMock
+})
+
 describe('LessonDetails', () => {
   beforeEach(async () => {
     await waitFor(() => {
       renderWithProviders(<LessonDetails />, { preloadedState: mockState })
-      mockAxiosClient
-        .onGet(`${URLs.resources.lessons.get}/${lessonId}`)
-        .reply(200, lessonMock)
     })
   })
 
@@ -65,13 +70,27 @@ describe('LessonDetails', () => {
     expect(description).toBeInTheDocument()
   })
 
-  it('should open content', async () => {
+  it('should open and close content', async () => {
     const title = await screen.findByText('lesson.attachments')
 
     fireEvent.click(title)
 
     const attachment = screen.getByText('file1.png')
     expect(title).toBeInTheDocument()
-    expect(attachment).toBeInTheDocument()
+    expect(attachment).toBeVisible()
+
+    fireEvent.click(title)
+
+    await waitFor(() => {
+      expect(attachment).not.toBeVisible()
+    })
+  })
+
+  it('should handle lesson editing', async () => {
+    const editButton = screen.getByText('common.edit')
+
+    fireEvent.click(editButton)
+
+    expect(mockNavigate).toHaveBeenCalled()
   })
 })

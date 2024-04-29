@@ -150,6 +150,11 @@ export const authRouter = (
       path={authRoutes.lessonDetails.route}
     />
     <Route
+      element={<LessonDetails />}
+      handle={{ crumb: [myCooperations, cooperationDetails, lessonDetails] }}
+      path={authRoutes.cooperationLessonDetails.route}
+    />
+    <Route
       element={<NewQuiz />}
       handle={{ crumb: [myResources, newQuiz] }}
       path={authRoutes.myResources.newQuiz.route}
