@@ -21,7 +21,7 @@ describe('AccountIcon test with user role', () => {
   })
 
   it('should render click menu icon and open account menu after click on it', async () => {
-    const AccountIconButton = await screen.findByAltText('User')
+    const AccountIconButton = await screen.findByAltText('User Avatar')
     expect(AccountIconButton).toBeInTheDocument()
 
     fireEvent.click(AccountIconButton)
