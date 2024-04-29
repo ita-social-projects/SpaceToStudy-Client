@@ -3,13 +3,13 @@ import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import ImgTitleDescription from '~/components/img-title-description/ImgTitleDescription'
 
-import { ComponentEnum, UserRoleEnum } from '~/types'
+import { ComponentEnum, UserRole, UserRoleEnum } from '~/types'
 import defaultImg from '~/assets/img/cooperation-details/default.svg'
 import { styles } from '~/containers/my-cooperations/empty-cooperation-activities/EmptyCooperationActivities.styles'
 import { useAppSelector } from '~/hooks/use-redux'
 import EmptyCooperationTutorControls from '~/containers/my-cooperations/empty-cooperation-activities/EmptyCooperationTutorControls'
 import { componentDescription } from '~/containers/my-cooperations/empty-cooperation-activities/EmptyCooperation.constants'
-import { ReactElement } from 'react'
+import { ReactNode } from 'react'
 
 const EmptyCooperationActivities = () => {
   const { userRole } = useAppSelector((state) => state.appMain)
@@ -29,27 +29,22 @@ const EmptyCooperationActivities = () => {
     </Typography>
   )
 
-  const textDescription = () => {
-    let description: string | ReactElement = ''
+  let description: ReactNode = ''
+  const textDescriptionArray =
+    componentDescription[userRole as Exclude<UserRole, UserRoleEnum.Admin>]
 
-    if (userRole) {
-      description = (
-        <>
-          {componentDescription[userRole]?.map(({ text, isSpan }) =>
-            isSpan
-              ? createDescriptionSpan({ text })
-              : t(`cooperationsPage.description.${text}`)
-          )}
-        </>
-      )
-    }
-    return description
+  if (userRole in componentDescription) {
+    description = textDescriptionArray.map(({ text, isSpan }) =>
+      isSpan
+        ? createDescriptionSpan({ text })
+        : t(`cooperationsPage.description.${text}`)
+    )
   }
 
   return (
     <Box sx={styles.logoBlock}>
       <ImgTitleDescription
-        description={textDescription()}
+        description={description}
         img={defaultImg}
         style={styles}
       />

@@ -48,21 +48,19 @@ const EmptyCooperationTutorControls: FC = () => {
 
   const menuItems = [
     {
-      id: 1,
       label: 'courseTemplate',
       icon: <ViewComfyOutlinedIcon />,
       onClick: openAddCourseTemplateModal
     },
     {
-      id: 2,
       label: 'scratch',
       icon: <Crop75Icon />,
       onClick: handleFromScratch
     }
   ]
 
-  const menu = menuItems.map(({ id, label, icon, onClick }) => (
-    <MenuItem key={id} onClick={onClick} sx={styles.menuItem}>
+  const menu = menuItems.map(({ label, icon, onClick }) => (
+    <MenuItem key={label} onClick={onClick} sx={styles.menuItem}>
       {icon} {t(`cooperationsPage.manyTypes.${label}`)}
     </MenuItem>
   ))

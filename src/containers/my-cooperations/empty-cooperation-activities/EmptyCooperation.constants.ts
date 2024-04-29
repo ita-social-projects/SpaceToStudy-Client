@@ -1,7 +1,8 @@
 import { UserRoleEnum } from '~/types'
 
-export const componentDescription: Partial<
-  Record<UserRoleEnum, Array<{ text: string; isSpan?: boolean }>>
+export const componentDescription: Record<
+  Exclude<UserRoleEnum, UserRoleEnum.Admin>,
+  Array<{ text: string; isSpan?: boolean }>
 > = {
   [UserRoleEnum.Tutor]: [
     { text: 'existingCourse' },
