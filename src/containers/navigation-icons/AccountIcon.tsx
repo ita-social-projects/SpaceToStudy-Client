@@ -1,4 +1,4 @@
-import { useCallback, FC } from 'react'
+import { useCallback, FC, MouseEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useAppSelector } from '~/hooks/use-redux'
 import { AxiosResponse } from 'axios'
@@ -15,7 +15,7 @@ import { styles } from '~/containers/navigation-icons/NavigationIcons.styles'
 import { UserResponse, UserRole } from '~/types'
 
 interface AccountIconProps {
-  openMenu: () => void
+  openMenu: (event: MouseEvent) => void
 }
 
 const AccountIcon: FC<AccountIconProps> = ({ openMenu }) => {

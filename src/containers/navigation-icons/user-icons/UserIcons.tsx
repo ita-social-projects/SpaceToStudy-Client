@@ -82,7 +82,7 @@ const UserIcons: FC<UserIconsProps> = ({ setSidebarOpen }) => {
         anchorEl={languageMenuAnchorEl}
         onClose={closeLanguageMenu}
       />
-      <AccountIcon openMenu={openMenu} />
+      <AccountIcon openMenu={openAccountMenu} />
       <AccountMenu anchorEl={accountMenuAnchorEl} onClose={closeAccountMenu} />
       <NotificationsMenu
         anchorEl={notificationsAnchor}
