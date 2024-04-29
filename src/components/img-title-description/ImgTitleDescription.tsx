@@ -1,4 +1,4 @@
-import { FC, ReactElement } from 'react'
+import { FC, ReactNode } from 'react'
 
 import Box from '@mui/material/Box'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
@@ -9,10 +9,8 @@ import { styles } from '~/components/img-title-description/ImgTitleDescription.s
 interface ImgTitleDescriptionProps {
   img?: string
   title?: string
-  description?: string | ReactElement
-  style?: {
-    [key: string]: SxProps
-  }
+  description?: ReactNode
+  style?: Record<string, SxProps>
 }
 
 const ImgTitleDescription: FC<ImgTitleDescriptionProps> = ({

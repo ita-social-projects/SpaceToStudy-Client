@@ -46,7 +46,10 @@
     "lessons": "lessons ",
     "or": "or ",
     "quizzes": "quizzes ",
-    "resourcesLibrary": "from resource library."
+    "resourcesLibrary": "from resource library.",
+    "seems": "Looks like there’re", 
+    "noActivities": " no activities added ",
+    "engageTutor": "yet. As a student, you're here to engage with the materials provided by your tutor."
   },
   "button": {
     "create": "Create Activity"
