@@ -1,10 +1,10 @@
 export const languageMenuConstants = [
   {
-    languageCode: 'en',
-    language: 'English'
+    value: 'en',
+    label: 'English'
   },
   {
-    languageCode: 'ua',
-    language: 'Українська'
+    value: 'ua',
+    label: 'Українська'
   }
 ]
