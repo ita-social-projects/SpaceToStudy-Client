@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
 
+import useMenu from '~/hooks/use-menu'
 import NavigationIcon from '~/components/navigation-icon/NavigationIcon'
 import {
   mockNotifications,
@@ -12,6 +13,7 @@ import {
 import { styles } from '~/containers/navigation-icons/NavigationIcons.styles'
 import AccountMenu from '~/containers/layout/account-menu/AccountMenu'
 import NotificationsMenu from '~/containers/layout/notifications-menu/NotificationsMenu'
+import LanguageMenu from '~/containers/layout/language-menu/LanguageMenu'
 import { Notification } from '~/types'
 
 interface UserIconsProps {
@@ -21,16 +23,25 @@ interface UserIconsProps {
 const UserIcons: FC<UserIconsProps> = ({ setSidebarOpen }) => {
   const [notificationItems, setNotificationItems] =
     useState<Notification[]>(mockNotifications)
-  const [menuAnchorEl, setMenuAnchorEl] = useState<HTMLElement | null>(null)
-  const [notificationsAnchor, setNotificationsAnchor] =
-    useState<HTMLElement | null>(null)
-  const anchorRef = useRef<HTMLDivElement | null>(null)
+  const {
+    anchorEl: accountMenuAnchorEl,
+    openMenu: openAccountMenu,
+    closeMenu: closeAccountMenu
+  } = useMenu()
+  const {
+    anchorEl: notificationsAnchor,
+    openMenu: openNotifications,
+    closeMenu: closeNotifications
+  } = useMenu()
+  const {
+    anchorEl: languageMenuAnchorEl,
+    openMenu: openLanguageMenu,
+    closeMenu: closeLanguageMenu
+  } = useMenu()
+
   const { t } = useTranslation()
 
-  const openMenu = () => setMenuAnchorEl(anchorRef.current)
-  const closeMenu = () => setMenuAnchorEl(null)
-  const openNotifications = () => setNotificationsAnchor(anchorRef.current)
-  const closeNotifications = () => setNotificationsAnchor(null)
+  const anchorRef = useRef<HTMLDivElement | null>(null)
 
   const icons = userIcons.map(
     (item) =>
@@ -40,9 +51,10 @@ const UserIcons: FC<UserIconsProps> = ({ setSidebarOpen }) => {
             notifications: notificationItems.length
           })}
           buttonProps={item.buttonProps({
-            openMenu,
+            openAccountMenu,
             openNotifications,
-            setSidebarOpen
+            setSidebarOpen,
+            openLanguageMenu
           })}
           icon={item.icon}
           key={item.tooltip}
@@ -65,7 +77,11 @@ const UserIcons: FC<UserIconsProps> = ({ setSidebarOpen }) => {
   return (
     <Box ref={anchorRef} sx={styles.iconBox}>
       {icons}
-      <AccountMenu anchorEl={menuAnchorEl} onClose={closeMenu} />
+      <LanguageMenu
+        anchorEl={languageMenuAnchorEl}
+        onClose={closeLanguageMenu}
+      />
+      <AccountMenu anchorEl={accountMenuAnchorEl} onClose={closeAccountMenu} />
       <NotificationsMenu
         anchorEl={notificationsAnchor}
         items={notificationItems}

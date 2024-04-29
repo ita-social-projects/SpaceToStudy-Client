@@ -15,9 +15,10 @@ import { styles } from '~/containers/navigation-icons/NavigationIcons.styles'
 
 type ButtonProps = (props: {
   openLoginDialog?: () => void
-  openMenu?: () => void
+  openAccountMenu?: (event: React.MouseEvent<HTMLButtonElement>) => void
   setSidebarOpen?: () => void
-  openNotifications?: () => void
+  openNotifications?: (event: React.MouseEvent<HTMLButtonElement>) => void
+  openLanguageMenu?: (event: React.MouseEvent<HTMLButtonElement>) => void
 }) => IconButtonProps
 
 type BadgeContent = (props: { notifications: number }) => number
@@ -30,11 +31,13 @@ interface NavigationIconButton {
   badgeContent?: BadgeContent
 }
 
-const languageIcon = {
-  disabled: true,
+const languageIcon: NavigationIconButton = {
   tooltip: 'iconsTooltip.language',
-  icon: <LanguageIcon color='disabled' />,
-  buttonProps: () => ({ sx: styles.studentIcons })
+  icon: <LanguageIcon />,
+  buttonProps: ({ openLanguageMenu }) => ({
+    onClick: openLanguageMenu,
+    sx: styles.studentIcons
+  })
 }
 
 const menuIcon: NavigationIconButton = {
@@ -88,8 +91,8 @@ export const userIcons: NavigationIconButton[] = [
   {
     tooltip: 'iconsTooltip.account',
     icon: <AccountCircleOutlinedIcon />,
-    buttonProps: ({ openMenu }) => ({
-      onClick: openMenu,
+    buttonProps: ({ openAccountMenu }) => ({
+      onClick: openAccountMenu,
       sx: styles.studentIcons
     })
   },

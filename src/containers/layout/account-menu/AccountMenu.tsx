@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
 import MenuItem from '@mui/material/MenuItem'
+import { MenuProps } from '@mui/material'
 
 import AppMenu from '~/components/app-menu/AppMenu'
 import { authRoutes } from '~/router/constants/authRoutes'
@@ -10,7 +11,7 @@ import { authRoutes } from '~/router/constants/authRoutes'
 import { styles } from '~/containers/layout/account-menu/AccountMenu.styles'
 
 interface AccountMenuProps {
-  anchorEl: Element | null
+  anchorEl: MenuProps['anchorEl']
   onClose: () => void
 }
 
