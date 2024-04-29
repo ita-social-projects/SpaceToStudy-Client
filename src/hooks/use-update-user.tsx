@@ -1,4 +1,5 @@
 import { useCallback } from 'react'
+import { useNavigate } from 'react-router'
 import { snackbarVariants } from '~/constants'
 import { useSnackBarContext } from '~/context/snackbar-context'
 import { userService } from '~/services/user-service'
@@ -7,6 +8,8 @@ import useAxios from './use-axios'
 
 const useUpdateUser = (userId: string) => {
   const { setAlert } = useSnackBarContext()
+
+  const navigate = useNavigate()
 
   const updateUser = useCallback(
     (data: UpdateUserParams) => userService.updateUser(userId, data),
@@ -18,7 +21,7 @@ const useUpdateUser = (userId: string) => {
       severity: snackbarVariants.success,
       message: 'editProfilePage.profile.successMessage'
     })
-    window.location.reload()
+    navigate(0)
   }
 
   const handleResponseError = (error: ErrorResponse) => {
