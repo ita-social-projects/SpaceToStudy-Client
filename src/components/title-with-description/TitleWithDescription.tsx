@@ -14,6 +14,7 @@ interface TitleWithDescriptionProps {
     title?: SxProps
     description?: SxProps
   }
+
   isDescriptionTooltip?: boolean
 }
 
@@ -27,6 +28,7 @@ const TitleWithDescription = ({
     <Box sx={style.wrapper}>
       {title && <Typography sx={style.title}>{title}</Typography>}
       <Tooltip
+        arrow
         placement='bottom'
         title={isDescriptionTooltip ? description : ''}
       >

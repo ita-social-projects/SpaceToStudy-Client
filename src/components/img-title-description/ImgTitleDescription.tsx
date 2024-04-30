@@ -10,7 +10,15 @@ interface ImgTitleDescriptionProps {
   img?: string
   title?: string
   description?: ReactNode
-  style?: Record<string, SxProps>
+  style?: {
+    root?: SxProps
+    img?: SxProps
+    titleWithDescription?: {
+      wrapper?: SxProps
+      title?: SxProps
+      description?: SxProps
+    }
+  }
 }
 
 const ImgTitleDescription: FC<ImgTitleDescriptionProps> = ({
@@ -25,7 +33,7 @@ const ImgTitleDescription: FC<ImgTitleDescriptionProps> = ({
 
       <TitleWithDescription
         description={description}
-        style={styles.titleWithDescription}
+        style={style.titleWithDescription}
         title={title}
       />
     </Box>
