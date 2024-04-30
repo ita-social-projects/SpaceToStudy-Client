@@ -16,6 +16,41 @@
       "languagesTitle": "Мова",
       "languagesDesc": "Виберіть мову, якою ви б хотіли навчатися та співпрацювати.",
       "videoPresentationDesc": "Додайте посилання на вашу відеопрезентацію. Відео має бути публічним та розміщеним на YouTube."
+    },
+    "professionalTab": {
+      "categoriesTitle": "Ваші професійні категорії",
+      "categoriesDescription": "Вкажіть свою професійну сферу, в якій ви хочете працювати зі своїми студентами.\nОбepiть принаймні одну навчальну категорію, один предмет i один рівень володіння мовою",
+      "addCategoryBtn": "Створити категорію",
+      "addCategoryModal": {
+        "title": "Ваша професійна категорія",
+        "description": "Оберіть професійну сферу, в якій ви хочете працювати зі своїми студентами.",
+        "addSubjectBtn": "Додати предмет",
+        "submitBtn": "Зберегти зміни",
+        "discardBtn": "Скасувати"
+      },
+      "deleteCategoryModal": {
+        "title": "Видалити цю категорію?",
+        "description": "Якщо ви видалите категорію, ви втратите свій прогрес.\nПісля видалення цю дію неможливо скасувати.",
+        "cancelBtn": "Скасувати",
+        "submitBtn": "Видалити"
+      },
+      "mainStudyCategory": "Основна навчальна категорія",
+      "subject": "Предмет",
+      "proficiencyLevels": "Рівні кваліфікації",
+      "editCategoryBtn": "Редагувати",
+      "activateCategoryBtn": "Активувати",
+      "deactivateCategoryBtn": "Деактивувати",
+      "deactivateCategoryBtnEnabledTooltip": "Ця категорія буде прихована.\nВи можете активувати її коли завгодно",
+      "deactivateCategoryBtnDisabledTooltip": "Стає невидимою у вашому профілі.\nВи можете активувати її у будь-який час.",
+      "aboutTheTutorTitle": "Про викладача",
+      "aboutTheTutorDescription": "Опишіть ваш професійний досвід. Ця інформація буде відображена у вашому публічному профілі.",
+      "accordion": {
+        "education": "Освіта",
+        "workExperience": "Досвід роботи",
+        "scientificActivities": "Наукова діяльність",
+        "awards": "Нагороди",
+        "textareaLabel": "Текст"
+      }
     }
   }
 }

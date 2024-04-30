@@ -16,6 +16,41 @@
       "languagesTitle": "Language",
       "languagesDesc": "Select the language in which you would like to study and cooperate.",
       "videoPresentationDesc": "Add the link to your presentational video. Your video needs to be public and uploaded to YouTube."
+    },
+    "professionalTab": {
+      "categoriesTitle": "Your professional categories",
+      "categoriesDescription": "State your professional field you want to work in with your students.\nChoose at least one study category, one subject and one proficiency level.",
+      "addCategoryBtn": "Add category",
+      "addCategoryModal": {
+        "title": "Your professional category",
+        "description": "Choose your professional field you want to work in with your students.",
+        "addSubjectBtn": "Add one more subject",
+        "submitBtn": "Save changes",
+        "discardBtn": "Discard"
+      },
+      "deleteCategoryModal": {
+        "title": "Delete this category?",
+        "description": "If you delete the category you will lose your progress.\nOnce removed, this action cannot be undone.",
+        "cancelBtn": "Cancel",
+        "submitBtn": "Delete"
+      },
+      "mainStudyCategory": "Main Study Category",
+      "subject": "Subject",
+      "proficiencyLevels": "Proficiency Levels",
+      "editCategoryBtn": "Edit category",
+      "activateCategoryBtn": "Activate",
+      "deactivateCategoryBtn": "Deactivate",
+      "deactivateCategoryBtnEnabledTooltip": "This category will be hidden.\nYou can activate it anytime",
+      "deactivateCategoryBtnDisabledTooltip": "Becomes unvisible on your profile.\nYou can activate it anytime.",
+      "aboutTheTutorTitle": "About the tutor",
+      "aboutTheTutorDescription": "Describe your professional experience. This information will be displayed on your public profile.",
+      "accordion": {
+        "education": "Education",
+        "workExperience": "Work experience",
+        "scientificActivities": "Scientific activities",
+        "awards": "Awards",
+        "textareaLabel": "Text here"
+      }
     }
   }
 }
