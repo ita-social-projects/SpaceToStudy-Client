@@ -4,6 +4,7 @@ import { styles } from './ProfileProfessionalTab.styles'
 import AppButton from '~/components/app-button/AppButton'
 import {
   ButtonVariantEnum,
+  ComponentEnum,
   OpenProfessionalCategoryModalHandler,
   ProfessionalCategoryWithActivationControls,
   ProficiencyLevelEnum
@@ -120,7 +121,7 @@ const ProfileProfessionalTab = () => {
 
   return (
     <Box sx={styles.root}>
-      <Box component='section'>
+      <Box component={ComponentEnum.Section}>
         <TitleWithDescription
           description={t(
             'editProfilePage.profile.professionalTab.categoriesDescription'

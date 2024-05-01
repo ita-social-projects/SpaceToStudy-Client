@@ -1,12 +1,12 @@
 import palette from '~/styles/app-theme/app.pallete'
-import { TypographyVariantEnum } from '~/types'
+import { PositionEnum, TypographyVariantEnum } from '~/types'
 
 const { Subtitle1, Body2 } = TypographyVariantEnum
 
 const titleWithDescription = {
-  wrapper: { textAlign: 'left' },
+  wrapper: { textAlign: PositionEnum.Left },
   title: { typography: Subtitle1 },
-  description: { typography: Body2, color: 'primary.500' }
+  description: { typography: Body2, color: palette.primary[500] }
 }
 
 export const styles = {

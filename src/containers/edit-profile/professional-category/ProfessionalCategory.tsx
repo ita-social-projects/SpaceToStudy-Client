@@ -6,10 +6,10 @@ import Tooltip from '@mui/material/Tooltip'
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import AppButton from '~/components/app-button/AppButton'
-import { ButtonVariantEnum } from '~/types'
+import { ButtonVariantEnum, ComponentEnum, PositionEnum } from '~/types'
 import DeleteIcon from '@mui/icons-material/Delete'
 import useConfirm from '~/hooks/use-confirm'
-import { styles } from './ProfessionalCategory.styles'
+import { styles } from '~/containers/edit-profile/professional-category/ProfessionalCategory.styles'
 import {
   OpenProfessionalCategoryModalHandler,
   ProfessionalCategoryWithActivationControls
@@ -64,10 +64,10 @@ const ProfessionalCategory: FC<ProfessionalCategoryProps> = ({
   }) => {
     return (
       <Box sx={styles.card.item}>
-        <Typography component='dt' sx={styles.card.item.label}>
+        <Typography component={ComponentEnum.Dt} sx={styles.card.item.label}>
           {label}:
         </Typography>
-        <Typography component='dd' sx={styles.card.item.value}>
+        <Typography component={ComponentEnum.Dd} sx={styles.card.item.value}>
           {children}
         </Typography>
       </Box>
@@ -84,7 +84,7 @@ const ProfessionalCategory: FC<ProfessionalCategoryProps> = ({
       </AppButton>
       <Tooltip
         arrow
-        placement='right'
+        placement={PositionEnum.Right}
         title={
           <Typography sx={styles.toolbar.deactivateButtonTooltip}>
             {t(
@@ -139,7 +139,7 @@ const ProfessionalCategory: FC<ProfessionalCategoryProps> = ({
           <DeleteIcon />
         </IconButton>
       </Box>
-      <Box component='dl' sx={styles.card.root(item.isActivated)}>
+      <Box component={ComponentEnum.Dl} sx={styles.card.root(item.isActivated)}>
         <CardItem
           label={t('editProfilePage.profile.professionalTab.mainStudyCategory')}
         >

@@ -1,12 +1,12 @@
 import Accordions from '~/components/accordion/Accordions'
-import { ExpandMore } from '@mui/icons-material'
+import ExpandMore from '@mui/icons-material/ExpandMore'
 import AppTextArea from '~/components/app-text-area/AppTextArea'
 import { useState } from 'react'
 import useForm from '~/hooks/use-form'
 import { useTranslation } from 'react-i18next'
-import { styles } from './AboutTutorAccordion.styles'
-import { initialFormValues } from './AboutTutorAccordion.constants'
-import { AccordionItem } from '~/types'
+import { styles } from '~/containers/edit-profile/about-tutor-accordion/AboutTutorAccordion.styles'
+import { initialFormValues } from '~/containers/edit-profile/about-tutor-accordion/AboutTutorAccordion.constants'
+import { AccordionItem, TypographyVariantEnum } from '~/types'
 
 const AboutTutorAccordion = () => {
   const { t } = useTranslation()
@@ -80,12 +80,12 @@ const AboutTutorAccordion = () => {
   return (
     <Accordions
       activeIndex={activeItemId}
-      descriptionVariant='body2'
+      descriptionVariant={TypographyVariantEnum.Body2}
       icon={<ExpandMore />}
       items={accordionItems}
       onChange={(index) => setActiveItemId(index)}
       sx={styles.accordion}
-      titleVariant='body2'
+      titleVariant={TypographyVariantEnum.Body2}
     />
   )
 }

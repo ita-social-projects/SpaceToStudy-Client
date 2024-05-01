@@ -1,15 +1,12 @@
-import {
-  Checkbox,
-  FormControl,
-  FormHelperText,
-  InputLabel,
-  ListItemText,
-  MenuItem,
-  OutlinedInput,
-  Select,
-  SelectProps,
-  SxProps
-} from '@mui/material'
+import Checkbox from '@mui/material/Checkbox'
+import FormControl from '@mui/material/FormControl'
+import FormHelperText from '@mui/material/FormHelperText'
+import InputLabel from '@mui/material/InputLabel'
+import ListItemText from '@mui/material/ListItemText'
+import MenuItem from '@mui/material/MenuItem'
+import OutlinedInput from '@mui/material/OutlinedInput'
+import Select from '@mui/material/Select'
+import { SelectProps, SxProps } from '@mui/material'
 import { FC, useId } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ProficiencyLevelEnum } from '~/types'
@@ -62,7 +59,6 @@ const ProficiencyLevelSelect: FC<ProficiencyLevelSelectProps> = ({
       <Select
         MenuProps={styles.menuProps}
         error={hasError}
-        id={`${id}-multiple-checkbox`}
         input={<OutlinedInput label={label} />}
         labelId={`${id}-multiple-checkbox-label`}
         multiple
