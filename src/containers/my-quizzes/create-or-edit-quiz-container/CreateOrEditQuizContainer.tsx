@@ -6,7 +6,7 @@ import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
 import EditIcon from '@mui/icons-material/Edit'
 import AddIcon from '@mui/icons-material/Add'
-import { Tooltip } from '@mui/material'
+import Tooltip from '@mui/material/Tooltip'
 
 import AddResources from '~/containers/add-resources/AddResources'
 import CreateOrEditQuizQuestion from '~/containers/my-quizzes/create-or-edit-quiz-question/CreateOrEditQuizQuestion'
@@ -40,10 +40,12 @@ import {
   TextFieldVariantEnum,
   ResourcesTabsEnum,
   UpdateQuizParams,
-  CategoryNameInterface
+  CategoryNameInterface,
+  PositionEnum
 } from '~/types'
 import { getErrorMessage } from '~/utils/error-with-message'
 import { createUrlPath } from '~/utils/helper-functions'
+
 import { styles } from '~/containers/my-quizzes/create-or-edit-quiz-container/CreateOrEditQuizContainer.styles'
 
 const CreateOrEditQuizContainer = ({
@@ -202,7 +204,7 @@ const CreateOrEditQuizContainer = ({
   const CreateQuestionButton = (
     <Tooltip
       arrow
-      placement='top'
+      placement={PositionEnum.Top}
       title={
         isCreationOpen ? t('myResourcesPage.quizzes.savePreviousQuestion') : ''
       }
