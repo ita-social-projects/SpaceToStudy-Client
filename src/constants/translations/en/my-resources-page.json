@@ -50,6 +50,7 @@
     "defaultNewTitle": "Untitled",
     "defaultNewDescription": "Description...",
     "createNewQuestion": "Create new question",
+    "savePreviousQuestion": "Please save the previous question",
     "addQuestion": "Add question",
     "settingsPointsAndAnswers": "Settings: Points and answers",
     "pointValues": "Point values",

@@ -6,6 +6,7 @@ import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
 import EditIcon from '@mui/icons-material/Edit'
 import AddIcon from '@mui/icons-material/Add'
+import Tooltip from '@mui/material/Tooltip'
 
 import AddResources from '~/containers/add-resources/AddResources'
 import CreateOrEditQuizQuestion from '~/containers/my-quizzes/create-or-edit-quiz-question/CreateOrEditQuizQuestion'
@@ -39,10 +40,12 @@ import {
   TextFieldVariantEnum,
   ResourcesTabsEnum,
   UpdateQuizParams,
-  CategoryNameInterface
+  CategoryNameInterface,
+  PositionEnum
 } from '~/types'
 import { getErrorMessage } from '~/utils/error-with-message'
 import { createUrlPath } from '~/utils/helper-functions'
+
 import { styles } from '~/containers/my-quizzes/create-or-edit-quiz-container/CreateOrEditQuizContainer.styles'
 
 const CreateOrEditQuizContainer = ({
@@ -198,6 +201,25 @@ const CreateOrEditQuizContainer = ({
         })
       : void addNewQuiz({ title, description, items: questions, category })
 
+  const CreateQuestionButton = (
+    <Tooltip
+      arrow
+      placement={PositionEnum.Top}
+      title={
+        isCreationOpen ? t('myResourcesPage.quizzes.savePreviousQuestion') : ''
+      }
+    >
+      <AppButton
+        onClick={onOpenCreateQuestion}
+        size={SizeEnum.ExtraLarge}
+        variant={ButtonVariantEnum.Tonal}
+      >
+        {t('myResourcesPage.quizzes.createNewQuestion')}
+        <EditIcon fontSize={SizeEnum.Small} />
+      </AppButton>
+    </Tooltip>
+  )
+
   return (
     <PageWrapper sx={styles.container}>
       <Box sx={styles.root}>
@@ -236,14 +258,7 @@ const CreateOrEditQuizContainer = ({
           />
         )}
         <Box sx={styles.functionalButtons}>
-          <AppButton
-            onClick={onOpenCreateQuestion}
-            size={SizeEnum.ExtraLarge}
-            variant={ButtonVariantEnum.Tonal}
-          >
-            {t('myResourcesPage.quizzes.createNewQuestion')}
-            <EditIcon fontSize={SizeEnum.Small} />
-          </AppButton>
+          {CreateQuestionButton}
           <AppButton
             onClick={onOpenAddQuestionsModal}
             size={SizeEnum.ExtraLarge}
