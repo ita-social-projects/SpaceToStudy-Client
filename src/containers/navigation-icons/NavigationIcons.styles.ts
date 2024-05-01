@@ -1,4 +1,8 @@
-const hideOnMobile = { display: { xs: 'none', md: 'inherit' } }
+const hideOnMobile = {
+  display: { xs: 'none', md: 'inherit' },
+  color: 'primary.900'
+}
+import { TypographyVariantEnum } from '~/types'
 
 export const styles = {
   iconBox: {
@@ -14,5 +18,12 @@ export const styles = {
     ...hideOnMobile,
     ml: '12px'
   },
-  studentIcons: { ...hideOnMobile, color: 'primary.900' }
+  studentIcons: {
+    ...hideOnMobile
+  },
+  accountIcon: {
+    ...hideOnMobile,
+    ml: { sm: '12px', md: '12px', lg: '12px' },
+    typography: TypographyVariantEnum.Button
+  }
 }

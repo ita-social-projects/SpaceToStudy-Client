@@ -5,6 +5,7 @@ import Box from '@mui/material/Box'
 
 import useMenu from '~/hooks/use-menu'
 import NavigationIcon from '~/components/navigation-icon/NavigationIcon'
+import AccountIcon from '~/containers/navigation-icons/AccountIcon'
 import {
   mockNotifications,
   userIcons
@@ -81,6 +82,7 @@ const UserIcons: FC<UserIconsProps> = ({ setSidebarOpen }) => {
         anchorEl={languageMenuAnchorEl}
         onClose={closeLanguageMenu}
       />
+      <AccountIcon openMenu={openAccountMenu} />
       <AccountMenu anchorEl={accountMenuAnchorEl} onClose={closeAccountMenu} />
       <NotificationsMenu
         anchorEl={notificationsAnchor}

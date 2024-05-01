@@ -15,6 +15,12 @@ vi.mock('~/containers/guest-home-page/google-button/GoogleButton', () => ({
   }
 }))
 
+vi.mock('~/containers/navigation-icons/AccountIcon', () => ({
+  default: function () {
+    return <button>AccountIcon</button>
+  }
+}))
+
 describe('Guest NavBar test', () => {
   const preloadedState = { appMain: { loading: false, userRole: '' } }
   beforeEach(() => {
@@ -63,8 +69,7 @@ describe('Student NavBar test', () => {
     expect(text).toBeInTheDocument()
   })
   it('should render account icon', () => {
-    const icon = screen.getByTestId('AccountCircleOutlinedIcon')
-
-    expect(icon).toBeInTheDocument()
+    const accountIcon = screen.getByText('AccountIcon')
+    expect(accountIcon).toBeInTheDocument()
   })
 })

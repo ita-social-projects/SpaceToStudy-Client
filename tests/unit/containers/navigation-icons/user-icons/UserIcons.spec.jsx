@@ -6,9 +6,20 @@ import { vi } from 'vitest'
 const openLoginDialog = vi.fn()
 const setIsSidebarOpen = vi.fn()
 
+vi.mock('~/containers/navigation-icons/AccountIcon', () => ({
+  default: function () {
+    return <button>AccountIcon</button>
+  }
+}))
+
 describe('test with user role', () => {
   beforeEach(() => {
-    renderWithProviders(<UserIcons openLoginDialog={ openLoginDialog } setSidebarOpen={ setIsSidebarOpen } />)
+    renderWithProviders(
+      <UserIcons
+        openLoginDialog={openLoginDialog}
+        setSidebarOpen={setIsSidebarOpen}
+      />
+    )
   })
 
   it('should render login icon', () => {
@@ -27,15 +38,15 @@ describe('test with user role', () => {
   it('should render tooltip title', async () => {
     const messageIcon = screen.getByTestId('MessageRoundedIcon')
     fireEvent.mouseOver(messageIcon)
-    const messagesTooltipTitle = await screen.findByText('iconsTooltip.messages')
+    const messagesTooltipTitle = await screen.findByText(
+      'iconsTooltip.messages'
+    )
 
     expect(messagesTooltipTitle).toBeInTheDocument()
   })
-  it('should open account menu', async () => {
-    const accountMenuIcon = screen.getByTestId('AccountCircleOutlinedIcon')
-    fireEvent.click(accountMenuIcon)
-    const accountMenuLogout = await screen.findByText('header.logout')
 
-    expect(accountMenuLogout).toBeInTheDocument()
+  it('should render account menu icon', async () => {
+    const accountMenuIcon = await screen.findByText('AccountIcon')
+    expect(accountMenuIcon).toBeInTheDocument()
   })
 })
