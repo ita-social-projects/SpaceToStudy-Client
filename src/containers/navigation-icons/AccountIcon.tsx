@@ -40,25 +40,15 @@ const AccountIcon: FC<AccountIconProps> = ({ openMenu }) => {
     return <Avatar sx={styles.accountIcon} />
   }
 
-  let userPhoto = ''
-  if (!loading && photo) {
-    userPhoto = `${import.meta.env.VITE_APP_IMG_USER_URL}${photo}`
-  }
-
-  let userNameInitials = ''
-  if (!loading && firstName && lastName) {
-    userNameInitials = `${firstName[0]}${lastName[0]}`
-  }
-
   return (
     <Tooltip arrow title={t('iconsTooltip.account')}>
       <Avatar
         alt='User Avatar'
         onClick={openMenu}
-        src={userPhoto}
+        src={`${import.meta.env.VITE_APP_IMG_USER_URL}${photo}`}
         sx={styles.accountIcon}
       >
-        {userNameInitials}
+        {!loading && firstName && lastName && `${firstName[0]}${lastName[0]}`}
       </Avatar>
     </Tooltip>
   )
