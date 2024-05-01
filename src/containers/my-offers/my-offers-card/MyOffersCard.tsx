@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
 
 import AppButton from '~/components/app-button/AppButton'
-import TitleWithDescripiton from '~/components/title-with-description/TitleWithDescription'
+import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import StatusChip from '~/components/status-chip/StatusChip'
 import SubjectLevelWithLabels from '~/components/subject-level-with-labels/SubjectLevelWithLabels'
 
@@ -48,7 +48,7 @@ const MyOffersCard: FC<OfferCardSquareProps> = ({ buttonActions, offer }) => {
         subject={subject.name}
       />
       <Box sx={styles.priceContainer}>
-        <TitleWithDescripiton
+        <TitleWithDescription
           description={`/ ${t('common.hour')}`}
           style={styles.titleWithDescription}
           title={`${price} ${t('common.uah')}`}
