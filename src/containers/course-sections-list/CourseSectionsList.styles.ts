@@ -26,7 +26,8 @@ export const styles = {
     fontSize: '30px',
     transform: 'rotate(90deg)',
     color: 'primary.400',
-    cursor: 'pointer'
+    cursor: 'grab',
+    touchAction: 'none'
   },
   activityButton: {
     typography: TypographyVariantEnum.Body2,

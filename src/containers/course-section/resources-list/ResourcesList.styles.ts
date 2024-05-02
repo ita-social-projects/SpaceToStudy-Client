@@ -9,6 +9,7 @@ export const styles = {
     position: 'relative',
     backgroundColor: 'basic.white',
     borderRadius: '6px',
+    zIndex: isDragging ? 10 : 1,
     ...(isDragging && {
       boxShadow: `0px 3px 16px 2px ${palette.primary[300]}`,
       border: `2px solid ${palette.primary[300]}`,
@@ -22,6 +23,8 @@ export const styles = {
     position: 'absolute',
     top: '24px',
     color: 'primary.700',
+    touchAction: 'none',
+    cursor: 'grab',
     '&:hover': {
       color: 'primary.400'
     }

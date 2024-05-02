@@ -89,7 +89,8 @@ export const styles = {
     fontSize: '30px',
     transform: 'rotate(90deg)',
     color: 'primary.400',
-    cursor: 'pointer'
+    touchAction: 'none',
+    cursor: 'grab'
   },
   editIconWrapper: actionIconWrapper,
   deleteIconWrapper: { ...actionIconWrapper, color: 'error.700' },

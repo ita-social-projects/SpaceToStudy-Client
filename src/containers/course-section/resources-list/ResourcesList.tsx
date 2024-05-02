@@ -1,20 +1,34 @@
-import { FC, Dispatch, SetStateAction, useCallback } from 'react'
 import {
-  DragDropContext,
-  Droppable,
-  Draggable,
-  DraggableProvided,
-  DraggableStateSnapshot,
-  DropResult,
-  DroppableProvided
-} from 'react-beautiful-dnd'
+  FC,
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useState,
+  useMemo
+} from 'react'
+import {
+  DndContext,
+  Active,
+  useSensor,
+  useSensors,
+  PointerSensor,
+  DragOverlay,
+  DragEndEvent,
+  TouchSensor
+} from '@dnd-kit/core'
+import {
+  SortableContext,
+  arrayMove,
+  verticalListSortingStrategy
+} from '@dnd-kit/sortable'
 import Box from '@mui/material/Box'
-import DragIndicatorIcon from '@mui/icons-material/DragIndicator'
 
+import SortableWrapper from '~/containers/sortable-wrapper/SortableWrapper'
+import DragHandle from '~/components/drag-handle/DragHandle'
 import ResourceItem from '~/containers/course-section/resource-item/ResourceItem'
+import { styles } from '~/containers/course-section/resources-list/ResourcesList.styles'
 
 import useDroppable from '~/hooks/use-droppable'
-import { styles } from '~/containers/course-section/resources-list/ResourcesList.styles'
 import { CourseResources, ResourceAvailabilityStatusEnum } from '~/types'
 
 interface ResourcesListProps {
@@ -31,32 +45,13 @@ const ResourcesList: FC<ResourcesListProps> = ({
   editResource
 }) => {
   const { enabled } = useDroppable()
+  const [active, setActive] = useState<Active | null>(null)
+  const activeItem = useMemo(
+    () => items.find((item) => item._id === active?.id),
+    [active, items]
+  )
 
-  const reorder = (
-    list: CourseResources[],
-    startIndex: number,
-    endIndex: number
-  ): CourseResources[] => {
-    const result = Array.from(list)
-    const [removed] = result.splice(startIndex, 1)
-    result.splice(endIndex, 0, removed)
-
-    return result
-  }
-
-  const onDragEnd = (result: DropResult) => {
-    if (!result.destination) {
-      return
-    }
-
-    const reorderedItems = reorder(
-      items,
-      result.source.index,
-      result.destination.index
-    )
-
-    setResources(reorderedItems)
-  }
+  const sensors = useSensors(useSensor(PointerSensor), useSensor(TouchSensor))
 
   const setResourceAvailability = useCallback(
     (
@@ -77,47 +72,71 @@ const ResourcesList: FC<ResourcesListProps> = ({
     [setResources]
   )
 
-  const resourcesList = items.map((item, i) => (
-    <Draggable draggableId={item._id.toString()} index={i} key={item._id}>
-      {(provided: DraggableProvided, snapshot: DraggableStateSnapshot) => (
-        <Box
-          ref={provided.innerRef}
-          sx={styles.section(snapshot.isDragging)}
-          {...provided.draggableProps}
-        >
-          <Box
-            className='dragIcon'
-            sx={styles.dragIcon}
-            {...provided.dragHandleProps}
-          >
-            <DragIndicatorIcon />
-          </Box>
-          <ResourceItem
-            deleteResource={deleteResource}
-            editResource={editResource}
-            resource={item}
-            setResourceAvailability={setResourceAvailability}
-          />
-        </Box>
-      )}
-    </Draggable>
-  ))
+  const handleDragEnd = useCallback(
+    (event: DragEndEvent) => {
+      const { active, over } = event
+      if (active && over) {
+        setResources((prevResources) => {
+          const activeIndex = prevResources.findIndex(
+            (item) => item._id === active.id
+          )
+          const overIndex = prevResources.findIndex(
+            (item) => item._id === over.id
+          )
+          if (activeIndex !== -1 && overIndex !== -1) {
+            return arrayMove(prevResources, activeIndex, overIndex)
+          }
+          return prevResources
+        })
+      }
+    },
+    [setResources]
+  )
+
+  const renderItem = (item: CourseResources, isDragOver = false) => (
+    <SortableWrapper
+      id={item._id}
+      key={item._id}
+      onDragEndStyles={styles.section(isDragOver)}
+      onDragStartStyles={styles.section(true)}
+    >
+      <DragHandle iconStyles={styles.dragIcon} />
+      <ResourceItem
+        deleteResource={deleteResource}
+        editResource={editResource}
+        resource={item}
+        setResourceAvailability={setResourceAvailability}
+      />
+    </SortableWrapper>
+  )
+
+  const resourceItems = items.map((item) => renderItem(item))
 
   return (
-    <Box sx={styles.root}>
-      <DragDropContext onDragEnd={onDragEnd}>
-        {enabled && (
-          <Droppable droppableId='draggable'>
-            {(provided: DroppableProvided) => (
-              <Box {...provided.droppableProps} ref={provided.innerRef}>
-                {resourcesList}
-                {provided.placeholder}
-              </Box>
-            )}
-          </Droppable>
-        )}
-      </DragDropContext>
-    </Box>
+    <DndContext
+      onDragCancel={() => {
+        setActive(null)
+      }}
+      onDragEnd={handleDragEnd}
+      onDragStart={({ active }) => {
+        setActive(active)
+      }}
+      sensors={sensors}
+    >
+      {enabled && (
+        <>
+          <SortableContext
+            items={items.map((item) => item._id)}
+            strategy={verticalListSortingStrategy}
+          >
+            <Box sx={styles.root}>{resourceItems}</Box>
+          </SortableContext>
+          <DragOverlay>
+            {activeItem && renderItem(activeItem, true)}
+          </DragOverlay>
+        </>
+      )}
+    </DndContext>
   )
 }
 

@@ -1,20 +1,34 @@
-import { FC, Dispatch, SetStateAction, useState } from 'react'
 import {
-  DragDropContext,
-  Droppable,
-  Draggable,
-  DraggableProvided,
-  DraggableStateSnapshot,
-  DropResult,
-  DroppableProvided
-} from 'react-beautiful-dnd'
+  FC,
+  Dispatch,
+  SetStateAction,
+  useState,
+  useCallback,
+  useMemo
+} from 'react'
+import {
+  DndContext,
+  Active,
+  useSensor,
+  useSensors,
+  PointerSensor,
+  TouchSensor,
+  DragOverlay,
+  DragEndEvent
+} from '@dnd-kit/core'
+import {
+  SortableContext,
+  arrayMove,
+  verticalListSortingStrategy
+} from '@dnd-kit/sortable'
 import Box from '@mui/material/Box'
 
 import Question from '~/components/question/Question'
+import SortableWrapper from '~/containers/sortable-wrapper/SortableWrapper'
 import CreateOrEditQuizQuestion from '~/containers/my-quizzes/create-or-edit-quiz-question/CreateOrEditQuizQuestion'
-import useDroppable from '~/hooks/use-droppable'
-
 import { styles } from '~/containers/questions-list/QuestionsList.styles'
+
+import useDroppable from '~/hooks/use-droppable'
 import { Question as QuestionInterface } from '~/types'
 
 interface QuestionsListProps {
@@ -24,76 +38,82 @@ interface QuestionsListProps {
 
 const QuestionsList: FC<QuestionsListProps> = ({ items, setItems }) => {
   const [editableItemId, setEditableItemId] = useState<string>('')
+  const [active, setActive] = useState<Active | null>(null)
+
+  const sensors = useSensors(useSensor(PointerSensor), useSensor(TouchSensor))
+
+  const activeItem = useMemo(
+    () => items.find((item) => item._id === active?.id),
+    [active, items]
+  )
+
   const { enabled } = useDroppable()
 
-  const reorder = (
-    list: QuestionInterface[],
-    startIndex: number,
-    endIndex: number
-  ): QuestionInterface[] => {
-    const result = Array.from(list)
-    const [removed] = result.splice(startIndex, 1)
-    result.splice(endIndex, 0, removed)
+  const onDragEnd = useCallback(
+    (event: DragEndEvent) => {
+      const { active, over } = event
 
-    return result
-  }
-
-  const onDragEnd = (result: DropResult) => {
-    if (!result.destination) {
-      return
-    }
-
-    const reorderedItems = reorder(
-      items,
-      result.source.index,
-      result.destination.index
-    )
-
-    setItems(reorderedItems)
-  }
+      if (active && over) {
+        setItems((prevItems) => {
+          const activeIndex = prevItems.findIndex(
+            (item) => item._id === active.id
+          )
+          const overIndex = prevItems.findIndex((item) => item._id === over.id)
+          if (activeIndex !== -1 && overIndex !== -1) {
+            return arrayMove(prevItems, activeIndex, overIndex)
+          }
+          return prevItems
+        })
+      }
+    },
+    [setItems]
+  )
 
   const onEditCancel = () => setEditableItemId('')
 
-  const questionsList = items.map((item, i) => (
-    <Draggable draggableId={item._id} index={i} key={item._id}>
-      {(provided: DraggableProvided, snapshot: DraggableStateSnapshot) => (
-        <Box
-          ref={provided.innerRef}
-          sx={styles.question(snapshot.isDragging)}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
-        >
-          {editableItemId === item._id ? (
-            <CreateOrEditQuizQuestion
-              onCancel={onEditCancel}
-              question={item}
-              setQuestions={setItems}
-            />
-          ) : (
-            <Question
-              question={item}
-              setEditableItemId={setEditableItemId}
-              setQuestions={setItems}
-            />
-          )}
-        </Box>
+  const questionItem = (item: QuestionInterface, isDragOver = false) => (
+    <SortableWrapper
+      id={item._id}
+      key={item._id}
+      onDragEndStyles={styles.question(isDragOver)}
+      onDragStartStyles={styles.question(true)}
+    >
+      {editableItemId === item._id ? (
+        <CreateOrEditQuizQuestion
+          onCancel={onEditCancel}
+          question={item}
+          setQuestions={setItems}
+        />
+      ) : (
+        <Question
+          question={item}
+          setEditableItemId={setEditableItemId}
+          setQuestions={setItems}
+        />
       )}
-    </Draggable>
-  ))
+    </SortableWrapper>
+  )
+  const questionsList = items.map((item) => questionItem(item))
 
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      {enabled && (
-        <Droppable droppableId='draggable'>
-          {(provided: DroppableProvided) => (
-            <Box {...provided.droppableProps} ref={provided.innerRef}>
-              {questionsList}
-              {provided.placeholder}
-            </Box>
-          )}
-        </Droppable>
-      )}
-    </DragDropContext>
+    <DndContext
+      onDragCancel={() => {
+        setActive(null)
+      }}
+      onDragEnd={onDragEnd}
+      onDragStart={({ active }) => {
+        setActive(active)
+      }}
+      sensors={sensors}
+    >
+      <SortableContext
+        items={items.map((item) => item._id)}
+        strategy={verticalListSortingStrategy}
+      >
+        {enabled && <Box>{questionsList}</Box>}
+      </SortableContext>
+      <DragOverlay>{activeItem && questionItem(activeItem, true)}</DragOverlay>
+    </DndContext>
   )
 }
 
