@@ -2,9 +2,14 @@ export const updateCheckBoxState = <T,>(
   items: T[],
   value: T[],
   checkbox: T,
-  fillRange?: boolean
+  fillRange?: boolean,
+  singleSelect?: boolean
 ) => {
   const removeCurrent = () => value.filter((el) => el !== checkbox)
+
+  if (singleSelect) {
+    return value.includes(checkbox) ? [] : [checkbox]
+  }
 
   if (!fillRange || !value.length) {
     return value.includes(checkbox) ? removeCurrent() : [...value, checkbox]

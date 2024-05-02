@@ -47,6 +47,11 @@ const SpecializationBlock = <T extends CreateOrUpdateOfferData>({
   const levelOptions = Object.values(ProficiencyLevelEnum)
   const subjectError = data.category && errors.subject
 
+  const checkboxListProps =
+    (userRole as string) === 'tutor'
+      ? { fillRange: true }
+      : { singleSelect: true }
+
   return (
     <OrderedListItem
       number={1}
@@ -96,7 +101,7 @@ const SpecializationBlock = <T extends CreateOrUpdateOfferData>({
           </Typography>
           <CheckboxList
             error={t(errors.proficiencyLevel)}
-            fillRange
+            {...checkboxListProps}
             items={levelOptions}
             onChange={handleCheckboxesChange}
             value={data.proficiencyLevel}

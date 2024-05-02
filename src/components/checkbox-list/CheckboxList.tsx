@@ -14,6 +14,7 @@ interface CheckboxListProps<T> extends Pick<TypographyProps, 'variant'> {
   title?: string
   error?: string
   fillRange?: boolean
+  singleSelect?: boolean
   onChange: (checkbox: T[]) => void
 }
 
@@ -23,6 +24,7 @@ const CheckboxList = <T extends string>({
   value = [],
   title,
   fillRange,
+  singleSelect = false,
   variant,
   onChange
 }: CheckboxListProps<T>) => {
@@ -33,7 +35,8 @@ const CheckboxList = <T extends string>({
       items,
       value,
       checkbox,
-      fillRange
+      fillRange,
+      singleSelect
     )
 
     onChange(updatedCheckboxes)
