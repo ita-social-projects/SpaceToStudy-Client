@@ -50,8 +50,8 @@
       "student": "Choose the category and subject that best describe your learning needs."
     },
     "level": {
-      "tutor": "Select the preparation levels you are comfortable teaching, from beginner to advanced or others. *",
-      "student": "Select your current skill level to match you with a tutor who can meet you where you're at and help you progress towards your goals. *"
+      "tutor": "Select the preparation levels you are comfortable teaching, from beginner to advanced or others (You can choose either a single level or a range). *",
+      "student": "Select your current skill level to match you with a tutor who can meet you where you're at and help you progress towards your goals (You can choose a single level). *"
     },
     "describe": {
       "tutor": "Please describe any additional information about your tutoring services, your teaching style, the topics you cover, and any specific areas of expertise you have.",
