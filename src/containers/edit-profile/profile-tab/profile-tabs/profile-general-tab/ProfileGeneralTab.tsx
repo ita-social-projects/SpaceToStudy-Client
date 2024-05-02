@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Avatar from '@mui/material/Avatar'
 import InputAdornment from '@mui/material/InputAdornment'
+import { useBlocker } from 'react-router-dom'
 
 import useForm from '~/hooks/use-form'
 import useConfirm from '~/hooks/use-confirm'
@@ -33,13 +34,13 @@ import { useSnackBarContext } from '~/context/snackbar-context'
 import { useProfileContext } from '~/context/profile-context'
 import { snackbarVariants } from '~/constants'
 import { imageResize } from '~/utils/image-resize'
-import { styles } from './ProfileGeneralTab.styles'
+import { styles } from '~/containers/edit-profile/profile-tab/profile-tabs/profile-general-tab/ProfileGeneralTab.styles'
 
 const ProfileGeneralTab: FC<ProfileTabProps> = ({ user }) => {
   const { t } = useTranslation()
   const { setAlert } = useSnackBarContext()
   const { profileData, handleProfileData } = useProfileContext()
-  const { setNeedConfirmation } = useConfirm()
+  const { setNeedConfirmation, checkConfirmation } = useConfirm()
   const profileGeneralData = profileData.generalData.data
   const photo = profileGeneralData.photo
 
@@ -62,6 +63,28 @@ const ProfileGeneralTab: FC<ProfileTabProps> = ({ user }) => {
     initialValues,
     validations
   })
+
+  const blocker = useBlocker(isDirty)
+
+  useEffect(() => {
+    const handleBlocker = async () => {
+      if (blocker.state === 'blocked') {
+        const confirmed = await checkConfirmation({
+          message: 'questions.goBackToProfile',
+          title: 'titles.discardChanges',
+          confirmButton: t('common.discard'),
+          cancelButton: t('common.cancel')
+        })
+        if (confirmed) {
+          blocker.proceed()
+        } else {
+          blocker.reset()
+        }
+      }
+    }
+
+    handleBlocker().catch(console.error)
+  }, [blocker, checkConfirmation, t])
 
   useEffect(() => {
     setNeedConfirmation(isDirty)

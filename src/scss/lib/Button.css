@@ -1,0 +1,339 @@
+/*=============================================
+=                #VARIABLES                   =
+=============================================*/
+/**
+ * TABLE OF CONTEXT
+ * 
+ * COLORS
+ * Basic colors................There are the main colors, which are used the most in project 
+ * Additional colors................on surface colors, on primary colors, secondary colors
+ * Utility colors................Other colors represent states: warning, success, error, etc.
+ *
+ * TYPOGRAPHY
+ * Font families................The fonts used in the S2S design system
+ * Font weights................Font weights
+ * Sizes................Fonts sizes for paragraphs, body text, inputs, etc.
+ * Heading sizes................Font sizing for page headings
+ *
+ * BREAKPOINTS
+ * Breakpoints................Global responsive breakpoints definition
+ *
+ * SPACING
+ * Spacing................paddings, margins, etc.
+ *
+ * SHADOWS ------ Basic shadows values which are used in project
+ *
+ */
+/*=============================================
+ =                   COLORS                    =
+ =============================================*/
+/* Basic colors */
+/* Additional colors */
+/* Utility colors */
+/*=============================================
+=                TYPOGRAPHY                   =
+=============================================*/
+/* Font families */
+/* Font weights */
+/* Font sizes (headings) */
+/* Font sizes (texts) */
+/* Line heights (headings) */
+/* Line heights (texts) */
+/* Letter spacings (headings) */
+/* Letter spacings (texts) */
+/* Text transforms */
+/*=====  End of TYPOGRAPHY  ======*/
+/*=============================================
+=                BREAKPOINTS                  =
+=============================================*/
+/*=============================================
+=                  SPACING                   =
+=============================================*/
+/*=====  End of BREAKPOINTS  ======*/
+/*=============================================
+=                  SHADOWS                   =
+=============================================*/
+/*=====  End of SHADOWS  ======*/
+/*=============================================
+=                 #COLORS                     =
+=============================================*/
+/**
+ *
+ * This file defines an actual colors that will be used for styling. The default values are the parameters 
+ * which are declared in _variables.scss. This is default palette and can be overridden by developers 
+ * with their own variables.
+ *
+ */
+/*=============================================
+ =            Global text colors            =
+ =============================================*/
+/*=============================================
+=                   Form                     =
+=============================================*/
+/*=============================================
+=                Navigation                   =
+=============================================*/
+/*=============================================
+=                    Chat                     =
+=============================================*/
+/*=============================================
+=                  Elements                   =
+=============================================*/
+/*=============================================
+=                 #TYPOGRAPHY                 =
+=============================================*/
+/**
+ *
+ * This file defines the default font rules to be used on headings and text. The defaults come
+ * from the palette defined in _variables.scss.
+ *
+ */
+/*=============================================
+=              Body constants                 =
+=============================================*/
+/*=============================================
+=            Font sizes (heading)             =
+=============================================*/
+/*=============================================
+=            Font fizes (texts)               =
+=============================================*/
+/*=============================================
+=                #VARIABLES                   =
+=============================================*/
+/**
+ * TABLE OF CONTEXT
+ * 
+ * COLORS
+ * Basic colors................There are the main colors, which are used the most in project 
+ * Additional colors................on surface colors, on primary colors, secondary colors
+ * Utility colors................Other colors represent states: warning, success, error, etc.
+ *
+ * TYPOGRAPHY
+ * Font families................The fonts used in the S2S design system
+ * Font weights................Font weights
+ * Sizes................Fonts sizes for paragraphs, body text, inputs, etc.
+ * Heading sizes................Font sizing for page headings
+ *
+ * BREAKPOINTS
+ * Breakpoints................Global responsive breakpoints definition
+ *
+ * SPACING
+ * Spacing................paddings, margins, etc.
+ *
+ * SHADOWS ------ Basic shadows values which are used in project
+ *
+ */
+/*=============================================
+ =                   COLORS                    =
+ =============================================*/
+/* Basic colors */
+/* Additional colors */
+/* Utility colors */
+/*=============================================
+=                TYPOGRAPHY                   =
+=============================================*/
+/* Font families */
+/* Font weights */
+/* Font sizes (headings) */
+/* Font sizes (texts) */
+/* Line heights (headings) */
+/* Line heights (texts) */
+/* Letter spacings (headings) */
+/* Letter spacings (texts) */
+/* Text transforms */
+/*=====  End of TYPOGRAPHY  ======*/
+/*=============================================
+=                BREAKPOINTS                  =
+=============================================*/
+/*=============================================
+=                  SPACING                   =
+=============================================*/
+/*=====  End of BREAKPOINTS  ======*/
+/*=============================================
+=                  SHADOWS                   =
+=============================================*/
+/*=====  End of SHADOWS  ======*/
+/*=============================================
+=                 #MIXINS                     =
+=============================================*/
+/**
+ *
+ * Helpful reusable functions-like code that will be used to implement
+ * styles for components
+ *
+ */
+/*=============================================
+ =                @media rules                =
+ =============================================*/
+/**
+  *
+  * Set of mixins for different screen resolutions
+  *
+  * example usage: @include tablet { color: $pink }
+  */
+/*=============================================
+=                 Spacings                    =
+=============================================*/
+/**
+ * Function which returns values for spacing according to our design system. For your understanding,
+ * you can multiply value to 4 to get value in px
+ *
+ * $value is expected to be a plain integer without unit name => 1; 2; 4;
+ * 
+ * Example usage:
+ * margin: spacing(2) => margin: 0.5rem // 8px
+ * padding-right: spacing(1) => padding-right: 0.25rem // 4px
+ */
+/*=============================================
+=              Containers sizings            =
+=============================================*/
+/**
+ * defines width and height in one go
+ * 
+ * @include box(1rem, 2rem) => width: 1rem;  height: 2rem
+ * @include box(1rem) => width: 1rem; height 1rem;
+ */
+/*=============================================
+=               FLEX/GRID Toolkit            =
+=============================================*/
+/**
+ * Setup for flexbox container
+ *
+ * example usage: 
+ * @include flexbox(column, space-between) - if you want to change values in their order in function
+ * @include flexbox($justify: center) - if you want to change specific values, in random order
+ *
+ */
+/**
+ * Setup for grid container
+ *    
+ * @include grid(1fr 1fr, 30px, start, center); - if you want to change values in their order in function
+ * @include grid($justify: center) - if you want to change specific values, in random order
+ *
+ */
+/*=============================================
+=            Text manipulations            =
+=============================================*/
+/**
+ * This mixin is used to truncate text that overflows its container.
+ * 
+ * To truncate text on the 1 row: @include text-truncate; => 'Some text...'
+ * To truncate text on the 2 row: @include text-truncate(2); => 'Some text with meaning
+ *                                                               and its continue....'
+ * 
+ */
+/**
+ * This mixin is used to set up all font configuration in one go
+ * 
+ * Example usage:
+ * @include font-setup-rubik(h1, $white, regular, base, 2xs) => 
+ *      { 
+ *          font-family: "Rubik, -apple-system, Arial, sans-serif"; 
+ *          color: #ffffff;
+ *          font-size: 4.5rem; // 72px
+ *          font-weight: 400;
+ *          line-height: 1.5rem; // 24px
+ *          letter-spacing: 0.006rem; // 0.1px
+ *      }
+ *
+ * @include font-setup-rubik($color: $success-50) => font-family: "Rubik, -apple-system, Arial, sans-serif"; color: #ebf3eb;
+ * 
+ */
+/*=============================================
+=                Useful resets               =
+=============================================*/
+/**
+ * mixin is used to reset the margin, padding, and list-style of the <ul> element.
+ *
+ * example usage: @include listReset;
+ *
+ */
+/**
+ * mixin is applied to create a clearfix, ensuring that it contains floated elements properly.
+ *
+ * example usage: @include clearFix;
+ *
+ */
+.s2s-button {
+  font-size: var(--s2s-button-font-size, 1rem);
+  font-weight: var(--s2s-button-font-weight, 500);
+  line-height: var(--s2s-button-line-height, 1.5rem);
+  letter-spacing: var(--s2s-button-letter-spacing, 0.031rem);
+  text-transform: var(--s2s-button-text-transform, none);
+}
+.s2s-button__small {
+  font-size: var(--s2s-button-small-font-size, 0.875rem);
+  line-height: var(--s2s-button-small-line-height, 1.25rem);
+  padding: 0.375rem 0.5rem;
+  column-gap: 0.5rem;
+}
+
+.s2s-button__medium {
+  padding: 0.5rem 0.75rem;
+  column-gap: 0.5rem;
+}
+
+.s2s-button__large {
+  padding: 0.75rem 1rem;
+  column-gap: 0.75rem;
+}
+
+.s2s-button__extraLarge {
+  padding: 1rem;
+  column-gap: 0.75rem;
+}
+
+.s2s-button__contained {
+  background-color: var(--s2s-btn-contained-bg, #263238);
+  color: var(--s2s-btn-contained-color, #ffffff);
+}
+.s2s-button__contained:hover {
+  background-color: var(--s2s-btn-contained-hover-bg, #37474f);
+  color: var(--s2s-btn-contained-hover-color, #ffffff);
+}
+.s2s-button__contained:is(:focus-visible, :active) {
+  background-color: var(--s2s-btn-contained-focus-bg, #546e7a);
+  color: var(--s2s-btn-contained-focus-color, #ffffff);
+}
+.s2s-button__contained:disabled {
+  background-color: var(--s2s-btn-contained-disabled-bg, #eceff1);
+  color: var(--s2s-btn-contained-disabled-color, #90a4ae);
+}
+
+.s2s-button__containedLight {
+  background-color: var(--s2s-btn-contained-light-bg, #607d8b);
+  color: var(--s2s-btn-contained-light-color, #ffffff);
+}
+.s2s-button__containedLight:hover {
+  background-color: var(--s2s-btn-contained-light-hover-bg, #78909c);
+  color: var(--s2s-btn-contained-light-hover-color, #ffffff);
+}
+.s2s-button__containedLight:is(:focus-visible, :active) {
+  background-color: var(--s2s-btn-contained-light-focus-bg, #546e7a);
+  color: var(--s2s-btn-contained-light-focus-color, #ffffff);
+}
+.s2s-button__containedLight:disabled {
+  background-color: var(--s2s-btn-contained-light-disabled-bg, #eceff1);
+  color: var(--s2s-btn-contained-light-disabled-color, #90a4ae);
+}
+
+.s2s-button__tonal {
+  background-color: var(--s2s-btn-tonal-bg, #eceff1);
+  color: var(--s2s-btn-tonal-color, #263238);
+}
+.s2s-button__tonal:hover {
+  background-color: var(--s2s-btn-tonal-hover-bg, #eceff1);
+  color: var(--s2s-btn-tonal-hover-color, #263238);
+}
+.s2s-button__tonal:is(:focus-visible, :active) {
+  background-color: var(--s2s-btn-tonal-focus-bg, #cfd8dc);
+  color: var(--s2s-btn-tonal-focus-color, #263238);
+}
+.s2s-button__tonal:disabled {
+  background-color: var(--s2s-btn-tonal-disabled-bg, #eceff1);
+  color: var(--s2s-btn-tonal-disabled-color, #b0bec5);
+}
+
+.s2s-button__text {
+  background-color: var(--s2s-btn-text-bg, #fcfcfc);
+}

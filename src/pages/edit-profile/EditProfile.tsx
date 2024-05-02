@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
@@ -32,10 +32,18 @@ const EditProfile = () => {
 
   const [activeTab, setActiveTab] = useState(TutorProfileTabsEnum.Profile)
 
-  const navigate = useNavigate()
+  const handleClick = async (tab: TutorProfileTabsEnum) => {
+    if (activeTab === tab) return
 
-  const handleClick = (tab: TutorProfileTabsEnum) => {
-    setActiveTab(tab)
+    const confirmed = checkConfirmation({
+      message: 'questions.goBackToProfile',
+      title: 'titles.discardChanges',
+      confirmButton: t('common.discard'),
+      cancelButton: t('common.cancel')
+    })
+    if (await confirmed) {
+      setActiveTab(tab)
+    }
   }
 
   const { userId, userRole } = useAppSelector((state) => state.appMain)
@@ -55,18 +63,6 @@ const EditProfile = () => {
     return <Loader pageLoad size={70} />
   }
 
-  const handleBack = async () => {
-    const confirmed = checkConfirmation({
-      message: 'questions.goBackToProfile',
-      title: 'titles.discardChanges',
-      confirmButton: t('common.discard'),
-      cancelButton: t('common.cancel')
-    })
-    if (await confirmed) {
-      navigate(authRoutes.accountMenu.myProfile.path)
-    }
-  }
-
   const cooperationContent =
     activeTab && tabsData[activeTab]?.content?.(response)
 
@@ -82,9 +78,10 @@ const EditProfile = () => {
           </Typography>
         </Box>
         <AppButton
-          onClick={() => void handleBack()}
+          component={Link}
           size={SizeEnum.Large}
           sx={styles.backBtn}
+          to={authRoutes.accountMenu.myProfile.path}
           variant={ButtonVariantEnum.Tonal}
         >
           {t('editTutor.main.backBtn')}
@@ -92,7 +89,10 @@ const EditProfile = () => {
       </Box>
       <Divider sx={styles.line} />
       <Box sx={styles.mainContainer}>
-        <SidebarMenu handleClick={handleClick} tabsData={tabsData} />
+        <SidebarMenu
+          handleClick={(tab) => void handleClick(tab)}
+          tabsData={tabsData}
+        />
         <Box sx={styles.mainContent}>{cooperationContent}</Box>
       </Box>
     </PageWrapper>

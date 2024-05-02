@@ -1,0 +1,776 @@
+/*=============================================
+
+=               TABLE OF CONTENT              =
+
+=============================================*/
+/**
+ *
+ * FOUNDATION...................
+ * BASE.........................
+ *
+ */
+/*=============================================
+ =            FOUNDATION            =
+ =============================================*/
+/*=============================================
+=                #VARIABLES                   =
+=============================================*/
+/**
+ * TABLE OF CONTEXT
+ * 
+ * COLORS
+ * Basic colors................There are the main colors, which are used the most in project 
+ * Additional colors................on surface colors, on primary colors, secondary colors
+ * Utility colors................Other colors represent states: warning, success, error, etc.
+ *
+ * TYPOGRAPHY
+ * Font families................The fonts used in the S2S design system
+ * Font weights................Font weights
+ * Sizes................Fonts sizes for paragraphs, body text, inputs, etc.
+ * Heading sizes................Font sizing for page headings
+ *
+ * BREAKPOINTS
+ * Breakpoints................Global responsive breakpoints definition
+ *
+ * SPACING
+ * Spacing................paddings, margins, etc.
+ *
+ * SHADOWS ------ Basic shadows values which are used in project
+ *
+ */
+/*=============================================
+ =                   COLORS                    =
+ =============================================*/
+/* Basic colors */
+/* Additional colors */
+/* Utility colors */
+/*=============================================
+=                TYPOGRAPHY                   =
+=============================================*/
+/* Font families */
+/* Font weights */
+/* Font sizes (headings) */
+/* Font sizes (texts) */
+/* Line heights (headings) */
+/* Line heights (texts) */
+/* Letter spacings (headings) */
+/* Letter spacings (texts) */
+/* Text transforms */
+/*=====  End of TYPOGRAPHY  ======*/
+/*=============================================
+=                BREAKPOINTS                  =
+=============================================*/
+/*=============================================
+=                  SPACING                   =
+=============================================*/
+/*=====  End of BREAKPOINTS  ======*/
+/*=============================================
+=                  SHADOWS                   =
+=============================================*/
+/*=====  End of SHADOWS  ======*/
+/*=============================================
+=                 #COLORS                     =
+=============================================*/
+/**
+ *
+ * This file defines an actual colors that will be used for styling. The default values are the parameters 
+ * which are declared in _variables.scss. This is default palette and can be overridden by developers 
+ * with their own variables.
+ *
+ */
+/*=============================================
+ =            Global text colors            =
+ =============================================*/
+/*=============================================
+=                   Form                     =
+=============================================*/
+/*=============================================
+=                Navigation                   =
+=============================================*/
+/*=============================================
+=                    Chat                     =
+=============================================*/
+/*=============================================
+=                  Elements                   =
+=============================================*/
+/*=============================================
+=                 #TYPOGRAPHY                 =
+=============================================*/
+/**
+ *
+ * This file defines the default font rules to be used on headings and text. The defaults come
+ * from the palette defined in _variables.scss.
+ *
+ */
+/*=============================================
+=              Body constants                 =
+=============================================*/
+/*=============================================
+=            Font sizes (heading)             =
+=============================================*/
+/*=============================================
+=            Font fizes (texts)               =
+=============================================*/
+/*=============================================
+=                #VARIABLES                   =
+=============================================*/
+/**
+ * TABLE OF CONTEXT
+ * 
+ * COLORS
+ * Basic colors................There are the main colors, which are used the most in project 
+ * Additional colors................on surface colors, on primary colors, secondary colors
+ * Utility colors................Other colors represent states: warning, success, error, etc.
+ *
+ * TYPOGRAPHY
+ * Font families................The fonts used in the S2S design system
+ * Font weights................Font weights
+ * Sizes................Fonts sizes for paragraphs, body text, inputs, etc.
+ * Heading sizes................Font sizing for page headings
+ *
+ * BREAKPOINTS
+ * Breakpoints................Global responsive breakpoints definition
+ *
+ * SPACING
+ * Spacing................paddings, margins, etc.
+ *
+ * SHADOWS ------ Basic shadows values which are used in project
+ *
+ */
+/*=============================================
+ =                   COLORS                    =
+ =============================================*/
+/* Basic colors */
+/* Additional colors */
+/* Utility colors */
+/*=============================================
+=                TYPOGRAPHY                   =
+=============================================*/
+/* Font families */
+/* Font weights */
+/* Font sizes (headings) */
+/* Font sizes (texts) */
+/* Line heights (headings) */
+/* Line heights (texts) */
+/* Letter spacings (headings) */
+/* Letter spacings (texts) */
+/* Text transforms */
+/*=====  End of TYPOGRAPHY  ======*/
+/*=============================================
+=                BREAKPOINTS                  =
+=============================================*/
+/*=============================================
+=                  SPACING                   =
+=============================================*/
+/*=====  End of BREAKPOINTS  ======*/
+/*=============================================
+=                  SHADOWS                   =
+=============================================*/
+/*=====  End of SHADOWS  ======*/
+/*=============================================
+=                 #MIXINS                     =
+=============================================*/
+/**
+ *
+ * Helpful reusable functions-like code that will be used to implement
+ * styles for components
+ *
+ */
+/*=============================================
+ =                @media rules                =
+ =============================================*/
+/**
+  *
+  * Set of mixins for different screen resolutions
+  *
+  * example usage: @include tablet { color: $pink }
+  */
+/*=============================================
+=                 Spacings                    =
+=============================================*/
+/**
+ * Function which returns values for spacing according to our design system. For your understanding,
+ * you can multiply value to 4 to get value in px
+ *
+ * $value is expected to be a plain integer without unit name => 1; 2; 4;
+ * 
+ * Example usage:
+ * margin: spacing(2) => margin: 0.5rem // 8px
+ * padding-right: spacing(1) => padding-right: 0.25rem // 4px
+ */
+/*=============================================
+=              Containers sizings            =
+=============================================*/
+/**
+ * defines width and height in one go
+ * 
+ * @include box(1rem, 2rem) => width: 1rem;  height: 2rem
+ * @include box(1rem) => width: 1rem; height 1rem;
+ */
+/*=============================================
+=               FLEX/GRID Toolkit            =
+=============================================*/
+/**
+ * Setup for flexbox container
+ *
+ * example usage: 
+ * @include flexbox(column, space-between) - if you want to change values in their order in function
+ * @include flexbox($justify: center) - if you want to change specific values, in random order
+ *
+ */
+/**
+ * Setup for grid container
+ *    
+ * @include grid(1fr 1fr, 30px, start, center); - if you want to change values in their order in function
+ * @include grid($justify: center) - if you want to change specific values, in random order
+ *
+ */
+/*=============================================
+=            Text manipulations            =
+=============================================*/
+/**
+ * This mixin is used to truncate text that overflows its container.
+ * 
+ * To truncate text on the 1 row: @include text-truncate; => 'Some text...'
+ * To truncate text on the 2 row: @include text-truncate(2); => 'Some text with meaning
+ *                                                               and its continue....'
+ * 
+ */
+/**
+ * This mixin is used to set up all font configuration in one go
+ * 
+ * Example usage:
+ * @include font-setup-rubik(h1, $white, regular, base, 2xs) => 
+ *      { 
+ *          font-family: "Rubik, -apple-system, Arial, sans-serif"; 
+ *          color: #ffffff;
+ *          font-size: 4.5rem; // 72px
+ *          font-weight: 400;
+ *          line-height: 1.5rem; // 24px
+ *          letter-spacing: 0.006rem; // 0.1px
+ *      }
+ *
+ * @include font-setup-rubik($color: $success-50) => font-family: "Rubik, -apple-system, Arial, sans-serif"; color: #ebf3eb;
+ * 
+ */
+/*=============================================
+=                Useful resets               =
+=============================================*/
+/**
+ * mixin is used to reset the margin, padding, and list-style of the <ul> element.
+ *
+ * example usage: @include listReset;
+ *
+ */
+/**
+ * mixin is applied to create a clearfix, ensuring that it contains floated elements properly.
+ *
+ * example usage: @include clearFix;
+ *
+ */
+/*=====  End of FOUNDATION  ======*/
+/*=============================================
+ =            BASE            =
+ =============================================*/
+/*=============================================
+=               CSS RESETS                    =
+=============================================*/
+/**
+ *
+ * The normalize.css npm package improves browser rendering consistency.
+ * https://necolas.github.io/normalize.css/
+ */
+/*! normalize-scss | MIT/GPLv2 License | bit.ly/normalize-scss */
+/* Document
+   ========================================================================== */
+/**
+ * 1. Correct the line height in all browsers.
+ * 2. Prevent adjustments of font size after orientation changes in iOS.
+ */
+html {
+  line-height: 1.15; /* 1 */
+  -webkit-text-size-adjust: 100%; /* 2 */
+}
+
+/* Sections
+   ========================================================================== */
+/**
+ * Remove the margin in all browsers.
+ */
+body {
+  margin: 0;
+}
+
+/**
+ * Render the `main` element consistently in IE.
+ */
+main {
+  display: block;
+}
+
+/**
+ * Correct the font size and margin on `h1` elements within `section` and
+ * `article` contexts in Chrome, Firefox, and Safari.
+ */
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+/* Grouping content
+   ========================================================================== */
+/**
+ * 1. Add the correct box sizing in Firefox.
+ * 2. Show the overflow in Edge and IE.
+ */
+hr {
+  box-sizing: content-box; /* 1 */
+  height: 0; /* 1 */
+  overflow: visible; /* 2 */
+}
+
+/**
+ * Add the correct display in IE.
+ */
+main {
+  display: block;
+}
+
+/**
+ * 1. Correct the inheritance and scaling of font size in all browsers.
+ * 2. Correct the odd `em` font sizing in all browsers.
+ */
+pre {
+  font-family: monospace, monospace; /* 1 */
+  font-size: 1em; /* 2 */
+}
+
+/* Links
+   ========================================================================== */
+/**
+ * Remove the gray background on active links in IE 10.
+ */
+a {
+  background-color: transparent;
+}
+
+/* Text-level semantics
+   ========================================================================== */
+/**
+ * 1. Remove the bottom border in Chrome 57-
+ * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.
+ */
+abbr[title] {
+  border-bottom: none; /* 1 */
+  text-decoration: underline; /* 2 */
+  text-decoration: underline dotted; /* 2 */
+}
+
+/**
+ * Add the correct font weight in Chrome, Edge, and Safari.
+ */
+b,
+strong {
+  font-weight: bolder;
+}
+
+/**
+ * 1. Correct the inheritance and scaling of font size in all browsers.
+ * 2. Correct the odd `em` font sizing in all browsers.
+ */
+code,
+kbd,
+samp {
+  font-family: monospace, monospace; /* 1 */
+  font-size: 1em; /* 2 */
+}
+
+/**
+ * Add the correct font size in all browsers.
+ */
+small {
+  font-size: 80%;
+}
+
+/**
+ * Prevent `sub` and `sup` elements from affecting the line height in
+ * all browsers.
+ */
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+sup {
+  top: -0.5em;
+}
+
+/* Embedded content
+   ========================================================================== */
+/**
+ * Remove the border on images inside links in IE 10.
+ */
+img {
+  border-style: none;
+}
+
+/* Forms
+   ========================================================================== */
+/**
+ * 1. Change the font styles in all browsers.
+ * 2. Remove the margin in Firefox and Safari.
+ */
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit; /* 1 */
+  font-size: 100%; /* 1 */
+  line-height: 1.15; /* 1 */
+  margin: 0; /* 2 */
+}
+
+/**
+ * Show the overflow in IE.
+ */
+button {
+  overflow: visible;
+}
+
+/**
+ * Remove the inheritance of text transform in Edge, Firefox, and IE.
+ * 1. Remove the inheritance of text transform in Firefox.
+ */
+button,
+select { /* 1 */
+  text-transform: none;
+}
+
+/**
+ * Correct the inability to style clickable types in iOS and Safari.
+ */
+button,
+[type=button],
+[type=reset],
+[type=submit] {
+  -webkit-appearance: button;
+}
+
+button,
+[type=button],
+[type=reset],
+[type=submit] {
+  /**
+   * Remove the inner border and padding in Firefox.
+   */
+  /**
+   * Restore the focus styles unset by the previous rule.
+   */
+}
+button::-moz-focus-inner,
+[type=button]::-moz-focus-inner,
+[type=reset]::-moz-focus-inner,
+[type=submit]::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}
+button:-moz-focusring,
+[type=button]:-moz-focusring,
+[type=reset]:-moz-focusring,
+[type=submit]:-moz-focusring {
+  outline: 1px dotted ButtonText;
+}
+
+/**
+ * Show the overflow in Edge.
+ */
+input {
+  overflow: visible;
+}
+
+/**
+ * 1. Add the correct box sizing in IE 10.
+ * 2. Remove the padding in IE 10.
+ */
+[type=checkbox],
+[type=radio] {
+  box-sizing: border-box; /* 1 */
+  padding: 0; /* 2 */
+}
+
+/**
+ * Correct the cursor style of increment and decrement buttons in Chrome.
+ */
+[type=number]::-webkit-inner-spin-button,
+[type=number]::-webkit-outer-spin-button {
+  height: auto;
+}
+
+/**
+ * 1. Correct the odd appearance in Chrome and Safari.
+ * 2. Correct the outline style in Safari.
+ */
+[type=search] {
+  -webkit-appearance: textfield; /* 1 */
+  outline-offset: -2px; /* 2 */
+  /**
+   * Remove the inner padding in Chrome and Safari on macOS.
+   */
+}
+[type=search]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+/**
+ * 1. Correct the inability to style clickable types in iOS and Safari.
+ * 2. Change font properties to `inherit` in Safari.
+ */
+::-webkit-file-upload-button {
+  -webkit-appearance: button; /* 1 */
+  font: inherit; /* 2 */
+}
+
+/**
+ * Correct the padding in Firefox.
+ */
+fieldset {
+  padding: 0.35em 0.75em 0.625em;
+}
+
+/**
+ * 1. Correct the text wrapping in Edge and IE.
+ * 2. Correct the color inheritance from `fieldset` elements in IE.
+ * 3. Remove the padding so developers are not caught out when they zero out
+ *    `fieldset` elements in all browsers.
+ */
+legend {
+  box-sizing: border-box; /* 1 */
+  display: table; /* 1 */
+  max-width: 100%; /* 1 */
+  padding: 0; /* 3 */
+  color: inherit; /* 2 */
+  white-space: normal; /* 1 */
+}
+
+/**
+ * Add the correct vertical alignment in Chrome, Firefox, and Opera.
+ */
+progress {
+  vertical-align: baseline;
+}
+
+/**
+ * Remove the default vertical scrollbar in IE 10+.
+ */
+textarea {
+  overflow: auto;
+}
+
+/* Interactive
+   ========================================================================== */
+/*
+ * Add the correct display in Edge, IE 10+, and Firefox.
+ */
+details {
+  display: block;
+}
+
+/*
+ * Add the correct display in all browsers.
+ */
+summary {
+  display: list-item;
+}
+
+/* Misc
+   ========================================================================== */
+/**
+ * Add the correct display in IE.
+ */
+template {
+  display: none;
+}
+
+/**
+ * Add the correct display in IE 10.
+ */
+[hidden] {
+  display: none;
+}
+
+:root {
+  /*=============================================
+  =                  COLORS                     =
+  =============================================*/
+  /* Body colors */
+  --s2s-body-text-color: #263238;
+  --s2s-body-bg-color: #f7f7f7;
+  /* Header colors */
+  --s2s-header-text-color: #263238;
+  --s2s-header-bg-color: #ffffff;
+  /* Footer colors */
+  --s2s-footer-primary-bg: #263238;
+  --s2s-footer-primary-color: #eceff1;
+  --s2s-footer-light-bg: #fcfcfc;
+  --s2s-footer-light-color: #263238;
+  /* Button colors */
+  --s2s-btn-primary-bg: #263238;
+  --s2s-btn-primary-color: #ffffff;
+  --s2s-btn-primary-hover: #37474f;
+  --s2s-btn-primary-focus: #546e7a;
+  --s2s-btn-primary-disabled-bg: #eceff1;
+  --s2s-btn-primary-disabled-color: #90a4ae;
+  --s2s-btn-tonal-bg: #eceff1;
+  --s2s-btn-tonal-color: #263238;
+  --s2s-btn-tonal-focus: #cfd8dc;
+  --s2s-btn-tonal-disabled-bg: #eceff1;
+  --s2s-btn-tonal-disabled-color: #90a4ae;
+  /* Form colors */
+  --s2s-text-field-border: #90a4ae;
+  --s2s-text-field-border-hover: #37474f;
+  --s2s-text-field-active: #263238;
+  --s2s-text-field-disabled: #cfd8dc;
+  --s2s-text-field-error: #e63c35;
+  /* Navigation colors */
+  --s2s-tab-color: #cfd8dc;
+  --s2s-tab-active-color: #37474f;
+  --s2s-tab-disabled-bg: #eceff1;
+  --s2s-tab-disabled-color: #90a4ae;
+  --s2s-pagination-active-bg: #263238;
+  --s2s-pagination-active-color: #eceff1;
+  --s2s-pagination-hover-bg: #eceff1;
+  --s2s-pagination-color: #263238;
+  --s2s-scroll-bar-bg: #eceff1;
+  --s2s-scroll-bar-color: #90a4ae;
+  /* Chat colors */
+  --s2s-online-color: #68ba6a;
+  --s2s-unread-counter-bg: #f25750;
+  --s2s-unread-counter-color: #eceff1;
+  --s2s-hat-preview-clicked-bg: #cfd8dc;
+  --s2s-hat-preview-active-bg: #eceff1;
+  --s2s-message-contact-bg: #cfd8dc;
+  --s2s-message-contact-color: #263238;
+  --s2s-message-contact-timestamp-color: #607d8b;
+  --s2s-message-user-bg: #607d8b;
+  --s2s-message-user-color: #fcfcfc;
+  --s2s-message-user-timestamp-color: #cfd8dc;
+  --s2s-attachment-bg-hover: #eceff1;
+  --s2s-attachment-title-color: #263238;
+  --s2s-attachment-text-color: #607d8b;
+  --s2s-attachment-file-icon-bg: #489da0;
+  --s2s-attachment-file-icon-color: #ffffff;
+  --s2s-attachment-link-icon-bg: #78909c;
+  /* Elements colors */
+  --s2s-tooltip-bg: #263238;
+  --s2s-tooltip-color: #ffffff;
+  --s2s-alert-text-color: #ffffff;
+  --s2s-alert-success-bg: #4caf50;
+  --s2s-alert-error-bg: #f54636;
+  /*=============================================
+  =                TYPOGRAPHY                   =
+  =============================================*/
+  /* Body typography */
+  --s2s-body-font-family: Rubik, -apple-system, Arial, sans-serif;
+  --s2s-body-font-size: 1rem;
+  --s2s-body-font-weight: 400;
+  --s2s-body-line-height: 1.5rem;
+  --s2s-body-letter-spacing: 0.031rem;
+  /* Headings font sizes */
+  --s2s-h1-font-size: 4.5rem;
+  --s2s-h2-font-size: 3.813rem;
+  --s2s-h3-font-size: 3.063rem;
+  --s2s-h4-font-size: 2.188rem;
+  --s2s-h5-font-size: 1.5rem;
+  --s2s-h6-font-size: 1.25rem;
+  /* Text font sizes */
+  --s2s-mid-title-font-size: 1.125rem;
+  --s2s-subtitle1-font-size: 1rem;
+  --s2s-subtitle2-font-size: 0.875rem;
+  --s2s-body1-font-size: 1rem;
+  --s2s-body2-font-size: 0.875rem;
+  --s2s-caption1-font-size: 0.75rem;
+  --s2s-caption2-font-size: 0.75rem;
+  --s2s-overline-font-size: 0.625rem;
+  /* Headings font weights */
+  --s2s-h1-font-weight: 800;
+  --s2s-h2-font-weight: 600;
+  --s2s-h3-font-weight: 500;
+  --s2s-h4-font-weight: 500;
+  --s2s-h5-font-weight: 500;
+  --s2s-h6-font-weight: 500;
+  /* Text font weights */
+  --s2s-mid-title-font-weight: 500;
+  --s2s-subtitle1-font-weight: 400;
+  --s2s-subtitle2-font-weight: 500;
+  --s2s-body1-font-weight: 400;
+  --s2s-body2-font-weight: 400;
+  --s2s-caption1-font-weight: 400;
+  --s2s-caption2-font-weight: 500;
+  --s2s-overline-font-weight: 400;
+  /* Headings line heights */
+  --s2s-h1-line-height: 5.313rem;
+  --s2s-h2-line-height: 5.75rem;
+  --s2s-h3-line-height: 4.625rem;
+  --s2s-h4-line-height: 3.313rem;
+  --s2s-h5-line-height: 2.25rem;
+  --s2s-h6-line-height: 1.75rem;
+  /* Text line-heights */
+  --s2s-mid-title-line-height: 1.5rem;
+  --s2s-subtitle1-line-height: 1.5rem;
+  --s2s-subtitle2-line-height: 1.25rem;
+  --s2s-body1-line-height: 1.5rem;
+  --s2s-body2-line-height: 1.25rem;
+  --s2s-caption1-line-height: 1.25rem;
+  --s2s-caption2-line-height: 1.25rem;
+  --s2s-overline-line-height: 0.938rem;
+  /* Headings letter spacings */
+  --s2s-h1-letter-spacing: -0.094rem;
+  --s2s-h2-letter-spacing: -0.031rem;
+  --s2s-h3-letter-spacing: normal;
+  --s2s-h4-letter-spacing: normal;
+  --s2s-h5-letter-spacing: normal;
+  --s2s-h6-letter-spacing: 0.009rem;
+  /* Text letter spacings */
+  --s2s-mid-title-letter-spacing: normal;
+  --s2s-subtitle1-letter-spacing: 0.009rem;
+  --s2s-subtitle2-letter-spacing: 0.006rem;
+  --s2s-body1-letter-spacing: 0.031rem;
+  --s2s-body2-letter-spacing: 0.0025rem;
+  --s2s-caption1-letter-spacing: 0.025rem;
+  --s2s-caption2-letter-spacing: 0.025rem;
+  --s2s-overline-letter-spacing: 0.094rem;
+  /* Headings text transforms */
+  --s2s-h1-text-transform: none;
+  --s2s-h2-text-transform: none;
+  --s2s-h3-text-transform: none;
+  --s2s-h4-text-transform: none;
+  --s2s-h5-text-transform: none;
+  --s2s-h6-text-transform: none;
+  /* Text text transforms */
+  --s2s-mid-title-text-transform: none;
+  --s2s-subtitle1-text-transform: none;
+  --s2s-subtitle2-text-transform: none;
+  --s2s-body1-text-transform: none;
+  --s2s-body2-text-transform: none;
+  --s2s-caption1-text-transform: none;
+  --s2s-caption2-text-transform: none;
+  --s2s-overline-text-transform: uppercase;
+}
+
+body {
+  font-family: var(--s2s-body-font-family, "Rubik, -apple-system, Arial, sans-serif");
+  font-size: var(--s2s-body-font-size, 1rem);
+  font-weight: var(--s2s-body-font-weight, 400);
+  line-height: var(--s2s-body-line-height, 1.5rem);
+  letter-spacing: var(--s2s-body-line-height, 0.031rem);
+}
+
+/*=====  End of BASE  ======*/
