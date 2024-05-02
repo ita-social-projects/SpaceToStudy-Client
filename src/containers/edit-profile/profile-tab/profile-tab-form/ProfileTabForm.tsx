@@ -1,12 +1,9 @@
-import { FC, SyntheticEvent, useEffect, useMemo } from 'react'
+import { ChangeEvent, FC, FocusEvent, SyntheticEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Avatar from '@mui/material/Avatar'
 import InputAdornment from '@mui/material/InputAdornment'
-import { useBlocker } from 'react-router-dom'
 
-import useForm from '~/hooks/use-form'
-import useConfirm from '~/hooks/use-confirm'
 import AppButton from '~/components/app-button/AppButton'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import AppTextArea from '~/components/app-text-area/AppTextArea'
@@ -19,99 +16,52 @@ import DragAndDrop from '~/components/drag-and-drop/DragAndDrop'
 import {
   ButtonVariantEnum,
   EditProfileForm,
+  FormNonInputValueChange,
   PositionEnum,
-  ProfileTabProps,
   SizeEnum,
-  UpdateUserParams,
+  UpdatedPhoto,
   UploadFileEmitterArgs,
-  UserRoleEnum
+  UseFormErrors,
+  UseFormEventHandler,
+  UserResponse
 } from '~/types'
 
 import { languages } from '~/containers/tutor-home-page/language-step/constants'
-import { validations } from '~/components/user-steps-wrapper/constants'
 import { validationData } from '~/containers/tutor-home-page/add-photo-step/constants'
 import { useSnackBarContext } from '~/context/snackbar-context'
-import { useProfileContext } from '~/context/profile-context'
 import { snackbarVariants } from '~/constants'
 import { imageResize } from '~/utils/image-resize'
-import { styles } from '~/containers/edit-profile/profile-tab/profile-tabs/profile-general-tab/ProfileGeneralTab.styles'
+import { styles } from '~/containers/edit-profile/profile-tab/profile-tab-form/ProfileTabForm.styles'
 
-const ProfileGeneralTab: FC<ProfileTabProps> = ({ user }) => {
+export interface ProfileTabFormProps {
+  user: UserResponse
+  data: EditProfileForm
+  errors: UseFormErrors<EditProfileForm>
+  photo: UpdatedPhoto | null
+  setPhoto: (photo: UpdatedPhoto | null) => void
+  handleInputChange: UseFormEventHandler<
+    EditProfileForm,
+    ChangeEvent<HTMLInputElement>
+  >
+  handleNonInputValueChange: FormNonInputValueChange<
+    string | null,
+    EditProfileForm
+  >
+  handleBlur: UseFormEventHandler<EditProfileForm, FocusEvent<HTMLInputElement>>
+}
+
+const ProfileTabForm: FC<ProfileTabFormProps> = ({
+  user,
+  data,
+  errors,
+  photo,
+  setPhoto,
+  handleInputChange,
+  handleNonInputValueChange,
+  handleBlur
+}) => {
   const { t } = useTranslation()
   const { setAlert } = useSnackBarContext()
-  const { profileData, handleProfileData } = useProfileContext()
-  const { setNeedConfirmation, checkConfirmation } = useConfirm()
-  const profileGeneralData = profileData.generalData.data
-  const photo = profileGeneralData.photo
-
-  const initialValues = {
-    ...profileGeneralData,
-    country: profileGeneralData.address.country,
-    city: profileGeneralData.address.city,
-    professionalSummary: profileGeneralData.professionalSummary ?? '',
-    videoLink: profileGeneralData.videoLink ?? ''
-  }
-
-  const {
-    isDirty,
-    handleInputChange,
-    handleBlur,
-    handleNonInputValueChange,
-    data,
-    errors
-  } = useForm<EditProfileForm>({
-    initialValues,
-    validations
-  })
-
-  const blocker = useBlocker(isDirty)
-
-  useEffect(() => {
-    const handleBlocker = async () => {
-      if (blocker.state === 'blocked') {
-        const confirmed = await checkConfirmation({
-          message: 'questions.goBackToProfile',
-          title: 'titles.discardChanges',
-          confirmButton: t('common.discard'),
-          cancelButton: t('common.cancel')
-        })
-        if (confirmed) {
-          blocker.proceed()
-        } else {
-          blocker.reset()
-        }
-      }
-    }
-
-    handleBlocker().catch(console.error)
-  }, [blocker, checkConfirmation, t])
-
-  useEffect(() => {
-    setNeedConfirmation(isDirty)
-  }, [setNeedConfirmation, isDirty])
-
-  const updatedData: UpdateUserParams = useMemo(
-    () => ({
-      firstName: data.firstName,
-      lastName: data.lastName,
-      address: {
-        country: data.country ?? '',
-        city: data.city ?? ''
-      },
-      professionalSummary: data.professionalSummary,
-      mainSubjects:
-        user.role[0] !== UserRoleEnum.Admin
-          ? user.mainSubjects[user.role[0]]
-          : [],
-      nativeLanguage: data.nativeLanguage ?? null,
-      videoLink: data.videoLink
-    }),
-    [data, user.mainSubjects, user.role]
-  )
-
-  useEffect(() => {
-    handleProfileData(updatedData, errors)
-  }, [updatedData, errors, handleProfileData])
 
   const onLanguageChange = (
     _: SyntheticEvent,
@@ -126,10 +76,7 @@ const ProfileGeneralTab: FC<ProfileTabProps> = ({ user }) => {
 
     imageResize(originalPhotoPath, photoSizes)
       .then((resizedPhoto) => {
-        handleProfileData({
-          ...updatedData,
-          photo: { src: resizedPhoto, name: photo.name }
-        })
+        setPhoto({ src: resizedPhoto, name: photo.name })
       })
       .catch(console.error)
   }
@@ -147,10 +94,7 @@ const ProfileGeneralTab: FC<ProfileTabProps> = ({ user }) => {
   }
 
   const handleRemovePhoto = () => {
-    handleProfileData({
-      ...updatedData,
-      photo: null
-    })
+    setPhoto(null)
   }
 
   const photoToDisplay =
@@ -304,4 +248,4 @@ const ProfileGeneralTab: FC<ProfileTabProps> = ({ user }) => {
   )
 }
 
-export default ProfileGeneralTab
+export default ProfileTabForm

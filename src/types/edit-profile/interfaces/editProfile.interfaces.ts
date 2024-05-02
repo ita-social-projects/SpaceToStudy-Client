@@ -10,10 +10,6 @@ export interface EditProfileForm
   videoLink: string
 }
 
-export interface ProfileTabProps {
-  user: UserResponse
-}
-
 export interface ProfessionalSubject {
   _id: string
   name: string

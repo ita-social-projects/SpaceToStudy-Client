@@ -1,54 +1,39 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
-import { ProfileProvider } from '~/context/profile-context'
 import { imageResize } from '~/utils/image-resize'
-import { UserRoleEnum } from '~/types'
-import ProfileGeneralTab from '~/containers/edit-profile/profile-tab/profile-tabs/profile-general-tab/ProfileGeneralTab'
+import ProfileTabForm from '~/containers/edit-profile/profile-tab/profile-tab-form/ProfileTabForm'
+import {
+  formDataMock,
+  userDataMock
+} from '~tests/unit/containers/edit-profile/profile-tab/profile-tab-form/ProfileTabForm.spec.constants'
 
 vi.mock('~/utils/image-resize')
 
-vi.mock('~/context/profile-context', async () => {
-  const actual = await vi.importActual('~/context/profile-context')
-  return {
-    ...actual,
-    useProfileContext: () => ({
-      profileData: {
-        generalData: { data: initialContextValuesMock }
-      },
-      handleProfileData: mockHandleProfileData
-    })
-  }
-})
+const handleInputChange = vi.fn()
+const handleNonInputValueChange = vi.fn()
+const handleBlur = vi.fn()
+const setPhoto = vi.fn()
 
-const userDataMock = {
-  _id: 1,
-  role: [UserRoleEnum.Tutor],
-  firstName: '',
-  lastName: '',
-  mainSubjects: { student: [], tutor: [] },
-  nativeLanguage: null,
-  address: { country: null, city: null },
-  photo: 'photo.png',
-  videoLink: { student: '', tutor: '' }
+const props = {
+  user: userDataMock,
+  data: formDataMock,
+  errors: [],
+  photo: '',
+  setPhoto,
+  handleInputChange,
+  handleNonInputValueChange,
+  handleBlur
 }
 
-const initialContextValuesMock = {
-  ...userDataMock,
-  mainSubjects: [],
-  videoLink: null
-}
-
-const mockHandleProfileData = vi.fn()
-
-describe('ProfileGeneralTab', () => {
+describe('ProfileTabForm', () => {
   URL.createObjectURL = vi.fn().mockReturnValue('photo')
 
   beforeEach(() => {
-    renderWithProviders(
-      <ProfileProvider initialValues={initialContextValuesMock}>
-        <ProfileGeneralTab user={userDataMock} />
-      </ProfileProvider>
-    )
+    renderWithProviders(<ProfileTabForm {...props} />)
+  })
+
+  afterEach(() => {
+    vi.clearAllMocks()
   })
 
   afterAll(() => {
@@ -74,9 +59,7 @@ describe('ProfileGeneralTab', () => {
     const removePhotoBtn = screen.getByRole('button', { name: 'common.remove' })
     fireEvent.click(removePhotoBtn)
 
-    expect(mockHandleProfileData).toHaveBeenCalledWith(
-      expect.objectContaining({ photo: null })
-    )
+    expect(setPhoto).toHaveBeenCalledWith(null)
   })
 
   it('should handle adding a photo', async () => {
@@ -92,10 +75,8 @@ describe('ProfileGeneralTab', () => {
       fireEvent.change(uploadPhotoBtn, { target: { files: [file] } })
     )
 
-    const photo = { src: 'photo.jpeg', name: 'photo.jpeg' }
-    expect(mockHandleProfileData).toHaveBeenCalledWith(
-      expect.objectContaining({ photo })
-    )
+    const photo = { src: imageSrc, name: imageSrc }
+    expect(setPhoto).toHaveBeenCalledWith(photo)
   })
 
   it('should display an error message when adding an invalid photo', async () => {
@@ -116,13 +97,13 @@ describe('ProfileGeneralTab', () => {
 })
 
 describe('ProfileGeneralTab without a user photo', () => {
+  const propsWithoutPhoto = {
+    ...props,
+    photo: null
+  }
+
   beforeEach(() => {
-    initialContextValuesMock.photo = null
-    renderWithProviders(
-      <ProfileProvider initialValues={initialContextValuesMock}>
-        <ProfileGeneralTab user={userDataMock} />
-      </ProfileProvider>
-    )
+    renderWithProviders(<ProfileTabForm {...propsWithoutPhoto} />)
   })
 
   it('should display a default avatar icon if no photo is provided', () => {
