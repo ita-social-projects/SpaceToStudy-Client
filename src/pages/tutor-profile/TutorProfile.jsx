@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 import { useAppSelector } from '~/hooks/use-redux'
-import { useParams, useSearchParams } from 'react-router-dom'
+import { useParams, useSearchParams, useMatch } from 'react-router-dom'
 
 import ProfileInfo from '~/containers/tutor-profile/profile-info/ProfileInfo'
 import CompleteProfileBlock from '~/components/complete-profile/CompleteProfileBlock'
@@ -18,6 +18,7 @@ import { responseMock } from '~/pages/tutor-profile/constants'
 import AboutTutorBlock from '~/containers/tutor-profile/about-tutor-block/AboutTutorBlock'
 
 import { UserRoleEnum } from '~/types'
+import { authRoutes } from '~/router/constants/authRoutes'
 
 const TutorProfile = () => {
   const { id } = useParams()
@@ -29,6 +30,7 @@ const TutorProfile = () => {
 
   const preferredRole = paramsRole || userRole
   const preferredId = id || userId
+  const isMyProfile = useMatch(authRoutes.accountMenu.myProfile.path)
 
   const getUserData = useCallback(
     () => userService.getUserById(preferredId, preferredRole),
@@ -47,7 +49,9 @@ const TutorProfile = () => {
 
   const isTutor = preferredRole === UserRoleEnum.Tutor
   const shouldShowPresentation =
-    isTutor || (!isTutor && response.videoLink?.student)
+    (isTutor && isMyProfile) ||
+    (!isTutor && response.videoLink?.student) ||
+    (!isMyProfile && response.videoLink?.tutor)
   const VideoPresentationComponent = (
     <VideoPresentation
       video={response?.videoLink?.[preferredRole]}

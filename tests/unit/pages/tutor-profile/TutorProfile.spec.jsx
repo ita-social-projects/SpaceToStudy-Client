@@ -17,9 +17,15 @@ const studentAppMain = {
   _id: '648850c4fdc2d1a130c24aea'
 }
 
-const videoMockData = {
+const videoMockDataStudent = {
   videoLink: {
     student: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
+  }
+}
+
+const videoMockDataTutor = {
+  videoLink: {
+    tutor: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
   }
 }
 
@@ -56,9 +62,6 @@ const mockData = {
   averageRating: {
     student: 0,
     tutor: 0
-  },
-  videoLink: {
-    tutor: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
   }
 }
 
@@ -101,7 +104,7 @@ describe('TutorProfile', () => {
   })
 
   it('Should render video presentation block for tutor', () => {
-    renderWithMockData()
+    renderWithMockData({ extraData: videoMockDataTutor })
 
     const videoBlockTitle = screen.getByText(
       'tutorProfilePage.videoPresentation.title'
@@ -119,7 +122,10 @@ describe('TutorProfile', () => {
   })
 
   it('Should render video presentation block when student has a video link', () => {
-    renderWithMockData({ appMain: studentAppMain, extraData: videoMockData })
+    renderWithMockData({
+      appMain: studentAppMain,
+      extraData: videoMockDataStudent
+    })
 
     const videoBlockTitle = screen.getByText(
       'tutorProfilePage.videoPresentation.title'
