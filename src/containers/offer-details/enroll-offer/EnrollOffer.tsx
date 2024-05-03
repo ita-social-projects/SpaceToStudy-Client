@@ -86,7 +86,7 @@ const EnrollOffer: FC<EnrollOfferProps> = ({ offer, enrollOffer }) => {
     })
 
   const levelOptions = offer.proficiencyLevel.map((level) => ({
-    title: t(`common.levels.${level.toLowerCase()}`),
+    title: level,
     value: level
   }))
 
