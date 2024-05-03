@@ -1,4 +1,4 @@
-import { forwardRef, ElementType, FC, ReactNode } from 'react'
+import { forwardRef, ElementType, FC, ReactNode, Ref } from 'react'
 import Button, { ButtonProps } from '@mui/material/Button'
 
 import Loader from '~/components/loader/Loader'
@@ -24,7 +24,7 @@ const AppButton: FC<AppButtonProps> = forwardRef(
       size = SizeEnum.Large,
       ...props
     },
-    ref
+    ref: Ref<HTMLButtonElement>
   ) => {
     const loader = <Loader size={20} sx={{ opacity: '0.6' }} />
 

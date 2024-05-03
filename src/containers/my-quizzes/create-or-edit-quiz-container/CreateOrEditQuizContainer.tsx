@@ -204,19 +204,22 @@ const CreateOrEditQuizContainer = ({
   const CreateQuestionButton = (
     <Tooltip
       arrow
+      disableTouchListener
       placement={PositionEnum.Top}
       title={
         isCreationOpen ? t('myResourcesPage.quizzes.savePreviousQuestion') : ''
       }
     >
-      <AppButton
-        onClick={onOpenCreateQuestion}
-        size={SizeEnum.ExtraLarge}
-        variant={ButtonVariantEnum.Tonal}
-      >
-        {t('myResourcesPage.quizzes.createNewQuestion')}
-        <EditIcon fontSize={SizeEnum.Small} />
-      </AppButton>
+      <span>
+        <AppButton
+          onClick={onOpenCreateQuestion}
+          size={SizeEnum.ExtraLarge}
+          variant={ButtonVariantEnum.Tonal}
+        >
+          {t('myResourcesPage.quizzes.createNewQuestion')}
+          <EditIcon fontSize={SizeEnum.Small} />
+        </AppButton>
+      </span>
     </Tooltip>
   )
 
