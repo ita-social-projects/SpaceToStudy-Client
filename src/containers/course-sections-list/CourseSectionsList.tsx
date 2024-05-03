@@ -1,19 +1,6 @@
-import { FC, MouseEvent, useCallback, useMemo, useState } from 'react'
-import {
-  DndContext,
-  Active,
-  useSensor,
-  useSensors,
-  PointerSensor,
-  DragOverlay,
-  DragEndEvent,
-  TouchSensor
-} from '@dnd-kit/core'
-import {
-  SortableContext,
-  arrayMove,
-  verticalListSortingStrategy
-} from '@dnd-kit/sortable'
+import { FC, MouseEvent } from 'react'
+import { DndContext, DragOverlay } from '@dnd-kit/core'
+import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Crop75Icon from '@mui/icons-material/Crop75'
@@ -31,6 +18,7 @@ import { useCooperationContext } from '~/context/cooperation-context'
 import { useModalContext } from '~/context/modal-context'
 import useDroppable from '~/hooks/use-droppable'
 import useMenu from '~/hooks/use-menu'
+import useDndSensor from '~/hooks/use-dnd-sensor'
 import { CourseSection, CourseSectionHandlers } from '~/types'
 
 interface CourseSectionsListProps extends CourseSectionHandlers {
@@ -50,28 +38,15 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
   addNewSection
 }) => {
   const { enabled } = useDroppable()
-  const [active, setActive] = useState<Active | null>(null)
-  const activeItem = useMemo(
-    () => items.find((item) => item.id === active?.id),
-    [active, items]
-  )
 
-  const sensors = useSensors(useSensor(PointerSensor), useSensor(TouchSensor))
+  const {
+    activeItem,
+    handleDragCancel,
+    handleDragEnd,
+    handleDragStart,
+    sensors
+  } = useDndSensor(items, setSectionsItems, 'id')
 
-  const onDragEnd = useCallback(
-    (event: DragEndEvent) => {
-      const { active, over } = event
-
-      if (active && over) {
-        const activeIndex = items.findIndex((item) => item.id === active.id)
-        const overIndex = items.findIndex((item) => item.id === over.id)
-        if (activeIndex !== -1 && overIndex !== -1) {
-          setSectionsItems(arrayMove(items, activeIndex, overIndex))
-        }
-      }
-    },
-    [setSectionsItems, items]
-  )
   const { openMenu, closeMenu, renderMenu } = useMenu()
 
   const { openModal, closeModal } = useModalContext()
@@ -124,6 +99,32 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
   )
 
   const sectionsItem = (item: CourseSection, isDragOver = false) => {
+    const coorperationMenu = isCooperation && (
+      <Box data-testid='addActivity-container'>
+        <Divider flexItem>
+          <Typography
+            id={item.id}
+            onClick={handleActivitiesMenuClick}
+            sx={styles.activityButton}
+          >
+            Add activity
+            <Add sx={styles.activityButtonIcon} />
+          </Typography>
+          {renderMenu(addActivityMenuList, {
+            transformOrigin: {
+              vertical: 'top',
+              horizontal: 'center'
+            },
+            anchorOrigin: {
+              vertical: 'bottom',
+              horizontal: 'center'
+            },
+            sx: styles.menuRoot
+          })}
+        </Divider>
+      </Box>
+    )
+
     return (
       <SortableWrapper
         id={item.id}
@@ -131,32 +132,7 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
         onDragEndStyles={styles.section(isDragOver)}
         onDragStartStyles={styles.section(true)}
       >
-        {isCooperation && (
-          <Box data-testid='addActivity-container'>
-            <Divider flexItem>
-              <Typography
-                id={item.id}
-                onClick={handleActivitiesMenuClick}
-                sx={styles.activityButton}
-              >
-                Add activity
-                <Add sx={styles.activityButtonIcon} />
-              </Typography>
-              {renderMenu(addActivityMenuList, {
-                transformOrigin: {
-                  vertical: 'top',
-                  horizontal: 'center'
-                },
-                anchorOrigin: {
-                  vertical: 'bottom',
-                  horizontal: 'center'
-                },
-                sx: styles.menuRoot
-              })}
-            </Divider>
-          </Box>
-        )}
-
+        {coorperationMenu}
         <DragHandle
           iconStyles={styles.dragIcon}
           wrapperStyles={styles.dragIconWrapper}
@@ -174,27 +150,23 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
     )
   }
   const sectionItems = items.map((item) => sectionsItem(item))
+
+  const courseSectionContent = enabled && (
+    <>
+      <SortableContext items={items} strategy={verticalListSortingStrategy}>
+        {sectionItems}
+      </SortableContext>
+      <DragOverlay>{activeItem && sectionsItem(activeItem, true)}</DragOverlay>
+    </>
+  )
   return (
     <DndContext
-      onDragCancel={() => {
-        setActive(null)
-      }}
-      onDragEnd={onDragEnd}
-      onDragStart={({ active }) => {
-        setActive(active)
-      }}
+      onDragCancel={handleDragCancel}
+      onDragEnd={handleDragEnd}
+      onDragStart={handleDragStart}
       sensors={sensors}
     >
-      {enabled && (
-        <>
-          <SortableContext items={items} strategy={verticalListSortingStrategy}>
-            {sectionItems}
-          </SortableContext>
-          <DragOverlay>
-            {activeItem && sectionsItem(activeItem, true)}
-          </DragOverlay>
-        </>
-      )}
+      {courseSectionContent}
     </DndContext>
   )
 }

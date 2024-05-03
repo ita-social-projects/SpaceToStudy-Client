@@ -1,26 +1,6 @@
-import {
-  FC,
-  Dispatch,
-  SetStateAction,
-  useState,
-  useCallback,
-  useMemo
-} from 'react'
-import {
-  DndContext,
-  Active,
-  useSensor,
-  useSensors,
-  PointerSensor,
-  TouchSensor,
-  DragOverlay,
-  DragEndEvent
-} from '@dnd-kit/core'
-import {
-  SortableContext,
-  arrayMove,
-  verticalListSortingStrategy
-} from '@dnd-kit/sortable'
+import { FC, Dispatch, SetStateAction, useState } from 'react'
+import { DndContext, DragOverlay } from '@dnd-kit/core'
+import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import Box from '@mui/material/Box'
 
 import Question from '~/components/question/Question'
@@ -29,6 +9,7 @@ import CreateOrEditQuizQuestion from '~/containers/my-quizzes/create-or-edit-qui
 import { styles } from '~/containers/questions-list/QuestionsList.styles'
 
 import useDroppable from '~/hooks/use-droppable'
+import useDndSensor from '~/hooks/use-dnd-sensor'
 import { Question as QuestionInterface } from '~/types'
 
 interface QuestionsListProps {
@@ -38,47 +19,21 @@ interface QuestionsListProps {
 
 const QuestionsList: FC<QuestionsListProps> = ({ items, setItems }) => {
   const [editableItemId, setEditableItemId] = useState<string>('')
-  const [active, setActive] = useState<Active | null>(null)
-
-  const sensors = useSensors(useSensor(PointerSensor), useSensor(TouchSensor))
-
-  const activeItem = useMemo(
-    () => items.find((item) => item._id === active?.id),
-    [active, items]
-  )
-
   const { enabled } = useDroppable()
 
-  const onDragEnd = useCallback(
-    (event: DragEndEvent) => {
-      const { active, over } = event
-
-      if (active && over) {
-        setItems((prevItems) => {
-          const activeIndex = prevItems.findIndex(
-            (item) => item._id === active.id
-          )
-          const overIndex = prevItems.findIndex((item) => item._id === over.id)
-          if (activeIndex !== -1 && overIndex !== -1) {
-            return arrayMove(prevItems, activeIndex, overIndex)
-          }
-          return prevItems
-        })
-      }
-    },
-    [setItems]
-  )
+  const {
+    activeItem,
+    handleDragCancel,
+    handleDragEnd,
+    handleDragStart,
+    sensors
+  } = useDndSensor(items, setItems, '_id')
 
   const onEditCancel = () => setEditableItemId('')
 
-  const questionItem = (item: QuestionInterface, isDragOver = false) => (
-    <SortableWrapper
-      id={item._id}
-      key={item._id}
-      onDragEndStyles={styles.question(isDragOver)}
-      onDragStartStyles={styles.question(true)}
-    >
-      {editableItemId === item._id ? (
+  const questionItem = (item: QuestionInterface, isDragOver = false) => {
+    const questionOrQuizItem =
+      editableItemId === item._id ? (
         <CreateOrEditQuizQuestion
           onCancel={onEditCancel}
           question={item}
@@ -90,29 +45,41 @@ const QuestionsList: FC<QuestionsListProps> = ({ items, setItems }) => {
           setEditableItemId={setEditableItemId}
           setQuestions={setItems}
         />
-      )}
-    </SortableWrapper>
-  )
+      )
+
+    return (
+      <SortableWrapper
+        id={item._id}
+        key={item._id}
+        onDragEndStyles={styles.question(isDragOver)}
+        onDragStartStyles={styles.question(true)}
+      >
+        {questionOrQuizItem}
+      </SortableWrapper>
+    )
+  }
   const questionsList = items.map((item) => questionItem(item))
 
-  return (
-    <DndContext
-      onDragCancel={() => {
-        setActive(null)
-      }}
-      onDragEnd={onDragEnd}
-      onDragStart={({ active }) => {
-        setActive(active)
-      }}
-      sensors={sensors}
-    >
+  const questionListContent = enabled && (
+    <>
       <SortableContext
         items={items.map((item) => item._id)}
         strategy={verticalListSortingStrategy}
       >
-        {enabled && <Box>{questionsList}</Box>}
+        <Box>{questionsList}</Box>
       </SortableContext>
       <DragOverlay>{activeItem && questionItem(activeItem, true)}</DragOverlay>
+    </>
+  )
+
+  return (
+    <DndContext
+      onDragCancel={handleDragCancel}
+      onDragEnd={handleDragEnd}
+      onDragStart={handleDragStart}
+      sensors={sensors}
+    >
+      {questionListContent}
     </DndContext>
   )
 }

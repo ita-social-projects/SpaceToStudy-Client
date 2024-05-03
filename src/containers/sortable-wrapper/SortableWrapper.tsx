@@ -1,7 +1,8 @@
 import { CSSProperties, FC } from 'react'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import { Box, SxProps } from '@mui/material'
+import { SxProps } from '@mui/material'
+import Box from '@mui/material/Box'
 
 import { SortableItemProvider } from '~/context/sortable-context'
 

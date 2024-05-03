@@ -1,26 +1,6 @@
-import {
-  FC,
-  Dispatch,
-  SetStateAction,
-  useCallback,
-  useState,
-  useMemo
-} from 'react'
-import {
-  DndContext,
-  Active,
-  useSensor,
-  useSensors,
-  PointerSensor,
-  DragOverlay,
-  DragEndEvent,
-  TouchSensor
-} from '@dnd-kit/core'
-import {
-  SortableContext,
-  arrayMove,
-  verticalListSortingStrategy
-} from '@dnd-kit/sortable'
+import { FC, Dispatch, SetStateAction, useCallback } from 'react'
+import { DndContext, DragOverlay } from '@dnd-kit/core'
+import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import Box from '@mui/material/Box'
 
 import SortableWrapper from '~/containers/sortable-wrapper/SortableWrapper'
@@ -29,6 +9,7 @@ import ResourceItem from '~/containers/course-section/resource-item/ResourceItem
 import { styles } from '~/containers/course-section/resources-list/ResourcesList.styles'
 
 import useDroppable from '~/hooks/use-droppable'
+import useDndSensor from '~/hooks/use-dnd-sensor'
 import { CourseResources, ResourceAvailabilityStatusEnum } from '~/types'
 
 interface ResourcesListProps {
@@ -45,13 +26,6 @@ const ResourcesList: FC<ResourcesListProps> = ({
   editResource
 }) => {
   const { enabled } = useDroppable()
-  const [active, setActive] = useState<Active | null>(null)
-  const activeItem = useMemo(
-    () => items.find((item) => item._id === active?.id),
-    [active, items]
-  )
-
-  const sensors = useSensors(useSensor(PointerSensor), useSensor(TouchSensor))
 
   const setResourceAvailability = useCallback(
     (
@@ -72,26 +46,13 @@ const ResourcesList: FC<ResourcesListProps> = ({
     [setResources]
   )
 
-  const handleDragEnd = useCallback(
-    (event: DragEndEvent) => {
-      const { active, over } = event
-      if (active && over) {
-        setResources((prevResources) => {
-          const activeIndex = prevResources.findIndex(
-            (item) => item._id === active.id
-          )
-          const overIndex = prevResources.findIndex(
-            (item) => item._id === over.id
-          )
-          if (activeIndex !== -1 && overIndex !== -1) {
-            return arrayMove(prevResources, activeIndex, overIndex)
-          }
-          return prevResources
-        })
-      }
-    },
-    [setResources]
-  )
+  const {
+    activeItem,
+    handleDragCancel,
+    handleDragEnd,
+    handleDragStart,
+    sensors
+  } = useDndSensor(items, setResources, '_id')
 
   const renderItem = (item: CourseResources, isDragOver = false) => (
     <SortableWrapper
@@ -112,30 +73,26 @@ const ResourcesList: FC<ResourcesListProps> = ({
 
   const resourceItems = items.map((item) => renderItem(item))
 
+  const resourceListContent = enabled && (
+    <>
+      <SortableContext
+        items={items.map((item) => item._id)}
+        strategy={verticalListSortingStrategy}
+      >
+        <Box sx={styles.root}>{resourceItems}</Box>
+      </SortableContext>
+      <DragOverlay>{activeItem && renderItem(activeItem, true)}</DragOverlay>
+    </>
+  )
+
   return (
     <DndContext
-      onDragCancel={() => {
-        setActive(null)
-      }}
+      onDragCancel={handleDragCancel}
       onDragEnd={handleDragEnd}
-      onDragStart={({ active }) => {
-        setActive(active)
-      }}
+      onDragStart={handleDragStart}
       sensors={sensors}
     >
-      {enabled && (
-        <>
-          <SortableContext
-            items={items.map((item) => item._id)}
-            strategy={verticalListSortingStrategy}
-          >
-            <Box sx={styles.root}>{resourceItems}</Box>
-          </SortableContext>
-          <DragOverlay>
-            {activeItem && renderItem(activeItem, true)}
-          </DragOverlay>
-        </>
-      )}
+      {resourceListContent}
     </DndContext>
   )
 }
