@@ -27,7 +27,11 @@ const QuestionsList: FC<QuestionsListProps> = ({ items, setItems }) => {
     handleDragEnd,
     handleDragStart,
     sensors
-  } = useDndSensor(items, setItems, '_id')
+  } = useDndSensor({
+    setItems,
+    items,
+    idProp: '_id'
+  })
 
   const onEditCancel = () => setEditableItemId('')
 

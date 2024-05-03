@@ -10,13 +10,22 @@ import {
 } from '@dnd-kit/core'
 import { arrayMove } from '@dnd-kit/sortable'
 
-type IdProp = 'id' | '_id'
+type IdType1 = { id: string | number; _id?: string | number }
+type IdType2 = { id?: string | number; _id: string | number }
 
-const useDndSensor = <T extends { [K in IdProp]?: string }>(
-  items: T[],
-  setItems: (items: T[]) => void,
-  idProp: IdProp
-) => {
+type IdType = IdType1 | IdType2
+
+interface UseDndSensorProps<T extends IdType> {
+  items: T[]
+  setItems: (items: T[]) => void
+  idProp: 'id' | '_id'
+}
+
+const useDndSensor = <T extends IdType>({
+  items,
+  setItems,
+  idProp
+}: UseDndSensorProps<T>) => {
   const [active, setActive] = useState<Active | null>(null)
   const activeItem = useMemo(
     () => items.find((item) => item[idProp] === active?.id),

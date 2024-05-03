@@ -4,7 +4,9 @@ import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Crop75Icon from '@mui/icons-material/Crop75'
-import { Divider, MenuItem, Typography } from '@mui/material'
+import Divider from '@mui/material/Divider'
+import MenuItem from '@mui/material/MenuItem'
+import Typography from '@mui/material/Typography'
 import ViewComfyOutlinedIcon from '@mui/icons-material/ViewComfyOutlined'
 import { Add } from '@mui/icons-material'
 
@@ -45,7 +47,7 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
     handleDragEnd,
     handleDragStart,
     sensors
-  } = useDndSensor(items, setSectionsItems, 'id')
+  } = useDndSensor({ items, setItems: setSectionsItems, idProp: 'id' })
 
   const { openMenu, closeMenu, renderMenu } = useMenu()
 

@@ -23,8 +23,6 @@ export const styles = {
     position: 'absolute',
     top: '24px',
     color: 'primary.700',
-    touchAction: 'none',
-    cursor: 'grab',
     '&:hover': {
       color: 'primary.400'
     }

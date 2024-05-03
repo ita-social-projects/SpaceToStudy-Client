@@ -52,7 +52,7 @@ const ResourcesList: FC<ResourcesListProps> = ({
     handleDragEnd,
     handleDragStart,
     sensors
-  } = useDndSensor(items, setResources, '_id')
+  } = useDndSensor({ items, setItems: setResources, idProp: '_id' })
 
   const renderItem = (item: CourseResources, isDragOver = false) => (
     <SortableWrapper
