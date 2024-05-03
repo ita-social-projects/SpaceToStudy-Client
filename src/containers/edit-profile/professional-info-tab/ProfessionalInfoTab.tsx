@@ -121,6 +121,13 @@ const ProfessionalInfoTab = () => {
 
   return (
     <Box sx={styles.root}>
+      <TitleWithDescription
+        description={t(
+          'editProfilePage.profile.professionalTab.mainDescription'
+        )}
+        style={styles.mainTitleWithDescription}
+        title={t('editProfilePage.profile.professionalTab.mainTitle')}
+      />
       <Box component={ComponentEnum.Section}>
         <TitleWithDescription
           description={t(

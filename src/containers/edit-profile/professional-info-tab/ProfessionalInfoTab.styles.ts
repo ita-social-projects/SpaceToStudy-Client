@@ -1,13 +1,16 @@
 import { rootContainer } from '~/containers/edit-profile/common.style'
-import { TypographyVariantEnum } from '~/types'
+import palette from '~/styles/app-theme/app.pallete'
+import { PositionEnum, TypographyVariantEnum } from '~/types'
 
-const { Subtitle1, Body2 } = TypographyVariantEnum
+const { Subtitle1, Body2, H6 } = TypographyVariantEnum
 
-const titleWithDescription = {
-  wrapper: { textAlign: 'left' },
-  title: { typography: Subtitle1 },
-  description: { typography: Body2, color: 'primary.500' }
-}
+const titleWithDescription = (
+  titleTypographyVariant: TypographyVariantEnum
+) => ({
+  wrapper: { textAlign: PositionEnum.Left },
+  title: { typography: titleTypographyVariant },
+  description: { typography: Body2, color: palette.primary[500] }
+})
 
 export const styles = {
   root: {
@@ -16,7 +19,8 @@ export const styles = {
     flexDirection: 'column',
     rowGap: 4
   },
-  titleWithDescription,
+  mainTitleWithDescription: titleWithDescription(H6),
+  titleWithDescription: titleWithDescription(Subtitle1),
   createBtnContainer: {
     my: 3
   },

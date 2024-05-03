@@ -18,6 +18,8 @@
       "videoPresentationDesc": "Add the link to your presentational video. Your video needs to be public and uploaded to YouTube."
     },
     "professionalTab": {
+      "mainTitle": "Professional information",
+      "mainDescription": "Here you can edit public professional information about yourself.",
       "categoriesTitle": "Your professional categories",
       "categoriesDescription": "State your professional field you want to work in with your students.\nChoose at least one study category, one subject and one proficiency level.",
       "addCategoryBtn": "Add category",
