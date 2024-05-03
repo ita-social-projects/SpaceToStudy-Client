@@ -5,18 +5,18 @@ import Switch from '@mui/material/Switch'
 
 import SettingItem from '~/components/setting-item/SettingItem'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
-import { titleWithSubtitle } from '~/containers/edit-profile/notification-tab/NotificationContainer.constans'
-import { styles } from '~/containers/edit-profile/notification-tab/NotificationContainer.style'
+import { titleWithSubtitle } from '~/containers/edit-profile/notification-tab/NotificationTab.constants'
+import { styles } from '~/containers/edit-profile/notification-tab/NotificationTab.styles'
 
-const NotificationContainer = () => {
+const NotificationTab = () => {
   const { t } = useTranslation()
 
   return (
     <Box sx={styles.root}>
       <TitleWithDescription
-        description={t('editTutor.notificationTab.mainHint')}
+        description={t('editProfilePage.profile.notificationsTab.mainHint')}
         style={styles.titleWithDescription}
-        title={t('editTutor.notificationTab.notifications')}
+        title={t('editProfilePage.profile.notificationsTab.notifications')}
       />
 
       <Box sx={styles.optionsContainer}>
@@ -35,4 +35,4 @@ const NotificationContainer = () => {
   )
 }
 
-export default NotificationContainer
+export default NotificationTab

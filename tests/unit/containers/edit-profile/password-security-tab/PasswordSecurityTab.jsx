@@ -4,15 +4,15 @@ import {
   fireEvent,
   waitForElementToBeRemoved
 } from '@testing-library/react'
-import SecurityBlock from '~/containers/tutor-profile/security-block/SecurityBlock'
+import PasswordSecurityTab from '~/containers/edit-profile/security-tab/PasswordSecurityTab'
 
 const changeInputValue = (label, value) => {
   fireEvent.change(label, { target: { value } })
 }
 
-describe('SecurityBlock', () => {
+describe('PasswordSecurityTab', () => {
   beforeEach(() => {
-    render(<SecurityBlock />)
+    render(<PasswordSecurityTab />)
   })
 
   it('renders title and description', () => {

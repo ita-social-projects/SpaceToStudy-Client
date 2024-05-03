@@ -4,7 +4,7 @@ import { FC, SyntheticEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import AppButton from '~/components/app-button/AppButton'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
-import { styles } from '~/containers/edit-profile/add-professional-category-modal/AddProfessionalCategoryModal.styles'
+import { styles } from '~/containers/edit-profile/professional-info-tab/add-professional-category-modal/AddProfessionalCategoryModal.styles'
 import {
   ButtonVariantEnum,
   ComponentEnum,
@@ -15,7 +15,7 @@ import {
 import useForm from '~/hooks/use-form'
 import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
 import AddIcon from '@mui/icons-material/Add'
-import { professionalSubjectTemplate } from '~/containers/edit-profile/add-professional-category-modal/AddProfessionalCategoryModal.constants'
+import { professionalSubjectTemplate } from '~/containers/edit-profile/professional-info-tab/add-professional-category-modal/AddProfessionalCategoryModal.constants'
 import ProficiencyLevelSelect from '~/containers/proficiency-level-select/ProficiencyLevelSelect'
 
 interface ValueWithHandler<T> {

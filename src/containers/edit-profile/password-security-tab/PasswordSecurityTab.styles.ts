@@ -1,19 +1,8 @@
 import { TypographyVariantEnum } from '~/types'
-import { commonShadow } from '~/styles/app-theme/custom-shadows'
+import { rootContainer } from '~/containers/edit-profile/common.style'
 
 export const styles = {
-  container: {
-    display: 'flex',
-    flexDirection: 'column',
-    width: '100%',
-    boxSizing: 'border-box',
-    maxWidth: '768px',
-    m: '0 auto',
-    p: '20px 40px',
-    backgroundColor: 'basic.white',
-    borderRadius: '4px',
-    boxShadow: commonShadow
-  },
+  container: rootContainer,
   titleAndDescription: {
     title: {
       typography: TypographyVariantEnum.H6

@@ -1,12 +1,12 @@
 import { render, screen, fireEvent } from '@testing-library/react'
-import NotificationContainer from '~/containers/edit-profile/notification-tab/NotificationContainer'
-import { titleWithSubtitle } from '~/containers/edit-profile/notification-tab/NotificationContainer.constans'
+import NotificationTab from '~/containers/edit-profile/notification-tab/NotificationTab'
+import { titleWithSubtitle } from '~/containers/edit-profile/notification-tab/NotificationTab.constants'
 
-describe('NotificationContainer', () => {
+describe('NotificationTab', () => {
   let switchElements
 
   beforeEach(() => {
-    render(<NotificationContainer />)
+    render(<NotificationTab />)
     switchElements = screen.getAllByRole('checkbox')
   })
 

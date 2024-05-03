@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box'
 import { FC } from 'react'
-import ProfessionalCategory from '~/containers/edit-profile/professional-category/ProfessionalCategory'
-import { styles } from '~/containers/edit-profile/professional-category-list/ProfessionalCategoryList.styles'
+import ProfessionalCategory from '~/containers/edit-profile/professional-info-tab/professional-category/ProfessionalCategory'
+import { styles } from '~/containers/edit-profile/professional-info-tab/professional-category-list/ProfessionalCategoryList.styles'
 import {
   OpenProfessionalCategoryModalHandler,
   ProfessionalCategoryWithActivationControls

@@ -9,7 +9,7 @@ import AppButton from '~/components/app-button/AppButton'
 import { ButtonVariantEnum, ComponentEnum, PositionEnum } from '~/types'
 import DeleteIcon from '@mui/icons-material/Delete'
 import useConfirm from '~/hooks/use-confirm'
-import { styles } from '~/containers/edit-profile/professional-category/ProfessionalCategory.styles'
+import { styles } from '~/containers/edit-profile/professional-info-tab/professional-category/ProfessionalCategory.styles'
 import {
   OpenProfessionalCategoryModalHandler,
   ProfessionalCategoryWithActivationControls

@@ -3,9 +3,7 @@ import { rootContainer } from '~/containers/edit-profile/common.style'
 import { switchStyle } from '~/containers/my-quizzes/quiz-settings-container/QuizSettingsContainer.styles'
 
 export const styles = {
-  root: {
-    ...rootContainer
-  },
+  root: rootContainer,
   titleWithDescription: {
     title: {
       typography: TypographyVariantEnum.H6

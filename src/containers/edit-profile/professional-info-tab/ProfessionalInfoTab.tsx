@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
-import { styles } from './ProfileProfessionalTab.styles'
+import { styles } from './ProfessionalInfoTab.styles'
 import AppButton from '~/components/app-button/AppButton'
 import {
   ButtonVariantEnum,
@@ -10,11 +10,11 @@ import {
   ProficiencyLevelEnum
 } from '~/types'
 import Box from '@mui/material/Box'
-import ProfessionalCategoryList from '~/containers/edit-profile/professional-category-list/ProfessionalCategoryList'
+import ProfessionalCategoryList from '~/containers/edit-profile/professional-info-tab/professional-category-list/ProfessionalCategoryList'
 import { useModalContext } from '~/context/modal-context'
-import AddProfessionalCategoryModal from '~/containers/edit-profile/add-professional-category-modal/AddProfessionalCategoryModal'
+import AddProfessionalCategoryModal from '~/containers/edit-profile/professional-info-tab/add-professional-category-modal/AddProfessionalCategoryModal'
 import AddIcon from '@mui/icons-material/Add'
-import AboutTutorAccordion from '~/containers/edit-profile/about-tutor-accordion/AboutTutorAccordion'
+import AboutTutorAccordion from '~/containers/edit-profile/professional-info-tab/about-tutor-accordion/AboutTutorAccordion'
 
 // TODO: replace mock data to real data
 const mockCategoriesData: ProfessionalCategoryWithActivationControls[] = [
@@ -98,7 +98,7 @@ const mockCategoriesData: ProfessionalCategoryWithActivationControls[] = [
   }
 ]
 
-const ProfileProfessionalTab = () => {
+const ProfessionalInfoTab = () => {
   const { t } = useTranslation()
 
   const { openModal, closeModal } = useModalContext()
@@ -161,4 +161,4 @@ const ProfileProfessionalTab = () => {
   )
 }
 
-export default ProfileProfessionalTab
+export default ProfessionalInfoTab

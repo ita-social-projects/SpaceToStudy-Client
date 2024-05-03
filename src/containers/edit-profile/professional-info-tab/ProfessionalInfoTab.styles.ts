@@ -1,3 +1,4 @@
+import { rootContainer } from '~/containers/edit-profile/common.style'
 import { TypographyVariantEnum } from '~/types'
 
 const { Subtitle1, Body2 } = TypographyVariantEnum
@@ -10,6 +11,7 @@ const titleWithDescription = {
 
 export const styles = {
   root: {
+    ...rootContainer,
     display: 'flex',
     flexDirection: 'column',
     rowGap: 4

@@ -4,8 +4,8 @@ import AppTextArea from '~/components/app-text-area/AppTextArea'
 import { useState } from 'react'
 import useForm from '~/hooks/use-form'
 import { useTranslation } from 'react-i18next'
-import { styles } from '~/containers/edit-profile/about-tutor-accordion/AboutTutorAccordion.styles'
-import { initialFormValues } from '~/containers/edit-profile/about-tutor-accordion/AboutTutorAccordion.constants'
+import { styles } from '~/containers/edit-profile/professional-info-tab/about-tutor-accordion/AboutTutorAccordion.styles'
+import { initialFormValues } from '~/containers/edit-profile/professional-info-tab/about-tutor-accordion/AboutTutorAccordion.constants'
 import { AccordionItem, TypographyVariantEnum } from '~/types'
 
 const AboutTutorAccordion = () => {
