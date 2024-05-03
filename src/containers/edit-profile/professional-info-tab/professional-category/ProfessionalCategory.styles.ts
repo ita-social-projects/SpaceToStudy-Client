@@ -21,7 +21,8 @@ export const styles = {
   toolbar: {
     root: {
       display: 'flex',
-      justifyContent: 'space-between'
+      justifyContent: 'space-between',
+      alignItems: 'center'
     },
     buttonGroup: {
       display: 'flex',
