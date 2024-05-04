@@ -199,8 +199,8 @@ describe('CourseSectionContainer tests', () => {
     })
   })
 
-  it('it should delete quiz', () => {
-    waitFor(() => {
+  it('it should delete quiz', async () => {
+    await waitFor(async () => {
       const quizDelete = screen.getAllByTestId('CloseIcon')[1].parentElement
 
       fireEvent.click(quizDelete)
@@ -209,10 +209,10 @@ describe('CourseSectionContainer tests', () => {
     expect(mockedHandleSectionNonInputChange).toHaveBeenCalled()
   })
 
-  it('it should delete attachment', () => {
-    waitFor(() => {
-      const attachmentDelete =
-        screen.findAllByTestId('CloseIcon')[2].parentElement
+  it('it should delete attachment', async () => {
+    await waitFor(async () => {
+      const attachmentDelete = (await screen.findAllByTestId('CloseIcon'))[2]
+        .parentElement
 
       fireEvent.click(attachmentDelete)
     })
