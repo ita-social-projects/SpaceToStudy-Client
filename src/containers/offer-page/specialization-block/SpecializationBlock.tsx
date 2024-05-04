@@ -14,7 +14,8 @@ import {
   CategoryNameInterface,
   CreateOfferBlockProps,
   CreateOrUpdateOfferData,
-  ProficiencyLevelEnum
+  ProficiencyLevelEnum,
+  UserRoleEnum
 } from '~/types'
 import { styles } from '~/containers/offer-page/OfferPage.styles'
 
@@ -48,7 +49,7 @@ const SpecializationBlock = <T extends CreateOrUpdateOfferData>({
   const subjectError = data.category && errors.subject
 
   const checkboxListProps =
-    (userRole as string) === 'tutor'
+    userRole === UserRoleEnum.Tutor
       ? { fillRange: true }
       : { singleSelect: true }
 
