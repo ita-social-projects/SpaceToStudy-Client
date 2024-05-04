@@ -204,7 +204,6 @@ const CreateOrEditQuizContainer = ({
   const CreateQuestionButton = (
     <Tooltip
       arrow
-      disableTouchListener
       placement={PositionEnum.Top}
       title={
         isCreationOpen ? t('myResourcesPage.quizzes.savePreviousQuestion') : ''
@@ -212,6 +211,7 @@ const CreateOrEditQuizContainer = ({
     >
       <span>
         <AppButton
+          disabled={isCreationOpen}
           onClick={onOpenCreateQuestion}
           size={SizeEnum.ExtraLarge}
           variant={ButtonVariantEnum.Tonal}

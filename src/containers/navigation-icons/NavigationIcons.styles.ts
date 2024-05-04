@@ -24,6 +24,7 @@ export const styles = {
   accountIcon: {
     ...hideOnMobile,
     ml: { sm: '12px', md: '12px', lg: '12px' },
-    typography: TypographyVariantEnum.Button
+    typography: TypographyVariantEnum.Button,
+    cursor: 'pointer'
   }
 }
