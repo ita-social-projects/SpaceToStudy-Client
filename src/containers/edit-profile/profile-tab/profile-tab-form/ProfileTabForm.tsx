@@ -34,7 +34,7 @@ import { imageResize } from '~/utils/image-resize'
 import { styles } from '~/containers/edit-profile/profile-tab/profile-tab-form/ProfileTabForm.styles'
 
 export interface ProfileTabFormProps {
-  user: UserResponse
+  userPhoto: UserResponse['photo']
   data: EditProfileForm
   errors: UseFormErrors<EditProfileForm>
   photo: UpdatedPhoto | null
@@ -51,7 +51,7 @@ export interface ProfileTabFormProps {
 }
 
 const ProfileTabForm: FC<ProfileTabFormProps> = ({
-  user,
+  userPhoto,
   data,
   errors,
   photo,
@@ -94,14 +94,14 @@ const ProfileTabForm: FC<ProfileTabFormProps> = ({
   }
 
   const handleRemovePhoto = () => {
-    setPhoto(null)
+    setPhoto(userPhoto ? null : { src: '', name: '' })
   }
 
   const photoToDisplay =
     photo === null
       ? ''
       : photo?.src ||
-        (user.photo && `${import.meta.env.VITE_APP_IMG_USER_URL}${user.photo}`)
+        (userPhoto && `${import.meta.env.VITE_APP_IMG_USER_URL}${userPhoto}`)
 
   return (
     <Box sx={styles.profileGeneralTabContainer}>

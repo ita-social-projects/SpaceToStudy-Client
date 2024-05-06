@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Box } from '@mui/material'
+import Box from '@mui/material/Box'
 import { useBlocker } from 'react-router-dom'
 
 import useUpdateUser from '~/hooks/use-update-user'
@@ -103,7 +103,7 @@ const ProfileTab: FC<ProfileTabProps> = ({ user }) => {
           handleNonInputValueChange={handleNonInputValueChange}
           photo={photo}
           setPhoto={setPhoto}
-          user={user}
+          userPhoto={user.photo}
         />
       </Box>
 

@@ -15,7 +15,7 @@ const handleBlur = vi.fn()
 const setPhoto = vi.fn()
 
 const props = {
-  user: userDataMock,
+  userPhoto: userDataMock.photo,
   data: formDataMock,
   errors: [],
   photo: '',
