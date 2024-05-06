@@ -22,7 +22,7 @@ const NotificationTab = () => {
       <Box sx={styles.optionsContainer}>
         {titleWithSubtitle.map((item) => (
           <SettingItem
-            key={item.id}
+            key={item.title}
             style={styles.options}
             subtitle={t(item.subtitle)}
             title={t(item.title)}

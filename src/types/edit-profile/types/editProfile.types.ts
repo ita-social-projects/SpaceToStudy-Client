@@ -1,4 +1,4 @@
-import { ProfessionalCategory } from '../editProfile.index'
+import { ProfessionalCategory } from '~/types'
 
 export type OpenProfessionalCategoryModalHandler = (
   initialValues?: ProfessionalCategory
