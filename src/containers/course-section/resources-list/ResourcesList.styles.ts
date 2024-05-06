@@ -9,7 +9,7 @@ export const styles = {
     position: 'relative',
     backgroundColor: 'basic.white',
     borderRadius: '6px',
-    zIndex: isDragging ? 10 : 1,
+    zIndex: isDragging ? 1 : 0,
     ...(isDragging && {
       boxShadow: `0px 3px 16px 2px ${palette.primary[300]}`,
       border: `2px solid ${palette.primary[300]}`,
