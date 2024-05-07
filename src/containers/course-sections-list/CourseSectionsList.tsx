@@ -165,7 +165,6 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
             sectionData={item}
             sections={items}
             setSectionsItems={setSectionsItems}
-            titleText={titleText}
           />
         </SortableWrapper>
       </>
