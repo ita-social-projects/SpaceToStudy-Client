@@ -88,8 +88,7 @@ export const styles = {
   dragIcon: {
     fontSize: '30px',
     transform: 'rotate(90deg)',
-    color: 'primary.400',
-    cursor: 'pointer'
+    color: 'primary.400'
   },
   editIconWrapper: actionIconWrapper,
   deleteIconWrapper: { ...actionIconWrapper, color: 'error.700' },

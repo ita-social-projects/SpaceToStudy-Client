@@ -7,7 +7,6 @@ import Typography from '@mui/material/Typography'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Checkbox from '@mui/material/Checkbox'
 import CheckIcon from '@mui/icons-material/Check'
-import DragIndicatorIcon from '@mui/icons-material/DragIndicator'
 import IconButton from '@mui/material/IconButton'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import EditIcon from '@mui/icons-material/Edit'
@@ -17,6 +16,7 @@ import LibraryAddCheckOutlinedIcon from '@mui/icons-material/LibraryAddCheckOutl
 import useMenu from '~/hooks/use-menu'
 import IconTitleDescription from '~/components/icon-title-description/IconTitleDescription'
 import AppChip from '~/components/app-chip/AppChip'
+import DragHandle from '~/components/drag-handle/DragHandle'
 
 import {
   ColorEnum,
@@ -95,9 +95,10 @@ const Question: FC<QuestionProps> = ({
 
   return (
     <Box sx={spliceSx(styles.root, sx)}>
-      <Box sx={styles.dragIconWrapper}>
-        <DragIndicatorIcon sx={styles.dragIcon} />
-      </Box>
+      <DragHandle
+        iconStyles={styles.dragIcon}
+        wrapperStyles={styles.dragIconWrapper}
+      />
       <Box sx={styles.header}>
         <IconTitleDescription
           icon={

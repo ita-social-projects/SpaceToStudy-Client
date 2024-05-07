@@ -25,8 +25,7 @@ export const styles = {
   dragIcon: {
     fontSize: '30px',
     transform: 'rotate(90deg)',
-    color: 'primary.400',
-    cursor: 'pointer'
+    color: 'primary.400'
   },
   activityButton: {
     typography: TypographyVariantEnum.Body2,

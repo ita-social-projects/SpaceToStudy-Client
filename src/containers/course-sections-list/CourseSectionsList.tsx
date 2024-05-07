@@ -1,32 +1,27 @@
 import { FC, MouseEvent } from 'react'
-import {
-  DragDropContext,
-  Droppable,
-  Draggable,
-  DraggableProvided,
-  DraggableStateSnapshot,
-  DropResult,
-  DroppableProvided
-} from 'react-beautiful-dnd'
+import { DndContext, DragOverlay } from '@dnd-kit/core'
+import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
+import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
-import DragIndicatorIcon from '@mui/icons-material/DragIndicator'
+import Crop75Icon from '@mui/icons-material/Crop75'
 import Divider from '@mui/material/Divider'
 import MenuItem from '@mui/material/MenuItem'
 import Typography from '@mui/material/Typography'
-import Crop75Icon from '@mui/icons-material/Crop75'
 import ViewComfyOutlinedIcon from '@mui/icons-material/ViewComfyOutlined'
 import { Add } from '@mui/icons-material'
-import { useTranslation } from 'react-i18next'
 
-import CourseSectionContainer from '~/containers/course-section/CourseSectionContainer'
 import AddCourseTemplateModal from '~/containers/cooperation-details/add-course-modal-modal/AddCourseTemplateModal'
+import SortableWrapper from '~/containers/sortable-wrapper/SortableWrapper'
+import CourseSectionContainer from '~/containers/course-section/CourseSectionContainer'
+import DragHandle from '~/components/drag-handle/DragHandle'
+import { styles } from '~/containers/course-sections-list/CourseSectionsList.styles'
+
+import { useCooperationContext } from '~/context/cooperation-context'
+import { useModalContext } from '~/context/modal-context'
 import useDroppable from '~/hooks/use-droppable'
 import useMenu from '~/hooks/use-menu'
-
-import { styles } from '~/containers/course-sections-list/CourseSectionsList.styles'
+import useDndSensor from '~/hooks/use-dnd-sensor'
 import { CourseSection, CourseSectionHandlers } from '~/types'
-import { useModalContext } from '~/context/modal-context'
-import { useCooperationContext } from '~/context/cooperation-context'
 
 interface CourseSectionsListProps extends CourseSectionHandlers {
   items: CourseSection[]
@@ -45,7 +40,17 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
   addNewSection
 }) => {
   const { enabled } = useDroppable()
-  const { openMenu, renderMenu, closeMenu, anchorEl } = useMenu()
+
+  const {
+    activeItem,
+    handleDragCancel,
+    handleDragEnd,
+    handleDragStart,
+    sensors
+  } = useDndSensor({ items, setItems: setSectionsItems, idProp: 'id' })
+
+  const { anchorEl, openMenu, closeMenu, renderMenu } = useMenu()
+
   const { openModal, closeModal } = useModalContext()
   const { setIsAddedClicked, currentSectionIndex, setCurrentSectionIndex } =
     useCooperationContext()
@@ -56,32 +61,6 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
     setCurrentSectionIndex(
       items.findIndex((item) => item.id === event.currentTarget.id)
     )
-  }
-
-  const reorder = (
-    list: CourseSection[],
-    startIndex: number,
-    endIndex: number
-  ): CourseSection[] => {
-    const result = Array.from(list)
-    const [removed] = result.splice(startIndex, 1)
-    result.splice(endIndex, 0, removed)
-
-    return result
-  }
-
-  const onDragEnd = (result: DropResult) => {
-    if (!result.destination) {
-      return
-    }
-
-    const reorderedItems = reorder(
-      items,
-      result.source.index,
-      result.destination.index
-    )
-
-    setSectionsItems(reorderedItems)
   }
 
   const handleMenuItemClick = () => {
@@ -121,80 +100,85 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
     )
   )
 
-  const sectionsList = items.map((item, i, items) => (
-    <Draggable draggableId={item.id} index={i} key={item.id}>
-      {(provided: DraggableProvided, snapshot: DraggableStateSnapshot) => (
-        <>
-          {isCooperation && (
-            <Box
-              data-testid='addActivity-container'
-              sx={
-                anchorEl
-                  ? styles.activityButtonContainerVisible
-                  : styles.activityButtonContainerDefault
-              }
-            >
-              <Divider flexItem>
-                <Typography
-                  id={item.id}
-                  onClick={handleActivitiesMenuClick}
-                  sx={styles.activityButton}
-                >
-                  Add activity
-                  <Add sx={styles.activityButtonIcon} />
-                </Typography>
-                {renderMenu(addActivityMenuList, {
-                  transformOrigin: {
-                    vertical: 'top',
-                    horizontal: 'center'
-                  },
-                  anchorOrigin: {
-                    vertical: 'bottom',
-                    horizontal: 'center'
-                  },
-                  sx: styles.menuRoot
-                })}
-              </Divider>
-            </Box>
-          )}
-          <Box
-            ref={provided.innerRef}
-            sx={styles.section(snapshot.isDragging)}
-            {...provided.draggableProps}
+  const sectionsItem = (item: CourseSection, isDragOver = false) => {
+    const coorperationMenu = isCooperation && (
+      <Box
+        data-testid='addActivity-container'
+        sx={
+          anchorEl
+            ? styles.activityButtonContainerVisible
+            : styles.activityButtonContainerDefault
+        }
+      >
+        <Divider flexItem>
+          <Typography
+            id={item.id}
+            onClick={handleActivitiesMenuClick}
+            sx={styles.activityButton}
           >
-            <Box sx={styles.dragIconWrapper} {...provided.dragHandleProps}>
-              <DragIndicatorIcon sx={styles.dragIcon} />
-            </Box>
-            <CourseSectionContainer
-              handleSectionInputChange={handleSectionInputChange}
-              handleSectionNonInputChange={handleSectionNonInputChange}
-              handleSectionResourcesOrder={handleSectionResourcesOrder}
-              sectionData={item}
-              sections={items}
-              setSectionsItems={setSectionsItems}
-              titleText={titleText}
-            />
-          </Box>
-        </>
-      )}
-    </Draggable>
-  ))
+            Add activity
+            <Add sx={styles.activityButtonIcon} />
+          </Typography>
+          {renderMenu(addActivityMenuList, {
+            transformOrigin: {
+              vertical: 'top',
+              horizontal: 'center'
+            },
+            anchorOrigin: {
+              vertical: 'bottom',
+              horizontal: 'center'
+            },
+            sx: styles.menuRoot
+          })}
+        </Divider>
+      </Box>
+    )
 
+    return (
+      <>
+        {coorperationMenu}
+        <SortableWrapper
+          id={item.id}
+          key={item.id}
+          onDragEndStyles={styles.section(isDragOver)}
+          onDragStartStyles={styles.section(true)}
+        >
+          <DragHandle
+            iconStyles={styles.dragIcon}
+            wrapperStyles={styles.dragIconWrapper}
+          />
+          <CourseSectionContainer
+            handleSectionInputChange={handleSectionInputChange}
+            handleSectionNonInputChange={handleSectionNonInputChange}
+            handleSectionResourcesOrder={handleSectionResourcesOrder}
+            sectionData={item}
+            sections={items}
+            setSectionsItems={setSectionsItems}
+            titleText={titleText}
+          />
+        </SortableWrapper>
+      </>
+    )
+  }
+  const sectionItems = items.map((item) => sectionsItem(item))
+
+  const courseSectionContent = enabled && (
+    <>
+      <SortableContext items={items} strategy={verticalListSortingStrategy}>
+        {sectionItems}
+      </SortableContext>
+      <DragOverlay>{activeItem && sectionsItem(activeItem, true)}</DragOverlay>
+    </>
+  )
   return (
-    <Box>
-      <DragDropContext onDragEnd={onDragEnd}>
-        {enabled && (
-          <Droppable droppableId='draggable'>
-            {(provided: DroppableProvided) => (
-              <Box {...provided.droppableProps} ref={provided.innerRef}>
-                {sectionsList}
-                {provided.placeholder}
-              </Box>
-            )}
-          </Droppable>
-        )}
-      </DragDropContext>
-    </Box>
+    <DndContext
+      onDragCancel={handleDragCancel}
+      onDragEnd={handleDragEnd}
+      onDragStart={handleDragStart}
+      sensors={sensors}
+    >
+      {courseSectionContent}
+    </DndContext>
   )
 }
 
