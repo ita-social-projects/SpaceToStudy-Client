@@ -49,7 +49,7 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
     sensors
   } = useDndSensor({ items, setItems: setSectionsItems, idProp: 'id' })
 
-  const { openMenu, closeMenu, renderMenu } = useMenu()
+  const { anchorEl, openMenu, closeMenu, renderMenu } = useMenu()
 
   const { openModal, closeModal } = useModalContext()
   const { setIsAddedClicked, currentSectionIndex, setCurrentSectionIndex } =
@@ -102,7 +102,14 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
 
   const sectionsItem = (item: CourseSection, isDragOver = false) => {
     const coorperationMenu = isCooperation && (
-      <Box data-testid='addActivity-container'>
+      <Box
+        data-testid='addActivity-container'
+        sx={
+          anchorEl
+            ? styles.activityButtonContainerVisible
+            : styles.activityButtonContainerDefault
+        }
+      >
         <Divider flexItem>
           <Typography
             id={item.id}
@@ -128,27 +135,29 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
     )
 
     return (
-      <SortableWrapper
-        id={item.id}
-        key={item.id}
-        onDragEndStyles={styles.section(isDragOver)}
-        onDragStartStyles={styles.section(true)}
-      >
+      <>
         {coorperationMenu}
-        <DragHandle
-          iconStyles={styles.dragIcon}
-          wrapperStyles={styles.dragIconWrapper}
-        />
-        <CourseSectionContainer
-          handleSectionInputChange={handleSectionInputChange}
-          handleSectionNonInputChange={handleSectionNonInputChange}
-          handleSectionResourcesOrder={handleSectionResourcesOrder}
-          sectionData={item}
-          sections={items}
-          setSectionsItems={setSectionsItems}
-          titleText={titleText}
-        />
-      </SortableWrapper>
+        <SortableWrapper
+          id={item.id}
+          key={item.id}
+          onDragEndStyles={styles.section(isDragOver)}
+          onDragStartStyles={styles.section(true)}
+        >
+          <DragHandle
+            iconStyles={styles.dragIcon}
+            wrapperStyles={styles.dragIconWrapper}
+          />
+          <CourseSectionContainer
+            handleSectionInputChange={handleSectionInputChange}
+            handleSectionNonInputChange={handleSectionNonInputChange}
+            handleSectionResourcesOrder={handleSectionResourcesOrder}
+            sectionData={item}
+            sections={items}
+            setSectionsItems={setSectionsItems}
+            titleText={titleText}
+          />
+        </SortableWrapper>
+      </>
     )
   }
   const sectionItems = items.map((item) => sectionsItem(item))
