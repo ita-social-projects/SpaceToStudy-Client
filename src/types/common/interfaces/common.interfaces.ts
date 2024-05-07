@@ -110,7 +110,7 @@ export interface CourseSectionHandlers {
     id: string,
     resources: CourseResources[]
   ) => void
-  titleText: string
+  titleText?: string
 }
 
 export interface StepData {

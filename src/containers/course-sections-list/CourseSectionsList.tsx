@@ -40,7 +40,6 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
   handleSectionInputChange,
   handleSectionNonInputChange,
   handleSectionResourcesOrder,
-  titleText,
   isCooperation = false,
   addNewSection
 }) => {

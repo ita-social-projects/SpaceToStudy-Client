@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams, useNavigate } from 'react-router-dom'
 import { AxiosResponse } from 'axios'
@@ -21,6 +21,9 @@ import { useAppSelector } from '~/hooks/use-redux'
 
 import CooperationActivities from '~/containers/cooperation-details/cooperation-activities/CooperationActivities'
 import CooperationNotes from '~/containers/my-cooperations/cooperation-notes/CooperationNotes'
+import CooperationActivitiesView from '~/containers/cooperation-details/cooperetion-activities-view/CooperationActivitiesView'
+
+import { errorRoutes } from '~/router/constants/errorRoutes'
 import {
   tabsData,
   defaultResponse,
@@ -52,6 +55,7 @@ const CooperationDetails = () => {
     CooperationTabsEnum.Activities
   )
   const [isNotesOpen, setIsNotesOpen] = useState<boolean>(false)
+  const [editMode, setEditMode] = useState<boolean>(false)
 
   const responseError = useCallback(
     () => navigate(errorRoutes.notFound.path),
@@ -67,6 +71,12 @@ const CooperationDetails = () => {
     defaultResponse,
     onResponseError: responseError
   })
+
+  useEffect(() => {
+    response.sections && response.sections.length
+      ? setEditMode(true)
+      : setEditMode(false)
+  }, [response.sections])
 
   if (loading) {
     return <Loader pageLoad />
@@ -86,12 +96,21 @@ const CooperationDetails = () => {
 
   const cooperationContent = activeTab && tabsData[activeTab]?.content
 
-  const pageContent =
-    isActivityCreated && activeTab === CooperationTabsEnum.Activities ? (
-      <CooperationActivities cooperationId={id} />
-    ) : (
-      cooperationContent
-    )
+  const pageContent = editMode ? (
+    (editMode === true &&
+      CooperationTabsEnum.Details === activeTab &&
+      cooperationContent) ||
+    (editMode === true && activeTab === CooperationTabsEnum.Activities && (
+      <CooperationActivitiesView
+        sections={response.sections}
+        setEditMode={setEditMode}
+      />
+    ))
+  ) : isActivityCreated ? (
+    <CooperationActivities cooperationId={id} />
+  ) : (
+    cooperationContent
+  )
 
   const iconConditionals = isNotesOpen ? (
     <KeyboardDoubleArrowRightIcon />
