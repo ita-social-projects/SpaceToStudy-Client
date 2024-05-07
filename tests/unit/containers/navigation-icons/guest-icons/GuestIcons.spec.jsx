@@ -4,10 +4,24 @@ import GuestIcons from '~/containers/navigation-icons/guest-icons/GuestIcons'
 import { vi } from 'vitest'
 
 const setIsSidebarOpen = vi.fn()
+const openLanguageMenu = vi.fn()
+const closeLanguageMenu = vi.fn()
+
+vi.mock('~/hooks/use-menu', () => ({
+  default: () => ({
+    openMenu: openLanguageMenu,
+    closeMenu: closeLanguageMenu
+  })
+}))
 
 describe('test with guest role', () => {
   beforeEach(() => {
-    renderWithProviders(<GuestIcons setSidebarOpen={setIsSidebarOpen} />)
+    renderWithProviders(
+      <GuestIcons
+        openLanguageMenu={openLanguageMenu}
+        setSidebarOpen={setIsSidebarOpen}
+      />
+    )
   })
 
   it('should render click menu icon', () => {
@@ -23,5 +37,22 @@ describe('test with guest role', () => {
     const loginTooltipTitle = await screen.findByText('iconsTooltip.login')
 
     expect(loginTooltipTitle).toBeInTheDocument()
+  })
+
+  it('should render click Language icon', () => {
+    const languageIcon = screen.getByTestId('LanguageIcon')
+    fireEvent.click(languageIcon)
+
+    expect(openLanguageMenu).toBeCalled()
+  })
+
+  it('should render tooltip title to language icon', async () => {
+    const languageIcon = screen.getByTestId('LanguageIcon')
+    fireEvent.mouseOver(languageIcon)
+    const languageTooltipTitle = await screen.findByText(
+      'iconsTooltip.language'
+    )
+
+    expect(languageTooltipTitle).toBeInTheDocument()
   })
 })
