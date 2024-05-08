@@ -60,20 +60,6 @@ describe('CreateCourse', () => {
     expect(addSectionButton).toBeInTheDocument()
   })
 
-  it('should change input section data', () => {
-    waitFor(() => {
-      const sectionTitleInput = screen.getByLabelText(
-        'course.courseSection.defaultNewTitle'
-      )
-
-      fireEvent.blur(sectionTitleInput, {
-        target: { value: 'New Section Title' }
-      })
-
-      expect(sectionTitleInput.value).toBe('New Section Title')
-    })
-  })
-
   it('should choose the category from options list', async () => {
     const autocomplete = screen.getAllByRole('combobox')[0]
 

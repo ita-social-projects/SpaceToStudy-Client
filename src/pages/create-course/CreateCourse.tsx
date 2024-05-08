@@ -229,7 +229,7 @@ const CreateCourse = () => {
           handleSectionResourcesOrder={handleSectionResourcesOrder}
           items={data.sections}
           setSectionsItems={setSectionsItems}
-          titleText='defaultNewTitle'
+          // titleText='defaultNewTitle'
         />
         <Box sx={styles.functionalButton}>
           <AppButton

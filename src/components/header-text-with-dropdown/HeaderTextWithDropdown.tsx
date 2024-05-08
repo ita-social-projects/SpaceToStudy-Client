@@ -48,9 +48,8 @@ const HeaderTextWithDropdown = ({
   const handleBlur = (
     event: FocusEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    isView
-      ? ''
-      : handleSectionInputChange(sectionData.id, 'title', event.target.value)
+    !isView &&
+      handleSectionInputChange(sectionData.id, 'title', event.target.value)
   }
 
   const sectionActions = [
