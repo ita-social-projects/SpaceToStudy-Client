@@ -12,6 +12,7 @@ import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import LocationSelectionInputs from '~/components/location-selection-inputs/LocationSelectionInputs'
 import FileUploader from '~/components/file-uploader/FileUploader'
+import DragAndDrop from '~/components/drag-and-drop/DragAndDrop'
 
 import {
   ButtonVariantEnum,
@@ -131,7 +132,13 @@ const ProfileGeneralTab: FC<ProfileTabProps> = ({ user }) => {
   return (
     <Box sx={styles.profileGeneralTabContainer}>
       <Box sx={styles.avatar.root}>
-        <Avatar src={photoToDisplay} sx={styles.avatar.img} />
+        <DragAndDrop
+          emitter={addPhoto}
+          style={{ root: styles.avatar.img }}
+          validationData={validationData}
+        >
+          <Avatar src={photoToDisplay} sx={styles.avatar.img} />
+        </DragAndDrop>
         <Box sx={styles.avatar.textWithButtons}>
           <TitleWithDescription
             description={t('editProfilePage.profile.generalTab.uploadDesc')}
