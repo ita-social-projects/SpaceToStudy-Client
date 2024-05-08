@@ -54,8 +54,8 @@ const CooperationDetails = () => {
   const [activeTab, setActiveTab] = useState<CooperationTabsEnum>(
     CooperationTabsEnum.Activities
   )
-  const [isNotesOpen, setIsNotesOpen] = useState<boolean>(false)
-  const [editMode, setEditMode] = useState<boolean>(false)
+  const [isNotesOpen, setIsNotesOpen] = useState(false)
+  const [editMode, setEditMode] = useState(false)
 
   const responseError = useCallback(
     () => navigate(errorRoutes.notFound.path),
@@ -73,9 +73,7 @@ const CooperationDetails = () => {
   })
 
   useEffect(() => {
-    response.sections && response.sections.length
-      ? setEditMode(true)
-      : setEditMode(false)
+    response.sections && response.sections.length && setEditMode(true)
   }, [response.sections])
 
   if (loading) {
@@ -96,21 +94,28 @@ const CooperationDetails = () => {
 
   const cooperationContent = activeTab && tabsData[activeTab]?.content
 
-  const pageContent = editMode ? (
-    (editMode === true &&
+  const pageContent = () => {
+    if (
+      editMode &&
       CooperationTabsEnum.Details === activeTab &&
-      cooperationContent) ||
-    (editMode === true && activeTab === CooperationTabsEnum.Activities && (
-      <CooperationActivitiesView
-        sections={response.sections}
-        setEditMode={setEditMode}
-      />
-    ))
-  ) : isActivityCreated ? (
-    <CooperationActivities cooperationId={id} />
-  ) : (
-    cooperationContent
-  )
+      cooperationContent
+    ) {
+      return cooperationContent
+    } else if (editMode && activeTab === CooperationTabsEnum.Activities) {
+      return (
+        <CooperationActivitiesView
+          sections={response.sections}
+          setEditMode={setEditMode}
+        />
+      )
+    }
+
+    if (isActivityCreated) {
+      return <CooperationActivities cooperationId={id} />
+    } else {
+      return cooperationContent
+    }
+  }
 
   const iconConditionals = isNotesOpen ? (
     <KeyboardDoubleArrowRightIcon />
@@ -123,6 +128,7 @@ const CooperationDetails = () => {
       <Box>
         <StatusChip status={response.status} />
         <TitleWithDescription
+          key={Date.now()}
           style={styles.cooperationTitle}
           title={response.title}
         />
@@ -149,7 +155,7 @@ const CooperationDetails = () => {
       <Box sx={styles.notesBlock}>
         <Box sx={styles.pageContent}>
           <ResourcesAvailabilityProvider>
-            {pageContent}
+            {pageContent()}
           </ResourcesAvailabilityProvider>
         </Box>
         {!isDesktop && isNotesOpen && (

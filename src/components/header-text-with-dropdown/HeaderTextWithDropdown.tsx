@@ -13,9 +13,9 @@ import {
   CourseSection,
   FormInputValueChange
 } from '~/types'
-import { MenuItem } from '@mui/material'
+import MenuItem from '@mui/material/MenuItem'
 import { useTranslation } from 'react-i18next'
-import { Dispatch, SetStateAction, useState } from 'react'
+import { Dispatch, FocusEvent, SetStateAction, useState } from 'react'
 import useMenu from '~/hooks/use-menu'
 import { styles } from '~/components/header-text-with-dropdown/HeaderTextWithDropdown.styles'
 
@@ -34,15 +34,23 @@ const HeaderTextWithDropdown = ({
   sectionData,
   onDeleteSection,
   isVisible,
-  isView
+  isView = false
 }: HeaderTextWithDropdownProps) => {
   const { t } = useTranslation()
-  const [titleInput, setTitleInput] = useState<string>(sectionData.title)
-  const [activeMenu, setActiveMenu] = useState<string>('')
+  const [titleInput, setTitleInput] = useState(sectionData.title)
+  const [activeMenu, setActiveMenu] = useState('')
   const { openMenu, renderMenu } = useMenu()
 
   const onShowHide = () => {
     setIsVisible((isVisible) => !isVisible)
+  }
+
+  const handleBlur = (
+    event: FocusEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    isView
+      ? ''
+      : handleSectionInputChange(sectionData.id, 'title', event.target.value)
   }
 
   const sectionActions = [
@@ -54,30 +62,29 @@ const HeaderTextWithDropdown = ({
           {t('course.courseSection.sectionMenu.deleteSection')}
         </Box>
       ),
-      func: onDeleteSection
+      onClick: onDeleteSection
     }
   ]
 
-  const sectionMenuItems = sectionActions.map(({ label, func, id }) => (
-    <MenuItem key={id} onClick={func}>
+  const sectionMenuItems = sectionActions.map(({ label, onClick, id }) => (
+    <MenuItem key={id} onClick={onClick}>
       {label}
     </MenuItem>
   ))
 
+  const showIcon = isVisible ? (
+    <KeyboardArrowUpIcon color={ColorEnum.Primary} sx={styles.headerIcon} />
+  ) : (
+    <KeyboardArrowDownIcon color={ColorEnum.Primary} sx={styles.headerIcon} />
+  )
+  const showMenu = isView
+    ? ''
+    : activeMenu === menuTypes.sectionMenu && renderMenu(sectionMenuItems)
+
   return (
     <Box sx={styles.header}>
       <IconButton onClick={onShowHide} sx={styles.headerIconWrapper}>
-        {isVisible ? (
-          <KeyboardArrowUpIcon
-            color={ColorEnum.Primary}
-            sx={styles.headerIcon}
-          />
-        ) : (
-          <KeyboardArrowDownIcon
-            color={ColorEnum.Primary}
-            sx={styles.headerIcon}
-          />
-        )}
+        {showIcon}
       </IconButton>
       <AppTextField
         InputLabelProps={styles.titleLabel}
@@ -85,15 +92,7 @@ const HeaderTextWithDropdown = ({
         fullWidth
         inputProps={styles.input(isView)}
         label={titleInput ? '' : t('course.courseSection.moduleTitle')}
-        onBlur={(event) =>
-          isView
-            ? ''
-            : handleSectionInputChange(
-                sectionData.id,
-                'title',
-                event.target.value
-              )
-        }
+        onBlur={(event) => handleBlur(event)}
         onChange={(event) => setTitleInput(event.target.value)}
         value={titleInput}
         variant={TextFieldVariantEnum.Standard}
@@ -110,9 +109,7 @@ const HeaderTextWithDropdown = ({
           <MoreVertIcon color={ColorEnum.Primary} sx={styles.headerIcon} />
         </IconButton>
       )}
-      {isView
-        ? ''
-        : activeMenu === menuTypes.sectionMenu && renderMenu(sectionMenuItems)}
+      {showMenu}
     </Box>
   )
 }

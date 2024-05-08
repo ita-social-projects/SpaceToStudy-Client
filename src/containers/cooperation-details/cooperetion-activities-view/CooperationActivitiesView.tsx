@@ -1,4 +1,4 @@
-import { Box } from '@mui/material'
+import Box from '@mui/material/Box'
 
 import CooperationSectionView from '~/components/cooperation-section-view/CooperationSectionView'
 import { CourseSection } from '~/types'

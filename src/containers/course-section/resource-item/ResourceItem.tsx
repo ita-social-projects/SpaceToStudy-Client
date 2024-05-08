@@ -142,6 +142,31 @@ const ResourceItem: FC<ResourceItemProps> = ({
     </Box>
   )
 
+  const showIcon = isView ? (
+    <Box>
+      {resource.availability?.status === ResourceAvailabilityStatusEnum.Open ? (
+        ''
+      ) : (
+        <Box sx={styles.availabilityIcon}>
+          <img
+            alt='resource icon'
+            src={availabilityIcons[resourceAvailabilityStatus]}
+          />
+        </Box>
+      )}
+    </Box>
+  ) : (
+    <Box sx={styles.resourceActions}>
+      {isCooperation && availabilitySelection}
+      <IconButton aria-label='edit' onClick={onEditResource}>
+        <EditIcon fontSize='small' sx={styles.editBtn} />
+      </IconButton>
+      <IconButton aria-label='delete' onClick={onDeleteResource}>
+        <CloseIcon fontSize='small' />
+      </IconButton>
+    </Box>
+  )
+
   return (
     <Box sx={styles.container(isView)}>
       <IconExtensionWithTitle
@@ -149,33 +174,7 @@ const ResourceItem: FC<ResourceItemProps> = ({
         icon={setResourceIcon()}
         title={'title' in resource ? resource.title : resource.fileName}
       />
-      <Box sx={styles.resourceActions}>
-        {isView ? (
-          <Box>
-            {resource.availability.status ===
-            ResourceAvailabilityStatusEnum.Open ? (
-              ''
-            ) : (
-              <Box sx={styles.availabilityIcon}>
-                <img
-                  alt='resource icon'
-                  src={availabilityIcons[resourceAvailabilityStatus]}
-                />
-              </Box>
-            )}
-          </Box>
-        ) : (
-          <Box sx={styles.resourceActions}>
-            {isCooperation && availabilitySelection}
-            <IconButton aria-label='edit' onClick={onEditResource}>
-              <EditIcon fontSize='small' sx={styles.editBtn} />
-            </IconButton>
-            <IconButton aria-label='delete' onClick={onDeleteResource}>
-              <CloseIcon fontSize='small' />
-            </IconButton>
-          </Box>
-        )}
-      </Box>
+      <Box sx={styles.resourceActions}>{showIcon}</Box>
     </Box>
   )
 }

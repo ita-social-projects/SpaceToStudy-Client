@@ -8,7 +8,7 @@ export const styles = {
   },
   input: (disabled: boolean) => ({
     style: { padding: 0, margin: 0 },
-    disabled: disabled ? true : false
+    disabled: disabled
   }),
   titleInput: {
     disableUnderline: true,

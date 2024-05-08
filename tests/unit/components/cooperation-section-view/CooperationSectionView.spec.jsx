@@ -1,4 +1,3 @@
-import { beforeEach } from 'vitest'
 import { render, screen } from '@testing-library/react'
 
 import CooperationSectionView from '~/components/cooperation-section-view/CooperationSectionView'

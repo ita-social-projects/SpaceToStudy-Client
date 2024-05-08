@@ -16,7 +16,7 @@ interface CooperationSectionViewProps {
 }
 
 const CooperationSectionView = ({ item, id }: CooperationSectionViewProps) => {
-  const [isVisible, setIsVisible] = useState<boolean>(true)
+  const [isVisible, setIsVisible] = useState(true)
   const { t } = useTranslation()
 
   return (
