@@ -1,4 +1,3 @@
-// import { t } from 'i18next'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { guestRoutes } from '~/router/constants/guestRoutes'
 import { UserResponse } from '~/types'
