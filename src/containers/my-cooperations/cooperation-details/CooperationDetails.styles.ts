@@ -26,7 +26,6 @@ export const styles = {
     justifyContent: 'space-between'
   },
   pageContent: {
-    width: { md: '1340px', sm: '980px' },
     flex: 1
   },
   banner: (isNotesOpen: boolean) => ({
