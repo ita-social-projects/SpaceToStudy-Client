@@ -61,6 +61,9 @@ export const styles = {
     '& button': {
       gap: '12px',
       width: '100%'
+    },
+    '& span': {
+      width: '100%'
     }
   },
 
