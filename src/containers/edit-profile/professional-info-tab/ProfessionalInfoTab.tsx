@@ -16,7 +16,7 @@ import AddProfessionalCategoryModal from '~/containers/edit-profile/professional
 import AddIcon from '@mui/icons-material/Add'
 import AboutTutorAccordion from '~/containers/edit-profile/professional-info-tab/about-tutor-accordion/AboutTutorAccordion'
 
-// TODO: replace mock data to real data
+// @TODO: replace mock data to real data
 const mockCategoriesData: ProfessionalCategoryWithActivationControls[] = [
   {
     _id: crypto.randomUUID(),

@@ -16,7 +16,7 @@ const AboutTutorAccordion = () => {
     initialValues: initialFormValues
   })
 
-  // TODO: replace content if backend is done
+  // @TODO: replace content if backend is done
   const accordionItems: AccordionItem[] = [
     {
       title: 'editProfilePage.profile.professionalTab.accordion.education',

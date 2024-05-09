@@ -28,11 +28,11 @@ const ProfessionalCategory: FC<ProfessionalCategoryProps> = ({
   const { openDialog } = useConfirm()
 
   const handleActivateButtonClick = () => {
-    // TODO: handle activation logic
+    // @TODO: handle activation logic
   }
 
   const handleDeactivateButtonClick = () => {
-    // TODO: handle deactivation logic
+    // @TODO: handle deactivation logic
   }
 
   const handleDeleteButtonClick = () => {
@@ -50,7 +50,7 @@ const ProfessionalCategory: FC<ProfessionalCategoryProps> = ({
         'editProfilePage.profile.professionalTab.deleteCategoryModal.submitBtn'
       ),
       sendConfirm: () => {
-        // TODO: handle deleting category
+        // @TODO: handle deleting category
       }
     })
   }

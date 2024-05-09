@@ -43,7 +43,7 @@ function SubjectGroup({
         <AppAutoComplete
           fullWidth
           onChange={(_, value) => subjectName.handleChange(value)}
-          options={['Subject1', 'Subject2', 'Subject3']} // TODO: replace with actual subjects from backend
+          options={['Subject1', 'Subject2', 'Subject3']} // @TODO: replace with actual subjects from backend
           textFieldProps={{
             label: `${t('editProfilePage.profile.professionalTab.subject')}*`
           }}
@@ -80,12 +80,12 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
     subjects: initialValuesFromProps?.subjects ?? [professionalSubjectTemplate]
   }
 
-  // TODO: add more validations if needed
+  // @TODO: add more validations if needed
   const { data, errors, handleDataChange, handleSubmit } = useForm({
     initialValues: initialFormValues,
     // eslint-disable-next-line
     onSubmit: async () => {
-      // TODO: handle data save
+      // @TODO: handle data save
       void closeModal()
     }
   })
@@ -97,18 +97,24 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
     handleDataChange({ mainStudyCategory: value })
   }
 
+  const transformSubjects = <Value,>(
+    index: number,
+    key: keyof ProfessionalSubject,
+    value: Value
+  ) => {
+    return data.subjects.map((subject, i) => {
+      if (index === i) {
+        return { ...subject, [key]: value }
+      }
+
+      return subject
+    })
+  }
+
   const handleProfessionalSubjectChange =
     (index: number, key: keyof ProfessionalSubject) =>
     <Value,>(value: Value) => {
-      handleDataChange({
-        subjects: data.subjects.map((subject, i) => {
-          if (index === i) {
-            return { ...subject, [key]: value }
-          }
-
-          return subject
-        })
-      })
+      handleDataChange({ subjects: transformSubjects(index, key, value) })
     }
 
   const handleSubjectAdd = () => {
@@ -136,7 +142,7 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
         <AppAutoComplete
           fullWidth
           onChange={handleMainStudyCategoryChange}
-          options={['Language1', 'Language2', 'Language3']} // TODO: replace with actual languages from backend
+          options={['Language1', 'Language2', 'Language3']} // @TODO: replace with actual languages from backend
           textFieldProps={{
             label: `${t(
               'editProfilePage.profile.professionalTab.mainStudyCategory'
@@ -148,7 +154,7 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
         />
         {data.subjects.map((subject, index) => (
           <SubjectGroup
-            isCategoryDisabled // TODO: handle checkbox
+            isCategoryDisabled // @TODO: handle checkbox
             key={index}
             proficiencyLevels={{
               value: subject.proficiencyLevels,
