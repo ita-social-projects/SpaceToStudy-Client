@@ -2,7 +2,7 @@ import { createTheme } from '@mui/material/styles'
 
 import palette from './app.pallete'
 import appTypography from './app.typography'
-import button from './app.button'
+import './app.button'
 import tooltip from './app.tooltip'
 import table from './app.table.js'
 import { svgIcon } from './app.svgicon'
@@ -17,7 +17,6 @@ export const theme = createTheme({
   typography: appTypography,
   components: {
     MuiSvgIcon: svgIcon,
-    MuiButton: button,
     MuiCheckbox: checkbox,
     MuiTextField: textField,
     MuiSelect: select,
