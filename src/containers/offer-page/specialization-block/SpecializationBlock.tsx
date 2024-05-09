@@ -14,7 +14,8 @@ import {
   CategoryNameInterface,
   CreateOfferBlockProps,
   CreateOrUpdateOfferData,
-  ProficiencyLevelEnum
+  ProficiencyLevelEnum,
+  UserRoleEnum
 } from '~/types'
 import { styles } from '~/containers/offer-page/OfferPage.styles'
 
@@ -46,6 +47,11 @@ const SpecializationBlock = <T extends CreateOrUpdateOfferData>({
   }
   const levelOptions = Object.values(ProficiencyLevelEnum)
   const subjectError = data.category && errors.subject
+
+  const checkboxListProps =
+    userRole === UserRoleEnum.Tutor
+      ? { fillRange: true }
+      : { singleSelect: true }
 
   return (
     <OrderedListItem
@@ -96,7 +102,7 @@ const SpecializationBlock = <T extends CreateOrUpdateOfferData>({
           </Typography>
           <CheckboxList
             error={t(errors.proficiencyLevel)}
-            fillRange
+            {...checkboxListProps}
             items={levelOptions}
             onChange={handleCheckboxesChange}
             value={data.proficiencyLevel}
