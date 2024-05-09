@@ -35,7 +35,7 @@ export const style = {
     fontWeight: '500'
   },
   profileDescription: {
-    width: '700px',
+    maxWidth: '700px',
     ...ellipsisTextStyle(2)
   },
   subjectContainer: {
@@ -64,7 +64,7 @@ export const style = {
     display: 'flex'
   },
   aboutCooperation: {
-    width: '900px'
+    maxWidth: '900px'
   },
   iconColor: (color: string) => ({
     color: color
