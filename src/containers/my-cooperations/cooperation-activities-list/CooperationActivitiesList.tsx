@@ -5,7 +5,8 @@ import CourseSectionsList from '~/containers/course-sections-list/CourseSections
 import { useEffect } from 'react'
 import { sectionInitialData } from '~/pages/create-course/CreateCourse.constants'
 import { CourseSection, CourseResources } from '~/types'
-import { useCooperationContext } from '~/context/cooperation-context'
+import { useAppSelector } from '~/hooks/use-redux'
+import { cooperationsSelector } from '~/redux/features/cooperationsSlice'
 
 interface CooperationActivitiesListProps {
   data: { sections: CourseSection[] }
@@ -17,7 +18,7 @@ const CooperationActivitiesList = ({
   handleNonInputValueChange
 }: CooperationActivitiesListProps) => {
   const { selectedCourse, isAddedClicked, currentSectionIndex } =
-    useCooperationContext()
+    useAppSelector(cooperationsSelector)
 
   const setSectionsData = (value: CourseSection[]) => {
     handleNonInputValueChange('sections', value)

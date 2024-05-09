@@ -6,16 +6,6 @@ import { sectionInitialData } from '~/pages/create-course/CreateCourse.constants
 const originalDateNow = Date.now
 Date.now = () => 1487076708000
 
-const useCooperationContextMock = vi.fn()
-
-vi.mock('~/context/cooperation-context', async () => {
-  const actual = await vi.importActual('~/context/cooperation-context')
-  return {
-    ...actual,
-    useCooperationContext: () => useCooperationContextMock()
-  }
-})
-
 const mockedCourseData = {
   title: 'Course title',
   description: 'Course description',
@@ -38,18 +28,21 @@ const renderWithMockData = (
   sectionIndex,
   isAddedClicked = true
 ) => {
-  useCooperationContextMock.mockReturnValue({
-    selectedCourse: mockedCourseData,
-    isAddedClicked: isAddedClicked,
-    currentSectionIndex: sectionIndex,
-    setCurrentSectionIndex: vi.fn()
-  })
-
   renderWithProviders(
     <CooperationActivitiesList
       data={mockedData}
       handleNonInputValueChange={handleNonInputValueChange}
-    />
+    />,
+    {
+      preloadedState: {
+        cooperations: {
+          selectedCourse: mockedCourseData,
+          isAddedClicked: isAddedClicked,
+          currentSectionIndex: sectionIndex,
+          setCurrentSectionIndex: vi.fn()
+        }
+      }
+    }
   )
 }
 
@@ -169,7 +162,7 @@ describe('CooperationActivitiesList with section data', () => {
 
     const newSectionData = { ...sectionInitialData }
     newSectionData.id = Date.now().toString()
-    const newSections = [...mockedSectionsData.sections, newSectionData]
+    const newSections = [newSectionData, ...mockedSectionsData.sections]
 
     await waitFor(() => {
       expect(handleNonInputValueChange).toHaveBeenCalledWith(

@@ -4,9 +4,11 @@ import { ToolkitStore } from '@reduxjs/toolkit/dist/configureStore'
 
 import { appApi } from '~/redux/apiSlice'
 import appMainReducer from '~/redux/reducer'
+import cooperationsReducer from '~/redux/features/cooperationsSlice'
 
 export const store = configureStore({
   reducer: {
+    cooperations: cooperationsReducer,
     appMain: appMainReducer,
     [appApi.reducerPath]: appApi.reducer
   },

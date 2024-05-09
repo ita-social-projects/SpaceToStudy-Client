@@ -11,7 +11,6 @@ import useAxios from '~/hooks/use-axios'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { cooperationService } from '~/services/cooperation-service'
 import { ResourcesAvailabilityProvider } from '~/context/resources-availability-context'
-import { useCooperationContext } from '~/context/cooperation-context'
 import AppDrawer from '~/components/app-drawer/AppDrawer'
 import TabNavigation from '~/components/tab-navigation/TabNavigation'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
@@ -29,11 +28,13 @@ import {
 } from '~/containers/my-cooperations/cooperation-details/CooperationDetails.constans'
 import { styles } from '~/containers/my-cooperations/cooperation-details/CooperationDetails.styles'
 import { CooperationTabsEnum, PositionEnum, Cooperation } from '~/types'
+import { useAppSelector } from '~/hooks/use-redux'
+import { cooperationsSelector } from '~/redux/features/cooperationsSlice'
 
 const CooperationDetails = () => {
   const { t } = useTranslation()
   const { id } = useParams()
-  const { isActivityCreated } = useCooperationContext()
+  const { isActivityCreated } = useAppSelector(cooperationsSelector)
   const navigate = useNavigate()
   const { isDesktop } = useBreakpoints()
   const [activeTab, setActiveTab] = useState<CooperationTabsEnum>(

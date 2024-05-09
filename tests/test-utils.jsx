@@ -5,8 +5,8 @@ import reducer from '~/redux/reducer'
 import { StyledEngineProvider, ThemeProvider } from '@mui/material/styles'
 import { render, waitFor } from '@testing-library/react'
 import { theme } from '~/styles/app-theme/custom-mui.styles'
-import { CooperationProvider } from '~/context/cooperation-context'
 import PopupsProvider from '~/PopupsProvider'
+import cooperationsReducer from '~/redux/features/cooperationsSlice'
 
 import { vi } from 'vitest'
 import MockAdapter from 'axios-mock-adapter'
@@ -17,7 +17,10 @@ export const renderWithProviders = (
   {
     initialEntries = '/',
     preloadedState,
-    store = configureStore({ reducer: { appMain: reducer }, preloadedState }),
+    store = configureStore({
+      reducer: { appMain: reducer, cooperations: cooperationsReducer },
+      preloadedState
+    }),
     ...renderOptions
   } = {}
 ) => {
@@ -26,9 +29,7 @@ export const renderWithProviders = (
       <MemoryRouter initialEntries={[initialEntries]}>
         <StyledEngineProvider injectFirst>
           <ThemeProvider theme={theme}>
-            <PopupsProvider>
-              <CooperationProvider>{children}</CooperationProvider>
-            </PopupsProvider>
+            <PopupsProvider>{children}</PopupsProvider>
           </ThemeProvider>
         </StyledEngineProvider>
       </MemoryRouter>
