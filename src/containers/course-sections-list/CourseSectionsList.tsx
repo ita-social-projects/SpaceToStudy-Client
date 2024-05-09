@@ -16,12 +16,17 @@ import CourseSectionContainer from '~/containers/course-section/CourseSectionCon
 import DragHandle from '~/components/drag-handle/DragHandle'
 import { styles } from '~/containers/course-sections-list/CourseSectionsList.styles'
 
-import { useCooperationContext } from '~/context/cooperation-context'
-import { useModalContext } from '~/context/modal-context'
 import useDroppable from '~/hooks/use-droppable'
 import useMenu from '~/hooks/use-menu'
 import useDndSensor from '~/hooks/use-dnd-sensor'
 import { CourseSection, CourseSectionHandlers } from '~/types'
+import { useModalContext } from '~/context/modal-context'
+import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
+import {
+  cooperationsSelector,
+  setCurrentSectionIndex,
+  setIsAddedClicked
+} from '~/redux/features/cooperationsSlice'
 
 interface CourseSectionsListProps extends CourseSectionHandlers {
   items: CourseSection[]
@@ -52,14 +57,16 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
   const { anchorEl, openMenu, closeMenu, renderMenu } = useMenu()
 
   const { openModal, closeModal } = useModalContext()
-  const { setIsAddedClicked, currentSectionIndex, setCurrentSectionIndex } =
-    useCooperationContext()
+  const { currentSectionIndex } = useAppSelector(cooperationsSelector)
+  const dispatch = useAppDispatch()
   const { t } = useTranslation()
 
   const handleActivitiesMenuClick = (event: MouseEvent<HTMLButtonElement>) => {
     openMenu(event)
-    setCurrentSectionIndex(
-      items.findIndex((item) => item.id === event.currentTarget.id)
+    dispatch(
+      setCurrentSectionIndex(
+        items.findIndex((item) => item.id === event.currentTarget.id)
+      )
     )
   }
 
@@ -70,7 +77,7 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
 
   const openAddCourseTemplateModal = () => {
     closeMenu()
-    setIsAddedClicked(false)
+    dispatch(setIsAddedClicked(false))
     openModal({
       component: <AddCourseTemplateModal closeModal={closeModal} />
     })

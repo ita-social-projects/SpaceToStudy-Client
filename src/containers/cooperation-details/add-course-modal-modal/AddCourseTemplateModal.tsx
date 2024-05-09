@@ -6,8 +6,7 @@ import SimpleBar from 'simplebar-react'
 import SearchIcon from '@mui/icons-material/Search'
 import Box from '@mui/material/Box'
 
-import { useCooperationContext } from '~/context/cooperation-context'
-import { useAppSelector } from '~/hooks/use-redux'
+import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 import { useFilterQuery } from '~/hooks/use-filter-query'
 import { CourseService } from '~/services/course-service'
 import { userService } from '~/services/user-service'
@@ -39,6 +38,11 @@ import {
   UserRole,
   UserResponse
 } from '~/types'
+import {
+  setIsActivityCreated,
+  setIsAddedClicked,
+  setSelectedCourse
+} from '~/redux/features/cooperationsSlice'
 
 interface AddCourseTemplateModalProps {
   closeModal: () => void
@@ -52,8 +56,7 @@ const AddCourseTemplateModal: FC<AddCourseTemplateModalProps> = ({
   const { sort, onRequestSort } = useSort({ initialSort })
   const [searchValue, setSearchValue] = useState<string>('')
   const [showFilters, setShowFilters] = useState(false)
-  const { setIsActivityCreated, setSelectedCourse, setIsAddedClicked } =
-    useCooperationContext()
+  const dispatch = useAppDispatch()
   const [selectedItem, setSelectedItem] = useState<Course | null>(null)
   const { userId, userRole } = useAppSelector((state) => state.appMain)
   const { filters, filterQueryActions } = useFilterQuery({
@@ -62,7 +65,7 @@ const AddCourseTemplateModal: FC<AddCourseTemplateModalProps> = ({
 
   const onCourseSelect = (course: Course) => {
     setSelectedItem(course)
-    setSelectedCourse(course)
+    dispatch(setSelectedCourse(course))
   }
 
   const getUserData = useCallback(
@@ -123,8 +126,8 @@ const AddCourseTemplateModal: FC<AddCourseTemplateModalProps> = ({
   }
 
   const onAdd = () => {
-    setIsAddedClicked(true)
-    setIsActivityCreated(true)
+    dispatch(setIsAddedClicked(true))
+    dispatch(setIsActivityCreated(true))
     closeModal()
   }
 
