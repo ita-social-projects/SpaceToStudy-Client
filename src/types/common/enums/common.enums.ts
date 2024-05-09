@@ -53,7 +53,8 @@ export enum ButtonVariantEnum {
   Contained = 'contained',
   ContainedLight = 'containedLight',
   Text = 'text',
-  Tonal = 'tonal'
+  Tonal = 'tonal',
+  Danger = 'danger'
 }
 
 export enum ButtonTypeEnum {
