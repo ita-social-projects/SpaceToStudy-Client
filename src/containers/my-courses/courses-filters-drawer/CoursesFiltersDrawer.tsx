@@ -2,7 +2,6 @@ import { FC, ReactNode, useCallback, SyntheticEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import FilterListIcon from '@mui/icons-material/FilterList'
 import Typography from '@mui/material/Typography'
-import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 
 import AppDrawer from '~/components/app-drawer/AppDrawer'
@@ -25,6 +24,7 @@ import {
   SizeEnum,
   SubjectNameInterface
 } from '~/types'
+import AppButton from '~/components/app-button/AppButton'
 
 interface CoursesFiltersDrawerProps {
   additionalParams: Record<string, number | string | undefined>
@@ -162,21 +162,21 @@ const CoursesFiltersDrawer: FC<CoursesFiltersDrawerProps> = ({
         value={filters.title}
       />
 
-      <Button
+      <AppButton
         onClick={resetFilters}
         size={SizeEnum.ExtraLarge}
         sx={styles.clearButtonMb}
         variant={ButtonVariantEnum.Tonal}
       >
         {t('button.clearFilters')}
-      </Button>
-      <Button
+      </AppButton>
+      <AppButton
         onClick={handleApplyFilters}
         size={SizeEnum.ExtraLarge}
         variant={ButtonVariantEnum.Contained}
       >
         {t('button.applyFilters')}
-      </Button>
+      </AppButton>
     </AppDrawer>
   )
 }

@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import { useTranslation } from 'react-i18next'
 
@@ -19,6 +18,7 @@ import { AuthService } from '~/services/auth-service'
 import { snackbarVariants } from '~/constants'
 import { email } from '~/utils/validations/login'
 import { styles } from '~/containers/guest-home-page/forgot-password/ForgotPassword.styles'
+import { ButtonVariantEnum, SizeEnum } from '~/types'
 
 const ForgotPassword = () => {
   const { t } = useTranslation()
@@ -103,14 +103,14 @@ const ForgotPassword = () => {
         </AppButton>
       </Box>
 
-      <Button
+      <AppButton
         onClick={backToLogin}
-        size='large'
+        size={SizeEnum.Large}
         sx={styles.backButton}
-        variant='text'
+        variant={ButtonVariantEnum.Text}
       >
         {t('login.backToLogin')}
-      </Button>
+      </AppButton>
     </Box>
   )
 }

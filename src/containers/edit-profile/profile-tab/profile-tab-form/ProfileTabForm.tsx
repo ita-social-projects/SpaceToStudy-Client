@@ -120,12 +120,13 @@ const ProfileTabForm: FC<ProfileTabFormProps> = ({
             <FileUploader
               buttonText={t('editProfilePage.profile.generalTab.uploadTitle')}
               emitter={addPhoto}
+              size={SizeEnum.Large}
               validationData={validationData}
               variant={ButtonVariantEnum.ContainedLight}
             />
             <AppButton
               onClick={handleRemovePhoto}
-              size={SizeEnum.Medium}
+              size={SizeEnum.Large}
               variant={ButtonVariantEnum.Tonal}
             >
               {t('common.remove')}

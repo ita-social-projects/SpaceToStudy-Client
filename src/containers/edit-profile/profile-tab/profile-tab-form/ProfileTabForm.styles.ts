@@ -28,7 +28,7 @@ export const styles = {
       ...titleWithDescription,
       description: { typography: Caption, color: 'primary.500' }
     },
-    buttons: { display: 'flex', columnGap: '10px', height: '40px' }
+    buttons: { display: 'flex', columnGap: '10px' }
   },
   section: { display: 'flex', flexDirection: 'column', rowGap: '15px' },
   sectionsTitleWithDesc: { ...titleWithDescription },

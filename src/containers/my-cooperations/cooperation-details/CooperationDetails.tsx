@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next'
 import { useParams, useNavigate } from 'react-router-dom'
 import { AxiosResponse } from 'axios'
 import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft'
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight'
 
@@ -27,9 +26,16 @@ import {
   MyCooperationsTabsData
 } from '~/containers/my-cooperations/cooperation-details/CooperationDetails.constans'
 import { styles } from '~/containers/my-cooperations/cooperation-details/CooperationDetails.styles'
-import { CooperationTabsEnum, PositionEnum, Cooperation } from '~/types'
+import {
+  CooperationTabsEnum,
+  PositionEnum,
+  Cooperation,
+  SizeEnum,
+  ButtonVariantEnum
+} from '~/types'
 import { useAppSelector } from '~/hooks/use-redux'
 import { cooperationsSelector } from '~/redux/features/cooperationsSlice'
+import AppButton from '~/components/app-button/AppButton'
 
 const CooperationDetails = () => {
   const { t } = useTranslation()
@@ -106,9 +112,14 @@ const CooperationDetails = () => {
         />
         <Box onClick={handleNotesClick} sx={styles.banner(isNotesOpen)}>
           {iconConditionals}
-          <Button disableRipple sx={styles.notes(isNotesOpen)}>
+          <AppButton
+            disableRipple
+            size={SizeEnum.Small}
+            sx={styles.notes(isNotesOpen)}
+            variant={ButtonVariantEnum.Base}
+          >
             {t('cooperationsPage.details.notes')}
-          </Button>
+          </AppButton>
         </Box>
       </Box>
       <Box sx={styles.notesBlock}>

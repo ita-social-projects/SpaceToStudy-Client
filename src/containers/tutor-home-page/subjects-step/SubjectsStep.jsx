@@ -1,7 +1,6 @@
 import { useState, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
 import FormHelperText from '@mui/material/FormHelperText'
 import Typography from '@mui/material/Typography'
 import useBreakpoints from '~/hooks/use-breakpoints'
@@ -13,6 +12,7 @@ import { useStepContext } from '~/context/step-context'
 import AppChipList from '~/components/app-chips-list/AppChipList'
 import { categoryService } from '~/services/category-service'
 import { subjectService } from '~/services/subject-service'
+import AppButton from '~/components/app-button/AppButton'
 
 const SubjectsStep = ({ btnsBox }) => {
   const { t } = useTranslation()
@@ -123,7 +123,7 @@ const SubjectsStep = ({ btnsBox }) => {
             value={subjects.subject?._id ?? null}
             valueField='_id'
           />
-          <Button
+          <AppButton
             data-testid='add-subject'
             fullWidth
             onClick={addSubject}
@@ -132,7 +132,7 @@ const SubjectsStep = ({ btnsBox }) => {
             <Typography variant='button'>
               {t('becomeTutor.categories.btnText')}
             </Typography>
-          </Button>
+          </AppButton>
           <FormHelperText
             data-testid='error-subject'
             error={!!subjectError}

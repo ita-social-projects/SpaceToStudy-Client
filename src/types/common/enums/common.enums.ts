@@ -50,6 +50,7 @@ export enum DrawerVariantEnum {
 }
 
 export enum ButtonVariantEnum {
+  Base = 'base',
   Contained = 'contained',
   ContainedLight = 'containedLight',
   Text = 'text',

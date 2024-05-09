@@ -38,7 +38,6 @@ export const styles = {
     transition: 'transform 0.3s ease-in-out, color 0.3s ease-in-out'
   }),
   notes: (isNotesOpen: boolean) => ({
-    p: '10px 8px',
     fontSize: '16px',
     color: isNotesOpen ? palette.basic.lightBlue : palette.basic.blueGray,
     textDecoration: isNotesOpen ? 'underline' : ''

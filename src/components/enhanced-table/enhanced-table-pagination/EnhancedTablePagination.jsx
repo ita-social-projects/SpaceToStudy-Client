@@ -1,13 +1,14 @@
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
 import Pagination from '@mui/material/Pagination'
 import TablePagination from '@mui/material/TablePagination'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 
 import { styles } from './EnhancedTablePagination.styles'
+import AppButton from '~/components/app-button/AppButton'
+import { ButtonVariantEnum } from '~/types'
 
 const EnhancedTablePagination = ({ pagination }) => {
   const { t } = useTranslation()
@@ -70,13 +71,13 @@ const EnhancedTablePagination = ({ pagination }) => {
           type='number'
           value={pageInput}
         />
-        <Button
+        <AppButton
           onClick={() => handlePageSubmit(pageCount)}
           sx={styles.btn}
-          variant='outlined'
+          variant={ButtonVariantEnum.Contained}
         >
           {t('table.go')}
-        </Button>
+        </AppButton>
       </Box>
     </Box>
   )

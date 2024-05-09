@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import AppButton from '@mui/material/Button'
 import Divider from '@mui/material/Divider'
 
 import AppTextField from '~/components/app-text-field/AppTextField'
@@ -14,6 +13,7 @@ import { confirmPassword, password } from '~/utils/validations/login'
 import { ButtonVariantEnum, InputEnum, SizeEnum } from '~/types'
 import { FormValues } from '~/types/editTutorProfile/interfaces/securityBlockForm.interfaces'
 import { useTranslation } from 'react-i18next'
+import AppButton from '~/components/app-button/AppButton'
 
 const PasswordSecurityTab = () => {
   const { t } = useTranslation()
@@ -73,15 +73,14 @@ const PasswordSecurityTab = () => {
         />
         <Box sx={styles.passwordButtonsContainer}>
           <AppButton
-            onClick={() => {}}
-            size={SizeEnum.Medium}
+            size={SizeEnum.Large}
             variant={ButtonVariantEnum.Contained}
           >
             {t('editProfilePage.profile.passwordSecurityTab.savePassword')}
           </AppButton>
           <AppButton
             onClick={() => resetData()}
-            size={SizeEnum.Medium}
+            size={SizeEnum.Large}
             sx={styles.discardButton}
             variant={ButtonVariantEnum.Tonal}
           >
@@ -91,9 +90,9 @@ const PasswordSecurityTab = () => {
         <Divider />
         <AppButton
           onClick={() => setIsConfirmOpen(!isConfirmOpen)}
-          size={SizeEnum.Large}
+          size={SizeEnum.ExtraLarge}
           sx={styles.deactivateButton}
-          variant={ButtonVariantEnum.Contained}
+          variant={ButtonVariantEnum.Danger}
         >
           {t('editProfilePage.profile.passwordSecurityTab.deactivateAccount')}
         </AppButton>

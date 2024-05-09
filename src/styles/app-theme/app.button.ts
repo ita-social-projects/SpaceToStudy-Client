@@ -3,6 +3,7 @@ declare module '@mui/material/styles' {
     tonal: React.CSSProperties
     containedLight: React.CSSProperties
     danger: React.CSSProperties
+    base: React.CSSProperties
   }
 }
 
@@ -14,6 +15,7 @@ declare module '@mui/material/Button' {
     tonal: true
     containedLight: true
     danger: true
+    base: true
   }
 }
 
