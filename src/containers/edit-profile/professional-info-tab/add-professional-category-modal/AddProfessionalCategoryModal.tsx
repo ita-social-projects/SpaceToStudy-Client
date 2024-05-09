@@ -97,24 +97,18 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
     handleDataChange({ mainStudyCategory: value })
   }
 
-  const transformSubjects = <Value,>(
-    index: number,
-    key: keyof ProfessionalSubject,
-    value: Value
-  ) => {
-    return data.subjects.map((subject, i) => {
-      if (index === i) {
-        return { ...subject, [key]: value }
-      }
-
-      return subject
-    })
-  }
-
   const handleProfessionalSubjectChange =
     (index: number, key: keyof ProfessionalSubject) =>
     <Value,>(value: Value) => {
-      handleDataChange({ subjects: transformSubjects(index, key, value) })
+      const transformedSubjects = data.subjects.map((subject, i) => {
+        if (index === i) {
+          return { ...subject, [key]: value }
+        }
+
+        return subject
+      })
+
+      handleDataChange({ subjects: transformedSubjects })
     }
 
   const handleSubjectAdd = () => {
