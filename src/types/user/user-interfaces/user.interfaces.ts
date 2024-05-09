@@ -37,7 +37,7 @@ export interface UserResponse {
   nativeLanguage: string | null
   address: Address
   professionalSummary?: string
-  photo?: string
+  photo?: string | null
   lastLogin: string
   createdAt: string
   updatedAt: string

@@ -19,11 +19,9 @@ import {
   FormNonInputValueChange,
   PositionEnum,
   SizeEnum,
-  UpdatedPhoto,
   UploadFileEmitterArgs,
   UseFormErrors,
-  UseFormEventHandler,
-  UserResponse
+  UseFormEventHandler
 } from '~/types'
 
 import { languages } from '~/containers/tutor-home-page/language-step/constants'
@@ -34,28 +32,22 @@ import { imageResize } from '~/utils/image-resize'
 import { styles } from '~/containers/edit-profile/profile-tab/profile-tab-form/ProfileTabForm.styles'
 
 export interface ProfileTabFormProps {
-  userPhoto: UserResponse['photo']
   data: EditProfileForm
   errors: UseFormErrors<EditProfileForm>
-  photo: UpdatedPhoto | null
-  setPhoto: (photo: UpdatedPhoto | null) => void
   handleInputChange: UseFormEventHandler<
     EditProfileForm,
     ChangeEvent<HTMLInputElement>
   >
   handleNonInputValueChange: FormNonInputValueChange<
-    string | null,
+    EditProfileForm[keyof EditProfileForm],
     EditProfileForm
   >
   handleBlur: UseFormEventHandler<EditProfileForm, FocusEvent<HTMLInputElement>>
 }
 
 const ProfileTabForm: FC<ProfileTabFormProps> = ({
-  userPhoto,
   data,
   errors,
-  photo,
-  setPhoto,
   handleInputChange,
   handleNonInputValueChange,
   handleBlur
@@ -76,7 +68,10 @@ const ProfileTabForm: FC<ProfileTabFormProps> = ({
 
     imageResize(originalPhotoPath, photoSizes)
       .then((resizedPhoto) => {
-        setPhoto({ src: resizedPhoto, name: photo.name })
+        handleNonInputValueChange('photo', {
+          src: resizedPhoto,
+          name: photo.name
+        })
       })
       .catch(console.error)
   }
@@ -94,14 +89,16 @@ const ProfileTabForm: FC<ProfileTabFormProps> = ({
   }
 
   const handleRemovePhoto = () => {
-    setPhoto(userPhoto ? null : { src: '', name: '' })
+    const updatedPhoto =
+      typeof photo === 'string' ? null : { src: '', name: '' }
+    handleNonInputValueChange('photo', updatedPhoto)
   }
 
+  const { photo } = data
   const photoToDisplay =
-    photo === null
-      ? ''
-      : photo?.src ||
-        (userPhoto && `${import.meta.env.VITE_APP_IMG_USER_URL}${userPhoto}`)
+    typeof photo === 'string'
+      ? photo && `${import.meta.env.VITE_APP_IMG_USER_URL}${photo}`
+      : photo?.src
 
   return (
     <Box sx={styles.profileGeneralTabContainer}>

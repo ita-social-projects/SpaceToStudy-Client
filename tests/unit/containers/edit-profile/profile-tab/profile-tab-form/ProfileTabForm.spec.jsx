@@ -2,24 +2,17 @@ import { fireEvent, screen, waitFor } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 import { imageResize } from '~/utils/image-resize'
 import ProfileTabForm from '~/containers/edit-profile/profile-tab/profile-tab-form/ProfileTabForm'
-import {
-  formDataMock,
-  userDataMock
-} from '~tests/unit/containers/edit-profile/profile-tab/profile-tab-form/ProfileTabForm.spec.constants'
+import { formDataMock } from '~tests/unit/containers/edit-profile/profile-tab/profile-tab-form/ProfileTabForm.spec.constants'
 
 vi.mock('~/utils/image-resize')
 
 const handleInputChange = vi.fn()
 const handleNonInputValueChange = vi.fn()
 const handleBlur = vi.fn()
-const setPhoto = vi.fn()
 
 const props = {
-  userPhoto: userDataMock.photo,
   data: formDataMock,
   errors: [],
-  photo: '',
-  setPhoto,
   handleInputChange,
   handleNonInputValueChange,
   handleBlur
@@ -59,7 +52,7 @@ describe('ProfileTabForm', () => {
     const removePhotoBtn = screen.getByRole('button', { name: 'common.remove' })
     fireEvent.click(removePhotoBtn)
 
-    expect(setPhoto).toHaveBeenCalledWith(null)
+    expect(handleNonInputValueChange).toHaveBeenCalledWith('photo', null)
   })
 
   it('should handle adding a photo', async () => {
@@ -76,7 +69,7 @@ describe('ProfileTabForm', () => {
     )
 
     const photo = { src: imageSrc, name: imageSrc }
-    expect(setPhoto).toHaveBeenCalledWith(photo)
+    expect(handleNonInputValueChange).toHaveBeenCalledWith('photo', photo)
   })
 
   it('should display an error message when adding an invalid photo', async () => {
@@ -99,7 +92,10 @@ describe('ProfileTabForm', () => {
 describe('ProfileGeneralTab without a user photo', () => {
   const propsWithoutPhoto = {
     ...props,
-    photo: null
+    data: {
+      ...formDataMock,
+      photo: null
+    }
   }
 
   beforeEach(() => {

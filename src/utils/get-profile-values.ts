@@ -1,6 +1,5 @@
 import {
   EditProfileForm,
-  UpdatedPhoto,
   UpdateUserParams,
   UserResponse,
   UserRoleEnum
@@ -22,14 +21,13 @@ export const getProfileInitialValues = (user: UserResponse) => ({
       ? user.videoLink?.[user.role[0]] || ''
       : '',
   mainSubjects:
-    user.role[0] !== UserRoleEnum.Admin ? user.mainSubjects[user.role[0]] : []
+    user.role[0] !== UserRoleEnum.Admin ? user.mainSubjects[user.role[0]] : [],
+  photo: user.photo || { src: '', name: '' }
 })
 
 export const getUserUpdatedData = (
   user: UserResponse,
-  data: EditProfileForm,
-  isPhotoChanged: boolean,
-  photo: UpdatedPhoto | null
+  data: EditProfileForm
 ) => {
   const updatedData: UpdateUserParams = {
     firstName: data.firstName,
@@ -47,7 +45,13 @@ export const getUserUpdatedData = (
     videoLink: data.videoLink
   }
 
-  if (isPhotoChanged) updatedData.photo = photo
+  const updatedPhoto =
+    typeof data.photo !== 'string' &&
+    (data.photo === null || Boolean(data.photo.src))
+      ? data.photo
+      : undefined
+
+  if (updatedPhoto !== undefined) updatedData.photo = updatedPhoto
 
   return updatedData
 }

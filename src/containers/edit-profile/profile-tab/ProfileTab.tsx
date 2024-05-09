@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import { useBlocker } from 'react-router-dom'
@@ -20,7 +20,6 @@ import {
   ButtonVariantEnum,
   EditProfileForm,
   SizeEnum,
-  UpdatedPhoto,
   UserResponse
 } from '~/types'
 
@@ -32,10 +31,6 @@ const ProfileTab: FC<ProfileTabProps> = ({ user }) => {
   const { t } = useTranslation()
   const { setNeedConfirmation, checkConfirmation } = useConfirm()
   const { handleSubmit, loading } = useUpdateUser(user._id)
-  const [photo, setPhoto] = useState<UpdatedPhoto | null>({
-    src: '',
-    name: ''
-  })
 
   const initialValues = getProfileInitialValues(user)
 
@@ -51,10 +46,7 @@ const ProfileTab: FC<ProfileTabProps> = ({ user }) => {
     validations
   })
 
-  const isPhotoChanged = photo === null || Boolean(photo.src)
-  const isDataChanged = isDirty || isPhotoChanged
-
-  const blocker = useBlocker(isDataChanged)
+  const blocker = useBlocker(isDirty)
 
   useEffect(() => {
     const handleBlocker = async () => {
@@ -77,11 +69,11 @@ const ProfileTab: FC<ProfileTabProps> = ({ user }) => {
   }, [blocker, checkConfirmation, t])
 
   useEffect(() => {
-    setNeedConfirmation(isDataChanged)
-  }, [setNeedConfirmation, isDataChanged])
+    setNeedConfirmation(isDirty)
+  }, [setNeedConfirmation, isDirty])
 
   const handleUpdateData = () => {
-    const updatedData = getUserUpdatedData(user, data, isPhotoChanged, photo)
+    const updatedData = getUserUpdatedData(user, data)
     handleSubmit(updatedData)
   }
 
@@ -101,9 +93,6 @@ const ProfileTab: FC<ProfileTabProps> = ({ user }) => {
           handleBlur={handleBlur}
           handleInputChange={handleInputChange}
           handleNonInputValueChange={handleNonInputValueChange}
-          photo={photo}
-          setPhoto={setPhoto}
-          userPhoto={user.photo}
         />
       </Box>
 

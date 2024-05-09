@@ -1,4 +1,4 @@
-import { ProficiencyLevelEnum } from '~/types/common/common.index'
+import { ProficiencyLevelEnum, UpdatedPhoto } from '~/types/common/common.index'
 import { UserResponse } from '~/types/user/user.index'
 
 export interface EditProfileForm
@@ -8,6 +8,7 @@ export interface EditProfileForm
   professionalSummary: string
   nativeLanguage: string | null
   videoLink: string
+  photo: string | UpdatedPhoto | null
 }
 
 export interface ProfessionalSubject {
