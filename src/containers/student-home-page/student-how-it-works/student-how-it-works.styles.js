@@ -1,7 +1,8 @@
 export const styles = {
   container: {
     backgroundColor: 'basic.white',
-    display: 'block',
+    display: 'flex',
+    flexDirection: 'column',
     textAlign: 'center',
     p: '35px 40px'
   },

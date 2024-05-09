@@ -2,7 +2,8 @@ export const styles = {
   container: {
     flexDirection: 'column',
     mb: 0,
-    pb: 10
+    pb: 10,
+    pt: 6
   },
   titleWithDescription: {
     wrapper: {
