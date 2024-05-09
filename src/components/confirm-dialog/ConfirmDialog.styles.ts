@@ -18,7 +18,8 @@ export const styles = {
   },
   content: {
     color: 'primary.600',
-    p: '0 30px'
+    p: '0 30px',
+    whiteSpace: 'pre-line'
   },
   typographyContent: {
     typography: TypographyVariantEnum.Body1

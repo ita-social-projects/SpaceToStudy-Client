@@ -66,13 +66,17 @@ export enum VisibilityEnum {
 }
 
 export enum ComponentEnum {
+  Section = 'section',
   Img = 'img',
   Span = 'span',
   Footer = 'footer',
   Form = 'form',
   Label = 'label',
   Li = 'li',
-  Button = 'button'
+  Button = 'button',
+  Dl = 'dl',
+  Dt = 'dt',
+  Dd = 'dd'
 }
 
 export enum SortEnum {

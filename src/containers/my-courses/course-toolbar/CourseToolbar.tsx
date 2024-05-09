@@ -1,15 +1,8 @@
 import { useCallback, SyntheticEvent, ChangeEvent, FocusEvent } from 'react'
 import { useTranslation } from 'react-i18next'
-import FormControl from '@mui/material/FormControl'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import OutlinedInput from '@mui/material/OutlinedInput'
-import InputLabel from '@mui/material/InputLabel'
-import MenuItem from '@mui/material/MenuItem'
-import ListItemText from '@mui/material/ListItemText'
-import Select, { SelectChangeEvent } from '@mui/material/Select'
-import Checkbox from '@mui/material/Checkbox'
-import FormHelperText from '@mui/material/FormHelperText'
+import { SelectChangeEvent } from '@mui/material/Select'
 
 import { subjectService } from '~/services/subject-service'
 import { categoryService } from '~/services/category-service'
@@ -31,6 +24,7 @@ import {
   UseFormEventHandler
 } from '~/types'
 import { styles } from '~/containers/my-courses/course-toolbar/CourseToolbar.style'
+import ProficiencyLevelSelect from '~/containers/proficiency-level-select/ProficiencyLevelSelect'
 
 interface CourseToolbarProps {
   data: CourseForm
@@ -60,7 +54,6 @@ const CourseToolbar = ({
     useUserCategoriesAndSubjects({ user })
 
   const { category, subject, proficiencyLevel } = data
-  const levelLists = Object.values(ProficiencyLevelEnum)
 
   const getSubjectsNames = useCallback(
     () => subjectService.getSubjectsNames(category),
@@ -84,22 +77,6 @@ const CourseToolbar = ({
   const onLevelChange = (event: SelectChangeEvent<ProficiencyLevelEnum[]>) => {
     handleNonInputValueChange('proficiencyLevel', event.target.value)
   }
-
-  const renderSelectedLevels = (selected: string[]) => {
-    return selected.join(', ')
-  }
-  const menuItems = levelLists.map((item) => (
-    <MenuItem key={item} value={item}>
-      <Checkbox checked={proficiencyLevel.indexOf(item) > -1} />
-      <ListItemText primary={item} />
-    </MenuItem>
-  ))
-
-  const proficiencyLevelError = errors.proficiencyLevel && (
-    <FormHelperText error>
-      {t('common.errorMessages.proficiencyLevel')}
-    </FormHelperText>
-  )
 
   const AppAutoCompleteList = (
     <>
@@ -145,27 +122,14 @@ const CourseToolbar = ({
         value={subject}
         valueField='_id'
       />
-      <FormControl>
-        <InputLabel required sx={styles.inputColor(errors.proficiencyLevel)}>
-          {t('breadCrumbs.level')}
-        </InputLabel>
-        <Select
-          MenuProps={styles.menuProps}
-          error={Boolean(errors.proficiencyLevel)}
-          id='demo-multiple-checkbox'
-          input={<OutlinedInput label='Level' />}
-          labelId='demo-multiple-checkbox-label'
-          multiple
-          onBlur={handleBlur('proficiencyLevel')}
-          onChange={onLevelChange}
-          renderValue={renderSelectedLevels}
-          sx={styles.levelSelect}
-          value={proficiencyLevel}
-        >
-          {menuItems}
-        </Select>
-        {proficiencyLevelError}
-      </FormControl>
+      <ProficiencyLevelSelect
+        errorMessage={errors.proficiencyLevel}
+        label={t('breadCrumbs.level')}
+        onBlur={handleBlur('proficiencyLevel')}
+        onChange={onLevelChange}
+        sx={{ select: styles.levelSelect }}
+        value={proficiencyLevel}
+      />
     </>
   )
 

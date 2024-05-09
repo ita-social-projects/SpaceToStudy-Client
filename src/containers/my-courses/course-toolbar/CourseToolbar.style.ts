@@ -35,11 +35,11 @@ export const styles = {
     color: 'primary.300',
     px: '16px'
   },
-  levelSelect: {
-    width: { md: '370px', xs: '100%' }
-  },
   levelHelperText: {
     ...commonStyle
+  },
+  levelSelect: {
+    width: { md: '370px', xs: '100%' }
   },
   otherToolbar: {
     borderRadius: '10px',
@@ -49,14 +49,6 @@ export const styles = {
     backgroundColor: 'backgroundColor',
     boxShadow: 'none',
     mb: 0
-  },
-  menuProps: {
-    PaperProps: {
-      style: {
-        maxHeight: '224px',
-        width: '250px'
-      }
-    }
   },
   input: {
     style: {
@@ -91,9 +83,6 @@ export const styles = {
     mb: '30px',
     gap: '24px'
   },
-  inputColor: (error: string) => ({
-    color: error ? 'red' : 'basic.bismark'
-  }),
   searchBoxes: {
     width: '100%',
     display: 'flex',

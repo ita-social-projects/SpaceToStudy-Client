@@ -18,28 +18,31 @@ const userMock = {
 }
 
 vi.mock('~/containers/edit-profile/profile-tab/ProfileTab', () => ({
-  __esModule: true,
   default: function () {
     return <div>ProfileTab</div>
   }
 }))
 
+vi.mock('~/containers/edit-profile/profile-tab/ProfessionalTab', () => ({
+  default: function () {
+    return <div>ProfessionalTab</div>
+  }
+}))
+
+vi.mock('~/containers/edit-profile/notification-tab/NotificationTab', () => ({
+  default: function () {
+    return <div>NotificationMock</div>
+  }
+}))
+
 vi.mock(
-  '~/containers/edit-profile/notification-tab/NotificationContainer',
+  '~/containers/edit-profile/password-security-tab/PasswordSecurityTab',
   () => ({
-    __esModule: true,
     default: function () {
-      return <div>NotificationMock</div>
+      return <div>Password&SecurityMock</div>
     }
   })
 )
-
-vi.mock('~/containers/tutor-profile/security-block/SecurityBlock', () => ({
-  __esModule: true,
-  default: function () {
-    return <div>Password&SecurityMock</div>
-  }
-}))
 
 describe('EditProfile', () => {
   beforeEach(async () => {
@@ -65,7 +68,7 @@ describe('EditProfile', () => {
     expect(editProfileDesc).toBeInTheDocument()
 
     const menuTabs = await screen.findAllByRole('listitem')
-    expect(menuTabs).toHaveLength(3)
+    expect(menuTabs).toHaveLength(4)
   })
 
   it('should render Profile Container after click on Profile menu button', async () => {

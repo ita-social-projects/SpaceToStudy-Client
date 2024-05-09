@@ -9,13 +9,13 @@ import ConfirmDialog from '~/components/confirm-dialog/ConfirmDialog'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import useForm from '~/hooks/use-form'
 
-import { styles } from '~/containers/tutor-profile/security-block/SecurityBlock.styles'
+import { styles } from '~/containers/edit-profile/password-security-tab/PasswordSecurityTab.styles'
 import { confirmPassword, password } from '~/utils/validations/login'
 import { ButtonVariantEnum, InputEnum, SizeEnum } from '~/types'
 import { FormValues } from '~/types/editTutorProfile/interfaces/securityBlockForm.interfaces'
 import { useTranslation } from 'react-i18next'
 
-const SecurityBlock = () => {
+const PasswordSecurityTab = () => {
   const { t } = useTranslation()
   const [isConfirmOpen, setIsConfirmOpen] = useState<boolean>(false)
 
@@ -32,17 +32,21 @@ const SecurityBlock = () => {
   return (
     <Box sx={styles.container}>
       <TitleWithDescription
-        description={t('editTutor.passwordSecurityTab.description')}
+        description={t(
+          'editProfilePage.profile.passwordSecurityTab.description'
+        )}
         style={styles.titleAndDescription}
-        title={t('editTutor.passwordSecurityTab.title')}
+        title={t('editProfilePage.profile.passwordSecurityTab.title')}
       />
       <Box>
         <Typography sx={styles.subtitle}>
-          {t('editTutor.passwordSecurityTab.changePassword')}
+          {t('editProfilePage.profile.passwordSecurityTab.changePassword')}
         </Typography>
         <AppTextField
           fullWidth
-          label={t('editTutor.passwordSecurityTab.currentPassword')}
+          label={t(
+            'editProfilePage.profile.passwordSecurityTab.currentPassword'
+          )}
           onChange={handleInputChange('currentPassword')}
           type={InputEnum.Password}
           value={data.currentPassword}
@@ -50,7 +54,7 @@ const SecurityBlock = () => {
         <AppTextField
           errorMsg={t(errors.password)}
           fullWidth
-          label={t('editTutor.passwordSecurityTab.newPassword')}
+          label={t('editProfilePage.profile.passwordSecurityTab.newPassword')}
           onBlur={handleBlur('password')}
           onChange={handleInputChange('password')}
           type={InputEnum.Password}
@@ -59,7 +63,9 @@ const SecurityBlock = () => {
         <AppTextField
           errorMsg={t(errors.confirmPassword)}
           fullWidth
-          label={t('editTutor.passwordSecurityTab.retypePassword')}
+          label={t(
+            'editProfilePage.profile.passwordSecurityTab.retypePassword'
+          )}
           onBlur={handleBlur('confirmPassword')}
           onChange={handleInputChange('confirmPassword')}
           type={InputEnum.Password}
@@ -71,7 +77,7 @@ const SecurityBlock = () => {
             size={SizeEnum.Medium}
             variant={ButtonVariantEnum.Contained}
           >
-            {t('editTutor.passwordSecurityTab.savePassword')}
+            {t('editProfilePage.profile.passwordSecurityTab.savePassword')}
           </AppButton>
           <AppButton
             onClick={() => resetData()}
@@ -89,21 +95,27 @@ const SecurityBlock = () => {
           sx={styles.deactivateButton}
           variant={ButtonVariantEnum.Contained}
         >
-          {t('editTutor.passwordSecurityTab.deactivateAccount')}
+          {t('editProfilePage.profile.passwordSecurityTab.deactivateAccount')}
         </AppButton>
         <ConfirmDialog
           cancelButton={t('common.cancel')}
-          confirmButton={t('editTutor.passwordSecurityTab.deactivateBtn')}
-          message={t('editTutor.passwordSecurityTab.deactivateDescription')}
+          confirmButton={t(
+            'editProfilePage.profile.passwordSecurityTab.deactivateBtn'
+          )}
+          message={t(
+            'editProfilePage.profile.passwordSecurityTab.deactivateDescription'
+          )}
           onConfirm={() => {}}
           onDismiss={() => setIsConfirmOpen(!isConfirmOpen)}
           open={isConfirmOpen}
           revertButtons
-          title={t('editTutor.passwordSecurityTab.deactivateTitle')}
+          title={t(
+            'editProfilePage.profile.passwordSecurityTab.deactivateTitle'
+          )}
         />
       </Box>
     </Box>
   )
 }
 
-export default SecurityBlock
+export default PasswordSecurityTab
