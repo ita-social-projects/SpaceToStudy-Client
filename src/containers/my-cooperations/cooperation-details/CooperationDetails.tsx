@@ -95,13 +95,11 @@ const CooperationDetails = () => {
   const cooperationContent = activeTab && tabsData[activeTab]?.content
 
   const pageContent = () => {
-    if (
-      editMode &&
-      CooperationTabsEnum.Details === activeTab &&
-      cooperationContent
-    ) {
+    if (editMode && CooperationTabsEnum.Details === activeTab) {
       return cooperationContent
-    } else if (editMode && activeTab === CooperationTabsEnum.Activities) {
+    }
+
+    if (editMode && activeTab === CooperationTabsEnum.Activities) {
       return (
         <CooperationActivitiesView
           sections={response.sections}
@@ -112,9 +110,9 @@ const CooperationDetails = () => {
 
     if (isActivityCreated) {
       return <CooperationActivities cooperationId={id} />
-    } else {
-      return cooperationContent
     }
+
+    return cooperationContent
   }
 
   const iconConditionals = isNotesOpen ? (
