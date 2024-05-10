@@ -1,12 +1,14 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
 
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
 
-import { useCallback } from 'react'
+import useConfirm from '~/hooks/use-confirm'
 
+import { authRoutes } from '~/router/constants/authRoutes'
 import { useAppSelector } from '~/hooks/use-redux'
 import { userService } from '~/services/user-service'
 import useAxios from '~/hooks/use-axios'
@@ -30,8 +32,18 @@ const EditProfile = () => {
 
   const [activeTab, setActiveTab] = useState(TutorProfileTabsEnum.Profile)
 
-  const handleClick = (tab: TutorProfileTabsEnum) => {
-    setActiveTab(tab)
+  const handleClick = async (tab: TutorProfileTabsEnum) => {
+    if (activeTab === tab) return
+
+    const confirmed = checkConfirmation({
+      message: 'questions.goBackToProfile',
+      title: 'titles.discardChanges',
+      confirmButton: t('common.discard'),
+      cancelButton: t('common.cancel')
+    })
+    if (await confirmed) {
+      setActiveTab(tab)
+    }
   }
 
   const { userId, userRole } = useAppSelector((state) => state.appMain)
@@ -40,6 +52,7 @@ const EditProfile = () => {
     () => userService.getUserById(userId, userRole as UserRole),
     [userId, userRole]
   )
+  const { checkConfirmation } = useConfirm()
 
   const { loading, response } = useAxios<UserResponse>({
     service: getUserData,
@@ -65,8 +78,10 @@ const EditProfile = () => {
           </Typography>
         </Box>
         <AppButton
+          component={Link}
           size={SizeEnum.Large}
           sx={styles.backBtn}
+          to={authRoutes.accountMenu.myProfile.path}
           variant={ButtonVariantEnum.Tonal}
         >
           {t('editTutor.main.backBtn')}
@@ -74,7 +89,10 @@ const EditProfile = () => {
       </Box>
       <Divider sx={styles.line} />
       <Box sx={styles.mainContainer}>
-        <SidebarMenu handleClick={handleClick} tabsData={tabsData} />
+        <SidebarMenu
+          handleClick={(tab) => void handleClick(tab)}
+          tabsData={tabsData}
+        />
         <Box sx={styles.mainContent}>{cooperationContent}</Box>
       </Box>
     </PageWrapper>

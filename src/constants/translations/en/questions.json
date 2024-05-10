@@ -1,5 +1,6 @@
 {
   "confirmation": "Do you want to exit this page?",
   "unsavedChanges": "Are you certain you want to close? Any unsaved changes will be lost",
-  "discardChanges": "Are you certain you want to discard changes of your offer?"
+  "discardChanges": "Are you certain you want to discard changes of your offer?",
+  "goBackToProfile": "If you go back to your personal profile you will discard your recent changes."
 }
