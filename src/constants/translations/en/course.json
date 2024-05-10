@@ -1,27 +1,27 @@
 {
-    "yourCategories": "Your teaching categories:",
-    "otherCategories": "Other categories:",
-    "yourSubjects": "Your teaching subjects:",
-    "otherSubjects": "Other subjects:",
-    "addSectionBtn": "Add Section",
-    "section": "section",
-    "sections": "sections",
-    "courseSection": {
-        "defaultNewTitle": "Section",
-        "moduleTitle": "Module",
-        "defaultNewDescription": "Description...",
-        "addResourceBtn": "Add Resource",
-        "resourcesMenu": {
-            "lessonMenuItem": "Lesson",
-            "quizMenuItem": "Quiz",
-            "attachmentMenuItem": "Attachment"
-        },
-        "sectionMenu": {
-            "deleteSection": "Delete"
-        }
+  "yourCategories": "Your teaching categories:",
+  "otherCategories": "Other categories:",
+  "yourSubjects": "Your teaching subjects:",
+  "otherSubjects": "Other subjects:",
+  "addSectionBtn": "Add Section",
+  "section": "section",
+  "sections": "sections",
+  "courseSection": {
+    "defaultNewTitle": "Section*",
+    "moduleTitle": "Module*",
+    "defaultNewDescription": "Description...*",
+    "addResourceBtn": "Add Resource",
+    "resourcesMenu": {
+      "lessonMenuItem": "Lesson",
+      "quizMenuItem": "Quiz",
+      "attachmentMenuItem": "Attachment"
     },
-    "errorMessages": {
-        "title": "Please provide a title",
-        "description": "Please provide a description"
+    "sectionMenu": {
+      "deleteSection": "Delete"
     }
+  },
+  "errorMessages": {
+    "title": "Please provide a title",
+    "description": "Please provide a description"
+  }
 }
