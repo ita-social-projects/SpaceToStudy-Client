@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography'
 import Switch from '@mui/material/Switch'
 
 import { ResourceService } from '~/services/resource-service'
-import { useSnackBarContext } from '~/context/snackbar-context'
+import { useAppDispatch } from '~/hooks/use-redux'
 import useAxios from '~/hooks/use-axios'
 import useForm from '~/hooks/use-form'
 import SettingItem from '~/components/setting-item/SettingItem'
@@ -32,6 +32,7 @@ import {
   ComponentEnum,
   QuizSettings
 } from '~/types'
+import { openAlert } from '~/redux/features/snackbarSlice'
 
 const QuizSettingsContainer = ({
   title,
@@ -44,7 +45,7 @@ const QuizSettingsContainer = ({
   const { t } = useTranslation()
   const { id } = useParams()
   const navigate = useNavigate()
-  const { setAlert } = useSnackBarContext()
+  const dispatch = useAppDispatch()
 
   const editQuiz = useCallback(
     (params?: UpdateQuizParams) => ResourceService.editQuiz(params),
@@ -57,12 +58,14 @@ const QuizSettingsContainer = ({
   )
 
   const onResponse = () => {
-    setAlert({
-      severity: snackbarVariants.success,
-      message: id
-        ? t('myResourcesPage.quizzes.successEditedQuiz')
-        : t('myResourcesPage.quizzes.successAddedQuiz')
-    })
+    dispatch(
+      openAlert({
+        severity: snackbarVariants.success,
+        message: id
+          ? t('myResourcesPage.quizzes.successEditedQuiz')
+          : t('myResourcesPage.quizzes.successAddedQuiz')
+      })
+    )
 
     id
       ? setActiveTab(QuizTabsEnum.Edit)
@@ -70,14 +73,16 @@ const QuizSettingsContainer = ({
   }
 
   const onResponseError = (error: ErrorResponse) => {
-    setAlert({
-      severity: snackbarVariants.error,
-      message: error
-        ? t(`errors.${error.code}`, {
-            message: getErrorMessage(error.message)
-          })
-        : ''
-    })
+    dispatch(
+      openAlert({
+        severity: snackbarVariants.error,
+        message: error
+          ? t(`errors.${error.code}`, {
+              message: getErrorMessage(error.message)
+            })
+          : ''
+      })
+    )
   }
 
   const { fetchData: updateQuiz } = useAxios<null, UpdateQuizParams>({

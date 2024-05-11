@@ -11,7 +11,7 @@ import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded'
 import ChatDate from '~/containers/chat/chat-date/ChatDate'
 import ChatTextArea from '~/containers/chat/chat-text-area/ChatTextArea'
 import { useChatContext } from '~/context/chat-context'
-import { useSnackBarContext } from '~/context/snackbar-context'
+import { useAppDispatch } from '~/hooks/use-redux'
 import useAxios from '~/hooks/use-axios'
 import AppChip from '~/components/app-chip/AppChip'
 import Message from '~/components/message/Message'
@@ -31,6 +31,7 @@ import { defaultResponses, snackbarVariants } from '~/constants'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { styles } from '~/containers/offer-page/chat-dialog-window/ChatDialogWindow.styles'
 import { questions } from '~/containers/offer-page/chat-dialog-window/ChatDialogWindow.constants'
+import { openAlert } from '~/redux/features/snackbarSlice'
 
 interface ChatDialogWindow {
   chatInfo: ChatInfo
@@ -41,19 +42,21 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
   const [isChatDeleted, setIsChatDeleted] = useState<boolean>(false)
   const [isInitSended, setIsInitSended] = useState<boolean>(false)
   const [isRedirected, setIsRedirected] = useState<boolean>(false)
-  const { setAlert } = useSnackBarContext()
+  const dispatch = useAppDispatch()
   const { t } = useTranslation()
   const scrollRef = useRef<HTMLDivElement | null>(null)
   const { setChatInfo } = useChatContext()
 
   const handleErrorResponse = useCallback(
     (errorResponse: ErrorResponse) => {
-      setAlert({
-        severity: snackbarVariants.error,
-        message: errorResponse ? `${errorResponse.message}` : ''
-      })
+      dispatch(
+        openAlert({
+          severity: snackbarVariants.error,
+          message: errorResponse ? `${errorResponse.message}` : ''
+        })
+      )
     },
-    [setAlert]
+    [dispatch]
   )
 
   const onResponse = useCallback(

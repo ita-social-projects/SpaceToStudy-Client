@@ -8,13 +8,14 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import AppMenu from '~/components/app-menu/AppMenu'
 import useConfirm from '~/hooks/use-confirm'
 import useAxios from '~/hooks/use-axios'
-import { useSnackBarContext } from '~/context/snackbar-context'
 import { chatService } from '~/services/chat-service'
 import { messageService } from '~/services/message-service'
 
 import { styles } from '~/containers/layout/chat-menu/ChatMenu.styles'
 import { ChatResponse, ComponentEnum, ErrorResponse } from '~/types'
 import { defaultResponses, snackbarVariants } from '~/constants'
+import { useAppDispatch } from '~/hooks/use-redux'
+import { openAlert } from '~/redux/features/snackbarSlice'
 
 interface ChatMenuProps {
   anchorEl: Element | null
@@ -35,28 +36,32 @@ const ChatMenu: FC<ChatMenuProps> = ({
 }) => {
   const { t } = useTranslation()
   const { openDialog } = useConfirm()
-  const { setAlert } = useSnackBarContext()
+  const dispatch = useAppDispatch()
 
   const onResponse = useCallback(
     (isDeleting = true) => {
-      setAlert({
-        severity: snackbarVariants.success,
-        message: isDeleting
-          ? 'chatPage.chatMenu.deleteSuccess'
-          : 'chatPage.chatMenu.historyClearSuccess'
-      })
+      dispatch(
+        openAlert({
+          severity: snackbarVariants.success,
+          message: isDeleting
+            ? 'chatPage.chatMenu.deleteSuccess'
+            : 'chatPage.chatMenu.historyClearSuccess'
+        })
+      )
     },
-    [setAlert]
+    [dispatch]
   )
 
   const onResponseError = useCallback(
     (error: ErrorResponse) => {
-      setAlert({
-        severity: snackbarVariants.error,
-        message: error ? `errors.${error.code}` : 'errors.UNKNOWN_ERROR'
-      })
+      dispatch(
+        openAlert({
+          severity: snackbarVariants.error,
+          message: error ? `errors.${error.code}` : 'errors.UNKNOWN_ERROR'
+        })
+      )
     },
-    [setAlert]
+    [dispatch]
   )
 
   const markAsDeletedService = useCallback(

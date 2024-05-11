@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { AxiosResponse } from 'axios'
 import { PaginationProps } from '@mui/material'
 
-import { useSnackBarContext } from '~/context/snackbar-context'
+import { useAppDispatch } from '~/hooks/use-redux'
 import useAxios from '~/hooks/use-axios'
 import useConfirm from '~/hooks/use-confirm'
 import AppPagination from '~/components/app-pagination/AppPagination'
@@ -19,6 +19,7 @@ import {
   ResourcesTabsEnum
 } from '~/types'
 import { roundedBorderTable } from '~/containers/my-cooperations/cooperations-container/CooperationContainer.styles'
+import { openAlert } from '~/redux/features/snackbarSlice'
 
 interface MyResourcesTableInterface<T>
   extends Omit<EnhancedTableProps<T, undefined>, 'data'> {
@@ -43,7 +44,7 @@ const MyResourcesTable = <T extends TableItem>({
   ...props
 }: MyResourcesTableInterface<T>) => {
   const { t } = useTranslation()
-  const { setAlert } = useSnackBarContext()
+  const dispatch = useAppDispatch()
   const { openDialog } = useConfirm()
 
   const { page, onChange } = pagination
@@ -51,17 +52,21 @@ const MyResourcesTable = <T extends TableItem>({
   const { onEdit, onDuplicate } = actions
 
   const onDeleteError = (error: ErrorResponse) => {
-    setAlert({
-      severity: snackbarVariants.error,
-      message: error ? `errors.${error.code}` : ''
-    })
+    dispatch(
+      openAlert({
+        severity: snackbarVariants.error,
+        message: error ? `errors.${error.code}` : ''
+      })
+    )
   }
 
   const onDeleteResponse = () => {
-    setAlert({
-      severity: snackbarVariants.success,
-      message: `myResourcesPage.${resource}.successDeletion`
-    })
+    dispatch(
+      openAlert({
+        severity: snackbarVariants.success,
+        message: `myResourcesPage.${resource}.successDeletion`
+      })
+    )
   }
 
   const { error, fetchData: deleteItem } = useAxios({

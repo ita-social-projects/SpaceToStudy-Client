@@ -1,9 +1,10 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { fireEvent, screen, waitFor } from '@testing-library/react'
 
 import { ConfirmationDialogProvider } from '~/context/confirm-context'
 import CreateSubjectModal from '~/containers/find-offer/create-new-subject/CreateNewSubject'
 import { categoryService } from '~/services/category-service'
 import { beforeEach } from 'vitest'
+import { TestSnackbar, renderWithProviders } from '~tests/test-utils'
 
 vi.mock('~/services/category-service')
 
@@ -18,9 +19,11 @@ categoryService.getCategoriesNames.mockResolvedValue({
 describe('CreateSubjectModal container', () => {
   beforeEach(async () => {
     await waitFor(() => {
-      render(
+      renderWithProviders(
         <ConfirmationDialogProvider>
-          <CreateSubjectModal />
+          <TestSnackbar>
+            <CreateSubjectModal />
+          </TestSnackbar>
         </ConfirmationDialogProvider>
       )
     })

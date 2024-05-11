@@ -10,7 +10,7 @@ import useForm from '~/hooks/use-form'
 import useAxios from '~/hooks/use-axios'
 import { userService } from '~/services/user-service'
 import { CourseService } from '~/services/course-service'
-import { useSnackBarContext } from '~/context/snackbar-context'
+import { useAppDispatch } from '~/hooks/use-redux'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import CourseSectionsList from '~/containers/course-sections-list/CourseSectionsList'
 import CourseToolbar from '~/containers/my-courses/course-toolbar/CourseToolbar'
@@ -40,32 +40,37 @@ import {
   validations
 } from '~/pages/create-course/CreateCourse.constants'
 import { styles } from '~/pages/create-course/CreateCourse.styles'
+import { openAlert } from '~/redux/features/snackbarSlice'
 
 const CreateCourse = () => {
   const navigate = useNavigate()
   const { t } = useTranslation()
   const { id } = useParams()
-  const { setAlert } = useSnackBarContext()
+  const dispatch = useAppDispatch()
   const { userId, userRole } = useAppSelector((state) => state.appMain)
 
   const onResponseError = (error: ErrorResponse) => {
-    setAlert({
-      severity: snackbarVariants.error,
-      message: error
-        ? t(`errors.${error.code}`, {
-            message: getErrorMessage(error.message)
-          })
-        : ''
-    })
+    dispatch(
+      openAlert({
+        severity: snackbarVariants.error,
+        message: error
+          ? t(`errors.${error.code}`, {
+              message: getErrorMessage(error.message)
+            })
+          : ''
+      })
+    )
   }
 
   const onResponse = () => {
-    setAlert({
-      severity: snackbarVariants.success,
-      message: id
-        ? t('myCoursesPage.newCourse.successEditedCourse')
-        : t('myCoursesPage.newCourse.successAddedCourse')
-    })
+    dispatch(
+      openAlert({
+        severity: snackbarVariants.success,
+        message: id
+          ? t('myCoursesPage.newCourse.successEditedCourse')
+          : t('myCoursesPage.newCourse.successAddedCourse')
+      })
+    )
     navigate(authRoutes.myCourses.root.path)
   }
 

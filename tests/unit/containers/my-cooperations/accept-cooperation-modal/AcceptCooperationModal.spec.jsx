@@ -1,6 +1,10 @@
 import { fireEvent, screen } from '@testing-library/react'
 import AcceptCooperationModal from '~/containers/my-cooperations/accept-cooperation-modal/AcceptCooperationModal'
-import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
+import {
+  renderWithProviders,
+  mockAxiosClient,
+  TestSnackbar
+} from '~tests/test-utils'
 import { URLs } from '~/constants/request'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { mockedCoop } from '~tests/unit/containers/my-cooperations/MyCooperations.spec.constants'
@@ -27,10 +31,12 @@ describe('AcceptCooperationModal component ', () => {
       .reply(200, { updateData: null })
 
     renderWithProviders(
-      <AcceptCooperationModal
-        cooperation={mockedCoop}
-        getCooperations={vi.fn()}
-      />,
+      <TestSnackbar>
+        <AcceptCooperationModal
+          cooperation={mockedCoop}
+          getCooperations={vi.fn()}
+        />
+      </TestSnackbar>,
       {
         preloadedState
       }

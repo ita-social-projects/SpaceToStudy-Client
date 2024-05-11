@@ -1,6 +1,10 @@
 import { screen, fireEvent, waitFor } from '@testing-library/react'
 import ForgotPassword from '~/containers/guest-home-page/forgot-password/ForgotPassword'
-import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
+import {
+  renderWithProviders,
+  mockAxiosClient,
+  TestSnackbar
+} from '~tests/test-utils'
 import { URLs } from '~/constants/request'
 import { vi } from 'vitest'
 
@@ -19,7 +23,11 @@ vi.mock('~/containers/guest-home-page/google-button/GoogleButton', () => ({
 
 describe('ForgotPassword test', () => {
   beforeEach(async () => {
-    renderWithProviders(<ForgotPassword />)
+    renderWithProviders(
+      <TestSnackbar>
+        <ForgotPassword />
+      </TestSnackbar>
+    )
   })
 
   it('should render title', () => {

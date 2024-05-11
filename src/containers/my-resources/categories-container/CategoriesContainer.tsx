@@ -16,7 +16,6 @@ import useAxios from '~/hooks/use-axios'
 import useSort from '~/hooks/table/use-sort'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import usePagination from '~/hooks/table/use-pagination'
-import { useSnackBarContext } from '~/context/snackbar-context'
 import { useModalContext } from '~/context/modal-context'
 
 import { defaultResponses, snackbarVariants } from '~/constants'
@@ -39,6 +38,8 @@ import {
 import { ajustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
 
 import { styles } from '~/containers/my-resources/categories-container/CategoriesContainer.style'
+import { useAppDispatch } from '~/hooks/use-redux'
+import { openAlert } from '~/redux/features/snackbarSlice'
 
 const CategoriesContainer = () => {
   const { t } = useTranslation()
@@ -47,7 +48,7 @@ const CategoriesContainer = () => {
   const breakpoints = useBreakpoints()
   const { page, handleChangePage } = usePagination()
   const { openModal, closeModal } = useModalContext()
-  const { setAlert } = useSnackBarContext()
+  const dispatch = useAppDispatch()
   const [selectedItemId, setSelectedItemId] = useState<string>('')
   const [updateResourceCategory] = useUpdateResourceCategoryMutation()
 
@@ -56,26 +57,30 @@ const CategoriesContainer = () => {
 
   const onResponseError = useCallback(
     (error: ErrorResponse) => {
-      setAlert({
-        severity: snackbarVariants.error,
-        message: error ? `errors.${error.code}` : ''
-      })
+      dispatch(
+        openAlert({
+          severity: snackbarVariants.error,
+          message: error ? `errors.${error.code}` : ''
+        })
+      )
     },
-    [setAlert]
+    [dispatch]
   )
 
   const onResponse = useCallback(
     (response: Categories | null) => {
       const categoryName = response ? response.name : ''
 
-      setAlert({
-        severity: snackbarVariants.success,
-        message: t('myResourcesPage.categories.successCreation', {
-          category: categoryName
+      dispatch(
+        openAlert({
+          severity: snackbarVariants.success,
+          message: t('myResourcesPage.categories.successCreation', {
+            category: categoryName
+          })
         })
-      })
+      )
     },
-    [setAlert, t]
+    [dispatch, t]
   )
 
   const getCategories = useCallback(

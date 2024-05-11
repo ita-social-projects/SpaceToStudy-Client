@@ -15,7 +15,7 @@ import Loader from '~/components/loader/Loader'
 import useForm from '~/hooks/use-form'
 import useAxios from '~/hooks/use-axios'
 import { ResourceService } from '~/services/resource-service'
-import { useSnackBarContext } from '~/context/snackbar-context'
+import { useAppDispatch } from '~/hooks/use-redux'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { getErrorMessage } from '~/utils/error-with-message'
 import { createUrlPath } from '~/utils/helper-functions'
@@ -37,11 +37,12 @@ import {
   UpdateQuestionParams
 } from '~/types'
 import { styles } from '~/pages/create-or-edit-question/CreateOrEditQuestion.styles'
+import { openAlert } from '~/redux/features/snackbarSlice'
 
 const CreateOrEditQuestion = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const { setAlert } = useSnackBarContext()
+  const dispatch = useAppDispatch()
   const { id } = useParams()
 
   const createQuestion = useCallback(
@@ -61,24 +62,28 @@ const CreateOrEditQuestion = () => {
     )
   }
   const onResponse = () => {
-    setAlert({
-      severity: snackbarVariants.success,
-      message: id
-        ? t('myResourcesPage.questions.successEditedQuestion')
-        : t('myResourcesPage.questions.successAddedQuestion')
-    })
+    dispatch(
+      openAlert({
+        severity: snackbarVariants.success,
+        message: id
+          ? t('myResourcesPage.questions.successEditedQuestion')
+          : t('myResourcesPage.questions.successAddedQuestion')
+      })
+    )
     navigateToQuestionsTab()
   }
 
   const onResponseError = (error: ErrorResponse) => {
-    setAlert({
-      severity: snackbarVariants.error,
-      message: error
-        ? t(`errors.${error.code}`, {
-            message: getErrorMessage(error.message)
-          })
-        : ''
-    })
+    dispatch(
+      openAlert({
+        severity: snackbarVariants.error,
+        message: error
+          ? t(`errors.${error.code}`, {
+              message: getErrorMessage(error.message)
+            })
+          : ''
+      })
+    )
   }
 
   const { loading: createQuestionLoading, fetchData: handleCreateQuestion } =

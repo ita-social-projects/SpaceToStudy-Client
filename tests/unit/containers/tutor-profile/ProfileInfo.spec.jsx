@@ -1,8 +1,7 @@
 import { screen, fireEvent, waitFor } from '@testing-library/react'
 import { vi } from 'vitest'
 
-import { SnackBarProvider } from '~/context/snackbar-context'
-import { renderWithProviders } from '~tests/test-utils'
+import { renderWithProviders, TestSnackbar } from '~tests/test-utils'
 
 import useBreakpoints from '~/hooks/use-breakpoints'
 import ProfileInfo from '~/containers/tutor-profile/profile-info/ProfileInfo'
@@ -96,9 +95,9 @@ function renderWithBreakpoints(data) {
     }
   })
   renderWithProviders(
-    <SnackBarProvider>
+    <TestSnackbar>
       <ProfileInfo myRole={'student'} userData={userData} />
-    </SnackBarProvider>
+    </TestSnackbar>
   )
 }
 

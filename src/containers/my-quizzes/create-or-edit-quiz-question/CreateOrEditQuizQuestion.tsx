@@ -10,7 +10,6 @@ import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 
 import { useModalContext } from '~/context/modal-context'
-import { useSnackBarContext } from '~/context/snackbar-context'
 import { ResourceService } from '~/services/resource-service'
 import useForm from '~/hooks/use-form'
 import useAxios from '~/hooks/use-axios'
@@ -28,6 +27,8 @@ import {
   UpdateQuestionParams
 } from '~/types'
 import { initialValues } from '~/containers/my-quizzes/create-or-edit-quiz-question/CreateOrEditQuizQuestion.constants'
+import { useAppDispatch } from '~/hooks/use-redux'
+import { openAlert } from '~/redux/features/snackbarSlice'
 
 interface CreateOrEditQuizQuestionProps {
   question?: Question
@@ -41,7 +42,7 @@ const CreateOrEditQuizQuestion: FC<CreateOrEditQuizQuestionProps> = ({
   onCancel
 }) => {
   const { t } = useTranslation()
-  const { setAlert } = useSnackBarContext()
+  const dispatch = useAppDispatch()
   const [isNewQuestion, setIsNewQuestion] = useState<boolean>(!!question)
   const { openModal, closeModal } = useModalContext()
 
@@ -69,22 +70,26 @@ const CreateOrEditQuizQuestion: FC<CreateOrEditQuizQuestionProps> = ({
   }
 
   const onResponse = () => {
-    setAlert({
-      severity: snackbarVariants.success,
-      message: 'categoriesPage.newSubject.successMessage'
-    })
+    dispatch(
+      openAlert({
+        severity: snackbarVariants.success,
+        message: 'categoriesPage.newSubject.successMessage'
+      })
+    )
     onCancel()
   }
 
   const onResponseError = (error: ErrorResponse) => {
-    setAlert({
-      severity: snackbarVariants.error,
-      message: error
-        ? t(`errors.${error.code}`, {
-            message: getErrorMessage(error.message)
-          })
-        : ''
-    })
+    dispatch(
+      openAlert({
+        severity: snackbarVariants.error,
+        message: error
+          ? t(`errors.${error.code}`, {
+              message: getErrorMessage(error.message)
+            })
+          : ''
+      })
+    )
   }
 
   const { loading: createLoading, fetchData: createQuestion } = useAxios({

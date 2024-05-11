@@ -6,7 +6,7 @@ import AddIcon from '@mui/icons-material/Add'
 
 import useAxios from '~/hooks/use-axios'
 import { useModalContext } from '~/context/modal-context'
-import { useSnackBarContext } from '~/context/snackbar-context'
+import { useAppDispatch } from '~/hooks/use-redux'
 import { ResourceService } from '~/services/resource-service'
 import AddCategoriesModal from '~/containers/my-resources/add-categories-modal/AddCategoriesModal'
 import DropdownButton from '~/components/dropdown-add-btn/DropdownButton'
@@ -25,6 +25,7 @@ import {
   getOptionLabel,
   isOptionEqualToValue
 } from '~/containers/category-dropdown/CategoryDropdown.constants'
+import { openAlert } from '~/redux/features/snackbarSlice'
 
 interface CategoryDropdownInterface {
   category: string | null
@@ -39,14 +40,16 @@ const CategoryDropdown = ({
   onCategoryChange
 }: CategoryDropdownInterface) => {
   const { t } = useTranslation()
-  const { setAlert } = useSnackBarContext()
+  const dispatch = useAppDispatch()
   const { openModal, closeModal } = useModalContext()
 
   const handleResponseError = (error: ErrorResponse) => {
-    setAlert({
-      severity: snackbarVariants.error,
-      message: error ? `errors.${error.code}` : ''
-    })
+    dispatch(
+      openAlert({
+        severity: snackbarVariants.error,
+        message: error ? `errors.${error.code}` : ''
+      })
+    )
   }
 
   const { response: allCategoriesNames, fetchData: fetchAllCategoriesNames } =
@@ -78,16 +81,18 @@ const CategoryDropdown = ({
     async (response: Categories | null) => {
       const categoryName = response ? response.name : ''
 
-      setAlert({
-        severity: snackbarVariants.success,
-        message: t('myResourcesPage.categories.successCreation', {
-          category: categoryName
+      dispatch(
+        openAlert({
+          severity: snackbarVariants.success,
+          message: t('myResourcesPage.categories.successCreation', {
+            category: categoryName
+          })
         })
-      })
+      )
 
       await fetchAllCategoriesNames()
     },
-    [setAlert, fetchAllCategoriesNames, t]
+    [dispatch, fetchAllCategoriesNames, t]
   )
 
   const { fetchData: handleCreateCategory } = useAxios({

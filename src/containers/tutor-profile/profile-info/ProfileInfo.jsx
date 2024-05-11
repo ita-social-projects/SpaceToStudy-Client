@@ -14,28 +14,31 @@ import ProfileContainerMobile from '~/containers/tutor-profile/profile-info/Prof
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 
 import { authRoutes } from '~/router/constants/authRoutes'
-import { useSnackBarContext } from '~/context/snackbar-context'
 import { styles } from '~/containers/tutor-profile/profile-info/ProfileInfo.styles'
 import { snackbarVariants } from '~/constants'
 import { SizeEnum, UserRoleEnum, ButtonVariantEnum } from '~/types'
 import { createUrlPath, getDifferenceDates } from '~/utils/helper-functions'
+import { useAppDispatch } from '~/hooks/use-redux'
+import { openAlert } from '~/redux/features/snackbarSlice'
 
 const ProfileInfo = ({ userData, myRole }) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const { isLaptopAndAbove, isMobile } = useBreakpoints()
-  const { setAlert } = useSnackBarContext()
+  const dispatch = useAppDispatch()
   const isMyProfile = useMatch(authRoutes.accountMenu.myProfile.path)
   const { number, format } = getDifferenceDates(userData.createdAt, new Date())
   const { Student, Tutor } = UserRoleEnum
 
   const copyProfileLink = () => {
     navigator.clipboard.writeText(window.location.href)
-    setAlert({
-      severity: snackbarVariants.success,
-      message: 'tutorProfilePage.profileInfo.copyProfileLink',
-      duration: 2000
-    })
+    dispatch(
+      openAlert({
+        severity: snackbarVariants.success,
+        message: 'tutorProfilePage.profileInfo.copyProfileLink',
+        duration: 2000
+      })
+    )
   }
 
   const navigateToUserOffers = () => {

@@ -6,7 +6,7 @@ import useAxios from '~/hooks/use-axios'
 import useInputVisibility from '~/hooks/use-input-visibility'
 
 import { AuthService } from '~/services/auth-service'
-import { useSnackBarContext } from '~/context/snackbar-context'
+import { useAppDispatch } from '~/hooks/use-redux'
 
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
@@ -21,10 +21,11 @@ import { confirmPassword, password } from '~/utils/validations/login'
 import { snackbarVariants } from '~/constants'
 import { styles } from './ResetPassword.styles'
 import imgSuccess from '~/assets/img/email-confirmation-modals/success-icon.svg'
+import { openAlert } from '~/redux/features/snackbarSlice'
 
 const ResetPassword = ({ resetToken, openModal }) => {
   const { t } = useTranslation()
-  const { setAlert } = useSnackBarContext()
+  const dispatch = useAppDispatch()
 
   const successNotification = useMemo(
     () => (
@@ -62,14 +63,16 @@ const ResetPassword = ({ resetToken, openModal }) => {
 
   useEffect(() => {
     if (error) {
-      setAlert({
-        severity: snackbarVariants.error,
-        message: `errors.${error.code}`
-      })
+      dispatch(
+        openAlert({
+          severity: snackbarVariants.error,
+          message: `errors.${error.code}`
+        })
+      )
     } else if (response !== null) {
       openModal({ component: successNotification }, 5000)
     }
-  }, [error, openModal, response, setAlert, successNotification])
+  }, [error, openModal, response, dispatch, successNotification])
 
   const { handleSubmit, handleInputChange, handleBlur, errors, data } = useForm(
     {

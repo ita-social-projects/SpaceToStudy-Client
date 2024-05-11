@@ -1,6 +1,10 @@
 import { screen, waitFor } from '@testing-library/react'
 import QuizzesContainer from '~/containers/my-quizzes/QuizzesContainer'
-import { mockAxiosClient, renderWithProviders } from '~tests/test-utils'
+import {
+  mockAxiosClient,
+  renderWithProviders,
+  TestSnackbar
+} from '~tests/test-utils'
 import { URLs } from '~/constants/request'
 
 const quizzesMock = {
@@ -63,7 +67,11 @@ describe('QuizzesContainer component with an error', () => {
         message: 'The requested URL was not found.'
       })
 
-      renderWithProviders(<QuizzesContainer />)
+      renderWithProviders(
+        <TestSnackbar>
+          <QuizzesContainer />
+        </TestSnackbar>
+      )
     })
   })
   afterEach(() => {

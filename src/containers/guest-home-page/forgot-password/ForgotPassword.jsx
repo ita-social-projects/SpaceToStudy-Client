@@ -4,7 +4,7 @@ import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import { useTranslation } from 'react-i18next'
 
-import { useSnackBarContext } from '~/context/snackbar-context'
+import { useAppDispatch } from '~/hooks/use-redux'
 import { useModalContext } from '~/context/modal-context'
 import useForm from '~/hooks/use-form'
 
@@ -19,12 +19,13 @@ import { AuthService } from '~/services/auth-service'
 import { snackbarVariants } from '~/constants'
 import { email } from '~/utils/validations/login'
 import { styles } from '~/containers/guest-home-page/forgot-password/ForgotPassword.styles'
+import { openAlert } from '~/redux/features/snackbarSlice'
 
 const ForgotPassword = () => {
   const { t } = useTranslation()
   const { openModal, closeModal } = useModalContext()
   const [loading, setLoading] = useState(false)
-  const { setAlert } = useSnackBarContext()
+  const dispatch = useAppDispatch()
 
   const backToLogin = () => {
     openModal({ component: <LoginDialog /> })
@@ -49,10 +50,12 @@ const ForgotPassword = () => {
         5000
       )
     } catch (e) {
-      setAlert({
-        severity: snackbarVariants.error,
-        message: `errors.${e.response.data.code}`
-      })
+      dispatch(
+        openAlert({
+          severity: snackbarVariants.error,
+          message: `errors.${e.response.data.code}`
+        })
+      )
     } finally {
       setLoading(false)
     }

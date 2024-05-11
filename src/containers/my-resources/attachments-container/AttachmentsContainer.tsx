@@ -2,7 +2,6 @@ import { useCallback, useRef, useState } from 'react'
 import Box from '@mui/material/Box'
 import AddIcon from '@mui/icons-material/Add'
 import { useTranslation } from 'react-i18next'
-import { useSnackBarContext } from '~/context/snackbar-context'
 import { useModalContext } from '~/context/modal-context'
 import { ResourceService } from '~/services/resource-service'
 import EditAttachmentModal from '~/containers/my-resources/edit-attachment-modal/EditAttachmentModal'
@@ -34,10 +33,12 @@ import {
 } from '~/types'
 import { ajustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
 import { styles } from '~/containers/my-resources/attachments-container/AttachmentsContainer.styles'
+import { useAppDispatch } from '~/hooks/use-redux'
+import { openAlert } from '~/redux/features/snackbarSlice'
 
 const AttachmentsContainer = () => {
   const { t } = useTranslation()
-  const { setAlert } = useSnackBarContext()
+  const dispatch = useAppDispatch()
   const { openModal, closeModal } = useModalContext()
   const breakpoints = useBreakpoints()
   const { page, handleChangePage } = usePagination()
@@ -51,12 +52,14 @@ const AttachmentsContainer = () => {
 
   const onResponseError = useCallback(
     (error: ErrorResponse) => {
-      setAlert({
-        severity: snackbarVariants.error,
-        message: error ? `errors.${error.code}` : ''
-      })
+      dispatch(
+        openAlert({
+          severity: snackbarVariants.error,
+          message: error ? `errors.${error.code}` : ''
+        })
+      )
     },
-    [setAlert]
+    [dispatch]
   )
 
   const getAttachments = useCallback(
@@ -111,10 +114,12 @@ const AttachmentsContainer = () => {
   )
 
   const onCreateAttachmentsError = (error: ErrorResponse) => {
-    setAlert({
-      severity: snackbarVariants.error,
-      message: error ? `errors.${error.code}` : ''
-    })
+    dispatch(
+      openAlert({
+        severity: snackbarVariants.error,
+        message: error ? `errors.${error.code}` : ''
+      })
+    )
   }
   const { fetchData: fetchCreateAttachment } = useAxios({
     service: createAttachments,

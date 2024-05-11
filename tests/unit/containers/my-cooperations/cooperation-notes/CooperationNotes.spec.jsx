@@ -1,6 +1,6 @@
 import { screen, fireEvent, waitFor } from '@testing-library/react'
 import CooperationNotes from '~/containers/my-cooperations/cooperation-notes/CooperationNotes'
-import { renderWithProviders } from '~tests/test-utils'
+import { renderWithProviders, TestSnackbar } from '~tests/test-utils'
 import { ConfirmationDialogProvider } from '~/context/confirm-context'
 
 const mockNotesData = [
@@ -67,7 +67,9 @@ describe('CooperationNotes', () => {
     await waitFor(() => {
       renderWithProviders(
         <ConfirmationDialogProvider>
-          <CooperationNotes />
+          <TestSnackbar>
+            <CooperationNotes />
+          </TestSnackbar>
         </ConfirmationDialogProvider>,
         { preloadedState: userState }
       )
@@ -186,7 +188,12 @@ describe('CooperationNotes with error', () => {
     })
 
     await waitFor(() => {
-      renderWithProviders(<CooperationNotes />, { preloadedState: userState })
+      renderWithProviders(
+        <TestSnackbar>
+          <CooperationNotes />
+        </TestSnackbar>,
+        { preloadedState: userState }
+      )
     })
   })
 

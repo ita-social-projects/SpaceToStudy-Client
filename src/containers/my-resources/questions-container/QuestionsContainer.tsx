@@ -2,7 +2,7 @@ import { useCallback, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Box from '@mui/material/Box'
 
-import { useSnackBarContext } from '~/context/snackbar-context'
+import { useAppDispatch } from '~/hooks/use-redux'
 import { ResourceService } from '~/services/resource-service'
 import AddResourceWithInput from '~/containers/my-resources/add-resource-with-input/AddResourceWithInput'
 import MyResourcesTable from '~/containers/my-resources/my-resources-table/MyResourcesTable'
@@ -32,9 +32,10 @@ import {
   createUrlPath,
   getScreenBasedLimit
 } from '~/utils/helper-functions'
+import { openAlert } from '~/redux/features/snackbarSlice'
 
 const QuestionsContainer = () => {
-  const { setAlert } = useSnackBarContext()
+  const dispatch = useAppDispatch()
   const sortOptions = useSort({ initialSort })
   const searchTitle = useRef<string>('')
   const breakpoints = useBreakpoints()
@@ -52,12 +53,14 @@ const QuestionsContainer = () => {
 
   const onResponseError = useCallback(
     (error: ErrorResponse) => {
-      setAlert({
-        severity: snackbarVariants.error,
-        message: error ? `errors.${error.code}` : ''
-      })
+      dispatch(
+        openAlert({
+          severity: snackbarVariants.error,
+          message: error ? `errors.${error.code}` : ''
+        })
+      )
     },
-    [setAlert]
+    [dispatch]
   )
 
   const getQuestions = useCallback(
@@ -108,17 +111,21 @@ const QuestionsContainer = () => {
   )
 
   const onDuplicateError = (error: ErrorResponse) => {
-    setAlert({
-      severity: snackbarVariants.error,
-      message: error ? `errors.${error.code}` : ''
-    })
+    dispatch(
+      openAlert({
+        severity: snackbarVariants.error,
+        message: error ? `errors.${error.code}` : ''
+      })
+    )
   }
 
   const onDuplicateResponse = () => {
-    setAlert({
-      severity: snackbarVariants.success,
-      message: `myResourcesPage.questions.successDuplication`
-    })
+    dispatch(
+      openAlert({
+        severity: snackbarVariants.success,
+        message: `myResourcesPage.questions.successDuplication`
+      })
+    )
   }
 
   const { error: duplicationError, fetchData: duplicateItem } = useAxios({

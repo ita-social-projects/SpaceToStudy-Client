@@ -6,9 +6,10 @@ import Menu, { MenuProps } from '@mui/material/Menu'
 
 import { languageMenuConstants } from '~/containers/layout/language-menu/LanguageMenu.constants'
 import { setToLocalStorage } from '~/services/local-storage-service'
-import { useSnackBarContext } from '~/context/snackbar-context'
 
 import { styles } from '~/containers/layout/language-menu/LanguageMenu.styles'
+import { useAppDispatch } from '~/hooks/use-redux'
+import { openAlert } from '~/redux/features/snackbarSlice'
 
 interface LanguageMenuProps {
   anchorEl: MenuProps['anchorEl']
@@ -16,7 +17,7 @@ interface LanguageMenuProps {
 }
 const LanguageMenu: FC<LanguageMenuProps> = ({ anchorEl, onClose }) => {
   const { i18n } = useTranslation()
-  const { setAlert } = useSnackBarContext()
+  const dispatch = useAppDispatch()
 
   const handleLanguageChange = (language: string) => {
     i18n
@@ -26,11 +27,13 @@ const LanguageMenu: FC<LanguageMenuProps> = ({ anchorEl, onClose }) => {
         onClose()
       })
       .catch(() => {
-        setAlert({
-          message: 'Failed to change language',
-          severity: 'error',
-          duration: 1000
-        })
+        dispatch(
+          openAlert({
+            message: 'Failed to change language',
+            severity: 'error',
+            duration: 1000
+          })
+        )
       })
   }
 

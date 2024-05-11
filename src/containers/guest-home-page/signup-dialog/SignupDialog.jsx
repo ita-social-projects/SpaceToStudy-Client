@@ -7,7 +7,7 @@ import useForm from '~/hooks/use-form'
 import useConfirm from '~/hooks/use-confirm'
 import { useSignUpMutation } from '~/services/auth-service'
 import { useModalContext } from '~/context/modal-context'
-import { useSnackBarContext } from '~/context/snackbar-context'
+import { useAppDispatch } from '~/hooks/use-redux'
 
 import {
   firstName,
@@ -26,12 +26,13 @@ import tutor from '~/assets/img/signup-dialog/tutor.svg'
 import info from '~/assets/img/guest-home-page/info.svg'
 
 import { styles } from '~/containers/guest-home-page/signup-dialog/SignupDialog.styles'
+import { openAlert } from '~/redux/features/snackbarSlice'
 
 const SignupDialog = ({ type }) => {
   const { t } = useTranslation()
   const { setNeedConfirmation } = useConfirm()
   const { openModal, closeModal } = useModalContext()
-  const { setAlert } = useSnackBarContext()
+  const dispatch = useAppDispatch()
   const [signUp] = useSignUpMutation()
 
   const signupImg = { student, tutor }
@@ -56,10 +57,12 @@ const SignupDialog = ({ type }) => {
             5000
           )
         } catch (e) {
-          setAlert({
-            severity: snackbarVariants.error,
-            message: `errors.${e.data.code}`
-          })
+          dispatch(
+            openAlert({
+              severity: snackbarVariants.error,
+              message: `errors.${e.data.code}`
+            })
+          )
         }
       },
       initialValues: {
