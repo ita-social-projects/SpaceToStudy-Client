@@ -1,7 +1,8 @@
 import { TypographyVariantEnum } from '~/types'
 import {
   rootContainer,
-  updateProfileBtn
+  updateProfileBtn,
+  innerContainer
 } from '~/containers/edit-profile/common.style'
 
 const { Body2, H6 } = TypographyVariantEnum
@@ -11,11 +12,7 @@ export const styles = {
     ...rootContainer
   },
   profileInnerContainer: {
-    maxWidth: '768px',
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '20px'
+    ...innerContainer
   },
   headerTitleWithDesc: {
     wrapper: { textAlign: 'left' },

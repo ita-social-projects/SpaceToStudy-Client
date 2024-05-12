@@ -2,7 +2,7 @@
   "profile": {
     "title": "Profile",
     "description": "Here you can edit public information about yourself.",
-    "updateProfileBtn": "Update profile",
+    "updateProfileBtn": "Update",
     "successMessage": "Success! Your data has been updated.",
     "generalTab": {
       "uploadTitle": "Upload new photo",

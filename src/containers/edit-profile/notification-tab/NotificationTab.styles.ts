@@ -1,9 +1,16 @@
 import { TypographyVariantEnum } from '~/types'
-import { rootContainer } from '~/containers/edit-profile/common.style'
+import {
+  innerContainer,
+  rootContainer,
+  updateProfileBtn
+} from '~/containers/edit-profile/common.style'
 import { switchStyle } from '~/containers/my-quizzes/quiz-settings-container/QuizSettingsContainer.styles'
 
 export const styles = {
   root: rootContainer,
+  notificationInnerContainer: {
+    ...innerContainer
+  },
   titleWithDescription: {
     title: {
       typography: TypographyVariantEnum.H6
@@ -25,5 +32,8 @@ export const styles = {
   },
   switch: {
     ...switchStyle
+  },
+  updateProfileBtn: {
+    ...updateProfileBtn
   }
 }
