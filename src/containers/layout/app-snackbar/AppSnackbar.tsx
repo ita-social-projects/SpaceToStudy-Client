@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
-import { Box } from '@mui/material'
+import Box from '@mui/material/Box'
 import { closeAlert, snackbarSelector } from '~/redux/features/snackbarSlice'
 import { useTranslation } from 'react-i18next'
 
