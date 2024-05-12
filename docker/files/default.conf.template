@@ -1,34 +1,26 @@
 server {
     listen 80;
-    server_name s2s-frontend;
+    server_name s2s-frontend;  # Adjust as necessary
 
-    # Proxy API requests
+    root /usr/share/nginx/html;
+    index index.html;
+
     location /api/ {
-        proxy_pass ${PROXY_API_URL};  # Ensure this is correctly set
+        proxy_pass $PROXY_API_URL;  # Environment variable placeholder
         proxy_http_version 1.1;
         proxy_set_header Host $host;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection "upgrade";
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
         proxy_set_header X-Forwarded-Host $host;
         proxy_set_header X-Forwarded-Port $server_port;
-        proxy_connect_timeout 60s; 
-        proxy_read_timeout 300s; 
-        proxy_send_timeout 300s;
+        proxy_set_header Connection "keep-alive";
     }
 
-
-    # Serve all other requests via index.html
     location / {
-        add_header 'Access-Control-Allow-Origin' '*'; # Handles CORS
-        root /usr/share/nginx/html; # Correct path to your static files
-        index index.html index.htm;
-
-        try_files $uri $uri/ /index.html; # Direct all requests to index.html for React Router to handle
+        try_files $uri $uri/ /index.html;
+        add_header 'Access-Control-Allow-Origin' '*';
     }
 
-    error_page 404 /index.html; # Handle 404 by serving index.html
-    error_page 405 =200 $uri; # Ensure that 405 Method Not Allowed errors redirect appropriately
+    error_page 405 =200 $uri;
 }
