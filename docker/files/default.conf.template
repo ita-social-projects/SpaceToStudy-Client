@@ -1,9 +1,10 @@
 server {
-    listen       80;
-    server_name  s2s-frontend;
+    listen 80;
+    server_name s2s-frontend;
 
+    # Proxy API requests
     location /api/ {
-        proxy_pass ${PROXY_API_URL};
+        proxy_pass ${PROXY_API_URL}; # Ensure this environment variable is correctly set
         proxy_set_header Host $host;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
@@ -15,12 +16,15 @@ server {
         proxy_set_header X-Forwarded-Port $server_port;
     }
 
+    # Serve all other requests via index.html
     location / {
-        add_header 'Access-Control-Allow-Origin' '*';
-        root /usr/share/nginx/html;
+        add_header 'Access-Control-Allow-Origin' '*'; # Handles CORS
+        root /usr/share/nginx/html; # Correct path to your static files
         index index.html index.htm;
-        try_files $uri $uri/ /index.html;
+
+        try_files $uri $uri/ /index.html; # Direct all requests to index.html for React Router to handle
     }
 
-    error_page  405     =200 $uri;
+    error_page 404 /index.html; # Handle 404 by serving index.html
+    error_page 405 =200 $uri; # Ensure that 405 Method Not Allowed errors redirect appropriately
 }
