@@ -1,5 +1,5 @@
 import { TypographyVariantEnum } from '~/types'
-import { rootContainer } from '~/containers/edit-profile/common.style'
+import { rootContainer } from '~/containers/edit-profile/common.styles'
 
 export const styles = {
   container: rootContainer,

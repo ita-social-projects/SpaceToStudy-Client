@@ -2,7 +2,7 @@ import {
   rootContainer,
   updateProfileBtn,
   innerContainer
-} from '~/containers/edit-profile/common.style'
+} from '~/containers/edit-profile/common.styles'
 import palette from '~/styles/app-theme/app.pallete'
 import { PositionEnum, TypographyVariantEnum } from '~/types'
 
@@ -23,9 +23,7 @@ export const styles = {
     flexDirection: 'column',
     rowGap: 4
   },
-  professionalInfoInnerContainer: {
-    ...innerContainer
-  },
+  professionalInfoInnerContainer: innerContainer,
   mainTitleWithDescription: titleWithDescription(H6),
   titleWithDescription: titleWithDescription(Subtitle1),
   createBtnContainer: {
@@ -38,7 +36,5 @@ export const styles = {
     maxWidth: '664px',
     width: '100%'
   },
-  updateProfileBtn: {
-    ...updateProfileBtn
-  }
+  updateProfileBtn
 }

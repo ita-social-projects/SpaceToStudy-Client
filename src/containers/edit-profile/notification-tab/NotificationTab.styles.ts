@@ -3,14 +3,12 @@ import {
   innerContainer,
   rootContainer,
   updateProfileBtn
-} from '~/containers/edit-profile/common.style'
+} from '~/containers/edit-profile/common.styles'
 import { switchStyle } from '~/containers/my-quizzes/quiz-settings-container/QuizSettingsContainer.styles'
 
 export const styles = {
   root: rootContainer,
-  notificationInnerContainer: {
-    ...innerContainer
-  },
+  notificationInnerContainer: innerContainer,
   titleWithDescription: {
     title: {
       typography: TypographyVariantEnum.H6
@@ -30,10 +28,6 @@ export const styles = {
     padding: '15px',
     mt: '-1px'
   },
-  switch: {
-    ...switchStyle
-  },
-  updateProfileBtn: {
-    ...updateProfileBtn
-  }
+  switch: switchStyle,
+  updateProfileBtn
 }
