@@ -88,4 +88,4 @@ RUN /tmp/ssh_setup.sh \
 EXPOSE 80 2222
 
 # Start the sshd service and run nginx with the 'daemon off' option
-CMD ["sh", "-c", "/usr/sbin/sshd && nginx -g 'daemon off;'"]
+CMD ["sh", "-c", "/usr/sbin/sshd && /docker-entrypoint.sh nginx && nginx -g 'daemon off;'"]
