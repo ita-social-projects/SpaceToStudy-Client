@@ -6,6 +6,7 @@ import { ErrorResponse, UpdateUserParams } from '~/types'
 import useAxios from './use-axios'
 import { useAppDispatch } from './use-redux'
 import { openAlert } from '~/redux/features/snackbarSlice'
+import { getErrorKey } from '~/utils/get-error-key'
 
 const useUpdateUser = (userId: string) => {
   const dispatch = useAppDispatch()
@@ -27,11 +28,11 @@ const useUpdateUser = (userId: string) => {
     navigate(0)
   }
 
-  const handleResponseError = (error: ErrorResponse) => {
+  const handleResponseError = (error?: ErrorResponse) => {
     dispatch(
       openAlert({
         severity: snackbarVariants.error,
-        message: error ? `errors.${error.code}` : ''
+        message: getErrorKey(error)
       })
     )
   }

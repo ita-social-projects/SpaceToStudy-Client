@@ -16,6 +16,7 @@ import { ChatResponse, ComponentEnum, ErrorResponse } from '~/types'
 import { defaultResponses, snackbarVariants } from '~/constants'
 import { useAppDispatch } from '~/hooks/use-redux'
 import { openAlert } from '~/redux/features/snackbarSlice'
+import { getErrorKey } from '~/utils/get-error-key'
 
 interface ChatMenuProps {
   anchorEl: Element | null
@@ -53,11 +54,11 @@ const ChatMenu: FC<ChatMenuProps> = ({
   )
 
   const onResponseError = useCallback(
-    (error: ErrorResponse) => {
+    (error?: ErrorResponse) => {
       dispatch(
         openAlert({
           severity: snackbarVariants.error,
-          message: error ? `errors.${error.code}` : 'errors.UNKNOWN_ERROR'
+          message: getErrorKey(error)
         })
       )
     },

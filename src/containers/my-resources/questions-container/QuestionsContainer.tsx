@@ -33,6 +33,7 @@ import {
   getScreenBasedLimit
 } from '~/utils/helper-functions'
 import { openAlert } from '~/redux/features/snackbarSlice'
+import { getErrorKey } from '~/utils/get-error-key'
 
 const QuestionsContainer = () => {
   const dispatch = useAppDispatch()
@@ -52,11 +53,11 @@ const QuestionsContainer = () => {
   )
 
   const onResponseError = useCallback(
-    (error: ErrorResponse) => {
+    (error?: ErrorResponse) => {
       dispatch(
         openAlert({
           severity: snackbarVariants.error,
-          message: error ? `errors.${error.code}` : ''
+          message: getErrorKey(error)
         })
       )
     },
@@ -110,11 +111,11 @@ const QuestionsContainer = () => {
     [response.items]
   )
 
-  const onDuplicateError = (error: ErrorResponse) => {
+  const onDuplicateError = (error?: ErrorResponse) => {
     dispatch(
       openAlert({
         severity: snackbarVariants.error,
-        message: error ? `errors.${error.code}` : ''
+        message: getErrorKey(error)
       })
     )
   }

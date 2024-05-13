@@ -23,6 +23,8 @@ import {
 } from '~/types'
 import { useAppDispatch } from '~/hooks/use-redux'
 import { openAlert } from '~/redux/features/snackbarSlice'
+import { getErrorMessage } from '~/utils/error-with-message'
+import { getErrorKey } from '~/utils/get-error-key'
 
 const CooperationNotes = () => {
   const { t } = useTranslation()
@@ -33,11 +35,20 @@ const CooperationNotes = () => {
   const [editableItemId, setEditableItemId] = useState<string>('')
 
   const onResponseError = useCallback(
-    (error: ErrorResponse) => {
+    (error?: ErrorResponse) => {
+      const errorKey = getErrorKey(error)
+
       dispatch(
         openAlert({
           severity: snackbarVariants.error,
-          message: error ? `errors.${error.message}` : ''
+          message: error
+            ? {
+                text: errorKey,
+                options: {
+                  message: getErrorMessage(error.message)
+                }
+              }
+            : errorKey
         })
       )
     },

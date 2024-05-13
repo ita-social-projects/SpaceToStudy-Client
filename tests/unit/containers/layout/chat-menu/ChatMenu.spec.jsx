@@ -1,6 +1,6 @@
 import { fireEvent, screen, cleanup, waitFor } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
-import { expect, vi } from 'vitest'
+import { expect } from 'vitest'
 import ChatMenu from '~/containers/layout/chat-menu/ChatMenu'
 
 const mockOpenDialog = vi.fn()

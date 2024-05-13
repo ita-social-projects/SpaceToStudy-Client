@@ -15,6 +15,9 @@ const AppSnackbar = () => {
 
   const handleClose = () => dispatch(closeAlert())
 
+  const translatedMessage =
+    typeof message === 'string' ? t(message) : t(message.text, message.options)
+
   return (
     <Snackbar
       anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
@@ -23,11 +26,9 @@ const AppSnackbar = () => {
       open={isOpened}
     >
       <Alert severity={severity} sx={{ color: 'basic.white' }} variant='filled'>
-        {t(message)
-          .split(', ')
-          .map((line) => (
-            <Box key={line}>{line}</Box>
-          ))}
+        {translatedMessage.split(', ').map((line) => (
+          <Box key={line}>{line}</Box>
+        ))}
       </Alert>
     </Snackbar>
   )

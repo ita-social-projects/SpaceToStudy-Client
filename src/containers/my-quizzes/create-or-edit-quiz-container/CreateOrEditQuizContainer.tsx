@@ -48,6 +48,7 @@ import { createUrlPath } from '~/utils/helper-functions'
 
 import { styles } from '~/containers/my-quizzes/create-or-edit-quiz-container/CreateOrEditQuizContainer.styles'
 import { openAlert } from '~/redux/features/snackbarSlice'
+import { getErrorKey } from '~/utils/get-error-key'
 
 const CreateOrEditQuizContainer = ({
   title,
@@ -85,22 +86,27 @@ const CreateOrEditQuizContainer = ({
       openAlert({
         severity: snackbarVariants.success,
         message: id
-          ? t('myResourcesPage.quizzes.successEditedQuiz')
-          : t('myResourcesPage.quizzes.successAddedQuiz')
+          ? 'myResourcesPage.quizzes.successEditedQuiz'
+          : 'myResourcesPage.quizzes.successAddedQuiz'
       })
     )
     navigateToQuizzesTab()
   }
 
-  const onResponseError = (error: ErrorResponse) => {
+  const onResponseError = (error?: ErrorResponse) => {
+    const errorKey = getErrorKey(error)
+
     dispatch(
       openAlert({
         severity: snackbarVariants.error,
         message: error
-          ? t(`errors.${error.code}`, {
-              message: getErrorMessage(error.message)
-            })
-          : ''
+          ? {
+              text: errorKey,
+              options: {
+                message: getErrorMessage(error.message)
+              }
+            }
+          : errorKey
       })
     )
   }

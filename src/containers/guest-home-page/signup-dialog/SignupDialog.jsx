@@ -27,6 +27,7 @@ import info from '~/assets/img/guest-home-page/info.svg'
 
 import { styles } from '~/containers/guest-home-page/signup-dialog/SignupDialog.styles'
 import { openAlert } from '~/redux/features/snackbarSlice'
+import { getErrorKey } from '~/utils/get-error-key'
 
 const SignupDialog = ({ type }) => {
   const { t } = useTranslation()
@@ -60,7 +61,7 @@ const SignupDialog = ({ type }) => {
           dispatch(
             openAlert({
               severity: snackbarVariants.error,
-              message: `errors.${e.data.code}`
+              message: getErrorKey(e.data)
             })
           )
         }

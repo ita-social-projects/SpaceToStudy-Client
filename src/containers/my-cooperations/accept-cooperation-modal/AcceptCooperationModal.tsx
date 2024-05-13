@@ -32,6 +32,7 @@ import { snackbarVariants } from '~/constants'
 import { styles } from '~/containers/my-cooperations/accept-cooperation-modal/AcceptCooperation.styles'
 import { useAppDispatch } from '~/hooks/use-redux'
 import { openAlert } from '~/redux/features/snackbarSlice'
+import { getErrorKey } from '~/utils/get-error-key'
 
 interface AcceptCooperationModalProps {
   cooperation: Cooperation
@@ -76,11 +77,11 @@ const AcceptCooperationModal: FC<AcceptCooperationModalProps> = ({
     void getCooperations()
   }
 
-  const onResponseError = (error: ErrorResponse) => {
+  const onResponseError = (error?: ErrorResponse) => {
     dispatch(
       openAlert({
         severity: snackbarVariants.error,
-        message: error ? `errors.${error.code}` : ''
+        message: getErrorKey(error)
       })
     )
   }

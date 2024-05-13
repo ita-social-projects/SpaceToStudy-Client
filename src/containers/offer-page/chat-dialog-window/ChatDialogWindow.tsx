@@ -32,6 +32,8 @@ import { authRoutes } from '~/router/constants/authRoutes'
 import { styles } from '~/containers/offer-page/chat-dialog-window/ChatDialogWindow.styles'
 import { questions } from '~/containers/offer-page/chat-dialog-window/ChatDialogWindow.constants'
 import { openAlert } from '~/redux/features/snackbarSlice'
+import { getErrorKey } from '~/utils/get-error-key'
+import { getErrorMessage } from '~/utils/error-with-message'
 
 interface ChatDialogWindow {
   chatInfo: ChatInfo
@@ -48,11 +50,20 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
   const { setChatInfo } = useChatContext()
 
   const handleErrorResponse = useCallback(
-    (errorResponse: ErrorResponse) => {
+    (error?: ErrorResponse) => {
+      const errorKey = getErrorKey(error)
+
       dispatch(
         openAlert({
           severity: snackbarVariants.error,
-          message: errorResponse ? `${errorResponse.message}` : ''
+          message: error
+            ? {
+                text: errorKey,
+                options: {
+                  message: getErrorMessage(error.message)
+                }
+              }
+            : errorKey
         })
       )
     },

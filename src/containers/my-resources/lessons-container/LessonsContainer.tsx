@@ -33,6 +33,7 @@ import {
 } from '~/utils/helper-functions'
 import { useAppDispatch } from '~/hooks/use-redux'
 import { openAlert } from '~/redux/features/snackbarSlice'
+import { getErrorKey } from '~/utils/get-error-key'
 
 const LessonsContainer = () => {
   const dispatch = useAppDispatch()
@@ -52,11 +53,11 @@ const LessonsContainer = () => {
   )
 
   const onResponseError = useCallback(
-    (error: ErrorResponse) => {
+    (error?: ErrorResponse) => {
       dispatch(
         openAlert({
           severity: snackbarVariants.error,
-          message: error ? `errors.${error.code}` : ''
+          message: getErrorKey(error)
         })
       )
     },

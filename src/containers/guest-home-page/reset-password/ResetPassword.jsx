@@ -22,6 +22,7 @@ import { snackbarVariants } from '~/constants'
 import { styles } from './ResetPassword.styles'
 import imgSuccess from '~/assets/img/email-confirmation-modals/success-icon.svg'
 import { openAlert } from '~/redux/features/snackbarSlice'
+import { getErrorKey } from '~/utils/get-error-key'
 
 const ResetPassword = ({ resetToken, openModal }) => {
   const { t } = useTranslation()
@@ -66,7 +67,7 @@ const ResetPassword = ({ resetToken, openModal }) => {
       dispatch(
         openAlert({
           severity: snackbarVariants.error,
-          message: `errors.${error.code}`
+          message: getErrorKey(error)
         })
       )
     } else if (response !== null) {

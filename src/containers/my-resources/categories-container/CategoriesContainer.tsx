@@ -40,6 +40,7 @@ import { ajustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
 import { styles } from '~/containers/my-resources/categories-container/CategoriesContainer.style'
 import { useAppDispatch } from '~/hooks/use-redux'
 import { openAlert } from '~/redux/features/snackbarSlice'
+import { getErrorKey } from '~/utils/get-error-key'
 
 const CategoriesContainer = () => {
   const { t } = useTranslation()
@@ -56,11 +57,11 @@ const CategoriesContainer = () => {
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
 
   const onResponseError = useCallback(
-    (error: ErrorResponse) => {
+    (error?: ErrorResponse) => {
       dispatch(
         openAlert({
           severity: snackbarVariants.error,
-          message: error ? `errors.${error.code}` : ''
+          message: getErrorKey(error)
         })
       )
     },
@@ -74,13 +75,16 @@ const CategoriesContainer = () => {
       dispatch(
         openAlert({
           severity: snackbarVariants.success,
-          message: t('myResourcesPage.categories.successCreation', {
-            category: categoryName
-          })
+          message: {
+            text: 'myResourcesPage.categories.successCreation',
+            options: {
+              category: categoryName
+            }
+          }
         })
       )
     },
-    [dispatch, t]
+    [dispatch]
   )
 
   const getCategories = useCallback(

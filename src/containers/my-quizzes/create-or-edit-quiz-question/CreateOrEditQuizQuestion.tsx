@@ -6,7 +6,6 @@ import {
   Dispatch,
   SetStateAction
 } from 'react'
-import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 
 import { useModalContext } from '~/context/modal-context'
@@ -29,6 +28,7 @@ import {
 import { initialValues } from '~/containers/my-quizzes/create-or-edit-quiz-question/CreateOrEditQuizQuestion.constants'
 import { useAppDispatch } from '~/hooks/use-redux'
 import { openAlert } from '~/redux/features/snackbarSlice'
+import { getErrorKey } from '~/utils/get-error-key'
 
 interface CreateOrEditQuizQuestionProps {
   question?: Question
@@ -41,7 +41,6 @@ const CreateOrEditQuizQuestion: FC<CreateOrEditQuizQuestionProps> = ({
   setQuestions,
   onCancel
 }) => {
-  const { t } = useTranslation()
   const dispatch = useAppDispatch()
   const [isNewQuestion, setIsNewQuestion] = useState<boolean>(!!question)
   const { openModal, closeModal } = useModalContext()
@@ -79,15 +78,20 @@ const CreateOrEditQuizQuestion: FC<CreateOrEditQuizQuestionProps> = ({
     onCancel()
   }
 
-  const onResponseError = (error: ErrorResponse) => {
+  const onResponseError = (error?: ErrorResponse) => {
+    const errorKey = getErrorKey(error)
+
     dispatch(
       openAlert({
         severity: snackbarVariants.error,
         message: error
-          ? t(`errors.${error.code}`, {
-              message: getErrorMessage(error.message)
-            })
-          : ''
+          ? {
+              text: errorKey,
+              options: {
+                message: getErrorMessage(error.message)
+              }
+            }
+          : errorKey
       })
     )
   }

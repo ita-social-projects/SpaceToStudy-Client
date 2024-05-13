@@ -28,6 +28,7 @@ import { categoryService } from '~/services/category-service'
 import { validations } from '~/containers/find-offer/create-new-subject/CreateNewSubject.constants'
 import { styles } from '~/containers/find-offer/create-new-subject/CreateNewSubject.styles'
 import { openAlert } from '~/redux/features/snackbarSlice'
+import { getErrorKey } from '~/utils/get-error-key'
 
 const CreateSubjectModal = () => {
   const { closeModal } = useModalContext()
@@ -35,11 +36,11 @@ const CreateSubjectModal = () => {
   const dispatch = useAppDispatch()
   const { t } = useTranslation()
 
-  const handleResponseError = (error: ErrorResponse) => {
+  const handleResponseError = (error?: ErrorResponse) => {
     dispatch(
       openAlert({
         severity: snackbarVariants.error,
-        message: error ? `errors.${error.code}` : ''
+        message: getErrorKey(error)
       })
     )
   }

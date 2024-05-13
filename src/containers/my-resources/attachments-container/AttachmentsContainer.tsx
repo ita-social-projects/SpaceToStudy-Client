@@ -35,6 +35,7 @@ import { ajustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
 import { styles } from '~/containers/my-resources/attachments-container/AttachmentsContainer.styles'
 import { useAppDispatch } from '~/hooks/use-redux'
 import { openAlert } from '~/redux/features/snackbarSlice'
+import { getErrorKey } from '~/utils/get-error-key'
 
 const AttachmentsContainer = () => {
   const { t } = useTranslation()
@@ -51,11 +52,11 @@ const AttachmentsContainer = () => {
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
 
   const onResponseError = useCallback(
-    (error: ErrorResponse) => {
+    (error?: ErrorResponse) => {
       dispatch(
         openAlert({
           severity: snackbarVariants.error,
-          message: error ? `errors.${error.code}` : ''
+          message: getErrorKey(error)
         })
       )
     },
@@ -113,11 +114,11 @@ const AttachmentsContainer = () => {
     []
   )
 
-  const onCreateAttachmentsError = (error: ErrorResponse) => {
+  const onCreateAttachmentsError = (error?: ErrorResponse) => {
     dispatch(
       openAlert({
         severity: snackbarVariants.error,
-        message: error ? `errors.${error.code}` : ''
+        message: getErrorKey(error)
       })
     )
   }

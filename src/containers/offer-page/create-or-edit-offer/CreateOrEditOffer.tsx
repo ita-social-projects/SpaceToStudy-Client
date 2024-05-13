@@ -35,6 +35,7 @@ import {
 } from '~/types'
 import { styles } from '~/containers/offer-page/OfferPage.styles'
 import { openAlert } from '~/redux/features/snackbarSlice'
+import { getErrorKey } from '~/utils/get-error-key'
 
 interface CreateOrUpdateOfferProps {
   existingOffer: Offer | null
@@ -57,11 +58,11 @@ const CreateOrEditOffer: FC<CreateOrUpdateOfferProps> = ({
     ? OfferActionsEnum.Edit
     : OfferActionsEnum.Create
 
-  const onResponseError = (error: ErrorResponse) => {
+  const onResponseError = (error?: ErrorResponse) => {
     dispatch(
       openAlert({
         severity: snackbarVariants.error,
-        message: error ? `errors.${error.code}` : ''
+        message: getErrorKey(error)
       })
     )
   }

@@ -50,6 +50,7 @@ import {
   CategoryNameInterface
 } from '~/types'
 import { openAlert } from '~/redux/features/snackbarSlice'
+import { getErrorKey } from '~/utils/get-error-key'
 
 const CreateOrEditLesson = () => {
   const { t } = useTranslation()
@@ -59,15 +60,20 @@ const CreateOrEditLesson = () => {
   const navigate = useNavigate()
   const { id } = useParams()
 
-  const handleResponseError = (error: ErrorResponse) => {
+  const handleResponseError = (error?: ErrorResponse) => {
+    const errorKey = getErrorKey(error)
+
     dispatch(
       openAlert({
         severity: snackbarVariants.error,
         message: error
-          ? t(`errors.${error.code}`, {
-              message: getErrorMessage(error.message)
-            })
-          : ''
+          ? {
+              text: errorKey,
+              options: {
+                message: getErrorMessage(error.message)
+              }
+            }
+          : errorKey
       })
     )
   }
@@ -81,9 +87,7 @@ const CreateOrEditLesson = () => {
     dispatch(
       openAlert({
         severity: snackbarVariants.success,
-        message: id
-          ? t('lesson.successEditedLesson')
-          : t('lesson.successAddedLesson')
+        message: id ? 'lesson.successEditedLesson' : 'lesson.successAddedLesson'
       })
     )
     navigateToLessonTab()

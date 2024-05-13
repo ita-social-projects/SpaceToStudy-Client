@@ -6,7 +6,6 @@ import {
   TestSnackbar
 } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
-import { vi } from 'vitest'
 
 const openModal = vi.fn()
 const resetToken = 'test'

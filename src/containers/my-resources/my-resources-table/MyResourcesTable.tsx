@@ -20,6 +20,7 @@ import {
 } from '~/types'
 import { roundedBorderTable } from '~/containers/my-cooperations/cooperations-container/CooperationContainer.styles'
 import { openAlert } from '~/redux/features/snackbarSlice'
+import { getErrorKey } from '~/utils/get-error-key'
 
 interface MyResourcesTableInterface<T>
   extends Omit<EnhancedTableProps<T, undefined>, 'data'> {
@@ -51,11 +52,11 @@ const MyResourcesTable = <T extends TableItem>({
   const { response, getData } = data
   const { onEdit, onDuplicate } = actions
 
-  const onDeleteError = (error: ErrorResponse) => {
+  const onDeleteError = (error?: ErrorResponse) => {
     dispatch(
       openAlert({
         severity: snackbarVariants.error,
-        message: error ? `errors.${error.code}` : ''
+        message: getErrorKey(error)
       })
     )
   }

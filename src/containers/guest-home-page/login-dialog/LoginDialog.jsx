@@ -17,6 +17,7 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import { errorRoutes } from '~/router/constants/errorRoutes'
 import { guestRoutes } from '~/router/constants/guestRoutes'
 import { openAlert } from '~/redux/features/snackbarSlice'
+import { getErrorKey } from '~/utils/get-error-key'
 
 const LoginDialog = () => {
   const { t } = useTranslation()
@@ -40,7 +41,7 @@ const LoginDialog = () => {
           dispatch(
             openAlert({
               severity: snackbarVariants.error,
-              message: `errors.${e.data.code}`
+              message: getErrorKey(e.data)
             })
           )
         }

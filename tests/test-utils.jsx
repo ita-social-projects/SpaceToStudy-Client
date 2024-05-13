@@ -10,7 +10,6 @@ import cooperationsReducer from '~/redux/features/cooperationsSlice'
 import snackbarReducer from '~/redux/features/snackbarSlice'
 import AppSnackbar from '~/containers/layout/app-snackbar/AppSnackbar'
 
-import { vi } from 'vitest'
 import MockAdapter from 'axios-mock-adapter'
 import { axiosClient } from '~/plugins/axiosClient'
 

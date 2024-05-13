@@ -9,6 +9,7 @@ import { scrollToHash } from '~/utils/hash-scroll'
 import { snackbarVariants } from '~/constants'
 import { styles } from '~/containers/guest-home-page/google-button/GoogleButton.styles'
 import { openAlert } from '~/redux/features/snackbarSlice'
+import { getErrorKey } from '~/utils/get-error-key'
 
 const GoogleButton = ({ role, route, buttonWidth, type }) => {
   const ref = useHref(route)
@@ -25,7 +26,7 @@ const GoogleButton = ({ role, route, buttonWidth, type }) => {
         dispatch(
           openAlert({
             severity: snackbarVariants.error,
-            message: `errors.${e.data.code}`
+            message: getErrorKey(e.data)
           })
         )
         if (e.data.code === 'USER_NOT_FOUND') {

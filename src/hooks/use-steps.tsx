@@ -9,6 +9,7 @@ import { userService } from '~/services/user-service'
 import { snackbarVariants } from '~/constants'
 import { ErrorResponse, StepData, UpdateUserParams } from '~/types'
 import { openAlert } from '~/redux/features/snackbarSlice'
+import { getErrorKey } from '~/utils/get-error-key'
 
 interface UseSteps {
   steps: string[]
@@ -30,7 +31,7 @@ const useSteps = ({ steps }: UseSteps) => {
     dispatch(
       openAlert({
         severity: snackbarVariants.error,
-        message: error ? `errors.${error.code}` : ''
+        message: getErrorKey(error)
       })
     )
   }

@@ -26,6 +26,7 @@ import {
   isOptionEqualToValue
 } from '~/containers/category-dropdown/CategoryDropdown.constants'
 import { openAlert } from '~/redux/features/snackbarSlice'
+import { getErrorKey } from '~/utils/get-error-key'
 
 interface CategoryDropdownInterface {
   category: string | null
@@ -43,11 +44,11 @@ const CategoryDropdown = ({
   const dispatch = useAppDispatch()
   const { openModal, closeModal } = useModalContext()
 
-  const handleResponseError = (error: ErrorResponse) => {
+  const handleResponseError = (error?: ErrorResponse) => {
     dispatch(
       openAlert({
         severity: snackbarVariants.error,
-        message: error ? `errors.${error.code}` : ''
+        message: getErrorKey(error)
       })
     )
   }
@@ -84,15 +85,18 @@ const CategoryDropdown = ({
       dispatch(
         openAlert({
           severity: snackbarVariants.success,
-          message: t('myResourcesPage.categories.successCreation', {
-            category: categoryName
-          })
+          message: {
+            text: 'myResourcesPage.categories.successCreation',
+            options: {
+              category: categoryName
+            }
+          }
         })
       )
 
       await fetchAllCategoriesNames()
     },
-    [dispatch, fetchAllCategoriesNames, t]
+    [dispatch, fetchAllCategoriesNames]
   )
 
   const { fetchData: handleCreateCategory } = useAxios({

@@ -23,6 +23,7 @@ import {
   ServiceFunction
 } from '~/types'
 import { openAlert } from '~/redux/features/snackbarSlice'
+import { getErrorKey } from '~/utils/get-error-key'
 
 interface AddResourcesProps<T extends CourseResources | Question> {
   resources: T[]
@@ -60,11 +61,11 @@ const AddResources = <T extends CourseResources | Question>({
   )
 
   const onResponseError = useCallback(
-    (error: ErrorResponse) => {
+    (error?: ErrorResponse) => {
       dispatch(
         openAlert({
           severity: snackbarVariants.error,
-          message: error ? `errors.${error.code}` : ''
+          message: getErrorKey(error)
         })
       )
     },

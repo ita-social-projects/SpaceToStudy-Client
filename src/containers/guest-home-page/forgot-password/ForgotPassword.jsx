@@ -20,6 +20,7 @@ import { snackbarVariants } from '~/constants'
 import { email } from '~/utils/validations/login'
 import { styles } from '~/containers/guest-home-page/forgot-password/ForgotPassword.styles'
 import { openAlert } from '~/redux/features/snackbarSlice'
+import { getErrorKey } from '~/utils/get-error-key'
 
 const ForgotPassword = () => {
   const { t } = useTranslation()
@@ -53,7 +54,7 @@ const ForgotPassword = () => {
       dispatch(
         openAlert({
           severity: snackbarVariants.error,
-          message: `errors.${e.response.data.code}`
+          message: getErrorKey(e.response.data)
         })
       )
     } finally {

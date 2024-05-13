@@ -37,6 +37,7 @@ import { snackbarVariants } from '~/constants'
 
 import { styles } from '~/pages/my-courses/MyCourses.styles'
 import { openAlert } from '~/redux/features/snackbarSlice'
+import { getErrorKey } from '~/utils/get-error-key'
 
 const MyCourses = () => {
   const { t } = useTranslation()
@@ -72,11 +73,11 @@ const MyCourses = () => {
     fetchOnMount: false
   })
 
-  const onResponseError = (error: ErrorResponse) => {
+  const onResponseError = (error?: ErrorResponse) => {
     dispatch(
       openAlert({
         severity: snackbarVariants.error,
-        message: error ? `errors.${error.code}` : ''
+        message: getErrorKey(error)
       })
     )
   }

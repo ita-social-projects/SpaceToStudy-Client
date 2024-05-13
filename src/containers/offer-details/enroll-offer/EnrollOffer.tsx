@@ -29,6 +29,7 @@ import {
   ButtonTypeEnum
 } from '~/types'
 import { openAlert } from '~/redux/features/snackbarSlice'
+import { getErrorKey } from '~/utils/get-error-key'
 
 interface EnrollOfferProps {
   offer: Offer
@@ -43,11 +44,11 @@ const EnrollOffer: FC<EnrollOfferProps> = ({ offer, enrollOffer }) => {
 
   const [minPrice, maxPrice] = minMaxPrice(offer.price, 0.25)
 
-  const handleResponseError = (error: ErrorResponse) => {
+  const handleResponseError = (error?: ErrorResponse) => {
     dispatch(
       openAlert({
         severity: snackbarVariants.error,
-        message: error ? `errors.${error.code}` : ''
+        message: getErrorKey(error)
       })
     )
   }

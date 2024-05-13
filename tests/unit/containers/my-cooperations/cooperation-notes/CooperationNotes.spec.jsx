@@ -179,7 +179,7 @@ describe('CooperationNotes', () => {
 
 describe('CooperationNotes with error', () => {
   const fakeError = {
-    message: 'Something went wrong'
+    message: 'UNKNOWN_ERROR'
   }
 
   beforeEach(async () => {
