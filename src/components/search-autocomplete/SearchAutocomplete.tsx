@@ -29,7 +29,7 @@ import {
   VisibilityEnum,
   TextFieldVariantEnum
 } from '~/types'
-import AppButton from '../app-button/AppButton'
+import AppButton from '~/components/app-button/AppButton'
 
 interface SearchAutocompleteProps
   extends Omit<AutocompleteProps<string, false, true, true>, 'renderInput'> {

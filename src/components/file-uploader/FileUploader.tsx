@@ -20,7 +20,7 @@ import {
   InputEnum,
   SizeEnum
 } from '~/types'
-import AppButton from '../app-button/AppButton'
+import AppButton from '~/components/app-button/AppButton'
 
 interface FileUploaderProps {
   buttonText: string
