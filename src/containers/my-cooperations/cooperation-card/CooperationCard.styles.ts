@@ -50,6 +50,7 @@ export const styles = {
     borderColor: 'primary.50'
   },
   title: {
-    typography: { xs: 'body2', sm: 'body1' }
+    typography: { xs: 'body2', sm: 'body1' },
+    wordBreak: 'break-word'
   }
 }
