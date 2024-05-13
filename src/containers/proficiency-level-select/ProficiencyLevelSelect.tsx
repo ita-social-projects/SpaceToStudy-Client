@@ -11,12 +11,15 @@ import { FC, useId } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ProficiencyLevelEnum } from '~/types'
 import { styles } from './ProficiencyLevelSelect.styles'
+// import { updateCheckBoxState } from '~/utils/checkbox-list'
 
 interface ProficiencyLevelSelectProps
   extends Omit<SelectProps<ProficiencyLevelEnum[]>, 'sx'> {
   value: ProficiencyLevelEnum[]
   label?: string
   errorMessage?: string
+  // fillRange?: boolean
+  // singleSelect?: boolean
   sx?: {
     select: SxProps
   }
@@ -27,6 +30,8 @@ const ProficiencyLevelSelect: FC<ProficiencyLevelSelectProps> = ({
   label,
   errorMessage,
   sx,
+  // fillRange = false,
+  // singleSelect = false,
   ...props
 }) => {
   const { t } = useTranslation()
@@ -62,7 +67,13 @@ const ProficiencyLevelSelect: FC<ProficiencyLevelSelectProps> = ({
         input={<OutlinedInput label={label} />}
         labelId={`${id}-multiple-checkbox-label`}
         multiple
+        // onChange={() => handleCheckbox(checkbox)}
         renderValue={(selected) => selected.join(', ')}
+        // renderValue={(selected) =>
+        //   fillRange
+        //     ? `${selected[0]} - ${selected[selected.length - 1]}`
+        //     : selected.join(', ')
+        // }
         sx={sx?.select}
         value={value}
         {...props}
