@@ -124,6 +124,7 @@ const CourseToolbar = ({
       />
       <ProficiencyLevelSelect
         errorMessage={errors.proficiencyLevel}
+        fillRange
         label={t('breadCrumbs.level')}
         onBlur={handleBlur('proficiencyLevel')}
         onChange={onLevelChange}

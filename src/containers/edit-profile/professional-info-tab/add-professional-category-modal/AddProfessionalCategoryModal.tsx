@@ -51,6 +51,7 @@ function SubjectGroup({
         />
       </Box>
       <ProficiencyLevelSelect
+        fillRange
         fullWidth
         label={t('editProfilePage.profile.professionalTab.proficiencyLevels')}
         onChange={(event) =>

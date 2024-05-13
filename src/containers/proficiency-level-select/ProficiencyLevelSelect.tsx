@@ -6,40 +6,60 @@ import ListItemText from '@mui/material/ListItemText'
 import MenuItem from '@mui/material/MenuItem'
 import OutlinedInput from '@mui/material/OutlinedInput'
 import Select from '@mui/material/Select'
+// import { SelectChangeEvent } from '@mui/material/Select'
 import { SelectProps, SxProps } from '@mui/material'
 import { FC, useId } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ProficiencyLevelEnum } from '~/types'
 import { styles } from './ProficiencyLevelSelect.styles'
-// import { updateCheckBoxState } from '~/utils/checkbox-list'
+import { updateCheckBoxState } from '~/utils/checkbox-list'
 
 interface ProficiencyLevelSelectProps
   extends Omit<SelectProps<ProficiencyLevelEnum[]>, 'sx'> {
   value: ProficiencyLevelEnum[]
   label?: string
   errorMessage?: string
-  // fillRange?: boolean
-  // singleSelect?: boolean
+  fillRange?: boolean
+  singleSelect?: boolean
   sx?: {
     select: SxProps
   }
+  // onChange: (event) => void
 }
 
 const ProficiencyLevelSelect: FC<ProficiencyLevelSelectProps> = ({
-  value,
+  value = [],
   label,
-  errorMessage,
+  errorMessage = '',
   sx,
-  // fillRange = false,
-  // singleSelect = false,
+  fillRange = false,
+  singleSelect = false,
+  // onChange,
   ...props
 }) => {
   const { t } = useTranslation()
   const id = useId()
 
+  console.log(value)
+
+  const handleCheckbox = (item: ProficiencyLevelEnum) => {
+    const updatedCheckboxes = updateCheckBoxState(
+      Object.values(ProficiencyLevelEnum),
+      value,
+      item,
+      fillRange,
+      singleSelect
+    )
+
+    return updatedCheckboxes
+  }
+
   const menuItems = Object.values(ProficiencyLevelEnum).map((item) => (
     <MenuItem key={item} value={item}>
-      <Checkbox checked={value.indexOf(item) > -1} />
+      <Checkbox
+        checked={value.indexOf(item) > -1}
+        onChange={() => handleCheckbox(item)}
+      />
       <ListItemText primary={item} />
     </MenuItem>
   ))
@@ -67,13 +87,12 @@ const ProficiencyLevelSelect: FC<ProficiencyLevelSelectProps> = ({
         input={<OutlinedInput label={label} />}
         labelId={`${id}-multiple-checkbox-label`}
         multiple
-        // onChange={() => handleCheckbox(checkbox)}
-        renderValue={(selected) => selected.join(', ')}
-        // renderValue={(selected) =>
-        //   fillRange
-        //     ? `${selected[0]} - ${selected[selected.length - 1]}`
-        //     : selected.join(', ')
-        // }
+        // onChange={onChange}
+        renderValue={(selected) =>
+          fillRange
+            ? `${selected[0]} - ${selected[selected.length - 1]}`
+            : selected.join(', ')
+        }
         sx={sx?.select}
         value={value}
         {...props}
