@@ -1,9 +1,8 @@
-import { act, render, screen, waitFor, fireEvent } from '@testing-library/react'
-import { vi } from 'vitest'
+import { render, screen, waitFor } from '@testing-library/react'
 import LocationSelectionInputs from '~/components/location-selection-inputs/LocationSelectionInputs'
-
 import { mockAxiosClient } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
+import { selectOption } from '~tests/test-utils'
 
 const onDataChangeMock = vi.fn()
 
@@ -14,20 +13,6 @@ const mockCountries = [
   { name: 'Country3', iso2: 'C3' }
 ]
 const initialData = { country: 'Country3', city: 'City3' }
-
-const selectOption = async (label, option) => {
-  const autocomplete = screen.getByLabelText(label)
-  expect(autocomplete).toBeInTheDocument()
-  await act(async () => {
-    fireEvent.click(autocomplete)
-    fireEvent.change(autocomplete, { target: { value: option } })
-  })
-  const selectedOption = screen.getByText(option)
-  await act(async () => {
-    fireEvent.click(selectedOption)
-  })
-  expect(autocomplete.value).toBe(option)
-}
 
 describe('LocationSelectionInputs', () => {
   beforeEach(async () => {
@@ -52,12 +37,18 @@ describe('LocationSelectionInputs', () => {
   })
   it('changes the value of the country input when a country is selected', async () => {
     const newCountry = mockCountries[0].name
-    await selectOption('common.labels.country', newCountry)
+
+    const option = screen.getByLabelText('common.labels.country')
+    await selectOption(option, newCountry)
   })
   it('changes the value of the city input when a city is selected after a country is selected', async () => {
     const newCountry = mockCountries[0].name
     const newCity = mockCities[0]
-    await selectOption('common.labels.country', newCountry)
-    await selectOption('common.labels.city', newCity)
+
+    const countryOption = screen.getByLabelText('common.labels.country')
+    await selectOption(countryOption, newCountry)
+
+    const cityOption = screen.getByLabelText('common.labels.city')
+    await selectOption(cityOption, newCity)
   })
 })

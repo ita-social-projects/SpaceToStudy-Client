@@ -133,6 +133,7 @@ const ProfessionalCategory: FC<ProfessionalCategoryProps> = ({
       <Box sx={styles.toolbar.root}>
         <Box sx={styles.toolbar.buttonGroup}>{ToolbarButtons}</Box>
         <IconButton
+          data-testid='delete-professional-category-button'
           onClick={handleDeleteButtonClick}
           sx={styles.toolbar.deleteButton}
         >
