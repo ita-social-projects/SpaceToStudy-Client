@@ -48,7 +48,7 @@ const HeaderTextWithDropdown = ({
   const handleBlur = (
     event: FocusEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    !isView &&
+    if (handleSectionInputChange && !isView)
       handleSectionInputChange(sectionData.id, 'title', event.target.value)
   }
 
@@ -96,9 +96,7 @@ const HeaderTextWithDropdown = ({
         value={titleInput}
         variant={TextFieldVariantEnum.Standard}
       />
-      {isView ? (
-        ''
-      ) : (
+      {!isView && (
         <IconButton
           onClick={(event) => {
             setActiveMenu(menuTypes.sectionMenu)

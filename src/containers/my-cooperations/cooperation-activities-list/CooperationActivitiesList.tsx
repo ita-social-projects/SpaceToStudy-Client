@@ -64,7 +64,6 @@ const CooperationActivitiesList = ({
     }
 
     if (selectedCourse && !data.sections.length && isAddedClicked) {
-      // temporary solution I will add the task to create these fields in My Courses by default
       const allSections = selectedCourse.sections.map((section, index) => {
         if (section.attachments.length) {
           section.attachments[0].availability = { status: 'open', date: '1234' }

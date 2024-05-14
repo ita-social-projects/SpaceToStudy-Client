@@ -144,9 +144,8 @@ const ResourceItem: FC<ResourceItemProps> = ({
 
   const showIcon = isView ? (
     <Box>
-      {resource.availability?.status === ResourceAvailabilityStatusEnum.Open ? (
-        ''
-      ) : (
+      {resource.availability?.status ===
+        ResourceAvailabilityStatusEnum.Open && (
         <Box sx={styles.availabilityIcon}>
           <img
             alt='resource icon'
