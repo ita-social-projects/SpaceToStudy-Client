@@ -2,7 +2,6 @@ import { useCallback, SyntheticEvent, ChangeEvent, FocusEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import { SelectChangeEvent } from '@mui/material/Select'
 
 import { subjectService } from '~/services/subject-service'
 import { categoryService } from '~/services/category-service'
@@ -74,8 +73,12 @@ const CourseToolbar = ({
     handleNonInputValueChange('subject', value?._id ?? null)
   }
 
-  const onLevelChange = (event: SelectChangeEvent<ProficiencyLevelEnum[]>) => {
-    handleNonInputValueChange('proficiencyLevel', event.target.value)
+  // const onLevelChange = (event: SelectChangeEvent<ProficiencyLevelEnum[]>) => {
+  //   handleNonInputValueChange('proficiencyLevel', event.target.value)
+  // }
+
+  const onLevelChange = (value: ProficiencyLevelEnum[]) => {
+    handleNonInputValueChange('proficiencyLevel', value)
   }
 
   const AppAutoCompleteList = (

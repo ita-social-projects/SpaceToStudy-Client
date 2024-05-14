@@ -39,7 +39,7 @@ export const styles = {
     ...commonStyle
   },
   levelSelect: {
-    width: { md: '370px', xs: '100%' }
+    width: '100%'
   },
   otherToolbar: {
     borderRadius: '10px',
