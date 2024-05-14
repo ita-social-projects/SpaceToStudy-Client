@@ -73,10 +73,6 @@ const CourseToolbar = ({
     handleNonInputValueChange('subject', value?._id ?? null)
   }
 
-  // const onLevelChange = (event: SelectChangeEvent<ProficiencyLevelEnum[]>) => {
-  //   handleNonInputValueChange('proficiencyLevel', event.target.value)
-  // }
-
   const onLevelChange = (value: ProficiencyLevelEnum[]) => {
     handleNonInputValueChange('proficiencyLevel', value)
   }
