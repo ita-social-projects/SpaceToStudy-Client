@@ -54,7 +54,7 @@ function SubjectGroup({
         fillRange
         fullWidth
         label={t('editProfilePage.profile.professionalTab.proficiencyLevels')}
-        onChange={(value) => proficiencyLevels.handleChange(value)}
+        onChange={proficiencyLevels.handleChange}
         value={proficiencyLevels.value}
       />
     </Box>
