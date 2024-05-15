@@ -28,6 +28,12 @@ const videoMockDataTutor = {
   }
 }
 
+const professionalBlockMock = {
+  professionalBlock: {
+    awards: 'My awards are countless, why bother telling you them?'
+  }
+}
+
 const mockData = {
   firstName: 'Іван',
   lastName: 'Мавдрик',
@@ -130,5 +136,28 @@ describe('TutorProfile', () => {
       'tutorProfilePage.videoPresentation.title'
     )
     expect(videoBlockTitle).toBeInTheDocument()
+  })
+
+  it('Should render professional block info for tutor', () => {
+    renderWithMockData({
+      appMain: tutorAppMain,
+      extraData: professionalBlockMock
+    })
+
+    const aboutTutorTitle = screen.getByText(
+      'tutorProfilePage.aboutTutor.title'
+    )
+    expect(aboutTutorTitle).toBeInTheDocument()
+  })
+
+  it('Should not render professional block info for tutor if there is no information', () => {
+    renderWithMockData({
+      appMain: tutorAppMain
+    })
+
+    const aboutTutorTitle = screen.queryByText(
+      'tutorProfilePage.aboutTutor.title'
+    )
+    expect(aboutTutorTitle).not.toBeInTheDocument()
   })
 })
