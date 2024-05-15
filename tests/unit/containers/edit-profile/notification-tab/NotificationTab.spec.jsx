@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react'
 import NotificationTab from '~/containers/edit-profile/notification-tab/NotificationTab'
-import { titleWithSubtitle } from '~/containers/edit-profile/notification-tab/NotificationTab.constants'
+import { notificationGroupOptions } from '~/containers/edit-profile/notification-tab/NotificationTab.constants'
 
 describe('NotificationTab', () => {
   let switchElements
@@ -11,7 +11,7 @@ describe('NotificationTab', () => {
   })
 
   it('renders the correct number of switch elements', () => {
-    expect(switchElements).toHaveLength(titleWithSubtitle.length)
+    expect(switchElements).toHaveLength(notificationGroupOptions.length)
   })
 
   it('changes switch state when clicked', () => {
@@ -23,13 +23,14 @@ describe('NotificationTab', () => {
   })
 
   it('renders the correct text for each setting item', () => {
-    titleWithSubtitle.forEach((item) => {
+    notificationGroupOptions.forEach((item) => {
       expect(screen.getByText(item.title)).toBeInTheDocument()
     })
   })
   it('renders update button', () => {
-    expect(
-      screen.getByText('editProfilePage.profile.updateProfileBtn')
-    ).toBeInTheDocument()
+    const updateButton = screen.getByText(
+      'editProfilePage.profile.updateProfileBtn'
+    )
+    expect(updateButton).toBeInTheDocument()
   })
 })

@@ -5,10 +5,10 @@ import Switch from '@mui/material/Switch'
 
 import SettingItem from '~/components/setting-item/SettingItem'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
-import { titleWithSubtitle } from '~/containers/edit-profile/notification-tab/NotificationTab.constants'
 import { styles } from '~/containers/edit-profile/notification-tab/NotificationTab.styles'
 import AppButton from '~/components/app-button/AppButton'
 import { ButtonVariantEnum, SizeEnum } from '~/types'
+import { notificationGroupOptions } from '~/containers/edit-profile/notification-tab/NotificationTab.constants'
 
 const NotificationTab = () => {
   const { t } = useTranslation()
@@ -16,6 +16,17 @@ const NotificationTab = () => {
   const handleUpdateData = () => {
     // @TODO: implement update data logic
   }
+
+  const notificationOptionList = notificationGroupOptions.map((option) => (
+    <SettingItem
+      key={option.title}
+      style={styles.options}
+      subtitle={t(option.subtitle)}
+      title={t(option.title)}
+    >
+      <Switch sx={styles.switch} />
+    </SettingItem>
+  ))
 
   return (
     <Box sx={styles.notificationInnerContainer}>
@@ -26,18 +37,7 @@ const NotificationTab = () => {
           title={t('editProfilePage.profile.notificationsTab.notifications')}
         />
 
-        <Box sx={styles.optionsContainer}>
-          {titleWithSubtitle.map((item) => (
-            <SettingItem
-              key={item.title}
-              style={styles.options}
-              subtitle={t(item.subtitle)}
-              title={t(item.title)}
-            >
-              <Switch sx={styles.switch} />
-            </SettingItem>
-          ))}
-        </Box>
+        <Box sx={styles.optionsContainer}>{notificationOptionList}</Box>
       </Box>
       <AppButton
         onClick={handleUpdateData}

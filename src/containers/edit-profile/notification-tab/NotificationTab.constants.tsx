@@ -1,4 +1,4 @@
-export const titleWithSubtitle = [
+export const notificationGroupOptions = [
   {
     title: 'editProfilePage.profile.notificationsTab.offerStatus',
     subtitle: 'editProfilePage.profile.notificationsTab.offerSubtitle'
