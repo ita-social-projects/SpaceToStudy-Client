@@ -23,7 +23,7 @@ const CooperationActivitiesList = ({
   const setSectionsData = (value: CourseSection[]) => {
     handleNonInputValueChange('sections', value)
   }
-
+  const { isNewActivity } = useAppSelector(cooperationsSelector)
   const handleSectionChange = (
     id: string,
     field: keyof CourseSection,
@@ -59,7 +59,7 @@ const CooperationActivitiesList = ({
   }
 
   useEffect(() => {
-    if (!data.sections.length && !isAddedClicked) {
+    if (!data.sections.length && !isAddedClicked && isNewActivity) {
       addNewSection()
     }
 

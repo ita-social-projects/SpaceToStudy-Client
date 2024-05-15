@@ -107,6 +107,31 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
     )
   )
 
+  const clearCoorperationMenu = isCooperation && (
+    <Box>
+      <Divider flexItem>
+        <Typography
+          onClick={handleActivitiesMenuClick}
+          sx={styles.activityButton}
+        >
+          Add activity
+          <Add sx={styles.activityButtonIcon} />
+        </Typography>
+        {renderMenu(addActivityMenuList, {
+          transformOrigin: {
+            vertical: 'top',
+            horizontal: 'center'
+          },
+          anchorOrigin: {
+            vertical: 'bottom',
+            horizontal: 'center'
+          },
+          sx: styles.menuRoot
+        })}
+      </Divider>
+    </Box>
+  )
+
   const sectionsItem = (item: CourseSection, isDragOver = false) => {
     const coorperationMenu = isCooperation && (
       <Box
@@ -167,7 +192,10 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
       </>
     )
   }
-  const sectionItems = items.map((item) => sectionsItem(item))
+  const sectionItems =
+    items.length === 0
+      ? clearCoorperationMenu
+      : items.map((item) => sectionsItem(item))
 
   const courseSectionContent = enabled && (
     <>
