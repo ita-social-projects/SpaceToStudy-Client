@@ -121,14 +121,15 @@ describe('ProfileInfo test in my profile on laptop', () => {
     expect(sendMessageBtn).toBeInTheDocument()
   })
 
-  it('should click on `tutor offers` button', () => {
-    const tutorOffersBtn = screen.getByText(
+  it('should click on `tutor offers` button', async () => {
+    const tutorOffersBtn = await screen.findByText(
       /tutorProfilePage.profileInfo.tutorOffers/i
     )
 
     fireEvent.click(tutorOffersBtn)
-
-    waitFor(() => expect(mockNavigate).toHaveBeenCalled())
+    waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalled()
+    })
   })
 })
 

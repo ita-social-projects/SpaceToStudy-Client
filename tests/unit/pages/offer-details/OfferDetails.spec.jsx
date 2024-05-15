@@ -73,9 +73,7 @@ describe('OfferDetails on desktop', () => {
 
     const draft = await screen.findByText('common.labels.moveToDraft')
 
-    waitFor(() => {
-      fireEvent.click(draft)
-    })
+    fireEvent.click(draft)
 
     const active = await screen.findByText('common.labels.makeActive')
 
