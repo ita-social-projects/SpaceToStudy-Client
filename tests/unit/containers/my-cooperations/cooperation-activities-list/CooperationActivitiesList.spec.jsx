@@ -26,7 +26,8 @@ const handleNonInputValueChange = vi.fn()
 const renderWithMockData = (
   mockedData,
   sectionIndex,
-  isAddedClicked = true
+  isAddedClicked = true,
+  isNewActivity = true
 ) => {
   renderWithProviders(
     <CooperationActivitiesList
@@ -38,6 +39,7 @@ const renderWithMockData = (
         cooperations: {
           selectedCourse: mockedCourseData,
           isAddedClicked: isAddedClicked,
+          isNewActivity: isNewActivity,
           currentSectionIndex: sectionIndex,
           setCurrentSectionIndex: vi.fn()
         }
