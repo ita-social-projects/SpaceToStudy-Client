@@ -27,4 +27,9 @@ describe('NotificationTab', () => {
       expect(screen.getByText(item.title)).toBeInTheDocument()
     })
   })
+  it('renders update button', () => {
+    expect(
+      screen.getByText('editProfilePage.profile.updateProfileBtn')
+    ).toBeInTheDocument()
+  })
 })
