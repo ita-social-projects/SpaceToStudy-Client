@@ -8,7 +8,6 @@ import { theme } from '~/styles/app-theme/custom-mui.styles'
 import PopupsProvider from '~/PopupsProvider'
 import cooperationsReducer from '~/redux/features/cooperationsSlice'
 
-import { vi } from 'vitest'
 import MockAdapter from 'axios-mock-adapter'
 import { axiosClient } from '~/plugins/axiosClient'
 
