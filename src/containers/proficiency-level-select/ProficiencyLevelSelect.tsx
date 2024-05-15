@@ -36,7 +36,6 @@ const ProficiencyLevelSelect: FC<ProficiencyLevelSelectProps> = ({
 }) => {
   const { t } = useTranslation()
   const id = useId()
-
   const proficiencyLevelItems = Object.values(ProficiencyLevelEnum)
 
   const handleCheckbox = (checkbox: ProficiencyLevelEnum) => {
@@ -51,11 +50,12 @@ const ProficiencyLevelSelect: FC<ProficiencyLevelSelectProps> = ({
   }
 
   const menuItems = proficiencyLevelItems.map((checkbox) => (
-    <MenuItem key={checkbox} value={checkbox}>
-      <Checkbox
-        checked={value.indexOf(checkbox) > -1}
-        onChange={() => handleCheckbox(checkbox)}
-      />
+    <MenuItem
+      key={checkbox}
+      onClick={() => handleCheckbox(checkbox)}
+      value={checkbox}
+    >
+      <Checkbox checked={value.indexOf(checkbox) > -1} />
       <ListItemText primary={checkbox} />
     </MenuItem>
   ))
