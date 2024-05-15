@@ -1,8 +1,9 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import { screen, fireEvent, waitFor } from '@testing-library/react'
 import { beforeEach } from 'vitest'
 
 import OfferFilterBlock from '~/containers/find-offer/offer-filter-block/OfferFilterBlock'
 import { defaultFilters } from '~/pages/find-offers/FindOffers.constants'
+import { renderWithProviders } from '~tests/test-utils'
 import useBreakpoints from '~/hooks/use-breakpoints'
 
 vi.mock('~/hooks/use-breakpoints')
@@ -24,7 +25,7 @@ useBreakpoints.mockImplementation(() => ({ isMobile: true }))
 describe('OfferFilterBlock', () => {
   beforeEach(async () => {
     await waitFor(() => {
-      render(
+      renderWithProviders(
         <OfferFilterBlock
           activeFilterCount={activeFilterCount}
           additionalParams={additionalParams}
