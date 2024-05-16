@@ -8,7 +8,8 @@ import {
   SubjectNameInterface,
   Faq,
   DataByRole,
-  UpdatedPhoto
+  UpdatedPhoto,
+  UpdateFields
 } from '~/types'
 
 export interface LocalStorage {
@@ -31,7 +32,7 @@ export interface UserResponse {
   firstName: string
   lastName: string
   email: string
-  mainSubjects: { student: SubjectInterface[]; tutor: SubjectInterface[] }
+  mainSubjects: DataByRole<SubjectInterface[]>
   totalReviews: DataByRole<number>
   averageRating: DataByRole<number>
   nativeLanguage: string | null
@@ -60,17 +61,7 @@ export interface UserGeneralInfo
 }
 
 export interface UpdateUserParams
-  extends Partial<
-    Pick<
-      UserResponse,
-      | 'firstName'
-      | 'lastName'
-      | 'address'
-      | 'professionalSummary'
-      | 'nativeLanguage'
-      | 'professionalBlock'
-    >
-  > {
+  extends Partial<Pick<UserResponse, UpdateFields>> {
   mainSubjects?: SubjectNameInterface[]
   videoLink?: string
   photo?: UpdatedPhoto | null

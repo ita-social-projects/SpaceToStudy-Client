@@ -1,14 +1,19 @@
-import Accordions from '~/components/accordion/Accordions'
-import ExpandMore from '@mui/icons-material/ExpandMore'
-import AppTextArea from '~/components/app-text-area/AppTextArea'
 import { FC, useState } from 'react'
+
 import { useTranslation } from 'react-i18next'
-import { styles } from '~/containers/edit-profile/professional-info-tab/about-tutor-accordion/AboutTutorAccordion.styles'
+
 import {
   AccordionItem,
   ProfessionalBlock,
   TypographyVariantEnum
 } from '~/types'
+
+import ExpandMore from '@mui/icons-material/ExpandMore'
+
+import Accordions from '~/components/accordion/Accordions'
+import AppTextArea from '~/components/app-text-area/AppTextArea'
+
+import { styles } from '~/containers/edit-profile/professional-info-tab/about-tutor-accordion/AboutTutorAccordion.styles'
 
 interface AboutTutorAccordionProps {
   data: ProfessionalBlock
