@@ -1,7 +1,6 @@
 import {
   rootContainer,
-  updateProfileBtn,
-  innerContainer
+  updateProfileBtn
 } from '~/containers/edit-profile/common.styles'
 import palette from '~/styles/app-theme/app.pallete'
 import { PositionEnum, TypographyVariantEnum } from '~/types'
@@ -23,7 +22,6 @@ export const styles = {
     flexDirection: 'column',
     rowGap: 4
   },
-  professionalInfoInnerContainer: innerContainer,
   mainTitleWithDescription: titleWithDescription(H6),
   titleWithDescription: titleWithDescription(Subtitle1),
   createBtnContainer: {

@@ -23,11 +23,14 @@ vi.mock('~/containers/edit-profile/profile-tab/ProfileTab', () => ({
   }
 }))
 
-vi.mock('~/containers/edit-profile/profile-tab/ProfessionalTab', () => ({
-  default: function () {
-    return <div>ProfessionalTab</div>
-  }
-}))
+vi.mock(
+  '~/containers/edit-profile/professional-info-tab/ProfessionalInfoTab',
+  () => ({
+    default: function () {
+      return <div>ProfessionalTab</div>
+    }
+  })
+)
 
 vi.mock('~/containers/edit-profile/notification-tab/NotificationTab', () => ({
   default: function () {
@@ -79,6 +82,17 @@ describe('EditProfile', () => {
     await waitFor(() => {
       const profileContent = screen.getByText('ProfileTab')
       expect(profileContent).toBeInTheDocument()
+    })
+  })
+
+  it('should render Professional tab Container after click on Profile menu button', async () => {
+    const professionalTab = await screen.findByRole('button', {
+      name: 'editTutor.main.professionalInfo'
+    })
+    fireEvent.click(professionalTab)
+    await waitFor(() => {
+      const professionalContent = screen.getByText('ProfessionalTab')
+      expect(professionalContent).toBeInTheDocument()
     })
   })
 

@@ -4,6 +4,16 @@ import { renderWithProviders } from '~tests/test-utils'
 
 const mockOpenModal = vi.fn()
 
+const handleSubmitMock = vi.fn()
+vi.mock('~/hooks/use-update-user', () => ({
+  default: () => ({
+    handleSubmit: handleSubmitMock,
+    loading: false
+  })
+}))
+
+const mockedState = (role) => ({ appMain: { userRole: role } })
+
 vi.mock('~/context/modal-context', async () => {
   const actual = await vi.importActual('~/context/modal-context')
   return {
@@ -39,5 +49,30 @@ describe('ProfessionalInfoTab', () => {
     fireEvent.click(addCategoryButton)
 
     expect(mockOpenModal).toHaveBeenCalled()
+  })
+})
+
+describe('ProfessionalInfoTab for tutor', () => {
+  beforeEach(() => {
+    renderWithProviders(<ProfessionalInfoTab />, {
+      preloadedState: mockedState('tutor')
+    })
+  })
+
+  it('should render about tutor block', () => {
+    const aboutTutorTitle = screen.getByText(
+      'editProfilePage.profile.professionalTab.aboutTheTutorTitle'
+    )
+
+    expect(aboutTutorTitle).toBeInTheDocument()
+  })
+
+  it('should update about tutor info', () => {
+    const updateBtn = screen.getByText(
+      'editProfilePage.profile.updateProfileBtn'
+    )
+    fireEvent.click(updateBtn)
+
+    expect(handleSubmitMock).toHaveBeenCalled()
   })
 })

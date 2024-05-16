@@ -1,6 +1,6 @@
-import { useCallback, useState } from 'react'
+import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
@@ -30,7 +30,11 @@ import { styles } from '~/pages/edit-profile/EditProfile.styles'
 const EditProfile = () => {
   const { t } = useTranslation()
 
-  const [activeTab, setActiveTab] = useState(TutorProfileTabsEnum.Profile)
+  const [searchParams, setSearchParams] = useSearchParams({
+    tab: TutorProfileTabsEnum.Profile
+  })
+
+  const activeTab = searchParams.get('tab') as TutorProfileTabsEnum
 
   const handleClick = async (tab: TutorProfileTabsEnum) => {
     if (activeTab === tab) return
@@ -42,7 +46,7 @@ const EditProfile = () => {
       cancelButton: t('common.cancel')
     })
     if (await confirmed) {
-      setActiveTab(tab)
+      setSearchParams({ tab })
     }
   }
 

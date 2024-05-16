@@ -8,7 +8,7 @@ import { useAppDispatch } from './use-redux'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { getErrorKey } from '~/utils/get-error-key'
 
-const useUpdateUser = (userId: string) => {
+const useUpdateUser = (userId: string, shouldRefreshAfterResponse = false) => {
   const dispatch = useAppDispatch()
 
   const navigate = useNavigate()
@@ -25,7 +25,10 @@ const useUpdateUser = (userId: string) => {
         message: 'editProfilePage.profile.successMessage'
       })
     )
-    navigate(0)
+
+    if (shouldRefreshAfterResponse) {
+      navigate(0)
+    }
   }
 
   const handleResponseError = (error?: ErrorResponse) => {
@@ -46,30 +49,7 @@ const useUpdateUser = (userId: string) => {
   })
 
   const handleSubmit = (data: UpdateUserParams) => {
-    const {
-      photo,
-      firstName,
-      lastName,
-      address,
-      professionalSummary,
-      nativeLanguage,
-      videoLink,
-      mainSubjects
-    } = data
-
-    const updatedData: UpdateUserParams = {
-      firstName,
-      lastName,
-      address,
-      professionalSummary,
-      mainSubjects,
-      nativeLanguage,
-      videoLink
-    }
-
-    if (photo !== undefined) updatedData.photo = photo
-
-    fetchData(updatedData).catch(console.error)
+    fetchData(data).catch(console.error)
   }
 
   return { loading, handleSubmit }

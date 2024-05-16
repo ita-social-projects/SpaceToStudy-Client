@@ -28,7 +28,13 @@ export const tabsData: TutorProfileProps = {
   [TutorProfileTabsEnum.ProfessionalInfo]: {
     icon: <SchoolIcon />,
     title: 'editTutor.main.professionalInfo',
-    content: () => <ProfessionalInfoTab />
+    content: (response) => (
+      <ProfessionalInfoTab
+        categories={response.mainSubjects.tutor}
+        professionalBlock={response.professionalBlock}
+        userId={response._id}
+      />
+    )
   },
   [TutorProfileTabsEnum.Notifications]: {
     icon: <NotificationsIcon />,

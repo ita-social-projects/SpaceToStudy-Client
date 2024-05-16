@@ -2,9 +2,18 @@ import AboutTutorAccordion from '~/containers/edit-profile/professional-info-tab
 import { fireEvent, screen } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 
+const mockedData = {
+  awards: 'My awards',
+  workExperience: 'My work Experience',
+  education: 'Education',
+  scientificActivities: 'Scientific activities'
+}
+
 describe('AboutTutorAccordion', () => {
   beforeEach(() => {
-    renderWithProviders(<AboutTutorAccordion />)
+    renderWithProviders(
+      <AboutTutorAccordion data={mockedData} handleInputChange={() => {}} />
+    )
   })
 
   it('should open first accordion by default', () => {
