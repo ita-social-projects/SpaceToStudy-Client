@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { Editor } from '@tinymce/tinymce-react'
-import { getEditorInitOptions } from './FileEditor.constants'
+import { getEditorInitOptions } from '~/components/file-editor/FileEditor.constants'
 import { useTranslation } from 'react-i18next'
 
 interface FileEditorProps {
