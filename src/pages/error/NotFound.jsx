@@ -2,14 +2,16 @@ import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
+
+import AppButton from '~/components/app-button/AppButton'
 
 import { guestRoutes } from '~/router/constants/guestRoutes'
 import plantImg from '~/assets/img/error-page/404-plant.svg'
 import manImg from '~/assets/img/error-page/404-man.svg'
 
 import { styles } from '~/pages/error/styles/NotFound.styles'
+import { ButtonVariantEnum } from '~/types'
 
 const NotFound = () => {
   const { t } = useTranslation()
@@ -22,14 +24,14 @@ const NotFound = () => {
           style={styles.titleWithDescription}
           title={t('errorPage.404.title')}
         />
-        <Button
+        <AppButton
           component={Link}
           sx={styles.button}
           to={guestRoutes.home.path}
-          variant='contained'
+          variant={ButtonVariantEnum.Contained}
         >
           {t('button.toMain')}
-        </Button>
+        </AppButton>
       </Box>
 
       <Box sx={styles.imgBox}>

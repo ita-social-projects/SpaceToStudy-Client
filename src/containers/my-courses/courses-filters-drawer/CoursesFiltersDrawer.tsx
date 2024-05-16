@@ -1,19 +1,22 @@
 import { FC, ReactNode, useCallback, SyntheticEvent } from 'react'
 import { useTranslation } from 'react-i18next'
+
 import FilterListIcon from '@mui/icons-material/FilterList'
 import Typography from '@mui/material/Typography'
-import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 
 import AppDrawer from '~/components/app-drawer/AppDrawer'
 import CheckboxList from '~/components/checkbox-list/CheckboxList'
 import FilterInput from '~/components/filter-input/FilterInput'
 import AsyncAutocomplete from '~/components/async-autocomlete/AsyncAutocomplete'
+import AppButton from '~/components/app-button/AppButton'
+
+import { styles } from '~/containers/my-courses/courses-filters-drawer/CoursesFiltersDrawer.styles'
 
 import { spliceSx } from '~/utils/helper-functions'
 import { categoryService } from '~/services/category-service'
 import { subjectService } from '~/services/subject-service'
-import { styles } from '~/containers/my-courses/courses-filters-drawer/CoursesFiltersDrawer.styles'
+
 import {
   ButtonVariantEnum,
   CategoryNameInterface,
@@ -163,21 +166,21 @@ const CoursesFiltersDrawer: FC<CoursesFiltersDrawerProps> = ({
         value={filters.title}
       />
 
-      <Button
+      <AppButton
         onClick={resetFilters}
         size={SizeEnum.ExtraLarge}
         sx={styles.clearButtonMb}
         variant={ButtonVariantEnum.Tonal}
       >
         {t('button.clearFilters')}
-      </Button>
-      <Button
+      </AppButton>
+      <AppButton
         onClick={handleApplyFilters}
         size={SizeEnum.ExtraLarge}
         variant={ButtonVariantEnum.Contained}
       >
         {t('button.applyFilters')}
-      </Button>
+      </AppButton>
     </AppDrawer>
   )
 }

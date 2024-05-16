@@ -1,16 +1,18 @@
-import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
-
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
+import Box from '@mui/material/Box'
+
+import AppButton from '~/components/app-button/AppButton'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 
-import { studentRoutes } from '~/router/constants/studentRoutes'
 import { howItWorksCards } from '~/containers/student-home-page/student-how-it-works/HowItWorksCards'
-
 import { styles } from '~/containers/student-home-page/student-how-it-works/student-how-it-works.styles'
+
+import { studentRoutes } from '~/router/constants/studentRoutes'
 import { authRoutes } from '~/router/constants/authRoutes'
+
+import { ButtonVariantEnum, SizeEnum } from '~/types'
 
 const sectionId = studentRoutes.navBar.howItWorks.route
 
@@ -48,9 +50,14 @@ const StudentHowItWorks = () => {
 
       <Box sx={styles.cardsContainer}>{cards}</Box>
 
-      <Button component={Link} size='extraLarge' to={path} variant='contained'>
+      <AppButton
+        component={Link}
+        size={SizeEnum.ExtraLarge}
+        to={path}
+        variant={ButtonVariantEnum.Contained}
+      >
         {t('studentHomePage.findTutorBlock.button')}
-      </Button>
+      </AppButton>
     </Box>
   )
 }

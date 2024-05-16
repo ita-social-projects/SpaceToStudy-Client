@@ -24,7 +24,7 @@ const EmptyCooperationActivities = () => {
     context?: string
     from?: string
   }) => (
-    <Typography component={ComponentEnum.Span} sx={styles.weightBox}>
+    <Typography component={ComponentEnum.Span} key={text} sx={styles.weightBox}>
       {t(`cooperationsPage.${from}.${text}`, { context })}
     </Typography>
   )

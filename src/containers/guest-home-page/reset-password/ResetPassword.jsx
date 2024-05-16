@@ -8,18 +8,20 @@ import useInputVisibility from '~/hooks/use-input-visibility'
 import { AuthService } from '~/services/auth-service'
 import { useSnackBarContext } from '~/context/snackbar-context'
 
-import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 
-import AppTextField from '~/components/app-text-field/AppTextField'
-import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
-import LoginDialog from '../login-dialog/LoginDialog'
 import Loader from '~/components/loader/Loader'
+import AppButton from '~/components/app-button/AppButton'
+import AppTextField from '~/components/app-text-field/AppTextField'
 import ImgTitleDescription from '~/components/img-title-description/ImgTitleDescription'
+import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 
+import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
+import { styles } from '~/containers/guest-home-page/reset-password/ResetPassword.styles'
+
+import { ButtonVariantEnum, SizeEnum } from '~/types'
 import { confirmPassword, password } from '~/utils/validations/login'
 import { snackbarVariants } from '~/constants'
-import { styles } from './ResetPassword.styles'
 import imgSuccess from '~/assets/img/email-confirmation-modals/success-icon.svg'
 
 const ResetPassword = ({ resetToken, openModal }) => {
@@ -34,15 +36,14 @@ const ResetPassword = ({ resetToken, openModal }) => {
           style={styles}
           title={t('login.successReset')}
         />
-        <Button
-          color='primary'
+        <AppButton
           onClick={() => openModal({ component: <LoginDialog /> })}
-          size='large'
-          style={styles.button}
-          variant='contained'
+          size={SizeEnum.Large}
+          sx={styles.button}
+          variant={ButtonVariantEnum.Contained}
         >
           {t('button.goToLogin')}
-        </Button>
+        </AppButton>
       </Box>
     ),
     [openModal, t]
@@ -119,15 +120,15 @@ const ResetPassword = ({ resetToken, openModal }) => {
           type={showConfirmPassword ? 'text' : 'password'}
           value={data.confirmPassword}
         />
-        <Button
+        <AppButton
           disabled={loading}
           fullWidth
-          size='large'
+          size={SizeEnum.Large}
           type='submit'
-          variant='contained'
+          variant={ButtonVariantEnum.Contained}
         >
           {loading ? <Loader size={20} /> : t('login.savePassword')}
-        </Button>
+        </AppButton>
       </Box>
     </Box>
   )
