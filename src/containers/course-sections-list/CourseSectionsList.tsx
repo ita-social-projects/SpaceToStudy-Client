@@ -110,6 +110,7 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
   const clearCoorperationMenu = isCooperation && (
     <Divider flexItem>
       <Typography
+        data-testid='Add activity'
         onClick={handleActivitiesMenuClick}
         sx={styles.activityButton}
       >
@@ -132,6 +133,7 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
       >
         <Divider flexItem>
           <Typography
+            data-testid='Add activity'
             id={item.id}
             onClick={handleActivitiesMenuClick}
             sx={styles.activityButton}
