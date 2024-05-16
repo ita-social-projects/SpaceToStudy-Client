@@ -4,8 +4,8 @@ import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
+import { useAppDispatch } from '~/hooks/use-redux'
 import useForm from '~/hooks/use-form'
-import { useSnackBarContext } from '~/context/snackbar-context'
 import { useModalContext } from '~/context/modal-context'
 
 import AppTextField from '~/components/app-text-field/AppTextField'
@@ -20,13 +20,15 @@ import info from '~/assets/img/guest-home-page/info.svg'
 import { AuthService } from '~/services/auth-service'
 import { snackbarVariants } from '~/constants'
 import { email } from '~/utils/validations/login'
+import { openAlert } from '~/redux/features/snackbarSlice'
+import { getErrorKey } from '~/utils/get-error-key'
 import { ButtonVariantEnum, SizeEnum } from '~/types'
 
 const ForgotPassword = () => {
   const { t } = useTranslation()
   const { openModal, closeModal } = useModalContext()
   const [loading, setLoading] = useState(false)
-  const { setAlert } = useSnackBarContext()
+  const dispatch = useAppDispatch()
 
   const backToLogin = () => {
     openModal({ component: <LoginDialog /> })
@@ -51,10 +53,12 @@ const ForgotPassword = () => {
         5000
       )
     } catch (e) {
-      setAlert({
-        severity: snackbarVariants.error,
-        message: `errors.${e.response.data.code}`
-      })
+      dispatch(
+        openAlert({
+          severity: snackbarVariants.error,
+          message: getErrorKey(e.response.data)
+        })
+      )
     } finally {
       setLoading(false)
     }

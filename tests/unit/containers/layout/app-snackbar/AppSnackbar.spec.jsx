@@ -1,7 +1,7 @@
 import { screen, fireEvent, waitFor } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
-import { vi } from 'vitest'
+import { TestSnackbar } from '~tests/test-utils'
 
 const preloadedState = {
   appMain: { loading: false, authLoading: false, userRole: '', error: '' }
@@ -26,9 +26,14 @@ vi.mock('~/services/auth-service', async () => {
   }
 })
 
-describe('snackbar context', () => {
+describe('snackbar', () => {
   beforeEach(async () => {
-    renderWithProviders(<LoginDialog />, { preloadedState })
+    renderWithProviders(
+      <TestSnackbar>
+        <LoginDialog />
+      </TestSnackbar>,
+      preloadedState
+    )
 
     const inputEmail = screen.getByLabelText(/common.labels.email/i)
 

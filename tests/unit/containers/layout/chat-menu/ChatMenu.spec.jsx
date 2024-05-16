@@ -1,10 +1,10 @@
 import { fireEvent, screen, cleanup, waitFor } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
-import { expect, vi } from 'vitest'
+import { expect } from 'vitest'
 import ChatMenu from '~/containers/layout/chat-menu/ChatMenu'
 
 const mockOpenDialog = vi.fn()
-const mockSetAlert = vi.fn()
+const mockOpenAlert = vi.fn()
 vi.mock('~/hooks/use-confirm', () => {
   return {
     default: () => ({
@@ -27,9 +27,7 @@ vi.mock('~/hooks/use-axios', async () => {
 vi.mock('~/context/snackbar-context', async () => {
   const actual = await vi.importActual('~/context/snackbar-context')
   return {
-    useSnackBarContext: vi.fn(() => ({
-      setAlert: mockSetAlert
-    })),
+    openAlert: () => mockOpenAlert(),
     ...actual
   }
 })

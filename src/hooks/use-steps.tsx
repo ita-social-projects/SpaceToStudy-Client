@@ -1,14 +1,15 @@
 import { useCallback, useState } from 'react'
 
 import useAxios from '~/hooks/use-axios'
-import { useAppSelector } from '~/hooks/use-redux'
+import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 
 import { useModalContext } from '~/context/modal-context'
 import { useStepContext } from '~/context/step-context'
-import { useSnackBarContext } from '~/context/snackbar-context'
 import { userService } from '~/services/user-service'
 import { snackbarVariants } from '~/constants'
 import { ErrorResponse, StepData, UpdateUserParams } from '~/types'
+import { openAlert } from '~/redux/features/snackbarSlice'
+import { getErrorKey } from '~/utils/get-error-key'
 
 interface UseSteps {
   steps: string[]
@@ -18,7 +19,7 @@ const useSteps = ({ steps }: UseSteps) => {
   const [activeStep, setActiveStep] = useState(0)
   const { closeModal } = useModalContext()
   const { stepData } = useStepContext()
-  const { setAlert } = useSnackBarContext()
+  const dispatch = useAppDispatch()
   const { userId } = useAppSelector((state) => state.appMain)
 
   const updateUser = useCallback(
@@ -27,17 +28,21 @@ const useSteps = ({ steps }: UseSteps) => {
   )
 
   const handleResponseError = (error?: ErrorResponse) => {
-    setAlert({
-      severity: snackbarVariants.error,
-      message: error ? `errors.${error.code}` : ''
-    })
+    dispatch(
+      openAlert({
+        severity: snackbarVariants.error,
+        message: getErrorKey(error)
+      })
+    )
   }
 
   const handleResponse = () => {
-    setAlert({
-      severity: snackbarVariants.success,
-      message: 'becomeTutor.successMessage'
-    })
+    dispatch(
+      openAlert({
+        severity: snackbarVariants.success,
+        message: 'becomeTutor.successMessage'
+      })
+    )
     closeModal()
   }
 

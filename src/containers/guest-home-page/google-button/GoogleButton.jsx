@@ -3,16 +3,18 @@ import { useHref } from 'react-router-dom'
 
 import { useGoogleAuthMutation } from '~/services/auth-service'
 import { useModalContext } from '~/context/modal-context'
-import { useSnackBarContext } from '~/context/snackbar-context'
+import { useAppDispatch } from '~/hooks/use-redux'
 import { scrollToHash } from '~/utils/hash-scroll'
 
 import { snackbarVariants } from '~/constants'
 import { styles } from '~/containers/guest-home-page/google-button/GoogleButton.styles'
+import { openAlert } from '~/redux/features/snackbarSlice'
+import { getErrorKey } from '~/utils/get-error-key'
 
 const GoogleButton = ({ role, route, buttonWidth, type }) => {
   const ref = useHref(route)
   const { closeModal } = useModalContext()
-  const { setAlert } = useSnackBarContext()
+  const dispatch = useAppDispatch()
   const [googleAuth] = useGoogleAuthMutation()
 
   const handleCredentialResponse = useCallback(
@@ -21,17 +23,19 @@ const GoogleButton = ({ role, route, buttonWidth, type }) => {
         await googleAuth({ token, role }).unwrap()
         closeModal()
       } catch (e) {
-        setAlert({
-          severity: snackbarVariants.error,
-          message: `errors.${e.data.code}`
-        })
+        dispatch(
+          openAlert({
+            severity: snackbarVariants.error,
+            message: getErrorKey(e.data)
+          })
+        )
         if (e.data.code === 'USER_NOT_FOUND') {
           closeModal()
           scrollToHash(ref)
         }
       }
     },
-    [googleAuth, role, closeModal, setAlert, ref]
+    [googleAuth, role, closeModal, dispatch, ref]
   )
 
   useEffect(() => {

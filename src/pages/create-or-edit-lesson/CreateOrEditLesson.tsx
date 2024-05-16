@@ -17,7 +17,7 @@ import AppTextField from '~/components/app-text-field/AppTextField'
 import FileEditor from '~/components/file-editor/FileEditor'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import CategoryDropdown from '~/containers/category-dropdown/CategoryDropdown'
-import { useSnackBarContext } from '~/context/snackbar-context'
+import { useAppDispatch } from '~/hooks/use-redux'
 import useAxios from '~/hooks/use-axios'
 import useForm from '~/hooks/use-form'
 import { ResourceService } from '~/services/resource-service'
@@ -49,24 +49,33 @@ import {
   ResourcesTabsEnum,
   CategoryNameInterface
 } from '~/types'
+import { openAlert } from '~/redux/features/snackbarSlice'
+import { getErrorKey } from '~/utils/get-error-key'
 
 const CreateOrEditLesson = () => {
   const { t } = useTranslation()
-  const { setAlert } = useSnackBarContext()
+  const dispatch = useAppDispatch()
 
   const { openModal } = useModalContext()
   const navigate = useNavigate()
   const { id } = useParams()
 
-  const handleResponseError = (error: ErrorResponse) => {
-    setAlert({
-      severity: snackbarVariants.error,
-      message: error
-        ? t(`errors.${error.code}`, {
-            message: getErrorMessage(error.message)
-          })
-        : ''
-    })
+  const handleResponseError = (error?: ErrorResponse) => {
+    const errorKey = getErrorKey(error)
+
+    dispatch(
+      openAlert({
+        severity: snackbarVariants.error,
+        message: error
+          ? {
+              text: errorKey,
+              options: {
+                message: getErrorMessage(error.message)
+              }
+            }
+          : errorKey
+      })
+    )
   }
   const navigateToLessonTab = () => {
     navigate(
@@ -75,12 +84,12 @@ const CreateOrEditLesson = () => {
   }
 
   const handleResponse = () => {
-    setAlert({
-      severity: snackbarVariants.success,
-      message: id
-        ? t('lesson.successEditedLesson')
-        : t('lesson.successAddedLesson')
-    })
+    dispatch(
+      openAlert({
+        severity: snackbarVariants.success,
+        message: id ? 'lesson.successEditedLesson' : 'lesson.successAddedLesson'
+      })
+    )
     navigateToLessonTab()
   }
 

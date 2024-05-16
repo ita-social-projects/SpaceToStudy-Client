@@ -1,13 +1,15 @@
 import { useCallback } from 'react'
 import { useNavigate } from 'react-router'
 import { snackbarVariants } from '~/constants'
-import { useSnackBarContext } from '~/context/snackbar-context'
 import { userService } from '~/services/user-service'
 import { ErrorResponse, UpdateUserParams } from '~/types'
 import useAxios from './use-axios'
+import { useAppDispatch } from './use-redux'
+import { openAlert } from '~/redux/features/snackbarSlice'
+import { getErrorKey } from '~/utils/get-error-key'
 
 const useUpdateUser = (userId: string) => {
-  const { setAlert } = useSnackBarContext()
+  const dispatch = useAppDispatch()
 
   const navigate = useNavigate()
 
@@ -17,18 +19,22 @@ const useUpdateUser = (userId: string) => {
   )
 
   const handleResponse = () => {
-    setAlert({
-      severity: snackbarVariants.success,
-      message: 'editProfilePage.profile.successMessage'
-    })
+    dispatch(
+      openAlert({
+        severity: snackbarVariants.success,
+        message: 'editProfilePage.profile.successMessage'
+      })
+    )
     navigate(0)
   }
 
-  const handleResponseError = (error: ErrorResponse) => {
-    setAlert({
-      severity: snackbarVariants.error,
-      message: error ? `errors.${error.code}` : ''
-    })
+  const handleResponseError = (error?: ErrorResponse) => {
+    dispatch(
+      openAlert({
+        severity: snackbarVariants.error,
+        message: getErrorKey(error)
+      })
+    )
   }
 
   const { loading, fetchData } = useAxios({

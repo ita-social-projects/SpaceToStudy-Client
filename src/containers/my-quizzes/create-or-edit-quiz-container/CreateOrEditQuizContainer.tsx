@@ -13,7 +13,7 @@ import CreateOrEditQuizQuestion from '~/containers/my-quizzes/create-or-edit-qui
 import CategoryDropdown from '~/containers/category-dropdown/CategoryDropdown'
 import QuestionsList from '~/containers/questions-list/QuestionsList'
 import { useModalContext } from '~/context/modal-context'
-import { useSnackBarContext } from '~/context/snackbar-context'
+import { useAppDispatch } from '~/hooks/use-redux'
 import { ResourceService } from '~/services/resource-service'
 import useAxios from '~/hooks/use-axios'
 import AppButton from '~/components/app-button/AppButton'
@@ -47,6 +47,8 @@ import { getErrorMessage } from '~/utils/error-with-message'
 import { createUrlPath } from '~/utils/helper-functions'
 
 import { styles } from '~/containers/my-quizzes/create-or-edit-quiz-container/CreateOrEditQuizContainer.styles'
+import { openAlert } from '~/redux/features/snackbarSlice'
+import { getErrorKey } from '~/utils/get-error-key'
 
 const CreateOrEditQuizContainer = ({
   title,
@@ -60,7 +62,7 @@ const CreateOrEditQuizContainer = ({
   setSettings
 }: QuizContentProps) => {
   const { t } = useTranslation()
-  const { setAlert } = useSnackBarContext()
+  const dispatch = useAppDispatch()
   const { openModal } = useModalContext()
   const navigate = useNavigate()
   const { id } = useParams()
@@ -80,24 +82,33 @@ const CreateOrEditQuizContainer = ({
   }
 
   const handleResponse = () => {
-    setAlert({
-      severity: snackbarVariants.success,
-      message: id
-        ? t('myResourcesPage.quizzes.successEditedQuiz')
-        : t('myResourcesPage.quizzes.successAddedQuiz')
-    })
+    dispatch(
+      openAlert({
+        severity: snackbarVariants.success,
+        message: id
+          ? 'myResourcesPage.quizzes.successEditedQuiz'
+          : 'myResourcesPage.quizzes.successAddedQuiz'
+      })
+    )
     navigateToQuizzesTab()
   }
 
-  const onResponseError = (error: ErrorResponse) => {
-    setAlert({
-      severity: snackbarVariants.error,
-      message: error
-        ? t(`errors.${error.code}`, {
-            message: getErrorMessage(error.message)
-          })
-        : ''
-    })
+  const onResponseError = (error?: ErrorResponse) => {
+    const errorKey = getErrorKey(error)
+
+    dispatch(
+      openAlert({
+        severity: snackbarVariants.error,
+        message: error
+          ? {
+              text: errorKey,
+              options: {
+                message: getErrorMessage(error.message)
+              }
+            }
+          : errorKey
+      })
+    )
   }
 
   const createQuizService = useCallback(

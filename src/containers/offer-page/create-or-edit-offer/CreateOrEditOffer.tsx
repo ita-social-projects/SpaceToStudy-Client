@@ -5,8 +5,7 @@ import LeakAddSharpIcon from '@mui/icons-material/LeakAddSharp'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 
-import { useSnackBarContext } from '~/context/snackbar-context'
-import { useAppSelector } from '~/hooks/use-redux'
+import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 import useForm from '~/hooks/use-form'
 import useConfirm from '~/hooks/use-confirm'
 import useAxios from '~/hooks/use-axios'
@@ -35,6 +34,8 @@ import {
   StatusEnum
 } from '~/types'
 import { styles } from '~/containers/offer-page/OfferPage.styles'
+import { openAlert } from '~/redux/features/snackbarSlice'
+import { getErrorKey } from '~/utils/get-error-key'
 
 interface CreateOrUpdateOfferProps {
   existingOffer: Offer | null
@@ -49,7 +50,7 @@ const CreateOrEditOffer: FC<CreateOrUpdateOfferProps> = ({
 }) => {
   const { userRole } = useAppSelector((state) => state.appMain)
   const { setNeedConfirmation } = useConfirm()
-  const { setAlert } = useSnackBarContext()
+  const dispatch = useAppDispatch()
   const { t } = useTranslation()
   const navigate = useNavigate()
 
@@ -57,17 +58,21 @@ const CreateOrEditOffer: FC<CreateOrUpdateOfferProps> = ({
     ? OfferActionsEnum.Edit
     : OfferActionsEnum.Create
 
-  const onResponseError = (error: ErrorResponse) => {
-    setAlert({
-      severity: snackbarVariants.error,
-      message: error ? `errors.${error.code}` : ''
-    })
+  const onResponseError = (error?: ErrorResponse) => {
+    dispatch(
+      openAlert({
+        severity: snackbarVariants.error,
+        message: getErrorKey(error)
+      })
+    )
   }
   const onResponse = (response: Offer | null) => {
-    setAlert({
-      severity: snackbarVariants.success,
-      message: `offerPage.${offerAction}.successMessage`
-    })
+    dispatch(
+      openAlert({
+        severity: snackbarVariants.success,
+        message: `offerPage.${offerAction}.successMessage`
+      })
+    )
     closeDrawer()
     navigate(
       createUrlPath(

@@ -7,6 +7,8 @@ import { screen, render, waitFor, fireEvent, act } from '@testing-library/react'
 import { theme } from '~/styles/app-theme/custom-mui.styles'
 import PopupsProvider from '~/PopupsProvider'
 import cooperationsReducer from '~/redux/features/cooperationsSlice'
+import snackbarReducer from '~/redux/features/snackbarSlice'
+import AppSnackbar from '~/containers/layout/app-snackbar/AppSnackbar'
 
 import MockAdapter from 'axios-mock-adapter'
 import { axiosClient } from '~/plugins/axiosClient'
@@ -17,7 +19,11 @@ export const renderWithProviders = (
     initialEntries = '/',
     preloadedState,
     store = configureStore({
-      reducer: { appMain: reducer, cooperations: cooperationsReducer },
+      reducer: {
+        appMain: reducer,
+        cooperations: cooperationsReducer,
+        snackbar: snackbarReducer
+      },
       preloadedState
     }),
     ...renderOptions
@@ -48,6 +54,13 @@ export const waitForTimeout = (callback, options) => {
   const mergedOptions = { timeout: 5000, ...options }
   return waitFor(callback, mergedOptions)
 }
+
+export const TestSnackbar = ({ children }) => (
+  <>
+    <AppSnackbar />
+    {children}
+  </>
+)
 
 export const selectOption = async (selectLike, option) => {
   await act(async () => {

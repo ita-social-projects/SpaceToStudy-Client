@@ -8,7 +8,6 @@ import AddIcon from '@mui/icons-material/Add'
 
 import useAxios from '~/hooks/use-axios'
 import useConfirm from '~/hooks/use-confirm'
-import { useSnackBarContext } from '~/context/snackbar-context'
 import { CooperationNotesService } from '~/services/cooperation-service'
 import CreateOrEditNote from '~/containers/my-cooperations/cooperation-notes/create-or-edit-note/CreateOrEditNote'
 import NoteView from '~/containers/my-cooperations/cooperation-notes/note-view/NoteView'
@@ -22,45 +21,66 @@ import {
   ErrorResponse,
   NoteResponse
 } from '~/types'
+import { useAppDispatch } from '~/hooks/use-redux'
+import { openAlert } from '~/redux/features/snackbarSlice'
+import { getErrorMessage } from '~/utils/error-with-message'
+import { getErrorKey } from '~/utils/get-error-key'
 
 const CooperationNotes = () => {
   const { t } = useTranslation()
   const { id } = useParams()
-  const { setAlert } = useSnackBarContext()
+  const dispatch = useAppDispatch()
   const { openDialog } = useConfirm()
   const [open, setOpen] = useState<boolean>(false)
   const [editableItemId, setEditableItemId] = useState<string>('')
 
   const onResponseError = useCallback(
-    (error: ErrorResponse) => {
-      setAlert({
-        severity: snackbarVariants.error,
-        message: error ? `errors.${error.message}` : ''
-      })
+    (error?: ErrorResponse) => {
+      const errorKey = getErrorKey(error)
+
+      dispatch(
+        openAlert({
+          severity: snackbarVariants.error,
+          message: error
+            ? {
+                text: errorKey,
+                options: {
+                  message: getErrorMessage(error.message)
+                }
+              }
+            : errorKey
+        })
+      )
     },
-    [setAlert]
+    [dispatch]
   )
 
   const onResponse = useCallback(() => {
-    setAlert({
-      severity: snackbarVariants.success,
-      message: t('cooperationsPage.notes.noteMsg')
-    })
-  }, [setAlert, t])
+    dispatch(
+      openAlert({
+        severity: snackbarVariants.success,
+        message: 'cooperationsPage.notes.noteMsg'
+      })
+    )
+  }, [dispatch])
 
   const onDeleteResponse = useCallback(() => {
-    setAlert({
-      severity: snackbarVariants.success,
-      message: t('cooperationsPage.modalMessages.successDeletion')
-    })
-  }, [setAlert, t])
+    dispatch(
+      openAlert({
+        severity: snackbarVariants.success,
+        message: 'cooperationsPage.modalMessages.successDeletion'
+      })
+    )
+  }, [dispatch])
 
   const onUpdateResponse = useCallback(() => {
-    setAlert({
-      severity: snackbarVariants.success,
-      message: t('cooperationsPage.modalMessages.successUpdating')
-    })
-  }, [setAlert, t])
+    dispatch(
+      openAlert({
+        severity: snackbarVariants.success,
+        message: 'cooperationsPage.modalMessages.successUpdating'
+      })
+    )
+  }, [dispatch])
 
   const getNotes = useCallback(() => CooperationNotesService.getNotes(id), [id])
 
@@ -150,10 +170,12 @@ const CooperationNotes = () => {
   )
 
   const onDuplicateResponse = () => {
-    setAlert({
-      severity: snackbarVariants.success,
-      message: `cooperationsPage.modalMessages.successDuplication`
-    })
+    dispatch(
+      openAlert({
+        severity: snackbarVariants.success,
+        message: `cooperationsPage.modalMessages.successDuplication`
+      })
+    )
   }
 
   const { error: duplicationError, fetchData: duplicateItem } = useAxios({

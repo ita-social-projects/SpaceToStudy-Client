@@ -1,4 +1,3 @@
-import { vi } from 'vitest'
 import { screen } from '@testing-library/react'
 
 import useAxios from '~/hooks/use-axios'

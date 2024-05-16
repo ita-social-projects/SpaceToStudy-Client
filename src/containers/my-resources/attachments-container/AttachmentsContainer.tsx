@@ -2,7 +2,6 @@ import { useCallback, useRef, useState } from 'react'
 import Box from '@mui/material/Box'
 import AddIcon from '@mui/icons-material/Add'
 import { useTranslation } from 'react-i18next'
-import { useSnackBarContext } from '~/context/snackbar-context'
 import { useModalContext } from '~/context/modal-context'
 import { ResourceService } from '~/services/resource-service'
 import EditAttachmentModal from '~/containers/my-resources/edit-attachment-modal/EditAttachmentModal'
@@ -34,10 +33,13 @@ import {
 } from '~/types'
 import { ajustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
 import { styles } from '~/containers/my-resources/attachments-container/AttachmentsContainer.styles'
+import { useAppDispatch } from '~/hooks/use-redux'
+import { openAlert } from '~/redux/features/snackbarSlice'
+import { getErrorKey } from '~/utils/get-error-key'
 
 const AttachmentsContainer = () => {
   const { t } = useTranslation()
-  const { setAlert } = useSnackBarContext()
+  const dispatch = useAppDispatch()
   const { openModal, closeModal } = useModalContext()
   const breakpoints = useBreakpoints()
   const { page, handleChangePage } = usePagination()
@@ -50,13 +52,15 @@ const AttachmentsContainer = () => {
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
 
   const onResponseError = useCallback(
-    (error: ErrorResponse) => {
-      setAlert({
-        severity: snackbarVariants.error,
-        message: error ? `errors.${error.code}` : ''
-      })
+    (error?: ErrorResponse) => {
+      dispatch(
+        openAlert({
+          severity: snackbarVariants.error,
+          message: getErrorKey(error)
+        })
+      )
     },
-    [setAlert]
+    [dispatch]
   )
 
   const getAttachments = useCallback(
@@ -110,11 +114,13 @@ const AttachmentsContainer = () => {
     []
   )
 
-  const onCreateAttachmentsError = (error: ErrorResponse) => {
-    setAlert({
-      severity: snackbarVariants.error,
-      message: error ? `errors.${error.code}` : ''
-    })
+  const onCreateAttachmentsError = (error?: ErrorResponse) => {
+    dispatch(
+      openAlert({
+        severity: snackbarVariants.error,
+        message: getErrorKey(error)
+      })
+    )
   }
   const { fetchData: fetchCreateAttachment } = useAxios({
     service: createAttachments,

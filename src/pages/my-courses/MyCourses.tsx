@@ -19,7 +19,7 @@ import { useFilterQuery } from '~/hooks/use-filter-query'
 import { getScreenBasedLimit } from '~/utils/helper-functions'
 import { countActiveCourseFilters } from '~/utils/count-active-filters'
 import { CourseService } from '~/services/course-service'
-import { useSnackBarContext } from '~/context/snackbar-context'
+import { useAppDispatch } from '~/hooks/use-redux'
 import {
   Course,
   ItemsWithCount,
@@ -36,12 +36,14 @@ import { coursesDefaultFilters } from '~/containers/cooperation-details/add-cour
 import { snackbarVariants } from '~/constants'
 
 import { styles } from '~/pages/my-courses/MyCourses.styles'
+import { openAlert } from '~/redux/features/snackbarSlice'
+import { getErrorKey } from '~/utils/get-error-key'
 
 const MyCourses = () => {
   const { t } = useTranslation()
   const breakpoints = useBreakpoints()
   const { openDialog } = useConfirm()
-  const { setAlert } = useSnackBarContext()
+  const dispatch = useAppDispatch()
   const { sort, onRequestSort } = useSort({ initialSort })
   const itemsPerPage = getScreenBasedLimit(breakpoints, courseItemsLoadLimit)
 
@@ -71,18 +73,22 @@ const MyCourses = () => {
     fetchOnMount: false
   })
 
-  const onResponseError = (error: ErrorResponse) => {
-    setAlert({
-      severity: snackbarVariants.error,
-      message: error ? `errors.${error.code}` : ''
-    })
+  const onResponseError = (error?: ErrorResponse) => {
+    dispatch(
+      openAlert({
+        severity: snackbarVariants.error,
+        message: getErrorKey(error)
+      })
+    )
   }
 
   const onDeleteResponse = () => {
-    setAlert({
-      severity: snackbarVariants.success,
-      message: `myCoursesPage.modalMessages.successDeletion`
-    })
+    dispatch(
+      openAlert({
+        severity: snackbarVariants.success,
+        message: `myCoursesPage.modalMessages.successDeletion`
+      })
+    )
   }
 
   const { error, fetchData: deleteItem } = useAxios({
@@ -120,10 +126,12 @@ const MyCourses = () => {
   )
 
   const onDuplicateResponse = () => {
-    setAlert({
-      severity: snackbarVariants.success,
-      message: `myCoursesPage.modalMessages.successDuplication`
-    })
+    dispatch(
+      openAlert({
+        severity: snackbarVariants.success,
+        message: `myCoursesPage.modalMessages.successDuplication`
+      })
+    )
   }
 
   const { error: duplicationError, fetchData: duplicateItem } = useAxios({

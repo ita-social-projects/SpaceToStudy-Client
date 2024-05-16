@@ -23,8 +23,9 @@ import {
 } from '~/types'
 import useForm from '~/hooks/use-form'
 import { snackbarVariants } from '~/constants'
-import { useSnackBarContext } from '~/context/snackbar-context'
+import { useAppDispatch } from '~/hooks/use-redux'
 import { styles } from '~/containers/cooperation-details/cooperation-activities/CooperationActivities.styles'
+import { openAlert } from '~/redux/features/snackbarSlice'
 
 interface CooperationActivitiesProps {
   cooperationId?: string
@@ -34,7 +35,7 @@ const CooperationActivities = ({
   cooperationId
 }: CooperationActivitiesProps) => {
   const { t } = useTranslation()
-  const { setAlert } = useSnackBarContext()
+  const dispatch = useAppDispatch()
   const { resourceAvailability, setResourceAvailability } =
     useResourceAvailabilityContext()
 
@@ -45,10 +46,12 @@ const CooperationActivities = ({
       _id: cooperationId,
       ...data
     })
-    setAlert({
-      severity: snackbarVariants.success,
-      message: 'cooperationsPage.acceptModal.successMessage'
-    })
+    dispatch(
+      openAlert({
+        severity: snackbarVariants.success,
+        message: 'cooperationsPage.acceptModal.successMessage'
+      })
+    )
   }
 
   const { data, handleNonInputValueChange, handleSubmit } = useForm<{

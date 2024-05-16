@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
 
-import { useSnackBarContext } from '~/context/snackbar-context'
+import { useAppDispatch } from '~/hooks/use-redux'
 import { useModalContext } from '~/context/modal-context'
 import useSelect from '~/hooks/table/use-select'
 import useSort from '~/hooks/table/use-sort'
@@ -22,6 +22,8 @@ import {
   Question,
   ServiceFunction
 } from '~/types'
+import { openAlert } from '~/redux/features/snackbarSlice'
+import { getErrorKey } from '~/utils/get-error-key'
 
 interface AddResourcesProps<T extends CourseResources | Question> {
   resources: T[]
@@ -42,7 +44,7 @@ const AddResources = <T extends CourseResources | Question>({
 }: AddResourcesProps<T>) => {
   const [selectedRows, setSelectedRows] = useState<T[]>(resources)
   const { closeModal } = useModalContext()
-  const { setAlert } = useSnackBarContext()
+  const dispatch = useAppDispatch()
   const breakpoints = useBreakpoints()
   const initialSelect = resources.map((resource) => resource._id)
   const select = useSelect({ initialSelect })
@@ -59,13 +61,15 @@ const AddResources = <T extends CourseResources | Question>({
   )
 
   const onResponseError = useCallback(
-    (error: ErrorResponse) => {
-      setAlert({
-        severity: snackbarVariants.error,
-        message: error ? `errors.${error.code}` : ''
-      })
+    (error?: ErrorResponse) => {
+      dispatch(
+        openAlert({
+          severity: snackbarVariants.error,
+          message: getErrorKey(error)
+        })
+      )
     },
-    [setAlert]
+    [dispatch]
   )
 
   const { loading, response } = useAxios<ItemsWithCount<T>>({

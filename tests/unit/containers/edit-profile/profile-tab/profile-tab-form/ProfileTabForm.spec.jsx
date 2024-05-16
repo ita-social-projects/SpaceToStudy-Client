@@ -1,5 +1,5 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react'
-import { renderWithProviders } from '~tests/test-utils'
+import { renderWithProviders, TestSnackbar } from '~tests/test-utils'
 import { imageResize } from '~/utils/image-resize'
 import ProfileTabForm from '~/containers/edit-profile/profile-tab/profile-tab-form/ProfileTabForm'
 import { formDataMock } from '~tests/unit/containers/edit-profile/profile-tab/profile-tab-form/ProfileTabForm.spec.constants'
@@ -22,7 +22,11 @@ describe('ProfileTabForm', () => {
   URL.createObjectURL = vi.fn().mockReturnValue('photo')
 
   beforeEach(() => {
-    renderWithProviders(<ProfileTabForm {...props} />)
+    renderWithProviders(
+      <TestSnackbar>
+        <ProfileTabForm {...props} />
+      </TestSnackbar>
+    )
   })
 
   afterEach(() => {
@@ -99,7 +103,11 @@ describe('ProfileGeneralTab without a user photo', () => {
   }
 
   beforeEach(() => {
-    renderWithProviders(<ProfileTabForm {...propsWithoutPhoto} />)
+    renderWithProviders(
+      <TestSnackbar>
+        <ProfileTabForm {...propsWithoutPhoto} />
+      </TestSnackbar>
+    )
   })
 
   it('should display a default avatar icon if no photo is provided', () => {

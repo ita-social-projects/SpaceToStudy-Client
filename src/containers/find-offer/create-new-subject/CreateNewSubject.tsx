@@ -9,7 +9,7 @@ import useAxios from '~/hooks/use-axios'
 import useForm from '~/hooks/use-form'
 import useConfirm from '~/hooks/use-confirm'
 import { useModalContext } from '~/context/modal-context'
-import { useSnackBarContext } from '~/context/snackbar-context'
+import { useAppDispatch } from '~/hooks/use-redux'
 import Image from '~/assets/img/signup-dialog/student.svg'
 import AppTextArea from '~/components/app-text-area/AppTextArea'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
@@ -27,25 +27,31 @@ import { snackbarVariants } from '~/constants'
 import { categoryService } from '~/services/category-service'
 import { validations } from '~/containers/find-offer/create-new-subject/CreateNewSubject.constants'
 import { styles } from '~/containers/find-offer/create-new-subject/CreateNewSubject.styles'
+import { openAlert } from '~/redux/features/snackbarSlice'
+import { getErrorKey } from '~/utils/get-error-key'
 
 const CreateSubjectModal = () => {
   const { closeModal } = useModalContext()
   const { setNeedConfirmation } = useConfirm()
-  const { setAlert } = useSnackBarContext()
+  const dispatch = useAppDispatch()
   const { t } = useTranslation()
 
-  const handleResponseError = (error: ErrorResponse) => {
-    setAlert({
-      severity: snackbarVariants.error,
-      message: error ? `errors.${error.code}` : ''
-    })
+  const handleResponseError = (error?: ErrorResponse) => {
+    dispatch(
+      openAlert({
+        severity: snackbarVariants.error,
+        message: getErrorKey(error)
+      })
+    )
   }
 
   const handleResponse = () => {
-    setAlert({
-      severity: snackbarVariants.success,
-      message: 'categoriesPage.newSubject.successMessage'
-    })
+    dispatch(
+      openAlert({
+        severity: snackbarVariants.success,
+        message: 'categoriesPage.newSubject.successMessage'
+      })
+    )
     closeModal()
   }
 

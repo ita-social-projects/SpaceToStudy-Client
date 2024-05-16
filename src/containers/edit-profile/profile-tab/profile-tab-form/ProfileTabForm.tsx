@@ -27,11 +27,12 @@ import {
 
 import { languages } from '~/containers/tutor-home-page/language-step/constants'
 import { validationData } from '~/containers/tutor-home-page/add-photo-step/constants'
-import { styles } from '~/containers/edit-profile/profile-tab/profile-tab-form/ProfileTabForm.styles'
-
-import { useSnackBarContext } from '~/context/snackbar-context'
+import { useAppDispatch } from '~/hooks/use-redux'
 import { snackbarVariants } from '~/constants'
 import { imageResize } from '~/utils/image-resize'
+import { styles } from '~/containers/edit-profile/profile-tab/profile-tab-form/ProfileTabForm.styles'
+import { openAlert } from '~/redux/features/snackbarSlice'
+
 
 export interface ProfileTabFormProps {
   data: EditProfileForm
@@ -55,7 +56,7 @@ const ProfileTabForm: FC<ProfileTabFormProps> = ({
   handleBlur
 }) => {
   const { t } = useTranslation()
-  const { setAlert } = useSnackBarContext()
+  const dispatch = useAppDispatch()
 
   const onLanguageChange = (
     _: SyntheticEvent,
@@ -80,10 +81,12 @@ const ProfileTabForm: FC<ProfileTabFormProps> = ({
 
   const addPhoto = ({ files, error }: UploadFileEmitterArgs) => {
     if (error) {
-      setAlert({
-        severity: snackbarVariants.error,
-        message: error
-      })
+      dispatch(
+        openAlert({
+          severity: snackbarVariants.error,
+          message: error
+        })
+      )
       return
     }
 

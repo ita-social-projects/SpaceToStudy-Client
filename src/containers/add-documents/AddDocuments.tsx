@@ -3,13 +3,14 @@ import Box from '@mui/material/Box'
 import { SxProps } from '@mui/material'
 
 import FileUploader from '~/components/file-uploader/FileUploader'
-import { useSnackBarContext } from '~/context/snackbar-context'
+import { useAppDispatch } from '~/hooks/use-redux'
 
 import { validationData } from '~/containers/add-documents/AddDocuments.constants'
 import { styles } from '~/containers/add-documents/AddDocuments.styles'
 import { snackbarVariants } from '~/constants'
 import { ButtonVariantEnum, UploadFileEmitter } from '~/types'
 import { spliceSx } from '~/utils/helper-functions'
+import { openAlert } from '~/redux/features/snackbarSlice'
 
 interface AddDocumentsProps {
   fetchData: (formData: FormData) => Promise<void>
@@ -35,17 +36,19 @@ const AddDocuments: FC<AddDocumentsProps> = ({
 }) => {
   const [documents, setDocuments] = useState<File[]>([])
   const [documentsError, setDocumentsError] = useState('')
-  const { setAlert } = useSnackBarContext()
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
     if (documentsError) {
-      setAlert({
-        severity: snackbarVariants.error,
-        message: documentsError
-      })
+      dispatch(
+        openAlert({
+          severity: snackbarVariants.error,
+          message: documentsError
+        })
+      )
       setDocumentsError('')
     }
-  }, [documentsError, setAlert])
+  }, [documentsError, dispatch])
 
   const addDocuments: UploadFileEmitter = ({ files, error }) => {
     setDocuments(files)

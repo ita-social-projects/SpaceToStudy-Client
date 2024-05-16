@@ -7,7 +7,7 @@ import LoginForm from '~/containers/guest-home-page/login-form/LoginForm'
 import useForm from '~/hooks/use-form'
 import { useLoginMutation } from '~/services/auth-service'
 import { useModalContext } from '~/context/modal-context'
-import { useSnackBarContext } from '~/context/snackbar-context'
+import { useAppDispatch } from '~/hooks/use-redux'
 import { email } from '~/utils/validations/login'
 import loginImg from '~/assets/img/login-dialog/login.svg'
 import { login, snackbarVariants } from '~/constants'
@@ -16,11 +16,13 @@ import styles from '~/containers/guest-home-page/login-dialog/LoginDialog.styles
 import { useNavigate, useLocation } from 'react-router-dom'
 import { errorRoutes } from '~/router/constants/errorRoutes'
 import { guestRoutes } from '~/router/constants/guestRoutes'
+import { openAlert } from '~/redux/features/snackbarSlice'
+import { getErrorKey } from '~/utils/get-error-key'
 
 const LoginDialog = () => {
   const { t } = useTranslation()
   const { closeModal } = useModalContext()
-  const { setAlert } = useSnackBarContext()
+  const dispatch = useAppDispatch()
   const [loginUser] = useLoginMutation()
 
   const { pathname, state } = useLocation()
@@ -36,10 +38,12 @@ const LoginDialog = () => {
             navigate(state?.prevPage || guestRoutes.home.path)
           }
         } catch (e) {
-          setAlert({
-            severity: snackbarVariants.error,
-            message: `errors.${e.data.code}`
-          })
+          dispatch(
+            openAlert({
+              severity: snackbarVariants.error,
+              message: getErrorKey(e.data)
+            })
+          )
         }
       },
       initialValues: { email: '', password: '' },

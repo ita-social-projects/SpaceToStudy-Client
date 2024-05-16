@@ -6,7 +6,7 @@ import Box from '@mui/material/Box'
 import useAxios from '~/hooks/use-axios'
 import useForm from '~/hooks/use-form'
 import { useModalContext } from '~/context/modal-context'
-import { useSnackBarContext } from '~/context/snackbar-context'
+import { useAppDispatch } from '~/hooks/use-redux'
 import OfferCardSquare from '~/containers/find-offer/offer-card-square/OfferCardSquare'
 import AppTextArea from '~/components/app-text-area/AppTextArea'
 import AppCard from '~/components/app-card/AppCard'
@@ -28,6 +28,8 @@ import {
   EnrollOfferForm,
   ButtonTypeEnum
 } from '~/types'
+import { openAlert } from '~/redux/features/snackbarSlice'
+import { getErrorKey } from '~/utils/get-error-key'
 
 interface EnrollOfferProps {
   offer: Offer
@@ -37,22 +39,26 @@ interface EnrollOfferProps {
 const EnrollOffer: FC<EnrollOfferProps> = ({ offer, enrollOffer }) => {
   const { isLaptopAndAbove } = useBreakpoints()
   const { closeModal } = useModalContext()
-  const { setAlert } = useSnackBarContext()
+  const dispatch = useAppDispatch()
   const { t } = useTranslation()
 
   const [minPrice, maxPrice] = minMaxPrice(offer.price, 0.25)
 
-  const handleResponseError = (error: ErrorResponse) => {
-    setAlert({
-      severity: snackbarVariants.error,
-      message: error ? `errors.${error.code}` : ''
-    })
+  const handleResponseError = (error?: ErrorResponse) => {
+    dispatch(
+      openAlert({
+        severity: snackbarVariants.error,
+        message: getErrorKey(error)
+      })
+    )
   }
   const handleResponse = () => {
-    setAlert({
-      severity: snackbarVariants.success,
-      message: 'offerDetailsPage.enrollOffer.successMessage'
-    })
+    dispatch(
+      openAlert({
+        severity: snackbarVariants.success,
+        message: 'offerDetailsPage.enrollOffer.successMessage'
+      })
+    )
     closeModal()
     void enrollOffer()
   }

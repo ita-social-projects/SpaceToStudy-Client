@@ -2,7 +2,7 @@ import { useCallback, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Box from '@mui/material/Box'
 
-import { useSnackBarContext } from '~/context/snackbar-context'
+import { useAppDispatch } from '~/hooks/use-redux'
 import { ResourceService } from '~/services/resource-service'
 import AddResourceWithInput from '~/containers/my-resources/add-resource-with-input/AddResourceWithInput'
 import MyResourcesTable from '~/containers/my-resources/my-resources-table/MyResourcesTable'
@@ -33,9 +33,11 @@ import {
   createUrlPath,
   getScreenBasedLimit
 } from '~/utils/helper-functions'
+import { openAlert } from '~/redux/features/snackbarSlice'
+import { getErrorKey } from '~/utils/get-error-key'
 
 const QuizzesContainer = () => {
-  const { setAlert } = useSnackBarContext()
+  const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const { page, handleChangePage } = usePagination()
   const sortOptions = useSort({ initialSort })
@@ -52,13 +54,15 @@ const QuizzesContainer = () => {
   )
 
   const onResponseError = useCallback(
-    (error: ErrorResponse) => {
-      setAlert({
-        severity: snackbarVariants.error,
-        message: error ? `errors.${error.code}` : ''
-      })
+    (error?: ErrorResponse) => {
+      dispatch(
+        openAlert({
+          severity: snackbarVariants.error,
+          message: getErrorKey(error)
+        })
+      )
     },
-    [setAlert]
+    [dispatch]
   )
 
   const getQuizzes = useCallback(

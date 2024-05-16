@@ -14,7 +14,6 @@ import useForm from '~/hooks/use-form'
 import useAxios from '~/hooks/use-axios'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import useConfirm from '~/hooks/use-confirm'
-import { useSnackBarContext } from '~/context/snackbar-context'
 import { useModalContext } from '~/context/modal-context'
 import { minMaxPrice } from '~/utils/range-filter'
 import { cooperationService } from '~/services/cooperation-service'
@@ -31,6 +30,9 @@ import {
 } from '~/types'
 import { snackbarVariants } from '~/constants'
 import { styles } from '~/containers/my-cooperations/accept-cooperation-modal/AcceptCooperation.styles'
+import { useAppDispatch } from '~/hooks/use-redux'
+import { openAlert } from '~/redux/features/snackbarSlice'
+import { getErrorKey } from '~/utils/get-error-key'
 
 interface AcceptCooperationModalProps {
   cooperation: Cooperation
@@ -45,7 +47,7 @@ const AcceptCooperationModal: FC<AcceptCooperationModalProps> = ({
   const { isDesktop } = useBreakpoints()
   const { closeModal } = useModalContext()
   const { checkConfirmation } = useConfirm()
-  const { setAlert } = useSnackBarContext()
+  const dispatch = useAppDispatch()
   const [minPrice, maxPrice] = minMaxPrice(cooperation.offer.price, 0.25)
 
   const needAction = cooperation.user.role !== cooperation.needAction
@@ -65,19 +67,23 @@ const AcceptCooperationModal: FC<AcceptCooperationModalProps> = ({
   )
 
   const onResponse = () => {
-    setAlert({
-      severity: snackbarVariants.success,
-      message: 'cooperationsPage.acceptModal.successMessage'
-    })
+    dispatch(
+      openAlert({
+        severity: snackbarVariants.success,
+        message: 'cooperationsPage.acceptModal.successMessage'
+      })
+    )
     closeModal()
     void getCooperations()
   }
 
-  const onResponseError = (error: ErrorResponse) => {
-    setAlert({
-      severity: snackbarVariants.error,
-      message: error ? `errors.${error.code}` : ''
-    })
+  const onResponseError = (error?: ErrorResponse) => {
+    dispatch(
+      openAlert({
+        severity: snackbarVariants.error,
+        message: getErrorKey(error)
+      })
+    )
   }
 
   const { loading, fetchData } = useAxios({
