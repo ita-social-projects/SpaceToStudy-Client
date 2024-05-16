@@ -1,12 +1,12 @@
 import { Dispatch, FocusEvent, SetStateAction, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
+import MenuItem from '@mui/material/MenuItem'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import IconButton from '@mui/material/IconButton'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
-import MenuItem from '@mui/material/MenuItem'
 
 import AppTextField from '~/components/app-text-field/AppTextField'
 import { menuTypes } from '~/containers/course-section/CourseSectionContainer.constants'

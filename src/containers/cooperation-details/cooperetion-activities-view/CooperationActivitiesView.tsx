@@ -1,3 +1,4 @@
+import { FC } from 'react'
 import Box from '@mui/material/Box'
 
 import CooperationSectionView from '~/components/cooperation-section-view/CooperationSectionView'
@@ -9,9 +10,9 @@ interface CooperationActivitiesViewProps {
   sections: CourseSection[]
 }
 
-const CooperationActivitiesView = ({
+const CooperationActivitiesView: FC<CooperationActivitiesViewProps> = ({
   sections
-}: CooperationActivitiesViewProps) => {
+}) => {
   return (
     <Box sx={styles.root}>
       {sections.map((item) => (
