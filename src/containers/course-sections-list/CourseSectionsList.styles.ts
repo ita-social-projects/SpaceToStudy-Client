@@ -6,7 +6,6 @@ const iconSize = {
   width: '16px',
   height: '16px'
 }
-PositionEnum
 export const styles = {
   section: (isDragging: boolean) => ({
     mb: '20px',
