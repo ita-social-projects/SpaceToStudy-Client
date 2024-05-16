@@ -98,7 +98,8 @@ export enum PositionEnum {
   Top = 'top',
   Start = 'start',
   End = 'end',
-  Vertical = 'vertical'
+  Vertical = 'vertical',
+  Center = 'center'
 }
 
 export enum InputEnum {
