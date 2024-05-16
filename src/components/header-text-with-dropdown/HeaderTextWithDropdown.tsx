@@ -1,22 +1,23 @@
+import { Dispatch, FocusEvent, SetStateAction, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import IconButton from '@mui/material/IconButton'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
+import MenuItem from '@mui/material/MenuItem'
 
 import AppTextField from '~/components/app-text-field/AppTextField'
 import { menuTypes } from '~/containers/course-section/CourseSectionContainer.constants'
+import useMenu from '~/hooks/use-menu'
+
 import {
   TextFieldVariantEnum,
   ColorEnum,
   CourseSection,
   FormInputValueChange
 } from '~/types'
-import MenuItem from '@mui/material/MenuItem'
-import { useTranslation } from 'react-i18next'
-import { Dispatch, FocusEvent, SetStateAction, useState } from 'react'
-import useMenu from '~/hooks/use-menu'
 import { styles } from '~/components/header-text-with-dropdown/HeaderTextWithDropdown.styles'
 
 interface HeaderTextWithDropdownProps {
@@ -91,7 +92,7 @@ const HeaderTextWithDropdown = ({
         fullWidth
         inputProps={styles.input(isView)}
         label={titleInput ? '' : t('course.courseSection.moduleTitle')}
-        onBlur={(event) => handleBlur(event)}
+        onBlur={handleBlur}
         onChange={(event) => setTitleInput(event.target.value)}
         value={titleInput}
         variant={TextFieldVariantEnum.Standard}

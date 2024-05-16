@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box'
 
-import { useState } from 'react'
+import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import AppTextField from '~/components/app-text-field/AppTextField'
@@ -15,9 +15,16 @@ interface CooperationSectionViewProps {
   item: CourseSection
 }
 
-const CooperationSectionView = ({ item, id }: CooperationSectionViewProps) => {
+const CooperationSectionView: FC<CooperationSectionViewProps> = ({
+  item,
+  id
+}) => {
   const [isVisible, setIsVisible] = useState(true)
   const { t } = useTranslation()
+
+  const resources = item.activities.map((item) => (
+    <ResourceItem isView key={item.resource} resource={item.resource} />
+  ))
 
   return (
     <Box sx={styles.root}>
@@ -42,9 +49,7 @@ const CooperationSectionView = ({ item, id }: CooperationSectionViewProps) => {
             variant={TextFieldVariantEnum.Standard}
             withHelperText
           />
-          {item.activities.map((item) => (
-            <ResourceItem isView key={item.resource} resource={item.resource} />
-          ))}
+          {resources}
         </Box>
       )}
     </Box>

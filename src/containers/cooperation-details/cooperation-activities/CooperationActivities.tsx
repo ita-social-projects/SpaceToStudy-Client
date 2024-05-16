@@ -2,6 +2,9 @@ import { useTranslation } from 'react-i18next'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import { Link } from 'react-router-dom'
+import { FC } from 'react'
+import openIcon from '~/assets/img/cooperation-details/resource-availability/open-icon.svg'
+import closeIcon from '~/assets/img/cooperation-details/resource-availability/closed-icon.svg'
 
 import AppSelect from '~/components/app-select/AppSelect'
 import CooperationActivitiesList from '~/containers/my-cooperations/cooperation-activities-list/CooperationActivitiesList'
@@ -9,10 +12,11 @@ import { useResourceAvailabilityContext } from '~/context/resources-availability
 import AppButton from '~/components/app-button/AppButton'
 import { cooperationTranslationKeys } from '~/containers/cooperation-details/cooperation-activities/CooperationActivities.constants'
 import { cooperationService } from '~/services/cooperation-service'
-
 import { authRoutes } from '~/router/constants/authRoutes'
-import openIcon from '~/assets/img/cooperation-details/resource-availability/open-icon.svg'
-import closeIcon from '~/assets/img/cooperation-details/resource-availability/closed-icon.svg'
+import useForm from '~/hooks/use-form'
+import { snackbarVariants } from '~/constants'
+import { useSnackBarContext } from '~/context/snackbar-context'
+
 import {
   ResourcesAvailabilityEnum,
   ButtonVariantEnum,
@@ -31,9 +35,9 @@ interface CooperationActivitiesProps {
   cooperationId?: string
 }
 
-const CooperationActivities = ({
+const CooperationActivities: FC<CooperationActivitiesProps> = ({
   cooperationId
-}: CooperationActivitiesProps) => {
+}) => {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
   const { resourceAvailability, setResourceAvailability } =

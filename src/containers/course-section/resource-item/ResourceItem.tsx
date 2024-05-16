@@ -20,7 +20,8 @@ import {
   CourseResources,
   ResourceAvailabilityStatusEnum,
   ResourcesAvailabilityEnum,
-  ResourcesTabsEnum as ResourcesTypes
+  ResourcesTabsEnum as ResourcesTypes,
+  SizeEnum
 } from '~/types'
 
 import { selectionFields } from '~/containers/course-section/resource-item/ResourceItem.constants'
@@ -39,13 +40,13 @@ interface ResourceItemProps {
   isView?: boolean
 }
 
-interface availabilityIconsProps {
+interface AvailabilityIconsProps {
   open: string
   openFrom: string
   closed: string
 }
 
-const availabilityIcons: availabilityIconsProps = {
+const availabilityIcons: AvailabilityIconsProps = {
   open: openIcon,
   openFrom: openFrom,
   closed: closedIcon
@@ -158,10 +159,10 @@ const ResourceItem: FC<ResourceItemProps> = ({
     <Box sx={styles.resourceActions}>
       {isCooperation && availabilitySelection}
       <IconButton aria-label='edit' onClick={onEditResource}>
-        <EditIcon fontSize='small' sx={styles.editBtn} />
+        <EditIcon fontSize={SizeEnum.Small} sx={styles.editBtn} />
       </IconButton>
       <IconButton aria-label='delete' onClick={onDeleteResource}>
-        <CloseIcon fontSize='small' />
+        <CloseIcon fontSize={SizeEnum.Small} />
       </IconButton>
     </Box>
   )

@@ -64,19 +64,10 @@ const CooperationActivitiesList = ({
     }
 
     if (selectedCourse && !data.sections.length && isAddedClicked) {
-      const allSections = selectedCourse.sections.map((section, index) => {
-        if (section.attachments.length) {
-          section.attachments[0].availability = { status: 'open', date: '1234' }
-        } else if (section.lessons.length) {
-          section.lessons[0].availability = { status: 'open', date: '1234' }
-        } else if (section.quizzes.length) {
-          section.quizzes[0].availability = { status: 'open', date: '1234' }
-        }
-
-        {
-          return { ...section, id: Date.now().toString() + index }
-        }
-      })
+      const allSections = selectedCourse.sections.map((section, index) => ({
+        ...section,
+        id: Date.now().toString() + index
+      }))
       setSectionsData(allSections)
     }
 

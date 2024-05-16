@@ -14,8 +14,7 @@ export const styles = {
   },
   descriptionInput: {
     style: {
-      marginTop: 0,
-      marginLeft: '45px'
+      m: '0 0 0 45px'
     },
     disableUnderline: true
   },
