@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { Editor } from '@tinymce/tinymce-react'
-import { fileEditorConfig } from './FileEditor.constants'
+import { getEditorInitOptions } from './FileEditor.constants'
 import { useTranslation } from 'react-i18next'
 
 interface FileEditorProps {
@@ -11,22 +11,15 @@ interface FileEditorProps {
 const FileEditor: FC<FileEditorProps> = ({ onEdit, value }) => {
   const { t } = useTranslation()
 
+  const initOptions = getEditorInitOptions({
+    placeholder: t('lesson.fileEditorPlaceholder')
+  })
+
   return (
     <Editor
       apiKey={import.meta.env.VITE_APP_TINY_MCE_API_KEY}
       data-testid='editor'
-      init={{
-        height: 400,
-        menubar: true,
-        placeholder: t('lesson.fileEditorPlaceholder'),
-        plugins: fileEditorConfig.plugins.join(' '),
-        toolbar: fileEditorConfig.toolbar.join(' | '),
-        content_style:
-          '@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;800&display=swap"); body { font-family:Rubik; font-size:14px }',
-        font_family_formats: Object.entries(fileEditorConfig.fonts)
-          .map((entry) => entry.join('='))
-          .join('; ')
-      }}
+      init={initOptions}
       onEditorChange={onEdit}
       value={value}
     />
