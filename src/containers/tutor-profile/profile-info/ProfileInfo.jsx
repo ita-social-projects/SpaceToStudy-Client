@@ -2,23 +2,26 @@ import { useMatch, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
-import AppIconButton from '~/components/app-icon-button/AppIconButton'
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
 import CopyRoundedIcon from '@mui/icons-material/ContentCopyRounded'
 
-import useBreakpoints from '~/hooks/use-breakpoints'
+import AppIconButton from '~/components/app-icon-button/AppIconButton'
 import AppRatingMobile from '~/components/app-rating-mobile/AppRatingMobile'
+import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
+import AppButton from '~/components/app-button/AppButton'
+
+import useBreakpoints from '~/hooks/use-breakpoints'
+
 import ProfileContainerDesktop from '~/containers/tutor-profile/profile-info/ProfileContainerDesktop'
 import ProfileContainerMobile from '~/containers/tutor-profile/profile-info/ProfileContainerMobile'
-import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
+import { styles } from '~/containers/tutor-profile/profile-info/ProfileInfo.styles'
 
 import { authRoutes } from '~/router/constants/authRoutes'
-import { useSnackBarContext } from '~/context/snackbar-context'
-import { styles } from '~/containers/tutor-profile/profile-info/ProfileInfo.styles'
 import { snackbarVariants } from '~/constants'
+
+import { useSnackBarContext } from '~/context/snackbar-context'
 import { SizeEnum, UserRoleEnum, ButtonVariantEnum } from '~/types'
 import { createUrlPath, getDifferenceDates } from '~/utils/helper-functions'
-import AppButton from '~/components/app-button/AppButton'
 
 const ProfileInfo = ({ userData, myRole }) => {
   const { t } = useTranslation()

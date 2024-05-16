@@ -6,8 +6,9 @@ import TablePagination from '@mui/material/TablePagination'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 
-import { styles } from './EnhancedTablePagination.styles'
 import AppButton from '~/components/app-button/AppButton'
+import { styles } from '~/components/enhanced-table/enhanced-table-pagination/EnhancedTablePagination.styles'
+
 import { ButtonVariantEnum } from '~/types'
 
 const EnhancedTablePagination = ({ pagination }) => {

@@ -1,17 +1,22 @@
-import Box from '@mui/material/Box'
-import { styles } from '~/containers/email-confirm-modal/EmailConfirmModal.styles'
 import { useCallback } from 'react'
-import { useModalContext } from '~/context/modal-context'
 import { useTranslation } from 'react-i18next'
+
+import Box from '@mui/material/Box'
+
+import Loader from '~/components/loader/Loader'
+import AppButton from '~/components/app-button/AppButton'
+import ImgTitleDescription from '~/components/img-title-description/ImgTitleDescription'
+
+import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
+import { styles } from '~/containers/email-confirm-modal/EmailConfirmModal.styles'
+
 import imgSuccess from '~/assets/img/email-confirmation-modals/success-icon.svg'
 import imgReject from '~/assets/img/email-confirmation-modals/not-success-icon.svg'
-import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
-import useAxios from '~/hooks/use-axios'
+
 import { AuthService } from '~/services/auth-service'
-import Loader from '~/components/loader/Loader'
-import ImgTitleDescription from '~/components/img-title-description/ImgTitleDescription'
-import AppButton from '~/components/app-button/AppButton'
 import { ButtonVariantEnum } from '~/types'
+import useAxios from '~/hooks/use-axios'
+import { useModalContext } from '~/context/modal-context'
 
 const EmailConfirmModal = ({ confirmToken, openModal }) => {
   const { t } = useTranslation()

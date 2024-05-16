@@ -1,5 +1,6 @@
 import { FC, ReactNode, useCallback, SyntheticEvent } from 'react'
 import { useTranslation } from 'react-i18next'
+
 import FilterListIcon from '@mui/icons-material/FilterList'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
@@ -8,11 +9,14 @@ import AppDrawer from '~/components/app-drawer/AppDrawer'
 import CheckboxList from '~/components/checkbox-list/CheckboxList'
 import FilterInput from '~/components/filter-input/FilterInput'
 import AsyncAutocomplete from '~/components/async-autocomlete/AsyncAutocomplete'
+import AppButton from '~/components/app-button/AppButton'
+
+import { styles } from '~/containers/my-courses/courses-filters-drawer/CoursesFiltersDrawer.styles'
 
 import { spliceSx } from '~/utils/helper-functions'
 import { categoryService } from '~/services/category-service'
 import { subjectService } from '~/services/subject-service'
-import { styles } from '~/containers/my-courses/courses-filters-drawer/CoursesFiltersDrawer.styles'
+
 import {
   ButtonVariantEnum,
   CategoryNameInterface,
@@ -24,7 +28,6 @@ import {
   SizeEnum,
   SubjectNameInterface
 } from '~/types'
-import AppButton from '~/components/app-button/AppButton'
 
 interface CoursesFiltersDrawerProps {
   additionalParams: Record<string, number | string | undefined>

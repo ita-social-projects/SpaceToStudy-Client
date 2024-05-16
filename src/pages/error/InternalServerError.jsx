@@ -4,10 +4,11 @@ import { Link } from 'react-router-dom'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
+import AppButton from '~/components/app-button/AppButton'
+
 import { guestRoutes } from '~/router/constants/guestRoutes'
 import { styles } from '~/pages/error/styles/InternalServerError.styles'
 import backGround500 from '~/assets/img/error-page/500.svg'
-import AppButton from '~/components/app-button/AppButton'
 import { ButtonVariantEnum } from '~/types'
 
 const InternalServerError = () => {

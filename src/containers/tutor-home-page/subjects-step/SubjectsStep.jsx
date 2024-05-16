@@ -1,18 +1,21 @@
 import { useState, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
+
 import Box from '@mui/material/Box'
 import FormHelperText from '@mui/material/FormHelperText'
 import Typography from '@mui/material/Typography'
+
+import AppButton from '~/components/app-button/AppButton'
+import AppChipList from '~/components/app-chips-list/AppChipList'
+import AsyncAutocomplete from '~/components/async-autocomlete/AsyncAutocomplete'
+
 import useBreakpoints from '~/hooks/use-breakpoints'
 
 import { styles } from '~/containers/tutor-home-page/subjects-step/SubjectsStep.styles'
 import img from '~/assets/img/tutor-home-page/become-tutor/study-category.svg'
-import AsyncAutocomplete from '~/components/async-autocomlete/AsyncAutocomplete'
 import { useStepContext } from '~/context/step-context'
-import AppChipList from '~/components/app-chips-list/AppChipList'
 import { categoryService } from '~/services/category-service'
 import { subjectService } from '~/services/subject-service'
-import AppButton from '~/components/app-button/AppButton'
 
 const SubjectsStep = ({ btnsBox }) => {
   const { t } = useTranslation()

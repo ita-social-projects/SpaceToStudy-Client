@@ -9,27 +9,32 @@ import {
 } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { createFilterOptions, FilterOptionsState } from '@mui/material'
 import {
   AutocompleteProps,
   AutocompleteRenderInputParams
 } from '@mui/material/Autocomplete'
-import { TextFieldProps } from '@mui/material/TextField'
 import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
 import ClearIcon from '@mui/icons-material/Clear'
 import SearchIcon from '@mui/icons-material/Search'
+import {
+  createFilterOptions,
+  FilterOptionsState,
+  TextFieldProps
+} from '@mui/material'
 
-import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
 import useBreakpoints from '~/hooks/use-breakpoints'
+
+import AppButton from '~/components/app-button/AppButton'
+import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
 import { styles } from '~/components/search-autocomplete/SearchAutocomplete.styles'
+
 import {
   SizeEnum,
   ButtonVariantEnum,
   VisibilityEnum,
   TextFieldVariantEnum
 } from '~/types'
-import AppButton from '~/components/app-button/AppButton'
 
 interface SearchAutocompleteProps
   extends Omit<AutocompleteProps<string, false, true, true>, 'renderInput'> {

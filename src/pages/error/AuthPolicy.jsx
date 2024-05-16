@@ -4,12 +4,13 @@ import { Link } from 'react-router-dom'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 
+import AppButton from '~/components/app-button/AppButton'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
+
 import { guestRoutes } from '~/router/constants/guestRoutes'
 import error401 from '~/assets/img/error-page/401.svg'
 
 import { styles } from '~/pages/error/styles/AuthPolicy.styles'
-import AppButton from '~/components/app-button/AppButton'
 import { ButtonVariantEnum, SizeEnum } from '~/types'
 
 const AuthPolicy = () => {

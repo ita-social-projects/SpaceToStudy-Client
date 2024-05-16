@@ -10,13 +10,18 @@ import MenuItem from '@mui/material/MenuItem'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 
 import HashLink from '~/components/hash-link/HashLink'
+import AppDrawer from '~/components/app-drawer/AppDrawer'
+import AppButton from '~/components/app-button/AppButton'
+
 import Logo from '~/containers/logo/Logo'
 import Sidebar from '~/containers/layout/sidebar/Sidebar'
 import NavigationIcons from '~/containers/navigation-icons/NavigationIcons'
-import AppDrawer from '~/components/app-drawer/AppDrawer'
+import { styles } from '~/containers/layout/navbar/NavBar.styles'
+
 import useMenu from '~/hooks/use-menu'
 import { useDrawer } from '~/hooks/use-drawer'
 import { useAppSelector } from '~/hooks/use-redux'
+
 import { guestRoutes } from '~/router/constants/guestRoutes'
 import {
   tutorRoutes,
@@ -26,8 +31,6 @@ import { studentRoutes } from '~/router/constants/studentRoutes'
 import { authRoutes } from '~/router/constants/authRoutes'
 
 import { ButtonVariantEnum, SizeEnum, UserRoleEnum } from '~/types'
-import { styles } from '~/containers/layout/navbar/NavBar.styles'
-import AppButton from '~/components/app-button/AppButton'
 
 const Navbar = () => {
   const { userRole } = useAppSelector((state) => state.appMain)

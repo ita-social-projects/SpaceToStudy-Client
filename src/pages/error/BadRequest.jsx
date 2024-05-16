@@ -4,12 +4,13 @@ import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 
-import { guestRoutes } from '~/router/constants/guestRoutes'
+import AppButton from '~/components/app-button/AppButton'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 
+import { guestRoutes } from '~/router/constants/guestRoutes'
+
 import img from '~/assets/img/error-page/400.svg'
-import { styles } from './styles/BadRequest.styles'
-import AppButton from '~/components/app-button/AppButton'
+import { styles } from '~/pages/error/styles/BadRequest.styles'
 import { ButtonVariantEnum, SizeEnum } from '~/types'
 
 const BadRequest = () => {

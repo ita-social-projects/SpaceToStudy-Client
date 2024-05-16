@@ -1,5 +1,6 @@
 import { FC, ReactElement, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
+
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import IconButton from '@mui/material/IconButton'
@@ -9,9 +10,11 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload'
 import CloseIcon from '@mui/icons-material/Close'
 import { FormHelperText, SxProps } from '@mui/material'
 
+import AppButton from '~/components/app-button/AppButton'
+import { styles } from '~/components/file-uploader/FileUploader.styles'
+
 import useUpload from '~/hooks/use-upload'
 
-import { styles } from '~/components/file-uploader/FileUploader.styles'
 import {
   AddDocuments,
   ButtonVariantEnum,
@@ -20,7 +23,6 @@ import {
   InputEnum,
   SizeEnum
 } from '~/types'
-import AppButton from '~/components/app-button/AppButton'
 
 interface FileUploaderProps {
   buttonText: string

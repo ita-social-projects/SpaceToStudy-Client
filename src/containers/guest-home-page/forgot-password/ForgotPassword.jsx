@@ -1,23 +1,25 @@
 import { useState } from 'react'
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
 import { useTranslation } from 'react-i18next'
 
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+
+import useForm from '~/hooks/use-form'
 import { useSnackBarContext } from '~/context/snackbar-context'
 import { useModalContext } from '~/context/modal-context'
-import useForm from '~/hooks/use-form'
 
 import AppTextField from '~/components/app-text-field/AppTextField'
 import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
 import AppButton from '~/components/app-button/AppButton'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
+
 import NotificationModal from '~/containers/guest-home-page/notification-modal/NotificationModal'
+import { styles } from '~/containers/guest-home-page/forgot-password/ForgotPassword.styles'
+
 import info from '~/assets/img/guest-home-page/info.svg'
 import { AuthService } from '~/services/auth-service'
-
 import { snackbarVariants } from '~/constants'
 import { email } from '~/utils/validations/login'
-import { styles } from '~/containers/guest-home-page/forgot-password/ForgotPassword.styles'
 import { ButtonVariantEnum, SizeEnum } from '~/types'
 
 const ForgotPassword = () => {

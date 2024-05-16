@@ -2,30 +2,37 @@ import { useState, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams, useNavigate } from 'react-router-dom'
 import { AxiosResponse } from 'axios'
+
 import Box from '@mui/material/Box'
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft'
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight'
 
-import useAxios from '~/hooks/use-axios'
-import useBreakpoints from '~/hooks/use-breakpoints'
-import { cooperationService } from '~/services/cooperation-service'
-import { ResourcesAvailabilityProvider } from '~/context/resources-availability-context'
 import AppDrawer from '~/components/app-drawer/AppDrawer'
 import TabNavigation from '~/components/tab-navigation/TabNavigation'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
-import CooperationActivities from '~/containers/cooperation-details/cooperation-activities/CooperationActivities'
+import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import Loader from '~/components/loader/Loader'
 import StatusChip from '~/components/status-chip/StatusChip'
-import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
-import CooperationNotes from '~/containers/my-cooperations/cooperation-notes/CooperationNotes'
+import AppButton from '~/components/app-button/AppButton'
 
-import { errorRoutes } from '~/router/constants/errorRoutes'
+import useAxios from '~/hooks/use-axios'
+import useBreakpoints from '~/hooks/use-breakpoints'
+import { useAppSelector } from '~/hooks/use-redux'
+
+import CooperationActivities from '~/containers/cooperation-details/cooperation-activities/CooperationActivities'
+import CooperationNotes from '~/containers/my-cooperations/cooperation-notes/CooperationNotes'
 import {
   tabsData,
   defaultResponse,
   MyCooperationsTabsData
-} from '~/containers/my-cooperations/cooperation-details/CooperationDetails.constans'
+} from '~/containers/my-cooperations/cooperation-details/CooperationDetails.constants'
 import { styles } from '~/containers/my-cooperations/cooperation-details/CooperationDetails.styles'
+
+import { cooperationService } from '~/services/cooperation-service'
+import { ResourcesAvailabilityProvider } from '~/context/resources-availability-context'
+
+import { errorRoutes } from '~/router/constants/errorRoutes'
+
 import {
   CooperationTabsEnum,
   PositionEnum,
@@ -33,9 +40,7 @@ import {
   SizeEnum,
   ButtonVariantEnum
 } from '~/types'
-import { useAppSelector } from '~/hooks/use-redux'
 import { cooperationsSelector } from '~/redux/features/cooperationsSlice'
-import AppButton from '~/components/app-button/AppButton'
 
 const CooperationDetails = () => {
   const { t } = useTranslation()

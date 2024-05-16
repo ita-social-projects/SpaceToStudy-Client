@@ -1,23 +1,24 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
 
+import AppButton from '~/components/app-button/AppButton'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import ConfirmDialog from '~/components/confirm-dialog/ConfirmDialog'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
+
 import useForm from '~/hooks/use-form'
 
 import { styles } from '~/containers/edit-profile/password-security-tab/PasswordSecurityTab.styles'
 import { confirmPassword, password } from '~/utils/validations/login'
-import { ButtonVariantEnum, InputEnum, SizeEnum } from '~/types'
-import { FormValues } from '~/types/editTutorProfile/interfaces/securityBlockForm.interfaces'
-import { useTranslation } from 'react-i18next'
-import AppButton from '~/components/app-button/AppButton'
+import { ButtonVariantEnum, InputEnum, SizeEnum, FormValues } from '~/types'
 
 const PasswordSecurityTab = () => {
   const { t } = useTranslation()
-  const [isConfirmOpen, setIsConfirmOpen] = useState<boolean>(false)
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false)
 
   const { data, handleInputChange, errors, handleBlur, resetData } =
     useForm<FormValues>({

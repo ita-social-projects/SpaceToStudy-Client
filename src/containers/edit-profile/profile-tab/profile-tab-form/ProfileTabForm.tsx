@@ -1,5 +1,6 @@
 import { ChangeEvent, FC, FocusEvent, SyntheticEvent } from 'react'
 import { useTranslation } from 'react-i18next'
+
 import Box from '@mui/material/Box'
 import Avatar from '@mui/material/Avatar'
 import InputAdornment from '@mui/material/InputAdornment'
@@ -26,10 +27,11 @@ import {
 
 import { languages } from '~/containers/tutor-home-page/language-step/constants'
 import { validationData } from '~/containers/tutor-home-page/add-photo-step/constants'
+import { styles } from '~/containers/edit-profile/profile-tab/profile-tab-form/ProfileTabForm.styles'
+
 import { useSnackBarContext } from '~/context/snackbar-context'
 import { snackbarVariants } from '~/constants'
 import { imageResize } from '~/utils/image-resize'
-import { styles } from '~/containers/edit-profile/profile-tab/profile-tab-form/ProfileTabForm.styles'
 
 export interface ProfileTabFormProps {
   data: EditProfileForm

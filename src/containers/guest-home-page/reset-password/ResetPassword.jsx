@@ -10,18 +10,19 @@ import { useSnackBarContext } from '~/context/snackbar-context'
 
 import Box from '@mui/material/Box'
 
-import AppTextField from '~/components/app-text-field/AppTextField'
-import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
-import LoginDialog from '../login-dialog/LoginDialog'
 import Loader from '~/components/loader/Loader'
+import AppButton from '~/components/app-button/AppButton'
+import AppTextField from '~/components/app-text-field/AppTextField'
 import ImgTitleDescription from '~/components/img-title-description/ImgTitleDescription'
+import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 
+import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
+import { styles } from '~/containers/guest-home-page/reset-password/ResetPassword.styles'
+
+import { ButtonVariantEnum, SizeEnum } from '~/types'
 import { confirmPassword, password } from '~/utils/validations/login'
 import { snackbarVariants } from '~/constants'
-import { styles } from './ResetPassword.styles'
 import imgSuccess from '~/assets/img/email-confirmation-modals/success-icon.svg'
-import AppButton from '~/components/app-button/AppButton'
-import { ButtonVariantEnum, SizeEnum } from '~/types'
 
 const ResetPassword = ({ resetToken, openModal }) => {
   const { t } = useTranslation()
