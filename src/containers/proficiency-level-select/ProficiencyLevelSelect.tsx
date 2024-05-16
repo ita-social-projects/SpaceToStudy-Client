@@ -10,32 +10,53 @@ import { SelectProps, SxProps } from '@mui/material'
 import { FC, useId } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ProficiencyLevelEnum } from '~/types'
-import { styles } from './ProficiencyLevelSelect.styles'
+import { styles } from '~/containers/proficiency-level-select/ProficiencyLevelSelect.styles'
+import { updateCheckBoxState } from '~/utils/checkbox-list'
 
 interface ProficiencyLevelSelectProps
-  extends Omit<SelectProps<ProficiencyLevelEnum[]>, 'sx'> {
+  extends Omit<SelectProps<ProficiencyLevelEnum[]>, 'sx' | 'onChange'> {
   value: ProficiencyLevelEnum[]
   label?: string
   errorMessage?: string
+  fillRange?: boolean
   sx?: {
     select: SxProps
   }
+  onChange: (event: ProficiencyLevelEnum[]) => void
 }
 
 const ProficiencyLevelSelect: FC<ProficiencyLevelSelectProps> = ({
-  value,
+  value = [],
   label,
-  errorMessage,
+  errorMessage = '',
   sx,
+  fillRange = false,
+  onChange,
   ...props
 }) => {
   const { t } = useTranslation()
   const id = useId()
+  const proficiencyLevelItems = Object.values(ProficiencyLevelEnum)
 
-  const menuItems = Object.values(ProficiencyLevelEnum).map((item) => (
-    <MenuItem key={item} value={item}>
-      <Checkbox checked={value.indexOf(item) > -1} />
-      <ListItemText primary={item} />
+  const handleCheckbox = (checkbox: ProficiencyLevelEnum) => {
+    const updatedCheckboxes = updateCheckBoxState(
+      proficiencyLevelItems,
+      value,
+      checkbox,
+      fillRange
+    )
+
+    onChange(updatedCheckboxes)
+  }
+
+  const menuItems = proficiencyLevelItems.map((checkbox) => (
+    <MenuItem
+      key={checkbox}
+      onClick={() => handleCheckbox(checkbox)}
+      value={checkbox}
+    >
+      <Checkbox checked={value.indexOf(checkbox) > -1} />
+      <ListItemText primary={checkbox} />
     </MenuItem>
   ))
 
@@ -46,6 +67,12 @@ const ProficiencyLevelSelect: FC<ProficiencyLevelSelectProps> = ({
       {t('common.errorMessages.proficiencyLevel')}
     </FormHelperText>
   )
+
+  const renderSelectedValue = (selected: ProficiencyLevelEnum[]) => {
+    return fillRange && selected.length > 1
+      ? `${selected[0]} - ${selected[selected.length - 1]}`
+      : selected.join(', ')
+  }
 
   return (
     <FormControl error={hasError}>
@@ -62,7 +89,7 @@ const ProficiencyLevelSelect: FC<ProficiencyLevelSelectProps> = ({
         input={<OutlinedInput label={label} />}
         labelId={`${id}-multiple-checkbox-label`}
         multiple
-        renderValue={(selected) => selected.join(', ')}
+        renderValue={(selected) => renderSelectedValue(selected)}
         sx={sx?.select}
         value={value}
         {...props}

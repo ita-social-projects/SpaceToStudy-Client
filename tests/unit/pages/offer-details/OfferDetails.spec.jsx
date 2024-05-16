@@ -76,7 +76,6 @@ describe('OfferDetails on desktop', () => {
     waitFor(() => {
       fireEvent.click(draft)
     })
-
     const active = await screen.findByText('common.labels.makeActive')
 
     expect(active).toBeInTheDocument()

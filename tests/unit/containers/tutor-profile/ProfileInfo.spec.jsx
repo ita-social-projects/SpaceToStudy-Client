@@ -125,10 +125,10 @@ describe('ProfileInfo test in my profile on laptop', () => {
     const tutorOffersBtn = screen.getByText(
       /tutorProfilePage.profileInfo.tutorOffers/i
     )
-
     fireEvent.click(tutorOffersBtn)
-
-    waitFor(() => expect(mockNavigate).toHaveBeenCalled())
+    waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalled()
+    })
   })
 })
 

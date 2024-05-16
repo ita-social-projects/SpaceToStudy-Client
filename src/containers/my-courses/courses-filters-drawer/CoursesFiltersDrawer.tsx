@@ -147,6 +147,7 @@ const CoursesFiltersDrawer: FC<CoursesFiltersDrawerProps> = ({
           </Typography>
         </Typography>
         <CheckboxList
+          fillRange
           items={levelOptions}
           onChange={updateFilterByKey('proficiencyLevel')}
           value={filters.proficiencyLevel}

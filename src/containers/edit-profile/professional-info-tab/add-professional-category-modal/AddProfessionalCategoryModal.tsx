@@ -51,13 +51,10 @@ function SubjectGroup({
         />
       </Box>
       <ProficiencyLevelSelect
+        fillRange
         fullWidth
         label={t('editProfilePage.profile.professionalTab.proficiencyLevels')}
-        onChange={(event) =>
-          proficiencyLevels.handleChange(
-            event.target.value as ProficiencyLevelEnum[]
-          )
-        }
+        onChange={proficiencyLevels.handleChange}
         value={proficiencyLevels.value}
       />
     </Box>
