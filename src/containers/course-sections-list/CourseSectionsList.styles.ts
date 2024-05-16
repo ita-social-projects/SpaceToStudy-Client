@@ -1,12 +1,11 @@
 import palette from '~/styles/app-theme/app.pallete'
 import { fadeAnimation } from '~/styles/app-theme/custom-animations'
-import { TypographyVariantEnum } from '~/types'
+import { PositionEnum, TypographyVariantEnum } from '~/types'
 
 const iconSize = {
   width: '16px',
   height: '16px'
 }
-
 export const styles = {
   section: (isDragging: boolean) => ({
     mb: '20px',
@@ -75,6 +74,14 @@ export const styles = {
         color: 'basic.darkGray',
         fontWeight: 500
       }
+    },
+    transformOrigin: {
+      vertical: PositionEnum.Top,
+      horizontal: PositionEnum.Center
+    },
+    anchorOrigin: {
+      vertical: PositionEnum.Bottom,
+      horizontal: PositionEnum.Center
     }
   },
   menuIcon: {

@@ -48,9 +48,11 @@ import {
   UpdateAttachmentParams
 } from '~/types'
 import { styles } from '~/containers/course-section/CourseSectionContainer.styles'
-import EditAttachmentModal from '~/containers/my-resources/edit-attachment-modal/EditAttachmentModal'
 import { createUrlPath } from '~/utils/helper-functions'
 import { authRoutes } from '~/router/constants/authRoutes'
+import { useAppDispatch } from '~/hooks/use-redux'
+import { setIsNewActivity } from '~/redux/features/cooperationsSlice'
+import EditAttachmentModal from '~/containers/my-resources/edit-attachment-modal/EditAttachmentModal'
 
 import useAxios from '~/hooks/use-axios'
 
@@ -71,7 +73,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
   titleText
 }) => {
   const { t } = useTranslation()
-
+  const dispatch = useAppDispatch()
   const { openMenu, renderMenu, closeMenu } = useMenu()
   const { openModal, closeModal } = useModalContext()
 
@@ -256,6 +258,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
   }
 
   const onDeleteSection = () => {
+    dispatch(setIsNewActivity(false))
     setSectionsItems(sections.filter((item) => item.id !== sectionData.id))
   }
 
