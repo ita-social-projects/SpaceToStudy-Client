@@ -5,7 +5,8 @@ import { useTranslation } from 'react-i18next'
 import {
   AccordionItem,
   ProfessionalBlock,
-  TypographyVariantEnum
+  TypographyVariantEnum,
+  UseFormEventHandler
 } from '~/types'
 
 import ExpandMore from '@mui/icons-material/ExpandMore'
@@ -17,9 +18,10 @@ import { styles } from '~/containers/edit-profile/professional-info-tab/about-tu
 
 interface AboutTutorAccordionProps {
   data: ProfessionalBlock
-  handleInputChange: (
-    key: keyof ProfessionalBlock
-  ) => (event: React.ChangeEvent<HTMLInputElement>) => void
+  handleInputChange: UseFormEventHandler<
+    ProfessionalBlock,
+    React.ChangeEvent<HTMLInputElement>
+  >
 }
 
 const AboutTutorAccordion: FC<AboutTutorAccordionProps> = ({

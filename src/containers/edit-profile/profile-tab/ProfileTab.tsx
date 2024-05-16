@@ -30,7 +30,7 @@ interface ProfileTabProps {
 const ProfileTab: FC<ProfileTabProps> = ({ user }) => {
   const { t } = useTranslation()
   const { setNeedConfirmation, checkConfirmation } = useConfirm()
-  const { handleSubmit, loading } = useUpdateUser(user._id)
+  const { handleSubmit, loading } = useUpdateUser(user._id, true)
 
   const initialValues = getProfileInitialValues(user)
 
