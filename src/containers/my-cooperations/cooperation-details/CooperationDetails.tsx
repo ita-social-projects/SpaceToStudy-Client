@@ -126,7 +126,7 @@ const CooperationDetails = () => {
       <Box>
         <StatusChip status={response.status} />
         <TitleWithDescription
-          key={Date.now()}
+          key={crypto.randomUUID()}
           style={styles.cooperationTitle}
           title={response.title}
         />

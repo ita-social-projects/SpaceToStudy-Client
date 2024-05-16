@@ -77,7 +77,7 @@ const HeaderTextWithDropdown = ({
   ) : (
     <KeyboardArrowDownIcon color={ColorEnum.Primary} sx={styles.headerIcon} />
   )
-  const showMenu = isView
+  const isContentShown = isView
     ? ''
     : activeMenu === menuTypes.sectionMenu && renderMenu(sectionMenuItems)
 
@@ -107,7 +107,7 @@ const HeaderTextWithDropdown = ({
           <MoreVertIcon color={ColorEnum.Primary} sx={styles.headerIcon} />
         </IconButton>
       )}
-      {showMenu}
+      {isContentShown}
     </Box>
   )
 }
