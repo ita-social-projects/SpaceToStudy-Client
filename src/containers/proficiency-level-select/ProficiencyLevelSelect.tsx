@@ -10,7 +10,7 @@ import { SelectProps, SxProps } from '@mui/material'
 import { FC, useId } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ProficiencyLevelEnum } from '~/types'
-import { styles } from './ProficiencyLevelSelect.styles'
+import { styles } from '~/containers/proficiency-level-select/ProficiencyLevelSelect.styles'
 import { updateCheckBoxState } from '~/utils/checkbox-list'
 
 interface ProficiencyLevelSelectProps
