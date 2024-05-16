@@ -64,7 +64,9 @@ const TutorProfile = () => {
     <PageWrapper>
       <ProfileInfo myRole={userRole} userData={response} />
       <CompleteProfileBlock data={response} profileItems={profileItems} />
-      <AboutTutorBlock data={response.professionalBlock} />
+      {response.professionalBlock && (
+        <AboutTutorBlock data={response.professionalBlock} />
+      )}
       {shouldShowPresentation && VideoPresentationComponent}
       <CommentsWithRatingBlock
         averageRating={response?.averageRating?.tutor}

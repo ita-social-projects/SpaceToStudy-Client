@@ -24,10 +24,12 @@ const AboutTutorBlock: FC<AboutTutorBlockProps> = ({ data }) => {
     setActiveIndex(activeIndex !== index ? index : null)
   }
 
-  const accordionItems = Object.keys(data).map((el) => ({
-    title: `tutorProfilePage.aboutTutor.${el}`,
-    description: data[el as keyof ProfessionalBlock]
-  }))
+  const accordionItems = Object.keys(data)
+    .filter((el) => data[el as keyof ProfessionalBlock])
+    .map((el) => ({
+      title: `tutorProfilePage.aboutTutor.${el}`,
+      description: data[el as keyof ProfessionalBlock]
+    }))
 
   return (
     <Box sx={styles.root}>
