@@ -353,10 +353,6 @@ const CourseSectionContainer: FC<SectionProps> = ({
     </MenuItem>
   ))
 
-  const onDeleteSection = () => {
-    setSectionsItems(sections.filter((item) => item.id !== sectionData.id))
-  }
-
   return (
     <Box sx={styles.root}>
       <HeaderTextWithDropdown

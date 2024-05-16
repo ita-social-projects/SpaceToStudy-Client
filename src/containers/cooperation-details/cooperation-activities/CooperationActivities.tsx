@@ -3,8 +3,6 @@ import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import { Link } from 'react-router-dom'
 import { FC } from 'react'
-import openIcon from '~/assets/img/cooperation-details/resource-availability/open-icon.svg'
-import closeIcon from '~/assets/img/cooperation-details/resource-availability/closed-icon.svg'
 
 import AppSelect from '~/components/app-select/AppSelect'
 import CooperationActivitiesList from '~/containers/my-cooperations/cooperation-activities-list/CooperationActivitiesList'
@@ -14,9 +12,12 @@ import { cooperationTranslationKeys } from '~/containers/cooperation-details/coo
 import { cooperationService } from '~/services/cooperation-service'
 import { authRoutes } from '~/router/constants/authRoutes'
 import useForm from '~/hooks/use-form'
-import { snackbarVariants } from '~/constants'
-import { useSnackBarContext } from '~/context/snackbar-context'
+import { useAppDispatch } from '~/hooks/use-redux'
+import { openAlert } from '~/redux/features/snackbarSlice'
 
+import openIcon from '~/assets/img/cooperation-details/resource-availability/open-icon.svg'
+import closeIcon from '~/assets/img/cooperation-details/resource-availability/closed-icon.svg'
+import { snackbarVariants } from '~/constants'
 import {
   ResourcesAvailabilityEnum,
   ButtonVariantEnum,
@@ -25,11 +26,7 @@ import {
   ButtonTypeEnum,
   ComponentEnum
 } from '~/types'
-import useForm from '~/hooks/use-form'
-import { snackbarVariants } from '~/constants'
-import { useAppDispatch } from '~/hooks/use-redux'
 import { styles } from '~/containers/cooperation-details/cooperation-activities/CooperationActivities.styles'
-import { openAlert } from '~/redux/features/snackbarSlice'
 
 interface CooperationActivitiesProps {
   cooperationId?: string

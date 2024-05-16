@@ -34,8 +34,6 @@ import { styles } from '~/containers/my-cooperations/cooperation-details/Coopera
 import { cooperationService } from '~/services/cooperation-service'
 import { ResourcesAvailabilityProvider } from '~/context/resources-availability-context'
 
-import { errorRoutes } from '~/router/constants/errorRoutes'
-
 import {
   CooperationTabsEnum,
   PositionEnum,
