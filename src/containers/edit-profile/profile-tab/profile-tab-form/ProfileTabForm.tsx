@@ -33,7 +33,6 @@ import { imageResize } from '~/utils/image-resize'
 import { styles } from '~/containers/edit-profile/profile-tab/profile-tab-form/ProfileTabForm.styles'
 import { openAlert } from '~/redux/features/snackbarSlice'
 
-
 export interface ProfileTabFormProps {
   data: EditProfileForm
   errors: UseFormErrors<EditProfileForm>
