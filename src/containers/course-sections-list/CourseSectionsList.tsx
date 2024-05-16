@@ -100,7 +100,7 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
 
   const addActivityMenuList = addActivityMenuItems.map(
     ({ id, label, icon, onClick }) => (
-      <MenuItem key={id} onClick={onClick}>
+      <MenuItem key={id} onClick={onClick} sx={styles.menuRoot}>
         {icon}
         {t(label)}
       </MenuItem>
@@ -108,28 +108,16 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
   )
 
   const clearCoorperationMenu = isCooperation && (
-    <Box>
-      <Divider flexItem>
-        <Typography
-          onClick={handleActivitiesMenuClick}
-          sx={styles.activityButton}
-        >
-          Add activity
-          <Add sx={styles.activityButtonIcon} />
-        </Typography>
-        {renderMenu(addActivityMenuList, {
-          transformOrigin: {
-            vertical: 'top',
-            horizontal: 'center'
-          },
-          anchorOrigin: {
-            vertical: 'bottom',
-            horizontal: 'center'
-          },
-          sx: styles.menuRoot
-        })}
-      </Divider>
-    </Box>
+    <Divider flexItem>
+      <Typography
+        onClick={handleActivitiesMenuClick}
+        sx={styles.activityButton}
+      >
+        {t(`cooperationsPage.button.create`)}
+        <Add sx={styles.activityButtonIcon} />
+      </Typography>
+      {renderMenu(addActivityMenuList)}
+    </Divider>
   )
 
   const sectionsItem = (item: CourseSection, isDragOver = false) => {
@@ -148,20 +136,10 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
             onClick={handleActivitiesMenuClick}
             sx={styles.activityButton}
           >
-            Add activity
+            {t(`cooperationsPage.button.add`)}
             <Add sx={styles.activityButtonIcon} />
           </Typography>
-          {renderMenu(addActivityMenuList, {
-            transformOrigin: {
-              vertical: 'top',
-              horizontal: 'center'
-            },
-            anchorOrigin: {
-              vertical: 'bottom',
-              horizontal: 'center'
-            },
-            sx: styles.menuRoot
-          })}
+          {renderMenu(addActivityMenuList)}
         </Divider>
       </Box>
     )

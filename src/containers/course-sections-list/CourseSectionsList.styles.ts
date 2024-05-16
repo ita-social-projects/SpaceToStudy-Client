@@ -75,6 +75,14 @@ export const styles = {
         color: 'basic.darkGray',
         fontWeight: 500
       }
+    },
+    transformOrigin: {
+      vertical: 'top',
+      horizontal: 'center'
+    },
+    anchorOrigin: {
+      vertical: 'bottom',
+      horizontal: 'center'
     }
   },
   menuIcon: {
