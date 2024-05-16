@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams, useNavigate } from 'react-router-dom'
 import { AxiosResponse } from 'axios'
@@ -21,6 +21,9 @@ import { useAppSelector } from '~/hooks/use-redux'
 
 import CooperationActivities from '~/containers/cooperation-details/cooperation-activities/CooperationActivities'
 import CooperationNotes from '~/containers/my-cooperations/cooperation-notes/CooperationNotes'
+import CooperationActivitiesView from '~/containers/cooperation-details/cooperetion-activities-view/CooperationActivitiesView'
+
+import { errorRoutes } from '~/router/constants/errorRoutes'
 import {
   tabsData,
   defaultResponse,
@@ -30,8 +33,6 @@ import { styles } from '~/containers/my-cooperations/cooperation-details/Coopera
 
 import { cooperationService } from '~/services/cooperation-service'
 import { ResourcesAvailabilityProvider } from '~/context/resources-availability-context'
-
-import { errorRoutes } from '~/router/constants/errorRoutes'
 
 import {
   CooperationTabsEnum,
@@ -51,7 +52,8 @@ const CooperationDetails = () => {
   const [activeTab, setActiveTab] = useState<CooperationTabsEnum>(
     CooperationTabsEnum.Activities
   )
-  const [isNotesOpen, setIsNotesOpen] = useState<boolean>(false)
+  const [isNotesOpen, setIsNotesOpen] = useState(false)
+  const [editMode, setEditMode] = useState(false)
 
   const responseError = useCallback(
     () => navigate(errorRoutes.notFound.path),
@@ -67,6 +69,10 @@ const CooperationDetails = () => {
     defaultResponse,
     onResponseError: responseError
   })
+
+  useEffect(() => {
+    response.sections && response.sections.length && setEditMode(true)
+  }, [response.sections])
 
   if (loading) {
     return <Loader pageLoad />
@@ -86,12 +92,26 @@ const CooperationDetails = () => {
 
   const cooperationContent = activeTab && tabsData[activeTab]?.content
 
-  const pageContent =
-    isActivityCreated && activeTab === CooperationTabsEnum.Activities ? (
-      <CooperationActivities cooperationId={id} />
-    ) : (
-      cooperationContent
-    )
+  const pageContent = () => {
+    if (editMode && CooperationTabsEnum.Details === activeTab) {
+      return cooperationContent
+    }
+
+    if (editMode && activeTab === CooperationTabsEnum.Activities) {
+      return (
+        <CooperationActivitiesView
+          sections={response.sections}
+          setEditMode={setEditMode}
+        />
+      )
+    }
+
+    if (isActivityCreated) {
+      return <CooperationActivities cooperationId={id} />
+    }
+
+    return cooperationContent
+  }
 
   const iconConditionals = isNotesOpen ? (
     <KeyboardDoubleArrowRightIcon />
@@ -104,6 +124,7 @@ const CooperationDetails = () => {
       <Box>
         <StatusChip status={response.status} />
         <TitleWithDescription
+          key={crypto.randomUUID()}
           style={styles.cooperationTitle}
           title={response.title}
         />
@@ -130,7 +151,7 @@ const CooperationDetails = () => {
       <Box sx={styles.notesBlock}>
         <Box sx={styles.pageContent}>
           <ResourcesAvailabilityProvider>
-            {pageContent}
+            {pageContent()}
           </ResourcesAvailabilityProvider>
         </Box>
         {!isDesktop && isNotesOpen && (

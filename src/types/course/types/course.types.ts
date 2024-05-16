@@ -8,6 +8,6 @@ import {
 type Resources = Lesson | Quiz | Attachment
 
 export type CourseResources = Resources & {
-  resourceAvailability?: ResourceAvailabilityStatusEnum
+  availability?: ResourceAvailabilityStatusEnum
   openFromDate?: string | null
 }

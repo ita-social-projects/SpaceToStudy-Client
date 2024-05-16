@@ -40,7 +40,6 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
   handleSectionInputChange,
   handleSectionNonInputChange,
   handleSectionResourcesOrder,
-  titleText,
   isCooperation = false,
   addNewSection
 }) => {
@@ -166,7 +165,6 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
             sectionData={item}
             sections={items}
             setSectionsItems={setSectionsItems}
-            titleText={titleText}
           />
         </SortableWrapper>
       </>

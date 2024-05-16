@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import { Link } from 'react-router-dom'
+import { FC } from 'react'
 
 import AppSelect from '~/components/app-select/AppSelect'
 import CooperationActivitiesList from '~/containers/my-cooperations/cooperation-activities-list/CooperationActivitiesList'
@@ -9,10 +10,14 @@ import { useResourceAvailabilityContext } from '~/context/resources-availability
 import AppButton from '~/components/app-button/AppButton'
 import { cooperationTranslationKeys } from '~/containers/cooperation-details/cooperation-activities/CooperationActivities.constants'
 import { cooperationService } from '~/services/cooperation-service'
-
 import { authRoutes } from '~/router/constants/authRoutes'
+import useForm from '~/hooks/use-form'
+import { useAppDispatch } from '~/hooks/use-redux'
+import { openAlert } from '~/redux/features/snackbarSlice'
+
 import openIcon from '~/assets/img/cooperation-details/resource-availability/open-icon.svg'
 import closeIcon from '~/assets/img/cooperation-details/resource-availability/closed-icon.svg'
+import { snackbarVariants } from '~/constants'
 import {
   ResourcesAvailabilityEnum,
   ButtonVariantEnum,
@@ -21,19 +26,15 @@ import {
   ButtonTypeEnum,
   ComponentEnum
 } from '~/types'
-import useForm from '~/hooks/use-form'
-import { snackbarVariants } from '~/constants'
-import { useAppDispatch } from '~/hooks/use-redux'
 import { styles } from '~/containers/cooperation-details/cooperation-activities/CooperationActivities.styles'
-import { openAlert } from '~/redux/features/snackbarSlice'
 
 interface CooperationActivitiesProps {
   cooperationId?: string
 }
 
-const CooperationActivities = ({
+const CooperationActivities: FC<CooperationActivitiesProps> = ({
   cooperationId
-}: CooperationActivitiesProps) => {
+}) => {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
   const { resourceAvailability, setResourceAvailability } =

@@ -2,12 +2,12 @@ import palette from '~/styles/app-theme/app.pallete'
 import { SlideLeftLongAnimation } from '~/styles/app-theme/custom-animations'
 
 export const styles = {
-  container: {
+  container: (isView: boolean) => ({
     p: '16px 24px',
     display: 'flex',
     justifyContent: 'space-between',
-    ml: '38px'
-  },
+    ml: isView ? '15px' : '38px'
+  }),
   availabilitySelectionContainer: {
     display: 'flex',
     alignItems: 'center',

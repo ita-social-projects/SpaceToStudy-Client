@@ -37,7 +37,7 @@ const ResourcesList: FC<ResourcesListProps> = ({
         const resources = [...prevResources]
         const resource = resources.find((item) => item._id === id)
         if (resource) {
-          resource.resourceAvailability = availability
+          resource.availability = availability
           resource.openFromDate = openFromDate
         }
         return resources

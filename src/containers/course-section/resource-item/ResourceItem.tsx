@@ -20,7 +20,8 @@ import {
   CourseResources,
   ResourceAvailabilityStatusEnum,
   ResourcesAvailabilityEnum,
-  ResourcesTabsEnum as ResourcesTypes
+  ResourcesTabsEnum as ResourcesTypes,
+  SizeEnum
 } from '~/types'
 
 import { selectionFields } from '~/containers/course-section/resource-item/ResourceItem.constants'
@@ -29,16 +30,23 @@ import { styles } from '~/containers/course-section/resource-item/ResourceItem.s
 
 interface ResourceItemProps {
   resource: CourseResources
-  deleteResource: (resource: CourseResources) => void
-  setResourceAvailability: (
+  deleteResource?: (resource: CourseResources) => void
+  setResourceAvailability?: (
     id: string,
     availability: ResourceAvailabilityStatusEnum,
     openFromDate: string | null
   ) => void
-  editResource: (resource: CourseResources) => void
+  editResource?: (resource: CourseResources) => void
+  isView?: boolean
 }
 
-const availabilityIcons = {
+interface AvailabilityIconsProps {
+  open: string
+  openFrom: string
+  closed: string
+}
+
+const availabilityIcons: AvailabilityIconsProps = {
   open: openIcon,
   openFrom: openFrom,
   closed: closedIcon
@@ -48,14 +56,15 @@ const ResourceItem: FC<ResourceItemProps> = ({
   resource,
   deleteResource,
   setResourceAvailability,
-  editResource
+  editResource,
+  isView = false
 }) => {
   const onDeleteResource = () => {
-    deleteResource(resource)
+    deleteResource?.(resource)
   }
 
   const onEditResource = () => {
-    editResource(resource)
+    editResource?.(resource)
   }
 
   const { t } = useTranslation()
@@ -73,16 +82,16 @@ const ResourceItem: FC<ResourceItemProps> = ({
 
   const { Open, OpenFrom, Closed } = ResourceAvailabilityStatusEnum
 
-  const resourceAvailabilityStatus = resource.resourceAvailability ?? Open
+  const resourceAvailabilityStatus = resource.availability ?? Open
   const displayDatePicker = resourceAvailabilityStatus === OpenFrom
 
   const setDate = (value: string | null) => {
-    setResourceAvailability(resource._id, resourceAvailabilityStatus, value)
+    setResourceAvailability?.(resource._id, resourceAvailabilityStatus, value)
   }
 
   const setStatus = useCallback(
     (status: ResourceAvailabilityStatusEnum) => {
-      setResourceAvailability(resource._id, status, null)
+      setResourceAvailability?.(resource._id, status, null)
     },
     [resource._id, setResourceAvailability]
   )
@@ -134,22 +143,38 @@ const ResourceItem: FC<ResourceItemProps> = ({
     </Box>
   )
 
+  const showIcon = isView ? (
+    <Box>
+      {resource.availability?.status ===
+        ResourceAvailabilityStatusEnum.Open && (
+        <Box sx={styles.availabilityIcon}>
+          <img
+            alt='resource icon'
+            src={availabilityIcons[resourceAvailabilityStatus]}
+          />
+        </Box>
+      )}
+    </Box>
+  ) : (
+    <Box sx={styles.resourceActions}>
+      {isCooperation && availabilitySelection}
+      <IconButton aria-label='edit' onClick={onEditResource}>
+        <EditIcon fontSize={SizeEnum.Small} sx={styles.editBtn} />
+      </IconButton>
+      <IconButton aria-label='delete' onClick={onDeleteResource}>
+        <CloseIcon fontSize={SizeEnum.Small} />
+      </IconButton>
+    </Box>
+  )
+
   return (
-    <Box sx={styles.container}>
+    <Box sx={styles.container(isView)}>
       <IconExtensionWithTitle
         description={resource.description ?? ''}
         icon={setResourceIcon()}
         title={'title' in resource ? resource.title : resource.fileName}
       />
-      <Box sx={styles.resourceActions}>
-        {isCooperation && availabilitySelection}
-        <IconButton aria-label='edit' onClick={onEditResource}>
-          <EditIcon fontSize='small' sx={styles.editBtn} />
-        </IconButton>
-        <IconButton aria-label='delete' onClick={onDeleteResource}>
-          <CloseIcon fontSize='small' />
-        </IconButton>
-      </Box>
+      <Box sx={styles.resourceActions}>{showIcon}</Box>
     </Box>
   )
 }

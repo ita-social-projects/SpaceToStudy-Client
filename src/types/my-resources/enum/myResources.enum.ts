@@ -6,6 +6,12 @@ export enum ResourcesTabsEnum {
   Categories = 'categories'
 }
 
+export enum ResourcesEnum {
+  Lesson = 'lesson',
+  Quizz = 'quiz',
+  Attachment = 'attachment'
+}
+
 export enum QuestionTypesEnum {
   MultipleChoice = 'multipleChoice',
   OpenAnswer = 'openAnswer',

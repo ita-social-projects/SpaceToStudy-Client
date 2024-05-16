@@ -30,6 +30,10 @@ export interface CourseForm
   sections: CourseSection[]
 }
 
+export interface Activities {
+  resource: [Lesson, Quiz, Attachment]
+}
+
 export interface CourseSection {
   _id?: string
   id: string
@@ -39,6 +43,7 @@ export interface CourseSection {
   quizzes: Quiz[]
   attachments: Attachment[]
   order: string[]
+  activities: Activities[]
 }
 
 export interface CourseFilters extends Pick<Course, 'proficiencyLevel'> {

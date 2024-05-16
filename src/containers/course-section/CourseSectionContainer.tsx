@@ -2,13 +2,10 @@ import { useState, FC, useEffect, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { MenuItem } from '@mui/material'
 import Box from '@mui/material/Box'
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
-import IconButton from '@mui/material/IconButton'
-import MoreVertIcon from '@mui/icons-material/MoreVert'
 import AddIcon from '@mui/icons-material/Add'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 
+import HeaderTextWithDropdown from '~/components/header-text-with-dropdown/HeaderTextWithDropdown'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import AppButton from '~/components/app-button/AppButton'
 import ResourcesList from '~/containers/course-section/resources-list/ResourcesList'
@@ -36,7 +33,6 @@ import {
 import {
   TextFieldVariantEnum,
   SizeEnum,
-  ColorEnum,
   ButtonVariantEnum,
   CourseSection,
   Lesson,
@@ -69,15 +65,13 @@ const CourseSectionContainer: FC<SectionProps> = ({
   setSectionsItems,
   handleSectionInputChange,
   handleSectionNonInputChange,
-  handleSectionResourcesOrder,
-  titleText
+  handleSectionResourcesOrder
 }) => {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
   const { openMenu, renderMenu, closeMenu } = useMenu()
   const { openModal, closeModal } = useModalContext()
 
-  const [titleInput, setTitleInput] = useState<string>(sectionData.title)
   const [descriptionInput, setDescriptionInput] = useState<string>(
     sectionData.description
   )
@@ -248,10 +242,6 @@ const CourseSectionContainer: FC<SectionProps> = ({
     }
   }
 
-  const onShowHide = () => {
-    setIsVisible((isVisible) => !isVisible)
-  }
-
   const onAction = (actionFunc: openModalFunc) => {
     closeMenu()
     actionFunc()
@@ -324,25 +314,6 @@ const CourseSectionContainer: FC<SectionProps> = ({
     })
   }
 
-  const sectionActions = [
-    {
-      id: 1,
-      label: (
-        <Box sx={styles.deleteIconWrapper}>
-          <DeleteOutlineIcon sx={styles.menuIcon} />
-          {t('course.courseSection.sectionMenu.deleteSection')}
-        </Box>
-      ),
-      func: onDeleteSection
-    }
-  ]
-
-  const sectionMenuItems = sectionActions.map(({ label, func, id }) => (
-    <MenuItem key={id} onClick={func}>
-      {label}
-    </MenuItem>
-  ))
-
   const addResourceActions = [
     {
       id: 1,
@@ -384,47 +355,13 @@ const CourseSectionContainer: FC<SectionProps> = ({
 
   return (
     <Box sx={styles.root}>
-      <Box sx={styles.header}>
-        <IconButton onClick={onShowHide} sx={styles.headerIconWrapper}>
-          {isVisible ? (
-            <KeyboardArrowUpIcon
-              color={ColorEnum.Primary}
-              sx={styles.headerIcon}
-            />
-          ) : (
-            <KeyboardArrowDownIcon
-              color={ColorEnum.Primary}
-              sx={styles.headerIcon}
-            />
-          )}
-        </IconButton>
-        <AppTextField
-          InputLabelProps={styles.titleLabel}
-          InputProps={styles.titleInput}
-          fullWidth
-          inputProps={styles.input}
-          label={titleInput ? '' : t(`course.courseSection.${titleText}`)}
-          onBlur={(event) =>
-            handleSectionInputChange(
-              sectionData.id,
-              'title',
-              event.target.value
-            )
-          }
-          onChange={(event) => setTitleInput(event.target.value)}
-          value={titleInput}
-          variant={TextFieldVariantEnum.Standard}
-        />
-        <IconButton
-          onClick={(event) => {
-            setActiveMenu(menuTypes.sectionMenu)
-            openMenu(event)
-          }}
-        >
-          <MoreVertIcon color={ColorEnum.Primary} sx={styles.headerIcon} />
-        </IconButton>
-        {activeMenu === menuTypes.sectionMenu && renderMenu(sectionMenuItems)}
-      </Box>
+      <HeaderTextWithDropdown
+        handleSectionInputChange={handleSectionInputChange}
+        isVisible={isVisible}
+        onDeleteSection={onDeleteSection}
+        sectionData={sectionData}
+        setIsVisible={setIsVisible}
+      />
       {isVisible && (
         <Box>
           <AppTextField
