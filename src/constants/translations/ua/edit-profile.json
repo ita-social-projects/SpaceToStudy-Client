@@ -2,7 +2,7 @@
   "profile": {
     "title": "Профіль",
     "description": "Тут ви можете редагувати публічну інформацію про себе.",
-    "updateProfileBtn": "Оновити профіль",
+    "updateProfileBtn": "Оновити",
     "successMessage": "Ваші дані успішно оновлено.",
     "generalTab": {
       "uploadTitle": "Завантажити нове зображення",

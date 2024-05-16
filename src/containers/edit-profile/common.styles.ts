@@ -17,3 +17,11 @@ export const rootContainer = {
 export const updateProfileBtn = {
   alignSelf: 'flex-end'
 }
+
+export const innerContainer = {
+  maxWidth: '768px',
+  width: '100%',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '20px'
+}

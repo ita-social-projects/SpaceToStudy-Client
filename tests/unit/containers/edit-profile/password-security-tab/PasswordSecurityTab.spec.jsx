@@ -4,7 +4,7 @@ import {
   fireEvent,
   waitForElementToBeRemoved
 } from '@testing-library/react'
-import PasswordSecurityTab from '~/containers/edit-profile/security-tab/PasswordSecurityTab'
+import PasswordSecurityTab from '~/containers/edit-profile/password-security-tab/PasswordSecurityTab'
 
 const changeInputValue = (label, value) => {
   fireEvent.change(label, { target: { value } })
@@ -16,17 +16,18 @@ describe('PasswordSecurityTab', () => {
   })
 
   it('renders title and description', () => {
-    const title = screen.getByText('editTutor.passwordSecurityTab.title')
+    const title = screen.getByText(
+      'editProfilePage.profile.passwordSecurityTab.title'
+    )
     const description = screen.getByText(
-      'editTutor.passwordSecurityTab.description'
+      'editProfilePage.profile.passwordSecurityTab.description'
     )
     expect(title).toBeInTheDocument()
     expect(description).toBeInTheDocument()
   })
-
   it('resets form when discard button is clicked', () => {
     const currentPasswordLabel = screen.getByLabelText(
-      'editTutor.passwordSecurityTab.currentPassword'
+      'editProfilePage.profile.passwordSecurityTab.currentPassword'
     )
     const discardButtonText = screen.getByText('common.discard')
 
@@ -39,7 +40,7 @@ describe('PasswordSecurityTab', () => {
 
   it('updates state when form fields are changed', () => {
     const currentPasswordLabel = screen.getByLabelText(
-      'editTutor.passwordSecurityTab.currentPassword'
+      'editProfilePage.profile.passwordSecurityTab.currentPassword'
     )
 
     changeInputValue(currentPasswordLabel, 'oldPassword')
@@ -49,20 +50,20 @@ describe('PasswordSecurityTab', () => {
 
   it('checks is ConfirmDialog open when deactivate account button is clicked', () => {
     const deactivateAccountButton = screen.getByText(
-      'editTutor.passwordSecurityTab.deactivateAccount'
+      'editProfilePage.profile.passwordSecurityTab.deactivateAccount'
     )
 
     fireEvent.click(deactivateAccountButton)
 
     const deactivateTitle = screen.getByText(
-      'editTutor.passwordSecurityTab.deactivateTitle'
+      'editProfilePage.profile.passwordSecurityTab.deactivateTitle'
     )
     expect(deactivateTitle).toBeInTheDocument()
   })
 
   it('checks is ConfirmDialog closed when cancel button is clicked', async () => {
     const deactivateAccountButton = screen.getByText(
-      'editTutor.passwordSecurityTab.deactivateAccount'
+      'editProfilePage.profile.passwordSecurityTab.deactivateAccount'
     )
     let deactivateTitle
 
@@ -73,7 +74,7 @@ describe('PasswordSecurityTab', () => {
 
     await waitForElementToBeRemoved(() => {
       deactivateTitle = screen.queryByText(
-        'editTutor.passwordSecurityTab.deactivateTitle'
+        'editProfilePage.profile.passwordSecurityTab.deactivateTitle'
       )
       return deactivateTitle
     })
