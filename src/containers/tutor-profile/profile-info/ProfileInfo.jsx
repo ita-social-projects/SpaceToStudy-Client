@@ -17,10 +17,8 @@ import ProfileContainerMobile from '~/containers/tutor-profile/profile-info/Prof
 import { styles } from '~/containers/tutor-profile/profile-info/ProfileInfo.styles'
 
 import { authRoutes } from '~/router/constants/authRoutes'
-import { styles } from '~/containers/tutor-profile/profile-info/ProfileInfo.styles'
 import { snackbarVariants } from '~/constants'
 
-import { useSnackBarContext } from '~/context/snackbar-context'
 import { SizeEnum, UserRoleEnum, ButtonVariantEnum } from '~/types'
 import { createUrlPath, getDifferenceDates } from '~/utils/helper-functions'
 import { useAppDispatch } from '~/hooks/use-redux'
