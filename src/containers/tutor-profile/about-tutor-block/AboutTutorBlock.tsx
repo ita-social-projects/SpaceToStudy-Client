@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
@@ -7,12 +7,15 @@ import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded'
 
 import useBreakpoints from '~/hooks/use-breakpoints'
 import Accordions from '~/components/accordion/Accordions'
-import { accordionItems } from '~/containers/tutor-profile/about-tutor-block/AboutTutorBlock.constans'
-import { TypographyVariantEnum } from '~/types'
+import { ProfessionalBlock, TypographyVariantEnum } from '~/types'
 
 import { styles } from '~/containers/tutor-profile/about-tutor-block/AboutTutorBlock.styles'
 
-const AboutTutorBlock = () => {
+interface AboutTutorBlockProps {
+  data: ProfessionalBlock
+}
+
+const AboutTutorBlock: FC<AboutTutorBlockProps> = ({ data }) => {
   const { t } = useTranslation()
   const { isMobile } = useBreakpoints()
   const [activeIndex, setActiveIndex] = useState<number | null>(null)
@@ -20,6 +23,11 @@ const AboutTutorBlock = () => {
   const handleAccordionChange = (index: number) => {
     setActiveIndex(activeIndex !== index ? index : null)
   }
+
+  const accordionItems = Object.keys(data).map((el) => ({
+    title: `tutorProfilePage.aboutTutor.${el}`,
+    description: data[el as keyof ProfessionalBlock]
+  }))
 
   return (
     <Box sx={styles.root}>

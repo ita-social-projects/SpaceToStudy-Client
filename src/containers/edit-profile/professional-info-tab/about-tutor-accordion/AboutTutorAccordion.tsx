@@ -1,22 +1,29 @@
 import Accordions from '~/components/accordion/Accordions'
 import ExpandMore from '@mui/icons-material/ExpandMore'
 import AppTextArea from '~/components/app-text-area/AppTextArea'
-import { useState } from 'react'
-import useForm from '~/hooks/use-form'
+import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { styles } from '~/containers/edit-profile/professional-info-tab/about-tutor-accordion/AboutTutorAccordion.styles'
-import { initialFormValues } from '~/containers/edit-profile/professional-info-tab/about-tutor-accordion/AboutTutorAccordion.constants'
-import { AccordionItem, TypographyVariantEnum } from '~/types'
+import {
+  AccordionItem,
+  ProfessionalBlock,
+  TypographyVariantEnum
+} from '~/types'
 
-const AboutTutorAccordion = () => {
+interface AboutTutorAccordionProps {
+  data: ProfessionalBlock
+  handleInputChange: (
+    key: keyof ProfessionalBlock
+  ) => (event: React.ChangeEvent<HTMLInputElement>) => void
+}
+
+const AboutTutorAccordion: FC<AboutTutorAccordionProps> = ({
+  data,
+  handleInputChange
+}) => {
   const { t } = useTranslation()
   const [activeItemId, setActiveItemId] = useState(0)
 
-  const { data, handleInputChange } = useForm({
-    initialValues: initialFormValues
-  })
-
-  // @TODO: replace content if backend is done
   const accordionItems: AccordionItem[] = [
     {
       title: 'editProfilePage.profile.professionalTab.accordion.education',

@@ -141,7 +141,8 @@ const ProfileInfo = ({ userData, myRole }) => {
     </Box>
   )
 
-  const subjectData = userData.mainSubjects.tutor.map((item) => item.name)
+  const subjectData =
+    userData.mainSubjects.tutor?.map((item) => item.name) || []
 
   return !isMobile ? (
     <ProfileContainerDesktop

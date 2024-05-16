@@ -1,21 +1,35 @@
+import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
-import { styles } from './ProfessionalInfoTab.styles'
-import AppButton from '~/components/app-button/AppButton'
+
+import useForm from '~/hooks/use-form'
+import useUpdateUser from '~/hooks/use-update-user'
+import { useAppSelector } from '~/hooks/use-redux'
+
+import { useModalContext } from '~/context/modal-context'
+
 import {
   ButtonVariantEnum,
   ComponentEnum,
   OpenProfessionalCategoryModalHandler,
+  ProfessionalBlock,
   ProfessionalCategoryWithActivationControls,
   ProficiencyLevelEnum,
-  SizeEnum
+  SizeEnum,
+  SubjectInterface,
+  UserRoleEnum
 } from '~/types'
+
 import Box from '@mui/material/Box'
-import ProfessionalCategoryList from '~/containers/edit-profile/professional-info-tab/professional-category-list/ProfessionalCategoryList'
-import { useModalContext } from '~/context/modal-context'
-import AddProfessionalCategoryModal from '~/containers/edit-profile/professional-info-tab/add-professional-category-modal/AddProfessionalCategoryModal'
 import AddIcon from '@mui/icons-material/Add'
+
+import ProfessionalCategoryList from '~/containers/edit-profile/professional-info-tab/professional-category-list/ProfessionalCategoryList'
+import AddProfessionalCategoryModal from '~/containers/edit-profile/professional-info-tab/add-professional-category-modal/AddProfessionalCategoryModal'
 import AboutTutorAccordion from '~/containers/edit-profile/professional-info-tab/about-tutor-accordion/AboutTutorAccordion'
+import { initialFormValues } from '~/containers/edit-profile/professional-info-tab/about-tutor-accordion/AboutTutorAccordion.constants'
+import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
+import AppButton from '~/components/app-button/AppButton'
+
+import { styles } from '~/containers/edit-profile/professional-info-tab/ProfessionalInfoTab.styles'
 
 // @TODO: replace mock data to real data
 const mockCategoriesData: ProfessionalCategoryWithActivationControls[] = [
@@ -99,10 +113,31 @@ const mockCategoriesData: ProfessionalCategoryWithActivationControls[] = [
   }
 ]
 
-const ProfessionalInfoTab = () => {
+interface ProfessionalInfoTabProps {
+  professionalBlock?: ProfessionalBlock
+  categories: SubjectInterface[]
+  userId: string
+}
+
+const ProfessionalInfoTab: FC<ProfessionalInfoTabProps> = ({
+  professionalBlock,
+  userId
+}) => {
   const { t } = useTranslation()
 
   const { openModal, closeModal } = useModalContext()
+
+  const { userRole } = useAppSelector((state) => state.appMain)
+
+  const { handleSubmit, loading } = useUpdateUser(userId)
+
+  const { data, handleInputChange } = useForm<ProfessionalBlock>({
+    initialValues: professionalBlock || initialFormValues
+  })
+
+  const handleUpdateInfo = () => {
+    handleSubmit({ professionalBlock: data })
+  }
 
   const openProfessionalCategoryModal: OpenProfessionalCategoryModalHandler = (
     initialValues
@@ -120,65 +155,70 @@ const ProfessionalInfoTab = () => {
     })
   }
 
-  const handleUpdateData = () => {
-    // @TODO: add logic to update data
-  }
-
-  return (
-    <Box sx={styles.professionalInfoInnerContainer}>
-      <Box sx={styles.root}>
+  const TutorInfo = userRole === UserRoleEnum.Tutor && (
+    <>
+      <Box component='section'>
         <TitleWithDescription
           description={t(
-            'editProfilePage.profile.professionalTab.mainDescription'
+            'editProfilePage.profile.professionalTab.aboutTheTutorDescription'
           )}
-          style={styles.mainTitleWithDescription}
-          title={t('editProfilePage.profile.professionalTab.mainTitle')}
+          style={styles.titleWithDescription}
+          title={t(
+            'editProfilePage.profile.professionalTab.aboutTheTutorTitle'
+          )}
         />
-        <Box component={ComponentEnum.Section}>
-          <TitleWithDescription
-            description={t(
-              'editProfilePage.profile.professionalTab.categoriesDescription'
-            )}
-            style={styles.titleWithDescription}
-            title={t('editProfilePage.profile.professionalTab.categoriesTitle')}
+        <Box sx={styles.accordionContainer}>
+          <AboutTutorAccordion
+            data={data}
+            handleInputChange={handleInputChange}
           />
-          <Box sx={styles.createBtnContainer}>
-            <AppButton
-              onClick={() => openProfessionalCategoryModal()}
-              startIcon={<AddIcon />}
-              variant={ButtonVariantEnum.Contained}
-            >
-              {t('editProfilePage.profile.professionalTab.addCategoryBtn')}
-            </AppButton>
-          </Box>
-          <ProfessionalCategoryList
-            items={mockCategoriesData}
-            openProfessionalCategoryModal={openProfessionalCategoryModal}
-          />
-        </Box>
-        <Box component='section'>
-          <TitleWithDescription
-            description={t(
-              'editProfilePage.profile.professionalTab.aboutTheTutorDescription'
-            )}
-            style={styles.titleWithDescription}
-            title={t(
-              'editProfilePage.profile.professionalTab.aboutTheTutorTitle'
-            )}
-          />
-          <Box sx={styles.accordionContainer}>
-            <AboutTutorAccordion />
-          </Box>
         </Box>
       </Box>
       <AppButton
-        onClick={handleUpdateData}
+        disabled={false}
+        loading={loading}
+        onClick={handleUpdateInfo}
         size={SizeEnum.ExtraLarge}
         sx={styles.updateProfileBtn}
         variant={ButtonVariantEnum.Contained}
       >
         {t('editProfilePage.profile.updateProfileBtn')}
       </AppButton>
+    </>
+  )
+
+  return (
+    <Box sx={styles.root}>
+      <TitleWithDescription
+        description={t(
+          'editProfilePage.profile.professionalTab.mainDescription'
+        )}
+        style={styles.mainTitleWithDescription}
+        title={t('editProfilePage.profile.professionalTab.mainTitle')}
+      />
+      <Box component={ComponentEnum.Section}>
+        <TitleWithDescription
+          description={t(
+            'editProfilePage.profile.professionalTab.categoriesDescription'
+          )}
+          style={styles.titleWithDescription}
+          title={t('editProfilePage.profile.professionalTab.categoriesTitle')}
+        />
+        <Box sx={styles.createBtnContainer}>
+          <AppButton
+            onClick={() => openProfessionalCategoryModal()}
+            startIcon={<AddIcon />}
+            variant={ButtonVariantEnum.Contained}
+          >
+            {t('editProfilePage.profile.professionalTab.addCategoryBtn')}
+          </AppButton>
+        </Box>
+        <ProfessionalCategoryList
+          items={mockCategoriesData}
+          openProfessionalCategoryModal={openProfessionalCategoryModal}
+        />
+      </Box>
+      {TutorInfo}
     </Box>
   )
 }

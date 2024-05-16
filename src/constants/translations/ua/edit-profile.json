@@ -42,8 +42,8 @@
       "editCategoryBtn": "Редагувати",
       "activateCategoryBtn": "Активувати",
       "deactivateCategoryBtn": "Деактивувати",
-      "deactivateCategoryBtnEnabledTooltip": "Ця категорія буде прихована.\nВи можете активувати її коли завгодно",
-      "deactivateCategoryBtnDisabledTooltip": "Стає невидимою у вашому профілі.\nВи можете активувати її у будь-який час.",
+      "deactivateCategoryBtnEnabledTooltip": "Стає невидимою у вашому профілі.\nВи можете активувати її у будь-який час.",
+      "deactivateCategoryBtnDisabledTooltip": "Ви розпочали співпрацю(і) з цією категорією.\nБудь ласка, закрийте її перед деактивацією",
       "aboutTheTutorTitle": "Про викладача",
       "aboutTheTutorDescription": "Опишіть ваш професійний досвід. Ця інформація буде відображена у вашому публічному профілі.",
       "accordion": {

@@ -46,30 +46,7 @@ const useUpdateUser = (userId: string) => {
   })
 
   const handleSubmit = (data: UpdateUserParams) => {
-    const {
-      photo,
-      firstName,
-      lastName,
-      address,
-      professionalSummary,
-      nativeLanguage,
-      videoLink,
-      mainSubjects
-    } = data
-
-    const updatedData: UpdateUserParams = {
-      firstName,
-      lastName,
-      address,
-      professionalSummary,
-      mainSubjects,
-      nativeLanguage,
-      videoLink
-    }
-
-    if (photo !== undefined) updatedData.photo = photo
-
-    fetchData(updatedData).catch(console.error)
+    fetchData(data).catch(console.error)
   }
 
   return { loading, handleSubmit }
