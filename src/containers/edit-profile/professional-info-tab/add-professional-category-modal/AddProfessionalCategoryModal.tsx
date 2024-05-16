@@ -6,6 +6,7 @@ import AppButton from '~/components/app-button/AppButton'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import { styles } from '~/containers/edit-profile/professional-info-tab/add-professional-category-modal/AddProfessionalCategoryModal.styles'
 import {
+  ButtonTypeEnum,
   ButtonVariantEnum,
   ComponentEnum,
   ProfessionalCategory,
@@ -173,7 +174,10 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
         </Box>
       </Box>
       <Box sx={styles.buttonGroup}>
-        <AppButton type='submit' variant={ButtonVariantEnum.Contained}>
+        <AppButton
+          type={ButtonTypeEnum.Submit}
+          variant={ButtonVariantEnum.Contained}
+        >
           {t(
             'editProfilePage.profile.professionalTab.addCategoryModal.submitBtn'
           )}

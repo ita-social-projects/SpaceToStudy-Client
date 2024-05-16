@@ -87,6 +87,7 @@ const ProficiencyLevelSelect: FC<ProficiencyLevelSelectProps> = ({
         MenuProps={styles.menuProps}
         error={hasError}
         input={<OutlinedInput label={label} />}
+        inputProps={{ 'data-testid': 'proficiency-levels' }}
         labelId={`${id}-multiple-checkbox-label`}
         multiple
         renderValue={(selected) => renderSelectedValue(selected)}
