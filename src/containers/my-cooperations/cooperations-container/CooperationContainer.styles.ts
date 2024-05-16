@@ -43,5 +43,8 @@ export const styles = {
       color: 'primary.900'
     }
   },
-  title: { maxWidth: '360px' }
+  title: {
+    maxWidth: '360px',
+    wordBreak: 'break-word'
+  }
 }

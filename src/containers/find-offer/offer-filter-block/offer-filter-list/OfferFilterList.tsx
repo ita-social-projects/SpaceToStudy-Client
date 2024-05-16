@@ -7,6 +7,7 @@ import AppRange from '~/components/app-range/AppRange'
 import CheckboxList from '~/components/checkbox-list/CheckboxList'
 import FilterInput from '~/components/filter-input/FilterInput'
 import RadioButtonInputs from '~/components/radio-button-inputs/RadioButtonInputs'
+import { useAppSelector } from '~/hooks/use-redux'
 
 import {
   languageValues,
@@ -20,7 +21,8 @@ import {
   PriceRange,
   ProficiencyLevelEnum,
   UpdateFiltersInQuery,
-  UpdateOfferFilterByKey
+  UpdateOfferFilterByKey,
+  UserRoleEnum
 } from '~/types'
 
 interface OfferFilterListProps {
@@ -37,6 +39,7 @@ const OfferFilterList: FC<OfferFilterListProps> = ({
   price
 }) => {
   const { t } = useTranslation()
+  const { userRole } = useAppSelector((state) => state.appMain)
   const levelOptions = Object.values(ProficiencyLevelEnum)
 
   const radioOptions = radioButtonsTranslationKeys.map(({ title, value }) => ({
@@ -80,10 +83,16 @@ const OfferFilterList: FC<OfferFilterListProps> = ({
     <Typography sx={styles.title}>{title}</Typography>
   )
 
+  const checkboxListProps =
+    userRole === UserRoleEnum.Tutor
+      ? { fillRange: true }
+      : { singleSelect: true }
+
   return (
     <>
       {filterTitle(t('findOffers.filterTitles.level'))}
       <CheckboxList
+        {...checkboxListProps}
         items={levelOptions}
         onChange={updateFilterByKey('proficiencyLevel')}
         value={filters.proficiencyLevel}

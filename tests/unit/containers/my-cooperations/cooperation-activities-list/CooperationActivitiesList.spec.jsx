@@ -6,6 +6,12 @@ import { sectionInitialData } from '~/pages/create-course/CreateCourse.constants
 const originalDateNow = Date.now
 Date.now = () => 1487076708000
 
+const TestsId = {
+  addButton: 'Add activity',
+  activityContainer: 'addActivity-container',
+  closeIcon: 'CloseIcon'
+}
+
 const mockedCourseData = {
   title: 'Course title',
   description: 'Course description',
@@ -26,7 +32,8 @@ const handleNonInputValueChange = vi.fn()
 const renderWithMockData = (
   mockedData,
   sectionIndex,
-  isAddedClicked = true
+  isAddedClicked = true,
+  isNewActivity = true
 ) => {
   renderWithProviders(
     <CooperationActivitiesList
@@ -38,6 +45,7 @@ const renderWithMockData = (
         cooperations: {
           selectedCourse: mockedCourseData,
           isAddedClicked: isAddedClicked,
+          isNewActivity: isNewActivity,
           currentSectionIndex: sectionIndex,
           setCurrentSectionIndex: vi.fn()
         }
@@ -86,10 +94,12 @@ describe('CooperationActivitiesList with section data', () => {
   })
 
   it('should add a new section when Add activity button is clicked', async () => {
-    const [hoverElement] = await screen.findAllByTestId('addActivity-container')
+    const [hoverElement] = await screen.findAllByTestId(
+      TestsId.activityContainer
+    )
     fireEvent.mouseOver(hoverElement)
 
-    const [addButton] = screen.getAllByText('Add activity')
+    const [addButton] = screen.getAllByTestId(TestsId.addButton)
     fireEvent.click(addButton)
 
     const [menuItem] = await screen.findAllByText(
@@ -97,13 +107,15 @@ describe('CooperationActivitiesList with section data', () => {
     )
     fireEvent.click(menuItem)
 
-    const sections = await screen.findAllByTestId('addActivity-container')
+    const sections = await screen.findAllByTestId(TestsId.activityContainer)
     expect(sections.length).toBe(2)
   })
 
   it('should delete section resource', async () => {
     await waitFor(() => {
-      const deleteResourceBtn = screen.getByTestId('CloseIcon').parentElement
+      const deleteResourceBtn = screen.getByTestId(
+        TestsId.closeIcon
+      ).parentElement
       fireEvent.click(deleteResourceBtn)
     })
 
@@ -149,10 +161,12 @@ describe('CooperationActivitiesList with section data', () => {
   it('should set sections from the data first in order if a new section index is null', async () => {
     renderWithMockData(mockedSectionsData, null)
 
-    const [hoverElement] = await screen.findAllByTestId('addActivity-container')
+    const [hoverElement] = await screen.findAllByTestId(
+      TestsId.activityContainer
+    )
     fireEvent.mouseOver(hoverElement)
 
-    const [addButton] = screen.getAllByText('Add activity')
+    const [addButton] = screen.getAllByTestId(TestsId.addButton)
     fireEvent.click(addButton)
 
     const [menuItem] = await screen.findAllByText(

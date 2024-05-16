@@ -1,8 +1,8 @@
 import { FC, ReactElement, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
+
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
 import ListItem from '@mui/material/ListItem'
 import List from '@mui/material/List'
@@ -10,9 +10,11 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload'
 import CloseIcon from '@mui/icons-material/Close'
 import { FormHelperText, SxProps } from '@mui/material'
 
+import AppButton from '~/components/app-button/AppButton'
+import { styles } from '~/components/file-uploader/FileUploader.styles'
+
 import useUpload from '~/hooks/use-upload'
 
-import { styles } from '~/components/file-uploader/FileUploader.styles'
 import {
   AddDocuments,
   ButtonVariantEnum,
@@ -35,6 +37,7 @@ interface FileUploaderProps {
     error?: SxProps
   }
   variant?: ButtonVariantEnum
+  size?: SizeEnum
   icon?: ReactElement
 }
 
@@ -47,6 +50,7 @@ const FileUploader: FC<FileUploaderProps> = ({
   isImages = false,
   sx = {},
   variant,
+  size = SizeEnum.Medium,
   icon
 }) => {
   const { t } = useTranslation()
@@ -81,9 +85,10 @@ const FileUploader: FC<FileUploaderProps> = ({
   const acceptableFileTypes = validationData.filesTypes.join(', ')
 
   const uploadButton = (
-    <Button
+    <AppButton
       component={ComponentEnum.Label}
       onClick={handleClick}
+      size={size}
       sx={sx.button}
       variant={variant}
     >
@@ -98,7 +103,7 @@ const FileUploader: FC<FileUploaderProps> = ({
         ref={inputRef}
         type={InputEnum.File}
       />
-    </Button>
+    </AppButton>
   )
 
   return (

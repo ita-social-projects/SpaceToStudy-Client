@@ -1,105 +1,104 @@
-import { t } from 'i18next'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { guestRoutes } from '~/router/constants/guestRoutes'
 import { UserResponse } from '~/types'
 
 export const home = {
-  name: t('breadCrumbs.home'),
+  name: 'breadCrumbs.home',
   path: guestRoutes.home.route
 }
 
 export const privacyPolicy = {
-  name: t('breadCrumbs.privacyPolicy'),
+  name: 'breadCrumbs.privacyPolicy',
   path: guestRoutes.privacyPolicy.route
 }
 
 export const myProfile = {
-  name: t('breadCrumbs.myProfile'),
+  name: 'breadCrumbs.myProfile',
   path: authRoutes.accountMenu.myProfile.route
 }
 
 export const editProfile = {
-  name: t('breadCrumbs.editProfile'),
+  name: 'breadCrumbs.editProfile',
   path: authRoutes.editProfile.route
 }
 
 export const myCooperations = {
-  name: t('breadCrumbs.myCooperations'),
+  name: 'breadCrumbs.myCooperations',
   path: authRoutes.accountMenu.myCooperations.route
 }
 
 export const cooperationDetails = {
-  name: t('breadCrumbs.cooperationDetails'),
+  name: 'breadCrumbs.cooperationDetails',
   path: authRoutes.cooperationDetails.route
 }
 
 export const myOffers = {
-  name: t('breadCrumbs.myOffers'),
+  name: 'breadCrumbs.myOffers',
   path: authRoutes.accountMenu.myOffers.route
 }
 
 export const categories = {
-  name: t('breadCrumbs.categories'),
+  name: 'breadCrumbs.categories',
   path: authRoutes.categories.route
 }
 
 export const subjects = {
-  name: t('breadCrumbs.subjects'),
+  name: 'breadCrumbs.subjects',
   path: authRoutes.subjects.route
 }
 
 export const findOffers = {
-  name: t('breadCrumbs.findOffers'),
+  name: 'breadCrumbs.findOffers',
   path: authRoutes.findOffers.route
 }
 
 export const offerDetails = {
-  name: t('breadCrumbs.offerDetails'),
+  name: 'breadCrumbs.offerDetails',
   path: authRoutes.offerDetails.route
 }
 
 export const myResources = {
-  name: t('breadCrumbs.myResources'),
+  name: 'breadCrumbs.myResources',
   path: authRoutes.myResources.root.route
 }
 
 export const myCourses = {
-  name: t('breadCrumbs.myCourses'),
+  name: 'breadCrumbs.myCourses',
   path: authRoutes.myCourses.root.route
 }
 
 export const newCourse = {
-  name: t('breadCrumbs.newCourse'),
+  name: 'breadCrumbs.newCourse',
   path: authRoutes.myCourses.newCourse.route
 }
 
 export const editCourse = {
-  name: t('breadCrumbs.editCourse'),
+  name: 'breadCrumbs.editCourse',
   path: authRoutes.myCourses.editCourse.route
 }
 
 export const newLesson = {
-  name: t('breadCrumbs.newLesson'),
+  name: 'breadCrumbs.newLesson',
   path: authRoutes.myResources.newLesson.route
 }
 
 export const editLesson = {
-  name: t('breadCrumbs.editLesson'),
+  name: 'breadCrumbs.editLesson',
   path: authRoutes.myResources.editLesson.route
 }
 
 export const lessonDetails = {
-  name: t('breadCrumbs.lessonDetails'),
+  name: 'breadCrumbs.lessonDetails',
   path: authRoutes.lessonDetails.route
 }
 
 export const newQuiz = {
-  name: t('breadCrumbs.newQuiz'),
+  name: 'breadCrumbs.newQuiz',
   path: authRoutes.myResources.newQuiz.route
 }
 
 export const editQuiz = {
-  name: t('breadCrumbs.editQuiz'),
+  name: 'breadCrumbs.editQuiz',
   path: authRoutes.myResources.editQuiz.route
 }
 
@@ -108,11 +107,11 @@ export const userProfile = ({ data }: { data: UserResponse }) => ({
 })
 
 export const newQuestion = {
-  name: t('breadCrumbs.newQuestion'),
+  name: 'breadCrumbs.newQuestion',
   path: authRoutes.myResources.newQuestion.route
 }
 
 export const editQuestion = {
-  name: t('breadCrumbs.editQuestion'),
+  name: 'breadCrumbs.editQuestion',
   path: authRoutes.myResources.editQuestion.route
 }

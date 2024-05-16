@@ -52,7 +52,8 @@
     "engageTutor": "yet. As a student, you're here to engage with the materials provided by your tutor."
   },
   "button": {
-    "create": "Create Activity"
+    "create": "Create Activity",
+    "add":"Add Activity"
   },
   "manyTypes": {
     "courseTemplate": "Course template",

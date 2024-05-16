@@ -1,5 +1,6 @@
 import { ChangeEvent, FC, FocusEvent, SyntheticEvent } from 'react'
 import { useTranslation } from 'react-i18next'
+
 import Box from '@mui/material/Box'
 import Avatar from '@mui/material/Avatar'
 import InputAdornment from '@mui/material/InputAdornment'
@@ -31,6 +32,7 @@ import { snackbarVariants } from '~/constants'
 import { imageResize } from '~/utils/image-resize'
 import { styles } from '~/containers/edit-profile/profile-tab/profile-tab-form/ProfileTabForm.styles'
 import { openAlert } from '~/redux/features/snackbarSlice'
+
 
 export interface ProfileTabFormProps {
   data: EditProfileForm
@@ -123,12 +125,13 @@ const ProfileTabForm: FC<ProfileTabFormProps> = ({
             <FileUploader
               buttonText={t('editProfilePage.profile.generalTab.uploadTitle')}
               emitter={addPhoto}
+              size={SizeEnum.Large}
               validationData={validationData}
               variant={ButtonVariantEnum.ContainedLight}
             />
             <AppButton
               onClick={handleRemovePhoto}
-              size={SizeEnum.Medium}
+              size={SizeEnum.Large}
               variant={ButtonVariantEnum.Tonal}
             >
               {t('common.remove')}

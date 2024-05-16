@@ -6,6 +6,12 @@
   line-height: var(--s2s-button-line-height, $lh-base);
   letter-spacing: var(--s2s-button-letter-spacing, $ls-base);
   text-transform: var(--s2s-button-text-transform, $tt-none);
+  display: inline-flex;
+  border-radius: spacing(1);
+
+  & > .MuiButton-startIcon {
+    margin: 0;
+  }
 
   &__small {
     @extend %size-small;
@@ -37,6 +43,10 @@
 
   &__text {
     @extend %variant-text;
+  }
+
+  &__danger {
+    @extend %variant-danger;
   }
 }
 
@@ -124,4 +134,14 @@
 
 %variant-text {
   background-color: var(--s2s-btn-text-bg, $blue-gray);
+}
+
+%variant-danger {
+  background-color: var(--s2s-btn-danger-bg, $error-700);
+  color: var(--s2s-btn-contained-light-focus-color, $white);
+
+  &:hover {
+    background-color: var(--s2s-btn-tonal-hover-bg, $error-600);
+    color: var(--s2s-btn-tonal-hover-color, $white);
+  }
 }

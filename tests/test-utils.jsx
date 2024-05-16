@@ -3,7 +3,7 @@ import { Provider } from 'react-redux'
 import { configureStore } from '@reduxjs/toolkit'
 import reducer from '~/redux/reducer'
 import { StyledEngineProvider, ThemeProvider } from '@mui/material/styles'
-import { render, waitFor } from '@testing-library/react'
+import { screen, render, waitFor, fireEvent, act } from '@testing-library/react'
 import { theme } from '~/styles/app-theme/custom-mui.styles'
 import PopupsProvider from '~/PopupsProvider'
 import cooperationsReducer from '~/redux/features/cooperationsSlice'
@@ -61,3 +61,17 @@ export const TestSnackbar = ({ children }) => (
     {children}
   </>
 )
+
+export const selectOption = async (selectLike, option) => {
+  await act(async () => {
+    fireEvent.click(selectLike)
+    fireEvent.change(selectLike, { target: { value: option } })
+  })
+
+  const selectedOption = screen.getByText(option)
+  await act(async () => {
+    fireEvent.click(selectedOption)
+  })
+
+  expect(selectLike.value).toBe(option)
+}

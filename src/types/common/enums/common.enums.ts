@@ -50,10 +50,12 @@ export enum DrawerVariantEnum {
 }
 
 export enum ButtonVariantEnum {
+  Base = 'base',
   Contained = 'contained',
   ContainedLight = 'containedLight',
   Text = 'text',
-  Tonal = 'tonal'
+  Tonal = 'tonal',
+  Danger = 'danger'
 }
 
 export enum ButtonTypeEnum {
@@ -98,7 +100,8 @@ export enum PositionEnum {
   Top = 'top',
   Start = 'start',
   End = 'end',
-  Vertical = 'vertical'
+  Vertical = 'vertical',
+  Center = 'center'
 }
 
 export enum InputEnum {

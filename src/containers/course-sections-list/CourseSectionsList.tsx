@@ -100,11 +100,25 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
 
   const addActivityMenuList = addActivityMenuItems.map(
     ({ id, label, icon, onClick }) => (
-      <MenuItem key={id} onClick={onClick}>
+      <MenuItem key={id} onClick={onClick} sx={styles.menuRoot}>
         {icon}
         {t(label)}
       </MenuItem>
     )
+  )
+
+  const clearCoorperationMenu = isCooperation && (
+    <Divider flexItem>
+      <Typography
+        data-testid='Add activity'
+        onClick={handleActivitiesMenuClick}
+        sx={styles.activityButton}
+      >
+        {t(`cooperationsPage.button.create`)}
+        <Add sx={styles.activityButtonIcon} />
+      </Typography>
+      {renderMenu(addActivityMenuList)}
+    </Divider>
   )
 
   const sectionsItem = (item: CourseSection, isDragOver = false) => {
@@ -119,24 +133,15 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
       >
         <Divider flexItem>
           <Typography
+            data-testid='Add activity'
             id={item.id}
             onClick={handleActivitiesMenuClick}
             sx={styles.activityButton}
           >
-            Add activity
+            {t(`cooperationsPage.button.add`)}
             <Add sx={styles.activityButtonIcon} />
           </Typography>
-          {renderMenu(addActivityMenuList, {
-            transformOrigin: {
-              vertical: 'top',
-              horizontal: 'center'
-            },
-            anchorOrigin: {
-              vertical: 'bottom',
-              horizontal: 'center'
-            },
-            sx: styles.menuRoot
-          })}
+          {renderMenu(addActivityMenuList)}
         </Divider>
       </Box>
     )
@@ -167,7 +172,10 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
       </>
     )
   }
-  const sectionItems = items.map((item) => sectionsItem(item))
+  const sectionItems =
+    items.length === 0
+      ? clearCoorperationMenu
+      : items.map((item) => sectionsItem(item))
 
   const courseSectionContent = enabled && (
     <>

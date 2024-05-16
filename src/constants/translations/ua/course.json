@@ -1,27 +1,27 @@
 {
-    "yourCategories": "Ваші категорії навчання:",
-    "otherCategories": "Інші категорії:",
-    "yourSubjects": "Ваші предмети навчання:",
-    "otherSubjects": "Інші предмети:",
-    "addSectionBtn": "Новий розділ",
-    "section": "Розділ",
-    "sections": "Розділи",
-    "courseSection": {
-        "defaultNewTitle": "Розділ",
-        "moduleTitle": "Модуль",
-        "defaultNewDescription": "Опис...",
-        "addResourceBtn": "Додати матеріал",
-        "resourcesMenu": {
-            "lessonMenuItem": "Урок",
-            "quizMenuItem": "Тест",
-            "attachmentMenuItem": "Вкладення"
-        },
-        "sectionMenu": {
-            "deleteSection": "Видалити"
-        }
+  "yourCategories": "Ваші категорії навчання:",
+  "otherCategories": "Інші категорії:",
+  "yourSubjects": "Ваші предмети навчання:",
+  "otherSubjects": "Інші предмети:",
+  "addSectionBtn": "Новий розділ",
+  "section": "Розділ",
+  "sections": "Розділи",
+  "courseSection": {
+    "defaultNewTitle": "Розділ*",
+    "moduleTitle": "Модуль*",
+    "defaultNewDescription": "Опис...*",
+    "addResourceBtn": "Додати матеріал",
+    "resourcesMenu": {
+      "lessonMenuItem": "Урок",
+      "quizMenuItem": "Тест",
+      "attachmentMenuItem": "Вкладення"
     },
-    "errorMessages": {
-        "title": "Будь ласка, вкажіть заголовок",
-        "description": "Будь ласка, надайте опис"
+    "sectionMenu": {
+      "deleteSection": "Видалити"
     }
+  },
+  "errorMessages": {
+    "title": "Будь ласка, вкажіть заголовок",
+    "description": "Будь ласка, надайте опис"
+  }
 }

@@ -7,6 +7,7 @@ interface CooperationsState {
   selectedCourse: Course | null
   isActivityCreated: boolean
   isAddedClicked: boolean
+  isNewActivity: boolean
   currentSectionIndex?: number
 }
 
@@ -14,6 +15,7 @@ const initialState: CooperationsState = {
   selectedCourse: null,
   isActivityCreated: false,
   isAddedClicked: false,
+  isNewActivity: false,
   currentSectionIndex: 0
 }
 
@@ -39,6 +41,12 @@ const cooperationsSlice = createSlice({
     ) {
       state.isAddedClicked = action.payload
     },
+    setIsNewActivity(
+      state,
+      action: PayloadAction<CooperationsState['isNewActivity']>
+    ) {
+      state.isNewActivity = action.payload
+    },
     setCurrentSectionIndex(
       state,
       action: PayloadAction<CooperationsState['currentSectionIndex']>
@@ -54,6 +62,7 @@ export const {
   setSelectedCourse,
   setIsActivityCreated,
   setIsAddedClicked,
+  setIsNewActivity,
   setCurrentSectionIndex
 } = actions
 
