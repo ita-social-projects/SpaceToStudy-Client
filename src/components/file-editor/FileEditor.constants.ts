@@ -1,3 +1,5 @@
+import { IAllProps } from '@tinymce/tinymce-react'
+
 const fonts = {
   'Andale Mono': 'andale mono,times',
   Arial: 'arial,helvetica,sans-serif',
@@ -57,8 +59,22 @@ const toolbar = [
   'removeformat'
 ]
 
-export const fileEditorConfig = {
-  fonts,
-  plugins,
-  toolbar
+const initOptions: IAllProps['init'] = {
+  height: 400,
+  menubar: true,
+  plugins: plugins.join(' '),
+  toolbar: toolbar.join(' | '),
+  content_style:
+    '@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;800&display=swap"); body { font-family:Rubik; font-size:14px }',
+  font_family_formats: Object.entries(fonts)
+    .map((entry) => entry.join('='))
+    .join('; '),
+  ui_mode: 'split'
 }
+
+export const getEditorInitOptions = (
+  extraOptions: Partial<IAllProps['init']>
+) => ({
+  ...initOptions,
+  ...extraOptions
+})
