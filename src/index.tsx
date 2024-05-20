@@ -19,4 +19,4 @@ root.render(
   </React.StrictMode>
 )
 
-setupInterceptors(store)
+setupInterceptors()
