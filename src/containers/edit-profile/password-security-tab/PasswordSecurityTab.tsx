@@ -9,6 +9,10 @@ import TitleWithDescription from '~/components/title-with-description/TitleWithD
 
 import useForm from '~/hooks/use-form'
 import useChangeUserStatus from '~/hooks/use-change-user-status'
+// import useAxios from '~/hooks/use-axios'
+import useInputVisibility from '~/hooks/use-input-visibility'
+
+// import { AuthService } from '~/services/auth-service'
 
 import { confirmPassword, password } from '~/utils/validations/login'
 import { ButtonVariantEnum, InputEnum, SizeEnum } from '~/types'
@@ -36,6 +40,19 @@ const PasswordSecurityTab = () => {
     ).catch(console.error)
   }
 
+  const {
+    inputVisibility: currentPasswordVisibility,
+    showInputText: showCurrentPassword
+  } = useInputVisibility(errors.password)
+
+  const { inputVisibility: passwordVisibility, showInputText: showPassword } =
+    useInputVisibility(errors.password)
+
+  const {
+    inputVisibility: nePpasswordVisibility,
+    showInputText: showNewPassword
+  } = useInputVisibility(errors.confirmPassword)
+
   return (
     <Box sx={styles.container}>
       <TitleWithDescription
@@ -45,29 +62,33 @@ const PasswordSecurityTab = () => {
         style={styles.titleAndDescription}
         title={t('editProfilePage.profile.passwordSecurityTab.title')}
       />
-      <Box>
+      <Box component='form' onSubmit={handleSubmit}>
         <Typography sx={styles.subtitle}>
           {t('editProfilePage.profile.passwordSecurityTab.changePassword')}
         </Typography>
         <AppTextField
+          InputProps={currentPasswordVisibility}
+          // errorMsg={currentPasswordError}
           fullWidth
           label={t(
             'editProfilePage.profile.passwordSecurityTab.currentPassword'
           )}
           onChange={handleInputChange('currentPassword')}
-          type={InputEnum.Password}
+          type={showCurrentPassword ? 'text' : InputEnum.Password}
           value={data.currentPassword}
         />
         <AppTextField
+          InputProps={passwordVisibility}
           errorMsg={t(errors.password)}
           fullWidth
           label={t('editProfilePage.profile.passwordSecurityTab.newPassword')}
           onBlur={handleBlur('password')}
           onChange={handleInputChange('password')}
-          type={InputEnum.Password}
+          type={showPassword ? 'text' : InputEnum.Password}
           value={data.password}
         />
         <AppTextField
+          InputProps={nePpasswordVisibility}
           errorMsg={t(errors.confirmPassword)}
           fullWidth
           label={t(
@@ -75,7 +96,7 @@ const PasswordSecurityTab = () => {
           )}
           onBlur={handleBlur('confirmPassword')}
           onChange={handleInputChange('confirmPassword')}
-          type={InputEnum.Password}
+          type={showNewPassword ? 'text' : InputEnum.Password}
           value={data.confirmPassword}
         />
         <Box sx={styles.passwordButtonsContainer}>
