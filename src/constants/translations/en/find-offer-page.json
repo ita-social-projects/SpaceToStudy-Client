@@ -13,7 +13,8 @@
   },
   "backToAllSubjects": "Back to all subjects",
   "searchToolbar": {
-    "label": "Search by tutor name"
+    "tutorLabel": "Search by tutor name",
+    "studentLabel": "Search by student name"
   },
   "topMenu": {
     "tutorsOffers": "Tutors’ offers",
@@ -42,12 +43,12 @@
     "rating": "Rating",
     "priceAsc": "Price low-high",
     "priceDesc": "Price high-low",
-    "name":"Name"
+    "name": "Name"
   },
-  "notFound":{
+  "notFound": {
     "description": "We couldn’t find what you were searching for."
   },
-  "otherOffers":{
-    "title":"Other offers"
+  "otherOffers": {
+    "title": "Other offers"
   }
 }

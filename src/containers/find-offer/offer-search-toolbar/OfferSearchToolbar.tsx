@@ -88,6 +88,10 @@ const OfferSearchToolbar = ({
     </>
   )
 
+  const searchInputPlaceholder = t(
+    `findOffers.searchToolbar.${filters.authorRole}Label`
+  )
+
   return (
     <Box sx={styles.container}>
       {!isMobile && (
@@ -96,7 +100,7 @@ const OfferSearchToolbar = ({
           {isLaptopAndAbove && (
             <SearchFilterInput
               textFieldProps={{
-                placeholder: t('findOffers.searchToolbar.label')
+                placeholder: searchInputPlaceholder
               }}
               updateFilter={updateName}
             />

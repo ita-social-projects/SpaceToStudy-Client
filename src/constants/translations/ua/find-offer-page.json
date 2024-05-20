@@ -13,7 +13,8 @@
   },
   "backToAllSubjects": "Повернутися до всіх предметів",
   "searchToolbar": {
-    "label": "Пошук за іменем репетитора"
+    "tutorLabel": "Пошук за іменем репетитора",
+    "studentLabel": "Пошук за іменем студента"
   },
   "topMenu": {
     "tutorsOffers": "Пропозиції репетитора",
@@ -34,7 +35,7 @@
     "level": "Рівень",
     "language": "Мова",
     "price": "Ціна",
-    "search": "Пошук за ім'ям",
+    "search": "Пошук за іменем",
     "nativeSpeaker": "Носій рідної мови"
   },
   "sortTitles": {
@@ -42,12 +43,12 @@
     "rating": "За рейтингом",
     "priceAsc": "Ціною від низької до високої",
     "priceDesc": "Ціною від високої до низької",
-    "name":"За ім'ям"
+    "name": "За іменем"
   },
-  "notFound":{
+  "notFound": {
     "description": "Ми не змогли знайти те, що ви шукали."
   },
-  "otherOffers":{
-    "title":"Інші пропозиції"
+  "otherOffers": {
+    "title": "Інші пропозиції"
   }
 }
