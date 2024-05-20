@@ -19,12 +19,12 @@ const useUserCategoriesAndSubjects = ({
   const { Subjects } = CourseAutocompleteOptionsEnum
 
   const userCategories = useMemo(
-    () => user?.mainSubjects.tutor.map((item) => item.category.name) ?? [],
+    () => user?.mainSubjects.tutor?.map((item) => item.category.name) ?? [],
     [user?.mainSubjects.tutor]
   )
 
   const userSubjects = useMemo(
-    () => user?.mainSubjects.tutor.map((item) => item.name) ?? [],
+    () => user?.mainSubjects.tutor?.map((item) => item.name) ?? [],
     [user?.mainSubjects.tutor]
   )
 
