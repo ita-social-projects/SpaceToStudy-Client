@@ -77,6 +77,7 @@
     "nameLength": "This field cannot be longer than 30 characters",
     "nameAlphabeticOnly": "This field can contain alphabetic characters only",
     "passwordsDontMatch": "Passwords do not match",
+    "samePasswords": "New password cannot be the same as the current one",
     "currentPassword": "Enter your current password",
     "shortText": "This text is too short",
     "longText": "This text is too long",
