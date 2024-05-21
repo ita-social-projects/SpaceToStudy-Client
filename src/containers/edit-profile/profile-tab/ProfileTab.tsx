@@ -73,7 +73,7 @@ const ProfileTab: FC<ProfileTabProps> = ({ user }) => {
   }, [setNeedConfirmation, isDirty])
 
   const handleUpdateData = () => {
-    const updatedData = getUserUpdatedData(user, data)
+    const updatedData = getUserUpdatedData(data)
     handleSubmit(updatedData)
   }
 

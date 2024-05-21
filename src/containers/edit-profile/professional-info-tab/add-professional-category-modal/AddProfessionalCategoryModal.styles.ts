@@ -28,15 +28,10 @@ export const styles = {
   addOneMoreSubjectButton: {
     marginLeft: '58px'
   },
-  checkbox: {
-    padding: '12px',
-    '&.Mui-disabled': {
-      color: palette.primary[100]
-    }
-  },
   checkboxGroup: {
     display: 'flex',
-    gap: '10px'
+    gap: '10px',
+    marginLeft: '58px'
   },
   buttonGroup: {
     display: 'flex',

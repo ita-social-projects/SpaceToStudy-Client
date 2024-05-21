@@ -45,10 +45,7 @@
       "subject": "Subject",
       "proficiencyLevels": "Proficiency Levels",
       "editCategoryBtn": "Edit category",
-      "activateCategoryBtn": "Activate",
-      "deactivateCategoryBtn": "Deactivate",
-      "deactivateCategoryBtnEnabledTooltip": "This category will be hidden on your profile.\nYou can activate it anytime.",
-      "deactivateCategoryBtnDisabledTooltip": "You have opened cooperation(s) with this category.\nPlease close it before deactivation",
+      "deleteCategoryBtnDisabledTooltip": "You have opened cooperation(s)/offers with this category.\nPlease close it before deactivation",
       "aboutTheTutorTitle": "About the tutor",
       "aboutTheTutorDescription": "Describe your professional experience. This information will be displayed on your public profile.",
       "accordion": {

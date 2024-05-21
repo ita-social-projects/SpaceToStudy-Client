@@ -45,10 +45,7 @@
       "subject": "Предмет",
       "proficiencyLevels": "Рівні кваліфікації",
       "editCategoryBtn": "Редагувати",
-      "activateCategoryBtn": "Активувати",
-      "deactivateCategoryBtn": "Деактивувати",
-      "deactivateCategoryBtnEnabledTooltip": "Стає невидимою у вашому профілі.\nВи можете активувати її у будь-який час.",
-      "deactivateCategoryBtnDisabledTooltip": "Ви розпочали співпрацю(і) з цією категорією.\nБудь ласка, закрийте її перед деактивацією",
+      "deleteCategoryBtnDisabledTooltip": "Ви розпочали співпрацю(і)/пропозицію. з цією категорією.\nБудь ласка, закрийте її перед деактивацією",
       "aboutTheTutorTitle": "Про викладача",
       "aboutTheTutorDescription": "Опишіть ваш професійний досвід. Ця інформація буде відображена у вашому публічному профілі.",
       "accordion": {

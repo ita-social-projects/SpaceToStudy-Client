@@ -18,6 +18,7 @@ import AppButton from '~/components/app-button/AppButton'
 import SidebarMenu from '~/components/sidebar-menu/SidebarMenu'
 import {
   ButtonVariantEnum,
+  MainUserRole,
   SizeEnum,
   UserProfileTabsEnum,
   UserResponse,
@@ -68,7 +69,8 @@ const EditProfile = () => {
   }
 
   const cooperationContent =
-    activeTab && tabsData[activeTab]?.content?.(response)
+    activeTab &&
+    tabsData[activeTab]?.content?.(response, userRole as MainUserRole)
 
   return (
     <PageWrapper>

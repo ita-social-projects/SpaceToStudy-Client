@@ -2,22 +2,22 @@ import Box from '@mui/material/Box'
 import { FC } from 'react'
 import ProfessionalCategory from '~/containers/edit-profile/professional-info-tab/professional-category/ProfessionalCategory'
 import { styles } from '~/containers/edit-profile/professional-info-tab/professional-category-list/ProfessionalCategoryList.styles'
-import {
-  OpenProfessionalCategoryModalHandler,
-  ProfessionalCategoryWithActivationControls
-} from '~/types'
+import { OpenProfessionalCategoryModalHandler, UserMainSubject } from '~/types'
 
 interface ProfessionalCategoryListProps {
-  items: ProfessionalCategoryWithActivationControls[]
+  items: UserMainSubject[]
   openProfessionalCategoryModal: OpenProfessionalCategoryModalHandler
+  handleDeleteCategory: (id: string) => void
 }
 
 const ProfessionalCategoryList: FC<ProfessionalCategoryListProps> = ({
   items,
-  openProfessionalCategoryModal
+  openProfessionalCategoryModal,
+  handleDeleteCategory
 }) => {
   const professionalCategoryItems = items.map((item) => (
     <ProfessionalCategory
+      handleDelete={() => handleDeleteCategory(item._id)}
       item={item}
       key={item._id}
       openProfessionalCategoryModal={openProfessionalCategoryModal}

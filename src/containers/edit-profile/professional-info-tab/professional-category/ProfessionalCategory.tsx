@@ -6,34 +6,30 @@ import Tooltip from '@mui/material/Tooltip'
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import AppButton from '~/components/app-button/AppButton'
-import { ButtonVariantEnum, ComponentEnum, PositionEnum } from '~/types'
+import {
+  ButtonVariantEnum,
+  ComponentEnum,
+  PositionEnum,
+  UserMainSubject
+} from '~/types'
 import DeleteIcon from '@mui/icons-material/Delete'
 import useConfirm from '~/hooks/use-confirm'
 import { styles } from '~/containers/edit-profile/professional-info-tab/professional-category/ProfessionalCategory.styles'
-import {
-  OpenProfessionalCategoryModalHandler,
-  ProfessionalCategoryWithActivationControls
-} from '~/types'
+import { OpenProfessionalCategoryModalHandler } from '~/types'
 
 interface ProfessionalCategoryProps {
-  item: ProfessionalCategoryWithActivationControls
+  item: UserMainSubject
   openProfessionalCategoryModal: OpenProfessionalCategoryModalHandler
+  handleDelete: () => void
 }
 
 const ProfessionalCategory: FC<ProfessionalCategoryProps> = ({
   item,
-  openProfessionalCategoryModal
+  openProfessionalCategoryModal,
+  handleDelete
 }) => {
   const { t } = useTranslation()
   const { openDialog } = useConfirm()
-
-  const handleActivateButtonClick = () => {
-    // @TODO: handle activation logic
-  }
-
-  const handleDeactivateButtonClick = () => {
-    // @TODO: handle deactivation logic
-  }
 
   const handleDeleteButtonClick = () => {
     openDialog({
@@ -50,7 +46,7 @@ const ProfessionalCategory: FC<ProfessionalCategoryProps> = ({
         'editProfilePage.profile.professionalTab.deleteCategoryModal.submitBtn'
       ),
       sendConfirm: () => {
-        // @TODO: handle deleting category
+        handleDelete()
       }
     })
   }
@@ -74,77 +70,52 @@ const ProfessionalCategory: FC<ProfessionalCategoryProps> = ({
     )
   }
 
-  const ToolbarButtons = item.isActivated ? (
-    <>
-      <AppButton
-        onClick={() => openProfessionalCategoryModal(item)}
-        variant={ButtonVariantEnum.ContainedLight}
-      >
-        {t('editProfilePage.profile.professionalTab.editCategoryBtn')}
-      </AppButton>
-      <Tooltip
-        arrow
-        placement={PositionEnum.Right}
-        title={
-          <Typography sx={styles.toolbar.deactivateButtonTooltip}>
-            {t(
-              `editProfilePage.profile.professionalTab.deactivateCategoryBtn${
-                !item.isActivationBlocked ? 'Enabled' : 'Disabled'
-              }Tooltip`
-            )}
-          </Typography>
-        }
-      >
-        <Box>
-          <AppButton
-            disabled={item.isActivationBlocked}
-            onClick={handleDeactivateButtonClick}
-            variant={ButtonVariantEnum.Tonal}
-          >
-            {t('editProfilePage.profile.professionalTab.deactivateCategoryBtn')}
-          </AppButton>
-        </Box>
-      </Tooltip>
-    </>
-  ) : (
-    <AppButton
-      onClick={handleActivateButtonClick}
-      variant={ButtonVariantEnum.Tonal}
-    >
-      {t('editProfilePage.profile.professionalTab.activateCategoryBtn')}
-    </AppButton>
-  )
-
   const Subjects = item.subjects.map((subject) => (
     <Box key={subject._id} sx={styles.subjects.item}>
       <CardItem label={t('editProfilePage.profile.professionalTab.subject')}>
         {subject.name}
       </CardItem>
-      <CardItem
-        label={t('editProfilePage.profile.professionalTab.proficiencyLevels')}
-      >
-        {subject.proficiencyLevels.join(', ')}
-      </CardItem>
     </Box>
   ))
 
   return (
-    <Box sx={styles.root(item.isActivated)}>
+    <Box sx={styles.root}>
       <Box sx={styles.toolbar.root}>
-        <Box sx={styles.toolbar.buttonGroup}>{ToolbarButtons}</Box>
-        <IconButton
-          data-testid='delete-professional-category-button'
-          onClick={handleDeleteButtonClick}
-          sx={styles.toolbar.deleteButton}
+        <Box sx={styles.toolbar.buttonGroup}>
+          <AppButton
+            onClick={() => openProfessionalCategoryModal(item)}
+            variant={ButtonVariantEnum.ContainedLight}
+          >
+            {t('editProfilePage.profile.professionalTab.editCategoryBtn')}
+          </AppButton>
+        </Box>
+        <Tooltip
+          arrow
+          placement={PositionEnum.Right}
+          title={
+            <Typography sx={styles.toolbar.deactivateButtonTooltip}>
+              {item.isDeletionBlocked
+                ? t(
+                    'editProfilePage.profile.professionalTab.deleteCategoryBtnDisabledTooltip'
+                  )
+                : ''}
+            </Typography>
+          }
         >
-          <DeleteIcon />
-        </IconButton>
+          <IconButton
+            disabled={item.isDeletionBlocked}
+            onClick={handleDeleteButtonClick}
+            sx={styles.toolbar.deleteButton}
+          >
+            <DeleteIcon />
+          </IconButton>
+        </Tooltip>
       </Box>
-      <Box component={ComponentEnum.Dl} sx={styles.card.root(item.isActivated)}>
+      <Box component={ComponentEnum.Dl} sx={styles.card.root}>
         <CardItem
           label={t('editProfilePage.profile.professionalTab.mainStudyCategory')}
         >
-          {item.name}
+          {item.category.name}
         </CardItem>
         <Divider sx={styles.divider} />
         <Box sx={styles.subjects.root}>{Subjects}</Box>

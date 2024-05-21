@@ -1,4 +1,8 @@
-import { ProficiencyLevelEnum, UpdatedPhoto } from '~/types/common/common.index'
+import {
+  CategoryNameInterface,
+  SubjectNameInterface,
+  UpdatedPhoto
+} from '~/types/common/common.index'
 import { UserResponse } from '~/types/user/user.index'
 
 export interface EditProfileForm
@@ -11,20 +15,12 @@ export interface EditProfileForm
   photo: string | UpdatedPhoto | null
 }
 
-export interface ProfessionalSubject {
-  _id: string
-  name: string
-  proficiencyLevels: ProficiencyLevelEnum[]
-}
-
 export interface ProfessionalCategory {
-  _id: string
-  name: string
-  subjects: ProfessionalSubject[]
+  category: CategoryNameInterface
+  subjects: SubjectNameInterface[]
 }
 
-export interface ProfessionalCategoryWithActivationControls
-  extends ProfessionalCategory {
-  isActivated: boolean
-  isActivationBlocked: boolean
+export interface UserMainSubject extends ProfessionalCategory {
+  isDeletionBlocked: boolean
+  _id: string
 }

@@ -12,10 +12,8 @@ import {
   ComponentEnum,
   OpenProfessionalCategoryModalHandler,
   ProfessionalBlock,
-  ProfessionalCategoryWithActivationControls,
-  ProficiencyLevelEnum,
   SizeEnum,
-  SubjectInterface,
+  UserMainSubject,
   UserRoleEnum
 } from '~/types'
 
@@ -115,25 +113,36 @@ const mockCategoriesData: ProfessionalCategoryWithActivationControls[] = [
 
 interface ProfessionalInfoTabProps {
   professionalBlock?: ProfessionalBlock
-  categories: SubjectInterface[]
+  categories: UserMainSubject[]
   userId: string
 }
 
 const ProfessionalInfoTab: FC<ProfessionalInfoTabProps> = ({
   professionalBlock,
-  userId
+  userId,
+  categories
 }) => {
   const { t } = useTranslation()
 
-  const { openModal, closeModal } = useModalContext()
-
   const { userRole } = useAppSelector((state) => state.appMain)
+
+  const { openModal, closeModal } = useModalContext()
 
   const { handleSubmit, loading } = useUpdateUser(userId)
 
   const { data, handleInputChange } = useForm<ProfessionalBlock>({
     initialValues: professionalBlock || initialFormValues
   })
+
+  const handleDeleteCategory = (mainSubjectId: string) => {
+    handleSubmit({
+      mainSubjects: {
+        _id: mainSubjectId,
+        category: { _id: '', name: '' },
+        subjects: []
+      }
+    })
+  }
 
   const handleUpdateInfo = () => {
     handleSubmit({ professionalBlock: data })
@@ -145,8 +154,7 @@ const ProfessionalInfoTab: FC<ProfessionalInfoTabProps> = ({
     openModal({
       component: (
         <AddProfessionalCategoryModal
-          closeModal={closeModal}
-          initialValues={initialValues}
+          {...{ handleSubmit, loading, initialValues, closeModal }}
         />
       ),
       paperProps: {
@@ -214,7 +222,8 @@ const ProfessionalInfoTab: FC<ProfessionalInfoTabProps> = ({
           </AppButton>
         </Box>
         <ProfessionalCategoryList
-          items={mockCategoriesData}
+          handleDeleteCategory={handleDeleteCategory}
+          items={categories}
           openProfessionalCategoryModal={openProfessionalCategoryModal}
         />
       </Box>

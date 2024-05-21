@@ -4,17 +4,15 @@ import palette from '~/styles/app-theme/app.pallete'
 const { Body2, Overline, Caption } = TypographyVariantEnum
 
 export const styles = {
-  root: (isActivated: boolean) => ({
-    border: `1px solid ${
-      isActivated ? palette.primary[300] : palette.primary[100]
-    }`,
+  root: {
+    border: `1px solid ${palette.primary[300]}`,
     display: 'flex',
     flexDirection: 'column',
     gap: 2,
     borderRadius: 1,
     px: 2,
     py: 4
-  }),
+  },
   createBtnContainer: {
     my: 3
   },
@@ -62,10 +60,9 @@ export const styles = {
     }
   },
   card: {
-    root: (isActivated: boolean) => ({
-      m: 0,
-      ...(!isActivated && { color: palette.primary[200] })
-    }),
+    root: {
+      m: 0
+    },
     item: {
       display: 'flex',
       flexDirection: { xs: 'column', md: 'row' },
