@@ -62,13 +62,17 @@ export const TestSnackbar = ({ children }) => (
   </>
 )
 
-export const selectOption = async (selectLike, option) => {
+export const selectOption = async (
+  selectLike,
+  option,
+  selectionFn = 'getByText'
+) => {
   await act(async () => {
     fireEvent.click(selectLike)
     fireEvent.change(selectLike, { target: { value: option } })
   })
 
-  const selectedOption = screen.getByText(option)
+  const selectedOption = screen[selectionFn](option)
   await act(async () => {
     fireEvent.click(selectedOption)
   })

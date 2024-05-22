@@ -61,10 +61,15 @@ function SubjectGroup({
   return (
     <Box sx={styles.item}>
       <Box sx={styles.checkboxGroup}>
-        <IconButton onClick={handleSubjectDelete} sx={styles.deleteBtn}>
+        <IconButton
+          data-testid='deleteBtn'
+          onClick={handleSubjectDelete}
+          sx={styles.deleteBtn}
+        >
           <DeleteIcon />
         </IconButton>
         <AsyncAutocomplete
+          data-testid='subjectField'
           disabled={!selectedCategory}
           fullWidth
           getOptionDisabled={handleDisableOptions}
@@ -118,7 +123,6 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
     initialValues: initialFormValues,
     onSubmit: formSubmission
   })
-
   const handleMainStudyCategoryChange = (
     _: SyntheticEvent,
     value: CategoryNameInterface | null
