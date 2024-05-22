@@ -1,6 +1,7 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, FC, ChangeEvent, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 // import { useSelector } from 'react-redux'
+import { useBlocker } from 'react-router-dom'
 
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
@@ -15,10 +16,11 @@ import { snackbarVariants } from '~/constants'
 import useForm from '~/hooks/use-form'
 import useChangeUserStatus from '~/hooks/use-change-user-status'
 import useAxios from '~/hooks/use-axios'
+import useConfirm from '~/hooks/use-confirm'
 import { useAppDispatch } from '~/hooks/use-redux'
+import useInputVisibility from '~/hooks/use-input-visibility'
 
 import { userService } from '~/services/user-service'
-import useInputVisibility from '~/hooks/use-input-visibility'
 import { openAlert } from '~/redux/features/snackbarSlice'
 
 import { emptyField } from '~/utils/validations/common'
@@ -28,15 +30,28 @@ import { ButtonVariantEnum, InputEnum, SizeEnum } from '~/types'
 import { FormValues } from '~/types/edit-user-profile/interfaces/securityBlockForm.interfaces'
 import { styles } from '~/containers/edit-profile/password-security-tab/PasswordSecurityTab.styles'
 import { confirmPassword, password } from '~/utils/validations/login'
-import { ButtonVariantEnum, InputEnum, SizeEnum, FormValues } from '~/types'
+import {
+  ButtonVariantEnum,
+  InputEnum,
+  SizeEnum,
+  FormValues,
+  UserResponse,
+  ErrorResponse
+} from '~/types'
 
-const PasswordSecurityTab = ({user}) => {
+interface PasswordSecurityTabProps {
+  user: UserResponse
+}
+
+const PasswordSecurityTab: FC<PasswordSecurityTabProps> = ({ user }) => {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
-  // const store = useSelector((state) => state.appMain)
-  const [isConfirmOpen, setIsConfirmOpen] = useState(false)
-  const [samePasswordError, setSamePasswordError] = useState('')
-  const [currentPasswordError, setCurrentPasswordError] = useState('')
+
+  const { setNeedConfirmation, checkConfirmation } = useConfirm()
+
+  const [isConfirmOpen, setIsConfirmOpen] = useState<boolean>(false)
+  const [samePasswordError, setSamePasswordError] = useState<string>('')
+  const [currentPasswordError, setCurrentPasswordError] = useState<string>('')
 
   const handleResponse = () => {
     dispatch(
@@ -47,20 +62,13 @@ const PasswordSecurityTab = ({user}) => {
     )
   }
 
-  // const changePassword = useCallback(
-  //   (passwords) => userService.changePassword(store.userId, passwords),
-  //   [store.userId]
-  // )
-
   const changePassword = useCallback(
-    (passwords) => userService.changePassword(user._id, passwords),
+    (passwords: FormValues) => userService.changePassword(user._id, passwords),
     [user._id]
   )
 
-  console.log(user._id)
-
-  const handleResponseError = (error) => {
-    if (error.code === 'INCORRECT_CREDENTIALS') {
+  const handleResponseError = (error?: ErrorResponse) => {
+    if (error?.code === 'INCORRECT_CREDENTIALS') {
       setSamePasswordError(t('common.errorMessages.samePasswords'))
     } else {
       setCurrentPasswordError(t('common.errorMessages.currentPassword'))
@@ -84,6 +92,7 @@ const PasswordSecurityTab = ({user}) => {
   }
 
   const {
+    isDirty,
     data,
     handleSubmit,
     handleInputChange,
@@ -92,14 +101,18 @@ const PasswordSecurityTab = ({user}) => {
     resetData,
     resetErrors
   } = useForm<FormValues>({
-    onSubmit: () => {
+    onSubmit: async () => {
       console.log('Form submitted with data:', data)
       setSamePasswordError('')
       setCurrentPasswordError('')
-      sendResetPassword({
-        password: data.password,
-        currentPassword: data.currentPassword
-      })
+      try {
+        await sendResetPassword({
+          password: data.password,
+          currentPassword: data.currentPassword
+        })
+      } catch (error) {
+        console.error('Password reset failed:', error)
+      }
     },
     initialValues: {
       currentPassword: '',
@@ -107,6 +120,7 @@ const PasswordSecurityTab = ({user}) => {
       confirmPassword: ''
     },
     validations: {
+      currentPassword: password,
       password: (password) => validateNewPassword(password),
       confirmPassword
     }
@@ -133,12 +147,12 @@ const PasswordSecurityTab = ({user}) => {
     showInputText: showNewPassword
   } = useInputVisibility(errors.confirmPassword)
 
-  const handlePasswordChange = (e) => {
+  const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSamePasswordError('')
     handleInputChange('password')(e)
   }
 
-  const handleCurrentPasswordChange = (e) => {
+  const handleCurrentPasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
     setCurrentPasswordError('')
     handleInputChange('currentPassword')(e)
   }

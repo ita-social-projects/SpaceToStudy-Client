@@ -92,6 +92,12 @@ export interface SignupParams {
   role: UserRole
 }
 
+export interface ChangePasswordParams {
+  currentPassword: string
+  password: string
+  confirmPassword: string
+}
+
 export interface SignupResponse {
   userId: string
   userEmail: string
