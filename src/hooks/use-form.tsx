@@ -26,6 +26,7 @@ interface UseFormOutput<T> {
   handleErrors: (key: keyof T, error: string) => void
   handleSubmit: (event: React.FormEvent<HTMLDivElement>) => void
   resetData: (keys?: (keyof T)[]) => void
+  resetErrors: () => void
   handleDataChange: <K extends object>(newData: K) => void
 }
 
@@ -149,6 +150,10 @@ export const useForm = <T extends object>({
     })
   }
 
+  const resetErrors = () => {
+    setErrors(initialErrors)
+  }
+
   const handleDataChange = <K extends object>(newData: K) => {
     const filteredNewData = Object.keys(newData).reduce((acc, key) => {
       if (Object.prototype.hasOwnProperty.call(initialValues, key)) {
@@ -173,7 +178,8 @@ export const useForm = <T extends object>({
     handleBlur,
     handleErrors,
     handleSubmit,
-    resetData
+    resetData,
+    resetErrors
   }
 }
 

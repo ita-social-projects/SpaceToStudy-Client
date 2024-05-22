@@ -14,21 +14,14 @@ import { useSelector } from 'react-redux'
 import { userService } from '~/services/user-service'
 import useInputVisibility from '~/hooks/use-input-visibility'
 
-import { emptyField, textField } from '~/utils/validations/common'
+import { emptyField } from '~/utils/validations/common'
 
 import { confirmPassword, password } from '~/utils/validations/login'
 import { ButtonVariantEnum, InputEnum, SizeEnum } from '~/types'
 import { FormValues } from '~/types/edit-user-profile/interfaces/securityBlockForm.interfaces'
 import { styles } from '~/containers/edit-profile/password-security-tab/PasswordSecurityTab.styles'
-import { confirmPassword, password as psw } from '~/utils/validations/login'
+import { confirmPassword, password } from '~/utils/validations/login'
 import { ButtonVariantEnum, InputEnum, SizeEnum, FormValues } from '~/types'
-
-const validateNewPassword = (password) => {
-  if (!password) {
-    return emptyField(password)
-  }
-  return psw(password)
-}
 
 const PasswordSecurityTab = () => {
   const { t } = useTranslation()
@@ -53,13 +46,21 @@ const PasswordSecurityTab = () => {
     defaultResponse: null
   })
 
+  const validateNewPassword = (newPassword) => {
+    if (!newPassword) {
+      return emptyField(newPassword)
+    }
+    return password(newPassword)
+  }
+
   const {
     data,
     handleSubmit,
     handleInputChange,
     errors,
     handleBlur,
-    resetData
+    resetData,
+    resetErrors
   } = useForm<FormValues>({
     onSubmit: () => {
       console.log('Form submitted with data:', data)
@@ -114,6 +115,13 @@ const PasswordSecurityTab = () => {
     console.log('Current password changed:', e.target.value)
   }
 
+  const onDiscard = () => {
+    resetData()
+    setSamePasswordError('')
+    setCurrentPasswordError('')
+    resetErrors()
+  }
+
   return (
     <Box sx={styles.container}>
       <TitleWithDescription
@@ -134,7 +142,6 @@ const PasswordSecurityTab = () => {
           label={t(
             'editProfilePage.profile.passwordSecurityTab.currentPassword'
           )}
-          // onChange={handleInputChange('currentPassword')}
           onChange={handleCurrentPasswordChange}
           type={showCurrentPassword ? 'text' : InputEnum.Password}
           value={data.currentPassword}
@@ -145,7 +152,6 @@ const PasswordSecurityTab = () => {
           fullWidth
           label={t('editProfilePage.profile.passwordSecurityTab.newPassword')}
           onBlur={handleBlur('password')}
-          // onChange={handleInputChange('password')}
           onChange={handlePasswordChange}
           type={showPassword ? 'text' : InputEnum.Password}
           value={data.password}
@@ -171,7 +177,7 @@ const PasswordSecurityTab = () => {
             {t('editProfilePage.profile.passwordSecurityTab.savePassword')}
           </AppButton>
           <AppButton
-            onClick={() => resetData()}
+            onClick={onDiscard}
             size={SizeEnum.Large}
             sx={styles.discardButton}
             variant={ButtonVariantEnum.Tonal}
