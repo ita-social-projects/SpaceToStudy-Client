@@ -43,6 +43,6 @@ export const tabsData: UserProfileProps = {
   [UserProfileTabsEnum.PasswordAndSecurity]: {
     icon: <GppGoodIcon />,
     title: 'editProfilePage.profile.passwordSecurityTab.tabTitle',
-    content: () => <SecurityTab />
+    content: (response) => <SecurityTab user={response} />
   }
 }

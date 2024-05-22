@@ -1,18 +1,25 @@
+import { useState, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
+// import { useSelector } from 'react-redux'
+
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
 
+import Loader from '~/components/loader/Loader'
 import AppButton from '~/components/app-button/AppButton'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
+import { snackbarVariants } from '~/constants'
 
 import useForm from '~/hooks/use-form'
 import useChangeUserStatus from '~/hooks/use-change-user-status'
 import useAxios from '~/hooks/use-axios'
-import { useSelector } from 'react-redux'
+import { useAppDispatch } from '~/hooks/use-redux'
+
 import { userService } from '~/services/user-service'
 import useInputVisibility from '~/hooks/use-input-visibility'
+import { openAlert } from '~/redux/features/snackbarSlice'
 
 import { emptyField } from '~/utils/validations/common'
 
@@ -23,25 +30,48 @@ import { styles } from '~/containers/edit-profile/password-security-tab/Password
 import { confirmPassword, password } from '~/utils/validations/login'
 import { ButtonVariantEnum, InputEnum, SizeEnum, FormValues } from '~/types'
 
-const PasswordSecurityTab = () => {
+const PasswordSecurityTab = ({user}) => {
   const { t } = useTranslation()
+  const dispatch = useAppDispatch()
+  // const store = useSelector((state) => state.appMain)
   const [isConfirmOpen, setIsConfirmOpen] = useState(false)
-  const store = useSelector((state) => state.appMain)
   const [samePasswordError, setSamePasswordError] = useState('')
   const [currentPasswordError, setCurrentPasswordError] = useState('')
 
-  const { fetchData: sendResetPassword } = useAxios({
-    service: (passwords) => {
-      return userService.changePassword(store.userId, passwords)
-    },
-    onResponseError: (error) => {
-      if (error.code === 'INCORRECT_CREDENTIALS') {
-        setSamePasswordError(t('common.errorMessages.samePasswords'))
-      } else {
-        setCurrentPasswordError(t('common.errorMessages.currentPassword'))
-      }
-      console.error('Error response:', error)
-    },
+  const handleResponse = () => {
+    dispatch(
+      openAlert({
+        severity: snackbarVariants.success,
+        message: 'editProfilePage.profile.successMessage'
+      })
+    )
+  }
+
+  // const changePassword = useCallback(
+  //   (passwords) => userService.changePassword(store.userId, passwords),
+  //   [store.userId]
+  // )
+
+  const changePassword = useCallback(
+    (passwords) => userService.changePassword(user._id, passwords),
+    [user._id]
+  )
+
+  console.log(user._id)
+
+  const handleResponseError = (error) => {
+    if (error.code === 'INCORRECT_CREDENTIALS') {
+      setSamePasswordError(t('common.errorMessages.samePasswords'))
+    } else {
+      setCurrentPasswordError(t('common.errorMessages.currentPassword'))
+    }
+    console.error('Error response:', error)
+  }
+
+  const { loading, fetchData: sendResetPassword } = useAxios({
+    service: changePassword,
+    onResponse: handleResponse,
+    onResponseError: handleResponseError,
     fetchOnMount: false,
     defaultResponse: null
   })
@@ -106,13 +136,11 @@ const PasswordSecurityTab = () => {
   const handlePasswordChange = (e) => {
     setSamePasswordError('')
     handleInputChange('password')(e)
-    console.log('Password changed:', e.target.value)
   }
 
   const handleCurrentPasswordChange = (e) => {
     setCurrentPasswordError('')
     handleInputChange('currentPassword')(e)
-    console.log('Current password changed:', e.target.value)
   }
 
   const onDiscard = () => {
@@ -174,7 +202,11 @@ const PasswordSecurityTab = () => {
             type='submit'
             variant={ButtonVariantEnum.Contained}
           >
-            {t('editProfilePage.profile.passwordSecurityTab.savePassword')}
+            {loading ? (
+              <Loader size={20} />
+            ) : (
+              t('editProfilePage.profile.passwordSecurityTab.savePassword')
+            )}
           </AppButton>
           <AppButton
             onClick={onDiscard}
