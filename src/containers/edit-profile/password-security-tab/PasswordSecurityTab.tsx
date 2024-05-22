@@ -14,7 +14,7 @@ import { useSelector } from 'react-redux'
 import { userService } from '~/services/user-service'
 import useInputVisibility from '~/hooks/use-input-visibility'
 
-import { emptyField } from '~/utils/validations/common'
+import { emptyField, textField } from '~/utils/validations/common'
 
 import { confirmPassword, password } from '~/utils/validations/login'
 import { ButtonVariantEnum, InputEnum, SizeEnum } from '~/types'
@@ -23,18 +23,11 @@ import { styles } from '~/containers/edit-profile/password-security-tab/Password
 import { confirmPassword, password as psw } from '~/utils/validations/login'
 import { ButtonVariantEnum, InputEnum, SizeEnum, FormValues } from '~/types'
 
-const validatePassword = (password, samePasswordError) => {
-  if (psw(password)) {
-    return true
-  }
+const validateNewPassword = (password) => {
   if (!password) {
-    return emptyField(
-      password,
-      'common.errorMessages.emptyField',
-      samePasswordError !== '' ? samePasswordError : ''
-    )
+    return emptyField(password)
   }
-  return ''
+  return psw(password)
 }
 
 const PasswordSecurityTab = () => {
@@ -60,13 +53,6 @@ const PasswordSecurityTab = () => {
     defaultResponse: null
   })
 
-  const validateCurrentPassword = (currentPassword) => {
-    if (!currentPassword) {
-      return t('common.errorMessages.emptyField')
-    }
-    return ''
-  }
-
   const {
     data,
     handleSubmit,
@@ -90,8 +76,7 @@ const PasswordSecurityTab = () => {
       confirmPassword: ''
     },
     validations: {
-      currentPassword: validateCurrentPassword,
-      password: (password) => validatePassword(password, samePasswordError),
+      password: (password) => validateNewPassword(password),
       confirmPassword
     }
   })
