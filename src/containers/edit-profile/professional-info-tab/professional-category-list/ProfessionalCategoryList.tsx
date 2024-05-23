@@ -15,14 +15,17 @@ const ProfessionalCategoryList: FC<ProfessionalCategoryListProps> = ({
   openProfessionalCategoryModal,
   handleDeleteCategory
 }) => {
-  const professionalCategoryItems = items.map((item) => (
-    <ProfessionalCategory
-      handleDelete={() => handleDeleteCategory(item._id, item.category._id)}
-      item={item}
-      key={item._id}
-      openProfessionalCategoryModal={openProfessionalCategoryModal}
-    />
-  ))
+  const professionalCategoryItems = items.map((item) => {
+    const handleDelete = () => handleDeleteCategory(item._id, item.category._id)
+    return (
+      <ProfessionalCategory
+        handleDelete={handleDelete}
+        item={item}
+        key={item._id}
+        openProfessionalCategoryModal={openProfessionalCategoryModal}
+      />
+    )
+  })
 
   return <Box sx={styles.cards}>{professionalCategoryItems}</Box>
 }

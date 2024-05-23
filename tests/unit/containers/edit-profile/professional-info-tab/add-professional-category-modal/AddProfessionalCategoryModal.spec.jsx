@@ -77,10 +77,7 @@ describe('AddProfessionalCategoryModal without initial value', () => {
     )
     await selectOption(categoryAutocomplete, 'Cooking', 'getByDisplayValue')
 
-    // const subjectAutoComplete = screen.getByLabelText(
-    //   /editProfilePage.profile.professionalTab.subject/
-    // )
-    // await selectOption(subjectAutoComplete, 'Gastronomy')
+    // TODO: Implement test case for subjects
   })
 
   it('should close modal when form is submitted', async () => {
@@ -95,11 +92,7 @@ describe('AddProfessionalCategoryModal without initial value', () => {
   })
 
   it('should be disabled if category is disabled', () => {
-    const categoryAutocomplete = screen.getByLabelText(
-      /editProfilePage.profile.professionalTab.mainStudyCategory/
-    )
-    fireEvent.mouseDown(categoryAutocomplete)
-    // const disabledOption = screen.getByText('Music')
+    // TODO: Implement test case
   })
 })
 
@@ -119,12 +112,7 @@ describe('AddProfessionalCategoryModal with initial value', () => {
   )
 
   it('should create SubjectGroup list according to passed initial values (modal edit mode)', async () => {
-    // const professionalSubjects = screen.getAllByTestId('subjectField')
-    // expect(professionalSubjects).toHaveLength(2)
-    // expect(professionalSubjects[0]).toHaveValue(initialValues.subjects[0]._id)
-    // expect(professionalSubjects[1]).not.toHaveValue(
-    //   initialValues.subjects[0]._id
-    // )
+    // TODO: Implement test case
   })
 
   it('should delete subject from the list', async () => {

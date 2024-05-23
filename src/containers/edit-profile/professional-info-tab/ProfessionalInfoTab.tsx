@@ -51,11 +51,13 @@ const ProfessionalInfoTab: FC<ProfessionalInfoTabProps> = ({
   })
 
   const handleDeleteCategory = (mainSubjectId: string, categoryId: string) => {
+    const deletedMainSubject = {
+      _id: mainSubjectId,
+      category: { _id: categoryId, name: '' }
+    }
+
     handleSubmit({
-      mainSubjects: {
-        _id: mainSubjectId,
-        category: { _id: categoryId, name: '' }
-      }
+      mainSubjects: deletedMainSubject
     })
   }
 
@@ -71,6 +73,7 @@ const ProfessionalInfoTab: FC<ProfessionalInfoTabProps> = ({
         <AddProfessionalCategoryModal
           {...{ handleSubmit, loading, initialValues, closeModal }}
           blockedCategoriesOptions={categories}
+          isDeletionBlocked={initialValues?.isDeletionBlocked}
         />
       ),
       paperProps: {

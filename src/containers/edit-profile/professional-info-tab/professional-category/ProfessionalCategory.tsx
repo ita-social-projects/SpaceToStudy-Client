@@ -10,12 +10,12 @@ import {
   ButtonVariantEnum,
   ComponentEnum,
   PositionEnum,
-  UserMainSubject
+  UserMainSubject,
+  OpenProfessionalCategoryModalHandler
 } from '~/types'
 import DeleteIcon from '@mui/icons-material/Delete'
 import useConfirm from '~/hooks/use-confirm'
 import { styles } from '~/containers/edit-profile/professional-info-tab/professional-category/ProfessionalCategory.styles'
-import { OpenProfessionalCategoryModalHandler } from '~/types'
 
 interface ProfessionalCategoryProps {
   item: UserMainSubject
@@ -94,11 +94,10 @@ const ProfessionalCategory: FC<ProfessionalCategoryProps> = ({
           placement={PositionEnum.Right}
           sx={styles.toolbar.deactivateButtonTooltip}
           title={
-            item.isDeletionBlocked
-              ? t(
-                  'editProfilePage.profile.professionalTab.deleteCategoryBtnDisabledTooltip'
-                )
-              : ''
+            item.isDeletionBlocked &&
+            t(
+              'editProfilePage.profile.professionalTab.deleteCategoryBtnDisabledTooltip'
+            )
           }
         >
           <span>

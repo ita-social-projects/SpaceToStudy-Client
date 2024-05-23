@@ -55,7 +55,7 @@ function SubjectGroup({
   )
 
   const handleDisableOptions = (option: SubjectInterface) => {
-    return disableOptions.some((subj) => subj._id === option._id)
+    return disableOptions.some((subject) => subject._id === option._id)
   }
 
   return (
@@ -93,6 +93,7 @@ interface AddProfessionalCategoryModalProps {
   initialValues?: ProfessionalCategory
   handleSubmit: (data: UpdateUserParams) => void
   loading: boolean
+  isDeletionBlocked?: boolean
 }
 
 const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
@@ -100,7 +101,8 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
   closeModal,
   initialValues: initialValuesFromProps,
   handleSubmit,
-  loading
+  loading,
+  isDeletionBlocked = false
 }) => {
   const { t } = useTranslation()
 
@@ -145,24 +147,37 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
     }
 
   const handleSubjectAdd = () => {
+    const newSubjects = [...data.subjects, professionalSubjectTemplate]
     handleDataChange({
-      subjects: [...data.subjects, professionalSubjectTemplate]
+      subjects: newSubjects
     })
   }
 
   const handleSubjectDelete = (id: string) => {
+    const updatedSubjects = data.subjects.filter((el) => el._id !== id)
     handleDataChange({
-      subjects: data.subjects.filter((el) => el._id !== id)
+      subjects: updatedSubjects
     })
   }
 
   const handleBlockOption = (option: CategoryNameInterface) => {
-    return (
-      blockedCategoriesOptions.some(
-        (mainSubject) => mainSubject.category._id === option._id
-      ) && option._id !== data.category._id
+    const isCurrent = option._id !== data.category._id
+    const isBlocked = blockedCategoriesOptions.some(
+      (mainSubject) => mainSubject.category._id === option._id
     )
+    return isBlocked && isCurrent
   }
+
+  const SubjectsGroup = data.subjects.map((subject, index) => (
+    <SubjectGroup
+      disableOptions={data.subjects}
+      handleChange={handleProfessionalSubjectChange(index)}
+      handleSubjectDelete={() => handleSubjectDelete(subject._id)}
+      key={index}
+      selectedCategory={data.category._id}
+      subject={{ name: subject.name, _id: subject._id }}
+    />
+  ))
 
   return (
     <Box component={ComponentEnum.Form} onSubmit={submitForm} sx={styles.root}>
@@ -177,6 +192,7 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
       />
       <Box sx={styles.formWrapper}>
         <AsyncAutocomplete
+          disabled={isDeletionBlocked}
           fullWidth
           getOptionDisabled={handleBlockOption}
           labelField='name'
@@ -192,16 +208,7 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
           value={data.category._id}
           valueField='_id'
         />
-        {data.subjects.map((subject, index) => (
-          <SubjectGroup
-            disableOptions={data.subjects}
-            handleChange={handleProfessionalSubjectChange(index)}
-            handleSubjectDelete={() => handleSubjectDelete(subject._id)}
-            key={index}
-            selectedCategory={data.category._id}
-            subject={{ name: subject.name, _id: subject._id }}
-          />
-        ))}
+        {SubjectsGroup}
         <Box sx={styles.addOneMoreSubjectButton}>
           <AppButton
             loading={loading}
