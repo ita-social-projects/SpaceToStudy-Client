@@ -1,7 +1,5 @@
-import { useState, useCallback, FC, ChangeEvent, useEffect } from 'react'
+import { useState, useCallback, FC, ChangeEvent } from 'react'
 import { useTranslation } from 'react-i18next'
-// import { useSelector } from 'react-redux'
-import { useBlocker } from 'react-router-dom'
 
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
@@ -16,14 +14,13 @@ import { snackbarVariants } from '~/constants'
 import useForm from '~/hooks/use-form'
 import useChangeUserStatus from '~/hooks/use-change-user-status'
 import useAxios from '~/hooks/use-axios'
-import useConfirm from '~/hooks/use-confirm'
 import { useAppDispatch } from '~/hooks/use-redux'
 import useInputVisibility from '~/hooks/use-input-visibility'
 
 import { userService } from '~/services/user-service'
 import { openAlert } from '~/redux/features/snackbarSlice'
 
-import { emptyField } from '~/utils/validations/common'
+import { emptyField, textField } from '~/utils/validations/common'
 
 import { confirmPassword, password } from '~/utils/validations/login'
 import { ButtonVariantEnum, InputEnum, SizeEnum } from '~/types'
@@ -46,8 +43,6 @@ interface PasswordSecurityTabProps {
 const PasswordSecurityTab: FC<PasswordSecurityTabProps> = ({ user }) => {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
-
-  const { setNeedConfirmation, checkConfirmation } = useConfirm()
 
   const [isConfirmOpen, setIsConfirmOpen] = useState<boolean>(false)
   const [samePasswordError, setSamePasswordError] = useState<string>('')
@@ -84,15 +79,35 @@ const PasswordSecurityTab: FC<PasswordSecurityTabProps> = ({ user }) => {
     defaultResponse: null
   })
 
-  const validateNewPassword = (newPassword) => {
+  // const validateNewPassword = (newPassword) => {
+  //   if (!newPassword) {
+  //     return emptyField(newPassword)
+  //   }
+  //   return password(newPassword)
+  // }
+
+  // const validateCurrentPassword = (currentPassword) => {
+  //   if (!currentPassword) {
+  //     return emptyField(currentPassword)
+  //   }
+  //   return password(currentPassword)
+  // }
+
+  const validateNewPassword = (newPassword: string) => {
     if (!newPassword) {
-      return emptyField(newPassword)
+      return emptyField({ value: newPassword })
     }
     return password(newPassword)
   }
 
+  const validateCurrentPassword = (currentPassword: string) => {
+    if (!currentPassword) {
+      return emptyField({ value: currentPassword })
+    }
+    return textField(5, 55)(currentPassword)
+  }
+
   const {
-    isDirty,
     data,
     handleSubmit,
     handleInputChange,
@@ -104,7 +119,7 @@ const PasswordSecurityTab: FC<PasswordSecurityTabProps> = ({ user }) => {
     onSubmit: async () => {
       console.log('Form submitted with data:', data)
       setSamePasswordError('')
-      setCurrentPasswordError('')
+      // setCurrentPasswordError('')
       try {
         await sendResetPassword({
           password: data.password,
@@ -120,8 +135,21 @@ const PasswordSecurityTab: FC<PasswordSecurityTabProps> = ({ user }) => {
       confirmPassword: ''
     },
     validations: {
-      currentPassword: password,
-      password: (password) => validateNewPassword(password),
+      // currentPassword: (value: string) => {
+      //   console.log('value', value)
+      //   return emptyField({
+      //     value,
+      //     emptyMessage: 'common.errorMessages.emptyField',
+      //     helperText: textField(5, 55)(value)
+      //   })
+      // },
+      // currentPassword: (currentPassword) =>
+      //   validateCurrentPassword(currentPassword),
+      // password: (password) => validateNewPassword(password),
+      // confirmPassword
+
+      currentPassword: validateCurrentPassword,
+      password: validateNewPassword,
       confirmPassword
     }
   })
@@ -179,7 +207,7 @@ const PasswordSecurityTab: FC<PasswordSecurityTabProps> = ({ user }) => {
         </Typography>
         <AppTextField
           InputProps={currentPasswordVisibility}
-          errorMsg={currentPasswordError}
+          errorMsg={t(errors.currentPassword) || currentPasswordError}
           fullWidth
           label={t(
             'editProfilePage.profile.passwordSecurityTab.currentPassword'
