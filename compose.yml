@@ -16,6 +16,7 @@ services:
     ports:
       - '80:80'
       - '2222:2222'
+      - '22:22'
     # Enable tty and stdin for the container
     stdin_open: true
     tty: true
