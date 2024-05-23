@@ -20,7 +20,7 @@ import useInputVisibility from '~/hooks/use-input-visibility'
 import { userService } from '~/services/user-service'
 import { openAlert } from '~/redux/features/snackbarSlice'
 
-import { emptyField, textField } from '~/utils/validations/common'
+import { emptyField } from '~/utils/validations/common'
 
 import { confirmPassword, password } from '~/utils/validations/login'
 import { ButtonVariantEnum, InputEnum, SizeEnum } from '~/types'
@@ -58,7 +58,9 @@ const PasswordSecurityTab: FC<PasswordSecurityTabProps> = ({ user }) => {
   }
 
   const changePassword = useCallback(
-    (passwords: FormValues) => userService.changePassword(user._id, passwords),
+    (data: { password: string; currentPassword: string }) => {
+      return userService.changePassword(user._id, data)
+    },
     [user._id]
   )
 
@@ -68,30 +70,15 @@ const PasswordSecurityTab: FC<PasswordSecurityTabProps> = ({ user }) => {
     } else {
       setCurrentPasswordError(t('common.errorMessages.currentPassword'))
     }
-    console.error('Error response:', error)
   }
 
-  const { loading, fetchData: sendResetPassword } = useAxios({
+  const { loading, fetchData: sendChangedPassword } = useAxios({
     service: changePassword,
     onResponse: handleResponse,
     onResponseError: handleResponseError,
     fetchOnMount: false,
     defaultResponse: null
   })
-
-  // const validateNewPassword = (newPassword) => {
-  //   if (!newPassword) {
-  //     return emptyField(newPassword)
-  //   }
-  //   return password(newPassword)
-  // }
-
-  // const validateCurrentPassword = (currentPassword) => {
-  //   if (!currentPassword) {
-  //     return emptyField(currentPassword)
-  //   }
-  //   return password(currentPassword)
-  // }
 
   const validateNewPassword = (newPassword: string) => {
     if (!newPassword) {
@@ -104,7 +91,7 @@ const PasswordSecurityTab: FC<PasswordSecurityTabProps> = ({ user }) => {
     if (!currentPassword) {
       return emptyField({ value: currentPassword })
     }
-    return textField(5, 55)(currentPassword)
+    return password(currentPassword)
   }
 
   const {
@@ -117,17 +104,12 @@ const PasswordSecurityTab: FC<PasswordSecurityTabProps> = ({ user }) => {
     resetErrors
   } = useForm<FormValues>({
     onSubmit: async () => {
-      console.log('Form submitted with data:', data)
       setSamePasswordError('')
-      // setCurrentPasswordError('')
-      try {
-        await sendResetPassword({
-          password: data.password,
-          currentPassword: data.currentPassword
-        })
-      } catch (error) {
-        console.error('Password reset failed:', error)
-      }
+      setCurrentPasswordError('')
+      await sendChangedPassword({
+        password: data.password,
+        currentPassword: data.currentPassword
+      })
     },
     initialValues: {
       currentPassword: '',
@@ -135,19 +117,6 @@ const PasswordSecurityTab: FC<PasswordSecurityTabProps> = ({ user }) => {
       confirmPassword: ''
     },
     validations: {
-      // currentPassword: (value: string) => {
-      //   console.log('value', value)
-      //   return emptyField({
-      //     value,
-      //     emptyMessage: 'common.errorMessages.emptyField',
-      //     helperText: textField(5, 55)(value)
-      //   })
-      // },
-      // currentPassword: (currentPassword) =>
-      //   validateCurrentPassword(currentPassword),
-      // password: (password) => validateNewPassword(password),
-      // confirmPassword
-
       currentPassword: validateCurrentPassword,
       password: validateNewPassword,
       confirmPassword
@@ -165,10 +134,10 @@ const PasswordSecurityTab: FC<PasswordSecurityTabProps> = ({ user }) => {
   const {
     inputVisibility: currentPasswordVisibility,
     showInputText: showCurrentPassword
-  } = useInputVisibility(currentPasswordError)
+  } = useInputVisibility(errors.currentPassword || currentPasswordError)
 
   const { inputVisibility: passwordVisibility, showInputText: showPassword } =
-    useInputVisibility(errors.password)
+    useInputVisibility(errors.password || samePasswordError)
 
   const {
     inputVisibility: newPasswordVisibility,

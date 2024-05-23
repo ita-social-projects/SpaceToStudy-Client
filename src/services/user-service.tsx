@@ -32,7 +32,7 @@ export const userService = {
   },
   changePassword: (
     userId: string,
-    params: { passwords: string }
+    params: { password: string; currentPassword: string }
   ): Promise<AxiosResponse<null>> => {
     return axiosClient.patch(
       createUrlPath(URLs.users.changePassword, userId),
