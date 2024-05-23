@@ -43,22 +43,14 @@ const userData = {
     student: [],
     tutor: [
       {
-        _id: '645b9f4a1c0272f5cde0e11e',
-        name: 'Danish',
-        category: '6459347d943e375d1c0a1912',
-        totalOffers: 0
+        _id: '648850c4fdc2d1a130c24aea',
+        category: { _id: '64884f21fdc2d1a130c24ac0', name: 'Music' },
+        subjects: [{ _id: '64885108fdc2d1a130c24af9', name: 'Guitar' }]
       },
       {
-        _id: '6422d995d898aa732d038e8f',
-        name: 'Guitar',
-        category: '6421ed8ed991d46a84721dfa',
-        totalOffers: 4
-      },
-      {
-        _id: '6422ad6a74c1353b96c7c132',
-        name: 'Web design',
-        category: '6421ed8ed991d46a84721df4',
-        totalOffers: 9
+        _id: '648850c4fdc2d1342130c24d',
+        category: { _id: '64884f21fdc2d1a130c24ac0', name: 'Cooking' },
+        subjects: [{ _id: '64885108fdc2d1a130c24af9', name: 'Gastronomy' }]
       }
     ]
   },

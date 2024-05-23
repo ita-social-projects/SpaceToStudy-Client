@@ -103,6 +103,7 @@ const ProfessionalCategory: FC<ProfessionalCategoryProps> = ({
         >
           <span>
             <IconButton
+              data-testid='delete-professional-category-button'
               disabled={item.isDeletionBlocked}
               onClick={handleDeleteButtonClick}
               sx={styles.toolbar.deleteButton}

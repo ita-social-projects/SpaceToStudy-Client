@@ -1,43 +1,28 @@
 import ProfessionalCategory from '~/containers/edit-profile/professional-info-tab/professional-category/ProfessionalCategory'
 import { fireEvent, screen } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
-import { ProficiencyLevelEnum } from '~/types'
 
 const mockOpenProfessionalCategoryModal = vi.fn()
-
-const activatedCategory = {
-  _id: '1',
-  name: 'Computer science',
-  isActivated: true,
-  isActivationBlocked: false,
-  subjects: []
-}
+const mockedHandleDelete = vi.fn()
 
 const categoryWithSubjects = {
-  ...activatedCategory,
-  subjects: [
-    {
-      _id: '1',
-      name: 'PHP',
-      proficiencyLevels: [
-        ProficiencyLevelEnum.Beginner,
-        ProficiencyLevelEnum.Intermediate,
-        ProficiencyLevelEnum.Advanced
-      ]
-    },
-    {
-      _id: '2',
-      name: 'Java',
-      proficiencyLevels: [ProficiencyLevelEnum.Beginner]
-    }
-  ]
+  _id: '648850c4fdc2d1a130c24aea',
+  category: { _id: '64884f21fdc2d1a130c24ac0', name: 'Music' },
+  subjects: [{ _id: '64885108fdc2d1a130c24af9', name: 'Guitar' }],
+  isDeletionBlocked: false
 }
 
-const deactivatedCategory = { ...activatedCategory, isActivated: false }
+const blockedCategory = {
+  _id: '648850c4fdc2d1a130c24aea',
+  category: { _id: '64884f21fdc2d1a130c24ac0', name: 'Music' },
+  subjects: [{ _id: '64885108fdc2d1a130c24af9', name: 'Guitar' }],
+  isDeletionBlocked: true
+}
 
 const renderProfessionalCategoryWithItem = (item) => {
   renderWithProviders(
     <ProfessionalCategory
+      handleDelete={mockedHandleDelete}
       item={item}
       openProfessionalCategoryModal={mockOpenProfessionalCategoryModal}
     />
@@ -45,26 +30,6 @@ const renderProfessionalCategoryWithItem = (item) => {
 }
 
 describe('ProfessionalCategory', () => {
-  it('should render deactivate button when isActivated is true', () => {
-    renderProfessionalCategoryWithItem(activatedCategory)
-
-    const deactivateCategoryButton = screen.getByText(
-      /editProfilePage.profile.professionalTab.deactivateCategoryBtn/
-    )
-
-    expect(deactivateCategoryButton).toBeInTheDocument()
-  })
-
-  it('should render activate button when isActivated is false', () => {
-    renderProfessionalCategoryWithItem(deactivatedCategory)
-
-    const activateCategoryButton = screen.getByText(
-      /editProfilePage.profile.professionalTab.activateCategoryBtn/
-    )
-
-    expect(activateCategoryButton).toBeInTheDocument()
-  })
-
   it('should open modal when Delete button is clicked', () => {
     renderProfessionalCategoryWithItem(categoryWithSubjects)
 
@@ -76,8 +41,24 @@ describe('ProfessionalCategory', () => {
     const deleteCategoryModalTitle = screen.getByText(
       /editProfilePage.profile.professionalTab.deleteCategoryModal.title/
     )
-
     expect(deleteCategoryModalTitle).toBeInTheDocument()
+
+    const confirmBtn = screen.getByText(
+      /editProfilePage.profile.professionalTab.deleteCategoryModal.submitBtn/
+    )
+
+    fireEvent.click(confirmBtn)
+
+    expect(mockedHandleDelete).toHaveBeenCalled()
+  })
+
+  it('should disable delete button if deletion blocked', () => {
+    renderProfessionalCategoryWithItem(blockedCategory)
+    const deleteCategoryButton = screen.getByTestId(
+      'delete-professional-category-button'
+    )
+
+    expect(deleteCategoryButton).toBeDisabled()
   })
 
   it('should render subjects correctly', () => {
@@ -92,5 +73,18 @@ describe('ProfessionalCategory', () => {
     )
 
     expect(subjectLabels).toHaveLength(categoryWithSubjects.subjects.length)
+  })
+
+  it('should open edit subject modal correctly', () => {
+    renderProfessionalCategoryWithItem(categoryWithSubjects)
+
+    const editBtn = screen.getByText(
+      /editProfilePage.profile.professionalTab.editCategoryBtn/
+    )
+    expect(editBtn).toBeInTheDocument()
+
+    fireEvent.click(editBtn)
+
+    expect(mockOpenProfessionalCategoryModal).toHaveBeenCalled()
   })
 })

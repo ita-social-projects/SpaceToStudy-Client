@@ -42,21 +42,13 @@ const mockData = {
     tutor: [
       {
         _id: '648850c4fdc2d1a130c24aea',
-        name: 'Guitar',
-        category: '64884f21fdc2d1a130c24ac0',
-        totalOffers: {
-          student: 4,
-          tutor: 12
-        }
+        category: { _id: '64884f21fdc2d1a130c24ac0', name: 'Music' },
+        subjects: [{ _id: '64885108fdc2d1a130c24af9', name: 'Guitar' }]
       },
       {
-        _id: '64885108fdc2d1a130c24af9',
-        name: 'Cybersecurity',
-        category: '64884f33fdc2d1a130c24ac2',
-        totalOffers: {
-          student: 3,
-          tutor: 20
-        }
+        _id: '648850c4fdc2d1342130c24d',
+        category: { _id: '64884f21fdc2d1a130c24ac0', name: 'Cooking' },
+        subjects: [{ _id: '64885108fdc2d1a130c24af9', name: 'Gastronomy' }]
       }
     ]
   },

@@ -1,11 +1,13 @@
 import AddProfessionalCategoryModal from '~/containers/edit-profile/professional-info-tab/add-professional-category-modal/AddProfessionalCategoryModal'
 import { renderWithProviders, selectOption } from '~tests/test-utils'
-import { act, fireEvent, screen } from '@testing-library/react'
+import { act, fireEvent, screen, waitFor } from '@testing-library/react'
 import { professionalSubjectTemplate } from '~/containers/edit-profile/professional-info-tab/add-professional-category-modal/AddProfessionalCategoryModal.constants'
+import { mockAxiosClient } from '~tests/test-utils'
+import { URLs } from '~/constants/request'
 
 const mockCloseModal = vi.fn()
 const mockHandleSubmit = vi.fn()
-const mockedBlockedCategory = [{ id: '4', name: 'Music' }]
+const mockedBlockedCategory = [{ _id: '4', name: 'Music' }]
 
 const initialValues = {
   category: { _id: '1', name: 'Cooking' },
@@ -21,22 +23,6 @@ const initialValues = {
   ]
 }
 
-vi.mock('~/services/subject-service', async () => {
-  const actual = await vi.importActual('~/services/subject-service')
-  return {
-    ...actual,
-    getSubjectsNames: () => initialValues.subjects
-  }
-})
-
-vi.mock('~/services/category-service', async () => {
-  const actual = await vi.importActual('~/services/category-service')
-  return {
-    ...actual,
-    getCategoriesNames: () => [initialValues.category, ...mockedBlockedCategory]
-  }
-})
-
 const renderProfessionalCategoryModalWithInitialValues = (initialValues) => {
   renderWithProviders(
     <AddProfessionalCategoryModal
@@ -49,8 +35,17 @@ const renderProfessionalCategoryModalWithInitialValues = (initialValues) => {
 }
 
 describe('AddProfessionalCategoryModal without initial value', () => {
-  beforeEach(() => {
-    renderProfessionalCategoryModalWithInitialValues()
+  beforeEach(async () => {
+    await waitFor(() => {
+      mockAxiosClient
+        .onGet(URLs.categories.getNames)
+        .reply(200, [initialValues.category, ...mockedBlockedCategory])
+      mockAxiosClient
+        .onGet(`${initialValues.category._id}${URLs.subjects.getNames}`)
+        .reply(200, initialValues.subjects)
+
+      renderProfessionalCategoryModalWithInitialValues()
+    })
   })
 
   it('should render SubjectGroup using template in (modal create mode)', async () => {
@@ -109,8 +104,18 @@ describe('AddProfessionalCategoryModal without initial value', () => {
 })
 
 describe('AddProfessionalCategoryModal with initial value', () => {
-  beforeEach(() =>
-    renderProfessionalCategoryModalWithInitialValues(initialValues)
+  beforeEach(
+    async () =>
+      await waitFor(() => {
+        mockAxiosClient
+          .onGet(URLs.categories.getNames)
+          .reply(200, [initialValues.category, ...mockedBlockedCategory])
+        mockAxiosClient
+          .onGet(`${initialValues.category._id}${URLs.subjects.getNames}`)
+          .reply(200, initialValues.subjects)
+
+        renderProfessionalCategoryModalWithInitialValues(initialValues)
+      })
   )
 
   it('should create SubjectGroup list according to passed initial values (modal edit mode)', async () => {
