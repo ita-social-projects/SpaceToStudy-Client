@@ -34,8 +34,25 @@ export const AuthService = {
   ): Promise<AxiosResponse> => {
     const confirmUrl = createUrlPath(URLs.auth.resetPassword, resetToken)
     return axiosClient.patch(confirmUrl, newPassword)
+  },
+  changePassword: (
+    userId: string,
+    params: { password: string; currentPassword: string }
+  ): Promise<AxiosResponse<null>> => {
+    return axiosClient.patch(
+      createUrlPath(URLs.auth.changePassword, userId),
+      params
+    )
   }
 }
+//   changePassword: (
+//     userId: string,
+//     params: { password: string; currentPassword: string }
+//   ): Promise<AxiosResponse<null>> => {
+//     const confirmUrl = createUrlPath(URLs.auth.changePassword, userId)
+//     return axiosClient.patch(confirmUrl, params)
+//   }
+// }
 
 export const authService = appApi.injectEndpoints({
   endpoints: (build) => ({

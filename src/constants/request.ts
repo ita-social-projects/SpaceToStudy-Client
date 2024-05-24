@@ -14,7 +14,8 @@ export const URLs = {
     refresh: '/auth/refresh',
     confirm: '/auth/confirm-email',
     forgotPassword: '/auth/forgot-password',
-    resetPassword: '/auth/reset-password'
+    resetPassword: '/auth/reset-password',
+    changePassword: '/auth/change-password'
   },
   users: {
     get: '/users',
@@ -22,8 +23,8 @@ export const URLs = {
     delete: '/users/delete',
     deactivate: '/users/deactivate',
     activate: '/users/activate',
-    myProfile: '/users/myProfile',
-    changePassword: '/users/change-password'
+    myProfile: '/users/myProfile'
+    // changePassword: '/users/change-password'
   },
   offers: {
     create: '/offers',

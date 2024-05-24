@@ -17,6 +17,7 @@ export const styles = {
     typography: TypographyVariantEnum.Body1,
     mb: '15px'
   },
+  form: { display: 'flex', flexDirection: 'column', gap: '6px' },
   passwordButtonsContainer: {
     m: '10px 0 20px'
   },

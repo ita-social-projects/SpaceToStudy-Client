@@ -17,7 +17,7 @@ import useAxios from '~/hooks/use-axios'
 import { useAppDispatch } from '~/hooks/use-redux'
 import useInputVisibility from '~/hooks/use-input-visibility'
 
-import { userService } from '~/services/user-service'
+import { AuthService } from '~/services/auth-service'
 import { openAlert } from '~/redux/features/snackbarSlice'
 
 import { emptyField } from '~/utils/validations/common'
@@ -59,7 +59,7 @@ const PasswordSecurityTab: FC<PasswordSecurityTabProps> = ({ user }) => {
 
   const changePassword = useCallback(
     (data: { password: string; currentPassword: string }) => {
-      return userService.changePassword(user._id, data)
+      return AuthService.changePassword(user._id, data)
     },
     [user._id]
   )
@@ -174,39 +174,42 @@ const PasswordSecurityTab: FC<PasswordSecurityTabProps> = ({ user }) => {
         <Typography sx={styles.subtitle}>
           {t('editProfilePage.profile.passwordSecurityTab.changePassword')}
         </Typography>
-        <AppTextField
-          InputProps={currentPasswordVisibility}
-          errorMsg={t(errors.currentPassword) || currentPasswordError}
-          fullWidth
-          label={t(
-            'editProfilePage.profile.passwordSecurityTab.currentPassword'
-          )}
-          onChange={handleCurrentPasswordChange}
-          type={showCurrentPassword ? 'text' : InputEnum.Password}
-          value={data.currentPassword}
-        />
-        <AppTextField
-          InputProps={passwordVisibility}
-          errorMsg={samePasswordError || t(errors.password)}
-          fullWidth
-          label={t('editProfilePage.profile.passwordSecurityTab.newPassword')}
-          onBlur={handleBlur('password')}
-          onChange={handlePasswordChange}
-          type={showPassword ? 'text' : InputEnum.Password}
-          value={data.password}
-        />
-        <AppTextField
-          InputProps={newPasswordVisibility}
-          errorMsg={t(errors.confirmPassword)}
-          fullWidth
-          label={t(
-            'editProfilePage.profile.passwordSecurityTab.retypePassword'
-          )}
-          onBlur={handleBlur('confirmPassword')}
-          onChange={handleInputChange('confirmPassword')}
-          type={showNewPassword ? 'text' : InputEnum.Password}
-          value={data.confirmPassword}
-        />
+        <Box sx={styles.form}>
+          <AppTextField
+            InputProps={currentPasswordVisibility}
+            errorMsg={t(errors.currentPassword) || currentPasswordError}
+            fullWidth
+            label={t(
+              'editProfilePage.profile.passwordSecurityTab.currentPassword'
+            )}
+            onBlur={handleBlur('currentPassword')}
+            onChange={handleCurrentPasswordChange}
+            type={showCurrentPassword ? 'text' : InputEnum.Password}
+            value={data.currentPassword}
+          />
+          <AppTextField
+            InputProps={passwordVisibility}
+            errorMsg={samePasswordError || t(errors.password)}
+            fullWidth
+            label={t('editProfilePage.profile.passwordSecurityTab.newPassword')}
+            onBlur={handleBlur('password')}
+            onChange={handlePasswordChange}
+            type={showPassword ? 'text' : InputEnum.Password}
+            value={data.password}
+          />
+          <AppTextField
+            InputProps={newPasswordVisibility}
+            errorMsg={t(errors.confirmPassword)}
+            fullWidth
+            label={t(
+              'editProfilePage.profile.passwordSecurityTab.retypePassword'
+            )}
+            onBlur={handleBlur('confirmPassword')}
+            onChange={handleInputChange('confirmPassword')}
+            type={showNewPassword ? 'text' : InputEnum.Password}
+            value={data.confirmPassword}
+          />
+        </Box>
         <Box sx={styles.passwordButtonsContainer}>
           <AppButton
             size={SizeEnum.Large}
