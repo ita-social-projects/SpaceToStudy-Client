@@ -30,15 +30,6 @@ export const userService = {
   ): Promise<AxiosResponse<null>> => {
     return axiosClient.patch(createUrlPath(URLs.users.update, userId), params)
   },
-  // changePassword: (
-  //   userId: string,
-  //   params: { password: string; currentPassword: string }
-  // ): Promise<AxiosResponse<null>> => {
-  //   return axiosClient.patch(
-  //     createUrlPath(URLs.users.changePassword, userId),
-  //     params
-  //   )
-  // },
   deleteUser: (userId: string): Promise<AxiosResponse<null>> => {
     return axiosClient.delete(createUrlPath(URLs.users.get, userId))
   },

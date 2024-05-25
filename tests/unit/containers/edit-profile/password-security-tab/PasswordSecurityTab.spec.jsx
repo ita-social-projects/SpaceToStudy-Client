@@ -1,23 +1,29 @@
 import {
   screen,
   fireEvent,
-  // waitFor,
+  waitFor,
   waitForElementToBeRemoved
 } from '@testing-library/react'
 import {
   renderWithProviders,
-  // mockAxiosClient,
+  mockAxiosClient,
   TestSnackbar
 } from '~tests/test-utils'
 import PasswordSecurityTab from '~/containers/edit-profile/password-security-tab/PasswordSecurityTab'
+import { AuthService } from '~/services/auth-service'
 
-export const userDataMock = {
+import { URLs } from '~/constants/request'
+import { expect } from 'vitest'
+
+const userDataMock = {
   _id: 123456
 }
 
-// import { URLs } from '~/constants/request'
-
-// const openModal = vi.fn()
+vi.mock('~/services/auth-service', () => ({
+  AuthService: {
+    changePassword: vi.fn()
+  }
+}))
 
 const changeInputValue = (label, value) => {
   fireEvent.change(label, { target: { value } })
@@ -32,33 +38,80 @@ describe('PasswordSecurityTab', () => {
     )
   })
 
-  // it('should open login dilog after positive response', async () => {
-  //   mockAxiosClient
-  //     .onPatch(`${URLs.auth.changePassword}/${userDataMock}`)
-  //     .reply(200)
-  //   const currentPasswordInput = screen.getByLabelText(
-  //     /editProfilePage.profile.passwordSecurityTab.currentPassword/i
-  //   )
-  //   const passwordInput = screen.getByLabelText(
-  //     /editProfilePage.profile.passwordSecurityTab.newPassword/i
-  //   )
-  //   const confirmPasswordInput = screen.getByLabelText(
-  //     /editProfilePage.profile.passwordSecurityTab.retypePassword/i
-  //   )
-  //   const button = screen.getByText(
-  //     'editProfilePage.profile.passwordSecurityTab.savePassword'
-  //   )
+  it('should show Snackbar after positive response', async () => {
+    mockAxiosClient
+      .onPatch(`${URLs.auth.changePassword}/${userDataMock}`)
+      .reply(200)
+    const currentPasswordInput = screen.getByLabelText(
+      /editProfilePage.profile.passwordSecurityTab.currentPassword/i
+    )
+    const passwordInput = screen.getByLabelText(
+      /editProfilePage.profile.passwordSecurityTab.newPassword/i
+    )
 
-  //   fireEvent.change(currentPasswordInput, { target: { value: '12345qwert' } })
-  //   fireEvent.change(passwordInput, { target: { value: '12345qwertY' } })
-  //   fireEvent.change(confirmPasswordInput, { target: { value: '12345qwertY' } })
+    const confirmPasswordInput = screen.getByLabelText(
+      /editProfilePage.profile.passwordSecurityTab.retypePassword/i
+    )
 
-  //   await waitFor(() => {
-  //     fireEvent.click(button)
-  //   })
-  //   const snackbar = await screen.findByText('editProfilePage.profile.successMessage')
-  //   expect(snackbar).toHaveBeenCalled()
-  // })
+    const saveButton = screen.getByText(
+      'editProfilePage.profile.passwordSecurityTab.savePassword'
+    )
+
+    fireEvent.change(currentPasswordInput, { target: { value: '12345qwert' } })
+    fireEvent.change(passwordInput, { target: { value: '12345qwertY' } })
+    fireEvent.change(confirmPasswordInput, { target: { value: '12345qwertY' } })
+
+    await waitFor(() => {
+      fireEvent.click(saveButton)
+    })
+
+    await waitFor(() => {
+      expect(AuthService.changePassword).toHaveBeenCalledWith(
+        userDataMock._id,
+        {
+          password: '12345qwertY',
+          currentPassword: '12345qwert'
+        }
+      )
+    })
+  })
+
+  it('should do not save empty fields', async () => {
+    const currentPasswordInput = screen.getByLabelText(
+      /editProfilePage.profile.passwordSecurityTab.currentPassword/i
+    )
+    const passwordInput = screen.getByLabelText(
+      /editProfilePage.profile.passwordSecurityTab.newPassword/i
+    )
+    const confirmPasswordInput = screen.getByLabelText(
+      /editProfilePage.profile.passwordSecurityTab.retypePassword/i
+    )
+    const saveButton = screen.getByText(
+      /editProfilePage.profile.passwordSecurityTab.savePassword/i
+    )
+
+    fireEvent.change(currentPasswordInput, { target: { value: '' } })
+    fireEvent.change(passwordInput, { target: { value: '' } })
+    fireEvent.change(confirmPasswordInput, { target: { value: '' } })
+    fireEvent.click(saveButton)
+
+    expect(currentPasswordInput).toHaveValue('')
+    expect(passwordInput).toHaveValue('')
+    expect(confirmPasswordInput).toHaveValue('')
+  })
+
+  it('should show visibility icon', async () => {
+    const visibilityOffIcons = screen.getAllByTestId('VisibilityOffIcon')
+    const visibilityOffIcon = visibilityOffIcons[0]
+    fireEvent.click(visibilityOffIcon)
+
+    const visibilityIcons = screen.getAllByTestId('VisibilityIcon')
+    const visibilityIcon = visibilityIcons[0]
+    await waitFor(() => {
+      expect(visibilityIcon).toBeInTheDocument()
+      expect(visibilityOffIcon).not.toBeInTheDocument()
+    })
+  })
 
   it('renders title and description', () => {
     const title = screen.getByText(
@@ -70,6 +123,7 @@ describe('PasswordSecurityTab', () => {
     expect(title).toBeInTheDocument()
     expect(description).toBeInTheDocument()
   })
+
   it('resets form when discard button is clicked', () => {
     const currentPasswordLabel = screen.getByLabelText(
       'editProfilePage.profile.passwordSecurityTab.currentPassword'

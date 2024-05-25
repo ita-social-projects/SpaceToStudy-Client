@@ -24,7 +24,6 @@ export const URLs = {
     deactivate: '/users/deactivate',
     activate: '/users/activate',
     myProfile: '/users/myProfile'
-    // changePassword: '/users/change-password'
   },
   offers: {
     create: '/offers',
