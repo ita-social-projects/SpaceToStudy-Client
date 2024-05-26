@@ -3,17 +3,22 @@ import {
   Category,
   CommonEntityFields,
   RequestParams,
+  ResourceAvailability,
   ResourcesTabsEnum as ResourcesTypes
 } from '~/types'
 
-export interface Lesson extends CommonEntityFields {
+export interface ResourceBase {
+  description: string
+  resourceType: ResourcesTypes
+  availability: ResourceAvailability
+}
+
+export interface Lesson extends CommonEntityFields, ResourceBase {
   title: string
   author: string
   content: string
-  description: string
   attachments: Attachment[]
   category: Category | null
-  resourceType?: ResourcesTypes
 }
 
 export interface Categories extends CommonEntityFields {

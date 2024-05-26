@@ -7,7 +7,8 @@ import {
   UserResponse,
   Quiz,
   Attachment,
-  Lesson
+  Lesson,
+  CourseResource
 } from '~/types'
 
 export interface Course extends CommonEntityFields {
@@ -31,7 +32,7 @@ export interface CourseForm
 }
 
 export interface Activities {
-  resource: [Lesson, Quiz, Attachment]
+  resource: CourseResource
 }
 
 export interface CourseSection {

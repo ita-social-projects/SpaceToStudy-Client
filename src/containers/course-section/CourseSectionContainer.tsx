@@ -39,7 +39,7 @@ import {
   Quiz,
   Attachment,
   ResourcesTabsEnum as ResourcesTypes,
-  CourseResources,
+  CourseResource,
   CourseSectionHandlers,
   UpdateAttachmentParams
 } from '~/types'
@@ -57,7 +57,7 @@ interface SectionProps extends CourseSectionHandlers {
   sections: CourseSection[]
 }
 
-type openModalFunc = () => void
+type OpenModalFunction = () => void
 
 const CourseSectionContainer: FC<SectionProps> = ({
   sectionData,
@@ -77,9 +77,9 @@ const CourseSectionContainer: FC<SectionProps> = ({
   )
   const [activeMenu, setActiveMenu] = useState<string>('')
   const [isVisible, setIsVisible] = useState<boolean>(true)
-  const [resources, setResources] = useState<CourseResources[]>([])
+  const [resources, setResources] = useState<CourseResource[]>([])
 
-  const getAllResourcesItems = useCallback((): CourseResources[] => {
+  const getAllResourcesItems = useCallback((): CourseResource[] => {
     return [
       ...sectionData.lessons,
       ...sectionData.quizzes,
@@ -89,8 +89,8 @@ const CourseSectionContainer: FC<SectionProps> = ({
 
   const updateResources = useCallback(
     (
-      prevResources: CourseResources[],
-      allResourcesItems: CourseResources[],
+      prevResources: CourseResource[],
+      allResourcesItems: CourseResource[],
       displayOrder: string[]
     ) => {
       return prevResources
@@ -110,10 +110,10 @@ const CourseSectionContainer: FC<SectionProps> = ({
 
   const addNewResources = useCallback(
     (
-      updatedResourcesItems: CourseResources[],
-      allResourcesItems: CourseResources[],
+      updatedResourcesItems: CourseResource[],
+      allResourcesItems: CourseResource[],
       displayOrder: string[]
-    ): CourseResources[] => {
+    ): CourseResource[] => {
       return [
         ...updatedResourcesItems,
         ...allResourcesItems
@@ -161,7 +161,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
     sectionData.order
   ])
 
-  const deleteResource = (resource: CourseResources) => {
+  const deleteResource = (resource: CourseResource) => {
     if (resource.resourceType === ResourcesTypes.Lessons) {
       const newLessons = sectionData.lessons.filter(
         (item) => item._id !== resource._id
@@ -210,7 +210,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
     }
   })
 
-  const editResource = (resource: CourseResources) => {
+  const editResource = (resource: CourseResource) => {
     const resourceType = resource.resourceType
 
     if (!resourceType) return
@@ -242,7 +242,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
     }
   }
 
-  const onAction = (actionFunc: openModalFunc) => {
+  const onAction = (actionFunc: OpenModalFunction) => {
     closeMenu()
     actionFunc()
   }
@@ -252,7 +252,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
     setSectionsItems(sections.filter((item) => item.id !== sectionData.id))
   }
 
-  const handleAddResources = <T extends CourseResources>(
+  const handleAddResources = <T extends CourseResource>(
     newResources: T[],
     type: ResourcesTypes
   ) => {

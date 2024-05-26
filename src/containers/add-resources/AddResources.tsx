@@ -16,7 +16,7 @@ import {
   ErrorResponse,
   GetResourcesParams,
   ItemsWithCount,
-  CourseResources,
+  CourseResource,
   TableColumn,
   RemoveColumnRules,
   Question,
@@ -25,7 +25,7 @@ import {
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { getErrorKey } from '~/utils/get-error-key'
 
-interface AddResourcesProps<T extends CourseResources | Question> {
+interface AddResourcesProps<T extends CourseResource | Question> {
   resources: T[]
   onAddResources: (resource: T[]) => void
   resourceType: string
@@ -34,7 +34,7 @@ interface AddResourcesProps<T extends CourseResources | Question> {
   removeColumnRules: RemoveColumnRules<T>
 }
 
-const AddResources = <T extends CourseResources | Question>({
+const AddResources = <T extends CourseResource | Question>({
   resources = [],
   onAddResources,
   resourceType,

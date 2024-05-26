@@ -4,7 +4,7 @@ import CourseSectionsList from '~/containers/course-sections-list/CourseSections
 
 import { useEffect } from 'react'
 import { sectionInitialData } from '~/pages/create-course/CreateCourse.constants'
-import { CourseSection, CourseResources } from '~/types'
+import { CourseSection, CourseResource } from '~/types'
 import { useAppSelector } from '~/hooks/use-redux'
 import { cooperationsSelector } from '~/redux/features/cooperationsSlice'
 
@@ -36,7 +36,7 @@ const CooperationActivitiesList = ({
   const handleNonInputChange = (
     id: string,
     field: keyof CourseSection,
-    value: CourseResources[]
+    value: CourseResource[]
   ) => {
     const sectionToEdit = data.sections.find((section) => section.id === id)
     sectionToEdit && Object.defineProperty(sectionToEdit, field, { value })

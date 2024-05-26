@@ -1,6 +1,7 @@
+import { CourseSection } from '~/types'
 import { emptyField, textField } from '~/utils/validations/common'
 
-export const sectionInitialData = {
+export const sectionInitialData: Omit<CourseSection, 'activities'> = {
   id: '',
   title: '',
   description: '',

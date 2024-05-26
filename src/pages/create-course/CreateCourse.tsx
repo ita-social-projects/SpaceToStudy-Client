@@ -27,7 +27,7 @@ import {
   CourseSection,
   Course,
   ErrorResponse,
-  CourseResources,
+  CourseResource,
   UserResponse,
   UserRole
 } from '~/types'
@@ -136,7 +136,7 @@ const CreateCourse = () => {
 
   const handleSectionResourcesOrder = (
     id: string,
-    resources: CourseResources[]
+    resources: CourseResource[]
   ) => {
     const sectionToEdit = data.sections.find((section) => section.id === id)
     if (sectionToEdit) {
@@ -157,7 +157,7 @@ const CreateCourse = () => {
   const handleSectionNonInputChange = (
     id: string,
     field: keyof CourseSection,
-    value: CourseResources[]
+    value: CourseResource[]
   ) => {
     const sectionToEdit = data.sections.find((section) => section.id === id)
     sectionToEdit && Object.defineProperty(sectionToEdit, field, { value })

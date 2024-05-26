@@ -2,17 +2,15 @@ import {
   CategoryNameInterface,
   CommonEntityFields,
   UserResponse,
-  ResourcesTabsEnum as ResourcesTypes
+  ResourceBase
 } from '~/types'
 
-export interface Attachment extends CommonEntityFields {
+export interface Attachment extends CommonEntityFields, ResourceBase {
   category: CategoryNameInterface | null
   author: Pick<UserResponse, '_id'>
   fileName: string
   link: string
-  description?: string
   size: number
-  resourceType?: ResourcesTypes
 }
 
 export interface UpdateAttachmentParams {

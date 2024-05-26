@@ -1,5 +1,5 @@
 import {
-  CourseResources,
+  CourseResource,
   CourseSection,
   FormInputValueChange,
   Offer,
@@ -103,12 +103,12 @@ export interface CourseSectionHandlers {
   setSectionsItems: (value: CourseSection[]) => void
   handleSectionInputChange: FormInputValueChange<string, CourseSection>
   handleSectionNonInputChange: FormInputValueChange<
-    CourseResources[],
+    CourseResource[],
     CourseSection
   >
   handleSectionResourcesOrder?: (
     id: string,
-    resources: CourseResources[]
+    resources: CourseResource[]
   ) => void
   titleText?: string
 }

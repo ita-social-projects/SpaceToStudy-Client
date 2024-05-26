@@ -1,4 +1,4 @@
-import { FC, MouseEvent } from 'react'
+import { FC, Fragment, MouseEvent } from 'react'
 import { DndContext, DragOverlay } from '@dnd-kit/core'
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import { useTranslation } from 'react-i18next'
@@ -146,11 +146,10 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
     )
 
     return (
-      <>
+      <Fragment key={item.id}>
         {coorperationMenu}
         <SortableWrapper
           id={item.id}
-          key={item.id}
           onDragEndStyles={styles.section(isDragOver)}
           onDragStartStyles={styles.section(true)}
         >
@@ -167,7 +166,7 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
             setSectionsItems={setSectionsItems}
           />
         </SortableWrapper>
-      </>
+      </Fragment>
     )
   }
   const sectionItems =

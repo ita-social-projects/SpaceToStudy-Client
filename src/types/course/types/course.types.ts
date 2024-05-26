@@ -5,9 +5,14 @@ import {
   ResourceAvailabilityStatusEnum
 } from '~/types'
 
-type Resources = Lesson | Quiz | Attachment
-
-export type CourseResources = Resources & {
-  availability?: ResourceAvailabilityStatusEnum
-  openFromDate?: string | null
+export interface ResourceAvailability {
+  status: ResourceAvailabilityStatusEnum
+  date: Date | null
 }
+
+export type CourseResource = Lesson | Quiz | Attachment
+
+export type SetResourseAvailability = (
+  sectionId: string,
+  availability: ResourceAvailability
+) => void
