@@ -13,7 +13,6 @@ import PasswordSecurityTab from '~/containers/edit-profile/password-security-tab
 import { AuthService } from '~/services/auth-service'
 
 import { URLs } from '~/constants/request'
-import { expect } from 'vitest'
 
 const userDataMock = {
   _id: 123456
@@ -29,6 +28,28 @@ const changeInputValue = (label, value) => {
   fireEvent.change(label, { target: { value } })
 }
 
+const setupChangePasswordFields = () => {
+  const currentPasswordInput = screen.getByLabelText(
+    /editProfilePage.profile.passwordSecurityTab.currentPassword/i
+  )
+  const passwordInput = screen.getByLabelText(
+    /editProfilePage.profile.passwordSecurityTab.newPassword/i
+  )
+  const confirmPasswordInput = screen.getByLabelText(
+    /editProfilePage.profile.passwordSecurityTab.retypePassword/i
+  )
+  const saveButton = screen.getByText(
+    /editProfilePage.profile.passwordSecurityTab.savePassword/i
+  )
+
+  return {
+    currentPasswordInput,
+    passwordInput,
+    confirmPasswordInput,
+    saveButton
+  }
+}
+
 describe('PasswordSecurityTab', () => {
   beforeEach(() => {
     renderWithProviders(
@@ -42,24 +63,23 @@ describe('PasswordSecurityTab', () => {
     mockAxiosClient
       .onPatch(`${URLs.auth.changePassword}/${userDataMock}`)
       .reply(200)
-    const currentPasswordInput = screen.getByLabelText(
-      /editProfilePage.profile.passwordSecurityTab.currentPassword/i
-    )
-    const passwordInput = screen.getByLabelText(
-      /editProfilePage.profile.passwordSecurityTab.newPassword/i
-    )
 
-    const confirmPasswordInput = screen.getByLabelText(
-      /editProfilePage.profile.passwordSecurityTab.retypePassword/i
-    )
+    const {
+      currentPasswordInput,
+      passwordInput,
+      confirmPasswordInput,
+      saveButton
+    } = setupChangePasswordFields()
 
-    const saveButton = screen.getByText(
-      'editProfilePage.profile.passwordSecurityTab.savePassword'
-    )
-
-    fireEvent.change(currentPasswordInput, { target: { value: '12345qwert' } })
-    fireEvent.change(passwordInput, { target: { value: '12345qwertY' } })
-    fireEvent.change(confirmPasswordInput, { target: { value: '12345qwertY' } })
+    fireEvent.change(currentPasswordInput, {
+      target: { value: '12345qwert' }
+    })
+    fireEvent.change(passwordInput, {
+      target: { value: '12345qwertY' }
+    })
+    fireEvent.change(confirmPasswordInput, {
+      target: { value: '12345qwertY' }
+    })
 
     await waitFor(() => {
       fireEvent.click(saveButton)
@@ -77,22 +97,22 @@ describe('PasswordSecurityTab', () => {
   })
 
   it('should do not save empty fields', async () => {
-    const currentPasswordInput = screen.getByLabelText(
-      /editProfilePage.profile.passwordSecurityTab.currentPassword/i
-    )
-    const passwordInput = screen.getByLabelText(
-      /editProfilePage.profile.passwordSecurityTab.newPassword/i
-    )
-    const confirmPasswordInput = screen.getByLabelText(
-      /editProfilePage.profile.passwordSecurityTab.retypePassword/i
-    )
-    const saveButton = screen.getByText(
-      /editProfilePage.profile.passwordSecurityTab.savePassword/i
-    )
+    const {
+      currentPasswordInput,
+      passwordInput,
+      confirmPasswordInput,
+      saveButton
+    } = setupChangePasswordFields()
 
-    fireEvent.change(currentPasswordInput, { target: { value: '' } })
-    fireEvent.change(passwordInput, { target: { value: '' } })
-    fireEvent.change(confirmPasswordInput, { target: { value: '' } })
+    fireEvent.change(currentPasswordInput, {
+      target: { value: '' }
+    })
+    fireEvent.change(passwordInput, {
+      target: { value: '' }
+    })
+    fireEvent.change(confirmPasswordInput, {
+      target: { value: '' }
+    })
     fireEvent.click(saveButton)
 
     expect(currentPasswordInput).toHaveValue('')
@@ -125,26 +145,23 @@ describe('PasswordSecurityTab', () => {
   })
 
   it('resets form when discard button is clicked', () => {
-    const currentPasswordLabel = screen.getByLabelText(
-      'editProfilePage.profile.passwordSecurityTab.currentPassword'
-    )
+    const { currentPasswordInput } = setupChangePasswordFields()
+
     const discardButtonText = screen.getByText('common.discard')
 
-    changeInputValue(currentPasswordLabel, 'oldPassword')
+    changeInputValue(currentPasswordInput, 'oldPassword')
 
     fireEvent.click(discardButtonText)
 
-    expect(currentPasswordLabel).toHaveValue('')
+    expect(currentPasswordInput).toHaveValue('')
   })
 
   it('updates state when form fields are changed', () => {
-    const currentPasswordLabel = screen.getByLabelText(
-      'editProfilePage.profile.passwordSecurityTab.currentPassword'
-    )
+    const { currentPasswordInput } = setupChangePasswordFields()
 
-    changeInputValue(currentPasswordLabel, 'oldPassword')
+    changeInputValue(currentPasswordInput, 'oldPassword')
 
-    expect(currentPasswordLabel).toHaveValue('oldPassword')
+    expect(currentPasswordInput).toHaveValue('oldPassword')
   })
 
   it('checks is ConfirmDialog open when deactivate account button is clicked', () => {

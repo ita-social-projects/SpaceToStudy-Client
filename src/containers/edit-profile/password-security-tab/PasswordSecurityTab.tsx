@@ -20,21 +20,18 @@ import useInputVisibility from '~/hooks/use-input-visibility'
 import { AuthService } from '~/services/auth-service'
 import { openAlert } from '~/redux/features/snackbarSlice'
 
-import { emptyField } from '~/utils/validations/common'
-
-import { confirmPassword, password } from '~/utils/validations/login'
-import { ButtonVariantEnum, InputEnum, SizeEnum } from '~/types'
-import { FormValues } from '~/types/edit-user-profile/interfaces/securityBlockForm.interfaces'
 import { styles } from '~/containers/edit-profile/password-security-tab/PasswordSecurityTab.styles'
-import { confirmPassword, password } from '~/utils/validations/login'
+
 import {
   ButtonVariantEnum,
+  ButtonTypeEnum,
   InputEnum,
   SizeEnum,
   FormValues,
   UserResponse,
   ErrorResponse
 } from '~/types'
+import { initialValues, validations } from './PasswordSecurityTab.constants'
 
 interface PasswordSecurityTabProps {
   user: UserResponse
@@ -44,9 +41,7 @@ const PasswordSecurityTab: FC<PasswordSecurityTabProps> = ({ user }) => {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
 
-  const [isConfirmOpen, setIsConfirmOpen] = useState<boolean>(false)
-  const [samePasswordError, setSamePasswordError] = useState<string>('')
-  const [currentPasswordError, setCurrentPasswordError] = useState<string>('')
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false)
 
   const handleResponse = () => {
     dispatch(
@@ -66,9 +61,9 @@ const PasswordSecurityTab: FC<PasswordSecurityTabProps> = ({ user }) => {
 
   const handleResponseError = (error?: ErrorResponse) => {
     if (error?.code === 'INCORRECT_CREDENTIALS') {
-      setSamePasswordError(t('common.errorMessages.samePasswords'))
+      handleErrors('password', t('common.errorMessages.samePasswords'))
     } else {
-      setCurrentPasswordError(t('common.errorMessages.currentPassword'))
+      handleErrors('currentPassword', t('common.errorMessages.currentPassword'))
     }
   }
 
@@ -76,23 +71,8 @@ const PasswordSecurityTab: FC<PasswordSecurityTabProps> = ({ user }) => {
     service: changePassword,
     onResponse: handleResponse,
     onResponseError: handleResponseError,
-    fetchOnMount: false,
-    defaultResponse: null
+    fetchOnMount: false
   })
-
-  const validateNewPassword = (newPassword: string) => {
-    if (!newPassword) {
-      return emptyField({ value: newPassword })
-    }
-    return password(newPassword)
-  }
-
-  const validateCurrentPassword = (currentPassword: string) => {
-    if (!currentPassword) {
-      return emptyField({ value: currentPassword })
-    }
-    return password(currentPassword)
-  }
 
   const {
     data,
@@ -101,26 +81,18 @@ const PasswordSecurityTab: FC<PasswordSecurityTabProps> = ({ user }) => {
     errors,
     handleBlur,
     resetData,
-    resetErrors
+    resetErrors,
+    handleErrors
   } = useForm<FormValues>({
     onSubmit: async () => {
-      setSamePasswordError('')
-      setCurrentPasswordError('')
+      resetErrors()
       await sendChangedPassword({
         password: data.password,
         currentPassword: data.currentPassword
       })
     },
-    initialValues: {
-      currentPassword: '',
-      password: '',
-      confirmPassword: ''
-    },
-    validations: {
-      currentPassword: validateCurrentPassword,
-      password: validateNewPassword,
-      confirmPassword
-    }
+    initialValues: initialValues,
+    validations: validations
   })
 
   const handleChangeStatusClick = () => {
@@ -134,10 +106,10 @@ const PasswordSecurityTab: FC<PasswordSecurityTabProps> = ({ user }) => {
   const {
     inputVisibility: currentPasswordVisibility,
     showInputText: showCurrentPassword
-  } = useInputVisibility(errors.currentPassword || currentPasswordError)
+  } = useInputVisibility(errors.currentPassword)
 
   const { inputVisibility: passwordVisibility, showInputText: showPassword } =
-    useInputVisibility(errors.password || samePasswordError)
+    useInputVisibility(errors.password)
 
   const {
     inputVisibility: newPasswordVisibility,
@@ -145,21 +117,25 @@ const PasswordSecurityTab: FC<PasswordSecurityTabProps> = ({ user }) => {
   } = useInputVisibility(errors.confirmPassword)
 
   const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSamePasswordError('')
+    handleErrors('password', '')
     handleInputChange('password')(e)
   }
 
   const handleCurrentPasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setCurrentPasswordError('')
+    handleErrors('currentPassword', '')
     handleInputChange('currentPassword')(e)
   }
 
   const onDiscard = () => {
     resetData()
-    setSamePasswordError('')
-    setCurrentPasswordError('')
     resetErrors()
   }
+
+  const saveButtonContent = loading ? (
+    <Loader size={20} />
+  ) : (
+    t('editProfilePage.profile.passwordSecurityTab.savePassword')
+  )
 
   return (
     <Box sx={styles.container}>
@@ -177,24 +153,24 @@ const PasswordSecurityTab: FC<PasswordSecurityTabProps> = ({ user }) => {
         <Box sx={styles.form}>
           <AppTextField
             InputProps={currentPasswordVisibility}
-            errorMsg={t(errors.currentPassword) || currentPasswordError}
+            errorMsg={t(errors.currentPassword)}
             fullWidth
             label={t(
               'editProfilePage.profile.passwordSecurityTab.currentPassword'
             )}
             onBlur={handleBlur('currentPassword')}
             onChange={handleCurrentPasswordChange}
-            type={showCurrentPassword ? 'text' : InputEnum.Password}
+            type={showCurrentPassword ? InputEnum.Text : InputEnum.Password}
             value={data.currentPassword}
           />
           <AppTextField
             InputProps={passwordVisibility}
-            errorMsg={samePasswordError || t(errors.password)}
+            errorMsg={t(errors.password)}
             fullWidth
             label={t('editProfilePage.profile.passwordSecurityTab.newPassword')}
             onBlur={handleBlur('password')}
             onChange={handlePasswordChange}
-            type={showPassword ? 'text' : InputEnum.Password}
+            type={showPassword ? InputEnum.Text : InputEnum.Password}
             value={data.password}
           />
           <AppTextField
@@ -206,21 +182,17 @@ const PasswordSecurityTab: FC<PasswordSecurityTabProps> = ({ user }) => {
             )}
             onBlur={handleBlur('confirmPassword')}
             onChange={handleInputChange('confirmPassword')}
-            type={showNewPassword ? 'text' : InputEnum.Password}
+            type={showNewPassword ? InputEnum.Text : InputEnum.Password}
             value={data.confirmPassword}
           />
         </Box>
         <Box sx={styles.passwordButtonsContainer}>
           <AppButton
             size={SizeEnum.Large}
-            type='submit'
+            type={ButtonTypeEnum.Submit}
             variant={ButtonVariantEnum.Contained}
           >
-            {loading ? (
-              <Loader size={20} />
-            ) : (
-              t('editProfilePage.profile.passwordSecurityTab.savePassword')
-            )}
+            {saveButtonContent}
           </AppButton>
           <AppButton
             onClick={onDiscard}
