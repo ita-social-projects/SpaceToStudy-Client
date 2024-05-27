@@ -94,6 +94,7 @@ const EditProfile = () => {
       <Divider sx={styles.line} />
       <Box sx={styles.mainContainer}>
         <SidebarMenu
+          activeTab={activeTab}
           handleClick={(tab) => void handleClick(tab)}
           tabsData={tabsData}
         />

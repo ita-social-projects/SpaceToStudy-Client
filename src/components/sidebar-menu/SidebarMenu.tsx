@@ -15,17 +15,21 @@ import { styles } from '~/components/sidebar-menu/SidebarMenu.styles'
 interface SidebarMenu {
   tabsData: TutorProfileProps
   handleClick: (tab: TutorProfileTabsEnum) => void
+  activeTab: TutorProfileTabsEnum
 }
 
-const SidebarMenu: FC<SidebarMenu> = ({ handleClick, tabsData }) => {
+const SidebarMenu: FC<SidebarMenu> = ({ handleClick, tabsData, activeTab }) => {
   const { t } = useTranslation()
 
   const list = Object.keys(tabsData).map((key) => {
     const tabKey = key as TutorProfileTabsEnum
     const item = tabsData[tabKey]
+
+    const isActiveTab = item.title.endsWith(activeTab)
+
     return (
       <ListItem key={tabKey} onClick={() => handleClick(tabKey)}>
-        <ListItemButton>
+        <ListItemButton sx={styles.tabButton(isActiveTab)}>
           <ListItemIcon>{item.icon}</ListItemIcon>
           <ListItemText primary={t(item.title)} />
         </ListItemButton>
@@ -33,7 +37,7 @@ const SidebarMenu: FC<SidebarMenu> = ({ handleClick, tabsData }) => {
     )
   })
 
-  return <List sx={styles.sidebarButton}>{list}</List>
+  return <List sx={styles.tabList}>{list}</List>
 }
 
 export default SidebarMenu
