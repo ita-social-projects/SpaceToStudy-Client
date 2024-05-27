@@ -83,5 +83,9 @@ export const styles = {
   deleteIcon: {
     ...actionIcon,
     color: 'error.700'
+  },
+  accountIcon: {
+    typography: TypographyVariantEnum.Button,
+    color: 'primary.900'
   }
 }

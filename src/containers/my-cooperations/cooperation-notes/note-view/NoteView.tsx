@@ -103,10 +103,15 @@ const NoteView: FC<NoteViewProps> = ({
         <Box sx={styles.header}>
           <Avatar
             src={
-              note.author.photo &&
+              note.author.photo ??
               `${import.meta.env.VITE_APP_IMG_USER_URL}${note.author.photo}`
             }
-          />
+            sx={styles.accountIcon}
+          >
+            {note.author.firstName &&
+              note.author.lastName &&
+              `${note.author.firstName[0]}${note.author.lastName[0]}`}
+          </Avatar>
           <Box>
             <Typography variant={TypographyVariantEnum.Subtitle2}>
               {`${note.author.firstName} ${note.author.lastName}`}

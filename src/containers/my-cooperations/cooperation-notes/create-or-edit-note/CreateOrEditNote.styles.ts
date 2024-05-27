@@ -55,5 +55,9 @@ export const styles = {
   },
   lockIcon: {
     mr: '4px'
+  },
+  accountIcon: {
+    typography: TypographyVariantEnum.Button,
+    color: 'primary.900'
   }
 }
