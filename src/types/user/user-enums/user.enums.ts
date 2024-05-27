@@ -3,3 +3,9 @@ export enum UserRoleEnum {
   Tutor = 'tutor',
   Admin = 'admin'
 }
+
+export enum UserStatusEnum {
+  Active = 'active',
+  Blocked = 'blocked',
+  Deactivated = 'deactivated'
+}

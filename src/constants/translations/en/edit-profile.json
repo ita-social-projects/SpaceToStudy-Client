@@ -77,7 +77,13 @@
       "deactivateAccount": "Deactivate account",
       "deactivateBtn": "Deactivate",
       "deactivateTitle": "Deactivate your account?",
-      "deactivateDescription": "If you deactivate your account it will be hidden on this site. You can activate your account anytime."
+      "deactivateDescription": "If you deactivate your account it will be hidden on this site. You can activate your account anytime.",
+      "activateAccount": "Activate account",
+      "activateBtn": "Activate",
+      "activateTitle": "Activate your account?",
+      "activateDescription": "If you activate your account it will be shown on this site. You can deactivate your account anytime.",
+      "deactivatedAccountTitle": "Your account is deactivated",
+      "deactivatedAccountDescription": "Your account is hidden on this site. This means you cannot provide any professional activity until you activate your account."
     }
   }
 }

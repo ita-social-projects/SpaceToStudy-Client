@@ -8,11 +8,12 @@ import {
 } from '@reduxjs/toolkit'
 import { AuthService, authService } from '~/services/auth-service'
 import { AxiosError } from 'axios'
-import { AccessToken, ErrorResponse, UserRole } from '~/types'
+import { AccessToken, ErrorResponse, UserRole, UserStatusEnum } from '~/types'
 
 interface UserState {
   userId: string
   userRole: UserRole | ''
+  userStatus: UserStatusEnum
   authLoading: boolean
   error: string
   isFirstLogin: boolean
@@ -23,6 +24,7 @@ interface UserState {
 const initialState: UserState = {
   userId: '',
   userRole: '',
+  userStatus: UserStatusEnum.Active,
   authLoading: false,
   loading: true,
   pageLoad: false,
@@ -65,17 +67,22 @@ export const mainSlice = createSlice({
       state.userId = userData.id
       state.userRole = userData.role
       state.isFirstLogin = userData.isFirstLogin
+      state.userStatus = userData.status
     },
     logout(state) {
       state.userId = initialState.userId
       state.userRole = initialState.userRole
       state.isFirstLogin = initialState.isFirstLogin
+      state.userStatus = initialState.userStatus
     },
     markFirstLoginComplete(state) {
       state.isFirstLogin = false
     },
     setPageLoading(state, action: PayloadAction<boolean>) {
       state.pageLoad = action.payload
+    },
+    setUserStatus(state, action: PayloadAction<UserStatusEnum>) {
+      state.userStatus = action.payload
     }
   },
   extraReducers: (builder) => {
@@ -117,7 +124,12 @@ export const mainSlice = createSlice({
 
 const { actions, reducer } = mainSlice
 
-export const { setUser, logout, markFirstLoginComplete, setPageLoading } =
-  actions
+export const {
+  setUser,
+  logout,
+  markFirstLoginComplete,
+  setPageLoading,
+  setUserStatus
+} = actions
 
 export default reducer

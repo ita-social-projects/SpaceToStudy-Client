@@ -34,5 +34,11 @@ export const userService = {
   },
   deleteUsers: (userIds: string): Promise<AxiosResponse<null>> => {
     return axiosClient.post(URLs.users.delete, userIds)
+  },
+  deactivateUser: (userId: string): Promise<AxiosResponse<null>> => {
+    return axiosClient.patch(createUrlPath(URLs.users.deactivate, userId))
+  },
+  activateUser: (userId: string): Promise<AxiosResponse<null>> => {
+    return axiosClient.patch(createUrlPath(URLs.users.activate, userId))
   }
 }

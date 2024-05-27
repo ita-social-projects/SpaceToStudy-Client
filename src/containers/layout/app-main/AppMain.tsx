@@ -1,4 +1,4 @@
-import { Suspense, useLayoutEffect, useRef } from 'react'
+import { Suspense, useEffect, useLayoutEffect, useRef } from 'react'
 import { Outlet, useNavigation } from 'react-router-dom'
 import Box from '@mui/material/Box'
 
@@ -11,6 +11,7 @@ import Loader from '~/components/loader/Loader'
 import { checkAuth } from '~/redux/reducer'
 import ChatDialogWindow from '~/containers/offer-page/chat-dialog-window/ChatDialogWindow'
 import { useChatContext } from '~/context/chat-context'
+import useChangeUserStatus from '~/hooks/use-change-user-status'
 
 import { styles } from '~/containers/app-content/AppContent.styles'
 
@@ -21,6 +22,7 @@ const AppMain = () => {
   const { state } = useNavigation()
   const { chatInfo } = useChatContext()
   const dispatch = useAppDispatch()
+  const { checkStatusChange } = useChangeUserStatus()
 
   useLayoutEffect(() => {
     !authCheckRef.current && void dispatch(checkAuth())
@@ -29,6 +31,13 @@ const AppMain = () => {
       authCheckRef.current = true
     }
   }, [dispatch])
+
+  useEffect(() => {
+    checkStatusChange(
+      'editProfilePage.profile.passwordSecurityTab.deactivatedAccountTitle',
+      'editProfilePage.profile.passwordSecurityTab.deactivatedAccountDescription'
+    ).catch(console.error)
+  }, [checkStatusChange])
 
   if (loading || state === 'loading') {
     return <Loader pageLoad />
