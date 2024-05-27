@@ -103,8 +103,9 @@ const NoteView: FC<NoteViewProps> = ({
         <Box sx={styles.header}>
           <Avatar
             src={
-              note.author.photo ??
-              `${import.meta.env.VITE_APP_IMG_USER_URL}${note.author.photo}`
+              note.author.photo
+                ? `${import.meta.env.VITE_APP_IMG_USER_URL}${note.author.photo}`
+                : undefined
             }
             sx={styles.accountIcon}
           >

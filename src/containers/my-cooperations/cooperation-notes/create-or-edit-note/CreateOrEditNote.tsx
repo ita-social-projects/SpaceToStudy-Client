@@ -90,7 +90,11 @@ const CreateOrEditNote = ({
         ) : (
           <>
             <Avatar
-              src={photo ?? `${import.meta.env.VITE_APP_IMG_USER_URL}${photo}`}
+              src={
+                photo
+                  ? `${import.meta.env.VITE_APP_IMG_USER_URL}${photo}`
+                  : undefined
+              }
               sx={styles.accountIcon}
             >
               {firstName && lastName && `${firstName[0]}${lastName[0]}`}
