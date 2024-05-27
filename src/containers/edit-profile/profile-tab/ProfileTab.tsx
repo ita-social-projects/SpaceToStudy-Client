@@ -20,14 +20,10 @@ import {
   ButtonVariantEnum,
   EditProfileForm,
   SizeEnum,
-  UserResponse
+  EditProfileTabUserProps
 } from '~/types'
 
-interface ProfileTabProps {
-  user: UserResponse
-}
-
-const ProfileTab: FC<ProfileTabProps> = ({ user }) => {
+const ProfileTab: FC<EditProfileTabUserProps> = ({ user }) => {
   const { t } = useTranslation()
   const { setNeedConfirmation, checkConfirmation } = useConfirm()
   const { handleSubmit, loading } = useUpdateUser(user._id, true)

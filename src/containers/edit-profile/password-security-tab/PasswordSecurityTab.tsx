@@ -24,20 +24,20 @@ import { styles } from '~/containers/edit-profile/password-security-tab/Password
 
 import {
   ButtonVariantEnum,
+  ComponentEnum,
   ButtonTypeEnum,
   InputEnum,
   SizeEnum,
   FormValues,
-  UserResponse,
-  ErrorResponse
+  ErrorResponse,
+  EditProfileTabUserProps
 } from '~/types'
-import { initialValues, validations } from './PasswordSecurityTab.constants'
+import {
+  initialValues,
+  validations
+} from '~/containers/edit-profile/password-security-tab/PasswordSecurityTab.constants'
 
-interface PasswordSecurityTabProps {
-  user: UserResponse
-}
-
-const PasswordSecurityTab: FC<PasswordSecurityTabProps> = ({ user }) => {
+const PasswordSecurityTab: FC<EditProfileTabUserProps> = ({ user }) => {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
 
@@ -137,6 +137,9 @@ const PasswordSecurityTab: FC<PasswordSecurityTabProps> = ({ user }) => {
     t('editProfilePage.profile.passwordSecurityTab.savePassword')
   )
 
+  const inputType = (isVisible: boolean) =>
+    isVisible ? InputEnum.Text : InputEnum.Password
+
   return (
     <Box sx={styles.container}>
       <TitleWithDescription
@@ -146,7 +149,7 @@ const PasswordSecurityTab: FC<PasswordSecurityTabProps> = ({ user }) => {
         style={styles.titleAndDescription}
         title={t('editProfilePage.profile.passwordSecurityTab.title')}
       />
-      <Box component='form' onSubmit={handleSubmit}>
+      <Box component={ComponentEnum.Form} onSubmit={handleSubmit}>
         <Typography sx={styles.subtitle}>
           {t('editProfilePage.profile.passwordSecurityTab.changePassword')}
         </Typography>
@@ -160,7 +163,7 @@ const PasswordSecurityTab: FC<PasswordSecurityTabProps> = ({ user }) => {
             )}
             onBlur={handleBlur('currentPassword')}
             onChange={handleCurrentPasswordChange}
-            type={showCurrentPassword ? InputEnum.Text : InputEnum.Password}
+            type={inputType(showCurrentPassword)}
             value={data.currentPassword}
           />
           <AppTextField
@@ -170,7 +173,7 @@ const PasswordSecurityTab: FC<PasswordSecurityTabProps> = ({ user }) => {
             label={t('editProfilePage.profile.passwordSecurityTab.newPassword')}
             onBlur={handleBlur('password')}
             onChange={handlePasswordChange}
-            type={showPassword ? InputEnum.Text : InputEnum.Password}
+            type={inputType(showPassword)}
             value={data.password}
           />
           <AppTextField
@@ -182,13 +185,14 @@ const PasswordSecurityTab: FC<PasswordSecurityTabProps> = ({ user }) => {
             )}
             onBlur={handleBlur('confirmPassword')}
             onChange={handleInputChange('confirmPassword')}
-            type={showNewPassword ? InputEnum.Text : InputEnum.Password}
+            type={inputType(showNewPassword)}
             value={data.confirmPassword}
           />
         </Box>
         <Box sx={styles.passwordButtonsContainer}>
           <AppButton
             size={SizeEnum.Large}
+            sx={styles.saveButton}
             type={ButtonTypeEnum.Submit}
             variant={ButtonVariantEnum.Contained}
           >

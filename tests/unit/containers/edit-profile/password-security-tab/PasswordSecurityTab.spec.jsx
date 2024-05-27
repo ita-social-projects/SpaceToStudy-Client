@@ -24,6 +24,8 @@ vi.mock('~/services/auth-service', () => ({
   }
 }))
 
+const handleSubmit = vi.fn()
+
 const changeInputValue = (label, value) => {
   fireEvent.change(label, { target: { value } })
 }
@@ -59,7 +61,7 @@ describe('PasswordSecurityTab', () => {
     )
   })
 
-  it('should show Snackbar after positive response', async () => {
+  it('should save data after positive response', async () => {
     mockAxiosClient
       .onPatch(`${URLs.auth.changePassword}/${userDataMock}`)
       .reply(200)
@@ -96,6 +98,36 @@ describe('PasswordSecurityTab', () => {
     })
   })
 
+  it('should not save data after negative response', async () => {
+    mockAxiosClient
+      .onPatch(`${URLs.auth.changePassword}/${userDataMock}`)
+      .reply(400, {
+        message: 'new password cannot be the same as the current one'
+      })
+
+    const {
+      currentPasswordInput,
+      passwordInput,
+      confirmPasswordInput,
+      saveButton
+    } = setupChangePasswordFields()
+
+    fireEvent.change(currentPasswordInput, {
+      target: { value: '12345qwertY' }
+    })
+    fireEvent.change(passwordInput, {
+      target: { value: '12345qwertY' }
+    })
+    fireEvent.change(confirmPasswordInput, {
+      target: { value: '12345qwertY' }
+    })
+
+    await waitFor(() => {
+      fireEvent.click(saveButton)
+    })
+    expect(handleSubmit).not.toHaveBeenCalled()
+  })
+
   it('should do not save empty fields', async () => {
     const {
       currentPasswordInput,
@@ -113,7 +145,10 @@ describe('PasswordSecurityTab', () => {
     fireEvent.change(confirmPasswordInput, {
       target: { value: '' }
     })
+
     fireEvent.click(saveButton)
+
+    expect(handleSubmit).not.toHaveBeenCalled()
 
     expect(currentPasswordInput).toHaveValue('')
     expect(passwordInput).toHaveValue('')
