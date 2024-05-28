@@ -39,7 +39,7 @@ const CommentsWithRatingBlock = ({
   return (
     <Box sx={styles.root}>
       <Typography sx={styles.title}>
-        {t('tutorProfilePage.reviews.title')}
+        {t('userProfilePage.reviews.title')}
       </Typography>
       {loadingMock && !items.length ? (
         <Loader />

@@ -115,7 +115,7 @@ const UserProfileInfo: FC<UserProfileInfoProps> = ({
         )}
         {!isNaN(Number(rating)) && (
           <Typography sx={spliceSx(styles.reviews, sx.reviews)}>
-            {t('tutorProfilePage.reviews.reviewsCount', {
+            {t('userProfilePage.reviews.reviewsCount', {
               count: reviewsCount
             })}
           </Typography>

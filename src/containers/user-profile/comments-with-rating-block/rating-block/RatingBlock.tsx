@@ -58,7 +58,7 @@ const RatingBlock: FC<RatingBlockProps> = ({
             sx={[styles.progressBar, optionalStyles]}
           >
             <Typography sx={styles.typography}>
-              {t('tutorProfilePage.reviews.starsCount', { count: idx })}
+              {t('userProfilePage.reviews.starsCount', { count: idx })}
             </Typography>
             <LinearProgress
               sx={styles.linearProgress}
@@ -94,7 +94,7 @@ const RatingBlock: FC<RatingBlockProps> = ({
             onClick={resetFilters}
             sx={styles.resetButton}
           >
-            {t('tutorProfilePage.reviews.buttonTitle')}
+            {t('userProfilePage.reviews.buttonTitle')}
           </Typography>
         )}
       </Box>

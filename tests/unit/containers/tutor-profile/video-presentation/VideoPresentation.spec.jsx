@@ -7,7 +7,7 @@ describe('VideoPresentation component', () => {
   })
 
   it('should render title text', () => {
-    const title = screen.getByText('tutorProfilePage.videoPresentation.title')
+    const title = screen.getByText('userProfilePage.videoPresentation.title')
 
     expect(title).toBeInTheDocument()
   })

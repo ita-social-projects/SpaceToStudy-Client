@@ -112,7 +112,7 @@ describe('UserProfile', () => {
     renderWithMockData({ extraData: videoMockDataTutor })
 
     const videoBlockTitle = screen.getByText(
-      'tutorProfilePage.videoPresentation.title'
+      'userProfilePage.videoPresentation.title'
     )
     expect(videoBlockTitle).toBeInTheDocument()
   })
@@ -121,7 +121,7 @@ describe('UserProfile', () => {
     renderWithMockData({ appMain: studentAppMain })
 
     const videoBlockTitle = screen.queryByText(
-      'tutorProfilePage.videoPresentation.title'
+      'userProfilePage.videoPresentation.title'
     )
     expect(videoBlockTitle).not.toBeInTheDocument()
   })
@@ -133,7 +133,7 @@ describe('UserProfile', () => {
     })
 
     const videoBlockTitle = screen.getByText(
-      'tutorProfilePage.videoPresentation.title'
+      'userProfilePage.videoPresentation.title'
     )
     expect(videoBlockTitle).toBeInTheDocument()
   })
@@ -144,9 +144,7 @@ describe('UserProfile', () => {
       extraData: professionalBlockMock
     })
 
-    const aboutTutorTitle = screen.getByText(
-      'tutorProfilePage.aboutTutor.title'
-    )
+    const aboutTutorTitle = screen.getByText('userProfilePage.aboutTutor.title')
     expect(aboutTutorTitle).toBeInTheDocument()
   })
 
@@ -156,7 +154,7 @@ describe('UserProfile', () => {
     })
 
     const aboutTutorTitle = screen.queryByText(
-      'tutorProfilePage.aboutTutor.title'
+      'userProfilePage.aboutTutor.title'
     )
     expect(aboutTutorTitle).not.toBeInTheDocument()
   })

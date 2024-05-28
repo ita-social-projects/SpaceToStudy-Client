@@ -46,7 +46,7 @@ const ComentsBlock = ({
       onClick={loadMore}
       sx={styles.button}
     >
-      {t('tutorProfilePage.reviews.buttonTitle')}
+      {t('userProfilePage.reviews.buttonTitle')}
     </AppButton>
   )
 
