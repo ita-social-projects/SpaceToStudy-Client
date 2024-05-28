@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
@@ -7,6 +7,7 @@ import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded'
 
 import useBreakpoints from '~/hooks/use-breakpoints'
 import Accordions from '~/components/accordion/Accordions'
+import useAccordions from '~/hooks/use-accordions'
 import { ProfessionalBlock, TypographyVariantEnum } from '~/types'
 
 import { styles } from '~/containers/user-profile/about-tutor-block/AboutTutorBlock.styles'
@@ -18,11 +19,8 @@ interface AboutTutorBlockProps {
 const AboutTutorBlock: FC<AboutTutorBlockProps> = ({ data }) => {
   const { t } = useTranslation()
   const { isMobile } = useBreakpoints()
-  const [activeIndex, setActiveIndex] = useState<number | null>(null)
 
-  const handleAccordionChange = (index: number) => {
-    setActiveIndex(activeIndex !== index ? index : null)
-  }
+  const [expandedItem, handleAccordionChange] = useAccordions()
 
   const professionalBlockKeys = Object.keys(data) as Array<
     keyof ProfessionalBlock
@@ -49,7 +47,7 @@ const AboutTutorBlock: FC<AboutTutorBlockProps> = ({ data }) => {
       </Typography>
       <Box sx={styles.wrapper}>
         <Accordions
-          activeIndex={activeIndex}
+          activeIndex={expandedItem}
           descriptionVariant={TypographyVariantEnum.Body1}
           icon={<ExpandMoreRoundedIcon />}
           items={accordionItems}

@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC } from 'react'
 
 import { useTranslation } from 'react-i18next'
 
@@ -11,6 +11,7 @@ import {
 
 import ExpandMore from '@mui/icons-material/ExpandMore'
 
+import useAccordions from '~/hooks/use-accordions'
 import Accordions from '~/components/accordion/Accordions'
 import AppTextArea from '~/components/app-text-area/AppTextArea'
 
@@ -29,7 +30,10 @@ const AboutTutorAccordion: FC<AboutTutorAccordionProps> = ({
   handleInputChange
 }) => {
   const { t } = useTranslation()
-  const [activeItemId, setActiveItemId] = useState(0)
+  const [expandedItem, handleAccordionChange] = useAccordions({
+    initialState: 0,
+    toggle: false
+  })
 
   const accordionItems: AccordionItem[] = [
     {
@@ -93,11 +97,11 @@ const AboutTutorAccordion: FC<AboutTutorAccordionProps> = ({
 
   return (
     <Accordions
-      activeIndex={activeItemId}
+      activeIndex={expandedItem}
       descriptionVariant={TypographyVariantEnum.Body2}
       icon={<ExpandMore />}
       items={accordionItems}
-      onChange={(index) => setActiveItemId(index)}
+      onChange={handleAccordionChange}
       sx={styles.accordion}
       titleVariant={TypographyVariantEnum.Body2}
     />
