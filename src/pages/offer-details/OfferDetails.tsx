@@ -226,7 +226,7 @@ const OfferDetails = () => {
           isExpandable
           loadMore={() => null}
           loading={loadingMock}
-          title={t('tutorProfilePage.reviews.title')}
+          title={t('userProfilePage.reviews.title')}
         />
       </AppCard>
 

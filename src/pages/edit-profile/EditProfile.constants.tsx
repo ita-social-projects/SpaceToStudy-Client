@@ -10,7 +10,7 @@ import ProfessionalInfoTab from '~/containers/edit-profile/professional-info-tab
 import NotificationTab from '~/containers/edit-profile/notification-tab/NotificationTab'
 import SecurityTab from '~/containers/edit-profile/password-security-tab/PasswordSecurityTab'
 
-export type TutorProfileProps = Record<
+export type UserProfileProps = Record<
   TutorProfileTabsEnum,
   {
     title: string
@@ -19,7 +19,7 @@ export type TutorProfileProps = Record<
   }
 >
 
-export const tabsData: TutorProfileProps = {
+export const tabsData: UserProfileProps = {
   [TutorProfileTabsEnum.Profile]: {
     icon: <AccountCircleIcon />,
     title: 'editTutor.main.profile',

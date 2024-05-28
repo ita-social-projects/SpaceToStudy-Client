@@ -223,7 +223,7 @@ const ProfileTabForm: FC<ProfileTabFormProps> = ({
             'editProfilePage.profile.generalTab.videoPresentationDesc'
           )}
           style={styles.sectionsTitleWithDesc}
-          title={t('tutorProfilePage.videoPresentation.title')}
+          title={t('userProfilePage.videoPresentation.title')}
         />
         <AppTextField
           InputProps={{

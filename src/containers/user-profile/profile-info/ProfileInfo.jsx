@@ -38,7 +38,7 @@ const ProfileInfo = ({ userData, myRole }) => {
     dispatch(
       openAlert({
         severity: snackbarVariants.success,
-        message: 'tutorProfilePage.profileInfo.copyProfileLink',
+        message: 'userProfilePage.profileInfo.copyProfileLink',
         duration: 2000
       })
     )
@@ -83,10 +83,10 @@ const ProfileInfo = ({ userData, myRole }) => {
 
   const accountInfo = [
     {
-      title: t(`tutorProfilePage.profileInfo.timeFor${format}`, {
+      title: t(`userProfilePage.profileInfo.timeFor${format}`, {
         count: number
       }),
-      description: t('tutorProfilePage.profileInfo.withS2S')
+      description: t('userProfilePage.profileInfo.withS2S')
     },
     {
       title: '',
@@ -105,12 +105,12 @@ const ProfileInfo = ({ userData, myRole }) => {
 
   const doneItems = [
     userData.nativeLanguage && {
-      title: t('tutorProfilePage.profileInfo.nativeLanguage'),
+      title: t('userProfilePage.profileInfo.nativeLanguage'),
       description: userData.nativeLanguage
     },
     userData.address &&
       userData.address.country.length > 0 && {
-        title: t('tutorProfilePage.profileInfo.location'),
+        title: t('userProfilePage.profileInfo.location'),
         description: `${userData.address.city}, ${userData.address.country}`
       }
   ].filter(Boolean)
@@ -124,7 +124,7 @@ const ProfileInfo = ({ userData, myRole }) => {
         variant={ButtonVariantEnum.ContainedLight}
       >
         {t(
-          `tutorProfilePage.profileInfo.${
+          `userProfilePage.profileInfo.${
             myRole !== Student ? 'studentRequests' : 'tutorOffers'
           }`
         )}
@@ -136,7 +136,7 @@ const ProfileInfo = ({ userData, myRole }) => {
         size={isLaptopAndAbove ? SizeEnum.ExtraLarge : SizeEnum.Medium}
         variant='contained'
       >
-        {t('tutorProfilePage.profileInfo.sendMessage')}
+        {t('userProfilePage.profileInfo.sendMessage')}
       </AppButton>
     </Box>
   )

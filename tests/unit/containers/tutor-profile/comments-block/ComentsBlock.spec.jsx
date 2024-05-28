@@ -18,7 +18,7 @@ describe('CommentsWithRatingBlock', () => {
     renderWithProviders(<CommentsWithRatingBlock {...props} />)
   })
   it('should render the comments block', () => {
-    const titleElement = screen.getByText('tutorProfilePage.reviews.title')
+    const titleElement = screen.getByText('userProfilePage.reviews.title')
 
     expect(titleElement).toBeInTheDocument()
   })

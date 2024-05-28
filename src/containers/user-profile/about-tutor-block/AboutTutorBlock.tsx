@@ -46,7 +46,7 @@ const AboutTutorBlock: FC<AboutTutorBlockProps> = ({ data }) => {
           isMobile ? TypographyVariantEnum.Button : TypographyVariantEnum.H5
         }
       >
-        {t('tutorProfilePage.aboutTutor.title')}
+        {t('userProfilePage.aboutTutor.title')}
       </Typography>
       <Box sx={styles.wrapper}>
         <Accordions

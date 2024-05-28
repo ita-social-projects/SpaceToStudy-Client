@@ -26,7 +26,7 @@ const ProfileDoneItemsList = ({ items, icon, defaultQuantity }) => {
 
   const showMoreElem = (
     <Typography sx={styles.showMore}>
-      {t('tutorProfilePage.profileInfo.showMore')}
+      {t('userProfilePage.profileInfo.showMore')}
     </Typography>
   )
 

@@ -10,7 +10,7 @@ const VideoPresentation = ({ video, videoPreview, videoMock }) => {
   return (
     <Box className={ComponentEnum.Section} sx={{ flexDirection: 'column' }}>
       <Typography sx={{ my: '32px', typography: { md: 'h4', xs: 'h5' } }}>
-        {t('tutorProfilePage.videoPresentation.title')}
+        {t('userProfilePage.videoPresentation.title')}
       </Typography>
       <VideoBox
         video={video}

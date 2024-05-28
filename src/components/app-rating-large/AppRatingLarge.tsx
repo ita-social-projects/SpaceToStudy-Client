@@ -25,7 +25,7 @@ const AppRatingLarge: FC<AppRatingLargeProps> = ({
       </Box>
       <AppRating value={value} {...ratingProps} />
       <Typography variant={'body1'}>
-        {t('tutorProfilePage.reviews.reviewsCount', { count: reviewsCount })}
+        {t('userProfilePage.reviews.reviewsCount', { count: reviewsCount })}
       </Typography>
     </Box>
   )

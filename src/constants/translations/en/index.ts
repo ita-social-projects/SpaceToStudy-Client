@@ -20,7 +20,7 @@ import table from './table.json'
 import admin from './admin.json'
 import breadCrumbs from './breadcrumbs.json'
 import completeProfile from './complete-profile.json'
-import tutorProfilePage from './tutor-profile-page.json'
+import userProfilePage from './user-profile-page.json'
 import tutorHomePage from './tutor-home-page.json'
 import userTable from './user-table.json'
 import errorMessages from './error-messages.json'
@@ -65,7 +65,7 @@ const en = {
     admin,
     breadCrumbs,
     completeProfile,
-    tutorProfilePage,
+    userProfilePage,
     tutorHomePage,
     userTable,
     errorMessages,

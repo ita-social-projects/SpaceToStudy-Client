@@ -113,7 +113,7 @@ describe('ProfileInfo test in my profile on laptop', () => {
 
   it('should render send message button', () => {
     const sendMessageBtn = screen.getByText(
-      /tutorProfilePage.profileInfo.sendMessage/i
+      /userProfilePage.profileInfo.sendMessage/i
     )
 
     expect(sendMessageBtn).toBeInTheDocument()
@@ -121,7 +121,7 @@ describe('ProfileInfo test in my profile on laptop', () => {
 
   it('should click on `tutor offers` button', () => {
     const tutorOffersBtn = screen.getByText(
-      /tutorProfilePage.profileInfo.tutorOffers/i
+      /userProfilePage.profileInfo.tutorOffers/i
     )
     fireEvent.click(tutorOffersBtn)
     waitFor(() => {
@@ -143,7 +143,7 @@ describe('ProfileInfo test in my profile on mobile', () => {
 
   it('should render send message button', () => {
     const sendMessageBtn = screen.getByText(
-      /tutorProfilePage.profileInfo.sendMessage/i
+      /userProfilePage.profileInfo.sendMessage/i
     )
 
     expect(sendMessageBtn).toBeInTheDocument()
