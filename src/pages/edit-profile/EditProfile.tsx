@@ -19,7 +19,7 @@ import SidebarMenu from '~/components/sidebar-menu/SidebarMenu'
 import {
   ButtonVariantEnum,
   SizeEnum,
-  TutorProfileTabsEnum,
+  UserProfileTabsEnum,
   UserResponse,
   UserRole
 } from '~/types'
@@ -31,12 +31,12 @@ const EditProfile = () => {
   const { t } = useTranslation()
 
   const [searchParams, setSearchParams] = useSearchParams({
-    tab: TutorProfileTabsEnum.Profile
+    tab: UserProfileTabsEnum.Profile
   })
 
-  const activeTab = searchParams.get('tab') as TutorProfileTabsEnum
+  const activeTab = searchParams.get('tab') as UserProfileTabsEnum
 
-  const handleClick = async (tab: TutorProfileTabsEnum) => {
+  const handleClick = async (tab: UserProfileTabsEnum) => {
     if (activeTab === tab) return
 
     const confirmed = checkConfirmation({

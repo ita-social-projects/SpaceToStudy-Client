@@ -4,14 +4,14 @@ import SchoolIcon from '@mui/icons-material/School'
 import NotificationsIcon from '@mui/icons-material/Notifications'
 import GppGoodIcon from '@mui/icons-material/GppGood'
 
-import { TutorProfileTabsEnum, UserResponse } from '~/types'
+import { UserProfileTabsEnum, UserResponse } from '~/types'
 import ProfileTab from '~/containers/edit-profile/profile-tab/ProfileTab'
 import ProfessionalInfoTab from '~/containers/edit-profile/professional-info-tab/ProfessionalInfoTab'
 import NotificationTab from '~/containers/edit-profile/notification-tab/NotificationTab'
 import SecurityTab from '~/containers/edit-profile/password-security-tab/PasswordSecurityTab'
 
 export type UserProfileProps = Record<
-  TutorProfileTabsEnum,
+  UserProfileTabsEnum,
   {
     title: string
     content: (response: UserResponse) => ReactElement
@@ -20,12 +20,12 @@ export type UserProfileProps = Record<
 >
 
 export const tabsData: UserProfileProps = {
-  [TutorProfileTabsEnum.Profile]: {
+  [UserProfileTabsEnum.Profile]: {
     icon: <AccountCircleIcon />,
     title: 'editTutor.main.profile',
     content: (response) => <ProfileTab user={response} />
   },
-  [TutorProfileTabsEnum.ProfessionalInfo]: {
+  [UserProfileTabsEnum.ProfessionalInfo]: {
     icon: <SchoolIcon />,
     title: 'editTutor.main.professionalInfo',
     content: (response) => (
@@ -36,12 +36,12 @@ export const tabsData: UserProfileProps = {
       />
     )
   },
-  [TutorProfileTabsEnum.Notifications]: {
+  [UserProfileTabsEnum.Notifications]: {
     icon: <NotificationsIcon />,
     title: 'editTutor.main.notifications',
     content: () => <NotificationTab />
   },
-  [TutorProfileTabsEnum.PasswordAndSecurity]: {
+  [UserProfileTabsEnum.PasswordAndSecurity]: {
     icon: <GppGoodIcon />,
     title: 'editTutor.main.passwordAndSecurity',
     content: () => <SecurityTab />

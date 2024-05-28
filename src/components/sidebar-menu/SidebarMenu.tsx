@@ -7,22 +7,22 @@ import ListItemIcon from '@mui/material/ListItemIcon'
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { TutorProfileProps } from '~/pages/edit-profile/EditProfile.constants'
-import { TutorProfileTabsEnum } from '~/types'
+import { UserProfileProps } from '~/pages/edit-profile/EditProfile.constants'
+import { UserProfileTabsEnum } from '~/types'
 
 import { styles } from '~/components/sidebar-menu/SidebarMenu.styles'
 
 interface SidebarMenu {
-  tabsData: TutorProfileProps
-  handleClick: (tab: TutorProfileTabsEnum) => void
-  activeTab: TutorProfileTabsEnum
+  tabsData: UserProfileProps
+  handleClick: (tab: UserProfileTabsEnum) => void
+  activeTab: UserProfileTabsEnum
 }
 
 const SidebarMenu: FC<SidebarMenu> = ({ handleClick, tabsData, activeTab }) => {
   const { t } = useTranslation()
 
   const list = Object.keys(tabsData).map((key) => {
-    const tabKey = key as TutorProfileTabsEnum
+    const tabKey = key as UserProfileTabsEnum
     const item = tabsData[tabKey]
 
     const isActiveTab = item.title.endsWith(activeTab)

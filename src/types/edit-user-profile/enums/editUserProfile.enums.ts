@@ -1,4 +1,4 @@
-export enum TutorProfileTabsEnum {
+export enum UserProfileTabsEnum {
   Profile = 'profile',
   ProfessionalInfo = 'professionalInfo',
   Notifications = 'notifications',
