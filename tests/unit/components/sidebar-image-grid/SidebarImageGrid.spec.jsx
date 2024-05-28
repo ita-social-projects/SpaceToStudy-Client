@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react'
 
 import SidebarImageGrid from '~/components/sidebar-image-grid/SidebarImageGrid'
 
-import someAvatar from '~/assets/img/tutor-profile-page/avatar.png'
+import someAvatar from '~/assets/img/user-profile-page/avatar.png'
 
 const images = [
   {

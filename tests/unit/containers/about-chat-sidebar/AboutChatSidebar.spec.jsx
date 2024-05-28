@@ -4,7 +4,7 @@ import { render, screen } from '@testing-library/react'
 
 import AboutChatSidebar from '~/containers/about-chat-sidebar/AboutChatSidebar'
 
-import someAvatar from '~/assets/img/tutor-profile-page/avatar.png'
+import someAvatar from '~/assets/img/user-profile-page/avatar.png'
 
 vi.mock('simplebar-react', () => {
   return {

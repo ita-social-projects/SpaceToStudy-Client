@@ -1,4 +1,4 @@
-import someAvatar from '~/assets/img/tutor-profile-page/avatar.png'
+import someAvatar from '~/assets/img/user-profile-page/avatar.png'
 
 export const mockMedia = [
   {
