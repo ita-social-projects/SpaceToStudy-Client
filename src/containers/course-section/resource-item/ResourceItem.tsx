@@ -68,10 +68,15 @@ const ResourceItem: FC<ResourceItemProps> = ({
     useResourceAvailabilityContext()
 
   const renderResourceIcon = () => {
-    if (resource.resourceType === ResourcesTypes.Lessons) {
-      return resourcesData.lessons.icon
-    } else if (resource.resourceType === ResourcesTypes.Quizzes) {
-      return resourcesData.quizzes.icon
+    const { Lessons, Quizzes } = ResourcesTypes
+
+    switch (resource.resourceType) {
+      case Lessons:
+        return resourcesData.lessons.icon
+      case Quizzes:
+        return resourcesData.quizzes.icon
+      default:
+        return null
     }
   }
 
