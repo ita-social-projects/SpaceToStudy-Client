@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react'
 
 import useAxios from '~/hooks/use-axios'
-import TutorProfile from '~/pages/tutor-profile/TutorProfile.jsx'
+import UserProfile from '~/pages/user-profile/UserProfile.jsx'
 import { renderWithProviders } from '~tests/test-utils'
 
 const route = '/tutor/my-profile'
@@ -85,7 +85,7 @@ const renderWithMockData = ({
   const fakeData = getFakeData(load, extraData)
 
   useAxios.mockImplementation(() => fakeData)
-  renderWithProviders(<TutorProfile />, {
+  renderWithProviders(<UserProfile />, {
     preloadedState: { appMain },
     initialEntries: route
   })
@@ -93,7 +93,7 @@ const renderWithMockData = ({
 
 vi.mock('~/hooks/use-axios')
 
-describe('TutorProfile', () => {
+describe('UserProfile', () => {
   it('should render loader', () => {
     renderWithMockData({ load: true })
 

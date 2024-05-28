@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import VideoPresentation from '~/containers/tutor-profile/video-presentation/VideoPresentation'
+import VideoPresentation from '~/containers/user-profile/video-presentation/VideoPresentation'
 
 describe('VideoPresentation component', () => {
   beforeEach(() => {

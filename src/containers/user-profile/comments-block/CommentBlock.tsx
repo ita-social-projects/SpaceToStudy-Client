@@ -9,7 +9,7 @@ import AppButton from '~/components/app-button/AppButton'
 
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { Offer } from '~/types'
-import { styles } from '~/containers/tutor-profile/comments-block/CommentsBlock.styles'
+import { styles } from '~/containers/user-profile/comments-block/CommentsBlock.styles'
 
 interface ComentsBlockProps {
   title?: string

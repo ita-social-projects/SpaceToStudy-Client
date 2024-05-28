@@ -12,9 +12,9 @@ import AppButton from '~/components/app-button/AppButton'
 
 import useBreakpoints from '~/hooks/use-breakpoints'
 
-import ProfileContainerDesktop from '~/containers/tutor-profile/profile-info/ProfileContainerDesktop'
-import ProfileContainerMobile from '~/containers/tutor-profile/profile-info/ProfileContainerMobile'
-import { styles } from '~/containers/tutor-profile/profile-info/ProfileInfo.styles'
+import ProfileContainerDesktop from '~/containers/user-profile/profile-info/ProfileContainerDesktop'
+import ProfileContainerMobile from '~/containers/user-profile/profile-info/ProfileContainerMobile'
+import { styles } from '~/containers/user-profile/profile-info/ProfileInfo.styles'
 
 import { authRoutes } from '~/router/constants/authRoutes'
 import { snackbarVariants } from '~/constants'

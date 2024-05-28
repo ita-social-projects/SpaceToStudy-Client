@@ -45,7 +45,7 @@ const Subjects = lazy(() => import('~/pages/subjects/Subjects'))
 const Categories = lazy(() => import('~/pages/categories/Categories'))
 const FindOffers = lazy(() => import('~/pages/find-offers/FindOffers'))
 const OfferDetails = lazy(() => import('~/pages/offer-details/OfferDetails'))
-const TutorProfile = lazy(() => import('~/pages/tutor-profile/TutorProfile'))
+const UserProfile = lazy(() => import('~/pages/user-profile/UserProfile'))
 const MyResources = lazy(() => import('~/pages/my-resources/MyResources'))
 const MyCourses = lazy(() => import('~/pages/my-courses/MyCourses'))
 const CreateOrEditLesson = lazy(
@@ -83,14 +83,14 @@ export const authRouter = (
       path={authRoutes.offerDetails.route}
     />
     <Route
-      element={<TutorProfile />}
+      element={<UserProfile />}
       handle={{ crumb: userProfile }}
       loader={userProfileLoader}
       path={authRoutes.userProfile.route}
     />
     <Route element={<Chat />} path={authRoutes.chat.route} />
     <Route
-      element={<TutorProfile />}
+      element={<UserProfile />}
       handle={{ crumb: myProfile }}
       path={authRoutes.accountMenu.myProfile.route}
     />
