@@ -11,7 +11,7 @@ import useAxios from '~/hooks/use-axios'
 import useConfirm from '~/hooks/use-confirm'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
-import CommentsBlock from '~/containers/tutor-profile/comments-block/CommentBlock'
+import CommentsBlock from '~/containers/user-profile/comments-block/CommentBlock'
 import OfferCardSquare from '~/containers/find-offer/offer-card-square/OfferCardSquare'
 import EnrollOffer from '~/containers/offer-details/enroll-offer/EnrollOffer'
 import OfferCarousel from '~/containers/offer-details/offer-carousel/OfferCarousel'
@@ -37,8 +37,8 @@ import OfferBanner from '~/components/offer-banner/OfferBanner'
 import {
   responseMock,
   loadingMock
-} from '~/containers/tutor-profile/comments-with-rating-block/constants'
-import { activeButtonActions } from './OfferDetails.constants'
+} from '~/containers/user-profile/comments-with-rating-block/CommentsWithRatingBlock.constants'
+import { activeButtonActions } from '~/pages/offer-details/OfferDetails.constants'
 
 const OfferDetails = () => {
   const { t } = useTranslation()

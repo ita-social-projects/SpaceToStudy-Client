@@ -3,16 +3,16 @@ import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
-import RatingBlock from '~/containers/tutor-profile/comments-with-rating-block/rating-block/RatingBlock'
-import CommentsBlock from '~/containers/tutor-profile/comments-block/CommentBlock'
+import RatingBlock from '~/containers/user-profile/comments-with-rating-block/rating-block/RatingBlock'
+import CommentsBlock from '~/containers/user-profile/comments-block/CommentBlock'
 import Loader from '~/components/loader/Loader'
 
 import { RatingType } from '~/types'
-import { styles } from '~/containers/tutor-profile/comments-with-rating-block/CommentsWithRatingBlock.styles'
+import { styles } from '~/containers/user-profile/comments-with-rating-block/CommentsWithRatingBlock.styles'
 import {
   responseMock,
   loadingMock
-} from '~/containers/tutor-profile/comments-with-rating-block/constants'
+} from '~/containers/user-profile/comments-with-rating-block/CommentsWithRatingBlock.constants'
 
 interface CommentsWithRatingBlockProps {
   averageRating: number

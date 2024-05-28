@@ -1,6 +1,6 @@
 import { fireEvent, screen } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
-import CommentsWithRatingBlock from '~/containers/tutor-profile/comments-with-rating-block/CommentsWithRaitngBlock'
+import CommentsWithRatingBlock from '~/containers/user-profile/comments-with-rating-block/CommentsWithRaitngBlock'
 
 const props = {
   averageRating: 4.5,

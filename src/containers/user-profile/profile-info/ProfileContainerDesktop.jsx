@@ -7,7 +7,7 @@ import TitleWithDescription from '~/components/title-with-description/TitleWithD
 import AppChipList from '~/components/app-chips-list/AppChipList'
 import ProfileDoneItemsList from '~/components/icon-with-text-list/ProfileDoneItemsList'
 
-import { styles } from '~/containers/tutor-profile/profile-info/ProfileInfo.styles'
+import { styles } from '~/containers/user-profile/profile-info/ProfileInfo.styles'
 
 const ProfileContainerDesktop = ({
   userData,
@@ -18,6 +18,7 @@ const ProfileContainerDesktop = ({
   doneItems,
   chipItems
 }) => {
+  console.log(userData.professionalSummary)
   return (
     <Box sx={styles.container}>
       <Box sx={styles.avatarContainer}>

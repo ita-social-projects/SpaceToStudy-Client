@@ -3,7 +3,7 @@ import { screen, fireEvent, waitFor } from '@testing-library/react'
 import { renderWithProviders, TestSnackbar } from '~tests/test-utils'
 
 import useBreakpoints from '~/hooks/use-breakpoints'
-import ProfileInfo from '~/containers/tutor-profile/profile-info/ProfileInfo'
+import ProfileInfo from '~/containers/user-profile/profile-info/ProfileInfo'
 
 vi.mock('~/hooks/use-breakpoints')
 
