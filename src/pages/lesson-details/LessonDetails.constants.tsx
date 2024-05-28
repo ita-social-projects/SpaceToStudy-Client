@@ -1,4 +1,10 @@
-export const defaultResponse = {
+import {
+  Lesson,
+  ResourceAvailabilityStatusEnum,
+  ResourcesTabsEnum
+} from '~/types'
+
+export const defaultResponse: Lesson = {
   attachments: [],
   category: null,
   author: '',
@@ -7,5 +13,10 @@ export const defaultResponse = {
   content: '',
   title: '',
   updatedAt: '',
-  _id: ''
+  _id: '',
+  availability: {
+    status: ResourceAvailabilityStatusEnum.Open,
+    date: null
+  },
+  resourceType: ResourcesTabsEnum.Lessons
 }
