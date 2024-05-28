@@ -34,6 +34,10 @@ const AboutTutorBlock: FC<AboutTutorBlockProps> = ({ data }) => {
       description: data[key]
     }))
 
+  if (accordionItems.length === 0) {
+    return null
+  }
+
   return (
     <Box sx={styles.root}>
       <Typography
@@ -51,7 +55,11 @@ const AboutTutorBlock: FC<AboutTutorBlockProps> = ({ data }) => {
           icon={<ExpandMoreRoundedIcon />}
           items={accordionItems}
           onChange={handleAccordionChange}
-          sx={styles.accordion}
+          sx={{
+            withIcon: {
+              accordion: styles.accordion
+            }
+          }}
         />
       </Box>
     </Box>
