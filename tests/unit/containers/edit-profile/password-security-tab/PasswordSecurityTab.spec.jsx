@@ -1,9 +1,9 @@
 import {
   screen,
-  render,
   fireEvent,
   waitForElementToBeRemoved
 } from '@testing-library/react'
+import { renderWithProviders, TestSnackbar } from '~tests/test-utils'
 import PasswordSecurityTab from '~/containers/edit-profile/password-security-tab/PasswordSecurityTab'
 
 const changeInputValue = (label, value) => {
@@ -12,7 +12,11 @@ const changeInputValue = (label, value) => {
 
 describe('PasswordSecurityTab', () => {
   beforeEach(() => {
-    render(<PasswordSecurityTab />)
+    renderWithProviders(
+      <TestSnackbar>
+        <PasswordSecurityTab />
+      </TestSnackbar>
+    )
   })
 
   it('renders title and description', () => {

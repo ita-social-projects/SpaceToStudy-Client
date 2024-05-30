@@ -1,5 +1,10 @@
 import { useCallback } from 'react'
-import { useAppDispatch, useAppSelector } from './use-redux'
+import { useTranslation } from 'react-i18next'
+
+import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
+import useAxios from '~/hooks/use-axios'
+import useConfirm from '~/hooks/use-confirm'
+
 import { ErrorResponse, UserStatusEnum } from '~/types'
 import { userService } from '~/services/user-service'
 import { setUserStatus } from '~/redux/reducer'
@@ -8,9 +13,6 @@ import {
   setToLocalStorage
 } from '~/services/local-storage-service'
 import { dismissedActivation, snackbarVariants } from '~/constants'
-import useAxios from './use-axios'
-import useConfirm from './use-confirm'
-import { useTranslation } from 'react-i18next'
 import { openAlert } from '~/redux/features/snackbarSlice'
 
 const useChangeUserStatus = () => {
@@ -67,8 +69,7 @@ const useChangeUserStatus = () => {
   const checkStatusChange = useCallback(
     async (title: string, message: string, checkOnClick?: boolean) => {
       const open =
-        userStatus === UserStatusEnum.Deactivated &&
-        getFromLocalStorage('activation') !== dismissedActivation
+        !isActive && getFromLocalStorage('activation') !== dismissedActivation
 
       if (open || checkOnClick) {
         const confirmed = await checkConfirmation({
@@ -81,11 +82,13 @@ const useChangeUserStatus = () => {
           check: true
         })
 
-        if (confirmed) changeStatus().catch(console.error)
+        if (confirmed) {
+          changeStatus().catch(console.error)
+        }
         setToLocalStorage('activation', dismissedActivation)
       }
     },
-    [t, checkConfirmation, changeStatus, userStatus, neededAction]
+    [t, checkConfirmation, changeStatus, isActive, neededAction]
   )
 
   return {

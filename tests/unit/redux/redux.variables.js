@@ -11,6 +11,7 @@ export const signupUserData = {
 export const initialState = {
   userId: '',
   userRole: '',
+  userStatus: 'active',
   authLoading: false,
   loading: true,
   pageLoad: false,
@@ -21,6 +22,7 @@ export const initialState = {
 export const stateAfterLogin = {
   userId: '62f4fa49d39c988e347d833f',
   userRole: 'student',
+  userStatus: 'active',
   authLoading: false,
   loading: false,
   pageLoad: false,
@@ -31,6 +33,7 @@ export const stateAfterLogin = {
 export const stateAfterSignup = {
   userId: '',
   userRole: '',
+  userStatus: 'active',
   loading: false,
   pageLoad: false,
   authLoading: false,
@@ -42,4 +45,4 @@ export const errorMessage = 'Request failed with status code 404'
 export const errorCode = 'USER_NOT_REGISTERED'
 
 export const accessToken =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZjRmYTQ5ZDM5Yzk4OGUzNDdkODMzZiIsInJvbGUiOiJzdHVkZW50IiwiaXNGaXJzdExvZ2luIjp0cnVlLCJpYXQiOjE2NjAyMjIwNDMsImV4cCI6MTY2MDIyNTY0M30.Gr10O-Ri3k_SJfXb41Yojx7toZvEz5RUekZVHLHEVOw'
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZjRmYTQ5ZDM5Yzk4OGUzNDdkODMzZiIsInJvbGUiOiJzdHVkZW50IiwiaXNGaXJzdExvZ2luIjp0cnVlLCJzdGF0dXMiOiJhY3RpdmUiLCJpYXQiOjE3MTcwMTYwMDcsImV4cCI6MTcxNzEwMjQwN30.YsoMtl_yRSD0aSVbrdzXhqUsM4Aip7BW6BnktcdulKc'
