@@ -38,14 +38,13 @@ const AboutTutorBlock: FC<AboutTutorBlockProps> = ({ data }) => {
     return null
   }
 
+  const titleVariant = isMobile
+    ? TypographyVariantEnum.Button
+    : TypographyVariantEnum.H5
+
   return (
     <Box sx={styles.root}>
-      <Typography
-        sx={styles.title}
-        variant={
-          isMobile ? TypographyVariantEnum.Button : TypographyVariantEnum.H5
-        }
-      >
+      <Typography sx={styles.title} variant={titleVariant}>
         {t('userProfilePage.aboutTutor.title')}
       </Typography>
       <Box sx={styles.wrapper}>
