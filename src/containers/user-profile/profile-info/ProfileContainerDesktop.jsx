@@ -18,7 +18,6 @@ const ProfileContainerDesktop = ({
   doneItems,
   chipItems
 }) => {
-  console.log(userData.professionalSummary)
   return (
     <Box sx={styles.container}>
       <Box sx={styles.avatarContainer}>
