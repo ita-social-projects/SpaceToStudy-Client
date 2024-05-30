@@ -71,7 +71,7 @@ describe('useChangeUserStatus custom hook', () => {
     mockSetItem.mockRestore()
   })
 
-  it('should activate and activate a user account', async () => {
+  it('should activate and deactivate a user account', async () => {
     mockActivateUser.mockReturnValue({
       data: {}
     })
