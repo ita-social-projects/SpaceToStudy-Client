@@ -14,10 +14,6 @@ import AppSelect from '~/components/app-select/AppSelect'
 import IconExtensionWithTitle from '~/components/icon-extension-with-title/IconExtensionWithTitle'
 import { useResourceAvailabilityContext } from '~/context/resources-availability-context'
 
-import openIcon from '~/assets/img/cooperation-details/resource-availability/open-icon.svg'
-import openFrom from '~/assets/img/cooperation-details/resource-availability/open-from.svg'
-import closedIcon from '~/assets/img/cooperation-details/resource-availability/closed-icon.svg'
-
 import {
   CourseResource,
   ResourceAvailabilityStatusEnum,
@@ -27,7 +23,10 @@ import {
   SizeEnum
 } from '~/types'
 
-import { selectionFields } from '~/containers/course-section/resource-item/ResourceItem.constants'
+import {
+  availabilityIcons,
+  selectionFields
+} from '~/containers/course-section/resource-item/ResourceItem.constants'
 import { resourcesData } from '~/containers/course-section/CourseSectionContainer.constants'
 import { styles } from '~/containers/course-section/resource-item/ResourceItem.styles'
 
@@ -37,14 +36,6 @@ interface ResourceItemProps {
   setResourceAvailability?: SetResourseAvailability
   editResource?: (resource: CourseResource) => void
   isView?: boolean
-}
-
-const { Open, OpenFrom, Closed } = ResourceAvailabilityStatusEnum
-
-const availabilityIcons: Record<ResourceAvailabilityStatusEnum, string> = {
-  [Open]: openIcon,
-  [OpenFrom]: openFrom,
-  [Closed]: closedIcon
 }
 
 const ResourceItem: FC<ResourceItemProps> = ({
@@ -66,6 +57,7 @@ const ResourceItem: FC<ResourceItemProps> = ({
 
   const { resourceAvailability: allResourcesAvailability, isCooperation } =
     useResourceAvailabilityContext()
+  const { Open, OpenFrom, Closed } = ResourceAvailabilityStatusEnum
 
   const renderResourceIcon = () => {
     const { Lessons, Quizzes } = ResourcesTypes
