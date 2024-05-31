@@ -60,13 +60,11 @@ describe('EditProfile', () => {
   })
 
   it('should render component with header, description and menu-tabs', async () => {
-    const editProfileHeader = await screen.findByText(
-      'editTutor.main.accountSettings'
-    )
+    const editProfileHeader = await screen.findByText('editProfilePage.title')
     expect(editProfileHeader).toBeInTheDocument()
 
     const editProfileDesc = await screen.findByText(
-      'editTutor.main.littleDescription'
+      'editProfilePage.description'
     )
     expect(editProfileDesc).toBeInTheDocument()
 
@@ -76,7 +74,7 @@ describe('EditProfile', () => {
 
   it('should render Profile Container after click on Profile menu button', async () => {
     const profileMenuTab = await screen.findByRole('button', {
-      name: 'editTutor.main.profile'
+      name: 'editProfilePage.profile.generalTab.tabTitle'
     })
     fireEvent.click(profileMenuTab)
     await waitFor(() => {
@@ -87,7 +85,7 @@ describe('EditProfile', () => {
 
   it('should render Professional tab Container after click on Profile menu button', async () => {
     const professionalTab = await screen.findByRole('button', {
-      name: 'editTutor.main.professionalInfo'
+      name: 'editProfilePage.profile.professionalTab.tabTitle'
     })
     fireEvent.click(professionalTab)
     await waitFor(() => {
@@ -98,7 +96,7 @@ describe('EditProfile', () => {
 
   it('should render Notification Container after click on Notification menu button', async () => {
     const notificationMenuTab = await screen.findByRole('button', {
-      name: 'editTutor.main.notifications'
+      name: 'editProfilePage.profile.notificationsTab.tabTitle'
     })
     fireEvent.click(notificationMenuTab)
     await waitFor(() => {
@@ -109,7 +107,7 @@ describe('EditProfile', () => {
 
   it('should render Security block after click on Password & Security menu button', async () => {
     const securityMenuTab = await screen.findByRole('button', {
-      name: 'editTutor.main.passwordAndSecurity'
+      name: 'editProfilePage.profile.passwordSecurityTab.tabTitle'
     })
     fireEvent.click(securityMenuTab)
     await waitFor(() => {

@@ -22,12 +22,12 @@ export type UserProfileProps = Record<
 export const tabsData: UserProfileProps = {
   [UserProfileTabsEnum.Profile]: {
     icon: <AccountCircleIcon />,
-    title: 'editTutor.main.profile',
+    title: 'editProfilePage.profile.generalTab.tabTitle',
     content: (response) => <ProfileTab user={response} />
   },
   [UserProfileTabsEnum.ProfessionalInfo]: {
     icon: <SchoolIcon />,
-    title: 'editTutor.main.professionalInfo',
+    title: 'editProfilePage.profile.professionalTab.tabTitle',
     content: (response) => (
       <ProfessionalInfoTab
         categories={response.mainSubjects.tutor}
@@ -38,12 +38,12 @@ export const tabsData: UserProfileProps = {
   },
   [UserProfileTabsEnum.Notifications]: {
     icon: <NotificationsIcon />,
-    title: 'editTutor.main.notifications',
+    title: 'editProfilePage.profile.notificationsTab.tabTitle',
     content: () => <NotificationTab />
   },
   [UserProfileTabsEnum.PasswordAndSecurity]: {
     icon: <GppGoodIcon />,
-    title: 'editTutor.main.passwordAndSecurity',
+    title: 'editProfilePage.profile.passwordSecurityTab.tabTitle',
     content: () => <SecurityTab />
   }
 }
