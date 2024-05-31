@@ -75,10 +75,10 @@ const EditProfile = () => {
       <Box sx={styles.headerContainer}>
         <Box>
           <Typography sx={styles.title}>
-            {t('editTutor.main.accountSettings')}
+            {t('editProfilePage.title')}
           </Typography>
           <Typography sx={styles.description}>
-            {t('editTutor.main.littleDescription')}
+            {t('editProfilePage.description')}
           </Typography>
         </Box>
         <AppButton
@@ -88,7 +88,7 @@ const EditProfile = () => {
           to={authRoutes.accountMenu.myProfile.path}
           variant={ButtonVariantEnum.Tonal}
         >
-          {t('editTutor.main.backBtn')}
+          {t('editProfilePage.backBtn')}
         </AppButton>
       </Box>
       <Divider sx={styles.line} />

@@ -39,7 +39,6 @@ import questionPage from './question-page.json'
 import course from './course.json'
 import cooperationDetailsPage from './cooperation-details.json'
 import editProfilePage from './edit-profile.json'
-import editTutor from './edit-tutor-profile.json'
 
 const en = {
   translations: {
@@ -83,8 +82,7 @@ const en = {
     questionPage,
     course,
     cooperationDetailsPage,
-    editProfilePage,
-    editTutor
+    editProfilePage
   }
 }
 

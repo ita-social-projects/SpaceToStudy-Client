@@ -1,10 +1,14 @@
 {
+  "title": "Account Settings",
+  "description": "Manage your account settings and preferences",
+  "backBtn": "Back to your personal profile",
   "profile": {
     "title": "Profile",
     "description": "Here you can edit public information about yourself.",
     "updateProfileBtn": "Update",
     "successMessage": "Success! Your data has been updated.",
     "generalTab": {
+      "tabTitle": "Profile",
       "uploadTitle": "Upload new photo",
       "uploadDesc": "Maximum file size - 5 Mb",
       "informationTitle": "Personal information",
@@ -18,6 +22,7 @@
       "videoPresentationDesc": "Add the link to your presentational video. Your video needs to be public and uploaded to YouTube."
     },
     "professionalTab": {
+      "tabTitle": "Professional info",
       "mainTitle": "Professional information",
       "mainDescription": "Here you can edit public professional information about yourself.",
       "categoriesTitle": "Your professional categories",
@@ -55,6 +60,7 @@
       }
     },
     "notificationsTab": {
+      "tabTitle": "Notifications",
       "notifications": "Notifications",
       "mainHint": "Choose what emails you'd like to be sent",
       "offerStatus": "Change of offer status",
@@ -67,6 +73,7 @@
       "emailSubtitle": "Turn on email notification to get updates through email"
     },
     "passwordSecurityTab": {
+      "tabTitle": "Password & Security",
       "title": "Password & Security",
       "description": "Change password and security settings",
       "changePassword": "Change password",
