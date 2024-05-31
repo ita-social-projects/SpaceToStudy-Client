@@ -2,22 +2,24 @@ import { useCallback } from 'react'
 import { useAppSelector } from '~/hooks/use-redux'
 import { useParams, useSearchParams, useMatch } from 'react-router-dom'
 
-import ProfileInfo from '~/containers/user-profile/profile-info/ProfileInfo'
 import CompleteProfileBlock from '~/components/complete-profile/CompleteProfileBlock'
-import VideoPresentation from '~/containers/user-profile/video-presentation/VideoPresentation'
-import CommentsWithRatingBlock from '~/containers/user-profile/comments-with-rating-block/CommentsWithRatingBlock'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import Loader from '~/components/loader/Loader'
-import { userService } from '~/services/user-service'
-import useAxios from '~/hooks/use-axios'
-import videoImgProfile from '~/assets/img/user-profile-page/presentationVideoImg.png'
-
 import { profileItems } from '~/components/profile-item/complete-profile.constants'
-import { defaultResponses } from '~/constants'
-import { responseMock } from '~/pages/user-profile/constants'
+
+import ProfileInfo from '~/containers/user-profile/profile-info/ProfileInfo'
 import AboutTutorBlock from '~/containers/user-profile/about-tutor-block/AboutTutorBlock'
+import VideoPresentation from '~/containers/user-profile/video-presentation/VideoPresentation'
+import CommentsWithRatingBlock from '~/containers/user-profile/comments-with-rating-block/CommentsWithRatingBlock'
 
 import { UserRoleEnum } from '~/types'
+import { defaultResponses } from '~/constants'
+
+import useAxios from '~/hooks/use-axios'
+import { userService } from '~/services/user-service'
+import videoImgProfile from '~/assets/img/user-profile-page/presentationVideoImg.png'
+
+import { responseMock } from '~/pages/user-profile/constants'
 import { authRoutes } from '~/router/constants/authRoutes'
 
 const UserProfile = () => {
