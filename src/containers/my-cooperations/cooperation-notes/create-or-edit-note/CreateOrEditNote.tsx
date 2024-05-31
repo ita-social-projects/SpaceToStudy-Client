@@ -78,33 +78,33 @@ const CreateOrEditNote = ({
     }
   })
 
+  const userPhoto = photo
+    ? `${import.meta.env.VITE_APP_IMG_USER_URL}${photo}`
+    : undefined
+  const isNameValid = firstName && lastName
+  const userInitials = isNameValid && `${firstName[0]}${lastName[0]}`
+  const userName = isNameValid && `${firstName} ${lastName}`
+
+  const userInfo = loading ? (
+    <Loader size={20} />
+  ) : (
+    <>
+      <Avatar src={userPhoto} sx={styles.accountIcon}>
+        {userInitials}
+      </Avatar>
+      <Typography variant={TypographyVariantEnum.Subtitle2}>
+        {userName}
+      </Typography>
+    </>
+  )
+
   return (
     <Box
       component={ComponentEnum.Form}
       onSubmit={handleSubmit}
       sx={styles.container}
     >
-      <Box sx={styles.header}>
-        {loading ? (
-          <Loader size={20} />
-        ) : (
-          <>
-            <Avatar
-              src={
-                photo
-                  ? `${import.meta.env.VITE_APP_IMG_USER_URL}${photo}`
-                  : undefined
-              }
-              sx={styles.accountIcon}
-            >
-              {firstName && lastName && `${firstName[0]}${lastName[0]}`}
-            </Avatar>
-            <Typography variant={TypographyVariantEnum.Subtitle2}>
-              {firstName && lastName && `${firstName} ${lastName}`}
-            </Typography>
-          </>
-        )}
-      </Box>
+      <Box sx={styles.header}>{userInfo}</Box>
       <AppTextField
         InputLabelProps={styles.descriptionLabel}
         InputProps={styles.descriptionInput}
