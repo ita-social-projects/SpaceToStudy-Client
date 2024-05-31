@@ -1,4 +1,4 @@
-import { ReactElement, FC } from 'react'
+import { FC, ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 
@@ -14,7 +14,7 @@ interface IconExtensionWithTitleProps {
   title: string
   description?: string
   size?: number
-  icon?: ReactElement
+  icon?: ReactNode
 }
 
 const IconExtensionWithTitle: FC<IconExtensionWithTitleProps> = ({

@@ -23,7 +23,7 @@ const CooperationSectionView: FC<CooperationSectionViewProps> = ({
   const { t } = useTranslation()
 
   const resources = item.activities.map((item) => (
-    <ResourceItem isView key={item.resource} resource={item.resource} />
+    <ResourceItem isView key={item.resource._id} resource={item.resource} />
   ))
 
   return (

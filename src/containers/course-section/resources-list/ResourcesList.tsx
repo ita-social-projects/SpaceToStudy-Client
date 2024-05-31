@@ -10,13 +10,13 @@ import { styles } from '~/containers/course-section/resources-list/ResourcesList
 
 import useDroppable from '~/hooks/use-droppable'
 import useDndSensor from '~/hooks/use-dnd-sensor'
-import { CourseResources, ResourceAvailabilityStatusEnum } from '~/types'
+import { CourseResource, SetResourseAvailability } from '~/types'
 
 interface ResourcesListProps {
-  items: CourseResources[]
-  setResources: Dispatch<SetStateAction<CourseResources[]>>
-  deleteResource: (resource: CourseResources) => void
-  editResource: (resource: CourseResources) => void
+  items: CourseResource[]
+  setResources: Dispatch<SetStateAction<CourseResource[]>>
+  deleteResource: (resource: CourseResource) => void
+  editResource: (resource: CourseResource) => void
 }
 
 const ResourcesList: FC<ResourcesListProps> = ({
@@ -27,18 +27,13 @@ const ResourcesList: FC<ResourcesListProps> = ({
 }) => {
   const { enabled } = useDroppable()
 
-  const setResourceAvailability = useCallback(
-    (
-      id: string,
-      availability: ResourceAvailabilityStatusEnum,
-      openFromDate?: string | null
-    ) => {
+  const setResourceAvailability: SetResourseAvailability = useCallback(
+    (id, availability) => {
       setResources((prevResources) => {
         const resources = [...prevResources]
         const resource = resources.find((item) => item._id === id)
         if (resource) {
           resource.availability = availability
-          resource.openFromDate = openFromDate
         }
         return resources
       })
@@ -54,7 +49,7 @@ const ResourcesList: FC<ResourcesListProps> = ({
     sensors
   } = useDndSensor({ items, setItems: setResources, idProp: '_id' })
 
-  const renderItem = (item: CourseResources, isDragOver = false) => (
+  const renderItem = (item: CourseResource, isDragOver = false) => (
     <SortableWrapper
       id={item._id}
       key={item._id}

@@ -2,8 +2,8 @@ import {
   CommonEntityFields,
   UserResponse,
   Question,
-  ResourcesTabsEnum as ResourcesTypes,
-  QuizViewEnum
+  QuizViewEnum,
+  ResourceBase
 } from '~/types'
 
 export interface QuizSettings {
@@ -14,13 +14,11 @@ export interface QuizSettings {
   shuffle: boolean
 }
 
-export interface Quiz extends CommonEntityFields {
+export interface Quiz extends CommonEntityFields, ResourceBase {
   title: string
-  description: string
   items: Question[]
   author: Pick<UserResponse, '_id'>
   category: string | null
-  resourceType?: ResourcesTypes
   settings: QuizSettings
 }
 
