@@ -1,25 +1,28 @@
-import { useState } from 'react'
+import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
 
 import AppButton from '~/components/app-button/AppButton'
 import AppTextField from '~/components/app-text-field/AppTextField'
-import ConfirmDialog from '~/components/confirm-dialog/ConfirmDialog'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 
 import useForm from '~/hooks/use-form'
+import useChangeUserStatus from '~/hooks/use-change-user-status'
 
-import { styles } from '~/containers/edit-profile/password-security-tab/PasswordSecurityTab.styles'
 import { confirmPassword, password } from '~/utils/validations/login'
-import { ButtonVariantEnum, InputEnum, SizeEnum, FormValues } from '~/types'
+import { ButtonVariantEnum, InputEnum, SizeEnum, UserResponse } from '~/types'
+import { FormValues } from '~/types/editTutorProfile/interfaces/securityBlockForm.interfaces'
+import { styles } from '~/containers/edit-profile/password-security-tab/PasswordSecurityTab.styles'
 
-const PasswordSecurityTab = () => {
+interface PasswordSecurityTabProps {
+  user: UserResponse
+}
+
+const PasswordSecurityTab: FC<PasswordSecurityTabProps> = () => {
   const { t } = useTranslation()
-  const [isConfirmOpen, setIsConfirmOpen] = useState(false)
-
+  const { neededAction, checkStatusChange } = useChangeUserStatus()
   const { data, handleInputChange, errors, handleBlur, resetData } =
     useForm<FormValues>({
       initialValues: {
@@ -29,6 +32,14 @@ const PasswordSecurityTab = () => {
       },
       validations: { password, confirmPassword }
     })
+
+  const handleChangeStatusClick = () => {
+    checkStatusChange(
+      `editProfilePage.profile.passwordSecurityTab.${neededAction}Title`,
+      `editProfilePage.profile.passwordSecurityTab.${neededAction}Description`,
+      true
+    ).catch(console.error)
+  }
 
   return (
     <Box sx={styles.container}>
@@ -90,29 +101,15 @@ const PasswordSecurityTab = () => {
         </Box>
         <Divider />
         <AppButton
-          onClick={() => setIsConfirmOpen(!isConfirmOpen)}
-          size={SizeEnum.ExtraLarge}
+          onClick={handleChangeStatusClick}
+          size={SizeEnum.Large}
           sx={styles.deactivateButton}
           variant={ButtonVariantEnum.Danger}
         >
-          {t('editProfilePage.profile.passwordSecurityTab.deactivateAccount')}
+          {t(
+            `editProfilePage.profile.passwordSecurityTab.${neededAction}Account`
+          )}
         </AppButton>
-        <ConfirmDialog
-          cancelButton={t('common.cancel')}
-          confirmButton={t(
-            'editProfilePage.profile.passwordSecurityTab.deactivateBtn'
-          )}
-          message={t(
-            'editProfilePage.profile.passwordSecurityTab.deactivateDescription'
-          )}
-          onConfirm={() => {}}
-          onDismiss={() => setIsConfirmOpen(!isConfirmOpen)}
-          open={isConfirmOpen}
-          revertButtons
-          title={t(
-            'editProfilePage.profile.passwordSecurityTab.deactivateTitle'
-          )}
-        />
       </Box>
     </Box>
   )

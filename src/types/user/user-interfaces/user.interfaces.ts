@@ -9,12 +9,14 @@ import {
   Faq,
   DataByRole,
   UpdatedPhoto,
-  UpdateFields
+  UpdateFields,
+  UserStatusEnum
 } from '~/types'
 
 export interface LocalStorage {
   'emoji-mart.last'?: string
   language?: string
+  activation?: string
 }
 
 export interface GetUsersParams extends RequestParams {
@@ -45,6 +47,7 @@ export interface UserResponse {
   FAQ: DataByRole<Faq[]>
   videoLink: DataByRole<string>
   professionalBlock?: ProfessionalBlock
+  status: DataByRole<UserStatusEnum>
 }
 
 export interface ProfessionalBlock {
@@ -99,4 +102,5 @@ export interface AccessToken {
   id: string
   role: UserRole
   isFirstLogin: boolean
+  status: UserStatusEnum
 }

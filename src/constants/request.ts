@@ -20,6 +20,8 @@ export const URLs = {
     get: '/users',
     update: '/users',
     delete: '/users/delete',
+    deactivate: '/users/deactivate',
+    activate: '/users/activate',
     myProfile: '/users/myProfile'
   },
   offers: {
