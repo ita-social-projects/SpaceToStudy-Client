@@ -43,7 +43,7 @@ export const tabsData: TutorProfileProps = {
   },
   [TutorProfileTabsEnum.PasswordAndSecurity]: {
     icon: <GppGoodIcon />,
-    title: 'editTutor.main.passwordSecurity',
+    title: 'editTutor.main.passwordAndSecurity',
     content: () => <SecurityTab />
   }
 }

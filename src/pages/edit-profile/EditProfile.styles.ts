@@ -21,7 +21,8 @@ export const styles = {
   },
   mainContainer: {
     display: 'flex',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    gap: '24px'
   },
   mainContent: {
     width: '65%'

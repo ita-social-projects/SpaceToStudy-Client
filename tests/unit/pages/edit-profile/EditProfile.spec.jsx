@@ -109,7 +109,7 @@ describe('EditProfile', () => {
 
   it('should render Security block after click on Password & Security menu button', async () => {
     const securityMenuTab = await screen.findByRole('button', {
-      name: 'editTutor.main.passwordSecurity'
+      name: 'editTutor.main.passwordAndSecurity'
     })
     fireEvent.click(securityMenuTab)
     await waitFor(() => {
