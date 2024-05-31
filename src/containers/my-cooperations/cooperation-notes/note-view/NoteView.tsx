@@ -98,7 +98,7 @@ const NoteView: FC<NoteViewProps> = ({
     ))
 
   const userPhoto = note.author.photo
-    ? `${import.meta.env.VITE_APP_IMG_USER_URL}${note.author.photo}`
+    ? new URL(note.author.photo, import.meta.env.VITE_APP_IMG_USER_URL).href
     : undefined
   const isNameValid = Boolean(note.author.firstName && note.author.lastName)
   const userInitials =

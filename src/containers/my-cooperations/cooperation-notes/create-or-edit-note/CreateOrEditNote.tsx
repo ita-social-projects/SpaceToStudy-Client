@@ -79,7 +79,7 @@ const CreateOrEditNote = ({
   })
 
   const userPhoto = photo
-    ? `${import.meta.env.VITE_APP_IMG_USER_URL}${photo}`
+    ? new URL(photo, import.meta.env.VITE_APP_IMG_USER_URL).href
     : undefined
   const isNameValid = Boolean(firstName && lastName)
   const userInitials = isNameValid && `${firstName[0]}${lastName[0]}`
