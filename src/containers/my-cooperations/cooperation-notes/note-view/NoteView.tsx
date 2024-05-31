@@ -100,7 +100,7 @@ const NoteView: FC<NoteViewProps> = ({
   const userPhoto = note.author.photo
     ? `${import.meta.env.VITE_APP_IMG_USER_URL}${note.author.photo}`
     : undefined
-  const isNameValid = note.author.firstName && note.author.lastName
+  const isNameValid = Boolean(note.author.firstName && note.author.lastName)
   const userInitials =
     isNameValid && `${note.author.firstName[0]}${note.author.lastName[0]}`
   const userName =
