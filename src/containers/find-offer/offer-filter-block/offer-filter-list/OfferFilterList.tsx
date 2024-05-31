@@ -1,4 +1,4 @@
-import { FC, MouseEvent, SyntheticEvent } from 'react'
+import { FC, SyntheticEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Typography, Checkbox, FormControlLabel, Box } from '@mui/material'
 
@@ -48,9 +48,9 @@ const OfferFilterList: FC<OfferFilterListProps> = ({
   }))
 
   const handleLanguagesChange = (
-    _: MouseEvent<HTMLLIElement>,
-    value: LanguagesEnum | null
-  ) => updateFiltersInQuery({ language: value })
+    _: SyntheticEvent<Element, Event>,
+    value: string | null
+  ) => updateFiltersInQuery({ language: value as LanguagesEnum | null })
 
   const handleChecked = (_: SyntheticEvent<Element, Event>, checked: boolean) =>
     updateFiltersInQuery({ native: checked.toString() })
@@ -94,7 +94,7 @@ const OfferFilterList: FC<OfferFilterListProps> = ({
       <CheckboxList
         {...checkboxListProps}
         items={levelOptions}
-        onChange={updateFilterByKey('proficiencyLevel')}
+        onChange={() => updateFilterByKey('proficiencyLevel')}
         value={filters.proficiencyLevel}
         variant={'body2'}
       />
@@ -110,7 +110,7 @@ const OfferFilterList: FC<OfferFilterListProps> = ({
       {filterTitle(t('findOffers.filterTitles.rating'))}
       <RadioButtonInputs
         items={radioOptions}
-        onChange={updateFilterByKey('rating')}
+        onChange={() => updateFilterByKey('rating')}
         value={Number(filters.rating)}
       />
       {filterTitle(t('findOffers.filterTitles.search'))}
