@@ -1,4 +1,3 @@
-import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
@@ -12,15 +11,11 @@ import useForm from '~/hooks/use-form'
 import useChangeUserStatus from '~/hooks/use-change-user-status'
 
 import { confirmPassword, password } from '~/utils/validations/login'
-import { ButtonVariantEnum, InputEnum, SizeEnum, UserResponse } from '~/types'
-import { FormValues } from '~/types/editTutorProfile/interfaces/securityBlockForm.interfaces'
+import { ButtonVariantEnum, InputEnum, SizeEnum } from '~/types'
+import { FormValues } from '~/types/edit-user-profile/interfaces/securityBlockForm.interfaces'
 import { styles } from '~/containers/edit-profile/password-security-tab/PasswordSecurityTab.styles'
 
-interface PasswordSecurityTabProps {
-  user: UserResponse
-}
-
-const PasswordSecurityTab: FC<PasswordSecurityTabProps> = () => {
+const PasswordSecurityTab = () => {
   const { t } = useTranslation()
   const { neededAction, checkStatusChange } = useChangeUserStatus()
   const { data, handleInputChange, errors, handleBlur, resetData } =
