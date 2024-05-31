@@ -82,9 +82,7 @@ const useChangeUserStatus = () => {
           check: true
         })
 
-        if (confirmed) {
-          changeStatus().catch(console.error)
-        }
+        if (confirmed) await changeStatus()
         setToLocalStorage('activation', dismissedActivation)
       }
     },
