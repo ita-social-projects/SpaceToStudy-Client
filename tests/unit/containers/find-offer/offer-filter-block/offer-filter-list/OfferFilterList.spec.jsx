@@ -1,14 +1,9 @@
-import { screen, render, fireEvent } from '@testing-library/react'
+import { screen, fireEvent } from '@testing-library/react'
 
 import OfferFilterList from '~/containers/find-offer/offer-filter-block/offer-filter-list/OfferFilterList'
 
-import { useAppSelector } from '~/hooks/use-redux'
 import { ProficiencyLevelEnum, UserRoleEnum } from '~/types'
-import { selectOption } from '~tests/test-utils'
-
-vi.mock('~/hooks/use-redux', () => ({
-  useAppSelector: vi.fn()
-}))
+import { selectOption, renderWithProviders } from '~tests/test-utils'
 
 const mockUpdateFilterByKey = vi.fn()
 const mockUpdateFiltersInQuery = vi.fn()
@@ -24,21 +19,32 @@ const defaultFilters = {
 
 const priceRange = { minPrice: 0, maxPrice: 100 }
 
-const setupWithRole = (userRole) => {
-  useAppSelector.mockImplementation(() => ({ userRole }))
-  render(
+const preloadedTutorState = {
+  appMain: {
+    userRole: UserRoleEnum.Tutor
+  }
+}
+const preloadedStudentState = {
+  appMain: {
+    userRole: UserRoleEnum.Student
+  }
+}
+
+const setupWithRole = (preloadedState) => {
+  renderWithProviders(
     <OfferFilterList
       filters={defaultFilters}
       price={priceRange}
       updateFilterByKey={mockUpdateFilterByKey}
       updateFiltersInQuery={mockUpdateFiltersInQuery}
-    />
+    />,
+    { preloadedState }
   )
 }
 
 describe('OfferFilterList for Tutor', () => {
   beforeEach(() => {
-    setupWithRole(UserRoleEnum.Tutor)
+    setupWithRole(preloadedTutorState)
   })
 
   it('renders filter titles correctly', () => {
@@ -87,7 +93,7 @@ describe('OfferFilterList for Tutor', () => {
 
 describe('OfferFilterList for Student', () => {
   beforeEach(() => {
-    setupWithRole(UserRoleEnum.Student)
+    setupWithRole(preloadedStudentState)
   })
 
   it('calls updateFilterByKey when proficiency level is changed', () => {

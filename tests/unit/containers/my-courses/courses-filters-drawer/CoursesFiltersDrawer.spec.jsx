@@ -57,8 +57,8 @@ const setup = async (filters) => {
 
 describe('CoursesFiltersDrawer', () => {
   describe('with default filters', () => {
-    beforeEach(async () => {
-      await setup(defaultFilters)
+    beforeEach(() => {
+      setup(defaultFilters)
     })
 
     it('renders filter titles correctly', async () => {
@@ -117,8 +117,8 @@ describe('CoursesFiltersDrawer', () => {
   })
 
   describe('with category filter', () => {
-    beforeEach(async () => {
-      await setup(filterWithCategory)
+    beforeEach(() => {
+      setup(filterWithCategory)
     })
 
     it('calls updateFiltersInQuery when subject is changed', async () => {
