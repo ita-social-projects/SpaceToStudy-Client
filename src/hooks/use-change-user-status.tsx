@@ -82,8 +82,8 @@ const useChangeUserStatus = () => {
           check: true
         })
 
-        if (confirmed) await changeStatus()
         setToLocalStorage('activation', dismissedActivation)
+        if (confirmed) await changeStatus()
       }
     },
     [t, checkConfirmation, changeStatus, isActive, neededAction]
