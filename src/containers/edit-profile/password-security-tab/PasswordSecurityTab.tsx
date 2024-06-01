@@ -1,4 +1,4 @@
-import { useState, useCallback, FC } from 'react'
+import { useCallback, FC } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
@@ -41,7 +41,7 @@ const PasswordSecurityTab: FC<EditProfileTabUserProps> = ({ user }) => {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
 
-  const [isConfirmOpen, setIsConfirmOpen] = useState(false)
+  const { neededAction, checkStatusChange } = useChangeUserStatus()
 
   const handleSubmitChangePassword = async () => {
     resetErrors()
