@@ -1,7 +1,8 @@
-import { FC, useState } from 'react'
+import { FC } from 'react'
 
 import Accordions from '~/components/accordion/Accordions'
 import Box from '@mui/material/Box'
+import useAccordions from '~/hooks/use-accordions'
 
 import { styles } from '~/components/accordion-with-image/AccordionWithImage.styles'
 import { AccordionWithImageItem, TypographyVariantEnum } from '~/types'
@@ -11,16 +12,23 @@ interface AccordionWithImageProps {
 }
 
 const AccordionWithImage: FC<AccordionWithImageProps> = ({ items }) => {
-  const [activeItemId, setActiveItemId] = useState(0)
+  const [expandedItem, handleAccordionChange] = useAccordions({
+    toggle: false,
+    initialState: 0
+  })
 
   return (
     <Box className='section' data-testid='accordion' sx={styles.feature}>
-      <Box component='img' src={items[activeItemId].image} sx={styles.image} />
+      <Box
+        component='img'
+        src={items[expandedItem || 0].image}
+        sx={styles.image}
+      />
       <Accordions
-        activeIndex={activeItemId}
+        activeIndex={expandedItem}
         descriptionVariant={TypographyVariantEnum.Body2}
         items={items}
-        onChange={(id) => setActiveItemId(id)}
+        onChange={handleAccordionChange}
         titleVariant={TypographyVariantEnum.H6}
       />
     </Box>

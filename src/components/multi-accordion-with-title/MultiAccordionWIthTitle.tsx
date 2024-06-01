@@ -1,4 +1,4 @@
-import { FC, ReactNode, useState } from 'react'
+import { FC, ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Typography from '@mui/material/Typography'
@@ -11,6 +11,7 @@ import {
   TypographyVariantEnum
 } from '~/types'
 import Accordions from '~/components/accordion/Accordions'
+import useAccordions from '~/hooks/use-accordions'
 
 interface MultiAccordionWithTitleProps {
   items: AccordionItem[]
@@ -27,19 +28,9 @@ const MultiAccordionWithTitle: FC<MultiAccordionWithTitleProps> = ({
 }) => {
   const { t } = useTranslation()
 
-  const [activeItems, setActiveItems] = useState<number[]>([])
-
-  const onChange = (activeItem: number) => {
-    setActiveItems((prevActiveItems) => {
-      if (prevActiveItems.includes(activeItem)) {
-        return prevActiveItems.filter(
-          (prevActiveItem) => prevActiveItem !== activeItem
-        )
-      } else {
-        return [...prevActiveItems, activeItem]
-      }
-    })
-  }
+  const [expandedItems, handleAccordionChange] = useAccordions({
+    multiple: true
+  })
 
   const accordionTitle = title && (
     <Typography sx={sx.title}>{t(title)}</Typography>
@@ -47,13 +38,13 @@ const MultiAccordionWithTitle: FC<MultiAccordionWithTitleProps> = ({
 
   const accordionList = (
     <Accordions
-      activeIndex={activeItems}
+      activeIndex={expandedItems}
       descriptionVariant={TypographyVariantEnum.Body2}
       elevation={0}
       icon={icon}
       items={items}
       multiple
-      onChange={onChange}
+      onChange={handleAccordionChange}
       sx={{
         withIcon: sx.withIcon,
         noIcon: sx.noIcon

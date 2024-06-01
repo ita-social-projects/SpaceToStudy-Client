@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
@@ -6,6 +5,7 @@ import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded'
 
 import { accordionItems } from '~/containers/student-home-page/faq/accordionItems'
 import Accordions from '~/components/accordion/Accordions'
+import useAccordions from '~/hooks/use-accordions'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import { studentRoutes } from '~/router/constants/studentRoutes'
 import { TypographyVariantEnum } from '~/types'
@@ -14,10 +14,8 @@ import { styles } from '~/containers/student-home-page/faq/Faq.styles'
 
 const Faq = () => {
   const { t } = useTranslation()
-  const [activeItemId, setActiveItemId] = useState<number | null>(null)
 
-  const changeAccordion = (id: number) =>
-    activeItemId === id ? setActiveItemId(null) : setActiveItemId(id)
+  const [expandedItem, handleAccordionChange] = useAccordions()
 
   return (
     <Box
@@ -32,11 +30,11 @@ const Faq = () => {
       />
 
       <Accordions
-        activeIndex={activeItemId}
+        activeIndex={expandedItem}
         descriptionVariant={TypographyVariantEnum.Body2}
         icon={<ExpandMoreRoundedIcon />}
         items={accordionItems}
-        onChange={changeAccordion}
+        onChange={handleAccordionChange}
         square
         titleVariant={TypographyVariantEnum.H6}
       />

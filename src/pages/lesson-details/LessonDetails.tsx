@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { AxiosResponse } from 'axios'
@@ -14,6 +14,7 @@ import useAxios from '~/hooks/use-axios'
 import { ResourceService } from '~/services/resource-service'
 import { defaultResponse } from '~/pages/lesson-details/LessonDetails.constants'
 import Accordions from '~/components/accordion/Accordions'
+import useAccordion from '~/hooks/use-accordions'
 import IconExtensionWithTitle from '~/components/icon-extension-with-title/IconExtensionWithTitle'
 import AppButton from '~/components/app-button/AppButton'
 
@@ -25,24 +26,15 @@ import { createUrlPath } from '~/utils/helper-functions'
 import { useAppSelector } from '~/hooks/use-redux'
 
 const LessonDetails = () => {
-  const [activeItems, setActiveItems] = useState<number[]>([0])
-
   const { lessonId } = useParams()
   const navigate = useNavigate()
   const { t } = useTranslation()
   const { userId } = useAppSelector((state) => state.appMain)
 
-  const onChange = (activeItem: number) => {
-    setActiveItems((prevActiveItems) => {
-      if (prevActiveItems.includes(activeItem)) {
-        return prevActiveItems.filter(
-          (prevActiveItem) => prevActiveItem !== activeItem
-        )
-      } else {
-        return [...prevActiveItems, activeItem]
-      }
-    })
-  }
+  const [expandedItems, handleAccordionChange] = useAccordion({
+    initialState: 0,
+    multiple: true
+  })
 
   const responseError = useCallback(
     () => navigate(errorRoutes.notFound.path),
@@ -110,12 +102,12 @@ const LessonDetails = () => {
           title={response.title}
         />
         <Accordions
-          activeIndex={activeItems}
+          activeIndex={expandedItems}
           descriptionVariant={TypographyVariantEnum.Body2}
           icon={<ExpandMoreIcon />}
           items={items}
           multiple
-          onChange={onChange}
+          onChange={handleAccordionChange}
           sx={styles.accordion}
           titleVariant={TypographyVariantEnum.Subtitle2}
         />
