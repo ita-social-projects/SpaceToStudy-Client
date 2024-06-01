@@ -1,4 +1,4 @@
-import { useState, useCallback, FC, ChangeEvent } from 'react'
+import { useState, useCallback, FC } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
@@ -43,6 +43,14 @@ const PasswordSecurityTab: FC<EditProfileTabUserProps> = ({ user }) => {
 
   const [isConfirmOpen, setIsConfirmOpen] = useState(false)
 
+  const handleSubmitChangePassword = async () => {
+    resetErrors()
+    await sendChangedPassword({
+      password: data.password,
+      currentPassword: data.currentPassword
+    })
+  }
+
   const handleResponse = () => {
     dispatch(
       openAlert({
@@ -84,13 +92,7 @@ const PasswordSecurityTab: FC<EditProfileTabUserProps> = ({ user }) => {
     resetErrors,
     handleErrors
   } = useForm<FormValues>({
-    onSubmit: async () => {
-      resetErrors()
-      await sendChangedPassword({
-        password: data.password,
-        currentPassword: data.currentPassword
-      })
-    },
+    onSubmit: handleSubmitChangePassword,
     initialValues: initialValues,
     validations: validations
   })
@@ -115,16 +117,6 @@ const PasswordSecurityTab: FC<EditProfileTabUserProps> = ({ user }) => {
     inputVisibility: newPasswordVisibility,
     showInputText: showNewPassword
   } = useInputVisibility(errors.confirmPassword)
-
-  const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
-    handleErrors('password', '')
-    handleInputChange('password')(e)
-  }
-
-  const handleCurrentPasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
-    handleErrors('currentPassword', '')
-    handleInputChange('currentPassword')(e)
-  }
 
   const onDiscard = () => {
     resetData()
@@ -162,7 +154,7 @@ const PasswordSecurityTab: FC<EditProfileTabUserProps> = ({ user }) => {
               'editProfilePage.profile.passwordSecurityTab.currentPassword'
             )}
             onBlur={handleBlur('currentPassword')}
-            onChange={handleCurrentPasswordChange}
+            onChange={handleInputChange('currentPassword')}
             type={inputType(showCurrentPassword)}
             value={data.currentPassword}
           />
@@ -172,7 +164,7 @@ const PasswordSecurityTab: FC<EditProfileTabUserProps> = ({ user }) => {
             fullWidth
             label={t('editProfilePage.profile.passwordSecurityTab.newPassword')}
             onBlur={handleBlur('password')}
-            onChange={handlePasswordChange}
+            onChange={handleInputChange('password')}
             type={inputType(showPassword)}
             value={data.password}
           />

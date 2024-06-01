@@ -18,14 +18,19 @@ export const styles = {
     mb: '15px'
   },
   form: { display: 'flex', flexDirection: 'column', gap: '8px' },
+
   passwordButtonsContainer: {
-    m: '10px 0 20px'
+    m: '10px 0 20px',
+    display: 'grid',
+    gridTemplateColumns: 'repeat(9, minmax(0, 1fr))',
+    gap: '10px'
   },
+
   saveButton: {
-    width: '199px'
+    gridColumn: 'span 3'
   },
   discardButton: {
-    ml: '10px'
+    gridColumn: 'span 2'
   },
   deactivateButton: {
     mt: '20px',
