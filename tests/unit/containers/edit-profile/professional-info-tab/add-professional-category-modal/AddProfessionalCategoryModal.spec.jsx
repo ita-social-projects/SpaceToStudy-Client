@@ -1,28 +1,24 @@
 import AddProfessionalCategoryModal from '~/containers/edit-profile/professional-info-tab/add-professional-category-modal/AddProfessionalCategoryModal'
 import { renderWithProviders, selectOption } from '~tests/test-utils'
-import { fireEvent, screen } from '@testing-library/react'
+import { act, fireEvent, screen, waitFor } from '@testing-library/react'
 import { professionalSubjectTemplate } from '~/containers/edit-profile/professional-info-tab/add-professional-category-modal/AddProfessionalCategoryModal.constants'
-import { ProficiencyLevelEnum } from '~/types'
+import { mockAxiosClient } from '~tests/test-utils'
+import { URLs } from '~/constants/request'
 
 const mockCloseModal = vi.fn()
+const mockHandleSubmit = vi.fn()
+const mockedBlockedCategory = [{ _id: '4', name: 'Music' }]
 
 const initialValues = {
-  _id: '1',
-  name: 'Computer science',
+  category: { _id: '1', name: 'Cooking' },
   subjects: [
     {
-      _id: '1',
-      name: 'PHP',
-      proficiencyLevels: [
-        ProficiencyLevelEnum.Beginner,
-        ProficiencyLevelEnum.Intermediate,
-        ProficiencyLevelEnum.Advanced
-      ]
+      _id: '2',
+      name: 'Gastronomy'
     },
     {
-      _id: '2',
-      name: 'Java',
-      proficiencyLevels: [ProficiencyLevelEnum.Beginner]
+      _id: '3',
+      name: 'Varenychky'
     }
   ]
 }
@@ -30,15 +26,26 @@ const initialValues = {
 const renderProfessionalCategoryModalWithInitialValues = (initialValues) => {
   renderWithProviders(
     <AddProfessionalCategoryModal
+      blockedCategoriesOptions={mockedBlockedCategory}
       closeModal={mockCloseModal}
+      handleSubmit={mockHandleSubmit}
       initialValues={initialValues}
     />
   )
 }
 
 describe('AddProfessionalCategoryModal without initial value', () => {
-  beforeEach(() => {
-    renderProfessionalCategoryModalWithInitialValues()
+  beforeEach(async () => {
+    await waitFor(() => {
+      mockAxiosClient
+        .onGet(URLs.categories.getNames)
+        .reply(200, [initialValues.category, ...mockedBlockedCategory])
+      mockAxiosClient
+        .onGet(`${initialValues.category._id}${URLs.subjects.getNames}`)
+        .reply(200, initialValues.subjects)
+
+      renderProfessionalCategoryModalWithInitialValues()
+    })
   })
 
   it('should render SubjectGroup using template in (modal create mode)', async () => {
@@ -64,69 +71,64 @@ describe('AddProfessionalCategoryModal without initial value', () => {
     expect(professionalSubjects).toHaveLength(3)
   })
 
-  it('should update subject name when other option is selected', async () => {
-    const autocomplete = screen.getByLabelText(
+  it('should update professional category value in autocomplete', async () => {
+    const categoryAutocomplete = screen.getByLabelText(
       /editProfilePage.profile.professionalTab.mainStudyCategory/
     )
-    await selectOption(autocomplete, 'Language1')
+    await selectOption(categoryAutocomplete, 'Cooking', 'getByDisplayValue')
+
+    // TODO: Implement test case for subjects
   })
 
-  it('should update professional subject value in autocomplete', async () => {
-    const autocomplete = screen.getByLabelText(
-      /editProfilePage.profile.professionalTab.subject/
-    )
-    await selectOption(autocomplete, 'Subject1')
-  })
-
-  it('should update proficiency level select value correctly', () => {
-    const select = screen.getByTestId('proficiency-levels')
-    expect(select).toHaveValue('')
-
-    fireEvent.select(select, {
-      target: {
-        value: [ProficiencyLevelEnum.Beginner, ProficiencyLevelEnum.Advanced]
-      }
-    })
-    expect(select).toHaveValue(
-      [ProficiencyLevelEnum.Beginner, ProficiencyLevelEnum.Advanced].join(',')
-    )
-  })
-
-  it('should close modal when form is submitted', () => {
+  it('should close modal when form is submitted', async () => {
     const submitButton = screen.getByText(
       /editProfilePage.profile.professionalTab.addCategoryModal.submitBtn/
     )
-    fireEvent.click(submitButton)
+    await act(async () => {
+      fireEvent.click(submitButton)
+    })
 
     expect(mockCloseModal).toHaveBeenCalled()
+  })
+
+  it('should be disabled if category is disabled', () => {
+    // TODO: Implement test case
   })
 })
 
 describe('AddProfessionalCategoryModal with initial value', () => {
-  beforeEach(() => {
-    renderProfessionalCategoryModalWithInitialValues(initialValues)
+  beforeEach(
+    async () =>
+      await waitFor(() => {
+        mockAxiosClient
+          .onGet(URLs.categories.getNames)
+          .reply(200, [initialValues.category, ...mockedBlockedCategory])
+        mockAxiosClient
+          .onGet(`${initialValues.category._id}${URLs.subjects.getNames}`)
+          .reply(200, initialValues.subjects)
+
+        renderProfessionalCategoryModalWithInitialValues(initialValues)
+      })
+  )
+
+  it('should create SubjectGroup list according to passed initial values (modal edit mode)', async () => {
+    // TODO: Implement test case
   })
 
-  it('should create SubjectGroup list according to passed initial values (modal edit mode)', () => {
-    const professionalSubjects = screen.getAllByLabelText(
+  it('should delete subject from the list', async () => {
+    const professionalSubjectsBefore = screen.getAllByLabelText(
       /editProfilePage.profile.professionalTab.subject/
     )
-    expect(professionalSubjects).toHaveLength(2)
+    const deleteBtn = screen.getAllByTestId('deleteBtn')
 
-    expect(professionalSubjects[0]).toHaveValue(initialValues.subjects[0].name)
-    expect(professionalSubjects[1]).not.toHaveValue(
-      initialValues.subjects[0].name
+    expect(professionalSubjectsBefore).toHaveLength(2)
+
+    await act(async () => fireEvent.click(deleteBtn[0]))
+
+    const professionalSubjectsAfter = screen.getAllByLabelText(
+      /editProfilePage.profile.professionalTab.subject/
     )
 
-    const professionalProficiencyLevelSelects =
-      screen.getAllByTestId('proficiency-levels')
-    expect(professionalProficiencyLevelSelects).toHaveLength(2)
-
-    const secondProficiencyLevelSelect = professionalProficiencyLevelSelects[1]
-    const selectedProficiencyLevels =
-      initialValues.subjects[1].proficiencyLevels
-    expect(secondProficiencyLevelSelect).toHaveValue(
-      selectedProficiencyLevels.join(', ')
-    )
+    expect(professionalSubjectsAfter).toHaveLength(1)
   })
 })

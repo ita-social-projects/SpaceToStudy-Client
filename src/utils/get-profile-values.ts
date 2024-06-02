@@ -20,15 +20,10 @@ export const getProfileInitialValues = (user: UserResponse) => ({
     user.role[0] !== UserRoleEnum.Admin
       ? user.videoLink?.[user.role[0]] || ''
       : '',
-  mainSubjects:
-    user.role[0] !== UserRoleEnum.Admin ? user.mainSubjects[user.role[0]] : [],
   photo: user.photo || { src: '', name: '' }
 })
 
-export const getUserUpdatedData = (
-  user: UserResponse,
-  data: EditProfileForm
-) => {
+export const getUserUpdatedData = (data: EditProfileForm) => {
   const updatedData: UpdateUserParams = {
     firstName: data.firstName,
     lastName: data.lastName,
@@ -37,10 +32,6 @@ export const getUserUpdatedData = (
       city: data.city ?? ''
     },
     professionalSummary: data.professionalSummary,
-    mainSubjects:
-      user.role[0] !== UserRoleEnum.Admin
-        ? user.mainSubjects[user.role[0]]
-        : [],
     nativeLanguage: data.nativeLanguage ?? null,
     videoLink: data.videoLink
   }

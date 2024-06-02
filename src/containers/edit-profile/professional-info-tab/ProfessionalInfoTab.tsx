@@ -12,10 +12,8 @@ import {
   ComponentEnum,
   OpenProfessionalCategoryModalHandler,
   ProfessionalBlock,
-  ProfessionalCategoryWithActivationControls,
-  ProficiencyLevelEnum,
   SizeEnum,
-  SubjectInterface,
+  UserMainSubject,
   UserRoleEnum
 } from '~/types'
 
@@ -31,109 +29,37 @@ import AppButton from '~/components/app-button/AppButton'
 
 import { styles } from '~/containers/edit-profile/professional-info-tab/ProfessionalInfoTab.styles'
 
-// @TODO: replace mock data to real data
-const mockCategoriesData: ProfessionalCategoryWithActivationControls[] = [
-  {
-    _id: crypto.randomUUID(),
-    name: 'Languages',
-    isActivated: true,
-    isActivationBlocked: true,
-    subjects: [
-      {
-        _id: crypto.randomUUID(),
-        name: 'English',
-        proficiencyLevels: [
-          ProficiencyLevelEnum.Beginner,
-          ProficiencyLevelEnum.Intermediate,
-          ProficiencyLevelEnum.Advanced,
-          ProficiencyLevelEnum.Professional,
-          ProficiencyLevelEnum.TestPreparation
-        ]
-      },
-      {
-        _id: crypto.randomUUID(),
-        name: 'English',
-        proficiencyLevels: [
-          ProficiencyLevelEnum.Beginner,
-          ProficiencyLevelEnum.Intermediate,
-          ProficiencyLevelEnum.Advanced
-        ]
-      }
-    ]
-  },
-  {
-    _id: crypto.randomUUID(),
-    name: 'Languages',
-    isActivated: true,
-    isActivationBlocked: false,
-    subjects: [
-      {
-        _id: crypto.randomUUID(),
-        name: 'English',
-        proficiencyLevels: [
-          ProficiencyLevelEnum.Beginner,
-          ProficiencyLevelEnum.Intermediate,
-          ProficiencyLevelEnum.Advanced,
-          ProficiencyLevelEnum.Professional,
-          ProficiencyLevelEnum.TestPreparation
-        ]
-      },
-      {
-        _id: crypto.randomUUID(),
-        name: 'English',
-        proficiencyLevels: [
-          ProficiencyLevelEnum.Beginner,
-          ProficiencyLevelEnum.Intermediate,
-          ProficiencyLevelEnum.Advanced
-        ]
-      }
-    ]
-  },
-  {
-    _id: crypto.randomUUID(),
-    name: 'Computer science',
-    isActivated: false,
-    isActivationBlocked: false,
-    subjects: [
-      {
-        _id: crypto.randomUUID(),
-        name: 'PHP',
-        proficiencyLevels: [
-          ProficiencyLevelEnum.Beginner,
-          ProficiencyLevelEnum.Intermediate,
-          ProficiencyLevelEnum.Advanced
-        ]
-      },
-      {
-        _id: crypto.randomUUID(),
-        name: 'Java',
-        proficiencyLevels: [ProficiencyLevelEnum.Beginner]
-      }
-    ]
-  }
-]
-
 interface ProfessionalInfoTabProps {
   professionalBlock?: ProfessionalBlock
-  categories: SubjectInterface[]
-  userId: string
+  categories: UserMainSubject[]
 }
 
 const ProfessionalInfoTab: FC<ProfessionalInfoTabProps> = ({
   professionalBlock,
-  userId
+  categories = []
 }) => {
   const { t } = useTranslation()
 
+  const { userId, userRole } = useAppSelector((state) => state.appMain)
+
   const { openModal, closeModal } = useModalContext()
 
-  const { userRole } = useAppSelector((state) => state.appMain)
-
-  const { handleSubmit, loading } = useUpdateUser(userId)
+  const { handleSubmit, loading } = useUpdateUser(userId, true)
 
   const { data, handleInputChange } = useForm<ProfessionalBlock>({
     initialValues: professionalBlock || initialFormValues
   })
+
+  const handleDeleteCategory = (mainSubjectId: string, categoryId: string) => {
+    const deletedMainSubject = {
+      _id: mainSubjectId,
+      category: { _id: categoryId, name: '' }
+    }
+
+    handleSubmit({
+      mainSubjects: deletedMainSubject
+    })
+  }
 
   const handleUpdateInfo = () => {
     handleSubmit({ professionalBlock: data })
@@ -145,8 +71,9 @@ const ProfessionalInfoTab: FC<ProfessionalInfoTabProps> = ({
     openModal({
       component: (
         <AddProfessionalCategoryModal
-          closeModal={closeModal}
-          initialValues={initialValues}
+          {...{ handleSubmit, loading, initialValues, closeModal }}
+          blockedCategoriesOptions={categories}
+          isDeletionBlocked={initialValues?.isDeletionBlocked}
         />
       ),
       paperProps: {
@@ -214,7 +141,8 @@ const ProfessionalInfoTab: FC<ProfessionalInfoTabProps> = ({
           </AppButton>
         </Box>
         <ProfessionalCategoryList
-          items={mockCategoriesData}
+          handleDeleteCategory={handleDeleteCategory}
+          items={categories}
           openProfessionalCategoryModal={openProfessionalCategoryModal}
         />
       </Box>

@@ -17,10 +17,11 @@ export const userService = {
   },
   getUserById: (
     userId: string,
-    userRole: UserRole
+    userRole: UserRole,
+    isEdit?: boolean
   ): Promise<AxiosResponse<UserResponse>> => {
     return axiosClient.get(
-      createUrlPath(URLs.users.get, userId, { role: userRole })
+      createUrlPath(URLs.users.get, userId, { role: userRole, isEdit })
     )
   },
   updateUser: (

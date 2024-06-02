@@ -4,13 +4,12 @@ import {
   Address,
   UserRole,
   RequestParams,
-  SubjectInterface,
-  SubjectNameInterface,
   Faq,
   DataByRole,
   UpdatedPhoto,
   UpdateFields,
-  UserStatusEnum
+  UserStatusEnum,
+  UserMainSubject
 } from '~/types'
 
 export interface LocalStorage {
@@ -34,7 +33,7 @@ export interface UserResponse {
   firstName: string
   lastName: string
   email: string
-  mainSubjects: DataByRole<SubjectInterface[]>
+  mainSubjects: DataByRole<UserMainSubject[]>
   totalReviews: DataByRole<number>
   averageRating: DataByRole<number>
   nativeLanguage: string | null
@@ -65,7 +64,7 @@ export interface UserGeneralInfo
 
 export interface UpdateUserParams
   extends Partial<Pick<UserResponse, UpdateFields>> {
-  mainSubjects?: SubjectNameInterface[]
+  mainSubjects?: Partial<UserMainSubject>
   videoLink?: string
   photo?: UpdatedPhoto | null
 }

@@ -142,7 +142,10 @@ const ProfileInfo = ({ userData, myRole }) => {
   )
 
   const subjectData =
-    userData.mainSubjects.tutor?.map((item) => item.name) || []
+    userData.mainSubjects.tutor?.flatMap((item) => {
+      const subjectNames = item.subjects.map((subject) => subject.name)
+      return subjectNames.length ? subjectNames : [item.category.name]
+    }) || []
 
   return !isMobile ? (
     <ProfileContainerDesktop

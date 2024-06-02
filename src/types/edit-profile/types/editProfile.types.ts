@@ -1,5 +1,5 @@
-import { ProfessionalCategory } from '~/types'
+import { UserMainSubject } from '~/types'
 
 export type OpenProfessionalCategoryModalHandler = (
-  initialValues?: ProfessionalCategory
+  initialValues?: UserMainSubject
 ) => void

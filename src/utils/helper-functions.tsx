@@ -192,7 +192,9 @@ const createQueryParamsString = (query: { [key: string]: string }) => {
   const queryParams = new URLSearchParams()
 
   Object.entries(query).forEach(([key, value]) => {
-    queryParams.append(key, value)
+    if (value) {
+      queryParams.append(key, value)
+    }
   })
 
   return queryParams.toString()

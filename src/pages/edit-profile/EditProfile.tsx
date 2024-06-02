@@ -18,6 +18,7 @@ import AppButton from '~/components/app-button/AppButton'
 import SidebarMenu from '~/components/sidebar-menu/SidebarMenu'
 import {
   ButtonVariantEnum,
+  MainUserRole,
   SizeEnum,
   UserProfileTabsEnum,
   UserResponse,
@@ -53,7 +54,7 @@ const EditProfile = () => {
   const { userId, userRole } = useAppSelector((state) => state.appMain)
 
   const getUserData = useCallback(
-    () => userService.getUserById(userId, userRole as UserRole),
+    () => userService.getUserById(userId, userRole as UserRole, true),
     [userId, userRole]
   )
   const { checkConfirmation } = useConfirm()
@@ -68,7 +69,8 @@ const EditProfile = () => {
   }
 
   const cooperationContent =
-    activeTab && tabsData[activeTab]?.content?.(response)
+    activeTab &&
+    tabsData[activeTab]?.content?.(response, userRole as MainUserRole)
 
   return (
     <PageWrapper>

@@ -51,7 +51,7 @@ describe('EditProfile', () => {
   beforeEach(async () => {
     await waitFor(() => {
       mockAxiosClient
-        .onGet(`${URLs.users.get}/${userId}?role=${userRole}`)
+        .onGet(`${URLs.users.get}/${userId}?role=${userRole}&isEdit=true`)
         .reply(200, userMock)
       renderWithProviders(<EditProfile />, {
         preloadedState: mockState

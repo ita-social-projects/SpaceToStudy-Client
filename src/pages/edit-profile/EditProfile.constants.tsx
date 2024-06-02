@@ -4,7 +4,7 @@ import SchoolIcon from '@mui/icons-material/School'
 import NotificationsIcon from '@mui/icons-material/Notifications'
 import GppGoodIcon from '@mui/icons-material/GppGood'
 
-import { UserProfileTabsEnum, UserResponse } from '~/types'
+import { UserProfileTabsEnum, UserResponse, MainUserRole } from '~/types'
 import ProfileTab from '~/containers/edit-profile/profile-tab/ProfileTab'
 import ProfessionalInfoTab from '~/containers/edit-profile/professional-info-tab/ProfessionalInfoTab'
 import NotificationTab from '~/containers/edit-profile/notification-tab/NotificationTab'
@@ -14,7 +14,7 @@ export type UserProfileProps = Record<
   UserProfileTabsEnum,
   {
     title: string
-    content: (response: UserResponse) => ReactElement
+    content: (response: UserResponse, userRole: MainUserRole) => ReactElement
     icon?: ReactElement
   }
 >
@@ -28,11 +28,10 @@ export const tabsData: UserProfileProps = {
   [UserProfileTabsEnum.ProfessionalInfo]: {
     icon: <SchoolIcon />,
     title: 'editProfilePage.profile.professionalTab.tabTitle',
-    content: (response) => (
+    content: (response, userRole) => (
       <ProfessionalInfoTab
-        categories={response.mainSubjects.tutor}
+        categories={response.mainSubjects[userRole]}
         professionalBlock={response.professionalBlock}
-        userId={response._id}
       />
     )
   },
