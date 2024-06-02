@@ -54,7 +54,7 @@ const EditProfile = () => {
   const { userId, userRole } = useAppSelector((state) => state.appMain)
 
   const getUserData = useCallback(
-    () => userService.getUserById(userId, userRole as UserRole),
+    () => userService.getUserById(userId, userRole as UserRole, true),
     [userId, userRole]
   )
   const { checkConfirmation } = useConfirm()

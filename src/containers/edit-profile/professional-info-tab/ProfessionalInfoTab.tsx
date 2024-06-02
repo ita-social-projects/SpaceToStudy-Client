@@ -29,117 +29,32 @@ import AppButton from '~/components/app-button/AppButton'
 
 import { styles } from '~/containers/edit-profile/professional-info-tab/ProfessionalInfoTab.styles'
 
-// @TODO: replace mock data to real data
-const mockCategoriesData: ProfessionalCategoryWithActivationControls[] = [
-  {
-    _id: crypto.randomUUID(),
-    name: 'Languages',
-    isActivated: true,
-    isActivationBlocked: true,
-    subjects: [
-      {
-        _id: crypto.randomUUID(),
-        name: 'English',
-        proficiencyLevels: [
-          ProficiencyLevelEnum.Beginner,
-          ProficiencyLevelEnum.Intermediate,
-          ProficiencyLevelEnum.Advanced,
-          ProficiencyLevelEnum.Professional,
-          ProficiencyLevelEnum.TestPreparation
-        ]
-      },
-      {
-        _id: crypto.randomUUID(),
-        name: 'English',
-        proficiencyLevels: [
-          ProficiencyLevelEnum.Beginner,
-          ProficiencyLevelEnum.Intermediate,
-          ProficiencyLevelEnum.Advanced
-        ]
-      }
-    ]
-  },
-  {
-    _id: crypto.randomUUID(),
-    name: 'Languages',
-    isActivated: true,
-    isActivationBlocked: false,
-    subjects: [
-      {
-        _id: crypto.randomUUID(),
-        name: 'English',
-        proficiencyLevels: [
-          ProficiencyLevelEnum.Beginner,
-          ProficiencyLevelEnum.Intermediate,
-          ProficiencyLevelEnum.Advanced,
-          ProficiencyLevelEnum.Professional,
-          ProficiencyLevelEnum.TestPreparation
-        ]
-      },
-      {
-        _id: crypto.randomUUID(),
-        name: 'English',
-        proficiencyLevels: [
-          ProficiencyLevelEnum.Beginner,
-          ProficiencyLevelEnum.Intermediate,
-          ProficiencyLevelEnum.Advanced
-        ]
-      }
-    ]
-  },
-  {
-    _id: crypto.randomUUID(),
-    name: 'Computer science',
-    isActivated: false,
-    isActivationBlocked: false,
-    subjects: [
-      {
-        _id: crypto.randomUUID(),
-        name: 'PHP',
-        proficiencyLevels: [
-          ProficiencyLevelEnum.Beginner,
-          ProficiencyLevelEnum.Intermediate,
-          ProficiencyLevelEnum.Advanced
-        ]
-      },
-      {
-        _id: crypto.randomUUID(),
-        name: 'Java',
-        proficiencyLevels: [ProficiencyLevelEnum.Beginner]
-      }
-    ]
-  }
-]
-
 interface ProfessionalInfoTabProps {
   professionalBlock?: ProfessionalBlock
   categories: UserMainSubject[]
-  userId: string
 }
 
 const ProfessionalInfoTab: FC<ProfessionalInfoTabProps> = ({
   professionalBlock,
-  userId,
-  categories
+  categories = []
 }) => {
   const { t } = useTranslation()
 
-  const { userRole } = useAppSelector((state) => state.appMain)
+  const { userId, userRole } = useAppSelector((state) => state.appMain)
 
   const { openModal, closeModal } = useModalContext()
 
-  const { handleSubmit, loading } = useUpdateUser(userId)
+  const { handleSubmit, loading } = useUpdateUser(userId, true)
 
   const { data, handleInputChange } = useForm<ProfessionalBlock>({
     initialValues: professionalBlock || initialFormValues
   })
 
-  const handleDeleteCategory = (mainSubjectId: string) => {
+  const handleDeleteCategory = (mainSubjectId: string, categoryId: string) => {
     handleSubmit({
       mainSubjects: {
         _id: mainSubjectId,
-        category: { _id: '', name: '' },
-        subjects: []
+        category: { _id: categoryId, name: '' }
       }
     })
   }
@@ -155,6 +70,7 @@ const ProfessionalInfoTab: FC<ProfessionalInfoTabProps> = ({
       component: (
         <AddProfessionalCategoryModal
           {...{ handleSubmit, loading, initialValues, closeModal }}
+          blockedCategoriesOptions={categories}
         />
       ),
       paperProps: {

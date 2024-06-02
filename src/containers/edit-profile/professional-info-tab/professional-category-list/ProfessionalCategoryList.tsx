@@ -7,7 +7,7 @@ import { OpenProfessionalCategoryModalHandler, UserMainSubject } from '~/types'
 interface ProfessionalCategoryListProps {
   items: UserMainSubject[]
   openProfessionalCategoryModal: OpenProfessionalCategoryModalHandler
-  handleDeleteCategory: (id: string) => void
+  handleDeleteCategory: (id: string, categoryId: string) => void
 }
 
 const ProfessionalCategoryList: FC<ProfessionalCategoryListProps> = ({
@@ -17,7 +17,7 @@ const ProfessionalCategoryList: FC<ProfessionalCategoryListProps> = ({
 }) => {
   const professionalCategoryItems = items.map((item) => (
     <ProfessionalCategory
-      handleDelete={() => handleDeleteCategory(item._id)}
+      handleDelete={() => handleDeleteCategory(item._id, item.category._id)}
       item={item}
       key={item._id}
       openProfessionalCategoryModal={openProfessionalCategoryModal}

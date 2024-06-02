@@ -92,23 +92,24 @@ const ProfessionalCategory: FC<ProfessionalCategoryProps> = ({
         <Tooltip
           arrow
           placement={PositionEnum.Right}
+          sx={styles.toolbar.deactivateButtonTooltip}
           title={
-            <Typography sx={styles.toolbar.deactivateButtonTooltip}>
-              {item.isDeletionBlocked
-                ? t(
-                    'editProfilePage.profile.professionalTab.deleteCategoryBtnDisabledTooltip'
-                  )
-                : ''}
-            </Typography>
+            item.isDeletionBlocked
+              ? t(
+                  'editProfilePage.profile.professionalTab.deleteCategoryBtnDisabledTooltip'
+                )
+              : ''
           }
         >
-          <IconButton
-            disabled={item.isDeletionBlocked}
-            onClick={handleDeleteButtonClick}
-            sx={styles.toolbar.deleteButton}
-          >
-            <DeleteIcon />
-          </IconButton>
+          <span>
+            <IconButton
+              disabled={item.isDeletionBlocked}
+              onClick={handleDeleteButtonClick}
+              sx={styles.toolbar.deleteButton}
+            >
+              <DeleteIcon />
+            </IconButton>
+          </span>
         </Tooltip>
       </Box>
       <Box component={ComponentEnum.Dl} sx={styles.card.root}>

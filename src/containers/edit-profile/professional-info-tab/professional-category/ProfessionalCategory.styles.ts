@@ -8,7 +8,7 @@ export const styles = {
     border: `1px solid ${palette.primary[300]}`,
     display: 'flex',
     flexDirection: 'column',
-    gap: 2,
+    gap: 3,
     borderRadius: 1,
     px: 2,
     py: 4
@@ -34,7 +34,8 @@ export const styles = {
     deleteButton: {
       svg: {
         fill: palette.primary[700]
-      }
+      },
+      '&:disabled': { svg: { fill: palette.primary[200] } }
     }
   },
   cards: {
@@ -50,7 +51,7 @@ export const styles = {
       display: 'flex',
       flexDirection: 'column',
       columnGap: 3,
-      rowGap: 5
+      rowGap: 2
     },
     item: {
       display: 'flex',

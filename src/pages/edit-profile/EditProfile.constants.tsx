@@ -32,7 +32,6 @@ export const tabsData: UserProfileProps = {
       <ProfessionalInfoTab
         categories={response.mainSubjects[userRole]}
         professionalBlock={response.professionalBlock}
-        userId={response._id}
       />
     )
   },

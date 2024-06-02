@@ -9,7 +9,8 @@ import {
   ProfessionalCategory,
   SubjectInterface,
   SubjectNameInterface,
-  UpdateUserParams
+  UpdateUserParams,
+  UserMainSubject
 } from '~/types'
 
 import { subjectService } from '~/services/subject-service'
@@ -18,7 +19,10 @@ import useForm from '~/hooks/use-form'
 
 import Box from '@mui/material/Box'
 import AddIcon from '@mui/icons-material/Add'
+import DeleteIcon from '@mui/icons-material/Delete'
+import IconButton from '@mui/material/IconButton'
 import AppButton from '~/components/app-button/AppButton'
+
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import AsyncAutocomplete from '~/components/async-autocomlete/AsyncAutocomplete'
 
@@ -33,13 +37,15 @@ interface SubjectGroupProps {
   selectedCategory: string
   handleChange: (value: Partial<SubjectNameInterface>) => void
   disableOptions: Array<SubjectNameInterface>
+  handleSubjectDelete: () => void
 }
 
 function SubjectGroup({
   handleChange,
   subject,
   selectedCategory,
-  disableOptions
+  disableOptions,
+  handleSubjectDelete
 }: SubjectGroupProps) {
   const { t } = useTranslation()
 
@@ -55,6 +61,9 @@ function SubjectGroup({
   return (
     <Box sx={styles.item}>
       <Box sx={styles.checkboxGroup}>
+        <IconButton onClick={handleSubjectDelete} sx={styles.deleteBtn}>
+          <DeleteIcon />
+        </IconButton>
         <AsyncAutocomplete
           disabled={!selectedCategory}
           fullWidth
@@ -74,13 +83,15 @@ function SubjectGroup({
 }
 
 interface AddProfessionalCategoryModalProps {
+  blockedCategoriesOptions?: UserMainSubject[]
   closeModal: () => void
   initialValues?: ProfessionalCategory
-  handleSubmit: (data: UpdateUserParams) => Promise<void>
+  handleSubmit: (data: UpdateUserParams) => void
   loading: boolean
 }
 
 const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
+  blockedCategoriesOptions = [],
   closeModal,
   initialValues: initialValuesFromProps,
   handleSubmit,
@@ -90,8 +101,8 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
 
   const initialFormValues = initialValuesFromProps || userMainSubjectTemplate
 
-  const formSubmission = async () => {
-    await handleSubmit({
+  const formSubmission = () => {
+    handleSubmit({
       mainSubjects: data
     })
 
@@ -135,6 +146,20 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
     })
   }
 
+  const handleSubjectDelete = (id: string) => {
+    handleDataChange({
+      subjects: data.subjects.filter((el) => el._id !== id)
+    })
+  }
+
+  const handleBlockOption = (option: CategoryNameInterface) => {
+    return (
+      blockedCategoriesOptions.some(
+        (mainSubject) => mainSubject.category._id === option._id
+      ) && option._id !== data.category._id
+    )
+  }
+
   return (
     <Box component={ComponentEnum.Form} onSubmit={submitForm} sx={styles.root}>
       <TitleWithDescription
@@ -149,6 +174,7 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
       <Box sx={styles.formWrapper}>
         <AsyncAutocomplete
           fullWidth
+          getOptionDisabled={handleBlockOption}
           labelField='name'
           onChange={handleMainStudyCategoryChange}
           service={categoryService.getCategoriesNames}
@@ -166,6 +192,7 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
           <SubjectGroup
             disableOptions={data.subjects}
             handleChange={handleProfessionalSubjectChange(index)}
+            handleSubjectDelete={() => handleSubjectDelete(subject._id)}
             key={index}
             selectedCategory={data.category._id}
             subject={{ name: subject.name, _id: subject._id }}

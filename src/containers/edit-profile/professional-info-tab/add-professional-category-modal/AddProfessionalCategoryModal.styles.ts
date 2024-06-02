@@ -30,8 +30,13 @@ export const styles = {
   },
   checkboxGroup: {
     display: 'flex',
-    gap: '10px',
-    marginLeft: '58px'
+    gap: '10px'
+  },
+  deleteBtn: {
+    padding: '12px',
+    svg: {
+      fill: palette.primary[700]
+    }
   },
   buttonGroup: {
     display: 'flex',

@@ -12,7 +12,7 @@ interface UseFormProps<T> {
   initialValues: T
   initialErrors?: UseFormErrors<T>
   validations?: Partial<UseFormValidations<T>>
-  onSubmit?: (data?: T) => Promise<void>
+  onSubmit?: (data?: T) => Promise<void> | void
   submitWithData?: boolean
 }
 

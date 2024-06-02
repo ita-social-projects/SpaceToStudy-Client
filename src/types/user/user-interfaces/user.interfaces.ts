@@ -9,8 +9,7 @@ import {
   UpdatedPhoto,
   UpdateFields,
   UserStatusEnum,
-  UserMainSubject,
-  ProfessionalCategory
+  UserMainSubject
 } from '~/types'
 
 export interface LocalStorage {
@@ -65,7 +64,7 @@ export interface UserGeneralInfo
 
 export interface UpdateUserParams
   extends Partial<Pick<UserResponse, UpdateFields>> {
-  mainSubjects?: ProfessionalCategory & { _id?: string }
+  mainSubjects?: Partial<UserMainSubject>
   videoLink?: string
   photo?: UpdatedPhoto | null
 }
