@@ -57,7 +57,6 @@ const ResourceItem: FC<ResourceItemProps> = ({
 
   const { resourceAvailability: allResourcesAvailability, isCooperation } =
     useResourceAvailabilityContext()
-  const { Open, OpenFrom, Closed } = ResourceAvailabilityStatusEnum
 
   const renderResourceIcon = () => {
     const { Lessons, Quizzes } = ResourcesTypes
@@ -73,9 +72,11 @@ const ResourceItem: FC<ResourceItemProps> = ({
   }
 
   const resourceAvailability = resource.availability
-  const resourceAvailabilityStatus = resourceAvailability?.status ?? Open
+  const resourceAvailabilityStatus =
+    resourceAvailability?.status ?? ResourceAvailabilityStatusEnum.Open
 
-  const shouldShowDatePicker = resourceAvailabilityStatus === OpenFrom
+  const shouldShowDatePicker =
+    resourceAvailabilityStatus === ResourceAvailabilityStatusEnum.OpenFrom
 
   const setOpenFromDate = (value: Date | null) => {
     setResourceAvailability?.(resource._id, {
@@ -96,9 +97,9 @@ const ResourceItem: FC<ResourceItemProps> = ({
 
   useEffect(() => {
     if (allResourcesAvailability === ResourcesAvailabilityEnum.OpenManually) {
-      setAvailabilityStatus(Closed)
+      setAvailabilityStatus(ResourceAvailabilityStatusEnum.Closed)
     } else {
-      setAvailabilityStatus(Open)
+      setAvailabilityStatus(ResourceAvailabilityStatusEnum.Open)
     }
   }, [allResourcesAvailability, setAvailabilityStatus])
 
@@ -139,7 +140,10 @@ const ResourceItem: FC<ResourceItemProps> = ({
   )
 
   const showIcon = isView ? (
-    <Box>{resourceAvailabilityStatus === Open && availabilityIcon}</Box>
+    <Box>
+      {resourceAvailabilityStatus === ResourceAvailabilityStatusEnum.Open &&
+        availabilityIcon}
+    </Box>
   ) : (
     <Box sx={styles.resourceActions}>
       {isCooperation && availabilitySelection}
