@@ -163,7 +163,7 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
   const handleBlockOption = (option: CategoryNameInterface) => {
     const isCurrent = option._id !== data.category._id
     const isBlocked = blockedCategoriesOptions.some(
-      (mainSubject) => mainSubject.category._id === option._id
+      (mainSubject) => mainSubject.category?._id === option._id
     )
     return isBlocked && isCurrent
   }
