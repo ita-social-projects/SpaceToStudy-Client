@@ -205,11 +205,12 @@ export const createUrlPath = (
   params: string | null = '',
   query = {}
 ) => {
+  const trimmedUrl = URL.replace(/\/+$/g, '')
   const queryParams = createQueryParamsString(query)
   const queryParamsString = queryParams ? `?${queryParams}` : ''
-  const paramsString = params ? `/${params}` : ''
+  const paramsString = params ? `/${params.replace(/^\/+/g, '')}` : ''
 
-  return `${URL}${paramsString}${queryParamsString}`
+  return `${trimmedUrl}${paramsString}${queryParamsString}`
 }
 
 export const ellipsisTextStyle = (linesCount: number) => ({
