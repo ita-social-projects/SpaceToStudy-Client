@@ -22,6 +22,9 @@ import {
   SizeEnum,
   UserResponse
 } from '~/types'
+import { useAppDispatch } from '~/hooks/use-redux'
+import { snackbarVariants } from '~/constants'
+import { openAlert } from '~/redux/features/snackbarSlice'
 
 interface ProfileTabProps {
   user: UserResponse
@@ -29,6 +32,7 @@ interface ProfileTabProps {
 
 const ProfileTab: FC<ProfileTabProps> = ({ user }) => {
   const { t } = useTranslation()
+  const dispatch = useAppDispatch()
   const { setNeedConfirmation, checkConfirmation } = useConfirm()
   const { handleSubmit, loading } = useUpdateUser(user._id, true)
 
@@ -65,8 +69,15 @@ const ProfileTab: FC<ProfileTabProps> = ({ user }) => {
       }
     }
 
-    handleBlocker().catch(console.error)
-  }, [blocker, checkConfirmation, t])
+    handleBlocker().catch((error: string) => {
+      dispatch(
+        openAlert({
+          severity: snackbarVariants.error,
+          message: error
+        })
+      )
+    })
+  }, [blocker, checkConfirmation, t, dispatch])
 
   useEffect(() => {
     setNeedConfirmation(isDirty)
@@ -74,7 +85,7 @@ const ProfileTab: FC<ProfileTabProps> = ({ user }) => {
 
   const handleUpdateData = () => {
     const updatedData = getUserUpdatedData(data)
-    handleSubmit(updatedData)
+    void handleSubmit(updatedData)
   }
 
   const hasError = Object.values(errors).some((error) => error)

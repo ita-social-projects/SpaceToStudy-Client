@@ -29,11 +29,11 @@ const PasswordSecurityTab = () => {
     })
 
   const handleChangeStatusClick = () => {
-    checkStatusChange(
+    void checkStatusChange(
       `editProfilePage.profile.passwordSecurityTab.${neededAction}Title`,
       `editProfilePage.profile.passwordSecurityTab.${neededAction}Description`,
       true
-    ).catch(console.error)
+    )
   }
 
   return (
