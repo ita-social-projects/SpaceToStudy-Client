@@ -55,6 +55,9 @@ const OfferFilterList: FC<OfferFilterListProps> = ({
   const handleChecked = (_: SyntheticEvent<Element, Event>, checked: boolean) =>
     updateFiltersInQuery({ native: checked.toString() })
 
+  const handleFilterChange = (key: keyof FindOffersFilters) => () =>
+    updateFilterByKey(key)
+
   const languagesFilter = (
     <Box>
       <AppAutoComplete
@@ -94,7 +97,7 @@ const OfferFilterList: FC<OfferFilterListProps> = ({
       <CheckboxList
         {...checkboxListProps}
         items={levelOptions}
-        onChange={() => updateFilterByKey('proficiencyLevel')}
+        onChange={handleFilterChange('proficiencyLevel')}
         value={filters.proficiencyLevel}
         variant={'body2'}
       />
@@ -110,7 +113,7 @@ const OfferFilterList: FC<OfferFilterListProps> = ({
       {filterTitle(t('findOffers.filterTitles.rating'))}
       <RadioButtonInputs
         items={radioOptions}
-        onChange={() => updateFilterByKey('rating')}
+        onChange={handleFilterChange('rating')}
         value={Number(filters.rating)}
       />
       {filterTitle(t('findOffers.filterTitles.search'))}

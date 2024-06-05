@@ -48,9 +48,8 @@ describe('OfferFilterList for Tutor', () => {
   })
 
   it('renders filter titles correctly', () => {
-    expect(
-      screen.getByText('findOffers.filterTitles.level')
-    ).toBeInTheDocument()
+    const filterTitle = screen.getByText('findOffers.filterTitles.level')
+    expect(filterTitle).toBeInTheDocument()
   })
 
   it('calls updateFiltersInQuery when language is changed', async () => {
