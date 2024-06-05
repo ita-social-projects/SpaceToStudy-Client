@@ -1,5 +1,16 @@
 import { TypographyVariantEnum } from '~/types'
 
 export const styles = {
-  title: { typography: TypographyVariantEnum.H5 }
+  titleWithDescription: {
+    title: { typography: TypographyVariantEnum.H5 },
+    description: {
+      typography: TypographyVariantEnum.Body1,
+      color: 'primary.600'
+    }
+  },
+  questionWrapper: {
+    question: {
+      px: '0'
+    }
+  }
 }

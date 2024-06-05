@@ -115,3 +115,8 @@ export const editQuestion = {
   name: 'breadCrumbs.editQuestion',
   path: authRoutes.myResources.editQuestion.route
 }
+
+export const cooperationQuiz = {
+  name: 'breadCrumbs.quiz',
+  path: authRoutes.cooperationQuiz.route
+}
