@@ -18,7 +18,7 @@ const PageWrapper = (
 
   return (
     <Container
-      maxWidth='xl'
+      maxWidth='lg'
       ref={ref}
       sx={spliceSx(styles.container, sx)}
       {...rest}

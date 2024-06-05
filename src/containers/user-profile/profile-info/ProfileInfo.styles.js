@@ -19,7 +19,7 @@ export const styles = {
     borderRadius: '15px'
   },
   infoWrapper: {
-    maxWidth: { sm: '345px', lg: '834px' },
+    maxWidth: { sm: '345px', lg: '552px' },
     width: '100%'
   },
   iconBtn: {
