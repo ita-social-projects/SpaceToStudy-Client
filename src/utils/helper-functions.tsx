@@ -205,7 +205,11 @@ export const createUrlPath = (
   params: string | null = '',
   query = {}
 ) => {
-  const trimmedUrl = URL.replace(/\/+$/g, '')
+  let trimmedUrl = URL
+  while (trimmedUrl.endsWith('/')) {
+    trimmedUrl = trimmedUrl.slice(0, -1)
+  }
+
   const queryParams = createQueryParamsString(query)
   const queryParamsString = queryParams ? `?${queryParams}` : ''
   const paramsString = params ? `/${params.replace(/^\/+/g, '')}` : ''
