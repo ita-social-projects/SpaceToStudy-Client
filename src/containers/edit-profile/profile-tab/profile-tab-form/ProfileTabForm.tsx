@@ -65,14 +65,23 @@ const ProfileTabForm: FC<ProfileTabFormProps> = ({
   }
 
   const resizeImage = async (photo: File) => {
-    const originalPhotoPath = URL.createObjectURL(photo)
-    const photoSizes = { newWidth: 440, newHeight: 440 }
+    try {
+      const originalPhotoPath = URL.createObjectURL(photo)
+      const photoSizes = { newWidth: 440, newHeight: 440 }
 
-    const resizedPhoto = await imageResize(originalPhotoPath, photoSizes)
-    handleNonInputValueChange('photo', {
-      src: resizedPhoto,
-      name: photo.name
-    })
+      const resizedPhoto = await imageResize(originalPhotoPath, photoSizes)
+      handleNonInputValueChange('photo', {
+        src: resizedPhoto,
+        name: photo.name
+      })
+    } catch (error) {
+      dispatch(
+        openAlert({
+          severity: snackbarVariants.error,
+          message: t('common.errorMessages.resizeImage')
+        })
+      )
+    }
   }
 
   const addPhoto = ({ files, error }: UploadFileEmitterArgs) => {
