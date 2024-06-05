@@ -25,11 +25,11 @@ const SidebarMenu: FC<SidebarMenu> = ({ handleClick, tabsData, activeTab }) => {
     const tabKey = key as UserProfileTabsEnum
     const item = tabsData[tabKey]
 
-    const isActiveTab = item.title.endsWith(activeTab)
+    const isTabActive = tabKey === activeTab
 
     return (
       <ListItem key={tabKey} onClick={() => handleClick(tabKey)}>
-        <ListItemButton sx={styles.tabButton(isActiveTab)}>
+        <ListItemButton sx={styles.tabButton(isTabActive)}>
           <ListItemIcon>{item.icon}</ListItemIcon>
           <ListItemText primary={t(item.title)} />
         </ListItemButton>
