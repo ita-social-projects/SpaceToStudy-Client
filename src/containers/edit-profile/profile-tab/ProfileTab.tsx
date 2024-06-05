@@ -74,7 +74,7 @@ const ProfileTab: FC<ProfileTabProps> = ({ user }) => {
 
   const handleUpdateData = () => {
     const updatedData = getUserUpdatedData(data)
-    handleSubmit(updatedData)
+    void handleSubmit(updatedData)
   }
 
   const hasError = Object.values(errors).some((error) => error)

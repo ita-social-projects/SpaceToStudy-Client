@@ -24,7 +24,10 @@ const useUserCategoriesAndSubjects = ({
   )
 
   const userSubjects = useMemo(
-    () => user?.mainSubjects.tutor?.map((item) => item.name) ?? [],
+    () =>
+      user?.mainSubjects.tutor?.flatMap((item) =>
+        item.subjects.map((subject) => subject.name)
+      ) ?? [],
     [user?.mainSubjects.tutor]
   )
 
