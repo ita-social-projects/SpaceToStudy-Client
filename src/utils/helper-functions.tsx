@@ -301,5 +301,5 @@ export const parseFileName = (
   }
 }
 
-export const getInitials = (firstName: string, lastName: string): string =>
-  `${firstName[0]}${lastName[0]}`.toUpperCase()
+export const getInitials = (firstName: string, lastName: string) =>
+  firstName && lastName ? `${firstName[0]}${lastName[0]}`.toUpperCase() : ''
