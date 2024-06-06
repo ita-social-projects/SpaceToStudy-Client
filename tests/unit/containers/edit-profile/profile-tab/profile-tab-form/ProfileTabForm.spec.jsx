@@ -91,6 +91,25 @@ describe('ProfileTabForm', () => {
     const error = screen.queryByText('becomeTutor.photo.fileSizeError')
     expect(error).toBeInTheDocument()
   })
+
+  it('should display an error message when image resizing fails', async () => {
+    const file = new File(['photo'], 'photo.jpeg', { type: 'image/jpeg' })
+    const errorMessage = 'Image resizing failed'
+    imageResize.mockRejectedValue(new Error(errorMessage))
+
+    const uploadPhotoBtn = screen.getByLabelText(
+      'editProfilePage.profile.generalTab.uploadTitle'
+    )
+
+    await waitFor(() =>
+      fireEvent.change(uploadPhotoBtn, { target: { files: [file] } })
+    )
+
+    const resizeError = await screen.findByText(
+      'common.errorMessages.resizeImage'
+    )
+    expect(resizeError).toBeInTheDocument()
+  })
 })
 
 describe('ProfileGeneralTab without a user photo', () => {
