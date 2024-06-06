@@ -22,9 +22,6 @@ import {
   SizeEnum,
   UserResponse
 } from '~/types'
-import { useAppDispatch } from '~/hooks/use-redux'
-import { snackbarVariants } from '~/constants'
-import { openAlert } from '~/redux/features/snackbarSlice'
 
 interface ProfileTabProps {
   user: UserResponse
@@ -32,7 +29,6 @@ interface ProfileTabProps {
 
 const ProfileTab: FC<ProfileTabProps> = ({ user }) => {
   const { t } = useTranslation()
-  const dispatch = useAppDispatch()
   const { setNeedConfirmation, checkConfirmation } = useConfirm()
   const { handleSubmit, loading } = useUpdateUser(user._id, true)
 
@@ -53,7 +49,7 @@ const ProfileTab: FC<ProfileTabProps> = ({ user }) => {
   const blocker = useBlocker(isDirty)
 
   useEffect(() => {
-    const handleBlocker = async () => {
+    void (async () => {
       if (blocker.state === 'blocked') {
         const confirmed = await checkConfirmation({
           message: 'questions.goBackToProfile',
@@ -67,17 +63,8 @@ const ProfileTab: FC<ProfileTabProps> = ({ user }) => {
           blocker.reset()
         }
       }
-    }
-
-    handleBlocker().catch((error: string) => {
-      dispatch(
-        openAlert({
-          severity: snackbarVariants.error,
-          message: error
-        })
-      )
-    })
-  }, [blocker, checkConfirmation, t, dispatch])
+    })()
+  }, [blocker, checkConfirmation, t])
 
   useEffect(() => {
     setNeedConfirmation(isDirty)

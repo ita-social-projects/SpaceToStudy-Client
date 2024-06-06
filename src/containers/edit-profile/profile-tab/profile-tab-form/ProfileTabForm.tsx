@@ -78,7 +78,7 @@ const ProfileTabForm: FC<ProfileTabFormProps> = ({
       dispatch(
         openAlert({
           severity: snackbarVariants.error,
-          message: t('common.errorMessages.resizeImage')
+          message: t('becomeTutor.photo.resizeImage')
         })
       )
     }

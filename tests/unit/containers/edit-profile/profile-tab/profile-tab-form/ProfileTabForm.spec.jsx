@@ -105,9 +105,7 @@ describe('ProfileTabForm', () => {
       fireEvent.change(uploadPhotoBtn, { target: { files: [file] } })
     )
 
-    const resizeError = await screen.findByText(
-      'common.errorMessages.resizeImage'
-    )
+    const resizeError = await screen.findByText('becomeTutor.photo.resizeImage')
     expect(resizeError).toBeInTheDocument()
   })
 })

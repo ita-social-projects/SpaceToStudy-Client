@@ -27,7 +27,8 @@
     "description": "Please upload a photo that represents you and helps others recognize you.",
     "typeError": "Wrong file type. Only .png/.jpg/.jpeg files are allowed.",
     "fileSizeError": "Size for one file cannot be more than 5 MB.",
-    "quantityError": "Maximum allowed to add 1 photo"
+    "quantityError": "Maximum allowed to add 1 photo",
+    "resizeImage": "Failed to resize image. Please try again."
   },
   "successMessage": "Success! Your data were added."
 }

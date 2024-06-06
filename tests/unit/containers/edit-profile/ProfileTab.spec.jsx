@@ -4,13 +4,15 @@ import ProfileTab from '~/containers/edit-profile/profile-tab/ProfileTab'
 import { userDataMock } from '~tests/unit/containers/edit-profile/profile-tab/profile-tab-form/ProfileTabForm.spec.constants'
 
 const resetMock = vi.fn()
+const proceedMock = vi.fn()
+
 vi.mock('react-router-dom', async () => {
   const actual = await vi.importActual('react-router-dom')
   return {
     ...actual,
     useBlocker: () => ({
       state: 'blocked',
-      proceed: vi.fn(),
+      proceed: proceedMock,
       reset: () => resetMock()
     })
   }
@@ -54,6 +56,14 @@ describe('ProfileTab', () => {
 
     await waitFor(() => {
       expect(resetMock).toHaveBeenCalled()
+    })
+  })
+  it('should proceed if the page leave was confirmed', async () => {
+    checkConfirmationMock.mockResolvedValue(true)
+    renderWithProviders(<ProfileTab user={userDataMock} />)
+
+    await waitFor(() => {
+      expect(proceedMock).toHaveBeenCalled()
     })
   })
 })

@@ -86,8 +86,7 @@
     "category": "Please select a category",
     "subject": "Please select a subject",
     "proficiencyLevel": "Please select at least one proficiency level",
-    "youtubeLink": "Please provide a YouTube video link",
-    "resizeImage": "Failed to resize image. Please try again."
+    "youtubeLink": "Please provide a YouTube video link"
   },
   "levels": {
     "beginner": "Beginner",
