@@ -59,7 +59,7 @@ const QuizQuestion: FC<QuizQuestionProps> = ({
   const correctAnswers = shouldShowCorrectAnswers && (
     <Box sx={styles.correctAnswers.root}>
       <Typography sx={styles.correctAnswers.title}>
-        {t('myResourcesPage.correctAnswers')}
+        {t('myResourcesPage.quizzes.correctAnswers')}
       </Typography>
       <Box sx={styles.correctAnswers.list}>
         {question.answers
