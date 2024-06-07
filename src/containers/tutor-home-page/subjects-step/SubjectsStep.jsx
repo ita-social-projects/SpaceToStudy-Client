@@ -77,7 +77,10 @@ const SubjectsStep = ({ btnsBox }) => {
       setSubjectError('')
     }
 
-    handleSubjects([...subjectData, subjects.subject])
+    handleSubjects([
+      ...subjectData,
+      { ...subjects.subject, category: subjects.category }
+    ])
 
     !subjectError &&
       setSubjects({
