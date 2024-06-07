@@ -79,7 +79,7 @@ describe('Test quiz page', () => {
     })
 
     const correctAnswersLabel = screen.getByText(
-      'myResourcesPage.correctAnswers'
+      'myResourcesPage.quizzes.correctAnswers'
     )
 
     expect(correctAnswersLabel).toBeInTheDocument()
