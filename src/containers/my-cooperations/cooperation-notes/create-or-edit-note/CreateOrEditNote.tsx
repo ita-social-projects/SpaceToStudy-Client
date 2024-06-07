@@ -1,4 +1,6 @@
+import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
+import { AxiosResponse } from 'axios'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import CheckBox from '@mui/material/Checkbox'
@@ -6,10 +8,15 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import LockIcon from '@mui/icons-material/Lock'
 import Avatar from '@mui/material/Avatar'
 
+import { useAppSelector } from '~/hooks/use-redux'
 import useForm from '~/hooks/use-form'
+import useAxios from '~/hooks/use-axios'
+import { userService } from '~/services/user-service'
 import AppButton from '~/components/app-button/AppButton'
 import AppTextField from '~/components/app-text-field/AppTextField'
+import Loader from '~/components/loader/Loader'
 
+import { defaultResponses } from '~/constants'
 import { styles } from '~/containers/my-cooperations/cooperation-notes/create-or-edit-note/CreateOrEditNote.styles'
 import {
   TextFieldVariantEnum,
@@ -19,7 +26,9 @@ import {
   CreateOrUpdateNoteParams,
   NoteResponse,
   ComponentEnum,
-  ButtonTypeEnum
+  ButtonTypeEnum,
+  UserResponse,
+  UserRole
 } from '~/types'
 
 interface CreateOrEditNoteProps {
@@ -37,7 +46,21 @@ const CreateOrEditNote = ({
 }: CreateOrEditNoteProps) => {
   const { t } = useTranslation()
 
-  const userNameMocked = 'User Name'
+  const { userId, userRole } = useAppSelector((state) => state.appMain)
+
+  const getUserData: () => Promise<AxiosResponse<UserResponse>> = useCallback(
+    () => userService.getUserById(userId, userRole as UserRole),
+    [userId, userRole]
+  )
+
+  const {
+    loading,
+    response: { photo, firstName, lastName }
+  } = useAxios<UserResponse>({
+    service: getUserData,
+    fetchOnMount: true,
+    defaultResponse: defaultResponses.object as UserResponse
+  })
 
   const {
     data,
@@ -55,18 +78,33 @@ const CreateOrEditNote = ({
     }
   })
 
+  const userPhoto = photo
+    ? new URL(photo, import.meta.env.VITE_APP_IMG_USER_URL).href
+    : undefined
+  const isNameValid = Boolean(firstName && lastName)
+  const userInitials = isNameValid && `${firstName[0]}${lastName[0]}`
+  const userName = isNameValid && `${firstName} ${lastName}`
+
+  const userInfo = loading ? (
+    <Loader size={20} />
+  ) : (
+    <>
+      <Avatar src={userPhoto} sx={styles.accountIcon}>
+        {userInitials}
+      </Avatar>
+      <Typography variant={TypographyVariantEnum.Subtitle2}>
+        {userName}
+      </Typography>
+    </>
+  )
+
   return (
     <Box
       component={ComponentEnum.Form}
       onSubmit={handleSubmit}
       sx={styles.container}
     >
-      <Box sx={styles.header}>
-        <Avatar />
-        <Typography variant={TypographyVariantEnum.Subtitle2}>
-          {userNameMocked}
-        </Typography>
-      </Box>
+      <Box sx={styles.header}>{userInfo}</Box>
       <AppTextField
         InputLabelProps={styles.descriptionLabel}
         InputProps={styles.descriptionInput}

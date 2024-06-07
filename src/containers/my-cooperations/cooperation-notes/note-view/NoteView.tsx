@@ -97,19 +97,25 @@ const NoteView: FC<NoteViewProps> = ({
       </MenuItem>
     ))
 
+  const userPhoto = note.author.photo
+    ? new URL(note.author.photo, import.meta.env.VITE_APP_IMG_USER_URL).href
+    : undefined
+  const isNameValid = Boolean(note.author.firstName && note.author.lastName)
+  const userInitials =
+    isNameValid && `${note.author.firstName[0]}${note.author.lastName[0]}`
+  const userName =
+    isNameValid && `${note.author.firstName} ${note.author.lastName}`
+
   return (
     <Box sx={styles.container(isCurrentUser, note.isPrivate)}>
       <Box sx={styles.header}>
         <Box sx={styles.header}>
-          <Avatar
-            src={
-              note.author.photo &&
-              `${import.meta.env.VITE_APP_IMG_USER_URL}${note.author.photo}`
-            }
-          />
+          <Avatar src={userPhoto} sx={styles.accountIcon}>
+            {userInitials}
+          </Avatar>
           <Box>
             <Typography variant={TypographyVariantEnum.Subtitle2}>
-              {`${note.author.firstName} ${note.author.lastName}`}
+              {userName}
             </Typography>
             <Typography
               sx={styles.date}
