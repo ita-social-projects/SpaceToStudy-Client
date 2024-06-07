@@ -24,3 +24,7 @@ export interface UserMainSubject extends ProfessionalCategory {
   isDeletionBlocked: boolean
   _id: string
 }
+
+export interface EditProfileTabUserProps {
+  user: UserResponse
+}
