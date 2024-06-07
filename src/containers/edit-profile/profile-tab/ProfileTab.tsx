@@ -45,7 +45,7 @@ const ProfileTab: FC<EditProfileTabUserProps> = ({ user }) => {
   const blocker = useBlocker(isDirty)
 
   useEffect(() => {
-    const handleBlocker = async () => {
+    void (async () => {
       if (blocker.state === 'blocked') {
         const confirmed = await checkConfirmation({
           message: 'questions.goBackToProfile',
@@ -59,9 +59,7 @@ const ProfileTab: FC<EditProfileTabUserProps> = ({ user }) => {
           blocker.reset()
         }
       }
-    }
-
-    handleBlocker().catch(console.error)
+    })()
   }, [blocker, checkConfirmation, t])
 
   useEffect(() => {

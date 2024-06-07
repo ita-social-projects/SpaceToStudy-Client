@@ -64,18 +64,24 @@ const ProfileTabForm: FC<ProfileTabFormProps> = ({
     handleNonInputValueChange('nativeLanguage', value)
   }
 
-  const resizeImage = (photo: File) => {
-    const originalPhotoPath = URL.createObjectURL(photo)
-    const photoSizes = { newWidth: 440, newHeight: 440 }
+  const resizeImage = async (photo: File) => {
+    try {
+      const originalPhotoPath = URL.createObjectURL(photo)
+      const photoSizes = { newWidth: 440, newHeight: 440 }
 
-    imageResize(originalPhotoPath, photoSizes)
-      .then((resizedPhoto) => {
-        handleNonInputValueChange('photo', {
-          src: resizedPhoto,
-          name: photo.name
-        })
+      const resizedPhoto = await imageResize(originalPhotoPath, photoSizes)
+      handleNonInputValueChange('photo', {
+        src: resizedPhoto,
+        name: photo.name
       })
-      .catch(console.error)
+    } catch (error) {
+      dispatch(
+        openAlert({
+          severity: snackbarVariants.error,
+          message: t('becomeTutor.photo.resizeImage')
+        })
+      )
+    }
   }
 
   const addPhoto = ({ files, error }: UploadFileEmitterArgs) => {
@@ -89,9 +95,8 @@ const ProfileTabForm: FC<ProfileTabFormProps> = ({
       return
     }
 
-    resizeImage(files[0])
+    void resizeImage(files[0])
   }
-
   const handleRemovePhoto = () => {
     const updatedPhoto =
       typeof photo === 'string' ? null : { src: '', name: '' }

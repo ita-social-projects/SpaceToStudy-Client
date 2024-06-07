@@ -33,10 +33,10 @@ const AppMain = () => {
   }, [dispatch])
 
   useEffect(() => {
-    checkStatusChange(
+    void checkStatusChange(
       'editProfilePage.profile.passwordSecurityTab.deactivatedAccountTitle',
       'editProfilePage.profile.passwordSecurityTab.deactivatedAccountDescription'
-    ).catch(console.error)
+    )
   }, [checkStatusChange])
 
   if (loading || state === 'loading') {

@@ -48,9 +48,9 @@ const useUpdateUser = (userId: string, shouldRefreshAfterResponse = false) => {
     onResponseError: handleResponseError
   })
 
-  const handleSubmit = (data: UpdateUserParams) => {
-    fetchData(data).catch(console.error)
-  }
+  const handleSubmit = (async (data: UpdateUserParams) => {
+    await fetchData(data)
+  }) as (data: UpdateUserParams) => void
 
   return { loading, handleSubmit }
 }

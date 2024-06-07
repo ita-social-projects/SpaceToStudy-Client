@@ -98,11 +98,11 @@ const PasswordSecurityTab: FC<EditProfileTabUserProps> = ({ user }) => {
   })
 
   const handleChangeStatusClick = () => {
-    checkStatusChange(
+    void checkStatusChange(
       `editProfilePage.profile.passwordSecurityTab.${neededAction}Title`,
       `editProfilePage.profile.passwordSecurityTab.${neededAction}Description`,
       true
-    ).catch(console.error)
+    )
   }
 
   const {
