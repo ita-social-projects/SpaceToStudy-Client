@@ -1,4 +1,7 @@
-import { AnswerStatus, AnswerStatusEnum } from '~/containers/quiz/question-answer/Answer.types'
+import {
+  AnswerStatus,
+  AnswerStatusEnum
+} from '~/containers/quiz/question-answer/Answer.types'
 
 export const styles = {
   root: (status: AnswerStatus, isOpenAnswer: boolean) => {

@@ -2,12 +2,13 @@ import Box from '@mui/material/Box'
 
 import SelectableQuestionQuizView from '~/containers/quiz/selectable-question-quiz-view/SelectableQuestionQuizView'
 import ScrollQuestionsQuizView from '~/containers/quiz/scroll-question-quiz-view/ScrollQuestionsQuizView'
+import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
+import useForm from '~/hooks/use-form'
 
 import { styles } from '~/containers/my-quizzes/view-quiz-container/ViewQuizContainer.styles'
 import { QuizContentProps } from '~/pages/new-quiz/NewQuiz.constants'
+
 import { QuizViewEnum } from '~/types'
-import useForm from '~/hooks/use-form'
-import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 
 const ViewQuizContainer = ({
   questions,

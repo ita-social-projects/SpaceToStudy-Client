@@ -13,8 +13,8 @@ import CloseIcon from '@mui/icons-material/Close'
 import { SxProps } from '@mui/material/styles'
 
 import AppTextField from '~/components/app-text-field/AppTextField'
-import { spliceSx } from '~/utils/helper-functions'
 
+import { spliceSx } from '~/utils/helper-functions'
 import { styles } from '~/containers/quiz/question-answer/Answer.styles'
 
 import { QuestionTypesEnum } from '~/types/my-resources/myResources.index'
@@ -44,7 +44,7 @@ const Answer: FC<AnswerProps> = ({
   sx,
   onTextInputChange,
   onCheckboxChange,
-  value = '',
+  value,
   showCorrectness = false,
   isEditable = true
 }) => {
@@ -68,10 +68,12 @@ const Answer: FC<AnswerProps> = ({
     onCheckboxChange && onCheckboxChange(checked)
   }
 
+  const iconStyles = styles.icon(answerStatus)
+
   const stateIcon = isCorrect ? (
-    <CheckIcon sx={styles.icon(answerStatus)} />
+    <CheckIcon sx={iconStyles} />
   ) : (
-    <CloseIcon sx={styles.icon(answerStatus)} />
+    <CloseIcon sx={iconStyles} />
   )
 
   const resultIcon = shouldShowAnswerStatus ? stateIcon : null

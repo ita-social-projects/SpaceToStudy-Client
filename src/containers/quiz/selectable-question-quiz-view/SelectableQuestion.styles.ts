@@ -5,13 +5,11 @@ import {
   AnswerStatusEnum
 } from '~/containers/quiz/question-answer/Answer.types'
 
-interface RootParams {
-  isSelected: boolean
-  status: AnswerStatusEnum[keyof AnswerStatusEnum]
-}
-
 export const styles = {
-  root: ({ isSelected, status }: RootParams) => {
+  questionButton: (
+    isSelected: boolean,
+    status: AnswerStatusEnum[keyof AnswerStatusEnum]
+  ) => {
     const isCorrect = status === AnswerStatusEnum.Correct
     const isIncorrect = status === AnswerStatusEnum.Incorrect
 

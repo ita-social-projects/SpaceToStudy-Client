@@ -1,7 +1,8 @@
 import { isCorrectAnswer } from '~/utils/is-correct-answer'
+import { determineQuestionType } from '~/components/question-editor/QuestionEditor.constants'
+
 import { AnswerStatusEnum } from '~/containers/quiz/question-answer/Answer.types'
 import { Question } from '~/types'
-import { determineQuestionType } from '~/components/question-editor/QuestionEditor.constants'
 
 interface GetQuestionStatusParams {
   question: Question

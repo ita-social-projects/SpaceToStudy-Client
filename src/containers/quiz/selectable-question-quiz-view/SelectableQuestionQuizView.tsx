@@ -54,22 +54,25 @@ const SelectableQuestionQuizView: FC<SelectableQuestionQuizViewProps> = ({
   const questionsNumberList = questions.map((item, index) => {
     const answer = answers[item._id]
 
+    const isSelected = selectedIndex === index
+
     const status = getQuestionStatus({
       question: item,
       answer,
       showAnswersCorrectness
     })
 
+    const questionButtonStyles = styles.questionButton(isSelected, status)
+
+    const statusLineStyles = styles.statusLine(status)
+
     return (
       <Box
         key={item._id}
         onClick={() => setSelectedIndex(index)}
-        sx={styles.root({
-          isSelected: selectedIndex === index,
-          status: status
-        })}
+        sx={questionButtonStyles}
       >
-        <Box sx={styles.statusLine(status)} />
+        <Box sx={statusLineStyles} />
         <Typography sx={styles.text}>{index + 1}</Typography>
       </Box>
     )

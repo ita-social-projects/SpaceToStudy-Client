@@ -9,16 +9,15 @@ import AppCard from '~/components/app-card/AppCard'
 import CheckIcon from '@mui/icons-material/Check'
 import CloseIcon from '@mui/icons-material/Close'
 import Answer from '~/containers/quiz/question-answer/Answer'
+import { SxProps } from '@mui/material/styles'
 
 import { determineQuestionType } from '~/components/question-editor/QuestionEditor.constants'
+import { isCorrectAnswer } from '~/utils/is-correct-answer'
 import { spliceSx } from '~/utils/helper-functions'
-
 import { styles } from '~/containers/quiz/quiz-question/Question.styles'
 
 import { Question } from '~/types'
-import { SxProps } from '@mui/material/styles'
 import { AnswerStatusEnum } from '~/containers/quiz/question-answer/Answer.types'
-import { isCorrectAnswer } from '~/utils/is-correct-answer'
 
 interface QuizQuestionProps {
   question: Question
@@ -94,9 +93,9 @@ const QuizQuestion: FC<QuizQuestionProps> = ({
   )
 
   const answersList = question.answers.map((answer) => {
-    const isChecked = isMultipleChoice
-      ? value?.includes(answer.text)
-      : value === answer.text
+    const isChecked = Boolean(
+      isMultipleChoice ? value?.includes(answer.text) : value === answer.text
+    )
 
     const handleChange = () => {
       if (isMultipleChoice) {
@@ -122,6 +121,7 @@ const QuizQuestion: FC<QuizQuestionProps> = ({
         showCorrectness={showAnswersCorrectness}
         text={answer.text}
         type={question.type}
+        value={answer.text}
       />
     )
   })

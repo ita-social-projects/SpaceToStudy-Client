@@ -13,10 +13,11 @@ import TitleWithDescription from '~/components/title-with-description/TitleWithD
 import SelectableQuestionQuizView from '~/containers/quiz/selectable-question-quiz-view/SelectableQuestionQuizView'
 import ScrollQuestionsQuizView from '~/containers/quiz/scroll-question-quiz-view/ScrollQuestionsQuizView'
 import AppButton from '~/components/app-button/AppButton'
+
 import useAxios from '~/hooks/use-axios'
 import useForm from '~/hooks/use-form'
-import { ResourceService } from '~/services/resource-service'
 
+import { ResourceService } from '~/services/resource-service'
 import styles from '~/pages/quiz/Quiz.styles'
 
 import { ComponentEnum, QuizViewEnum, type Quiz } from '~/types'
