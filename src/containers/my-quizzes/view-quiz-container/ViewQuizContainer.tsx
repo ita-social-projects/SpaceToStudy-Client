@@ -7,6 +7,7 @@ import useForm from '~/hooks/use-form'
 
 import { styles } from '~/containers/my-quizzes/view-quiz-container/ViewQuizContainer.styles'
 import { QuizContentProps } from '~/pages/new-quiz/NewQuiz.constants'
+import { defaultResponses } from '~/constants'
 
 import { QuizViewEnum } from '~/types'
 
@@ -19,7 +20,7 @@ const ViewQuizContainer = ({
   const { data, handleInputChange, handleNonInputValueChange } = useForm<
     Record<string, string | string[]>
   >({
-    initialValues: {}
+    initialValues: defaultResponses.object
   })
 
   const handleNonInputChange = (key: string) => (value: string | string[]) => {

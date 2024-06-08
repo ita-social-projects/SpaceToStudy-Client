@@ -27,14 +27,14 @@ interface QuizQuestionProps {
   showPoints?: boolean
   showAnswersCorrectness?: boolean
   isEditable?: boolean
-  appCardWrapper?: boolean
+  shouldUseAppCardWrapper?: boolean
   sx?: SxProps
   handleInputChange: ChangeEventHandler
   handleNonInputValueChange: (value: string | string[]) => void
 }
 
 const QuizQuestion: FC<QuizQuestionProps> = ({
-  appCardWrapper,
+  shouldUseAppCardWrapper,
   sx,
   index,
   showPoints,
@@ -52,7 +52,7 @@ const QuizQuestion: FC<QuizQuestionProps> = ({
     question.type
   )
 
-  const ContainerComponent = appCardWrapper ? AppCard : Box
+  const ContainerComponent = shouldUseAppCardWrapper ? AppCard : Box
 
   const isCorrect = isCorrectAnswer(question, value)
 
@@ -93,9 +93,10 @@ const QuizQuestion: FC<QuizQuestionProps> = ({
   )
 
   const answersList = question.answers.map((answer) => {
-    const isChecked = Boolean(
-      isMultipleChoice ? value?.includes(answer.text) : value === answer.text
-    )
+    const isValidMultipleChoice = value && isMultipleChoice
+    const isChecked = isValidMultipleChoice
+      ? value.includes(answer.text)
+      : value === answer.text
 
     const handleChange = () => {
       if (isMultipleChoice) {

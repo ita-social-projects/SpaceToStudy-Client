@@ -114,12 +114,12 @@ const SelectableQuestionQuizView: FC<SelectableQuestionQuizViewProps> = ({
     <Box sx={sx?.root}>
       <Box sx={styles.selectableList}>{questionsNumberList}</Box>
       <QuizQuestion
-        appCardWrapper
         handleInputChange={handleInputChange(question._id)}
         handleNonInputValueChange={handleNonInputValueChange(question._id)}
         index={selectedIndex}
         key={question._id}
         question={question}
+        shouldUseAppCardWrapper
         showAnswersCorrectness={showAnswersCorrectness}
         showCorrectAnswers={showCorrectAnswers}
         showPoints={showPoints}

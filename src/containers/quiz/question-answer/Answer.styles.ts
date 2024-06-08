@@ -3,14 +3,24 @@ import {
   AnswerStatusEnum
 } from '~/containers/quiz/question-answer/Answer.types'
 
+const getColor = (
+  status: AnswerStatus,
+  successColor = 'success.main',
+  errorColor = 'error.main'
+) => {
+  const isCorrect = status === AnswerStatusEnum.Correct
+  const isIncorrect = status === AnswerStatusEnum.Incorrect
+
+  const answeredStatusColor = isCorrect ? successColor : errorColor
+
+  const color = isCorrect || isIncorrect ? answeredStatusColor : undefined
+
+  return color
+}
+
 export const styles = {
   root: (status: AnswerStatus, isOpenAnswer: boolean) => {
-    const isCorrect = status === AnswerStatusEnum.Correct
-    const isIncorrect = status === AnswerStatusEnum.Incorrect
-
-    const unsweredStatusColor = isCorrect ? 'success.50' : 'error.50'
-
-    const bgcolor = isCorrect || isIncorrect ? unsweredStatusColor : undefined
+    const bgcolor = getColor(status, 'success.50', 'error.50')
 
     return {
       p: isOpenAnswer ? undefined : '4px 12px 7px 3px',
@@ -25,12 +35,7 @@ export const styles = {
     flex: '1'
   },
   icon: (status: AnswerStatus) => {
-    const isCorrect = status === AnswerStatusEnum.Correct
-    const isIncorrect = status === AnswerStatusEnum.Incorrect
-
-    const unsweredStatusColor = isCorrect ? 'success.main' : 'error.main'
-
-    const color = isCorrect || isIncorrect ? unsweredStatusColor : undefined
+    const color = getColor(status, 'success.50', 'error.50')
 
     return {
       color

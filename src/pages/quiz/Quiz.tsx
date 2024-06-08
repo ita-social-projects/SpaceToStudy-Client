@@ -20,6 +20,7 @@ import useForm from '~/hooks/use-form'
 import { ResourceService } from '~/services/resource-service'
 import { countPoints } from '~/utils/count-quiz-points'
 import styles from '~/pages/quiz/Quiz.styles'
+import { defaultResponses } from '~/constants'
 
 import { ComponentEnum, QuizViewEnum, Quiz } from '~/types'
 
@@ -34,7 +35,7 @@ const QuizPage = () => {
   const { handleInputChange, handleNonInputValueChange, data } = useForm<
     Record<string, string | string[]>
   >({
-    initialValues: {}
+    initialValues: defaultResponses.object
   })
 
   const handleNonInputChange = (key: string) => (value: string | string[]) =>
