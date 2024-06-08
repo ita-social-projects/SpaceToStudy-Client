@@ -18,12 +18,12 @@ import useAxios from '~/hooks/use-axios'
 import useForm from '~/hooks/use-form'
 
 import { ResourceService } from '~/services/resource-service'
+import { countPoints } from '~/utils/count-quiz-points'
 import styles from '~/pages/quiz/Quiz.styles'
 
-import { ComponentEnum, QuizViewEnum, type Quiz } from '~/types'
-import { countPoints } from '~/utils/count-quiz-points'
+import { ComponentEnum, QuizViewEnum, Quiz } from '~/types'
 
-const Quiz = () => {
+const QuizPage = () => {
   const { quizId } = useParams()
   const { t } = useTranslation()
 
@@ -113,4 +113,4 @@ const Quiz = () => {
   )
 }
 
-export default Quiz
+export default QuizPage

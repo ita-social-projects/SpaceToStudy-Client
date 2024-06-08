@@ -5,8 +5,8 @@ import { SxProps } from '@mui/material/styles'
 
 import QuizQuestion from '~/containers/quiz/quiz-question/Question'
 import { spliceSx } from '~/utils/helper-functions'
-
 import { styles } from '~/containers/quiz/scroll-question-quiz-view/ScrollQuestionsQuizView.styles'
+
 import { Question, UseFormEventHandler } from '~/types'
 
 export interface QuizViewProps {

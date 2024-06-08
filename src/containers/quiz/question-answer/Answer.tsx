@@ -15,11 +15,11 @@ import { SxProps } from '@mui/material/styles'
 import AppTextField from '~/components/app-text-field/AppTextField'
 
 import { spliceSx } from '~/utils/helper-functions'
+import { determineQuestionType } from '~/components/question-editor/QuestionEditor.constants'
 import { styles } from '~/containers/quiz/question-answer/Answer.styles'
 
 import { QuestionTypesEnum } from '~/types/my-resources/myResources.index'
 import { AnswerStatusEnum } from '~/containers/quiz/question-answer/Answer.types'
-import { determineQuestionType } from '~/components/question-editor/QuestionEditor.constants'
 
 interface AnswerProps {
   text: string

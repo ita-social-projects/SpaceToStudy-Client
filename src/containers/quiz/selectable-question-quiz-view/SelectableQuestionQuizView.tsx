@@ -1,10 +1,18 @@
 import { ChangeEvent, FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import ArrowForward from '@mui/icons-material/ArrowForward'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
+import { SxProps } from '@mui/material/styles'
+
 import AppButton from '~/components/app-button/AppButton'
+import QuizQuestion from '~/containers/quiz/quiz-question/Question'
+
+import { styles } from '~/containers/quiz/selectable-question-quiz-view/SelectableQuestion.styles'
+import { getQuestionStatus } from '~/containers/quiz/quiz-question/Question.constants'
+import { spliceSx } from '~/utils/helper-functions'
 
 import {
   Question,
@@ -12,11 +20,6 @@ import {
   SizeEnum,
   UseFormEventHandler
 } from '~/types'
-import { styles } from '~/containers/quiz/selectable-question-quiz-view/SelectableQuestion.styles'
-import { SxProps } from '@mui/material/styles'
-import QuizQuestion from '~/containers/quiz/quiz-question/Question'
-import { getQuestionStatus } from '~/containers/quiz/quiz-question/Question.constants'
-import { spliceSx } from '~/utils/helper-functions'
 
 interface SelectableQuestionQuizViewProps {
   questions: Question[]

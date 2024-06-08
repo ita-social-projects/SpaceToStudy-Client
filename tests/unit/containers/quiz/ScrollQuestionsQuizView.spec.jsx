@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/react'
-import { renderWithProviders } from '~tests/test-utils'
 import ScrollQuestionsQuizView from '~/containers/quiz/scroll-question-quiz-view/ScrollQuestionsQuizView'
+import { renderWithProviders } from '~tests/test-utils'
 
 const mockedQuestion = [
   {
