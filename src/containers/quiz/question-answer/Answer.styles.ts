@@ -13,7 +13,8 @@ const getColor = (
 
   const answeredStatusColor = isCorrect ? successColor : errorColor
 
-  const color = isCorrect || isIncorrect ? answeredStatusColor : undefined
+  const isAnswered = isCorrect || isIncorrect
+  const color = isAnswered ? answeredStatusColor : undefined
 
   return color
 }
