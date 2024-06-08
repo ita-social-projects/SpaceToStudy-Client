@@ -1,7 +1,6 @@
 import { TypographyVariantEnum } from '~/types'
 import {
-  AnswerCompletionStatus,
-  AnswerCorrectnessStatus,
+  AnswerStatus,
   AnswerStatusEnum
 } from '~/containers/quiz/question-answer/Answer.types'
 
@@ -32,7 +31,7 @@ export const styles = {
     display: 'block',
     p: '20px 30px'
   },
-  statusLine: (status: AnswerCorrectnessStatus | AnswerCompletionStatus) => {
+  statusLine: (status: AnswerStatus) => {
     const isCorrect = status === AnswerStatusEnum.Correct
     const isIncorrect = status === AnswerStatusEnum.Incorrect
     const isAnswered = status === AnswerStatusEnum.Answered

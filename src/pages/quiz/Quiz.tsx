@@ -46,21 +46,28 @@ const QuizPage = () => {
 
   if (loading) return <Loader pageLoad />
 
+  const {
+    settings: { pointValues, scoredResponses, correctAnswers, view },
+    description,
+    title,
+    items
+  } = response
+
   const handleFinish = () => setIsFinished(true)
 
-  const showPoints = response.settings.pointValues && isFinished
-  const showAnswersCorrectness = response.settings.scoredResponses && isFinished
-  const showCorrectAnswers = response.settings.correctAnswers && isFinished
+  const showPoints = pointValues && isFinished
+  const showAnswersCorrectness = scoredResponses && isFinished
+  const showCorrectAnswers = correctAnswers && isFinished
 
-  const points = showPoints && countPoints(response.items, data)
+  const points = showPoints && countPoints(items, data)
 
-  const isStepper = response.settings.view === QuizViewEnum.Stepper
+  const isStepper = view === QuizViewEnum.Stepper
 
   const pointsBlock = showPoints && (
     <Box sx={styles.points.root}>
       <Typography sx={styles.points.title}>{t('quiz.points')}</Typography>
       <Chip
-        label={`${points}/${response.items.length}`}
+        label={`${points}/${items.length}`}
         size='small'
         sx={styles.points.chip}
       />
@@ -73,7 +80,7 @@ const QuizPage = () => {
       handleInputChange={handleInputChange}
       handleNonInputValueChange={handleNonInputChange}
       isEditable={!isFinished}
-      questions={response.items}
+      questions={items}
       showAnswersCorrectness={showAnswersCorrectness}
       showCorrectAnswers={showCorrectAnswers}
       showPoints={showPoints}
@@ -85,7 +92,7 @@ const QuizPage = () => {
       handleInputChange={handleInputChange}
       handleNonInputValueChange={handleNonInputChange}
       isEditable={!isFinished}
-      questions={response.items}
+      questions={items}
       showAnswersCorrectness={showAnswersCorrectness}
       showCorrectAnswers={showCorrectAnswers}
       showPoints={showPoints}
@@ -96,9 +103,9 @@ const QuizPage = () => {
     <PageWrapper sx={styles.quizzesWrapper}>
       <Box component={ComponentEnum.Form} sx={styles.quizzesWrapper}>
         <TitleWithDescription
-          description={response.description}
+          description={description}
           style={styles.titleWithDescription}
-          title={response.title}
+          title={title}
         />
         {pointsBlock}
         <Divider sx={styles.divider} />

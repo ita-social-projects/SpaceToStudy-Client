@@ -19,7 +19,9 @@ export const countPoints = (
       return item.answers.find((item) => item.isCorrect)?.text === userAnswer
     }
 
-    if (isMultipleChoice && Array.isArray(userAnswer)) {
+    const isMultiple = isMultipleChoice && Array.isArray(userAnswer)
+
+    if (isMultiple) {
       const correctAnswers = item.answers.filter((item) => item.isCorrect)
 
       return (
