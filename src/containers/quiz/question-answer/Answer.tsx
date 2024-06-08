@@ -1,23 +1,27 @@
-import {
-  FormControlLabel,
-  FormControlLabelProps,
-  Box,
-  Checkbox,
-  Radio,
-  InputAdornment,
-  SxProps
-} from '@mui/material'
 import { ChangeEventHandler, FC } from 'react'
-import CheckIcon from '@mui/icons-material/Check'
-import CloseIcon from '@mui/icons-material/Close'
-import { spliceSx } from '~/utils/helper-functions'
-import { styles } from './Answer.styles'
-import { QuestionTypesEnum } from '~/types'
-import AppTextField from '~/components/app-text-field/AppTextField'
-import { questionType } from '~/components/question-editor/QuestionEditor.constants'
 import { useTranslation } from 'react-i18next'
 
-interface Answer {
+import FormControlLabel, {
+  FormControlLabelProps
+} from '@mui/material/FormControlLabel'
+import Box from '@mui/material/Box'
+import Checkbox from '@mui/material/Checkbox'
+import Radio from '@mui/material/Radio'
+import InputAdornment from '@mui/material/InputAdornment'
+import CheckIcon from '@mui/icons-material/Check'
+import CloseIcon from '@mui/icons-material/Close'
+import { SxProps } from '@mui/material/styles'
+
+import AppTextField from '~/components/app-text-field/AppTextField'
+import { spliceSx } from '~/utils/helper-functions'
+
+import { styles } from '~/containers/quiz/question-answer/Answer.styles'
+
+import { QuestionTypesEnum } from '~/types/my-resources/myResources.index'
+import { AnswerStatusEnum } from '~/containers/quiz/question-answer/Answer.types'
+import { determineQuestionType } from '~/components/question-editor/QuestionEditor.constants'
+
+interface AnswerProps {
   text: string
   isCorrect?: boolean
   value?: string
@@ -31,7 +35,7 @@ interface Answer {
   onCheckboxChange?: (isChecked: boolean) => void
 }
 
-const Answer: FC<Answer> = ({
+const Answer: FC<AnswerProps> = ({
   text,
   isCorrect,
   checked,
@@ -44,15 +48,18 @@ const Answer: FC<Answer> = ({
   showCorrectness = false,
   isEditable = true
 }) => {
-  const { isMultipleChoice, isOpenAnswer } = questionType(type)
+  const { isMultipleChoice, isOpenAnswer } = determineQuestionType(type)
 
   const { t } = useTranslation()
 
-  const shouldShowState = (isOpenAnswer || checked) && showCorrectness
-  const baseState = isCorrect ? 'correct' : 'incorrect'
-  const answerState = shouldShowState ? baseState : undefined
+  const shouldShowAnswerStatus = (isOpenAnswer || checked) && showCorrectness
+  const answerCorrectnessStatus = isCorrect
+    ? AnswerStatusEnum.Correct
+    : AnswerStatusEnum.Incorrect
 
-  const style = styles({ state: answerState, isOpenAnswer })
+  const answerStatus = shouldShowAnswerStatus
+    ? answerCorrectnessStatus
+    : AnswerStatusEnum.Unanswered
 
   const handleCheckboxChange: FormControlLabelProps['onChange'] = (
     _,
@@ -62,12 +69,14 @@ const Answer: FC<Answer> = ({
   }
 
   const stateIcon = isCorrect ? (
-    <CheckIcon sx={style.icon} />
+    <CheckIcon sx={styles.icon(answerStatus)} />
   ) : (
-    <CloseIcon sx={style.icon} />
+    <CloseIcon sx={styles.icon(answerStatus)} />
   )
 
-  const resultIcon = shouldShowState && showCorrectness ? stateIcon : null
+  const resultIcon = shouldShowAnswerStatus ? stateIcon : null
+
+  const rootStyle = styles.root(answerStatus, isOpenAnswer)
 
   if (isOpenAnswer) {
     const inputIcon = resultIcon && (
@@ -83,7 +92,7 @@ const Answer: FC<Answer> = ({
         fullWidth
         label={t('questionPage.answer')}
         onChange={onTextInputChange}
-        sx={style.root}
+        sx={spliceSx(rootStyle, sx)}
         value={value}
         withHelperText={false}
       />
@@ -97,13 +106,13 @@ const Answer: FC<Answer> = ({
   )
 
   return (
-    <Box sx={spliceSx(style.root, sx)}>
+    <Box sx={spliceSx(rootStyle, sx)}>
       <FormControlLabel
         checked={checked}
         control={controlIcon}
         label={label}
         onChange={handleCheckboxChange}
-        sx={style.label}
+        sx={styles.label}
         value={text}
       />
       {resultIcon}

@@ -1,8 +1,7 @@
-import { screen, fireEvent } from '@testing-library/react'
+import { screen, fireEvent, act } from '@testing-library/react'
 import Quiz from '~/pages/quiz/Quiz'
 import useAxios from '~/hooks/use-axios'
 import { renderWithProviders } from '~tests/test-utils'
-import { act } from 'react-dom/test-utils'
 
 vi.mock('~/hooks/use-axios')
 

@@ -45,10 +45,8 @@ export const ResourceService = {
     ),
   getQuizzes: async (
     params?: GetResourcesParams
-  ): Promise<AxiosResponse<ItemsWithCount<Quiz>>> => {
-    const a = await axiosClient.get(URLs.quizzes.get, { params })
-    return a
-  },
+  ): Promise<AxiosResponse<ItemsWithCount<Quiz>>> =>
+    await axiosClient.get(URLs.quizzes.get, { params }),
   getQuiz: async (id?: string): Promise<AxiosResponse<Quiz>> =>
     await axiosClient.get(createUrlPath(URLs.quizzes.get, id)),
   addQuiz: async (data?: CreateQuizParams): Promise<AxiosResponse> =>

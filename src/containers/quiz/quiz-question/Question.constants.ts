@@ -1,5 +1,7 @@
-import { questionType } from '~/components/question-editor/QuestionEditor.constants'
+import { isCorrectAnswer } from '~/utils/is-correct-answer'
+import { AnswerStatusEnum } from '~/containers/quiz/question-answer/Answer.types'
 import { Question } from '~/types'
+import { determineQuestionType } from '~/components/question-editor/QuestionEditor.constants'
 
 interface GetQuestionStatusParams {
   question: Question
@@ -7,39 +9,30 @@ interface GetQuestionStatusParams {
   showAnswersCorrectness: boolean
 }
 
-export const isCorrectAnswer = (
-  question: Question,
-  answer: null | string | string[]
-) => {
-  if (!answer) return false
-  const { isMultipleChoice, isOpenAnswer } = questionType(question.type)
-
-  if (isOpenAnswer) {
-    return true
-  } else if (isMultipleChoice && Array.isArray(answer)) {
-    const correctAnswers = question.answers.filter((item) => item.isCorrect)
-
-    return (
-      answer.every(
-        (item) => question.answers.find((i) => i.text === item)?.isCorrect
-      ) && answer.length === correctAnswers.length
-    )
-  } else {
-    return question.answers.find((item) => item.isCorrect)?.text === answer
-  }
-}
-
 export const getQuestionStatus = ({
   answer,
   question,
   showAnswersCorrectness
 }: GetQuestionStatusParams) => {
-  const isAnswered = Boolean(answer)
+  const { isOpenAnswer } = determineQuestionType(question.type)
+
+  if (isOpenAnswer && showAnswersCorrectness) return AnswerStatusEnum.Correct
+
+  const isMultipleChoiceAnswered = Array.isArray(answer) ? answer.length : true
+
+  const isAnswered = Boolean(answer) && isMultipleChoiceAnswered
 
   const isCorrect = isAnswered && isCorrectAnswer(question, answer)
-  const baseState = isCorrect ? 'correct' : 'incorrect'
-  const shouldShowState = isAnswered || showAnswersCorrectness
-  const answeredState = showAnswersCorrectness ? baseState : 'answered'
 
-  return shouldShowState ? answeredState : 'unanswered'
+  const correctnessStatus = isCorrect
+    ? AnswerStatusEnum.Correct
+    : AnswerStatusEnum.Incorrect
+
+  const answeredStatus = showAnswersCorrectness
+    ? correctnessStatus
+    : AnswerStatusEnum.Answered
+
+  const shouldShowSpecificStatus = isAnswered || showAnswersCorrectness
+
+  return shouldShowSpecificStatus ? answeredStatus : AnswerStatusEnum.Unanswered
 }

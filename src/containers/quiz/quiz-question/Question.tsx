@@ -1,16 +1,24 @@
 import { ChangeEventHandler, FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Box, Typography, FormGroup, RadioGroup, SxProps } from '@mui/material'
-import { questionType } from '~/components/question-editor/QuestionEditor.constants'
+
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import FormGroup from '@mui/material/FormGroup'
+import RadioGroup from '@mui/material/RadioGroup'
 import AppCard from '~/components/app-card/AppCard'
 import CheckIcon from '@mui/icons-material/Check'
 import CloseIcon from '@mui/icons-material/Close'
+import Answer from '~/containers/quiz/question-answer/Answer'
+
+import { determineQuestionType } from '~/components/question-editor/QuestionEditor.constants'
+import { spliceSx } from '~/utils/helper-functions'
+
+import { styles } from '~/containers/quiz/quiz-question/Question.styles'
 
 import { Question } from '~/types'
-import { styles } from './Question.styles'
-import { isCorrectAnswer } from './Question.constants'
-import Answer from '../question-answer/Answer'
-import { spliceSx } from '~/utils/helper-functions'
+import { SxProps } from '@mui/material/styles'
+import { AnswerStatusEnum } from '~/containers/quiz/question-answer/Answer.types'
+import { isCorrectAnswer } from '~/utils/is-correct-answer'
 
 interface QuizQuestionProps {
   question: Question
@@ -20,14 +28,14 @@ interface QuizQuestionProps {
   showPoints?: boolean
   showAnswersCorrectness?: boolean
   isEditable?: boolean
-  useAppCard?: boolean
+  appCardWrapper?: boolean
   sx?: SxProps
   handleInputChange: ChangeEventHandler
   handleNonInputValueChange: (value: string | string[]) => void
 }
 
 const QuizQuestion: FC<QuizQuestionProps> = ({
-  useAppCard,
+  appCardWrapper,
   sx,
   index,
   showPoints,
@@ -41,42 +49,47 @@ const QuizQuestion: FC<QuizQuestionProps> = ({
 }) => {
   const { t } = useTranslation()
 
-  const { isMultipleChoice, isSingleChoice, isOpenAnswer } = questionType(
+  const { isMultipleChoice, isOpenAnswer } = determineQuestionType(
     question.type
   )
 
-  const ContainerComponent = useAppCard ? AppCard : Box
+  const ContainerComponent = appCardWrapper ? AppCard : Box
 
   const isCorrect = isCorrectAnswer(question, value)
 
-  const iconStyles = styles.icon(isCorrect ? 'correct' : 'incorrect')
+  const iconStyles = styles.icon(
+    isCorrect ? AnswerStatusEnum.Correct : AnswerStatusEnum.Incorrect
+  )
 
   const correctnessIcon =
     showAnswersCorrectness &&
     (isCorrect ? <CheckIcon sx={iconStyles} /> : <CloseIcon sx={iconStyles} />)
 
   const shouldShowCorrectAnswers = showCorrectAnswers && !isOpenAnswer
+
+  const correctAnswersList =
+    shouldShowCorrectAnswers &&
+    question.answers
+      .filter((item) => item.isCorrect)
+      .map((item) => (
+        <Answer
+          checked
+          isCorrect={item.isCorrect}
+          isEditable={false}
+          key={item.text}
+          label={item.text}
+          showCorrectness
+          text={item.text}
+          type={question.type}
+        />
+      ))
+
   const correctAnswers = shouldShowCorrectAnswers && (
     <Box sx={styles.correctAnswers.root}>
       <Typography sx={styles.correctAnswers.title}>
         {t('myResourcesPage.quizzes.correctAnswers')}
       </Typography>
-      <Box sx={styles.correctAnswers.list}>
-        {question.answers
-          .filter((item) => item.isCorrect)
-          .map((item) => (
-            <Answer
-              checked
-              isCorrect={item.isCorrect}
-              isEditable={false}
-              key={item.text}
-              label={item.text}
-              showCorrectness
-              text={item.text}
-              type={question.type}
-            />
-          ))}
-      </Box>
+      <Box sx={styles.correctAnswers.list}>{correctAnswersList}</Box>
     </Box>
   )
 
@@ -113,11 +126,13 @@ const QuizQuestion: FC<QuizQuestionProps> = ({
     )
   })
 
-  const answersContent = isMultipleChoice ? (
+  const multipleChoiceAnswersBlock = isMultipleChoice ? (
     <FormGroup sx={styles.answersContainer}>{answersList}</FormGroup>
-  ) : isSingleChoice ? (
-    <RadioGroup sx={styles.answersContainer}>{answersList}</RadioGroup>
   ) : (
+    <RadioGroup sx={styles.answersContainer}>{answersList}</RadioGroup>
+  )
+
+  const answersBlock = isOpenAnswer ? (
     <Answer
       isCorrect
       isEditable={isEditable}
@@ -128,6 +143,8 @@ const QuizQuestion: FC<QuizQuestionProps> = ({
       type={question.type}
       value={value as string}
     />
+  ) : (
+    multipleChoiceAnswersBlock
   )
 
   const pointsBlock = showPoints && (
@@ -148,7 +165,7 @@ const QuizQuestion: FC<QuizQuestionProps> = ({
         <Typography sx={styles.title}>{index + 1}.</Typography>
         <Typography sx={styles.title}>{question.text}</Typography>
       </Box>
-      {answersContent}
+      {answersBlock}
 
       {correctAnswers}
     </ContainerComponent>

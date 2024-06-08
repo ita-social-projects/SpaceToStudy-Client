@@ -25,6 +25,24 @@ const ViewQuizContainer = ({
     handleNonInputValueChange(key, value)
   }
 
+  const questionsView =
+    settings.view === QuizViewEnum.Stepper ? (
+      <SelectableQuestionQuizView
+        answers={data}
+        handleInputChange={handleInputChange}
+        handleNonInputValueChange={handleNonInputChange}
+        questions={questions}
+      />
+    ) : (
+      <ScrollQuestionsQuizView
+        answers={data}
+        handleInputChange={handleInputChange}
+        handleNonInputValueChange={handleNonInputChange}
+        questions={questions}
+        sx={styles.questionWrapper}
+      />
+    )
+
   return (
     <Box>
       <TitleWithDescription
@@ -32,22 +50,7 @@ const ViewQuizContainer = ({
         style={styles.titleWithDescription}
         title={title}
       />
-      {settings.view === QuizViewEnum.Stepper ? (
-        <SelectableQuestionQuizView
-          answers={data}
-          handleInputChange={handleInputChange}
-          handleNonInputValueChange={handleNonInputChange}
-          questions={questions}
-        />
-      ) : (
-        <ScrollQuestionsQuizView
-          answers={data}
-          handleInputChange={handleInputChange}
-          handleNonInputValueChange={handleNonInputChange}
-          questions={questions}
-          sx={styles.questionWrapper}
-        />
-      )}
+      {questionsView}
     </Box>
   )
 }

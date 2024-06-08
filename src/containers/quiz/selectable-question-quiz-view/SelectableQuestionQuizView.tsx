@@ -13,9 +13,9 @@ import {
   UseFormEventHandler
 } from '~/types'
 import { styles } from '~/containers/quiz/selectable-question-quiz-view/SelectableQuestion.styles'
-import { SxProps } from '@mui/material'
+import { SxProps } from '@mui/material/styles'
 import QuizQuestion from '~/containers/quiz/quiz-question/Question'
-import { getQuestionStatus } from '../quiz-question/Question.constants'
+import { getQuestionStatus } from '~/containers/quiz/quiz-question/Question.constants'
 import { spliceSx } from '~/utils/helper-functions'
 
 interface SelectableQuestionQuizViewProps {
@@ -45,7 +45,7 @@ const SelectableQuestionQuizView: FC<SelectableQuestionQuizViewProps> = ({
   ...props
 }) => {
   const { t } = useTranslation()
-  const [selectedIndex, setSelectedIndex] = useState<number>(0)
+  const [selectedIndex, setSelectedIndex] = useState(0)
 
   const isSingleQuestion = questions.length === 1
   const isFirstQuestion = selectedIndex === 0
@@ -54,7 +54,7 @@ const SelectableQuestionQuizView: FC<SelectableQuestionQuizViewProps> = ({
   const questionsNumberList = questions.map((item, index) => {
     const answer = answers[item._id]
 
-    const state = getQuestionStatus({
+    const status = getQuestionStatus({
       question: item,
       answer,
       showAnswersCorrectness
@@ -66,10 +66,10 @@ const SelectableQuestionQuizView: FC<SelectableQuestionQuizViewProps> = ({
         onClick={() => setSelectedIndex(index)}
         sx={styles.root({
           isSelected: selectedIndex === index,
-          status: state
+          status: status
         })}
       >
-        <Box sx={styles.statusLine(state)} />
+        <Box sx={styles.statusLine(status)} />
         <Typography sx={styles.text}>{index + 1}</Typography>
       </Box>
     )
@@ -81,11 +81,34 @@ const SelectableQuestionQuizView: FC<SelectableQuestionQuizViewProps> = ({
 
   const onBack = () => !isFirstQuestion && setSelectedIndex(selectedIndex - 1)
 
+  const navigationArrows = !isSingleQuestion && (
+    <Box sx={styles.buttons}>
+      <AppButton
+        disabled={isFirstQuestion}
+        onClick={onBack}
+        size={SizeEnum.Large}
+        variant={ButtonVariantEnum.Tonal}
+      >
+        <ArrowBackIcon fontSize={SizeEnum.Medium} sx={styles.backIcon} />
+        {t('common.back')}
+      </AppButton>
+      <AppButton
+        disabled={isLastQuestion}
+        onClick={onNext}
+        size={SizeEnum.Large}
+        variant={ButtonVariantEnum.Tonal}
+      >
+        {t('common.next')}
+        <ArrowForward fontSize={SizeEnum.Medium} sx={styles.nextIcon} />
+      </AppButton>
+    </Box>
+  )
+
   return (
     <Box sx={sx?.root}>
       <Box sx={styles.selectableList}>{questionsNumberList}</Box>
-
       <QuizQuestion
+        appCardWrapper
         handleInputChange={handleInputChange(question._id)}
         handleNonInputValueChange={handleNonInputValueChange(question._id)}
         index={selectedIndex}
@@ -95,32 +118,10 @@ const SelectableQuestionQuizView: FC<SelectableQuestionQuizViewProps> = ({
         showCorrectAnswers={showCorrectAnswers}
         showPoints={showPoints}
         sx={spliceSx(styles.quizQuestion, sx?.question)}
-        useAppCard
         value={answers[question._id]}
         {...props}
       />
-      {!isSingleQuestion && (
-        <Box sx={styles.buttons}>
-          <AppButton
-            disabled={isFirstQuestion}
-            onClick={onBack}
-            size={SizeEnum.Large}
-            variant={ButtonVariantEnum.Tonal}
-          >
-            <ArrowBackIcon fontSize={SizeEnum.Medium} sx={styles.backIcon} />
-            {t('common.back')}
-          </AppButton>
-          <AppButton
-            disabled={isLastQuestion}
-            onClick={onNext}
-            size={SizeEnum.Large}
-            variant={ButtonVariantEnum.Tonal}
-          >
-            {t('common.next')}
-            <ArrowForward fontSize={SizeEnum.Medium} sx={styles.nextIcon} />
-          </AppButton>
-        </Box>
-      )}
+      {navigationArrows}
     </Box>
   )
 }

@@ -1,8 +1,12 @@
 import { ChangeEvent, FC } from 'react'
-import { Box, SxProps } from '@mui/material'
 
-import { Question, UseFormEventHandler } from '~/types'
+import Box from '@mui/material/Box'
+import { SxProps } from '@mui/material/styles'
+
 import QuizQuestion from '~/containers/quiz/quiz-question/Question'
+import { spliceSx } from '~/utils/helper-functions'
+import { styles } from '~/containers/quiz/scroll-question-quiz-view/ScrollQuestionsQuizView.styles'
+import { Question, UseFormEventHandler } from '~/types'
 
 export interface QuizViewProps {
   questions: Question[]
@@ -33,7 +37,6 @@ const ScrollQuestionsQuizView: FC<QuizViewProps> = ({
   const questionList = questions.map((question, index) => {
     return (
       <QuizQuestion
-        {...props}
         handleInputChange={handleInputChange(question._id)}
         handleNonInputValueChange={handleNonInputValueChange(question._id)}
         index={index}
@@ -42,8 +45,9 @@ const ScrollQuestionsQuizView: FC<QuizViewProps> = ({
         showAnswersCorrectness={showAnswersCorrectness}
         showCorrectAnswers={showCorrectAnswers}
         showPoints={showPoints}
-        sx={sx?.question}
+        sx={spliceSx(styles.question, sx?.question)}
         value={answers[question._id]}
+        {...props}
       />
     )
   })

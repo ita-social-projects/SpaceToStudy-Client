@@ -1,27 +1,35 @@
-type AnswerState = 'correct' | 'incorrect'
+import { AnswerStatus, AnswerStatusEnum } from '~/containers/quiz/question-answer/Answer.types'
 
-interface Params {
-  state?: AnswerState
-  isOpenAnswer?: boolean
-}
+export const styles = {
+  root: (status: AnswerStatus, isOpenAnswer: boolean) => {
+    const isCorrect = status === AnswerStatusEnum.Correct
+    const isIncorrect = status === AnswerStatusEnum.Incorrect
 
-export const styles = ({ state, isOpenAnswer }: Params) => {
-  const bgcolor = state && (state === 'correct' ? 'success.50' : 'error.50')
-  const color = state && (state === 'correct' ? 'success.main' : 'error.main')
+    const unsweredStatusColor = isCorrect ? 'success.50' : 'error.50'
 
-  return {
-    root: {
+    const bgcolor = isCorrect || isIncorrect ? unsweredStatusColor : undefined
+
+    return {
       p: isOpenAnswer ? undefined : '4px 12px 7px 3px',
       borderRadius: 2,
       display: 'flex',
       alignItems: 'center',
       bgcolor
-    },
-    label: {
-      m: '0px',
-      flex: '1'
-    },
-    icon: {
+    }
+  },
+  label: {
+    m: '0px',
+    flex: '1'
+  },
+  icon: (status: AnswerStatus) => {
+    const isCorrect = status === AnswerStatusEnum.Correct
+    const isIncorrect = status === AnswerStatusEnum.Incorrect
+
+    const unsweredStatusColor = isCorrect ? 'success.main' : 'error.main'
+
+    const color = isCorrect || isIncorrect ? unsweredStatusColor : undefined
+
+    return {
       color
     }
   }

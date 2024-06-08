@@ -39,7 +39,7 @@ const styles = {
       borderRadius: 1,
       fontWeight: 600,
       color: 'white',
-      typography: 'subtitle2',
+      typography: TypographyVariantEnum.Subtitle2,
       p: '4px'
     },
     title: {

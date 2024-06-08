@@ -1,5 +1,5 @@
-import Answer from '~/containers/quiz/question-answer/Answer.tsx'
 import { screen, render } from '@testing-library/react'
+import Answer from '~/containers/quiz/question-answer/Answer.tsx'
 
 const mockAnswer = {
   text: 'Right answer',
@@ -10,36 +10,33 @@ const mockAnswer = {
   isEditable: true
 }
 
-describe('Test answer component', () => {
-  beforeEach(() => {})
+const renderWithProps = (props = {}) =>
+  render(<Answer {...mockAnswer} {...props} />)
 
+describe('Test answer component', () => {
   it('should render answer component with one answer', () => {
-    render(<Answer {...mockAnswer} />)
+    renderWithProps()
 
     const answerInput = screen.getByRole('radio')
     expect(answerInput).toBeInTheDocument()
   })
 
   it('should render answer component with multiple answer', () => {
-    render(<Answer {...mockAnswer} type='multipleChoice' />)
+    renderWithProps({ type: 'multipleChoice' })
 
     const answerInput = screen.getByRole('checkbox')
     expect(answerInput).toBeInTheDocument()
   })
 
   it('should render answer component with open answer', () => {
-    render(<Answer {...mockAnswer} type='openAnswer' />)
+    renderWithProps({ type: 'openAnswer' })
 
     const answerInput = screen.getByRole('textbox')
     expect(answerInput).toBeInTheDocument()
   })
 
   it('should render uneditable answer component', () => {
-    const uneditableMockAnswer = {
-      ...mockAnswer,
-      isEditable: false
-    }
-    render(<Answer {...uneditableMockAnswer} />)
+    renderWithProps({ isEditable: false })
 
     const answerInput = screen.getByRole('radio')
     expect(answerInput).toHaveProperty('disabled', true)

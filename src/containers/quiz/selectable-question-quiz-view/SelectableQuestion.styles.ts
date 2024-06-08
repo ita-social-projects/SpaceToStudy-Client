@@ -1,16 +1,19 @@
 import { TypographyVariantEnum } from '~/types'
-
-type QuestionStatus = 'correct' | 'incorrect' | 'unanswered' | 'answered'
+import {
+  AnswerCompletionStatus,
+  AnswerCorrectnessStatus,
+  AnswerStatusEnum
+} from '~/containers/quiz/question-answer/Answer.types'
 
 interface RootParams {
   isSelected: boolean
-  status: QuestionStatus
+  status: AnswerStatusEnum[keyof AnswerStatusEnum]
 }
 
 export const styles = {
   root: ({ isSelected, status }: RootParams) => {
-    const isCorrect = status === 'correct'
-    const isIncorrect = status === 'incorrect'
+    const isCorrect = status === AnswerStatusEnum.Correct
+    const isIncorrect = status === AnswerStatusEnum.Incorrect
 
     const incorrect = isIncorrect ? 'error.50' : '#DAEFF0'
     const specificColor = isCorrect ? 'success.50' : incorrect
@@ -22,19 +25,19 @@ export const styles = {
       alignItems: 'center',
       justifyContent: 'center',
       minWidth: '79px',
-      bgcolor: bgcolor,
       borderRadius: '2px',
-      cursor: 'pointer'
+      cursor: 'pointer',
+      bgcolor
     }
   },
   quizQuestion: {
     display: 'block',
     p: '20px 30px'
   },
-  statusLine: (status: QuestionStatus) => {
-    const isCorrect = status === 'correct'
-    const isIncorrect = status === 'incorrect'
-    const isAnswered = status === 'answered'
+  statusLine: (status: AnswerCorrectnessStatus | AnswerCompletionStatus) => {
+    const isCorrect = status === AnswerStatusEnum.Correct
+    const isIncorrect = status === AnswerStatusEnum.Incorrect
+    const isAnswered = status === AnswerStatusEnum.Answered
 
     const withoutCorrectness = isAnswered ? '#73BBBD' : 'primary.200'
     const incorrect = isIncorrect ? 'error.600' : withoutCorrectness
@@ -63,9 +66,6 @@ export const styles = {
     gap: '24px',
     justifyContent: { xs: 'center', sm: 'flex-end' },
     mt: '32px'
-  },
-  button: {
-    py: '12px !important'
   },
   backIcon: {
     mr: '5px'

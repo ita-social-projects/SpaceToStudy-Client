@@ -1,4 +1,8 @@
 import { TypographyVariantEnum } from '~/types'
+import {
+  AnswerCorrectnessStatus,
+  AnswerStatusEnum
+} from '~/containers/quiz/question-answer/Answer.types'
 
 export const styles = {
   root: {
@@ -42,7 +46,7 @@ export const styles = {
   answersContainer: {
     gap: '8px'
   },
-  icon: (state?: 'incorrect' | 'correct') => ({
-    color: state === 'correct' ? 'success.main' : 'error.main'
+  icon: (state?: AnswerCorrectnessStatus) => ({
+    color: state === AnswerStatusEnum.Correct ? 'success.main' : 'error.main'
   })
 }
