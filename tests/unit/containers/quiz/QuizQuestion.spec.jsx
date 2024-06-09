@@ -26,14 +26,14 @@ describe('Quiz Question tests', () => {
   })
 
   it('Should render correct answers', () => {
-    renderWithProps({ showCorrectAnswers: true })
+    renderWithProps({ shouldShowCorrectAnswers: true })
 
     const element = screen.getAllByText(mockQuestion.answers[0].text)[1]
     expect(element).toBeInTheDocument()
   })
 
   it('Should render points', () => {
-    renderWithProps({ showPoints: true })
+    renderWithProps({ shouldShowPoints: true })
 
     const element = screen.getByText('0/1')
     expect(element).toBeInTheDocument()

@@ -23,9 +23,9 @@ interface QuizQuestionProps {
   question: Question
   index: number
   value: string | null | string[]
-  showCorrectAnswers?: boolean
-  showPoints?: boolean
-  showAnswersCorrectness?: boolean
+  shouldShowCorrectAnswers?: boolean
+  shouldShowPoints?: boolean
+  shouldShowAnswersCorrectness?: boolean
   isEditable?: boolean
   shouldUseAppCardWrapper?: boolean
   sx?: SxProps
@@ -37,9 +37,9 @@ const QuizQuestion: FC<QuizQuestionProps> = ({
   shouldUseAppCardWrapper,
   sx,
   index,
-  showPoints,
-  showCorrectAnswers,
-  showAnswersCorrectness,
+  shouldShowPoints,
+  shouldShowCorrectAnswers,
+  shouldShowAnswersCorrectness,
   value,
   question,
   isEditable,
@@ -61,13 +61,13 @@ const QuizQuestion: FC<QuizQuestionProps> = ({
   )
 
   const correctnessIcon =
-    showAnswersCorrectness &&
+    shouldShowAnswersCorrectness &&
     (isCorrect ? <CheckIcon sx={iconStyles} /> : <CloseIcon sx={iconStyles} />)
 
-  const shouldShowCorrectAnswers = showCorrectAnswers && !isOpenAnswer
+  const showCorrectAnswers = shouldShowCorrectAnswers && !isOpenAnswer
 
   const correctAnswersList =
-    shouldShowCorrectAnswers &&
+    showCorrectAnswers &&
     question.answers
       .filter((item) => item.isCorrect)
       .map((item) => (
@@ -77,13 +77,13 @@ const QuizQuestion: FC<QuizQuestionProps> = ({
           isEditable={false}
           key={item.text}
           label={item.text}
-          showCorrectness
+          shouldShowCorrectness
           text={item.text}
           type={question.type}
         />
       ))
 
-  const correctAnswers = shouldShowCorrectAnswers && (
+  const correctAnswers = showCorrectAnswers && (
     <Box sx={styles.correctAnswers.root}>
       <Typography sx={styles.correctAnswers.title}>
         {t('myResourcesPage.quizzes.correctAnswers')}
@@ -93,10 +93,10 @@ const QuizQuestion: FC<QuizQuestionProps> = ({
   )
 
   const answersList = question.answers.map((answer) => {
-    const isValidMultipleChoice = value && isMultipleChoice
-    const isChecked = isValidMultipleChoice
-      ? value.includes(answer.text)
-      : value === answer.text
+    const isChecked =
+      value && isMultipleChoice
+        ? value.includes(answer.text)
+        : value === answer.text
 
     const handleChange = () => {
       if (isMultipleChoice) {
@@ -119,7 +119,7 @@ const QuizQuestion: FC<QuizQuestionProps> = ({
         key={answer.text}
         label={answer.text}
         onCheckboxChange={handleChange}
-        showCorrectness={showAnswersCorrectness}
+        shouldShowCorrectness={shouldShowAnswersCorrectness}
         text={answer.text}
         type={question.type}
         value={answer.text}
@@ -139,7 +139,7 @@ const QuizQuestion: FC<QuizQuestionProps> = ({
       isEditable={isEditable}
       label={question.text}
       onTextInputChange={handleInputChange}
-      showCorrectness={showAnswersCorrectness}
+      shouldShowCorrectness={shouldShowAnswersCorrectness}
       text={question.text}
       type={question.type}
       value={value as string}
@@ -148,7 +148,7 @@ const QuizQuestion: FC<QuizQuestionProps> = ({
     multipleChoiceAnswersBlock
   )
 
-  const pointsBlock = showPoints && (
+  const pointsBlock = shouldShowPoints && (
     <Typography sx={styles.type}>{Number(isCorrect)}/1</Typography>
   )
 

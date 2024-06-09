@@ -7,17 +7,18 @@ import { Question } from '~/types'
 interface GetQuestionStatusParams {
   question: Question
   answer: null | string | string[]
-  showAnswersCorrectness: boolean
+  shouldShowAnswersCorrectness: boolean
 }
 
 export const getQuestionStatus = ({
   answer,
   question,
-  showAnswersCorrectness
+  shouldShowAnswersCorrectness
 }: GetQuestionStatusParams) => {
   const { isOpenAnswer } = determineQuestionType(question.type)
 
-  if (isOpenAnswer && showAnswersCorrectness) return AnswerStatusEnum.Correct
+  if (isOpenAnswer && shouldShowAnswersCorrectness)
+    return AnswerStatusEnum.Correct
 
   const isMultipleChoiceAnswered = Array.isArray(answer) ? answer.length : true
 
@@ -29,11 +30,11 @@ export const getQuestionStatus = ({
     ? AnswerStatusEnum.Correct
     : AnswerStatusEnum.Incorrect
 
-  const answeredStatus = showAnswersCorrectness
+  const answeredStatus = shouldShowAnswersCorrectness
     ? correctnessStatus
     : AnswerStatusEnum.Answered
 
-  const shouldShowSpecificStatus = isAnswered || showAnswersCorrectness
+  const shouldShowSpecificStatus = isAnswered || shouldShowAnswersCorrectness
 
   return shouldShowSpecificStatus ? answeredStatus : AnswerStatusEnum.Unanswered
 }

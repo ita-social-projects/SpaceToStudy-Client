@@ -30,9 +30,9 @@ interface SelectableQuestionQuizViewProps {
   handleNonInputValueChange: (key: string) => (value: string | string[]) => void
   answers: Record<string, string | string[]>
   isEditable?: boolean
-  showCorrectAnswers?: boolean
-  showPoints?: boolean
-  showAnswersCorrectness?: boolean
+  shouldShowCorrectAnswers?: boolean
+  shouldShowPoints?: boolean
+  shouldShowAnswersCorrectness?: boolean
   sx?: { root?: SxProps; question?: SxProps }
 }
 
@@ -41,9 +41,9 @@ const SelectableQuestionQuizView: FC<SelectableQuestionQuizViewProps> = ({
   handleInputChange,
   handleNonInputValueChange,
   answers,
-  showCorrectAnswers = false,
-  showPoints = false,
-  showAnswersCorrectness = false,
+  shouldShowCorrectAnswers = false,
+  shouldShowPoints = false,
+  shouldShowAnswersCorrectness = false,
   sx,
   ...props
 }) => {
@@ -62,7 +62,7 @@ const SelectableQuestionQuizView: FC<SelectableQuestionQuizViewProps> = ({
     const status = getQuestionStatus({
       question: item,
       answer,
-      showAnswersCorrectness
+      shouldShowAnswersCorrectness
     })
 
     const questionButtonStyles = styles.questionButton(isSelected, status)
@@ -119,10 +119,10 @@ const SelectableQuestionQuizView: FC<SelectableQuestionQuizViewProps> = ({
         index={selectedIndex}
         key={question._id}
         question={question}
+        shouldShowAnswersCorrectness={shouldShowAnswersCorrectness}
+        shouldShowCorrectAnswers={shouldShowCorrectAnswers}
+        shouldShowPoints={shouldShowPoints}
         shouldUseAppCardWrapper
-        showAnswersCorrectness={showAnswersCorrectness}
-        showCorrectAnswers={showCorrectAnswers}
-        showPoints={showPoints}
         sx={spliceSx(styles.quizQuestion, sx?.question)}
         value={answers[question._id]}
         {...props}

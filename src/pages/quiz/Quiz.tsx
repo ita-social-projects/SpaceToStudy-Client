@@ -82,9 +82,9 @@ const QuizPage = () => {
       handleNonInputValueChange={handleNonInputChange}
       isEditable={!isFinished}
       questions={items}
-      showAnswersCorrectness={showAnswersCorrectness}
-      showCorrectAnswers={showCorrectAnswers}
-      showPoints={showPoints}
+      shouldShowAnswersCorrectness={showAnswersCorrectness}
+      shouldShowCorrectAnswers={showCorrectAnswers}
+      shouldShowPoints={showPoints}
       sx={styles.selectableQuestionQuizWrapper}
     />
   ) : (
@@ -94,9 +94,9 @@ const QuizPage = () => {
       handleNonInputValueChange={handleNonInputChange}
       isEditable={!isFinished}
       questions={items}
-      showAnswersCorrectness={showAnswersCorrectness}
-      showCorrectAnswers={showCorrectAnswers}
-      showPoints={showPoints}
+      shouldShowAnswersCorrectness={showAnswersCorrectness}
+      shouldShowCorrectAnswers={showCorrectAnswers}
+      shouldShowPoints={showPoints}
     />
   )
 

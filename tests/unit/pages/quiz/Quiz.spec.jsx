@@ -49,6 +49,10 @@ describe('Test quiz page', () => {
     renderWithProviders(<Quiz />)
   })
 
+  afterAll(() => {
+    useAxios.mockReset()
+  })
+
   it('should render Quiz page', () => {
     const quizTitle = screen.getByText('JS Quiz')
 

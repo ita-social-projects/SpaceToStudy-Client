@@ -27,7 +27,7 @@ interface AnswerProps {
   value?: string
   label?: string
   checked?: boolean
-  showCorrectness?: boolean
+  shouldShowCorrectness?: boolean
   type: QuestionTypesEnum
   isEditable?: boolean
   sx?: SxProps
@@ -45,14 +45,15 @@ const Answer: FC<AnswerProps> = ({
   onTextInputChange,
   onCheckboxChange,
   value,
-  showCorrectness = false,
+  shouldShowCorrectness = false,
   isEditable = true
 }) => {
   const { isMultipleChoice, isOpenAnswer } = determineQuestionType(type)
 
   const { t } = useTranslation()
 
-  const shouldShowAnswerStatus = (isOpenAnswer || checked) && showCorrectness
+  const shouldShowAnswerStatus =
+    (isOpenAnswer || checked) && shouldShowCorrectness
   const answerCorrectnessStatus = isCorrect
     ? AnswerStatusEnum.Correct
     : AnswerStatusEnum.Incorrect
