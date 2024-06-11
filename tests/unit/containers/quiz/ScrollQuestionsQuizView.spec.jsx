@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/react'
+import ScrollQuestionsQuizView from '~/containers/quiz/scroll-question-quiz-view/ScrollQuestionsQuizView'
 import { renderWithProviders } from '~tests/test-utils'
-import ScrollQuestionsQuizView from '~/containers/my-quizzes/scroll-question-quiz-view/ScrollQuestionsQuizView'
 
 const mockedQuestion = [
   {
@@ -26,22 +26,16 @@ const mockedQuestion = [
   }
 ]
 
-const mockedDescription = 'Description'
+const mockedProps = {
+  answers: {},
+  questions: mockedQuestion,
+  handleInputChange: () => {},
+  handleNonInputValueChange: () => {}
+}
 
 describe('Tests scroll view quiz page', () => {
   beforeEach(() => {
-    renderWithProviders(
-      <ScrollQuestionsQuizView
-        description={mockedDescription}
-        questions={mockedQuestion}
-      />
-    )
-  })
-
-  it('should render description', () => {
-    const description = screen.getByText(mockedDescription)
-
-    expect(description).toBeInTheDocument()
+    renderWithProviders(<ScrollQuestionsQuizView {...mockedProps} />)
   })
 
   it('should render first quiz question', () => {

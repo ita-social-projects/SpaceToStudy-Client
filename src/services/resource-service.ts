@@ -43,11 +43,10 @@ export const ResourceService = {
       createUrlPath(URLs.resources.lessons.patch, id),
       data
     ),
-  getQuizzes: (
+  getQuizzes: async (
     params?: GetResourcesParams
-  ): Promise<AxiosResponse<ItemsWithCount<Quiz>>> => {
-    return axiosClient.get(URLs.quizzes.get, { params })
-  },
+  ): Promise<AxiosResponse<ItemsWithCount<Quiz>>> =>
+    await axiosClient.get(URLs.quizzes.get, { params }),
   getQuiz: async (id?: string): Promise<AxiosResponse<Quiz>> =>
     await axiosClient.get(createUrlPath(URLs.quizzes.get, id)),
   addQuiz: async (data?: CreateQuizParams): Promise<AxiosResponse> =>

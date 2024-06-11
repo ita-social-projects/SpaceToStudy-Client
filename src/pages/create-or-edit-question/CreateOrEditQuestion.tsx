@@ -24,7 +24,7 @@ import {
   initialValues,
   defaultResponse
 } from './CreateOrEditQuestion.constants'
-import { questionType } from '~/components/question-editor/QuestionEditor.constants'
+import { determineQuestionType } from '~/components/question-editor/QuestionEditor.constants'
 import {
   ButtonTypeEnum,
   ButtonVariantEnum,
@@ -145,7 +145,7 @@ const CreateOrEditQuestion = () => {
   })
 
   const { type, title, text, answers, openAnswer, category } = data
-  const { isOpenAnswer } = questionType(type)
+  const { isOpenAnswer } = determineQuestionType(type)
 
   const isButtonsVisible = isOpenAnswer
     ? Boolean(title && text && openAnswer)

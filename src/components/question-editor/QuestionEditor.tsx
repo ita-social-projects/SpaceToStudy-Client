@@ -20,7 +20,7 @@ import AppTextField from '~/components/app-text-field/AppTextField'
 import AppButton from '~/components/app-button/AppButton'
 import AppSelect from '~/components/app-select/AppSelect'
 import {
-  questionType,
+  determineQuestionType,
   sortQuestions
 } from '~/components/question-editor/QuestionEditor.constants'
 
@@ -63,7 +63,8 @@ const QuestionEditor: FC<QuestionEditorProps> = ({
   const { openMenu, renderMenu, closeMenu } = useMenu()
 
   const { type, text, answers, openAnswer } = data
-  const { isMultipleChoice, isOpenAnswer, isSingleChoice } = questionType(type)
+  const { isMultipleChoice, isOpenAnswer, isSingleChoice } =
+    determineQuestionType(type)
 
   const isEmptyAnswer = answers[answers.length - 1]?.text === ''
   const option = sortQuestions.find((item) => item.value === data.type)

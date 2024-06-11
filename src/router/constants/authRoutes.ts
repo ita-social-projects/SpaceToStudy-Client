@@ -43,6 +43,9 @@ export const authRoutes = {
   cooperationLessonDetails: {
     route: 'my-cooperations/:id/lesson-details/:lessonId'
   },
+  cooperationQuiz: {
+    route: 'my-cooperations/:id/quiz/:quizId'
+  },
   accountMenu: {
     myProfile: { route: 'my-profile', path: '/my-profile' },
     myCooperations: {

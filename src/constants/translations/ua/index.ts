@@ -39,6 +39,7 @@ import editProfilePage from './edit-profile.json'
 import studentHomePage from './student-home-page.json'
 import becomeTutor from './become-tutor.json'
 import userProfilePage from './user-profile-page.json'
+import quiz from './quiz.json'
 
 const ua = {
   translations: {
@@ -82,7 +83,8 @@ const ua = {
     editProfilePage,
     studentHomePage,
     becomeTutor,
-    userProfilePage
+    userProfilePage,
+    quiz
   }
 }
 

@@ -1,7 +1,7 @@
 import { screen, fireEvent } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 
-import SelectableQuestionQuizView from '~/containers/my-quizzes/selectable-question-quiz-view/SelectableQuestionQuizView'
+import SelectableQuestionQuizView from '~/containers/quiz/selectable-question-quiz-view/SelectableQuestionQuizView'
 
 const questionsMock = [
   {
@@ -18,11 +18,16 @@ const questionsMock = [
   }
 ]
 
+const mockedProps = {
+  answers: {},
+  questions: questionsMock,
+  handleInputChange: () => {},
+  handleNonInputValueChange: () => {}
+}
+
 describe('SelectableQuestion component test', () => {
   beforeEach(() => {
-    renderWithProviders(
-      <SelectableQuestionQuizView questions={questionsMock} />
-    )
+    renderWithProviders(<SelectableQuestionQuizView {...mockedProps} />)
   })
 
   it('renders the component with question', () => {
