@@ -72,7 +72,7 @@ const CreateOrEditQuizQuestion: FC<CreateOrEditQuizQuestionProps> = ({
     dispatch(
       openAlert({
         severity: snackbarVariants.success,
-        message: 'categoriesPage.newSubject.successMessage'
+        message: 'myResourcesPage.questions.successAddedQuestion'
       })
     )
     onCancel()
