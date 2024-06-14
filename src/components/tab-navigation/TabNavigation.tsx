@@ -48,7 +48,7 @@ const TabNavigation = <T extends string, U extends Record<T, BaseTabsData>>({
     )
   })
 
-  return <Box sx={spliceSx(sx?.root, styles.tabs)}>{tabs}</Box>
+  return <Box sx={spliceSx(styles.tabs, sx?.root)}>{tabs}</Box>
 }
 
 export default TabNavigation

@@ -23,7 +23,10 @@ export const styles = {
   },
   tabsWrapper: {
     display: 'flex',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    borderBottom: '1px solid',
+    borderColor: 'primary.100',
+    mb: '24px'
   },
   pageContent: {
     flex: 1
@@ -47,6 +50,8 @@ export const styles = {
   },
   tabs: {
     root: {
+      borderBottom: '0px',
+      mb: '0px',
       '& > button': {
         minWidth: '100px'
       },
