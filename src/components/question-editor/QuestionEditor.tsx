@@ -186,7 +186,7 @@ const QuestionEditor: FC<QuestionEditorProps> = ({
       <Box sx={styles.header}>
         <Box sx={styles.options}>
           {option && <Box sx={styles.iconWrapper}>{option.icon}</Box>}
-          <AppSelect<string>
+          <AppSelect
             fields={sortOptions}
             setValue={handleTypeChange}
             sx={styles.selectContainer}
