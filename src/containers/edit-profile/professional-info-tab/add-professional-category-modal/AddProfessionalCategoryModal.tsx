@@ -125,11 +125,18 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
     initialValues: initialFormValues,
     onSubmit: formSubmission
   })
+
+  const isSubmitDisabled = (subjects: SubjectNameInterface[]) => {
+    const areSubjectsPresent = subjects.length > 0
+    const areAllSubjectsValid = subjects.every((subject) => subject._id)
+    return areAllSubjectsValid && areSubjectsPresent
+  }
+
   const handleMainStudyCategoryChange = (
     _: SyntheticEvent,
     value: CategoryNameInterface | null
   ) => {
-    handleDataChange({ category: value })
+    handleDataChange({ category: value, professionalSubjectTemplate })
   }
 
   const handleProfessionalSubjectChange =
@@ -224,6 +231,7 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
       </Box>
       <Box sx={styles.buttonGroup}>
         <AppButton
+          disabled={!isSubmitDisabled(data.subjects)}
           type={ButtonTypeEnum.Submit}
           variant={ButtonVariantEnum.Contained}
         >
