@@ -15,6 +15,7 @@ import {
 
 import { subjectService } from '~/services/subject-service'
 import { categoryService } from '~/services/category-service'
+import { isSubmitDisabled } from '~/utils/is-submit-disabled'
 import useForm from '~/hooks/use-form'
 
 import Box from '@mui/material/Box'
@@ -125,12 +126,6 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
     initialValues: initialFormValues,
     onSubmit: formSubmission
   })
-
-  const isSubmitDisabled = (subjects: SubjectNameInterface[]) => {
-    const areSubjectsPresent = subjects.length > 0
-    const areAllSubjectsValid = subjects.every((subject) => subject._id)
-    return areAllSubjectsValid && areSubjectsPresent
-  }
 
   const handleMainStudyCategoryChange = (
     _: SyntheticEvent,
