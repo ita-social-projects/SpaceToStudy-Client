@@ -55,13 +55,7 @@ const UserProfileInfo: FC<UserProfileInfoProps> = ({
 }) => {
   const { t } = useTranslation()
 
-  const name = (
-    <>
-      {firstName}
-      <br />
-      {lastName}
-    </>
-  )
+  const name = `${firstName} ${lastName}`
 
   const userURL = createUrlPath(authRoutes.userProfile.path, _id, {
     role
