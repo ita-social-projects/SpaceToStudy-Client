@@ -4,7 +4,10 @@
       "tutor": "Student for private lessons",
       "student": "Tutor for private lessons"
     },
-    "description": "Find the perfect tutor for your needs by creating a request. Select the options that best describe what you're looking for.",
+    "description": {
+      "tutor": "Start building your tutoring business by creating your offer. Select the options that best describes your expertise.",
+      "student": "Find the perfect tutor for your needs by creating a request. Select the options that best describe what you're looking for."
+    },
     "button": "Create request"
   },
   "titleWithDescription": {
