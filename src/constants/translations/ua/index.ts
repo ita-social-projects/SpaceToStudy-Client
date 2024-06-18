@@ -30,6 +30,7 @@ import footer from './footer.json'
 import step from './step.json'
 import userTable from './user-table.json'
 import admin from './admin.json'
+import cookieConsentBanner from './cookie-consent-banner.json'
 import cookiePolicyPage from './cookie-policy-page.json'
 import guestHomePage from './guest-home-page.json'
 import table from './table.json'
@@ -75,6 +76,7 @@ const ua = {
     step,
     userTable,
     admin,
+    cookieConsentBanner,
     cookiePolicyPage,
     guestHomePage,
     table,

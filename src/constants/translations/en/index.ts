@@ -9,6 +9,7 @@ import guestHomePage from './guest-home-page.json'
 import studentHomePage from './student-home-page.json'
 import categoriesPage from './categories-page.json'
 import cookiePolicyPage from './cookie-policy-page.json'
+import cookieConsentBanner from './cookie-consent-banner.json'
 import iconsTooltip from './icons-tooltip.json'
 import signup from './signup.json'
 import footer from './footer.json'
@@ -55,6 +56,7 @@ const en = {
     signup,
     studentHomePage,
     categoriesPage,
+    cookieConsentBanner,
     cookiePolicyPage,
     footer,
     becomeTutor,
