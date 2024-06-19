@@ -43,4 +43,19 @@ describe('title-with-description component with tooltip', () => {
       expect(tooltipContent).toHaveTextContent(props.description)
     })
   })
+
+  describe('title-with-description component with React component as description', () => {
+    const props = {
+      title: 'Title for test case',
+      description: <div>React component description</div>
+    }
+
+    it('should render description as a div when description is a React component', () => {
+      render(<TitleWithDescription {...props} />)
+      const descriptionElement = screen.getByText('React component description')
+      const parentElement = descriptionElement.parentElement
+
+      expect(parentElement.tagName).toBe('DIV')
+    })
+  })
 })
