@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+import { useMemo, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Typography from '@mui/material/Typography'
@@ -45,7 +45,25 @@ const SpecializationBlock = <T extends CreateOrUpdateOfferData>({
   const handleCheckboxesChange = (value: ProficiencyLevelEnum[]) => {
     handleNonInputValueChange('proficiencyLevel', value)
   }
-  const levelOptions = Object.values(ProficiencyLevelEnum)
+
+  const levelOptions = useMemo(() => Object.values(ProficiencyLevelEnum), [])
+  const levelLabels = useMemo(
+    () =>
+      new Map([
+        [ProficiencyLevelEnum.Beginner, t('common.levels.beginner')],
+        [ProficiencyLevelEnum.Intermediate, t('common.levels.intermediate')],
+        [ProficiencyLevelEnum.Advanced, t('common.levels.advanced')],
+        [
+          ProficiencyLevelEnum.TestPreparation,
+          t('common.levels.testPreparation')
+        ],
+        [ProficiencyLevelEnum.Professional, t('common.levels.professional')],
+        [ProficiencyLevelEnum.Specialized, t('common.levels.specialized')]
+      ]),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  )
+
   const subjectError = data.category && errors.subject
 
   const checkboxListProps =
@@ -104,6 +122,7 @@ const SpecializationBlock = <T extends CreateOrUpdateOfferData>({
             error={t(errors.proficiencyLevel)}
             {...checkboxListProps}
             items={levelOptions}
+            labels={levelLabels}
             onChange={handleCheckboxesChange}
             value={data.proficiencyLevel}
           />

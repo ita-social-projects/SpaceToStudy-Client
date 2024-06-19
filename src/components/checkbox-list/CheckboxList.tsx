@@ -15,6 +15,7 @@ interface CheckboxListProps<T> extends Pick<TypographyProps, 'variant'> {
   error?: string
   fillRange?: boolean
   singleSelect?: boolean
+  labels?: Map<T, string>
   onChange: (checkbox: T[]) => void
 }
 
@@ -26,6 +27,7 @@ const CheckboxList = <T extends string>({
   fillRange,
   singleSelect = false,
   variant,
+  labels,
   onChange
 }: CheckboxListProps<T>) => {
   const { t } = useTranslation()
@@ -52,7 +54,11 @@ const CheckboxList = <T extends string>({
         />
       }
       key={checkbox}
-      label={<Typography variant={variant}>{t(checkbox)}</Typography>}
+      label={
+        <Typography variant={variant}>
+          {labels?.has(checkbox) ? labels.get(checkbox)! : t(checkbox)}
+        </Typography>
+      }
       onChange={() => handleCheckbox(checkbox)}
     />
   ))
