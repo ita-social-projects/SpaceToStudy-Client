@@ -54,13 +54,13 @@ const CookieConsentBanner: FC = () => {
         />
       </Typography>
       <AppButton
-        endIcon={<DoneIcon sx={styles.buttonIcon} />}
         onClick={handleButtonClick}
         size='extraLarge'
         sx={styles.button}
         variant='text'
       >
         {t('cookieConsentBanner.acceptButton')}
+        <DoneIcon />
       </AppButton>
     </Box>,
     document.body

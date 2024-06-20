@@ -27,12 +27,6 @@ export const styles = {
     fontWeight: '500',
     color: 'basic.grey'
   },
-  buttonIcon: {
-    width: '24px',
-    height: '24px',
-    ml: '-12px',
-    mt: '-2px'
-  },
   button: {
     minWidth: '210px',
     color: 'primary.900',
