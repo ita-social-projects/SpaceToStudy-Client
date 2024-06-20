@@ -3,7 +3,7 @@ export const styles = {
     mt: { xs: '64px', md: '84px' },
 
     img: {
-      xs: { display: 'none', width: '168px', height: '168px' },
+      xs: { display: 'none', width: '246px', height: '246px' },
       md: { display: 'block' }
     }
   },
