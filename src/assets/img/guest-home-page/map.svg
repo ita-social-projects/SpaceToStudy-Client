@@ -1,11 +1,7 @@
 <svg width="780" height="507" viewBox="0 0 780 507" fill="none" xmlns="http://www.w3.org/2000/svg">
   <g filter="url(#a)">
-    <g filter="url(#b)">
-      <rect x="18" y="15" width="744" height="470" rx="16" fill="#ECEFF1"/>
-    </g>
-    <g opacity=".5" filter="url(#c)">
-      <path d="M18 31c0-8.837 7.163-16 16-16h712c8.837 0 16 7.163 16 16v19.621H18V31Z" fill="#CFD8DC"/>
-    </g>
+    <rect filter="url(#b)" x="18" y="15" width="744" height="470" rx="16" fill="#ECEFF1"/>
+    <path opacity=".5" filter="url(#c)" d="M18 31c0-8.837 7.163-16 16-16h712c8.837 0 16 7.163 16 16v19.621H18V31Z" fill="#CFD8DC"/>
     <ellipse cx="47.571" cy="32.81" rx="5.571" ry="5.937" fill="#EE6767"/>
     <ellipse cx="71.141" cy="32.81" rx="6" ry="5.937" fill="#F7C566"/>
     <ellipse cx="95.141" cy="32.81" rx="6" ry="5.937" fill="#5BEB7B"/>
