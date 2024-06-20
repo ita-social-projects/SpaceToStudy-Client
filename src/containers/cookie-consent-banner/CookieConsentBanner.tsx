@@ -37,14 +37,14 @@ const CookieConsentBanner: FC = () => {
           components={[
             <Link
               component={HashLink}
-              key={guestRoutes.privacyPolicy.path}
+              key={guestRoutes.cookiePolicy.path}
               sx={styles.link}
               target='_blank'
-              to={guestRoutes.privacyPolicy.path}
+              to={guestRoutes.cookiePolicy.path}
             />,
             <Link
               component={HashLink}
-              key={'2'}
+              key={guestRoutes.privacyPolicy.path}
               sx={styles.link}
               target='_blank'
               to={guestRoutes.privacyPolicy.path}
