@@ -1,4 +1,5 @@
 {
+  "subject": "subject",
   "subjects": {
     "title": "{{category}} Subjects",
     "description": "Explore subjects you're passionate about.",

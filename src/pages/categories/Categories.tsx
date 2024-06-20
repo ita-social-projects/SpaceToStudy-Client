@@ -22,6 +22,7 @@ import NotFoundResults from '~/components/not-found-results/NotFoundResults'
 import CreateSubjectModal from '~/containers/find-offer/create-new-subject/CreateNewSubject'
 import serviceIcon from '~/assets/img/student-home-page/service_icon.png'
 import { getOpositeRole, getScreenBasedLimit } from '~/utils/helper-functions'
+import { getSuffixes } from '~/utils/get-translation-suffixes'
 
 import {
   CategoryInterface,
@@ -34,7 +35,9 @@ import { authRoutes } from '~/router/constants/authRoutes'
 import { styles } from '~/pages/categories/Categories.styles'
 
 const Categories = () => {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
+  const nameOfSearchContent = t('categoriesPage.category')
+  const { suffix } = getSuffixes(nameOfSearchContent, i18n.language)
   const { userRole } = useAppSelector((state) => state.appMain)
   const breakpoints = useBreakpoints()
   const [match, setMatch] = useState<string>('')
@@ -129,8 +132,14 @@ const Categories = () => {
 
       {!categories.length && !categoriesLoading ? (
         <NotFoundResults
-          buttonText={t('errorMessages.buttonRequest', { name: 'categories' })}
-          description={t('errorMessages.tryAgainText', { name: 'categories' })}
+          buttonText={t('errorMessages.buttonRequest', {
+            name: nameOfSearchContent,
+            suffix
+          })}
+          description={t('errorMessages.tryAgainText', {
+            name: nameOfSearchContent,
+            suffix
+          })}
           onClick={handleOpenModal}
         />
       ) : (
