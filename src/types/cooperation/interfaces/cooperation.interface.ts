@@ -21,7 +21,7 @@ export interface Cooperation extends CommonEntityFields {
   proficiencyLevel: ProficiencyLevelEnum
   status: StatusEnum
   needAction: UserRoleEnum
-  sections: Pick<CourseSection, 'title' | 'description'>
+  sections: CourseSection[]
 }
 
 export interface MyCooperationDetails<TOffer extends Offer> {

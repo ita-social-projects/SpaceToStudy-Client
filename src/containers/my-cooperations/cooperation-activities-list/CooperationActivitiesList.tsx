@@ -3,67 +3,77 @@ import Box from '@mui/material/Box'
 import CourseSectionsList from '~/containers/course-sections-list/CourseSectionsList'
 
 import { useEffect } from 'react'
-import { sectionInitialData } from '~/pages/create-course/CreateCourse.constants'
-import { CourseSection, CourseResource } from '~/types'
-import { useAppSelector } from '~/hooks/use-redux'
-import { cooperationsSelector } from '~/redux/features/cooperationsSlice'
+import {
+  CourseSection,
+  Lesson,
+  Quiz,
+  Attachment,
+  CourseResource,
+  Activities
+} from '~/types'
+import { useAppSelector, useAppDispatch } from '~/hooks/use-redux'
+import {
+  cooperationsSelector,
+  setCooperationSections,
+  updateCooperationSection
+} from '~/redux/features/cooperationsSlice'
+import { initialCooperationSectionData } from '~/containers/my-cooperations/cooperation-activities-list/CooperationActivitiesList.constants'
 
-interface CooperationActivitiesListProps {
-  data: { sections: CourseSection[] }
-  handleNonInputValueChange: (key: 'sections', value: CourseSection[]) => void
-}
-
-const CooperationActivitiesList = ({
-  data,
-  handleNonInputValueChange
-}: CooperationActivitiesListProps) => {
-  const { selectedCourse, isAddedClicked, currentSectionIndex } =
-    useAppSelector(cooperationsSelector)
+const CooperationActivitiesList = () => {
+  const {
+    selectedCourse,
+    isAddedClicked,
+    currentSectionIndex,
+    isNewActivity,
+    sections
+  } = useAppSelector(cooperationsSelector)
+  const dispatch = useAppDispatch()
 
   const setSectionsData = (value: CourseSection[]) => {
-    handleNonInputValueChange('sections', value)
+    dispatch(setCooperationSections(value))
   }
-  const { isNewActivity } = useAppSelector(cooperationsSelector)
   const handleSectionChange = (
     id: string,
     field: keyof CourseSection,
-    value: string
+    value: string | CourseResource[]
   ) => {
-    const sectionToEdit = data.sections.find((item) => item.id === id)
-    sectionToEdit && Object.defineProperty(sectionToEdit, field, { value })
-  }
+    type Value = string &
+      Lesson[] &
+      Quiz[] &
+      Attachment[] &
+      string[] &
+      Activities[]
 
-  const handleNonInputChange = (
-    id: string,
-    field: keyof CourseSection,
-    value: CourseResource[]
-  ) => {
-    const sectionToEdit = data.sections.find((section) => section.id === id)
-    sectionToEdit && Object.defineProperty(sectionToEdit, field, { value })
-    setSectionsData(data.sections)
+    dispatch(
+      updateCooperationSection({
+        id,
+        field,
+        value: value as Value
+      })
+    )
   }
 
   const addNewSection = (index: number | undefined = undefined) => {
-    const newSectionData = { ...sectionInitialData }
+    const newSectionData = { ...initialCooperationSectionData }
     newSectionData.id = Date.now().toString()
     const newSections =
       index !== null
         ? [
-            ...data.sections.slice(0, index),
+            ...sections.slice(0, index),
             newSectionData,
-            ...data.sections.slice(index)
+            ...sections.slice(index)
           ]
-        : [...data.sections, newSectionData]
+        : [...sections, newSectionData]
 
     setSectionsData(newSections)
   }
 
   useEffect(() => {
-    if (!data.sections.length && !isAddedClicked && isNewActivity) {
+    if (!sections.length && !isAddedClicked && isNewActivity) {
       addNewSection()
     }
 
-    if (selectedCourse && !data.sections.length && isAddedClicked) {
+    if (selectedCourse && !sections.length && isAddedClicked) {
       const allSections = selectedCourse.sections.map((section, index) => ({
         ...section,
         id: Date.now().toString() + index
@@ -71,7 +81,7 @@ const CooperationActivitiesList = ({
       setSectionsData(allSections)
     }
 
-    if (selectedCourse && data.sections.length && isAddedClicked) {
+    if (selectedCourse && sections.length && isAddedClicked) {
       const addNewSectionsCourse = (index: number | undefined = undefined) => {
         const newSectionData = selectedCourse.sections.map(
           (section, index) => ({
@@ -79,15 +89,15 @@ const CooperationActivitiesList = ({
             id: Date.now().toString() + index
           })
         )
-        let newSections = []
+        let newSections
         if (index !== undefined) {
           newSections = [
-            ...data.sections.slice(0, index),
+            ...sections.slice(0, index),
             ...newSectionData,
-            ...data.sections.slice(index)
+            ...sections.slice(index)
           ]
         } else {
-          newSections = [...data.sections, ...newSectionData]
+          newSections = [...sections, ...newSectionData]
         }
         setSectionsData(newSections)
       }
@@ -101,9 +111,9 @@ const CooperationActivitiesList = ({
       <CourseSectionsList
         addNewSection={addNewSection}
         handleSectionInputChange={handleSectionChange}
-        handleSectionNonInputChange={handleNonInputChange}
+        handleSectionNonInputChange={handleSectionChange}
         isCooperation
-        items={data.sections}
+        items={sections}
         setSectionsItems={setSectionsData}
         titleText='moduleTitle'
       />

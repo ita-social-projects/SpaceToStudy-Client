@@ -1,7 +1,7 @@
 import { screen, fireEvent, waitFor } from '@testing-library/react'
 import CooperationActivitiesList from '~/containers/my-cooperations/cooperation-activities-list/CooperationActivitiesList'
 import { renderWithProviders } from '~tests/test-utils'
-import { sectionInitialData } from '~/pages/create-course/CreateCourse.constants'
+import { vi } from 'vitest'
 
 const originalDateNow = Date.now
 Date.now = () => 1487076708000
@@ -27,66 +27,57 @@ const mockedCourseData = {
   ]
 }
 
-const handleNonInputValueChange = vi.fn()
-
 const renderWithMockData = (
-  mockedData,
   sectionIndex,
+  sections = [],
+  courseData = mockedCourseData,
   isAddedClicked = true,
   isNewActivity = true
 ) => {
-  renderWithProviders(
-    <CooperationActivitiesList
-      data={mockedData}
-      handleNonInputValueChange={handleNonInputValueChange}
-    />,
-    {
-      preloadedState: {
-        cooperations: {
-          selectedCourse: mockedCourseData,
-          isAddedClicked: isAddedClicked,
-          isNewActivity: isNewActivity,
-          currentSectionIndex: sectionIndex,
-          setCurrentSectionIndex: vi.fn()
-        }
+  renderWithProviders(<CooperationActivitiesList />, {
+    preloadedState: {
+      cooperations: {
+        selectedCourse: courseData,
+        isAddedClicked: isAddedClicked,
+        isNewActivity: isNewActivity,
+        currentSectionIndex: sectionIndex,
+        sections: sections
       }
     }
-  )
+  })
 }
 
 describe('CooperationActivitiesList with section data', () => {
-  const mockedSectionsData = {
-    sections: [
-      {
-        title: 'Section1 title',
-        description: 'Section1 description',
-        order: ['66183816fb40f35f91bb77ce'],
-        lessons: [
-          {
-            _id: '66183816fb40f35f91bb77ce',
-            title: 'Lesson 1',
-            description: 'Lesson 1 description',
-            content: 'Lesson 1 content',
-            resourceType: 'lessons'
-          }
-        ],
-        quizzes: [],
-        attachments: [],
-        id: '17121748017180'
-      },
-      {
-        title: 'Section2 title',
-        description: 'Section2 description',
-        lessons: [],
-        quizzes: [],
-        attachments: [],
-        id: '17121748017181'
-      }
-    ]
-  }
+  const mockedSectionsData = [
+    {
+      title: 'Section1',
+      description: 'Section1 description',
+      order: ['66183816fb40f35f91bb77ce'],
+      lessons: [
+        {
+          _id: '66183816fb40f35f91bb77ce',
+          title: 'Lesson 1',
+          description: 'Lesson 1 description',
+          content: 'Lesson 1 content',
+          resourceType: 'lessons'
+        }
+      ],
+      quizzes: [],
+      attachments: [],
+      id: '17121748017180'
+    },
+    {
+      title: 'Section2 title',
+      description: 'Section2 description',
+      lessons: [],
+      quizzes: [],
+      attachments: [],
+      id: '17121748017181'
+    }
+  ]
 
   beforeEach(() => {
-    renderWithMockData(mockedSectionsData, 0)
+    renderWithMockData(0, mockedSectionsData)
   })
 
   afterEach(() => {
@@ -94,9 +85,9 @@ describe('CooperationActivitiesList with section data', () => {
   })
 
   it('should add a new section when Add activity button is clicked', async () => {
-    const [hoverElement] = await screen.findAllByTestId(
-      TestsId.activityContainer
-    )
+    let sections = await screen.findAllByTestId(TestsId.activityContainer)
+
+    const [hoverElement] = sections
     fireEvent.mouseOver(hoverElement)
 
     const [addButton] = screen.getAllByTestId(TestsId.addButton)
@@ -107,8 +98,8 @@ describe('CooperationActivitiesList with section data', () => {
     )
     fireEvent.click(menuItem)
 
-    const sections = await screen.findAllByTestId(TestsId.activityContainer)
-    expect(sections.length).toBe(2)
+    sections = await screen.findAllByTestId(TestsId.activityContainer)
+    expect(sections.length).toBe(4)
   })
 
   it('should delete section resource', async () => {
@@ -128,7 +119,7 @@ describe('CooperationActivitiesList with section data', () => {
 
   it('should change the activity title', async () => {
     const titleInput = await screen.findByDisplayValue(
-      mockedSectionsData.sections[0].title
+      mockedSectionsData[0].title
     )
     const newTitle = 'New section title'
 
@@ -140,57 +131,10 @@ describe('CooperationActivitiesList with section data', () => {
       expect(titleInput.value).toBe(newTitle)
     })
   })
-
-  it('should set sections from the data first in order if the current section index is undefined', async () => {
-    renderWithMockData(mockedSectionsData, undefined)
-
-    const newSectionData = mockedCourseData.sections.map((section, index) => ({
-      ...section,
-      id: Date.now().toString() + index
-    }))
-    const newSections = [...mockedSectionsData.sections, ...newSectionData]
-
-    await waitFor(() => {
-      expect(handleNonInputValueChange).toHaveBeenCalledWith(
-        'sections',
-        newSections
-      )
-    })
-  })
-
-  it('should set sections from the data first in order if a new section index is null', async () => {
-    renderWithMockData(mockedSectionsData, null)
-
-    const [hoverElement] = await screen.findAllByTestId(
-      TestsId.activityContainer
-    )
-    fireEvent.mouseOver(hoverElement)
-
-    const [addButton] = screen.getAllByTestId(TestsId.addButton)
-    fireEvent.click(addButton)
-
-    const [menuItem] = await screen.findAllByText(
-      'cooperationsPage.manyTypes.module'
-    )
-    fireEvent.click(menuItem)
-
-    const newSectionData = { ...sectionInitialData }
-    newSectionData.id = Date.now().toString()
-    const newSections = [newSectionData, ...mockedSectionsData.sections]
-
-    await waitFor(() => {
-      expect(handleNonInputValueChange).toHaveBeenCalledWith(
-        'sections',
-        newSections
-      )
-    })
-  })
 })
 
 describe('CooperationActivitiesList without section data', () => {
-  const mockedSectionsData = {
-    sections: []
-  }
+  const mockedEmptySectionsData = []
 
   afterEach(() => {
     vi.clearAllMocks()
@@ -201,31 +145,24 @@ describe('CooperationActivitiesList without section data', () => {
   })
 
   it('should set only selected course sections in the data when no section was added', async () => {
-    renderWithMockData(mockedSectionsData, 0)
+    renderWithMockData(0, mockedEmptySectionsData, mockedCourseData, true, true)
 
-    const allSections = mockedCourseData.sections.map((section, index) => ({
-      ...section,
-      id: Date.now().toString() + index
-    }))
-
-    await waitFor(() => {
-      expect(handleNonInputValueChange).toHaveBeenCalledWith(
-        'sections',
-        allSections
-      )
-    })
+    const sections = await screen.findAllByTestId(TestsId.activityContainer)
+    expect(sections.length).toBe(1)
   })
 
   it('should add a new section when no section was added and no course was selected', async () => {
-    renderWithMockData(mockedSectionsData, 0, false)
+    renderWithMockData(
+      0,
+      mockedEmptySectionsData,
+      { ...mockedCourseData, sections: [] },
+      false,
+      true
+    )
 
-    const newSectionData = { ...sectionInitialData }
-    newSectionData.id = Date.now().toString()
-
+    const sections = await screen.findAllByTestId(TestsId.activityContainer)
     await waitFor(() => {
-      expect(handleNonInputValueChange).toHaveBeenCalledWith('sections', [
-        newSectionData
-      ])
+      expect(sections.length).toBe(1)
     })
   })
 })
