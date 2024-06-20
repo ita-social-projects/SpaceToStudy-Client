@@ -1,12 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import {
-  Activities,
-  Attachment,
-  Course,
-  CourseSection,
-  Lesson,
-  Quiz
-} from '~/types'
+import { Course, CourseFieldValues, CourseSection } from '~/types'
 import { RootState } from '../store'
 import { sliceNames } from '../redux.constants'
 
@@ -73,12 +66,7 @@ const cooperationsSlice = createSlice({
       action: PayloadAction<{
         id: string
         field: keyof CourseSection
-        value: string &
-          Lesson[] &
-          Quiz[] &
-          Attachment[] &
-          string[] &
-          Activities[]
+        value: CourseFieldValues
       }>
     ) {
       const sectionToEdit = state.sections.find(

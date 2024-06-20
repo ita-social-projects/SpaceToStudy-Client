@@ -3,14 +3,7 @@ import Box from '@mui/material/Box'
 import CourseSectionsList from '~/containers/course-sections-list/CourseSectionsList'
 
 import { useEffect } from 'react'
-import {
-  CourseSection,
-  Lesson,
-  Quiz,
-  Attachment,
-  CourseResource,
-  Activities
-} from '~/types'
+import { CourseSection, CourseResource, CourseFieldValues } from '~/types'
 import { useAppSelector, useAppDispatch } from '~/hooks/use-redux'
 import {
   cooperationsSelector,
@@ -37,18 +30,11 @@ const CooperationActivitiesList = () => {
     field: keyof CourseSection,
     value: string | CourseResource[]
   ) => {
-    type Value = string &
-      Lesson[] &
-      Quiz[] &
-      Attachment[] &
-      string[] &
-      Activities[]
-
     dispatch(
       updateCooperationSection({
         id,
         field,
-        value: value as Value
+        value: value as CourseFieldValues
       })
     )
   }
