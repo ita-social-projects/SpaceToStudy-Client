@@ -21,6 +21,7 @@ interface ProficiencyLevelSelectProps
   fillRange?: boolean
   sx?: {
     select: SxProps
+    formSx?: SxProps
   }
   onChange: (event: ProficiencyLevelEnum[]) => void
 }
@@ -75,7 +76,7 @@ const ProficiencyLevelSelect: FC<ProficiencyLevelSelectProps> = ({
   }
 
   return (
-    <FormControl error={hasError}>
+    <FormControl error={hasError} sx={sx?.formSx}>
       <InputLabel
         id={`${id}-multiple-checkbox-label`}
         required
