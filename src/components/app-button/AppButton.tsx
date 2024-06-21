@@ -6,12 +6,13 @@ import { ButtonVariantEnum, SizeEnum } from '~/types'
 
 import '~/scss/lib/Button.css'
 
-interface AppButtonProps extends ButtonProps {
+interface AppButtonProps extends Omit<ButtonProps, 'size'> {
   children: ReactNode
   loading?: boolean
   disabled?: boolean
   component?: ElementType
   to?: string
+  size?: SizeEnum
 }
 
 const AppButton: FC<AppButtonProps> = ({
@@ -19,7 +20,7 @@ const AppButton: FC<AppButtonProps> = ({
   loading,
   disabled,
   variant = ButtonVariantEnum.Contained,
-  size = SizeEnum.Large,
+  size = SizeEnum.ExtraExtraLarge,
   ...props
 }) => {
   const loader = <Loader size={20} sx={{ opacity: '0.6' }} />
