@@ -127,7 +127,7 @@ const CourseToolbar = ({
         label={t('breadCrumbs.level')}
         onBlur={handleBlur('proficiencyLevel')}
         onChange={onLevelChange}
-        sx={{ select: styles.levelSelect }}
+        sx={{ select: styles.levelSelect, formSx: { flex: 1 } }}
         value={proficiencyLevel}
       />
     </>

@@ -17,14 +17,15 @@ export const styles = {
   },
   autocomplete: {
     width: { md: '370px', xs: '100%' },
-    mr: '30px',
+    mr: '20px',
     '& .MuiOutlinedInput-root': {
       padding: '5px 9px'
     },
     label: {
       lineHeight: '20px'
     },
-    position: 'relative'
+    position: 'relative',
+    flex: 1
   },
   autocompleteDropdownDivider: {
     m: '8px 0 10px 0',
@@ -39,7 +40,13 @@ export const styles = {
     ...commonStyle
   },
   levelSelect: {
-    width: { md: '370px', xs: '100%' }
+    width: '100%',
+    '& .MuiOutlinedInput-root': {
+      padding: '5px 9px'
+    },
+    label: {
+      lineHeight: '20px'
+    }
   },
   otherToolbar: {
     borderRadius: '10px',
@@ -88,7 +95,7 @@ export const styles = {
     display: 'flex',
     flexDirection: { md: 'row', xs: 'column' },
     justifyContent: { md: 'space-between', xs: 'center' },
-    gap: { md: '30px', sm: '20px', xs: '15px' }
+    gap: { md: '0px', sm: '20px', xs: '15px' }
   },
   categories: {
     color: 'basic.bismark'
@@ -100,6 +107,7 @@ export const styles = {
     display: 'flex',
     borderBottom: '1px solid',
     borderColor: 'primary.100',
-    my: '32px'
+    mt: { sm: '32px', md: '10px' },
+    mb: '32px'
   }
 }
