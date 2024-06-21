@@ -55,6 +55,7 @@ export const styles = {
     justifyContent: 'space-between',
     backgroundColor: 'backgroundColor',
     boxShadow: 'none',
+    p: '25px 0px 0px',
     mb: 0
   },
   input: {
