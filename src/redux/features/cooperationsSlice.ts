@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { Course, CourseFieldValues, CourseSection } from '~/types'
-import { RootState } from '../store'
-import { sliceNames } from '../redux.constants'
+import { RootState } from '~/redux/store'
+import { sliceNames } from '~/redux/redux.constants'
 
 interface CooperationsState {
   selectedCourse: Course | null
