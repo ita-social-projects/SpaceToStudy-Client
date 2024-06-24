@@ -1,11 +1,28 @@
+import { alpha } from '@mui/material/styles'
+
 export const styles = {
-  img: {
-    width: '100%',
-    alignSelf: 'center',
-    mr: '24px',
-    maxWidth: '62px',
-    maxHeight: '62px'
+  card: {
+    padding: { xs: '20px 30px', lg: '25px 32px' },
+    display: 'flex',
+    gap: '24px',
+    justifyContent: 'flex-start',
+    alignItems: 'center'
   },
+  iconContainer: (bgColor: string) => ({
+    flexShrink: 0,
+    width: '62px',
+    height: '62px',
+    borderRadius: '6px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: alpha(bgColor, 0.2)
+  }),
+  icon: (color: string) => ({
+    width: '32px',
+    height: '32px',
+    color: color
+  }),
   titleWithDescription: {
     wrapper: {
       minWidth: '110px',

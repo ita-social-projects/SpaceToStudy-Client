@@ -12,7 +12,6 @@ import Loader from '~/components/loader/Loader'
 import CardWithLink from '~/components/card-with-link/CardWithLink'
 import { authRoutes } from '~/router/constants/authRoutes'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
-import serviceIcon from '~/assets/img/student-home-page/service_icon.png'
 import CardsList from '~/components/cards-list/CardsList'
 import { CategoryInterface, ItemsWithCount } from '~/types'
 import useBreakpoints from '~/hooks/use-breakpoints'
@@ -62,7 +61,8 @@ const PopularCategories: FC<PopularCategoriesProps> = ({
           description={`${item.totalOffers[oppositeRole]} ${t(
             'common.offers'
           )}`}
-          img={serviceIcon}
+          icon={item.appearance.icon}
+          iconColor={item.appearance.color}
           key={item._id}
           link={`${authRoutes.subjects.path}?categoryId=${item._id}`}
           title={item.name}

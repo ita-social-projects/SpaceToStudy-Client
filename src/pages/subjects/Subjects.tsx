@@ -25,7 +25,6 @@ import AppToolbar from '~/components/app-toolbar/AppToolbar'
 import OfferRequestBlock from '~/containers/find-offer/offer-request-block/OfferRequestBlock'
 import AsyncAutocomplete from '~/components/async-autocomlete/AsyncAutocomplete'
 import useBreakpoints from '~/hooks/use-breakpoints'
-import serviceIcon from '~/assets/img/student-home-page/service_icon.png'
 import { getOpositeRole, getScreenBasedLimit } from '~/utils/helper-functions'
 import { mapArrayByField } from '~/utils/map-array-by-field'
 
@@ -102,7 +101,8 @@ const Subjects = () => {
             description={`${item.totalOffers[oppositeRole]} ${t(
               'categoriesPage.offers'
             )}`}
-            img={serviceIcon}
+            icon={item.category.appearance.icon}
+            iconColor={item.category.appearance.color}
             key={item._id}
             link={`${authRoutes.findOffers.path}?categoryId=${categoryId}&subjectId=${item._id}`}
             title={item.name}
