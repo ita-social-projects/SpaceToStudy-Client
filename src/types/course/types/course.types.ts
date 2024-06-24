@@ -2,7 +2,8 @@ import {
   Lesson,
   Quiz,
   Attachment,
-  ResourceAvailabilityStatusEnum
+  ResourceAvailabilityStatusEnum,
+  Activities
 } from '~/types'
 
 export interface ResourceAvailability {
@@ -16,3 +17,10 @@ export type SetResourseAvailability = (
   sectionId: string,
   availability: ResourceAvailability
 ) => void
+
+export type CourseFieldValues = string &
+  Lesson[] &
+  Quiz[] &
+  Attachment[] &
+  string[] &
+  Activities[]

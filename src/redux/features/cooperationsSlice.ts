@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { Course } from '~/types'
-import { RootState } from '../store'
-import { sliceNames } from '../redux.constants'
+import { Course, CourseFieldValues, CourseSection } from '~/types'
+import { RootState } from '~/redux/store'
+import { sliceNames } from '~/redux/redux.constants'
 
 interface CooperationsState {
   selectedCourse: Course | null
@@ -9,6 +9,7 @@ interface CooperationsState {
   isAddedClicked: boolean
   isNewActivity: boolean
   currentSectionIndex?: number
+  sections: CourseSection[]
 }
 
 const initialState: CooperationsState = {
@@ -16,7 +17,8 @@ const initialState: CooperationsState = {
   isActivityCreated: false,
   isAddedClicked: false,
   isNewActivity: false,
-  currentSectionIndex: 0
+  currentSectionIndex: 0,
+  sections: []
 }
 
 const cooperationsSlice = createSlice({
@@ -52,6 +54,28 @@ const cooperationsSlice = createSlice({
       action: PayloadAction<CooperationsState['currentSectionIndex']>
     ) {
       state.currentSectionIndex = action.payload
+    },
+    setCooperationSections(
+      state,
+      action: PayloadAction<CooperationsState['sections']>
+    ) {
+      state.sections = action.payload
+    },
+    updateCooperationSection(
+      state,
+      action: PayloadAction<{
+        id: string
+        field: keyof CourseSection
+        value: CourseFieldValues
+      }>
+    ) {
+      const sectionToEdit = state.sections.find(
+        (section) => section.id === action.payload.id
+      ) as CourseSection
+
+      if (sectionToEdit) {
+        sectionToEdit[action.payload.field] = action.payload.value
+      }
     }
   }
 })
@@ -63,7 +87,9 @@ export const {
   setIsActivityCreated,
   setIsAddedClicked,
   setIsNewActivity,
-  setCurrentSectionIndex
+  setCurrentSectionIndex,
+  setCooperationSections,
+  updateCooperationSection
 } = actions
 
 export const cooperationsSelector = (state: RootState) => state.cooperations

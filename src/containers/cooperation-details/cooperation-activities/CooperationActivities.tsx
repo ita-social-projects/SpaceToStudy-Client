@@ -5,26 +5,24 @@ import { Link } from 'react-router-dom'
 import { FC } from 'react'
 
 import AppSelect from '~/components/app-select/AppSelect'
+import AppButton from '~/components/app-button/AppButton'
 import CooperationActivitiesList from '~/containers/my-cooperations/cooperation-activities-list/CooperationActivitiesList'
 import { useResourceAvailabilityContext } from '~/context/resources-availability-context'
-import AppButton from '~/components/app-button/AppButton'
-import { cooperationTranslationKeys } from '~/containers/cooperation-details/cooperation-activities/CooperationActivities.constants'
 import { cooperationService } from '~/services/cooperation-service'
 import { authRoutes } from '~/router/constants/authRoutes'
-import useForm from '~/hooks/use-form'
-import { useAppDispatch } from '~/hooks/use-redux'
+import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 import { openAlert } from '~/redux/features/snackbarSlice'
+import { cooperationsSelector } from '~/redux/features/cooperationsSlice'
 
 import openIcon from '~/assets/img/cooperation-details/resource-availability/open-icon.svg'
 import closeIcon from '~/assets/img/cooperation-details/resource-availability/closed-icon.svg'
+import { cooperationTranslationKeys } from '~/containers/cooperation-details/cooperation-activities/CooperationActivities.constants'
 import { snackbarVariants } from '~/constants'
 import {
   ResourcesAvailabilityEnum,
   ButtonVariantEnum,
   SizeEnum,
-  CourseSection,
-  ButtonTypeEnum,
-  ComponentEnum
+  ButtonTypeEnum
 } from '~/types'
 import { styles } from '~/containers/cooperation-details/cooperation-activities/CooperationActivities.styles'
 
@@ -37,15 +35,14 @@ const CooperationActivities: FC<CooperationActivitiesProps> = ({
 }) => {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
+  const { sections } = useAppSelector(cooperationsSelector)
   const { resourceAvailability, setResourceAvailability } =
     useResourceAvailabilityContext()
 
-  const updateCooperationSection = async (data?: {
-    sections: CourseSection[]
-  }) => {
+  const updateCooperationSection = async () => {
     await cooperationService.updateCooperation({
       _id: cooperationId,
-      ...data
+      sections
     })
     dispatch(
       openAlert({
@@ -54,14 +51,6 @@ const CooperationActivities: FC<CooperationActivitiesProps> = ({
       })
     )
   }
-
-  const { data, handleNonInputValueChange, handleSubmit } = useForm<{
-    sections: CourseSection[]
-  }>({
-    initialValues: { sections: [] },
-    onSubmit: updateCooperationSection,
-    submitWithData: true
-  })
 
   const cooperationOption = cooperationTranslationKeys.map(
     ({ title, value }) => ({
@@ -76,7 +65,7 @@ const CooperationActivities: FC<CooperationActivitiesProps> = ({
       : closeIcon
 
   return (
-    <Box component={ComponentEnum.Form} onSubmit={handleSubmit}>
+    <Box>
       <Box data-testid='coop-from-scratch' sx={styles.root}>
         <Box sx={styles.publishBlock}>
           <Box>
@@ -100,10 +89,7 @@ const CooperationActivities: FC<CooperationActivitiesProps> = ({
             />
           </Box>
         </Box>
-        <CooperationActivitiesList
-          data={data}
-          handleNonInputValueChange={handleNonInputValueChange}
-        />
+        <CooperationActivitiesList />
       </Box>
       <Box sx={styles.buttons}>
         <AppButton
@@ -114,7 +100,11 @@ const CooperationActivities: FC<CooperationActivitiesProps> = ({
         >
           {t('common.cancel')}
         </AppButton>
-        <AppButton size={SizeEnum.ExtraLarge} type={ButtonTypeEnum.Submit}>
+        <AppButton
+          onClick={() => void updateCooperationSection()}
+          size={SizeEnum.ExtraLarge}
+          type={ButtonTypeEnum.Submit}
+        >
           {t('common.save')}
         </AppButton>
       </Box>
