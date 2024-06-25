@@ -45,8 +45,8 @@ const ProfessionalCategory: FC<ProfessionalCategoryProps> = ({
       confirmButton: t(
         'editProfilePage.profile.professionalTab.deleteCategoryModal.submitBtn'
       ),
-      sendConfirm: () => {
-        handleDelete()
+      sendConfirm: (isConfirmed) => {
+        if (isConfirmed) handleDelete()
       }
     })
   }
