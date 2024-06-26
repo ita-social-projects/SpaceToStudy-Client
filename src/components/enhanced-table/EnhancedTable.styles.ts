@@ -19,7 +19,8 @@ export const styles = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    columnGap: 1
+    columnGap: 1,
+    borderRadius: '10px'
   },
   loader: { py: '170px' }
 }

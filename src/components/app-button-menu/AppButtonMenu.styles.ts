@@ -13,7 +13,6 @@ export const styles = {
   text: { typography: TypographyVariantEnum.Subtitle1 },
   chosenFilters: {
     typography: TypographyVariantEnum.Subtitle1,
-    ml: '4px',
     fontWeight: 500,
     overflow: 'hidden',
     whiteSpace: 'nowrap',

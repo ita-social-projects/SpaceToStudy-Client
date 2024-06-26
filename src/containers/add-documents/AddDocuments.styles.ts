@@ -8,7 +8,10 @@ export const styles = {
   },
   fileUpload: {
     root: {
-      border: 'none'
+      border: 'none',
+      Label: {
+        // py: '12px'
+      }
     },
     button: {
       backgroundColor: 'primary.50'

@@ -203,6 +203,7 @@ const CategoriesContainer = () => {
           </AppButton>
         }
         fetchData={fetchData}
+        placeholder={'myResourcesPage.categories.searchInput'}
         searchRef={searchTitle}
       />
       {loading ? (

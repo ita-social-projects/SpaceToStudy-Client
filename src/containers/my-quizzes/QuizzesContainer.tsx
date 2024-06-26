@@ -112,6 +112,7 @@ const QuizzesContainer = () => {
         btnText={'myResourcesPage.quizzes.addBtn'}
         fetchData={fetchData}
         link={authRoutes.myResources.newQuiz.path}
+        placeholder={'myResourcesPage.quizzes.searchInput'}
         searchRef={searchTitle}
         selectedItems={selectedItems}
         setItems={setSelectedItems}

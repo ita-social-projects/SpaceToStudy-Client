@@ -8,6 +8,7 @@ import { PopoverOrigin } from '@mui/material/Popover'
 import Typography from '@mui/material/Typography'
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
+import CircleIcon from '@mui/icons-material/Circle'
 
 import useAxios from '~/hooks/use-axios'
 import useMenu from '~/hooks/use-menu'
@@ -150,6 +151,7 @@ const AppButtonMenu = <T extends Pick<CategoryNameInterface, '_id'>>({
         sx={spliceSx(styles.root, customSx?.root)}
         variant={ButtonVariantEnum.Tonal}
       >
+        <CircleIcon sx={{ width: '14px', height: '14px' }} />
         <Typography sx={styles.text}>{title}:</Typography>
         <Typography sx={styles.chosenFilters}>{chosenFiltersText}</Typography>
         <KeyboardArrowDownIcon sx={styles.arrowIcon(Boolean(anchorEl))} />

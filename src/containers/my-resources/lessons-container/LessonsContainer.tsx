@@ -111,6 +111,7 @@ const LessonsContainer = () => {
         btnText={'myResourcesPage.lessons.addBtn'}
         fetchData={fetchData}
         link={authRoutes.myResources.newLesson.path}
+        placeholder={'myResourcesPage.lessons.searchInput'}
         searchRef={searchTitle}
         selectedItems={selectedItems}
         setItems={setSelectedItems}

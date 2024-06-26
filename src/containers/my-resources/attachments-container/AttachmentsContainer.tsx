@@ -194,6 +194,7 @@ const AttachmentsContainer = () => {
         />
       }
       fetchData={fetchAttachments}
+      placeholder={'myResourcesPage.attachments.searchInput'}
       searchRef={searchFileName}
       selectedItems={selectedItems}
       setItems={setSelectedItems}
