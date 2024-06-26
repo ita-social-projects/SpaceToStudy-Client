@@ -1,5 +1,4 @@
 import { useCallback } from 'react'
-import { useNavigate } from 'react-router'
 import { snackbarVariants } from '~/constants'
 import { userService } from '~/services/user-service'
 import { ErrorResponse, UpdateUserParams } from '~/types'
@@ -8,10 +7,8 @@ import { useAppDispatch } from './use-redux'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { getErrorKey } from '~/utils/get-error-key'
 
-const useUpdateUser = (userId: string, shouldRefreshAfterResponse = false) => {
+const useUpdateUser = (userId: string) => {
   const dispatch = useAppDispatch()
-
-  const navigate = useNavigate()
 
   const updateUser = useCallback(
     (data: UpdateUserParams) => userService.updateUser(userId, data),
@@ -25,10 +22,6 @@ const useUpdateUser = (userId: string, shouldRefreshAfterResponse = false) => {
         message: 'editProfilePage.profile.successMessage'
       })
     )
-
-    if (shouldRefreshAfterResponse) {
-      navigate(0)
-    }
   }
 
   const handleResponseError = (error?: ErrorResponse) => {
@@ -48,9 +41,9 @@ const useUpdateUser = (userId: string, shouldRefreshAfterResponse = false) => {
     onResponseError: handleResponseError
   })
 
-  const handleSubmit = (async (data: UpdateUserParams) => {
+  const handleSubmit = async (data: UpdateUserParams) => {
     await fetchData(data)
-  }) as (data: UpdateUserParams) => void
+  }
 
   return { loading, handleSubmit }
 }
