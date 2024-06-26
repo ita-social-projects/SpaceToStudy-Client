@@ -26,7 +26,7 @@ import {
 const ProfileTab: FC<EditProfileTabUserProps> = ({ user }) => {
   const { t } = useTranslation()
   const { setNeedConfirmation, checkConfirmation } = useConfirm()
-  const { handleSubmit, loading } = useUpdateUser(user._id, true)
+  const { handleSubmit, loading } = useUpdateUser(user._id)
 
   const initialValues = getProfileInitialValues(user)
 
