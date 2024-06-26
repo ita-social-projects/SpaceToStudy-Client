@@ -5,6 +5,8 @@ import { useSelector } from 'react-redux'
 import Box from '@mui/material/Box'
 import ButtonBase from '@mui/material/ButtonBase'
 import Typography from '@mui/material/Typography'
+import Checkbox from '@mui/material/Checkbox'
+import FormControlLabel from '@mui/material/FormControlLabel'
 import { useModalContext } from '~/context/modal-context'
 import ForgotPassword from '~/containers/guest-home-page/forgot-password/ForgotPassword'
 import AppTextField from '~/components/app-text-field/AppTextField'
@@ -61,14 +63,25 @@ const LoginForm = ({
         value={data.password}
       />
 
-      <Typography
-        component={ButtonBase}
-        onClick={openForgotPassword}
-        sx={styles.forgotPass}
-        variant='subtitle2'
-      >
-        {t('login.forgotPassword')}
-      </Typography>
+      <Box sx={styles.loginOptionsContainer}>
+        <FormControlLabel
+          control={<Checkbox />}
+          label={t('login.rememberMe')}
+          labelPlacement='end'
+          onChange={handleChange('rememberMe')}
+          sx={styles.checkboxLabel}
+          value={data.rememberMe}
+        />
+
+        <Typography
+          component={ButtonBase}
+          onClick={openForgotPassword}
+          sx={styles.forgotPass}
+          variant='subtitle2'
+        >
+          {t('login.forgotPassword')}
+        </Typography>
+      </Box>
 
       <AppButton
         disabled={!data.email || !data.password}

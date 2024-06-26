@@ -46,7 +46,7 @@ const LoginDialog = () => {
           )
         }
       },
-      initialValues: { email: '', password: '' },
+      initialValues: { email: '', password: '', rememberMe: false },
       validations: { email }
     }
   )

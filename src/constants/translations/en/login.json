@@ -1,9 +1,10 @@
 {
   "head": "Welcome back",
   "forgotPassword": "Forgot password?",
+  "rememberMe": "Remember me",
   "googleButton": "Login with Google",
   "continue": "or continue",
-  "haveAccount": "Don`t have an account yet?",
+  "haveAccount": "Don't have an account yet?",
   "joinUs": "Join us for free",
   "enterEmail": "Enter the email address associated with your account and we`ll send you a link to reset your password.",
   "sendPassword": "Send me password reset link",
