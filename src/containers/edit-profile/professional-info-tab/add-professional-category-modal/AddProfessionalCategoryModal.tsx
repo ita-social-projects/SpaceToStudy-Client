@@ -15,6 +15,7 @@ import {
 
 import { subjectService } from '~/services/subject-service'
 import { categoryService } from '~/services/category-service'
+import { isSubmitDisabled } from '~/utils/is-submit-disabled'
 import useForm from '~/hooks/use-form'
 
 import Box from '@mui/material/Box'
@@ -125,11 +126,12 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
     initialValues: initialFormValues,
     onSubmit: formSubmission
   })
+
   const handleMainStudyCategoryChange = (
     _: SyntheticEvent,
     value: CategoryNameInterface | null
   ) => {
-    handleDataChange({ category: value })
+    handleDataChange({ category: value, professionalSubjectTemplate })
   }
 
   const handleProfessionalSubjectChange =
@@ -224,6 +226,7 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
       </Box>
       <Box sx={styles.buttonGroup}>
         <AppButton
+          disabled={!isSubmitDisabled(data.subjects)}
           type={ButtonTypeEnum.Submit}
           variant={ButtonVariantEnum.Contained}
         >

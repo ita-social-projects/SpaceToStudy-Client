@@ -80,15 +80,8 @@ describe('AddProfessionalCategoryModal without initial value', () => {
     // TODO: Implement test case for subjects
   })
 
-  it('should close modal when form is submitted', async () => {
-    const submitButton = screen.getByText(
-      /editProfilePage.profile.professionalTab.addCategoryModal.submitBtn/
-    )
-    await act(async () => {
-      fireEvent.click(submitButton)
-    })
-
-    expect(mockCloseModal).toHaveBeenCalled()
+  it('button "Save changes" should be disabled if subject field is empty', () => {
+    // TODO: Implement test case
   })
 
   it('should be disabled if category is disabled', () => {
@@ -100,13 +93,6 @@ describe('AddProfessionalCategoryModal with initial value', () => {
   beforeEach(
     async () =>
       await waitFor(() => {
-        mockAxiosClient
-          .onGet(URLs.categories.getNames)
-          .reply(200, [initialValues.category, ...mockedBlockedCategory])
-        mockAxiosClient
-          .onGet(`${initialValues.category._id}${URLs.subjects.getNames}`)
-          .reply(200, initialValues.subjects)
-
         renderProfessionalCategoryModalWithInitialValues(initialValues)
       })
   )
@@ -130,5 +116,16 @@ describe('AddProfessionalCategoryModal with initial value', () => {
     )
 
     expect(professionalSubjectsAfter).toHaveLength(1)
+  })
+
+  it('should close modal when form is submitted', async () => {
+    const submitButton = screen.getByText(
+      /editProfilePage.profile.professionalTab.addCategoryModal.submitBtn/
+    )
+    await act(async () => {
+      fireEvent.click(submitButton)
+    })
+
+    expect(mockCloseModal).toHaveBeenCalled()
   })
 })
