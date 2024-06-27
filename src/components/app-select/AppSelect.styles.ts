@@ -17,7 +17,7 @@ export const styles = {
     typography: TypographyVariantEnum.Body1,
     color: 'primary.500',
     mr: '8px',
-    minWidth: '65px'
+    minWidth: 'fit-content'
   },
   formControl: {
     '& label': {
