@@ -1,29 +1,28 @@
-import { FC, useMemo, useCallback } from 'react'
+import Box from '@mui/material/Box'
+import { SxProps } from '@mui/material/styles'
+import { FC, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 
-import Box from '@mui/material/Box'
-import { SxProps } from '@mui/material/styles'
-
-import useAxios from '~/hooks/use-axios'
-import { categoryService } from '~/services/category-service'
-import { useAppSelector } from '~/hooks/use-redux'
-import Loader from '~/components/loader/Loader'
 import CardWithLink from '~/components/card-with-link/CardWithLink'
-import { authRoutes } from '~/router/constants/authRoutes'
-import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import CardsList from '~/components/cards-list/CardsList'
-import { CategoryInterface, ItemsWithCount } from '~/types'
+import Loader from '~/components/loader/Loader'
+import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
+import useAxios from '~/hooks/use-axios'
 import useBreakpoints from '~/hooks/use-breakpoints'
+import { useAppSelector } from '~/hooks/use-redux'
+import { authRoutes } from '~/router/constants/authRoutes'
+import { categoryService } from '~/services/category-service'
 
-import {
-  getScreenBasedLimit,
-  spliceSx,
-  getOpositeRole
-} from '~/utils/helper-functions'
-import { styles } from '~/components/popular-categories/PopularCategories.styles'
-import { defaultResponses } from '~/constants'
 import { itemsLoadLimit } from '~/components/popular-categories/PopularCategories.constants'
+import { defaultResponses } from '~/constants'
+import {
+  getOpositeRole,
+  getScreenBasedLimit,
+  spliceSx
+} from '~/utils/helper-functions'
+import { CategoryInterface, ItemsWithCount } from '~/types'
+import { styles } from '~/components/popular-categories/PopularCategories.styles'
 
 interface PopularCategoriesProps {
   title: string

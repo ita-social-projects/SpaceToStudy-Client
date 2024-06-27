@@ -1,10 +1,11 @@
 import { FC } from 'react'
 import Box from '@mui/material/Box'
+
 import AppCard from '~/components/app-card/AppCard'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import { getCategoryIcon } from '~/services/category-icon-service'
-import palette from '~/styles/app-theme/app.pallete'
 
+import palette from '~/styles/app-theme/app.pallete'
 import { styles } from '~/components/card-with-link/CardWithLink.styles'
 
 interface CardWithLinkProps {

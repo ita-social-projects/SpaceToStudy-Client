@@ -2,7 +2,7 @@ import { alpha } from '@mui/material/styles'
 
 export const styles = {
   card: {
-    padding: { xs: '20px 30px', lg: '25px 32px' },
+    p: { xs: '20px 30px', lg: '25px 32px' },
     display: 'flex',
     gap: '24px',
     justifyContent: 'flex-start',
