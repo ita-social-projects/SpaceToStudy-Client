@@ -20,7 +20,7 @@ const AppButton: FC<AppButtonProps> = ({
   loading,
   disabled,
   variant = ButtonVariantEnum.Contained,
-  size = SizeEnum.ExtraExtraLarge,
+  size = SizeEnum.XXL,
   ...props
 }) => {
   const loader = <Loader size={20} sx={{ opacity: '0.6' }} />
