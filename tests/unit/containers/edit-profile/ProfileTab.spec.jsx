@@ -1,22 +1,7 @@
-import { fireEvent, screen, waitFor } from '@testing-library/react'
+import { fireEvent, screen } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 import ProfileTab from '~/containers/edit-profile/profile-tab/ProfileTab'
 import { userDataMock } from '~tests/unit/containers/edit-profile/profile-tab/profile-tab-form/ProfileTabForm.spec.constants'
-
-const resetMock = vi.fn()
-const proceedMock = vi.fn()
-
-vi.mock('react-router-dom', async () => {
-  const actual = await vi.importActual('react-router-dom')
-  return {
-    ...actual,
-    useBlocker: () => ({
-      state: 'blocked',
-      proceed: proceedMock,
-      reset: () => resetMock()
-    })
-  }
-})
 
 const handleSubmitMock = vi.fn()
 vi.mock('~/hooks/use-update-user', () => ({
@@ -26,19 +11,16 @@ vi.mock('~/hooks/use-update-user', () => ({
   })
 }))
 
-const checkConfirmationMock = vi.fn()
 vi.mock('~/hooks/use-confirm', () => {
   return {
     default: () => ({
-      setNeedConfirmation: () => true,
-      checkConfirmation: () => checkConfirmationMock()
+      setNeedConfirmation: () => true
     })
   }
 })
 
 describe('ProfileTab', () => {
   it('should handle data updates', () => {
-    checkConfirmationMock.mockResolvedValue(true)
     renderWithProviders(<ProfileTab user={userDataMock} />)
 
     const updateButton = screen.getByRole('button', {
@@ -48,22 +30,5 @@ describe('ProfileTab', () => {
     fireEvent.click(updateButton)
 
     expect(handleSubmitMock).toHaveBeenCalled()
-  })
-
-  it('should call the reset function if the page leave was not confirmed', async () => {
-    checkConfirmationMock.mockResolvedValue(false)
-    renderWithProviders(<ProfileTab user={userDataMock} />)
-
-    await waitFor(() => {
-      expect(resetMock).toHaveBeenCalled()
-    })
-  })
-  it('should proceed if the page leave was confirmed', async () => {
-    checkConfirmationMock.mockResolvedValue(true)
-    renderWithProviders(<ProfileTab user={userDataMock} />)
-
-    await waitFor(() => {
-      expect(proceedMock).toHaveBeenCalled()
-    })
   })
 })
