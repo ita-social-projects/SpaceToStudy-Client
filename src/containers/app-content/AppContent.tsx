@@ -3,6 +3,7 @@ import Box from '@mui/material/Box'
 import AppHeader from '~/containers/layout/app-header/AppHeader'
 import AppMain from '~/containers/layout/app-main/AppMain'
 import AppSnackbar from '~/containers/layout/app-snackbar/AppSnackbar'
+import CookieConsentBanner from '~/containers/cookie-consent-banner/CookieConsentBanner'
 import { styles } from '~/containers/app-content/AppContent.styles'
 
 const AppContent = () => {
@@ -11,6 +12,7 @@ const AppContent = () => {
       <AppSnackbar />
       <AppHeader />
       <AppMain />
+      <CookieConsentBanner />
     </Box>
   )
 }
