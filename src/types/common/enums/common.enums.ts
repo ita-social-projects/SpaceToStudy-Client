@@ -22,7 +22,7 @@ export enum SizeEnum {
   Medium = 'medium',
   Large = 'large',
   ExtraLarge = 'extraLarge',
-  ExtraExtraLarge = 'extraExtraLarge'
+  XXL = 'xxl'
 }
 
 export enum TypographyVariantEnum {
