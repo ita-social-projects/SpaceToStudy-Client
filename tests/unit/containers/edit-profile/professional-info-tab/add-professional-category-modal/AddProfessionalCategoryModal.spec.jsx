@@ -41,7 +41,9 @@ describe('AddProfessionalCategoryModal without initial value', () => {
         .onGet(URLs.categories.getNames)
         .reply(200, [initialValues.category, ...mockedBlockedCategory])
       mockAxiosClient
-        .onGet(`${initialValues.category._id}${URLs.subjects.getNames}`)
+        .onGet(
+          `${URLs.categories.get}/${initialValues.category._id}${URLs.subjects.getNames}`
+        )
         .reply(200, initialValues.subjects)
 
       renderProfessionalCategoryModalWithInitialValues()
@@ -71,21 +73,55 @@ describe('AddProfessionalCategoryModal without initial value', () => {
     expect(professionalSubjects).toHaveLength(3)
   })
 
-  it('should update professional category value in autocomplete', async () => {
+  it('should update professional category value in autocomplete and load subjects', async () => {
     const categoryAutocomplete = screen.getByLabelText(
       /editProfilePage.profile.professionalTab.mainStudyCategory/
     )
-    await selectOption(categoryAutocomplete, 'Cooking', 'getByDisplayValue')
+    const professionalSubjects = screen.getByLabelText(
+      /editProfilePage.profile.professionalTab.subject/
+    )
 
-    // TODO: Implement test case for subjects
+    await selectOption(categoryAutocomplete, 'Cooking')
+    await selectOption(professionalSubjects, 'Varenychky')
   })
 
-  it('button "Save changes" should be disabled if subject field is empty', () => {
-    // TODO: Implement test case
+  it('should update only the subject with matching index and not others', async () => {
+    const categoryAutocomplete = screen.getByLabelText(
+      /editProfilePage.profile.professionalTab.mainStudyCategory/
+    )
+    const button = screen.getByText(
+      /editProfilePage.profile.professionalTab.addCategoryModal.addSubjectBtn/
+    )
+    fireEvent.click(button)
+    const professionalSubjects = screen.getAllByLabelText(
+      /editProfilePage.profile.professionalTab.subject/
+    )
+    await selectOption(categoryAutocomplete, 'Cooking')
+    await selectOption(professionalSubjects[0], 'Gastronomy')
+    await selectOption(professionalSubjects[1], 'Varenychky')
+
+    expect(professionalSubjects[0]).toHaveValue('Gastronomy')
   })
 
-  it('should be disabled if category is disabled', () => {
-    // TODO: Implement test case
+  it('button "Save changes" should be disabled if subject field is empty', async () => {
+    const submitButton = screen.getByText(
+      /editProfilePage.profile.professionalTab.addCategoryModal.submitBtn/
+    )
+    const categoryAutocomplete = screen.getByLabelText(
+      /editProfilePage.profile.professionalTab.mainStudyCategory/
+    )
+
+    await selectOption(categoryAutocomplete, 'Cooking')
+
+    expect(submitButton).toBeDisabled()
+  })
+
+  it('subject field should be disabled if category is disabled', async () => {
+    const subjectAutocomplete = screen.getByLabelText(
+      /editProfilePage.profile.professionalTab.subject/
+    )
+
+    expect(subjectAutocomplete).toBeDisabled()
   })
 })
 
@@ -98,7 +134,14 @@ describe('AddProfessionalCategoryModal with initial value', () => {
   )
 
   it('should create SubjectGroup list according to passed initial values (modal edit mode)', async () => {
-    // TODO: Implement test case
+    const professionalSubjects = screen.getAllByLabelText(
+      /editProfilePage.profile.professionalTab.subject/
+    )
+    await waitFor(() => {
+      initialValues.subjects.forEach((subject, index) => {
+        expect(professionalSubjects[index]).toHaveValue(subject.name)
+      })
+    })
   })
 
   it('should delete subject from the list', async () => {
