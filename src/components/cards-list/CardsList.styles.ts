@@ -5,8 +5,7 @@ export const styles = {
     gridTemplateColumns: {
       xs: 'repeat(1, minmax(264px, 1fr))',
       sm: 'repeat(2, minmax(264px, 1fr))',
-      md: 'repeat(3, minmax(264px, 1fr))',
-      lg: 'repeat(4, minmax(264px, 1fr))'
+      md: 'repeat(3, minmax(264px, 1fr))'
     },
     gridAutoRows: '112px',
     gridGap: '24px'
