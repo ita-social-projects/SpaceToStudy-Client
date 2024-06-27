@@ -10,7 +10,7 @@ export const styles = {
     root: {
       border: 'none',
       Label: {
-        // py: '12px'
+        py: '12px'
       }
     },
     button: {
