@@ -4,7 +4,10 @@
       "tutor": "Student for private lessons",
       "student": "Tutor for private lessons"
     },
-    "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
+    "description": {
+      "tutor": "Start building your tutoring business by creating your offer. Select the options that best describes your expertise.",
+      "student": "Find the perfect tutor for your needs by creating a request. Select the options that best describe what you're looking for."
+    },
     "button": "Create request"
   },
   "titleWithDescription": {
