@@ -52,7 +52,7 @@ const StudentHowItWorks = () => {
 
       <AppButton
         component={Link}
-        size={SizeEnum.ExtraExtraLarge}
+        size={SizeEnum.XXL}
         to={path}
         variant={ButtonVariantEnum.Contained}
       >
