@@ -1,4 +1,4 @@
-import { ReactElement, ReactNode } from 'react'
+import { ReactElement, ReactNode, isValidElement } from 'react'
 import { SxProps } from '@mui/material'
 import Tooltip from '@mui/material/Tooltip'
 import Box from '@mui/material/Box'
@@ -24,6 +24,13 @@ const TitleWithDescription = ({
   style = styles,
   isDescriptionTooltip = false
 }: TitleWithDescriptionProps) => {
+  const renderDescription = () => {
+    if (isValidElement(description)) {
+      return <Box sx={style.description}>{description}</Box>
+    }
+    return <Typography sx={style.description}>{description}</Typography>
+  }
+
   return (
     <Box sx={style.wrapper}>
       {title && <Typography sx={style.title}>{title}</Typography>}
@@ -32,7 +39,7 @@ const TitleWithDescription = ({
         placement='bottom'
         title={isDescriptionTooltip ? description : ''}
       >
-        <Typography sx={style.description}>{description}</Typography>
+        {renderDescription()}
       </Tooltip>
     </Box>
   )
