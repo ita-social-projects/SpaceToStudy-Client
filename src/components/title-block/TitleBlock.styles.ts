@@ -2,8 +2,10 @@ import { TypographyVariantEnum } from '~/types'
 
 export const styles = {
   container: {
+    display: 'flex',
     justifyContent: 'space-between',
     backgroundColor: 'companyBlue',
+    alignItems: 'center',
     borderRadius: 2,
     px: { md: 7, xs: 3 },
     py: { sm: 9, xs: 4 },
