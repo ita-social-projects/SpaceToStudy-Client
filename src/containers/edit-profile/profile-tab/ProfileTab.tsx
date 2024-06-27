@@ -1,7 +1,6 @@
 import { FC, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
-import { useBlocker } from 'react-router-dom'
 
 import useUpdateUser from '~/hooks/use-update-user'
 import useConfirm from '~/hooks/use-confirm'
@@ -25,7 +24,7 @@ import {
 
 const ProfileTab: FC<EditProfileTabUserProps> = ({ user }) => {
   const { t } = useTranslation()
-  const { setNeedConfirmation, checkConfirmation } = useConfirm()
+  const { setNeedConfirmation } = useConfirm()
   const { handleSubmit, loading } = useUpdateUser(user._id)
 
   const initialValues = getProfileInitialValues(user)
@@ -42,26 +41,6 @@ const ProfileTab: FC<EditProfileTabUserProps> = ({ user }) => {
     validations
   })
 
-  const blocker = useBlocker(isDirty)
-
-  useEffect(() => {
-    void (async () => {
-      if (blocker.state === 'blocked') {
-        const confirmed = await checkConfirmation({
-          message: 'questions.goBackToProfile',
-          title: 'titles.discardChanges',
-          confirmButton: t('common.discard'),
-          cancelButton: t('common.cancel')
-        })
-        if (confirmed) {
-          blocker.proceed()
-        } else {
-          blocker.reset()
-        }
-      }
-    })()
-  }, [blocker, checkConfirmation, t])
-
   useEffect(() => {
     setNeedConfirmation(isDirty)
   }, [setNeedConfirmation, isDirty])
@@ -69,6 +48,7 @@ const ProfileTab: FC<EditProfileTabUserProps> = ({ user }) => {
   const handleUpdateData = () => {
     const updatedData = getUserUpdatedData(data)
     handleSubmit(updatedData)
+    setNeedConfirmation(false)
   }
 
   const hasError = Object.values(errors).some((error) => error)
