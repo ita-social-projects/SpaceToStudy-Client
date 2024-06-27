@@ -21,7 +21,8 @@ export const styles = {
   titleWithDescription: {
     wrapper: {
       textAlign: 'left',
-      mb: '8px'
+      mb: '8px',
+      width: { md: '80%' }
     },
     title: {
       typography: {
