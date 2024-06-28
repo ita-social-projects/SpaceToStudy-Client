@@ -10,13 +10,17 @@
     "nativeLanguage": "Рідна мова: ",
     "location": "Родом із",
     "timeForYear_one": "{{count}} рік",
-    "timeForYear_other": "{{count}} років",
+    "timeForYear_few": "{{count}} роки",
+    "timeForYear_many": "{{count}} років",
     "timeForMonth_one": "{{count}} місяць",
-    "timeForMonth_other": "{{count}} місяців",
+    "timeForMonth_few": "{{count}} місяці",
+    "timeForMonth_many": "{{count}} місяців",
     "timeForWeek_one": "{{count}} тиждень",
-    "timeForWeek_other": "{{count}} тижнів",
+    "timeForWeek_few": "{{count}} тижні",
+    "timeForWeek_many": "{{count}} тижнів",
     "timeForDay_one": "{{count}} день",
-    "timeForDay_other": "{{count}} днів"
+    "timeForDay_few": "{{count}} дні",
+    "timeForDay_many": "{{count}} днів"
   },
   "videoPresentation": {
     "title": "Відео Презентація"
