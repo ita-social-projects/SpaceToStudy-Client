@@ -36,7 +36,7 @@ const CardsList: FC<CardsListProps> = ({
         <AppButton
           loading={loading}
           onClick={onClick}
-          size={SizeEnum.ExtraLarge}
+          size={SizeEnum.XXL}
           sx={styles.btn}
           variant={ButtonVariantEnum.Tonal}
         >

@@ -29,6 +29,10 @@
     @extend %size-extra-large;
   }
 
+  &__extraExtraLarge {
+    @extend %size-extra-extra-large;
+  }
+
   &__contained {
     @extend %variant-contained;
   }
@@ -70,6 +74,11 @@
 %size-extra-large {
   padding: spacing(4);
   column-gap: spacing(3);
+}
+
+%size-extra-extra-large {
+  padding: 0.75rem 2rem; 
+  column-gap: 0.75rem;
 }
 
 %variant-contained {
