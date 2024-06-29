@@ -1,6 +1,7 @@
 {
   "head": "Welcome back",
   "forgotPassword": "Forgot password?",
+  "rememberMe": "Remember me",
   "googleButton": "Login with Google",
   "continue": "or continue",
   "haveAccount": "Don't have an account yet?",
