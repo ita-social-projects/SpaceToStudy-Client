@@ -9,7 +9,7 @@ export const styles = {
     flexDirection: 'row',
     justifyContent: 'space-between',
     height: '40px',
-    padding: '0px 5px',
+    p: '0px 5px',
     mb: '10px'
   },
   input: {
