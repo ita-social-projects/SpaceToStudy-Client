@@ -39,6 +39,7 @@
     "starsCount_one": "{{count}} зірка",
     "starsCount_few": "{{count}} зірки",
     "starsCount_many": "{{count}} зірок",
+    "reviewsCount_zero": "{{count}} відгуків",
     "reviewsCount_one": "{{count}} відгук",
     "reviewsCount_few": "{{count}} відгуки",
     "reviewsCount_many": "{{count}} відгуків"
