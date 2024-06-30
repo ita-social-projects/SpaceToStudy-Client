@@ -5,11 +5,16 @@ export const styles = {
     marginTop: 'auto'
   },
   container: {
+    position: 'relative',
     display: 'flex',
     flexDirection: { xs: 'column-reverse', sm: 'row' },
     justifyContent: { xs: 'space-between', sm: 'space-around' },
     alignItems: 'center',
     py: { xs: '12px', sm: '26px' }
+  },
+  allRightsReserved: {
+    position: { xs: 'static', lg: 'absolute' },
+    left: '0'
   },
   links: {
     display: { xs: 'flex', sm: 'block' },

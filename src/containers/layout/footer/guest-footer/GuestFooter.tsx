@@ -15,7 +15,10 @@ const GuestFooter = () => {
 
   return (
     <Container sx={styles.container}>
-      <Typography variant={TypographyVariantEnum.Caption}>
+      <Typography
+        sx={styles.allRightsReserved}
+        variant={TypographyVariantEnum.Caption}
+      >
         {t('footer.allRightsReserved')}
       </Typography>
       <Box sx={styles.links}>
