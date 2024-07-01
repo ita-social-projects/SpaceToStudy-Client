@@ -46,7 +46,7 @@ export interface CategoryNameInterface {
 export interface SubjectInterface {
   _id: string
   name: string
-  category: Pick<CategoryNameInterface, 'name' | '_id'>
+  category: Pick<CategoryInterface, '_id' | 'appearance'>
   totalOffers: DataByRole<number>
   createdAt: string
   updatedAt: string

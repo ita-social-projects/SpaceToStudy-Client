@@ -7,12 +7,20 @@ const items = [
   {
     _id: '1',
     name: 'Math',
-    totalOffers: 10
+    totalOffers: 10,
+    appearance: {
+      icon: 'math.svg',
+      color: '#FF0000'
+    }
   },
   {
     _id: '2',
     name: 'Science',
-    totalOffers: 20
+    totalOffers: 20,
+    appearance: {
+      icon: 'science.svg',
+      color: '#22ff33'
+    }
   }
 ]
 

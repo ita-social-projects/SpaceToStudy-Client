@@ -20,7 +20,6 @@ import AppToolbar from '~/components/app-toolbar/AppToolbar'
 import DirectionLink from '~/components/direction-link/DirectionLink'
 import NotFoundResults from '~/components/not-found-results/NotFoundResults'
 import CreateSubjectModal from '~/containers/find-offer/create-new-subject/CreateNewSubject'
-import serviceIcon from '~/assets/img/student-home-page/service_icon.png'
 import { getOpositeRole, getScreenBasedLimit } from '~/utils/helper-functions'
 import { getSuffixes } from '~/utils/get-translation-suffixes'
 
@@ -79,7 +78,8 @@ const Categories = () => {
             description={`${item.totalOffers[oppositeRole]} ${t(
               'categoriesPage.offers'
             )}`}
-            img={serviceIcon}
+            icon={item.appearance.icon}
+            iconColor={item.appearance.color}
             key={item._id}
             link={`${authRoutes.subjects.path}?categoryId=${item._id}`}
             title={item.name}
