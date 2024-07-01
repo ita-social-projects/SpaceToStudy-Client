@@ -11,5 +11,13 @@ export const styles = {
       marginTop: 0
     },
     disableUnderline: true
+  },
+  editContainer: {
+    display: 'flex',
+    justifyContent: 'flex-end'
+  },
+  editButton: {
+    p: '16px',
+    backgroundColor: 'basic.grey'
   }
 }

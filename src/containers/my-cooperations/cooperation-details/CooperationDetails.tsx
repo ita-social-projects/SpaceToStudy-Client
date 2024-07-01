@@ -17,7 +17,7 @@ import AppButton from '~/components/app-button/AppButton'
 
 import useAxios from '~/hooks/use-axios'
 import useBreakpoints from '~/hooks/use-breakpoints'
-import { useAppSelector } from '~/hooks/use-redux'
+import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 
 import CooperationActivities from '~/containers/cooperation-details/cooperation-activities/CooperationActivities'
 import CooperationNotes from '~/containers/my-cooperations/cooperation-notes/CooperationNotes'
@@ -41,7 +41,10 @@ import {
   SizeEnum,
   ButtonVariantEnum
 } from '~/types'
-import { cooperationsSelector } from '~/redux/features/cooperationsSlice'
+import {
+  cooperationsSelector,
+  setIsActivityCreated
+} from '~/redux/features/cooperationsSlice'
 
 const CooperationDetails = () => {
   const { t } = useTranslation()
@@ -54,6 +57,7 @@ const CooperationDetails = () => {
   )
   const [isNotesOpen, setIsNotesOpen] = useState(false)
   const [editMode, setEditMode] = useState(false)
+  const dispatch = useAppDispatch()
 
   const responseError = useCallback(
     () => navigate(errorRoutes.notFound.path),
@@ -73,6 +77,11 @@ const CooperationDetails = () => {
   useEffect(() => {
     response.sections && response.sections.length && setEditMode(true)
   }, [response.sections])
+
+  const handleEditMode = useCallback(() => {
+    setEditMode((prev) => !prev)
+    dispatch(setIsActivityCreated(true))
+  }, [dispatch])
 
   if (loading) {
     return <Loader pageLoad />
@@ -101,13 +110,15 @@ const CooperationDetails = () => {
       return (
         <CooperationActivitiesView
           sections={response.sections}
-          setEditMode={setEditMode}
+          setEditMode={handleEditMode}
         />
       )
     }
 
     if (isActivityCreated) {
-      return <CooperationActivities cooperationId={id} />
+      return (
+        <CooperationActivities cooperationId={id} oldData={response.sections} />
+      )
     }
 
     return cooperationContent
