@@ -41,11 +41,11 @@ describe('CoursesFilters component', () => {
     expect(resetFiltersMocked).toHaveBeenCalled()
   })
 
-  it('should display all choosen proficiency levels', () => {
-    const choosenLevels = screen.getByText(
+  it('should display all chosen proficiency levels', () => {
+    const chosenLevels = screen.getByText(
       filtersMocked.proficiencyLevel.join(', ')
     )
 
-    expect(choosenLevels).toBeInTheDocument()
+    expect(chosenLevels).toBeInTheDocument()
   })
 })
