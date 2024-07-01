@@ -49,7 +49,7 @@ describe.skip('router test', () => {
   describe('guest routes', () => {
     it('should render private policy page', async () => {
       renderWithRouter(createPath(guestRoutes.privacyPolicy.route), {
-        appMain: { loding: false, userRole: '' }
+        appMain: { loading: false, userRole: '' }
       })
       const privacyPolicyTitle = await screen.findByText(
         'cookiePolicyPage.cookiePolicy.title'
@@ -58,7 +58,7 @@ describe.skip('router test', () => {
     })
     it('should render guest home page', async () => {
       renderWithRouter(guestRoutes.home.route, {
-        appMain: { loding: false, userRole: '' }
+        appMain: { loading: false, userRole: '' }
       })
       const welcomeBlock = await screen.findByText(
         'guestHomePage.welcomeBlock.getStarted'
@@ -69,7 +69,7 @@ describe.skip('router test', () => {
   describe.skip('student routes', () => {
     it('should render student home page', async () => {
       renderWithRouter(guestRoutes.home.route, {
-        appMain: { loding: false, userRole: student }
+        appMain: { loading: false, userRole: student }
       })
       const findTutorTitle = await screen.findByText(
         'studentHomePage.findTutorBlock.title'
@@ -78,7 +78,7 @@ describe.skip('router test', () => {
     })
     it('should render student profile page', async () => {
       renderWithRouter(studentRoutes.accountMenu.myProfile.path, {
-        appMain: { loding: false, userRole: student }
+        appMain: { loading: false, userRole: student }
       })
       const studentPagePlaceholder = await screen.findByText(
         'StudentProfile Page Placeholder'
@@ -87,7 +87,7 @@ describe.skip('router test', () => {
     })
     it('should render student findTutor page', async () => {
       renderWithRouter(studentRoutes.findTutor.path, {
-        appMain: { loding: false, userRole: student }
+        appMain: { loading: false, userRole: student }
       })
       const findTutorPagePlaceholder = await screen.findByText(
         'FindTutor Page Placeholder'
@@ -96,7 +96,7 @@ describe.skip('router test', () => {
     })
     it('should render error on protected route', async () => {
       renderWithRouter(createPath(guestRoutes.student.route), {
-        appMain: { loding: false, userRole: '' }
+        appMain: { loading: false, userRole: '' }
       })
       const error = await screen.findByText('errorPage.401.title')
       await waitFor(() => expect(error).toBeInTheDocument())
@@ -105,14 +105,14 @@ describe.skip('router test', () => {
   describe.skip('tutor routes', () => {
     it('should render tutor home page', async () => {
       renderWithRouter(createPath(guestRoutes.tutor.route), {
-        appMain: { loding: false, userRole: tutor }
+        appMain: { loading: false, userRole: tutor }
       })
       const tutorHomePagePlaceholder = await screen.findByText('Hello Tutor!')
       await waitFor(() => expect(tutorHomePagePlaceholder).toBeInTheDocument())
     })
     it('should render error on protected route', async () => {
       renderWithRouter(createPath(guestRoutes.tutor.route), {
-        appMain: { loding: false, userRole: student }
+        appMain: { loading: false, userRole: student }
       })
       const error = await screen.findByText('errorPage.401.title')
       await waitFor(() => expect(error).toBeInTheDocument())
@@ -121,7 +121,7 @@ describe.skip('router test', () => {
   describe.skip('admin routes', () => {
     it('should render admin home page', async () => {
       renderWithRouter(createPath(guestRoutes.admin.route), {
-        appMain: { loding: false, userRole: admin }
+        appMain: { loading: false, userRole: admin }
       })
       const adminPagePlaceholder = await screen.findByText('Hello Admin!')
       await waitFor(() => expect(adminPagePlaceholder).toBeInTheDocument())
@@ -136,7 +136,7 @@ describe.skip('router test', () => {
       renderWithRouter(
         createPath(guestRoutes.admin.route, adminRoutes.students.route),
         {
-          appMain: { loding: false, userRole: admin }
+          appMain: { loading: false, userRole: admin }
         }
       )
       const title = await screen.findByText('studentTable.studentsTab')
@@ -148,7 +148,7 @@ describe.skip('router test', () => {
       renderWithRouter(
         createPath(guestRoutes.error.route, errorRoutes.badRequest.route),
         {
-          appMain: { loding: false, userRole: '' }
+          appMain: { loading: false, userRole: '' }
         }
       )
       const error = await screen.findByText('errorPage.400.title')
@@ -161,7 +161,7 @@ describe.skip('router test', () => {
           errorRoutes.internalServerError.route
         ),
         {
-          appMain: { loding: false, userRole: '' }
+          appMain: { loading: false, userRole: '' }
         }
       )
       const error = await screen.findByText('errorPage.500.title')
@@ -169,7 +169,7 @@ describe.skip('router test', () => {
     })
     it('should render not found error on bad path', async () => {
       renderWithRouter(createPath('badPath'), {
-        appMain: { loding: false, userRole: '' }
+        appMain: { loading: false, userRole: '' }
       })
       const error = await screen.findByText('errorPage.404.title')
       await waitFor(() => expect(error).toBeInTheDocument())
@@ -177,7 +177,7 @@ describe.skip('router test', () => {
   })
   it('should render loader after logout', async () => {
     renderWithRouter(studentRoutes.accountMenu.logout.path, {
-      appMain: { loding: false, userRole: '' }
+      appMain: { loading: false, userRole: '' }
     })
     await waitFor(async () =>
       expect(await screen.findByTestId('loader')).toBeInTheDocument()
