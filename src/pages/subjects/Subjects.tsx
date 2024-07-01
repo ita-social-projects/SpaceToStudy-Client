@@ -28,6 +28,7 @@ import useBreakpoints from '~/hooks/use-breakpoints'
 import serviceIcon from '~/assets/img/student-home-page/service_icon.png'
 import { getOpositeRole, getScreenBasedLimit } from '~/utils/helper-functions'
 import { mapArrayByField } from '~/utils/map-array-by-field'
+import { getSuffixes } from '~/utils/get-translation-suffixes'
 
 import {
   CategoryNameInterface,
@@ -45,7 +46,9 @@ const Subjects = () => {
   const [isFetched, setIsFetched] = useState<boolean>(false)
   const params = useMemo(() => ({ name: match }), [match])
 
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
+  const nameOfSearchContent = t('subjectsPage.subject')
+  const { suffix } = getSuffixes(nameOfSearchContent, i18n.language)
   const { userRole } = useAppSelector((state) => state.appMain)
   const breakpoints = useBreakpoints()
   const { openModal } = useModalContext()
@@ -186,8 +189,14 @@ const Subjects = () => {
       {breakpoints.isMobile && autoCompleteCategories}
       {!subjects.length && !subjectsLoading ? (
         <NotFoundResults
-          buttonText={t('errorMessages.buttonRequest', { name: 'subjects' })}
-          description={t('errorMessages.tryAgainText', { name: 'subjects' })}
+          buttonText={t('errorMessages.buttonRequest', {
+            name: nameOfSearchContent,
+            suffix
+          })}
+          description={t('errorMessages.tryAgainText', {
+            name: nameOfSearchContent,
+            suffix
+          })}
           onClick={handleOpenModal}
         />
       ) : (
