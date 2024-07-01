@@ -14,13 +14,13 @@ import { authRoutes } from '~/router/constants/authRoutes'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import serviceIcon from '~/assets/img/student-home-page/service_icon.png'
 import CardsList from '~/components/cards-list/CardsList'
-import { CategoryInterface, ItemsWithCount } from '~/types'
+import { CategoryInterface, ItemsWithCount, SortEnum } from '~/types'
 import useBreakpoints from '~/hooks/use-breakpoints'
 
 import {
+  getOpositeRole,
   getScreenBasedLimit,
-  spliceSx,
-  getOpositeRole
+  spliceSx
 } from '~/utils/helper-functions'
 import { styles } from '~/components/popular-categories/PopularCategories.styles'
 import { defaultResponses } from '~/constants'
@@ -45,7 +45,11 @@ const PopularCategories: FC<PopularCategoriesProps> = ({
   const itemsToShow = getScreenBasedLimit(breakpoints, itemsLoadLimit)
 
   const getCategories = useCallback(
-    () => categoryService.getCategories({ limit: itemsToShow }),
+    () =>
+      categoryService.getCategories({
+        limit: itemsToShow,
+        sort: { order: SortEnum.Desc, orderBy: 'totalOffersSum' }
+      }),
     [itemsToShow]
   )
   const { response, loading } = useAxios<ItemsWithCount<CategoryInterface>>({
