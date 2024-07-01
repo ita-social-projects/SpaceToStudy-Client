@@ -17,7 +17,10 @@ import {
   ProficiencyLevelEnum,
   UserRoleEnum
 } from '~/types'
+import { proficiencyLevelLabels } from '~/constants/labels'
 import { styles } from '~/containers/offer-page/OfferPage.styles'
+
+const levelOptions = Object.values(ProficiencyLevelEnum)
 
 const SpecializationBlock = <T extends CreateOrUpdateOfferData>({
   data,
@@ -46,20 +49,14 @@ const SpecializationBlock = <T extends CreateOrUpdateOfferData>({
     handleNonInputValueChange('proficiencyLevel', value)
   }
 
-  const levelOptions = useMemo(() => Object.values(ProficiencyLevelEnum), [])
   const levelLabels = useMemo(
     () =>
-      new Map([
-        [ProficiencyLevelEnum.Beginner, t('common.levels.beginner')],
-        [ProficiencyLevelEnum.Intermediate, t('common.levels.intermediate')],
-        [ProficiencyLevelEnum.Advanced, t('common.levels.advanced')],
-        [
-          ProficiencyLevelEnum.TestPreparation,
-          t('common.levels.testPreparation')
-        ],
-        [ProficiencyLevelEnum.Professional, t('common.levels.professional')],
-        [ProficiencyLevelEnum.Specialized, t('common.levels.specialized')]
-      ]),
+      new Map(
+        Object.entries(proficiencyLevelLabels).map(([key, value]) => [
+          key,
+          t(value)
+        ])
+      ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   )
