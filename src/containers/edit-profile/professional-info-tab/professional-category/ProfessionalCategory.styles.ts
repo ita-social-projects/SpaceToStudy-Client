@@ -40,7 +40,7 @@ export const styles = {
   },
   subjectChipLabel: (color: string) => ({
     typography: Overline,
-    fontWeight: '400',
+    fontWeight: '500',
     lineHeight: 1.2,
     color: darken(color, 0.6)
   }),
