@@ -4,19 +4,20 @@ import { IconButton } from '@mui/material'
 import EditIcon from '@mui/icons-material/Edit'
 
 import CooperationSectionView from '~/components/cooperation-section-view/CooperationSectionView'
-import { CourseSection } from '~/types'
+import { useAppSelector } from '~/hooks/use-redux'
+import { cooperationsSelector } from '~/redux/features/cooperationsSlice'
 
 import { styles } from '~/containers/cooperation-details/cooperetion-activities-view/CooperationActivitiesView.style'
 
 interface CooperationActivitiesViewProps {
-  sections: CourseSection[]
   setEditMode: () => void
 }
 
 const CooperationActivitiesView: FC<CooperationActivitiesViewProps> = ({
-  sections,
   setEditMode
 }) => {
+  const { sections } = useAppSelector(cooperationsSelector)
+
   const onEdit = () => {
     setEditMode()
   }

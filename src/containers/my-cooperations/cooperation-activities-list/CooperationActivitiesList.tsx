@@ -75,7 +75,7 @@ const CooperationActivitiesList = () => {
             id: Date.now().toString() + index
           })
         )
-        let newSections
+        let newSections: CourseSection[]
         if (index !== undefined) {
           newSections = [
             ...sections.slice(0, index),
@@ -85,7 +85,7 @@ const CooperationActivitiesList = () => {
         } else {
           newSections = [...sections, ...newSectionData]
         }
-        setSectionsData(newSections)
+        ;() => setSectionsData(newSections)
       }
       addNewSectionsCourse(currentSectionIndex)
     }

@@ -23,7 +23,6 @@ const SortableWrapper: FC<SortableWrapperProps> = ({
   const { isDragging, setNodeRef, transform, transition } = useSortable({ id })
 
   const style: CSSProperties = {
-    opacity: isDragging ? 0.4 : 1,
     transform: CSS.Translate.toString(transform),
     transition
   }

@@ -43,6 +43,7 @@ import {
 } from '~/types'
 import {
   cooperationsSelector,
+  setCooperationSections,
   setIsActivityCreated
 } from '~/redux/features/cooperationsSlice'
 
@@ -75,8 +76,9 @@ const CooperationDetails = () => {
   })
 
   useEffect(() => {
+    dispatch(setCooperationSections(response.sections))
     response.sections && response.sections.length && setEditMode(true)
-  }, [response.sections])
+  }, [response.sections, dispatch])
 
   const handleEditMode = useCallback(() => {
     setEditMode((prev) => !prev)
@@ -107,17 +109,12 @@ const CooperationDetails = () => {
     }
 
     if (editMode && activeTab === CooperationTabsEnum.Activities) {
-      return (
-        <CooperationActivitiesView
-          sections={response.sections}
-          setEditMode={handleEditMode}
-        />
-      )
+      return <CooperationActivitiesView setEditMode={handleEditMode} />
     }
 
     if (isActivityCreated) {
       return (
-        <CooperationActivities cooperationId={id} oldData={response.sections} />
+        <CooperationActivities cooperationId={id} setEditMode={setEditMode} />
       )
     }
 
