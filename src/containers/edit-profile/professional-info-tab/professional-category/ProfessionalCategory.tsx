@@ -1,19 +1,21 @@
 import Box from '@mui/material/Box'
-import Divider from '@mui/material/Divider'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import Tooltip from '@mui/material/Tooltip'
-import { FC } from 'react'
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
+import { FC, ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import AppButton from '~/components/app-button/AppButton'
+import AppChip from '~/components/app-chip/AppChip'
+import { getCategoryIcon } from '~/services/category-icon-service'
 import {
   ButtonVariantEnum,
   ComponentEnum,
   PositionEnum,
   UserMainSubject,
-  OpenProfessionalCategoryModalHandler
+  OpenProfessionalCategoryModalHandler,
+  SizeEnum
 } from '~/types'
-import DeleteIcon from '@mui/icons-material/Delete'
 import useConfirm from '~/hooks/use-confirm'
 import { styles } from '~/containers/edit-profile/professional-info-tab/professional-category/ProfessionalCategory.styles'
 
@@ -51,31 +53,39 @@ const ProfessionalCategory: FC<ProfessionalCategoryProps> = ({
     })
   }
 
-  const CardItem = ({
+  const handleEditButtonClick = () => {
+    openProfessionalCategoryModal(item)
+  }
+
+  const DescriptionItem = ({
     label,
     children
   }: {
     label: string
-    children: string
+    children: ReactNode
   }) => {
     return (
-      <Box sx={styles.card.item}>
-        <Typography component={ComponentEnum.Dt} sx={styles.card.item.label}>
+      <>
+        <Typography component={ComponentEnum.Dt} sx={styles.description.label}>
           {label}:
         </Typography>
-        <Typography component={ComponentEnum.Dd} sx={styles.card.item.value}>
+        <Typography component={ComponentEnum.Dd} sx={styles.description.value}>
           {children}
         </Typography>
-      </Box>
+      </>
     )
   }
 
+  const CategoryIcon = getCategoryIcon(item.category.appearance.icon)
+
   const Subjects = item.subjects.map((subject) => (
-    <Box key={subject._id} sx={styles.subjects.item}>
-      <CardItem label={t('editProfilePage.profile.professionalTab.subject')}>
-        {subject.name}
-      </CardItem>
-    </Box>
+    <AppChip
+      key={subject._id}
+      labelSx={styles.subjectChipLabel(item.category.appearance.color)}
+      sx={styles.subjectChip(item.category.appearance.color)}
+    >
+      {subject.name}
+    </AppChip>
   ))
 
   return (
@@ -83,8 +93,9 @@ const ProfessionalCategory: FC<ProfessionalCategoryProps> = ({
       <Box sx={styles.toolbar.root}>
         <Box sx={styles.toolbar.buttonGroup}>
           <AppButton
-            onClick={() => openProfessionalCategoryModal(item)}
-            variant={ButtonVariantEnum.ContainedLight}
+            onClick={handleEditButtonClick}
+            size={SizeEnum.Medium}
+            variant={ButtonVariantEnum.Tonal}
           >
             {t('editProfilePage.profile.professionalTab.editCategoryBtn')}
           </AppButton>
@@ -100,26 +111,30 @@ const ProfessionalCategory: FC<ProfessionalCategoryProps> = ({
             )
           }
         >
-          <span>
-            <IconButton
-              data-testid='delete-professional-category-button'
-              disabled={item.isDeletionBlocked}
-              onClick={handleDeleteButtonClick}
-              sx={styles.toolbar.deleteButton}
-            >
-              <DeleteIcon />
-            </IconButton>
-          </span>
+          <IconButton
+            data-testid='delete-professional-category-button'
+            disabled={item.isDeletionBlocked}
+            onClick={handleDeleteButtonClick}
+            sx={styles.toolbar.deleteButton}
+          >
+            <DeleteOutlineIcon />
+          </IconButton>
         </Tooltip>
       </Box>
-      <Box component={ComponentEnum.Dl} sx={styles.card.root}>
-        <CardItem
+      <Box component={ComponentEnum.Dl} sx={styles.description.grid}>
+        <DescriptionItem
           label={t('editProfilePage.profile.professionalTab.mainStudyCategory')}
         >
+          <CategoryIcon
+            sx={styles.categoryIcon(item.category.appearance.color)}
+          />
           {item.category.name}
-        </CardItem>
-        <Divider sx={styles.divider} />
-        <Box sx={styles.subjects.root}>{Subjects}</Box>
+        </DescriptionItem>
+        <DescriptionItem
+          label={t('editProfilePage.profile.professionalTab.subject')}
+        >
+          {Subjects}
+        </DescriptionItem>
       </Box>
     </Box>
   )

@@ -41,8 +41,8 @@
         "cancelBtn": "Cancel",
         "submitBtn": "Delete"
       },
-      "mainStudyCategory": "Main Study Category",
-      "subject": "Subject",
+      "mainStudyCategory": "Main study category",
+      "subject": "The category subject(s)",
       "proficiencyLevels": "Proficiency Levels",
       "editCategoryBtn": "Edit category",
       "deleteCategoryBtnDisabledTooltip": "You have opened cooperation(s)/offers with this category.\nPlease close it before deactivation",

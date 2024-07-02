@@ -42,7 +42,7 @@
         "submitBtn": "Видалити"
       },
       "mainStudyCategory": "Основна навчальна категорія",
-      "subject": "Предмет",
+      "subject": "Предмет(и) категорії",
       "proficiencyLevels": "Рівні кваліфікації",
       "editCategoryBtn": "Редагувати",
       "deleteCategoryBtnDisabledTooltip": "Ви розпочали співпрацю(і)/пропозицію. з цією категорією.\nБудь ласка, закрийте її перед деактивацією",
