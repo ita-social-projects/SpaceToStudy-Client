@@ -1,4 +1,4 @@
-import { useMemo, useCallback } from 'react'
+import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Typography from '@mui/material/Typography'
@@ -48,18 +48,6 @@ const SpecializationBlock = <T extends CreateOrUpdateOfferData>({
   const handleCheckboxesChange = (value: ProficiencyLevelEnum[]) => {
     handleNonInputValueChange('proficiencyLevel', value)
   }
-
-  const levelLabels = useMemo(
-    () =>
-      new Map(
-        Object.entries(proficiencyLevelLabels).map(([key, value]) => [
-          key,
-          t(value)
-        ])
-      ),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  )
 
   const subjectError = data.category && errors.subject
 
@@ -119,7 +107,7 @@ const SpecializationBlock = <T extends CreateOrUpdateOfferData>({
             error={t(errors.proficiencyLevel)}
             {...checkboxListProps}
             items={levelOptions}
-            labels={levelLabels}
+            labels={proficiencyLevelLabels}
             onChange={handleCheckboxesChange}
             value={data.proficiencyLevel}
           />
