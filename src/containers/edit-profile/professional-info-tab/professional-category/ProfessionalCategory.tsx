@@ -18,6 +18,7 @@ import {
 } from '~/types'
 import useConfirm from '~/hooks/use-confirm'
 import { styles } from '~/containers/edit-profile/professional-info-tab/professional-category/ProfessionalCategory.styles'
+import { getValidatedHexColor } from '~/utils/get-validated-hex-color'
 
 interface ProfessionalCategoryProps {
   item: UserMainSubject
@@ -76,13 +77,14 @@ const ProfessionalCategory: FC<ProfessionalCategoryProps> = ({
     )
   }
 
+  const categoryColor = getValidatedHexColor(item.category.appearance.color)
   const CategoryIcon = getCategoryIcon(item.category.appearance.icon)
 
   const Subjects = item.subjects.map((subject) => (
     <AppChip
       key={subject._id}
-      labelSx={styles.subjectChipLabel(item.category.appearance.color)}
-      sx={styles.subjectChip(item.category.appearance.color)}
+      labelSx={styles.subjectChipLabel(categoryColor)}
+      sx={styles.subjectChip(categoryColor)}
     >
       {subject.name}
     </AppChip>
@@ -125,9 +127,7 @@ const ProfessionalCategory: FC<ProfessionalCategoryProps> = ({
         <DescriptionItem
           label={t('editProfilePage.profile.professionalTab.mainStudyCategory')}
         >
-          <CategoryIcon
-            sx={styles.categoryIcon(item.category.appearance.color)}
-          />
+          <CategoryIcon sx={styles.categoryIcon(categoryColor)} />
           {item.category.name}
         </DescriptionItem>
         <DescriptionItem
