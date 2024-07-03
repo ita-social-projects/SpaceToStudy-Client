@@ -17,7 +17,10 @@ import {
   ProficiencyLevelEnum,
   UserRoleEnum
 } from '~/types'
+import { proficiencyLevelLabels } from '~/constants/labels'
 import { styles } from '~/containers/offer-page/OfferPage.styles'
+
+const levelOptions = Object.values(ProficiencyLevelEnum)
 
 const SpecializationBlock = <T extends CreateOrUpdateOfferData>({
   data,
@@ -45,7 +48,7 @@ const SpecializationBlock = <T extends CreateOrUpdateOfferData>({
   const handleCheckboxesChange = (value: ProficiencyLevelEnum[]) => {
     handleNonInputValueChange('proficiencyLevel', value)
   }
-  const levelOptions = Object.values(ProficiencyLevelEnum)
+
   const subjectError = data.category && errors.subject
 
   const checkboxListProps =
@@ -104,6 +107,7 @@ const SpecializationBlock = <T extends CreateOrUpdateOfferData>({
             error={t(errors.proficiencyLevel)}
             {...checkboxListProps}
             items={levelOptions}
+            labels={proficiencyLevelLabels}
             onChange={handleCheckboxesChange}
             value={data.proficiencyLevel}
           />
