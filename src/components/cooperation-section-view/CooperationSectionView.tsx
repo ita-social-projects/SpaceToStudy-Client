@@ -1,17 +1,17 @@
 import Box from '@mui/material/Box'
 
-import { FC, useState } from 'react'
+import { FC, useState, ReactNode, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import AppTextField from '~/components/app-text-field/AppTextField'
 import HeaderTextWithDropdown from '~/components/header-text-with-dropdown/HeaderTextWithDropdown'
 import ResourceItem from '~/containers/course-section/resource-item/ResourceItem'
-import { CourseSection, TextFieldVariantEnum } from '~/types'
+import { Activities, CourseSection, TextFieldVariantEnum } from '~/types'
 
 import { styles } from '~/components/cooperation-section-view/CooperationSectionView.styles'
 
 interface CooperationSectionViewProps {
-  id: string
+  id?: string
   item: CourseSection
 }
 
@@ -22,9 +22,20 @@ const CooperationSectionView: FC<CooperationSectionViewProps> = ({
   const [isVisible, setIsVisible] = useState(true)
   const { t } = useTranslation()
 
-  const resources = item.activities.map((item) => (
-    <ResourceItem isView key={item.resource._id} resource={item.resource} />
-  ))
+  console.log('item --->', item)
+
+  const resources = useMemo<undefined | ReactNode[]>(
+    () =>
+      item.activities?.map((activity: Activities) => (
+        <ResourceItem
+          isView
+          key={activity.resource._id}
+          resource={activity.resource}
+          resourceType={activity.resourceType}
+        />
+      )),
+    [item.activities]
+  )
 
   return (
     <Box sx={styles.root}>

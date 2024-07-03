@@ -32,6 +32,7 @@ import { styles } from '~/containers/course-section/resource-item/ResourceItem.s
 
 interface ResourceItemProps {
   resource: CourseResource
+  resourceType?: ResourcesTypes
   deleteResource?: (resource: CourseResource) => void
   setResourceAvailability?: SetResourseAvailability
   editResource?: (resource: CourseResource) => void
@@ -40,6 +41,7 @@ interface ResourceItemProps {
 
 const ResourceItem: FC<ResourceItemProps> = ({
   resource,
+  resourceType,
   deleteResource,
   setResourceAvailability,
   editResource,
@@ -61,7 +63,7 @@ const ResourceItem: FC<ResourceItemProps> = ({
   const renderResourceIcon = () => {
     const { Lessons, Quizzes } = ResourcesTypes
 
-    switch (resource.resourceType) {
+    switch (resourceType) {
       case Lessons:
         return resourcesData.lessons.icon
       case Quizzes:

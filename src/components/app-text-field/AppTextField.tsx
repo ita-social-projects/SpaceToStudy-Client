@@ -5,11 +5,13 @@ import Tooltip from '@mui/material/Tooltip'
 
 import { styles } from '~/components/app-text-field/AppTextField.styles'
 import { TypographyVariantEnum } from '~/types'
+import { SxProps } from '@mui/material'
 
 interface AppTextFieldProps
   extends Omit<TextFieldProps, 'error' | 'helperText'> {
   errorMsg?: string
   withHelperText?: boolean
+  sx?: SxProps
 }
 
 const AppTextField: FC<AppTextFieldProps> = ({

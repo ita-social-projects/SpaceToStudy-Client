@@ -8,6 +8,7 @@ import { styles } from '~/containers/cooperation-details/cooperetion-activities-
 
 interface CooperationActivitiesViewProps {
   sections: CourseSection[]
+  setEditMode: (value: boolean) => void
 }
 
 const CooperationActivitiesView: FC<CooperationActivitiesViewProps> = ({
