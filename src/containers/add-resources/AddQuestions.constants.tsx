@@ -1,4 +1,4 @@
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
+import ListIcon from '@mui/icons-material/CheckCircleOutline'
 import Typography from '@mui/material/Typography'
 
 import AppChip from '~/components/app-chip/AppChip'
@@ -28,7 +28,7 @@ export const columns: TableColumn<Question>[] = [
               component={ComponentEnum.Span}
               sx={styles.questionTitle}
             >
-              <CheckCircleOutlineIcon sx={styles.questionIcon} />
+              <ListIcon sx={styles.questionIcon} />
               {question.title}
             </Typography>
           }
