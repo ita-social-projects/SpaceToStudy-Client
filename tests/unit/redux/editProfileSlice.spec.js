@@ -248,13 +248,33 @@ describe('editProfileSlice test', () => {
     )
   })
 
+  it('should not add category if it is already added', () => {
+    const previousState = createState({ categories: [mockedCategories[0]] })
+    const expectedState = createState({ categories: [mockedCategories[0]] })
+
+    expect(reducer(previousState, addCategory(mockedCategories[0]))).toEqual(
+      expectedState
+    )
+  })
+
   it('should delete category', () => {
+    const categoryIdToDelete = '1'
     const previousState = createState({ categories: mockedCategories })
     const expectedState = createState({ categories: [mockedCategories[1]] })
 
-    expect(reducer(previousState, deleteCategory({ id: '1' }))).toEqual(
-      expectedState
-    )
+    expect(
+      reducer(previousState, deleteCategory({ id: categoryIdToDelete }))
+    ).toEqual(expectedState)
+  })
+
+  it('should not delete category if it does not exist', () => {
+    const categoryIdToDelete = '2'
+    const previousState = createState({ categories: [mockedCategories[0]] })
+    const expectedState = createState({ categories: [mockedCategories[0]] })
+
+    expect(
+      reducer(previousState, deleteCategory({ id: categoryIdToDelete }))
+    ).toEqual(expectedState)
   })
 
   it('should edit category', () => {
@@ -300,6 +320,24 @@ describe('editProfileSlice test', () => {
 
     const previousState = createState({ categories: mockedCategories })
     const expectedState = createState({ categories: expectedCategories })
+
+    expect(
+      reducer(
+        previousState,
+        editCategory({
+          id: categoryIdToEdit,
+          field: 'isDeletionBlocked',
+          value: true
+        })
+      )
+    ).toEqual(expectedState)
+  })
+
+  it('should not edit category if it does not exist', () => {
+    const categoryIdToEdit = '4'
+
+    const previousState = createState({ categories: mockedCategories })
+    const expectedState = createState({ categories: mockedCategories })
 
     expect(
       reducer(
@@ -372,6 +410,40 @@ describe('editProfileSlice test', () => {
     ).toEqual(expectedState)
   })
 
+  it('should not add subject to category if category does not exist', () => {
+    const categoryIdToEdit = '4'
+
+    const previousState = createState({ categories: mockedCategories })
+    const expectedState = createState({ categories: mockedCategories })
+
+    expect(
+      reducer(
+        previousState,
+        addSubjectToCategory({
+          id: categoryIdToEdit,
+          subject: { _id: 'subject_005', name: 'Piano' }
+        })
+      )
+    ).toEqual(expectedState)
+  })
+
+  it('should not add subject to category if subject is already added', () => {
+    const categoryIdToEdit = '1'
+
+    const previousState = createState({ categories: mockedCategories })
+    const expectedState = createState({ categories: mockedCategories })
+
+    expect(
+      reducer(
+        previousState,
+        addSubjectToCategory({
+          id: categoryIdToEdit,
+          subject: { _id: 'subject_001', name: 'Violin' }
+        })
+      )
+    ).toEqual(expectedState)
+  })
+
   it('should remove subject from category', () => {
     const expectedCategories = [
       {
@@ -412,6 +484,42 @@ describe('editProfileSlice test', () => {
 
     const previousState = createState({ categories: mockedCategories })
     const expectedState = createState({ categories: expectedCategories })
+
+    expect(
+      reducer(
+        previousState,
+        removeSubjectFromCategory({
+          id: categoryIdToEdit,
+          subjectId: subjectIdToRemove
+        })
+      )
+    ).toEqual(expectedState)
+  })
+
+  it('should not remove subject from category if category does not exist', () => {
+    const categoryIdToEdit = '4'
+    const subjectIdToRemove = 'subject_002'
+
+    const previousState = createState({ categories: mockedCategories })
+    const expectedState = createState({ categories: mockedCategories })
+
+    expect(
+      reducer(
+        previousState,
+        removeSubjectFromCategory({
+          id: categoryIdToEdit,
+          subjectId: subjectIdToRemove
+        })
+      )
+    ).toEqual(expectedState)
+  })
+
+  it('should not remove subject from category if subject does not exist', () => {
+    const categoryIdToEdit = '1'
+    const subjectIdToRemove = 'subject_009'
+
+    const previousState = createState({ categories: mockedCategories })
+    const expectedState = createState({ categories: mockedCategories })
 
     expect(
       reducer(
