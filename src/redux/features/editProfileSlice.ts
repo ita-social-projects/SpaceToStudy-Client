@@ -133,7 +133,13 @@ const editProfileSlice = createSlice({
       ) as UserMainSubject
 
       if (existingCategory) {
-        existingCategory.subjects.push(action.payload.subject)
+        const existingSubject = existingCategory.subjects.find(
+          (subject) => subject._id === action.payload.subject._id
+        ) as SubjectNameInterface
+
+        if (!existingSubject) {
+          existingCategory.subjects.push(action.payload.subject)
+        }
       }
     },
     removeSubjectFromCategory: (
