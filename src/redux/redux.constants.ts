@@ -1,4 +1,5 @@
 export const sliceNames = {
   cooperations: 'cooperationsSlice',
-  snackbar: 'snackbarSlice'
+  snackbar: 'snackbarSlice',
+  editProfile: 'editProfileSlice'
 }
