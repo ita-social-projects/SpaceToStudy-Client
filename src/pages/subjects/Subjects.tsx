@@ -98,7 +98,7 @@ const Subjects = () => {
 
   const cards = useMemo(
     () =>
-      subjects.map((item: SubjectInterface, index) => {
+      subjects.map((item: SubjectInterface) => {
         return (
           <CardWithLink
             description={`${item.totalOffers[oppositeRole]} ${t(
@@ -106,7 +106,7 @@ const Subjects = () => {
             )}`}
             icon={item.category.appearance.icon}
             iconColor={item.category.appearance.color}
-            key={`${item._id}-${index}`}
+            key={item._id}
             link={`${authRoutes.findOffers.path}?categoryId=${categoryId}&subjectId=${item._id}`}
             title={item.name}
           />
