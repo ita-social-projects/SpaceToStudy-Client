@@ -6,7 +6,7 @@
   line-height: var(--s2s-button-line-height, $lh-base);
   letter-spacing: var(--s2s-button-letter-spacing, $ls-base);
   text-transform: var(--s2s-button-text-transform, $tt-none);
-  display: inline-flex;
+  display: flex;
   border-radius: spacing(1);
 
   & > .MuiButton-startIcon {
