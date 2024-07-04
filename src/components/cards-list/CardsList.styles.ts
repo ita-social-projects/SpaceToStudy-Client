@@ -4,11 +4,6 @@ import {
 } from '~/styles/app-theme/custom-shadows'
 
 export const styles = {
-  container: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center'
-  },
   cardsContainer: {
     display: 'grid',
     justifyContent: 'center',
@@ -22,7 +17,6 @@ export const styles = {
   },
   btn: {
     m: '32px auto 0',
-    p: '16px 32px',
     boxShadow: commonShadow,
     '&:hover': {
       boxShadow: commonHoverShadow

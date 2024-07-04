@@ -23,7 +23,7 @@ const CardsList: FC<CardsListProps> = ({
   onClick
 }) => {
   return (
-    <Box sx={styles.container}>
+    <Box>
       {loading && !cards.length ? (
         <Box sx={styles.loaderContainer}>
           <Loader pageLoad size={50} />
