@@ -22,8 +22,6 @@ const CooperationSectionView: FC<CooperationSectionViewProps> = ({
   const [isVisible, setIsVisible] = useState(true)
   const { t } = useTranslation()
 
-  console.log('item --->', item)
-
   const resources = useMemo<undefined | ReactNode[]>(
     () =>
       item.activities?.map((activity: Activities) => (

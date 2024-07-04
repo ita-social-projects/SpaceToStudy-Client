@@ -63,7 +63,9 @@ const ResourceItem: FC<ResourceItemProps> = ({
   const renderResourceIcon = () => {
     const { Lessons, Quizzes } = ResourcesTypes
 
-    switch (resourceType) {
+    const type = resourceType || resource.resourceType
+
+    switch (type) {
       case Lessons:
         return resourcesData.lessons.icon
       case Quizzes:
@@ -74,6 +76,7 @@ const ResourceItem: FC<ResourceItemProps> = ({
   }
 
   const resourceAvailability = resource.availability
+
   const resourceAvailabilityStatus =
     resourceAvailability?.status ?? ResourceAvailabilityStatusEnum.Open
 
@@ -120,7 +123,7 @@ const ResourceItem: FC<ResourceItemProps> = ({
       {shouldShowDatePicker && (
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <Box sx={styles.datePicker}>
-            {availabilityIcon}
+            fffffffff{availabilityIcon}
             <DatePicker
               disablePast
               inputFormat={'MMM d, yyyy'}
