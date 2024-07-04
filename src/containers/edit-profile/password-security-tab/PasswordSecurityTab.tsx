@@ -36,19 +36,30 @@ import {
   initialValues,
   validations
 } from '~/containers/edit-profile/password-security-tab/PasswordSecurityTab.constants'
+import useConfirm from '~/hooks/use-confirm'
 
 const PasswordSecurityTab: FC<EditProfileTabUserProps> = ({ user }) => {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
+  const { checkConfirmation } = useConfirm()
 
   const { neededAction, checkStatusChange } = useChangeUserStatus()
 
   const handleSubmitChangePassword = async () => {
-    resetErrors()
-    await sendChangedPassword({
-      password: data.password,
-      currentPassword: data.currentPassword
+    const confirmed = await checkConfirmation({
+      message: t(
+        'editProfilePage.profile.passwordSecurityTab.changePasswordConfirm'
+      ),
+      title: 'titles.confirmTitle',
+      check: true
     })
+    if (confirmed) {
+      resetErrors()
+      await sendChangedPassword({
+        password: data.password,
+        currentPassword: data.currentPassword
+      })
+    }
   }
 
   const handleResponse = () => {

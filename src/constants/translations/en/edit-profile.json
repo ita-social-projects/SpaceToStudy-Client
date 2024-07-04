@@ -74,6 +74,7 @@
       "title": "Password & Security",
       "description": "Change password and security settings",
       "changePassword": "Change password",
+      "changePasswordConfirm": "Are you sure you want to change the password?",
       "currentPassword": "Current password",
       "newPassword": "New password",
       "retypePassword": "Re-type new password",
