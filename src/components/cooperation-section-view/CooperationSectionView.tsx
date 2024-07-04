@@ -11,7 +11,7 @@ import { CourseSection, TextFieldVariantEnum } from '~/types'
 import { styles } from '~/components/cooperation-section-view/CooperationSectionView.styles'
 
 interface CooperationSectionViewProps {
-  id: string
+  id?: string
   item: CourseSection
 }
 

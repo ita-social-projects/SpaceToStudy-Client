@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, Dispatch, SetStateAction } from 'react'
 import Box from '@mui/material/Box'
 
 import CooperationSectionView from '~/components/cooperation-section-view/CooperationSectionView'
@@ -8,6 +8,7 @@ import { styles } from '~/containers/cooperation-details/cooperetion-activities-
 
 interface CooperationActivitiesViewProps {
   sections: CourseSection[]
+  setEditMode: Dispatch<SetStateAction<boolean>>
 }
 
 const CooperationActivitiesView: FC<CooperationActivitiesViewProps> = ({

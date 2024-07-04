@@ -9,11 +9,11 @@ export const styles = {
     boxShadow: commonShadow
   },
   input: {
-    style: { padding: 0, margin: 0 },
+    sx: { padding: 0, margin: 0 },
     disabled: true
   },
   descriptionInput: {
-    style: {
+    sx: {
       m: '0 0 0 45px'
     },
     disableUnderline: true
