@@ -29,7 +29,7 @@ import {
   CategoriesParams,
   SizeEnum
 } from '~/types'
-import { itemsLoadLimit } from '~/constants'
+import { itemsLoadLimit } from './Categories.constants'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { styles } from '~/pages/categories/Categories.styles'
 
