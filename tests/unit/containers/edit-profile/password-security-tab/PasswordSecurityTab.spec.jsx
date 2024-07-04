@@ -13,6 +13,7 @@ import PasswordSecurityTab from '~/containers/edit-profile/password-security-tab
 import { AuthService } from '~/services/auth-service'
 
 import { URLs } from '~/constants/request'
+import { vi } from 'vitest'
 
 const userDataMock = {
   _id: 123456
@@ -23,6 +24,12 @@ vi.mock('~/services/auth-service', () => ({
     changePassword: vi.fn()
   }
 }))
+
+// vi.mock('~/hooks/use-confirm', () => {
+//   return {
+//     default: () => ({ checkConfirmation: () => true })
+//   }
+// })
 
 const handleSubmit = vi.fn()
 
@@ -86,6 +93,9 @@ describe('PasswordSecurityTab', () => {
     await waitFor(() => {
       fireEvent.click(saveButton)
     })
+
+    const confirmButton = screen.getByText('common.yes')
+    fireEvent.click(confirmButton)
 
     await waitFor(() => {
       expect(AuthService.changePassword).toHaveBeenCalledWith(
