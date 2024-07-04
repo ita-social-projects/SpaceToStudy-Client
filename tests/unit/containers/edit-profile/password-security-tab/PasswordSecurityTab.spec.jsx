@@ -25,12 +25,6 @@ vi.mock('~/services/auth-service', () => ({
   }
 }))
 
-// vi.mock('~/hooks/use-confirm', () => {
-//   return {
-//     default: () => ({ checkConfirmation: () => true })
-//   }
-// })
-
 const handleSubmit = vi.fn()
 
 const changeInputValue = (label, value) => {
