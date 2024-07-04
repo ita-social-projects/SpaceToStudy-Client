@@ -33,7 +33,9 @@ export const styles = {
     },
     deleteButton: {
       svg: {
-        fill: palette.primary[700]
+        fill: palette.primary[900],
+        width: '20px',
+        height: '20px'
       },
       '&:disabled': { svg: { fill: palette.primary[200] } }
     }

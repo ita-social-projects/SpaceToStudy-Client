@@ -2,7 +2,7 @@ import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import Tooltip from '@mui/material/Tooltip'
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
+import DeleteIcon from '@mui/icons-material/Delete'
 import { FC, ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import AppButton from '~/components/app-button/AppButton'
@@ -119,7 +119,7 @@ const ProfessionalCategory: FC<ProfessionalCategoryProps> = ({
             onClick={handleDeleteButtonClick}
             sx={styles.toolbar.deleteButton}
           >
-            <DeleteOutlineIcon />
+            <DeleteIcon />
           </IconButton>
         </Tooltip>
       </Box>
