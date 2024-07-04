@@ -2,10 +2,10 @@ import { FC } from 'react'
 import Typography from '@mui/material/Typography'
 import TextField, { TextFieldProps } from '@mui/material/TextField'
 import Tooltip from '@mui/material/Tooltip'
+import { SxProps } from '@mui/material'
 
 import { styles } from '~/components/app-text-field/AppTextField.styles'
 import { TypographyVariantEnum } from '~/types'
-import { SxProps } from '@mui/material'
 
 interface AppTextFieldProps
   extends Omit<TextFieldProps, 'error' | 'helperText'> {
