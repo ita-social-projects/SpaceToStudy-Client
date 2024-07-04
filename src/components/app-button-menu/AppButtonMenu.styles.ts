@@ -47,5 +47,9 @@ export const styles = {
   },
   scrollableContent: { maxHeight: '216px' },
   loader: { color: 'primary.700' },
-  noItemsIcon: { color: 'primary.400' }
+  noItemsIcon: { color: 'primary.400' },
+  unorderedListIcon: {
+    width: '14px',
+    height: '14px'
+  }
 }

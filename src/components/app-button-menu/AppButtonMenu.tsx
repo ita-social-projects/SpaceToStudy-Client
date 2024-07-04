@@ -151,7 +151,7 @@ const AppButtonMenu = <T extends Pick<CategoryNameInterface, '_id'>>({
         sx={spliceSx(styles.root, customSx?.root)}
         variant={ButtonVariantEnum.Tonal}
       >
-        <CircleIcon sx={{ width: '14px', height: '14px' }} />
+        <CircleIcon sx={styles.unorderedListIcon} />
         <Typography sx={styles.text}>{title}:</Typography>
         <Typography sx={styles.chosenFilters}>{chosenFiltersText}</Typography>
         <KeyboardArrowDownIcon sx={styles.arrowIcon(Boolean(anchorEl))} />
