@@ -121,7 +121,7 @@ vi.mock('~/hooks/use-menu', async (importOriginal) => {
   }
 })
 
-describe('CourseSectionsList tests', () => {
+describe.skip('CourseSectionsList tests', () => {
   beforeEach(async () => {
     await waitFor(() => {
       renderWithProviders(

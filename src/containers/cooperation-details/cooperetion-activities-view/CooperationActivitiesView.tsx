@@ -33,7 +33,11 @@ const CooperationActivitiesView: FC<CooperationActivitiesViewProps> = ({
         <CooperationSectionView id={item._id} item={item} key={item._id} />
       ))}
       <Box sx={styles.editContainer}>
-        <IconButton onClick={onEdit} sx={styles.editButton}>
+        <IconButton
+          data-testid='iconButton'
+          onClick={onEdit}
+          sx={styles.editButton}
+        >
           <EditIcon />
         </IconButton>
       </Box>
