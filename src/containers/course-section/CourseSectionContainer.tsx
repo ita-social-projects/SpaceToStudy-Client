@@ -78,14 +78,24 @@ const CourseSectionContainer: FC<SectionProps> = ({
   const [activeMenu, setActiveMenu] = useState<string>('')
   const [isVisible, setIsVisible] = useState<boolean>(true)
   const [resources, setResources] = useState<CourseResource[]>([])
+  const activities: CourseResource[] = sectionData.activities?.map((item) => {
+    return { ...item.resource, resourceType: item.resourceType }
+  })
 
   const getAllResourcesItems = useCallback((): CourseResource[] => {
-    return [
-      ...sectionData.lessons,
-      ...sectionData.quizzes,
-      ...sectionData.attachments
-    ]
-  }, [sectionData.lessons, sectionData.quizzes, sectionData.attachments])
+    return activities?.length
+      ? [...activities]
+      : [
+          ...sectionData.lessons,
+          ...sectionData.quizzes,
+          ...sectionData.attachments
+        ]
+  }, [
+    sectionData.lessons,
+    sectionData.quizzes,
+    sectionData.attachments,
+    activities
+  ])
 
   const updateResources = useCallback(
     (
