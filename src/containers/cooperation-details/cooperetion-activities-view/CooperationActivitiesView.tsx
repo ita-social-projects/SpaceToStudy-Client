@@ -4,8 +4,11 @@ import { IconButton } from '@mui/material'
 import EditIcon from '@mui/icons-material/Edit'
 
 import CooperationSectionView from '~/components/cooperation-section-view/CooperationSectionView'
-import { useAppSelector } from '~/hooks/use-redux'
-import { cooperationsSelector } from '~/redux/features/cooperationsSlice'
+import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
+import {
+  cooperationsSelector,
+  setIsAddedClicked
+} from '~/redux/features/cooperationsSlice'
 
 import { styles } from '~/containers/cooperation-details/cooperetion-activities-view/CooperationActivitiesView.style'
 
@@ -17,9 +20,11 @@ const CooperationActivitiesView: FC<CooperationActivitiesViewProps> = ({
   setEditMode
 }) => {
   const { sections } = useAppSelector(cooperationsSelector)
+  const dispatch = useAppDispatch()
 
   const onEdit = () => {
     setEditMode()
+    dispatch(setIsAddedClicked(false))
   }
 
   return (

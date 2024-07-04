@@ -9,6 +9,7 @@ import MenuItem from '@mui/material/MenuItem'
 import Typography from '@mui/material/Typography'
 import ViewComfyOutlinedIcon from '@mui/icons-material/ViewComfyOutlined'
 import { Add } from '@mui/icons-material'
+import { v4 as uuidv4 } from 'uuid'
 
 import AddCourseTemplateModal from '~/containers/cooperation-details/add-course-modal-modal/AddCourseTemplateModal'
 import SortableWrapper from '~/containers/sortable-wrapper/SortableWrapper'
@@ -44,7 +45,7 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
   addNewSection
 }) => {
   const { enabled } = useDroppable()
-
+  const Id = uuidv4()
   const {
     activeItem,
     handleDragCancel,
@@ -133,7 +134,7 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
         <Divider flexItem>
           <Typography
             data-testid='Add activity'
-            id={item.id}
+            id={Id}
             onClick={handleActivitiesMenuClick}
             sx={styles.activityButton}
           >
@@ -149,7 +150,7 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
       <Fragment key={item.id}>
         {coorperationMenu}
         <SortableWrapper
-          id={item.id}
+          id={Id}
           onDragEndStyles={styles.section(isDragOver)}
           onDragStartStyles={styles.section(true)}
         >
