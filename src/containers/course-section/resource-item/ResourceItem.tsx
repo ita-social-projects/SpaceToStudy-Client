@@ -123,7 +123,7 @@ const ResourceItem: FC<ResourceItemProps> = ({
       {shouldShowDatePicker && (
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <Box sx={styles.datePicker}>
-            fffffffff{availabilityIcon}
+            {availabilityIcon}
             <DatePicker
               disablePast
               inputFormat={'MMM d, yyyy'}
