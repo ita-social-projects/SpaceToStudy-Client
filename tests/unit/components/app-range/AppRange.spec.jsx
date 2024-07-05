@@ -49,7 +49,7 @@ describe('AppRange', () => {
 
     expect(onChangeMock).not.toHaveBeenCalledWith()
   })
-  it('should call onChange whith min number if input is empty', async () => {
+  it('should call onChange with min number if input is empty', async () => {
     const inputs = screen.getAllByRole('textbox')
     const inputValue = ''
 

@@ -12,7 +12,7 @@ describe('Faq component test', () => {
     expect(title).toBeInTheDocument()
   })
 
-  it('should render findTurot text', () => {
+  it('should render findTutor text', () => {
     const text = screen.getByText('studentHomePage.faq.findTutor')
 
     expect(text).toBeInTheDocument()
