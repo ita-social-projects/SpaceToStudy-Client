@@ -4,7 +4,9 @@
       "student": "A Global Network of Tutors",
       "tutor": "A Global Network of Students"
     },
-    "description": "A Space2Study platform is a place where you can learn from the best.\nType who or what would you like to learn from and find the best tutor.",
+    "description": {
+      "student": "A Space2Study platform is a place where you can learn from the best.\nType who or what would you like to learn from and find the best tutor."
+    },
     "label": "Who or what do you want to learn from?",
     "button": "Find tutor"
   },

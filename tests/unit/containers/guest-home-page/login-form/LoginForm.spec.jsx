@@ -9,8 +9,12 @@ vi.mock('~/hooks/use-confirm', () => {
   }
 })
 
-const errors = { email: false, password: false }
-const data = { email: 'email@mail.com', password: 'passTest1' }
+const errors = { email: false, password: false, rememberMe: false }
+const data = {
+  email: 'email@mail.com',
+  password: 'passTest1',
+  rememberMe: false
+}
 const handleChange = vi.fn()
 const handleBlur = vi.fn()
 const handleSubmit = vi.fn()

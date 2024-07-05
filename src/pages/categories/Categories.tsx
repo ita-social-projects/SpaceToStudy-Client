@@ -20,8 +20,8 @@ import AppToolbar from '~/components/app-toolbar/AppToolbar'
 import DirectionLink from '~/components/direction-link/DirectionLink'
 import NotFoundResults from '~/components/not-found-results/NotFoundResults'
 import CreateSubjectModal from '~/containers/find-offer/create-new-subject/CreateNewSubject'
-import serviceIcon from '~/assets/img/student-home-page/service_icon.png'
 import { getOpositeRole, getScreenBasedLimit } from '~/utils/helper-functions'
+import { getSuffixes } from '~/utils/get-translation-suffixes'
 
 import {
   CategoryInterface,
@@ -29,12 +29,14 @@ import {
   CategoriesParams,
   SizeEnum
 } from '~/types'
-import { itemsLoadLimit } from '~/constants'
+import { itemsLoadLimit } from './Categories.constants'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { styles } from '~/pages/categories/Categories.styles'
 
 const Categories = () => {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
+  const nameOfSearchContent = t('categoriesPage.category')
+  const { suffix } = getSuffixes(nameOfSearchContent, i18n.language)
   const { userRole } = useAppSelector((state) => state.appMain)
   const breakpoints = useBreakpoints()
   const [match, setMatch] = useState<string>('')
@@ -76,7 +78,8 @@ const Categories = () => {
             description={`${item.totalOffers[oppositeRole]} ${t(
               'categoriesPage.offers'
             )}`}
-            img={serviceIcon}
+            icon={item.appearance.icon}
+            iconColor={item.appearance.color}
             key={item._id}
             link={`${authRoutes.subjects.path}?categoryId=${item._id}`}
             title={item.name}
@@ -129,8 +132,14 @@ const Categories = () => {
 
       {!categories.length && !categoriesLoading ? (
         <NotFoundResults
-          buttonText={t('errorMessages.buttonRequest', { name: 'categories' })}
-          description={t('errorMessages.tryAgainText', { name: 'categories' })}
+          buttonText={t('errorMessages.buttonRequest', {
+            name: nameOfSearchContent,
+            suffix
+          })}
+          description={t('errorMessages.tryAgainText', {
+            name: nameOfSearchContent,
+            suffix
+          })}
           onClick={handleOpenModal}
         />
       ) : (

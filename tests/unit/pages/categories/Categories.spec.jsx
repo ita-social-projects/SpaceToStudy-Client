@@ -26,8 +26,24 @@ describe('Categories page', () => {
     useLoadMore.mockImplementation(() => ({
       loading: false,
       data: [
-        { _id: '1', name: 'Languages', totalOffers: 0 },
-        { _id: '2', name: 'Music', totalOffers: 0 }
+        {
+          _id: '1',
+          name: 'Languages',
+          totalOffers: 0,
+          appearance: {
+            icon: 'Languages.svg',
+            color: '#FF0000'
+          }
+        },
+        {
+          _id: '2',
+          name: 'Music',
+          totalOffers: 0,
+          appearance: {
+            icon: 'Music.svg',
+            color: '#440fff'
+          }
+        }
       ],
       resetData: resetDataMock,
       loadMore: loadMoreMock,

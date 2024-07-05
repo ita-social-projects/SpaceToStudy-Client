@@ -36,11 +36,11 @@ describe('CreateOffer component', () => {
 
   it('should render correctly', async () => {
     const mainTitle = screen.getByText('offerPage.createOffer.title.tutor')
-    const maintDescription = screen.getByText(
+    const mainDescription = screen.getByText(
       'offerPage.createOffer.description.tutor'
     )
     expect(mainTitle).toBeInTheDocument()
-    expect(maintDescription).toBeInTheDocument()
+    expect(mainDescription).toBeInTheDocument()
   })
 
   it('should add and delete a language', () => {
