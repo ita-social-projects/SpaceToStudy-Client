@@ -16,6 +16,7 @@ import useChangeUserStatus from '~/hooks/use-change-user-status'
 import useAxios from '~/hooks/use-axios'
 import { useAppDispatch } from '~/hooks/use-redux'
 import useInputVisibility from '~/hooks/use-input-visibility'
+import useConfirm from '~/hooks/use-confirm'
 
 import { AuthService } from '~/services/auth-service'
 import { openAlert } from '~/redux/features/snackbarSlice'
@@ -36,7 +37,6 @@ import {
   initialValues,
   validations
 } from '~/containers/edit-profile/password-security-tab/PasswordSecurityTab.constants'
-import useConfirm from '~/hooks/use-confirm'
 
 const PasswordSecurityTab: FC<EditProfileTabUserProps> = ({ user }) => {
   const { t } = useTranslation()
