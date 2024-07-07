@@ -99,18 +99,100 @@ export interface AddDocuments {
   maxFileNameError: string
 }
 
+export enum CourseResourceEventType {
+  ResourceUpdated = 'resourceUpdated',
+  ResourceRemoved = 'resourceRemoved',
+  ResourcesOrderChange = 'resourcesOrderChange',
+  SetSectionResources = 'setSectionResources'
+}
+
+export interface ResourceUpdatedEvent {
+  type: CourseResourceEventType.ResourceUpdated
+  sectionId: string
+  resourceId: string
+  resourceType: CourseResource['resourceType']
+  resource: Partial<CourseResource>
+}
+
+export interface ResourceRemovedEvent {
+  type: CourseResourceEventType.ResourceRemoved
+  sectionId: string
+  resourceType: CourseResource['resourceType']
+  resourceId: string
+}
+
+export interface ResourcesOrderChangeEvent {
+  type: CourseResourceEventType.ResourcesOrderChange
+  sectionId: string
+  resources: CourseResource[]
+}
+
+export interface SetSectionResourcesEvent {
+  type: CourseResourceEventType.SetSectionResources
+  sectionId: string
+  resourceType: CourseResource['resourceType']
+  resources: CourseResource[]
+}
+
+export type ResourceEventHandler = (
+  event:
+    | ResourceUpdatedEvent
+    | ResourceRemovedEvent
+    | ResourcesOrderChangeEvent
+    | SetSectionResourcesEvent
+) => void
+
+export enum CourseSectionEventType {
+  SectionAdded = 'sectionAdded',
+  SectionRemoved = 'sectionRemoved',
+  SectionsOrderChange = 'sectionsOrderChange'
+}
+
+export interface SectionAddedEvent {
+  type: CourseSectionEventType.SectionAdded
+  index?: number
+}
+
+export interface SectionRemovedEvent {
+  type: CourseSectionEventType.SectionRemoved
+  sectionId: string
+}
+
+export interface SectionsOrderChangeEvent {
+  type: CourseSectionEventType.SectionsOrderChange
+  sections: CourseSection[]
+}
+
+export type SectionEventHandler = (
+  event: SectionAddedEvent | SectionRemovedEvent | SectionsOrderChangeEvent
+) => void
+
 export interface CourseSectionHandlers {
-  setSectionsItems: (value: CourseSection[]) => void
   handleSectionInputChange: FormInputValueChange<string, CourseSection>
-  handleSectionNonInputChange: FormInputValueChange<
-    CourseResource[],
-    CourseSection
-  >
+  resourceEventHandler?: ResourceEventHandler
+  sectionEventHandler?: SectionEventHandler
+  titleText?: string
+
+  /**
+   * @deprecated Not used
+   */
   handleSectionResourcesOrder?: (
     id: string,
     resources: CourseResource[]
   ) => void
-  titleText?: string
+
+  /**
+   * @deprecated Not used
+   */
+  handleSectionNonInputChange?: FormInputValueChange<
+    CourseResource[],
+    CourseSection
+  >
+
+  /**
+   * @deprecated Not used
+   */
+  setSectionsItems?: (value: CourseSection[]) => void
 }
 
 export interface StepData {

@@ -24,6 +24,7 @@ export const styles = {
   },
   datePicker: {
     display: 'flex',
+    alignItems: 'center',
     ...SlideLeftLongAnimation,
     '& .MuiTextField-root': {
       fontSize: '14px',
