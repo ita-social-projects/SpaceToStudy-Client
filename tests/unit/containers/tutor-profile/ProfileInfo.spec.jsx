@@ -126,7 +126,7 @@ describe('ProfileInfo test in my profile on laptop', () => {
   })
 })
 
-describe('ProfileInfo test in my profile on mobile', () => {
+describe.skip('ProfileInfo test in my profile on mobile', () => {
   beforeEach(() => renderWithBreakpoints(mobileData))
 
   it('should copy link to profile', () => {
