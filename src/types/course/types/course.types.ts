@@ -13,7 +13,7 @@ export interface ResourceAvailability {
 
 export type CourseResource = Lesson | Quiz | Attachment
 
-export type SetResourseAvailability = (
+export type SetResourceAvailability = (
   sectionId: string,
   availability: ResourceAvailability
 ) => void

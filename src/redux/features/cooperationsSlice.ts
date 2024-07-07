@@ -1,7 +1,17 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { Course, CourseFieldValues, CourseSection } from '~/types'
 import { RootState } from '~/redux/store'
 import { sliceNames } from '~/redux/redux.constants'
+import {
+  Course,
+  CourseFieldValues,
+  CourseResource,
+  CourseSection,
+  ResourcesAvailabilityEnum
+} from '~/types'
+import {
+  getSectionResourceField,
+  recalculateResourceOrder
+} from '~/utils/course-resource-helpers'
 
 interface CooperationsState {
   selectedCourse: Course | null
@@ -10,6 +20,7 @@ interface CooperationsState {
   isNewActivity: boolean
   currentSectionIndex?: number
   sections: CourseSection[]
+  resourcesAvailability: ResourcesAvailabilityEnum
 }
 
 const initialState: CooperationsState = {
@@ -18,7 +29,8 @@ const initialState: CooperationsState = {
   isAddedClicked: false,
   isNewActivity: false,
   currentSectionIndex: 0,
-  sections: []
+  sections: [],
+  resourcesAvailability: ResourcesAvailabilityEnum.OpenAll
 }
 
 const cooperationsSlice = createSlice({
@@ -61,6 +73,7 @@ const cooperationsSlice = createSlice({
     ) {
       state.sections = action.payload
     },
+
     updateCooperationSection(
       state,
       action: PayloadAction<{
@@ -76,6 +89,111 @@ const cooperationsSlice = createSlice({
       if (sectionToEdit) {
         sectionToEdit[action.payload.field] = action.payload.value
       }
+    },
+
+    deleteCooperationSection(
+      state,
+      action: PayloadAction<CourseSection['id']>
+    ) {
+      state.sections = state.sections.filter(
+        (section) => section.id !== action.payload
+      )
+    },
+
+    setSectionResources(
+      state,
+      action: PayloadAction<{
+        sectionId: CourseSection['id']
+        resourceType: CourseResource['resourceType']
+        resources: CourseResource[]
+      }>
+    ) {
+      const section = state.sections.find(
+        (section) => section.id === action.payload.sectionId
+      )
+
+      if (!section) return
+
+      const { resourceType, resources } = action.payload
+      const resourceField = getSectionResourceField(resourceType)
+
+      if (!resourceField) return
+      ;(section[resourceField] as CourseResource[]) = resources
+
+      section.order = recalculateResourceOrder(section.order ?? [], section)
+    },
+
+    updateResourcesOrder(
+      state,
+      action: PayloadAction<{
+        sectionId: CourseSection['id']
+        resources: CourseResource[]
+      }>
+    ) {
+      const section = state.sections.find(
+        (section) => section.id === action.payload.sectionId
+      )
+
+      if (section) {
+        section.order = action.payload.resources.map((resource) => resource._id)
+      }
+    },
+
+    updateResource(
+      state,
+      action: PayloadAction<{
+        sectionId: CourseSection['id']
+        resourceType: CourseResource['resourceType']
+        resourceId: CourseResource['_id']
+        resource: Partial<CourseResource>
+      }>
+    ) {
+      const section = state.sections.find(
+        (section) => section.id === action.payload.sectionId
+      )
+
+      if (!section) return
+
+      const { resourceType, resourceId, resource } = action.payload
+      const resourceField = getSectionResourceField(resourceType)
+
+      if (!resourceField) return
+
+      const resourceIndex = section[resourceField].findIndex(
+        (res) => res._id === resourceId
+      )
+
+      if (resourceIndex >= 0) {
+        section[resourceField][resourceIndex] = {
+          ...section[resourceField][resourceIndex],
+          ...resource
+        } as CourseResource
+      }
+    },
+
+    deleteResource(
+      state,
+      action: PayloadAction<{
+        sectionId: CourseSection['id']
+        resourceType: CourseResource['resourceType']
+        resourceId: CourseResource['_id']
+      }>
+    ) {
+      const section = state.sections.find(
+        (section) => section.id === action.payload.sectionId
+      )
+
+      if (!section) return
+
+      const { resourceType, resourceId } = action.payload
+      const resourceField = getSectionResourceField(resourceType)
+
+      if (!resourceField) return
+      ;(section[resourceField] as CourseResource[]) = section[
+        resourceField
+      ].filter((res) => res._id !== resourceId)
+
+      section.order = recalculateResourceOrder(section.order ?? [], section)
     }
   }
 })
@@ -89,7 +207,12 @@ export const {
   setIsNewActivity,
   setCurrentSectionIndex,
   setCooperationSections,
-  updateCooperationSection
+  updateCooperationSection,
+  deleteCooperationSection,
+  setSectionResources,
+  updateResourcesOrder,
+  updateResource,
+  deleteResource
 } = actions
 
 export const cooperationsSelector = (state: RootState) => state.cooperations

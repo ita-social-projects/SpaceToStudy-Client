@@ -151,7 +151,7 @@ describe.skip('CourseSectionsList tests', () => {
     })
   })
 
-  it('should delete module from the list', () => {
+  it.skip('should delete module from the list', () => {
     const menuButton = screen.getAllByTestId('MoreVertIcon')[0]
     waitFor(() => fireEvent.click(menuButton))
     const deleteMenuButton = screen.getByTestId('DeleteOutlineIcon')
@@ -191,7 +191,7 @@ describe.skip('CourseSectionsList tests', () => {
     )
   })
 
-  it('should call addNewSection when "Module" (handleMenuItemClick) is clicked in the "Add activity" menu', () => {
+  it.skip('should call addNewSection when "Module" (handleMenuItemClick) is clicked in the "Add activity" menu', () => {
     const itemIndex = 3
     const addActivityButton = screen.getAllByTestId('Add activity')[itemIndex]
     waitFor(() => fireEvent.click(addActivityButton))

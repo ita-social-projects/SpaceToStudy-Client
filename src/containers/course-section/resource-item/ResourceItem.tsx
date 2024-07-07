@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect } from 'react'
+import { FC, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
@@ -12,16 +12,6 @@ import EditIcon from '@mui/icons-material/Edit'
 
 import AppSelect from '~/components/app-select/AppSelect'
 import IconExtensionWithTitle from '~/components/icon-extension-with-title/IconExtensionWithTitle'
-import { useResourceAvailabilityContext } from '~/context/resources-availability-context'
-
-import {
-  CourseResource,
-  ResourceAvailabilityStatusEnum,
-  ResourcesAvailabilityEnum,
-  ResourcesTabsEnum as ResourcesTypes,
-  SetResourseAvailability,
-  SizeEnum
-} from '~/types'
 
 import {
   availabilityIcons,
@@ -30,23 +20,38 @@ import {
 import { resourcesData } from '~/containers/course-section/CourseSectionContainer.constants'
 import { styles } from '~/containers/course-section/resource-item/ResourceItem.styles'
 
+import {
+  CourseResource,
+  ResourceAvailability,
+  ResourceAvailabilityStatusEnum,
+  ResourcesTabsEnum as ResourcesTypes,
+  SizeEnum
+} from '~/types'
+
 interface ResourceItemProps {
   resource: CourseResource
   resourceType?: ResourcesTypes
   deleteResource?: (resource: CourseResource) => void
-  setResourceAvailability?: SetResourseAvailability
   editResource?: (resource: CourseResource) => void
+  updateAvailability?: (
+    resource: CourseResource,
+    availability: ResourceAvailability
+  ) => void
   isView?: boolean
+  isCooperation?: boolean
 }
 
 const ResourceItem: FC<ResourceItemProps> = ({
   resource,
   resourceType,
   deleteResource,
-  setResourceAvailability,
   editResource,
-  isView = false
+  updateAvailability,
+  isView = false,
+  isCooperation = false
 }) => {
+  const { t } = useTranslation()
+
   const handleDeleteResource = () => {
     deleteResource?.(resource)
   }
@@ -54,11 +59,6 @@ const ResourceItem: FC<ResourceItemProps> = ({
   const handleEditResource = () => {
     editResource?.(resource)
   }
-
-  const { t } = useTranslation()
-
-  const { resourceAvailability: allResourcesAvailability, isCooperation } =
-    useResourceAvailabilityContext()
 
   const renderResourceIcon = () => {
     const { Lessons, Quizzes } = ResourcesTypes
@@ -83,30 +83,22 @@ const ResourceItem: FC<ResourceItemProps> = ({
   const shouldShowDatePicker =
     resourceAvailabilityStatus === ResourceAvailabilityStatusEnum.OpenFrom
 
-  const setOpenFromDate = (value: Date | null) => {
-    setResourceAvailability?.(resource._id, {
+  const setOpenFromDate = (date: Date | null) => {
+    updateAvailability?.(resource, {
       status: resourceAvailabilityStatus,
-      date: value
+      date
     })
   }
 
   const setAvailabilityStatus = useCallback(
     (status: ResourceAvailabilityStatusEnum) => {
-      setResourceAvailability?.(resource._id, {
+      updateAvailability?.(resource, {
         status: status,
         date: null
       })
     },
-    [resource._id, setResourceAvailability]
+    [resource, updateAvailability]
   )
-
-  useEffect(() => {
-    if (allResourcesAvailability === ResourcesAvailabilityEnum.OpenManually) {
-      setAvailabilityStatus(ResourceAvailabilityStatusEnum.Closed)
-    } else {
-      setAvailabilityStatus(ResourceAvailabilityStatusEnum.Open)
-    }
-  }, [allResourcesAvailability, setAvailabilityStatus])
 
   const availabilityIcon = (
     <Box sx={styles.availabilityIcon}>
