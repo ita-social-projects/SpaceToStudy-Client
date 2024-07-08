@@ -5,63 +5,68 @@ vi.mock('@mui/icons-material/Language', () => ({
   default: 'LanguageIcon'
 }))
 
-vi.mock('@mui/icons-material/ColorLens', () => ({
-  default: 'ColorLensIcon'
+vi.mock('@mui/icons-material/ColorLensRounded', () => ({
+  default: 'ColorLensRoundedIcon'
 }))
 
-vi.mock('@mui/icons-material/Biotech', () => ({
-  default: 'BiotechIcon'
+vi.mock('@mui/icons-material/ScienceRounded', () => ({
+  default: 'ScienceRoundedIcon'
 }))
 
-vi.mock('@mui/icons-material/DesktopMacOutlined', () => ({
-  default: 'DesktopMacOutlinedIcon'
+vi.mock('@mui/icons-material/DesktopMacRounded', () => ({
+  default: 'DesktopMacRoundedIcon'
 }))
 
-vi.mock('@mui/icons-material/Tag', () => ({
-  default: 'TagIcon'
+vi.mock('@mui/icons-material/TagRounded', () => ({
+  default: 'TagRoundedIcon'
 }))
 
-vi.mock('@mui/icons-material/AccountBalance', () => ({
-  default: 'AccountBalanceIcon'
+vi.mock('@mui/icons-material/AccountTreeRounded', () => ({
+  default: 'AccountTreeRoundedIcon'
 }))
 
-vi.mock('@mui/icons-material/Star', () => ({
-  default: 'StarIcon'
+vi.mock('@mui/icons-material/StarRounded', () => ({
+  default: 'StarRoundedIcon'
 }))
 
 vi.mock('@mui/icons-material/DesignServices', () => ({
   default: 'DesignServicesIcon'
 }))
 
-vi.mock('@mui/icons-material/MusicNote', () => ({
-  default: 'MusicNoteIcon'
+vi.mock('@mui/icons-material/MusicNoteRounded', () => ({
+  default: 'MusicNoteRoundedIcon'
 }))
 
-vi.mock('@mui/icons-material/Science', () => ({
-  default: 'ScienceIcon'
+vi.mock('@mui/icons-material/StackedBarChart', () => ({
+  default: 'StackedBarChartIcon'
 }))
 
-vi.mock('@mui/icons-material/LegendToggle', () => ({
-  default: 'LegendToggleIcon'
+vi.mock('@mui/icons-material/LegendToggleRounded', () => ({
+  default: 'LegendToggleRoundedIcon'
 }))
 
-vi.mock('@mui/icons-material/HistoryEdu', () => ({
-  default: 'HistoryEduIcon'
+vi.mock('@mui/icons-material/HistoryEduRounded', () => ({
+  default: 'HistoryEduRoundedIcon'
+}))
+
+vi.mock('@mui/icons-material/Campaign', () => ({
+  default: 'CampaignIcon'
 }))
 
 const iconNames = [
   'LanguageIcon',
-  'ColorLensIcon',
-  'BiotechIcon',
-  'DesktopMacOutlinedIcon',
-  'TagIcon',
-  'AccountBalanceIcon',
-  'StarIcon',
+  'ColorLensRoundedIcon',
+  'ScienceRoundedIcon',
+  'DesktopMacRoundedIcon',
+  'TagRoundedIcon',
+  'AccountTreeRoundedIcon',
+  'StarRoundedIcon',
   'DesignServicesIcon',
-  'MusicNoteIcon',
-  'ScienceIcon',
-  'LegendToggleIcon',
-  'HistoryEduIcon'
+  'MusicNoteRoundedIcon',
+  'StackedBarChartIcon',
+  'LegendToggleRoundedIcon',
+  'HistoryEduRoundedIcon',
+  'CampaignIcon'
 ]
 
 describe('categoryIconService test', () => {
