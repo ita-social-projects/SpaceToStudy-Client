@@ -1,3 +1,8 @@
+import {
+  commonHoverShadow,
+  commonShadow
+} from '~/styles/app-theme/custom-shadows'
+
 export const styles = {
   cardsContainer: {
     display: 'grid',
@@ -11,9 +16,11 @@ export const styles = {
     gridGap: '24px'
   },
   btn: {
-    minWidth: '148px',
-    display: 'block',
-    m: '32px auto 0'
+    m: '32px auto 0',
+    boxShadow: commonShadow,
+    '&:hover': {
+      boxShadow: commonHoverShadow
+    }
   },
   loaderContainer: {
     minHeight: '350px',

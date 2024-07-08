@@ -47,7 +47,7 @@ const AdminNavBar = () => {
     () =>
       navBarItems.map((item, index) => (
         <AdminNavBarItem
-          active={active === index}
+          active={active == index}
           expanded={expanded}
           handleActive={() => setActive(index)}
           handleShowSubItems={handleShowSubItems}

@@ -21,7 +21,7 @@ import {
   getScreenBasedLimit,
   spliceSx
 } from '~/utils/helper-functions'
-import { CategoryInterface, ItemsWithCount } from '~/types'
+import { CategoryInterface, ItemsWithCount, SortEnum } from '~/types'
 import { styles } from '~/components/popular-categories/PopularCategories.styles'
 
 interface PopularCategoriesProps {
@@ -43,7 +43,11 @@ const PopularCategories: FC<PopularCategoriesProps> = ({
   const itemsToShow = getScreenBasedLimit(breakpoints, itemsLoadLimit)
 
   const getCategories = useCallback(
-    () => categoryService.getCategories({ limit: itemsToShow }),
+    () =>
+      categoryService.getCategories({
+        limit: itemsToShow,
+        sort: { order: SortEnum.Desc, orderBy: 'totalOffersSum' }
+      }),
     [itemsToShow]
   )
   const { response, loading } = useAxios<ItemsWithCount<CategoryInterface>>({

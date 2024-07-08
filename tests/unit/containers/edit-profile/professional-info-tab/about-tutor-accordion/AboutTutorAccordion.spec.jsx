@@ -17,11 +17,11 @@ describe('AboutTutorAccordion', () => {
   })
 
   it('should open first accordion by default', () => {
-    const textareas = screen.getAllByLabelText(
+    const textAreas = screen.getAllByLabelText(
       'editProfilePage.profile.professionalTab.accordion.textareaLabel'
     )
 
-    expect(textareas).toHaveLength(4)
+    expect(textAreas).toHaveLength(4)
     expect(screen.getByTestId('0-true')).toBeInTheDocument()
     expect(screen.getByTestId('1-false')).toBeInTheDocument()
   })

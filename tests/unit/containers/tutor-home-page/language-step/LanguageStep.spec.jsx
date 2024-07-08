@@ -23,7 +23,7 @@ describe('Autocomplete test', () => {
       </StepProvider>
     )
   })
-  it('Shoult select some data', () => {
+  it('should select some data', () => {
     const autocomplete = screen.getByTestId('language')
     const input = within(autocomplete).getByRole('combobox')
 

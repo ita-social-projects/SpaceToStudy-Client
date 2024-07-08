@@ -31,11 +31,11 @@ describe('GuestHomePage test', () => {
     renderWithProviders(<GuestHomePage />, { initialEntries: defaultRoute })
     expect(mockSetModal).not.toBeCalled()
   })
-  it('shoud open login modal when login query in url', () => {
-    const routeWithSeaechParam = '/?login'
+  it('should open login modal when login query in url', () => {
+    const routeWithSearchParam = '/?login'
     mockGet.mockReturnValue(true)
     renderWithProviders(<GuestHomePage />, {
-      initialEntries: routeWithSeaechParam
+      initialEntries: routeWithSearchParam
     })
     expect(mockSetModal).toBeCalled()
   })

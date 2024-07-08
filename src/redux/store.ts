@@ -6,9 +6,11 @@ import { appApi } from '~/redux/apiSlice'
 import appMainReducer from '~/redux/reducer'
 import cooperationsReducer from '~/redux/features/cooperationsSlice'
 import snackbarReducer from '~/redux/features/snackbarSlice'
+import editProfileReducer from '~/redux/features/editProfileSlice'
 
 export const store = configureStore({
   reducer: {
+    editProfile: editProfileReducer,
     cooperations: cooperationsReducer,
     appMain: appMainReducer,
     snackbar: snackbarReducer,

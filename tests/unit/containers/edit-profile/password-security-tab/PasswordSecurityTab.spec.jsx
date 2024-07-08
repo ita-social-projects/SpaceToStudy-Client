@@ -1,3 +1,4 @@
+import { vi } from 'vitest'
 import {
   screen,
   fireEvent,
@@ -86,6 +87,9 @@ describe('PasswordSecurityTab', () => {
     await waitFor(() => {
       fireEvent.click(saveButton)
     })
+
+    const confirmButton = screen.getByText('common.yes')
+    fireEvent.click(confirmButton)
 
     await waitFor(() => {
       expect(AuthService.changePassword).toHaveBeenCalledWith(

@@ -38,8 +38,8 @@ describe('AppBreadCrumbs container', () => {
   it('should render all breadcrumbs', () => {
     const children = (
       <Route
-        element={<div>expample</div>}
-        handle={{ crumb: { name: 'expample', path: 'example' } }}
+        element={<div>example</div>}
+        handle={{ crumb: { name: 'example', path: 'example' } }}
         path='example'
       >
         <Route
@@ -52,7 +52,7 @@ describe('AppBreadCrumbs container', () => {
     const initialEntries = '/example/test'
     mockedMatches.mockImplementationOnce(() => [
       { handle: { crumb: { name: 'home', path: '/' } } },
-      { handle: { crumb: { name: 'expample', path: 'example' } } },
+      { handle: { crumb: { name: 'example', path: 'example' } } },
       { handle: { crumb: { name: 'test', path: 'test' } } }
     ])
     render(<RouterProvider router={router(children, initialEntries)} />)
@@ -64,15 +64,15 @@ describe('AppBreadCrumbs container', () => {
   it('should render two breadcrumb', () => {
     const children = (
       <Route
-        element={<div>expample</div>}
-        handle={{ crumb: { name: 'expample', path: 'example' } }}
+        element={<div>example</div>}
+        handle={{ crumb: { name: 'example', path: 'example' } }}
         path='example'
       />
     )
     const initialEntries = '/example'
     mockedMatches.mockImplementationOnce(() => [
       { handle: { crumb: { name: 'home', path: '/' } } },
-      { handle: { crumb: { name: 'expample', path: 'example' } } }
+      { handle: { crumb: { name: 'example', path: 'example' } } }
     ])
     render(<RouterProvider router={router(children, initialEntries)} />)
 
@@ -81,7 +81,7 @@ describe('AppBreadCrumbs container', () => {
     expect(breadCrumbs.length).toBe(2)
   })
   it('should not render breadcrumbs', () => {
-    const children = <Route element={<div>expample</div>} path='example' />
+    const children = <Route element={<div>example</div>} path='example' />
     const initialEntries = '/example'
     mockedMatches.mockImplementationOnce(() => [
       { handle: { crumb: { name: 'home', path: '/' } } }

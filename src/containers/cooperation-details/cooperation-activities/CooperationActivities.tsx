@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import { Link } from 'react-router-dom'
-import { FC } from 'react'
+import { Dispatch, FC, SetStateAction } from 'react'
 
 import AppSelect from '~/components/app-select/AppSelect'
 import AppButton from '~/components/app-button/AppButton'
@@ -28,10 +28,12 @@ import { styles } from '~/containers/cooperation-details/cooperation-activities/
 
 interface CooperationActivitiesProps {
   cooperationId?: string
+  setEditMode: Dispatch<SetStateAction<boolean>>
 }
 
 const CooperationActivities: FC<CooperationActivitiesProps> = ({
-  cooperationId
+  cooperationId,
+  setEditMode
 }) => {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
@@ -50,6 +52,7 @@ const CooperationActivities: FC<CooperationActivitiesProps> = ({
         message: 'cooperationsPage.acceptModal.successMessage'
       })
     )
+    setEditMode((prev: boolean) => !prev)
   }
 
   const cooperationOption = cooperationTranslationKeys.map(

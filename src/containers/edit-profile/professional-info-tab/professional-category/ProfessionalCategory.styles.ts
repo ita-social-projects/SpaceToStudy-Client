@@ -1,5 +1,6 @@
 import { TypographyVariantEnum } from '~/types'
 import palette from '~/styles/app-theme/app.pallete'
+import { alpha, darken } from '@mui/material'
 
 const { Body2, Overline, Caption } = TypographyVariantEnum
 
@@ -8,10 +9,9 @@ export const styles = {
     border: `1px solid ${palette.primary[300]}`,
     display: 'flex',
     flexDirection: 'column',
-    gap: 3,
+    gap: 2.5,
     borderRadius: 1,
-    px: 2,
-    py: 4
+    p: 3
   },
   createBtnContainer: {
     my: 3
@@ -33,52 +33,48 @@ export const styles = {
     },
     deleteButton: {
       svg: {
-        fill: palette.primary[700]
+        fill: palette.primary[900],
+        width: '20px',
+        height: '20px'
       },
       '&:disabled': { svg: { fill: palette.primary[200] } }
     }
   },
-  cards: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: 3
-  },
-  divider: {
-    my: 1
-  },
-  subjects: {
-    root: {
-      display: 'flex',
-      flexDirection: 'column',
-      columnGap: 3,
-      rowGap: 2
-    },
-    item: {
-      display: 'flex',
-      flexDirection: 'column',
-      columnGap: 1,
-      rowGap: 2
-    }
-  },
-  card: {
-    root: {
-      m: 0
-    },
-    item: {
-      display: 'flex',
-      flexDirection: { xs: 'column', md: 'row' },
+  subjectChipLabel: (color: string) => ({
+    typography: Overline,
+    fontWeight: '500',
+    lineHeight: 1.2,
+    color: darken(color, 0.6)
+  }),
+  subjectChip: (color: string) => ({
+    backgroundColor: alpha(color, 0.6)
+  }),
+  categoryIcon: (color: string) => ({
+    width: '24px',
+    height: '24px',
+    color: color
+  }),
+  description: {
+    grid: {
       m: 0,
-      columnGap: 3,
-      rowGap: 1,
-      label: {
-        flex: 1,
-        typography: Overline,
-        lineHeight: '20px'
-      },
-      value: {
-        flex: 2.5,
-        typography: Body2
-      }
+      display: 'grid',
+      gridTemplateColumns: { xs: '1fr', md: 'auto 1fr' },
+      gridTemplateRows: 'minmax(24px, auto)',
+      rowGap: 2,
+      columnGap: 3
+    },
+    label: {
+      typography: Body2,
+      color: palette.basic.blueGray,
+      lineHeight: '24px',
+      alignSelf: 'start'
+    },
+    value: {
+      typography: Body2,
+      display: 'flex',
+      alignItems: 'center',
+      flexWrap: 'wrap',
+      gap: '12px'
     }
   }
 }
