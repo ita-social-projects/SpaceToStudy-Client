@@ -7,14 +7,28 @@ const mockedHandleDelete = vi.fn()
 
 const categoryWithSubjects = {
   _id: '648850c4fdc2d1a130c24aea',
-  category: { _id: '64884f21fdc2d1a130c24ac0', name: 'Music' },
+  category: {
+    _id: '64884f21fdc2d1a130c24ac0',
+    name: 'Music',
+    appearance: {
+      color: '#FFD700',
+      icon: 'MusicNoteIcon'
+    }
+  },
   subjects: [{ _id: '64885108fdc2d1a130c24af9', name: 'Guitar' }],
   isDeletionBlocked: false
 }
 
 const blockedCategory = {
   _id: '648850c4fdc2d1a130c24aea',
-  category: { _id: '64884f21fdc2d1a130c24ac0', name: 'Music' },
+  category: {
+    _id: '64884f21fdc2d1a130c24ac0',
+    name: 'Music',
+    appearance: {
+      color: '#FFD700',
+      icon: 'MusicNoteIcon'
+    }
+  },
   subjects: [{ _id: '64885108fdc2d1a130c24af9', name: 'Guitar' }],
   isDeletionBlocked: true
 }

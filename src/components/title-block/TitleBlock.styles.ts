@@ -12,11 +12,12 @@ export const styles = {
     pr: { lg: 15 }
   },
   info: {
-    minWidth: '60%'
+    minWidth: '80%'
   },
   form: {
     display: 'flex',
-    flexWrap: { sm: 'nowrap', xs: 'wrap' }
+    flexWrap: { sm: 'nowrap', xs: 'wrap' },
+    maxWidth: { md: '80%' }
   },
   titleWithDescription: {
     wrapper: {

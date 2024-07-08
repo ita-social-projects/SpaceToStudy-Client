@@ -46,7 +46,7 @@ describe('Accordion component without expandMoreIcon test', () => {
     expect(props.onChange).toHaveBeenCalled()
   })
 
-  it('shuld render expand more icon', () => {
+  it('should render expand more icon', () => {
     const expandMoreIcon = screen.queryAllByTestId('ExpandMoreRoundedIcon')
 
     expect(expandMoreIcon).toHaveLength(0)

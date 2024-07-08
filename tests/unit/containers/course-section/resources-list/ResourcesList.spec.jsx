@@ -29,7 +29,7 @@ const mockedLessonData = [
 
 const mockedSetResources = vi.fn()
 
-describe('new course section RescourceItem tests', () => {
+describe('new course section ResourceItem tests', () => {
   beforeEach(() => {
     renderWithProviders(
       <ResourcesList

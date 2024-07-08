@@ -169,7 +169,7 @@ const UserTable = ({
         />
       </Box>
       {tabsInfo[externalFilter.status].component(props)}
-      {!loading && items.length && (
+      {!loading && !!items.length && (
         <EnhancedTablePagination pagination={pagination} />
       )}
     </Box>

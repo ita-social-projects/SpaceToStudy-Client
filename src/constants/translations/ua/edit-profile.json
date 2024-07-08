@@ -42,7 +42,7 @@
         "submitBtn": "Видалити"
       },
       "mainStudyCategory": "Основна навчальна категорія",
-      "subject": "Предмет",
+      "subject": "Предмет(и) категорії",
       "proficiencyLevels": "Рівні кваліфікації",
       "editCategoryBtn": "Редагувати",
       "deleteCategoryBtnDisabledTooltip": "Ви розпочали співпрацю(і)/пропозицію. з цією категорією.\nБудь ласка, закрийте її перед деактивацією",
@@ -74,6 +74,7 @@
       "title": "Пароль і Безпека",
       "description": "Зміна паролю та налаштуваннь безпеки",
       "changePassword": "Змінити пароль",
+      "changePasswordConfirm": "Ви впевнені, що бажаєте змінити пароль?",
       "currentPassword": "Поточний пароль",
       "newPassword": "Новий пароль",
       "retypePassword": "Повторіть пароль",

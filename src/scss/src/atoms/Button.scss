@@ -6,7 +6,7 @@
   line-height: var(--s2s-button-line-height, $lh-base);
   letter-spacing: var(--s2s-button-letter-spacing, $ls-base);
   text-transform: var(--s2s-button-text-transform, $tt-none);
-  display: inline-flex;
+  display: flex;
   border-radius: spacing(1);
 
   & > .MuiButton-startIcon {
@@ -29,8 +29,8 @@
     @extend %size-extra-large;
   }
 
-  &__extraExtraLarge {
-    @extend %size-extra-extra-large;
+  &__xxl {
+    @extend %size-xxl;
   }
 
   &__contained {
@@ -76,7 +76,7 @@
   column-gap: spacing(3);
 }
 
-%size-extra-extra-large {
+%size-xxl {
   padding: 0.75rem 2rem; 
   column-gap: 0.75rem;
 }

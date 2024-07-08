@@ -1,5 +1,5 @@
 import {
-  CategoryNameInterface,
+  CategoryInterface,
   SubjectNameInterface,
   UpdatedPhoto
 } from '~/types/common/common.index'
@@ -16,7 +16,7 @@ export interface EditProfileForm
 }
 
 export interface ProfessionalCategory {
-  category: CategoryNameInterface
+  category: Pick<CategoryInterface, '_id' | 'name' | 'appearance'>
   subjects: SubjectNameInterface[]
 }
 

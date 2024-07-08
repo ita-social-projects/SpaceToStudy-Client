@@ -13,7 +13,7 @@ const error = new Error()
 error.code = 'BAD_RESET_TOKEN'
 
 describe('ResetPassword test', () => {
-  it('should open login dilog after positive response', async () => {
+  it('should open login dialog after positive response', async () => {
     mockAxiosClient
       .onPatch(`${URLs.auth.resetPassword}/${resetToken}`)
       .reply(200)

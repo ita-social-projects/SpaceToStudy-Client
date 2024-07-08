@@ -12,14 +12,14 @@ const cardsViewEnums = {
   inline: 'inline'
 }
 
-describe('OfferContainer test on modile', () => {
+describe('OfferContainer test on mobile', () => {
   const mobileData = {
     isLaptopAndAbove: false,
     isMobile: true,
     isTablet: false
   }
 
-  it('Test should render square card component on modile', () => {
+  it('Test should render square card component on mobile', () => {
     useBreakpoints.mockImplementation(() => mobileData)
     renderWithProviders(
       <OfferContainer

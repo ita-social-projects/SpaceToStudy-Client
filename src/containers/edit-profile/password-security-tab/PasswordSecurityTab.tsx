@@ -16,6 +16,7 @@ import useChangeUserStatus from '~/hooks/use-change-user-status'
 import useAxios from '~/hooks/use-axios'
 import { useAppDispatch } from '~/hooks/use-redux'
 import useInputVisibility from '~/hooks/use-input-visibility'
+import useConfirm from '~/hooks/use-confirm'
 
 import { AuthService } from '~/services/auth-service'
 import { openAlert } from '~/redux/features/snackbarSlice'
@@ -40,15 +41,25 @@ import {
 const PasswordSecurityTab: FC<EditProfileTabUserProps> = ({ user }) => {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
+  const { checkConfirmation } = useConfirm()
 
   const { neededAction, checkStatusChange } = useChangeUserStatus()
 
   const handleSubmitChangePassword = async () => {
-    resetErrors()
-    await sendChangedPassword({
-      password: data.password,
-      currentPassword: data.currentPassword
+    const confirmed = await checkConfirmation({
+      message: t(
+        'editProfilePage.profile.passwordSecurityTab.changePasswordConfirm'
+      ),
+      title: 'titles.confirmTitle',
+      check: true
     })
+    if (confirmed) {
+      resetErrors()
+      await sendChangedPassword({
+        password: data.password,
+        currentPassword: data.currentPassword
+      })
+    }
   }
 
   const handleResponse = () => {
