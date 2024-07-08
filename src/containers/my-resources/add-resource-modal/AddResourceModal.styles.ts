@@ -35,7 +35,7 @@ export const styles = {
   },
   buttonsArea: {
     display: 'flex',
-    justifyContent: 'space-between'
+    justifyContent: 'end'
   },
   addButton: { mr: '16px' }
 }
