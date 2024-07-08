@@ -1,30 +1,44 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { sliceNames } from '~/redux/redux.constants'
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { AxiosError } from 'axios'
 import {
+  LoadingStatus,
+  LoadingStatusEnum,
+  sliceNames
+} from '~/redux/redux.constants'
+import {
+  DataByRole,
+  ErrorResponse,
+  MainUserRole,
   SubjectNameInterface,
-  UpdatedPhoto,
+  UpdateUserParams,
   UserMainSubject,
-  UserMainSubjectFieldValues
+  UserMainSubjectFieldValues,
+  UserResponse,
+  UserRole,
+  UserRoleEnum
 } from '~/types'
+import { userService } from '~/services/user-service'
 
 interface EditProfileState {
   firstName: string
   lastName: string
   country: string
   city: string
-  professionalSummary: string
-  nativeLanguage: string
-  videoLink: string
-  photo: string | UpdatedPhoto | null
-  categories: UserMainSubject[]
-  education: string
-  workExperience: string
-  scientificActivities: string
-  awards: string
+  professionalSummary?: string
+  nativeLanguage: string | null
+  videoLink: DataByRole<string>
+  photo?: string | null
+  categories: DataByRole<UserMainSubject[]>
+  education?: string
+  workExperience?: string
+  scientificActivities?: string
+  awards?: string
   isOfferStatusNotification: boolean
   isChatNotification: boolean
   isSimilarOffersNotification: boolean
   isEmailNotification: boolean
+  loading: LoadingStatus
+  error: string | null
 }
 
 const initialState: EditProfileState = {
@@ -34,9 +48,9 @@ const initialState: EditProfileState = {
   city: '',
   professionalSummary: '',
   nativeLanguage: '',
-  videoLink: '',
+  videoLink: { [UserRoleEnum.Tutor]: '', [UserRoleEnum.Student]: '' },
   photo: null,
-  categories: [],
+  categories: { [UserRoleEnum.Tutor]: [], [UserRoleEnum.Student]: [] },
   education: '',
   workExperience: '',
   scientificActivities: '',
@@ -44,65 +58,102 @@ const initialState: EditProfileState = {
   isOfferStatusNotification: false,
   isChatNotification: false,
   isSimilarOffersNotification: false,
-  isEmailNotification: false
+  isEmailNotification: false,
+  loading: LoadingStatusEnum.Idle,
+  error: null
 }
+
+const updateStateFromPayload = (
+  state: EditProfileState,
+  payload: UserResponse
+) => {
+  const {
+    firstName,
+    lastName,
+    address,
+    professionalSummary,
+    nativeLanguage,
+    photo,
+    videoLink,
+    mainSubjects,
+    professionalBlock
+  } = payload
+  state.firstName = firstName
+  state.lastName = lastName
+  state.country = address.country
+  state.city = address.city
+  state.professionalSummary = professionalSummary
+  state.nativeLanguage = nativeLanguage
+  state.photo = photo
+  state.videoLink = videoLink
+  state.categories = mainSubjects
+  state.education = professionalBlock?.education
+  state.workExperience = professionalBlock?.workExperience
+  state.scientificActivities = professionalBlock?.scientificActivities
+  state.awards = professionalBlock?.awards
+}
+
+export const fetchUserById = createAsyncThunk(
+  'editProfile/fetchUserById',
+  async (
+    {
+      userId,
+      role,
+      isEdit
+    }: { userId: string; role: UserRole; isEdit: boolean },
+    { rejectWithValue }
+  ) => {
+    try {
+      const response = await userService.getUserById(userId, role, isEdit)
+      return response.data
+    } catch (e) {
+      const error = e as AxiosError<ErrorResponse>
+      return rejectWithValue(error.response?.data.code)
+    }
+  }
+)
+
+export const updateUser = createAsyncThunk(
+  'editProfile/updateUser',
+  async (
+    { userId, params }: { userId: string; params: UpdateUserParams },
+    { rejectWithValue }
+  ) => {
+    try {
+      const response = await userService.updateUser(userId, params)
+      return response.data
+    } catch (e) {
+      const error = e as AxiosError<ErrorResponse>
+      return rejectWithValue(error.response?.data.code)
+    }
+  }
+)
 
 const editProfileSlice = createSlice({
   name: sliceNames.editProfile,
   initialState,
   reducers: {
-    setFirstName: (
-      state,
-      action: PayloadAction<EditProfileState['firstName']>
+    setField: <K extends keyof EditProfileState>(
+      state: EditProfileState,
+      action: PayloadAction<{ field: K; value: EditProfileState[K] }>
     ) => {
-      state.firstName = action.payload
+      const { field, value } = action.payload
+      state[field] = value
     },
-    setLastName: (
+    addCategory: (
       state,
-      action: PayloadAction<EditProfileState['lastName']>
+      action: PayloadAction<{
+        category: UserMainSubject
+        userRole: MainUserRole
+      }>
     ) => {
-      state.lastName = action.payload
-    },
-    setCountry: (state, action: PayloadAction<EditProfileState['country']>) => {
-      state.country = action.payload
-    },
-    setCity: (state, action: PayloadAction<EditProfileState['city']>) => {
-      state.city = action.payload
-    },
-    setProfessionalSummary: (
-      state,
-      action: PayloadAction<EditProfileState['professionalSummary']>
-    ) => {
-      state.professionalSummary = action.payload
-    },
-    setNativeLanguage: (
-      state,
-      action: PayloadAction<EditProfileState['nativeLanguage']>
-    ) => {
-      state.nativeLanguage = action.payload
-    },
-    setVideoLink: (
-      state,
-      action: PayloadAction<EditProfileState['videoLink']>
-    ) => {
-      state.videoLink = action.payload
-    },
-    setPhoto: (state, action: PayloadAction<EditProfileState['photo']>) => {
-      state.photo = action.payload
-    },
-    setCategories: (
-      state,
-      action: PayloadAction<EditProfileState['categories']>
-    ) => {
-      state.categories = action.payload
-    },
-    addCategory: (state, action: PayloadAction<UserMainSubject>) => {
-      const existingCategory = state.categories.find(
-        (category) => category._id === action.payload._id
-      ) as UserMainSubject
+      const { category, userRole } = action.payload
+      const existingCategory = state.categories[userRole].find(
+        (cat) => cat._id === category._id
+      )
 
       if (!existingCategory) {
-        state.categories.push(action.payload)
+        state.categories[userRole].push(category)
       }
     },
     editCategory: (
@@ -111,14 +162,16 @@ const editProfileSlice = createSlice({
         id: string
         field: keyof UserMainSubject
         value: UserMainSubjectFieldValues
+        userRole: MainUserRole
       }>
     ) => {
-      const categoryToEdit = state.categories.find(
-        (category) => category._id === action.payload.id
-      ) as UserMainSubject
+      const { id, field, value, userRole } = action.payload
+      const categoryToEdit = state.categories[userRole].find(
+        (category) => category._id === id
+      )
 
       if (categoryToEdit) {
-        categoryToEdit[action.payload.field] = action.payload.value
+        categoryToEdit[field] = value
       }
     },
     addSubjectToCategory: (
@@ -126,19 +179,21 @@ const editProfileSlice = createSlice({
       action: PayloadAction<{
         id: string
         subject: SubjectNameInterface
+        userRole: MainUserRole
       }>
     ) => {
-      const existingCategory = state.categories.find(
-        (category) => category._id === action.payload.id
-      ) as UserMainSubject
+      const { id, subject, userRole } = action.payload
+      const existingCategory = state.categories[userRole].find(
+        (category) => category._id === id
+      )
 
       if (existingCategory) {
         const existingSubject = existingCategory.subjects.find(
-          (subject) => subject._id === action.payload.subject._id
-        ) as SubjectNameInterface
+          (sub) => sub._id === subject._id
+        )
 
         if (!existingSubject) {
-          existingCategory.subjects.push(action.payload.subject)
+          existingCategory.subjects.push(subject)
         }
       }
     },
@@ -147,102 +202,73 @@ const editProfileSlice = createSlice({
       action: PayloadAction<{
         id: string
         subjectId: string
+        userRole: MainUserRole
       }>
     ) => {
-      const existingCategory = state.categories.find(
-        (category) => category._id === action.payload.id
-      ) as UserMainSubject
+      const { id, subjectId, userRole } = action.payload
+      const existingCategory = state.categories[userRole].find(
+        (category) => category._id === id
+      )
 
       if (existingCategory) {
         existingCategory.subjects = existingCategory.subjects.filter(
-          (subject) => subject._id !== action.payload.subjectId
+          (subject) => subject._id !== subjectId
         )
       }
     },
-    deleteCategory: (state, action: PayloadAction<{ id: string }>) => {
-      const categoryToDelete = state.categories.find(
-        (category) => category._id === action.payload.id
-      ) as UserMainSubject
-
-      if (categoryToDelete) {
-        state.categories = state.categories.filter(
-          (category) => category._id !== action.payload.id
-        )
-      }
-    },
-    setEducation: (
+    deleteCategory: (
       state,
-      action: PayloadAction<EditProfileState['education']>
+      action: PayloadAction<{
+        id: string
+        userRole: MainUserRole
+      }>
     ) => {
-      state.education = action.payload
-    },
-    setWorkExperience: (
-      state,
-      action: PayloadAction<EditProfileState['workExperience']>
-    ) => {
-      state.workExperience = action.payload
-    },
-    setScientificActivities: (
-      state,
-      action: PayloadAction<EditProfileState['scientificActivities']>
-    ) => {
-      state.scientificActivities = action.payload
-    },
-    setAwards: (state, action: PayloadAction<EditProfileState['awards']>) => {
-      state.awards = action.payload
-    },
-    setIsOfferStatusNotification: (
-      state,
-      action: PayloadAction<EditProfileState['isOfferStatusNotification']>
-    ) => {
-      state.isOfferStatusNotification = action.payload
-    },
-    setIsChatNotification: (
-      state,
-      action: PayloadAction<EditProfileState['isChatNotification']>
-    ) => {
-      state.isChatNotification = action.payload
-    },
-    setIsSimilarOffersNotification: (
-      state,
-      action: PayloadAction<EditProfileState['isSimilarOffersNotification']>
-    ) => {
-      state.isSimilarOffersNotification = action.payload
-    },
-    setIsEmailNotification: (
-      state,
-      action: PayloadAction<EditProfileState['isEmailNotification']>
-    ) => {
-      state.isEmailNotification = action.payload
+      const { id, userRole } = action.payload
+      state.categories[userRole] = state.categories[userRole].filter(
+        (category) => category._id !== id
+      )
     }
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchUserById.pending, (state) => {
+        state.loading = LoadingStatusEnum.Pending
+        state.error = null
+      })
+      .addCase(
+        fetchUserById.fulfilled,
+        (state, action: PayloadAction<UserResponse>) => {
+          state.loading = LoadingStatusEnum.Fulfilled
+          updateStateFromPayload(state, action.payload)
+        }
+      )
+      .addCase(fetchUserById.rejected, (state, action) => {
+        state.loading = LoadingStatusEnum.Rejected
+        state.error = action.payload as string
+      })
+      .addCase(updateUser.pending, (state) => {
+        state.loading = LoadingStatusEnum.Pending
+        state.error = null
+      })
+      .addCase(updateUser.fulfilled, (state) => {
+        state.loading = LoadingStatusEnum.Fulfilled
+      })
+      .addCase(updateUser.rejected, (state, action) => {
+        state.loading = LoadingStatusEnum.Rejected
+        state.error = action.payload as string
+      })
   }
 })
 
 const { actions, reducer } = editProfileSlice
 
 export const {
-  setFirstName,
-  setLastName,
-  setCountry,
-  setCity,
-  setProfessionalSummary,
-  setNativeLanguage,
-  setVideoLink,
-  setPhoto,
-  setCategories,
+  setField,
   addCategory,
   editCategory,
   addSubjectToCategory,
   removeSubjectFromCategory,
-  deleteCategory,
-  setEducation,
-  setWorkExperience,
-  setScientificActivities,
-  setAwards,
-  setIsOfferStatusNotification,
-  setIsChatNotification,
-  setIsSimilarOffersNotification,
-  setIsEmailNotification
+  deleteCategory
 } = actions
 
 export default reducer
