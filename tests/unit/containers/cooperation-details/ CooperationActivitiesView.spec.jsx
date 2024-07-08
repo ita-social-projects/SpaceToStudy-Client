@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, act, fireEvent } from '@testing-library/react'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import CooperationActivitiesView from '~/containers/cooperation-details/cooperetion-activities-view/CooperationActivitiesView.tsx'
 
@@ -8,29 +8,43 @@ vi.mock('~/components/cooperation-section-view/CooperationSectionView', () => ({
   )
 }))
 
-const setEditMode = vi.fn()
-const mockSections = [
-  { _id: '1', title: 'Section1' },
-  { _id: '2', title: 'Section2' }
-]
+vi.mock('~/hooks/use-redux', () => ({
+  useAppSelector: vi.fn().mockReturnValue({
+    sections: [
+      { _id: '1', title: 'Section1' },
+      { _id: '2', title: 'Section2' }
+    ]
+  }),
+  useAppDispatch: vi.fn().mockReturnValue(vi.fn())
+}))
 
-describe('CooperationActivitesView', () => {
+const setEditMode = vi.fn()
+
+describe('CooperationActivitiesView', () => {
   beforeEach(() => {
-    render(
-      <CooperationActivitiesView
-        sections={mockSections}
-        setEditMode={setEditMode}
-      />
-    )
+    render(<CooperationActivitiesView setEditMode={setEditMode} />)
   })
 
   it('should render sections correctly', () => {
-    screen.debug()
-
     const section1 = screen.getByTestId('section-1')
     expect(section1).toHaveTextContent('Section1')
 
     const section2 = screen.getByTestId('section-2')
     expect(section2).toHaveTextContent('Section2')
+  })
+
+  it('should render edit button', () => {
+    const button = screen.getByTestId('iconButton')
+
+    expect(button).toBeInTheDocument()
+  })
+
+  it('should click on Edit button', () => {
+    const button = screen.getByTestId('iconButton')
+    act(() => {
+      fireEvent.click(button)
+    })
+
+    expect(setEditMode).toHaveBeenCalled()
   })
 })
