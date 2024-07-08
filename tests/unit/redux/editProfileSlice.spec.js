@@ -1,27 +1,58 @@
+import { configureStore } from '@reduxjs/toolkit'
 import reducer, {
-  setCity,
-  setCountry,
-  setFirstName,
-  setLastName,
-  setProfessionalSummary,
-  setNativeLanguage,
-  setVideoLink,
-  setPhoto,
-  setCategories,
-  setEducation,
-  setWorkExperience,
-  setScientificActivities,
-  setAwards,
-  setIsOfferStatusNotification,
-  setIsChatNotification,
-  setIsSimilarOffersNotification,
-  setIsEmailNotification,
+  setField,
   addCategory,
   deleteCategory,
   editCategory,
   addSubjectToCategory,
-  removeSubjectFromCategory
+  removeSubjectFromCategory,
+  fetchUserById,
+  updateUser
 } from '~/redux/features/editProfileSlice'
+import { UserRoleEnum } from '~/types'
+import { mockAxiosClient } from '~tests/test-utils'
+import { createUrlPath } from '~/utils/helper-functions'
+import { URLs } from '~/constants/request'
+import { LoadingStatusEnum } from '~/redux/redux.constants'
+
+const userDataMock = {
+  firstName: 'John',
+  lastName: 'Doe',
+  address: { country: 'USA', city: 'New York' },
+  professionalSummary: 'Summary',
+  nativeLanguage: 'English',
+  photo: 'photo_url',
+  videoLink: { [UserRoleEnum.Tutor]: 'link', [UserRoleEnum.Student]: '' },
+  mainSubjects: { [UserRoleEnum.Tutor]: [], [UserRoleEnum.Student]: [] },
+  professionalBlock: {
+    education: 'Education',
+    workExperience: 'Experience',
+    scientificActivities: 'Activities',
+    awards: 'Awards'
+  }
+}
+
+const expectedUserData = {
+  firstName: 'John',
+  lastName: 'Doe',
+  country: 'USA',
+  city: 'New York',
+  professionalSummary: 'Summary',
+  nativeLanguage: 'English',
+  videoLink: { [UserRoleEnum.Tutor]: 'link', [UserRoleEnum.Student]: '' },
+  photo: 'photo_url',
+  categories: { [UserRoleEnum.Tutor]: [], [UserRoleEnum.Student]: [] },
+  education: 'Education',
+  workExperience: 'Experience',
+  scientificActivities: 'Activities',
+  awards: 'Awards',
+  isOfferStatusNotification: false,
+  isChatNotification: false,
+  isSimilarOffersNotification: false,
+  isEmailNotification: false,
+  loading: LoadingStatusEnum.Fulfilled,
+  error: null
+}
 
 const initialState = {
   firstName: '',
@@ -30,9 +61,9 @@ const initialState = {
   city: '',
   professionalSummary: '',
   nativeLanguage: '',
-  videoLink: '',
+  videoLink: { [UserRoleEnum.Tutor]: '', [UserRoleEnum.Student]: '' },
   photo: null,
-  categories: [],
+  categories: { [UserRoleEnum.Tutor]: [], [UserRoleEnum.Student]: [] },
   education: '',
   workExperience: '',
   scientificActivities: '',
@@ -40,7 +71,9 @@ const initialState = {
   isOfferStatusNotification: false,
   isChatNotification: false,
   isSimilarOffersNotification: false,
-  isEmailNotification: false
+  isEmailNotification: false,
+  loading: LoadingStatusEnum.Idle,
+  error: null
 }
 
 const mockedCategories = [
@@ -88,7 +121,16 @@ const createState = (overrides) => ({
 })
 
 describe('editProfileSlice test', () => {
-  afterEach(() => vi.clearAllMocks())
+  let store
+
+  beforeEach(() => {
+    store = configureStore({
+      reducer: {
+        editProfile: reducer
+      }
+    })
+    vi.clearAllMocks()
+  })
 
   it('should return the initial state', () => {
     expect(reducer(undefined, {})).toEqual(initialState)
@@ -97,31 +139,39 @@ describe('editProfileSlice test', () => {
   it('should set firstName correctly', () => {
     const expectedState = createState({ firstName: 'test firstName' })
 
-    expect(reducer(undefined, setFirstName('test firstName'))).toEqual(
-      expectedState
-    )
+    expect(
+      reducer(
+        undefined,
+        setField({ field: 'firstName', value: 'test firstName' })
+      )
+    ).toEqual(expectedState)
   })
 
   it('should set lastName correctly', () => {
     const expectedState = createState({ lastName: 'test lastName' })
 
-    expect(reducer(undefined, setLastName('test lastName'))).toEqual(
-      expectedState
-    )
+    expect(
+      reducer(
+        undefined,
+        setField({ field: 'lastName', value: 'test lastName' })
+      )
+    ).toEqual(expectedState)
   })
 
   it('should set country correctly', () => {
     const expectedState = createState({ country: 'test country' })
 
-    expect(reducer(undefined, setCountry('test country'))).toEqual(
-      expectedState
-    )
+    expect(
+      reducer(undefined, setField({ field: 'country', value: 'test country' }))
+    ).toEqual(expectedState)
   })
 
   it('should set city correctly', () => {
     const expectedState = createState({ city: 'test city' })
 
-    expect(reducer(undefined, setCity('test city'))).toEqual(expectedState)
+    expect(
+      reducer(undefined, setField({ field: 'city', value: 'test city' }))
+    ).toEqual(expectedState)
   })
 
   it('should set professionalSummary correctly', () => {
@@ -130,7 +180,13 @@ describe('editProfileSlice test', () => {
     })
 
     expect(
-      reducer(undefined, setProfessionalSummary('test professionalSummary'))
+      reducer(
+        undefined,
+        setField({
+          field: 'professionalSummary',
+          value: 'test professionalSummary'
+        })
+      )
     ).toEqual(expectedState)
   })
 
@@ -139,23 +195,31 @@ describe('editProfileSlice test', () => {
       nativeLanguage: 'test language'
     })
 
-    expect(reducer(undefined, setNativeLanguage('test language'))).toEqual(
-      expectedState
-    )
+    expect(
+      reducer(
+        undefined,
+        setField({ field: 'nativeLanguage', value: 'test language' })
+      )
+    ).toEqual(expectedState)
   })
 
   it('should set videoLink correctly', () => {
     const expectedState = createState({ videoLink: 'test video link' })
 
-    expect(reducer(undefined, setVideoLink('test video link'))).toEqual(
-      expectedState
-    )
+    expect(
+      reducer(
+        undefined,
+        setField({ field: 'videoLink', value: 'test video link' })
+      )
+    ).toEqual(expectedState)
   })
 
   it('should set photo correctly', () => {
     const expectedState = createState({ photo: 'test photo' })
 
-    expect(reducer(undefined, setPhoto('test photo'))).toEqual(expectedState)
+    expect(
+      reducer(undefined, setField({ field: 'photo', value: 'test photo' }))
+    ).toEqual(expectedState)
   })
 
   it('should set categories correctly', () => {
@@ -163,17 +227,23 @@ describe('editProfileSlice test', () => {
       categories: mockedCategories
     })
 
-    expect(reducer(undefined, setCategories(mockedCategories))).toEqual(
-      expectedState
-    )
+    expect(
+      reducer(
+        undefined,
+        setField({ field: 'categories', value: mockedCategories })
+      )
+    ).toEqual(expectedState)
   })
 
   it('should set education correctly', () => {
     const expectedState = createState({ education: 'test education' })
 
-    expect(reducer(undefined, setEducation('test education'))).toEqual(
-      expectedState
-    )
+    expect(
+      reducer(
+        undefined,
+        setField({ field: 'education', value: 'test education' })
+      )
+    ).toEqual(expectedState)
   })
 
   it('should set workExperience correctly', () => {
@@ -182,7 +252,10 @@ describe('editProfileSlice test', () => {
     })
 
     expect(
-      reducer(undefined, setWorkExperience('test work experience'))
+      reducer(
+        undefined,
+        setField({ field: 'workExperience', value: 'test work experience' })
+      )
     ).toEqual(expectedState)
   })
 
@@ -192,14 +265,22 @@ describe('editProfileSlice test', () => {
     })
 
     expect(
-      reducer(undefined, setScientificActivities('test scientific activities'))
+      reducer(
+        undefined,
+        setField({
+          field: 'scientificActivities',
+          value: 'test scientific activities'
+        })
+      )
     ).toEqual(expectedState)
   })
 
   it('should set awards correctly', () => {
     const expectedState = createState({ awards: 'test awards' })
 
-    expect(reducer(undefined, setAwards('test awards'))).toEqual(expectedState)
+    expect(
+      reducer(undefined, setField({ field: 'awards', value: 'test awards' }))
+    ).toEqual(expectedState)
   })
 
   it('should set isOfferStatusNotification correctly', () => {
@@ -207,17 +288,20 @@ describe('editProfileSlice test', () => {
       isOfferStatusNotification: true
     })
 
-    expect(reducer(undefined, setIsOfferStatusNotification(true))).toEqual(
-      expectedState
-    )
+    expect(
+      reducer(
+        undefined,
+        setField({ field: 'isOfferStatusNotification', value: true })
+      )
+    ).toEqual(expectedState)
   })
 
   it('should set isChatNotification correctly', () => {
     const expectedState = createState({ isChatNotification: true })
 
-    expect(reducer(undefined, setIsChatNotification(true))).toEqual(
-      expectedState
-    )
+    expect(
+      reducer(undefined, setField({ field: 'isChatNotification', value: true }))
+    ).toEqual(expectedState)
   })
 
   it('should set isSimilarOffersNotification correctly', () => {
@@ -225,55 +309,112 @@ describe('editProfileSlice test', () => {
       isSimilarOffersNotification: true
     })
 
-    expect(reducer(undefined, setIsSimilarOffersNotification(true))).toEqual(
-      expectedState
-    )
+    expect(
+      reducer(
+        undefined,
+        setField({ field: 'isSimilarOffersNotification', value: true })
+      )
+    ).toEqual(expectedState)
   })
 
   it('should set isEmailNotification correctly', () => {
     const expectedState = createState({ isEmailNotification: true })
 
-    expect(reducer(undefined, setIsEmailNotification(true))).toEqual(
-      expectedState
-    )
+    expect(
+      reducer(
+        undefined,
+        setField({ field: 'isEmailNotification', value: true })
+      )
+    ).toEqual(expectedState)
   })
 
   it('should add new category', () => {
     const expectedState = createState({
-      categories: [mockedCategories[0]]
+      categories: {
+        [UserRoleEnum.Tutor]: [mockedCategories[0]],
+        [UserRoleEnum.Student]: []
+      }
     })
 
-    expect(reducer(undefined, addCategory(mockedCategories[0]))).toEqual(
-      expectedState
-    )
+    expect(
+      reducer(
+        undefined,
+        addCategory({
+          category: mockedCategories[0],
+          userRole: UserRoleEnum.Tutor
+        })
+      )
+    ).toEqual(expectedState)
   })
 
   it('should not add category if it is already added', () => {
-    const previousState = createState({ categories: [mockedCategories[0]] })
-    const expectedState = createState({ categories: [mockedCategories[0]] })
+    const previousState = createState({
+      categories: {
+        [UserRoleEnum.Tutor]: [mockedCategories[0]],
+        [UserRoleEnum.Student]: []
+      }
+    })
+    const expectedState = createState({
+      categories: {
+        [UserRoleEnum.Tutor]: [mockedCategories[0]],
+        [UserRoleEnum.Student]: []
+      }
+    })
 
-    expect(reducer(previousState, addCategory(mockedCategories[0]))).toEqual(
-      expectedState
-    )
+    expect(
+      reducer(
+        previousState,
+        addCategory({
+          category: mockedCategories[0],
+          userRole: UserRoleEnum.Tutor
+        })
+      )
+    ).toEqual(expectedState)
   })
 
   it('should delete category', () => {
     const categoryIdToDelete = '1'
-    const previousState = createState({ categories: mockedCategories })
-    const expectedState = createState({ categories: [mockedCategories[1]] })
+    const previousState = createState({
+      categories: {
+        [UserRoleEnum.Tutor]: mockedCategories,
+        [UserRoleEnum.Student]: []
+      }
+    })
+    const expectedState = createState({
+      categories: {
+        [UserRoleEnum.Tutor]: [mockedCategories[1]],
+        [UserRoleEnum.Student]: []
+      }
+    })
 
     expect(
-      reducer(previousState, deleteCategory({ id: categoryIdToDelete }))
+      reducer(
+        previousState,
+        deleteCategory({ id: categoryIdToDelete, userRole: UserRoleEnum.Tutor })
+      )
     ).toEqual(expectedState)
   })
 
   it('should not delete category if it does not exist', () => {
     const categoryIdToDelete = '2'
-    const previousState = createState({ categories: [mockedCategories[0]] })
-    const expectedState = createState({ categories: [mockedCategories[0]] })
+    const previousState = createState({
+      categories: {
+        [UserRoleEnum.Tutor]: [mockedCategories[0]],
+        [UserRoleEnum.Student]: []
+      }
+    })
+    const expectedState = createState({
+      categories: {
+        [UserRoleEnum.Tutor]: [mockedCategories[0]],
+        [UserRoleEnum.Student]: []
+      }
+    })
 
     expect(
-      reducer(previousState, deleteCategory({ id: categoryIdToDelete }))
+      reducer(
+        previousState,
+        deleteCategory({ id: categoryIdToDelete, userRole: UserRoleEnum.Tutor })
+      )
     ).toEqual(expectedState)
   })
 
@@ -318,8 +459,18 @@ describe('editProfileSlice test', () => {
     ]
     const categoryIdToEdit = '1'
 
-    const previousState = createState({ categories: mockedCategories })
-    const expectedState = createState({ categories: expectedCategories })
+    const previousState = createState({
+      categories: {
+        [UserRoleEnum.Tutor]: mockedCategories,
+        [UserRoleEnum.Student]: []
+      }
+    })
+    const expectedState = createState({
+      categories: {
+        [UserRoleEnum.Tutor]: expectedCategories,
+        [UserRoleEnum.Student]: []
+      }
+    })
 
     expect(
       reducer(
@@ -327,7 +478,8 @@ describe('editProfileSlice test', () => {
         editCategory({
           id: categoryIdToEdit,
           field: 'isDeletionBlocked',
-          value: true
+          value: true,
+          userRole: UserRoleEnum.Tutor
         })
       )
     ).toEqual(expectedState)
@@ -336,8 +488,18 @@ describe('editProfileSlice test', () => {
   it('should not edit category if it does not exist', () => {
     const categoryIdToEdit = '4'
 
-    const previousState = createState({ categories: mockedCategories })
-    const expectedState = createState({ categories: mockedCategories })
+    const previousState = createState({
+      categories: {
+        [UserRoleEnum.Tutor]: mockedCategories,
+        [UserRoleEnum.Student]: []
+      }
+    })
+    const expectedState = createState({
+      categories: {
+        [UserRoleEnum.Tutor]: mockedCategories,
+        [UserRoleEnum.Student]: []
+      }
+    })
 
     expect(
       reducer(
@@ -345,7 +507,8 @@ describe('editProfileSlice test', () => {
         editCategory({
           id: categoryIdToEdit,
           field: 'isDeletionBlocked',
-          value: true
+          value: true,
+          userRole: UserRoleEnum.Tutor
         })
       )
     ).toEqual(expectedState)
@@ -396,15 +559,26 @@ describe('editProfileSlice test', () => {
     ]
     const categoryIdToEdit = '1'
 
-    const previousState = createState({ categories: mockedCategories })
-    const expectedState = createState({ categories: expectedCategories })
+    const previousState = createState({
+      categories: {
+        [UserRoleEnum.Tutor]: mockedCategories,
+        [UserRoleEnum.Student]: []
+      }
+    })
+    const expectedState = createState({
+      categories: {
+        [UserRoleEnum.Tutor]: expectedCategories,
+        [UserRoleEnum.Student]: []
+      }
+    })
 
     expect(
       reducer(
         previousState,
         addSubjectToCategory({
           id: categoryIdToEdit,
-          subject: { _id: 'subject_005', name: 'Piano' }
+          subject: { _id: 'subject_005', name: 'Piano' },
+          userRole: UserRoleEnum.Tutor
         })
       )
     ).toEqual(expectedState)
@@ -413,15 +587,26 @@ describe('editProfileSlice test', () => {
   it('should not add subject to category if category does not exist', () => {
     const categoryIdToEdit = '4'
 
-    const previousState = createState({ categories: mockedCategories })
-    const expectedState = createState({ categories: mockedCategories })
+    const previousState = createState({
+      categories: {
+        [UserRoleEnum.Tutor]: mockedCategories,
+        [UserRoleEnum.Student]: []
+      }
+    })
+    const expectedState = createState({
+      categories: {
+        [UserRoleEnum.Tutor]: mockedCategories,
+        [UserRoleEnum.Student]: []
+      }
+    })
 
     expect(
       reducer(
         previousState,
         addSubjectToCategory({
           id: categoryIdToEdit,
-          subject: { _id: 'subject_005', name: 'Piano' }
+          subject: { _id: 'subject_005', name: 'Piano' },
+          userRole: UserRoleEnum.Tutor
         })
       )
     ).toEqual(expectedState)
@@ -430,15 +615,26 @@ describe('editProfileSlice test', () => {
   it('should not add subject to category if subject is already added', () => {
     const categoryIdToEdit = '1'
 
-    const previousState = createState({ categories: mockedCategories })
-    const expectedState = createState({ categories: mockedCategories })
+    const previousState = createState({
+      categories: {
+        [UserRoleEnum.Tutor]: mockedCategories,
+        [UserRoleEnum.Student]: []
+      }
+    })
+    const expectedState = createState({
+      categories: {
+        [UserRoleEnum.Tutor]: mockedCategories,
+        [UserRoleEnum.Student]: []
+      }
+    })
 
     expect(
       reducer(
         previousState,
         addSubjectToCategory({
           id: categoryIdToEdit,
-          subject: { _id: 'subject_001', name: 'Violin' }
+          subject: { _id: 'subject_001', name: 'Violin' },
+          userRole: UserRoleEnum.Tutor
         })
       )
     ).toEqual(expectedState)
@@ -482,15 +678,26 @@ describe('editProfileSlice test', () => {
     const categoryIdToEdit = '1'
     const subjectIdToRemove = 'subject_002'
 
-    const previousState = createState({ categories: mockedCategories })
-    const expectedState = createState({ categories: expectedCategories })
+    const previousState = createState({
+      categories: {
+        [UserRoleEnum.Tutor]: mockedCategories,
+        [UserRoleEnum.Student]: []
+      }
+    })
+    const expectedState = createState({
+      categories: {
+        [UserRoleEnum.Tutor]: expectedCategories,
+        [UserRoleEnum.Student]: []
+      }
+    })
 
     expect(
       reducer(
         previousState,
         removeSubjectFromCategory({
           id: categoryIdToEdit,
-          subjectId: subjectIdToRemove
+          subjectId: subjectIdToRemove,
+          userRole: UserRoleEnum.Tutor
         })
       )
     ).toEqual(expectedState)
@@ -500,15 +707,26 @@ describe('editProfileSlice test', () => {
     const categoryIdToEdit = '4'
     const subjectIdToRemove = 'subject_002'
 
-    const previousState = createState({ categories: mockedCategories })
-    const expectedState = createState({ categories: mockedCategories })
+    const previousState = createState({
+      categories: {
+        [UserRoleEnum.Tutor]: mockedCategories,
+        [UserRoleEnum.Student]: []
+      }
+    })
+    const expectedState = createState({
+      categories: {
+        [UserRoleEnum.Tutor]: mockedCategories,
+        [UserRoleEnum.Student]: []
+      }
+    })
 
     expect(
       reducer(
         previousState,
         removeSubjectFromCategory({
           id: categoryIdToEdit,
-          subjectId: subjectIdToRemove
+          subjectId: subjectIdToRemove,
+          userRole: UserRoleEnum.Tutor
         })
       )
     ).toEqual(expectedState)
@@ -518,17 +736,93 @@ describe('editProfileSlice test', () => {
     const categoryIdToEdit = '1'
     const subjectIdToRemove = 'subject_009'
 
-    const previousState = createState({ categories: mockedCategories })
-    const expectedState = createState({ categories: mockedCategories })
+    const previousState = createState({
+      categories: {
+        [UserRoleEnum.Tutor]: mockedCategories,
+        [UserRoleEnum.Student]: []
+      }
+    })
+    const expectedState = createState({
+      categories: {
+        [UserRoleEnum.Tutor]: mockedCategories,
+        [UserRoleEnum.Student]: []
+      }
+    })
 
     expect(
       reducer(
         previousState,
         removeSubjectFromCategory({
           id: categoryIdToEdit,
-          subjectId: subjectIdToRemove
+          subjectId: subjectIdToRemove,
+          userRole: UserRoleEnum.Tutor
         })
       )
     ).toEqual(expectedState)
+  })
+
+  it('fetchUserById should handle fulfilled state', async () => {
+    const userId = '123'
+    const role = UserRoleEnum.Tutor
+    const isEdit = true
+
+    mockAxiosClient
+      .onGet(createUrlPath(URLs.users.get, userId, { role: role, isEdit }))
+      .reply(200, userDataMock)
+
+    await store.dispatch(fetchUserById({ userId, role, isEdit }))
+    expect(store.getState().editProfile).toEqual(expectedUserData)
+  })
+
+  it('fetchUserById should handle rejected state', async () => {
+    const userId = '123'
+    const role = UserRoleEnum.Tutor
+    const isEdit = true
+    const error = new Error('Failed to fetch user')
+    const errorCode = 'USER_NOT_FOUND'
+    error.code = errorCode
+    const expectedState = createState({
+      loading: LoadingStatusEnum.Rejected,
+      error: errorCode
+    })
+
+    mockAxiosClient
+      .onGet(createUrlPath(URLs.users.get, userId, { role: role, isEdit }))
+      .reply(404, error)
+
+    await store.dispatch(fetchUserById({ userId, role, isEdit }))
+    expect(store.getState().editProfile).toEqual(expectedState)
+  })
+
+  it('updateUser should handle fulfilled state', async () => {
+    const userId = '123'
+    const params = { firstName: 'new firstname' }
+    const expectedState = createState({ loading: LoadingStatusEnum.Fulfilled })
+
+    mockAxiosClient
+      .onPatch(createUrlPath(URLs.users.update, userId), params)
+      .reply(200)
+
+    await store.dispatch(updateUser({ userId, params }))
+    expect(store.getState().editProfile).toEqual(expectedState)
+  })
+
+  it('updateUser should handle rejected state', async () => {
+    const userId = '123'
+    const params = { firstName: 'new firstname' }
+    const error = new Error('Failed to update user')
+    const errorCode = 'USER_NOT_FOUND'
+    error.code = errorCode
+    const expectedState = createState({
+      loading: LoadingStatusEnum.Rejected,
+      error: errorCode
+    })
+
+    mockAxiosClient
+      .onPatch(createUrlPath(URLs.users.update, userId), params)
+      .reply(404, error)
+
+    await store.dispatch(updateUser({ userId, params }))
+    expect(store.getState().editProfile).toEqual(expectedState)
   })
 })
