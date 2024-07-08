@@ -1,7 +1,11 @@
 import {
+  Attachment,
   CooperationResourceField,
   CourseResource,
-  CourseSection
+  CourseSection,
+  Lesson,
+  Quiz,
+  ResourceAvailabilityStatusEnum
 } from '~/types'
 import { COOPERATION_RESOURCE_TYPES } from '~/containers/my-cooperations/cooperation-activities-list/CooperationActivitiesList.constants'
 
@@ -38,4 +42,16 @@ export function recalculateResourceOrder(
   )
 
   return [...order, ...newResources.map((resource) => resource._id)]
+}
+
+export function updateAvailabilityStatus(
+  items: Lesson[] | Quiz[] | Attachment[],
+  status: ResourceAvailabilityStatusEnum
+): void {
+  for (const item of items ?? []) {
+    item.availability = {
+      status,
+      date: null
+    }
+  }
 }

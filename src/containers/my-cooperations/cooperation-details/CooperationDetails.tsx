@@ -22,8 +22,6 @@ import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 import CooperationActivities from '~/containers/cooperation-details/cooperation-activities/CooperationActivities'
 import CooperationNotes from '~/containers/my-cooperations/cooperation-notes/CooperationNotes'
 import CooperationActivitiesView from '~/containers/cooperation-details/cooperetion-activities-view/CooperationActivitiesView'
-
-import { errorRoutes } from '~/router/constants/errorRoutes'
 import {
   tabsData,
   defaultResponse,
@@ -31,8 +29,8 @@ import {
 } from '~/containers/my-cooperations/cooperation-details/CooperationDetails.constants'
 import { styles } from '~/containers/my-cooperations/cooperation-details/CooperationDetails.styles'
 
+import { errorRoutes } from '~/router/constants/errorRoutes'
 import { cooperationService } from '~/services/cooperation-service'
-import { ResourcesAvailabilityProvider } from '~/context/resources-availability-context'
 
 import {
   CooperationTabsEnum,
@@ -157,11 +155,7 @@ const CooperationDetails = () => {
         </Box>
       </Box>
       <Box sx={styles.notesBlock}>
-        <Box sx={styles.pageContent}>
-          <ResourcesAvailabilityProvider>
-            {pageContent()}
-          </ResourcesAvailabilityProvider>
-        </Box>
+        <Box sx={styles.pageContent}>{pageContent()}</Box>
         {!isDesktop && isNotesOpen && (
           <AppDrawer
             anchor={PositionEnum.Right}
