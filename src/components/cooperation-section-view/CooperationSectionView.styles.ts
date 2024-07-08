@@ -13,7 +13,7 @@ export const styles = {
     disabled: true
   },
   descriptionInput: {
-    style: {
+    sx: {
       m: '0 0 0 45px'
     },
     disableUnderline: true

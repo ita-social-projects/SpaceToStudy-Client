@@ -8,7 +8,8 @@ import {
   Quiz,
   Attachment,
   Lesson,
-  CourseResource
+  CourseResource,
+  ResourcesTabsEnum
 } from '~/types'
 
 export interface Course extends CommonEntityFields {
@@ -33,7 +34,7 @@ export interface CourseForm
 
 export interface Activities {
   resource: CourseResource
-  resourceType: string
+  resourceType: ResourcesTabsEnum
 }
 
 export interface CourseSection {

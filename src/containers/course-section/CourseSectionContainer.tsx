@@ -145,7 +145,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
   useEffect(() => {
     setResources((prevResources) => {
       const allResourcesItems = getAllResourcesItems()
-      const displayOrder = sectionData.order
+      const displayOrder = sectionData.order || []
       const updatedResourcesItems = updateResources(
         prevResources,
         allResourcesItems,

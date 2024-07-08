@@ -32,6 +32,7 @@ import { styles } from '~/containers/course-section/resource-item/ResourceItem.s
 
 interface ResourceItemProps {
   resource: CourseResource
+  resourceType?: ResourcesTypes
   deleteResource?: (resource: CourseResource) => void
   setResourceAvailability?: SetResourseAvailability
   editResource?: (resource: CourseResource) => void
@@ -40,6 +41,7 @@ interface ResourceItemProps {
 
 const ResourceItem: FC<ResourceItemProps> = ({
   resource,
+  resourceType,
   deleteResource,
   setResourceAvailability,
   editResource,
@@ -61,7 +63,9 @@ const ResourceItem: FC<ResourceItemProps> = ({
   const renderResourceIcon = () => {
     const { Lessons, Quizzes } = ResourcesTypes
 
-    switch (resource.resourceType) {
+    const type = resourceType || resource.resourceType
+
+    switch (type) {
       case Lessons:
         return resourcesData.lessons.icon
       case Quizzes:
@@ -72,6 +76,7 @@ const ResourceItem: FC<ResourceItemProps> = ({
   }
 
   const resourceAvailability = resource.availability
+
   const resourceAvailabilityStatus =
     resourceAvailability?.status ?? ResourceAvailabilityStatusEnum.Open
 
