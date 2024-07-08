@@ -1,22 +1,27 @@
+import { Dispatch, FC, SetStateAction } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
+
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
-import { Link } from 'react-router-dom'
-import { Dispatch, FC, SetStateAction } from 'react'
 
 import AppSelect from '~/components/app-select/AppSelect'
 import AppButton from '~/components/app-button/AppButton'
 import CooperationActivitiesList from '~/containers/my-cooperations/cooperation-activities-list/CooperationActivitiesList'
-import { useResourceAvailabilityContext } from '~/context/resources-availability-context'
-import { cooperationService } from '~/services/cooperation-service'
-import { authRoutes } from '~/router/constants/authRoutes'
-import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
-import { openAlert } from '~/redux/features/snackbarSlice'
-import { cooperationsSelector } from '~/redux/features/cooperationsSlice'
+import { cooperationTranslationKeys } from '~/containers/cooperation-details/cooperation-activities/CooperationActivities.constants'
+import { styles } from '~/containers/cooperation-details/cooperation-activities/CooperationActivities.styles'
 
 import openIcon from '~/assets/img/cooperation-details/resource-availability/open-icon.svg'
 import closeIcon from '~/assets/img/cooperation-details/resource-availability/closed-icon.svg'
-import { cooperationTranslationKeys } from '~/containers/cooperation-details/cooperation-activities/CooperationActivities.constants'
+
+import { cooperationService } from '~/services/cooperation-service'
+import { authRoutes } from '~/router/constants/authRoutes'
+import { openAlert } from '~/redux/features/snackbarSlice'
+import {
+  cooperationsSelector,
+  setResourcesAvailability
+} from '~/redux/features/cooperationsSlice'
+
 import { snackbarVariants } from '~/constants'
 import {
   ResourcesAvailabilityEnum,
@@ -24,7 +29,8 @@ import {
   SizeEnum,
   ButtonTypeEnum
 } from '~/types'
-import { styles } from '~/containers/cooperation-details/cooperation-activities/CooperationActivities.styles'
+
+import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 
 interface CooperationActivitiesProps {
   cooperationId?: string
@@ -37,9 +43,14 @@ const CooperationActivities: FC<CooperationActivitiesProps> = ({
 }) => {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
-  const { sections } = useAppSelector(cooperationsSelector)
-  const { resourceAvailability, setResourceAvailability } =
-    useResourceAvailabilityContext()
+  const { sections, resourcesAvailability } =
+    useAppSelector(cooperationsSelector)
+
+  const handleResourcesAvailabilityChange = (
+    status: ResourcesAvailabilityEnum
+  ) => {
+    dispatch(setResourcesAvailability(status))
+  }
 
   const updateCooperationSection = async () => {
     await cooperationService.updateCooperation({
@@ -63,7 +74,7 @@ const CooperationActivities: FC<CooperationActivitiesProps> = ({
   )
 
   const imgSrc =
-    resourceAvailability === ResourcesAvailabilityEnum.OpenAll
+    resourcesAvailability === ResourcesAvailabilityEnum.OpenAll
       ? openIcon
       : closeIcon
 
@@ -76,19 +87,19 @@ const CooperationActivities: FC<CooperationActivitiesProps> = ({
               <img alt='resource icon' src={imgSrc} />
               <Typography sx={styles.lockTitle}>
                 {t('cooperationDetailsPage.publish')}
-                {t(`cooperationDetailsPage.select.${resourceAvailability}`)}
+                {t(`cooperationDetailsPage.select.${resourcesAvailability}`)}
               </Typography>
             </Box>
             <Typography sx={styles.lockSubtitle}>
-              {t(`cooperationDetailsPage.${resourceAvailability}`)}
+              {t(`cooperationDetailsPage.${resourcesAvailability}`)}
             </Typography>
           </Box>
           <Box>
             <AppSelect
               fields={cooperationOption}
-              setValue={setResourceAvailability}
+              setValue={handleResourcesAvailabilityChange}
               sx={styles.resourcesSelect}
-              value={resourceAvailability}
+              value={resourcesAvailability}
             />
           </Box>
         </Box>
