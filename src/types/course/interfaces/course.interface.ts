@@ -33,6 +33,7 @@ export interface CourseForm
 
 export interface Activities {
   resource: CourseResource
+  resourceType: string
 }
 
 export interface CourseSection {

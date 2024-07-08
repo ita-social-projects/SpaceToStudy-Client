@@ -22,7 +22,7 @@ const CooperationSectionView: FC<CooperationSectionViewProps> = ({
   const [isVisible, setIsVisible] = useState(true)
   const { t } = useTranslation()
 
-  const resources = item.activities.map((item) => (
+  const resources = item.activities?.map((item) => (
     <ResourceItem isView key={item.resource._id} resource={item.resource} />
   ))
 
