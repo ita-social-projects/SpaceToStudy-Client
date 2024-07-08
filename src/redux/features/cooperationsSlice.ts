@@ -6,29 +6,31 @@ import {
   CourseFieldValues,
   CourseResource,
   CourseSection,
+  ResourceAvailabilityStatusEnum,
   ResourcesAvailabilityEnum
 } from '~/types'
 import {
   getSectionResourceField,
-  recalculateResourceOrder
+  recalculateResourceOrder,
+  updateAvailabilityStatus
 } from '~/utils/course-resource-helpers'
 
 interface CooperationsState {
-  selectedCourse: Course | null
-  isActivityCreated: boolean
-  isAddedClicked: boolean
-  isNewActivity: boolean
-  currentSectionIndex?: number
+  selectedCourse: Course | null // delete it
+  isActivityCreated: boolean // delete it
+  isAddedClicked: boolean // delete it
+  isNewActivity: boolean // delete it
+  currentSectionIndex?: number // delete it
   sections: CourseSection[]
   resourcesAvailability: ResourcesAvailabilityEnum
 }
 
 const initialState: CooperationsState = {
-  selectedCourse: null,
-  isActivityCreated: false,
-  isAddedClicked: false,
-  isNewActivity: false,
-  currentSectionIndex: 0,
+  selectedCourse: null, // delete it
+  isActivityCreated: false, // delete it
+  isAddedClicked: false, // delete it
+  isNewActivity: false, // delete it
+  currentSectionIndex: 0, // delete it
   sections: [],
   resourcesAvailability: ResourcesAvailabilityEnum.OpenAll
 }
@@ -38,35 +40,41 @@ const cooperationsSlice = createSlice({
   initialState,
   reducers: {
     setSelectedCourse(
+      // delete it
       state,
       action: PayloadAction<CooperationsState['selectedCourse']>
     ) {
       state.selectedCourse = action.payload
     },
     setIsActivityCreated(
+      // delete it
       state,
       action: PayloadAction<CooperationsState['isActivityCreated']>
     ) {
       state.isActivityCreated = action.payload
     },
     setIsAddedClicked(
+      // delete it
       state,
       action: PayloadAction<CooperationsState['isAddedClicked']>
     ) {
       state.isAddedClicked = action.payload
     },
     setIsNewActivity(
+      // delete it
       state,
       action: PayloadAction<CooperationsState['isNewActivity']>
     ) {
       state.isNewActivity = action.payload
     },
     setCurrentSectionIndex(
+      // delete it
       state,
       action: PayloadAction<CooperationsState['currentSectionIndex']>
     ) {
       state.currentSectionIndex = action.payload
     },
+
     setCooperationSections(
       state,
       action: PayloadAction<CooperationsState['sections']>
@@ -194,6 +202,23 @@ const cooperationsSlice = createSlice({
       ].filter((res) => res._id !== resourceId)
 
       section.order = recalculateResourceOrder(section.order ?? [], section)
+    },
+
+    setResourcesAvailability(
+      state,
+      action: PayloadAction<CooperationsState['resourcesAvailability']>
+    ) {
+      state.resourcesAvailability = action.payload
+      const status: ResourceAvailabilityStatusEnum =
+        action.payload === ResourcesAvailabilityEnum.OpenAll
+          ? ResourceAvailabilityStatusEnum.Open
+          : ResourceAvailabilityStatusEnum.Closed
+
+      for (const section of state.sections ?? []) {
+        updateAvailabilityStatus(section.lessons, status)
+        updateAvailabilityStatus(section.quizzes, status)
+        updateAvailabilityStatus(section.attachments, status)
+      }
     }
   }
 })
@@ -212,7 +237,8 @@ export const {
   setSectionResources,
   updateResourcesOrder,
   updateResource,
-  deleteResource
+  deleteResource,
+  setResourcesAvailability
 } = actions
 
 export const cooperationsSelector = (state: RootState) => state.cooperations
