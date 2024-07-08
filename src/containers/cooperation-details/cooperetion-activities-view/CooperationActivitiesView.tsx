@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, Dispatch, SetStateAction } from 'react'
 import Box from '@mui/material/Box'
 import { IconButton } from '@mui/material'
 import EditIcon from '@mui/icons-material/Edit'
@@ -13,7 +13,8 @@ import {
 import { styles } from '~/containers/cooperation-details/cooperetion-activities-view/CooperationActivitiesView.style'
 
 interface CooperationActivitiesViewProps {
-  setEditMode: () => void
+  sections: CourseSection[]
+  setEditMode: Dispatch<SetStateAction<boolean>>
 }
 
 const CooperationActivitiesView: FC<CooperationActivitiesViewProps> = ({
