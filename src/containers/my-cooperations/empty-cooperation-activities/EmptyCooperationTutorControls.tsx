@@ -81,7 +81,7 @@ const EmptyCooperationTutorControls: FC = () => {
         size={SizeEnum.Large}
         startIcon={StartIcon}
         sx={styles.button}
-        variant={ButtonVariantEnum.Contained}
+        variant={ButtonVariantEnum.Tonal}
       >
         {t('cooperationsPage.button.create')}
       </AppButton>

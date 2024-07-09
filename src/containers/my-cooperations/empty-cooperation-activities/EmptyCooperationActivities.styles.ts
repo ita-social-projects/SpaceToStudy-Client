@@ -6,7 +6,7 @@ export const styles = {
     textAlign: 'center',
     minWidth: { xs: '280px', sm: '400px' }
   },
-  img: { display: 'block', m: '0 auto' },
+  img: { display: 'block', m: '40px auto 0' },
   titleWithDescription: {
     wrapper: {
       maxWidth: '800px',
@@ -15,7 +15,7 @@ export const styles = {
     description: {
       typography: TypographyVariantEnum.Subtitle1,
       color: palette.basic.darkGray,
-      mb: '20px'
+      mb: '24px'
     }
   },
   button: {
@@ -39,6 +39,9 @@ export const styles = {
     fontWeight: 500
   },
   logoBlock: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
     minWidth: { xs: '225px', sm: '345px' },
     textAlign: 'center'
   }
