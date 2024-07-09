@@ -240,6 +240,7 @@ const CreateOrEditLesson = () => {
           fullWidth
           inputProps={styles.input}
           label={data.description ? '' : t('lesson.labels.description')}
+          maxRows={3}
           multiline
           onChange={handleInputChange('description')}
           value={data.description}
