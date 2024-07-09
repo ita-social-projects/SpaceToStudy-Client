@@ -90,27 +90,25 @@ const AddResourceModal = <T extends TableItem>({
       />
 
       <Box sx={styles.buttonsArea}>
-        <Box>
-          <AppButton
-            disabled={!selectedRows.length}
-            onClick={onAddItems}
-            sx={styles.addButton}
-          >
-            {t('common.add')}
-          </AppButton>
-          <AppButton onClick={closeModal} variant={ButtonVariantEnum.Tonal}>
-            {t('common.cancel')}
-          </AppButton>
-        </Box>
-
-        {uploadItem && (
-          <AddDocuments
-            buttonText={t('common.uploadNewFile')}
-            fetchData={uploadItem}
-            formData={formData}
-          />
-        )}
+        <AppButton onClick={closeModal} variant={ButtonVariantEnum.Tonal}>
+          {t('common.cancel')}
+        </AppButton>
+        <AppButton
+          disabled={!selectedRows.length}
+          onClick={onAddItems}
+          sx={styles.addButton}
+        >
+          {t('common.add')}
+        </AppButton>
       </Box>
+
+      {uploadItem && (
+        <AddDocuments
+          buttonText={t('common.uploadNewFile')}
+          fetchData={uploadItem}
+          formData={formData}
+        />
+      )}
     </Box>
   )
 }

@@ -262,12 +262,12 @@ const CreateOrEditLesson = () => {
         <Box sx={styles.buttons}>
           <AppButton
             onClick={navigateToLessonTab}
-            size={SizeEnum.ExtraLarge}
+            size={SizeEnum.XXL}
             variant={ButtonVariantEnum.Tonal}
           >
             {t('common.cancel')}
           </AppButton>
-          <AppButton size={SizeEnum.ExtraLarge} type={ButtonTypeEnum.Submit}>
+          <AppButton size={SizeEnum.XXL} type={ButtonTypeEnum.Submit}>
             {t('common.save')}
           </AppButton>
         </Box>
