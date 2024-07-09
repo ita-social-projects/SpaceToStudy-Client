@@ -90,15 +90,15 @@ const AddResourceModal = <T extends TableItem>({
       />
 
       <Box sx={styles.buttonsArea}>
+        <AppButton onClick={closeModal} variant={ButtonVariantEnum.Tonal}>
+          {t('common.cancel')}
+        </AppButton>
         <AppButton
           disabled={!selectedRows.length}
           onClick={onAddItems}
           sx={styles.addButton}
         >
           {t('common.add')}
-        </AppButton>
-        <AppButton onClick={closeModal} variant={ButtonVariantEnum.Tonal}>
-          {t('common.cancel')}
         </AppButton>
       </Box>
 
