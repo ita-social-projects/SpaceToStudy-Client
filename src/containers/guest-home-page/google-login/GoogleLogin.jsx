@@ -8,10 +8,9 @@ import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
 import GoogleButton from '~/containers/guest-home-page/google-button/GoogleButton'
 
 import { styles } from '~/containers/guest-home-page/google-login/GoogleLogin.styles'
-import i18n from '~/plugins/i18n.ts'
 
 const GoogleLogin = ({ type, buttonWidth, role }) => {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const { whatCanYouDo } = guestRoutes.navBar
   const { openModal, closeModal } = useModalContext()
 
