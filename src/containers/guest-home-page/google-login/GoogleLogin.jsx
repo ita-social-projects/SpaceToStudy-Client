@@ -8,6 +8,7 @@ import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
 import GoogleButton from '~/containers/guest-home-page/google-button/GoogleButton'
 
 import { styles } from '~/containers/guest-home-page/google-login/GoogleLogin.styles'
+import i18n from '~/plugins/i18n.ts'
 
 const GoogleLogin = ({ type, buttonWidth, role }) => {
   const { t } = useTranslation()
@@ -18,6 +19,8 @@ const GoogleLogin = ({ type, buttonWidth, role }) => {
     closeModal()
     setTimeout(() => openModal({ component: <LoginDialog /> }), 0)
   }
+
+  const currentLanguage = i18n.language
 
   return (
     <Box sx={styles.googleForm}>
@@ -33,7 +36,14 @@ const GoogleLogin = ({ type, buttonWidth, role }) => {
         route={whatCanYouDo.path}
         type={type}
       />
-      <Box sx={styles.haveAccount}>
+      <Box
+        sx={{
+          ...styles.haveAccount,
+          ...(currentLanguage === 'ua' && type !== 'signup'
+            ? styles.haveAccountUa
+            : {})
+        }}
+      >
         <Typography sx={{ pr: 1 }} variant='body2'>
           {t(`${type}.haveAccount`)}
         </Typography>
@@ -41,7 +51,9 @@ const GoogleLogin = ({ type, buttonWidth, role }) => {
         {type === 'signup' ? (
           <Typography
             onClick={openLoginDialog}
-            sx={styles.underlineText}
+            sx={{
+              ...styles.underlineText
+            }}
             variant='body2'
           >
             {t('signup.joinUs')}
@@ -50,7 +62,10 @@ const GoogleLogin = ({ type, buttonWidth, role }) => {
           <Typography
             component={HashLink}
             onClick={closeModal}
-            sx={styles.underlineText}
+            sx={{
+              ...styles.underlineText,
+              ...(currentLanguage === 'ua' ? styles.underlineTextUa : {})
+            }}
             to={whatCanYouDo.path}
             variant='body2'
           >
