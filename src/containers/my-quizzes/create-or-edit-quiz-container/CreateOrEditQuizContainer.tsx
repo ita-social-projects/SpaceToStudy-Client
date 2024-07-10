@@ -253,6 +253,8 @@ const CreateOrEditQuizContainer = ({
           fullWidth
           inputProps={styles.input}
           label={t('myResourcesPage.quizzes.defaultNewDescription')}
+          maxRows={3}
+          multiline
           onChange={onDescriptionChange}
           value={description}
           variant={TextFieldVariantEnum.Standard}

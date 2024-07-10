@@ -10,7 +10,7 @@ const inputFontSize = {
 
 const titleAndDescription = {
   fontSize: '16px',
-  maxHeight: '16px',
+  maxHeight: '24px',
   marginTop: 0
 }
 
