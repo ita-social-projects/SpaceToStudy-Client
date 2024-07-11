@@ -13,7 +13,6 @@ export const styles = {
   text: { typography: TypographyVariantEnum.Subtitle1 },
   chosenFilters: {
     typography: TypographyVariantEnum.Subtitle1,
-    ml: '4px',
     fontWeight: 500,
     overflow: 'hidden',
     whiteSpace: 'nowrap',
@@ -48,5 +47,9 @@ export const styles = {
   },
   scrollableContent: { maxHeight: '216px' },
   loader: { color: 'primary.700' },
-  noItemsIcon: { color: 'primary.400' }
+  noItemsIcon: { color: 'primary.400' },
+  unorderedListIcon: {
+    width: '14px',
+    height: '14px'
+  }
 }

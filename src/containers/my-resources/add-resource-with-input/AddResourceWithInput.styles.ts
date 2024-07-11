@@ -8,15 +8,14 @@ export const styles = {
   searchIcon: { color: 'primary.700' },
   input: {
     flex: 1,
-    maxWidth: '285px',
+    maxWidth: '500px',
     border: '1px solid',
     borderColor: 'primary.500',
-    borderRadius: '6px'
+    borderRadius: '6px',
+    width: '285px'
   },
   filterWithInput: {
     display: 'flex',
-    columnGap: '25px',
-    maxWidth: '457px',
-    width: '100%'
+    columnGap: '25px'
   }
 }

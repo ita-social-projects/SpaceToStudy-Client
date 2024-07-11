@@ -33,7 +33,8 @@ interface AddResourceWithInputProps {
   button?: ReactElement
   selectedItems?: string[]
   setItems?: Dispatch<SetStateAction<string[]>>
-  sortOptions: SortHook
+  sortOptions?: SortHook
+  placeholder: string
 }
 
 const AddResourceWithInput: FC<AddResourceWithInputProps> = ({
@@ -44,7 +45,8 @@ const AddResourceWithInput: FC<AddResourceWithInputProps> = ({
   button,
   selectedItems,
   setItems,
-  sortOptions
+  sortOptions,
+  placeholder
 }) => {
   const { t } = useTranslation()
   const { isMobile, isTablet } = useBreakpoints()
@@ -77,6 +79,11 @@ const AddResourceWithInput: FC<AddResourceWithInputProps> = ({
     <>
       {selectedItems && setItems && (
         <AppButtonMenu<CategoryNameInterface>
+          customSx={{
+            root: {
+              borderRadius: '100px !important'
+            }
+          }}
           position={PositionEnum.Right}
           selectedItems={selectedItems}
           service={ResourceService.getResourcesCategoriesNames}
@@ -90,7 +97,7 @@ const AddResourceWithInput: FC<AddResourceWithInputProps> = ({
         endAdornment={<SearchIcon sx={styles.searchIcon} />}
         onChange={onChange}
         onClear={onClear}
-        placeholder={t('common.search')}
+        placeholder={t(placeholder)}
         sx={styles.input}
         value={searchInput}
       />
@@ -112,7 +119,7 @@ const AddResourceWithInput: FC<AddResourceWithInputProps> = ({
         button
       )}
 
-      {isMobileOrTablet && setItems ? (
+      {isMobileOrTablet && setItems && sortOptions ? (
         <ResourcesToolBarDrawer
           isMobile={isMobile}
           setCategories={setItems}

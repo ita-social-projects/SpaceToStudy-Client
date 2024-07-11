@@ -12,6 +12,7 @@ const route = '/my-resources'
 
 const props = {
   btnText: 'myResourcesPage.quizzes.newQuizBtn',
+  placeholder: 'common.search',
   fetchData: fetchDataMock,
   link: '#',
   searchRef: { current: text },
