@@ -23,7 +23,7 @@ export const tabsData: UserProfileProps = {
   [UserProfileTabsEnum.Profile]: {
     icon: <AccountCircleIcon />,
     title: 'editProfilePage.profile.generalTab.tabTitle',
-    content: (response) => <ProfileTab user={response} />
+    content: () => <ProfileTab />
   },
   [UserProfileTabsEnum.ProfessionalInfo]: {
     icon: <SchoolIcon />,

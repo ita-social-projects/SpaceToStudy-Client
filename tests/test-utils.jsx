@@ -8,6 +8,7 @@ import { theme } from '~/styles/app-theme/custom-mui.styles'
 import PopupsProvider from '~/PopupsProvider'
 import cooperationsReducer from '~/redux/features/cooperationsSlice'
 import snackbarReducer from '~/redux/features/snackbarSlice'
+import editProfileReducer from '~/redux/features/editProfileSlice'
 import AppSnackbar from '~/containers/layout/app-snackbar/AppSnackbar'
 
 import MockAdapter from 'axios-mock-adapter'
@@ -22,7 +23,8 @@ export const renderWithProviders = (
       reducer: {
         appMain: reducer,
         cooperations: cooperationsReducer,
-        snackbar: snackbarReducer
+        snackbar: snackbarReducer,
+        editProfile: editProfileReducer
       },
       preloadedState
     }),

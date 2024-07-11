@@ -1,40 +1,56 @@
+import Box from '@mui/material/Box'
 import { FC, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import Box from '@mui/material/Box'
-import { useBlocker } from 'react-router-dom'
 
-import useUpdateUser from '~/hooks/use-update-user'
-import useConfirm from '~/hooks/use-confirm'
 import useForm from '~/hooks/use-form'
 
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
-import AppButton from '~/components/app-button/AppButton'
-import ProfileTabForm from '~/containers/edit-profile/profile-tab/profile-tab-form/ProfileTabForm'
-import {
-  getProfileInitialValues,
-  getUserUpdatedData
-} from '~/utils/get-profile-values'
 import { validations } from '~/components/user-steps-wrapper/constants'
+import ProfileTabForm from '~/containers/edit-profile/profile-tab/profile-tab-form/ProfileTabForm'
 import { styles } from '~/containers/edit-profile/profile-tab/ProfileTab.styles'
+import { useDebounce } from '~/hooks/use-debounce'
+import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 import {
-  ButtonVariantEnum,
-  EditProfileForm,
-  SizeEnum,
-  EditProfileTabUserProps
-} from '~/types'
+  updateProfileData,
+  updateValidityStatus
+} from '~/redux/features/editProfileSlice'
+import { EditProfileForm, MainUserRole } from '~/types'
 
-const ProfileTab: FC<EditProfileTabUserProps> = ({ user }) => {
+const ProfileTab: FC = () => {
   const { t } = useTranslation()
-  const { setNeedConfirmation, checkConfirmation } = useConfirm()
-  const { handleSubmit, loading } = useUpdateUser(user._id, true)
+  const dispatch = useAppDispatch()
+  const { userRole } = useAppSelector((state) => state.appMain)
+  const {
+    city,
+    country,
+    firstName,
+    lastName,
+    nativeLanguage,
+    photo,
+    professionalSummary,
+    videoLink
+  } = useAppSelector((state) => state.editProfile)
 
-  const initialValues = getProfileInitialValues(user)
+  const initialValues: EditProfileForm = {
+    city,
+    country,
+    firstName,
+    lastName,
+    nativeLanguage,
+    photo: photo || null,
+    professionalSummary: professionalSummary || '',
+    videoLink:
+      typeof videoLink === 'string'
+        ? videoLink
+        : videoLink[userRole as MainUserRole] ?? ''
+  }
 
   const {
-    isDirty,
+    isValid,
     handleInputChange,
     handleBlur,
     handleNonInputValueChange,
+    trigger,
     data,
     errors
   } = useForm<EditProfileForm>({
@@ -42,36 +58,23 @@ const ProfileTab: FC<EditProfileTabUserProps> = ({ user }) => {
     validations
   })
 
-  const blocker = useBlocker(isDirty)
+  const debouncedUpdateProfileData = useDebounce(() => {
+    void dispatch(updateProfileData(data))
+  }, 300)
 
   useEffect(() => {
-    void (async () => {
-      if (blocker.state === 'blocked') {
-        const confirmed = await checkConfirmation({
-          message: 'questions.goBackToProfile',
-          title: 'titles.discardChanges',
-          confirmButton: t('common.discard'),
-          cancelButton: t('common.cancel')
-        })
-        if (confirmed) {
-          blocker.proceed()
-        } else {
-          blocker.reset()
-        }
-      }
-    })()
-  }, [blocker, checkConfirmation, t])
+    debouncedUpdateProfileData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data])
 
   useEffect(() => {
-    setNeedConfirmation(isDirty)
-  }, [setNeedConfirmation, isDirty])
+    trigger()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
-  const handleUpdateData = () => {
-    const updatedData = getUserUpdatedData(data)
-    handleSubmit(updatedData)
-  }
-
-  const hasError = Object.values(errors).some((error) => error)
+  useEffect(() => {
+    void dispatch(updateValidityStatus({ tab: 'profileTab', value: isValid }))
+  }, [isValid, dispatch])
 
   return (
     <Box sx={styles.profileInnerContainer}>
@@ -89,17 +92,6 @@ const ProfileTab: FC<EditProfileTabUserProps> = ({ user }) => {
           handleNonInputValueChange={handleNonInputValueChange}
         />
       </Box>
-
-      <AppButton
-        disabled={hasError}
-        loading={loading}
-        onClick={handleUpdateData}
-        size={SizeEnum.ExtraLarge}
-        sx={styles.updateProfileBtn}
-        variant={ButtonVariantEnum.Contained}
-      >
-        {t('editProfilePage.profile.updateProfileBtn')}
-      </AppButton>
     </Box>
   )
 }

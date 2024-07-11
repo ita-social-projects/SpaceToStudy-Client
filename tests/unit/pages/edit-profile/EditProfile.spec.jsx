@@ -14,7 +14,19 @@ const mockState = {
 const userMock = {
   role: userRole,
   videoLink: { [userRole]: '' },
-  mainSubjects: { [userRole]: [] }
+  mainSubjects: { [userRole]: [] },
+  firstName: 'John',
+  lastName: 'Doe',
+  address: { country: 'USA', city: 'New York' },
+  professionalSummary: 'Summary',
+  nativeLanguage: 'English',
+  photo: 'photo_url',
+  professionalBlock: {
+    education: 'Education',
+    workExperience: 'Experience',
+    scientificActivities: 'Activities',
+    awards: 'Awards'
+  }
 }
 
 vi.mock('~/containers/edit-profile/profile-tab/ProfileTab', () => ({

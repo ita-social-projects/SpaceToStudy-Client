@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+import { useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useSearchParams } from 'react-router-dom'
 
@@ -9,7 +9,7 @@ import Divider from '@mui/material/Divider'
 import useConfirm from '~/hooks/use-confirm'
 
 import { authRoutes } from '~/router/constants/authRoutes'
-import { useAppSelector } from '~/hooks/use-redux'
+import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 import { userService } from '~/services/user-service'
 import useAxios from '~/hooks/use-axios'
 import Loader from '~/components/loader/Loader'
@@ -27,9 +27,13 @@ import {
 import { tabsData } from '~/pages/edit-profile/EditProfile.constants'
 
 import { styles } from '~/pages/edit-profile/EditProfile.styles'
+import { fetchUserById } from '~/redux/features/editProfileSlice'
+import { LoadingStatusEnum } from '~/redux/redux.constants'
 
 const EditProfile = () => {
   const { t } = useTranslation()
+  const dispatch = useAppDispatch()
+  const { loading } = useAppSelector((state) => state.editProfile)
 
   const [searchParams, setSearchParams] = useSearchParams({
     tab: UserProfileTabsEnum.Profile
@@ -57,14 +61,22 @@ const EditProfile = () => {
     () => userService.getUserById(userId, userRole as UserRole, true),
     [userId, userRole]
   )
+
+  useEffect(() => {
+    void dispatch(
+      fetchUserById({ userId, role: userRole as UserRole, isEdit: true })
+    )
+  }, [dispatch, userId, userRole])
+
   const { checkConfirmation } = useConfirm()
 
-  const { loading, response } = useAxios<UserResponse>({
+  //! delete when all tabs are ready
+  const { loading: userLoading, response } = useAxios<UserResponse>({
     service: getUserData,
     fetchOnMount: true
   })
 
-  if (loading) {
+  if (loading === LoadingStatusEnum.Pending || userLoading) {
     return <Loader pageLoad size={70} />
   }
 
