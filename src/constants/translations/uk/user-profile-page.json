@@ -36,6 +36,7 @@
   "reviews": {
     "title": "Що говорять студенти",
     "buttonTitle": "Більше відгуків",
+    "starsCount_zero": "{{count}} зірок",
     "starsCount_one": "{{count}} зірка",
     "starsCount_few": "{{count}} зірки",
     "starsCount_many": "{{count}} зірок",

@@ -42,7 +42,7 @@ import becomeTutor from './become-tutor.json'
 import userProfilePage from './user-profile-page.json'
 import quiz from './quiz.json'
 
-const ua = {
+const uk = {
   translations: {
     common,
     errorMessages,
@@ -90,4 +90,4 @@ const ua = {
   }
 }
 
-export default ua
+export default uk
