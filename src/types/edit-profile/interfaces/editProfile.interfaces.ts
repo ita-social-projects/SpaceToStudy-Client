@@ -28,3 +28,10 @@ export interface UserMainSubject extends ProfessionalCategory {
 export interface EditProfileTabUserProps {
   user: UserResponse
 }
+
+export interface NotificationSettings {
+  isOfferStatusNotification: boolean
+  isChatNotification: boolean
+  isSimilarOffersNotification: boolean
+  isEmailNotification: boolean
+}

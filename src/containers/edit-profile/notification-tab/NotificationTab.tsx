@@ -1,4 +1,6 @@
 import { useTranslation } from 'react-i18next'
+import { RootState } from '~/redux/store'
+import { ChangeEvent } from 'react'
 
 import Box from '@mui/system/Box'
 import Switch from '@mui/material/Switch'
@@ -6,25 +8,59 @@ import Switch from '@mui/material/Switch'
 import SettingItem from '~/components/setting-item/SettingItem'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import { styles } from '~/containers/edit-profile/notification-tab/NotificationTab.styles'
-import AppButton from '~/components/app-button/AppButton'
-import { ButtonVariantEnum, SizeEnum } from '~/types'
+import { setField } from '~/redux/features/editProfileSlice'
 import { notificationGroupOptions } from '~/containers/edit-profile/notification-tab/NotificationTab.constants'
+import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
+import { NotificationSettings } from '~/types'
 
 const NotificationTab = () => {
   const { t } = useTranslation()
+  const dispatch = useAppDispatch()
 
-  const handleUpdateData = () => {
-    // @TODO: implement update data logic
+  const isOfferStatusNotification = useAppSelector(
+    (state: RootState) => state.editProfile.isOfferStatusNotification
+  )
+  const isChatNotification = useAppSelector(
+    (state: RootState) => state.editProfile.isChatNotification
+  )
+  const isSimilarOffersNotification = useAppSelector(
+    (state: RootState) => state.editProfile.isSimilarOffersNotification
+  )
+  const isEmailNotification = useAppSelector(
+    (state: RootState) => state.editProfile.isEmailNotification
+  )
+
+  const notificationSettings: NotificationSettings = {
+    isOfferStatusNotification,
+    isChatNotification,
+    isSimilarOffersNotification,
+    isEmailNotification
+  }
+
+  const handleSwitchChange = (field: keyof NotificationSettings) => {
+    return (event: ChangeEvent<HTMLInputElement>) => {
+      dispatch(setField({ field, value: event.target.checked }))
+    }
+  }
+
+  const getCheckedValue = (field: keyof NotificationSettings) => {
+    return notificationSettings[field]
   }
 
   const notificationOptionList = notificationGroupOptions.map((option) => (
     <SettingItem
-      key={option.title}
+      key={option.field}
       style={styles.options}
       subtitle={t(option.subtitle)}
       title={t(option.title)}
     >
-      <Switch sx={styles.switch} />
+      <Switch
+        checked={getCheckedValue(option.field as keyof NotificationSettings)}
+        onChange={handleSwitchChange(
+          option.field as keyof NotificationSettings
+        )}
+        sx={styles.switch}
+      />
     </SettingItem>
   ))
 
@@ -36,17 +72,8 @@ const NotificationTab = () => {
           style={styles.titleWithDescription}
           title={t('editProfilePage.profile.notificationsTab.notifications')}
         />
-
         <Box sx={styles.optionsContainer}>{notificationOptionList}</Box>
       </Box>
-      <AppButton
-        onClick={handleUpdateData}
-        size={SizeEnum.ExtraLarge}
-        sx={styles.updateProfileBtn}
-        variant={ButtonVariantEnum.Contained}
-      >
-        {t('editProfilePage.profile.updateProfileBtn')}
-      </AppButton>
     </Box>
   )
 }
