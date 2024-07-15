@@ -10,7 +10,7 @@ export const getSuffixes = (name: string, language: string): Suffixes => {
       suffixes: { feminine: string; masculine: string }
     }
   } = {
-    ua: {
+    uk: {
       feminine: ['категорію'],
       masculine: ['предмет'],
       suffixes: {

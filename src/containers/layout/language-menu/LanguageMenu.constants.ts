@@ -4,7 +4,7 @@ export const languageMenuConstants = [
     label: 'English'
   },
   {
-    value: 'ua',
+    value: 'uk',
     label: 'Українська'
   }
 ]
