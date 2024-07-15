@@ -38,7 +38,7 @@ const GoogleLogin = ({ type, buttonWidth, role }) => {
       <Box
         sx={{
           ...styles.haveAccount,
-          ...(currentLanguage === 'ua' && type !== 'signup'
+          ...(currentLanguage === 'uk' && type !== 'signup'
             ? styles.haveAccountUa
             : {})
         }}
@@ -61,7 +61,7 @@ const GoogleLogin = ({ type, buttonWidth, role }) => {
             onClick={closeModal}
             sx={{
               ...styles.underlineText,
-              ...(currentLanguage === 'ua' ? styles.underlineTextUa : {})
+              ...(currentLanguage === 'uk' ? styles.underlineTextUa : {})
             }}
             to={whatCanYouDo.path}
             variant='body2'
