@@ -1,6 +1,6 @@
 export const styles = {
   linesBox: {
-    margin: '22px 0',
+    m: '22px 0',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -13,7 +13,7 @@ export const styles = {
   },
   continue: {
     whiteSpace: 'nowrap',
-    margin: '0 10px'
+    m: '0 10px'
   },
   underlineText: {
     fontWeight: '500',
@@ -21,9 +21,15 @@ export const styles = {
     textDecoration: 'underline',
     cursor: 'pointer'
   },
+  underlineTextUa: {
+    mt: '6px'
+  },
   haveAccount: {
     display: 'flex',
     color: 'primary.700'
+  },
+  haveAccountUa: {
+    flexDirection: 'column'
   },
   googleForm: {
     display: 'flex',

@@ -10,7 +10,7 @@ import GoogleButton from '~/containers/guest-home-page/google-button/GoogleButto
 import { styles } from '~/containers/guest-home-page/google-login/GoogleLogin.styles'
 
 const GoogleLogin = ({ type, buttonWidth, role }) => {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const { whatCanYouDo } = guestRoutes.navBar
   const { openModal, closeModal } = useModalContext()
 
@@ -18,6 +18,8 @@ const GoogleLogin = ({ type, buttonWidth, role }) => {
     closeModal()
     setTimeout(() => openModal({ component: <LoginDialog /> }), 0)
   }
+
+  const currentLanguage = i18n.language
 
   return (
     <Box sx={styles.googleForm}>
@@ -33,7 +35,14 @@ const GoogleLogin = ({ type, buttonWidth, role }) => {
         route={whatCanYouDo.path}
         type={type}
       />
-      <Box sx={styles.haveAccount}>
+      <Box
+        sx={{
+          ...styles.haveAccount,
+          ...(currentLanguage === 'uk' && type !== 'signup'
+            ? styles.haveAccountUa
+            : {})
+        }}
+      >
         <Typography sx={{ pr: 1 }} variant='body2'>
           {t(`${type}.haveAccount`)}
         </Typography>
@@ -50,7 +59,10 @@ const GoogleLogin = ({ type, buttonWidth, role }) => {
           <Typography
             component={HashLink}
             onClick={closeModal}
-            sx={styles.underlineText}
+            sx={{
+              ...styles.underlineText,
+              ...(currentLanguage === 'uk' ? styles.underlineTextUa : {})
+            }}
             to={whatCanYouDo.path}
             variant='body2'
           >
