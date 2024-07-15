@@ -10,8 +10,7 @@ let initialLanguage = getFromLocalStorage('language')
 
 if (!initialLanguage) {
   const browserLanguage = navigator.language.split('-')[0]
-  initialLanguage = browserLanguage === 'uk' ? 'ua' : 'en'
-
+  initialLanguage = browserLanguage === 'uk' ? 'uk' : 'en'
   setToLocalStorage('language', initialLanguage)
 }
 
@@ -21,6 +20,6 @@ void i18n.use(initReactI18next).init({
   ns: ['translations']
 })
 
-i18n.languages = ['en', 'ua']
+i18n.languages = ['en', 'uk']
 
 export default i18n
