@@ -8,7 +8,6 @@ import IconButton from '@mui/material/IconButton'
 import MenuItem from '@mui/material/MenuItem'
 import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
-import { TableProps } from '@mui/material/Table'
 import useMenu from '~/hooks/use-menu'
 
 import { styles } from '~/components/enhanced-table/enhanced-table-row/EnhancedTableRow.styles'
@@ -20,7 +19,7 @@ import {
   TableSelect
 } from '~/types'
 
-export interface EnhancedTableRowProps<I> extends Omit<TableProps, 'style'> {
+export interface EnhancedTableRowProps<I> {
   columns: TableColumn<I>[]
   isSelection?: boolean
   item: I
