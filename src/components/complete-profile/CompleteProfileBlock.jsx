@@ -13,7 +13,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import ExpandLessIcon from '@mui/icons-material/ExpandLess'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 
-import AppProgressBar from '~/components/app-progress-bar-line/AppProgressBarLine.jsx'
+import AppProgressBarLine from '~/components/app-progress-bar-line/AppProgressBarLine'
 import ProfileItem from '~/components/profile-item/ProfileItem.jsx'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { authRoutes } from '~/router/constants/authRoutes'
@@ -88,7 +88,7 @@ const CompleteProfileBlock = ({ profileItems, data }) => {
           </Box>
           {icon}
         </Box>
-        <AppProgressBar value={valueProgressBar} />
+        <AppProgressBarLine value={valueProgressBar} />
       </AccordionSummary>
       <AccordionDetails sx={styles.profileItems}>
         {profileList}
