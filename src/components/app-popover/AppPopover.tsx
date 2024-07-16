@@ -1,8 +1,17 @@
-import { useState, useRef } from 'react'
-import Popover from '@mui/material/Popover'
+import { useState, useRef, FC, ReactNode } from 'react'
+import Popover, { PopoverProps } from '@mui/material/Popover'
 import Box from '@mui/material/Box'
+import { SxProps } from '@mui/material'
 
-const AppPopover = ({
+interface AppPopoverProps
+  extends Omit<PopoverProps, 'open' | 'onClose' | 'anchorEl'> {
+  initialItems: ReactNode
+  initialItemsWrapperStyle: SxProps
+  showMoreElem: ReactNode
+  hideElem?: boolean
+}
+
+const AppPopover: FC<AppPopoverProps> = ({
   children,
   initialItems,
   initialItemsWrapperStyle,
@@ -21,7 +30,8 @@ const AppPopover = ({
     setIsOpen(false)
   }
 
-  const hideElement = hideElem && isOpen ? { visibility: 'hidden' } : null
+  const hideElement: SxProps =
+    hideElem && isOpen ? { visibility: 'hidden' } : null
 
   return (
     <Box ref={anchorEl}>
