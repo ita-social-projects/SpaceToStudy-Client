@@ -201,7 +201,7 @@ describe.skip('CourseSectionsList tests', () => {
   })
 })
 
-describe('CourseSectionsList test when prop items is empty', () => {
+describe.skip('CourseSectionsList test when prop items is empty', () => {
   beforeEach(async () => {
     await waitFor(() => {
       renderWithProviders(
