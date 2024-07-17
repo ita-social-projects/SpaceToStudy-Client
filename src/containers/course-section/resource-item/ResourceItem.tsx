@@ -2,13 +2,13 @@ import { FC, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
+import TextField from '@mui/material/TextField'
 import IconButton from '@mui/material/IconButton'
 import CloseIcon from '@mui/icons-material/Close'
+import EditIcon from '@mui/icons-material/Edit'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
-import TextField from '@mui/material/TextField'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
-import EditIcon from '@mui/icons-material/Edit'
 
 import AppSelect from '~/components/app-select/AppSelect'
 import IconExtensionWithTitle from '~/components/icon-extension-with-title/IconExtensionWithTitle'
@@ -122,7 +122,7 @@ const ResourceItem: FC<ResourceItemProps> = ({
               label={t('cooperationDetailsPage.datePickerLabel')}
               onChange={setOpenFromDate}
               renderInput={(params) => <TextField {...params} />}
-              value={resourceAvailability.date ?? null}
+              value={resourceAvailability?.date ?? null}
             />
           </Box>
         </LocalizationProvider>

@@ -1,10 +1,10 @@
 import { useCallback, useEffect } from 'react'
-
-import Box from '@mui/material/Box'
 import { v4 as uuidv4 } from 'uuid'
 
-import CourseSectionsList from '~/containers/course-sections-list/CourseSectionsList'
+import Box from '@mui/material/Box'
+
 import Loader from '~/components/loader/Loader'
+import CourseSectionsList from '~/containers/course-sections-list/CourseSectionsList'
 import { initialCooperationSectionData } from '~/containers/my-cooperations/cooperation-activities-list/CooperationActivitiesList.constants'
 
 import {
@@ -22,7 +22,7 @@ import {
   deleteResource,
   setCooperationSections,
   setIsNewActivity,
-  setSectionResources,
+  addSectionResources,
   updateCooperationSection,
   updateResource,
   updateResourcesOrder
@@ -50,7 +50,7 @@ const CooperationActivitiesList = () => {
       addNewSection()
     }
 
-    if (selectedCourse && !sections?.length && isAddedClicked) {
+    if (selectedCourse && !sections.length && isAddedClicked) {
       const allSections = selectedCourse.sections.map((section) => ({
         ...section,
         id: Id
@@ -58,7 +58,7 @@ const CooperationActivitiesList = () => {
       setSectionsData(allSections)
     }
 
-    if (selectedCourse && sections?.length && isAddedClicked) {
+    if (selectedCourse && sections.length && isAddedClicked) {
       const addNewSectionsCourse = (index: number | undefined = undefined) => {
         const newSectionData = selectedCourse.sections.map((section) => ({
           ...section,
@@ -147,7 +147,6 @@ const CooperationActivitiesList = () => {
           dispatch(
             updateResource({
               sectionId: event.sectionId,
-              resourceType: event.resourceType,
               resourceId: event.resourceId,
               resource: event.resource
             })
@@ -161,11 +160,10 @@ const CooperationActivitiesList = () => {
             })
           )
           break
-        case CourseResourceEventType.SetSectionResources:
+        case CourseResourceEventType.AddSectionResources:
           dispatch(
-            setSectionResources({
+            addSectionResources({
               sectionId: event.sectionId,
-              resourceType: event.resourceType,
               resources: event.resources
             })
           )
@@ -174,7 +172,6 @@ const CooperationActivitiesList = () => {
           dispatch(
             deleteResource({
               sectionId: event.sectionId,
-              resourceType: event.resourceType,
               resourceId: event.resourceId
             })
           )
