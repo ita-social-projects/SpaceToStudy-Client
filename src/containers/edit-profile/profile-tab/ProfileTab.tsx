@@ -3,18 +3,18 @@ import { FC, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import useForm from '~/hooks/use-form'
+import { useDebounce } from '~/hooks/use-debounce'
+import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import { validations } from '~/components/user-steps-wrapper/constants'
 import ProfileTabForm from '~/containers/edit-profile/profile-tab/profile-tab-form/ProfileTabForm'
-import { styles } from '~/containers/edit-profile/profile-tab/ProfileTab.styles'
-import { useDebounce } from '~/hooks/use-debounce'
-import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 import {
   updateProfileData,
   updateValidityStatus
 } from '~/redux/features/editProfileSlice'
 import { EditProfileForm, MainUserRole } from '~/types'
+import { styles } from '~/containers/edit-profile/profile-tab/ProfileTab.styles'
 
 const ProfileTab: FC = () => {
   const { t } = useTranslation()
