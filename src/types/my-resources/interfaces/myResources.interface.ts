@@ -10,7 +10,7 @@ import {
 export interface ResourceBase {
   description: string
   resourceType: ResourcesTypes
-  availability: ResourceAvailability
+  availability?: ResourceAvailability
 }
 
 export interface Lesson extends CommonEntityFields, ResourceBase {

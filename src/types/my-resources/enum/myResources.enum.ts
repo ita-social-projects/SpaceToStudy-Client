@@ -8,7 +8,7 @@ export enum ResourcesTabsEnum {
 
 export enum ResourcesEnum {
   Lesson = 'lesson',
-  Quizz = 'quiz',
+  Quiz = 'quiz',
   Attachment = 'attachment'
 }
 
