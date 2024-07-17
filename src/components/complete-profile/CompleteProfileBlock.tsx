@@ -1,7 +1,6 @@
-import { useMemo, useState } from 'react'
+import { FC, useMemo, useState } from 'react'
 import { Link, useMatch } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
 
 import Accordion from '@mui/material/Accordion'
 import AccordionDetails from '@mui/material/AccordionDetails'
@@ -18,17 +17,28 @@ import ProfileItem from '~/components/profile-item/ProfileItem.jsx'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { guestRoutes } from '~/router/constants/guestRoutes'
-import { styles } from '~/components/complete-profile/CompleteProfileBlock.styles.js'
+import { ProfileItemType } from '../profile-item/complete-profile.constants'
+import { useAppSelector } from '~/hooks/use-redux'
+import { UserResponse, UserRole } from '~/types'
+import { styles } from '~/components/complete-profile/CompleteProfileBlock.styles'
 
-const CompleteProfileBlock = ({ profileItems, data }) => {
+interface CompleteProfileBlockProps {
+  profileItems: ProfileItemType[]
+  data: UserResponse
+}
+
+const CompleteProfileBlock: FC<CompleteProfileBlockProps> = ({
+  profileItems,
+  data
+}) => {
   const { t } = useTranslation()
   const { isMobile } = useBreakpoints()
-  const { userRole } = useSelector((state) => state.appMain)
-  const homePage = useMatch(guestRoutes[userRole].path)
+  const { userRole } = useAppSelector((state) => state.appMain)
+  const homePage = useMatch(guestRoutes[userRole as UserRole].path)
   const [isOpen, setIsOpen] = useState(false)
 
   const checkProfileData = useMemo(
-    () => profileItems.filter((item) => data[item.id]),
+    () => profileItems.filter((item) => data[item.id as keyof UserResponse]),
     [data, profileItems]
   )
 
@@ -75,12 +85,11 @@ const CompleteProfileBlock = ({ profileItems, data }) => {
       <AccordionSummary>
         <Box sx={styles.headerProgressBar}>
           <Box>
-            <Typography sx={styles.title} variant={isMobile ? 'button' : 'h5'}>
+            <Typography variant={isMobile ? 'button' : 'h5'}>
               {t('completeProfile.title')}
             </Typography>
             <Typography
               color={'primary.500'}
-              sx={styles.subtitle}
               variant={isMobile ? 'body2' : 'subtitle2'}
             >
               {t('completeProfile.subtitle')}
