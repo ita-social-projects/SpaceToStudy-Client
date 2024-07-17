@@ -35,7 +35,6 @@ export const style = {
     mt: { xs: '20px', md: '0px' }
   },
   activeDrag: {
-    border: '2px primary',
     borderColor: 'primary.900'
   },
   rigthBox: {
