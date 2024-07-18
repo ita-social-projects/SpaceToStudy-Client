@@ -1,6 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit'
 import reducer, {
   setField,
+  updateValidityStatus,
+  updateProfileData,
   addCategory,
   deleteCategory,
   editCategory,
@@ -51,7 +53,12 @@ const expectedUserData = {
   isSimilarOffersNotification: false,
   isEmailNotification: false,
   loading: LoadingStatusEnum.Fulfilled,
-  error: null
+  error: null,
+  tabValidityStatus: {
+    profileTab: true,
+    professionalInfoTab: true,
+    notificationTab: true
+  }
 }
 
 const initialState = {
@@ -73,7 +80,12 @@ const initialState = {
   isSimilarOffersNotification: false,
   isEmailNotification: false,
   loading: LoadingStatusEnum.Idle,
-  error: null
+  error: null,
+  tabValidityStatus: {
+    profileTab: true,
+    professionalInfoTab: true,
+    notificationTab: true
+  }
 }
 
 const mockedCategories = [
@@ -324,6 +336,52 @@ describe('editProfileSlice test', () => {
       reducer(
         undefined,
         setField({ field: 'isEmailNotification', value: true })
+      )
+    ).toEqual(expectedState)
+  })
+
+  it('should set profile tab validity correctly', () => {
+    const expectedState = createState({
+      tabValidityStatus: {
+        profileTab: false,
+        professionalInfoTab: true,
+        notificationTab: true
+      }
+    })
+
+    expect(
+      reducer(
+        undefined,
+        updateValidityStatus({ tab: 'profileTab', value: false })
+      )
+    ).toEqual(expectedState)
+  })
+
+  it('should set profile tab validity correctly', () => {
+    const expectedState = createState({
+      city: 'city',
+      country: 'country',
+      firstName: 'firstName',
+      lastName: 'lastName',
+      nativeLanguage: 'nativeLanguage',
+      photo: 'photo',
+      professionalSummary: 'professionalSummary',
+      videoLink: 'videoLink'
+    })
+
+    expect(
+      reducer(
+        undefined,
+        updateProfileData({
+          city: 'city',
+          country: 'country',
+          firstName: 'firstName',
+          lastName: 'lastName',
+          nativeLanguage: 'nativeLanguage',
+          photo: 'photo',
+          professionalSummary: 'professionalSummary',
+          videoLink: 'videoLink'
+        })
       )
     ).toEqual(expectedState)
   })

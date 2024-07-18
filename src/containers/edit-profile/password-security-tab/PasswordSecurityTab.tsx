@@ -31,14 +31,14 @@ import {
   SizeEnum,
   FormValues,
   ErrorResponse,
-  EditProfileTabUserProps
+  EditProfileUserProps
 } from '~/types'
 import {
   initialValues,
   validations
 } from '~/containers/edit-profile/password-security-tab/PasswordSecurityTab.constants'
 
-const PasswordSecurityTab: FC<EditProfileTabUserProps> = ({ user }) => {
+const PasswordSecurityTab: FC<EditProfileUserProps> = ({ user }) => {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
   const { checkConfirmation } = useConfirm()

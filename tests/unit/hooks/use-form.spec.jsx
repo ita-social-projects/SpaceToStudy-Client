@@ -55,6 +55,50 @@ describe('useForm custom hook test without errors', () => {
     expect(result.current.isDirty).toEqual(true)
   })
 
+  it('should trigger validation for one specific field', () => {
+    const validations = { email: vi.fn(() => 'error') }
+    const { result } = renderHook(() => useForm({ initialValues, validations }))
+
+    act(() => result.current.trigger('email'))
+
+    expect(validations.email).toBeCalled()
+    expect(result.current.errors).toEqual({ email: 'error' })
+  })
+
+  it('should trigger validation for a few fields', () => {
+    const validations = {
+      email: vi.fn(() => 'error'),
+      firstName: vi.fn(() => 'error')
+    }
+    const { result } = renderHook(() => useForm({ initialValues, validations }))
+
+    act(() => result.current.trigger(['email', 'firstName']))
+
+    expect(validations.email).toBeCalled()
+    expect(result.current.errors).toEqual({
+      email: 'error',
+      firstName: 'error'
+    })
+  })
+
+  it('should trigger validation for all fields', () => {
+    const validations = {
+      email: vi.fn(() => 'error'),
+      firstName: vi.fn(() => 'error'),
+      lastName: vi.fn(() => 'error')
+    }
+    const { result } = renderHook(() => useForm({ initialValues, validations }))
+
+    act(() => result.current.trigger())
+
+    expect(validations.email).toBeCalled()
+    expect(result.current.errors).toEqual({
+      email: 'error',
+      firstName: 'error',
+      lastName: 'error'
+    })
+  })
+
   it('should submit', () => {
     const validations = { email: vi.fn(() => undefined) }
     const { result } = renderHook(() =>

@@ -7,9 +7,11 @@ import {
 } from '~/redux/redux.constants'
 import {
   DataByRole,
+  EditProfileForm,
   ErrorResponse,
   MainUserRole,
   SubjectNameInterface,
+  UpdatedPhoto,
   UpdateUserParams,
   UserMainSubject,
   UserMainSubjectFieldValues,
@@ -22,12 +24,12 @@ import { userService } from '~/services/user-service'
 interface EditProfileState {
   firstName: string
   lastName: string
-  country: string
-  city: string
+  country: string | null
+  city: string | null
   professionalSummary?: string
   nativeLanguage: string | null
-  videoLink: DataByRole<string>
-  photo?: string | null
+  videoLink: DataByRole<string> | string
+  photo?: string | UpdatedPhoto | null
   categories: DataByRole<UserMainSubject[]>
   education?: string
   workExperience?: string
@@ -39,6 +41,11 @@ interface EditProfileState {
   isEmailNotification: boolean
   loading: LoadingStatus
   error: string | null
+  tabValidityStatus: {
+    profileTab: boolean
+    professionalInfoTab: boolean
+    notificationTab: boolean
+  }
 }
 
 const initialState: EditProfileState = {
@@ -60,7 +67,12 @@ const initialState: EditProfileState = {
   isSimilarOffersNotification: false,
   isEmailNotification: false,
   loading: LoadingStatusEnum.Idle,
-  error: null
+  error: null,
+  tabValidityStatus: {
+    profileTab: true,
+    professionalInfoTab: true,
+    notificationTab: true
+  }
 }
 
 const updateStateFromPayload = (
@@ -139,6 +151,37 @@ const editProfileSlice = createSlice({
     ) => {
       const { field, value } = action.payload
       state[field] = value
+    },
+    updateValidityStatus: (
+      state,
+      action: PayloadAction<{
+        tab: keyof EditProfileState['tabValidityStatus']
+        value: boolean
+      }>
+    ) => {
+      const { tab, value } = action.payload
+      state.tabValidityStatus[tab] = value
+    },
+    updateProfileData: (state, action: PayloadAction<EditProfileForm>) => {
+      const {
+        city,
+        country,
+        firstName,
+        lastName,
+        nativeLanguage,
+        photo,
+        professionalSummary,
+        videoLink
+      } = action.payload
+
+      state.city = city
+      state.country = country
+      state.firstName = firstName
+      state.lastName = lastName
+      state.nativeLanguage = nativeLanguage
+      state.photo = photo
+      state.professionalSummary = professionalSummary
+      state.videoLink = videoLink
     },
     addCategory: (
       state,
@@ -264,6 +307,8 @@ const { actions, reducer } = editProfileSlice
 
 export const {
   setField,
+  updateValidityStatus,
+  updateProfileData,
   addCategory,
   editCategory,
   addSubjectToCategory,

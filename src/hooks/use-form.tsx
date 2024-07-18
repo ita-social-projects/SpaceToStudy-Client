@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   FormNonInputValueChange,
   UseFormErrors,
@@ -19,7 +19,9 @@ interface UseFormProps<T> {
 interface UseFormOutput<T> {
   data: T
   isDirty: boolean
+  isValid: boolean
   errors: UseFormErrors<T>
+  trigger: (key?: keyof T | (keyof T)[]) => boolean
   handleInputChange: UseFormEventHandler<T, React.ChangeEvent<HTMLInputElement>>
   handleNonInputValueChange: FormNonInputValueChange<T[keyof T], T>
   handleBlur: UseFormEventHandler<T, React.FocusEvent<HTMLInputElement>>
@@ -39,10 +41,15 @@ export const useForm = <T extends object>({
 }: UseFormProps<T>): UseFormOutput<T> => {
   const [data, setData] = useState<T>(initialValues)
   const [isDirty, setDirty] = useState<boolean>(false)
+  const [isFormValid, setIsFormValid] = useState<boolean>(true)
   const [errors, setErrors] = useState<UseFormErrors<T>>(initialErrors)
   const [isTouched, setTouched] = useState<Record<keyof T, boolean>>(
     getEmptyValues(initialValues, false)
   )
+
+  useEffect(() => {
+    setIsFormValid(!Object.values(errors).some((error) => error))
+  }, [errors])
 
   const validateValue = (key: keyof T, value: T[keyof T] | string) => {
     if (validations && validations[key]) {
@@ -136,6 +143,30 @@ export const useForm = <T extends object>({
     isValid ? onSubmit && void onSubmit(submittedData) : setErrors(newErrors)
   }
 
+  const trigger = (key?: keyof T | (keyof T)[]): boolean => {
+    if (!validations) return true
+
+    const fieldNames = key
+      ? Array.isArray(key)
+        ? key
+        : [key]
+      : (Object.keys(validations) as (keyof T)[])
+    let isValid = true
+
+    fieldNames.forEach((field) => {
+      const validation = validateValue(field, data[field])
+      if (validation) {
+        isValid = false
+        setErrors((prev) => ({
+          ...prev,
+          [field]: validation
+        }))
+      }
+    })
+
+    return isValid
+  }
+
   const resetData = (keys: (keyof T)[] = []) => {
     setData((prev) => {
       if (keys.length === 0) return initialValues
@@ -171,7 +202,9 @@ export const useForm = <T extends object>({
   return {
     data,
     isDirty,
+    isValid: isFormValid,
     errors,
+    trigger,
     handleDataChange,
     handleInputChange,
     handleNonInputValueChange,

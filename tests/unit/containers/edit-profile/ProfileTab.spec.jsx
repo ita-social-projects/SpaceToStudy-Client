@@ -1,69 +1,101 @@
-import { fireEvent, screen, waitFor } from '@testing-library/react'
+import { fireEvent, screen } from '@testing-library/react'
+import { UserRoleEnum } from '~/types'
+import { LoadingStatusEnum } from '~/redux/redux.constants'
 import { renderWithProviders } from '~tests/test-utils'
 import ProfileTab from '~/containers/edit-profile/profile-tab/ProfileTab'
-import { userDataMock } from '~tests/unit/containers/edit-profile/profile-tab/profile-tab-form/ProfileTabForm.spec.constants'
 
-const resetMock = vi.fn()
-const proceedMock = vi.fn()
-
-vi.mock('react-router-dom', async () => {
-  const actual = await vi.importActual('react-router-dom')
-  return {
-    ...actual,
-    useBlocker: () => ({
-      state: 'blocked',
-      proceed: proceedMock,
-      reset: () => resetMock()
-    })
-  }
-})
-
-const handleSubmitMock = vi.fn()
-vi.mock('~/hooks/use-update-user', () => ({
-  default: () => ({
-    handleSubmit: handleSubmitMock,
-    loading: false
-  })
+vi.mock('~/components/title-with-description/TitleWithDescription', () => ({
+  default: ({ description, title }) => (
+    <div data-testid='title'>
+      <span>{title}</span>
+      <span>{description}</span>
+    </div>
+  )
 }))
 
-const checkConfirmationMock = vi.fn()
-vi.mock('~/hooks/use-confirm', () => {
+vi.mock(
+  '~/containers/edit-profile/profile-tab/profile-tab-form/ProfileTabForm',
+  () => ({
+    default: ({ data, handleBlur, handleInputChange }) => (
+      <div data-testid='form'>
+        <input
+          onBlur={handleBlur('firstName')}
+          onChange={handleInputChange('firstName')}
+          placeholder={'firstName'}
+          required
+          value={data.firstName}
+        />
+      </div>
+    )
+  })
+)
+
+const mockUseAppDispatch = vi.fn()
+vi.mock('~/hooks/use-debounce', () => ({
+  useDebounce: (value) => value
+}))
+
+vi.mock('~/hooks/use-redux', async () => {
+  const actual = await vi.importActual('~/hooks/use-redux')
   return {
-    default: () => ({
-      setNeedConfirmation: () => true,
-      checkConfirmation: () => checkConfirmationMock()
-    })
+    ...actual,
+    useAppDispatch: () => mockUseAppDispatch
   }
 })
 
+const mockedUserProfileData = {
+  firstName: 'John',
+  lastName: 'Doe',
+  country: 'USA',
+  city: 'New York',
+  professionalSummary: 'Summary',
+  nativeLanguage: 'English',
+  videoLink: { [UserRoleEnum.Tutor]: 'link', [UserRoleEnum.Student]: '' },
+  photo: 'photo_url',
+  categories: { [UserRoleEnum.Tutor]: [], [UserRoleEnum.Student]: [] },
+  education: 'Education',
+  workExperience: 'Experience',
+  scientificActivities: 'Activities',
+  awards: 'Awards',
+  isOfferStatusNotification: false,
+  isChatNotification: false,
+  isSimilarOffersNotification: false,
+  isEmailNotification: false,
+  loading: LoadingStatusEnum.Fulfilled,
+  error: null,
+  tabValidityStatus: {
+    profileTab: true,
+    professionalInfoTab: true,
+    notificationTab: true
+  }
+}
+
+const renderWithMockData = () => {
+  renderWithProviders(<ProfileTab />, {
+    preloadedState: {
+      editProfile: mockedUserProfileData,
+      appMain: {
+        userId: '644e6b1778cc37f543f2f37c',
+        userRole: UserRoleEnum.Student
+      }
+    }
+  })
+}
+
 describe('ProfileTab', () => {
-  it('should handle data updates', () => {
-    checkConfirmationMock.mockResolvedValue(true)
-    renderWithProviders(<ProfileTab user={userDataMock} />)
+  it('should render correctly', () => {
+    renderWithMockData()
+    const title = screen.getByTestId('title')
+    const form = screen.getByTestId('form')
 
-    const updateButton = screen.getByRole('button', {
-      name: 'editProfilePage.profile.updateProfileBtn'
-    })
-
-    fireEvent.click(updateButton)
-
-    expect(handleSubmitMock).toHaveBeenCalled()
+    expect(title).toBeInTheDocument()
+    expect(form).toBeInTheDocument()
   })
 
-  it('should call the reset function if the page leave was not confirmed', async () => {
-    checkConfirmationMock.mockResolvedValue(false)
-    renderWithProviders(<ProfileTab user={userDataMock} />)
-
-    await waitFor(() => {
-      expect(resetMock).toHaveBeenCalled()
-    })
-  })
-  it('should proceed if the page leave was confirmed', async () => {
-    checkConfirmationMock.mockResolvedValue(true)
-    renderWithProviders(<ProfileTab user={userDataMock} />)
-
-    await waitFor(() => {
-      expect(proceedMock).toHaveBeenCalled()
-    })
+  it('should update store after input value change', async () => {
+    renderWithMockData()
+    const videoLinkInput = screen.getByPlaceholderText('firstName')
+    fireEvent.change(videoLinkInput, { target: { value: 'NewValue' } })
+    expect(mockUseAppDispatch).toHaveBeenCalled()
   })
 })

@@ -25,6 +25,6 @@ export interface UserMainSubject extends ProfessionalCategory {
   _id: string
 }
 
-export interface EditProfileTabUserProps {
+export interface EditProfileUserProps {
   user: UserResponse
 }
