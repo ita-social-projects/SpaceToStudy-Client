@@ -126,7 +126,7 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
         isDeletionBlocked,
         ...data
       }
-      void dispatch(
+      dispatch(
         updateCategory({
           category: categoryToUpdate,
           userRole: userRoleCategory
@@ -138,7 +138,7 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
         isDeletionBlocked,
         ...data
       }
-      void dispatch(
+      dispatch(
         addCategory({
           category: categoryToAdd,
           userRole: userRoleCategory

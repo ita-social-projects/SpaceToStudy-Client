@@ -51,7 +51,7 @@ const ProfessionalInfoTab: FC = () => {
   })
 
   const debouncedProfessionalBlockData = useDebounce(() => {
-    void dispatch(updateProfessionalBlock(data))
+    dispatch(updateProfessionalBlock(data))
   }, 300)
 
   useEffect(() => {
@@ -61,7 +61,7 @@ const ProfessionalInfoTab: FC = () => {
 
   const handleDeleteCategory = (categoryId: string) => {
     const userRoleToDeleteCategory = userRole as MainUserRole
-    void dispatch(
+    dispatch(
       deleteCategory({ id: categoryId, userRole: userRoleToDeleteCategory })
     )
   }
