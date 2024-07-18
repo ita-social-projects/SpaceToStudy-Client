@@ -1,8 +1,8 @@
 import { FC, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import useForm from '~/hooks/use-form'
-import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
+import Box from '@mui/material/Box'
+import AddIcon from '@mui/icons-material/Add'
 
 import { useModalContext } from '~/context/modal-context'
 
@@ -15,22 +15,22 @@ import {
   UserRoleEnum
 } from '~/types'
 
-import Box from '@mui/material/Box'
-import AddIcon from '@mui/icons-material/Add'
-
-import ProfessionalCategoryList from '~/containers/edit-profile/professional-info-tab/professional-category-list/ProfessionalCategoryList'
-import AddProfessionalCategoryModal from '~/containers/edit-profile/professional-info-tab/add-professional-category-modal/AddProfessionalCategoryModal'
-import AboutTutorAccordion from '~/containers/edit-profile/professional-info-tab/about-tutor-accordion/AboutTutorAccordion'
-import { initialFormValues } from '~/containers/edit-profile/professional-info-tab/about-tutor-accordion/AboutTutorAccordion.constants'
-import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
-import AppButton from '~/components/app-button/AppButton'
-
-import { styles } from '~/containers/edit-profile/professional-info-tab/ProfessionalInfoTab.styles'
-import { useDebounce } from '~/hooks/use-debounce'
 import {
   deleteCategory,
   updateProfessionalBlock
 } from '~/redux/features/editProfileSlice'
+
+import { useDebounce } from '~/hooks/use-debounce'
+import useForm from '~/hooks/use-form'
+import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
+
+import ProfessionalCategoryList from '~/containers/edit-profile/professional-info-tab/professional-category-list/ProfessionalCategoryList'
+import AddProfessionalCategoryModal from '~/containers/edit-profile/professional-info-tab/add-professional-category-modal/AddProfessionalCategoryModal'
+import AboutTutorAccordion from '~/containers/edit-profile/professional-info-tab/about-tutor-accordion/AboutTutorAccordion'
+import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
+import AppButton from '~/components/app-button/AppButton'
+
+import { styles } from '~/containers/edit-profile/professional-info-tab/ProfessionalInfoTab.styles'
 
 const ProfessionalInfoTab: FC = () => {
   const { t } = useTranslation()
@@ -47,9 +47,7 @@ const ProfessionalInfoTab: FC = () => {
   const { openModal, closeModal } = useModalContext()
 
   const { data, handleInputChange } = useForm<ProfessionalBlock>({
-    initialValues:
-      { education, workExperience, scientificActivities, awards } ||
-      initialFormValues
+    initialValues: { education, workExperience, scientificActivities, awards }
   })
 
   const debouncedProfessionalBlockData = useDebounce(() => {
