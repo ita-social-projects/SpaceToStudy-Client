@@ -4,12 +4,26 @@ import { act, fireEvent, screen, waitFor } from '@testing-library/react'
 import { professionalSubjectTemplate } from '~/containers/edit-profile/professional-info-tab/add-professional-category-modal/AddProfessionalCategoryModal.constants'
 import { mockAxiosClient } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
+import { vi } from 'vitest'
 
 const mockCloseModal = vi.fn()
-const mockHandleSubmit = vi.fn()
 const mockedBlockedCategory = [{ _id: '4', name: 'Music' }]
 
+const mockDispatch = vi.fn()
+const mockSelector = vi.fn()
+
+vi.mock('react-redux', async () => {
+  const actual = await vi.importActual('react-redux')
+  return {
+    ...actual,
+    useDispatch: () => mockDispatch,
+    useSelector: () => mockSelector
+  }
+})
+
 const initialValues = {
+  _id: 'kajsdf',
+  isDeletionBlocked: false,
   category: { _id: '1', name: 'Cooking' },
   subjects: [
     {
@@ -21,17 +35,6 @@ const initialValues = {
       name: 'Varenychky'
     }
   ]
-}
-
-const renderProfessionalCategoryModalWithInitialValues = (initialValues) => {
-  renderWithProviders(
-    <AddProfessionalCategoryModal
-      blockedCategoriesOptions={mockedBlockedCategory}
-      closeModal={mockCloseModal}
-      handleSubmit={mockHandleSubmit}
-      initialValues={initialValues}
-    />
-  )
 }
 
 describe('AddProfessionalCategoryModal without initial value', () => {
@@ -46,7 +49,12 @@ describe('AddProfessionalCategoryModal without initial value', () => {
         )
         .reply(200, initialValues.subjects)
 
-      renderProfessionalCategoryModalWithInitialValues()
+      renderWithProviders(
+        <AddProfessionalCategoryModal
+          blockedCategoriesOptions={mockedBlockedCategory}
+          closeModal={mockCloseModal}
+        />
+      )
     })
   })
 
@@ -129,7 +137,14 @@ describe('AddProfessionalCategoryModal with initial value', () => {
   beforeEach(
     async () =>
       await waitFor(() => {
-        renderProfessionalCategoryModalWithInitialValues(initialValues)
+        renderWithProviders(
+          <AddProfessionalCategoryModal
+            blockedCategoriesOptions={mockedBlockedCategory}
+            closeModal={mockCloseModal}
+            initialValues={initialValues}
+            isEdit
+          />
+        )
       })
   )
 

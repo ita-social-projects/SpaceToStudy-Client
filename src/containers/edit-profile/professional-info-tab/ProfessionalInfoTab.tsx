@@ -1,19 +1,17 @@
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import useForm from '~/hooks/use-form'
-import useUpdateUser from '~/hooks/use-update-user'
-import { useAppSelector } from '~/hooks/use-redux'
+import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 
 import { useModalContext } from '~/context/modal-context'
 
 import {
   ButtonVariantEnum,
   ComponentEnum,
+  MainUserRole,
   OpenProfessionalCategoryModalHandler,
   ProfessionalBlock,
-  SizeEnum,
-  UserMainSubject,
   UserRoleEnum
 } from '~/types'
 
@@ -28,51 +26,57 @@ import TitleWithDescription from '~/components/title-with-description/TitleWithD
 import AppButton from '~/components/app-button/AppButton'
 
 import { styles } from '~/containers/edit-profile/professional-info-tab/ProfessionalInfoTab.styles'
+import { useDebounce } from '~/hooks/use-debounce'
+import {
+  deleteCategory,
+  updateProfessionalBlock
+} from '~/redux/features/editProfileSlice'
 
-interface ProfessionalInfoTabProps {
-  professionalBlock?: ProfessionalBlock
-  categories: UserMainSubject[]
-}
-
-const ProfessionalInfoTab: FC<ProfessionalInfoTabProps> = ({
-  professionalBlock,
-  categories = []
-}) => {
+const ProfessionalInfoTab: FC = () => {
   const { t } = useTranslation()
-
-  const { userId, userRole } = useAppSelector((state) => state.appMain)
+  const dispatch = useAppDispatch()
+  const { userRole } = useAppSelector((state) => state.appMain)
+  const {
+    categories,
+    education,
+    workExperience,
+    scientificActivities,
+    awards
+  } = useAppSelector((state) => state.editProfile)
 
   const { openModal, closeModal } = useModalContext()
 
-  const { handleSubmit, loading } = useUpdateUser(userId, true)
-
   const { data, handleInputChange } = useForm<ProfessionalBlock>({
-    initialValues: professionalBlock || initialFormValues
+    initialValues:
+      { education, workExperience, scientificActivities, awards } ||
+      initialFormValues
   })
 
-  const handleDeleteCategory = (mainSubjectId: string, categoryId: string) => {
-    const deletedMainSubject = {
-      _id: mainSubjectId,
-      category: { _id: categoryId, name: '' }
-    }
+  const debouncedProfessionalBlockData = useDebounce(() => {
+    void dispatch(updateProfessionalBlock(data))
+  }, 300)
 
-    handleSubmit({
-      mainSubjects: deletedMainSubject
-    })
-  }
+  useEffect(() => {
+    debouncedProfessionalBlockData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data])
 
-  const handleUpdateInfo = () => {
-    handleSubmit({ professionalBlock: data })
+  const handleDeleteCategory = (categoryId: string) => {
+    const userRoleToDeleteCategory = userRole as MainUserRole
+    void dispatch(
+      deleteCategory({ id: categoryId, userRole: userRoleToDeleteCategory })
+    )
   }
 
   const openProfessionalCategoryModal: OpenProfessionalCategoryModalHandler = (
-    initialValues
+    initialValues,
+    isEdit
   ) => {
     openModal({
       component: (
         <AddProfessionalCategoryModal
-          {...{ handleSubmit, loading, initialValues, closeModal }}
-          blockedCategoriesOptions={categories}
+          {...{ initialValues, closeModal, isEdit }}
+          blockedCategoriesOptions={categories[userRole as MainUserRole]}
           isDeletionBlocked={initialValues?.isDeletionBlocked}
         />
       ),
@@ -83,35 +87,21 @@ const ProfessionalInfoTab: FC<ProfessionalInfoTabProps> = ({
   }
 
   const TutorInfo = userRole === UserRoleEnum.Tutor && (
-    <>
-      <Box component='section'>
-        <TitleWithDescription
-          description={t(
-            'editProfilePage.profile.professionalTab.aboutTheTutorDescription'
-          )}
-          style={styles.titleWithDescription}
-          title={t(
-            'editProfilePage.profile.professionalTab.aboutTheTutorTitle'
-          )}
+    <Box component='section'>
+      <TitleWithDescription
+        description={t(
+          'editProfilePage.profile.professionalTab.aboutTheTutorDescription'
+        )}
+        style={styles.titleWithDescription}
+        title={t('editProfilePage.profile.professionalTab.aboutTheTutorTitle')}
+      />
+      <Box sx={styles.accordionContainer}>
+        <AboutTutorAccordion
+          data={data}
+          handleInputChange={handleInputChange}
         />
-        <Box sx={styles.accordionContainer}>
-          <AboutTutorAccordion
-            data={data}
-            handleInputChange={handleInputChange}
-          />
-        </Box>
       </Box>
-      <AppButton
-        disabled={false}
-        loading={loading}
-        onClick={handleUpdateInfo}
-        size={SizeEnum.ExtraLarge}
-        sx={styles.updateProfileBtn}
-        variant={ButtonVariantEnum.Contained}
-      >
-        {t('editProfilePage.profile.updateProfileBtn')}
-      </AppButton>
-    </>
+    </Box>
   )
 
   return (
@@ -142,7 +132,7 @@ const ProfessionalInfoTab: FC<ProfessionalInfoTabProps> = ({
         </Box>
         <ProfessionalCategoryList
           handleDeleteCategory={handleDeleteCategory}
-          items={categories}
+          items={categories[userRole as MainUserRole]}
           openProfessionalCategoryModal={openProfessionalCategoryModal}
         />
       </Box>

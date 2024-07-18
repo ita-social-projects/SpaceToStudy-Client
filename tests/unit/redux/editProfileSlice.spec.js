@@ -3,9 +3,11 @@ import reducer, {
   setField,
   updateValidityStatus,
   updateProfileData,
+  updateProfessionalBlock,
   addCategory,
   deleteCategory,
   editCategory,
+  updateCategory,
   addSubjectToCategory,
   removeSubjectFromCategory,
   fetchUserById,
@@ -386,6 +388,27 @@ describe('editProfileSlice test', () => {
     ).toEqual(expectedState)
   })
 
+  it('should updateProfessionalBlock', () => {
+    const expectedState = createState({
+      education: 'test education',
+      workExperience: 'test workExperience',
+      scientificActivities: 'test scientificActivities',
+      awards: 'test awards'
+    })
+
+    expect(
+      reducer(
+        undefined,
+        updateProfessionalBlock({
+          education: 'test education',
+          workExperience: 'test workExperience',
+          scientificActivities: 'test scientificActivities',
+          awards: 'test awards'
+        })
+      )
+    ).toEqual(expectedState)
+  })
+
   it('should add new category', () => {
     const expectedState = createState({
       categories: {
@@ -424,6 +447,45 @@ describe('editProfileSlice test', () => {
         previousState,
         addCategory({
           category: mockedCategories[0],
+          userRole: UserRoleEnum.Tutor
+        })
+      )
+    ).toEqual(expectedState)
+  })
+
+  it('should update category', () => {
+    const updatedCategory = {
+      _id: '1',
+      isDeletionBlocked: false,
+      category: {
+        _id: 'category_001',
+        name: 'Music'
+      },
+      subjects: [
+        {
+          _id: 'subject_001',
+          name: 'Violin'
+        }
+      ]
+    }
+    const previousState = createState({
+      categories: {
+        [UserRoleEnum.Tutor]: [mockedCategories[0]],
+        [UserRoleEnum.Student]: []
+      }
+    })
+    const expectedState = createState({
+      categories: {
+        [UserRoleEnum.Tutor]: [updatedCategory],
+        [UserRoleEnum.Student]: []
+      }
+    })
+
+    expect(
+      reducer(
+        previousState,
+        updateCategory({
+          category: updatedCategory,
           userRole: UserRoleEnum.Tutor
         })
       )

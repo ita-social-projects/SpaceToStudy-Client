@@ -10,6 +10,7 @@ import {
   EditProfileForm,
   ErrorResponse,
   MainUserRole,
+  ProfessionalBlock,
   SubjectNameInterface,
   UpdatedPhoto,
   UpdateUserParams,
@@ -183,6 +184,17 @@ const editProfileSlice = createSlice({
       state.professionalSummary = professionalSummary
       state.videoLink = videoLink
     },
+    updateProfessionalBlock: (
+      state,
+      action: PayloadAction<ProfessionalBlock>
+    ) => {
+      const { education, workExperience, scientificActivities, awards } =
+        action.payload
+      state.education = education
+      state.workExperience = workExperience
+      state.scientificActivities = scientificActivities
+      state.awards = awards
+    },
     addCategory: (
       state,
       action: PayloadAction<{
@@ -215,6 +227,23 @@ const editProfileSlice = createSlice({
 
       if (categoryToEdit) {
         categoryToEdit[field] = value
+      }
+    },
+    updateCategory: (
+      state,
+      action: PayloadAction<{
+        category: UserMainSubject
+        userRole: MainUserRole
+      }>
+    ) => {
+      const { category, userRole } = action.payload
+      const categoryToUpdate = state.categories[userRole].find(
+        (cat) => cat._id === category._id
+      )
+
+      if (categoryToUpdate) {
+        categoryToUpdate.category = category.category
+        categoryToUpdate.subjects = category.subjects
       }
     },
     addSubjectToCategory: (
@@ -309,8 +338,10 @@ export const {
   setField,
   updateValidityStatus,
   updateProfileData,
+  updateProfessionalBlock,
   addCategory,
   editCategory,
+  updateCategory,
   addSubjectToCategory,
   removeSubjectFromCategory,
   deleteCategory
