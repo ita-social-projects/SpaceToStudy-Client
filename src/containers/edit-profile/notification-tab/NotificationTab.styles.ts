@@ -1,8 +1,7 @@
 import { TypographyVariantEnum } from '~/types'
 import {
   innerContainer,
-  rootContainer,
-  updateProfileBtn
+  rootContainer
 } from '~/containers/edit-profile/common.styles'
 import { switchStyle } from '~/containers/my-quizzes/quiz-settings-container/QuizSettingsContainer.styles'
 
@@ -28,6 +27,5 @@ export const styles = {
     padding: '15px',
     mt: '-1px'
   },
-  switch: switchStyle,
-  updateProfileBtn
+  switch: switchStyle
 }
