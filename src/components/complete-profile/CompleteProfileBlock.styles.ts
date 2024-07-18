@@ -24,7 +24,6 @@ export const styles = {
     alignItems: 'flex-start',
     justifyContent: 'space-between'
   },
-
   profileItems: {
     marginTop: { xs: '20px', sm: '40px' },
     display: 'flex',
