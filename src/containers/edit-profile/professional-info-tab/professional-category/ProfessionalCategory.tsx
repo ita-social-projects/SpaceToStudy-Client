@@ -55,7 +55,7 @@ const ProfessionalCategory: FC<ProfessionalCategoryProps> = ({
   }
 
   const handleEditButtonClick = () => {
-    openProfessionalCategoryModal(item)
+    openProfessionalCategoryModal(item, true)
   }
 
   const DescriptionItem = ({

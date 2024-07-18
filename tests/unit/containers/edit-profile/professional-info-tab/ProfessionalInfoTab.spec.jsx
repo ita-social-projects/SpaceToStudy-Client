@@ -1,18 +1,11 @@
 import ProfessionalInfoTab from '~/containers/edit-profile/professional-info-tab/ProfessionalInfoTab'
 import { fireEvent, screen } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
+import { vi } from 'vitest'
+import { useAppSelector } from '~/hooks/use-redux'
+import { UserRoleEnum } from '~/types'
 
 const mockOpenModal = vi.fn()
-
-const handleSubmitMock = vi.fn()
-vi.mock('~/hooks/use-update-user', () => ({
-  default: () => ({
-    handleSubmit: handleSubmitMock,
-    loading: false
-  })
-}))
-
-const mockedState = (role) => ({ appMain: { userRole: role } })
 
 vi.mock('~/context/modal-context', async () => {
   const actual = await vi.importActual('~/context/modal-context')
@@ -24,8 +17,63 @@ vi.mock('~/context/modal-context', async () => {
   }
 })
 
+vi.mock(
+  '~/containers/edit-profile/professional-info-tab/professional-category-list/ProfessionalCategoryList',
+  () => ({
+    default: () => <div>Professional Category List</div>
+  })
+)
+
+const mockedCategories = [
+  {
+    _id: '1',
+    isDeletionBlocked: false,
+    category: {
+      _id: 'category_001',
+      name: 'Music'
+    },
+    subjects: [
+      {
+        _id: 'subject_001',
+        name: 'Violin'
+      },
+      {
+        _id: 'subject_002',
+        name: 'Voice training'
+      }
+    ]
+  },
+  {
+    _id: '2',
+    isDeletionBlocked: false,
+    category: {
+      _id: 'category_002',
+      name: 'Marketing'
+    },
+    subjects: [
+      {
+        _id: 'subject_003',
+        name: 'Digital marketing'
+      },
+      {
+        _id: 'subject_004',
+        name: 'Content marketing'
+      }
+    ]
+  }
+]
+
+vi.mock('~/hooks/use-redux', () => ({
+  useAppSelector: vi.fn(),
+  useAppDispatch: vi.fn()
+}))
+
 describe('ProfessionalInfoTab', () => {
   beforeEach(() => {
+    useAppSelector.mockReturnValue({
+      userRole: UserRoleEnum.Student,
+      categories: mockedCategories
+    })
     renderWithProviders(<ProfessionalInfoTab />)
   })
 
@@ -54,9 +102,11 @@ describe('ProfessionalInfoTab', () => {
 
 describe('ProfessionalInfoTab for tutor', () => {
   beforeEach(() => {
-    renderWithProviders(<ProfessionalInfoTab />, {
-      preloadedState: mockedState('tutor')
+    useAppSelector.mockReturnValue({
+      userRole: UserRoleEnum.Tutor,
+      categories: mockedCategories
     })
+    renderWithProviders(<ProfessionalInfoTab />)
   })
 
   it('should render about tutor block', () => {
@@ -65,14 +115,5 @@ describe('ProfessionalInfoTab for tutor', () => {
     )
 
     expect(aboutTutorTitle).toBeInTheDocument()
-  })
-
-  it('should update about tutor info', () => {
-    const updateBtn = screen.getByText(
-      'editProfilePage.profile.updateProfileBtn'
-    )
-    fireEvent.click(updateBtn)
-
-    expect(handleSubmitMock).toHaveBeenCalled()
   })
 })

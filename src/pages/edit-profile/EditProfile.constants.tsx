@@ -28,12 +28,7 @@ export const tabsData: UserProfileProps = {
   [UserProfileTabsEnum.ProfessionalInfo]: {
     icon: <SchoolIcon />,
     title: 'editProfilePage.profile.professionalTab.tabTitle',
-    content: (response, userRole) => (
-      <ProfessionalInfoTab
-        categories={response.mainSubjects[userRole]}
-        professionalBlock={response.professionalBlock}
-      />
-    )
+    content: () => <ProfessionalInfoTab />
   },
   [UserProfileTabsEnum.Notifications]: {
     icon: <NotificationsIcon />,

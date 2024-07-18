@@ -1,36 +1,38 @@
 import { FC, SyntheticEvent, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
+import { v4 as uuidv4 } from 'uuid'
+
+import Box from '@mui/material/Box'
+import AddIcon from '@mui/icons-material/Add'
+import DeleteIcon from '@mui/icons-material/Delete'
+import IconButton from '@mui/material/IconButton'
 
 import {
   ButtonTypeEnum,
   ButtonVariantEnum,
   CategoryNameInterface,
   ComponentEnum,
-  ProfessionalCategory,
+  MainUserRole,
   SubjectInterface,
   SubjectNameInterface,
-  UpdateUserParams,
   UserMainSubject
 } from '~/types'
 
+import { addCategory, updateCategory } from '~/redux/features/editProfileSlice'
 import { subjectService } from '~/services/subject-service'
 import { categoryService } from '~/services/category-service'
 import { isSubmitDisabled } from '~/utils/is-submit-disabled'
 import useForm from '~/hooks/use-form'
+import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 
-import Box from '@mui/material/Box'
-import AddIcon from '@mui/icons-material/Add'
-import DeleteIcon from '@mui/icons-material/Delete'
-import IconButton from '@mui/material/IconButton'
 import AppButton from '~/components/app-button/AppButton'
-
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import AsyncAutocomplete from '~/components/async-autocomlete/AsyncAutocomplete'
-
 import {
   professionalSubjectTemplate,
   userMainSubjectTemplate
 } from '~/containers/edit-profile/professional-info-tab/add-professional-category-modal/AddProfessionalCategoryModal.constants'
+
 import { styles } from '~/containers/edit-profile/professional-info-tab/add-professional-category-modal/AddProfessionalCategoryModal.styles'
 
 interface SubjectGroupProps {
@@ -91,29 +93,58 @@ function SubjectGroup({
 interface AddProfessionalCategoryModalProps {
   blockedCategoriesOptions?: UserMainSubject[]
   closeModal: () => void
-  initialValues?: ProfessionalCategory
-  handleSubmit: (data: UpdateUserParams) => void
-  loading: boolean
+  initialValues?: UserMainSubject
   isDeletionBlocked?: boolean
+  isEdit?: boolean
 }
 
 const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
   blockedCategoriesOptions = [],
   closeModal,
   initialValues: initialValuesFromProps,
-  handleSubmit,
-  loading,
-  isDeletionBlocked = false
+  isDeletionBlocked = false,
+  isEdit = false
 }) => {
   const { t } = useTranslation()
+  const dispatch = useAppDispatch()
+  const { userRole } = useAppSelector((state) => state.appMain)
 
   const initialFormValues = initialValuesFromProps || userMainSubjectTemplate
 
   const formSubmission = () => {
-    handleSubmit({
-      mainSubjects: data
-    })
+    const userRoleCategory = userRole as MainUserRole
+    const { category } = data
 
+    // TODO: icon should be displayed accordingly to category
+    if (category.appearance === undefined) {
+      category.appearance = { color: '#E3B21C', icon: 'ScienceRoundedIcon' }
+    }
+
+    if (isEdit) {
+      const categoryToUpdate: UserMainSubject = {
+        _id: initialValuesFromProps?._id,
+        isDeletionBlocked,
+        ...data
+      }
+      dispatch(
+        updateCategory({
+          category: categoryToUpdate,
+          userRole: userRoleCategory
+        })
+      )
+    } else {
+      const categoryToAdd: UserMainSubject = {
+        _id: uuidv4(),
+        isDeletionBlocked,
+        ...data
+      }
+      dispatch(
+        addCategory({
+          category: categoryToAdd,
+          userRole: userRoleCategory
+        })
+      )
+    }
     closeModal()
   }
 
@@ -213,7 +244,6 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
         {SubjectsGroup}
         <Box sx={styles.addOneMoreSubjectButton}>
           <AppButton
-            loading={loading}
             onClick={handleSubjectAdd}
             startIcon={<AddIcon />}
             variant={ButtonVariantEnum.ContainedLight}
