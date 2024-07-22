@@ -53,13 +53,25 @@ const setupChangePasswordFields = () => {
   }
 }
 
+const renderWithMockData = () => {
+  renderWithProviders(
+    <TestSnackbar>
+      <PasswordSecurityTab />
+    </TestSnackbar>,
+    {
+      preloadedState: {
+        appMain: {
+          userId: userDataMock._id,
+          userStatus: 'active'
+        }
+      }
+    }
+  )
+}
+
 describe('PasswordSecurityTab', () => {
   beforeEach(() => {
-    renderWithProviders(
-      <TestSnackbar>
-        <PasswordSecurityTab user={userDataMock} />
-      </TestSnackbar>
-    )
+    renderWithMockData()
   })
 
   it('should save data after positive response', async () => {
