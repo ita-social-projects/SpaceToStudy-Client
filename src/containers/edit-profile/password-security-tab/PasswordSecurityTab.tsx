@@ -14,7 +14,7 @@ import { snackbarVariants } from '~/constants'
 import useForm from '~/hooks/use-form'
 import useChangeUserStatus from '~/hooks/use-change-user-status'
 import useAxios from '~/hooks/use-axios'
-import { useAppDispatch } from '~/hooks/use-redux'
+import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 import useInputVisibility from '~/hooks/use-input-visibility'
 import useConfirm from '~/hooks/use-confirm'
 
@@ -30,17 +30,17 @@ import {
   InputEnum,
   SizeEnum,
   FormValues,
-  ErrorResponse,
-  EditProfileUserProps
+  ErrorResponse
 } from '~/types'
 import {
   initialValues,
   validations
 } from '~/containers/edit-profile/password-security-tab/PasswordSecurityTab.constants'
 
-const PasswordSecurityTab: FC<EditProfileUserProps> = ({ user }) => {
+const PasswordSecurityTab: FC = () => {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
+  const { userId } = useAppSelector((state) => state.appMain)
   const { checkConfirmation } = useConfirm()
 
   const { neededAction, checkStatusChange } = useChangeUserStatus()
@@ -73,9 +73,9 @@ const PasswordSecurityTab: FC<EditProfileUserProps> = ({ user }) => {
 
   const changePassword = useCallback(
     (data: { password: string; currentPassword: string }) => {
-      return AuthService.changePassword(user._id, data)
+      return AuthService.changePassword(userId, data)
     },
-    [user._id]
+    [userId]
   )
 
   const handleResponseError = (error?: ErrorResponse) => {
