@@ -50,7 +50,8 @@ const useAxios = <
         const responseData = transform ? transform(res.data) : res.data
         setResponse(responseData as TransformedResponse)
         setError(null)
-        onResponse && onResponse(responseData as TransformedResponse)?.catch()
+        onResponse &&
+          void onResponse(responseData as TransformedResponse)?.catch()
       } catch (e) {
         const error = e as AxiosError<ErrorResponse>
         if (error.response) {
