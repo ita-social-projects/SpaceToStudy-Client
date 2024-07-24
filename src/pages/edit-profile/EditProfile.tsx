@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useSearchParams } from 'react-router-dom'
 
@@ -10,18 +10,14 @@ import useConfirm from '~/hooks/use-confirm'
 
 import { authRoutes } from '~/router/constants/authRoutes'
 import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
-import { userService } from '~/services/user-service'
-import useAxios from '~/hooks/use-axios'
 import Loader from '~/components/loader/Loader'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import AppButton from '~/components/app-button/AppButton'
 import SidebarMenu from '~/components/sidebar-menu/SidebarMenu'
 import {
   ButtonVariantEnum,
-  MainUserRole,
   SizeEnum,
   UserProfileTabsEnum,
-  UserResponse,
   UserRole
 } from '~/types'
 import { tabsData } from '~/pages/edit-profile/EditProfile.constants'
@@ -57,11 +53,6 @@ const EditProfile = () => {
 
   const { userId, userRole } = useAppSelector((state) => state.appMain)
 
-  const getUserData = useCallback(
-    () => userService.getUserById(userId, userRole as UserRole, true),
-    [userId, userRole]
-  )
-
   useEffect(() => {
     void dispatch(
       fetchUserById({ userId, role: userRole as UserRole, isEdit: true })
@@ -70,19 +61,11 @@ const EditProfile = () => {
 
   const { checkConfirmation } = useConfirm()
 
-  //! delete when all tabs are ready
-  const { loading: userLoading, response } = useAxios<UserResponse>({
-    service: getUserData,
-    fetchOnMount: true
-  })
-
-  if (loading === LoadingStatusEnum.Pending || userLoading) {
+  if (loading === LoadingStatusEnum.Pending) {
     return <Loader pageLoad size={70} />
   }
 
-  const cooperationContent =
-    activeTab &&
-    tabsData[activeTab]?.content?.(response, userRole as MainUserRole)
+  const cooperationContent = activeTab && tabsData[activeTab]?.content
 
   return (
     <PageWrapper>
