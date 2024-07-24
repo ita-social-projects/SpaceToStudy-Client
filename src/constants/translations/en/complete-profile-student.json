@@ -1,0 +1,20 @@
+{
+  "title": "Complete your profile",
+  "subtitle": "Fill out the goals below to open up additional features on your profie.",
+  "photo": {
+    "title": "Set a profile picture",
+    "subtitle": "Your photo will make it easier for members to recognize you."
+  },
+  "category": {
+    "title": "Choose categories you are interested in",
+    "subtitle": "Show us what you would like to learn."
+  },
+  "schedule": {
+    "title": "Set up your working hours",
+    "subtitle": "Create yourself a suitable working schedule. "
+  },
+  "offer": {
+    "title": "Create a new offer ",
+    "subtitle": "Сreate an offer to find students for a subject you want to tutor."
+  }
+}

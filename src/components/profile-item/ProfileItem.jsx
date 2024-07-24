@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { styles } from '~/components/profile-item/ProfileItem.styles'
 import useBreakpoints from '~/hooks/use-breakpoints'
 
-const ProfileItem = ({ item, isFilled = false }) => {
+const ProfileItem = ({ item, role, isFilled = false }) => {
   const { t } = useTranslation()
   const { isMobile } = useBreakpoints()
   const { id, icon } = item
@@ -21,13 +21,17 @@ const ProfileItem = ({ item, isFilled = false }) => {
               sx={styles.title}
               variant={isMobile ? 'subtitle2' : 'h6'}
             >
-              {t(`completeProfile.${id}.title`)}
+              {role == 'student'
+                ? t(`completeProfileStudent.${id}.title`)
+                : t(`completeProfileTutor.${id}.title`)}
             </Typography>
             <Typography
               sx={styles.subtitle}
               variant={isMobile ? 'caption' : 'body2'}
             >
-              {t(`completeProfile.${id}.subtitle`)}
+              {role == 'student'
+                ? t(`completeProfileStudent.${id}.subtitle`)
+                : t(`completeProfileTutor.${id}.subtitle`)}
             </Typography>
           </Box>
         </Box>
