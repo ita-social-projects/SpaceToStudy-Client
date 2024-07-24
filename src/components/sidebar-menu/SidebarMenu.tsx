@@ -3,6 +3,8 @@ import ListItemButton from '@mui/material/ListItemButton'
 import ListItemText from '@mui/material/ListItemText'
 import List from '@mui/material/List'
 import ListItemIcon from '@mui/material/ListItemIcon'
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline'
+import { Box, Tooltip } from '@mui/material'
 
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -16,9 +18,17 @@ interface SidebarMenu {
   tabsData: UserProfileProps
   handleClick: (tab: UserProfileTabsEnum) => void
   activeTab: UserProfileTabsEnum
+  tooltipTabHolder: UserProfileTabsEnum
+  hasErrors: boolean
 }
 
-const SidebarMenu: FC<SidebarMenu> = ({ handleClick, tabsData, activeTab }) => {
+const SidebarMenu: FC<SidebarMenu> = ({
+  handleClick,
+  tabsData,
+  activeTab,
+  tooltipTabHolder,
+  hasErrors
+}) => {
   const { t } = useTranslation()
 
   const list = Object.keys(tabsData).map((key) => {
@@ -27,11 +37,30 @@ const SidebarMenu: FC<SidebarMenu> = ({ handleClick, tabsData, activeTab }) => {
 
     const isTabActive = tabKey === activeTab
 
+    const tooltipContent = (
+      <Box sx={styles.tooltipContent}>
+        <ErrorOutlineIcon sx={styles.errorIcon} />
+        {t('editProfilePage.profile.generalTab.errorTooltip')}
+      </Box>
+    )
+    const tooltipOpen = hasErrors && !isTabActive && tabKey === tooltipTabHolder
+
     return (
       <ListItem key={tabKey} onClick={() => handleClick(tabKey)}>
         <ListItemButton sx={styles.tabButton(isTabActive)}>
           <ListItemIcon>{item.icon}</ListItemIcon>
-          <ListItemText primary={t(item.title)} />
+          <ListItemText>
+            <Tooltip
+              PopperProps={styles.popperProps}
+              arrow
+              open={tooltipOpen}
+              placement='right'
+              slotProps={styles.slotProps}
+              title={tooltipContent}
+            >
+              <span>{t(item.title)}</span>
+            </Tooltip>
+          </ListItemText>
         </ListItemButton>
       </ListItem>
     )

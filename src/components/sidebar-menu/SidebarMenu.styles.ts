@@ -37,5 +37,32 @@ export const styles = {
         minWidth: 'unset'
       }
     }
+  },
+  tooltipContent: {
+    position: 'relative',
+    display: 'flex',
+    alignItems: 'center'
+  },
+  errorIcon: {
+    color: palette.error[800],
+    position: 'absolute',
+    left: '-2.5rem'
+  },
+  slotProps: {
+    popper: {
+      modifiers: [
+        {
+          name: 'offset',
+          options: {
+            offset: [0, 24]
+          }
+        }
+      ]
+    }
+  },
+  popperProps: {
+    sx: {
+      zIndex: 10
+    }
   }
 }
