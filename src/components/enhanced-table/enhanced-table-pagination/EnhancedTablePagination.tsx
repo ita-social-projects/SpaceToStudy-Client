@@ -9,9 +9,15 @@ import Typography from '@mui/material/Typography'
 import AppButton from '~/components/app-button/AppButton'
 import { styles } from '~/components/enhanced-table/enhanced-table-pagination/EnhancedTablePagination.styles'
 
-import { ButtonVariantEnum } from '~/types'
+import { ButtonVariantEnum, TablePaginationProps } from '~/types'
 
-const EnhancedTablePagination = ({ pagination }) => {
+interface EnhancedTablePaginationProps {
+  pagination: TablePaginationProps
+}
+
+const EnhancedTablePagination = ({
+  pagination
+}: EnhancedTablePaginationProps) => {
   const { t } = useTranslation()
 
   const {
@@ -26,7 +32,7 @@ const EnhancedTablePagination = ({ pagination }) => {
     handlePageSubmit
   } = pagination
 
-  const PaginationController = (currentPage, pageCount) => {
+  const PaginationController = (currentpage: number, pageCount: number) => {
     return (
       <Box
         sx={{
@@ -36,13 +42,13 @@ const EnhancedTablePagination = ({ pagination }) => {
         <Pagination
           count={pageCount}
           onChange={handleChangePage}
-          page={currentPage}
+          page={currentpage}
         />
       </Box>
     )
   }
 
-  const getDisplayedRowsLabel = (from, to, count) =>
+  const getDisplayedRowsLabel = (from: number, to: number, count: number) =>
     `${from}-${to} ${t('table.of')} ${count}`
 
   return (
