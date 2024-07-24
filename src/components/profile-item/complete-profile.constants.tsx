@@ -43,7 +43,7 @@ export const profileItemsStudent: ProfileItemType[] = [
     icon: <LocationOnIcon />
   },
   {
-    id: 'offer',
+    id: 'request',
     icon: <LeakAddIcon />
   }
 ]
