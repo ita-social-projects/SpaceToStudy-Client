@@ -35,6 +35,7 @@ interface AppButtonMenuProps<T> extends Omit<MenuProps, 'open'> {
   valueField?: keyof T
   showNoneProperty?: boolean
   customSx?: { root?: SxProps }
+  disabled?: boolean
 }
 
 const AppButtonMenu = <T extends Pick<CategoryNameInterface, '_id'>>({
@@ -51,13 +52,24 @@ const AppButtonMenu = <T extends Pick<CategoryNameInterface, '_id'>>({
   const { t } = useTranslation()
   const [inputValue, setInputValue] = useState<string>('')
   const [selectedNames, setSelectedNames] = useState<string[]>([])
+  const [, setIsNoneSelectedNames] = useState<boolean>(false)
   const { anchorEl, openMenu, renderMenu } = useMenu()
 
   const onMenuItemClick = (item: string, id: string) => {
-    if (selectedNames.includes(item)) {
-      setSelectedItems(selectedItems.filter((selected) => selected !== id))
+    if (item === 'No category') {
+      if (selectedNames.includes(item)) {
+        setIsNoneSelectedNames(false)
+        setSelectedItems([])
+      } else {
+        setIsNoneSelectedNames(true)
+        setSelectedItems([id])
+      }
     } else {
-      setSelectedItems([...selectedItems, id])
+      if (selectedNames.includes(item)) {
+        setSelectedItems(selectedItems.filter((selected) => selected !== id))
+      } else {
+        setSelectedItems([...selectedItems, id])
+      }
     }
   }
 
@@ -87,9 +99,12 @@ const AppButtonMenu = <T extends Pick<CategoryNameInterface, '_id'>>({
   const menuItems = filteredItems.map((item) => {
     const field = String(valueField ? (item as T)[valueField] : item)
     const id = item._id
+    const isDisabled =
+      selectedNames.includes('No category') && field !== 'No category'
     return (
       <AppSelectButton
         checked={selectedNames.includes(field)}
+        disabled={isDisabled}
         key={item._id}
         onMenuItemClick={() => onMenuItemClick(field, id)}
       >
