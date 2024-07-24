@@ -32,7 +32,7 @@ const EnhancedTablePagination = ({
     handlePageSubmit
   } = pagination
 
-  const PaginationController = (currentpage: number, pageCount: number) => {
+  const PaginationController = (currentPage: number, pageCount: number) => {
     return (
       <Box
         sx={{
@@ -42,7 +42,7 @@ const EnhancedTablePagination = ({
         <Pagination
           count={pageCount}
           onChange={handleChangePage}
-          page={currentpage}
+          page={currentPage}
         />
       </Box>
     )
