@@ -11,7 +11,8 @@ import login from './login.json'
 import signup from './signup.json'
 import modals from './email-modals.json'
 import breadCrumbs from './breadcrumbs.json'
-import completeProfile from './complete-profile.json'
+import completeProfileTutor from './complete-profile-tutor.json'
+import completeProfileStudent from './complete-profile-student.json'
 import findOffers from './find-offer-page.json'
 import filters from './filters.json'
 import iconsTooltip from './icons-tooltip.json'
@@ -56,7 +57,8 @@ const uk = {
     signup,
     modals,
     breadCrumbs,
-    completeProfile,
+    completeProfileTutor,
+    completeProfileStudent,
     categoriesPage,
     findOffers,
     filters,
