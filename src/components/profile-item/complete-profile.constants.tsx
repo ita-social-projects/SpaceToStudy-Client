@@ -3,6 +3,7 @@ import InfoIcon from '@mui/icons-material/Info'
 import SellIcon from '@mui/icons-material/Sell'
 import LeakAddIcon from '@mui/icons-material/LeakAdd'
 import CategoryIcon from '@mui/icons-material/Category'
+import LocationOnIcon from '@mui/icons-material/LocationOn'
 
 export interface ProfileItemType {
   id: string
@@ -38,8 +39,8 @@ export const profileItemsStudent: ProfileItemType[] = [
     icon: <CategoryIcon />
   },
   {
-    id: 'schedule',
-    icon: <SellIcon />
+    id: 'location',
+    icon: <LocationOnIcon />
   },
   {
     id: 'offer',
