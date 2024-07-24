@@ -37,29 +37,28 @@ const SidebarMenu: FC<SidebarMenu> = ({
 
     const isTabActive = tabKey === activeTab
 
-    const tooltipContent = (
-      <Box sx={styles.tooltipContent}>
+    const enableTooltipError =
+      hasErrors && !isTabActive && tabKey === tooltipTabHolder
+
+    const toolTip = enableTooltipError && (
+      <Tooltip
+        arrow
+        placement='right'
+        title={t('editProfilePage.profile.generalTab.errorTooltip')}
+      >
         <ErrorOutlineIcon sx={styles.errorIcon} />
-        {t('editProfilePage.profile.generalTab.errorTooltip')}
-      </Box>
+      </Tooltip>
     )
-    const tooltipOpen = hasErrors && !isTabActive && tabKey === tooltipTabHolder
 
     return (
       <ListItem key={tabKey} onClick={() => handleClick(tabKey)}>
         <ListItemButton sx={styles.tabButton(isTabActive)}>
           <ListItemIcon>{item.icon}</ListItemIcon>
           <ListItemText>
-            <Tooltip
-              PopperProps={styles.popperProps}
-              arrow
-              open={tooltipOpen}
-              placement='right'
-              slotProps={styles.slotProps}
-              title={tooltipContent}
-            >
-              <span>{t(item.title)}</span>
-            </Tooltip>
+            <Box sx={styles.listItemContent}>
+              {t(item.title)}
+              {toolTip}
+            </Box>
           </ListItemText>
         </ListItemButton>
       </ListItem>

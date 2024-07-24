@@ -38,31 +38,11 @@ export const styles = {
       }
     }
   },
-  tooltipContent: {
-    position: 'relative',
+  listItemContent: {
     display: 'flex',
     alignItems: 'center'
   },
   errorIcon: {
-    color: palette.error[800],
-    position: 'absolute',
-    left: '-2.5rem'
-  },
-  slotProps: {
-    popper: {
-      modifiers: [
-        {
-          name: 'offset',
-          options: {
-            offset: [0, 24]
-          }
-        }
-      ]
-    }
-  },
-  popperProps: {
-    sx: {
-      zIndex: 10
-    }
+    color: `${palette.error[800]} !important`
   }
 }
