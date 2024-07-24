@@ -9,9 +9,9 @@
     "title": "Choose categories you are interested in",
     "subtitle": "Show us what you would like to learn."
   },
-  "schedule": {
-    "title": "Set up your working hours",
-    "subtitle": "Create yourself a suitable working schedule. "
+  "location": {
+    "title": "Add your location",
+    "subtitle": "Let members know where you are based."
   },
   "offer": {
     "title": "Create a new offer ",
