@@ -21,7 +21,7 @@ const AccordionWithImage: FC<AccordionWithImageProps> = ({ items }) => {
     <Box className='section' data-testid='accordion' sx={styles.feature}>
       <Box
         component='img'
-        src={items[expandedItem || 0].image}
+        src={items[expandedItem ?? 0].image}
         sx={styles.image}
       />
       <Accordions

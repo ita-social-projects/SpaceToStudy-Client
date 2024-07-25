@@ -51,10 +51,10 @@ const ConfirmDialog: FC<ConfirmDialogProps> = ({
       </DialogContent>
       <DialogActions sx={styles.actions(revertButtons)}>
         <AppButton onClick={onDismiss} variant={ButtonVariantEnum.Tonal}>
-          {cancelButton || t('common.no')}
+          {cancelButton ?? t('common.no')}
         </AppButton>
         <AppButton onClick={onConfirm}>
-          {confirmButton || t('common.yes')}
+          {confirmButton ?? t('common.yes')}
         </AppButton>
       </DialogActions>
     </Dialog>

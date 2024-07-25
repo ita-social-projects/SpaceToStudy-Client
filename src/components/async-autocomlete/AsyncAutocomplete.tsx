@@ -65,7 +65,7 @@ const AsyncAutocomplete = <
     () =>
       response.find(
         (option) => (valueField ? option[valueField] : option) === value
-      ) || null,
+      ) ?? null,
     [response, value, valueField]
   )
 
