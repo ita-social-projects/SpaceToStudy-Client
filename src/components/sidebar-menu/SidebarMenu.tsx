@@ -35,7 +35,8 @@ const SidebarMenu: FC<SidebarMenu> = ({
 
     const isTabActive = tabKey === activeTab
 
-    const enableTooltipError = !isTabActive && errorTooltipHolders[tabKey]
+    const enableTooltipError =
+      !isTabActive && errorTooltipHolders && errorTooltipHolders[tabKey]
 
     const toolTip = enableTooltipError && (
       <Tooltip
