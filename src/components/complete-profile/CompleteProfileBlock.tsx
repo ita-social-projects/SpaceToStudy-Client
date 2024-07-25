@@ -58,7 +58,7 @@ const CompleteProfileBlock: FC<CompleteProfileBlockProps> = ({
           role={role}
         />
       )),
-    [profileItems, checkProfileData]
+    [profileItems, checkProfileData, role]
   )
 
   const handleToggleMenu = () => {
