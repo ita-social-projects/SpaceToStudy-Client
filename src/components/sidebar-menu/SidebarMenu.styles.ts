@@ -40,9 +40,11 @@ export const styles = {
   },
   listItemContent: {
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
+    gap: 1.25
   },
   errorIcon: {
-    color: `${palette.error[800]} !important`
+    color: `${palette.error[800]} !important`,
+    fontSize: '1.25rem'
   }
 }
