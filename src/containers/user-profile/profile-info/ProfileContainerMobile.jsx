@@ -8,6 +8,7 @@ import AppChipList from '~/components/app-chips-list/AppChipList'
 import ProfileDoneItemsList from '~/components/icon-with-text-list/ProfileDoneItemsList'
 
 import { styles } from '~/containers/user-profile/profile-info/ProfileInfo.styles'
+import { createUrlPath } from '~/utils/helper-functions'
 
 const ProfileContainerMobile = ({
   actionIcon,
@@ -25,7 +26,10 @@ const ProfileContainerMobile = ({
           <Avatar
             src={
               userData.photo &&
-              `${import.meta.env.VITE_APP_IMG_USER_URL}${userData.photo}`
+              createUrlPath(
+                import.meta.env.VITE_APP_IMG_USER_URL,
+                userData.photo
+              )
             }
             sx={styles.img}
           />

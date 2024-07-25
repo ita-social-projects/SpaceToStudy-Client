@@ -76,7 +76,9 @@ const Message: FC<MessageProps> = ({
   const avatar = !isMyMessage && isAvatarVisible && (
     <Link onClick={handleLinkClick} to={pathToProfile}>
       <Avatar
-        src={photo && `${import.meta.env.VITE_APP_IMG_USER_URL}${photo}`}
+        src={
+          photo && createUrlPath(import.meta.env.VITE_APP_IMG_USER_URL, photo)
+        }
         sx={spliceSx(styles.avatar, sx.avatar)}
       />
     </Link>
