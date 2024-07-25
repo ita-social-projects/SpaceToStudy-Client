@@ -69,8 +69,7 @@ const EditProfile = () => {
 
   const cooperationContent = activeTab && tabsData[activeTab]?.content
   const errorTooltipHolders = {
-    [UserProfileTabsEnum.Profile]: !tabValidityStatus.profileTab,
-    [UserProfileTabsEnum.ProfessionalInfo]: false // false - doesn't have errors by default
+    [UserProfileTabsEnum.Profile]: !tabValidityStatus.profileTab
   }
 
   return (
