@@ -18,16 +18,14 @@ interface SidebarMenu {
   tabsData: UserProfileProps
   handleClick: (tab: UserProfileTabsEnum) => void
   activeTab: UserProfileTabsEnum
-  tooltipTabHolder: UserProfileTabsEnum
-  hasErrors: boolean
+  errorTooltipHolders: Partial<Record<UserProfileTabsEnum, boolean>>
 }
 
 const SidebarMenu: FC<SidebarMenu> = ({
   handleClick,
   tabsData,
   activeTab,
-  tooltipTabHolder,
-  hasErrors
+  errorTooltipHolders
 }) => {
   const { t } = useTranslation()
 
@@ -37,8 +35,7 @@ const SidebarMenu: FC<SidebarMenu> = ({
 
     const isTabActive = tabKey === activeTab
 
-    const enableTooltipError =
-      hasErrors && !isTabActive && tabKey === tooltipTabHolder
+    const enableTooltipError = !isTabActive && errorTooltipHolders[tabKey]
 
     const toolTip = enableTooltipError && (
       <Tooltip

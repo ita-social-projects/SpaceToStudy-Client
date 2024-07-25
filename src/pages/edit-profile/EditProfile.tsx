@@ -68,6 +68,10 @@ const EditProfile = () => {
   }
 
   const cooperationContent = activeTab && tabsData[activeTab]?.content
+  const errorTooltipHolders = {
+    [UserProfileTabsEnum.Profile]: !tabValidityStatus.profileTab,
+    [UserProfileTabsEnum.ProfessionalInfo]: false // false - doesn't have errors by default
+  }
 
   return (
     <PageWrapper>
@@ -94,10 +98,9 @@ const EditProfile = () => {
       <Box sx={styles.mainContainer}>
         <SidebarMenu
           activeTab={activeTab}
+          errorTooltipHolders={errorTooltipHolders}
           handleClick={(tab) => void handleClick(tab)}
-          hasErrors={!tabValidityStatus.profileTab}
           tabsData={tabsData}
-          tooltipTabHolder={UserProfileTabsEnum.Profile}
         />
         <Box sx={styles.mainContent}>{cooperationContent}</Box>
       </Box>
