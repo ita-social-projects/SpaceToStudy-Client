@@ -42,7 +42,7 @@ const ProfileTab: FC = () => {
     videoLink:
       typeof videoLink === 'string'
         ? videoLink
-        : videoLink?.[userRole as MainUserRole] ?? ''
+        : (videoLink?.[userRole as MainUserRole] ?? '')
   }
 
   const {

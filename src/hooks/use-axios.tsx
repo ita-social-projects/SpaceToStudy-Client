@@ -20,7 +20,9 @@ interface UseAxiosReturn<TransformedResponse, Params> {
   response: TransformedResponse
   error: ErrorResponse | null
   loading: boolean
-  fetchData: (params?: Params) => Promise<void>
+  fetchData: (
+    params?: Params extends undefined ? undefined : Params
+  ) => Promise<void>
 }
 
 const useAxios = <
@@ -46,16 +48,23 @@ const useAxios = <
     async (params?: Params) => {
       try {
         setLoading(true)
-        const res = await service(params)
+        // Use type assertion to handle undefined params properly
+        const res = await service(
+          params as Params extends undefined ? undefined : Params
+        )
         const responseData = transform ? transform(res.data) : res.data
         setResponse(responseData as TransformedResponse)
         setError(null)
-        onResponse && onResponse(responseData as TransformedResponse)?.catch()
+        if (onResponse) {
+          await onResponse(responseData as TransformedResponse)
+        }
       } catch (e) {
         const error = e as AxiosError<ErrorResponse>
         if (error.response) {
           setError(error.response.data)
-          onResponseError && onResponseError(error.response.data)
+          if (onResponseError) {
+            onResponseError(error.response.data)
+          }
         }
       } finally {
         setLoading(false)

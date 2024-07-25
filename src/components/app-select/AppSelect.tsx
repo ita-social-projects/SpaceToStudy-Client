@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 
 import MenuItem from '@mui/material/MenuItem'
-import Select, { SelectChangeEvent, SelectProps } from '@mui/material/Select'
+import Select, { SelectChangeEvent } from '@mui/material/Select'
 import FormControl from '@mui/material/FormControl'
 import Box from '@mui/material/Box'
 
@@ -11,11 +11,13 @@ import Typography from '@mui/material/Typography'
 import { SelectFieldType } from '~/types'
 import { styles } from '~/components/app-select/AppSelect.styles'
 
-interface AppSelectProps<T> extends SelectProps<T> {
+interface AppSelectProps<T> {
   setValue: (value: T) => void
   value: T
   fields: SelectFieldType<T>[]
   selectTitle?: string
+  label?: string
+  sx?: object
 }
 
 const AppSelect = <T,>({

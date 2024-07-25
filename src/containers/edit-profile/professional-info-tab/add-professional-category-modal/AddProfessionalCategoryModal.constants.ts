@@ -6,6 +6,6 @@ export const professionalSubjectTemplate: SubjectNameInterface = {
 }
 
 export const userMainSubjectTemplate: ProfessionalCategory = {
-  category: { _id: '', name: '' },
+  category: { _id: '', name: '', appearance: { color: '', icon: '' } },
   subjects: [professionalSubjectTemplate]
 }

@@ -1,4 +1,4 @@
-import { FC, MouseEvent } from 'react'
+import React, { FC, MouseEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
@@ -67,13 +67,22 @@ const UserProfileInfo: FC<UserProfileInfoProps> = ({
 
   const avatar = (
     <Avatar
-      src={photo && `${import.meta.env.VITE_APP_IMG_USER_URL}${photo}`}
+      src={
+        photo ? `${import.meta.env.VITE_APP_IMG_USER_URL}${photo}` : undefined
+      }
       sx={spliceSx(styles.avatar, sx.avatar)}
     />
   )
 
   return (
-    <Box sx={spliceSx(styles.root, sx.root)}>
+    <Box
+      sx={{
+        ...spliceSx(styles.root, sx.root),
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center'
+      }}
+    >
       {renderAdditionalInfo && (
         <Link onClick={handleLinkClick} to={userURL}>
           {onlineBadge ? (
@@ -95,10 +104,12 @@ const UserProfileInfo: FC<UserProfileInfoProps> = ({
         </Link>
       )}
       <Box
-        sx={spliceSx(
-          styles.info,
-          renderAdditionalInfo ? sx.interlocutorInfo : sx.myInfo
-        )}
+        sx={{
+          ...spliceSx(
+            styles.info,
+            renderAdditionalInfo ? sx.interlocutorInfo : sx.myInfo
+          )
+        }}
       >
         <Link onClick={handleLinkClick} style={styles.link} to={userURL}>
           <Typography sx={spliceSx(styles.name, sx.name)}>

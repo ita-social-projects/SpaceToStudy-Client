@@ -21,7 +21,6 @@ import {
 import { addCategory, updateCategory } from '~/redux/features/editProfileSlice'
 import { subjectService } from '~/services/subject-service'
 import { categoryService } from '~/services/category-service'
-import { isSubmitDisabled } from '~/utils/is-submit-disabled'
 import useForm from '~/hooks/use-form'
 import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 
@@ -82,7 +81,7 @@ function SubjectGroup({
           textFieldProps={{
             label: `${t('editProfilePage.profile.professionalTab.subject')}*`
           }}
-          value={subject._id}
+          value={subject._id || ''}
           valueField='_id'
         />
       </Box>
@@ -122,7 +121,7 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
 
     if (isEdit) {
       const categoryToUpdate: UserMainSubject = {
-        _id: initialValuesFromProps?._id,
+        _id: initialValuesFromProps?._id || '',
         isDeletionBlocked,
         ...data
       }
@@ -162,7 +161,7 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
     _: SyntheticEvent,
     value: CategoryNameInterface | null
   ) => {
-    handleDataChange({ category: value, professionalSubjectTemplate })
+    handleDataChange({ category: value, subjects: [] })
   }
 
   const handleProfessionalSubjectChange =
@@ -194,12 +193,22 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
   }
 
   const handleBlockOption = (option: CategoryNameInterface) => {
-    const isCurrent = option._id !== data.category._id
+    const isCurrent = option._id !== data.category?._id
     const isBlocked = blockedCategoriesOptions.some(
       (mainSubject) => mainSubject.category?._id === option._id
     )
     return isBlocked && isCurrent
   }
+
+  const isFormValid = useCallback(() => {
+    return (
+      data.category &&
+      data.subjects.length > 0 &&
+      data.subjects.every((subject) => subject._id)
+    )
+  }, [data])
+
+  const isSaveDisabled = !isFormValid()
 
   const SubjectsGroup = data.subjects.map((subject, index) => (
     <SubjectGroup
@@ -207,8 +216,8 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
       handleChange={handleProfessionalSubjectChange(index)}
       handleSubjectDelete={() => handleSubjectDelete(subject._id)}
       key={index}
-      selectedCategory={data.category._id}
-      subject={{ name: subject.name, _id: subject._id }}
+      selectedCategory={data.category?._id || ''}
+      subject={{ name: subject.name, _id: subject._id || '' }}
     />
   ))
 
@@ -238,7 +247,7 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
             error: Boolean(errors.category),
             helperText: errors.category
           }}
-          value={data.category._id}
+          value={data.category?._id || ''}
           valueField='_id'
         />
         {SubjectsGroup}
@@ -256,7 +265,7 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
       </Box>
       <Box sx={styles.buttonGroup}>
         <AppButton
-          disabled={!isSubmitDisabled(data.subjects)}
+          disabled={isSaveDisabled}
           type={ButtonTypeEnum.Submit}
           variant={ButtonVariantEnum.Contained}
         >

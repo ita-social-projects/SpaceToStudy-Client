@@ -144,8 +144,8 @@ const AddCourseTemplateModal: FC<AddCourseTemplateModalProps> = ({
           (!filters.category || item.category?._id === filters.category) &&
           (!filters.subject || item.subject?._id === filters.subject) &&
           (!filters.proficiencyLevel.length ||
-            filters.proficiencyLevel.some(
-              (level) => item.proficiencyLevel?.includes(level)
+            filters.proficiencyLevel.some((level) =>
+              item.proficiencyLevel?.includes(level)
             ))
       )
       .sort((a, b) => {
