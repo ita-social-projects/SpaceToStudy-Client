@@ -67,7 +67,7 @@ const UserProfileInfo: FC<UserProfileInfoProps> = ({
 
   const avatar = (
     <Avatar
-      src={photo && `${import.meta.env.VITE_APP_IMG_USER_URL}${photo}`}
+      src={photo && createUrlPath(import.meta.env.VITE_APP_IMG_USER_URL, photo)}
       sx={spliceSx(styles.avatar, sx.avatar)}
     />
   )

@@ -11,6 +11,7 @@ import ProfileDoneItemsList from '~/components/icon-with-text-list/ProfileDoneIt
 
 import { styles } from '~/containers/user-profile/profile-info/ProfileInfo.styles'
 import { UserResponse } from '~/types'
+import { createUrlPath } from '~/utils/helper-functions'
 
 interface ProfileContainerMobileProps {
   actionIcon: ReactNode
@@ -31,14 +32,20 @@ const ProfileContainerMobile = ({
   userData,
   chipItems
 }: ProfileContainerMobileProps) => {
-  const avatarSrc = userData.photo
-    ? `${import.meta.env.VITE_APP_IMG_USER_URL}${userData.photo}`
-    : ''
   return (
     <Box sx={styles.container}>
       <Box sx={styles.wrapperForPhoto}>
         <Box sx={styles.avatarContainerMobile}>
-          <Avatar src={avatarSrc} sx={styles.img} />
+          <Avatar
+            src={
+              userData.photo &&
+              createUrlPath(
+                import.meta.env.VITE_APP_IMG_USER_URL,
+                userData.photo
+              )
+            }
+            sx={styles.img}
+          />
         </Box>
 
         <TitleWithDescription

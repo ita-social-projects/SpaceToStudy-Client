@@ -104,7 +104,10 @@ const MyCooperationsDetails = () => {
             <Avatar
               src={
                 offer.author.photo &&
-                `${import.meta.env.VITE_APP_IMG_USER_URL}${offer.author.photo}`
+                createUrlPath(
+                  import.meta.env.VITE_APP_IMG_USER_URL,
+                  offer.author.photo
+                )
               }
             />
             <Typography sx={style.profileName}>
