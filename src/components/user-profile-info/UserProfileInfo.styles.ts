@@ -9,7 +9,7 @@ export const styles = {
   },
   info: {
     display: 'flex',
-    flexDirection: 'row',
+    flexDirection: 'column',
     gap: '4px'
   },
   avatar: {

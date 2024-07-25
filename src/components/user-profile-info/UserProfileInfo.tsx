@@ -75,14 +75,7 @@ const UserProfileInfo: FC<UserProfileInfoProps> = ({
   )
 
   return (
-    <Box
-      sx={{
-        ...spliceSx(styles.root, sx.root),
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center'
-      }}
-    >
+    <Box sx={spliceSx(styles.root, sx.root)}>
       {renderAdditionalInfo && (
         <Link onClick={handleLinkClick} to={userURL}>
           {onlineBadge ? (
