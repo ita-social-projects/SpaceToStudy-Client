@@ -1,14 +1,13 @@
-import { useCallback, FC } from 'react'
+import { useCallback, useState, FC } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import Divider from '@mui/material/Divider'
+import Modal from '@mui/material/Modal'
 
 import Loader from '~/components/loader/Loader'
 import AppButton from '~/components/app-button/AppButton'
 import AppTextField from '~/components/app-text-field/AppTextField'
-import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import { snackbarVariants } from '~/constants'
 
 import useForm from '~/hooks/use-form'
@@ -22,6 +21,7 @@ import { AuthService } from '~/services/auth-service'
 import { openAlert } from '~/redux/features/snackbarSlice'
 
 import { styles } from '~/containers/edit-profile/password-security-tab/PasswordSecurityTab.styles'
+import PasswordSecurityItem from './password-security-item/PasswordSecurityItem'
 
 import {
   ButtonVariantEnum,
@@ -44,6 +44,8 @@ const PasswordSecurityTab: FC = () => {
   const { checkConfirmation } = useConfirm()
 
   const { neededAction, checkStatusChange } = useChangeUserStatus()
+
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const handleSubmitChangePassword = async () => {
     const confirmed = await checkConfirmation({
@@ -69,6 +71,7 @@ const PasswordSecurityTab: FC = () => {
         message: 'editProfilePage.profile.successMessage'
       })
     )
+    setIsModalOpen(false)
   }
 
   const changePassword = useCallback(
@@ -108,6 +111,14 @@ const PasswordSecurityTab: FC = () => {
     validations: validations
   })
 
+  const openChangePasswordModal = () => {
+    setIsModalOpen(true)
+  }
+
+  const closeChangePasswordModal = () => {
+    setIsModalOpen(false)
+  }
+
   const handleChangeStatusClick = () => {
     void checkStatusChange(
       `editProfilePage.profile.passwordSecurityTab.${neededAction}Title`,
@@ -132,6 +143,7 @@ const PasswordSecurityTab: FC = () => {
   const onDiscard = () => {
     resetData()
     resetErrors()
+    closeChangePasswordModal()
   }
 
   const saveButtonContent = loading ? (
@@ -144,84 +156,99 @@ const PasswordSecurityTab: FC = () => {
     isVisible ? InputEnum.Text : InputEnum.Password
 
   return (
-    <Box sx={styles.container}>
-      <TitleWithDescription
-        description={t(
-          'editProfilePage.profile.passwordSecurityTab.description'
+    <Box>
+      <PasswordSecurityItem
+        buttonText={t(
+          'editProfilePage.profile.passwordSecurityTab.changePassword'
         )}
-        style={styles.titleAndDescription}
+        description={t('editProfilePage.profile.passwordSecurityTab.subTitle')}
+        onClick={openChangePasswordModal}
+        sx={styles.deactivateButton}
         title={t('editProfilePage.profile.passwordSecurityTab.title')}
       />
-      <Box component={ComponentEnum.Form} onSubmit={handleSubmit}>
-        <Typography sx={styles.subtitle}>
-          {t('editProfilePage.profile.passwordSecurityTab.changePassword')}
-        </Typography>
-        <Box sx={styles.form}>
-          <AppTextField
-            InputProps={currentPasswordVisibility}
-            errorMsg={t(errors.currentPassword)}
-            fullWidth
-            label={t(
-              'editProfilePage.profile.passwordSecurityTab.currentPassword'
-            )}
-            onBlur={handleBlur('currentPassword')}
-            onChange={handleInputChange('currentPassword')}
-            type={inputType(showCurrentPassword)}
-            value={data.currentPassword}
-          />
-          <AppTextField
-            InputProps={passwordVisibility}
-            errorMsg={t(errors.password)}
-            fullWidth
-            label={t('editProfilePage.profile.passwordSecurityTab.newPassword')}
-            onBlur={handleBlur('password')}
-            onChange={handleInputChange('password')}
-            type={inputType(showPassword)}
-            value={data.password}
-          />
-          <AppTextField
-            InputProps={newPasswordVisibility}
-            errorMsg={t(errors.confirmPassword)}
-            fullWidth
-            label={t(
-              'editProfilePage.profile.passwordSecurityTab.retypePassword'
-            )}
-            onBlur={handleBlur('confirmPassword')}
-            onChange={handleInputChange('confirmPassword')}
-            type={inputType(showNewPassword)}
-            value={data.confirmPassword}
-          />
+      <Modal onClose={closeChangePasswordModal} open={isModalOpen}>
+        <Box sx={styles.modalContainer}>
+          <Box sx={styles.container}>
+            <Typography sx={styles.titleAndDescription}>
+              {t('editProfilePage.profile.passwordSecurityTab.changePassword')}
+            </Typography>
+            <Typography sx={styles.subtitle}>
+              {t(
+                'editProfilePage.profile.passwordSecurityTab.changePasswordModalDescription'
+              )}
+            </Typography>
+            <Box component={ComponentEnum.Form} onSubmit={handleSubmit}>
+              <Box sx={styles.form}>
+                <AppTextField
+                  InputProps={currentPasswordVisibility}
+                  errorMsg={t(errors.currentPassword)}
+                  fullWidth
+                  label={t(
+                    'editProfilePage.profile.passwordSecurityTab.currentPassword'
+                  )}
+                  onBlur={handleBlur('currentPassword')}
+                  onChange={handleInputChange('currentPassword')}
+                  type={inputType(showCurrentPassword)}
+                  value={data.currentPassword}
+                />
+                <AppTextField
+                  InputProps={passwordVisibility}
+                  errorMsg={t(errors.password)}
+                  fullWidth
+                  label={t(
+                    'editProfilePage.profile.passwordSecurityTab.newPassword'
+                  )}
+                  onBlur={handleBlur('password')}
+                  onChange={handleInputChange('password')}
+                  type={inputType(showPassword)}
+                  value={data.password}
+                />
+                <AppTextField
+                  InputProps={newPasswordVisibility}
+                  errorMsg={t(errors.confirmPassword)}
+                  fullWidth
+                  label={t(
+                    'editProfilePage.profile.passwordSecurityTab.retypePassword'
+                  )}
+                  onBlur={handleBlur('confirmPassword')}
+                  onChange={handleInputChange('confirmPassword')}
+                  type={inputType(showNewPassword)}
+                  value={data.confirmPassword}
+                />
+              </Box>
+              <Box sx={styles.passwordButtonsContainer}>
+                <AppButton
+                  datatest-id={'cancelButton'}
+                  onClick={onDiscard}
+                  size={SizeEnum.Large}
+                  sx={styles.discardButton}
+                  variant={ButtonVariantEnum.Tonal}
+                >
+                  {t('common.cancel')}
+                </AppButton>
+                <AppButton
+                  size={SizeEnum.Large}
+                  sx={styles.saveButton}
+                  type={ButtonTypeEnum.Submit}
+                  variant={ButtonVariantEnum.Contained}
+                >
+                  {saveButtonContent}
+                </AppButton>
+              </Box>
+            </Box>
+          </Box>
         </Box>
-        <Box sx={styles.passwordButtonsContainer}>
-          <AppButton
-            size={SizeEnum.Large}
-            sx={styles.saveButton}
-            type={ButtonTypeEnum.Submit}
-            variant={ButtonVariantEnum.Contained}
-          >
-            {saveButtonContent}
-          </AppButton>
-          <AppButton
-            onClick={onDiscard}
-            size={SizeEnum.Large}
-            sx={styles.discardButton}
-            variant={ButtonVariantEnum.Tonal}
-          >
-            {t('common.discard')}
-          </AppButton>
-        </Box>
-        <Divider />
-        <AppButton
-          onClick={handleChangeStatusClick}
-          size={SizeEnum.Large}
-          sx={styles.deactivateButton}
-          variant={ButtonVariantEnum.Danger}
-        >
-          {t(
-            `editProfilePage.profile.passwordSecurityTab.${neededAction}Account`
-          )}
-        </AppButton>
-      </Box>
+      </Modal>
+      <AppButton
+        onClick={handleChangeStatusClick}
+        size={SizeEnum.Large}
+        sx={styles.deactivateButton}
+        variant={ButtonVariantEnum.Danger}
+      >
+        {t(
+          `editProfilePage.profile.passwordSecurityTab.${neededAction}Account`
+        )}
+      </AppButton>
     </Box>
   )
 }
