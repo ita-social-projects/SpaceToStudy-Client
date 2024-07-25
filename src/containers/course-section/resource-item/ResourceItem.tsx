@@ -63,7 +63,7 @@ const ResourceItem: FC<ResourceItemProps> = ({
   const renderResourceIcon = () => {
     const { Lessons, Quizzes } = ResourcesTypes
 
-    const type = resourceType || resource.resourceType
+    const type = resourceType ?? resource.resourceType
 
     switch (type) {
       case Lessons:

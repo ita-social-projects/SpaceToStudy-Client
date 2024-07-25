@@ -107,7 +107,7 @@ const AboutChatSidebar: FC<AboutChatSidebarProps> = ({
                 {t(`chatPage.sidebar.viewButton`)}
               </AppButton>
               <Typography sx={styles.userDescription}>
-                {professionalSummary || t(`chatPage.sidebar.noSummary`)}
+                {professionalSummary ?? t(`chatPage.sidebar.noSummary`)}
               </Typography>
             </Box>
             <Divider />

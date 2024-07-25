@@ -13,7 +13,6 @@ import {
 import { styles } from '~/containers/cooperation-details/cooperetion-activities-view/CooperationActivitiesView.style'
 
 interface CooperationActivitiesViewProps {
-  sections: CourseSection[]
   setEditMode: Dispatch<SetStateAction<boolean>>
 }
 
