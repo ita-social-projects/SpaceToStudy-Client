@@ -171,7 +171,6 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
         if (index === i) {
           return { ...subject, ...value }
         }
-
         return subject
       })
 
