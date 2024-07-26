@@ -13,7 +13,7 @@ export const validations = (disallowedValues: string[]) => ({
   name: (value: string) => {
     const trimmedValue = value.trim()
     return (
-      emptyField({ value, helperText: textField(2, 35)(trimmedValue) }) ||
+      emptyField({ value, helperText: textField(2, 35)(trimmedValue) }) ??
       valueNotIn(trimmedValue, disallowedValues)
     )
   }

@@ -42,7 +42,7 @@ const snackbarSlice = createSlice({
       state.isOpened = true
       state.severity = action.payload.severity
       state.message = action.payload.message
-      state.duration = action.payload.duration || 4000
+      state.duration = action.payload.duration ?? 4000
     },
     closeAlert: (state) => {
       state.isOpened = false

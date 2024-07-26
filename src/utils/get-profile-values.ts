@@ -20,7 +20,7 @@ export const getProfileInitialValues = (user: UserResponse) => ({
     user.role[0] !== UserRoleEnum.Admin
       ? user.videoLink?.[user.role[0]] || ''
       : '',
-  photo: user.photo || { src: '', name: '' }
+  photo: user.photo ?? { src: '', name: '' }
 })
 
 export const getUserUpdatedData = (data: EditProfileForm) => {

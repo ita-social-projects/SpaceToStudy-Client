@@ -38,9 +38,9 @@ export const useForm = <T extends object>({
   submitWithData
 }: UseFormProps<T>): UseFormOutput<T> => {
   const [data, setData] = useState<T>(initialValues)
-  const [isDirty, setDirty] = useState<boolean>(false)
+  const [isDirty, setIsDirty] = useState<boolean>(false)
   const [errors, setErrors] = useState<UseFormErrors<T>>(initialErrors)
-  const [isTouched, setTouched] = useState<Record<keyof T, boolean>>(
+  const [isTouched, setIsTouched] = useState<Record<keyof T, boolean>>(
     getEmptyValues(initialValues, false)
   )
 
@@ -72,7 +72,7 @@ export const useForm = <T extends object>({
           ...prev,
           [key]: value
         }
-        setDirty(!isEqual(newData, initialValues))
+        setIsDirty(!isEqual(newData, initialValues))
         return newData
       })
       checkForError(key, event.target.value)
@@ -87,7 +87,7 @@ export const useForm = <T extends object>({
         ...prev,
         [key]: value
       }
-      setDirty(!isEqual(newData, initialValues))
+      setIsDirty(!isEqual(newData, initialValues))
       return newData
     })
     checkForError(key, value)
@@ -102,7 +102,7 @@ export const useForm = <T extends object>({
 
   const handleBlur =
     (key: keyof T) => (event: React.FocusEvent<HTMLInputElement>) => {
-      setDirty(!isEqual(data, initialValues))
+      setIsDirty(!isEqual(data, initialValues))
 
       const valid = validateValue(key, event.target.value)
 
@@ -110,7 +110,7 @@ export const useForm = <T extends object>({
         ...prev,
         [key]: valid ?? ''
       }))
-      setTouched((prev) => ({
+      setIsTouched((prev) => ({
         ...prev,
         [key]: true
       }))

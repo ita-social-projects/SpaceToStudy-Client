@@ -22,7 +22,7 @@ const AppBreadCrumbs = () => {
     const component = isLast ? Typography : Link
     const paramName = crumb.path?.split(':')[1]
     const path = paramName
-      ? crumb.path?.replace(`:${paramName}`, matches[0].params[paramName] || '')
+      ? crumb.path?.replace(`:${paramName}`, matches[0].params[paramName] ?? '')
       : crumb.path
 
     return (

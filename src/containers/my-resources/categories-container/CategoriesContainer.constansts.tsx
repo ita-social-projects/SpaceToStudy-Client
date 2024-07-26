@@ -10,7 +10,7 @@ import { emptyField, textField } from '~/utils/validations/common'
 export const validation = (disallowedValues: string[]) => (value: string) => {
   const trimmedValue = value.trim()
   return Boolean(
-    emptyField({ value, helperText: textField(2, 35)(trimmedValue) }) ||
+    emptyField({ value, helperText: textField(2, 35)(trimmedValue) }) ??
       disallowedValues.includes(trimmedValue)
   )
 }

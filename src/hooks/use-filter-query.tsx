@@ -33,7 +33,7 @@ export const useFilterQuery = <T extends object>({
   const updateFiltersInQuery: UpdateFiltersInQuery<T> = useCallback(
     (valuesToUpdate) => {
       for (const key in valuesToUpdate) {
-        const value = valuesToUpdate[key]!
+        const value = valuesToUpdate[key]
 
         if (value) {
           searchParams.set(String(key), String(value))
@@ -41,7 +41,6 @@ export const useFilterQuery = <T extends object>({
           searchParams.delete(String(key))
         }
       }
-
       setSearchParams(searchParams)
     },
     [searchParams, setSearchParams]

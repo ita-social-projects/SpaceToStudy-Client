@@ -2,7 +2,7 @@ import { s2s } from '~/constants'
 import { LocalStorage } from '~/types'
 
 const getLocalObject = () =>
-  JSON.parse(localStorage.getItem('s2s') || 'null') as LocalStorage | null
+  JSON.parse(localStorage.getItem('s2s') ?? 'null') as LocalStorage | null
 
 export const getFromLocalStorage = <K extends keyof LocalStorage>(
   name: K

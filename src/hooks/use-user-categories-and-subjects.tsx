@@ -9,13 +9,13 @@ import {
   UserResponse
 } from '~/types'
 
-interface useUserCategoriesAndSubjectsProps {
+interface UseUserCategoriesAndSubjectsProps {
   user: UserResponse | null
 }
 
 const useUserCategoriesAndSubjects = ({
   user
-}: useUserCategoriesAndSubjectsProps) => {
+}: UseUserCategoriesAndSubjectsProps) => {
   const { Subjects } = CourseAutocompleteOptionsEnum
 
   const userCategories = useMemo(
