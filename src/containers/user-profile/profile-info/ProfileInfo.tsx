@@ -19,22 +19,35 @@ import { styles } from '~/containers/user-profile/profile-info/ProfileInfo.style
 import { authRoutes } from '~/router/constants/authRoutes'
 import { snackbarVariants } from '~/constants'
 
-import { SizeEnum, UserRoleEnum, ButtonVariantEnum } from '~/types'
+import {
+  SizeEnum,
+  UserRoleEnum,
+  ButtonVariantEnum,
+  UserResponse
+} from '~/types'
 import { createUrlPath, getDifferenceDates } from '~/utils/helper-functions'
 import { useAppDispatch } from '~/hooks/use-redux'
 import { openAlert } from '~/redux/features/snackbarSlice'
 
-const ProfileInfo = ({ userData, myRole }) => {
+interface ProfileInfoProps {
+  userData: UserResponse
+  myRole: UserRoleEnum
+}
+
+const ProfileInfo = ({ userData, myRole }: ProfileInfoProps) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const { isLaptopAndAbove, isMobile } = useBreakpoints()
   const dispatch = useAppDispatch()
   const isMyProfile = useMatch(authRoutes.accountMenu.myProfile.path)
-  const { number, format } = getDifferenceDates(userData.createdAt, new Date())
+  const { number, format } = getDifferenceDates(
+    new Date(userData.createdAt),
+    new Date()
+  )
   const { Student, Tutor } = UserRoleEnum
 
-  const copyProfileLink = () => {
-    navigator.clipboard.writeText(window.location.href)
+  const copyProfileLink = async () => {
+    await navigator.clipboard.writeText(window.location.href)
     dispatch(
       openAlert({
         severity: snackbarVariants.success,
@@ -66,18 +79,22 @@ const ProfileInfo = ({ userData, myRole }) => {
       onClick={!isMyProfile ? copyProfileLink : undefined}
       size={isLaptopAndAbove ? SizeEnum.Large : SizeEnum.Small}
       sx={styles.iconBtn}
-      to={isMyProfile && authRoutes.editProfile.path}
+      to={isMyProfile?.pathname && authRoutes.editProfile.path}
     >
       {actionIcon}
     </AppIconButton>
   )
+  const reviewsCount =
+    userData.totalReviews[myRole as UserRoleEnum.Student | UserRoleEnum.Tutor]
+  const value =
+    userData.averageRating[myRole as UserRoleEnum.Student | UserRoleEnum.Tutor]
 
   const accountRating = (
     <AppRatingMobile
       link={'#'}
-      reviewsCount={userData.totalReviews[userData.role]}
+      reviewsCount={reviewsCount}
       sx={styles.appRating}
-      value={userData.averageRating[userData.role]}
+      value={value}
     />
   )
 
