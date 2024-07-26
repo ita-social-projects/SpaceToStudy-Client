@@ -29,6 +29,7 @@ export interface GetUsersParams extends RequestParams {
 }
 
 export interface UserResponse {
+  id: string
   _id: string
   role: UserRole[]
   firstName: string
