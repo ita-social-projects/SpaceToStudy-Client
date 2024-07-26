@@ -5,8 +5,8 @@ import { Theme } from '@emotion/react'
 
 import AppButton from '~/components/app-button/AppButton'
 import AppCard from '~/components/app-card/AppCard'
-import { styles } from '~/containers/edit-profile/password-security-tab/password-security-item/PasswordSecurityItem.styles'
 
+import { styles } from '~/containers/edit-profile/password-security-tab/password-security-item/PasswordSecurityItem.styles'
 import { ButtonVariantEnum, SizeEnum } from '~/types'
 
 interface PasswordSecurityItemProps {

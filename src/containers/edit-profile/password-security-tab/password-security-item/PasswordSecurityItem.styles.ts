@@ -15,6 +15,6 @@ export const styles = {
     color: 'primary.500'
   },
   titlesAndButtonContainer: {
-    padding: '20px 0'
+    p: '20px 0'
   }
 }

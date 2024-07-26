@@ -38,7 +38,7 @@ export const styles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    height: '100vh',
+    width: '700px',
     position: 'relative'
   }
 }
