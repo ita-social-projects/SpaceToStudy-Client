@@ -72,7 +72,7 @@ const NotificationTab = () => {
           style={styles.titleWithDescription}
           title={t('editProfilePage.profile.notificationsTab.notifications')}
         />
-        <Box sx={styles.optionsContainer}>{notificationOptionList}</Box>
+        <Box>{notificationOptionList}</Box>
       </Box>
     </Box>
   )
