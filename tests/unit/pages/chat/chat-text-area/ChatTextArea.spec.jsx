@@ -1,9 +1,7 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-
 import useBreakpoints from '~/hooks/use-breakpoints'
 import ChatTextArea from '~/containers/chat/chat-text-area/ChatTextArea'
-
 import { renderWithProviders } from '~tests/test-utils'
 
 vi.mock('~/hooks/use-breakpoints')
@@ -13,7 +11,9 @@ global.window.matchMedia = vi.fn().mockImplementation((query) => ({
   media: query,
   onchange: null,
   addListener: vi.fn(),
-  removeListener: vi.fn()
+  removeListener: vi.fn(),
+  addEventListener: vi.fn(),
+  removeEventListener: vi.fn()
 }))
 
 global.IntersectionObserver = vi.fn().mockImplementation(() => ({
@@ -45,10 +45,10 @@ const props = {
 
 describe('ChatTextArea component test', () => {
   const breakpointsData = { isMobile: false }
+
   beforeEach(async () => {
     await waitFor(() => {
       useBreakpoints.mockImplementation(() => breakpointsData)
-
       renderWithProviders(<ChatTextArea {...props} />)
     })
   })

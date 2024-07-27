@@ -10,12 +10,15 @@ import Typography from '@mui/material/Typography'
 
 import { SelectFieldType } from '~/types'
 import { styles } from '~/components/app-select/AppSelect.styles'
+import { SxProps, Theme } from '@mui/material/styles' // Updated import
 
-interface AppSelectProps<T> extends SelectProps<T> {
+interface AppSelectProps<T> extends Omit<SelectProps<T>, 'sx'> {
   setValue: (value: T) => void
   value: T
   fields: SelectFieldType<T>[]
   selectTitle?: string
+  label: string
+  sx?: SxProps<Theme>
 }
 
 const AppSelect = <T,>({
