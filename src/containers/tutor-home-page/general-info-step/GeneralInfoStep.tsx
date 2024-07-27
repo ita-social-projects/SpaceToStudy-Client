@@ -1,10 +1,10 @@
-import { useEffect, useCallback } from 'react'
-import { useSelector } from 'react-redux'
+import { useEffect, useCallback, ReactNode, SyntheticEvent } from 'react'
+
 import { useTranslation } from 'react-i18next'
 import { LocationService } from '~/services/location-service'
 import { userService } from '~/services/user-service'
 
-import { createFilterOptions } from '@mui/material'
+import { createFilterOptions, FilterOptionsState } from '@mui/material'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
@@ -21,13 +21,39 @@ import { useStepContext } from '~/context/step-context'
 import { validations } from '~/components/user-steps-wrapper/constants'
 import { styles } from '~/containers/tutor-home-page/general-info-step/GeneralInfoStep.styles'
 import { defaultResponses } from '~/constants'
+import { useAppSelector } from '~/hooks/use-redux'
+import { Country, UserGeneralInfo, UserRole } from '~/types'
 
-const GeneralInfoStep = ({ btnsBox, isUserFetched, setIsUserFetched }) => {
+interface GeneralInfoStepProps {
+  btnsBox: ReactNode
+  isUserFetched: boolean
+  setIsUserFetched: (isUserFetched: boolean) => void
+}
+
+type UserName = { firstName: string; lastName: string }
+
+const GeneralInfoStep = ({
+  btnsBox,
+  isUserFetched,
+  setIsUserFetched
+}: GeneralInfoStepProps) => {
   const { t } = useTranslation()
   const { isLaptopAndAbove, isMobile } = useBreakpoints()
   const { stepData, handleGeneralInfo } = useStepContext()
-  const { userId, userRole } = useSelector((state) => state.appMain)
+  const { userId, userRole } = useAppSelector((state) => state.appMain)
   const generalInfo = stepData.generalInfo
+
+  const getCountries = useCallback(() => LocationService.getCountries(), [])
+
+  const {
+    loading: loadingCountries,
+    response: countries,
+    fetchData: fetchCountries
+  } = useAxios({
+    service: getCountries,
+    fetchOnMount: false,
+    defaultResponse: defaultResponses.array as Country[]
+  })
 
   const {
     handleInputChange,
@@ -35,18 +61,27 @@ const GeneralInfoStep = ({ btnsBox, isUserFetched, setIsUserFetched }) => {
     handleNonInputValueChange,
     data,
     errors
-  } = useForm({
+  } = useForm<UserGeneralInfo>({
     initialValues: generalInfo.data,
-    initialErrors: generalInfo.errors,
-    validations
+    initialErrors: {
+      city: generalInfo.errors['city'] || '',
+      country: generalInfo.errors['country'] || '',
+      firstName: generalInfo.errors['firstName'] || '',
+      lastName: generalInfo.errors['lastName'] || '',
+      professionalSummary: generalInfo.errors['professionalSummaryy'] || ''
+    },
+    ...validations
   })
 
-  const filterOptions = (options, state) => {
+  const filterOptions = (
+    options: unknown[],
+    state: FilterOptionsState<unknown>
+  ) => {
     const defaultFilterOptions = createFilterOptions()
     return defaultFilterOptions(options, state).slice(0, 300)
   }
 
-  const onChangeCountry = async (_, value) => {
+  const onChangeCountry = async (value: string) => {
     if (data.country !== value) {
       handleNonInputValueChange('city', null)
       handleNonInputValueChange('country', value)
@@ -62,23 +97,25 @@ const GeneralInfoStep = ({ btnsBox, isUserFetched, setIsUserFetched }) => {
     }
   }
 
-  const onChangeCity = (_, value) => {
-    handleNonInputValueChange('city', value)
+  const onChangeCity = (
+    event: SyntheticEvent<Element, Event>,
+    value: unknown
+  ) => {
+    handleNonInputValueChange('city', value as string | null)
   }
 
   const getUserById = useCallback(
-    () => userService.getUserById(userId, userRole),
+    () => userService.getUserById(userId, userRole as UserRole),
     [userId, userRole]
   )
 
-  const getCountries = useCallback(() => LocationService.getCountries(), [])
   const getCities = useCallback(
-    (country) => LocationService.getCities(country),
+    (country: string) => LocationService.getCities(country),
     []
   )
 
   const updateUserName = useCallback(
-    (user) => {
+    (user: UserName) => {
       handleNonInputValueChange('firstName', user.firstName)
       handleNonInputValueChange('lastName', user.lastName)
 
@@ -95,19 +132,9 @@ const GeneralInfoStep = ({ btnsBox, isUserFetched, setIsUserFetched }) => {
   })
 
   useEffect(() => {
-    !isUserFetched && fetchUser()
+    !isUserFetched && void fetchUser()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
-  const {
-    loading: loadingCountries,
-    response: countries,
-    fetchData: fetchCountries
-  } = useAxios({
-    service: getCountries,
-    fetchOnMount: false,
-    defaultResponse: defaultResponses.array
-  })
 
   const countriesNames = countries.map((country) => country.name)
 
@@ -118,7 +145,6 @@ const GeneralInfoStep = ({ btnsBox, isUserFetched, setIsUserFetched }) => {
   } = useAxios({
     service: getCities,
     fetchOnMount: false,
-    clearResponse: true,
     defaultResponse: defaultResponses.array
   })
 
@@ -127,7 +153,7 @@ const GeneralInfoStep = ({ btnsBox, isUserFetched, setIsUserFetched }) => {
   }, [data, errors, handleGeneralInfo])
 
   const onFocusCountry =
-    !data.country && !countries.length ? fetchCountries : undefined
+    !data.country && !countries.length ? void fetchCountries : undefined
 
   if (userLoading) {
     return (
@@ -182,14 +208,13 @@ const GeneralInfoStep = ({ btnsBox, isUserFetched, setIsUserFetched }) => {
 
             <AppAutoComplete
               loading={loadingCountries}
-              onChange={onChangeCountry}
+              onChange={(_, value) => onChangeCountry(value as string)}
               onFocus={onFocusCountry}
               options={countriesNames}
               sx={{ mb: '30px' }}
               textFieldProps={{
                 label: t('common.labels.country')
               }}
-              type='text'
               value={data.country}
             />
 
@@ -203,7 +228,6 @@ const GeneralInfoStep = ({ btnsBox, isUserFetched, setIsUserFetched }) => {
               textFieldProps={{
                 label: t('common.labels.city')
               }}
-              type='text'
               value={data.city}
             />
           </Box>
