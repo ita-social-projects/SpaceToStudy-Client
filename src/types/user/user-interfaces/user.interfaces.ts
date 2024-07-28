@@ -73,6 +73,7 @@ export interface UpdateUserParams
 export interface LoginParams {
   email: string
   password: string
+  rememberMe: boolean
 }
 
 export interface LoginResponse {

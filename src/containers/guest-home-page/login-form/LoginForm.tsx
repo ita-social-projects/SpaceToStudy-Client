@@ -1,6 +1,7 @@
+import { ChangeEvent, FocusEvent, FormEventHandler } from 'react'
+
 import { useTranslation } from 'react-i18next'
 import useInputVisibility from '~/hooks/use-input-visibility'
-import { useSelector } from 'react-redux'
 
 import Box from '@mui/material/Box'
 import ButtonBase from '@mui/material/ButtonBase'
@@ -14,6 +15,16 @@ import AppTextField from '~/components/app-text-field/AppTextField'
 import AppButton from '~/components/app-button/AppButton'
 
 import { styles } from '~/containers/guest-home-page/login-form/LoginForm.styles'
+import { LoginParams, UseFormErrors, UseFormEventHandler } from '~/types'
+import { useAppSelector } from '~/hooks/use-redux'
+
+interface SignupFormProps {
+  handleSubmit: FormEventHandler<HTMLFormElement>
+  handleChange: UseFormEventHandler<LoginParams, ChangeEvent<HTMLInputElement>>
+  handleBlur: UseFormEventHandler<LoginParams, FocusEvent<HTMLInputElement>>
+  data: LoginParams
+  errors: UseFormErrors<LoginParams>
+}
 
 const LoginForm = ({
   handleSubmit,
@@ -21,11 +32,11 @@ const LoginForm = ({
   handleBlur,
   data,
   errors
-}) => {
+}: SignupFormProps) => {
   const { inputVisibility: passwordVisibility, showInputText: showPassword } =
     useInputVisibility(errors.password)
 
-  const { authLoading } = useSelector((state) => state.appMain)
+  const { authLoading } = useAppSelector((state) => state.appMain)
 
   const { openModal } = useModalContext()
 
@@ -46,7 +57,7 @@ const LoginForm = ({
         onBlur={handleBlur('email')}
         onChange={handleChange('email')}
         required
-        size='large'
+        size='medium'
         sx={{ mb: '5px' }}
         type='email'
         value={data.email}
@@ -69,7 +80,7 @@ const LoginForm = ({
           control={<Checkbox />}
           label={t('login.rememberMe')}
           labelPlacement='end'
-          onChange={handleChange('rememberMe')}
+          onChange={() => handleChange('rememberMe')}
           sx={styles.checkboxLabel}
           value={data.rememberMe}
         />
