@@ -1,7 +1,5 @@
-import { SxProps } from '@mui/material'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import { Theme } from '@emotion/react'
 
 import AppButton from '~/components/app-button/AppButton'
 import AppCard from '~/components/app-card/AppCard'
@@ -14,7 +12,7 @@ interface PasswordSecurityItemProps {
   description: string
   buttonText: string
   onClick: () => void
-  sx?: SxProps<Theme>
+  buttonVariant: ButtonVariantEnum
 }
 
 const PasswordSecurityItem = ({
@@ -22,7 +20,7 @@ const PasswordSecurityItem = ({
   description,
   buttonText,
   onClick,
-  sx
+  buttonVariant
 }: PasswordSecurityItemProps) => (
   <AppCard sx={styles.container}>
     <Box sx={styles.titlesAndButtonContainer}>
@@ -33,8 +31,8 @@ const PasswordSecurityItem = ({
     <AppButton
       onClick={onClick}
       size={SizeEnum.Medium}
-      sx={sx}
-      variant={ButtonVariantEnum.Tonal}
+      sx={styles.appButton}
+      variant={buttonVariant}
     >
       {buttonText}
     </AppButton>

@@ -30,10 +30,6 @@ export const styles = {
   discardButton: {
     gridColumn: { sm: 'span 1', md: 'span 2', lg: 'span 2' }
   },
-  deactivateButton: {
-    mt: '20px',
-    backgroundColor: 'error.700'
-  },
   modalContainer: {
     display: 'flex',
     alignItems: 'center',
