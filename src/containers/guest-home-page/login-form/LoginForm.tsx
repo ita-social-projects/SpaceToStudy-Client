@@ -15,7 +15,30 @@ import AppButton from '~/components/app-button/AppButton'
 
 import { styles } from '~/containers/guest-home-page/login-form/LoginForm.styles'
 
-const LoginForm = ({
+interface LoginFormProps {
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void
+  handleChange: (
+    name: string
+  ) => (e: React.ChangeEvent<HTMLInputElement>) => void
+  handleBlur: (name: string) => (e: React.FocusEvent<HTMLInputElement>) => void
+  data: {
+    email: string
+    password: string
+    rememberMe: boolean
+  }
+  errors: {
+    email?: string
+    password?: string
+  }
+}
+
+interface AppState {
+  appMain: {
+    authLoading: boolean
+  }
+}
+
+const LoginForm: React.FC<LoginFormProps> = ({
   handleSubmit,
   handleChange,
   handleBlur,
@@ -23,9 +46,9 @@ const LoginForm = ({
   errors
 }) => {
   const { inputVisibility: passwordVisibility, showInputText: showPassword } =
-    useInputVisibility(errors.password)
+    useInputVisibility(errors.password ?? '')
 
-  const { authLoading } = useSelector((state) => state.appMain)
+  const { authLoading } = useSelector((state: AppState) => state.appMain)
 
   const { openModal } = useModalContext()
 
@@ -35,18 +58,33 @@ const LoginForm = ({
     openModal({ component: <ForgotPassword /> })
   }
 
+  const handleCheckboxChange = (
+    event: React.SyntheticEvent<Element, Event>,
+    checked: boolean
+  ) => {
+    const target = event.target as HTMLInputElement
+    const changeEvent = {
+      ...event,
+      target: {
+        ...target,
+        value: checked.toString()
+      }
+    } as React.ChangeEvent<HTMLInputElement>
+    handleChange(target.name)(changeEvent)
+  }
+
   return (
     <Box component='form' onSubmit={handleSubmit} sx={styles.form}>
       <AppTextField
         autoFocus
         data-testid={'email'}
-        errorMsg={t(errors.email)}
+        errorMsg={t(errors.email ?? '')}
         fullWidth
         label={t('common.labels.email')}
         onBlur={handleBlur('email')}
         onChange={handleChange('email')}
         required
-        size='large'
+        size='medium'
         sx={{ mb: '5px' }}
         type='email'
         value={data.email}
@@ -54,7 +92,7 @@ const LoginForm = ({
 
       <AppTextField
         InputProps={passwordVisibility}
-        errorMsg={t(errors.password)}
+        errorMsg={t(errors.password ?? '')}
         fullWidth
         label={t('common.labels.password')}
         onBlur={handleBlur('password')}
@@ -66,10 +104,10 @@ const LoginForm = ({
 
       <Box sx={styles.loginOptionsContainer}>
         <FormControlLabel
-          control={<Checkbox />}
+          control={<Checkbox checked={data.rememberMe} name='rememberMe' />}
           label={t('login.rememberMe')}
           labelPlacement='end'
-          onChange={handleChange('rememberMe')}
+          onChange={handleCheckboxChange}
           sx={styles.checkboxLabel}
           value={data.rememberMe}
         />
