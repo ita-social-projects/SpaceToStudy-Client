@@ -1,15 +1,15 @@
+import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
+import { PopoverOrigin } from '@mui/material'
 
 import AppPopover from '../app-popover/AppPopover'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 
 import { styles } from '~/components/icon-with-text-list/ProfileDoneItemsList.style'
 import { ProfileDoneItem } from '~/types'
-import { FC } from 'react'
-import { PopoverOrigin } from '@mui/material'
 
 interface ProfileDoneItemsListProps {
   items: ProfileDoneItem[]
