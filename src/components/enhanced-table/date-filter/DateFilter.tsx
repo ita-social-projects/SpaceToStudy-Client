@@ -61,8 +61,8 @@ const DateFilter: React.FC<DateFilterProps> = ({
 
   const datePickers = datePickersOptions.map(({ placement, direction }) => (
     <DesktopDatePicker
-      InputProps={{ 'aria-label': `date-filter-${direction}` }}
       PopperProps={{ placement: placement }}
+      inputProps={{ 'aria-label': `date-filter-${direction}` }}
       key={direction}
       onChange={handleChange(direction)}
       onClose={() => handleClose(direction)}
