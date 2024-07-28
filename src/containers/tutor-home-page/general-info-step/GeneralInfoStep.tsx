@@ -74,10 +74,10 @@ const GeneralInfoStep = ({
   })
 
   const filterOptions = (
-    options: unknown[],
-    state: FilterOptionsState<unknown>
+    options: string[],
+    state: FilterOptionsState<string>
   ) => {
-    const defaultFilterOptions = createFilterOptions()
+    const defaultFilterOptions = createFilterOptions<string>()
     return defaultFilterOptions(options, state).slice(0, 300)
   }
 
@@ -99,9 +99,9 @@ const GeneralInfoStep = ({
 
   const onChangeCity = (
     event: SyntheticEvent<Element, Event>,
-    value: unknown
+    value: string | null
   ) => {
-    handleNonInputValueChange('city', value as string | null)
+    handleNonInputValueChange('city', value)
   }
 
   const getUserById = useCallback(
