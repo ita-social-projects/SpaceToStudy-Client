@@ -9,7 +9,7 @@ import { styles } from './SearchInput.styles'
 
 interface SearchInputProps {
   search: string
-  setSearch: (state: string) => void
+  setSearch: React.Dispatch<React.SetStateAction<string>>
 }
 
 const SearchInput = ({ search, setSearch }: SearchInputProps) => {
