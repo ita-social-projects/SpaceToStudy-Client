@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import useInputVisibility from '~/hooks/use-input-visibility'
-import { useSelector } from 'react-redux'
+import { useAppSelector } from '~/hooks/use-redux'
 
 import Box from '@mui/material/Box'
 import ButtonBase from '@mui/material/ButtonBase'
@@ -32,12 +32,6 @@ interface LoginFormProps {
   }
 }
 
-interface AppState {
-  appMain: {
-    authLoading: boolean
-  }
-}
-
 const LoginForm: React.FC<LoginFormProps> = ({
   handleSubmit,
   handleChange,
@@ -48,7 +42,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
   const { inputVisibility: passwordVisibility, showInputText: showPassword } =
     useInputVisibility(errors.password ?? '')
 
-  const { authLoading } = useSelector((state: AppState) => state.appMain)
+  const { authLoading } = useAppSelector((state) => state.appMain)
 
   const { openModal } = useModalContext()
 
