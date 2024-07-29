@@ -50,8 +50,8 @@ const useAxios = <
         const responseData = transform ? transform(res.data) : res.data
         setResponse(responseData as TransformedResponse)
         setError(null)
-        onResponse &&
-          void onResponse(responseData as TransformedResponse)?.catch()
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
+        onResponse && onResponse(responseData as TransformedResponse)?.catch()
       } catch (e) {
         const error = e as AxiosError<ErrorResponse>
         if (error.response) {
