@@ -152,8 +152,11 @@ const GeneralInfoStep = ({
     handleGeneralInfo({ data, errors })
   }, [data, errors, handleGeneralInfo])
 
-  const onFocusCountry =
-    !data.country && !countries.length ? void fetchCountries : undefined
+  const onFocusCountry = async () => {
+    if (!data.country && !countries.length) {
+      await fetchCountries()
+    }
+  }
 
   if (userLoading) {
     return (
