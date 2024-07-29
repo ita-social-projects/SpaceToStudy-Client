@@ -57,7 +57,7 @@ const initialState: EditProfileState = {
   professionalSummary: '',
   nativeLanguage: '',
   videoLink: { [UserRoleEnum.Tutor]: '', [UserRoleEnum.Student]: '' },
-  photo: null,
+  photo: '',
   categories: { [UserRoleEnum.Tutor]: [], [UserRoleEnum.Student]: [] },
   education: '',
   workExperience: '',

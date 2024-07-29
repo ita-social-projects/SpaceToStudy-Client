@@ -16,7 +16,7 @@ export const styles = {
   line: {
     m: '16px 0'
   },
-  backBtn: {
+  updateBtn: {
     padding: '10px'
   },
   mainContainer: {
