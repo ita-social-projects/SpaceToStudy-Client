@@ -52,6 +52,6 @@ describe('EnhancedTableToolbar test', () => {
 
     fireEvent.click(button)
 
-    expect(func).toHaveBeenCalledWith({ itemIds: selected })
+    expect(func).toHaveBeenCalledWith(selected)
   })
 })
