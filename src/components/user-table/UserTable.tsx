@@ -161,11 +161,17 @@ const UserTable: React.FC<UserTableProps> = ({
     setExternalFilter((prev) => ({ ...prev, [tab.key]: tab.value }))
   }
 
+  const wrappedHandleTabClick = (tab: { key: string; value: string }) => {
+    return () => {
+      handleTabClick(tab)
+    }
+  }
+
   const tabs = Object.values(tabsInfo).map((tab) => (
     <Tab
       activeTab={externalFilter.status === tab.value}
       key={tab.label}
-      onClick={() => handleTabClick({ key: tab.key, value: tab.value })}
+      onClick={wrappedHandleTabClick({ key: tab.key, value: tab.value })}
     >
       {t(tab.label)}
     </Tab>
