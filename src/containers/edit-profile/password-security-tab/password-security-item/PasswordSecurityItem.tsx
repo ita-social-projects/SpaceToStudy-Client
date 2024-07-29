@@ -4,8 +4,9 @@ import Typography from '@mui/material/Typography'
 import AppButton from '~/components/app-button/AppButton'
 import AppCard from '~/components/app-card/AppCard'
 
-import { styles } from '~/containers/edit-profile/password-security-tab/password-security-item/PasswordSecurityItem.styles'
 import { ButtonVariantEnum, SizeEnum } from '~/types'
+
+import { styles } from '~/containers/edit-profile/password-security-tab/password-security-item/PasswordSecurityItem.styles'
 
 interface PasswordSecurityItemProps {
   title: string
