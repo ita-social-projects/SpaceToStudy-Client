@@ -24,7 +24,9 @@ export interface TableItem {
 
 export interface TableSelect<I> {
   selected: string[]
-  createSelectAllHandler: (items: I[]) => void
+  createSelectAllHandler: (
+    items: I[]
+  ) => (e: ChangeEvent<HTMLInputElement>) => void
   handleSelectClick: (item: string, e?: ChangeEvent<HTMLInputElement>) => void
   isSelected: (id: string) => boolean
 }
@@ -42,6 +44,7 @@ export interface TableSort {
 
 export interface TableData<I> {
   items: I[]
+  count?: number
   loading?: boolean
   getData?: () => void
 }

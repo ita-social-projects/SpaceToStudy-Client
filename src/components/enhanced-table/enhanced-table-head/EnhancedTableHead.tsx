@@ -7,26 +7,46 @@ import TableRow from '@mui/material/TableRow'
 import EnhancedTableHeaderCell from '~/components/enhanced-table/enhanced-table-header-cell/EnhancedTableHeaderCell'
 
 import { styles } from '~/components/enhanced-table/enhanced-table-head/EnhancedTableHead.styles'
+import {
+  TableColumn,
+  TableData,
+  TableItem,
+  TableRowAction,
+  TableSelect,
+  TableSort
+} from '~/types'
 
-const EnhancedTableHead = ({
+export interface EnhancedTableHeadProps<I> {
+  columns: TableColumn<I>[]
+  data: TableData<I>
+  isSelection?: boolean
+  rowsPerPage?: number
+  rowActions?: TableRowAction[]
+  select?: TableSelect<I>
+  sort: TableSort
+}
+
+const EnhancedTableHead = <I extends TableItem>({
   columns,
   data,
   isSelection,
   rowsPerPage,
   rowActions,
-  select = {},
+  select = {} as TableSelect<I>,
   sort
-}) => {
+}: EnhancedTableHeadProps<I>) => {
   const { t } = useTranslation()
   const { selected, createSelectAllHandler } = select
-  const { items, count: itemsCount } = data
+  const { items, count: itemsCount = 0 } = data
 
   const checkboxCell = isSelection && (
     <TableCell padding='checkbox'>
       <Checkbox
         checked={itemsCount > 0 && selected.length === rowsPerPage}
         color='primary'
-        indeterminate={selected.length > 0 && selected.length < rowsPerPage}
+        indeterminate={
+          selected.length > 0 && selected.length < (rowsPerPage ?? 0)
+        }
         onChange={createSelectAllHandler(items)}
       />
     </TableCell>
