@@ -10,7 +10,7 @@ export const styles = {
     display: 'flex',
     width: '100%',
     position: 'absolute',
-    padding: '10px',
+    padding: '20px',
     gap: '10px',
     boxSizing: 'border-box',
     alignItems: 'center',
@@ -33,20 +33,29 @@ export const styles = {
   },
   buttons: {
     display: 'flex',
-    gap: '10px'
+    gap: '16px'
   },
   button: {
-    whiteSpace: 'nowrap'
+    whiteSpace: 'nowrap',
+    padding: '14.5px 30px',
+    width: 'auto',
+    lineHeight: '18.96px'
   },
   bookmarkButton: {
-    color: 'primary.500'
+    color: 'primary.500',
+    padding: '12px 30px',
+    marginLeft: '16px'
   },
   bookmarkButtonText: {
     color: 'primary.500',
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginLeft: '8px'
   },
   buttonsBlock: {
     display: 'flex'
+  },
+  chipsContainer: {
+    marginLeft: '12px'
   }
 }

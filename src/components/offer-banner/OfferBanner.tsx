@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import IconButton from '@mui/material/IconButton'
 import TurnedInNot from '@mui/icons-material/TurnedInNot'
 
 import useBreakpoints from '~/hooks/use-breakpoints'
@@ -14,6 +13,7 @@ import SubjectLevelChips from '~/components/subject-level-chips/SubjectLevelChip
 
 import { ButtonActions, Offer } from '~/types'
 import { styles } from '~/components/offer-banner/OfferBanner.styles'
+import { Button } from '@mui/material'
 
 interface OfferBannerProps {
   offer: Offer
@@ -33,6 +33,8 @@ const OfferBanner: FC<OfferBannerProps> = ({ offer, buttonActions }) => {
           key={elem.label}
           sx={styles.button}
           {...elem.buttonProps}
+          size={null}
+          style={{ lineHeight: '18.96px' }}
         >
           {t(elem.label)}
         </AppButton>
@@ -56,19 +58,20 @@ const OfferBanner: FC<OfferBannerProps> = ({ offer, buttonActions }) => {
               color={category.appearance.color}
               proficiencyLevel={proficiencyLevel}
               subject={subject.name}
+              sx={styles.chipsContainer}
             />
           )}
         </Box>
         <Box sx={styles.buttonsBlock}>
           <Box sx={styles.buttons}>{buttons}</Box>
-          <IconButton data-testid='iconButton' sx={styles.bookmarkButton}>
+          <Button data-testid='iconButton' sx={styles.bookmarkButton}>
             <TurnedInNot />
-          </IconButton>
-          {isLaptopAndAbove && (
-            <Typography sx={styles.bookmarkButtonText}>
-              {t('offerDetailsPage.offerBanner.saveOfferButton')}
-            </Typography>
-          )}
+            {isLaptopAndAbove && (
+              <Typography sx={styles.bookmarkButtonText}>
+                {t('offerDetailsPage.offerBanner.saveOfferButton')}
+              </Typography>
+            )}
+          </Button>
         </Box>
       </AppCard>
     </Box>
