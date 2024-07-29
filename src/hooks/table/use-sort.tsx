@@ -36,3 +36,4 @@ const useSort = ({ initialSort }: UseSortProps): SortHook => {
 }
 
 export default useSort
+export type { Sort }
