@@ -4,13 +4,22 @@ import TableCell from '@mui/material/TableCell'
 import TableSortLabel from '@mui/material/TableSortLabel'
 
 import { styles } from '~/components/enhanced-table/enhanced-table-header-cell/EnhancedTableHeaderCell.styles'
+import { TableColumn, TableItem, TableSort } from '~/types'
 
-const EnhancedTableHeaderCell = ({ column, sort }) => {
+export interface EnhancedTableHeaderCellProps<I> {
+  column: TableColumn<I>
+  sort: TableSort
+}
+
+const EnhancedTableHeaderCell = <I extends TableItem>({
+  column,
+  sort
+}: EnhancedTableHeaderCellProps<I>) => {
   const { t } = useTranslation()
   const { sort: sortParams, onRequestSort } = sort
 
   const createSortHandler = () => {
-    onRequestSort(column.field)
+    onRequestSort(column.field ?? '')
   }
 
   return (
