@@ -9,11 +9,14 @@ vi.mock('~/hooks/use-breakpoints')
 
 const mockNavigate = vi.fn()
 
-vi.mock('react-router-dom', async () => ({
-  ...(await vi.importActual('react-router-dom')),
-  useMatch: () => false,
-  useNavigate: () => mockNavigate
-}))
+vi.mock('react-router-dom', async () => {
+  const actual = await vi.importActual('react-router-dom')
+  return {
+    ...actual,
+    useMatch: () => false,
+    useNavigate: () => mockNavigate
+  }
+})
 
 Object.assign(window.navigator, {
   clipboard: {
@@ -91,6 +94,10 @@ function renderWithBreakpoints(data) {
     </TestSnackbar>
   )
 }
+
+beforeEach(() => {
+  vi.clearAllMocks()
+})
 
 describe('ProfileInfo test in my profile on laptop', () => {
   beforeEach(() => renderWithBreakpoints(laptopData))
