@@ -5,14 +5,15 @@ import {
   mockAxiosClient,
   TestSnackbar
 } from '~tests/test-utils'
-import PasswordSecurityTab from '~/containers/edit-profile/password-security-tab/PasswordSecurityTab'
+import ChangePasswordModal from '~/containers/edit-profile/password-security-tab/change-password-modal/ChangePasswordModal'
 import { AuthService } from '~/services/auth-service'
-
 import { URLs } from '~/constants/request'
 
 const userDataMock = {
   _id: 123456
 }
+
+const handleSubmit = vi.fn()
 
 vi.mock('~/services/auth-service', () => ({
   AuthService: {
@@ -20,46 +21,10 @@ vi.mock('~/services/auth-service', () => ({
   }
 }))
 
-const handleSubmit = vi.fn()
-
-const changeInputValue = (label, value) => {
-  fireEvent.change(label, { target: { value } })
-}
-
-const setupChangePasswordButton = () => {
-  const changePasswordButton = screen.getByText(
-    /editProfilePage.profile.passwordSecurityTab.changePassword/i
-  )
-  return {
-    changePasswordButton
-  }
-}
-const setupChangePasswordFields = () => {
-  const currentPasswordInput = screen.getByLabelText(
-    /editProfilePage.profile.passwordSecurityTab.currentPassword/i
-  )
-  const passwordInput = screen.getByLabelText(
-    /editProfilePage.profile.passwordSecurityTab.newPassword/i
-  )
-  const confirmPasswordInput = screen.getByLabelText(
-    /editProfilePage.profile.passwordSecurityTab.retypePassword/i
-  )
-  const saveButton = screen.getByText(
-    /editProfilePage.profile.passwordSecurityTab.savePassword/i
-  )
-
-  return {
-    currentPasswordInput,
-    passwordInput,
-    confirmPasswordInput,
-    saveButton
-  }
-}
-
-const renderWithMockData = () => {
+const renderChangePasswordModal = () => {
   renderWithProviders(
     <TestSnackbar>
-      <PasswordSecurityTab />
+      <ChangePasswordModal userId={userDataMock._id} />
     </TestSnackbar>,
     {
       preloadedState: {
@@ -72,9 +37,9 @@ const renderWithMockData = () => {
   )
 }
 
-describe('PasswordSecurityTab', () => {
+describe('ChangePasswordModal', () => {
   beforeEach(() => {
-    renderWithMockData()
+    renderChangePasswordModal()
   })
 
   it('should save data after positive response', async () => {
@@ -82,16 +47,18 @@ describe('PasswordSecurityTab', () => {
       .onPatch(`${URLs.auth.changePassword}/${userDataMock._id}`)
       .reply(200)
 
-    const { changePasswordButton } = setupChangePasswordButton()
-
-    fireEvent.click(changePasswordButton)
-
-    const {
-      currentPasswordInput,
-      passwordInput,
-      confirmPasswordInput,
-      saveButton
-    } = setupChangePasswordFields()
+    const currentPasswordInput = screen.getByLabelText(
+      /editProfilePage.profile.passwordSecurityTab.currentPassword/i
+    )
+    const passwordInput = screen.getByLabelText(
+      /editProfilePage.profile.passwordSecurityTab.newPassword/i
+    )
+    const confirmPasswordInput = screen.getByLabelText(
+      /editProfilePage.profile.passwordSecurityTab.retypePassword/i
+    )
+    const saveButton = screen.getByText(
+      /editProfilePage.profile.passwordSecurityTab.savePassword/i
+    )
 
     fireEvent.change(currentPasswordInput, {
       target: { value: '12345qwert' }
@@ -123,20 +90,23 @@ describe('PasswordSecurityTab', () => {
 
   it('should not save data after negative response', async () => {
     mockAxiosClient
-      .onPatch(`${URLs.auth.changePassword}/${userDataMock}`)
+      .onPatch(`${URLs.auth.changePassword}/${userDataMock._id}`)
       .reply(400, {
         message: 'new password cannot be the same as the current one'
       })
-    const { changePasswordButton } = setupChangePasswordButton()
 
-    fireEvent.click(changePasswordButton)
-
-    const {
-      currentPasswordInput,
-      passwordInput,
-      confirmPasswordInput,
-      saveButton
-    } = setupChangePasswordFields()
+    const currentPasswordInput = screen.getByLabelText(
+      /editProfilePage.profile.passwordSecurityTab.currentPassword/i
+    )
+    const passwordInput = screen.getByLabelText(
+      /editProfilePage.profile.passwordSecurityTab.newPassword/i
+    )
+    const confirmPasswordInput = screen.getByLabelText(
+      /editProfilePage.profile.passwordSecurityTab.retypePassword/i
+    )
+    const saveButton = screen.getByText(
+      /editProfilePage.profile.passwordSecurityTab.savePassword/i
+    )
 
     fireEvent.change(currentPasswordInput, {
       target: { value: '12345qwertY' }
@@ -151,19 +121,23 @@ describe('PasswordSecurityTab', () => {
     await waitFor(() => {
       fireEvent.click(saveButton)
     })
+
     expect(handleSubmit).not.toHaveBeenCalled()
   })
 
-  it('should do not save empty fields', async () => {
-    const { changePasswordButton } = setupChangePasswordButton()
-
-    fireEvent.click(changePasswordButton)
-    const {
-      currentPasswordInput,
-      passwordInput,
-      confirmPasswordInput,
-      saveButton
-    } = setupChangePasswordFields()
+  it('should not save empty fields', () => {
+    const currentPasswordInput = screen.getByLabelText(
+      /editProfilePage.profile.passwordSecurityTab.currentPassword/i
+    )
+    const passwordInput = screen.getByLabelText(
+      /editProfilePage.profile.passwordSecurityTab.newPassword/i
+    )
+    const confirmPasswordInput = screen.getByLabelText(
+      /editProfilePage.profile.passwordSecurityTab.retypePassword/i
+    )
+    const saveButton = screen.getByText(
+      /editProfilePage.profile.passwordSecurityTab.savePassword/i
+    )
 
     fireEvent.change(currentPasswordInput, {
       target: { value: '' }
@@ -178,16 +152,12 @@ describe('PasswordSecurityTab', () => {
     fireEvent.click(saveButton)
 
     expect(handleSubmit).not.toHaveBeenCalled()
-
     expect(currentPasswordInput).toHaveValue('')
     expect(passwordInput).toHaveValue('')
     expect(confirmPasswordInput).toHaveValue('')
   })
 
   it('should show visibility icon', async () => {
-    const { changePasswordButton } = setupChangePasswordButton()
-
-    fireEvent.click(changePasswordButton)
     const visibilityOffIcons = screen.getAllByTestId('VisibilityOffIcon')
     const visibilityOffIcon = visibilityOffIcons[0]
     fireEvent.click(visibilityOffIcon)
@@ -201,33 +171,30 @@ describe('PasswordSecurityTab', () => {
   })
 
   it('resets form when discard button is clicked', () => {
-    const { changePasswordButton } = setupChangePasswordButton()
-
-    fireEvent.click(changePasswordButton)
-
-    const { passwordInput } = setupChangePasswordFields()
-    const discardButtonText = screen.getByText('common.cancel')
-
-    changeInputValue(passwordInput, 'oldPassword')
-
-    fireEvent.click(discardButtonText)
-    fireEvent.click(changePasswordButton)
-
-    const cleanedPasswordInput = screen.getByLabelText(
+    const currentPasswordInput = screen.getByLabelText(
       /editProfilePage.profile.passwordSecurityTab.currentPassword/i
     )
+    const passwordInput = screen.getByLabelText(
+      /editProfilePage.profile.passwordSecurityTab.newPassword/i
+    )
+    const confirmPasswordInput = screen.getByLabelText(
+      /editProfilePage.profile.passwordSecurityTab.retypePassword/i
+    )
+    const discardButton = screen.getByText('common.cancel')
 
-    expect(cleanedPasswordInput).toHaveValue('')
+    fireEvent.change(passwordInput, { target: { value: 'oldPassword' } })
+    fireEvent.click(discardButton)
+
+    expect(currentPasswordInput).toHaveValue('')
+    expect(passwordInput).toHaveValue('')
+    expect(confirmPasswordInput).toHaveValue('')
   })
 
   it('updates state when form fields are changed', () => {
-    const { changePasswordButton } = setupChangePasswordButton()
-
-    fireEvent.click(changePasswordButton)
-    const { currentPasswordInput } = setupChangePasswordFields()
-
-    changeInputValue(currentPasswordInput, 'oldPassword')
-
+    const currentPasswordInput = screen.getByLabelText(
+      /editProfilePage.profile.passwordSecurityTab.currentPassword/i
+    )
+    fireEvent.change(currentPasswordInput, { target: { value: 'oldPassword' } })
     expect(currentPasswordInput).toHaveValue('oldPassword')
   })
 })

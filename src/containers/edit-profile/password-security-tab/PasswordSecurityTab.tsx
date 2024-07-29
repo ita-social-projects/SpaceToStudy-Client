@@ -4,8 +4,8 @@ import Box from '@mui/material/Box'
 
 import { useModalContext } from '~/context/modal-context'
 import useChangeUserStatus from '~/hooks/use-change-user-status'
-import PasswordSecurityItem from './password-security-item/PasswordSecurityItem'
-import ChangePasswordModal from './change-password-modal/ChangePasswordModal'
+import PasswordSecurityItem from '~/containers/edit-profile/password-security-tab/password-security-item/PasswordSecurityItem'
+import ChangePasswordModal from '~/containers/edit-profile/password-security-tab/change-password-modal/ChangePasswordModal'
 import AppButton from '~/components/app-button/AppButton'
 
 import { styles } from '~/containers/edit-profile/password-security-tab/PasswordSecurityTab.styles'
