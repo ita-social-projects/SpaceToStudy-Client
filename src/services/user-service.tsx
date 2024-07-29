@@ -33,7 +33,7 @@ export const userService = {
   deleteUser: (userId: string): Promise<AxiosResponse<null>> => {
     return axiosClient.delete(createUrlPath(URLs.users.get, userId))
   },
-  deleteUsers: (userIds: string): Promise<AxiosResponse<null>> => {
+  deleteUsers: (userIds: string[]): Promise<AxiosResponse<null>> => {
     return axiosClient.post(URLs.users.delete, userIds)
   },
   deactivateUser: (userId: string): Promise<AxiosResponse<null>> => {
