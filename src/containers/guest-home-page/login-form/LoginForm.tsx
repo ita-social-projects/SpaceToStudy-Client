@@ -19,7 +19,11 @@ interface LoginFormProps {
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void
   handleChange: (
     name: string
-  ) => (e: React.ChangeEvent<HTMLInputElement>) => void
+  ) => (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | { target: { name: string; value: string | boolean } }
+  ) => void
   handleBlur: (name: string) => (e: React.FocusEvent<HTMLInputElement>) => void
   data: {
     email: string
@@ -50,21 +54,6 @@ const LoginForm: React.FC<LoginFormProps> = ({
 
   const openForgotPassword = () => {
     openModal({ component: <ForgotPassword /> })
-  }
-
-  const handleCheckboxChange = (
-    event: React.SyntheticEvent<Element, Event>,
-    checked: boolean
-  ) => {
-    const target = event.target as HTMLInputElement
-    const changeEvent = {
-      ...event,
-      target: {
-        ...target,
-        value: checked.toString()
-      }
-    } as React.ChangeEvent<HTMLInputElement>
-    handleChange(target.name)(changeEvent)
   }
 
   return (
@@ -98,12 +87,21 @@ const LoginForm: React.FC<LoginFormProps> = ({
 
       <Box sx={styles.loginOptionsContainer}>
         <FormControlLabel
-          control={<Checkbox checked={data.rememberMe} name='rememberMe' />}
+          control={
+            <Checkbox
+              checked={data.rememberMe}
+              name='rememberMe'
+              onChange={(e) =>
+                handleChange('rememberMe')({
+                  ...e,
+                  target: { ...e.target, value: e.target.checked }
+                })
+              }
+            />
+          }
           label={t('login.rememberMe')}
           labelPlacement='end'
-          onChange={handleCheckboxChange}
           sx={styles.checkboxLabel}
-          value={data.rememberMe}
         />
 
         <Typography
