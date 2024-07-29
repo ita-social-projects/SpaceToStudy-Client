@@ -48,3 +48,18 @@ export interface TableData<I> {
   loading?: boolean
   getData?: () => void
 }
+
+export interface TablePaginationProps {
+  page: number
+  pageInput: number | string
+  rowsPerPage: number
+  pageCount: number
+  itemsCount: number
+  handleChangePage: (
+    event: ChangeEvent<unknown> | MouseEvent | null,
+    page: number
+  ) => void
+  handleChangeRowsPerPage: (e: ChangeEvent<HTMLInputElement>) => void
+  handleChangePageInput: (e: ChangeEvent<HTMLInputElement>) => void
+  handlePageSubmit: (maxPages: number) => void
+}
