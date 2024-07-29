@@ -44,7 +44,7 @@ const SubjectsStep = ({ btnsBox }: SubjectsStepProps) => {
   const fetchSubjectHandler = () => setSubjectIsFetched(true)
 
   const getSubjectsNames = useCallback(
-    () => subjectService.getSubjectsNames(subjects.category?._id || null),
+    () => subjectService.getSubjectsNames(subjects.category?._id ?? null),
     [subjects.category]
   )
 
