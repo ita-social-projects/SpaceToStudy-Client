@@ -103,21 +103,19 @@ export enum CourseResourceEventType {
   ResourceUpdated = 'resourceUpdated',
   ResourceRemoved = 'resourceRemoved',
   ResourcesOrderChange = 'resourcesOrderChange',
-  SetSectionResources = 'setSectionResources'
+  AddSectionResources = 'addSectionResources'
 }
 
 export interface ResourceUpdatedEvent {
   type: CourseResourceEventType.ResourceUpdated
   sectionId: string
   resourceId: string
-  resourceType: CourseResource['resourceType']
   resource: Partial<CourseResource>
 }
 
 export interface ResourceRemovedEvent {
   type: CourseResourceEventType.ResourceRemoved
   sectionId: string
-  resourceType: CourseResource['resourceType']
   resourceId: string
 }
 
@@ -127,10 +125,9 @@ export interface ResourcesOrderChangeEvent {
   resources: CourseResource[]
 }
 
-export interface SetSectionResourcesEvent {
-  type: CourseResourceEventType.SetSectionResources
+export interface AddSectionResourcesEvent {
+  type: CourseResourceEventType.AddSectionResources
   sectionId: string
-  resourceType: CourseResource['resourceType']
   resources: CourseResource[]
 }
 
@@ -139,7 +136,7 @@ export type ResourceEventHandler = (
     | ResourceUpdatedEvent
     | ResourceRemovedEvent
     | ResourcesOrderChangeEvent
-    | SetSectionResourcesEvent
+    | AddSectionResourcesEvent
 ) => void
 
 export enum CourseSectionEventType {

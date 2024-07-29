@@ -1,7 +1,7 @@
 import { screen, fireEvent, waitFor } from '@testing-library/react'
-import CooperationActivitiesList from '~/containers/my-cooperations/cooperation-activities-list/CooperationActivitiesList'
 import { renderWithProviders } from '~tests/test-utils'
-import { vi } from 'vitest'
+
+import CooperationActivitiesList from '~/containers/my-cooperations/cooperation-activities-list/CooperationActivitiesList'
 
 const originalDateNow = Date.now
 Date.now = () => 1487076708000
@@ -19,9 +19,7 @@ const mockedCourseData = {
     {
       title: 'Course section1 title',
       description: 'Course section1 description',
-      lessons: [],
-      quizzes: [],
-      attachments: [],
+      activities: [],
       id: '17121748017182'
     }
   ]
@@ -52,26 +50,23 @@ describe('CooperationActivitiesList with section data', () => {
     {
       title: 'Section1',
       description: 'Section1 description',
-      order: ['66183816fb40f35f91bb77ce'],
-      lessons: [
+      activities: [
         {
-          _id: '66183816fb40f35f91bb77ce',
-          title: 'Lesson 1',
-          description: 'Lesson 1 description',
-          content: 'Lesson 1 content',
+          resource: {
+            _id: '66183816fb40f35f91bb77ce',
+            title: 'Lesson 1',
+            description: 'Lesson 1 description',
+            content: 'Lesson 1 content'
+          },
           resourceType: 'lessons'
         }
       ],
-      quizzes: [],
-      attachments: [],
       id: '17121748017180'
     },
     {
       title: 'Section2 title',
       description: 'Section2 description',
-      lessons: [],
-      quizzes: [],
-      attachments: [],
+      activities: [],
       id: '17121748017181'
     }
   ]
@@ -84,7 +79,7 @@ describe('CooperationActivitiesList with section data', () => {
     vi.clearAllMocks()
   })
 
-  it.skip('should add a new section when Add activity button is clicked', async () => {
+  it('should add a new section when Add activity button is clicked', async () => {
     let sections = await screen.findAllByTestId(TestsId.activityContainer)
 
     const [hoverElement] = sections
@@ -102,7 +97,7 @@ describe('CooperationActivitiesList with section data', () => {
     expect(sections.length).toBe(4)
   })
 
-  it.skip('should delete section resource', async () => {
+  it('should delete section resource', async () => {
     await waitFor(() => {
       const deleteResourceBtn = screen.getByTestId(
         TestsId.closeIcon
@@ -117,7 +112,7 @@ describe('CooperationActivitiesList with section data', () => {
     })
   })
 
-  it.skip('should change the activity title', async () => {
+  it('should change the activity title', async () => {
     const titleInput = await screen.findByDisplayValue(
       mockedSectionsData[0].title
     )

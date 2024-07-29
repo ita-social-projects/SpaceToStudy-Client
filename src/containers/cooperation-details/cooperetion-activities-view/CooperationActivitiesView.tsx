@@ -1,20 +1,21 @@
 import { FC, Dispatch, SetStateAction } from 'react'
+
 import Box from '@mui/material/Box'
-import { IconButton } from '@mui/material'
 import EditIcon from '@mui/icons-material/Edit'
+import { IconButton } from '@mui/material'
 
 import CooperationSectionView from '~/components/cooperation-section-view/CooperationSectionView'
-import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
+import { styles } from '~/containers/cooperation-details/cooperetion-activities-view/CooperationActivitiesView.style'
+
 import {
   cooperationsSelector,
   setIsAddedClicked
 } from '~/redux/features/cooperationsSlice'
 
-import { styles } from '~/containers/cooperation-details/cooperetion-activities-view/CooperationActivitiesView.style'
-import { CourseSection, UserRoleEnum } from '~/types'
+import { UserRoleEnum } from '~/types'
+import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 
 interface CooperationActivitiesViewProps {
-  sections: CourseSection[]
   setEditMode: Dispatch<SetStateAction<boolean>>
 }
 
@@ -25,7 +26,7 @@ const CooperationActivitiesView: FC<CooperationActivitiesViewProps> = ({
   const dispatch = useAppDispatch()
 
   const onEdit = () => {
-    setEditMode()
+    setEditMode(true)
     dispatch(setIsAddedClicked(false))
   }
 

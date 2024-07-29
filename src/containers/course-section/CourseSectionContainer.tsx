@@ -44,7 +44,6 @@ import {
   CourseSectionHandlers,
   UpdateAttachmentParams,
   CourseResourceEventType,
-  ResourcesTabsEnum,
   CourseSectionEventType,
   ResourceAvailability
 } from '~/types'
@@ -74,33 +73,37 @@ const CourseSectionContainer: FC<SectionProps> = ({
   const { openMenu, renderMenu, closeMenu } = useMenu()
   const { openModal, closeModal } = useModalContext()
 
-  const [descriptionInput, setDescriptionInput] = useState<string>(
-    sectionData.description
-  )
   const [activeMenu, setActiveMenu] = useState<string>('')
   const [isVisible, setIsVisible] = useState<boolean>(true)
 
   const allResources = useMemo(
-    () =>
-      [
-        ...sectionData.lessons,
-        ...sectionData.quizzes,
-        ...sectionData.attachments
-      ] as CourseResource[],
-    [sectionData.lessons, sectionData.quizzes, sectionData.attachments]
+    () => sectionData.activities.map((activity) => activity.resource),
+    [sectionData.activities]
   )
 
-  const allSectionResources = useMemo(() => {
-    const allResourcesMap = new Map(
-      allResources.map((resource) => [resource._id, resource])
-    )
+  const lessons = useMemo(
+    () =>
+      allResources.filter(
+        (resource) => resource.resourceType === ResourcesTypes.Lessons
+      ) as Lesson[],
+    [allResources]
+  )
 
-    return sectionData.order?.length
-      ? sectionData.order
-          .filter((id) => allResourcesMap.has(id))
-          .map((id) => allResourcesMap.get(id)!)
-      : allResources
-  }, [allResources, sectionData.order])
+  const quizzes = useMemo(
+    () =>
+      allResources.filter(
+        (resource) => resource.resourceType === ResourcesTypes.Quizzes
+      ) as Quiz[],
+    [allResources]
+  )
+
+  const attachments = useMemo(
+    () =>
+      allResources.filter(
+        (resource) => resource.resourceType === ResourcesTypes.Attachments
+      ) as Attachment[],
+    [allResources]
+  )
 
   const handleResourcesSort = useCallback(
     (resources: CourseResource[]) => {
@@ -119,7 +122,6 @@ const CourseSectionContainer: FC<SectionProps> = ({
         type: CourseResourceEventType.ResourceUpdated,
         sectionId: sectionData.id,
         resourceId: resource._id,
-        resourceType: resource.resourceType,
         resource: {
           availability
         }
@@ -132,7 +134,6 @@ const CourseSectionContainer: FC<SectionProps> = ({
     resourceEventHandler?.({
       type: CourseResourceEventType.ResourceRemoved,
       sectionId: sectionData.id,
-      resourceType: resource.resourceType,
       resourceId: resource._id
     })
   }
@@ -148,7 +149,6 @@ const CourseSectionContainer: FC<SectionProps> = ({
         type: CourseResourceEventType.ResourceUpdated,
         sectionId: sectionData.id,
         resourceId: attachment._id,
-        resourceType: ResourcesTabsEnum.Attachments,
         resource: attachment
       })
     }
@@ -198,14 +198,10 @@ const CourseSectionContainer: FC<SectionProps> = ({
     })
   }
 
-  const handleAddResources = <T extends CourseResource>(
-    newResources: T[],
-    type: ResourcesTypes
-  ) => {
+  const handleAddResources = <T extends CourseResource>(newResources: T[]) => {
     resourceEventHandler?.({
-      type: CourseResourceEventType.SetSectionResources,
+      type: CourseResourceEventType.AddSectionResources,
       sectionId: sectionData.id,
-      resourceType: type,
       resources: newResources
     })
   }
@@ -215,13 +211,11 @@ const CourseSectionContainer: FC<SectionProps> = ({
       component: (
         <AddResources<Lesson>
           columns={lessonColumns}
-          onAddResources={(resources) =>
-            handleAddResources(resources, ResourcesTypes.Lessons)
-          }
+          onAddResources={handleAddResources}
           removeColumnRules={removeLessonColumnRules}
           requestService={ResourceService.getUsersLessons}
           resourceType={resourcesData.lessons.resource}
-          resources={sectionData.lessons}
+          resources={lessons}
         />
       )
     })
@@ -232,13 +226,11 @@ const CourseSectionContainer: FC<SectionProps> = ({
       component: (
         <AddResources<Quiz>
           columns={quizColumns}
-          onAddResources={(resources) => {
-            handleAddResources(resources, ResourcesTypes.Quizzes)
-          }}
+          onAddResources={handleAddResources}
           removeColumnRules={removeQuizColumnRules}
           requestService={ResourceService.getQuizzes}
           resourceType={resourcesData.quizzes.resource}
-          resources={sectionData.quizzes}
+          resources={quizzes}
         />
       )
     })
@@ -249,13 +241,11 @@ const CourseSectionContainer: FC<SectionProps> = ({
       component: (
         <AddResources<Attachment>
           columns={attachmentColumns}
-          onAddResources={(resources) =>
-            handleAddResources(resources, ResourcesTypes.Attachments)
-          }
+          onAddResources={handleAddResources}
           removeColumnRules={removeAttachmentColumnRules}
           requestService={ResourceService.getAttachments}
           resourceType={resourcesData.attachments.resource}
-          resources={sectionData.attachments}
+          resources={attachments}
         />
       )
     })
@@ -317,7 +307,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
             fullWidth
             inputProps={styles.input}
             label={
-              descriptionInput
+              sectionData.description
                 ? ''
                 : t('course.courseSection.defaultNewDescription')
             }
@@ -328,15 +318,21 @@ const CourseSectionContainer: FC<SectionProps> = ({
                 event.target.value
               )
             }
-            onChange={(event) => setDescriptionInput(event.target.value)}
-            value={descriptionInput}
+            onChange={(event) =>
+              handleSectionInputChange(
+                sectionData.id,
+                'description',
+                event.target.value
+              )
+            }
+            value={sectionData.description}
             variant={TextFieldVariantEnum.Standard}
           />
           <ResourcesList
             deleteResource={deleteResource}
             editResource={editResource}
             isCooperation={isCooperation}
-            items={allSectionResources}
+            items={allResources}
             sortResources={handleResourcesSort}
             updateAvailability={handleResourceAvailabilityChange}
           />
