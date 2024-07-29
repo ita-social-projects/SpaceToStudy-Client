@@ -1,23 +1,20 @@
 import { useTranslation } from 'react-i18next'
-
 import Box from '@mui/material/Box'
 import Pagination from '@mui/material/Pagination'
 import TablePagination from '@mui/material/TablePagination'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
-
 import AppButton from '~/components/app-button/AppButton'
 import { styles } from '~/components/enhanced-table/enhanced-table-pagination/EnhancedTablePagination.styles'
-
 import { ButtonVariantEnum, TablePaginationProps } from '~/types'
 
 interface EnhancedTablePaginationProps {
   pagination: TablePaginationProps
 }
 
-const EnhancedTablePagination = ({
+const EnhancedTablePagination: React.FC<EnhancedTablePaginationProps> = ({
   pagination
-}: EnhancedTablePaginationProps) => {
+}) => {
   const { t } = useTranslation()
 
   const {
@@ -32,21 +29,22 @@ const EnhancedTablePagination = ({
     handlePageSubmit
   } = pagination
 
-  const PaginationController = (currentPage: number, pageCount: number) => {
-    return (
-      <Box
-        sx={{
-          flexShrink: 0
-        }}
-      >
-        <Pagination
-          count={pageCount}
-          onChange={handleChangePage}
-          page={currentPage}
-        />
-      </Box>
-    )
-  }
+  const PaginationController: React.FC<{
+    currentPage: number
+    pageCount: number
+  }> = ({ currentPage, pageCount }) => (
+    <Box
+      sx={{
+        flexShrink: 0
+      }}
+    >
+      <Pagination
+        count={pageCount}
+        onChange={handleChangePage}
+        page={currentPage}
+      />
+    </Box>
+  )
 
   const getDisplayedRowsLabel = (from: number, to: number, count: number) =>
     `${from}-${to} ${t('table.of')} ${count}`
@@ -54,7 +52,9 @@ const EnhancedTablePagination = ({
   return (
     <Box sx={styles.root}>
       <TablePagination
-        ActionsComponent={() => PaginationController(page, pageCount)}
+        ActionsComponent={() => (
+          <PaginationController currentPage={page} pageCount={pageCount} />
+        )}
         component='div'
         count={itemsCount}
         labelDisplayedRows={({ from, to, count }) =>
