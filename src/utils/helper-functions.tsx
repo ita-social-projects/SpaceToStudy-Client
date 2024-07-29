@@ -206,7 +206,7 @@ export const createUrlPath = (
   query = {}
 ) => {
   let trimmedUrl = URL
-  while (trimmedUrl && trimmedUrl.endsWith('/')) {
+  while (trimmedUrl?.endsWith('/')) {
     trimmedUrl = trimmedUrl.slice(0, -1)
   }
 
