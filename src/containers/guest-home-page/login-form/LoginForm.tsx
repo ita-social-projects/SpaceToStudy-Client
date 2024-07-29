@@ -1,6 +1,5 @@
 import { useTranslation } from 'react-i18next'
 import useInputVisibility from '~/hooks/use-input-visibility'
-import { useAppSelector } from '~/hooks/use-redux'
 
 import Box from '@mui/material/Box'
 import ButtonBase from '@mui/material/ButtonBase'
@@ -14,17 +13,16 @@ import AppTextField from '~/components/app-text-field/AppTextField'
 import AppButton from '~/components/app-button/AppButton'
 
 import { styles } from '~/containers/guest-home-page/login-form/LoginForm.styles'
+import { useAppSelector } from '~/hooks/use-redux'
 
 interface LoginFormProps {
-  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void
+  handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void
   handleChange: (
-    name: string
-  ) => (
-    e:
-      | React.ChangeEvent<HTMLInputElement>
-      | { target: { name: string; value: string | boolean } }
-  ) => void
-  handleBlur: (name: string) => (e: React.FocusEvent<HTMLInputElement>) => void
+    field: string
+  ) => (event: React.SyntheticEvent<Element, Event>) => void
+  handleBlur: (
+    field: string
+  ) => (event: React.FocusEvent<HTMLInputElement>) => void
   data: {
     email: string
     password: string
@@ -87,21 +85,16 @@ const LoginForm: React.FC<LoginFormProps> = ({
 
       <Box sx={styles.loginOptionsContainer}>
         <FormControlLabel
-          control={
-            <Checkbox
-              checked={data.rememberMe}
-              name='rememberMe'
-              onChange={(e) =>
-                handleChange('rememberMe')({
-                  ...e,
-                  target: { ...e.target, value: e.target.checked }
-                })
-              }
-            />
-          }
+          control={<Checkbox />}
           label={t('login.rememberMe')}
           labelPlacement='end'
+          onChange={(event) =>
+            handleChange('rememberMe')(
+              event as React.ChangeEvent<HTMLInputElement>
+            )
+          }
           sx={styles.checkboxLabel}
+          value={data.rememberMe}
         />
 
         <Typography
