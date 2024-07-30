@@ -3,7 +3,6 @@ import reducer, {
   setField,
   updateValidityStatus,
   updateProfileData,
-  updateProfessionalBlock,
   addCategory,
   deleteCategory,
   editCategory,
@@ -33,6 +32,12 @@ const userDataMock = {
     workExperience: 'Experience',
     scientificActivities: 'Activities',
     awards: 'Awards'
+  },
+  notificationSettings: {
+    isOfferStatusNotification: false,
+    isChatNotification: false,
+    isSimilarOffersNotification: false,
+    isEmailNotification: false
   }
 }
 
@@ -46,14 +51,18 @@ const expectedUserData = {
   videoLink: { [UserRoleEnum.Tutor]: 'link', [UserRoleEnum.Student]: '' },
   photo: 'photo_url',
   categories: { [UserRoleEnum.Tutor]: [], [UserRoleEnum.Student]: [] },
-  education: 'Education',
-  workExperience: 'Experience',
-  scientificActivities: 'Activities',
-  awards: 'Awards',
-  isOfferStatusNotification: false,
-  isChatNotification: false,
-  isSimilarOffersNotification: false,
-  isEmailNotification: false,
+  professionalBlock: {
+    education: 'Education',
+    workExperience: 'Experience',
+    scientificActivities: 'Activities',
+    awards: 'Awards'
+  },
+  notificationSettings: {
+    isOfferStatusNotification: false,
+    isChatNotification: false,
+    isSimilarOffersNotification: false,
+    isEmailNotification: false
+  },
   loading: LoadingStatusEnum.Fulfilled,
   error: null,
   tabValidityStatus: {
@@ -71,16 +80,20 @@ const initialState = {
   professionalSummary: '',
   nativeLanguage: '',
   videoLink: { [UserRoleEnum.Tutor]: '', [UserRoleEnum.Student]: '' },
-  photo: null,
+  photo: '',
   categories: { [UserRoleEnum.Tutor]: [], [UserRoleEnum.Student]: [] },
-  education: '',
-  workExperience: '',
-  scientificActivities: '',
-  awards: '',
-  isOfferStatusNotification: false,
-  isChatNotification: false,
-  isSimilarOffersNotification: false,
-  isEmailNotification: false,
+  professionalBlock: {
+    education: '',
+    workExperience: '',
+    scientificActivities: '',
+    awards: ''
+  },
+  notificationSettings: {
+    isOfferStatusNotification: false,
+    isChatNotification: false,
+    isSimilarOffersNotification: false,
+    isEmailNotification: false
+  },
   loading: LoadingStatusEnum.Idle,
   error: null,
   tabValidityStatus: {
@@ -383,27 +396,6 @@ describe('editProfileSlice test', () => {
           photo: 'photo',
           professionalSummary: 'professionalSummary',
           videoLink: 'videoLink'
-        })
-      )
-    ).toEqual(expectedState)
-  })
-
-  it('should updateProfessionalBlock', () => {
-    const expectedState = createState({
-      education: 'test education',
-      workExperience: 'test workExperience',
-      scientificActivities: 'test scientificActivities',
-      awards: 'test awards'
-    })
-
-    expect(
-      reducer(
-        undefined,
-        updateProfessionalBlock({
-          education: 'test education',
-          workExperience: 'test workExperience',
-          scientificActivities: 'test scientificActivities',
-          awards: 'test awards'
         })
       )
     ).toEqual(expectedState)

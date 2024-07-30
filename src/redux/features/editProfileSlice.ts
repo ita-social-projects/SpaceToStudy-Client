@@ -33,7 +33,7 @@ export interface EditProfileState {
   videoLink: DataByRole<string> | string
   photo?: string | UpdatedPhoto | null
   categories: DataByRole<UserMainSubject[]>
-  professionalBlock?: ProfessionalBlock
+  professionalBlock: ProfessionalBlock
   notificationSettings: NotificationSettings
   loading: LoadingStatus
   error: string | null
@@ -42,6 +42,13 @@ export interface EditProfileState {
     professionalInfoTab: boolean
     notificationTab: boolean
   }
+}
+
+export const initialProfessoinalBlock: ProfessionalBlock = {
+  education: '',
+  workExperience: '',
+  scientificActivities: '',
+  awards: ''
 }
 
 const initialState: EditProfileState = {
@@ -54,12 +61,7 @@ const initialState: EditProfileState = {
   videoLink: { [UserRoleEnum.Tutor]: '', [UserRoleEnum.Student]: '' },
   photo: '',
   categories: { [UserRoleEnum.Tutor]: [], [UserRoleEnum.Student]: [] },
-  professionalBlock: {
-    education: '',
-    workExperience: '',
-    scientificActivities: '',
-    awards: ''
-  },
+  professionalBlock: initialProfessoinalBlock,
   notificationSettings: {
     isOfferStatusNotification: false,
     isChatNotification: false,
@@ -101,7 +103,7 @@ const updateStateFromPayload = (
   state.photo = photo
   state.videoLink = videoLink
   state.categories = mainSubjects
-  state.professionalBlock = professionalBlock
+  state.professionalBlock = professionalBlock || initialProfessoinalBlock
   state.notificationSettings = notificationSettings
 }
 
