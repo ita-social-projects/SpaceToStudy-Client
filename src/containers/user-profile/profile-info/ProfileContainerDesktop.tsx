@@ -17,7 +17,7 @@ interface ProfileContainerDesktopProps {
   accInfo: ReactNode
   buttonGroup: ReactNode
   defaultQuantity: number
-  doneItems: number
+  doneItems: { title: string; description: string }
   userData: UserResponse
   chipItems: string[]
 }
