@@ -53,6 +53,10 @@ export interface SubjectInterface {
 }
 
 export interface SubjectNameInterface {
+  category: Pick<CategoryInterface, '_id' | 'appearance'>
+  totalOffers: DataByRole<number>
+  createdAt: string
+  updatedAt: string
   _id: string
   name: string
 }
