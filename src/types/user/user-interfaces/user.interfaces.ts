@@ -9,7 +9,8 @@ import {
   UpdatedPhoto,
   UpdateFields,
   UserStatusEnum,
-  UserMainSubject
+  UserMainSubject,
+  NotificationSettings
 } from '~/types'
 
 export interface LocalStorage {
@@ -48,6 +49,7 @@ export interface UserResponse {
   videoLink: DataByRole<string>
   professionalBlock?: ProfessionalBlock
   status: DataByRole<UserStatusEnum>
+  notificationSettings: NotificationSettings
 }
 
 export interface ProfessionalBlock {

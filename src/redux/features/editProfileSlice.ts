@@ -10,6 +10,7 @@ import {
   EditProfileForm,
   ErrorResponse,
   MainUserRole,
+  NotificationSettings,
   ProfessionalBlock,
   SubjectNameInterface,
   UpdatedPhoto,
@@ -22,7 +23,7 @@ import {
 } from '~/types'
 import { userService } from '~/services/user-service'
 
-interface EditProfileState {
+export interface EditProfileState {
   firstName: string
   lastName: string
   country: string | null
@@ -32,14 +33,8 @@ interface EditProfileState {
   videoLink: DataByRole<string> | string
   photo?: string | UpdatedPhoto | null
   categories: DataByRole<UserMainSubject[]>
-  education?: string
-  workExperience?: string
-  scientificActivities?: string
-  awards?: string
-  isOfferStatusNotification: boolean
-  isChatNotification: boolean
-  isSimilarOffersNotification: boolean
-  isEmailNotification: boolean
+  professionalBlock?: ProfessionalBlock
+  notificationSettings: NotificationSettings
   loading: LoadingStatus
   error: string | null
   tabValidityStatus: {
@@ -59,14 +54,18 @@ const initialState: EditProfileState = {
   videoLink: { [UserRoleEnum.Tutor]: '', [UserRoleEnum.Student]: '' },
   photo: '',
   categories: { [UserRoleEnum.Tutor]: [], [UserRoleEnum.Student]: [] },
-  education: '',
-  workExperience: '',
-  scientificActivities: '',
-  awards: '',
-  isOfferStatusNotification: false,
-  isChatNotification: false,
-  isSimilarOffersNotification: false,
-  isEmailNotification: false,
+  professionalBlock: {
+    education: '',
+    workExperience: '',
+    scientificActivities: '',
+    awards: ''
+  },
+  notificationSettings: {
+    isOfferStatusNotification: false,
+    isChatNotification: false,
+    isSimilarOffersNotification: false,
+    isEmailNotification: false
+  },
   loading: LoadingStatusEnum.Idle,
   error: null,
   tabValidityStatus: {
@@ -89,8 +88,10 @@ const updateStateFromPayload = (
     photo,
     videoLink,
     mainSubjects,
-    professionalBlock
+    professionalBlock,
+    notificationSettings
   } = payload
+
   state.firstName = firstName
   state.lastName = lastName
   state.country = address?.country ?? null
@@ -100,10 +101,8 @@ const updateStateFromPayload = (
   state.photo = photo
   state.videoLink = videoLink
   state.categories = mainSubjects
-  state.education = professionalBlock?.education
-  state.workExperience = professionalBlock?.workExperience
-  state.scientificActivities = professionalBlock?.scientificActivities
-  state.awards = professionalBlock?.awards
+  state.professionalBlock = professionalBlock
+  state.notificationSettings = notificationSettings
 }
 
 export const fetchUserById = createAsyncThunk(
@@ -183,17 +182,6 @@ const editProfileSlice = createSlice({
       state.photo = photo
       state.professionalSummary = professionalSummary
       state.videoLink = videoLink
-    },
-    updateProfessionalBlock: (
-      state,
-      action: PayloadAction<ProfessionalBlock>
-    ) => {
-      const { education, workExperience, scientificActivities, awards } =
-        action.payload
-      state.education = education
-      state.workExperience = workExperience
-      state.scientificActivities = scientificActivities
-      state.awards = awards
     },
     addCategory: (
       state,
@@ -338,7 +326,6 @@ export const {
   setField,
   updateValidityStatus,
   updateProfileData,
-  updateProfessionalBlock,
   addCategory,
   editCategory,
   updateCategory,

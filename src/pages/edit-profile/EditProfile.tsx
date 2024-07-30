@@ -16,31 +16,77 @@ import SidebarMenu from '~/components/sidebar-menu/SidebarMenu'
 import {
   ButtonVariantEnum,
   SizeEnum,
+  UpdateUserParams,
   UserProfileTabsEnum,
   UserRole
 } from '~/types'
 import { tabsData } from '~/pages/edit-profile/EditProfile.constants'
 
 import { styles } from '~/pages/edit-profile/EditProfile.styles'
-import { fetchUserById } from '~/redux/features/editProfileSlice'
+import {
+  fetchUserById,
+  updateUser,
+  EditProfileState
+} from '~/redux/features/editProfileSlice'
 import { LoadingStatusEnum } from '~/redux/redux.constants'
 import { updatedDiff } from 'deep-object-diff'
 
 const EditProfile = () => {
-  const { t } = useTranslation()
-  const dispatch = useAppDispatch()
-  const { loading, ...profileState } = useAppSelector(
-    (state) => state.editProfile
-  )
-
   const [initialEditProfileState, setInitialEditProfileState] = useState<
     typeof profileState | null
   >(null)
+
   const [searchParams, setSearchParams] = useSearchParams({
     tab: UserProfileTabsEnum.Profile
   })
 
   const activeTab = searchParams.get('tab') as UserProfileTabsEnum
+
+  const { t } = useTranslation()
+
+  const dispatch = useAppDispatch()
+  const { loading, ...profileState } = useAppSelector(
+    (state) => state.editProfile
+  )
+
+  const { userId, userRole } = useAppSelector((state) => state.appMain)
+
+  const { checkConfirmation } = useConfirm()
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await dispatch(
+        fetchUserById({ userId, role: userRole as UserRole, isEdit: true })
+      )
+    }
+    void fetchData()
+  }, [dispatch, userId, userRole])
+
+  useEffect(() => {
+    if (
+      loading === LoadingStatusEnum.Fulfilled &&
+      initialEditProfileState === null
+    ) {
+      setInitialEditProfileState(structuredClone(profileState))
+    }
+  }, [loading, profileState, initialEditProfileState])
+
+  const changedFields = useMemo<Partial<EditProfileState>>(() => {
+    if (!initialEditProfileState || !profileState) return {}
+
+    // TODO: because of different videolink types in editProfileSlice.ts and ProfileTab.tsx, we have a hot solution below to compare states without videolink. later, we need to fix it
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { videoLink, ...initialData } = initialEditProfileState
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { videoLink: videoLinkCurrent, ...currentData } = profileState
+
+    return updatedDiff(initialData, currentData)
+  }, [profileState, initialEditProfileState])
+
+  const isChanged = useMemo<boolean>(
+    () => Boolean(Object.values(changedFields).length),
+    [changedFields]
+  )
 
   const handleClick = async (tab: UserProfileTabsEnum) => {
     if (activeTab === tab) return
@@ -56,61 +102,48 @@ const EditProfile = () => {
     }
   }
 
-  const { userId, userRole } = useAppSelector((state) => state.appMain)
+  const handleUpdateUser = async (): Promise<void> => {
+    const { country, city } = profileState
+    const {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      photo,
+      videoLink,
+      notificationSettings,
+      professionalBlock,
+      ...rest
+    } = changedFields
 
-  useEffect(() => {
-    const fetchData = async () => {
-      await dispatch(
-        fetchUserById({ userId, role: userRole as UserRole, isEdit: true })
-      )
-    }
-    void fetchData()
-  }, [dispatch, userId, userRole])
+    const dataToUpdate: UpdateUserParams = rest
 
-  const { checkConfirmation } = useConfirm()
+    if (city && country)
+      dataToUpdate.address = {
+        city,
+        country
+      }
 
-  useEffect(() => {
-    if (
-      loading === LoadingStatusEnum.Fulfilled &&
-      initialEditProfileState === null
-    ) {
-      setInitialEditProfileState(structuredClone(profileState))
-      console.log('Setting initial state:', profileState)
-    }
-  }, [loading, profileState, initialEditProfileState])
+    if (videoLink === 'string') dataToUpdate.videoLink = videoLink
+    else if (videoLink)
+      dataToUpdate.videoLink = videoLink[userRole as keyof typeof videoLink]
 
-  const isChanged = useMemo<boolean>(() => {
-    if (!initialEditProfileState || !profileState) return false
+    if (notificationSettings)
+      dataToUpdate.notificationSettings = profileState.notificationSettings
 
-    // TODO: because of different videolink types in editProfileSlice.ts and ProfileTab.tsx, we have a hot solution below to compare states without videolink. later, we need to fix it
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { videoLink, ...initialData } = initialEditProfileState
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { videoLink: videoLinkCurrent, ...currentData } = profileState
+    if (professionalBlock)
+      dataToUpdate.professionalBlock = profileState.professionalBlock
 
-    const changedFields = updatedDiff(initialData, currentData)
+    await dispatch(
+      updateUser({
+        userId,
+        params: dataToUpdate
+      })
+    )
+  }
 
-    const isChanged = Boolean(Object.values(changedFields).length)
-
-    console.log('changed fields', changedFields)
-    console.log('isChanged', isChanged)
-
-    return isChanged
-  }, [profileState, initialEditProfileState])
-
-  useEffect(() => {
-    console.log('isChanged:', {
-      isChanged,
-      profileState,
-      initialEditProfileState
-    })
-  }, [isChanged, profileState, initialEditProfileState])
+  const cooperationContent = activeTab && tabsData[activeTab]?.content
 
   if (loading === LoadingStatusEnum.Pending) {
     return <Loader pageLoad size={70} />
   }
-
-  const cooperationContent = activeTab && tabsData[activeTab]?.content
 
   return (
     <PageWrapper>
@@ -126,6 +159,7 @@ const EditProfile = () => {
         <AppButton
           component={Link}
           disabled={!isChanged}
+          onClick={() => void handleUpdateUser()}
           size={SizeEnum.Large}
           sx={styles.updateBtn}
           variant={ButtonVariantEnum.Tonal}
