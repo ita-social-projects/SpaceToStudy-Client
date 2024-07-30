@@ -62,10 +62,11 @@ describe('AddProfessionalCategoryModal without initial value', () => {
     const professionalSubject = screen.getByLabelText(
       /editProfilePage.profile.professionalTab.subject/
     )
+    console.log('Professional Subject:', professionalSubject)
     expect(professionalSubject).toHaveValue(professionalSubjectTemplate.name)
   })
 
-  it('should add one more subject group if "Add one more subject" button in clicked', () => {
+  it('should add one more subject group if "Add one more subject" button is clicked', () => {
     const button = screen.getByText(
       /editProfilePage.profile.professionalTab.addCategoryModal.addSubjectBtn/
     )
@@ -78,6 +79,7 @@ describe('AddProfessionalCategoryModal without initial value', () => {
     const professionalSubjects = screen.getAllByLabelText(
       /editProfilePage.profile.professionalTab.subject/
     )
+    console.log('Professional Subjects:', professionalSubjects)
     expect(professionalSubjects).toHaveLength(3)
   })
 
@@ -85,12 +87,11 @@ describe('AddProfessionalCategoryModal without initial value', () => {
     const categoryAutocomplete = screen.getByLabelText(
       /editProfilePage.profile.professionalTab.mainStudyCategory/
     )
-    const professionalSubjects = screen.getByLabelText(
-      /editProfilePage.profile.professionalTab.subject/
-    )
-
     await selectOption(categoryAutocomplete, 'Cooking')
-    await selectOption(professionalSubjects, 'Varenychky')
+    await waitFor(() => {
+      console.log('Varenychky Element:', screen.queryByText(/Varenychky/))
+      expect(screen.queryByText(/Varenychky/)).toBeInTheDocument()
+    })
   })
 
   it('should update only the subject with matching index and not others', async () => {
@@ -108,7 +109,10 @@ describe('AddProfessionalCategoryModal without initial value', () => {
     await selectOption(professionalSubjects[0], 'Gastronomy')
     await selectOption(professionalSubjects[1], 'Varenychky')
 
-    expect(professionalSubjects[0]).toHaveValue('Gastronomy')
+    await waitFor(() => {
+      console.log('Subject 0 Value:', professionalSubjects[0].value)
+      expect(professionalSubjects[0]).toHaveValue('Gastronomy')
+    })
   })
 
   it('button "Save changes" should be disabled if subject field is empty', async () => {
@@ -154,6 +158,7 @@ describe('AddProfessionalCategoryModal with initial value', () => {
     )
     await waitFor(() => {
       initialValues.subjects.forEach((subject, index) => {
+        console.log('Subject Value:', professionalSubjects[index].value)
         expect(professionalSubjects[index]).toHaveValue(subject.name)
       })
     })
