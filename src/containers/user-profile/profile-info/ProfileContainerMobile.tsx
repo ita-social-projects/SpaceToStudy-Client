@@ -17,7 +17,7 @@ interface ProfileContainerMobileProps {
   accInfo: ReactNode
   buttonGroup: ReactNode
   defaultQuantity: number
-  doneItems: { title: string; description: string }
+  doneItems: { title: string; description: string }[]
   userData: UserResponse
   chipItems: string[]
 }
