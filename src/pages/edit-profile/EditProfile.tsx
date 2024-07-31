@@ -75,7 +75,9 @@ const EditProfile = () => {
   const changedFields = useMemo<Partial<EditProfileState>>(() => {
     if (!initialEditProfileState || !profileState) return {}
 
-    // TODO: because of different videolink types in editProfileSlice.ts and ProfileTab.tsx, we have a hot solution below to compare states without videolink. later, we need to fix it
+    // TODO: because of different videolink types in editProfileSlice.ts and ProfileTab.tsx,
+    // we have a hot solution below to compare states without videolink.
+    // We need to fix videolink types and also save it on Update click
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { videoLink, ...initialData } = initialEditProfileState
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
