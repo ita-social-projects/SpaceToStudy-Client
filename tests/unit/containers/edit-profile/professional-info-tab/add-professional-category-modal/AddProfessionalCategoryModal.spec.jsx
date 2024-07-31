@@ -58,6 +58,25 @@ describe('AddProfessionalCategoryModal without initial value', () => {
     })
   })
 
+  it('should update the correct subject when changing value', async () => {
+    const categoryAutocomplete = screen.getByLabelText(
+      /editProfilePage.profile.professionalTab.mainStudyCategory/
+    )
+    const professionalSubjects = screen.getAllByLabelText(
+      /editProfilePage.profile.professionalTab.subject/
+    )
+
+    await selectOption(categoryAutocomplete, 'Cooking')
+
+    await act(async () => {
+      fireEvent.change(professionalSubjects[0], {
+        target: { value: 'Updated Gastronomy' }
+      })
+    })
+
+    expect(professionalSubjects[0].value).toBe('Updated Gastronomy')
+  })
+
   it('should render SubjectGroup using template in (modal create mode)', async () => {
     const professionalSubject = screen.getByLabelText(
       /editProfilePage.profile.professionalTab.subject/
@@ -128,9 +147,9 @@ describe('AddProfessionalCategoryModal without initial value', () => {
   })
 
   it('button "Save changes" should be disabled if subject field is empty', async () => {
-    const submitButton = screen.getByRole('button', {
-      name: /editProfilePage.profile.professionalTab.addCategoryModal.submitBtn/
-    })
+    const submitButton = screen.getByText(
+      /editProfilePage.profile.professionalTab.addCategoryModal.submitBtn/
+    )
     const categoryAutocomplete = screen.getByLabelText(
       /editProfilePage.profile.professionalTab.mainStudyCategory/
     )
@@ -195,9 +214,9 @@ describe('AddProfessionalCategoryModal with initial value', () => {
   })
 
   it('should close modal when form is submitted', async () => {
-    const submitButton = screen.getByRole('button', {
-      name: /editProfilePage.profile.professionalTab.addCategoryModal.submitBtn/
-    })
+    const submitButton = screen.getByText(
+      /editProfilePage.profile.professionalTab.addCategoryModal.submitBtn/
+    )
     await act(async () => {
       fireEvent.click(submitButton)
     })
