@@ -204,4 +204,34 @@ describe('AddProfessionalCategoryModal with initial value', () => {
 
     expect(mockCloseModal).toHaveBeenCalled()
   })
+
+  it('should render correctly with empty blockedCategoriesOptions', async () => {
+    renderWithProviders(
+      <AddProfessionalCategoryModal
+        blockedCategoriesOptions={[]}
+        closeModal={mockCloseModal}
+      />
+    )
+
+    const categoryAutocomplete = screen.getByLabelText(
+      /editProfilePage.profile.professionalTab.mainStudyCategory/
+    )
+
+    expect(categoryAutocomplete).toBeInTheDocument()
+  })
+
+  it('should show error message if API call fails', async () => {
+    mockAxiosClient.onGet(URLs.categories.getNames).reply(500)
+    renderWithProviders(
+      <AddProfessionalCategoryModal
+        blockedCategoriesOptions={mockedBlockedCategory}
+        closeModal={mockCloseModal}
+      />
+    )
+
+    await waitFor(() => {
+      const errorMessage = screen.getByText(/error/i)
+      expect(errorMessage).toBeInTheDocument()
+    })
+  })
 })
