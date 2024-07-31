@@ -128,9 +128,9 @@ describe('AddProfessionalCategoryModal without initial value', () => {
   })
 
   it('button "Save changes" should be disabled if subject field is empty', async () => {
-    const submitButton = screen.getByText(
-      /editProfilePage.profile.professionalTab.addCategoryModal.submitBtn/
-    )
+    const submitButton = screen.getByRole('button', {
+      name: /editProfilePage.profile.professionalTab.addCategoryModal.submitBtn/
+    })
     const categoryAutocomplete = screen.getByLabelText(
       /editProfilePage.profile.professionalTab.mainStudyCategory/
     )
@@ -195,9 +195,9 @@ describe('AddProfessionalCategoryModal with initial value', () => {
   })
 
   it('should close modal when form is submitted', async () => {
-    const submitButton = screen.getByText(
-      /editProfilePage.profile.professionalTab.addCategoryModal.submitBtn/
-    )
+    const submitButton = screen.getByRole('button', {
+      name: /editProfilePage.profile.professionalTab.addCategoryModal.submitBtn/
+    })
     await act(async () => {
       fireEvent.click(submitButton)
     })
