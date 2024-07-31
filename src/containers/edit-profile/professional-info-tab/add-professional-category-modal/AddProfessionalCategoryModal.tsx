@@ -76,7 +76,7 @@ function SubjectGroup({
           fullWidth
           getOptionDisabled={handleDisableOptions}
           labelField='name'
-          onChange={(_, value) => handleChange(value!)}
+          onChange={(_, value) => handleChange(value || {})}
           service={getSubjectsNames}
           textFieldProps={{
             label: `${t('editProfilePage.profile.professionalTab.subject')}*`
