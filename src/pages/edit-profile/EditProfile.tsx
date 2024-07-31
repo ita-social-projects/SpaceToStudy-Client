@@ -120,7 +120,6 @@ const EditProfile = () => {
       return {}
     }
   }, [profileState, initialEditProfileState])
-  console.log('changedFields', changedFields)
 
   const isChanged = useMemo<boolean>(
     () => Object.keys(changedFields).length > 0,
