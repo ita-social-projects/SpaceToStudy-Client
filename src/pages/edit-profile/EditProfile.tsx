@@ -83,7 +83,6 @@ const EditProfile = () => {
 
     return diff(initialData, currentData)
   }, [profileState, initialEditProfileState])
-  console.log('changedFields', changedFields)
 
   const isChanged = useMemo<boolean>(
     () => Boolean(Object.values(changedFields).length),
