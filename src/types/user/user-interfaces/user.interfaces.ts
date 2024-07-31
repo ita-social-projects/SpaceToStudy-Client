@@ -67,7 +67,7 @@ export interface UserGeneralInfo
 
 export interface UpdateUserParams
   extends Partial<Pick<UserResponse, UpdateFields>> {
-  mainSubjects?: Partial<UserMainSubject>
+  mainSubjects?: DataByRole<UserMainSubject[]>
   videoLink?: string
   photo?: UpdatedPhoto | null
 }

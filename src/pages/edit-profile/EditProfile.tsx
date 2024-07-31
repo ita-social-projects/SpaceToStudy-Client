@@ -29,7 +29,7 @@ import {
   EditProfileState
 } from '~/redux/features/editProfileSlice'
 import { LoadingStatusEnum } from '~/redux/redux.constants'
-import { updatedDiff } from 'deep-object-diff'
+import { diff } from 'deep-object-diff'
 
 const EditProfile = () => {
   const [initialEditProfileState, setInitialEditProfileState] = useState<
@@ -45,6 +45,7 @@ const EditProfile = () => {
   const { t } = useTranslation()
 
   const dispatch = useAppDispatch()
+
   const { loading, ...profileState } = useAppSelector(
     (state) => state.editProfile
   )
@@ -80,8 +81,9 @@ const EditProfile = () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { videoLink: videoLinkCurrent, ...currentData } = profileState
 
-    return updatedDiff(initialData, currentData)
+    return diff(initialData, currentData)
   }, [profileState, initialEditProfileState])
+  console.log('changedFields', changedFields)
 
   const isChanged = useMemo<boolean>(
     () => Boolean(Object.values(changedFields).length),
@@ -105,11 +107,18 @@ const EditProfile = () => {
   const handleUpdateUser = async (): Promise<void> => {
     const { country, city } = profileState
     const {
+      // TODO: we remove 'photo' from the changed fields because:
+      // 1 - we should deal with its types. It expects to be string in fact, when the photo is uploaded, we received an object.
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       photo,
       videoLink,
       notificationSettings,
       professionalBlock,
+      // TODO: we remove 'categories' from the changed fields because:
+      // 1 - we should create thunk for categories update in editProfileSlice;
+      // 2 - we should create an endpoint for categories update on back end in services/user.js
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      categories,
       ...rest
     } = changedFields
 
