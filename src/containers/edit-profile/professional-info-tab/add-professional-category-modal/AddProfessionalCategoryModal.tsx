@@ -57,7 +57,7 @@ function SubjectGroup({
   )
 
   const handleDisableOptions = (option: Partial<SubjectInterface>) => {
-    return disableOptions.some((subject) => subject._id === option._id)
+    return disableOptions.some((subjects) => subjects._id === option._id)
   }
 
   return (
@@ -132,18 +132,34 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
         })
       )
     } else {
+      // Ensure all necessary fields are populated
       const categoryToAdd: UserMainSubject = {
         _id: uuidv4(),
         isDeletionBlocked,
         ...data
       }
-      dispatch(
-        addCategory({
-          category: categoryToAdd,
-          userRole: userRoleCategory
-        })
-      )
+
+      if (!categoryToAdd.category?._id || !categoryToAdd.subjects.length) {
+        console.error(
+          'Required fields are missing for the new category:',
+          categoryToAdd
+        )
+        return
+      }
+
+      try {
+        dispatch(
+          addCategory({
+            category: categoryToAdd,
+            userRole: userRoleCategory
+          })
+        )
+      } catch (error) {
+        console.error('Failed to add category:', error)
+        // Optionally, show an error message to the user
+      }
     }
+
     closeModal()
   }
 
@@ -201,7 +217,7 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
   const handleBlockOption = (option: CategoryNameInterface) => {
     const isCurrent = option._id !== data.category?._id
     const isBlocked = blockedCategoriesOptions.some(
-      (mainSubject) => mainSubject.category?._id === option._id
+      (mainSubjects) => mainSubjects.category?._id === option._id
     )
     return isBlocked && isCurrent
   }
