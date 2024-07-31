@@ -132,34 +132,18 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
         })
       )
     } else {
-      // Ensure all necessary fields are populated
       const categoryToAdd: UserMainSubject = {
         _id: uuidv4(),
         isDeletionBlocked,
         ...data
       }
-
-      if (!categoryToAdd.category?._id || !categoryToAdd.subjects.length) {
-        console.error(
-          'Required fields are missing for the new category:',
-          categoryToAdd
-        )
-        return
-      }
-
-      try {
-        dispatch(
-          addCategory({
-            category: categoryToAdd,
-            userRole: userRoleCategory
-          })
-        )
-      } catch (error) {
-        console.error('Failed to add category:', error)
-        // Optionally, show an error message to the user
-      }
+      dispatch(
+        addCategory({
+          category: categoryToAdd,
+          userRole: userRoleCategory
+        })
+      )
     }
-
     closeModal()
   }
 
