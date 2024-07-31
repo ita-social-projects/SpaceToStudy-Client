@@ -81,7 +81,7 @@
     "eslint-plugin-typescript": "^0.14.0",
     "eslint-plugin-vitest-globals": "^1.5.0",
     "globals": "^15.8.0",
-    "husky": "^8.0.3",
+    "husky": "^9.1.2",
     "jsdom": "^22.1.0",
     "lint-staged": "^15.0.2",
     "prettier": "^3.0.3",
@@ -103,7 +103,7 @@
     "lint-fix": "eslint src/**/*.{js,jsx,ts,tsx} --fix",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook -o build-story",
-    "prepare": "husky install",
+    "prepare": "husky",
     "pre-commit": "lint-staged",
     "compile-scss": "node src/scss/src/scripts/compile-scss.js --logger"
   },
