@@ -101,9 +101,9 @@ const Subjects = () => {
       subjects.map((item: SubjectInterface) => {
         return (
           <CardWithLink
-            description={`${item.totalOffers[oppositeRole]} ${t(
-              'categoriesPage.offers'
-            )}`}
+            description={t('categoriesPage.offerCount', {
+              count: item.totalOffers[oppositeRole]
+            })}
             icon={item.category.appearance.icon}
             iconColor={item.category.appearance.color}
             key={item._id}
