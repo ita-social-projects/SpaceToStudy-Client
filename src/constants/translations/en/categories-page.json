@@ -5,7 +5,8 @@
   "showAllOffers": "Show all offers",
   "searchLabel": "What would you like to learn?",
   "viewMore": "View more",
-  "offers": "offers",
+  "offerCount_one": "{{count}} offer",
+  "offerCount_other": "{{count}} offers",
   "newSubject": {
     "successMessage": "Request send successfully",
     "title": "Request a new study",
