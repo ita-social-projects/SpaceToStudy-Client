@@ -14,6 +14,19 @@ import {
   errorCode
 } from './redux.variables'
 
+vi.mock('~/utils/helper-functions', async () => {
+  const actual = await vi.importActual('~/utils/helper-functions')
+  return {
+    ...actual,
+    parseJwt: vi.fn(() => ({
+      id: stateAfterLogin.userId,
+      role: stateAfterLogin.userRole,
+      isFirstLogin: stateAfterLogin.isFirstLogin,
+      status: stateAfterLogin.userStatus
+    }))
+  }
+})
+
 const error = new Error(errorMessage)
 error.code = errorCode
 
