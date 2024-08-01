@@ -1,7 +1,6 @@
 import NoteAltOutlinedIcon from '@mui/icons-material/NoteAltOutlined'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import i18n from 'i18next'
 
 import {
   AdditionalPropsInterface,
@@ -40,28 +39,13 @@ export const columns: TableColumn<Quiz>[] = [
     field: 'questions',
     calculatedCellValue: (item: Quiz, { t }: AdditionalPropsInterface) => {
       const amountQuestions = item.items.length
-      let questionText
-
-      if (i18n.language == 'en') {
-        questionText =
-          amountQuestions === 1
-            ? t(`myResourcesPage.quizzes.question`)
-            : t(`myResourcesPage.quizzes.questions`)
-      } else if (i18n.language == 'uk') {
-        const singularFormNumbers = [1, 2, 3, 4]
-        const teenPluralFormNumbers = [11, 12, 13, 14]
-
-        questionText =
-          singularFormNumbers.includes(amountQuestions % 10) &&
-          !teenPluralFormNumbers.includes(amountQuestions % 100)
-            ? t(`myResourcesPage.quizzes.question`)
-            : t(`myResourcesPage.quizzes.questionPlural`)
-      }
+      // const questionText = t(`myResourcesPage.quizzes.question`)
 
       return (
         <Typography sx={styles.amountQuestions}>
-          {amountQuestions}
-          {` ${questionText}`}
+          {t('myResourcesPage.quizzes.questionCount', {
+            count: amountQuestions
+          })}
         </Typography>
       )
     }
