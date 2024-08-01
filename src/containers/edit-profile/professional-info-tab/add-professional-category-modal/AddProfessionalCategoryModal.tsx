@@ -49,7 +49,7 @@ function SubjectGroup({
   selectedCategory,
   disableOptions,
   handleSubjectDelete
-}: SubjectGroupProps) {
+}: Readonly<SubjectGroupProps>) {
   const { t } = useTranslation()
 
   const getSubjectsNames = useCallback(
