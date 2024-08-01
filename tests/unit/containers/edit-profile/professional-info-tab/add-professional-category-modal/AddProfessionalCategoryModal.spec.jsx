@@ -224,3 +224,36 @@ describe('AddProfessionalCategoryModal with initial value', () => {
     expect(mockCloseModal).toHaveBeenCalled()
   })
 })
+
+describe('AddProfessionalCategoryModal Subject Updates', () => {
+  beforeEach(async () => {
+    await waitFor(() => {
+      renderWithProviders(
+        <AddProfessionalCategoryModal
+          blockedCategoriesOptions={mockedBlockedCategory}
+          closeModal={mockCloseModal}
+          initialValues={initialValues}
+          isEdit
+        />
+      )
+    })
+  })
+
+  it('should update only the specific subject when changing value', async () => {
+    const categoryAutocomplete = screen.getByLabelText(
+      /editProfilePage.profile.professionalTab.mainStudyCategory/
+    )
+    const professionalSubjects = screen.getAllByLabelText(
+      /editProfilePage.profile.professionalTab.subject/
+    )
+
+    await selectOption(categoryAutocomplete, 'Cooking')
+    await act(async () => {
+      fireEvent.change(professionalSubjects[0], {
+        target: { value: 'Gastronomy' }
+      })
+    })
+    expect(screen.getByDisplayValue('Gastronomy')).toBeInTheDocument()
+    expect(professionalSubjects[1].value).toBe('Varenychky')
+  })
+})
