@@ -43,6 +43,7 @@
     "title": "Title",
     "question": "Question",
     "questions": "Questions",
+    "questionPlural": "Questions",
     "updated": "Last updates",
     "emptyItems": "You have no quizzes yet",
     "confirmDeletionTitle": "Do you confirm quiz deletion?",
