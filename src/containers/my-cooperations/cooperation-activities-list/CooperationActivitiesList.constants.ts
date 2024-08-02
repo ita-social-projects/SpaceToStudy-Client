@@ -4,5 +4,5 @@ export const initialCooperationSectionData: CourseSection = {
   id: '',
   title: '',
   description: '',
-  activities: []
+  resources: []
 }

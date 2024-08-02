@@ -77,8 +77,8 @@ const CourseSectionContainer: FC<SectionProps> = ({
   const [isVisible, setIsVisible] = useState<boolean>(true)
 
   const allResources = useMemo(
-    () => sectionData.activities.map((activity) => activity.resource),
-    [sectionData.activities]
+    () => sectionData.resources.map((item) => item.resource),
+    [sectionData.resources]
   )
 
   const lessons = useMemo(

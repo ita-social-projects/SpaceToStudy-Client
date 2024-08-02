@@ -19,7 +19,7 @@ const mockedCourseData = {
     {
       title: 'Course section1 title',
       description: 'Course section1 description',
-      activities: [],
+      resources: [],
       id: '17121748017182'
     }
   ]
@@ -50,7 +50,7 @@ describe('CooperationActivitiesList with section data', () => {
     {
       title: 'Section1',
       description: 'Section1 description',
-      activities: [
+      resources: [
         {
           resource: {
             _id: '66183816fb40f35f91bb77ce',
@@ -66,7 +66,7 @@ describe('CooperationActivitiesList with section data', () => {
     {
       title: 'Section2 title',
       description: 'Section2 description',
-      activities: [],
+      resources: [],
       id: '17121748017181'
     }
   ]

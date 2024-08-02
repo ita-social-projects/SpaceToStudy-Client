@@ -77,7 +77,7 @@ const cooperationsSlice = createSlice({
       // state.sections = action.payload if courses will be fixed
       state.sections = (action.payload ?? []).map((section) => ({
         ...section,
-        activities: section.activities ?? []
+        resources: section.resources ?? []
       }))
     },
 
@@ -122,13 +122,13 @@ const cooperationsSlice = createSlice({
 
       const newResources = action.payload.resources
         .filter((resource) => {
-          return !section.activities.some(
-            (activity) => activity.resource._id === resource._id
+          return !section.resources.some(
+            (item) => item.resource._id === resource._id
           )
         })
         .map((resource) => ({ resource, resourceType: resource.resourceType }))
 
-      section.activities = [...section.activities, ...newResources]
+      section.resources = [...section.resources, ...newResources]
     },
 
     updateResourcesOrder(
@@ -144,7 +144,7 @@ const cooperationsSlice = createSlice({
 
       if (!section) return
 
-      section.activities = action.payload.resources.map((resource) => ({
+      section.resources = action.payload.resources.map((resource) => ({
         resource,
         resourceType: resource.resourceType
       }))
@@ -164,14 +164,14 @@ const cooperationsSlice = createSlice({
 
       if (!section) return
 
-      const activity = section.activities.find(
-        (activity) => activity.resource._id === action.payload.resourceId
+      const resource = section.resources.find(
+        (item) => item.resource._id === action.payload.resourceId
       )
 
-      if (!activity) return
+      if (!resource) return
 
-      activity.resource = {
-        ...activity.resource,
+      resource.resource = {
+        ...resource.resource,
         ...action.payload.resource
       } as CourseResource
     },
@@ -189,8 +189,8 @@ const cooperationsSlice = createSlice({
 
       if (!section) return
 
-      section.activities = section.activities.filter(
-        (activity) => activity.resource._id !== action.payload.resourceId
+      section.resources = section.resources.filter(
+        (item) => item.resource._id !== action.payload.resourceId
       )
     },
 
@@ -205,8 +205,8 @@ const cooperationsSlice = createSlice({
           : ResourceAvailabilityStatusEnum.Closed
 
       for (const section of state.sections ?? []) {
-        section.activities.forEach((activity) => {
-          activity.resource.availability = {
+        section.resources.forEach((item) => {
+          item.resource.availability = {
             status,
             date: null
           }

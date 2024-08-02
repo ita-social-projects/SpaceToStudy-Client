@@ -21,7 +21,7 @@ import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 
 import CooperationActivities from '~/containers/cooperation-details/cooperation-activities/CooperationActivities'
 import CooperationNotes from '~/containers/my-cooperations/cooperation-notes/CooperationNotes'
-import CooperationActivitiesView from '~/containers/cooperation-details/cooperetion-activities-view/CooperationActivitiesView'
+import CooperationActivitiesView from '~/containers/cooperation-details/cooperation-activities-view/CooperationActivitiesView'
 import {
   tabsData,
   defaultResponse,

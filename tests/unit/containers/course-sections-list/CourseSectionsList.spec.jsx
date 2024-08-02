@@ -14,7 +14,7 @@ const mockedCourseSectionData = Array(5)
     id: `${index + 1}`,
     title: `Title ${index + 1}`,
     description: `Description ${index + 1}`,
-    activities: [
+    resources: [
       {
         resource: {
           availability: {

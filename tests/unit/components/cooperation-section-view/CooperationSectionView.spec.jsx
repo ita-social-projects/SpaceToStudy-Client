@@ -6,7 +6,7 @@ describe('CooperationSectionView', () => {
   const mockSection = {
     title: 'QuizzesTitle',
     description: 'Quizzes',
-    activities: [
+    resources: [
       {
         resource: {
           _id: '662ba5f9f3edc14ca7b2336f',
@@ -40,9 +40,9 @@ describe('CooperationSectionView', () => {
   })
 
   it('should render resource title and description', () => {
-    const title = screen.getByText(mockSection.activities[0].resource.title)
+    const title = screen.getByText(mockSection.resources[0].resource.title)
     const description = screen.getByText(
-      mockSection.activities[0].resource.description
+      mockSection.resources[0].resource.description
     )
 
     expect(title).toBeInTheDocument()
