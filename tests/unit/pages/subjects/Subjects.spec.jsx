@@ -99,4 +99,23 @@ describe('Subjects', () => {
 
     expect(autocomplete.value).toBe('')
   })
+
+  it('should display NotFoundResults when there are no subjects and loading is false', async () => {
+    vi.mock('~/hooks/use-subjects-names', () => ({
+      __esModule: true,
+      default: () => ({
+        loading: false,
+        response: []
+      })
+    }))
+
+    renderWithProviders(<Subjects />, {
+      initialEntries: route,
+      preloadedState: mockState
+    })
+
+    await waitFor(() => {
+      expect(screen.getByText('errorMessages.tryAgainText')).toBeInTheDocument()
+    })
+  })
 })
