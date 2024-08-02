@@ -162,6 +162,13 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
     _: SyntheticEvent,
     value: CategoryNameInterface | null
   ) => {
+    if (!value) {
+      handleDataChange({
+        category: { _id: '', name: '' },
+        subjects: [{ _id: '', name: '' }]
+      })
+      return
+    }
     handleDataChange({ category: value, professionalSubjectTemplate })
   }
 

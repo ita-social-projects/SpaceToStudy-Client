@@ -1,1 +1,1 @@
-export type TableActionFunc = (id: string) => Promise<void> | void
+export type TableActionFunc = (id: string | string[]) => Promise<void> | void

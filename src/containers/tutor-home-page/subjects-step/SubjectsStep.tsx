@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, SyntheticEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
@@ -16,25 +16,35 @@ import img from '~/assets/img/tutor-home-page/become-tutor/study-category.svg'
 import { useStepContext } from '~/context/step-context'
 import { categoryService } from '~/services/category-service'
 import { subjectService } from '~/services/subject-service'
+import { CategoryNameInterface, SubjectNameInterface } from '~/types'
 
-const SubjectsStep = ({ btnsBox }) => {
+interface SubjectsStepProps {
+  btnsBox: JSX.Element
+}
+
+interface SubjectsType {
+  category: CategoryNameInterface | null
+  subject: SubjectNameInterface | null
+}
+
+const SubjectsStep = ({ btnsBox }: SubjectsStepProps) => {
   const { t } = useTranslation()
   const { isLaptopAndAbove, isMobile } = useBreakpoints()
   const { stepData, handleSubjects } = useStepContext()
   const subjectData = stepData.subjects
 
-  const [subjects, setSubjects] = useState({
+  const [subjects, setSubjects] = useState<SubjectsType>({
     category: null,
     subject: null
   })
 
   const [subjectError, setSubjectError] = useState('')
-  const [subjectFetched, setSubjectIsFetched] = useState(false)
+  const [subjectIsFetched, setSubjectIsFetched] = useState(false)
 
   const fetchSubjectHandler = () => setSubjectIsFetched(true)
 
   const getSubjectsNames = useCallback(
-    () => subjectService.getSubjectsNames(subjects.category._id),
+    () => subjectService.getSubjectsNames(subjects.category?._id ?? null),
     [subjects.category]
   )
 
@@ -44,18 +54,25 @@ const SubjectsStep = ({ btnsBox }) => {
     </Box>
   )
 
-  const onChangeCategory = (_, value) => {
-    setSubjects(
-      (prev) =>
-        prev.category?._id !== value?._id && {
-          category: value,
-          subject: null
-        }
+  const onChangeCategory = (
+    _: SyntheticEvent,
+    value: CategoryNameInterface | null
+  ) => {
+    setSubjects((prev) =>
+      prev.category?._id !== value?._id
+        ? {
+            category: value,
+            subject: null
+          }
+        : prev
     )
     setSubjectIsFetched(false)
   }
 
-  const onChangeSubject = (_, value) => {
+  const onChangeSubject = (
+    _: SyntheticEvent,
+    value: SubjectNameInterface | null
+  ) => {
     setSubjects((prev) => ({ category: prev.category, subject: value }))
     subjectError && setSubjectError('')
   }
@@ -89,7 +106,7 @@ const SubjectsStep = ({ btnsBox }) => {
       })
   }
 
-  const handleChipDelete = (item) => {
+  const handleChipDelete = (item: string) => {
     const newItems = subjectData.filter(({ name }) => name !== item)
     handleSubjects(newItems)
   }
@@ -117,7 +134,7 @@ const SubjectsStep = ({ btnsBox }) => {
           <AsyncAutocomplete
             axiosProps={{ onResponse: fetchSubjectHandler }}
             disabled={!subjects.category}
-            fetchCondition={!subjectFetched}
+            fetchCondition={!subjectIsFetched}
             fetchOnFocus
             labelField='name'
             onChange={onChangeSubject}

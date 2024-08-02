@@ -69,7 +69,7 @@ const SignupForm = ({
         to={termOfUse.path}
         variant='subtitle2'
       >
-        {t('common.labels.terms')}
+        {t('signup.terms')}
       </Typography>
       <Typography sx={{ ml: '5px' }} variant='subtitle2'>
         {t('signup.and')}
@@ -82,7 +82,7 @@ const SignupForm = ({
         to={privacyPolicy.path}
         variant='subtitle2'
       >
-        {t('common.labels.privacyPolicy')}
+        {t('signup.privacyPolicy')}
       </Typography>
     </Box>
   )

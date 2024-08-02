@@ -5,8 +5,18 @@ import LanguagesListWithIcon from '~/components/languages-list-with-icon/Languag
 import SubjectLevelChips from '~/components/subject-level-chips/SubjectLevelChips'
 
 import { styles } from '~/components/offer-card/offer-details/OfferDetails.styles'
+import { LanguagesEnum, ProficiencyLevelEnum } from '~/types'
 
-const OfferDetails = ({
+interface OfferDetailsProps {
+  subject: string
+  chipsColor: string
+  level: ProficiencyLevelEnum
+  title: string
+  description: string
+  languages: LanguagesEnum
+}
+
+const OfferDetails: React.FC<OfferDetailsProps> = ({
   subject,
   chipsColor,
   level,

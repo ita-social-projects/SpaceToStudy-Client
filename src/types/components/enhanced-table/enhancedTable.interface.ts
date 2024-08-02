@@ -24,7 +24,9 @@ export interface TableItem {
 
 export interface TableSelect<I> {
   selected: string[]
-  createSelectAllHandler: (items: I[]) => void
+  createSelectAllHandler: (
+    items: I[]
+  ) => (e: ChangeEvent<HTMLInputElement>) => void
   handleSelectClick: (item: string, e?: ChangeEvent<HTMLInputElement>) => void
   isSelected: (id: string) => boolean
 }
@@ -42,6 +44,22 @@ export interface TableSort {
 
 export interface TableData<I> {
   items: I[]
+  count?: number
   loading?: boolean
   getData?: () => void
+}
+
+export interface TablePaginationProps {
+  page: number
+  pageInput: number | string
+  rowsPerPage: number
+  pageCount: number
+  itemsCount: number
+  handleChangePage: (
+    event: ChangeEvent<unknown> | MouseEvent | null,
+    page: number
+  ) => void
+  handleChangeRowsPerPage: (e: ChangeEvent<HTMLInputElement>) => void
+  handleChangePageInput: (e: ChangeEvent<HTMLInputElement>) => void
+  handlePageSubmit: (maxPages: number) => void
 }

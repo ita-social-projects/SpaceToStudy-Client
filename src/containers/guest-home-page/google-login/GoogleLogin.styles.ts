@@ -34,6 +34,6 @@ export const styles = {
   googleForm: {
     display: 'flex',
     flexDirection: 'column',
-    minWidth: { sm: '330px' }
+    minWidth: '330px'
   }
 }
