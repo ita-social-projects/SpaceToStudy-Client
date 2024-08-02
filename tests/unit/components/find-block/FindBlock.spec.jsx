@@ -42,7 +42,7 @@ describe('FindBlock test', () => {
     const input = screen.getByRole('textbox')
 
     fireEvent.change(input, { target: { value: 'test' } })
-    fireEvent.keyPress(input, { key: 'Enter', code: 'Enter', charCode: 13 })
+    fireEvent.keyDown(input, { key: 'Enter', code: 'Enter', charCode: 13 })
 
     expect(mockNavigate).toHaveBeenCalled()
   })

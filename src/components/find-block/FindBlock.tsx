@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { ChangeEvent, KeyboardEvent, useCallback, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
@@ -13,7 +13,11 @@ import bag from '~/assets/img/student-home/bag.png'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { styles } from '~/components/find-block/find-block.styles'
 
-const FindBlock = ({ translationKey }) => {
+interface FindBlockProps {
+  translationKey: string
+}
+
+const FindBlock = ({ translationKey }: FindBlockProps) => {
   const [inputValue, setInputValue] = useState('')
   const { t } = useTranslation()
   const navigate = useNavigate()
@@ -21,12 +25,12 @@ const FindBlock = ({ translationKey }) => {
   const encodedInputValue = encodeURIComponent(inputValue)
   const findOffers = `${authRoutes.findOffers.path}?search=${encodedInputValue}`
 
-  const onChange = (e) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value)
   }
 
   const handleEnterPress = useCallback(
-    (e) => {
+    (e: KeyboardEvent<HTMLInputElement>) => {
       if (e.key === 'Enter' && inputValue) {
         navigate(findOffers)
       }
@@ -45,7 +49,7 @@ const FindBlock = ({ translationKey }) => {
         fullWidth={isMobile}
         onChange={onChange}
         onClear={onClear}
-        onKeyPress={handleEnterPress}
+        onKeyDown={handleEnterPress}
         placeholder={t(`${translationKey}.label`)}
         startIcon={<SearchIcon />}
         sx={styles.input}
