@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { ReactNode, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
@@ -12,6 +12,18 @@ import ListItemText from '@mui/material/ListItemText'
 import Box from '@mui/material/Box'
 import { styles } from './AdminNavBarItem.styles'
 
+interface AdminNavBarItemProps {
+  label: string
+  icon: ReactNode
+  expanded: boolean
+  children: { subLabel: string; path: string }[]
+  path: string
+  active: boolean
+  showSubItems: boolean
+  handleShowSubItems: (label: string) => void
+  handleActive: () => void
+}
+
 const AdminNavBarItem = ({
   label,
   icon,
@@ -22,8 +34,8 @@ const AdminNavBarItem = ({
   showSubItems,
   handleShowSubItems,
   handleActive
-}) => {
-  const [activeSubItem, setActiveSubItem] = useState(null)
+}: AdminNavBarItemProps) => {
+  const [activeSubItem, setActiveSubItem] = useState<number | null>(null)
 
   const { t } = useTranslation()
 
