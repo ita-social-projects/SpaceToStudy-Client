@@ -37,5 +37,14 @@ export const styles = {
         minWidth: 'unset'
       }
     }
+  },
+  listItemContent: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 1.25
+  },
+  errorIcon: {
+    color: `${palette.error[800]} !important`,
+    fontSize: '1.25rem'
   }
 }
