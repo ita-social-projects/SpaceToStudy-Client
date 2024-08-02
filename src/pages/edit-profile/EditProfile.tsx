@@ -29,7 +29,9 @@ import { LoadingStatusEnum } from '~/redux/redux.constants'
 const EditProfile = () => {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
-  const { loading } = useAppSelector((state) => state.editProfile)
+  const { loading, tabValidityStatus } = useAppSelector(
+    (state) => state.editProfile
+  )
 
   const [searchParams, setSearchParams] = useSearchParams({
     tab: UserProfileTabsEnum.Profile
@@ -66,6 +68,11 @@ const EditProfile = () => {
   }
 
   const cooperationContent = activeTab && tabsData[activeTab]?.content
+  const errorTooltipHolders = {
+    [UserProfileTabsEnum.Profile]: !tabValidityStatus.profileTab,
+    [UserProfileTabsEnum.ProfessionalInfo]:
+      !tabValidityStatus.professionalInfoTab
+  }
 
   return (
     <PageWrapper>
@@ -92,6 +99,7 @@ const EditProfile = () => {
       <Box sx={styles.mainContainer}>
         <SidebarMenu
           activeTab={activeTab}
+          errorTooltipHolders={errorTooltipHolders}
           handleClick={(tab) => void handleClick(tab)}
           tabsData={tabsData}
         />

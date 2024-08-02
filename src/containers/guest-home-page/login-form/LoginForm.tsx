@@ -1,6 +1,5 @@
 import { useTranslation } from 'react-i18next'
 import useInputVisibility from '~/hooks/use-input-visibility'
-import { useSelector } from 'react-redux'
 
 import Box from '@mui/material/Box'
 import ButtonBase from '@mui/material/ButtonBase'
@@ -14,8 +13,28 @@ import AppTextField from '~/components/app-text-field/AppTextField'
 import AppButton from '~/components/app-button/AppButton'
 
 import { styles } from '~/containers/guest-home-page/login-form/LoginForm.styles'
+import { useAppSelector } from '~/hooks/use-redux'
 
-const LoginForm = ({
+interface LoginFormProps {
+  handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void
+  handleChange: (
+    field: string
+  ) => (event: React.SyntheticEvent<Element, Event>) => void
+  handleBlur: (
+    field: string
+  ) => (event: React.FocusEvent<HTMLInputElement>) => void
+  data: {
+    email: string
+    password: string
+    rememberMe: boolean
+  }
+  errors: {
+    email?: string
+    password?: string
+  }
+}
+
+const LoginForm: React.FC<LoginFormProps> = ({
   handleSubmit,
   handleChange,
   handleBlur,
@@ -23,9 +42,9 @@ const LoginForm = ({
   errors
 }) => {
   const { inputVisibility: passwordVisibility, showInputText: showPassword } =
-    useInputVisibility(errors.password)
+    useInputVisibility(errors.password ?? '')
 
-  const { authLoading } = useSelector((state) => state.appMain)
+  const { authLoading } = useAppSelector((state) => state.appMain)
 
   const { openModal } = useModalContext()
 
@@ -40,13 +59,13 @@ const LoginForm = ({
       <AppTextField
         autoFocus
         data-testid={'email'}
-        errorMsg={t(errors.email)}
+        errorMsg={t(errors.email ?? '')}
         fullWidth
         label={t('common.labels.email')}
         onBlur={handleBlur('email')}
         onChange={handleChange('email')}
         required
-        size='large'
+        size='medium'
         sx={{ mb: '5px' }}
         type='email'
         value={data.email}
@@ -54,7 +73,7 @@ const LoginForm = ({
 
       <AppTextField
         InputProps={passwordVisibility}
-        errorMsg={t(errors.password)}
+        errorMsg={t(errors.password ?? '')}
         fullWidth
         label={t('common.labels.password')}
         onBlur={handleBlur('password')}
@@ -69,7 +88,11 @@ const LoginForm = ({
           control={<Checkbox />}
           label={t('login.rememberMe')}
           labelPlacement='end'
-          onChange={handleChange('rememberMe')}
+          onChange={(event) =>
+            handleChange('rememberMe')(
+              event as React.ChangeEvent<HTMLInputElement>
+            )
+          }
           sx={styles.checkboxLabel}
           value={data.rememberMe}
         />

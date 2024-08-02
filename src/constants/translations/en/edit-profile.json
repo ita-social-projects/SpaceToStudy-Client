@@ -19,7 +19,8 @@
       "professionalStatus": "Describe in short your professional summary. Maximum 200 characters.",
       "languagesTitle": "Language",
       "languagesDesc": "Select the language in which you would like to study and cooperate.",
-      "videoPresentationDesc": "Add the link to your presentational video. Your video needs to be public and uploaded to YouTube."
+      "videoPresentationDesc": "Add the link to your presentational video. Your video needs to be public and uploaded to YouTube.",
+      "errorTooltip": "There is a problem with your changes"
     },
     "professionalTab": {
       "tabTitle": "Professional info",

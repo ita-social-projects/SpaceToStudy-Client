@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { format } from 'date-fns'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker'
@@ -9,21 +9,43 @@ import IconButton from '@mui/material/IconButton'
 import ClearIcon from '@mui/icons-material/Clear'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
 
-import { initialState, datePickersOptions } from './constants'
+import { initialState, datePickersOptions } from './DateFilter.constants'
 import { styles } from './DateFilter.styles'
 
-const DateFilter = ({ filter, setFilter, clearFilter }) => {
-  const [open, setOpen] = useState(initialState)
+interface Filter {
+  from: string | null
+  to: string | null
+}
 
-  const handleChange = (direction) => (date) => {
-    setFilter({ ...filter, [direction]: format(date, 'yyyy-MM-dd') })
+interface OpenState {
+  from: boolean
+  to: boolean
+}
+
+export interface DateFilterProps {
+  filter: Filter
+  setFilter: (filter: Filter) => void
+  clearFilter: () => void
+}
+
+const DateFilter: React.FC<DateFilterProps> = ({
+  filter,
+  setFilter,
+  clearFilter
+}) => {
+  const [open, setOpen] = useState<OpenState>(initialState)
+
+  const handleChange = (direction: string) => (date: Date | null) => {
+    if (date) {
+      setFilter({ ...filter, [direction]: format(date, 'yyyy-MM-dd') })
+    }
   }
 
-  const handleClose = (direction) => {
+  const handleClose = (direction: string) => {
     setOpen((prev) => ({ ...prev, [direction]: false }))
   }
 
-  const handleOpen = (direction) => {
+  const handleOpen = (direction: string) => {
     setOpen((prev) => ({ ...prev, [direction]: true }))
   }
 

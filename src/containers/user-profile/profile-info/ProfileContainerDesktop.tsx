@@ -1,3 +1,5 @@
+import { ReactNode } from 'react'
+
 import Box from '@mui/material/Box'
 import SchoolIcon from '@mui/icons-material/School'
 import DoneIcon from '@mui/icons-material/Done'
@@ -8,39 +10,44 @@ import AppChipList from '~/components/app-chips-list/AppChipList'
 import ProfileDoneItemsList from '~/components/icon-with-text-list/ProfileDoneItemsList'
 
 import { styles } from '~/containers/user-profile/profile-info/ProfileInfo.styles'
+import { UserResponse } from '~/types'
 
-const ProfileContainerMobile = ({
+interface ProfileContainerDesktopProps {
+  actionIcon: ReactNode
+  accInfo: ReactNode
+  buttonGroup: ReactNode
+  defaultQuantity: number
+  doneItems: { title: string; description: string }[]
+  userData: UserResponse
+  chipItems: string[]
+}
+
+const ProfileContainerDesktop = ({
+  userData,
   actionIcon,
   accInfo,
   buttonGroup,
   defaultQuantity,
   doneItems,
-  userData,
   chipItems
-}) => {
+}: ProfileContainerDesktopProps) => {
+  const avatarSrc = userData.photo
+    ? `${import.meta.env.VITE_APP_IMG_USER_URL}${userData.photo}`
+    : ''
   return (
     <Box sx={styles.container}>
-      <Box sx={styles.wrapperForPhoto}>
-        <Box sx={styles.avatarContainerMobile}>
-          <Avatar
-            src={
-              userData.photo &&
-              `${import.meta.env.VITE_APP_IMG_USER_URL}${userData.photo}`
-            }
-            sx={styles.img}
-          />
-        </Box>
+      <Box sx={styles.avatarContainer}>
+        <Avatar src={avatarSrc} sx={styles.img} />
+      </Box>
+      {actionIcon}
 
+      <Box sx={styles.infoWrapper}>
         <TitleWithDescription
           description={userData.professionalSummary}
           style={styles.titleWithDescription}
           title={`${userData.firstName} ${userData.lastName}`}
         />
-      </Box>
 
-      {actionIcon}
-
-      <Box sx={styles.infoWrapper}>
         <AppChipList
           defaultQuantity={2}
           icon={<SchoolIcon fontSize='small' sx={styles.schoolIcon} />}
@@ -52,7 +59,7 @@ const ProfileContainerMobile = ({
 
         <ProfileDoneItemsList
           defaultQuantity={defaultQuantity}
-          icon={<DoneIcon color='success' fontSize={'small'} />}
+          icon={<DoneIcon sx={styles.doneIcon} />}
           items={doneItems}
         />
 
@@ -62,4 +69,4 @@ const ProfileContainerMobile = ({
   )
 }
 
-export default ProfileContainerMobile
+export default ProfileContainerDesktop

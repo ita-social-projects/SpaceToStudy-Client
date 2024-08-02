@@ -4,7 +4,17 @@ import Typography from '@mui/material/Typography'
 import VideoBox from '~/components/video-box/VideoBox'
 import { ComponentEnum } from '~/types'
 
-const VideoPresentation = ({ video, videoPreview, videoMock }) => {
+interface VideoPresentationProps {
+  video: string
+  videoPreview: boolean
+  videoMock: string
+}
+
+const VideoPresentation = ({
+  video,
+  videoPreview,
+  videoMock
+}: VideoPresentationProps) => {
   const { t } = useTranslation()
 
   return (
