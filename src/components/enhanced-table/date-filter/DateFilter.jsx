@@ -40,15 +40,20 @@ const DateFilter = ({ filter, setFilter, clearFilter }) => {
   const datePickers = datePickersOptions.map(({ placement, direction }) => (
     <DesktopDatePicker
       PopperProps={{ placement: placement }}
-      inputProps={{ 'aria-label': `date-filter-${direction}` }}
+      inputProps={{
+        'aria-label': `date-filter-${direction}`,
+        'data-testid': `date-filter-${direction}`
+      }}
       key={direction}
       onChange={handleChange(direction)}
       onClose={() => handleClose(direction)}
       onOpen={() => handleOpen(direction)}
       open={open[direction]}
-      renderInput={(params) => (
-        <TextField sx={styles.datePicker} variant='standard' {...params} />
-      )}
+      slots={{
+        textField: (params) => (
+          <TextField sx={styles.datePicker} variant='standard' {...params} />
+        )
+      }}
       value={filter[direction]}
     />
   ))
