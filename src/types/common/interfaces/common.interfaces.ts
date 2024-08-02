@@ -119,7 +119,7 @@ export interface StepData {
     errors: Record<string, string>
   }
   photo: string[]
-  subjects: SubjectInterface[]
+  subjects: Array<SubjectNameInterface & { category: CategoryNameInterface }>
   language: UserResponse['nativeLanguage']
 }
 
