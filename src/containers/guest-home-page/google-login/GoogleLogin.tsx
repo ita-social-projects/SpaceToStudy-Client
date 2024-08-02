@@ -8,8 +8,19 @@ import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
 import GoogleButton from '~/containers/guest-home-page/google-button/GoogleButton'
 
 import { styles } from '~/containers/guest-home-page/google-login/GoogleLogin.styles'
+import { UserRole } from '~/types'
 
-const GoogleLogin = ({ type, buttonWidth, role }) => {
+interface GoogleLoginProps {
+  type: 'signup' | 'login'
+  buttonWidth: string
+  role: UserRole
+}
+
+const GoogleLogin: React.FC<GoogleLoginProps> = ({
+  type,
+  buttonWidth,
+  role
+}) => {
   const { t, i18n } = useTranslation()
   const { whatCanYouDo } = guestRoutes.navBar
   const { openModal, closeModal } = useModalContext()
