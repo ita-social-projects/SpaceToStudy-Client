@@ -99,4 +99,11 @@ describe('Subjects', () => {
 
     expect(autocomplete.value).toBe('')
   })
+
+  it('should render offer count descriptions for subjects', async () => {
+    await waitFor(() => {
+      const noOffers = screen.queryByText(/offers/)
+      expect(noOffers).not.toBeInTheDocument()
+    })
+  })
 })
