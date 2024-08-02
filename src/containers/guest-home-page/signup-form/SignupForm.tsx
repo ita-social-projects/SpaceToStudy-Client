@@ -1,7 +1,12 @@
-import { useState, useMemo } from 'react'
+import {
+  useState,
+  useMemo,
+  FormEventHandler,
+  FocusEvent,
+  ChangeEvent
+} from 'react'
 import { useTranslation } from 'react-i18next'
 import HashLink from '~/components/hash-link/HashLink'
-import { useSelector } from 'react-redux'
 
 import Box from '@mui/material/Box'
 import FormControlLabel from '@mui/material/FormControlLabel'
@@ -13,6 +18,16 @@ import { guestRoutes } from '~/router/constants/guestRoutes'
 import AppButton from '~/components/app-button/AppButton'
 
 import { styles } from '~/containers/guest-home-page/signup-form/SignupForm.styles'
+import { SignupParams, UseFormErrors, UseFormEventHandler } from '~/types'
+import { useAppSelector } from '~/hooks/use-redux'
+
+interface SignupFormProps {
+  handleSubmit: FormEventHandler<HTMLFormElement>
+  handleChange: UseFormEventHandler<SignupParams, ChangeEvent<HTMLInputElement>>
+  handleBlur: UseFormEventHandler<SignupParams, FocusEvent<HTMLInputElement>>
+  data: SignupParams
+  errors: UseFormErrors<SignupParams>
+}
 
 const SignupForm = ({
   handleSubmit,
@@ -20,7 +35,7 @@ const SignupForm = ({
   handleBlur,
   data,
   errors
-}) => {
+}: SignupFormProps) => {
   const { t } = useTranslation()
   const { privacyPolicy, termOfUse } = guestRoutes
   const [isAgreementChecked, setIsAgreementChecked] = useState(false)
@@ -30,7 +45,7 @@ const SignupForm = ({
     inputVisibility: confirmPasswordVisibility,
     showInputText: showConfirmPassword
   } = useInputVisibility(errors.confirmPassword)
-  const { authLoading } = useSelector((state) => state.appMain)
+  const { authLoading } = useAppSelector((state) => state.appMain)
 
   const handleOnAgreementChange = () => {
     setIsAgreementChecked((prev) => !prev)
