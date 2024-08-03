@@ -5,11 +5,7 @@ import CreateOrEditLesson from '~/pages/create-or-edit-lesson/CreateOrEditLesson
 import { createUrlPath } from '~/utils/helper-functions'
 import { ResourceService } from '~/services/resource-service'
 import { URLs } from '~/constants/request'
-import {
-  mockAxiosClient,
-  renderWithProviders,
-  TestSnackbar
-} from '~tests/test-utils'
+import { mockAxiosClient, renderWithProviders } from '~tests/test-utils'
 
 const mockParams = {
   id: 'id'
@@ -35,13 +31,7 @@ describe('CreateOrEditLesson component with id', () => {
   })
 
   beforeEach(async () => {
-    await waitFor(() =>
-      renderWithProviders(
-        <TestSnackbar>
-          <CreateOrEditLesson />
-        </TestSnackbar>
-      )
-    )
+    await waitFor(() => renderWithProviders(<CreateOrEditLesson />))
   })
 
   it('should load a lesson info', () => {
@@ -53,7 +43,7 @@ describe('CreateOrEditLesson component with id', () => {
   it('should edit a lesson', async () => {
     mockAxiosClient.onPatch(URLs.resources.lessons.patch).reply(200)
     const editLessonSpy = vi.spyOn(ResourceService, 'editLesson')
-    const titleInput = screen.getByText(mockLesson.title)
+    const titleInput = await screen.findByText(mockLesson.title)
     const descriptionInput = screen.getByLabelText('lesson.labels.description')
     const submitBtn = screen.getByText('common.save')
 
