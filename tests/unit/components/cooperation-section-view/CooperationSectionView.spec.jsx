@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react'
 
 import CooperationSectionView from '~/components/cooperation-section-view/CooperationSectionView'
+import { ResourcesTypesEnum as ResourceType } from '~/types'
 
 describe('CooperationSectionView', () => {
   const mockSection = {
@@ -16,7 +17,7 @@ describe('CooperationSectionView', () => {
           items: ['656609af8a848ff2202df8d5'],
           author: '6565fc5a8a848ff2202df766',
           category: '656609518a848ff2202df8b7',
-          resourceType: 'quizzes',
+          resourceType: ResourceType.Quiz,
           settings: {
             view: 'Scroll',
             shuffle: true,
@@ -29,7 +30,7 @@ describe('CooperationSectionView', () => {
             date: '1234'
           }
         },
-        resourceType: 'quizzes'
+        resourceType: ResourceType.Quiz
       }
     ],
     _id: '6632264063eb69afaf165c61'

@@ -8,6 +8,7 @@ import {
 import { renderWithProviders } from '~tests/test-utils'
 
 import CourseSectionContainer from '~/containers/course-section/CourseSectionContainer'
+import { ResourcesTypesEnum as ResourceType } from '~/types'
 
 const mockedSectionData = {
   id: 1,
@@ -28,7 +29,7 @@ const mockedSectionData = {
         attachments: [],
         category: null
       },
-      resourceType: 'lessons'
+      resourceType: ResourceType.Lesson
     },
     {
       resource: {
@@ -45,7 +46,7 @@ const mockedSectionData = {
         createdAt: '2023-09-08T14:14:11.373Z',
         updatedAt: '2023-09-08T14:14:11.373Z'
       },
-      resourceType: 'quizzes'
+      resourceType: ResourceType.Quiz
     },
     {
       resource: {
@@ -63,7 +64,7 @@ const mockedSectionData = {
         createdAt: '2023-07-25T13:12:12.998Z',
         updatedAt: '2023-07-25T13:12:12.998Z'
       },
-      resourceType: 'attachments'
+      resourceType: ResourceType.Attachment
     }
   ]
 }

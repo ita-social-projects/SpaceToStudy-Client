@@ -2,6 +2,7 @@ import { screen, fireEvent, waitFor } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 
 import CooperationActivitiesList from '~/containers/my-cooperations/cooperation-activities-list/CooperationActivitiesList'
+import { ResourcesTypesEnum as ResourceType } from '~/types'
 
 const originalDateNow = Date.now
 Date.now = () => 1487076708000
@@ -58,7 +59,7 @@ describe('CooperationActivitiesList with section data', () => {
             description: 'Lesson 1 description',
             content: 'Lesson 1 content'
           },
-          resourceType: 'lessons'
+          resourceType: ResourceType.Lesson
         }
       ],
       id: '17121748017180'

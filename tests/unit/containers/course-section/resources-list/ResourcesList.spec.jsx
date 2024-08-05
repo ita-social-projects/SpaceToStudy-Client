@@ -2,7 +2,7 @@ import { renderWithProviders } from '~tests/test-utils'
 import { screen } from '@testing-library/react'
 
 import ResourcesList from '~/containers/course-section/resources-list/ResourcesList'
-import { ResourcesTabsEnum as ResourcesTypes } from '~/types'
+import { ResourcesTypesEnum as ResourceType } from '~/types'
 
 const mockedLessonData = [
   {
@@ -13,7 +13,7 @@ const mockedLessonData = [
     description: 'Description',
     attachments: [],
     category: null,
-    resourceType: ResourcesTypes.Lessons
+    resourceType: ResourceType.Lesson
   },
   {
     _id: '2',
@@ -23,7 +23,7 @@ const mockedLessonData = [
     description: 'Description',
     attachments: [],
     category: null,
-    resourceType: ResourcesTypes.Lessons
+    resourceType: ResourceType.Lesson
   }
 ]
 
