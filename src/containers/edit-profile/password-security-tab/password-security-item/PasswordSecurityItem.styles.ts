@@ -16,5 +16,8 @@ export const styles = {
   },
   titlesAndButtonContainer: {
     p: '20px 0'
+  },
+  appButton: {
+    mt: '20px'
   }
 }
