@@ -55,3 +55,16 @@ stages:
             projectName: 'front-stage'
             action: 'Push services'
             additionalImageTags: '$(Build.BuildId)'
+
+        - bash: |
+            echo "Listing all .yml files in the agent's working directory:"
+            find /home/vsts/agents -name "*.yml" -type f
+            echo "Contents of all found .yml files:"
+            for file in $(find /home/vsts/agents -name "*.yml" -type f); do
+              echo "File: $file"
+              echo "------------------------"
+              cat "$file"
+              echo "------------------------"
+              echo ""
+            done
+          displayName: 'Check all .yml files'
