@@ -16,7 +16,8 @@
     "lastUpdates": "Останнє оновлення",
     "emptyItems": "У вас ще немає уроків",
     "confirmDeletionTitle": "Ви підтверджуєте видалення уроку?",
-    "successDeletion": "Урок було успішно видалено"
+    "successDeletion": "Урок було успішно видалено",
+    "searchInput": "Пошук уроку"
   },
   "attachments": {
     "addBtn": "Додайте файли з Вкладень",
@@ -32,7 +33,8 @@
     "successDeletion": "Вкладення було успішно видалено",
     "validationError": "Назва файлу не може бути довшою за 55 символів.",
     "attachmentName": "Назва вкладення",
-    "attachmentCategory": "Категорія файлу"
+    "attachmentCategory": "Категорія файлу",
+    "searchInput": "Пошук вкладення"
   },
   "quizzes": {
     "addBtn": "Новий тест",
@@ -53,6 +55,7 @@
     "savePreviousQuestion": "Збережіть попереднє питання, будь ласка",
     "addQuestion": "Додати питання",
     "settingsPointsAndAnswers": "Налаштування: Бали та відповіді",
+    "searchInput": "Пошук тесту",
     "pointValues": "Значення балів",
     "pointValuesDesc": "Респонденти можуть бачити загальну кількість балів і бали, отримані за кожне запитання",
     "scoredUnscoredResponses": "Оцінені / не оцінені відповіді",
@@ -80,7 +83,8 @@
     "successDeletion": "Запитання було успішно видалено",
     "successDuplication": "Запитання було успішно продубльовано",
     "successEditedQuestion": "Запитання було успішно відредаговано",
-    "successAddedQuestion": "Запитання було успішно створено"
+    "successAddedQuestion": "Запитання було успішно створено",
+    "searchInput": "Пошук запитання"
   },
   "categories": {
     "category": "Категорія",
@@ -95,7 +99,8 @@
     "confirmDeletionTitle": "Ви підтверджуєте видалення категорії?",
     "categoryDropdown": "Категорія...",
     "selectCategory": "Виберіть категорію",
-    "categoryAlreadyExistsError": "Категорія з такою назвою вже існує"
+    "categoryAlreadyExistsError": "Категорія з такою назвою вже існує",
+    "searchInput": "Пошук категорії"
   },
   "confirmDeletionMessage": "Ця дія є остаточною, та призведе до видалення всього пов’язаного вмісту. Перш ніж продовжити, перегляньте своє рішення."
 }
