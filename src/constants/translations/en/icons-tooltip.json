@@ -1,6 +1,7 @@
 {
   "language": "Language",
   "messages": "Messages",
+  "favourites": "Favourites",
   "bookmarks": "Saved",
   "notifications": "Notifications",
   "account": "Account",

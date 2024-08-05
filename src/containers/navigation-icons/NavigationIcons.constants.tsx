@@ -6,6 +6,7 @@ import LoginIcon from '@mui/icons-material/Login'
 import MessageRoundedIcon from '@mui/icons-material/MessageRounded'
 import BookmarkIcon from '@mui/icons-material/Bookmark'
 import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded'
+import FavoriteIcon from '@mui/icons-material/Favorite'
 
 import { IconButtonProps } from '@mui/material/IconButton'
 
@@ -74,9 +75,13 @@ export const userIcons: NavigationIconButton[] = [
     })
   },
   {
-    disabled: true,
+    tooltip: 'iconsTooltip.favourites',
+    icon: <FavoriteIcon />,
+    buttonProps: () => ({ sx: styles.studentIcons })
+  },
+  {
     tooltip: 'iconsTooltip.bookmarks',
-    icon: <BookmarkIcon color='disabled' />,
+    icon: <BookmarkIcon />,
     buttonProps: () => ({ sx: styles.studentIcons })
   },
   {
