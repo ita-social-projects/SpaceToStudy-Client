@@ -73,8 +73,10 @@
     "passwordSecurityTab": {
       "tabTitle": "Пароль і Безпека",
       "title": "Пароль і Безпека",
+      "subTitle": "Ви можете змінити свій пароль, використовуючи поточний.",
       "description": "Зміна паролю та налаштуваннь безпеки",
       "changePassword": "Змінити пароль",
+      "changePasswordModalDescription": "Змінити поточний пароль на новий.",
       "changePasswordConfirm": "Ви впевнені, що бажаєте змінити пароль?",
       "currentPassword": "Поточний пароль",
       "newPassword": "Новий пароль",
