@@ -10,9 +10,10 @@ import { ProfileItemType } from '~/components/profile-item/complete-profile.cons
 interface ProfileItemProps {
   item: ProfileItemType
   isFilled?: boolean
+  role: string
 }
 
-const ProfileItem = ({ item, isFilled = false }: ProfileItemProps) => {
+const ProfileItem = ({ item, role, isFilled = false }: ProfileItemProps) => {
   const { t } = useTranslation()
   const { isMobile } = useBreakpoints()
   const { id, icon } = item
@@ -24,10 +25,14 @@ const ProfileItem = ({ item, isFilled = false }: ProfileItemProps) => {
           {!isMobile && <Box sx={styles.icon}>{icon}</Box>}
           <Box sx={styles.text}>
             <Typography variant={isMobile ? 'subtitle2' : 'h6'}>
-              {t(`completeProfile.${id}.title`)}
+              {role == 'student'
+                ? t(`completeProfileStudent.${id}.title`)
+                : t(`completeProfileTutor.${id}.title`)}
             </Typography>
             <Typography variant={isMobile ? 'caption' : 'body2'}>
-              {t(`completeProfile.${id}.subtitle`)}
+              {role == 'student'
+                ? t(`completeProfileStudent.${id}.subtitle`)
+                : t(`completeProfileTutor.${id}.subtitle`)}
             </Typography>
           </Box>
         </Box>
