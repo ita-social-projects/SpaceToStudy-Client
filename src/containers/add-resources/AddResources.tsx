@@ -20,7 +20,8 @@ import {
   TableColumn,
   RemoveColumnRules,
   Question,
-  ServiceFunction
+  ServiceFunction,
+  ResourcesTabsEnum
 } from '~/types'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { getErrorKey } from '~/utils/get-error-key'
@@ -28,7 +29,7 @@ import { getErrorKey } from '~/utils/get-error-key'
 interface AddResourcesProps<T extends CourseResource | Question> {
   resources: T[]
   onAddResources: (resource: T[]) => void
-  resourceType: string
+  resourceTab: ResourcesTabsEnum
   requestService: ServiceFunction<ItemsWithCount<T>, GetResourcesParams>
   columns: TableColumn<T>[]
   removeColumnRules: RemoveColumnRules<T>
@@ -37,7 +38,7 @@ interface AddResourcesProps<T extends CourseResource | Question> {
 const AddResources = <T extends CourseResource | Question>({
   resources = [],
   onAddResources,
-  resourceType,
+  resourceTab,
   requestService,
   columns,
   removeColumnRules
@@ -133,7 +134,7 @@ const AddResources = <T extends CourseResource | Question>({
     onAddItems,
     data: { loading, getItems },
     onRowClick,
-    resource: resourceType
+    resourceTab
   }
 
   return <AddResourceModal<T> {...props} />

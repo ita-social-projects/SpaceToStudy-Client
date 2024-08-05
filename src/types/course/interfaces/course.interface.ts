@@ -6,7 +6,7 @@ import {
   ProficiencyLevelEnum,
   UserResponse,
   CourseResource,
-  ResourcesTabsEnum
+  ResourcesTypesEnum as ResourceType
 } from '~/types'
 
 export interface Course extends CommonEntityFields {
@@ -31,7 +31,7 @@ export interface CourseForm
 
 export interface Resource {
   resource: CourseResource
-  resourceType: ResourcesTabsEnum
+  resourceType: ResourceType
 }
 
 export interface CourseSection {

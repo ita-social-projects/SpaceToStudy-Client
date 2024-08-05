@@ -39,6 +39,7 @@ import {
   SizeEnum,
   TextFieldVariantEnum,
   ResourcesTabsEnum,
+  ResourcesTypesEnum as ResourceType,
   UpdateQuizParams,
   CategoryNameInterface,
   PositionEnum
@@ -179,7 +180,7 @@ const CreateOrEditQuizContainer = ({
           onAddResources={onAddQuestions}
           removeColumnRules={removeColumnRules}
           requestService={ResourceService.getQuestions}
-          resourceType={ResourcesTabsEnum.Questions}
+          resourceTab={ResourcesTabsEnum.Questions}
           resources={questions}
         />
       )
@@ -210,7 +211,13 @@ const CreateOrEditQuizContainer = ({
           items: questions,
           category
         })
-      : void addNewQuiz({ title, description, items: questions, category })
+      : void addNewQuiz({
+          title,
+          description,
+          items: questions,
+          category,
+          resourceType: ResourceType.Quiz
+        })
 
   const CreateQuestionButton = (
     <Tooltip
