@@ -32,6 +32,7 @@ import { snackbarVariants } from '~/constants'
 import { imageResize } from '~/utils/image-resize'
 import { styles } from '~/containers/edit-profile/profile-tab/profile-tab-form/ProfileTabForm.styles'
 import { openAlert } from '~/redux/features/snackbarSlice'
+import { createUrlPath } from '~/utils/helper-functions'
 
 export interface ProfileTabFormProps {
   data: EditProfileForm
@@ -106,7 +107,7 @@ const ProfileTabForm: FC<ProfileTabFormProps> = ({
   const { photo } = data
   const photoToDisplay =
     typeof photo === 'string'
-      ? photo && `${import.meta.env.VITE_APP_IMG_USER_URL}${photo}`
+      ? photo && createUrlPath(import.meta.env.VITE_APP_IMG_USER_URL, photo)
       : photo?.src
 
   return (

@@ -91,7 +91,8 @@ const AboutChatSidebar: FC<AboutChatSidebarProps> = ({
             <Box sx={styles.chatInfo}>
               <Avatar
                 src={
-                  photo && `${import.meta.env.VITE_APP_IMG_USER_URL}${photo}`
+                  photo &&
+                  createUrlPath(import.meta.env.VITE_APP_IMG_USER_URL, photo)
                 }
                 sx={styles.userAvatar}
               />
