@@ -28,7 +28,7 @@ stages:
           inputs:
             targetType: 'inline'
             script: 'mv $(envStage.secureFilePath) .env'
-        - task: DockerCompose@0
+        - task: DockerCompose@1
           inputs:
             dockerComposePath: '/usr/libexec/docker/cli-plugins/docker-compose'
             containerregistrytype: 'Azure Container Registry'
@@ -42,7 +42,7 @@ stages:
             action: 'Build services'
             additionalImageTags: '$(Build.BuildId)'
        
-        - task: DockerCompose@0
+        - task: DockerCompose@1
           inputs:
             dockerComposePath: '/usr/libexec/docker/cli-plugins/docker-compose'
             containerregistrytype: 'Azure Container Registry'
