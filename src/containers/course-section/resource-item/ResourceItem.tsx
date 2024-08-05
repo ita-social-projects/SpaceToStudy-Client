@@ -3,13 +3,12 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 
 import Box from '@mui/system/Box'
-import TextField from '@mui/material/TextField'
 import IconButton from '@mui/material/IconButton'
 import CloseIcon from '@mui/icons-material/Close'
 import EditIcon from '@mui/icons-material/Edit'
 import LinkRoundedIcon from '@mui/icons-material/LinkRounded'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 
 import AppSelect from '~/components/app-select/AppSelect'
@@ -141,10 +140,9 @@ const ResourceItem: FC<ResourceItemProps> = ({
             <DatePicker
               disableMaskedInput
               disablePast
-              inputFormat={'MMM d, yyyy'}
+              format='MMM d, yyyy'
               label={t('cooperationDetailsPage.datePickerLabel')}
               onChange={setOpenFromDate}
-              renderInput={(params) => <TextField {...params} />}
               value={availability?.date ?? null}
             />
           </Box>

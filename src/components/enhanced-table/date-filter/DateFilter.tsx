@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { format } from 'date-fns'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker'
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import IconButton from '@mui/material/IconButton'
@@ -62,15 +62,20 @@ const DateFilter: React.FC<DateFilterProps> = ({
   const datePickers = datePickersOptions.map(({ placement, direction }) => (
     <DesktopDatePicker
       PopperProps={{ placement: placement }}
-      inputProps={{ 'aria-label': `date-filter-${direction}` }}
+      inputProps={{
+        'aria-label': `date-filter-${direction}`,
+        'data-testid': `date-filter-${direction}`
+      }}
       key={direction}
       onChange={handleChange(direction)}
       onClose={() => handleClose(direction)}
       onOpen={() => handleOpen(direction)}
       open={open[direction]}
-      renderInput={(params) => (
-        <TextField sx={styles.datePicker} variant='standard' {...params} />
-      )}
+      slots={{
+        textField: (params) => (
+          <TextField sx={styles.datePicker} variant='standard' {...params} />
+        )
+      }}
       value={filter[direction]}
     />
   ))
