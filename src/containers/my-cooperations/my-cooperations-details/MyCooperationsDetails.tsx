@@ -30,12 +30,14 @@ import { createUrlPath } from '~/utils/helper-functions'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { useChatContext } from '~/context/chat-context'
 import CooperationCompletion from '../cooperation-completion/CooperationCompletion'
+import { useAppSelector } from '~/hooks/use-redux'
 
 const MyCooperationsDetails = () => {
   const { t } = useTranslation()
   const { id = '' } = useParams()
   const navigate = useNavigate()
   const { setChatInfo } = useChatContext()
+  const userRole = useAppSelector((state) => state.appMain.userRole)
 
   const getDetails: ServiceFunction<
     MyCooperationDetails<Offer> | null,
@@ -85,6 +87,9 @@ const MyCooperationsDetails = () => {
         <Typography>{item}</Typography>
       </Box>
     ))
+
+  const cooperationCompletion =
+    userRole === UserRoleEnum.Tutor ? <CooperationCompletion /> : null
 
   return (
     <Box>
@@ -171,7 +176,7 @@ const MyCooperationsDetails = () => {
         </Typography>
         <Typography>{`${price} UAH/hour`}</Typography>
       </Box>
-      <CooperationCompletion />
+      {cooperationCompletion}
     </Box>
   )
 }
