@@ -8,6 +8,7 @@ import useConfirm from '~/hooks/use-confirm'
 
 import { styles } from '~/components/app-drawer/AppDrawer.styles'
 import { PositionEnum } from '~/types'
+import { spliceSx } from '~/utils/helper-functions'
 
 interface AppDrawerProps extends Omit<DrawerProps, 'anchor'> {
   children: ReactNode
@@ -23,6 +24,7 @@ const AppDrawer: FC<AppDrawerProps> = ({
   onClose,
   anchor = PositionEnum.Right,
   closeIcon = true,
+  sx,
   ...props
 }) => {
   const { t } = useTranslation()
@@ -43,7 +45,7 @@ const AppDrawer: FC<AppDrawerProps> = ({
 
   return (
     <Drawer
-      PaperProps={{ sx: styles.root }}
+      PaperProps={{ sx: spliceSx(styles.root, sx) }}
       anchor={anchor}
       onClose={() => void handleCloseDrawer()}
       {...props}

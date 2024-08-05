@@ -111,7 +111,11 @@ const MyOffers = () => {
         <AppButton onClick={handleOpenDrawer}>
           {t('myOffersPage.buttonLabel')}
         </AppButton>
-        <AppDrawer onClose={closeDrawer} open={isOpen}>
+        <AppDrawer
+          onClose={closeDrawer}
+          open={isOpen}
+          sx={{ width: { xs: '100%', md: 'auto' } }}
+        >
           <CreateOffer closeDrawer={closeDrawer} />
         </AppDrawer>
       </Box>
