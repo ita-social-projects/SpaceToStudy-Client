@@ -28,7 +28,7 @@ stages:
           inputs:
             targetType: 'inline'
             script: 'mv $(envStage.secureFilePath) .env'
-        - task: DockerCompose@2
+        - task: DockerCompose@1
           inputs:
             containerregistrytype: 'Azure Container Registry'
             azureSubscription: 'S2s-Service'
