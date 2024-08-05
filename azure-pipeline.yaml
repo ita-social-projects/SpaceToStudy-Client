@@ -55,21 +55,3 @@ stages:
             projectName: 'front-stage'
             action: 'Push services'
             additionalImageTags: '$(Build.BuildId)'
-
-  - stage: Deploy
-    displayName: Deploy image to app service
-    jobs:
-     - job: Deploy
-       pool:
-         vmImage: $(agentOS)
-       steps:
-          - task: AzureRmWebAppDeployment@4
-            inputs:
-              ConnectionType: 'AzureRM'
-              azureSubscription: 'S2s-Service'
-              appType: 'webAppContainer'
-              WebAppName: 's2s-front-stage'
-              DockerNamespace: 's2sstage.azurecr.io'
-              DockerRepository: 'frontstage_nginx'
-              DockerImageTag: '$(Build.BuildId)'
-             
