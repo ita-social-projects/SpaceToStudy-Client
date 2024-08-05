@@ -30,7 +30,6 @@ stages:
             script: 'mv $(envStage.secureFilePath) .env'
         - task: DockerCompose@2
           inputs:
-            dockerComposePath: '/usr/libexec/docker/cli-plugins/docker-compose'
             containerregistrytype: 'Azure Container Registry'
             azureSubscription: 'S2s-Service'
             azureContainerRegistry: '{"loginServer":"s2sstage.azurecr.io", "id" : "/subscriptions/734fc759-c3a2-4e22-a478-301dc5b10496/resourceGroups/Space2Study/providers/Microsoft.ContainerRegistry/registries/S2sStage"}'
@@ -44,7 +43,6 @@ stages:
        
         - task: DockerCompose@2
           inputs:
-            dockerComposePath: '/usr/libexec/docker/cli-plugins/docker-compose'
             containerregistrytype: 'Azure Container Registry'
             azureSubscription: 'S2s-Service'
             azureContainerRegistry: '{"loginServer":"s2sstage.azurecr.io", "id" : "/subscriptions/734fc759-c3a2-4e22-a478-301dc5b10496/resourceGroups/Space2Study/providers/Microsoft.ContainerRegistry/registries/S2sStage"}'
