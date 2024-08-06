@@ -1,5 +1,5 @@
 import { vi } from 'vitest'
-import { fireEvent, screen } from '@testing-library/react'
+import { fireEvent, screen, waitFor } from '@testing-library/react'
 
 import { renderWithProviders } from '~tests/test-utils'
 import Categories from '~/pages/categories/Categories'
@@ -30,6 +30,7 @@ describe('Categories page', () => {
           _id: '1',
           name: 'Languages',
           totalOffers: 0,
+          description: 'offers',
           appearance: {
             icon: 'Languages.svg',
             color: '#FF0000'
@@ -39,6 +40,7 @@ describe('Categories page', () => {
           _id: '2',
           name: 'Music',
           totalOffers: 0,
+          description: 'offers',
           appearance: {
             icon: 'Music.svg',
             color: '#440fff'
@@ -113,5 +115,12 @@ describe('Categories page with empty data', () => {
   it('should render not found results when no categories are found', () => {
     const newNotFound = screen.getByText('errorMessages.resultsNotFound')
     expect(newNotFound).toBeInTheDocument()
+  })
+
+  it('should render offer count descriptions for categories', async () => {
+    await waitFor(() => {
+      const noOffers = screen.queryByText(/offers/)
+      expect(noOffers).not.toBeInTheDocument()
+    })
   })
 })

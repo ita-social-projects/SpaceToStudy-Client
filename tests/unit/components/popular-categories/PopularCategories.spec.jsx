@@ -51,4 +51,11 @@ describe('PopularCategories', () => {
 
     expect(card).toBeInTheDocument()
   })
+
+  it('should render offer count descriptions for popularCategories', async () => {
+    await waitFor(() => {
+      const noOffers = screen.queryByText(/offers/)
+      expect(noOffers).not.toBeInTheDocument()
+    })
+  })
 })
