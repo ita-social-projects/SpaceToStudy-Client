@@ -88,8 +88,9 @@ const MyCooperationsDetails = () => {
       </Box>
     ))
 
-  const cooperationCompletion =
-    userRole === UserRoleEnum.Tutor ? <CooperationCompletion /> : null
+  const cooperationCompletion = userRole === UserRoleEnum.Tutor && (
+    <CooperationCompletion />
+  )
 
   return (
     <Box>
