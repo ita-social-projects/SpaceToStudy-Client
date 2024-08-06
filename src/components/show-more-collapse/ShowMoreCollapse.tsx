@@ -33,21 +33,25 @@ const ShowMoreCollapse: FC<ShowMoreCollapseProps> = ({
   const collapsedHeight =
     (description.length / collapsedTextLength) * collapsedSize
 
+  const hasLongWord = description.split(' ').some((word) => word.length > 150)
+
   const collapsedDescription = (
-    <Typography sx={styles.description(collapsedHeight)}>
-      {expanded ? description : description.slice(0, collapsedTextLength)}
+    <Typography
+      sx={hasLongWord ? styles.longWord : styles.description(collapsedHeight)}
+    >
+      {description}
     </Typography>
   )
 
   return (
-    <Box>
+    <Box sx={styles.aboutOfferContainer}>
       {withoutTitle ? '' : <Typography sx={styles.title}>{title}</Typography>}
 
       <Collapse collapsedSize={collapsedSize} in={expanded} {...props}>
         {collapsedDescription}
       </Collapse>
 
-      {hasMoreText && (
+      {hasMoreText && !hasLongWord && (
         <Typography onClick={handleChange} sx={styles.showBtnText}>
           {t(expanded ? 'common.showLess' : 'common.showMore')}
         </Typography>
