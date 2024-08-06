@@ -39,7 +39,6 @@ export const columns: TableColumn<Quiz>[] = [
     field: 'questions',
     calculatedCellValue: (item: Quiz, { t }: AdditionalPropsInterface) => {
       const amountQuestions = item.items.length
-      // const questionText = t(`myResourcesPage.quizzes.question`)
 
       return (
         <Typography sx={styles.amountQuestions}>
