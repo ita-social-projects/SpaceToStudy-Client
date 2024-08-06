@@ -3,6 +3,7 @@ import { mockAxiosClient, selectOption } from '~tests/test-utils'
 import CourseToolbar from '~/containers/my-courses/course-toolbar/CourseToolbar'
 import { URLs } from '~/constants/request'
 import { ProficiencyLevelEnum } from '~/types'
+import { proficiencyLevelLabels } from '~/constants/labels'
 
 const mockData = {
   title: '',
@@ -171,7 +172,7 @@ describe('CourseToolbar', () => {
       })
 
       const proficiencyCheckbox = screen.getByText(
-        ProficiencyLevelEnum.Beginner
+        proficiencyLevelLabels.get(ProficiencyLevelEnum.Beginner)
       )
       fireEvent.click(proficiencyCheckbox)
 
