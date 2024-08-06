@@ -5,6 +5,8 @@ import MyCooperationsDetails from '~/containers/my-cooperations/my-cooperations-
 import { waitFor, screen, fireEvent } from '@testing-library/react'
 
 const mockedOffer = {
+  initiator: { _id: 'initiatorId', role: ['tutor'] },
+  receiver: { _id: 'receiverId', role: ['student'] },
   offer: {
     title: 'Title',
     description: 'Description',
