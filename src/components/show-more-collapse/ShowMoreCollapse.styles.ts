@@ -1,6 +1,6 @@
 export const styles = {
   aboutOfferContainer: {
-    width: '1000px'
+    width: '100%'
   },
   title: {
     color: 'primary.700',
