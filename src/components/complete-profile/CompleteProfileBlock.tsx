@@ -1,4 +1,4 @@
-import { FC, useMemo, useState } from 'react'
+import { FC, useMemo, useState, useCallback } from 'react'
 import { Link, useMatch } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
@@ -21,6 +21,9 @@ import { ProfileItemType } from '../profile-item/complete-profile.constants'
 import { useAppSelector } from '~/hooks/use-redux'
 import { UserResponse, UserRole } from '~/types'
 import { styles } from '~/components/complete-profile/CompleteProfileBlock.styles'
+import useAxios from '~/hooks/use-axios'
+import { OfferService } from '~/services/offer-service'
+import { defaultResponse } from '~/pages/my-offers/MyOffers.constants'
 
 interface CompleteProfileBlockProps {
   profileItems: ProfileItemType[]
@@ -35,13 +38,47 @@ const CompleteProfileBlock: FC<CompleteProfileBlockProps> = ({
 }) => {
   const { t } = useTranslation()
   const { isMobile } = useBreakpoints()
-  const { userRole } = useAppSelector((state) => state.appMain)
+  const { userRole, userId } = useAppSelector((state) => state.appMain)
   const homePage = useMatch(guestRoutes[userRole as UserRole].path)
   const [isOpen, setIsOpen] = useState(false)
 
+  const getMyOffers = useCallback(
+    () =>
+      OfferService.getUsersOffers({
+        id: userId
+      }),
+    [userId]
+  )
+
+  const { response } = useAxios({
+    service: getMyOffers,
+    defaultResponse
+  })
+
+  const checkIfHasNonEmptyFields = (obj: object) => {
+    for (const prop in obj) {
+      if (prop) {
+        return true
+      }
+      return false
+    }
+  }
+
   const checkProfileData = useMemo(
-    () => profileItems.filter((item) => data[item.id as keyof UserResponse]),
-    [data, profileItems]
+    () =>
+      profileItems.filter((item) => {
+        switch (item.id) {
+          case 'category':
+            return data.mainSubjects.student.length
+          case 'education':
+            return checkIfHasNonEmptyFields(data.professionalBlock!)
+          case 'offer':
+            return response.items.length
+          default:
+            return data[item.id as keyof UserResponse]
+        }
+      }),
+    [data, profileItems, response]
   )
 
   const valueProgressBar = Math.floor(

@@ -39,6 +39,7 @@ const ProfileItem = ({ item, role, isFilled = false }: ProfileItemProps) => {
       </Box>
       {isFilled && (
         <CheckIcon
+          data-testid={`icon-${item.id}`}
           fontSize={isMobile ? 'small' : 'medium'}
           sx={styles.checkIcon}
         />

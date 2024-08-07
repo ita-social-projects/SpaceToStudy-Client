@@ -39,11 +39,11 @@ export const profileItemsStudent: ProfileItemType[] = [
     icon: <CategoryIcon />
   },
   {
-    id: 'location',
+    id: 'address',
     icon: <LocationOnIcon />
   },
   {
-    id: 'request',
+    id: 'offer',
     icon: <LeakAddIcon />
   }
 ]
