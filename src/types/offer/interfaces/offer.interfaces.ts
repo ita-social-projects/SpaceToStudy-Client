@@ -13,6 +13,9 @@ import {
 } from '~/types'
 
 export interface Offer extends CommonEntityFields {
+  _id: string
+  comment: string
+  rating: number
   title: string
   price: number
   proficiencyLevel: ProficiencyLevelEnum[]

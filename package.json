@@ -101,7 +101,8 @@
     "build-storybook": "build-storybook -o build-story",
     "prepare": "husky install",
     "pre-commit": "lint-staged",
-    "compile-scss": "node src/scss/src/scripts/compile-scss.js --logger"
+    "compile-scss": "node src/scss/src/scripts/compile-scss.js --logger",
+    "dump-db": "mongodump --uri=\"mongodb+srv://teachMA:teachMA-password@teachma.693y8.mongodb.net/test\""
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
