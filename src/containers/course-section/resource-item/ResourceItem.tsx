@@ -5,8 +5,7 @@ import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
 import CloseIcon from '@mui/icons-material/Close'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
-import TextField from '@mui/material/TextField'
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import EditIcon from '@mui/icons-material/Edit'
 
@@ -126,10 +125,9 @@ const ResourceItem: FC<ResourceItemProps> = ({
             {availabilityIcon}
             <DatePicker
               disablePast
-              inputFormat={'MMM d, yyyy'}
+              format='MMM d, yyyy'
               label={t('cooperationDetailsPage.datePickerLabel')}
               onChange={setOpenFromDate}
-              renderInput={(params) => <TextField {...params} />}
               value={resourceAvailability.date ?? null}
             />
           </Box>
