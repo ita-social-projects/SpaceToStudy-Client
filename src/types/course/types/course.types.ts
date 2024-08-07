@@ -8,7 +8,7 @@ import {
 
 export interface ResourceAvailability {
   status: ResourceAvailabilityStatusEnum
-  date: Date | null
+  date: string | null
 }
 
 export type CourseResource = Lesson | Quiz | Attachment

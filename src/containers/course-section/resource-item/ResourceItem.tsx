@@ -86,7 +86,7 @@ const ResourceItem: FC<ResourceItemProps> = ({
   const setOpenFromDate = (date: Date | null) => {
     updateAvailability?.(resource, {
       status: resourceAvailabilityStatus,
-      date
+      date: date?.toISOString() ?? null
     })
   }
 
@@ -117,6 +117,7 @@ const ResourceItem: FC<ResourceItemProps> = ({
           <Box sx={styles.datePicker}>
             {availabilityIcon}
             <DatePicker
+              disableMaskedInput
               disablePast
               inputFormat={'MMM d, yyyy'}
               label={t('cooperationDetailsPage.datePickerLabel')}
