@@ -101,7 +101,7 @@
     "build-storybook": "build-storybook -o build-story",
     "prepare": "husky install",
     "pre-commit": "lint-staged",
-    "compile-scss": "node src/scss/src/scripts/compile-scss.js --logger",
+    "compile-scss": "node src/scss/src/scripts/compile-scss.js --logger"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
