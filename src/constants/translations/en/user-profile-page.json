@@ -36,4 +36,11 @@
     "starsCount_other": "{{count}} stars",
     "reviewsCount_one": "{{count}} review",
     "reviewsCount_other": "{{count}} reviews"
-}}
+},
+"sortItems": {
+    "Newest": "Newest",
+    "Relevant": "Relevant",
+    "highestRating": "Highest rating",
+    "lowestRating": "Lowest rating"
+  }
+}

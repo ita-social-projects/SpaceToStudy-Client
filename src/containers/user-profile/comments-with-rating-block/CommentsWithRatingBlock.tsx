@@ -12,23 +12,41 @@ import {
   responseMock,
   loadingMock
 } from '~/containers/user-profile/comments-with-rating-block/CommentsWithRatingBlock.constants'
-import { MenuItem, Select } from '@mui/material'
+import { ListItemText, MenuItem, Select } from '@mui/material'
+import { SortByEnum } from '~/types'
 
 interface CommentsWithRatingBlockProps {
   averageRating: number
   totalReviews: number
   reviewsCount: RatingType[]
+  labels?: ReadonlyMap<SortByEnum, string>
+  value: SortByEnum[]
 }
 
 const CommentsWithRatingBlock = ({
   averageRating,
   totalReviews,
-  reviewsCount
+  reviewsCount,
+  labels
 }: CommentsWithRatingBlockProps) => {
   const [filter, setFilter] = useState<number | null>(null)
 
   const { t } = useTranslation()
   const { items } = responseMock
+
+  const sortItems = Object.values(SortByEnum)
+
+  const sortMenuItems = sortItems.map((el) => (
+    <MenuItem key={el} value={el}>
+      <ListItemText
+        primary={
+          labels?.has(el)
+            ? t(labels.get(el)!)
+            : t(`userProfilePage.sortItems.${el}`)
+        }
+      />
+    </MenuItem>
+  ))
 
   return (
     <Box sx={styles.root}>
@@ -62,16 +80,11 @@ const CommentsWithRatingBlock = ({
                 ...styles.root,
                 flexDirection: 'row',
                 gap: '8px',
-                maxWidth: '200px'
+                maxWidth: '250px'
               }}
             >
               <Typography>Sort by:</Typography>
-              <Select defaultValue={'Newest'}>
-                <MenuItem value={'Newest'}>Newest</MenuItem>
-                <MenuItem value={'Relevant'}>Relevant</MenuItem>
-                <MenuItem value={'Highest rating'}>Highest rating</MenuItem>
-                <MenuItem value={'Lowest rating'}>Lowest rating</MenuItem>
-              </Select>
+              <Select defaultValue={'Newest'}>{sortMenuItems}</Select>
             </Box>
 
             <Box sx={{ ...styles.root, flexDirection: 'row', gap: '8px' }}>
