@@ -145,13 +145,13 @@ describe('CreateOrEditLesson component test', () => {
     })
     fireEvent.click(attachmentsBtn)
 
-    const attachment = await screen.findByText('test.pdf')
+    const attachment = await screen.findByText(mockedAttachement.fileName)
     fireEvent.click(attachment)
 
     const addBtn = screen.getByText('common.add')
     fireEvent.click(addBtn)
 
-    const addedAttachment = screen.getByText('test.pdf')
+    const addedAttachment = screen.getByText(mockedAttachement.fileName)
 
     expect(addedAttachment).toBeInTheDocument()
   })
@@ -165,19 +165,19 @@ describe('CreateOrEditLesson component test', () => {
     })
     fireEvent.click(attachmentsBtn)
 
-    const attachment = await screen.findByText('test.pdf')
+    const attachment = await screen.findByText(mockedAttachement.fileName)
     fireEvent.click(attachment)
 
     const addBtn = screen.getByText('common.add')
     fireEvent.click(addBtn)
 
-    let addedAttachment = screen.getByText('test.pdf')
+    let addedAttachment = screen.getByText(mockedAttachement.fileName)
     expect(addedAttachment).toBeInTheDocument()
 
     const removeAttachmentBtn = screen.getByTestId('CloseIcon')
     fireEvent.click(removeAttachmentBtn)
 
-    addedAttachment = screen.queryByText('test.pdf')
+    addedAttachment = screen.queryByText(mockedAttachement.fileName)
     expect(addedAttachment).not.toBeInTheDocument()
   })
 
