@@ -74,24 +74,8 @@ const CommentsWithRatingBlock = ({
             totalReviews={totalReviews}
           />
 
-          <Box
-            sx={{
-              ...styles.root,
-              gap: '80px',
-              width: '100%',
-              flexDirection: 'row',
-              left: 0,
-              justifyContent: 'flex-start'
-            }}
-          >
-            <Box
-              sx={{
-                ...styles.root,
-                flexDirection: 'row',
-                gap: '8px',
-                maxWidth: '250px'
-              }}
-            >
+          <Box sx={styles.container}>
+            <Box sx={styles.innerBox}>
               <Typography>{t('common.labels.sortBy')}</Typography>
               <Select defaultValue={SortByEnum.Newest}>{sortMenuItems}</Select>
             </Box>
