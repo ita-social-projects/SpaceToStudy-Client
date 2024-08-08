@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-
 import RatingBlock from '~/containers/user-profile/comments-with-rating-block/rating-block/RatingBlock'
 import CommentsBlock from '~/containers/user-profile/comments-block/CommentBlock'
 import Loader from '~/components/loader/Loader'
@@ -30,7 +29,6 @@ const CommentsWithRatingBlock = ({
   labels
 }: CommentsWithRatingBlockProps) => {
   const [filter, setFilter] = useState<number | null>(null)
-
   const { t } = useTranslation()
   const { items } = responseMock
 
@@ -45,6 +43,17 @@ const CommentsWithRatingBlock = ({
             : t(`userProfilePage.sortItems.${el}`)
         }
       />
+    </MenuItem>
+  ))
+
+  const ratingOptions = [5, 4, 3, 2, 1]
+
+  const ratingMenuItems = ratingOptions.map((rating) => (
+    <MenuItem key={rating} value={rating}>
+      {t('userProfilePage.reviews.starsCount', {
+        count: rating,
+        defaultValue: '{{count}} stars'
+      })}
     </MenuItem>
   ))
 
@@ -83,19 +92,13 @@ const CommentsWithRatingBlock = ({
                 maxWidth: '250px'
               }}
             >
-              <Typography>Sort by:</Typography>
-              <Select defaultValue={'Newest'}>{sortMenuItems}</Select>
+              <Typography>{t('common.labels.sortBy')}</Typography>
+              <Select defaultValue={SortByEnum.Newest}>{sortMenuItems}</Select>
             </Box>
 
             <Box sx={{ ...styles.root, flexDirection: 'row', gap: '8px' }}>
-              <Typography>Filter by:</Typography>
-              <Select defaultValue={5}>
-                <MenuItem value={5}>5 stars</MenuItem>
-                <MenuItem value={4}>4 stars</MenuItem>
-                <MenuItem value={3}>3 stars</MenuItem>
-                <MenuItem value={2}>2 stars</MenuItem>
-                <MenuItem value={1}>1 star</MenuItem>
-              </Select>
+              <Typography>{t('common.labels.filterBy')}</Typography>
+              <Select defaultValue={5}>{ratingMenuItems}</Select>
             </Box>
           </Box>
 
