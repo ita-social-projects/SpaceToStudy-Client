@@ -1,50 +1,62 @@
 import { FC, ReactNode } from 'react'
-import Carousel, { ControlProps, CarouselProps } from 'nuka-carousel'
+import { Carousel, CarouselProps, useCarousel } from 'nuka-carousel'
 import IconButton from '@mui/material/IconButton'
 import {
   ArrowBackIosRounded,
   ArrowForwardIosRounded
 } from '@mui/icons-material'
-import { SxProps } from '@mui/material'
+import { Box, Container, SxProps } from '@mui/material'
+import { styles } from './AppCarousel.styles'
 
 interface Settings extends CarouselProps {
   leftButtonStyles: SxProps
   leftArrowStyles: SxProps
   rightButtonStyles: SxProps
   rightArrowStyles: SxProps
+  slidesToShow: number
 }
 
 interface AppCarouselProps {
-  children: ReactNode[]
   settings?: Settings
+  children: ReactNode
 }
 
-const AppCarousel: FC<AppCarouselProps> = ({ children, settings }) => {
-  const leftArrow = ({ previousSlide }: ControlProps) => (
-    <IconButton onClick={previousSlide} sx={settings?.leftButtonStyles}>
+const CustomArrows = ({ settings }: { settings?: Settings }) => {
+  const { goBack, goForward } = useCarousel()
+
+  const leftArrow = (
+    <IconButton onClick={goBack} sx={settings?.leftButtonStyles}>
       <ArrowBackIosRounded sx={settings?.leftArrowStyles} />
     </IconButton>
   )
 
-  const rightArrow = ({ nextSlide }: ControlProps) => (
-    <IconButton onClick={nextSlide} sx={settings?.rightButtonStyles}>
+  const rightArrow = (
+    <IconButton onClick={goForward} sx={settings?.rightButtonStyles}>
       <ArrowForwardIosRounded sx={settings?.rightArrowStyles} />
     </IconButton>
   )
 
   return (
-    <Carousel
-      autoplay
-      cellSpacing={24}
-      renderCenterLeftControls={leftArrow}
-      renderCenterRightControls={rightArrow}
-      style={{ paddingBottom: '36px' }}
-      withoutControls={Number(settings?.slidesToShow) >= children.length}
-      wrapAround={children.length > Number(settings?.slidesToShow)}
-      {...settings}
-    >
-      {children}
-    </Carousel>
+    <Box sx={styles.arrowsWrapper}>
+      {leftArrow}
+      {rightArrow}
+    </Box>
+  )
+}
+
+const AppCarousel: FC<AppCarouselProps> = ({ settings, children }) => {
+  return (
+    <Container disableGutters sx={styles.carouselContainer}>
+      <Carousel
+        arrows={<CustomArrows settings={settings} />}
+        autoplay
+        showArrows='always'
+        wrapMode='wrap'
+        {...settings}
+      >
+        <Box sx={styles.childrenWrapper}>{children}</Box>
+      </Carousel>
+    </Container>
   )
 }
 
