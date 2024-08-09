@@ -55,13 +55,15 @@ const CompleteProfileBlock: FC<CompleteProfileBlockProps> = ({
     defaultResponse
   })
 
-  const checkIfHasNonEmptyFields = (obj: object) => {
+  const checkIfHasNonEmptyFields = (
+    obj: Record<string, string | undefined>
+  ): boolean => {
     for (const prop in obj) {
-      if (prop) {
+      if (obj[prop]) {
         return true
       }
-      return false
     }
+    return false
   }
 
   const checkProfileData = useMemo(
