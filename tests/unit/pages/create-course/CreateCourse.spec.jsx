@@ -18,7 +18,7 @@ vi.mock('react-router-dom', async () => ({
   useNavigate: () => mockedNavigate
 }))
 
-describe.skip('CreateCourse', () => {
+describe('CreateCourse', () => {
   beforeEach(async () => {
     await waitFor(() =>
       renderWithProviders(
