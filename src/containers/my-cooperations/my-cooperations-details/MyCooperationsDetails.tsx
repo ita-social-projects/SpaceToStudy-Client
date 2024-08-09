@@ -117,7 +117,7 @@ const MyCooperationsDetails = () => {
               {offer.author.professionalSummary}
             </Typography>
           </Box>
-          <Box>
+          <Box sx={style.userButtons}>
             <AppButton
               onClick={onClickOpenChat}
               size={SizeEnum.Medium}
