@@ -10,10 +10,10 @@ import useSort from '~/hooks/table/use-sort'
 import useFilter from '~/hooks/table/use-filter'
 import useSelect from '~/hooks/table/use-select'
 import usePagination from '~/hooks/table/use-pagination'
-import { Sort } from '~/hooks/table/use-sort'
 import Tab from '~/components/tab/Tab'
 import EnhancedTableToolbar from '~/components/enhanced-table/enhanced-table-toolbar/EnhancedTableToolbar'
 import EnhancedTablePagination from '~/components/enhanced-table/enhanced-table-pagination/EnhancedTablePagination'
+import { Sort } from '~/hooks/table/use-sort'
 
 import { styles } from '~/components/user-table/UserTable.styles'
 import { VisibilityEnum } from '~/types'
@@ -83,7 +83,8 @@ const UserTable: React.FC<UserTableProps> = ({
   )
 
   const deleteAllFunction = useCallback(
-    (userIds: string) => userService.deleteUsers(userIds),
+    (userIds: string | string[]) =>
+      userService.deleteUsers(Array.isArray(userIds) ? userIds : [userIds]),
     []
   )
 
