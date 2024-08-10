@@ -40,7 +40,12 @@ const EnhancedTablePagination: React.FC<EnhancedTablePaginationProps> = ({
     >
       <Pagination
         count={pageCount}
-        onChange={handleChangePage}
+        onChange={(event: React.ChangeEvent<unknown>, page: number) =>
+          handleChangePage(
+            event as React.MouseEvent<HTMLButtonElement, MouseEvent> | null,
+            page
+          )
+        }
         page={currentPage}
       />
     </Box>

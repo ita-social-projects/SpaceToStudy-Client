@@ -191,6 +191,13 @@ const UserTable: React.FC<UserTableProps> = ({
   const toolbarVisibility =
     selected.length > 0 ? VisibilityEnum.Visible : VisibilityEnum.Hidden
 
+  const handleChangePage = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null,
+    page: number
+  ) => {
+    console.log(page)
+  }
+
   return (
     <Box sx={styles.root}>
       <Typography sx={styles.header}>{t(`userTable.${role}sTab`)}</Typography>
@@ -204,7 +211,9 @@ const UserTable: React.FC<UserTableProps> = ({
       </Box>
       {tabsInfo[externalFilter.status].component(props)}
       {!loading && !!items.length && (
-        <EnhancedTablePagination pagination={pagination} />
+        <EnhancedTablePagination
+          pagination={{ ...pagination, handleChangePage }}
+        />
       )}
     </Box>
   )

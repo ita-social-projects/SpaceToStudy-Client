@@ -56,7 +56,7 @@ export interface TablePaginationProps {
   pageCount: number
   itemsCount: number
   handleChangePage: (
-    event: ChangeEvent<unknown> | MouseEvent | null,
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null,
     page: number
   ) => void
   handleChangeRowsPerPage: (e: ChangeEvent<HTMLInputElement>) => void
