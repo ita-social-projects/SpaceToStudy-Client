@@ -199,6 +199,10 @@ const UserTable: React.FC<UserTableProps> = ({
     console.log(page)
   }
 
+  const handleRefetchData = () => {
+    void getData()
+  }
+
   return (
     <Box sx={styles.root}>
       <Typography sx={styles.header}>{t(`userTable.${role}sTab`)}</Typography>
@@ -207,7 +211,7 @@ const UserTable: React.FC<UserTableProps> = ({
         <EnhancedTableToolbar
           bulkActions={bulkActions}
           itemIds={selected}
-          refetchData={getData}
+          refetchData={handleRefetchData}
         />
       </Box>
       {tabsInfo[externalFilter.status].component(props)}
