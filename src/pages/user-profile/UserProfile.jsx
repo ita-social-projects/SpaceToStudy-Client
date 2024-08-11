@@ -68,13 +68,15 @@ const UserProfile = () => {
   return (
     <PageWrapper>
       <ProfileInfo myRole={userRole} userData={response} />
-      <CompleteProfileBlock
-        data={response}
-        profileItems={
-          preferredRole == 'student' ? profileItemsStudent : profileItemsTutor
-        }
-        role={preferredRole}
-      />
+      {isMyProfile && (
+        <CompleteProfileBlock
+          data={response}
+          profileItems={
+            preferredRole == 'student' ? profileItemsStudent : profileItemsTutor
+          }
+          role={preferredRole}
+        />
+      )}
       {response.professionalBlock && (
         <AboutTutorBlock data={response.professionalBlock} />
       )}

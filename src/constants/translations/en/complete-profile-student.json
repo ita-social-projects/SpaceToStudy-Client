@@ -9,11 +9,11 @@
     "title": "Choose categories you are interested in",
     "subtitle": "Show us what you would like to learn."
   },
-  "location": {
+  "address": {
     "title": "Add your location",
     "subtitle": "Let members know where you are based."
   },
-  "request": {
+  "offer": {
     "title": "Create a new request",
     "subtitle": "Сreate a request to find the right tutor for a subject you want to learn."
   }
