@@ -1,5 +1,4 @@
-import { ProficiencyLevelEnum } from '~/types'
-import { SortByEnum } from '~/types'
+import { ProficiencyLevelEnum, SortByEnum } from '~/types'
 
 export const proficiencyLevelLabels: ReadonlyMap<ProficiencyLevelEnum, string> =
   new Map([

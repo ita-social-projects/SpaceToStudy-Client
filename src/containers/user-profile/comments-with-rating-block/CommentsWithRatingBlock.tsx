@@ -5,21 +5,19 @@ import Typography from '@mui/material/Typography'
 import RatingBlock from '~/containers/user-profile/comments-with-rating-block/rating-block/RatingBlock'
 import CommentsBlock from '~/containers/user-profile/comments-block/CommentBlock'
 import Loader from '~/components/loader/Loader'
-import { RatingType } from '~/types'
+import { RatingType, SortByEnum } from '~/types'
 import { styles } from '~/containers/user-profile/comments-with-rating-block/CommentsWithRatingBlock.styles'
 import {
   responseMock,
   loadingMock
 } from '~/containers/user-profile/comments-with-rating-block/CommentsWithRatingBlock.constants'
 import { ListItemText, MenuItem, Select } from '@mui/material'
-import { SortByEnum } from '~/types'
 
 interface CommentsWithRatingBlockProps {
   averageRating: number
   totalReviews: number
   reviewsCount: RatingType[]
   labels?: ReadonlyMap<SortByEnum, string>
-  value: SortByEnum[]
 }
 
 const CommentsWithRatingBlock = ({
