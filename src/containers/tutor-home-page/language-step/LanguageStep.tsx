@@ -11,10 +11,10 @@ import img from '~/assets/img/tutor-home-page/become-tutor/languages.svg'
 import { languages } from '~/containers/tutor-home-page/language-step/constants'
 
 interface LanguageStepProps {
-  btnsBox: React.ReactNode
+  buttonsBox: React.ReactNode
 }
 
-const LanguageStep: React.FC<LanguageStepProps> = ({ btnsBox }) => {
+const LanguageStep: React.FC<LanguageStepProps> = ({ buttonsBox }) => {
   const { t } = useTranslation()
   const { isLaptopAndAbove, isMobile } = useBreakpoints()
   const { stepData, handleLanguage } = useStepContext()
@@ -45,12 +45,12 @@ const LanguageStep: React.FC<LanguageStepProps> = ({ btnsBox }) => {
             options={languages}
             textFieldProps={{
               label: t('becomeTutor.languages.autocompleteLabel'),
-              sx: { mb: '30px' }
+              sx: styles.textField
             }}
             value={languageData}
           />
         </Box>
-        {btnsBox}
+        {buttonsBox}
       </Box>
     </Box>
   )
