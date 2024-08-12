@@ -87,4 +87,24 @@ describe('Test quiz page', () => {
 
     expect(correctAnswersLabel).toBeInTheDocument()
   })
+
+  it('should render ScrollQuestionsQuizView with correct props', () => {
+    const questionText = screen.getByText(
+      'What is the difference between function expression and function declaration?'
+    )
+
+    expect(questionText).toBeInTheDocument()
+  })
+
+  it('should render points and answers correctness when finished', () => {
+    const finishButton = screen.getByText('quiz.finish')
+    fireEvent.click(finishButton)
+    const pointsLabel = screen.getByText('quiz.points')
+    const answersCorrectnessLabel = screen.getByText(
+      'myResourcesPage.quizzes.correctAnswers'
+    )
+
+    expect(pointsLabel).toBeInTheDocument()
+    expect(answersCorrectnessLabel).toBeInTheDocument()
+  })
 })

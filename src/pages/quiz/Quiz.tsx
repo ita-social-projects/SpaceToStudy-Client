@@ -90,6 +90,7 @@ const QuizPage = () => {
   ) : (
     <ScrollQuestionsQuizView
       answers={data}
+      data-testid='scroll-questions-quiz-view'
       handleInputChange={handleInputChange}
       handleNonInputValueChange={handleNonInputChange}
       isEditable={!isFinished}
