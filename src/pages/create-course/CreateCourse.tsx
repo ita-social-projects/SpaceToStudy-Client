@@ -48,8 +48,7 @@ import {
 
 import useForm from '~/hooks/use-form'
 import useAxios from '~/hooks/use-axios'
-import { useAppSelector } from '~/hooks/use-redux'
-import { useAppDispatch } from '~/hooks/use-redux'
+import { useAppSelector, useAppDispatch } from '~/hooks/use-redux'
 
 const CreateCourse = () => {
   const navigate = useNavigate()
