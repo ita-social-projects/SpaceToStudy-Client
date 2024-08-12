@@ -10,13 +10,17 @@ import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
 import { languages } from '~/containers/tutor-home-page/language-step/constants'
 import useBreakpoints from '~/hooks/use-breakpoints'
 
-const LanguageStep = ({ btnsBox }) => {
+interface LanguageStepProps {
+  btnsBox: React.ReactNode
+}
+
+const LanguageStep: React.FC<LanguageStepProps> = ({ btnsBox }) => {
   const { t } = useTranslation()
   const { isLaptopAndAbove, isMobile } = useBreakpoints()
   const { stepData, handleLanguage } = useStepContext()
   const languageData = stepData.language
 
-  const onChangeLanguage = (_, value) => {
+  const onChangeLanguage = (_: unknown, value: string | null) => {
     handleLanguage(value)
   }
 
@@ -36,14 +40,13 @@ const LanguageStep = ({ btnsBox }) => {
             </Box>
           )}
           <AppAutoComplete
+            data-testid='language'
             onChange={onChangeLanguage}
             options={languages}
             textFieldProps={{
               label: t('becomeTutor.languages.autocompleteLabel'),
-              'data-testid': 'language',
               sx: { mb: '30px' }
             }}
-            type='text'
             value={languageData}
           />
         </Box>
