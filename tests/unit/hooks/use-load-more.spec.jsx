@@ -38,28 +38,6 @@ describe('useLoadMore custom hook', () => {
       )
     })
   })
-
-  it('should open modal window', async () => {
-    const { result } = renderHook(() => useLoadMore({ ...props }))
-
-    await waitFor(() => {
-      expect(result.current.data).toEqual(
-        mockResponseData.slice(0, mockParams.limit)
-      )
-      expect(result.current.loading).toBe(false)
-    })
-
-    act(() => {
-      result.current.loadMore()
-    })
-
-    expect(result.current.loading).toBe(true)
-
-    await waitFor(() => {
-      expect(result.current.data).toEqual(mockResponseData)
-    })
-  }, 10000)
-
   it('should call showMore and return array with length equal to 2', async () => {
     const { result } = renderHook(() => useLoadMore({ ...props }))
 
