@@ -10,10 +10,10 @@ import { LanguagesEnum, ProficiencyLevelEnum } from '~/types'
 interface OfferDetailsProps {
   subject: string
   chipsColor: string
-  level: ProficiencyLevelEnum
+  level: ProficiencyLevelEnum | ProficiencyLevelEnum[]
   title: string
   description: string
-  languages: LanguagesEnum
+  languages: LanguagesEnum | LanguagesEnum[]
 }
 
 const OfferDetails: React.FC<OfferDetailsProps> = ({
