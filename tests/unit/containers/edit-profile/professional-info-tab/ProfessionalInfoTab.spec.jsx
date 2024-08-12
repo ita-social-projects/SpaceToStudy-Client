@@ -2,7 +2,6 @@ import ProfessionalInfoTab from '~/containers/edit-profile/professional-info-tab
 import { fireEvent, screen } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 import { vi } from 'vitest'
-import { useAppSelector } from '~/hooks/use-redux'
 import { UserRoleEnum } from '~/types'
 import { initialProfessoinalBlock } from '~/redux/features/editProfileSlice.ts'
 
@@ -64,19 +63,29 @@ const mockedCategories = [
   }
 ]
 
-vi.mock('~/hooks/use-redux', () => ({
-  useAppSelector: vi.fn(),
-  useAppDispatch: vi.fn()
-}))
+const mockUseAppDispatch = vi.fn()
+
+vi.mock('~/hooks/use-redux', async () => {
+  const actual = await vi.importActual('~/hooks/use-redux')
+  return {
+    ...actual,
+    useAppDispatch: () => mockUseAppDispatch
+  }
+})
 
 describe('ProfessionalInfoTab', () => {
   beforeEach(() => {
-    useAppSelector.mockReturnValue({
-      userRole: UserRoleEnum.Student,
-      categories: mockedCategories,
-      professionalBlock: initialProfessoinalBlock
+    renderWithProviders(<ProfessionalInfoTab />, {
+      preloadedState: {
+        editProfile: {
+          categories: mockedCategories,
+          professionalBlock: initialProfessoinalBlock
+        },
+        appMain: {
+          userRole: UserRoleEnum.Student
+        }
+      }
     })
-    renderWithProviders(<ProfessionalInfoTab />)
   })
 
   it('should render title and description', () => {
@@ -104,12 +113,17 @@ describe('ProfessionalInfoTab', () => {
 
 describe('ProfessionalInfoTab for tutor', () => {
   beforeEach(() => {
-    useAppSelector.mockReturnValue({
-      userRole: UserRoleEnum.Tutor,
-      categories: mockedCategories,
-      professionalBlock: initialProfessoinalBlock
+    renderWithProviders(<ProfessionalInfoTab />, {
+      preloadedState: {
+        editProfile: {
+          categories: mockedCategories,
+          professionalBlock: initialProfessoinalBlock
+        },
+        appMain: {
+          userRole: UserRoleEnum.Tutor
+        }
+      }
     })
-    renderWithProviders(<ProfessionalInfoTab />)
   })
 
   it('should render about tutor block', () => {

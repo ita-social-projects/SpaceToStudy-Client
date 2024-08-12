@@ -15,7 +15,11 @@ import {
   UserRoleEnum
 } from '~/types'
 
-import { deleteCategory, setField } from '~/redux/features/editProfileSlice'
+import {
+  deleteCategory,
+  setField,
+  updateValidityStatus
+} from '~/redux/features/editProfileSlice'
 
 import { useDebounce } from '~/hooks/use-debounce'
 import useForm from '~/hooks/use-form'
@@ -39,7 +43,7 @@ const ProfessionalInfoTab: FC = () => {
 
   const { openModal, closeModal } = useModalContext()
 
-  const { data, handleInputChange } = useForm<ProfessionalBlock>({
+  const { isValid, data, handleInputChange } = useForm<ProfessionalBlock>({
     initialValues: professionalBlock
   })
 
@@ -58,6 +62,12 @@ const ProfessionalInfoTab: FC = () => {
       deleteCategory({ id: categoryId, userRole: userRoleToDeleteCategory })
     )
   }
+
+  useEffect(() => {
+    void dispatch(
+      updateValidityStatus({ tab: 'professionalInfoTab', value: isValid })
+    )
+  }, [isValid, dispatch])
 
   const openProfessionalCategoryModal: OpenProfessionalCategoryModalHandler = (
     initialValues,
