@@ -78,7 +78,7 @@ const CommentsWithRatingBlock = ({
               <Select defaultValue={SortByEnum.Newest}>{sortMenuItems}</Select>
             </Box>
 
-            <Box sx={{ ...styles.root, flexDirection: 'row', gap: '8px' }}>
+            <Box sx={styles.innerBox}>
               <Typography>{t('common.labels.filterBy')}</Typography>
               <Select defaultValue={5}>{ratingMenuItems}</Select>
             </Box>
