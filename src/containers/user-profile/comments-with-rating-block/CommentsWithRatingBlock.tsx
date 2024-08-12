@@ -27,6 +27,7 @@ const CommentsWithRatingBlock = ({
   labels
 }: CommentsWithRatingBlockProps) => {
   const [filter, setFilter] = useState<number | null>(null)
+  const [sortBy, setSortBy] = useState<SortByEnum>(SortByEnum.Newest)
   const { t } = useTranslation()
   const { items } = responseMock
 
@@ -55,6 +56,28 @@ const CommentsWithRatingBlock = ({
     </MenuItem>
   ))
 
+  const filteredItems = items.filter((item) => {
+    if (filter !== null) {
+      return item.rating === filter
+    }
+    return true
+  })
+
+  const sortedItems = filteredItems.sort((a, b) => {
+    switch (sortBy) {
+      case SortByEnum.Newest:
+        return new Date().getTime() - new Date().getTime()
+      case SortByEnum.Relevant:
+        return new Date().getTime() - new Date().getTime()
+      case SortByEnum.highestRating:
+        return b.rating - a.rating
+      case SortByEnum.lowestRating:
+        return a.rating - b.rating
+      default:
+        return 0
+    }
+  })
+
   return (
     <Box sx={styles.root}>
       <Typography sx={styles.title}>
@@ -75,17 +98,37 @@ const CommentsWithRatingBlock = ({
           <Box sx={styles.container}>
             <Box sx={styles.innerBox}>
               <Typography>{t('common.labels.sortBy')}</Typography>
-              <Select defaultValue={SortByEnum.Newest}>{sortMenuItems}</Select>
+              <Select
+                defaultValue={SortByEnum.Newest}
+                onChange={(e) => {
+                  const value = e.target.value
+                  if (Object.values(SortByEnum).includes(value as SortByEnum)) {
+                    setSortBy(value as SortByEnum)
+                  }
+                }}
+              >
+                {sortMenuItems}
+              </Select>
             </Box>
 
             <Box sx={styles.innerBox}>
               <Typography>{t('common.labels.filterBy')}</Typography>
-              <Select defaultValue={5}>{ratingMenuItems}</Select>
+              <Select
+                defaultValue={5}
+                onChange={(e) =>
+                  setFilter(
+                    e.target.value === '' ? null : Number(e.target.value)
+                  )
+                }
+                value={filter ?? 5}
+              >
+                {ratingMenuItems}
+              </Select>
             </Box>
           </Box>
 
           <CommentsBlock
-            data={items}
+            data={sortedItems}
             isExpandable
             loadMore={() => null}
             loading={loadingMock}
