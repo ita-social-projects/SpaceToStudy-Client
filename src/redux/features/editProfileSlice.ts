@@ -47,6 +47,7 @@ interface EditProfileState {
     professionalInfoTab: boolean
     notificationTab: boolean
   }
+  bookmarkedOffers: string[]
 }
 
 const initialState: EditProfileState = {
@@ -73,7 +74,8 @@ const initialState: EditProfileState = {
     profileTab: true,
     professionalInfoTab: true,
     notificationTab: true
-  }
+  },
+  bookmarkedOffers: []
 }
 
 const updateStateFromPayload = (
@@ -89,7 +91,8 @@ const updateStateFromPayload = (
     photo,
     videoLink,
     mainSubjects,
-    professionalBlock
+    professionalBlock,
+    bookmarkedOffers
   } = payload
   state.firstName = firstName
   state.lastName = lastName
@@ -104,6 +107,7 @@ const updateStateFromPayload = (
   state.workExperience = professionalBlock?.workExperience
   state.scientificActivities = professionalBlock?.scientificActivities
   state.awards = professionalBlock?.awards
+  state.bookmarkedOffers = bookmarkedOffers
 }
 
 export const fetchUserById = createAsyncThunk(

@@ -13,13 +13,15 @@ interface OfferCardProps {
   offer: Offer
   onBookmarkClick: (id: string) => void
   buttonActions: (ButtonActions | null)[]
+  isBookmarked: boolean
 }
 
 const OfferCard: FC<OfferCardProps> = ({
   isHideField = false,
   offer,
   onBookmarkClick,
-  buttonActions
+  buttonActions,
+  isBookmarked
 }) => {
   const {
     _id,
@@ -48,7 +50,7 @@ const OfferCard: FC<OfferCardProps> = ({
       />
       <OfferDetails
         chipsColor={category.appearance.color}
-        description={!isHideField && description}
+        description={!isHideField ? description : ''}
         languages={languages}
         level={proficiencyLevel}
         subject={subject.name}
@@ -57,7 +59,7 @@ const OfferCard: FC<OfferCardProps> = ({
       <OfferActions
         buttonActions={buttonActions}
         id={_id}
-        isBookmarked={false}
+        isBookmarked={isBookmarked}
         onBookmarkClick={onBookmarkClick}
         price={price}
       />

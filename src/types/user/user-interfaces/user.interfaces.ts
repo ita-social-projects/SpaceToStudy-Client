@@ -48,6 +48,7 @@ export interface UserResponse {
   videoLink: DataByRole<string>
   professionalBlock?: ProfessionalBlock
   status: DataByRole<UserStatusEnum>
+  bookmarkedOffers: string[]
 }
 
 export interface ProfessionalBlock {

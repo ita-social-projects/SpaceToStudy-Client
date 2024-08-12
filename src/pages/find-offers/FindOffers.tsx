@@ -24,7 +24,7 @@ import NotFoundResults from '~/components/not-found-results/NotFoundResults'
 import { countActiveOfferFilters } from '~/utils/count-active-filters'
 import { useDrawer } from '~/hooks/use-drawer'
 import { useFilterQuery } from '~/hooks/use-filter-query'
-import { useAppSelector } from '~/hooks/use-redux'
+import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 import usePagination from '~/hooks/table/use-pagination'
 import useAxios from '~/hooks/use-axios'
 import { getOpositeRole } from '~/utils/helper-functions'
@@ -36,7 +36,8 @@ import {
   GetOffersParams,
   GetOffersResponse,
   PositionEnum,
-  StatusEnum
+  StatusEnum,
+  UserRole
 } from '~/types'
 import {
   defaultFilters,
@@ -44,12 +45,14 @@ import {
   itemsPerPage
 } from '~/pages/find-offers/FindOffers.constants'
 import { styles } from '~/pages/find-offers/FindOffers.styles'
+import { fetchUserById } from '~/redux/features/editProfileSlice'
 
 const FindOffers = () => {
   const [cardsView, setCardsView] = useState<CardsView>(CardsViewEnum.Inline)
-  const { userRole } = useAppSelector((state) => state.appMain)
+  const { userRole, userId } = useAppSelector((state) => state.appMain)
   const { openDrawer, closeDrawer, isOpen } = useDrawer()
   const { isMobile, isLaptopAndAbove } = useBreakpoints()
+  const dispatch = useAppDispatch()
 
   const { t } = useTranslation()
 
@@ -106,6 +109,12 @@ const FindOffers = () => {
     updateInfo()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetchData, searchString])
+
+  useEffect(() => {
+    void dispatch(
+      fetchUserById({ userId, role: userRole as UserRole, isEdit: false })
+    )
+  }, [dispatch, userId, userRole])
 
   const toggleFiltersOpen = () => (isOpen ? closeDrawer() : openDrawer())
 

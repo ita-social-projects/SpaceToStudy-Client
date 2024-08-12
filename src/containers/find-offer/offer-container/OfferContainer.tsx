@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import Box from '@mui/material/Box'
 
 import { useChatContext } from '~/context/chat-context'
-import { useAppSelector } from '~/hooks/use-redux'
+import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import OfferCardSquare from '~/containers/find-offer/offer-card-square/OfferCardSquare'
 import OfferCard from '~/components/offer-card/OfferCard'
@@ -12,8 +12,20 @@ import AppCard from '~/components/app-card/AppCard'
 import { authRoutes } from '~/router/constants/authRoutes'
 
 import { createUrlPath } from '~/utils/helper-functions'
-import { CardsView, Offer, CardsViewEnum, ButtonVariantEnum } from '~/types'
+import {
+  CardsView,
+  Offer,
+  CardsViewEnum,
+  ButtonVariantEnum,
+  ErrorResponse
+} from '~/types'
 import { styles } from '~/containers/find-offer/offer-container/OfferContainer.styles'
+import { userService } from '~/services/user-service'
+import { openAlert } from '~/redux/features/snackbarSlice'
+import { snackbarVariants } from '~/constants'
+import { getErrorKey } from '~/utils/get-error-key'
+import { setField } from '~/redux/features/editProfileSlice'
+import useAxios from '~/hooks/use-axios'
 
 interface OfferContainerProps {
   viewMode: CardsView
@@ -30,9 +42,31 @@ const OfferContainer: FC<OfferContainerProps> = ({
   const { isMobile, isLaptopAndAbove } = useBreakpoints()
   const { setChatInfo } = useChatContext()
   const { userId } = useAppSelector((state) => state.appMain)
+  const { bookmarkedOffers } = useAppSelector((state) => state.editProfile)
+  const dispatch = useAppDispatch()
+
+  const handleResponse = (response: string[]) => {
+    dispatch(setField({ field: 'bookmarkedOffers', value: response }))
+  }
+
+  const handleResponseError = (error?: ErrorResponse) => {
+    dispatch(
+      openAlert({
+        severity: snackbarVariants.error,
+        message: getErrorKey(error)
+      })
+    )
+  }
+
+  const { fetchData: toggleBookmark } = useAxios({
+    service: (offerID: string) => userService.toggleBookmark(userId, offerID),
+    fetchOnMount: false,
+    onResponse: handleResponse,
+    onResponseError: handleResponseError
+  })
 
   const onBookmarkClick = (id: string) => {
-    console.log(id)
+    void toggleBookmark(id)
   }
 
   const renderSquareCard =
@@ -47,6 +81,8 @@ const OfferContainer: FC<OfferContainerProps> = ({
     })
 
   const offerItems = offerCards.map((el) => {
+    const isBookmarked = bookmarkedOffers.includes(el._id)
+
     const buttonActions = [
       {
         label: t('common.labels.viewDetails'),
@@ -71,6 +107,7 @@ const OfferContainer: FC<OfferContainerProps> = ({
           <AppCard sx={styles.appCardSquare}>
             <OfferCardSquare
               buttonActions={buttonActions}
+              isBookmarked={isBookmarked}
               offer={el}
               onBookmarkClick={onBookmarkClick}
             />
@@ -79,6 +116,7 @@ const OfferContainer: FC<OfferContainerProps> = ({
           <AppCard sx={styles.appCard}>
             <OfferCard
               buttonActions={buttonActions}
+              isBookmarked={isBookmarked}
               offer={el}
               onBookmarkClick={onBookmarkClick}
             />

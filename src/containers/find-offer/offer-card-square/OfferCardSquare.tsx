@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
 import TurnedInNot from '@mui/icons-material/TurnedInNot'
+import TurnedIn from '@mui/icons-material/TurnedIn'
 import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
 
@@ -20,12 +21,14 @@ interface OfferCardSquareProps {
   buttonActions?: (ButtonActions | null)[]
   offer: Offer
   onBookmarkClick?: (id: string) => void
+  isBookmarked: boolean
 }
 
 const OfferCardSquare: FC<OfferCardSquareProps> = ({
   buttonActions,
   offer,
-  onBookmarkClick
+  onBookmarkClick,
+  isBookmarked
 }) => {
   const { t } = useTranslation()
 
@@ -75,7 +78,7 @@ const OfferCardSquare: FC<OfferCardSquareProps> = ({
             onClick={() => onBookmarkClick(_id)}
             sx={styles.iconButton}
           >
-            <TurnedInNot />
+            {isBookmarked ? <TurnedIn /> : <TurnedInNot />}
           </IconButton>
         )}
         <SubjectLevelWithLabels
