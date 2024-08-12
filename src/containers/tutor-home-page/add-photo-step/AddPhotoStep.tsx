@@ -4,18 +4,18 @@ import { Box, Typography } from '@mui/material'
 
 import FileUploader from '~/components/file-uploader/FileUploader'
 import DragAndDrop from '~/components/drag-and-drop/DragAndDrop'
-import { imageResize } from '~/utils/image-resize'
-
-import { style } from '~/containers/tutor-home-page/add-photo-step/AddPhotoStep.style'
-import { useStepContext } from '~/context/step-context'
 import useBreakpoints from '~/hooks/use-breakpoints'
+import { useStepContext } from '~/context/step-context'
+
+import { imageResize } from '~/utils/image-resize'
 import { validationData } from './constants'
+import { style } from '~/containers/tutor-home-page/add-photo-step/AddPhotoStep.style'
 
 interface AddPhotoStepProps {
-  btnsBox: React.ReactNode
+  buttonsBox: React.ReactNode
 }
 
-const AddPhotoStep: React.FC<AddPhotoStepProps> = ({ btnsBox }) => {
+const AddPhotoStep: React.FC<AddPhotoStepProps> = ({ buttonsBox }) => {
   const { isLaptopAndAbove, isTablet, isMobile } = useBreakpoints()
   const [photoError, setPhotoError] = useState('')
   const { t } = useTranslation()
@@ -93,7 +93,7 @@ const AddPhotoStep: React.FC<AddPhotoStepProps> = ({ btnsBox }) => {
           />
         </Box>
         {(isMobile || isTablet) && photoPreview}
-        {btnsBox}
+        {buttonsBox}
       </Box>
     </Box>
   )
