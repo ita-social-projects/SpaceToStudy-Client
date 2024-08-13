@@ -1,6 +1,7 @@
 import { Dispatch, FC, SetStateAction } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
+import { AxiosError } from 'axios'
 
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
@@ -27,10 +28,13 @@ import {
   ResourcesAvailabilityEnum,
   ButtonVariantEnum,
   SizeEnum,
-  ButtonTypeEnum
+  ButtonTypeEnum,
+  ErrorResponse
 } from '~/types'
 
 import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
+import { getErrorKey } from '~/utils/get-error-key'
+import { getErrorMessage } from '~/utils/error-with-message'
 
 interface CooperationActivitiesProps {
   cooperationId?: string
@@ -53,17 +57,37 @@ const CooperationActivities: FC<CooperationActivitiesProps> = ({
   }
 
   const updateCooperationSection = async () => {
-    await cooperationService.updateCooperation({
-      _id: cooperationId,
-      sections
-    })
-    dispatch(
-      openAlert({
-        severity: snackbarVariants.success,
-        message: 'cooperationsPage.acceptModal.successMessage'
+    try {
+      await cooperationService.updateCooperation({
+        _id: cooperationId,
+        sections
       })
-    )
-    setEditMode((prev: boolean) => !prev)
+      dispatch(
+        openAlert({
+          severity: snackbarVariants.success,
+          message: 'cooperationsPage.acceptModal.successMessage'
+        })
+      )
+      setEditMode((prev: boolean) => !prev)
+    } catch (error) {
+      const errorData = (error as AxiosError).response?.data as ErrorResponse
+      const errorKey = getErrorKey(errorData)
+      const errorMessage = errorData
+        ? {
+            text: errorKey,
+            options: {
+              message: getErrorMessage(errorData.message)
+            }
+          }
+        : errorKey
+
+      dispatch(
+        openAlert({
+          severity: snackbarVariants.error,
+          message: errorMessage
+        })
+      )
+    }
   }
 
   const cooperationOption = cooperationTranslationKeys.map(
