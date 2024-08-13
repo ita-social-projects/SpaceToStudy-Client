@@ -108,7 +108,7 @@ const UserTable: React.FC<UserTableProps> = ({
       sort: sortParams,
       ...filters,
       ...externalFilter,
-      status: status || filters.status
+      status: status ?? filters.status
     } as GetUsersParams)
   }, [
     fetchData,
