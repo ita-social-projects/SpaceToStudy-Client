@@ -74,6 +74,8 @@ const CompleteProfileBlock: FC<CompleteProfileBlockProps> = ({
             return data.mainSubjects.student.length
           case 'education':
             return checkIfHasNonEmptyFields(data.professionalBlock!)
+          case 'video':
+            return data.videoLink
           case 'offer':
             return response.items.length
           default:
@@ -139,7 +141,7 @@ const CompleteProfileBlock: FC<CompleteProfileBlockProps> = ({
           </Box>
           {icon}
         </Box>
-        <AppProgressBarLine value={valueProgressBar} />
+        <AppProgressBarLine role={role} value={valueProgressBar} />
       </AccordionSummary>
       <AccordionDetails sx={styles.profileItems}>
         {profileList}

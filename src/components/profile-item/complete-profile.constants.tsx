@@ -4,6 +4,7 @@ import SellIcon from '@mui/icons-material/Sell'
 import LeakAddIcon from '@mui/icons-material/LeakAdd'
 import CategoryIcon from '@mui/icons-material/Category'
 import LocationOnIcon from '@mui/icons-material/LocationOn'
+import TheatersIcon from '@mui/icons-material/Theaters'
 
 export interface ProfileItemType {
   id: string
@@ -18,6 +19,10 @@ export const profileItemsTutor: ProfileItemType[] = [
   {
     id: 'education',
     icon: <InfoIcon />
+  },
+  {
+    id: 'video',
+    icon: <TheatersIcon />
   },
   {
     id: 'schedule',

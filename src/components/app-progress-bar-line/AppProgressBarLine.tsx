@@ -8,11 +8,13 @@ import { LinearProgress } from '@mui/material'
 
 interface AppProgressBarLineProps {
   value: number
+  role: string
 }
 
-const AppProgressBarLine: FC<AppProgressBarLineProps> = ({ value }) => {
+const AppProgressBarLine: FC<AppProgressBarLineProps> = ({ value, role }) => {
   const { isMobile } = useBreakpoints()
-  const labelsValue = [0, 20, 40, 60, 80, 100]
+  const labelsValue =
+    role == 'student' ? [0, 25, 50, 75, 100] : [0, 20, 40, 60, 80, 100]
 
   const labelsWithPercent = isMobile ? (
     <Typography color={'primary.500'} variant='subtitle2'>

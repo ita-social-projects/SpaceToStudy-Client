@@ -23,12 +23,19 @@ const mockDataFilled = {
   professionalBlock: {
     bla: 'blabla',
     blatwo: ''
+  },
+  videoLink: {
+    tutor: 'blabla'
   }
 }
 
 const mockDataEmpty = {
   mainSubjects: {
     student: ''
+  },
+  professionalBlock: {
+    bla: '',
+    blatwo: ''
   }
 }
 
@@ -59,7 +66,7 @@ describe('CompleteProfile test when user data is filled', () => {
     expect(progressBar).toHaveAttribute('aria-valuenow', '100')
   })
 
-  it('Progress bar value should be 75 for tutor (filled)', () => {
+  it('Progress bar value should be 80 for tutor (filled)', () => {
     renderWithProviders(
       <CompleteProfileBlock
         data={mockDataFilled}
@@ -73,7 +80,7 @@ describe('CompleteProfile test when user data is filled', () => {
     )
 
     const progressBar = screen.getByRole('progressbar')
-    expect(progressBar).toHaveAttribute('aria-valuenow', '75')
+    expect(progressBar).toHaveAttribute('aria-valuenow', '80')
   })
 })
 
