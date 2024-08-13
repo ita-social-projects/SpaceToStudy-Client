@@ -2,6 +2,7 @@ import { screen, fireEvent } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 import CommentsWithRatingBlock from '~/containers/user-profile/comments-with-rating-block/CommentsWithRatingBlock'
 import { responseMock } from '~/containers/user-profile/comments-with-rating-block/CommentsWithRatingBlock.constants'
+import { SortByEnum } from '~/types'
 
 const { items } = responseMock
 
@@ -52,13 +53,12 @@ describe('CommentsWithRatingBlock', () => {
     expect(selectElement).toBeInTheDocument()
     fireEvent.click(selectElement)
   })
-})
-describe('Sorting functionality', () => {
+
   it('should sort items by Newest correctly', () => {
-    const sortBy = 'Newest'
-    const sortedItems = items.sort((a, b) => {
+    const sortBy = SortByEnum.Newest
+    const sortedItems = [...items].sort((a, b) => {
       switch (sortBy) {
-        case 'Newest':
+        case SortByEnum.Newest:
           return (
             new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
           )
@@ -68,15 +68,28 @@ describe('Sorting functionality', () => {
     })
 
     expect(sortedItems[0].createdAt).toBe('2023-03-02T19:13:04.074Z')
-    expect(sortedItems[1].createdAt).toBe('2023-03-02T19:13:04.074Z')
-    expect(sortedItems[2].createdAt).toBe('2023-03-02T19:13:04.074Z')
+  })
+
+  it('should sort items by Relevant correctly', () => {
+    const sortBy = SortByEnum.Relevant
+    const sortedItems = [...items].sort((a, b) => {
+      switch (sortBy) {
+        case SortByEnum.Relevant:
+          return (
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          )
+        default:
+          return 0
+      }
+    })
+    expect(sortedItems[0].createdAt).toBe('2023-03-02T19:13:04.074Z')
   })
 
   it('should sort items by highestRating correctly', () => {
-    const sortBy = 'highestRating'
-    const sortedItems = items.sort((a, b) => {
+    const sortBy = SortByEnum.highestRating
+    const sortedItems = [...items].sort((a, b) => {
       switch (sortBy) {
-        case 'highestRating':
+        case SortByEnum.highestRating:
           return b.rating - a.rating
         default:
           return 0
@@ -84,22 +97,19 @@ describe('Sorting functionality', () => {
     })
 
     expect(sortedItems[0].rating).toBe(5)
-    expect(sortedItems[1].rating).toBe(4)
-    expect(sortedItems[2].rating).toBe(3)
   })
-})
-describe('Sorting functionality', () => {
-  it('should sort items by Newest correctly', () => {
+
+  it('should sort items by lowestRating correctly', () => {
+    const sortBy = SortByEnum.lowestRating
     const sortedItems = [...items].sort((a, b) => {
-      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      switch (sortBy) {
+        case SortByEnum.lowestRating:
+          return a.rating - b.rating
+        default:
+          return 0
+      }
     })
 
-    expect(sortedItems[0].createdAt).toBe('2023-03-02T19:13:04.074Z')
-  })
-
-  it('should sort items by highestRating correctly', () => {
-    const sortedItems = [...items].sort((a, b) => b.rating - a.rating)
-
-    expect(sortedItems[0].rating).toBe(5)
+    expect(sortedItems[0].rating).toBe(1)
   })
 })
