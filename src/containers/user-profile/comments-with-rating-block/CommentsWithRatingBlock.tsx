@@ -12,6 +12,7 @@ import {
   loadingMock
 } from '~/containers/user-profile/comments-with-rating-block/CommentsWithRatingBlock.constants'
 import { ListItemText, MenuItem, Select } from '@mui/material'
+import { SelectChangeEvent } from '@mui/material/Select'
 
 interface CommentsWithRatingBlockProps {
   averageRating: number
@@ -63,12 +64,14 @@ const CommentsWithRatingBlock = ({
     return true
   })
 
-  const sortedItems = filteredItems.sort((a, b) => {
+  const toSorted = [...filteredItems]
+
+  const sortedItems = toSorted.sort((a, b) => {
     switch (sortBy) {
       case SortByEnum.Newest:
-        return new Date().getTime() - new Date().getTime()
+        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
       case SortByEnum.Relevant:
-        return new Date().getTime() - new Date().getTime()
+        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
       case SortByEnum.highestRating:
         return b.rating - a.rating
       case SortByEnum.lowestRating:
@@ -77,6 +80,16 @@ const CommentsWithRatingBlock = ({
         return 0
     }
   })
+
+  const handleSortChange = (event: SelectChangeEvent<SortByEnum>) => {
+    const value = event.target.value as SortByEnum
+    setSortBy(value)
+  }
+
+  const handleFilterChange = (event: SelectChangeEvent<SortByEnum>) => {
+    const value = event.target.value as SortByEnum | ''
+    setFilter(value === '' ? null : Number(value))
+  }
 
   return (
     <Box sx={styles.root}>
@@ -99,13 +112,9 @@ const CommentsWithRatingBlock = ({
             <Box sx={styles.innerBox}>
               <Typography>{t('common.labels.sortBy')}</Typography>
               <Select
+                data-testid='sort-select'
                 defaultValue={SortByEnum.Newest}
-                onChange={(e) => {
-                  const value = e.target.value
-                  if (Object.values(SortByEnum).includes(value as SortByEnum)) {
-                    setSortBy(value as SortByEnum)
-                  }
-                }}
+                onChange={handleSortChange}
               >
                 {sortMenuItems}
               </Select>
@@ -114,12 +123,9 @@ const CommentsWithRatingBlock = ({
             <Box sx={styles.innerBox}>
               <Typography>{t('common.labels.filterBy')}</Typography>
               <Select
-                defaultValue={5}
-                onChange={(e) =>
-                  setFilter(
-                    e.target.value === '' ? null : Number(e.target.value)
-                  )
-                }
+                data-testid='filter-select'
+                defaultValue={SortByEnum.highestRating}
+                onChange={handleFilterChange}
                 value={filter ?? 5}
               >
                 {ratingMenuItems}

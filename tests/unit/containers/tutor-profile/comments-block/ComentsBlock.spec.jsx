@@ -17,11 +17,13 @@ describe('CommentsWithRatingBlock', () => {
   beforeEach(() => {
     renderWithProviders(<CommentsWithRatingBlock {...props} />)
   })
+
   it('should render the comments block', () => {
     const titleElement = screen.getByText('userProfilePage.reviews.title')
 
     expect(titleElement).toBeInTheDocument()
   })
+
   it('should increase amountToShow by commentsCount.increment when handleShowMoreComments is called', () => {
     const showMoreButton = screen.getByRole('button')
 
@@ -31,11 +33,23 @@ describe('CommentsWithRatingBlock', () => {
 
     expect(showMoreButton).toBeInTheDocument()
   })
+
   it('should update filter state when handleFilterChange is called', () => {
     const progressBar = screen.getByTestId('progress-bar-1')
     fireEvent.click(progressBar)
     const resetButton = screen.getByTestId('reset-filter')
 
     expect(resetButton).toBeInTheDocument()
+  })
+
+  it('should update sortBy state when handleSortChange is called', () => {
+    const sortSelect = screen.getByTestId('sort-select')
+    expect(sortSelect).toBeInTheDocument()
+    fireEvent.click(sortSelect)
+  })
+  it('should update filter state when handleFilterChange is called', () => {
+    const selectElement = screen.getByTestId('filter-select')
+    expect(selectElement).toBeInTheDocument()
+    fireEvent.click(selectElement)
   })
 })
