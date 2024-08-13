@@ -88,3 +88,18 @@ describe('Sorting functionality', () => {
     expect(sortedItems[2].rating).toBe(3)
   })
 })
+describe('Sorting functionality', () => {
+  it('should sort items by Newest correctly', () => {
+    const sortedItems = [...items].sort((a, b) => {
+      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    })
+
+    expect(sortedItems[0].createdAt).toBe('2023-03-02T19:13:04.074Z')
+  })
+
+  it('should sort items by highestRating correctly', () => {
+    const sortedItems = [...items].sort((a, b) => b.rating - a.rating)
+
+    expect(sortedItems[0].rating).toBe(5)
+  })
+})
