@@ -87,7 +87,8 @@ const initialState = {
     profileTab: true,
     professionalInfoTab: true,
     notificationTab: true
-  }
+  },
+  bookmarkedOffers: []
 }
 
 const mockedCategories = [
