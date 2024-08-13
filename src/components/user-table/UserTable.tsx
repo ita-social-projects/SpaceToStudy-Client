@@ -13,16 +13,14 @@ import usePagination from '~/hooks/table/use-pagination'
 import Tab from '~/components/tab/Tab'
 import EnhancedTableToolbar from '~/components/enhanced-table/enhanced-table-toolbar/EnhancedTableToolbar'
 import EnhancedTablePagination from '~/components/enhanced-table/enhanced-table-pagination/EnhancedTablePagination'
-import { Sort } from '~/hooks/table/use-sort'
 
 import { styles } from '~/components/user-table/UserTable.styles'
-import { VisibilityEnum } from '~/types'
-import { GetUsersParams } from '~/types'
+import { VisibilityEnum, GetUsersParams } from '~/types'
 
 interface UserTableProps {
   columns: unknown[]
   initialFilters: Record<string, unknown>
-  initialSort: Sort
+  initialSort: typeof useSort
   role: string
   tabsInfo: Record<
     string,
