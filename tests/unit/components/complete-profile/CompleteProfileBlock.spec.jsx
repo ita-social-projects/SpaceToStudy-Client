@@ -15,17 +15,19 @@ vi.mock('~/services/offer-service')
 const badRoute = '/tutor/myProfile'
 
 const mockDataFilled = {
-  photo: 'blabla',
-  address: 'blabla',
+  photo: 'some-photo',
+  address: 'some-address',
   mainSubjects: {
-    student: ['blabla']
+    student: ['subject1']
   },
   professionalBlock: {
-    bla: 'blabla',
-    blatwo: ''
+    awards: '',
+    scientificActivities: 'some-activities',
+    workExperience: '',
+    education: ''
   },
   videoLink: {
-    tutor: 'blabla'
+    tutor: 'some-videolink'
   }
 }
 
@@ -34,19 +36,21 @@ const mockDataEmpty = {
     student: ''
   },
   professionalBlock: {
-    bla: '',
-    blatwo: ''
+    awards: '',
+    scientificActivities: '',
+    workExperience: '',
+    education: ''
   }
 }
 
 describe('CompleteProfile test when user data is filled', () => {
   beforeEach(() => {
     useAxios.mockReturnValue({
-      response: { items: [{ bla: 'blabla' }] },
+      response: { items: ['item1'], count: 1 },
       loading: false
     })
 
-    OfferService.getUsersOffers.mockReturnValue({ items: [{ bla: 'blabla' }] })
+    OfferService.getUsersOffers.mockReturnValue({ items: ['item1'], count: 1 })
   })
 
   it('Progress bar value should be 100 for student (filled)', () => {
@@ -54,7 +58,6 @@ describe('CompleteProfile test when user data is filled', () => {
       <CompleteProfileBlock
         data={mockDataFilled}
         profileItems={profileItemsStudent}
-        role='student'
       />,
       {
         initialEntries: badRoute,
@@ -71,7 +74,6 @@ describe('CompleteProfile test when user data is filled', () => {
       <CompleteProfileBlock
         data={mockDataFilled}
         profileItems={profileItemsTutor}
-        role='tutor'
       />,
       {
         initialEntries: badRoute,
@@ -87,11 +89,11 @@ describe('CompleteProfile test when user data is filled', () => {
 describe('CompleteProfile test when user data is empty', () => {
   beforeEach(() => {
     useAxios.mockReturnValue({
-      response: { items: [] },
+      response: { items: [], count: 0 },
       loading: false
     })
 
-    OfferService.getUsersOffers.mockReturnValue({ items: [] })
+    OfferService.getUsersOffers.mockReturnValue({ items: [], count: 0 })
   })
 
   it('Progress bar value should be 0 for student (empty)', () => {
@@ -99,7 +101,6 @@ describe('CompleteProfile test when user data is empty', () => {
       <CompleteProfileBlock
         data={mockDataEmpty}
         profileItems={profileItemsStudent}
-        role='student'
       />,
       {
         initialEntries: badRoute,
@@ -116,7 +117,6 @@ describe('CompleteProfile test when user data is empty', () => {
       <CompleteProfileBlock
         data={mockDataEmpty}
         profileItems={profileItemsTutor}
-        role='tutor'
       />,
       {
         initialEntries: badRoute,
@@ -135,7 +135,6 @@ describe('CompleteProfile test ui', () => {
       <CompleteProfileBlock
         data={mockDataEmpty}
         profileItems={profileItemsTutor}
-        role='tutor'
       />,
       {
         initialEntries: badRoute,
@@ -157,7 +156,6 @@ describe('CompleteProfile test ui', () => {
       <CompleteProfileBlock
         data={mockDataEmpty}
         profileItems={profileItemsStudent}
-        role='student'
       />,
       {
         initialEntries: badRoute,
