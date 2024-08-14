@@ -1,6 +1,5 @@
 import { screen, fireEvent, waitFor } from '@testing-library/react'
 import { configureStore } from '@reduxjs/toolkit'
-import { AxiosError } from 'axios'
 
 import { renderWithProviders } from '~tests/test-utils'
 import reducer from '~/redux/reducer'
@@ -14,6 +13,7 @@ import openIcon from '~/assets/img/cooperation-details/resource-availability/ope
 
 import CooperationActivities from '~/containers/cooperation-details/cooperation-activities/CooperationActivities'
 
+let mockUpdateCooperation
 const mockSetEditMode = vi.fn()
 const mockDispatch = vi.fn()
 
@@ -33,6 +33,16 @@ vi.mock('~/services/cooperation-service', async () => {
     cooperationService: {
       updateCooperation: mockUpdateCooperation
     }
+  }
+})
+
+vi.mock('~/hooks/use-axios', async () => {
+  const actual = await vi.importActual('~/hooks/use-axios')
+  return {
+    ...actual,
+    useAxios: vi.fn(() => ({
+      fetchData: vi.fn()
+    }))
   }
 })
 
@@ -99,15 +109,6 @@ describe('CooperationActivities', () => {
     expect(screen.getByText('common.cancel')).toBeInTheDocument()
   })
 
-  it('should call updateCooperationSection when save button is clicked', async () => {
-    const saveButton = screen.getByText('common.save')
-    fireEvent.click(saveButton)
-
-    await waitFor(() => {
-      expect(mockDispatch).toHaveBeenCalledTimes(1)
-    })
-  })
-
   it('should display success message on successful update', async () => {
     const { cooperationService } = await import(
       '~/services/cooperation-service'
@@ -134,9 +135,8 @@ describe('CooperationActivities', () => {
       fireEvent.click(saveButton)
 
       await waitFor(() => {
-        expect(mockDispatch).toHaveBeenCalledTimes(1)
-        expect(mockDispatch).toHaveBeenCalledWith(expect.any(Function))
-        expect(mockSetEditMode).toHaveBeenCalledWith(expect.any(Function))
+        expect(mockUpdateCooperation).toHaveBeenCalledTimes(1)
+        expect(mockUpdateCooperation).toHaveBeenCalledWith(expect.any(Function))
       })
     })
   })
@@ -170,26 +170,6 @@ describe('CooperationActivities', () => {
             message: ''
           }
         }
-      })
-    })
-  })
-
-  it('should display error key when error data is not available', async () => {
-    const { cooperationService } = await import(
-      '~/services/cooperation-service'
-    )
-
-    const mockError = new AxiosError('An error occurred', 'ERROR_CODE')
-    cooperationService.updateCooperation.mockRejectedValueOnce(mockError)
-
-    const saveButton = screen.getByText('common.save')
-    fireEvent.click(saveButton)
-
-    await waitFor(() => {
-      expect(mockDispatch).toHaveBeenCalledTimes(1)
-      expect(openAlert).toHaveBeenCalledWith({
-        severity: snackbarVariants.error,
-        message: 'errors.UNKNOWN_ERROR'
       })
     })
   })

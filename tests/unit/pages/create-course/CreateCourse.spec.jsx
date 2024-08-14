@@ -74,17 +74,6 @@ vi.mock('~/hooks/use-axios', async () => {
     ...actual,
     useAxios: vi.fn(() => ({
       loading: false,
-      fetchData: mockFetchCourseData
-    }))
-  }
-})
-
-vi.mock('~/hooks/use-axios', async () => {
-  const actual = await vi.importActual('~/hooks/use-axios')
-  return {
-    ...actual,
-    useAxios: vi.fn(() => ({
-      loading: false,
       response: null,
       fetchData: mockFetchCourseData
     }))
