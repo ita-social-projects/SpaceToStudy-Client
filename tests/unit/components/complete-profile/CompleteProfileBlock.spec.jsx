@@ -7,7 +7,6 @@ import {
 } from '~/components/profile-item/complete-profile.constants'
 import { renderWithProviders } from '~tests/test-utils'
 import useAxios from '~/hooks/use-axios'
-import { OfferService } from '~/services/offer-service'
 
 vi.mock('~/hooks/use-axios')
 vi.mock('~/services/offer-service')
@@ -49,8 +48,6 @@ describe('CompleteProfile test when user data is filled', () => {
       response: { items: ['item1'], count: 1 },
       loading: false
     })
-
-    OfferService.getUsersOffers.mockReturnValue({ items: ['item1'], count: 1 })
   })
 
   it('Progress bar value should be 100 for student (filled)', () => {
@@ -92,8 +89,6 @@ describe('CompleteProfile test when user data is empty', () => {
       response: { items: [], count: 0 },
       loading: false
     })
-
-    OfferService.getUsersOffers.mockReturnValue({ items: [], count: 0 })
   })
 
   it('Progress bar value should be 0 for student (empty)', () => {
