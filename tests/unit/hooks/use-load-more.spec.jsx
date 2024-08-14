@@ -38,7 +38,6 @@ describe('useLoadMore custom hook', () => {
       )
     })
   })
-
   it('should call showMore and return array with length equal to 2', async () => {
     const { result } = renderHook(() => useLoadMore({ ...props }))
 
