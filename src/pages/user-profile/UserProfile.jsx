@@ -72,9 +72,10 @@ const UserProfile = () => {
         <CompleteProfileBlock
           data={response}
           profileItems={
-            preferredRole == 'student' ? profileItemsStudent : profileItemsTutor
+            preferredRole === UserRoleEnum.Student
+              ? profileItemsStudent
+              : profileItemsTutor
           }
-          role={preferredRole}
         />
       )}
       {response.professionalBlock && (

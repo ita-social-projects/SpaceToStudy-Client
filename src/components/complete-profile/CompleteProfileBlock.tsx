@@ -28,13 +28,11 @@ import { defaultResponse } from '~/pages/my-offers/MyOffers.constants'
 interface CompleteProfileBlockProps {
   profileItems: ProfileItemType[]
   data: UserResponse
-  role: string
 }
 
 const CompleteProfileBlock: FC<CompleteProfileBlockProps> = ({
-  profileItems,
-  role,
-  data
+  data,
+  profileItems
 }) => {
   const { t } = useTranslation()
   const { isMobile } = useBreakpoints()
@@ -96,10 +94,10 @@ const CompleteProfileBlock: FC<CompleteProfileBlockProps> = ({
           isFilled={checkProfileData.includes(item)}
           item={item}
           key={item.id}
-          role={role}
+          userRole={userRole}
         />
       )),
-    [profileItems, checkProfileData, role]
+    [profileItems, checkProfileData, userRole]
   )
 
   const handleToggleMenu = () => {
@@ -141,7 +139,7 @@ const CompleteProfileBlock: FC<CompleteProfileBlockProps> = ({
           </Box>
           {icon}
         </Box>
-        <AppProgressBarLine role={role} value={valueProgressBar} />
+        <AppProgressBarLine userRole={userRole} value={valueProgressBar} />
       </AccordionSummary>
       <AccordionDetails sx={styles.profileItems}>
         {profileList}
