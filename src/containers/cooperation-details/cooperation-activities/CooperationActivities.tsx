@@ -104,7 +104,7 @@ const CooperationActivities: FC<CooperationActivitiesProps> = ({
 
   return (
     <Box>
-      <Box data-testid='coop-from-scratch' sx={styles.root}>
+      <Box sx={styles.root}>
         <Box sx={styles.publishBlock}>
           <Box>
             <Box sx={styles.lockBlock}>
