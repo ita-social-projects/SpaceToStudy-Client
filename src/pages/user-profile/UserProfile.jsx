@@ -53,15 +53,12 @@ const UserProfile = () => {
   }
 
   const isTutor = preferredRole === UserRoleEnum.Tutor
-  const shouldShowPresentation =
-    (isTutor && isMyProfile) ||
-    (!isTutor && response.videoLink?.student) ||
-    (!isMyProfile && response.videoLink?.tutor)
+
   const VideoPresentationComponent = (
     <VideoPresentation
-      video={response?.videoLink?.[preferredRole]}
+      video={response?.videoLink?.tutor}
       videoMock={videoImgProfile}
-      videoPreview={loading || !response?.videoLink?.[preferredRole]}
+      videoPreview={loading || !response?.videoLink?.tutor}
     />
   )
 
@@ -71,17 +68,13 @@ const UserProfile = () => {
       {isMyProfile && (
         <CompleteProfileBlock
           data={response}
-          profileItems={
-            preferredRole === UserRoleEnum.Student
-              ? profileItemsStudent
-              : profileItemsTutor
-          }
+          profileItems={isTutor ? profileItemsTutor : profileItemsStudent}
         />
       )}
       {response.professionalBlock && (
         <AboutTutorBlock data={response.professionalBlock} />
       )}
-      {shouldShowPresentation && VideoPresentationComponent}
+      {isTutor && VideoPresentationComponent}
       <CommentsWithRatingBlock
         averageRating={response?.averageRating?.tutor}
         reviewsCount={reviews}

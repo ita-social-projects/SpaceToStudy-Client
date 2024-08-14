@@ -22,7 +22,8 @@ import {
   SizeEnum,
   UploadFileEmitterArgs,
   UseFormErrors,
-  UseFormEventHandler
+  UseFormEventHandler,
+  UserRoleEnum
 } from '~/types'
 
 import { languages } from '~/containers/tutor-home-page/language-step/constants'
@@ -109,6 +110,8 @@ const ProfileTabForm: FC<ProfileTabFormProps> = ({
     typeof photo === 'string'
       ? photo && createUrlPath(import.meta.env.VITE_APP_IMG_USER_URL, photo)
       : photo?.src
+
+  const isTutor = (data.userRole || '') === UserRoleEnum.Tutor
 
   return (
     <Box sx={styles.profileGeneralTabContainer}>
@@ -223,35 +226,37 @@ const ProfileTabForm: FC<ProfileTabFormProps> = ({
         />
       </Box>
 
-      <Box sx={styles.section}>
-        <TitleWithDescription
-          description={t(
-            'editProfilePage.profile.generalTab.videoPresentationDesc'
-          )}
-          style={styles.sectionsTitleWithDesc}
-          title={t('userProfilePage.videoPresentation.title')}
-        />
-        <AppTextField
-          InputProps={{
-            startAdornment: (
-              <InputAdornment
-                disablePointerEvents
-                position={PositionEnum.Start}
-                sx={styles.linkAdornment}
-              >
-                https://
-              </InputAdornment>
-            ),
-            sx: styles.videoLinkInput
-          }}
-          errorMsg={t(errors.videoLink)}
-          fullWidth
-          onBlur={handleBlur('videoLink')}
-          onChange={handleInputChange('videoLink')}
-          placeholder='youtube.com/my-video'
-          value={data.videoLink.replace('https://', '')}
-        />
-      </Box>
+      {isTutor && (
+        <Box sx={styles.section}>
+          <TitleWithDescription
+            description={t(
+              'editProfilePage.profile.generalTab.videoPresentationDesc'
+            )}
+            style={styles.sectionsTitleWithDesc}
+            title={t('userProfilePage.videoPresentation.title')}
+          />
+          <AppTextField
+            InputProps={{
+              startAdornment: (
+                <InputAdornment
+                  disablePointerEvents
+                  position={PositionEnum.Start}
+                  sx={styles.linkAdornment}
+                >
+                  https://
+                </InputAdornment>
+              ),
+              sx: styles.videoLinkInput
+            }}
+            errorMsg={t(errors.videoLink)}
+            fullWidth
+            onBlur={handleBlur('videoLink')}
+            onChange={handleInputChange('videoLink')}
+            placeholder='youtube.com/my-video'
+            value={data.videoLink.replace('https://', '')}
+          />
+        </Box>
+      )}
     </Box>
   )
 }

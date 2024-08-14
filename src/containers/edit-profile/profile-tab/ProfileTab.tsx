@@ -39,6 +39,7 @@ const ProfileTab: FC = () => {
     nativeLanguage,
     photo: photo || null,
     professionalSummary: professionalSummary || '',
+    userRole,
     videoLink:
       typeof videoLink === 'string'
         ? videoLink
