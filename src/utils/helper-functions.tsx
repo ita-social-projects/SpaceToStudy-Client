@@ -1,4 +1,5 @@
 import { SxProps, Theme } from '@mui/material'
+import { useTranslation } from 'react-i18next'
 import {
   Breakpoints,
   ConvertedSize,
@@ -84,6 +85,11 @@ const addOrdinalSuffix = (day: number): string => {
   }
 }
 
+const mapper: Record<string, string> = {
+  en: 'en-US',
+  uk: 'uk-UA'
+}
+
 export const getFormattedDate = ({
   date,
   locales = 'en-US',
@@ -95,8 +101,12 @@ export const getFormattedDate = ({
   isCurrentDayHours = false,
   includeOrdinal = false
 }: FormatedDate): string => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const { i18n } = useTranslation()
+  const get_language = i18n.language
+  const language_key = mapper[get_language]
   const currentDate = new Date()
-  const formattedDate = new Date(date).toLocaleString(locales, options)
+  const formattedDate = new Date(date).toLocaleString(language_key, options)
 
   if (
     isCurrentDayHours &&
