@@ -16,9 +16,17 @@ import imgReject from '~/assets/img/email-confirmation-modals/not-success-icon.s
 import { AuthService } from '~/services/auth-service'
 import { ButtonVariantEnum } from '~/types'
 import useAxios from '~/hooks/use-axios'
-import { useModalContext } from '~/context/modal-context'
+import { Component, useModalContext } from '~/context/modal-context'
 
-const EmailConfirmModal = ({ confirmToken, openModal }) => {
+interface EmailConfirmModalProps {
+  confirmToken: string
+  openModal: (component: Component, delayToClose?: number) => void
+}
+
+const EmailConfirmModal = ({
+  confirmToken,
+  openModal
+}: EmailConfirmModalProps) => {
   const { t } = useTranslation()
   const { closeModal } = useModalContext()
 

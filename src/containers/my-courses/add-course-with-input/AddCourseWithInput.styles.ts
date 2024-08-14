@@ -1,7 +1,8 @@
 const box = {
   display: 'flex',
   justifyContent: 'space-between',
-  alignItems: 'center'
+  alignItems: 'center',
+  gap: '24px'
 }
 
 export const styles = {

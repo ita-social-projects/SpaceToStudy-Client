@@ -61,9 +61,9 @@ const PopularCategories: FC<PopularCategoriesProps> = ({
     () =>
       response.items.map((item) => (
         <CardWithLink
-          description={`${item.totalOffers[oppositeRole]} ${t(
-            'common.offers'
-          )}`}
+          description={t('common.offerCount', {
+            count: item.totalOffers[oppositeRole]
+          })}
           icon={item.appearance.icon}
           iconColor={item.appearance.color}
           key={item._id}

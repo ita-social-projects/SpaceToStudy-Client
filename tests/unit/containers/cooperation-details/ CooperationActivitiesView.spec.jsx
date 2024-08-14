@@ -1,5 +1,6 @@
 import { render, screen, act, fireEvent } from '@testing-library/react'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { UserRoleEnum } from '~/types'
 import CooperationActivitiesView from '~/containers/cooperation-details/cooperetion-activities-view/CooperationActivitiesView.tsx'
 
 vi.mock('~/components/cooperation-section-view/CooperationSectionView', () => ({
@@ -13,7 +14,8 @@ vi.mock('~/hooks/use-redux', () => ({
     sections: [
       { _id: '1', title: 'Section1' },
       { _id: '2', title: 'Section2' }
-    ]
+    ],
+    userRole: UserRoleEnum.Tutor
   }),
   useAppDispatch: vi.fn().mockReturnValue(vi.fn())
 }))

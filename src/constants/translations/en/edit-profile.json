@@ -19,7 +19,8 @@
       "professionalStatus": "Describe in short your professional summary. Maximum 200 characters.",
       "languagesTitle": "Language",
       "languagesDesc": "Select the language in which you would like to study and cooperate.",
-      "videoPresentationDesc": "Add the link to your presentational video. Your video needs to be public and uploaded to YouTube."
+      "videoPresentationDesc": "Add the link to your presentational video. Your video needs to be public and uploaded to YouTube.",
+      "errorTooltip": "There is a problem with your changes"
     },
     "professionalTab": {
       "tabTitle": "Professional info",
@@ -72,16 +73,19 @@
     "passwordSecurityTab": {
       "tabTitle": "Password & Security",
       "title": "Password & Security",
+      "subTitle": "You can change your password using the current one.",
       "description": "Change password and security settings",
       "changePassword": "Change password",
+      "changePasswordModalDescription": "Reset your current password to new one.",
       "changePasswordConfirm": "Are you sure you want to change the password?",
       "currentPassword": "Current password",
       "newPassword": "New password",
       "retypePassword": "Re-type new password",
-      "savePassword": "Save new password",
+      "savePassword": "Save the password",
       "deactivateAccount": "Deactivate account",
       "deactivateBtn": "Deactivate",
-      "deactivateTitle": "Deactivate your account?",
+      "deactivateTitle": "Deactivate your account",
+      "deactivateSubTitle": "Deactivate and delete your account.",
       "deactivateDescription": "If you deactivate your account it will be hidden on this site. You can activate your account anytime.",
       "activateAccount": "Activate account",
       "activateBtn": "Activate",

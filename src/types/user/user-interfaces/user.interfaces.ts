@@ -57,6 +57,7 @@ export interface ProfessionalBlock {
   workExperience?: string
   scientificActivities?: string
   awards?: string
+  [key: string]: string | undefined
 }
 
 export interface UserGeneralInfo

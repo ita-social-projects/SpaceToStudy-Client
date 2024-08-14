@@ -6,21 +6,18 @@ import DateFilter from '~/components/enhanced-table/date-filter/DateFilter'
 const props = {
   filter: { from: '', to: '' },
   setFilter: vi.fn(),
-  clearFilter: vi.fn(),
+  clearFilter: vi.fn()
 }
 
 const dateMock = new Date('2023-01-01')
 
 describe('DateFilter test', () => {
   beforeEach(() => {
-    render(
-      <DateFilter { ...props } />
-
-    )
+    render(<DateFilter {...props} />)
   })
 
   it('Should open, and change value in calendar', () => {
-    const calendarIcon = screen.getByTestId('calendar-icon') 
+    const calendarIcon = screen.getByTestId('calendar-icon')
 
     fireEvent.click(calendarIcon)
 
@@ -38,12 +35,11 @@ describe('DateFilter test', () => {
   })
 
   it('Should clear value in calendar', async () => {
-
     const dateToInput = screen.getByLabelText('date-filter-to')
 
     fireEvent.change(dateToInput, { target: { value: dateMock } })
 
-    const clearIcon = screen.getByTestId('clear-icon') 
+    const clearIcon = screen.getByTestId('clear-icon')
 
     fireEvent.click(clearIcon)
 

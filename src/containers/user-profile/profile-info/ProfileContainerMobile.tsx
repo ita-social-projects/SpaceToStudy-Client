@@ -1,3 +1,5 @@
+import { ReactNode } from 'react'
+
 import Box from '@mui/material/Box'
 import SchoolIcon from '@mui/icons-material/School'
 import DoneIcon from '@mui/icons-material/Done'
@@ -8,6 +10,18 @@ import AppChipList from '~/components/app-chips-list/AppChipList'
 import ProfileDoneItemsList from '~/components/icon-with-text-list/ProfileDoneItemsList'
 
 import { styles } from '~/containers/user-profile/profile-info/ProfileInfo.styles'
+import { UserResponse } from '~/types'
+import { createUrlPath } from '~/utils/helper-functions'
+
+interface ProfileContainerMobileProps {
+  actionIcon: ReactNode
+  accInfo: ReactNode
+  buttonGroup: ReactNode
+  defaultQuantity: number
+  doneItems: { title: string; description: string }[]
+  userData: UserResponse
+  chipItems: string[]
+}
 
 const ProfileContainerMobile = ({
   actionIcon,
@@ -17,7 +31,7 @@ const ProfileContainerMobile = ({
   doneItems,
   userData,
   chipItems
-}) => {
+}: ProfileContainerMobileProps) => {
   return (
     <Box sx={styles.container}>
       <Box sx={styles.wrapperForPhoto}>
@@ -25,7 +39,10 @@ const ProfileContainerMobile = ({
           <Avatar
             src={
               userData.photo &&
-              `${import.meta.env.VITE_APP_IMG_USER_URL}${userData.photo}`
+              createUrlPath(
+                import.meta.env.VITE_APP_IMG_USER_URL,
+                userData.photo
+              )
             }
             sx={styles.img}
           />

@@ -7,7 +7,12 @@ import SearchIcon from '@mui/icons-material/Search'
 
 import { styles } from './SearchInput.styles'
 
-const SearchInput = ({ search, setSearch }) => {
+interface SearchInputProps {
+  search: string
+  setSearch: React.Dispatch<React.SetStateAction<string>>
+}
+
+const SearchInput = ({ search, setSearch }: SearchInputProps) => {
   const [searchInput, setSearchInput] = useState(search)
 
   return (
@@ -37,7 +42,7 @@ const SearchInput = ({ search, setSearch }) => {
         autoComplete: 'off'
       }}
       onChange={(e) => setSearchInput(e.target.value)}
-      onKeyPress={(e) => {
+      onKeyDown={(e) => {
         if (e.key === 'Enter') {
           setSearch(searchInput)
         }

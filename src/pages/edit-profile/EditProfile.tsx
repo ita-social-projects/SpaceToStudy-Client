@@ -46,13 +46,19 @@ const EditProfile = () => {
 
   const dispatch = useAppDispatch()
 
-  const { loading, ...profileState } = useAppSelector(
+  const { loading, tabValidityStatus, ...profileState } = useAppSelector(
     (state) => state.editProfile
   )
 
   const { userId, userRole } = useAppSelector((state) => state.appMain)
 
   const { checkConfirmation } = useConfirm()
+
+  const errorTooltipHolders = {
+    [UserProfileTabsEnum.Profile]: !tabValidityStatus.profileTab,
+    [UserProfileTabsEnum.ProfessionalInfo]:
+      !tabValidityStatus.professionalInfoTab
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -181,6 +187,7 @@ const EditProfile = () => {
       <Box sx={styles.mainContainer}>
         <SidebarMenu
           activeTab={activeTab}
+          errorTooltipHolders={errorTooltipHolders}
           handleClick={(tab) => void handleClick(tab)}
           tabsData={tabsData}
         />

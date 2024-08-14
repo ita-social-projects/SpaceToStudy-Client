@@ -11,6 +11,7 @@ import {
 } from '~/redux/features/cooperationsSlice'
 
 import { styles } from '~/containers/cooperation-details/cooperetion-activities-view/CooperationActivitiesView.style'
+import { CourseSection, UserRoleEnum } from '~/types'
 
 interface CooperationActivitiesViewProps {
   sections: CourseSection[]
@@ -28,20 +29,26 @@ const CooperationActivitiesView: FC<CooperationActivitiesViewProps> = ({
     dispatch(setIsAddedClicked(false))
   }
 
+  const { userRole } = useAppSelector((state) => state.appMain)
+  const isTutor = userRole === UserRoleEnum.Tutor
+
   return (
     <Box sx={styles.root}>
       {sections.map((item) => (
         <CooperationSectionView id={item._id} item={item} key={item._id} />
       ))}
-      <Box sx={styles.editContainer}>
-        <IconButton
-          data-testid='iconButton'
-          onClick={onEdit}
-          sx={styles.editButton}
-        >
-          <EditIcon />
-        </IconButton>
-      </Box>
+
+      {isTutor && (
+        <Box sx={styles.editContainer}>
+          <IconButton
+            data-testid='iconButton'
+            onClick={onEdit}
+            sx={styles.editButton}
+          >
+            <EditIcon />
+          </IconButton>
+        </Box>
+      )}
     </Box>
   )
 }

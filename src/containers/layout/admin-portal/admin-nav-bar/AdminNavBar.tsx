@@ -12,23 +12,26 @@ import AdminNavBarItem from '../admin-nav-bar-item/AdminNavBarItem'
 
 import { initialExpandSubItems, navBarItems } from './constants'
 
-const AdminNavBar = () => {
-  const [expanded, setExpanded] = useState(false)
-  const [active, setActive] = useState(null)
-  const [expandSubItems, setExpandSubItems] = useState(initialExpandSubItems)
+const AdminNavBar: React.FC = () => {
+  const [expanded, setExpanded] = useState<boolean>(false)
+  const [active, setActive] = useState<number | null>(null)
+  const [expandSubItems, setExpandSubItems] = useState<{
+    [key: string]: boolean
+  }>(initialExpandSubItems)
 
   const openNavBar = () => {
-    expanded && setExpandSubItems(initialExpandSubItems)
+    if (expanded) {
+      setExpandSubItems(initialExpandSubItems)
+    }
     setExpanded((prev) => !prev)
   }
 
   const handleShowSubItems = useCallback(
-    (label) => {
-      const isExpandedItem = Object.prototype.hasOwnProperty.call(
-        initialExpandSubItems,
-        label
-      )
-      !expanded && isExpandedItem && setExpanded(true)
+    (label: string) => {
+      const isExpandedItem = Object.hasOwn(initialExpandSubItems, label)
+      if (!expanded && isExpandedItem) {
+        setExpanded(true)
+      }
       setExpandSubItems((prev) => ({
         ...initialExpandSubItems,
         [label]: !prev[label]
@@ -47,7 +50,7 @@ const AdminNavBar = () => {
     () =>
       navBarItems.map((item, index) => (
         <AdminNavBarItem
-          active={active == index}
+          active={active === index}
           expanded={expanded}
           handleActive={() => setActive(index)}
           handleShowSubItems={handleShowSubItems}

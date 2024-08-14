@@ -1,0 +1,20 @@
+{
+  "title": "Complete your profile",
+  "subtitle": "Fill out the goals below to open up additional features on your profie.",
+  "photo": {
+    "title": "Set a profile picture",
+    "subtitle": "Your photo will make it easier for members to recognize you."
+  },
+  "category": {
+    "title": "Choose categories you are interested in",
+    "subtitle": "Show us what you would like to learn."
+  },
+  "address": {
+    "title": "Add your location",
+    "subtitle": "Let members know where you are based."
+  },
+  "offer": {
+    "title": "Create a new request",
+    "subtitle": "Сreate a request to find the right tutor for a subject you want to learn."
+  }
+}

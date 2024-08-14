@@ -32,7 +32,8 @@ export const styles = {
   title: {
     mb: '8px',
     fontSize: '32px',
-    lineHeight: '48px'
+    lineHeight: '48px',
+    pr: { xs: '8px', sm: '96px', md: '80px', lg: '96px' }
   },
   form: {
     overflow: 'auto',

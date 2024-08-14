@@ -11,7 +11,7 @@ import {
 import PopupDialog from '~/components/popup-dialog/PopupDialog'
 import { PaperProps } from '@mui/material/Paper'
 
-interface Component {
+export interface Component {
   component: ReactElement
   paperProps?: PaperProps
   customCloseModal?: () => void

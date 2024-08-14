@@ -1,4 +1,4 @@
-import { FC, useMemo, useState } from 'react'
+import { FC, useMemo, useState, useCallback } from 'react'
 import { Link, useMatch } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
@@ -21,25 +21,66 @@ import { ProfileItemType } from '../profile-item/complete-profile.constants'
 import { useAppSelector } from '~/hooks/use-redux'
 import { UserResponse, UserRole } from '~/types'
 import { styles } from '~/components/complete-profile/CompleteProfileBlock.styles'
+import useAxios from '~/hooks/use-axios'
+import { OfferService } from '~/services/offer-service'
+import { defaultResponse } from '~/pages/my-offers/MyOffers.constants'
 
 interface CompleteProfileBlockProps {
   profileItems: ProfileItemType[]
   data: UserResponse
+  role: string
 }
 
 const CompleteProfileBlock: FC<CompleteProfileBlockProps> = ({
   profileItems,
+  role,
   data
 }) => {
   const { t } = useTranslation()
   const { isMobile } = useBreakpoints()
-  const { userRole } = useAppSelector((state) => state.appMain)
+  const { userRole, userId } = useAppSelector((state) => state.appMain)
   const homePage = useMatch(guestRoutes[userRole as UserRole].path)
   const [isOpen, setIsOpen] = useState(false)
 
+  const getMyOffers = useCallback(
+    () =>
+      OfferService.getUsersOffers({
+        id: userId
+      }),
+    [userId]
+  )
+
+  const { response } = useAxios({
+    service: getMyOffers,
+    defaultResponse
+  })
+
+  const checkIfHasNonEmptyFields = (
+    obj: Record<string, string | undefined>
+  ): boolean => {
+    for (const prop in obj) {
+      if (obj[prop]) {
+        return true
+      }
+    }
+    return false
+  }
+
   const checkProfileData = useMemo(
-    () => profileItems.filter((item) => data[item.id as keyof UserResponse]),
-    [data, profileItems]
+    () =>
+      profileItems.filter((item) => {
+        switch (item.id) {
+          case 'category':
+            return data.mainSubjects.student.length
+          case 'education':
+            return checkIfHasNonEmptyFields(data.professionalBlock!)
+          case 'offer':
+            return response.items.length
+          default:
+            return data[item.id as keyof UserResponse]
+        }
+      }),
+    [data, profileItems, response]
   )
 
   const valueProgressBar = Math.floor(
@@ -53,9 +94,10 @@ const CompleteProfileBlock: FC<CompleteProfileBlockProps> = ({
           isFilled={checkProfileData.includes(item)}
           item={item}
           key={item.id}
+          role={role}
         />
       )),
-    [profileItems, checkProfileData]
+    [profileItems, checkProfileData, role]
   )
 
   const handleToggleMenu = () => {
@@ -86,13 +128,13 @@ const CompleteProfileBlock: FC<CompleteProfileBlockProps> = ({
         <Box sx={styles.headerProgressBar}>
           <Box>
             <Typography variant={isMobile ? 'button' : 'h5'}>
-              {t('completeProfile.title')}
+              {t('completeProfileTutor.title')}
             </Typography>
             <Typography
               color={'primary.500'}
               variant={isMobile ? 'body2' : 'subtitle2'}
             >
-              {t('completeProfile.subtitle')}
+              {t('completeProfileTutor.subtitle')}
             </Typography>
           </Box>
           {icon}

@@ -73,7 +73,7 @@ const AppButtonMenu = <T extends Pick<CategoryNameInterface, '_id'>>({
   const filteredItems = useMemo(() => {
     const noneItem = {
       _id: 'null',
-      [valueField as string]: 'None'
+      [valueField as string]: 'No category'
     }
 
     const filtered = response.filter((item) =>

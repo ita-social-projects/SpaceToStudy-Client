@@ -5,8 +5,15 @@ import { useTranslation } from 'react-i18next'
 
 import { styles } from '~/components/profile-item/ProfileItem.styles'
 import useBreakpoints from '~/hooks/use-breakpoints'
+import { ProfileItemType } from '~/components/profile-item/complete-profile.constants'
 
-const ProfileItem = ({ item, isFilled = false }) => {
+interface ProfileItemProps {
+  item: ProfileItemType
+  isFilled?: boolean
+  role: string
+}
+
+const ProfileItem = ({ item, role, isFilled = false }: ProfileItemProps) => {
   const { t } = useTranslation()
   const { isMobile } = useBreakpoints()
   const { id, icon } = item
@@ -17,23 +24,22 @@ const ProfileItem = ({ item, isFilled = false }) => {
         <Box sx={styles.information}>
           {!isMobile && <Box sx={styles.icon}>{icon}</Box>}
           <Box sx={styles.text}>
-            <Typography
-              sx={styles.title}
-              variant={isMobile ? 'subtitle2' : 'h6'}
-            >
-              {t(`completeProfile.${id}.title`)}
+            <Typography variant={isMobile ? 'subtitle2' : 'h6'}>
+              {role == 'student'
+                ? t(`completeProfileStudent.${id}.title`)
+                : t(`completeProfileTutor.${id}.title`)}
             </Typography>
-            <Typography
-              sx={styles.subtitle}
-              variant={isMobile ? 'caption' : 'body2'}
-            >
-              {t(`completeProfile.${id}.subtitle`)}
+            <Typography variant={isMobile ? 'caption' : 'body2'}>
+              {role == 'student'
+                ? t(`completeProfileStudent.${id}.subtitle`)
+                : t(`completeProfileTutor.${id}.subtitle`)}
             </Typography>
           </Box>
         </Box>
       </Box>
       {isFilled && (
         <CheckIcon
+          data-testid={`icon-${item.id}`}
           fontSize={isMobile ? 'small' : 'medium'}
           sx={styles.checkIcon}
         />

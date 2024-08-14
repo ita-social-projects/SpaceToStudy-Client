@@ -1,14 +1,27 @@
+import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
+import { PopoverOrigin } from '@mui/material'
 
 import AppPopover from '../app-popover/AppPopover'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 
 import { styles } from '~/components/icon-with-text-list/ProfileDoneItemsList.style'
+import { ProfileDoneItem } from '~/types'
 
-const ProfileDoneItemsList = ({ items, icon, defaultQuantity }) => {
+interface ProfileDoneItemsListProps {
+  items: ProfileDoneItem[]
+  icon: JSX.Element
+  defaultQuantity: number
+}
+
+const ProfileDoneItemsList: FC<ProfileDoneItemsListProps> = ({
+  items,
+  icon,
+  defaultQuantity
+}) => {
   const { t } = useTranslation()
   const shouldShowMore = items.length > defaultQuantity
 
@@ -36,12 +49,13 @@ const ProfileDoneItemsList = ({ items, icon, defaultQuantity }) => {
 
   return (
     <AppPopover
-      PaperProps={{ sx: styles.paperProps }}
       TransitionProps={{ timeout: 500 }}
-      anchorOrigin={styles.anchorOrigin}
+      anchorOrigin={styles.anchorOrigin as PopoverOrigin}
       hideElem
       initialItems={initialItems}
+      initialItemsWrapperStyle={null}
       showMoreElem={shouldShowMore && showMoreElem}
+      slotProps={{ paper: { sx: styles.paperProps } }}
     >
       <Box sx={{ ...styles.container }}>{itemsList}</Box>
     </AppPopover>
