@@ -16,12 +16,6 @@ const studentAppMain = {
   _id: '648850c4fdc2d1a130c24aea'
 }
 
-const videoMockDataStudent = {
-  videoLink: {
-    student: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
-  }
-}
-
 const videoMockDataTutor = {
   videoLink: {
     tutor: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
@@ -109,25 +103,16 @@ describe('UserProfile', () => {
     expect(videoBlockTitle).toBeInTheDocument()
   })
 
-  it('Should not render video presentation block when student has no video link', () => {
-    renderWithMockData({ appMain: studentAppMain })
+  it('Should not render video presentation block for student', () => {
+    renderWithMockData({
+      appMain: studentAppMain,
+      extraData: videoMockDataTutor
+    })
 
     const videoBlockTitle = screen.queryByText(
       'userProfilePage.videoPresentation.title'
     )
     expect(videoBlockTitle).not.toBeInTheDocument()
-  })
-
-  it('Should render video presentation block when student has a video link', () => {
-    renderWithMockData({
-      appMain: studentAppMain,
-      extraData: videoMockDataStudent
-    })
-
-    const videoBlockTitle = screen.getByText(
-      'userProfilePage.videoPresentation.title'
-    )
-    expect(videoBlockTitle).toBeInTheDocument()
   })
 
   it('Should render professional block info for tutor', () => {
