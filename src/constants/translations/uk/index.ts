@@ -13,6 +13,7 @@ import modals from './email-modals.json'
 import breadCrumbs from './breadcrumbs.json'
 import completeProfileTutor from './complete-profile-tutor.json'
 import completeProfileStudent from './complete-profile-student.json'
+import changeConfirm from './change-confirm.json'
 import findOffers from './find-offer-page.json'
 import filters from './filters.json'
 import iconsTooltip from './icons-tooltip.json'
@@ -59,6 +60,7 @@ const uk = {
     breadCrumbs,
     completeProfileTutor,
     completeProfileStudent,
+    changeConfirm,
     categoriesPage,
     findOffers,
     filters,
