@@ -38,8 +38,8 @@ export const styles = {
   iconButton: {
     color: 'basic.black',
     position: 'absolute',
-    top: '-20px',
-    right: '-12px'
+    top: '-5px',
+    right: '-5px'
   },
   priceContainer: {
     display: 'flex',
