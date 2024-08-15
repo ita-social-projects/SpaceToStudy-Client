@@ -27,6 +27,6 @@ export const styles = {
   } as SxProps<Theme>,
   title: {
     typography: { xs: 'button', sm: 'h5', md: 'h4' },
-    marginTop: '100px'
+    mt: '100px'
   } as SxProps<Theme>
 }
