@@ -71,6 +71,13 @@ const EditProfile = () => {
   const isTabInvalid =
     errorTooltipHolders.profile || errorTooltipHolders.professionalInfo
 
+  const hasChanges = (
+    initialData: Partial<EditProfileState>,
+    currentData: Partial<EditProfileState>
+  ): boolean => {
+    return JSON.stringify(initialData) !== JSON.stringify(currentData)
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       await dispatch(
@@ -226,7 +233,9 @@ const EditProfile = () => {
           handleClick={(tab) => void handleClick(tab)}
           tabsData={tabsData}
         />
-        <Box sx={styles.mainContent}>{cooperationContent}</Box>
+        <Box sx={styles.mainContent}>
+          {cooperationContent} {/* Відображаємо контент завжди */}
+        </Box>
       </Box>
     </PageWrapper>
   )
