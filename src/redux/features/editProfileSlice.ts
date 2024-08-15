@@ -50,6 +50,12 @@ export const initialProfessoinalBlock: ProfessionalBlock = {
   scientificActivities: '',
   awards: ''
 }
+export const intitialNotificationSettings: NotificationSettings = {
+  isOfferStatusNotification: false,
+  isChatNotification: false,
+  isSimilarOffersNotification: false,
+  isEmailNotification: false
+}
 
 const initialState: EditProfileState = {
   firstName: '',
@@ -62,12 +68,7 @@ const initialState: EditProfileState = {
   photo: '',
   categories: { [UserRoleEnum.Tutor]: [], [UserRoleEnum.Student]: [] },
   professionalBlock: initialProfessoinalBlock,
-  notificationSettings: {
-    isOfferStatusNotification: false,
-    isChatNotification: false,
-    isSimilarOffersNotification: false,
-    isEmailNotification: false
-  },
+  notificationSettings: intitialNotificationSettings,
   loading: LoadingStatusEnum.Idle,
   error: null,
   tabValidityStatus: {
@@ -104,7 +105,8 @@ const updateStateFromPayload = (
   state.videoLink = videoLink
   state.categories = mainSubjects
   state.professionalBlock = professionalBlock || initialProfessoinalBlock
-  state.notificationSettings = notificationSettings
+  state.notificationSettings =
+    notificationSettings || intitialNotificationSettings
 }
 
 export const fetchUserById = createAsyncThunk(

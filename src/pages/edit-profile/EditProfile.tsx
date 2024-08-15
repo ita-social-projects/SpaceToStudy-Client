@@ -30,6 +30,8 @@ import {
 } from '~/redux/features/editProfileSlice'
 import { LoadingStatusEnum } from '~/redux/redux.constants'
 import { diff } from 'deep-object-diff'
+import { openAlert } from '~/redux/features/snackbarSlice'
+import { snackbarVariants } from '~/constants'
 
 const EditProfile = () => {
   const [initialEditProfileState, setInitialEditProfileState] = useState<
@@ -59,6 +61,9 @@ const EditProfile = () => {
     [UserProfileTabsEnum.ProfessionalInfo]:
       !tabValidityStatus.professionalInfoTab
   }
+
+  const isTabInvalid =
+    errorTooltipHolders.profile || errorTooltipHolders.professionalInfo
 
   useEffect(() => {
     const fetchData = async () => {
@@ -153,6 +158,13 @@ const EditProfile = () => {
         params: dataToUpdate
       })
     )
+
+    dispatch(
+      openAlert({
+        severity: snackbarVariants.success,
+        message: 'editProfilePage.profile.successMessage'
+      })
+    )
   }
 
   const cooperationContent = activeTab && tabsData[activeTab]?.content
@@ -174,7 +186,7 @@ const EditProfile = () => {
         </Box>
         <AppButton
           component={Link}
-          disabled={!isChanged}
+          disabled={!isChanged || isTabInvalid}
           onClick={() => void handleUpdateUser()}
           size={SizeEnum.Large}
           sx={styles.updateBtn}
