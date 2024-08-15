@@ -29,7 +29,6 @@ import {
   EditProfileState
 } from '~/redux/features/editProfileSlice'
 import { LoadingStatusEnum } from '~/redux/redux.constants'
-import { diff } from 'deep-object-diff'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { snackbarVariants } from '~/constants'
 
@@ -65,6 +64,13 @@ const EditProfile = () => {
   const isTabInvalid =
     errorTooltipHolders.profile || errorTooltipHolders.professionalInfo
 
+  const hasChanges = (
+    initialData: Partial<EditProfileState>,
+    currentData: Partial<EditProfileState>
+  ): boolean => {
+    return JSON.stringify(initialData) !== JSON.stringify(currentData)
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       await dispatch(
@@ -86,32 +92,50 @@ const EditProfile = () => {
   const changedFields = useMemo<Partial<EditProfileState>>(() => {
     if (!initialEditProfileState || !profileState) return {}
 
-    // TODO: because of different videolink types in editProfileSlice.ts and ProfileTab.tsx,
-    // we have a hot solution below to compare states without videolink.
-    // We need to fix videolink types and also save it on Update click
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { videoLink, ...initialData } = initialEditProfileState
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { videoLink: videoLinkCurrent, ...currentData } = profileState
+    const {
+      // TODO: because of different videolink types in editProfileSlice.ts and ProfileTab.tsx,
+      // we have a hot solution below to compare states without videolink.
+      // We need to fix videolink types and also save it on Update click
+      //eslint-disable-next-line @typescript-eslint/no-unused-vars
+      videoLink: initialVideoLink,
+      photo: initialPhoto,
+      ...initialData
+    } = initialEditProfileState
+    const {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      videoLink: currentVideoLink,
+      photo: currentPhoto,
+      ...currentData
+    } = profileState
 
-    return diff(initialData, currentData)
+    const hasChanged = hasChanges(initialData, currentData)
+
+    if (hasChanged) {
+      const changes: Partial<EditProfileState> = { ...currentData }
+      if (initialPhoto === currentPhoto) {
+        delete changes.photo
+      }
+      return changes
+    } else {
+      return {}
+    }
   }, [profileState, initialEditProfileState])
 
   const isChanged = useMemo<boolean>(
-    () => Boolean(Object.values(changedFields).length),
+    () => Object.keys(changedFields).length > 0,
     [changedFields]
   )
 
   const handleClick = async (tab: UserProfileTabsEnum) => {
     if (activeTab === tab) return
 
-    const confirmed = checkConfirmation({
+    const confirmed = await checkConfirmation({
       message: 'questions.goBackToProfile',
       title: 'titles.discardChanges',
       confirmButton: t('common.discard'),
       cancelButton: t('common.cancel')
     })
-    if (await confirmed) {
+    if (confirmed) {
       setSearchParams({ tab })
     }
   }
@@ -136,15 +160,14 @@ const EditProfile = () => {
 
     const dataToUpdate: UpdateUserParams = rest
 
-    if (city && country)
-      dataToUpdate.address = {
-        city,
-        country
-      }
+    if (city && country) dataToUpdate.address = { city, country }
 
-    if (videoLink === 'string') dataToUpdate.videoLink = videoLink
-    else if (videoLink)
-      dataToUpdate.videoLink = videoLink[userRole as keyof typeof videoLink]
+    if (videoLink) {
+      dataToUpdate.videoLink =
+        typeof videoLink === 'string'
+          ? videoLink
+          : videoLink[userRole as keyof typeof videoLink]
+    }
 
     if (notificationSettings)
       dataToUpdate.notificationSettings = profileState.notificationSettings
@@ -203,7 +226,9 @@ const EditProfile = () => {
           handleClick={(tab) => void handleClick(tab)}
           tabsData={tabsData}
         />
-        <Box sx={styles.mainContent}>{cooperationContent}</Box>
+        <Box sx={styles.mainContent}>
+          {cooperationContent} {/* Відображаємо контент завжди */}
+        </Box>
       </Box>
     </PageWrapper>
   )
