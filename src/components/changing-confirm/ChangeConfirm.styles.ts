@@ -7,6 +7,10 @@ export const styles = {
     alignItems: 'center',
     mb: '20px'
   },
+  warningImage: {
+    color: 'error.700',
+    fontSize: '2.5rem'
+  },
   changeConfirmTitle: {
     textAlign: 'center',
     typography: TypographyVariantEnum.MidTitle,

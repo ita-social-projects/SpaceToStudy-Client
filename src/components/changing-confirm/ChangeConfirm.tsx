@@ -1,9 +1,9 @@
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { useTranslation } from 'react-i18next'
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline'
 
 import AppButton from '~/components/app-button/AppButton'
-import warningImg from '~/assets/img/cooperation-details/warning.svg'
 
 import { ButtonVariantEnum, SizeEnum } from '~/types'
 import { styles } from '~/components/changing-confirm/ChangeConfirm.styles'
@@ -11,6 +11,7 @@ import { styles } from '~/components/changing-confirm/ChangeConfirm.styles'
 interface ChangeConfirmProps {
   title: string
   courseList: {
+    id: string
     title: string
     subTitle: string
   }[]
@@ -19,7 +20,7 @@ interface ChangeConfirmProps {
 const ChangeConfirm = ({ title, courseList }: ChangeConfirmProps) => {
   const { t } = useTranslation()
 
-  const descriptionText = t('changeConfirm.descriptionLesson', {
+  const descriptionText = t('changeConfirm.descriptionResource', {
     resource: title
   })
 
@@ -28,7 +29,7 @@ const ChangeConfirm = ({ title, courseList }: ChangeConfirmProps) => {
   return (
     <Box>
       <Box sx={styles.warningImageContainer}>
-        <img alt='Warning' src={warningImg} />
+        <ErrorOutlineIcon data-testid='warning-icon' sx={styles.warningImage} />
       </Box>
       <Box>
         <Typography sx={styles.changeConfirmTitle}>
@@ -46,8 +47,8 @@ const ChangeConfirm = ({ title, courseList }: ChangeConfirmProps) => {
         </Typography>
       </Box>
       <Box sx={styles.lessonsListContainer}>
-        {courseList.map((el, index) => (
-          <Box key={index} sx={styles.changeConfirmListItems}>
+        {courseList.map((el) => (
+          <Box key={el.id} sx={styles.changeConfirmListItems}>
             <Typography sx={styles.changeConfirmListTitles}>
               {el.title}
             </Typography>

@@ -24,9 +24,9 @@ describe('ChangeConfirm component tests', () => {
     render(<ChangeConfirm {...props} />)
   })
 
-  it('should render the warning image', () => {
-    const imgElement = screen.getByAltText('Warning')
-    expect(imgElement).toBeInTheDocument()
+  it('should render the warning icon', () => {
+    const iconElement = screen.getByTestId('warning-icon')
+    expect(iconElement).toBeInTheDocument()
   })
 
   it('should render course list items with titles and subtitles', () => {
