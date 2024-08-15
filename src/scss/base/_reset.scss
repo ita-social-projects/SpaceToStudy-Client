@@ -8,6 +8,6 @@
  * https://necolas.github.io/normalize.css/
  */
 
-@import 'normalize';
+@import 'node_modules/normalize-scss/sass/normalize';
 
 @include normalize();

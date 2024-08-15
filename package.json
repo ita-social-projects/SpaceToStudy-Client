@@ -91,17 +91,16 @@
     "vitest-sonar-reporter": "^0.4.1"
   },
   "scripts": {
-    "start": "npm run compile-scss && vite",
-    "build": "npm run compile-scss && vite build",
-    "test": "cross-env CI=true npm run compile-scss && vitest --coverage",
-    "serve": "npm run compile-scss && vite preview --port 3000",
+    "start": "vite",
+    "build": "vite build",
+    "test": "cross-env CI=true vitest --coverage",
+    "serve": "vite preview --port 3000",
     "lint": "eslint src/**/*.{js,jsx,ts,tsx}",
     "lint-fix": "eslint src/**/*.{js,jsx,ts,tsx} --fix",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook -o build-story",
     "prepare": "husky install",
-    "pre-commit": "lint-staged",
-    "compile-scss": "node src/scss/src/scripts/compile-scss.js --logger"
+    "pre-commit": "lint-staged"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
