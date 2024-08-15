@@ -30,6 +30,8 @@ import {
 } from '~/redux/features/editProfileSlice'
 import { LoadingStatusEnum } from '~/redux/redux.constants'
 import { diff } from 'deep-object-diff'
+import { openAlert } from '~/redux/features/snackbarSlice'
+import { snackbarVariants } from '~/constants'
 
 const EditProfile = () => {
   const [initialEditProfileState, setInitialEditProfileState] = useState<
@@ -156,6 +158,13 @@ const EditProfile = () => {
         params: dataToUpdate
       })
     )
+    dispatch(
+      openAlert({
+        severity: snackbarVariants.success,
+        message: 'editProfilePage.profile.successMessage'
+      })
+    )
+    setInitialEditProfileState(structuredClone(profileState))
   }
 
   const cooperationContent = activeTab && tabsData[activeTab]?.content
