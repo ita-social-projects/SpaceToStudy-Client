@@ -16,7 +16,7 @@ describe('cn', () => {
   })
 
   it('should be trimmed', () => {
-    const result = cn('', 'b', {}, '')
+    const result = cn(' ', 'b', {}, ' ')
     expect(result).toBe('b')
   })
 
