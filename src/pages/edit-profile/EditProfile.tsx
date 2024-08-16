@@ -226,9 +226,7 @@ const EditProfile = () => {
           handleClick={(tab) => void handleClick(tab)}
           tabsData={tabsData}
         />
-        <Box sx={styles.mainContent}>
-          {cooperationContent} {/* Відображаємо контент завжди */}
-        </Box>
+        <Box sx={styles.mainContent}>{cooperationContent}</Box>
       </Box>
     </PageWrapper>
   )
