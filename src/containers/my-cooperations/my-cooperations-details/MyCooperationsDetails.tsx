@@ -30,12 +30,14 @@ import { createUrlPath } from '~/utils/helper-functions'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { useChatContext } from '~/context/chat-context'
 import CooperationCompletion from '../cooperation-completion/CooperationCompletion'
+import { useAppSelector } from '~/hooks/use-redux'
 
 const MyCooperationsDetails = () => {
   const { t } = useTranslation()
   const { id = '' } = useParams()
   const navigate = useNavigate()
   const { setChatInfo } = useChatContext()
+  const userRole = useAppSelector((state) => state.appMain.userRole)
 
   const getDetails: ServiceFunction<
     MyCooperationDetails<Offer> | null,
@@ -86,6 +88,10 @@ const MyCooperationsDetails = () => {
       </Box>
     ))
 
+  const cooperationCompletion = userRole === UserRoleEnum.Tutor && (
+    <CooperationCompletion />
+  )
+
   return (
     <Box>
       <Typography sx={style.header}>
@@ -104,7 +110,10 @@ const MyCooperationsDetails = () => {
             <Avatar
               src={
                 offer.author.photo &&
-                `${import.meta.env.VITE_APP_IMG_USER_URL}${offer.author.photo}`
+                createUrlPath(
+                  import.meta.env.VITE_APP_IMG_USER_URL,
+                  offer.author.photo
+                )
               }
             />
             <Typography sx={style.profileName}>
@@ -114,7 +123,7 @@ const MyCooperationsDetails = () => {
               {offer.author.professionalSummary}
             </Typography>
           </Box>
-          <Box>
+          <Box sx={style.userButtons}>
             <AppButton
               onClick={onClickOpenChat}
               size={SizeEnum.Medium}
@@ -168,7 +177,7 @@ const MyCooperationsDetails = () => {
         </Typography>
         <Typography>{`${price} UAH/hour`}</Typography>
       </Box>
-      <CooperationCompletion />
+      {cooperationCompletion}
     </Box>
   )
 }

@@ -12,6 +12,7 @@ import {
   setIsAddedClicked
 } from '~/redux/features/cooperationsSlice'
 
+import { UserRoleEnum } from '~/types'
 import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 
 interface CooperationActivitiesViewProps {
@@ -23,6 +24,8 @@ const CooperationActivitiesView: FC<CooperationActivitiesViewProps> = ({
 }) => {
   const { sections } = useAppSelector(cooperationsSelector)
   const dispatch = useAppDispatch()
+  const { userRole } = useAppSelector((state) => state.appMain)
+  const isTutor = userRole === UserRoleEnum.Tutor
 
   const onEdit = () => {
     setEditMode(true)
@@ -34,15 +37,18 @@ const CooperationActivitiesView: FC<CooperationActivitiesViewProps> = ({
       {sections.map((item) => (
         <CooperationSectionView id={item._id} item={item} key={item._id} />
       ))}
-      <Box sx={styles.editContainer}>
-        <IconButton
-          data-testid='iconButton'
-          onClick={onEdit}
-          sx={styles.editButton}
-        >
-          <EditIcon />
-        </IconButton>
-      </Box>
+
+      {isTutor && (
+        <Box sx={styles.editContainer}>
+          <IconButton
+            data-testid='iconButton'
+            onClick={onEdit}
+            sx={styles.editButton}
+          >
+            <EditIcon />
+          </IconButton>
+        </Box>
+      )}
     </Box>
   )
 }

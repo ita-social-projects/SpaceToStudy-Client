@@ -13,6 +13,7 @@ import { defaultResponses } from '~/constants'
 import { styles } from '~/containers/navigation-icons/NavigationIcons.styles'
 
 import { UserResponse, UserRole } from '~/types'
+import { createUrlPath } from '~/utils/helper-functions'
 
 interface AccountIconProps {
   openMenu: (event: MouseEvent) => void
@@ -45,7 +46,10 @@ const AccountIcon: FC<AccountIconProps> = ({ openMenu }) => {
       <Avatar
         alt='User Avatar'
         onClick={openMenu}
-        src={`${import.meta.env.VITE_APP_IMG_USER_URL}${photo}`}
+        src={
+          photo &&
+          createUrlPath(import.meta.env.VITE_APP_IMG_USER_URL || '', photo)
+        }
         sx={styles.accountIcon}
       >
         {!loading && firstName && lastName && `${firstName[0]}${lastName[0]}`}

@@ -15,7 +15,7 @@ import {
   OverlapEnum,
   PositionEnum
 } from '~/types'
-import { getFormattedDate } from '~/utils/helper-functions'
+import { createUrlPath, getFormattedDate } from '~/utils/helper-functions'
 
 interface ItemOfChatProps {
   isActiveChat: boolean
@@ -84,7 +84,10 @@ const ChatItem: FC<ItemOfChatProps> = ({
           overlap={OverlapEnum.Circular}
         >
           <Avatar
-            src={photo && `${import.meta.env.VITE_APP_IMG_USER_URL}${photo}`}
+            src={
+              photo &&
+              createUrlPath(import.meta.env.VITE_APP_IMG_USER_URL, photo)
+            }
             sx={styles.img}
           />
         </Badge>

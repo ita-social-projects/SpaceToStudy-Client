@@ -59,7 +59,8 @@ const MyCooperations = () => {
         ...filters,
         sort,
         limit: itemsPerPage,
-        skip: (page - 1) * itemsPerPage
+        skip: (page - 1) * itemsPerPage,
+        categories: []
       }),
     [filters, page, itemsPerPage, sort]
   )

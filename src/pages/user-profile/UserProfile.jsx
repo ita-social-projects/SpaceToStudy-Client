@@ -5,7 +5,10 @@ import { useParams, useSearchParams, useMatch } from 'react-router-dom'
 import CompleteProfileBlock from '~/components/complete-profile/CompleteProfileBlock'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import Loader from '~/components/loader/Loader'
-import { profileItems } from '~/components/profile-item/complete-profile.constants'
+import {
+  profileItemsTutor,
+  profileItemsStudent
+} from '~/components/profile-item/complete-profile.constants'
 
 import ProfileInfo from '~/containers/user-profile/profile-info/ProfileInfo'
 import AboutTutorBlock from '~/containers/user-profile/about-tutor-block/AboutTutorBlock'
@@ -65,7 +68,16 @@ const UserProfile = () => {
   return (
     <PageWrapper>
       <ProfileInfo myRole={userRole} userData={response} />
-      <CompleteProfileBlock data={response} profileItems={profileItems} />
+      {isMyProfile && (
+        <CompleteProfileBlock
+          data={response}
+          profileItems={
+            preferredRole === UserRoleEnum.Student
+              ? profileItemsStudent
+              : profileItemsTutor
+          }
+        />
+      )}
       {response.professionalBlock && (
         <AboutTutorBlock data={response.professionalBlock} />
       )}

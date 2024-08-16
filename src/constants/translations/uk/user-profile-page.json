@@ -44,5 +44,11 @@
     "reviewsCount_one": "{{count}} відгук",
     "reviewsCount_few": "{{count}} відгуки",
     "reviewsCount_many": "{{count}} відгуків"
+  },
+  "sortItems": {
+    "Newest": "Нові",
+    "Relevant": "Актуальні",
+    "highestRating": "Найвищий рейтинг",
+    "lowestRating": "Найнижчий рейтинг"
   }
 }

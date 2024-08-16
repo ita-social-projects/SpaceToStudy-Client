@@ -131,3 +131,10 @@ export enum StepsEnum {
   SetSubjects,
   SetLanguage
 }
+
+export enum SortByEnum {
+  Newest = 'Newest',
+  Relevant = 'Relevant',
+  highestRating = 'highestRating',
+  lowestRating = 'lowestRating'
+}
