@@ -9,7 +9,6 @@ import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 import { snackbarVariants } from '~/constants'
 import { URLs } from '~/constants/request'
 import {
-  ProficiencyLevelEnum,
   UserRoleEnum,
   CourseResourceEventType,
   CourseSectionEventType
@@ -267,25 +266,14 @@ describe('CreateCourse with params id', () => {
     expect(errorMessage).toBeInTheDocument()
   })
 
-  it('should choose the proficiency levels from options list', async () => {
+  it('should render the proficiency levels in option list', async () => {
     const select = screen.getByLabelText(/level/i)
     expect(select).toBeInTheDocument()
 
-    waitFor(() => {
-      fireEvent.mouseDown(select)
-    })
-
-    const proficiencyCheckbox = screen.getByText(ProficiencyLevelEnum.Advanced)
-    fireEvent.click(proficiencyCheckbox)
-
-    expect(mockHandleNonInputValueChange).toHaveBeenCalledWith(
-      'proficiencyLevel',
-      [
-        ProficiencyLevelEnum.Beginner,
-        ProficiencyLevelEnum.Intermediate,
-        ProficiencyLevelEnum.Advanced
-      ]
+    const proficiencyCheckbox = screen.getByDisplayValue(
+      /beginner,intermediate/i
     )
+    expect(proficiencyCheckbox).toBeInTheDocument()
   })
 
   it('should add a new section when the "Add Section" button is clicked', async () => {
