@@ -17,6 +17,7 @@ interface ProficiencyLevelSelectProps
   extends Omit<SelectProps<ProficiencyLevelEnum[]>, 'sx' | 'onChange'> {
   value: ProficiencyLevelEnum[]
   label?: string
+  labels?: ReadonlyMap<ProficiencyLevelEnum, string>
   errorMessage?: string
   fillRange?: boolean
   sx?: {
@@ -29,6 +30,7 @@ interface ProficiencyLevelSelectProps
 const ProficiencyLevelSelect: FC<ProficiencyLevelSelectProps> = ({
   value = [],
   label,
+  labels,
   errorMessage = '',
   sx,
   fillRange = false,
@@ -57,7 +59,9 @@ const ProficiencyLevelSelect: FC<ProficiencyLevelSelectProps> = ({
       value={checkbox}
     >
       <Checkbox checked={value.indexOf(checkbox) > -1} />
-      <ListItemText primary={checkbox} />
+      <ListItemText
+        primary={labels?.has(checkbox) ? t(labels.get(checkbox)!) : t(checkbox)}
+      />
     </MenuItem>
   ))
 
@@ -70,9 +74,15 @@ const ProficiencyLevelSelect: FC<ProficiencyLevelSelectProps> = ({
   )
 
   const renderSelectedValue = (selected: ProficiencyLevelEnum[]) => {
+    const translatedValues = selected.map((level) =>
+      labels?.has(level) ? t(labels.get(level)!) : t(level)
+    )
+
     return fillRange && selected.length > 1
-      ? `${selected[0]} - ${selected[selected.length - 1]}`
-      : selected.join(', ')
+      ? `${translatedValues[0]} - ${
+          translatedValues[translatedValues.length - 1]
+        }`
+      : translatedValues.join(', ')
   }
 
   return (

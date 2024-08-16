@@ -1,102 +1,115 @@
 import { vi } from 'vitest'
-import Subjects from '~/pages/subjects/Subjects'
 import { fireEvent, screen, waitFor } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
+import Subjects from '~/pages/subjects/Subjects'
+import useLoadMore from '~/hooks/use-load-more'
 
-vi.mock('~/hooks/use-categories-names', () => ({
-  __esModule: true,
-  default: () => ({
-    loading: false,
-    response: [
-      { _id: '123', name: 'Category 1' },
-      { _id: '456', name: 'Category 2' },
-      { _id: '789', name: '' }
-    ]
-  })
-}))
+const resetDataMock = vi.fn()
+const loadMoreMock = vi.fn()
 
 vi.mock('~/hooks/use-subjects-names', () => ({
   __esModule: true,
   default: () => ({
     loading: false,
-    response: ['Subject 1', 'Subject 2']
+    response: [{ name: 'Algebra' }, { name: 'Violin' }],
+    fetchData: vi.fn()
   })
 }))
 
-const route = '/categories/subjects?categoryId=123'
+vi.mock('~/hooks/use-load-more')
 
-const mockState = {
-  appMain: { userRole: 'tutor' }
-}
-
-describe('Subjects', () => {
-  beforeEach(async () => {
-    await waitFor(() => {
-      renderWithProviders(<Subjects />, {
-        initialEntries: route,
-        preloadedState: mockState
-      })
-    })
+describe('Subjects page', () => {
+  beforeAll(() => {
+    useLoadMore.mockImplementation(() => ({
+      loading: false,
+      data: [
+        {
+          _id: '1',
+          name: 'Algebra',
+          totalOffers: { student: 13, teacher: 8 },
+          description: '13 offers',
+          category: {
+            appearance: { icon: 'Algebra.svg', color: '#FF0000' }
+          }
+        },
+        {
+          _id: '2',
+          name: 'Violin',
+          totalOffers: { student: 6, teacher: 6 },
+          description: '6 offers',
+          category: {
+            appearance: { icon: 'Violin.svg', color: '#440fff' }
+          }
+        }
+      ],
+      resetData: resetDataMock,
+      loadMore: loadMoreMock,
+      isExpandable: true
+    }))
   })
 
-  afterEach(() => {
+  afterAll(() => {
     vi.clearAllMocks()
   })
 
-  it('should render correctly', () => {
-    expect(
-      screen.getByText('subjectsPage.subjects.description')
-    ).toBeInTheDocument()
-    expect(
-      screen.getByText('subjectsPage.subjects.title', {
-        category: 'Category 1'
-      })
-    ).toBeInTheDocument()
-    expect(screen.getByLabelText('breadCrumbs.categories')).toBeInTheDocument()
-    expect(
-      screen.getByLabelText('subjectsPage.subjects.searchLabel')
-    ).toBeInTheDocument()
-    expect(
-      screen.getByText('subjectsPage.subjects.backToAllCategories')
-    ).toBeInTheDocument()
-    expect(
-      screen.getByText('subjectsPage.subjects.showAllOffers')
-    ).toBeInTheDocument()
+  beforeEach(() => {
+    renderWithProviders(<Subjects />)
   })
 
-  it('should update search value when search input is changed', () => {
-    const searchLabel = screen.getByLabelText(
+  it('should render title with description', () => {
+    const title = screen.getByText(/subjectsPage.subjects.title/)
+    const description = screen.getByText(/subjectsPage.subjects.description/)
+
+    expect(title).toBeInTheDocument()
+    expect(description).toBeInTheDocument()
+  })
+
+  it('should change autocomplete and fetch subjects', () => {
+    const autocomplete = screen.getByLabelText(
       'subjectsPage.subjects.searchLabel'
     )
 
-    fireEvent.change(searchLabel, { target: { value: 'Subject' } })
-
-    const subject = screen.getByDisplayValue('Subject')
-
-    expect(subject).toBeInTheDocument()
-  })
-
-  it('should change autocomplete', () => {
-    const autocomplete = screen.getByLabelText('breadCrumbs.categories')
-
-    expect(autocomplete).toBeInTheDocument()
-
     fireEvent.click(autocomplete)
-    fireEvent.change(autocomplete, { target: { value: 'Category 2' } })
+    fireEvent.change(autocomplete, { target: { value: 'Violin' } })
     fireEvent.keyDown(autocomplete, { key: 'ArrowDown' })
     fireEvent.keyDown(autocomplete, { key: 'Enter' })
 
-    expect(autocomplete.value).toBe('Category 2')
+    expect(autocomplete.value).toBe('Violin')
+
+    const subjectName = screen.getByText(/Violin/)
+
+    expect(subjectName).toBeInTheDocument()
+  })
+})
+
+describe('Subjects page with empty data', () => {
+  beforeAll(() => {
+    useLoadMore.mockImplementation(() => ({
+      loading: false,
+      data: [],
+      resetData: resetDataMock,
+      loadMore: loadMoreMock,
+      isExpandable: true
+    }))
   })
 
-  it('should clear autocomplete', () => {
-    const autocomplete = screen.getByLabelText('breadCrumbs.categories')
+  afterAll(() => {
+    vi.clearAllMocks()
+  })
 
-    fireEvent.click(autocomplete)
-    fireEvent.change(autocomplete, { target: { value: '' } })
-    fireEvent.keyDown(autocomplete, { key: 'ArrowDown' })
-    fireEvent.keyDown(autocomplete, { key: 'Enter' })
+  beforeEach(() => {
+    renderWithProviders(<Subjects />)
+  })
 
-    expect(autocomplete.value).toBe('')
+  it('should render not found results when no subjects are found', () => {
+    const newNotFound = screen.getByText('errorMessages.resultsNotFound')
+    expect(newNotFound).toBeInTheDocument()
+  })
+
+  it('should render offer count descriptions for subjects', async () => {
+    await waitFor(() => {
+      const noOffers = screen.queryByText(/offers/)
+      expect(noOffers).not.toBeInTheDocument()
+    })
   })
 })

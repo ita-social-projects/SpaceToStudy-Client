@@ -49,24 +49,35 @@ describe('PasswordSecurityTab', () => {
     expect(description).toBeInTheDocument()
   })
 
-  it('checks if ConfirmDialog is open when deactivate account button is clicked', () => {
+  it('renders title and description change password', () => {
+    const title = screen.getByText(
+      'editProfilePage.profile.passwordSecurityTab.deactivateTitle'
+    )
+    const description = screen.getByText(
+      'editProfilePage.profile.passwordSecurityTab.deactivateSubTitle'
+    )
+    expect(title).toBeInTheDocument()
+    expect(description).toBeInTheDocument()
+  })
+
+  it('renders title and description deactivate account', async () => {
     const deactivateAccountButton = screen.getByText(
       'editProfilePage.profile.passwordSecurityTab.deactivateAccount'
     )
 
     fireEvent.click(deactivateAccountButton)
 
-    const deactivateTitle = screen.getByText(
-      'editProfilePage.profile.passwordSecurityTab.deactivateTitle'
+    const deactivateDescription = screen.getByText(
+      'editProfilePage.profile.passwordSecurityTab.deactivateDescription'
     )
-    expect(deactivateTitle).toBeInTheDocument()
+    expect(deactivateDescription).toBeInTheDocument()
   })
 
   it('checks if ConfirmDialog is closed when cancel button is clicked', async () => {
     const deactivateAccountButton = screen.getByText(
       'editProfilePage.profile.passwordSecurityTab.deactivateAccount'
     )
-    let deactivateTitle
+    let deactivateDescription
 
     fireEvent.click(deactivateAccountButton)
 
@@ -74,12 +85,12 @@ describe('PasswordSecurityTab', () => {
     fireEvent.click(cancelButton)
 
     await waitForElementToBeRemoved(() => {
-      deactivateTitle = screen.queryByText(
-        'editProfilePage.profile.passwordSecurityTab.deactivateTitle'
+      deactivateDescription = screen.queryByText(
+        'editProfilePage.profile.passwordSecurityTab.deactivateDescription'
       )
-      return deactivateTitle
+      return deactivateDescription
     })
 
-    expect(deactivateTitle).not.toBeInTheDocument()
+    expect(deactivateDescription).not.toBeInTheDocument()
   })
 })

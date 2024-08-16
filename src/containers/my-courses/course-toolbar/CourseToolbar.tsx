@@ -9,6 +9,7 @@ import useUserCategoriesAndSubjects from '~/hooks/use-user-categories-and-subjec
 import AppTextField from '~/components/app-text-field/AppTextField'
 import AppToolbar from '~/components/app-toolbar/AppToolbar'
 import DividedDropdownAutocomplete from '~/components/divider-dropdown-autocomplete/DividerDropdownAutocomplete'
+import { proficiencyLevelLabels } from '~/constants/labels'
 
 import {
   CategoryNameInterface,
@@ -125,6 +126,7 @@ const CourseToolbar = ({
         errorMessage={errors.proficiencyLevel}
         fillRange
         label={t('breadCrumbs.level')}
+        labels={proficiencyLevelLabels}
         onBlur={handleBlur('proficiencyLevel')}
         onChange={onLevelChange}
         sx={{ select: styles.levelSelect, formSx: { flex: 1 } }}

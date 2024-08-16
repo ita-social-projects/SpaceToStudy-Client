@@ -3,13 +3,12 @@ import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 
 import { useModalContext } from '~/context/modal-context'
+
 import useChangeUserStatus from '~/hooks/use-change-user-status'
 import PasswordSecurityItem from '~/containers/edit-profile/password-security-tab/password-security-item/PasswordSecurityItem'
 import ChangePasswordModal from '~/containers/edit-profile/password-security-tab/change-password-modal/ChangePasswordModal'
-import AppButton from '~/components/app-button/AppButton'
 
-import { styles } from '~/containers/edit-profile/password-security-tab/PasswordSecurityTab.styles'
-import { ButtonVariantEnum, SizeEnum } from '~/types'
+import { ButtonVariantEnum } from '~/types'
 
 const PasswordSecurityTab: FC = () => {
   const { t } = useTranslation()
@@ -34,21 +33,22 @@ const PasswordSecurityTab: FC = () => {
         buttonText={t(
           'editProfilePage.profile.passwordSecurityTab.changePassword'
         )}
+        buttonVariant={ButtonVariantEnum.Tonal}
         description={t('editProfilePage.profile.passwordSecurityTab.subTitle')}
         onClick={openChangePasswordModal}
-        sx={styles.deactivateButton}
         title={t('editProfilePage.profile.passwordSecurityTab.title')}
       />
-      <AppButton
-        onClick={handleChangeStatusClick}
-        size={SizeEnum.Large}
-        sx={styles.deactivateButton}
-        variant={ButtonVariantEnum.Danger}
-      >
-        {t(
+      <PasswordSecurityItem
+        buttonText={t(
           `editProfilePage.profile.passwordSecurityTab.${neededAction}Account`
         )}
-      </AppButton>
+        buttonVariant={ButtonVariantEnum.Danger}
+        description={t(
+          'editProfilePage.profile.passwordSecurityTab.deactivateSubTitle'
+        )}
+        onClick={handleChangeStatusClick}
+        title={t('editProfilePage.profile.passwordSecurityTab.deactivateTitle')}
+      />
     </Box>
   )
 }

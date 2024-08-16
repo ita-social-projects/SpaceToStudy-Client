@@ -6,13 +6,19 @@ import { useTranslation } from 'react-i18next'
 import { styles } from '~/components/profile-item/ProfileItem.styles'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { ProfileItemType } from '~/components/profile-item/complete-profile.constants'
+import { UserRoleEnum } from '~/types'
 
 interface ProfileItemProps {
   item: ProfileItemType
   isFilled?: boolean
+  userRole: UserRoleEnum | ''
 }
 
-const ProfileItem = ({ item, isFilled = false }: ProfileItemProps) => {
+const ProfileItem = ({
+  item,
+  userRole,
+  isFilled = false
+}: ProfileItemProps) => {
   const { t } = useTranslation()
   const { isMobile } = useBreakpoints()
   const { id, icon } = item
@@ -24,16 +30,21 @@ const ProfileItem = ({ item, isFilled = false }: ProfileItemProps) => {
           {!isMobile && <Box sx={styles.icon}>{icon}</Box>}
           <Box sx={styles.text}>
             <Typography variant={isMobile ? 'subtitle2' : 'h6'}>
-              {t(`completeProfile.${id}.title`)}
+              {userRole === UserRoleEnum.Student
+                ? t(`completeProfileStudent.${id}.title`)
+                : t(`completeProfileTutor.${id}.title`)}
             </Typography>
             <Typography variant={isMobile ? 'caption' : 'body2'}>
-              {t(`completeProfile.${id}.subtitle`)}
+              {userRole === UserRoleEnum.Student
+                ? t(`completeProfileStudent.${id}.subtitle`)
+                : t(`completeProfileTutor.${id}.subtitle`)}
             </Typography>
           </Box>
         </Box>
       </Box>
       {isFilled && (
         <CheckIcon
+          data-testid={`icon-${item.id}`}
           fontSize={isMobile ? 'small' : 'medium'}
           sx={styles.checkIcon}
         />

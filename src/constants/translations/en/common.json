@@ -23,6 +23,8 @@
   "uahSlashHour": "UAH/hour",
   "beginner": "Beginner",
   "offers": "offers",
+  "offerCount_one": "{{count}} offer",
+  "offerCount_other": "{{count}} offers",
   "goToCategories": "Go to categories",
   "popularCategories": "Popular Categories",
   "aboutOffer": "About Offer",
@@ -64,6 +66,7 @@
     "moveToDraft": "Move to draft",
     "closeOffer": "Close an offer",
     "sortBy": "Sort by:",
+    "filterBy": "Filter by:",
     "subject": "Subject:",
     "level": "Level:"
   },

@@ -4,6 +4,6 @@ export const styles = {
     height: '44px',
     width: '100%',
     overflow: 'hidden',
-    minWidth: { sm: '315px' }
+    minWidth: '315px'
   }
 }

@@ -37,7 +37,8 @@ const MyCooperationsDetails = () => {
   const { id = '' } = useParams()
   const navigate = useNavigate()
   const { setChatInfo } = useChatContext()
-  const userId = useAppSelector((store) => store.appMain.userId)
+  const userId = useAppSelector((state) => state.appMain.userId)
+  const userRole = useAppSelector((state) => state.appMain.userRole)
 
   const getDetails: ServiceFunction<
     MyCooperationDetails<Offer> | null,
@@ -99,6 +100,10 @@ const MyCooperationsDetails = () => {
   const avatarSrc =
     displayedUser.photo &&
     createUrlPath(import.meta.env.VITE_APP_IMG_USER_URL, displayedUser.photo)
+  
+  const cooperationCompletion = userRole === UserRoleEnum.Tutor && (
+    <CooperationCompletion />
+  )
 
   return (
     <Box>
@@ -127,7 +132,7 @@ const MyCooperationsDetails = () => {
               {displayedUser.professionalSummary}
             </Typography>
           </Box>
-          <Box>
+          <Box sx={style.userButtons}>
             <AppButton
               onClick={onClickOpenChat}
               size={SizeEnum.Medium}
@@ -181,7 +186,7 @@ const MyCooperationsDetails = () => {
         </Typography>
         <Typography>{`${price} UAH/hour`}</Typography>
       </Box>
-      <CooperationCompletion />
+      {cooperationCompletion}
     </Box>
   )
 }

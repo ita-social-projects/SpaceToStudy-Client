@@ -4,11 +4,14 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
 import { useModalContext } from '~/context/modal-context'
+
 import { AuthService } from '~/services/auth-service'
+
 import useForm from '~/hooks/use-form'
 import useAxios from '~/hooks/use-axios'
 import useInputVisibility from '~/hooks/use-input-visibility'
 import useConfirm from '~/hooks/use-confirm'
+import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 
 import Loader from '~/components/loader/Loader'
 import AppButton from '~/components/app-button/AppButton'
@@ -16,7 +19,6 @@ import AppTextField from '~/components/app-text-field/AppTextField'
 
 import { snackbarVariants } from '~/constants'
 
-import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 import { openAlert } from '~/redux/features/snackbarSlice'
 
 import { styles } from '~/containers/edit-profile/password-security-tab/PasswordSecurityTab.styles'
