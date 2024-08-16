@@ -15,9 +15,31 @@ import EnhancedTableToolbar from '~/components/enhanced-table/enhanced-table-too
 import EnhancedTablePagination from '~/components/enhanced-table/enhanced-table-pagination/EnhancedTablePagination'
 
 import { styles } from '~/components/user-table/UserTable.styles'
-import { VisibilityEnum } from '~/types'
+import { VisibilityEnum, GetUsersParams } from '~/types'
 
-const UserTable = ({
+interface UserTableProps {
+  columns: unknown[]
+  initialFilters: Record<string, unknown>
+  initialSort: typeof useSort
+  role: string
+  tabsInfo: Record<
+    string,
+    {
+      key: string
+      label: string
+      value: string
+      component: (props: unknown) => JSX.Element
+    }
+  >
+}
+
+interface User {
+  id: string
+  name: string
+  status: Record<string, string>
+}
+
+const UserTable: React.FC<UserTableProps> = ({
   columns,
   initialFilters,
   initialSort,
@@ -25,11 +47,15 @@ const UserTable = ({
   tabsInfo
 }) => {
   const { t } = useTranslation()
-  const [itemsCount, setItemsCount] = useState()
-  const [externalFilter, setExternalFilter] = useState({
+  const [itemsCount, setItemsCount] = useState<number | undefined>()
+  const [externalFilter, setExternalFilter] = useState<{
+    status: string
+    role: string
+  }>({
     status: 'all',
     role
   })
+
   const select = useSelect({})
   const sort = useSort({ initialSort })
   const filter = useFilter({ initialFilters })
@@ -40,22 +66,23 @@ const UserTable = ({
   const { sort: sortParams } = sort
   const { page, rowsPerPage, clearPage } = pagination
 
-  const setItemsResponse = useCallback(
-    (response) => {
-      setItemsCount(response.count)
-    },
-    [setItemsCount]
+  const setItemsResponse = useCallback((response: { count: number }) => {
+    setItemsCount(response.count)
+  }, [])
+
+  const getUsers = useCallback(
+    (params: GetUsersParams) => userService.getUsers(params),
+    []
   )
 
-  const getUsers = useCallback((params) => userService.getUsers(params), [])
-
   const deleteFunction = useCallback(
-    (userId) => userService.deleteUser(userId),
+    (userId: string) => userService.deleteUser(userId),
     []
   )
 
   const deleteAllFunction = useCallback(
-    (userIds) => userService.deleteUsers(userIds),
+    (userIds: string | string[]) =>
+      userService.deleteUsers(Array.isArray(userIds) ? userIds : [userIds]),
     []
   )
 
@@ -66,14 +93,14 @@ const UserTable = ({
     onResponse: setItemsResponse
   })
 
-  const items = response.items.map((item) => ({
+  const items = response.items.map((item: User) => ({
     ...item,
     status: item.status[role]
   }))
 
   const getData = useCallback(async () => {
-    const status = externalFilter.status !== 'all' && [externalFilter.status]
-
+    const status =
+      externalFilter.status !== 'all' ? externalFilter.status : undefined
     clearSelected()
     await fetchData({
       skip: (page - 1) * rowsPerPage,
@@ -81,8 +108,8 @@ const UserTable = ({
       sort: sortParams,
       ...filters,
       ...externalFilter,
-      status: status || filters.status
-    })
+      status: status ?? filters.status
+    } as GetUsersParams)
   }, [
     fetchData,
     externalFilter,
@@ -128,16 +155,22 @@ const UserTable = ({
     }
   ]
 
-  const handleTabClick = (tab) => {
+  const handleTabClick = (tab: { key: string; value: string }) => {
     clearFilters()
     setExternalFilter((prev) => ({ ...prev, [tab.key]: tab.value }))
+  }
+
+  const wrappedHandleTabClick = (tab: { key: string; value: string }) => {
+    return () => {
+      handleTabClick(tab)
+    }
   }
 
   const tabs = Object.values(tabsInfo).map((tab) => (
     <Tab
       activeTab={externalFilter.status === tab.value}
       key={tab.label}
-      onClick={() => handleTabClick(tab)}
+      onClick={wrappedHandleTabClick({ key: tab.key, value: tab.value })}
     >
       {t(tab.label)}
     </Tab>
@@ -157,6 +190,17 @@ const UserTable = ({
   const toolbarVisibility =
     selected.length > 0 ? VisibilityEnum.Visible : VisibilityEnum.Hidden
 
+  const handleChangePage = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null,
+    page: number
+  ) => {
+    console.log(page)
+  }
+
+  const handleRefetchData = () => {
+    void getData()
+  }
+
   return (
     <Box sx={styles.root}>
       <Typography sx={styles.header}>{t(`userTable.${role}sTab`)}</Typography>
@@ -165,12 +209,14 @@ const UserTable = ({
         <EnhancedTableToolbar
           bulkActions={bulkActions}
           itemIds={selected}
-          refetchData={getData}
+          refetchData={handleRefetchData}
         />
       </Box>
       {tabsInfo[externalFilter.status].component(props)}
       {!loading && !!items.length && (
-        <EnhancedTablePagination pagination={pagination} />
+        <EnhancedTablePagination
+          pagination={{ ...pagination, handleChangePage }}
+        />
       )}
     </Box>
   )

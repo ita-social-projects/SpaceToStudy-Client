@@ -17,7 +17,7 @@ interface AdminNavBarItemProps {
   icon: ReactNode
   expanded: boolean
   children: { subLabel: string; path: string }[]
-  path: string
+  path?: string
   active: boolean
   showSubItems: boolean
   handleShowSubItems: (label: string) => void

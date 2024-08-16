@@ -10,8 +10,14 @@ import WestIcon from '@mui/icons-material/West'
 import AppButton from '~/components/app-button/AppButton'
 import useSteps from '~/hooks/use-steps'
 import { styles } from '~/components/step-wrapper/StepWrapper.styles'
+import { SizeEnum } from '~/types'
 
-const StepWrapper = ({ children, steps }) => {
+interface StepWrapperProps {
+  children: JSX.Element[]
+  steps: string[]
+}
+
+const StepWrapper = ({ children, steps }: StepWrapperProps) => {
   const { activeStep, stepErrors, isLastStep, loading, stepOperation } =
     useSteps({
       steps
@@ -34,15 +40,20 @@ const StepWrapper = ({ children, steps }) => {
   const nextButton = isLastStep ? (
     <AppButton
       loading={loading}
-      onClick={handleSubmit}
-      size='small'
+      onClick={() => void handleSubmit()}
+      size={SizeEnum.Small}
       sx={styles.finishBtn}
       variant='contained'
     >
       {t('common.finish')}
     </AppButton>
   ) : (
-    <AppButton onClick={next} size='small' sx={styles.btn} variant='contained'>
+    <AppButton
+      onClick={next}
+      size={SizeEnum.Small}
+      sx={styles.btn}
+      variant='contained'
+    >
       {t('common.next')}
       <EastIcon fontSize='small' />
     </AppButton>
@@ -53,7 +64,7 @@ const StepWrapper = ({ children, steps }) => {
       <AppButton
         disabled={activeStep === 0}
         onClick={back}
-        size='small'
+        size={SizeEnum.Small}
         sx={styles.btn}
         variant='outlined'
       >

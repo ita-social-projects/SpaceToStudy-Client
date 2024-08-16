@@ -3,7 +3,8 @@ import {
   UserResponse,
   Question,
   QuizViewEnum,
-  ResourceBase
+  ResourceBase,
+  Category
 } from '~/types'
 
 export interface QuizSettings {
@@ -18,7 +19,7 @@ export interface Quiz extends CommonEntityFields, ResourceBase {
   title: string
   items: Question[]
   author: Pick<UserResponse, '_id'>
-  category: string | null
+  category: Category | null
   settings: QuizSettings
 }
 

@@ -23,6 +23,10 @@
   "uahSlashHour": "ГРН/годину",
   "beginner": "Початковий",
   "offers": "Пропозиції",
+  "offerCount_one": "{{count}} пропозиція",
+  "offerCount_few": "{{count}} пропозиції",
+  "offerCount_many": "{{count}} пропозицій",
+  "offerCount_other": "{{count}} пропозицій",
   "goToCategories": "Перейти до категорій",
   "popularCategories": "Популярні категорії",
   "aboutOffer": "Про пропозицію",
@@ -64,6 +68,7 @@
     "moveToDraft": "Перемістити до чернетки",
     "closeOffer": "Закрити пропозицію",
     "sortBy": "Сортувати за:",
+    "filterBy": "Фільтрувати за:",
     "subject": "Предмет:",
     "level": "Рівень:"
   },

@@ -5,14 +5,22 @@ import Box from '@mui/system/Box'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { styles } from '~/components/app-progress-bar-line/AppProgressBarLine.styles'
 import { LinearProgress } from '@mui/material'
+import { UserRoleEnum } from '~/types'
 
 interface AppProgressBarLineProps {
   value: number
+  userRole: UserRoleEnum | ''
 }
 
-const AppProgressBarLine: FC<AppProgressBarLineProps> = ({ value }) => {
+const AppProgressBarLine: FC<AppProgressBarLineProps> = ({
+  value,
+  userRole
+}) => {
   const { isMobile } = useBreakpoints()
-  const labelsValue = [0, 20, 40, 60, 80, 100]
+  const labelsValue =
+    userRole === UserRoleEnum.Student
+      ? [0, 25, 50, 75, 100]
+      : [0, 20, 40, 60, 80, 100]
 
   const labelsWithPercent = isMobile ? (
     <Typography color={'primary.500'} variant='subtitle2'>

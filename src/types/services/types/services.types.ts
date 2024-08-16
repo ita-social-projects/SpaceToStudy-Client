@@ -2,10 +2,10 @@ import { Sort } from '~/types'
 import { AxiosResponse } from 'axios'
 
 export interface RequestParams {
-  limit: number
-  skip: number
-  sort: Sort
-  categories: string[]
+  limit?: number
+  skip?: number
+  sort?: Sort
+  categories?: string[]
 }
 
 export interface ErrorResponse {

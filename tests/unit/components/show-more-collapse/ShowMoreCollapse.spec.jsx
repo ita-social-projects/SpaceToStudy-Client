@@ -1,23 +1,23 @@
 import { render, fireEvent, screen } from '@testing-library/react'
-
 import ShowMoreCollapse from '~/components/show-more-collapse/ShowMoreCollapse'
 
 const collapsedTextLength = 50
 const title = 'Test Title'
-const description = 'Lorem ipsum dolor sit amet.'
 
 describe('ShowMoreCollapse component', () => {
   it('should render ShowMoreCollapse without showMore button', () => {
+    const shortDescription = 'Short description.'
+
     render(
       <ShowMoreCollapse
         collapsedTextLength={collapsedTextLength}
-        description={description}
+        description={shortDescription}
         title={title}
       />
     )
 
     const titleText = screen.getByText(title)
-    const descriptionText = screen.getByText(description)
+    const descriptionText = screen.getByText(shortDescription)
     const showMore = screen.queryByText('common.showMore')
 
     expect(titleText).toBeInTheDocument()
@@ -26,28 +26,33 @@ describe('ShowMoreCollapse component', () => {
   })
 
   it('should render ShowMoreCollapse with showMore button', () => {
-    const fullDescription = description.repeat(5)
+    const fullDescription = 'Lorem ipsum dolor sit amet. '.repeat(20)
     const collapsedDescription = fullDescription.slice(0, collapsedTextLength)
 
     render(
       <ShowMoreCollapse
         collapsedTextLength={collapsedTextLength}
-        description={description.repeat(5)}
+        description={fullDescription}
         title={title}
       />
     )
 
-    const collapsedDescriptionText = screen.getByText(collapsedDescription)
+    const collapsedDescriptionText = screen.getByText(
+      new RegExp(collapsedDescription.trim(), 'i')
+    )
     const showMore = screen.queryByText('common.showMore')
 
     expect(collapsedDescriptionText).toBeInTheDocument()
+    expect(showMore).toBeInTheDocument()
 
     fireEvent.click(showMore)
 
-    const fullDescriptionText = screen.getByText(fullDescription)
-    const showLess = screen.queryByText('common.showLess')
+    const descriptionElement = screen.getByText(fullDescription.trim(), {
+      exact: false
+    })
 
-    expect(fullDescriptionText).toBeInTheDocument()
+    const showLess = screen.queryByText('common.showLess')
+    expect(descriptionElement).toBeInTheDocument()
     expect(showLess).toBeInTheDocument()
   })
 })
