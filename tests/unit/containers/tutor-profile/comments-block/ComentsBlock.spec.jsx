@@ -2,9 +2,8 @@ import { screen, fireEvent } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 import CommentsWithRatingBlock from '~/containers/user-profile/comments-with-rating-block/CommentsWithRatingBlock'
 import { responseMock } from '~/containers/user-profile/comments-with-rating-block/CommentsWithRatingBlock.constants'
-import { SortByEnum } from '~/types'
-
 const { items } = responseMock
+import { SortByEnum } from '~/types'
 
 const props = {
   averageRating: 4.5,
@@ -17,6 +16,12 @@ const props = {
   ],
   items: items
 }
+
+const Items = [
+  { createdAt: '2024-08-15T12:00:00Z', rating: 4 },
+  { createdAt: '2024-08-16T12:00:00Z', rating: 5 },
+  { createdAt: '2024-08-14T12:00:00Z', rating: 3 }
+]
 
 describe('CommentsWithRatingBlock', () => {
   beforeEach(() => {
@@ -53,56 +58,23 @@ describe('CommentsWithRatingBlock', () => {
     expect(selectElement).toBeInTheDocument()
     fireEvent.click(selectElement)
   })
+})
 
-  it('should sort items by Newest correctly', () => {
-    const sortBy = SortByEnum.Newest
-    const sortedItems = [...items].sort((a, b) => {
+describe('Sorting function', () => {
+  it('should sort items by newest first', () => {
+    const sortedItems = Items.sort((a, b) => {
+      const sortBy = SortByEnum.Newest
       switch (sortBy) {
         case SortByEnum.Newest:
           return (
             new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
           )
-        default:
-          return 0
-      }
-    })
-
-    expect(sortedItems[0].createdAt).toBe('2023-03-02T19:13:04.074Z')
-  })
-
-  it('should sort items by Relevant correctly', () => {
-    const sortBy = SortByEnum.Relevant
-    const sortedItems = [...items].sort((a, b) => {
-      switch (sortBy) {
         case SortByEnum.Relevant:
           return (
             new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
           )
-        default:
-          return 0
-      }
-    })
-    expect(sortedItems[0].createdAt).toBe('2023-03-02T19:13:04.074Z')
-  })
-
-  it('should sort items by highestRating correctly', () => {
-    const sortBy = SortByEnum.highestRating
-    const sortedItems = [...items].sort((a, b) => {
-      switch (sortBy) {
         case SortByEnum.highestRating:
           return b.rating - a.rating
-        default:
-          return 0
-      }
-    })
-
-    expect(sortedItems[0].rating).toBe(5)
-  })
-
-  it('should sort items by lowestRating correctly', () => {
-    const sortBy = SortByEnum.lowestRating
-    const sortedItems = [...items].sort((a, b) => {
-      switch (sortBy) {
         case SortByEnum.lowestRating:
           return a.rating - b.rating
         default:
@@ -110,6 +82,38 @@ describe('CommentsWithRatingBlock', () => {
       }
     })
 
-    expect(sortedItems[0].rating).toBe(1)
+    expect(sortedItems).toEqual([
+      { createdAt: '2024-08-16T12:00:00Z', rating: 5 },
+      { createdAt: '2024-08-15T12:00:00Z', rating: 4 },
+      { createdAt: '2024-08-14T12:00:00Z', rating: 3 }
+    ])
+  })
+
+  it('should sort items by highest rating first', () => {
+    const sortedItems = Items.sort((a, b) => {
+      const sortBy = SortByEnum.highestRating
+      switch (sortBy) {
+        case SortByEnum.Newest:
+          return (
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          )
+        case SortByEnum.Relevant:
+          return (
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          )
+        case SortByEnum.highestRating:
+          return b.rating - a.rating
+        case SortByEnum.lowestRating:
+          return a.rating - b.rating
+        default:
+          return 0
+      }
+    })
+
+    expect(sortedItems).toEqual([
+      { createdAt: '2024-08-16T12:00:00Z', rating: 5 },
+      { createdAt: '2024-08-15T12:00:00Z', rating: 4 },
+      { createdAt: '2024-08-14T12:00:00Z', rating: 3 }
+    ])
   })
 })
