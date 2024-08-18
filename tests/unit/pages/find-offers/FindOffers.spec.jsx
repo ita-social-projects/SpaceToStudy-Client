@@ -77,7 +77,7 @@ describe('FindOffers component', () => {
       screen.getByText('findOffers.offerRequestBlock.description.tutor')
     ).toBeInTheDocument()
     expect(
-      screen.getByText('findOffers.notFound.description')
+      screen.getByText(/findOffers\.notFound\.description/i)
     ).toBeInTheDocument()
   })
 
