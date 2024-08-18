@@ -261,8 +261,6 @@ describe('AddProfessionalCategoryModal Subject Updates', () => {
     const submitButton = screen.getByText(
       /editProfilePage.profile.professionalTab.addCategoryModal.submitBtn/
     )
-
-    // Simulate adding a subject and then clearing it
     const addButton = screen.getByText(
       /editProfilePage.profile.professionalTab.addCategoryModal.addSubjectBtn/
     )
@@ -274,7 +272,7 @@ describe('AddProfessionalCategoryModal Subject Updates', () => {
 
     await act(async () => {
       fireEvent.change(professionalSubjects[0], {
-        target: { value: '' } // Clear the subject field
+        target: { value: '' }
       })
     })
 
