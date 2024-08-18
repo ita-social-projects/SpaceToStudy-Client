@@ -232,6 +232,7 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
       />
       <Box sx={styles.formWrapper}>
         <AsyncAutocomplete
+          data-testid='mainStudyCategory'
           disabled={isDeletionBlocked}
           fullWidth
           getOptionDisabled={handleBlockOption}

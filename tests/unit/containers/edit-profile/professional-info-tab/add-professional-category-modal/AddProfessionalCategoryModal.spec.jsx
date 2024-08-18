@@ -256,4 +256,41 @@ describe('AddProfessionalCategoryModal Subject Updates', () => {
     expect(screen.getByDisplayValue('Gastronomy')).toBeInTheDocument()
     expect(professionalSubjects[1].value).toBe('Varenychky')
   })
+
+  it('should disable the "Save changes" button if any subject field is empty', async () => {
+    const submitButton = screen.getByText(
+      /editProfilePage.profile.professionalTab.addCategoryModal.submitBtn/
+    )
+
+    // Simulate adding a subject and then clearing it
+    const addButton = screen.getByText(
+      /editProfilePage.profile.professionalTab.addCategoryModal.addSubjectBtn/
+    )
+
+    fireEvent.click(addButton)
+    const professionalSubjects = screen.getAllByLabelText(
+      /editProfilePage.profile.professionalTab.subject/
+    )
+
+    await act(async () => {
+      fireEvent.change(professionalSubjects[0], {
+        target: { value: '' } // Clear the subject field
+      })
+    })
+
+    expect(submitButton).toBeDisabled()
+  })
+
+  it('should create SubjectGroup list according to passed initial values (modal edit mode)', async () => {
+    await waitFor(() => {
+      const professionalSubjects = screen.getAllByLabelText(
+        /editProfilePage.profile.professionalTab.subject/
+      )
+
+      initialValues.subjects.forEach((subject, index) => {
+        const subjectElement = professionalSubjects[index]
+        expect(subjectElement.value).toMatch(new RegExp(subject.name, 'i'))
+      })
+    })
+  })
 })
