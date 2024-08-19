@@ -16,7 +16,7 @@
     "lastUpdates": "Last updates",
     "emptyItems": "You have no lessons yet",
     "confirmDeletionTitle": "Do you confirm lesson deletion?",
-    "successDeletion": "Lesson was deleted successfully", 
+    "successDeletion": "Lesson was deleted successfully",
     "searchInput": "Search a lesson"
   },
   "attachments": {
@@ -35,7 +35,6 @@
     "attachmentName": "Attachment name",
     "attachmentCategory": "Attachment category",
     "searchInput": "Search an attachment"
-
   },
   "quizzes": {
     "addBtn": "New quiz",
@@ -49,7 +48,7 @@
     "confirmDeletionTitle": "Do you confirm quiz deletion?",
     "successDeletion": "Quiz was deleted successfully",
     "editQuestion": "Edit question",
-    "successEditedQuiz": "Quiz was successtully edited",
+    "successEditedQuiz": "Quiz was successfully edited",
     "successAddedQuiz": "Quiz was successfully created",
     "defaultNewTitle": "Untitled",
     "defaultNewDescription": "Description...",
@@ -57,7 +56,7 @@
     "savePreviousQuestion": "Please save the previous question",
     "addQuestion": "Add question",
     "settingsPointsAndAnswers": "Settings: Points and answers",
-    "searchInput": "Search a quizz",
+    "searchInput": "Search a quiz",
     "pointValues": "Point values",
     "pointValuesDesc": "Respondents can see total points and points received for each question",
     "scoredUnscoredResponses": "Scored / Unscored responses",
@@ -104,5 +103,14 @@
     "categoryAlreadyExistsError": "Category with the same name already exists",
     "searchInput": "Search a category"
   },
-  "confirmDeletionMessage": "This action is permanent and will remove all related content. Please review your decision before proceeding."
+  "confirmDeletionMessage": "This action is permanent and will remove all related content. Please review your decision before proceeding.",
+  "resourceDuplication": {
+    "resource": {
+      "lessons": "lesson",
+      "quizzes": "quiz",
+      "attachments": "attachment"
+    },
+    "description": "Make a copy of the selected {{resource}}.",
+    "tooltip": "By making a copy of selected resources, any changes you'll make to the resource will not influence the resource in your other cooperation/courses."
+  }
 }

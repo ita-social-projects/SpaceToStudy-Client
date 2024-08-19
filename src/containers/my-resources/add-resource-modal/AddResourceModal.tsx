@@ -13,6 +13,7 @@ import EnhancedTable, {
 } from '~/components/enhanced-table/EnhancedTable'
 import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
 import AppButtonMenu from '~/components/app-button-menu/AppButtonMenu'
+import CheckboxWithTooltip from '~/components/checkbox-with-tooltip/CheckboxWithTooltip'
 
 import { styles } from '~/containers/my-resources/add-resource-modal/AddResourceModal.styles'
 import {
@@ -32,6 +33,7 @@ interface AddResourceModalProps<T>
   onAddItems: () => void
   uploadItem?: (data: FormData) => Promise<void>
   resourceTab: ResourcesTabsEnum
+  showCheckboxWithTooltip?: boolean
 }
 
 const AddResourceModal = <T extends TableItem>({
@@ -40,6 +42,7 @@ const AddResourceModal = <T extends TableItem>({
   onAddItems,
   uploadItem,
   resourceTab,
+  showCheckboxWithTooltip,
   ...props
 }: AddResourceModalProps<T>) => {
   const { t } = useTranslation()
@@ -94,17 +97,29 @@ const AddResourceModal = <T extends TableItem>({
         {...props}
       />
 
-      <Box sx={styles.buttonsArea}>
-        <AppButton onClick={closeModal} variant={ButtonVariantEnum.Tonal}>
-          {t('common.cancel')}
-        </AppButton>
-        <AppButton
-          disabled={!selectedRows.length}
-          onClick={onAddItems}
-          sx={styles.addButton}
-        >
-          {t('common.add')}
-        </AppButton>
+      <Box sx={showCheckboxWithTooltip ? styles.formControls : {}}>
+        {showCheckboxWithTooltip && (
+          <CheckboxWithTooltip
+            label={t('myResourcesPage.resourceDuplication.description', {
+              resource: t(
+                `myResourcesPage.resourceDuplication.resource.${resourceTab}`
+              )
+            })}
+            tooltipTitle={t('myResourcesPage.resourceDuplication.tooltip')}
+          ></CheckboxWithTooltip>
+        )}
+        <Box sx={styles.buttonsArea}>
+          <AppButton onClick={closeModal} variant={ButtonVariantEnum.Tonal}>
+            {t('common.cancel')}
+          </AppButton>
+          <AppButton
+            disabled={!selectedRows.length}
+            onClick={onAddItems}
+            sx={styles.addButton}
+          >
+            {t('common.add')}
+          </AppButton>
+        </Box>
       </Box>
 
       {uploadItem && (

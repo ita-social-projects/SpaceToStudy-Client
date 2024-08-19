@@ -28,7 +28,7 @@ import {
   Question
 } from '~/types'
 import {
-  ajustColumns,
+  adjustColumns,
   createUrlPath,
   getScreenBasedLimit
 } from '~/utils/helper-functions'
@@ -46,7 +46,7 @@ const QuestionsContainer = () => {
 
   const { sort } = sortOptions
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
-  const columnsToShow = ajustColumns<Question>(
+  const columnsToShow = adjustColumns<Question>(
     breakpoints,
     columns,
     removeColumnRules

@@ -81,30 +81,6 @@ const CourseSectionContainer: FC<SectionProps> = ({
     [sectionData.resources]
   )
 
-  const lessons = useMemo(
-    () =>
-      allResources.filter(
-        (resource) => resource.resourceType === ResourceType.Lesson
-      ) as Lesson[],
-    [allResources]
-  )
-
-  const quizzes = useMemo(
-    () =>
-      allResources.filter(
-        (resource) => resource.resourceType === ResourceType.Quiz
-      ) as Quiz[],
-    [allResources]
-  )
-
-  const attachments = useMemo(
-    () =>
-      allResources.filter(
-        (resource) => resource.resourceType === ResourceType.Attachment
-      ) as Attachment[],
-    [allResources]
-  )
-
   const handleResourcesSort = useCallback(
     (resources: CourseResource[]) => {
       resourceEventHandler?.({
@@ -215,7 +191,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
           removeColumnRules={removeLessonColumnRules}
           requestService={ResourceService.getUsersLessons}
           resourceTab={resourcesData.lessons.resourceTab}
-          resources={lessons}
+          showCheckboxWithTooltip
         />
       )
     })
@@ -230,7 +206,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
           removeColumnRules={removeQuizColumnRules}
           requestService={ResourceService.getQuizzes}
           resourceTab={resourcesData.quizzes.resourceTab}
-          resources={quizzes}
+          showCheckboxWithTooltip
         />
       )
     })
@@ -245,7 +221,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
           removeColumnRules={removeAttachmentColumnRules}
           requestService={ResourceService.getAttachments}
           resourceTab={resourcesData.attachments.resourceTab}
-          resources={attachments}
+          showCheckboxWithTooltip
         />
       )
     })

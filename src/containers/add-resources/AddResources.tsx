@@ -11,7 +11,7 @@ import AddResourceModal from '~/containers/my-resources/add-resource-modal/AddRe
 
 import { initialSort } from '~/containers/add-resources/AddResources.constants'
 import { defaultResponses, snackbarVariants } from '~/constants'
-import { ajustColumns } from '~/utils/helper-functions'
+import { adjustColumns } from '~/utils/helper-functions'
 import {
   ErrorResponse,
   GetResourcesParams,
@@ -27,21 +27,23 @@ import { openAlert } from '~/redux/features/snackbarSlice'
 import { getErrorKey } from '~/utils/get-error-key'
 
 interface AddResourcesProps<T extends CourseResource | Question> {
-  resources: T[]
+  resources?: T[]
   onAddResources: (resource: T[]) => void
   resourceTab: ResourcesTabsEnum
-  requestService: ServiceFunction<ItemsWithCount<T>, GetResourcesParams>
   columns: TableColumn<T>[]
   removeColumnRules: RemoveColumnRules<T>
+  requestService: ServiceFunction<ItemsWithCount<T>, GetResourcesParams>
+  showCheckboxWithTooltip?: boolean
 }
 
 const AddResources = <T extends CourseResource | Question>({
   resources = [],
   onAddResources,
   resourceTab,
-  requestService,
   columns,
-  removeColumnRules
+  removeColumnRules,
+  requestService,
+  showCheckboxWithTooltip = false
 }: AddResourcesProps<T>) => {
   const [selectedRows, setSelectedRows] = useState<T[]>(resources)
   const { closeModal } = useModalContext()
@@ -54,7 +56,11 @@ const AddResources = <T extends CourseResource | Question>({
   const { sort } = sortOptions
   const { handleSelectClick } = select
 
-  const columnsToShow = ajustColumns<T>(breakpoints, columns, removeColumnRules)
+  const columnsToShow = adjustColumns<T>(
+    breakpoints,
+    columns,
+    removeColumnRules
+  )
 
   const getMyResources = useCallback(
     () => requestService({ sort }),
@@ -134,7 +140,8 @@ const AddResources = <T extends CourseResource | Question>({
     onAddItems,
     data: { loading, getItems },
     onRowClick,
-    resourceTab
+    resourceTab,
+    showCheckboxWithTooltip
   }
 
   return <AddResourceModal<T> {...props} />
