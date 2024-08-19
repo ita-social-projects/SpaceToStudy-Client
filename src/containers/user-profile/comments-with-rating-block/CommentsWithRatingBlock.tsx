@@ -23,8 +23,6 @@ interface CommentsWithRatingBlockProps {
   totalReviews: number
   reviewsCount: RatingType[]
   labels?: ReadonlyMap<SortByEnum, string>
-  setFilter: (value: number | null) => void
-  setSortBy: (value: SortByEnum) => void
 }
 
 const CommentsWithRatingBlock = ({
