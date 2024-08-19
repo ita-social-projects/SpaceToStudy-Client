@@ -22,15 +22,19 @@ describe('NotificationTab', () => {
 
   it('initial state of each switch is correct', () => {
     const initialStates = {
-      isOfferStatusNotification: false,
-      isChatNotification: false,
-      isSimilarOffersNotification: false,
-      isEmailNotification: false
+      notificationSettings: {
+        isOfferStatusNotification: false,
+        isChatNotification: false,
+        isSimilarOffersNotification: false,
+        isEmailNotification: false
+      }
     }
 
     notificationGroupOptions.forEach((option, index) => {
       const field = option.field
-      expect(switchElements[index].checked).toBe(initialStates[field])
+      expect(switchElements[index].checked).toBe(
+        initialStates.notificationSettings[field]
+      )
     })
   })
 
@@ -54,6 +58,6 @@ describe('NotificationTab', () => {
     expect(firstSwitch.checked).toBe(true)
     fireEvent.click(firstSwitch)
     const state = store.getState().editProfile
-    expect(state.isOfferStatusNotification).toBe(false)
+    expect(state.notificationSettings.isOfferStatusNotification).toBe(false)
   })
 })
