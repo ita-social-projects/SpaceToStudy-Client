@@ -19,6 +19,8 @@ interface CommentsWithRatingBlockProps {
   totalReviews: number
   reviewsCount: RatingType[]
   labels?: ReadonlyMap<SortByEnum, string>
+  setFilter: (value: number | null) => void
+  setSortBy: (value: SortByEnum) => void
 }
 
 const CommentsWithRatingBlock = ({
@@ -103,6 +105,7 @@ const CommentsWithRatingBlock = ({
           <RatingBlock
             activeFilter={filter}
             averageRating={averageRating}
+            data-testid='rating-block'
             reviewsCount={reviewsCount}
             setFilter={setFilter}
             totalReviews={totalReviews}

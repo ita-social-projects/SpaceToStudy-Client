@@ -89,7 +89,7 @@ const ComentsBlock = ({
   )
 
   return (
-    <Box sx={styles.root}>
+    <Box data-testid='comment-item' sx={styles.root}>
       {title && <Typography sx={styles.title}>{title}</Typography>}
       {itemsList}
       {showMoreButton}

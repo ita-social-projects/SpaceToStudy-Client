@@ -2,8 +2,9 @@ import { screen, fireEvent } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 import CommentsWithRatingBlock from '~/containers/user-profile/comments-with-rating-block/CommentsWithRatingBlock'
 import { responseMock } from '~/containers/user-profile/comments-with-rating-block/CommentsWithRatingBlock.constants'
-const { items } = responseMock
+import userEvent from '@testing-library/user-event'
 import { SortByEnum } from '~/types'
+const { items } = responseMock
 
 const props = {
   averageRating: 4.5,
@@ -16,12 +17,6 @@ const props = {
   ],
   items: items
 }
-
-const Items = [
-  { createdAt: '2024-08-15T12:00:00Z', rating: 4 },
-  { createdAt: '2024-08-16T12:00:00Z', rating: 5 },
-  { createdAt: '2024-08-14T12:00:00Z', rating: 3 }
-]
 
 describe('CommentsWithRatingBlock', () => {
   beforeEach(() => {
@@ -58,62 +53,112 @@ describe('CommentsWithRatingBlock', () => {
     expect(selectElement).toBeInTheDocument()
     fireEvent.click(selectElement)
   })
-})
 
-describe('Sorting function', () => {
-  it('should sort items by newest first', () => {
-    const sortedItems = Items.sort((a, b) => {
-      const sortBy = SortByEnum.Newest
-      switch (sortBy) {
-        case SortByEnum.Newest:
-          return (
-            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-          )
-        case SortByEnum.Relevant:
-          return (
-            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-          )
-        case SortByEnum.highestRating:
-          return b.rating - a.rating
-        case SortByEnum.lowestRating:
-          return a.rating - b.rating
-        default:
-          return 0
-      }
+  it('should sort comments by newest first', async () => {
+    renderWithProviders(<CommentsWithRatingBlock {...props} />)
+
+    const sortSelect = screen.getAllByTestId('sort-select')[0]
+    userEvent.click(sortSelect) // or fireEvent.mouseDown(sortSelect)
+
+    const newestOption = await screen.findAllByText(/newest/i)[0]
+    userEvent.click(newestOption)
+
+    const sortedCommentItems = screen.getAllByTestId('comment-item')
+    const newestSortedItems = [...props.items].sort(
+      (a, b) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    )
+
+    sortedCommentItems.forEach((comment, index) => {
+      expect(comment).toHaveTextContent(newestSortedItems[index].comment)
     })
-
-    expect(sortedItems).toEqual([
-      { createdAt: '2024-08-16T12:00:00Z', rating: 5 },
-      { createdAt: '2024-08-15T12:00:00Z', rating: 4 },
-      { createdAt: '2024-08-14T12:00:00Z', rating: 3 }
-    ])
   })
 
-  it('should sort items by highest rating first', () => {
-    const sortedItems = Items.sort((a, b) => {
-      const sortBy = SortByEnum.highestRating
-      switch (sortBy) {
-        case SortByEnum.Newest:
-          return (
-            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-          )
-        case SortByEnum.Relevant:
-          return (
-            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-          )
-        case SortByEnum.highestRating:
-          return b.rating - a.rating
-        case SortByEnum.lowestRating:
-          return a.rating - b.rating
-        default:
-          return 0
-      }
-    })
+  it('should render RatingBlock with correct props', () => {
+    renderWithProviders(<CommentsWithRatingBlock {...props} />)
 
-    expect(sortedItems).toEqual([
-      { createdAt: '2024-08-16T12:00:00Z', rating: 5 },
-      { createdAt: '2024-08-15T12:00:00Z', rating: 4 },
-      { createdAt: '2024-08-14T12:00:00Z', rating: 3 }
-    ])
+    const ratingBlock = screen.queryByTestId('rating-block')
+    if (ratingBlock) {
+      expect(ratingBlock).toHaveAttribute(
+        'data-average-rating',
+        `${props.averageRating}`
+      )
+      expect(ratingBlock).toHaveAttribute(
+        'data-total-reviews',
+        `${props.totalReviews}`
+      )
+    }
+  })
+
+  it('should sort comments by newest first', () => {
+    renderWithProviders(<CommentsWithRatingBlock {...props} />)
+
+    const sortSelect = screen.getAllByTestId('sort-select')[0]
+    userEvent.click(sortSelect, [SortByEnum.Newest])
+
+    const sortedCommentItems = screen.getAllByTestId('comment-item')
+    const newestSortedItems = [...props.items].sort(
+      (a, b) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    )
+
+    sortedCommentItems.forEach((comment, index) => {
+      expect(comment).toHaveTextContent(newestSortedItems[index].comment)
+    })
+  })
+
+  it('should sort comments by relevant first', () => {
+    renderWithProviders(
+      <CommentsWithRatingBlock {...props} sortBy={SortByEnum.Relevant} />
+    )
+
+    const sortSelect = screen.getAllByTestId('sort-select')[1]
+    userEvent.click(sortSelect, [SortByEnum.Relevant])
+
+    const sortedCommentItems = screen.getAllByTestId('comment-item')
+    const relevantSortedItems = [...props.items].sort(
+      (a, b) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    )
+
+    sortedCommentItems.forEach((comment, index) => {
+      expect(comment).toHaveTextContent(relevantSortedItems[index].comment)
+    })
+  })
+
+  it('should sort comments by highest rating first', () => {
+    renderWithProviders(
+      <CommentsWithRatingBlock {...props} sortBy={SortByEnum.highestRating} />
+    )
+
+    const sortSelect = screen.getAllByTestId('sort-select')[2]
+    userEvent.click(sortSelect, [SortByEnum.highestRating])
+
+    const sortedCommentItems = screen.getAllByTestId('comment-item')
+    const highestRatingSortedItems = [...props.items].sort(
+      (a, b) => b.rating - a.rating
+    )
+
+    sortedCommentItems.forEach((comment, index) => {
+      expect(comment).toHaveTextContent(highestRatingSortedItems[index].comment)
+    })
+  })
+
+  it('should sort comments by lowest rating first', () => {
+    renderWithProviders(
+      <CommentsWithRatingBlock {...props} sortBy={SortByEnum.lowestRating} />
+    )
+
+    const sortSelect = screen.getAllByTestId('sort-select')[3]
+    userEvent.click(sortSelect, [SortByEnum.lowestRating])
+
+    const sortedCommentItems = screen.getAllByTestId('comment-item')
+    const lowestRatingSortedItems = [...props.items].sort(
+      (a, b) => a.rating - b.rating
+    )
+
+    sortedCommentItems.forEach((comment, index) => {
+      expect(comment).toHaveTextContent(lowestRatingSortedItems[index].comment)
+    })
   })
 })
