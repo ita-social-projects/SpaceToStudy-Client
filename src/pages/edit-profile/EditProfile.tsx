@@ -108,7 +108,8 @@ const EditProfile = () => {
       ...currentData
     } = profileState
 
-    const hasChanged = hasChanges(initialData, currentData)
+    const hasChanged =
+      hasChanges(initialData, currentData) || initialPhoto !== currentPhoto
 
     if (hasChanged) {
       const changes: Partial<EditProfileState> = { ...currentData }
@@ -143,10 +144,6 @@ const EditProfile = () => {
   const handleUpdateUser = async (): Promise<void> => {
     const { country, city } = profileState
     const {
-      // TODO: we remove 'photo' from the changed fields because:
-      // 1 - we should deal with its types. It expects to be string in fact, when the photo is uploaded, we received an object.
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      photo,
       videoLink,
       notificationSettings,
       professionalBlock,
@@ -174,6 +171,10 @@ const EditProfile = () => {
 
     if (professionalBlock)
       dataToUpdate.professionalBlock = profileState.professionalBlock
+
+    if (typeof profileState.photo === 'object') {
+      dataToUpdate.photo = profileState.photo
+    }
 
     await dispatch(
       updateUser({
