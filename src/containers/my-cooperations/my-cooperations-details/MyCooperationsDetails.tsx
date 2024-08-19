@@ -37,6 +37,7 @@ const MyCooperationsDetails = () => {
   const { id = '' } = useParams()
   const navigate = useNavigate()
   const { setChatInfo } = useChatContext()
+  const userId = useAppSelector((state) => state.appMain.userId)
   const userRole = useAppSelector((state) => state.appMain.userRole)
 
   const getDetails: ServiceFunction<
@@ -61,20 +62,28 @@ const MyCooperationsDetails = () => {
     return <Loader pageLoad />
   }
 
+  const displayedUser =
+    detailsResponse.initiator._id === userId
+      ? detailsResponse.receiver
+      : detailsResponse.initiator
+  const isTutor = displayedUser.role[0] === UserRoleEnum.Tutor
+
   const { offer, price } = detailsResponse
 
   const onHandleClick = () => {
     navigate(
-      createUrlPath(authRoutes.userProfile.path, offer.author._id, {
-        role: UserRoleEnum.Tutor
+      createUrlPath(authRoutes.userProfile.path, displayedUser._id, {
+        role: displayedUser.role
       })
     )
   }
 
   const onClickOpenChat = () =>
     setChatInfo({
-      author: offer.author,
-      authorRole: UserRoleEnum.Tutor,
+      author: displayedUser,
+      authorRole: displayedUser.role[0] as
+        | UserRoleEnum.Student
+        | UserRoleEnum.Tutor,
       chatId: offer.chatId,
       updateInfo: updateInfo
     })
@@ -87,6 +96,10 @@ const MyCooperationsDetails = () => {
         <Typography>{item}</Typography>
       </Box>
     ))
+
+  const avatarSrc =
+    displayedUser.photo &&
+    createUrlPath(import.meta.env.VITE_APP_IMG_USER_URL, displayedUser.photo)
 
   const cooperationCompletion = userRole === UserRoleEnum.Tutor && (
     <CooperationCompletion />
@@ -103,24 +116,20 @@ const MyCooperationsDetails = () => {
         </Typography>
         <Typography sx={style.title}>{offer.title}</Typography>
         <Typography sx={style.titles}>
-          {t('cooperationDetailsPage.tutor')}
+          {t(
+            isTutor
+              ? 'cooperationDetailsPage.tutor'
+              : 'cooperationDetailsPage.student'
+          )}
         </Typography>
         <Box>
           <Box sx={style.profileContainer}>
-            <Avatar
-              src={
-                offer.author.photo &&
-                createUrlPath(
-                  import.meta.env.VITE_APP_IMG_USER_URL,
-                  offer.author.photo
-                )
-              }
-            />
+            <Avatar src={avatarSrc ?? ''} />
             <Typography sx={style.profileName}>
-              {offer.author.firstName} {offer.author.lastName}
+              {displayedUser.firstName} {displayedUser.lastName}
             </Typography>
             <Typography sx={style.profileDescription}>
-              {offer.author.professionalSummary}
+              {displayedUser.professionalSummary}
             </Typography>
           </Box>
           <Box sx={style.userButtons}>
