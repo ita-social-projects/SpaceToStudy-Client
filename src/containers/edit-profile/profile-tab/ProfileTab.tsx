@@ -15,6 +15,8 @@ import {
 } from '~/redux/features/editProfileSlice'
 import { EditProfileForm, MainUserRole } from '~/types'
 import { styles } from '~/containers/edit-profile/profile-tab/ProfileTab.styles'
+import { useLocation } from 'react-router-dom'
+import { scrollToAndHighlight } from '~/utils/scroll-and-highlight'
 
 const ProfileTab: FC = () => {
   const { t } = useTranslation()
@@ -61,6 +63,15 @@ const ProfileTab: FC = () => {
   const debouncedUpdateProfileData = useDebounce(() => {
     void dispatch(updateProfileData(data))
   }, 300)
+
+  const { hash, pathname } = useLocation()
+
+  useEffect(() => {
+    if (hash) {
+      // console.log(hash)
+      scrollToAndHighlight(`${pathname}${hash}`)
+    }
+  }, [pathname, hash])
 
   useEffect(() => {
     debouncedUpdateProfileData()

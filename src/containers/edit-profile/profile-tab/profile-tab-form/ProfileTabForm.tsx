@@ -111,7 +111,7 @@ const ProfileTabForm: FC<ProfileTabFormProps> = ({
 
   return (
     <Box sx={styles.profileGeneralTabContainer}>
-      <Box sx={styles.avatar.root}>
+      <Box id='photo' sx={styles.avatar.root}>
         <DragAndDrop
           emitter={addPhoto}
           style={{ root: styles.avatar.img }}
@@ -227,7 +227,7 @@ const ProfileTabForm: FC<ProfileTabFormProps> = ({
         />
       </Box>
 
-      <Box sx={styles.section}>
+      <Box id='video' sx={styles.section}>
         <TitleWithDescription
           description={t(
             'editProfilePage.profile.generalTab.videoPresentationDesc'

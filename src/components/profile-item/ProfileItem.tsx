@@ -2,11 +2,13 @@ import Typography from '@mui/material/Typography'
 import Box from '@mui/system/Box'
 import CheckIcon from '@mui/icons-material/Check'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
 
 import { styles } from '~/components/profile-item/ProfileItem.styles'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { ProfileItemType } from '~/components/profile-item/complete-profile.constants'
 import { UserRoleEnum } from '~/types'
+import { authRoutes } from '~/router/constants/authRoutes'
 
 interface ProfileItemProps {
   item: ProfileItemType
@@ -22,9 +24,24 @@ const ProfileItem = ({
   const { t } = useTranslation()
   const { isMobile } = useBreakpoints()
   const { id, icon } = item
+  const navigate = useNavigate()
+
+  const handleItemClick = () => {
+    switch (item.id) {
+      case 'photo':
+        navigate(`${authRoutes.editProfile.path}#photo`)
+        break
+      case 'video':
+        navigate(`${authRoutes.editProfile.path}#video`)
+        break
+    }
+  }
 
   return (
-    <Box sx={{ position: 'relative' }}>
+    <Box
+      onClick={handleItemClick}
+      sx={{ position: 'relative', cursor: 'pointer' }}
+    >
       <Box sx={{ ...styles.wrapper, opacity: isFilled ? 0.5 : 1 }}>
         <Box sx={styles.information}>
           {!isMobile && <Box sx={styles.icon}>{icon}</Box>}
