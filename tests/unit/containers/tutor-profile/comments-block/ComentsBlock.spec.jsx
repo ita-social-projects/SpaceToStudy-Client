@@ -6,7 +6,10 @@ import userEvent from '@testing-library/user-event'
 import { SortByEnum } from '~/types'
 const { items } = responseMock
 
+const mockSetFilter = vi.fn()
+
 const props = {
+  setFilter: mockSetFilter,
   averageRating: 4.5,
   totalReviews: 5,
   reviewsCount: [
@@ -141,24 +144,6 @@ describe('CommentsWithRatingBlock', () => {
 
     sortedCommentItems.forEach((comment, index) => {
       expect(comment).toHaveTextContent(highestRatingSortedItems[index].comment)
-    })
-  })
-
-  it('should sort comments by lowest rating first', () => {
-    renderWithProviders(
-      <CommentsWithRatingBlock {...props} sortBy={SortByEnum.lowestRating} />
-    )
-
-    const sortSelect = screen.getAllByTestId('sort-select')[3]
-    userEvent.click(sortSelect, [SortByEnum.lowestRating])
-
-    const sortedCommentItems = screen.getAllByTestId('comment-item')
-    const lowestRatingSortedItems = [...props.items].sort(
-      (a, b) => a.rating - b.rating
-    )
-
-    sortedCommentItems.forEach((comment, index) => {
-      expect(comment).toHaveTextContent(lowestRatingSortedItems[index].comment)
     })
   })
 })

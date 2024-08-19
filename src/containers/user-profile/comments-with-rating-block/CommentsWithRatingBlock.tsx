@@ -11,8 +11,12 @@ import {
   responseMock,
   loadingMock
 } from '~/containers/user-profile/comments-with-rating-block/CommentsWithRatingBlock.constants'
-import { ListItemText, MenuItem, Select } from '@mui/material'
-import { SelectChangeEvent } from '@mui/material/Select'
+import {
+  ListItemText,
+  MenuItem,
+  Select,
+  SelectChangeEvent
+} from '@mui/material'
 
 interface CommentsWithRatingBlockProps {
   averageRating: number
@@ -35,7 +39,6 @@ const CommentsWithRatingBlock = ({
   const { items } = responseMock
 
   const sortItems = Object.values(SortByEnum)
-
   const sortMenuItems = sortItems.map((el) => (
     <MenuItem key={el} value={el}>
       <ListItemText
@@ -49,7 +52,6 @@ const CommentsWithRatingBlock = ({
   ))
 
   const ratingOptions = [5, 4, 3, 2, 1]
-
   const ratingMenuItems = ratingOptions.map((rating) => (
     <MenuItem key={rating} value={rating}>
       {t('userProfilePage.reviews.starsCount', {
@@ -59,19 +61,13 @@ const CommentsWithRatingBlock = ({
     </MenuItem>
   ))
 
-  const filteredItems = items.filter((item) => {
-    if (filter !== null) {
-      return item.rating === filter
-    }
-    return true
-  })
+  const filteredItems = items.filter(
+    (item) => filter === null || item.rating === filter
+  )
 
-  const toSorted = [...filteredItems]
-
-  const sortedItems = toSorted.sort((a, b) => {
+  const sortedItems = [...filteredItems].sort((a, b) => {
     switch (sortBy) {
       case SortByEnum.Newest:
-        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
       case SortByEnum.Relevant:
         return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
       case SortByEnum.highestRating:
@@ -83,15 +79,10 @@ const CommentsWithRatingBlock = ({
     }
   })
 
-  const handleSortChange = (event: SelectChangeEvent<SortByEnum>) => {
-    const value = event.target.value as SortByEnum
-    setSortBy(value)
-  }
-
-  const handleFilterChange = (event: SelectChangeEvent<SortByEnum>) => {
-    const value = event.target.value as SortByEnum | ''
-    setFilter(value === '' ? null : Number(value))
-  }
+  const handleSortChange = (event: SelectChangeEvent<SortByEnum>) =>
+    setSortBy(event.target.value as SortByEnum)
+  const handleFilterChange = (event: SelectChangeEvent<number>) =>
+    setFilter(event.target.value === '' ? null : Number(event.target.value))
 
   return (
     <Box sx={styles.root}>
@@ -99,7 +90,7 @@ const CommentsWithRatingBlock = ({
         {t('userProfilePage.reviews.title')}
       </Typography>
       {loadingMock && !items.length ? (
-        <Loader />
+        <Loader data-testid='loader' />
       ) : (
         <>
           <RatingBlock
@@ -110,7 +101,6 @@ const CommentsWithRatingBlock = ({
             setFilter={setFilter}
             totalReviews={totalReviews}
           />
-
           <Box sx={styles.container}>
             <Box sx={styles.innerBox}>
               <Typography>{t('common.labels.sortBy')}</Typography>
@@ -122,12 +112,11 @@ const CommentsWithRatingBlock = ({
                 {sortMenuItems}
               </Select>
             </Box>
-
             <Box sx={styles.innerBox}>
               <Typography>{t('common.labels.filterBy')}</Typography>
               <Select
                 data-testid='filter-select'
-                defaultValue={SortByEnum.highestRating}
+                defaultValue={5}
                 onChange={handleFilterChange}
                 value={filter ?? 5}
               >
@@ -135,9 +124,9 @@ const CommentsWithRatingBlock = ({
               </Select>
             </Box>
           </Box>
-
           <CommentsBlock
             data={sortedItems}
+            data-testid='comments-block'
             isExpandable
             loadMore={() => null}
             loading={loadingMock}
