@@ -1,0 +1,9 @@
+@use '../foundation/typography' as *;
+
+body {
+  font-family: $body-font-family;
+  font-size: $body-font-size;
+  font-weight: $body-font-weight;
+  line-height: $body-line-height;
+  letter-spacing: $body-letter-spacing;
+}

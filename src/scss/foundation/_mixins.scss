@@ -1,4 +1,6 @@
-@import "./variables";
+@use 'variables' as *;
+@use 'sass:map';
+@use 'sass:math';
 
 /*=============================================
 =                 #MIXINS                     =
@@ -23,21 +25,21 @@
   */
 
 @mixin tablet {
-    @media (min-width: map-get($breakpoints, "tablet")) {
-        @content;
-    }
+  @media (min-width: map.get($breakpoints, 'tablet')) {
+    @content;
+  }
 }
 
 @mixin desktop {
-    @media (min-width: map-get($breakpoints, "desktop")) {
-        @content;
-    }
+  @media (min-width: map.get($breakpoints, 'desktop')) {
+    @content;
+  }
 }
 
 @mixin mobile {
-    @media (min-width: map-get($breakpoints, "mobile")) {
-        @content;
-    }
+  @media (min-width: map.get($breakpoints, 'mobile')) {
+    @content;
+  }
 }
 
 /*=============================================
@@ -56,10 +58,10 @@
  */
 
 @function spacing($value: 1) {
-    @if $value != round($value) {
-        @error "#{$value} is not a valid property. Expected an plain integer.";
-    }
-    @return $spacing-scale-factor * $value;
+  @if $value != math.round($value) {
+    @error "#{$value} is not a valid property. Expected an plain integer.";
+  }
+  @return $spacing-scale-factor * $value;
 }
 
 /*=============================================
@@ -74,8 +76,8 @@
  */
 
 @mixin box($width, $height: $width) {
-    width: $width;
-    height: $height;
+  width: $width;
+  height: $height;
 }
 
 /*=============================================
@@ -91,13 +93,19 @@
  *
  */
 
-@mixin flexbox($direction: row, $justify: center, $align: center, $wrap: nowrap, $gap: normal) {
-    display: flex;
-    flex-direction: $direction;
-    justify-content: $justify;
-    align-items: $align;
-    flex-wrap: $wrap;
-    gap: $gap;
+@mixin flexbox(
+  $direction: row,
+  $justify: center,
+  $align: center,
+  $wrap: nowrap,
+  $gap: normal
+) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+  flex-wrap: $wrap;
+  gap: $gap;
 }
 
 /**
@@ -108,13 +116,19 @@
  *
  */
 
-@mixin grid($columns: auto, $rows: auto, $gap: map-get($spacing, "none"), $justify: center, $align: center) {
-    display: grid;
-    grid-template-columns: $columns;
-    grid-template-rows: $rows;
-    gap: $gap;
-    justify-items: $justify;
-    align-items: $align;
+@mixin grid(
+  $columns: auto,
+  $rows: auto,
+  $gap: map.get($spacing, 'none'),
+  $justify: center,
+  $align: center
+) {
+  display: grid;
+  grid-template-columns: $columns;
+  grid-template-rows: $rows;
+  gap: $gap;
+  justify-items: $justify;
+  align-items: $align;
 }
 
 /*=============================================
@@ -131,12 +145,12 @@
  */
 
 @mixin text-truncate($line-clamp: 1) {
-    @if $line-clamp != round($line-clamp) {
-        @error "#{$line-clamp} is not a valid property. Expected an plain integer.";
-    }
-    display: -webkit-box;
-    -webkit-line-clamp: $line-clamp; // value is: integer;
-    -webkit-box-orient: vertical;
+  @if $line-clamp != math.round($line-clamp) {
+    @error "#{$line-clamp} is not a valid property. Expected an plain integer.";
+  }
+  display: -webkit-box;
+  -webkit-line-clamp: $line-clamp; // value is: integer;
+  -webkit-box-orient: vertical;
 }
 
 /**
@@ -158,39 +172,39 @@
  */
 
 @mixin font-setup-rubik(
-    $font-size: false,
-    $color: false,
-    $font-weight: false,
-    $line-height: false,
-    $letter-spacing: false
+  $font-size: false,
+  $color: false,
+  $font-weight: false,
+  $line-height: false,
+  $letter-spacing: false
 ) {
-    font-family: $rubik;
-    @if $font-size {
-        $all-font-sizes: map-merge($fs, $fs-h);
-        $extracted-font-size: map-get($all-font-sizes, $font-size);
+  font-family: $rubik;
+  @if $font-size {
+    $all-font-sizes: map.merge($fs, $fs-h);
+    $extracted-font-size: map.get($all-font-sizes, $font-size);
 
-        font-size: $extracted-font-size;
-    }
-    @if $color {
-        color: $color;
-    }
-    @if $font-weight {
-        $extracted-font-weight: map-get($fw, $font-weight);
+    font-size: $extracted-font-size;
+  }
+  @if $color {
+    color: $color;
+  }
+  @if $font-weight {
+    $extracted-font-weight: map.get($fw, $font-weight);
 
-        font-weight: $extracted-font-weight;
-    }
-    @if $line-height {
-        $all-line-heights: map-merge($lh, $lh-h);
-        $extracted-line-height: map-get($all-line-heights, $line-height);
+    font-weight: $extracted-font-weight;
+  }
+  @if $line-height {
+    $all-line-heights: map.merge($lh, $lh-h);
+    $extracted-line-height: map.get($all-line-heights, $line-height);
 
-        line-height: $extracted-line-height;
-    }
-    @if $letter-spacing {
-        $all-letter-spacings: map-merge($ls, $ls-h);
-        $extracted-letter-spacing: map-get($all-letter-spacings, $letter-spacing);
+    line-height: $extracted-line-height;
+  }
+  @if $letter-spacing {
+    $all-letter-spacings: map.merge($ls, $ls-h);
+    $extracted-letter-spacing: map.get($all-letter-spacings, $letter-spacing);
 
-        letter-spacing: $extracted-letter-spacing;
-    }
+    letter-spacing: $extracted-letter-spacing;
+  }
 }
 
 /*=============================================
@@ -205,9 +219,9 @@
  */
 
 @mixin list-reset {
-    margin: 0;
-    padding: 0;
-    list-style: none;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 /**
@@ -217,13 +231,13 @@
  *
  */
 
-@mixin clearfix($content: "") {
-    &:before,
-    &:after {
-        content: $content;
-        display: table;
-    }
-    &:after {
-        clear: both;
-    }
+@mixin clearfix($content: '') {
+  &:before,
+  &:after {
+    content: $content;
+    display: table;
+  }
+  &:after {
+    clear: both;
+  }
 }

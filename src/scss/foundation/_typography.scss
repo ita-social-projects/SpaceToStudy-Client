@@ -1,8 +1,8 @@
+@use 'variables' as *;
+
 /*=============================================
 =                 #TYPOGRAPHY                 =
 =============================================*/
-
-
 
 /**
  *
@@ -19,7 +19,7 @@ $body-font-family: var(--s2s-body-font-family, $rubik) !default;
 $body-font-size: var(--s2s-body-font-size, $fs-base) !default;
 $body-font-weight: var(--s2s-body-font-weight, $fw-regular) !default;
 $body-line-height: var(--s2s-body-line-height, $lh-base) !default;
-$body-letter-spacing: var(--s2s-body-line-height, $ls-base) !default;
+$body-letter-spacing: var(--s2s-body-letter-spacing, $ls-base) !default;
 
 /*=============================================
 =            Font sizes (heading)             =

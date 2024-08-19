@@ -15,23 +15,14 @@
  =            FOUNDATION            =
  =============================================*/
 
-@import './foundation/all';
+@forward 'foundation/index';
 
 /*=====  End of FOUNDATION  ======*/
 
 /*=============================================
- =            BASE            =
- =============================================*/
+=            BASE            =
+=============================================*/
 
-@import './base/reset';
-@import './base/root';
-
-body {
-  font-family: $body-font-family;
-  font-size: $body-font-size;
-  font-weight: $body-font-weight;
-  line-height: $body-line-height;
-  letter-spacing: $body-letter-spacing;
-}
+@forward 'base/index';
 
 /*=====  End of BASE  ======*/

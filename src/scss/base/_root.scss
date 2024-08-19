@@ -1,3 +1,5 @@
+@use '../foundation/variables' as *;
+
 :root {
   /*=============================================
   =                  COLORS                     =
@@ -6,7 +8,7 @@
   --s2s-body-text-color: #{$blue-gray-900};
   --s2s-body-bg-color: #{$light-gray};
 
-   /* Header colors */
+  /* Header colors */
   --s2s-header-text-color: #{$blue-gray-900};
   --s2s-header-bg-color: #{$white};
 

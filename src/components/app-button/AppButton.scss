@@ -1,4 +1,4 @@
-@import '../foundation/all';
+@use '~/scss/foundation/index' as *;
 
 .s2s-button {
   font-size: var(--s2s-button-font-size, $fs-base);
@@ -77,7 +77,7 @@
 }
 
 %size-xxl {
-  padding: 0.75rem 2rem; 
+  padding: 0.75rem 2rem;
   column-gap: 0.75rem;
 }
 

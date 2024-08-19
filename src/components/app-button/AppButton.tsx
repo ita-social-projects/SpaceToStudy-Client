@@ -4,7 +4,7 @@ import Button, { ButtonProps } from '@mui/material/Button'
 import Loader from '~/components/loader/Loader'
 import { ButtonVariantEnum, SizeEnum } from '~/types'
 
-import '~/scss/lib/Button.css'
+import './AppButton.scss'
 
 interface AppButtonProps extends Omit<ButtonProps, 'size'> {
   children: ReactNode
