@@ -164,7 +164,8 @@ const CooperationActivitiesList = () => {
           dispatch(
             addSectionResources({
               sectionId: event.sectionId,
-              resources: event.resources
+              resources: event.resources,
+              isDuplicate: event.isDuplicate
             })
           )
           break

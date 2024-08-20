@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { ReactNode, useCallback } from 'react'
 
 import {
   Box,
@@ -15,13 +15,20 @@ import { styles } from './CheckboxWithTooltip.styles'
 interface CheckboxWithTooltipProps extends CheckboxProps {
   label: ReactNode
   tooltipTitle: ReactNode
+  onChecked?: (value: boolean) => void
 }
 
 const CheckboxWithTooltip = ({
   label,
   tooltipTitle,
+  onChecked,
   ...props
 }: CheckboxWithTooltipProps) => {
+  const onChangeHandler = useCallback(
+    (_: React.SyntheticEvent, checked: boolean) => onChecked?.(checked),
+    [onChecked]
+  )
+
   return (
     <Box sx={styles.root}>
       <FormControlLabel
@@ -32,6 +39,7 @@ const CheckboxWithTooltip = ({
         }}
         control={<Checkbox {...props} />}
         label={label}
+        onChange={onChangeHandler}
         sx={styles.label}
       />
       <Tooltip

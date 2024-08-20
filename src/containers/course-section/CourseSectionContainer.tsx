@@ -81,6 +81,35 @@ const CourseSectionContainer: FC<SectionProps> = ({
     [sectionData.resources]
   )
 
+  const allNonDuplicateResources = useMemo(
+    () => allResources.filter((resource) => !resource.isDuplicate),
+    [allResources]
+  )
+
+  const lessons = useMemo(
+    () =>
+      allNonDuplicateResources.filter(
+        (resource) => resource.resourceType === ResourceType.Lesson
+      ) as Lesson[],
+    [allNonDuplicateResources]
+  )
+
+  const quizzes = useMemo(
+    () =>
+      allNonDuplicateResources.filter(
+        (resource) => resource.resourceType === ResourceType.Quiz
+      ) as Quiz[],
+    [allNonDuplicateResources]
+  )
+
+  const attachments = useMemo(
+    () =>
+      allNonDuplicateResources.filter(
+        (resource) => resource.resourceType === ResourceType.Attachment
+      ) as Attachment[],
+    [allNonDuplicateResources]
+  )
+
   const handleResourcesSort = useCallback(
     (resources: CourseResource[]) => {
       resourceEventHandler?.({
@@ -173,12 +202,15 @@ const CourseSectionContainer: FC<SectionProps> = ({
       sectionId: sectionData.id
     })
   }
-
-  const handleAddResources = <T extends CourseResource>(newResources: T[]) => {
+  const handleAddResources = <T extends CourseResource>(
+    newResources: T[],
+    isDuplicate: boolean
+  ) => {
     resourceEventHandler?.({
       type: CourseResourceEventType.AddSectionResources,
       sectionId: sectionData.id,
-      resources: newResources
+      resources: newResources,
+      isDuplicate: isDuplicate
     })
   }
 
@@ -191,6 +223,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
           removeColumnRules={removeLessonColumnRules}
           requestService={ResourceService.getUsersLessons}
           resourceTab={resourcesData.lessons.resourceTab}
+          resources={lessons}
           showCheckboxWithTooltip
         />
       )
@@ -206,6 +239,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
           removeColumnRules={removeQuizColumnRules}
           requestService={ResourceService.getQuizzes}
           resourceTab={resourcesData.quizzes.resourceTab}
+          resources={quizzes}
           showCheckboxWithTooltip
         />
       )
@@ -221,6 +255,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
           removeColumnRules={removeAttachmentColumnRules}
           requestService={ResourceService.getAttachments}
           resourceTab={resourcesData.attachments.resourceTab}
+          resources={attachments}
           showCheckboxWithTooltip
         />
       )

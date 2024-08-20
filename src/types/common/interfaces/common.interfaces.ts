@@ -129,6 +129,7 @@ export interface AddSectionResourcesEvent {
   type: CourseResourceEventType.AddSectionResources
   sectionId: string
   resources: CourseResource[]
+  isDuplicate?: boolean
 }
 
 export type ResourceEventHandler = (

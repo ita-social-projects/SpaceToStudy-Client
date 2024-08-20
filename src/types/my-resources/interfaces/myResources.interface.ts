@@ -11,6 +11,7 @@ export interface ResourceBase {
   description: string
   resourceType: ResourceType
   availability?: ResourceAvailability
+  isDuplicate?: boolean
 }
 
 export interface Lesson extends CommonEntityFields, ResourceBase {

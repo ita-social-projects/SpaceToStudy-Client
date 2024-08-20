@@ -72,7 +72,6 @@ vi.mock('~/components/app-select/AppSelect', () => ({
     <input
       data-testid='mock-AppSelect'
       onChange={(e) => {
-        console.log('e.target.value', e.target.value)
         setValue(JSON.parse(e.target.value))
       }}
       {...props}
