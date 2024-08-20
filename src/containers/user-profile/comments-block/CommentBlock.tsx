@@ -11,7 +11,7 @@ import useBreakpoints from '~/hooks/use-breakpoints'
 
 import { styles } from '~/containers/user-profile/comments-block/CommentsBlock.styles'
 
-interface MockResponseItem {
+export interface MockResponseItem {
   _id: string
   comment: string
   rating: number
