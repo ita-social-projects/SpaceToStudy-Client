@@ -30,8 +30,8 @@
     "socialMedia": "Social media"
   },
   "reviews":{
-    "title_tutor":"What students say",
-    "title_student":"What tutors say",
+    "titleTutor":"What students say",
+    "titleStudent":"What tutors say",
     "buttonTitle":"More reviews",
     "starsCount_one": "{{count}} star",
     "starsCount_other": "{{count}} stars",

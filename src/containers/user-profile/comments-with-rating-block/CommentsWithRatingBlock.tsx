@@ -36,8 +36,8 @@ const CommentsWithRatingBlock = ({
 
   const titleKey =
     userRole === UserRoleEnum.Tutor
-      ? 'userProfilePage.reviews.title_tutor'
-      : 'userProfilePage.reviews.title_student'
+      ? 'userProfilePage.reviews.titleTutor'
+      : 'userProfilePage.reviews.titleStudent'
 
   const { items }: { items: MockReview[] } =
     userRole === UserRoleEnum.Tutor ? responseMock : responseMockStudents
