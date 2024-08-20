@@ -20,7 +20,6 @@ interface CommentsWithRatingBlockProps {
   totalReviews: number
   reviewsCount: RatingType[]
   labels?: ReadonlyMap<SortByEnum, string>
-  isStudentProfile?: boolean
   userRole: UserRoleEnum
 }
 
