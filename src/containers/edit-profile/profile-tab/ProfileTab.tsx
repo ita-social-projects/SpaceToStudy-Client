@@ -37,7 +37,7 @@ const ProfileTab: FC = () => {
     firstName,
     lastName,
     nativeLanguage,
-    photo: photo || '',
+    photo: photo ?? '',
     professionalSummary: professionalSummary || '',
     videoLink:
       typeof videoLink === 'string'
