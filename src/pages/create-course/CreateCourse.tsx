@@ -217,9 +217,10 @@ const CreateCourse = () => {
         })
         .map((resource) => {
           return {
-            resource: isDuplicate ? { ...resource, _id: uuidv4() } : resource,
-            resourceType: resource.resourceType,
-            ...(isDuplicate && { isDuplicate: true })
+            resource: isDuplicate
+              ? { ...resource, _id: uuidv4(), isDuplicate: true }
+              : resource,
+            resourceType: resource.resourceType
           }
         })
 

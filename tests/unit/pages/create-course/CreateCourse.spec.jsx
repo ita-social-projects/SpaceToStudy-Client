@@ -481,10 +481,10 @@ describe('Testing CreateCourse Event Handlers', () => {
             expect.objectContaining({
               resource: expect.objectContaining({
                 _id: expect.any(String),
-                title: mockNewSectionResource.title
+                title: mockNewSectionResource.title,
+                isDuplicate: true
               }),
-              resourceType: mockNewSectionResource.resourceType,
-              isDuplicate: true
+              resourceType: mockNewSectionResource.resourceType
             })
           ])
         })

@@ -63,6 +63,6 @@ export const mockedSectionData = {
 }
 
 export const mockedUpdatedResources = [
-  { _id: 'resource1', resourceType: 'lesson' },
-  { _id: 'resource2', resourceType: 'quiz' }
+  { _id: 'resource1', resourceType: ResourceType.Lesson },
+  { _id: 'resource2', resourceType: ResourceType.Quiz }
 ]
