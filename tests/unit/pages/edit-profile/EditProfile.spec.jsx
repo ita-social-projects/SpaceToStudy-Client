@@ -146,6 +146,17 @@ describe('EditProfile', () => {
     vi.clearAllMocks()
   })
 
+  it('should not include address in dataToUpdate if city or country is missing', () => {
+    const city = ''
+    const country = 'USA'
+    const rest = {}
+
+    const dataToUpdate = { ...rest }
+    if (city && country) dataToUpdate.address = { city, country }
+
+    expect(dataToUpdate).not.toHaveProperty('address')
+  })
+
   it('should include address in dataToUpdate if city and country are provided', () => {
     const city = 'New York'
     const country = 'USA'
@@ -157,8 +168,8 @@ describe('EditProfile', () => {
     expect(dataToUpdate).toHaveProperty('address', { city, country })
   })
 
-  it('should include notificationSettings in dataToUpdate if notificationSettings is provided', () => {
-    const notificationSettings = { isOfferStatusNotification: true }
+  it('should not include notificationSettings in dataToUpdate if notificationSettings is null', () => {
+    const notificationSettings = null
     const profileState = { notificationSettings }
     const rest = {}
 
@@ -167,14 +178,11 @@ describe('EditProfile', () => {
       dataToUpdate.notificationSettings = profileState.notificationSettings
     }
 
-    expect(dataToUpdate).toHaveProperty(
-      'notificationSettings',
-      profileState.notificationSettings
-    )
+    expect(dataToUpdate).not.toHaveProperty('notificationSettings')
   })
 
-  it('should include professionalBlock in dataToUpdate if professionalBlock is provided', () => {
-    const professionalBlock = { title: 'Developer' }
+  it('should not include professionalBlock in dataToUpdate if professionalBlock is null', () => {
+    const professionalBlock = null
     const profileState = { professionalBlock }
     const rest = {}
 
@@ -183,10 +191,7 @@ describe('EditProfile', () => {
       dataToUpdate.professionalBlock = profileState.professionalBlock
     }
 
-    expect(dataToUpdate).toHaveProperty(
-      'professionalBlock',
-      profileState.professionalBlock
-    )
+    expect(dataToUpdate).not.toHaveProperty('professionalBlock')
   })
 
   it('should include photo in dataToUpdate if profileState.photo is an object', () => {
@@ -200,6 +205,33 @@ describe('EditProfile', () => {
     }
 
     expect(dataToUpdate).toHaveProperty('photo', profileState.photo)
+  })
+
+  it('should not include photo in dataToUpdate if profileState.photo is not an object', () => {
+    const photo = 'stringInsteadOfObject'
+    const profileState = { photo }
+    const rest = {}
+
+    const dataToUpdate = { ...rest }
+    if (typeof profileState.photo === 'object') {
+      dataToUpdate.photo = profileState.photo
+    }
+
+    expect(dataToUpdate).not.toHaveProperty('photo')
+  })
+
+  it('should not include videoLink in dataToUpdate if videoLink is null', () => {
+    const videoLink = null
+    const userRole = 'tutor'
+    const rest = {}
+
+    const dataToUpdate = { ...rest }
+    if (videoLink) {
+      dataToUpdate.videoLink =
+        typeof videoLink === 'string' ? videoLink : videoLink[userRole]
+    }
+
+    expect(dataToUpdate).not.toHaveProperty('videoLink')
   })
 
   it('should include videoLink in dataToUpdate if videoLink is a string', () => {
