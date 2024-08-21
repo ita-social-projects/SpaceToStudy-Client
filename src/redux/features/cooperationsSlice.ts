@@ -116,6 +116,7 @@ const cooperationsSlice = createSlice({
         isDuplicate?: boolean
       }>
     ) {
+      const isDuplicate = action.payload.isDuplicate
       const section = state.sections.find(
         (section) => section.id === action.payload.sectionId
       )
@@ -125,22 +126,14 @@ const cooperationsSlice = createSlice({
       const newResources = action.payload.resources
         .filter((resource) => {
           return !section.resources.some(
-            (item) =>
-              item.resource._id === resource._id && !action.payload.isDuplicate
+            (item) => item.resource._id === resource._id && !isDuplicate
           )
         })
         .map((resource) => {
-          if (action.payload.isDuplicate) {
-            return {
-              resource: { ...resource, _id: uuidv4() },
-              resourceType: resource.resourceType,
-              isDuplicate: true
-            }
-          }
-
           return {
-            resource,
-            resourceType: resource.resourceType
+            resource: isDuplicate ? { ...resource, _id: uuidv4() } : resource,
+            resourceType: resource.resourceType,
+            ...(isDuplicate && { isDuplicate: true })
           }
         })
 

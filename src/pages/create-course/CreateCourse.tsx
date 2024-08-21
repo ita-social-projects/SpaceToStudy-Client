@@ -2,6 +2,7 @@ import { useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router-dom'
 import { AxiosResponse } from 'axios'
+import { v4 as uuidv4 } from 'uuid'
 
 import Box from '@mui/material/Box'
 import AddIcon from '@mui/icons-material/Add'
@@ -198,10 +199,12 @@ const CreateCourse = () => {
   const addSectionResources = useCallback(
     ({
       sectionId,
-      resources
+      resources,
+      isDuplicate
     }: {
       sectionId: CourseSection['id']
       resources: CourseResource[]
+      isDuplicate?: boolean
     }) => {
       const section = data.sections.find((section) => section.id === sectionId)
       if (!section) return
@@ -209,10 +212,16 @@ const CreateCourse = () => {
       const newResources = resources
         .filter((resource) => {
           return !section.resources.some(
-            (item) => item.resource._id === resource._id
+            (item) => item.resource._id === resource._id && !isDuplicate
           )
         })
-        .map((resource) => ({ resource, resourceType: resource.resourceType }))
+        .map((resource) => {
+          return {
+            resource: isDuplicate ? { ...resource, _id: uuidv4() } : resource,
+            resourceType: resource.resourceType,
+            ...(isDuplicate && { isDuplicate: true })
+          }
+        })
 
       const newSectionResources = [...section.resources, ...newResources]
       handleSectionChange(sectionId, 'resources', newSectionResources)
@@ -307,7 +316,8 @@ const CreateCourse = () => {
         case CourseResourceEventType.AddSectionResources:
           addSectionResources({
             sectionId: event.sectionId,
-            resources: event.resources
+            resources: event.resources,
+            isDuplicate: event.isDuplicate
           })
           break
         case CourseResourceEventType.ResourceRemoved:
