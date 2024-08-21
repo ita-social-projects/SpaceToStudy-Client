@@ -71,13 +71,6 @@ const EditProfile = () => {
   const isTabInvalid =
     errorTooltipHolders.profile || errorTooltipHolders.professionalInfo
 
-  const hasChanges = (
-    initialData: Partial<EditProfileState>,
-    currentData: Partial<EditProfileState>
-  ): boolean => {
-    return JSON.stringify(initialData) !== JSON.stringify(currentData)
-  }
-
   useEffect(() => {
     const fetchData = async () => {
       await dispatch(
