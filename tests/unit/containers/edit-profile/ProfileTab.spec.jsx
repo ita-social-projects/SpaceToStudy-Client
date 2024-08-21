@@ -51,7 +51,10 @@ const mockedUserProfileData = {
   professionalSummary: 'Summary',
   nativeLanguage: 'English',
   videoLink: { [UserRoleEnum.Tutor]: 'link', [UserRoleEnum.Student]: '' },
-  photo: 'photo_url',
+  photo: {
+    src: 'url',
+    name: 'profile_photo'
+  },
   categories: { [UserRoleEnum.Tutor]: [], [UserRoleEnum.Student]: [] },
   education: 'Education',
   workExperience: 'Experience',
@@ -97,5 +100,49 @@ describe('ProfileTab', () => {
     const videoLinkInput = screen.getByPlaceholderText('firstName')
     fireEvent.change(videoLinkInput, { target: { value: 'NewValue' } })
     expect(mockUseAppDispatch).toHaveBeenCalled()
+  })
+
+  it('should render correctly for a Tutor role', () => {
+    renderWithProviders(<ProfileTab />, {
+      preloadedState: {
+        editProfile: mockedUserProfileData,
+        appMain: {
+          userId: '644e6b1778cc37f543f2f37c',
+          userRole: UserRoleEnum.Tutor
+        }
+      }
+    })
+
+    const title = screen.getByTestId('title')
+    expect(title).toBeInTheDocument()
+    expect(screen.getByPlaceholderText('firstName')).toHaveValue('John')
+  })
+
+  it('should handle non-input value changes', () => {
+    renderWithMockData()
+    const dropdown = screen.getByTestId('form')
+    fireEvent.click(dropdown)
+
+    expect(mockUseAppDispatch).toHaveBeenCalled()
+  })
+
+  it('should set photo to empty string if photo is undefined', () => {
+    const mockedDataWithoutPhoto = {
+      ...mockedUserProfileData,
+      photo: null
+    }
+
+    renderWithProviders(<ProfileTab />, {
+      preloadedState: {
+        editProfile: mockedDataWithoutPhoto,
+        appMain: {
+          userId: '644e6b1778cc37f543f2f37c',
+          userRole: UserRoleEnum.Student
+        }
+      }
+    })
+
+    const photoInput = screen.queryByDisplayValue('')
+    expect(photoInput).not.toBeInTheDocument()
   })
 })
