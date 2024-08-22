@@ -1,6 +1,7 @@
 import Box from '@mui/material/Box'
 import { FC, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useLocation } from 'react-router-dom'
 
 import useForm from '~/hooks/use-form'
 import { useDebounce } from '~/hooks/use-debounce'
@@ -15,7 +16,6 @@ import {
 } from '~/redux/features/editProfileSlice'
 import { EditProfileForm, MainUserRole } from '~/types'
 import { styles } from '~/containers/edit-profile/profile-tab/ProfileTab.styles'
-import { useLocation } from 'react-router-dom'
 import { scrollToAndHighlight } from '~/utils/scroll-and-highlight'
 
 const ProfileTab: FC = () => {

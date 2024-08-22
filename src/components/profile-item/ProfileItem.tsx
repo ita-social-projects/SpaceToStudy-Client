@@ -8,7 +8,6 @@ import { styles } from '~/components/profile-item/ProfileItem.styles'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { ProfileItemType } from '~/components/profile-item/complete-profile.constants'
 import { UserRoleEnum } from '~/types'
-import { authRoutes } from '~/router/constants/authRoutes'
 
 interface ProfileItemProps {
   item: ProfileItemType
@@ -27,13 +26,8 @@ const ProfileItem = ({
   const navigate = useNavigate()
 
   const handleItemClick = () => {
-    switch (item.id) {
-      case 'photo':
-        navigate(`${authRoutes.editProfile.path}#photo`)
-        break
-      case 'video':
-        navigate(`${authRoutes.editProfile.path}#video`)
-        break
+    if (item.id !== 'schedule') {
+      navigate(`${item.path}#${item.id}`)
     }
   }
 
