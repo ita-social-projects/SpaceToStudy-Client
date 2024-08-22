@@ -127,7 +127,7 @@ const MyCooperationsDetails = () => {
             <AvatarIcon
               firstName={offer.author.firstName}
               lastName={offer.author.lastName}
-              photo={avatarSrc ?? ''}
+              photo={avatarSrc}
             />
             <Typography sx={style.profileName}>
               {displayedUser.firstName} {displayedUser.lastName}

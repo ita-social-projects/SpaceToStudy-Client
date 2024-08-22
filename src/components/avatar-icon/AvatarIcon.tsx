@@ -20,7 +20,7 @@ const AvatarIcon: FC<AvatarIconProps> = ({
   return (
     <Avatar
       alt='User Avatar'
-      src={photo || undefined}
+      src={photo ?? ''}
       sx={spliceSx(styles.avatar, sx)}
     >
       {getInitials(firstName, lastName)}
