@@ -92,12 +92,12 @@ export const authRouter = (
     <Route
       element={<UserProfile />}
       handle={{ crumb: myProfile }}
-      path={authRoutes.accountMenu.myProfile.route}
+      path={authRoutes.myProfile.route}
     />
     <Route
       element={<MyCooperations />}
       handle={{ crumb: myCooperations }}
-      path={authRoutes.accountMenu.myCooperations.route}
+      path={authRoutes.myCooperations.route}
     />
     <Route
       element={<CooperationDetails />}
@@ -112,7 +112,7 @@ export const authRouter = (
     <Route
       element={<MyOffers />}
       handle={{ crumb: myOffers }}
-      path={authRoutes.accountMenu.myOffers.route}
+      path={authRoutes.myOffers.route}
     />
     <Route
       element={<MyResources />}

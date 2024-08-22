@@ -9,12 +9,9 @@ import TitleWithDescription from '~/components/title-with-description/TitleWithD
 import { howItWorksCards } from '~/containers/student-home-page/student-how-it-works/HowItWorksCards'
 import { styles } from '~/containers/student-home-page/student-how-it-works/student-how-it-works.styles'
 
-import { studentRoutes } from '~/router/constants/studentRoutes'
 import { authRoutes } from '~/router/constants/authRoutes'
 
 import { ButtonVariantEnum, SizeEnum } from '~/types'
-
-const sectionId = studentRoutes.navBar.howItWorks.route
 
 const StudentHowItWorks = () => {
   const { t } = useTranslation()
@@ -41,7 +38,7 @@ const StudentHowItWorks = () => {
   })
 
   return (
-    <Box className='section' id={sectionId} sx={styles.container}>
+    <Box className='section' sx={styles.container}>
       <TitleWithDescription
         description={t('studentHomePage.howItWorks.description')}
         style={styles.sectionTitleComp}
