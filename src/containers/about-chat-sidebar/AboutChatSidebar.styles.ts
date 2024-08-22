@@ -45,7 +45,8 @@ export const styles = {
   },
   userAvatar: {
     width: '124px',
-    height: '124px'
+    height: '124px',
+    fontSize: '32px'
   },
   userDescription: {
     textAlign: 'center',

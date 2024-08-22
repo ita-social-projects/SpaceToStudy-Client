@@ -6,7 +6,7 @@ import {
 } from '~/types'
 
 export interface MessageInterface extends CommonEntityFields {
-  author: Pick<UserResponse, '_id' | 'photo'>
+  author: Pick<UserResponse, '_id' | 'photo' | 'firstName' | 'lastName'>
   authorRole: UserRole
   text: string
   chat: string
