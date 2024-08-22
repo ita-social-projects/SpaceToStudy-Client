@@ -24,7 +24,8 @@ import {
   editQuiz,
   editQuestion,
   editCourse,
-  cooperationQuiz
+  cooperationQuiz,
+  bookmarkedOffers
 } from '~/router/constants/crumbs'
 import PrivateRoute from '~/router/helpers/PrivateRoute'
 import { UserRoleEnum } from '~/types'
@@ -46,6 +47,9 @@ const Subjects = lazy(() => import('~/pages/subjects/Subjects'))
 const Categories = lazy(() => import('~/pages/categories/Categories'))
 const FindOffers = lazy(() => import('~/pages/find-offers/FindOffers'))
 const OfferDetails = lazy(() => import('~/pages/offer-details/OfferDetails'))
+const BookmarkedOffers = lazy(
+  () => import('~/pages/bookmarked-offers/BookmarkedOffers')
+)
 const UserProfile = lazy(() => import('~/pages/user-profile/UserProfile'))
 const MyResources = lazy(() => import('~/pages/my-resources/MyResources'))
 const MyCourses = lazy(() => import('~/pages/my-courses/MyCourses'))
@@ -83,6 +87,11 @@ export const authRouter = (
       element={<OfferDetails />}
       handle={{ crumb: [categories, subjects, findOffers, offerDetails] }}
       path={authRoutes.offerDetails.route}
+    />
+    <Route
+      element={<BookmarkedOffers />}
+      handle={{ crumb: [findOffers, bookmarkedOffers] }}
+      path={authRoutes.bookmarkedOffers.route}
     />
     <Route
       element={<UserProfile />}

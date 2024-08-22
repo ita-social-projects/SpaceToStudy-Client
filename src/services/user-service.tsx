@@ -6,7 +6,8 @@ import {
   GetUsersParams,
   UpdateUserParams,
   UserResponse,
-  UserRole
+  UserRole,
+  GetOffersParams
 } from '~/types'
 
 export const userService = {
@@ -41,5 +42,15 @@ export const userService = {
   },
   activateUser: (userId: string): Promise<AxiosResponse<null>> => {
     return axiosClient.patch(createUrlPath(URLs.users.activate, userId))
+  },
+  getBookmarkedOffers: async (
+    userId: string,
+    params?: GetOffersParams
+  ): Promise<AxiosResponse> => {
+    const userPath = createUrlPath(URLs.users.get, userId)
+
+    return await axiosClient.get(`${userPath}${URLs.users.getBookmarks}`, {
+      params
+    })
   }
 }

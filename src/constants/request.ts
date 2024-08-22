@@ -23,7 +23,8 @@ export const URLs = {
     delete: '/users/delete',
     deactivate: '/users/deactivate',
     activate: '/users/activate',
-    myProfile: '/users/myProfile'
+    myProfile: '/users/myProfile',
+    getBookmarks: '/bookmarks/offers'
   },
   offers: {
     create: '/offers',
