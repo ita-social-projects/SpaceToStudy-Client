@@ -47,7 +47,6 @@ describe('BookmarkedOffers page with offers', () => {
   })
 
   it('should change the page number', async () => {
-    console.log(offersMock) ////////////
     const pageNumber = 2
     const goToPageBtn = await screen.findByText(`${pageNumber}`, {
       selector: 'button'
