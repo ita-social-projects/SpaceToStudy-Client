@@ -25,6 +25,7 @@ import {
   ChatInfo,
   ChatResponse,
   ErrorResponse,
+  GetMessagesResponse,
   MessageInterface
 } from '~/types'
 import { defaultResponses, snackbarVariants } from '~/constants'
@@ -108,12 +109,12 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
   })
 
   const {
-    response: messages,
+    response: { items: messages },
     loading: messagesLoad,
     fetchData
-  } = useAxios<MessageInterface[]>({
+  } = useAxios<GetMessagesResponse>({
     service: getMessages,
-    defaultResponse: defaultResponses.array,
+    defaultResponse: defaultResponses.itemsWithCount,
     fetchOnMount: false
   })
 
