@@ -173,7 +173,10 @@ const FindOffers = () => {
         {offersLoading ? (
           <Loader pageLoad />
         ) : !items.length && !offersLoading ? (
-          <NotFoundResults description={t('findOffers.notFound.description')} />
+          <NotFoundResults
+            data
+            description={t('findOffers.notFound.description')}
+          />
         ) : (
           <OfferContainer
             offerCards={items}
