@@ -2,7 +2,12 @@ server {
     listen       80;
     server_name  s2s-fronend;
 
-
+    location ~ ^/api/(.*)$ {
+        rewrite ^/api/(.*)$ /$1 break;
+        proxy_pass '${PROXY_API_URL}';
+        proxy_set_header Host $host;
+        proxy_cookie_path / "/; SameSite=None; Secure";
+    }
 
     location / {
         add_header 'Access-Control-Allow-Origin' '*';
