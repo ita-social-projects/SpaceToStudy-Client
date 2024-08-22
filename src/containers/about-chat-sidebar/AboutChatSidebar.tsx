@@ -5,7 +5,6 @@ import SimpleBar from 'simplebar-react'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
-import Avatar from '@mui/material/Avatar'
 import IconButton from '@mui/material/IconButton'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined'
@@ -13,6 +12,7 @@ import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutl
 import LinkOutlinedIcon from '@mui/icons-material/LinkOutlined'
 
 import AppButton from '~/components/app-button/AppButton'
+import AvatarIcon from '~/components/avatar-icon/AvatarIcon'
 import SidebarContentBox from '~/components/sidebar-content-box/SidebarContentBox'
 import SidebarGroupedContent from '~/containers/chat/sidebar-grouped-content/SidebarGroupedContent'
 
@@ -89,8 +89,10 @@ const AboutChatSidebar: FC<AboutChatSidebarProps> = ({
         {titleText === About ? (
           <Box sx={styles.contentWrapper}>
             <Box sx={styles.chatInfo}>
-              <Avatar
-                src={
+              <AvatarIcon
+                firstName={firstName}
+                lastName={lastName}
+                photo={
                   photo &&
                   createUrlPath(import.meta.env.VITE_APP_IMG_USER_URL, photo)
                 }

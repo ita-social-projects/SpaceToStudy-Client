@@ -3,8 +3,8 @@ import { ReactNode } from 'react'
 import Box from '@mui/material/Box'
 import SchoolIcon from '@mui/icons-material/School'
 import DoneIcon from '@mui/icons-material/Done'
-import Avatar from '@mui/material/Avatar'
 
+import AvatarIcon from '~/components/avatar-icon/AvatarIcon'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import AppChipList from '~/components/app-chips-list/AppChipList'
 import ProfileDoneItemsList from '~/components/icon-with-text-list/ProfileDoneItemsList'
@@ -36,8 +36,10 @@ const ProfileContainerMobile = ({
     <Box sx={styles.container}>
       <Box sx={styles.wrapperForPhoto}>
         <Box sx={styles.avatarContainerMobile}>
-          <Avatar
-            src={
+          <AvatarIcon
+            firstName={userData.firstName}
+            lastName={userData.lastName}
+            photo={
               userData.photo &&
               createUrlPath(
                 import.meta.env.VITE_APP_IMG_USER_URL,

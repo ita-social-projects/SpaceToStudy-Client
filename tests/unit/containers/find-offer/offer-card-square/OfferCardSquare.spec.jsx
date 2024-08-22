@@ -43,10 +43,12 @@ describe('OfferCardSquare test', () => {
     expect(price).toBeInTheDocument()
   })
 
-  it('renders the author photo', () => {
-    const authorPhoto = screen.getByTestId('PersonIcon')
+  it('should render initials on avatar if no photo is provided', () => {
+    const avatarElement = screen.getByText(
+      `${mockOffer.author.firstName[0]}${mockOffer.author.lastName[0]}`
+    )
 
-    expect(authorPhoto).toBeInTheDocument()
+    expect(avatarElement).toBeInTheDocument()
   })
 
   it('renders the proficiency level', () => {

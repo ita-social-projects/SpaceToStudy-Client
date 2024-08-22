@@ -2,10 +2,10 @@ import { FC, MouseEvent, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import Avatar from '@mui/material/Avatar'
 import { SxProps } from '@mui/material'
 
 import AppCard from '~/components/app-card/AppCard'
+import AvatarIcon from '~/components/avatar-icon/AvatarIcon'
 import { useAppSelector } from '~/hooks/use-redux'
 
 import {
@@ -36,7 +36,7 @@ const Message: FC<MessageProps> = ({
 }) => {
   const { userId: myId } = useAppSelector((state) => state.appMain)
   const { author, text, authorRole, createdAt } = message
-  const { _id, photo } = author
+  const { _id, photo, firstName, lastName } = author
   const { path } = authRoutes.userProfile
   const isMyMessage = myId === _id
   const isSameAuthor = prevMessage?.author._id === _id
@@ -75,8 +75,10 @@ const Message: FC<MessageProps> = ({
   })
   const avatar = !isMyMessage && isAvatarVisible && (
     <Link onClick={handleLinkClick} to={pathToProfile}>
-      <Avatar
-        src={
+      <AvatarIcon
+        firstName={firstName}
+        lastName={lastName}
+        photo={
           photo && createUrlPath(import.meta.env.VITE_APP_IMG_USER_URL, photo)
         }
         sx={spliceSx(styles.avatar, sx.avatar)}

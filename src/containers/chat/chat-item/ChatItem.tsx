@@ -1,9 +1,10 @@
 import { FC, memo, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import Avatar from '@mui/material/Avatar'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Badge from '@mui/material/Badge'
+
+import AvatarIcon from '~/components/avatar-icon/AvatarIcon'
 
 import { useAppSelector } from '~/hooks/use-redux'
 
@@ -83,8 +84,10 @@ const ChatItem: FC<ItemOfChatProps> = ({
           }
           overlap={OverlapEnum.Circular}
         >
-          <Avatar
-            src={
+          <AvatarIcon
+            firstName={firstName ?? ''}
+            lastName={lastName ?? ''}
+            photo={
               photo &&
               createUrlPath(import.meta.env.VITE_APP_IMG_USER_URL, photo)
             }
