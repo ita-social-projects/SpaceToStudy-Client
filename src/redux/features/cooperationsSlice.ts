@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { RootState } from '~/redux/store'
 import { sliceNames } from '~/redux/redux.constants'
@@ -112,6 +113,7 @@ const cooperationsSlice = createSlice({
       action: PayloadAction<{
         sectionId: CourseSection['id']
         resources: CourseResource[]
+        isDuplicate?: boolean
       }>
     ) {
       const section = state.sections.find(
@@ -123,10 +125,24 @@ const cooperationsSlice = createSlice({
       const newResources = action.payload.resources
         .filter((resource) => {
           return !section.resources.some(
-            (item) => item.resource._id === resource._id
+            (item) =>
+              item.resource._id === resource._id && !action.payload.isDuplicate
           )
         })
-        .map((resource) => ({ resource, resourceType: resource.resourceType }))
+        .map((resource) => {
+          if (action.payload.isDuplicate) {
+            return {
+              resource: { ...resource, _id: uuidv4() },
+              resourceType: resource.resourceType,
+              isDuplicate: true
+            }
+          }
+
+          return {
+            resource,
+            resourceType: resource.resourceType
+          }
+        })
 
       section.resources = [...section.resources, ...newResources]
     },

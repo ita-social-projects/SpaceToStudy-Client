@@ -7,71 +7,54 @@ import {
 } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 
-import CourseSectionContainer from '~/containers/course-section/CourseSectionContainer'
-import { ResourcesTypesEnum as ResourceType } from '~/types'
+import { CourseResourceEventType } from '~/types'
+import {
+  mockedSectionData,
+  mockedUpdatedResources
+} from '~tests/unit/containers/course-section/CourseSectionContainer.spec.constants'
+import { authRoutes } from '~/router/constants/authRoutes'
+import { resourceNavigationMap } from '~/containers/course-section/CourseSectionContainer.constants'
 
-const mockedSectionData = {
-  id: 1,
-  title: 'Title',
-  description: 'Description',
-  resources: [
-    {
-      resource: {
-        availability: {
-          status: 'open',
-          date: null
-        },
-        _id: '64cd12f1fad091e0sfe12134',
-        title: 'Lesson1',
-        author: 'some author',
-        content: 'Content',
-        description: 'Description',
-        attachments: [],
-        category: null
-      },
-      resourceType: ResourceType.Lesson
-    },
-    {
-      resource: {
-        availability: {
-          status: 'open',
-          date: null
-        },
-        _id: '64fb2c33eba89699411d22bb',
-        title: 'Quiz',
-        description: '',
-        items: [],
-        author: '648afee884936e09a37deaaa',
-        category: { id: '64fb2c33eba89699411d22bb', name: 'Music' },
-        createdAt: '2023-09-08T14:14:11.373Z',
-        updatedAt: '2023-09-08T14:14:11.373Z'
-      },
-      resourceType: ResourceType.Quiz
-    },
-    {
-      resource: {
-        availability: {
-          status: 'open',
-          date: null
-        },
-        _id: '64cd12f1fad091e0ee719830',
-        author: '6494128829631adbaf5cf615',
-        fileName: 'spanish.pdf',
-        link: 'link',
-        category: { id: '64fb2c33eba89699411d22bb', name: 'History' },
-        description: 'Mock description for attachments',
-        size: 100,
-        createdAt: '2023-07-25T13:12:12.998Z',
-        updatedAt: '2023-07-25T13:12:12.998Z'
-      },
-      resourceType: ResourceType.Attachment
-    }
-  ]
-}
+import CourseSectionContainer from '~/containers/course-section/CourseSectionContainer'
 
 const mockedHandleSectionInputChange = vi.fn()
 const mockedResourceEventHandler = vi.fn()
 const mockedSectionEventHandler = vi.fn()
+
+vi.mock(
+  '~/containers/course-section/resources-list/ResourcesList',
+  async () => {
+    const ResourcesList = (
+      await vi.importActual(
+        '~/containers/course-section/resources-list/ResourcesList'
+      )
+    ).default
+    return {
+      __esModule: true,
+      default: (props) => (
+        <>
+          <ResourcesList
+            deleteResource={props.deleteResource}
+            editResource={props.editResource}
+            isCooperation={props.isCooperation}
+            items={props.items}
+            sortResources={props.sortResources}
+            updateAvailability={props.updateAvailability}
+          />
+          <input
+            data-testid='mock-ResourcesList'
+            onChange={(e) => {
+              const parsed = JSON.parse(e.target.value)
+              if (props[parsed.event]) {
+                props[parsed.event](parsed.payload)
+              }
+            }}
+          />
+        </>
+      )
+    }
+  }
+)
 
 describe('CourseSectionContainer tests', () => {
   beforeEach(() => {
@@ -324,6 +307,157 @@ describe('CourseSectionContainer tests', () => {
       resourceId: mockedSectionData.resources[2].resource._id,
       sectionId: 1,
       type: 'resourceRemoved'
+    })
+  })
+})
+
+describe('Testing CourseSectionContainer Event Handlers', () => {
+  const mockSectionId = mockedSectionData.id
+  beforeEach(() => {
+    renderWithProviders(
+      <CourseSectionContainer
+        handleSectionInputChange={mockedHandleSectionInputChange}
+        isCooperation
+        resourceEventHandler={mockedResourceEventHandler}
+        sectionData={mockedSectionData}
+        sectionEventHandler={mockedSectionEventHandler}
+      />
+    )
+  })
+
+  afterEach(() => {
+    cleanup()
+    vi.resetAllMocks()
+  })
+
+  it('should handle resource update event [CourseResourceEventType.ResourceUpdated]', async () => {
+    const updatedResource = mockedSectionData.resources[0].resource
+    const newAvailability = 'closed'
+
+    await waitFor(() => {
+      const availabilitySelect = screen.getAllByTestId('app-select')[0]
+      fireEvent.change(availabilitySelect, {
+        target: { value: newAvailability }
+      })
+      fireEvent.blur(availabilitySelect)
+    })
+
+    expect(mockedResourceEventHandler).toHaveBeenCalledTimes(1)
+    expect(mockedResourceEventHandler).toHaveBeenCalledWith({
+      type: CourseResourceEventType.ResourceUpdated,
+      sectionId: mockSectionId,
+      resourceId: updatedResource._id,
+      resource: {
+        availability: {
+          ...updatedResource.availability,
+          status: newAvailability
+        }
+      }
+    })
+  })
+
+  it('should handle resource order change event [CourseResourceEventType.ResourcesOrderChange]', async () => {
+    fireEvent.change(screen.getByTestId('mock-ResourcesList'), {
+      target: {
+        value: JSON.stringify({
+          event: 'sortResources',
+          payload: {
+            type: CourseResourceEventType.ResourcesOrderChange,
+            sectionId: mockSectionId,
+            resources: mockedUpdatedResources
+          }
+        })
+      }
+    })
+
+    await waitFor(() => {
+      expect(mockedResourceEventHandler).toHaveBeenCalledTimes(1)
+      expect(mockedResourceEventHandler).toHaveBeenCalledWith(
+        expect.objectContaining({
+          type: CourseResourceEventType.ResourcesOrderChange,
+          sectionId: mockSectionId,
+          resources: expect.objectContaining({
+            resources: expect.arrayContaining([
+              expect.objectContaining({
+                _id: expect.any(String),
+                resourceType: expect.any(String)
+              })
+            ])
+          })
+        })
+      )
+    })
+  })
+
+  it('should handle resource remove event [CourseResourceEventType.ResourceRemoved]', async () => {
+    fireEvent.change(screen.getByTestId('mock-ResourcesList'), {
+      target: {
+        value: JSON.stringify({
+          event: 'deleteResource',
+          payload: {
+            type: CourseResourceEventType.ResourceRemoved,
+            sectionId: mockSectionId,
+            resourceId: mockedSectionData.resources[0]._id
+          }
+        })
+      }
+    })
+
+    await waitFor(() => {
+      expect(mockedResourceEventHandler).toHaveBeenCalledTimes(1)
+      expect(mockedResourceEventHandler).toHaveBeenCalledWith(
+        expect.objectContaining({
+          type: CourseResourceEventType.ResourceRemoved,
+          sectionId: mockSectionId,
+          resourceId: mockedSectionData.resources[0]._id
+        })
+      )
+    })
+  })
+
+  it('should handle edit resource event when resourceType is not Attachment', async () => {
+    const resource = mockedSectionData.resources[0].resource
+    const editResourceSpy = vi
+      .spyOn(window, 'open')
+      .mockImplementation(() => ({ focus: vi.fn() }))
+
+    fireEvent.change(screen.getByTestId('mock-ResourcesList'), {
+      target: {
+        value: JSON.stringify({
+          event: 'editResource',
+          payload: resource
+        })
+      }
+    })
+
+    await waitFor(() => {
+      expect(editResourceSpy).toHaveBeenCalledTimes(1)
+      expect(editResourceSpy).toHaveBeenCalledWith(
+        expect.stringContaining(
+          authRoutes.myResources[resourceNavigationMap[resource.resourceType]]
+            .path
+        ),
+        '_blank'
+      )
+    })
+  })
+
+  it('should handle edit resource event when resourceType is Attachment', async () => {
+    const resource = mockedSectionData.resources[2].resource
+
+    fireEvent.change(screen.getByTestId('mock-ResourcesList'), {
+      target: {
+        value: JSON.stringify({
+          event: 'editResource',
+          payload: resource
+        })
+      }
+    })
+
+    await waitFor(() => {
+      expect(
+        screen.getByText('myResourcesPage.attachments.edit')
+      ).toBeInTheDocument()
     })
   })
 })

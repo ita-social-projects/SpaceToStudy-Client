@@ -28,7 +28,7 @@ import { getErrorKey } from '~/utils/get-error-key'
 
 interface AddResourcesProps<T extends CourseResource | Question> {
   resources?: T[]
-  onAddResources: (resource: T[]) => void
+  onAddResources: (resource: T[], isDuplicate: boolean) => void
   resourceTab: ResourcesTabsEnum
   columns: TableColumn<T>[]
   removeColumnRules: RemoveColumnRules<T>
@@ -45,12 +45,15 @@ const AddResources = <T extends CourseResource | Question>({
   requestService,
   showCheckboxWithTooltip = false
 }: AddResourcesProps<T>) => {
-  const [selectedRows, setSelectedRows] = useState<T[]>(resources)
-  const { closeModal } = useModalContext()
   const dispatch = useAppDispatch()
   const breakpoints = useBreakpoints()
+  const { closeModal } = useModalContext()
+
+  const [selectedRows, setSelectedRows] = useState<T[]>(resources)
+  const [isDuplicate, setIsDuplicate] = useState<boolean>(false)
+
   const initialSelect = resources.map((resource) => resource._id)
-  const select = useSelect({ initialSelect })
+  const { clearSelected, ...select } = useSelect({ initialSelect })
   const sortOptions = useSort({ initialSort })
 
   const { sort } = sortOptions
@@ -97,8 +100,19 @@ const AddResources = <T extends CourseResource | Question>({
   }
 
   const onAddItems = () => {
-    onAddResources(selectedRows)
+    onAddResources(selectedRows, isDuplicate)
     closeModal()
+  }
+
+  const onCreateResourceCopy = (value: boolean) => {
+    setIsDuplicate(value)
+    if (value) {
+      setSelectedRows([])
+      clearSelected()
+    } else {
+      setSelectedRows(resources)
+      select.setSelected(resources.map((item) => item._id))
+    }
   }
 
   const getItems = useCallback(
@@ -138,6 +152,7 @@ const AddResources = <T extends CourseResource | Question>({
     selectedRows,
     isSelection: true,
     onAddItems,
+    onCreateResourceCopy,
     data: { loading, getItems },
     onRowClick,
     resourceTab,

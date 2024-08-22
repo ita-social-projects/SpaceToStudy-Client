@@ -31,6 +31,7 @@ interface AddResourceModalProps<T>
   }
   selectedRows: T[]
   onAddItems: () => void
+  onCreateResourceCopy?: (value: boolean) => void
   uploadItem?: (data: FormData) => Promise<void>
   resourceTab: ResourcesTabsEnum
   showCheckboxWithTooltip?: boolean
@@ -40,6 +41,7 @@ const AddResourceModal = <T extends TableItem>({
   data,
   selectedRows,
   onAddItems,
+  onCreateResourceCopy,
   uploadItem,
   resourceTab,
   showCheckboxWithTooltip,
@@ -105,8 +107,9 @@ const AddResourceModal = <T extends TableItem>({
                 `myResourcesPage.resourceDuplication.resource.${resourceTab}`
               )
             })}
+            onChecked={onCreateResourceCopy}
             tooltipTitle={t('myResourcesPage.resourceDuplication.tooltip')}
-          ></CheckboxWithTooltip>
+          />
         )}
         <Box sx={styles.buttonsArea}>
           <AppButton onClick={closeModal} variant={ButtonVariantEnum.Tonal}>
