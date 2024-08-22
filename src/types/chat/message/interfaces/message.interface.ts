@@ -27,3 +27,8 @@ export interface GroupedMessages {
   date: string
   messages: MessageInterface[]
 }
+
+export interface GetMessagesResponse {
+  items: MessageInterface[]
+  count: number
+}

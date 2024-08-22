@@ -45,6 +45,13 @@ export const styles = {
   }),
   loader: { color: 'primary.700' },
   chip: { backgroundColor: 'basic.white' },
+  chipWrapper: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: `calc(100% - 164px)`,
+    marginBottom: '3px'
+  },
   warningChip: {
     backgroundColor: 'basic.white',
     m: 'auto',
