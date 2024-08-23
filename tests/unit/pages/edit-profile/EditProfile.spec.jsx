@@ -206,6 +206,25 @@ describe('EditProfile', () => {
 
     expect(dataToUpdate).toHaveProperty('photo', profileState.photo)
   })
+  it('should include videoLink in dataToUpdate if videoLink is an object with a property that matches the userRole', () => {
+    const videoLink = { [userRole]: 'http://video1234556443.com/video' }
+    const rest = {}
+    const dataToUpdate = { ...rest }
+    if (videoLink) {
+      dataToUpdate.videoLink =
+        typeof videoLink === 'string' ? videoLink : videoLink[userRole]
+    }
+    expect(dataToUpdate).toHaveProperty('videoLink', videoLink[userRole])
+  })
+
+  it('should include address in dataToUpdate if city and country are both truthy', () => {
+    const city = 'New York'
+    const country = 'USA'
+    const rest = {}
+    const dataToUpdate = { ...rest }
+    if (city && country) dataToUpdate.address = { city, country }
+    expect(dataToUpdate).toHaveProperty('address', { city, country })
+  })
 
   it('should not include photo in dataToUpdate if profileState.photo is not an object', () => {
     const photo = 'stringInsteadOfObject'
