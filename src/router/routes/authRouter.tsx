@@ -28,6 +28,7 @@ import {
 } from '~/router/constants/crumbs'
 import PrivateRoute from '~/router/helpers/PrivateRoute'
 import { UserRoleEnum } from '~/types'
+import { userProfileLoader } from '../constants/loaders'
 
 const MyCooperations = lazy(
   () => import('~/pages/my-cooperations/MyCooperations')
@@ -86,6 +87,7 @@ export const authRouter = (
     <Route
       element={<UserProfile />}
       handle={{ crumb: userProfile }}
+      loader={userProfileLoader}
       path={authRoutes.userProfile.route}
     />
     <Route element={<Chat />} path={authRoutes.chat.route} />
