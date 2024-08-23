@@ -112,6 +112,7 @@ const EditProfile = () => {
 
     if (hasChanged) {
       const changes: Partial<EditProfileState> = { ...currentData }
+
       if (initialPhoto === currentPhoto) {
         delete changes.photo
       }
@@ -174,6 +175,10 @@ const EditProfile = () => {
 
     if (professionalBlock)
       dataToUpdate.professionalBlock = profileState.professionalBlock
+
+    if (categories) {
+      dataToUpdate.mainSubjects = categories
+    }
 
     await dispatch(
       updateUser({
