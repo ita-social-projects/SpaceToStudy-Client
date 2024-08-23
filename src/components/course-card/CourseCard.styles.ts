@@ -24,7 +24,7 @@ export const styles = {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    minHeight: '285px',
+    minHeight: '320px',
     height: '100%',
     boxSizing: 'border-box',
     backgroundColor: 'basic.white',
