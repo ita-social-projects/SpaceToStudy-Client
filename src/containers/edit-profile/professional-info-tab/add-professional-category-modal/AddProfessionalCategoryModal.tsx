@@ -14,7 +14,6 @@ import {
   ComponentEnum,
   MainUserRole,
   SubjectInterface,
-  SubjectNameInterface,
   UserMainSubject
 } from '~/types'
 
@@ -36,10 +35,10 @@ import {
 import { styles } from '~/containers/edit-profile/professional-info-tab/add-professional-category-modal/AddProfessionalCategoryModal.styles'
 
 interface SubjectGroupProps {
-  subject: SubjectNameInterface
+  subject: Partial<SubjectInterface>
   selectedCategory: string
-  handleChange: (value: Partial<SubjectNameInterface>) => void
-  disableOptions: Array<SubjectNameInterface>
+  handleChange: (value: Partial<SubjectInterface>) => void
+  disableOptions: Array<Partial<SubjectInterface>>
   handleSubjectDelete: () => void
 }
 
@@ -57,7 +56,7 @@ function SubjectGroup({
     [selectedCategory]
   )
 
-  const handleDisableOptions = (option: SubjectInterface) => {
+  const handleDisableOptions = (option: Partial<SubjectInterface>) => {
     return disableOptions.some((subject) => subject._id === option._id)
   }
 
@@ -122,7 +121,7 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
 
     if (isEdit) {
       const categoryToUpdate: UserMainSubject = {
-        _id: initialValuesFromProps?._id,
+        _id: initialValuesFromProps?._id ?? '',
         isDeletionBlocked,
         ...data
       }
@@ -162,14 +161,10 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
     _: SyntheticEvent,
     value: CategoryNameInterface | null
   ) => {
-    if (!value) {
-      handleDataChange({
-        category: { _id: '', name: '' },
-        subjects: [{ _id: '', name: '' }]
-      })
-      return
-    }
-    handleDataChange({ category: value, professionalSubjectTemplate })
+    handleDataChange({
+      category: value ? { ...value, _id: value._id || '' } : null,
+      subjects: []
+    })
   }
 
   const handleProfessionalSubjectChange =
@@ -177,7 +172,10 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
     <Value,>(value: Value) => {
       const transformedSubjects = data.subjects.map((subject, i) => {
         if (index === i) {
-          return { ...subject, ...value }
+          return {
+            ...subject,
+            ...value
+          }
         }
 
         return subject
@@ -201,7 +199,7 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
   }
 
   const handleBlockOption = (option: CategoryNameInterface) => {
-    const isCurrent = option._id !== data.category._id
+    const isCurrent = option._id !== data.category?._id
     const isBlocked = blockedCategoriesOptions.some(
       (mainSubject) => mainSubject.category?._id === option._id
     )
@@ -210,12 +208,14 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
 
   const SubjectsGroup = data.subjects.map((subject, index) => (
     <SubjectGroup
-      disableOptions={data.subjects}
+      disableOptions={data.subjects as Array<Partial<SubjectInterface>>}
       handleChange={handleProfessionalSubjectChange(index)}
-      handleSubjectDelete={() => handleSubjectDelete(subject._id)}
+      handleSubjectDelete={() => handleSubjectDelete(subject._id || '')}
       key={index}
-      selectedCategory={data.category._id}
-      subject={{ name: subject.name, _id: subject._id }}
+      selectedCategory={data.category?._id || ''}
+      subject={{
+        ...subject
+      }}
     />
   ))
 
@@ -232,6 +232,7 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
       />
       <Box sx={styles.formWrapper}>
         <AsyncAutocomplete
+          data-testid='mainStudyCategory'
           disabled={isDeletionBlocked}
           fullWidth
           getOptionDisabled={handleBlockOption}
@@ -245,7 +246,7 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
             error: Boolean(errors.category),
             helperText: errors.category
           }}
-          value={data.category._id}
+          value={data.category?._id || ''}
           valueField='_id'
         />
         {SubjectsGroup}
