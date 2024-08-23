@@ -86,7 +86,8 @@ const Chat = () => {
 
   const onMessagesResponse = useCallback(
     (response: GetMessagesResponse) => {
-      const items = response.items.reverse() ?? []
+      const items = response.items ?? []
+      items.reverse()
       setMessages((messages) => (skip === 0 ? items : [...items, ...messages]))
       setMessagesCount(response.count)
     },
