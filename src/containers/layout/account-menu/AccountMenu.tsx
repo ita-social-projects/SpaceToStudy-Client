@@ -23,20 +23,6 @@ const AccountMenu: FC<AccountMenuProps> = ({ anchorEl, onClose }) => {
 
   const { userRole } = useAppSelector((state) => state.appMain)
 
-  const menuList = Object.values(
-    authRoutes.accountMenu[userRole as keyof typeof authRoutes.accountMenu]
-  ).map((item: RouteItem) => (
-    <MenuItem
-      component={Link}
-      key={item.path}
-      onClick={onClose}
-      sx={styles.menuItem}
-      to={item.path}
-    >
-      {t(`header.${item.route}`)}
-    </MenuItem>
-  ))
-
   const logOutButton = (
     <MenuItem
       component={Link}
@@ -50,7 +36,21 @@ const AccountMenu: FC<AccountMenuProps> = ({ anchorEl, onClose }) => {
     </MenuItem>
   )
 
-  menuList.push(logOutButton)
+  const menuItems = Object.values(
+    authRoutes.accountMenu[userRole as keyof typeof authRoutes.accountMenu]
+  ).map((item: RouteItem) => (
+    <MenuItem
+      component={Link}
+      key={item.path}
+      onClick={onClose}
+      sx={styles.menuItem}
+      to={item.path}
+    >
+      {t(`header.${item.route}`)}
+    </MenuItem>
+  ))
+
+  const menuList = [...menuItems, logOutButton]
 
   return (
     <AppMenu
