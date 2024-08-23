@@ -52,7 +52,7 @@ describe('ChatDialogWindow Component with ChatId', () => {
   })
 
   it('should render messages', async () => {
-    const message = await screen.findByText(messagesMock[0].text)
+    const message = await screen.findByText(messagesMock.items[0].text)
     expect(message).toBeInTheDocument()
   })
 })

@@ -54,7 +54,6 @@ const Chat = () => {
   const { userId: myId } = useAppSelector((state) => state.appMain)
 
   const limit = 15
-  console.log(messages)
 
   const userToSpeak = useMemo<Member | undefined>(
     () => selectedChat?.members.find((member) => member.user._id !== myId),

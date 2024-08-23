@@ -107,6 +107,7 @@ const MessagesList = ({
 
   return (
     <SimpleBar
+      data-testid='scrollable-content'
       scrollableNodeProps={{ ref: scrollRef }}
       style={styles.scrollableContent}
     >
