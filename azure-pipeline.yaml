@@ -2,14 +2,22 @@ trigger:
   batch: true
   branches:
     include:
-    - develop
-    - main
-    - devops
-    
+      - develop
+      - main
 variables:
   agentOS: ubuntu-latest
-
 stages:
+  - stage: Debug
+    displayName: Debug Variables
+    jobs:
+      - job: PrintVariables
+        pool:
+          vmImage: $(agentOS)
+        steps:
+        - bash: |
+            echo "Printing all pipeline variables:"
+            env | sort
+          displayName: 'Print all variables'
 
   - stage: Build
     displayName: Build and push docker image
@@ -20,9 +28,9 @@ stages:
         steps:
         - task: DownloadSecureFile@1
           name: envStage
-          condition: or(eq(variables['Build.SourceBranch'], 'refs/heads/devops'), eq(variables['Build.SourceBranch'], 'refs/heads/develop'), eq(variables['Build.SourceBranch'], 'refs/heads/feature/1659/deployment-proxy'))
+          condition: or(eq(variables['Build.SourceBranch'], 'refs/heads/develop'), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
           inputs:
-            secureFile: 'env-front-stage'
+            secureFile: 'env-front-prod'
         - task: Bash@3
           name: setEnvStage
           inputs:
@@ -37,11 +45,10 @@ stages:
             dockerComposeFile: '**/compose.yml'
             dockerComposeFileArgs: |
               PROXY_API_URL=$(PROXY_API_URL)
-              password=$(password)
-            projectName: 'front-stage'
+              password=$(PASSWORD)
+            projectName: '$(ENV_TYPE)'
             action: 'Build services'
-            additionalImageTags: '$(Build.BuildId)'
-       
+            additionalImageTags: '$(Build.SourceVersion)'
         - task: DockerCompose@1
           inputs:
             dockerComposePath: '/usr/libexec/docker/cli-plugins/docker-compose'
@@ -51,11 +58,10 @@ stages:
             dockerComposeFile: '**/compose.yml'
             dockerComposeFileArgs: |
               PROXY_API_URL=$(PROXY_API_URL)
-              password=$(password)
-            projectName: 'front-stage'
+              password=$(PASSWORD)
+            projectName: '$(ENV_TYPE)'
             action: 'Push services'
-            additionalImageTags: '$(Build.BuildId)'
-
+            additionalImageTags: '$(Build.SourceVersion)'
   - stage: Deploy
     displayName: Deploy image to app service
     jobs:
@@ -68,8 +74,7 @@ stages:
               ConnectionType: 'AzureRM'
               azureSubscription: 'S2s-Service'
               appType: 'webAppContainer'
-              WebAppName: 's2s-front-stage'
+              WebAppName: '$(WEB_APP_NAME)'
               DockerNamespace: 's2sstage.azurecr.io'
-              DockerRepository: 'frontstage_nginx'
-              DockerImageTag: '$(Build.BuildId)'
-             
+              DockerRepository: '$(ENV_TYPE)_nginx'
+              DockerImageTag: '$(Build.SourceVersion)'
