@@ -29,13 +29,13 @@ const CooperationActivitiesView: FC<CooperationActivitiesViewProps> = ({
 
   const onEdit = () => {
     setEditMode(true)
-    dispatch(setIsAddedClicked(false))
+    dispatch(setIsAddedClicked(false)) // Why is this needed?
   }
 
   return (
     <Box sx={styles.root}>
       {sections.map((item) => (
-        <CooperationSectionView id={item._id} item={item} key={item._id} />
+        <CooperationSectionView id={item.id} item={item} key={item.id} />
       ))}
 
       {isTutor && (

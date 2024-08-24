@@ -23,8 +23,8 @@ describe('Test cooperationsSlice', () => {
 
   it('should set sections correctly with setCooperationSections', () => {
     const sections = [
-      { id: '1', resources: [] },
-      { id: '2', resources: [] }
+      { _id: '1', id: '1', resources: [] },
+      { _id: '2', id: '2', resources: [] }
     ]
     const action = setCooperationSections(sections)
     const state = reducer(initialState, action)
