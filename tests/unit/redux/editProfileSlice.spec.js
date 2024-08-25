@@ -24,7 +24,10 @@ const userDataMock = {
   address: { country: 'USA', city: 'New York' },
   professionalSummary: 'Summary',
   nativeLanguage: 'English',
-  photo: 'photo_url',
+  photo: {
+    src: 'url',
+    name: 'profile_photo'
+  },
   videoLink: { [UserRoleEnum.Tutor]: 'link', [UserRoleEnum.Student]: '' },
   mainSubjects: { [UserRoleEnum.Tutor]: [], [UserRoleEnum.Student]: [] },
   professionalBlock: {
@@ -49,7 +52,10 @@ const expectedUserData = {
   professionalSummary: 'Summary',
   nativeLanguage: 'English',
   videoLink: { [UserRoleEnum.Tutor]: 'link', [UserRoleEnum.Student]: '' },
-  photo: 'photo_url',
+  photo: {
+    src: 'url',
+    name: 'profile_photo'
+  },
   categories: { [UserRoleEnum.Tutor]: [], [UserRoleEnum.Student]: [] },
   professionalBlock: {
     education: 'Education',
@@ -80,7 +86,7 @@ const initialState = {
   professionalSummary: '',
   nativeLanguage: '',
   videoLink: { [UserRoleEnum.Tutor]: '', [UserRoleEnum.Student]: '' },
-  photo: '',
+  photo: null,
   categories: { [UserRoleEnum.Tutor]: [], [UserRoleEnum.Student]: [] },
   professionalBlock: {
     education: '',
