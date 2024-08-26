@@ -8,6 +8,7 @@ import {
 } from '~/types'
 
 export interface ResourceBase {
+  id: string
   description: string
   resourceType: ResourceType
   availability?: ResourceAvailability

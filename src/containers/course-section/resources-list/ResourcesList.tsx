@@ -41,12 +41,12 @@ const ResourcesList: FC<ResourcesListProps> = ({
     handleDragEnd,
     handleDragStart,
     sensors
-  } = useDndSensor({ items, setItems: sortResources, idProp: '_id' })
+  } = useDndSensor({ items, setItems: sortResources, idProp: 'id' })
 
   const renderItem = (item: CourseResource, isDragOver = false) => (
     <SortableWrapper
-      id={item._id}
-      key={item._id}
+      id={item.id}
+      key={item.id}
       onDragEndStyles={styles.section(isDragOver)}
       onDragStartStyles={styles.section(true)}
     >
@@ -66,7 +66,7 @@ const ResourcesList: FC<ResourcesListProps> = ({
   const resourceListContent = enabled && (
     <>
       <SortableContext
-        items={items.map((item) => item._id)}
+        items={items.map((item) => item.id)}
         strategy={verticalListSortingStrategy}
       >
         <Box sx={styles.root}>{resourceItems}</Box>

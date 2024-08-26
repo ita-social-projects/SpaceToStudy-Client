@@ -29,6 +29,13 @@ const initialState: CooperationsState = {
   resourcesAvailability: ResourcesAvailabilityEnum.OpenAll
 }
 
+export const initialCooperationSectionData: CourseSection = {
+  id: '',
+  title: '',
+  description: '',
+  resources: []
+}
+
 const cooperationsSlice = createSlice({
   name: sliceNames.cooperations,
   initialState,
@@ -66,12 +73,31 @@ const cooperationsSlice = createSlice({
       state,
       action: PayloadAction<CooperationsState['sections']>
     ) {
-      // state.sections = action.payload if courses will be fixed
       state.sections = (action.payload ?? []).map((section) => ({
         ...section,
         id: section._id ?? uuidv4(),
-        resources: section.resources ?? []
+        resources: (section.resources ?? []).map((resource) => ({
+          ...resource,
+          resource: { ...resource.resource, id: uuidv4() }
+        }))
       }))
+    },
+
+    addNewCooperationSection(
+      state,
+      action: PayloadAction<{
+        index: number | undefined
+      }>
+    ) {
+      const newSectionData = { ...initialCooperationSectionData }
+      newSectionData.id = uuidv4()
+      const newSections = [...state.sections]
+      newSections.splice(
+        action.payload.index ?? state.sections.length,
+        0,
+        newSectionData
+      )
+      state.sections = newSections
     },
 
     updateCooperationSection(
@@ -118,14 +144,17 @@ const cooperationsSlice = createSlice({
       const newResources = action.payload.resources
         .filter((resource) => {
           return !section.resources.some(
-            (item) => item.resource._id === resource._id && !isDuplicate
+            (item) => item.resource.id === resource.id && !isDuplicate
           )
         })
         .map((resource) => {
+          const { _id, ...newDuplicateResource } = resource
           return {
-            resource: isDuplicate
-              ? { ...resource, _id: uuidv4(), isDuplicate: true }
-              : resource,
+            resource: {
+              ...newDuplicateResource,
+              id: uuidv4(),
+              ...(isDuplicate ? { _id: '', isDuplicate: true } : { _id })
+            },
             resourceType: resource.resourceType
           }
         })
@@ -156,7 +185,7 @@ const cooperationsSlice = createSlice({
       state,
       action: PayloadAction<{
         sectionId: CourseSection['id']
-        resourceId: CourseResource['_id']
+        resourceId: CourseResource['id']
         resource: Partial<CourseResource>
       }>
     ) {
@@ -167,7 +196,7 @@ const cooperationsSlice = createSlice({
       if (!section) return
 
       const resource = section.resources.find(
-        (item) => item.resource._id === action.payload.resourceId
+        (item) => item.resource.id === action.payload.resourceId
       )
 
       if (!resource) return
@@ -182,7 +211,7 @@ const cooperationsSlice = createSlice({
       state,
       action: PayloadAction<{
         sectionId: CourseSection['id']
-        resourceId: CourseResource['_id']
+        resourceId: CourseResource['id']
       }>
     ) {
       const section = state.sections.find(
@@ -192,7 +221,7 @@ const cooperationsSlice = createSlice({
       if (!section) return
 
       section.resources = section.resources.filter(
-        (item) => item.resource._id !== action.payload.resourceId
+        (item) => item.resource.id !== action.payload.resourceId
       )
     },
 
@@ -226,6 +255,7 @@ export const {
   setIsAddedClicked,
   setIsNewActivity,
   setCooperationSections,
+  addNewCooperationSection,
   updateCooperationSection,
   deleteCooperationSection,
   addSectionResources,
