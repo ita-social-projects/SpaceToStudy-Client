@@ -16,11 +16,12 @@ import EnhancedTablePagination from '~/components/enhanced-table/enhanced-table-
 
 import { styles } from '~/components/user-table/UserTable.styles'
 import { VisibilityEnum, GetUsersParams } from '~/types'
+import { Sort } from '~/types'
 
 interface UserTableProps {
   columns: unknown[]
   initialFilters: Record<string, unknown>
-  initialSort: typeof useSort
+  initialSort: Sort
   role: string
   tabsInfo: Record<
     string,
@@ -190,11 +191,8 @@ const UserTable: React.FC<UserTableProps> = ({
   const toolbarVisibility =
     selected.length > 0 ? VisibilityEnum.Visible : VisibilityEnum.Hidden
 
-  const handleChangePage = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null,
-    page: number
-  ) => {
-    console.log(page)
+  const handleChangePage = () => {
+    return null
   }
 
   const handleRefetchData = () => {
