@@ -31,6 +31,7 @@ export const mockedSectionsData = [
       {
         resource: {
           _id: '66183816fb40f35f91bb77ce',
+          id: 'a1b2c3d4-5e6f-7a8b-9c0d-1e2f3b4c5d6e',
           title: 'Lesson 1',
           description: 'Lesson 1 description',
           content: 'Lesson 1 content'

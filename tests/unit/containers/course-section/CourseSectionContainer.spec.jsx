@@ -176,7 +176,7 @@ describe('CourseSectionContainer tests', () => {
         }
       },
       resourceId:
-        mockedSectionData.resources[activityIndexToChange].resource._id,
+        mockedSectionData.resources[activityIndexToChange].resource.id,
       sectionId: 1,
       type: 'resourceUpdated'
     })
@@ -279,7 +279,7 @@ describe('CourseSectionContainer tests', () => {
       act(() => fireEvent.click(lessonDelete))
     })
     expect(mockedResourceEventHandler).toHaveBeenCalledWith({
-      resourceId: mockedSectionData.resources[0].resource._id,
+      resourceId: mockedSectionData.resources[0].resource.id,
       sectionId: 1,
       type: 'resourceRemoved'
     })
@@ -291,7 +291,7 @@ describe('CourseSectionContainer tests', () => {
       act(() => fireEvent.click(quizDelete))
     })
     expect(mockedResourceEventHandler).toHaveBeenCalledWith({
-      resourceId: mockedSectionData.resources[1].resource._id,
+      resourceId: mockedSectionData.resources[1].resource.id,
       sectionId: 1,
       type: 'resourceRemoved'
     })
@@ -304,7 +304,7 @@ describe('CourseSectionContainer tests', () => {
       act(() => fireEvent.click(attachmentDelete))
     })
     expect(mockedResourceEventHandler).toHaveBeenCalledWith({
-      resourceId: mockedSectionData.resources[2].resource._id,
+      resourceId: mockedSectionData.resources[2].resource.id,
       sectionId: 1,
       type: 'resourceRemoved'
     })
@@ -346,7 +346,7 @@ describe('Testing CourseSectionContainer Event Handlers', () => {
     expect(mockedResourceEventHandler).toHaveBeenCalledWith({
       type: CourseResourceEventType.ResourceUpdated,
       sectionId: mockSectionId,
-      resourceId: updatedResource._id,
+      resourceId: updatedResource.id,
       resource: {
         availability: {
           ...updatedResource.availability,
@@ -397,7 +397,7 @@ describe('Testing CourseSectionContainer Event Handlers', () => {
           payload: {
             type: CourseResourceEventType.ResourceRemoved,
             sectionId: mockSectionId,
-            resourceId: mockedSectionData.resources[0]._id
+            resourceId: mockedSectionData.resources[0].id
           }
         })
       }
@@ -409,7 +409,7 @@ describe('Testing CourseSectionContainer Event Handlers', () => {
         expect.objectContaining({
           type: CourseResourceEventType.ResourceRemoved,
           sectionId: mockSectionId,
-          resourceId: mockedSectionData.resources[0]._id
+          resourceId: mockedSectionData.resources[0].id
         })
       )
     })
