@@ -15,8 +15,7 @@ import EnhancedTableToolbar from '~/components/enhanced-table/enhanced-table-too
 import EnhancedTablePagination from '~/components/enhanced-table/enhanced-table-pagination/EnhancedTablePagination'
 
 import { styles } from '~/components/user-table/UserTable.styles'
-import { VisibilityEnum, GetUsersParams } from '~/types'
-import { Sort } from '~/types'
+import { VisibilityEnum, GetUsersParams, Sort } from '~/types'
 
 interface UserTableProps {
   columns: unknown[]
