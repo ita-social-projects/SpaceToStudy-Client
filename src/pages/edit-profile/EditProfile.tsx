@@ -100,6 +100,7 @@ const EditProfile = () => {
 
     if (hasChanged) {
       const changes: Partial<EditProfileState> = { ...currentData }
+
       if (initialPhoto === currentPhoto) {
         delete changes.photo
       }
@@ -130,8 +131,13 @@ const EditProfile = () => {
 
   const handleUpdateUser = async (): Promise<void> => {
     const { country, city } = profileState
-    const { videoLink, notificationSettings, professionalBlock, ...rest } =
-      changedFields
+    const {
+      videoLink,
+      notificationSettings,
+      professionalBlock,
+      categories,
+      ...rest
+    } = changedFields
 
     const dataToUpdate: UpdateUserParams = rest
 
@@ -149,6 +155,10 @@ const EditProfile = () => {
 
     if (professionalBlock)
       dataToUpdate.professionalBlock = profileState.professionalBlock
+
+    if (categories) {
+      dataToUpdate.mainSubjects = categories
+    }
 
     if (typeof profileState.photo === 'object') {
       dataToUpdate.photo = profileState.photo
