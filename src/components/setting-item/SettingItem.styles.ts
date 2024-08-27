@@ -1,10 +1,11 @@
 import { TypographyVariantEnum } from '~/types'
 export const styles = {
   title: {
-    typography: TypographyVariantEnum.Subtitle2
+    typography: TypographyVariantEnum.Subtitle1,
+    fontWeight: 500
   },
   subtitle: {
-    typography: TypographyVariantEnum.Subtitle2,
+    typography: TypographyVariantEnum.Subtitle1,
     fontWeight: 400,
     color: 'basic.blueGray'
   },

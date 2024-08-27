@@ -7,7 +7,6 @@ import {
 } from '~/components/profile-item/complete-profile.constants'
 import { renderWithProviders } from '~tests/test-utils'
 import useAxios from '~/hooks/use-axios'
-import { OfferService } from '~/services/offer-service'
 
 vi.mock('~/hooks/use-axios')
 vi.mock('~/services/offer-service')
@@ -15,31 +14,40 @@ vi.mock('~/services/offer-service')
 const badRoute = '/tutor/myProfile'
 
 const mockDataFilled = {
-  photo: 'blabla',
-  address: 'blabla',
+  photo: 'some-photo',
+  address: 'some-address',
   mainSubjects: {
-    student: ['blabla']
+    student: ['subject1']
   },
   professionalBlock: {
-    bla: 'blabla',
-    blatwo: ''
+    awards: '',
+    scientificActivities: 'some-activities',
+    workExperience: '',
+    education: ''
+  },
+  videoLink: {
+    tutor: 'some-videolink'
   }
 }
 
 const mockDataEmpty = {
   mainSubjects: {
     student: ''
+  },
+  professionalBlock: {
+    awards: '',
+    scientificActivities: '',
+    workExperience: '',
+    education: ''
   }
 }
 
 describe('CompleteProfile test when user data is filled', () => {
   beforeEach(() => {
     useAxios.mockReturnValue({
-      response: { items: [{ bla: 'blabla' }] },
+      response: { items: ['item1'], count: 1 },
       loading: false
     })
-
-    OfferService.getUsersOffers.mockReturnValue({ items: [{ bla: 'blabla' }] })
   })
 
   it('Progress bar value should be 100 for student (filled)', () => {
@@ -47,7 +55,6 @@ describe('CompleteProfile test when user data is filled', () => {
       <CompleteProfileBlock
         data={mockDataFilled}
         profileItems={profileItemsStudent}
-        role='student'
       />,
       {
         initialEntries: badRoute,
@@ -59,12 +66,11 @@ describe('CompleteProfile test when user data is filled', () => {
     expect(progressBar).toHaveAttribute('aria-valuenow', '100')
   })
 
-  it('Progress bar value should be 75 for tutor (filled)', () => {
+  it('Progress bar value should be 80 for tutor (filled)', () => {
     renderWithProviders(
       <CompleteProfileBlock
         data={mockDataFilled}
         profileItems={profileItemsTutor}
-        role='tutor'
       />,
       {
         initialEntries: badRoute,
@@ -73,18 +79,16 @@ describe('CompleteProfile test when user data is filled', () => {
     )
 
     const progressBar = screen.getByRole('progressbar')
-    expect(progressBar).toHaveAttribute('aria-valuenow', '75')
+    expect(progressBar).toHaveAttribute('aria-valuenow', '80')
   })
 })
 
 describe('CompleteProfile test when user data is empty', () => {
   beforeEach(() => {
     useAxios.mockReturnValue({
-      response: { items: [] },
+      response: { items: [], count: 0 },
       loading: false
     })
-
-    OfferService.getUsersOffers.mockReturnValue({ items: [] })
   })
 
   it('Progress bar value should be 0 for student (empty)', () => {
@@ -92,7 +96,6 @@ describe('CompleteProfile test when user data is empty', () => {
       <CompleteProfileBlock
         data={mockDataEmpty}
         profileItems={profileItemsStudent}
-        role='student'
       />,
       {
         initialEntries: badRoute,
@@ -109,7 +112,6 @@ describe('CompleteProfile test when user data is empty', () => {
       <CompleteProfileBlock
         data={mockDataEmpty}
         profileItems={profileItemsTutor}
-        role='tutor'
       />,
       {
         initialEntries: badRoute,
@@ -128,7 +130,6 @@ describe('CompleteProfile test ui', () => {
       <CompleteProfileBlock
         data={mockDataEmpty}
         profileItems={profileItemsTutor}
-        role='tutor'
       />,
       {
         initialEntries: badRoute,
@@ -150,7 +151,6 @@ describe('CompleteProfile test ui', () => {
       <CompleteProfileBlock
         data={mockDataEmpty}
         profileItems={profileItemsStudent}
-        role='student'
       />,
       {
         initialEntries: badRoute,

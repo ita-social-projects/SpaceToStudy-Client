@@ -20,8 +20,9 @@
   "profile": "Профіль",
   "title": "Назва кооперації:",
   "tutor": "Викладач:",
+  "student": "Студент:",
   "tutoringSubject": "Предмет і рівень:",
-  "aboutCooperation":"Про співпрацю:",
-  "tutoringLanguages":"Мови:",
-  "pricing":"Ціна:"
+  "aboutCooperation": "Про співпрацю:",
+  "tutoringLanguages": "Мови:",
+  "pricing": "Ціна:"
 }

@@ -1,4 +1,4 @@
-import { ReactElement, ReactNode, isValidElement } from 'react'
+import { ReactElement, ReactNode } from 'react'
 import { SxProps } from '@mui/material'
 import Tooltip from '@mui/material/Tooltip'
 import Box from '@mui/material/Box'
@@ -25,7 +25,7 @@ const TitleWithDescription = ({
   isDescriptionTooltip = false
 }: TitleWithDescriptionProps) => {
   const renderDescription = () => {
-    if (isValidElement(description)) {
+    if (typeof description !== 'string') {
       return <Box sx={style.description}>{description}</Box>
     }
     return <Typography sx={style.description}>{description}</Typography>

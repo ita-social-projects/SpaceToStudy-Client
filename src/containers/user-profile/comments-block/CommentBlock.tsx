@@ -11,7 +11,7 @@ import useBreakpoints from '~/hooks/use-breakpoints'
 
 import { styles } from '~/containers/user-profile/comments-block/CommentsBlock.styles'
 
-interface MockResponseItem {
+export interface MockResponseItem {
   _id: string
   comment: string
   rating: number
@@ -89,7 +89,7 @@ const ComentsBlock = ({
   )
 
   return (
-    <Box sx={styles.root}>
+    <Box data-testid='comment-item' sx={styles.root}>
       {title && <Typography sx={styles.title}>{title}</Typography>}
       {itemsList}
       {showMoreButton}

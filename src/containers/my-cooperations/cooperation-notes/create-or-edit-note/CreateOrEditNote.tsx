@@ -6,7 +6,6 @@ import Box from '@mui/material/Box'
 import CheckBox from '@mui/material/Checkbox'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import LockIcon from '@mui/icons-material/Lock'
-import Avatar from '@mui/material/Avatar'
 
 import { useAppSelector } from '~/hooks/use-redux'
 import useForm from '~/hooks/use-form'
@@ -15,6 +14,7 @@ import { userService } from '~/services/user-service'
 import AppButton from '~/components/app-button/AppButton'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import Loader from '~/components/loader/Loader'
+import AvatarIcon from '~/components/avatar-icon/AvatarIcon'
 
 import { defaultResponses } from '~/constants'
 import { styles } from '~/containers/my-cooperations/cooperation-notes/create-or-edit-note/CreateOrEditNote.styles'
@@ -82,16 +82,18 @@ const CreateOrEditNote = ({
     ? new URL(photo, import.meta.env.VITE_APP_IMG_USER_URL).href
     : undefined
   const isNameValid = Boolean(firstName && lastName)
-  const userInitials = isNameValid && `${firstName[0]}${lastName[0]}`
   const userName = isNameValid && `${firstName} ${lastName}`
 
   const userInfo = loading ? (
     <Loader size={20} />
   ) : (
     <>
-      <Avatar src={userPhoto} sx={styles.accountIcon}>
-        {userInitials}
-      </Avatar>
+      <AvatarIcon
+        firstName={firstName}
+        lastName={lastName}
+        photo={userPhoto}
+        sx={styles.accountIcon}
+      />
       <Typography variant={TypographyVariantEnum.Subtitle2}>
         {userName}
       </Typography>

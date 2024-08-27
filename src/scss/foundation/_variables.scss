@@ -1,0 +1,318 @@
+/*=============================================
+=                #VARIABLES                   =
+=============================================*/
+
+/**
+ * TABLE OF CONTEXT
+ * 
+ * COLORS
+ * Basic colors................There are the main colors, which are used the most in project 
+ * Additional colors................on surface colors, on primary colors, secondary colors
+ * Utility colors................Other colors represent states: warning, success, error, etc.
+ *
+ * TYPOGRAPHY
+ * Font families................The fonts used in the S2S design system
+ * Font weights................Font weights
+ * Sizes................Fonts sizes for paragraphs, body text, inputs, etc.
+ * Heading sizes................Font sizing for page headings
+ *
+ * BREAKPOINTS
+ * Breakpoints................Global responsive breakpoints definition
+ *
+ * SPACING
+ * Spacing................paddings, margins, etc.
+ *
+ * SHADOWS ------ Basic shadows values which are used in project
+ *
+ */
+
+/*=============================================
+ =                   COLORS                    =
+ =============================================*/
+
+/* Basic colors */
+
+$blue-gray: #fcfcfc;
+$blue-gray-50: #eceff1;
+$blue-gray-100: #cfd8dc;
+$blue-gray-200: #b0bec5;
+$blue-gray-300: #90a4ae;
+$blue-gray-400: #78909c;
+$blue-gray-500: #607d8b;
+$blue-gray-600: #546e7a;
+$blue-gray-700: #455a64;
+$blue-gray-800: #37474f;
+$blue-gray-900: #263238;
+
+$s2s-blue: #00a7a733;
+
+/* Additional colors */
+
+$white: #ffffff;
+$light-gray: #f7f7f7;
+
+$turquoise: #f5ffff;
+$turquoise-100: #d7fcfd;
+$turquoise-200: #baf7f9;
+$turquoise-300: #a0f0f2;
+$turquoise-400: #89e6e9;
+$turquoise-500: #76d9dd;
+$turquoise-600: #65c9cd;
+$turquoise-700: #56b5b8;
+$turquoise-800: #489da0;
+$turquoise-900: #3b8587;
+
+$blue: #f5fbff;
+$blue-100: #c5e7fd;
+$blue-200: #98d2f9;
+$blue-300: #70bef2;
+$blue-400: #50ace9;
+$blue-500: #389bdc;
+$blue-600: #278acb;
+$blue-700: #1b78b6;
+$blue-800: #12669e;
+$blue-900: #0d5585;
+$blue-accent: #0b8af8;
+
+$yellow-accent: #ffb000;
+$yellow-brown: #f5d636;
+$yellow-green: #9bc541;
+
+$burnt-orange: #f56f36;
+
+$lime: #99cc00;
+$green-accent: #12a03a;
+
+/* Utility colors */
+
+$success-50: #ebf3eb;
+$success-100: #cce7cd;
+$success-200: #a7d5a8;
+$success-300: #82c684;
+$success-400: #68ba6a;
+$success-500: #4caf50;
+$success-600: #44a148;
+$success-700: #388d3c;
+$success-800: #2c7c32;
+$success-900: #1e5f23;
+
+$warning-50: #fff8e1;
+$warning-100: #ffecb3;
+$warning-200: #ffe082;
+$warning-300: #ffd54f;
+$warning-400: #ffca28;
+$warning-500: #ffc107;
+$warning-600: #ffb300;
+$warning-700: #ffa000;
+$warning-800: #ff8f00;
+$warning-900: #ff6f00;
+
+$error-50: #ffeff2;
+$error-100: #ffcfd4;
+$error-200: #f19b9a;
+$error-300: #e77574;
+$error-400: #f25750;
+$error-500: #f54636;
+$error-600: #e63c35;
+$error-700: #d32f2f;
+$error-800: #c72a28;
+$error-900: #b91f1b;
+
+/*=============================================
+=                TYPOGRAPHY                   =
+=============================================*/
+
+/* Font families */
+
+$rubik: 'Rubik, -apple-system, Arial, sans-serif';
+
+/* Font weights */
+
+$fw-regular: 400;
+$fw-medium: 500;
+$fw-semibold: 600;
+$fw-bold: 800;
+
+$fw: (
+  regular: $fw-regular,
+  medium: $fw-medium,
+  semibold: $fw-semibold,
+  bold: $fw-bold
+);
+
+/* Font sizes (headings) */
+
+$fs-h1: 4.5rem; // 72px
+$fs-h2: 3.813rem; // 61px
+$fs-h3: 3.063rem; // 49px
+$fs-h4: 2.188rem; // 35px
+$fs-h5: 1.5rem; // 24px
+$fs-h6: 1.25rem; // 20px
+
+$fs-h: (
+  h1: $fs-h1,
+  h2: $fs-h2,
+  h3: $fs-h3,
+  h4: $fs-h4,
+  h5: $fs-h5,
+  h6: $fs-h6
+);
+
+/* Font sizes (texts) */
+
+$fs-2xs: 0.625rem; // 10px
+$fs-xs: 0.75rem; // 12px
+$fs-sm: 0.875rem; // 14px
+$fs-base: 1rem; // 16px
+$fs-lg: 1.125rem; // 18px
+
+$fs: (
+  2xs: $fs-2xs,
+  xs: $fs-xs,
+  sm: $fs-sm,
+  base: $fs-base,
+  lg: $fs-lg
+);
+
+/* Line heights (headings) */
+
+$lh-h1: 5.313rem; // 85px
+$lh-h2: 5.75rem; // 92px
+$lh-h3: 4.625rem; // 74px
+$lh-h4: 3.313rem; // 53px
+$lh-h5: 2.25rem; // 36px
+$lh-h6: 1.75rem; // 28px
+
+$lh-h: (
+  h1: $lh-h1,
+  h2: $lh-h2,
+  h3: $lh-h3,
+  h4: $lh-h4,
+  h5: $lh-h5,
+  h6: $lh-h6
+);
+
+/* Line heights (texts) */
+
+$lh-xs: 0.938rem; // 15px
+$lh-sm: 1.25rem; // 20px
+$lh-base: 1.5rem; // 24px
+
+$lh: (
+  xs: $lh-xs,
+  sm: $lh-sm,
+  base: $lh-base
+);
+
+/* Letter spacings (headings) */
+
+$ls-h1: -0.094rem; // -1.5px
+$ls-h2: -0.031rem; // -0.5px
+$ls-h3: normal;
+$ls-h4: normal;
+$ls-h5: normal;
+$ls-h6: 0.009rem; // 0.15px
+
+$ls-h: (
+  h1: $ls-h1,
+  h2: $ls-h2,
+  h3: $ls-h3,
+  h4: $ls-h4,
+  h5: $ls-h5,
+  h6: $ls-h6
+);
+
+/* Letter spacings (texts) */
+
+$ls-none: normal; // normal
+$ls-3xs: 0.0025rem; // 0.04px
+$ls-2xs: 0.006rem; // 0.1px
+$ls-xs: 0.009rem; // 0.15px
+$ls-sm: 0.025rem; // 0.4px
+$ls-base: 0.031rem; // 0.5px
+$ls-lg: 0.094rem; // 1.5px
+
+$ls: (
+  none: $ls-none,
+  3xs: $ls-3xs,
+  2xs: $ls-2xs,
+  xs: $ls-xs,
+  sm: $ls-sm,
+  base: $ls-base,
+  lg: $ls-lg
+);
+
+/* Text transforms */
+
+$tt-none: none;
+$tt-uppercase: uppercase;
+
+$tt: (
+  none: $tt-none,
+  uppercase: $tt-uppercase
+);
+
+/*=====  End of TYPOGRAPHY  ======*/
+
+/*=============================================
+=                BREAKPOINTS                  =
+=============================================*/
+
+$mobile: 25.875rem; // 414px
+$tablet: 55rem; // 880px
+$desktop: 90rem; // 1440px
+
+$breakpoints: (
+  mobile: $mobile,
+  tablet: $tablet,
+  desktop: $desktop
+);
+
+/*=============================================
+=                  SPACING                   =
+=============================================*/
+
+$spacing-none: 0;
+$spacing-3xs: 0.25rem; // 4px
+$spacing-2xs: 0.5rem; // 8px
+$spacing-xs: 0.75rem; // 12px
+$spacing-sm: 1rem; // 16px
+$spacing-md: 1.5rem; // 24px
+$spacing-lg: 2rem; // 32px
+$spacing-xl: 3rem; // 48px
+$spacing-2xl: 4.5rem; // 72px
+$spacing-3xl: 6rem; // 96px
+
+$spacing: (
+  none: $spacing-none,
+  3xs: $spacing-3xs,
+  2xs: $spacing-2xs,
+  xs: $spacing-xs,
+  sm: $spacing-sm,
+  md: $spacing-md,
+  lg: $spacing-lg,
+  xl: $spacing-xl,
+  2xl: $spacing-2xl,
+  3xl: $spacing-3xl
+);
+
+$spacing-scale-factor: 0.25rem; // 4px
+
+/*=====  End of BREAKPOINTS  ======*/
+
+/*=============================================
+=                  SHADOWS                   =
+=============================================*/
+
+$shadow-main:
+  0px 5px 6px -3px rgba(144, 164, 174, 0.2),
+  0px 9px 12px 1px rgba(144, 164, 174, 0.14),
+  0px 3px 16px 2px rgba(144, 164, 174, 0.12);
+
+$shadow-common: 0px 3px 16px 2px rgba(144, 164, 174, 0.12);
+
+$shadow-common-hover: 0px 3px 16px 2px rgba(144, 164, 174, 0.56);
+
+$shadow-small-hover: 0 3px 1px rgba(144, 164, 174, 0.56);
+
+/*=====  End of SHADOWS  ======*/

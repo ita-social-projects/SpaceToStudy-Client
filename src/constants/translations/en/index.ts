@@ -8,6 +8,7 @@ import titles from './titles.json'
 import guestHomePage from './guest-home-page.json'
 import studentHomePage from './student-home-page.json'
 import categoriesPage from './categories-page.json'
+import changeConfirm from './change-confirm.json'
 import cookiePolicyPage from './cookie-policy-page.json'
 import cookieConsentBanner from './cookie-consent-banner.json'
 import iconsTooltip from './icons-tooltip.json'
@@ -57,6 +58,7 @@ const en = {
     signup,
     studentHomePage,
     categoriesPage,
+    changeConfirm,
     cookieConsentBanner,
     cookiePolicyPage,
     footer,

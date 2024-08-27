@@ -17,29 +17,18 @@ const NotificationTab = () => {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
 
-  const isOfferStatusNotification = useAppSelector(
-    (state: RootState) => state.editProfile.isOfferStatusNotification
+  const notificationSettings = useAppSelector(
+    (state: RootState) => state.editProfile.notificationSettings
   )
-  const isChatNotification = useAppSelector(
-    (state: RootState) => state.editProfile.isChatNotification
-  )
-  const isSimilarOffersNotification = useAppSelector(
-    (state: RootState) => state.editProfile.isSimilarOffersNotification
-  )
-  const isEmailNotification = useAppSelector(
-    (state: RootState) => state.editProfile.isEmailNotification
-  )
-
-  const notificationSettings: NotificationSettings = {
-    isOfferStatusNotification,
-    isChatNotification,
-    isSimilarOffersNotification,
-    isEmailNotification
-  }
 
   const handleSwitchChange = (field: keyof NotificationSettings) => {
     return (event: ChangeEvent<HTMLInputElement>) => {
-      dispatch(setField({ field, value: event.target.checked }))
+      dispatch(
+        setField({
+          field: 'notificationSettings',
+          value: { ...notificationSettings, [field]: event.target.checked }
+        })
+      )
     }
   }
 
@@ -72,7 +61,7 @@ const NotificationTab = () => {
           style={styles.titleWithDescription}
           title={t('editProfilePage.profile.notificationsTab.notifications')}
         />
-        <Box sx={styles.optionsContainer}>{notificationOptionList}</Box>
+        <Box>{notificationOptionList}</Box>
       </Box>
     </Box>
   )
