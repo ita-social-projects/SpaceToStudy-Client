@@ -86,6 +86,7 @@ const UserProfile = () => {
         averageRating={response?.averageRating?.tutor}
         reviewsCount={reviews}
         totalReviews={response?.totalReviews?.tutor}
+        userRole={preferredRole}
       />
     </PageWrapper>
   )
