@@ -3,15 +3,19 @@ export const scrollToAndHighlight = (path: string) => {
     const elementWithId = document.getElementById(
       path.split('#').slice(1).join()
     )
-    if (elementWithId) {
-      // console.log(elementWithId)
+    const highlightedElement = elementWithId?.querySelectorAll('div')[0]
+
+    if (elementWithId && highlightedElement) {
       elementWithId.style.position = 'relative'
+      highlightedElement.style.visibility = 'visible'
+      highlightedElement.style.transform = 'scale(1.05, 1.23)'
+
       elementWithId.scrollIntoView({ behavior: 'smooth', block: 'center' })
 
-      // setTimeout(() => {
-      //   elementWithId.style.backgroundColor = ''
-      //   elementWithId.style.padding = '0'
-      // }, 1000)
+      setTimeout(() => {
+        highlightedElement.style.transform = 'scale(1.01)'
+        highlightedElement.style.visibility = 'hidden'
+      }, 2500)
     }
   }, 0)
 }
