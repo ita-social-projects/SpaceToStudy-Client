@@ -1,4 +1,11 @@
-import { useCallback, useEffect, ChangeEvent, useState, useMemo } from 'react'
+import {
+  useCallback,
+  useEffect,
+  ChangeEvent,
+  useState,
+  useMemo,
+  useRef
+} from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
@@ -111,10 +118,15 @@ const FindOffers = () => {
 
   const defaultParams = { page: defaultFilters(oppositeRole).page }
 
+  const pageWrapperRef = useRef<HTMLDivElement>(null)
+
   const handlePageChange = (_: ChangeEvent<unknown>, page: number) => {
     filterQueryActions.updateFiltersInQuery({ page })
-  }
 
+    if (pageWrapperRef.current) {
+      pageWrapperRef.current.scrollIntoView()
+    }
+  }
   const handleShowingTutorOffers = () => {
     const updatedRole = getOpositeRole(filters.authorRole)
     filterQueryActions.updateFiltersInQuery({
@@ -124,7 +136,7 @@ const FindOffers = () => {
   }
 
   return (
-    <PageWrapper>
+    <PageWrapper ref={pageWrapperRef}>
       <OfferRequestBlock />
       <TitleWithDescription
         description={t('findOffers.titleWithDescription.description')}
