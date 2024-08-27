@@ -1,5 +1,15 @@
 import { ResourcesTypesEnum as ResourceType } from '~/types'
 
+export const mockedEmptySectionsData = []
+
+export const mockedNewEmptySectionsData = [
+  {
+    title: '',
+    description: '',
+    resources: []
+  }
+]
+
 export const mockedCourseData = {
   title: 'Course title',
   description: 'Course description',
@@ -37,5 +47,3 @@ export const mockedSectionsData = [
     id: '17121748017181'
   }
 ]
-
-export const mockedEmptySectionsData = []

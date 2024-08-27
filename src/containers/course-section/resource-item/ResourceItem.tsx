@@ -6,6 +6,7 @@ import TextField from '@mui/material/TextField'
 import IconButton from '@mui/material/IconButton'
 import CloseIcon from '@mui/icons-material/Close'
 import EditIcon from '@mui/icons-material/Edit'
+import LinkRoundedIcon from '@mui/icons-material/LinkRounded'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
@@ -52,15 +53,19 @@ const ResourceItem: FC<ResourceItemProps> = ({
 }) => {
   const { t } = useTranslation()
 
-  const handleDeleteResource = () => {
+  const handleDeleteResource = useCallback(() => {
     deleteResource?.(resource)
-  }
+  }, [deleteResource, resource])
 
-  const handleEditResource = () => {
+  const handleEditResource = useCallback(() => {
     editResource?.(resource)
-  }
+  }, [editResource, resource])
 
-  const renderResourceIcon = () => {
+  const handleLinkResource = useCallback(() => {
+    editResource?.(resource)
+  }, [editResource, resource])
+
+  const renderResourceIcon = useCallback(() => {
     const { Lesson, Quiz } = ResourceType
 
     const type = resourceType || resource.resourceType
@@ -73,27 +78,29 @@ const ResourceItem: FC<ResourceItemProps> = ({
       default:
         return null
     }
-  }
+  }, [resourceType, resource.resourceType])
 
   const resourceAvailability = resource.availability
-
   const resourceAvailabilityStatus =
     resourceAvailability?.status ?? ResourceAvailabilityStatusEnum.Open
 
   const shouldShowDatePicker =
     resourceAvailabilityStatus === ResourceAvailabilityStatusEnum.OpenFrom
 
-  const setOpenFromDate = (date: Date | null) => {
-    updateAvailability?.(resource, {
-      status: resourceAvailabilityStatus,
-      date: date?.toISOString() ?? null
-    })
-  }
+  const setOpenFromDate = useCallback(
+    (date: Date | null) => {
+      updateAvailability?.(resource, {
+        status: resourceAvailabilityStatus,
+        date: date?.toISOString() ?? null
+      })
+    },
+    [resource, resourceAvailabilityStatus, updateAvailability]
+  )
 
   const setAvailabilityStatus = useCallback(
     (status: ResourceAvailabilityStatusEnum) => {
       updateAvailability?.(resource, {
-        status: status,
+        status,
         date: null
       })
     },
@@ -130,7 +137,7 @@ const ResourceItem: FC<ResourceItemProps> = ({
       )}
       <AppSelect
         fields={selectionFields}
-        setValue={(value) => setAvailabilityStatus(value)}
+        setValue={setAvailabilityStatus}
         sx={styles.availabilitySelect}
         value={resourceAvailabilityStatus}
       />
@@ -145,9 +152,15 @@ const ResourceItem: FC<ResourceItemProps> = ({
   ) : (
     <Box sx={styles.resourceActions}>
       {isCooperation && availabilitySelection}
-      <IconButton aria-label='edit' onClick={handleEditResource}>
-        <EditIcon fontSize={SizeEnum.Small} sx={styles.editBtn} />
-      </IconButton>
+      {resource.isDuplicate ? (
+        <IconButton aria-label='edit' onClick={handleEditResource}>
+          <EditIcon fontSize={SizeEnum.Small} sx={styles.editBtn} />
+        </IconButton>
+      ) : (
+        <IconButton aria-label='link' onClick={handleLinkResource}>
+          <LinkRoundedIcon fontSize={SizeEnum.Small} sx={styles.linkBtn} />
+        </IconButton>
+      )}
       <IconButton aria-label='delete' onClick={handleDeleteResource}>
         <CloseIcon fontSize={SizeEnum.Small} />
       </IconButton>

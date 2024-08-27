@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { SxProps } from '@mui/material'
@@ -13,8 +14,8 @@ import EnhancedTableRow from '~/components/enhanced-table/enhanced-table-row/Enh
 import FilterRow from '~/components/enhanced-table/filter-row/FilterRow'
 import Loader from '~/components/loader/Loader'
 
-import { spliceSx } from '~/utils/helper-functions'
 import { styles } from '~/components/enhanced-table/EnhancedTable.styles'
+import { spliceSx } from '~/utils/helper-functions'
 import {
   TableColumn,
   TableData,
@@ -29,14 +30,16 @@ export interface EnhancedTableProps<I, F> extends Omit<TableProps, 'style'> {
   columns: TableColumn<I>[]
   isSelection?: boolean
   rowActions?: TableRowAction[]
+  onRowClick?: (item: I) => void
   select?: TableSelect<I>
   filter?: TableFilter<F>
   sort: TableSort
   rowsPerPage?: number
   data: TableData<I>
-  onRowClick?: (item: I) => void
+  disableInitialSelectedRows?: boolean
   emptyTableKey?: string
   selectedRows?: I[]
+  initialSelectedRows?: I[]
   style?: {
     root?: SxProps
     tableContainer?: SxProps
@@ -53,27 +56,46 @@ const EnhancedTable = <I extends TableItem, F = undefined>({
   sort,
   rowsPerPage,
   data,
+  disableInitialSelectedRows = false,
   emptyTableKey = 'table.noExactMatches',
   selectedRows = [],
+  initialSelectedRows = [],
   style = {},
   ...props
 }: EnhancedTableProps<I, F>) => {
   const { t } = useTranslation()
   const { items, loading, getData } = data
 
-  const rows = items.map((item) => (
-    <EnhancedTableRow
-      columns={columns}
-      isSelection={isSelection}
-      item={item}
-      key={item._id}
-      onRowClick={onRowClick}
-      refetchData={getData}
-      rowActions={rowActions}
-      select={select}
-      selectedRows={selectedRows}
-    />
-  ))
+  const rows = useMemo(
+    () =>
+      items.map((item) => (
+        <EnhancedTableRow
+          columns={columns}
+          initialSelectedRows={initialSelectedRows}
+          isDisableRow={disableInitialSelectedRows}
+          isSelection={isSelection}
+          item={item}
+          key={item._id}
+          onRowClick={onRowClick}
+          refetchData={getData}
+          rowActions={rowActions}
+          select={select}
+          selectedRows={selectedRows}
+        />
+      )),
+    [
+      items,
+      columns,
+      initialSelectedRows,
+      disableInitialSelectedRows,
+      isSelection,
+      onRowClick,
+      getData,
+      rowActions,
+      select,
+      selectedRows
+    ]
+  )
 
   const tableBody = (
     <TableContainer

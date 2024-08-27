@@ -16,7 +16,6 @@ interface CooperationsState {
   isActivityCreated: boolean // delete it
   isAddedClicked: boolean // delete it
   isNewActivity: boolean // delete it
-  currentSectionIndex?: number // delete it
   sections: CourseSection[]
   resourcesAvailability: ResourcesAvailabilityEnum
 }
@@ -26,7 +25,6 @@ const initialState: CooperationsState = {
   isActivityCreated: false, // delete it
   isAddedClicked: false, // delete it
   isNewActivity: false, // delete it
-  currentSectionIndex: 0, // delete it
   sections: [],
   resourcesAvailability: ResourcesAvailabilityEnum.OpenAll
 }
@@ -63,13 +61,6 @@ const cooperationsSlice = createSlice({
     ) {
       state.isNewActivity = action.payload
     },
-    setCurrentSectionIndex(
-      // delete it
-      state,
-      action: PayloadAction<CooperationsState['currentSectionIndex']>
-    ) {
-      state.currentSectionIndex = action.payload
-    },
 
     setCooperationSections(
       state,
@@ -78,6 +69,7 @@ const cooperationsSlice = createSlice({
       // state.sections = action.payload if courses will be fixed
       state.sections = (action.payload ?? []).map((section) => ({
         ...section,
+        id: section._id ?? uuidv4(),
         resources: section.resources ?? []
       }))
     },
@@ -131,9 +123,10 @@ const cooperationsSlice = createSlice({
         })
         .map((resource) => {
           return {
-            resource: isDuplicate ? { ...resource, _id: uuidv4() } : resource,
-            resourceType: resource.resourceType,
-            ...(isDuplicate && { isDuplicate: true })
+            resource: isDuplicate
+              ? { ...resource, _id: uuidv4(), isDuplicate: true }
+              : resource,
+            resourceType: resource.resourceType
           }
         })
 
@@ -232,7 +225,6 @@ export const {
   setIsActivityCreated,
   setIsAddedClicked,
   setIsNewActivity,
-  setCurrentSectionIndex,
   setCooperationSections,
   updateCooperationSection,
   deleteCooperationSection,
