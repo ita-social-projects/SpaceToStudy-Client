@@ -61,13 +61,11 @@ const MessagesList = ({
     [isMessagesLoading, infiniteLoadCallback]
   )
 
-  if (isMessagesLoading || messages.length === 0) {
+  if (messages.length === 0) {
     return (
       <Box sx={styles.chipWrapper}>
         <AppChip labelSx={styles.chipLabel(true)} sx={styles.chip}>
-          {isMessagesLoading
-            ? t('chatPage.chat.loading')
-            : t('chatPage.message.noMessages')}
+          {t('chatPage.message.noMessages')}
         </AppChip>
       </Box>
     )

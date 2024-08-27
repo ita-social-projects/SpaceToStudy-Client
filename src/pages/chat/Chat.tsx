@@ -223,7 +223,8 @@ const Chat = () => {
   }
 
   const handleFilteredMessage = (filteredMessages: string[]) => {
-    setFilteredMessages(filteredMessages.reverse())
+    filteredMessages.reverse()
+    setFilteredMessages(filteredMessages)
   }
 
   const hadleIndexMessage = (filteredIndex: number) => {
