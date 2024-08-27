@@ -224,6 +224,7 @@ const ProfileTabForm: FC<ProfileTabFormProps> = ({
       </Box>
 
       <Box id='video' sx={styles.section}>
+        <Box sx={styles.highlight}></Box>
         <TitleWithDescription
           description={t(
             'editProfilePage.profile.generalTab.videoPresentationDesc'

@@ -32,7 +32,7 @@ export const profileItemsTutor: ProfileItemType[] = [
   {
     id: 'schedule',
     icon: <SellIcon />,
-    path: authRoutes.accountMenu.myProfile.path
+    path: ''
   },
   {
     id: 'offer',
