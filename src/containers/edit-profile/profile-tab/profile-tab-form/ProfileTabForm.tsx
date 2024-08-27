@@ -113,6 +113,7 @@ const ProfileTabForm: FC<ProfileTabFormProps> = ({
   return (
     <Box sx={styles.profileGeneralTabContainer}>
       <Box id='photo' sx={styles.avatar.root}>
+        <Box sx={styles.highlight}></Box>
         <DragAndDrop
           emitter={addPhoto}
           style={{ root: styles.avatar.img }}

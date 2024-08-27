@@ -17,6 +17,7 @@ import {
 import { EditProfileForm, MainUserRole } from '~/types'
 import { styles } from '~/containers/edit-profile/profile-tab/ProfileTab.styles'
 import { scrollToAndHighlight } from '~/utils/scroll-and-highlight'
+import { fieldsWithIncreasedHeight } from '~/components/profile-item/complete-profile.constants'
 
 const ProfileTab: FC = () => {
   const { t } = useTranslation()
@@ -68,8 +69,10 @@ const ProfileTab: FC = () => {
 
   useEffect(() => {
     if (hash) {
-      // console.log(hash)
-      scrollToAndHighlight(`${pathname}${hash}`)
+      scrollToAndHighlight(
+        `${pathname}${hash}`,
+        fieldsWithIncreasedHeight.includes(hash)
+      )
     }
   }, [pathname, hash])
 

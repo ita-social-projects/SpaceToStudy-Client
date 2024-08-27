@@ -63,3 +63,5 @@ export const profileItemsStudent: ProfileItemType[] = [
     path: ''
   }
 ]
+
+export const fieldsWithIncreasedHeight = ['#video']
