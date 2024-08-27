@@ -2,10 +2,6 @@ import { screen } from '@testing-library/react'
 import MessagesList from '~/pages/chat/MessagesList'
 import { renderWithProviders } from '~tests/test-utils'
 
-vi.mock('react-i18next', () => ({
-  useTranslation: () => ({ t: (key) => key })
-}))
-
 vi.mock('~/components/message/Message', () => ({
   default: vi.fn(() => <div data-testid='mock-message'>Mock Message</div>)
 }))
