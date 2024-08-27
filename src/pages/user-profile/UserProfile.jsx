@@ -35,7 +35,7 @@ const UserProfile = () => {
 
   const preferredRole = paramsRole || userRole
   const preferredId = id || userId
-  const isMyProfile = useMatch(authRoutes.accountMenu.myProfile.path)
+  const isMyProfile = useMatch(authRoutes.myProfile.path)
 
   const getUserData = useCallback(
     () => userService.getUserById(preferredId, preferredRole),
