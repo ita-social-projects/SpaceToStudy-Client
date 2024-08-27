@@ -13,8 +13,8 @@ vi.mock('~/components/cooperation-section-view/CooperationSectionView', () => ({
 vi.mock('~/hooks/use-redux', () => ({
   useAppSelector: vi.fn().mockReturnValue({
     sections: [
-      { _id: '1', title: 'Section1' },
-      { _id: '2', title: 'Section2' }
+      { id: '1', title: 'Section1' },
+      { id: '2', title: 'Section2' }
     ],
     userRole: UserRoleEnum.Tutor
   }),

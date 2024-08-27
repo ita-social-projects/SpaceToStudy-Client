@@ -408,7 +408,7 @@ describe('Testing CreateCourse Event Handlers', () => {
     mockDispatch.mockReset()
   })
 
-  it('should handle adding a new resource to a section [CourseResourceEventType.AddSectionResources]', async () => {
+  it('should handle adding a new resource to a section [CourseResourceEventType.AddSectionResources] when isDuplicate=false', async () => {
     const courseSectionList = screen.getByTestId('mock-CourseSectionsList')
 
     fireEvent.change(courseSectionList, {
@@ -418,7 +418,8 @@ describe('Testing CreateCourse Event Handlers', () => {
           payload: {
             type: CourseResourceEventType.AddSectionResources,
             sectionId: mockSectionId,
-            resources: [mockNewSectionResource]
+            resources: [mockNewSectionResource],
+            isDuplicate: false
           }
         })
       }
@@ -439,6 +440,54 @@ describe('Testing CreateCourse Event Handlers', () => {
           ],
           title: mockNewCourseData.sections[0].title
         }
+      ])
+    })
+  })
+
+  it('should handle adding a new resource to a section [CourseResourceEventType.AddSectionResources] when isDuplicate=true', async () => {
+    const courseSectionList = screen.getByTestId('mock-CourseSectionsList')
+
+    fireEvent.change(courseSectionList, {
+      target: {
+        value: JSON.stringify({
+          event: 'resourceEventHandler',
+          payload: {
+            type: CourseResourceEventType.AddSectionResources,
+            sectionId: mockSectionId,
+            resources: [mockNewSectionResource],
+            isDuplicate: true
+          }
+        })
+      }
+    })
+
+    await waitFor(() => {
+      expect(mockHandleNonInputValueChange).toHaveBeenCalled(1)
+      expect(mockHandleNonInputValueChange).toHaveBeenCalledWith('sections', [
+        expect.objectContaining({
+          id: mockCourseResponseData.sections[0].id,
+          title: mockCourseResponseData.sections[0].title,
+          resources: expect.arrayContaining([
+            expect.objectContaining({
+              resource: expect.objectContaining({
+                _id: mockCourseResponseData.sections[0].resources[0].resource
+                  ._id,
+                title:
+                  mockCourseResponseData.sections[0].resources[0].resource.title
+              }),
+              resourceType:
+                mockCourseResponseData.sections[0].resources[0].resourceType
+            }),
+            expect.objectContaining({
+              resource: expect.objectContaining({
+                _id: expect.any(String),
+                title: mockNewSectionResource.title,
+                isDuplicate: true
+              }),
+              resourceType: mockNewSectionResource.resourceType
+            })
+          ])
+        })
       ])
     })
   })

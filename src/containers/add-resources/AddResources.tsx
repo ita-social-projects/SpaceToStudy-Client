@@ -1,17 +1,18 @@
 import { useCallback, useState } from 'react'
 
 import { useAppDispatch } from '~/hooks/use-redux'
-import { useModalContext } from '~/context/modal-context'
 import useSelect from '~/hooks/table/use-select'
 import useSort from '~/hooks/table/use-sort'
 import useAxios from '~/hooks/use-axios'
 import useBreakpoints from '~/hooks/use-breakpoints'
 
-import AddResourceModal from '~/containers/my-resources/add-resource-modal/AddResourceModal'
-
-import { initialSort } from '~/containers/add-resources/AddResources.constants'
+import { useModalContext } from '~/context/modal-context'
+import { openAlert } from '~/redux/features/snackbarSlice'
 import { defaultResponses, snackbarVariants } from '~/constants'
+import { initialSort } from '~/containers/add-resources/AddResources.constants'
+import AddResourceModal from '~/containers/my-resources/add-resource-modal/AddResourceModal'
 import { adjustColumns } from '~/utils/helper-functions'
+import { getErrorKey } from '~/utils/get-error-key'
 import {
   ErrorResponse,
   GetResourcesParams,
@@ -23,8 +24,6 @@ import {
   ServiceFunction,
   ResourcesTabsEnum
 } from '~/types'
-import { openAlert } from '~/redux/features/snackbarSlice'
-import { getErrorKey } from '~/utils/get-error-key'
 
 interface AddResourcesProps<T extends CourseResource | Question> {
   resources?: T[]
@@ -50,6 +49,7 @@ const AddResources = <T extends CourseResource | Question>({
   const { closeModal } = useModalContext()
 
   const [selectedRows, setSelectedRows] = useState<T[]>(resources)
+  const [initialSelectedRows, setInitialSelectedRows] = useState<T[]>(resources)
   const [isDuplicate, setIsDuplicate] = useState<boolean>(false)
 
   const initialSelect = resources.map((resource) => resource._id)
@@ -88,49 +88,53 @@ const AddResources = <T extends CourseResource | Question>({
     onResponseError
   })
 
-  const onRowClick = (item: T) => {
-    if (selectedRows.find((resource) => resource._id === item._id)) {
+  const onRowClick = useCallback(
+    (item: T) => {
       setSelectedRows((selectedRows) =>
-        selectedRows.filter((resource) => resource._id !== item._id)
+        selectedRows.find((resource) => resource._id === item._id)
+          ? selectedRows.filter((resource) => resource._id !== item._id)
+          : [...selectedRows, item]
       )
-    } else {
-      setSelectedRows((selectedRows) => [...selectedRows, item])
-    }
-    handleSelectClick(item._id)
-  }
+      handleSelectClick(item._id)
+    },
+    [handleSelectClick]
+  )
 
-  const onAddItems = () => {
+  const onAddItems = useCallback(() => {
     onAddResources(selectedRows, isDuplicate)
     closeModal()
-  }
+  }, [selectedRows, isDuplicate, onAddResources, closeModal])
 
-  const onCreateResourceCopy = (value: boolean) => {
-    setIsDuplicate(value)
-    if (value) {
-      setSelectedRows([])
-      clearSelected()
-    } else {
-      setSelectedRows(resources)
-      select.setSelected(resources.map((item) => item._id))
-    }
-  }
+  const onCreateResourceCopy = useCallback(
+    (value: boolean) => {
+      setIsDuplicate(value)
+      if (value) {
+        setSelectedRows([])
+        setInitialSelectedRows([])
+        clearSelected()
+      } else {
+        setSelectedRows(resources)
+        setInitialSelectedRows(resources)
+        select.setSelected(resources.map((item) => item._id))
+      }
+    },
+    [resources, clearSelected, select]
+  )
 
   const getItems = useCallback(
     (inputValue: string, selectedCategories: string[]) => {
       return response.items.filter((item) => {
-        let titleMatch
-        if ('title' in item) {
-          titleMatch = item.title
-            .toLocaleLowerCase()
-            .includes(inputValue.toLocaleLowerCase())
-        } else {
-          titleMatch = item.fileName
-            .toLocaleLowerCase()
-            .split('.')
-            .slice(0, -1)
-            .join('.')
-            .includes(inputValue.toLocaleLowerCase())
-        }
+        const titleMatch =
+          'title' in item
+            ? item.title
+                .toLocaleLowerCase()
+                .includes(inputValue.toLocaleLowerCase())
+            : item.fileName
+                .toLocaleLowerCase()
+                .split('.')
+                .slice(0, -1)
+                .join('.')
+                .includes(inputValue.toLocaleLowerCase())
 
         const categoryId =
           typeof item.category !== 'string' ? item.category?._id : null
@@ -150,6 +154,7 @@ const AddResources = <T extends CourseResource | Question>({
     sort: sortOptions,
     select,
     selectedRows,
+    initialSelectedRows,
     isSelection: true,
     onAddItems,
     onCreateResourceCopy,

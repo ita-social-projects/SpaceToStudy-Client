@@ -1,5 +1,6 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react'
 
+import { ResourcesTypesEnum as ResourceType } from '~/types'
 import {
   mockAxiosClient,
   renderWithProviders,
@@ -8,12 +9,13 @@ import {
 import { URLs } from '~/constants/request'
 import { createUrlPath } from '~/utils/helper-functions'
 import { authRoutes } from '~/router/constants/authRoutes'
+
 import CreateOrEditLesson from '~/pages/create-or-edit-lesson/CreateOrEditLesson'
 
 const mockNavigate = vi.fn()
 const mockedCategory = { _id: 'categoryId', name: 'categoryName' }
 
-const mockedAttachement = {
+const mockedAttachment = {
   availability: {
     status: 'open',
     date: null
@@ -24,14 +26,14 @@ const mockedAttachement = {
   link: '1722535882408-test.pdf',
   size: 15069,
   category: null,
-  resourceType: 'attachments',
+  resourceType: ResourceType.Attachment,
   createdAt: '2024-08-01T18:11:23.042Z',
   updatedAt: '2024-08-01T18:11:23.042Z'
 }
 
-const mockedAttachementsResponse = {
+const mockedAttachmentsResponse = {
   count: 1,
-  items: [mockedAttachement]
+  items: [mockedAttachment]
 }
 
 vi.mock('react-router-dom', async () => ({
@@ -43,7 +45,7 @@ describe('CreateOrEditLesson component test', () => {
   beforeAll(() => {
     mockAxiosClient
       .onGet(URLs.resources.attachments.get)
-      .reply(200, mockedAttachementsResponse)
+      .reply(200, mockedAttachmentsResponse)
 
     mockAxiosClient
       .onGet(URLs.resources.resourcesCategories.getNames)
@@ -139,19 +141,19 @@ describe('CreateOrEditLesson component test', () => {
   it('should add an attachment', async () => {
     mockAxiosClient
       .onGet(URLs.resources.attachments.get)
-      .reply(200, mockedAttachementsResponse)
+      .reply(200, mockedAttachmentsResponse)
     const attachmentsBtn = screen.getByRole('button', {
       name: 'lesson.labels.attachments'
     })
     fireEvent.click(attachmentsBtn)
 
-    const attachment = await screen.findByText(mockedAttachement.fileName)
+    const attachment = await screen.findByText(mockedAttachment.fileName)
     fireEvent.click(attachment)
 
     const addBtn = screen.getByText('common.add')
     fireEvent.click(addBtn)
 
-    const addedAttachment = screen.getByText(mockedAttachement.fileName)
+    const addedAttachment = screen.getByText(mockedAttachment.fileName)
 
     expect(addedAttachment).toBeInTheDocument()
   })
@@ -159,25 +161,25 @@ describe('CreateOrEditLesson component test', () => {
   it('should remove an attachment', async () => {
     mockAxiosClient
       .onGet(URLs.resources.attachments.get)
-      .reply(200, mockedAttachementsResponse)
+      .reply(200, mockedAttachmentsResponse)
     const attachmentsBtn = screen.getByRole('button', {
       name: 'lesson.labels.attachments'
     })
     fireEvent.click(attachmentsBtn)
 
-    const attachment = await screen.findByText(mockedAttachement.fileName)
+    const attachment = await screen.findByText(mockedAttachment.fileName)
     fireEvent.click(attachment)
 
     const addBtn = screen.getByText('common.add')
     fireEvent.click(addBtn)
 
-    let addedAttachment = screen.getByText(mockedAttachement.fileName)
+    let addedAttachment = screen.getByText(mockedAttachment.fileName)
     expect(addedAttachment).toBeInTheDocument()
 
     const removeAttachmentBtn = screen.getByTestId('CloseIcon')
     fireEvent.click(removeAttachmentBtn)
 
-    addedAttachment = screen.queryByText(mockedAttachement.fileName)
+    addedAttachment = screen.queryByText(mockedAttachment.fileName)
     expect(addedAttachment).not.toBeInTheDocument()
   })
 
