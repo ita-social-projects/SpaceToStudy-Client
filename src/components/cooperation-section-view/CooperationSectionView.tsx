@@ -20,7 +20,7 @@ const CooperationSectionView: FC<CooperationSectionViewProps> = ({
   id
 }) => {
   const { t } = useTranslation()
-  const [isVisible, setIsVisible] = useState(true)
+  const [isVisible, setIsVisible] = useState<boolean>(true)
 
   const resources = useMemo<undefined | ReactNode[]>(
     () =>
@@ -36,7 +36,7 @@ const CooperationSectionView: FC<CooperationSectionViewProps> = ({
   )
 
   return (
-    <Box sx={styles.root}>
+    <Box key={id} sx={styles.root}>
       <HeaderTextWithDropdown
         isView
         isVisible={isVisible}
@@ -44,7 +44,7 @@ const CooperationSectionView: FC<CooperationSectionViewProps> = ({
         setIsVisible={setIsVisible}
       />
       {isVisible && (
-        <Box key={id} sx={styles.showBlock}>
+        <Box sx={styles.showBlock}>
           <AppTextField
             InputProps={styles.descriptionInput}
             fullWidth

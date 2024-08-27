@@ -161,7 +161,7 @@ const CreateCourse = () => {
 
   const addNewSection = useCallback(() => {
     const newSectionData = { ...sectionInitialData }
-    newSectionData.id = Date.now().toString()
+    newSectionData.id = uuidv4()
     setSectionsData([...data.sections, newSectionData])
   }, [data.sections, setSectionsData])
 

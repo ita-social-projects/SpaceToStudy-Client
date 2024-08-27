@@ -1,4 +1,4 @@
-import { FC, Fragment, MouseEvent } from 'react'
+import { FC, Fragment, MouseEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DndContext, DragOverlay } from '@dnd-kit/core'
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
@@ -10,7 +10,6 @@ import MenuItem from '@mui/material/MenuItem'
 import Typography from '@mui/material/Typography'
 import ViewComfyOutlinedIcon from '@mui/icons-material/ViewComfyOutlined'
 import { Add } from '@mui/icons-material'
-import { v4 as uuidv4 } from 'uuid'
 
 import AddCourseTemplateModal from '~/containers/cooperation-details/add-course-modal-modal/AddCourseTemplateModal'
 import SortableWrapper from '~/containers/sortable-wrapper/SortableWrapper'
@@ -24,16 +23,12 @@ import {
   CourseSectionHandlers
 } from '~/types'
 import { useModalContext } from '~/context/modal-context'
-import {
-  cooperationsSelector,
-  setCurrentSectionIndex,
-  setIsAddedClicked
-} from '~/redux/features/cooperationsSlice'
+import { setIsAddedClicked } from '~/redux/features/cooperationsSlice'
 
 import useDroppable from '~/hooks/use-droppable'
 import useMenu from '~/hooks/use-menu'
 import useDndSensor from '~/hooks/use-dnd-sensor'
-import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
+import { useAppDispatch } from '~/hooks/use-redux'
 
 interface CourseSectionsListProps extends CourseSectionHandlers {
   items: CourseSection[]
@@ -47,8 +42,12 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
   sectionEventHandler,
   isCooperation = false
 }) => {
+  const dispatch = useAppDispatch()
+  const { t } = useTranslation()
   const { enabled } = useDroppable()
-  const Id = uuidv4()
+  const { anchorEl, openMenu, closeMenu, renderMenu } = useMenu()
+  const { openModal, closeModal } = useModalContext()
+  const [currentSectionIndex, setCurrentSectionIndex] = useState<number>(0)
 
   const handleSectionsSort = (sections: CourseSection[]) => {
     sectionEventHandler?.({
@@ -65,19 +64,12 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
     sensors
   } = useDndSensor({ items, setItems: handleSectionsSort, idProp: 'id' })
 
-  const dispatch = useAppDispatch()
-  const { t } = useTranslation()
-  const { anchorEl, openMenu, closeMenu, renderMenu } = useMenu()
-  const { openModal, closeModal } = useModalContext()
-  const { currentSectionIndex } = useAppSelector(cooperationsSelector)
-
-  const handleActivitiesMenuClick = (event: MouseEvent<HTMLButtonElement>) => {
+  const handleActivitiesMenuClick = (
+    event: MouseEvent<HTMLElement>,
+    index: number
+  ) => {
+    setCurrentSectionIndex(index)
     openMenu(event)
-    dispatch(
-      setCurrentSectionIndex(
-        items.findIndex((item) => item.id === event.currentTarget.id)
-      )
-    )
   }
 
   const handleMenuItemClick = () => {
@@ -90,7 +82,7 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
 
   const openAddCourseTemplateModal = () => {
     closeMenu()
-    dispatch(setIsAddedClicked(false))
+    dispatch(setIsAddedClicked(false)) // Why is this needed?
     openModal({
       component: <AddCourseTemplateModal closeModal={closeModal} />
     })
@@ -111,7 +103,7 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
     }
   ]
 
-  const addActivityMenuList = addActivityMenuItems.map(
+  const renderActivityMenuList = addActivityMenuItems.map(
     ({ id, label, icon, onClick }) => (
       <MenuItem key={id} onClick={onClick} sx={styles.menuRoot}>
         {icon}
@@ -120,22 +112,22 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
     )
   )
 
-  const addActivityMenu = isCooperation && (
+  const renderAddActivityBtnMenu = (label: string, index: number) => (
     <Divider flexItem>
       <Typography
         data-testid='Add activity'
-        onClick={handleActivitiesMenuClick}
+        onClick={(e) => handleActivitiesMenuClick(e, index)}
         sx={styles.activityButton}
       >
-        {t(`cooperationsPage.button.create`)}
+        {label}
         <Add sx={styles.activityButtonIcon} />
       </Typography>
-      {renderMenu(addActivityMenuList)}
+      {renderMenu(renderActivityMenuList)}
     </Divider>
   )
 
-  const sectionItemMapper = (item: CourseSection, isDragOver = false) => {
-    const cooperationMenu = isCooperation && (
+  const cooperationActivityMenu = (index: number) => {
+    return (
       <Box
         data-testid='addActivity-container'
         sx={
@@ -144,26 +136,21 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
             : styles.activityButtonContainerDefault
         }
       >
-        <Divider flexItem>
-          <Typography
-            data-testid='Add activity'
-            id={Id}
-            onClick={handleActivitiesMenuClick}
-            sx={styles.activityButton}
-          >
-            {t(`cooperationsPage.button.add`)}
-            <Add sx={styles.activityButtonIcon} />
-          </Typography>
-          {renderMenu(addActivityMenuList)}
-        </Divider>
+        {renderAddActivityBtnMenu(t('cooperationsPage.button.add'), index)}
       </Box>
     )
+  }
 
+  const renderSectionItem = (
+    item: CourseSection,
+    index: number,
+    isDragOver = false
+  ) => {
     return (
       <Fragment key={item.id}>
-        {cooperationMenu}
+        {isCooperation && cooperationActivityMenu(index)}
         <SortableWrapper
-          id={Id}
+          id={item.id}
           onDragEndStyles={styles.section(isDragOver)}
           onDragStartStyles={styles.section(true)}
         >
@@ -185,8 +172,8 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
 
   const sectionItems =
     items.length === 0
-      ? addActivityMenu
-      : items.map((item) => sectionItemMapper(item))
+      ? renderAddActivityBtnMenu(t('cooperationsPage.button.create'), 0)
+      : items.map((item, index) => renderSectionItem(item, index))
 
   const courseSectionContent = enabled && (
     <>
@@ -194,7 +181,7 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
         {sectionItems}
       </SortableContext>
       <DragOverlay>
-        {activeItem && sectionItemMapper(activeItem, true)}
+        {activeItem && renderSectionItem(activeItem, 0, true)}
       </DragOverlay>
     </>
   )

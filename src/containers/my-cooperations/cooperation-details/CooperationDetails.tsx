@@ -48,14 +48,14 @@ import {
 const CooperationDetails = () => {
   const { t } = useTranslation()
   const { id } = useParams()
-  const { isActivityCreated } = useAppSelector(cooperationsSelector)
+  const { isActivityCreated } = useAppSelector(cooperationsSelector) // Why is this needed?
   const navigate = useNavigate()
   const { isDesktop } = useBreakpoints()
   const [activeTab, setActiveTab] = useState<CooperationTabsEnum>(
     CooperationTabsEnum.Activities
   )
-  const [isNotesOpen, setIsNotesOpen] = useState(false)
-  const [editMode, setEditMode] = useState(false)
+  const [isNotesOpen, setIsNotesOpen] = useState<boolean>(false)
+  const [editMode, setEditMode] = useState<boolean>(false)
   const dispatch = useAppDispatch()
 
   const responseError = useCallback(
