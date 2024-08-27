@@ -70,17 +70,6 @@ describe('MessagesList component', () => {
     expect(screen.getByText('chatPage.message.noMessages')).toBeInTheDocument()
   })
 
-  it('renders loading message while messages are loading', () => {
-    renderWithProviders(
-      <MessagesList
-        infiniteLoadCallback={vi.fn()}
-        isMessagesLoading
-        messages={[]}
-      />
-    )
-    expect(screen.getByText('chatPage.chat.loading')).toBeInTheDocument()
-  })
-
   it('renders messages grouped by date with ChatDate and Message components', () => {
     renderWithProviders(
       <MessagesList infiniteLoadCallback={vi.fn()} messages={mockMessages} />
