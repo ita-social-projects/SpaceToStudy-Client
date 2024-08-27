@@ -24,23 +24,20 @@ const TitleWithDescription = ({
   style = styles,
   isDescriptionTooltip = false
 }: TitleWithDescriptionProps) => {
-  const renderDescription = () => {
-    if (typeof description !== 'string') {
-      return <Box sx={style.description}>{description}</Box>
-    }
-    return <Typography sx={style.description}>{description}</Typography>
-  }
-
   return (
     <Box sx={style.wrapper}>
       {title && <Typography sx={style.title}>{title}</Typography>}
-      <Tooltip
-        arrow
-        placement='bottom'
-        title={isDescriptionTooltip ? description : ''}
-      >
-        {renderDescription()}
-      </Tooltip>
+      {isDescriptionTooltip ? (
+        <Tooltip arrow placement='bottom' title={String(description)}>
+          <Typography component='span' sx={style.description}>
+            {description}
+          </Typography>
+        </Tooltip>
+      ) : (
+        <Typography component='span' sx={style.description}>
+          {description}
+        </Typography>
+      )}
     </Box>
   )
 }
