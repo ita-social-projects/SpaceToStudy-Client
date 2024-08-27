@@ -2,6 +2,7 @@ import { screen, fireEvent, waitFor } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 
 import CooperationActivitiesList from '~/containers/my-cooperations/cooperation-activities-list/CooperationActivitiesList'
+import { ResourcesTypesEnum as ResourceType } from '~/types'
 
 const originalDateNow = Date.now
 Date.now = () => 1487076708000
@@ -19,7 +20,7 @@ const mockedCourseData = {
     {
       title: 'Course section1 title',
       description: 'Course section1 description',
-      activities: [],
+      resources: [],
       id: '17121748017182'
     }
   ]
@@ -50,7 +51,7 @@ describe('CooperationActivitiesList with section data', () => {
     {
       title: 'Section1',
       description: 'Section1 description',
-      activities: [
+      resources: [
         {
           resource: {
             _id: '66183816fb40f35f91bb77ce',
@@ -58,7 +59,7 @@ describe('CooperationActivitiesList with section data', () => {
             description: 'Lesson 1 description',
             content: 'Lesson 1 content'
           },
-          resourceType: 'lessons'
+          resourceType: ResourceType.Lesson
         }
       ],
       id: '17121748017180'
@@ -66,7 +67,7 @@ describe('CooperationActivitiesList with section data', () => {
     {
       title: 'Section2 title',
       description: 'Section2 description',
-      activities: [],
+      resources: [],
       id: '17121748017181'
     }
   ]

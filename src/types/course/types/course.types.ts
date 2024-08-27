@@ -3,12 +3,12 @@ import {
   Quiz,
   Attachment,
   ResourceAvailabilityStatusEnum,
-  Activity
+  Resource
 } from '~/types'
 
 export interface ResourceAvailability {
   status: ResourceAvailabilityStatusEnum
-  date: Date | null
+  date: string | null
 }
 
 export type CourseResource = Lesson | Quiz | Attachment
@@ -18,4 +18,4 @@ export type SetResourceAvailability = (
   availability: ResourceAvailability
 ) => void
 
-export type CourseFieldValues = string & string[] & Activity[]
+export type CourseFieldValues = string & string[] & Resource[]

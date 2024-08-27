@@ -24,13 +24,13 @@ import {
   CourseResource,
   ResourceAvailability,
   ResourceAvailabilityStatusEnum,
-  ResourcesTabsEnum as ResourcesTypes,
+  ResourcesTypesEnum as ResourceType,
   SizeEnum
 } from '~/types'
 
 interface ResourceItemProps {
   resource: CourseResource
-  resourceType?: ResourcesTypes
+  resourceType?: ResourceType
   deleteResource?: (resource: CourseResource) => void
   editResource?: (resource: CourseResource) => void
   updateAvailability?: (
@@ -61,14 +61,14 @@ const ResourceItem: FC<ResourceItemProps> = ({
   }
 
   const renderResourceIcon = () => {
-    const { Lessons, Quizzes } = ResourcesTypes
+    const { Lesson, Quiz } = ResourceType
 
     const type = resourceType || resource.resourceType
 
     switch (type) {
-      case Lessons:
+      case Lesson:
         return resourcesData.lessons.icon
-      case Quizzes:
+      case Quiz:
         return resourcesData.quizzes.icon
       default:
         return null
@@ -86,7 +86,7 @@ const ResourceItem: FC<ResourceItemProps> = ({
   const setOpenFromDate = (date: Date | null) => {
     updateAvailability?.(resource, {
       status: resourceAvailabilityStatus,
-      date
+      date: date?.toISOString() ?? null
     })
   }
 
@@ -117,6 +117,7 @@ const ResourceItem: FC<ResourceItemProps> = ({
           <Box sx={styles.datePicker}>
             {availabilityIcon}
             <DatePicker
+              disableMaskedInput
               disablePast
               inputFormat={'MMM d, yyyy'}
               label={t('cooperationDetailsPage.datePickerLabel')}

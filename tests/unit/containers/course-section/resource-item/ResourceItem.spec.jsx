@@ -2,7 +2,7 @@ import { renderWithProviders } from '~tests/test-utils'
 import { fireEvent, screen } from '@testing-library/react'
 
 import ResourceItem from '~/containers/course-section/resource-item/ResourceItem'
-import { ResourcesTabsEnum as ResourcesTypes } from '~/types'
+import { ResourcesTypesEnum as ResourceType } from '~/types'
 
 const mockedLessonData = {
   _id: '1',
@@ -12,7 +12,7 @@ const mockedLessonData = {
   description: 'Description',
   attachments: [],
   category: null,
-  resourceType: ResourcesTypes.Lessons
+  resourceType: ResourceType.Lesson
 }
 
 const mockedSetResourceAvailability = vi.fn()
@@ -61,7 +61,7 @@ describe('new course section ResourceItem tests', () => {
 
 describe('should render quiz component', () => {
   it('should display quiz icon', () => {
-    mockedLessonData.resourceType = ResourcesTypes.Quizzes
+    mockedLessonData.resourceType = ResourceType.Quiz
 
     renderWithProviders(
       <ResourceItem

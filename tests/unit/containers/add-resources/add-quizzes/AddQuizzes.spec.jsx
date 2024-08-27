@@ -2,6 +2,7 @@ import { screen, waitFor } from '@testing-library/react'
 import AddResources from '~/containers/add-resources/AddResources'
 import { mockAxiosClient, renderWithProviders } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
+import { ResourcesTabsEnum } from '~/types'
 import {
   columns,
   removeColumnRules
@@ -49,7 +50,7 @@ describe('AddQuizzes', () => {
           onAddResources={mockOnAddResources}
           removeColumnRules={removeColumnRules}
           requestService={mockRequestService}
-          resourceType={'quizzes'}
+          resourceTab={ResourcesTabsEnum.Quizzes}
           resources={responseItemsMock}
         />
       )

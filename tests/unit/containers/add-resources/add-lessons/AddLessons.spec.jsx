@@ -1,6 +1,7 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react'
 import AddResources from '~/containers/add-resources/AddResources'
 import { URLs } from '~/constants/request'
+import { ResourcesTabsEnum } from '~/types'
 import {
   columns,
   removeColumnRules
@@ -53,7 +54,7 @@ describe('Tests for AddResources container', () => {
           onAddResources={mockOnAddResources}
           removeColumnRules={removeColumnRules}
           requestService={mockRequestService}
-          resourceType={'lessons'}
+          resourceTab={ResourcesTabsEnum.Lessons}
           resources={responseItemsMock}
         />
       )

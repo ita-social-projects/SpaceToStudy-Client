@@ -1,7 +1,8 @@
 import { render, screen, act, fireEvent } from '@testing-library/react'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { UserRoleEnum } from '~/types'
-import CooperationActivitiesView from '~/containers/cooperation-details/cooperetion-activities-view/CooperationActivitiesView.tsx'
+
+import CooperationActivitiesView from '~/containers/cooperation-details/cooperation-activities-view/CooperationActivitiesView.tsx'
 
 vi.mock('~/components/cooperation-section-view/CooperationSectionView', () => ({
   default: ({ id, item }) => (

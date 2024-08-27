@@ -8,12 +8,13 @@ import {
 import { renderWithProviders } from '~tests/test-utils'
 
 import CourseSectionContainer from '~/containers/course-section/CourseSectionContainer'
+import { ResourcesTypesEnum as ResourceType } from '~/types'
 
 const mockedSectionData = {
   id: 1,
   title: 'Title',
   description: 'Description',
-  activities: [
+  resources: [
     {
       resource: {
         availability: {
@@ -28,7 +29,7 @@ const mockedSectionData = {
         attachments: [],
         category: null
       },
-      resourceType: 'lessons'
+      resourceType: ResourceType.Lesson
     },
     {
       resource: {
@@ -45,7 +46,7 @@ const mockedSectionData = {
         createdAt: '2023-09-08T14:14:11.373Z',
         updatedAt: '2023-09-08T14:14:11.373Z'
       },
-      resourceType: 'quizzes'
+      resourceType: ResourceType.Quiz
     },
     {
       resource: {
@@ -63,7 +64,7 @@ const mockedSectionData = {
         createdAt: '2023-07-25T13:12:12.998Z',
         updatedAt: '2023-07-25T13:12:12.998Z'
       },
-      resourceType: 'attachments'
+      resourceType: ResourceType.Attachment
     }
   ]
 }
@@ -157,18 +158,18 @@ describe('CourseSectionContainer tests', () => {
     )
   })
 
-  it('should render activities status for each activity', async () => {
+  it('should render availability status for each resource', async () => {
     await waitFor(() => {
       const allMenuAvailabilityStatus = screen.getAllByTestId('app-select')
-      allMenuAvailabilityStatus.forEach((activity, index) => {
-        const activityStatus =
-          mockedSectionData.activities[index].resource.availability.status
-        expect(activity).toHaveValue(activityStatus)
+      allMenuAvailabilityStatus.forEach((resource, index) => {
+        const resourceStatus =
+          mockedSectionData.resources[index].resource.availability.status
+        expect(resource).toHaveValue(resourceStatus)
       })
     })
   })
 
-  it('should call handleSectionInputChange with the correct arguments when the activity status is changed', async () => {
+  it('should call handleSectionInputChange with the correct arguments when the resource status is changed', async () => {
     const activityIndexToChange = 1
     await waitFor(() => {
       const allMenuAvailabilityStatus = screen.getAllByTestId('app-select')
@@ -192,7 +193,7 @@ describe('CourseSectionContainer tests', () => {
         }
       },
       resourceId:
-        mockedSectionData.activities[activityIndexToChange].resource._id,
+        mockedSectionData.resources[activityIndexToChange].resource._id,
       sectionId: 1,
       type: 'resourceUpdated'
     })
@@ -295,7 +296,7 @@ describe('CourseSectionContainer tests', () => {
       act(() => fireEvent.click(lessonDelete))
     })
     expect(mockedResourceEventHandler).toHaveBeenCalledWith({
-      resourceId: mockedSectionData.activities[0].resource._id,
+      resourceId: mockedSectionData.resources[0].resource._id,
       sectionId: 1,
       type: 'resourceRemoved'
     })
@@ -307,7 +308,7 @@ describe('CourseSectionContainer tests', () => {
       act(() => fireEvent.click(quizDelete))
     })
     expect(mockedResourceEventHandler).toHaveBeenCalledWith({
-      resourceId: mockedSectionData.activities[1].resource._id,
+      resourceId: mockedSectionData.resources[1].resource._id,
       sectionId: 1,
       type: 'resourceRemoved'
     })
@@ -320,7 +321,7 @@ describe('CourseSectionContainer tests', () => {
       act(() => fireEvent.click(attachmentDelete))
     })
     expect(mockedResourceEventHandler).toHaveBeenCalledWith({
-      resourceId: mockedSectionData.activities[2].resource._id,
+      resourceId: mockedSectionData.resources[2].resource._id,
       sectionId: 1,
       type: 'resourceRemoved'
     })

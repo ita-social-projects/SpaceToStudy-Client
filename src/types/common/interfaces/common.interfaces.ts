@@ -169,27 +169,6 @@ export interface CourseSectionHandlers {
   resourceEventHandler?: ResourceEventHandler
   sectionEventHandler?: SectionEventHandler
   titleText?: string
-
-  /**
-   * @deprecated Not used
-   */
-  handleSectionResourcesOrder?: (
-    id: string,
-    resources: CourseResource[]
-  ) => void
-
-  /**
-   * @deprecated Not used
-   */
-  handleSectionNonInputChange?: FormInputValueChange<
-    CourseResource[],
-    CourseSection
-  >
-
-  /**
-   * @deprecated Not used
-   */
-  setSectionsItems?: (value: CourseSection[]) => void
 }
 
 export interface StepData {

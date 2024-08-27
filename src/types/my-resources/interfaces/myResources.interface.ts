@@ -4,12 +4,12 @@ import {
   CommonEntityFields,
   RequestParams,
   ResourceAvailability,
-  ResourcesTabsEnum as ResourcesTypes
+  ResourcesTypesEnum as ResourceType
 } from '~/types'
 
 export interface ResourceBase {
   description: string
-  resourceType: ResourcesTypes
+  resourceType: ResourceType
   availability?: ResourceAvailability
 }
 

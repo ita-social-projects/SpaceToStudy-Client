@@ -15,7 +15,12 @@ import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
 import AppButtonMenu from '~/components/app-button-menu/AppButtonMenu'
 
 import { styles } from '~/containers/my-resources/add-resource-modal/AddResourceModal.styles'
-import { ButtonVariantEnum, CategoryNameInterface, TableItem } from '~/types'
+import {
+  ButtonVariantEnum,
+  CategoryNameInterface,
+  ResourcesTabsEnum,
+  TableItem
+} from '~/types'
 
 interface AddResourceModalProps<T>
   extends Omit<EnhancedTableProps<T, undefined>, 'data'> {
@@ -26,7 +31,7 @@ interface AddResourceModalProps<T>
   selectedRows: T[]
   onAddItems: () => void
   uploadItem?: (data: FormData) => Promise<void>
-  resource: string
+  resourceTab: ResourcesTabsEnum
 }
 
 const AddResourceModal = <T extends TableItem>({
@@ -34,7 +39,7 @@ const AddResourceModal = <T extends TableItem>({
   selectedRows,
   onAddItems,
   uploadItem,
-  resource,
+  resourceTab,
   ...props
 }: AddResourceModalProps<T>) => {
   const { t } = useTranslation()
@@ -57,7 +62,7 @@ const AddResourceModal = <T extends TableItem>({
   return (
     <Box sx={styles.root}>
       <Typography sx={styles.title}>
-        {t(`myResourcesPage.${resource}.add`)}
+        {t(`myResourcesPage.${resourceTab}.add`)}
       </Typography>
 
       <Box sx={styles.inputWithFilter}>
@@ -81,7 +86,7 @@ const AddResourceModal = <T extends TableItem>({
 
       <EnhancedTable
         data={{ loading, items }}
-        emptyTableKey={`myResourcesPage.${resource}.emptyItems`}
+        emptyTableKey={`myResourcesPage.${resourceTab}.emptyItems`}
         selectedRows={selectedRows}
         stickyHeader
         style={styles.tableWrapper(!!items.length)}

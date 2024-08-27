@@ -5,7 +5,7 @@ import EditIcon from '@mui/icons-material/Edit'
 import { IconButton } from '@mui/material'
 
 import CooperationSectionView from '~/components/cooperation-section-view/CooperationSectionView'
-import { styles } from '~/containers/cooperation-details/cooperetion-activities-view/CooperationActivitiesView.style'
+import { styles } from '~/containers/cooperation-details/cooperation-activities-view/CooperationActivitiesView.style'
 
 import {
   cooperationsSelector,
@@ -24,14 +24,13 @@ const CooperationActivitiesView: FC<CooperationActivitiesViewProps> = ({
 }) => {
   const { sections } = useAppSelector(cooperationsSelector)
   const dispatch = useAppDispatch()
+  const { userRole } = useAppSelector((state) => state.appMain)
+  const isTutor = userRole === UserRoleEnum.Tutor
 
   const onEdit = () => {
     setEditMode(true)
     dispatch(setIsAddedClicked(false))
   }
-
-  const { userRole } = useAppSelector((state) => state.appMain)
-  const isTutor = userRole === UserRoleEnum.Tutor
 
   return (
     <Box sx={styles.root}>

@@ -4,6 +4,8 @@ import { renderWithProviders } from '~tests/test-utils'
 import CourseSectionsList from '~/containers/course-sections-list/CourseSectionsList'
 import AddCourseTemplateModal from '~/containers/cooperation-details/add-course-modal-modal/AddCourseTemplateModal'
 
+import { ResourcesTypesEnum as ResourceType } from '~/types'
+
 const mockedHandleSectionChange = vi.fn()
 const mockedResourceEventHandler = vi.fn()
 const mockedSectionEventHandler = vi.fn()
@@ -14,7 +16,7 @@ const mockedCourseSectionData = Array(5)
     id: `${index + 1}`,
     title: `Title ${index + 1}`,
     description: `Description ${index + 1}`,
-    activities: [
+    resources: [
       {
         resource: {
           availability: {
@@ -29,7 +31,7 @@ const mockedCourseSectionData = Array(5)
           attachments: [],
           category: null
         },
-        resourceType: 'lessons'
+        resourceType: ResourceType.Lesson
       },
       {
         resource: {
@@ -46,7 +48,7 @@ const mockedCourseSectionData = Array(5)
           createdAt: '2023-09-08T14:14:11.373Z',
           updatedAt: '2023-09-08T14:14:11.373Z'
         },
-        resourceType: 'quizzes'
+        resourceType: ResourceType.Quiz
       },
       {
         resource: {
@@ -64,7 +66,7 @@ const mockedCourseSectionData = Array(5)
           createdAt: '2023-07-25T13:12:12.998Z',
           updatedAt: '2023-07-25T13:12:12.998Z'
         },
-        resourceType: 'attachments'
+        resourceType: ResourceType.Attachment
       }
     ]
   }))

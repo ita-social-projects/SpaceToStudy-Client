@@ -39,7 +39,7 @@ import {
   Lesson,
   Quiz,
   Attachment,
-  ResourcesTabsEnum as ResourcesTypes,
+  ResourcesTypesEnum as ResourceType,
   CourseResource,
   CourseSectionHandlers,
   UpdateAttachmentParams,
@@ -77,14 +77,14 @@ const CourseSectionContainer: FC<SectionProps> = ({
   const [isVisible, setIsVisible] = useState<boolean>(true)
 
   const allResources = useMemo(
-    () => sectionData.activities.map((activity) => activity.resource),
-    [sectionData.activities]
+    () => sectionData.resources.map((item) => item.resource),
+    [sectionData.resources]
   )
 
   const lessons = useMemo(
     () =>
       allResources.filter(
-        (resource) => resource.resourceType === ResourcesTypes.Lessons
+        (resource) => resource.resourceType === ResourceType.Lesson
       ) as Lesson[],
     [allResources]
   )
@@ -92,7 +92,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
   const quizzes = useMemo(
     () =>
       allResources.filter(
-        (resource) => resource.resourceType === ResourcesTypes.Quizzes
+        (resource) => resource.resourceType === ResourceType.Quiz
       ) as Quiz[],
     [allResources]
   )
@@ -100,7 +100,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
   const attachments = useMemo(
     () =>
       allResources.filter(
-        (resource) => resource.resourceType === ResourcesTypes.Attachments
+        (resource) => resource.resourceType === ResourceType.Attachment
       ) as Attachment[],
     [allResources]
   )
@@ -159,7 +159,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
 
     if (!resourceType) return
 
-    if (resourceType === ResourcesTypes.Attachments) {
+    if (resourceType === ResourceType.Attachment) {
       openModal({
         component: (
           <EditAttachmentModal
@@ -214,7 +214,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
           onAddResources={handleAddResources}
           removeColumnRules={removeLessonColumnRules}
           requestService={ResourceService.getUsersLessons}
-          resourceType={resourcesData.lessons.resource}
+          resourceTab={resourcesData.lessons.resourceTab}
           resources={lessons}
         />
       )
@@ -229,7 +229,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
           onAddResources={handleAddResources}
           removeColumnRules={removeQuizColumnRules}
           requestService={ResourceService.getQuizzes}
-          resourceType={resourcesData.quizzes.resource}
+          resourceTab={resourcesData.quizzes.resourceTab}
           resources={quizzes}
         />
       )
@@ -244,7 +244,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
           onAddResources={handleAddResources}
           removeColumnRules={removeAttachmentColumnRules}
           requestService={ResourceService.getAttachments}
-          resourceType={resourcesData.attachments.resource}
+          resourceTab={resourcesData.attachments.resourceTab}
           resources={attachments}
         />
       )

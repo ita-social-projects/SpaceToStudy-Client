@@ -8,7 +8,7 @@ import AppTextField from '~/components/app-text-field/AppTextField'
 import HeaderTextWithDropdown from '~/components/header-text-with-dropdown/HeaderTextWithDropdown'
 import { styles } from '~/components/cooperation-section-view/CooperationSectionView.styles'
 
-import { Activity, CourseSection, TextFieldVariantEnum } from '~/types'
+import { CourseSection, TextFieldVariantEnum } from '~/types'
 
 interface CooperationSectionViewProps {
   id?: string
@@ -24,15 +24,15 @@ const CooperationSectionView: FC<CooperationSectionViewProps> = ({
 
   const resources = useMemo<undefined | ReactNode[]>(
     () =>
-      item.activities?.map((activity: Activity) => (
+      item.resources?.map(({ resource, resourceType }) => (
         <ResourceItem
           isView
-          key={activity.resource._id}
-          resource={activity.resource}
-          resourceType={activity.resourceType}
+          key={resource._id}
+          resource={resource}
+          resourceType={resourceType}
         />
       )),
-    [item.activities]
+    [item.resources]
   )
 
   return (
