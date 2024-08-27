@@ -50,6 +50,7 @@ export interface UserResponse {
   professionalBlock?: ProfessionalBlock
   status: DataByRole<UserStatusEnum>
   notificationSettings: NotificationSettings
+  bookmarkedOffers: string[]
 }
 
 export interface ProfessionalBlock {
