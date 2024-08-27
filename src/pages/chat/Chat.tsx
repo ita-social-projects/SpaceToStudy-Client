@@ -230,6 +230,11 @@ const Chat = () => {
     setFilteredIndex(filteredIndex)
   }
 
+  const handleChatSelection = (chat: ChatResponse) => {
+    setSkip(0)
+    setSelectedChat(chat)
+  }
+
   return (
     <PageWrapper disableGutters maxWidth={false} sx={styles.root}>
       {isMobile && (
@@ -242,7 +247,7 @@ const Chat = () => {
             closeDrawer={closeDrawer}
             listOfChats={listOfChats}
             selectedChat={selectedChat}
-            setSelectedChat={setSelectedChat}
+            setSelectedChat={handleChatSelection}
           />
         </AppDrawer>
       )}
@@ -252,7 +257,7 @@ const Chat = () => {
             <ListOfUsersWithSearch
               listOfChats={listOfChats}
               selectedChat={selectedChat}
-              setSelectedChat={setSelectedChat}
+              setSelectedChat={handleChatSelection}
             />
           </Allotment.Pane>
         )}
