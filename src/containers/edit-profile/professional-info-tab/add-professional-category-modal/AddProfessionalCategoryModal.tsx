@@ -185,7 +185,10 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
     }
 
   const handleSubjectAdd = () => {
-    const newSubjects = [...data.subjects, professionalSubjectTemplate]
+    const newSubjects = [
+      ...data.subjects,
+      { ...professionalSubjectTemplate, _id: uuidv4() }
+    ]
     handleDataChange({
       subjects: newSubjects
     })

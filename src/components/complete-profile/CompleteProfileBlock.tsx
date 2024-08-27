@@ -105,7 +105,7 @@ const CompleteProfileBlock: FC<CompleteProfileBlockProps> = ({
   }
 
   const icon = homePage ? (
-    <Link to={authRoutes.accountMenu.myProfile.path}>
+    <Link to={authRoutes.myProfile.path}>
       <ArrowForwardIcon color='secondary' />
     </Link>
   ) : (

@@ -83,7 +83,8 @@ const Navbar = () => {
 
     return (
       <Fragment key={item.route}>
-        {item.route === tutorRoutes.navBar.findOffers.route ? (
+        {item.route === tutorRoutes.navBar.findOffers.route ||
+        item.route === studentRoutes.navBar.findOffers.route ? (
           <ListItem onClick={openMenu} sx={styles.listItem}>
             <Typography sx={styles.navItemText(isChildRouteActive)}>
               {t(`header.${item.route}`)}

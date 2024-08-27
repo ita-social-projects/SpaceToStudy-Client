@@ -92,23 +92,11 @@ const EditProfile = () => {
   const changedFields = useMemo<Partial<EditProfileState>>(() => {
     if (!initialEditProfileState || !profileState) return {}
 
-    const {
-      // TODO: because of different videolink types in editProfileSlice.ts and ProfileTab.tsx,
-      // we have a hot solution below to compare states without videolink.
-      // We need to fix videolink types and also save it on Update click
-      //eslint-disable-next-line @typescript-eslint/no-unused-vars
-      videoLink: initialVideoLink,
-      photo: initialPhoto,
-      ...initialData
-    } = initialEditProfileState
-    const {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      videoLink: currentVideoLink,
-      photo: currentPhoto,
-      ...currentData
-    } = profileState
+    const { photo: initialPhoto, ...initialData } = initialEditProfileState
+    const { photo: currentPhoto, ...currentData } = profileState
 
-    const hasChanged = hasChanges(initialData, currentData)
+    const hasChanged =
+      hasChanges(initialData, currentData) || initialPhoto !== currentPhoto
 
     if (hasChanged) {
       const changes: Partial<EditProfileState> = { ...currentData }
@@ -144,17 +132,9 @@ const EditProfile = () => {
   const handleUpdateUser = async (): Promise<void> => {
     const { country, city } = profileState
     const {
-      // TODO: we remove 'photo' from the changed fields because:
-      // 1 - we should deal with its types. It expects to be string in fact, when the photo is uploaded, we received an object.
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      photo,
       videoLink,
       notificationSettings,
       professionalBlock,
-      // TODO: we remove 'categories' from the changed fields because:
-      // 1 - we should create thunk for categories update in editProfileSlice;
-      // 2 - we should create an endpoint for categories update on back end in services/user.js
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       categories,
       ...rest
     } = changedFields
@@ -178,6 +158,10 @@ const EditProfile = () => {
 
     if (categories) {
       dataToUpdate.mainSubjects = categories
+    }
+
+    if (typeof profileState.photo === 'object') {
+      dataToUpdate.photo = profileState.photo
     }
 
     await dispatch(
