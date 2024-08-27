@@ -111,9 +111,6 @@ const updateStateFromPayload = (
   state.notificationSettings =
     notificationSettings || intitialNotificationSettings
   state.bookmarkedOffers = bookmarkedOffers
-  state.professionalBlock = professionalBlock || initialProfessoinalBlock
-  state.notificationSettings =
-    notificationSettings || intitialNotificationSettings
 }
 
 export const fetchUserById = createAsyncThunk(
