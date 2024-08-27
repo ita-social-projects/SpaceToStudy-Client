@@ -5,13 +5,11 @@ import Typography from '@mui/material/Typography'
 import RatingBlock from '~/containers/user-profile/comments-with-rating-block/rating-block/RatingBlock'
 import CommentsBlock from '~/containers/user-profile/comments-block/CommentBlock'
 import Loader from '~/components/loader/Loader'
-import { RatingType, SortByEnum, UserRoleEnum } from '~/types'
+import { RatingType, SortByEnum } from '~/types'
 import { styles } from '~/containers/user-profile/comments-with-rating-block/CommentsWithRatingBlock.styles'
 import {
   responseMock,
-  loadingMock,
-  responseMockStudents,
-  MockReview
+  loadingMock
 } from '~/containers/user-profile/comments-with-rating-block/CommentsWithRatingBlock.constants'
 import {
   ListItemText,
@@ -25,27 +23,18 @@ interface CommentsWithRatingBlockProps {
   totalReviews: number
   reviewsCount: RatingType[]
   labels?: ReadonlyMap<SortByEnum, string>
-  userRole: UserRoleEnum
 }
 
 const CommentsWithRatingBlock = ({
   averageRating,
   totalReviews,
   reviewsCount,
-  labels,
-  userRole
+  labels
 }: CommentsWithRatingBlockProps) => {
   const [filter, setFilter] = useState<number | null>(null)
   const [sortBy, setSortBy] = useState<SortByEnum>(SortByEnum.Newest)
   const { t } = useTranslation()
-
-  const titleKey =
-    userRole === UserRoleEnum.Tutor
-      ? 'userProfilePage.reviews.titleTutor'
-      : 'userProfilePage.reviews.titleStudent'
-
-  const { items }: { items: MockReview[] } =
-    userRole === UserRoleEnum.Tutor ? responseMock : responseMockStudents
+  const { items } = responseMock
 
   const sortItems = Object.values(SortByEnum)
   const sortMenuItems = sortItems.map((el) => (
@@ -95,7 +84,9 @@ const CommentsWithRatingBlock = ({
 
   return (
     <Box sx={styles.root}>
-      <Typography sx={styles.title}>{t(titleKey)}</Typography>
+      <Typography sx={styles.title}>
+        {t('userProfilePage.reviews.title')}
+      </Typography>
       {loadingMock && !items.length ? (
         <Loader data-testid='loader' />
       ) : (

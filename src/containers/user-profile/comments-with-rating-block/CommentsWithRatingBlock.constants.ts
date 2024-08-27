@@ -1,24 +1,3 @@
-import { MockResponseItem } from '~/containers/user-profile/comments-block/CommentBlock'
-
-export interface MockReview extends MockResponseItem {
-  _id: string
-  comment: string
-  rating: number
-  author: {
-    _id: string
-    role: string[]
-    firstName: string
-    lastName: string
-    photo: string
-    email: string
-    categories: never[]
-    lastLogin: string
-    createdAt: string
-    updatedAt: string
-    __v: number
-  }
-}
-
 const mockAuthor = {
   _id: '63f905d3237ccffcf95d88da',
   role: ['student'],
@@ -27,20 +6,6 @@ const mockAuthor = {
   photo:
     'https://media.npr.org/assets/img/2014/08/07/monkey-selfie_custom-7117031c832fc3607ee5b26b9d5b03d10a1deaca-s300-c85.webp',
   email: 'tartdrilling@gmail.com',
-  categories: [],
-  lastLogin: '2023-03-03T21:01:30.973Z',
-  createdAt: '2023-02-24T18:45:39.298Z',
-  updatedAt: '2023-03-03T21:01:30.975Z',
-  __v: 0
-}
-
-const tutorMockAuthor = {
-  _id: '63f905d3237ccffcf95d88db',
-  role: ['tutor'],
-  firstName: 'Irene',
-  lastName: 'Stone',
-  photo: '',
-  email: 'irene.stone@gmail.com',
   categories: [],
   lastLogin: '2023-03-03T21:01:30.973Z',
   createdAt: '2023-02-24T18:45:39.298Z',
@@ -73,7 +38,7 @@ const mockResponseItemBase = {
   __v: 0
 }
 
-export const responseMock: { items: MockReview[] } = {
+export const responseMock = {
   count: 5,
   items: [
     {
@@ -106,43 +71,6 @@ export const responseMock: { items: MockReview[] } = {
       _id: '6400f540307bdcc5da14aa5x',
       comment: 'prety bad',
       rating: 2
-    }
-  ]
-}
-
-export const responseMockStudents: { items: MockReview[] } = {
-  count: 4,
-  items: [
-    {
-      ...mockResponseItemBase,
-      author: tutorMockAuthor,
-      _id: '6400f540307bdcc5da14aa5z',
-      comment:
-        'Jane is a great student. I am comfortable to work with her. She is very smart, memorizes new things very fast.',
-      rating: 5
-    },
-    {
-      ...mockResponseItemBase,
-      author: tutorMockAuthor,
-      _id: '6400f540307bdcc5da14aa5y',
-      comment:
-        'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.',
-      rating: 5
-    },
-    {
-      ...mockResponseItemBase,
-      author: tutorMockAuthor,
-      _id: '6400f540307bdcc5da14aa5x',
-      comment: 'Exercitation veniam consequat sunt nostrud amet.',
-      rating: 3
-    },
-    {
-      ...mockResponseItemBase,
-      author: tutorMockAuthor,
-      _id: '6400f540307bdcc5da14aa5x',
-      comment:
-        'The classes are relaxed and I like that she is responsible for her learning.',
-      rating: 4
     }
   ]
 }
