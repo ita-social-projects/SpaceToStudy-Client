@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react'
 import { Sort, SortEnum } from '~/types'
 
-interface UseSortProps {
+export interface UseSortProps {
   initialSort: Sort
 }
 
