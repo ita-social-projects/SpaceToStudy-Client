@@ -74,8 +74,9 @@ export const userIcons: NavigationIconButton[] = [
     })
   },
   {
+    disabled: true,
     tooltip: 'iconsTooltip.bookmarks',
-    icon: <BookmarkIcon />,
+    icon: <BookmarkIcon color='disabled' />,
     buttonProps: () => ({ sx: styles.studentIcons })
   },
   {
