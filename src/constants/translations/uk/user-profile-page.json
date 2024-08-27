@@ -34,7 +34,8 @@
     "socialMedia": "Соціальні медіа"
   },
   "reviews": {
-    "title": "Що говорять студенти",
+    "titleTutor": "Що говорять студенти",
+    "titleStudent": "Що говорять викладачі",
     "buttonTitle": "Більше відгуків",
     "starsCount_zero": "{{count}} зірок",
     "starsCount_one": "{{count}} зірка",

@@ -7,6 +7,7 @@ export const styles = {
     borderRadius: '8px'
   },
   button: {
+    margin: '0 auto',
     size: 'large',
     mt: '32px'
   },

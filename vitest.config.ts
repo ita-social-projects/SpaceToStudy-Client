@@ -25,7 +25,8 @@ export default defineConfig({
         'src/**/*.jsx',
         'src/**/*.tsx',
         'src/utils/**/*.ts',
-        'src/utils/**/*.js'
+        'src/utils/**/*.js',
+        'src/redux/**/*.ts'
       ],
       exclude: ['src/stories', './tests/setup-tests.js'],
       reportsDirectory: './tests/coverage'
