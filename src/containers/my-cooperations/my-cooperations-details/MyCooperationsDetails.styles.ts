@@ -8,6 +8,10 @@ export const style = {
     color: palette.basic.blueGray,
     mr: '30px'
   },
+  userButtons: {
+    display: 'flex',
+    flexDirection: 'row'
+  },
   titles: {
     color: palette.basic.blueGray
   },

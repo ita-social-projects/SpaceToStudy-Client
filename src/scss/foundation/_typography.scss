@@ -1,0 +1,160 @@
+@use 'variables' as *;
+
+/*=============================================
+=                 #TYPOGRAPHY                 =
+=============================================*/
+
+/**
+ *
+ * This file defines the default font rules to be used on headings and text. The defaults come
+ * from the palette defined in _variables.scss.
+ *
+ */
+
+/*=============================================
+=              Body constants                 =
+=============================================*/
+
+$body-font-family: var(--s2s-body-font-family, $rubik) !default;
+$body-font-size: var(--s2s-body-font-size, $fs-base) !default;
+$body-font-weight: var(--s2s-body-font-weight, $fw-regular) !default;
+$body-line-height: var(--s2s-body-line-height, $lh-base) !default;
+$body-letter-spacing: var(--s2s-body-letter-spacing, $ls-base) !default;
+
+/*=============================================
+=            Font sizes (heading)             =
+=============================================*/
+
+$heading1-font-size: var(--s2s-h1-font-size, $fs-h1) !default;
+$heading2-font-size: var(--s2s-h2-font-size, $fs-h2) !default;
+$heading3-font-size: var(--s2s-h3-font-size, $fs-h3) !default;
+$heading4-font-size: var(--s2s-h4-font-size, $fs-h4) !default;
+$heading5-font-size: var(--s2s-h5-font-size, $fs-h5) !default;
+$heading6-font-size: var(--s2s-h6-font-size, $fs-h6) !default;
+
+/*=============================================
+=            Font fizes (texts)               =
+=============================================*/
+
+$mid-title-font-size: var(--s2s-mid-title-font-size, $fs-lg) !default;
+$subtitle1-font-size: var(--s2s-subtitle1-font-size, $fs-base) !default;
+$subtitle2-font-size: var(--s2s-subtitle2-font-size, $fs-sm) !default;
+$body-1-font-size: var(--s2s-body1-font-size, $fs-base) !default;
+$body-2-font-size: var(--s2s-body2-font-size, $fs-sm) !default;
+$caption1-font-size: var(--s2s-caption1-font-size, $fs-xs) !default;
+$caption2-font-size: var(--s2s-caption2-font-size, $fs-xs) !default;
+$overline-font-size: var(--s2s-overline-font-size, $fs-2xs) !default;
+
+// /*=============================================
+// =         font weights (headings)             =
+// =============================================*/
+
+$heading1-font-weight: var(--s2s-h1-font-weight, $fw-bold) !default;
+$heading2-font-weight: var(--s2s-h2-font-weight, $fw-semibold) !default;
+$heading3-font-weight: var(--s2s-h3-font-weight, $fw-medium) !default;
+$heading4-font-weight: var(--s2s-h4-font-weight, $fw-medium) !default;
+$heading5-font-weight: var(--s2s-h5-font-weight, $fw-medium) !default;
+$heading6-font-weight: var(--s2s-h6-font-weight, $fw-medium) !default;
+
+// /*=============================================
+// =           font weights (texts)              =
+// =============================================*/
+
+$mid-title-font-weight: var(--s2s-mid-title-font-weight, $fw-medium) !default;
+$subtitle1-font-weight: var(--s2s-subtitle1-font-weight, $fw-regular) !default;
+$subtitle2-font-weight: var(--s2s-subtitle2-font-weight, $fw-medium) !default;
+$body-1-font-weight: var(--s2s-body1-font-weight, $fw-regular) !default;
+$body-2-font-weight: var(--s2s-body2-font-weight, $fw-regular) !default;
+$caption1-font-weight: var(--s2s-caption1-font-weight, $fw-regular) !default;
+$caption2-font-weight: var(--s2s-caption2-font-weight, $fw-medium) !default;
+$overline-font-weight: var(--s2s-overline-font-weight, $fw-regular) !default;
+
+// /*=============================================
+// =          Line heights (headings)            =
+// =============================================*/
+
+$heading1-line-height: var(--s2s-h1-line-height, $lh-h1) !default;
+$heading2-line-height: var(--s2s-h2-line-height, $lh-h2) !default;
+$heading3-line-height: var(--s2s-h3-line-height, $lh-h3) !default;
+$heading4-line-height: var(--s2s-h4-line-height, $lh-h4) !default;
+$heading5-line-height: var(--s2s-h5-line-height, $lh-h5) !default;
+$heading6-line-height: var(--s2s-h6-line-height, $lh-h6) !default;
+
+// /*=============================================
+// =            Line heights (texts)             =
+// =============================================*/
+
+$mid-title-line-height: var(--s2s-mid-title-line-height, $lh-base) !default;
+$subtitle1-line-height: var(--s2s-subtitle1-line-height, $lh-base) !default;
+$subtitle2-line-height: var(--s2s-subtitle2-line-height, $lh-sm) !default;
+$body-1-line-height: var(--s2s-body1-line-height, $lh-base) !default;
+$body-2-line-height: var(--s2s-body2-line-height, $lh-sm) !default;
+$caption1-line-height: var(--s2s-caption1-line-height, $lh-sm) !default;
+$caption2-line-height: var(--s2s-caption2-line-height, $lh-sm) !default;
+$overline-line-height: var(--s2s-overline-line-height, $lh-xs) !default;
+
+// /*=============================================
+// =       Letters spacings (headings)           =
+// =============================================*/
+
+$heading1-letter-spacing: var(--s2s-h1-letter-spacing, $ls-h1) !default;
+$heading2-letter-spacing: var(--s2s-h2-letter-spacing, $ls-h2) !default;
+$heading3-letter-spacing: var(--s2s-h3-letter-spacing, $ls-h3) !default;
+$heading4-letter-spacing: var(--s2s-h4-letter-spacing, $ls-h4) !default;
+$heading5-letter-spacing: var(--s2s-h5-letter-spacing, $ls-h5) !default;
+$heading6-letter-spacing: var(--s2s-h6-letter-spacing, $ls-h6) !default;
+
+// /*=============================================
+// =          Letters spacings (texts)           =
+// =============================================*/
+
+$mid-title-letter-spacing: var(
+  --s2s-mid-title-letter-spacing,
+  $ls-none
+) !default;
+$subtitle1-letter-spacing: var(--s2s-subtitle1-letter-spacing, $ls-xs) !default;
+$subtitle2-letter-spacing: var(
+  --s2s-subtitle2-letter-spacing,
+  $ls-2xs
+) !default;
+$body-1-letter-spacing: var(--s2s-body1-letter-spacing, $ls-base) !default;
+$body-2-letter-spacing: var(--s2s-body2-letter-spacing, $ls-3xs) !default;
+$caption1-letter-spacing: var(--s2s-caption1-letter-spacing, $ls-sm) !default;
+$caption2-letter-spacing: var(--s2s-caption2-letter-spacing, $ls-sm) !default;
+$overline-letter-spacing: var(--s2s-overline-letter-spacing, $ls-lg) !default;
+
+// /*=============================================
+// =         Text transforms (headings)          =
+// =============================================*/
+
+$heading1-text-transform: var(--s2s-h1-text-transform, $tt-none) !default;
+$heading2-text-transform: var(--s2s-h2-text-transform, $tt-none) !default;
+$heading3-text-transform: var(--s2s-h3-text-transform, $tt-none) !default;
+$heading4-text-transform: var(--s2s-h4-text-transform, $tt-none) !default;
+$heading5-text-transform: var(--s2s-h5-text-transform, $tt-none) !default;
+$heading6-text-transform: var(--s2s-h6-text-transform, $tt-none) !default;
+
+// /*=============================================
+// =           Text transforms (texts)           =
+// =============================================*/
+
+$mid-title-text-transform: var(
+  --s2s-mid-title-text-transform,
+  $tt-none
+) !default;
+$subtitle1-text-transform: var(
+  --s2s-subtitle1-text-transform,
+  $tt-none
+) !default;
+$subtitle2-text-transform: var(
+  --s2s-subtitle2-text-transform,
+  $tt-none
+) !default;
+$body-1-text-transform: var(--s2s-body1-text-transform, $tt-none) !default;
+$body-2-text-transform: var(--s2s-body2-text-transform, $tt-none) !default;
+$caption1-text-transform: var(--s2s-caption1-text-transform, $tt-none) !default;
+$caption2-text-transform: var(--s2s-caption2-text-transform, $tt-none) !default;
+$overline-text-transform: var(
+  --s2s-overline-text-transform,
+  $tt-uppercase
+) !default;

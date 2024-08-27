@@ -9,7 +9,8 @@ import {
   UpdatedPhoto,
   UpdateFields,
   UserStatusEnum,
-  UserMainSubject
+  UserMainSubject,
+  NotificationSettings
 } from '~/types'
 
 export interface LocalStorage {
@@ -48,6 +49,7 @@ export interface UserResponse {
   videoLink: DataByRole<string>
   professionalBlock?: ProfessionalBlock
   status: DataByRole<UserStatusEnum>
+  notificationSettings: NotificationSettings
   bookmarkedOffers: string[]
 }
 
@@ -67,7 +69,7 @@ export interface UserGeneralInfo
 
 export interface UpdateUserParams
   extends Partial<Pick<UserResponse, UpdateFields>> {
-  mainSubjects?: Partial<UserMainSubject>
+  mainSubjects?: DataByRole<UserMainSubject[]>
   videoLink?: string
   photo?: UpdatedPhoto | null
 }

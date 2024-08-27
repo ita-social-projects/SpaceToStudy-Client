@@ -28,13 +28,11 @@ import { defaultResponse } from '~/pages/my-offers/MyOffers.constants'
 interface CompleteProfileBlockProps {
   profileItems: ProfileItemType[]
   data: UserResponse
-  role: string
 }
 
 const CompleteProfileBlock: FC<CompleteProfileBlockProps> = ({
-  profileItems,
-  role,
-  data
+  data,
+  profileItems
 }) => {
   const { t } = useTranslation()
   const { isMobile } = useBreakpoints()
@@ -74,6 +72,8 @@ const CompleteProfileBlock: FC<CompleteProfileBlockProps> = ({
             return data.mainSubjects.student.length
           case 'education':
             return checkIfHasNonEmptyFields(data.professionalBlock!)
+          case 'video':
+            return data.videoLink
           case 'offer':
             return response.items.length
           default:
@@ -94,10 +94,10 @@ const CompleteProfileBlock: FC<CompleteProfileBlockProps> = ({
           isFilled={checkProfileData.includes(item)}
           item={item}
           key={item.id}
-          role={role}
+          userRole={userRole}
         />
       )),
-    [profileItems, checkProfileData, role]
+    [profileItems, checkProfileData, userRole]
   )
 
   const handleToggleMenu = () => {
@@ -105,7 +105,7 @@ const CompleteProfileBlock: FC<CompleteProfileBlockProps> = ({
   }
 
   const icon = homePage ? (
-    <Link to={authRoutes.accountMenu.myProfile.path}>
+    <Link to={authRoutes.myProfile.path}>
       <ArrowForwardIcon color='secondary' />
     </Link>
   ) : (
@@ -139,7 +139,7 @@ const CompleteProfileBlock: FC<CompleteProfileBlockProps> = ({
           </Box>
           {icon}
         </Box>
-        <AppProgressBarLine value={valueProgressBar} />
+        <AppProgressBarLine userRole={userRole} value={valueProgressBar} />
       </AccordionSummary>
       <AccordionDetails sx={styles.profileItems}>
         {profileList}

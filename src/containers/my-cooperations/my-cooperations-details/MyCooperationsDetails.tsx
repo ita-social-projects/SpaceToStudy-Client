@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import DesignServicesIcon from '@mui/icons-material/DesignServices'
-import Avatar from '@mui/material/Avatar'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import DoneIcon from '@mui/icons-material/Done'
@@ -12,6 +11,7 @@ import MessageIcon from '@mui/icons-material/Message'
 
 import useAxios from '~/hooks/use-axios'
 import { cooperationService } from '~/services/cooperation-service'
+import AvatarIcon from '~/components/avatar-icon/AvatarIcon'
 import SubjectLevelChips from '~/components/subject-level-chips/SubjectLevelChips'
 import AppButton from '~/components/app-button/AppButton'
 import ShowMoreCollapse from '~/components/show-more-collapse/ShowMoreCollapse'
@@ -30,12 +30,15 @@ import { createUrlPath } from '~/utils/helper-functions'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { useChatContext } from '~/context/chat-context'
 import CooperationCompletion from '../cooperation-completion/CooperationCompletion'
+import { useAppSelector } from '~/hooks/use-redux'
 
 const MyCooperationsDetails = () => {
   const { t } = useTranslation()
   const { id = '' } = useParams()
   const navigate = useNavigate()
   const { setChatInfo } = useChatContext()
+  const userId = useAppSelector((state) => state.appMain.userId)
+  const userRole = useAppSelector((state) => state.appMain.userRole)
 
   const getDetails: ServiceFunction<
     MyCooperationDetails<Offer> | null,
@@ -59,20 +62,28 @@ const MyCooperationsDetails = () => {
     return <Loader pageLoad />
   }
 
+  const displayedUser =
+    detailsResponse.initiator._id === userId
+      ? detailsResponse.receiver
+      : detailsResponse.initiator
+  const isTutor = displayedUser.role[0] === UserRoleEnum.Tutor
+
   const { offer, price } = detailsResponse
 
   const onHandleClick = () => {
     navigate(
-      createUrlPath(authRoutes.userProfile.path, offer.author._id, {
-        role: UserRoleEnum.Tutor
+      createUrlPath(authRoutes.userProfile.path, displayedUser._id, {
+        role: displayedUser.role
       })
     )
   }
 
   const onClickOpenChat = () =>
     setChatInfo({
-      author: offer.author,
-      authorRole: UserRoleEnum.Tutor,
+      author: displayedUser,
+      authorRole: displayedUser.role[0] as
+        | UserRoleEnum.Student
+        | UserRoleEnum.Tutor,
       chatId: offer.chatId,
       updateInfo: updateInfo
     })
@@ -86,6 +97,14 @@ const MyCooperationsDetails = () => {
       </Box>
     ))
 
+  const avatarSrc =
+    displayedUser.photo &&
+    createUrlPath(import.meta.env.VITE_APP_IMG_USER_URL, displayedUser.photo)
+
+  const cooperationCompletion = userRole === UserRoleEnum.Tutor && (
+    <CooperationCompletion />
+  )
+
   return (
     <Box>
       <Typography sx={style.header}>
@@ -97,27 +116,27 @@ const MyCooperationsDetails = () => {
         </Typography>
         <Typography sx={style.title}>{offer.title}</Typography>
         <Typography sx={style.titles}>
-          {t('cooperationDetailsPage.tutor')}
+          {t(
+            isTutor
+              ? 'cooperationDetailsPage.tutor'
+              : 'cooperationDetailsPage.student'
+          )}
         </Typography>
         <Box>
           <Box sx={style.profileContainer}>
-            <Avatar
-              src={
-                offer.author.photo &&
-                createUrlPath(
-                  import.meta.env.VITE_APP_IMG_USER_URL,
-                  offer.author.photo
-                )
-              }
+            <AvatarIcon
+              firstName={offer.author.firstName}
+              lastName={offer.author.lastName}
+              photo={avatarSrc}
             />
             <Typography sx={style.profileName}>
-              {offer.author.firstName} {offer.author.lastName}
+              {displayedUser.firstName} {displayedUser.lastName}
             </Typography>
             <Typography sx={style.profileDescription}>
-              {offer.author.professionalSummary}
+              {displayedUser.professionalSummary}
             </Typography>
           </Box>
-          <Box>
+          <Box sx={style.userButtons}>
             <AppButton
               onClick={onClickOpenChat}
               size={SizeEnum.Medium}
@@ -171,7 +190,7 @@ const MyCooperationsDetails = () => {
         </Typography>
         <Typography>{`${price} UAH/hour`}</Typography>
       </Box>
-      <CooperationCompletion />
+      {cooperationCompletion}
     </Box>
   )
 }

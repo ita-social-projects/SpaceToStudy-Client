@@ -92,6 +92,10 @@ function renderWithBreakpoints(data) {
   )
 }
 
+beforeEach(() => {
+  vi.clearAllMocks()
+})
+
 describe('ProfileInfo test in my profile on laptop', () => {
   beforeEach(() => renderWithBreakpoints(laptopData))
 

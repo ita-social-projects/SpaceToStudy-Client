@@ -25,5 +25,8 @@ export const styles = {
     maxWidth: '250px',
     alignItems: 'center'
   } as SxProps<Theme>,
-  title: { typography: { xs: 'button', sm: 'h5', md: 'h4' } } as SxProps<Theme>
+  title: {
+    typography: { xs: 'button', sm: 'h5', md: 'h4' },
+    mt: '100px'
+  } as SxProps<Theme>
 }

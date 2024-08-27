@@ -2,12 +2,12 @@ import { FC, MouseEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
-import Avatar from '@mui/material/Avatar'
 import Badge from '@mui/material/Badge'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import AppRating from '~/components/app-rating/AppRating'
 import LanguagesListWithIcon from '~/components/languages-list-with-icon/LanguagesListWithIcon'
+import AvatarIcon from '~/components/avatar-icon/AvatarIcon'
 
 import {
   createUrlPath,
@@ -66,8 +66,12 @@ const UserProfileInfo: FC<UserProfileInfoProps> = ({
   }
 
   const avatar = (
-    <Avatar
-      src={photo && createUrlPath(import.meta.env.VITE_APP_IMG_USER_URL, photo)}
+    <AvatarIcon
+      firstName={firstName}
+      lastName={lastName}
+      photo={
+        photo && createUrlPath(import.meta.env.VITE_APP_IMG_USER_URL, photo)
+      }
       sx={spliceSx(styles.avatar, sx.avatar)}
     />
   )
@@ -75,7 +79,7 @@ const UserProfileInfo: FC<UserProfileInfoProps> = ({
   return (
     <Box sx={spliceSx(styles.root, sx.root)}>
       {renderAdditionalInfo && (
-        <Link onClick={handleLinkClick} to={userURL}>
+        <Link onClick={handleLinkClick} style={styles.link} to={userURL}>
           {onlineBadge ? (
             <Badge
               anchorOrigin={{

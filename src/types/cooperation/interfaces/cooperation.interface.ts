@@ -41,6 +41,7 @@ export interface MyCooperationDetails<TOffer extends Offer> {
   price: number
   title: string
   description: string
+  receiver: UserResponse
   receiverRole: UserRoleEnum
   languages: string[]
   chatId: string
@@ -48,6 +49,8 @@ export interface MyCooperationDetails<TOffer extends Offer> {
   subject: Pick<SubjectInterface, 'name'>
   category: CategoryInterface
   proficiencyLevel: ProficiencyLevelEnum
+  initiator: UserResponse
+  initiatorRole: UserRoleEnum
 }
 
 export interface CreateCooperationsParams extends EnrollOfferForm {

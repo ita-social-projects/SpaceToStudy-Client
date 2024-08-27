@@ -32,7 +32,7 @@ const AboutTutorAccordion: FC<AboutTutorAccordionProps> = ({
   const { t } = useTranslation()
   const [expandedItem, handleAccordionChange] = useAccordions({
     initialState: 0,
-    toggle: false
+    toggle: true
   })
 
   const accordionItems: AccordionItem[] = [
