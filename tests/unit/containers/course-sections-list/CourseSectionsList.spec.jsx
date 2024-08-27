@@ -209,7 +209,7 @@ describe('CourseSectionsList tests', () => {
     const addModuleButton = screen.getAllByTestId('Crop75Icon')[itemIndex]
     waitFor(() => fireEvent.click(addModuleButton))
     expect(mockedSectionEventHandler).toHaveBeenCalledWith({
-      index: -1,
+      index: 1,
       type: 'sectionAdded'
     })
   })

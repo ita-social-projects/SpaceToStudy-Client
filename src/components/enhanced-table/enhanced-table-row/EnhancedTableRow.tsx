@@ -1,16 +1,16 @@
+import { ReactNode, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
-import { ReactNode } from 'react'
 
-import MoreVertIcon from '@mui/icons-material/MoreVert'
 import Checkbox from '@mui/material/Checkbox'
+import MoreVertIcon from '@mui/icons-material/MoreVert'
 import IconButton from '@mui/material/IconButton'
 import MenuItem from '@mui/material/MenuItem'
 import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
-import useMenu from '~/hooks/use-menu'
 
 import { styles } from '~/components/enhanced-table/enhanced-table-row/EnhancedTableRow.styles'
+import useMenu from '~/hooks/use-menu'
 import {
   TableActionFunc,
   TableColumn,
@@ -22,60 +22,89 @@ import {
 export interface EnhancedTableRowProps<I> {
   columns: TableColumn<I>[]
   isSelection?: boolean
+  isDisableRow?: boolean
   item: I
   onRowClick?: (item: I) => void
   refetchData?: () => void
   rowActions?: TableRowAction[]
   select?: TableSelect<I>
   selectedRows: I[]
+  initialSelectedRows?: I[]
+}
+
+interface AdditionalProps {
+  t: ReturnType<typeof useTranslation>['t']
+  navigate: ReturnType<typeof useNavigate>
 }
 
 const EnhancedTableRow = <I extends TableItem>({
   columns,
   isSelection,
+  isDisableRow = false,
   item,
+  onRowClick,
   refetchData,
   rowActions,
-  onRowClick,
   select = {} as TableSelect<I>,
-  selectedRows
+  selectedRows,
+  initialSelectedRows = []
 }: EnhancedTableRowProps<I>) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const { openMenu, renderMenu, closeMenu } = useMenu()
   const { isSelected, handleSelectClick } = select
 
-  const onAction = async (actionFunc: TableActionFunc) => {
-    closeMenu()
-    await actionFunc(item._id)
-    refetchData && refetchData()
-  }
+  const onAction = useCallback(
+    async (actionFunc: TableActionFunc) => {
+      closeMenu()
+      await actionFunc(item._id)
+      refetchData && refetchData()
+    },
+    [closeMenu, item._id, refetchData]
+  )
 
-  const additionalProps = { t, navigate }
+  const additionalProps = useMemo(() => ({ t, navigate }), [t, navigate])
 
-  const tableCells = columns.map(({ field, label, calculatedCellValue }) => {
-    let propValue: string | ReactNode
-    if (calculatedCellValue) {
-      propValue = calculatedCellValue(item, additionalProps)
-    } else {
-      propValue = item[field as keyof I]?.toString()
-    }
+  const renderTableCell = useCallback(
+    (
+      field: keyof I,
+      label: string,
+      calculatedCellValue?: (item: I, props: AdditionalProps) => ReactNode
+    ) => {
+      const propValue = calculatedCellValue
+        ? calculatedCellValue(item, additionalProps)
+        : item[field]?.toString()
+      return <TableCell key={label}>{propValue}</TableCell>
+    },
+    [additionalProps, item]
+  )
 
-    return <TableCell key={label}>{propValue}</TableCell>
-  })
+  const tableCells = useMemo(
+    () =>
+      columns.map(({ field, label, calculatedCellValue }) =>
+        renderTableCell(field as keyof I, label, calculatedCellValue)
+      ),
+    [columns, renderTableCell]
+  )
 
-  const menuItems = rowActions?.map(({ label, func }) => (
-    <MenuItem key={label} onClick={() => void onAction(func)}>
-      {label}
-    </MenuItem>
-  ))
+  const menuItems = useMemo(
+    () =>
+      rowActions?.map(({ label, func }) => (
+        <MenuItem key={label} onClick={() => void onAction(func)}>
+          {label}
+        </MenuItem>
+      )),
+    [rowActions, onAction]
+  )
 
-  const handleRowClick = () => (onRowClick ? onRowClick(item) : null)
+  const handleRowClick = () => onRowClick && onRowClick(item)
 
-  const isRowSelected =
-    onRowClick &&
-    selectedRows.length &&
-    selectedRows.find((row) => row._id === item._id)
+  const isRowSelected = !!(
+    onRowClick && selectedRows.find((row) => row._id === item._id)
+  )
+
+  const isInitialSelected =
+    isDisableRow && !!initialSelectedRows?.find((row) => row._id === item._id)
 
   return (
     <TableRow
@@ -83,7 +112,7 @@ const EnhancedTableRow = <I extends TableItem>({
       key={item._id}
       onClick={handleRowClick}
       selected={isSelection && isSelected(item._id)}
-      sx={styles.row(!!isRowSelected, !!onRowClick)}
+      sx={styles.row(isRowSelected, !!onRowClick, isInitialSelected)}
     >
       {isSelection && (
         <TableCell padding='checkbox'>
