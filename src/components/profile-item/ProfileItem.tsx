@@ -25,8 +25,10 @@ const ProfileItem = ({
   const { id, icon } = item
   const navigate = useNavigate()
 
+  const isClickable = !isFilled && item.id !== 'schedule'
+
   const handleItemClick = () => {
-    if (item.id !== 'schedule') {
+    if (isClickable) {
       navigate(`${item.path}#${item.id}`)
     }
   }
@@ -34,7 +36,7 @@ const ProfileItem = ({
   return (
     <Box
       onClick={handleItemClick}
-      sx={{ position: 'relative', cursor: 'pointer' }}
+      sx={{ position: 'relative', cursor: isClickable ? 'pointer' : '' }}
     >
       <Box sx={{ ...styles.wrapper, opacity: isFilled ? 0.5 : 1 }}>
         <Box sx={styles.information}>

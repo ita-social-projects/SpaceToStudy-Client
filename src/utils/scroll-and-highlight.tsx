@@ -5,20 +5,13 @@ export const scrollToAndHighlight = (path: string) => {
     )
     if (elementWithId) {
       // console.log(elementWithId)
-      elementWithId.style.backgroundColor = '#ffff0029'
-      elementWithId.style.padding = '10px'
-      elementWithId.style.transition = '1s ease'
-
+      elementWithId.style.position = 'relative'
       elementWithId.scrollIntoView({ behavior: 'smooth', block: 'center' })
 
-      // const top = elementWithId.getBoundingClientRect().top
-      // console.log(top)
-      // document.querySelector('body')!.scrollBy(0, top)
-
-      setTimeout(() => {
-        elementWithId.style.backgroundColor = ''
-        elementWithId.style.padding = '0'
-      }, 1000)
+      // setTimeout(() => {
+      //   elementWithId.style.backgroundColor = ''
+      //   elementWithId.style.padding = '0'
+      // }, 1000)
     }
   }, 0)
 }
