@@ -1,4 +1,4 @@
-import { Dispatch, FC, SetStateAction } from 'react'
+import { Dispatch, FC, SetStateAction, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
@@ -27,10 +27,16 @@ import {
   ResourcesAvailabilityEnum,
   ButtonVariantEnum,
   SizeEnum,
-  ButtonTypeEnum
+  ButtonTypeEnum,
+  ErrorResponse,
+  UpdateCooperationsSections,
+  UpdateCooperationsParams
 } from '~/types'
 
+import useAxios from '~/hooks/use-axios'
 import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
+import { getErrorKey } from '~/utils/get-error-key'
+import { getErrorMessage } from '~/utils/error-with-message'
 
 interface CooperationActivitiesProps {
   cooperationId?: string
@@ -52,11 +58,14 @@ const CooperationActivities: FC<CooperationActivitiesProps> = ({
     dispatch(setResourcesAvailability(status))
   }
 
-  const updateCooperationSection = async () => {
-    await cooperationService.updateCooperation({
+  const onSaveCooperation = () => {
+    void updateCooperation({
       _id: cooperationId,
       sections
     })
+  }
+
+  const onUpdateResponse = useCallback(() => {
     dispatch(
       openAlert({
         severity: snackbarVariants.success,
@@ -64,7 +73,39 @@ const CooperationActivities: FC<CooperationActivitiesProps> = ({
       })
     )
     setEditMode((prev: boolean) => !prev)
-  }
+  }, [dispatch, setEditMode])
+
+  const onResponseError = useCallback(
+    (error?: ErrorResponse) => {
+      const errorKey = getErrorKey(error)
+      dispatch(
+        openAlert({
+          severity: snackbarVariants.error,
+          message: error
+            ? {
+                text: errorKey,
+                options: {
+                  message: getErrorMessage(error.message)
+                }
+              }
+            : errorKey
+        })
+      )
+    },
+    [dispatch]
+  )
+
+  const updateCooperationService = (
+    data: UpdateCooperationsParams | UpdateCooperationsSections
+  ) => cooperationService.updateCooperation(data)
+
+  const { fetchData: updateCooperation } = useAxios({
+    service: updateCooperationService,
+    fetchOnMount: false,
+    defaultResponse: null,
+    onResponse: onUpdateResponse,
+    onResponseError
+  })
 
   const cooperationOption = cooperationTranslationKeys.map(
     ({ title, value }) => ({
@@ -80,7 +121,7 @@ const CooperationActivities: FC<CooperationActivitiesProps> = ({
 
   return (
     <Box>
-      <Box data-testid='coop-from-scratch' sx={styles.root}>
+      <Box sx={styles.root}>
         <Box sx={styles.publishBlock}>
           <Box>
             <Box sx={styles.lockBlock}>
@@ -115,7 +156,7 @@ const CooperationActivities: FC<CooperationActivitiesProps> = ({
           {t('common.cancel')}
         </AppButton>
         <AppButton
-          onClick={() => void updateCooperationSection()}
+          onClick={onSaveCooperation}
           size={SizeEnum.ExtraLarge}
           type={ButtonTypeEnum.Submit}
         >
