@@ -115,7 +115,9 @@ describe('ProfileGeneralTab without a user photo', () => {
     ...props,
     data: {
       ...formDataMock,
-      photo: null
+      photo: null,
+      firstName: 'John',
+      lastName: 'Doe'
     }
   }
 
@@ -127,8 +129,9 @@ describe('ProfileGeneralTab without a user photo', () => {
     )
   })
 
-  it('should display a default avatar icon if no photo is provided', () => {
-    const avatarIcon = screen.getByTestId('PersonIcon')
-    expect(avatarIcon).toBeInTheDocument()
+  it('should render initials on avatar if no photo is provided', () => {
+    const avatarElement = screen.getByText('JD')
+
+    expect(avatarElement).toBeInTheDocument()
   })
 })

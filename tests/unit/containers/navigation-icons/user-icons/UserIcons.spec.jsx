@@ -13,12 +13,15 @@ vi.mock('~/containers/navigation-icons/AccountIcon', () => ({
 }))
 
 describe('test with user role', () => {
+  const preloadedState = { appMain: { loading: false, userRole: 'student' } }
+
   beforeEach(() => {
     renderWithProviders(
       <UserIcons
         openLoginDialog={openLoginDialog}
         setSidebarOpen={setIsSidebarOpen}
-      />
+      />,
+      { preloadedState }
     )
   })
 

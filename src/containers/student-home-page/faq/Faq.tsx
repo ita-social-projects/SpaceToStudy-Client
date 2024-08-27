@@ -7,7 +7,6 @@ import { accordionItems } from '~/containers/student-home-page/faq/accordionItem
 import Accordions from '~/components/accordion/Accordions'
 import useAccordions from '~/hooks/use-accordions'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
-import { studentRoutes } from '~/router/constants/studentRoutes'
 import { TypographyVariantEnum } from '~/types'
 
 import { styles } from '~/containers/student-home-page/faq/Faq.styles'
@@ -18,11 +17,7 @@ const Faq = () => {
   const [expandedItem, handleAccordionChange] = useAccordions()
 
   return (
-    <Box
-      className='section'
-      id={studentRoutes.navBar.faq.route}
-      sx={styles.container}
-    >
+    <Box className='section' sx={styles.container}>
       <TitleWithDescription
         description={t('studentHomePage.faq.subtitle')}
         style={styles.titleWithDescription}
