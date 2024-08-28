@@ -25,7 +25,7 @@ const ProfileItem = ({
   const { id, icon } = item
   const navigate = useNavigate()
 
-  const isClickable = true //!isFilled && item.id !== 'schedule'
+  const isClickable = !isFilled && item.id !== 'schedule' && item.id !== 'offer'
 
   const handleItemClick = () => {
     if (isClickable) {

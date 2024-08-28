@@ -34,6 +34,7 @@ import AppButton from '~/components/app-button/AppButton'
 import { scrollToAndHighlight } from '~/utils/scroll-and-highlight'
 
 import { styles } from '~/containers/edit-profile/professional-info-tab/ProfessionalInfoTab.styles'
+import { highlightElem } from '../common.styles'
 
 const ProfessionalInfoTab: FC = () => {
   const { t } = useTranslation()
@@ -100,6 +101,7 @@ const ProfessionalInfoTab: FC = () => {
 
   const TutorInfo = userRole === UserRoleEnum.Tutor && (
     <Box component='section' id='education'>
+      <Box sx={highlightElem}></Box>
       <TitleWithDescription
         description={t(
           'editProfilePage.profile.professionalTab.aboutTheTutorDescription'
