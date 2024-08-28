@@ -39,7 +39,7 @@ const ProfileInfo = ({ userData, myRole }: ProfileInfoProps) => {
   const navigate = useNavigate()
   const { isLaptopAndAbove, isMobile } = useBreakpoints()
   const dispatch = useAppDispatch()
-  const isMyProfile = useMatch(authRoutes.accountMenu.myProfile.path)
+  const isMyProfile = useMatch(authRoutes.myProfile.path)
   const { number, format } = getDifferenceDates(
     new Date(userData.createdAt),
     new Date()

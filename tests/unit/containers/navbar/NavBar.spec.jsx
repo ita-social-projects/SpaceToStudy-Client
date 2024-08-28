@@ -57,14 +57,14 @@ describe('Guest NavBar test', () => {
 })
 
 describe('Student NavBar test', () => {
-  const preloadedState = { appMain: { loading: false, userRole: 'student' } }
+  const preloadedState = { appMain: { loading: false, userRole: 'tutor' } }
 
   beforeEach(() => {
     renderWithProviders(<NavBar />, { preloadedState })
   })
 
   it('should render navigation item with navBar text', () => {
-    const text = screen.getByText('header.categories')
+    const text = screen.getByText('header.findStudent')
 
     expect(text).toBeInTheDocument()
   })

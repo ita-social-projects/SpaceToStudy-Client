@@ -18,7 +18,7 @@ export const styles = {
   headerTitleWithDesc: { ...titleWithDescription, title: { typography: H6 } },
   avatar: {
     root: { display: 'flex', columnGap: '34px', my: '20px' },
-    img: { width: '108px', height: '108px' },
+    img: { width: '108px', height: '108px', fontSize: '40px' },
     textWithButtons: {
       display: 'flex',
       flexDirection: 'column',

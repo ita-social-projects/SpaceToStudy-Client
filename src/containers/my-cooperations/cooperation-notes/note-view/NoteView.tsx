@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import MenuItem from '@mui/material/MenuItem'
-import Avatar from '@mui/material/Avatar'
 import IconButton from '@mui/material/IconButton'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import LockIcon from '@mui/icons-material/Lock'
@@ -15,6 +14,7 @@ import { useAppSelector } from '~/hooks/use-redux'
 import useMenu from '~/hooks/use-menu'
 import { getFormattedDate } from '~/utils/helper-functions'
 import AppTextField from '~/components/app-text-field/AppTextField'
+import AvatarIcon from '~/components/avatar-icon/AvatarIcon'
 import {
   TypographyVariantEnum,
   NoteResponse,
@@ -101,8 +101,6 @@ const NoteView: FC<NoteViewProps> = ({
     ? new URL(note.author.photo, import.meta.env.VITE_APP_IMG_USER_URL).href
     : undefined
   const isNameValid = Boolean(note.author.firstName && note.author.lastName)
-  const userInitials =
-    isNameValid && `${note.author.firstName[0]}${note.author.lastName[0]}`
   const userName =
     isNameValid && `${note.author.firstName} ${note.author.lastName}`
 
@@ -110,9 +108,12 @@ const NoteView: FC<NoteViewProps> = ({
     <Box sx={styles.container(isCurrentUser, note.isPrivate)}>
       <Box sx={styles.header}>
         <Box sx={styles.header}>
-          <Avatar src={userPhoto} sx={styles.accountIcon}>
-            {userInitials}
-          </Avatar>
+          <AvatarIcon
+            firstName={note.author.firstName}
+            lastName={note.author.lastName}
+            photo={userPhoto}
+            sx={styles.accountIcon}
+          />
           <Box>
             <Typography variant={TypographyVariantEnum.Subtitle2}>
               {userName}

@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useSearchParams } from 'react-router-dom'
 
@@ -8,7 +8,6 @@ import Divider from '@mui/material/Divider'
 
 import useConfirm from '~/hooks/use-confirm'
 
-import { authRoutes } from '~/router/constants/authRoutes'
 import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 import Loader from '~/components/loader/Loader'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
@@ -17,21 +16,26 @@ import SidebarMenu from '~/components/sidebar-menu/SidebarMenu'
 import {
   ButtonVariantEnum,
   SizeEnum,
+  UpdateUserParams,
   UserProfileTabsEnum,
   UserRole
 } from '~/types'
 import { tabsData } from '~/pages/edit-profile/EditProfile.constants'
 
 import { styles } from '~/pages/edit-profile/EditProfile.styles'
-import { fetchUserById } from '~/redux/features/editProfileSlice'
+import {
+  fetchUserById,
+  updateUser,
+  EditProfileState
+} from '~/redux/features/editProfileSlice'
 import { LoadingStatusEnum } from '~/redux/redux.constants'
+import { openAlert } from '~/redux/features/snackbarSlice'
+import { snackbarVariants } from '~/constants'
 
 const EditProfile = () => {
-  const { t } = useTranslation()
-  const dispatch = useAppDispatch()
-  const { loading, tabValidityStatus } = useAppSelector(
-    (state) => state.editProfile
-  )
+  const [initialEditProfileState, setInitialEditProfileState] = useState<
+    typeof profileState | null
+  >(null)
 
   const [searchParams, setSearchParams] = useSearchParams({
     tab: UserProfileTabsEnum.Profile
@@ -39,39 +43,146 @@ const EditProfile = () => {
 
   const activeTab = searchParams.get('tab') as UserProfileTabsEnum
 
+  const { t } = useTranslation()
+
+  const dispatch = useAppDispatch()
+
+  const { loading, tabValidityStatus, ...profileState } = useAppSelector(
+    (state) => state.editProfile
+  )
+
+  const { userId, userRole } = useAppSelector((state) => state.appMain)
+
+  const { checkConfirmation } = useConfirm()
+
+  const errorTooltipHolders = {
+    [UserProfileTabsEnum.Profile]: !tabValidityStatus.profileTab,
+    [UserProfileTabsEnum.ProfessionalInfo]:
+      !tabValidityStatus.professionalInfoTab
+  }
+
+  const isTabInvalid =
+    errorTooltipHolders.profile || errorTooltipHolders.professionalInfo
+
+  const hasChanges = (
+    initialData: Partial<EditProfileState>,
+    currentData: Partial<EditProfileState>
+  ): boolean => {
+    return JSON.stringify(initialData) !== JSON.stringify(currentData)
+  }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await dispatch(
+        fetchUserById({ userId, role: userRole as UserRole, isEdit: true })
+      )
+    }
+    void fetchData()
+  }, [dispatch, userId, userRole])
+
+  useEffect(() => {
+    if (
+      loading === LoadingStatusEnum.Fulfilled &&
+      initialEditProfileState === null
+    ) {
+      setInitialEditProfileState(structuredClone(profileState))
+    }
+  }, [loading, profileState, initialEditProfileState])
+
+  const changedFields = useMemo<Partial<EditProfileState>>(() => {
+    if (!initialEditProfileState || !profileState) return {}
+
+    const { photo: initialPhoto, ...initialData } = initialEditProfileState
+    const { photo: currentPhoto, ...currentData } = profileState
+
+    const hasChanged =
+      hasChanges(initialData, currentData) || initialPhoto !== currentPhoto
+
+    if (hasChanged) {
+      const changes: Partial<EditProfileState> = { ...currentData }
+
+      if (initialPhoto === currentPhoto) {
+        delete changes.photo
+      }
+      return changes
+    } else {
+      return {}
+    }
+  }, [profileState, initialEditProfileState])
+
+  const isChanged = useMemo<boolean>(
+    () => Object.keys(changedFields).length > 0,
+    [changedFields]
+  )
+
   const handleClick = async (tab: UserProfileTabsEnum) => {
     if (activeTab === tab) return
 
-    const confirmed = checkConfirmation({
+    const confirmed = await checkConfirmation({
       message: 'questions.goBackToProfile',
       title: 'titles.discardChanges',
       confirmButton: t('common.discard'),
       cancelButton: t('common.cancel')
     })
-    if (await confirmed) {
+    if (confirmed) {
       setSearchParams({ tab })
     }
   }
 
-  const { userId, userRole } = useAppSelector((state) => state.appMain)
+  const handleUpdateUser = async (): Promise<void> => {
+    const { country, city } = profileState
+    const {
+      videoLink,
+      notificationSettings,
+      professionalBlock,
+      categories,
+      ...rest
+    } = changedFields
 
-  useEffect(() => {
-    void dispatch(
-      fetchUserById({ userId, role: userRole as UserRole, isEdit: true })
+    const dataToUpdate: UpdateUserParams = rest
+
+    if (city && country) dataToUpdate.address = { city, country }
+
+    if (videoLink) {
+      dataToUpdate.videoLink =
+        typeof videoLink === 'string'
+          ? videoLink
+          : videoLink[userRole as keyof typeof videoLink]
+    }
+
+    if (notificationSettings)
+      dataToUpdate.notificationSettings = profileState.notificationSettings
+
+    if (professionalBlock)
+      dataToUpdate.professionalBlock = profileState.professionalBlock
+
+    if (categories) {
+      dataToUpdate.mainSubjects = categories
+    }
+
+    if (typeof profileState.photo === 'object') {
+      dataToUpdate.photo = profileState.photo
+    }
+
+    await dispatch(
+      updateUser({
+        userId,
+        params: dataToUpdate
+      })
     )
-  }, [dispatch, userId, userRole])
-
-  const { checkConfirmation } = useConfirm()
-
-  if (loading === LoadingStatusEnum.Pending) {
-    return <Loader pageLoad size={70} />
+    dispatch(
+      openAlert({
+        severity: snackbarVariants.success,
+        message: 'editProfilePage.profile.successMessage'
+      })
+    )
+    setInitialEditProfileState(structuredClone(profileState))
   }
 
   const cooperationContent = activeTab && tabsData[activeTab]?.content
-  const errorTooltipHolders = {
-    [UserProfileTabsEnum.Profile]: !tabValidityStatus.profileTab,
-    [UserProfileTabsEnum.ProfessionalInfo]:
-      !tabValidityStatus.professionalInfoTab
+
+  if (loading === LoadingStatusEnum.Pending) {
+    return <Loader pageLoad size={70} />
   }
 
   return (
@@ -87,12 +198,13 @@ const EditProfile = () => {
         </Box>
         <AppButton
           component={Link}
+          disabled={!isChanged || isTabInvalid}
+          onClick={() => void handleUpdateUser()}
           size={SizeEnum.Large}
-          sx={styles.backBtn}
-          to={authRoutes.accountMenu.myProfile.path}
+          sx={styles.updateBtn}
           variant={ButtonVariantEnum.Tonal}
         >
-          {t('editProfilePage.backBtn')}
+          {t('editProfilePage.updateBtn')}
         </AppButton>
       </Box>
       <Divider sx={styles.line} />

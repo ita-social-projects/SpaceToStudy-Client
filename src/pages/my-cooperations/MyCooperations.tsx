@@ -103,7 +103,7 @@ const MyCooperations = () => {
     <PageWrapper>
       <Box sx={styles.titleBlock}>
         <Typography sx={styles.title}>{t('cooperationsPage.title')}</Typography>
-        <AppButton component={Link} to={authRoutes.accountMenu.myOffers.path}>
+        <AppButton component={Link} to={authRoutes.myOffers.path}>
           {t('button.viewMyOffers')}
         </AppButton>
       </Box>

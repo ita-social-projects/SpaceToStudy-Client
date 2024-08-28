@@ -2,13 +2,12 @@ import { ChangeEvent, FC, FocusEvent, SyntheticEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
-import Avatar from '@mui/material/Avatar'
 import InputAdornment from '@mui/material/InputAdornment'
-
 import AppButton from '~/components/app-button/AppButton'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import AppTextArea from '~/components/app-text-area/AppTextArea'
 import AppAutoComplete from '~/components/app-auto-complete/AppAutoComplete'
+import AvatarIcon from '~/components/avatar-icon/AvatarIcon'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import LocationSelectionInputs from '~/components/location-selection-inputs/LocationSelectionInputs'
 import FileUploader from '~/components/file-uploader/FileUploader'
@@ -119,7 +118,12 @@ const ProfileTabForm: FC<ProfileTabFormProps> = ({
           style={{ root: styles.avatar.img }}
           validationData={validationData}
         >
-          <Avatar src={photoToDisplay} sx={styles.avatar.img} />
+          <AvatarIcon
+            firstName={data.firstName}
+            lastName={data.lastName}
+            photo={photoToDisplay}
+            sx={styles.avatar.img}
+          />
         </DragAndDrop>
         <Box sx={styles.avatar.textWithButtons}>
           <TitleWithDescription

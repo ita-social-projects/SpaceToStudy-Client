@@ -16,10 +16,7 @@ import {
   UserRoleEnum
 } from '~/types'
 
-import {
-  deleteCategory,
-  updateProfessionalBlock
-} from '~/redux/features/editProfileSlice'
+import { deleteCategory, setField } from '~/redux/features/editProfileSlice'
 
 import { useDebounce } from '~/hooks/use-debounce'
 import useForm from '~/hooks/use-form'
@@ -38,22 +35,18 @@ const ProfessionalInfoTab: FC = () => {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
   const { userRole } = useAppSelector((state) => state.appMain)
-  const {
-    categories,
-    education,
-    workExperience,
-    scientificActivities,
-    awards
-  } = useAppSelector((state) => state.editProfile)
+  const { categories, professionalBlock } = useAppSelector(
+    (state) => state.editProfile
+  )
 
   const { openModal, closeModal } = useModalContext()
 
   const { data, handleInputChange } = useForm<ProfessionalBlock>({
-    initialValues: { education, workExperience, scientificActivities, awards }
+    initialValues: professionalBlock
   })
 
   const debouncedProfessionalBlockData = useDebounce(() => {
-    dispatch(updateProfessionalBlock(data))
+    dispatch(setField({ field: 'professionalBlock', value: data }))
   }, 300)
 
   const { hash, pathname } = useLocation()

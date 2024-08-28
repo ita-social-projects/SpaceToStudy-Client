@@ -2,8 +2,6 @@ import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router-dom'
 
-import DesignServicesIcon from '@mui/icons-material/DesignServices'
-import Avatar from '@mui/material/Avatar'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import DoneIcon from '@mui/icons-material/Done'
@@ -12,6 +10,7 @@ import MessageIcon from '@mui/icons-material/Message'
 
 import useAxios from '~/hooks/use-axios'
 import { cooperationService } from '~/services/cooperation-service'
+import AvatarIcon from '~/components/avatar-icon/AvatarIcon'
 import SubjectLevelChips from '~/components/subject-level-chips/SubjectLevelChips'
 import AppButton from '~/components/app-button/AppButton'
 import ShowMoreCollapse from '~/components/show-more-collapse/ShowMoreCollapse'
@@ -30,6 +29,8 @@ import { createUrlPath } from '~/utils/helper-functions'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { useChatContext } from '~/context/chat-context'
 import CooperationCompletion from '../cooperation-completion/CooperationCompletion'
+import { getCategoryIcon } from '~/services/category-icon-service'
+import { getValidatedHexColor } from '~/utils/get-validated-hex-color'
 import { useAppSelector } from '~/hooks/use-redux'
 
 const MyCooperationsDetails = () => {
@@ -69,6 +70,9 @@ const MyCooperationsDetails = () => {
   const isTutor = displayedUser.role[0] === UserRoleEnum.Tutor
 
   const { offer, price } = detailsResponse
+
+  const CategoryIcon = getCategoryIcon(offer.category.appearance.icon)
+  const categoryColor = getValidatedHexColor(offer.category.appearance.color)
 
   const onHandleClick = () => {
     navigate(
@@ -124,7 +128,11 @@ const MyCooperationsDetails = () => {
         </Typography>
         <Box>
           <Box sx={style.profileContainer}>
-            <Avatar src={avatarSrc ?? ''} />
+            <AvatarIcon
+              firstName={offer.author.firstName}
+              lastName={offer.author.lastName}
+              photo={avatarSrc}
+            />
             <Typography sx={style.profileName}>
               {displayedUser.firstName} {displayedUser.lastName}
             </Typography>
@@ -157,9 +165,7 @@ const MyCooperationsDetails = () => {
           {t('cooperationDetailsPage.tutoringSubject')}
         </Typography>
         <Box sx={style.subjectContainer}>
-          <DesignServicesIcon
-            sx={style.iconColor(offer.category.appearance.color)}
-          />
+          <CategoryIcon sx={style.iconColor(categoryColor)} />
           <Typography>{offer.category.name}</Typography>
           <SubjectLevelChips
             color={offer.category.appearance.color}

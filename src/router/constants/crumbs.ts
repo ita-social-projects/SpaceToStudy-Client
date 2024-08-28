@@ -14,7 +14,7 @@ export const privacyPolicy = {
 
 export const myProfile = {
   name: 'breadCrumbs.myProfile',
-  path: authRoutes.accountMenu.myProfile.route
+  path: authRoutes.myProfile.route
 }
 
 export const editProfile = {
@@ -24,7 +24,7 @@ export const editProfile = {
 
 export const myCooperations = {
   name: 'breadCrumbs.myCooperations',
-  path: authRoutes.accountMenu.myCooperations.route
+  path: authRoutes.myCooperations.route
 }
 
 export const cooperationDetails = {
@@ -34,7 +34,7 @@ export const cooperationDetails = {
 
 export const myOffers = {
   name: 'breadCrumbs.myOffers',
-  path: authRoutes.accountMenu.myOffers.route
+  path: authRoutes.myOffers.route
 }
 
 export const categories = {

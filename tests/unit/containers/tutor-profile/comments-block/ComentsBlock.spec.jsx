@@ -1,6 +1,8 @@
-import { fireEvent, screen } from '@testing-library/react'
+import { render, fireEvent, screen } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
+import { MemoryRouter } from 'react-router-dom'
 import CommentsWithRatingBlock from '~/containers/user-profile/comments-with-rating-block/CommentsWithRatingBlock'
+import { UserRoleEnum } from '~/types'
 
 const props = {
   averageRating: 4.5,
@@ -13,13 +15,30 @@ const props = {
   ]
 }
 
+const mockReviewsCount = [
+  { count: 10, rating: 5 },
+  { count: 4, rating: 4 },
+  { count: 2, rating: 3 },
+  { count: 1, rating: 2 },
+  { count: 0, rating: 1 }
+]
+
 describe('CommentsWithRatingBlock', () => {
   beforeEach(() => {
     renderWithProviders(<CommentsWithRatingBlock {...props} />)
   })
-  it('should render the comments block', () => {
-    const titleElement = screen.getByText('userProfilePage.reviews.title')
-
+  it('should render the tutor comments block title', () => {
+    render(
+      <MemoryRouter>
+        <CommentsWithRatingBlock
+          averageRating={4.5}
+          reviewsCount={mockReviewsCount}
+          totalReviews={20}
+          userRole={UserRoleEnum.Tutor}
+        />
+      </MemoryRouter>
+    )
+    const titleElement = screen.getByText('userProfilePage.reviews.titleTutor')
     expect(titleElement).toBeInTheDocument()
   })
   it('should increase amountToShow by commentsCount.increment when handleShowMoreComments is called', () => {
