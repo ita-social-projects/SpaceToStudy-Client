@@ -1,6 +1,12 @@
 import { TypographyVariantEnum } from '~/types'
 
 export const styles = {
+  root: {
+    width: '684px',
+    maxWidth: '684px',
+    height: '520px',
+    paddingTop: '64px'
+  },
   warningImageContainer: {
     display: 'flex',
     justifyContent: 'center',

@@ -50,6 +50,8 @@ import { createUrlPath } from '~/utils/helper-functions'
 import { styles } from '~/containers/my-quizzes/create-or-edit-quiz-container/CreateOrEditQuizContainer.styles'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { getErrorKey } from '~/utils/get-error-key'
+import useChangeConfirm from '~/hooks/use-change-confirm'
+import ChangeConfirm from '~/components/changing-confirm/ChangeConfirm'
 
 const CreateOrEditQuizContainer = ({
   title,
@@ -168,10 +170,6 @@ const CreateOrEditQuizContainer = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id])
 
-  if (getQuizLoading) {
-    return <Loader pageLoad />
-  }
-
   const onOpenAddQuestionsModal = () => {
     openModal({
       component: (
@@ -218,6 +216,13 @@ const CreateOrEditQuizContainer = ({
           category,
           resourceType: ResourceType.Quiz
         })
+
+  const { openDialog, onCloseDialog, coursesFiltered, onSubmitButtonClick } =
+    useChangeConfirm(id)
+
+  if (getQuizLoading) {
+    return <Loader pageLoad />
+  }
 
   const CreateQuestionButton = (
     <Tooltip
@@ -300,13 +305,20 @@ const CreateOrEditQuizContainer = ({
             {t('common.cancel')}
           </AppButton>
           <AppButton
-            onClick={onSaveQuiz}
+            onClick={coursesFiltered.length ? onSubmitButtonClick : onSaveQuiz}
             size={SizeEnum.ExtraLarge}
             type={ButtonTypeEnum.Submit}
           >
             {t('common.save')}
           </AppButton>
         </Box>
+        <ChangeConfirm
+          courseList={coursesFiltered}
+          onClose={onCloseDialog}
+          onSubmit={onSaveQuiz}
+          open={openDialog}
+          title={title}
+        />
       </Box>
     </PageWrapper>
   )
