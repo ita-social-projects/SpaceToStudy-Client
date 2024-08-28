@@ -129,6 +129,7 @@ const ProfileTabForm: FC<ProfileTabFormProps> = ({
         <Box sx={styles.avatar.textWithButtons}>
           <TitleWithDescription
             description={t('editProfilePage.profile.generalTab.uploadDesc')}
+            isHighlighted
             style={styles.avatar.titleWithDesc}
             title={t('editProfilePage.profile.generalTab.uploadTitle')}
           />
@@ -179,9 +180,11 @@ const ProfileTabForm: FC<ProfileTabFormProps> = ({
         </Box>
       </Box>
 
-      <Box sx={styles.section}>
+      <Box id='address' sx={styles.section}>
+        <Box sx={highlightElem}></Box>
         <TitleWithDescription
           description={t('editProfilePage.profile.generalTab.locationDesc')}
+          isHighlighted
           style={styles.sectionsTitleWithDesc}
           title={t('editProfilePage.profile.generalTab.locationTitle')}
         />
@@ -235,6 +238,7 @@ const ProfileTabForm: FC<ProfileTabFormProps> = ({
           description={t(
             'editProfilePage.profile.generalTab.videoPresentationDesc'
           )}
+          isHighlighted
           style={styles.sectionsTitleWithDesc}
           title={t('userProfilePage.videoPresentation.title')}
         />

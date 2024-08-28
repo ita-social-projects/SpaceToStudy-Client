@@ -106,6 +106,7 @@ const ProfessionalInfoTab: FC = () => {
         description={t(
           'editProfilePage.profile.professionalTab.aboutTheTutorDescription'
         )}
+        isHighlighted
         style={styles.titleWithDescription}
         title={t('editProfilePage.profile.professionalTab.aboutTheTutorTitle')}
       />
@@ -127,11 +128,13 @@ const ProfessionalInfoTab: FC = () => {
         style={styles.mainTitleWithDescription}
         title={t('editProfilePage.profile.professionalTab.mainTitle')}
       />
-      <Box component={ComponentEnum.Section}>
+      <Box component={ComponentEnum.Section} id='category'>
+        <Box sx={highlightElem}></Box>
         <TitleWithDescription
           description={t(
             'editProfilePage.profile.professionalTab.categoriesDescription'
           )}
+          isHighlighted
           style={styles.titleWithDescription}
           title={t('editProfilePage.profile.professionalTab.categoriesTitle')}
         />

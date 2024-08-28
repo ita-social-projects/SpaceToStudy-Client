@@ -45,17 +45,17 @@ export const profileItemsStudent: ProfileItemType[] = [
   {
     id: 'photo',
     icon: <AccountCircleIcon />,
-    path: ''
+    path: authRoutes.editProfile.path
   },
   {
     id: 'category',
     icon: <CategoryIcon />,
-    path: ''
+    path: `${authRoutes.editProfile.path}?tab=professionalInfo`
   },
   {
     id: 'address',
     icon: <LocationOnIcon />,
-    path: ''
+    path: authRoutes.editProfile.path
   },
   {
     id: 'offer',
@@ -64,4 +64,4 @@ export const profileItemsStudent: ProfileItemType[] = [
   }
 ]
 
-export const fieldsWithIncreasedHeight = ['#video']
+export const fieldsWithIncreasedHeight = ['#video', '#address']
