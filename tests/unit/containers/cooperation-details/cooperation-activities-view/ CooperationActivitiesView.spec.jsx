@@ -5,8 +5,8 @@ import { UserRoleEnum } from '~/types'
 import CooperationActivitiesView from '~/containers/cooperation-details/cooperation-activities-view/CooperationActivitiesView.tsx'
 
 vi.mock('~/components/cooperation-section-view/CooperationSectionView', () => ({
-  default: ({ id, item }) => (
-    <div data-testid={`section-${id}`}>{item.title}</div>
+  default: ({ item }) => (
+    <div data-testid={`section-${item.id}`}>{item.title}</div>
   )
 }))
 

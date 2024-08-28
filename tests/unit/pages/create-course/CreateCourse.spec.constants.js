@@ -12,6 +12,7 @@ export const mockSubjectsNames = [
 
 export const mockNewSectionResource = {
   _id: '66b67d84b58ba31be667ee9d',
+  id: 'e7f8a9b0-c1d2-3e4f-5a6b-7c8d9e0f1a2b',
   author: '6658f73f93885febb491e08b',
   title: 'New Lesson',
   description: 'New lesson description',
@@ -106,7 +107,8 @@ export const mockCourseResponseData = {
           resourceType: ResourceType.Attachment
         }
       ],
-      id: '66b6862cb58ba31be667f1a7'
+      _id: '66b6862cb58ba31be667f1a7',
+      id: 'a1b2c3d4-5e6f-7a8b-9c0d-1e2f3b4c5d6e'
     }
   ]
 }
@@ -185,7 +187,8 @@ export const mockNewCourseData = {
           resourceType: ResourceType.Attachment
         }
       ],
-      id: '66b6862cb58ba31be667f1a7'
+      _id: '66b6862cb58ba31be667f1a7',
+      id: 'a1b2c3d4-5e6f-7a8b-9c0d-1e2f3b4c5d6e'
     }
   ]
 }

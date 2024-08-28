@@ -37,7 +37,7 @@ describe('CooperationSectionView', () => {
   }
 
   beforeEach(() => {
-    render(<CooperationSectionView id={mockSection._id} item={mockSection} />)
+    render(<CooperationSectionView item={mockSection} />)
   })
 
   it('should render resource title and description', () => {

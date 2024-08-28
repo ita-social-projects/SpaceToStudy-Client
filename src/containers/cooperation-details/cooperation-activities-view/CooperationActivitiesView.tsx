@@ -22,8 +22,8 @@ interface CooperationActivitiesViewProps {
 const CooperationActivitiesView: FC<CooperationActivitiesViewProps> = ({
   setEditMode
 }) => {
-  const { sections } = useAppSelector(cooperationsSelector)
   const dispatch = useAppDispatch()
+  const { sections } = useAppSelector(cooperationsSelector)
   const { userRole } = useAppSelector((state) => state.appMain)
   const isTutor = userRole === UserRoleEnum.Tutor
 
@@ -35,7 +35,7 @@ const CooperationActivitiesView: FC<CooperationActivitiesViewProps> = ({
   return (
     <Box sx={styles.root}>
       {sections.map((item) => (
-        <CooperationSectionView id={item.id} item={item} key={item.id} />
+        <CooperationSectionView item={item} key={item.id} />
       ))}
 
       {isTutor && (

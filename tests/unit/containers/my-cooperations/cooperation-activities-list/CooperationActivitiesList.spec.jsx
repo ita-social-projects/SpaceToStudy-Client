@@ -5,8 +5,7 @@ import { CourseResourceEventType, CourseSectionEventType } from '~/types'
 import {
   mockedCourseData,
   mockedSectionsData,
-  mockedEmptySectionsData,
-  mockedNewEmptySectionsData
+  mockedEmptySectionsData
 } from '~tests/unit/containers/my-cooperations/cooperation-activities-list/CooperationActivitiesList.spec.constants'
 
 import CooperationActivitiesList from '~/containers/my-cooperations/cooperation-activities-list/CooperationActivitiesList'
@@ -104,14 +103,10 @@ describe('CooperationActivitiesList with section data', () => {
 
     await waitFor(() => {
       expect(mockDispatch).toHaveBeenCalledWith({
-        type: 'cooperationsSlice/setCooperationSections',
-        payload: [
-          expect.objectContaining({
-            ...mockedNewEmptySectionsData[0],
-            id: expect.any(String)
-          }),
-          ...mockedSectionsData
-        ]
+        type: 'cooperationsSlice/addNewCooperationSection',
+        payload: {
+          index: 0
+        }
       })
     })
   })
@@ -126,7 +121,7 @@ describe('CooperationActivitiesList with section data', () => {
       expect(mockDispatch).toHaveBeenCalledWith({
         type: 'cooperationsSlice/deleteResource',
         payload: {
-          resourceId: mockedSectionsData[0].resources[0].resource._id,
+          resourceId: mockedSectionsData[0].resources[0].resource.id,
           sectionId: mockedSectionsData[0].id
         }
       })
@@ -164,14 +159,10 @@ describe('CooperationActivitiesList with section data', () => {
 
     await waitFor(() => {
       expect(mockDispatch).toHaveBeenCalledWith({
-        type: 'cooperationsSlice/setCooperationSections',
-        payload: [
-          expect.objectContaining({
-            ...mockedNewEmptySectionsData[0],
-            id: expect.any(String)
-          }),
-          ...mockedSectionsData
-        ]
+        type: 'cooperationsSlice/addNewCooperationSection',
+        payload: {
+          index: 0
+        }
       })
     })
   })

@@ -1,5 +1,8 @@
+import { isValidUUID } from '~/utils/validations/isValidUUID'
+
 import reducer, {
   setCooperationSections,
+  addNewCooperationSection,
   updateCooperationSection,
   deleteCooperationSection,
   addSectionResources,
@@ -9,7 +12,10 @@ import reducer, {
   setResourcesAvailability
 } from '~/redux/features/cooperationsSlice'
 
-import { ResourcesAvailabilityEnum } from '~/types'
+import {
+  ResourcesAvailabilityEnum,
+  ResourcesTypesEnum as ResourceType
+} from '~/types'
 
 describe('Test cooperationsSlice', () => {
   let initialState
@@ -29,6 +35,79 @@ describe('Test cooperationsSlice', () => {
     const action = setCooperationSections(sections)
     const state = reducer(initialState, action)
     expect(state.sections).toEqual(sections)
+  })
+
+  it('should set sections and resources correctly with setCooperationSections (with _id)', () => {
+    const sections = [
+      {
+        _id: '1',
+        resources: [
+          {
+            _id: 'some id',
+            title: 'Resource 1',
+            resourceType: ResourceType.Attachment
+          }
+        ]
+      }
+    ]
+    const action = setCooperationSections(sections)
+    const state = reducer(initialState, action)
+
+    const addedResource = state.sections[0].resources[0].resource
+
+    expect(isValidUUID(addedResource.id)).toBe(true)
+    expect(state.sections).toMatchObject([
+      {
+        _id: '1',
+        id: '1',
+        resources: [
+          {
+            _id: 'some id',
+            resource: {
+              id: expect.any(String)
+            },
+            resourceType: 'attachment',
+            title: 'Resource 1'
+          }
+        ]
+      }
+    ])
+  })
+
+  it('should set sections and resources correctly with setCooperationSections (without _id)', () => {
+    const sections = [
+      {
+        resources: [
+          {
+            _id: 'some id',
+            title: 'Resource 1',
+            resourceType: ResourceType.Attachment
+          }
+        ]
+      }
+    ]
+    const action = setCooperationSections(sections)
+    const state = reducer(initialState, action)
+
+    const addedResource = state.sections[0].resources[0].resource
+
+    expect(isValidUUID(state.sections[0].id)).toBe(true)
+    expect(isValidUUID(addedResource.id)).toBe(true)
+    expect(state.sections).toMatchObject([
+      {
+        id: expect.any(String),
+        resources: [
+          {
+            _id: 'some id',
+            resource: {
+              id: expect.any(String)
+            },
+            resourceType: 'attachment',
+            title: 'Resource 1'
+          }
+        ]
+      }
+    ])
   })
 
   it('should update section correctly with updateCooperationSection', () => {
@@ -57,10 +136,23 @@ describe('Test cooperationsSlice', () => {
     expect(state.sections.length).toBe(0)
   })
 
-  it('should add resources to section correctly with addSectionResources', () => {
+  it('should add new section correctly with addNewCooperationSection', () => {
+    const sectionIndex = 0
+    const initialStateWithSections = {
+      ...initialState,
+      sections: []
+    }
+    const action = addNewCooperationSection(sectionIndex)
+
+    const state = reducer(initialStateWithSections, action)
+    expect(state.sections.length).toBe(1)
+    expect(isValidUUID(state.sections[0].id)).toBe(true)
+  })
+
+  it('should add resources to section correctly with addSectionResources when isDuplicate=false', () => {
     const sectionId = '1'
     const resources = [
-      { _id: 'r1', title: 'Resource 1', resourceType: 'video' }
+      { _id: 'some id', title: 'Resource 1', resourceType: ResourceType.Quiz }
     ]
     const initialStateWithSections = {
       ...initialState,
@@ -68,8 +160,50 @@ describe('Test cooperationsSlice', () => {
     }
     const action = addSectionResources({ sectionId, resources })
     const state = reducer(initialStateWithSections, action)
+
     expect(state.sections[0].resources).toHaveLength(1)
-    expect(state.sections[0].resources[0].resource).toEqual(resources[0])
+
+    const addedResource = state.sections[0].resources[0].resource
+
+    expect(isValidUUID(addedResource.id)).toBe(true)
+    expect(addedResource).toMatchObject({
+      _id: 'some id',
+      title: 'Resource 1',
+      resourceType: ResourceType.Quiz
+    })
+  })
+
+  it('should add resources to section correctly with addSectionResources when isDuplicate=true', () => {
+    const sectionId = '1'
+    const resources = [
+      {
+        _id: 'some id',
+        title: 'Resource 1',
+        resourceType: ResourceType.Lesson
+      }
+    ]
+    const initialStateWithSections = {
+      ...initialState,
+      sections: [{ id: sectionId, resources: [] }]
+    }
+    const action = addSectionResources({
+      sectionId,
+      resources,
+      isDuplicate: true
+    })
+    const state = reducer(initialStateWithSections, action)
+
+    expect(state.sections[0].resources).toHaveLength(1)
+
+    const addedResource = state.sections[0].resources[0].resource
+
+    expect(isValidUUID(addedResource.id)).toBe(true)
+    expect(addedResource).toMatchObject({
+      _id: '',
+      title: 'Resource 1',
+      resourceType: ResourceType.Lesson,
+      isDuplicate: true
+    })
   })
 
   it('should update resources order correctly with updateResourcesOrder', () => {
@@ -92,7 +226,7 @@ describe('Test cooperationsSlice', () => {
       sections: [
         {
           id: sectionId,
-          resources: [{ resource: { _id: resourceId, title: 'Old Title' } }]
+          resources: [{ resource: { id: resourceId, title: 'Old Title' } }]
         }
       ]
     }
@@ -111,7 +245,7 @@ describe('Test cooperationsSlice', () => {
     const initialStateWithSections = {
       ...initialState,
       sections: [
-        { id: sectionId, resources: [{ resource: { _id: resourceId } }] }
+        { id: sectionId, resources: [{ resource: { id: resourceId } }] }
       ]
     }
     const action = deleteResource({ sectionId, resourceId })

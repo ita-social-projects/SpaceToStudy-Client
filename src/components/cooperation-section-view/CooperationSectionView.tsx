@@ -11,14 +11,10 @@ import { styles } from '~/components/cooperation-section-view/CooperationSection
 import { CourseSection, TextFieldVariantEnum } from '~/types'
 
 interface CooperationSectionViewProps {
-  id?: string
   item: CourseSection
 }
 
-const CooperationSectionView: FC<CooperationSectionViewProps> = ({
-  item,
-  id
-}) => {
+const CooperationSectionView: FC<CooperationSectionViewProps> = ({ item }) => {
   const { t } = useTranslation()
   const [isVisible, setIsVisible] = useState<boolean>(true)
 
@@ -27,7 +23,7 @@ const CooperationSectionView: FC<CooperationSectionViewProps> = ({
       item.resources?.map(({ resource, resourceType }) => (
         <ResourceItem
           isView
-          key={resource._id}
+          key={resource.id}
           resource={resource}
           resourceType={resourceType}
         />
@@ -36,7 +32,7 @@ const CooperationSectionView: FC<CooperationSectionViewProps> = ({
   )
 
   return (
-    <Box key={id} sx={styles.root}>
+    <Box sx={styles.root}>
       <HeaderTextWithDropdown
         isView
         isVisible={isVisible}

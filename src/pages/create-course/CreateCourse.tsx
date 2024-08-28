@@ -212,14 +212,17 @@ const CreateCourse = () => {
       const newResources = resources
         .filter((resource) => {
           return !section.resources.some(
-            (item) => item.resource._id === resource._id && !isDuplicate
+            (item) => item.resource.id === resource.id && !isDuplicate
           )
         })
         .map((resource) => {
+          const { _id, ...newDuplicateResource } = resource
           return {
-            resource: isDuplicate
-              ? { ...resource, _id: uuidv4(), isDuplicate: true }
-              : resource,
+            resource: {
+              ...newDuplicateResource,
+              id: uuidv4(),
+              ...(isDuplicate ? { _id: '', isDuplicate: true } : { _id })
+            },
             resourceType: resource.resourceType
           }
         })
@@ -237,19 +240,19 @@ const CreateCourse = () => {
       resource
     }: {
       sectionId: CourseSection['id']
-      resourceId: CourseResource['_id']
+      resourceId: CourseResource['id']
       resource: Partial<CourseResource>
     }) => {
       const section = data.sections.find((section) => section.id === sectionId)
       if (!section) return
 
       const currentResource = section.resources.find(
-        (item) => item.resource._id === resourceId
+        (item) => item.resource.id === resourceId
       )
       if (!currentResource) return
 
       const newSectionResources = section.resources.map((item) =>
-        item.resource._id === resourceId
+        item.resource.id === resourceId
           ? { ...currentResource, ...resource }
           : item
       )
@@ -265,13 +268,13 @@ const CreateCourse = () => {
       resourceId
     }: {
       sectionId: CourseSection['id']
-      resourceId: CourseResource['_id']
+      resourceId: CourseResource['id']
     }) => {
       const section = data.sections.find((section) => section.id === sectionId)
       if (!section) return
 
       const newSectionResources = section.resources.filter(
-        (resource) => resource.resource._id !== resourceId
+        (resource) => resource.resource.id !== resourceId
       )
       handleSectionChange(sectionId, 'resources', newSectionResources)
     },
@@ -341,6 +344,11 @@ const CreateCourse = () => {
       if (item._id) {
         item.id = item._id
       }
+    })
+    course.sections.forEach((section) => {
+      section.resources?.forEach((resource) => {
+        resource.resource.id ||= uuidv4()
+      })
     })
     for (const key in data) {
       const validKey = key as keyof CourseForm

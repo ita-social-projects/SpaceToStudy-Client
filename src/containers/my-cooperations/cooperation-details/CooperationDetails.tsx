@@ -46,17 +46,17 @@ import {
 } from '~/redux/features/cooperationsSlice'
 
 const CooperationDetails = () => {
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate()
   const { t } = useTranslation()
   const { id } = useParams()
-  const { isActivityCreated } = useAppSelector(cooperationsSelector) // Why is this needed?
-  const navigate = useNavigate()
   const { isDesktop } = useBreakpoints()
+  const { isActivityCreated } = useAppSelector(cooperationsSelector) // Why is this needed?
   const [activeTab, setActiveTab] = useState<CooperationTabsEnum>(
     CooperationTabsEnum.Activities
   )
   const [isNotesOpen, setIsNotesOpen] = useState<boolean>(false)
   const [editMode, setEditMode] = useState<boolean>(false)
-  const dispatch = useAppDispatch()
 
   const responseError = useCallback(
     () => navigate(errorRoutes.notFound.path),
@@ -75,7 +75,7 @@ const CooperationDetails = () => {
 
   useEffect(() => {
     dispatch(setCooperationSections(response.sections))
-    response.sections && response.sections.length && setEditMode(true)
+    setEditMode(Boolean(response?.sections?.length))
   }, [response.sections, dispatch])
 
   const handleEditMode = useCallback(() => {

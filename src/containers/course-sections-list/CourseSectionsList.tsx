@@ -177,7 +177,10 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
 
   const courseSectionContent = enabled && (
     <>
-      <SortableContext items={items} strategy={verticalListSortingStrategy}>
+      <SortableContext
+        items={items.map((item) => item.id)}
+        strategy={verticalListSortingStrategy}
+      >
         {sectionItems}
       </SortableContext>
       <DragOverlay>
