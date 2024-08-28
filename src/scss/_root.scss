@@ -1,0 +1,34 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+:root {
+  // Colors
+  @include generate-css-variables($blue-grays, '#{$prefix}blue-gray-');
+  @include generate-css-variables($turquoises, '#{$prefix}turquoise-');
+  @include generate-css-variables($blues, '#{$prefix}blue-');
+  @include generate-css-variables($greens, '#{$prefix}green-');
+  @include generate-css-variables($yellows, '#{$prefix}yellow-');
+  @include generate-css-variables($purples, '#{$prefix}purple-');
+  @include generate-css-variables($reds, '#{$prefix}red-');
+  @include generate-css-variables($neutrals, '#{$prefix}neutral-');
+
+  // Breakpoints
+  @include generate-css-variables($breakpoints, '#{$prefix}breakpoint-');
+
+  // Borders
+  @include generate-css-variables($border-radiuses, '#{$prefix}border-radius-');
+  @include generate-css-variables($border-widths, '#{$prefix}border-width-');
+
+  // Typography
+  @include generate-css-variables($font-families, '#{$prefix}font-family-');
+  @include generate-css-variables($font-sizes, '#{$prefix}font-size-');
+  @include generate-css-variables($font-weights, '#{$prefix}font-weight-');
+  @include generate-css-variables($line-heights, '#{$prefix}line-height-');
+  @include generate-css-variables($letter-spacings, '#{$prefix}letter-spacing-');
+
+  // Spacing
+  @include generate-css-variables($spaces, '#{$prefix}space-');
+
+  // Shadows
+  @include generate-css-variables($box-shadows, '#{$prefix}box-shadow-');
+}

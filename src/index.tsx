@@ -7,6 +7,7 @@ import { store } from '~/redux/store'
 import { setupInterceptors } from '~/services/setup-interceptors'
 import { router } from '~/router/router'
 import '~/styles/index.css'
+import '~/scss/styles.scss'
 import '~/plugins/i18n'
 
 const root = createRoot(document.getElementById('root') as HTMLElement)

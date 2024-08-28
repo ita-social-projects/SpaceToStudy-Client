@@ -13,6 +13,12 @@
  *
  */
 
+@mixin generate-css-variables($map, $prefix: '') {
+  @each $key, $value in $map {
+    --#{$prefix}#{$key}: #{$value};
+  }
+}
+
 /*=============================================
  =                @media rules                =
  =============================================*/
@@ -24,44 +30,28 @@
   * example usage: @include tablet { color: $pink }
   */
 
-@mixin tablet {
-  @media (min-width: map.get($breakpoints, 'tablet')) {
+@mixin desktop {
+  @media (min-width: map.get($breakpoints, 'xl')) {
     @content;
   }
 }
 
-@mixin desktop {
-  @media (min-width: map.get($breakpoints, 'desktop')) {
+@mixin tablet-landscape {
+  @media (min-width: map.get($breakpoints, 'lg')) {
+    @content;
+  }
+}
+
+@mixin tablet-portrait {
+  @media (min-width: map.get($breakpoints, 'md')) {
     @content;
   }
 }
 
 @mixin mobile {
-  @media (min-width: map.get($breakpoints, 'mobile')) {
+  @media (min-width: map.get($breakpoints, 'sm')) {
     @content;
   }
-}
-
-/*=============================================
-=                 Spacings                    =
-=============================================*/
-
-/**
- * Function which returns values for spacing according to our design system. For your understanding,
- * you can multiply value to 4 to get value in px
- *
- * $value is expected to be a plain integer without unit name => 1; 2; 4;
- * 
- * Example usage:
- * margin: spacing(2) => margin: 0.5rem // 8px
- * padding-right: spacing(1) => padding-right: 0.25rem // 4px
- */
-
-@function spacing($value: 1) {
-  @if $value != math.round($value) {
-    @error "#{$value} is not a valid property. Expected an plain integer.";
-  }
-  @return $spacing-scale-factor * $value;
 }
 
 /*=============================================

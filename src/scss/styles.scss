@@ -1,28 +1,9 @@
-/*=============================================
+@charset 'UTF-8';
 
-=               TABLE OF CONTENT              =
+@forward 'mixins';
+@forward 'variables';
+@forward 'root';
+@forward 'reset';
 
-=============================================*/
+@import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&family=Rubik:wght@300..900&display=swap');
 
-/**
- *
- * FOUNDATION...................
- * BASE.........................
- *
- */
-
-/*=============================================
- =            FOUNDATION            =
- =============================================*/
-
-@forward 'foundation/index';
-
-/*=====  End of FOUNDATION  ======*/
-
-/*=============================================
-=            BASE            =
-=============================================*/
-
-@forward 'base/index';
-
-/*=====  End of BASE  ======*/
