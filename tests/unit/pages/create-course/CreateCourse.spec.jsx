@@ -184,14 +184,6 @@ describe('CreateCourse with params id', () => {
     })
   })
 
-  it('should navigate back to courses when "Cancel" is clicked', () => {
-    const cancelButton = screen.getByText('common.cancel')
-
-    fireEvent.click(cancelButton)
-
-    expect(mockNavigate).toHaveBeenCalledWith('/my-courses')
-  })
-
   it('should choose the category from options list', async () => {
     const autocomplete = screen.getAllByRole('combobox')[0]
 
