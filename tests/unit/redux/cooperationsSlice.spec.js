@@ -29,12 +29,21 @@ describe('Test cooperationsSlice', () => {
 
   it('should set sections correctly with setCooperationSections', () => {
     const sections = [
-      { _id: '1', id: '1', resources: [] },
-      { _id: '2', id: '2', resources: [] }
+      { _id: '1', resources: [] },
+      { _id: '2', resources: [] }
     ]
     const action = setCooperationSections(sections)
     const state = reducer(initialState, action)
-    expect(state.sections).toEqual(sections)
+
+    expect(state.sections).toEqual(
+      sections.map((section) => ({
+        ...section,
+        id: expect.any(String)
+      }))
+    )
+    state.sections.forEach((section) => {
+      expect(isValidUUID(section.id)).toBe(true)
+    })
   })
 
   it('should set sections and resources correctly with setCooperationSections (with _id)', () => {
@@ -59,19 +68,25 @@ describe('Test cooperationsSlice', () => {
     expect(state.sections).toMatchObject([
       {
         _id: '1',
-        id: '1',
+        id: expect.any(String),
         resources: [
           {
             _id: 'some id',
             resource: {
               id: expect.any(String)
             },
-            resourceType: 'attachment',
+            resourceType: ResourceType.Attachment,
             title: 'Resource 1'
           }
         ]
       }
     ])
+    state.sections.forEach((section) => {
+      expect(isValidUUID(section.id)).toBe(true)
+      section.resources.forEach((resource) => {
+        expect(isValidUUID(resource.resource.id)).toBe(true)
+      })
+    })
   })
 
   it('should set sections and resources correctly with setCooperationSections (without _id)', () => {
