@@ -177,7 +177,12 @@ export interface StepData {
     data: UserGeneralInfo
     errors: Record<string, string>
   }
-  photo: string[]
+  photo: Array<{
+    src: string
+    name: string
+    type: string
+    lastModified: number
+  }>
   subjects: Array<SubjectNameInterface & { category: CategoryNameInterface }>
   language: UserResponse['nativeLanguage']
 }
