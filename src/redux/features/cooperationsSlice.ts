@@ -75,7 +75,7 @@ const cooperationsSlice = createSlice({
     ) {
       state.sections = (action.payload ?? []).map((section) => ({
         ...section,
-        id: section._id ?? uuidv4(),
+        id: uuidv4(),
         resources: (section.resources ?? []).map((resource) => ({
           ...resource,
           resource: { ...resource.resource, id: uuidv4() }
