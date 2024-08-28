@@ -12,7 +12,7 @@ import EditOffer from '~/containers/offer-page/edit-offer/EditOffer'
 import { SortHook } from '~/hooks/table/use-sort'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { useDrawer } from '~/hooks/use-drawer'
-import { ajustColumns, createUrlPath } from '~/utils/helper-functions'
+import { adjustColumns, createUrlPath } from '~/utils/helper-functions'
 
 import { styles } from '~/containers/my-cooperations/cooperations-container/CooperationContainer.styles'
 import {
@@ -20,7 +20,13 @@ import {
   removeColumnRules
 } from '~/containers/my-offers/my-offers-container/MyOffersContainer.constants'
 import { authRoutes } from '~/router/constants/authRoutes'
-import { ButtonVariantEnum, Offer, SizeEnum } from '~/types'
+import {
+  ButtonVariantEnum,
+  Offer,
+  SizeEnum,
+  TableActionFunc,
+  TableRowAction
+} from '~/types'
 
 interface MyOffersContainerProps {
   items: Offer[]
@@ -39,7 +45,7 @@ const MyOffersContainer: FC<MyOffersContainerProps> = ({
   const { openDrawer, closeDrawer, isOpen } = useDrawer()
   const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null)
 
-  const columnsToShow = ajustColumns<Offer>(
+  const columnsToShow = adjustColumns<Offer>(
     breakpoints,
     columns,
     removeColumnRules
@@ -68,13 +74,15 @@ const MyOffersContainer: FC<MyOffersContainerProps> = ({
     }
   ]
 
-  const editOffer = (id: string) => handleOpenDrawer(id)
-
-  const viewDetails = (id: string) => {
-    navigate(createUrlPath(authRoutes.offerDetails.path, id))
+  const editOffer: TableActionFunc = (id) => {
+    handleOpenDrawer(id as string)
   }
 
-  const rowActions = [
+  const viewDetails: TableActionFunc = (id) => {
+    navigate(createUrlPath(authRoutes.offerDetails.path, id as string))
+  }
+
+  const rowActions: TableRowAction[] = [
     { label: t('myOffersPage.editButton'), func: editOffer },
     { label: t('common.labels.viewDetails'), func: viewDetails }
   ]

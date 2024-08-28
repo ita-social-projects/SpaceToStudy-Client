@@ -1,3 +1,5 @@
+import { ResourcesTypesEnum as ResourceType } from '~/types'
+
 export const mockCategoriesNames = [
   { _id: '64884f33fdc2d1a130c24ac2', name: 'Mathematic' },
   { _id: '660c27618a9fbf234b8bb4cd', name: 'Music' }
@@ -10,13 +12,14 @@ export const mockSubjectsNames = [
 
 export const mockNewSectionResource = {
   _id: '66b67d84b58ba31be667ee9d',
+  id: 'e7f8a9b0-c1d2-3e4f-5a6b-7c8d9e0f1a2b',
   author: '6658f73f93885febb491e08b',
   title: 'New Lesson',
   description: 'New lesson description',
   content: '<h4>Lesson New Plan:</h4>',
   attachments: [],
   category: '64884f33fdc2d1a130c24ac2',
-  resourceType: 'lesson'
+  resourceType: ResourceType.Lesson
 }
 
 export const mockUpdatedSectionResource = {
@@ -27,7 +30,7 @@ export const mockUpdatedSectionResource = {
   content: '<h4>Lesson Updated Plan:</h4>',
   attachments: [],
   category: '64884f33fdc2d1a130c24ac2',
-  resourceType: 'lesson'
+  resourceType: ResourceType.Lesson
 }
 
 export const mockCourseResponseData = {
@@ -55,13 +58,13 @@ export const mockCourseResponseData = {
             content: '<h4>Lesson Plan:</h4>',
             attachments: [],
             category: '6684175179e5232bce4579ed',
-            resourceType: 'lesson',
+            resourceType: ResourceType.Lesson,
             availability: {
               status: 'open',
               date: null
             }
           },
-          resourceType: 'lesson'
+          resourceType: ResourceType.Lesson
         },
         {
           resource: {
@@ -72,7 +75,7 @@ export const mockCourseResponseData = {
             items: ['66b67e02b58ba31be667ee43'],
             author: '6658f73f93885febb491e08b',
             category: '6684175179e5232bce4579ed',
-            resourceType: 'quiz',
+            resourceType: ResourceType.Quiz,
             availability: {
               status: 'open',
               date: null
@@ -85,7 +88,7 @@ export const mockCourseResponseData = {
               correctAnswers: false
             }
           },
-          resourceType: 'quiz'
+          resourceType: ResourceType.Quiz
         },
         {
           resource: {
@@ -95,16 +98,17 @@ export const mockCourseResponseData = {
             link: '1723236050559-Exploring Systems of Linear Equations.png',
             size: 39340,
             category: '6684175179e5232bce4579ed',
-            resourceType: 'attachment',
+            resourceType: ResourceType.Attachment,
             availability: {
               status: 'open',
               date: null
             }
           },
-          resourceType: 'attachment'
+          resourceType: ResourceType.Attachment
         }
       ],
-      id: '66b6862cb58ba31be667f1a7'
+      _id: '66b6862cb58ba31be667f1a7',
+      id: 'a1b2c3d4-5e6f-7a8b-9c0d-1e2f3b4c5d6e'
     }
   ]
 }
@@ -134,13 +138,13 @@ export const mockNewCourseData = {
             content: '<h4>Lesson Plan:</h4>',
             attachments: [],
             category: '6684175179e5232bce4579ed',
-            resourceType: 'lesson',
+            resourceType: ResourceType.Lesson,
             availability: {
               status: 'open',
               date: null
             }
           },
-          resourceType: 'lesson'
+          resourceType: ResourceType.Lesson
         },
         {
           resource: {
@@ -151,7 +155,7 @@ export const mockNewCourseData = {
             items: ['66b67e02b58ba31be667ee43'],
             author: '6658f73f93885febb491e08b',
             category: '6684175179e5232bce4579ed',
-            resourceType: 'quiz',
+            resourceType: ResourceType.Quiz,
             availability: {
               status: 'open',
               date: null
@@ -164,7 +168,7 @@ export const mockNewCourseData = {
               correctAnswers: false
             }
           },
-          resourceType: 'quiz'
+          resourceType: ResourceType.Quiz
         },
         {
           resource: {
@@ -174,16 +178,17 @@ export const mockNewCourseData = {
             link: '1723236050559-Multiplication Tables Chart.png',
             size: 39340,
             category: '6684175179e5232bce4579ed',
-            resourceType: 'attachment',
+            resourceType: ResourceType.Attachment,
             availability: {
               status: 'open',
               date: null
             }
           },
-          resourceType: 'attachment'
+          resourceType: ResourceType.Attachment
         }
       ],
-      id: '66b6862cb58ba31be667f1a7'
+      _id: '66b6862cb58ba31be667f1a7',
+      id: 'a1b2c3d4-5e6f-7a8b-9c0d-1e2f3b4c5d6e'
     }
   ]
 }

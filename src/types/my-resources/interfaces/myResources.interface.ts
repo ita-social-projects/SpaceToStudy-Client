@@ -8,9 +8,11 @@ import {
 } from '~/types'
 
 export interface ResourceBase {
+  id: string
   description: string
   resourceType: ResourceType
   availability?: ResourceAvailability
+  isDuplicate?: boolean
 }
 
 export interface Lesson extends CommonEntityFields, ResourceBase {

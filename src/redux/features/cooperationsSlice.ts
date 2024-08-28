@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { RootState } from '~/redux/store'
 import { sliceNames } from '~/redux/redux.constants'
@@ -15,7 +16,6 @@ interface CooperationsState {
   isActivityCreated: boolean // delete it
   isAddedClicked: boolean // delete it
   isNewActivity: boolean // delete it
-  currentSectionIndex?: number // delete it
   sections: CourseSection[]
   resourcesAvailability: ResourcesAvailabilityEnum
 }
@@ -25,9 +25,15 @@ const initialState: CooperationsState = {
   isActivityCreated: false, // delete it
   isAddedClicked: false, // delete it
   isNewActivity: false, // delete it
-  currentSectionIndex: 0, // delete it
   sections: [],
   resourcesAvailability: ResourcesAvailabilityEnum.OpenAll
+}
+
+export const initialCooperationSectionData: CourseSection = {
+  id: '',
+  title: '',
+  description: '',
+  resources: []
 }
 
 const cooperationsSlice = createSlice({
@@ -62,23 +68,36 @@ const cooperationsSlice = createSlice({
     ) {
       state.isNewActivity = action.payload
     },
-    setCurrentSectionIndex(
-      // delete it
-      state,
-      action: PayloadAction<CooperationsState['currentSectionIndex']>
-    ) {
-      state.currentSectionIndex = action.payload
-    },
 
     setCooperationSections(
       state,
       action: PayloadAction<CooperationsState['sections']>
     ) {
-      // state.sections = action.payload if courses will be fixed
       state.sections = (action.payload ?? []).map((section) => ({
         ...section,
-        resources: section.resources ?? []
+        id: section._id ?? uuidv4(),
+        resources: (section.resources ?? []).map((resource) => ({
+          ...resource,
+          resource: { ...resource.resource, id: uuidv4() }
+        }))
       }))
+    },
+
+    addNewCooperationSection(
+      state,
+      action: PayloadAction<{
+        index: number | undefined
+      }>
+    ) {
+      const newSectionData = { ...initialCooperationSectionData }
+      newSectionData.id = uuidv4()
+      const newSections = [...state.sections]
+      newSections.splice(
+        action.payload.index ?? state.sections.length,
+        0,
+        newSectionData
+      )
+      state.sections = newSections
     },
 
     updateCooperationSection(
@@ -112,8 +131,10 @@ const cooperationsSlice = createSlice({
       action: PayloadAction<{
         sectionId: CourseSection['id']
         resources: CourseResource[]
+        isDuplicate?: boolean
       }>
     ) {
+      const isDuplicate = action.payload.isDuplicate
       const section = state.sections.find(
         (section) => section.id === action.payload.sectionId
       )
@@ -123,10 +144,20 @@ const cooperationsSlice = createSlice({
       const newResources = action.payload.resources
         .filter((resource) => {
           return !section.resources.some(
-            (item) => item.resource._id === resource._id
+            (item) => item.resource.id === resource.id && !isDuplicate
           )
         })
-        .map((resource) => ({ resource, resourceType: resource.resourceType }))
+        .map((resource) => {
+          const { _id, ...newDuplicateResource } = resource
+          return {
+            resource: {
+              ...newDuplicateResource,
+              id: uuidv4(),
+              ...(isDuplicate ? { _id: '', isDuplicate: true } : { _id })
+            },
+            resourceType: resource.resourceType
+          }
+        })
 
       section.resources = [...section.resources, ...newResources]
     },
@@ -154,7 +185,7 @@ const cooperationsSlice = createSlice({
       state,
       action: PayloadAction<{
         sectionId: CourseSection['id']
-        resourceId: CourseResource['_id']
+        resourceId: CourseResource['id']
         resource: Partial<CourseResource>
       }>
     ) {
@@ -165,7 +196,7 @@ const cooperationsSlice = createSlice({
       if (!section) return
 
       const resource = section.resources.find(
-        (item) => item.resource._id === action.payload.resourceId
+        (item) => item.resource.id === action.payload.resourceId
       )
 
       if (!resource) return
@@ -180,7 +211,7 @@ const cooperationsSlice = createSlice({
       state,
       action: PayloadAction<{
         sectionId: CourseSection['id']
-        resourceId: CourseResource['_id']
+        resourceId: CourseResource['id']
       }>
     ) {
       const section = state.sections.find(
@@ -190,7 +221,7 @@ const cooperationsSlice = createSlice({
       if (!section) return
 
       section.resources = section.resources.filter(
-        (item) => item.resource._id !== action.payload.resourceId
+        (item) => item.resource.id !== action.payload.resourceId
       )
     },
 
@@ -223,8 +254,8 @@ export const {
   setIsActivityCreated,
   setIsAddedClicked,
   setIsNewActivity,
-  setCurrentSectionIndex,
   setCooperationSections,
+  addNewCooperationSection,
   updateCooperationSection,
   deleteCooperationSection,
   addSectionResources,

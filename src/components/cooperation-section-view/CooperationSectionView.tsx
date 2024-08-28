@@ -11,23 +11,19 @@ import { styles } from '~/components/cooperation-section-view/CooperationSection
 import { CourseSection, TextFieldVariantEnum } from '~/types'
 
 interface CooperationSectionViewProps {
-  id?: string
   item: CourseSection
 }
 
-const CooperationSectionView: FC<CooperationSectionViewProps> = ({
-  item,
-  id
-}) => {
+const CooperationSectionView: FC<CooperationSectionViewProps> = ({ item }) => {
   const { t } = useTranslation()
-  const [isVisible, setIsVisible] = useState(true)
+  const [isVisible, setIsVisible] = useState<boolean>(true)
 
   const resources = useMemo<undefined | ReactNode[]>(
     () =>
       item.resources?.map(({ resource, resourceType }) => (
         <ResourceItem
           isView
-          key={resource._id}
+          key={resource.id}
           resource={resource}
           resourceType={resourceType}
         />
@@ -44,7 +40,7 @@ const CooperationSectionView: FC<CooperationSectionViewProps> = ({
         setIsVisible={setIsVisible}
       />
       {isVisible && (
-        <Box key={id} sx={styles.showBlock}>
+        <Box sx={styles.showBlock}>
           <AppTextField
             InputProps={styles.descriptionInput}
             fullWidth

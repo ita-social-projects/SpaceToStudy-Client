@@ -5,16 +5,16 @@ import { UserRoleEnum } from '~/types'
 import CooperationActivitiesView from '~/containers/cooperation-details/cooperation-activities-view/CooperationActivitiesView.tsx'
 
 vi.mock('~/components/cooperation-section-view/CooperationSectionView', () => ({
-  default: ({ id, item }) => (
-    <div data-testid={`section-${id}`}>{item.title}</div>
+  default: ({ item }) => (
+    <div data-testid={`section-${item.id}`}>{item.title}</div>
   )
 }))
 
 vi.mock('~/hooks/use-redux', () => ({
   useAppSelector: vi.fn().mockReturnValue({
     sections: [
-      { _id: '1', title: 'Section1' },
-      { _id: '2', title: 'Section2' }
+      { id: '1', title: 'Section1' },
+      { id: '2', title: 'Section2' }
     ],
     userRole: UserRoleEnum.Tutor
   }),

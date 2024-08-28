@@ -1,20 +1,22 @@
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useState, useMemo, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
+
 import SearchIcon from '@mui/icons-material/Search'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
-import { ResourceService } from '~/services/resource-service'
-import { useModalContext } from '~/context/modal-context'
-import AppButton from '~/components/app-button/AppButton'
-import AddDocuments from '~/containers/add-documents/AddDocuments'
 import EnhancedTable, {
   EnhancedTableProps
 } from '~/components/enhanced-table/EnhancedTable'
+import AppButton from '~/components/app-button/AppButton'
 import InputWithIcon from '~/components/input-with-icon/InputWithIcon'
 import AppButtonMenu from '~/components/app-button-menu/AppButtonMenu'
+import CheckboxWithTooltip from '~/components/checkbox-with-tooltip/CheckboxWithTooltip'
 
+import AddDocuments from '~/containers/add-documents/AddDocuments'
 import { styles } from '~/containers/my-resources/add-resource-modal/AddResourceModal.styles'
+import { ResourceService } from '~/services/resource-service'
+import { useModalContext } from '~/context/modal-context'
 import {
   ButtonVariantEnum,
   CategoryNameInterface,
@@ -29,17 +31,23 @@ interface AddResourceModalProps<T>
     getItems: (title: string, selectedItems: string[]) => T[]
   }
   selectedRows: T[]
+  initialSelectedRows: T[]
   onAddItems: () => void
+  onCreateResourceCopy?: (value: boolean) => void
   uploadItem?: (data: FormData) => Promise<void>
   resourceTab: ResourcesTabsEnum
+  showCheckboxWithTooltip?: boolean
 }
 
 const AddResourceModal = <T extends TableItem>({
   data,
   selectedRows,
+  initialSelectedRows,
   onAddItems,
+  onCreateResourceCopy,
   uploadItem,
   resourceTab,
+  showCheckboxWithTooltip = false,
   ...props
 }: AddResourceModalProps<T>) => {
   const { t } = useTranslation()
@@ -49,15 +57,19 @@ const AddResourceModal = <T extends TableItem>({
 
   const formData = new FormData()
   const { loading, getItems } = data
-  const items = getItems(inputValue, selectedItems)
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const items = useMemo(
+    () => getItems(inputValue, selectedItems),
+    [inputValue, selectedItems, getItems]
+  )
+
+  const handleInputChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value)
-  }
+  }, [])
 
-  const handleInputReset = () => {
+  const handleInputReset = useCallback(() => {
     setInputValue('')
-  }
+  }, [])
 
   return (
     <Box sx={styles.root}>
@@ -86,7 +98,9 @@ const AddResourceModal = <T extends TableItem>({
 
       <EnhancedTable
         data={{ loading, items }}
+        disableInitialSelectedRows
         emptyTableKey={`myResourcesPage.${resourceTab}.emptyItems`}
+        initialSelectedRows={initialSelectedRows}
         selectedRows={selectedRows}
         stickyHeader
         style={styles.tableWrapper(!!items.length)}
@@ -94,17 +108,33 @@ const AddResourceModal = <T extends TableItem>({
         {...props}
       />
 
-      <Box sx={styles.buttonsArea}>
-        <AppButton onClick={closeModal} variant={ButtonVariantEnum.Tonal}>
-          {t('common.cancel')}
-        </AppButton>
-        <AppButton
-          disabled={!selectedRows.length}
-          onClick={onAddItems}
-          sx={styles.addButton}
-        >
-          {t('common.add')}
-        </AppButton>
+      <Box sx={showCheckboxWithTooltip ? styles.formControls : {}}>
+        {showCheckboxWithTooltip && (
+          <CheckboxWithTooltip
+            label={t('myResourcesPage.resourceDuplication.description', {
+              resource: t(
+                `myResourcesPage.resourceDuplication.resource.${resourceTab}`
+              )
+            })}
+            onChecked={onCreateResourceCopy}
+            tooltipTitle={t('myResourcesPage.resourceDuplication.tooltip')}
+          />
+        )}
+        <Box sx={styles.buttonsArea}>
+          <AppButton onClick={closeModal} variant={ButtonVariantEnum.Tonal}>
+            {t('common.cancel')}
+          </AppButton>
+          <AppButton
+            disabled={
+              !selectedRows.length ||
+              initialSelectedRows.length === selectedRows.length
+            }
+            onClick={onAddItems}
+            sx={styles.addButton}
+          >
+            {t('common.add')}
+          </AppButton>
+        </Box>
       </Box>
 
       {uploadItem && (

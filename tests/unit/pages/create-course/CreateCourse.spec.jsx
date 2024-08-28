@@ -176,15 +176,12 @@ describe('CreateCourse with params id', () => {
     mockDispatch.mockReset()
   })
 
-  it('should render "Cancel", "Save" and "Add Section" buttons', () => {
-    const cancelButton = screen.getByText('common.cancel')
-    expect(cancelButton).toBeInTheDocument()
-
-    const saveButton = screen.getByText('common.save')
-    expect(saveButton).toBeInTheDocument()
-
-    const addSectionButton = screen.getByText('course.addSectionBtn')
-    expect(addSectionButton).toBeInTheDocument()
+  it('should render "Cancel", "Save" and "Add Section" buttons', async () => {
+    await waitFor(() => {
+      expect(screen.getByText('common.cancel')).toBeInTheDocument()
+      expect(screen.getByText('common.save')).toBeInTheDocument()
+      expect(screen.getByText('course.addSectionBtn')).toBeInTheDocument()
+    })
   })
 
   it('should navigate back to courses when "Cancel" is clicked', () => {
@@ -333,9 +330,9 @@ describe('CreateCourse with params id', () => {
       `${URLs.courses.patch}/${mockCourseResponseData._id}`
     )
     await waitFor(() => {
-      const textareas = screen.getAllByRole('textbox')
-      expect(textareas[0].value).toBe(mockUpdatedCourseData.title)
-      expect(textareas[1].value).toBe(mockUpdatedCourseData.description)
+      const textAreas = screen.getAllByRole('textbox')
+      expect(textAreas[0].value).toBe(mockUpdatedCourseData.title)
+      expect(textAreas[1].value).toBe(mockUpdatedCourseData.description)
     })
 
     await waitFor(() => {
@@ -375,9 +372,9 @@ describe('CreateCourse without params id', () => {
     expect(mockAxiosClient.history.post.length).toBe(1)
     expect(mockAxiosClient.history.post[0].url).toBe(URLs.courses.create)
     await waitFor(() => {
-      const textareas = screen.getAllByRole('textbox')
-      expect(textareas[0].value).toBe(mockNewCourseData.title)
-      expect(textareas[1].value).toBe(mockNewCourseData.description)
+      const textAreas = screen.getAllByRole('textbox')
+      expect(textAreas[0].value).toBe(mockNewCourseData.title)
+      expect(textAreas[1].value).toBe(mockNewCourseData.description)
     })
 
     await waitFor(() => {
@@ -408,7 +405,7 @@ describe('Testing CreateCourse Event Handlers', () => {
     mockDispatch.mockReset()
   })
 
-  it('should handle adding a new resource to a section [CourseResourceEventType.AddSectionResources]', async () => {
+  it('should handle adding a new resource to a section [CourseResourceEventType.AddSectionResources] when isDuplicate=false', async () => {
     const courseSectionList = screen.getByTestId('mock-CourseSectionsList')
 
     fireEvent.change(courseSectionList, {
@@ -418,7 +415,8 @@ describe('Testing CreateCourse Event Handlers', () => {
           payload: {
             type: CourseResourceEventType.AddSectionResources,
             sectionId: mockSectionId,
-            resources: [mockNewSectionResource]
+            resources: [mockNewSectionResource],
+            isDuplicate: false
           }
         })
       }
@@ -428,17 +426,66 @@ describe('Testing CreateCourse Event Handlers', () => {
       expect(mockHandleNonInputValueChange).toHaveBeenCalled(1)
       expect(mockHandleNonInputValueChange).toHaveBeenCalledWith('sections', [
         {
+          _id: mockNewCourseData.sections[0]._id,
+          id: mockSectionId,
           description: mockNewCourseData.sections[0].description,
-          id: mockNewCourseData.sections[0].id,
           resources: [
             ...mockNewCourseData.sections[0].resources,
             {
-              resource: mockNewSectionResource,
+              resource: { ...mockNewSectionResource, id: expect.any(String) },
               resourceType: mockNewSectionResource.resourceType
             }
           ],
           title: mockNewCourseData.sections[0].title
         }
+      ])
+    })
+  })
+
+  it('should handle adding a new resource to a section [CourseResourceEventType.AddSectionResources] when isDuplicate=true', async () => {
+    const courseSectionList = screen.getByTestId('mock-CourseSectionsList')
+
+    fireEvent.change(courseSectionList, {
+      target: {
+        value: JSON.stringify({
+          event: 'resourceEventHandler',
+          payload: {
+            type: CourseResourceEventType.AddSectionResources,
+            sectionId: mockSectionId,
+            resources: [mockNewSectionResource],
+            isDuplicate: true
+          }
+        })
+      }
+    })
+
+    await waitFor(() => {
+      expect(mockHandleNonInputValueChange).toHaveBeenCalled(1)
+      expect(mockHandleNonInputValueChange).toHaveBeenCalledWith('sections', [
+        expect.objectContaining({
+          id: mockCourseResponseData.sections[0].id,
+          title: mockCourseResponseData.sections[0].title,
+          resources: expect.arrayContaining([
+            expect.objectContaining({
+              resource: expect.objectContaining({
+                _id: mockCourseResponseData.sections[0].resources[0].resource
+                  ._id,
+                title:
+                  mockCourseResponseData.sections[0].resources[0].resource.title
+              }),
+              resourceType:
+                mockCourseResponseData.sections[0].resources[0].resourceType
+            }),
+            expect.objectContaining({
+              resource: expect.objectContaining({
+                _id: expect.any(String),
+                title: mockNewSectionResource.title,
+                isDuplicate: true
+              }),
+              resourceType: mockNewSectionResource.resourceType
+            })
+          ])
+        })
       ])
     })
   })
@@ -453,7 +500,7 @@ describe('Testing CreateCourse Event Handlers', () => {
           payload: {
             type: CourseResourceEventType.ResourceUpdated,
             sectionId: mockSectionId,
-            resourceId: mockUpdatedSectionResource._id,
+            resourceId: mockUpdatedSectionResource.id,
             resource: mockUpdatedSectionResource
           }
         })

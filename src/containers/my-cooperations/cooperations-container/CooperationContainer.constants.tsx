@@ -8,13 +8,13 @@ import { styles } from '~/containers/my-cooperations/cooperations-container/Coop
 import {
   AdditionalPropsInterface,
   Cooperation,
-  Offer,
   RemoveColumnRules,
-  StatusEnum
+  StatusEnum,
+  TableColumn
 } from '~/types'
 import { getFormattedDate } from '~/utils/helper-functions'
 
-export const columns = [
+export const columns: TableColumn<Cooperation>[] = [
   {
     label: 'cooperationsPage.tableHeaders.name',
     field: 'name',
@@ -50,7 +50,7 @@ export const columns = [
   {
     label: 'cooperationsPage.tableHeaders.price',
     field: 'price',
-    calculatedCellValue: (item: Offer, { t }: AdditionalPropsInterface) =>
+    calculatedCellValue: (item: Cooperation, { t }: AdditionalPropsInterface) =>
       `${item.price} ${t('common.uah')}`
   },
   {

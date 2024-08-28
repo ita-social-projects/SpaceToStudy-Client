@@ -22,20 +22,20 @@ interface CooperationActivitiesViewProps {
 const CooperationActivitiesView: FC<CooperationActivitiesViewProps> = ({
   setEditMode
 }) => {
-  const { sections } = useAppSelector(cooperationsSelector)
   const dispatch = useAppDispatch()
+  const { sections } = useAppSelector(cooperationsSelector)
   const { userRole } = useAppSelector((state) => state.appMain)
   const isTutor = userRole === UserRoleEnum.Tutor
 
   const onEdit = () => {
     setEditMode(true)
-    dispatch(setIsAddedClicked(false))
+    dispatch(setIsAddedClicked(false)) // Why is this needed?
   }
 
   return (
     <Box sx={styles.root}>
       {sections.map((item) => (
-        <CooperationSectionView id={item._id} item={item} key={item._id} />
+        <CooperationSectionView item={item} key={item.id} />
       ))}
 
       {isTutor && (

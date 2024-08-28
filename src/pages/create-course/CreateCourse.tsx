@@ -2,6 +2,7 @@ import { useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router-dom'
 import { AxiosResponse } from 'axios'
+import { v4 as uuidv4 } from 'uuid'
 
 import Box from '@mui/material/Box'
 import AddIcon from '@mui/icons-material/Add'
@@ -160,7 +161,7 @@ const CreateCourse = () => {
 
   const addNewSection = useCallback(() => {
     const newSectionData = { ...sectionInitialData }
-    newSectionData.id = Date.now().toString()
+    newSectionData.id = uuidv4()
     setSectionsData([...data.sections, newSectionData])
   }, [data.sections, setSectionsData])
 
@@ -198,10 +199,12 @@ const CreateCourse = () => {
   const addSectionResources = useCallback(
     ({
       sectionId,
-      resources
+      resources,
+      isDuplicate
     }: {
       sectionId: CourseSection['id']
       resources: CourseResource[]
+      isDuplicate?: boolean
     }) => {
       const section = data.sections.find((section) => section.id === sectionId)
       if (!section) return
@@ -209,10 +212,20 @@ const CreateCourse = () => {
       const newResources = resources
         .filter((resource) => {
           return !section.resources.some(
-            (item) => item.resource._id === resource._id
+            (item) => item.resource.id === resource.id && !isDuplicate
           )
         })
-        .map((resource) => ({ resource, resourceType: resource.resourceType }))
+        .map((resource) => {
+          const { _id, ...newDuplicateResource } = resource
+          return {
+            resource: {
+              ...newDuplicateResource,
+              id: uuidv4(),
+              ...(isDuplicate ? { _id: '', isDuplicate: true } : { _id })
+            },
+            resourceType: resource.resourceType
+          }
+        })
 
       const newSectionResources = [...section.resources, ...newResources]
       handleSectionChange(sectionId, 'resources', newSectionResources)
@@ -227,19 +240,19 @@ const CreateCourse = () => {
       resource
     }: {
       sectionId: CourseSection['id']
-      resourceId: CourseResource['_id']
+      resourceId: CourseResource['id']
       resource: Partial<CourseResource>
     }) => {
       const section = data.sections.find((section) => section.id === sectionId)
       if (!section) return
 
       const currentResource = section.resources.find(
-        (item) => item.resource._id === resourceId
+        (item) => item.resource.id === resourceId
       )
       if (!currentResource) return
 
       const newSectionResources = section.resources.map((item) =>
-        item.resource._id === resourceId
+        item.resource.id === resourceId
           ? { ...currentResource, ...resource }
           : item
       )
@@ -255,13 +268,13 @@ const CreateCourse = () => {
       resourceId
     }: {
       sectionId: CourseSection['id']
-      resourceId: CourseResource['_id']
+      resourceId: CourseResource['id']
     }) => {
       const section = data.sections.find((section) => section.id === sectionId)
       if (!section) return
 
       const newSectionResources = section.resources.filter(
-        (resource) => resource.resource._id !== resourceId
+        (resource) => resource.resource.id !== resourceId
       )
       handleSectionChange(sectionId, 'resources', newSectionResources)
     },
@@ -307,7 +320,8 @@ const CreateCourse = () => {
         case CourseResourceEventType.AddSectionResources:
           addSectionResources({
             sectionId: event.sectionId,
-            resources: event.resources
+            resources: event.resources,
+            isDuplicate: event.isDuplicate
           })
           break
         case CourseResourceEventType.ResourceRemoved:
@@ -330,6 +344,11 @@ const CreateCourse = () => {
       if (item._id) {
         item.id = item._id
       }
+    })
+    course.sections.forEach((section) => {
+      section.resources?.forEach((resource) => {
+        resource.resource.id ||= uuidv4()
+      })
     })
     for (const key in data) {
       const validKey = key as keyof CourseForm

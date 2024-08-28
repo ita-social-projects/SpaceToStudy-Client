@@ -81,28 +81,33 @@ const CourseSectionContainer: FC<SectionProps> = ({
     [sectionData.resources]
   )
 
+  const allNonDuplicateResources = useMemo(
+    () => allResources.filter((resource) => !resource.isDuplicate),
+    [allResources]
+  )
+
   const lessons = useMemo(
     () =>
-      allResources.filter(
+      allNonDuplicateResources.filter(
         (resource) => resource.resourceType === ResourceType.Lesson
       ) as Lesson[],
-    [allResources]
+    [allNonDuplicateResources]
   )
 
   const quizzes = useMemo(
     () =>
-      allResources.filter(
+      allNonDuplicateResources.filter(
         (resource) => resource.resourceType === ResourceType.Quiz
       ) as Quiz[],
-    [allResources]
+    [allNonDuplicateResources]
   )
 
   const attachments = useMemo(
     () =>
-      allResources.filter(
+      allNonDuplicateResources.filter(
         (resource) => resource.resourceType === ResourceType.Attachment
       ) as Attachment[],
-    [allResources]
+    [allNonDuplicateResources]
   )
 
   const handleResourcesSort = useCallback(
@@ -121,7 +126,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
       resourceEventHandler?.({
         type: CourseResourceEventType.ResourceUpdated,
         sectionId: sectionData.id,
-        resourceId: resource._id,
+        resourceId: resource.id,
         resource: {
           availability
         }
@@ -134,7 +139,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
     resourceEventHandler?.({
       type: CourseResourceEventType.ResourceRemoved,
       sectionId: sectionData.id,
-      resourceId: resource._id
+      resourceId: resource.id
     })
   }
 
@@ -197,12 +202,15 @@ const CourseSectionContainer: FC<SectionProps> = ({
       sectionId: sectionData.id
     })
   }
-
-  const handleAddResources = <T extends CourseResource>(newResources: T[]) => {
+  const handleAddResources = <T extends CourseResource>(
+    newResources: T[],
+    isDuplicate: boolean
+  ) => {
     resourceEventHandler?.({
       type: CourseResourceEventType.AddSectionResources,
       sectionId: sectionData.id,
-      resources: newResources
+      resources: newResources,
+      isDuplicate: isDuplicate
     })
   }
 
@@ -216,6 +224,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
           requestService={ResourceService.getUsersLessons}
           resourceTab={resourcesData.lessons.resourceTab}
           resources={lessons}
+          showCheckboxWithTooltip
         />
       )
     })
@@ -231,6 +240,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
           requestService={ResourceService.getQuizzes}
           resourceTab={resourcesData.quizzes.resourceTab}
           resources={quizzes}
+          showCheckboxWithTooltip
         />
       )
     })
@@ -246,6 +256,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
           requestService={ResourceService.getAttachments}
           resourceTab={resourcesData.attachments.resourceTab}
           resources={attachments}
+          showCheckboxWithTooltip
         />
       )
     })

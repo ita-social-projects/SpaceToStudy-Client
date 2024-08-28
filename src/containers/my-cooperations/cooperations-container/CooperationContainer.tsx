@@ -7,7 +7,7 @@ import CooperationCard from '~/containers/my-cooperations/cooperation-card/Coope
 import { useModalContext } from '~/context/modal-context'
 import { SortHook } from '~/hooks/table/use-sort'
 import useBreakpoints from '~/hooks/use-breakpoints'
-import { ajustColumns } from '~/utils/helper-functions'
+import { adjustColumns } from '~/utils/helper-functions'
 
 import {
   columns,
@@ -34,7 +34,7 @@ const CooperationContainer: FC<CooperationContainerProps> = ({
   const { openModal } = useModalContext()
   const navigate = useNavigate()
 
-  const columnsToShow = ajustColumns<Cooperation>(
+  const columnsToShow = adjustColumns<Cooperation>(
     breakpoints,
     columns,
     removeColumnRules
