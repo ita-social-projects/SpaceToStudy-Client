@@ -40,19 +40,5 @@ export const styles = {
   }),
   languageInput: { maxWidth: '300px', width: '100%', mb: '20px' },
   linkAdornment: { '& > p': { color: 'primary.500' } },
-  videoLinkInput: { '& .MuiInputBase-input': { pl: 0 } },
-  highlight: {
-    visibility: 'hidden',
-    position: 'absolute',
-    top: '0',
-    left: '0',
-    bottom: '0',
-    // bottom: '18px',
-    width: '100%',
-    backgroundColor: '#F2FAFA',
-    border: '1px solid #2B6E6E',
-    borderRadius: '4px',
-    zIndex: '0',
-    transition: '1s ease'
-  }
+  videoLinkInput: { '& .MuiInputBase-input': { pl: 0 } }
 }

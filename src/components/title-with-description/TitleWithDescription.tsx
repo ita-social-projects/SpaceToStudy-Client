@@ -32,7 +32,7 @@ const TitleWithDescription = ({
   }
 
   return (
-    <Box style={{ zIndex: '1' }} sx={style.wrapper}>
+    <Box style={{ position: 'relative', zIndex: '1' }} sx={style.wrapper}>
       {title && <Typography sx={style.title}>{title}</Typography>}
       <Tooltip
         arrow
