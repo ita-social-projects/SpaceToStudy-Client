@@ -42,6 +42,8 @@ const filterQueryMock = {
   }
 }
 
+const scrollIntoViewMock = vi.fn()
+
 describe('FindOffers component', () => {
   const desktopData = {
     isLaptopAndAbove: true,
@@ -49,6 +51,7 @@ describe('FindOffers component', () => {
     isTablet: false
   }
   beforeEach(async () => {
+    window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock
     await waitFor(() => {
       useFilterQuery.mockReturnValue(filterQueryMock)
       useBreakpoints.mockImplementation(() => desktopData)
@@ -133,6 +136,7 @@ describe('FindOffers component', () => {
 
     fireEvent.click(secondPage)
 
+    expect(scrollIntoViewMock).toHaveBeenCalled()
     expect(
       filterQueryMock.filterQueryActions.updateFiltersInQuery
     ).toHaveBeenCalledTimes(1)
