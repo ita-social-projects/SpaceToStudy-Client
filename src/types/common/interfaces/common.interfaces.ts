@@ -99,17 +99,76 @@ export interface AddDocuments {
   maxFileNameError: string
 }
 
+export enum CourseResourceEventType {
+  ResourceUpdated = 'resourceUpdated',
+  ResourceRemoved = 'resourceRemoved',
+  ResourcesOrderChange = 'resourcesOrderChange',
+  AddSectionResources = 'addSectionResources'
+}
+
+export interface ResourceUpdatedEvent {
+  type: CourseResourceEventType.ResourceUpdated
+  sectionId: string
+  resourceId: string
+  resource: Partial<CourseResource>
+}
+
+export interface ResourceRemovedEvent {
+  type: CourseResourceEventType.ResourceRemoved
+  sectionId: string
+  resourceId: string
+}
+
+export interface ResourcesOrderChangeEvent {
+  type: CourseResourceEventType.ResourcesOrderChange
+  sectionId: string
+  resources: CourseResource[]
+}
+
+export interface AddSectionResourcesEvent {
+  type: CourseResourceEventType.AddSectionResources
+  sectionId: string
+  resources: CourseResource[]
+  isDuplicate?: boolean
+}
+
+export type ResourceEventHandler = (
+  event:
+    | ResourceUpdatedEvent
+    | ResourceRemovedEvent
+    | ResourcesOrderChangeEvent
+    | AddSectionResourcesEvent
+) => void
+
+export enum CourseSectionEventType {
+  SectionAdded = 'sectionAdded',
+  SectionRemoved = 'sectionRemoved',
+  SectionsOrderChange = 'sectionsOrderChange'
+}
+
+export interface SectionAddedEvent {
+  type: CourseSectionEventType.SectionAdded
+  index?: number
+}
+
+export interface SectionRemovedEvent {
+  type: CourseSectionEventType.SectionRemoved
+  sectionId: string
+}
+
+export interface SectionsOrderChangeEvent {
+  type: CourseSectionEventType.SectionsOrderChange
+  sections: CourseSection[]
+}
+
+export type SectionEventHandler = (
+  event: SectionAddedEvent | SectionRemovedEvent | SectionsOrderChangeEvent
+) => void
+
 export interface CourseSectionHandlers {
-  setSectionsItems: (value: CourseSection[]) => void
   handleSectionInputChange: FormInputValueChange<string, CourseSection>
-  handleSectionNonInputChange: FormInputValueChange<
-    CourseResource[],
-    CourseSection
-  >
-  handleSectionResourcesOrder?: (
-    id: string,
-    resources: CourseResource[]
-  ) => void
+  resourceEventHandler?: ResourceEventHandler
+  sectionEventHandler?: SectionEventHandler
   titleText?: string
 }
 

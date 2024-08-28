@@ -29,7 +29,7 @@ import {
   ResourcesTabsEnum
 } from '~/types'
 import {
-  ajustColumns,
+  adjustColumns,
   createUrlPath,
   getScreenBasedLimit
 } from '~/utils/helper-functions'
@@ -47,7 +47,7 @@ const QuizzesContainer = () => {
 
   const { sort } = sortOptions
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
-  const columnsToShow = ajustColumns<Quiz>(
+  const columnsToShow = adjustColumns<Quiz>(
     breakpoints,
     columns,
     removeColumnRules

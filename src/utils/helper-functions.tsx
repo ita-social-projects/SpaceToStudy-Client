@@ -142,7 +142,7 @@ export const getScreenBasedLimit = (
   }
 }
 
-export const ajustColumns = <
+export const adjustColumns = <
   T extends
     | Cooperation
     | Offer

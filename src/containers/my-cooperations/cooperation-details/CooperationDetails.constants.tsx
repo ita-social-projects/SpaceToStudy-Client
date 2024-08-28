@@ -71,6 +71,7 @@ export const defaultResponse: Cooperation = {
   proficiencyLevel: ProficiencyLevelEnum.Beginner,
   status: StatusEnum.Active,
   needAction: UserRoleEnum.Tutor,
+  sections: [],
   createdAt: '',
   updatedAt: '',
   _id: ''

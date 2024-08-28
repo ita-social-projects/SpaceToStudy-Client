@@ -21,9 +21,7 @@ import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 
 import CooperationActivities from '~/containers/cooperation-details/cooperation-activities/CooperationActivities'
 import CooperationNotes from '~/containers/my-cooperations/cooperation-notes/CooperationNotes'
-import CooperationActivitiesView from '~/containers/cooperation-details/cooperetion-activities-view/CooperationActivitiesView'
-
-import { errorRoutes } from '~/router/constants/errorRoutes'
+import CooperationActivitiesView from '~/containers/cooperation-details/cooperation-activities-view/CooperationActivitiesView'
 import {
   tabsData,
   defaultResponse,
@@ -31,8 +29,8 @@ import {
 } from '~/containers/my-cooperations/cooperation-details/CooperationDetails.constants'
 import { styles } from '~/containers/my-cooperations/cooperation-details/CooperationDetails.styles'
 
+import { errorRoutes } from '~/router/constants/errorRoutes'
 import { cooperationService } from '~/services/cooperation-service'
-import { ResourcesAvailabilityProvider } from '~/context/resources-availability-context'
 
 import {
   CooperationTabsEnum,
@@ -48,17 +46,17 @@ import {
 } from '~/redux/features/cooperationsSlice'
 
 const CooperationDetails = () => {
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate()
   const { t } = useTranslation()
   const { id } = useParams()
-  const { isActivityCreated } = useAppSelector(cooperationsSelector)
-  const navigate = useNavigate()
   const { isDesktop } = useBreakpoints()
+  const { isActivityCreated } = useAppSelector(cooperationsSelector) // Why is this needed?
   const [activeTab, setActiveTab] = useState<CooperationTabsEnum>(
     CooperationTabsEnum.Activities
   )
-  const [isNotesOpen, setIsNotesOpen] = useState(false)
-  const [editMode, setEditMode] = useState(false)
-  const dispatch = useAppDispatch()
+  const [isNotesOpen, setIsNotesOpen] = useState<boolean>(false)
+  const [editMode, setEditMode] = useState<boolean>(false)
 
   const responseError = useCallback(
     () => navigate(errorRoutes.notFound.path),
@@ -77,7 +75,7 @@ const CooperationDetails = () => {
 
   useEffect(() => {
     dispatch(setCooperationSections(response.sections))
-    response.sections && response.sections.length && setEditMode(true)
+    setEditMode(Boolean(response?.sections?.length))
   }, [response.sections, dispatch])
 
   const handleEditMode = useCallback(() => {
@@ -157,11 +155,7 @@ const CooperationDetails = () => {
         </Box>
       </Box>
       <Box sx={styles.notesBlock}>
-        <Box sx={styles.pageContent}>
-          <ResourcesAvailabilityProvider>
-            {pageContent()}
-          </ResourcesAvailabilityProvider>
-        </Box>
+        <Box sx={styles.pageContent}>{pageContent()}</Box>
         {!isDesktop && isNotesOpen && (
           <AppDrawer
             anchor={PositionEnum.Right}

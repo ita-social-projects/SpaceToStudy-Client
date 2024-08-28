@@ -1,4 +1,5 @@
 import { emptyField } from '~/utils/validations/common'
+import { ResourcesTypesEnum as ResourceType } from '~/types'
 
 export const validations = {
   title: (value: string | null) =>
@@ -24,7 +25,8 @@ export const defaultResponse = {
   updatedAt: '',
   _id: '',
   content: '',
-  category: null
+  category: null,
+  resourceType: ResourceType.Lesson
 }
 
 export const myResourcesPath = '/my-resources'

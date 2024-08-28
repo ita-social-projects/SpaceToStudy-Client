@@ -47,8 +47,8 @@ const EmptyCooperationTutorControls: FC = () => {
 
   const handleFromScratch = () => {
     closeMenu()
-    dispatch(setIsActivityCreated(true))
-    dispatch(setIsNewActivity(true))
+    dispatch(setIsActivityCreated(true)) // should delete it
+    dispatch(setIsNewActivity(true)) // should delete it
   }
 
   const menuItems = [

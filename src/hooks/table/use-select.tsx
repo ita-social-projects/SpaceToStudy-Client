@@ -16,6 +16,7 @@ interface UseSelectOutput {
     items: Item[]
   ) => (e: ChangeEvent<HTMLInputElement>) => void
   handleSelectClick: (id: string) => void
+  setSelected: (ids: string[]) => void
 }
 
 const useSelect = ({ initialSelect = [] }: UseSelectInput): UseSelectOutput => {
@@ -54,7 +55,8 @@ const useSelect = ({ initialSelect = [] }: UseSelectInput): UseSelectOutput => {
     isSelected,
     clearSelected,
     createSelectAllHandler,
-    handleSelectClick
+    handleSelectClick,
+    setSelected
   }
 }
 

@@ -1,45 +1,39 @@
-import { FC, Dispatch, SetStateAction, useCallback } from 'react'
+import { FC } from 'react'
 import { DndContext, DragOverlay } from '@dnd-kit/core'
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import Box from '@mui/material/Box'
 
-import SortableWrapper from '~/containers/sortable-wrapper/SortableWrapper'
 import DragHandle from '~/components/drag-handle/DragHandle'
+import SortableWrapper from '~/containers/sortable-wrapper/SortableWrapper'
 import ResourceItem from '~/containers/course-section/resource-item/ResourceItem'
 import { styles } from '~/containers/course-section/resources-list/ResourcesList.styles'
 
+import { CourseResource, ResourceAvailability } from '~/types'
+
 import useDroppable from '~/hooks/use-droppable'
 import useDndSensor from '~/hooks/use-dnd-sensor'
-import { CourseResource, SetResourseAvailability } from '~/types'
 
 interface ResourcesListProps {
   items: CourseResource[]
-  setResources: Dispatch<SetStateAction<CourseResource[]>>
+  sortResources: (resources: CourseResource[]) => void
   deleteResource: (resource: CourseResource) => void
   editResource: (resource: CourseResource) => void
+  updateAvailability?: (
+    resource: CourseResource,
+    availability: ResourceAvailability
+  ) => void
+  isCooperation?: boolean
 }
 
 const ResourcesList: FC<ResourcesListProps> = ({
   items,
-  setResources,
+  sortResources,
   deleteResource,
-  editResource
+  editResource,
+  updateAvailability,
+  isCooperation = false
 }) => {
   const { enabled } = useDroppable()
-
-  const setResourceAvailability: SetResourseAvailability = useCallback(
-    (id, availability) => {
-      setResources((prevResources) => {
-        const resources = [...prevResources]
-        const resource = resources.find((item) => item._id === id)
-        if (resource) {
-          resource.availability = availability
-        }
-        return resources
-      })
-    },
-    [setResources]
-  )
 
   const {
     activeItem,
@@ -47,12 +41,12 @@ const ResourcesList: FC<ResourcesListProps> = ({
     handleDragEnd,
     handleDragStart,
     sensors
-  } = useDndSensor({ items, setItems: setResources, idProp: '_id' })
+  } = useDndSensor({ items, setItems: sortResources, idProp: 'id' })
 
   const renderItem = (item: CourseResource, isDragOver = false) => (
     <SortableWrapper
-      id={item._id}
-      key={item._id}
+      id={item.id}
+      key={item.id}
       onDragEndStyles={styles.section(isDragOver)}
       onDragStartStyles={styles.section(true)}
     >
@@ -60,8 +54,9 @@ const ResourcesList: FC<ResourcesListProps> = ({
       <ResourceItem
         deleteResource={deleteResource}
         editResource={editResource}
+        isCooperation={isCooperation}
         resource={item}
-        setResourceAvailability={setResourceAvailability}
+        updateAvailability={updateAvailability}
       />
     </SortableWrapper>
   )
@@ -71,7 +66,7 @@ const ResourcesList: FC<ResourcesListProps> = ({
   const resourceListContent = enabled && (
     <>
       <SortableContext
-        items={items.map((item) => item._id)}
+        items={items.map((item) => item.id)}
         strategy={verticalListSortingStrategy}
       >
         <Box sx={styles.root}>{resourceItems}</Box>
