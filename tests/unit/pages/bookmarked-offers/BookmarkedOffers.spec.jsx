@@ -1,5 +1,5 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react'
-import { vi } from 'vitest'
+import { expect, vi } from 'vitest'
 
 import BookmarkedOffers from '~/pages/bookmarked-offers/BookmarkedOffers'
 
@@ -24,7 +24,7 @@ vi.mock('react-router-dom', async () => {
 const mockUserId = '66b0aecdadd1fe775238c7d5'
 const preloadedState = { appMain: { userId: mockUserId } }
 const getBookmarksUrl = `${createUrlPath(URLs.users.get, mockUserId)}${
-  URLs.users.getBookmarks
+  URLs.users.bookmarks
 }`
 
 const sortTranslationKeysMock = [
