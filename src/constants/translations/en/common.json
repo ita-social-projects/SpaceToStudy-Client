@@ -26,6 +26,7 @@
   "offerCount_one": "{{count}} offer",
   "offerCount_other": "{{count}} offers",
   "goToCategories": "Go to categories",
+  "goToOffers": "Go to offers",
   "popularCategories": "Popular Categories",
   "aboutOffer": "About Offer",
   "goToName": "Go to {{name}}",

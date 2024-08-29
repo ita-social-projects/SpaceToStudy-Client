@@ -43,6 +43,7 @@ import studentHomePage from './student-home-page.json'
 import becomeTutor from './become-tutor.json'
 import userProfilePage from './user-profile-page.json'
 import quiz from './quiz.json'
+import bookmarkedOffers from './bookmarked-offers-page.json'
 
 const uk = {
   translations: {
@@ -90,7 +91,8 @@ const uk = {
     studentHomePage,
     becomeTutor,
     userProfilePage,
-    quiz
+    quiz,
+    bookmarkedOffers
   }
 }
 

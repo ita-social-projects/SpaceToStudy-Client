@@ -28,6 +28,7 @@
   "offerCount_many": "{{count}} пропозицій",
   "offerCount_other": "{{count}} пропозицій",
   "goToCategories": "Перейти до категорій",
+  "goToOffers": "Перейти до пропозицій",
   "popularCategories": "Популярні категорії",
   "aboutOffer": "Про пропозицію",
   "goToName": "Перейти до {{name}}",

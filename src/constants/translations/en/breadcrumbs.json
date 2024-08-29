@@ -25,5 +25,6 @@
   "editQuestion": "Edit question",
   "category": "Category",
   "subject": "Subject",
-  "level": "Level"
+  "level": "Level",
+  "bookmarks": "Bookmarks"
 }

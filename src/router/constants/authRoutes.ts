@@ -11,6 +11,7 @@ export const authRoutes = {
     path: '/categories/subjects/find-offers'
   },
   offerDetails: { route: 'offer-details/:id', path: '/offer-details' },
+  bookmarkedOffers: { route: 'bookmarked-offers', path: '/bookmarked-offers' },
   cooperationDetails: {
     route: 'my-cooperations/:id',
     path: '/my-cooperations'
@@ -52,6 +53,7 @@ export const authRoutes = {
   accountMenu: {
     student: {
       myProfile: { route: 'my-profile', path: '/my-profile' },
+      bookmarks: { route: 'bookmarked-offers', path: '/bookmarked-offers' },
       myRequests: {
         route: 'my-requests',
         path: '/my-offers'
@@ -59,6 +61,7 @@ export const authRoutes = {
     },
     tutor: {
       myProfile: { route: 'my-profile', path: '/my-profile' },
+      bookmarks: { route: 'bookmarked-offers', path: '/bookmarked-offers' },
       myOffers: {
         route: 'my-offers',
         path: '/my-offers'
