@@ -1,13 +1,13 @@
-@use '~/scss/foundation/index' as *;
+@use '~/scss/utilities' as *;
 
-.s2s-button {
-  font-size: var(--s2s-button-font-size, $fs-base);
-  font-weight: var(--s2s-button-font-weight, $fw-medium);
-  line-height: var(--s2s-button-line-height, $lh-base);
-  letter-spacing: var(--s2s-button-letter-spacing, $ls-base);
-  text-transform: var(--s2s-button-text-transform, $tt-none);
+.#{$prefix}button {
+  font-size: var(--#{$prefix}font-size-md);
+  font-weight: var(--#{$prefix}font-weight-medium);
+  line-height: var(--#{$prefix}line-height-lg);
+  letter-spacing: var(--#{$prefix}letter-spacing-lg);
+  text-transform: none;
   display: flex;
-  border-radius: spacing(1);
+  border-radius: var(--#{$prefix}border-radius-2xs);
 
   & > .MuiButton-startIcon {
     margin: 0;
@@ -55,102 +55,102 @@
 }
 
 %size-small {
-  font-size: var(--s2s-button-small-font-size, $fs-sm);
-  line-height: var(--s2s-button-small-line-height, $lh-sm);
-  padding: 0.375rem spacing(2); // hardcoded value needed for this button according to the design
-  column-gap: spacing(2);
+  font-size: var(--#{$prefix}font-size-sm);
+  line-height: var(--#{$prefix}line-height-sm);
+  padding: var(--#{$prefix}space-sm);
+  column-gap: var(--#{$prefix}space-sm);
 }
 
 %size-medium {
-  padding: spacing(2) spacing(3);
-  column-gap: spacing(2);
+  padding: var(--#{$prefix}space-sm) var(--#{$prefix}space-md);
+  column-gap: var(--#{$prefix}space-sm);
 }
 
 %size-large {
-  padding: spacing(3) spacing(4);
-  column-gap: spacing(3);
+  padding: var(--#{$prefix}space-md) var(--#{$prefix}space-lg);
+  column-gap: var(--#{$prefix}space-md);
 }
 
 %size-extra-large {
-  padding: spacing(4);
-  column-gap: spacing(3);
+  padding: var(--#{$prefix}space-lg);
+  column-gap: var(--#{$prefix}space-md);
 }
 
 %size-xxl {
-  padding: 0.75rem 2rem;
-  column-gap: 0.75rem;
+  padding: var(--#{$prefix}space-md) var(--#{$prefix}space-2xl);
+  column-gap: var(--#{$prefix}space-md);
 }
 
 %variant-contained {
-  background-color: var(--s2s-btn-contained-bg, $blue-gray-900);
-  color: var(--s2s-btn-contained-color, $white);
+  background-color: var(--#{$prefix}blue-gray-800);
+  color: var(--#{$prefix}neutral-50);
 
   &:hover {
-    background-color: var(--s2s-btn-contained-hover-bg, $blue-gray-800);
-    color: var(--s2s-btn-contained-hover-color, $white);
+    background-color: var(--#{$prefix}blue-gray-700);
+    color: var(--#{$prefix}neutral-50);
   }
 
   &:is(:focus-visible, :active) {
-    background-color: var(--s2s-btn-contained-focus-bg, $blue-gray-600);
-    color: var(--s2s-btn-contained-focus-color, $white);
+    background-color: var(--#{$prefix}blue-gray-500);
+    color: var(--#{$prefix}neutral-50);
   }
 
   &:disabled {
-    background-color: var(--s2s-btn-contained-disabled-bg, $blue-gray-50);
-    color: var(--s2s-btn-contained-disabled-color, $blue-gray-300);
+    background-color: var(--#{$prefix}blue-gray-50);
+    color: var(--#{$prefix}blue-gray-300);
   }
 }
 
 %variant-contained-light {
-  background-color: var(--s2s-btn-contained-light-bg, $blue-gray-500);
-  color: var(--s2s-btn-contained-light-color, $white);
+  background-color: var(--#{$prefix}blue-gray-500);
+  color: var(--#{$prefix}neutral-50);
 
   &:hover {
-    background-color: var(--s2s-btn-contained-light-hover-bg, $blue-gray-400);
-    color: var(--s2s-btn-contained-light-hover-color, $white);
+    background-color: var(--#{$prefix}blue-gray-400);
+    color: var(--#{$prefix}neutral-50);
   }
 
   &:is(:focus-visible, :active) {
-    background-color: var(--s2s-btn-contained-light-focus-bg, $blue-gray-600);
-    color: var(--s2s-btn-contained-light-focus-color, $white);
+    background-color: var(--#{$prefix}blue-gray-500);
+    color: var(--#{$prefix}neutral-50);
   }
 
   &:disabled {
-    background-color: var(--s2s-btn-contained-light-disabled-bg, $blue-gray-50);
-    color: var(--s2s-btn-contained-light-disabled-color, $blue-gray-300);
+    background-color: var(--#{$prefix}blue-gray-50);
+    color: var(--#{$prefix}blue-gray-300);
   }
 }
 
 %variant-tonal {
-  background-color: var(--s2s-btn-tonal-bg, $blue-gray-50);
-  color: var(--s2s-btn-tonal-color, $blue-gray-900);
+  background-color: var(--#{$prefix}blue-gray-50);
+  color: var(--#{$prefix}blue-gray-800);
 
   &:hover {
-    background-color: var(--s2s-btn-tonal-hover-bg, $blue-gray-50);
-    color: var(--s2s-btn-tonal-hover-color, $blue-gray-900);
+    background-color: var(--#{$prefix}blue-gray-50);
+    color: var(--#{$prefix}blue-gray-800);
   }
 
   &:is(:focus-visible, :active) {
-    background-color: var(--s2s-btn-tonal-focus-bg, $blue-gray-100);
-    color: var(--s2s-btn-tonal-focus-color, $blue-gray-900);
+    background-color: var(--#{$prefix}blue-gray-100);
+    color: var(--#{$prefix}blue-gray-800);
   }
 
   &:disabled {
-    background-color: var(--s2s-btn-tonal-disabled-bg, $blue-gray-50);
-    color: var(--s2s-btn-tonal-disabled-color, $blue-gray-200);
+    background-color: var(--#{$prefix}blue-gray-50);
+    color: var(--#{$prefix}blue-gray-200);
   }
 }
 
 %variant-text {
-  background-color: var(--s2s-btn-text-bg, $blue-gray);
+  background-color: transparent;
 }
 
 %variant-danger {
-  background-color: var(--s2s-btn-danger-bg, $error-700);
-  color: var(--s2s-btn-contained-light-focus-color, $white);
+  background-color: var(--#{$prefix}red-500);
+  color: var(--#{$prefix}neutral-50);
 
   &:hover {
-    background-color: var(--s2s-btn-tonal-hover-bg, $error-600);
-    color: var(--s2s-btn-tonal-hover-color, $white);
+    background-color: var(--#{$prefix}red-400);
+    color: var(--#{$prefix}neutral-50);
   }
 }
