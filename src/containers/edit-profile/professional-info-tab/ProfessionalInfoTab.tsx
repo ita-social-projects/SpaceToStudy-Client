@@ -64,7 +64,7 @@ const ProfessionalInfoTab: FC = () => {
   }
 
   useEffect(() => {
-    void dispatch(
+    dispatch(
       updateValidityStatus({ tab: 'professionalInfoTab', value: isValid })
     )
   }, [isValid, dispatch])
