@@ -1,6 +1,8 @@
 import { FormEvent, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Box } from '@mui/material'
+import { Box, IconButton } from '@mui/material'
+import ClearIcon from '@mui/icons-material/Clear'
+import SearchIcon from '@mui/icons-material/Search'
 
 import AppSelect from '~/components/app-select/AppSelect'
 import FilterInput from '~/components/filter-input/FilterInput'
@@ -49,11 +51,29 @@ const BookmarksToolbar = ({
     value
   }))
 
+  const inputProps = {
+    endAdornment: filters.title ? (
+      <IconButton
+        data-testid='clear-button'
+        onClick={() => {
+          setTitle('')
+          updateFilters({ ...additionalParams, title: '' })
+        }}
+        sx={{ p: 0 }}
+      >
+        <ClearIcon color='secondary' />
+      </IconButton>
+    ) : (
+      <SearchIcon color='primary' />
+    )
+  }
+
   return (
     <Box sx={styles.container}>
       <Box sx={styles.searchBox}>
         <form onSubmit={handleInputSubmit}>
           <FilterInput
+            InputProps={inputProps}
             label={t('bookmarkedOffers.search')}
             onChange={setTitle}
             size={SizeEnum.Medium}

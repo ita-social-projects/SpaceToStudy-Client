@@ -1,7 +1,14 @@
 import { screen, fireEvent, waitFor } from '@testing-library/react'
-import CooperationActivitiesList from '~/containers/my-cooperations/cooperation-activities-list/CooperationActivitiesList'
 import { renderWithProviders } from '~tests/test-utils'
-import { vi } from 'vitest'
+
+import { CourseResourceEventType, CourseSectionEventType } from '~/types'
+import {
+  mockedCourseData,
+  mockedSectionsData,
+  mockedEmptySectionsData
+} from '~tests/unit/containers/my-cooperations/cooperation-activities-list/CooperationActivitiesList.spec.constants'
+
+import CooperationActivitiesList from '~/containers/my-cooperations/cooperation-activities-list/CooperationActivitiesList'
 
 const originalDateNow = Date.now
 Date.now = () => 1487076708000
@@ -12,23 +19,7 @@ const TestsId = {
   closeIcon: 'CloseIcon'
 }
 
-const mockedCourseData = {
-  title: 'Course title',
-  description: 'Course description',
-  sections: [
-    {
-      title: 'Course section1 title',
-      description: 'Course section1 description',
-      lessons: [],
-      quizzes: [],
-      attachments: [],
-      id: '17121748017182'
-    }
-  ]
-}
-
 const renderWithMockData = (
-  sectionIndex,
   sections = [],
   courseData = mockedCourseData,
   isAddedClicked = true,
@@ -40,44 +31,57 @@ const renderWithMockData = (
         selectedCourse: courseData,
         isAddedClicked: isAddedClicked,
         isNewActivity: isNewActivity,
-        currentSectionIndex: sectionIndex,
         sections: sections
       }
     }
   })
 }
 
-describe('CooperationActivitiesList with section data', () => {
-  const mockedSectionsData = [
-    {
-      title: 'Section1',
-      description: 'Section1 description',
-      order: ['66183816fb40f35f91bb77ce'],
-      lessons: [
-        {
-          _id: '66183816fb40f35f91bb77ce',
-          title: 'Lesson 1',
-          description: 'Lesson 1 description',
-          content: 'Lesson 1 content',
-          resourceType: 'lessons'
-        }
-      ],
-      quizzes: [],
-      attachments: [],
-      id: '17121748017180'
-    },
-    {
-      title: 'Section2 title',
-      description: 'Section2 description',
-      lessons: [],
-      quizzes: [],
-      attachments: [],
-      id: '17121748017181'
-    }
-  ]
+const mockDispatch = vi.fn()
+vi.mock('~/hooks/use-redux', async () => {
+  const actual = await vi.importActual('~/hooks/use-redux')
+  return {
+    ...actual,
+    useAppDispatch: () => mockDispatch
+  }
+})
 
+vi.mock('~/containers/course-sections-list/CourseSectionsList', async () => {
+  const CourseSectionsList = (
+    await vi.importActual(
+      '~/containers/course-sections-list/CourseSectionsList'
+    )
+  ).default
+  return {
+    __esModule: true,
+    default: (props) => (
+      <>
+        <CourseSectionsList
+          /* eslint-disable react/jsx-handler-names */
+          handleSectionInputChange={props.handleSectionChange}
+          isCooperation
+          items={props.items}
+          resourceEventHandler={props.resourceEventHandler}
+          sectionEventHandler={props.sectionEventHandler}
+          titleText='moduleTitle'
+        />
+        <input
+          data-testid='mock-CourseSectionsList'
+          onChange={(e) => {
+            const parsed = JSON.parse(e.target.value)
+            if (props[parsed.event]) {
+              props[parsed.event](parsed.payload)
+            }
+          }}
+        />
+      </>
+    )
+  }
+})
+
+describe('CooperationActivitiesList with section data', () => {
   beforeEach(() => {
-    renderWithMockData(0, mockedSectionsData)
+    renderWithMockData(mockedSectionsData)
   })
 
   afterEach(() => {
@@ -85,8 +89,7 @@ describe('CooperationActivitiesList with section data', () => {
   })
 
   it('should add a new section when Add activity button is clicked', async () => {
-    let sections = await screen.findAllByTestId(TestsId.activityContainer)
-
+    const sections = await screen.findAllByTestId(TestsId.activityContainer)
     const [hoverElement] = sections
     fireEvent.mouseOver(hoverElement)
 
@@ -98,22 +101,30 @@ describe('CooperationActivitiesList with section data', () => {
     )
     fireEvent.click(menuItem)
 
-    sections = await screen.findAllByTestId(TestsId.activityContainer)
-    expect(sections.length).toBe(4)
+    await waitFor(() => {
+      expect(mockDispatch).toHaveBeenCalledWith({
+        type: 'cooperationsSlice/addNewCooperationSection',
+        payload: {
+          index: 0
+        }
+      })
+    })
   })
 
   it('should delete section resource', async () => {
     await waitFor(() => {
-      const deleteResourceBtn = screen.getByTestId(
-        TestsId.closeIcon
-      ).parentElement
+      const deleteResourceBtn = screen.getAllByTestId(TestsId.closeIcon)[0]
       fireEvent.click(deleteResourceBtn)
     })
 
-    const resource = screen.queryByText('Lesson 1 description')
-
     await waitFor(() => {
-      expect(resource).not.toBeInTheDocument()
+      expect(mockDispatch).toHaveBeenCalledWith({
+        type: 'cooperationsSlice/deleteResource',
+        payload: {
+          resourceId: mockedSectionsData[0].resources[0].resource.id,
+          sectionId: mockedSectionsData[0].id
+        }
+      })
     })
   })
 
@@ -123,19 +134,197 @@ describe('CooperationActivitiesList with section data', () => {
     )
     const newTitle = 'New section title'
 
-    fireEvent.blur(titleInput, {
-      target: { value: newTitle }
-    })
+    fireEvent.change(titleInput, { target: { value: newTitle } })
+    fireEvent.blur(titleInput)
 
     await waitFor(() => {
       expect(titleInput.value).toBe(newTitle)
     })
   })
+
+  it('should call sectionEventHandler with SectionAdded event', async () => {
+    const courseSectionList = screen.getByTestId('mock-CourseSectionsList')
+
+    fireEvent.change(courseSectionList, {
+      target: {
+        value: JSON.stringify({
+          event: 'sectionEventHandler',
+          payload: {
+            type: CourseSectionEventType.SectionAdded,
+            index: 0
+          }
+        })
+      }
+    })
+
+    await waitFor(() => {
+      expect(mockDispatch).toHaveBeenCalledWith({
+        type: 'cooperationsSlice/addNewCooperationSection',
+        payload: {
+          index: 0
+        }
+      })
+    })
+  })
+
+  it('should call sectionEventHandler with SectionRemoved event', async () => {
+    const courseSectionList = screen.getByTestId('mock-CourseSectionsList')
+
+    fireEvent.change(courseSectionList, {
+      target: {
+        value: JSON.stringify({
+          event: 'sectionEventHandler',
+          payload: {
+            type: CourseSectionEventType.SectionRemoved,
+            sectionId: 'section-1'
+          }
+        })
+      }
+    })
+
+    await waitFor(() => {
+      expect(mockDispatch).toHaveBeenCalledWith({
+        type: 'cooperationsSlice/deleteCooperationSection',
+        payload: 'section-1'
+      })
+    })
+  })
+
+  it('should call sectionEventHandler with SectionsOrderChange event', async () => {
+    const courseSectionList = screen.getByTestId('mock-CourseSectionsList')
+
+    fireEvent.change(courseSectionList, {
+      target: {
+        value: JSON.stringify({
+          event: 'sectionEventHandler',
+          payload: {
+            type: CourseSectionEventType.SectionsOrderChange,
+            sections: [
+              { id: 'section-2', name: 'Section 2' },
+              { id: 'section-1', name: 'Section 1' }
+            ]
+          }
+        })
+      }
+    })
+
+    await waitFor(() => {
+      expect(mockDispatch).toHaveBeenCalledWith({
+        type: 'cooperationsSlice/setCooperationSections',
+        payload: [
+          { id: 'section-2', name: 'Section 2' },
+          { id: 'section-1', name: 'Section 1' }
+        ]
+      })
+    })
+  })
+
+  it('should call resourceEventHandler with ResourceUpdated event', async () => {
+    const courseSectionList = screen.getByTestId('mock-CourseSectionsList')
+
+    fireEvent.change(courseSectionList, {
+      target: {
+        value: JSON.stringify({
+          event: 'resourceEventHandler',
+          payload: {
+            type: CourseResourceEventType.ResourceUpdated,
+            sectionId: 'section-1',
+            resourceId: 'resource-1',
+            resource: { name: 'Updated Resource' }
+          }
+        })
+      }
+    })
+
+    await waitFor(() => {
+      expect(mockDispatch).toHaveBeenCalledWith({
+        type: 'cooperationsSlice/updateResource',
+        payload: {
+          sectionId: 'section-1',
+          resourceId: 'resource-1',
+          resource: { name: 'Updated Resource' }
+        }
+      })
+    })
+  })
+
+  it('should call resourceEventHandler with ResourcesOrderChange event', async () => {
+    const courseSectionList = screen.getByTestId('mock-CourseSectionsList')
+
+    fireEvent.change(courseSectionList, {
+      target: {
+        value: JSON.stringify({
+          event: 'resourceEventHandler',
+          payload: {
+            type: CourseResourceEventType.ResourcesOrderChange,
+            sectionId: 'section-1',
+            resources: [{ id: 'resource-1', name: 'Resource 1' }]
+          }
+        })
+      }
+    })
+
+    await waitFor(() => {
+      expect(mockDispatch).toHaveBeenCalledWith({
+        type: 'cooperationsSlice/updateResourcesOrder',
+        payload: {
+          sectionId: 'section-1',
+          resources: [{ id: 'resource-1', name: 'Resource 1' }]
+        }
+      })
+    })
+  })
+
+  it('should call resourceEventHandler with AddSectionResources event', async () => {
+    const courseSectionList = screen.getByTestId('mock-CourseSectionsList')
+
+    fireEvent.change(courseSectionList, {
+      target: {
+        value: JSON.stringify({
+          event: 'resourceEventHandler',
+          payload: {
+            type: CourseResourceEventType.AddSectionResources,
+            sectionId: 'section-1',
+            resources: [{ id: 'resource-1', name: 'Resource 1' }]
+          }
+        })
+      }
+    })
+
+    await waitFor(() => {
+      expect(mockDispatch).toHaveBeenCalledWith({
+        type: 'cooperationsSlice/addSectionResources',
+        payload: {
+          sectionId: 'section-1',
+          resources: [{ id: 'resource-1', name: 'Resource 1' }]
+        }
+      })
+    })
+  })
+
+  it('should call handleSectionInputChange event', async () => {
+    const courseSectionList = screen.getByTestId('mock-CourseSectionsList')
+
+    fireEvent.change(courseSectionList, {
+      target: {
+        value: JSON.stringify({
+          event: 'handleSectionInputChange',
+          payload: {
+            id: 'id',
+            field: 'field',
+            value: 'value'
+          }
+        })
+      }
+    })
+
+    await waitFor(() => {
+      expect(mockDispatch).toHaveBeenCalled(1)
+    })
+  })
 })
 
 describe('CooperationActivitiesList without section data', () => {
-  const mockedEmptySectionsData = []
-
   afterEach(() => {
     vi.clearAllMocks()
   })
@@ -145,24 +334,21 @@ describe('CooperationActivitiesList without section data', () => {
   })
 
   it('should set only selected course sections in the data when no section was added', async () => {
-    renderWithMockData(0, mockedEmptySectionsData, mockedCourseData, true, true)
+    renderWithMockData(mockedEmptySectionsData, mockedCourseData, true, true)
 
-    const sections = await screen.findAllByTestId(TestsId.activityContainer)
+    const sections = await screen.findAllByTestId(TestsId.addButton)
     expect(sections.length).toBe(1)
   })
 
   it('should add a new section when no section was added and no course was selected', async () => {
     renderWithMockData(
-      0,
       mockedEmptySectionsData,
       { ...mockedCourseData, sections: [] },
       false,
       true
     )
 
-    const sections = await screen.findAllByTestId(TestsId.activityContainer)
-    await waitFor(() => {
-      expect(sections.length).toBe(1)
-    })
+    const sections = await screen.findAllByTestId(TestsId.addButton)
+    expect(sections.length).toBe(1)
   })
 })

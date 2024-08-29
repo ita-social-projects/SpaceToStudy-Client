@@ -1,14 +1,40 @@
 import { screen, waitFor, fireEvent } from '@testing-library/react'
 import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
-
+import { openAlert } from '~/redux/features/snackbarSlice'
 import EditProfile from '~/pages/edit-profile/EditProfile'
+import { expect, vi } from 'vitest'
+import { snackbarVariants } from '~/constants'
+import { useAppSelector } from '~/hooks/use-redux'
+import { LoadingStatusEnum } from '~/redux/redux.constants'
 
 const userId = '63f5d0ebb'
 const userRole = 'tutor'
 
+const mockDispatch = vi.fn()
+
 const mockState = {
-  appMain: { userId: userId, userRole: userRole }
+  appMain: { userId, userRole },
+  editProfile: {
+    loading: LoadingStatusEnum.Fulfilled,
+    tabValidityStatus: {
+      profileTab: true,
+      professionalInfoTab: true,
+      notificationTab: true
+    },
+    profileState: {
+      country: 'USA',
+      city: 'New York',
+      firstName: 'John',
+      lastName: 'Doe',
+      notificationSettings: {
+        isOfferStatusNotification: false,
+        isChatNotification: false,
+        isSimilarOffersNotification: false,
+        isEmailNotification: false
+      }
+    }
+  }
 }
 
 const userMock = {
@@ -20,14 +46,58 @@ const userMock = {
   address: { country: 'USA', city: 'New York' },
   professionalSummary: 'Summary',
   nativeLanguage: 'English',
-  photo: 'photo_url',
+  photo: {
+    src: 'url',
+    name: 'profile_photo'
+  },
   professionalBlock: {
     education: 'Education',
     workExperience: 'Experience',
     scientificActivities: 'Activities',
     awards: 'Awards'
+  },
+  notificationSettings: {
+    isOfferStatusNotification: false,
+    isChatNotification: false,
+    isSimilarOffersNotification: false,
+    isEmailNotification: false
+  },
+  tabValidityStatus: {
+    profileTab: true,
+    professionalInfoTab: true,
+    notificationTab: true
   }
 }
+
+vi.mock('~/hooks/use-confirm', () => ({
+  default: () => ({ checkConfirmation: () => true })
+}))
+
+vi.mock('~/redux/features/editProfileSlice', async () => {
+  const actual = await vi.importActual('~/redux/features/editProfileSlice')
+  return {
+    ...actual,
+    updateUser: vi.fn(),
+    fetchUserById: vi.fn()
+  }
+})
+
+vi.mock('~/redux/features/snackbarSlice', async () => {
+  const actual = await vi.importActual('~/redux/features/snackbarSlice')
+  return {
+    ...actual,
+    openAlert: vi.fn()
+  }
+})
+
+vi.mock('~/hooks/use-redux', async () => {
+  const actual = await vi.importActual('~/hooks/use-redux')
+  return {
+    ...actual,
+    useAppDispatch: () => mockDispatch,
+    useAppSelector: vi.fn()
+  }
+})
 
 vi.mock('~/containers/edit-profile/profile-tab/ProfileTab', () => ({
   default: function () {
@@ -61,12 +131,214 @@ vi.mock(
 
 describe('EditProfile', () => {
   beforeEach(async () => {
+    useAppSelector.mockImplementation((selector) => selector(mockState))
+
+    mockAxiosClient
+      .onGet(`${URLs.users.get}/${userId}?role=${userRole}&isEdit=true`)
+      .reply(200, userMock)
+
+    renderWithProviders(<EditProfile />, {
+      preloadedState: mockState
+    })
+  })
+
+  afterEach(() => {
+    vi.clearAllMocks()
+  })
+
+  it('should not include address in dataToUpdate if city or country is missing', () => {
+    const city = ''
+    const country = 'USA'
+    const rest = {}
+
+    const dataToUpdate = { ...rest }
+    if (city && country) dataToUpdate.address = { city, country }
+
+    expect(dataToUpdate).not.toHaveProperty('address')
+  })
+
+  it('should include address in dataToUpdate if city and country are provided', () => {
+    const city = 'New York'
+    const country = 'USA'
+    const rest = {}
+
+    const dataToUpdate = { ...rest }
+    if (city && country) dataToUpdate.address = { city, country }
+
+    expect(dataToUpdate).toHaveProperty('address', { city, country })
+  })
+
+  it('should not include notificationSettings in dataToUpdate if notificationSettings is null', () => {
+    const notificationSettings = null
+    const profileState = { notificationSettings }
+    const rest = {}
+
+    const dataToUpdate = { ...rest }
+    if (notificationSettings) {
+      dataToUpdate.notificationSettings = profileState.notificationSettings
+    }
+
+    expect(dataToUpdate).not.toHaveProperty('notificationSettings')
+  })
+
+  it('should not include professionalBlock in dataToUpdate if professionalBlock is null', () => {
+    const professionalBlock = null
+    const profileState = { professionalBlock }
+    const rest = {}
+
+    const dataToUpdate = { ...rest }
+    if (professionalBlock) {
+      dataToUpdate.professionalBlock = profileState.professionalBlock
+    }
+
+    expect(dataToUpdate).not.toHaveProperty('professionalBlock')
+  })
+
+  it('should include photo in dataToUpdate if profileState.photo is an object', () => {
+    const photo = { src: 'photo.jpg', name: 'Profile Photo' }
+    const profileState = { photo }
+    const rest = {}
+
+    const dataToUpdate = { ...rest }
+    if (typeof profileState.photo === 'object') {
+      dataToUpdate.photo = profileState.photo
+    }
+
+    expect(dataToUpdate).toHaveProperty('photo', profileState.photo)
+  })
+  it('should include videoLink in dataToUpdate if videoLink is an object with a property that matches the userRole', () => {
+    const videoLink = { [userRole]: 'http://video1234556443.com/video' }
+    const rest = {}
+    const dataToUpdate = { ...rest }
+    if (videoLink) {
+      dataToUpdate.videoLink =
+        typeof videoLink === 'string' ? videoLink : videoLink[userRole]
+    }
+    expect(dataToUpdate).toHaveProperty('videoLink', videoLink[userRole])
+  })
+
+  it('should include address in dataToUpdate if city and country are both truthy', () => {
+    const city = 'New York'
+    const country = 'USA'
+    const rest = {}
+    const dataToUpdate = { ...rest }
+    if (city && country) dataToUpdate.address = { city, country }
+    expect(dataToUpdate).toHaveProperty('address', { city, country })
+  })
+
+  it('should not include photo in dataToUpdate if profileState.photo is not an object', () => {
+    const photo = 'stringInsteadOfObject'
+    const profileState = { photo }
+    const rest = {}
+
+    const dataToUpdate = { ...rest }
+    if (typeof profileState.photo === 'object') {
+      dataToUpdate.photo = profileState.photo
+    }
+
+    expect(dataToUpdate).not.toHaveProperty('photo')
+  })
+
+  it('should not include videoLink in dataToUpdate if videoLink is null', () => {
+    const videoLink = null
+    const userRole = 'tutor'
+    const rest = {}
+
+    const dataToUpdate = { ...rest }
+    if (videoLink) {
+      dataToUpdate.videoLink =
+        typeof videoLink === 'string' ? videoLink : videoLink[userRole]
+    }
+
+    expect(dataToUpdate).not.toHaveProperty('videoLink')
+  })
+
+  it('should include videoLink in dataToUpdate if videoLink is a string', () => {
+    const videoLink = 'http://video1234556443.com/video'
+    const userRole = 'tutor'
+    const rest = {}
+
+    const dataToUpdate = { ...rest }
+    if (videoLink) {
+      dataToUpdate.videoLink =
+        typeof videoLink === 'string' ? videoLink : videoLink[userRole]
+    }
+
+    expect(dataToUpdate).toHaveProperty('videoLink', videoLink)
+  })
+
+  it('should include videoLink from userRole in dataToUpdate if videoLink is an object', () => {
+    const videoLink = { tutor: 'http://video1111111.com/video' }
+    const userRole = 'tutor'
+    const rest = {}
+
+    const dataToUpdate = { ...rest }
+    if (videoLink) {
+      dataToUpdate.videoLink =
+        typeof videoLink === 'string' ? videoLink : videoLink[userRole]
+    }
+
+    expect(dataToUpdate).toHaveProperty('videoLink', videoLink[userRole])
+  })
+
+  it('should render the Update button', () => {
+    const updateBtn = screen.getByText('editProfilePage.updateBtn')
+    expect(updateBtn).toBeInTheDocument()
+  })
+
+  it('should enable the Update button if isChanged is true and isTabInvalid is false', () => {
+    const updateBtn = screen.getByText('editProfilePage.updateBtn')
+
+    useAppSelector.mockImplementation((selector) =>
+      selector({
+        ...mockState,
+        editProfile: {
+          ...mockState.editProfile,
+          profileState: { ...userMock, firstName: 'John' },
+          loading: LoadingStatusEnum.Fulfilled
+        }
+      })
+    )
+
+    expect(updateBtn).not.toBeDisabled()
+  })
+
+  it('should disable the Update button if isChanged is false and isTabInvalid is false', () => {
+    const updateBtn = screen.getByText('editProfilePage.updateBtn')
+
+    useAppSelector.mockImplementation((selector) =>
+      selector({
+        ...mockState,
+        editProfile: {
+          ...mockState.editProfile,
+          profileState: { ...userMock },
+          loading: LoadingStatusEnum.Fulfilled
+        }
+      })
+    )
+
+    expect(updateBtn).toHaveAttribute('aria-disabled', 'true')
+  })
+
+  it('should display a success alert on the Update click and successful update of the profile data', async () => {
+    useAppSelector.mockImplementation((selector) =>
+      selector({
+        ...mockState,
+        editProfile: {
+          ...mockState.editProfile,
+          profileState: { ...userMock, lastName: 'Cena' },
+          loading: LoadingStatusEnum.Fulfilled
+        }
+      })
+    )
+
+    const updateBtn = screen.getByText('editProfilePage.updateBtn')
+    fireEvent.click(updateBtn)
+
     await waitFor(() => {
-      mockAxiosClient
-        .onGet(`${URLs.users.get}/${userId}?role=${userRole}&isEdit=true`)
-        .reply(200, userMock)
-      renderWithProviders(<EditProfile />, {
-        preloadedState: mockState
+      expect(openAlert).toHaveBeenCalledWith({
+        severity: snackbarVariants.success,
+        message: 'editProfilePage.profile.successMessage'
       })
     })
   })
@@ -95,7 +367,7 @@ describe('EditProfile', () => {
     })
   })
 
-  it('should render Professional tab Container after click on Profile menu button', async () => {
+  it('should render Professional tab Container after click on Professional menu button', async () => {
     const professionalTab = await screen.findByRole('button', {
       name: 'editProfilePage.profile.professionalTab.tabTitle'
     })

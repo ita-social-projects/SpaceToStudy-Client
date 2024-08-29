@@ -46,7 +46,7 @@ export const styles = {
     typography: TypographyVariantEnum.H5,
     ...ellipsisTextStyle(2),
     fontWeight: '600',
-    lineHeight: '24px',
+    lineHeight: '28px',
     letterSpacing: '0.15px'
   },
   description: {

@@ -35,7 +35,7 @@ const UserProfile = () => {
 
   const preferredRole = paramsRole || userRole
   const preferredId = id || userId
-  const isMyProfile = useMatch(authRoutes.accountMenu.myProfile.path)
+  const isMyProfile = useMatch(authRoutes.myProfile.path)
 
   const getUserData = useCallback(
     () => userService.getUserById(preferredId, preferredRole),
@@ -86,6 +86,7 @@ const UserProfile = () => {
         averageRating={response?.averageRating?.tutor}
         reviewsCount={reviews}
         totalReviews={response?.totalReviews?.tutor}
+        userRole={preferredRole}
       />
     </PageWrapper>
   )

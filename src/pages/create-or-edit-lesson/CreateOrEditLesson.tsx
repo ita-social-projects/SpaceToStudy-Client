@@ -105,7 +105,7 @@ const CreateOrEditLesson = () => {
           onAddResources={handleAddAttachments}
           removeColumnRules={removeColumnRules}
           requestService={ResourceService.getAttachments}
-          resourceType={ResourcesTabsEnum.Attachments}
+          resourceTab={ResourcesTabsEnum.Attachments}
           resources={data.attachments}
         />
       )

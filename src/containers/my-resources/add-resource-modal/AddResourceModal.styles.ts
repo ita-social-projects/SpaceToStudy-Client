@@ -8,7 +8,7 @@ const input = {
 }
 
 export const styles = {
-  root: { width: '65vw', p: '20px' },
+  root: { width: '65vw', p: '40px' },
   title: {
     mb: '32px',
     typography: TypographyVariantEnum.H4
@@ -32,6 +32,11 @@ export const styles = {
   }),
   table: {
     '& th': { backgroundColor: 'primary.100' }
+  },
+  formControls: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    pl: '16px'
   },
   buttonsArea: {
     display: 'flex',

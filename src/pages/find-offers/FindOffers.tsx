@@ -1,4 +1,11 @@
-import { useCallback, useEffect, ChangeEvent, useState, useMemo } from 'react'
+import {
+  useCallback,
+  useEffect,
+  ChangeEvent,
+  useState,
+  useMemo,
+  useRef
+} from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
@@ -24,7 +31,7 @@ import NotFoundResults from '~/components/not-found-results/NotFoundResults'
 import { countActiveOfferFilters } from '~/utils/count-active-filters'
 import { useDrawer } from '~/hooks/use-drawer'
 import { useFilterQuery } from '~/hooks/use-filter-query'
-import { useAppSelector } from '~/hooks/use-redux'
+import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 import usePagination from '~/hooks/table/use-pagination'
 import useAxios from '~/hooks/use-axios'
 import { getOpositeRole } from '~/utils/helper-functions'
@@ -36,7 +43,8 @@ import {
   GetOffersParams,
   GetOffersResponse,
   PositionEnum,
-  StatusEnum
+  StatusEnum,
+  UserRole
 } from '~/types'
 import {
   defaultFilters,
@@ -44,12 +52,14 @@ import {
   itemsPerPage
 } from '~/pages/find-offers/FindOffers.constants'
 import { styles } from '~/pages/find-offers/FindOffers.styles'
+import { fetchUserById } from '~/redux/features/editProfileSlice'
 
 const FindOffers = () => {
   const [cardsView, setCardsView] = useState<CardsView>(CardsViewEnum.Inline)
-  const { userRole } = useAppSelector((state) => state.appMain)
+  const { userRole, userId } = useAppSelector((state) => state.appMain)
   const { openDrawer, closeDrawer, isOpen } = useDrawer()
   const { isMobile, isLaptopAndAbove } = useBreakpoints()
+  const dispatch = useAppDispatch()
 
   const { t } = useTranslation()
 
@@ -107,14 +117,25 @@ const FindOffers = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetchData, searchString])
 
+  useEffect(() => {
+    void dispatch(
+      fetchUserById({ userId, role: userRole as UserRole, isEdit: false })
+    )
+  }, [dispatch, userId, userRole])
+
   const toggleFiltersOpen = () => (isOpen ? closeDrawer() : openDrawer())
 
   const defaultParams = { page: defaultFilters(oppositeRole).page }
 
+  const pageWrapperRef = useRef<HTMLDivElement>(null)
+
   const handlePageChange = (_: ChangeEvent<unknown>, page: number) => {
     filterQueryActions.updateFiltersInQuery({ page })
-  }
 
+    if (pageWrapperRef.current) {
+      pageWrapperRef.current.scrollIntoView()
+    }
+  }
   const handleShowingTutorOffers = () => {
     const updatedRole = getOpositeRole(filters.authorRole)
     filterQueryActions.updateFiltersInQuery({
@@ -124,7 +145,7 @@ const FindOffers = () => {
   }
 
   return (
-    <PageWrapper>
+    <PageWrapper ref={pageWrapperRef}>
       <OfferRequestBlock />
       <TitleWithDescription
         description={t('findOffers.titleWithDescription.description')}
@@ -173,7 +194,10 @@ const FindOffers = () => {
         {offersLoading ? (
           <Loader pageLoad />
         ) : !items.length && !offersLoading ? (
-          <NotFoundResults description={t('findOffers.notFound.description')} />
+          <NotFoundResults
+            data
+            description={t('findOffers.notFound.description')}
+          />
         ) : (
           <OfferContainer
             offerCards={items}

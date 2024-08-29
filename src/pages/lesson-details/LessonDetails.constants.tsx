@@ -1,7 +1,7 @@
 import {
   Lesson,
   ResourceAvailabilityStatusEnum,
-  ResourcesTabsEnum
+  ResourcesTypesEnum as ResourceType
 } from '~/types'
 
 export const defaultResponse: Lesson = {
@@ -18,5 +18,5 @@ export const defaultResponse: Lesson = {
     status: ResourceAvailabilityStatusEnum.Open,
     date: null
   },
-  resourceType: ResourcesTabsEnum.Lessons
+  resourceType: ResourceType.Lesson
 }

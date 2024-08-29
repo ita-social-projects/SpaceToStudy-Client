@@ -1,5 +1,6 @@
-import { useState, FC, useEffect, useCallback } from 'react'
+import { useState, FC, useMemo, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
+
 import { MenuItem } from '@mui/material'
 import Box from '@mui/material/Box'
 import AddIcon from '@mui/icons-material/Add'
@@ -10,9 +11,7 @@ import AppTextField from '~/components/app-text-field/AppTextField'
 import AppButton from '~/components/app-button/AppButton'
 import ResourcesList from '~/containers/course-section/resources-list/ResourcesList'
 import AddResources from '~/containers/add-resources/AddResources'
-import { ResourceService } from '~/services/resource-service'
-import useMenu from '~/hooks/use-menu'
-import { useModalContext } from '~/context/modal-context'
+import EditAttachmentModal from '~/containers/my-resources/edit-attachment-modal/EditAttachmentModal'
 import {
   menuTypes,
   resourceNavigationMap,
@@ -30,6 +29,8 @@ import {
   columns as quizColumns,
   removeColumnRules as removeQuizColumnRules
 } from '~/containers/add-resources/AddQuizzes.constants'
+import { styles } from '~/containers/course-section/CourseSectionContainer.styles'
+
 import {
   TextFieldVariantEnum,
   SizeEnum,
@@ -38,168 +39,108 @@ import {
   Lesson,
   Quiz,
   Attachment,
-  ResourcesTabsEnum as ResourcesTypes,
+  ResourcesTypesEnum as ResourceType,
   CourseResource,
   CourseSectionHandlers,
-  UpdateAttachmentParams
+  UpdateAttachmentParams,
+  CourseResourceEventType,
+  CourseSectionEventType,
+  ResourceAvailability
 } from '~/types'
-import { styles } from '~/containers/course-section/CourseSectionContainer.styles'
-import { createUrlPath } from '~/utils/helper-functions'
 import { authRoutes } from '~/router/constants/authRoutes'
-import { useAppDispatch } from '~/hooks/use-redux'
-import { setIsNewActivity } from '~/redux/features/cooperationsSlice'
-import EditAttachmentModal from '~/containers/my-resources/edit-attachment-modal/EditAttachmentModal'
+import { ResourceService } from '~/services/resource-service'
+import { createUrlPath } from '~/utils/helper-functions'
+import { useModalContext } from '~/context/modal-context'
 
 import useAxios from '~/hooks/use-axios'
+import useMenu from '~/hooks/use-menu'
 
 interface SectionProps extends CourseSectionHandlers {
   sectionData: CourseSection
-  sections: CourseSection[]
+  isCooperation?: boolean
 }
 
 type OpenModalFunction = () => void
 
 const CourseSectionContainer: FC<SectionProps> = ({
   sectionData,
-  sections,
-  setSectionsItems,
   handleSectionInputChange,
-  handleSectionNonInputChange,
-  handleSectionResourcesOrder
+  resourceEventHandler,
+  sectionEventHandler,
+  isCooperation = false
 }) => {
   const { t } = useTranslation()
-  const dispatch = useAppDispatch()
   const { openMenu, renderMenu, closeMenu } = useMenu()
   const { openModal, closeModal } = useModalContext()
 
-  const [descriptionInput, setDescriptionInput] = useState<string>(
-    sectionData.description
-  )
   const [activeMenu, setActiveMenu] = useState<string>('')
   const [isVisible, setIsVisible] = useState<boolean>(true)
-  const [resources, setResources] = useState<CourseResource[]>([])
-  const activities: CourseResource[] = sectionData.activities?.map((item) => {
-    return { ...item.resource, resourceType: item.resourceType }
-  })
 
-  const getAllResourcesItems = useCallback((): CourseResource[] => {
-    return activities?.length
-      ? [...activities]
-      : [
-          ...sectionData.lessons,
-          ...sectionData.quizzes,
-          ...sectionData.attachments
-        ]
-  }, [
-    sectionData.lessons,
-    sectionData.quizzes,
-    sectionData.attachments,
-    activities
-  ])
-
-  const updateResources = useCallback(
-    (
-      prevResources: CourseResource[],
-      allResourcesItems: CourseResource[],
-      displayOrder: string[]
-    ) => {
-      return prevResources
-        .filter((prevResource) =>
-          allResourcesItems.some(
-            (currentResource) => currentResource._id === prevResource._id
-          )
-        )
-        .map((prevResource) => ({
-          ...prevResource,
-          order: displayOrder.indexOf(prevResource._id)
-        }))
-        .sort((a, b) => a.order - b.order)
-    },
-    []
+  const allResources = useMemo(
+    () => sectionData.resources.map((item) => item.resource),
+    [sectionData.resources]
   )
 
-  const addNewResources = useCallback(
-    (
-      updatedResourcesItems: CourseResource[],
-      allResourcesItems: CourseResource[],
-      displayOrder: string[]
-    ): CourseResource[] => {
-      return [
-        ...updatedResourcesItems,
-        ...allResourcesItems
-          .filter(
-            (currentResource) =>
-              !updatedResourcesItems.some(
-                (prevResource) => prevResource._id === currentResource._id
-              )
-          )
-          .map((newResource) => ({
-            ...newResource,
-            order: displayOrder.indexOf(newResource._id)
-          }))
-      ]
-    },
-    []
+  const allNonDuplicateResources = useMemo(
+    () => allResources.filter((resource) => !resource.isDuplicate),
+    [allResources]
   )
 
-  useEffect(() => {
-    setResources((prevResources) => {
-      const allResourcesItems = getAllResourcesItems()
-      const displayOrder = sectionData.order || []
-      const updatedResourcesItems = updateResources(
-        prevResources,
-        allResourcesItems,
-        displayOrder
-      )
+  const lessons = useMemo(
+    () =>
+      allNonDuplicateResources.filter(
+        (resource) => resource.resourceType === ResourceType.Lesson
+      ) as Lesson[],
+    [allNonDuplicateResources]
+  )
 
-      return addNewResources(
-        updatedResourcesItems,
-        allResourcesItems,
-        displayOrder
-      )
-    })
-  }, [getAllResourcesItems, updateResources, addNewResources, sectionData])
+  const quizzes = useMemo(
+    () =>
+      allNonDuplicateResources.filter(
+        (resource) => resource.resourceType === ResourceType.Quiz
+      ) as Quiz[],
+    [allNonDuplicateResources]
+  )
 
-  useEffect(() => {
-    if (handleSectionResourcesOrder && sectionData.order) {
-      handleSectionResourcesOrder(sectionData.id, resources)
-    }
-  }, [
-    resources,
-    sectionData.id,
-    handleSectionResourcesOrder,
-    sectionData.order
-  ])
+  const attachments = useMemo(
+    () =>
+      allNonDuplicateResources.filter(
+        (resource) => resource.resourceType === ResourceType.Attachment
+      ) as Attachment[],
+    [allNonDuplicateResources]
+  )
+
+  const handleResourcesSort = useCallback(
+    (resources: CourseResource[]) => {
+      resourceEventHandler?.({
+        type: CourseResourceEventType.ResourcesOrderChange,
+        sectionId: sectionData.id,
+        resources
+      })
+    },
+    [sectionData, resourceEventHandler]
+  )
+
+  const handleResourceAvailabilityChange = useCallback(
+    (resource: CourseResource, availability: ResourceAvailability) => {
+      resourceEventHandler?.({
+        type: CourseResourceEventType.ResourceUpdated,
+        sectionId: sectionData.id,
+        resourceId: resource.id,
+        resource: {
+          availability
+        }
+      })
+    },
+    [sectionData, resourceEventHandler]
+  )
 
   const deleteResource = (resource: CourseResource) => {
-    if (resource.resourceType === ResourcesTypes.Lessons) {
-      const newLessons = sectionData.lessons.filter(
-        (item) => item._id !== resource._id
-      )
-      handleSectionNonInputChange(
-        sectionData.id,
-        resource.resourceType,
-        newLessons
-      )
-    } else if (resource.resourceType === ResourcesTypes.Quizzes) {
-      const newQuizzes = sectionData.quizzes.filter(
-        (item) => item._id !== resource._id
-      )
-      handleSectionNonInputChange(
-        sectionData.id,
-        resource.resourceType,
-        newQuizzes
-      )
-    } else if (resource.resourceType === ResourcesTypes.Attachments) {
-      const newAttachments = sectionData.attachments.filter(
-        (item) => item._id !== resource._id
-      )
-      handleSectionNonInputChange(
-        sectionData.id,
-        resource.resourceType,
-        newAttachments
-      )
-    }
+    resourceEventHandler?.({
+      type: CourseResourceEventType.ResourceRemoved,
+      sectionId: sectionData.id,
+      resourceId: resource.id
+    })
   }
 
   const handleEditAttachment = (params?: UpdateAttachmentParams) =>
@@ -209,14 +150,12 @@ const CourseSectionContainer: FC<SectionProps> = ({
     service: handleEditAttachment,
     fetchOnMount: false,
     onResponse: (attachment: Attachment) => {
-      setResources((prev) =>
-        prev.map((resource) => {
-          if (resource._id === attachment._id) {
-            return { ...resource, ...attachment }
-          }
-          return resource
-        })
-      )
+      resourceEventHandler?.({
+        type: CourseResourceEventType.ResourceUpdated,
+        sectionId: sectionData.id,
+        resourceId: attachment._id,
+        resource: attachment
+      })
     }
   })
 
@@ -225,7 +164,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
 
     if (!resourceType) return
 
-    if (resourceType === ResourcesTypes.Attachments) {
+    if (resourceType === ResourceType.Attachment) {
       openModal({
         component: (
           <EditAttachmentModal
@@ -258,19 +197,21 @@ const CourseSectionContainer: FC<SectionProps> = ({
   }
 
   const onDeleteSection = () => {
-    dispatch(setIsNewActivity(false))
-    setSectionsItems(sections.filter((item) => item.id !== sectionData.id))
+    sectionEventHandler?.({
+      type: CourseSectionEventType.SectionRemoved,
+      sectionId: sectionData.id
+    })
   }
-
   const handleAddResources = <T extends CourseResource>(
     newResources: T[],
-    type: ResourcesTypes
+    isDuplicate: boolean
   ) => {
-    handleSectionNonInputChange(
-      sectionData.id,
-      type as keyof CourseSection,
-      newResources
-    )
+    resourceEventHandler?.({
+      type: CourseResourceEventType.AddSectionResources,
+      sectionId: sectionData.id,
+      resources: newResources,
+      isDuplicate: isDuplicate
+    })
   }
 
   const handleOpenAddLessonsModal = () => {
@@ -278,13 +219,12 @@ const CourseSectionContainer: FC<SectionProps> = ({
       component: (
         <AddResources<Lesson>
           columns={lessonColumns}
-          onAddResources={(resources) =>
-            handleAddResources(resources, ResourcesTypes.Lessons)
-          }
+          onAddResources={handleAddResources}
           removeColumnRules={removeLessonColumnRules}
           requestService={ResourceService.getUsersLessons}
-          resourceType={resourcesData.lessons.resource}
-          resources={sectionData.lessons}
+          resourceTab={resourcesData.lessons.resourceTab}
+          resources={lessons}
+          showCheckboxWithTooltip
         />
       )
     })
@@ -295,13 +235,12 @@ const CourseSectionContainer: FC<SectionProps> = ({
       component: (
         <AddResources<Quiz>
           columns={quizColumns}
-          onAddResources={(resources) => {
-            handleAddResources(resources, ResourcesTypes.Quizzes)
-          }}
+          onAddResources={handleAddResources}
           removeColumnRules={removeQuizColumnRules}
           requestService={ResourceService.getQuizzes}
-          resourceType={resourcesData.quizzes.resource}
-          resources={sectionData.quizzes}
+          resourceTab={resourcesData.quizzes.resourceTab}
+          resources={quizzes}
+          showCheckboxWithTooltip
         />
       )
     })
@@ -312,13 +251,12 @@ const CourseSectionContainer: FC<SectionProps> = ({
       component: (
         <AddResources<Attachment>
           columns={attachmentColumns}
-          onAddResources={(resources) =>
-            handleAddResources(resources, ResourcesTypes.Attachments)
-          }
+          onAddResources={handleAddResources}
           removeColumnRules={removeAttachmentColumnRules}
           requestService={ResourceService.getAttachments}
-          resourceType={resourcesData.attachments.resource}
-          resources={sectionData.attachments}
+          resourceTab={resourcesData.attachments.resourceTab}
+          resources={attachments}
+          showCheckboxWithTooltip
         />
       )
     })
@@ -380,7 +318,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
             fullWidth
             inputProps={styles.input}
             label={
-              descriptionInput
+              sectionData.description
                 ? ''
                 : t('course.courseSection.defaultNewDescription')
             }
@@ -391,15 +329,23 @@ const CourseSectionContainer: FC<SectionProps> = ({
                 event.target.value
               )
             }
-            onChange={(event) => setDescriptionInput(event.target.value)}
-            value={descriptionInput}
+            onChange={(event) =>
+              handleSectionInputChange(
+                sectionData.id,
+                'description',
+                event.target.value
+              )
+            }
+            value={sectionData.description}
             variant={TextFieldVariantEnum.Standard}
           />
           <ResourcesList
             deleteResource={deleteResource}
             editResource={editResource}
-            items={resources}
-            setResources={setResources}
+            isCooperation={isCooperation}
+            items={allResources}
+            sortResources={handleResourcesSort}
+            updateAvailability={handleResourceAvailabilityChange}
           />
           <AppButton
             endIcon={<KeyboardArrowDownIcon fontSize={SizeEnum.Small} />}

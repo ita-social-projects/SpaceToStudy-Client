@@ -27,7 +27,7 @@ import {
   ResourcesTabsEnum
 } from '~/types'
 import {
-  ajustColumns,
+  adjustColumns,
   createUrlPath,
   getScreenBasedLimit
 } from '~/utils/helper-functions'
@@ -46,7 +46,7 @@ const LessonsContainer = () => {
 
   const { sort } = sortOptions
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
-  const columnsToShow = ajustColumns<Lesson>(
+  const columnsToShow = adjustColumns<Lesson>(
     breakpoints,
     columns,
     removeColumnRules

@@ -3,6 +3,9 @@ export const authRoutes = {
   subjects: { route: 'categories/subjects', path: '/categories/subjects' },
   chat: { route: 'chat', path: '/chat' },
   userProfile: { route: 'user/:id', path: '/user' },
+  myProfile: { route: 'my-profile', path: '/my-profile' },
+  myCooperations: { route: 'my-cooperations', path: '/my-cooperations' },
+  myOffers: { route: 'my-offers', path: '/my-offers' },
   findOffers: {
     route: 'categories/subjects/find-offers',
     path: '/categories/subjects/find-offers'
@@ -48,15 +51,26 @@ export const authRoutes = {
     route: 'my-cooperations/:id/quiz/:quizId'
   },
   accountMenu: {
-    myProfile: { route: 'my-profile', path: '/my-profile' },
-    bookmarks: { route: 'bookmarked-offers', path: '/bookmarked-offers' },
-    myCooperations: {
-      route: 'my-cooperations',
-      path: '/my-cooperations'
+    student: {
+      myProfile: { route: 'my-profile', path: '/my-profile' },
+      bookmarks: { route: 'bookmarked-offers', path: '/bookmarked-offers' },
+      myRequests: {
+        route: 'my-requests',
+        path: '/my-offers'
+      }
     },
-    myOffers: {
-      route: 'my-offers',
-      path: '/my-offers'
+    tutor: {
+      myProfile: { route: 'my-profile', path: '/my-profile' },
+      bookmarks: { route: 'bookmarked-offers', path: '/bookmarked-offers' },
+      myOffers: {
+        route: 'my-offers',
+        path: '/my-offers'
+      },
+      myResources: { route: 'my-resources', path: '/my-resources' },
+      myCourses: {
+        route: 'my-courses',
+        path: '/my-courses'
+      }
     },
     logout: { route: 'logout', path: '/logout' }
   },

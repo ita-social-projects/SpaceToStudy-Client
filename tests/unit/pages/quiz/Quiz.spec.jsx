@@ -1,7 +1,10 @@
 import { screen, fireEvent, act } from '@testing-library/react'
+import { renderWithProviders } from '~tests/test-utils'
+
 import Quiz from '~/pages/quiz/Quiz'
 import useAxios from '~/hooks/use-axios'
-import { renderWithProviders } from '~tests/test-utils'
+
+import { ResourcesTypesEnum as ResourceType } from '~/types'
 
 vi.mock('~/hooks/use-axios')
 
@@ -19,7 +22,7 @@ const mockQuiz = {
   ],
   author: '660a8c7da2f78d2ed869b2bf',
   category: '665799d795ab9dbdd7ad40df',
-  resourceType: 'quizzes',
+  resourceType: ResourceType.Quiz,
   settings: {
     view: 'Stepper',
     shuffle: false,

@@ -31,7 +31,7 @@ import {
   ResourcesTabsEnum,
   ButtonVariantEnum
 } from '~/types'
-import { ajustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
+import { adjustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
 import { styles } from '~/containers/my-resources/attachments-container/AttachmentsContainer.styles'
 import { useAppDispatch } from '~/hooks/use-redux'
 import { openAlert } from '~/redux/features/snackbarSlice'
@@ -162,7 +162,7 @@ const AttachmentsContainer = () => {
     })
   }
 
-  const columnsToShow = ajustColumns(
+  const columnsToShow = adjustColumns(
     breakpoints,
     columns(onAddCategory),
     removeColumnRules

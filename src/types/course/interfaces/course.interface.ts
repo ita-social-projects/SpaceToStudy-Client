@@ -5,11 +5,8 @@ import {
   SubjectNameInterface,
   ProficiencyLevelEnum,
   UserResponse,
-  Quiz,
-  Attachment,
-  Lesson,
   CourseResource,
-  ResourcesTabsEnum
+  ResourcesTypesEnum as ResourceType
 } from '~/types'
 
 export interface Course extends CommonEntityFields {
@@ -32,9 +29,9 @@ export interface CourseForm
   sections: CourseSection[]
 }
 
-export interface Activities {
+export interface Resource {
   resource: CourseResource
-  resourceType: ResourcesTabsEnum
+  resourceType: ResourceType
 }
 
 export interface CourseSection {
@@ -42,11 +39,7 @@ export interface CourseSection {
   id: string
   title: string
   description: string
-  lessons: Lesson[]
-  quizzes: Quiz[]
-  attachments: Attachment[]
-  order?: string[]
-  activities: Activities[]
+  resources: Resource[]
 }
 
 export interface CourseFilters extends Pick<Course, 'proficiencyLevel'> {

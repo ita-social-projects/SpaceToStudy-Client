@@ -78,19 +78,22 @@ export const chatsMock = [
   }
 ]
 
-export const messagesMock = [
-  {
-    _id: '64a28e8c5d56f749c7d915d0',
-    author: {
-      _id: '644e6b1668cc37f543f2f37c',
-      photo: '1687425744398-ITA wallpapers-19.png'
-    },
-    authorRole: 'student',
-    text: 'Some text',
-    isRead: false,
-    isNotified: false,
-    chat: '64aec471990d5985c11b6e4c',
-    createdAt: '2023-20-01T13:25:36.292Z',
-    updatedAt: '2023-20-01T13:25:36.292Z'
-  }
-]
+export const messagesMock = {
+  items: [
+    {
+      _id: '64a28e8c5d56f749c7d915d0',
+      author: {
+        _id: '644e6b1668cc37f543f2f37c',
+        photo: '1687425744398-ITA wallpapers-19.png'
+      },
+      authorRole: 'student',
+      text: 'Some text',
+      isRead: false,
+      isNotified: false,
+      chat: '64aec471990d5985c11b6e4c',
+      createdAt: '2023-20-01T13:25:36.292Z',
+      updatedAt: '2023-20-01T13:25:36.292Z'
+    }
+  ],
+  count: 1
+}

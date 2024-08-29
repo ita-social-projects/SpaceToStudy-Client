@@ -35,7 +35,7 @@ import {
   CreateCategoriesParams,
   CategoryNameInterface
 } from '~/types'
-import { ajustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
+import { adjustColumns, getScreenBasedLimit } from '~/utils/helper-functions'
 
 import { styles } from '~/containers/my-resources/categories-container/CategoriesContainer.style'
 import { useAppDispatch } from '~/hooks/use-redux'
@@ -169,7 +169,7 @@ const CategoriesContainer = () => {
   const onEdit = (id: string) => setSelectedItemId(id)
   const onCancel = () => setSelectedItemId('')
 
-  const columnsToShow = ajustColumns<Categories>(
+  const columnsToShow = adjustColumns<Categories>(
     breakpoints,
     columns(
       selectedItemId,

@@ -20,8 +20,9 @@
   "profile": "Profile",
   "title": "Cooperations title:",
   "tutor": "Tutor:",
+  "student": "Student:",
   "tutoringSubject": "Tutoring subject & level:",
-  "aboutCooperation":"About cooperation:",
-  "tutoringLanguages":"Tutoring languages:",
-  "pricing":"Pricing:"
+  "aboutCooperation": "About cooperation:",
+  "tutoringLanguages": "Tutoring languages:",
+  "pricing": "Pricing:"
 }

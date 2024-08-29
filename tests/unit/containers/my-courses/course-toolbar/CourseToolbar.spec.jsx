@@ -19,9 +19,7 @@ const mockData = {
       id: '1716926626910',
       title: '',
       description: '',
-      lessons: [],
-      quizzes: [],
-      attachments: [],
+      resources: [],
       order: []
     }
   ]

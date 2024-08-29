@@ -1,30 +1,42 @@
+import { Dispatch, FC, SetStateAction, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
+
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
-import { Link } from 'react-router-dom'
-import { Dispatch, FC, SetStateAction } from 'react'
 
 import AppSelect from '~/components/app-select/AppSelect'
 import AppButton from '~/components/app-button/AppButton'
 import CooperationActivitiesList from '~/containers/my-cooperations/cooperation-activities-list/CooperationActivitiesList'
-import { useResourceAvailabilityContext } from '~/context/resources-availability-context'
-import { cooperationService } from '~/services/cooperation-service'
-import { authRoutes } from '~/router/constants/authRoutes'
-import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
-import { openAlert } from '~/redux/features/snackbarSlice'
-import { cooperationsSelector } from '~/redux/features/cooperationsSlice'
+import { cooperationTranslationKeys } from '~/containers/cooperation-details/cooperation-activities/CooperationActivities.constants'
+import { styles } from '~/containers/cooperation-details/cooperation-activities/CooperationActivities.styles'
 
 import openIcon from '~/assets/img/cooperation-details/resource-availability/open-icon.svg'
 import closeIcon from '~/assets/img/cooperation-details/resource-availability/closed-icon.svg'
-import { cooperationTranslationKeys } from '~/containers/cooperation-details/cooperation-activities/CooperationActivities.constants'
+
+import { cooperationService } from '~/services/cooperation-service'
+import { authRoutes } from '~/router/constants/authRoutes'
+import { openAlert } from '~/redux/features/snackbarSlice'
+import {
+  cooperationsSelector,
+  setResourcesAvailability
+} from '~/redux/features/cooperationsSlice'
+
 import { snackbarVariants } from '~/constants'
 import {
   ResourcesAvailabilityEnum,
   ButtonVariantEnum,
   SizeEnum,
-  ButtonTypeEnum
+  ButtonTypeEnum,
+  ErrorResponse,
+  UpdateCooperationsSections,
+  UpdateCooperationsParams
 } from '~/types'
-import { styles } from '~/containers/cooperation-details/cooperation-activities/CooperationActivities.styles'
+
+import useAxios from '~/hooks/use-axios'
+import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
+import { getErrorKey } from '~/utils/get-error-key'
+import { getErrorMessage } from '~/utils/error-with-message'
 
 interface CooperationActivitiesProps {
   cooperationId?: string
@@ -37,15 +49,23 @@ const CooperationActivities: FC<CooperationActivitiesProps> = ({
 }) => {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
-  const { sections } = useAppSelector(cooperationsSelector)
-  const { resourceAvailability, setResourceAvailability } =
-    useResourceAvailabilityContext()
+  const { sections, resourcesAvailability } =
+    useAppSelector(cooperationsSelector)
 
-  const updateCooperationSection = async () => {
-    await cooperationService.updateCooperation({
+  const handleResourcesAvailabilityChange = (
+    status: ResourcesAvailabilityEnum
+  ) => {
+    dispatch(setResourcesAvailability(status))
+  }
+
+  const onSaveCooperation = () => {
+    void updateCooperation({
       _id: cooperationId,
       sections
     })
+  }
+
+  const onUpdateResponse = useCallback(() => {
     dispatch(
       openAlert({
         severity: snackbarVariants.success,
@@ -53,7 +73,39 @@ const CooperationActivities: FC<CooperationActivitiesProps> = ({
       })
     )
     setEditMode((prev: boolean) => !prev)
-  }
+  }, [dispatch, setEditMode])
+
+  const onResponseError = useCallback(
+    (error?: ErrorResponse) => {
+      const errorKey = getErrorKey(error)
+      dispatch(
+        openAlert({
+          severity: snackbarVariants.error,
+          message: error
+            ? {
+                text: errorKey,
+                options: {
+                  message: getErrorMessage(error.message)
+                }
+              }
+            : errorKey
+        })
+      )
+    },
+    [dispatch]
+  )
+
+  const updateCooperationService = (
+    data: UpdateCooperationsParams | UpdateCooperationsSections
+  ) => cooperationService.updateCooperation(data)
+
+  const { fetchData: updateCooperation } = useAxios({
+    service: updateCooperationService,
+    fetchOnMount: false,
+    defaultResponse: null,
+    onResponse: onUpdateResponse,
+    onResponseError
+  })
 
   const cooperationOption = cooperationTranslationKeys.map(
     ({ title, value }) => ({
@@ -63,32 +115,32 @@ const CooperationActivities: FC<CooperationActivitiesProps> = ({
   )
 
   const imgSrc =
-    resourceAvailability === ResourcesAvailabilityEnum.OpenAll
+    resourcesAvailability === ResourcesAvailabilityEnum.OpenAll
       ? openIcon
       : closeIcon
 
   return (
     <Box>
-      <Box data-testid='coop-from-scratch' sx={styles.root}>
+      <Box sx={styles.root}>
         <Box sx={styles.publishBlock}>
           <Box>
             <Box sx={styles.lockBlock}>
               <img alt='resource icon' src={imgSrc} />
               <Typography sx={styles.lockTitle}>
                 {t('cooperationDetailsPage.publish')}
-                {t(`cooperationDetailsPage.select.${resourceAvailability}`)}
+                {t(`cooperationDetailsPage.select.${resourcesAvailability}`)}
               </Typography>
             </Box>
             <Typography sx={styles.lockSubtitle}>
-              {t(`cooperationDetailsPage.${resourceAvailability}`)}
+              {t(`cooperationDetailsPage.${resourcesAvailability}`)}
             </Typography>
           </Box>
           <Box>
             <AppSelect
               fields={cooperationOption}
-              setValue={setResourceAvailability}
+              setValue={handleResourcesAvailabilityChange}
               sx={styles.resourcesSelect}
-              value={resourceAvailability}
+              value={resourcesAvailability}
             />
           </Box>
         </Box>
@@ -104,7 +156,7 @@ const CooperationActivities: FC<CooperationActivitiesProps> = ({
           {t('common.cancel')}
         </AppButton>
         <AppButton
-          onClick={() => void updateCooperationSection()}
+          onClick={onSaveCooperation}
           size={SizeEnum.ExtraLarge}
           type={ButtonTypeEnum.Submit}
         >

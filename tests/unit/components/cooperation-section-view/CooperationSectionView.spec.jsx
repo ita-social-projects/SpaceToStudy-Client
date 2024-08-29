@@ -1,12 +1,13 @@
 import { render, screen } from '@testing-library/react'
 
 import CooperationSectionView from '~/components/cooperation-section-view/CooperationSectionView'
+import { ResourcesTypesEnum as ResourceType } from '~/types'
 
 describe('CooperationSectionView', () => {
   const mockSection = {
     title: 'QuizzesTitle',
     description: 'Quizzes',
-    activities: [
+    resources: [
       {
         resource: {
           _id: '662ba5f9f3edc14ca7b2336f',
@@ -16,7 +17,7 @@ describe('CooperationSectionView', () => {
           items: ['656609af8a848ff2202df8d5'],
           author: '6565fc5a8a848ff2202df766',
           category: '656609518a848ff2202df8b7',
-          resourceType: 'quizzes',
+          resourceType: ResourceType.Quiz,
           settings: {
             view: 'Scroll',
             shuffle: true,
@@ -29,20 +30,20 @@ describe('CooperationSectionView', () => {
             date: '1234'
           }
         },
-        resourceType: 'quizzes'
+        resourceType: ResourceType.Quiz
       }
     ],
     _id: '6632264063eb69afaf165c61'
   }
 
   beforeEach(() => {
-    render(<CooperationSectionView id={mockSection._id} item={mockSection} />)
+    render(<CooperationSectionView item={mockSection} />)
   })
 
   it('should render resource title and description', () => {
-    const title = screen.getByText(mockSection.activities[0].resource.title)
+    const title = screen.getByText(mockSection.resources[0].resource.title)
     const description = screen.getByText(
-      mockSection.activities[0].resource.description
+      mockSection.resources[0].resource.description
     )
 
     expect(title).toBeInTheDocument()

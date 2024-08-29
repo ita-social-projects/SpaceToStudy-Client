@@ -17,6 +17,10 @@ export const styles = {
     width: '48px',
     '&:hover': {
       transform: 'scale(1.1)'
+    },
+    fontSize: {
+      xs: '20px',
+      md: '18px'
     }
   },
   active: {

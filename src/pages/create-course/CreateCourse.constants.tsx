@@ -1,14 +1,11 @@
 import { CourseSection } from '~/types'
 import { emptyField, textField } from '~/utils/validations/common'
 
-export const sectionInitialData: Omit<CourseSection, 'activities'> = {
+export const sectionInitialData: CourseSection = {
   id: '',
   title: '',
   description: '',
-  lessons: [],
-  quizzes: [],
-  attachments: [],
-  order: []
+  resources: []
 }
 
 export const initialValues = {

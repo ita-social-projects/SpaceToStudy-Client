@@ -1,38 +1,34 @@
-import Box from '@mui/material/Box'
-
 import { FC, useState, ReactNode, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import Box from '@mui/material/Box'
+
+import ResourceItem from '~/containers/course-section/resource-item/ResourceItem'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import HeaderTextWithDropdown from '~/components/header-text-with-dropdown/HeaderTextWithDropdown'
-import ResourceItem from '~/containers/course-section/resource-item/ResourceItem'
-import { Activities, CourseSection, TextFieldVariantEnum } from '~/types'
-
 import { styles } from '~/components/cooperation-section-view/CooperationSectionView.styles'
 
+import { CourseSection, TextFieldVariantEnum } from '~/types'
+
 interface CooperationSectionViewProps {
-  id?: string
   item: CourseSection
 }
 
-const CooperationSectionView: FC<CooperationSectionViewProps> = ({
-  item,
-  id
-}) => {
-  const [isVisible, setIsVisible] = useState(true)
+const CooperationSectionView: FC<CooperationSectionViewProps> = ({ item }) => {
   const { t } = useTranslation()
+  const [isVisible, setIsVisible] = useState<boolean>(true)
 
   const resources = useMemo<undefined | ReactNode[]>(
     () =>
-      item.activities?.map((activity: Activities) => (
+      item.resources?.map(({ resource, resourceType }) => (
         <ResourceItem
           isView
-          key={activity.resource._id}
-          resource={activity.resource}
-          resourceType={activity.resourceType}
+          key={resource.id}
+          resource={resource}
+          resourceType={resourceType}
         />
       )),
-    [item.activities]
+    [item.resources]
   )
 
   return (
@@ -44,7 +40,7 @@ const CooperationSectionView: FC<CooperationSectionViewProps> = ({
         setIsVisible={setIsVisible}
       />
       {isVisible && (
-        <Box key={id} sx={styles.showBlock}>
+        <Box sx={styles.showBlock}>
           <AppTextField
             InputProps={styles.descriptionInput}
             fullWidth

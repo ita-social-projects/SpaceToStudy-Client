@@ -4,11 +4,11 @@ import { renderWithProviders } from '~tests/test-utils'
 import CourseSectionsList from '~/containers/course-sections-list/CourseSectionsList'
 import AddCourseTemplateModal from '~/containers/cooperation-details/add-course-modal-modal/AddCourseTemplateModal'
 
-const mockedHandleSectionInputChange = vi.fn()
-const mockedHandleSectionNonInputChange = vi.fn()
-const mockedHandleSectionResourcesOrder = vi.fn()
-const mockedAddNewSection = vi.fn()
-const mockedSetSections = vi.fn()
+import { ResourcesTypesEnum as ResourceType } from '~/types'
+
+const mockedHandleSectionChange = vi.fn()
+const mockedResourceEventHandler = vi.fn()
+const mockedSectionEventHandler = vi.fn()
 
 const mockedCourseSectionData = Array(5)
   .fill()
@@ -16,47 +16,59 @@ const mockedCourseSectionData = Array(5)
     id: `${index + 1}`,
     title: `Title ${index + 1}`,
     description: `Description ${index + 1}`,
-    lessons: [
+    resources: [
       {
-        _id: '1',
-        title: 'Lesson1',
-        author: 'some author',
-        content: 'Content',
-        description: 'Description',
-        attachments: [],
-        category: null,
-        resourceType: 'lessons'
-      }
-    ],
-    quizzes: [
+        resource: {
+          availability: {
+            status: 'open',
+            date: null
+          },
+          _id: '64cd12f1fad091e0sfe12134',
+          title: 'Lesson1',
+          author: 'some author',
+          content: 'Content',
+          description: 'Description',
+          attachments: [],
+          category: null
+        },
+        resourceType: ResourceType.Lesson
+      },
       {
-        _id: '64fb2c33eba89699411d22bb',
-        title: 'Quiz',
-        description: '',
-        items: [],
-        author: '648afee884936e09a37deaaa',
-        category: { id: '64fb2c33eba89699411d22bb', name: 'Music' },
-        createdAt: '2023-09-08T14:14:11.373Z',
-        updatedAt: '2023-09-08T14:14:11.373Z',
-        resourceType: 'quizzes'
-      }
-    ],
-    attachments: [
+        resource: {
+          availability: {
+            status: 'open',
+            date: null
+          },
+          _id: '64fb2c33eba89699411d22bb',
+          title: 'Quiz',
+          description: '',
+          items: [],
+          author: '648afee884936e09a37deaaa',
+          category: { id: '64fb2c33eba89699411d22bb', name: 'Music' },
+          createdAt: '2023-09-08T14:14:11.373Z',
+          updatedAt: '2023-09-08T14:14:11.373Z'
+        },
+        resourceType: ResourceType.Quiz
+      },
       {
-        _id: '64cd12f1fad091e0ee719830',
-        author: '6494128829631adbaf5cf615',
-        fileName: 'spanish.pdf',
-        link: 'link',
-        category: { id: '64fb2c33eba89699411d22bb', name: 'History' },
-        description: 'Mock description for attachments',
-        size: 100,
-        createdAt: '2023-07-25T13:12:12.998Z',
-        updatedAt: '2023-07-25T13:12:12.998Z',
-        resourceType: 'attachments'
+        resource: {
+          availability: {
+            status: 'open',
+            date: null
+          },
+          _id: '64cd12f1fad091e0ee719830',
+          author: '6494128829631adbaf5cf615',
+          fileName: 'spanish.pdf',
+          link: 'link',
+          category: { id: '64fb2c33eba89699411d22bb', name: 'History' },
+          description: 'Mock description for attachments',
+          size: 100,
+          createdAt: '2023-07-25T13:12:12.998Z',
+          updatedAt: '2023-07-25T13:12:12.998Z'
+        },
+        resourceType: ResourceType.Attachment
       }
-    ],
-    order: ['1', '64fb2c33eba89699411d22bb', '64cd12f1fad091e0ee719830'],
-    activities: []
+    ]
   }))
 
 vi.mock(
@@ -121,18 +133,16 @@ vi.mock('~/hooks/use-menu', async (importOriginal) => {
   }
 })
 
-describe.skip('CourseSectionsList tests', () => {
+describe('CourseSectionsList tests', () => {
   beforeEach(async () => {
     await waitFor(() => {
       renderWithProviders(
         <CourseSectionsList
-          addNewSection={mockedAddNewSection}
-          handleSectionInputChange={mockedHandleSectionInputChange}
-          handleSectionNonInputChange={mockedHandleSectionNonInputChange}
-          handleSectionResourcesOrder={mockedHandleSectionResourcesOrder}
+          handleSectionInputChange={mockedHandleSectionChange}
           isCooperation
           items={mockedCourseSectionData}
-          setSectionsItems={mockedSetSections}
+          resourceEventHandler={mockedResourceEventHandler}
+          sectionEventHandler={mockedSectionEventHandler}
         />
       )
     })
@@ -157,9 +167,10 @@ describe.skip('CourseSectionsList tests', () => {
     const deleteMenuButton = screen.getByTestId('DeleteOutlineIcon')
     expect(deleteMenuButton).toBeInTheDocument()
     waitFor(() => fireEvent.click(deleteMenuButton))
-    expect(mockedSetSections).toHaveBeenCalledWith(
-      mockedCourseSectionData.slice(1)
-    )
+    expect(mockedSectionEventHandler).toHaveBeenCalledWith({
+      sectionId: '1',
+      type: 'sectionRemoved'
+    })
   })
 
   it('should render cooperation menu on click "Add activity"', () => {
@@ -191,13 +202,16 @@ describe.skip('CourseSectionsList tests', () => {
     )
   })
 
-  it('should call addNewSection when "Module" (handleMenuItemClick) is clicked in the "Add activity" menu', () => {
-    const itemIndex = 3
+  it('should call event handler with proper type when "Module" is clicked in the "Add activity" menu', () => {
+    const itemIndex = 1
     const addActivityButton = screen.getAllByTestId('Add activity')[itemIndex]
     waitFor(() => fireEvent.click(addActivityButton))
     const addModuleButton = screen.getAllByTestId('Crop75Icon')[itemIndex]
     waitFor(() => fireEvent.click(addModuleButton))
-    expect(mockedAddNewSection).toHaveBeenCalledWith(itemIndex)
+    expect(mockedSectionEventHandler).toHaveBeenCalledWith({
+      index: 1,
+      type: 'sectionAdded'
+    })
   })
 })
 
@@ -206,13 +220,11 @@ describe('CourseSectionsList test when prop items is empty', () => {
     await waitFor(() => {
       renderWithProviders(
         <CourseSectionsList
-          addNewSection={mockedAddNewSection}
-          handleSectionInputChange={mockedHandleSectionInputChange}
-          handleSectionNonInputChange={mockedHandleSectionNonInputChange}
-          handleSectionResourcesOrder={mockedHandleSectionResourcesOrder}
+          handleSectionInputChange={mockedHandleSectionChange}
           isCooperation
           items={[]}
-          setSectionsItems={mockedSetSections}
+          resourceEventHandler={mockedResourceEventHandler}
+          sectionEventHandler={mockedSectionEventHandler}
         />
       )
     })

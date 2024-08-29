@@ -1,27 +1,18 @@
-import { FC, useCallback, useEffect } from 'react'
+import { FC, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
+import TextField from '@mui/material/TextField'
 import IconButton from '@mui/material/IconButton'
 import CloseIcon from '@mui/icons-material/Close'
+import EditIcon from '@mui/icons-material/Edit'
+import LinkRoundedIcon from '@mui/icons-material/LinkRounded'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
-import TextField from '@mui/material/TextField'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
-import EditIcon from '@mui/icons-material/Edit'
 
 import AppSelect from '~/components/app-select/AppSelect'
 import IconExtensionWithTitle from '~/components/icon-extension-with-title/IconExtensionWithTitle'
-import { useResourceAvailabilityContext } from '~/context/resources-availability-context'
-
-import {
-  CourseResource,
-  ResourceAvailabilityStatusEnum,
-  ResourcesAvailabilityEnum,
-  ResourcesTabsEnum as ResourcesTypes,
-  SetResourseAvailability,
-  SizeEnum
-} from '~/types'
 
 import {
   availabilityIcons,
@@ -30,83 +21,91 @@ import {
 import { resourcesData } from '~/containers/course-section/CourseSectionContainer.constants'
 import { styles } from '~/containers/course-section/resource-item/ResourceItem.styles'
 
+import {
+  CourseResource,
+  ResourceAvailability,
+  ResourceAvailabilityStatusEnum,
+  ResourcesTypesEnum as ResourceType,
+  SizeEnum
+} from '~/types'
+
 interface ResourceItemProps {
   resource: CourseResource
-  resourceType?: ResourcesTypes
+  resourceType?: ResourceType
   deleteResource?: (resource: CourseResource) => void
-  setResourceAvailability?: SetResourseAvailability
   editResource?: (resource: CourseResource) => void
+  updateAvailability?: (
+    resource: CourseResource,
+    availability: ResourceAvailability
+  ) => void
   isView?: boolean
+  isCooperation?: boolean
 }
 
 const ResourceItem: FC<ResourceItemProps> = ({
   resource,
   resourceType,
   deleteResource,
-  setResourceAvailability,
   editResource,
-  isView = false
+  updateAvailability,
+  isView = false,
+  isCooperation = false
 }) => {
-  const handleDeleteResource = () => {
-    deleteResource?.(resource)
-  }
-
-  const handleEditResource = () => {
-    editResource?.(resource)
-  }
-
   const { t } = useTranslation()
 
-  const { resourceAvailability: allResourcesAvailability, isCooperation } =
-    useResourceAvailabilityContext()
+  const handleDeleteResource = useCallback(() => {
+    deleteResource?.(resource)
+  }, [deleteResource, resource])
 
-  const renderResourceIcon = () => {
-    const { Lessons, Quizzes } = ResourcesTypes
+  const handleEditResource = useCallback(() => {
+    editResource?.(resource)
+  }, [editResource, resource])
+
+  const handleLinkResource = useCallback(() => {
+    editResource?.(resource)
+  }, [editResource, resource])
+
+  const renderResourceIcon = useCallback(() => {
+    const { Lesson, Quiz } = ResourceType
 
     const type = resourceType || resource.resourceType
 
     switch (type) {
-      case Lessons:
+      case Lesson:
         return resourcesData.lessons.icon
-      case Quizzes:
+      case Quiz:
         return resourcesData.quizzes.icon
       default:
         return null
     }
-  }
+  }, [resourceType, resource.resourceType])
 
   const resourceAvailability = resource.availability
-
   const resourceAvailabilityStatus =
     resourceAvailability?.status ?? ResourceAvailabilityStatusEnum.Open
 
   const shouldShowDatePicker =
     resourceAvailabilityStatus === ResourceAvailabilityStatusEnum.OpenFrom
 
-  const setOpenFromDate = (value: Date | null) => {
-    setResourceAvailability?.(resource._id, {
-      status: resourceAvailabilityStatus,
-      date: value
-    })
-  }
+  const setOpenFromDate = useCallback(
+    (date: Date | null) => {
+      updateAvailability?.(resource, {
+        status: resourceAvailabilityStatus,
+        date: date?.toISOString() ?? null
+      })
+    },
+    [resource, resourceAvailabilityStatus, updateAvailability]
+  )
 
   const setAvailabilityStatus = useCallback(
     (status: ResourceAvailabilityStatusEnum) => {
-      setResourceAvailability?.(resource._id, {
-        status: status,
+      updateAvailability?.(resource, {
+        status,
         date: null
       })
     },
-    [resource._id, setResourceAvailability]
+    [resource, updateAvailability]
   )
-
-  useEffect(() => {
-    if (allResourcesAvailability === ResourcesAvailabilityEnum.OpenManually) {
-      setAvailabilityStatus(ResourceAvailabilityStatusEnum.Closed)
-    } else {
-      setAvailabilityStatus(ResourceAvailabilityStatusEnum.Open)
-    }
-  }, [allResourcesAvailability, setAvailabilityStatus])
 
   const availabilityIcon = (
     <Box sx={styles.availabilityIcon}>
@@ -125,19 +124,20 @@ const ResourceItem: FC<ResourceItemProps> = ({
           <Box sx={styles.datePicker}>
             {availabilityIcon}
             <DatePicker
+              disableMaskedInput
               disablePast
               inputFormat={'MMM d, yyyy'}
               label={t('cooperationDetailsPage.datePickerLabel')}
               onChange={setOpenFromDate}
               renderInput={(params) => <TextField {...params} />}
-              value={resourceAvailability.date ?? null}
+              value={resourceAvailability?.date ?? null}
             />
           </Box>
         </LocalizationProvider>
       )}
       <AppSelect
         fields={selectionFields}
-        setValue={(value) => setAvailabilityStatus(value)}
+        setValue={setAvailabilityStatus}
         sx={styles.availabilitySelect}
         value={resourceAvailabilityStatus}
       />
@@ -152,9 +152,15 @@ const ResourceItem: FC<ResourceItemProps> = ({
   ) : (
     <Box sx={styles.resourceActions}>
       {isCooperation && availabilitySelection}
-      <IconButton aria-label='edit' onClick={handleEditResource}>
-        <EditIcon fontSize={SizeEnum.Small} sx={styles.editBtn} />
-      </IconButton>
+      {resource.isDuplicate ? (
+        <IconButton aria-label='edit' onClick={handleEditResource}>
+          <EditIcon fontSize={SizeEnum.Small} sx={styles.editBtn} />
+        </IconButton>
+      ) : (
+        <IconButton aria-label='link' onClick={handleLinkResource}>
+          <LinkRoundedIcon fontSize={SizeEnum.Small} sx={styles.linkBtn} />
+        </IconButton>
+      )}
       <IconButton aria-label='delete' onClick={handleDeleteResource}>
         <CloseIcon fontSize={SizeEnum.Small} />
       </IconButton>

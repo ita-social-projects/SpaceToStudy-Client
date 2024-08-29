@@ -1,19 +1,22 @@
 import { screen, fireEvent, waitFor } from '@testing-library/react'
-
 import { renderWithProviders, TestSnackbar } from '~tests/test-utils'
 
+import { useMatch } from 'react-router-dom'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import ProfileInfo from '~/containers/user-profile/profile-info/ProfileInfo'
 
-vi.mock('~/hooks/use-breakpoints')
-
 const mockNavigate = vi.fn()
 
-vi.mock('react-router-dom', async () => ({
-  ...(await vi.importActual('react-router-dom')),
-  useMatch: () => false,
-  useNavigate: () => mockNavigate
-}))
+vi.mock('~/hooks/use-breakpoints')
+
+vi.mock('react-router-dom', async () => {
+  const actual = await vi.importActual('react-router-dom')
+  return {
+    ...actual,
+    useMatch: vi.fn(),
+    useNavigate: () => mockNavigate
+  }
+})
 
 Object.assign(window.navigator, {
   clipboard: {
@@ -74,70 +77,96 @@ const userData = {
   updatedAt: '2023-07-12T19:33:43.616+00:00'
 }
 
-function renderWithBreakpoints(data) {
+function renderWithBreakpoints(data, role = 'student') {
   useBreakpoints.mockImplementation(() => data)
-  vi.mock('react-router-dom', async () => {
-    const actual = await vi.importActual('react-router-dom')
-    return {
-      ...actual,
-      useLocation: () => ({
-        pathname: '/tutors/German/testUser'
-      })
-    }
-  })
   renderWithProviders(
     <TestSnackbar>
-      <ProfileInfo myRole={'student'} userData={userData} />
+      <ProfileInfo myRole={role} userData={userData} />
     </TestSnackbar>
   )
 }
 
-describe('ProfileInfo test in my profile on laptop', () => {
-  beforeEach(() => renderWithBreakpoints(laptopData))
-
-  it('should copy link to profile', () => {
-    const iconBtn = screen.getByTestId('icon-btn')
-
-    fireEvent.click(iconBtn)
-
-    expect(window.navigator.clipboard.writeText).toHaveBeenCalled()
+describe('ProfileInfo component tests', () => {
+  beforeEach(() => {
+    vi.resetModules()
   })
 
-  it('should render send message button', () => {
-    const sendMessageBtn = screen.getByText(
-      /userProfilePage.profileInfo.sendMessage/i
-    )
+  describe('when profile is not own and on laptop', () => {
+    beforeEach(() => {
+      useMatch.mockImplementation(() => false)
+      renderWithBreakpoints(laptopData, 'student')
+    })
 
-    expect(sendMessageBtn).toBeInTheDocument()
-  })
+    it('should copy link to profile', () => {
+      const iconBtn = screen.getByTestId('icon-btn')
+      fireEvent.click(iconBtn)
 
-  it('should click on `tutor offers` button', () => {
-    const tutorOffersBtn = screen.getByText(
-      /userProfilePage.profileInfo.tutorOffers/i
-    )
-    fireEvent.click(tutorOffersBtn)
-    waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalled()
+      expect(window.navigator.clipboard.writeText).toHaveBeenCalled()
+    })
+
+    it('should render send message button', () => {
+      const sendMessageBtn = screen.getByText(
+        /userProfilePage.profileInfo.sendMessage/i
+      )
+
+      expect(sendMessageBtn).toBeInTheDocument()
+    })
+
+    it('should navigate on clicking "tutor offers" button', () => {
+      const tutorOffersBtn = screen.getByText(
+        /userProfilePage.profileInfo.tutorOffers/i
+      )
+      fireEvent.click(tutorOffersBtn)
+
+      waitFor(() => {
+        expect(mockNavigate).toHaveBeenCalled()
+      })
     })
   })
-})
 
-describe('ProfileInfo test in my profile on mobile', () => {
-  beforeEach(() => renderWithBreakpoints(mobileData))
+  describe('when profile is not own and on mobile', () => {
+    beforeEach(() => {
+      useMatch.mockImplementation(() => false)
+      renderWithBreakpoints(mobileData, 'tutor')
+    })
 
-  it('should copy link to profile', () => {
-    const iconBtn = screen.getByTestId('icon-btn')
+    it('should copy link to profile', () => {
+      const iconBtn = screen.getByTestId('icon-btn')
+      fireEvent.click(iconBtn)
 
-    fireEvent.click(iconBtn)
+      expect(window.navigator.clipboard.writeText).toHaveBeenCalled()
+    })
 
-    expect(window.navigator.clipboard.writeText).toHaveBeenCalled()
+    it('should render send message button', () => {
+      const sendMessageBtn = screen.getByText(
+        /userProfilePage.profileInfo.sendMessage/i
+      )
+
+      expect(sendMessageBtn).toBeInTheDocument()
+    })
   })
 
-  it('should render send message button', () => {
-    const sendMessageBtn = screen.getByText(
-      /userProfilePage.profileInfo.sendMessage/i
-    )
+  describe('test with different cases of useMatch', () => {
+    it('should render EditOutlinedIcon for own profile [ isMyProfile = true ]', () => {
+      useMatch.mockImplementation(() => true)
+      renderWithBreakpoints(mobileData, 'tutor')
 
-    expect(sendMessageBtn).toBeInTheDocument()
+      const editIcon = screen.getByTestId('icon-btn').querySelector('svg')
+
+      expect(editIcon).toBeInTheDocument()
+      expect(editIcon.getAttribute('data-testid')).toBe('EditOutlinedIcon')
+    })
+
+    it('should render CopyRoundedIcon for not own profile [ isMyProfile = false ]', () => {
+      useMatch.mockImplementation(() => false)
+      renderWithBreakpoints(mobileData, 'tutor')
+
+      const copyIcon = screen.getByTestId('icon-btn').querySelector('svg')
+
+      expect(copyIcon).toBeInTheDocument()
+      expect(copyIcon.getAttribute('data-testid')).toBe(
+        'ContentCopyRoundedIcon'
+      )
+    })
   })
 })

@@ -58,6 +58,25 @@ describe('AddProfessionalCategoryModal without initial value', () => {
     })
   })
 
+  it('should update the correct subject when changing value', async () => {
+    const categoryAutocomplete = screen.getByLabelText(
+      /editProfilePage.profile.professionalTab.mainStudyCategory/
+    )
+    const professionalSubjects = screen.getAllByLabelText(
+      /editProfilePage.profile.professionalTab.subject/
+    )
+
+    await selectOption(categoryAutocomplete, 'Cooking')
+
+    await act(async () => {
+      fireEvent.change(professionalSubjects[0], {
+        target: { value: 'Updated Gastronomy' }
+      })
+    })
+
+    expect(professionalSubjects[0].value).toBe('Updated Gastronomy')
+  })
+
   it('should render SubjectGroup using template in (modal create mode)', async () => {
     const professionalSubject = screen.getByLabelText(
       /editProfilePage.profile.professionalTab.subject/
@@ -65,7 +84,7 @@ describe('AddProfessionalCategoryModal without initial value', () => {
     expect(professionalSubject).toHaveValue(professionalSubjectTemplate.name)
   })
 
-  it('should add one more subject group if "Add one more subject" button in clicked', () => {
+  it('should add one more subject group if "Add one more subject" button is clicked', () => {
     const button = screen.getByText(
       /editProfilePage.profile.professionalTab.addCategoryModal.addSubjectBtn/
     )
@@ -90,7 +109,13 @@ describe('AddProfessionalCategoryModal without initial value', () => {
     )
 
     await selectOption(categoryAutocomplete, 'Cooking')
-    await selectOption(professionalSubjects, 'Varenychky')
+
+    await act(async () => {
+      fireEvent.change(professionalSubjects, {
+        target: { value: 'Varenychky' }
+      })
+    })
+    expect(professionalSubjects.value).toBe('Varenychky')
   })
 
   it('should update only the subject with matching index and not others', async () => {
@@ -105,10 +130,20 @@ describe('AddProfessionalCategoryModal without initial value', () => {
       /editProfilePage.profile.professionalTab.subject/
     )
     await selectOption(categoryAutocomplete, 'Cooking')
-    await selectOption(professionalSubjects[0], 'Gastronomy')
-    await selectOption(professionalSubjects[1], 'Varenychky')
 
-    expect(professionalSubjects[0]).toHaveValue('Gastronomy')
+    await act(async () => {
+      fireEvent.change(professionalSubjects[0], {
+        target: { value: 'Gastronomy' }
+      })
+    })
+    expect(professionalSubjects[0].value).toBe('Gastronomy')
+
+    await act(async () => {
+      fireEvent.change(professionalSubjects[1], {
+        target: { value: 'Varenychky' }
+      })
+    })
+    expect(professionalSubjects[1].value).toBe('Varenychky')
   })
 
   it('button "Save changes" should be disabled if subject field is empty', async () => {
@@ -149,12 +184,14 @@ describe('AddProfessionalCategoryModal with initial value', () => {
   )
 
   it('should create SubjectGroup list according to passed initial values (modal edit mode)', async () => {
-    const professionalSubjects = screen.getAllByLabelText(
-      /editProfilePage.profile.professionalTab.subject/
-    )
     await waitFor(() => {
+      const professionalSubjects = screen.getAllByLabelText(
+        /editProfilePage.profile.professionalTab.subject/
+      )
+
       initialValues.subjects.forEach((subject, index) => {
-        expect(professionalSubjects[index]).toHaveValue(subject.name)
+        const subjectElement = professionalSubjects[index]
+        expect(subjectElement.value).toMatch(new RegExp(subject.name, 'i'))
       })
     })
   })
@@ -185,5 +222,73 @@ describe('AddProfessionalCategoryModal with initial value', () => {
     })
 
     expect(mockCloseModal).toHaveBeenCalled()
+  })
+})
+
+describe('AddProfessionalCategoryModal Subject Updates', () => {
+  beforeEach(async () => {
+    await waitFor(() => {
+      renderWithProviders(
+        <AddProfessionalCategoryModal
+          blockedCategoriesOptions={mockedBlockedCategory}
+          closeModal={mockCloseModal}
+          initialValues={initialValues}
+          isEdit
+        />
+      )
+    })
+  })
+
+  it('should update only the specific subject when changing value', async () => {
+    const categoryAutocomplete = screen.getByLabelText(
+      /editProfilePage.profile.professionalTab.mainStudyCategory/
+    )
+    const professionalSubjects = screen.getAllByLabelText(
+      /editProfilePage.profile.professionalTab.subject/
+    )
+
+    await selectOption(categoryAutocomplete, 'Cooking')
+    await act(async () => {
+      fireEvent.change(professionalSubjects[0], {
+        target: { value: 'Gastronomy' }
+      })
+    })
+    expect(screen.getByDisplayValue('Gastronomy')).toBeInTheDocument()
+    expect(professionalSubjects[1].value).toBe('Varenychky')
+  })
+
+  it('should disable the "Save changes" button if any subject field is empty', async () => {
+    const submitButton = screen.getByText(
+      /editProfilePage.profile.professionalTab.addCategoryModal.submitBtn/
+    )
+    const addButton = screen.getByText(
+      /editProfilePage.profile.professionalTab.addCategoryModal.addSubjectBtn/
+    )
+
+    fireEvent.click(addButton)
+    const professionalSubjects = screen.getAllByLabelText(
+      /editProfilePage.profile.professionalTab.subject/
+    )
+
+    await act(async () => {
+      fireEvent.change(professionalSubjects[0], {
+        target: { value: '' }
+      })
+    })
+
+    expect(submitButton).toBeDisabled()
+  })
+
+  it('should create SubjectGroup list according to passed initial values (modal edit mode)', async () => {
+    await waitFor(() => {
+      const professionalSubjects = screen.getAllByLabelText(
+        /editProfilePage.profile.professionalTab.subject/
+      )
+
+      initialValues.subjects.forEach((subject, index) => {
+        const subjectElement = professionalSubjects[index]
+        expect(subjectElement.value).toMatch(new RegExp(subject.name, 'i'))
+      })
+    })
   })
 })

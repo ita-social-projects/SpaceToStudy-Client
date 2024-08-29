@@ -1,4 +1,5 @@
 import { authRoutes } from '~/router/constants/authRoutes'
+import { guestRoutes } from '~/router/constants/guestRoutes'
 
 export const findOffersChildRoutes = [
   { route: 'categories', path: authRoutes.categories.path },
@@ -8,17 +9,17 @@ export const findOffersChildRoutes = [
 
 export const tutorRoutes = {
   navBar: {
+    homePage: {
+      route: 'homePage',
+      path: guestRoutes.tutor.path
+    },
     findOffers: {
-      route: 'findOffers',
+      route: 'findStudent',
       path: authRoutes.findOffers.path
     },
-    myResources: {
-      route: 'my-resources',
-      path: authRoutes.myResources.root.path
-    },
-    myCourses: {
-      route: 'my-courses',
-      path: authRoutes.myCourses.root.path
+    cooperations: {
+      route: 'cooperations',
+      path: authRoutes.cooperationDetails.path
     }
   }
 }

@@ -3,7 +3,8 @@ import CheckboxWithTooltip from '~/components/checkbox-with-tooltip/CheckboxWith
 
 const props = {
   label: 'Test Checkbox',
-  tooltipTitle: 'Test Tooltip'
+  tooltipTitle: 'Test Tooltip',
+  onChecked: vi.fn()
 }
 
 describe('CheckboxWithTooltip', () => {
@@ -24,5 +25,17 @@ describe('CheckboxWithTooltip', () => {
 
     expect(checkbox).toBeInTheDocument()
     expect(tooltip).toBeInTheDocument()
+  })
+
+  it('calls onChecked callback when checkbox is toggled', () => {
+    const checkbox = screen.getByLabelText(props.label)
+
+    fireEvent.click(checkbox)
+
+    expect(props.onChecked).toHaveBeenCalledWith(true)
+
+    fireEvent.click(checkbox)
+
+    expect(props.onChecked).toHaveBeenCalledWith(false)
   })
 })

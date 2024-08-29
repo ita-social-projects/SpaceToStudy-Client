@@ -24,6 +24,7 @@ export const styles = {
   },
   datePicker: {
     display: 'flex',
+    alignItems: 'center',
     ...SlideLeftLongAnimation,
     '& .MuiTextField-root': {
       fontSize: '14px',
@@ -40,5 +41,9 @@ export const styles = {
   },
   editBtn: {
     color: palette.basic.blueGray
+  },
+  linkBtn: {
+    color: palette.basic.blueGray,
+    transform: 'rotate(315deg)'
   }
 }

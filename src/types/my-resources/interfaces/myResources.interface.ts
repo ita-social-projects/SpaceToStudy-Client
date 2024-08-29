@@ -4,13 +4,15 @@ import {
   CommonEntityFields,
   RequestParams,
   ResourceAvailability,
-  ResourcesTabsEnum as ResourcesTypes
+  ResourcesTypesEnum as ResourceType
 } from '~/types'
 
 export interface ResourceBase {
+  id: string
   description: string
-  resourceType: ResourcesTypes
-  availability: ResourceAvailability
+  resourceType: ResourceType
+  availability?: ResourceAvailability
+  isDuplicate?: boolean
 }
 
 export interface Lesson extends CommonEntityFields, ResourceBase {

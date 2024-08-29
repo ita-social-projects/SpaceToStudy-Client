@@ -26,5 +26,8 @@ export const styles = {
     justifyContent: 'space-between',
     m: { md: 0, xs: '0 auto' },
     pt: 0
+  },
+  textField: {
+    mb: '30px'
   }
 }

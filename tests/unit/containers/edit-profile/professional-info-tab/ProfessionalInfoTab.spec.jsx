@@ -4,6 +4,7 @@ import { renderWithProviders } from '~tests/test-utils'
 import { vi } from 'vitest'
 import { useAppSelector } from '~/hooks/use-redux'
 import { UserRoleEnum } from '~/types'
+import { initialProfessoinalBlock } from '~/redux/features/editProfileSlice.ts'
 
 const mockOpenModal = vi.fn()
 
@@ -72,7 +73,8 @@ describe('ProfessionalInfoTab', () => {
   beforeEach(() => {
     useAppSelector.mockReturnValue({
       userRole: UserRoleEnum.Student,
-      categories: mockedCategories
+      categories: mockedCategories,
+      professionalBlock: initialProfessoinalBlock
     })
     renderWithProviders(<ProfessionalInfoTab />)
   })
@@ -104,7 +106,8 @@ describe('ProfessionalInfoTab for tutor', () => {
   beforeEach(() => {
     useAppSelector.mockReturnValue({
       userRole: UserRoleEnum.Tutor,
-      categories: mockedCategories
+      categories: mockedCategories,
+      professionalBlock: initialProfessoinalBlock
     })
     renderWithProviders(<ProfessionalInfoTab />)
   })

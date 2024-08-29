@@ -7,6 +7,9 @@
   "subjects": "Предмети",
   "categories": "Категорії",
   "homePage": "Домашня сторінка",
+  "cooperations": "Співпраці",
+  "findTutor": "Знайти викладача",
+  "findStudent": "Знайти студента",
   "faq": "Поширені питання",
   "becomeTutor": "Стати викладачем",
   "loginButton": "Увійти",
@@ -15,6 +18,7 @@
   "my-cooperations": "Мої співпраці",
   "my-courses": "Мої курси",
   "my-offers": "Мої пропозиції",
+  "my-requests": "Мої запити",
   "my-resources": "Мої ресурси",
   "logout": "Вийти",
   "notifications": {

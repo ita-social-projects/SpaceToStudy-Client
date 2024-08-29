@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useLayoutEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
@@ -19,7 +19,7 @@ import useSort from '~/hooks/table/use-sort'
 import useAxios from '~/hooks/use-axios'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { useDrawer } from '~/hooks/use-drawer'
-import { useAppSelector } from '~/hooks/use-redux'
+import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 import { OfferService } from '~/services/offer-service'
 import { getScreenBasedLimit } from '~/utils/helper-functions'
 
@@ -33,12 +33,14 @@ import {
   tabsInfo
 } from '~/pages/my-offers/MyOffers.constants'
 import { CardsViewEnum, TabType } from '~/types'
+import { setPageLoad } from '~/redux/reducer'
 
 const MyOffers = () => {
   const [itemsView, setItemsView] = useState<CardsViewEnum>(
     CardsViewEnum.Inline
   )
   const { t } = useTranslation()
+  const dispatch = useAppDispatch()
   const breakpoints = useBreakpoints()
   const filterOptions = useFilter({
     initialFilters
@@ -97,6 +99,10 @@ const MyOffers = () => {
     title: t(title),
     value
   }))
+
+  useLayoutEffect(() => {
+    void dispatch(setPageLoad(loading))
+  }, [dispatch, loading])
 
   return (
     <PageWrapper>

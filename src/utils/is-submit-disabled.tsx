@@ -1,5 +1,5 @@
-export const isSubmitDisabled = (items: { _id: string }[]): boolean => {
+export const isSubmitDisabled = (items: { name: string }[]): boolean => {
   const areItemsPresent = items.length > 0
-  const areAllItemsValid = items.every((item) => item._id)
+  const areAllItemsValid = items.every((item) => item.name)
   return areAllItemsValid && areItemsPresent
 }

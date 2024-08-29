@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography'
 
 import AppPagination from '~/components/app-pagination/AppPagination'
 import Loader from '~/components/loader/Loader'
+import NotFoundResults from '~/components/not-found-results/NotFoundResults'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import BookmarksToolbar from '~/containers/bookmarked-offers/BookmarksToolbar'
 import OfferContainer from '~/containers/find-offer/offer-container/OfferContainer'
@@ -13,26 +14,28 @@ import usePagination from '~/hooks/table/use-pagination'
 import useAxios from '~/hooks/use-axios'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { useFilterQuery } from '~/hooks/use-filter-query'
-import { useAppSelector } from '~/hooks/use-redux'
+import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 import {
   defaultFilters,
   itemsPerPage
 } from '~/pages/bookmarked-offers/BookmarkedOffers.constants'
 import { styles } from '~/pages/bookmarked-offers/BookmarkedOffers.styles'
+import { fetchUserById } from '~/redux/features/editProfileSlice'
 import { userService } from '~/services/user-service'
 import {
   CardsView,
   CardsViewEnum,
   GetOffersParams,
   GetOffersResponse,
-  SizeEnum
+  SizeEnum,
+  UserRole
 } from '~/types'
-import NotFoundResults from '~/components/not-found-results/NotFoundResults'
 
 const BookmarkedOffers = () => {
   const [cardsView, setCardsView] = useState<CardsView>(CardsViewEnum.Inline)
-  const { userId } = useAppSelector((state) => state.appMain)
+  const { userId, userRole } = useAppSelector((state) => state.appMain)
   const { isMobile } = useBreakpoints()
+  const dispatch = useAppDispatch()
   const { t } = useTranslation()
 
   const { filters, searchParams, filterQueryActions } = useFilterQuery({
@@ -82,6 +85,12 @@ const BookmarkedOffers = () => {
   const handlePageChange = (_: ChangeEvent<unknown>, page: number) => {
     filterQueryActions.updateFiltersInQuery({ page })
   }
+
+  useEffect(() => {
+    void dispatch(
+      fetchUserById({ userId, role: userRole as UserRole, isEdit: false })
+    )
+  }, [dispatch, userId, userRole])
 
   return (
     <PageWrapper>
