@@ -146,7 +146,6 @@ const CourseToolbar = ({
             fullWidth
             inputProps={styles.input}
             label={data.title ? ' ' : t('lesson.labels.title')}
-            multiline
             onChange={handleInputChange('title')}
             value={data.title}
             variant={TextFieldVariantEnum.Standard}
@@ -158,6 +157,7 @@ const CourseToolbar = ({
             fullWidth
             inputProps={styles.input}
             label={data.description ? ' ' : t('lesson.labels.description')}
+            maxRows={3}
             multiline
             onChange={handleInputChange('description')}
             value={data.description}

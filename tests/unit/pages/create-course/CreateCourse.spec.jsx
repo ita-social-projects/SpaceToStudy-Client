@@ -285,7 +285,7 @@ describe('CreateCourse with params id', () => {
   })
 
   it('should call handleInputChange when "Course title" input is changed', async () => {
-    const inputField = screen.getByText(mockCourseResponseData.title)
+    const inputField = screen.getByDisplayValue(mockCourseResponseData.title)
     expect(inputField).toBeInTheDocument()
 
     fireEvent.change(inputField, { target: { value: 'New course title' } })
