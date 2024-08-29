@@ -1,3 +1,4 @@
+import { ReactNode, FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
@@ -11,10 +12,10 @@ import img from '~/assets/img/tutor-home-page/become-tutor/languages.svg'
 import { languages } from '~/containers/tutor-home-page/language-step/constants'
 
 interface LanguageStepProps {
-  buttonsBox: React.ReactNode
+  btnsBox: ReactNode
 }
 
-const LanguageStep: React.FC<LanguageStepProps> = ({ buttonsBox }) => {
+const LanguageStep: FC<LanguageStepProps> = ({ btnsBox }) => {
   const { t } = useTranslation()
   const { isLaptopAndAbove, isMobile } = useBreakpoints()
   const { stepData, handleLanguage } = useStepContext()
@@ -50,7 +51,7 @@ const LanguageStep: React.FC<LanguageStepProps> = ({ buttonsBox }) => {
             value={languageData}
           />
         </Box>
-        {buttonsBox}
+        {btnsBox}
       </Box>
     </Box>
   )

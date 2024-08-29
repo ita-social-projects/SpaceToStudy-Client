@@ -1,28 +1,30 @@
-import { useState } from 'react'
+import { useState, ReactNode, FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Box, Typography } from '@mui/material'
 
 import FileUploader from '~/components/file-uploader/FileUploader'
 import DragAndDrop from '~/components/drag-and-drop/DragAndDrop'
+import { UploadFileEmitterArgs } from '~/types'
+
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { useStepContext } from '~/context/step-context'
 
 import { imageResize } from '~/utils/image-resize'
-import { validationData } from './constants'
+import { validationData } from '~/containers/tutor-home-page/add-photo-step/constants'
 import { style } from '~/containers/tutor-home-page/add-photo-step/AddPhotoStep.style'
 
 interface AddPhotoStepProps {
-  buttonsBox: React.ReactNode
+  btnsBox: ReactNode
 }
 
-const AddPhotoStep: React.FC<AddPhotoStepProps> = ({ buttonsBox }) => {
+const AddPhotoStep: FC<AddPhotoStepProps> = ({ btnsBox }) => {
   const { isLaptopAndAbove, isTablet, isMobile } = useBreakpoints()
   const [photoError, setPhotoError] = useState('')
   const { t } = useTranslation()
   const { stepData, handlePhoto } = useStepContext()
   const photo: File[] = stepData.photo as unknown as File[]
 
-  const addPhoto = ({ files, error }: { files: File[]; error: string }) => {
+  const addPhoto = ({ files, error }: UploadFileEmitterArgs) => {
     if (files.length > 0 && files[0] instanceof File) {
       resizeImage(files[0]).catch((err) => {
         console.error('Error in addPhoto:', err)
@@ -31,7 +33,7 @@ const AddPhotoStep: React.FC<AddPhotoStepProps> = ({ buttonsBox }) => {
     setPhotoError(error)
   }
 
-  const resizeImage = async (photo: File): Promise<void> => {
+  const resizeImage = async (photo: File) => {
     const originalPhotoPath = URL.createObjectURL(photo)
     const photoSizes = { newWidth: 440, newHeight: 440 }
     const photoName = photo.name
@@ -93,7 +95,7 @@ const AddPhotoStep: React.FC<AddPhotoStepProps> = ({ buttonsBox }) => {
           />
         </Box>
         {(isMobile || isTablet) && photoPreview}
-        {buttonsBox}
+        {btnsBox}
       </Box>
     </Box>
   )

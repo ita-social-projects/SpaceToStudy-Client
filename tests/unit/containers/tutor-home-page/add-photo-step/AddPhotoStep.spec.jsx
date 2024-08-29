@@ -12,7 +12,7 @@ import {
 
 vi.mock('~/hooks/use-breakpoints')
 
-const buttonsBox = (
+const btnsBox = (
   <div>
     <button>back</button>
     <button>next</button>
@@ -31,7 +31,7 @@ describe('AddPhotoStep test', () => {
     window.URL.createObjectURL = vi.fn(() => 'image/png')
     render(
       <StepProvider initialValues={initialValues} stepLabels={tutorStepLabels}>
-        <AddPhotoStep buttonsBox={buttonsBox} stepLabel={'photo'} />
+        <AddPhotoStep btnsBox={btnsBox} stepLabel={'photo'} />
       </StepProvider>
     )
   })
