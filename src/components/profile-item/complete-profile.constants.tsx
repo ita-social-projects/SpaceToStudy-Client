@@ -37,7 +37,7 @@ export const profileItemsTutor: ProfileItemType[] = [
   {
     id: 'offer',
     icon: <LeakAddIcon />,
-    path: ''
+    path: authRoutes.myOffers.path
   }
 ]
 
@@ -60,7 +60,7 @@ export const profileItemsStudent: ProfileItemType[] = [
   {
     id: 'offer',
     icon: <LeakAddIcon />,
-    path: ''
+    path: authRoutes.myOffers.path
   }
 ]
 
