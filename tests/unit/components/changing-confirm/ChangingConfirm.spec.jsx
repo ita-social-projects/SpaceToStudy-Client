@@ -17,7 +17,9 @@ describe('ChangeConfirm component tests', () => {
     courseList: [
       { title: 'Course 1', subTitle: 'subtitle1' },
       { title: 'Course 2', subTitle: 'subtitle2' }
-    ]
+    ],
+    open: true,
+    onClose: () => {}
   }
 
   beforeEach(() => {

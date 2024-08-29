@@ -51,6 +51,8 @@ import {
 } from '~/types'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { getErrorKey } from '~/utils/get-error-key'
+import ChangeConfirm from '~/components/changing-confirm/ChangeConfirm'
+import useChangeConfirm from '~/hooks/use-change-confirm'
 
 const CreateOrEditLesson = () => {
   const { t } = useTranslation()
@@ -191,6 +193,9 @@ const CreateOrEditLesson = () => {
     onResponseError: handleResponseError
   })
 
+  const { openDialog, onCloseDialog, coursesFiltered, onSubmitButtonClick } =
+    useChangeConfirm(id)
+
   useEffect(() => {
     if (id) {
       void fetchDataLesson(id)
@@ -245,7 +250,6 @@ const CreateOrEditLesson = () => {
           value={data.description}
           variant={TextFieldVariantEnum.Standard}
         />
-
         <CategoryDropdown
           category={data.category}
           onCategoryChange={onCategoryChange}
@@ -267,10 +271,20 @@ const CreateOrEditLesson = () => {
           >
             {t('common.cancel')}
           </AppButton>
-          <AppButton size={SizeEnum.XXL} type={ButtonTypeEnum.Submit}>
+          <AppButton
+            onClick={onSubmitButtonClick}
+            size={SizeEnum.XXL}
+            type={ButtonTypeEnum.Submit}
+          >
             {t('common.save')}
           </AppButton>
         </Box>
+        <ChangeConfirm
+          courseList={coursesFiltered}
+          onClose={onCloseDialog}
+          open={openDialog}
+          title={data.title}
+        />
       </Box>
     </PageWrapper>
   )
