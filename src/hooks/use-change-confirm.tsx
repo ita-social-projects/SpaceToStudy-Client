@@ -16,11 +16,10 @@ const useChangeConfirm = (id: string | undefined) => {
   const coursesFiltered = useMemo(
     () =>
       coursesResponse.items
+        .filter((item) => item.sections[0].resources?.length)
         .filter((item) =>
-          item.sections.some(
-            (section) =>
-              section.lessons.some((lesson) => lesson._id == id) ||
-              section.quizzes.some((quiz) => quiz._id == id)
+          item.sections.some((res) =>
+            res.resources.some((val) => val.resource._id == id)
           )
         )
         .map((item) => ({
