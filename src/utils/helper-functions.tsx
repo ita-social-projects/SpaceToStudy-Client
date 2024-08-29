@@ -1,5 +1,5 @@
 import { SxProps, Theme } from '@mui/material'
-import { useTranslation } from 'react-i18next'
+import i18next from 'i18next'
 import {
   Breakpoints,
   ConvertedSize,
@@ -101,9 +101,7 @@ export const getFormattedDate = ({
   isCurrentDayHours = false,
   includeOrdinal = false
 }: FormatedDate): string => {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { i18n } = useTranslation()
-  const get_language = i18n.language
+  const get_language = i18next.language
   const language_key = mapper[get_language]
   const currentDate = new Date()
   const formattedDate = new Date(date).toLocaleString(language_key, options)
