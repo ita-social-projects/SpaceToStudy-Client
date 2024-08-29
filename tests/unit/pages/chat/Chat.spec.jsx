@@ -12,6 +12,14 @@ import {
   messagesMock
 } from '~tests/unit/containers/chat/list-of-users-with-search/MockChat.spec.constants'
 
+vi.mock('~/pages/chat/MessagesList', () => ({
+  default: vi.fn(() => (
+    <div data-testid='mock-messages-list'>
+      {chatsMock[1].latestMessage.text}
+    </div>
+  ))
+}))
+
 vi.mock('~/hooks/use-breakpoints')
 global.ResizeObserver = vi.fn().mockImplementation(() => ({
   observe: vi.fn(),
@@ -69,16 +77,17 @@ describe('Chat for desktop', () => {
     expect(title).toBeInTheDocument()
   })
 
-  it('should choose chat and render messages', async () => {
+  it('should choose chat and render MessagesList component with messages', async () => {
     const chatItem = await screen.findByText('Scott Short')
 
-    waitFor(() => {
+    await waitFor(() => {
       fireEvent.click(chatItem)
     })
 
-    const message = screen.getByText(chatsMock[1].latestMessage.text)
+    const messagesList = screen.getByTestId('mock-messages-list')
+    expect(messagesList).toBeInTheDocument()
 
-    expect(message).toBeInTheDocument()
+    expect(messagesList).toHaveTextContent(chatsMock[1].latestMessage.text)
   })
 
   it('should send new message and clear input', async () => {

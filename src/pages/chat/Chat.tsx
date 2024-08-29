@@ -1,14 +1,6 @@
-import {
-  useState,
-  useCallback,
-  useEffect,
-  useRef,
-  useMemo,
-  MouseEvent
-} from 'react'
+import { useState, useCallback, useEffect, useMemo, MouseEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Allotment } from 'allotment'
-import SimpleBar from 'simplebar-react'
 import Box from '@mui/material/Box'
 import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded'
 
@@ -21,15 +13,12 @@ import { useAppSelector } from '~/hooks/use-redux'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import AppDrawer from '~/components/app-drawer/AppDrawer'
 import AppChip from '~/components/app-chip/AppChip'
-import Message from '~/components/message/Message'
 import Loader from '~/components/loader/Loader'
 import ListOfUsersWithSearch from '~/containers/chat/list-of-users-with-search/ListOfUsersWithSearch'
 import ChatHeader from '~/containers/chat/chat-header/ChatHeader'
-import ChatDate from '~/containers/chat/chat-date/ChatDate'
 import ChatTextArea from '~/containers/chat/chat-text-area/ChatTextArea'
 import AboutChatSidebar from '~/containers/about-chat-sidebar/AboutChatSidebar'
 
-import { getGroupedByDate, getIsNewDay } from '~/utils/helper-functions'
 import { defaultResponses } from '~/constants'
 import { styles } from '~/pages/chat/Chat.styles'
 import {
@@ -41,10 +30,12 @@ import {
 import {
   ChatResponse,
   DrawerVariantEnum,
+  GetMessagesResponse,
   Member,
   MessageInterface,
   PositionEnum
 } from '~/types'
+import MessagesList from './MessagesList'
 
 const Chat = () => {
   const { t } = useTranslation()
@@ -53,11 +44,17 @@ const Chat = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false)
   const [selectedChat, setSelectedChat] = useState<ChatResponse | null>(null)
   const [messages, setMessages] = useState<MessageInterface[]>([])
+  const [messagesCount, setMessagesCount] = useState(0)
+  const [skip, setSkip] = useState(0)
   const [textAreaValue, setTextAreaValue] = useState<string>('')
   const [filteredMessages, setFilteredMessages] = useState<string[]>([])
   const [filteredIndex, setFilteredIndex] = useState<number>(0)
-  const scrollRef = useRef<HTMLDivElement | null>(null)
+  const [prevScrollHeight, setPrevScrollHeight] = useState(0)
+  const [prevScrollTop, setPrevScrollTop] = useState(0)
   const { userId: myId } = useAppSelector((state) => state.appMain)
+
+  const limit = 15
+
   const userToSpeak = useMemo<Member | undefined>(
     () => selectedChat?.members.find((member) => member.user._id !== myId),
     [selectedChat, myId]
@@ -68,7 +65,6 @@ const Chat = () => {
     [selectedChat]
   )
 
-  const groupedMessages = getGroupedByDate(messages, getIsNewDay)
   const allotmentSizes = isSidebarOpen && isDesktop ? [25, 50, 25] : [25, 75]
   const { Persistent, Temporary } = DrawerVariantEnum
 
@@ -89,8 +85,13 @@ const Chat = () => {
   }
 
   const onMessagesResponse = useCallback(
-    (response: MessageInterface[]) => setMessages(response),
-    [setMessages]
+    (response: GetMessagesResponse) => {
+      const items = response.items ?? []
+      items.reverse()
+      setMessages((messages) => (skip === 0 ? items : [...items, ...messages]))
+      setMessagesCount(response.count)
+    },
+    [setMessages, skip]
   )
 
   const getChats = useCallback(() => chatService.getChats(), [])
@@ -105,8 +106,13 @@ const Chat = () => {
   )
 
   const getMessages = useCallback(
-    () => messageService.getMessages({ chatId: selectedChat?._id ?? '' }),
-    [selectedChat?._id]
+    () =>
+      messageService.getMessages({
+        chatId: selectedChat?._id ?? '',
+        limit,
+        skip
+      }),
+    [selectedChat?._id, skip]
   )
 
   const {
@@ -121,31 +127,26 @@ const Chat = () => {
   const { fetchData, loading: isMessagesLoading } = useAxios({
     service: getMessages,
     onResponse: onMessagesResponse,
-    defaultResponse: defaultResponses.array,
+    defaultResponse: defaultResponses.itemsWithCount,
     fetchOnMount: false
   })
 
   const handleUpdateChats = async () => {
     await updateChats()
+    setSkip(0)
     setSelectedChat(null)
   }
 
   const onMessageSend = async () => {
     setTextAreaValue('')
+    setSkip(0)
     await sendMessage()
     await fetchData()
   }
 
   useEffect(() => {
-    setMessages([])
     selectedChat && void fetchData()
   }, [selectedChat, fetchData])
-
-  useEffect(() => {
-    if (selectedChat && messages.length) {
-      scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight })
-    }
-  }, [selectedChat, messages.length])
 
   useEffect(() => {
     const currentChatId = localStorage.getItem('currentChatId')
@@ -156,30 +157,16 @@ const Chat = () => {
       )
 
       if (foundChat) {
+        setSkip(0)
         setSelectedChat(foundChat)
         localStorage.removeItem('currentChatId')
       }
     }
   }, [listOfChats])
 
-  if (loading) {
+  if (loading || (isMessagesLoading && !skip)) {
     return <Loader size={100} />
   }
-
-  const messagesListWithDate = groupedMessages.map((group) => (
-    <Box key={group.date} sx={styles.messagesWithDate}>
-      <ChatDate date={group.date} />
-      {group.items.map((item, index) => (
-        <Message
-          filteredIndex={filteredIndex}
-          filteredMessages={filteredMessages}
-          key={item._id}
-          message={item}
-          prevMessage={index ? group.items[index - 1] : null}
-        />
-      ))}
-    </Box>
-  ))
 
   const aboutChatSidebar = selectedChat && (
     <AppDrawer
@@ -207,15 +194,13 @@ const Chat = () => {
     </AppChip>
   )
 
-  const scrollableContent = messages.length ? (
-    messagesListWithDate
-  ) : (
-    <AppChip labelSx={styles.chipLabel(true)} sx={styles.chip}>
-      {isMessagesLoading
-        ? t('chatPage.chat.loading')
-        : t('chatPage.message.noMessages')}
-    </AppChip>
-  )
+  const handleInifiniteLoad = (scrollTop: number, scrollHeight: number) => {
+    if (messagesCount < skip + limit) return
+
+    setPrevScrollTop(scrollTop)
+    setPrevScrollHeight(scrollHeight)
+    setSkip((skip) => skip + limit)
+  }
 
   const renderChatTextArea = () => {
     const userName = userToSpeak
@@ -236,12 +221,19 @@ const Chat = () => {
       />
     )
   }
+
   const handleFilteredMessage = (filteredMessages: string[]) => {
-    setFilteredMessages(filteredMessages.reverse())
+    filteredMessages.reverse()
+    setFilteredMessages(filteredMessages)
   }
 
   const hadleIndexMessage = (filteredIndex: number) => {
     setFilteredIndex(filteredIndex)
+  }
+
+  const handleChatSelection = (chat: ChatResponse) => {
+    setSkip(0)
+    setSelectedChat(chat)
   }
 
   return (
@@ -256,7 +248,7 @@ const Chat = () => {
             closeDrawer={closeDrawer}
             listOfChats={listOfChats}
             selectedChat={selectedChat}
-            setSelectedChat={setSelectedChat}
+            setSelectedChat={handleChatSelection}
           />
         </AppDrawer>
       )}
@@ -266,7 +258,7 @@ const Chat = () => {
             <ListOfUsersWithSearch
               listOfChats={listOfChats}
               selectedChat={selectedChat}
-              setSelectedChat={setSelectedChat}
+              setSelectedChat={handleChatSelection}
             />
           </Allotment.Pane>
         )}
@@ -291,12 +283,15 @@ const Chat = () => {
                     user={userToSpeak?.user}
                   />
                 )}
-                <SimpleBar
-                  scrollableNodeProps={{ ref: scrollRef }}
-                  style={styles.scrollableContent}
-                >
-                  {scrollableContent}
-                </SimpleBar>
+                <MessagesList
+                  filteredIndex={filteredIndex}
+                  filteredMessages={filteredMessages}
+                  infiniteLoadCallback={handleInifiniteLoad}
+                  isMessagesLoading={isMessagesLoading}
+                  messages={messages}
+                  scrollHeight={!skip ? 0 : prevScrollHeight}
+                  scrollTop={!skip ? 0 : prevScrollTop}
+                />
                 {renderChatTextArea()}
               </>
             )}

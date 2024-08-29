@@ -6,7 +6,7 @@ import { renderWithProviders } from '~tests/test-utils'
 import { getFormattedDate } from '~/utils/helper-functions'
 import { messagesMock } from '~tests/unit/containers/chat/list-of-users-with-search/MockChat.spec.constants'
 
-const messageMock = messagesMock[0]
+const messageMock = messagesMock.items[0]
 const filteredMessageMock = ['Some text']
 describe('Message component', () => {
   beforeEach(() => {
