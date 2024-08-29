@@ -75,7 +75,7 @@ const BookmarkedOffers = () => {
   useEffect(() => {
     updateInfo()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fetchData, searchString])
+  }, [searchString])
 
   const defaultParams = { page: defaultFilters.page }
 
