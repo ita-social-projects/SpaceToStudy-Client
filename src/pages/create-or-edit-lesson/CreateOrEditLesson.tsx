@@ -228,7 +228,6 @@ const CreateOrEditLesson = () => {
           fullWidth
           inputProps={styles.input}
           label={data.title ? '' : t('lesson.labels.title')}
-          multiline
           onChange={handleInputChange('title')}
           value={data.title}
           variant={TextFieldVariantEnum.Standard}
