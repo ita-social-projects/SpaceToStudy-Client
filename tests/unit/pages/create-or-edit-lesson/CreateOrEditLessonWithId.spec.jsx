@@ -35,7 +35,7 @@ describe('CreateOrEditLesson component with id', () => {
   })
 
   it('should load a lesson info', () => {
-    const titleInput = screen.getByText(mockLesson.title)
+    const titleInput = screen.getByDisplayValue(mockLesson.title)
 
     expect(titleInput).toBeInTheDocument()
   })
@@ -43,7 +43,7 @@ describe('CreateOrEditLesson component with id', () => {
   it('should edit a lesson', async () => {
     mockAxiosClient.onPatch(URLs.resources.lessons.patch).reply(200)
     const editLessonSpy = vi.spyOn(ResourceService, 'editLesson')
-    const titleInput = await screen.findByText(mockLesson.title)
+    const titleInput = await screen.findByDisplayValue(mockLesson.title)
     const descriptionInput = screen.getByLabelText('lesson.labels.description')
     const submitBtn = screen.getByText('common.save')
 
