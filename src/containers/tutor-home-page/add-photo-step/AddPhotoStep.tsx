@@ -22,13 +22,15 @@ const AddPhotoStep: FC<AddPhotoStepProps> = ({ btnsBox }) => {
   const [photoError, setPhotoError] = useState('')
   const { t } = useTranslation()
   const { stepData, handlePhoto } = useStepContext()
-  const photo = stepData.photo
+  const photo: File[] = stepData.photo as unknown as File[]
 
   const addPhoto = ({ files, error }: UploadFileEmitterArgs) => {
-    if (error) {
-      setPhotoError(error)
+    if (files.length > 0 && files[0] instanceof File) {
+      resizeImage(files[0]).catch((err) => {
+        console.error('Error in addPhoto:', err)
+      })
     }
-    void resizeImage(files[0])
+    setPhotoError(error)
   }
 
   const resizeImage = async (photo: File) => {
@@ -37,42 +39,42 @@ const AddPhotoStep: FC<AddPhotoStepProps> = ({ btnsBox }) => {
     const photoName = photo.name
     const lastModified = photo.lastModified
 
-    await imageResize(originalPhotoPath, photoSizes).then((resizedPhoto) => {
-      handlePhoto([
-        {
-          src: resizedPhoto,
-          name: photoName,
-          type: 'image/png',
-          lastModified
-        }
-      ])
-    })
+    try {
+      const resizedPhotoBlob = await imageResize(originalPhotoPath, photoSizes)
+      const resizedPhotoFile = new File([resizedPhotoBlob], photoName, {
+        type: 'image/png',
+        lastModified
+      })
+      handlePhoto([resizedPhotoFile] as unknown as string[])
+    } catch (error) {
+      console.error('Error resizing image:', error)
+    }
   }
 
-  const photoToDisplay = photo.length > 0 ? photo[0].src : ''
-
-  const photoPreview = photoToDisplay ? (
-    <Box sx={style.imgContainer}>
-      <Box
-        alt={t('becomeTutor.photo.imageAlt') as unknown as string}
-        component='img'
-        src={photoToDisplay}
-        sx={style.img}
-      />
-    </Box>
-  ) : (
-    <DragAndDrop
-      emitter={addPhoto}
-      style={{
-        root: style.imgContainer,
-        uploadBox: style.uploadBox,
-        activeDrag: style.activeDrag
-      }}
-      validationData={validationData}
-    >
-      <Typography>{t('becomeTutor.photo.placeholder')}</Typography>
-    </DragAndDrop>
-  )
+  const photoPreview =
+    photo.length && photo[0] instanceof File ? (
+      <Box sx={style.imgContainer}>
+        <Box
+          alt={t('becomeTutor.photo.imageAlt') as unknown as string}
+          component='img'
+          src={URL.createObjectURL(photo[0])}
+          sx={style.img}
+        />
+      </Box>
+    ) : (
+      <DragAndDrop
+        emitter={addPhoto}
+        initialState={photo}
+        style={{
+          root: style.imgContainer,
+          uploadBox: style.uploadBox,
+          activeDrag: style.activeDrag
+        }}
+        validationData={validationData}
+      >
+        <Typography>{t('becomeTutor.photo.placeholder')}</Typography>
+      </DragAndDrop>
+    )
 
   return (
     <Box sx={style.root}>
@@ -86,6 +88,7 @@ const AddPhotoStep: FC<AddPhotoStepProps> = ({ btnsBox }) => {
             buttonText={t('becomeTutor.photo.button')}
             emitter={addPhoto}
             initialError={photoError}
+            initialState={photo}
             isImages
             sx={style.fileUploader}
             validationData={validationData}
