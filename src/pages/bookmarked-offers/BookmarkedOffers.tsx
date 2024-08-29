@@ -34,6 +34,7 @@ import {
 const BookmarkedOffers = () => {
   const [cardsView, setCardsView] = useState<CardsView>(CardsViewEnum.Inline)
   const { userId, userRole } = useAppSelector((state) => state.appMain)
+  const { bookmarkedOffers } = useAppSelector((state) => state.editProfile)
   const { isMobile } = useBreakpoints()
   const dispatch = useAppDispatch()
   const { t } = useTranslation()
@@ -78,7 +79,7 @@ const BookmarkedOffers = () => {
   useEffect(() => {
     updateInfo()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchString])
+  }, [searchString, bookmarkedOffers])
 
   const defaultParams = { page: defaultFilters.page }
 
@@ -106,7 +107,7 @@ const BookmarkedOffers = () => {
 
       {isOffersLoading && <Loader pageLoad />}
 
-      {!isOffersLoading && offersCount > 0 && (
+      {offersCount > 0 && (
         <OfferContainer
           offerCards={items}
           updateOffersInfo={updateInfo}
@@ -114,7 +115,7 @@ const BookmarkedOffers = () => {
         />
       )}
 
-      {!isOffersLoading && offersCount === 0 && (
+      {offersCount === 0 && (
         <NotFoundResults
           description={t('bookmarkedOffers.notFound.description')}
           sx={styles.notFound}
