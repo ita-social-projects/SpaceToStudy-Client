@@ -83,9 +83,9 @@ const UserProfile = () => {
       )}
       {shouldShowPresentation && VideoPresentationComponent}
       <CommentsWithRatingBlock
-        averageRating={response?.averageRating?.tutor}
+        averageRating={user.reviewStats.averageRating}
         reviewsCount={reviews}
-        totalReviews={response?.totalReviews?.tutor}
+        totalReviews={user.reviewStats.totalReviews}
         userRole={preferredRole}
       />
     </PageWrapper>

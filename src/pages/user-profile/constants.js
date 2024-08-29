@@ -34,8 +34,8 @@ export const responseMock = {
           rating: 4
         }
       ],
-      totalReviews: 10,
-      averageRating: 4.5
+      totalReviews: 7,
+      averageRating: 3.8
     }
   }
 }
