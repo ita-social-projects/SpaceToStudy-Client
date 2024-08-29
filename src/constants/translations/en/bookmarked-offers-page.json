@@ -1,7 +1,7 @@
 {
   "title": "Bookmarks",
+  "search": "Search for offer",
   "notFound": {
-    "title": "No Bookmarks",
-    "description": "You can bookmark the offers you like the most so that you can find those over here."
+    "description": "We couldn’t find any bookmarks."
   }
 }

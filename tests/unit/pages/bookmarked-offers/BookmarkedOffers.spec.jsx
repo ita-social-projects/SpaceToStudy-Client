@@ -7,7 +7,7 @@ import { mockAxiosClient, renderWithProviders } from '~tests/test-utils'
 import { createUrlPath } from '~/utils/helper-functions'
 import { URLs } from '~/constants/request'
 import { offersMock } from '~tests/unit/pages/bookmarked-offers/BookmarkedOffers.constants'
-import { authRoutes } from '~/router/constants/authRoutes'
+import * as sortValues from '~/containers/find-offer/offer-filter-block/OfferFilterBlock.constants'
 
 const mockNavigate = vi.fn()
 const mockSetSearchParams = vi.fn()
@@ -26,6 +26,17 @@ const preloadedState = { appMain: { userId: mockUserId } }
 const getBookmarksUrl = `${createUrlPath(URLs.users.get, mockUserId)}${
   URLs.users.getBookmarks
 }`
+
+const sortTranslationKeysMock = [
+  { title: 'newest', value: 'createdAt' },
+  { title: 'rating', value: 'rating' },
+  { title: 'priceAsc', value: 'priceAsc' },
+  { title: 'priceDesc', value: 'priceDesc' }
+]
+
+vi.spyOn(sortValues, 'sortTranslationKeys', 'get').mockReturnValue(
+  sortTranslationKeysMock
+)
 
 describe('BookmarkedOffers page with offers', () => {
   beforeEach(async () => {
@@ -58,6 +69,35 @@ describe('BookmarkedOffers page with offers', () => {
       new URLSearchParams({ page: pageNumber })
     )
   })
+
+  it('should add title to URL search params', async () => {
+    const text = 'test text'
+    const searchInput = await screen.findByLabelText('bookmarkedOffers.search')
+
+    fireEvent.click(searchInput)
+    fireEvent.change(searchInput, { target: { value: text } })
+    fireEvent.submit(searchInput)
+
+    expect(mockSetSearchParams).toHaveBeenCalledWith(
+      new URLSearchParams({ page: 1, title: text })
+    )
+  })
+
+  it('should add sortBy to URL search params', async () => {
+    const sortBySelect = await screen.findByText(
+      sortTranslationKeysMock[0].title
+    )
+    fireEvent.mouseDown(sortBySelect)
+
+    const secondOption = await screen.findByText(
+      sortTranslationKeysMock[1].title
+    )
+    fireEvent.click(secondOption)
+
+    expect(mockSetSearchParams).toHaveBeenCalledWith(
+      new URLSearchParams({ page: 1, sort: sortTranslationKeysMock[1].value })
+    )
+  })
 })
 
 describe('BookmarkedOffers page without offers', () => {
@@ -70,20 +110,10 @@ describe('BookmarkedOffers page without offers', () => {
   })
 
   it('should render the page without offers', async () => {
-    const pageTitle = await screen.findByText('bookmarkedOffers.notFound.title')
     const pageDescription = await screen.findByText(
       'bookmarkedOffers.notFound.description'
     )
 
-    expect(pageTitle).toBeInTheDocument()
     expect(pageDescription).toBeInTheDocument()
-  })
-
-  it('should navigate to the offers page', async () => {
-    const goToOffersBtn = await screen.findByText('common.goToOffers')
-
-    fireEvent.click(goToOffersBtn)
-
-    expect(mockNavigate).toHaveBeenCalledWith(authRoutes.findOffers.path)
   })
 })

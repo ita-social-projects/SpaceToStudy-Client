@@ -1,14 +1,12 @@
-import { ChangeEvent, useCallback, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { ChangeEvent, useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Box } from '@mui/material'
+import { Divider } from '@mui/material'
 import Typography from '@mui/material/Typography'
 
-import AppButton from '~/components/app-button/AppButton'
 import AppPagination from '~/components/app-pagination/AppPagination'
 import Loader from '~/components/loader/Loader'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
-import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
+import BookmarksToolbar from '~/containers/bookmarked-offers/BookmarksToolbar'
 import OfferContainer from '~/containers/find-offer/offer-container/OfferContainer'
 
 import usePagination from '~/hooks/table/use-pagination'
@@ -21,27 +19,24 @@ import {
   itemsPerPage
 } from '~/pages/bookmarked-offers/BookmarkedOffers.constants'
 import { styles } from '~/pages/bookmarked-offers/BookmarkedOffers.styles'
-import { authRoutes } from '~/router/constants/authRoutes'
 import { userService } from '~/services/user-service'
 import {
-  ButtonVariantEnum,
+  CardsView,
   CardsViewEnum,
   GetOffersParams,
   GetOffersResponse,
-  SizeEnum,
-  StatusEnum
+  SizeEnum
 } from '~/types'
-import { countActiveOfferFilters } from '~/utils/count-active-filters'
+import NotFoundResults from '~/components/not-found-results/NotFoundResults'
 
-function BookmarkedOffers() {
+const BookmarkedOffers = () => {
+  const [cardsView, setCardsView] = useState<CardsView>(CardsViewEnum.Inline)
   const { userId } = useAppSelector((state) => state.appMain)
   const { isMobile } = useBreakpoints()
-  const navigate = useNavigate()
   const { t } = useTranslation()
 
   const { filters, searchParams, filterQueryActions } = useFilterQuery({
-    defaultFilters,
-    countActiveFilters: countActiveOfferFilters
+    defaultFilters
   })
 
   const getOffers = useCallback(
@@ -52,11 +47,11 @@ function BookmarkedOffers() {
 
   const {
     response: offersResponse,
-    loading: offersLoading,
+    loading: isOffersLoading,
     fetchData
   } = useAxios<GetOffersResponse, GetOffersParams>({
     service: getOffers,
-    defaultResponse: { items: [], count: 0 },
+    defaultResponse: { items: [], count: -1 },
     fetchOnMount: false
   })
 
@@ -70,7 +65,6 @@ function BookmarkedOffers() {
   const updateInfo = useCallback(() => {
     void fetchData({
       ...filters,
-      status: StatusEnum.Active,
       limit: itemsPerPage,
       skip: (Number(filters.page) - 1) * itemsPerPage
     })
@@ -83,56 +77,48 @@ function BookmarkedOffers() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetchData, searchString])
 
+  const defaultParams = { page: defaultFilters.page }
+
   const handlePageChange = (_: ChangeEvent<unknown>, page: number) => {
     filterQueryActions.updateFiltersInQuery({ page })
   }
 
-  if (offersLoading)
-    return (
-      <PageWrapper>
-        <Loader pageLoad />
-      </PageWrapper>
-    )
-
   return (
     <PageWrapper>
-      {items.length ? (
-        <>
-          <Typography sx={styles.title}>
-            {t('bookmarkedOffers.title')}
-          </Typography>
-          <Box sx={styles.offersSection}>
-            <OfferContainer
-              offerCards={items}
-              updateOffersInfo={updateInfo}
-              viewMode={CardsViewEnum.Inline}
-            />
-          </Box>
-          <AppPagination
-            onChange={handlePageChange}
-            page={Number(filters.page)}
-            pageCount={pageCount}
-            size={isMobile ? SizeEnum.Small : SizeEnum.Medium}
-            sx={styles.pagination(offersLoading || !offersCount)}
-          />
-        </>
-      ) : (
-        <>
-          <TitleWithDescription
-            description={t('bookmarkedOffers.notFound.description')}
-            style={styles.titleWithDescription}
-            title={t('bookmarkedOffers.notFound.title')}
-          />
-          <AppButton
-            onClick={() => navigate(authRoutes.findOffers.path)}
-            size={SizeEnum.ExtraLarge}
-            sx={styles.button}
-            variant={ButtonVariantEnum.Tonal}
-          >
-            {t('common.goToOffers')}
-          </AppButton>
-        </>
+      <Typography sx={styles.title}>{t('bookmarkedOffers.title')}</Typography>
+      <BookmarksToolbar
+        additionalParams={defaultParams}
+        filters={filters}
+        handleOffersView={setCardsView}
+        offersView={cardsView}
+        updateFilters={filterQueryActions.updateFiltersInQuery}
+      />
+      <Divider sx={styles.divider} />
+
+      {isOffersLoading && <Loader pageLoad />}
+
+      {!isOffersLoading && offersCount > 0 && (
+        <OfferContainer
+          offerCards={items}
+          updateOffersInfo={updateInfo}
+          viewMode={cardsView}
+        />
       )}
+
+      {!isOffersLoading && offersCount === 0 && (
+        <NotFoundResults
+          description={t('bookmarkedOffers.notFound.description')}
+          sx={styles.notFound}
+        />
+      )}
+
+      <AppPagination
+        onChange={handlePageChange}
+        page={Number(filters.page)}
+        pageCount={pageCount}
+        size={isMobile ? SizeEnum.Small : SizeEnum.Medium}
+        sx={styles.pagination(isOffersLoading || !offersCount)}
+      />
     </PageWrapper>
   )
 }

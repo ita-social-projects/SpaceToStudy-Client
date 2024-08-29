@@ -49,6 +49,7 @@ export const authRoutes = {
   },
   accountMenu: {
     myProfile: { route: 'my-profile', path: '/my-profile' },
+    bookmarks: { route: 'bookmarked-offers', path: '/bookmarked-offers' },
     myCooperations: {
       route: 'my-cooperations',
       path: '/my-cooperations'

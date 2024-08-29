@@ -90,7 +90,7 @@ export const authRouter = (
     />
     <Route
       element={<BookmarkedOffers />}
-      handle={{ crumb: [findOffers, bookmarkedOffers] }}
+      handle={{ crumb: [bookmarkedOffers] }}
       path={authRoutes.bookmarkedOffers.route}
     />
     <Route

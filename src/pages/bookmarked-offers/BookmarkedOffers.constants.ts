@@ -1,17 +1,9 @@
-import { FindOffersFilters, UserRoleEnum } from '~/types'
+import { FindBookmarksFilters } from '~/types'
 
-export const defaultFilters: FindOffersFilters = {
-  categoryId: '',
-  subjectId: '',
+export const defaultFilters: FindBookmarksFilters = {
+  title: '',
   sort: 'createdAt',
-  language: null,
-  native: 'false',
-  rating: '0',
-  search: '',
-  proficiencyLevel: [],
-  price: undefined,
-  page: '1',
-  authorRole: UserRoleEnum.Student
+  page: '1'
 }
 
 export const defaultResponse = { items: [], count: 0 }
