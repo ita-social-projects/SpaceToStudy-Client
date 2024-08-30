@@ -32,7 +32,7 @@ import { imageResize } from '~/utils/image-resize'
 import { styles } from '~/containers/edit-profile/profile-tab/profile-tab-form/ProfileTabForm.styles'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { createUrlPath } from '~/utils/helper-functions'
-import { highlightElem } from '../../common.styles'
+import { highlightElem } from '~/containers/edit-profile/common.styles'
 
 export interface ProfileTabFormProps {
   data: EditProfileForm

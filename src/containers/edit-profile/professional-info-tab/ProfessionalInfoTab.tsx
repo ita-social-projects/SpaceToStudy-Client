@@ -34,7 +34,7 @@ import AppButton from '~/components/app-button/AppButton'
 import { scrollToAndHighlight } from '~/utils/scroll-and-highlight'
 
 import { styles } from '~/containers/edit-profile/professional-info-tab/ProfessionalInfoTab.styles'
-import { highlightElem } from '../common.styles'
+import { highlightElem } from '~/containers/edit-profile/common.styles'
 
 const ProfessionalInfoTab: FC = () => {
   const { t } = useTranslation()
@@ -58,7 +58,6 @@ const ProfessionalInfoTab: FC = () => {
 
   useEffect(() => {
     if (hash) {
-      // console.log(hash)
       scrollToAndHighlight(`${pathname}${hash}`)
     }
   }, [pathname, hash])

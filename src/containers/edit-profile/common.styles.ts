@@ -1,4 +1,5 @@
 import { commonShadow } from '~/styles/app-theme/custom-shadows'
+import palette from '~/styles/app-theme/app.pallete'
 
 export const rootContainer = {
   display: 'flex',
@@ -33,8 +34,8 @@ export const highlightElem = {
   left: '0',
   bottom: '0',
   width: '100%',
-  backgroundColor: '#F2FAFA',
-  border: '1px solid #2B6E6E',
+  backgroundColor: palette.basic.turquoise50,
+  border: `1px solid ${palette.basic.turquoise700}`,
   borderRadius: '4px',
   zIndex: '0',
   transition: '1s ease'
