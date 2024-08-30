@@ -65,7 +65,7 @@ const initialState: EditProfileState = {
   city: '',
   professionalSummary: '',
   nativeLanguage: '',
-  videoLink: '',
+  videoLink: { [UserRoleEnum.Tutor]: '', [UserRoleEnum.Student]: '' },
   photo: null,
   categories: { [UserRoleEnum.Tutor]: [], [UserRoleEnum.Student]: [] },
   professionalBlock: initialProfessoinalBlock,
@@ -82,8 +82,7 @@ const initialState: EditProfileState = {
 
 const updateStateFromPayload = (
   state: EditProfileState,
-  payload: UserResponse,
-  role: MainUserRole
+  payload: UserResponse
 ) => {
   const {
     firstName,
@@ -106,7 +105,7 @@ const updateStateFromPayload = (
   state.professionalSummary = professionalSummary
   state.nativeLanguage = nativeLanguage
   state.photo = photo as UpdatedPhoto | null
-  state.videoLink = videoLink[role]
+  state.videoLink = videoLink
   state.categories = mainSubjects
   state.professionalBlock = professionalBlock || initialProfessoinalBlock
   state.notificationSettings =
@@ -306,19 +305,9 @@ const editProfileSlice = createSlice({
       })
       .addCase(
         fetchUserById.fulfilled,
-        (
-          state,
-          action: PayloadAction<UserResponse> & {
-            meta: { arg: { role: UserRoleEnum } }
-          }
-        ) => {
+        (state, action: PayloadAction<UserResponse>) => {
           state.loading = LoadingStatusEnum.Fulfilled
-
-          updateStateFromPayload(
-            state,
-            action.payload,
-            action.meta.arg.role as MainUserRole
-          )
+          updateStateFromPayload(state, action.payload)
         }
       )
       .addCase(fetchUserById.rejected, (state, action) => {

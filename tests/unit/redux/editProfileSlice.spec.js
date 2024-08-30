@@ -28,7 +28,7 @@ const userDataMock = {
     src: 'url',
     name: 'profile_photo'
   },
-  videoLink: { [UserRoleEnum.Tutor]: '', [UserRoleEnum.Student]: '' },
+  videoLink: { [UserRoleEnum.Tutor]: 'link', [UserRoleEnum.Student]: '' },
   mainSubjects: { [UserRoleEnum.Tutor]: [], [UserRoleEnum.Student]: [] },
   professionalBlock: {
     education: 'Education',
@@ -51,7 +51,7 @@ const expectedUserData = {
   city: 'New York',
   professionalSummary: 'Summary',
   nativeLanguage: 'English',
-  videoLink: '',
+  videoLink: { [UserRoleEnum.Tutor]: 'link', [UserRoleEnum.Student]: '' },
   photo: {
     src: 'url',
     name: 'profile_photo'
@@ -85,7 +85,7 @@ const initialState = {
   city: '',
   professionalSummary: '',
   nativeLanguage: '',
-  videoLink: '',
+  videoLink: { [UserRoleEnum.Tutor]: '', [UserRoleEnum.Student]: '' },
   photo: null,
   categories: { [UserRoleEnum.Tutor]: [], [UserRoleEnum.Student]: [] },
   professionalBlock: {
