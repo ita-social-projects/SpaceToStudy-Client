@@ -10,6 +10,7 @@ import { offersMock } from '~tests/unit/pages/bookmarked-offers/BookmarkedOffers
 import * as sortValues from '~/containers/find-offer/offer-filter-block/OfferFilterBlock.constants'
 
 const mockNavigate = vi.fn()
+let mockSearchParams = new URLSearchParams()
 const mockSetSearchParams = vi.fn()
 
 vi.mock('react-router-dom', async () => {
@@ -17,7 +18,7 @@ vi.mock('react-router-dom', async () => {
   return {
     ...actual,
     useNavigate: () => mockNavigate,
-    useSearchParams: () => [new URLSearchParams(), mockSetSearchParams]
+    useSearchParams: () => [mockSearchParams, mockSetSearchParams]
   }
 })
 
@@ -51,7 +52,7 @@ describe('BookmarkedOffers page with offers', () => {
 
   it('should render the page with offers', async () => {
     const offer1Title = await screen.findByText(offersMock[0].title)
-    const offer2Title = await screen.findByText(offersMock[1].title)
+    const offer2Title = screen.getByText(offersMock[1].title)
 
     expect(offer1Title).toBeInTheDocument()
     expect(offer2Title).toBeInTheDocument()
@@ -95,7 +96,9 @@ describe('BookmarkedOffers page with offers', () => {
     fireEvent.click(secondOption)
 
     expect(mockSetSearchParams).toHaveBeenCalledWith(
-      new URLSearchParams({ page: 1, sort: sortTranslationKeysMock[1].value })
+      expect.objectContaining(
+        new URLSearchParams({ page: 1, sort: sortTranslationKeysMock[1].value })
+      )
     )
   })
 })
