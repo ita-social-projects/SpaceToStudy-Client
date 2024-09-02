@@ -21,6 +21,7 @@ import {
 } from '~/pages/bookmarked-offers/BookmarkedOffers.constants'
 import { styles } from '~/pages/bookmarked-offers/BookmarkedOffers.styles'
 import { fetchUserById } from '~/redux/features/editProfileSlice'
+import { parseQueryParams } from '~/utils/helper-functions'
 import { userService } from '~/services/user-service'
 import {
   CardsView,
@@ -67,19 +68,21 @@ const BookmarkedOffers = () => {
   })
 
   const updateInfo = useCallback(() => {
+    const parsedFilters = parseQueryParams(searchParams, defaultFilters)
+    const filters = { ...defaultFilters, ...parsedFilters }
+
     void fetchData({
       ...filters,
       limit: itemsPerPage,
       skip: (Number(filters.page) - 1) * itemsPerPage
     })
-  }, [fetchData, filters])
+  }, [fetchData, searchParams])
 
   const searchString = searchParams.toString()
 
   useEffect(() => {
     updateInfo()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchString, bookmarkedOffers])
+  }, [searchString, bookmarkedOffers, updateInfo])
 
   const defaultParams = { page: defaultFilters.page }
 
