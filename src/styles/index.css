@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;800;900&display=swap');
+@import 'https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;800;900&display=swap';
 
 :root {
   --scrollbar-border-radius: 10px;
@@ -11,7 +11,8 @@ body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
 }
 
 .section {
@@ -32,18 +33,6 @@ code {
   background: #dee0e1;
 }
 
-::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 5px rgba(43, 49, 52, 0.3);
-}
-
-::-webkit-scrollbar-thumb {
-  background: #9da7ac;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #727e84;
-}
-
 body ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
@@ -51,10 +40,22 @@ body ::-webkit-scrollbar {
   border-radius: var(--scrollbar-border-radius);
 }
 
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px rgba(43, 49, 52, 0.3);
+}
+
 body ::-webkit-scrollbar-track {
   border-radius: var(--scrollbar-border-radius);
 }
 
+::-webkit-scrollbar-thumb {
+  background: #9da7ac;
+}
+
 body ::-webkit-scrollbar-thumb {
   border-radius: var(--scrollbar-border-radius);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #727e84;
 }
