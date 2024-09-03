@@ -30,7 +30,8 @@ import {
   CreateOrUpdateOfferData,
   Offer,
   OutletContext,
-  StatusEnum
+  StatusEnum,
+  UserRoleEnum
 } from '~/types'
 import ScrollVisibilityWrapper from '~/components/scroll-visibility-wrapper/ScrollVisibilityWrapper'
 import OfferBanner from '~/components/offer-banner/OfferBanner'
@@ -54,6 +55,11 @@ const OfferDetails = () => {
   const offerDetailsPage = useRef(null)
   const { pageRef } = useOutletContext<OutletContext>()
   const { items } = responseMock
+
+  const titleKey =
+    userRole === UserRoleEnum.Tutor
+      ? 'userProfilePage.reviews.titleTutor'
+      : 'userProfilePage.reviews.titleStudent'
 
   const getOffer = useCallback(() => OfferService.getOffer(id), [id])
   const responseError = useCallback(
@@ -226,7 +232,7 @@ const OfferDetails = () => {
           isExpandable
           loadMore={() => null}
           loading={loadingMock}
-          title={t('userProfilePage.reviews.title')}
+          title={t(titleKey)}
         />
       </AppCard>
 
