@@ -2,12 +2,12 @@ import { ProficiencyLevelEnum, SortByEnum } from '~/types'
 
 export const proficiencyLevelLabels: ReadonlyMap<ProficiencyLevelEnum, string> =
   new Map([
-    [ProficiencyLevelEnum.Beginner, 'common.levels.beginner'],
-    [ProficiencyLevelEnum.Intermediate, 'common.levels.intermediate'],
-    [ProficiencyLevelEnum.Advanced, 'common.levels.advanced'],
-    [ProficiencyLevelEnum.TestPreparation, 'common.levels.testPreparation'],
-    [ProficiencyLevelEnum.Professional, 'common.levels.professional'],
-    [ProficiencyLevelEnum.Specialized, 'common.levels.specialized']
+    [ProficiencyLevelEnum.Beginner, 'common.levels.Beginner'],
+    [ProficiencyLevelEnum.Intermediate, 'common.levels.Intermediate'],
+    [ProficiencyLevelEnum.Advanced, 'common.levels.Advanced'],
+    [ProficiencyLevelEnum.TestPreparation, 'common.levels.TestPreparation'],
+    [ProficiencyLevelEnum.Professional, 'common.levels.Professional'],
+    [ProficiencyLevelEnum.Specialized, 'common.levels.Specialized']
   ])
 
 export const SortByLabels: ReadonlyMap<SortByEnum, string> = new Map([

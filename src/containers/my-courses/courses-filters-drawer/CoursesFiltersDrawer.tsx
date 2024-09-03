@@ -36,6 +36,7 @@ interface CoursesFiltersDrawerProps {
   onClose: () => void
   isOpen: boolean
   deviceFields?: ReactNode
+  labels?: ReadonlyMap<ProficiencyLevelEnum, string>
 }
 
 const CoursesFiltersDrawer: FC<CoursesFiltersDrawerProps> = ({
@@ -44,15 +45,19 @@ const CoursesFiltersDrawer: FC<CoursesFiltersDrawerProps> = ({
   filters,
   onClose,
   isOpen,
-  deviceFields
+  deviceFields,
+  labels
 }) => {
-  const levelOptions = Object.values(ProficiencyLevelEnum)
   const { t } = useTranslation()
+  const levelOptions = Object.values(ProficiencyLevelEnum)
   const { updateFiltersInQuery, resetFilters } = filterActions
-
   const getSubjectsNames = useCallback(
     () => subjectService.getSubjectsNames(filters.category),
     [filters.category]
+  )
+
+  const levelItems = levelOptions.map((el) =>
+    labels?.has(el) ? t(labels.get(el)!) : t(`common.levels.${el}`)
   )
 
   const onCategoryChange = (
@@ -151,7 +156,7 @@ const CoursesFiltersDrawer: FC<CoursesFiltersDrawerProps> = ({
         </Typography>
         <CheckboxList
           fillRange
-          items={levelOptions}
+          items={levelItems}
           onChange={updateFilterByKey('proficiencyLevel')}
           value={filters.proficiencyLevel}
         />
