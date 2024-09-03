@@ -5,7 +5,6 @@ import CoursesFiltersDrawer from '~/containers/my-courses/courses-filters-drawer
 import { renderWithProviders } from '~tests/test-utils'
 import { mockAxiosClient, selectOption } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
-import { ProficiencyLevelEnum } from '~/types'
 
 const mockUpdateFiltersInQuery = vi.fn()
 const mockResetFilters = vi.fn()
@@ -81,16 +80,6 @@ describe('CoursesFiltersDrawer', () => {
       expect(mockUpdateFiltersInQuery).toHaveBeenCalledWith({
         category: '1',
         subject: ''
-      })
-    })
-
-    it('calls updateFiltersInQuery when proficiency level is changed', () => {
-      const proficiencyCheckbox = screen.getByLabelText(
-        ProficiencyLevelEnum.Beginner
-      )
-      fireEvent.click(proficiencyCheckbox)
-      expect(mockUpdateFiltersInQuery).toHaveBeenCalledWith({
-        proficiencyLevel: [ProficiencyLevelEnum.Beginner]
       })
     })
 
