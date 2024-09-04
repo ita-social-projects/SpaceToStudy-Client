@@ -17,6 +17,7 @@ import { useFilterQuery } from '~/hooks/use-filter-query'
 import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 import {
   defaultFilters,
+  defaultResponse,
   itemsPerPage
 } from '~/pages/bookmarked-offers/BookmarkedOffers.constants'
 import { styles } from '~/pages/bookmarked-offers/BookmarkedOffers.styles'
@@ -64,6 +65,7 @@ const BookmarkedOffers = () => {
         const response = await userService.getBookmarkedOffers(userId, params)
         setOffers(response.data as GetOffersResponse)
       } catch (e) {
+        setOffers(defaultResponse)
         dispatch(
           openAlert({
             severity: snackbarVariants.error,

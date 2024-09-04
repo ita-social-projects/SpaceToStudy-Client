@@ -1,9 +1,13 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react'
-import { expect, vi } from 'vitest'
+import { describe, expect, vi } from 'vitest'
 
 import BookmarkedOffers from '~/pages/bookmarked-offers/BookmarkedOffers'
 
-import { mockAxiosClient, renderWithProviders } from '~tests/test-utils'
+import {
+  mockAxiosClient,
+  renderWithProviders,
+  TestSnackbar
+} from '~tests/test-utils'
 import { createUrlPath } from '~/utils/helper-functions'
 import { URLs } from '~/constants/request'
 import { offersMock } from '~tests/unit/pages/bookmarked-offers/BookmarkedOffers.constants'
@@ -36,6 +40,7 @@ const preloadedState = { appMain: { userId: mockUserId } }
 const getBookmarksUrl = `${createUrlPath(URLs.users.get, mockUserId)}${
   URLs.users.bookmarks
 }`
+const mockError = { code: 'mockErrorCode', message: 'test error' }
 
 const sortTranslationKeysMock = [
   { title: 'newest', value: 'createdAt' },
@@ -127,5 +132,26 @@ describe('BookmarkedOffers page without offers', () => {
     )
 
     expect(pageDescription).toBeInTheDocument()
+  })
+})
+
+describe("BookmarkedOffers page couldn't load offers", () => {
+  beforeEach(async () => {
+    mockAxiosClient.onGet(getBookmarksUrl).reply(400, mockError)
+
+    await waitFor(() => {
+      renderWithProviders(
+        <TestSnackbar>
+          <BookmarkedOffers />
+        </TestSnackbar>,
+        { preloadedState }
+      )
+    })
+  })
+
+  it('should show a snackbar with an error text', async () => {
+    const snackbar = await screen.findByText('bookmarkedOffers.loadingError')
+
+    expect(snackbar).toBeInTheDocument()
   })
 })
