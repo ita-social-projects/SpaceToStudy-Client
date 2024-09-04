@@ -91,7 +91,7 @@ const BookmarkedOffers = () => {
   const searchString = searchParams.toString()
 
   useEffect(() => {
-    void updateInfo()
+    updateInfo()
   }, [searchString, bookmarkedOffers, updateInfo])
 
   const defaultParams = { page: defaultFilters.page }
