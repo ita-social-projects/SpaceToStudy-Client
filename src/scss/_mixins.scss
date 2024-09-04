@@ -138,6 +138,7 @@
   @if $line-clamp != math.round($line-clamp) {
     @error "#{$line-clamp} is not a valid property. Expected an plain integer.";
   }
+
   display: -webkit-box;
   -webkit-line-clamp: $line-clamp; // value is: integer;
   -webkit-box-orient: vertical;
@@ -222,12 +223,13 @@
  */
 
 @mixin clearfix($content: '') {
-  &:before,
-  &:after {
+  &::before,
+  &::after {
     content: $content;
     display: table;
   }
-  &:after {
+
+  &::after {
     clear: both;
   }
 }

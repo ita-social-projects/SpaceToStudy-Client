@@ -1,0 +1,16 @@
+{
+  "plugins": ["stylelint-prettier"],
+  "extends": "stylelint-config-standard-scss",
+  "rules": {
+    "prettier/prettier": true,
+    "selector-class-pattern": null,
+    "length-zero-no-unit": null,
+    "at-rule-empty-line-before": null,
+    "comment-whitespace-inside": null,
+    "alpha-value-notation": "number",
+    "color-function-notation": null,
+    "declaration-block-no-redundant-longhand-properties": null,
+    "scss/at-mixin-argumentless-call-parentheses": "always",
+    "scss/dollar-variable-empty-line-before": null
+  }
+}

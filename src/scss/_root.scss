@@ -24,7 +24,10 @@
   @include generate-css-variables($font-sizes, '#{$prefix}font-size-');
   @include generate-css-variables($font-weights, '#{$prefix}font-weight-');
   @include generate-css-variables($line-heights, '#{$prefix}line-height-');
-  @include generate-css-variables($letter-spacings, '#{$prefix}letter-spacing-');
+  @include generate-css-variables(
+    $letter-spacings,
+    '#{$prefix}letter-spacing-'
+  );
 
   // Spacing
   @include generate-css-variables($spaces, '#{$prefix}space-');
