@@ -50,8 +50,8 @@ const OfferCardSquare: FC<OfferCardSquareProps> = ({
         <AppButton
           fullWidth
           key={elem.label}
-          size={SizeEnum.Medium}
           {...elem.buttonProps}
+          size={SizeEnum.Medium}
         >
           {t(elem.label)}
         </AppButton>
