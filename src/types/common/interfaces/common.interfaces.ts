@@ -183,7 +183,7 @@ export interface StepData {
     data: UserGeneralInfo
     errors: Record<string, string>
   }
-  photo?: File[] | undefined
+  photo?: File[]
   subjects: Array<SubjectNameInterface & { category: CategoryNameInterface }>
   language: UserResponse['nativeLanguage']
 }
