@@ -2,18 +2,18 @@ export const styles = {
   containerTop: {
     minWidth: '150px',
     position: 'relative',
-    mb: '30px'
+    m: '16px 0'
   },
   bookmarkButton: {
     position: 'absolute',
-    right: 0,
-    top: 0,
+    top: '-42px',
+    right: '-20px',
     color: 'basic.black'
   },
   buttons: {
     display: 'flex',
     flexDirection: 'column',
-    gap: '10px'
+    gap: '16px'
   },
   button: { whiteSpace: 'nowrap' }
 }
