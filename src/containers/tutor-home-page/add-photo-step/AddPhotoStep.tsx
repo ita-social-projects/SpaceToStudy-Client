@@ -22,42 +22,43 @@ const AddPhotoStep: FC<AddPhotoStepProps> = ({ btnsBox }) => {
   const [photoError, setPhotoError] = useState('')
   const { t } = useTranslation()
   const { stepData, handlePhoto } = useStepContext()
-  const photo: File[] = stepData.photo as unknown as File[]
+
+  const photo = stepData.photo
 
   const addPhoto = ({ files, error }: UploadFileEmitterArgs) => {
-    if (files.length > 0 && files[0] instanceof File) {
-      resizeImage(files[0]).catch((err) => {
-        console.error('Error in addPhoto:', err)
-      })
-    }
+    files.length && !files[0].src
+      ? void resizeImage(files[0])
+      : handlePhoto(files)
+
     setPhotoError(error)
   }
 
-  const resizeImage = async (photo: File) => {
+  const resizeImage = (photo: File) => {
     const originalPhotoPath = URL.createObjectURL(photo)
+
     const photoSizes = { newWidth: 440, newHeight: 440 }
     const photoName = photo.name
     const lastModified = photo.lastModified
-
-    try {
-      const resizedPhotoBlob = await imageResize(originalPhotoPath, photoSizes)
-      const resizedPhotoFile = new File([resizedPhotoBlob], photoName, {
-        type: 'image/png',
-        lastModified
-      })
-      handlePhoto([resizedPhotoFile] as unknown as string[])
-    } catch (error) {
-      console.error('Error resizing image:', error)
-    }
+    void imageResize(originalPhotoPath, photoSizes).then((resizedPhoto) => {
+      handlePhoto([
+        {
+          ...photo,
+          src: resizedPhoto,
+          name: photoName,
+          type: 'image/png',
+          lastModified
+        }
+      ])
+    })
   }
 
   const photoPreview =
-    photo.length && photo[0] instanceof File ? (
+    photo && photo.length ? (
       <Box sx={style.imgContainer}>
         <Box
           alt={t('becomeTutor.photo.imageAlt') as unknown as string}
           component='img'
-          src={URL.createObjectURL(photo[0])}
+          src={photo[0].src}
           sx={style.img}
         />
       </Box>

@@ -172,12 +172,18 @@ export interface CourseSectionHandlers {
   titleText?: string
 }
 
+declare global {
+  export interface File {
+    src?: string
+  }
+}
+
 export interface StepData {
   generalInfo: {
     data: UserGeneralInfo
     errors: Record<string, string>
   }
-  photo: string[]
+  photo?: File[] | undefined
   subjects: Array<SubjectNameInterface & { category: CategoryNameInterface }>
   language: UserResponse['nativeLanguage']
 }
