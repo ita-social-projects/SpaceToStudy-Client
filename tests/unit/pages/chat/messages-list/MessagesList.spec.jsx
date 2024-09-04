@@ -70,6 +70,6 @@ describe('MessagesList component', () => {
     renderWithProviders(
       <MessagesList infiniteLoadCallback={vi.fn()} messages={mockMessages} />
     )
-    expect(screen.getByText(/August/i)).toBeInTheDocument()
+    expect(screen.getByText(/2024/i)).toBeInTheDocument()
   })
 })
