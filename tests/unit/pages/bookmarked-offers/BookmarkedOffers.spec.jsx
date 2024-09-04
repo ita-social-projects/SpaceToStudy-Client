@@ -12,6 +12,7 @@ import * as sortValues from '~/containers/find-offer/offer-filter-block/OfferFil
 const mockNavigate = vi.fn()
 let mockSearchParams = new URLSearchParams()
 const mockSetSearchParams = vi.fn()
+const mockT = (str) => str
 
 vi.mock('react-router-dom', async () => {
   const actual = await vi.importActual('react-router-dom')
@@ -21,6 +22,14 @@ vi.mock('react-router-dom', async () => {
     useSearchParams: () => [mockSearchParams, mockSetSearchParams]
   }
 })
+
+vi.mock('react-i18next', () => ({
+  Trans: ({ i18nKey }) => i18nKey,
+  useTranslation: () => ({
+    i18n: { language: 'en' },
+    t: mockT
+  })
+}))
 
 const mockUserId = '66b0aecdadd1fe775238c7d5'
 const preloadedState = { appMain: { userId: mockUserId } }
