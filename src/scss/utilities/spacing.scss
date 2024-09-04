@@ -1,0 +1,171 @@
+@use '../variables' as *;
+@use '../functions' as *;
+@use '../mixins' as *;
+@use 'sass:map';
+
+$space-var-map: map-to-var-map($spaces, 'space');
+
+$spacing-utilities: (
+  // Margin utilities
+  'margin':
+    (
+      class: 'm',
+      properties: margin,
+      values:
+        map.merge(
+          $space-var-map,
+          (
+            'auto': 'auto'
+          )
+        )
+    ),
+  'margin-x': (
+    class: 'mx',
+    properties: margin-right margin-left,
+    values:
+      map.merge(
+        $space-var-map,
+        (
+          'auto': 'auto'
+        )
+      )
+  ),
+  'margin-y': (
+    class: 'my',
+    properties: margin-top margin-bottom,
+    values:
+      map.merge(
+        $space-var-map,
+        (
+          'auto': 'auto'
+        )
+      )
+  ),
+  'margin-top': (
+    class: 'mt',
+    properties: margin-top,
+    values:
+      map.merge(
+        $space-var-map,
+        (
+          'auto': 'auto'
+        )
+      )
+  ),
+  'margin-right': (
+    class: 'mr',
+    properties: margin-right,
+    values:
+      map.merge(
+        $space-var-map,
+        (
+          'auto': 'auto'
+        )
+      )
+  ),
+  'margin-bottom': (
+    class: 'mb',
+    properties: margin-bottom,
+    values:
+      map.merge(
+        $space-var-map,
+        (
+          'auto': 'auto'
+        )
+      )
+  ),
+  'margin-left': (
+    class: 'ml',
+    properties: margin-left,
+    values:
+      map.merge(
+        $space-var-map,
+        (
+          'auto': 'auto'
+        )
+      )
+  ),
+  // Padding utilities
+  'padding':
+    (
+      class: 'p',
+      properties: padding,
+      values:
+        map.merge(
+          $space-var-map,
+          (
+            'auto': 'auto'
+          )
+        )
+    ),
+  'padding-x': (
+    class: 'px',
+    properties: padding-right padding-left,
+    values:
+      map.merge(
+        $space-var-map,
+        (
+          'auto': 'auto'
+        )
+      )
+  ),
+  'padding-y': (
+    class: 'py',
+    properties: padding-top padding-bottom,
+    values:
+      map.merge(
+        $space-var-map,
+        (
+          'auto': 'auto'
+        )
+      )
+  ),
+  'padding-top': (
+    class: 'pt',
+    properties: padding-top,
+    values:
+      map.merge(
+        $space-var-map,
+        (
+          'auto': 'auto'
+        )
+      )
+  ),
+  'padding-right': (
+    class: 'pr',
+    properties: padding-right,
+    values:
+      map.merge(
+        $space-var-map,
+        (
+          'auto': 'auto'
+        )
+      )
+  ),
+  'padding-bottom': (
+    class: 'pb',
+    properties: padding-bottom,
+    values:
+      map.merge(
+        $space-var-map,
+        (
+          'auto': 'auto'
+        )
+      )
+  ),
+  'padding-left': (
+    class: 'pl',
+    properties: padding-left,
+    values:
+      map.merge(
+        $space-var-map,
+        (
+          'auto': 'auto'
+        )
+      )
+  )
+);
+
+@each $key, $utility in $spacing-utilities {
+  @include generate-utilities($utility);
+}

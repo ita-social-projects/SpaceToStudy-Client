@@ -3,35 +3,32 @@
 
 :root {
   // Colors
-  @include generate-css-variables($blue-grays, '#{$prefix}blue-gray-');
-  @include generate-css-variables($turquoises, '#{$prefix}turquoise-');
-  @include generate-css-variables($blues, '#{$prefix}blue-');
-  @include generate-css-variables($greens, '#{$prefix}green-');
-  @include generate-css-variables($yellows, '#{$prefix}yellow-');
-  @include generate-css-variables($purples, '#{$prefix}purple-');
-  @include generate-css-variables($reds, '#{$prefix}red-');
-  @include generate-css-variables($neutrals, '#{$prefix}neutral-');
+  @include register-vars($blue-grays, 'blue-gray');
+  @include register-vars($turquoises, 'turquoise');
+  @include register-vars($blues, 'blue');
+  @include register-vars($greens, 'green');
+  @include register-vars($yellows, 'yellow');
+  @include register-vars($purples, 'purple');
+  @include register-vars($reds, 'red');
+  @include register-vars($neutrals, 'neutral');
 
   // Breakpoints
-  @include generate-css-variables($breakpoints, '#{$prefix}breakpoint-');
+  @include register-vars($breakpoints, 'breakpoint');
 
   // Borders
-  @include generate-css-variables($border-radiuses, '#{$prefix}border-radius-');
-  @include generate-css-variables($border-widths, '#{$prefix}border-width-');
+  @include register-vars($border-radiuses, 'border-radius');
+  @include register-vars($border-widths, 'border-width');
 
   // Typography
-  @include generate-css-variables($font-families, '#{$prefix}font-family-');
-  @include generate-css-variables($font-sizes, '#{$prefix}font-size-');
-  @include generate-css-variables($font-weights, '#{$prefix}font-weight-');
-  @include generate-css-variables($line-heights, '#{$prefix}line-height-');
-  @include generate-css-variables(
-    $letter-spacings,
-    '#{$prefix}letter-spacing-'
-  );
+  @include register-vars($font-families, 'font-family');
+  @include register-vars($font-sizes, 'font-size');
+  @include register-vars($font-weights, 'font-weight');
+  @include register-vars($line-heights, 'line-height');
+  @include register-vars($letter-spacings, 'letter-spacing');
 
   // Spacing
-  @include generate-css-variables($spaces, '#{$prefix}space-');
+  @include register-vars($spaces, 'space');
 
   // Shadows
-  @include generate-css-variables($box-shadows, '#{$prefix}box-shadow-');
+  @include register-vars($box-shadows, 'box-shadow');
 }
