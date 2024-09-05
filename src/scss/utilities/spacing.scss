@@ -90,79 +90,37 @@ $spacing-utilities: (
     (
       class: 'p',
       properties: padding,
-      values:
-        map.merge(
-          $space-var-map,
-          (
-            'auto': 'auto'
-          )
-        )
+      values: $space-var-map
     ),
   'padding-x': (
     class: 'px',
     properties: padding-right padding-left,
-    values:
-      map.merge(
-        $space-var-map,
-        (
-          'auto': 'auto'
-        )
-      )
+    values: $space-var-map
   ),
   'padding-y': (
     class: 'py',
     properties: padding-top padding-bottom,
-    values:
-      map.merge(
-        $space-var-map,
-        (
-          'auto': 'auto'
-        )
-      )
+    values: $space-var-map
   ),
   'padding-top': (
     class: 'pt',
     properties: padding-top,
-    values:
-      map.merge(
-        $space-var-map,
-        (
-          'auto': 'auto'
-        )
-      )
+    values: $space-var-map
   ),
   'padding-right': (
     class: 'pr',
     properties: padding-right,
-    values:
-      map.merge(
-        $space-var-map,
-        (
-          'auto': 'auto'
-        )
-      )
+    values: $space-var-map
   ),
   'padding-bottom': (
     class: 'pb',
     properties: padding-bottom,
-    values:
-      map.merge(
-        $space-var-map,
-        (
-          'auto': 'auto'
-        )
-      )
+    values: $space-var-map
   ),
   'padding-left': (
     class: 'pl',
     properties: padding-left,
-    values:
-      map.merge(
-        $space-var-map,
-        (
-          'auto': 'auto'
-        )
-      )
+    values: $space-var-map
   )
 );
 
