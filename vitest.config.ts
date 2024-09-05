@@ -24,6 +24,7 @@ export default defineConfig({
       include: [
         'src/**/*.jsx',
         'src/**/*.tsx',
+        'src/**/*.ts',
         'src/utils/**/*.ts',
         'src/utils/**/*.js',
         'src/redux/**/*.ts'
