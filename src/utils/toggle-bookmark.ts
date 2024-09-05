@@ -1,6 +1,5 @@
-import useAxios from '~/hooks/use-axios'
 import { userService } from '~/services/user-service'
-import { UseAxiosProps } from '~/hooks/use-axios'
+import useAxios, { UseAxiosProps } from '~/hooks/use-axios'
 
 export const useToggleBookmark = (
   userId: string,
