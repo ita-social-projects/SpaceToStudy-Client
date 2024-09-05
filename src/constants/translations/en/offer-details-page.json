@@ -18,7 +18,9 @@
       "student": "Offer details",
       "tutor": "Offer details"
     },
-    "description": "Here, you can access all the essential details about the offer you've selected. This page includes details about the chosen offer. Take a moment to review this information and make an informed decision about your tutoring needs."
+    "description": {
+      "tutor": "Here, you can access all the essential details about the offer you've selected. This page includes details about the chosen offer. Take a moment to review this information and make an informed decision about your tutoring needs."
+    }
   },
   "generalInfo": {
     "title": "General information",
