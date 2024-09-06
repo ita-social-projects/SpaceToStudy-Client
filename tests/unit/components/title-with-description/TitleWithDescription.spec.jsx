@@ -55,7 +55,7 @@ describe('title-with-description component with tooltip', () => {
       const descriptionElement = screen.getByText('React component description')
       const parentElement = descriptionElement.parentElement
 
-      expect(parentElement.tagName).toBe('SPAN')
+      expect(parentElement.tagName).toBe('DIV')
     })
   })
 })
