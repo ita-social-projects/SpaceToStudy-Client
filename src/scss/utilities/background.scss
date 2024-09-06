@@ -44,6 +44,15 @@ $bg-utilities: (
     class: 'bg-neutral',
     properties: background-color,
     values: map-to-var-map($neutrals, 'neutral')
+  ),
+  'bg': (
+    class: 'bg',
+    properties: background-color,
+    values: (
+      'inherit': 'inherit',
+      'transparent': 'transparent',
+      'current': 'currentColor'
+    )
   )
 );
 
