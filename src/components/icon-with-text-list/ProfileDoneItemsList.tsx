@@ -6,8 +6,6 @@ import Typography from '@mui/material/Typography'
 import { PopoverOrigin } from '@mui/material'
 
 import AppPopover from '../app-popover/AppPopover'
-import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
-
 import { styles } from '~/components/icon-with-text-list/ProfileDoneItemsList.style'
 import { ProfileDoneItem } from '~/types'
 
@@ -29,11 +27,9 @@ const ProfileDoneItemsList: FC<ProfileDoneItemsListProps> = ({
     <Box key={item.title} sx={styles.itemWrapper}>
       <Box>{icon}</Box>
 
-      <TitleWithDescription
-        description={item.description}
-        style={styles.titleWithDescription}
-        title={item.title}
-      />
+      <Typography sx={styles.itemTextStyle}>
+        {`${item.title} ${item.description}`}
+      </Typography>
     </Box>
   ))
 
