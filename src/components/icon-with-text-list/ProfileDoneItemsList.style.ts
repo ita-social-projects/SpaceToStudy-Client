@@ -34,18 +34,7 @@ export const styles = {
     mr: '15px',
     boxShadow: commonHoverShadow
   },
-  titleWithDescription: {
-    wrapper: {
-      display: 'flex',
-      columnGap: '10px',
-      gap: '5px',
-      marginBottom: '32px'
-    },
-    title: {
-      ...textStyles
-    },
-    description: {
-      ...textStyles
-    }
+  itemTextStyle: {
+    ...textStyles
   }
 }
