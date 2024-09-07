@@ -85,7 +85,7 @@ const EmailConfirmModal = ({
           sx={styles.button}
           variant={ButtonVariantEnum.Contained}
         >
-          {t('common.confirmButton')}
+          {t('button.goToLogin')}
         </AppButton>
       </Box>
     )

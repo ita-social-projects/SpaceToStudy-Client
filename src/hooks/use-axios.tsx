@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { AxiosError } from 'axios'
 
 import { ErrorResponse, ServiceFunction } from '~/types'
@@ -42,8 +42,13 @@ const useAxios = <
   const [error, setError] = useState<ErrorResponse | null>(null)
   const [loading, setLoading] = useState<boolean>(fetchOnMount)
 
+  const isRequestInProgress = useRef<boolean>(false)
+
   const fetchData = useCallback(
     async (params?: Params) => {
+      if (isRequestInProgress.current) return
+      isRequestInProgress.current = true
+
       try {
         setLoading(true)
         const res = await service(params)
@@ -59,6 +64,7 @@ const useAxios = <
         }
       } finally {
         setLoading(false)
+        isRequestInProgress.current = false
       }
     },
     [service, transform, onResponse, onResponseError]
