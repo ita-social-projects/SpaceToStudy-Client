@@ -37,7 +37,6 @@ interface CoursesFiltersDrawerProps {
   onClose: () => void
   isOpen: boolean
   deviceFields?: ReactNode
-  labels?: ReadonlyMap<ProficiencyLevelEnum, string>
 }
 
 const CoursesFiltersDrawer: FC<CoursesFiltersDrawerProps> = ({
