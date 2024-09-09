@@ -17,6 +17,7 @@ interface AppTextAreaProps
   value?: string
   textFieldStyles?: SxProps
   withHelperText?: boolean
+  isRightAligned?: boolean
 }
 
 const AppTextArea: FC<AppTextAreaProps> = ({
@@ -27,9 +28,13 @@ const AppTextArea: FC<AppTextAreaProps> = ({
   value,
   sx,
   textFieldStyles,
+  isRightAligned,
   ...props
 }) => {
   const titleEl = title && <Typography sx={styles.title}>{title}</Typography>
+  const textLengthStyle = isRightAligned
+    ? styles.textLengthRight
+    : styles.textLength
 
   return (
     <Box sx={spliceSx(styles.container, sx)}>
@@ -46,7 +51,7 @@ const AppTextArea: FC<AppTextAreaProps> = ({
       {maxLength && (
         <Typography
           color={value?.length === maxLength ? 'error' : 'primary.300'}
-          sx={styles.textLength}
+          sx={textLengthStyle}
           variant={TypographyVariantEnum.Body2}
         >
           {`${Number(value?.length)}/${maxLength}`}
