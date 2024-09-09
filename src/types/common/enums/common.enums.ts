@@ -2,7 +2,7 @@ export enum ProficiencyLevelEnum {
   Beginner = 'Beginner',
   Intermediate = 'Intermediate',
   Advanced = 'Advanced',
-  TestPreparation = 'TestPreparation',
+  TestPreparation = 'Test Preparation',
   Professional = 'Professional',
   Specialized = 'Specialized'
 }

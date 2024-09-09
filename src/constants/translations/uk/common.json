@@ -97,12 +97,12 @@
     "youtubeLink": "Будь ласка, надайте посилання на YouTube відео"
   },
   "levels": {
-    "Beginner": "Початковий",
-    "Intermediate": "Середній",
-    "Advanced": "Високий",
-    "TestPreparation": "Підготовка до тесту",
-    "Professional": "Професійний",
-    "Specialized": "Спеціалізований"
+    "beginner": "Початковий",
+    "intermediate": "Середній",
+    "advanced": "Високий",
+    "testPreparation": "Підготовка до тесту",
+    "professional": "Професійний",
+    "specialized": "Спеціалізований"
   },
   "languages": {
     "allLanguages": "Усі мови",

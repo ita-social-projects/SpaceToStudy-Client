@@ -95,12 +95,12 @@
     "youtubeLink": "Please provide a YouTube video link"
   },
   "levels": {
-    "Beginner": "Beginner",
-    "Intermediate": "Intermediate",
-    "Advanced": "Advanced",
-    "TestPreparation": "Test Preparation",
-    "Professional": "Professional",
-    "Specialized": "Specialized"
+    "beginner": "Beginner",
+    "intermediate": "Intermediate",
+    "advanced": "Advanced",
+    "testPreparation": "Test Preparation",
+    "professional": "Professional",
+    "specialized": "Specialized"
   },
   "languages": {
     "allLanguages": "All languages",
