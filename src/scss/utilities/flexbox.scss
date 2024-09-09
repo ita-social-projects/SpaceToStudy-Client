@@ -87,7 +87,7 @@ $flexbox-utilities: (
     )
   ),
   'align-items': (
-    class: 'align',
+    class: 'items',
     properties: align-items,
     values: (
       'start': flex-start,
