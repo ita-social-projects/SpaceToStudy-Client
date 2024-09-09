@@ -1,0 +1,61 @@
+@use '../variables' as *;
+@use '../functions' as *;
+@use '../mixins' as *;
+
+$bg-utilities: (
+  // Background color utilities
+  'bg-blue-gray':
+    (
+      class: 'bg-blue-gray',
+      properties: background-color,
+      values: map-to-var-map($blue-grays, 'blue-gray')
+    ),
+  'bg-turquoise': (
+    class: 'bg-turquoise',
+    properties: background-color,
+    values: map-to-var-map($turquoises, 'turquoise')
+  ),
+  'bg-blue': (
+    class: 'bg-blue',
+    properties: background-color,
+    values: map-to-var-map($blues, 'blue')
+  ),
+  'bg-green': (
+    class: 'bg-green',
+    properties: background-color,
+    values: map-to-var-map($greens, 'green')
+  ),
+  'bg-yellow': (
+    class: 'bg-yellow',
+    properties: background-color,
+    values: map-to-var-map($yellows, 'yellow')
+  ),
+  'bg-purple': (
+    class: 'bg-purple',
+    properties: background-color,
+    values: map-to-var-map($purples, 'purple')
+  ),
+  'bg-red': (
+    class: 'bg-red',
+    properties: background-color,
+    values: map-to-var-map($reds, 'red')
+  ),
+  'bg-neutral': (
+    class: 'bg-neutral',
+    properties: background-color,
+    values: map-to-var-map($neutrals, 'neutral')
+  ),
+  'bg': (
+    class: 'bg',
+    properties: background-color,
+    values: (
+      'inherit': 'inherit',
+      'transparent': 'transparent',
+      'current': 'currentColor'
+    )
+  )
+);
+
+@each $key, $utility in $bg-utilities {
+  @include generate-utilities($utility);
+}
