@@ -10,7 +10,7 @@ describe('CooperationSectionView', () => {
     resources: [
       {
         resource: {
-          _id: '662ba5f9f3edc14ca7b2336f',
+          id: '662ba5f9f3edc14ca7b2336f',
           title: 'The newest',
           description:
             'The newestThe newestThe newestThe newestThe newestThe newestThe newest',
