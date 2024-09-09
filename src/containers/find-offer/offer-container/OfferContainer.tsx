@@ -20,12 +20,11 @@ import {
   ErrorResponse
 } from '~/types'
 import { styles } from '~/containers/find-offer/offer-container/OfferContainer.styles'
-import { userService } from '~/services/user-service'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { snackbarVariants } from '~/constants'
 import { getErrorKey } from '~/utils/get-error-key'
 import { setField } from '~/redux/features/editProfileSlice'
-import useAxios from '~/hooks/use-axios'
+import { useToggleBookmark } from '~/utils/toggle-bookmark'
 
 interface OfferContainerProps {
   viewMode: CardsView
@@ -58,12 +57,11 @@ const OfferContainer: FC<OfferContainerProps> = ({
     )
   }
 
-  const { fetchData: toggleBookmark } = useAxios({
-    service: (offerID: string) => userService.toggleBookmark(userId, offerID),
-    fetchOnMount: false,
-    onResponse: handleResponse,
-    onResponseError: handleResponseError
-  })
+  const toggleBookmark = useToggleBookmark(
+    userId,
+    handleResponse,
+    handleResponseError
+  )
 
   const onBookmarkClick = (id: string) => {
     void toggleBookmark(id)

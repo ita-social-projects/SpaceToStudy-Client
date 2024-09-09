@@ -1,4 +1,4 @@
-import { useCallback, useRef, useLayoutEffect } from 'react'
+import { useCallback, useRef, useLayoutEffect, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams, useNavigate, useOutletContext } from 'react-router-dom'
 
@@ -31,6 +31,8 @@ import {
   Offer,
   OutletContext,
   StatusEnum,
+  ErrorResponse,
+  UserRole,
   UserRoleEnum
 } from '~/types'
 import ScrollVisibilityWrapper from '~/components/scroll-visibility-wrapper/ScrollVisibilityWrapper'
@@ -40,6 +42,11 @@ import {
   loadingMock
 } from '~/containers/user-profile/comments-with-rating-block/CommentsWithRatingBlock.constants'
 import { activeButtonActions } from '~/pages/offer-details/OfferDetails.constants'
+import { useToggleBookmark } from '~/utils/toggle-bookmark'
+import { openAlert } from '~/redux/features/snackbarSlice'
+import { setField, fetchUserById } from '~/redux/features/editProfileSlice'
+import { snackbarVariants } from '~/constants'
+import { getErrorKey } from '~/utils/get-error-key'
 
 const OfferDetails = () => {
   const { t } = useTranslation()
@@ -51,6 +58,7 @@ const OfferDetails = () => {
   const navigate = useNavigate()
   const { checkConfirmation } = useConfirm()
   const { userId, userRole } = useAppSelector((state) => state.appMain)
+  const { bookmarkedOffers } = useAppSelector((state) => state.editProfile)
 
   const offerDetailsPage = useRef(null)
   const { pageRef } = useOutletContext<OutletContext>()
@@ -92,8 +100,32 @@ const OfferDetails = () => {
     onResponseError: responseError
   })
 
+  const handleResponse = (response: string[]) => {
+    dispatch(setField({ field: 'bookmarkedOffers', value: response }))
+  }
+
+  const handleResponseError = (error?: ErrorResponse) => {
+    dispatch(
+      openAlert({
+        severity: snackbarVariants.error,
+        message: getErrorKey(error)
+      })
+    )
+  }
+
+  const toggleBookmark = useToggleBookmark(
+    userId,
+    handleResponse,
+    handleResponseError
+  )
+
+  const isBookmarked = useMemo(
+    () => (offerData ? bookmarkedOffers.includes(offerData._id) : false),
+    [offerData, bookmarkedOffers]
+  )
+
   const onBookmarkClick = (id: string) => {
-    console.log(id)
+    void toggleBookmark(id)
   }
 
   const handleEnrollOfferClick = () =>
@@ -160,9 +192,24 @@ const OfferDetails = () => {
     handleSendMessage
   })
 
+  const faqItems = useMemo(
+    () =>
+      offerData?.FAQ.map((item) => ({
+        title: item.question,
+        description: item.answer
+      })),
+    [offerData]
+  )
+
   useLayoutEffect(() => {
     void dispatch(setPageLoad(offerLoading))
   }, [dispatch, offerLoading])
+
+  useEffect(() => {
+    void dispatch(
+      fetchUserById({ userId, role: userRole as UserRole, isEdit: false })
+    )
+  }, [dispatch, userId, userRole])
 
   if (offerLoading) {
     return <Loader pageLoad />
@@ -171,11 +218,6 @@ const OfferDetails = () => {
   if (!offerData) {
     return null
   }
-
-  const faqItems = offerData.FAQ.map((item) => ({
-    title: item.question,
-    description: item.answer
-  }))
 
   return (
     <PageWrapper ref={offerDetailsPage} sx={styles.container}>
@@ -192,6 +234,7 @@ const OfferDetails = () => {
         <AppCard sx={styles.offerCardSquare}>
           <OfferCardSquare
             buttonActions={buttonActions}
+            isBookmarked={isBookmarked}
             offer={offerData}
             onBookmarkClick={onBookmarkClick}
           />
@@ -200,6 +243,7 @@ const OfferDetails = () => {
         <AppCard sx={styles.offerCard}>
           <OfferCard
             buttonActions={buttonActions}
+            isBookmarked={isBookmarked}
             isHideField
             offer={offerData}
             onBookmarkClick={onBookmarkClick}
@@ -217,7 +261,7 @@ const OfferDetails = () => {
       <AppCard sx={styles.wrapper}>
         <OfferGeneralInfo offer={offerData} />
       </AppCard>
-      {faqItems.length > 0 && (
+      {faqItems?.length && (
         <AppCard sx={styles.wrapper}>
           <MultiAccordionWithTitle
             items={faqItems}
