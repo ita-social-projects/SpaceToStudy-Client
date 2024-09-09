@@ -60,7 +60,13 @@
   $properties: map.get($utility, 'properties');
 
   @each $key, $value in $values {
-    .#{$class}-#{$key} {
+    $class-name: $key;
+
+    @if $class != null and $class != '' {
+      $class-name: #{$class}-#{$key};
+    }
+
+    .#{$class-name} {
       @each $property in $properties {
         #{$property}: #{$value};
       }
