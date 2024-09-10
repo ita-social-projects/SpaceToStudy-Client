@@ -64,6 +64,7 @@ const TeachingBlock = <T extends CreateOrUpdateOfferData>({
           <AppTextArea
             errorMsg={t(errors.title)}
             fullWidth
+            isRightAligned
             label={t(`offerPage.labels.title`)}
             maxLength={100}
             maxRows={1}
@@ -80,6 +81,7 @@ const TeachingBlock = <T extends CreateOrUpdateOfferData>({
           <AppTextArea
             errorMsg={t(errors.description)}
             fullWidth
+            isRightAligned
             label={t(`offerPage.labels.describe.${userRole}`)}
             maxLength={1000}
             onBlur={handleBlur('description')}
