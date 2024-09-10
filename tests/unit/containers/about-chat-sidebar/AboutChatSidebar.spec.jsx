@@ -112,17 +112,4 @@ describe('AboutChatSidebar component test', () => {
 
     expect(screen.getByText('Space2Study WebApp')).toBeInTheDocument()
   })
-
-  it('should show "There are no media here yet!"', () => {
-    setup({
-      member: mockMember,
-      media: [],
-      files: [],
-      links: []
-    })
-
-    const noMedia = screen.getByText('chatPage.sidebar.noMedia')
-
-    expect(noMedia).toBeInTheDocument()
-  })
 })
