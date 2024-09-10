@@ -100,7 +100,7 @@ const AboutChatSidebar: FC<AboutChatSidebarProps> = ({ member, links }) => {
             />
           </Box>
         ) : (
-          <SidebarGroupedContent<Link> items={links} type={titleText} />
+          <SidebarGroupedContent<Link> items={links} />
         )}
       </SimpleBar>
     </Box>
