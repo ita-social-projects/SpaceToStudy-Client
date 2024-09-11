@@ -139,6 +139,7 @@ const ChatMenu: FC<ChatMenuProps> = ({
     if (isConfirmed) {
       await clearHistory(id)
       await updateMessages()
+      await updateChats()
     }
   }
 

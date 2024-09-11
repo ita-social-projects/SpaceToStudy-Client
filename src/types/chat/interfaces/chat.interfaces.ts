@@ -15,6 +15,7 @@ export interface LatestMessage extends CommonEntityFields {
   authorRole: string
   text: string
   chat: string
+  clearedFor: { user: string }[]
 }
 
 export interface ChatResponse extends CommonEntityFields {
