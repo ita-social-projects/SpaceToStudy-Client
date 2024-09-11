@@ -32,6 +32,10 @@ const ListOfUsersWithSearch: FC<ListOfUsersWithSearchProps> = ({
   const { userId } = useAppSelector((state) => state.appMain)
   const { t } = useTranslation()
 
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(event.target.value)
+  }
+
   const filteredChats = filterChats(listOfChats, userId, search)
 
   const chats = filteredChats.map((item: ChatResponse) => {
@@ -53,7 +57,7 @@ const ListOfUsersWithSearch: FC<ListOfUsersWithSearchProps> = ({
         <FilterInput
           fullWidth
           label={t('common.search')}
-          onChange={setSearch}
+          onChange={handleInputChange}
           size={SizeEnum.Medium}
           value={search}
         />
