@@ -44,8 +44,10 @@ const CommentsWithRatingBlock = ({
       ? 'userProfilePage.reviews.titleTutor'
       : 'userProfilePage.reviews.titleStudent'
 
-  const { items }: { items: MockReview[] } =
-    userRole === UserRoleEnum.Tutor ? responseMock : responseMockStudents
+  const items: MockReview[] =
+    userRole === UserRoleEnum.Tutor
+      ? [...responseMock.items]
+      : [...responseMockStudents.items]
 
   const sortItems = Object.values(SortByEnum)
   const sortMenuItems = sortItems.map((el) => (
