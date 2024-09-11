@@ -109,10 +109,8 @@ const ChatTextArea: FC<ChatTextAreaProps> = ({
           InputLabelProps={styles.textAreaLabel(value)}
           InputProps={{
             disableUnderline: true,
-            endAdornment:
-              adornmentPosition === AdornmentPosition.End && adornment,
-            startAdornment:
-              adornmentPosition === AdornmentPosition.Start && adornment
+            endAdornment: adornmentPosition === AdornmentPosition.End && adornment,
+            startAdornment: adornmentPosition === AdornmentPosition.Start && adornment
           }}
           fullWidth
           inputRef={inputRef}
