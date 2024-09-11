@@ -84,15 +84,15 @@ describe('AddProfessionalCategoryModal without initial value', () => {
     expect(professionalSubject).toHaveValue(professionalSubjectTemplate.name)
   })
 
-  it('should add one more subject group if "Add one more subject" button is clicked', () => {
+  it('should add one more subject group if "Add one more subject" button is clicked', async () => {
     const button = screen.getByText(
       /editProfilePage.profile.professionalTab.addCategoryModal.addSubjectBtn/
     )
 
     expect(button).toBeInTheDocument()
 
-    fireEvent.click(button)
-    fireEvent.click(button)
+    await act(() => fireEvent.click(button))
+    await act(() => fireEvent.click(button))
 
     const professionalSubjects = screen.getAllByLabelText(
       /editProfilePage.profile.professionalTab.subject/

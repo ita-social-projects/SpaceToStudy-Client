@@ -15,8 +15,8 @@ describe('ChangeConfirm component tests', () => {
   const props = {
     title: 'Course Title',
     courseList: [
-      { title: 'Course 1', subTitle: 'subtitle1' },
-      { title: 'Course 2', subTitle: 'subtitle2' }
+      { title: 'Course 1', subTitle: 'subtitle1', id: "1" },
+      { title: 'Course 2', subTitle: 'subtitle2', id: "2" }
     ],
     open: true,
     onClose: () => {}

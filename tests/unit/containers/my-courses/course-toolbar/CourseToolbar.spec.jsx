@@ -4,6 +4,7 @@ import CourseToolbar from '~/containers/my-courses/course-toolbar/CourseToolbar'
 import { URLs } from '~/constants/request'
 import { ProficiencyLevelEnum } from '~/types'
 import { proficiencyLevelLabels } from '~/constants/labels'
+import { act } from 'react-dom/test-utils'
 
 const mockData = {
   title: '',
@@ -139,8 +140,10 @@ describe('CourseToolbar', () => {
   })
 
   describe('with single render', () => {
-    beforeEach(() => {
-      render(getCourseToolbarElement())
+    beforeEach(async () => {
+      await waitFor(() => {
+        render(getCourseToolbarElement())
+      })
     })
 
     it('should render correctly', () => {

@@ -148,6 +148,9 @@ const Subjects = () => {
 
   const handleOpenModal = () => openModal({ component: <CreateSubjectModal /> })
 
+  const getOptionLabel = (option: string | Pick<SubjectInterface, 'name'>) =>
+    typeof option === 'string' ? option : option.name
+
   return (
     <PageWrapper>
       <OfferRequestBlock />
@@ -175,6 +178,7 @@ const Subjects = () => {
       <AppToolbar sx={styles.searchToolbar}>
         {!breakpoints.isMobile && autoCompleteCategories}
         <SearchAutocomplete
+          getOptionLabel={getOptionLabel}
           loading={subjectNamesLoading}
           onFocus={getSubjectNames}
           onSearchChange={resetData}

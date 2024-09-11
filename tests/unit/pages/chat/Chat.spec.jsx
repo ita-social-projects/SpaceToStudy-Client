@@ -1,5 +1,4 @@
-import { fireEvent, screen, waitFor } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
+import { fireEvent, screen, waitFor, act } from '@testing-library/react'
 
 import useBreakpoints from '~/hooks/use-breakpoints'
 import Chat from '~/pages/chat/Chat'
@@ -91,27 +90,21 @@ describe('Chat for desktop', () => {
   })
 
   it('should send new message and clear input', async () => {
-    const user = userEvent.setup()
-
     const chatItem = screen.getByText('Scott Short')
 
-    waitFor(() => {
-      fireEvent.click(chatItem)
-    })
+    fireEvent.click(chatItem)
 
     const messageInput = await screen.findByLabelText(
       'chatPage.chat.inputLabel'
     )
 
-    await user.type(messageInput, 'new message')
+    fireEvent.change(messageInput, { target: { value: 'new message' } })
 
     expect(messageInput.value).toBe('new message')
 
     const sendBtn = screen.getByTestId('send-btn')
 
-    waitFor(() => {
-      fireEvent.click(sendBtn)
-    })
+    await act(() => fireEvent.click(sendBtn))
 
     expect(messageInput.value).toBe('')
   })
@@ -123,11 +116,12 @@ describe('Chat for mobile', () => {
     isMobile: true,
     isTablet: false
   }
-  beforeEach(() => {
+  beforeEach(async () => {
     useBreakpoints.mockImplementation(() => mobileData)
 
-    renderWithProviders(<Chat />)
+    await waitFor(() => renderWithProviders(<Chat />))
   })
+
   it('should render just right pane in a chat', async () => {
     const chip = await screen.findByText('chatPage.chat.chipLabel')
 
