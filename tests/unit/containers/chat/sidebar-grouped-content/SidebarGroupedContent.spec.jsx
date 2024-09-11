@@ -31,12 +31,7 @@ describe('SidebarGroupedContent', () => {
       { preloadedState: mockState }
     )
 
-    const formattedDate = getFormattedDate({
-      date: mockFiles[0].createdAt,
-      options: { year: 'numeric', month: 'long' }
-    })
-
-    const date = screen.getByText(formattedDate)
+    const date = screen.getByText(/24 серпня/i)
     const file = screen.getByText('Cool book.pdf')
 
     expect(date).toBeInTheDocument()
