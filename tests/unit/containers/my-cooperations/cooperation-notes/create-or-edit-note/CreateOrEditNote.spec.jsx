@@ -1,4 +1,6 @@
-import { fireEvent, screen } from '@testing-library/react'
+import { fireEvent, screen, waitFor } from '@testing-library/react'
+import { act } from 'react-dom/test-utils'
+import { beforeEach } from 'vitest'
 import CreateOrEditNote from '~/containers/my-cooperations/cooperation-notes/create-or-edit-note/CreateOrEditNote'
 import { renderWithProviders } from '~tests/test-utils'
 
@@ -7,10 +9,12 @@ const addNewNoteMock = vi.fn()
 const noteMock = { text: 'noteText', isPrivate: true }
 
 describe('CreateOrEditNote component', () => {
-  beforeEach(() => {
-    renderWithProviders(
-      <CreateOrEditNote onSubmit={addNewNoteMock} onSubmitLoading={false} />
-    )
+  beforeEach(async () => {
+    await waitFor(() => {
+      renderWithProviders(
+        <CreateOrEditNote onSubmit={addNewNoteMock} onSubmitLoading={false} />
+      )
+    })
   })
 
   it('should render component', () => {
@@ -43,15 +47,19 @@ describe('CreateOrEditNote component', () => {
 })
 
 describe('CreateOrEditNote component with initial note', () => {
-  it('should set note as initial data to form', () => {
-    renderWithProviders(
-      <CreateOrEditNote
-        note={noteMock}
-        onSubmit={addNewNoteMock}
-        onSubmitLoading={false}
-      />
-    )
+  beforeEach(async () => {
+    await waitFor(() => {
+      renderWithProviders(
+        <CreateOrEditNote
+          note={noteMock}
+          onSubmit={addNewNoteMock}
+          onSubmitLoading={false}
+        />
+      )
+    })
+  })
 
+  it('should set note as initial data to form', () => {
     const noteText = screen.getByText(noteMock.text)
 
     expect(noteText).toBeInTheDocument()

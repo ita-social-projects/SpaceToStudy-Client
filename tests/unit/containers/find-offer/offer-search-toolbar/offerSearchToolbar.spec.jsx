@@ -12,6 +12,10 @@ const filterActions = {
 const filters = defaultFilters('student')
 const resetPage = vi.fn()
 
+vi.mock('~/hooks/use-axios', () => ({
+  default: () => ({ loading: false, response: [], fetchData: () => {} })
+}))
+
 useBreakpoints.mockImplementation(() => ({ isLaptopAndAbove: true }))
 
 describe('OfferSearchToolbar', () => {

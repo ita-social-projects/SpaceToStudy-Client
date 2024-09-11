@@ -1,4 +1,4 @@
-import { screen, fireEvent, waitFor } from '@testing-library/react'
+import { screen, fireEvent, waitFor, act } from '@testing-library/react'
 import { renderWithProviders, TestSnackbar } from '~tests/test-utils'
 
 import { useMatch } from 'react-router-dom'
@@ -97,9 +97,9 @@ describe('ProfileInfo component tests', () => {
       renderWithBreakpoints(laptopData, 'student')
     })
 
-    it('should copy link to profile', () => {
+    it('should copy link to profile', async () => {
       const iconBtn = screen.getByTestId('icon-btn')
-      fireEvent.click(iconBtn)
+      await act(() => fireEvent.click(iconBtn))
 
       expect(window.navigator.clipboard.writeText).toHaveBeenCalled()
     })

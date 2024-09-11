@@ -52,8 +52,8 @@ describe('Subjects page', () => {
     vi.clearAllMocks()
   })
 
-  beforeEach(() => {
-    renderWithProviders(<Subjects />)
+  beforeEach(async () => {
+    await waitFor(() => renderWithProviders(<Subjects />))
   })
 
   it('should render title with description', () => {
@@ -97,8 +97,8 @@ describe('Subjects page with empty data', () => {
     vi.clearAllMocks()
   })
 
-  beforeEach(() => {
-    renderWithProviders(<Subjects />)
+  beforeEach(async () => {
+    await waitFor(() => renderWithProviders(<Subjects />))
   })
 
   it('should render not found results when no subjects are found', () => {
