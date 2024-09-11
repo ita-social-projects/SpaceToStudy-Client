@@ -14,20 +14,20 @@ vi.mock('~/services/user-service', () => ({
 
 describe('AccountIcon test with user role', () => {
   const preloadedState = { appMain: { userRole: 'tutor' } }
-  beforeEach(() => {
-    renderWithProviders(<AccountIcon openMenu={mockOpenMenu} />, {
-      preloadedState
+  beforeEach(async () => {
+    await waitFor(() => {
+      renderWithProviders(<AccountIcon openMenu={mockOpenMenu} />, {
+        preloadedState
+      })
     })
   })
 
-  it('should render click menu icon and open account menu after click on it', async () => {
-    const AccountIconButton = await screen.findByAltText('User Avatar')
+  it('should render click menu icon and open account menu after click on it', () => {
+    const AccountIconButton = screen.getByAltText('User Avatar')
     expect(AccountIconButton).toBeInTheDocument()
 
     fireEvent.click(AccountIconButton)
 
-    await waitFor(() => {
-      expect(mockOpenMenu).toHaveBeenCalled()
-    })
+    expect(mockOpenMenu).toHaveBeenCalled()
   })
 })

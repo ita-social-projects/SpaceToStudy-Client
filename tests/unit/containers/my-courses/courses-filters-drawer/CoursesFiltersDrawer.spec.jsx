@@ -56,8 +56,8 @@ const setup = async (filters) => {
 
 describe('CoursesFiltersDrawer', () => {
   describe('with default filters', () => {
-    beforeEach(() => {
-      setup(defaultFilters)
+    beforeEach(async () => {
+      await setup(defaultFilters)
     })
 
     it('renders filter titles correctly', async () => {

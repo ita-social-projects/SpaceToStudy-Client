@@ -1,4 +1,4 @@
-import { screen, fireEvent, waitFor } from '@testing-library/react'
+import { screen, fireEvent, waitFor, act } from '@testing-library/react'
 import { configureStore } from '@reduxjs/toolkit'
 
 import reducer from '~/redux/reducer'
@@ -98,7 +98,7 @@ const updateFormData = (data) => {
 }
 const mockUseForm = vi.hoisted(() => {
   return vi.fn(({ onSubmit } = {}) => {
-    mockOnSubmit = onSubmit
+    mockOnSubmit = () => act(() => onSubmit())
     return {
       handleSubmit: mockHandleSubmit,
       handleInputChange: mockHandleInputChange,

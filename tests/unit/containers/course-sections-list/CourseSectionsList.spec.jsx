@@ -23,7 +23,7 @@ const mockedCourseSectionData = Array(5)
             status: 'open',
             date: null
           },
-          _id: '64cd12f1fad091e0sfe12134',
+          id: '64cd12f1fad091e0sfe12134',
           title: 'Lesson1',
           author: 'some author',
           content: 'Content',
@@ -39,7 +39,7 @@ const mockedCourseSectionData = Array(5)
             status: 'open',
             date: null
           },
-          _id: '64fb2c33eba89699411d22bb',
+          id: '64fb2c33eba89699411d22bb',
           title: 'Quiz',
           description: '',
           items: [],
@@ -56,7 +56,7 @@ const mockedCourseSectionData = Array(5)
             status: 'open',
             date: null
           },
-          _id: '64cd12f1fad091e0ee719830',
+          id: '64cd12f1fad091e0ee719830',
           author: '6494128829631adbaf5cf615',
           fileName: 'spanish.pdf',
           link: 'link',

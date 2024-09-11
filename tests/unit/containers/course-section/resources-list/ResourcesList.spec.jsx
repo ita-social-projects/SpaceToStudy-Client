@@ -6,7 +6,7 @@ import { ResourcesTypesEnum as ResourceType } from '~/types'
 
 const mockedLessonData = [
   {
-    _id: '1',
+    id: '1',
     title: 'Lesson1',
     author: 'some author',
     content: 'Content',
@@ -16,7 +16,7 @@ const mockedLessonData = [
     resourceType: ResourceType.Lesson
   },
   {
-    _id: '2',
+    id: '2',
     title: 'Lesson2',
     author: 'new author',
     content: 'Content',
