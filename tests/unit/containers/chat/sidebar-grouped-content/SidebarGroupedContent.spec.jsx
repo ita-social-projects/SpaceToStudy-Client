@@ -2,8 +2,6 @@ import { screen } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 
 import SidebarGroupedContent from '~/containers/chat/sidebar-grouped-content/SidebarGroupedContent'
-
-import { getFormattedDate } from '~/utils/helper-functions'
 import { SidebarContentEnum } from '~/types'
 
 const mockFiles = [
@@ -31,11 +29,7 @@ describe('SidebarGroupedContent', () => {
       { preloadedState: mockState }
     )
 
-    const formattedDate = getFormattedDate({
-      date: mockFiles[0].createdAt
-    })
-
-    const date = screen.getByText(formattedDate)
+    const date = screen.getByText(/24 серпня/i)
     const file = screen.getByText('Cool book.pdf')
 
     expect(date).toBeInTheDocument()
