@@ -4,3 +4,8 @@ export enum SidebarContentEnum {
   Files = 'files',
   Links = 'links'
 }
+
+export enum AdornmentPosition {
+  Start = 'start',
+  End = 'end'
+}

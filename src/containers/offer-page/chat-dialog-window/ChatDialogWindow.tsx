@@ -22,6 +22,7 @@ import { chatService } from '~/services/chat-service'
 import { getGroupedByDate, getIsNewDay } from '~/utils/helper-functions'
 
 import {
+  AdornmentPosition,
   ChatInfo,
   ChatResponse,
   ErrorResponse,
@@ -249,6 +250,7 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
     </AppChip>
   ) : (
     <ChatTextArea
+      adornmentPosition={AdornmentPosition.Start}
       emojiPickerProps={{ perLine: 6 }}
       label={
         isMessageSending
