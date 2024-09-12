@@ -12,7 +12,7 @@ import { useAppSelector } from '~/hooks/use-redux'
 
 import { ChatResponse, SizeEnum } from '~/types'
 import { styles } from '~/containers/chat/list-of-users-with-search/ListOfUsersWithSearch.styles'
-import { filterChats } from './ListOfUsersWithSearch.constants'
+import { filterChats } from '~/containers/chat/list-of-users-with-search/ListOfUsersWithSearch.constants'
 
 interface ListOfUsersWithSearchProps {
   listOfChats: ChatResponse[]

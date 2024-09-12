@@ -1,6 +1,8 @@
 import { screen, fireEvent, waitFor } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 
+import { useAppSelector } from '~/hooks/use-redux'
+
 import ListOfUsersWithSearch from '~/containers/chat/list-of-users-with-search/ListOfUsersWithSearch'
 import { chatsMock } from '~tests/unit/containers/chat/list-of-users-with-search/MockChat.spec.constants'
 
@@ -10,9 +12,9 @@ vi.mock('simplebar-react', () => {
   }
 })
 
-// vi.mock('~/hooks/use-redux', () => ({
-//   useAppSelector: vi.fn().mockReturnValue({ userId: '644e6b1668cc37f543f2f37a' })
-// }))
+vi.mock('~/hooks/use-redux', () => ({
+  useAppSelector: vi.fn()
+}))
 
 const props = {
   listOfChats: chatsMock,
@@ -23,6 +25,7 @@ const props = {
 
 describe('ListOfUsersWithSearch component', () => {
   beforeEach(() => {
+    useAppSelector.mockReturnValue({ userId: '644e6b1668cc37f543f2f37a' })
     renderWithProviders(<ListOfUsersWithSearch {...props} />)
   })
 
@@ -39,7 +42,8 @@ describe('ListOfUsersWithSearch component', () => {
   })
 
   it('renders chat items when chats are present', () => {
-    const chatItems = screen.getAllByTestId('chat-item')
+    const chatItems = screen.getAllByAltText('User Avatar')
+
     expect(chatItems.length).toBe(chatsMock.length)
   })
 
@@ -48,7 +52,7 @@ describe('ListOfUsersWithSearch component', () => {
 
     fireEvent.change(searchInput, { target: { value: 'Alaya' } })
 
-    const filteredChatItems = screen.getAllByTestId('chat-item')
+    const filteredChatItems = screen.getAllByAltText('User Avatar')
     waitFor(() => {
       expect(filteredChatItems.length).toBe(1)
       expect(filteredChatItems[0]).toHaveTextContent('Alaya McKenzie')
@@ -56,7 +60,7 @@ describe('ListOfUsersWithSearch component', () => {
   })
 
   it('calls setSelectedChat when a chat is clicked', () => {
-    const chatItem = screen.getAllByTestId('chat-item')[0]
+    const chatItem = screen.getAllByAltText('User Avatar')[0]
 
     fireEvent.click(chatItem)
 
