@@ -12,7 +12,7 @@ export const styles = {
       : '1fr'
   }),
   gridItem: { width: '100%' },
-  appCard: { padding: { sm: '20px', md: '30px 20px' } },
+  appCard: { padding: { sm: '30px 20px', md: '30px 20px' } },
   appCardSquare: {
     minHeight: '460px',
     padding: '24px 20px'
