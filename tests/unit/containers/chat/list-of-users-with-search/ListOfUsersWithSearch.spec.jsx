@@ -5,6 +5,7 @@ import { useAppSelector } from '~/hooks/use-redux'
 
 import ListOfUsersWithSearch from '~/containers/chat/list-of-users-with-search/ListOfUsersWithSearch'
 import { chatsMock } from '~tests/unit/containers/chat/list-of-users-with-search/MockChat.spec.constants'
+import { isCorrectUser } from '~/containers/chat/list-of-users-with-search/ListOfUsersWithSearch.constants'
 
 vi.mock('simplebar-react', () => {
   return {
@@ -48,14 +49,17 @@ describe('ListOfUsersWithSearch component', () => {
   })
 
   it('filters chats based on search input', () => {
+    const handleChange = vi.fn()
     const searchInput = screen.getByLabelText('common.search')
 
-    fireEvent.change(searchInput, { target: { value: 'Alaya' } })
+    fireEvent.change(searchInput, { target: { value: 'alaya' } })
 
     const filteredChatItems = screen.getAllByAltText('User Avatar')
     waitFor(() => {
       expect(filteredChatItems.length).toBe(1)
-      expect(filteredChatItems[0]).toHaveTextContent('Alaya McKenzie')
+      expect(filteredChatItems).toHaveTextContent('Alaya McKenzie')
+      expect(filteredChatItems._id).toBe(chatsMock[1]._id)
+      expect(handleChange).toHaveBeenCalledWith('alaya')
     })
   })
 
@@ -65,5 +69,20 @@ describe('ListOfUsersWithSearch component', () => {
     fireEvent.click(chatItem)
 
     expect(props.setSelectedChat).toHaveBeenCalledWith(chatsMock[0])
+  })
+})
+
+describe('isCorrectUser', () => {
+  beforeEach(() => {
+    useAppSelector.mockReturnValue({ userId: '644e6b1668cc37f543f2f37a' })
+    renderWithProviders(<ListOfUsersWithSearch {...props} />)
+  })
+
+  it('should return true when there is another user besides the current user', () => {
+    const userId = '644e6b1668cc37f543f2f37a'
+    const chat = chatsMock[0]
+
+    const result = isCorrectUser(chat, userId)
+    expect(result).toBe(true)
   })
 })
