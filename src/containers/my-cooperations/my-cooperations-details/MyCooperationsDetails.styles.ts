@@ -44,15 +44,15 @@ export const style = {
   },
   subjectContainer: {
     display: 'flex',
-    gap: '4px',
     '& > *': {
       mr: '10px'
-    }
+    },
+    gap: '4px'
   },
   buttons: {
     mr: '15px',
     color: 'basic.black',
-    diplay: 'flex',
+    display: 'flex',
     alignItems: 'center',
     '& > svg': {
       fontSize: '20px',
