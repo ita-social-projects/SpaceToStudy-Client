@@ -7,6 +7,9 @@
   "createCooperation": "Send cooperation request",
   "sendRequest": "Send request",
   "addQuestion": "Add one more question",
-  "viewMyOffers":"View my offers",
+  "view": {
+    "viewMyOffers": "View my offers",
+    "viewMyRequests": "View my requests"
+  },
   "newLesson": "New lesson"
 }

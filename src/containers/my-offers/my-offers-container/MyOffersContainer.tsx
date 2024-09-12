@@ -27,6 +27,7 @@ import {
   TableActionFunc,
   TableRowAction
 } from '~/types'
+import { useAppSelector } from '~/hooks/use-redux'
 
 interface MyOffersContainerProps {
   items: Offer[]
@@ -44,6 +45,7 @@ const MyOffersContainer: FC<MyOffersContainerProps> = ({
   const { t } = useTranslation()
   const { openDrawer, closeDrawer, isOpen } = useDrawer()
   const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null)
+  const { userRole } = useAppSelector((state) => state.appMain)
 
   const columnsToShow = adjustColumns<Offer>(
     breakpoints,
@@ -83,7 +85,7 @@ const MyOffersContainer: FC<MyOffersContainerProps> = ({
   }
 
   const rowActions: TableRowAction[] = [
-    { label: t('myOffersPage.editButton'), func: editOffer },
+    { label: t(`myOffersPage.editButton.${userRole}`), func: editOffer },
     { label: t('common.labels.viewDetails'), func: viewDetails }
   ]
 
