@@ -1,0 +1,113 @@
+@use '../variables' as *;
+@use '../functions' as *;
+@use '../mixins' as *;
+@use 'sass:map';
+
+$-space-var-map: map-to-var-map($spaces, 'space');
+
+$sizing-utilities: (
+  // width utilities
+  'width':
+    (
+      class: 'w',
+      properties: width,
+      values:
+        map.merge(
+          $-space-var-map,
+          (
+            'auto': auto,
+            'min': min-content,
+            'max': max-content,
+            'fit': fit-content,
+            'screen': 100vw,
+            '25': 25%,
+            '50': 50%,
+            '75': 75%,
+            '100': 100%
+          )
+        )
+    ),
+  'min-width': (
+    class: 'min-w',
+    properties: min-width,
+    values:
+      map.merge(
+        $-space-var-map,
+        (
+          'min': min-content,
+          'max': max-content,
+          'fit': fit-content,
+          '100': 100%
+        )
+      )
+  ),
+  'max-width': (
+    class: 'max-w',
+    properties: max-width,
+    values:
+      map.merge(
+        $-space-var-map,
+        (
+          'min': min-content,
+          'max': max-content,
+          'fit': fit-content,
+          '100': 100%
+        )
+      )
+  ),
+  // height utilities
+  'height':
+    (
+      class: 'h',
+      properties: height,
+      values:
+        map.merge(
+          $-space-var-map,
+          (
+            'auto': auto,
+            'min': min-content,
+            'max': max-content,
+            'fit': fit-content,
+            'screen': 100vh,
+            '25': 25%,
+            '50': 50%,
+            '75': 75%,
+            '100': 100%
+          )
+        )
+    ),
+  'min-height': (
+    class: 'min-h',
+    properties: min-height,
+    values:
+      map.merge(
+        $-space-var-map,
+        (
+          'screen': 100vh,
+          '100': 100%,
+          'min': min-content,
+          'max': max-content,
+          'fit': fit-content
+        )
+      )
+  ),
+  'max-height': (
+    class: 'max-h',
+    properties: max-height,
+    values:
+      map.merge(
+        $-space-var-map,
+        (
+          'screen': 100vh,
+          '100': 100%,
+          'min': min-content,
+          'max': max-content,
+          'fit': fit-content
+        )
+      )
+  )
+);
+
+@each $key, $utility in $sizing-utilities {
+  @include generate-utilities($utility);
+}
