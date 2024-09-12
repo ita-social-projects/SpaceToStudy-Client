@@ -1,0 +1,171 @@
+@use 'variables' as *;
+@use 'functions' as *;
+
+.#{$prefix}heading {
+  &-xs {
+    font-size: get-var('font-size-xl');
+    font-weight: get-var('font-weight-medium');
+    line-height: get-var('line-height-xl');
+    letter-spacing: get-var('letter-spacing-lg');
+  }
+
+  &-sm {
+    font-size: get-var('font-size-2xl');
+    font-weight: get-var('font-weight-medium');
+    line-height: get-var('line-height-2xl');
+    letter-spacing: get-var('letter-spacing-md');
+  }
+
+  &-md {
+    font-size: get-var('font-size-3xl');
+    font-weight: get-var('font-weight-medium');
+    line-height: get-var('line-height-3xl');
+    letter-spacing: get-var('letter-spacing-sm');
+  }
+
+  &-lg {
+    font-size: get-var('font-size-4xl');
+    font-weight: get-var('font-weight-medium');
+    line-height: get-var('line-height-4xl');
+    letter-spacing: get-var('letter-spacing-sm');
+  }
+
+  &-xl {
+    font-size: get-var('font-size-5xl');
+    font-weight: get-var('font-weight-semibold');
+    line-height: get-var('line-height-5xl');
+    letter-spacing: get-var('letter-spacing-sm');
+  }
+
+  &-2xl {
+    font-size: get-var('font-size-6xl');
+    font-weight: get-var('font-weight-extrabold');
+    line-height: get-var('line-height-6xl');
+    letter-spacing: get-var('letter-spacing-sm');
+  }
+}
+
+.#{$prefix}text {
+  &-sm {
+    &-regular {
+      @extend %text-sm;
+
+      font-weight: get-var('font-weight-regular');
+    }
+
+    &-medium {
+      @extend %text-sm;
+
+      font-weight: get-var('font-weight-medium');
+    }
+  }
+
+  &-md {
+    &-regular {
+      @extend %text-md;
+
+      font-weight: get-var('font-weight-regular');
+    }
+
+    &-semibold {
+      @extend %text-md;
+
+      font-weight: get-var('font-weight-semibold');
+    }
+  }
+}
+
+.#{$prefix}label {
+  &-sm {
+    &-regular {
+      @extend %label-sm;
+
+      line-height: get-var('line-height-md');
+      font-weight: get-var('font-weight-regular');
+    }
+
+    &-medium {
+      @extend %label-sm;
+
+      line-height: get-var('line-height-sm');
+      font-weight: get-var('font-weight-medium');
+    }
+  }
+
+  &-md {
+    &-regular {
+      @extend %label-md;
+
+      font-weight: get-var('font-weight-regular');
+    }
+
+    &-medium {
+      @extend %label-md;
+
+      font-weight: get-var('font-weight-medium');
+    }
+  }
+}
+
+.#{$prefix}caption {
+  &-xs {
+    &-regular {
+      text-transform: uppercase;
+      font-size: get-var('font-size-xs');
+      line-height: get-var('line-height-sm');
+      letter-spacing: get-var('letter-spacing-xl');
+      font-weight: get-var('font-weight-regular');
+    }
+
+    &-semibold {
+      text-transform: uppercase;
+      font-size: get-var('font-size-2xs');
+      line-height: get-var('line-height-xs');
+      letter-spacing: get-var('letter-spacing-xl');
+      font-weight: get-var('font-weight-semibold');
+    }
+  }
+
+  &-sm {
+    &-regular {
+      @extend %caption-sm;
+
+      font-weight: get-var('font-weight-regular');
+    }
+
+    &-semibold {
+      @extend %caption-sm;
+
+      font-weight: get-var('font-weight-semibold');
+    }
+  }
+}
+
+%text-sm {
+  font-size: get-var('font-size-md');
+  line-height: get-var('line-height-lg');
+  letter-spacing: get-var('letter-spacing-md');
+}
+
+%text-md {
+  font-size: get-var('font-size-xl');
+  line-height: get-var('line-height-xl');
+  letter-spacing: get-var('letter-spacing-md');
+}
+
+%label-sm {
+  font-size: get-var('font-size', 'sm');
+  letter-spacing: get-var('letter-spacing-md');
+}
+
+%label-md {
+  font-size: get-var('font-size-lg');
+  line-height: get-var('line-height-xl');
+  letter-spacing: get-var('letter-spacing-md');
+}
+
+%caption-sm {
+  font-size: get-var('font-size-xs');
+  line-height: get-var('line-height-sm');
+  letter-spacing: get-var('letter-spacing-md');
+}
