@@ -59,3 +59,13 @@ export interface CourseExtendedAutocompleteOptions {
   _id: string
   title: string
 }
+
+export interface CreateCourseContext {
+  sections: CourseSection[]
+  setSectionsData: (sections: CourseSection[]) => void
+  handleSectionChange: (
+    id: string,
+    field: keyof CourseSection,
+    value: string | CourseResource[] | Resource[]
+  ) => void
+}

@@ -1,5 +1,6 @@
 import { useCallback, useEffect } from 'react'
 import { v4 as uuidv4 } from 'uuid'
+import { AnyAction } from '@reduxjs/toolkit'
 
 import Box from '@mui/material/Box'
 
@@ -7,28 +8,90 @@ import Loader from '~/components/loader/Loader'
 import CourseSectionsList from '~/containers/course-sections-list/CourseSectionsList'
 
 import {
-  CourseSection,
-  CourseResource,
   CourseFieldValues,
-  ResourceEventHandler,
-  SectionEventHandler,
+  CourseResource,
+  CourseResourceEventType,
+  CourseSection,
   CourseSectionEventType,
-  CourseResourceEventType
+  ResourceEvent,
+  SectionEvent
 } from '~/types'
 import {
   cooperationsSelector,
-  deleteCooperationSection,
-  deleteResource,
   setCooperationSections,
-  addNewCooperationSection,
-  setIsNewActivity,
-  addSectionResources,
+  deleteCooperationSection,
   updateCooperationSection,
+  addNewCooperationSection,
+  deleteResource,
   updateResource,
+  addSectionResources,
   updateResourcesOrder
 } from '~/redux/features/cooperationsSlice'
 
 import { useAppSelector, useAppDispatch } from '~/hooks/use-redux'
+
+const resourceHandlers: Record<
+  CourseResourceEventType,
+  (event: ResourceEvent) => AnyAction | null
+> = {
+  // Use ? type guard to automatically infer the type of the event
+  [CourseResourceEventType.ResourceUpdated]: (event) => {
+    return event.type === CourseResourceEventType.ResourceUpdated
+      ? updateResource({
+          sectionId: event.sectionId,
+          resourceId: event.resourceId,
+          resource: event.resource
+        })
+      : null
+  },
+  [CourseResourceEventType.ResourcesOrderChange]: (event) => {
+    return event.type === CourseResourceEventType.ResourcesOrderChange
+      ? updateResourcesOrder({
+          sectionId: event.sectionId,
+          resources: event.resources
+        })
+      : null
+  },
+  [CourseResourceEventType.AddSectionResources]: (event) => {
+    return event.type === CourseResourceEventType.AddSectionResources
+      ? addSectionResources({
+          sectionId: event.sectionId,
+          resources: event.resources,
+          isDuplicate: event.isDuplicate
+        })
+      : null
+  },
+  [CourseResourceEventType.ResourceRemoved]: (event) => {
+    return event.type === CourseResourceEventType.ResourceRemoved
+      ? deleteResource({
+          sectionId: event.sectionId,
+          resourceId: event.resourceId
+        })
+      : null
+  }
+}
+
+const sectionHandlers: Record<
+  CourseSectionEventType,
+  (event: SectionEvent) => AnyAction | null
+> = {
+  // Use ? type guard to automatically infer the type of the event
+  [CourseSectionEventType.SectionAdded]: (event) => {
+    return event.type === CourseSectionEventType.SectionAdded
+      ? addNewCooperationSection({ index: event.index })
+      : null
+  },
+  [CourseSectionEventType.SectionRemoved]: (event) => {
+    return event.type === CourseSectionEventType.SectionRemoved
+      ? deleteCooperationSection(event.sectionId)
+      : null
+  },
+  [CourseSectionEventType.SectionsOrderChange]: (event) => {
+    return event.type === CourseSectionEventType.SectionsOrderChange
+      ? setCooperationSections(event.sections)
+      : null
+  }
+}
 
 const CooperationActivitiesList = () => {
   const dispatch = useAppDispatch()
@@ -48,7 +111,7 @@ const CooperationActivitiesList = () => {
         ...section,
         id: uuidv4()
       }))
-      setSectionsData(allSections)
+      dispatch(setCooperationSections(allSections))
     }
 
     if (selectedCourse && sections.length && isAddedClicked) {
@@ -67,97 +130,42 @@ const CooperationActivitiesList = () => {
         } else {
           newSections = [...sections, ...newSectionData]
         }
-        setSectionsData(newSections)
+        dispatch(setCooperationSections(newSections))
       }
       addNewSectionsCourse(0) // this is a mock and will always insert at the 0 position, but it will change in issue #2064
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAddedClicked])
 
-  const setSectionsData = useCallback(
-    (sections: CourseSection[]) => {
-      dispatch(setCooperationSections(sections))
+  const handleSectionChange = useCallback(
+    (
+      id: string,
+      field: keyof CourseSection,
+      value: string | CourseResource[]
+    ) => {
+      dispatch(
+        updateCooperationSection({
+          id,
+          field,
+          value: value as CourseFieldValues
+        })
+      )
     },
     [dispatch]
   )
 
-  const handleSectionChange = (
-    id: string,
-    field: keyof CourseSection,
-    value: string | CourseResource[]
-  ) => {
-    dispatch(
-      updateCooperationSection({
-        id,
-        field,
-        value: value as CourseFieldValues
-      })
-    )
-  }
-
-  const deleteSection = useCallback(
-    (sectionId: string) => {
-      dispatch(setIsNewActivity(false)) // Why do we need this flag here? (moved from the child component)
-      dispatch(deleteCooperationSection(sectionId))
+  const sectionEventHandler = useCallback(
+    (event: SectionEvent) => {
+      const action = sectionHandlers[event.type]?.(event)
+      if (action) dispatch(action)
     },
     [dispatch]
   )
 
-  const sectionEventHandler = useCallback<SectionEventHandler>(
-    (event) => {
-      switch (event.type) {
-        case CourseSectionEventType.SectionAdded:
-          dispatch(addNewCooperationSection({ index: event.index }))
-          break
-        case CourseSectionEventType.SectionRemoved:
-          deleteSection(event.sectionId)
-          break
-        case CourseSectionEventType.SectionsOrderChange:
-          setSectionsData(event.sections)
-          break
-      }
-    },
-    [dispatch, deleteSection, setSectionsData]
-  )
-
-  const resourceEventHandler = useCallback<ResourceEventHandler>(
-    (event) => {
-      switch (event.type) {
-        case CourseResourceEventType.ResourceUpdated:
-          dispatch(
-            updateResource({
-              sectionId: event.sectionId,
-              resourceId: event.resourceId,
-              resource: event.resource
-            })
-          )
-          break
-        case CourseResourceEventType.ResourcesOrderChange:
-          dispatch(
-            updateResourcesOrder({
-              sectionId: event.sectionId,
-              resources: event.resources
-            })
-          )
-          break
-        case CourseResourceEventType.AddSectionResources:
-          dispatch(
-            addSectionResources({
-              sectionId: event.sectionId,
-              resources: event.resources,
-              isDuplicate: event.isDuplicate
-            })
-          )
-          break
-        case CourseResourceEventType.ResourceRemoved:
-          dispatch(
-            deleteResource({
-              sectionId: event.sectionId,
-              resourceId: event.resourceId
-            })
-          )
-          break
-      }
+  const resourceEventHandler = useCallback(
+    (event: ResourceEvent) => {
+      const action = resourceHandlers[event.type]?.(event)
+      if (action) dispatch(action)
     },
     [dispatch]
   )

@@ -22,7 +22,6 @@ import { openAlert } from '~/redux/features/snackbarSlice'
 
 import { styles } from '~/pages/create-course/CreateCourse.styles'
 import {
-  sectionInitialData,
   initialValues,
   defaultResponse,
   validations
@@ -32,24 +31,30 @@ import {
   ButtonTypeEnum,
   ButtonVariantEnum,
   SizeEnum,
-  CourseForm,
-  ComponentEnum,
-  CourseSection,
-  Resource,
-  Course,
-  ErrorResponse,
-  CourseResource,
-  UserResponse,
   UserRole,
-  SectionEventHandler,
-  CourseSectionEventType,
+  UserResponse,
+  ErrorResponse,
+  ComponentEnum,
+  Course,
+  CourseForm,
+  CourseSection,
+  CourseResource,
+  Resource,
+  ResourceEvent,
   ResourceEventHandler,
-  CourseResourceEventType
+  SectionEvent,
+  SectionEventHandler
 } from '~/types'
 
 import useForm from '~/hooks/use-form'
 import useAxios from '~/hooks/use-axios'
 import { useAppSelector, useAppDispatch } from '~/hooks/use-redux'
+
+import {
+  sectionHandlers,
+  resourceHandlers,
+  addNewSection
+} from '~/pages/create-course/CreateCourse.handlers'
 
 const CreateCourse = () => {
   const navigate = useNavigate()
@@ -57,6 +62,17 @@ const CreateCourse = () => {
   const { t } = useTranslation()
   const { id } = useParams()
   const { userId, userRole } = useAppSelector((state) => state.appMain)
+
+  const getUserData = useCallback(
+    () => userService.getUserById(userId, userRole as UserRole),
+    [userId, userRole]
+  )
+
+  const { loading: userLoading, response: user } =
+    useAxios<UserResponse | null>({
+      service: getUserData,
+      defaultResponse: null
+    })
 
   const onResponseError = (error?: ErrorResponse) => {
     const errorKey = getErrorKey(error)
@@ -88,17 +104,6 @@ const CreateCourse = () => {
     navigate(authRoutes.myCourses.root.path)
   }
 
-  const getUserData = useCallback(
-    () => userService.getUserById(userId, userRole as UserRole),
-    [userId, userRole]
-  )
-
-  const { loading: userLoading, response: user } =
-    useAxios<UserResponse | null>({
-      service: getUserData,
-      defaultResponse: null
-    })
-
   const addCourse = useCallback(
     (data?: CourseForm) => CourseService.addCourse(data),
     []
@@ -113,7 +118,7 @@ const CreateCourse = () => {
   })
 
   const editCourse = (): Promise<AxiosResponse> => {
-    return CourseService.editCourse(data, id)
+    return CourseService.editCourse(courseData, id)
   }
 
   const { fetchData: fetchEditCourse } = useAxios<null, CourseForm>({
@@ -125,7 +130,7 @@ const CreateCourse = () => {
   })
 
   const {
-    data,
+    data: courseData,
     handleInputChange,
     handleNonInputValueChange,
     handleBlur,
@@ -137,6 +142,8 @@ const CreateCourse = () => {
     onSubmit: id ? fetchEditCourse : fetchAddCourse,
     submitWithData: true
   })
+
+  const { sections } = courseData
 
   const setSectionsData = useCallback(
     (sections: CourseSection[]) => {
@@ -151,209 +158,57 @@ const CreateCourse = () => {
       field: keyof CourseSection,
       value: string | CourseResource[] | Resource[]
     ) => {
-      const newSections = data.sections.map((section) =>
+      const newSections = sections.map((section) =>
         section.id === id ? { ...section, [field]: value } : section
       )
       setSectionsData(newSections)
     },
-    [data.sections, setSectionsData]
+    [sections, setSectionsData]
   )
 
-  const addNewSection = useCallback(() => {
-    const newSectionData = { ...sectionInitialData }
-    newSectionData.id = uuidv4()
-    setSectionsData([...data.sections, newSectionData])
-  }, [data.sections, setSectionsData])
-
-  if (data.sections.length === 0) {
-    addNewSection()
-  }
-
-  const deleteSection = useCallback(
-    (sectionId: string) => {
-      const sections = data.sections.filter(
-        (section) => section.id !== sectionId
+  const sectionEventHandler = useCallback(
+    (event: SectionEvent) => {
+      ;(sectionHandlers[event.type] as SectionEventHandler)(
+        {
+          sections,
+          setSectionsData,
+          handleSectionChange
+        },
+        event
       )
-      setSectionsData(sections)
     },
-    [data.sections, setSectionsData]
+    [sections, setSectionsData, handleSectionChange]
   )
 
-  const sectionEventHandler = useCallback<SectionEventHandler>(
-    (event) => {
-      switch (event.type) {
-        case CourseSectionEventType.SectionAdded:
-          addNewSection()
-          break
-        case CourseSectionEventType.SectionRemoved:
-          deleteSection(event.sectionId)
-          break
-        case CourseSectionEventType.SectionsOrderChange:
-          setSectionsData(event.sections)
-          break
-      }
-    },
-    [addNewSection, deleteSection, setSectionsData]
-  )
-
-  const addSectionResources = useCallback(
-    ({
-      sectionId,
-      resources,
-      isDuplicate
-    }: {
-      sectionId: CourseSection['id']
-      resources: CourseResource[]
-      isDuplicate?: boolean
-    }) => {
-      const section = data.sections.find((section) => section.id === sectionId)
-      if (!section) return
-
-      const newResources = resources
-        .filter((resource) => {
-          return !section.resources.some(
-            (item) => item.resource.id === resource.id && !isDuplicate
-          )
-        })
-        .map((resource) => {
-          const { _id, ...newDuplicateResource } = resource
-          return {
-            resource: {
-              ...newDuplicateResource,
-              id: uuidv4(),
-              ...(isDuplicate ? { _id: '', isDuplicate: true } : { _id })
-            },
-            resourceType: resource.resourceType
-          }
-        })
-
-      const newSectionResources = [...section.resources, ...newResources]
-      handleSectionChange(sectionId, 'resources', newSectionResources)
-    },
-    [data.sections, handleSectionChange]
-  )
-
-  const updateResource = useCallback(
-    ({
-      sectionId,
-      resourceId,
-      resource
-    }: {
-      sectionId: CourseSection['id']
-      resourceId: CourseResource['id']
-      resource: Partial<CourseResource>
-    }) => {
-      const section = data.sections.find((section) => section.id === sectionId)
-      if (!section) return
-
-      const currentResource = section.resources.find(
-        (item) => item.resource.id === resourceId
+  const resourceEventHandler = useCallback(
+    (event: ResourceEvent) => {
+      ;(resourceHandlers[event.type] as ResourceEventHandler)(
+        {
+          sections,
+          setSectionsData,
+          handleSectionChange
+        },
+        event
       )
-      if (!currentResource) return
-
-      const newSectionResources = section.resources.map((item) =>
-        item.resource.id === resourceId
-          ? { ...currentResource, ...resource }
-          : item
-      )
-
-      handleSectionChange(sectionId, 'resources', newSectionResources)
     },
-    [data.sections, handleSectionChange]
+    [sections, setSectionsData, handleSectionChange]
   )
-
-  const deleteResource = useCallback(
-    ({
-      sectionId,
-      resourceId
-    }: {
-      sectionId: CourseSection['id']
-      resourceId: CourseResource['id']
-    }) => {
-      const section = data.sections.find((section) => section.id === sectionId)
-      if (!section) return
-
-      const newSectionResources = section.resources.filter(
-        (resource) => resource.resource.id !== resourceId
-      )
-      handleSectionChange(sectionId, 'resources', newSectionResources)
-    },
-    [data, handleSectionChange]
-  )
-
-  const updateResourcesOrder = useCallback(
-    ({
-      sectionId,
-      resources
-    }: {
-      sectionId: CourseSection['id']
-      resources: CourseResource[]
-    }) => {
-      const section = data.sections.find((section) => section.id === sectionId)
-      if (!section) return
-
-      const newSectionResources = resources.map((resource) => ({
-        resource,
-        resourceType: resource.resourceType
-      }))
-      handleSectionChange(sectionId, 'resources', newSectionResources)
-    },
-    [data.sections, handleSectionChange]
-  )
-
-  const resourceEventHandler = useCallback<ResourceEventHandler>(
-    (event) => {
-      switch (event.type) {
-        case CourseResourceEventType.ResourceUpdated:
-          updateResource({
-            sectionId: event.sectionId,
-            resourceId: event.resourceId,
-            resource: event.resource
-          })
-          break
-        case CourseResourceEventType.ResourcesOrderChange:
-          updateResourcesOrder({
-            sectionId: event.sectionId,
-            resources: event.resources
-          })
-          break
-        case CourseResourceEventType.AddSectionResources:
-          addSectionResources({
-            sectionId: event.sectionId,
-            resources: event.resources,
-            isDuplicate: event.isDuplicate
-          })
-          break
-        case CourseResourceEventType.ResourceRemoved:
-          deleteResource({
-            sectionId: event.sectionId,
-            resourceId: event.resourceId
-          })
-          break
-      }
-    },
-    [updateResource, updateResourcesOrder, addSectionResources, deleteResource]
-  )
-
-  const getCourse = (id?: string): Promise<AxiosResponse> => {
-    return CourseService.getCourse(id)
-  }
 
   const handleCourseResponse = (course: CourseForm) => {
-    course.sections.forEach((item) => {
-      if (item._id) {
-        item.id = item._id
-      }
-    })
     course.sections.forEach((section) => {
+      section.id = section._id ?? section.id
       section.resources?.forEach((resource) => {
         resource.resource.id ||= uuidv4()
       })
     })
-    for (const key in data) {
+    Object.keys(courseData).forEach((key) => {
       const validKey = key as keyof CourseForm
       handleNonInputValueChange(validKey, course[validKey])
-    }
+    })
+  }
+
+  const getCourse = (id?: string): Promise<AxiosResponse> => {
+    return CourseService.getCourse(id)
   }
 
   const { loading: getCourseLoading, fetchData: fetchCourseData } = useAxios<
@@ -374,6 +229,10 @@ const CreateCourse = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id])
 
+  if (sections.length === 0) {
+    addNewSection({ sections, setSectionsData, handleSectionChange })
+  }
+
   if (getCourseLoading || userLoading) {
     return <Loader pageLoad />
   }
@@ -382,7 +241,7 @@ const CreateCourse = () => {
     <PageWrapper>
       <Box component={ComponentEnum.Form} onSubmit={handleSubmit}>
         <CourseToolbar
-          data={data}
+          data={courseData}
           errors={errors}
           handleBlur={handleBlur}
           handleInputChange={handleInputChange}
@@ -391,13 +250,15 @@ const CreateCourse = () => {
         />
         <CourseSectionsList
           handleSectionInputChange={handleSectionChange}
-          items={data.sections}
+          items={sections}
           resourceEventHandler={resourceEventHandler}
           sectionEventHandler={sectionEventHandler}
         />
         <Box sx={styles.functionalButton}>
           <AppButton
-            onClick={addNewSection}
+            onClick={() =>
+              addNewSection({ sections, setSectionsData, handleSectionChange })
+            }
             size={SizeEnum.Medium}
             variant={ButtonVariantEnum.Tonal}
           >
