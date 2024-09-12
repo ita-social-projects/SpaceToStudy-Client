@@ -44,6 +44,7 @@ export const style = {
   },
   subjectContainer: {
     display: 'flex',
+    gap: '4px',
     '& > *': {
       mr: '10px'
     }
