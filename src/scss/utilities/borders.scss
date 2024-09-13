@@ -32,7 +32,6 @@ $borders-utilities: (
     values: $border-widths
   ),
   'border-top-style': (
-    //
     class: 'border-t',
     properties: border-top-style,
     values: $border-styles
@@ -60,37 +59,37 @@ $borders-utilities: (
   'border-radius': (
     class: 'rounded',
     properties: border-radius,
-    values: $border-radius
+    values: $border-radiuses
   ),
   'border-top-radius': (
     class: 'rounded-t',
     properties: border-top-left-radius border-top-right-radius,
-    values: $border-radius
+    values: $border-radiuses
   ),
   'border-bottom-radius': (
     class: 'rounded-b',
     properties: border-bottom-left-radius border-bottom-right-radius,
-    values: $border-radius
+    values: $border-radiuses
   ),
   'border-right-radius': (
     class: 'rounded-r',
     properties: border-top-right-radius border-bottom-right-radius,
-    values: $border-radius
+    values: $border-radiuses
   ),
   'border-left-radius': (
     class: 'rounded-l',
     properties: border-top-left-radius border-bottom-left-radius,
-    values: $border-radius
+    values: $border-radiuses
   ),
   'border-start-radius': (
     class: 'rounded-s',
     properties: border-start-start-radius border-end-start-radius,
-    values: $border-radius
+    values: $border-radiuses
   ),
   'border-end-radius': (
     class: 'rounded-e',
     properties: border-start-end-radius border-end-end-radius,
-    values: $border-radius
+    values: $border-radiuses
   ),
   'border-blue-gray': (
     class: 'border-blue-gray',
