@@ -57,7 +57,8 @@ export const authRoutes = {
       myRequests: {
         route: 'my-requests',
         path: '/my-offers'
-      }
+      },
+      logout: { route: 'logout', path: '/logout' }
     },
     tutor: {
       myProfile: { route: 'my-profile', path: '/my-profile' },
@@ -70,7 +71,8 @@ export const authRoutes = {
       myCourses: {
         route: 'my-courses',
         path: '/my-courses'
-      }
+      },
+      logout: { route: 'logout', path: '/logout' }
     },
     logout: { route: 'logout', path: '/logout' }
   },

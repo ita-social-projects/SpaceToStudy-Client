@@ -57,8 +57,9 @@ const Navbar = () => {
   }, [userRole])
 
   const accountItems = useMemo(() => {
-    if (!userRole) return []
-    return Object.values(authRoutes.accountMenu)
+    if (userRole === UserRoleEnum.Student || userRole === UserRoleEnum.Tutor)
+      return Object.values(authRoutes.accountMenu[userRole])
+    return []
   }, [userRole])
 
   const handleOpenSidebar = () => {
