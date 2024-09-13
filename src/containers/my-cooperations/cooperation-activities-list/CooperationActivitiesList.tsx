@@ -22,6 +22,7 @@ import {
   deleteCooperationSection,
   updateCooperationSection,
   addNewCooperationSection,
+  updateResourceAvailability,
   deleteResource,
   updateResource,
   addSectionResources,
@@ -34,7 +35,6 @@ const resourceHandlers: Record<
   CourseResourceEventType,
   (event: ResourceEvent) => AnyAction | null
 > = {
-  // Use ? type guard to automatically infer the type of the event
   [CourseResourceEventType.ResourceUpdated]: (event) => {
     return event.type === CourseResourceEventType.ResourceUpdated
       ? updateResource({
@@ -68,6 +68,15 @@ const resourceHandlers: Record<
           resourceId: event.resourceId
         })
       : null
+  },
+  [CourseResourceEventType.ResourceUpdateAvailability]: (event) => {
+    return event.type === CourseResourceEventType.ResourceUpdateAvailability
+      ? updateResourceAvailability({
+          sectionId: event.sectionId,
+          resourceId: event.resourceId,
+          availability: event.availability
+        })
+      : null
   }
 }
 
@@ -75,7 +84,6 @@ const sectionHandlers: Record<
   CourseSectionEventType,
   (event: SectionEvent) => AnyAction | null
 > = {
-  // Use ? type guard to automatically infer the type of the event
   [CourseSectionEventType.SectionAdded]: (event) => {
     return event.type === CourseSectionEventType.SectionAdded
       ? addNewCooperationSection({ index: event.index })

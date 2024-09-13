@@ -32,6 +32,10 @@ export interface CourseForm
 export interface Resource {
   resource: CourseResource
   resourceType: ResourceType
+  availability?: {
+    status: string
+    date: string | null
+  }
 }
 
 export interface CourseSection {

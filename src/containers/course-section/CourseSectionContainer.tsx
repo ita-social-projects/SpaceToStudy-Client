@@ -123,13 +123,12 @@ const CourseSectionContainer: FC<SectionProps> = ({
 
   const handleResourceAvailabilityChange = useCallback(
     (resource: CourseResource, availability: ResourceAvailability) => {
+      console.log('HANDLER', resource, availability)
       resourceEventHandler?.({
-        type: CourseResourceEventType.ResourceUpdated,
+        type: CourseResourceEventType.ResourceUpdateAvailability,
         sectionId: sectionData.id,
         resourceId: resource.id,
-        resource: {
-          availability
-        }
+        availability
       })
     },
     [sectionData, resourceEventHandler]
@@ -340,6 +339,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
             variant={TextFieldVariantEnum.Standard}
           />
           <ResourcesList
+            cooperationData={sectionData.resources}
             deleteResource={deleteResource}
             editResource={editResource}
             isCooperation={isCooperation}
