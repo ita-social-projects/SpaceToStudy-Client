@@ -15,13 +15,12 @@ import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
 import SendIcon from '@mui/icons-material/Send'
 import MoodIcon from '@mui/icons-material/Mood'
-import AttachFileIcon from '@mui/icons-material/AttachFile'
 
 import useBreakpoints from '~/hooks/use-breakpoints'
 import AppTextArea from '~/components/app-text-area/AppTextArea'
 
 import { styles } from '~/containers/chat/chat-text-area/ChatTextArea.styles'
-import { TextFieldVariantEnum } from '~/types'
+import { AdornmentPosition, TextFieldVariantEnum } from '~/types'
 import { spliceSx } from '~/utils/helper-functions'
 
 interface ChatTextAreaProps extends Omit<TextFieldProps, 'onChange' | 'sx'> {
@@ -34,6 +33,7 @@ interface ChatTextAreaProps extends Omit<TextFieldProps, 'onChange' | 'sx'> {
     icon?: SxProps
   }
   emojiPickerProps?: { perLine: number }
+  adornmentPosition?: AdornmentPosition
 }
 
 const ChatTextArea: FC<ChatTextAreaProps> = ({
@@ -44,6 +44,7 @@ const ChatTextArea: FC<ChatTextAreaProps> = ({
   minRows = 1,
   sx = {},
   emojiPickerProps,
+  adornmentPosition = AdornmentPosition.End,
   ...props
 }) => {
   const { isMobile } = useBreakpoints()
@@ -78,15 +79,10 @@ const ChatTextArea: FC<ChatTextAreaProps> = ({
 
   const onClosePicker = () => setIsEmojiPickerOpen(false)
 
-  const endAdornment = (
-    <>
-      <IconButton onClick={onTogglePicker}>
-        <MoodIcon />
-      </IconButton>
-      <IconButton disabled>
-        <AttachFileIcon />
-      </IconButton>
-    </>
+  const adornment = (
+    <IconButton onClick={onTogglePicker}>
+      <MoodIcon />
+    </IconButton>
   )
 
   return (
@@ -113,7 +109,10 @@ const ChatTextArea: FC<ChatTextAreaProps> = ({
           InputLabelProps={styles.textAreaLabel(value)}
           InputProps={{
             disableUnderline: true,
-            endAdornment: endAdornment
+            endAdornment:
+              adornmentPosition === AdornmentPosition.End && adornment,
+            startAdornment:
+              adornmentPosition === AdornmentPosition.Start && adornment
           }}
           fullWidth
           inputRef={inputRef}
