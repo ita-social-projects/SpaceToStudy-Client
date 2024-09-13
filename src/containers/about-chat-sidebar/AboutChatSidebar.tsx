@@ -7,8 +7,6 @@ import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
 import IconButton from '@mui/material/IconButton'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
-import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined'
-import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined'
 import LinkOutlinedIcon from '@mui/icons-material/LinkOutlined'
 
 import AppButton from '~/components/app-button/AppButton'
@@ -21,8 +19,6 @@ import {
   ButtonVariantEnum,
   Member,
   Link,
-  File,
-  Media,
   SidebarContentEnum
 } from '~/types'
 import { createUrlPath, spliceSx } from '~/utils/helper-functions'
@@ -31,20 +27,13 @@ import { styles } from '~/containers/about-chat-sidebar/AboutChatSidebar.styles'
 
 interface AboutChatSidebarProps {
   member: Member
-  media: Media[]
-  files: File[]
   links: Link[]
 }
 
-const AboutChatSidebar: FC<AboutChatSidebarProps> = ({
-  member,
-  media,
-  files,
-  links
-}) => {
+const AboutChatSidebar: FC<AboutChatSidebarProps> = ({ member, links }) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const { About, Media, Files, Links } = SidebarContentEnum
+  const { About, Links } = SidebarContentEnum
   const [titleText, setTitleText] = useState<SidebarContentEnum>(About)
 
   const { user, role } = member
@@ -57,17 +46,6 @@ const AboutChatSidebar: FC<AboutChatSidebarProps> = ({
 
   const onSeeAllClick = (text: SidebarContentEnum) => {
     setTitleText(text)
-  }
-
-  const getContentByTitle = () => {
-    switch (titleText) {
-      case Files:
-        return <SidebarGroupedContent<File> items={files} type={titleText} />
-      case Media:
-        return <SidebarGroupedContent<Media> items={media} type={titleText} />
-      case Links:
-        return <SidebarGroupedContent<Link> items={links} type={titleText} />
-    }
   }
 
   const goBackBtn = titleText !== About && (
@@ -115,20 +93,6 @@ const AboutChatSidebar: FC<AboutChatSidebarProps> = ({
             </Box>
             <Divider />
             <SidebarContentBox
-              content={media}
-              icon={<ImageOutlinedIcon />}
-              name={Media}
-              onClick={onSeeAllClick}
-            />
-            <Divider />
-            <SidebarContentBox
-              content={files}
-              icon={<InsertDriveFileOutlinedIcon />}
-              name={Files}
-              onClick={onSeeAllClick}
-            />
-            <Divider />
-            <SidebarContentBox
               content={links}
               icon={<LinkOutlinedIcon />}
               name={Links}
@@ -136,7 +100,7 @@ const AboutChatSidebar: FC<AboutChatSidebarProps> = ({
             />
           </Box>
         ) : (
-          getContentByTitle()
+          <SidebarGroupedContent<Link> items={links} />
         )}
       </SimpleBar>
     </Box>

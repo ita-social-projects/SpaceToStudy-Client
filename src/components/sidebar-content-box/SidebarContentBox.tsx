@@ -4,8 +4,6 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
 import AppButton from '~/components/app-button/AppButton'
-import SidebarImageGrid from '~/components/sidebar-image-grid/SidebarImageGrid'
-import FileComponent from '~/components/file-component/FileComponent'
 import LinkComponent from '~/components/link-component/LinkComponent'
 
 import { maxElemToShow } from '~/components/sidebar-content-box/SidebarContentBox.constants'
@@ -35,23 +33,11 @@ const SidebarContentBox: FC<SidebarContentBoxProps> = ({
 }) => {
   const { t } = useTranslation()
 
-  const { Media, Files } = SidebarContentEnum
-  const isMoreContent = content.length > maxElemToShow && name !== Media
+  const isMoreContent = content.length > maxElemToShow
   const capitalizedName = name.charAt(0).toUpperCase() + name.slice(1)
 
-  const mediaContent = name === Media && (
-    <SidebarImageGrid
-      images={content as Media[]}
-      onClick={() => onClick(name)}
-    />
-  )
-
   const limitedContent = content.slice(0, maxElemToShow).map((component) => {
-    return name === Files ? (
-      <FileComponent file={component as File} key={component._id} />
-    ) : (
-      <LinkComponent key={component._id} link={component as Link} />
-    )
+    return <LinkComponent key={component._id} link={component as Link} />
   })
 
   const noContent = !content.length && (
@@ -82,7 +68,7 @@ const SidebarContentBox: FC<SidebarContentBoxProps> = ({
           </AppButton>
         )}
       </Box>
-      {name === Media ? mediaContent : limitedContent}
+      {limitedContent}
       {noContent}
     </Box>
   )
