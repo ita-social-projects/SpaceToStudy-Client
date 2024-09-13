@@ -217,8 +217,8 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
     onMessageSend
   ])
 
-  messages.reverse()
   const groupedMessages = getGroupedByDate(messages || [], getIsNewDay)
+  groupedMessages.reverse()
 
   const messagesListWithDate = groupedMessages.map((group) => (
     <Box key={group.date} sx={styles.messagesWithDate}>
