@@ -10,7 +10,6 @@ import {
   cooperationDetails,
   editLesson,
   lessonDetails,
-  myOffers,
   myProfile,
   myResources,
   myCourses,
@@ -41,7 +40,6 @@ const CooperationDetails = lazy(
     )
 )
 const EditProfile = lazy(() => import('~/pages/edit-profile/EditProfile'))
-const MyOffers = lazy(() => import('~/pages/my-offers/MyOffers'))
 const Chat = lazy(() => import('~/pages/chat/Chat'))
 const Subjects = lazy(() => import('~/pages/subjects/Subjects'))
 const Categories = lazy(() => import('~/pages/categories/Categories'))
@@ -119,11 +117,6 @@ export const authRouter = (
       element={<EditProfile />}
       handle={{ crumb: [myProfile, editProfile] }}
       path={authRoutes.editProfile.route}
-    />
-    <Route
-      element={<MyOffers />}
-      handle={{ crumb: myOffers }}
-      path={authRoutes.myOffers.route}
     />
     <Route
       element={<MyResources />}

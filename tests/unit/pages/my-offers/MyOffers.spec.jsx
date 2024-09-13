@@ -4,6 +4,7 @@ import { URLs } from '~/constants/request'
 
 import MyOffers from '~/pages/my-offers/MyOffers'
 import { mockOffer } from '~tests/unit/pages/offer-details/OfferDetails.spec.constants'
+import { UserRoleEnum } from '~/types'
 
 const mockData = {
   offers: [mockOffer],
@@ -16,10 +17,18 @@ mockAxiosClient
 
 describe('MyOffers', () => {
   beforeEach(async () => {
-    await waitFor(() => renderWithProviders(<MyOffers />))
+    await waitFor(() =>
+      renderWithProviders(<MyOffers />, {
+        preloadedState: {
+          appMain: {
+            userRole: UserRoleEnum.Tutor
+          }
+        }
+      })
+    )
   })
   it('should render title on page', () => {
-    const title = screen.getByText('myOffersPage.title')
+    const title = screen.getByText('myOffersPage.title.tutor')
 
     expect(title).toBeInTheDocument()
   })

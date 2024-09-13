@@ -59,7 +59,7 @@ const MyOffers = () => {
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
   const showTable = !breakpoints.isMobile && itemsView === CardsViewEnum.Inline
 
-  const { userId } = useAppSelector((state) => state.appMain)
+  const { userId, userRole } = useAppSelector((state) => state.appMain)
 
   const getMyOffers = useCallback(
     () =>
@@ -107,9 +107,11 @@ const MyOffers = () => {
   return (
     <PageWrapper>
       <Box sx={styles.titleBlock}>
-        <Typography sx={styles.title}>{t('myOffersPage.title')}</Typography>
+        <Typography sx={styles.title}>
+          {t(`myOffersPage.title.${userRole}`)}
+        </Typography>
         <AppButton onClick={handleOpenDrawer}>
-          {t('myOffersPage.buttonLabel')}
+          {t(`myOffersPage.buttonLabel.${userRole}`)}
         </AppButton>
         <AppDrawer onClose={closeDrawer} open={isOpen}>
           <CreateOffer closeDrawer={closeDrawer} />

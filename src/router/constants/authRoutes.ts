@@ -6,6 +6,7 @@ export const authRoutes = {
   myProfile: { route: 'my-profile', path: '/my-profile' },
   myCooperations: { route: 'my-cooperations', path: '/my-cooperations' },
   myOffers: { route: 'my-offers', path: '/my-offers' },
+  myRequests: { route: 'my-requests', path: '/my-requests' },
   findOffers: {
     route: 'categories/subjects/find-offers',
     path: '/categories/subjects/find-offers'
@@ -56,7 +57,7 @@ export const authRoutes = {
       bookmarks: { route: 'bookmarked-offers', path: '/bookmarked-offers' },
       myRequests: {
         route: 'my-requests',
-        path: '/my-offers'
+        path: '/my-requests'
       }
     },
     tutor: {

@@ -1,5 +1,8 @@
 {
-  "title": "My Offers",
+  "title": {
+    "student": "My Requests",
+    "tutor": "My Offers"
+  },
   "tabs": {
     "all": "All",
     "active": "Active",
@@ -13,6 +16,12 @@
     "updated": "Last update",
     "status": "Status"
   },
-  "buttonLabel": "Create new offer",
-  "editButton": "Edit offer"
+  "buttonLabel": {
+    "student": "Create new request",
+    "tutor": "Create new offer"
+  },
+  "editButton": {
+    "tutor": "Edit offer",
+    "student": "Edit request"
+  }
 }

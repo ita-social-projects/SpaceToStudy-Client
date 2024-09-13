@@ -5,7 +5,7 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
 import { setPageLoad } from '~/redux/reducer'
-import { useAppDispatch } from '~/hooks/use-redux'
+import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 import usePagination from '~/hooks/table/use-pagination'
 import useAxios from '~/hooks/use-axios'
 import useSort from '~/hooks/table/use-sort'
@@ -30,7 +30,7 @@ import {
   tabsInfo
 } from '~/pages/my-cooperations/MyCooperations.constants'
 import { itemsLoadLimit } from '~/constants'
-import { CardsViewEnum, TabType } from '~/types'
+import { CardsViewEnum, TabType, UserRoleEnum } from '~/types'
 import { styles } from '~/pages/my-cooperations/MyCooperations.styles'
 
 const MyCooperations = () => {
@@ -49,6 +49,7 @@ const MyCooperations = () => {
   const { page, handleChangePage } = usePagination()
   const { sort, resetSort } = sortOptions
   const { filters, clearFilters, setFilterByKey } = filterOptions
+  const { userRole } = useAppSelector((state) => state.appMain)
 
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
   const showTable = !breakpoints.isMobile && itemsView === CardsViewEnum.Inline
@@ -103,8 +104,19 @@ const MyCooperations = () => {
     <PageWrapper>
       <Box sx={styles.titleBlock}>
         <Typography sx={styles.title}>{t('cooperationsPage.title')}</Typography>
-        <AppButton component={Link} to={authRoutes.myOffers.path}>
-          {t('button.viewMyOffers')}
+        <AppButton
+          component={Link}
+          to={
+            userRole == UserRoleEnum.Tutor
+              ? authRoutes.myOffers.path
+              : authRoutes.myRequests.path
+          }
+        >
+          {t(
+            `button.view.${
+              userRole == UserRoleEnum.Tutor ? 'viewMyOffers' : 'viewMyRequests'
+            }`
+          )}
         </AppButton>
       </Box>
       <Box sx={styles.tabs}>{tabs}</Box>

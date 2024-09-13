@@ -7,6 +7,9 @@
   "createCooperation": "Відправити запит на співпрацю",
   "sendRequest": "Надіслати запит",
   "addQuestion": "Додати ще одне питання",
-  "viewMyOffers": "До моїх пропозицій",
+  "view": {
+    "viewMyOffers": "До моїх пропозицій",
+    "viewMyRequests": "До моїх запитів"
+  },
   "newLesson": "Новий урок"
 }

@@ -37,6 +37,11 @@ export const myOffers = {
   path: authRoutes.myOffers.route
 }
 
+export const myRequests = {
+  name: 'breadCrumbs.myRequests',
+  path: authRoutes.myRequests.route
+}
+
 export const categories = {
   name: 'breadCrumbs.categories',
   path: authRoutes.categories.route
