@@ -45,9 +45,8 @@ export const style = {
   subjectContainer: {
     display: 'flex',
     '& > *': {
-      mr: '10px'
-    },
-    gap: '4px'
+      mr: '8px'
+    }
   },
   buttons: {
     mr: '15px',
