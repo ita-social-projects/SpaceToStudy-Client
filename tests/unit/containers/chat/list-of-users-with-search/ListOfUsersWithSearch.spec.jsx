@@ -5,7 +5,6 @@ import { useAppSelector } from '~/hooks/use-redux'
 
 import ListOfUsersWithSearch from '~/containers/chat/list-of-users-with-search/ListOfUsersWithSearch'
 import { chatsMock } from '~tests/unit/containers/chat/list-of-users-with-search/MockChat.spec.constants'
-import { isCorrectUser } from '~/containers/chat/list-of-users-with-search/ListOfUsersWithSearch.constants'
 
 vi.mock('simplebar-react', () => {
   return {
@@ -19,7 +18,7 @@ vi.mock('~/hooks/use-redux', () => ({
 
 const props = {
   listOfChats: chatsMock,
-  selectedChat: null,
+  selectedChat: chatsMock[0],
   setSelectedChat: vi.fn(),
   closeDrawer: vi.fn()
 }
@@ -43,46 +42,30 @@ describe('ListOfUsersWithSearch component', () => {
   })
 
   it('renders chat items when chats are present', () => {
-    const chatItems = screen.getAllByAltText('User Avatar')
+    const chatItems = screen.getAllByTestId('chat-item')
 
-    expect(chatItems.length).toBe(chatsMock.length)
+    expect(chatItems.length).toBe(chatsMock.length - 1)
   })
 
   it('filters chats based on search input', () => {
-    const handleChange = vi.fn()
     const searchInput = screen.getByLabelText('common.search')
 
     fireEvent.change(searchInput, { target: { value: 'alaya' } })
 
-    const filteredChatItems = screen.getAllByAltText('User Avatar')
+    const filteredChatItems = screen.getAllByTestId('chat-item')
     waitFor(() => {
       expect(filteredChatItems.length).toBe(1)
       expect(filteredChatItems).toHaveTextContent('Alaya McKenzie')
       expect(filteredChatItems._id).toBe(chatsMock[1]._id)
-      expect(handleChange).toHaveBeenCalledWith('alaya')
     })
   })
 
-  it('calls setSelectedChat when a chat is clicked', () => {
-    const chatItem = screen.getAllByAltText('User Avatar')[0]
+  it('calls setSelectedChat when a chat is clicked', async () => {
+    const chatItem = screen.getAllByTestId('chat-item')[0]
 
     fireEvent.click(chatItem)
-
-    expect(props.setSelectedChat).toHaveBeenCalledWith(chatsMock[0])
-  })
-})
-
-describe('isCorrectUser', () => {
-  beforeEach(() => {
-    useAppSelector.mockReturnValue({ userId: '644e6b1668cc37f543f2f37a' })
-    renderWithProviders(<ListOfUsersWithSearch {...props} />)
-  })
-
-  it('should return true when there is another user besides the current user', () => {
-    const userId = '644e6b1668cc37f543f2f37a'
-    const chat = chatsMock[0]
-
-    const result = isCorrectUser(chat, userId)
-    expect(result).toBe(true)
+    await waitFor(() => {
+      expect(props.setSelectedChat).toHaveBeenCalledWith(chatsMock[0])
+    })
   })
 })

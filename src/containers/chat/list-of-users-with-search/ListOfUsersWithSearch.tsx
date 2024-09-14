@@ -31,7 +31,7 @@ const ListOfUsersWithSearch: FC<ListOfUsersWithSearchProps> = ({
 
   const { userId } = useAppSelector((state) => state.appMain)
   const { t } = useTranslation()
-
+  console.log(userId)
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value)
   }

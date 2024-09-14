@@ -1,12 +1,5 @@
 import { ChatResponse } from '~/types'
 
-export const isCorrectUser = (item: ChatResponse, userId: string): boolean => {
-  const otherMember = item.members.filter(
-    (member) => member.user._id !== userId
-  )
-  return !!otherMember
-}
-
 export const filterChats = (
   listOfChats: ChatResponse[],
   userId: string,
