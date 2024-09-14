@@ -3,7 +3,7 @@ import ChatDialogWindow from '~/containers/offer-page/chat-dialog-window/ChatDia
 import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 import { createUrlPath } from '~/utils/helper-functions'
 import { URLs } from '~/constants/request'
-import { messagesMock } from '~tests/unit/containers/chat/list-of-users-with-search/MockChat.spec.constants'
+import { messagesMock } from '~tests/unit/pages/chat/ChatsMock.spec.constants'
 
 global.window.getComputedStyle = vi.fn().mockImplementation(() => ({
   getPropertyValue: vi.fn()
