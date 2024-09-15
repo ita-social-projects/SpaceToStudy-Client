@@ -5,7 +5,8 @@ export const styles = {
     display: 'flex',
     flexWrap: 'wrap',
     alignItems: 'start',
-    gap: '4px'
+    gap: '4px',
+    ml: '8px'
   },
   subjectChipLabel: {
     typography: 'overline',

@@ -177,7 +177,7 @@ const MyCooperationsDetails = () => {
           {t('cooperationDetailsPage.aboutCooperation')}
         </Typography>
         <ShowMoreCollapse
-          collapsedSize={30}
+          collapsedSize={28}
           collapsedTextLength={100}
           description={offer.description}
           sx={style.aboutCooperation}
