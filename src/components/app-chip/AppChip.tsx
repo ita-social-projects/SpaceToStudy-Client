@@ -1,6 +1,12 @@
 import { ReactNode, ReactElement } from 'react'
 
-import { Chip, IconButton, SvgIconProps, Typography, TypographyProps } from '@mui/material'
+import {
+  Chip,
+  IconButton,
+  SvgIconProps,
+  Typography,
+  TypographyProps
+} from '@mui/material'
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded'
 import { SxProps } from '@mui/system'
 
@@ -12,7 +18,7 @@ interface AppChipProps {
   icon?: ReactElement<SvgIconProps>
   sx?: SxProps
   labelSx?: SxProps
-  labelElementProps?: Omit<TypographyProps, "sx">
+  labelElementProps?: Omit<TypographyProps, 'sx'>
 }
 
 const AppChip: React.FC<AppChipProps> = ({
@@ -39,7 +45,10 @@ const AppChip: React.FC<AppChipProps> = ({
       }
       icon={icon}
       label={
-        <Typography sx={{ typography: 'subtitle2', ...labelSx }} {...labelElementProps}>
+        <Typography
+          sx={{ typography: 'subtitle2', ...labelSx }}
+          {...labelElementProps}
+        >
           {children}
         </Typography>
       }
