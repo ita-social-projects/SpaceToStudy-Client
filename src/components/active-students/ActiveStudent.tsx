@@ -47,7 +47,7 @@ const ActiveStudent: React.FC<ActiveStudentProps> = ({
       <Typography noWrap textOverflow={'ellipsis'}>
         {fullName}
       </Typography>
-      <AppChip labelSx={styles.chipLabel} sx={styles.chip}>
+      <AppChip labelSx={styles.chipLabel} sx={styles.chip} labelElementProps={{ component: "div" }}>
         <Box sx={styles.subjectNameWrapper}>
           <Typography>{subjectName}</Typography>
           <Typography sx={styles.dot} />
