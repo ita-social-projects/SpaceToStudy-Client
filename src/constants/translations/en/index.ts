@@ -44,6 +44,7 @@ import cooperationDetailsPage from './cooperation-details.json'
 import editProfilePage from './edit-profile.json'
 import quiz from './quiz.json'
 import bookmarkedOffers from './bookmarked-offers-page.json'
+import activeStudents from './active-students.json'
 
 const en = {
   translations: {
@@ -92,7 +93,8 @@ const en = {
     cooperationDetailsPage,
     editProfilePage,
     quiz,
-    bookmarkedOffers
+    bookmarkedOffers,
+    activeStudents
   }
 }
 

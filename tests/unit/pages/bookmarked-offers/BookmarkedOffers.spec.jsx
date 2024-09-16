@@ -1,31 +1,46 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react'
-import { expect, vi } from 'vitest'
+import { describe, expect, vi } from 'vitest'
 
 import BookmarkedOffers from '~/pages/bookmarked-offers/BookmarkedOffers'
 
-import { mockAxiosClient, renderWithProviders } from '~tests/test-utils'
+import {
+  mockAxiosClient,
+  renderWithProviders,
+  TestSnackbar
+} from '~tests/test-utils'
 import { createUrlPath } from '~/utils/helper-functions'
 import { URLs } from '~/constants/request'
 import { offersMock } from '~tests/unit/pages/bookmarked-offers/BookmarkedOffers.constants'
 import * as sortValues from '~/containers/find-offer/offer-filter-block/OfferFilterBlock.constants'
 
 const mockNavigate = vi.fn()
+let mockSearchParams = new URLSearchParams()
 const mockSetSearchParams = vi.fn()
+const mockT = (str) => str
 
 vi.mock('react-router-dom', async () => {
   const actual = await vi.importActual('react-router-dom')
   return {
     ...actual,
     useNavigate: () => mockNavigate,
-    useSearchParams: () => [new URLSearchParams(), mockSetSearchParams]
+    useSearchParams: () => [mockSearchParams, mockSetSearchParams]
   }
 })
+
+vi.mock('react-i18next', () => ({
+  Trans: ({ i18nKey }) => i18nKey,
+  useTranslation: () => ({
+    i18n: { language: 'en' },
+    t: mockT
+  })
+}))
 
 const mockUserId = '66b0aecdadd1fe775238c7d5'
 const preloadedState = { appMain: { userId: mockUserId } }
 const getBookmarksUrl = `${createUrlPath(URLs.users.get, mockUserId)}${
   URLs.users.bookmarks
 }`
+const mockError = { code: 'mockErrorCode', message: 'test error' }
 
 const sortTranslationKeysMock = [
   { title: 'newest', value: 'createdAt' },
@@ -51,7 +66,7 @@ describe('BookmarkedOffers page with offers', () => {
 
   it('should render the page with offers', async () => {
     const offer1Title = await screen.findByText(offersMock[0].title)
-    const offer2Title = await screen.findByText(offersMock[1].title)
+    const offer2Title = screen.getByText(offersMock[1].title)
 
     expect(offer1Title).toBeInTheDocument()
     expect(offer2Title).toBeInTheDocument()
@@ -95,7 +110,9 @@ describe('BookmarkedOffers page with offers', () => {
     fireEvent.click(secondOption)
 
     expect(mockSetSearchParams).toHaveBeenCalledWith(
-      new URLSearchParams({ page: 1, sort: sortTranslationKeysMock[1].value })
+      expect.objectContaining(
+        new URLSearchParams({ page: 1, sort: sortTranslationKeysMock[1].value })
+      )
     )
   })
 })
@@ -115,5 +132,26 @@ describe('BookmarkedOffers page without offers', () => {
     )
 
     expect(pageDescription).toBeInTheDocument()
+  })
+})
+
+describe("BookmarkedOffers page couldn't load offers", () => {
+  beforeEach(async () => {
+    mockAxiosClient.onGet(getBookmarksUrl).reply(400, mockError)
+
+    await waitFor(() => {
+      renderWithProviders(
+        <TestSnackbar>
+          <BookmarkedOffers />
+        </TestSnackbar>,
+        { preloadedState }
+      )
+    })
+  })
+
+  it('should show a snackbar with an error text', async () => {
+    const snackbar = await screen.findByText('bookmarkedOffers.loadingError')
+
+    expect(snackbar).toBeInTheDocument()
   })
 })

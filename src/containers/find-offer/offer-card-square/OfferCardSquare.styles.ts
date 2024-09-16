@@ -39,7 +39,7 @@ export const styles = {
     color: 'basic.black',
     position: 'absolute',
     top: '-20px',
-    right: '-20px'
+    right: '-12px'
   },
   priceContainer: {
     display: 'flex',

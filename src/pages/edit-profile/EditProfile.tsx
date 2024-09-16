@@ -143,11 +143,11 @@ const EditProfile = () => {
 
     if (city && country) dataToUpdate.address = { city, country }
 
-    if (videoLink) {
+    if (typeof videoLink === 'string' || typeof videoLink === 'undefined') {
+      dataToUpdate.videoLink = videoLink ?? ''
+    } else if (typeof videoLink === 'object') {
       dataToUpdate.videoLink =
-        typeof videoLink === 'string'
-          ? videoLink
-          : videoLink[userRole as keyof typeof videoLink]
+        videoLink[userRole as keyof typeof videoLink] || ''
     }
 
     if (notificationSettings)

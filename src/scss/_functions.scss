@@ -18,7 +18,7 @@
  * Retrieves the value of a CSS variable by constructing its name using a base name and optional suffix.
  */
 
-@function get-var($name, $suffix) {
+@function get-var($name, $suffix: '') {
   $var-name: build-var-name($name, $suffix);
   @return var(#{$var-name});
 }

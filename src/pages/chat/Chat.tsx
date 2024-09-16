@@ -21,12 +21,7 @@ import AboutChatSidebar from '~/containers/about-chat-sidebar/AboutChatSidebar'
 
 import { defaultResponses } from '~/constants'
 import { styles } from '~/pages/chat/Chat.styles'
-import {
-  backdropIgnore,
-  mockFiles,
-  mockLinks,
-  mockMedia
-} from '~/pages/chat/Chat.constants'
+import { backdropIgnore, mockLinks } from '~/pages/chat/Chat.constants'
 import {
   ChatResponse,
   DrawerVariantEnum,
@@ -178,12 +173,7 @@ const Chat = () => {
       variant={isDesktop ? Persistent : Temporary}
     >
       {userToSpeak && (
-        <AboutChatSidebar
-          files={mockFiles}
-          links={mockLinks}
-          media={mockMedia}
-          member={userToSpeak}
-        />
+        <AboutChatSidebar links={mockLinks} member={userToSpeak} />
       )}
     </AppDrawer>
   )

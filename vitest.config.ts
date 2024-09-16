@@ -24,11 +24,12 @@ export default defineConfig({
       include: [
         'src/**/*.jsx',
         'src/**/*.tsx',
+        'src/**/*.ts',
         'src/utils/**/*.ts',
         'src/utils/**/*.js',
         'src/redux/**/*.ts'
       ],
-      exclude: ['src/stories', './tests/setup-tests.js'],
+      exclude: ['src/stories', './tests/setup-tests.js', 'src/**/*.styles.ts'],
       reportsDirectory: './tests/coverage'
     },
     reporters: ['vitest-sonar-reporter', 'default'],

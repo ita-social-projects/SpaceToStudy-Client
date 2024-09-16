@@ -45,13 +45,13 @@ export const style = {
   subjectContainer: {
     display: 'flex',
     '& > *': {
-      mr: '10px'
+      mr: '8px'
     }
   },
   buttons: {
     mr: '15px',
     color: 'basic.black',
-    diplay: 'flex',
+    display: 'flex',
     alignItems: 'center',
     '& > svg': {
       fontSize: '20px',

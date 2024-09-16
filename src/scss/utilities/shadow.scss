@@ -1,0 +1,22 @@
+@use '../variables' as *;
+@use '../functions' as *;
+@use '../mixins' as *;
+@use 'sass:map';
+
+$shadow-utilities: (
+  'box-shadow': (
+    class: 'shadow',
+    properties: box-shadow,
+    values:
+      map.merge(
+        map-to-var-map($box-shadows, 'box-shadow'),
+        (
+          'none': none
+        )
+      )
+  )
+);
+
+@each $key, $utility in $shadow-utilities {
+  @include generate-utilities($utility);
+}
