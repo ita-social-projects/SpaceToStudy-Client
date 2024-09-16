@@ -9,27 +9,27 @@ $borders-utilities: (
     (
       class: 'border',
       properties: border-width,
-      values: $border-widths
+      values: map-to-var-map($border-widths, 'border-width')
     ),
   'border-top-width': (
     class: 'border-t',
     properties: border-top-width,
-    values: $border-widths
+    values: map-to-var-map($border-widths, 'border-width')
   ),
   'border-bottom-width': (
     class: 'border-b',
     properties: border-bottom-width,
-    values: $border-widths
+    values: map-to-var-map($border-widths, 'border-width')
   ),
   'border-right-width': (
     class: 'border-r',
     properties: border-right-width,
-    values: $border-widths
+    values: map-to-var-map($border-widths, 'border-width')
   ),
   'border-left-width': (
     class: 'border-l',
     properties: border-left-width,
-    values: $border-widths
+    values: map-to-var-map($border-widths, 'border-width')
   ),
   'border-top-style': (
     class: 'border-t',
@@ -59,37 +59,37 @@ $borders-utilities: (
   'border-radius': (
     class: 'rounded',
     properties: border-radius,
-    values: $border-radiuses
+    values: map-to-var-map($border-radiuses, 'border-radiuses')
   ),
   'border-top-radius': (
     class: 'rounded-t',
     properties: border-top-left-radius border-top-right-radius,
-    values: $border-radiuses
+    values: map-to-var-map($border-radiuses, 'border-radiuses')
   ),
   'border-bottom-radius': (
     class: 'rounded-b',
     properties: border-bottom-left-radius border-bottom-right-radius,
-    values: $border-radiuses
+    values: map-to-var-map($border-radiuses, 'border-radiuses')
   ),
   'border-right-radius': (
     class: 'rounded-r',
     properties: border-top-right-radius border-bottom-right-radius,
-    values: $border-radiuses
+    values: map-to-var-map($border-radiuses, 'border-radiuses')
   ),
   'border-left-radius': (
     class: 'rounded-l',
     properties: border-top-left-radius border-bottom-left-radius,
-    values: $border-radiuses
+    values: map-to-var-map($border-radiuses, 'border-radiuses')
   ),
   'border-start-radius': (
     class: 'rounded-s',
     properties: border-start-start-radius border-end-start-radius,
-    values: $border-radiuses
+    values: map-to-var-map($border-radiuses, 'border-radiuses')
   ),
   'border-end-radius': (
     class: 'rounded-e',
     properties: border-start-end-radius border-end-end-radius,
-    values: $border-radiuses
+    values: map-to-var-map($border-radiuses, 'border-radiuses')
   ),
   'border-blue-gray': (
     class: 'border-blue-gray',
