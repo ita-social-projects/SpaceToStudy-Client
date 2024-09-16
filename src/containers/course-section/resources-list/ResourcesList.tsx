@@ -8,12 +8,18 @@ import SortableWrapper from '~/containers/sortable-wrapper/SortableWrapper'
 import ResourceItem from '~/containers/course-section/resource-item/ResourceItem'
 import { styles } from '~/containers/course-section/resources-list/ResourcesList.styles'
 
-import { CourseResource, ResourceAvailability } from '~/types'
+import {
+  CourseResource,
+  ResourceAvailability,
+  ResourceAvailabilityStatusEnum,
+  Resource
+} from '~/types'
 
 import useDroppable from '~/hooks/use-droppable'
 import useDndSensor from '~/hooks/use-dnd-sensor'
 
 interface ResourcesListProps {
+  cooperationData?: Resource[]
   items: CourseResource[]
   sortResources: (resources: CourseResource[]) => void
   deleteResource: (resource: CourseResource) => void
@@ -26,6 +32,7 @@ interface ResourcesListProps {
 }
 
 const ResourcesList: FC<ResourcesListProps> = ({
+  cooperationData,
   items,
   sortResources,
   deleteResource,
@@ -43,7 +50,11 @@ const ResourcesList: FC<ResourcesListProps> = ({
     sensors
   } = useDndSensor({ items, setItems: sortResources, idProp: 'id' })
 
-  const renderItem = (item: CourseResource, isDragOver = false) => (
+  const renderItem = (
+    item: CourseResource,
+    availability: ResourceAvailability,
+    isDragOver = false
+  ) => (
     <SortableWrapper
       id={item.id}
       key={item.id}
@@ -52,6 +63,7 @@ const ResourcesList: FC<ResourcesListProps> = ({
     >
       <DragHandle iconStyles={styles.dragIcon} />
       <ResourceItem
+        availability={availability}
         deleteResource={deleteResource}
         editResource={editResource}
         isCooperation={isCooperation}
@@ -61,7 +73,9 @@ const ResourcesList: FC<ResourcesListProps> = ({
     </SortableWrapper>
   )
 
-  const resourceItems = items.map((item) => renderItem(item))
+  const resourceItems = cooperationData?.map((item) => {
+    return renderItem(item.resource, item.availability as ResourceAvailability)
+  })
 
   const resourceListContent = enabled && (
     <>
@@ -71,7 +85,14 @@ const ResourcesList: FC<ResourcesListProps> = ({
       >
         <Box sx={styles.root}>{resourceItems}</Box>
       </SortableContext>
-      <DragOverlay>{activeItem && renderItem(activeItem, true)}</DragOverlay>
+      <DragOverlay>
+        {activeItem &&
+          renderItem(
+            activeItem,
+            { status: ResourceAvailabilityStatusEnum.Open, date: null },
+            false
+          )}
+      </DragOverlay>
     </>
   )
 

@@ -1,6 +1,7 @@
 import {
   CourseResourceEventType,
   CourseSectionEventType,
+  ResourceAvailability,
   ResourceEvent,
   SectionEvent,
   CourseResource,
@@ -32,6 +33,13 @@ export interface AddSectionResourcesEvent {
   sectionId: string
   resources: CourseResource[]
   isDuplicate?: boolean
+}
+
+export interface ResourceUpdateAvailabilityEvent {
+  type: CourseResourceEventType.ResourceUpdateAvailability
+  sectionId: string
+  resourceId: string
+  availability: ResourceAvailability
 }
 
 export interface SectionAddedEvent {
