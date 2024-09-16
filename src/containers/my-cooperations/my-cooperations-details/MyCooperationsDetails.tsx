@@ -165,8 +165,10 @@ const MyCooperationsDetails = () => {
           {t('cooperationDetailsPage.tutoringSubject')}
         </Typography>
         <Box sx={style.subjectContainer}>
-          <CategoryIcon sx={style.iconColor(categoryColor)} />
-          <Typography>{offer.category.name}</Typography>
+          <Box sx={style.categoryContainer}>
+            <CategoryIcon sx={style.iconColor(categoryColor)} />
+            <Typography>{offer.category.name}</Typography>
+          </Box>
           <SubjectLevelChips
             color={offer.category.appearance.color}
             proficiencyLevel={offer.proficiencyLevel}
