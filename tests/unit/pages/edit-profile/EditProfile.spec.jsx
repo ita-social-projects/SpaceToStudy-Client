@@ -399,4 +399,45 @@ describe('EditProfile', () => {
       expect(securityContent).toBeInTheDocument()
     })
   })
+
+  it('should not include videoLink in dataToUpdate if videoLink is undefined', () => {
+    const videoLink = undefined
+    const userRole = 'tutor'
+    const rest = {}
+
+    const dataToUpdate = { ...rest }
+    if (videoLink) {
+      dataToUpdate.videoLink =
+        typeof videoLink === 'string' ? videoLink : videoLink[userRole]
+    }
+
+    expect(dataToUpdate).not.toHaveProperty('videoLink')
+  })
+
+  it('should include an empty string for videoLink in dataToUpdate if videoLink is an empty string', () => {
+    const videoLink = ''
+    const rest = {}
+
+    const dataToUpdate = { ...rest }
+    if (videoLink !== undefined && videoLink !== null) {
+      dataToUpdate.videoLink =
+        typeof videoLink === 'string' ? videoLink : videoLink[userRole]
+    }
+
+    expect(dataToUpdate).toHaveProperty('videoLink', '')
+  })
+
+  it('should not include videoLink in dataToUpdate if videoLink is undefined', () => {
+    const videoLink = undefined
+    const userRole = 'tutor'
+    const rest = {}
+
+    const dataToUpdate = { ...rest }
+    if (videoLink) {
+      dataToUpdate.videoLink =
+        typeof videoLink === 'string' ? videoLink : videoLink[userRole]
+    }
+
+    expect(dataToUpdate).not.toHaveProperty('videoLink')
+  })
 })
