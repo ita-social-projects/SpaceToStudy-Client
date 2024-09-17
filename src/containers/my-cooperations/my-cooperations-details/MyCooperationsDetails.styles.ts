@@ -43,10 +43,13 @@ export const style = {
     ...ellipsisTextStyle(2)
   },
   subjectContainer: {
+    display: 'flex'
+  },
+  categoryContainer: {
     display: 'flex',
-    '& > *': {
-      mr: '8px'
-    }
+    alignItems: 'center',
+    gap: '8px',
+    mr: '16px'
   },
   buttons: {
     mr: '15px',
