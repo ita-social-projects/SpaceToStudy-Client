@@ -1,0 +1,138 @@
+@use '../variables' as *;
+@use '../functions' as *;
+@use '../mixins' as *;
+@use 'sass:map';
+
+$borders-utilities: (
+  // Borders utilities
+  'border-width':
+    (
+      class: 'border',
+      properties: border-width,
+      values: map-to-var-map($border-widths, 'border-width')
+    ),
+  'border-top-width': (
+    class: 'border-t',
+    properties: border-top-width,
+    values: map-to-var-map($border-widths, 'border-width')
+  ),
+  'border-bottom-width': (
+    class: 'border-b',
+    properties: border-bottom-width,
+    values: map-to-var-map($border-widths, 'border-width')
+  ),
+  'border-right-width': (
+    class: 'border-r',
+    properties: border-right-width,
+    values: map-to-var-map($border-widths, 'border-width')
+  ),
+  'border-left-width': (
+    class: 'border-l',
+    properties: border-left-width,
+    values: map-to-var-map($border-widths, 'border-width')
+  ),
+  'border-top-style': (
+    class: 'border-t',
+    properties: border-top-style,
+    values: $border-styles
+  ),
+  'border-bottom-style': (
+    class: 'border-b',
+    properties: border-bottom-style,
+    values: $border-styles
+  ),
+  'border-right-style': (
+    class: 'border-r',
+    properties: border-right-style,
+    values: $border-styles
+  ),
+  'border-left-style': (
+    class: 'border-l',
+    properties: border-left-style,
+    values: $border-styles
+  ),
+  'border-style': (
+    class: 'border',
+    properties: border-style,
+    values: $border-styles
+  ),
+  'border-radius': (
+    class: 'rounded',
+    properties: border-radius,
+    values: map-to-var-map($border-radiuses, 'border-radiuses')
+  ),
+  'border-top-radius': (
+    class: 'rounded-t',
+    properties: border-top-left-radius border-top-right-radius,
+    values: map-to-var-map($border-radiuses, 'border-radiuses')
+  ),
+  'border-bottom-radius': (
+    class: 'rounded-b',
+    properties: border-bottom-left-radius border-bottom-right-radius,
+    values: map-to-var-map($border-radiuses, 'border-radiuses')
+  ),
+  'border-right-radius': (
+    class: 'rounded-r',
+    properties: border-top-right-radius border-bottom-right-radius,
+    values: map-to-var-map($border-radiuses, 'border-radiuses')
+  ),
+  'border-left-radius': (
+    class: 'rounded-l',
+    properties: border-top-left-radius border-bottom-left-radius,
+    values: map-to-var-map($border-radiuses, 'border-radiuses')
+  ),
+  'border-start-radius': (
+    class: 'rounded-s',
+    properties: border-start-start-radius border-end-start-radius,
+    values: map-to-var-map($border-radiuses, 'border-radiuses')
+  ),
+  'border-end-radius': (
+    class: 'rounded-e',
+    properties: border-start-end-radius border-end-end-radius,
+    values: map-to-var-map($border-radiuses, 'border-radiuses')
+  ),
+  'border-blue-gray': (
+    class: 'border-blue-gray',
+    properties: border-color,
+    values: map-to-var-map($blue-grays, 'blue-gray')
+  ),
+  'border-turquoise': (
+    class: 'border-turquoise',
+    properties: border-color,
+    values: map-to-var-map($turquoises, 'turquoise')
+  ),
+  'border-blue': (
+    class: 'border-blue',
+    properties: border-color,
+    values: map-to-var-map($blues, 'blue')
+  ),
+  'border-green': (
+    class: 'border-green',
+    properties: border-color,
+    values: map-to-var-map($greens, 'green')
+  ),
+  'border-yellow': (
+    class: 'border-yellow',
+    properties: border-color,
+    values: map-to-var-map($yellows, 'yellow')
+  ),
+  'border-purple': (
+    class: 'border-purple',
+    properties: border-color,
+    values: map-to-var-map($purples, 'purple')
+  ),
+  'border-red': (
+    class: 'border-red',
+    properties: border-color,
+    values: map-to-var-map($reds, 'red')
+  ),
+  'border-neutral': (
+    class: 'border-neutral',
+    properties: border-color,
+    values: map-to-var-map($neutrals, 'neutral')
+  )
+);
+
+@each $key, $utility in $borders-utilities {
+  @include generate-utilities($utility);
+}
