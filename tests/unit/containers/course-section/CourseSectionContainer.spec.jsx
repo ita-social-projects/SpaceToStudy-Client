@@ -38,7 +38,6 @@ vi.mock(
             deleteResource={props.deleteResource}
             editResource={props.editResource}
             isCooperation={props.isCooperation}
-            items={props.items}
             sortResources={props.sortResources}
             updateAvailability={props.updateAvailability}
           />

@@ -342,7 +342,6 @@ const CourseSectionContainer: FC<SectionProps> = ({
             deleteResource={deleteResource}
             editResource={editResource}
             isCooperation={isCooperation}
-            items={allResources}
             sortResources={handleResourcesSort}
             updateAvailability={handleResourceAvailabilityChange}
           />

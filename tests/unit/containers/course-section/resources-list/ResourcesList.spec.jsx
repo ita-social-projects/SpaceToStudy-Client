@@ -36,29 +36,6 @@ export const mokedCooperationData = [
   }
 ]
 
-export const mockedLessonData = [
-  {
-    id: '1',
-    title: 'Lesson1',
-    author: 'some author',
-    content: 'Content',
-    description: 'Description',
-    attachments: [],
-    category: null,
-    resourceType: ResourceType.Lesson
-  },
-  {
-    id: '2',
-    title: 'Lesson2',
-    author: 'new author',
-    content: 'Content',
-    description: 'Description',
-    attachments: [],
-    category: null,
-    resourceType: ResourceType.Lesson
-  }
-]
-
 const mockedSetResources = vi.fn()
 
 describe('new course section ResourceItem tests', () => {
@@ -66,15 +43,19 @@ describe('new course section ResourceItem tests', () => {
     renderWithProviders(
       <ResourcesList
         cooperationData={mokedCooperationData}
-        items={mockedLessonData}
+        // items={mockedLessonData}
         setResources={mockedSetResources}
       />
     )
   })
 
   it('should render resources list with gragBtn', async () => {
-    const resourceTitle1 = await screen.findByText(mockedLessonData[0].title)
-    const resourceTitle2 = screen.getByText(mockedLessonData[1].title)
+    const resourceTitle1 = await screen.findByText(
+      mokedCooperationData[0].resource.title
+    )
+    const resourceTitle2 = screen.getByText(
+      mokedCooperationData[1].resource.title
+    )
 
     expect(resourceTitle1).toBeInTheDocument()
     expect(resourceTitle2).toBeInTheDocument()

@@ -20,7 +20,7 @@ import useDndSensor from '~/hooks/use-dnd-sensor'
 
 interface ResourcesListProps {
   cooperationData?: Resource[]
-  items: CourseResource[]
+
   sortResources: (resources: CourseResource[]) => void
   deleteResource: (resource: CourseResource) => void
   editResource: (resource: CourseResource) => void
@@ -32,8 +32,7 @@ interface ResourcesListProps {
 }
 
 const ResourcesList: FC<ResourcesListProps> = ({
-  cooperationData,
-  items,
+  cooperationData = [],
   sortResources,
   deleteResource,
   editResource,
@@ -42,13 +41,21 @@ const ResourcesList: FC<ResourcesListProps> = ({
 }) => {
   const { enabled } = useDroppable()
 
+  const itemsForSort: CourseResource[] = cooperationData.map(
+    (item) => item.resource
+  )
+
   const {
     activeItem,
     handleDragCancel,
     handleDragEnd,
     handleDragStart,
     sensors
-  } = useDndSensor({ items, setItems: sortResources, idProp: 'id' })
+  } = useDndSensor({
+    items: itemsForSort,
+    setItems: sortResources,
+    idProp: 'id'
+  })
 
   const renderItem = (
     item: CourseResource,
@@ -80,7 +87,7 @@ const ResourcesList: FC<ResourcesListProps> = ({
   const resourceListContent = enabled && (
     <>
       <SortableContext
-        items={items.map((item) => item.id)}
+        items={cooperationData?.map((item) => item.resource.id)}
         strategy={verticalListSortingStrategy}
       >
         <Box sx={styles.root}>{resourceItems}</Box>
