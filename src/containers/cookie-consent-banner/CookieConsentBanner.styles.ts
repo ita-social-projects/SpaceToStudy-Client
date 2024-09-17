@@ -28,10 +28,6 @@ export const styles = {
     color: 'basic.grey'
   },
   button: {
-    minWidth: '210px',
-    color: 'primary.900',
-    '&:hover': {
-      backgroundColor: 'basic.gray'
-    }
+    minWidth: '210px'
   }
 }
