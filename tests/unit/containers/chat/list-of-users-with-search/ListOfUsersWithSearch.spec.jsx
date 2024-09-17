@@ -4,7 +4,7 @@ import { renderWithProviders } from '~tests/test-utils'
 import { useAppSelector } from '~/hooks/use-redux'
 
 import ListOfUsersWithSearch from '~/containers/chat/list-of-users-with-search/ListOfUsersWithSearch'
-import { chatsMock } from '~tests/unit/containers/chat/list-of-users-with-search/MockChat.spec.constants'
+import { chatsMock } from '~tests/unit/containers/chat/list-of-users-with-search/MockChat.constants'
 
 vi.mock('simplebar-react', () => {
   return {
