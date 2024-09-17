@@ -16,7 +16,6 @@ export const styles = {
     width: '100%',
     px: { md: '15px', xs: '10px' },
     '& .MuiPaper-root': {
-      borderTop: `1px solid ${palette.basic.lightGray}`,
       boxShadow: 'none',
       borderRadius: '0',
       backgroundColor: palette.backgroundColor
@@ -48,6 +47,7 @@ export const styles = {
         backgroundColor: palette.basic.grey
       },
     '& .MuiPaper-root:first-of-type': {
+      borderTop: `1px solid ${palette.basic.lightGray}`,
       borderRadius: '0'
     },
     '& .MuiPaper-root:last-of-type': {
