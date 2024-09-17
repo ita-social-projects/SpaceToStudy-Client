@@ -7,8 +7,9 @@ import AppRange from '~/components/app-range/AppRange'
 import CheckboxList from '~/components/checkbox-list/CheckboxList'
 import FilterInput from '~/components/filter-input/FilterInput'
 import RadioButtonInputs from '~/components/radio-button-inputs/RadioButtonInputs'
-import { useAppSelector } from '~/hooks/use-redux'
 
+import { useAppSelector } from '~/hooks/use-redux'
+import useBreakpoints from '~/hooks/use-breakpoints'
 import {
   languageValues,
   radioButtonsTranslationKeys
@@ -38,6 +39,7 @@ const OfferFilterList: FC<OfferFilterListProps> = ({
   filters,
   price
 }) => {
+  const { isLaptopAndAbove } = useBreakpoints()
   const { t } = useTranslation()
   const { userRole } = useAppSelector((state) => state.appMain)
   const levelOptions = Object.values(ProficiencyLevelEnum)
@@ -116,11 +118,15 @@ const OfferFilterList: FC<OfferFilterListProps> = ({
         onChange={handleFilterChange('rating')}
         value={Number(filters.rating)}
       />
-      {filterTitle(t('findOffers.filterTitles.search'))}
-      <FilterInput
-        onChange={updateFilterByKey('search')}
-        value={filters.search || ''}
-      />
+      {!isLaptopAndAbove && (
+        <>
+          {filterTitle(t('findOffers.filterTitles.search'))}
+          <FilterInput
+            onChange={updateFilterByKey('search')}
+            value={filters.search || ''}
+          />
+        </>
+      )}
     </>
   )
 }

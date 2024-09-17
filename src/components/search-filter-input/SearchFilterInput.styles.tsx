@@ -19,6 +19,7 @@ export const styles = {
     left: '15px'
   },
   searchBtn: {
-    ml: '25px'
+    width: '105px',
+    ml: '10px'
   }
 }

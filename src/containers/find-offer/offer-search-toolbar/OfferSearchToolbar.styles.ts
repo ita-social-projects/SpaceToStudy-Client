@@ -7,8 +7,8 @@ export const styles = {
   },
   autocomplete: {
     width: '100%',
-    maxWidth: { md: '220px' },
-    mr: '30px',
+    maxWidth: { md: '180px', lg: '220px' },
+    mr: { sm: '20px', lg: '30px' },
     '& .MuiOutlinedInput-root': {
       padding: '5px 9px'
     },
