@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useMemo } from 'react'
 import Typography from '@mui/material/Typography'
 import TextField, { TextFieldProps } from '@mui/material/TextField'
 import Tooltip from '@mui/material/Tooltip'
@@ -18,21 +18,23 @@ const AppTextField: FC<AppTextFieldProps> = ({
   withHelperText = true,
   ...props
 }) => {
-  const helperText = errorMsg ? (
-    <Tooltip title={errorMsg}>
-      <Typography variant={TypographyVariantEnum.Caption}>
-        {errorMsg}
-      </Typography>
-    </Tooltip>
-  ) : (
-    ' '
-  )
+  const helperText = useMemo(() => {
+    return errorMsg ? (
+      <Tooltip title={errorMsg}>
+        <Typography variant={TypographyVariantEnum.Caption}>
+          {errorMsg}
+        </Typography>
+      </Tooltip>
+    ) : (
+      ' '
+    )
+  }, [errorMsg])
 
   return (
     <TextField
       FormHelperTextProps={{ sx: styles.helperText(multiline) }}
       error={Boolean(errorMsg)}
-      helperText={withHelperText && helperText}
+      helperText={withHelperText ? helperText : ' '}
       multiline={multiline}
       {...props}
     />
