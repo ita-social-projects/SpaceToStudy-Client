@@ -23,10 +23,15 @@ export const filterChats = (
   const sortedChats = sortChatsByDate(listOfChats)
   const lowerCaseSearch = search.toLocaleLowerCase()
   return sortedChats.filter((item) => {
-    if (!isCorrectUser(item, userId)) return false
+    const otherMember = item.members.find(
+      (member) => member.user._id !== userId
+    )
 
-    const { firstName, lastName } = item.members[0].user
-    const fullName = `${firstName} ${lastName}`
-    return fullName.toLocaleLowerCase().includes(lowerCaseSearch)
+    if (!otherMember) return false
+
+    const { firstName, lastName } = otherMember.user
+    const fullName = `${firstName} ${lastName}`.toLocaleLowerCase()
+
+    return fullName.includes(lowerCaseSearch)
   })
 }
