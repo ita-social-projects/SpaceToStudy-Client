@@ -22,6 +22,7 @@ export const filterChats = (
 ): ChatResponse[] => {
   const sortedChats = sortChatsByDate(listOfChats)
   const lowerCaseSearch = search.toLocaleLowerCase()
+
   return sortedChats.filter((item) => {
     const otherMember = item.members.find(
       (member) => member.user._id !== userId
