@@ -1,7 +1,15 @@
 import { render, screen } from '@testing-library/react'
 
 import CooperationSectionView from '~/components/cooperation-section-view/CooperationSectionView'
-import { ResourcesTypesEnum as ResourceType } from '~/types'
+import {
+  ResourcesTypesEnum as ResourceType,
+  ResourcesAvailabilityEnum
+} from '~/types'
+import { useAppSelector } from '~/hooks/use-redux'
+
+vi.mock('~/hooks/use-redux', () => ({
+  useAppSelector: vi.fn()
+}))
 
 describe('CooperationSectionView', () => {
   const mockSection = {
@@ -37,6 +45,7 @@ describe('CooperationSectionView', () => {
   }
 
   beforeEach(() => {
+    useAppSelector.mockReturnValue(ResourcesAvailabilityEnum.OpenManually)
     render(<CooperationSectionView item={mockSection} />)
   })
 
