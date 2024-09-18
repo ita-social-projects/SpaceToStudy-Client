@@ -32,9 +32,9 @@ describe('tests for MyCourses page', () => {
   })
 
   it('should click delete button', async () => {
-    const menu = screen.getAllByTestId('MoreVertIcon')[0].parentElement
+    const menu = await screen.findAllByTestId('MoreVertIcon')
 
-    fireEvent.click(menu)
+    fireEvent.click(menu[0])
 
     const deleteBtn = await screen.findByText('common.delete')
 
@@ -48,9 +48,9 @@ describe('tests for MyCourses page', () => {
   })
 
   it('should click duplicate button', async () => {
-    const menu = screen.getAllByTestId('MoreVertIcon')[1].parentElement
+    const menu = await screen.findAllByTestId('MoreVertIcon')
 
-    await act(() => fireEvent.click(menu))
+    await act(() => fireEvent.click(menu[1]))
 
     const duplicateBtn = screen.getByText('common.duplicate')
 

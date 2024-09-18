@@ -4,7 +4,7 @@ import Message from '~/components/message/Message'
 
 import { renderWithProviders } from '~tests/test-utils'
 import { getFormattedDate } from '~/utils/helper-functions'
-import { messagesMock } from '~tests/unit/containers/chat/list-of-users-with-search/MockChat.spec.constants'
+import { messagesMock } from '~tests/unit/pages/chat/ChatsMock.constants'
 
 const messageMock = messagesMock.items[0]
 const filteredMessageMock = ['Some text']

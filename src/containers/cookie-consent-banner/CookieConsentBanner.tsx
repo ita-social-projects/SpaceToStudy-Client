@@ -57,7 +57,7 @@ const CookieConsentBanner: FC = () => {
         onClick={handleButtonClick}
         size='extraLarge'
         sx={styles.button}
-        variant='text'
+        variant='tonal'
       >
         {t('cookieConsentBanner.acceptButton')}
         <DoneIcon />

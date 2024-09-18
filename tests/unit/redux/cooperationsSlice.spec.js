@@ -9,11 +9,13 @@ import reducer, {
   updateResourcesOrder,
   updateResource,
   deleteResource,
-  setResourcesAvailability
+  setResourcesAvailability,
+  updateResourceAvailability
 } from '~/redux/features/cooperationsSlice'
 
 import {
   ResourcesAvailabilityEnum,
+  ResourceAvailabilityStatusEnum,
   ResourcesTypesEnum as ResourceType
 } from '~/types'
 
@@ -276,7 +278,7 @@ describe('Test cooperationsSlice', () => {
         {
           id: sectionId,
           resources: [
-            { resource: { _id: 'r1', availability: { status: 'Open' } } }
+            { resource: { _id: 'r1' }, availability: { status: 'open' } }
           ]
         }
       ]
@@ -286,8 +288,40 @@ describe('Test cooperationsSlice', () => {
     expect(state.resourcesAvailability).toBe(
       ResourcesAvailabilityEnum.ClosedAll
     )
-    expect(state.sections[0].resources[0].resource.availability.status).toBe(
-      'closed'
-    )
+    expect(state.sections[0].resources[0].availability.status).toBe('closed')
+  })
+
+  it('should update resources availability correctly with updateResourceAvailability', () => {
+    const sectionId = '1'
+    const resourceId = 'r1'
+    const initialStateWithSections = {
+      ...initialState,
+      sections: [
+        {
+          id: sectionId,
+          resources: [
+            {
+              resource: { id: resourceId },
+              availability: { status: 'open', date: null },
+              resourceType: ResourceType.Lesson
+            }
+          ]
+        }
+      ]
+    }
+
+    const availabilityUpdate = {
+      status: ResourceAvailabilityStatusEnum.Closed,
+      date: null
+    }
+
+    const action = updateResourceAvailability({
+      sectionId,
+      resourceId,
+      availability: availabilityUpdate
+    })
+    const state = reducer(initialStateWithSections, action)
+
+    expect(state.sections[0].resources[0].availability.status).toBe('closed')
   })
 })
