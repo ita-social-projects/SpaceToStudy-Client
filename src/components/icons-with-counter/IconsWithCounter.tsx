@@ -50,11 +50,7 @@ const IconsWithCounter: FC<IconsWithCounterProps> = ({
 
   return (
     <Box sx={styles.iconBox}>
-      <IconButton
-        data-testid='IconUp'
-        disabled={maxValue === 0}
-        onClick={handleIncrement}
-      >
+      <IconButton data-testid='IconUp' onClick={handleIncrement}>
         <KeyboardArrowUpIcon />
       </IconButton>
       <Typography sx={styles.typography}>
@@ -62,11 +58,7 @@ const IconsWithCounter: FC<IconsWithCounterProps> = ({
           ? `${possibleValue + 1} ${t('common.of')} ${maxValue}`
           : `${possibleValue}  ${t('common.of')} ${maxValue}`}
       </Typography>
-      <IconButton
-        data-testid='IconDown'
-        disabled={maxValue === 0}
-        onClick={handleDecrement}
-      >
+      <IconButton data-testid='IconDown' onClick={handleDecrement}>
         <KeyboardArrowDownIcon />
       </IconButton>
     </Box>

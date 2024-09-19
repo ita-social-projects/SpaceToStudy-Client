@@ -43,18 +43,15 @@ export const style = {
     ...ellipsisTextStyle(2)
   },
   subjectContainer: {
-    display: 'flex'
-  },
-  categoryContainer: {
     display: 'flex',
-    alignItems: 'center',
-    gap: '8px',
-    mr: '16px'
+    '& > *': {
+      mr: '10px'
+    }
   },
   buttons: {
     mr: '15px',
     color: 'basic.black',
-    display: 'flex',
+    diplay: 'flex',
     alignItems: 'center',
     '& > svg': {
       fontSize: '20px',

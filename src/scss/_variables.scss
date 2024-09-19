@@ -251,7 +251,6 @@ $border-radiuses: (
 
 /* Border widths */
 
-$border-width-none: 0px !default;
 $border-width-xs: 1px !default;
 $border-width-sm: 1.5px !default;
 $border-width-md: 2px !default;
@@ -259,31 +258,12 @@ $border-width-lg: 4px !default;
 $border-width-xl: 8px !default;
 
 $border-widths: (
-  none: $border-width-none,
   xs: $border-width-xs,
   sm: $border-width-sm,
   md: $border-width-md,
   lg: $border-width-lg,
   xl: $border-width-xl
 ) !default;
-
-/* Border style */
-
-$border-styles: (
-  solid: solid,
-  dashed: dashed,
-  dotted: dotted,
-  double: double
-);
-
-/* Border sides */
-
-$border-sides: (
-  top: top,
-  right: right,
-  bottom: bottom,
-  left: left
-);
 
 /*=============================================
 =                TYPOGRAPHY                   =

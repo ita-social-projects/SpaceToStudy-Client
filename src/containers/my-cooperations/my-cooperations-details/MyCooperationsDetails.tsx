@@ -165,10 +165,8 @@ const MyCooperationsDetails = () => {
           {t('cooperationDetailsPage.tutoringSubject')}
         </Typography>
         <Box sx={style.subjectContainer}>
-          <Box sx={style.categoryContainer}>
-            <CategoryIcon sx={style.iconColor(categoryColor)} />
-            <Typography>{offer.category.name}</Typography>
-          </Box>
+          <CategoryIcon sx={style.iconColor(categoryColor)} />
+          <Typography>{offer.category.name}</Typography>
           <SubjectLevelChips
             color={offer.category.appearance.color}
             proficiencyLevel={offer.proficiencyLevel}
@@ -179,7 +177,7 @@ const MyCooperationsDetails = () => {
           {t('cooperationDetailsPage.aboutCooperation')}
         </Typography>
         <ShowMoreCollapse
-          collapsedSize={28}
+          collapsedSize={30}
           collapsedTextLength={100}
           description={offer.description}
           sx={style.aboutCooperation}

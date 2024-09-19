@@ -185,28 +185,28 @@ describe('CreateCourse with params id', () => {
   })
 
   it('should choose the category from options list', async () => {
+    const autocomplete = screen.getAllByRole('combobox')[0]
+
+    expect(autocomplete).toBeInTheDocument()
+
+    fireEvent.click(autocomplete)
+    fireEvent.focus(autocomplete)
+
+    fireEvent.change(autocomplete, {
+      target: { value: mockCategoriesNames[1].name }
+    })
+
+    fireEvent.keyDown(autocomplete, { key: 'ArrowDown' })
+    fireEvent.keyDown(autocomplete, { key: 'Enter' })
+
     await waitFor(() => {
-      const autocomplete = screen.getAllByRole('combobox')[0]
-
-      expect(autocomplete).toBeInTheDocument()
-
-      fireEvent.click(autocomplete)
-      fireEvent.focus(autocomplete)
-
-      fireEvent.change(autocomplete, {
-        target: { value: mockCategoriesNames[1].name }
-      })
-
-      fireEvent.keyDown(autocomplete, { key: 'ArrowDown' })
-      fireEvent.keyDown(autocomplete, { key: 'Enter' })
-
-      expect(autocomplete.value).toBe(mockCategoriesNames[1].name)
-
-      fireEvent.keyDown(autocomplete, { key: 'ArrowDown' })
-      fireEvent.keyDown(autocomplete, { key: 'Enter' })
-
       expect(autocomplete.value).toBe(mockCategoriesNames[1].name)
     })
+
+    fireEvent.keyDown(autocomplete, { key: 'ArrowDown' })
+    fireEvent.keyDown(autocomplete, { key: 'Enter' })
+
+    expect(autocomplete.value).toBe(mockCategoriesNames[1].name)
   })
 
   it('should choose the subject from options list', async () => {

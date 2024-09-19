@@ -32,7 +32,6 @@ import {
 interface ResourceItemProps {
   resource: CourseResource
   resourceType?: ResourceType
-  availability?: ResourceAvailability
   deleteResource?: (resource: CourseResource) => void
   editResource?: (resource: CourseResource) => void
   updateAvailability?: (
@@ -46,7 +45,6 @@ interface ResourceItemProps {
 const ResourceItem: FC<ResourceItemProps> = ({
   resource,
   resourceType,
-  availability,
   deleteResource,
   editResource,
   updateAvailability,
@@ -55,7 +53,11 @@ const ResourceItem: FC<ResourceItemProps> = ({
 }) => {
   const { t } = useTranslation()
 
-  const { isDuplicate, description } = resource
+  const {
+    availability: resourceAvailability,
+    isDuplicate,
+    description
+  } = resource
 
   const handleDeleteResource = useCallback(() => {
     deleteResource?.(resource)
@@ -75,7 +77,7 @@ const ResourceItem: FC<ResourceItemProps> = ({
   }, [resourceType, resource.resourceType])
 
   const resourceAvailabilityStatus =
-    availability?.status ?? ResourceAvailabilityStatusEnum.Open
+    resourceAvailability?.status ?? ResourceAvailabilityStatusEnum.Open
 
   const shouldShowDatePicker =
     resourceAvailabilityStatus === ResourceAvailabilityStatusEnum.OpenFrom
@@ -123,7 +125,7 @@ const ResourceItem: FC<ResourceItemProps> = ({
               label={t('cooperationDetailsPage.datePickerLabel')}
               onChange={setOpenFromDate}
               renderInput={(params) => <TextField {...params} />}
-              value={availability?.date ?? null}
+              value={resourceAvailability?.date ?? null}
             />
           </Box>
         </LocalizationProvider>
@@ -165,7 +167,8 @@ const ResourceItem: FC<ResourceItemProps> = ({
       />
       <Box sx={styles.resourceActions}>
         {isView
-          ? resourceAvailabilityStatus && availabilityIcon
+          ? resourceAvailabilityStatus ===
+              ResourceAvailabilityStatusEnum.Open && availabilityIcon
           : actionButtons}
       </Box>
     </Box>

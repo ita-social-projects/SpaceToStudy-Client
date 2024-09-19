@@ -4,10 +4,7 @@ import { fireEvent, screen, waitFor } from '@testing-library/react'
 import {
   mockedLessonDataOriginal,
   mockedQuizDataDuplicate,
-  mockedAttachmentDataOriginal,
-  mockAvailabilityForLesson,
-  mockAvailabilityForQuizDataDuplicate,
-  mockAvailabilityOpen
+  mockedAttachmentDataOriginal
 } from '~tests/unit/containers/course-section/resource-item/ResourceItem.spec.constants'
 
 import ResourceItem from '~/containers/course-section/resource-item/ResourceItem'
@@ -46,7 +43,6 @@ describe('ResourceItem tests', () => {
   beforeEach(() => {
     renderWithProviders(
       <ResourceItem
-        availability={mockAvailabilityForLesson}
         deleteResource={mockDeleteResource}
         editResource={mockEditResource}
         isCooperation
@@ -101,7 +97,6 @@ describe('ResourceItem tests with isView prop', () => {
   beforeEach(() => {
     renderWithProviders(
       <ResourceItem
-        availability={mockAvailabilityOpen}
         deleteResource={mockDeleteResource}
         editResource={mockEditResource}
         isView
@@ -136,7 +131,6 @@ describe('ResourceItem tests with isCooperation prop', () => {
   beforeEach(() => {
     renderWithProviders(
       <ResourceItem
-        availability={mockAvailabilityForQuizDataDuplicate}
         deleteResource={mockDeleteResource}
         editResource={mockEditResource}
         isCooperation
@@ -154,7 +148,7 @@ describe('ResourceItem tests with isCooperation prop', () => {
   it('should properly render availability status and icon', () => {
     const availabilitySelect = screen.getByTestId('app-select')
     const option = screen.getByRole('img', {
-      src: '/src/assets/img/cooperation-details/resource-availability/open-from.svg'
+      src: '/src/assets/img/cooperation-details/resource-availability/open-icon.svg'
     })
 
     expect(availabilitySelect).toBeInTheDocument()
@@ -195,7 +189,6 @@ describe('ResourceItem tests when isDuplicate=true and resourceType quiz', () =>
   beforeEach(() => {
     renderWithProviders(
       <ResourceItem
-        availability={mockAvailabilityOpen}
         deleteResource={mockDeleteResource}
         editResource={mockEditResource}
         resource={mockedQuizDataDuplicate}
@@ -223,7 +216,6 @@ describe('ResourceItem tests when resourceType attachment', () => {
   beforeEach(() => {
     renderWithProviders(
       <ResourceItem
-        availability={mockAvailabilityOpen}
         deleteResource={mockDeleteResource}
         editResource={mockEditResource}
         resource={mockedAttachmentDataOriginal}

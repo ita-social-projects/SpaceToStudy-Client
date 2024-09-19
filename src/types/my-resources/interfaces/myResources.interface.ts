@@ -3,6 +3,7 @@ import {
   Category,
   CommonEntityFields,
   RequestParams,
+  ResourceAvailability,
   ResourcesTypesEnum as ResourceType
 } from '~/types'
 
@@ -10,6 +11,7 @@ export interface ResourceBase {
   id: string
   description: string
   resourceType: ResourceType
+  availability?: ResourceAvailability
   isDuplicate?: boolean
 }
 

@@ -12,7 +12,7 @@ import { useAppSelector } from '~/hooks/use-redux'
 
 import { ChatResponse, SizeEnum } from '~/types'
 import { styles } from '~/containers/chat/list-of-users-with-search/ListOfUsersWithSearch.styles'
-import { filterChats } from '~/containers/chat/list-of-users-with-search/ListOfUsersWithSearch.constants'
+import { filterChats } from './ListOfUsersWithSearch.constants'
 
 interface ListOfUsersWithSearchProps {
   listOfChats: ChatResponse[]
@@ -31,10 +31,6 @@ const ListOfUsersWithSearch: FC<ListOfUsersWithSearchProps> = ({
 
   const { userId } = useAppSelector((state) => state.appMain)
   const { t } = useTranslation()
-
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(event.target.value)
-  }
 
   const filteredChats = filterChats(listOfChats, userId, search)
 
@@ -57,7 +53,7 @@ const ListOfUsersWithSearch: FC<ListOfUsersWithSearchProps> = ({
         <FilterInput
           fullWidth
           label={t('common.search')}
-          onChange={handleInputChange}
+          onChange={setSearch}
           size={SizeEnum.Medium}
           value={search}
         />

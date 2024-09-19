@@ -8,7 +8,6 @@ import {
   CourseResource,
   CourseSection,
   ResourceAvailabilityStatusEnum,
-  ResourceAvailability,
   ResourcesAvailabilityEnum
 } from '~/types'
 
@@ -238,32 +237,11 @@ const cooperationsSlice = createSlice({
 
       for (const section of state.sections ?? []) {
         section.resources.forEach((item) => {
-          item.availability = {
+          item.resource.availability = {
             status,
             date: null
           }
         })
-      }
-    },
-    updateResourceAvailability(
-      state,
-      action: PayloadAction<{
-        sectionId: CourseSection['id']
-        resourceId: CourseResource['id']
-        availability: ResourceAvailability
-      }>
-    ) {
-      const { sectionId, resourceId, availability } = action.payload
-
-      for (const section of state.sections ?? []) {
-        if (section.id === sectionId) {
-          for (const resource of section.resources) {
-            if (resource.resource.id === resourceId) {
-              resource.availability = availability
-              return
-            }
-          }
-        }
       }
     }
   }
@@ -284,8 +262,7 @@ export const {
   updateResourcesOrder,
   updateResource,
   deleteResource,
-  setResourcesAvailability,
-  updateResourceAvailability
+  setResourcesAvailability
 } = actions
 
 export const cooperationsSelector = (state: RootState) => state.cooperations

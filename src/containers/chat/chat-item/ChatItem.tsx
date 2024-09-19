@@ -78,11 +78,7 @@ const ChatItem: FC<ItemOfChatProps> = ({
   )
 
   return (
-    <Box
-      data-testid='chat-item'
-      onClick={handleSelectedChat}
-      sx={styles.root(isActiveChat)}
-    >
+    <Box onClick={handleSelectedChat} sx={styles.root(isActiveChat)}>
       <Box sx={styles.imageWrapper}>
         <Badge
           anchorOrigin={{

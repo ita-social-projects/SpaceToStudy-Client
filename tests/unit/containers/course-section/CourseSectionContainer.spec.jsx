@@ -34,10 +34,10 @@ vi.mock(
       default: (props) => (
         <>
           <ResourcesList
-            cooperationData={mockedSectionData.resources}
             deleteResource={props.deleteResource}
             editResource={props.editResource}
             isCooperation={props.isCooperation}
+            items={props.items}
             sortResources={props.sortResources}
             updateAvailability={props.updateAvailability}
           />
@@ -141,6 +141,17 @@ describe('CourseSectionContainer tests', () => {
     )
   })
 
+  it('should render availability status for each resource', async () => {
+    await waitFor(() => {
+      const allMenuAvailabilityStatus = screen.getAllByTestId('app-select')
+      allMenuAvailabilityStatus.forEach((resource, index) => {
+        const resourceStatus =
+          mockedSectionData.resources[index].resource.availability.status
+        expect(resource).toHaveValue(resourceStatus)
+      })
+    })
+  })
+
   it('should call handleSectionInputChange with the correct arguments when the resource status is changed', async () => {
     const activityIndexToChange = 1
     await waitFor(() => {
@@ -158,14 +169,16 @@ describe('CourseSectionContainer tests', () => {
 
     expect(mockedResourceEventHandler).toHaveBeenCalledTimes(1)
     expect(mockedResourceEventHandler).toHaveBeenCalledWith({
-      availability: {
-        date: null,
-        status: 'closed'
+      resource: {
+        availability: {
+          date: null,
+          status: 'closed'
+        }
       },
       resourceId:
         mockedSectionData.resources[activityIndexToChange].resource.id,
       sectionId: 1,
-      type: 'resourceUpdateAvailability'
+      type: 'resourceUpdated'
     })
   })
 
@@ -300,7 +313,6 @@ describe('CourseSectionContainer tests', () => {
 
 describe('Testing CourseSectionContainer Event Handlers', () => {
   const mockSectionId = mockedSectionData.id
-
   beforeEach(() => {
     renderWithProviders(
       <CourseSectionContainer
@@ -318,8 +330,8 @@ describe('Testing CourseSectionContainer Event Handlers', () => {
     vi.resetAllMocks()
   })
 
-  it('should handle resource update event [CourseResourceEventType.ResourceUpdateAvailability]', async () => {
-    const updatedResource = mockedSectionData.resources[0]
+  it('should handle resource update event [CourseResourceEventType.ResourceUpdated]', async () => {
+    const updatedResource = mockedSectionData.resources[0].resource
     const newAvailability = 'closed'
 
     await waitFor(() => {
@@ -332,12 +344,14 @@ describe('Testing CourseSectionContainer Event Handlers', () => {
 
     expect(mockedResourceEventHandler).toHaveBeenCalledTimes(1)
     expect(mockedResourceEventHandler).toHaveBeenCalledWith({
-      type: CourseResourceEventType.ResourceUpdateAvailability,
+      type: CourseResourceEventType.ResourceUpdated,
       sectionId: mockSectionId,
-      resourceId: updatedResource.resource.id,
-      availability: {
-        ...updatedResource.availability,
-        status: newAvailability
+      resourceId: updatedResource.id,
+      resource: {
+        availability: {
+          ...updatedResource.availability,
+          status: newAvailability
+        }
       }
     })
   })

@@ -9,7 +9,7 @@ import { URLs } from '~/constants/request'
 import {
   chatsMock,
   messagesMock
-} from '~tests/unit/pages/chat/ChatsMock.constants'
+} from '~tests/unit/containers/chat/list-of-users-with-search/MockChat.spec.constants'
 
 vi.mock('~/pages/chat/MessagesList', () => ({
   default: vi.fn(() => (

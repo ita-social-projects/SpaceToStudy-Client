@@ -94,7 +94,7 @@ describe('BookmarkedOffers page with offers', () => {
     fireEvent.submit(searchInput)
 
     expect(mockSetSearchParams).toHaveBeenCalledWith(
-      expect.objectContaining(new URLSearchParams({ page: 1, title: text }))
+      new URLSearchParams({ page: 1, title: text })
     )
   })
 

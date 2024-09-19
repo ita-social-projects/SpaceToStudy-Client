@@ -8,19 +8,13 @@ import SortableWrapper from '~/containers/sortable-wrapper/SortableWrapper'
 import ResourceItem from '~/containers/course-section/resource-item/ResourceItem'
 import { styles } from '~/containers/course-section/resources-list/ResourcesList.styles'
 
-import {
-  CourseResource,
-  ResourceAvailability,
-  ResourceAvailabilityStatusEnum,
-  Resource
-} from '~/types'
+import { CourseResource, ResourceAvailability } from '~/types'
 
 import useDroppable from '~/hooks/use-droppable'
 import useDndSensor from '~/hooks/use-dnd-sensor'
 
 interface ResourcesListProps {
-  cooperationData?: Resource[]
-
+  items: CourseResource[]
   sortResources: (resources: CourseResource[]) => void
   deleteResource: (resource: CourseResource) => void
   editResource: (resource: CourseResource) => void
@@ -32,7 +26,7 @@ interface ResourcesListProps {
 }
 
 const ResourcesList: FC<ResourcesListProps> = ({
-  cooperationData = [],
+  items,
   sortResources,
   deleteResource,
   editResource,
@@ -41,27 +35,15 @@ const ResourcesList: FC<ResourcesListProps> = ({
 }) => {
   const { enabled } = useDroppable()
 
-  const itemsForSort: CourseResource[] = cooperationData.map(
-    (item) => item.resource
-  )
-
   const {
     activeItem,
     handleDragCancel,
     handleDragEnd,
     handleDragStart,
     sensors
-  } = useDndSensor({
-    items: itemsForSort,
-    setItems: sortResources,
-    idProp: 'id'
-  })
+  } = useDndSensor({ items, setItems: sortResources, idProp: 'id' })
 
-  const renderItem = (
-    item: CourseResource,
-    availability: ResourceAvailability,
-    isDragOver = false
-  ) => (
+  const renderItem = (item: CourseResource, isDragOver = false) => (
     <SortableWrapper
       id={item.id}
       key={item.id}
@@ -70,7 +52,6 @@ const ResourcesList: FC<ResourcesListProps> = ({
     >
       <DragHandle iconStyles={styles.dragIcon} />
       <ResourceItem
-        availability={availability}
         deleteResource={deleteResource}
         editResource={editResource}
         isCooperation={isCooperation}
@@ -80,26 +61,17 @@ const ResourcesList: FC<ResourcesListProps> = ({
     </SortableWrapper>
   )
 
-  const resourceItems = cooperationData?.map((item) => {
-    return renderItem(item.resource, item.availability as ResourceAvailability)
-  })
+  const resourceItems = items.map((item) => renderItem(item))
 
   const resourceListContent = enabled && (
     <>
       <SortableContext
-        items={cooperationData?.map((item) => item.resource.id)}
+        items={items.map((item) => item.id)}
         strategy={verticalListSortingStrategy}
       >
         <Box sx={styles.root}>{resourceItems}</Box>
       </SortableContext>
-      <DragOverlay>
-        {activeItem &&
-          renderItem(
-            activeItem,
-            { status: ResourceAvailabilityStatusEnum.Open, date: null },
-            false
-          )}
-      </DragOverlay>
+      <DragOverlay>{activeItem && renderItem(activeItem, true)}</DragOverlay>
     </>
   )
 

@@ -20,9 +20,8 @@ const CooperationSectionView: FC<CooperationSectionViewProps> = ({ item }) => {
 
   const resources = useMemo<undefined | ReactNode[]>(
     () =>
-      item.resources?.map(({ availability, resource, resourceType }) => (
+      item.resources?.map(({ resource, resourceType }) => (
         <ResourceItem
-          availability={availability}
           isView
           key={resource.id}
           resource={resource}

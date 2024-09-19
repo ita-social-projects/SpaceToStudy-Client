@@ -2,7 +2,6 @@ import {
   ResourceUpdatedEvent,
   ResourceRemovedEvent,
   ResourcesOrderChangeEvent,
-  ResourceUpdateAvailabilityEvent,
   AddSectionResourcesEvent,
   SectionAddedEvent,
   SectionRemovedEvent,
@@ -15,7 +14,6 @@ export type ResourceEvent =
   | ResourceRemovedEvent
   | ResourcesOrderChangeEvent
   | AddSectionResourcesEvent
-  | ResourceUpdateAvailabilityEvent
 
 export type SectionEvent =
   | SectionAddedEvent
