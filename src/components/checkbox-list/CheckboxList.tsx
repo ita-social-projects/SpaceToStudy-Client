@@ -60,7 +60,7 @@ const CheckboxList = <T extends string>({
         key={checkbox}
         label={
           <Typography variant={variant}>
-            {t(`common.levels.${name || checkbox.toLowerCase()}`)}
+            {t(`common.levels.${name ?? checkbox.toLowerCase()}`)}
           </Typography>
         }
         onChange={() => handleCheckbox(checkbox)}
