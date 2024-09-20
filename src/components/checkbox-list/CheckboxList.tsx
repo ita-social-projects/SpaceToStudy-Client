@@ -44,7 +44,9 @@ const CheckboxList = <T extends string>({
 
   const checkboxesList = items.map((checkbox) => {
     let name
-    checkbox == 'Test Preparation' ? (name = 'testPreparation') : name
+    if (checkbox === 'Test Preparation') {
+      name = 'testPreparation'
+    }
 
     return (
       <FormControlLabel
