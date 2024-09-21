@@ -69,10 +69,10 @@ const Chat = () => {
   const lastOpenedChat = chatInfo?.chatId
 
   useEffect(() => {
-    setChatInfo(null)
     if (lastOpenedChat) {
       localStorage.setItem('currentChatId', lastOpenedChat as string)
     }
+    setChatInfo(null)
   }, [setChatInfo, lastOpenedChat])
 
   const openChatsHandler = (e: MouseEvent<HTMLButtonElement>) => {
