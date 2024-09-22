@@ -75,6 +75,16 @@ const CourseSectionContainer: FC<SectionProps> = ({
 
   const [activeMenu, setActiveMenu] = useState<string>('')
   const [isVisible, setIsVisible] = useState<boolean>(true)
+  const [description, setDescription] = useState<string>(
+    sectionData.description
+  )
+
+  const handleDescriptionChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setDescription(event.target.value)
+    handleSectionInputChange(sectionData.id, 'description', event.target.value)
+  }
 
   const allResources = useMemo(
     () => sectionData.resources.map((item) => item.resource),
@@ -329,14 +339,8 @@ const CourseSectionContainer: FC<SectionProps> = ({
                 event.target.value
               )
             }
-            onChange={(event) =>
-              handleSectionInputChange(
-                sectionData.id,
-                'description',
-                event.target.value
-              )
-            }
-            value={sectionData.description}
+            onChange={handleDescriptionChange}
+            value={description}
             variant={TextFieldVariantEnum.Standard}
           />
           <ResourcesList
