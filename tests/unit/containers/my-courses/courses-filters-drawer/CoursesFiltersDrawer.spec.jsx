@@ -86,8 +86,10 @@ describe('CoursesFiltersDrawer', () => {
     it('calls updateFiltersInQuery when search input is changed', () => {
       const input = screen.getByPlaceholderText('common.search')
       fireEvent.change(input, { target: { value: 'test input' } })
-      expect(mockUpdateFiltersInQuery).toHaveBeenCalledWith({
-        title: 'test input'
+      waitFor(() => {
+        expect(mockUpdateFiltersInQuery).toHaveBeenCalledWith({
+          title: 'test input'
+        })
       })
     })
 

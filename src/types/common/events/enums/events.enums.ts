@@ -2,7 +2,8 @@ export enum CourseResourceEventType {
   ResourceUpdated = 'resourceUpdated',
   ResourceRemoved = 'resourceRemoved',
   ResourcesOrderChange = 'resourcesOrderChange',
-  AddSectionResources = 'addSectionResources'
+  AddSectionResources = 'addSectionResources',
+  ResourceUpdateAvailability = 'resourceUpdateAvailability'
 }
 
 export enum CourseSectionEventType {
