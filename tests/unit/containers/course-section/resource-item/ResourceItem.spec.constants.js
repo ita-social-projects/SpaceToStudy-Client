@@ -9,9 +9,10 @@ export const mockedLessonDataOriginal = {
   content: '<h4>Lesson Plan:</h4>',
   attachments: [],
   category: '6684175179e5232bce4579ed',
-  resourceType: ResourceType.Lesson,
-  availability: null
+  resourceType: ResourceType.Lesson
 }
+
+export const mockAvailabilityForLesson = null
 
 export const mockedQuizDataDuplicate = {
   _id: '66b67e2ab58ba31be667ee4c',
@@ -29,11 +30,12 @@ export const mockedQuizDataDuplicate = {
     scoredResponses: false,
     correctAnswers: false
   },
-  availability: {
-    status: 'openFrom',
-    date: '2022-05-01T00:00:00.000Z'
-  },
   isDuplicate: true
+}
+
+export const mockAvailabilityForQuizDataDuplicate = {
+  status: 'openFrom',
+  date: '2022-05-01T00:00:00.000Z'
 }
 
 export const mockedAttachmentDataOriginal = {
@@ -43,9 +45,10 @@ export const mockedAttachmentDataOriginal = {
   link: '1723236050559-Exploring Systems of Linear Equations.png',
   size: 39340,
   category: '6684175179e5232bce4579ed',
-  resourceType: ResourceType.Attachment,
-  availability: {
-    status: 'open',
-    date: null
-  }
+  resourceType: ResourceType.Attachment
+}
+
+export const mockAvailabilityOpen = {
+  status: 'open',
+  date: null
 }

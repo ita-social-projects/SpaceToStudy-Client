@@ -61,8 +61,11 @@ export const styles = {
   },
   offerCard: {
     ...border,
-    p: { sm: '20px 20px', md: '20px 30px' }
+    p: { sm: '30px 20px', md: '30px' }
   },
-  offerCardSquare: border,
+  offerCardSquare: {
+    ...border,
+    p: '30px 20px'
+  },
   faqAccordion
 }
