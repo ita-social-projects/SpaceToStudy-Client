@@ -19,6 +19,7 @@ export const mockedSectionData = {
         description: 'Description',
         attachments: [],
         category: null,
+        isDuplicate: true,
         resourceType: ResourceType.Lesson
       },
       resourceType: ResourceType.Lesson
