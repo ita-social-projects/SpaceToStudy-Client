@@ -182,6 +182,13 @@ const CourseSectionContainer: FC<SectionProps> = ({
           />
         )
       })
+    } else if (resourceType === ResourceType.Lesson && !resource.isDuplicate) {
+      window
+        .open(
+          createUrlPath(authRoutes.lessonDetails.path, resource._id),
+          '_blank'
+        )
+        ?.focus()
     } else {
       const navigationFiled = resourceNavigationMap[
         resourceType
