@@ -1,5 +1,13 @@
 import { ChatResponse } from '~/types'
 
+const sortChatsByDate = (listOfChats: ChatResponse[]): ChatResponse[] => {
+  return listOfChats.sort((a, b) => {
+    const dateA = new Date(a.latestMessage.createdAt).getTime()
+    const dateB = new Date(b.latestMessage.createdAt).getTime()
+    return dateB - dateA
+  })
+}
+
 export const filterChats = (
   listOfChats: ChatResponse[],
   userId: string,
@@ -7,7 +15,9 @@ export const filterChats = (
 ): ChatResponse[] => {
   const lowerCaseSearch = search.toLocaleLowerCase()
 
-  return listOfChats.filter((item) => {
+  const sortedChats = sortChatsByDate(listOfChats)
+
+  return sortedChats.filter((item) => {
     const otherMember = item.members.find(
       (member) => member.user._id !== userId
     )
