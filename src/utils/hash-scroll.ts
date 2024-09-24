@@ -3,7 +3,6 @@ export const scrollToHash = (path: string) => {
     const elementWithId = document.getElementById(
       path.split('#').slice(1).join()
     )
-    elementWithId &&
-      elementWithId.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    elementWithId && elementWithId.scrollIntoView({ behavior: 'smooth' })
   }, 1000)
 }

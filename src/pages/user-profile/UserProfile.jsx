@@ -85,6 +85,7 @@ const UserProfile = () => {
       {isMyProfile && (
         <CompleteProfileBlock
           data={response}
+          openAccordion={hash ? true : false}
           profileItems={
             preferredRole === UserRoleEnum.Student
               ? profileItemsStudent
