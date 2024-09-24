@@ -123,7 +123,7 @@ const CompleteProfileBlock: FC<CompleteProfileBlockProps> = ({
   )
 
   return (
-    <Accordion expanded={isOpen} sx={styles.wrapper}>
+    <Accordion expanded={isOpen} id='complete' sx={styles.wrapper}>
       <AccordionSummary>
         <Box sx={styles.headerProgressBar}>
           <Box>
