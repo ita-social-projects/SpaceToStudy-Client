@@ -38,7 +38,7 @@
     "level": "Level",
     "language": "Language",
     "price": "Price",
-    "search": "Search by name",
+    "search": "Search by tutor name",
     "nativeSpeaker": "Native speaker"
   },
   "sortTitles": {
