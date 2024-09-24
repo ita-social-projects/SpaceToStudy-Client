@@ -62,6 +62,7 @@ const SearchByMessage: FC<SearchByMessageProps> = ({
         onFilteredIndexChange={onFilteredIndexChange}
       />
       <InputWithIcon
+        inputProps={{ maxLength: 30 }}
         onChange={onChange}
         onClear={onClose}
         placeholder={`${t('common.search')}...`}
