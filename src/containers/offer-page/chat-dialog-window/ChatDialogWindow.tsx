@@ -101,6 +101,7 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
         member: chatInfo.author._id,
         memberRole: chatInfo.authorRole
       }),
+
     [chatInfo.author._id, chatInfo.authorRole]
   )
 
