@@ -70,15 +70,13 @@ const OfferCarousel: FC<OfferCarouselProps> = ({ offer }) => {
         }
       }
     ]
-    const onBookmarkClick = (id: string) => {
-      console.log(id)
-    }
+
     return (
       <AppCard key={item._id} sx={styles.offerCard}>
         <OfferCardSquare
           buttonActions={buttonActions}
           offer={item}
-          onBookmarkClick={onBookmarkClick}
+          onBookmarkClick={() => {}}
         />
       </AppCard>
     )
