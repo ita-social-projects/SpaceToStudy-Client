@@ -12,16 +12,21 @@ import titleSm from '~/assets/img/guest-home-page/titleSm.svg'
 import titleXs from '~/assets/img/guest-home-page/titleXs.svg'
 import { guestRoutes } from '~/router/constants/guestRoutes'
 import { styles } from '~/containers/guest-home-page/styles/Welcome.styles.js'
+import i18next from 'i18next'
 
 const Welcome = () => {
   const { t } = useTranslation()
   const { isLaptopAndAbove, isTablet, isMobile } = useBreakpoints()
 
   const image = useMemo(() => {
-    if (isLaptopAndAbove) return titleMd
-    if (isTablet) return titleSm
-    if (isMobile) return titleXs
-  }, [isLaptopAndAbove, isTablet, isMobile])
+    if (i18next.language == 'en') {
+      if (isLaptopAndAbove) return titleMd
+      if (isTablet) return titleSm
+      if (isMobile) return titleXs
+    } else if (i18next.language == 'uk') {
+      return titleXs
+    }
+  }, [isLaptopAndAbove, isTablet, isMobile, i18next.language])
 
   return (
     <Box
