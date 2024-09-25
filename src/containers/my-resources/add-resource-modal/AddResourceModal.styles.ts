@@ -1,5 +1,4 @@
 import palette from '~/styles/app-theme/app.pallete'
-import { theme } from '~/styles/app-theme/custom-mui.styles'
 import { TypographyVariantEnum, VisibilityEnum } from '~/types'
 
 const input = {
@@ -10,12 +9,9 @@ const input = {
 
 export const styles = {
   root: {
-    width: '65vw',
+    width: { xs: 'auto', sm: '65vw' },
     p: '20px',
-    maxWidth: '1480px',
-    [theme.breakpoints.down('sm')]: {
-      width: 'auto'
-    }
+    maxWidth: '1480px'
   },
   title: {
     mb: '32px',
