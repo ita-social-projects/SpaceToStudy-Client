@@ -1,9 +1,39 @@
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useState } from 'react'
 import useAxios from './use-axios'
-import { Course, GetCoursesParams, ItemsWithCount } from '~/types'
+import {
+  Cooperation,
+  Course,
+  GetCooperationsParams,
+  GetCoursesParams,
+  ItemsWithCount
+} from '~/types'
 import { CourseService } from '~/services/course-service'
+import { cooperationService } from '~/services/cooperation-service'
+
+const transformCourses =
+  (subTitle: 'course' | 'cooperation') =>
+  <T extends Course | Cooperation>(course: T) => ({
+    id: course._id,
+    title: course.title,
+    subTitle
+  })
+
+const findCourseOrCooperationByResourceId = (id?: string) => {
+  return <T extends Course | Cooperation>(item: T) => {
+    if (!item.sections.length) {
+      return false
+    }
+
+    return item.sections.some((res) =>
+      res.resources.some((val) => val.resource._id == id)
+    )
+  }
+}
 
 const useChangeConfirm = (id: string | undefined) => {
+  const [openDialog, setOpenDialog] = useState(false)
+  const onCloseDialog = useCallback(() => setOpenDialog(false), [])
+
   const { response: coursesResponse } = useAxios<
     ItemsWithCount<Course>,
     GetCoursesParams
@@ -13,40 +43,37 @@ const useChangeConfirm = (id: string | undefined) => {
     fetchOnMount: true
   })
 
-  const coursesFiltered = useMemo(
-    () =>
-      coursesResponse.items
-        .filter((item) => item.sections[0].resources?.length)
-        .filter((item) =>
-          item.sections.some((res) =>
-            res.resources.some((val) => val.resource._id == id)
-          )
-        )
-        .map((item) => ({
-          id: item._id,
-          title: item.title,
-          subTitle: 'course'
-        })),
-    [coursesResponse.items, id]
-  )
+  const { response: cooperationsResponse } = useAxios<
+    ItemsWithCount<Cooperation>,
+    GetCooperationsParams
+  >({
+    service: cooperationService.getCooperations,
+    defaultResponse: { items: [], count: 0 },
+    fetchOnMount: true
+  })
 
-  const [openDialog, setOpenDialog] = useState(false)
-  const onCloseDialog = useCallback(() => setOpenDialog(false), [])
+  const matchingCourses = coursesResponse.items
+    .filter(findCourseOrCooperationByResourceId(id))
+    .map(transformCourses('course'))
+
+  const matchingCooperations = cooperationsResponse.items
+    .filter(findCourseOrCooperationByResourceId(id))
+    .map(transformCourses('cooperation'))
 
   const onSubmitButtonClick = useCallback(
     (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-      if (coursesFiltered.length > 0) {
+      if (matchingCourses.length > 0) {
         event.preventDefault()
         setOpenDialog(true)
       }
     },
-    [coursesFiltered.length]
+    [matchingCourses.length]
   )
 
   return {
     openDialog,
     onCloseDialog,
-    coursesFiltered,
+    coursesFiltered: [...matchingCourses, ...matchingCooperations],
     onSubmitButtonClick
   }
 }
