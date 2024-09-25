@@ -10,3 +10,10 @@ export const cooperationTranslationKeys = [
     value: ResourcesAvailabilityEnum.OpenManually
   }
 ]
+
+export const OpenFromError = {
+  status: 409,
+  code: 'VALIDATION_ERROR',
+  message:
+    'Cooperation validation failed: OpenFrom: OpenFrom should be with date.'
+}
