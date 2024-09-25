@@ -2,8 +2,8 @@ import { ChatResponse } from '~/types'
 
 const sortChatsByDate = (listOfChats: ChatResponse[]): ChatResponse[] => {
   return listOfChats.sort((a, b) => {
-    const dateA = new Date(a.latestMessage.createdAt).getTime()
-    const dateB = new Date(b.latestMessage.createdAt).getTime()
+    const dateA = new Date(a.updatedAt).getTime()
+    const dateB = new Date(b.updatedAt).getTime()
     return dateB - dateA
   })
 }
