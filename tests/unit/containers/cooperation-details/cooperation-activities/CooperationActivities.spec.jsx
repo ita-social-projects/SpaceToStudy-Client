@@ -6,6 +6,7 @@ import reducer from '~/redux/reducer'
 import cooperationsReducer from '~/redux/features/cooperationsSlice'
 import snackbarReducer, { openAlert } from '~/redux/features/snackbarSlice'
 import { setResourcesAvailability } from '~/redux/features/cooperationsSlice'
+import { useAppSelector } from '~/hooks/use-redux'
 
 import { snackbarVariants } from '~/constants'
 import { ResourcesAvailabilityEnum } from '~/types'
@@ -16,6 +17,20 @@ import CooperationActivities from '~/containers/cooperation-details/cooperation-
 let mockUpdateCooperation
 const mockSetEditMode = vi.fn()
 const mockDispatch = vi.fn()
+
+const mockedSections = [
+  {
+    resources: [
+      {
+        availability: {
+          status: 'openFrom',
+          date: null
+        },
+        resourceType: 'lesson'
+      }
+    ]
+  }
+]
 
 const store = configureStore({
   reducer: {
@@ -197,6 +212,41 @@ describe('CooperationActivities', () => {
     expect(mockDispatch).toHaveBeenCalledWith({
       type: setResourcesAvailability.type,
       payload: selectedAvailability
+    })
+  })
+})
+
+describe('CooperationActivities - checkDate function', () => {
+  beforeEach(() => {
+    useAppSelector.mockReturnValue({
+      sections: mockedSections,
+      resourcesAvailability: ResourcesAvailabilityEnum.OpenAll
+    })
+
+    renderWithProviders(
+      <CooperationActivities
+        cooperationId='123'
+        setEditMode={mockSetEditMode}
+      />,
+      { store }
+    )
+  })
+
+  it('should return true and call onResponseError when a resource has OpenFrom status with no date', async () => {
+    const saveButton = screen.getByText('common.save')
+    fireEvent.click(saveButton)
+
+    await waitFor(() => {
+      expect(openAlert).toHaveBeenCalledTimes(1)
+      expect(openAlert).toHaveBeenCalledWith({
+        severity: snackbarVariants.error,
+        message: {
+          text: 'errors.VALIDATION_ERROR',
+          options: {
+            message: 'OpenFrom should be with date.'
+          }
+        }
+      })
     })
   })
 })
