@@ -93,7 +93,10 @@ export const styles = {
       height: '24px'
     },
     textAreaWrapper: {
-      p: '5px 0px'
+      p: '5px 0px',
+      '& label': {
+        left: '40px'
+      }
     }
   },
   icons: {

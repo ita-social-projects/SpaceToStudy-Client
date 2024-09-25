@@ -75,6 +75,16 @@ const CourseSectionContainer: FC<SectionProps> = ({
 
   const [activeMenu, setActiveMenu] = useState<string>('')
   const [isVisible, setIsVisible] = useState<boolean>(true)
+  const [description, setDescription] = useState<string>(
+    sectionData.description
+  )
+
+  const handleDescriptionChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setDescription(event.target.value)
+    handleSectionInputChange(sectionData.id, 'description', event.target.value)
+  }
 
   const allResources = useMemo(
     () => sectionData.resources.map((item) => item.resource),
@@ -124,12 +134,10 @@ const CourseSectionContainer: FC<SectionProps> = ({
   const handleResourceAvailabilityChange = useCallback(
     (resource: CourseResource, availability: ResourceAvailability) => {
       resourceEventHandler?.({
-        type: CourseResourceEventType.ResourceUpdated,
+        type: CourseResourceEventType.ResourceUpdateAvailability,
         sectionId: sectionData.id,
         resourceId: resource.id,
-        resource: {
-          availability
-        }
+        availability
       })
     },
     [sectionData, resourceEventHandler]
@@ -329,21 +337,15 @@ const CourseSectionContainer: FC<SectionProps> = ({
                 event.target.value
               )
             }
-            onChange={(event) =>
-              handleSectionInputChange(
-                sectionData.id,
-                'description',
-                event.target.value
-              )
-            }
-            value={sectionData.description}
+            onChange={handleDescriptionChange}
+            value={description}
             variant={TextFieldVariantEnum.Standard}
           />
           <ResourcesList
+            cooperationData={sectionData.resources}
             deleteResource={deleteResource}
             editResource={editResource}
             isCooperation={isCooperation}
-            items={allResources}
             sortResources={handleResourcesSort}
             updateAvailability={handleResourceAvailabilityChange}
           />

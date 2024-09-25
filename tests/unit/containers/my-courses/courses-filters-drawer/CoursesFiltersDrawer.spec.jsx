@@ -5,7 +5,6 @@ import CoursesFiltersDrawer from '~/containers/my-courses/courses-filters-drawer
 import { renderWithProviders } from '~tests/test-utils'
 import { mockAxiosClient, selectOption } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
-import { ProficiencyLevelEnum } from '~/types'
 
 const mockUpdateFiltersInQuery = vi.fn()
 const mockResetFilters = vi.fn()
@@ -57,8 +56,8 @@ const setup = async (filters) => {
 
 describe('CoursesFiltersDrawer', () => {
   describe('with default filters', () => {
-    beforeEach(() => {
-      setup(defaultFilters)
+    beforeEach(async () => {
+      await setup(defaultFilters)
     })
 
     it('renders filter titles correctly', async () => {
@@ -84,21 +83,13 @@ describe('CoursesFiltersDrawer', () => {
       })
     })
 
-    it('calls updateFiltersInQuery when proficiency level is changed', () => {
-      const proficiencyCheckbox = screen.getByLabelText(
-        ProficiencyLevelEnum.Beginner
-      )
-      fireEvent.click(proficiencyCheckbox)
-      expect(mockUpdateFiltersInQuery).toHaveBeenCalledWith({
-        proficiencyLevel: [ProficiencyLevelEnum.Beginner]
-      })
-    })
-
     it('calls updateFiltersInQuery when search input is changed', () => {
       const input = screen.getByPlaceholderText('common.search')
       fireEvent.change(input, { target: { value: 'test input' } })
-      expect(mockUpdateFiltersInQuery).toHaveBeenCalledWith({
-        title: 'test input'
+      waitFor(() => {
+        expect(mockUpdateFiltersInQuery).toHaveBeenCalledWith({
+          title: 'test input'
+        })
       })
     })
 

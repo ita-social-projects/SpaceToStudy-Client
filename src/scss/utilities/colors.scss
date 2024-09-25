@@ -1,0 +1,59 @@
+@use '../variables' as *;
+@use '../functions' as *;
+@use '../mixins' as *;
+
+$text-utilities: (
+  'text-blue-gray': (
+    class: 'text-blue-gray',
+    properties: color,
+    values: map-to-var-map($blue-grays, 'blue-gray')
+  ),
+  'text-turquoise': (
+    class: 'text-turquoise',
+    properties: color,
+    values: map-to-var-map($turquoises, 'turquoise')
+  ),
+  'text-blue': (
+    class: 'text-blue',
+    properties: color,
+    values: map-to-var-map($blues, 'blue')
+  ),
+  'text-green': (
+    class: 'text-green',
+    properties: color,
+    values: map-to-var-map($greens, 'green')
+  ),
+  'text-yellow': (
+    class: 'text-yellow',
+    properties: color,
+    values: map-to-var-map($yellows, 'yellow')
+  ),
+  'text-purple': (
+    class: 'text-purple',
+    properties: color,
+    values: map-to-var-map($purples, 'purple')
+  ),
+  'text-red': (
+    class: 'text-red',
+    properties: color,
+    values: map-to-var-map($reds, 'red')
+  ),
+  'text-neutral': (
+    class: 'text-neutral',
+    properties: color,
+    values: map-to-var-map($neutrals, 'neutral')
+  ),
+  'text': (
+    class: 'text',
+    properties: color,
+    values: (
+      'text-inherit': 'inherit',
+      'text-current': 'currentColor',
+      'text-transparent': 'transparent'
+    )
+  )
+);
+
+@each $key, $utility in $text-utilities {
+  @include generate-utilities($utility);
+}

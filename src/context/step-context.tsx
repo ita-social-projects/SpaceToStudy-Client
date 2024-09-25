@@ -20,7 +20,7 @@ interface StepProviderProps {
 interface StepContextOutput {
   stepData: StepData
   handleSubjects: (subjects: StepData['subjects']) => void
-  handlePhoto: (subjects: StepData['photo']) => void
+  handlePhoto: (photo: StepData['photo']) => void
   handleLanguage: (language: StepData['language']) => void
   handleGeneralInfo: (generalInfo: StepData['generalInfo']) => void
 }

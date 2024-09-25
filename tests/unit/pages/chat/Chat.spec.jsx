@@ -1,5 +1,4 @@
-import { fireEvent, screen, waitFor } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
+import { fireEvent, screen, waitFor, act } from '@testing-library/react'
 
 import useBreakpoints from '~/hooks/use-breakpoints'
 import Chat from '~/pages/chat/Chat'
@@ -10,7 +9,8 @@ import { URLs } from '~/constants/request'
 import {
   chatsMock,
   messagesMock
-} from '~tests/unit/containers/chat/list-of-users-with-search/MockChat.spec.constants'
+} from '~tests/unit/pages/chat/ChatsMock.constants'
+import { afterEach } from 'vitest'
 
 vi.mock('~/pages/chat/MessagesList', () => ({
   default: vi.fn(() => (
@@ -21,6 +21,7 @@ vi.mock('~/pages/chat/MessagesList', () => ({
 }))
 
 vi.mock('~/hooks/use-breakpoints')
+
 global.ResizeObserver = vi.fn().mockImplementation(() => ({
   observe: vi.fn(),
   unobserve: vi.fn(),
@@ -37,6 +38,8 @@ const mockChatContext = {
 vi.mock('~/context/chat-context', () => ({
   useChatContext: () => mockChatContext
 }))
+
+const mockSetChatInfo = vi.fn()
 
 const mockRef = { current: { scrollTo: vi.fn(), scrollHeight: 100 } }
 
@@ -63,12 +66,17 @@ describe('Chat for desktop', () => {
     isMobile: false,
     isTablet: false
   }
+
   beforeEach(async () => {
     useBreakpoints.mockImplementation(() => desktopData)
 
     await waitFor(() => {
       renderWithProviders(<Chat />)
     })
+  })
+
+  afterEach(() => {
+    vi.clearAllMocks()
   })
 
   it('should render user in a chat', async () => {
@@ -91,27 +99,21 @@ describe('Chat for desktop', () => {
   })
 
   it('should send new message and clear input', async () => {
-    const user = userEvent.setup()
-
     const chatItem = screen.getByText('Scott Short')
 
-    waitFor(() => {
-      fireEvent.click(chatItem)
-    })
+    fireEvent.click(chatItem)
 
     const messageInput = await screen.findByLabelText(
       'chatPage.chat.inputLabel'
     )
 
-    await user.type(messageInput, 'new message')
+    fireEvent.change(messageInput, { target: { value: 'new message' } })
 
     expect(messageInput.value).toBe('new message')
 
     const sendBtn = screen.getByTestId('send-btn')
 
-    waitFor(() => {
-      fireEvent.click(sendBtn)
-    })
+    await act(() => fireEvent.click(sendBtn))
 
     expect(messageInput.value).toBe('')
   })
@@ -123,14 +125,53 @@ describe('Chat for mobile', () => {
     isMobile: true,
     isTablet: false
   }
-  beforeEach(() => {
+  beforeEach(async () => {
     useBreakpoints.mockImplementation(() => mobileData)
 
-    renderWithProviders(<Chat />)
+    await waitFor(() => {
+      renderWithProviders(<Chat />)
+    })
   })
-  it('should render just right pane in a chat', async () => {
+
+  it('should not render left panel in a chat', async () => {
     const chip = await screen.findByText('chatPage.chat.chipLabel')
 
-    expect(chip).toBeInTheDocument()
+    expect(chip).not.toBeInTheDocument()
+  })
+})
+
+describe('Chat - open last chat and close mini chat window', () => {
+  beforeEach(async () => {
+    vi.mock('~/context/chat-context', () => ({
+      useChatContext: () => ({
+        chatInfo: { chatId: chatsMock[0]._id },
+        setChatInfo: mockSetChatInfo
+      })
+    }))
+    Storage.prototype.getItem = vi.fn((key) => {
+      if (key === 'currentChatId') return chatsMock[0]._id
+      return null
+    })
+    Storage.prototype.setItem = vi.fn()
+
+    await waitFor(() => {
+      renderWithProviders(<Chat />)
+    })
+  })
+
+  afterEach(() => {
+    vi.clearAllMocks()
+  })
+
+  it('should open the last chat and close the mini chat window', async () => {
+    await waitFor(() => {
+      expect(screen.getByTestId('mock-messages-list')).toBeInTheDocument()
+    })
+    expect(localStorage.getItem).toHaveBeenCalledWith('currentChatId')
+    expect(localStorage.setItem).toHaveBeenCalledWith(
+      'currentChatId',
+      chatsMock[0]._id
+    )
+    expect(mockSetChatInfo).toHaveBeenCalledWith(null)
   })
 })

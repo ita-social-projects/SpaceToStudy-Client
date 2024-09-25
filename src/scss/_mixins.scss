@@ -1,4 +1,5 @@
 @use 'variables' as *;
+@use 'functions' as *;
 @use 'sass:map';
 @use 'sass:math';
 
@@ -13,9 +14,63 @@
  *
  */
 
-@mixin generate-css-variables($map, $prefix: '') {
-  @each $key, $value in $map {
-    --#{$prefix}#{$key}: #{$value};
+/*=============================================
+ =                CSS variables               =
+ =============================================*/
+
+/**
+ * @mixin register-var
+ * Registers a CSS variable with a specified value, constructing its name using a base name and optional suffix.
+ */
+
+@mixin register-var($name, $suffix, $value) {
+  $var-name: build-var-name($name, $suffix);
+
+  #{$var-name}: #{$value};
+}
+
+/**
+ * @mixin register-vars
+ * Registers multiple CSS variables using a map of suffixes and values, optionally specifying a base name.
+ */
+
+@mixin register-vars($vars, $name) {
+  @each $suffix, $value in $vars {
+    @include register-var($name, $suffix, $value);
+  }
+}
+
+/*=============================================
+ =                Utility classes             =
+ =============================================*/
+
+/**
+ * @mixin generate-utilities
+ * This mixin generates utility classes based on a provided configuration map.
+ *
+ * @param {Map} $utility - A map containing the configuration for utility classes.
+ *   - 'values': A map where keys are the utility class suffixes and values are the corresponding property values.
+ *   - 'class': The base class name for the utility classes.
+ *   - 'properties': A list of CSS properties that will be set using the values from the 'values' map.
+ */
+
+@mixin generate-utilities($utility) {
+  $values: map.get($utility, 'values');
+  $class: map.get($utility, 'class');
+  $properties: map.get($utility, 'properties');
+
+  @each $key, $value in $values {
+    $class-name: $key;
+
+    @if $class != null and $class != '' {
+      $class-name: #{$class}-#{$key};
+    }
+
+    .#{$class-name} {
+      @each $property in $properties {
+        #{$property}: #{$value};
+      }
+    }
   }
 }
 
@@ -138,6 +193,7 @@
   @if $line-clamp != math.round($line-clamp) {
     @error "#{$line-clamp} is not a valid property. Expected an plain integer.";
   }
+
   display: -webkit-box;
   -webkit-line-clamp: $line-clamp; // value is: integer;
   -webkit-box-orient: vertical;
@@ -222,12 +278,13 @@
  */
 
 @mixin clearfix($content: '') {
-  &:before,
-  &:after {
+  &::before,
+  &::after {
     content: $content;
     display: table;
   }
-  &:after {
+
+  &::after {
     clear: both;
   }
 }

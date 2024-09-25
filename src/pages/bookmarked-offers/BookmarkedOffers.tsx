@@ -10,17 +10,19 @@ import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import BookmarksToolbar from '~/containers/bookmarked-offers/BookmarksToolbar'
 import OfferContainer from '~/containers/find-offer/offer-container/OfferContainer'
 
+import { snackbarVariants } from '~/constants'
 import usePagination from '~/hooks/table/use-pagination'
-import useAxios from '~/hooks/use-axios'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { useFilterQuery } from '~/hooks/use-filter-query'
 import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 import {
   defaultFilters,
+  defaultResponse,
   itemsPerPage
 } from '~/pages/bookmarked-offers/BookmarkedOffers.constants'
 import { styles } from '~/pages/bookmarked-offers/BookmarkedOffers.styles'
 import { fetchUserById } from '~/redux/features/editProfileSlice'
+import { openAlert } from '~/redux/features/snackbarSlice'
 import { userService } from '~/services/user-service'
 import {
   CardsView,
@@ -30,56 +32,69 @@ import {
   SizeEnum,
   UserRole
 } from '~/types'
+import { parseQueryParams } from '~/utils/helper-functions'
 
 const BookmarkedOffers = () => {
   const [cardsView, setCardsView] = useState<CardsView>(CardsViewEnum.Inline)
+  const [offers, setOffers] = useState<GetOffersResponse>({
+    items: [],
+    count: -1
+  })
+  const [isOffersLoading, setIsOffersLoading] = useState(false)
   const { userId, userRole } = useAppSelector((state) => state.appMain)
   const { bookmarkedOffers } = useAppSelector((state) => state.editProfile)
   const { isMobile } = useBreakpoints()
   const dispatch = useAppDispatch()
   const { t } = useTranslation()
 
+  const { items, count: offersCount } = offers
+
   const { filters, searchParams, filterQueryActions } = useFilterQuery({
     defaultFilters
   })
-
-  const getOffers = useCallback(
-    (params?: GetOffersParams) =>
-      userService.getBookmarkedOffers(userId, params),
-    [userId]
-  )
-
-  const {
-    response: offersResponse,
-    loading: isOffersLoading,
-    fetchData
-  } = useAxios<GetOffersResponse, GetOffersParams>({
-    service: getOffers,
-    defaultResponse: { items: [], count: -1 },
-    fetchOnMount: false
-  })
-
-  const { items, count: offersCount } = offersResponse
 
   const { pageCount } = usePagination({
     itemsCount: offersCount,
     itemsPerPage
   })
 
+  const fetchData = useCallback(
+    async (params: GetOffersParams) => {
+      try {
+        setIsOffersLoading(true)
+        const response = await userService.getBookmarkedOffers(userId, params)
+        setOffers(response.data as GetOffersResponse)
+      } catch (e) {
+        setOffers(defaultResponse)
+        dispatch(
+          openAlert({
+            severity: snackbarVariants.error,
+            message: t('bookmarkedOffers.loadingError')
+          })
+        )
+      } finally {
+        setIsOffersLoading(false)
+      }
+    },
+    [userId, dispatch, t]
+  )
+
   const updateInfo = useCallback(() => {
+    const parsedFilters = parseQueryParams(searchParams, defaultFilters)
+    const filters = { ...defaultFilters, ...parsedFilters }
+
     void fetchData({
       ...filters,
       limit: itemsPerPage,
       skip: (Number(filters.page) - 1) * itemsPerPage
     })
-  }, [fetchData, filters])
+  }, [searchParams, fetchData])
 
   const searchString = searchParams.toString()
 
   useEffect(() => {
     updateInfo()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchString, bookmarkedOffers])
+  }, [searchString, bookmarkedOffers, updateInfo])
 
   const defaultParams = { page: defaultFilters.page }
 

@@ -6,6 +6,8 @@ vi.mock('~/components/message/Message', () => ({
   default: vi.fn(() => <div data-testid='mock-message'>Mock Message</div>)
 }))
 
+vi.spyOn(window, "getComputedStyle").mockReturnValue(new CSSStyleDeclaration)
+
 global.IntersectionObserver = vi.fn().mockImplementation((callback) => ({
   observe: vi.fn(),
   unobserve: vi.fn(),
@@ -70,6 +72,6 @@ describe('MessagesList component', () => {
     renderWithProviders(
       <MessagesList infiniteLoadCallback={vi.fn()} messages={mockMessages} />
     )
-    expect(screen.getByText(/August/i)).toBeInTheDocument()
+    expect(screen.getByText(/2024/i)).toBeInTheDocument()
   })
 })

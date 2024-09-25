@@ -127,13 +127,13 @@ const FindOffers = () => {
 
   const defaultParams = { page: defaultFilters(oppositeRole).page }
 
-  const pageWrapperRef = useRef<HTMLDivElement>(null)
+  const targetBlock = useRef<HTMLDivElement>(null)
 
   const handlePageChange = (_: ChangeEvent<unknown>, page: number) => {
     filterQueryActions.updateFiltersInQuery({ page })
 
-    if (pageWrapperRef.current) {
-      pageWrapperRef.current.scrollIntoView()
+    if (targetBlock.current) {
+      targetBlock.current.scrollIntoView({ behavior: 'smooth' })
     }
   }
   const handleShowingTutorOffers = () => {
@@ -145,7 +145,7 @@ const FindOffers = () => {
   }
 
   return (
-    <PageWrapper ref={pageWrapperRef}>
+    <PageWrapper>
       <OfferRequestBlock />
       <TitleWithDescription
         description={t('findOffers.titleWithDescription.description')}
@@ -171,6 +171,7 @@ const FindOffers = () => {
         handleOffersView={setCardsView}
         offersView={cardsView}
         onToggleTutorOffers={handleShowingTutorOffers}
+        ref={targetBlock}
         toggleFilters={toggleFiltersOpen}
         updateFilters={filterQueryActions.updateFiltersInQuery}
       />

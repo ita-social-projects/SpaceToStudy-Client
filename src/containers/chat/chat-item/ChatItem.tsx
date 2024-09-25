@@ -41,11 +41,17 @@ const ChatItem: FC<ItemOfChatProps> = ({
   const firstName = userToSpeak?.user.firstName
   const lastName = userToSpeak?.user.lastName
   const photo = userToSpeak?.user.photo
-  const { text, author, updatedAt } = chat.latestMessage || {
-    text: t('chatPage.message.noMessages'),
-    author: '',
-    updatedAt: ''
-  }
+  const showLastMessage =
+    chat.latestMessage &&
+    !chat.latestMessage.clearedFor?.some((item) => item.user === userId)
+
+  const { text, author, updatedAt } = showLastMessage
+    ? chat.latestMessage
+    : {
+        text: t('chatPage.message.noMessages'),
+        author: { _id: '' },
+        updatedAt: ''
+      }
 
   const fullName = `${firstName ?? ''} ${lastName ?? ''}`
 
@@ -72,7 +78,11 @@ const ChatItem: FC<ItemOfChatProps> = ({
   )
 
   return (
-    <Box onClick={handleSelectedChat} sx={styles.root(isActiveChat)}>
+    <Box
+      data-testid='chat-item'
+      onClick={handleSelectedChat}
+      sx={styles.root(isActiveChat)}
+    >
       <Box sx={styles.imageWrapper}>
         <Badge
           anchorOrigin={{

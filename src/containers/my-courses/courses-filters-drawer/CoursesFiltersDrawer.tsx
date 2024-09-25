@@ -16,6 +16,7 @@ import { styles } from '~/containers/my-courses/courses-filters-drawer/CoursesFi
 import { spliceSx } from '~/utils/helper-functions'
 import { categoryService } from '~/services/category-service'
 import { subjectService } from '~/services/subject-service'
+import { proficiencyLevelLabels } from '~/constants/labels'
 
 import {
   ButtonVariantEnum,
@@ -46,10 +47,9 @@ const CoursesFiltersDrawer: FC<CoursesFiltersDrawerProps> = ({
   isOpen,
   deviceFields
 }) => {
-  const levelOptions = Object.values(ProficiencyLevelEnum)
   const { t } = useTranslation()
+  const levelOptions = Object.values(ProficiencyLevelEnum)
   const { updateFiltersInQuery, resetFilters } = filterActions
-
   const getSubjectsNames = useCallback(
     () => subjectService.getSubjectsNames(filters.category),
     [filters.category]
@@ -152,6 +152,7 @@ const CoursesFiltersDrawer: FC<CoursesFiltersDrawerProps> = ({
         <CheckboxList
           fillRange
           items={levelOptions}
+          labels={proficiencyLevelLabels}
           onChange={updateFilterByKey('proficiencyLevel')}
           value={filters.proficiencyLevel}
         />

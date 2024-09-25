@@ -6,7 +6,8 @@ import {
   ProficiencyLevelEnum,
   UserResponse,
   CourseResource,
-  ResourcesTypesEnum as ResourceType
+  ResourcesTypesEnum as ResourceType,
+  ResourceAvailability
 } from '~/types'
 
 export interface Course extends CommonEntityFields {
@@ -32,6 +33,7 @@ export interface CourseForm
 export interface Resource {
   resource: CourseResource
   resourceType: ResourceType
+  availability?: ResourceAvailability
 }
 
 export interface CourseSection {
@@ -58,4 +60,14 @@ export interface CourseExtendedAutocompleteOptions {
   name: string
   _id: string
   title: string
+}
+
+export interface CreateCourseContext {
+  sections: CourseSection[]
+  setSectionsData: (sections: CourseSection[]) => void
+  handleSectionChange: (
+    id: string,
+    field: keyof CourseSection,
+    value: string | CourseResource[] | Resource[]
+  ) => void
 }

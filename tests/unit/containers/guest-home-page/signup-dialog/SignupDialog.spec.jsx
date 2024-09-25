@@ -1,9 +1,8 @@
 import { expect, vi } from 'vitest'
-import { screen, fireEvent, waitFor } from '@testing-library/react'
+import { screen, fireEvent, waitFor, renderHook } from '@testing-library/react'
 import SignupDialog from '~/containers/guest-home-page/signup-dialog/SignupDialog'
 import { renderWithProviders } from '~tests/test-utils'
 import { student } from '~/constants'
-import { renderHook } from '@testing-library/react-hooks'
 import useBreakpoints from '~/hooks/use-breakpoints'
 
 const mockSelector = vi.fn()
@@ -137,6 +136,7 @@ describe('Signup dialog test', () => {
       expect(signUp).toHaveBeenCalledTimes(1)
     })
   })
+
   it('isDesktop', () => {
     useBreakpoints.mockImplementation(() => ({
       isDesktop: true,

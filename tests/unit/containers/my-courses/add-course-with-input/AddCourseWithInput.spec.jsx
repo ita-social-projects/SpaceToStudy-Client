@@ -1,4 +1,4 @@
-import { fireEvent, screen } from '@testing-library/react'
+import { fireEvent, screen, act } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 import AddCourseWithInput from '~/containers/my-courses/add-course-with-input/AddCourseWithInput'
 
@@ -16,6 +16,7 @@ describe('AddCourseWithInput test', () => {
       <AddCourseWithInput
         filterActions={mockedFilterActions}
         filters={mockedFilters}
+        sort=""
       />
     )
   })
@@ -42,11 +43,11 @@ describe('AddCourseWithInput test', () => {
     expect(mockedFilterActions.updateFiltersInQuery).toHaveBeenCalled()
   })
 
-  it('should render filters', () => {
+  it('should render filters', async () => {
     const filters = screen.getByText('filters.filtersListTitle')
 
     expect(filters).toBeInTheDocument()
-    fireEvent.click(filters)
+    await act(() => fireEvent.click(filters))
     const filtersModal = screen.getByRole('presentation')
     expect(filtersModal).toBeInTheDocument()
   })

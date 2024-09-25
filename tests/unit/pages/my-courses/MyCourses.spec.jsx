@@ -1,4 +1,4 @@
-import { fireEvent, screen, waitFor } from '@testing-library/react'
+import { fireEvent, screen, waitFor, act } from '@testing-library/react'
 import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
 
@@ -19,10 +19,10 @@ const mockCoursesData = {
 }
 
 describe('tests for MyCourses page', () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     mockAxiosClient.onGet(URLs.courses.get).reply(200, mockCoursesData)
     mockAxiosClient.onPost(URLs.courses.create).reply(200, null)
-    renderWithProviders(<MyCourses />)
+    await waitFor(() => renderWithProviders(<MyCourses />))
   })
 
   it('should render page title', async () => {
@@ -32,17 +32,13 @@ describe('tests for MyCourses page', () => {
   })
 
   it('should click delete button', async () => {
-    waitFor(() => {
-      const menu = screen.getAllByTestId('MoreVertIcon')[0].parentElement
+    const menu = await screen.findAllByTestId('MoreVertIcon')
 
-      fireEvent.click(menu)
-    })
+    fireEvent.click(menu[0])
 
     const deleteBtn = await screen.findByText('common.delete')
 
-    waitFor(() => {
-      fireEvent.click(deleteBtn)
-    })
+    fireEvent.click(deleteBtn)
 
     const title = screen.getByText(
       'myCoursesPage.modalMessages.confirmDeletionMessage'
@@ -52,17 +48,13 @@ describe('tests for MyCourses page', () => {
   })
 
   it('should click duplicate button', async () => {
-    waitFor(() => {
-      const menu = screen.getAllByTestId('MoreVertIcon')[1].parentElement
+    const menu = await screen.findAllByTestId('MoreVertIcon')
 
-      fireEvent.click(menu)
-    })
+    await act(() => fireEvent.click(menu[1]))
 
-    const duplicateBtn = await screen.findByText('common.duplicate')
+    const duplicateBtn = screen.getByText('common.duplicate')
 
-    waitFor(() => {
-      fireEvent.click(duplicateBtn)
-    })
+    await act(() => fireEvent.click(duplicateBtn))
 
     const title = screen.getByText(
       '1Advanced Lineal Math: Theoretical Concepts'

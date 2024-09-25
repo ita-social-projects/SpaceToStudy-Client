@@ -57,28 +57,28 @@
 %size-small {
   font-size: var(--#{$prefix}font-size-sm);
   line-height: var(--#{$prefix}line-height-sm);
-  padding: var(--#{$prefix}space-sm);
-  column-gap: var(--#{$prefix}space-sm);
+  padding: var(--#{$prefix}space-1);
+  column-gap: var(--#{$prefix}space-1);
 }
 
 %size-medium {
-  padding: var(--#{$prefix}space-sm) var(--#{$prefix}space-md);
-  column-gap: var(--#{$prefix}space-sm);
+  padding: var(--#{$prefix}space-1) var(--#{$prefix}space-1-5);
+  column-gap: var(--#{$prefix}space-1);
 }
 
 %size-large {
-  padding: var(--#{$prefix}space-md) var(--#{$prefix}space-lg);
-  column-gap: var(--#{$prefix}space-md);
+  padding: var(--#{$prefix}space-1-5) var(--#{$prefix}space-2);
+  column-gap: var(--#{$prefix}space-1-5);
 }
 
 %size-extra-large {
-  padding: var(--#{$prefix}space-lg);
-  column-gap: var(--#{$prefix}space-md);
+  padding: var(--#{$prefix}space-2);
+  column-gap: var(--#{$prefix}space-1-5);
 }
 
 %size-xxl {
-  padding: var(--#{$prefix}space-md) var(--#{$prefix}space-2xl);
-  column-gap: var(--#{$prefix}space-md);
+  padding: var(--#{$prefix}space-1-5) var(--#{$prefix}space-4);
+  column-gap: var(--#{$prefix}space-1-5);
 }
 
 %variant-contained {
@@ -126,7 +126,7 @@
   color: var(--#{$prefix}blue-gray-800);
 
   &:hover {
-    background-color: var(--#{$prefix}blue-gray-50);
+    background-color: var(--#{$prefix}blue-gray-100);
     color: var(--#{$prefix}blue-gray-800);
   }
 

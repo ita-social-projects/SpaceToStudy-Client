@@ -35,7 +35,7 @@ const AppSelect = <T,>({
   const fieldsList = fields.map(({ title, value }) => {
     if (typeof value === 'string' || typeof value === 'number') {
       return (
-        <MenuItem key={title} value={value}>
+        <MenuItem key={title + value} value={value}>
           {t(title)}
         </MenuItem>
       )

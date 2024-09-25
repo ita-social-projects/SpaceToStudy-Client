@@ -42,9 +42,14 @@ describe('test with guest role', () => {
 
 describe('test with student role', () => {
   const preloadedState = { appMain: { userRole: 'student' } }
-  beforeEach(() => {
-    renderWithProviders(<NavigationIcons setSidebarOpen={setIsSidebarOpen} />, {
-      preloadedState
+  beforeEach(async () => {
+    await waitFor(() => {
+      renderWithProviders(
+        <NavigationIcons setSidebarOpen={setIsSidebarOpen} />,
+        {
+          preloadedState
+        }
+      )
     })
   })
 

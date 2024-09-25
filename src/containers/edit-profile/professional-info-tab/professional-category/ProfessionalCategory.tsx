@@ -113,14 +113,16 @@ const ProfessionalCategory: FC<ProfessionalCategoryProps> = ({
             )
           }
         >
-          <IconButton
-            data-testid='delete-professional-category-button'
-            disabled={item.isDeletionBlocked}
-            onClick={handleDeleteButtonClick}
-            sx={styles.toolbar.deleteButton}
-          >
-            <DeleteIcon />
-          </IconButton>
+          <Box component='span'>
+            <IconButton
+              data-testid='delete-professional-category-button'
+              disabled={item.isDeletionBlocked}
+              onClick={handleDeleteButtonClick}
+              sx={styles.toolbar.deleteButton}
+            >
+              <DeleteIcon />
+            </IconButton>
+          </Box>
         </Tooltip>
       </Box>
       <Box component={ComponentEnum.Dl} sx={styles.description.grid}>

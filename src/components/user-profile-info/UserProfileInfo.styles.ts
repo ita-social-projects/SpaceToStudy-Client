@@ -5,7 +5,7 @@ export const styles = {
   root: {
     display: 'flex',
     flexDirection: 'column',
-    gap: '6px'
+    gap: '20px'
   },
   info: {
     display: 'flex',
@@ -20,7 +20,7 @@ export const styles = {
     },
     fontSize: {
       xs: '20px',
-      md: '18px'
+      md: '16px'
     }
   },
   active: {

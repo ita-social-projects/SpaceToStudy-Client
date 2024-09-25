@@ -9,7 +9,9 @@ import { messageService } from '~/services/message-service'
 import { useDrawer } from '~/hooks/use-drawer'
 import useAxios from '~/hooks/use-axios'
 import useBreakpoints from '~/hooks/use-breakpoints'
+
 import { useAppSelector } from '~/hooks/use-redux'
+import { useChatContext } from '~/context/chat-context'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import AppDrawer from '~/components/app-drawer/AppDrawer'
 import AppChip from '~/components/app-chip/AppChip'
@@ -21,12 +23,7 @@ import AboutChatSidebar from '~/containers/about-chat-sidebar/AboutChatSidebar'
 
 import { defaultResponses } from '~/constants'
 import { styles } from '~/pages/chat/Chat.styles'
-import {
-  backdropIgnore,
-  mockFiles,
-  mockLinks,
-  mockMedia
-} from '~/pages/chat/Chat.constants'
+import { backdropIgnore, mockLinks } from '~/pages/chat/Chat.constants'
 import {
   ChatResponse,
   DrawerVariantEnum,
@@ -52,6 +49,7 @@ const Chat = () => {
   const [prevScrollHeight, setPrevScrollHeight] = useState(0)
   const [prevScrollTop, setPrevScrollTop] = useState(0)
   const { userId: myId } = useAppSelector((state) => state.appMain)
+  const { setChatInfo, chatInfo } = useChatContext()
 
   const limit = 15
 
@@ -67,6 +65,15 @@ const Chat = () => {
 
   const allotmentSizes = isSidebarOpen && isDesktop ? [25, 50, 25] : [25, 75]
   const { Persistent, Temporary } = DrawerVariantEnum
+
+  const lastOpenedChat = chatInfo?.chatId
+
+  useEffect(() => {
+    if (lastOpenedChat) {
+      localStorage.setItem('currentChatId', lastOpenedChat as string)
+    }
+    setChatInfo(null)
+  }, [setChatInfo, lastOpenedChat])
 
   const openChatsHandler = (e: MouseEvent<HTMLButtonElement>) => {
     openDrawer()
@@ -151,7 +158,7 @@ const Chat = () => {
   useEffect(() => {
     const currentChatId = localStorage.getItem('currentChatId')
 
-    if (currentChatId) {
+    if (currentChatId && !selectedChat) {
       const foundChat = listOfChats.find(
         (chat: ChatResponse) => chat._id === currentChatId
       )
@@ -162,7 +169,7 @@ const Chat = () => {
         localStorage.removeItem('currentChatId')
       }
     }
-  }, [listOfChats])
+  }, [listOfChats, lastOpenedChat, selectedChat])
 
   if (loading || (isMessagesLoading && !skip)) {
     return <Loader size={100} />
@@ -178,12 +185,7 @@ const Chat = () => {
       variant={isDesktop ? Persistent : Temporary}
     >
       {userToSpeak && (
-        <AboutChatSidebar
-          files={mockFiles}
-          links={mockLinks}
-          media={mockMedia}
-          member={userToSpeak}
-        />
+        <AboutChatSidebar links={mockLinks} member={userToSpeak} />
       )}
     </AppDrawer>
   )

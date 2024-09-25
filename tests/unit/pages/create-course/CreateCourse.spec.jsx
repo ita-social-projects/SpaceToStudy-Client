@@ -1,4 +1,4 @@
-import { screen, fireEvent, waitFor } from '@testing-library/react'
+import { screen, fireEvent, waitFor, act } from '@testing-library/react'
 import { configureStore } from '@reduxjs/toolkit'
 
 import reducer from '~/redux/reducer'
@@ -98,7 +98,7 @@ const updateFormData = (data) => {
 }
 const mockUseForm = vi.hoisted(() => {
   return vi.fn(({ onSubmit } = {}) => {
-    mockOnSubmit = onSubmit
+    mockOnSubmit = () => act(() => onSubmit())
     return {
       handleSubmit: mockHandleSubmit,
       handleInputChange: mockHandleInputChange,
@@ -185,28 +185,28 @@ describe('CreateCourse with params id', () => {
   })
 
   it('should choose the category from options list', async () => {
-    const autocomplete = screen.getAllByRole('combobox')[0]
-
-    expect(autocomplete).toBeInTheDocument()
-
-    fireEvent.click(autocomplete)
-    fireEvent.focus(autocomplete)
-
-    fireEvent.change(autocomplete, {
-      target: { value: mockCategoriesNames[1].name }
-    })
-
-    fireEvent.keyDown(autocomplete, { key: 'ArrowDown' })
-    fireEvent.keyDown(autocomplete, { key: 'Enter' })
-
     await waitFor(() => {
+      const autocomplete = screen.getAllByRole('combobox')[0]
+
+      expect(autocomplete).toBeInTheDocument()
+
+      fireEvent.click(autocomplete)
+      fireEvent.focus(autocomplete)
+
+      fireEvent.change(autocomplete, {
+        target: { value: mockCategoriesNames[1].name }
+      })
+
+      fireEvent.keyDown(autocomplete, { key: 'ArrowDown' })
+      fireEvent.keyDown(autocomplete, { key: 'Enter' })
+
+      expect(autocomplete.value).toBe(mockCategoriesNames[1].name)
+
+      fireEvent.keyDown(autocomplete, { key: 'ArrowDown' })
+      fireEvent.keyDown(autocomplete, { key: 'Enter' })
+
       expect(autocomplete.value).toBe(mockCategoriesNames[1].name)
     })
-
-    fireEvent.keyDown(autocomplete, { key: 'ArrowDown' })
-    fireEvent.keyDown(autocomplete, { key: 'Enter' })
-
-    expect(autocomplete.value).toBe(mockCategoriesNames[1].name)
   })
 
   it('should choose the subject from options list', async () => {

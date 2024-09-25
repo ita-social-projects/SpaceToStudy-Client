@@ -8,6 +8,7 @@ import UserStepsWrapper from '~/components/user-steps-wrapper/UserStepsWrapper'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import PopularCategories from '~/components/popular-categories/PopularCategories'
 import FindBlock from '~/components/find-block/FindBlock'
+import ActiveStudentsBlock from '~/components/active-students/ActiveStudentsBlock'
 
 import { styles } from '~/pages/tutor-home/TutorHome.styles'
 import { translationKey } from '~/components/find-block/find-student-constants'
@@ -31,6 +32,7 @@ const TutorHome = () => {
   return (
     <PageWrapper data-testid='tutorHome'>
       <FindBlock translationKey={translationKey} />
+      <ActiveStudentsBlock />
       <PopularCategories
         description={t('tutorHomePage.popularCategories.description')}
         title={t('tutorHomePage.popularCategories.title')}

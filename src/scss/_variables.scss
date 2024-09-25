@@ -251,6 +251,7 @@ $border-radiuses: (
 
 /* Border widths */
 
+$border-width-none: 0px !default;
 $border-width-xs: 1px !default;
 $border-width-sm: 1.5px !default;
 $border-width-md: 2px !default;
@@ -258,12 +259,31 @@ $border-width-lg: 4px !default;
 $border-width-xl: 8px !default;
 
 $border-widths: (
+  none: $border-width-none,
   xs: $border-width-xs,
   sm: $border-width-sm,
   md: $border-width-md,
   lg: $border-width-lg,
   xl: $border-width-xl
 ) !default;
+
+/* Border style */
+
+$border-styles: (
+  solid: solid,
+  dashed: dashed,
+  dotted: dotted,
+  double: double
+);
+
+/* Border sides */
+
+$border-sides: (
+  top: top,
+  right: right,
+  bottom: bottom,
+  left: left
+);
 
 /*=============================================
 =                TYPOGRAPHY                   =
@@ -384,42 +404,46 @@ $breakpoints: (
 =                  SPACING                   =
 =============================================*/
 
-$space-2xs: 2px !default;
-$space-xs: 4px !default;
-$space-sm: 8px !default;
-$space-md: 12px !default;
-$space-lg: 16px !default;
-$space-xl: 24px !default;
-$space-2xl: 32px !default;
-$space-3xl: 40px !default;
-$space-4xl: 48px !default;
-$space-5xl: 56px !default;
-$space-6xl: 64px !default;
-$space-7xl: 72px !default;
-$space-8xl: 80px !default;
-$space-9xl: 88px !default;
-$space-10xl: 96px !default;
-$space-11xl: 104px !default;
-$space-12xl: 112px !default;
+$space-baseline: 8px !default;
+
+$space-0: 0 !default;
+$space-0-25: $space-baseline * 0.25 !default;
+$space-0-5: $space-baseline * 0.5 !default;
+$space-1: $space-baseline !default;
+$space-1-5: $space-baseline * 1.5 !default;
+$space-2: $space-baseline * 2 !default;
+$space-3: $space-baseline * 3 !default;
+$space-4: $space-baseline * 4 !default;
+$space-5: $space-baseline * 5 !default;
+$space-6: $space-baseline * 6 !default;
+$space-7: $space-baseline * 7 !default;
+$space-8: $space-baseline * 8 !default;
+$space-9: $space-baseline * 9 !default;
+$space-10: $space-baseline * 10 !default;
+$space-11: $space-baseline * 11 !default;
+$space-12: $space-baseline * 12 !default;
+$space-13: $space-baseline * 13 !default;
+$space-14: $space-baseline * 14 !default;
 
 $spaces: (
-  2xs: $space-2xs,
-  xs: $space-xs,
-  sm: $space-sm,
-  md: $space-md,
-  lg: $space-lg,
-  xl: $space-xl,
-  2xl: $space-2xl,
-  3xl: $space-3xl,
-  4xl: $space-4xl,
-  5xl: $space-5xl,
-  6xl: $space-6xl,
-  7xl: $space-7xl,
-  8xl: $space-8xl,
-  9xl: $space-9xl,
-  10xl: $space-10xl,
-  11xl: $space-11xl,
-  12xl: $space-12xl
+  0: $space-0,
+  '0-25': $space-0-25,
+  '0-5': $space-0-5,
+  1: $space-1,
+  '1-5': $space-1-5,
+  2: $space-2,
+  3: $space-3,
+  4: $space-4,
+  5: $space-5,
+  6: $space-6,
+  7: $space-7,
+  8: $space-8,
+  9: $space-9,
+  10: $space-10,
+  11: $space-11,
+  12: $space-12,
+  13: $space-13,
+  14: $space-14
 ) !default;
 
 /*=============================================
@@ -453,4 +477,3 @@ $box-shadows: (
   xl: $box-shadow-xl,
   2xl: $box-shadow-2xl
 ) !default;
-

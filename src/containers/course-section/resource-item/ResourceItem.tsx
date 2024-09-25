@@ -16,9 +16,9 @@ import IconExtensionWithTitle from '~/components/icon-extension-with-title/IconE
 
 import {
   availabilityIcons,
+  resourceIcons,
   selectionFields
 } from '~/containers/course-section/resource-item/ResourceItem.constants'
-import { resourcesData } from '~/containers/course-section/CourseSectionContainer.constants'
 import { styles } from '~/containers/course-section/resource-item/ResourceItem.styles'
 
 import {
@@ -32,6 +32,7 @@ import {
 interface ResourceItemProps {
   resource: CourseResource
   resourceType?: ResourceType
+  availability?: ResourceAvailability
   deleteResource?: (resource: CourseResource) => void
   editResource?: (resource: CourseResource) => void
   updateAvailability?: (
@@ -45,6 +46,7 @@ interface ResourceItemProps {
 const ResourceItem: FC<ResourceItemProps> = ({
   resource,
   resourceType,
+  availability,
   deleteResource,
   editResource,
   updateAvailability,
@@ -52,6 +54,8 @@ const ResourceItem: FC<ResourceItemProps> = ({
   isCooperation = false
 }) => {
   const { t } = useTranslation()
+
+  const { isDuplicate, description } = resource
 
   const handleDeleteResource = useCallback(() => {
     deleteResource?.(resource)
@@ -66,23 +70,12 @@ const ResourceItem: FC<ResourceItemProps> = ({
   }, [editResource, resource])
 
   const renderResourceIcon = useCallback(() => {
-    const { Lesson, Quiz } = ResourceType
-
     const type = resourceType || resource.resourceType
-
-    switch (type) {
-      case Lesson:
-        return resourcesData.lessons.icon
-      case Quiz:
-        return resourcesData.quizzes.icon
-      default:
-        return null
-    }
+    return resourceIcons[type] ?? null
   }, [resourceType, resource.resourceType])
 
-  const resourceAvailability = resource.availability
   const resourceAvailabilityStatus =
-    resourceAvailability?.status ?? ResourceAvailabilityStatusEnum.Open
+    availability?.status ?? ResourceAvailabilityStatusEnum.Open
 
   const shouldShowDatePicker =
     resourceAvailabilityStatus === ResourceAvailabilityStatusEnum.OpenFrom
@@ -130,7 +123,7 @@ const ResourceItem: FC<ResourceItemProps> = ({
               label={t('cooperationDetailsPage.datePickerLabel')}
               onChange={setOpenFromDate}
               renderInput={(params) => <TextField {...params} />}
-              value={resourceAvailability?.date ?? null}
+              value={availability?.date ?? null}
             />
           </Box>
         </LocalizationProvider>
@@ -144,23 +137,19 @@ const ResourceItem: FC<ResourceItemProps> = ({
     </Box>
   )
 
-  const showIcon = isView ? (
-    <Box>
-      {resourceAvailabilityStatus === ResourceAvailabilityStatusEnum.Open &&
-        availabilityIcon}
-    </Box>
-  ) : (
+  const actionButtons = (
     <Box sx={styles.resourceActions}>
       {isCooperation && availabilitySelection}
-      {resource.isDuplicate ? (
-        <IconButton aria-label='edit' onClick={handleEditResource}>
+      <IconButton
+        aria-label={isDuplicate ? 'edit' : 'link'}
+        onClick={isDuplicate ? handleEditResource : handleLinkResource}
+      >
+        {isDuplicate ? (
           <EditIcon fontSize={SizeEnum.Small} sx={styles.editBtn} />
-        </IconButton>
-      ) : (
-        <IconButton aria-label='link' onClick={handleLinkResource}>
+        ) : (
           <LinkRoundedIcon fontSize={SizeEnum.Small} sx={styles.linkBtn} />
-        </IconButton>
-      )}
+        )}
+      </IconButton>
       <IconButton aria-label='delete' onClick={handleDeleteResource}>
         <CloseIcon fontSize={SizeEnum.Small} />
       </IconButton>
@@ -170,11 +159,15 @@ const ResourceItem: FC<ResourceItemProps> = ({
   return (
     <Box sx={styles.container(isView)}>
       <IconExtensionWithTitle
-        description={resource.description ?? ''}
+        description={description ?? ''}
         icon={renderResourceIcon()}
         title={'title' in resource ? resource.title : resource.fileName}
       />
-      <Box sx={styles.resourceActions}>{showIcon}</Box>
+      <Box sx={styles.resourceActions}>
+        {isView
+          ? resourceAvailabilityStatus && availabilityIcon
+          : actionButtons}
+      </Box>
     </Box>
   )
 }

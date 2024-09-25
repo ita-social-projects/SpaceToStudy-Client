@@ -3,5 +3,6 @@
   "search": "Search for offer",
   "notFound": {
     "description": "We couldn’t find any bookmarks."
-  }
+  },
+  "loadingError": "Couldn’t load offers data"
 }

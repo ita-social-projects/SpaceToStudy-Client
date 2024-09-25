@@ -22,6 +22,7 @@ import { chatService } from '~/services/chat-service'
 import { getGroupedByDate, getIsNewDay } from '~/utils/helper-functions'
 
 import {
+  AdornmentPosition,
   ChatInfo,
   ChatResponse,
   ErrorResponse,
@@ -100,6 +101,7 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
         member: chatInfo.author._id,
         memberRole: chatInfo.authorRole
       }),
+
     [chatInfo.author._id, chatInfo.authorRole]
   )
 
@@ -217,7 +219,10 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
     onMessageSend
   ])
 
-  const groupedMessages = getGroupedByDate(messages || [], getIsNewDay)
+  const groupedMessages = getGroupedByDate(
+    [...messages].reverse() || [],
+    getIsNewDay
+  )
 
   const messagesListWithDate = groupedMessages.map((group) => (
     <Box key={group.date} sx={styles.messagesWithDate}>
@@ -249,6 +254,7 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
     </AppChip>
   ) : (
     <ChatTextArea
+      adornmentPosition={AdornmentPosition.Start}
       emojiPickerProps={{ perLine: 6 }}
       label={
         isMessageSending

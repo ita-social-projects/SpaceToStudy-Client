@@ -1,0 +1,152 @@
+@use '../variables' as *;
+@use '../functions' as *;
+@use '../mixins' as *;
+
+$-space-var-map: map-to-var-map($spaces, 'space');
+
+$flexbox-utilities: (
+  'display-flex': (
+    properties: display,
+    values: (
+      'flex': flex,
+      'inline-flex': inline-flex
+    )
+  ),
+  'flex': (
+    class: 'flex',
+    properties: flex,
+    values: (
+      '1': 1 1 0%,
+      'auto': 1 1 auto,
+      'initial': 0 1 auto,
+      'none': none
+    )
+  ),
+  'flex-direction': (
+    class: 'flex',
+    properties: flex-direction,
+    values: (
+      'row': row,
+      'row-reverse': row-reverse,
+      'col': column,
+      'col-reverse': column-reverse
+    )
+  ),
+  'flex-grow': (
+    class: 'flex',
+    properties: flex-grow,
+    values: (
+      '0': 0,
+      '1': 1
+    )
+  ),
+  'flex-shrink': (
+    class: 'flex',
+    properties: flex-shrink,
+    values: (
+      '0': 0,
+      '1': 1
+    )
+  ),
+  'flex-wrap': (
+    class: 'flex',
+    properties: flex-wrap,
+    values: (
+      'nowrap': nowrap,
+      'wrap': wrap,
+      'wrap-reverse': wrap-reverse
+    )
+  ),
+  'justify-content': (
+    class: 'justify',
+    properties: justify-content,
+    values: (
+      'normal': normal,
+      'start': flex-start,
+      'end': flex-end,
+      'center': center,
+      'between': space-between,
+      'around': space-around,
+      'evenly': space-evenly,
+      'stretch': stretch
+    )
+  ),
+  'align-content': (
+    class: 'content',
+    properties: align-content,
+    values: (
+      'normal': normal,
+      'start': flex-start,
+      'end': flex-end,
+      'center': center,
+      'between': space-between,
+      'around': space-around,
+      'evenly': space-evenly,
+      'baseline': baseline,
+      'stretch': stretch
+    )
+  ),
+  'align-items': (
+    class: 'items',
+    properties: align-items,
+    values: (
+      'start': flex-start,
+      'end': flex-end,
+      'center': center,
+      'baseline': baseline,
+      'stretch': stretch
+    )
+  ),
+  'align-self': (
+    class: 'self',
+    properties: align-self,
+    values: (
+      'auto': auto,
+      'start': flex-start,
+      'end': flex-end,
+      'center': center,
+      'baseline': baseline,
+      'stretch': stretch
+    )
+  ),
+  'order': (
+    class: 'order',
+    properties: order,
+    values: (
+      '1': 1,
+      '2': 2,
+      '3': 3,
+      '4': 4,
+      '5': 5,
+      '6': 6,
+      '7': 7,
+      '8': 8,
+      '9': 9,
+      '10': 10,
+      '11': 11,
+      '12': 12,
+      'first': -9999,
+      'last': 9999,
+      'none': 0
+    )
+  ),
+  'gap': (
+    class: 'gap',
+    properties: gap,
+    values: $-space-var-map
+  ),
+  'gap-x': (
+    class: 'gap-x',
+    properties: column-gap,
+    values: $-space-var-map
+  ),
+  'gap-y': (
+    class: 'gap-y',
+    properties: row-gap,
+    values: $-space-var-map
+  )
+);
+
+@each $key, $utility in $flexbox-utilities {
+  @include generate-utilities($utility);
+}

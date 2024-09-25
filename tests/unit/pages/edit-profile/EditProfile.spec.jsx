@@ -241,7 +241,6 @@ describe('EditProfile', () => {
 
   it('should not include videoLink in dataToUpdate if videoLink is null', () => {
     const videoLink = null
-    const userRole = 'tutor'
     const rest = {}
 
     const dataToUpdate = { ...rest }
@@ -255,7 +254,6 @@ describe('EditProfile', () => {
 
   it('should include videoLink in dataToUpdate if videoLink is a string', () => {
     const videoLink = 'http://video1234556443.com/video'
-    const userRole = 'tutor'
     const rest = {}
 
     const dataToUpdate = { ...rest }
@@ -269,7 +267,6 @@ describe('EditProfile', () => {
 
   it('should include videoLink from userRole in dataToUpdate if videoLink is an object', () => {
     const videoLink = { tutor: 'http://video1111111.com/video' }
-    const userRole = 'tutor'
     const rest = {}
 
     const dataToUpdate = { ...rest }
@@ -398,5 +395,31 @@ describe('EditProfile', () => {
       const securityContent = screen.getByText('Password&SecurityMock')
       expect(securityContent).toBeInTheDocument()
     })
+  })
+
+  it('should not include videoLink in dataToUpdate if videoLink is undefined', () => {
+    const videoLink = undefined
+    const rest = {}
+
+    const dataToUpdate = { ...rest }
+    if (videoLink) {
+      dataToUpdate.videoLink =
+        typeof videoLink === 'string' ? videoLink : videoLink[userRole]
+    }
+
+    expect(dataToUpdate).not.toHaveProperty('videoLink')
+  })
+
+  it('should include an empty string for videoLink in dataToUpdate if videoLink is an empty string', () => {
+    const videoLink = ''
+    const rest = {}
+
+    const dataToUpdate = { ...rest }
+    if (videoLink !== undefined && videoLink !== null) {
+      dataToUpdate.videoLink =
+        typeof videoLink === 'string' ? videoLink : videoLink[userRole]
+    }
+
+    expect(dataToUpdate).toHaveProperty('videoLink', '')
   })
 })

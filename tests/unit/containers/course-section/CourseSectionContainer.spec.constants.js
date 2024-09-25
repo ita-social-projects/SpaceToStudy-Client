@@ -6,11 +6,11 @@ export const mockedSectionData = {
   description: 'Description',
   resources: [
     {
+      availability: {
+        status: 'open',
+        date: null
+      },
       resource: {
-        availability: {
-          status: 'open',
-          date: null
-        },
         _id: '64cd12f1fad091e0sfe12134',
         id: 'f47ac10b-58cc-4372-a567-0e02b2c3d479',
         title: 'Lesson1',
@@ -24,11 +24,11 @@ export const mockedSectionData = {
       resourceType: ResourceType.Lesson
     },
     {
+      availability: {
+        status: 'open',
+        date: null
+      },
       resource: {
-        availability: {
-          status: 'open',
-          date: null
-        },
         _id: '64fb2c33eba89699411d22bb',
         id: '9b2e3d7e-1c4b-4f3b-8f8e-2d3b2c3d4e5f',
         title: 'Quiz',
@@ -43,11 +43,11 @@ export const mockedSectionData = {
       resourceType: ResourceType.Quiz
     },
     {
+      availability: {
+        status: 'open',
+        date: null
+      },
       resource: {
-        availability: {
-          status: 'open',
-          date: null
-        },
         _id: '64cd12f1fad091e0ee719830',
         id: 'd2c3b4e5-6f7a-8b9c-0d1e-2f3b4c5d6e7f',
         author: '6494128829631adbaf5cf615',
