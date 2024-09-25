@@ -46,7 +46,7 @@ const CompleteProfileBlock: FC<CompleteProfileBlockProps> = ({
     if (openAccordion) {
       setIsOpen(true)
     }
-  }, [])
+  }, [openAccordion])
 
   const getMyOffers = useCallback(
     () =>
