@@ -64,6 +64,7 @@ const ResourceItem: FC<ResourceItemProps> = ({
   useEffect(() => {
     resourcesAvailability === ResourcesAvailabilityEnum.OpenManually &&
       setAvailabilityStatus(ResourceAvailabilityStatusEnum.Closed)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resourcesAvailability])
 
   const handleDeleteResource = useCallback(() => {
