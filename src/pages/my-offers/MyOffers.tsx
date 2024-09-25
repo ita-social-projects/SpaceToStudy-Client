@@ -63,7 +63,7 @@ const MyOffers = () => {
     if (hash === '#offer') {
       handleOpenDrawer()
     }
-  })
+  }, [hash])
 
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
   const showTable = !breakpoints.isMobile && itemsView === CardsViewEnum.Inline
