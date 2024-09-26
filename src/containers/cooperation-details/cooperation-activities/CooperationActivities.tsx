@@ -8,7 +8,10 @@ import Box from '@mui/material/Box'
 import AppSelect from '~/components/app-select/AppSelect'
 import AppButton from '~/components/app-button/AppButton'
 import CooperationActivitiesList from '~/containers/my-cooperations/cooperation-activities-list/CooperationActivitiesList'
-import { cooperationTranslationKeys } from '~/containers/cooperation-details/cooperation-activities/CooperationActivities.constants'
+import {
+  cooperationTranslationKeys,
+  OpenFromError
+} from '~/containers/cooperation-details/cooperation-activities/CooperationActivities.constants'
 import { styles } from '~/containers/cooperation-details/cooperation-activities/CooperationActivities.styles'
 
 import openIcon from '~/assets/img/cooperation-details/resource-availability/open-icon.svg'
@@ -30,7 +33,8 @@ import {
   ButtonTypeEnum,
   ErrorResponse,
   UpdateCooperationsSections,
-  UpdateCooperationsParams
+  UpdateCooperationsParams,
+  ResourceAvailabilityStatusEnum
 } from '~/types'
 
 import useAxios from '~/hooks/use-axios'
@@ -58,7 +62,25 @@ const CooperationActivities: FC<CooperationActivitiesProps> = ({
     dispatch(setResourcesAvailability(status))
   }
 
+  const checkDate = () => {
+    return sections.some((section) =>
+      section.resources.some((res) => {
+        const availability = res?.availability
+        if (
+          availability?.status === ResourceAvailabilityStatusEnum.OpenFrom &&
+          availability.date === null
+        ) {
+          onResponseError(OpenFromError)
+          return true
+        }
+        return false
+      })
+    )
+  }
+
   const onSaveCooperation = () => {
+    if (checkDate()) return
+
     void updateCooperation({
       _id: cooperationId,
       sections
