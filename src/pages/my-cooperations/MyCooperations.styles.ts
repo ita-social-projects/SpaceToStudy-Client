@@ -14,5 +14,6 @@ export const styles = {
     borderBottom: '1px solid',
     borderColor: 'primary.100'
   },
-  pagination: { marginTop: 'auto' }
+  pagination: { marginTop: 'auto' },
+  drawer: { width: { xs: '100%', md: 'auto' } }
 }
