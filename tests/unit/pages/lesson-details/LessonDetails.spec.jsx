@@ -19,6 +19,13 @@ vi.mock('react-router-dom', async () => {
   }
 })
 
+vi.mock(
+  '~/containers/change-resource-confirm-modal/ChangeResourceConfirmModal',
+  () => ({
+    default: () => <div data-testid='testModal' />
+  })
+)
+
 const userId = '6477007a6fa4d05e1a800ce5'
 const mockState = {
   appMain: { userId: userId, userRole: 'tutor' }
@@ -90,7 +97,8 @@ describe('LessonDetails', () => {
     const editButton = screen.getByText('common.edit')
 
     fireEvent.click(editButton)
+    const modal = await screen.findByTestId('testModal')
 
-    expect(mockNavigate).toHaveBeenCalled()
+    expect(modal).toBeInTheDocument()
   })
 })
