@@ -34,7 +34,6 @@ const OfferBanner: FC<OfferBannerProps> = ({ offer, buttonActions }) => {
           sx={styles.button}
           {...elem.buttonProps}
           size={null}
-          style={{ lineHeight: '18.96px' }}
         >
           {t(elem.label)}
         </AppButton>
