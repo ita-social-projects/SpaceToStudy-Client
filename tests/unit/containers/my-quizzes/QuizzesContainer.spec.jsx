@@ -1,4 +1,4 @@
-import { screen, waitFor } from '@testing-library/react'
+import { fireEvent, screen, waitFor } from '@testing-library/react'
 import QuizzesContainer from '~/containers/my-quizzes/QuizzesContainer'
 import {
   mockAxiosClient,
@@ -6,6 +6,26 @@ import {
   TestSnackbar
 } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
+
+vi.mock(
+  '~/containers/my-resources/my-resources-table/MyResourcesTable',
+  () => ({
+    default: ({ actions }) => (
+      <div data-testid='testTable'>
+        <button data-testid='editButton' onClick={() => actions.onEdit()}>
+          Edit
+        </button>
+      </div>
+    )
+  })
+)
+
+vi.mock(
+  '~/containers/change-resource-confirm-modal/ChangeResourceConfirmModal',
+  () => ({
+    default: () => <div data-testid='confirmModal' />
+  })
+)
 
 const quizzesMock = {
   _id: '64ca5914b57f2442403394a5',
@@ -52,10 +72,26 @@ describe('QuizzesContainer component with data', () => {
     mockAxiosClient.reset()
   })
 
-  it('should render table', async () => {
-    const title = await screen.findByText(responseQuizzesMock.items[0].title)
+  it('should render "New quiz" button', () => {
+    const addBtn = screen.getByText('myResourcesPage.quizzes.addBtn')
 
-    expect(title).toBeInTheDocument()
+    expect(addBtn).toBeInTheDocument()
+  })
+
+  it('should render table with questions', async () => {
+    const table = await screen.findByTestId('testTable')
+
+    expect(table).toBeInTheDocument()
+  })
+
+  it('should run onEdit action', async () => {
+    const editButton = await screen.findByTestId('editButton')
+
+    fireEvent.click(editButton)
+
+    const modal = await screen.findByTestId('confirmModal')
+
+    expect(modal).toBeInTheDocument()
   })
 })
 

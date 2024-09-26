@@ -3,6 +3,33 @@ import AttachmentsContainer from '~/containers/my-resources/attachments-containe
 import { mockAxiosClient, renderWithProviders } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
 
+vi.mock(
+  '~/containers/my-resources/my-resources-table/MyResourcesTable',
+  () => ({
+    default: ({ actions }) => (
+      <div data-testid='testTable'>
+        <button data-testid='editButton' onClick={() => actions.onEdit()}>
+          Edit
+        </button>
+      </div>
+    )
+  })
+)
+
+vi.mock(
+  '~/containers/my-resources/edit-attachment-modal/EditAttachmentModal',
+  () => ({
+    default: () => <div data-testid='editModal' />
+  })
+)
+
+vi.mock(
+  '~/containers/change-resource-confirm-modal/ChangeResourceConfirmModal',
+  () => ({
+    default: () => <div data-testid='confirmModal' />
+  })
+)
+
 const attachmentDataMock = {
   _id: '64cd12f1fad091e0ee719830',
   author: '6494128829631adbaf5cf615',
@@ -27,20 +54,6 @@ const attachmentMockData = {
   items: responseItemsMock
 }
 
-const responseItemsMockCategory = Array(20)
-  .fill()
-  .map((_, index) => ({
-    ...attachmentDataMock,
-    category: { id: '64fb2c33eba89699411d22bb', name: 'New Category' },
-    _id: `${index}`,
-    fileName: index + attachmentDataMock.fileName
-  }))
-
-const attachmentMockDataCategory = {
-  count: 20,
-  items: responseItemsMockCategory
-}
-
 describe('AttachmentContainer renders correct data', () => {
   beforeEach(async () => {
     await waitFor(() => {
@@ -56,53 +69,25 @@ describe('AttachmentContainer renders correct data', () => {
     mockAxiosClient.reset()
   })
 
-  it('should render table', async () => {
-    const title = await screen.findByText(
-      'myResourcesPage.attachments.attachmentName'
-    )
+  it('should render "New attachment" button', () => {
+    const addBtn = screen.getByText('myResourcesPage.attachments.addBtn')
 
-    expect(title).toBeInTheDocument()
+    expect(addBtn).toBeInTheDocument()
   })
 
-  it('should correctly shows filename of attachment', async () => {
-    const fileName = await screen.findByText('1spanish.pdf')
+  it('should render table with questions', async () => {
+    const table = await screen.findByTestId('testTable')
 
-    expect(fileName).toBeInTheDocument()
+    expect(table).toBeInTheDocument()
   })
 
-  it('should show pagination', async () => {
-    const secondButton = await screen.findByLabelText('Go to page 2')
+  it('should run onEdit action', async () => {
+    const editButton = await screen.findByTestId('editButton')
 
-    expect(secondButton).not.toHaveAttribute('aria-current')
+    fireEvent.click(editButton)
 
-    waitFor(() => {
-      fireEvent.click(secondButton)
-    })
+    const modal = await screen.findByTestId('confirmModal')
 
-    expect(secondButton).toHaveAttribute('aria-current', 'true')
-  })
-})
-
-describe('QuestionsContainer test', () => {
-  beforeEach(async () => {
-    await waitFor(() => {
-      mockAxiosClient
-        .onGet(URLs.resources.attachments.get)
-        .reply(200, attachmentMockDataCategory)
-      renderWithProviders(<AttachmentsContainer />)
-    })
-  })
-
-  afterEach(() => {
-    vi.clearAllMocks()
-    mockAxiosClient.reset()
-  })
-
-  it('should render correct category', async () => {
-    const category = await screen.findByText(
-      'myResourcesPage.categories.category'
-    )
-
-    expect(category).toBeInTheDocument()
+    expect(modal).toBeInTheDocument()
   })
 })
