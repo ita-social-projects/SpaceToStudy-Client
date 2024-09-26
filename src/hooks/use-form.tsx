@@ -26,7 +26,7 @@ interface UseFormOutput<T> {
   handleNonInputValueChange: FormNonInputValueChange<T[keyof T], T>
   handleBlur: UseFormEventHandler<T, React.FocusEvent<HTMLInputElement>>
   handleErrors: (key: keyof T, error: string) => void
-  handleSubmit: (event: React.FormEvent<HTMLDivElement>) => void
+  handleSubmit: (event?: React.FormEvent<HTMLDivElement>) => void
   resetData: (keys?: (keyof T)[]) => void
   resetErrors: () => void
   handleDataChange: <K extends object>(newData: K) => void
@@ -123,8 +123,8 @@ export const useForm = <T extends object>({
       }))
     }
 
-  const handleSubmit = (event: React.FormEvent<HTMLDivElement>) => {
-    event.preventDefault()
+  const handleSubmit = (event?: React.FormEvent<HTMLDivElement>) => {
+    event?.preventDefault()
     let isValid = true
     const submittedData = submitWithData ? data : undefined
     const newErrors = { ...errors }

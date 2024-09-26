@@ -1,6 +1,6 @@
 {
   "title": "Changes to resource may affect courses and cooperation",
-  "descriptionResource": "You are about to make changes to the resource '{{resource}}'.",
+  "descriptionResource": "You are about to make changes to the resource",
   "description": "These changes will affect the following courses & cooperation:",
   "backButton": "Back",
   "confirmButton": "Confirm",
