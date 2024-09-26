@@ -4,7 +4,7 @@ import MessageIcon from '@mui/icons-material/Message'
 import { styles } from './TutorScheduleCard.styles'
 import { ITutorScheduleItem } from './types'
 
-function TutorScheduleCard({ item }: { item: ITutorScheduleItem }) {
+function TutorScheduleCard({ item }: Readonly<{ item: ITutorScheduleItem }>) {
   return (
     <Box sx={styles.cardContainer}>
       <AvatarIcon
