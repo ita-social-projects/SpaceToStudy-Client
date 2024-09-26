@@ -132,7 +132,7 @@ const OfferCarousel: FC<OfferCarouselProps> = ({ offer }) => {
   }
 
   return itemsToShow.length > 0 ? (
-    <Box sx={styles.root}>
+    <Box data-testid='OfferContainer' sx={styles.root}>
       <Typography sx={styles.title}>
         {t('findOffers.otherOffers.title')}
       </Typography>
