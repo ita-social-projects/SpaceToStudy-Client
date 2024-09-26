@@ -8,7 +8,11 @@ const input = {
 }
 
 export const styles = {
-  root: { width: '65vw', p: '40px' },
+  root: {
+    width: { xs: 'auto', sm: '65vw' },
+    p: '20px',
+    maxWidth: '1480px'
+  },
   title: {
     mb: '32px',
     typography: TypographyVariantEnum.H4
