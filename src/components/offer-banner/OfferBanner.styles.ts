@@ -1,4 +1,5 @@
 import { commonHoverShadow } from '~/styles/app-theme/custom-shadows'
+import { TypographyVariantEnum } from '~/types'
 
 export const styles = {
   main: {
@@ -10,7 +11,7 @@ export const styles = {
     display: 'flex',
     width: '100%',
     position: 'absolute',
-    padding: '10px',
+    p: '20px',
     gap: '10px',
     boxSizing: 'border-box',
     alignItems: 'center',
@@ -23,8 +24,8 @@ export const styles = {
       alignItems: 'center'
     },
     name: {
-      typography: 'h6',
-      padding: '12px'
+      typography: TypographyVariantEnum.H6,
+      p: '12px'
     }
   },
   mainBlock: {
@@ -33,20 +34,29 @@ export const styles = {
   },
   buttons: {
     display: 'flex',
-    gap: '10px'
+    gap: '16px'
   },
   button: {
-    whiteSpace: 'nowrap'
+    whiteSpace: 'nowrap',
+    p: '15px 30px',
+    width: 'auto',
+    lineHeight: '19px'
   },
   bookmarkButton: {
-    color: 'primary.500'
+    color: 'primary.500',
+    p: '12px 30px',
+    ml: '16px'
   },
   bookmarkButtonText: {
     color: 'primary.500',
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
+    ml: '8px'
   },
   buttonsBlock: {
     display: 'flex'
+  },
+  chipsContainer: {
+    ml: '12px'
   }
 }

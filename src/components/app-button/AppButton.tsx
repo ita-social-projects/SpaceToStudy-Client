@@ -12,7 +12,7 @@ interface AppButtonProps extends Omit<ButtonProps, 'size'> {
   disabled?: boolean
   component?: ElementType
   to?: string
-  size?: SizeEnum
+  size?: SizeEnum | null
 }
 
 const AppButton: FC<AppButtonProps> = ({
@@ -27,7 +27,10 @@ const AppButton: FC<AppButtonProps> = ({
 
   return (
     <Button
-      className={`s2s-button s2s-button__${variant} s2s-button__${size}`}
+      className={
+        `s2s-button s2s-button__${variant} ` +
+        (size ? `s2s-button__${size}` : '')
+      }
       disabled={loading || disabled}
       {...props}
     >
