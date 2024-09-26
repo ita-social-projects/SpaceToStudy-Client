@@ -33,12 +33,12 @@ const TutorHome = () => {
   return (
     <PageWrapper data-testid='tutorHome'>
       <FindBlock translationKey={translationKey} />
+      <TutorSchedule />
       <ActiveStudentsBlock />
       <PopularCategories
         description={t('tutorHomePage.popularCategories.description')}
         title={t('tutorHomePage.popularCategories.title')}
       />
-      <TutorSchedule />
     </PageWrapper>
   )
 }

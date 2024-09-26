@@ -1,32 +1,47 @@
-import { Avatar, Box, Button, Typography } from '@mui/material'
+import { Box, Button, Typography } from '@mui/material'
 import { styles } from '~/components/tutor-schedule/TutorSchedule.styles'
-import { items } from './TutorSchedule.constants'
-import MessageIcon from '@mui/icons-material/Message'
+import TutorScheduleCard from './TutorScheduleCard'
+import { ITutorScheduleItem } from './types'
+
+const items: ITutorScheduleItem[] = [
+  {
+    time: '18:00-19:30 Thu',
+    firstName: 'Tomas',
+    lastName: 'Wang',
+    subject: 'Computer science: ',
+    chapter: 'python',
+    price: 80
+  },
+
+  {
+    time: '12:45-14:45 Thu',
+    firstName: 'Bella',
+    lastName: 'Hadid',
+    subject: 'Computer science: ',
+    chapter: 'python',
+    price: 140
+  },
+
+  {
+    time: '18:00-19:30 Thu',
+    firstName: 'Bella',
+    lastName: 'Hadid',
+    subject: 'Math: ',
+    chapter: 'linear algebra',
+    price: 90
+  }
+]
 
 function TutorSchedule() {
   return (
-    <Box sx={styles.general_container}>
-      <Typography sx={styles.section_title}>Your schedule</Typography>
-      <Typography sx={styles.section_subtitle}>Upcoming classes</Typography>
-      <Box sx={styles.card_wrapper}>
-        {items.map((item, index) => (
-          <Box key={index} sx={styles.card_container}>
-            <Avatar alt='User Photo' sx={styles.avatar}></Avatar>
-            <Box sx={styles.main_info_container}>
-              <Typography sx={styles.time}>{item.time}</Typography>
-              <Typography sx={styles.user_name}>{item.user_name}</Typography>
-              <Typography sx={styles.subject}>
-                {item.subject}
-                {item.chapter}
-              </Typography>
-            </Box>
-            <Box sx={styles.price_and_message}>
-              <Typography>
-                {item.price} UAH <Typography component='span'>/hour</Typography>
-              </Typography>
-              <MessageIcon />
-            </Box>
-          </Box>
+    <Box sx={styles.generalContainer}>
+      <Box sx={styles.textContainer}>
+        <Typography sx={styles.sectionTitle}>Your schedule</Typography>
+        <Typography sx={styles.sectionSubtitle}>Upcoming classes</Typography>
+      </Box>
+      <Box sx={styles.cardWrapper}>
+        {items.map((item) => (
+          <TutorScheduleCard item={item} key={item.lastName} />
         ))}
       </Box>
       <Button sx={styles.btn} variant='text'>
