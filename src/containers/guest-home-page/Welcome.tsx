@@ -7,11 +7,12 @@ import useBreakpoints from '~/hooks/use-breakpoints'
 import HashLink from '~/components/hash-link/HashLink'
 import AppButton from '~/components/app-button/AppButton'
 
-import titleMd from '~/assets/img/guest-home-page/titleMd.svg'
-import titleSm from '~/assets/img/guest-home-page/titleSm.svg'
-import titleXs from '~/assets/img/guest-home-page/titleXs.svg'
 import { guestRoutes } from '~/router/constants/guestRoutes'
 import { styles } from '~/containers/guest-home-page/styles/Welcome.styles.js'
+import {
+  titles,
+  DeviceType
+} from '~/containers/guest-home-page/Welcome.constants'
 import i18next from 'i18next'
 
 const Welcome = () => {
@@ -19,13 +20,14 @@ const Welcome = () => {
   const { isLaptopAndAbove, isTablet, isMobile } = useBreakpoints()
 
   const image = useMemo(() => {
-    if (i18next.language == 'en') {
-      if (isLaptopAndAbove) return titleMd
-      if (isTablet) return titleSm
-      if (isMobile) return titleXs
-    } else if (i18next.language == 'uk') {
-      return titleXs
-    }
+    const language = i18next.language === 'uk' ? 'uk' : 'default'
+    const deviceType: DeviceType = isLaptopAndAbove
+      ? 'isLaptopAndAbove'
+      : isTablet
+        ? 'isTablet'
+        : 'isMobile'
+
+    return titles[language]?.[deviceType]
   }, [isLaptopAndAbove, isTablet, isMobile, i18next.language])
 
   return (
