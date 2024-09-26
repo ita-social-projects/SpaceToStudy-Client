@@ -12,6 +12,7 @@ import useBreakpoints from '~/hooks/use-breakpoints'
 import useAxios from '~/hooks/use-axios'
 import usePagination from '~/hooks/table/use-pagination'
 import { authRoutes } from '~/router/constants/authRoutes'
+import { useModalContext } from '~/context/modal-context'
 
 import { defaultResponses, snackbarVariants } from '~/constants'
 import {
@@ -35,6 +36,7 @@ import {
 } from '~/utils/helper-functions'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { getErrorKey } from '~/utils/get-error-key'
+import ChangeResourceConfirmModal from '../change-resource-confirm-modal/ChangeResourceConfirmModal'
 
 const QuizzesContainer = () => {
   const dispatch = useAppDispatch()
@@ -44,6 +46,7 @@ const QuizzesContainer = () => {
   const searchTitle = useRef<string>('')
   const breakpoints = useBreakpoints()
   const [selectedItems, setSelectedItems] = useState<string[]>([])
+  const { openModal } = useModalContext()
 
   const { sort } = sortOptions
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
@@ -82,10 +85,6 @@ const QuizzesContainer = () => {
     []
   )
 
-  const onEdit = (id: string) => {
-    navigate(createUrlPath(authRoutes.myResources.editQuiz.path, id))
-  }
-
   const { response, loading, fetchData } = useAxios<
     ItemsWithCount<Quiz>,
     GetResourcesParams
@@ -94,6 +93,21 @@ const QuizzesContainer = () => {
     defaultResponse: defaultResponses.itemsWithCount,
     onResponseError
   })
+
+  const onEdit = (id: string) => {
+    const resource = response.items.find((item) => item._id === id)
+    openModal({
+      component: (
+        <ChangeResourceConfirmModal
+          onConfirm={() =>
+            navigate(createUrlPath(authRoutes.myResources.editQuiz.path, id))
+          }
+          resourceId={id}
+          title={resource?.title}
+        />
+      )
+    })
+  }
 
   const props = {
     columns: columnsToShow,

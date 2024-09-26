@@ -36,6 +36,7 @@ import { styles } from '~/containers/my-resources/attachments-container/Attachme
 import { useAppDispatch } from '~/hooks/use-redux'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { getErrorKey } from '~/utils/get-error-key'
+import ChangeResourceConfirmModal from '~/containers/change-resource-confirm-modal/ChangeResourceConfirmModal'
 
 const AttachmentsContainer = () => {
   const { t } = useTranslation()
@@ -137,12 +138,23 @@ const AttachmentsContainer = () => {
   const onEdit = (id: string) => {
     const attachment = response.items.find((item) => item._id === id)
 
+    const handleConfirm = () =>
+      openModal({
+        component: (
+          <EditAttachmentModal
+            attachment={attachment as Attachment}
+            closeModal={closeModal}
+            updateAttachment={updateData}
+          />
+        )
+      })
+
     openModal({
       component: (
-        <EditAttachmentModal
-          attachment={attachment as Attachment}
-          closeModal={closeModal}
-          updateAttachment={updateData}
+        <ChangeResourceConfirmModal
+          onConfirm={handleConfirm}
+          resourceId={id}
+          title={attachment?.fileName}
         />
       )
     })

@@ -1,3 +1,4 @@
+import { useCallback, useEffect, useMemo } from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { useTranslation } from 'react-i18next'
@@ -17,7 +18,6 @@ import { useModalContext } from '~/context/modal-context'
 import Loader from '~/components/loader/Loader'
 import useAxios from '~/hooks/use-axios'
 import { CourseService } from '~/services/course-service'
-import { useMemo } from 'react'
 
 interface ChangeResourceConfirmModalProps {
   resourceId?: string
@@ -61,10 +61,16 @@ const ChangeResourceConfirmModal = ({
   )
   ////////////////////////////////////!
 
-  const handleConfirm = () => {
-    onConfirm?.()
+  const handleConfirm = useCallback(() => {
     closeModal()
-  }
+    onConfirm?.()
+  }, [closeModal, onConfirm])
+
+  useEffect(() => {
+    if (!loading && !courseList?.length) {
+      handleConfirm()
+    }
+  }, [courseList, handleConfirm, loading])
 
   if (loading) {
     return (
@@ -75,7 +81,6 @@ const ChangeResourceConfirmModal = ({
   }
 
   if (!loading && !courseList?.length) {
-    handleConfirm()
     return null
   }
 

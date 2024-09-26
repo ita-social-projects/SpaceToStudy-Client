@@ -54,6 +54,7 @@ import { useModalContext } from '~/context/modal-context'
 
 import useAxios from '~/hooks/use-axios'
 import useMenu from '~/hooks/use-menu'
+import ChangeResourceConfirmModal from '../change-resource-confirm-modal/ChangeResourceConfirmModal'
 
 interface SectionProps extends CourseSectionHandlers {
   sectionData: CourseSection
@@ -173,12 +174,22 @@ const CourseSectionContainer: FC<SectionProps> = ({
     if (!resourceType) return
 
     if (resourceType === ResourceType.Attachment) {
+      const handleConfirm = () =>
+        openModal({
+          component: (
+            <EditAttachmentModal
+              attachment={resource as Attachment}
+              closeModal={closeModal}
+              updateAttachment={updateData}
+            />
+          )
+        })
       openModal({
         component: (
-          <EditAttachmentModal
-            attachment={resource as Attachment}
-            closeModal={closeModal}
-            updateAttachment={updateData}
+          <ChangeResourceConfirmModal
+            onConfirm={handleConfirm}
+            resourceId={resource.isDuplicate ? '' : resource._id}
+            title={(resource as Attachment).fileName}
           />
         )
       })

@@ -1,4 +1,4 @@
-import { MouseEventHandler, SyntheticEvent, useEffect } from 'react'
+import { SyntheticEvent, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router-dom'
 import { AxiosResponse } from 'axios'
@@ -51,7 +51,6 @@ import {
 } from '~/types'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { getErrorKey } from '~/utils/get-error-key'
-import ChangeResourceConfirmModal from '~/containers/change-resource-confirm-modal/ChangeResourceConfirmModal'
 
 const CreateOrEditLesson = () => {
   const { t } = useTranslation()
@@ -192,21 +191,6 @@ const CreateOrEditLesson = () => {
     onResponseError: handleResponseError
   })
 
-  const openChangeResourceConfirmModal: MouseEventHandler<HTMLButtonElement> = (
-    e
-  ) => {
-    e.preventDefault()
-    openModal({
-      component: (
-        <ChangeResourceConfirmModal
-          onConfirm={() => handleSubmit()}
-          resourceId={id}
-          title={data.title}
-        />
-      )
-    })
-  }
-
   useEffect(() => {
     if (id) {
       void fetchDataLesson(id)
@@ -282,11 +266,7 @@ const CreateOrEditLesson = () => {
           >
             {t('common.cancel')}
           </AppButton>
-          <AppButton
-            onClick={openChangeResourceConfirmModal}
-            size={SizeEnum.XXL}
-            type={ButtonTypeEnum.Submit}
-          >
+          <AppButton size={SizeEnum.XXL} type={ButtonTypeEnum.Submit}>
             {t('common.save')}
           </AppButton>
         </Box>

@@ -34,10 +34,13 @@ import {
 import { useAppDispatch } from '~/hooks/use-redux'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { getErrorKey } from '~/utils/get-error-key'
+import { useModalContext } from '~/context/modal-context'
+import ChangeResourceConfirmModal from '~/containers/change-resource-confirm-modal/ChangeResourceConfirmModal'
 
 const LessonsContainer = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
+  const { openModal } = useModalContext()
   const { page, handleChangePage } = usePagination()
   const sortOptions = useSort({ initialSort })
   const searchTitle = useRef<string>('')
@@ -81,10 +84,6 @@ const LessonsContainer = () => {
     []
   )
 
-  const onEdit = (id: string) => {
-    navigate(createUrlPath(authRoutes.myResources.editLesson.path, id))
-  }
-
   const { response, loading, fetchData } = useAxios<
     ItemsWithCount<Lesson>,
     GetResourcesParams
@@ -93,6 +92,21 @@ const LessonsContainer = () => {
     defaultResponse: defaultResponses.itemsWithCount,
     onResponseError
   })
+
+  const onEdit = (id: string) => {
+    const resource = response.items.find((item) => item._id === id)
+    openModal({
+      component: (
+        <ChangeResourceConfirmModal
+          onConfirm={() =>
+            navigate(createUrlPath(authRoutes.myResources.editLesson.path, id))
+          }
+          resourceId={id}
+          title={resource?.title}
+        />
+      )
+    })
+  }
 
   const props = {
     columns: columnsToShow,

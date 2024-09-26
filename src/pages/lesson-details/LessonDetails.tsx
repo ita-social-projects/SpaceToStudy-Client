@@ -24,12 +24,15 @@ import { styles } from '~/pages/lesson-details/LessonsDetails.styles'
 import { Lesson, TypographyVariantEnum } from '~/types'
 import { createUrlPath } from '~/utils/helper-functions'
 import { useAppSelector } from '~/hooks/use-redux'
+import { useModalContext } from '~/context/modal-context'
+import ChangeResourceConfirmModal from '~/containers/change-resource-confirm-modal/ChangeResourceConfirmModal'
 
 const LessonDetails = () => {
   const { lessonId } = useParams()
   const navigate = useNavigate()
   const { t } = useTranslation()
   const { userId } = useAppSelector((state) => state.appMain)
+  const { openModal } = useModalContext()
 
   const [expandedItems, handleAccordionChange] = useAccordion({
     initialState: 0,
@@ -56,7 +59,19 @@ const LessonDetails = () => {
   }
 
   const handleEditLesson = () => {
-    navigate(createUrlPath(authRoutes.myResources.editLesson.path, lessonId))
+    openModal({
+      component: (
+        <ChangeResourceConfirmModal
+          onConfirm={() =>
+            navigate(
+              createUrlPath(authRoutes.myResources.editLesson.path, lessonId)
+            )
+          }
+          resourceId={lessonId}
+          title={response.title}
+        />
+      )
+    })
   }
 
   const attachmentsList = response.attachments.map((attachment) => (
