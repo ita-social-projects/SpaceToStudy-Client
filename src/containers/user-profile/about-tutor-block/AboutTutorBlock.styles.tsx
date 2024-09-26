@@ -16,7 +16,9 @@ export const styles = {
     width: '100%',
     px: { md: '15px', xs: '10px' },
     '& .MuiPaper-root': {
-      borderTop: `1px solid ${palette.basic.lightGray}`
+      boxShadow: 'none',
+      borderRadius: '0',
+      backgroundColor: palette.backgroundColor
     },
     '& .MuiAccordionSummary-root': {
       p: { md: '24px', xs: '12px' }
@@ -43,7 +45,15 @@ export const styles = {
     '& .MuiAccordion-root:hover, & .MuiAccordion-root.Mui-expanded, & .MuiAccordion-root.Mui-expanded:hover':
       {
         backgroundColor: palette.basic.grey
-      }
+      },
+    '& .MuiPaper-root:first-of-type': {
+      borderTop: `1px solid ${palette.basic.lightGray}`,
+      borderRadius: '0'
+    },
+    '& .MuiPaper-root:last-of-type': {
+      borderRadius: '0',
+      borderBottom: `1px solid ${palette.basic.lightGray}`
+    }
   },
   accordion: {
     fontWeight: { md: 500, xs: 400 },
