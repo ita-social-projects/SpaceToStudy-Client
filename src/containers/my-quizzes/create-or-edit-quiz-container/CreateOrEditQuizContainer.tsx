@@ -1,10 +1,4 @@
-import {
-  ChangeEvent,
-  MouseEventHandler,
-  useCallback,
-  useEffect,
-  useState
-} from 'react'
+import { ChangeEvent, useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router-dom'
 import { AxiosResponse } from 'axios'
@@ -56,7 +50,6 @@ import { createUrlPath } from '~/utils/helper-functions'
 import { styles } from '~/containers/my-quizzes/create-or-edit-quiz-container/CreateOrEditQuizContainer.styles'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { getErrorKey } from '~/utils/get-error-key'
-import ChangeResourceConfirmModal from '~/containers/change-resource-confirm-modal/ChangeResourceConfirmModal'
 
 const CreateOrEditQuizContainer = ({
   title,
@@ -222,21 +215,6 @@ const CreateOrEditQuizContainer = ({
           resourceType: ResourceType.Quiz
         })
 
-  const openChangeResourceConfirmModal: MouseEventHandler<HTMLButtonElement> = (
-    e
-  ) => {
-    e.preventDefault()
-    openModal({
-      component: (
-        <ChangeResourceConfirmModal
-          onConfirm={() => onSaveQuiz()}
-          resourceId={id}
-          title={title}
-        />
-      )
-    })
-  }
-
   if (getQuizLoading) {
     return <Loader pageLoad />
   }
@@ -322,7 +300,7 @@ const CreateOrEditQuizContainer = ({
             {t('common.cancel')}
           </AppButton>
           <AppButton
-            onClick={openChangeResourceConfirmModal}
+            onClick={onSaveQuiz}
             size={SizeEnum.ExtraLarge}
             type={ButtonTypeEnum.Submit}
           >

@@ -1,9 +1,29 @@
-import { screen, waitFor } from '@testing-library/react'
+import { fireEvent, screen, waitFor } from '@testing-library/react'
 
 import LessonsContainer from '~/containers/my-resources/lessons-container/LessonsContainer'
 
 import { mockAxiosClient, renderWithProviders } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
+
+vi.mock(
+  '~/containers/my-resources/my-resources-table/MyResourcesTable',
+  () => ({
+    default: ({ actions }) => (
+      <div data-testid='testTable'>
+        <button data-testid='editButton' onClick={() => actions.onEdit()}>
+          Edit
+        </button>
+      </div>
+    )
+  })
+)
+
+vi.mock(
+  '~/containers/change-resource-confirm-modal/ChangeResourceConfirmModal',
+  () => ({
+    default: () => <div data-testid='confirmModal' />
+  })
+)
 
 const lessonMock = {
   _id: '64e49ce305b3353b2ae6309e',
@@ -28,20 +48,6 @@ const lessonResponseMock = {
   items: responseItemsMock
 }
 
-const responseItemsMockCategory = Array(10)
-  .fill()
-  .map((_, index) => ({
-    ...lessonMock,
-    category: { id: '64fb2c33eba89699411d22bb', name: 'New Category' },
-    _id: `${index}`,
-    title: index + lessonMock.title
-  }))
-
-const lessonResponseMockCategory = {
-  count: 10,
-  items: responseItemsMockCategory
-}
-
 describe('LessonContainer test', () => {
   beforeEach(async () => {
     await waitFor(() => {
@@ -62,35 +68,20 @@ describe('LessonContainer test', () => {
 
     expect(addBtn).toBeInTheDocument()
   })
-  it('should render table with lessons', async () => {
-    const columnLabel = await screen.findByText('myResourcesPage.lessons.title')
-    const lessonTitle = await screen.findByText(responseItemsMock[5].title)
 
-    expect(columnLabel).toBeInTheDocument()
-    expect(lessonTitle).toBeInTheDocument()
-  })
-})
+  it('should render table with questions', async () => {
+    const table = await screen.findByTestId('testTable')
 
-describe('Lessons category test', () => {
-  beforeEach(async () => {
-    await waitFor(() => {
-      mockAxiosClient
-        .onGet(URLs.resources.lessons.get)
-        .reply(200, lessonResponseMockCategory)
-      renderWithProviders(<LessonsContainer />)
-    })
+    expect(table).toBeInTheDocument()
   })
 
-  afterEach(() => {
-    vi.clearAllMocks()
-    mockAxiosClient.reset()
-  })
+  it('should run onEdit action', async () => {
+    const editButton = await screen.findByTestId('editButton')
 
-  it('should render correct category', async () => {
-    const category = await screen.findByText(
-      'myResourcesPage.categories.category'
-    )
+    fireEvent.click(editButton)
 
-    expect(category).toBeInTheDocument()
+    const modal = await screen.findByTestId('confirmModal')
+
+    expect(modal).toBeInTheDocument()
   })
 })
