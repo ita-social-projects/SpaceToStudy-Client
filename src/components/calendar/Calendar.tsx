@@ -28,7 +28,7 @@ const mockedData = [
   }
 ]
 
-function Calendar() {
+const Calendar = () => {
   const [date, setDate] = useState<Date>(new Date())
 
   const renderDay = (
