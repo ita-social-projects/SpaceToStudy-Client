@@ -12,6 +12,7 @@ import ActiveStudentsBlock from '~/components/active-students/ActiveStudentsBloc
 
 import { styles } from '~/pages/tutor-home/TutorHome.styles'
 import { translationKey } from '~/components/find-block/find-student-constants'
+import TutorSchedule from '~/components/tutor-schedule/TutorSchedule'
 
 const TutorHome = () => {
   const { t } = useTranslation()
@@ -32,6 +33,7 @@ const TutorHome = () => {
   return (
     <PageWrapper data-testid='tutorHome'>
       <FindBlock translationKey={translationKey} />
+      <TutorSchedule />
       <ActiveStudentsBlock />
       <PopularCategories
         description={t('tutorHomePage.popularCategories.description')}
