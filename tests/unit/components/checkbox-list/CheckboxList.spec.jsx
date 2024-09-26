@@ -6,11 +6,6 @@ const mockedItemChanged = 'Beginner'
 
 const mockedItems = ['Beginner', 'Intermediate', 'Advanced']
 const mockedValue = ['Advanced']
-const mockedLabels = new Map([
-  ['Beginner', 'Початковий'],
-  ['Intermediate', 'Середній'],
-  ['Advanced', 'Високий']
-])
 
 const mockedGetCheckbox = vi.fn()
 
@@ -50,20 +45,5 @@ describe('CheckboxList component', () => {
     const title = screen.queryByLabelText(titleId)
 
     expect(title).toBeNull()
-  })
-
-  it('should render checkbox labels correctly based on provided labels map and translation function', () => {
-    render(
-      <CheckboxList
-        items={mockedItems}
-        labels={mockedLabels}
-        onChange={mockedGetCheckbox}
-      />
-    )
-
-    mockedItems.forEach((item) => {
-      const label = mockedLabels.get(item) || item
-      expect(screen.getByText(label)).toBeInTheDocument()
-    })
   })
 })

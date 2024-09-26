@@ -16,7 +16,6 @@ import { styles } from '~/containers/my-courses/courses-filters-drawer/CoursesFi
 import { spliceSx } from '~/utils/helper-functions'
 import { categoryService } from '~/services/category-service'
 import { subjectService } from '~/services/subject-service'
-import { proficiencyLevelLabels } from '~/constants/labels'
 
 import {
   ButtonVariantEnum,
@@ -152,7 +151,6 @@ const CoursesFiltersDrawer: FC<CoursesFiltersDrawerProps> = ({
         <CheckboxList
           fillRange
           items={levelOptions}
-          labels={proficiencyLevelLabels}
           onChange={updateFilterByKey('proficiencyLevel')}
           value={filters.proficiencyLevel}
         />

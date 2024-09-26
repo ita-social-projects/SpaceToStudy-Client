@@ -15,7 +15,6 @@ interface CheckboxListProps<T> extends Pick<TypographyProps, 'variant'> {
   error?: string
   fillRange?: boolean
   singleSelect?: boolean
-  labels?: ReadonlyMap<T, string>
   onChange: (checkbox: T[]) => void
 }
 
@@ -27,7 +26,6 @@ const CheckboxList = <T extends string>({
   fillRange,
   singleSelect = false,
   variant,
-  labels,
   onChange
 }: CheckboxListProps<T>) => {
   const { t } = useTranslation()
@@ -44,24 +42,31 @@ const CheckboxList = <T extends string>({
     onChange(updatedCheckboxes)
   }
 
-  const checkboxesList = items.map((checkbox) => (
-    <FormControlLabel
-      checked={value.includes(checkbox)}
-      control={
-        <Checkbox
-          inputProps={{ 'aria-label': checkbox }}
-          sx={styles.checkbox}
-        />
-      }
-      key={checkbox}
-      label={
-        <Typography variant={variant}>
-          {labels?.has(checkbox) ? t(labels.get(checkbox)!) : t(checkbox)}
-        </Typography>
-      }
-      onChange={() => handleCheckbox(checkbox)}
-    />
-  ))
+  const checkboxesList = items.map((checkbox) => {
+    let name
+    if (checkbox === 'Test Preparation') {
+      name = 'testPreparation'
+    }
+
+    return (
+      <FormControlLabel
+        checked={value.includes(checkbox)}
+        control={
+          <Checkbox
+            inputProps={{ 'aria-label': checkbox }}
+            sx={styles.checkbox}
+          />
+        }
+        key={checkbox}
+        label={
+          <Typography variant={variant}>
+            {t(`common.levels.${name ?? checkbox.toLowerCase()}`)}
+          </Typography>
+        }
+        onChange={() => handleCheckbox(checkbox)}
+      />
+    )
+  })
 
   const checkboxesTitle = title && (
     <Typography
