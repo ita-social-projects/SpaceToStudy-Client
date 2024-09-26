@@ -1,4 +1,4 @@
-import { FC, useCallback } from 'react'
+import { FC, useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
@@ -13,6 +13,8 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 
 import AppSelect from '~/components/app-select/AppSelect'
 import IconExtensionWithTitle from '~/components/icon-extension-with-title/IconExtensionWithTitle'
+import { cooperationsSelector } from '~/redux/features/cooperationsSlice'
+import { useAppSelector } from '~/hooks/use-redux'
 
 import {
   availabilityIcons,
@@ -25,6 +27,7 @@ import {
   CourseResource,
   ResourceAvailability,
   ResourceAvailabilityStatusEnum,
+  ResourcesAvailabilityEnum,
   ResourcesTypesEnum as ResourceType,
   SizeEnum
 } from '~/types'
@@ -54,8 +57,15 @@ const ResourceItem: FC<ResourceItemProps> = ({
   isCooperation = false
 }) => {
   const { t } = useTranslation()
+  const { resourcesAvailability } = useAppSelector(cooperationsSelector)
 
   const { isDuplicate, description } = resource
+
+  useEffect(() => {
+    resourcesAvailability === ResourcesAvailabilityEnum.OpenManually &&
+      setAvailabilityStatus(ResourceAvailabilityStatusEnum.Closed)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resourcesAvailability])
 
   const handleDeleteResource = useCallback(() => {
     deleteResource?.(resource)
