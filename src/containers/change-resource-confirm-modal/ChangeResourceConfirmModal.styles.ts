@@ -4,65 +4,72 @@ export const styles = {
   root: {
     width: '684px',
     maxWidth: '684px',
-    height: '520px',
-    paddingTop: '64px'
+    minHeight: '300px',
+    p: '64px 40px 40px',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   warningImageContainer: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    mb: '20px'
+    mb: '32px'
   },
   warningImage: {
     color: 'error.700',
     fontSize: '2.5rem'
   },
-  changeConfirmTitle: {
+  title: {
     textAlign: 'center',
     typography: TypographyVariantEnum.MidTitle,
     fontWeight: 600,
-    pb: '20px'
+    mb: '12px'
   },
-  changeConfirmResource: {
+  resource: {
     textAlign: 'center',
-    width: '55%',
+    width: '100%',
     m: '0 auto',
     typography: TypographyVariantEnum.Subtitle1,
     color: 'primary.600',
-    pb: '15px'
+    mb: '8px'
   },
-  changeConfirmDescription: {
+  description: {
     textAlign: 'center',
     typography: TypographyVariantEnum.Subtitle1,
     color: 'primary.600',
-    pb: '35px'
+    mb: '32px'
   },
   lessonsListContainer: {
-    width: '55%',
+    width: '100%',
     m: '0 auto',
-    maxHeight: '190px',
+    maxHeight: '220px',
     overflowY: 'auto',
-    mb: '50px'
+    mb: '38px'
   },
-  changeConfirmListTitles: {
+  listTitles: {
     typography: TypographyVariantEnum.MidTitle,
     fontSize: '15px'
   },
-  changeConfirmListItems: {
-    pb: '30px'
+  listItems: {
+    p: '16px 32px'
   },
-  changeConfirmListsubTitle: {
+  listSubtitle: {
     typography: TypographyVariantEnum.Subtitle2,
     color: 'primary.600'
   },
-  changeConfirmButtonsContainer: {
-    width: '78%',
-    gap: '20px',
+  buttonsContainer: {
+    width: '100%',
+    gap: '16px',
     display: 'flex',
     justifyContent: 'flex-end',
     alignItems: 'flex-end'
   },
-  changeConfirmResourceData: {
+  button: {
+    flexBasis: '96px'
+  },
+  resourceData: {
     fontWeight: '600',
     display: 'inline'
   }

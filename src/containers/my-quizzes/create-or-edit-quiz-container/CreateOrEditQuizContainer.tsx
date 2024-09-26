@@ -1,4 +1,10 @@
-import { ChangeEvent, useCallback, useEffect, useState } from 'react'
+import {
+  ChangeEvent,
+  MouseEventHandler,
+  useCallback,
+  useEffect,
+  useState
+} from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router-dom'
 import { AxiosResponse } from 'axios'
@@ -50,8 +56,7 @@ import { createUrlPath } from '~/utils/helper-functions'
 import { styles } from '~/containers/my-quizzes/create-or-edit-quiz-container/CreateOrEditQuizContainer.styles'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { getErrorKey } from '~/utils/get-error-key'
-import useChangeConfirm from '~/hooks/use-change-confirm'
-import ChangeConfirm from '~/components/changing-confirm/ChangeConfirm'
+import ChangeResourceConfirmModal from '~/containers/change-resource-confirm-modal/ChangeResourceConfirmModal'
 
 const CreateOrEditQuizContainer = ({
   title,
@@ -217,8 +222,20 @@ const CreateOrEditQuizContainer = ({
           resourceType: ResourceType.Quiz
         })
 
-  const { openDialog, onCloseDialog, coursesFiltered, onSubmitButtonClick } =
-    useChangeConfirm(id)
+  const openChangeResourceConfirmModal: MouseEventHandler<HTMLButtonElement> = (
+    e
+  ) => {
+    e.preventDefault()
+    openModal({
+      component: (
+        <ChangeResourceConfirmModal
+          onConfirm={() => onSaveQuiz()}
+          resourceId={id}
+          title={title}
+        />
+      )
+    })
+  }
 
   if (getQuizLoading) {
     return <Loader pageLoad />
@@ -305,20 +322,13 @@ const CreateOrEditQuizContainer = ({
             {t('common.cancel')}
           </AppButton>
           <AppButton
-            onClick={coursesFiltered.length ? onSubmitButtonClick : onSaveQuiz}
+            onClick={openChangeResourceConfirmModal}
             size={SizeEnum.ExtraLarge}
             type={ButtonTypeEnum.Submit}
           >
             {t('common.save')}
           </AppButton>
         </Box>
-        <ChangeConfirm
-          courseList={coursesFiltered}
-          onClose={onCloseDialog}
-          onSubmit={onSaveQuiz}
-          open={openDialog}
-          title={title}
-        />
       </Box>
     </PageWrapper>
   )
