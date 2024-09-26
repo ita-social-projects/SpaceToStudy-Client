@@ -36,7 +36,7 @@ const ProfileItem = ({
   return (
     <Box
       onClick={handleItemClick}
-      sx={{ position: 'relative', cursor: isClickable ? 'pointer' : '' }}
+      sx={{ ...styles.container, cursor: isClickable ? 'pointer' : '' }}
     >
       <Box sx={{ ...styles.wrapper, opacity: isFilled ? 0.5 : 1 }}>
         <Box sx={styles.information}>
