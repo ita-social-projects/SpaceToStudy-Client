@@ -40,7 +40,6 @@ import {
 } from '~/types'
 import {
   setIsActivityCreated,
-  setIsAddedClicked,
   setSelectedCourse
 } from '~/redux/features/cooperationsSlice'
 
@@ -126,7 +125,6 @@ const AddCourseTemplateModal: FC<AddCourseTemplateModalProps> = ({
   }
 
   const onAdd = () => {
-    dispatch(setIsAddedClicked(true))
     dispatch(setIsActivityCreated(true))
     closeModal()
   }

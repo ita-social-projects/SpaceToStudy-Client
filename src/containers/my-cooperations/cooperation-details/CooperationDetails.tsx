@@ -51,7 +51,7 @@ const CooperationDetails = () => {
   const { t } = useTranslation()
   const { id } = useParams()
   const { isDesktop } = useBreakpoints()
-  const { isActivityCreated } = useAppSelector(cooperationsSelector) // Why is this needed?
+  const { isActivityCreated } = useAppSelector(cooperationsSelector)
   const [activeTab, setActiveTab] = useState<CooperationTabsEnum>(
     CooperationTabsEnum.Activities
   )

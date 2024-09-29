@@ -15,10 +15,7 @@ import AppButton from '~/components/app-button/AppButton'
 import { SizeEnum, ButtonVariantEnum } from '~/types'
 import { styles } from '~/containers/my-cooperations/empty-cooperation-activities/EmptyCooperationActivities.styles'
 import { useAppDispatch } from '~/hooks/use-redux'
-import {
-  setIsActivityCreated,
-  setIsNewActivity
-} from '~/redux/features/cooperationsSlice'
+import { setIsActivityCreated } from '~/redux/features/cooperationsSlice'
 
 const EmptyCooperationTutorControls: FC = () => {
   const { t } = useTranslation()
@@ -47,8 +44,7 @@ const EmptyCooperationTutorControls: FC = () => {
 
   const handleFromScratch = () => {
     closeMenu()
-    dispatch(setIsActivityCreated(true)) // should delete it
-    dispatch(setIsNewActivity(true)) // should delete it
+    dispatch(setIsActivityCreated(true))
   }
 
   const menuItems = [
