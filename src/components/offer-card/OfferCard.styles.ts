@@ -9,6 +9,9 @@ export const styles = {
   },
   userInfo: {
     root: {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
       gap: '4px',
       maxWidth: '112px'
     },
