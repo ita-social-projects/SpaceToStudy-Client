@@ -3,7 +3,6 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { RootState } from '~/redux/store'
 import { sliceNames } from '~/redux/redux.constants'
 import {
-  Course,
   CourseFieldValues,
   CourseResource,
   CourseSection,
@@ -13,14 +12,12 @@ import {
 } from '~/types'
 
 interface CooperationsState {
-  selectedCourse: Course | null // delete it
   isActivityCreated: boolean
   sections: CourseSection[]
   resourcesAvailability: ResourcesAvailabilityEnum
 }
 
 const initialState: CooperationsState = {
-  selectedCourse: null, // delete it
   isActivityCreated: false,
   sections: [],
   resourcesAvailability: ResourcesAvailabilityEnum.OpenAll
@@ -37,13 +34,6 @@ const cooperationsSlice = createSlice({
   name: sliceNames.cooperations,
   initialState,
   reducers: {
-    setSelectedCourse(
-      // delete it
-      state,
-      action: PayloadAction<CooperationsState['selectedCourse']>
-    ) {
-      state.selectedCourse = action.payload
-    },
     setIsActivityCreated(
       state,
       action: PayloadAction<CooperationsState['isActivityCreated']>
@@ -252,7 +242,6 @@ const cooperationsSlice = createSlice({
 const { actions, reducer } = cooperationsSlice
 
 export const {
-  setSelectedCourse,
   setIsActivityCreated,
   setCooperationSections,
   addNewCooperationSection,
