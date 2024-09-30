@@ -124,8 +124,14 @@ const ResourceItem: FC<ResourceItemProps> = ({
       {!shouldShowDatePicker && availabilityIcon}
       {shouldShowDatePicker && (
         <LocalizationProvider dateAdapter={AdapterDateFns}>
+          {availabilityIcon}
+          <AppSelect
+            fields={selectionFields}
+            setValue={setAvailabilityStatus}
+            sx={styles.availabilitySelect}
+            value={resourceAvailabilityStatus}
+          />
           <Box sx={styles.datePicker}>
-            {availabilityIcon}
             <DatePicker
               disableMaskedInput
               disablePast
@@ -138,12 +144,6 @@ const ResourceItem: FC<ResourceItemProps> = ({
           </Box>
         </LocalizationProvider>
       )}
-      <AppSelect
-        fields={selectionFields}
-        setValue={setAvailabilityStatus}
-        sx={styles.availabilitySelect}
-        value={resourceAvailabilityStatus}
-      />
     </Box>
   )
 

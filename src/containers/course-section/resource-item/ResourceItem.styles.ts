@@ -11,8 +11,7 @@ export const styles = {
   availabilitySelectionContainer: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center',
-    mr: '16px'
+    justifyContent: 'center'
   },
   availabilityIcon: {
     p: '8px'
