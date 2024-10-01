@@ -1,0 +1,187 @@
+@use '~/scss/utilities' as *;
+
+.#{$prefix}btn {
+  --#{$prefix}btn-padding-x: #{get-var('space-3')};
+  --#{$prefix}btn-padding-y: #{get-var('space-1-5')};
+  --#{$prefix}btn-inner-gap: #{get-var('space-1-5')};
+  --#{$prefix}btn-font-size: #{get-var('font-size-md')};
+  --#{$prefix}btn-font-weight: #{get-var('font-weight-medium')};
+  --#{$prefix}btn-line-height: #{get-var('line-height-lg')};
+  --#{$prefix}btn-letter-spacing: #{get-var('letter-spacing-md')};
+  --#{$prefix}btn-border-radius: #{get-var('border-radius-2xs')};
+  --#{$prefix}btn-color: #{get-var('color-neutral-900')};
+  --#{$prefix}btn-text-decoration: none;
+  --#{$prefix}btn-shadow: none;
+
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: get-var('btn-padding-y') get-var('btn-padding-x');
+  background-color: get-var('btn-bg');
+  color: get-var('btn-color');
+  font-size: get-var('btn-font-size');
+  line-height: get-var('btn-line-height');
+  font-weight: get-var('btn-font-weight');
+  letter-spacing: get-var('btn-letter-spacing');
+  text-decoration: get-var('btn-text-decoration');
+  text-transform: none;
+  border-radius: get-var('btn-border-radius');
+  box-shadow: get-var('btn-shadow');
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    background-color: get-var('btn-hover-bg');
+    color: get-var('btn-hover-color');
+    box-shadow: get-var('btn-hover-shadow');
+  }
+
+  &:is(:focus-visible, :active) {
+    background-color: get-var('btn-active-bg');
+    color: get-var('btn-active-color');
+    box-shadow: get-var('btn-active-shadow');
+    text-decoration: get-var('btn-active-text-decoration');
+  }
+
+  &-disabled,
+  &:disabled {
+    background-color: get-var('btn-disabled-bg');
+    color: get-var('btn-disabled-color');
+    box-shadow: get-var('btn-disabled-shadow');
+    pointer-events: none;
+    cursor: not-allowed;
+  }
+
+  & .#{$prefix}btn-label {
+    padding: 0 get-var('btn-inner-gap');
+  }
+
+  & .#{$prefix}btn-loader {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  & .#{$prefix}btn-hidden-content {
+    display: contents;
+    visibility: hidden;
+  }
+
+  &-primary {
+    @include button-variant(
+      $background: get-var('blue-gray-800'),
+      $color: get-var('neutral-50'),
+      $shadow: get-var('box-shadow-xl'),
+      $hover-background: get-var('blue-gray-700'),
+      $hover-shadow: get-var('box-shadow-2xl'),
+      $active-background: get-var('blue-gray-500'),
+      $disabled-background: get-var('blue-gray-50'),
+      $disabled-color: get-var('blue-gray-300')
+    );
+  }
+
+  &-tonal {
+    @include button-variant(
+      $background: get-var('blue-gray-50'),
+      $color: get-var('blue-gray-800'),
+      $shadow: get-var('box-shadow-xs'),
+      $hover-background: get-var('blue-gray-100'),
+      $hover-shadow: get-var('box-shadow-xs'),
+      $active-background: get-var('blue-gray-300'),
+      $disabled-background: get-var('blue-gray-50'),
+      $disabled-color: get-var('blue-gray-300')
+    );
+  }
+
+  &-text-primary {
+    @include button-variant(
+      $background: transparent,
+      $color: get-var('blue-gray-800'),
+      $hover-background: rgba($blue-gray-400, 0.2),
+      $active-background: rgba($blue-gray-400, 0.2),
+      $active-text-decoration: underline,
+      $disabled-background: transparent,
+      $disabled-color: get-var('blue-gray-300')
+    );
+  }
+
+  &-text-secondary {
+    @include button-variant(
+      $background: transparent,
+      $color: get-var('blue-gray-600'),
+      $hover-background: rgba($blue-gray-400, 0.2),
+      $active-background: rgba($blue-gray-400, 0.2),
+      $active-text-decoration: underline,
+      $disabled-background: transparent,
+      $disabled-color: get-var('blue-gray-300')
+    );
+  }
+
+  &-tonal-success {
+    @include button-variant(
+      $background: get-var('green-50'),
+      $color: get-var('green-800'),
+      $shadow: get-var('box-shadow-xs'),
+      $hover-background: get-var('green-200'),
+      $hover-shadow: get-var('box-shadow-xs'),
+      $active-background: get-var('green-300'),
+      $disabled-background: get-var('green-50'),
+      $disabled-color: get-var('green-300')
+    );
+  }
+
+  &-tonal-error {
+    @include button-variant(
+      $background: get-var('red-100'),
+      $color: get-var('red-600'),
+      $shadow: get-var('box-shadow-xs'),
+      $hover-background: get-var('red-200'),
+      $hover-shadow: get-var('box-shadow-xs'),
+      $active-background: get-var('red-300'),
+      $active-color: get-var('red-700'),
+      $disabled-background: get-var('red-50'),
+      $disabled-color: get-var('red-300')
+    );
+  }
+
+  &-xs {
+    @include button-size(
+      $padding-x: get-var('space-1'),
+      $padding-y: get-var('space-1'),
+      $inner-gap: get-var('space-1'),
+      $font-size: get-var('font-size-sm'),
+      $line-height: get-var('line-height-sm')
+    );
+  }
+
+  &-sm {
+    @include button-size(
+      $padding-x: get-var('space-1-5'),
+      $padding-y: get-var('space-1'),
+      $inner-gap: get-var('space-1'),
+      $font-size: get-var('font-size-md'),
+      $line-height: get-var('line-height-lg')
+    );
+  }
+
+  &-md {
+    @include button-size(
+      $padding-x: get-var('space-1-5'),
+      $padding-y: get-var('space-1-5'),
+      $inner-gap: get-var('space-1-5'),
+      $font-size: get-var('font-size-md'),
+      $line-height: get-var('line-height-lg')
+    );
+  }
+
+  &-lg {
+    @include button-size(
+      $padding-x: get-var('space-2'),
+      $padding-y: get-var('space-2'),
+      $inner-gap: get-var('space-1-5'),
+      $font-size: get-var('font-size-lg'),
+      $line-height: get-var('line-height-lg')
+    );
+  }
+}

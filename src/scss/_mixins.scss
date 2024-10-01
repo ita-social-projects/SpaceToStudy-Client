@@ -68,10 +68,58 @@
 
     .#{$class-name} {
       @each $property in $properties {
-        #{$property}: #{$value};
+        #{$property}: #{$value} !important;
       }
     }
   }
+}
+
+/*=============================================
+ =                Button utils                =
+ =============================================*/
+
+@mixin button-variant(
+  $background,
+  $color,
+  $shadow: none,
+  $hover-background,
+  $hover-color: $color,
+  $hover-shadow: none,
+  $active-background,
+  $active-color: $color,
+  $active-shadow: none,
+  $active-text-decoration: none,
+  $disabled-background,
+  $disabled-color: $color,
+  $disabled-shadow: none
+) {
+  --#{$prefix}btn-bg: #{$background};
+  --#{$prefix}btn-color: #{$color};
+  --#{$prefix}btn-shadow: #{$shadow};
+  --#{$prefix}btn-hover-bg: #{$hover-background};
+  --#{$prefix}btn-hover-color: #{$hover-color};
+  --#{$prefix}btn-hover-shadow: #{$hover-shadow};
+  --#{$prefix}btn-active-bg: #{$active-background};
+  --#{$prefix}btn-active-color: #{$active-color};
+  --#{$prefix}btn-active-shadow: #{$active-shadow};
+  --#{$prefix}btn-active-text-decoration: #{$active-text-decoration};
+  --#{$prefix}btn-disabled-bg: #{$disabled-background};
+  --#{$prefix}btn-disabled-color: #{$disabled-color};
+  --#{$prefix}btn-disabled-shadow: #{$disabled-shadow};
+}
+
+@mixin button-size(
+  $padding-x,
+  $padding-y,
+  $inner-gap,
+  $font-size,
+  $line-height
+) {
+  --#{$prefix}btn-padding-x: #{$padding-x};
+  --#{$prefix}btn-padding-y: #{$padding-y};
+  --#{$prefix}btn-inner-gap: #{$inner-gap};
+  --#{$prefix}btn-font-size: #{$font-size};
+  --#{$prefix}btn-line-height: #{$line-height};
 }
 
 /*=============================================
