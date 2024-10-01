@@ -31,7 +31,7 @@ const Welcome = () => {
       if (isTablet) return titleSm
       if (isMobile) return titleXs
     }
-  }, [isLaptopAndAbove, isTablet, isMobile, i18next.language])
+  }, [isLaptopAndAbove, isTablet, isMobile])
 
   return (
     <Box
