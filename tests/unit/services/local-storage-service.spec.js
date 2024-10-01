@@ -6,6 +6,21 @@ import {
 import { vi } from 'vitest'
 
 describe('Local storage service test', () => {
+  it('should return null if local storage contains a corrupted item', () => {
+    Object.defineProperty(window, 'localStorage', {
+      configurable: true,
+      writable: true,
+      value: {
+        getItem: () => '{"language":"en}',
+        setItem: vi.fn(),
+        removeItem: vi.fn()
+      }
+    })
+
+    const token = getFromLocalStorage('token')
+    expect(token).toBe(null)
+  })
+
   it('should return null from local storage', () => {
     Object.defineProperty(window, 'localStorage', {
       configurable: true,
