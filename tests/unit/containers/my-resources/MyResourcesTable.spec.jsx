@@ -1,4 +1,4 @@
-import { fireEvent, screen, waitFor } from '@testing-library/react'
+import { fireEvent, screen } from '@testing-library/react'
 
 import MyResourcesTable from '~/containers/my-resources/my-resources-table/MyResourcesTable'
 
@@ -47,6 +47,10 @@ const responseItemsMock = Array(10)
 
 const props = {
   resource: 'lessons',
+  pagination: {
+    page: 1,
+    onChange: vi.fn()
+  },
   data: {
     response: {
       items: responseItemsMock,
@@ -65,13 +69,7 @@ const props = {
 
 describe('MyResourcesTable test', () => {
   beforeEach(async () => {
-    await waitFor(() => {
-      renderWithProviders(<MyResourcesTable {...props} />)
-    })
-  })
-
-  afterEach(() => {
-    vi.clearAllMocks()
+    renderWithProviders(<MyResourcesTable {...props} />)
   })
 
   it('should render table and pagination', () => {
