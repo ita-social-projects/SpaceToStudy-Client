@@ -20,6 +20,8 @@ export interface TableRowAction {
 
 export interface TableItem {
   _id: string
+  title?: string
+  fileName?: string
 }
 
 export interface TableSelect<I> {

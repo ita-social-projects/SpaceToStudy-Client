@@ -5,6 +5,7 @@ import { PaginationProps } from '@mui/material'
 import { useAppDispatch } from '~/hooks/use-redux'
 import useAxios from '~/hooks/use-axios'
 import useConfirm from '~/hooks/use-confirm'
+import { useModalContext } from '~/context/modal-context'
 import AppPagination from '~/components/app-pagination/AppPagination'
 import EnhancedTable, {
   EnhancedTableProps
@@ -19,6 +20,7 @@ import {
   ResourcesTabsEnum
 } from '~/types'
 import { roundedBorderTable } from '~/containers/my-cooperations/cooperations-container/CooperationContainer.styles'
+import ChangeResourceConfirmModal from '~/containers/change-resource-confirm-modal/ChangeResourceConfirmModal'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { getErrorKey } from '~/utils/get-error-key'
 
@@ -47,6 +49,7 @@ const MyResourcesTable = <T extends TableItem>({
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
   const { openDialog } = useConfirm()
+  const { openModal } = useModalContext()
 
   const { page, onChange } = pagination
   const { response, getData } = data
@@ -86,10 +89,25 @@ const MyResourcesTable = <T extends TableItem>({
   }
 
   const onDelete = (id: string) => {
-    openDialog({
-      message: 'myResourcesPage.confirmDeletionMessage',
-      sendConfirm: (isConfirmed: boolean) => void handleDelete(id, isConfirmed),
-      title: `myResourcesPage.${resource}.confirmDeletionTitle`
+    const currentResource = response.items.find((item) => item._id === id)
+
+    const handleConfirm = () => {
+      openDialog({
+        message: 'myResourcesPage.confirmDeletionMessage',
+        sendConfirm: (isConfirmed: boolean) =>
+          void handleDelete(id, isConfirmed),
+        title: `myResourcesPage.${resource}.confirmDeletionTitle`
+      })
+    }
+
+    openModal({
+      component: (
+        <ChangeResourceConfirmModal
+          onConfirm={handleConfirm}
+          resourceId={id}
+          title={currentResource?.title ?? currentResource?.fileName}
+        />
+      )
     })
   }
 
