@@ -6,6 +6,7 @@ import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded'
 
 import { chatService } from '~/services/chat-service'
 import { messageService } from '~/services/message-service'
+import { socketService } from '~/services/socket-service'
 import { useDrawer } from '~/hooks/use-drawer'
 import useAxios from '~/hooks/use-axios'
 import useBreakpoints from '~/hooks/use-breakpoints'
@@ -138,6 +139,13 @@ const Chat = () => {
     await sendMessage()
     await fetchData()
   }
+
+  useEffect(() => {
+    const socket = socketService.connectUser()
+    return () => {
+      socketService.disconnectUser(socket)
+    }
+  }, [])
 
   useEffect(() => {
     selectedChat && void fetchData()
