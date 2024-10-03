@@ -20,7 +20,8 @@ const props = {
   listOfChats: chatsMock,
   selectedChat: chatsMock[0],
   setSelectedChat: vi.fn(),
-  closeDrawer: vi.fn()
+  closeDrawer: vi.fn(),
+  usersOnline: new Set()
 }
 
 describe('ListOfUsersWithSearch component', () => {

@@ -23,13 +23,15 @@ interface ItemOfChatProps {
   chat: ChatResponse
   setSelectedChat: (chat: ChatResponse) => void
   closeDrawer?: () => void
+  isOnline: boolean
 }
 
 const ChatItem: FC<ItemOfChatProps> = ({
   isActiveChat,
   chat,
   setSelectedChat,
-  closeDrawer
+  closeDrawer,
+  isOnline
 }) => {
   const { t } = useTranslation()
   const { userId } = useAppSelector((state) => state.appMain)
@@ -92,6 +94,7 @@ const ChatItem: FC<ItemOfChatProps> = ({
           badgeContent={
             <Typography component={ComponentEnum.Span} sx={styles.active} />
           }
+          invisible={!isOnline}
           overlap={OverlapEnum.Circular}
         >
           <AvatarIcon

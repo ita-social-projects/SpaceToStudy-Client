@@ -49,6 +49,7 @@ const Chat = () => {
   const [filteredIndex, setFilteredIndex] = useState<number>(0)
   const [prevScrollHeight, setPrevScrollHeight] = useState(0)
   const [prevScrollTop, setPrevScrollTop] = useState(0)
+  const [usersOnline, setUsersOnline] = useState<Set<string>>(new Set())
   const { userId: myId } = useAppSelector((state) => state.appMain)
   const { setChatInfo, chatInfo } = useChatContext()
 
@@ -153,7 +154,7 @@ const Chat = () => {
   }
 
   useEffect(() => {
-    const socket = socketService.connectUser()
+    const socket = socketService.connectUser(setUsersOnline)
     return () => {
       socketService.disconnectUser(socket)
     }
@@ -259,6 +260,7 @@ const Chat = () => {
             listOfChats={listOfChats}
             selectedChat={selectedChat}
             setSelectedChat={handleChatSelection}
+            usersOnline={usersOnline}
           />
         </AppDrawer>
       )}
@@ -269,6 +271,7 @@ const Chat = () => {
               listOfChats={listOfChats}
               selectedChat={selectedChat}
               setSelectedChat={handleChatSelection}
+              usersOnline={usersOnline}
             />
           </Allotment.Pane>
         )}
@@ -281,6 +284,7 @@ const Chat = () => {
                 {userToSpeak && (
                   <ChatHeader
                     currentChat={selectedChat}
+                    isOnline={usersOnline.has(userToSpeak?.user._id)}
                     messages={messages}
                     onClick={(event?: MouseEvent<HTMLButtonElement>) =>
                       onSidebarHandler(true, event)
