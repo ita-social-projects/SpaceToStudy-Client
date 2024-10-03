@@ -1,6 +1,5 @@
-import { useCallback, useLayoutEffect, useEffect, useState } from 'react'
+import { useCallback, useLayoutEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useLocation } from 'react-router-dom'
 
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
@@ -56,14 +55,6 @@ const MyOffers = () => {
   const { filters, clearFilters, setFilterByKey } = filterOptions
 
   const handleOpenDrawer = () => openDrawer()
-
-  const { hash } = useLocation()
-
-  useEffect(() => {
-    if (hash === '#offer') {
-      handleOpenDrawer()
-    }
-  }, [hash])
 
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
   const showTable = !breakpoints.isMobile && itemsView === CardsViewEnum.Inline
