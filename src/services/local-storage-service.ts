@@ -4,7 +4,7 @@ import { LocalStorage } from '~/types'
 const getLocalObject = () => {
   try {
     return JSON.parse(
-      localStorage.getItem(s2s) || 'null'
+      localStorage.getItem(s2s) ?? 'null'
     ) as LocalStorage | null
   } catch (error) {
     localStorage.removeItem(s2s)
