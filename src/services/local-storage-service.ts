@@ -1,8 +1,16 @@
 import { s2s } from '~/constants'
 import { LocalStorage } from '~/types'
 
-const getLocalObject = () =>
-  JSON.parse(localStorage.getItem('s2s') || 'null') as LocalStorage | null
+const getLocalObject = () => {
+  try {
+    return JSON.parse(
+      localStorage.getItem(s2s) ?? 'null'
+    ) as LocalStorage | null
+  } catch (error) {
+    localStorage.removeItem(s2s)
+    return null
+  }
+}
 
 export const getFromLocalStorage = <K extends keyof LocalStorage>(
   name: K
