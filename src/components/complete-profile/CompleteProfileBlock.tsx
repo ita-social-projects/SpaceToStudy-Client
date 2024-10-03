@@ -1,4 +1,4 @@
-import { FC, useMemo, useState, useCallback } from 'react'
+import { FC, useMemo, useState, useCallback, useEffect } from 'react'
 import { Link, useMatch } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
@@ -28,17 +28,25 @@ import { defaultResponse } from '~/pages/my-offers/MyOffers.constants'
 interface CompleteProfileBlockProps {
   profileItems: ProfileItemType[]
   data: UserResponse
+  openAccordion?: boolean
 }
 
 const CompleteProfileBlock: FC<CompleteProfileBlockProps> = ({
   data,
-  profileItems
+  profileItems,
+  openAccordion = false
 }) => {
   const { t } = useTranslation()
   const { isMobile } = useBreakpoints()
   const { userRole, userId } = useAppSelector((state) => state.appMain)
   const homePage = useMatch(guestRoutes[userRole as UserRole].path)
   const [isOpen, setIsOpen] = useState(false)
+
+  useEffect(() => {
+    if (openAccordion) {
+      setIsOpen(true)
+    }
+  }, [openAccordion])
 
   const getMyOffers = useCallback(
     () =>
@@ -123,7 +131,7 @@ const CompleteProfileBlock: FC<CompleteProfileBlockProps> = ({
   )
 
   return (
-    <Accordion expanded={isOpen} sx={styles.wrapper}>
+    <Accordion expanded={isOpen} id='complete' sx={styles.wrapper}>
       <AccordionSummary>
         <Box sx={styles.headerProgressBar}>
           <Box>

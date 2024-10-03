@@ -16,13 +16,15 @@ interface TitleWithDescriptionProps {
   }
 
   isDescriptionTooltip?: boolean
+  isHighlighted?: boolean
 }
 
 const TitleWithDescription = ({
   title,
   description,
   style = styles,
-  isDescriptionTooltip = false
+  isDescriptionTooltip = false,
+  isHighlighted = false
 }: TitleWithDescriptionProps) => {
   const renderDescription = () => {
     if (typeof description !== 'string') {
@@ -32,7 +34,9 @@ const TitleWithDescription = ({
   }
 
   return (
-    <Box sx={style.wrapper}>
+    <Box
+      sx={{ ...style.wrapper, position: isHighlighted ? 'relative' : 'static' }}
+    >
       {title && <Typography sx={style.title}>{title}</Typography>}
       <Tooltip
         arrow

@@ -1,6 +1,11 @@
-import { useCallback } from 'react'
+import { useCallback, useEffect } from 'react'
 import { useAppSelector } from '~/hooks/use-redux'
-import { useParams, useSearchParams, useMatch } from 'react-router-dom'
+import {
+  useParams,
+  useLocation,
+  useSearchParams,
+  useMatch
+} from 'react-router-dom'
 
 import CompleteProfileBlock from '~/components/complete-profile/CompleteProfileBlock'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
@@ -24,6 +29,7 @@ import videoImgProfile from '~/assets/img/user-profile-page/presentationVideoImg
 
 import { responseMock } from '~/pages/user-profile/constants'
 import { authRoutes } from '~/router/constants/authRoutes'
+import { scrollToHash } from '~/utils/hash-scroll'
 
 const UserProfile = () => {
   const { id } = useParams()
@@ -32,6 +38,14 @@ const UserProfile = () => {
   const paramsRole = searchParams.get('role')
   const { user } = responseMock
   const { reviews } = user.reviewStats || {}
+
+  const { hash, pathname } = useLocation()
+
+  useEffect(() => {
+    if (hash) {
+      scrollToHash(`${pathname}${hash}`)
+    }
+  }, [pathname, hash])
 
   const preferredRole = paramsRole || userRole
   const preferredId = id || userId
@@ -71,6 +85,7 @@ const UserProfile = () => {
       {isMyProfile && (
         <CompleteProfileBlock
           data={response}
+          openAccordion={!!hash}
           profileItems={
             preferredRole === UserRoleEnum.Student
               ? profileItemsStudent

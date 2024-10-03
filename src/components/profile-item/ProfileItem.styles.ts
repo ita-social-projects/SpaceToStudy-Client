@@ -1,4 +1,5 @@
 export const styles = {
+  container: { position: 'relative' },
   wrapper: {
     padding: { xs: '10px 14px', sm: '20px 35px' },
     borderRadius: '8px',
@@ -21,7 +22,6 @@ export const styles = {
   text: {
     margin: { xs: '0', sm: '0 35px 0 28px' }
   },
-
   checkIcon: {
     color: 'basic.orientalHerbs',
     position: 'absolute',

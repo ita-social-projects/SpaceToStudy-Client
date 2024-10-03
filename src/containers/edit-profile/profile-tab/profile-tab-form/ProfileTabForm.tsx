@@ -32,6 +32,7 @@ import { imageResize } from '~/utils/image-resize'
 import { styles } from '~/containers/edit-profile/profile-tab/profile-tab-form/ProfileTabForm.styles'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { createUrlPath } from '~/utils/helper-functions'
+import { highlightElem } from '~/containers/edit-profile/common.styles'
 
 export interface ProfileTabFormProps {
   data: EditProfileForm
@@ -111,7 +112,8 @@ const ProfileTabForm: FC<ProfileTabFormProps> = ({
 
   return (
     <Box sx={styles.profileGeneralTabContainer}>
-      <Box sx={styles.avatar.root}>
+      <Box id='photo' sx={styles.avatar.root}>
+        <Box sx={highlightElem}></Box>
         <DragAndDrop
           emitter={addPhoto}
           style={{ root: styles.avatar.img }}
@@ -127,6 +129,7 @@ const ProfileTabForm: FC<ProfileTabFormProps> = ({
         <Box sx={styles.avatar.textWithButtons}>
           <TitleWithDescription
             description={t('editProfilePage.profile.generalTab.uploadDesc')}
+            isHighlighted
             style={styles.avatar.titleWithDesc}
             title={t('editProfilePage.profile.generalTab.uploadTitle')}
           />
@@ -177,9 +180,11 @@ const ProfileTabForm: FC<ProfileTabFormProps> = ({
         </Box>
       </Box>
 
-      <Box sx={styles.section}>
+      <Box id='address' sx={styles.section}>
+        <Box sx={highlightElem}></Box>
         <TitleWithDescription
           description={t('editProfilePage.profile.generalTab.locationDesc')}
+          isHighlighted
           style={styles.sectionsTitleWithDesc}
           title={t('editProfilePage.profile.generalTab.locationTitle')}
         />
@@ -227,11 +232,13 @@ const ProfileTabForm: FC<ProfileTabFormProps> = ({
         />
       </Box>
 
-      <Box sx={styles.section}>
+      <Box id='video' sx={styles.section}>
+        <Box sx={highlightElem}></Box>
         <TitleWithDescription
           description={t(
             'editProfilePage.profile.generalTab.videoPresentationDesc'
           )}
+          isHighlighted
           style={styles.sectionsTitleWithDesc}
           title={t('userProfilePage.videoPresentation.title')}
         />

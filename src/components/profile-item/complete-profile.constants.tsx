@@ -5,50 +5,63 @@ import LeakAddIcon from '@mui/icons-material/LeakAdd'
 import CategoryIcon from '@mui/icons-material/Category'
 import LocationOnIcon from '@mui/icons-material/LocationOn'
 import VideocamRoundedIcon from '@mui/icons-material/VideocamRounded'
+import { authRoutes } from '~/router/constants/authRoutes'
 
 export interface ProfileItemType {
   id: string
   icon: JSX.Element
+  path: string
 }
 
 export const profileItemsTutor: ProfileItemType[] = [
   {
     id: 'photo',
-    icon: <AccountCircleIcon />
+    icon: <AccountCircleIcon />,
+    path: authRoutes.editProfile.path
   },
   {
     id: 'education',
-    icon: <InfoIcon />
+    icon: <InfoIcon />,
+    path: `${authRoutes.editProfile.path}?tab=professionalInfo`
   },
   {
     id: 'video',
-    icon: <VideocamRoundedIcon />
+    icon: <VideocamRoundedIcon />,
+    path: authRoutes.editProfile.path
   },
   {
     id: 'schedule',
-    icon: <SellIcon />
+    icon: <SellIcon />,
+    path: ''
   },
   {
     id: 'offer',
-    icon: <LeakAddIcon />
+    icon: <LeakAddIcon />,
+    path: ''
   }
 ]
 
 export const profileItemsStudent: ProfileItemType[] = [
   {
     id: 'photo',
-    icon: <AccountCircleIcon />
+    icon: <AccountCircleIcon />,
+    path: authRoutes.editProfile.path
   },
   {
     id: 'category',
-    icon: <CategoryIcon />
+    icon: <CategoryIcon />,
+    path: `${authRoutes.editProfile.path}?tab=professionalInfo`
   },
   {
     id: 'address',
-    icon: <LocationOnIcon />
+    icon: <LocationOnIcon />,
+    path: authRoutes.editProfile.path
   },
   {
     id: 'offer',
-    icon: <LeakAddIcon />
+    icon: <LeakAddIcon />,
+    path: ''
   }
 ]
+
+export const fieldsWithIncreasedHeight = ['#video', '#address']

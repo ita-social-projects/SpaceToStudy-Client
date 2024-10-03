@@ -1,6 +1,11 @@
 import { useEffect, useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link, useSearchParams } from 'react-router-dom'
+import {
+  Link,
+  useLocation,
+  useNavigate,
+  useSearchParams
+} from 'react-router-dom'
 
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
@@ -31,6 +36,7 @@ import {
 import { LoadingStatusEnum } from '~/redux/redux.constants'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { snackbarVariants } from '~/constants'
+import { authRoutes } from '~/router/constants/authRoutes'
 
 const EditProfile = () => {
   const [initialEditProfileState, setInitialEditProfileState] = useState<
@@ -129,6 +135,9 @@ const EditProfile = () => {
     }
   }
 
+  const { hash } = useLocation()
+  const navigate = useNavigate()
+
   const handleUpdateUser = async (): Promise<void> => {
     const { country, city } = profileState
     const {
@@ -177,6 +186,10 @@ const EditProfile = () => {
       })
     )
     setInitialEditProfileState(structuredClone(profileState))
+
+    if (hash) {
+      navigate(`${authRoutes.myProfile.path}#complete`)
+    }
   }
 
   const cooperationContent = activeTab && tabsData[activeTab]?.content

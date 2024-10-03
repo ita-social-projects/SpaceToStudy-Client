@@ -4,5 +4,5 @@ export const scrollToHash = (path: string) => {
       path.split('#').slice(1).join()
     )
     elementWithId && elementWithId.scrollIntoView({ behavior: 'smooth' })
-  }, 0)
+  }, 1000)
 }

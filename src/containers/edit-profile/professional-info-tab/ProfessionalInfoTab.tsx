@@ -1,5 +1,6 @@
 import { FC, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useLocation } from 'react-router-dom'
 
 import Box from '@mui/material/Box'
 import AddIcon from '@mui/icons-material/Add'
@@ -30,8 +31,10 @@ import AddProfessionalCategoryModal from '~/containers/edit-profile/professional
 import AboutTutorAccordion from '~/containers/edit-profile/professional-info-tab/about-tutor-accordion/AboutTutorAccordion'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import AppButton from '~/components/app-button/AppButton'
+import { scrollToAndHighlight } from '~/utils/scroll-and-highlight'
 
 import { styles } from '~/containers/edit-profile/professional-info-tab/ProfessionalInfoTab.styles'
+import { highlightElem } from '~/containers/edit-profile/common.styles'
 
 const ProfessionalInfoTab: FC = () => {
   const { t } = useTranslation()
@@ -50,6 +53,14 @@ const ProfessionalInfoTab: FC = () => {
   const debouncedProfessionalBlockData = useDebounce(() => {
     dispatch(setField({ field: 'professionalBlock', value: data }))
   }, 300)
+
+  const { hash, pathname } = useLocation()
+
+  useEffect(() => {
+    if (hash) {
+      scrollToAndHighlight(`${pathname}${hash}`)
+    }
+  }, [pathname, hash])
 
   useEffect(() => {
     debouncedProfessionalBlockData()
@@ -88,11 +99,13 @@ const ProfessionalInfoTab: FC = () => {
   }
 
   const TutorInfo = userRole === UserRoleEnum.Tutor && (
-    <Box component='section'>
+    <Box component='section' id='education'>
+      <Box sx={highlightElem}></Box>
       <TitleWithDescription
         description={t(
           'editProfilePage.profile.professionalTab.aboutTheTutorDescription'
         )}
+        isHighlighted
         style={styles.titleWithDescription}
         title={t('editProfilePage.profile.professionalTab.aboutTheTutorTitle')}
       />
@@ -114,11 +127,13 @@ const ProfessionalInfoTab: FC = () => {
         style={styles.mainTitleWithDescription}
         title={t('editProfilePage.profile.professionalTab.mainTitle')}
       />
-      <Box component={ComponentEnum.Section}>
+      <Box component={ComponentEnum.Section} id='category'>
+        <Box sx={highlightElem}></Box>
         <TitleWithDescription
           description={t(
             'editProfilePage.profile.professionalTab.categoriesDescription'
           )}
+          isHighlighted
           style={styles.titleWithDescription}
           title={t('editProfilePage.profile.professionalTab.categoriesTitle')}
         />

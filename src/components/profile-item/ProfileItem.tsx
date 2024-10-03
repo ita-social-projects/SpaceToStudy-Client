@@ -2,6 +2,7 @@ import Typography from '@mui/material/Typography'
 import Box from '@mui/system/Box'
 import CheckIcon from '@mui/icons-material/Check'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
 
 import { styles } from '~/components/profile-item/ProfileItem.styles'
 import useBreakpoints from '~/hooks/use-breakpoints'
@@ -22,9 +23,21 @@ const ProfileItem = ({
   const { t } = useTranslation()
   const { isMobile } = useBreakpoints()
   const { id, icon } = item
+  const navigate = useNavigate()
+
+  const isClickable = !isFilled && item.id !== 'schedule' && item.id !== 'offer'
+
+  const handleItemClick = () => {
+    if (isClickable) {
+      navigate(`${item.path}#${item.id}`)
+    }
+  }
 
   return (
-    <Box sx={{ position: 'relative' }}>
+    <Box
+      onClick={handleItemClick}
+      sx={{ ...styles.container, cursor: isClickable ? 'pointer' : '' }}
+    >
       <Box sx={{ ...styles.wrapper, opacity: isFilled ? 0.5 : 1 }}>
         <Box sx={styles.information}>
           {!isMobile && <Box sx={styles.icon}>{icon}</Box>}
