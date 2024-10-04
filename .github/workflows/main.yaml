@@ -60,7 +60,7 @@ jobs:
 
       - name: Build and push Docker images
         run: |
-          docker-compose build --parallel
+          docker compose build --parallel
 
       - name: Cache Docker Compose files
         uses: actions/cache@v3
@@ -71,7 +71,7 @@ jobs:
             ${{ runner.os }}-docker-compose-
 
       - name: Run Docker Compose
-        run: docker-compose up -d
+        run: docker compose up -d
 
 
 
