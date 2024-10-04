@@ -6,6 +6,13 @@ import path from 'path'
 export default defineConfig({
   plugins: [react(), svgrPlugin()],
   define: { 'process.env': {} },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        api: 'modern-compiler'
+      }
+    }
+  },
   resolve: {
     alias: {
       '~': path.resolve(__dirname, 'src/'),
