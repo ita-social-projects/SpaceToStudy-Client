@@ -111,7 +111,7 @@
     "lint-fix": "eslint src/**/*.{js,jsx,ts,tsx} --fix && stylelint src/**/*.{css,scss} --fix",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook -o build-story",
-    "prepare": "husky install",
+    "prepare": "husky",
     "pre-commit": "lint-staged"
   },
   "lint-staged": {
