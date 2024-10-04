@@ -35,6 +35,7 @@ vi.mock('react-i18next', () => ({
   })
 }))
 
+const testText = 'test text'
 const mockUserId = '66b0aecdadd1fe775238c7d5'
 const preloadedState = { appMain: { userId: mockUserId } }
 const getBookmarksUrl = `${createUrlPath(URLs.users.get, mockUserId)}${
@@ -64,6 +65,10 @@ describe('BookmarkedOffers page with offers', () => {
     })
   })
 
+  afterEach(() => {
+    vi.clearAllMocks()
+  })
+
   it('should render the page with offers', async () => {
     const offer1Title = await screen.findByText(offersMock[0].title)
     const offer2Title = screen.getByText(offersMock[1].title)
@@ -86,15 +91,14 @@ describe('BookmarkedOffers page with offers', () => {
   })
 
   it('should add title to URL search params', async () => {
-    const text = 'test text'
     const searchInput = await screen.findByLabelText('bookmarkedOffers.search')
 
     fireEvent.click(searchInput)
-    fireEvent.change(searchInput, { target: { value: text } })
+    fireEvent.change(searchInput, { target: { value: testText } })
     fireEvent.submit(searchInput)
 
     expect(mockSetSearchParams).toHaveBeenCalledWith(
-      expect.objectContaining(new URLSearchParams({ page: 1, title: text }))
+      expect.objectContaining(new URLSearchParams({ page: 1, title: testText }))
     )
   })
 
@@ -111,7 +115,11 @@ describe('BookmarkedOffers page with offers', () => {
 
     expect(mockSetSearchParams).toHaveBeenCalledWith(
       expect.objectContaining(
-        new URLSearchParams({ page: 1, sort: sortTranslationKeysMock[1].value })
+        new URLSearchParams({
+          page: 1,
+          title: testText,
+          sort: sortTranslationKeysMock[1].value
+        })
       )
     )
   })
