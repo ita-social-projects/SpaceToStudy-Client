@@ -44,14 +44,13 @@ jobs:
   Test_Docker:
     runs-on: ubuntu-latest
     steps:
-      # Checkout
       - name: Checkout repository
         uses: actions/checkout@v3
-
+  
       # Set up Buildx
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
-
+  
       # Use Buildx with caching
       - name: Cache Docker layers
         uses: actions/cache@v3
@@ -60,16 +59,18 @@ jobs:
           key: ${{ runner.os }}-buildx-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-buildx-
-
-      # Build and run with caching
+  
+      # Build with caching
+      - name: Build Docker Compose services
+        run: |
+          docker-compose -f ./compose.yaml build --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from=type=local,src=/tmp/.buildx-cache --cache-to=type=local,dest=/tmp/.buildx-cache
+  
+      # Run Docker Compose
       - name: Test Docker Compose
         uses: isbang/compose-action@v1.5.1
         with:
           compose-file: "./compose.yaml"
-          up-flags: "-d --build --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from=type=local,src=/tmp/.buildx-cache --cache-to=type=local,dest=/tmp/.buildx-cache"
-        env:
-          password: ${{ secrets.DOCKER_PASS }}
-          BUILDKIT_INLINE_CACHE: 1  # Enable inline cache
+          up-flags: "-d"
 
 
 
