@@ -63,7 +63,7 @@ jobs:
       # Build with caching
       - name: Build Docker Compose services
         run: |
-          docker-compose -f ./compose.yaml build --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from=type=local,src=/tmp/.buildx-cache --cache-to=type=local,dest=/tmp/.buildx-cache
+          docker compose -f ./compose.yaml build --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from=type=local,src=/tmp/.buildx-cache --cache-to=type=local,dest=/tmp/.buildx-cache
   
       # Run Docker Compose
       - name: Test Docker Compose
