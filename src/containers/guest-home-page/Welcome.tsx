@@ -1,4 +1,3 @@
-import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
@@ -21,7 +20,7 @@ const Welcome = () => {
   const { t } = useTranslation()
   const { isLaptopAndAbove, isTablet, isMobile } = useBreakpoints()
 
-  const image = useMemo(() => {
+  const getImage = () => {
     if (i18next.language == 'uk') {
       if (isLaptopAndAbove) return titleMdUk
       if (isTablet) return titleSmUk
@@ -31,7 +30,7 @@ const Welcome = () => {
       if (isTablet) return titleSm
       if (isMobile) return titleXs
     }
-  }, [isLaptopAndAbove, isTablet, isMobile, i18next.language])
+  }
 
   return (
     <Box
@@ -39,7 +38,7 @@ const Welcome = () => {
       id={guestRoutes.welcome.route}
       sx={styles.container}
     >
-      <Box alt='Title' component='img' src={image} sx={styles.title} />
+      <Box alt='Title' component='img' src={getImage()} sx={styles.title} />
       <Typography sx={styles.subtitle}>
         {t('guestHomePage.welcomeBlock.description')}
       </Typography>
