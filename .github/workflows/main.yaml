@@ -44,10 +44,23 @@ jobs:
   Test_Docker:
     runs-on: ubuntu-latest
     steps:
-
-      #Checkout Repository
+      # Checkout the repository
       - uses: actions/checkout@v3
-      
+  
+      # Set up Docker Buildx for caching
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+  
+      # Cache Docker layers to speed up subsequent builds
+      - name: Cache Docker layers
+        uses: actions/cache@v3
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+  
+      # Build and run Docker Compose with build cache enabled
       - name: Test Docker Compose
         uses: isbang/compose-action@v1.5.1
         with:
@@ -55,4 +68,10 @@ jobs:
           up-flags: "-d --build"
         env:
           password: ${{ secrets.DOCKER_PASS }}
+  
+      # Save Docker layers cache after build
+      - name: Export Docker layers cache
+        run: |
+          docker buildx build --cache-to=type=local,dest=/tmp/.buildx-cache --output=type=local,dest=/tmp/.build-output
+
 
