@@ -55,12 +55,16 @@ jobs:
         with:
           push: false
           file: ./docker/Dockerfile.stage
+          cache-from: type=gha
+          cache-to: type=gha, mode=max
           
       - name: Build Dockerfile.build
         uses: docker/build-push-action@v6
         with:
           push: false
           file: ./docker/Dockerfile.build
+          cache-from: type=gha
+          cache-to: type=gha, mode=max
 
       - name: Run Docker Compose
         run: docker compose up -d
