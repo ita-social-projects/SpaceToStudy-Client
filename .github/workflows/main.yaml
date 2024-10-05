@@ -62,12 +62,6 @@ jobs:
             NGINX_VERSION=1.19.6 
             PROXY_API_URL=${secrets.API_URL}
             password=${secrets.SERVER_PASS}
-            
-      - name: test
-        run: docker images 
-
-      - name: Run Docker Compose
-        run: docker compose --file "./compose-gh-ci.yaml" up nginx -d
 
 
 
