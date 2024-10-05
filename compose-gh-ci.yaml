@@ -2,19 +2,12 @@ services:
   builder:
     container_name: builder
     image: ci-dockerfile:build
-    args:
-      NODE_VERSION: 18.14.2
-      ALPINE_VERSION: 3.14
     volumes:
       - build:/usr/src/
 
   nginx:
     container_name: nginx-proxy
     image: ci-dockerfile:stage
-    args:
-      NGINX_VERSION: 1.19.6
-      PROXY_API_URL: ${PROXY_API_URL:-http://localhost:8080}
-      password: ${password}
     # Expose ports 80 and 2222 from the container
     ports:
       - '80:80'
