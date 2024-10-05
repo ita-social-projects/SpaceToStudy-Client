@@ -2,7 +2,7 @@ import io, { Socket } from 'socket.io-client'
 
 export const socketService = {
   connectUser: () => {
-    const socket = io('https://www.youtube.com/', {
+    const socket = io({
       withCredentials: true
     })
     socket.emit('connectUser')
