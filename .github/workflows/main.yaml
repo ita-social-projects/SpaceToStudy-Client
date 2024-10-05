@@ -48,20 +48,7 @@ jobs:
         uses: actions/checkout@v3
         
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
-      - name: Build Dockerfile.build
-        uses: docker/build-push-action@v6
-        with:
-          push: false
-          file: ./docker/Dockerfile.build
-          cache-from: type=gha
-          cache-to: type=gha, mode=max
-          tags: ci-dockerfile:build
-          build-args: |
-            NGINX_VERSION=1.19.6 
-            PROXY_API_URL=${secrets.API_URL}
-            password=${secrets.SERVER_PASS}
+        uses: docker/setup-buildx-action@v2 
           
       - name: Build Dockerfile.stage
         uses: docker/build-push-action@v6
@@ -71,6 +58,10 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha, mode=max
           tags: ci-dockerfile:stage
+          build-args: |
+            NGINX_VERSION=1.19.6 
+            PROXY_API_URL=${secrets.API_URL}
+            password=${secrets.SERVER_PASS}
 
       - name: Run Docker Compose
         run: docker compose --file "./compose-gh-ci.yaml" up nginx -d
