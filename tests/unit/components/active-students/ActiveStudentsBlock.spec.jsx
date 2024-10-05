@@ -82,6 +82,21 @@ const noCooperationsMock = {
   error: null,
   fetchData: vi.fn()
 }
+
+const errorCooperationsMock = {
+  loading: false,
+  response: {
+    items: [],
+    count: 0
+  },
+  error: {
+    code: 'not found',
+    message: 'cooperation not found',
+    status: '404'
+  },
+  fetchData: vi.fn()
+}
+
 describe('ActiveStudentsBlock', () => {
   useAxios.mockImplementation(() => mockedData)
 
@@ -130,5 +145,12 @@ describe('ActiveStudentsBlock', () => {
     fireEvent.click(showMoreButton)
 
     waitFor(() => expect(navigateMock).toHaveBeenCalled())
+  })
+
+  it('should not render on error', () => {
+    useAxios.mockImplementation(() => errorCooperationsMock)
+    renderWithProviders(<ActiveStudentsBlock />)
+
+    expect(screen.queryByText('activeStudents.title')).not.toBeInTheDocument()
   })
 })
