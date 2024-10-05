@@ -5,7 +5,7 @@ services:
     # Build frontend service using Dockerfile.build
     build:
       context: .
-      image: cont-int/ci-dockerfile:build
+      image: ci-dockerfile:build
       args:
         NODE_VERSION: 18.14.2
         ALPINE_VERSION: 3.14
@@ -18,7 +18,7 @@ services:
     # Build the nginx service using Dockerfile.stage
     build:
       context: .
-      image: cont-int/ci-dockerfile:stage
+      image: ci-dockerfile:stage
       args:
         NGINX_VERSION: 1.19.6
         PROXY_API_URL: ${PROXY_API_URL:-http://localhost:8080}
