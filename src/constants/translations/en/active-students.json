@@ -1,4 +1,6 @@
 {
   "title": "Your Students",
-  "showMore": "show more"
+  "showMore": "show more",
+  "addStudent": "add student",
+  "noStudentsYet": "You don't have any students yet"
 }

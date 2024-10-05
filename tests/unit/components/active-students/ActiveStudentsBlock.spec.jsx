@@ -115,10 +115,20 @@ describe('ActiveStudentsBlock', () => {
     expect(screen.getByTestId('loader')).toBeInTheDocument()
   })
 
-  it('should not render when no active cooperations available', () => {
+  it('should render add student button when no active cooperations available', () => {
+    useAxios.mockImplementation(() => noCooperationsMock)
+    renderWithProviders(<ActiveStudentsBlock />)
+    const addStudent = screen.getByTestId('addStudent')
+    expect(addStudent).toBeInTheDocument()
+  })
+
+  it('should navigate to /categories/subjects/find-offers on add student button click', () => {
     useAxios.mockImplementation(() => noCooperationsMock)
     renderWithProviders(<ActiveStudentsBlock />)
 
-    expect(screen.queryByText('activeStudents.title')).not.toBeInTheDocument()
+    const showMoreButton = screen.getByTestId('addStudent')
+    fireEvent.click(showMoreButton)
+
+    waitFor(() => expect(navigateMock).toHaveBeenCalled())
   })
 })
