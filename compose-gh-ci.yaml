@@ -1,28 +1,20 @@
-version: "3.8"
 services:
   builder:
     container_name: builder
-    # Build frontend service using Dockerfile.build
-    build:
-      context: .
-      image: ci-dockerfile:build
-      args:
-        NODE_VERSION: 18.14.2
-        ALPINE_VERSION: 3.14
-    # Mount built app to /usr/src in the container
+    image: ci-dockerfile:build
+    args:
+      NODE_VERSION: 18.14.2
+      ALPINE_VERSION: 3.14
     volumes:
       - build:/usr/src/
 
   nginx:
     container_name: nginx-proxy
-    # Build the nginx service using Dockerfile.stage
-    build:
-      context: .
-      image: ci-dockerfile:stage
-      args:
-        NGINX_VERSION: 1.19.6
-        PROXY_API_URL: ${PROXY_API_URL:-http://localhost:8080}
-        password: ${password}
+    image: ci-dockerfile:stage
+    args:
+      NGINX_VERSION: 1.19.6
+      PROXY_API_URL: ${PROXY_API_URL:-http://localhost:8080}
+      password: ${password}
     # Expose ports 80 and 2222 from the container
     ports:
       - '80:80'
