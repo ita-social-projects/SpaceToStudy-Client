@@ -69,7 +69,7 @@ jobs:
           tags: cont-int/ci-dockerfile:build
 
       - name: Run Docker Compose
-        run: docker compose up --file "./compose-gh-ci.yaml" -d 
+        run: docker compose --file "./compose-gh-ci.yaml" up -d 
 
 
 
