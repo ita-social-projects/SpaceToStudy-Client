@@ -60,7 +60,7 @@ jobs:
           tags: ci-dockerfile:build
           build-args: |
             NGINX_VERSION=1.19.6 
-            PROXY_API_URL=${secrets.API_URL}:http://localhost:8080 
+            PROXY_API_URL=${secrets.API_URL}
             password=${secrets.SERVER_PASS}
           
       - name: Build Dockerfile.stage
