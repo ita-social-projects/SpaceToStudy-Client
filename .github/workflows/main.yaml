@@ -50,9 +50,17 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      - name: Build and push Docker images
-        run: |
-          docker compose build --parallel
+      - name: Build Dockerfile.stage
+        uses: docker/build-push-action@v6
+        with:
+          push: false
+          file: ./docker/Dockerfile.stage
+          
+      - name: Build Dockerfile.build
+        uses: docker/build-push-action@v6
+        with:
+          push: false
+          file: ./docker/Dockerfile.build
 
       - name: Run Docker Compose
         run: docker compose up -d
