@@ -57,6 +57,7 @@ jobs:
           file: ./docker/Dockerfile.stage
           cache-from: type=gha
           cache-to: type=gha, mode=max
+          tags: cont-int/ci-dockerfile:stage
           
       - name: Build Dockerfile.build
         uses: docker/build-push-action@v6
@@ -65,9 +66,10 @@ jobs:
           file: ./docker/Dockerfile.build
           cache-from: type=gha
           cache-to: type=gha, mode=max
+          tags: cont-int/ci-dockerfile:build
 
       - name: Run Docker Compose
-        run: docker compose up -d
+        run: docker compose up -d -f ./compose-gh-ci.yaml
 
 
 
