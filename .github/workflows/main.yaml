@@ -29,7 +29,7 @@ jobs:
         run: npm install
         
       - name : Test
-        run: npx cross-env CI=true vitest --minWorkers 3 --maxWorkers 4 run --reporter=blob --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }} --coverage
+        run: npx cross-env CI=true vitest --minWorkers 3 --maxWorkers 4 run --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }} --coverage
 
       - run: ls -la
       - run: mkdir -p coverage/lcov
