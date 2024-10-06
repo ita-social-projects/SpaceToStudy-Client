@@ -10,8 +10,8 @@ jobs:
   tests:
     strategy:
       matrix:
-        shardIndex: [1, 2, 3, 4, 5, 6, 7, 8]
-        shardTotal: [8]
+        shardIndex: [1, 2, 3, 4, 5, 6]
+        shardTotal: [6]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -29,7 +29,7 @@ jobs:
         run: npm install
         
       - name : Test
-        run: npx cross-env CI=true vitest --minWorkers 8 --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }} --coverage
+        run: npx cross-env CI=true vitest --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }} --coverage
 
       - run: ls -la
       - run: mkdir -p coverage/lcov
