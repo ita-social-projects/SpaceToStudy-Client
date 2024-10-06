@@ -65,16 +65,16 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: coverage-artifacts
-          path: coverage
+          path: .vitest-reports
       
       - name: Verify coverage directory contents
-        run: ls -la coverage/
+        run: ls -la .vitest-reports/
 
-      - name: Install Cobertura Merge
-        run: npm install cobertura-merge --save-dev
+      - name: Install dependencies
+        run: npm install
 
       - name: Merge XML coverage reports
-        run: npx cobertura-merge coverage/*.xml -o ./test-report.xml
+        run: npx vitest --merge-reports
       
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
