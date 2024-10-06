@@ -65,6 +65,7 @@ jobs:
         path: coverage
         
     - run: ls -la
+    - run: ls -la coverage
     
     - name: Merge Code Coverage
       run: npx nyc merge coverage/ ./test-report.xml
