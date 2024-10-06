@@ -55,7 +55,7 @@ jobs:
           cache: 'npm'
   
       - name: Install dependencies
-        run: npm -i
+        run: npm install
   
       - name: Download blob reports from GitHub Actions Artifacts
         uses: actions/download-artifact@v4
