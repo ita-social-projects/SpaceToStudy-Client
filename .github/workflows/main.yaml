@@ -7,25 +7,11 @@ on:
     branches: [main, develop, 'feature/**']
 
 jobs:
-  Sonarcloud-scan:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-      with:
-        fetch-depth: 0  
-
-    - name: SonarCloud Scan
-      uses: SonarSource/sonarcloud-github-action@master
-      if: success() || failure()
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-    
   tests:
     strategy:
       matrix:
-        divider: [1/4, 2/4, 3/4, 4/4]
+        shardIndex: [1, 2, 3, 4]
+        shardTotal: [4]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -43,10 +29,43 @@ jobs:
         run: npm install
         
       - name : Test
-        run: npx cross-env CI=true vitest --minWorkers 8 --maxWorkers 10 run --reporter=blob --shard=${{ matrix.divider }}
+        run: npx cross-env CI=true vitest --minWorkers 3 --maxWorkers 4 run --reporter=blob --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
         
-      - name : Check Path
-        run: ls -la && pwd && ls -la /
+      - name: Upload blob report to GitHub Actions Artifacts
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: blob-report-${{ matrix.shardIndex }}
+          path: .vitest-reports/*
+          include-hidden-files: true
+          retention-days: 1
+
+  merge-reports:
+    if: ${{ !cancelled() }}
+    needs: [tests]
+  
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.15.1
+          cache: 'npm'
+  
+      - name: Install dependencies
+        run: npm -i
+  
+      - name: Download blob reports from GitHub Actions Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: .vitest-reports
+          pattern: blob-report-*
+          merge-multiple: true
+  
+      - name: Merge reports
+        run: npx vitest --merge-reports
       
   Test_Docker:
       runs-on: ubuntu-latest
