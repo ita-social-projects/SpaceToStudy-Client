@@ -29,43 +29,38 @@ jobs:
         run: npm install
         
       - name : Test
-        run: npx cross-env CI=true vitest --minWorkers 3 --maxWorkers 4 run --reporter=blob --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
-        
-      - name: Upload blob report to GitHub Actions Artifacts
-        if: ${{ !cancelled() }}
-        uses: actions/upload-artifact@v4
+        run: npx cross-env CI=true vitest --minWorkers 3 --maxWorkers 4 run --reporter=blob --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }} --coverage
+
+      - name: Move coverage report
+        run: mv ./test-report.xml coverage/${{matrix.shard}}.xml
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
         with:
-          name: blob-report-${{ matrix.shardIndex }}
-          path: .vitest-reports/*
-          include-hidden-files: true
-          retention-days: 1
+          name: coverage-artifacts
+          path: coverage/
+        
+     # - name: Upload blob report to GitHub Actions Artifacts
+     #   if: ${{ !cancelled() }}
+     #   uses: actions/upload-artifact@v4
+     #   with:
+     #     name: blob-report-${{ matrix.shardIndex }}
+     #     path: .vitest-reports/*
+     #     include-hidden-files: true
+     #     retention-days: 1
 
   merge-reports:
     if: ${{ !cancelled() }}
     needs: [tests]
-  
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20.15.1
-          cache: 'npm'
-  
-      - name: Install dependencies
-        run: npm install
-  
-      - name: Download blob reports from GitHub Actions Artifacts
-        uses: actions/download-artifact@v4
-        with:
-          path: .vitest-reports
-          pattern: blob-report-*
-          merge-multiple: true
-  
-      - name: Merge reports
-        run: npx vitest --merge-reports
+    - uses: actions/download-artifact@v3
+      with:
+        name: coverage-artifacts
+        path: coverage
+    
+    - name: Merge Code Coverage
+      run: npx nyc merge coverage/ merged-output/merged-coverage.json
       
   Test_Docker:
       runs-on: ubuntu-latest
