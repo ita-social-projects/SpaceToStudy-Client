@@ -32,7 +32,7 @@ jobs:
         run: npx cross-env CI=true vitest --minWorkers 3 --maxWorkers 4 run --reporter=blob --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }} --coverage
 
       - name: Move coverage report
-        run: mv ./test-report.xml coverage/${{matrix.shard}}.xml
+        run: mv ./test-report.xml coverage/${{matrix.shardIndex}}.xml
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
@@ -60,7 +60,7 @@ jobs:
         path: coverage
     
     - name: Merge Code Coverage
-      run: npx nyc merge coverage/ merged-output/merged-coverage.json
+      run: npx nyc merge coverage/ ./test-report.xml
       
   Test_Docker:
       runs-on: ubuntu-latest
