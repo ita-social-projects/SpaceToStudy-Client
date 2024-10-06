@@ -82,6 +82,7 @@ jobs:
           echo '<testExecutions version="1">' > test-report.xml
           grep -v testExecutions coverage/xml/*.xml >> test-report.xml
           echo '</testExecutions>' >> test-report.xml
+          cat test-report.xml
           
       - name: Run script to merge all the lcov files
         run: npx lcov-result-merger coverage/lcov/*.info ./tests/coverage/lcov.info
