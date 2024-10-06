@@ -76,6 +76,15 @@ jobs:
 
       - name: Verify coverage directory contents
         run: ls -la coverage/lcov
+
+      - name: Run script to merge all the xml files
+        run: | 
+          echo '<testExecutions version="1">' > test-reports.xml
+          grep -v testExecutions coverage/xml/*.xml >> test-reports.xml
+          echo '</testExecutions>' >> test-reports.xml
+          
+      - name: Run script to merge all the lcov files
+        run: npx lcov-result-merger coverage/lcov/*.info ./tests/coverage/lcov.info
       
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
