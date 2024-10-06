@@ -86,6 +86,7 @@ jobs:
           
       - name: Run script to merge all the lcov files
         run: |
+            mkdir ./tests/coverage
             cat coverage/lcov/*.info > ./tests/coverage/lcov.info
             cat ./tests/coverage/lcov.info
       
