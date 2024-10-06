@@ -36,7 +36,7 @@ jobs:
       - run: ls -la
 
       - name: Move coverage report
-        run: mv ./test-report.xml coverage/${{matrix.shardIndex}}.xml
+        run: mv ./tests/coverage/lcov.info coverage/${{matrix.shardIndex}}.xml
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
@@ -66,12 +66,13 @@ jobs:
         with:
           name: coverage-artifacts
           path: .vitest-reports
+          merge-multiple: true
       
       - name: Verify coverage directory contents
         run: ls -la .vitest-reports/
 
       - name: Merge XML coverage reports
-        run: npx playwright merge-reports --reporter default .vitest-reports
+        run: npx vitest --merge-reports
       
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
