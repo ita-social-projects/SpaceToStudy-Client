@@ -7,29 +7,54 @@ on:
     branches: [main, develop, 'feature/**']
 
 jobs:
-  tests:
+  install-dependency:
     runs-on: ubuntu-latest
     steps:
-      # Checkout the Repo
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
+    
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.15.1
+          cache: 'npm'
+  
+      - name : Npm Install
+        run: npm install
 
-      # Install Node 20.15.1
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: npm-dependencies
+          path: ./node_modules
+
+  tests:
+    needs: [ install-dependency ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version: 20.15.1
           cache: 'npm'
 
-      - name : Npm Install
-        run: npm install
-        
+      - name: Download dependencies
+        uses: actions/download-artifact@v4
+        with:
+          name: npm-dependencies
+      
       - name : Lint
         run : npm run lint
         
       - name : Test
-        run: npx cross-env CI=true vitest --minWorkers 15 --maxWorkers 20 --coverage
+        run: npm run test
         
       - name : Check Path
         run: ls -la && pwd && ls -la /
