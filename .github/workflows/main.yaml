@@ -85,7 +85,9 @@ jobs:
           cat test-report.xml
           
       - name: Run script to merge all the lcov files
-        run: npx lcov-result-merger coverage/lcov/*.info ./tests/coverage/lcov.info
+        run: |
+            cat coverage/lcov/*.info > ./tests/coverage/lcov.info
+            cat ./tests/coverage/lcov.info
       
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
