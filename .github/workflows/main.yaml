@@ -80,7 +80,7 @@ jobs:
       - name: Run script to merge all the xml files
         run: | 
           echo '<testExecutions version="1">' > test-report.xml
-          grep -v testExecutions coverage/xml/*.xml >> test-report.xml
+          grep -vh testExecutions coverage/xml/*.xml >> test-report.xml
           echo '</testExecutions>' >> test-report.xml
           cat test-report.xml
           
