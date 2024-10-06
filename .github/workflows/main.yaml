@@ -29,7 +29,7 @@ jobs:
         run : npm run lint
         
       - name : Test
-        run: vitest --sequence.concurrent --min-workers 15 --max-workers 20
+        run: npx vitest --sequence.concurrent --min-workers 15 --max-workers 20
         
       - name : Check Path
         run: ls -la && pwd && ls -la /
