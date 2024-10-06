@@ -74,8 +74,15 @@ jobs:
         run: npm install cobertura-merge --save-dev
 
       - name: Merge XML coverage reports
-        run: npx cobertura-merge coverage/*.xml -o ./coverage/merged-report.xml
+        run: npx cobertura-merge coverage/*.xml -o ./test-report.xml
       
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        if: success() || failure()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  
   Test_Docker:
       runs-on: ubuntu-latest
       steps:
