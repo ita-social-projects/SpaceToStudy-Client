@@ -20,6 +20,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 20.15.1
+          cache: 'npm'
 
       - name : Npm Install
         run: npm install
@@ -28,7 +29,7 @@ jobs:
         run : npm run lint
         
       - name : Test
-        run: npm test
+        run: npx cross-env CI=true vitest --sequence.concurrent --minWorkers 15 --maxWorkers 20 --coverage
         
       - name : Check Path
         run: ls -la && pwd && ls -la /
@@ -41,17 +42,24 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   Test_Docker:
-    runs-on: ubuntu-latest
-    steps:
-
-      #Checkout Repository
-      - uses: actions/checkout@v3
-      
-      - name: Test Docker Compose
-        uses: isbang/compose-action@v1.5.1
-        with:
-          compose-file: "./compose.yaml"
-          up-flags: "-d --build"
-        env:
-          password: ${{ secrets.DOCKER_PASS }}
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v3
+          
+        - name: Set up Docker Buildx
+          uses: docker/setup-buildx-action@v2 
+            
+        - name: Build Dockerfile.stage
+          uses: docker/build-push-action@v6
+          with:
+            push: false
+            file: ./docker/Dockerfile.stage
+            cache-from: type=gha
+            cache-to: type=gha, mode=max
+            tags: ci-dockerfile:stage
+            build-args: |
+              NGINX_VERSION=1.19.6 
+              PROXY_API_URL=${secrets.API_URL}
+              password=${secrets.SERVER_PASS}
 
