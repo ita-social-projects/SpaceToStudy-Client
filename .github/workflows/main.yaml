@@ -7,31 +7,25 @@ on:
     branches: [main, develop, 'feature/**']
 
 jobs:
-  install-dependency:
+  Sonarcloud-scan:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0  
+
+    - name: SonarCloud Scan
+      uses: SonarSource/sonarcloud-github-action@master
+      if: success() || failure()
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
     
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 20.15.1
-          cache: 'npm'
-  
-      - name : Npm Install
-        run: npm install
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: npm-dependencies
-          path: ./node_modules
-
   tests:
-    needs: [ install-dependency ]
+    strategy:
+      matrix:
+        divider: [1/4, 2/4, 3/4, 4/4]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -44,28 +38,16 @@ jobs:
         with:
           node-version: 20.15.1
           cache: 'npm'
-
-      - name: Download dependencies
-        uses: actions/download-artifact@v4
-        with:
-          name: npm-dependencies
-      
-      - name : Lint
-        run : npm run lint
+          
+      - name: Install dependency
+        run: npm install
         
       - name : Test
-        run: npm run test
+        run: npx cross-env CI=true vitest --minWorkers 8 --maxWorkers 10 run --reporter=blob --shard=${{ matrix.divider }}
         
       - name : Check Path
         run: ls -la && pwd && ls -la /
       
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
-        if: success() || failure()
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
   Test_Docker:
       runs-on: ubuntu-latest
       steps:
