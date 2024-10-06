@@ -31,10 +31,8 @@ jobs:
       - name : Test
         run: npx cross-env CI=true vitest --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }} --coverage
 
-      - run: ls -la
       - run: mkdir -p coverage/lcov
       - run: mkdir -p coverage/xml
-      - run: ls -la coverage
 
       - name: Move coverage report
         run: mv ./tests/coverage/lcov.info coverage/lcov/${{matrix.shardIndex}}.info
@@ -43,6 +41,7 @@ jobs:
         run: mv ./test-report.xml coverage/xml/${{matrix.shardIndex}}.xml
 
       - name: Upload artifact
+        if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v3
         with:
           name: coverage-artifacts
@@ -70,12 +69,6 @@ jobs:
         with:
           name: coverage-artifacts
           path: coverage
-      
-      - name: Verify coverage directory contents
-        run: ls -la coverage/xml
-
-      - name: Verify coverage directory contents
-        run: ls -la coverage/lcov
 
       - name: Run script to merge all the xml files
         run: | 
