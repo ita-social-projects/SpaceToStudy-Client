@@ -63,6 +63,8 @@ jobs:
       with:
         name: coverage-artifacts
         path: coverage
+        
+    - run: ls -la
     
     - name: Merge Code Coverage
       run: npx nyc merge coverage/ ./test-report.xml
