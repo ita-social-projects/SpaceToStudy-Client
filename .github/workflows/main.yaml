@@ -32,6 +32,8 @@ jobs:
         run: npx cross-env CI=true vitest --minWorkers 3 --maxWorkers 4 run --reporter=blob --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }} --coverage
 
       - run: ls -la
+      - run: mkdir coverage
+      - run: ls -la
 
       - name: Move coverage report
         run: mv ./test-report.xml coverage/${{matrix.shardIndex}}.xml
