@@ -70,11 +70,8 @@ jobs:
       - name: Verify coverage directory contents
         run: ls -la .vitest-reports/
 
-      - name: Install dependencies
-        run: npm install
-
       - name: Merge XML coverage reports
-        run: npx vitest --merge-reports
+        run: npx playwright merge-reports --reporter default .vitest-reports
       
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
