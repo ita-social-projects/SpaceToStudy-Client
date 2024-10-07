@@ -9,7 +9,7 @@ import Loader from '../loader/Loader'
 import { Cooperation, ItemsWithCount } from '~/types'
 import ActiveStudent from './ActiveStudent'
 import AppIconButton from '../app-icon-button/AppIconButton'
-import { MoreHoriz } from '@mui/icons-material'
+import { Add, MoreHoriz } from '@mui/icons-material'
 import { styles } from './ActiveStudentsBlock.styles'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
@@ -53,7 +53,7 @@ const ActiveStudentsBlock = () => {
             sx={styles.showMoreWrapper}
           >
             <AppIconButton size='medium' sx={styles.showMoreButton}>
-              <MoreHoriz />
+              <Add />
             </AppIconButton>
             <Typography>{t('activeStudents.addStudent')}</Typography>
           </Box>
