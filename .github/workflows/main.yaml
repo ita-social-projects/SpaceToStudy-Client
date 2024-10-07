@@ -24,8 +24,8 @@ jobs:
       - name: install dependencies
         run: npm install
 
-      - name: check
-        run: tar -czvf node_modules.tar.gz node_modules/
+    # - name: check
+    #   run: tar -czvf node_modules.tar.gz node_modules/
 
       - name: check
         run: ls -la
@@ -34,7 +34,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: dist-without-markdown
-          path: node_modules.tar.gz
+          path: node_modules
+          compression-level: 1
       
   lint:
     needs: [install-dependency]
