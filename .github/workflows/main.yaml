@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [main, develop, feature/enhancing-test-and-build-speed]
+    branches: [main, develop]
   pull_request:
     branches: [main, develop, 'feature/**']
 
