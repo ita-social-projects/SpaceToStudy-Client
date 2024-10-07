@@ -25,13 +25,16 @@ jobs:
         run: npm install
 
       - name: check
-        run: tar -czvf node_modules.tar node_modules/
-
-      - name: check
-        run: gzip node_modules.tar 
+        run: tar -czvf node_modules.tar.gz node_modules/
 
       - name: check
         run: ls -la
+
+      - name: Archive dependencies
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-without-markdown
+          path: node_modules.tar.gz
       
   lint:
     needs: [install-dependency]
@@ -48,8 +51,15 @@ jobs:
           node-version: 20.15.1
           cache: 'npm'
           
-      - name: Install dependency
-        run: npm install
-        
+      - name: Download dependencies
+        uses: actions/download-artifact@v4
+        with:
+          name: dist-without-markdown
+          path: node_modules.tar.gz
+
+      - run: tar -xzvf node_modules.tar.gz
+
+      - run: ls -la
+              
       - name : Run linter
         run: npm run lint
