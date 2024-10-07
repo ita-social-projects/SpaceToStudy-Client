@@ -4,7 +4,7 @@ export const styles = {
   calendarContainer: {
     width: { xs: '87%', sm: '380px', md: '561px' },
     height: { xs: '257px', sm: '290px', md: '444px' },
-    m: { xs: '87px auto 0px', md: '87px 0px 0px' },
+    m: { xs: '0px auto 0px', md: '40px 0px 0px', lg: '87px 0px 0px' },
     backgroundColor: 'basic.white',
     border: '1px solid basic.lightBlue',
     borderRadius: '36px',

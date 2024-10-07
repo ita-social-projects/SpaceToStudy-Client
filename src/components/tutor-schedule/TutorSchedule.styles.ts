@@ -4,6 +4,7 @@ export const styles = {
   generalContainer: {
     maxWidth: '500px',
     minHeight: '500px',
+    width: '100%',
     m: { xs: '87px auto 0px', md: '87px 0px 0px' }
   },
 
