@@ -24,7 +24,7 @@ jobs:
       - name: Install dependency
         run: npm install
         
-      - name : Test
+      - name : Run linter
         run: npm run lint
   tests:
     strategy:
