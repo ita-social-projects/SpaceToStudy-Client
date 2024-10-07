@@ -7,6 +7,25 @@ on:
     branches: [main, develop, 'feature/**']
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+            
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.15.1
+          cache: 'npm'
+          
+      - name: Install dependency
+        run: npm install
+        
+      - name : Test
+        run: npm run lint
   tests:
     strategy:
       matrix:
@@ -58,7 +77,7 @@ jobs:
 
   merge-reports-and-sonar-scan:
     if: ${{ !cancelled() }}
-    needs: [tests]
+    needs: [tests, lint]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
