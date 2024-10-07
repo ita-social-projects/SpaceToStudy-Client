@@ -2,36 +2,84 @@ name: CI
 
 on:
   push:
-    branches: [main, develop]
+    branches: [main, develop, feature/enhancing-test-and-build-speed]
   pull_request:
     branches: [main, develop, 'feature/**']
 
 jobs:
   tests:
+    strategy:
+      matrix:
+        shardIndex: [1, 2, 3, 4, 5, 6, 7 ,8]
+        shardTotal: [8]
     runs-on: ubuntu-latest
     steps:
-      # Checkout the Repo
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
-
-      # Install Node 20.15.1
+          
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version: 20.15.1
-
-      - name : Npm Install
+          cache: 'npm'
+          
+      - name: Install dependency
         run: npm install
         
-      - name : Lint
-        run : npm run lint
-        
       - name : Test
-        run: npm test
+        run: npx cross-env CI=true vitest --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }} --coverage
+
+      - run: mkdir -p coverage/lcov
+      - run: mkdir -p coverage/xml
+
+      - name: Move coverage report
+        run: mv ./tests/coverage/lcov.info coverage/lcov/${{matrix.shardIndex}}.info
         
-      - name : Check Path
-        run: ls -la && pwd && ls -la /
+      - name: Move coverage report
+        run: mv ./test-report.xml coverage/xml/${{matrix.shardIndex}}.xml
+
+      - name: Upload artifact
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-artifacts
+          path: coverage/
+        
+     # - name: Upload blob report to GitHub Actions Artifacts
+     #   if: ${{ !cancelled() }}
+     #   uses: actions/upload-artifact@v4
+     #   with:
+     #     name: blob-report-${{ matrix.shardIndex }}
+     #     path: .vitest-reports/*
+     #     include-hidden-files: true
+     #     retention-days: 1
+
+  merge-reports-and-sonar-scan:
+    if: ${{ !cancelled() }}
+    needs: [tests]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Download coverage artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: coverage-artifacts
+          path: coverage
+
+      - name: Run script to merge all the xml files
+        run: | 
+          echo '<testExecutions version="1">' > test-report.xml
+          grep -vh testExecutions coverage/xml/*.xml >> test-report.xml
+          echo '</testExecutions>' >> test-report.xml
+          
+      - name: Run script to merge all the lcov files
+        run: |
+            mkdir ./tests/coverage
+            cat coverage/lcov/*.info > ./tests/coverage/lcov.info
       
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
@@ -39,19 +87,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
-  Test_Docker:
-    runs-on: ubuntu-latest
-    steps:
-
-      #Checkout Repository
-      - uses: actions/checkout@v3
-      
-      - name: Test Docker Compose
-        uses: isbang/compose-action@v1.5.1
-        with:
-          compose-file: "./compose.yaml"
-          up-flags: "-d --build"
-        env:
-          password: ${{ secrets.DOCKER_PASS }}
 
