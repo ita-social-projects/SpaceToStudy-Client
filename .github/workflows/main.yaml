@@ -21,7 +21,10 @@ jobs:
           node-version: 20.15.1
           cache: 'npm'
 
-      - name: Install dependencies
+      - name: install dependencies
+        run: npm install
+
+      - name: check
         run: tar -czvf node_modules.tar node_modules/
 
       - name: check
