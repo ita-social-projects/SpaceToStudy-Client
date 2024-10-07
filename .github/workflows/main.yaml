@@ -55,7 +55,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: dist-without-markdown
-          path: node_modules.tar.gz
+          path: .
 
       - run: tar -xzvf node_modules.tar.gz
 
