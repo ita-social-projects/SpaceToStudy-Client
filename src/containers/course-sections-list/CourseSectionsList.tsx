@@ -23,12 +23,10 @@ import {
   CourseSectionHandlers
 } from '~/types'
 import { useModalContext } from '~/context/modal-context'
-import { setIsAddedClicked } from '~/redux/features/cooperationsSlice'
 
 import useDroppable from '~/hooks/use-droppable'
 import useMenu from '~/hooks/use-menu'
 import useDndSensor from '~/hooks/use-dnd-sensor'
-import { useAppDispatch } from '~/hooks/use-redux'
 
 interface CourseSectionsListProps extends CourseSectionHandlers {
   items: CourseSection[]
@@ -42,7 +40,6 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
   sectionEventHandler,
   isCooperation = false
 }) => {
-  const dispatch = useAppDispatch()
   const { t } = useTranslation()
   const { enabled } = useDroppable()
   const { anchorEl, openMenu, closeMenu, renderMenu } = useMenu()
@@ -82,7 +79,6 @@ const CourseSectionsList: FC<CourseSectionsListProps> = ({
 
   const openAddCourseTemplateModal = () => {
     closeMenu()
-    dispatch(setIsAddedClicked(false)) // Why is this needed?
     openModal({
       component: <AddCourseTemplateModal closeModal={closeModal} />
     })

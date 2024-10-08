@@ -7,13 +7,10 @@ import { IconButton } from '@mui/material'
 import CooperationSectionView from '~/components/cooperation-section-view/CooperationSectionView'
 import { styles } from '~/containers/cooperation-details/cooperation-activities-view/CooperationActivitiesView.style'
 
-import {
-  cooperationsSelector,
-  setIsAddedClicked
-} from '~/redux/features/cooperationsSlice'
+import { cooperationsSelector } from '~/redux/features/cooperationsSlice'
 
 import { UserRoleEnum } from '~/types'
-import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
+import { useAppSelector } from '~/hooks/use-redux'
 
 interface CooperationActivitiesViewProps {
   setEditMode: Dispatch<SetStateAction<boolean>>
@@ -22,14 +19,12 @@ interface CooperationActivitiesViewProps {
 const CooperationActivitiesView: FC<CooperationActivitiesViewProps> = ({
   setEditMode
 }) => {
-  const dispatch = useAppDispatch()
   const { sections } = useAppSelector(cooperationsSelector)
   const { userRole } = useAppSelector((state) => state.appMain)
   const isTutor = userRole === UserRoleEnum.Tutor
 
   const onEdit = () => {
     setEditMode(true)
-    dispatch(setIsAddedClicked(false)) // Why is this needed?
   }
 
   return (

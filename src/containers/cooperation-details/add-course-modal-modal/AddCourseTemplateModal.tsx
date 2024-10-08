@@ -38,11 +38,7 @@ import {
   UserRole,
   UserResponse
 } from '~/types'
-import {
-  setIsActivityCreated,
-  setIsAddedClicked,
-  setSelectedCourse
-} from '~/redux/features/cooperationsSlice'
+import { setIsActivityCreated } from '~/redux/features/cooperationsSlice'
 
 interface AddCourseTemplateModalProps {
   closeModal: () => void
@@ -65,7 +61,6 @@ const AddCourseTemplateModal: FC<AddCourseTemplateModalProps> = ({
 
   const onCourseSelect = (course: Course) => {
     setSelectedItem(course)
-    dispatch(setSelectedCourse(course))
   }
 
   const getUserData = useCallback(
@@ -126,7 +121,6 @@ const AddCourseTemplateModal: FC<AddCourseTemplateModalProps> = ({
   }
 
   const onAdd = () => {
-    dispatch(setIsAddedClicked(true))
     dispatch(setIsActivityCreated(true))
     closeModal()
   }

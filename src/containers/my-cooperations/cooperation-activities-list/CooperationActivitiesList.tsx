@@ -1,5 +1,4 @@
-import { useCallback, useEffect } from 'react'
-import { v4 as uuidv4 } from 'uuid'
+import { useCallback } from 'react'
 import { AnyAction } from '@reduxjs/toolkit'
 
 import Box from '@mui/material/Box'
@@ -103,47 +102,7 @@ const sectionHandlers: Record<
 
 const CooperationActivitiesList = () => {
   const dispatch = useAppDispatch()
-  const { selectedCourse, isAddedClicked, sections } =
-    useAppSelector(cooperationsSelector)
-
-  // This logic looks very complicated and seems that it doesn't work
-  // Why do we need to store some flags for user actions?
-  // isAddedClicked works even when we don't click, that adds unnecessary sections
-  useEffect(() => {
-    // if (!sections?.length && !isAddedClicked && isNewActivity) { // commented because this if causes adding two sections
-    //   dispatch(addNewCooperationSection({ index: 0 })) // should check and rewrite this logic
-    // }
-
-    if (selectedCourse && !sections.length && isAddedClicked) {
-      const allSections = selectedCourse.sections.map((section) => ({
-        ...section,
-        id: uuidv4()
-      }))
-      dispatch(setCooperationSections(allSections))
-    }
-
-    if (selectedCourse && sections.length && isAddedClicked) {
-      const addNewSectionsCourse = (index: number | undefined = undefined) => {
-        const newSectionData = selectedCourse.sections.map((section) => ({
-          ...section,
-          id: uuidv4()
-        }))
-        let newSections
-        if (index !== undefined) {
-          newSections = [
-            ...sections.slice(0, index),
-            ...newSectionData,
-            ...sections.slice(index)
-          ]
-        } else {
-          newSections = [...sections, ...newSectionData]
-        }
-        dispatch(setCooperationSections(newSections))
-      }
-      addNewSectionsCourse(0) // this is a mock and will always insert at the 0 position, but it will change in issue #2064
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAddedClicked])
+  const { sections } = useAppSelector(cooperationsSelector)
 
   const handleSectionChange = useCallback(
     (

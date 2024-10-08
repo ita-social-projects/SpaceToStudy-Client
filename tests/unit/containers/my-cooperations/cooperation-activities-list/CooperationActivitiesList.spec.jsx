@@ -22,14 +22,12 @@ const TestsId = {
 const renderWithMockData = (
   sections = [],
   courseData = mockedCourseData,
-  isAddedClicked = true,
   isNewActivity = true
 ) => {
   renderWithProviders(<CooperationActivitiesList />, {
     preloadedState: {
       cooperations: {
         selectedCourse: courseData,
-        isAddedClicked: isAddedClicked,
         isNewActivity: isNewActivity,
         sections: sections
       }

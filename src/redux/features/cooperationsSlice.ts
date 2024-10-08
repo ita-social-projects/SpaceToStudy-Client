@@ -3,7 +3,6 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { RootState } from '~/redux/store'
 import { sliceNames } from '~/redux/redux.constants'
 import {
-  Course,
   CourseFieldValues,
   CourseResource,
   CourseSection,
@@ -13,19 +12,13 @@ import {
 } from '~/types'
 
 interface CooperationsState {
-  selectedCourse: Course | null // delete it
-  isActivityCreated: boolean // delete it
-  isAddedClicked: boolean // delete it
-  isNewActivity: boolean // delete it
+  isActivityCreated: boolean
   sections: CourseSection[]
   resourcesAvailability: ResourcesAvailabilityEnum
 }
 
 const initialState: CooperationsState = {
-  selectedCourse: null, // delete it
-  isActivityCreated: false, // delete it
-  isAddedClicked: false, // delete it
-  isNewActivity: false, // delete it
+  isActivityCreated: false,
   sections: [],
   resourcesAvailability: ResourcesAvailabilityEnum.OpenAll
 }
@@ -41,35 +34,12 @@ const cooperationsSlice = createSlice({
   name: sliceNames.cooperations,
   initialState,
   reducers: {
-    setSelectedCourse(
-      // delete it
-      state,
-      action: PayloadAction<CooperationsState['selectedCourse']>
-    ) {
-      state.selectedCourse = action.payload
-    },
     setIsActivityCreated(
-      // delete it
       state,
       action: PayloadAction<CooperationsState['isActivityCreated']>
     ) {
       state.isActivityCreated = action.payload
     },
-    setIsAddedClicked(
-      // delete it
-      state,
-      action: PayloadAction<CooperationsState['isAddedClicked']>
-    ) {
-      state.isAddedClicked = action.payload
-    },
-    setIsNewActivity(
-      // delete it
-      state,
-      action: PayloadAction<CooperationsState['isNewActivity']>
-    ) {
-      state.isNewActivity = action.payload
-    },
-
     setCooperationSections(
       state,
       action: PayloadAction<CooperationsState['sections']>
@@ -272,10 +242,7 @@ const cooperationsSlice = createSlice({
 const { actions, reducer } = cooperationsSlice
 
 export const {
-  setSelectedCourse,
   setIsActivityCreated,
-  setIsAddedClicked,
-  setIsNewActivity,
   setCooperationSections,
   addNewCooperationSection,
   updateCooperationSection,
