@@ -1,7 +1,8 @@
 import { FC, useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
 
-import Box from '@mui/material/Box'
+import Box from '@mui/system/Box'
 import TextField from '@mui/material/TextField'
 import IconButton from '@mui/material/IconButton'
 import CloseIcon from '@mui/icons-material/Close'
@@ -57,9 +58,15 @@ const ResourceItem: FC<ResourceItemProps> = ({
   isCooperation = false
 }) => {
   const { t } = useTranslation()
+  const navigate = useNavigate()
   const { resourcesAvailability } = useAppSelector(cooperationsSelector)
 
   const { isDuplicate, description } = resource
+
+  const routeMap = {
+    [ResourceType.Lesson]: 'lesson-details/',
+    [ResourceType.Quiz]: 'quiz/'
+  }
 
   useEffect(() => {
     resourcesAvailability === ResourcesAvailabilityEnum.OpenManually &&
@@ -80,7 +87,7 @@ const ResourceItem: FC<ResourceItemProps> = ({
   }, [editResource, resource])
 
   const renderResourceIcon = useCallback(() => {
-    const type = resourceType || resource.resourceType
+    const type = resourceType ?? resource.resourceType
     return resourceIcons[type] ?? null
   }, [resourceType, resource.resourceType])
 
@@ -165,8 +172,24 @@ const ResourceItem: FC<ResourceItemProps> = ({
     </Box>
   )
 
+  const onResourceItemClick = () => {
+    if (!isView) return
+    const type = resourceType ?? resource.resourceType
+
+    if (type === ResourceType.Attachment) {
+      console.log('download the attachment / go to the attachment view')
+      return
+    }
+
+    navigate(
+      `${routeMap[type as ResourceType.Lesson | ResourceType.Quiz]}${
+        resource._id
+      }`
+    )
+  }
+
   return (
-    <Box sx={styles.container(isView)}>
+    <Box onClick={onResourceItemClick} sx={styles.container(isView)}>
       <IconExtensionWithTitle
         description={description ?? ''}
         icon={renderResourceIcon()}

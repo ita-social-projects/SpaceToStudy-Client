@@ -1,11 +1,17 @@
-import { render, screen } from '@testing-library/react'
-
+import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import CooperationSectionView from '~/components/cooperation-section-view/CooperationSectionView'
 import {
   ResourcesTypesEnum as ResourceType,
   ResourcesAvailabilityEnum
 } from '~/types'
 import { useAppSelector } from '~/hooks/use-redux'
+
+const navigateMock = vi.fn()
+
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual('react-router-dom')),
+  useNavigate: () => navigateMock
+}))
 
 vi.mock('~/hooks/use-redux', () => ({
   useAppSelector: vi.fn()
@@ -57,5 +63,14 @@ describe('CooperationSectionView', () => {
 
     expect(title).toBeInTheDocument()
     expect(description).toBeInTheDocument()
+  })
+
+  it('should navigate to cooperation', () => {
+    const resourceItem = screen.getByText(
+      mockSection.resources[0].resource.title
+    )
+    fireEvent.click(resourceItem)
+
+    waitFor(() => expect(navigateMock).toHaveBeenCalled())
   })
 })
