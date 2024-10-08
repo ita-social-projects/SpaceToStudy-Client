@@ -21,7 +21,8 @@ export const styles = {
   dragIcon: {
     left: '24px',
     position: 'absolute',
-    top: '22px',
+    top: '50%',
+    transform: 'translateY(-50%)',
     color: 'primary.700',
     '&:hover': {
       color: 'primary.400'
