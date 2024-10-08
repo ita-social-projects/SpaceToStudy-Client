@@ -35,12 +35,11 @@ const ProfileItem = ({
   const isOffer = item.id === 'offer'
 
   const handleItemClick = () => {
-    if(isOffer) {
+    if (isOffer) {
       handleOpenDrawer()
-    }
-    if (isClickable) {
+    } else if (isClickable) {
       navigate(`${item.path}#${item.id}`)
-    } 
+    }
   }
 
   return (
@@ -64,9 +63,11 @@ const ProfileItem = ({
             </Typography>
           </Box>
         </Box>
-        { isOffer && <AppDrawer onClose={closeDrawer} open={isOpen}>
-          <CreateOffer closeDrawer={closeDrawer} />
-        </AppDrawer>}
+        {isOffer && (
+          <AppDrawer onClose={closeDrawer} open={isOpen}>
+            <CreateOffer closeDrawer={closeDrawer} />
+          </AppDrawer>
+        )}
       </Box>
       {isFilled && (
         <CheckIcon
