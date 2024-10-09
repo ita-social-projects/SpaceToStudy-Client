@@ -1,3 +1,4 @@
+import palette from '~/styles/app-theme/app.pallete'
 import { TypographyVariantEnum } from '~/types'
 
 const menuItem = {
@@ -29,7 +30,13 @@ export const styles = {
     cursor: 'pointer'
   },
   input: {
-    style: { padding: 0, margin: 0 }
+    style: { padding: 0, margin: 0 },
+    sx: {
+      '::placeholder': {
+        color: palette.primary[500],
+        opacity: 1
+      }
+    }
   },
   titleInput: {
     disableUnderline: true,
