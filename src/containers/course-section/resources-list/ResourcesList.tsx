@@ -74,6 +74,7 @@ const ResourcesList: FC<ResourcesListProps> = ({
         deleteResource={deleteResource}
         editResource={editResource}
         isCooperation={isCooperation}
+        key={item.id}
         resource={item}
         updateAvailability={updateAvailability}
       />
