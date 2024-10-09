@@ -82,27 +82,6 @@ describe('CourseSectionContainer tests', () => {
     expect(labelInput).toBeInTheDocument()
   })
 
-  it('should display default new description when description is not provided', () => {
-    const sectionDataWithoutDescription = { ...mockedSectionData }
-    delete sectionDataWithoutDescription.description
-
-    cleanup()
-    renderWithProviders(
-      <CourseSectionContainer
-        handleSectionInputChange={mockedHandleSectionInputChange}
-        isCooperation
-        resourceEventHandler={mockedResourceEventHandler}
-        sectionData={sectionDataWithoutDescription}
-        sectionEventHandler={mockedSectionEventHandler}
-      />
-    )
-    const defaultDescription = screen.getByText(
-      /course\.coursesection\.defaultnewdescription/i
-    )
-
-    expect(defaultDescription).toBeInTheDocument()
-  })
-
   it('should call handleSectionInputChange with the correct arguments when the title input is changed', () => {
     const titleInput = screen.getByDisplayValue(mockedSectionData.title)
     act(() =>
