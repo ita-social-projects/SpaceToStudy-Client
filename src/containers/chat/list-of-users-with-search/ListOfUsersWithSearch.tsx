@@ -19,19 +19,18 @@ interface ListOfUsersWithSearchProps {
   selectedChat: ChatResponse | null
   setSelectedChat: (chat: ChatResponse) => void
   closeDrawer?: () => void
-  usersOnline: Set<string>
 }
 
 const ListOfUsersWithSearch: FC<ListOfUsersWithSearchProps> = ({
   listOfChats,
   selectedChat,
   setSelectedChat,
-  closeDrawer,
-  usersOnline
+  closeDrawer
 }) => {
   const [search, setSearch] = useState<string>('')
 
   const { userId } = useAppSelector((state) => state.appMain)
+  const { usersOnline } = useAppSelector((state) => state.socket)
   const { t } = useTranslation()
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,7 +49,7 @@ const ListOfUsersWithSearch: FC<ListOfUsersWithSearchProps> = ({
         chat={item}
         closeDrawer={closeDrawer}
         isActiveChat={isActiveChat}
-        isOnline={usersOnline.has(userToSpeak.user._id)}
+        isOnline={usersOnline.includes(userToSpeak.user._id)}
         key={item._id}
         setSelectedChat={setSelectedChat}
       />

@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography'
 import AppRating from '~/components/app-rating/AppRating'
 import LanguagesListWithIcon from '~/components/languages-list-with-icon/LanguagesListWithIcon'
 import AvatarIcon from '~/components/avatar-icon/AvatarIcon'
+import { useAppSelector } from '~/hooks/use-redux'
 
 import {
   createUrlPath,
@@ -34,7 +35,6 @@ interface UserProfileInfoProps
   reviewsCount?: number
   date?: string
   sx?: UserProfileInfoSx
-  onlineBadge?: boolean
   role: UserRole
   renderAdditionalInfo?: boolean
 }
@@ -50,10 +50,10 @@ const UserProfileInfo: FC<UserProfileInfoProps> = ({
   sx = {},
   _id,
   role,
-  renderAdditionalInfo = true,
-  onlineBadge = false
+  renderAdditionalInfo = true
 }) => {
   const { t } = useTranslation()
+  const { usersOnline } = useAppSelector((state) => state.socket)
 
   const name = `${firstName} ${lastName}`
 
@@ -80,22 +80,19 @@ const UserProfileInfo: FC<UserProfileInfoProps> = ({
     <Box sx={spliceSx(styles.root, sx.root)}>
       {renderAdditionalInfo && (
         <Link onClick={handleLinkClick} style={styles.link} to={userURL}>
-          {onlineBadge ? (
-            <Badge
-              anchorOrigin={{
-                vertical: PositionEnum.Bottom,
-                horizontal: PositionEnum.Right
-              }}
-              badgeContent={
-                <Typography component={ComponentEnum.Span} sx={styles.active} />
-              }
-              overlap={OverlapEnum.Circular}
-            >
-              {avatar}
-            </Badge>
-          ) : (
-            avatar
-          )}
+          <Badge
+            anchorOrigin={{
+              vertical: PositionEnum.Bottom,
+              horizontal: PositionEnum.Right
+            }}
+            badgeContent={
+              <Typography component={ComponentEnum.Span} sx={styles.active} />
+            }
+            invisible={!usersOnline.includes(_id)}
+            overlap={OverlapEnum.Circular}
+          >
+            {avatar}
+          </Badge>
         </Link>
       )}
       <Box
