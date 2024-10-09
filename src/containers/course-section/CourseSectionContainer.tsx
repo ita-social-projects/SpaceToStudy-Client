@@ -338,12 +338,8 @@ const CourseSectionContainer: FC<SectionProps> = ({
             defaultValue={sectionData.description}
             fullWidth
             inputProps={styles.input}
-            label={
-              sectionData.description
-                ? ''
-                : t('course.courseSection.defaultNewDescription')
-            }
             onBlur={handleDescriptionBlur}
+            placeholder={t('course.courseSection.defaultNewDescription')}
             variant={TextFieldVariantEnum.Standard}
           />
           <ResourcesList
