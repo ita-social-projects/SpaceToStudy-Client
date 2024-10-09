@@ -26,6 +26,7 @@ type BaseAppButtonProps = {
   variant?: (typeof variants)[number]
   startIcon?: ReactNode
   endIcon?: ReactNode
+  to?: string
 }
 
 type AppButtonProps = BaseAppButtonProps &
