@@ -82,6 +82,21 @@ const noCooperationsMock = {
   error: null,
   fetchData: vi.fn()
 }
+
+const errorCooperationsMock = {
+  loading: false,
+  response: {
+    items: [],
+    count: 0
+  },
+  error: {
+    code: 'not found',
+    message: 'cooperation not found',
+    status: '404'
+  },
+  fetchData: vi.fn()
+}
+
 describe('ActiveStudentsBlock', () => {
   useAxios.mockImplementation(() => mockedData)
 
@@ -115,8 +130,25 @@ describe('ActiveStudentsBlock', () => {
     expect(screen.getByTestId('loader')).toBeInTheDocument()
   })
 
-  it('should not render when no active cooperations available', () => {
+  it('should render add student button when no active cooperations available', () => {
     useAxios.mockImplementation(() => noCooperationsMock)
+    renderWithProviders(<ActiveStudentsBlock />)
+    const addStudent = screen.getByTestId('addStudent')
+    expect(addStudent).toBeInTheDocument()
+  })
+
+  it('should navigate to /categories/subjects/find-offers on add student button click', () => {
+    useAxios.mockImplementation(() => noCooperationsMock)
+    renderWithProviders(<ActiveStudentsBlock />)
+
+    const showMoreButton = screen.getByTestId('addStudent')
+    fireEvent.click(showMoreButton)
+
+    waitFor(() => expect(navigateMock).toHaveBeenCalled())
+  })
+
+  it('should not render on error', () => {
+    useAxios.mockImplementation(() => errorCooperationsMock)
     renderWithProviders(<ActiveStudentsBlock />)
 
     expect(screen.queryByText('activeStudents.title')).not.toBeInTheDocument()

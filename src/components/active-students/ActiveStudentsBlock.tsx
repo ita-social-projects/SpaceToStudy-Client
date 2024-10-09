@@ -9,7 +9,7 @@ import Loader from '../loader/Loader'
 import { Cooperation, ItemsWithCount } from '~/types'
 import ActiveStudent from './ActiveStudent'
 import AppIconButton from '../app-icon-button/AppIconButton'
-import { MoreHoriz } from '@mui/icons-material'
+import { Add, MoreHoriz } from '@mui/icons-material'
 import { styles } from './ActiveStudentsBlock.styles'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
@@ -29,7 +29,37 @@ const ActiveStudentsBlock = () => {
   })
 
   if (loading) return <Loader pageLoad size={50} />
-  if (error || !response.items.length) return null
+  if (error) return null
+
+  const onShowMoreClick = () => {
+    navigate('/my-cooperations')
+  }
+
+  const onAddStudentClick = () => {
+    navigate('/categories/subjects/find-offers')
+  }
+
+  if (!response.items.length)
+    return (
+      <>
+        <Typography sx={styles.title}>{t('activeStudents.title')}</Typography>
+        <Box sx={styles.noStudentsWrapper}>
+          <Typography sx={styles.title}>
+            {t('activeStudents.noStudentsYet')}
+          </Typography>
+          <Box
+            data-testid='addStudent'
+            onClick={onAddStudentClick}
+            sx={styles.showMoreWrapper}
+          >
+            <AppIconButton size='medium' sx={styles.showMoreButton}>
+              <Add />
+            </AppIconButton>
+            <Typography>{t('activeStudents.addStudent')}</Typography>
+          </Box>
+        </Box>
+      </>
+    )
 
   const activeStudents = response.items.map((cooperation) => (
     <ActiveStudent
@@ -41,10 +71,6 @@ const ActiveStudentsBlock = () => {
       subjectName={cooperation.offer.subject.name}
     />
   ))
-
-  const onShowMoreClick = () => {
-    navigate('/my-cooperations')
-  }
 
   return (
     <>

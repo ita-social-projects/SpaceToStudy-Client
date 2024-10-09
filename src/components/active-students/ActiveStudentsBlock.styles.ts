@@ -15,6 +15,16 @@ export const styles = {
     mt: '34px',
     p: '20px'
   },
+  noStudentsWrapper: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: { md: '70px', xs: '30px' },
+    flexWrap: 'wrap',
+    mt: '34px',
+    p: '20px'
+  },
   showMoreWrapper: {
     width: { xs: '180px', md: 'auto' },
     cursor: 'pointer',
