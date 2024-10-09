@@ -1,4 +1,4 @@
-import { useState, FC, useMemo, useCallback } from 'react'
+import { useState, FC, useMemo, useCallback, FocusEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { MenuItem } from '@mui/material'
@@ -76,14 +76,8 @@ const CourseSectionContainer: FC<SectionProps> = ({
 
   const [activeMenu, setActiveMenu] = useState<string>('')
   const [isVisible, setIsVisible] = useState<boolean>(true)
-  const [description, setDescription] = useState<string>(
-    sectionData.description
-  )
 
-  const handleDescriptionChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setDescription(event.target.value)
+  const handleDescriptionBlur = (event: FocusEvent<HTMLInputElement>) => {
     handleSectionInputChange(sectionData.id, 'description', event.target.value)
   }
 
@@ -341,6 +335,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
           <AppTextField
             InputLabelProps={styles.descriptionLabel}
             InputProps={styles.descriptionInput}
+            defaultValue={sectionData.description}
             fullWidth
             inputProps={styles.input}
             label={
@@ -348,15 +343,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
                 ? ''
                 : t('course.courseSection.defaultNewDescription')
             }
-            onBlur={(event) =>
-              handleSectionInputChange(
-                sectionData.id,
-                'description',
-                event.target.value
-              )
-            }
-            onChange={handleDescriptionChange}
-            value={description}
+            onBlur={handleDescriptionBlur}
             variant={TextFieldVariantEnum.Standard}
           />
           <ResourcesList
