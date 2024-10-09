@@ -33,7 +33,7 @@ $flexbox-utilities: (
     )
   ),
   'flex-grow': (
-    class: 'flex',
+    class: 'grow',
     properties: flex-grow,
     values: (
       '0': 0,
@@ -41,7 +41,7 @@ $flexbox-utilities: (
     )
   ),
   'flex-shrink': (
-    class: 'flex',
+    class: 'shrink',
     properties: flex-shrink,
     values: (
       '0': 0,
