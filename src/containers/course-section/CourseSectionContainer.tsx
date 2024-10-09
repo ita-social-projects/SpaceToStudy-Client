@@ -238,6 +238,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
       sectionId: sectionData.id
     })
   }
+
   const handleAddResources = async <T extends CourseResource>(
     resources: T[],
     isDuplicate: boolean
@@ -273,7 +274,6 @@ const CourseSectionContainer: FC<SectionProps> = ({
         }
       }
     }
-    //
 
     resourceEventHandler?.({
       type: CourseResourceEventType.AddSectionResources,
@@ -283,12 +283,19 @@ const CourseSectionContainer: FC<SectionProps> = ({
     })
   }
 
+  const onAddResourcesWrapper = (
+    resources: (Lesson | Quiz | Attachment)[],
+    isDuplicate: boolean
+  ) => {
+    void handleAddResources(resources, isDuplicate)
+  }
+
   const handleOpenAddLessonsModal = () => {
     openModal({
       component: (
         <AddResources<Lesson>
           columns={lessonColumns}
-          onAddResources={() => handleAddResources}
+          onAddResources={onAddResourcesWrapper}
           removeColumnRules={removeLessonColumnRules}
           requestService={ResourceService.getUsersLessons}
           resourceTab={resourcesData.lessons.resourceTab}
@@ -304,7 +311,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
       component: (
         <AddResources<Quiz>
           columns={quizColumns}
-          onAddResources={() => handleAddResources}
+          onAddResources={onAddResourcesWrapper}
           removeColumnRules={removeQuizColumnRules}
           requestService={ResourceService.getQuizzes}
           resourceTab={resourcesData.quizzes.resourceTab}
@@ -320,7 +327,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
       component: (
         <AddResources<Attachment>
           columns={attachmentColumns}
-          onAddResources={() => handleAddResources}
+          onAddResources={onAddResourcesWrapper}
           removeColumnRules={removeAttachmentColumnRules}
           requestService={ResourceService.getAttachments}
           resourceTab={resourcesData.attachments.resourceTab}
