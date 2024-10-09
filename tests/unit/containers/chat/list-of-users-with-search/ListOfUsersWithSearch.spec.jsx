@@ -20,13 +20,15 @@ const props = {
   listOfChats: chatsMock,
   selectedChat: chatsMock[0],
   setSelectedChat: vi.fn(),
-  closeDrawer: vi.fn(),
-  usersOnline: new Set()
+  closeDrawer: vi.fn()
 }
 
 describe('ListOfUsersWithSearch component', () => {
   beforeEach(() => {
-    useAppSelector.mockReturnValue({ userId: '644e6b1668cc37f543f2f37a' })
+    useAppSelector.mockReturnValue({
+      userId: '644e6b1668cc37f543f2f37a',
+      usersOnline: []
+    })
     renderWithProviders(<ListOfUsersWithSearch {...props} />)
   })
 
