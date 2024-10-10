@@ -198,7 +198,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
         component: (
           <ChangeResourceConfirmModal
             onConfirm={handleConfirm}
-            resourceId={resource.isDuplicate ? resource._id : resource._id}
+            resourceId={resource.isDuplicate ? '' : resource._id}
             title={(resource as Attachment).fileName}
           />
         )
