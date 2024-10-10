@@ -101,10 +101,10 @@ export const getFormattedDate = ({
   isCurrentDayHours = false,
   includeOrdinal = false
 }: FormatedDate): string => {
-  const get_language = i18next.language
-  const language_key = mapper[get_language]
+  const getLanguage = i18next.language
+  const languageKey = mapper[getLanguage]
   const currentDate = new Date()
-  const formattedDate = new Date(date).toLocaleString(language_key, options)
+  const formattedDate = new Date(date).toLocaleString(languageKey, options)
 
   if (
     isCurrentDayHours &&
