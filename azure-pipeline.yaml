@@ -20,7 +20,7 @@ stages:
         steps:
         - task: DownloadSecureFile@1
           name: envStage
-          condition: or(eq(variables['Build.SourceBranch'], 'refs/heads/devops'), eq(variables['Build.SourceBranch'], 'refs/heads/develop'), eq(variables['Build.SourceBranch'], 'refs/heads/feature/1659/deployment-proxy'))
+          condition: or(eq(variables['Build.SourceBranch'], 'refs/heads/devops'), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))
           inputs:
             secureFile: 'env-front-stage'
         - task: Bash@3
