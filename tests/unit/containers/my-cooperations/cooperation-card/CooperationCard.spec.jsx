@@ -4,7 +4,8 @@ import { renderWithProviders } from '~tests/test-utils'
 import { mockedCoop } from '~tests/unit/containers/my-cooperations/MyCooperations.spec.constants'
 
 const preloadedState = {
-  appMain: { userRole: 'tutor' }
+  appMain: { userRole: 'tutor' },
+  socket: { usersOnline: [] }
 }
 
 describe('CooperationCard component ', () => {

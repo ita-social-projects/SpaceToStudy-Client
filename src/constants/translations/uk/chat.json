@@ -4,7 +4,8 @@
     "noMessages": "Повідомлень немає"
   },
   "status": {
-    "online": "В мережі"
+    "online": "В мережі",
+    "offline": "Не в мережі"
   },
   "noContacts": "Немає контактів",
   "sidebar": {

@@ -26,6 +26,7 @@ interface ChatHeaderProps {
   messages: { text: string }[]
   onFilteredMessagesChange: (filteredMessages: string[]) => void
   onFilteredIndexChange: (filteredIndex: number) => void
+  isOnline: boolean
 }
 
 const ChatHeader: FC<ChatHeaderProps> = ({
@@ -37,7 +38,8 @@ const ChatHeader: FC<ChatHeaderProps> = ({
   currentChat,
   messages,
   onFilteredMessagesChange,
-  onFilteredIndexChange
+  onFilteredIndexChange,
+  isOnline
 }) => {
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false)
   const [menuAnchorEl, setMenuAnchorEl] = useState<HTMLElement | null>(null)
@@ -73,11 +75,13 @@ const ChatHeader: FC<ChatHeaderProps> = ({
     setIsSearchOpen(false)
   }
 
-  const status = (
+  const status = isOnline ? (
     <>
       <Typography sx={styles.statusBadge} />
       <Typography>{t('chatPage.status.online')}</Typography>
     </>
+  ) : (
+    <Typography>{t('chatPage.status.offline')}</Typography>
   )
 
   return (

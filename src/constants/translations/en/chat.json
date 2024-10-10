@@ -4,7 +4,8 @@
     "noMessages": "No messages yet"
   },
   "status": {
-    "online": "Online"
+    "online": "Online",
+    "offline": "Offline"
   },
   "noContacts": "No contacts found",
   "sidebar": {

@@ -296,7 +296,6 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
             _id={chatInfo.author._id}
             firstName={chatInfo.author.firstName}
             lastName={chatInfo.author.lastName}
-            onlineBadge
             photo={chatInfo.author.photo}
             role={chatInfo.authorRole}
             sx={styles.userProfileInfo}

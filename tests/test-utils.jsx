@@ -9,6 +9,7 @@ import PopupsProvider from '~/PopupsProvider'
 import cooperationsReducer from '~/redux/features/cooperationsSlice'
 import snackbarReducer from '~/redux/features/snackbarSlice'
 import editProfileReducer from '~/redux/features/editProfileSlice'
+import socketReducer from '~/redux/features/socketSlice'
 import AppSnackbar from '~/containers/layout/app-snackbar/AppSnackbar'
 
 import MockAdapter from 'axios-mock-adapter'
@@ -24,7 +25,8 @@ export const renderWithProviders = (
         appMain: reducer,
         cooperations: cooperationsReducer,
         snackbar: snackbarReducer,
-        editProfile: editProfileReducer
+        editProfile: editProfileReducer,
+        socket: socketReducer
       },
       preloadedState
     }),

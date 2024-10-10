@@ -1,7 +1,8 @@
 export const sliceNames = {
   cooperations: 'cooperationsSlice',
   snackbar: 'snackbarSlice',
-  editProfile: 'editProfileSlice'
+  editProfile: 'editProfileSlice',
+  socket: 'socketSlice'
 }
 
 export enum LoadingStatusEnum {

@@ -7,6 +7,8 @@ import appMainReducer from '~/redux/reducer'
 import cooperationsReducer from '~/redux/features/cooperationsSlice'
 import snackbarReducer from '~/redux/features/snackbarSlice'
 import editProfileReducer from '~/redux/features/editProfileSlice'
+import socketReducer from '~/redux/features/socketSlice'
+import socketMiddleware from '~/redux/middleware/socket-middleware'
 
 export const store = configureStore({
   reducer: {
@@ -14,10 +16,11 @@ export const store = configureStore({
     cooperations: cooperationsReducer,
     appMain: appMainReducer,
     snackbar: snackbarReducer,
+    socket: socketReducer,
     [appApi.reducerPath]: appApi.reducer
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(appApi.middleware)
+    getDefaultMiddleware().concat([appApi.middleware, socketMiddleware])
 })
 
 setupListeners(store.dispatch)

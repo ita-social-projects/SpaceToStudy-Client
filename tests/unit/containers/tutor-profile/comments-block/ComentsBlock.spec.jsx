@@ -1,6 +1,5 @@
-import { render, fireEvent, screen } from '@testing-library/react'
+import { fireEvent, screen } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
-import { MemoryRouter } from 'react-router-dom'
 import CommentsWithRatingBlock from '~/containers/user-profile/comments-with-rating-block/CommentsWithRatingBlock'
 import { UserRoleEnum } from '~/types'
 
@@ -23,24 +22,31 @@ const mockReviewsCount = [
   { count: 0, rating: 1 }
 ]
 
+const preloadedState = {
+  socket: { usersOnline: [] }
+}
+
 describe('CommentsWithRatingBlock', () => {
   beforeEach(() => {
-    renderWithProviders(<CommentsWithRatingBlock {...props} />)
+    renderWithProviders(<CommentsWithRatingBlock {...props} />, {
+      preloadedState
+    })
   })
+
   it('should render the tutor comments block title', () => {
-    render(
-      <MemoryRouter>
-        <CommentsWithRatingBlock
-          averageRating={4.5}
-          reviewsCount={mockReviewsCount}
-          totalReviews={20}
-          userRole={UserRoleEnum.Tutor}
-        />
-      </MemoryRouter>
+    renderWithProviders(
+      <CommentsWithRatingBlock
+        averageRating={4.5}
+        reviewsCount={mockReviewsCount}
+        totalReviews={20}
+        userRole={UserRoleEnum.Tutor}
+      />,
+      { preloadedState }
     )
     const titleElement = screen.getByText('userProfilePage.reviews.titleTutor')
     expect(titleElement).toBeInTheDocument()
   })
+
   it('should increase amountToShow by commentsCount.increment when handleShowMoreComments is called', () => {
     const showMoreButton = screen.getByRole('button')
 
@@ -50,6 +56,7 @@ describe('CommentsWithRatingBlock', () => {
 
     expect(showMoreButton).toBeInTheDocument()
   })
+
   it('should update filter state when handleFilterChange is called', () => {
     const progressBar = screen.getByTestId('progress-bar-1')
     fireEvent.click(progressBar)
