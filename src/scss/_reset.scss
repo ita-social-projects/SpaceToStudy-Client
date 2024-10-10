@@ -1,8 +1,6 @@
 @use 'variables' as *;
 
-@use 'node_modules/normalize-scss/sass/normalize' as *;
-
-@include normalize();
+@use 'normalize.css' as *;
 
 body {
   font-family: $font-family-base;
