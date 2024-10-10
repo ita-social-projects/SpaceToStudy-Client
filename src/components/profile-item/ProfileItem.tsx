@@ -8,6 +8,9 @@ import { styles } from '~/components/profile-item/ProfileItem.styles'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { ProfileItemType } from '~/components/profile-item/complete-profile.constants'
 import { UserRoleEnum } from '~/types'
+import CreateOffer from '~/containers/offer-page/create-offer/CreateOffer'
+import { useDrawer } from '~/hooks/use-drawer'
+import AppDrawer from '~/components/app-drawer/AppDrawer'
 
 interface ProfileItemProps {
   item: ProfileItemType
@@ -25,10 +28,16 @@ const ProfileItem = ({
   const { id, icon } = item
   const navigate = useNavigate()
 
-  const isClickable = !isFilled && item.id !== 'schedule' && item.id !== 'offer'
+  const { openDrawer, closeDrawer, isOpen } = useDrawer()
+  const handleOpenDrawer = () => openDrawer()
+
+  const isClickable = !isFilled && item.id !== 'schedule'
+  const isOffer = item.id === 'offer'
 
   const handleItemClick = () => {
-    if (isClickable) {
+    if (isOffer) {
+      handleOpenDrawer()
+    } else if (isClickable) {
       navigate(`${item.path}#${item.id}`)
     }
   }
@@ -54,6 +63,11 @@ const ProfileItem = ({
             </Typography>
           </Box>
         </Box>
+        {isOffer && (
+          <AppDrawer onClose={closeDrawer} open={isOpen}>
+            <CreateOffer closeDrawer={closeDrawer} />
+          </AppDrawer>
+        )}
       </Box>
       {isFilled && (
         <CheckIcon
