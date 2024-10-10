@@ -78,7 +78,8 @@ const OfferCarousel: FC<OfferCarouselProps> = ({ offer }) => {
   })
 
   const carouselSettings = {
-    slidesToShow: slidesToShow,
+    children: itemsToShow,
+    slidesToShow,
     defaultControlsConfig: {
       pagingDotsStyle: styles.dotStyles(isLaptopAndAbove)
     },

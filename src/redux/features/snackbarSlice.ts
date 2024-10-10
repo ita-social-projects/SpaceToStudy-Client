@@ -1,13 +1,12 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction, Draft } from '@reduxjs/toolkit'
 import { AlertColor } from '@mui/material/Alert'
 import { sliceNames } from '~/redux/redux.constants'
 import { RootState } from '~/redux/store'
 import { TOptions } from 'i18next/typescript/options'
-import { WritableDraft } from 'immer/dist/internal'
 
 interface ExtendedSnackbarMessage {
   text: string
-  options: WritableDraft<TOptions>
+  options: Draft<TOptions>
 }
 
 type SnackbarMessage = string | ExtendedSnackbarMessage

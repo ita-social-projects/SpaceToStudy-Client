@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography'
 import { SelectFieldType } from '~/types'
 import { styles } from '~/components/app-select/AppSelect.styles'
 
-interface AppSelectProps<T> extends SelectProps<T> {
+type AppSelectProps<T> = SelectProps<T> & {
   setValue: (value: T) => void
   value: T
   fields: SelectFieldType<T>[]

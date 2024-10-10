@@ -6,6 +6,13 @@ import path from 'path'
 export default defineConfig({
   plugins: [react(), svgrPlugin()],
   define: { 'process.env': {} },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        api: 'modern-compiler'
+      }
+    }
+  },
   resolve: {
     alias: {
       '~': path.resolve(__dirname, 'src/'),
@@ -29,7 +36,12 @@ export default defineConfig({
         'src/utils/**/*.js',
         'src/redux/**/*.ts'
       ],
-      exclude: ['src/stories', './tests/setup-tests.js', 'src/**/*.styles.ts'],
+      exclude: [
+        'src/stories',
+        './tests/setup-tests.js',
+        'src/**/*.styles.ts',
+        'src/types/**/*.ts'
+      ],
       reportsDirectory: './tests/coverage'
     },
     reporters: ['vitest-sonar-reporter', 'default'],

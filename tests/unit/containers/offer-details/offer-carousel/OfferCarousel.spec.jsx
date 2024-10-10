@@ -8,6 +8,25 @@ import { mockOffer } from '~tests/unit/pages/offer-details/OfferDetails.spec.con
 vi.mock('~/hooks/use-axios')
 
 describe('OfferCarousel test', () => {
+  beforeAll(() => {
+    global.ResizeObserver = vi.fn().mockImplementation(() => ({
+      observe: vi.fn(),
+      unobserve: vi.fn(),
+      disconnect: vi.fn()
+    }))
+
+    window.matchMedia = vi.fn().mockImplementation((query) => ({
+      matches: false,
+      media: query,
+      onchange: null,
+      addListener: vi.fn(),
+      removeListener: vi.fn(),
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+      dispatchEvent: vi.fn()
+    }))
+  })
+
   it('should render OfferCarousel', async () => {
     const fakeData = {
       loading: false,
