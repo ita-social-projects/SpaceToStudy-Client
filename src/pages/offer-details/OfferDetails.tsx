@@ -261,7 +261,7 @@ const OfferDetails = () => {
       <AppCard sx={styles.wrapper}>
         <OfferGeneralInfo offer={offerData} />
       </AppCard>
-      {faqItems?.length && (
+      {faqItems && faqItems.length > 0 && (
         <AppCard sx={styles.wrapper}>
           <MultiAccordionWithTitle
             items={faqItems}
