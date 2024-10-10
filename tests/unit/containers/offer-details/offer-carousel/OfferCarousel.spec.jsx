@@ -32,4 +32,16 @@ describe('OfferCarousel test', () => {
 
     expect(title).not.toBeInTheDocument()
   })
+  it('should not render OfferCardSquare when no offers', async () => {
+    const fakeData = {
+      loading: false,
+      response: { count: 0, items: [] }
+    }
+    useAxios.mockImplementation(() => fakeData)
+
+    renderWithProviders(<OfferCarousel offer={mockOffer} />)
+
+    const offerCard = screen.queryByTestId('OfferContainer')
+    expect(offerCard).not.toBeInTheDocument()
+  })
 })
