@@ -173,7 +173,11 @@ const ResourceItem: FC<ResourceItemProps> = ({
   )
 
   const onResourceItemClick = () => {
-    if (!isView) return
+    if (
+      !isView ||
+      resourceAvailabilityStatus !== ResourceAvailabilityStatusEnum.Open
+    )
+      return
     const type = resourceType ?? resource.resourceType
 
     if (type === ResourceType.Attachment) {
