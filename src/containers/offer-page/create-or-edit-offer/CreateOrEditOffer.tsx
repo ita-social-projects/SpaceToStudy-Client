@@ -75,17 +75,9 @@ const CreateOrEditOffer: FC<CreateOrUpdateOfferProps> = ({
       })
     )
     closeDrawer()
-    // if (hash == '#offer') {
-    //   navigate(`${authRoutes.myProfile.path}#complete`)
-    // } else {
-    //   navigate(
-    //     createUrlPath(
-    //       authRoutes.offerDetails.path,
-    //       existingOffer?._id ?? response?._id
-    //     )
-    //   )
-    // }
-    if (!hash) {
+    if (hash == '#offer') {
+      navigate(`${authRoutes.myProfile.path}#complete`)
+    } else {
       navigate(
         createUrlPath(
           authRoutes.offerDetails.path,
