@@ -1,6 +1,6 @@
 import { FC, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import LeakAddSharpIcon from '@mui/icons-material/LeakAddSharp'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
@@ -53,6 +53,7 @@ const CreateOrEditOffer: FC<CreateOrUpdateOfferProps> = ({
   const dispatch = useAppDispatch()
   const { t } = useTranslation()
   const navigate = useNavigate()
+  const { hash } = useLocation()
 
   const offerAction = existingOffer
     ? OfferActionsEnum.Edit
@@ -74,12 +75,16 @@ const CreateOrEditOffer: FC<CreateOrUpdateOfferProps> = ({
       })
     )
     closeDrawer()
-    navigate(
-      createUrlPath(
-        authRoutes.offerDetails.path,
-        existingOffer?._id ?? response?._id
+    if (hash == '#offer') {
+      navigate(`${authRoutes.myProfile.path}#complete`)
+    } else {
+      navigate(
+        createUrlPath(
+          authRoutes.offerDetails.path,
+          existingOffer?._id ?? response?._id
+        )
       )
-    )
+    }
   }
 
   const { loading, fetchData } = useAxios<

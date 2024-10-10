@@ -35,10 +35,11 @@ const ProfileItem = ({
   const isOffer = item.id === 'offer'
 
   const handleItemClick = () => {
+    if (isClickable || isOffer) {
+      navigate(`${item.path}#${item.id}`)
+    }
     if (isOffer) {
       handleOpenDrawer()
-    } else if (isClickable) {
-      navigate(`${item.path}#${item.id}`)
     }
   }
 
