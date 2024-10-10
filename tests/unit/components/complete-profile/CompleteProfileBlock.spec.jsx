@@ -39,6 +39,10 @@ const mockDataEmpty = {
     scientificActivities: '',
     workExperience: '',
     education: ''
+  },
+  videoLink: {
+    tutor: '',
+    student: ''
   }
 }
 
