@@ -22,7 +22,7 @@ export const setupInterceptors = (): void => {
     },
     async (error: AxiosResponseError) => {
       if (error.response?.data.code !== 'UNAUTHORIZED') {
-        return Promise.reject(error)
+        return Promise.resolve(error)
       }
 
       const originalRequest = error.config as InternalAxiosRequestConfig
@@ -35,8 +35,9 @@ export const setupInterceptors = (): void => {
         await store.dispatch(checkAuth())
         return axiosClient.request(originalRequest)
       } else {
-        void router.navigate(authRoutes.accountMenu.logout.path)
-        return Promise.reject(error)
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
+        router.navigate(authRoutes.accountMenu.logout.path)
+        return Promise.resolve(error)
       }
     }
   )
