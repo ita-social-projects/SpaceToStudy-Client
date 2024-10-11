@@ -25,7 +25,10 @@ const props = {
 
 describe('ListOfUsersWithSearch component', () => {
   beforeEach(() => {
-    useAppSelector.mockReturnValue({ userId: '644e6b1668cc37f543f2f37a' })
+    useAppSelector.mockReturnValue({
+      userId: '644e6b1668cc37f543f2f37a',
+      usersOnline: []
+    })
     renderWithProviders(<ListOfUsersWithSearch {...props} />)
   })
 

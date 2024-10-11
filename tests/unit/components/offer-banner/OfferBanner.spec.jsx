@@ -11,6 +11,10 @@ const buttonActions = [
   { label: 'Action 2', handleClick: vi.fn() }
 ]
 
+const preloadedState = {
+  socket: { usersOnline: [] }
+}
+
 describe('OfferDetails on desktop', () => {
   const desktopData = {
     isLaptopAndAbove: true,
@@ -20,7 +24,8 @@ describe('OfferDetails on desktop', () => {
   beforeEach(() => {
     useBreakpoints.mockImplementation(() => desktopData)
     renderWithProviders(
-      <OfferBanner buttonActions={buttonActions} offer={mockOffer} />
+      <OfferBanner buttonActions={buttonActions} offer={mockOffer} />,
+      { preloadedState }
     )
   })
   it('renders the bookmark button correctly', () => {
@@ -42,7 +47,8 @@ describe('OfferDetails on desktop', () => {
   beforeEach(() => {
     useBreakpoints.mockImplementation(() => tabletData)
     renderWithProviders(
-      <OfferBanner buttonActions={buttonActions} offer={mockOffer} />
+      <OfferBanner buttonActions={buttonActions} offer={mockOffer} />,
+      { preloadedState }
     )
   })
 

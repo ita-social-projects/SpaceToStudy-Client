@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography'
 import Badge from '@mui/material/Badge'
 
 import AvatarIcon from '~/components/avatar-icon/AvatarIcon'
+import { selectIsUserOnline } from '~/redux/selectors/socket-selectors'
 
 import { useAppSelector } from '~/hooks/use-redux'
 
@@ -36,7 +37,8 @@ const ChatItem: FC<ItemOfChatProps> = ({
   const userToSpeak = useMemo<Member | undefined>(
     () => chat?.members.find((member) => member.user._id !== userId),
     [chat, userId]
-  )
+  ) as Member
+  const isOnline = useAppSelector(selectIsUserOnline(userToSpeak.user._id))
 
   const firstName = userToSpeak?.user.firstName
   const lastName = userToSpeak?.user.lastName
@@ -92,6 +94,7 @@ const ChatItem: FC<ItemOfChatProps> = ({
           badgeContent={
             <Typography component={ComponentEnum.Span} sx={styles.active} />
           }
+          invisible={!isOnline}
           overlap={OverlapEnum.Circular}
         >
           <AvatarIcon

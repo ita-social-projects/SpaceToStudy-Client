@@ -13,7 +13,8 @@ const filterOptionsMock = {
 }
 
 const preloadedState = {
-  appMain: { userRole: 'tutor' }
+  appMain: { userRole: 'tutor' },
+  socket: { usersOnline: [] }
 }
 
 describe('CooperationContainer component ', () => {

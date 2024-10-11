@@ -15,6 +15,8 @@ import ChatMenu from '~/containers/layout/chat-menu/ChatMenu'
 
 import { styles } from '~/containers/chat/chat-header/ChatHeader.styles'
 import { ChatResponse, UserResponse } from '~/types'
+import { useAppSelector } from '~/hooks/use-redux'
+import { selectIsUserOnline } from '~/redux/selectors/socket-selectors'
 
 interface ChatHeaderProps {
   onClick: (e?: MouseEvent<HTMLButtonElement>) => void
@@ -44,6 +46,7 @@ const ChatHeader: FC<ChatHeaderProps> = ({
   const anchorRef = useRef<HTMLDivElement | null>(null)
   const { t } = useTranslation()
   const { isMobile } = useBreakpoints()
+  const isOnline = useAppSelector(selectIsUserOnline(user._id))
 
   const openMenu = () => setMenuAnchorEl(anchorRef.current)
   const closeMenu = () => setMenuAnchorEl(null)
@@ -73,11 +76,13 @@ const ChatHeader: FC<ChatHeaderProps> = ({
     setIsSearchOpen(false)
   }
 
-  const status = (
+  const status = isOnline ? (
     <>
       <Typography sx={styles.statusBadge} />
       <Typography>{t('chatPage.status.online')}</Typography>
     </>
+  ) : (
+    <Typography>{t('chatPage.status.offline')}</Typography>
   )
 
   return (
