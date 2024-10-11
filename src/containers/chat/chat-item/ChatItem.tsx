@@ -94,7 +94,6 @@ const ChatItem: FC<ItemOfChatProps> = ({
           badgeContent={
             <Typography component={ComponentEnum.Span} sx={styles.active} />
           }
-          // invisible={!isOnline}
           invisible={!isOnline}
           overlap={OverlapEnum.Circular}
         >
