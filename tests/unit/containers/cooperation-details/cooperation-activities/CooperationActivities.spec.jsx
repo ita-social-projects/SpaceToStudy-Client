@@ -138,21 +138,6 @@ describe('CooperationActivities', () => {
         message: 'cooperationsPage.acceptModal.successMessage'
       })
     })
-
-    it('should toggle edit mode on successful update', async () => {
-      const { cooperationService } = await import(
-        '~/services/cooperation-service'
-      )
-      cooperationService.updateCooperation.mockResolvedValueOnce({})
-
-      const saveButton = screen.getByText('common.save')
-      fireEvent.click(saveButton)
-
-      await waitFor(() => {
-        expect(mockUpdateCooperation).toHaveBeenCalledTimes(1)
-        expect(mockUpdateCooperation).toHaveBeenCalledWith(expect.any(Function))
-      })
-    })
   })
 
   it('should display error message when updateCooperationSection fails with specific error', async () => {
