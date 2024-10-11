@@ -10,7 +10,7 @@ import ChatItem from '~/containers/chat/chat-item/ChatItem'
 import FilterInput from '~/components/filter-input/FilterInput'
 import { useAppSelector } from '~/hooks/use-redux'
 
-import { ChatResponse, Member, SizeEnum } from '~/types'
+import { ChatResponse, SizeEnum } from '~/types'
 import { styles } from '~/containers/chat/list-of-users-with-search/ListOfUsersWithSearch.styles'
 import { filterChats } from '~/containers/chat/list-of-users-with-search/ListOfUsersWithSearch.constants'
 
@@ -30,7 +30,6 @@ const ListOfUsersWithSearch: FC<ListOfUsersWithSearchProps> = ({
   const [search, setSearch] = useState<string>('')
 
   const { userId } = useAppSelector((state) => state.appMain)
-  const { usersOnline } = useAppSelector((state) => state.socket)
   const { t } = useTranslation()
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,15 +40,11 @@ const ListOfUsersWithSearch: FC<ListOfUsersWithSearchProps> = ({
 
   const chats = filteredChats.map((item: ChatResponse) => {
     const isActiveChat = selectedChat?._id === item._id
-    const userToSpeak: Member = item.members.find(
-      (member) => member.user._id !== userId
-    ) as Member
     return (
       <ChatItem
         chat={item}
         closeDrawer={closeDrawer}
         isActiveChat={isActiveChat}
-        isOnline={usersOnline.includes(userToSpeak.user._id)}
         key={item._id}
         setSelectedChat={setSelectedChat}
       />

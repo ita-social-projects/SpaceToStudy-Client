@@ -26,6 +26,12 @@ describe('socketMiddleware', () => {
     }
 
     SocketFactory.create.mockReturnValue(mockSocket)
+
+    vi.useFakeTimers()
+  })
+
+  afterEach(() => {
+    vi.clearAllTimers()
   })
 
   it('should connect socket and set up events on setUser', () => {
@@ -55,6 +61,8 @@ describe('socketMiddleware', () => {
       (call) => call[0] === 'usersOnline'
     )[1]
     usersOnlineCallback(users)
+
+    vi.advanceTimersByTime(1000)
 
     expect(store.dispatch).toHaveBeenCalledWith(setUsersOnline(users))
   })

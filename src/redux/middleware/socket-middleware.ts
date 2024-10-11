@@ -7,6 +7,7 @@ import {
   setUsersOnline
 } from '~/redux/features/socketSlice'
 import { logout, setUser } from '~/redux/reducer'
+import { debounce } from '~/utils/debounce'
 
 enum SocketEvent {
   Connect = 'connect',
@@ -16,6 +17,10 @@ enum SocketEvent {
 
 const socketMiddleware: Middleware = (store) => {
   let socket: SocketInterface
+
+  const debouncedSetUsersOnline = debounce((users: string[]) => {
+    store.dispatch(setUsersOnline(users))
+  }, 1000)
 
   return (next) => (action: Action) => {
     if (setUser.match(action)) {
@@ -30,7 +35,7 @@ const socketMiddleware: Middleware = (store) => {
         })
 
         socket.socket.on(SocketEvent.UsersOnline, (users: string[]) => {
-          store.dispatch(setUsersOnline(users))
+          debouncedSetUsersOnline(users)
         })
       }
     }

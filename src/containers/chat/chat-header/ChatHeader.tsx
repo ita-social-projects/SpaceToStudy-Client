@@ -15,6 +15,8 @@ import ChatMenu from '~/containers/layout/chat-menu/ChatMenu'
 
 import { styles } from '~/containers/chat/chat-header/ChatHeader.styles'
 import { ChatResponse, UserResponse } from '~/types'
+import { useAppSelector } from '~/hooks/use-redux'
+import { selectIsUserOnline } from '~/redux/selectors/socket-selectors'
 
 interface ChatHeaderProps {
   onClick: (e?: MouseEvent<HTMLButtonElement>) => void
@@ -26,7 +28,6 @@ interface ChatHeaderProps {
   messages: { text: string }[]
   onFilteredMessagesChange: (filteredMessages: string[]) => void
   onFilteredIndexChange: (filteredIndex: number) => void
-  isOnline: boolean
 }
 
 const ChatHeader: FC<ChatHeaderProps> = ({
@@ -38,14 +39,14 @@ const ChatHeader: FC<ChatHeaderProps> = ({
   currentChat,
   messages,
   onFilteredMessagesChange,
-  onFilteredIndexChange,
-  isOnline
+  onFilteredIndexChange
 }) => {
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false)
   const [menuAnchorEl, setMenuAnchorEl] = useState<HTMLElement | null>(null)
   const anchorRef = useRef<HTMLDivElement | null>(null)
   const { t } = useTranslation()
   const { isMobile } = useBreakpoints()
+  const isOnline = useAppSelector(selectIsUserOnline(user._id))
 
   const openMenu = () => setMenuAnchorEl(anchorRef.current)
   const closeMenu = () => setMenuAnchorEl(null)

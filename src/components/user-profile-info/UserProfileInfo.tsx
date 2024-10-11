@@ -9,6 +9,7 @@ import AppRating from '~/components/app-rating/AppRating'
 import LanguagesListWithIcon from '~/components/languages-list-with-icon/LanguagesListWithIcon'
 import AvatarIcon from '~/components/avatar-icon/AvatarIcon'
 import { useAppSelector } from '~/hooks/use-redux'
+import { selectIsUserOnline } from '~/redux/selectors/socket-selectors'
 
 import {
   createUrlPath,
@@ -53,7 +54,7 @@ const UserProfileInfo: FC<UserProfileInfoProps> = ({
   renderAdditionalInfo = true
 }) => {
   const { t } = useTranslation()
-  const { usersOnline } = useAppSelector((state) => state.socket)
+  const isOnline = useAppSelector(selectIsUserOnline(_id))
 
   const name = `${firstName} ${lastName}`
 
@@ -88,7 +89,7 @@ const UserProfileInfo: FC<UserProfileInfoProps> = ({
             badgeContent={
               <Typography component={ComponentEnum.Span} sx={styles.active} />
             }
-            invisible={!usersOnline.includes(_id)}
+            invisible={!isOnline}
             overlap={OverlapEnum.Circular}
           >
             {avatar}

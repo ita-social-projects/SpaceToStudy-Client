@@ -50,7 +50,6 @@ const Chat = () => {
   const [prevScrollTop, setPrevScrollTop] = useState(0)
   const { setChatInfo, chatInfo } = useChatContext()
   const { userId: myId } = useAppSelector((state) => state.appMain)
-  const { usersOnline } = useAppSelector((state) => state.socket)
 
   const limit = 15
 
@@ -274,7 +273,6 @@ const Chat = () => {
                 {userToSpeak && (
                   <ChatHeader
                     currentChat={selectedChat}
-                    isOnline={usersOnline.includes(userToSpeak?.user._id)}
                     messages={messages}
                     onClick={(event?: MouseEvent<HTMLButtonElement>) =>
                       onSidebarHandler(true, event)
