@@ -399,10 +399,7 @@ describe('Testing CourseSectionContainer Event Handlers', () => {
     await waitFor(() => {
       expect(editResourceSpy).toHaveBeenCalledTimes(1)
       expect(editResourceSpy).toHaveBeenCalledWith(
-        expect.stringContaining(
-          authRoutes.myResources[resourceNavigationMap[resource.resourceType]]
-            .path
-        ),
+        expect.stringContaining(`lesson-details/${resource._id}`),
         '_blank'
       )
     })
@@ -448,6 +445,33 @@ describe('should remove duplicates from list', () => {
     vi.resetAllMocks()
   })
 
+  it('should edit duplicate resources', async () => {
+    const resource = mockedDuplicatedSectionData.resources[0].resource
+    const editResourceSpy = vi
+      .spyOn(window, 'open')
+      .mockImplementation(() => ({ focus: vi.fn() }))
+
+    fireEvent.change(screen.getByTestId('mock-ResourcesList'), {
+      target: {
+        value: JSON.stringify({
+          event: 'editResource',
+          payload: resource
+        })
+      }
+    })
+
+    await waitFor(() => {
+      expect(editResourceSpy).toHaveBeenCalledTimes(1)
+      expect(editResourceSpy).toHaveBeenCalledWith(
+        expect.stringContaining(
+          authRoutes.myResources[resourceNavigationMap[resource.resourceType]]
+            .path
+        ),
+        '_blank'
+      )
+    })
+  })
+
   it('should handle resource remove event on Quiz', async () => {
     fireEvent.change(screen.getByTestId('mock-ResourcesList'), {
       target: {
@@ -456,7 +480,7 @@ describe('should remove duplicates from list', () => {
           payload: {
             type: CourseResourceEventType.ResourceRemoved,
             sectionId: mockSectionId,
-            resourceId: mockedSectionData.resources[0].id
+            resourceId: mockedDuplicatedSectionData.resources[0].id
           }
         })
       }
@@ -468,7 +492,7 @@ describe('should remove duplicates from list', () => {
         expect.objectContaining({
           type: CourseResourceEventType.ResourceRemoved,
           sectionId: mockSectionId,
-          resourceId: mockedSectionData.resources[0].id
+          resourceId: mockedDuplicatedSectionData.resources[0].id
         })
       )
     })
@@ -482,7 +506,7 @@ describe('should remove duplicates from list', () => {
           payload: {
             type: CourseResourceEventType.ResourceRemoved,
             sectionId: mockSectionId,
-            resourceId: mockedSectionData.resources[1].id
+            resourceId: mockedDuplicatedSectionData.resources[1].id
           }
         })
       }
@@ -494,7 +518,7 @@ describe('should remove duplicates from list', () => {
         expect.objectContaining({
           type: CourseResourceEventType.ResourceRemoved,
           sectionId: mockSectionId,
-          resourceId: mockedSectionData.resources[1].id
+          resourceId: mockedDuplicatedSectionData.resources[1].id
         })
       )
     })
@@ -508,7 +532,7 @@ describe('should remove duplicates from list', () => {
           payload: {
             type: CourseResourceEventType.ResourceRemoved,
             sectionId: mockSectionId,
-            resourceId: mockedSectionData.resources[2].id
+            resourceId: mockedDuplicatedSectionData.resources[2].id
           }
         })
       }
@@ -520,7 +544,7 @@ describe('should remove duplicates from list', () => {
         expect.objectContaining({
           type: CourseResourceEventType.ResourceRemoved,
           sectionId: mockSectionId,
-          resourceId: mockedSectionData.resources[2].id
+          resourceId: mockedDuplicatedSectionData.resources[2].id
         })
       )
     })
