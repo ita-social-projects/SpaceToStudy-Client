@@ -17,7 +17,6 @@ import Accordions from '~/components/accordion/Accordions'
 import useAccordion from '~/hooks/use-accordions'
 import IconExtensionWithTitle from '~/components/icon-extension-with-title/IconExtensionWithTitle'
 import AppButton from '~/components/app-button/AppButton'
-
 import { errorRoutes } from '~/router/constants/errorRoutes'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { styles } from '~/pages/lesson-details/LessonsDetails.styles'
@@ -33,7 +32,6 @@ const LessonDetails = () => {
   const { t } = useTranslation()
   const { userId } = useAppSelector((state) => state.appMain)
   const { openModal } = useModalContext()
-
   const [expandedItems, handleAccordionChange] = useAccordion({
     initialState: 0,
     multiple: true
@@ -54,9 +52,7 @@ const LessonDetails = () => {
     onResponseError: responseError
   })
 
-  if (loading) {
-    return <Loader pageLoad />
-  }
+  if (loading) return <Loader pageLoad />
 
   const handleEditLesson = () => {
     openModal({
@@ -83,19 +79,19 @@ const LessonDetails = () => {
     </Box>
   ))
 
-  const sanitizedHtmlContent = DOMPurify.sanitize(response.content)
-
   const items = [
     {
       title: 'lesson.content',
       content: (
         <Box
-          dangerouslySetInnerHTML={{ __html: sanitizedHtmlContent }}
+          dangerouslySetInnerHTML={{
+            __html: DOMPurify.sanitize(response.content)
+          }}
           sx={styles.content}
         />
       )
     },
-    ...(response.attachments.length > 0
+    ...(response.attachments?.length
       ? [
           {
             title: 'lesson.attachments',
