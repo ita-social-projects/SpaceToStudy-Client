@@ -109,7 +109,6 @@ describe('LessonDetails', () => {
     const accordions = screen.getAllByText('lesson.attachments')
     const attachmentsTitle = accordions[0]
 
-    // Expand both sections
     fireEvent.click(contentTitle)
     fireEvent.click(attachmentsTitle)
 
