@@ -95,10 +95,14 @@ const LessonDetails = () => {
         />
       )
     },
-    {
-      title: 'lesson.attachments',
-      content: <Box sx={styles.attachmentList}>{attachmentsList}</Box>
-    }
+    ...(response.attachments.length > 0
+      ? [
+          {
+            title: 'lesson.attachments',
+            content: <Box sx={styles.attachmentList}>{attachmentsList}</Box>
+          }
+        ]
+      : [])
   ]
 
   const isEditable = userId === response.author

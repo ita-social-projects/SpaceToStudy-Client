@@ -4,6 +4,22 @@ import { axiosClient } from '~/plugins/axiosClient'
 import { Course, CourseForm, GetCoursesParams } from '~/types'
 import { createUrlPath } from '~/utils/helper-functions'
 
+export interface Resource {
+  _id: string
+  name: string
+  type: string
+}
+
+export interface Section {
+  _id: string
+  title: string
+  resources: Resource[]
+}
+
+export interface ResourceData {
+  sections: Section[]
+}
+
 export const CourseService = {
   getCourses: async (params?: GetCoursesParams): Promise<AxiosResponse> =>
     await axiosClient.get(URLs.courses.get, { params }),
