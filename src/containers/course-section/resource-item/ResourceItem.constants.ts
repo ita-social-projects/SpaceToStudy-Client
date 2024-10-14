@@ -34,5 +34,6 @@ export const availabilityIcons: Record<ResourceAvailabilityStatusEnum, string> =
 export const resourceIcons: Partial<Record<ResourceType, JSX.Element | null>> =
   {
     [ResourceType.Lesson]: resourcesData.lessons.icon,
-    [ResourceType.Quiz]: resourcesData.quizzes.icon
+    [ResourceType.Quiz]: resourcesData.quizzes.icon,
+    [ResourceType.Attachment]: resourcesData.attachments.icon
   }

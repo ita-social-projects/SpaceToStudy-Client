@@ -1,7 +1,8 @@
 import { ReactElement } from 'react'
 
 import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined'
-import AttachFileIcon from '@mui/icons-material/AttachFile'
+import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined'
+
 import NoteAltOutlinedIcon from '@mui/icons-material/NoteAltOutlined'
 import QuizOutlinedIcon from '@mui/icons-material/QuizOutlined'
 import CategoryIcon from '@mui/icons-material/Category'
@@ -42,7 +43,7 @@ export const tabsData: MyResourcesTabsData = {
   [ResourcesTabsEnum.Attachments]: {
     title: 'myResourcesPage.tabs.attachments',
     content: <AttachmentsContainer />,
-    icon: <AttachFileIcon />
+    icon: <DescriptionOutlinedIcon />
   },
   [ResourcesTabsEnum.Categories]: {
     title: 'myResourcesPage.tabs.categories',

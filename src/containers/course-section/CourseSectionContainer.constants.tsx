@@ -1,6 +1,6 @@
 import ListAltIcon from '@mui/icons-material/ListAlt'
 import NoteAltOutlinedIcon from '@mui/icons-material/NoteAltOutlined'
-import AttachFileIcon from '@mui/icons-material/AttachFile'
+import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined'
 
 import { ResourcesTabsEnum, ResourcesTypesEnum as ResourceType } from '~/types'
 
@@ -20,7 +20,7 @@ export const resourcesData = {
   },
   attachments: {
     resourceTab: ResourcesTabsEnum.Attachments,
-    icon: <AttachFileIcon />
+    icon: <DescriptionOutlinedIcon />
   }
 }
 

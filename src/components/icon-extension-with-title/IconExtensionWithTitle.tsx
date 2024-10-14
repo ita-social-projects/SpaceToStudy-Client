@@ -4,10 +4,7 @@ import Box from '@mui/material/Box'
 
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 
-import {
-  convertBytesToProperFormat,
-  parseFileName
-} from '~/utils/helper-functions'
+import { convertBytesToProperFormat } from '~/utils/helper-functions'
 import { styles } from '~/components/icon-extension-with-title/IconExtensionWithTitle.styles'
 
 interface IconExtensionWithTitleProps {
@@ -25,8 +22,6 @@ const IconExtensionWithTitle: FC<IconExtensionWithTitleProps> = ({
 }) => {
   const { t } = useTranslation()
 
-  const { fileExtension } = parseFileName(title)
-
   const convertSize = (incomingSize: number) => {
     const { size: properSize, unit } = convertBytesToProperFormat(incomingSize)
     return properSize + ' ' + t(`common.${unit}`)
@@ -34,11 +29,7 @@ const IconExtensionWithTitle: FC<IconExtensionWithTitleProps> = ({
 
   return (
     <Box sx={styles.container}>
-      {icon ? (
-        <Box sx={styles.svgBox}>{icon}</Box>
-      ) : (
-        <Box sx={styles.iconBox}>{fileExtension}</Box>
-      )}
+      {icon && <Box sx={styles.svgBox}>{icon}</Box>}
       <TitleWithDescription
         description={size ? convertSize(size) : description}
         isDescriptionTooltip
