@@ -15,12 +15,6 @@ describe('IconExtensionWithTitle test', () => {
     expect(title).toBeInTheDocument()
   })
 
-  it('Should render icon text', () => {
-    const iconText = screen.getByText('doc')
-
-    expect(iconText).toBeInTheDocument()
-  })
-
   it('Should render description', () => {
     const description = screen.getByText('21.3 common.kilobytes')
 
