@@ -1,4 +1,5 @@
 import { keyframes } from '@mui/system'
+import palette from '~/styles/app-theme/app.pallete'
 
 export const fade = keyframes`
   from {
@@ -39,6 +40,12 @@ export const SlidesLeftLong = keyframes`
   }
 `
 
+export const colorChange = keyframes`
+    0% { color: ${palette.success[300]}; }
+    50% { color: ${palette.success[500]}; }
+    100% { color: ${palette.success[300]}; }
+`
+
 export const fadeAnimation = {
   animation: `${fade} 0.5s ease-in`
 }
@@ -53,4 +60,8 @@ export const slidesLeftAnimation = {
 
 export const SlideLeftLongAnimation = {
   animation: `${SlidesLeftLong} .5s ease-in-out`
+}
+
+export const colorChangeAnimation = {
+  animation: `${colorChange} 1.5s ease-in-out infinite`
 }

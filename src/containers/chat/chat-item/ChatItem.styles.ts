@@ -1,4 +1,5 @@
 import { TypographyVariantEnum } from '~/types'
+import { colorChangeAnimation } from '~/styles/app-theme/custom-animations'
 
 const hideText = {
   textOverflow: 'ellipsis',
@@ -67,6 +68,13 @@ export const styles = {
     marginRight: '28px',
     typography: TypographyVariantEnum.Body1,
     ...hideText
+  },
+  isTypingMessage: {
+    width: '100%',
+    marginRight: '28px',
+    typography: TypographyVariantEnum.Body1,
+    ...hideText,
+    ...colorChangeAnimation
   },
   amountOfmessages: {
     borderRadius: '50%',

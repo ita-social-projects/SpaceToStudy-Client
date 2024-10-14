@@ -1,7 +1,8 @@
 {
   "message": {
     "you": "You",
-    "noMessages": "No messages yet"
+    "noMessages": "No messages yet",
+    "isTyping": "is typing..."
   },
   "status": {
     "online": "Online",
