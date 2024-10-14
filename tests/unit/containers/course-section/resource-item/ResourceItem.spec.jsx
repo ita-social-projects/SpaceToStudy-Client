@@ -233,7 +233,7 @@ describe('ResourceItem tests when resourceType attachment', () => {
   })
 
   it('should properly display attachment', () => {
-    const attachmentItem = screen.getByText('png')
+    const attachmentItem = screen.getByTestId('DescriptionOutlinedIcon')
 
     expect(attachmentItem).toBeInTheDocument()
   })
