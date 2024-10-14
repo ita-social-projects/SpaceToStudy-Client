@@ -101,4 +101,23 @@ describe('LessonDetails', () => {
 
     expect(modal).toBeInTheDocument()
   })
+
+  it('should handle opening and closing of multiple accordions', async () => {
+    renderWithProviders(<LessonDetails />, { preloadedState: mockState })
+
+    const contentTitle = await screen.findByText('lesson.content')
+    const accordions = screen.getAllByText('lesson.attachments')
+    const attachmentsTitle = accordions[0]
+
+    fireEvent.click(contentTitle)
+    fireEvent.click(attachmentsTitle)
+
+    const attachment = screen.getAllByText('file1.png')[0]
+    expect(attachment).toBeVisible()
+
+    fireEvent.click(attachmentsTitle)
+    await waitFor(() => {
+      expect(attachment).not.toBeVisible()
+    })
+  })
 })
