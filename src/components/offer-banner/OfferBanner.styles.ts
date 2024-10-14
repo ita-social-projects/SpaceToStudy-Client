@@ -37,7 +37,6 @@ export const styles = {
     gap: '16px'
   },
   button: {
-    whiteSpace: 'nowrap',
     p: '15px 30px',
     width: 'auto',
     lineHeight: '19px'
