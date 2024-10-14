@@ -13,5 +13,16 @@
     "title": "Popular Categories",
     "description": "Explore tutoring categories you're passionate about.",
     "viewMore": "View more"
+  },
+
+  "lessonsQuantity": {
+    "title": "Your Lessons Quantity",
+    "subTitle": "Statistics of your lessons with students during the last time.",
+    "select": {
+      "category": "Category",
+      "subject": "Subject",
+      "year": "Year"
+    },
+    "resetButton": "Clear all"
   }
 }
