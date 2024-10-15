@@ -3,7 +3,8 @@ import reducer, {
   disconnectSocket,
   setUsersOnline,
   addIsTyping,
-  removeIsTyping
+  removeIsTyping,
+  sendTyping
 } from '~/redux/features/socketSlice'
 
 const initialState = {
@@ -79,5 +80,17 @@ describe('socketSlice test', () => {
     expect(reducer(previousState, removeIsTyping('chat1'))).toEqual(
       expectedState
     )
+  })
+
+  it('should send correct payload in sendTyping', () => {
+    expect(
+      reducer(
+        initialState,
+        sendTyping({
+          chatId: 'chat1',
+          receiverId: 'receiver1'
+        })
+      )
+    ).toEqual(initialState)
   })
 })
