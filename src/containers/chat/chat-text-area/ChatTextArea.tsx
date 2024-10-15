@@ -34,6 +34,7 @@ interface ChatTextAreaProps extends Omit<TextFieldProps, 'onChange' | 'sx'> {
   }
   emojiPickerProps?: { perLine: number }
   adornmentPosition?: AdornmentPosition
+  dialogWindow?: boolean
 }
 
 const ChatTextArea: FC<ChatTextAreaProps> = ({
@@ -45,6 +46,7 @@ const ChatTextArea: FC<ChatTextAreaProps> = ({
   sx = {},
   emojiPickerProps,
   adornmentPosition = AdornmentPosition.End,
+  dialogWindow = false,
   ...props
 }) => {
   const { isMobile } = useBreakpoints()
@@ -80,7 +82,7 @@ const ChatTextArea: FC<ChatTextAreaProps> = ({
   const onClosePicker = () => setIsEmojiPickerOpen(false)
 
   const adornment = (
-    <IconButton onClick={onTogglePicker}>
+    <IconButton onClick={onTogglePicker} sx={styles.emojiIcon(dialogWindow)}>
       <MoodIcon />
     </IconButton>
   )
