@@ -13,7 +13,7 @@
     "@mui/icons-material": "^5.14.16",
     "@mui/material": "^5.14.16",
     "@reduxjs/toolkit": "^2.2.7",
-    "@mui/x-date-pickers": "^5.0.20",
+    "@mui/x-date-pickers": "^7.20.0",
     "@tinymce/tinymce-react": "^5.1.1",
     "allotment": "^1.19.3",
     "axios": "^1.6.0",
