@@ -1,6 +1,6 @@
-import ListAltIcon from '@mui/icons-material/ListAlt'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
+import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined'
 
 import { styles } from '~/containers/my-resources/lessons-container/LessonsContainer.styles'
 import AppChip from '~/components/app-chip/AppChip'
@@ -29,7 +29,7 @@ export const columns: TableColumn<Lesson>[] = [
 
       return (
         <Box onClick={navigateLesson} sx={styles.lessonTitleContainer}>
-          <ListAltIcon sx={styles.lessonIcon} />
+          <ArticleOutlinedIcon sx={styles.lessonIcon} />
           <Typography sx={styles.lessonTitle}>{item.title}</Typography>
         </Box>
       )

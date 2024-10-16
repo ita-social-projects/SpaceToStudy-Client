@@ -1,6 +1,6 @@
-import ListAltIcon from '@mui/icons-material/ListAlt'
 import NoteAltOutlinedIcon from '@mui/icons-material/NoteAltOutlined'
 import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined'
+import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined'
 
 import { ResourcesTabsEnum, ResourcesTypesEnum as ResourceType } from '~/types'
 
@@ -12,7 +12,7 @@ export const menuTypes = {
 export const resourcesData = {
   lessons: {
     resourceTab: ResourcesTabsEnum.Lessons,
-    icon: <ListAltIcon />
+    icon: <ArticleOutlinedIcon />
   },
   quizzes: {
     resourceTab: ResourcesTabsEnum.Quizzes,
