@@ -8,7 +8,7 @@ import { CreateOrUpdateOfferData } from '~/types'
 
 interface CreateOfferProps {
   closeDrawer: () => void
-  updateOffer?: Dispatch<SetStateAction<boolean>> | undefined
+  updateOffer?: Dispatch<SetStateAction<boolean>>
 }
 
 const CreateOffer: FC<CreateOfferProps> = ({

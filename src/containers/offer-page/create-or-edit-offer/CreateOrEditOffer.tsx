@@ -41,7 +41,7 @@ interface CreateOrUpdateOfferProps {
   existingOffer?: Offer | null
   closeDrawer: () => void
   service: ServiceFunction<Offer | null, CreateOrUpdateOfferData>
-  updateOffer?: Dispatch<SetStateAction<boolean>> | undefined
+  updateOffer?: Dispatch<SetStateAction<boolean>>
 }
 
 const CreateOrEditOffer: FC<CreateOrUpdateOfferProps> = ({
