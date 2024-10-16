@@ -67,7 +67,7 @@ describe('ResourceItem tests', () => {
   })
 
   it('should display lesson icon', () => {
-    const lessonIcon = screen.getByTestId('ListAltIcon')
+    const lessonIcon = screen.getByTestId('ArticleOutlinedIcon')
     expect(lessonIcon).toBeInTheDocument()
   })
 
