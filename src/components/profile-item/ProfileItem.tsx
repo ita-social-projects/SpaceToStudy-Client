@@ -8,28 +8,24 @@ import { styles } from '~/components/profile-item/ProfileItem.styles'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import { ProfileItemType } from '~/components/profile-item/complete-profile.constants'
 import { UserRoleEnum } from '~/types'
-import CreateOffer from '~/containers/offer-page/create-offer/CreateOffer'
-import { useDrawer } from '~/hooks/use-drawer'
-import AppDrawer from '~/components/app-drawer/AppDrawer'
 
 interface ProfileItemProps {
   item: ProfileItemType
   isFilled?: boolean
   userRole: UserRoleEnum | ''
+  handleOpenDrawer?: () => void | undefined
 }
 
 const ProfileItem = ({
   item,
   userRole,
-  isFilled = false
+  isFilled = false,
+  handleOpenDrawer = undefined
 }: ProfileItemProps) => {
   const { t } = useTranslation()
   const { isMobile } = useBreakpoints()
   const { id, icon } = item
   const navigate = useNavigate()
-
-  const { openDrawer, closeDrawer, isOpen } = useDrawer()
-  const handleOpenDrawer = () => openDrawer()
 
   const isClickable = !isFilled && item.id !== 'schedule'
   const isOffer = item.id === 'offer'
@@ -39,7 +35,7 @@ const ProfileItem = ({
       navigate(`${item.path}#${item.id}`)
     }
     if (isOffer) {
-      handleOpenDrawer()
+      handleOpenDrawer!()
     }
   }
 
@@ -64,11 +60,6 @@ const ProfileItem = ({
             </Typography>
           </Box>
         </Box>
-        {isOffer && (
-          <AppDrawer onClose={closeDrawer} open={isOpen}>
-            <CreateOffer closeDrawer={closeDrawer} />
-          </AppDrawer>
-        )}
       </Box>
       {isFilled && (
         <CheckIcon

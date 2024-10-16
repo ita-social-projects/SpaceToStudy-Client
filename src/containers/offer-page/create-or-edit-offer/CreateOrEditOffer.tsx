@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react'
+import { FC, useEffect, Dispatch, SetStateAction } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useLocation } from 'react-router-dom'
 import LeakAddSharpIcon from '@mui/icons-material/LeakAddSharp'
@@ -38,15 +38,17 @@ import { openAlert } from '~/redux/features/snackbarSlice'
 import { getErrorKey } from '~/utils/get-error-key'
 
 interface CreateOrUpdateOfferProps {
-  existingOffer: Offer | null
+  existingOffer?: Offer | null
   closeDrawer: () => void
   service: ServiceFunction<Offer | null, CreateOrUpdateOfferData>
+  updateOffer?: Dispatch<SetStateAction<boolean>> | undefined
 }
 
 const CreateOrEditOffer: FC<CreateOrUpdateOfferProps> = ({
   existingOffer = null,
   closeDrawer,
-  service
+  service,
+  updateOffer = undefined
 }) => {
   const { userRole } = useAppSelector((state) => state.appMain)
   const { setNeedConfirmation } = useConfirm()
@@ -77,6 +79,7 @@ const CreateOrEditOffer: FC<CreateOrUpdateOfferProps> = ({
     closeDrawer()
     if (hash == '#offer') {
       navigate(`${authRoutes.myProfile.path}#complete`)
+      updateOffer!(true)
     } else {
       navigate(
         createUrlPath(
