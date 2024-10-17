@@ -54,6 +54,10 @@ const setup = async (filters) => {
   })
 }
 
+beforeEach(() => {
+  vi.clearAllMocks()
+})
+
 describe('CoursesFiltersDrawer', () => {
   describe('with default filters', () => {
     beforeEach(async () => {
