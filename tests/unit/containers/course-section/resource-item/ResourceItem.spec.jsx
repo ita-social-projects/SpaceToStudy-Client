@@ -67,7 +67,7 @@ describe('ResourceItem tests', () => {
   })
 
   it('should display lesson icon', () => {
-    const lessonIcon = screen.getByTestId('ListAltIcon')
+    const lessonIcon = screen.getByTestId('ArticleOutlinedIcon')
     expect(lessonIcon).toBeInTheDocument()
   })
 
@@ -233,7 +233,7 @@ describe('ResourceItem tests when resourceType attachment', () => {
   })
 
   it('should properly display attachment', () => {
-    const attachmentItem = screen.getByText('png')
+    const attachmentItem = screen.getByTestId('DescriptionOutlinedIcon')
 
     expect(attachmentItem).toBeInTheDocument()
   })

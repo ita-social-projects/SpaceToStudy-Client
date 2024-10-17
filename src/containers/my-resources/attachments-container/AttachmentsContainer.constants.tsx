@@ -1,5 +1,6 @@
 import Typography from '@mui/material/Typography'
 import AddIcon from '@mui/icons-material/Add'
+import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined'
 
 import IconExtensionWithTitle from '~/components/icon-extension-with-title/IconExtensionWithTitle'
 import AppChip from '~/components/app-chip/AppChip'
@@ -22,6 +23,7 @@ export const columns = (
     calculatedCellValue: (item: Attachment) => (
       <IconExtensionWithTitle
         description={item.description}
+        icon={<DescriptionOutlinedIcon />}
         title={item.fileName}
       />
     )

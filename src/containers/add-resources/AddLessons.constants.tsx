@@ -1,5 +1,5 @@
-import ListAltIcon from '@mui/icons-material/ListAlt'
 import Typography from '@mui/material/Typography'
+import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined'
 
 import AppChip from '~/components/app-chip/AppChip'
 import IconExtensionWithTitle from '~/components/icon-extension-with-title/IconExtensionWithTitle'
@@ -13,7 +13,10 @@ export const columns = [
     label: 'myResourcesPage.lessons.title',
     field: 'title',
     calculatedCellValue: (lesson: Lesson) => (
-      <IconExtensionWithTitle icon={<ListAltIcon />} title={lesson.title} />
+      <IconExtensionWithTitle
+        icon={<ArticleOutlinedIcon />}
+        title={lesson.title}
+      />
     )
   },
   {

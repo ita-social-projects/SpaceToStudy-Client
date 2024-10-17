@@ -1,4 +1,5 @@
 import Typography from '@mui/material/Typography'
+import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined'
 
 import AppChip from '~/components/app-chip/AppChip'
 import IconExtensionWithTitle from '~/components/icon-extension-with-title/IconExtensionWithTitle'
@@ -16,7 +17,10 @@ export const columns = [
     label: 'myResourcesPage.attachments.file',
     field: 'fileName',
     calculatedCellValue: (attachment: Attachment) => (
-      <IconExtensionWithTitle title={attachment.fileName} />
+      <IconExtensionWithTitle
+        icon={<DescriptionOutlinedIcon />}
+        title={attachment.fileName}
+      />
     )
   },
 
