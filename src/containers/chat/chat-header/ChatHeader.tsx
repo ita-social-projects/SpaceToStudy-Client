@@ -1,4 +1,13 @@
-import { FC, MouseEvent, useRef, useState } from 'react'
+import {
+  FC,
+  MouseEvent,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  Dispatch
+} from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
@@ -14,9 +23,17 @@ import SearchByMessage from '~/components/search-by-message/SearchByMessage'
 import ChatMenu from '~/containers/layout/chat-menu/ChatMenu'
 
 import { styles } from '~/containers/chat/chat-header/ChatHeader.styles'
-import { ChatResponse, UserResponse } from '~/types'
+import {
+  ChatResponse,
+  GetMessagesResponse,
+  MessageInterface,
+  UserResponse
+} from '~/types'
 import { useAppSelector } from '~/hooks/use-redux'
 import { selectIsUserOnline } from '~/redux/selectors/socket-selectors'
+import useAxios from '~/hooks/use-axios'
+import { defaultResponses } from '~/constants'
+import { messageService } from '~/services/message-service'
 
 interface ChatHeaderProps {
   onClick: (e?: MouseEvent<HTMLButtonElement>) => void
@@ -28,6 +45,7 @@ interface ChatHeaderProps {
   messages: { text: string }[]
   onFilteredMessagesChange: (filteredMessages: string[]) => void
   onFilteredIndexChange: (filteredIndex: number) => void
+  setLimit: Dispatch<SetStateAction<number>>
 }
 
 const ChatHeader: FC<ChatHeaderProps> = ({
@@ -39,10 +57,12 @@ const ChatHeader: FC<ChatHeaderProps> = ({
   currentChat,
   messages,
   onFilteredMessagesChange,
-  onFilteredIndexChange
+  onFilteredIndexChange,
+  setLimit
 }) => {
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false)
   const [menuAnchorEl, setMenuAnchorEl] = useState<HTMLElement | null>(null)
+  const [allMessages, setAllMessages] = useState<MessageInterface[]>([])
   const anchorRef = useRef<HTMLDivElement | null>(null)
   const { t } = useTranslation()
   const { isMobile } = useBreakpoints()
@@ -75,6 +95,32 @@ const ChatHeader: FC<ChatHeaderProps> = ({
   const closeSearch = () => {
     setIsSearchOpen(false)
   }
+
+  const getAllMessages = useCallback(
+    () =>
+      messageService.getMessages({
+        chatId: currentChat._id,
+        limit: 100,
+        skip: 0
+      }),
+    [currentChat._id]
+  )
+
+  const onAllMessagesResponse = useCallback((response: GetMessagesResponse) => {
+    const items = response.items ?? []
+    setAllMessages(items)
+  }, [])
+
+  const { fetchData } = useAxios({
+    service: getAllMessages,
+    onResponse: onAllMessagesResponse,
+    defaultResponse: defaultResponses.itemsWithCount,
+    fetchOnMount: false
+  })
+
+  useEffect(() => {
+    void fetchData()
+  }, [fetchData])
 
   const status = isOnline ? (
     <>
@@ -111,10 +157,11 @@ const ChatHeader: FC<ChatHeaderProps> = ({
       {isSearchOpen && (
         <Box sx={styles.searchContainer}>
           <SearchByMessage
+            allMessages={allMessages}
             isCloseSearch={closeSearch}
-            messages={messages}
             onFilteredIndexChange={onFilteredIndexChange}
             onFilteredMessagesChange={onFilteredMessagesChange}
+            setLimit={setLimit}
           />
         </Box>
       )}
