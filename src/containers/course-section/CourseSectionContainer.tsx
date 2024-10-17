@@ -1,5 +1,6 @@
 import { useState, FC, useMemo, useCallback, FocusEvent } from 'react'
 import { useTranslation } from 'react-i18next'
+import { v4 as uuidv4 } from 'uuid'
 
 import { MenuItem } from '@mui/material'
 import Box from '@mui/material/Box'
@@ -45,7 +46,8 @@ import {
   UpdateAttachmentParams,
   CourseResourceEventType,
   CourseSectionEventType,
-  ResourceAvailability
+  ResourceAvailability,
+  ResourcesTypesEnum
 } from '~/types'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { ResourceService } from '~/services/resource-service'
@@ -139,6 +141,20 @@ const CourseSectionContainer: FC<SectionProps> = ({
   )
 
   const deleteResource = (resource: CourseResource) => {
+    if (resource.isDuplicate) {
+      if (resource.resourceType === ResourcesTypesEnum.Lesson) {
+        void ResourceService.deleteLesson(resource._id)
+      }
+
+      if (resource.resourceType === ResourcesTypesEnum.Quiz) {
+        void ResourceService.deleteQuiz(resource._id)
+      }
+
+      if (resource.resourceType === ResourcesTypesEnum.Attachment) {
+        void ResourceService.deleteAttachment(resource._id)
+      }
+    }
+
     resourceEventHandler?.({
       type: CourseResourceEventType.ResourceRemoved,
       sectionId: sectionData.id,
@@ -222,16 +238,56 @@ const CourseSectionContainer: FC<SectionProps> = ({
       sectionId: sectionData.id
     })
   }
-  const handleAddResources = <T extends CourseResource>(
-    newResources: T[],
+
+  const handleAddResources = async <T extends CourseResource>(
+    resources: T[],
     isDuplicate: boolean
   ) => {
+    const newResources: (Lesson | Quiz)[] = []
+    if (isDuplicate) {
+      for (const resource of resources) {
+        if (resource.resourceType === ResourcesTypesEnum.Lesson) {
+          const lesson = resource as Lesson
+
+          const newLesson = await ResourceService.addLesson({
+            title: lesson.title,
+            description: lesson.description,
+            content: lesson.content,
+            attachments: lesson.attachments,
+            category: null,
+            isDuplicate: isDuplicate
+          })
+
+          newResources.push(newLesson.data as Lesson)
+        } else if (resource.resourceType === ResourcesTypesEnum.Quiz) {
+          const quiz = resource as Quiz
+          const newQuiz = await ResourceService.addQuiz({
+            title: quiz.title,
+            description: quiz.description,
+            items: quiz.items,
+            isDuplicate: isDuplicate,
+            resourceType: ResourcesTypesEnum.Quiz,
+            category: null,
+            id: uuidv4()
+          })
+          newResources.push(newQuiz.data as Quiz)
+        }
+      }
+    }
+
     resourceEventHandler?.({
       type: CourseResourceEventType.AddSectionResources,
       sectionId: sectionData.id,
-      resources: newResources,
+      resources: newResources.length ? newResources : resources,
       isDuplicate: isDuplicate
     })
+  }
+
+  const onAddResourcesWrapper = (
+    resources: (Lesson | Quiz | Attachment)[],
+    isDuplicate: boolean
+  ) => {
+    void handleAddResources(resources, isDuplicate)
   }
 
   const handleOpenAddLessonsModal = () => {
@@ -239,7 +295,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
       component: (
         <AddResources<Lesson>
           columns={lessonColumns}
-          onAddResources={handleAddResources}
+          onAddResources={onAddResourcesWrapper}
           removeColumnRules={removeLessonColumnRules}
           requestService={ResourceService.getUsersLessons}
           resourceTab={resourcesData.lessons.resourceTab}
@@ -255,7 +311,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
       component: (
         <AddResources<Quiz>
           columns={quizColumns}
-          onAddResources={handleAddResources}
+          onAddResources={onAddResourcesWrapper}
           removeColumnRules={removeQuizColumnRules}
           requestService={ResourceService.getQuizzes}
           resourceTab={resourcesData.quizzes.resourceTab}
@@ -271,7 +327,7 @@ const CourseSectionContainer: FC<SectionProps> = ({
       component: (
         <AddResources<Attachment>
           columns={attachmentColumns}
-          onAddResources={handleAddResources}
+          onAddResources={onAddResourcesWrapper}
           removeColumnRules={removeAttachmentColumnRules}
           requestService={ResourceService.getAttachments}
           resourceTab={resourcesData.attachments.resourceTab}
