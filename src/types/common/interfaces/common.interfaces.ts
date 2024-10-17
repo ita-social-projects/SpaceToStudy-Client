@@ -3,7 +3,9 @@ import {
   UpdateFiltersInQuery,
   UserResponse,
   UserGeneralInfo,
-  UserRoleEnum
+  UserRoleEnum,
+  Course,
+  Cooperation
 } from '~/types'
 
 export interface ItemsWithCount<T> {
@@ -24,6 +26,11 @@ export interface CategoryAppearance {
 export interface DataByRole<T> {
   [UserRoleEnum.Student]: T
   [UserRoleEnum.Tutor]: T
+}
+
+export type CourseCooperationResponse = {
+  courses: Course[]
+  cooperations: Cooperation[]
 }
 
 export interface CategoryInterface {
