@@ -1,7 +1,8 @@
 {
   "message": {
     "you": "Ви",
-    "noMessages": "Повідомлень немає"
+    "noMessages": "Повідомлень немає",
+    "isTyping": "пише..."
   },
   "status": {
     "online": "В мережі",

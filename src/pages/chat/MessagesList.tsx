@@ -3,12 +3,16 @@ import Box from '@mui/material/Box'
 import SimpleBar from 'simplebar-react'
 import { useTranslation } from 'react-i18next'
 
-import { MessageInterface } from '~/types'
-import { getGroupedByDate, getIsNewDay } from '~/utils/helper-functions'
+import { styles } from '~/pages/chat/Chat.styles'
+
 import ChatDate from '~/containers/chat/chat-date/ChatDate'
 import Message from '~/components/message/Message'
-import { styles } from '~/pages/chat/Chat.styles'
+import TypingBlock from '~/components/typing-block/TypingBlock'
 import AppChip from '~/components/app-chip/AppChip'
+import { useAppSelector } from '~/hooks/use-redux'
+import { selectIsTyping } from '~/redux/selectors/socket-selectors'
+import { Member, MessageInterface } from '~/types'
+import { getGroupedByDate, getIsNewDay } from '~/utils/helper-functions'
 
 interface MessagesListProps {
   messages: MessageInterface[]
@@ -18,6 +22,8 @@ interface MessagesListProps {
   scrollTop: number
   scrollHeight: number
   infiniteLoadCallback: (scrollTop: number, scrollHeight: number) => void
+  chatId: string
+  userToSpeak: Member
 }
 
 const MessagesList = ({
@@ -27,11 +33,14 @@ const MessagesList = ({
   isMessagesLoading,
   infiniteLoadCallback,
   scrollTop,
-  scrollHeight
+  scrollHeight,
+  chatId,
+  userToSpeak
 }: MessagesListProps) => {
   const { t } = useTranslation()
   const observer = useRef<IntersectionObserver>()
   const scrollRef = useRef<HTMLDivElement>()
+  const isTyping = useAppSelector(selectIsTyping(chatId))
 
   useLayoutEffect(() => {
     if (!scrollRef.current) return
@@ -110,6 +119,7 @@ const MessagesList = ({
       style={styles.scrollableContent}
     >
       {messagesListWithDate}
+      {isTyping && <TypingBlock userToSpeak={userToSpeak} />}
     </SimpleBar>
   )
 }

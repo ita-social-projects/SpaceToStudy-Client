@@ -9,8 +9,8 @@ import { messageService } from '~/services/message-service'
 import { useDrawer } from '~/hooks/use-drawer'
 import useAxios from '~/hooks/use-axios'
 import useBreakpoints from '~/hooks/use-breakpoints'
+import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 
-import { useAppSelector } from '~/hooks/use-redux'
 import { useChatContext } from '~/context/chat-context'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import AppDrawer from '~/components/app-drawer/AppDrawer'
@@ -33,6 +33,8 @@ import {
   PositionEnum
 } from '~/types'
 import MessagesList from './MessagesList'
+import { joinChat, leaveChat, sendTyping } from '~/redux/features/socketSlice'
+import { useDebounce } from '~/hooks/use-debounce'
 
 const Chat = () => {
   const { t } = useTranslation()
@@ -50,6 +52,15 @@ const Chat = () => {
   const [prevScrollTop, setPrevScrollTop] = useState(0)
   const { setChatInfo, chatInfo } = useChatContext()
   const { userId: myId } = useAppSelector((state) => state.appMain)
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    dispatch(joinChat())
+
+    return () => {
+      dispatch(leaveChat())
+    }
+  }, [dispatch])
 
   const limit = 15
 
@@ -57,6 +68,15 @@ const Chat = () => {
     () => selectedChat?.members.find((member) => member.user._id !== myId),
     [selectedChat, myId]
   )
+
+  const handleKeyDown = useDebounce(() => {
+    dispatch(
+      sendTyping({
+        chatId: selectedChat!._id,
+        receiverId: userToSpeak!.user._id
+      })
+    )
+  }, 100)
 
   const markedAsDeleted = useMemo<boolean | null>(
     () => selectedChat && selectedChat?.deletedFor?.length > 0,
@@ -218,6 +238,7 @@ const Chat = () => {
       <ChatTextArea
         label={t('chatPage.chat.inputLabel')}
         onClick={() => void onMessageSend()}
+        onKeyDown={handleKeyDown}
         setValue={setTextAreaValue}
         value={textAreaValue}
       />
@@ -286,6 +307,7 @@ const Chat = () => {
                   />
                 )}
                 <MessagesList
+                  chatId={selectedChat._id}
                   filteredIndex={filteredIndex}
                   filteredMessages={filteredMessages}
                   infiniteLoadCallback={handleInifiniteLoad}
@@ -293,6 +315,7 @@ const Chat = () => {
                   messages={messages}
                   scrollHeight={!skip ? 0 : prevScrollHeight}
                   scrollTop={!skip ? 0 : prevScrollTop}
+                  userToSpeak={userToSpeak as Member}
                 />
                 {renderChatTextArea()}
               </>

@@ -6,6 +6,10 @@ vi.mock('~/components/message/Message', () => ({
   default: vi.fn(() => <div data-testid='mock-message'>Mock Message</div>)
 }))
 
+vi.mock('~/components/typing-block/TypingBlock', () => ({
+  default: vi.fn(() => <div>Typing animation</div>)
+}))
+
 vi.spyOn(window, "getComputedStyle").mockReturnValue(new CSSStyleDeclaration)
 
 global.IntersectionObserver = vi.fn().mockImplementation((callback) => ({

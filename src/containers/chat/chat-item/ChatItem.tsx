@@ -5,7 +5,10 @@ import Typography from '@mui/material/Typography'
 import Badge from '@mui/material/Badge'
 
 import AvatarIcon from '~/components/avatar-icon/AvatarIcon'
-import { selectIsUserOnline } from '~/redux/selectors/socket-selectors'
+import {
+  selectIsTyping,
+  selectIsUserOnline
+} from '~/redux/selectors/socket-selectors'
 
 import { useAppSelector } from '~/hooks/use-redux'
 
@@ -39,6 +42,7 @@ const ChatItem: FC<ItemOfChatProps> = ({
     [chat, userId]
   ) as Member
   const isOnline = useAppSelector(selectIsUserOnline(userToSpeak.user._id))
+  const isTyping = useAppSelector(selectIsTyping(chat._id))
 
   const firstName = userToSpeak?.user.firstName
   const lastName = userToSpeak?.user.lastName
@@ -114,9 +118,16 @@ const ChatItem: FC<ItemOfChatProps> = ({
           <Typography sx={styles.lastTimeMessage}>{formattedTime}</Typography>
         </Box>
         <Box sx={styles.messageBlock}>
-          {isCurrentUser}
-          <Typography sx={styles.message}>{text}</Typography>
-
+          {isTyping ? (
+            <Typography sx={styles.isTypingMessage}>
+              {t('chatPage.message.isTyping')}
+            </Typography>
+          ) : (
+            <>
+              {isCurrentUser}
+              <Typography sx={styles.message}>{text}</Typography>
+            </>
+          )}
           <Box>
             <Typography sx={styles.amountOfmessages}>{3}</Typography>
           </Box>
