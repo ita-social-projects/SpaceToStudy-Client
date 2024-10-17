@@ -9,6 +9,7 @@ import ChatDate from '~/containers/chat/chat-date/ChatDate'
 import Message from '~/components/message/Message'
 import { styles } from '~/pages/chat/Chat.styles'
 import AppChip from '~/components/app-chip/AppChip'
+import Loader from '~/components/loader/Loader'
 
 interface MessagesListProps {
   messages: MessageInterface[]
@@ -18,6 +19,7 @@ interface MessagesListProps {
   scrollTop: number
   scrollHeight: number
   infiniteLoadCallback: (scrollTop: number, scrollHeight: number) => void
+  skip: number
 }
 
 const MessagesList = ({
@@ -27,7 +29,8 @@ const MessagesList = ({
   isMessagesLoading,
   infiniteLoadCallback,
   scrollTop,
-  scrollHeight
+  scrollHeight,
+  skip
 }: MessagesListProps) => {
   const { t } = useTranslation()
   const observer = useRef<IntersectionObserver>()
@@ -60,6 +63,10 @@ const MessagesList = ({
     },
     [isMessagesLoading, infiniteLoadCallback]
   )
+
+  if (isMessagesLoading && !skip) {
+    return <Loader size={100} sx={styles.loader} />
+  }
 
   if (messages.length === 0) {
     return (

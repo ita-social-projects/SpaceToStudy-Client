@@ -50,8 +50,7 @@ const Chat = () => {
   const [prevScrollTop, setPrevScrollTop] = useState(0)
   const { setChatInfo, chatInfo } = useChatContext()
   const { userId: myId } = useAppSelector((state) => state.appMain)
-
-  const limit = 15
+  const [limit, setLimit] = useState<number>(15)
 
   const userToSpeak = useMemo<Member | undefined>(
     () => selectedChat?.members.find((member) => member.user._id !== myId),
@@ -119,7 +118,7 @@ const Chat = () => {
         limit,
         skip
       }),
-    [selectedChat?._id, skip]
+    [selectedChat?._id, skip, limit]
   )
 
   const {
@@ -153,7 +152,7 @@ const Chat = () => {
 
   useEffect(() => {
     selectedChat && void fetchData()
-  }, [selectedChat, fetchData])
+  }, [selectedChat, fetchData, limit])
 
   useEffect(() => {
     const currentChatId = localStorage.getItem('currentChatId')
@@ -171,7 +170,7 @@ const Chat = () => {
     }
   }, [listOfChats, lastOpenedChat, selectedChat])
 
-  if (loading || (isMessagesLoading && !skip)) {
+  if (loading) {
     return <Loader size={100} />
   }
 
@@ -209,12 +208,18 @@ const Chat = () => {
       ? `${userToSpeak.user.firstName} ${userToSpeak.user.lastName}`
       : t('chatPage.interlocutor')
 
-    return markedAsDeleted ? (
-      <AppChip labelSx={styles.warningLabel} sx={styles.warningChip}>
-        <WarningAmberRoundedIcon />
-        {t('chatPage.deletedChip', { userName: userName })}
-      </AppChip>
-    ) : (
+    if (isMessagesLoading) return
+
+    if (markedAsDeleted) {
+      return (
+        <AppChip labelSx={styles.warningLabel} sx={styles.warningChip}>
+          <WarningAmberRoundedIcon />
+          {t('chatPage.deletedChip', { userName: userName })}
+        </AppChip>
+      )
+    }
+
+    return (
       <ChatTextArea
         label={t('chatPage.chat.inputLabel')}
         onClick={() => void onMessageSend()}
@@ -280,6 +285,7 @@ const Chat = () => {
                     onFilteredIndexChange={hadleIndexMessage}
                     onFilteredMessagesChange={handleFilteredMessage}
                     onMenuClick={openChatsHandler}
+                    setLimit={setLimit}
                     updateChats={handleUpdateChats}
                     updateMessages={fetchData}
                     user={userToSpeak?.user}
@@ -293,6 +299,7 @@ const Chat = () => {
                   messages={messages}
                   scrollHeight={!skip ? 0 : prevScrollHeight}
                   scrollTop={!skip ? 0 : prevScrollTop}
+                  skip={skip}
                 />
                 {renderChatTextArea()}
               </>
