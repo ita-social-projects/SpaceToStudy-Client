@@ -13,14 +13,14 @@ interface ProfileItemProps {
   item: ProfileItemType
   isFilled?: boolean
   userRole: UserRoleEnum | ''
-  handleOpenDrawer?: () => void | undefined
+  handleOpenDrawer?: () => void
 }
 
 const ProfileItem = ({
   item,
   userRole,
   isFilled = false,
-  handleOpenDrawer = undefined
+  handleOpenDrawer
 }: ProfileItemProps) => {
   const { t } = useTranslation()
   const { isMobile } = useBreakpoints()

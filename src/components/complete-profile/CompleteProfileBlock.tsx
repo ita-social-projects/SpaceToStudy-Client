@@ -47,7 +47,6 @@ const CompleteProfileBlock: FC<CompleteProfileBlockProps> = ({
 
   const { openDrawer, closeDrawer, isOpen: isDrawerOpen } = useDrawer()
   const [isOfferCreated, setIsOfferCreated] = useState(false)
-  const handleOpenDrawer = () => openDrawer()
 
   useEffect(() => {
     if (openAccordion) {
@@ -60,6 +59,7 @@ const CompleteProfileBlock: FC<CompleteProfileBlockProps> = ({
       OfferService.getUsersOffers({
         id: userId
       }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [userId, isOfferCreated]
   )
 
@@ -106,14 +106,14 @@ const CompleteProfileBlock: FC<CompleteProfileBlockProps> = ({
     () =>
       profileItems.map((item) => (
         <ProfileItem
-          handleOpenDrawer={handleOpenDrawer}
+          handleOpenDrawer={openDrawer}
           isFilled={checkProfileData.includes(item)}
           item={item}
           key={item.id}
           userRole={userRole}
         />
       )),
-    [profileItems, checkProfileData, userRole]
+    [profileItems, checkProfileData, userRole, openDrawer]
   )
 
   const handleToggleMenu = () => {

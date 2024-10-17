@@ -11,10 +11,7 @@ interface CreateOfferProps {
   updateOffer?: Dispatch<SetStateAction<boolean>>
 }
 
-const CreateOffer: FC<CreateOfferProps> = ({
-  closeDrawer,
-  updateOffer = undefined
-}) => {
+const CreateOffer: FC<CreateOfferProps> = ({ closeDrawer, updateOffer }) => {
   const postOffer = useCallback(
     (data: CreateOrUpdateOfferData) =>
       OfferService.createOffer({ ...data, FAQ: findFullObjects(data.FAQ) }),

@@ -48,7 +48,7 @@ const CreateOrEditOffer: FC<CreateOrUpdateOfferProps> = ({
   existingOffer = null,
   closeDrawer,
   service,
-  updateOffer = undefined
+  updateOffer
 }) => {
   const { userRole } = useAppSelector((state) => state.appMain)
   const { setNeedConfirmation } = useConfirm()
