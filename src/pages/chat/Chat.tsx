@@ -315,7 +315,7 @@ const Chat = () => {
                   messages={messages}
                   scrollHeight={!skip ? 0 : prevScrollHeight}
                   scrollTop={!skip ? 0 : prevScrollTop}
-                  userToSpeak={userToSpeak!}
+                  userToSpeak={userToSpeak as Member}
                 />
                 {renderChatTextArea()}
               </>
