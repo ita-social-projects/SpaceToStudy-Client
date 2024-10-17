@@ -7,6 +7,7 @@ describe('SearchByMessage', () => {
   const onFilteredMessagesChange = vi.fn()
   const onFilteredIndexChange = vi.fn()
   const isCloseSearch = vi.fn()
+  const setLimit = vi.fn()
   const mockMessage = [
     {
       _id: '64ee0a2f6ae3b95ececb05b5',
@@ -43,6 +44,8 @@ describe('SearchByMessage', () => {
         messages={mockMessage}
         onFilteredIndexChange={onFilteredIndexChange}
         onFilteredMessagesChange={onFilteredMessagesChange}
+        allMessages={mockMessage}
+        setLimit={setLimit}
       />
     )
   })

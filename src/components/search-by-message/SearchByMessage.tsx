@@ -1,4 +1,11 @@
-import { useState, ChangeEvent, useEffect, FC } from 'react'
+import {
+  useState,
+  ChangeEvent,
+  useEffect,
+  FC,
+  SetStateAction,
+  Dispatch
+} from 'react'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 
@@ -7,19 +14,22 @@ import IconsWithCounter from '~/components/icons-with-counter/IconsWithCounter'
 import { useDebounce } from '~/hooks/use-debounce'
 
 import { styles } from '~/components/search-by-message/SearchByMessage.styles'
+import { MessageInterface } from '~/types'
 
 interface SearchByMessageProps {
-  messages: { text: string }[]
   onFilteredMessagesChange: (filteredMessages: string[]) => void
   onFilteredIndexChange: (filteredIndex: number) => void
   isCloseSearch: () => void
+  allMessages: MessageInterface[]
+  setLimit: Dispatch<SetStateAction<number>>
 }
 
 const SearchByMessage: FC<SearchByMessageProps> = ({
-  messages,
   onFilteredMessagesChange,
   onFilteredIndexChange,
-  isCloseSearch
+  isCloseSearch,
+  allMessages,
+  setLimit
 }) => {
   const { t } = useTranslation()
   const [search, setSearch] = useState<string>('')
@@ -36,9 +46,21 @@ const SearchByMessage: FC<SearchByMessageProps> = ({
   }
   useEffect(() => {
     if (search) {
-      const filtered = messages.filter((message) =>
-        message.text.toLowerCase().includes(search.toLowerCase())
-      )
+      const possibleMessage: number[] = []
+      const filtered = allMessages.filter((message, index) => {
+        const isMatch = message.text
+          .toLowerCase()
+          .includes(search.toLowerCase())
+
+        if (isMatch) {
+          possibleMessage.push(index)
+        }
+        const maxNumber = Math.max(...possibleMessage)
+        setLimit(maxNumber + 1)
+
+        return isMatch
+      })
+
       const filteredMessages = filtered.map((item) => item.text)
 
       debouncedOnFilteredMessagesChange(filteredMessages)
@@ -48,7 +70,7 @@ const SearchByMessage: FC<SearchByMessageProps> = ({
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [search, messages])
+  }, [search, allMessages])
 
   const onClose = () => {
     setSearch('')
