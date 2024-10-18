@@ -1,12 +1,11 @@
-import {
-  AxiosError,
-  InternalAxiosRequestConfig,
-  AxiosHeaders,
-  AxiosResponse
-} from 'axios'
+import { InternalAxiosRequestConfig, AxiosHeaders, AxiosResponse } from 'axios'
 import { axiosClient } from '~/plugins/axiosClient'
 import i18n from '~/plugins/i18n'
-import { authService } from '~/services/auth-service'
+import { checkAuth } from '~/redux/reducer'
+import { store } from '~/redux/store'
+import { router } from '~/router/router'
+import { AxiosResponseError } from '~/types'
+import { authRoutes } from '~/router/constants/authRoutes'
 
 export const setupInterceptors = (): void => {
   axiosClient.interceptors.request.use((config: InternalAxiosRequestConfig) => {
@@ -21,16 +20,25 @@ export const setupInterceptors = (): void => {
     (response: AxiosResponse) => {
       return response
     },
-    async (error: AxiosError) => {
-      const originalRequest = error.config as InternalAxiosRequestConfig
-      if (error.code === 'UNAUTHORIZED' && error.config) {
-        try {
-          return await axiosClient.request(originalRequest)
-        } catch (e) {
-          return authService.endpoints.logout.initiate()
-        }
+    async (error: AxiosResponseError) => {
+      if (error.response?.data.code !== 'UNAUTHORIZED') {
+        return Promise.resolve(error)
       }
-      return Promise.reject(error)
+
+      const originalRequest = error.config as InternalAxiosRequestConfig
+      if (
+        error.response?.data.code === 'UNAUTHORIZED' &&
+        error.config &&
+        !error.config._isRetry
+      ) {
+        error.config._isRetry = true
+        await store.dispatch(checkAuth())
+        return axiosClient.request(originalRequest)
+      } else {
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
+        router.navigate(authRoutes.accountMenu.logout.path)
+        return Promise.resolve(error)
+      }
     }
   )
 }
