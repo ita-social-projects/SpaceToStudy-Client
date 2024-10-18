@@ -5,19 +5,12 @@ import { useTranslation } from 'react-i18next'
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline'
 
 import AppButton from '~/components/app-button/AppButton'
-
-import {
-  ButtonVariantEnum,
-  Course,
-  GetCoursesParams,
-  ItemsWithCount,
-  SizeEnum
-} from '~/types'
 import { styles } from '~/containers/change-resource-confirm-modal/ChangeResourceConfirmModal.styles'
 import { useModalContext } from '~/context/modal-context'
 import Loader from '~/components/loader/Loader'
 import useAxios from '~/hooks/use-axios'
-import { CourseService } from '~/services/course-service'
+import { CoursesAndCooperationsService } from '~/services/course-cooperation-service'
+import { ButtonVariantEnum, CourseCooperationResponse, SizeEnum } from '~/types'
 
 interface ChangeResourceConfirmModalProps {
   resourceId?: string
@@ -26,40 +19,43 @@ interface ChangeResourceConfirmModalProps {
 }
 
 const ChangeResourceConfirmModal = ({
-  resourceId,
+  resourceId = '',
   title,
   onConfirm
 }: ChangeResourceConfirmModalProps) => {
   const { t } = useTranslation()
   const { closeModal } = useModalContext()
 
-  //! replace when new endpoint is ready
-  const { response: coursesResponse, loading } = useAxios<
-    ItemsWithCount<Course>,
-    GetCoursesParams
-  >({
-    service: CourseService.getCourses,
-    defaultResponse: { items: [], count: 0 },
+  const getCoursesAndCooperationsByResourceId = useCallback(
+    () => CoursesAndCooperationsService.getByResourceId(resourceId),
+    [resourceId]
+  )
+
+  const { response, loading } = useAxios({
+    service: getCoursesAndCooperationsByResourceId,
+    defaultResponse: {
+      courses: [],
+      cooperations: []
+    } as CourseCooperationResponse,
     fetchOnMount: true
   })
 
-  const courseList = useMemo(
-    () =>
-      coursesResponse.items
-        .filter((item) => item.sections[0].resources?.length)
-        .filter((item) =>
-          item.sections.some((res) =>
-            res.resources.some((val) => val.resource._id == resourceId)
-          )
-        )
-        .map((item) => ({
-          id: item._id,
-          title: item.title,
-          subTitle: 'course'
-        })),
-    [coursesResponse.items, resourceId]
+  const courses = response.courses.map((course) => ({
+    id: course._id,
+    title: course.title,
+    subTitle: 'course'
+  }))
+
+  const cooperations = response?.cooperations.map((cooperation) => ({
+    id: cooperation._id,
+    title: cooperation.title,
+    subTitle: 'cooperation'
+  }))
+
+  const affectedItems = useMemo(
+    () => [...courses, ...cooperations],
+    [courses, cooperations]
   )
-  ////////////////////////////////////!
 
   const handleConfirm = useCallback(() => {
     closeModal()
@@ -67,10 +63,10 @@ const ChangeResourceConfirmModal = ({
   }, [closeModal, onConfirm])
 
   useEffect(() => {
-    if (!loading && !courseList?.length) {
+    if (!loading && !affectedItems.length) {
       handleConfirm()
     }
-  }, [courseList, handleConfirm, loading])
+  }, [affectedItems, handleConfirm, loading])
 
   if (loading) {
     return (
@@ -80,7 +76,7 @@ const ChangeResourceConfirmModal = ({
     )
   }
 
-  if (!loading && !courseList?.length) {
+  if (!loading && !affectedItems?.length) {
     return null
   }
 
@@ -107,7 +103,7 @@ const ChangeResourceConfirmModal = ({
         </Typography>
       </Box>
       <Box sx={styles.lessonsListContainer}>
-        {courseList.map((el) => (
+        {affectedItems.map((el) => (
           <Box key={el.id} sx={styles.listItems}>
             <Typography sx={styles.listTitles}>{el.title}</Typography>
             <Typography sx={styles.listSubtitle}>

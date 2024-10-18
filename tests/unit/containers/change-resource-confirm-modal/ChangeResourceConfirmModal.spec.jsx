@@ -25,7 +25,7 @@ const props = {
 }
 
 const fakeData = {
-  items: [
+  courses: [
     {
       _id: 'testId1',
       title: 'Course 1',
@@ -75,7 +75,7 @@ const fakeData = {
       ]
     }
   ],
-  count: 2
+  cooperations: []
 }
 
 describe('ChangeResourceConfirmModal component tests', () => {

@@ -37,6 +37,9 @@ export const URLs = {
     create: '/courses',
     patch: '/courses'
   },
+  coursesAndCooperations: {
+    getByResourceId: '/courses-cooperations/resource/'
+  },
   categories: {
     get: '/categories',
     getNames: '/categories/names',
