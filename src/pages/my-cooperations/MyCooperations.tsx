@@ -1,6 +1,6 @@
-import { useCallback, useLayoutEffect, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
@@ -30,8 +30,10 @@ import {
   tabsInfo
 } from '~/pages/my-cooperations/MyCooperations.constants'
 import { itemsLoadLimit } from '~/constants'
-import { CardsViewEnum, TabType } from '~/types'
+import { CardsViewEnum, Entries, TabType } from '~/types'
 import { styles } from '~/pages/my-cooperations/MyCooperations.styles'
+
+type TabKey = keyof typeof tabsInfo
 
 const MyCooperations = () => {
   const [itemsView, setItemsView] = useState<CardsViewEnum>(
@@ -40,8 +42,13 @@ const MyCooperations = () => {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
   const breakpoints = useBreakpoints()
+  const [searchParams, setSearchParams] = useSearchParams()
+  const activeTab = searchParams.get('tab')
   const filterOptions = useFilter({
-    initialFilters
+    initialFilters: {
+      ...initialFilters,
+      status: activeTab ? tabsInfo[activeTab as TabKey].value : ''
+    }
   })
   const sortOptions = useSort({
     initialSort
@@ -49,6 +56,12 @@ const MyCooperations = () => {
   const { page, handleChangePage } = usePagination()
   const { sort, resetSort } = sortOptions
   const { filters, clearFilters, setFilterByKey } = filterOptions
+
+  useEffect(() => {
+    if (!activeTab) {
+      setSearchParams({ tab: Object.keys(tabsInfo)[0] })
+    }
+  }, [activeTab, setSearchParams])
 
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
   const showTable = !breakpoints.isMobile && itemsView === CardsViewEnum.Inline
@@ -74,21 +87,24 @@ const MyCooperations = () => {
     defaultResponse
   })
 
-  const handleTabClick = (tab: TabType<string>) => {
+  const handleTabClick = (tabName: TabKey, tab: TabType<string>) => {
     clearFilters()
     resetSort()
     setFilterByKey('status')(tab.value)
+    setSearchParams({ tab: tabName })
   }
 
-  const tabs = Object.values(tabsInfo).map((tab) => (
-    <Tab
-      activeTab={filters.status === tab.value}
-      key={tab.label}
-      onClick={() => handleTabClick(tab)}
-    >
-      {t(tab.label)}
-    </Tab>
-  ))
+  const tabs = (Object.entries(tabsInfo) as Entries<typeof tabsInfo>).map(
+    ([key, tab]) => (
+      <Tab
+        activeTab={activeTab === key}
+        key={tab.label}
+        onClick={() => handleTabClick(key, tab)}
+      >
+        {t(tab.label)}
+      </Tab>
+    )
+  )
 
   const sortFields = sortTranslationKeys.map(({ title, value }) => ({
     title: t(title),
