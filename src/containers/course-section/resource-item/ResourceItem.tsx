@@ -146,7 +146,7 @@ const ResourceItem: FC<ResourceItemProps> = ({
       }}
     >
       {availabilityIcon}
-      {formattedDate || status}
+      {formattedDate ?? status}
     </Box>
   )
 
