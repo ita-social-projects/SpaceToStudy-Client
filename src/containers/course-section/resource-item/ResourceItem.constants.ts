@@ -5,9 +5,9 @@ import {
 } from '~/types'
 import { resourcesData } from '~/containers/course-section/CourseSectionContainer.constants'
 
-import openIcon from '~/assets/img/cooperation-details/resource-availability/open-icon.svg'
-import openFrom from '~/assets/img/cooperation-details/resource-availability/open-from.svg'
-import closedIcon from '~/assets/img/cooperation-details/resource-availability/closed-icon.svg'
+import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined'
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
+import { SvgIconComponent } from '@mui/icons-material'
 
 export const selectionFields = [
   {
@@ -24,15 +24,18 @@ export const selectionFields = [
   }
 ]
 
-export const availabilityIcons: Record<ResourceAvailabilityStatusEnum, string> =
-  {
-    [ResourceAvailabilityStatusEnum.Open]: openIcon,
-    [ResourceAvailabilityStatusEnum.OpenFrom]: openFrom,
-    [ResourceAvailabilityStatusEnum.Closed]: closedIcon
-  }
+export const availabilityIcons: Record<
+  ResourceAvailabilityStatusEnum,
+  SvgIconComponent
+> = {
+  [ResourceAvailabilityStatusEnum.Open]: CheckCircleOutlineOutlinedIcon,
+  [ResourceAvailabilityStatusEnum.OpenFrom]: LockOutlinedIcon,
+  [ResourceAvailabilityStatusEnum.Closed]: LockOutlinedIcon
+}
 
 export const resourceIcons: Partial<Record<ResourceType, JSX.Element | null>> =
   {
     [ResourceType.Lesson]: resourcesData.lessons.icon,
-    [ResourceType.Quiz]: resourcesData.quizzes.icon
+    [ResourceType.Quiz]: resourcesData.quizzes.icon,
+    [ResourceType.Attachment]: resourcesData.attachments.icon
   }

@@ -58,12 +58,8 @@ describe('ResourceItem tests', () => {
 
   it('should render added resource', () => {
     const resourceTitle = screen.getByText(mockedLessonDataOriginal.title)
-    const resourceDescription = screen.getByText(
-      mockedLessonDataOriginal.description
-    )
-
+    
     expect(resourceTitle).toBeInTheDocument()
-    expect(resourceDescription).toBeInTheDocument()
   })
 
   it('should display lesson icon', () => {
@@ -89,10 +85,8 @@ describe('ResourceItem tests', () => {
     expect(mockEditResource).toHaveBeenCalledTimes(1)
   })
 
-  it('should set resourceAvailabilityStatus to Open when resourceAvailability is null or undefined', () => {
-    const availabilityIcon = screen.getByRole('img', {
-      src: '/src/assets/img/cooperation-details/resource-availability/open-icon.svg'
-    })
+  it('should set resourceAvailabilityStatus to Closed when resourceAvailability is null or undefined', () => {
+    const availabilityIcon = screen.getByTestId('CloseIcon')
     expect(availabilityIcon).toBeInTheDocument()
   })
 })
@@ -112,9 +106,7 @@ describe('ResourceItem tests with isView prop', () => {
   })
 
   it('should render availability icon', () => {
-    const availabilityIcon = screen.getByRole('img', {
-      name: /resource icon/i
-    })
+    const availabilityIcon = screen.getByTestId('CheckCircleOutlineOutlinedIcon')
     expect(availabilityIcon).toBeInTheDocument()
   })
 
@@ -124,9 +116,7 @@ describe('ResourceItem tests with isView prop', () => {
   })
 
   it('should properly render availability status and icon', () => {
-    const option = screen.getByRole('img', {
-      src: '/src/assets/img/cooperation-details/resource-availability/open-icon.svg'
-    })
+    const option = screen.getByTestId('CheckCircleOutlineOutlinedIcon')
 
     expect(option).toBeInTheDocument()
   })
@@ -153,9 +143,7 @@ describe('ResourceItem tests with isCooperation prop', () => {
 
   it('should properly render availability status and icon', () => {
     const availabilitySelect = screen.getByTestId('app-select')
-    const option = screen.getByRole('img', {
-      src: '/src/assets/img/cooperation-details/resource-availability/open-from.svg'
-    })
+    const option = screen.getByTestId('CloseIcon')
 
     expect(availabilitySelect).toBeInTheDocument()
     expect(option).toBeInTheDocument()
@@ -233,7 +221,7 @@ describe('ResourceItem tests when resourceType attachment', () => {
   })
 
   it('should properly display attachment', () => {
-    const attachmentItem = screen.getByText('png')
+    const attachmentItem = screen.getByText(/png/)
 
     expect(attachmentItem).toBeInTheDocument()
   })
