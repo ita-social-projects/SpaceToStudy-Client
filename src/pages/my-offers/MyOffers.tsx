@@ -33,10 +33,10 @@ import {
   sortTranslationKeys,
   tabsInfo
 } from '~/pages/my-offers/MyOffers.constants'
-import { CardsViewEnum, Entries, TabType } from '~/types'
+import { CardsViewEnum, Entries } from '~/types'
 import { setPageLoad } from '~/redux/reducer'
 
-type TabKey = keyof typeof tabsInfo
+type TabName = keyof typeof tabsInfo
 
 const MyOffers = () => {
   const [itemsView, setItemsView] = useState<CardsViewEnum>(
@@ -50,7 +50,7 @@ const MyOffers = () => {
   const filterOptions = useFilter({
     initialFilters: {
       ...initialFilters,
-      status: activeTab ? tabsInfo[activeTab as TabKey].value : ''
+      status: activeTab ? tabsInfo[activeTab as TabName].value : ''
     }
   })
   const sortOptions = useSort({
@@ -65,9 +65,7 @@ const MyOffers = () => {
   const handleOpenDrawer = () => openDrawer()
 
   useEffect(() => {
-    if (!activeTab) {
-      setSearchParams({ tab: Object.keys(tabsInfo)[0] })
-    }
+    if (!activeTab) setSearchParams({ tab: Object.keys(tabsInfo)[0] })
   }, [activeTab, setSearchParams])
 
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
@@ -93,19 +91,19 @@ const MyOffers = () => {
     defaultResponse
   })
 
-  const handleTabClick = (tabName: TabKey, tab: TabType<string>) => {
+  const handleTabClick = (tabName: TabName, tabValue: string) => {
+    setSearchParams({ tab: tabName })
     clearFilters()
     resetSort()
-    setFilterByKey('status')(tab.value)
-    setSearchParams({ tab: tabName })
+    setFilterByKey('status')(tabValue)
   }
 
   const tabs = (Object.entries(tabsInfo) as Entries<typeof tabsInfo>).map(
-    ([key, tab]) => (
+    ([tabName, tab]) => (
       <Tab
-        activeTab={activeTab === key}
+        activeTab={activeTab === tabName}
         key={tab.label}
-        onClick={() => handleTabClick(key, tab)}
+        onClick={() => handleTabClick(tabName, tab.value)}
       >
         {t(tab.label)}
       </Tab>
