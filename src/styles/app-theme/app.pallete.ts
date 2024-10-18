@@ -15,6 +15,7 @@ const palette = {
     burntOrange: '#F56F36',
     yellowBrown: '#F5D636',
     yellowGreen: '#9BC541',
+    yellowDark: '#948760',
     fruitSalad: '#4CAF50',
     orientalHerbs: '#12A03A',
     lime: '#99CC00',

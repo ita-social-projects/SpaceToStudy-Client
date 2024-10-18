@@ -8,17 +8,17 @@ import IconButton from '@mui/material/IconButton'
 import CloseIcon from '@mui/icons-material/Close'
 import EditIcon from '@mui/icons-material/Edit'
 import LinkRoundedIcon from '@mui/icons-material/LinkRounded'
+import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined'
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
+
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
-
 import AppSelect from '~/components/app-select/AppSelect'
-import IconExtensionWithTitle from '~/components/icon-extension-with-title/IconExtensionWithTitle'
 import { cooperationsSelector } from '~/redux/features/cooperationsSlice'
 import { useAppSelector } from '~/hooks/use-redux'
 
 import {
-  availabilityIcons,
   resourceIcons,
   selectionFields
 } from '~/containers/course-section/resource-item/ResourceItem.constants'
@@ -32,6 +32,8 @@ import {
   ResourcesTypesEnum as ResourceType,
   SizeEnum
 } from '~/types'
+import { getFormattedDate } from '~/utils/helper-functions'
+import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 
 interface ResourceItemProps {
   resource: CourseResource
@@ -45,6 +47,7 @@ interface ResourceItemProps {
   ) => void
   isView?: boolean
   isCooperation?: boolean
+  isDone?: boolean
 }
 
 const ResourceItem: FC<ResourceItemProps> = ({
@@ -61,7 +64,7 @@ const ResourceItem: FC<ResourceItemProps> = ({
   const navigate = useNavigate()
   const { resourcesAvailability } = useAppSelector(cooperationsSelector)
 
-  const { isDuplicate, description } = resource
+  const { isDuplicate } = resource
 
   const routeMap = {
     [ResourceType.Lesson]: 'lesson-details/',
@@ -91,20 +94,19 @@ const ResourceItem: FC<ResourceItemProps> = ({
     return resourceIcons[type] ?? null
   }, [resourceType, resource.resourceType])
 
-  const resourceAvailabilityStatus =
-    availability?.status ?? ResourceAvailabilityStatusEnum.Open
+  const status = availability?.status ?? ResourceAvailabilityStatusEnum.Open
 
   const shouldShowDatePicker =
-    resourceAvailabilityStatus === ResourceAvailabilityStatusEnum.OpenFrom
+    status === ResourceAvailabilityStatusEnum.OpenFrom
 
   const setOpenFromDate = useCallback(
     (date: Date | null) => {
       updateAvailability?.(resource, {
-        status: resourceAvailabilityStatus,
+        status,
         date: date?.toISOString() ?? null
       })
     },
-    [resource, resourceAvailabilityStatus, updateAvailability]
+    [resource, status, updateAvailability]
   )
 
   const setAvailabilityStatus = useCallback(
@@ -117,23 +119,52 @@ const ResourceItem: FC<ResourceItemProps> = ({
     [resource, updateAvailability]
   )
 
-  const availabilityIcon = (
-    <Box sx={styles.availabilityIcon}>
-      <img
-        alt='resource icon'
-        src={availabilityIcons[resourceAvailabilityStatus]}
-      />
+  const formattedDate = availability?.date
+    ? getFormattedDate({
+        date: availability?.date,
+        options: {
+          month: 'short',
+          day: 'numeric',
+          year: 'numeric'
+        }
+      })
+    : undefined
+
+  const availabilityIcon =
+    availability?.status === ResourceAvailabilityStatusEnum.Open ? (
+      <CheckCircleOutlineOutlinedIcon sx={styles.availabilityStatus.icon} />
+    ) : (
+      <LockOutlinedIcon sx={styles.availabilityStatus.icon} />
+    )
+
+  const availabilityStatus = (
+    <Box
+      sx={{
+        ...styles.availabilityStatus,
+        color: styles.availabilityStatus.color[status],
+        background: styles.availabilityStatus.background[status]
+      }}
+    >
+      {availabilityIcon}
+      {formattedDate ?? status}
     </Box>
   )
 
   const availabilitySelection = (
     <Box sx={styles.availabilitySelectionContainer}>
-      {availabilityIcon}
+      <Box
+        sx={{
+          ...styles.availabilitySectionIcon,
+          color: styles.availabilityStatus.color[status]
+        }}
+      >
+        {isCooperation && availabilityIcon}
+      </Box>
       <AppSelect
         fields={selectionFields}
         setValue={setAvailabilityStatus}
         sx={styles.availabilitySelect}
-        value={resourceAvailabilityStatus}
+        value={status}
       />
       {shouldShowDatePicker && (
         <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -173,11 +204,7 @@ const ResourceItem: FC<ResourceItemProps> = ({
   )
 
   const onResourceItemClick = () => {
-    if (
-      !isView ||
-      resourceAvailabilityStatus !== ResourceAvailabilityStatusEnum.Open
-    )
-      return
+    if (!isView || status !== ResourceAvailabilityStatusEnum.Open) return
     const type = resourceType ?? resource.resourceType
 
     if (type === ResourceType.Attachment) {
@@ -194,15 +221,22 @@ const ResourceItem: FC<ResourceItemProps> = ({
 
   return (
     <Box onClick={onResourceItemClick} sx={styles.container(isView)}>
-      <IconExtensionWithTitle
-        description={description ?? ''}
-        icon={renderResourceIcon()}
-        title={'title' in resource ? resource.title : resource.fileName}
-      />
+      <Box
+        sx={{
+          ...styles.titleWithDescriptionWrapper,
+          opacity: status !== ResourceAvailabilityStatusEnum.Open ? '60%' : ''
+        }}
+      >
+        {renderResourceIcon()}
+        <TitleWithDescription
+          description={'title' in resource ? resource.title : resource.fileName}
+          style={styles.titleWithDescription}
+          title={resource.resourceType}
+        />
+      </Box>
+
       <Box sx={styles.resourceActions}>
-        {isView
-          ? resourceAvailabilityStatus && availabilityIcon
-          : actionButtons}
+        {isView ? status && availabilityStatus : actionButtons}
       </Box>
     </Box>
   )
