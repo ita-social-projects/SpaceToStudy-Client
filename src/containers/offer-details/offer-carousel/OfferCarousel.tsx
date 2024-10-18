@@ -14,7 +14,8 @@ import {
   GetOffersResponse,
   Offer,
   ButtonVariantEnum,
-  StatusEnum
+  StatusEnum,
+  ErrorResponse
 } from '~/types'
 import { OfferService } from '~/services/offer-service'
 import { defaultResponse } from '~/pages/find-offers/FindOffers.constants'
@@ -22,6 +23,12 @@ import { authRoutes } from '~/router/constants/authRoutes'
 import { createUrlPath, getScreenBasedLimit } from '~/utils/helper-functions'
 import { styles } from '~/containers/offer-details/offer-carousel/OfferCarousel.styles'
 import { itemsLoadLimit } from '~/containers/offer-details/offer-carousel/OfferCarousel.constants'
+import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
+import { setField } from '~/redux/features/editProfileSlice'
+import { openAlert } from '~/redux/features/snackbarSlice'
+import { snackbarVariants } from '~/constants'
+import { getErrorKey } from '~/utils/get-error-key'
+import { useToggleBookmark } from '~/utils/toggle-bookmark'
 
 interface OfferCarouselProps {
   offer: Offer
@@ -53,7 +60,36 @@ const OfferCarousel: FC<OfferCarouselProps> = ({ offer }) => {
     defaultResponse
   })
 
+  const dispatch = useAppDispatch()
+  const { userId } = useAppSelector((state) => state.appMain)
+  const { bookmarkedOffers } = useAppSelector((state) => state.editProfile)
+
+  const handleResponse = (response: string[]) => {
+    dispatch(setField({ field: 'bookmarkedOffers', value: response }))
+  }
+
+  const handleResponseError = (error?: ErrorResponse) => {
+    dispatch(
+      openAlert({
+        severity: snackbarVariants.error,
+        message: getErrorKey(error)
+      })
+    )
+  }
+
+  const toggleBookmark = useToggleBookmark(
+    userId,
+    handleResponse,
+    handleResponseError
+  )
+
+  const onBookmarkClick = (id: string) => {
+    void toggleBookmark(id)
+  }
+
   const itemsToShow = response.items.map((item) => {
+    const isBookmarked = bookmarkedOffers.includes(item._id)
+
     const buttonActions = [
       {
         label: t('common.labels.viewDetails'),
@@ -70,9 +106,15 @@ const OfferCarousel: FC<OfferCarouselProps> = ({ offer }) => {
         }
       }
     ]
+
     return (
       <AppCard key={item._id} sx={styles.offerCard}>
-        <OfferCardSquare buttonActions={buttonActions} offer={item} />
+        <OfferCardSquare
+          buttonActions={buttonActions}
+          isBookmarked={isBookmarked}
+          offer={item}
+          onBookmarkClick={onBookmarkClick}
+        />
       </AppCard>
     )
   })
@@ -90,7 +132,7 @@ const OfferCarousel: FC<OfferCarouselProps> = ({ offer }) => {
   }
 
   return itemsToShow.length > 0 ? (
-    <Box sx={styles.root}>
+    <Box data-testid='OfferContainer' sx={styles.root}>
       <Typography sx={styles.title}>
         {t('findOffers.otherOffers.title')}
       </Typography>
