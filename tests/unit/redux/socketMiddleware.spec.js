@@ -1,3 +1,4 @@
+import { vi } from 'vitest'
 import socketMiddleware from '~/redux/middleware/socket-middleware'
 import { connectSocket, setUsersOnline } from '~/redux/features/socketSlice'
 import SocketFactory from '~/redux/socket-factory'
