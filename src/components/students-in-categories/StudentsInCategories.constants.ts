@@ -1,21 +1,20 @@
 import palette from '~/styles/app-theme/app.pallete'
 
-export const currencies = [
+export const selectedCategory = [
   {
-    value: 'USD',
-    label: '$'
+    value: 'Music'
   },
+
   {
-    value: 'EUR',
-    label: '€'
+    value: 'Marketing'
   },
+
   {
-    value: 'BTC',
-    label: '฿'
+    value: 'Bology'
   },
+
   {
-    value: 'JPY',
-    label: '¥'
+    value: 'IT'
   }
 ]
 
