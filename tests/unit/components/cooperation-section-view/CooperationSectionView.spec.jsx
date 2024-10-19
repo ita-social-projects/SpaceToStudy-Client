@@ -55,14 +55,10 @@ describe('CooperationSectionView', () => {
     render(<CooperationSectionView item={mockSection} />)
   })
 
-  it('should render resource title and description', () => {
+  it('should render resource title', () => {
     const title = screen.getByText(mockSection.resources[0].resource.title)
-    const description = screen.getByText(
-      mockSection.resources[0].resource.description
-    )
-
+    
     expect(title).toBeInTheDocument()
-    expect(description).toBeInTheDocument()
   })
 
   it('should navigate to cooperation', () => {

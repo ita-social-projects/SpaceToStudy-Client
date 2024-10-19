@@ -18,6 +18,20 @@
     },
     "sectionMenu": {
       "deleteSection": "Видалити"
+    },
+    "resourceCount":{
+      "lesson_one": "{{count}} урок",
+      "lesson_few": "{{count}} уроки",
+      "lesson_many": "{{count}} уроків",
+      "lesson_other": "{{count}} уроків",
+      "quiz_one": "{{count}} тест",
+      "quiz_few": "{{count}} теста",
+      "quiz_many": "{{count}} тестів",
+      "quiz_other": "{{count}} тестів",
+      "attachment_one": "{{count}} вкладення",
+      "attachment_few": "{{count}} вкладення",
+      "attachment_many": "{{count}} вкладень",
+      "attachment_other": "{{count}} вкладень"
     }
   },
   "errorMessages": {

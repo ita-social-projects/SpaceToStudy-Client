@@ -1,7 +1,6 @@
 import NoteAltOutlinedIcon from '@mui/icons-material/NoteAltOutlined'
 import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined'
 import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined'
-
 import { ResourcesTabsEnum, ResourcesTypesEnum as ResourceType } from '~/types'
 
 export const menuTypes = {

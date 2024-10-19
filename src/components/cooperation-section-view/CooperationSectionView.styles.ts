@@ -1,4 +1,5 @@
 import { commonShadow } from '~/styles/app-theme/custom-shadows'
+import palette from '~/styles/app-theme/app.pallete'
 
 export const styles = {
   root: {
@@ -14,12 +15,36 @@ export const styles = {
   },
   descriptionInput: {
     sx: {
-      m: '0 0 0 45px'
+      mx: '-14px'
     },
     disableUnderline: true
   },
   showBlock: {
-    m: 0,
-    p: '15px'
+    m: 0
+  },
+  resourceCount: {
+    container: {
+      pt: '10px',
+      px: '60px',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '24px'
+    },
+    wrapper: {
+      display: 'flex',
+      gap: '8px',
+      justifyContent: 'center',
+      alignItems: 'center',
+      color: palette.primary[500]
+    },
+    icon: {
+      fontSize: '16px'
+    },
+    text: {
+      fontSize: '12px'
+    }
+  },
+  divider: {
+    py: '8px'
   }
 }

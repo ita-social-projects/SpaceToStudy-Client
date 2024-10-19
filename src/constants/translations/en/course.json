@@ -18,6 +18,20 @@
     },
     "sectionMenu": {
       "deleteSection": "Delete"
+    },
+    "resourceCount":{
+      "lesson_one": "{{count}} lesson",
+      "lesson_few": "{{count}} lessons",
+      "lesson_many": "{{count}} lessons",
+      "lesson_other": "{{count}} lessons",
+      "quiz_one": "{{count}} quiz",
+      "quiz_few": "{{count}} quizzes",
+      "quiz_many": "{{count}} quizzes",
+      "quiz_other": "{{count}} quizzes",
+      "attachment_one": "{{count}} attachment",
+      "attachment_few": "{{count}} attachments",
+      "attachment_many": "{{count}} attachments",
+      "attachment_other": "{{count}} attachments"
     }
   },
   "errorMessages": {
