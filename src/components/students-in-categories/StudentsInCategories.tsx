@@ -4,43 +4,7 @@ import SchoolIcon from '@mui/icons-material/School'
 import EventIcon from '@mui/icons-material/Event'
 import StudentsInCatgoriesChart from './StudentsInCategoriesChart'
 import { useTranslation } from 'react-i18next'
-
-const currencies = [
-  {
-    value: 'USD',
-    label: '$'
-  },
-  {
-    value: 'EUR',
-    label: '€'
-  },
-  {
-    value: 'BTC',
-    label: '฿'
-  },
-  {
-    value: 'JPY',
-    label: '¥'
-  }
-]
-
-const years = [
-  {
-    value: '2021'
-  },
-
-  {
-    value: '2022'
-  },
-
-  {
-    value: '2023'
-  },
-
-  {
-    value: '2024'
-  }
-]
+import { currencies, years } from './StudentsInCategories.constants'
 
 function StudentsInCatgories() {
   const { t } = useTranslation()
