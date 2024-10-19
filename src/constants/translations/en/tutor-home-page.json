@@ -13,5 +13,15 @@
     "title": "Popular Categories",
     "description": "Explore tutoring categories you're passionate about.",
     "viewMore": "View more"
+  },
+  "studentsInCategories": {
+    "title": "Students in Your Categories",
+    "subTitle": "Statistics of your students quantity during the last time.",
+    "resetButton": "Clear all",
+    "select": {
+      "category": "Category",
+      "year": "Year"
+    },
+    "allStudents": "All students"
   }
 }
