@@ -25,7 +25,7 @@ import { itemsLoadLimit } from '~/containers/offer-details/offer-carousel/OfferC
 import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 import { setField } from '~/redux/features/editProfileSlice'
 import { openAlert } from '~/redux/features/snackbarSlice'
-import { snackbarVariants } from '~/constants'
+import { snackbarVariants as variants } from '~/constants'
 import { getErrorKey } from '~/utils/get-error-key'
 import { useToggleBookmark } from '~/utils/toggle-bookmark'
 import { useCallback } from 'react'
@@ -70,10 +70,7 @@ const OfferCarousel = ({ offer }: OfferCarouselProps) => {
 
   const handleResponseError = (error?: ErrorResponse) => {
     dispatch(
-      openAlert({
-        severity: snackbarVariants.error,
-        message: getErrorKey(error)
-      })
+      openAlert({ severity: variants.error, message: getErrorKey(error) })
     )
   }
 
