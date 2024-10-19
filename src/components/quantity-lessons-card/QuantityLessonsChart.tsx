@@ -11,6 +11,7 @@ import {
 } from 'chart.js'
 import { Box } from '@mui/material'
 import useBreakpoints from '~/hooks/use-breakpoints'
+import palette from '~/styles/app-theme/app.pallete'
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
@@ -33,8 +34,8 @@ const data = {
     {
       label: 'Lessons',
       data: [5, 5, 10, 10, 12, 15, 14, 14, 10, 10, 12, 12],
-      backgroundColor: '#79B260',
-      borderColor: '#79B260',
+      backgroundColor: palette.success[300],
+      borderColor: palette.success[300],
       borderWidth: 1,
       barThickness: 28
     }
@@ -55,7 +56,7 @@ const options = {
         display: false
       },
       ticks: {
-        color: '#455A64',
+        color: palette.basic.darkGray,
         weight: 'normal'
       },
       border: {
