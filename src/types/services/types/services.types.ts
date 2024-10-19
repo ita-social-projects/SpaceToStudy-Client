@@ -1,5 +1,5 @@
+import { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from 'axios'
 import { Sort } from '~/types'
-import { AxiosResponse } from 'axios'
 
 export interface RequestParams {
   limit?: number
@@ -17,3 +17,7 @@ export interface ErrorResponse {
 export type ServiceFunction<Response, Params = undefined> = (
   params: Params extends undefined ? undefined : Params
 ) => Promise<AxiosResponse<Response>>
+
+export interface AxiosResponseError extends AxiosError<ErrorResponse> {
+  config: InternalAxiosRequestConfig & { _isRetry: boolean }
+}
