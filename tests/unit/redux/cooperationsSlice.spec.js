@@ -182,7 +182,7 @@ describe('Test cooperationsSlice', () => {
 
     const addedResource = state.sections[0].resources[0].resource
 
-    expect(isValidUUID(addedResource.id)).toBe(true)
+    expect(addedResource.id).toBe(resources[0]._id)
     expect(addedResource).toMatchObject({
       _id: 'some id',
       title: 'Resource 1',
@@ -214,13 +214,8 @@ describe('Test cooperationsSlice', () => {
 
     const addedResource = state.sections[0].resources[0].resource
 
-    expect(isValidUUID(addedResource.id)).toBe(true)
-    expect(addedResource).toMatchObject({
-      _id: '',
-      title: 'Resource 1',
-      resourceType: ResourceType.Lesson,
-      isDuplicate: true
-    })
+    expect(addedResource.id).toBe(resources[0]._id)
+    expect(addedResource).toMatchObject(resources[0])
   })
 
   it('should update resources order correctly with updateResourcesOrder', () => {
