@@ -1,4 +1,3 @@
-import { FC, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
@@ -29,12 +28,13 @@ import { openAlert } from '~/redux/features/snackbarSlice'
 import { snackbarVariants } from '~/constants'
 import { getErrorKey } from '~/utils/get-error-key'
 import { useToggleBookmark } from '~/utils/toggle-bookmark'
+import { useCallback } from 'react'
 
 interface OfferCarouselProps {
   offer: Offer
 }
 
-const OfferCarousel: FC<OfferCarouselProps> = ({ offer }) => {
+const OfferCarousel = ({ offer }: OfferCarouselProps) => {
   const breakpoints = useBreakpoints()
   const { isLaptopAndAbove } = breakpoints
   const { t } = useTranslation()
@@ -83,10 +83,6 @@ const OfferCarousel: FC<OfferCarouselProps> = ({ offer }) => {
     handleResponseError
   )
 
-  const onBookmarkClick = (id: string) => {
-    void toggleBookmark(id)
-  }
-
   const itemsToShow = response.items.map((item) => {
     const isBookmarked = bookmarkedOffers.includes(item._id)
 
@@ -113,7 +109,7 @@ const OfferCarousel: FC<OfferCarouselProps> = ({ offer }) => {
           buttonActions={buttonActions}
           isBookmarked={isBookmarked}
           offer={item}
-          onBookmarkClick={onBookmarkClick}
+          onBookmarkClick={(val: string) => void toggleBookmark(val)}
         />
       </AppCard>
     )
