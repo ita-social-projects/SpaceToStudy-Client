@@ -4,7 +4,7 @@ import SchoolIcon from '@mui/icons-material/School'
 import EventIcon from '@mui/icons-material/Event'
 import StudentsInCatgoriesChart from './StudentsInCategoriesChart'
 import { useTranslation } from 'react-i18next'
-import { currencies, years } from './StudentsInCategories.constants'
+import { selectedCategory, years } from './StudentsInCategories.constants'
 
 function StudentsInCatgories() {
   const { t } = useTranslation()
@@ -27,7 +27,7 @@ function StudentsInCatgories() {
           )}
           sx={styles.select}
         >
-          {currencies.map((option) => (
+          {selectedCategory.map((option) => (
             <MenuItem key={option.value} value={option.value}>
               {option.value}
             </MenuItem>
