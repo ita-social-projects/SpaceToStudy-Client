@@ -24,6 +24,9 @@ import { styles } from '~/components/complete-profile/CompleteProfileBlock.style
 import useAxios from '~/hooks/use-axios'
 import { OfferService } from '~/services/offer-service'
 import { defaultResponse } from '~/pages/my-offers/MyOffers.constants'
+import { useDrawer } from '~/hooks/use-drawer'
+import AppDrawer from '~/components/app-drawer/AppDrawer'
+import CreateOffer from '~/containers/offer-page/create-offer/CreateOffer'
 
 interface CompleteProfileBlockProps {
   profileItems: ProfileItemType[]
@@ -42,6 +45,9 @@ const CompleteProfileBlock: FC<CompleteProfileBlockProps> = ({
   const homePage = useMatch(guestRoutes[userRole as UserRole].path)
   const [isOpen, setIsOpen] = useState(false)
 
+  const { openDrawer, closeDrawer, isOpen: isDrawerOpen } = useDrawer()
+  const [isOfferCreated, setIsOfferCreated] = useState(false)
+
   useEffect(() => {
     if (openAccordion) {
       setIsOpen(true)
@@ -53,7 +59,8 @@ const CompleteProfileBlock: FC<CompleteProfileBlockProps> = ({
       OfferService.getUsersOffers({
         id: userId
       }),
-    [userId]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [userId, isOfferCreated]
   )
 
   const { response } = useAxios({
@@ -99,13 +106,14 @@ const CompleteProfileBlock: FC<CompleteProfileBlockProps> = ({
     () =>
       profileItems.map((item) => (
         <ProfileItem
+          handleOpenDrawer={openDrawer}
           isFilled={checkProfileData.includes(item)}
           item={item}
           key={item.id}
           userRole={userRole}
         />
       )),
-    [profileItems, checkProfileData, userRole]
+    [profileItems, checkProfileData, userRole, openDrawer]
   )
 
   const handleToggleMenu = () => {
@@ -151,6 +159,12 @@ const CompleteProfileBlock: FC<CompleteProfileBlockProps> = ({
       </AccordionSummary>
       <AccordionDetails sx={styles.profileItems}>
         {profileList}
+        <AppDrawer onClose={closeDrawer} open={isDrawerOpen}>
+          <CreateOffer
+            closeDrawer={closeDrawer}
+            updateOffer={setIsOfferCreated}
+          />
+        </AppDrawer>
       </AccordionDetails>
     </Accordion>
   )
