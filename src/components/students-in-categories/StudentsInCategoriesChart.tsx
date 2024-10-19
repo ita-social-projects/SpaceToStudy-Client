@@ -3,15 +3,9 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
 import { Box, Typography } from '@mui/material'
 import { styles } from './StudentsInCategories.styles'
 import { useTranslation } from 'react-i18next'
+import { categories } from './StudentsInCategories.constants'
 
 ChartJS.register(ArcElement, Tooltip, Legend)
-
-const categories = [
-  { label: 'Languages', value: 75, color: '#79B260' },
-  { label: 'Mathematics', value: 12, color: '#FFD166' },
-  { label: 'History', value: 8, color: '#EF476F' },
-  { label: 'Other (+3)', value: 5, color: '#6C757D' }
-]
 
 const data = {
   labels: categories.map((category) => category.label),
@@ -55,8 +49,8 @@ const StudentsInCategoriesChart = () => {
       </Box>
 
       <Box sx={styles.legendContainer}>
-        {categories.map((category, index) => (
-          <Box key={index} sx={styles.legendRow}>
+        {categories.map((category) => (
+          <Box key={category.label} sx={styles.legendRow}>
             <Box sx={styles.legendBoxIcon(category.color)} />
             <Typography sx={styles.category}>{category.label}</Typography>
             <Typography sx={styles.percentage}>{category.value}%</Typography>
