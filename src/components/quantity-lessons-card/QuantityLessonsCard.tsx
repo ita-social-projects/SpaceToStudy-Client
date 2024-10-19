@@ -4,61 +4,7 @@ import SchoolIcon from '@mui/icons-material/School'
 import EventIcon from '@mui/icons-material/Event'
 import QuantityLessonsChart from './QuantityLessonsChart'
 import { useTranslation } from 'react-i18next'
-
-const currencies = [
-  {
-    value: 'USD',
-    label: '$'
-  },
-  {
-    value: 'EUR',
-    label: '€'
-  },
-  {
-    value: 'BTC',
-    label: '฿'
-  },
-  {
-    value: 'JPY',
-    label: '¥'
-  }
-]
-
-const subjects = [
-  {
-    value: 'Algebra'
-  },
-
-  {
-    value: 'Geometry'
-  },
-
-  {
-    value: 'English'
-  },
-
-  {
-    value: 'French'
-  }
-]
-
-const years = [
-  {
-    value: '2021'
-  },
-
-  {
-    value: '2022'
-  },
-
-  {
-    value: '2023'
-  },
-
-  {
-    value: '2024'
-  }
-]
+import { categories, subjects, years } from './QuantityLessons.constants'
 
 function QuantityLessonsCard() {
   const { t } = useTranslation()
@@ -81,7 +27,7 @@ function QuantityLessonsCard() {
           )}
           sx={styles.select}
         >
-          {currencies.map((option) => (
+          {categories.map((option) => (
             <MenuItem key={option.value} value={option.value}>
               {option.value}
             </MenuItem>
