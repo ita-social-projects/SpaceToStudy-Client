@@ -35,7 +35,7 @@ export const styles = {
     flexDirection: 'column',
     boxSizing: 'border-box',
     backgroundColor: 'primary.50',
-    p: '8px 8px 16px',
+    p: '8px 8px',
     '& .simplebar-content': { margin: messagesLength ? 'auto 0 0' : 'auto' },
     '& .simplebar-content-wrapper': {
       display: 'flex',
