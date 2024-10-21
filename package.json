@@ -32,7 +32,7 @@
     "react-router-dom": "^6.18.0",
     "react-swipeable-views": "^0.14.0",
     "react-transition-group": "^4.4.5",
-    "sass": "^1.74.1",
+    "sass": "^1.80.3",
     "simplebar-react": "^3.2.4",
     "socket.io-client": "^4.7.5",
     "vite-plugin-svgr": "^4.1.0",
