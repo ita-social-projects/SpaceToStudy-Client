@@ -8,8 +8,8 @@
   "sendRequest": "Send request",
   "addQuestion": "Add one more question",
   "view": {
-    "viewMyOffers": "View my offers",
-    "viewMyRequests": "View my requests"
+    "tutor": "View my offers",
+    "student": "View my requests"
   },
   "newLesson": "New lesson"
 }

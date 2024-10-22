@@ -112,11 +112,7 @@ const MyCooperations = () => {
               : authRoutes.myRequests.path
           }
         >
-          {t(
-            `button.view.${
-              userRole == UserRoleEnum.Tutor ? 'viewMyOffers' : 'viewMyRequests'
-            }`
-          )}
+          {t(`button.view.${userRole}`)}
         </AppButton>
       </Box>
       <Box sx={styles.tabs}>{tabs}</Box>

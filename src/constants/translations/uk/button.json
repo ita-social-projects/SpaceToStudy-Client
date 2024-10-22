@@ -8,8 +8,8 @@
   "sendRequest": "Надіслати запит",
   "addQuestion": "Додати ще одне питання",
   "view": {
-    "viewMyOffers": "До моїх пропозицій",
-    "viewMyRequests": "До моїх запитів"
+    "tutor": "До моїх пропозицій",
+    "student": "До моїх запитів"
   },
   "newLesson": "Новий урок"
 }
