@@ -59,14 +59,19 @@ const CompleteProfileBlock: FC<CompleteProfileBlockProps> = ({
       OfferService.getUsersOffers({
         id: userId
       }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [userId, isOfferCreated]
+    [userId]
   )
 
-  const { response } = useAxios({
+  const { response, fetchData } = useAxios({
     service: getMyOffers,
     defaultResponse
   })
+
+  useEffect(() => {
+    if (isOfferCreated) {
+      void fetchData()
+    }
+  }, [isOfferCreated, fetchData])
 
   const checkIfHasNonEmptyFields = (
     obj: Record<string, string | undefined>
