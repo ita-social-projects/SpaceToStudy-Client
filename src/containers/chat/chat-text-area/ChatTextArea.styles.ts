@@ -24,7 +24,7 @@ export const styles = {
     flex: 1,
     backgroundColor: 'basic.white',
     borderRadius: '6px',
-    p: { xs: '16px 10px', sm: '16px 32px' }
+    p: { xs: '7px 10px', sm: '7px 32px' }
   },
   textArea: {
     userSelect: 'none',
@@ -33,15 +33,22 @@ export const styles = {
       '&::-webkit-scrollbar-track, &::-webkit-scrollbar-thumb': {
         visibility: 'hidden'
       }
-    }
+    },
+    position: 'relative',
+    bottom: '-12px'
   },
   textAreaLabel: (value: string) => ({
     shrink: false,
     style: {
       visibility: value ? VisibilityEnum.Hidden : VisibilityEnum.Visible,
       color: palette.primary[300],
-      top: '-6px'
+      top: '-12px'
     }
   }),
-  icon: { width: '32px', height: '32px', color: 'primary.800' }
+  icon: { width: '32px', height: '32px', color: 'primary.800' },
+  emojiIcon: (dialogWindow: boolean) => ({
+    p: '0px',
+    m: '0px',
+    pr: dialogWindow ? '15px' : '0px'
+  })
 }

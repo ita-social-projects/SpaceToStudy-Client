@@ -255,6 +255,7 @@ const ChatDialogWindow: FC<ChatDialogWindow> = ({ chatInfo }) => {
   ) : (
     <ChatTextArea
       adornmentPosition={AdornmentPosition.Start}
+      dialogWindow
       emojiPickerProps={{ perLine: 6 }}
       label={
         isMessageSending
