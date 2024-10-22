@@ -10,7 +10,7 @@ export const selectedCategory = [
   },
 
   {
-    value: 'Bology'
+    value: 'Biology'
   },
 
   {
@@ -18,21 +18,22 @@ export const selectedCategory = [
   }
 ]
 
+const currentYear = new Date().getFullYear()
 export const years = [
   {
-    value: new Date().getFullYear() - 3
+    value: currentYear - 3
   },
 
   {
-    value: new Date().getFullYear() - 2
+    value: currentYear - 2
   },
 
   {
-    value: new Date().getFullYear() - 1
+    value: currentYear - 1
   },
 
   {
-    value: new Date().getFullYear()
+    value: currentYear
   }
 ]
 
