@@ -12,7 +12,8 @@
     "buttonTitles": {
       "tutor": "Create offer",
       "student": "Create request"
-    }
+    },
+    "extendedSuccessMessage": "You successfuly created an offer!"
   },
   "editOffer": {
     "title": {

@@ -11,6 +11,9 @@ import { UserRoleEnum } from '~/types'
 import CreateOffer from '~/containers/offer-page/create-offer/CreateOffer'
 import { useDrawer } from '~/hooks/use-drawer'
 import AppDrawer from '~/components/app-drawer/AppDrawer'
+import { openAlert } from '~/redux/features/snackbarSlice'
+import { snackbarVariants } from '~/constants'
+import { useAppDispatch } from '~/hooks/use-redux'
 
 interface ProfileItemProps {
   item: ProfileItemType
@@ -27,6 +30,7 @@ const ProfileItem = ({
   const { isMobile } = useBreakpoints()
   const { id, icon } = item
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
 
   const { openDrawer, closeDrawer, isOpen } = useDrawer()
   const handleOpenDrawer = () => openDrawer()
@@ -39,7 +43,15 @@ const ProfileItem = ({
       navigate(`${item.path}#${item.id}`)
     }
     if (isOffer) {
-      handleOpenDrawer()
+      dispatch(
+        openAlert({
+          severity: snackbarVariants.success,
+          message: `offerPage.createOffer.extendedSuccessMessage`,
+          duration: 8000,
+          isExtended: true
+        })
+      )
+      // handleOpenDrawer()
     }
   }
 

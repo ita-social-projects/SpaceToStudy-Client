@@ -68,13 +68,26 @@ const CreateOrEditOffer: FC<CreateOrUpdateOfferProps> = ({
     )
   }
   const onResponse = (response: Offer | null) => {
-    dispatch(
-      openAlert({
-        severity: snackbarVariants.success,
-        message: `offerPage.${offerAction}.successMessage`
-      })
-    )
+    if (hash == '#offer') {
+      dispatch(
+        openAlert({
+          severity: snackbarVariants.success,
+          message: `offerPage.createOffer.extendedSuccessMessage`,
+          duration: 8000,
+          isExtended: true
+        })
+      )
+    } else {
+      dispatch(
+        openAlert({
+          severity: snackbarVariants.success,
+          message: `offerPage.${offerAction}.successMessage`
+        })
+      )
+    }
+
     closeDrawer()
+    
     if (hash == '#offer') {
       navigate(`${authRoutes.myProfile.path}#complete`)
     } else {

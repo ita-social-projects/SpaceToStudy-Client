@@ -2,11 +2,15 @@ import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
 import Box from '@mui/material/Box'
-import { closeAlert, snackbarSelector } from '~/redux/features/snackbarSlice'
+import {
+  closeAlert,
+  snackbarSelector,
+  openSnackBar
+} from '~/redux/features/snackbarSlice'
 import { useTranslation } from 'react-i18next'
 
 const AppSnackbar = () => {
-  const { isOpened, message, duration, severity } =
+  const { isOpened, message, duration, severity, isExtended } =
     useAppSelector(snackbarSelector)
 
   const { t } = useTranslation()
@@ -25,7 +29,16 @@ const AppSnackbar = () => {
       onClose={handleClose}
       open={isOpened}
     >
-      <Alert severity={severity} sx={{ color: 'basic.white' }} variant='filled'>
+      <Alert
+        severity={severity}
+        sx={{ color: 'basic.white' }}
+        variant='filled'
+        action={
+          isExtended && (
+            <div onClick={(e) => e.currentTarget.remove()}>UNDO</div>
+          )
+        }
+      >
         {translatedMessage.split(', ').map((line) => (
           <Box key={line}>{line}</Box>
         ))}
