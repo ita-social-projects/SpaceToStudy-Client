@@ -21,7 +21,7 @@ export interface Offer extends CommonEntityFields {
   proficiencyLevel: ProficiencyLevelEnum[]
   description: string
   languages: LanguagesEnum[]
-  enrolledUsers: string[]
+  enrolledUsers?: string[]
   authorRole: UserRoleEnum.Tutor | UserRoleEnum.Student
   author: Pick<
     UserResponse,

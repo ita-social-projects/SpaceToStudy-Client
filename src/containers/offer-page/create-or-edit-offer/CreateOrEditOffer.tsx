@@ -72,9 +72,10 @@ const CreateOrEditOffer: FC<CreateOrUpdateOfferProps> = ({
       dispatch(
         openAlert({
           severity: snackbarVariants.success,
-          message: `offerPage.createOffer.extendedSuccessMessage`,
-          duration: 8000,
-          isExtended: true
+          message: `offerPage.createOffer.extendedSuccessMessage.${userRole}`,
+          duration: 10000,
+          isExtended: true,
+          route: authRoutes.myOffers.path
         })
       )
     } else {
@@ -87,7 +88,7 @@ const CreateOrEditOffer: FC<CreateOrUpdateOfferProps> = ({
     }
 
     closeDrawer()
-    
+
     if (hash == '#offer') {
       navigate(`${authRoutes.myProfile.path}#complete`)
     } else {

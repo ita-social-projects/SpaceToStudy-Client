@@ -17,6 +17,7 @@ interface SnackbarState {
   message: SnackbarMessage
   duration: number
   isExtended?: boolean
+  route?: string
 }
 
 interface SnackbarOpenParams {
@@ -24,6 +25,7 @@ interface SnackbarOpenParams {
   message: SnackbarMessage
   duration?: number
   isExtended?: boolean
+  route?: string
 }
 
 type OpenSnackbarAction = PayloadAction<SnackbarOpenParams>
@@ -33,7 +35,8 @@ const initialState: SnackbarState = {
   severity: 'info',
   message: '',
   duration: 0,
-  isExtended: false
+  isExtended: false,
+  route: ''
 }
 
 const snackbarSlice = createSlice({
@@ -46,15 +49,15 @@ const snackbarSlice = createSlice({
       state.message = action.payload.message
       state.duration = action.payload.duration || 4000
       state.isExtended = action.payload.isExtended || false
+      state.route = action.payload.route || ''
     },
     closeAlert: (state) => {
       state.isOpened = false
-    },
-    openSnackBar: () => {}
+    }
   }
 })
 
 export const snackbarSelector = (state: RootState) => state.snackbar
 
-export const { openAlert, closeAlert, openSnackBar } = snackbarSlice.actions
+export const { openAlert, closeAlert } = snackbarSlice.actions
 export default snackbarSlice.reducer
