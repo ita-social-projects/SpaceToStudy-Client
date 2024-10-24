@@ -70,13 +70,27 @@ const CreateOrEditOffer: FC<CreateOrUpdateOfferProps> = ({
     )
   }
   const onResponse = (response: Offer | null) => {
-    dispatch(
-      openAlert({
-        severity: snackbarVariants.success,
-        message: `offerPage.${offerAction}.successMessage`
-      })
-    )
+    if (hash == '#offer') {
+      dispatch(
+        openAlert({
+          severity: snackbarVariants.success,
+          message: `offerPage.createOffer.extendedSuccessMessage.${userRole}`,
+          duration: 10000,
+          isExtended: true,
+          route: authRoutes.myOffers.path
+        })
+      )
+    } else {
+      dispatch(
+        openAlert({
+          severity: snackbarVariants.success,
+          message: `offerPage.${offerAction}.successMessage`
+        })
+      )
+    }
+
     closeDrawer()
+
     if (hash == '#offer') {
       navigate(`${authRoutes.myProfile.path}#complete`)
       updateOffer!(true)

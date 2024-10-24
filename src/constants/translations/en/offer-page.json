@@ -12,7 +12,12 @@
     "buttonTitles": {
       "tutor": "Create offer",
       "student": "Create request"
-    }
+    },
+    "extendedSuccessMessage": {
+      "tutor": "You successfuly created an offer!;You can review all your offers on My Offers page.",
+      "student": "You successfuly created a request!;You can review all your requests on My Requests page."
+    },
+    "seeAll": "See all"
   },
   "editOffer": {
     "title": {
