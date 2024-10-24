@@ -25,9 +25,7 @@ const AppTextField: FC<AppTextFieldProps> = ({
           {errorMsg}
         </Typography>
       </Tooltip>
-    ) : (
-      ' '
-    )
+    ) : null
   }, [errorMsg])
 
   return (
