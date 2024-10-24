@@ -1,4 +1,4 @@
-import { useCallback, useLayoutEffect, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
@@ -9,10 +9,11 @@ import AppDrawer from '~/components/app-drawer/AppDrawer'
 import AppPagination from '~/components/app-pagination/AppPagination'
 import Loader from '~/components/loader/Loader'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
-import Tab from '~/components/tab/Tab'
+import TabFilterList from '~/components/tab-filter-list/TabFilterList'
 import CooperationOfferToolbar from '~/containers/my-cooperations/cooperation-offer-toolbar/CooperationOfferToolbar'
 import MyOffersContainer from '~/containers/my-offers/my-offers-container/MyOffersContainer'
 import CreateOffer from '~/containers/offer-page/create-offer/CreateOffer'
+import { useSearchParams } from 'react-router-dom'
 import useFilter from '~/hooks/table/use-filter'
 import usePagination from '~/hooks/table/use-pagination'
 import useSort from '~/hooks/table/use-sort'
@@ -32,8 +33,10 @@ import {
   sortTranslationKeys,
   tabsInfo
 } from '~/pages/my-offers/MyOffers.constants'
-import { CardsViewEnum, TabType } from '~/types'
+import { CardsViewEnum } from '~/types'
 import { setPageLoad } from '~/redux/reducer'
+
+type TabName = keyof typeof tabsInfo
 
 const MyOffers = () => {
   const [itemsView, setItemsView] = useState<CardsViewEnum>(
@@ -42,8 +45,13 @@ const MyOffers = () => {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
   const breakpoints = useBreakpoints()
+  const [searchParams, setSearchParams] = useSearchParams()
+  const activeTab = searchParams.get('tab')
   const filterOptions = useFilter({
-    initialFilters
+    initialFilters: {
+      ...initialFilters,
+      status: activeTab ? tabsInfo[activeTab as TabName].value : ''
+    }
   })
   const sortOptions = useSort({
     initialSort
@@ -55,6 +63,12 @@ const MyOffers = () => {
   const { filters, clearFilters, setFilterByKey } = filterOptions
 
   const handleOpenDrawer = () => openDrawer()
+
+  useEffect(() => {
+    if (!activeTab) {
+      setSearchParams({ tab: Object.keys(tabsInfo)[0] })
+    }
+  }, [activeTab, setSearchParams])
 
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
   const showTable = !breakpoints.isMobile && itemsView === CardsViewEnum.Inline
@@ -79,21 +93,12 @@ const MyOffers = () => {
     defaultResponse
   })
 
-  const handleTabClick = (tab: TabType<string>) => {
+  const handleTabClick = (tabName: string, tabValue: string) => {
+    setSearchParams({ tab: tabName })
     clearFilters()
     resetSort()
-    setFilterByKey('status')(tab.value)
+    setFilterByKey('status')(tabValue)
   }
-
-  const tabs = Object.values(tabsInfo).map((tab) => (
-    <Tab
-      activeTab={filters.status === tab.value}
-      key={tab.label}
-      onClick={() => handleTabClick(tab)}
-    >
-      {t(tab.label)}
-    </Tab>
-  ))
 
   const sortFields = sortTranslationKeys.map(({ title, value }) => ({
     title: t(title),
@@ -117,7 +122,12 @@ const MyOffers = () => {
           <CreateOffer closeDrawer={closeDrawer} />
         </AppDrawer>
       </Box>
-      <Box sx={styles.tabs}>{tabs}</Box>
+      <TabFilterList
+        activeTab={activeTab ?? ''}
+        onClick={handleTabClick}
+        sx={styles.tabs}
+        tabsData={tabsInfo}
+      />
       <CooperationOfferToolbar
         filterOptions={filterOptions}
         onChangeView={setItemsView}
