@@ -73,7 +73,10 @@ export const styles = {
     color: 'primary.400',
     fontWeight: 500
   }),
-  messagesWithDate: { mb: '24px' },
+  messagesWithDate: (groupIndex: number) => ({
+    mb: '24px',
+    mt: groupIndex === 0 ? '70px' : 0
+  }),
   scrollableContent: {
     height: `calc(100% - 164px)`,
     overflow: 'auto',

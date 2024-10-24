@@ -82,7 +82,7 @@ const MessagesList = ({
 
   const groupedMessages = getGroupedByDate(messages, getIsNewDay)
   const messagesListWithDate = groupedMessages.map((group, groupIndex) => (
-    <Box key={group.date} sx={styles.messagesWithDate}>
+    <Box key={group.date} sx={styles.messagesWithDate(groupIndex)}>
       <ChatDate date={group.date} />
       {group.items.map((item, messageIndex) => {
         if (messageIndex === 0 && groupIndex === 0) {
