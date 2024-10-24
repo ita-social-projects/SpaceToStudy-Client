@@ -93,7 +93,7 @@ const CompleteProfileBlock: FC<CompleteProfileBlockProps> = ({
           case 'education':
             return checkIfHasNonEmptyFields(data.professionalBlock!)
           case 'video':
-            return data.videoLink[userRole as VideoUserRole]
+            return data.videoLink?.[userRole as VideoUserRole]
           case 'offer':
             return response.items.length
           default:
