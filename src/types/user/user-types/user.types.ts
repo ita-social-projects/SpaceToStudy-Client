@@ -5,6 +5,8 @@ export type UserRole =
   | UserRoleEnum.Tutor
   | UserRoleEnum.Student
 
+export type VideoUserRole = UserRoleEnum.Tutor | UserRoleEnum.Student
+
 export type UpdateFields =
   | 'firstName'
   | 'lastName'

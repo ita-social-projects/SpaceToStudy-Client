@@ -19,7 +19,7 @@ import { authRoutes } from '~/router/constants/authRoutes'
 import { guestRoutes } from '~/router/constants/guestRoutes'
 import { ProfileItemType } from '../profile-item/complete-profile.constants'
 import { useAppSelector } from '~/hooks/use-redux'
-import { UserResponse, UserRole } from '~/types'
+import { UserResponse, UserRole, VideoUserRole } from '~/types'
 import { styles } from '~/components/complete-profile/CompleteProfileBlock.styles'
 import useAxios from '~/hooks/use-axios'
 import { OfferService } from '~/services/offer-service'
@@ -93,14 +93,14 @@ const CompleteProfileBlock: FC<CompleteProfileBlockProps> = ({
           case 'education':
             return checkIfHasNonEmptyFields(data.professionalBlock!)
           case 'video':
-            return data.videoLink
+            return data.videoLink?.[userRole as VideoUserRole]
           case 'offer':
             return response.items.length
           default:
             return data[item.id as keyof UserResponse]
         }
       }),
-    [data, profileItems, response]
+    [data, profileItems, response, userRole]
   )
 
   const valueProgressBar = Math.floor(
