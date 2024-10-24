@@ -65,7 +65,9 @@ const MyOffers = () => {
   const handleOpenDrawer = () => openDrawer()
 
   useEffect(() => {
-    if (!activeTab) setSearchParams({ tab: Object.keys(tabsInfo)[0] })
+    if (!activeTab) {
+      setSearchParams({ tab: Object.keys(tabsInfo)[0] })
+    }
   }, [activeTab, setSearchParams])
 
   const itemsPerPage = getScreenBasedLimit(breakpoints, itemsLoadLimit)
