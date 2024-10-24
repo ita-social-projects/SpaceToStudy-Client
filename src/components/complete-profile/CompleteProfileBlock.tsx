@@ -100,7 +100,7 @@ const CompleteProfileBlock: FC<CompleteProfileBlockProps> = ({
             return data[item.id as keyof UserResponse]
         }
       }),
-    [data, profileItems, response]
+    [data, profileItems, response, userRole]
   )
 
   const valueProgressBar = Math.floor(
