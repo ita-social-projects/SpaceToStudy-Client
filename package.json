@@ -68,7 +68,7 @@
     "@types/react-swipeable-views": "^0.13.5",
     "@types/uuid": "^10.0.0",
     "@typescript-eslint/eslint-plugin": "^7.17.0",
-    "@typescript-eslint/parser": "^7.17.0",
+    "@typescript-eslint/parser": "^8.10.0",
     "@vitejs/plugin-react": "^4.1.1",
     "@vitest/coverage-v8": "^2.0.4",
     "axios-mock-adapter": "^1.22.0",
