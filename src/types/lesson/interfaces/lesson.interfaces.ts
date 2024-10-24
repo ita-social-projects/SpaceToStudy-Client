@@ -6,4 +6,5 @@ export interface LessonData {
   content: string
   attachments: Attachment[]
   category: string | null
+  isDuplicate?: boolean
 }

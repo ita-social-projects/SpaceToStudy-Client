@@ -16,6 +16,7 @@ import { authRoutes } from '~/router/constants/authRoutes'
 import { resourceNavigationMap } from '~/containers/course-section/CourseSectionContainer.constants'
 
 import CourseSectionContainer from '~/containers/course-section/CourseSectionContainer'
+import { mockedDuplicatedSectionData } from './CourseSectionContainer.spec.constants'
 
 const mockedHandleSectionInputChange = vi.fn()
 const mockedResourceEventHandler = vi.fn()
@@ -398,10 +399,7 @@ describe('Testing CourseSectionContainer Event Handlers', () => {
     await waitFor(() => {
       expect(editResourceSpy).toHaveBeenCalledTimes(1)
       expect(editResourceSpy).toHaveBeenCalledWith(
-        expect.stringContaining(
-          authRoutes.myResources[resourceNavigationMap[resource.resourceType]]
-            .path
-        ),
+        expect.stringContaining(`lesson-details/${resource._id}`),
         '_blank'
       )
     })
@@ -423,6 +421,132 @@ describe('Testing CourseSectionContainer Event Handlers', () => {
       expect(
         screen.getByText('myResourcesPage.attachments.edit')
       ).toBeInTheDocument()
+    })
+  })
+})
+
+describe('should remove duplicates from list', () => {
+  const mockSectionId = mockedSectionData.id
+
+  beforeEach(() => {
+    renderWithProviders(
+      <CourseSectionContainer
+        handleSectionInputChange={mockedHandleSectionInputChange}
+        isCooperation
+        resourceEventHandler={mockedResourceEventHandler}
+        sectionData={mockedDuplicatedSectionData}
+        sectionEventHandler={mockedSectionEventHandler}
+      />
+    )
+  })
+
+  afterEach(() => {
+    cleanup()
+    vi.resetAllMocks()
+  })
+
+  it('should edit duplicate resources', async () => {
+    const resource = mockedDuplicatedSectionData.resources[0].resource
+    const editResourceSpy = vi
+      .spyOn(window, 'open')
+      .mockImplementation(() => ({ focus: vi.fn() }))
+
+    fireEvent.change(screen.getByTestId('mock-ResourcesList'), {
+      target: {
+        value: JSON.stringify({
+          event: 'editResource',
+          payload: resource
+        })
+      }
+    })
+
+    await waitFor(() => {
+      expect(editResourceSpy).toHaveBeenCalledTimes(1)
+      expect(editResourceSpy).toHaveBeenCalledWith(
+        expect.stringContaining(
+          authRoutes.myResources[resourceNavigationMap[resource.resourceType]]
+            .path
+        ),
+        '_blank'
+      )
+    })
+  })
+
+  it('should handle resource remove event on Quiz', async () => {
+    fireEvent.change(screen.getByTestId('mock-ResourcesList'), {
+      target: {
+        value: JSON.stringify({
+          event: 'deleteResource',
+          payload: {
+            type: CourseResourceEventType.ResourceRemoved,
+            sectionId: mockSectionId,
+            resourceId: mockedDuplicatedSectionData.resources[0].id
+          }
+        })
+      }
+    })
+
+    await waitFor(() => {
+      expect(mockedResourceEventHandler).toHaveBeenCalledTimes(1)
+      expect(mockedResourceEventHandler).toHaveBeenCalledWith(
+        expect.objectContaining({
+          type: CourseResourceEventType.ResourceRemoved,
+          sectionId: mockSectionId,
+          resourceId: mockedDuplicatedSectionData.resources[0].id
+        })
+      )
+    })
+  })
+
+  it('should handle resource remove event on Quiz', async () => {
+    fireEvent.change(screen.getByTestId('mock-ResourcesList'), {
+      target: {
+        value: JSON.stringify({
+          event: 'deleteResource',
+          payload: {
+            type: CourseResourceEventType.ResourceRemoved,
+            sectionId: mockSectionId,
+            resourceId: mockedDuplicatedSectionData.resources[1].id
+          }
+        })
+      }
+    })
+
+    await waitFor(() => {
+      expect(mockedResourceEventHandler).toHaveBeenCalledTimes(1)
+      expect(mockedResourceEventHandler).toHaveBeenCalledWith(
+        expect.objectContaining({
+          type: CourseResourceEventType.ResourceRemoved,
+          sectionId: mockSectionId,
+          resourceId: mockedDuplicatedSectionData.resources[1].id
+        })
+      )
+    })
+  })
+
+  it('should handle resource remove event on Attachement', async () => {
+    fireEvent.change(screen.getByTestId('mock-ResourcesList'), {
+      target: {
+        value: JSON.stringify({
+          event: 'deleteResource',
+          payload: {
+            type: CourseResourceEventType.ResourceRemoved,
+            sectionId: mockSectionId,
+            resourceId: mockedDuplicatedSectionData.resources[2].id
+          }
+        })
+      }
+    })
+
+    await waitFor(() => {
+      expect(mockedResourceEventHandler).toHaveBeenCalledTimes(1)
+      expect(mockedResourceEventHandler).toHaveBeenCalledWith(
+        expect.objectContaining({
+          type: CourseResourceEventType.ResourceRemoved,
+          sectionId: mockSectionId,
+          resourceId: mockedDuplicatedSectionData.resources[2].id
+        })
+      )
     })
   })
 })

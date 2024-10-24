@@ -123,8 +123,8 @@ const cooperationsSlice = createSlice({
           return {
             resource: {
               ...newDuplicateResource,
-              id: uuidv4(),
-              ...(isDuplicate ? { _id: '', isDuplicate: true } : { _id })
+              id: _id,
+              ...(isDuplicate ? { _id: _id, isDuplicate: true } : { _id })
             },
             resourceType: resource.resourceType
           }
