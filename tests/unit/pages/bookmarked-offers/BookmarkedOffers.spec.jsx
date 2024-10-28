@@ -16,7 +16,10 @@ import * as sortValues from '~/containers/find-offer/offer-filter-block/OfferFil
 const mockNavigate = vi.fn()
 let mockSearchParams = new URLSearchParams()
 const mockSetSearchParams = vi.fn()
+const mockScrollIntoView = vi.fn()
 const mockT = (str) => str
+
+window.HTMLElement.prototype.scrollIntoView = mockScrollIntoView
 
 vi.mock('react-router-dom', async () => {
   const actual = await vi.importActual('react-router-dom')
@@ -77,7 +80,7 @@ describe('BookmarkedOffers page with offers', () => {
     expect(offer2Title).toBeInTheDocument()
   })
 
-  it('should change the page number', async () => {
+  it('should change the page number and scroll to the top', async () => {
     const pageNumber = 2
     const goToPageBtn = await screen.findByText(`${pageNumber}`, {
       selector: 'button'
@@ -88,6 +91,7 @@ describe('BookmarkedOffers page with offers', () => {
     expect(mockSetSearchParams).toHaveBeenCalledWith(
       new URLSearchParams({ page: pageNumber })
     )
+    expect(mockScrollIntoView).toHaveBeenCalled()
   })
 
   it('should add title to URL search params', async () => {
