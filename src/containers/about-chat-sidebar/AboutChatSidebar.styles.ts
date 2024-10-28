@@ -2,6 +2,7 @@ import { TypographyVariantEnum } from '~/types'
 
 export const styles = {
   wrapper: {
+    width: '332px',
     display: 'flex',
     backgroundColor: 'basic.white',
     flexDirection: 'column',
@@ -58,5 +59,8 @@ export const styles = {
   },
   secondaryText: {
     typography: TypographyVariantEnum.Subtitle2
+  },
+  closeButton: {
+    ml: 'auto'
   }
 }

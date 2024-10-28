@@ -7,7 +7,7 @@ import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import LinkOutlinedIcon from '@mui/icons-material/LinkOutlined'
-
+import CloseIcon from '@mui/icons-material/Close'
 import { IconButton } from '~/design-system/components/icon-button/IconButton'
 import AppButton from '~/components/app-button/AppButton'
 import AvatarIcon from '~/components/avatar-icon/AvatarIcon'
@@ -28,9 +28,14 @@ import { styles } from '~/containers/about-chat-sidebar/AboutChatSidebar.styles'
 interface AboutChatSidebarProps {
   member: Member
   links: Link[]
+  onClose?: () => void
 }
 
-const AboutChatSidebar: FC<AboutChatSidebarProps> = ({ member, links }) => {
+const AboutChatSidebar: FC<AboutChatSidebarProps> = ({
+  member,
+  links,
+  onClose
+}) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const { About, Links } = SidebarContentEnum
@@ -61,6 +66,11 @@ const AboutChatSidebar: FC<AboutChatSidebarProps> = ({ member, links }) => {
         <Typography sx={spliceSx(styles.headerText, styles.title)}>
           {t(`chatPage.sidebar.${titleText}`)}
         </Typography>
+        {onClose && (
+          <IconButton onClick={onClose} sx={styles.closeButton}>
+            <CloseIcon />
+          </IconButton>
+        )}
       </Box>
       <Divider />
       <SimpleBar style={styles.scrollBar}>

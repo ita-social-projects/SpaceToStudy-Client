@@ -323,8 +323,12 @@ const Chat = () => {
           </Box>
         </Allotment.Pane>
         {isDesktop && isSidebarOpen && (
-          <Allotment.Pane maxSize={320} minSize={320}>
-            {aboutChatSidebar}
+          <Allotment.Pane maxSize={348} minSize={348}>
+            <AboutChatSidebar
+              links={mockLinks}
+              member={userToSpeak}
+              onClose={() => onSidebarHandler(false)}
+            />
           </Allotment.Pane>
         )}
       </Allotment>
