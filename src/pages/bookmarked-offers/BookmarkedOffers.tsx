@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useEffect, useState } from 'react'
+import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Divider } from '@mui/material'
 import Typography from '@mui/material/Typography'
@@ -45,6 +45,7 @@ const BookmarkedOffers = () => {
   const { bookmarkedOffers } = useAppSelector((state) => state.editProfile)
   const { isMobile } = useBreakpoints()
   const dispatch = useAppDispatch()
+  const toolbarRef = useRef<HTMLDivElement>(null)
   const { t } = useTranslation()
 
   const { items, count: offersCount } = offers
@@ -100,6 +101,7 @@ const BookmarkedOffers = () => {
 
   const handlePageChange = (_: ChangeEvent<unknown>, page: number) => {
     filterQueryActions.updateFiltersInQuery({ page })
+    toolbarRef.current?.scrollIntoView({ block: 'start', behavior: 'smooth' })
   }
 
   useEffect(() => {
@@ -116,6 +118,7 @@ const BookmarkedOffers = () => {
         filters={filters}
         handleOffersView={setCardsView}
         offersView={cardsView}
+        ref={toolbarRef}
         updateFilters={filterQueryActions.updateFiltersInQuery}
       />
       <Divider sx={styles.divider} />

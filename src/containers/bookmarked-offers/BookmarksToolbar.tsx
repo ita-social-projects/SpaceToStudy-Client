@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react'
+import { FormEvent, forwardRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Box, IconButton } from '@mui/material'
 import ClearIcon from '@mui/icons-material/Clear'
@@ -26,75 +26,80 @@ interface BookmarksToolbarProps {
   offersView: CardsView
 }
 
-const BookmarksToolbar = ({
-  filters,
-  updateFilters,
-  additionalParams,
-  offersView,
-  handleOffersView
-}: BookmarksToolbarProps) => {
-  const [title, setTitle] = useState(filters.title)
-  const { t } = useTranslation()
-  const { isLaptopAndAbove } = useBreakpoints()
+const BookmarksToolbar = forwardRef<HTMLDivElement, BookmarksToolbarProps>(
+  (
+    { filters, updateFilters, additionalParams, offersView, handleOffersView },
+    ref
+  ) => {
+    const [title, setTitle] = useState(filters.title)
+    const { t } = useTranslation()
+    const { isLaptopAndAbove } = useBreakpoints()
 
-  const handleInputSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    updateFilters({ ...additionalParams, title })
-  }
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      setTitle(event.target.value)
+    }
 
-  const handleSortBy = (value: string) => {
-    updateFilters({ ...additionalParams, sort: value })
-  }
+    const handleInputSubmit = (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault()
+      updateFilters({ ...additionalParams, title })
+    }
 
-  const sortOptions = sortTranslationKeys.map(({ title, value }) => ({
-    title: t(title),
-    value
-  }))
+    const handleSortBy = (value: string) => {
+      updateFilters({ ...additionalParams, sort: value })
+    }
 
-  const inputProps = {
-    endAdornment: filters.title ? (
-      <IconButton
-        data-testid='clear-button'
-        onClick={() => {
-          setTitle('')
-          updateFilters({ ...additionalParams, title: '' })
-        }}
-        sx={{ p: 0 }}
-      >
-        <ClearIcon color='secondary' />
-      </IconButton>
-    ) : (
-      <SearchIcon color='primary' />
+    const sortOptions = sortTranslationKeys.map(({ title, value }) => ({
+      title: t(title),
+      value
+    }))
+
+    const inputProps = {
+      endAdornment: filters.title ? (
+        <IconButton
+          data-testid='clear-button'
+          onClick={() => {
+            setTitle('')
+            updateFilters({ ...additionalParams, title: '' })
+          }}
+          sx={{ p: 0 }}
+        >
+          <ClearIcon color='secondary' />
+        </IconButton>
+      ) : (
+        <SearchIcon color='primary' />
+      )
+    }
+
+    return (
+      <Box ref={ref} sx={styles.container}>
+        <Box sx={styles.searchBox}>
+          <form onSubmit={handleInputSubmit}>
+            <FilterInput
+              InputProps={inputProps}
+              label={t('bookmarkedOffers.search')}
+              onChange={handleInputChange}
+              size={SizeEnum.Medium}
+              sx={styles.filterInput}
+              value={title}
+            />
+          </form>
+        </Box>
+        <Box sx={styles.selectContainer}>
+          <AppSelect
+            fields={sortOptions}
+            selectTitle={t('filters.sortBy.sortByTitle')}
+            setValue={handleSortBy}
+            value={filters.sort}
+          />
+          {isLaptopAndAbove && (
+            <ViewSwitcher onChange={handleOffersView} value={offersView} />
+          )}
+        </Box>
+      </Box>
     )
   }
+)
 
-  return (
-    <Box sx={styles.container}>
-      <Box sx={styles.searchBox}>
-        <form onSubmit={handleInputSubmit}>
-          <FilterInput
-            InputProps={inputProps}
-            label={t('bookmarkedOffers.search')}
-            onChange={setTitle}
-            size={SizeEnum.Medium}
-            sx={styles.filterInput}
-            value={title}
-          />
-        </form>
-      </Box>
-      <Box sx={styles.selectContainer}>
-        <AppSelect
-          fields={sortOptions}
-          selectTitle={t('filters.sortBy.sortByTitle')}
-          setValue={handleSortBy}
-          value={filters.sort}
-        />
-        {isLaptopAndAbove && (
-          <ViewSwitcher onChange={handleOffersView} value={offersView} />
-        )}
-      </Box>
-    </Box>
-  )
-}
+BookmarksToolbar.displayName = 'BookmarksToolbar'
 
 export default BookmarksToolbar

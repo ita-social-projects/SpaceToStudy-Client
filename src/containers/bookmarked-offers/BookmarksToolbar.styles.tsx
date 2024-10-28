@@ -7,6 +7,7 @@ export const styles = {
     justifyContent: 'flex-start',
     alignItems: 'center',
     gap: '10px',
+    scrollMarginTop: '16px',
     [theme.breakpoints.up('md')]: {
       flexDirection: 'row',
       justifyContent: 'space-between',
