@@ -106,10 +106,13 @@ const ChatHeader: FC<ChatHeaderProps> = ({
     [currentChat._id]
   )
 
-  const onAllMessagesResponse = useCallback((response: GetMessagesResponse) => {
-    const items = response.items ?? []
-    setAllMessages(items)
-  }, [])
+  const onAllMessagesResponse = useCallback(
+    (response: GetMessagesResponse) => {
+      const items = response.items ?? []
+      setAllMessages(items)
+    },
+    [setAllMessages]
+  )
 
   const { fetchData } = useAxios({
     service: getAllMessages,
