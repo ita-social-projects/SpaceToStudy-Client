@@ -27,6 +27,7 @@ const AboutTutorBlock: FC<AboutTutorBlockProps> = ({ data }) => {
   >
   const accordionItems = professionalBlockKeys
     .filter((key) => data[key])
+    .reverse()
     .map((key) => ({
       title: `userProfilePage.aboutTutor.${key}`,
       description: data[key]
