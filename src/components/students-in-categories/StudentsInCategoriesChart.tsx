@@ -3,36 +3,9 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
 import { Box, Typography } from '@mui/material'
 import { styles } from './StudentsInCategories.styles'
 import { useTranslation } from 'react-i18next'
-import { categories } from './StudentsInCategories.constants'
+import { categories, data, options } from './StudentsInCategories.constants'
 
 ChartJS.register(ArcElement, Tooltip, Legend)
-
-const data = {
-  labels: categories.map((category) => category.label),
-  datasets: [
-    {
-      data: categories.map((category) => category.value),
-      backgroundColor: categories.map((category) => category.color),
-      hoverBackgroundColor: categories.map((category) => category.color),
-      borderWidth: 1,
-      cutout: '70%',
-      rotation: 180
-    }
-  ]
-}
-
-const options = {
-  responsive: true,
-  maintainAspectRatio: false,
-  plugins: {
-    legend: {
-      display: false
-    },
-    tooltip: {
-      enabled: true
-    }
-  }
-}
 
 const StudentsInCategoriesChart = () => {
   const { t } = useTranslation()

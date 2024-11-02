@@ -43,3 +43,30 @@ export const categories = [
   { label: 'History', value: 8, color: palette.error[400] },
   { label: 'Other (+3)', value: 5, color: palette.basic.bismark }
 ]
+
+export const data = {
+  labels: categories.map((category) => category.label),
+  datasets: [
+    {
+      data: categories.map((category) => category.value),
+      backgroundColor: categories.map((category) => category.color),
+      hoverBackgroundColor: categories.map((category) => category.color),
+      borderWidth: 1,
+      cutout: '70%',
+      rotation: 180
+    }
+  ]
+}
+
+export const options = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: {
+    legend: {
+      display: false
+    },
+    tooltip: {
+      enabled: true
+    }
+  }
+}

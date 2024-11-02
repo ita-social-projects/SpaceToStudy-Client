@@ -2,11 +2,11 @@ import { Box, Button, MenuItem, Select, Typography } from '@mui/material'
 import { styles } from './StudentsInCategories.styles'
 import SchoolIcon from '@mui/icons-material/School'
 import EventIcon from '@mui/icons-material/Event'
-import StudentsInCatgoriesChart from './StudentsInCategoriesChart'
+import StudentsInCategoriesChart from './StudentsInCategoriesChart'
 import { useTranslation } from 'react-i18next'
 import { selectedCategory, years } from './StudentsInCategories.constants'
 
-function StudentsInCatgories() {
+function StudentsInCategories() {
   const { t } = useTranslation()
   return (
     <Box sx={styles.cardContainer}>
@@ -54,9 +54,9 @@ function StudentsInCatgories() {
           {t('tutorHomePage.studentsInCategories.resetButton')}
         </Button>
       </Box>
-      <StudentsInCatgoriesChart />
+      <StudentsInCategoriesChart />
     </Box>
   )
 }
 
-export default StudentsInCatgories
+export default StudentsInCategories
