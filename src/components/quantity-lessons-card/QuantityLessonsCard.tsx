@@ -2,7 +2,7 @@ import { Box, Button, MenuItem, Select, Typography } from '@mui/material'
 import { styles } from './QuantityLessonsCard.styles'
 import SchoolIcon from '@mui/icons-material/School'
 import EventIcon from '@mui/icons-material/Event'
-import QuantityLessonsChart from './QuantityLessonsChart'
+import QuantityLessonsChart from './QuantityLessonChart/QuantityLessonsChart'
 import { useTranslation } from 'react-i18next'
 import { categories, subjects, years } from './QuantityLessons.constants'
 
