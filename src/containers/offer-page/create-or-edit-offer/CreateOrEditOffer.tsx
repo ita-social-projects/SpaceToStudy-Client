@@ -57,6 +57,8 @@ const CreateOrEditOffer: FC<CreateOrUpdateOfferProps> = ({
   const navigate = useNavigate()
   const { hash } = useLocation()
 
+  console.log(1)
+
   const offerAction = existingOffer
     ? OfferActionsEnum.Edit
     : OfferActionsEnum.Create
@@ -70,6 +72,7 @@ const CreateOrEditOffer: FC<CreateOrUpdateOfferProps> = ({
     )
   }
   const onResponse = (response: Offer | null) => {
+    console.log(2)
     if (hash == '#offer') {
       dispatch(
         openAlert({

@@ -51,7 +51,9 @@ const useAxios = <
 
       try {
         setLoading(true)
+        console.log(3)
         const res = await service(params)
+        console.log(4)
         const responseData = transform ? transform(res.data) : res.data
         setResponse(responseData as TransformedResponse)
         setError(null)

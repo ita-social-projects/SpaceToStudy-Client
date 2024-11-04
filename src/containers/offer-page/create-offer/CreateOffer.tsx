@@ -17,6 +17,7 @@ const CreateOffer: FC<CreateOfferProps> = ({ closeDrawer, updateOffer }) => {
       OfferService.createOffer({ ...data, FAQ: findFullObjects(data.FAQ) }),
     []
   )
+  console.log(7)
 
   return (
     <CreateOrEditOffer
