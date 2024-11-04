@@ -14,7 +14,6 @@
     "@mui/material": "^5.14.16",
     "@mui/x-date-pickers": "^5.0.20",
     "@reduxjs/toolkit": "^2.2.7",
-    "@storybook/preset-scss": "^1.0.3",
     "@tinymce/tinymce-react": "^5.1.1",
     "allotment": "^1.19.3",
     "axios": "^1.6.0",
