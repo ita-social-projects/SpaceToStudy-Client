@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
@@ -9,6 +9,7 @@ import useBreakpoints from '~/hooks/use-breakpoints'
 import Accordions from '~/components/accordion/Accordions'
 import useAccordions from '~/hooks/use-accordions'
 import { ProfessionalBlock, TypographyVariantEnum } from '~/types'
+import { aboutTutorBlockKeys } from './AboutTutorBlock.constants'
 
 import { styles } from '~/containers/user-profile/about-tutor-block/AboutTutorBlock.styles'
 
@@ -22,16 +23,16 @@ const AboutTutorBlock: FC<AboutTutorBlockProps> = ({ data }) => {
 
   const [expandedItem, handleAccordionChange] = useAccordions()
 
-  const professionalBlockKeys = Object.keys(data) as Array<
-    keyof ProfessionalBlock
-  >
-  const accordionItems = professionalBlockKeys
-    .filter((key) => data[key])
-    .reverse()
-    .map((key) => ({
-      title: `userProfilePage.aboutTutor.${key}`,
-      description: data[key]
-    }))
+  const accordionItems = useMemo(
+    () =>
+      aboutTutorBlockKeys
+        .filter((key) => data[key])
+        .map((key) => ({
+          title: `userProfilePage.aboutTutor.${key}`,
+          description: data[key]
+        })),
+    [data]
+  )
 
   if (accordionItems.length === 0) {
     return null
