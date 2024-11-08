@@ -7,7 +7,12 @@ import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import Accordions from '~/components/accordion/Accordions'
 import useAccordions from '~/hooks/use-accordions'
-import { ProfessionalBlock, AboutStudentData, TypographyVariantEnum, UserRoleEnum } from '~/types'
+import {
+  ProfessionalBlock,
+  AboutStudentData,
+  TypographyVariantEnum,
+  UserRoleEnum
+} from '~/types'
 
 import { styles } from '~/containers/user-profile/about-user-block/AboutUserBlock.styles'
 
