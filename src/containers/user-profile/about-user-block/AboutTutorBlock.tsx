@@ -2,6 +2,7 @@ import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import AboutUserBlock from '~/containers/user-profile/about-user-block/AboutUserBlock'
+import { aboutTutorKeys } from '~/containers/user-profile/about-user-block/about-user-block.constants'
 import { UserRoleEnum, ProfessionalBlock } from '~/types'
 
 interface AboutTutorBlockProps {
@@ -11,12 +12,10 @@ interface AboutTutorBlockProps {
 const AboutTutorBlock: FC<AboutTutorBlockProps> = ({ data }) => {
   const { t } = useTranslation()
 
-  const professionalBlockKeys = Object.keys(data)
-
   return (
     <AboutUserBlock
       data={data}
-      itemKeys={professionalBlockKeys}
+      itemKeys={aboutTutorKeys}
       title={t('userProfilePage.tutorAbout.title')}
       userRole={UserRoleEnum.Tutor}
     />

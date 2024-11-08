@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useMemo } from 'react'
 
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
@@ -33,16 +33,16 @@ const AboutUserBlock: FC<AboutUserBlockProps> = ({
 
   const [expandedItem, handleAccordionChange] = useAccordions()
 
-  // const professionalBlockKeys = Object.keys(data) as Array<
-  //   keyof ProfessionalBlock
-  // >
-
-  const accordionItems = itemKeys
-    .filter((key) => data[key])
-    .map((key) => ({
-      title: `userProfilePage.${userRole}About.${key}`,
-      description: data[key]
-    }))
+  const accordionItems = useMemo(
+    () =>
+      itemKeys
+        .filter((key) => data[key])
+        .map((key) => ({
+          title: `userProfilePage.${userRole}About.${key}`,
+          description: data[key]
+        })),
+    [data]
+  )
 
   if (accordionItems.length === 0) {
     return null
