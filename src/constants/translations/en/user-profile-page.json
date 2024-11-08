@@ -26,8 +26,14 @@
     "education": "Education",
     "workExperience": "Work experience",
     "scientificActivities": "Scientific activities",
-    "awards": "Awards",
-    "socialMedia": "Social media"
+    "awards": "Awards"
+  },
+  "aboutStudent": {
+    "title": "About the student",
+    "education": "Education",
+    "workExperience": "Work experience",
+    "scientificActivities": "Scientific activities",
+    "awards": "Awards"
   },
   "reviews":{
     "titleTutor":"What students say",

@@ -1,5 +1,4 @@
 import { FC } from 'react'
-import { useTranslation } from 'react-i18next'
 
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
@@ -10,25 +9,28 @@ import Accordions from '~/components/accordion/Accordions'
 import useAccordions from '~/hooks/use-accordions'
 import { ProfessionalBlock, TypographyVariantEnum } from '~/types'
 
-import { styles } from '~/containers/user-profile/about-tutor-block/AboutTutorBlock.styles'
+import { styles } from '~/containers/user-profile/about-user-block/AboutUserBlock.styles'
 
 interface AboutTutorBlockProps {
   data: ProfessionalBlock
+  itemKeys: Array<keyof ProfessionalBlock>
+  title: string
+  userRole: string
 }
 
-const AboutTutorBlock: FC<AboutTutorBlockProps> = ({ data }) => {
-  const { t } = useTranslation()
+const AboutUserBlock: FC<AboutTutorBlockProps> = ({ data, itemKeys, title, userRole }) => {
   const { isMobile } = useBreakpoints()
 
   const [expandedItem, handleAccordionChange] = useAccordions()
 
-  const professionalBlockKeys = Object.keys(data) as Array<
-    keyof ProfessionalBlock
-  >
-  const accordionItems = professionalBlockKeys
+  // const professionalBlockKeys = Object.keys(data) as Array<
+  //   keyof ProfessionalBlock
+  // >
+
+  const accordionItems = itemKeys
     .filter((key) => data[key])
     .map((key) => ({
-      title: `userProfilePage.aboutTutor.${key}`,
+      title: `userProfilePage.about${userRole}.${key}`,
       description: data[key]
     }))
 
@@ -43,7 +45,7 @@ const AboutTutorBlock: FC<AboutTutorBlockProps> = ({ data }) => {
   return (
     <Box sx={styles.root}>
       <Typography sx={styles.title} variant={titleVariant}>
-        {t('userProfilePage.aboutTutor.title')}
+        {title}
       </Typography>
       <Box sx={styles.wrapper}>
         <Accordions
@@ -63,4 +65,4 @@ const AboutTutorBlock: FC<AboutTutorBlockProps> = ({ data }) => {
   )
 }
 
-export default AboutTutorBlock
+export default AboutUserBlock

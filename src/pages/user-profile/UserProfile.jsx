@@ -16,7 +16,7 @@ import {
 } from '~/components/profile-item/complete-profile.constants'
 
 import ProfileInfo from '~/containers/user-profile/profile-info/ProfileInfo'
-import AboutTutorBlock from '~/containers/user-profile/about-tutor-block/AboutTutorBlock'
+import AboutTutorBlock from '~/containers/user-profile/about-user-block/AboutTutorBlock'
 import VideoPresentation from '~/containers/user-profile/video-presentation/VideoPresentation'
 import CommentsWithRatingBlock from '~/containers/user-profile/comments-with-rating-block/CommentsWithRatingBlock'
 
