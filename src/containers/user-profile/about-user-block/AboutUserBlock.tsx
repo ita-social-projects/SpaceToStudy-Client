@@ -7,18 +7,23 @@ import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import Accordions from '~/components/accordion/Accordions'
 import useAccordions from '~/hooks/use-accordions'
-import { ProfessionalBlock, TypographyVariantEnum } from '~/types'
+import { ProfessionalBlock, AboutStudentData, TypographyVariantEnum, UserRoleEnum } from '~/types'
 
 import { styles } from '~/containers/user-profile/about-user-block/AboutUserBlock.styles'
 
-interface AboutTutorBlockProps {
-  data: ProfessionalBlock
+interface AboutUserBlockProps {
+  data: ProfessionalBlock | AboutStudentData
   itemKeys: Array<keyof ProfessionalBlock>
   title: string
-  userRole: string
+  userRole: UserRoleEnum
 }
 
-const AboutUserBlock: FC<AboutTutorBlockProps> = ({ data, itemKeys, title, userRole }) => {
+const AboutUserBlock: FC<AboutUserBlockProps> = ({
+  data,
+  itemKeys,
+  title,
+  userRole
+}) => {
   const { isMobile } = useBreakpoints()
 
   const [expandedItem, handleAccordionChange] = useAccordions()
@@ -30,7 +35,7 @@ const AboutUserBlock: FC<AboutTutorBlockProps> = ({ data, itemKeys, title, userR
   const accordionItems = itemKeys
     .filter((key) => data[key])
     .map((key) => ({
-      title: `userProfilePage.about${userRole}.${key}`,
+      title: `userProfilePage.${userRole}About.${key}`,
       description: data[key]
     }))
 
