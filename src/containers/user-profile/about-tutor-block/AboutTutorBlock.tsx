@@ -9,7 +9,7 @@ import useBreakpoints from '~/hooks/use-breakpoints'
 import Accordions from '~/components/accordion/Accordions'
 import useAccordions from '~/hooks/use-accordions'
 import { ProfessionalBlock, TypographyVariantEnum } from '~/types'
-import { aboutTutorBlockKeys } from './AboutTutorBlock.constants'
+import { aboutTutorBlockKeys } from '~/containers/user-profile/about-tutor-block/AboutTutorBlock.constants'
 
 import { styles } from '~/containers/user-profile/about-tutor-block/AboutTutorBlock.styles'
 
