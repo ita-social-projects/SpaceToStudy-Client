@@ -1,12 +1,12 @@
 import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
-import { cooperationMockData } from '~tests/test-constants'
+import {  getCooperationByIdMockResponse } from '~tests/test-constants'
 import { URLs } from '~/constants/request'
 import MyCooperationsDetails from '~/containers/my-cooperations/my-cooperations-details/MyCooperationsDetails.tsx'
 
 import { screen, fireEvent } from '@testing-library/react'
 import { vi } from 'vitest'
 
-const mockedOffer = { ...cooperationMockData }
+const mockedOffer = { ...getCooperationByIdMockResponse }
 mockedOffer.languages = ['Ukrainian', 'English']
 
 const mockChatContext = {

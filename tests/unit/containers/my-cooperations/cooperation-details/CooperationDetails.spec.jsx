@@ -1,6 +1,6 @@
 import { screen, fireEvent } from '@testing-library/react'
 import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
-import { cooperationMockData as cooperationMock } from '~tests/test-constants'
+import { getCooperationByIdMockResponse as cooperationMock } from '~tests/test-constants'
 import { URLs } from '~/constants/request'
 import { queryClient } from '~/plugins/queryClient'
 

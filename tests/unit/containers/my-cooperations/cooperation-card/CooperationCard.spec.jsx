@@ -1,7 +1,9 @@
 import { screen } from '@testing-library/react'
 import CooperationCard from '~/containers/my-cooperations/cooperation-card/CooperationCard'
 import { renderWithProviders } from '~tests/test-utils'
-import { mockedCoop } from '~tests/unit/containers/my-cooperations/MyCooperations.spec.constants'
+import { mockedCooperations } from '~tests/test-constants'
+
+const mockedCoop = mockedCooperations.items[0]
 
 const preloadedState = {
   appMain: { userRole: 'tutor' },

@@ -1,4 +1,4 @@
-export const cooperationMockData = {
+export const getCooperationByIdMockResponse = {
   _id: '672fd85a48371231a70da39f',
   price: 500,
   proficiencyLevel: ['Beginner'],
