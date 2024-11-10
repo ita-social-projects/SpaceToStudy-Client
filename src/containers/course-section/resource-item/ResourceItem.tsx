@@ -21,7 +21,7 @@ import {
   selectionFields
 } from '~/containers/course-section/resource-item/ResourceItem.constants'
 import { styles } from '~/containers/course-section/resource-item/ResourceItem.styles'
-
+import { ResourceService } from '~/services/resource-service'
 import {
   Attachment,
   CourseResource,
@@ -206,7 +206,12 @@ const ResourceItem: FC<ResourceItemProps> = ({
     const type = resourceType ?? resource.resourceType
 
     if (isAttachment(resource, type)) {
-      window.open(resource.link, '_blank')
+        window.open(resource.link, '_blank')
+    }
+
+    if (type === ResourceType.Attachment) {
+      const fileName = (resource as Attachment).fileName
+      void ResourceService.downloadAttachment(resource._id, fileName)
       return
     }
 

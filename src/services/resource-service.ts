@@ -104,6 +104,22 @@ export const ResourceService = {
       })
     })
   },
+  downloadAttachment: async (id: string, fileName: string): Promise<void> => {
+     const response = await axiosClient.get(
+        createUrlPath(URLs.resources.attachments.download, id),
+        { responseType: 'blob' }
+     )
+
+     const url = window.URL.createObjectURL(new Blob([response.data]))
+     const link = document.createElement('a')
+     link.href = url
+     link.setAttribute('download', fileName)
+     document.body.appendChild(link)
+     link.click()
+     document.body.removeChild(link)
+
+     setTimeout(() => window.URL.revokeObjectURL(url), 100)
+  },
   addQuiz: (data: CreateQuizParams) => {
     return baseService.request<Quiz>({
       method: 'POST',
