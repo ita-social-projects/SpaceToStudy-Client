@@ -2,6 +2,7 @@ import { screen, fireEvent } from '@testing-library/react'
 import { authRoutes } from '~/router/constants/authRoutes'
 
 import { renderWithProviders } from '~tests/test-utils'
+import { mockedCooperations as testCooperations } from '~tests/test-constants'
 import ActiveStudentsBlock from '~/components/active-students/ActiveStudentsBlock'
 import useQuery from '~/hooks/use-query'
 import { vi } from 'vitest'
@@ -17,45 +18,36 @@ vi.mock('react-router-dom', async () => ({
 
 const mockedCooperations = [
   {
-    _id: 'cooperation1',
-    offer: {
-      subject: {
-        name: 'Violin'
-      }
-    },
+    ...testCooperations.items[0],
+    _id: '66ec53d40d9d9983a952541',
+    subject: { name: 'Web Development' },
     user: {
-      _id: 'student1',
-      firstName: 'FirstNameStudent1',
-      lastName: 'LastNameStudent1',
-      photo: 'Student1Photo'
+      _id: '6565f781b2b2c701e9183cb8',
+      firstName: 'John',
+      lastName: 'Doe',
+      photo: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61'
     }
   },
   {
-    _id: 'cooperation2',
-    offer: {
-      subject: {
-        name: 'Piano'
-      }
-    },
+    ...testCooperations.items[0],
+    _id: '66ec53d40d9d9983a952542',
+    subject: { name: 'UI/UX Design' },
     user: {
-      _id: 'student2',
-      firstName: 'FirstNameStudent2',
-      lastName: 'LastNameStudent2',
-      photo: 'Student2Photo'
+      _id: '6565f781b2b2c701e9183cb8',
+      firstName: 'Jane',
+      lastName: 'Doe',
+      photo: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61'
     }
   },
   {
-    _id: 'cooperation3',
-    offer: {
-      subject: {
-        name: 'Web Development'
-      }
-    },
+    ...testCooperations.items[0],
+    _id: '66ec53d40d9d9983a952543',
+    subject: { name: 'Testing' },
     user: {
-      _id: 'student3',
-      firstName: 'FirstNameStudent3',
-      lastName: 'LastNameStudent3',
-      photo: 'Student3Photo'
+      _id: '6565f781b2b2c701e9183cb8',
+      firstName: 'Jack',
+      lastName: 'Black',
+      photo: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61'
     }
   }
 ]
@@ -64,7 +56,7 @@ const mockedData = {
   isLoading: false,
   data: {
     items: mockedCooperations,
-    count: 1
+    count: 3
   },
   refetch: vi.fn()
 }
@@ -109,7 +101,7 @@ describe('ActiveStudentsBlock', () => {
       const fullName = screen.getByText(
         `${cooperation.user.firstName} ${cooperation.user.lastName}`
       )
-      const subjectName = screen.getByText(cooperation.offer.subject.name)
+      const subjectName = screen.getByText(cooperation.subject.name)
 
       expect(fullName).toBeInTheDocument()
       expect(subjectName).toBeInTheDocument()

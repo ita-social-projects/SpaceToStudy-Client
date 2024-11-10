@@ -1,36 +1,13 @@
 import { renderWithProviders, mockAxiosClient } from '~tests/test-utils'
+import { cooperationMockData } from '~tests/test-constants'
 import { URLs } from '~/constants/request'
 import MyCooperationsDetails from '~/containers/my-cooperations/my-cooperations-details/MyCooperationsDetails.tsx'
 
 import { screen, fireEvent } from '@testing-library/react'
 import { vi } from 'vitest'
 
-const mockedOffer = {
-  initiator: { _id: 'initiatorId', role: ['tutor'] },
-  receiver: { _id: 'receiverId', role: ['student'] },
-  offer: {
-    title: 'Title',
-    description: 'Description',
-    languages: ['Ukrainian', 'English'],
-    author: {
-      firstName: 'Michael',
-      lastName: 'Scarn',
-      photo: '1701182621626.jpg',
-      professionalSummary: 'Agent'
-    },
-    subject: {
-      name: 'Algebra'
-    },
-    category: {
-      name: 'Mathematics',
-      appearance: {
-        color: '#1234'
-      }
-    },
-    proficiencyLevel: ['INTERMEDIATE']
-  },
-  price: 100
-}
+const mockedOffer = { ...cooperationMockData }
+mockedOffer.languages = ['Ukrainian', 'English']
 
 const mockChatContext = {
   setChatInfo: vi.fn()
