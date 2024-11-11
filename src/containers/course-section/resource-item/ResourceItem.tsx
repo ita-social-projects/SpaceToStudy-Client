@@ -225,7 +225,11 @@ const ResourceItem: FC<ResourceItemProps> = ({
   }
 
   return (
-    <Box onClick={onResourceItemClick} sx={styles.container(isView)}>
+    <Box
+      data-testid='resourceItem'
+      onClick={onResourceItemClick}
+      sx={styles.container(isView)}
+    >
       <Box
         sx={{
           ...styles.titleWithDescriptionWrapper,

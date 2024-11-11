@@ -3,6 +3,10 @@ import { fireEvent, screen } from '@testing-library/react'
 import { ResourcesTypesEnum } from '~/types'
 
 import {
+  ResourceAvailabilityStatusEnum,
+  ResourcesTypesEnum as ResourceType
+} from '~/types'
+import {
   mockedLessonDataOriginal,
   mockedQuizDataDuplicate,
   mockedAttachmentDataOriginal,
@@ -13,7 +17,7 @@ import {
   mockAvailabilityOpenFrom,
   mockAvailabilityClosed
 } from '~tests/unit/containers/course-section/resource-item/ResourceItem.spec.constants'
-
+import { ResourceService } from '~/services/resource-service'
 import ResourceItem from '~/containers/course-section/resource-item/ResourceItem'
 import { afterEach, expect, it, vi } from 'vitest'
 
@@ -54,6 +58,19 @@ vi.mock('@mui/x-date-pickers/DatePicker', () => ({
       type='date'
     />
   )
+}))
+
+const navigateMock = vi.fn()
+
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual('react-router-dom')),
+  useNavigate: () => navigateMock
+}))
+
+vi.mock('~/services/resource-service', () => ({
+  ResourceService: {
+    downloadAttachment: vi.fn()
+  }
 }))
 
 describe('ResourceItem tests', () => {
@@ -423,5 +440,93 @@ describe('ResourceItem navigation', () => {
     fireEvent.click(attachmentItem)
 
     expect(mockNavigate).not.toHaveBeenCalled()
+  })
+})
+
+describe('ResourceItem component', () => {
+  const mockNavigate = vi.fn()
+  const mockResource = {
+    _id: '123',
+    resourceType: ResourceType.Lesson
+  }
+
+  it('renders the button', () => {
+    renderWithProviders(<ResourceItem resource={mockResource} />)
+    expect(screen.getByTestId('resourceItem')).toBeInTheDocument()
+  })
+
+  it('does not navigate or download if isView is false', () => {
+    renderWithProviders(<ResourceItem resource={mockResource} isView={false} />)
+
+    fireEvent.click(screen.getByTestId('resourceItem'))
+    expect(mockNavigate).not.toHaveBeenCalled()
+    expect(ResourceService.downloadAttachment).not.toHaveBeenCalled()
+  })
+
+  it('does not navigate or download if resource is not open', () => {
+    renderWithProviders(
+      <ResourceItem
+        resource={mockResource}
+        isView={true}
+        availability={{ status: ResourceAvailabilityStatusEnum.Closed }}
+      />
+    )
+
+    fireEvent.click(screen.getByTestId('resourceItem'))
+    expect(mockNavigate).not.toHaveBeenCalled()
+    expect(ResourceService.downloadAttachment).not.toHaveBeenCalled()
+  })
+
+  it('navigates to lesson-details if resource type is Lesson and isView is true', () => {
+    renderWithProviders(
+      <ResourceItem
+        resource={mockResource}
+        resourceType={ResourceType.Lesson}
+        isView={true}
+        availability={{ status: ResourceAvailabilityStatusEnum.Open }}
+      />
+    )
+
+    fireEvent.click(screen.getByTestId('resourceItem'))
+    waitFor(()=> {
+      expect(mockNavigate).toHaveBeenCalledWith('lesson-details/123')
+    })
+  })
+
+  it('navigates to quiz if resource type is Quiz and isView is true', () => {
+    renderWithProviders(
+      <ResourceItem
+        resource={{ ...mockResource, resourceType: ResourceType.Quiz }}
+        resourceType={ResourceType.Quiz}
+        isView={true}
+        availability={{ status: ResourceAvailabilityStatusEnum.Open }}
+      />
+    )
+
+    fireEvent.click(screen.getByTestId('resourceItem'))
+    waitFor(()=> {
+      expect(mockNavigate).toHaveBeenCalledWith('quiz/123')
+    })
+  })
+
+  it('calls downloadAttachment if resource type is Attachment', () => {
+    renderWithProviders(
+      <ResourceItem
+        resource={{
+          ...mockResource,
+          resourceType: ResourceType.Attachment,
+          fileName: 'example.pdf'
+        }}
+        resourceType={ResourceType.Attachment}
+        isView={true}
+        availability={{ status: ResourceAvailabilityStatusEnum.Open }}
+      />
+    )
+
+    fireEvent.click(screen.getByTestId('resourceItem'))
+    expect(ResourceService.downloadAttachment).toHaveBeenCalledWith(
+      '123',
+      'example.pdf'
+    )
   })
 })
