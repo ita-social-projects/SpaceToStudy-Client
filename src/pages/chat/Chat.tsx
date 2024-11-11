@@ -319,10 +319,10 @@ const Chat = () => {
                   infiniteLoadCallback={handleInifiniteLoad}
                   isMessagesLoading={isMessagesLoading}
                   messages={messages}
-                  userToSpeak={userToSpeak as Member}
                   scrollHeight={!skip ? 0 : prevScrollHeight}
                   scrollTop={!skip ? 0 : prevScrollTop}
                   skip={skip}
+                  userToSpeak={userToSpeak as Member}
                 />
                 {renderChatTextArea()}
               </>
