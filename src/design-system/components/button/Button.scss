@@ -1,4 +1,4 @@
-@use '~/scss/utilities' as *;
+@use '~scss/utilities' as *;
 
 .#{$prefix}btn {
   --#{$prefix}btn-padding-x: #{get-var('space-3')};
@@ -69,7 +69,7 @@
   }
 
   &-primary {
-    @include button-variant(
+    @include button-color(
       $background: get-var('blue-gray-800'),
       $color: get-var('neutral-50'),
       $shadow: get-var('box-shadow-xl'),
@@ -82,7 +82,7 @@
   }
 
   &-tonal {
-    @include button-variant(
+    @include button-color(
       $background: get-var('blue-gray-50'),
       $color: get-var('blue-gray-800'),
       $shadow: get-var('box-shadow-xs'),
@@ -95,7 +95,7 @@
   }
 
   &-text-primary {
-    @include button-variant(
+    @include button-color(
       $background: transparent,
       $color: get-var('blue-gray-800'),
       $hover-background: rgba($blue-gray-400, 0.2),
@@ -107,7 +107,7 @@
   }
 
   &-text-secondary {
-    @include button-variant(
+    @include button-color(
       $background: transparent,
       $color: get-var('blue-gray-600'),
       $hover-background: rgba($blue-gray-400, 0.2),
@@ -119,7 +119,7 @@
   }
 
   &-tonal-success {
-    @include button-variant(
+    @include button-color(
       $background: get-var('green-50'),
       $color: get-var('green-800'),
       $shadow: get-var('box-shadow-xs'),
@@ -132,7 +132,7 @@
   }
 
   &-tonal-error {
-    @include button-variant(
+    @include button-color(
       $background: get-var('red-100'),
       $color: get-var('red-600'),
       $shadow: get-var('box-shadow-xs'),

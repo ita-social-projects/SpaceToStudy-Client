@@ -7,13 +7,14 @@ import {
 
 import { cn } from '~/utils/cn'
 
-import './AppButtonNew.scss'
+import './Button.scss'
 
 const sizes = ['xs', 'sm', 'md', 'lg'] as const
 
-const variants = [
+const colors = [
   'primary',
   'tonal',
+  'tonal-dark',
   'text-primary',
   'text-secondary',
   'tonal-success',
@@ -23,7 +24,7 @@ const variants = [
 type BaseAppButtonProps = {
   loading?: boolean
   size?: (typeof sizes)[number]
-  variant?: (typeof variants)[number]
+  color?: (typeof colors)[number]
   startIcon?: ReactNode
   endIcon?: ReactNode
   to?: string
@@ -34,11 +35,11 @@ type AppButtonProps = BaseAppButtonProps &
 
 type Ref = MuiButtonProps['ref']
 
-const AppButtonNew = forwardRef(
+const Button = forwardRef(
   (
     {
       size = 'md',
-      variant = 'primary',
+      color = 'primary',
       className,
       disabled,
       loading,
@@ -49,7 +50,9 @@ const AppButtonNew = forwardRef(
     }: AppButtonProps,
     forwardedRef: Ref
   ) => {
-    const loader = <CircularProgress color='inherit' size={25} />
+    const loader = (
+      <CircularProgress color='inherit' data-testid='loader' size={25} />
+    )
     const isDisabled = disabled || loading
 
     const content = (
@@ -65,7 +68,7 @@ const AppButtonNew = forwardRef(
         className={cn(
           's2s-btn',
           `s2s-btn-${size}`,
-          `s2s-btn-${variant}`,
+          `s2s-btn-${color}`,
           isDisabled && 's2s-btn-disabled',
           className
         )}
@@ -86,6 +89,6 @@ const AppButtonNew = forwardRef(
     )
   }
 )
-AppButtonNew.displayName = 'AppButtonNew'
+Button.displayName = 'Button'
 
-export default AppButtonNew
+export default Button
