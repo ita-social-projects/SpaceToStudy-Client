@@ -103,6 +103,15 @@ export interface ChangePasswordParams {
   confirmPassword: string
 }
 
+export interface NewPassword {
+  confirmPassword?: string
+  password: string
+}
+
+export interface SendResetPasswordPayload {
+  password: string
+}
+
 export interface SignupResponse {
   userId: string
   userEmail: string
