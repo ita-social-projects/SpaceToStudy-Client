@@ -57,7 +57,6 @@ const LoginForm: React.FC<LoginFormProps> = ({
   return (
     <Box component='form' onSubmit={handleSubmit} sx={styles.form}>
       <AppTextField
-        autoFocus
         data-testid={'email'}
         errorMsg={t(errors.email ?? '')}
         fullWidth
