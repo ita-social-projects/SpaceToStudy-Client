@@ -51,6 +51,13 @@ export const styles = {
     alignItems: { xs: 'center' },
     marginBottom: { xs: '2px', sm: '24px' }
   },
+  labelsCoop: {
+    width: { xs: 'auto', sm: '100%' },
+    display: 'flex',
+    justifyContent: 'space-between',
+    marginBottom: { xs: '0', sm: '0px' },
+    marginLeft: { xs: '20px', sm: '0' }
+  },
   wrapperTypographyProgressCoop: {
     width: '100%',
     display: 'flex',

@@ -27,16 +27,20 @@ const AppProgressBarLine: FC<AppProgressBarLineProps> = ({
       : [0, 20, 40, 60, 80, 100]
   const labelsWithPercentForCooperation = (
     <Box width={'100%'}>
-      <Typography color={'primary.500'} variant='subtitle1'>
+      <Typography color={'primary.500'} fontSize={'12px'} variant='subtitle1'>
         Your progress
       </Typography>
       <Box sx={styles.wrapperTypographyProgressCoop}>
-        <Typography color={'#2B6E6E'} variant='h5'>
+        <Typography color={'#2B6E6E'} fontSize={'20px'} variant='h5'>
           {`${value}% completed`}
         </Typography>
         <Box display={'flex'}>
           <Box component='img' marginRight={'8px'} src={Image} />
-          <Typography color={'primary.500'} variant='subtitle1'>
+          <Typography
+            color={'primary.500'}
+            fontSize={'12px'}
+            variant='subtitle1'
+          >
             {`${100 - value}% to complete`}
           </Typography>
         </Box>
@@ -69,7 +73,9 @@ const AppProgressBarLine: FC<AppProgressBarLineProps> = ({
           : styles.wrapperProgress
       }
     >
-      <Box sx={styles.labels}>{labelsWithPercent}</Box>
+      <Box sx={isCooperationActivities ? styles.labelsCoop : styles.labels}>
+        {labelsWithPercent}
+      </Box>
       <LinearProgress
         sx={
           isCooperationActivities ? styles.progressCoop : styles.progress(value)
