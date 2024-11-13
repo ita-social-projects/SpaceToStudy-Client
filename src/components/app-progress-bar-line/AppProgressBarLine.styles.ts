@@ -31,5 +31,30 @@ export const styles = {
       ${palette.basic.yellowGreen} ${175 - progress}%,
       ${palette.basic.fruitSalad} ${200 - progress}%)`
     }
-  })
+  }),
+  progressCoop: {
+    display: 'flex',
+    alignItems: 'center',
+    width: '100%',
+    height: '12px',
+    backgroundColor: `${palette.basic.turquoise100}`,
+    borderRadius: '5px',
+    '& .MuiLinearProgress-bar': {
+      borderRadius: '5px',
+      background: `${palette.basic.turquoise500}`
+    }
+  },
+  wrapperProgressCoop: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: { xs: 'row-reverse', sm: 'column' },
+    alignItems: { xs: 'center' },
+    marginBottom: { xs: '2px', sm: '24px' }
+  },
+  wrapperTypographyProgressCoop: {
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'flex-end'
+  }
 }

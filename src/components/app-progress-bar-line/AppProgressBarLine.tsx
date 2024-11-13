@@ -7,23 +7,46 @@ import { styles } from '~/components/app-progress-bar-line/AppProgressBarLine.st
 import { LinearProgress } from '@mui/material'
 import { UserRoleEnum } from '~/types'
 
+import Image from '~/assets/img/cooperation-details/clock.svg'
+
 interface AppProgressBarLineProps {
   value: number
   userRole: UserRoleEnum | ''
+  isCooperationActivities?: boolean
 }
 
 const AppProgressBarLine: FC<AppProgressBarLineProps> = ({
   value,
-  userRole
+  userRole,
+  isCooperationActivities = false
 }) => {
   const { isMobile } = useBreakpoints()
   const labelsValue =
     userRole === UserRoleEnum.Student
       ? [0, 25, 50, 75, 100]
       : [0, 20, 40, 60, 80, 100]
-
-  const labelsWithPercent = isMobile ? (
-    <Typography color={'primary.500'} variant='subtitle2'>
+  const labelsWithPercentForCooperation = (
+    <Box width={'100%'}>
+      <Typography color={'primary.500'} variant='subtitle1'>
+        Your progress
+      </Typography>
+      <Box sx={styles.wrapperTypographyProgressCoop}>
+        <Typography color={'#2B6E6E'} variant='h5'>
+          {`${value}% completed`}
+        </Typography>
+        <Box display={'flex'}>
+          <Box component='img' marginRight={'8px'} src={Image} />
+          <Typography color={'primary.500'} variant='subtitle1'>
+            {`${100 - value}% to complete`}
+          </Typography>
+        </Box>
+      </Box>
+    </Box>
+  )
+  const labelsWithPercent = isCooperationActivities ? (
+    labelsWithPercentForCooperation
+  ) : isMobile ? (
+    <Typography color='primary.500' variant='subtitle2'>
       {`${value}%`}
     </Typography>
   ) : (
@@ -39,10 +62,18 @@ const AppProgressBarLine: FC<AppProgressBarLineProps> = ({
   )
 
   return (
-    <Box sx={styles.wrapperProgress}>
+    <Box
+      sx={
+        isCooperationActivities
+          ? styles.wrapperProgressCoop
+          : styles.wrapperProgress
+      }
+    >
       <Box sx={styles.labels}>{labelsWithPercent}</Box>
       <LinearProgress
-        sx={styles.progress(value)}
+        sx={
+          isCooperationActivities ? styles.progressCoop : styles.progress(value)
+        }
         value={value}
         variant='determinate'
       />
