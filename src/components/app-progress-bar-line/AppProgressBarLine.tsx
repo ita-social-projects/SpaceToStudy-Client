@@ -47,9 +47,7 @@ const AppProgressBarLine: FC<AppProgressBarLineProps> = ({
       </Box>
     </Box>
   )
-  const labelsWithPercent = isCooperationActivities ? (
-    labelsWithPercentForCooperation
-  ) : isMobile ? (
+  const labelsWithPercentForProfile = isMobile ? (
     <Typography color='primary.500' variant='subtitle2'>
       {`${value}%`}
     </Typography>
@@ -64,6 +62,9 @@ const AppProgressBarLine: FC<AppProgressBarLineProps> = ({
       </Typography>
     ))
   )
+  const labelsWithPercent = isCooperationActivities
+    ? labelsWithPercentForCooperation
+    : labelsWithPercentForProfile
 
   return (
     <Box
