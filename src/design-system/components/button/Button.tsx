@@ -7,7 +7,7 @@ import {
 
 import { cn } from '~/utils/cn'
 
-import './Button.scss'
+import '~scss-components/button/Button.scss'
 
 const sizes = ['xs', 'sm', 'md', 'lg'] as const
 
