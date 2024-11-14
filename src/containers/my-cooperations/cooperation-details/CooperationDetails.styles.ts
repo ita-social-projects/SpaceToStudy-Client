@@ -7,7 +7,7 @@ export const styles = {
       typography: TypographyVariantEnum.H5,
       mb: '24px',
       mt: '16px',
-      width: { sm: '100%', md: '100%' },
+      width: { sm: '100%' },
       position: 'relative',
       top: '5px'
     }
