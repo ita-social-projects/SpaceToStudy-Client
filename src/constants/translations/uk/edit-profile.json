@@ -47,13 +47,21 @@
       "proficiencyLevels": "Рівні кваліфікації",
       "editCategoryBtn": "Редагувати",
       "deleteCategoryBtnDisabledTooltip": "Ви розпочали співпрацю(і)/пропозицію. з цією категорією.\nБудь ласка, закрийте її перед деактивацією",
-      "aboutTheTutorTitle": "Про викладача",
-      "aboutTheTutorDescription": "Опишіть ваш професійний досвід. Ця інформація буде відображена у вашому публічному профілі.",
-      "accordion": {
+      "tutorAboutTitle": "Про викладача",
+      "tutorAboutDescription": "Опишіть ваш професійний досвід. Ця інформація буде відображена у вашому публічному профілі.",
+      "studentAboutTitle": "Про студента",
+      "studentAboutDescription": "Опишіть себе та свій досвід навчання. Ця інформація буде відображена у вашому публічному профілі.",
+      "accordionTutor": {
         "education": "Освіта",
         "workExperience": "Досвід роботи",
         "scientificActivities": "Наукова діяльність",
         "awards": "Нагороди",
+        "textareaLabel": "Текст"
+      },
+      "accordionStudent": {
+        "personalIntroduction": "Особисте представлення",
+        "learningGoals": "Навчальні цілі",
+        "learningActivities": "Навчальні активності",
         "textareaLabel": "Текст"
       }
     },

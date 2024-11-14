@@ -47,13 +47,21 @@
       "proficiencyLevels": "Proficiency Levels",
       "editCategoryBtn": "Edit category",
       "deleteCategoryBtnDisabledTooltip": "You have opened cooperation(s)/offers with this category.\nPlease close it before deactivation",
-      "aboutTheTutorTitle": "About the tutor",
-      "aboutTheTutorDescription": "Describe your professional experience. This information will be displayed on your public profile.",
-      "accordion": {
+      "tutorAboutTitle": "About the tutor",
+      "tutorAboutDescription": "Describe your professional experience. This information will be displayed on your public profile.",
+      "studentAboutTitle": "About the student",
+      "studentAboutDescription": "Describe yourself and your learning experiance. This information will be displayed on your public profile.",
+      "accordionTutor": {
         "education": "Education",
         "workExperience": "Work experience",
         "scientificActivities": "Scientific activities",
         "awards": "Awards",
+        "textareaLabel": "Text here"
+      },
+      "accordionStudent": {
+        "personalIntroduction": "Personal Introduction",
+        "learningGoals": "Learning Goals",
+        "learningActivities": "Learning Activities",
         "textareaLabel": "Text here"
       }
     },

@@ -29,9 +29,11 @@ import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 import ProfessionalCategoryList from '~/containers/edit-profile/professional-info-tab/professional-category-list/ProfessionalCategoryList'
 import AddProfessionalCategoryModal from '~/containers/edit-profile/professional-info-tab/add-professional-category-modal/AddProfessionalCategoryModal'
 import AboutTutorAccordion from '~/containers/edit-profile/professional-info-tab/about-tutor-accordion/AboutTutorAccordion'
+import AboutStudentAccordion from '~/containers/edit-profile/professional-info-tab/about-student-accordion/AboutStudentAccordion'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import AppButton from '~/components/app-button/AppButton'
 import { scrollToAndHighlight } from '~/utils/scroll-and-highlight'
+import { aboutStudentData } from '~/containers/user-profile/about-user-block/about-user-block.constants'
 
 import { styles } from '~/containers/edit-profile/professional-info-tab/ProfessionalInfoTab.styles'
 import { highlightElem } from '~/containers/edit-profile/common.styles'
@@ -103,17 +105,23 @@ const ProfessionalInfoTab: FC = () => {
       <Box sx={highlightElem}></Box>
       <TitleWithDescription
         description={t(
-          'editProfilePage.profile.professionalTab.aboutTheTutorDescription'
+          `editProfilePage.profile.professionalTab.${userRole}AboutDescription`
         )}
         isHighlighted
         style={styles.titleWithDescription}
-        title={t('editProfilePage.profile.professionalTab.aboutTheTutorTitle')}
+        title={t(
+          `editProfilePage.profile.professionalTab.${userRole}AboutTitle`
+        )}
       />
       <Box sx={styles.accordionContainer}>
-        <AboutTutorAccordion
-          data={data}
-          handleInputChange={handleInputChange}
-        />
+        {userRole === UserRoleEnum.Tutor ? (
+          <AboutTutorAccordion
+            data={data}
+            handleInputChange={handleInputChange}
+          />
+        ) : (
+          <AboutStudentAccordion data={aboutStudentData} />
+        )}
       </Box>
     </Box>
   )
