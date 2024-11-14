@@ -13,19 +13,16 @@ export const styles = {
     boxSizing: 'border-box',
     mt: '75px'
   },
-
   cardTitle: {
     typography: TypographyVariantEnum.H5,
     color: 'basic.darkGray',
     mb: '5px'
   },
-
   cardSubTitle: {
     typography: TypographyVariantEnum.Body2,
     color: 'basic.blueGray',
     mb: '15px'
   },
-
   select: {
     height: '40px',
     border: '1px solid',
@@ -34,12 +31,10 @@ export const styles = {
       p: '8px 10px'
     }
   },
-
   selectedValue: {
     display: 'flex',
     gap: 1
   },
-
   selectAndButtonContainer: {
     display: 'flex',
     flexDirection: 'row',
@@ -48,14 +43,12 @@ export const styles = {
     flexWrap: 'wrap',
     gap: '8px'
   },
-
   clearAllButton: {
     height: '40px',
     ml: 'auto',
     typography: TypographyVariantEnum.Body1,
     color: 'basic.darkGray'
   },
-
   chartAndLegendContainer: {
     display: 'flex',
     flexDirection: { xs: 'column', sm: 'row' },
@@ -64,19 +57,16 @@ export const styles = {
     mt: '30px',
     gap: '15px'
   },
-
   legendContainer: {
     width: '146px',
     display: 'flex',
     flexDirection: 'column',
     gap: '20px'
   },
-
   legendRow: {
     display: 'flex',
     alignItems: 'center'
   },
-
   legendBoxIcon: (color: string) => ({
     width: '12px',
     height: '12px',
@@ -84,36 +74,30 @@ export const styles = {
     mr: 1,
     borderRadius: '50%'
   }),
-
   percentage: {
     ml: 'auto',
     typography: TypographyVariantEnum.Overline,
     color: 'basic.black'
   },
-
   totalStudents: {
     typography: TypographyVariantEnum.H5,
     color: 'basic.darkGray'
   },
-
   allStudents: {
     typography: TypographyVariantEnum.Subtitle2,
     color: 'basic.darkGray',
     textAlign: 'center'
   },
-
   category: {
     typography: TypographyVariantEnum.Overline,
     color: 'basic.black',
     textTransform: 'uppercase'
   },
-
   diagramContainer: {
     width: '170px',
     height: '170px',
     position: 'relative'
   },
-
   diagramInnerText: {
     position: 'absolute',
     top: '50%',
