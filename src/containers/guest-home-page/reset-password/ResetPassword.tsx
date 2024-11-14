@@ -84,7 +84,7 @@ const ResetPassword: FC<ResetPasswordProps> = ({ resetToken, openModal }) => {
 
   const { handleSubmit, handleInputChange, handleBlur, errors, data } =
     useForm<NewPassword>({
-      onSubmit: (): Promise<void> =>
+      onSubmit: async (): Promise<void> =>
         sendResetPassword({ password: data.password }),
       initialValues: { password: '', confirmPassword: '' },
       validations: { password, confirmPassword }
