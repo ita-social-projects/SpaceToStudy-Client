@@ -32,6 +32,7 @@ import {
 } from '~/types'
 import { getFormattedDate } from '~/utils/helper-functions'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
+import { downloadFile } from '~/utils/download-file'
 
 interface ResourceItemProps {
   resource: CourseResource
@@ -211,7 +212,10 @@ const ResourceItem: FC<ResourceItemProps> = ({
 
     if (type === ResourceType.Attachment) {
       const fileName = (resource as Attachment).fileName
-      void ResourceService.downloadAttachment(resource._id, fileName)
+      void downloadFile(
+        ResourceService.downloadAttachment(resource._id),
+        fileName
+      )
       return
     }
 

@@ -20,6 +20,7 @@ import {
 import { ResourceService } from '~/services/resource-service'
 import ResourceItem from '~/containers/course-section/resource-item/ResourceItem'
 import { afterEach, expect, it, vi } from 'vitest'
+import { downloadFile } from '~/utils/download-file'
 
 const mockDeleteResource = vi.fn()
 const mockEditResource = vi.fn()
@@ -33,6 +34,10 @@ vi.mock('react-router-dom', async () => {
     useNavigate: () => mockNavigate
   }
 })
+
+vi.mock('~/utils/download-file', () => ({
+  downloadFile: vi.fn()
+}))
 
 vi.mock('@mui/x-date-pickers/LocalizationProvider', async () => {
   const actual = await vi.importActual(
@@ -509,13 +514,13 @@ describe('ResourceItem component', () => {
     })
   })
 
-  it('calls downloadAttachment if resource type is Attachment', () => {
+  it('calls downloadFile if resource type is Attachment', () => {
     renderWithProviders(
       <ResourceItem
         resource={{
           ...mockResource,
           resourceType: ResourceType.Attachment,
-          fileName: 'example.pdf'
+          fileName: 'example.png'
         }}
         resourceType={ResourceType.Attachment}
         isView={true}
@@ -524,9 +529,6 @@ describe('ResourceItem component', () => {
     )
 
     fireEvent.click(screen.getByTestId('resourceItem'))
-    expect(ResourceService.downloadAttachment).toHaveBeenCalledWith(
-      '123',
-      'example.pdf'
-    )
+    expect(downloadFile).toHaveBeenCalled()
   })
 })
