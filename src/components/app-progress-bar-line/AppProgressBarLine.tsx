@@ -7,8 +7,7 @@ import { styles } from '~/components/app-progress-bar-line/AppProgressBarLine.st
 import { LinearProgress } from '@mui/material'
 import { UserRoleEnum } from '~/types'
 
-import Image from '~/assets/img/cooperation-details/clock.svg'
-
+import { AccessTime } from '@mui/icons-material'
 interface AppProgressBarLineProps {
   value: number
   userRole: UserRoleEnum | ''
@@ -27,20 +26,16 @@ const AppProgressBarLine: FC<AppProgressBarLineProps> = ({
       : [0, 20, 40, 60, 80, 100]
   const labelsWithPercentForCooperation = (
     <Box width={'100%'}>
-      <Typography color={'primary.500'} fontSize={'12px'} variant='subtitle1'>
+      <Typography sx={styles.primaryLabelsCoop} variant='body2'>
         Your progress
       </Typography>
       <Box sx={styles.wrapperTypographyProgressCoop}>
-        <Typography color={'#2B6E6E'} fontSize={'20px'} variant='h5'>
+        <Typography sx={styles.completedLabel} variant='h5'>
           {`${value}% completed`}
         </Typography>
-        <Box display={'flex'}>
-          <Box component='img' marginRight={'8px'} src={Image} />
-          <Typography
-            color={'primary.500'}
-            fontSize={'12px'}
-            variant='subtitle1'
-          >
+        <Box sx={styles.wrapperTitleWithIconCoop}>
+          <AccessTime sx={styles.accessTimeIcon} />
+          <Typography sx={styles.primaryLabelsCoop} variant='subtitle1'>
             {`${100 - value}% to complete`}
           </Typography>
         </Box>

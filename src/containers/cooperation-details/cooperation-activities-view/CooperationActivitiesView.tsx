@@ -33,7 +33,7 @@ const CooperationActivitiesView: FC<CooperationActivitiesViewProps> = ({
       <Box>
         <AppProgressBarLine
           isCooperationActivities
-          userRole={''}
+          userRole=''
           value={percentValue}
         />
       </Box>
