@@ -5,9 +5,20 @@ import EventIcon from '@mui/icons-material/Event'
 import StudentsInCategoriesChart from './StudentsInCategoriesChart'
 import { useTranslation } from 'react-i18next'
 import { selectedCategory, years } from './StudentsInCategories.constants'
+import { useCallback } from 'react'
 
 function StudentsInCategories() {
   const { t } = useTranslation()
+
+  const selectOption = useCallback(
+    (options: { value: number | string }[]) =>
+      options.map((option) => (
+        <MenuItem key={option.value} value={option.value}>
+          {option.value}
+        </MenuItem>
+      )),
+    []
+  )
   return (
     <Box sx={styles.cardContainer}>
       <Typography sx={styles.cardTitle}>
@@ -27,11 +38,7 @@ function StudentsInCategories() {
           )}
           sx={styles.select}
         >
-          {selectedCategory.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.value}
-            </MenuItem>
-          ))}
+          {selectOption(selectedCategory)}
         </Select>
 
         <Select
@@ -44,12 +51,9 @@ function StudentsInCategories() {
           )}
           sx={styles.select}
         >
-          {years.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.value}
-            </MenuItem>
-          ))}
+          {selectOption(years)}
         </Select>
+
         <Button sx={styles.clearAllButton} variant='text'>
           {t('tutorHomePage.studentsInCategories.resetButton')}
         </Button>
