@@ -18,6 +18,7 @@ export const styles = {
   },
   appCardSquare: {
     minHeight: '460px',
-    padding: '24px 20px'
+    padding: '24px 20px',
+    boxSizing: 'border-box'
   }
 }
