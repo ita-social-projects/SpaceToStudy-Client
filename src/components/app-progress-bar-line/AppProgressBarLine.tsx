@@ -8,6 +8,7 @@ import { LinearProgress } from '@mui/material'
 import { UserRoleEnum } from '~/types'
 
 import { AccessTime } from '@mui/icons-material'
+import { useTranslation } from 'react-i18next'
 interface AppProgressBarLineProps {
   value: number
   userRole: UserRoleEnum | ''
@@ -20,6 +21,7 @@ const AppProgressBarLine: FC<AppProgressBarLineProps> = ({
   isCooperationActivities = false
 }) => {
   const { isMobile } = useBreakpoints()
+  const { t } = useTranslation()
   const labelsValue =
     userRole === UserRoleEnum.Student
       ? [0, 25, 50, 75, 100]
@@ -27,16 +29,16 @@ const AppProgressBarLine: FC<AppProgressBarLineProps> = ({
   const labelsWithPercentForCooperation = (
     <Box width={'100%'}>
       <Typography sx={styles.primaryLabelsCoop} variant='body2'>
-        Your progress
+        {t('cooperationDetailsPage.progressBar.yourProgress')}
       </Typography>
       <Box sx={styles.wrapperTypographyProgressCoop}>
         <Typography sx={styles.completedLabel} variant='h5'>
-          {`${value}% completed`}
+          {`${value}% ${t('cooperationDetailsPage.progressBar.completed')}`}
         </Typography>
         <Box sx={styles.wrapperTitleWithIconCoop}>
           <AccessTime sx={styles.accessTimeIcon} />
           <Typography sx={styles.primaryLabelsCoop} variant='subtitle1'>
-            {`${100 - value}% to complete`}
+            {`${100 - value}% ${t('cooperationDetailsPage.progressBar.needToComplete')}`}
           </Typography>
         </Box>
       </Box>
