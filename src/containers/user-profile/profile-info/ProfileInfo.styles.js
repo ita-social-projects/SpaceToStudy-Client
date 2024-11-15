@@ -63,7 +63,7 @@ export const styles = {
   titleWithDescription: {
     wrapper: {
       textAlign: 'left',
-      xpr: '20px'
+      pr: '20px'
     },
     title: {
       typography: { xs: 'button', sm: 'h5', md: 'h4' },
