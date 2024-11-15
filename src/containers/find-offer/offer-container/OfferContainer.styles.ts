@@ -13,12 +13,12 @@ export const styles = {
   }),
   gridItem: { width: '100%' },
   appCard: {
-    padding: { sm: '30px 20px', md: '30px 20px' },
+    p: { sm: '30px 20px', md: '30px 20px' },
     alignSelf: 'flex-start'
   },
   appCardSquare: {
     minHeight: '460px',
-    padding: '24px 20px',
+    p: '24px 20px',
     boxSizing: 'border-box'
   }
 }
