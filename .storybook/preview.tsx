@@ -1,5 +1,5 @@
-import { StyledEngineProvider } from '@mui/material/styles'
 import React from 'react'
+import { StyledEngineProvider } from '@mui/material/styles'
 import { ThemeProvider } from '@mui/material/styles'
 import { theme } from '../src/styles/app-theme/custom-mui.styles'
 import i18n from '../src/plugins/i18n'
