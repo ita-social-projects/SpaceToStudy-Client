@@ -31,3 +31,4 @@ yarn-error.log*
 
 # scss builds
 /src/scss/lib
+*storybook.log

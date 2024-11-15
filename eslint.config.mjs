@@ -20,7 +20,7 @@ const compat = new FlatCompat({
 
 export default [
   {
-    ignores: ['src/assets/*', 'src/stories/assets/*']
+    ignores: ['src/assets/*', 'src/stories/assets/*', '.storybook/**/*']
   },
   ...compat.extends(
     'eslint:recommended',
