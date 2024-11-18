@@ -28,6 +28,8 @@ const EnumFilter: React.FC<EnumFilterProps> = ({
 }) => {
   const { renderMenu, openMenu } = useMenu()
 
+  const filterLength = filter.length
+
   const menuItems = column.filterEnum.map((filterEnum) => (
     <FilterCheckbox
       data-testid='filter-checkbox'
@@ -40,8 +42,8 @@ const EnumFilter: React.FC<EnumFilterProps> = ({
 
   const endAdornment = (
     <IconButton
-      aria-hidden={filter.length === 0}
-      className={filter.length > 0 ? 'visible' : 'hidden'}
+      aria-hidden={filterLength === 0}
+      className={filterLength > 0 ? 'visible' : 'hidden'}
       data-testid='clear-icon-in-filter'
       onClick={clearFilter}
     >
