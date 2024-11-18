@@ -49,7 +49,10 @@
   "firstQuestion": {
     "teachMethod": "What’s your teaching method?",
     "trialLesson": "Do you have a trial lesson?",
-    "tutoringSession": "How long is each tutoring session?"
+    "tutoringSession": "How long is each tutoring session?",
+    "motivation": "What is your motivation?",
+    "availability": "What time are you available?",
+    "studyCommitment": "How much time are you willing to devote to studying?"
   },
   "creating": "Creating new chat for you, please wait...",
   "deleted": "Chat was deleted",
