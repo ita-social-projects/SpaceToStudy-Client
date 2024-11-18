@@ -64,7 +64,6 @@ const EnrollOffer: FC<EnrollOfferProps> = ({ offer, enrollOffer }) => {
   }
 
   const postOffer = (): Promise<AxiosResponse> => {
-    console.log(data)
     return cooperationService.createCooperation({
       ...data,
       receiver: offer.author._id,
