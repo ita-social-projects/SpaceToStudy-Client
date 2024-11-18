@@ -81,10 +81,6 @@ const EditProfile = () => {
   }
 
   useEffect(() => {
-    console.log('isPasswordSecurityTab', isPasswordSecurityTab)
-  })
-
-  useEffect(() => {
     const fetchData = async () => {
       await dispatch(
         fetchUserById({ userId, role: userRole as UserRole, isEdit: true })
