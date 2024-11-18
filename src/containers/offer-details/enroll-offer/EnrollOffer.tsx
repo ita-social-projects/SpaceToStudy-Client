@@ -64,6 +64,7 @@ const EnrollOffer: FC<EnrollOfferProps> = ({ offer, enrollOffer }) => {
   }
 
   const postOffer = (): Promise<AxiosResponse> => {
+    console.log(data)
     return cooperationService.createCooperation({
       ...data,
       receiver: offer.author._id,
@@ -85,7 +86,7 @@ const EnrollOffer: FC<EnrollOfferProps> = ({ offer, enrollOffer }) => {
       initialValues: {
         proficiencyLevel: offer.proficiencyLevel[0],
         price: offer.price,
-        info: '',
+        additionalInfo: '',
         title: offer.title
       },
       onSubmit: fetchData
@@ -139,10 +140,10 @@ const EnrollOffer: FC<EnrollOfferProps> = ({ offer, enrollOffer }) => {
           fullWidth
           label={t('offerDetailsPage.enrollOffer.labels.info')}
           maxLength={1000}
-          onChange={handleInputChange('info')}
+          onChange={handleInputChange('additionalInfo')}
           sx={styles.textArea}
           title={t('offerDetailsPage.enrollOffer.inputs.info')}
-          value={data.info}
+          value={data.additionalInfo}
         />
         <AppButton
           loading={loading}
