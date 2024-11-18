@@ -14,14 +14,13 @@ const sizes = ['xs', 'sm', 'md', 'lg'] as const
 const colors = [
   'primary',
   'tonal',
-  'tonal-dark',
   'text-primary',
   'text-secondary',
   'tonal-success',
   'tonal-error'
 ] as const
 
-type BaseAppButtonProps = {
+type BaseButtonProps = {
   loading?: boolean
   size?: (typeof sizes)[number]
   color?: (typeof colors)[number]
@@ -30,8 +29,8 @@ type BaseAppButtonProps = {
   to?: string
 }
 
-type AppButtonProps = BaseAppButtonProps &
-  Omit<MuiButtonProps, keyof BaseAppButtonProps>
+export type ButtonProps = BaseButtonProps &
+  Omit<MuiButtonProps, keyof BaseButtonProps>
 
 type Ref = MuiButtonProps['ref']
 
@@ -47,7 +46,7 @@ const Button = forwardRef(
       endIcon,
       children,
       ...props
-    }: AppButtonProps,
+    }: ButtonProps,
     forwardedRef: Ref
   ) => {
     const loader = (
