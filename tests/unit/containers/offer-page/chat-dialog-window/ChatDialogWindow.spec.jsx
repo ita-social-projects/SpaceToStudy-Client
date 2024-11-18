@@ -90,7 +90,7 @@ describe('ChatDialogWindow Component without ChatId with tutor role', () => {
     })
   })
 
-  it('should render questions to the student', () => {
+  it('should render questions to the tutor', () => {
     const question = screen.getByText('chatPage.firstQuestion.teachMethod')
     expect(question).toBeInTheDocument()
   })
