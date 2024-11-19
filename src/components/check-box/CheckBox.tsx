@@ -16,10 +16,10 @@ interface CheckBoxProps extends Omit<CheckboxProps, 'size'> {
 const CheckBox: FC<CheckBoxProps> = ({
   color = 'primary',
   disabled = false,
-  variant = 'check',
   label,
   labelPosition = 'end',
   loading = false,
+  variant = 'check',
   size = 'md',
   ...props
 }) => {
@@ -44,19 +44,24 @@ const CheckBox: FC<CheckBoxProps> = ({
 
   return (
     <label
+      aria-busy={loading}
       aria-disabled={disabled || loading}
       className={`s2s-checkbox ${blockModifiers} s2s-checkbox--${labelPosition}`}
+      data-testid='checkbox-label'
     >
       {loading ? (
-        <span className='s2s-checkbox__loader'>{loader}</span>
+        <span className='s2s-checkbox__loader' data-testid='checkbox-loader'>
+          {loader}
+        </span>
       ) : (
         <Checkbox
           {...props}
           checked={checked}
           className='s2s-checkbox__input'
           color={color}
+          data-testid='checkbox-input'
           disabled={disabled || loading}
-          indeterminate={variant === 'middle' && !checked}
+          indeterminate={variant === 'middle' && checked}
           onChange={handleChange}
         />
       )}
