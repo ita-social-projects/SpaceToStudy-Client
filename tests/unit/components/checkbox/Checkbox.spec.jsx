@@ -24,6 +24,7 @@ describe('CheckBox Component', () => {
   test('sets indeterminate state when variant is middle', () => {
     render(<CheckBox label='test label' variant='middle' />)
     const checkbox = document.querySelector('.PrivateSwitchBase-input')
+    fireEvent.click(checkbox)
     expect(checkbox).toHaveAttribute('data-indeterminate', 'true')
   })
 
