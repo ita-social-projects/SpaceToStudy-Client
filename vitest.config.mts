@@ -44,7 +44,8 @@ export default defineConfig({
         'src/stories',
         './tests/setup-tests.js',
         'src/**/*.styles.ts',
-        'src/types/**/*.ts'
+        'src/types/**/*.ts',
+        'src/design-system/stories/**.tsx'
       ],
       reportsDirectory: './tests/coverage'
     },
