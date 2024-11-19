@@ -29,32 +29,35 @@ interface AboutChatSidebarProps {
   member: Member
   links: Link[]
   onClose?: () => void
+  title?: SidebarContentEnum
 }
 
 const AboutChatSidebar: FC<AboutChatSidebarProps> = ({
   member,
   links,
-  onClose
+  onClose,
+  title = SidebarContentEnum.About
 }) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const { About, Links } = SidebarContentEnum
-  const [titleText, setTitleText] = useState<SidebarContentEnum>(About)
+  const [titleText, setTitleText] = useState<SidebarContentEnum>(title)
 
   const { user, role } = member
   const { _id, firstName, lastName, photo, professionalSummary } = user
   const { path: pathToProfile } = authRoutes.userProfile
 
-  const navigateToUserProfile = () => {
+  const navigateToUserProfile = () =>
     navigate(createUrlPath(pathToProfile, _id, { role }))
-  }
 
-  const onSeeAllClick = (text: SidebarContentEnum) => {
-    setTitleText(text)
-  }
+  const onSeeAllClick = (text: SidebarContentEnum) => setTitleText(text)
 
   const goBackBtn = titleText !== About && (
-    <IconButton onClick={() => setTitleText(About)} sx={styles.goBackBtn}>
+    <IconButton
+      data-testid='back-icon'
+      onClick={() => setTitleText(About)}
+      sx={styles.goBackBtn}
+    >
       <ArrowBackIcon sx={styles.goBackIcon} />
     </IconButton>
   )
@@ -106,6 +109,7 @@ const AboutChatSidebar: FC<AboutChatSidebarProps> = ({
               </Typography>
             </Box>
             <Divider />
+
             <SidebarContentBox
               content={links}
               icon={<LinkOutlinedIcon />}

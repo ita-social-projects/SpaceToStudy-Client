@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { BrowserRouter } from 'react-router-dom'
 import { render, screen } from '@testing-library/react'
 
@@ -80,5 +80,54 @@ describe('AboutChatSidebar component test', () => {
 
     closeButton.click()
     expect(onCloseMock).toHaveBeenCalledTimes(1)
+  })
+
+  it('should render goBackBtn when titleText is not About ', () => {
+    setup({
+      member: mockMember,
+      media: [],
+      files: [],
+      links: mockLinks,
+      title: 'link'
+    })
+
+    const backButton = screen.getByTestId('back-icon')
+    expect(backButton).toBeInTheDocument()
+  })
+
+  it('should render the user professional summary when provided', () => {
+    const mockMemberWithSummary = {
+      user: {
+        ...mockUser,
+        professionalSummary: 'Experienced web developer'
+      },
+      role: 'tutor'
+    }
+
+    setup({
+      member: mockMemberWithSummary,
+      links: []
+    })
+
+    const userDescription = screen.getByText('Experienced web developer')
+    expect(userDescription).toBeInTheDocument()
+  })
+
+  it('should render the fallback text when professional summary is not provided', () => {
+    const mockMemberWithoutSummary = {
+      user: {
+        ...mockUser,
+        professionalSummary: ''
+      },
+      role: 'tutor'
+    }
+
+    setup({
+      member: mockMemberWithoutSummary,
+      links: []
+    })
+
+    const fallbackText = screen.getByText('chatPage.sidebar.noSummary')
+    expect(fallbackText).toBeInTheDocument()
   })
 })
