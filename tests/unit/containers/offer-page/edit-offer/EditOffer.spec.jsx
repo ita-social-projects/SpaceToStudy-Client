@@ -18,7 +18,8 @@ export const offerMock = {
   languages: ['Ukrainian'],
   subject: { _id: '6422dbc0823be47b41eeb8d9' },
   category: { _id: '6421ed8ed991d46a84721dfa' },
-  FAQ: []
+  FAQ: [],
+  status: 'draft'
 }
 
 const requiredSymbol = ' *'
@@ -134,5 +135,11 @@ describe('CreateOffer component', () => {
 
     expect(checkboxProfessional).toBeChecked()
     expect(checkboxBeginner).toBeChecked()
+  })
+
+  it('should not render "add to draft" button for draft offer', () => {
+    const draftButton = screen.queryByText('button.addToDrafts')
+
+    expect(draftButton).not.toBeInTheDocument()
   })
 })
