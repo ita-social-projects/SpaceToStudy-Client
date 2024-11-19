@@ -10,7 +10,8 @@ export const getInitialValues = (offer: Offer | null) => ({
   description: offer?.description ?? '',
   price: offer?.price.toString() ?? '',
   status: offer?.status ?? StatusEnum.Active,
-  FAQ: offer?.FAQ ?? [{ question: '', answer: '', id: `${Date.now()}` }]
+  FAQ: offer?.FAQ ?? [{ question: '', answer: '', id: `${Date.now()}` }],
+  enrolledUsers: offer?.enrolledUsers ?? []
 })
 
 export const validations = {
