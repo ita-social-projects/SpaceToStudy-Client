@@ -86,7 +86,7 @@ const ChatHeader: FC<ChatHeaderProps> = ({
   )
 
   return (
-    <AppCard onClick={onClick} sx={styles.container}>
+    <AppCard data-testid='chat-header' onClick={onClick} sx={styles.container}>
       <ChatMenu
         anchorEl={menuAnchorEl}
         currentChat={currentChat}

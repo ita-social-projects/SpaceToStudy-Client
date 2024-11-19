@@ -117,6 +117,25 @@ describe('Chat for desktop', () => {
 
     expect(messageInput.value).toBe('')
   })
+
+  it('should choose chat and render MessagesList component and click header to see details', async () => {
+    const chatItem = await screen.findByText('Scott Short')
+
+    await waitFor(() => {
+      fireEvent.click(chatItem)
+    })
+
+    const messagesList = screen.getByTestId('mock-messages-list')
+    expect(messagesList).toBeInTheDocument()
+
+    const sidebarToggle = await screen.findByTestId('chat-header')
+    await waitFor(() => {
+      fireEvent.click(sidebarToggle)
+    })
+
+    const sidebar = await screen.findByTestId('sidebar')
+    expect(sidebar).toBeInTheDocument()
+  })
 })
 
 describe('Chat for mobile', () => {
