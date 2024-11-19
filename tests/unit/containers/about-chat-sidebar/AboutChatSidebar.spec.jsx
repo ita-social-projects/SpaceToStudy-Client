@@ -65,4 +65,20 @@ describe('AboutChatSidebar component test', () => {
 
     expect(screen.getByText('Space2Study WebApp')).toBeInTheDocument()
   })
+
+  it('should render close button and call onClose on click', () => {
+    const onCloseMock = vi.fn()
+
+    setup({
+      member: mockMember,
+      links: [],
+      onClose: onCloseMock
+    })
+
+    const closeButton = screen.getByTestId('close-icon')
+    expect(closeButton).toBeInTheDocument()
+
+    closeButton.click()
+    expect(onCloseMock).toHaveBeenCalledTimes(1)
+  })
 })

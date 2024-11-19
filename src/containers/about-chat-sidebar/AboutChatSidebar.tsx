@@ -67,7 +67,11 @@ const AboutChatSidebar: FC<AboutChatSidebarProps> = ({
           {t(`chatPage.sidebar.${titleText}`)}
         </Typography>
         {onClose && (
-          <IconButton onClick={onClose} sx={styles.closeButton}>
+          <IconButton
+            data-testid='close-icon'
+            onClick={onClose}
+            sx={styles.closeButton}
+          >
             <CloseIcon />
           </IconButton>
         )}
