@@ -1,6 +1,5 @@
 import { useCallback, FC, MouseEvent } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useAppSelector } from '~/hooks/use-redux'
 import { AxiosResponse } from 'axios'
 
 import Avatar from '@mui/material/Avatar'
@@ -8,6 +7,7 @@ import Tooltip from '@mui/material/Tooltip'
 
 import { userService } from '~/services/user-service'
 import useAxios from '~/hooks/use-axios'
+import { useAppSelector } from '~/hooks/use-redux'
 import { defaultResponses } from '~/constants'
 
 import { styles } from '~/containers/navigation-icons/NavigationIcons.styles'
