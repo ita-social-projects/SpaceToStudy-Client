@@ -14,7 +14,7 @@ const mockedValues = {
   negativeNumber: '-5',
   shortPassword: '111a?',
   passwordWithoutNumbers: 'abc!dwga%g&sad',
-  passwordWithInvalidSymbol: '123qw er58',
+  passwordWithInvalidSymbol: '123#qw er58',
   invalidEmail: 'example2example.com',
   shortText: 't',
   longText: 'wwwwwwwwwwwwwwwwwwwwwwwwwwwwwww',
@@ -35,8 +35,8 @@ const errorMessages = {
   numbersOnly: 'common.errorMessages.numbersOnly',
   positiveNumbersOnly: 'common.errorMessages.positiveNumbersOnly',
   passwordLength: 'common.errorMessages.passwordLength',
-  passwordAlphabeticAndNumeric:
-    'common.errorMessages.passwordAlphabeticAndNumeric',
+  passwordComplex:
+    'common.errorMessages.passwordComplex',
   passwordValidSymbols: 'common.errorMessages.passwordValidSymbols',
   emailValid: 'common.errorMessages.emailValid',
   shortText: 'common.errorMessages.shortText',
@@ -121,9 +121,9 @@ describe('commonValidation', () => {
     expect(result).toBe(errorMessages.passwordLength)
   })
 
-  it('Should return error that password must contain at least one alphabetic and one numeric character', () => {
+  it('Should return error that password must contain at least one alphabetic, one numeric and one special character', () => {
     const result = passwordField(mockedValues.passwordWithoutNumbers)
-    expect(result).toBe(errorMessages.passwordAlphabeticAndNumeric)
+    expect(result).toBe(errorMessages.passwordComplex)
   })
 
   it('Should return error that password must contain only valid symbols', () => {
