@@ -30,7 +30,7 @@ export interface EditProfileState {
   city: string | null
   professionalSummary?: string
   nativeLanguage: string | null
-  videoLink: DataByRole<string> | string
+  videoLink: DataByRole<string>
   photo?: UpdatedPhoto | null
   categories: DataByRole<UserMainSubject[]>
   professionalBlock: ProfessionalBlock
@@ -105,7 +105,10 @@ const updateStateFromPayload = (
   state.professionalSummary = professionalSummary
   state.nativeLanguage = nativeLanguage
   state.photo = photo as UpdatedPhoto | null
-  state.videoLink = videoLink
+  state.videoLink = {
+    [UserRoleEnum.Tutor]: videoLink?.[UserRoleEnum.Tutor] ?? '',
+    [UserRoleEnum.Student]: videoLink?.[UserRoleEnum.Student] ?? ''
+  }
   state.categories = mainSubjects
   state.professionalBlock = professionalBlock || initialProfessoinalBlock
   state.notificationSettings =
@@ -189,7 +192,11 @@ const editProfileSlice = createSlice({
       state.nativeLanguage = nativeLanguage
       state.photo = photo as UpdatedPhoto
       state.professionalSummary = professionalSummary
-      state.videoLink = videoLink
+      // TODO
+      state.videoLink = {
+        [UserRoleEnum.Tutor]: videoLink?.[UserRoleEnum.Tutor] ?? '',
+        [UserRoleEnum.Student]: videoLink?.[UserRoleEnum.Student] ?? ''
+      }
     },
     addCategory: (
       state,
