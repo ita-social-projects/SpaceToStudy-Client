@@ -24,7 +24,7 @@ const style = {
   formContainer: {
     display: 'flex',
     flexDirection: 'column',
-    maxHeight: 'inherit',
+    height: '551px',
     boxSizing: 'border-box',
     borderTop: { xs: '1px solid', sm: 'none' },
     borderColor: { xs: 'primary.100' },
@@ -41,7 +41,6 @@ const style = {
     overflow: 'auto',
     pt: '16px',
     pr: { xs: '8px', sm: '96px', md: '80px', lg: '96px' },
-    pb: { xs: '24px', sm: '64px' },
     ...scrollbar
   }
 }
