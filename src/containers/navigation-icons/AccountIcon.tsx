@@ -40,7 +40,7 @@ const AccountIcon: FC<AccountIconProps> = ({ openMenu }) => {
   const { photo: statePhoto } = useAppSelector((state) => state.editProfile)
 
   const getAvatarSrc = useCallback(() => {
-    if (statePhoto && statePhoto.src) {
+    if (statePhoto?.src) {
       return statePhoto.src
     }
 
