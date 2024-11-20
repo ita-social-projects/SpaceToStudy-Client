@@ -196,6 +196,9 @@ const ChangePasswordModal = () => {
               {t('common.cancel')}
             </AppButton>
             <AppButton
+              disabled={
+                !data.password || !data.confirmPassword || !data.currentPassword
+              }
               size={SizeEnum.Large}
               sx={styles.saveButton}
               type={ButtonTypeEnum.Submit}
