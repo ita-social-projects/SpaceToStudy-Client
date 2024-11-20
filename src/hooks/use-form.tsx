@@ -70,10 +70,20 @@ export const useForm = <T extends object>({
 
   const handleInputChange =
     (key: keyof T) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      const value =
+      const nameRegex = /[^a-zA-Z\u0400-\u04FF]/g
+
+      let value =
         event.target.type === 'checkbox'
           ? event.target.checked
           : event.target.value
+
+      if (
+        (key === 'firstName' || key === 'lastName') &&
+        typeof value === 'string'
+      ) {
+        value = value.replace(nameRegex, '')
+      }
+
       setData((prev) => {
         const newData = {
           ...prev,
