@@ -6,7 +6,7 @@
  * Constructs a CSS variable name with an optional suffix, prefixed by a global prefix.
  */
 
-@function build-var-name($name, $suffix) {
+@function build-var-name($name, $suffix: '') {
   @if $suffix != null and $suffix != '' {
     @return '--#{gv.$prefix}#{$name}-#{$suffix}';
   }
