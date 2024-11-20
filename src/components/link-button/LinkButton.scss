@@ -1,0 +1,129 @@
+@use '~/scss/utilities' as *;
+
+.#{$prefix}link-button {
+  font-size: var(--#{$prefix}font-size-md);
+  font-weight: var(--#{$prefix}font-weight-medium);
+  line-height: var(--#{$prefix}line-height-lg);
+  text-transform: none;
+  display: flex;
+  justify-content: center;
+  transition: all 0.3s ease-out;
+  text-decoration: none;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: var(--#{$prefix}space-1);
+    opacity: 0;
+    width: calc(100% - var(--#{$prefix}space-1) * 2);
+    height: var(--#{$prefix}border-width-xs);
+    transition: all 0.3s ease-out;
+    border-radius: var(--#{$prefix}border-radius-2xs);
+  }
+
+  & > &__loader {
+    position: absolute;
+  }
+
+  &__small {
+    @extend %size-small;
+  }
+
+  &__medium {
+    @extend %size-medium;
+  }
+
+  &__light {
+    @extend %variant-light;
+  }
+
+  &__dark {
+    @extend %variant-dark;
+  }
+
+  &__disabled {
+    pointer-events: none;
+  }
+
+  &__loading .#{$prefix}link-button__content {
+    visibility: hidden;
+  }
+}
+
+%size-small {
+  font-size: var(--#{$prefix}font-size-sm);
+  line-height: var(--#{$prefix}line-height-sm);
+  padding: 0 var(--#{$prefix}space-1);
+  column-gap: var(--#{$prefix}space-1);
+
+  &::after {
+    bottom: 0;
+  }
+}
+
+%size-medium {
+  padding: 0 var(--#{$prefix}space-1);
+  column-gap: var(--#{$prefix}space-1);
+}
+
+%variant-light {
+  color: var(--#{$prefix}blue-gray-800);
+
+  &:hover {
+    color: var(--#{$prefix}blue-gray-500);
+  }
+
+  &:active {
+    color: var(--#{$prefix}blue-gray-500);
+
+    &::after {
+      background-color: var(--#{$prefix}blue-gray-500);
+      opacity: 1;
+    }
+  }
+
+  &:focus-visible {
+    color: var(--#{$prefix}blue-gray-800);
+
+    &::after {
+      background-color: var(--#{$prefix}blue-gray-800);
+      opacity: 1;
+    }
+  }
+
+  &.#{$prefix}link-button__disabled {
+    color: var(--#{$prefix}blue-gray-300);
+  }
+}
+
+%variant-dark {
+  color: var(--#{$prefix}blue-gray-50);
+
+  &:hover {
+    color: var(--#{$prefix}blue-gray-300);
+  }
+
+  &:active {
+    color: var(--#{$prefix}blue-gray-300);
+
+    &::after {
+      background-color: var(--#{$prefix}blue-gray-300);
+      opacity: 1;
+    }
+  }
+
+  &:focus-visible {
+    color: var(--#{$prefix}blue-gray-50);
+
+    &::after {
+      background-color: var(--#{$prefix}blue-gray-50);
+      opacity: 1;
+    }
+  }
+
+  &.#{$prefix}link-button__disabled {
+    color: var(--#{$prefix}blue-gray-200);
+  }
+}

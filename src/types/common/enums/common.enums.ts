@@ -59,6 +59,11 @@ export enum ButtonVariantEnum {
   Danger = 'danger'
 }
 
+export enum LinkButtonVariantEnum {
+  Light = 'light',
+  Dark = 'dark'
+}
+
 export enum ButtonTypeEnum {
   Submit = 'submit',
   Button = 'button'
