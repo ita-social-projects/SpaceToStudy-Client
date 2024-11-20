@@ -108,7 +108,11 @@ const LoginForm: React.FC<LoginFormProps> = ({
       </Box>
 
       <AppButton
-        disabled={!data.email || !data.password}
+        disabled={
+          !data.email ||
+          !data.password ||
+          !Object.values(errors).every((elem) => elem === '')
+        }
         loading={authLoading}
         sx={styles.loginButton}
         type='submit'

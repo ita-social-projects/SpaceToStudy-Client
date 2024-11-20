@@ -8,7 +8,7 @@ import useForm from '~/hooks/use-form'
 import { useLoginMutation } from '~/services/auth-service'
 import { useModalContext } from '~/context/modal-context'
 import { useAppDispatch } from '~/hooks/use-redux'
-import { email } from '~/utils/validations/login'
+import { email, logInPassword } from '~/utils/validations/login'
 import loginImg from '~/assets/img/login-dialog/login.svg'
 import { login, snackbarVariants } from '~/constants'
 
@@ -47,7 +47,7 @@ const LoginDialog = () => {
         }
       },
       initialValues: { email: '', password: '', rememberMe: false },
-      validations: { email }
+      validations: { email, password: logInPassword }
     }
   )
 
