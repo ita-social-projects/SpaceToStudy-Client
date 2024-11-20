@@ -37,6 +37,20 @@ const AccountIcon: FC<AccountIconProps> = ({ openMenu }) => {
     defaultResponse: defaultResponses.object as UserResponse
   })
 
+  const { photo: statePhoto } = useAppSelector((state) => state.editProfile)
+
+  const getAvatarSrc = useCallback(() => {
+    if (statePhoto && statePhoto.src) {
+      return statePhoto.src
+    }
+
+    if (photo) {
+      return createUrlPath(import.meta.env.VITE_APP_IMG_USER_URL || '', photo)
+    }
+  }, [photo, statePhoto])
+
+  const avatarSrc = getAvatarSrc()
+
   if (loading) {
     return <Avatar sx={styles.accountIcon} />
   }
@@ -46,10 +60,7 @@ const AccountIcon: FC<AccountIconProps> = ({ openMenu }) => {
       <Avatar
         alt='User Avatar'
         onClick={openMenu}
-        src={
-          photo &&
-          createUrlPath(import.meta.env.VITE_APP_IMG_USER_URL || '', photo)
-        }
+        src={avatarSrc}
         sx={styles.accountIcon}
       >
         {!loading && firstName && lastName && `${firstName[0]}${lastName[0]}`}
