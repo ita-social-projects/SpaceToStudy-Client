@@ -7,8 +7,15 @@ export const styles = {
       typography: TypographyVariantEnum.H5,
       mb: '24px',
       mt: '16px',
-      width: { sm: '100%', md: '70%' }
+      width: { sm: '100%' },
+      position: 'relative',
+      top: '5px'
     }
+  },
+  header: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '30px'
   },
   notesSidebar: {
     '& .MuiDrawer-root': {
