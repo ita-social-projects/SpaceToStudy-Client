@@ -12,11 +12,6 @@ import { ButtonVariantEnum, SizeEnum } from '~/types'
 const CooperationCompletion = () => {
   const { t } = useTranslation()
 
-  // const [materialsAccess, setMaterialsAccess] =
-  //   useState<CooperationMaterialsAccessEnum>(
-  //     CooperationMaterialsAccessEnum.OneMonthAccess
-  //   )
-
   return (
     <Box>
       <Divider />
@@ -37,17 +32,6 @@ const CooperationCompletion = () => {
           {t('cooperationsPage.cooperationDetails.closeCooperationBtn')}
         </AppButton>
       </SettingItem>
-      {/* <SettingItem
-        subtitle={t('cooperationsPage.cooperationDetails.accessDescription')}
-        title={t('cooperationsPage.cooperationDetails.accessTitle')}
-      >
-        <AppSelect
-          fields={cooperationAccessValues(t)}
-          setValue={setMaterialsAccess}
-          sx={styles.dropdown}
-          value={materialsAccess}
-        />
-      </SettingItem> */}
     </Box>
   )
 }
