@@ -34,7 +34,7 @@ const InputField: React.FC<InputFieldProps> = ({
   }
 
   return (
-    <>
+    <div className='s2s-input-wrapper'>
       <div
         className={`s2s-input-container s2s-input-container_${variant} ${
           disabled ? 's2s-input-container_disabled' : ''
@@ -66,7 +66,7 @@ const InputField: React.FC<InputFieldProps> = ({
           </span>
         </div>
       )}
-    </>
+    </div>
   )
 }
 
