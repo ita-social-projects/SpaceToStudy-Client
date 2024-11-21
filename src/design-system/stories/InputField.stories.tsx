@@ -25,6 +25,7 @@ The \`InputField\` component is a highly versatile and customizable input elemen
 - **Error State:** Highlights the input field with an error style if the \`error\` prop is enabled, signaling issues to the user.
 - **Accessibility:** Supports \`disabled\` states, preventing user interaction when needed, while maintaining a clear visual indication.
 - **Customizable Placeholder:** Offers a customizable placeholder to guide users about the expected input format or content.
+- **SX Prop:** The \`sx\` prop allows you to customize the styling of the component using Material UI’s system for styling. It accepts an object containing CSS properties or theme-based values for more flexible styling. Use it to modify layout, spacing, colors, and more dynamically based on your app's requirements.
 
 #### Usage:
 This component is ideal for building robust and user-friendly forms, search bars, or any text input scenarios where flexibility, usability, and customization are required.
@@ -36,6 +37,7 @@ This component is ideal for building robust and user-friendly forms, search bars
   tags: ['autodocs'],
 
   args: {
+    variant: InputFieldVariantEnum.Small,
     value: '',
     label: 'Label',
     disabled: false,
@@ -43,8 +45,7 @@ This component is ideal for building robust and user-friendly forms, search bars
     placeholder: '',
     search: true,
     error: false,
-    onChange: fn(),
-    onSearchClick: fn()
+    onChange: fn()
   },
   argTypes: {
     value: {
@@ -58,7 +59,7 @@ This component is ideal for building robust and user-friendly forms, search bars
     },
     variant: {
       description:
-        "The visual style of the input. This determines the input's appearance(large, small, outlined) and behavior",
+        'The visual style of the input. This determines the input\'s appearance(large, small, outlined) and behavior. Default: "Large"',
       options: ['large', 'small', 'outlined'],
       control: { type: 'radio' }
     },
@@ -74,6 +75,10 @@ This component is ideal for building robust and user-friendly forms, search bars
     error: {
       description:
         'Supports error text and error icon in giving user hints or warnings when true'
+    },
+    sx: {
+      description:
+        "Use it to modify layout, spacing, colors, and more dynamically based on your app's requirements."
     }
   }
 }

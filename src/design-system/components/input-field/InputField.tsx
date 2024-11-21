@@ -3,22 +3,25 @@ import { InputFieldVariantEnum } from '~/types'
 import SearchIcon from '@mui/icons-material/Search'
 import ClearIcon from '@mui/icons-material/Clear'
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline'
+import { InputBaseProps } from '@mui/material/InputBase'
 
-export interface InputFieldProps {
+import Box from '@mui/material/Box'
+import { SxProps } from '@mui/material'
+
+export interface InputFieldProps extends InputBaseProps {
   variant: InputFieldVariantEnum
-  label: string
-  disabled: boolean
+  label?: string
+  disabled?: boolean
   value: string
   placeholder: string
   helperText?: string
   search?: boolean
   error?: boolean
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-  onSearchClick?: (e: React.MouseEvent<SVGSVGElement>) => void
 }
 
 const InputField: React.FC<InputFieldProps> = ({
-  variant,
+  variant = InputFieldVariantEnum.Small,
   label,
   disabled,
   value,
@@ -27,22 +30,19 @@ const InputField: React.FC<InputFieldProps> = ({
   error,
   search,
   onChange,
-  onSearchClick
+  sx
 }) => {
   const clearInput = () => {
     onChange({ target: { value: '' } } as React.ChangeEvent<HTMLInputElement>)
   }
-
   return (
-    <div className='s2s-input-wrapper'>
+    <Box sx={sx as SxProps}>
       <div
         className={`s2s-input-container s2s-input-container_${variant} ${
           disabled ? 's2s-input-container_disabled' : ''
         } ${error ? 's2s-input-container_error' : ''}`}
       >
-        {search && (
-          <SearchIcon className='s2s-search-icon' onClick={onSearchClick} />
-        )}
+        {search && <SearchIcon className='s2s-search-icon' />}
 
         <input
           className='s2s-input-field'
@@ -66,7 +66,7 @@ const InputField: React.FC<InputFieldProps> = ({
           </span>
         </div>
       )}
-    </div>
+    </Box>
   )
 }
 

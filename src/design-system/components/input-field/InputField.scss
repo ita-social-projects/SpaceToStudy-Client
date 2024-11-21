@@ -1,13 +1,14 @@
 @use '~scss/utilities' as *;
 
 .#{$prefix}input-container {
+  width: 100%;
   position: relative;
   display: flex;
   align-items: center;
   box-sizing: border-box;
+  background-color: get-var('neutral-0');
   padding: get-var('space-0') get-var('space-1');
   gap: get-var('space-1');
-  cursor: pointer;
 
   .#{$prefix}search-icon {
     color: get-var('blue-gray-600');
