@@ -1,6 +1,8 @@
 @use '~scss/utilities' as *;
 
 .#{$prefix}input-container {
+  width: 100%;
+  height: 100%;
   position: relative;
   display: flex;
   align-items: center;
@@ -92,8 +94,6 @@
 }
 
 %variant-large {
-  width: 100%;
-
   input {
     font-size: get-var('font-size-3xl');
     font-weight: get-var('font-weight-medium');
@@ -105,8 +105,6 @@
 }
 
 %variant-small {
-  width: 100%;
-
   input {
     font-size: get-var('font-size-md');
     font-weight: get-var('font-weight-regular');
@@ -122,8 +120,6 @@
 }
 
 %variant-outlined {
-  width: 100%;
-  height: 56px;
   outline: get-var('border-width-xs') solid get-var('blue-gray-500');
   background: transparent;
   border-radius: get-var('border-radius-2xs');
