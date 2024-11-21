@@ -3,6 +3,7 @@ import { InputFieldVariantEnum } from '~/types'
 import SearchIcon from '@mui/icons-material/Search'
 import ClearIcon from '@mui/icons-material/Clear'
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline'
+
 import { InputBaseProps } from '@mui/material/InputBase'
 
 import Box from '@mui/material/Box'
@@ -35,6 +36,7 @@ const InputField: React.FC<InputFieldProps> = ({
   const clearInput = () => {
     onChange({ target: { value: '' } } as React.ChangeEvent<HTMLInputElement>)
   }
+
   return (
     <Box sx={sx as SxProps}>
       <div
