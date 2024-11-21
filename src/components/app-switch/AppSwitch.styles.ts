@@ -64,8 +64,16 @@ const getMixins = (
     )
   }
 }
-export const styles: Record<string, object> = {
+export const switchStyles: Record<string, object> = {
   [SizeEnum.Small.toString()]: getMixins(45, 21, 15, 1),
   [SizeEnum.Medium.toString()]: getMixins(60, 28, 20, 2),
   [SizeEnum.Large.toString()]: getMixins(75, 35, 25, 3)
+}
+export const formLabelStyles = {
+  formLabelBox: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '10px',
+    overflow: 'visible'
+  }
 }
