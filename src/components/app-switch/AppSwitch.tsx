@@ -22,7 +22,7 @@ export const AppSwitch = ({
       control={
         <Switch disabled={loading || disabled} sx={sizeStyle} {...props} />
       }
-      label={label ? label : ''}
+      label={label || ''}
       labelPlacement={labelPosition}
       sx={formLabelStyles.formLabelBox}
     />
