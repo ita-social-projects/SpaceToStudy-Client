@@ -6,7 +6,10 @@ import useBreakpoints from '~/hooks/use-breakpoints'
 import { styles } from '~/components/app-progress-bar-line/AppProgressBarLine.styles'
 import { LinearProgress } from '@mui/material'
 import { UserRoleEnum } from '~/types'
-
+import {
+  studentLabelsPercentage,
+  tutorLabelsPercentage
+} from './AppProgressBarLine.constans'
 import { AccessTime } from '@mui/icons-material'
 import { useTranslation } from 'react-i18next'
 interface AppProgressBarLineProps {
@@ -24,10 +27,10 @@ const AppProgressBarLine: FC<AppProgressBarLineProps> = ({
   const { t } = useTranslation()
   const labelsValue =
     userRole === UserRoleEnum.Student
-      ? [0, 25, 50, 75, 100]
-      : [0, 20, 40, 60, 80, 100]
+      ? studentLabelsPercentage
+      : tutorLabelsPercentage
   const labelsWithPercentForCooperation = (
-    <Box width={'100%'}>
+    <Box sx={styles.wrapperMainLabelForCoop}>
       <Typography sx={styles.primaryLabelsCoop} variant='body2'>
         {t('cooperationDetailsPage.progressBar.yourProgress')}
       </Typography>

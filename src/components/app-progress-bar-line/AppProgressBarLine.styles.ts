@@ -82,5 +82,8 @@ export const styles = {
   wrapperTitleWithIconCoop: {
     display: 'flex',
     alignItems: 'center'
+  },
+  wrapperMainLabelForCoop: {
+    width: '100%'
   }
 }
