@@ -1,15 +1,15 @@
 import { SizeEnum } from '~/types'
-
+import palette from '~/styles/app-theme/app.pallete'
 const trackMixin = (width: number, borderWidth: number) => ({
   position: 'absolute',
-  backgroundColor: '#F7F7F7 !important',
+  backgroundColor: `${palette.backgroundColor} !important`,
   border: `${borderWidth}px solid`,
   borderColor: 'primary.200',
   borderRadius: `${width / 3}px`,
-  opacity: 1,
+  opacity: '1 !important',
   transition: 'background-color 0.3s ease, border-color 0.3s ease',
-  '&.Mui-disabled': {
-    color: 'primary.200'
+  '&.Mui-checked': {
+    opacity: '1 !important'
   }
 })
 
@@ -30,7 +30,7 @@ const switchBaseMixin = (rWidth: number, tWidth: number) => ({
     left: `${rWidth - tWidth - rWidth / 10 - 20}px` //source forces +20px on transformX (literally 2 days spent to investigate it) https://github.com/mui/material-ui/blob/v6.1.8/packages/mui-material/src/Switch/Switch.js
   },
   '&.Mui-disabled': {
-    color: 'primary.200'
+    color: 'primary.100'
   }
 })
 
@@ -42,10 +42,22 @@ const rootMixin = (width: number, height: number) => ({
   overflow: 'visible',
   padding: 0,
   margin: '5px',
-  '&:hover': {
+  '&.Mui-checked': {
+    opacity: '1 !important'
+  },
+  '&:not(.Mui-disabled):hover': {
     '& .MuiSwitch-track': {
       borderColor: 'primary.500'
     }
+  },
+  '&.Mui-disabled:hover': {
+    pointerEvents: 'none',
+    '& .MuiSwitch-track': {
+      borderColor: 'inherit !important'
+    }
+  },
+  '& .MuiSwitch-track.Mui-disabled:hover': {
+    pointerEvents: 'none'
   }
 })
 const getMixins = (
