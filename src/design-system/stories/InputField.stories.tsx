@@ -25,10 +25,8 @@ The \`InputField\` component is a highly versatile and customizable input elemen
 - **Error State:** Highlights the input field with an error style if the \`error\` prop is enabled, signaling issues to the user.
 - **Accessibility:** Supports \`disabled\` states, preventing user interaction when needed, while maintaining a clear visual indication.
 - **Customizable Placeholder:** Offers a customizable placeholder to guide users about the expected input format or content.
-<<<<<<< HEAD
 - **SX Prop:** The \`sx\` prop allows you to customize the styling of the component using Material UI’s system for styling. It accepts an object containing CSS properties or theme-based values for more flexible styling. Use it to modify layout, spacing, colors, and more dynamically based on your app's requirements.
-=======
->>>>>>> 3f96b0d83678e6e0fd26490d94b1d936d1cd1ebe
+
 
 #### Usage:
 This component is ideal for building robust and user-friendly forms, search bars, or any text input scenarios where flexibility, usability, and customization are required.

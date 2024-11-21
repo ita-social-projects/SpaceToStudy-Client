@@ -125,10 +125,6 @@
   background: transparent;
   border-radius: get-var('border-radius-2xs');
 
-  &:hover {
-    border-color: get-var('blue-gray-900');
-  }
-
   input {
     color: get-var('blue-gray-700');
     font-weight: get-var('font-weight-regular');
@@ -141,16 +137,13 @@
 
   &:hover {
     outline: get-var('border-width-xs') solid get-var('blue-gray-900');
+    border-color: get-var('blue-gray-900');
 
     input {
       font-size: get-var('font-size-md');
       color: get-var('blue-gray-800');
-
-      &::placeholder {
-        color: get-var('blue-gray-900');
-        font-family: get-var('font-family-rubik');
-      }
     }
+
     .#{$prefix}input-label {
       color: get-var('blue-gray-800');
     }
@@ -185,6 +178,8 @@
 
   input:focus::placeholder {
     opacity: 1;
+    color: get-var('blue-gray-900');
+    font-family: get-var('font-family-rubik');
   }
 }
 
