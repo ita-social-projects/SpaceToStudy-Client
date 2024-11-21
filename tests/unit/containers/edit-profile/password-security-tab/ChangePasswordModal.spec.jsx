@@ -57,13 +57,13 @@ describe('ChangePasswordModal', () => {
     )
 
     fireEvent.change(currentPasswordInput, {
-      target: { value: '12345qwert' }
+      target: { value: '12345qwert!' }
     })
     fireEvent.change(passwordInput, {
-      target: { value: '12345qwertY' }
+      target: { value: '12345qwertY!' }
     })
     fireEvent.change(confirmPasswordInput, {
-      target: { value: '12345qwertY' }
+      target: { value: '12345qwertY!' }
     })
 
     fireEvent.click(saveButton)
@@ -75,8 +75,8 @@ describe('ChangePasswordModal', () => {
       expect(AuthService.changePassword).toHaveBeenCalledWith(
         userDataMock._id,
         {
-          password: '12345qwertY',
-          currentPassword: '12345qwert'
+          password: '12345qwertY!',
+          currentPassword: '12345qwert!'
         }
       )
     })
@@ -103,13 +103,13 @@ describe('ChangePasswordModal', () => {
     )
 
     fireEvent.change(currentPasswordInput, {
-      target: { value: '12345qwertY' }
+      target: { value: '12345qwertY!' }
     })
     fireEvent.change(passwordInput, {
-      target: { value: '12345qwertY' }
+      target: { value: '12345qwertY!' }
     })
     fireEvent.change(confirmPasswordInput, {
-      target: { value: '12345qwertY' }
+      target: { value: '12345qwertY!' }
     })
 
     fireEvent.click(saveButton)
