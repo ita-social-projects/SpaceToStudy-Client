@@ -1,6 +1,6 @@
 import Checkbox, { CheckboxProps } from '@mui/material/Checkbox'
 import { FC, ReactNode, useState } from 'react'
-import Loader from '../loader/Loader'
+import Loader from '~/components/loader/Loader'
 
 import './CheckBox.scss'
 

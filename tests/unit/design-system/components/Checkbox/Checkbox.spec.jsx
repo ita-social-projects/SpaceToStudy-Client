@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react'
-import CheckBox from '~/components/check-box/CheckBox'
+import CheckBox from '~scss-components/checkbox/CheckBox'
 import { expect } from 'vitest'
 
 describe('CheckBox Component', () => {

@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
-// import CheckBox from '~/components/check-box/CheckBox'
-import CheckBox from '~/components/check-box/CheckBox'
+import CheckBox from '../components/checkbox/CheckBox'
 
 const meta: Meta<typeof CheckBox> = {
   title: 'Components/CheckBox',
@@ -68,12 +67,6 @@ This component is ideal for use in forms, settings pages, or any interface requi
 export default meta
 
 type Story = StoryObj<typeof CheckBox>
-
-// export const All: Story = {
-//     render: (args) => {
-
-//     }
-// }
 
 export const Default: Story = {
   args: {
