@@ -41,7 +41,7 @@ const AboutUserBlock: FC<AboutUserBlockProps> = ({
           title: `userProfilePage.${userRole}About.${key}`,
           description: data[key]
         })),
-    [data]
+    [data, itemKeys, userRole]
   )
 
   if (accordionItems.length === 0) {
