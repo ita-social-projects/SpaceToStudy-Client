@@ -60,3 +60,8 @@ body ::-webkit-scrollbar-thumb {
 ::-webkit-scrollbar-thumb:hover {
   background: #727e84;
 }
+
+#storybook-docs {
+  height: 100vh;
+  overflow: auto;
+}

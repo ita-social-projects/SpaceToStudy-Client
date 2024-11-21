@@ -35,17 +35,22 @@ export default defineConfig({
   esbuild: {
     loader: 'tsx'
   },
-  css :{
-    preprocessorOptions : {
+  css: {
+    preprocessorOptions: {
       scss: {
-        api: "modern-compiler",
-      }        
-    } 
+        api: 'modern-compiler'
+      }
+    }
   },
   resolve: {
     alias: {
       '~': path.resolve(__dirname, 'src/'),
-      '~tests': path.resolve(__dirname, 'tests/')
+      '~tests': path.resolve(__dirname, 'tests/'),
+      '~scss': path.resolve(__dirname, 'src/design-system/scss/'),
+      '~scss-components': path.resolve(
+        __dirname,
+        'src/design-system/components/'
+      )
     }
   }
 })

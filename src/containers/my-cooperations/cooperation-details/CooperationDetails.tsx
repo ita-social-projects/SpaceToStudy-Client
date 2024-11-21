@@ -127,7 +127,7 @@ const CooperationDetails = () => {
 
   return (
     <PageWrapper>
-      <Box>
+      <Box sx={styles.header}>
         <StatusChip status={response.status} />
         <TitleWithDescription
           key={crypto.randomUUID()}

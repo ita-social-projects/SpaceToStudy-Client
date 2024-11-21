@@ -146,34 +146,30 @@ const AcceptCooperationModal: FC<AcceptCooperationModalProps> = ({
 
   const onCooperationAccept = () => void handleAcceptCooperation()
 
+  const acceptButtonText = isDirty
+    ? 'cooperationsPage.acceptModal.resend'
+    : 'cooperationsPage.acceptModal.accept'
+  const acceptButtonType = isDirty
+    ? ButtonTypeEnum.Submit
+    : ButtonTypeEnum.Button
+
   const buttons =
     loading || updateLoading ? (
       <Loader size={50} />
     ) : (
-      <>
+      <Box sx={styles.buttonRow}>
         {needAction && (
-          <AppButton
-            disabled={!isDirty}
-            type={ButtonTypeEnum.Submit}
-            variant={ButtonVariantEnum.ContainedLight}
-          >
-            {t('cooperationsPage.acceptModal.resend')}
+          <AppButton onClick={onCooperationAccept} type={acceptButtonType}>
+            {t(acceptButtonText)}
           </AppButton>
         )}
-        <Box sx={styles.buttonRow}>
-          {needAction && (
-            <AppButton onClick={onCooperationAccept}>
-              {t('cooperationsPage.acceptModal.accept')}
-            </AppButton>
-          )}
-          <AppButton
-            onClick={() => void handleDeclineCooperation()}
-            variant={ButtonVariantEnum.Tonal}
-          >
-            {t('cooperationsPage.acceptModal.decline')}
-          </AppButton>
-        </Box>
-      </>
+        <AppButton
+          onClick={() => void handleDeclineCooperation()}
+          variant={ButtonVariantEnum.Tonal}
+        >
+          {t('cooperationsPage.acceptModal.decline')}
+        </AppButton>
+      </Box>
     )
 
   return (

@@ -45,19 +45,18 @@
   },
   "devDependencies": {
     "@babel/core": "^7.23.2",
+    "@chromatic-com/storybook": "^1.9.0",
     "@eslint/compat": "^1.1.1",
     "@eslint/eslintrc": "^3.1.0",
     "@eslint/js": "^9.7.0",
-    "@storybook/addon-actions": "^6.5.16",
-    "@storybook/addon-essentials": "^6.5.16",
-    "@storybook/addon-interactions": "^6.5.16",
-    "@storybook/addon-links": "^6.5.16",
-    "@storybook/builder-webpack5": "^6.5.16",
-    "@storybook/manager-webpack5": "^6.5.16",
-    "@storybook/node-logger": "^6.5.9",
-    "@storybook/preset-create-react-app": "^1.2.0",
-    "@storybook/react": "^6.5.16",
-    "@storybook/testing-library": "^0.0.13",
+    "@storybook/addon-essentials": "^8.2.6",
+    "@storybook/addon-interactions": "^8.2.6",
+    "@storybook/addon-links": "^8.2.6",
+    "@storybook/addon-onboarding": "^8.2.6",
+    "@storybook/blocks": "^8.2.6",
+    "@storybook/react": "^8.2.6",
+    "@storybook/react-vite": "^8.2.6",
+    "@storybook/test": "^8.2.6",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.1.4",
     "@testing-library/react": "^16.0.0",
@@ -83,7 +82,7 @@
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-react": "^7.35.0",
     "eslint-plugin-react-hooks": "^4.6.2",
-    "eslint-plugin-storybook": "^0.8.0",
+    "eslint-plugin-storybook": "^0.10.1",
     "eslint-plugin-testing-library": "^6.2.2",
     "eslint-plugin-typescript": "^0.14.0",
     "eslint-plugin-vitest-globals": "^1.5.0",
@@ -93,6 +92,7 @@
     "lint-staged": "^15.0.2",
     "postcss": "^8.4.44",
     "prettier": "^3.0.3",
+    "storybook": "^8.2.6",
     "stylelint": "^16.9.0",
     "stylelint-config-standard-scss": "^13.1.0",
     "stylelint-prettier": "^5.0.2",
@@ -112,10 +112,10 @@
     "serve": "vite preview --port 3000",
     "lint": "eslint src/**/*.{js,jsx,ts,tsx} && stylelint src/**/*.{css,scss}",
     "lint-fix": "eslint src/**/*.{js,jsx,ts,tsx} --fix && stylelint src/**/*.{css,scss} --fix",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook -o build-story",
     "prepare": "husky",
-    "pre-commit": "lint-staged"
+    "pre-commit": "lint-staged",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": "eslint --fix",
@@ -131,6 +131,11 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
+    ]
+  },
+  "eslintConfig": {
+    "extends": [
+      "plugin:storybook/recommended"
     ]
   }
 }
