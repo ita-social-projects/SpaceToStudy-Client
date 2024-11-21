@@ -29,7 +29,7 @@ describe('CheckBox Component', () => {
   })
 
   test('is disabled when disabled', () => {
-    render(<CheckBox disabled label='test label' />)
+    render(<CheckBox label='test label' disabled />)
     const checkbox = screen.getByTestId('checkbox-input')
     expect(checkbox).toHaveAttribute('aria-disabled', 'true')
   })
@@ -47,19 +47,19 @@ describe('CheckBox Component', () => {
   })
 
   test('applies correct color when success', () => {
-    render(<CheckBox color='success' label='test label' variant='check' />)
+    render(<CheckBox label='test label' variant='check' color='success' />)
     const label = screen.getByTestId('checkbox-label')
     expect(label).toHaveClass('s2s-checkbox--success')
   })
 
   test('applies correct color when error', () => {
-    render(<CheckBox color='error' label='test label' variant='check' />)
+    render(<CheckBox label='test label' variant='check' color='error' />)
     const label = screen.getByTestId('checkbox-label')
     expect(label).toHaveClass('s2s-checkbox--error')
   })
 
   test('renders loader with correct size', () => {
-    render(<CheckBox label='test label' loading size='sm' variant='check' />)
+    render(<CheckBox label='test label' variant='check' size='sm' loading />)
     const loader = screen.getByRole('progressbar')
     expect(loader).toHaveStyle('width: 14px; height: 14px')
   })
