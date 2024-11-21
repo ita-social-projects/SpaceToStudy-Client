@@ -27,8 +27,10 @@
       "mainTitle": "Professional information",
       "mainDescription": "Here you can edit public professional information about yourself.",
       "categoriesTitle": "Your professional categories",
-      "categoriesDescriptionForTutor": "State your professional field you want to work in with your students.\nChoose at least one study category and one subject.",
-      "categoriesDescriptionForStudent": "State the category you want to study.\nChoose at least one study category and one subject.",
+      "categoriesDescription": {
+        "tutor": "State your professional field you want to work in with your students.\nChoose at least one study category and one subject.",
+        "student": "State the category you want to study.\nChoose at least one study category and one subject."
+      },
       "addCategoryBtn": "Add category",
       "addCategoryModal": {
         "title": "Your professional category",

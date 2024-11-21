@@ -118,12 +118,6 @@ const ProfessionalInfoTab: FC = () => {
     </Box>
   )
 
-  const professionalTabCategoriesDescription = t(
-    userRole === UserRoleEnum.Student
-      ? 'editProfilePage.profile.professionalTab.categoriesDescriptionForStudent'
-      : 'editProfilePage.profile.professionalTab.categoriesDescriptionForTutor'
-  )
-
   return (
     <Box sx={styles.root}>
       <TitleWithDescription
@@ -136,7 +130,9 @@ const ProfessionalInfoTab: FC = () => {
       <Box component={ComponentEnum.Section} id='category'>
         <Box sx={highlightElem}></Box>
         <TitleWithDescription
-          description={professionalTabCategoriesDescription}
+          description={t(
+            `editProfilePage.profile.professionalTab.categoriesDescription.${userRole}`
+          )}
           isHighlighted
           style={styles.titleWithDescription}
           title={t('editProfilePage.profile.professionalTab.categoriesTitle')}
