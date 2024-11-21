@@ -23,7 +23,7 @@ const CheckBox: FC<CheckBoxProps> = ({
   size = 'md',
   ...props
 }) => {
-  const [checked, setChecked] = useState(false)
+  const [checked, setChecked] = useState<boolean>(false)
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setChecked(event.target.checked)
@@ -65,7 +65,6 @@ const CheckBox: FC<CheckBoxProps> = ({
           onChange={handleChange}
         />
       )}
-
       <span className='s2s-checkbox__label'>{label}</span>
     </label>
   )
