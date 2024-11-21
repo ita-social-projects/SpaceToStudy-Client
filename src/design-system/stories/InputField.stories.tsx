@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { fn } from '@storybook/test'
 import { useState } from 'react'
-import InputField from '~/components/input-field/InputField'
+import InputField from '~/design-system/components/input-field/InputField'
 import { InputFieldVariantEnum } from '~/types'
-import { InputFieldProps } from '~/components/input-field/InputField'
+import { InputFieldProps } from '~/design-system/components/input-field/InputField'
 
 const meta: Meta<typeof InputField> = {
   title: 'Components/InputField',
