@@ -111,9 +111,11 @@ const LocationSelectionInputs = <
         onChange={onChangeCity}
         onFocus={onFocusCountry}
         options={cities}
+        required
         sx={{ mb: '25px' }}
         textFieldProps={{
-          label: t('common.labels.city')
+          label: t('common.labels.city'),
+          required: !!data.country
         }}
         value={data.city}
       />
