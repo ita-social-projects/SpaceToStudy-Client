@@ -14,6 +14,11 @@
     "description": "Explore tutoring categories you're passionate about.",
     "viewMore": "View more"
   },
+  "schedule": {
+    "title": "Your schedule",
+    "subTitle": "Upcoming classes",
+    "AllClasses": "All scheduled classes"
+  },
   "studentsInCategories": {
     "title": "Students in Your Categories",
     "subTitle": "Statistics of your students quantity during the last time.",
