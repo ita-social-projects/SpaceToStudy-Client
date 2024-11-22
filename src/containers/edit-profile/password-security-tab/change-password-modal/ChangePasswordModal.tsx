@@ -108,10 +108,9 @@ const ChangePasswordModal = () => {
     validations: validations
   })
 
-  const {
-    inputVisibility: currentPasswordVisibility,
-    showInputText: showCurrentPassword
-  } = useInputVisibility(errors.currentPassword)
+  const { showInputText: showCurrentPassword } = useInputVisibility(
+    errors.currentPassword
+  )
 
   const { inputVisibility: passwordVisibility, showInputText: showPassword } =
     useInputVisibility(errors.password)
@@ -150,7 +149,6 @@ const ChangePasswordModal = () => {
         <Box component={ComponentEnum.Form} onSubmit={handleSubmit}>
           <Box sx={styles.form}>
             <AppTextField
-              InputProps={currentPasswordVisibility}
               errorMsg={t(errors.currentPassword)}
               fullWidth
               label={t(
@@ -196,6 +194,9 @@ const ChangePasswordModal = () => {
               {t('common.cancel')}
             </AppButton>
             <AppButton
+              disabled={
+                !data.password || !data.confirmPassword || !data.currentPassword
+              }
               size={SizeEnum.Large}
               sx={styles.saveButton}
               type={ButtonTypeEnum.Submit}

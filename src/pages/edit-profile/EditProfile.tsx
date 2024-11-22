@@ -130,6 +130,7 @@ const EditProfile = () => {
       confirmButton: t('common.discard'),
       cancelButton: t('common.cancel')
     })
+
     if (confirmed) {
       setSearchParams({ tab })
     }
