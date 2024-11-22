@@ -1,4 +1,5 @@
 import { Box, Button, Typography } from '@mui/material'
+import { useTranslation } from 'react-i18next'
 import { styles } from '~/components/tutor-schedule/TutorSchedule.styles'
 import TutorScheduleCard from './TutorScheduleCard'
 import { ITutorScheduleItem } from './types'
@@ -33,11 +34,17 @@ const items: ITutorScheduleItem[] = [
 ]
 
 function TutorSchedule() {
+  const { t } = useTranslation()
+
   return (
     <Box sx={styles.generalContainer}>
       <Box sx={styles.textContainer}>
-        <Typography sx={styles.sectionTitle}>Your schedule</Typography>
-        <Typography sx={styles.sectionSubtitle}>Upcoming classes</Typography>
+        <Typography sx={styles.sectionTitle}>
+          {t('tutorHomePage.schedule.title')}
+        </Typography>
+        <Typography sx={styles.sectionSubtitle}>
+          {t('tutorHomePage.schedule.subTitle')}
+        </Typography>
       </Box>
       <Box sx={styles.cardWrapper}>
         {items.map((item) => (
@@ -45,7 +52,7 @@ function TutorSchedule() {
         ))}
       </Box>
       <Button sx={styles.btn} variant='text'>
-        All scheduled classes
+        {t('tutorHomePage.schedule.AllClasses')}
       </Button>
     </Box>
   )
