@@ -157,7 +157,11 @@ const EditProfile = () => {
     if (city && country) dataToUpdate.address = { city, country }
 
     if (videoLink) {
-      dataToUpdate.videoLink = videoLink[userRole as keyof DataByRole<string>]
+      const updatedVideolink = videoLink[userRole as keyof DataByRole<string>]
+
+      if (updatedVideolink) {
+        dataToUpdate.videoLink = updatedVideolink
+      }
     }
 
     if (notificationSettings)
