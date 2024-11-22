@@ -52,7 +52,7 @@ function TutorSchedule() {
         ))}
       </Box>
       <Button sx={styles.btn} variant='text'>
-        {t('tutorHomePage.schedule.AllClasses')}
+        {t('tutorHomePage.schedule.allClasses')}
       </Button>
     </Box>
   )

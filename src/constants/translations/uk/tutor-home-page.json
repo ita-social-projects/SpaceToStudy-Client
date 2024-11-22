@@ -28,7 +28,7 @@
   "schedule": {
     "title": "Ваш розклад",
     "subTitle": "Найближчі заняття",
-    "AllClasses": "Усі заплановані заняття"
+    "allClasses": "Усі заплановані заняття"
   },
   "studentsInCategories": {
     "title": "Студенти по Ваших категоріях",

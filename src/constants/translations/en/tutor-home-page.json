@@ -17,7 +17,7 @@
   "schedule": {
     "title": "Your schedule",
     "subTitle": "Upcoming classes",
-    "AllClasses": "All scheduled classes"
+    "allClasses": "All scheduled classes"
   },
   "studentsInCategories": {
     "title": "Students in Your Categories",
