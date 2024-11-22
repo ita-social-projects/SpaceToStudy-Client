@@ -81,6 +81,10 @@ const EditProfile = () => {
     return JSON.stringify(initialData) !== JSON.stringify(currentData)
   }
 
+  const areAllValuesEmptyStrings = (obj: DataByRole<string>): boolean => {
+    return Object.values(obj).every((value) => value === '')
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       await dispatch(
@@ -101,6 +105,8 @@ const EditProfile = () => {
 
   const changedFields = useMemo<Partial<EditProfileState>>(() => {
     if (!initialEditProfileState || !profileState) return {}
+    const { videoLink: initialVideoLink } = initialEditProfileState
+    const { videoLink: currentVideoLink } = profileState
 
     const { photo: initialPhoto, ...initialData } = initialEditProfileState
     const { photo: currentPhoto, ...currentData } = profileState
@@ -110,6 +116,13 @@ const EditProfile = () => {
 
     if (hasChanged) {
       const changes: Partial<EditProfileState> = { ...currentData }
+
+      if (
+        areAllValuesEmptyStrings(initialVideoLink) &&
+        areAllValuesEmptyStrings(currentVideoLink)
+      ) {
+        delete changes.videoLink
+      }
 
       if (initialPhoto === currentPhoto) {
         delete changes.photo
@@ -159,9 +172,7 @@ const EditProfile = () => {
     if (videoLink) {
       const updatedVideolink = videoLink[userRole as keyof DataByRole<string>]
 
-      if (updatedVideolink) {
-        dataToUpdate.videoLink = updatedVideolink
-      }
+      dataToUpdate.videoLink = updatedVideolink
     }
 
     if (notificationSettings)
