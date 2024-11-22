@@ -33,13 +33,14 @@ const mockState = {
         isSimilarOffersNotification: false,
         isEmailNotification: false
       }
-    }
+    },
+    videoLink: { tutor: '', student: '' }
   }
 }
 
 const userMock = {
   role: userRole,
-  videoLink: { [userRole]: '' },
+  videoLink: { tutor: '', student: '' },
   mainSubjects: { [userRole]: [] },
   firstName: 'John',
   lastName: 'Doe',
