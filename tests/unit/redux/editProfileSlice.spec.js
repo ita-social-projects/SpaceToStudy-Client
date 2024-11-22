@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
+import { vi } from 'vitest'
 import reducer, {
   setField,
   updateValidityStatus,
@@ -86,7 +87,7 @@ const initialState = {
   professionalSummary: '',
   nativeLanguage: '',
   videoLink: { [UserRoleEnum.Tutor]: '', [UserRoleEnum.Student]: '' },
-  photo: null,
+  photo: '',
   categories: { [UserRoleEnum.Tutor]: [], [UserRoleEnum.Student]: [] },
   professionalBlock: {
     education: '',
@@ -388,7 +389,10 @@ describe('editProfileSlice test', () => {
       nativeLanguage: 'nativeLanguage',
       photo: 'photo',
       professionalSummary: 'professionalSummary',
-      videoLink: 'videoLink'
+      videoLink: {
+        student: undefined,
+        tutor: 'videoLink'
+      }
     })
 
     expect(
@@ -402,7 +406,10 @@ describe('editProfileSlice test', () => {
           nativeLanguage: 'nativeLanguage',
           photo: 'photo',
           professionalSummary: 'professionalSummary',
-          videoLink: 'videoLink'
+          videoLink: {
+            student: undefined,
+            tutor: 'videoLink'
+          }
         })
       )
     ).toEqual(expectedState)
