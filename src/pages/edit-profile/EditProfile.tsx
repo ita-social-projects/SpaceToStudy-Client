@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from 'react'
+import { useEffect, useState, useMemo, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   Link,
@@ -21,6 +21,7 @@ import SidebarMenu from '~/components/sidebar-menu/SidebarMenu'
 import {
   ButtonVariantEnum,
   SizeEnum,
+  UpdatedPhoto,
   UpdateUserParams,
   UserProfileTabsEnum,
   UserRole
@@ -74,6 +75,14 @@ const EditProfile = () => {
   const isPasswordSecurityTab =
     activeTab === UserProfileTabsEnum.PasswordAndSecurity
 
+  const areAllValuesEmptyStrings = (
+    obj: DataByRole<string> | { [key: string]: string }
+  ): boolean => {
+    return Object.values(obj).every(
+      (value) => typeof value === 'string' && value === ''
+    )
+  }
+
   const hasChanges = (
     initialData: Partial<EditProfileState>,
     currentData: Partial<EditProfileState>
@@ -81,9 +90,44 @@ const EditProfile = () => {
     return JSON.stringify(initialData) !== JSON.stringify(currentData)
   }
 
-  const areAllValuesEmptyStrings = (obj: DataByRole<string>): boolean => {
-    return Object.values(obj).every((value) => value === '')
-  }
+  const hasPhotoChanges = useCallback(
+    (
+      initialPhoto: string | null | UpdatedPhoto,
+      currentPhoto: string | null | UpdatedPhoto
+    ): boolean => {
+      if (initialPhoto !== '' && currentPhoto === '') {
+        return true
+      }
+
+      if (
+        typeof initialPhoto === 'string' &&
+        (currentPhoto as UpdatedPhoto).name !== undefined &&
+        (currentPhoto as UpdatedPhoto).name !== initialPhoto
+      ) {
+        return true
+      }
+
+      if (
+        initialPhoto === null &&
+        (currentPhoto as UpdatedPhoto).name !== undefined &&
+        areAllValuesEmptyStrings(currentPhoto as UpdatedPhoto)
+      ) {
+        return true
+      }
+
+      if (
+        (initialPhoto as UpdatedPhoto).name !== undefined &&
+        (currentPhoto as UpdatedPhoto).name !== undefined &&
+        (initialPhoto as UpdatedPhoto).name !==
+          (currentPhoto as UpdatedPhoto).name
+      ) {
+        return true
+      }
+
+      return false
+    },
+    []
+  )
 
   useEffect(() => {
     const fetchData = async () => {
@@ -111,11 +155,15 @@ const EditProfile = () => {
     const { photo: initialPhoto, ...initialData } = initialEditProfileState
     const { photo: currentPhoto, ...currentData } = profileState
 
-    const hasChanged =
-      hasChanges(initialData, currentData) || initialPhoto !== currentPhoto
+    const hasPhotoChanged = hasPhotoChanges(initialPhoto, currentPhoto)
+
+    const hasChanged = hasChanges(initialData, currentData) || hasPhotoChanged
 
     if (hasChanged) {
-      const changes: Partial<EditProfileState> = { ...currentData }
+      const changes: Partial<EditProfileState> = {
+        ...currentData,
+        photo: currentPhoto
+      }
 
       if (
         areAllValuesEmptyStrings(initialVideoLink) &&
@@ -124,14 +172,15 @@ const EditProfile = () => {
         delete changes.videoLink
       }
 
-      if (initialPhoto === currentPhoto) {
+      if (!hasPhotoChanged) {
         delete changes.photo
       }
+
       return changes
     } else {
       return {}
     }
-  }, [profileState, initialEditProfileState])
+  }, [profileState, initialEditProfileState, hasPhotoChanges])
 
   const isChanged = useMemo<boolean>(
     () => Object.keys(changedFields).length > 0,
@@ -162,6 +211,7 @@ const EditProfile = () => {
       notificationSettings,
       professionalBlock,
       categories,
+      photo,
       ...rest
     } = changedFields
 
@@ -185,8 +235,8 @@ const EditProfile = () => {
       dataToUpdate.mainSubjects = categories
     }
 
-    if (typeof profileState.photo === 'object') {
-      dataToUpdate.photo = profileState.photo
+    if (photo || photo === '') {
+      dataToUpdate.photo = photo
     }
 
     await dispatch(

@@ -12,7 +12,7 @@ export interface EditProfileForm
   professionalSummary: string
   nativeLanguage: string | null
   videoLink: string
-  photo: string | UpdatedPhoto | null
+  photo: UpdatedPhoto | string | null
 }
 
 export interface EditProfileFormSubmitData
