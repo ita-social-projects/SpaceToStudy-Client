@@ -7,8 +7,8 @@ export const styles = {
     height: { xs: 'fit-content', sm: '97px' },
     backgroundColor: 'basic.white',
     borderRadius: '16px',
-    boxShadow: `0px 9px 12px 1px #90A4AE24, 
-    0px 3px 16px 2px #90A4AE1F, 
+    boxShadow: `0px 9px 12px 1px #90A4AE24,
+    0px 3px 16px 2px #90A4AE1F,
     0px 5px 6px -3px #90A4AE33`
   },
 
