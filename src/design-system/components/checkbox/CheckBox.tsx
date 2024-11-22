@@ -4,7 +4,7 @@ import Loader from '~/components/loader/Loader'
 
 import './CheckBox.scss'
 
-interface CheckBoxProps extends Omit<CheckboxProps, 'size'> {
+interface S2SCheckBoxProps extends Omit<CheckboxProps, 'size'> {
   variant: 'check' | 'middle'
   label: ReactNode
   labelPosition?: 'top' | 'bottom' | 'end'
@@ -13,7 +13,7 @@ interface CheckBoxProps extends Omit<CheckboxProps, 'size'> {
   loading?: boolean
 }
 
-const CheckBox: FC<CheckBoxProps> = ({
+const CheckBox: FC<S2SCheckBoxProps> = ({
   color = 'primary',
   disabled = false,
   label,
@@ -39,8 +39,13 @@ const CheckBox: FC<CheckBoxProps> = ({
     .filter(Boolean)
     .join(' ')
 
-  const loaderSize = size === 'sm' ? 14 : size === 'md' ? 18 : 20
-  const loader = <Loader size={loaderSize} />
+  const loaderSizeMapping: Record<string, number> = {
+    sm: 14,
+    md: 18,
+    lg: 20
+  }
+
+  const loader = <Loader size={loaderSizeMapping[size]} />
 
   return (
     <label
