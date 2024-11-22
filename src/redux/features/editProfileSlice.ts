@@ -13,7 +13,7 @@ import {
   NotificationSettings,
   ProfessionalBlock,
   SubjectNameInterface,
-  UpdatedPhoto,
+  EditProfilePhoto,
   UpdateUserParams,
   UserMainSubject,
   UserMainSubjectFieldValues,
@@ -31,7 +31,7 @@ export interface EditProfileState {
   professionalSummary?: string
   nativeLanguage: string | null
   videoLink: DataByRole<string>
-  photo: UpdatedPhoto | string | null
+  photo: EditProfilePhoto
   categories: DataByRole<UserMainSubject[]>
   professionalBlock: ProfessionalBlock
   notificationSettings: NotificationSettings

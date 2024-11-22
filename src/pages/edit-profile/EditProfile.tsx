@@ -22,6 +22,7 @@ import {
   ButtonVariantEnum,
   SizeEnum,
   UpdatedPhoto,
+  EditProfilePhoto,
   UpdateUserParams,
   UserProfileTabsEnum,
   UserRole
@@ -90,14 +91,14 @@ const EditProfile = () => {
     return JSON.stringify(initialData) !== JSON.stringify(currentData)
   }
 
-  const isUpdatedPhoto = (photo: string | null | UpdatedPhoto): boolean => {
+  const isUpdatedPhoto = (photo: EditProfilePhoto): boolean => {
     return photo !== null && typeof photo === 'object' && 'name' in photo
   }
 
   const hasPhotoChanges = useCallback(
     (
-      initialPhoto: string | null | UpdatedPhoto,
-      currentPhoto: string | null | UpdatedPhoto
+      initialPhoto: EditProfilePhoto,
+      currentPhoto: EditProfilePhoto
     ): boolean => {
       if (initialPhoto !== '' && currentPhoto === '') {
         return true

@@ -6,7 +6,7 @@ import {
   RequestParams,
   Faq,
   DataByRole,
-  UpdatedPhoto,
+  EditProfilePhoto,
   UpdateFields,
   UserStatusEnum,
   UserMainSubject,
@@ -78,7 +78,7 @@ export interface UpdateUserParams
   extends Partial<Pick<UserResponse, UpdateFields>> {
   mainSubjects?: DataByRole<UserMainSubject[]>
   videoLink?: string
-  photo?: UpdatedPhoto | string | null
+  photo?: EditProfilePhoto
 }
 
 export interface LoginParams {
