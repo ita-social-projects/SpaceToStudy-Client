@@ -7,7 +7,7 @@ import {
 } from '~/redux/redux.constants'
 import {
   DataByRole,
-  EditProfileForm,
+  EditProfileFormSubmitData,
   ErrorResponse,
   MainUserRole,
   NotificationSettings,
@@ -31,7 +31,7 @@ export interface EditProfileState {
   professionalSummary?: string
   nativeLanguage: string | null
   videoLink: DataByRole<string>
-  photo?: UpdatedPhoto | null
+  photo?: UpdatedPhoto | string
   categories: DataByRole<UserMainSubject[]>
   professionalBlock: ProfessionalBlock
   notificationSettings: NotificationSettings
@@ -66,7 +66,7 @@ const initialState: EditProfileState = {
   professionalSummary: '',
   nativeLanguage: '',
   videoLink: { [UserRoleEnum.Tutor]: '', [UserRoleEnum.Student]: '' },
-  photo: null,
+  photo: '',
   categories: { [UserRoleEnum.Tutor]: [], [UserRoleEnum.Student]: [] },
   professionalBlock: initialProfessoinalBlock,
   notificationSettings: intitialNotificationSettings,
@@ -104,7 +104,7 @@ const updateStateFromPayload = (
   state.city = address?.city ?? null
   state.professionalSummary = professionalSummary
   state.nativeLanguage = nativeLanguage
-  state.photo = photo as UpdatedPhoto | null
+  state.photo = photo ?? ''
   state.videoLink = {
     [UserRoleEnum.Tutor]: videoLink?.[UserRoleEnum.Tutor] ?? '',
     [UserRoleEnum.Student]: videoLink?.[UserRoleEnum.Student] ?? ''
@@ -173,7 +173,10 @@ const editProfileSlice = createSlice({
       const { tab, value } = action.payload
       state.tabValidityStatus[tab] = value
     },
-    updateProfileData: (state, action: PayloadAction<EditProfileForm>) => {
+    updateProfileData: (
+      state,
+      action: PayloadAction<EditProfileFormSubmitData>
+    ) => {
       const {
         city,
         country,
@@ -190,12 +193,15 @@ const editProfileSlice = createSlice({
       state.firstName = firstName
       state.lastName = lastName
       state.nativeLanguage = nativeLanguage
-      state.photo = photo as UpdatedPhoto
+      state.photo = photo ?? ''
       state.professionalSummary = professionalSummary
-      // TODO
-      state.videoLink = {
-        [UserRoleEnum.Tutor]: videoLink?.[UserRoleEnum.Tutor] ?? '',
-        [UserRoleEnum.Student]: videoLink?.[UserRoleEnum.Student] ?? ''
+
+      if (videoLink?.[UserRoleEnum.Tutor] !== null) {
+        state.videoLink[UserRoleEnum.Tutor] = videoLink[UserRoleEnum.Tutor]
+      }
+
+      if (videoLink?.[UserRoleEnum.Student] !== null) {
+        state.videoLink[UserRoleEnum.Student] = videoLink[UserRoleEnum.Student]
       }
     },
     addCategory: (

@@ -3,7 +3,7 @@ import {
   SubjectNameInterface,
   UpdatedPhoto
 } from '~/types/common/common.index'
-import { UserResponse, DataByRole } from '~/types'
+import { UserResponse, VideoUserRole } from '~/types'
 
 export interface EditProfileForm
   extends Pick<UserResponse, 'firstName' | 'lastName'> {
@@ -11,8 +11,13 @@ export interface EditProfileForm
   city: string | null
   professionalSummary: string
   nativeLanguage: string | null
-  videoLink: DataByRole<string>
+  videoLink: string
   photo: string | UpdatedPhoto | null
+}
+
+export interface EditProfileFormSubmitData
+  extends Omit<EditProfileForm, 'videoLink'> {
+  videoLink: { [key in VideoUserRole]: string | null }
 }
 
 export interface ProfessionalCategory {

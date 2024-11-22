@@ -37,6 +37,7 @@ import { LoadingStatusEnum } from '~/redux/redux.constants'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { snackbarVariants } from '~/constants'
 import { authRoutes } from '~/router/constants/authRoutes'
+import { DataByRole } from '~/types'
 
 const EditProfile = () => {
   const [initialEditProfileState, setInitialEditProfileState] = useState<
@@ -155,11 +156,8 @@ const EditProfile = () => {
 
     if (city && country) dataToUpdate.address = { city, country }
 
-    if (typeof videoLink === 'string' || typeof videoLink === 'undefined') {
-      dataToUpdate.videoLink = videoLink ?? ''
-    } else if (typeof videoLink === 'object') {
-      dataToUpdate.videoLink =
-        videoLink[userRole as keyof typeof videoLink] || ''
+    if (videoLink) {
+      dataToUpdate.videoLink = videoLink[userRole as keyof DataByRole<string>]
     }
 
     if (notificationSettings)
