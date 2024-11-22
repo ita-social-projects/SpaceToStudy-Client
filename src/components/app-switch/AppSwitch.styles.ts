@@ -7,10 +7,7 @@ const trackMixin = (width: number, borderWidth: number) => ({
   borderColor: 'primary.200',
   borderRadius: `${width / 3}px`,
   opacity: '1 !important',
-  transition: 'background-color 0.3s ease, border-color 0.3s ease',
-  '&.Mui-checked': {
-    opacity: '1 !important'
-  }
+  transition: 'background-color 0.3s ease, border-color 0.3s ease'
 })
 
 const thumbMixin = (diameter: number) => ({
@@ -42,22 +39,21 @@ const rootMixin = (width: number, height: number) => ({
   overflow: 'visible',
   padding: 0,
   margin: '5px',
-  '&.Mui-checked': {
-    opacity: '1 !important'
-  },
-  '&:not(.Mui-disabled):hover': {
+  // for some reason, the normal hover overrides the settings when disabled
+  '&:hover:not(.Mui-disabled)': {
     '& .MuiSwitch-track': {
       borderColor: 'primary.500'
     }
   },
-  '&.Mui-disabled:hover': {
-    pointerEvents: 'none',
+  '&.Mui-disabled': {
     '& .MuiSwitch-track': {
-      borderColor: 'inherit !important'
+      borderColor: 'primary.100 !important'
+    },
+    '&:hover': {
+      '& .MuiSwitch-track': {
+        borderColor: 'primary.100 !important'
+      }
     }
-  },
-  '& .MuiSwitch-track.Mui-disabled:hover': {
-    pointerEvents: 'none'
   }
 })
 const getMixins = (
