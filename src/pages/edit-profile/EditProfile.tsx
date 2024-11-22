@@ -90,6 +90,10 @@ const EditProfile = () => {
     return JSON.stringify(initialData) !== JSON.stringify(currentData)
   }
 
+  const isUpdatedPhoto = (photo: string | null | UpdatedPhoto): boolean => {
+    return photo !== null && typeof photo === 'object' && 'name' in photo
+  }
+
   const hasPhotoChanges = useCallback(
     (
       initialPhoto: string | null | UpdatedPhoto,
@@ -101,7 +105,7 @@ const EditProfile = () => {
 
       if (
         typeof initialPhoto === 'string' &&
-        (currentPhoto as UpdatedPhoto).name !== undefined &&
+        isUpdatedPhoto(currentPhoto) &&
         (currentPhoto as UpdatedPhoto).name !== initialPhoto
       ) {
         return true
@@ -109,15 +113,15 @@ const EditProfile = () => {
 
       if (
         initialPhoto === null &&
-        (currentPhoto as UpdatedPhoto).name !== undefined &&
+        isUpdatedPhoto(currentPhoto) &&
         areAllValuesEmptyStrings(currentPhoto as UpdatedPhoto)
       ) {
         return true
       }
 
       if (
-        (initialPhoto as UpdatedPhoto).name !== undefined &&
-        (currentPhoto as UpdatedPhoto).name !== undefined &&
+        isUpdatedPhoto(initialPhoto) &&
+        isUpdatedPhoto(currentPhoto) &&
         (initialPhoto as UpdatedPhoto).name !==
           (currentPhoto as UpdatedPhoto).name
       ) {
