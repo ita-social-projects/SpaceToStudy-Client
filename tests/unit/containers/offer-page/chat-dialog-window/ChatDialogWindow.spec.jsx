@@ -34,6 +34,12 @@ const chatInfoEmptyIdMock = {
   chatId: null
 }
 
+const chatInfoEmptyIdTutorMock = {
+  ...chatInfoMock,
+  authorRole: 'tutor',
+  chatId: null
+}
+
 const chat = createUrlPath(URLs.chats.get, chatInfoMock.chatId)
 
 describe('ChatDialogWindow Component with ChatId', () => {
@@ -67,5 +73,25 @@ describe('ChatDialogWindow Component without ChatId', () => {
   it('should render default message when there is no chatId', () => {
     const userProfileInfoElement = screen.getByText('chatPage.youCanAsk')
     expect(userProfileInfoElement).toBeInTheDocument()
+  })
+
+  it('should render questions to the student', () => {
+    const question = screen.getByText('chatPage.firstQuestion.studyCommitment')
+    expect(question).toBeInTheDocument()
+  })
+})
+
+describe('ChatDialogWindow Component without ChatId with tutor role', () => {
+  beforeEach(async () => {
+    await waitFor(() => {
+      renderWithProviders(
+        <ChatDialogWindow chatInfo={chatInfoEmptyIdTutorMock} />
+      )
+    })
+  })
+
+  it('should render questions to the tutor', () => {
+    const question = screen.getByText('chatPage.firstQuestion.teachMethod')
+    expect(question).toBeInTheDocument()
   })
 })

@@ -21,7 +21,7 @@ export const style = {
   },
   container: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(2, max-content)',
+    gridTemplateColumns: 'repeat(2, minmax(0, max-content))',
     gap: '40px',
     padding: '10px 0 ',
     mt: '20px'

@@ -70,6 +70,9 @@ const EditProfile = () => {
   const isTabInvalid =
     errorTooltipHolders.profile || errorTooltipHolders.professionalInfo
 
+  const isPasswordSecurityTab =
+    activeTab === UserProfileTabsEnum.PasswordAndSecurity
+
   const hasChanges = (
     initialData: Partial<EditProfileState>,
     currentData: Partial<EditProfileState>
@@ -211,7 +214,7 @@ const EditProfile = () => {
         </Box>
         <AppButton
           component={Link}
-          disabled={!isChanged || isTabInvalid}
+          disabled={!isChanged || isTabInvalid || isPasswordSecurityTab}
           onClick={() => void handleUpdateUser()}
           size={SizeEnum.Large}
           sx={styles.updateBtn}

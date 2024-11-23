@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react'
+import { FC, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import useForm from '~/hooks/use-form'
@@ -19,14 +19,20 @@ import TitleWithDescription from '~/components/title-with-description/TitleWithD
 import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
 import { styles } from '~/containers/guest-home-page/reset-password/ResetPassword.styles'
 
-import { ButtonVariantEnum, SizeEnum } from '~/types'
+import { ButtonVariantEnum, SizeEnum, NewPassword } from '~/types'
 import { confirmPassword, password } from '~/utils/validations/login'
 import { snackbarVariants } from '~/constants'
 import imgSuccess from '~/assets/img/email-confirmation-modals/success-icon.svg'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { getErrorKey } from '~/utils/get-error-key'
+import { Component } from '~/context/modal-context'
 
-const ResetPassword = ({ resetToken, openModal }) => {
+interface ResetPasswordProps {
+  resetToken: string
+  openModal: (component: Component, delayToClose?: number) => void
+}
+
+const ResetPassword: FC<ResetPasswordProps> = ({ resetToken, openModal }) => {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
 
@@ -57,7 +63,7 @@ const ResetPassword = ({ resetToken, openModal }) => {
     loading,
     fetchData: sendResetPassword
   } = useAxios({
-    service: (newPassword) =>
+    service: (newPassword: NewPassword) =>
       AuthService.resetPassword(resetToken, newPassword),
     fetchOnMount: false,
     defaultResponse: null
@@ -76,13 +82,13 @@ const ResetPassword = ({ resetToken, openModal }) => {
     }
   }, [error, openModal, response, dispatch, successNotification])
 
-  const { handleSubmit, handleInputChange, handleBlur, errors, data } = useForm(
-    {
-      onSubmit: () => sendResetPassword({ password: data.password }),
+  const { handleSubmit, handleInputChange, handleBlur, errors, data } =
+    useForm<NewPassword>({
+      onSubmit: async (): Promise<void> =>
+        sendResetPassword({ password: data.password }),
       initialValues: { password: '', confirmPassword: '' },
       validations: { password, confirmPassword }
-    }
-  )
+    })
 
   const { inputVisibility: passwordVisibility, showInputText: showPassword } =
     useInputVisibility(errors.password)
@@ -107,7 +113,6 @@ const ResetPassword = ({ resetToken, openModal }) => {
           onBlur={handleBlur('password')}
           onChange={handleInputChange('password')}
           required
-          size='large'
           sx={{ mb: '5px' }}
           type={showPassword ? 'text' : 'password'}
           value={data.password}
@@ -120,7 +125,6 @@ const ResetPassword = ({ resetToken, openModal }) => {
           onBlur={handleBlur('confirmPassword')}
           onChange={handleInputChange('confirmPassword')}
           required
-          size='large'
           type={showConfirmPassword ? 'text' : 'password'}
           value={data.confirmPassword}
         />

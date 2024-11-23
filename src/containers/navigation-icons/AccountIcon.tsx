@@ -1,4 +1,4 @@
-import { useCallback, FC, MouseEvent } from 'react'
+import { useMemo, useCallback, FC, MouseEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useAppSelector } from '~/hooks/use-redux'
 import { AxiosResponse } from 'axios'
@@ -37,6 +37,18 @@ const AccountIcon: FC<AccountIconProps> = ({ openMenu }) => {
     defaultResponse: defaultResponses.object as UserResponse
   })
 
+  const { photo: statePhoto } = useAppSelector((state) => state.editProfile)
+
+  const avatarSrc = useMemo(() => {
+    if (statePhoto?.src) {
+      return statePhoto.src
+    }
+
+    if (photo) {
+      return createUrlPath(import.meta.env.VITE_APP_IMG_USER_URL || '', photo)
+    }
+  }, [photo, statePhoto])
+
   if (loading) {
     return <Avatar sx={styles.accountIcon} />
   }
@@ -46,10 +58,7 @@ const AccountIcon: FC<AccountIconProps> = ({ openMenu }) => {
       <Avatar
         alt='User Avatar'
         onClick={openMenu}
-        src={
-          photo &&
-          createUrlPath(import.meta.env.VITE_APP_IMG_USER_URL || '', photo)
-        }
+        src={avatarSrc}
         sx={styles.accountIcon}
       >
         {!loading && firstName && lastName && `${firstName[0]}${lastName[0]}`}
