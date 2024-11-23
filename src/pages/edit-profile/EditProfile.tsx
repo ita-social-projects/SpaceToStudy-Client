@@ -240,7 +240,7 @@ const EditProfile = () => {
       dataToUpdate.mainSubjects = categories
     }
 
-    if (photo || photo === '') {
+    if (typeof photo === 'object' || photo === '') {
       dataToUpdate.photo = photo
     }
 
