@@ -141,6 +141,10 @@ const EditProfile = () => {
       )
     }
     void fetchData()
+
+    return () => {
+      void fetchData()
+    }
   }, [dispatch, userId, userRole])
 
   useEffect(() => {
