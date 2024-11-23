@@ -166,16 +166,15 @@ const EditProfile = () => {
 
     if (hasChanged) {
       const changes: Partial<EditProfileState> = {
-        ...currentData,
-        photo: currentPhoto
+        ...currentData
       }
 
       if (!hasChanges(initialVideoLink, currentVideoLink)) {
         delete changes.videoLink
       }
 
-      if (!hasPhotoChanged) {
-        delete changes.photo
+      if (hasPhotoChanged) {
+        changes.photo = currentPhoto
       }
 
       return changes

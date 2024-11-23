@@ -44,7 +44,14 @@ const AccountIcon: FC<AccountIconProps> = ({ openMenu }) => {
       return statePhoto.src
     }
 
-    if (photo || photo === '') {
+    if (typeof statePhoto === 'string' && statePhoto !== '') {
+      return createUrlPath(
+        import.meta.env.VITE_APP_IMG_USER_URL || '',
+        statePhoto
+      )
+    }
+
+    if (photo) {
       return createUrlPath(import.meta.env.VITE_APP_IMG_USER_URL || '', photo)
     }
   }, [photo, statePhoto])
