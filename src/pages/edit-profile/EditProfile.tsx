@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo, useCallback } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   Link,
@@ -20,8 +20,6 @@ import SidebarMenu from '~/components/sidebar-menu/SidebarMenu'
 import {
   ButtonVariantEnum,
   SizeEnum,
-  UpdatedPhoto,
-  EditProfilePhoto,
   UpdateUserParams,
   UserProfileTabsEnum,
   UserRole,
@@ -37,10 +35,9 @@ import { LoadingStatusEnum } from '~/redux/redux.constants'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { snackbarVariants } from '~/constants'
 import { authRoutes } from '~/router/constants/authRoutes'
-import { areAllValuesEmptyStrings } from '~/utils/are-all-values-empty-strings'
-import { isUpdatedPhoto } from '~/utils/is-updated-photo'
 
 import { styles } from '~/pages/edit-profile/EditProfile.styles'
+import { hasPhotoChanges } from '~/utils/has-photo-changes'
 
 const EditProfile = () => {
   const [initialEditProfileState, setInitialEditProfileState] = useState<
@@ -83,45 +80,6 @@ const EditProfile = () => {
   ): boolean => {
     return JSON.stringify(initialData) !== JSON.stringify(currentData)
   }
-
-  const hasPhotoChanges = useCallback(
-    (
-      initialPhoto: EditProfilePhoto,
-      currentPhoto: EditProfilePhoto
-    ): boolean => {
-      if (initialPhoto !== '' && currentPhoto === '') {
-        return true
-      }
-
-      if (
-        typeof initialPhoto === 'string' &&
-        isUpdatedPhoto(currentPhoto) &&
-        (currentPhoto as UpdatedPhoto).name !== initialPhoto
-      ) {
-        return true
-      }
-
-      if (
-        initialPhoto === null &&
-        isUpdatedPhoto(currentPhoto) &&
-        areAllValuesEmptyStrings(currentPhoto as UpdatedPhoto)
-      ) {
-        return true
-      }
-
-      if (
-        isUpdatedPhoto(initialPhoto) &&
-        isUpdatedPhoto(currentPhoto) &&
-        (initialPhoto as UpdatedPhoto).name !==
-          (currentPhoto as UpdatedPhoto).name
-      ) {
-        return true
-      }
-
-      return false
-    },
-    []
-  )
 
   useEffect(() => {
     const fetchData = async () => {
@@ -174,7 +132,7 @@ const EditProfile = () => {
     } else {
       return {}
     }
-  }, [profileState, initialEditProfileState, hasPhotoChanges])
+  }, [profileState, initialEditProfileState])
 
   const isChanged = useMemo<boolean>(
     () => Object.keys(changedFields).length > 0,
