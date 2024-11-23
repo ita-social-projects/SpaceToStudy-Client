@@ -40,11 +40,11 @@ const AccountIcon: FC<AccountIconProps> = ({ openMenu }) => {
   const { photo: statePhoto } = useAppSelector((state) => state.editProfile)
 
   const avatarSrc = useMemo(() => {
-    if (statePhoto?.src) {
+    if (typeof statePhoto === 'object' && statePhoto?.src) {
       return statePhoto.src
     }
 
-    if (photo) {
+    if (photo || photo === '') {
       return createUrlPath(import.meta.env.VITE_APP_IMG_USER_URL || '', photo)
     }
   }, [photo, statePhoto])
