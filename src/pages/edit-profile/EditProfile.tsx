@@ -12,7 +12,6 @@ import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
 
 import useConfirm from '~/hooks/use-confirm'
-
 import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 import Loader from '~/components/loader/Loader'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
@@ -25,11 +24,10 @@ import {
   EditProfilePhoto,
   UpdateUserParams,
   UserProfileTabsEnum,
-  UserRole
+  UserRole,
+  DataByRole
 } from '~/types'
 import { tabsData } from '~/pages/edit-profile/EditProfile.constants'
-
-import { styles } from '~/pages/edit-profile/EditProfile.styles'
 import {
   fetchUserById,
   updateUser,
@@ -39,7 +37,10 @@ import { LoadingStatusEnum } from '~/redux/redux.constants'
 import { openAlert } from '~/redux/features/snackbarSlice'
 import { snackbarVariants } from '~/constants'
 import { authRoutes } from '~/router/constants/authRoutes'
-import { DataByRole } from '~/types'
+import { areAllValuesEmptyStrings } from '~/utils/are-all-values-empty-strings'
+import { isUpdatedPhoto } from '~/utils/is-updated-photo'
+
+import { styles } from '~/pages/edit-profile/EditProfile.styles'
 
 const EditProfile = () => {
   const [initialEditProfileState, setInitialEditProfileState] = useState<
@@ -76,23 +77,11 @@ const EditProfile = () => {
   const isPasswordSecurityTab =
     activeTab === UserProfileTabsEnum.PasswordAndSecurity
 
-  const areAllValuesEmptyStrings = (obj: {
-    [key: string]: string
-  }): boolean => {
-    return Object.values(obj).every(
-      (value) => typeof value === 'string' && value === ''
-    )
-  }
-
   const hasChanges = (
     initialData: Partial<EditProfileState> | DataByRole<string>,
     currentData: Partial<EditProfileState> | DataByRole<string>
   ): boolean => {
     return JSON.stringify(initialData) !== JSON.stringify(currentData)
-  }
-
-  const isUpdatedPhoto = (photo: EditProfilePhoto): boolean => {
-    return photo !== null && typeof photo === 'object' && 'name' in photo
   }
 
   const hasPhotoChanges = useCallback(
