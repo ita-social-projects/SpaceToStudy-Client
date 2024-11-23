@@ -76,17 +76,17 @@ const EditProfile = () => {
   const isPasswordSecurityTab =
     activeTab === UserProfileTabsEnum.PasswordAndSecurity
 
-  const areAllValuesEmptyStrings = (
-    obj: DataByRole<string> | { [key: string]: string }
-  ): boolean => {
+  const areAllValuesEmptyStrings = (obj: {
+    [key: string]: string
+  }): boolean => {
     return Object.values(obj).every(
       (value) => typeof value === 'string' && value === ''
     )
   }
 
   const hasChanges = (
-    initialData: Partial<EditProfileState>,
-    currentData: Partial<EditProfileState>
+    initialData: Partial<EditProfileState> | DataByRole<string>,
+    currentData: Partial<EditProfileState> | DataByRole<string>
   ): boolean => {
     return JSON.stringify(initialData) !== JSON.stringify(currentData)
   }
@@ -170,10 +170,7 @@ const EditProfile = () => {
         photo: currentPhoto
       }
 
-      if (
-        areAllValuesEmptyStrings(initialVideoLink) &&
-        areAllValuesEmptyStrings(currentVideoLink)
-      ) {
+      if (!hasChanges(initialVideoLink, currentVideoLink)) {
         delete changes.videoLink
       }
 
