@@ -27,8 +27,10 @@ const validations: Validations = {
     return ''
   },
   password: (value) => {
-    if (!validationPatterns.passwordAlphabeticAndNumeric.test(value)) {
-      return 'common.errorMessages.passwordAlphabeticAndNumeric'
+    if (
+      !validationPatterns.passwordAlphabeticAndNumericAndSymbols.test(value)
+    ) {
+      return 'common.errorMessages.passwordAlphabeticAndNumericAndSymbols'
     }
     if (!validationPatterns.passwordValid.test(value)) {
       return 'common.errorMessages.passwordValidSymbols'

@@ -76,7 +76,7 @@
   "errorMessages": {
     "emailValid": "Електронна пошта має бути такого формату: “local-part@domain.com”",
     "passwordLength": "Пароль не може бути коротшим за 8 і довшим за 25 символів",
-    "passwordAlphabeticAndNumeric": "Пароль повинен містити принаймні одну літеру та одну цифру",
+    "passwordAlphabeticAndNumericAndSymbols": "Пароль повинен містити принаймні одну літеру та одну цифру",
     "passwordValidSymbols": "Пароль повинен містити лише букви, цифри та спеціальні символи",
     "emptyField": "Це поле не може бути порожнім",
     "hasOnlySpaces": "Поле повинно містити принанні один символ, який не є пробілом",
