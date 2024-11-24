@@ -1,4 +1,4 @@
-import './InputField.scss'
+import '~scss-components/input-field/InputField.scss'
 import { InputFieldVariantEnum } from '~/types'
 import SearchIcon from '@mui/icons-material/Search'
 import ClearIcon from '@mui/icons-material/Clear'

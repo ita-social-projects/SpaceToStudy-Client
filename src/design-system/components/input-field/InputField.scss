@@ -131,6 +131,7 @@
     padding: get-var('space-2') get-var('space-1');
 
     &::placeholder {
+      opacity: 0;
       font-size: get-var('font-size-md');
     }
   }
@@ -170,10 +171,6 @@
     .#{$prefix}input-label {
       color: get-var('red-500');
     }
-  }
-
-  input::placeholder {
-    opacity: 0;
   }
 
   input:focus::placeholder {
