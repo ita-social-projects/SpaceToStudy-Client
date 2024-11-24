@@ -30,8 +30,8 @@ describe('ResetPassword test', () => {
     )
     const button = screen.getByText('login.savePassword')
 
-    fireEvent.change(passwordInput, { target: { value: '12345qwertY' } })
-    fireEvent.change(confirmPasswordInput, { target: { value: '12345qwertY' } })
+    fireEvent.change(passwordInput, { target: { value: '12345qwertY$' } })
+    fireEvent.change(confirmPasswordInput, { target: { value: '12345qwertY$' } })
 
     await waitFor(() => {
       fireEvent.click(button)
@@ -59,8 +59,8 @@ describe('ResetPassword test', () => {
     )
     const button = screen.getByText('login.savePassword')
 
-    fireEvent.change(passwordInput, { target: { value: '12345qwertY' } })
-    fireEvent.change(confirmPasswordInput, { target: { value: '12345qwertY' } })
+    fireEvent.change(passwordInput, { target: { value: '12345qwertY$' } })
+    fireEvent.change(confirmPasswordInput, { target: { value: '12345qwertY$' } })
     fireEvent.click(button)
 
     const snackbar = await screen.findByText('errors.BAD_RESET_TOKEN')
