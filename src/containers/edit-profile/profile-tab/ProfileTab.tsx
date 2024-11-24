@@ -67,7 +67,7 @@ const ProfileTab: FC = () => {
       }
     }
 
-    void dispatch(updateProfileData(payload))
+    dispatch(updateProfileData(payload))
   }, 300)
 
   const { hash, pathname } = useLocation()
