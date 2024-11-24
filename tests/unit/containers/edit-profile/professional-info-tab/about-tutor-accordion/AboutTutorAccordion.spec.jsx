@@ -18,7 +18,7 @@ describe('AboutTutorAccordion', () => {
 
   it('should open first accordion by default', () => {
     const textAreas = screen.getAllByLabelText(
-      'editProfilePage.profile.professionalTab.accordion.textareaLabel'
+      'editProfilePage.profile.professionalTab.accordionTutor.textareaLabel'
     )
 
     expect(textAreas).toHaveLength(4)
@@ -28,7 +28,7 @@ describe('AboutTutorAccordion', () => {
 
   it('should open corresponding accordion content', () => {
     const secondItemTitle = screen.getByText(
-      'editProfilePage.profile.professionalTab.accordion.workExperience'
+      'editProfilePage.profile.professionalTab.accordionTutor.workExperience'
     )
     fireEvent.click(secondItemTitle)
 
