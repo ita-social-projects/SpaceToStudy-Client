@@ -100,7 +100,7 @@ const ProfessionalInfoTab: FC = () => {
     })
   }
 
-  const TutorInfo = userRole === UserRoleEnum.Tutor && (
+  const TutorInfo = (
     <Box component='section' id='education'>
       <Box sx={highlightElem}></Box>
       <TitleWithDescription

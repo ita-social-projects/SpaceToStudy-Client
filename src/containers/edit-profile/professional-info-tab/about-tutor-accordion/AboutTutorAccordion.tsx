@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import {
@@ -35,22 +35,24 @@ const AboutTutorAccordion: FC<AboutTutorAccordionProps> = ({
     toggle: true
   })
 
-  const accordionItems: AccordionItem[] = aboutTutorKeys.map((item) => {
-    return {
-      title: `editProfilePage.profile.professionalTab.accordionTutor.${item}`,
-      content: (
-        <AppTextArea
-          fullWidth
-          label={t(
-            'editProfilePage.profile.professionalTab.accordionTutor.textareaLabel'
-          )}
-          maxLength={1000}
-          onChange={handleInputChange(item)}
-          value={data.education}
-        />
-      )
-    }
-  })
+  const accordionItems: AccordionItem[] = useMemo(() => {
+    return aboutTutorKeys.map((item) => {
+      return {
+        title: `editProfilePage.profile.professionalTab.accordionTutor.${item}`,
+        content: (
+          <AppTextArea
+            fullWidth
+            label={t(
+              'editProfilePage.profile.professionalTab.accordionTutor.textareaLabel'
+            )}
+            maxLength={1000}
+            onChange={handleInputChange(item)}
+            value={data[item]}
+          />
+        )
+      }
+    })
+  }, [t, handleInputChange, data])
 
   return (
     <Accordions

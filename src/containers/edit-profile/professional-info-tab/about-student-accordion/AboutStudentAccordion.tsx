@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import {
@@ -15,7 +15,10 @@ import Accordions from '~/components/accordion/Accordions'
 import AppTextArea from '~/components/app-text-area/AppTextArea'
 
 import { styles } from '~/containers/edit-profile/professional-info-tab/about-tutor-accordion/AboutTutorAccordion.styles'
-import { aboutStudentKeys } from '~/containers/user-profile/about-user-block/about-user-block.constants'
+import {
+  aboutStudentKeys,
+  mockHandleStudentInputChange
+} from '~/containers/user-profile/about-user-block/about-user-block.constants'
 
 interface AboutStudentAccordionProps {
   data: AboutStudentData
@@ -25,20 +28,15 @@ interface AboutStudentAccordionProps {
   >
 }
 
-const AboutStudentAccordion: FC<AboutStudentAccordionProps> = ({
-  data,
-  handleInputChange
-}) => {
+const AboutStudentAccordion: FC<AboutStudentAccordionProps> = ({ data }) => {
   const { t } = useTranslation()
   const [expandedItem, handleAccordionChange] = useAccordions({
     initialState: 0,
     toggle: true
   })
 
-  const mockHandleInputChange = () => null
-
-  const accordionItems: AccordionItem[] = aboutStudentKeys.map((item) => {
-    return {
+  const accordionItems: AccordionItem[] = useMemo(() => {
+    return aboutStudentKeys.map((item) => ({
       title: `editProfilePage.profile.professionalTab.accordionStudent.${item}`,
       content: (
         <AppTextArea
@@ -47,12 +45,12 @@ const AboutStudentAccordion: FC<AboutStudentAccordionProps> = ({
             'editProfilePage.profile.professionalTab.accordionStudent.textareaLabel'
           )}
           maxLength={1000}
-          onChange={mockHandleInputChange}
-          value={data.education}
+          onChange={mockHandleStudentInputChange}
+          value={data[item]}
         />
       )
-    }
-  })
+    }))
+  }, [t, data])
 
   return (
     <Accordions
