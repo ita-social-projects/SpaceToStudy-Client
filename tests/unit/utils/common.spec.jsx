@@ -28,8 +28,8 @@ const errorMessages = {
   numbersOnly: 'common.errorMessages.numbersOnly',
   positiveNumbersOnly: 'common.errorMessages.positiveNumbersOnly',
   passwordLength: 'common.errorMessages.passwordLength',
-  passwordAlphabeticAndNumeric:
-    'common.errorMessages.passwordAlphabeticAndNumeric',
+  passwordAlphabeticAndNumericAndSymbols:
+    'common.errorMessages.passwordAlphabeticAndNumericAndSymbols',
   passwordValidSymbols: 'common.errorMessages.passwordValidSymbols',
   emailValid: 'common.errorMessages.emailValid',
   shortText: 'common.errorMessages.shortText',
@@ -74,12 +74,7 @@ describe('commonValidation', () => {
 
   it('Should return error that password must contain at least one alphabetic and one numeric character', () => {
     const result = passwordField(mockedValues.passwordWithoutNumbers)
-    expect(result).toBe(errorMessages.passwordAlphabeticAndNumeric)
-  })
-
-  it('Should return error that password must contain only valid symbols', () => {
-    const result = passwordField(mockedValues.passwordWithInvalidSymbol)
-    expect(result).toBe(errorMessages.passwordValidSymbols)
+    expect(result).toBe(errorMessages.passwordAlphabeticAndNumericAndSymbols)
   })
 
   it('Should return error that email is invalid', () => {
