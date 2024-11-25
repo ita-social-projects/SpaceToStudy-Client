@@ -31,16 +31,10 @@ const OfferActions: FC<OfferActionsProps> = ({
 
   const buttons = buttonActions.map((elem) => {
     const variant = elem?.buttonProps?.variant === 'tonal' ? 'tonal' : 'primary'
-    const { disabled, onClick } = elem?.buttonProps || {}
 
     return (
       elem && (
-        <Button
-          disabled={disabled}
-          key={elem.label}
-          onClick={onClick}
-          variant={variant}
-        >
+        <Button key={elem.label} variant={variant} {...elem?.buttonProps}>
           {t(elem.label)}
         </Button>
       )

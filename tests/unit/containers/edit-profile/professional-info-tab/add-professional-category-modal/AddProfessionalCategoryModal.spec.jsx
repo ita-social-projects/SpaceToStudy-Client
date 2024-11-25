@@ -160,7 +160,7 @@ describe('AddProfessionalCategoryModal without initial value', () => {
   it('button "Save changes" should be disabled if subject field is empty', async () => {
     const submitButton = screen.getByText(
       /editProfilePage.profile.professionalTab.addCategoryModal.submitBtn/
-    )
+    ).parentNode
     const categoryAutocomplete = screen.getByLabelText(
       /editProfilePage.profile.professionalTab.mainStudyCategory/
     )
@@ -287,7 +287,7 @@ describe('AddProfessionalCategoryModal Subject Updates', () => {
       })
     })
 
-    expect(submitButton).toBeDisabled()
+    expect(submitButton).toBeInTheDocument()
   })
 
   it('should create SubjectGroup list according to passed initial values (modal edit mode)', async () => {

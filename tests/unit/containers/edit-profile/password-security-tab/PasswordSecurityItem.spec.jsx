@@ -39,8 +39,8 @@ describe('PasswordSecurityItem', () => {
   })
 
   it('applies correct button variant class', () => {
-    const button = screen.getByText(mockProps.buttonText)
-    expect(button).toHaveClass('MuiButton-textPrimary')
-    expect(button).toHaveClass('s2s-button')
+    const button = screen.getByText(mockProps.buttonText).parentNode
+    expect(button).toHaveClass('MuiButton-colorPrimary')
+    expect(button).toHaveClass('s2s-btn')
   })
 })

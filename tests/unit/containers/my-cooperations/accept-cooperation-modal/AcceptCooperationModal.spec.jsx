@@ -85,7 +85,7 @@ describe('AcceptCooperationModal component ', () => {
 
     fireEvent.change(input, { target: { value: 200 } })
 
-    const resendButton = screen.getByText('cooperationsPage.acceptModal.resend')
+    const resendButton = screen.getByText('cooperationsPage.acceptModal.resend').parentNode
 
     fireEvent.click(resendButton)
 

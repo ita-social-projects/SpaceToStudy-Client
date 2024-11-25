@@ -162,16 +162,17 @@ const AcceptCooperationModal: FC<AcceptCooperationModalProps> = ({
     ) : (
       <Box sx={styles.buttonRow}>
         {needAction && (
-          <Button
-            disabled={!isDirty}
-            type={ButtonTypeEnum.Submit}
-            variant='tonal'
-          >
-            {t('cooperationsPage.acceptModal.resend')}
-          </Button>
-          <Button onClick={onCooperationAccept} type={acceptButtonType}>
-            {t(acceptButtonText)}
-          </Button>
+          <>
+            <Button onClick={onCooperationAccept} type={acceptButtonType}>
+              {t(acceptButtonText)}
+            </Button>
+            <Button
+              onClick={() => void handleDeclineCooperation()}
+              variant='tonal'
+            >
+              {t('cooperationsPage.acceptModal.decline')}
+            </Button>
+          </>
         )}
       </Box>
     )
