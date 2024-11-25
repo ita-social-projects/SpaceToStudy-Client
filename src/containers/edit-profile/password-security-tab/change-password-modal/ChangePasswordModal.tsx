@@ -200,12 +200,11 @@ const ChangePasswordModal = () => {
               variant='tonal'
             >
               {t('common.cancel')}
-
             </Button>
             <Button
-            disabled={
-              !data.password || !data.confirmPassword || !data.currentPassword
-            }
+              disabled={
+                !data.password || !data.confirmPassword || !data.currentPassword
+              }
               size='md'
               sx={styles.saveButton}
               type={ButtonTypeEnum.Submit}
