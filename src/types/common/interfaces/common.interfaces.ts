@@ -45,6 +45,7 @@ export interface CategoryInterface {
 export interface CategoryNameInterface {
   _id: string
   name: string
+  displayName?: string
 }
 
 export interface SubjectInterface {
@@ -54,6 +55,7 @@ export interface SubjectInterface {
   totalOffers: DataByRole<number>
   createdAt: string
   updatedAt: string
+  displayName?: string
 }
 
 export interface SubjectNameInterface {

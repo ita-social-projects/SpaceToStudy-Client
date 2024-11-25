@@ -86,7 +86,7 @@ const ProfessionalCategory: FC<ProfessionalCategoryProps> = ({
       labelSx={styles.subjectChipLabel(categoryColor)}
       sx={styles.subjectChip(categoryColor)}
     >
-      {subject.name}
+      {t(`subjects.${subject.name}`, { defaultValue: subject.name })}
     </AppChip>
   ))
 
@@ -130,7 +130,9 @@ const ProfessionalCategory: FC<ProfessionalCategoryProps> = ({
           label={t('editProfilePage.profile.professionalTab.mainStudyCategory')}
         >
           <CategoryIcon sx={styles.categoryIcon(categoryColor)} />
-          {item.category.name}
+          {t(`categories.${item.category.name}`, {
+            defaultValue: item.category.name
+          })}
         </DescriptionItem>
         <DescriptionItem
           label={t('editProfilePage.profile.professionalTab.subject')}
