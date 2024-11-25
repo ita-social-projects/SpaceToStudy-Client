@@ -28,10 +28,9 @@ import useBreakpoints from '~/hooks/use-breakpoints'
 import { getOpositeRole, getScreenBasedLimit } from '~/utils/helper-functions'
 import { mapArrayByField } from '~/utils/map-array-by-field'
 import { getSuffixes } from '~/utils/get-translation-suffixes'
-
+import { fetchAndTranslateData } from '~/utils/fetch-and-translate-category'
 import {
   CategoryNameInterface,
-  ServiceFunction,
   SizeEnum,
   SubjectInterface,
   SubjectNameInterface
@@ -39,7 +38,6 @@ import {
 import { itemsLoadLimit } from '~/constants'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { styles } from '~/pages/subjects/Subjects.styles'
-import { AxiosHeaders, AxiosResponse } from 'axios'
 
 const Subjects = () => {
   const [match, setMatch] = useState<string>('')
@@ -132,36 +130,13 @@ const Subjects = () => {
     const category = response.find((option) => option._id === categoryId)
     setCategoryName(category?.name ?? '')
   }
-  const fetchTranslatedCategories: ServiceFunction<
-    CategoryNameInterface[]
-  > = async () => {
-    try {
-      const response = await categoryService.getCategoriesNames()
-      const translatedCategories = response.data.map((category) => ({
-        ...category,
-        displayName: t(`categories.${category.name}`, {
-          defaultValue: category.name
-        })
-      }))
-      return {
-        ...response,
-        data: translatedCategories
-      }
-    } catch (error) {
-      console.error('Error fetching categories:', error)
-      return {
-        data: [],
-        status: 500,
-        statusText: 'Error',
-        headers: {},
-        config: {
-          headers: new AxiosHeaders(),
-          method: 'GET',
-          url: ''
-        }
-      } as AxiosResponse<CategoryNameInterface[]>
-    }
-  }
+  const fetchTranslatedCategories = useCallback(() => {
+    return fetchAndTranslateData(
+      () => categoryService.getCategoriesNames(),
+      'categories',
+      t
+    )
+  }, [t])
   const autoCompleteCategories = (
     <AsyncAutocomplete
       axiosProps={{ onResponse: onResponseCategory }}

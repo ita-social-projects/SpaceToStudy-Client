@@ -13,7 +13,6 @@ import {
   CategoryNameInterface,
   ComponentEnum,
   MainUserRole,
-  ServiceFunction,
   SubjectInterface,
   UserMainSubject
 } from '~/types'
@@ -34,7 +33,7 @@ import {
 } from '~/containers/edit-profile/professional-info-tab/add-professional-category-modal/AddProfessionalCategoryModal.constants'
 
 import { styles } from '~/containers/edit-profile/professional-info-tab/add-professional-category-modal/AddProfessionalCategoryModal.styles'
-import { AxiosHeaders, AxiosResponse, InternalAxiosRequestConfig } from 'axios'
+import { fetchAndTranslateData } from '~/utils/fetch-and-translate-category'
 
 interface SubjectGroupProps {
   subject: Partial<SubjectInterface>
@@ -53,40 +52,12 @@ function SubjectGroup({
 }: Readonly<SubjectGroupProps>) {
   const { t } = useTranslation()
 
-  const getSubjectsNames = useCallback(async () => {
-    try {
-      const response = await subjectService.getSubjectsNames(selectedCategory)
-      const translatedSubjects = response.data.map((subject) => ({
-        ...subject,
-        displayName: t(`subjects.${subject.name}`, {
-          defaultValue: subject.name
-        })
-      }))
-      return {
-        data: translatedSubjects,
-        status: 200,
-        statusText: 'OK',
-        headers: {},
-        config: {
-          headers: new AxiosHeaders(),
-          method: 'GET',
-          url: ''
-        } as InternalAxiosRequestConfig
-      } as AxiosResponse<{ name: string; _id: string }[]>
-    } catch (error) {
-      console.error('Error fetching subjects:', error)
-      return {
-        data: [],
-        status: 500,
-        statusText: 'Error',
-        headers: {},
-        config: {
-          headers: new AxiosHeaders(),
-          method: 'GET',
-          url: ''
-        } as InternalAxiosRequestConfig
-      } as AxiosResponse<{ name: string; _id: string }[]>
-    }
+  const getSubjectsNames = useCallback(() => {
+    return fetchAndTranslateData(
+      () => subjectService.getSubjectsNames(selectedCategory),
+      'subjects',
+      t
+    )
   }, [selectedCategory, t])
 
   const handleDisableOptions = (option: Partial<SubjectInterface>) => {
@@ -243,36 +214,13 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
     )
     return isBlocked && isCurrent
   }
-  const fetchTranslatedCategories: ServiceFunction<
-    CategoryNameInterface[]
-  > = async () => {
-    try {
-      const response = await categoryService.getCategoriesNames()
-      const translatedCategories = response.data.map((category) => ({
-        ...category,
-        displayName: t(`categories.${category.name}`, {
-          defaultValue: category.name
-        })
-      }))
-      return {
-        ...response,
-        data: translatedCategories
-      }
-    } catch (error) {
-      console.error('Error fetching categories:', error)
-      return {
-        data: [],
-        status: 500,
-        statusText: 'Error',
-        headers: {},
-        config: {
-          headers: new AxiosHeaders(),
-          method: 'GET',
-          url: ''
-        }
-      } as AxiosResponse<CategoryNameInterface[]>
-    }
-  }
+  const fetchTranslatedCategories = useCallback(() => {
+    return fetchAndTranslateData(
+      () => categoryService.getCategoriesNames(),
+      'categories',
+      t
+    )
+  }, [t])
   const SubjectsGroup = data.subjects.map((subject, index) => (
     <SubjectGroup
       disableOptions={data.subjects as Array<Partial<SubjectInterface>>}
