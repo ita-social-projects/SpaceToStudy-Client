@@ -2,6 +2,7 @@ import ProfessionalCategory from '~/containers/edit-profile/professional-info-ta
 import { fireEvent, screen } from '@testing-library/react'
 import { renderWithProviders } from '~tests/test-utils'
 import { useTranslation } from 'react-i18next'
+import {titleToCamel} from '~/utils/title-to-camel-case'
 const { t } = useTranslation()
 const mockOpenProfessionalCategoryModal = vi.fn()
 const mockedHandleDelete = vi.fn()
@@ -85,7 +86,7 @@ describe('ProfessionalCategory', () => {
   it('should render subjects correctly', () => {
     renderProfessionalCategoryWithItem(categoryWithSubjects)
   
-    const firstSubjectName = t(`subjects.${categoryWithSubjects.subjects[0].name}`, {
+    const firstSubjectName = t(`subjects.${titleToCamel(categoryWithSubjects.subjects[0].name)}`, {
       defaultValue: categoryWithSubjects.subjects[0].name,
     })
     const firstSubjectNameElement = screen.getByText(firstSubjectName)

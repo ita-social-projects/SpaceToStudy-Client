@@ -1,4 +1,5 @@
 import { AxiosHeaders, AxiosResponse, InternalAxiosRequestConfig } from 'axios'
+import { titleToCamel } from './title-to-camel-case'
 
 export async function fetchAndTranslateData<T extends { name: string }>(
   serviceMethod: () => Promise<AxiosResponse<T[]>>,
@@ -9,7 +10,7 @@ export async function fetchAndTranslateData<T extends { name: string }>(
     const response = await serviceMethod()
     const translatedData = response.data.map((item) => ({
       ...item,
-      displayName: t(`${translationKey}.${item.name}`, {
+      displayName: t(`${translationKey}.${titleToCamel(item.name)}`, {
         defaultValue: item.name
       })
     }))

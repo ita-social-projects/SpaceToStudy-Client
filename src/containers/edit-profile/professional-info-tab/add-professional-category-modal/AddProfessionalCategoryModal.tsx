@@ -34,6 +34,7 @@ import {
 
 import { styles } from '~/containers/edit-profile/professional-info-tab/add-professional-category-modal/AddProfessionalCategoryModal.styles'
 import { fetchAndTranslateData } from '~/utils/fetch-and-translate-category'
+import { titleToCamel } from '~/utils/title-to-camel-case'
 
 interface SubjectGroupProps {
   subject: Partial<SubjectInterface>
@@ -122,14 +123,14 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
     }
     const sanitizedCategory = {
       ...category,
-      name: t(`categories.${category.name}`, {
+      name: t(`categories.${titleToCamel(category.name)}`, {
         lng: 'en',
         defaultValue: category.name
       })
     }
     const sanitizedSubjects = subjects.map((subject) => ({
       ...subject,
-      name: t(`subjects.${subject.name}`, {
+      name: t(`subjects.${titleToCamel(subject.name)}`, {
         lng: 'en',
         defaultValue: subject.name
       })
@@ -138,7 +139,7 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
       ...data,
       category: sanitizedCategory,
       subjects: sanitizedSubjects,
-      _id: isEdit ? (initialValuesFromProps?._id ?? '') : uuidv4(),
+      _id: isEdit ? (initialValuesFromProps?._id ?? '') : crypto.randomUUID(),
       isDeletionBlocked
     }
     if (isEdit) {

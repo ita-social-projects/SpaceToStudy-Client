@@ -6,6 +6,7 @@ import { mockAxiosClient } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
 import { vi } from 'vitest'
 import { useTranslation } from 'react-i18next'
+import {titleToCamel} from '~/utils/title-to-camel-case'
 const { t } = useTranslation()
 
 const mockCloseModal = vi.fn()
@@ -74,7 +75,7 @@ describe('AddProfessionalCategoryModal without initial value', () => {
       /editProfilePage.profile.professionalTab.subject/
     )
   
-    await selectOption(categoryAutocomplete, t('categories.Cooking', { defaultValue: 'Cooking' }));
+    await selectOption(categoryAutocomplete, t(`categories.${titleToCamel('Cooking')}`, { defaultValue: 'Cooking' }));
 
     await act(async () => {
       fireEvent.change(professionalSubjects[0], {
@@ -118,7 +119,7 @@ describe('AddProfessionalCategoryModal without initial value', () => {
     const professionalSubjects = screen.getByLabelText(
       /editProfilePage.profile.professionalTab.subject/
     )
-    await selectOption(categoryAutocomplete,  t('categories.Cooking', { defaultValue: 'Cooking' }))
+    await selectOption(categoryAutocomplete,  t(`categories.${titleToCamel('Cooking')}`, { defaultValue: 'Cooking' }))
 
     await act(async () => {
       fireEvent.change(professionalSubjects, {
@@ -139,7 +140,7 @@ describe('AddProfessionalCategoryModal without initial value', () => {
     const professionalSubjects = screen.getAllByLabelText(
       /editProfilePage.profile.professionalTab.subject/
     )
-    await selectOption(categoryAutocomplete, t('categories.Cooking', { defaultValue: 'Cooking' }))
+    await selectOption(categoryAutocomplete, t(`categories.${titleToCamel('Cooking')}`, { defaultValue: 'Cooking' }))
 
     await act(async () => {
       fireEvent.change(professionalSubjects[0], {
@@ -164,7 +165,7 @@ describe('AddProfessionalCategoryModal without initial value', () => {
       /editProfilePage.profile.professionalTab.mainStudyCategory/
     )
 
-    await selectOption(categoryAutocomplete, t('categories.Cooking', { defaultValue: 'Cooking' }))
+    await selectOption(categoryAutocomplete, t(`categories.${titleToCamel('Cooking')}`, { defaultValue: 'Cooking' }))
 
     expect(submitButton).toBeDisabled()
   })
@@ -257,7 +258,7 @@ describe('AddProfessionalCategoryModal Subject Updates', () => {
       /editProfilePage.profile.professionalTab.subject/
     )
 
-    await selectOption(categoryAutocomplete, t('categories.Cooking', { defaultValue: 'Cooking' }));
+    await selectOption(categoryAutocomplete,t(`categories.${titleToCamel('Cooking')}`, { defaultValue: 'Cooking' }));
     await act(async () => {
       fireEvent.change(professionalSubjects[0], {
         target: { value: 'Gastronomy' }
@@ -295,7 +296,7 @@ describe('AddProfessionalCategoryModal Subject Updates', () => {
         /editProfilePage.profile.professionalTab.subject/
       )
       initialValues.subjects.forEach((subject, index) => {
-        const translatedSubjectName = t(`subjects.${subject.name}`, {
+        const translatedSubjectName = t(`subjects.${titleToCamel(subject.name)}`, {
           defaultValue: subject.name
         })
   

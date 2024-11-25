@@ -38,6 +38,7 @@ import {
 import { itemsLoadLimit } from '~/constants'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { styles } from '~/pages/subjects/Subjects.styles'
+import { titleToCamel } from '~/utils/title-to-camel-case'
 
 const Subjects = () => {
   const [match, setMatch] = useState<string>('')
@@ -108,7 +109,9 @@ const Subjects = () => {
             iconColor={item.category.appearance.color}
             key={item._id}
             link={`${authRoutes.findOffers.path}?categoryId=${categoryId}&subjectId=${item._id}`}
-            title={t(`subjects.${item.name}`)}
+            title={t(`subjects.${titleToCamel(item.name)}`, {
+              defaultValue: item.name
+            })}
           />
         )
       }),
@@ -166,7 +169,9 @@ const Subjects = () => {
         style={styles.titleWithDescription}
         title={t('subjectsPage.subjects.title', {
           category: categoryName
-            ? t(`categories.${categoryName}`)
+            ? t(`categories.${titleToCamel(categoryName)}`, {
+                defaultValue: categoryName
+              })
             : categoryName
         })}
       />
