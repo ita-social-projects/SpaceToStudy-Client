@@ -5,12 +5,20 @@ import { professionalSubjectTemplate } from '~/containers/edit-profile/professio
 import { mockAxiosClient } from '~tests/test-utils'
 import { URLs } from '~/constants/request'
 import { vi } from 'vitest'
+import { useTranslation } from 'react-i18next'
+const { t } = useTranslation()
 
 const mockCloseModal = vi.fn()
 const mockedBlockedCategory = [{ _id: '4', name: 'Music' }]
 
 const mockDispatch = vi.fn()
 const mockSelector = vi.fn()
+
+vi.mock('react-i18next', () => ({
+  useTranslation: () => ({
+    t: (key, options) => options?.defaultValue || key,
+  }),
+}));
 
 vi.mock('react-redux', async () => {
   const actual = await vi.importActual('react-redux')
@@ -65,8 +73,8 @@ describe('AddProfessionalCategoryModal without initial value', () => {
     const professionalSubjects = screen.getAllByLabelText(
       /editProfilePage.profile.professionalTab.subject/
     )
-
-    await selectOption(categoryAutocomplete, 'Cooking')
+  
+    await selectOption(categoryAutocomplete, t('categories.Cooking', { defaultValue: 'Cooking' }));
 
     await act(async () => {
       fireEvent.change(professionalSubjects[0], {
@@ -74,7 +82,10 @@ describe('AddProfessionalCategoryModal without initial value', () => {
       })
     })
 
-    expect(professionalSubjects[0].value).toBe('Updated Gastronomy')
+    expect(professionalSubjects[0].value).toBe('Updated Gastronomy');
+    if (professionalSubjects.length > 1) {
+      expect(professionalSubjects[1].value).not.toBe('Updated Gastronomy');
+    }
   })
 
   it('should render SubjectGroup using template in (modal create mode)', async () => {
@@ -107,8 +118,7 @@ describe('AddProfessionalCategoryModal without initial value', () => {
     const professionalSubjects = screen.getByLabelText(
       /editProfilePage.profile.professionalTab.subject/
     )
-
-    await selectOption(categoryAutocomplete, 'Cooking')
+    await selectOption(categoryAutocomplete,  t('categories.Cooking', { defaultValue: 'Cooking' }))
 
     await act(async () => {
       fireEvent.change(professionalSubjects, {
@@ -129,7 +139,7 @@ describe('AddProfessionalCategoryModal without initial value', () => {
     const professionalSubjects = screen.getAllByLabelText(
       /editProfilePage.profile.professionalTab.subject/
     )
-    await selectOption(categoryAutocomplete, 'Cooking')
+    await selectOption(categoryAutocomplete, t('categories.Cooking', { defaultValue: 'Cooking' }))
 
     await act(async () => {
       fireEvent.change(professionalSubjects[0], {
@@ -154,7 +164,7 @@ describe('AddProfessionalCategoryModal without initial value', () => {
       /editProfilePage.profile.professionalTab.mainStudyCategory/
     )
 
-    await selectOption(categoryAutocomplete, 'Cooking')
+    await selectOption(categoryAutocomplete, t('categories.Cooking', { defaultValue: 'Cooking' }))
 
     expect(submitButton).toBeDisabled()
   })
@@ -247,13 +257,13 @@ describe('AddProfessionalCategoryModal Subject Updates', () => {
       /editProfilePage.profile.professionalTab.subject/
     )
 
-    await selectOption(categoryAutocomplete, 'Cooking')
+    await selectOption(categoryAutocomplete, t('categories.Cooking', { defaultValue: 'Cooking' }));
     await act(async () => {
       fireEvent.change(professionalSubjects[0], {
         target: { value: 'Gastronomy' }
       })
     })
-    expect(screen.getByDisplayValue('Gastronomy')).toBeInTheDocument()
+    expect(screen.getByDisplayValue('Gastronomy')).toBeInTheDocument();
     expect(professionalSubjects[1].value).toBe('Varenychky')
   })
 
@@ -284,10 +294,13 @@ describe('AddProfessionalCategoryModal Subject Updates', () => {
       const professionalSubjects = screen.getAllByLabelText(
         /editProfilePage.profile.professionalTab.subject/
       )
-
       initialValues.subjects.forEach((subject, index) => {
-        const subjectElement = professionalSubjects[index]
-        expect(subjectElement.value).toMatch(new RegExp(subject.name, 'i'))
+        const translatedSubjectName = t(`subjects.${subject.name}`, {
+          defaultValue: subject.name
+        })
+  
+        const subjectElement = professionalSubjects[index];
+        expect(subjectElement.value).toMatch(new RegExp(translatedSubjectName, 'i'))
       })
     })
   })
