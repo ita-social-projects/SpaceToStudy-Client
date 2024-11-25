@@ -68,7 +68,7 @@ const PopularCategories: FC<PopularCategoriesProps> = ({
           iconColor={item.appearance.color}
           key={item._id}
           link={`${authRoutes.subjects.path}?categoryId=${item._id}`}
-          title={item.name}
+          title={t(`categories.${item.name}`)}
         />
       )),
     [response.items, oppositeRole, t]

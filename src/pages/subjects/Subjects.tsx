@@ -31,6 +31,7 @@ import { getSuffixes } from '~/utils/get-translation-suffixes'
 
 import {
   CategoryNameInterface,
+  ServiceFunction,
   SizeEnum,
   SubjectInterface,
   SubjectNameInterface
@@ -38,6 +39,7 @@ import {
 import { itemsLoadLimit } from '~/constants'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { styles } from '~/pages/subjects/Subjects.styles'
+import { AxiosHeaders, AxiosResponse } from 'axios'
 
 const Subjects = () => {
   const [match, setMatch] = useState<string>('')
@@ -108,7 +110,7 @@ const Subjects = () => {
             iconColor={item.category.appearance.color}
             key={item._id}
             link={`${authRoutes.findOffers.path}?categoryId=${categoryId}&subjectId=${item._id}`}
-            title={item.name}
+            title={t(`subjects.${item.name}`)}
           />
         )
       }),
@@ -130,13 +132,42 @@ const Subjects = () => {
     const category = response.find((option) => option._id === categoryId)
     setCategoryName(category?.name ?? '')
   }
-
+  const fetchTranslatedCategories: ServiceFunction<
+    CategoryNameInterface[]
+  > = async () => {
+    try {
+      const response = await categoryService.getCategoriesNames()
+      const translatedCategories = response.data.map((category) => ({
+        ...category,
+        displayName: t(`categories.${category.name}`, {
+          defaultValue: category.name
+        })
+      }))
+      return {
+        ...response,
+        data: translatedCategories
+      }
+    } catch (error) {
+      console.error('Error fetching categories:', error)
+      return {
+        data: [],
+        status: 500,
+        statusText: 'Error',
+        headers: {},
+        config: {
+          headers: new AxiosHeaders(),
+          method: 'GET',
+          url: ''
+        }
+      } as AxiosResponse<CategoryNameInterface[]>
+    }
+  }
   const autoCompleteCategories = (
     <AsyncAutocomplete
       axiosProps={{ onResponse: onResponseCategory }}
-      labelField='name'
+      labelField='displayName'
       onChange={onCategoryChange}
-      service={categoryService.getCategoriesNames}
+      service={fetchTranslatedCategories}
       sx={styles.categoryInput}
       textFieldProps={{
         label: t('breadCrumbs.categories')
@@ -160,6 +191,8 @@ const Subjects = () => {
         style={styles.titleWithDescription}
         title={t('subjectsPage.subjects.title', {
           category: categoryName
+            ? t(`categories.${categoryName}`)
+            : categoryName
         })}
       />
 
