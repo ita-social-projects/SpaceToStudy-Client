@@ -10,7 +10,7 @@
   import { URLs } from '~/constants/request'
 
   const userDataMock = {
-    _id: 123456
+    _id: '123456'
   }
 
   const handleSubmit = vi.fn()
@@ -106,13 +106,13 @@
       )
 
       fireEvent.change(currentPasswordInput, {
-        target: { value: '12345qwertY' }
+        target: { value: '12345qwertY$' }
       })
       fireEvent.change(passwordInput, {
-        target: { value: '12345qwertY' }
+        target: { value: '12345qwertY$' }
       })
       fireEvent.change(confirmPasswordInput, {
-        target: { value: '12345qwertY' }
+        target: { value: '12345qwertY$' }
       })
 
       await waitFor(() => {

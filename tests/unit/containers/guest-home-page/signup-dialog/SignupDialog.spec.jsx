@@ -113,16 +113,16 @@ describe('Signup dialog test', () => {
 
     const inputPassword = screen.getByLabelText(/common.labels.password/i)
 
-    fireEvent.change(inputPassword, { target: { value: '12345678a/A' } })
+    fireEvent.change(inputPassword, { target: { value: '12345678a$/A' } })
 
-    expect(inputPassword.value).toBe('12345678a/A')
+    expect(inputPassword.value).toBe('12345678a$/A')
 
     const inputConfirmPassword = screen.getByLabelText(
       /common.labels.confirmPassword/i
     )
-    fireEvent.change(inputConfirmPassword, { target: { value: '12345678a/A' } })
+    fireEvent.change(inputConfirmPassword, { target: { value: '12345678a$/A' } })
 
-    expect(inputConfirmPassword.value).toBe('12345678a/A')
+    expect(inputConfirmPassword.value).toBe('12345678a$/A')
 
     const checkbox = screen.getByRole('checkbox')
 
