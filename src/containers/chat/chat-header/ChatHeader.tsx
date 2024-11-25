@@ -100,7 +100,7 @@ const ChatHeader: FC<ChatHeaderProps> = ({
     () =>
       messageService.getMessages({
         chatId: currentChat._id,
-        limit: 100,
+        limit: Number.MAX_SAFE_INTEGER,
         skip: 0
       }),
     [currentChat._id]
