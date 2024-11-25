@@ -16,14 +16,14 @@ import { ResourceService } from '~/services/resource-service'
 import { useDebounce } from '~/hooks/use-debounce'
 import { SortHook } from '~/hooks/table/use-sort'
 import useBreakpoints from '~/hooks/use-breakpoints'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import InputField from '~scss-components/input-field/InputField'
 
 import AppButtonMenu from '~/components/app-button-menu/AppButtonMenu'
 import ResourcesToolBarDrawer from '~/containers/my-resources/resources-toolbar-drawer/ResourcesToolbarDrawer'
 
 import { styles } from '~/containers/my-resources/add-resource-with-input/AddResourceWithInput.styles'
-import { CategoryNameInterface, PositionEnum, SizeEnum } from '~/types'
+import { CategoryNameInterface, PositionEnum } from '~/types'
 import { InputFieldVariantEnum } from '~scss-components/input-field/InputField.constants'
 
 interface AddResourceWithInputProps {
@@ -54,7 +54,6 @@ const AddResourceWithInput: FC<AddResourceWithInputProps> = ({
   const [searchInput, setSearchInput] = useState<string>('')
 
   const isMobileOrTablet = isMobile || isTablet
-  const { Medium, Large } = SizeEnum
 
   const onSearchChange = (text: string) => {
     searchRef.current = text
@@ -109,14 +108,14 @@ const AddResourceWithInput: FC<AddResourceWithInputProps> = ({
   return (
     <Box sx={styles.container}>
       {!button ? (
-        <AppButton
+        <Button
           component={Link}
-          size={isMobileOrTablet ? Medium : Large}
+          endIcon={<AddIcon sx={styles.addIcon} />}
+          size={isMobileOrTablet ? 'sm' : 'md'}
           to={link}
         >
           {btnText && t(btnText)}
-          <AddIcon sx={styles.addIcon} />
-        </AppButton>
+        </Button>
       ) : (
         button
       )}

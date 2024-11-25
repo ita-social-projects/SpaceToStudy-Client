@@ -1,9 +1,9 @@
 import { FC, ReactNode } from 'react'
 import Box, { BoxProps } from '@mui/material/Box'
 
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 
-import { ComponentEnum, ButtonVariantEnum, Media } from '~/types'
+import { ComponentEnum, Media } from '~/types'
 import { styles } from '~/components/clickable-image/ClickableImage.styles'
 
 interface ClickableImageProps extends Omit<BoxProps, 'onClick'> {
@@ -19,10 +19,10 @@ const ClickableImage: FC<ClickableImageProps> = ({
   ...props
 }) => {
   return (
-    <AppButton
+    <Button
       onClick={() => onClick?.(image)}
       sx={styles.imageButton}
-      variant={ButtonVariantEnum.Text}
+      variant='text-secondary'
     >
       <Box
         alt={image.name}
@@ -32,7 +32,7 @@ const ClickableImage: FC<ClickableImageProps> = ({
         {...props}
       />
       {children}
-    </AppButton>
+    </Button>
   )
 }
 

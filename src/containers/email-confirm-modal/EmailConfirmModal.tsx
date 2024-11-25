@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 
 import Loader from '~/components/loader/Loader'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import ImgTitleDescription from '~/components/img-title-description/ImgTitleDescription'
 
 import LoginDialog from '~/containers/guest-home-page/login-dialog/LoginDialog'
@@ -14,7 +14,6 @@ import imgSuccess from '~/assets/img/email-confirmation-modals/success-icon.svg'
 import imgReject from '~/assets/img/email-confirmation-modals/not-success-icon.svg'
 
 import { AuthService } from '~/services/auth-service'
-import { ButtonVariantEnum } from '~/types'
 import useAxios from '~/hooks/use-axios'
 import { Component, useModalContext } from '~/context/modal-context'
 
@@ -60,13 +59,9 @@ const EmailConfirmModal = ({
           style={styles}
           title={t('modals.emailNotConfirm')}
         />
-        <AppButton
-          onClick={closeModal}
-          sx={styles.button}
-          variant={ButtonVariantEnum.Contained}
-        >
+        <Button onClick={closeModal} size='lg' sx={styles.button}>
           {t('common.confirmButton')}
-        </AppButton>
+        </Button>
       </Box>
     )
   }
@@ -80,13 +75,9 @@ const EmailConfirmModal = ({
           style={styles}
           title={t('modals.emailAlreadyConfirm')}
         />
-        <AppButton
-          onClick={openLoginDialog}
-          sx={styles.button}
-          variant={ButtonVariantEnum.Contained}
-        >
+        <Button onClick={openLoginDialog} size='lg' sx={styles.button}>
           {t('button.goToLogin')}
-        </AppButton>
+        </Button>
       </Box>
     )
   }
@@ -99,13 +90,9 @@ const EmailConfirmModal = ({
           style={styles}
           title={t('modals.emailConfirm')}
         />
-        <AppButton
-          onClick={openLoginDialog}
-          sx={styles.button}
-          variant={ButtonVariantEnum.Contained}
-        >
+        <Button onClick={openLoginDialog} size='lg' sx={styles.button}>
           {t('button.goToLogin')}
-        </AppButton>
+        </Button>
       </Box>
     )
   }

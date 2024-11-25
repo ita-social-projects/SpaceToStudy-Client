@@ -10,7 +10,7 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import { useModalContext } from '~/context/modal-context'
 import ForgotPassword from '~/containers/guest-home-page/forgot-password/ForgotPassword'
 import AppTextField from '~/components/app-text-field/AppTextField'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 
 import { styles } from '~/containers/guest-home-page/login-form/LoginForm.styles'
 import { useAppSelector } from '~/hooks/use-redux'
@@ -111,14 +111,14 @@ const LoginForm: React.FC<LoginFormProps> = ({
         </Typography>
       </Box>
 
-      <AppButton
+      <Button
         disabled={isDisabled}
         loading={authLoading}
         sx={styles.loginButton}
         type='submit'
       >
         {t('common.labels.login')}
-      </AppButton>
+      </Button>
     </Box>
   )
 }

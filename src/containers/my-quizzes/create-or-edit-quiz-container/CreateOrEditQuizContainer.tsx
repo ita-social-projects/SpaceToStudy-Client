@@ -16,7 +16,7 @@ import { useModalContext } from '~/context/modal-context'
 import { useAppDispatch } from '~/hooks/use-redux'
 import { ResourceService } from '~/services/resource-service'
 import useAxios from '~/hooks/use-axios'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import Loader from '~/components/loader/Loader'
@@ -31,7 +31,6 @@ import {
 import { defaultResponse } from '~/containers/my-quizzes/create-or-edit-quiz-container/CreateOrEditQuizContainer.constants'
 import {
   ButtonTypeEnum,
-  ButtonVariantEnum,
   ErrorResponse,
   CreateQuizParams,
   Question,
@@ -227,17 +226,15 @@ const CreateOrEditQuizContainer = ({
         isCreationOpen ? t('myResourcesPage.quizzes.savePreviousQuestion') : ''
       }
     >
-      <span>
-        <AppButton
-          disabled={isCreationOpen}
-          onClick={onOpenCreateQuestion}
-          size={SizeEnum.ExtraLarge}
-          variant={ButtonVariantEnum.Tonal}
-        >
-          {t('myResourcesPage.quizzes.createNewQuestion')}
-          <EditIcon fontSize={SizeEnum.Small} />
-        </AppButton>
-      </span>
+      <Button
+        disabled={isCreationOpen}
+        endIcon={<EditIcon fontSize={SizeEnum.Small} />}
+        onClick={onOpenCreateQuestion}
+        size='lg'
+        variant='tonal'
+      >
+        {t('myResourcesPage.quizzes.createNewQuestion')}
+      </Button>
     </Tooltip>
   )
 
@@ -282,30 +279,22 @@ const CreateOrEditQuizContainer = ({
         )}
         <Box sx={styles.functionalButtons}>
           {CreateQuestionButton}
-          <AppButton
+          <Button
+            endIcon={<AddIcon fontSize={SizeEnum.Small} />}
             onClick={onOpenAddQuestionsModal}
-            size={SizeEnum.ExtraLarge}
-            variant={ButtonVariantEnum.Tonal}
+            size='lg'
+            variant='tonal'
           >
             {t('myResourcesPage.quizzes.addQuestion')}
-            <AddIcon fontSize={SizeEnum.Small} />
-          </AppButton>
+          </Button>
         </Box>
         <Box sx={styles.buttons}>
-          <AppButton
-            onClick={navigateToQuizzesTab}
-            size={SizeEnum.ExtraLarge}
-            variant={ButtonVariantEnum.Tonal}
-          >
+          <Button onClick={navigateToQuizzesTab} size='lg' variant='tonal'>
             {t('common.cancel')}
-          </AppButton>
-          <AppButton
-            onClick={onSaveQuiz}
-            size={SizeEnum.ExtraLarge}
-            type={ButtonTypeEnum.Submit}
-          >
+          </Button>
+          <Button onClick={onSaveQuiz} size='lg' type={ButtonTypeEnum.Submit}>
             {t('common.save')}
-          </AppButton>
+          </Button>
         </Box>
       </Box>
     </PageWrapper>

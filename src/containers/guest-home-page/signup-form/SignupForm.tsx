@@ -15,7 +15,7 @@ import Checkbox from '@mui/material/Checkbox'
 import useInputVisibility from '~/hooks/use-input-visibility'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import { guestRoutes } from '~/router/constants/guestRoutes'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 
 import { styles } from '~/containers/guest-home-page/signup-form/SignupForm.styles'
 import { SignupParams, UseFormErrors, UseFormEventHandler } from '~/types'
@@ -164,14 +164,14 @@ const SignupForm = ({
         />
       </Box>
 
-      <AppButton
+      <Button
         disabled={!isValid || !isAgreementChecked}
         loading={authLoading}
         sx={styles.signupButton}
         type='submit'
       >
         {t('common.labels.signup')}
-      </AppButton>
+      </Button>
     </Box>
   )
 }

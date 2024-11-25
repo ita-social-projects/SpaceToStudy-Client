@@ -59,10 +59,6 @@ export const styles = {
     display: 'flex',
     gap: { xs: '24px', sm: '30px' },
     '& button': {
-      gap: '12px',
-      width: '100%'
-    },
-    '& span': {
       width: '100%'
     }
   },

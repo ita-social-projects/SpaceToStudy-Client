@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 
 import useBreakpoints from '~/hooks/use-breakpoints'
 import TitleBlock from '~/components/title-block/TitleBlock'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import InputField from '~scss-components/input-field/InputField'
 
 import bag from '~/assets/img/student-home/bag.png'
@@ -53,14 +53,9 @@ const FindBlock = ({ translationKey }: FindBlockProps) => {
         sx={styles.input}
         value={inputValue}
       />
-      <AppButton
-        component={Link}
-        fullWidth={isMobile}
-        sx={styles.button}
-        to={findOffers}
-      >
+      <Button component={Link} to={findOffers}>
         {t(`${translationKey}.button`)}
-      </AppButton>
+      </Button>
     </TitleBlock>
   )
 }

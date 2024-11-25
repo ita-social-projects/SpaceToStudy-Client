@@ -5,7 +5,7 @@ import Box from '@mui/material/Box'
 import FormHelperText from '@mui/material/FormHelperText'
 import Typography from '@mui/material/Typography'
 
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import AppChipList from '~/components/app-chips-list/AppChipList'
 import AsyncAutocomplete from '~/components/async-autocomplete/AsyncAutocomplete'
 
@@ -146,16 +146,9 @@ const SubjectsStep = ({ btnsBox }: SubjectsStepProps) => {
             value={subjects.subject?._id ?? null}
             valueField='_id'
           />
-          <AppButton
-            data-testid='add-subject'
-            fullWidth
-            onClick={addSubject}
-            sx={{ bgcolor: 'primary.50' }}
-          >
-            <Typography variant='button'>
-              {t('becomeTutor.categories.btnText')}
-            </Typography>
-          </AppButton>
+          <Button data-testid='add-subject' fullWidth onClick={addSubject}>
+            {t('becomeTutor.categories.btnText')}
+          </Button>
           <FormHelperText
             data-testid='error-subject'
             error={!!subjectError}

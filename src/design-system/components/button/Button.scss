@@ -53,6 +53,7 @@
 
   & .#{$prefix}btn-label {
     padding: 0 get-var('btn-inner-gap');
+    display: flex;
   }
 
   & .#{$prefix}btn-loader {
@@ -69,7 +70,7 @@
   }
 
   &-primary {
-    @include button-color(
+    @include button-variant(
       $background: get-var('blue-gray-800'),
       $color: get-var('neutral-50'),
       $shadow: get-var('box-shadow-xl'),
@@ -82,7 +83,7 @@
   }
 
   &-tonal {
-    @include button-color(
+    @include button-variant(
       $background: get-var('blue-gray-50'),
       $color: get-var('blue-gray-800'),
       $shadow: get-var('box-shadow-xs'),
@@ -95,7 +96,7 @@
   }
 
   &-text-primary {
-    @include button-color(
+    @include button-variant(
       $background: transparent,
       $color: get-var('blue-gray-800'),
       $hover-background: rgba($blue-gray-400, 0.2),
@@ -107,7 +108,7 @@
   }
 
   &-text-secondary {
-    @include button-color(
+    @include button-variant(
       $background: transparent,
       $color: get-var('blue-gray-600'),
       $hover-background: rgba($blue-gray-400, 0.2),
@@ -119,7 +120,7 @@
   }
 
   &-tonal-success {
-    @include button-color(
+    @include button-variant(
       $background: get-var('green-50'),
       $color: get-var('green-800'),
       $shadow: get-var('box-shadow-xs'),
@@ -132,7 +133,7 @@
   }
 
   &-tonal-error {
-    @include button-color(
+    @include button-variant(
       $background: get-var('red-100'),
       $color: get-var('red-600'),
       $shadow: get-var('box-shadow-xs'),

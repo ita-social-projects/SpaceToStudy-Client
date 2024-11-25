@@ -13,7 +13,7 @@ import CloseIcon from '@mui/icons-material/Close'
 import { subjectService } from '~/services/subject-service'
 import { categoryService } from '~/services/category-service'
 import useUserCategoriesAndSubjects from '~/hooks/use-user-categories-and-subjects'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import DividedDropdownAutocomplete from '~/components/divider-dropdown-autocomplete/DividerDropdownAutocomplete'
 
 import { styles } from '~/containers/find-course/courses-filters/CourseFilters.styles'
@@ -22,7 +22,6 @@ import {
   CategoryNameInterface,
   SubjectNameInterface,
   CourseFilters,
-  ButtonVariantEnum,
   CourseExtendedAutocompleteOptions,
   UserResponse
 } from '~/types'
@@ -125,14 +124,14 @@ const CoursesFilters = ({
           {menuItems}
         </Select>
       </FormControl>
-      <AppButton
+      <Button
         onClick={resetFilters}
+        startIcon={<CloseIcon />}
         sx={styles.clearBtn}
-        variant={ButtonVariantEnum.Text}
+        variant='text-secondary'
       >
-        <CloseIcon />
         {t('common.clear')}
-      </AppButton>
+      </Button>
     </Box>
   )
 }

@@ -9,12 +9,12 @@ const sizeLimit = {
 }
 
 export const styles = {
-  linkWrapper: {
+  linkButton: {
     display: 'flex',
     flexDirection: 'column',
     alignSelf: 'stretch'
   },
-  linkButton: {
+  linkWrapper: {
     display: 'flex',
     padding: '12px 16px',
     alignItems: 'center',

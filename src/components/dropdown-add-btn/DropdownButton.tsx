@@ -1,9 +1,8 @@
 import { FC, ReactElement } from 'react'
 import { SxProps } from '@mui/material'
 
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 
-import { ButtonVariantEnum, SizeEnum } from '~/types'
 import { spliceSx } from '~/utils/helper-functions'
 import { styles } from '~/components/dropdown-add-btn/DropdownButton.styles'
 
@@ -21,17 +20,17 @@ const DropdownButton: FC<DropdownButtonProps> = ({
   value
 }) => {
   return (
-    <AppButton
+    <Button
       disableRipple
       fullWidth
       onClick={handleOnClick}
-      size={SizeEnum.Medium}
+      size='md'
+      startIcon={icon}
       sx={spliceSx(styles.optionsButton, sx)}
-      variant={ButtonVariantEnum.Text}
+      variant='text-secondary'
     >
-      {icon}
       {value}
-    </AppButton>
+    </Button>
   )
 }
 

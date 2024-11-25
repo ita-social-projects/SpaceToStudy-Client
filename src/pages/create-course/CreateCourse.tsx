@@ -8,7 +8,7 @@ import AddIcon from '@mui/icons-material/Add'
 
 import Loader from '~/components/loader/Loader'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import CourseSectionsList from '~/containers/course-sections-list/CourseSectionsList'
 import CourseToolbar from '~/containers/my-courses/course-toolbar/CourseToolbar'
 
@@ -28,7 +28,6 @@ import {
 import { snackbarVariants } from '~/constants'
 import {
   ButtonTypeEnum,
-  ButtonVariantEnum,
   SizeEnum,
   UserRole,
   UserResponse,
@@ -254,25 +253,25 @@ const CreateCourse = () => {
           sectionEventHandler={sectionEventHandler}
         />
         <Box sx={styles.functionalButton}>
-          <AppButton
+          <Button
             onClick={() =>
               addNewSection({ sections, setSectionsData, handleSectionChange })
             }
-            size={SizeEnum.Medium}
-            variant={ButtonVariantEnum.Tonal}
+            size='md'
+            startIcon={<AddIcon fontSize={SizeEnum.Small} />}
+            variant='tonal'
           >
-            <AddIcon fontSize={SizeEnum.Small} />
             {t('course.addSectionBtn')}
-          </AppButton>
+          </Button>
         </Box>
         <Box sx={styles.buttons}>
-          <AppButton
+          <Button
             onClick={() => navigate(authRoutes.myCourses.root.path)}
-            variant={ButtonVariantEnum.Tonal}
+            variant='tonal'
           >
             {t('common.cancel')}
-          </AppButton>
-          <AppButton type={ButtonTypeEnum.Submit}>{t('common.save')}</AppButton>
+          </Button>
+          <Button type={ButtonTypeEnum.Submit}>{t('common.save')}</Button>
         </Box>
       </Box>
     </PageWrapper>

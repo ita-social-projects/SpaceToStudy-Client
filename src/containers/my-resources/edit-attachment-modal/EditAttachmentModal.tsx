@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 
 import AppTextField from '~/components/app-text-field/AppTextField'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import AppTextArea from '~/components/app-text-area/AppTextArea'
 import useForm from '~/hooks/use-form'
 
@@ -16,7 +16,6 @@ import { styles } from '~/containers/my-resources/edit-attachment-modal/EditAtta
 import {
   Attachment,
   ButtonTypeEnum,
-  ButtonVariantEnum,
   CategoryNameInterface,
   ComponentEnum,
   EditAttachmentForm,
@@ -134,17 +133,17 @@ const EditAttachmentModal: FC<EditAttachmentModalProps> = ({
       </Box>
 
       <Box sx={styles.buttons}>
-        <AppButton onClick={closeModal} variant={ButtonVariantEnum.Tonal}>
+        <Button onClick={closeModal} variant='tonal'>
           {t('common.cancel')}
-        </AppButton>
-        <AppButton
+        </Button>
+        <Button
           disabled={!!errors.fileName}
           loading={loading}
           sx={styles.saveBtn}
           type={ButtonTypeEnum.Submit}
         >
           {t('common.save')}
-        </AppButton>
+        </Button>
       </Box>
     </Box>
   )

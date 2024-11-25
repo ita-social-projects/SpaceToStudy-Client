@@ -9,7 +9,6 @@ import { useModalContext } from '~/context/modal-context'
 
 import {
   AboutStudentData,
-  ButtonVariantEnum,
   ComponentEnum,
   MainUserRole,
   OpenProfessionalCategoryModalHandler,
@@ -32,7 +31,7 @@ import AddProfessionalCategoryModal from '~/containers/edit-profile/professional
 import AboutTutorAccordion from '~/containers/edit-profile/professional-info-tab/about-tutor-accordion/AboutTutorAccordion'
 import AboutStudentAccordion from '~/containers/edit-profile/professional-info-tab/about-student-accordion/AboutStudentAccordion'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import { scrollToAndHighlight } from '~/utils/scroll-and-highlight'
 
 import { styles } from '~/containers/edit-profile/professional-info-tab/ProfessionalInfoTab.styles'
@@ -167,13 +166,12 @@ const ProfessionalInfoTab: FC = () => {
           title={t('editProfilePage.profile.professionalTab.categoriesTitle')}
         />
         <Box sx={styles.createBtnContainer}>
-          <AppButton
+          <Button
             onClick={() => openProfessionalCategoryModal()}
             startIcon={<AddIcon />}
-            variant={ButtonVariantEnum.Contained}
           >
             {t('editProfilePage.profile.professionalTab.addCategoryBtn')}
-          </AppButton>
+          </Button>
         </Box>
         <ProfessionalCategoryList
           handleDeleteCategory={handleDeleteCategory}

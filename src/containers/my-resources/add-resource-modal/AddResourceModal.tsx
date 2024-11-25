@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography'
 import EnhancedTable, {
   EnhancedTableProps
 } from '~/components/enhanced-table/EnhancedTable'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import InputField from '~scss-components/input-field/InputField'
 import AppButtonMenu from '~/components/app-button-menu/AppButtonMenu'
 import CheckboxWithTooltip from '~/components/checkbox-with-tooltip/CheckboxWithTooltip'
@@ -17,7 +17,6 @@ import { styles } from '~/containers/my-resources/add-resource-modal/AddResource
 import { ResourceService } from '~/services/resource-service'
 import { useModalContext } from '~/context/modal-context'
 import {
-  ButtonVariantEnum,
   CategoryNameInterface,
   ResourcesTabsEnum,
   TableItem
@@ -122,10 +121,10 @@ const AddResourceModal = <T extends TableItem>({
           />
         )}
         <Box sx={styles.buttonsArea}>
-          <AppButton onClick={closeModal} variant={ButtonVariantEnum.Tonal}>
+          <Button onClick={closeModal} variant='tonal'>
             {t('common.cancel')}
-          </AppButton>
-          <AppButton
+          </Button>
+          <Button
             disabled={
               !selectedRows.length ||
               initialSelectedRows.length === selectedRows.length
@@ -134,7 +133,7 @@ const AddResourceModal = <T extends TableItem>({
             sx={styles.addButton}
           >
             {t('common.add')}
-          </AppButton>
+          </Button>
         </Box>
       </Box>
 

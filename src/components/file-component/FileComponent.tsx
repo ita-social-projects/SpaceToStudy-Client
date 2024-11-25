@@ -3,9 +3,9 @@ import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 
-import { ButtonVariantEnum, File } from '~/types'
+import { File } from '~/types'
 import { getFormattedDate, spliceSx } from '~/utils/helper-functions'
 import { openInNewTab } from '~/components/file-component/FileComponent.constants'
 import { styles } from '~/components/file-component/FileComponent.styles'
@@ -30,10 +30,10 @@ const FileComponent: FC<FileComponentProps> = ({ file }) => {
 
   return (
     <Box sx={styles.fileWrapper}>
-      <AppButton
+      <Button
         onClick={() => openInNewTab(file)}
         sx={styles.file}
-        variant={ButtonVariantEnum.Text}
+        variant='text-secondary'
       >
         <Box sx={styles.formatFrame}>
           <Typography>{fileFormat}</Typography>
@@ -49,7 +49,7 @@ const FileComponent: FC<FileComponentProps> = ({ file }) => {
             <Typography>{formattedDate}</Typography>
           </Box>
         </Box>
-      </AppButton>
+      </Button>
     </Box>
   )
 }

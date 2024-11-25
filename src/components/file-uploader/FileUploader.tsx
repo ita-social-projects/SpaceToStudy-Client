@@ -10,14 +10,13 @@ import CloseIcon from '@mui/icons-material/Close'
 import { FormHelperText, SxProps } from '@mui/material'
 
 import { IconButton } from '~/design-system/components/icon-button/IconButton'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import { styles } from '~/components/file-uploader/FileUploader.styles'
 
 import useUpload from '~/hooks/use-upload'
 
 import {
   AddDocuments,
-  ButtonVariantEnum,
   ComponentEnum,
   UploadFileEmitter,
   InputEnum,
@@ -36,8 +35,6 @@ interface FileUploaderProps {
     button?: SxProps
     error?: SxProps
   }
-  variant?: ButtonVariantEnum
-  size?: SizeEnum
   icon?: ReactElement
 }
 
@@ -49,8 +46,6 @@ const FileUploader: FC<FileUploaderProps> = ({
   validationData,
   isImages = false,
   sx = {},
-  variant,
-  size = SizeEnum.Medium,
   icon
 }) => {
   const { t } = useTranslation()
@@ -85,16 +80,16 @@ const FileUploader: FC<FileUploaderProps> = ({
   const acceptableFileTypes = validationData.filesTypes.join(', ')
 
   const uploadButton = (
-    <AppButton
+    <Button
       component={ComponentEnum.Label}
       onClick={handleClick}
-      size={size}
+      size='md'
+      startIcon={icon}
       sx={sx.button}
-      variant={variant}
+      variant='primary'
     >
       {isImages && <CloudUploadIcon sx={styles.icon} />}
       {buttonText}
-      {icon}
       <input
         accept={acceptableFileTypes}
         hidden
@@ -103,7 +98,7 @@ const FileUploader: FC<FileUploaderProps> = ({
         ref={inputRef}
         type={InputEnum.File}
       />
-    </AppButton>
+    </Button>
   )
 
   return (

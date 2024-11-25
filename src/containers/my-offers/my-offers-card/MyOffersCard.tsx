@@ -5,12 +5,12 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
 
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import StatusChip from '~/components/status-chip/StatusChip'
 import SubjectLevelWithLabels from '~/components/subject-level-with-labels/SubjectLevelWithLabels'
 
-import { ButtonActions, Offer, SizeEnum } from '~/types'
+import { ButtonActions, Offer } from '~/types'
 import { styles } from '~/containers/my-offers/my-offers-card/MyOffersCard.styles'
 
 interface OfferCardSquareProps {
@@ -26,14 +26,9 @@ const MyOffersCard: FC<OfferCardSquareProps> = ({ buttonActions, offer }) => {
   const buttons = buttonActions?.map(
     (elem) =>
       elem && (
-        <AppButton
-          fullWidth
-          key={elem.label}
-          size={SizeEnum.Medium}
-          {...elem.buttonProps}
-        >
+        <Button fullWidth key={elem.label} size='md' {...elem.buttonProps}>
           {t(elem.label)}
-        </AppButton>
+        </Button>
       )
   )
 

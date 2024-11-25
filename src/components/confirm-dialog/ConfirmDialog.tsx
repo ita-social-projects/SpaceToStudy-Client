@@ -6,7 +6,7 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import Typography from '@mui/material/Typography'
 
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import { styles } from '~/components/confirm-dialog/ConfirmDialog.styles'
 import { IconButton } from '~/design-system/components/icon-button/IconButton'
 
@@ -53,12 +53,10 @@ const ConfirmDialog: FC<ConfirmDialogProps> = ({
         <Typography>{t(message)}</Typography>
       </DialogContent>
       <DialogActions sx={styles.actions(revertButtons)}>
-        <AppButton onClick={onDismiss} variant={ButtonVariantEnum.Tonal}>
+        <Button onClick={onDismiss} variant='tonal'>
           {cancelButton || t('common.no')}
-        </AppButton>
-        <AppButton onClick={onConfirm}>
-          {confirmButton || t('common.yes')}
-        </AppButton>
+        </Button>
+        <Button onClick={onConfirm}>{confirmButton || t('common.yes')}</Button>
       </DialogActions>
     </Dialog>
   )

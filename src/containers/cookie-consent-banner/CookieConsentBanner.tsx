@@ -5,7 +5,8 @@ import { FC, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { Trans, useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router-dom'
-import AppButton from '~/components/app-button/AppButton'
+
+import Button from '~scss-components/button/Button'
 import HashLink from '~/components/hash-link/HashLink'
 import { styles } from '~/containers/cookie-consent-banner/CookieConsentBanner.styles'
 import { guestRoutes } from '~/router/constants/guestRoutes'
@@ -53,15 +54,15 @@ const CookieConsentBanner: FC = () => {
           i18nKey='cookieConsentBanner.notice'
         />
       </Typography>
-      <AppButton
+      <Button
+        endIcon={<DoneIcon />}
         onClick={handleButtonClick}
-        size='extraLarge'
+        size='lg'
         sx={styles.button}
         variant='tonal'
       >
         {t('cookieConsentBanner.acceptButton')}
-        <DoneIcon />
-      </AppButton>
+      </Button>
     </Box>,
     document.body
   )

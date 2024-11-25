@@ -13,7 +13,7 @@ import { useAppDispatch } from '~/hooks/use-redux'
 import Image from '~/assets/img/signup-dialog/student.svg'
 import AppTextArea from '~/components/app-text-area/AppTextArea'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import AppTextField from '~/components/app-text-field/AppTextField'
 import AsyncAutocomplete from '~/components/async-autocomplete/AsyncAutocomplete'
 
@@ -154,13 +154,13 @@ const CreateSubjectModal = () => {
           title={t('categoriesPage.newSubject.info')}
           value={data.info}
         />
-        <AppButton
+        <Button
           loading={loading}
           sx={styles.button}
           type={ButtonTypeEnum.Submit}
         >
           {t('button.sendRequest')}
-        </AppButton>
+        </Button>
       </Box>
     </Box>
   )

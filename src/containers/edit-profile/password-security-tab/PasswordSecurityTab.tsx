@@ -8,8 +8,6 @@ import useChangeUserStatus from '~/hooks/use-change-user-status'
 import PasswordSecurityItem from '~/containers/edit-profile/password-security-tab/password-security-item/PasswordSecurityItem'
 import ChangePasswordModal from '~/containers/edit-profile/password-security-tab/change-password-modal/ChangePasswordModal'
 
-import { ButtonVariantEnum } from '~/types'
-
 const PasswordSecurityTab: FC = () => {
   const { t } = useTranslation()
   const { openModal } = useModalContext()
@@ -33,7 +31,7 @@ const PasswordSecurityTab: FC = () => {
         buttonText={t(
           'editProfilePage.profile.passwordSecurityTab.changePassword'
         )}
-        buttonVariant={ButtonVariantEnum.Tonal}
+        buttonVariant='tonal'
         description={t('editProfilePage.profile.passwordSecurityTab.subTitle')}
         onClick={openChangePasswordModal}
         title={t('editProfilePage.profile.passwordSecurityTab.title')}
@@ -42,7 +40,7 @@ const PasswordSecurityTab: FC = () => {
         buttonText={t(
           `editProfilePage.profile.passwordSecurityTab.${neededAction}Account`
         )}
-        buttonVariant={ButtonVariantEnum.Danger}
+        buttonVariant='tonal-error'
         description={t(
           'editProfilePage.profile.passwordSecurityTab.deactivateSubTitle'
         )}

@@ -52,14 +52,7 @@ export const style = {
     mr: '16px'
   },
   buttons: {
-    mr: '15px',
-    color: 'basic.black',
-    display: 'flex',
-    alignItems: 'center',
-    '& > svg': {
-      fontSize: '20px',
-      mr: '5px'
-    }
+    mr: '15px'
   },
   languageContainer: {
     display: 'flex',

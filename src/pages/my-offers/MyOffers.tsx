@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import AppDrawer from '~/components/app-drawer/AppDrawer'
 import AppPagination from '~/components/app-pagination/AppPagination'
 import Loader from '~/components/loader/Loader'
@@ -112,9 +112,9 @@ const MyOffers = () => {
         <Typography sx={styles.title}>
           {t(`myOffersPage.title.${userRole}`)}
         </Typography>
-        <AppButton onClick={handleOpenDrawer}>
+        <Button onClick={handleOpenDrawer}>
           {t(`myOffersPage.buttonLabel.${userRole}`)}
-        </AppButton>
+        </Button>
         <AppDrawer onClose={closeDrawer} open={isOpen} sx={styles.drawer}>
           <CreateOffer closeDrawer={closeDrawer} />
         </AppDrawer>

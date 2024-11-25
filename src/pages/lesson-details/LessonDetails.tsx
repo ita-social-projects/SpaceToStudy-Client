@@ -14,7 +14,7 @@ import { defaultResponse } from '~/pages/lesson-details/LessonDetails.constants'
 import Accordions from '~/components/accordion/Accordions'
 import useAccordion from '~/hooks/use-accordions'
 import IconExtensionWithTitle from '~/components/icon-extension-with-title/IconExtensionWithTitle'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import { errorRoutes } from '~/router/constants/errorRoutes'
 import { authRoutes } from '~/router/constants/authRoutes'
 import { styles } from '~/pages/lesson-details/LessonsDetails.styles'
@@ -114,9 +114,13 @@ const LessonDetails = () => {
   return (
     <PageWrapper>
       {isEditable && (
-        <AppButton onClick={handleEditLesson} sx={styles.button}>
-          {t('common.edit')} <EditIcon sx={styles.editIcon} />
-        </AppButton>
+        <Button
+          endIcon={<EditIcon sx={styles.editIcon} />}
+          onClick={handleEditLesson}
+          sx={styles.button}
+        >
+          {t('common.edit')}
+        </Button>
       )}
       <Box sx={styles.lessonWrapper}>
         <TitleWithDescription

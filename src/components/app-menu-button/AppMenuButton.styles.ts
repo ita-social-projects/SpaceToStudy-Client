@@ -10,14 +10,8 @@ export const styles = {
     p: { xs: 0, sm: 0 }
   },
   clearAll: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'end',
-    columnGap: '3px',
     typography: TypographyVariantEnum.Subtitle2,
-    m: '15px 20px 0 auto',
-    p: 0,
-    '&:hover': { backgroundColor: 'transparent' }
+    m: '15px 20px 0 auto'
   },
   clearIcon: { height: '18px', width: '18px' },
   divider: {

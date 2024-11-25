@@ -11,7 +11,7 @@ import useSort from '~/hooks/table/use-sort'
 import useBreakpoints from '~/hooks/use-breakpoints'
 import useFilter from '~/hooks/table/use-filter'
 import Loader from '~/components/loader/Loader'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import AppPagination from '~/components/app-pagination/AppPagination'
 import PageWrapper from '~/components/page-wrapper/PageWrapper'
 import CooperationOfferToolbar from '~/containers/my-cooperations/cooperation-offer-toolbar/CooperationOfferToolbar'
@@ -100,7 +100,7 @@ const MyCooperations = () => {
     <PageWrapper>
       <Box sx={styles.titleBlock}>
         <Typography sx={styles.title}>{t('cooperationsPage.title')}</Typography>
-        <AppButton
+        <Button
           component={Link}
           to={
             userRole == UserRoleEnum.Tutor
@@ -109,7 +109,7 @@ const MyCooperations = () => {
           }
         >
           {t(`button.view.${userRole}`)}
-        </AppButton>
+        </Button>
       </Box>
       <TabFilterList
         activeTab={activeTab ?? ''}

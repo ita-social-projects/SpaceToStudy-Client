@@ -9,7 +9,7 @@ import AppDrawer from '~/components/app-drawer/AppDrawer'
 import CheckboxList from '~/components/checkbox-list/CheckboxList'
 import FilterInput from '~/components/filter-input/FilterInput'
 import AsyncAutocomplete from '~/components/async-autocomplete/AsyncAutocomplete'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 
 import { styles } from '~/containers/my-courses/courses-filters-drawer/CoursesFiltersDrawer.styles'
 
@@ -18,14 +18,12 @@ import { categoryService } from '~/services/category-service'
 import { subjectService } from '~/services/subject-service'
 
 import {
-  ButtonVariantEnum,
   CategoryNameInterface,
   ComponentEnum,
   CourseFilters,
   FiltersActions,
   PositionEnum,
   ProficiencyLevelEnum,
-  SizeEnum,
   SubjectNameInterface
 } from '~/types'
 
@@ -165,21 +163,17 @@ const CoursesFiltersDrawer: FC<CoursesFiltersDrawerProps> = ({
         value={filters.title}
       />
 
-      <AppButton
+      <Button
         onClick={resetFilters}
-        size={SizeEnum.ExtraLarge}
+        size='lg'
         sx={styles.clearButtonMb}
-        variant={ButtonVariantEnum.Tonal}
+        variant='tonal'
       >
         {t('button.clearFilters')}
-      </AppButton>
-      <AppButton
-        onClick={handleApplyFilters}
-        size={SizeEnum.ExtraLarge}
-        variant={ButtonVariantEnum.Contained}
-      >
+      </Button>
+      <Button onClick={handleApplyFilters} size='lg'>
         {t('button.applyFilters')}
-      </AppButton>
+      </Button>
     </AppDrawer>
   )
 }

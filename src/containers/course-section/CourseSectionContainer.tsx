@@ -8,7 +8,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 
 import HeaderTextWithDropdown from '~/components/header-text-with-dropdown/HeaderTextWithDropdown'
 import AppTextField from '~/components/app-text-field/AppTextField'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import ResourcesList from '~/containers/course-section/resources-list/ResourcesList'
 import AddResources from '~/containers/add-resources/AddResources'
 import EditAttachmentModal from '~/containers/my-resources/edit-attachment-modal/EditAttachmentModal'
@@ -34,7 +34,6 @@ import { styles } from '~/containers/course-section/CourseSectionContainer.style
 import {
   TextFieldVariantEnum,
   SizeEnum,
-  ButtonVariantEnum,
   CourseSection,
   Lesson,
   Quiz,
@@ -403,18 +402,17 @@ const CourseSectionContainer: React.FC<SectionProps> = ({
             sortResources={handleResourcesSort}
             updateAvailability={handleResourceAvailabilityChange}
           />
-          <AppButton
+          <Button
             endIcon={<KeyboardArrowDownIcon fontSize={SizeEnum.Small} />}
             onClick={(event) => {
               setActiveMenu(menuTypes.resourcesMenu)
               openMenu(event)
             }}
-            size={SizeEnum.Large}
+            size='lg'
             startIcon={<AddIcon fontSize={SizeEnum.Small} />}
-            variant={ButtonVariantEnum.Contained}
           >
             {t('course.courseSection.addResourceBtn')}
-          </AppButton>
+          </Button>
           {activeMenu === menuTypes.resourcesMenu &&
             renderMenu(resourcesMenuItems)}
         </Box>

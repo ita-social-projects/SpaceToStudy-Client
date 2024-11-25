@@ -24,10 +24,5 @@ export const styles = {
   },
   inputLabel: {
     color: palette.primary[300]
-  },
-  searchBtn: {
-    minWidth: { xs: '44px' },
-    p: { xs: '7px 12px', sm: '12px 24px' },
-    ml: { xs: '5px', sm: '25px' }
   }
 }

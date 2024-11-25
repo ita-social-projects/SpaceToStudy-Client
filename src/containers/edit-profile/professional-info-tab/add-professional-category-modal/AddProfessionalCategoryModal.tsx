@@ -7,7 +7,6 @@ import DeleteIcon from '@mui/icons-material/Delete'
 
 import {
   ButtonTypeEnum,
-  ButtonVariantEnum,
   CategoryNameInterface,
   ComponentEnum,
   MainUserRole,
@@ -23,7 +22,7 @@ import useForm from '~/hooks/use-form'
 import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
 
 import { IconButton } from '~/design-system/components/icon-button/IconButton'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
 import AsyncAutocomplete from '~/components/async-autocomplete/AsyncAutocomplete'
 import {
@@ -266,32 +265,27 @@ const AddProfessionalCategoryModal: FC<AddProfessionalCategoryModalProps> = ({
         />
         {SubjectsGroup}
         <Box sx={styles.addOneMoreSubjectButton}>
-          <AppButton
-            onClick={handleSubjectAdd}
-            startIcon={<AddIcon />}
-            variant={ButtonVariantEnum.ContainedLight}
-          >
+          <Button onClick={handleSubjectAdd} startIcon={<AddIcon />}>
             {t(
               'editProfilePage.profile.professionalTab.addCategoryModal.addSubjectBtn'
             )}
-          </AppButton>
+          </Button>
         </Box>
       </Box>
       <Box sx={styles.buttonGroup}>
-        <AppButton
+        <Button
           disabled={!isSubmitDisabled(data.subjects)}
           type={ButtonTypeEnum.Submit}
-          variant={ButtonVariantEnum.Contained}
         >
           {t(
             'editProfilePage.profile.professionalTab.addCategoryModal.submitBtn'
           )}
-        </AppButton>
-        <AppButton onClick={closeModal} variant={ButtonVariantEnum.Tonal}>
+        </Button>
+        <Button onClick={closeModal} variant='tonal'>
           {t(
             'editProfilePage.profile.professionalTab.addCategoryModal.discardBtn'
           )}
-        </AppButton>
+        </Button>
       </Box>
     </Box>
   )

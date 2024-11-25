@@ -12,7 +12,7 @@ import { userService } from '~/services/user-service'
 import useAxios from '~/hooks/use-axios'
 import useSort from '~/hooks/table/use-sort'
 import Loader from '~/components/loader/Loader'
-import AppButton from '~/components/app-button/AppButton'
+import Button from '~scss-components/button/Button'
 import NotFoundResults from '~/components/not-found-results/NotFoundResults'
 import InputField from '~scss-components/input-field/InputField'
 import TitleWithDescription from '~/components/title-with-description/TitleWithDescription'
@@ -27,7 +27,6 @@ import { authRoutes } from '~/router/constants/authRoutes'
 import { initialSort } from '~/containers/find-course/courses-filter-bar/CorseFilterBar.constants'
 import { styles } from '~/containers/cooperation-details/add-course-modal-modal/AddCourseTemplateModal.styles'
 import {
-  ButtonVariantEnum,
   ItemsWithCount,
   Course,
   SortEnum,
@@ -219,12 +218,12 @@ const AddCourseTemplateModal: FC<AddCourseTemplateModalProps> = ({
       </SimpleBar>
 
       <Box sx={styles.buttonsArea}>
-        <AppButton onClick={onCancel} variant={ButtonVariantEnum.Tonal}>
+        <Button onClick={onCancel} variant='tonal'>
           {t('common.cancel')}
-        </AppButton>
-        <AppButton disabled={!selectedItem} onClick={onAdd}>
+        </Button>
+        <Button disabled={!selectedItem} onClick={onAdd}>
           {t('common.add')}
-        </AppButton>
+        </Button>
       </Box>
     </Box>
   )
