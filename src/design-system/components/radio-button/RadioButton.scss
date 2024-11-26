@@ -1,4 +1,5 @@
-@use '~/scss/variables.scss' as *;
+/*@use '~/scss/variables.scss' as *;*/
+@use '~scss/utilities' as *;
 
 .radio-btn-loader {
   position: absolute;

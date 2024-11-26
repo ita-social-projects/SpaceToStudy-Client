@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
-import RadioButton from '~/components/radio-button/RadioButton';
+/*import RadioButton from '~/design-system/components/radio-button/RadioButton';*/
+import RadioButton from '~scss-components/radio-button/RadioButton'
 
 describe('RadioButton Component', () => {
 
