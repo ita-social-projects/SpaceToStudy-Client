@@ -50,8 +50,9 @@ const CooperationContainer: FC<CooperationContainerProps> = ({
             />
           )
         })
-      : item.status === StatusEnum.Active &&
-        navigate(`./${item._id}?tab=activities`)
+      : (item.status === StatusEnum.Active ||
+          item.status === StatusEnum.RequestToClose) &&
+        navigate(`./${item._id}`)
   }
 
   const cooperationGrid = (

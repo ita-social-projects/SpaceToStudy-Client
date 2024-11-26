@@ -47,13 +47,13 @@
     "or": "or ",
     "quizzes": "quizzes ",
     "resourcesLibrary": "from resource library.",
-    "seems": "Looks like there’re", 
+    "seems": "Looks like there’re",
     "noActivities": " no activities added ",
     "engageTutor": "yet. As a student, you're here to engage with the materials provided by your tutor."
   },
   "button": {
     "create": "Create Activity",
-    "add":"Add Activity"
+    "add": "Add Activity"
   },
   "manyTypes": {
     "courseTemplate": "Course template",
@@ -66,7 +66,7 @@
     "closeCooperationDescription": "Start a closing process of current cooperation if your learning journey with the student is finished.",
     "closeCooperationBtn": "Close cooperation",
     "accessTitle": "Study materials access",
-    "accessDescription": "As a tutor, determine deadlines for student access to study materials after cooperation has finished.", 
+    "accessDescription": "As a tutor, determine deadlines for student access to study materials after cooperation has finished.",
     "noAccess": "No access",
     "monthAccess": "month access",
     "yearAccess": "year access",
@@ -83,5 +83,8 @@
     "successUpdating": "Note was successfully updated",
     "confirmDeletionMessage": "This action is permanent and will remove all related content. Please review your decision before proceeding.",
     "confirmDeletionTitle": "Do you confirm note deletion?"
+  },
+  "closeCooperationModal": {
+    "message": "Are you sure you want to close this cooperation?"
   }
 }

@@ -15,13 +15,17 @@ import SubjectLevelChips from '~/components/subject-level-chips/SubjectLevelChip
 import AppButton from '~/components/app-button/AppButton'
 import ShowMoreCollapse from '~/components/show-more-collapse/ShowMoreCollapse'
 import Loader from '~/components/loader/Loader'
+import useConfirm from '~/hooks/use-confirm'
 
 import {
   ButtonVariantEnum,
+  ErrorResponse,
   MyCooperationDetails,
   Offer,
   ServiceFunction,
   SizeEnum,
+  StatusEnum,
+  UpdateCooperationStatusParams,
   UserRoleEnum
 } from '~/types'
 import { style } from '~/containers/my-cooperations/my-cooperations-details/MyCooperationsDetails.styles'
@@ -31,7 +35,12 @@ import { useChatContext } from '~/context/chat-context'
 import CooperationCompletion from '../cooperation-completion/CooperationCompletion'
 import { getCategoryIcon } from '~/services/category-icon-service'
 import { getValidatedHexColor } from '~/utils/get-validated-hex-color'
-import { useAppSelector } from '~/hooks/use-redux'
+import { useAppDispatch, useAppSelector } from '~/hooks/use-redux'
+import { AxiosResponse } from 'axios'
+import { openAlert } from '~/redux/features/snackbarSlice'
+import { snackbarVariants } from '~/constants'
+import { getErrorKey } from '~/utils/get-error-key'
+import { setCooperationStatus } from '~/redux/features/cooperationsSlice'
 
 const MyCooperationsDetails = () => {
   const { t } = useTranslation()
@@ -40,6 +49,8 @@ const MyCooperationsDetails = () => {
   const { setChatInfo } = useChatContext()
   const userId = useAppSelector((state) => state.appMain.userId)
   const userRole = useAppSelector((state) => state.appMain.userRole)
+  const { checkConfirmation } = useConfirm()
+  const dispatch = useAppDispatch()
 
   const getDetails: ServiceFunction<
     MyCooperationDetails<Offer> | null,
@@ -53,6 +64,35 @@ const MyCooperationsDetails = () => {
   } = useAxios<MyCooperationDetails<Offer> | null>({
     service: getDetails,
     defaultResponse: null
+  })
+
+  const handleCooperationStatusChange = (
+    params: UpdateCooperationStatusParams
+  ): Promise<AxiosResponse> =>
+    cooperationService.updateCooperation({
+      _id: id,
+      ...params
+    })
+
+  const onResponse = () => {
+    void fetchStatusData()
+  }
+
+  const onResponseError = (error?: ErrorResponse) => {
+    dispatch(
+      openAlert({
+        severity: snackbarVariants.error,
+        message: getErrorKey(error)
+      })
+    )
+  }
+
+  const { fetchData: fetchStatusData } = useAxios({
+    service: handleCooperationStatusChange,
+    fetchOnMount: false,
+    defaultResponse: null,
+    onResponse,
+    onResponseError
   })
 
   const updateInfo = useCallback(() => {
@@ -105,11 +145,21 @@ const MyCooperationsDetails = () => {
     displayedUser.photo &&
     createUrlPath(import.meta.env.VITE_APP_IMG_USER_URL, displayedUser.photo)
 
-  // const cooperationCompletion = userRole === UserRoleEnum.Tutor && (
-  //   <CooperationCompletion />
-  // )
+  const handleCooperationStatusUpdate = async () => {
+    const confirmed = await checkConfirmation({
+      title: 'titles.confirmCooperationClosing',
+      message: t('cooperationsPage.closeCooperationModal.message'),
+      check: true
+    })
+    if (confirmed) {
+      await fetchStatusData({ status: StatusEnum.RequestToClose })
+      dispatch(setCooperationStatus(StatusEnum.RequestToClose))
+    }
+  }
 
-  const cooperationCompletion = <CooperationCompletion userRole={userRole} />
+  const onCooperationStatusUpdate = () => {
+    void handleCooperationStatusUpdate()
+  }
 
   return (
     <Box>
@@ -196,7 +246,10 @@ const MyCooperationsDetails = () => {
         </Typography>
         <Typography>{`${price} UAH/hour`}</Typography>
       </Box>
-      {cooperationCompletion}
+      <CooperationCompletion
+        onCloseCooperation={onCooperationStatusUpdate}
+        userRole={userRole}
+      />
     </Box>
   )
 }

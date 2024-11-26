@@ -18,10 +18,12 @@ import {
 } from '~/types'
 
 interface CooperationCompletionProps {
+  onCloseCooperation: () => void
   userRole: UserRoleEnum | ''
 }
 
 const CooperationCompletion: React.FC<CooperationCompletionProps> = ({
+  onCloseCooperation,
   userRole
 }) => {
   const { t } = useTranslation()
@@ -44,6 +46,7 @@ const CooperationCompletion: React.FC<CooperationCompletionProps> = ({
         title={t('cooperationsPage.cooperationDetails.closeCooperationTitle')}
       >
         <AppButton
+          onClick={onCloseCooperation}
           size={SizeEnum.Medium}
           sx={styles.closeBtn}
           variant={ButtonVariantEnum.Text}

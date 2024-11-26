@@ -16,6 +16,7 @@ export interface Cooperation extends CommonEntityFields {
   user: Pick<UserResponse, 'firstName' | 'lastName' | 'photo' | '_id'> & {
     role: UserRoleEnum
   }
+  initiator: Pick<UserResponse, 'firstName' | 'lastName'>
   title: Offer['title']
   price: Offer['price']
   proficiencyLevel: ProficiencyLevelEnum

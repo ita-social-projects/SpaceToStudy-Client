@@ -93,7 +93,8 @@ export enum StatusEnum {
   Active = 'active',
   Closed = 'closed',
   Draft = 'draft',
-  NeedAction = 'need action'
+  NeedAction = 'need action',
+  RequestToClose = 'request to close'
 }
 export enum PositionEnum {
   Left = 'left',

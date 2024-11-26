@@ -18,5 +18,14 @@ export const styles = {
   dropdown: {
     maxWidth: '216px',
     ml: '15px'
+  },
+  closeCooperationModal: {
+    text: {
+      padding: '30px'
+    },
+    button: {
+      display: 'flex',
+      justifyContent: 'center'
+    }
   }
 }
