@@ -61,13 +61,15 @@ const CooperationDetails = () => {
 
   const isTabInSearchParams = Object.values(CooperationTabsEnum).includes(tab)
 
-  const activeTab = isTabInSearchParams ? tab : CooperationTabsEnum.Activities
+  const defaultTab = CooperationTabsEnum.Activities
+
+  const activeTab = isTabInSearchParams ? tab : defaultTab
 
   useEffect(() => {
     if (!isTabInSearchParams) {
-      setSearchParams({ tab: CooperationTabsEnum.Activities })
+      setSearchParams({ tab: defaultTab })
     }
-  }, [isTabInSearchParams, setSearchParams])
+  }, [defaultTab, isTabInSearchParams, setSearchParams])
 
   const responseError = useCallback(
     () => navigate(errorRoutes.notFound.path),
