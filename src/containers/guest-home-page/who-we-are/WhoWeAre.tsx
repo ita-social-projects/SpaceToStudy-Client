@@ -9,6 +9,10 @@ import videoImgLandingPage from '~/assets/img/guest-home-page/videoImg.png'
 
 import { styles } from '~/containers/guest-home-page/who-we-are/WhoWeAre.styles.js'
 
+// remove later
+
+import DividerComponent from '~/design-system/components/divider/Divider'
+
 const WhoWeAre = () => {
   const { t } = useTranslation()
   const landingPageVideo = true
@@ -28,6 +32,7 @@ const WhoWeAre = () => {
         videoMock={videoImgLandingPage}
         videoPreview={landingPageVideo}
       />
+      <DividerComponent caption={'test'} variant={'ellipse'} />
     </Box>
   )
 }

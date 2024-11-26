@@ -1,0 +1,5 @@
+@use '~scss/utilities' as *;
+
+.#{prefix}-divider {
+  display: flex;
+}
