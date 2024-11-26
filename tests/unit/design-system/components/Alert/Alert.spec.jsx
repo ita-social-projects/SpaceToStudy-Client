@@ -31,7 +31,7 @@ describe('Alert Component', () => {
     const handleClose = vi.fn()
     render(<Alert onClose={handleClose} />)
 
-    const closeButton = screen.getByRole('button', { name: /.*close.*/i })
+    const closeButton = screen.getByRole('button', { name: 'Close alert' })
     expect(closeButton).toBeInTheDocument()
   })
 
