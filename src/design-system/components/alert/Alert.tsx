@@ -1,4 +1,4 @@
-import { Ref, SyntheticEvent, forwardRef } from 'react'
+import { Ref, SyntheticEvent, forwardRef, ButtonHTMLAttributes } from 'react'
 import {
   Alert as MuiAlert,
   AlertProps as MuiAlertProps,
@@ -22,6 +22,19 @@ export const AlertTitle = ({ children, ...props }: AlertTitleProps) => {
 }
 
 AlertTitle.displayName = 'AlertTitle'
+
+interface CloseButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  label?: string
+}
+
+const CloseButton = ({ label }: CloseButtonProps) => {
+  return (
+    <button aria-label='Close alert' className='s2s-alert-close-button'>
+      {label && <span className='s2s-alert-close-button-label'>{label}</span>}
+      <CloseRounded />
+    </button>
+  )
+}
 
 interface AlertProps extends MuiAlertProps {
   title?: string
@@ -51,13 +64,6 @@ const Alert = forwardRef(
       }
     }
 
-    const CloseButton = (
-      <button aria-label='Close alert' className='s2s-alert-close-button'>
-        {label && <span className='s2s-alert-close-button-label'>{label}</span>}
-        <CloseRounded />
-      </button>
-    )
-
     return (
       <MuiAlert
         className={cn('s2s-alert', className)}
@@ -71,7 +77,7 @@ const Alert = forwardRef(
         onClose={handleClose}
         ref={forwardedRef}
         slots={{
-          closeButton: () => CloseButton
+          closeButton: () => <CloseButton label={label} />
         }}
         {...props}
       >
