@@ -12,6 +12,7 @@ import {
   MainUserRole,
   NotificationSettings,
   ProfessionalBlock,
+  AboutStudentData,
   SubjectNameInterface,
   UpdatedPhoto,
   UpdateUserParams,
@@ -34,6 +35,7 @@ export interface EditProfileState {
   photo?: UpdatedPhoto | null
   categories: DataByRole<UserMainSubject[]>
   professionalBlock: ProfessionalBlock
+  aboutStudent: AboutStudentData
   notificationSettings: NotificationSettings
   loading: LoadingStatus
   error: string | null
@@ -50,6 +52,11 @@ export const initialProfessoinalBlock: ProfessionalBlock = {
   workExperience: '',
   scientificActivities: '',
   awards: ''
+}
+export const initialAboutStudent: AboutStudentData = {
+  personalIntroduction: '',
+  learningGoals: '',
+  learningActivities: ''
 }
 export const intitialNotificationSettings: NotificationSettings = {
   isOfferStatusNotification: false,
@@ -69,6 +76,7 @@ const initialState: EditProfileState = {
   photo: null,
   categories: { [UserRoleEnum.Tutor]: [], [UserRoleEnum.Student]: [] },
   professionalBlock: initialProfessoinalBlock,
+  aboutStudent: initialAboutStudent,
   notificationSettings: intitialNotificationSettings,
   loading: LoadingStatusEnum.Idle,
   error: null,
@@ -94,6 +102,7 @@ const updateStateFromPayload = (
     videoLink,
     mainSubjects,
     professionalBlock,
+    aboutStudent,
     notificationSettings,
     bookmarkedOffers
   } = payload
@@ -108,6 +117,7 @@ const updateStateFromPayload = (
   state.videoLink = videoLink
   state.categories = mainSubjects
   state.professionalBlock = professionalBlock || initialProfessoinalBlock
+  state.aboutStudent = aboutStudent || initialAboutStudent
   state.notificationSettings =
     notificationSettings || intitialNotificationSettings
   state.bookmarkedOffers = bookmarkedOffers

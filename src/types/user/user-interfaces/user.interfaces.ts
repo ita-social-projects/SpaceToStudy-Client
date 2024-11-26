@@ -48,6 +48,7 @@ export interface UserResponse {
   FAQ: DataByRole<Faq[]>
   videoLink: DataByRole<string>
   professionalBlock?: ProfessionalBlock
+  aboutStudent?: AboutStudentData
   status: DataByRole<UserStatusEnum>
   notificationSettings: NotificationSettings
   bookmarkedOffers: string[]
