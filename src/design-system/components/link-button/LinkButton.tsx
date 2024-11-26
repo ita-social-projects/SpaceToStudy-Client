@@ -32,7 +32,7 @@ const LinkButton: FC<LinkButtonProps> = ({
       }
       to={disabled ? '#' : to}
     >
-      {loading ? <div className='s2s-link-button__loader'>{loader}</div> : ''}
+      {loading && <div className='s2s-link-button__loader'>{loader}</div>}
       <div className='s2s-link-button__content'>{children}</div>
     </Link>
   )
