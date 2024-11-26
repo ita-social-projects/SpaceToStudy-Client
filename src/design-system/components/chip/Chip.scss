@@ -1,0 +1,119 @@
+@use '~/scss/utilities' as *;
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--#{$prefix}space-0-5) var(--#{$prefix}space-1);
+  border: none;
+  border-radius: var(--#{$prefix}border-radius-md);
+  font-family: var(--#{$prefix}font-family-rubik);
+  cursor: pointer;
+  border-width: var(--#{$prefix}border-width-md);
+
+  &--sm {
+    font-size: var(--#{$prefix}font-size-sm);
+    line-height: var(--#{$prefix}line-height-sm);
+  }
+
+  &--md {
+    font-size: var(--#{$prefix}font-size-md);
+    line-height: var(--#{$prefix}line-height-md);
+  }
+
+  &--lg {
+    font-size: var(--#{$prefix}font-size-lg);
+    line-height: var(--#{$prefix}line-height-lg);
+  }
+
+  &.disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  &--filter,
+  &--input {
+    &.filled {
+      background-color: var(--#{$prefix}blue-gray-50);
+      color: var(--#{$prefix}blue-gray-800);
+
+      &:hover {
+        box-shadow: var(--#{$prefix}box-shadow-xs);
+      }
+
+      &:focus {
+        background-color: var(--#{$prefix}blue-gray-100);
+      }
+
+      &.disabled {
+        opacity: 1;
+        color: var(--#{$prefix}blue-gray-500);
+      }
+    }
+
+    &.outlined,
+    &.filled-outlined {
+      background-color: var(--#{$prefix}neutral-0);
+      color: var(--#{$prefix}blue-gray-800);
+      border: solid var(--#{$prefix}border-width-md)
+        var(--#{$prefix}blue-gray-400);
+
+      &.disabled {
+        opacity: 1;
+        color: var(--#{$prefix}blue-gray-500);
+        border-color: var(--#{$prefix}blue-gray-200);
+      }
+    }
+
+    &.filled-outlined {
+      background-color: var(--#{$prefix}blue-gray-50);
+    }
+  }
+
+  &--input {
+    font-weight: var(--#{$prefix}font-weight-medium);
+  }
+
+  &--categories {
+    display: inline-flex;
+    gap: var(--#{$prefix}space-0-5);
+  }
+
+  &--category {
+    color: var(--chip-text-color);
+    background-color: var(--chip-bg-color);
+    font-weight: var(--#{$prefix}font-weight-regular);
+    letter-spacing: var(--#{$prefix}$letter-spacing-xl);
+    text-transform: uppercase;
+  }
+
+  &--state {
+    background-color: var(--chip-bg-color);
+    border-style: solid;
+    border-color: var(--chip-border-color);
+    color: var(--chip-text-color);
+    font-weight: var(--#{$prefix}font-weight-regular);
+    letter-spacing: var(--#{$prefix}letter-spacing-xl);
+    text-transform: uppercase;
+  }
+
+  .startIcon,
+  .endIcon {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    font-size: inherit;
+  }
+
+  .startIcon {
+    margin-right: var(--#{$prefix}space-1);
+  }
+
+  .endIcon {
+    margin-left: var(--#{$prefix}space-1);
+  }
+
+  .label {
+    padding: var(--#{$prefix}space-0-5);
+  }
+}
