@@ -13,22 +13,25 @@ export const styles = {
   },
   subtitle: {
     typography: TypographyVariantEnum.Body1,
-    mb: '15px'
+    mb: '24px'
   },
-  form: { display: 'flex', flexDirection: 'column', gap: '8px' },
+  form: { display: 'flex', flexDirection: 'column', gap: '24px' },
 
   passwordButtonsContainer: {
     display: 'flex',
     justifyContent: 'flex-end',
     alignItems: 'flex-end',
-    gap: '10px'
+    gap: '10px',
+    marginTop: '24px'
   },
 
   saveButton: {
-    gridColumn: { sm: 'span 3', md: 'span 3', lg: 'span 3' }
+    gridColumn: { sm: 'span 3', md: 'span 3', lg: 'span 3' },
+    width: '193px'
   },
   discardButton: {
-    gridColumn: { sm: 'span 1', md: 'span 2', lg: 'span 2' }
+    gridColumn: { sm: 'span 1', md: 'span 2', lg: 'span 2' },
+    width: '101px'
   },
   modalContainer: {
     display: 'flex',

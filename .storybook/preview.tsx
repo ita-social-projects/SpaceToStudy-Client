@@ -7,7 +7,7 @@ import { I18nextProvider } from 'react-i18next'
 import type { Preview } from '@storybook/react'
 
 import '../src/styles/index.css'
-import '../src/scss/styles.scss'
+import '~scss/styles.scss'
 
 const preview: Preview = {
   parameters: {

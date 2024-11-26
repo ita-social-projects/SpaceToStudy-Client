@@ -1,5 +1,4 @@
-import { FC } from 'react'
-
+import { FC, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import {
@@ -16,6 +15,7 @@ import Accordions from '~/components/accordion/Accordions'
 import AppTextArea from '~/components/app-text-area/AppTextArea'
 
 import { styles } from '~/containers/edit-profile/professional-info-tab/about-tutor-accordion/AboutTutorAccordion.styles'
+import { aboutTutorKeys } from '~/containers/user-profile/about-user-block/about-user-block.constants'
 
 interface AboutTutorAccordionProps {
   data: ProfessionalBlock
@@ -35,65 +35,24 @@ const AboutTutorAccordion: FC<AboutTutorAccordionProps> = ({
     toggle: true
   })
 
-  const accordionItems: AccordionItem[] = [
-    {
-      title: 'editProfilePage.profile.professionalTab.accordion.education',
-      content: (
-        <AppTextArea
-          fullWidth
-          label={t(
-            'editProfilePage.profile.professionalTab.accordion.textareaLabel'
-          )}
-          maxLength={1000}
-          onChange={handleInputChange('education')}
-          value={data.education}
-        />
-      )
-    },
-    {
-      title: 'editProfilePage.profile.professionalTab.accordion.workExperience',
-      content: (
-        <AppTextArea
-          fullWidth
-          label={t(
-            'editProfilePage.profile.professionalTab.accordion.textareaLabel'
-          )}
-          maxLength={1000}
-          onChange={handleInputChange('workExperience')}
-          value={data.workExperience}
-        />
-      )
-    },
-    {
-      title:
-        'editProfilePage.profile.professionalTab.accordion.scientificActivities',
-      content: (
-        <AppTextArea
-          fullWidth
-          label={t(
-            'editProfilePage.profile.professionalTab.accordion.textareaLabel'
-          )}
-          maxLength={1000}
-          onChange={handleInputChange('scientificActivities')}
-          value={data.scientificActivities}
-        />
-      )
-    },
-    {
-      title: 'editProfilePage.profile.professionalTab.accordion.awards',
-      content: (
-        <AppTextArea
-          fullWidth
-          label={t(
-            'editProfilePage.profile.professionalTab.accordion.textareaLabel'
-          )}
-          maxLength={1000}
-          onChange={handleInputChange('awards')}
-          value={data.awards}
-        />
-      )
-    }
-  ]
+  const accordionItems: AccordionItem[] = useMemo(() => {
+    return aboutTutorKeys.map((item) => {
+      return {
+        title: `editProfilePage.profile.professionalTab.accordionTutor.${item}`,
+        content: (
+          <AppTextArea
+            fullWidth
+            label={t(
+              'editProfilePage.profile.professionalTab.accordionTutor.textareaLabel'
+            )}
+            maxLength={1000}
+            onChange={handleInputChange(item)}
+            value={data[item]}
+          />
+        )
+      }
+    })
+  }, [t, handleInputChange, data])
 
   return (
     <Accordions

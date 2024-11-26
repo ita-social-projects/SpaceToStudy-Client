@@ -35,7 +35,8 @@ export const styles: AccordionSx = {
     description: {
       fontSize: { md: '14px', sm: '8px' },
       lineHeight: { md: '24px', sm: '12px' },
-      color: 'basic.white'
+      color: 'basic.white',
+      wordWrap: 'break-word'
     },
     active: {
       backgroundColor: 'primary.800',
@@ -66,7 +67,8 @@ export const styles: AccordionSx = {
       pb: '24px',
       color: 'primary.900',
       typography: 'body2',
-      fontWeight: 400
+      fontWeight: 400,
+      wordWrap: 'break-word'
     },
     active: {
       boxShadow: commonShadow,

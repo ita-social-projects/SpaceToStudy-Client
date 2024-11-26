@@ -37,7 +37,8 @@ export const styles = {
       }
     },
     '& .MuiAccordionDetails-root': {
-      p: { md: '0 24px 24px', xs: '0 12px 12px' }
+      p: { md: '0 24px 24px', xs: '0 12px 12px' },
+      wordWrap: 'break-word'
     },
     '& .MuiAccordion-root': {
       transition: 'background-color 0.2s ease-in-out'

@@ -10,11 +10,13 @@ import AppTextField from '~/components/app-text-field/AppTextField'
 import AppChipList from '~/components/app-chips-list/AppChipList'
 import AppTextArea from '~/components/app-text-area/AppTextArea'
 import OrderedListItem from '~/components/ordered-list-item/OrderedListItem'
+import StudyMaterials from '~/containers/my-cooperations/cooperation-completion/StudyMaterials'
 
 import {
   CreateOfferBlockProps,
   LanguagesEnum,
-  CreateOrUpdateOfferData
+  CreateOrUpdateOfferData,
+  UserRoleEnum
 } from '~/types'
 import { styles } from '~/containers/offer-page/OfferPage.styles'
 
@@ -50,6 +52,8 @@ const TeachingBlock = <T extends CreateOrUpdateOfferData>({
       handleInputChange('price')(e)
     }
   }
+
+  const studyMaterials = userRole === UserRoleEnum.Student && <StudyMaterials />
 
   return (
     <OrderedListItem
@@ -133,6 +137,7 @@ const TeachingBlock = <T extends CreateOrUpdateOfferData>({
             required
             value={data.price}
           />
+          {studyMaterials}
         </Box>
       </Box>
     </OrderedListItem>

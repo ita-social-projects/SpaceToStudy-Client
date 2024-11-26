@@ -60,7 +60,8 @@ export enum ButtonVariantEnum {
 }
 
 export enum ButtonTypeEnum {
-  Submit = 'submit'
+  Submit = 'submit',
+  Button = 'button'
 }
 
 export enum VisibilityEnum {

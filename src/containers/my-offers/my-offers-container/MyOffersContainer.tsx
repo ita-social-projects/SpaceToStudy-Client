@@ -61,7 +61,7 @@ const MyOffersContainer: FC<MyOffersContainerProps> = ({
 
   const createButtonActions = (id: string) => [
     {
-      label: t('myOffersPage.editButton'),
+      label: t(`myOffersPage.editButton.${userRole}`),
       buttonProps: {
         variant: ButtonVariantEnum.Tonal,
         onClick: () => handleOpenDrawer(id)

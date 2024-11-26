@@ -128,7 +128,7 @@ describe('ProfessionalInfoTab for tutor', () => {
 
   it('should render about tutor block', () => {
     const aboutTutorTitle = screen.getByText(
-      'editProfilePage.profile.professionalTab.aboutTheTutorTitle'
+      'editProfilePage.profile.professionalTab.tutorAboutTitle'
     )
 
     expect(aboutTutorTitle).toBeInTheDocument()
