@@ -52,7 +52,7 @@ const Alert = forwardRef(
     }
 
     const CloseButton = (
-      <button className='s2s-alert-close-button'>
+      <button aria-label='Close alert' className='s2s-alert-close-button'>
         {label && <span className='s2s-alert-close-button-label'>{label}</span>}
         <CloseRounded />
       </button>
