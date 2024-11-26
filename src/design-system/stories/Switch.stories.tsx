@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react/*'
-import { AppSwitch } from '~/components/app-switch/AppSwitch'
+import { AppSwitch } from '~/design-system/components/switch/Switch'
 import { SizeEnum } from '~/types'
 
 const meta: Meta<typeof AppSwitch> = {

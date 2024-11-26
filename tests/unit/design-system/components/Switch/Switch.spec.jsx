@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import { fireEvent } from '@testing-library/react'
-import {AppSwitch} from '~/components/app-switch/AppSwitch'
+import {AppSwitch} from '~/design-system/components/Switch/Switch'
 import {SizeEnum} from '~/types'
 
 describe('AppSwitch Component', () => {
