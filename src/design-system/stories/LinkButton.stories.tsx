@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import LinkButton from '~/components/link-button/LinkButton'
+import LinkButton from '~scss-components/link-button/LinkButton'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { LinkButtonVariantEnum, SizeEnum } from '~/types'
 

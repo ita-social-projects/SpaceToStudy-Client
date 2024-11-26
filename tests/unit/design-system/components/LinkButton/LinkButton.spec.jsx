@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import { BrowserRouter as Router } from 'react-router-dom'
-import LinkButton from '~/components/link-button/LinkButton'
+import LinkButton from '~scss-components/link-button/LinkButton'
 import {
   LinkButtonVariantEnum,
   SizeEnum

@@ -2,7 +2,7 @@ import { FC, ReactNode } from 'react'
 import Loader from '~/components/loader/Loader'
 import { LinkButtonVariantEnum, SizeEnum } from '~/types'
 import { Link } from 'react-router-dom'
-import './LinkButton.scss'
+import '~scss-components/link-button/LinkButton.scss'
 
 interface LinkButtonProps {
   children: ReactNode
