@@ -1,0 +1,63 @@
+@use '~scss/utilities' as *;
+
+.#{$prefix}user-avatar {
+  --#{$prefix}avatar-size-sm: #{get-var('line-height-3xl')};
+  --#{$prefix}avatar-size-md: #{get-var('line-height-5xl')};
+  --#{$prefix}avatar-size-lg: #{get-var('line-height-6xl')};
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  .#{$prefix}avatar {
+    font-family: get-var('font-family-rubik');
+    font-weight: get-var('font-weight-semibold');
+    background-color: get-var('blue-gray-200');
+    color: get-var('blue-gray-800');
+
+    &-sm {
+      width: var(--#{$prefix}avatar-size-sm);
+      height: var(--#{$prefix}avatar-size-sm);
+      font-size: get-var('font-size-md');
+    }
+
+    &-md {
+      width: var(--#{$prefix}avatar-size-md);
+      height: var(--#{$prefix}avatar-size-md);
+      font-size: get-var('font-size-md');
+    }
+
+    &-lg {
+      width: var(--#{$prefix}avatar-size-lg);
+      height: var(--#{$prefix}avatar-size-lg);
+      font-size: get-var('font-size-lg');
+    }
+  }
+
+  .#{$prefix}user-avatar-status {
+    position: absolute;
+    border-radius: 50%;
+    background-color: get-var('green-500');
+    right: 0;
+    bottom: 0;
+
+    &-sm {
+      border: get-var('border-width-md') solid get-var('neutral-0');
+      width: calc(var(--#{$prefix}avatar-size-sm) * 0.2);
+      height: calc(var(--#{$prefix}avatar-size-sm) * 0.2);
+    }
+
+    &-md {
+      border: get-var('border-width-lg') solid get-var('neutral-0');
+      width: calc(var(--#{$prefix}avatar-size-md) * 0.2);
+      height: calc(var(--#{$prefix}avatar-size-md) * 0.2);
+    }
+
+    &-lg {
+      border: get-var('border-width-lg') solid get-var('neutral-0');
+      width: calc(var(--#{$prefix}avatar-size-lg) * 0.2);
+      height: calc(var(--#{$prefix}avatar-size-lg) * 0.2);
+    }
+  }
+}
