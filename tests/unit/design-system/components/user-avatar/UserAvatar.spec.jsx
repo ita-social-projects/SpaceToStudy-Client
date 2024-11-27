@@ -51,4 +51,22 @@ describe('UserAvatar Component', () => {
     expect(onlineStatus).not.toBeInTheDocument();
   });
 
+  it('should trigger onClick callback when clicked', () => {
+    const handleClick = vi.fn();
+    
+    render(
+      <UserAvatar
+        variant="avatar"
+        firstName={firstName}
+        lastName={lastName}
+        onClick={handleClick}
+      />
+    );
+  
+    const avatarElement =  document.querySelector('.s2s-avatar'); 
+    avatarElement.click();
+    
+    expect(handleClick).toHaveBeenCalledTimes(1);
+  });
+  
 });
