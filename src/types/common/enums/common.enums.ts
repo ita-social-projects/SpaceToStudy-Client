@@ -139,3 +139,9 @@ export enum SortByEnum {
   highestRating = 'highestRating',
   lowestRating = 'lowestRating'
 }
+export enum IconButtonVariant {
+  Primary = 'primary',
+  Secondary = 'secondary',
+  Success = 'success',
+  Error = 'error'
+}

@@ -1,0 +1,59 @@
+@use '~scss/utilities' as *;
+
+@mixin icon-bg-mixin($diameter) {
+  width: #{$diameter}px;
+  height: #{$diameter}px;
+  box-shadow: none;
+  background-color: transparent;
+  transition:
+    transform 0.3s ease,
+    background-color 0.3s ease;
+  padding: 0;
+}
+@mixin icon-mixin($diameter) {
+  width: #{$diameter}px;
+  height: #{$diameter}px;
+  box-shadow: none;
+  transition:
+    transform 0.3s ease,
+    background-color 0.3s ease;
+
+  // .MuiSvgIcon-root {
+
+  // }
+}
+.#{$prefix}icon-button {
+  &--small {
+    @include icon-bg-mixin(20);
+  }
+
+  &--medium {
+    @include icon-bg-mixin(24);
+  }
+
+  &--large {
+    @include icon-bg-mixin(32);
+  }
+
+  &--extraLarge {
+    @include icon-bg-mixin(40);
+  }
+}
+
+.#{$prefix}icon {
+  &--small {
+    @include icon-mixin(12);
+  }
+
+  &--medium {
+    @include icon-mixin(16);
+  }
+
+  &--large {
+    @include icon-mixin(20);
+  }
+
+  &--extraLarge {
+    @include icon-mixin(24);
+  }
+}
