@@ -1,6 +1,7 @@
 import Checkbox, { CheckboxProps } from '@mui/material/Checkbox'
 import { FC, ReactNode, useState } from 'react'
 import Loader from '~/components/loader/Loader'
+import { cn } from '~/utils/cn'
 
 import './CheckBox.scss'
 
@@ -29,16 +30,6 @@ const CheckBox: FC<S2SCheckBoxProps> = ({
     setChecked(event.target.checked)
   }
 
-  const blockModifiers = [
-    disabled || loading ? 's2s-checkbox--disabled' : '',
-    color === 'error' ? 's2s-checkbox--error' : '',
-    color === 'success' ? 's2s-checkbox--success' : '',
-    `s2s-checkbox--${variant}`,
-    `s2s-checkbox--${size}`
-  ]
-    .filter(Boolean)
-    .join(' ')
-
   const loaderSizeMapping: Record<string, number> = {
     sm: 14,
     md: 18,
@@ -51,7 +42,15 @@ const CheckBox: FC<S2SCheckBoxProps> = ({
     <label
       aria-busy={loading}
       aria-disabled={disabled || loading}
-      className={`s2s-checkbox ${blockModifiers} s2s-checkbox--${labelPosition}`}
+      className={cn(
+        's2s-checkbox',
+        `s2s-checkbox--${labelPosition}`,
+        `s2s-checkbox--${variant}`,
+        `s2s-checkbox--${size}`,
+        (disabled || loading) && 's2s-checkbox--disabled',
+        color === 'error' && 's2s-checkbox--error',
+        color === 'success' && 's2s-checkbox--success'
+      )}
       data-testid='checkbox-label'
     >
       {loading ? (
